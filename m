@@ -2,180 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6768207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 23:40:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1625207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 23:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755130AbcI2Xko (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 19:40:44 -0400
-Received: from mout.web.de ([212.227.15.3]:59802 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752523AbcI2Xkm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 19:40:42 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0LyDqv-1at60S2Le1-015d9X; Fri, 30 Sep 2016 01:40:25
- +0200
-Subject: Re: [PATCH 1/3] add QSORT
-To:     Junio C Hamano <gitster@pobox.com>
-References: <67bddc37-4ee2-fef0-c852-e32645421e4c@web.de>
- <xmqqponmcp07.fsf@gitster.mtv.corp.google.com>
- <eeb2791e-c09b-b7bc-f8e8-336d4f3906b8@web.de>
-Cc:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <302c140e-bfb9-a54c-7ce0-14b266611584@web.de>
-Date:   Fri, 30 Sep 2016 01:40:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S935044AbcI2Xx0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 19:53:26 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:49476 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934896AbcI2XxZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 29 Sep 2016 19:53:25 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CA54B280AD;
+        Thu, 29 Sep 2016 23:53:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1475193203;
+        bh=vJel+T4NQoEDEDoTeSb5ls+Tkk5jNYDrj3mzPlLYE5w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UPB175BIgbiTNjmPSJboyC5Gm4fY1uWyjiHqqtyqWEqA76eSXiFjn2c9yRAM4/ajy
+         fSANPMocQI0bGpUJfhQl2JbCy663qIBGyg7UK8oTAQTPyrl8NcDAwGRAwGkQI5IfLA
+         Dke8AkXszY69VyWHPCAcv32mKXO8W5IbYX/6ZCDOvzoF1YeNhGaRakzWG9IF9SW7z3
+         0qQ/10Jh2VEUZW8rQTb0uafUMZqGQrMpnHDXDTxgK/1Y9aIFr39a08IFcs/aU16R5+
+         gwTvA5rhntW+HptyqUV/kPsi4+9Kgwogy/23rnTomaD66Mf127csrmw7M4nwovleoA
+         GC8u3BlBt0u5a7wVAydkkz3+MrWu/Z30ubS6Q01otLmyCwdVNDjVTf+zx3CnOl3C3B
+         pFE9yeMroWB/WDwpkWmteyQPHglZ+Kx+Nic9Ov4BOWaW+rljWJSbYrkkZEWFH2aMfV
+         U+JQDrb3XCpiiGlnGlv6vnTXl0yDeRY0X3OFz+QGiuv/ROkDdhV
+Date:   Thu, 29 Sep 2016 23:53:20 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Petr Stodulka <pstodulk@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] http: Control GSSAPI credential delegation.
+Message-ID: <20160929235320.ur3t66kypckmq4wl@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Petr Stodulka <pstodulk@redhat.com>, git@vger.kernel.org
+References: <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
+ <1475085694-10056-1-git-send-email-pstodulk@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <eeb2791e-c09b-b7bc-f8e8-336d4f3906b8@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:74MeBBHRBbX0k7PPYE3ntIpW4TUMAUv6Cf27u8ipTSLRqzc1yPd
- /CCoPgqyLAgs6sRI/Jbv9W0XkC6Oc1uh14E+8fd/sU0WcLL6dGjlwwQI12mI26JabEnGUwc
- s5Wc2bcaMCKCl6KSVJcZ+KvTcs1kDnJyxzNJC8/IGKMsD1MJ5bae+9P85pAyFN8ZefiKWG/
- Y/php71Ek9mzuyO8oT8gg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:04ONahPtH30=:iGxTDSQuUECeFY9wDVRmgW
- ftFf25d3tRBAXiquPeLwfvro5FkKEyugvteLOsljTwbWuXQTnnu0aRD+nmDhS1pWIGQne7hu5
- /PBjt+r3uX+hcOfh6Z9g/ecMXXteFGHsfnbRQD/xwbp72n1Anf3X57ttix7czN8sqZKiIQyCH
- SSUB7NuVkvyPoLJXZKSWybL+gkN03l9PDXeIEPLv/mDvVtrsVOstr0heoR91J+5+JlNgrY3TR
- el77VonXjR6TC47qAQbxjUhNUOJAsgJmvWykV+stpsnrzjbd9hLWlTDBBdRSj2htwCKGek003
- 8V/aVVBAyKGaCyLb6T6l9/F1lCc0HBJZkIy151Obs7pJSfAB2/10e0C8tOAEhbtugzPq3QJ4N
- 9uurhDgu8SOaxJPR4m6+iALi11gjxMjDWRz3VQ9K7I5oAEP7JM9gv8Ca+pj8A71YaViNAIpqA
- up2PP7735agDmdH3rCRsZt+8d1lUK4lwrWp8W9lApt4Cb8VVZeqaTnW/LjFm5pxw+YoU+MWq/
- gjanRahUv29/SIbjkEC1ykFBfDd1riQQnU76hlwKiNf2r4HohTceAcIKt5UImbe94pgb5Em9J
- gJ4+CAqNwGSGQPHJfQ5OYuHmDUNv8x5bcqvFlcUgoE0Ltak8i6pqAIDtizRunDqgv0uI6kuNn
- AyTWsrnkNNRBzp7V3GOTOuBnP6p4QTcYkhjY2nkEQ24ei+Qkm2+qtZgQ0FcX236MjSa3but7d
- VpeaXRdsjRJOel0oZrbU4dXL6yDtUylrben7ZqdipOH797LxJsUtSGO+iVwQFbK4L7qAbFsQW
- iqiPcq+
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4jy2bep6fssfhgfy"
+Content-Disposition: inline
+In-Reply-To: <1475085694-10056-1-git-send-email-pstodulk@redhat.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-1-amd64)
+User-Agent: NeoMutt/20160916 (1.7.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.09.2016 um 01:21 schrieb René Scharfe:
-> Am 30.09.2016 um 00:36 schrieb Junio C Hamano:
->> René Scharfe <l.s.r@web.de> writes:
->>
->>> Add the macro QSORT, a convenient wrapper for qsort(3) that infers the
->>> size of the array elements and supports the convention of initializing
->>> empty arrays with a NULL pointer, which we use in some places.
->>>
->>> Calling qsort(3) directly with a NULL pointer is undefined -- even with
->>> an element count of zero -- and allows the compiler to optimize away any
->>> following NULL checks.  Using the macro avoids such surprises.
->>>
->>> Add a semantic patch as well to demonstrate the macro's usage and to
->>> automate the transformation of trivial cases.
->>>
->>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->>> ---
->>>  contrib/coccinelle/qsort.cocci | 19 +++++++++++++++++++
->>>  git-compat-util.h              |  8 ++++++++
->>>  2 files changed, 27 insertions(+)
->>>  create mode 100644 contrib/coccinelle/qsort.cocci
->>
->> The direct calls to qsort(3) that this series leaves behind are
->> interesting.
->>
->> 1. builtin/index-pack.c has this:
->>
->> 	if (1 < opts->anomaly_nr)
->> 		qsort(opts->anomaly, opts->anomaly_nr, sizeof(uint32_t), cmp_uint32);
->>
->> where opts->anomaly is coming from pack.h:
->>
->>     struct pack_idx_option {
->>             unsigned flags;
->>             ...
->>             int anomaly_alloc, anomaly_nr;
->>             uint32_t *anomaly;
->>     };
->>
->> I cannot quite see how the automated conversion misses it?  It's not
->> like base and nmemb are type-restricted in the rule (they are both
->> just "expression"s).
->>
->> 2. builtin/shortlog.c has this:
->>
->> 	qsort(log->list.items, log->list.nr, sizeof(struct string_list_item),
->> 	      log->summary ? compare_by_counter : compare_by_list);
->>
->> where log->list is coming from shortlog.h:
->>
->>     struct shortlog {
->>             struct string_list list;
->>     };
->>
->> and string-list.h says:
->>
->>     struct string_list {
->>             struct string_list_item *items;
->>             unsigned int nr, alloc;
->>             ...
->>     };
->>
->> which seems to be a good candidate for this rule:
->>
->>     type T;
->>     T *base;
->>     expression nmemb, compar;
->>     @@
->>     - qsort(base, nmemb, sizeof(T), compar);
->>     + QSORT(base, nmemb, compar);
->>
->> if we take "T == struct string_list_item".
-> 
-> Transformations for these two are generated if we pass --all-includes
-> to spatch.  So let's do that.
 
-And here's the result:
+--4jy2bep6fssfhgfy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- >8 --
-Subject: [PATCH] use QSORT, part 2
+On Wed, Sep 28, 2016 at 08:01:34PM +0200, Petr Stodulka wrote:
+> Delegation of credentials is disabled by default in libcurl since
+> version 7.21.7 due to security vulnerability CVE-2011-2192. Which
+> makes troubles with GSS/kerberos authentication when delegation
+> of credentials is required. This can be changed with option
+> CURLOPT_GSSAPI_DELEGATION in libcurl with set expected parameter
+> since libcurl version 7.22.0.
+>=20
+> This patch provides new configuration variable http.delegation
+> which corresponds to curl parameter "--delegation" (see man 1 curl).
+>=20
+> The following values are supported:
+>=20
+> * none (default).
+> * policy
+> * always
 
-Convert two more qsort(3) calls to QSORT to reduce code size and for
-better safety and consistency.
+I don't personally use Kerberos delegation with Git, but I don't see any
+problems with this patch.  It preserves the security properties of the
+current behavior, and I think adding "policy" as an option to allow
+per-realm configuration is a good idea.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-Squashable.
+--4jy2bep6fssfhgfy
+Content-Type: application/pgp-signature; name="signature.asc"
 
- builtin/index-pack.c | 3 +--
- builtin/shortlog.c   | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.15 (GNU/Linux)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 7657d0a..0a27bab 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1531,8 +1531,7 @@ static void read_v2_anomalous_offsets(struct packed_git *p,
- 		opts->anomaly[opts->anomaly_nr++] = ntohl(idx2[off * 2 + 1]);
- 	}
- 
--	if (1 < opts->anomaly_nr)
--		qsort(opts->anomaly, opts->anomaly_nr, sizeof(uint32_t), cmp_uint32);
-+	QSORT(opts->anomaly, opts->anomaly_nr, cmp_uint32);
- }
- 
- static void read_idx_option(struct pack_idx_option *opts, const char *pack_name)
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 25fa8a6..ba0e115 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -308,7 +308,7 @@ void shortlog_output(struct shortlog *log)
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	if (log->sort_by_number)
--		qsort(log->list.items, log->list.nr, sizeof(struct string_list_item),
-+		QSORT(log->list.items, log->list.nr,
- 		      log->summary ? compare_by_counter : compare_by_list);
- 	for (i = 0; i < log->list.nr; i++) {
- 		const struct string_list_item *item = &log->list.items[i];
--- 
-2.10.0
+iQIcBAABCgAGBQJX7alwAAoJEL9TXYEfUvaLTGUQAJyBC3Ei+W5cW10wCUUMgZho
+9sWNL7Q5RK+ei96Uf9tf7NEWxZ8XtQjkgKV0gXqgd4h2N+oqwIZDfqTLmCwNxRPc
+/h3L1YxqTyP3bouOcvEsO8nA433SPFzlBpO6bRCERsIj3CRTs1vT54/9MGiQvYLN
+pyqKSHAi9cgU7eVZYO8XBpNqbaFLEjOx/DauY+/zghbYWUEH5hdIh/AQqiIleckS
+MUyf/jN1Zy4X7Hhc2+4YDIeXIvzrJvLuFI4UCKfQbZ1oTC0gtLrp9BazhKk8O7E/
+Ntun2Qk20cawmbREctHBOg+is0YWZRkCS5N0ikOrljjchllIDROyeAvYHvn/48Kh
+gaj9FzoUyOPfUca1ft7RoEYxUf0PgSu/UdkT95O10IHhn1iC71jt129bq038FiLQ
+F9Iq14jph/l61hIPATDjYS+JvtB5ExxIPgN+CGsiKXUL+3+O1EW7PNrXvBGK9zr1
+iAl2wd4egXD1WlsG9eHD2TSSCgRAzWRHdPYK+r7nYrn53fV+eup2Xa01EvzgkCuh
+Z0EXYuhtunszkG5TSly89l4vz/eiw362IOi4VvolWOs59itTVshH6yheoDTrt1MH
+ueb7RetCztzrD4O1+vbTM1VBF/8tMCoIVArKWJT8uCk8WjirGccL5CDmRNSxMq9i
+33Jy5xsV4Y7fVJYbboB+
+=Y23H
+-----END PGP SIGNATURE-----
 
-
+--4jy2bep6fssfhgfy--
