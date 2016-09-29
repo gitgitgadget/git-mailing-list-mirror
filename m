@@ -2,375 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0D1420987
-	for <e@80x24.org>; Thu, 29 Sep 2016 21:50:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DC5207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 21:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932929AbcI2Vug (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 17:50:36 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:33317 "EHLO
-        mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934827AbcI2VuT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 17:50:19 -0400
-Received: by mail-pa0-f41.google.com with SMTP id cd13so28237376pac.0
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:50:18 -0700 (PDT)
+        id S933878AbcI2Vxo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 17:53:44 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36208 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932185AbcI2Vxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 17:53:43 -0400
+Received: by mail-oi0-f66.google.com with SMTP id h186so1649799oia.3
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:53:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1y77MpsT3vIzY1fYt8V5nAYs6tix3CkAd+11LB2zOdE=;
-        b=a8Z8vrdNHbW7lNHIMWdXI9LNp7v3NJBiYAAEKog7bXh9jr5648Ufd2+ylCx1zI1Lz/
-         08/rJxXNxU0r0dhLqaIR81qZUjJOtFixkteiwR1LZJwljO6qqC6qsQl0taF1ej6+Q6f+
-         gEV3L9aTxMlJ34xoW7LpsxuvUkMgoPvEQg+WRr8yG45SLNqjOJV7c9vaLSTa0tA/YNIN
-         TKpKC1gBqPVMBBL3a+0Z+AFP7yrr90kFa6J8jh08GsshpvqNiR01dK8lLWQaErX0qIoW
-         oVvXYV3R6RAVsS5qvN1YEtBJVD2hwSZorJYxwyr1v1Uwng/p6uWaaoNSJGl6DPyqUbgB
-         PDlw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=BHG4TYBGUM8mRqbFS1NNbdiyoOplgNrJ+uifM+z4mdw=;
+        b=Uru9QFOH3376MEkTBl0rSZZ8ZXUzDqTE2rzSAjnKdSY6XdL5KqMz3RQuQW608eRxbS
+         vU9EdZr7EP68Z/LMVZdkbZc/zSrpVxta5c0GSIoVrzSRmqt/k9fiIVWePlLnkvrWDBg+
+         DbXy8k44t4pjmm582BTERjxDTXxML2u+aPJfNkjRx68vKJ/v0V24GfKVozFyBwZrUfge
+         iTNsYa4YJCIXkTwUA+r3luoredqO0ccI8eCXpj+sA3h0qI9XKUnFIelVG6P514EyhUpc
+         Y2TlLBfm9sic9Hn/7K+oTGJ4XXqSsdRn6HZma8aul2l9DJqzU12KyhKv9anUSLF+1aQz
+         ZWsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1y77MpsT3vIzY1fYt8V5nAYs6tix3CkAd+11LB2zOdE=;
-        b=TT8ol8ZG0i2Qwhb4h2deT7BsYW9sOJrqcFAGkH95dJbjizgYtovYsWzEry8R2wPqD6
-         xy4x5rIFxBdlG/kb5bYnjyA2vvfhEuIqwsDDX0tIEyV4FIeYxJyPlDYeyd7Hzlx1eFVt
-         H34baVAG5V7S/Sq47rl7Y01yiBLaNkA5GyzY9IuGbc9xeE1yraKqbxeZSYbnZeoY5/bX
-         hzQjvrmJnx32wa53w2GUER4tPcFOQ9Q5FOrlKwt623iIqsBJSk0net2bnwxqHufaImcb
-         1qXWdg6YkXOdrYZDA4r+lT/Ue5LY95vTofcdHDS/NRKtISZPGkBrVHdBmPECljqwpqxt
-         C+Eg==
-X-Gm-Message-State: AA6/9Rk8OARHW8tHfyv7mu2Q+n8GPynn6Sjo/6oJAQgYuQPSbpIsl3/aBq0zxURac5AQpdZH
-X-Received: by 10.66.163.5 with SMTP id ye5mr5977545pab.125.1475185818257;
-        Thu, 29 Sep 2016 14:50:18 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:4c71:119f:edd5:cf6c])
-        by smtp.gmail.com with ESMTPSA id c124sm22495406pfc.52.2016.09.29.14.50.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Sep 2016 14:50:17 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        peff@peff.net, gitster@pobox.com
-Subject: [PATCH v6 4/4] ls-files: add pathspec matching for submodules
-Date:   Thu, 29 Sep 2016 14:48:43 -0700
-Message-Id: <1475185723-36871-5-git-send-email-bmwill@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <1475185723-36871-1-git-send-email-bmwill@google.com>
-References: <1475099443-145608-1-git-send-email-bmwill@google.com>
- <1475185723-36871-1-git-send-email-bmwill@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=BHG4TYBGUM8mRqbFS1NNbdiyoOplgNrJ+uifM+z4mdw=;
+        b=X8mD8Ip2sLkBS7JIRRNYoIJBLwrMJ9coaly4amUahNbNIfozItbFZLwR3DBb1Y7zt1
+         D0hnDeunLX3yPQ67B2pv5+7SVamuXamhk131oYFn8y5OSCYgUxvUXlvDxU8FewzUGxMx
+         8nZxrO3MCgvvntX9zrY29gImb0U6MM2KWqtdiwrcMzS2irraB2rgbfn/UiES3EetsK/a
+         EAB4QA+G7kGsNSaLddxdl5/BjVXjMB3DUwDeACJn5DYDrp3ZQNItnIm+iHUe3FLOf1NZ
+         uj6jWsFwJt3FrGB8C3z11dOLVr1dtCsY+sEgBwEuOwOqfWihBm8mMKChPqW+20nQsdgi
+         e25Q==
+X-Gm-Message-State: AA6/9RmUsWfujUOxvuxSuuyQUUHW9j8NvdEJGGtC84sFe8oUx+fD+M7j/3lhJgG7xqSwZH3o9rydcD1SNbOzKA==
+X-Received: by 10.157.34.135 with SMTP id y7mr2842558ota.108.1475186022078;
+ Thu, 29 Sep 2016 14:53:42 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 14:53:41 -0700 (PDT)
+In-Reply-To: <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
+ <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
+ <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
+ <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+ <20160929191609.maxggcli76472t4g@sigill.intra.peff.net> <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
+ <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 29 Sep 2016 14:53:41 -0700
+X-Google-Sender-Auth: h3cVs06PkmZcfwDtt21-xzGxntk
+Message-ID: <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary=94eb2c047e2ad31e69053dac8284
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pathspecs can be a bit tricky when trying to apply them to submodules.
-The main challenge is that the pathspecs will be with respect to the
-superproject and not with respect to paths in the submodule.  The
-approach this patch takes is to pass in the identical pathspec from the
-superproject to the submodule in addition to the submodule-prefix, which
-is the path from the root of the superproject to the submodule, and then
-we can compare an entry in the submodule prepended with the
-submodule-prefix to the pathspec in order to determine if there is a
-match.
+--94eb2c047e2ad31e69053dac8284
+Content-Type: text/plain; charset=UTF-8
 
-This patch also permits the pathspec logic to perform a prefix match against
-submodules since a pathspec could refer to a file inside of a submodule.
-Due to limitations in the wildmatch logic, a prefix match is only done
-literally.  If any wildcard character is encountered we'll simply punt
-and produce a false positive match.  More accurate matching will be done
-once inside the submodule.  This is due to the superproject not knowing
-what files could exist in the submodule.
+On Thu, Sep 29, 2016 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I think that is a reasonable way to go.
+>
+> #define DEFAULT_ABBREV get_default_abbrev()
+>
+> would help.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- Documentation/git-ls-files.txt         |   3 +-
- builtin/ls-files.c                     |  27 +++++++--
- dir.c                                  |  46 +++++++++++++-
- dir.h                                  |   4 ++
- t/t3007-ls-files-recurse-submodules.sh | 108 ++++++++++++++++++++++++++++++++-
- 5 files changed, 175 insertions(+), 13 deletions(-)
+So something like this that replaces the previous patch?
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index ea01d45..51ec9a1 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -140,8 +140,7 @@ a space) at the start of each line:
- 
- --recurse-submodules::
- 	Recursively calls ls-files on each submodule in the repository.
--	Currently there is only support for the --cached mode without a
--	pathspec.
-+	Currently there is only support for the --cached.
- 
- --abbrev[=<n>]::
- 	Instead of showing the full 40-byte hexadecimal object
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 6f744ef..82ec811 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -215,6 +215,7 @@ static void show_gitlink(const struct cache_entry *ce)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	int status;
-+	int i;
- 
- 	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
- 			 super_prefix ? super_prefix : "",
-@@ -225,6 +226,15 @@ static void show_gitlink(const struct cache_entry *ce)
- 	/* add supported options */
- 	argv_array_pushv(&cp.args, submodules_options.argv);
- 
-+	/*
-+	 * Pass in the original pathspec args.  The submodule will be
-+	 * responsible for prepending the 'submodule_prefix' prior to comparing
-+	 * against the pathspec for matches.
-+	 */
-+	argv_array_push(&cp.args, "--");
-+	for (i = 0; i < pathspec.nr; i++)
-+		argv_array_push(&cp.args, pathspec.items[i].original);
-+
- 	cp.git_cmd = 1;
- 	cp.dir = ce->name;
- 	status = run_command(&cp);
-@@ -243,7 +253,8 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- 	if (len >= ce_namelen(ce))
- 		die("git ls-files: internal error - cache entry not superset of prefix");
- 
--	if (recurse_submodules && S_ISGITLINK(ce->ce_mode)) {
-+	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
-+	    submodule_path_match(&pathspec, name.buf, ps_matched)) {
- 		show_gitlink(ce);
- 	} else if (match_pathspec(&pathspec, name.buf, name.len,
- 				  len, ps_matched,
-@@ -623,16 +634,20 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		die("ls-files --recurse-submodules does not support "
- 		    "--error-unmatch");
- 
--	if (recurse_submodules && argc)
--		die("ls-files --recurse-submodules does not support pathspec");
--
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD |
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
- 		       prefix, argv);
- 
--	/* Find common prefix for all pathspec's */
--	max_prefix = common_prefix(&pathspec);
-+	/*
-+	 * Find common prefix for all pathspec's
-+	 * This is used as a performance optimization which unfortunately cannot
-+	 * be done when recursing into submodules
-+	 */
-+	if (recurse_submodules)
-+		max_prefix = NULL;
-+	else
-+		max_prefix = common_prefix(&pathspec);
- 	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
- 
- 	/* Treat unmatching pathspec elements as errors */
-diff --git a/dir.c b/dir.c
-index 0ea235f..28e9736 100644
---- a/dir.c
-+++ b/dir.c
-@@ -207,8 +207,9 @@ int within_depth(const char *name, int namelen,
- 	return 1;
- }
- 
--#define DO_MATCH_EXCLUDE   1
--#define DO_MATCH_DIRECTORY 2
-+#define DO_MATCH_EXCLUDE   (1<<0)
-+#define DO_MATCH_DIRECTORY (1<<1)
-+#define DO_MATCH_SUBMODULE (1<<2)
- 
- /*
-  * Does 'match' match the given name?
-@@ -283,6 +284,32 @@ static int match_pathspec_item(const struct pathspec_item *item, int prefix,
- 			 item->nowildcard_len - prefix))
- 		return MATCHED_FNMATCH;
- 
-+	/* Perform checks to see if "name" is a super set of the pathspec */
-+	if (flags & DO_MATCH_SUBMODULE) {
-+		/* name is a literal prefix of the pathspec */
-+		if ((namelen < matchlen) &&
-+		    (match[namelen] == '/') &&
-+		    !ps_strncmp(item, match, name, namelen))
-+			return MATCHED_RECURSIVELY;
-+
-+		/* name" doesn't match up to the first wild character */
-+		if (item->nowildcard_len < item->len &&
-+		    ps_strncmp(item, match, name,
-+			       item->nowildcard_len - prefix))
-+			return 0;
-+
-+		/*
-+		 * Here is where we would perform a wildmatch to check if
-+		 * "name" can be matched as a directory (or a prefix) against
-+		 * the pathspec.  Since wildmatch doesn't have this capability
-+		 * at the present we have to punt and say that it is a match,
-+		 * potentially returning a false positive
-+		 * The submodules themselves will be able to perform more
-+		 * accurate matching to determine if the pathspec matches.
-+		 */
-+		return MATCHED_RECURSIVELY;
-+	}
-+
- 	return 0;
- }
- 
-@@ -386,6 +413,21 @@ int match_pathspec(const struct pathspec *ps,
- 	return negative ? 0 : positive;
- }
- 
-+/**
-+ * Check if a submodule is a superset of the pathspec
-+ */
-+int submodule_path_match(const struct pathspec *ps,
-+			 const char *submodule_name,
-+			 char *seen)
-+{
-+	int matched = do_match_pathspec(ps, submodule_name,
-+					strlen(submodule_name),
-+					0, seen,
-+					DO_MATCH_DIRECTORY |
-+					DO_MATCH_SUBMODULE);
-+	return matched;
-+}
-+
- int report_path_error(const char *ps_matched,
- 		      const struct pathspec *pathspec,
- 		      const char *prefix)
-diff --git a/dir.h b/dir.h
-index da1a858..97c83bb 100644
---- a/dir.h
-+++ b/dir.h
-@@ -304,6 +304,10 @@ extern int git_fnmatch(const struct pathspec_item *item,
- 		       const char *pattern, const char *string,
- 		       int prefix);
- 
-+extern int submodule_path_match(const struct pathspec *ps,
-+				const char *submodule_name,
-+				char *seen);
-+
- static inline int ce_path_match(const struct cache_entry *ce,
- 				const struct pathspec *pathspec,
- 				char *seen)
-diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
-index e76fa30..5475855 100755
---- a/t/t3007-ls-files-recurse-submodules.sh
-+++ b/t/t3007-ls-files-recurse-submodules.sh
-@@ -81,9 +81,111 @@ test_expect_success 'ls-files recurses more than 1 level' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '--recurse-submodules does not support using path arguments' '
--	test_must_fail git ls-files --recurse-submodules b 2>actual &&
--	test_i18ngrep "does not support pathspec" actual
-+test_expect_success '--recurse-submodules and pathspecs setup' '
-+	echo e >submodule/subsub/e.txt &&
-+	git -C submodule/subsub add e.txt &&
-+	git -C submodule/subsub commit -m "adding e.txt" &&
-+	echo f >submodule/f.TXT &&
-+	echo g >submodule/g.txt &&
-+	git -C submodule add f.TXT g.txt &&
-+	git -C submodule commit -m "add f and g" &&
-+	echo h >h.txt &&
-+	mkdir sib &&
-+	echo sib >sib/file &&
-+	git add h.txt sib/file &&
-+	git commit -m "add h and sib/file" &&
-+	git init sub &&
-+	echo sub >sub/file &&
-+	git -C sub add file &&
-+	git -C sub commit -m "add file" &&
-+	git submodule add ./sub &&
-+	git commit -m "added sub" &&
-+
-+	cat >expect <<-\EOF &&
-+	.gitmodules
-+	a
-+	b/b
-+	h.txt
-+	sib/file
-+	sub/file
-+	submodule/.gitmodules
-+	submodule/c
-+	submodule/f.TXT
-+	submodule/g.txt
-+	submodule/subsub/d
-+	submodule/subsub/e.txt
-+	EOF
-+
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual &&
-+	cat actual &&
-+	git ls-files --recurse-submodules "*" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recurse-submodules and pathspecs' '
-+	cat >expect <<-\EOF &&
-+	h.txt
-+	submodule/g.txt
-+	submodule/subsub/e.txt
-+	EOF
-+
-+	git ls-files --recurse-submodules "*.txt" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recurse-submodules and pathspecs' '
-+	cat >expect <<-\EOF &&
-+	h.txt
-+	submodule/f.TXT
-+	submodule/g.txt
-+	submodule/subsub/e.txt
-+	EOF
-+
-+	git ls-files --recurse-submodules ":(icase)*.txt" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recurse-submodules and pathspecs' '
-+	cat >expect <<-\EOF &&
-+	h.txt
-+	submodule/f.TXT
-+	submodule/g.txt
-+	EOF
-+
-+	git ls-files --recurse-submodules ":(icase)*.txt" ":(exclude)submodule/subsub/*" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recurse-submodules and pathspecs' '
-+	cat >expect <<-\EOF &&
-+	sub/file
-+	EOF
-+
-+	git ls-files --recurse-submodules "sub" >actual &&
-+	test_cmp expect actual &&
-+	git ls-files --recurse-submodules "sub/" >actual &&
-+	test_cmp expect actual &&
-+	git ls-files --recurse-submodules "sub/file" >actual &&
-+	test_cmp expect actual &&
-+	git ls-files --recurse-submodules "su*/file" >actual &&
-+	test_cmp expect actual &&
-+	git ls-files --recurse-submodules "su?/file" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recurse-submodules and pathspecs' '
-+	cat >expect <<-\EOF &&
-+	sib/file
-+	sub/file
-+	EOF
-+
-+	git ls-files --recurse-submodules "s??/file" >actual &&
-+	test_cmp expect actual &&
-+	git ls-files --recurse-submodules "s???file" >actual &&
-+	test_cmp expect actual &&
-+	git ls-files --recurse-submodules "s*file" >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '--recurse-submodules does not support --error-unmatch' '
--- 
-2.10.0
+Somebody should really double-check my heuristics, to see that I did
+the pack counting etc right.  It doesn't do alternate loose file
+counting at all, and maybe it could matter.  The advantage of the
+previous patch was that it got the object counting right almost
+automatically, this actually has its own new object counting code and
+maybe I screwed it up.
 
+                Linus
+
+--94eb2c047e2ad31e69053dac8284
+Content-Type: text/plain; charset=US-ASCII; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_itovmyk50
+
+IGNhY2hlLmggICAgICAgfCAgMyArKy0KIGVudmlyb25tZW50LmMgfCAgMiArLQogc2hhMV9maWxl
+LmMgICB8IDQzICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIDMg
+ZmlsZXMgY2hhbmdlZCwgNDYgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
+aXQgYS9jYWNoZS5oIGIvY2FjaGUuaAppbmRleCA2ZTMzZjJmMjguLmEwMjJlMWJkMiAxMDA2NDQK
+LS0tIGEvY2FjaGUuaAorKysgYi9jYWNoZS5oCkBAIC0xMTg2LDggKzExODYsOSBAQCBzdGF0aWMg
+aW5saW5lIGludCBoZXgyY2hyKGNvbnN0IGNoYXIgKnMpCiB9CiAKIC8qIENvbnZlcnQgdG8vZnJv
+bSBoZXgvc2hhMSByZXByZXNlbnRhdGlvbiAqLworZXh0ZXJuIGludCBnZXRfZGVmYXVsdF9hYmJy
+ZXYodm9pZCk7CiAjZGVmaW5lIE1JTklNVU1fQUJCUkVWIG1pbmltdW1fYWJicmV2Ci0jZGVmaW5l
+IERFRkFVTFRfQUJCUkVWIGRlZmF1bHRfYWJicmV2CisjZGVmaW5lIERFRkFVTFRfQUJCUkVWIGdl
+dF9kZWZhdWx0X2FiYnJldigpCiAKIHN0cnVjdCBvYmplY3RfY29udGV4dCB7CiAJdW5zaWduZWQg
+Y2hhciB0cmVlWzIwXTsKZGlmZiAtLWdpdCBhL2Vudmlyb25tZW50LmMgYi9lbnZpcm9ubWVudC5j
+CmluZGV4IGMxNDQyZGY5YS4uZmQ2NjgxZTQ2IDEwMDY0NAotLS0gYS9lbnZpcm9ubWVudC5jCisr
+KyBiL2Vudmlyb25tZW50LmMKQEAgLTE2LDcgKzE2LDcgQEAgaW50IHRydXN0X2V4ZWN1dGFibGVf
+Yml0ID0gMTsKIGludCB0cnVzdF9jdGltZSA9IDE7CiBpbnQgY2hlY2tfc3RhdCA9IDE7CiBpbnQg
+aGFzX3N5bWxpbmtzID0gMTsKLWludCBtaW5pbXVtX2FiYnJldiA9IDQsIGRlZmF1bHRfYWJicmV2
+ID0gNzsKK2ludCBtaW5pbXVtX2FiYnJldiA9IDQsIGRlZmF1bHRfYWJicmV2ID0gLTE7CiBpbnQg
+aWdub3JlX2Nhc2U7CiBpbnQgYXNzdW1lX3VuY2hhbmdlZDsKIGludCBwcmVmZXJfc3ltbGlua19y
+ZWZzOwpkaWZmIC0tZ2l0IGEvc2hhMV9maWxlLmMgYi9zaGExX2ZpbGUuYwppbmRleCBjYTE0OWE2
+MDcuLjI4YmEwNGI2NSAxMDA2NDQKLS0tIGEvc2hhMV9maWxlLmMKKysrIGIvc2hhMV9maWxlLmMK
+QEAgLTM3MjAsMyArMzcyMCw0NiBAQCBpbnQgZm9yX2VhY2hfcGFja2VkX29iamVjdChlYWNoX3Bh
+Y2tlZF9vYmplY3RfZm4gY2IsIHZvaWQgKmRhdGEsIHVuc2lnbmVkIGZsYWdzKQogCX0KIAlyZXR1
+cm4gciA/IHIgOiBwYWNrX2Vycm9yczsKIH0KKworc3RhdGljIGludCBpbml0X2RlZmF1bHRfYWJi
+cmV2KHZvaWQpCit7CisJdW5zaWduZWQgbG9uZyBjb3VudCA9IDA7CisJc3RydWN0IHBhY2tlZF9n
+aXQgKnA7CisJc3RydWN0IHN0cmJ1ZiBidWYgPSBTVFJCVUZfSU5JVDsKKwlESVIgKmRpcjsKKwlj
+aGFyICpuYW1lOworCWludCByZXQ7CisKKwlwcmVwYXJlX3BhY2tlZF9naXQoKTsKKwlmb3IgKHAg
+PSBwYWNrZWRfZ2l0OyBwOyBwID0gcC0+bmV4dCkgeworCQlpZiAob3Blbl9wYWNrX2luZGV4KHAp
+KQorCQkJY29udGludWU7CisJCWNvdW50ICs9IHAtPm51bV9vYmplY3RzOworCX0KKworCXN0cmJ1
+Zl9hZGRzdHIoJmJ1ZiwgZ2V0X29iamVjdF9kaXJlY3RvcnkoKSk7CisJc3RyYnVmX2FkZHN0cigm
+YnVmLCAiLzQyLyIpOworCW5hbWUgPSBzdHJidWZfZGV0YWNoKCZidWYsIE5VTEwpOworCWRpciA9
+IG9wZW5kaXIobmFtZSk7CisJZnJlZShuYW1lKTsKKwlpZiAoZGlyKSB7CisJCXN0cnVjdCBkaXJl
+bnQgKmRlOworCQl3aGlsZSAoKGRlID0gcmVhZGRpcihkaXIpKSAhPSBOVUxMKSB7CisJCQljb3Vu
+dCArPSAyNTY7CisJCX0KKwkJY2xvc2VkaXIoZGlyKTsKKwl9CisJZm9yIChyZXQgPSA3OyByZXQg
+PCAxNTsgcmV0KyspIHsKKwkJdW5zaWduZWQgbG9uZyBleHBlY3RfY29sbGlzaW9uID0gMXVsIDw8
+IChyZXQgKiAyKTsKKwkJaWYgKGNvdW50IDwgZXhwZWN0X2NvbGxpc2lvbikKKwkJCWJyZWFrOwor
+CX0KKwlyZXR1cm4gcmV0OworfQorCitpbnQgZ2V0X2RlZmF1bHRfYWJicmV2KHZvaWQpCit7CisJ
+aWYgKGRlZmF1bHRfYWJicmV2IDwgMCkKKwkJZGVmYXVsdF9hYmJyZXYgPSBpbml0X2RlZmF1bHRf
+YWJicmV2KCk7CisJcmV0dXJuIGRlZmF1bHRfYWJicmV2OworfQo=
+--94eb2c047e2ad31e69053dac8284--
