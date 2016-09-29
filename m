@@ -2,118 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD134207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 21:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68461207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 21:00:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934015AbcI2VAH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 17:00:07 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34688 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933604AbcI2VAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 17:00:06 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w72so590873wmf.1
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:00:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=foTDtJ48BkVDUrz6mJCdfnQDNOToF2Mw9N7SstuuBK0=;
-        b=VCDSU4L0rAIwV+VI/aiW8ahNzAyTFxkDILTgLYcRxwKjhZzr3OFVYBAt7uI7UudvZ2
-         T/hTvtsQ+r69rAxo5cQnvmTN6yuI8jRaQaqyuEbVhBRhiNSReXQTEeu2A/Yd3zZItoyU
-         7YYkYyUbl9hUNTKzbu0Uvi2wM6vkpCtaZ3nM8zW7PvWOtH75hWObeI9CYLiuS/mmAZcM
-         nAfrSPsMqCMb4DkQVKG/Zs26fM5BzI2mPZrNolnM/rL1B02XMfsQK6qM8tZOU6xZAGFR
-         qp9q8XgiCbKUWY77ETt0FUiapozlnZO6ChDpILdHRFiKlayqdTSnxvePc3tLpZQhjyQe
-         eTTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=foTDtJ48BkVDUrz6mJCdfnQDNOToF2Mw9N7SstuuBK0=;
-        b=V9SawOmjHgNBrCSWRhB2XF4lUlR3vAnNLig3Z79UdTYpLl7L7j7XYr6kKRfx8xh04D
-         S+RVlP9/P0igTYS8VDGCyDSSzvUaZMPHMEYzBCIOvIdH/XcqBYlbWR94j2gzneE11gkj
-         GAKXcCOydXbEAo8+MBRuBGWDgBa3QunGYu9Adw1PnG+E/qaOIfI1HjMQ5edIrfBysQLo
-         uTa5Vx9P2msXoIIIWruSx0sF9LLlRr9wrZReDgmy6xHQo/Qo3VU4OtaLTkFYEHzaKc83
-         c8jeyomO5PbQuMTkFEje2GYFIwBKkUYjj3vdjaP4Cxa/CTaHGKq9I5cbAN+Sjh27PDDl
-         6bsw==
-X-Gm-Message-State: AA6/9RklIjgr5/YWd+ZwqFNL86KrI2zDNRKJEq6Bxt/cmXlKFLOFOcDhX0V8CYRyigpRdQ==
-X-Received: by 10.28.38.69 with SMTP id m66mr476987wmm.133.1475182804449;
-        Thu, 29 Sep 2016 14:00:04 -0700 (PDT)
-Received: from [192.168.1.26] (eln216.neoplus.adsl.tpnet.pl. [83.21.207.216])
-        by smtp.googlemail.com with ESMTPSA id s6sm16093473wjm.25.2016.09.29.14.00.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Sep 2016 14:00:03 -0700 (PDT)
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
- <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
- <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
- <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <f9a6dd02-34c0-d48b-3cbc-73202488920c@gmail.com>
-Date:   Thu, 29 Sep 2016 22:59:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-MIME-Version: 1.0
-In-Reply-To: <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S934101AbcI2VAT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 17:00:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50543 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933604AbcI2VAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 17:00:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A775A42978;
+        Thu, 29 Sep 2016 17:00:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id; s=sasl; bh=EcPSoPIlHPCWtzjMOdq4BCvh/Zo
+        =; b=PKzh4gsW9HFTI67z6LFZgi4C8e2BJk6rB4cuVt9QXe5rgyrEUEKeRxtmGNt
+        Gox+fDVhxl9sPDBXkZ6RAvgqEGIBMIm5bW3GiUYWJ6lUb5DvFiLxdeZIinnvK285
+        nAfyAozbHOcecFMiQcNm4TSBAhWWoPRQw4hb3DGCkJ9ETJgU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id; q=dns; s=sasl; b=Jamfhm615aRCDJMRgr4TP/CDbW5hY
+        y0VgkfKY2IRXXvVlBmEaVMweT94F0ZVn7dkNFVezn2/QnVQnUlE1L9qd45xiqe8N
+        Iz1rDpTkzkCwFMp7MkltCvjRXBQ+oI4pFh1NG7veTPfKSFrsrP3TBiexzPwMkqsM
+        TSeTE6t+8O7zvs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FCBC42977;
+        Thu, 29 Sep 2016 17:00:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E54842976;
+        Thu, 29 Sep 2016 17:00:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v2 0/9] allow customizing /etc/gitconfig location with an environment
+Date:   Thu, 29 Sep 2016 14:00:05 -0700
+Message-Id: <20160929210014.3874-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.10.0-589-g5adf4e1
+X-Pobox-Relay-ID: B8D9B896-8687-11E6-97E3-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 29.09.2016 o 13:57, Torsten Bögershausen pisze: 
-> On 29/09/16 12:28, Lars Schneider wrote:
+This ended up growing quite a bit, and I mostly hate it.
 
->> This is what happens:
->>
->> 1) Git exits
->> 2) The filter process receives EOF and prints "STOP" to the log
->> 3) t0021 checks the content of the log
->>
->> Sometimes 3 happened before 2 which makes the test fail.
->> (Example: https://travis-ci.org/git/git/jobs/162660563 )
->>
->> I added a this to wait until the filter process terminates:
->>
->> +wait_for_filter_termination () {
->> +    while ps | grep -v grep | grep -F "/t0021/rot13-filter.pl" >/dev/null 2>&1
->> +    do
->> +        echo "Waiting for /t0021/rot13-filter.pl to finish..."
->> +        sleep 1
->> +    done
->> +}
->>
->> Does this look OK to you?
-> Do we need the ps at all ?
-> How about this:
-> 
-> +wait_for_filter_termination () {
-> +    while ! grep "STOP"  LOGFILENAME >/dev/null
-> +    do
-> +        echo "Waiting for /t0021/rot13-filter.pl to finish..."
-> +        sleep 1
-> +    done
-> +}
+ - Patch 1 introduces GIT_CONFIG_SYSTEM_PATH environment variable
+   that lets you point at a file other than /etc/gitconfig to
+   pretend that your file is the system-wide configuration.
 
-Or even better: make filter driver write its pid to pidfile, and then
-"wait $(cat rot13-filter.pid)".  That's what we do in lib-git-daemon.sh
-(I think).
+ - Patch 2 is a small bugfix.
 
-If the problem is exit status of "wait" builtin, then filter driver
-can remove its pidfile after writing "STOP", just before ending.
+ - Patches 3-7 are updates to 1300 and 1308, i.e. tests for "git
+   config", to make them more robust, in preparation for using
+   GIT_CONFIG_SYSTEM_PATH mechanism to point at a file during the
+   test.  It protects them a bit more than necessary in that the
+   variables some of the tests they use when they try to see the
+   output from "git config --get" are unlikely to appear in the fake
+   system-wide configuration during the test (hence disabling the
+   fake system-wide configuration has no practical effect), but
+   nevertheless the calls are protected by explicitly telling them
+   to read only from --local configuration file to future-proof
+   them.
+
+ - Patch 8 is queued elsewhere already.
+
+ - Patch 9 raises the default core.abbrev to 12 and countermands it
+   by setting it to 7 in a fake system-wide configuration file
+   during our test.  The unconditional widening of the default
+   abbreviation size in this patch will have to be discarded,
+   preferring the approach Linus is taking to auto-size it based on
+   the number of objects in the repository, but the part that
+   updates the test script may still be necessary.
+
+Jeff King (1):
+  t1300: check also system-wide configuration file in --show-origin
+    tests
+
+Junio C Hamano (8):
+  config: allow customizing /etc/gitconfig location with an environment
+  t1300: always compare expect to actual
+  t1308: ignore system-wide config in the iteration test
+  t1300: disable system-wide config for tests that wants to read from -c
+  t1300: take contents of system-wide configuration into account in
+    "--list" test
+  t1300: be explicit in local configuration tests
+  worktree: honor configuration variables
+  core.abbrev: raise the default abbreviation to 12 hexdigits
+
+ builtin/worktree.c     |   2 +
+ cache.h                |   1 +
+ config.c               |   2 +
+ environment.c          |   2 +-
+ t/gitconfig-for-test   |   9 ++++
+ t/t1300-repo-config.sh | 120 ++++++++++++++++++++++++++++++-------------------
+ t/t1308-config-set.sh  |   1 +
+ t/test-lib.sh          |   4 +-
+ 8 files changed, 93 insertions(+), 48 deletions(-)
+ create mode 100644 t/gitconfig-for-test
 
 -- 
-Jakub Narębski
+2.10.0-589-g5adf4e1
 
