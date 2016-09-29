@@ -2,134 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41DC5207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 21:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0435C207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 21:56:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933878AbcI2Vxo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 17:53:44 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36208 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932185AbcI2Vxn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 17:53:43 -0400
-Received: by mail-oi0-f66.google.com with SMTP id h186so1649799oia.3
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:53:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=BHG4TYBGUM8mRqbFS1NNbdiyoOplgNrJ+uifM+z4mdw=;
-        b=Uru9QFOH3376MEkTBl0rSZZ8ZXUzDqTE2rzSAjnKdSY6XdL5KqMz3RQuQW608eRxbS
-         vU9EdZr7EP68Z/LMVZdkbZc/zSrpVxta5c0GSIoVrzSRmqt/k9fiIVWePlLnkvrWDBg+
-         DbXy8k44t4pjmm582BTERjxDTXxML2u+aPJfNkjRx68vKJ/v0V24GfKVozFyBwZrUfge
-         iTNsYa4YJCIXkTwUA+r3luoredqO0ccI8eCXpj+sA3h0qI9XKUnFIelVG6P514EyhUpc
-         Y2TlLBfm9sic9Hn/7K+oTGJ4XXqSsdRn6HZma8aul2l9DJqzU12KyhKv9anUSLF+1aQz
-         ZWsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=BHG4TYBGUM8mRqbFS1NNbdiyoOplgNrJ+uifM+z4mdw=;
-        b=X8mD8Ip2sLkBS7JIRRNYoIJBLwrMJ9coaly4amUahNbNIfozItbFZLwR3DBb1Y7zt1
-         D0hnDeunLX3yPQ67B2pv5+7SVamuXamhk131oYFn8y5OSCYgUxvUXlvDxU8FewzUGxMx
-         8nZxrO3MCgvvntX9zrY29gImb0U6MM2KWqtdiwrcMzS2irraB2rgbfn/UiES3EetsK/a
-         EAB4QA+G7kGsNSaLddxdl5/BjVXjMB3DUwDeACJn5DYDrp3ZQNItnIm+iHUe3FLOf1NZ
-         uj6jWsFwJt3FrGB8C3z11dOLVr1dtCsY+sEgBwEuOwOqfWihBm8mMKChPqW+20nQsdgi
-         e25Q==
-X-Gm-Message-State: AA6/9RmUsWfujUOxvuxSuuyQUUHW9j8NvdEJGGtC84sFe8oUx+fD+M7j/3lhJgG7xqSwZH3o9rydcD1SNbOzKA==
-X-Received: by 10.157.34.135 with SMTP id y7mr2842558ota.108.1475186022078;
- Thu, 29 Sep 2016 14:53:42 -0700 (PDT)
+        id S934401AbcI2V4j (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 17:56:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64153 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933081AbcI2V4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 17:56:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C846F430C0;
+        Thu, 29 Sep 2016 17:56:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mHFfIgj0PWHAldTOZG4gCLRF7wk=; b=w8Y6PH
+        8ynl5SS+9j7fi/n+9HGrPKjMQ2s3WC/RaG06Zces5IgcGx3BqJ5xBxyirhIk4NZ7
+        IQDcQZ5Si7U4AoduqwNk+LwlNF8bZVZSQl48IKWt8Bu7JS/OWVT8gU71O6RKDtP4
+        9jSCclkCvIoPtfWNEnPmQcWsvC0ckFDIB51mE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=M6fnym8Vy05tJWjUv9RVmMYSJZnmDQYp
+        Cn0tLgRaJwtScPuNLrQy2EuuwJsVb1Qb9OyMtkBQHm4Qp1SRaZrRn6xBj28axCeJ
+        qpFuanvmeN1SuTCX0HIintDAbpyl6mZXkuKfJFBXJuBux0jHxZAVHZnaDwpSqO9Q
+        Hx9ymFwNEuY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF162430BF;
+        Thu, 29 Sep 2016 17:56:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3D9AC430BD;
+        Thu, 29 Sep 2016 17:56:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 0/2] place cherry pick line below commit title
+References: <cover.1475176070.git.jonathantanmy@google.com>
+Date:   Thu, 29 Sep 2016 14:56:34 -0700
+In-Reply-To: <cover.1475176070.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 29 Sep 2016 12:21:36 -0700")
+Message-ID: <xmqqtwcycqul.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 14:53:41 -0700 (PDT)
-In-Reply-To: <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com>
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
- <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
- <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
- <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
- <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
- <20160929191609.maxggcli76472t4g@sigill.intra.peff.net> <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
- <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 29 Sep 2016 14:53:41 -0700
-X-Google-Sender-Auth: h3cVs06PkmZcfwDtt21-xzGxntk
-Message-ID: <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary=94eb2c047e2ad31e69053dac8284
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9790CFB4-868F-11E6-B505-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c047e2ad31e69053dac8284
-Content-Type: text/plain; charset=UTF-8
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-On Thu, Sep 29, 2016 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> This is somewhat of a follow-up to my previous e-mail with subject
+> "[PATCH] sequencer: support folding in rfc2822 footer" [1], in which I
+> proposed relaxing the definition of a commit message footer to allow
+> multiple-line field bodies (as described in RFC2822), but its strictness
+> was deemed deliberate.
+
+It does not necessarily mean we can never change it when we did
+something deliberately, though.  With a good enough justification,
+and with a transitition plan if the backward incompatibility is
+severe enough to warrant one, we can change things.
+
+I vaguely recall that there were some discussion on the definition
+of "what's a trailer line" with folks from the kernel land, perhaps
+while discussing the interpret-trailers topic.  IIRC, when somebody
+passes an improved version along, the resulting message's trailer
+block may look like this:
+
+    Signed-off-by: Original Author <original@author.xz>
+    [fixed typo in the variable names]
+    Signed-off-by: Somebhody Else <somebody@else.xz>
+
+and an obvious "wish" of theirs was to treat not just RFC2822-like
+"a line that begins with token followed by a colon" but also these
+short comments as part of the trailer block.  Your original wish in
+[*1*] is to also treat "a line that begin with a whitespace that
+follows a line that begins with token followed by a colon" as part
+of the trailer block and I personally think that is a reasonable
+thing to wish for, too.
+
+I recall that I was somewhat surprised and dissapointed to see no
+change to interpret-trailers when you tried [*1*], which was really
+about improving the definition of what the trailer block is, by the
+way.
+
+In any case, if we want to improve what the trailer block is, we
+would certainly need to make sure what is inserted by "cherry-pick -x"
+is also considered as part of the trailer block, so it may be necessary
+to change it to "Cherry-picked-from: ..." while doing so.  I dunno.
+
+> Below is a patch set that allows placing the "cherry picked from" line
+> without taking into account the definition of a commit message footer.
+> For example, "git cherry-pick -x" (with the appropriate configuration
+> variable or argument) would, to this commit message:
 >
-> I think that is a reasonable way to go.
+>   commit title
 >
-> #define DEFAULT_ABBREV get_default_abbrev()
+>   This is an explanatory paragraph.
 >
-> would help.
+>   Footer: foo
+>
+> place the "(cherry picked from ...)" line below "commit title".
+>
+> Would this be better?
 
-So something like this that replaces the previous patch?
+It is not immediately obvious what such a change buys us.  Wouldn't
+the current code place that line below "Footer: foo"?  I cannot
+think of any reason why anybody would want to place "cherry-picked
+from" immediately below the title and before the first line of the
+body.
 
-Somebody should really double-check my heuristics, to see that I did
-the pack counting etc right.  It doesn't do alternate loose file
-counting at all, and maybe it could matter.  The advantage of the
-previous patch was that it got the object counting right almost
-automatically, this actually has its own new object counting code and
-maybe I screwed it up.
 
-                Linus
+[Footnotes]
 
---94eb2c047e2ad31e69053dac8284
-Content-Type: text/plain; charset=US-ASCII; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_itovmyk50
-
-IGNhY2hlLmggICAgICAgfCAgMyArKy0KIGVudmlyb25tZW50LmMgfCAgMiArLQogc2hhMV9maWxl
-LmMgICB8IDQzICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIDMg
-ZmlsZXMgY2hhbmdlZCwgNDYgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
-aXQgYS9jYWNoZS5oIGIvY2FjaGUuaAppbmRleCA2ZTMzZjJmMjguLmEwMjJlMWJkMiAxMDA2NDQK
-LS0tIGEvY2FjaGUuaAorKysgYi9jYWNoZS5oCkBAIC0xMTg2LDggKzExODYsOSBAQCBzdGF0aWMg
-aW5saW5lIGludCBoZXgyY2hyKGNvbnN0IGNoYXIgKnMpCiB9CiAKIC8qIENvbnZlcnQgdG8vZnJv
-bSBoZXgvc2hhMSByZXByZXNlbnRhdGlvbiAqLworZXh0ZXJuIGludCBnZXRfZGVmYXVsdF9hYmJy
-ZXYodm9pZCk7CiAjZGVmaW5lIE1JTklNVU1fQUJCUkVWIG1pbmltdW1fYWJicmV2Ci0jZGVmaW5l
-IERFRkFVTFRfQUJCUkVWIGRlZmF1bHRfYWJicmV2CisjZGVmaW5lIERFRkFVTFRfQUJCUkVWIGdl
-dF9kZWZhdWx0X2FiYnJldigpCiAKIHN0cnVjdCBvYmplY3RfY29udGV4dCB7CiAJdW5zaWduZWQg
-Y2hhciB0cmVlWzIwXTsKZGlmZiAtLWdpdCBhL2Vudmlyb25tZW50LmMgYi9lbnZpcm9ubWVudC5j
-CmluZGV4IGMxNDQyZGY5YS4uZmQ2NjgxZTQ2IDEwMDY0NAotLS0gYS9lbnZpcm9ubWVudC5jCisr
-KyBiL2Vudmlyb25tZW50LmMKQEAgLTE2LDcgKzE2LDcgQEAgaW50IHRydXN0X2V4ZWN1dGFibGVf
-Yml0ID0gMTsKIGludCB0cnVzdF9jdGltZSA9IDE7CiBpbnQgY2hlY2tfc3RhdCA9IDE7CiBpbnQg
-aGFzX3N5bWxpbmtzID0gMTsKLWludCBtaW5pbXVtX2FiYnJldiA9IDQsIGRlZmF1bHRfYWJicmV2
-ID0gNzsKK2ludCBtaW5pbXVtX2FiYnJldiA9IDQsIGRlZmF1bHRfYWJicmV2ID0gLTE7CiBpbnQg
-aWdub3JlX2Nhc2U7CiBpbnQgYXNzdW1lX3VuY2hhbmdlZDsKIGludCBwcmVmZXJfc3ltbGlua19y
-ZWZzOwpkaWZmIC0tZ2l0IGEvc2hhMV9maWxlLmMgYi9zaGExX2ZpbGUuYwppbmRleCBjYTE0OWE2
-MDcuLjI4YmEwNGI2NSAxMDA2NDQKLS0tIGEvc2hhMV9maWxlLmMKKysrIGIvc2hhMV9maWxlLmMK
-QEAgLTM3MjAsMyArMzcyMCw0NiBAQCBpbnQgZm9yX2VhY2hfcGFja2VkX29iamVjdChlYWNoX3Bh
-Y2tlZF9vYmplY3RfZm4gY2IsIHZvaWQgKmRhdGEsIHVuc2lnbmVkIGZsYWdzKQogCX0KIAlyZXR1
-cm4gciA/IHIgOiBwYWNrX2Vycm9yczsKIH0KKworc3RhdGljIGludCBpbml0X2RlZmF1bHRfYWJi
-cmV2KHZvaWQpCit7CisJdW5zaWduZWQgbG9uZyBjb3VudCA9IDA7CisJc3RydWN0IHBhY2tlZF9n
-aXQgKnA7CisJc3RydWN0IHN0cmJ1ZiBidWYgPSBTVFJCVUZfSU5JVDsKKwlESVIgKmRpcjsKKwlj
-aGFyICpuYW1lOworCWludCByZXQ7CisKKwlwcmVwYXJlX3BhY2tlZF9naXQoKTsKKwlmb3IgKHAg
-PSBwYWNrZWRfZ2l0OyBwOyBwID0gcC0+bmV4dCkgeworCQlpZiAob3Blbl9wYWNrX2luZGV4KHAp
-KQorCQkJY29udGludWU7CisJCWNvdW50ICs9IHAtPm51bV9vYmplY3RzOworCX0KKworCXN0cmJ1
-Zl9hZGRzdHIoJmJ1ZiwgZ2V0X29iamVjdF9kaXJlY3RvcnkoKSk7CisJc3RyYnVmX2FkZHN0cigm
-YnVmLCAiLzQyLyIpOworCW5hbWUgPSBzdHJidWZfZGV0YWNoKCZidWYsIE5VTEwpOworCWRpciA9
-IG9wZW5kaXIobmFtZSk7CisJZnJlZShuYW1lKTsKKwlpZiAoZGlyKSB7CisJCXN0cnVjdCBkaXJl
-bnQgKmRlOworCQl3aGlsZSAoKGRlID0gcmVhZGRpcihkaXIpKSAhPSBOVUxMKSB7CisJCQljb3Vu
-dCArPSAyNTY7CisJCX0KKwkJY2xvc2VkaXIoZGlyKTsKKwl9CisJZm9yIChyZXQgPSA3OyByZXQg
-PCAxNTsgcmV0KyspIHsKKwkJdW5zaWduZWQgbG9uZyBleHBlY3RfY29sbGlzaW9uID0gMXVsIDw8
-IChyZXQgKiAyKTsKKwkJaWYgKGNvdW50IDwgZXhwZWN0X2NvbGxpc2lvbikKKwkJCWJyZWFrOwor
-CX0KKwlyZXR1cm4gcmV0OworfQorCitpbnQgZ2V0X2RlZmF1bHRfYWJicmV2KHZvaWQpCit7CisJ
-aWYgKGRlZmF1bHRfYWJicmV2IDwgMCkKKwkJZGVmYXVsdF9hYmJyZXYgPSBpbml0X2RlZmF1bHRf
-YWJicmV2KCk7CisJcmV0dXJuIGRlZmF1bHRfYWJicmV2OworfQo=
---94eb2c047e2ad31e69053dac8284--
+*1* http://public-inbox.org/git/1472846322-5592-1-git-send-email-jonathantanmy@google.com/
