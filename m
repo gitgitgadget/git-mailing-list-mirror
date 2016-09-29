@@ -2,93 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC75720987
-	for <e@80x24.org>; Thu, 29 Sep 2016 19:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBA1C207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 19:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933191AbcI2TG0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 15:06:26 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:36375 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932603AbcI2TGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 15:06:25 -0400
-Received: by mail-oi0-f65.google.com with SMTP id h186so1400568oia.3
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 12:06:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=NCOtw2lSPg0dMsgGuepqXCjkhkP4hs6vHRbjggFi5R8=;
-        b=aBD0d1nT/6ca37+CopAvqWqTqOv+biRvlMLiSrVWd+PNf0m/dichJx6jrBzI8KCcYj
-         axaEkKyrrS9VeDe27yFx7CC18s+RmebWTWcSAC5NwqwWssWQUyjzjqzWJENXYrJk/7hW
-         JSIEmk+boTqQUWlGDAQpckXqZIhdYPIp1W1gSgn45RqvOM3W6BlNGB1YF8x8dPuGSX5Q
-         03/5AJ9648JkSNyFdUrcmAH+Ro9XR8uNjElAl7d4DET/irV3U0ujxguXOgc1oE4Dk3RO
-         /j0q2HTmCn5aTx6+W6fG13BWUpTsaxu20LpJewT35vCrnnKvbuF7B6Z3RoV61uumOuqY
-         T0RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=NCOtw2lSPg0dMsgGuepqXCjkhkP4hs6vHRbjggFi5R8=;
-        b=JW1eSn09fk4m1f+E/d5q0CI78pFlh/FoQjyXOTTvAG6OmMDEJNoWWIrUlOH9U/gS06
-         GF0BfOjEde+YIE4VGWCVJZhmGDIFnTi3SYC30F70Ew9kRGDRkrdfF5VGzXAaDOGYvW79
-         fX+OVbIU8koXnNLkfH56DElVQjZTpbAAC/YL3J+SoK7xN+M2DQYNg4EdnjHETadGdqhk
-         LpD2uRkF9cX00VYuDOsiOg6C7WuEwQY5rFo/qwnSR5kAr4pAWL9TL/WKn2dsO1IH1wAo
-         AqGp+juOtAC2/yLQZCtqW8q8s9LLx/ZkKfXru3NBR76IwzQ3rV39RfVZTC8HG8y5Xsa3
-         Fmcg==
-X-Gm-Message-State: AA6/9RlvycB1bPyzmyHhuWIoITpdHU9m1Ltdw8/gHn4pcfmOOv1s5zsgpFD4Ew75yYwsUcHIyNLlJIKI0QDf5A==
-X-Received: by 10.157.43.124 with SMTP id f57mr2344805otd.83.1475175984059;
- Thu, 29 Sep 2016 12:06:24 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 12:06:23 -0700 (PDT)
-In-Reply-To: <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+        id S1754406AbcI2TQO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 15:16:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50112 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751670AbcI2TQN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 15:16:13 -0400
+Received: (qmail 14533 invoked by uid 109); 29 Sep 2016 19:16:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 19:16:12 +0000
+Received: (qmail 4134 invoked by uid 111); 29 Sep 2016 19:16:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 15:16:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 15:16:09 -0400
+Date:   Thu, 29 Sep 2016 15:16:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12
+ hexdigits
+Message-ID: <20160929191609.maxggcli76472t4g@sigill.intra.peff.net>
 References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
- <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
- <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
- <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com> <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 29 Sep 2016 12:06:23 -0700
-X-Google-Sender-Auth: 4jBW1HDkqqWZXKsvmjTxlEdJCSc
-Message-ID: <CA+55aFx9Utm9yDZceks+5q9c8ydc2QMYshWwJ0G0GHWWLwSsXQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+ <20160928233047.14313-1-gitster@pobox.com>
+ <20160928233047.14313-5-gitster@pobox.com>
+ <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org>
+ <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
+ <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 11:55 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> For the kernel, just the *math* right now actually gives 12
-> characters. For current git it actually seems to say that 8 is the
-> correct number. For small projects, you'll still see 7.
+On Thu, Sep 29, 2016 at 11:55:46AM -0700, Linus Torvalds wrote:
 
-Sorry, the git number is 9, not 8. The reason is that git has roughly
-212k objects, and 9 hex digits gets expected collisions at about 256k
-objects.
+> I think the patch can speak for itself, but the basic core is this
+> section in get_short_sha1():
+> 
+>   +       if (len < 16 && !status && (flags & GET_SHA1_AUTOMATIC)) {
+>   +               unsigned int expect_collision = 1 << (len * 2);
+>   +               if (ds.nrobjects > expect_collision)
+>   +                       return SHORT_NAME_AMBIGUOUS;
+>   +       }
 
-So the logic means that we'll see 7 hex digits for projects with less
-than 16k objects, 8 hex digits if there are less than 64k objects, and
-9 hex digits for projects like git that currently have fewer than 256k
-objects.
+Hmm. So at length 7, we expect collisions at 2^14, which is 16384. That
+seems really low. I mean, by the birthday paradox that's where expect
+a 50% chance of a collision. But that's a single collision. We
+definitely don't expect them to be common at that size.
 
-But git itself might not be *that* far from going to 10 hex digits
-with my patch.
+So I suspect this could be a bit looser. The real number we care about
+is probably something like "there is probability 'p' of a collision when
+we add a new object", but I'm not sure what that 'p' would be. Or
+perhaps "we accept collisions in 'n' percent of objects". But again, I
+don't know that 'n'.
 
-The kernel uses 12 he digits because the collision math says that's
-the right thing for a project with between 4M and 16M objects (with
-the kernel being at 5M).
+I dunno. I suppose being overly conservative with this number leaves
+room for growth. Repositories generally get bigger, not smaller. :)
 
-So on the whole the patch really does seem to just do the right thing
-automatically.
+> What do you think? It's actually a fairly simple patch and I really do
+> think it makes sense and it seems to just DTRT automatically.
 
-              Linus
+I like the general idea.
+
+As far as the implementation, I was surprised to see it touch
+get_short_sha1() at all. That's, after all, for lookups, and we would
+never want to require more characters on the reading side.
+
+I see you worked around it with a flag so that this behavior only kicks
+in when called via find_unique_abbrev(). But if you look at the caller:
+
+> @@ -458,14 +472,19 @@ int for_each_abbrev(const char *prefix, each_abbrev_fn fn, void *cb_data)
+>  int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
+>  {
+>  	int status, exists;
+> +	int flags = GET_SHA1_QUIETLY;
+>  
+> +	if (len < 0) {
+> +		flags |= GET_SHA1_AUTOMATIC;
+> +		len = 7;
+> +	}
+>  	sha1_to_hex_r(hex, sha1);
+>  	if (len == 40 || !len)
+>  		return 40;
+>  	exists = has_sha1_file(sha1);
+>  	while (len < 40) {
+>  		unsigned char sha1_ret[20];
+> -		status = get_short_sha1(hex, len, sha1_ret, GET_SHA1_QUIETLY);
+> +		status = get_short_sha1(hex, len, sha1_ret, flags);
+>  		if (exists
+>  		    ? !status
+>  		    : status == SHORT_NAME_NOT_FOUND) {
+
+You can see that we're going to do more work than we would otherwise
+need to. Because we start at 7, and ask get_short_sha1() "is this unique
+enough?", and looping. But if we _know_ we won't accept any answer
+shorter than some N based on the number of objects in the repository,
+then we should start at that N.
+
+IOW, something like:
+
+  if (len < 0)
+	len = ceil(log_base_2(repository_object_count()));
+
+here, and then you don't have to touch get_short_sha1() at all.
+
+I suspect you pushed it down into get_short_sha1() because it kind-of
+does the repository_object_count() step for "free" as it's looking at
+the object anyway. But that step is really not very expensive. And I'd
+even say you could just ignore loose objects entirely, and treat them
+like a rounding error (the way that duplicate objects in packs are
+treated).
+
+That leaves you with just an O(# of packs) loop over a linked list. You
+could even just keep a global object count up to date in
+add_packed_git(), and then it's O(1).
+
+-Peff
