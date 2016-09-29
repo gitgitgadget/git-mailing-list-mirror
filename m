@@ -2,83 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A09207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 18:05:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C849A207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 18:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934559AbcI2SFy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 14:05:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64692 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934382AbcI2SFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 14:05:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3860641D5D;
-        Thu, 29 Sep 2016 14:05:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=77psWww5TtCY4Nw0WAA0ylzplIc=; b=NJRu+/
-        FSaHmJHziFsKQ57RwdeVvrghCLvwOm88/6G41GRtFoaD2xPZ56fatZSkANkDQSrq
-        CH+o9piYj/9uzUPpDXjsiZr9KCB5BLA4/WqYLE34gmXk6dc7dUohTQm8AA09axBw
-        RVflLa4fp3wvqe6a0PwrBvlV+u9aaOeHbzYRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WfPA57HcLG8AhkMdpKRl+IUOKpTeMAH0
-        SWzA8uU5bVvWUFAvNUmZ0PhUcTFAUJjRCV18E6274lhPpnDXcNXj16ZU6zygXdW/
-        2ZzDlaDLEGJRTeEmFPhHqupoBDPG1BqXlba8piJRs7iPvDeG34UV3mUIqAmz3NXO
-        cFxJu31ShK8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F11F41D5C;
-        Thu, 29 Sep 2016 14:05:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 417A741D5B;
-        Thu, 29 Sep 2016 14:05:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, peff@peff.net, torvalds@linux-foundation.org
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-        <20160928233047.14313-1-gitster@pobox.com>
-        <20160928233047.14313-5-gitster@pobox.com>
-        <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org>
-Date:   Thu, 29 Sep 2016 11:05:34 -0700
-In-Reply-To: <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> (Johannes Sixt's
-        message of "Thu, 29 Sep 2016 07:58:49 +0200")
-Message-ID: <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S934571AbcI2SNg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 14:13:36 -0400
+Received: from mout.web.de ([212.227.15.4]:54644 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934368AbcI2SNe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 14:13:34 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0Mg7Vd-1bb17m2ZK1-00NO82; Thu, 29 Sep 2016 20:13:15
+ +0200
+Subject: Re: Two bugs in --pretty with %C(auto)
+To:     Anatoly Borodin <anatoly.borodin@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <nrje96$q7s$1@blaine.gmane.org>
+ <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <b032fcbc-045b-7822-f9d4-84930cbf6b41@web.de>
+Date:   Thu, 29 Sep 2016 20:13:05 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5AB7AC72-866F-11E6-8A63-C26412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:F0Q83rwQj/RXE/D4ykK1zD4pf0UINSwrVZSxQnnKYP2Fxe7rl81
+ 1DWU5g5rghPdScyYsze1OnXz352Tu1e9bnMj48Z3VQqA0nfyEVOuD6l170lIo0mpnTysZ2m
+ 9QQmMpFERP0BpJkJmcK2/otGGlHkPFTofoDlHnAglDPctNMgb5pGvB+ZYkkGICt5XqSxKXz
+ 3RVe3Ze4iJLKjGCvL25nw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RA5fOoCPZQg=:S5sEjl+wfhqjOogM43+KcL
+ Ra4L5d9X6pam/sQIunsVYEvXy6VUc8Cb6TWMcFb4SnqqHyc03+QqRPkTeY7fb1dKh/CvASC6z
+ AjK9CiEdP0Szo8YyypawueBUpZTOiGYLaagbEwT3yhV2ZRHhYBwg8Sg1TWS5ZYoUHjU3s21IY
+ RA0U9t3lx/j2cfM7DGNYCPDam/DosdeCH8wMK59PFxznbg1/DRAse+LBWJbgPLs0/bxx4dXGu
+ kmvoQxbghRI3v8GI6919fsnY/myVEDptlJE+Yna34I2DHy395821f+gxsublGLkj+8RXMD+0P
+ 04SQPkeK09+0ztoepCNtbE+7Rdu+3i9Aq+QNmNCHNg1OhUlYdmdr/UXsLS6WfdV+MGJ/FmfMy
+ ErjnlTbsRXqknSeFZTHrlrsfjymM0SQQLt+IAFFnRxd4BiKh7GSWg1xtjtytPvD53u4/bSZac
+ jVNdj/UBYwWzrKluoBHD9WAy96x4mVr4wf7GNIcmu6U2DFZ/Fep3tOsfw0JX09qzQmpYlWkRQ
+ ioal2fXAk1zzPPsQgzNRHbB9y4wqvh7S715g6tVlGh2ePtoq3OoOgBew7ezgdT8K2jeRl+YJ7
+ gkbxSxyM8RSYNXc6AtXYNiURaGGBV+kJNyEAX8UKs6Ov2y2R28FVzGr3NKvvNB6qVOJB0W+Yd
+ SR6GoKFxUWn0PBUBgDul+1QbP9T1hi1gOF8/bu3HSHSBJz23ocVvtaiUpTEWsVqvE2lzS/4lv
+ ULc706O350OX1iXrmnJxo6SMQF0WbzuxOQy6E9NWWtt7PHybGRN0Aph9lTAmUIpreN9VMplvT
+ VCqu59I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Am 17.09.2016 um 20:25 schrieb René Scharfe:
+> diff --git a/pretty.c b/pretty.c
+> index 9788bd8..493edb0 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1072,6 +1072,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+>  	case 'C':
+>  		if (starts_with(placeholder + 1, "(auto)")) {
+>  			c->auto_color = want_color(c->pretty_ctx->color);
+> +			if (c->auto_color)
+> +				strbuf_addstr(sb, GIT_COLOR_RESET);
+>  			return 7; /* consumed 7 bytes, "C(auto)" */
+>  		} else {
+>  			int ret = parse_color(sb, placeholder, c);
 
-> Am 29.09.2016 um 01:30 schrieb Junio C Hamano:
->> As Peff said, responding in a thread started by Linus's suggestion
->> to raise the default abbreviation to 12 hexdigits:
->
-> This is waayy too large for a new default. The vast majority of
-> repositories is smallish. For those, the long sequences of hex digits
-> are an uglification that is almost unbearable.
->
-> I know that kernel developers are important, but their importance has
-> long been outnumbered by the anonymous and silent masses of users.
->
-> Personally, I use 8 digits just because it is a "rounder" number than
-> 7, but in all of my repositories 7 would still work just as well.
+We could optimize this a bit (see below).  I can't think of a downside;
+someone adding a prefix would be responsible for adding a reset as well
+if needed, right?
 
-Yes, "git log --oneline" looks somewhat different and strange for
-me, too ;-)
+-- >8 --
+Subject: [PATCH] pretty: avoid adding reset for %C(auto) if output is empty
 
-I am sure I'll get used to it if I keep using it, but I suspect that
-I'd be irritated as I find myself typing 'q' more and more often to
-"less -S" that is automatically invoked when I do "git log --oneline
-master.." to see what commits are on my current topic branch.
+We emit an escape sequence for resetting color and attribute for
+%C(auto) to make sure automatic coloring is displayed as intended.
+Stop doing that if the output strbuf is empty, i.e. when %C(auto)
+appears at the start of the format string, because then there is no
+need for a reset and we save a few bytes in the output.
+
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+Reverts the change to t6006, so we'd need another test for this.
+Anatoly? :)
+
+ pretty.c                   | 2 +-
+ t/t6006-rev-list-format.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pretty.c b/pretty.c
+index 493edb0..25efbca 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1072,7 +1072,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	case 'C':
+ 		if (starts_with(placeholder + 1, "(auto)")) {
+ 			c->auto_color = want_color(c->pretty_ctx->color);
+-			if (c->auto_color)
++			if (c->auto_color && sb->len)
+ 				strbuf_addstr(sb, GIT_COLOR_RESET);
+ 			return 7; /* consumed 7 bytes, "C(auto)" */
+ 		} else {
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index f6020cd..a1dcdb8 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -225,7 +225,7 @@ test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
+ 
+ test_expect_success '%C(auto) respects --color' '
+ 	git log --color --format="%C(auto)%H" -1 >actual &&
+-	printf "\\033[m\\033[33m%s\\033[m\\n" $(git rev-parse HEAD) >expect &&
++	printf "\\033[33m%s\\033[m\\n" $(git rev-parse HEAD) >expect &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.10.0
+
