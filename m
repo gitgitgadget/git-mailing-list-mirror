@@ -6,136 +6,96 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ADB8207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 16:58:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78426207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 17:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934252AbcI2Q6J (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 12:58:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52582 "EHLO
+        id S933853AbcI2RFP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 13:05:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54303 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933901AbcI2Q6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 12:58:06 -0400
+        with ESMTP id S1751287AbcI2RFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 13:05:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 152ED410A1;
-        Thu, 29 Sep 2016 12:58:01 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2653C40693;
+        Thu, 29 Sep 2016 13:05:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=l8CuHIszCyzc
-        pQFyPGcEz+RLmMc=; b=IA3yXw/XKzMq8UOpA4uzCLKReSU52zlzsETKdq4la2gh
-        Q+ivrMvN776c/U9QKNZaN2+IHhDiiNRwgrYv/KQb+j4u8lP90jp0TArYh1J+pzCq
-        7TRsaGY88Jhszb8mmqUhnrTrmIv2lwp7uOhwv889nurrlpQKwVohi4pViaaUPHs=
+        :content-type; s=sasl; bh=LmFrFzlwENyUrejO3CWJYqZIeh8=; b=xo3azZ
+        F+24OvgunWoMZzE9IfJ8kOpYoh+L/ZhJ67WaV5wMmonc5U6G+gn1zxYzCEuqHXNK
+        txGtcR30st+AOopsNFazcHV/lQ53ih2uRm25t3tjoasIV3mPRCzinoFP/AXDhpug
+        1RAtIuaFoW8hxOLi/+BF1MN/JDBohrE6OlPhM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KUE50H
-        evqaQF4IY6RIzqSQmCBtXDUJTFY72Az1Cpom9E7OTR1IGIGFLZoeEShG5FZut0Hs
-        wHTzEFj0eoLLDlOHyH35/eOmkwRi/t2m1uicAv3lOf1dj6PlNNU794iuzxuNX97S
-        yRRxbL0p7ojIuDUxlQeoIuZ79L9SMY0gjm+yw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C20F1410A0;
-        Thu, 29 Sep 2016 12:58:00 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=vRxD4UmiEXqs8nSuDGFQ1Ty9tFdS/D2F
+        RosRCC34WqzWBNj6nkBREnRoJqWFyFhljj3ypBHBj9YLJ/fgUBulv2LYN1CIWTNT
+        QtYM5MHEngV5Gtxyr2v1iMSsORMD21hJ/sZjY0VMxTt+rP5Zeu1tuQicw15ndwEs
+        XM896oITVsk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1DF9140692;
+        Thu, 29 Sep 2016 13:05:12 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E95634109E;
-        Thu, 29 Sep 2016 12:57:59 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9007940691;
+        Thu, 29 Sep 2016 13:05:11 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
-        <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
-        <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
-        <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
-Date:   Thu, 29 Sep 2016 09:57:57 -0700
-In-Reply-To: <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Thu, 29 Sep 2016 13:57:47
- +0200")
-Message-ID: <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
+To:     Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 02/11] i18n: add--interactive: mark simple here documents for translation
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+        <1472646690-9699-3-git-send-email-vascomalmeida@sapo.pt>
+        <xmqqmvivy4i9.fsf@gitster.mtv.corp.google.com>
+        <1475159493.2435.7.camel@sapo.pt>
+Date:   Thu, 29 Sep 2016 10:05:09 -0700
+In-Reply-To: <1475159493.2435.7.camel@sapo.pt> (Vasco Almeida's message of
+        "Thu, 29 Sep 2016 14:31:33 +0000")
+Message-ID: <xmqqfuoihc1m.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E0A8820C-8665-11E6-9873-C26412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E1E4C90E-8666-11E6-8837-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
->> 1) Git exits
->> 2) The filter process receives EOF and prints "STOP" to the log
->> 3) t0021 checks the content of the log
->>
->> Sometimes 3 happened before 2 which makes the test fail.
->> (Example: https://travis-ci.org/git/git/jobs/162660563 )
->>
->> I added a this to wait until the filter process terminates:
->>
->> +wait_for_filter_termination () {
->> +	while ps | grep -v grep | grep -F "/t0021/rot13-filter.pl" >/dev/nul=
-l 2>&1
->> +	do
->> +		echo "Waiting for /t0021/rot13-filter.pl to finish..."
->> +		sleep 1
->> +	done
->> +}
->>
->> Does this look OK to you?
-> Do we need the ps at all ?
-> How about this:
+> On the other hand, would it make sense to translate these commands? If
+> so, we would mark for translation the commands name of @cmd in
+> main_loop().
 >
-> +wait_for_filter_termination () {
-> +	while ! grep "STOP"  LOGFILENAME >/dev/null
-> +	do
-> +		echo "Waiting for /t0021/rot13-filter.pl to finish..."
-> +		sleep 1
-> +	done
-> +}
+>  sub main_loop {
+> -       my @cmd = ([ 'status', \&status_cmd, ],
+> -                  [ 'update', \&update_cmd, ],
+> -                  [ 'revert', \&revert_cmd, ],
+> -                  [ 'add untracked', \&add_untracked_cmd, ],
+> -                  [ 'patch', \&patch_update_cmd, ],
+> -                  [ 'diff', \&diff_cmd, ],
+> -                  [ 'quit', \&quit_cmd, ],
+> -                  [ 'help', \&help_cmd, ],
+> +       my @cmd = ([ __('status'), \&status_cmd, ],
+> +                  [ __('update'), \&update_cmd, ],
+> +                  [ __('revert'), \&revert_cmd, ],
+> +                  [ __('add untracked'), \&add_untracked_cmd, ],
+> +                  [ __('patch'), \&patch_update_cmd, ],
+> +                  [ __('diff'), \&diff_cmd, ],
+> +                  [ __('quit'), \&quit_cmd, ],
+> +                  [ __('help'), \&help_cmd, ],
 
-Running "ps" and grepping for a command is not suitable for script
-to reliably tell things, so it is out of question.  Compared to
-that, your version looks slightly better, but what if the machinery
-that being tested, i.e. the part that drives the filter process, is
-buggy or becomes buggy and causes the filter process that writes
-"STOP" to die before it actually writes that string?
+I don't know offhand.  If the code to prompt and accept the command
+given by the user can take the translated word (or a prefix of it),
+theoretically I would say it could be made to work, but to me it is
+dubious the benefit outweighs its downsides.  It would make teaching
+Git and troubleshooting over the phone harder, I would guess.
 
-I have a feeling that the machinery being tested needs to be fixed
-so that the sequence is always be:
+ A: "Hi, I am in a 'git add -i' session."
+ B: "Give 's' at the prompt."
+ A: "My Git does not seem to take 's' as a valid command."
+ B: "What? I've never seen that problem."
+ ... back and forth wastes 10 minutes ...
+ A: "By the way, I am running Git in Portuguese."
 
-    0) Git spawns the filter process, as it needs some contents to
-       be filtered.
-
-    1) Git did everything it needed to do and decides that is time
-       to go.
-
-    2) Filter process receives EOF and prints "STOP" to the log.
-
-    3) Git waits until the filter process finishes.
-
-    4) t0021, after Git finishes, checks the log.
-
-Repeated sleep combined with grep is probably just sweeping the real
-problem under the rug.  Do we have enough information to do the
-above?
-
-An inspiration may be in the way we centrally clean all tempfiles
-and lockfiles before exiting.  We have a central registry of these
-files that need cleaning up and have a single atexit(3) handler to
-clean them up.  Perhaps we need a registry that filter processes
-spawned by the mechanism Lars introduces in this series, and have an
-atexit(3) handler that closes the pipe to them (which signals the
-filters that it is time for them to go) and wait(2) on them, or
-something?  I do not think we want any kill(2) to be involved in
-this clean-up procedure, but I do think we should wait(2) on what we
-spawn, as long as these processes are meant to be shut down when the
-main process of Git exits (this is different from things like
-credential-cache daemon where they are expected to persist and meant
-to serve multiple Git processes).
-
-
+;-)
