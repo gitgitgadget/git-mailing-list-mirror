@@ -2,101 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CCE6207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 14:55:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D5D8207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 15:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934093AbcI2Oz0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 10:55:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49930 "EHLO cloud.peff.net"
+        id S1754772AbcI2PYL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 11:24:11 -0400
+Received: from mout.web.de ([212.227.15.4]:58755 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932221AbcI2OzY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 10:55:24 -0400
-Received: (qmail 32021 invoked by uid 109); 29 Sep 2016 14:55:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 14:55:23 +0000
-Received: (qmail 1993 invoked by uid 111); 29 Sep 2016 14:55:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 10:55:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 10:55:20 -0400
-Date:   Thu, 29 Sep 2016 10:55:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Kyle J. McKay" <mackyle@gmail.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 10/10] get_short_sha1: list ambiguous objects on error
-Message-ID: <20160929145520.dgyj57df4tyqrl4y@sigill.intra.peff.net>
-References: <20160926115720.p2yb22lcq37gboon@sigill.intra.peff.net>
- <20160926120036.mqs435a36njeihq6@sigill.intra.peff.net>
- <CA+55aFyfvvqq1c=hZcuL-yPavp2tjzx8r3bFJnMY7DAE7YcB=Q@mail.gmail.com>
- <841D4FC2-9673-486A-8D94-8967188CCC60@gmail.com>
- <20160929132425.of7m5t4tsqcb6bbk@sigill.intra.peff.net>
- <2FECD796-7B92-41BB-A0AF-57650FF7E78D@gmail.com>
+        id S1754542AbcI2PYL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 11:24:11 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MGCm7-1bkMH943x1-00FCTY; Thu, 29 Sep 2016 17:23:53
+ +0200
+X-Mozilla-News-Host: news://news.gmane.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/3] add QSORT
+Message-ID: <67bddc37-4ee2-fef0-c852-e32645421e4c@web.de>
+Date:   Thu, 29 Sep 2016 17:23:43 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2FECD796-7B92-41BB-A0AF-57650FF7E78D@gmail.com>
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:rK6sRkbDLh/tjo+Wc5/aAhrzRKWI9NI94q5GkS1BHs8Y309mn3w
+ 6/ghiFnfqnbq+J8Sa5JQFc5v7tpcVTcA618BnVEU9of60h2tHk02oMKjaHb/HIKfl4GvBrb
+ NJq+qAoDm3KcV5NiYgQ3PknUy6PetSIN1G2NiLjHnIKQg6oNPkqXU28LHY7diLFQhXytYZ5
+ QMikB8y9+pqSJvqTnG5ZQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sG6eMGY+oK0=:dc68ca5/3Cw6kVmRK8o192
+ ujtfN4gYtE611lVdOWsnjQdMWbA5sHFH0XG/UMSzXLN6bm0xcC/I4DD8Znsv+vpC+1Gya+sL4
+ o19vDTACoLphTkTApunY4byJm97PnmGfvKsyiYJpBzytP/k99dJPp1ln8ZUGKqy/Hv+AERln5
+ qUjKki9ismfcnArKTvVOnQ3+TYYVOXLCfJjQvZgDkl6PcY/J+0MRMsydgLTV0NEX61ZhjoUna
+ 1xux8lzsUDKufm06IjeYBadv3tLQ6YadD2fPkzImOyxcgvZ77sqf3QKX3AAa4TC8H8VRZM8uf
+ YMDL96R+aljCCbsOolTUPrq8kYU/d9a10mphNGXobq9QaHurvw4NtkdwiYxgRzM4yG9mkzx58
+ jAoO2+uLvB8xm9ck3XH2a8lyweL3vEFb5+bj+dGNrPnJgnRvV+AJ7kwU7gc2VmJ+d68BzrGVy
+ fDaFyo3yyL8CeQUseBmJzmcEt9Lo1DoSAcR3h07C2JghC0ejT+NgXXYyCNf2EfbjySFK3odin
+ hM76ckZJ4Ja/2ukvthbAsIDI9q7O8jAWXltckM46rDGXSuby5WNY4CBvzGHVeVoYbTduTzOWk
+ TTMaRvKiGJCaC/QFncfE30kmlAVhEua/RsDvF1IcPI5E/9AHXEt23ntdHT/M49mTMapotcjTI
+ Tg5coVxqGh7diVG1D1zwjupsJNZSIfiVNXT81WI2kW12/lpvOddAV+LTD9fEgzWNCg100h1s1
+ QsnR6tPXhd/hVTBAvN1oRptqNRvUE6uI6+QP8yzYrQz3ZJINHGED1g0HlIggNH+1kOHBopdSc
+ BWRfeu6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 07:36:27AM -0700, Kyle J. McKay wrote:
+Add the macro QSORT, a convenient wrapper for qsort(3) that infers the
+size of the array elements and supports the convention of initializing
+empty arrays with a NULL pointer, which we use in some places.
 
-> On Sep 29, 2016, at 06:24, Jeff King wrote:
-> 
-> > > If you are doing "git show 235234" it should pick the tag (if it
-> > > peels to a
-> > > committish) because Git has already set a precedent of preferring
-> > > tags over
-> > > commits when it disambiguates ref names and otherwise pick the
-> > > commit.
-> > 
-> > I'm not convinced that picking the tag is actually helpful in this case;
-> > I agree with Linus that feeding something to "git show" almost always
-> > wants to choose the commit.
-> 
-> Since "git show" peels tags you end up seeing the commit it refers to
-> (assuming it's a committish tag).
+Calling qsort(3) directly with a NULL pointer is undefined -- even with
+an element count of zero -- and allows the compiler to optimize away any
+following NULL checks.  Using the macro avoids such surprises.
 
-Yes, but it's almost certainly _not_ the commit you meant. From your
-example:
+Add a semantic patch as well to demonstrate the macro's usage and to
+automate the transformation of trivial cases.
 
->    c512b03:
->       c512b035556eff4d commit Merge branch 'rc/maint-reflog-msg-for-forced
->       c512b0344196931a tag    (v0.99.9a) GIT 0.99.9a
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/qsort.cocci | 19 +++++++++++++++++++
+ git-compat-util.h              |  8 ++++++++
+ 2 files changed, 27 insertions(+)
+ create mode 100644 contrib/coccinelle/qsort.cocci
 
-If I'm looking for the commit c512b03, then it almost certainly isn't
-v0.99.9a. That tag's commit is e634aec. Or another way of thinking about
-it: you want to guess what the _writer_ of the note meant. Why would
-somebody write "c512b03" when they could have written "v0.99.9a"? And
-they certainly would not have written it if they meant "e634aec". :)
+diff --git a/contrib/coccinelle/qsort.cocci b/contrib/coccinelle/qsort.cocci
+new file mode 100644
+index 0000000..a094e7c
+--- /dev/null
++++ b/contrib/coccinelle/qsort.cocci
+@@ -0,0 +1,19 @@
++@@
++expression base, nmemb, compar;
++@@
++- qsort(base, nmemb, sizeof(*base), compar);
+++ QSORT(base, nmemb, compar);
++
++@@
++expression base, nmemb, compar;
++@@
++- qsort(base, nmemb, sizeof(base[0]), compar);
+++ QSORT(base, nmemb, compar);
++
++@@
++type T;
++T *base;
++expression nmemb, compar;
++@@
++- qsort(base, nmemb, sizeof(T), compar);
+++ QSORT(base, nmemb, compar);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8aab0c3..d7ed137 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -977,6 +977,14 @@ void git_qsort(void *base, size_t nmemb, size_t size,
+ #define qsort git_qsort
+ #endif
+ 
++#define QSORT(base, n, compar) sane_qsort((base), (n), sizeof(*(base)), compar)
++static void inline sane_qsort(void *base, size_t nmemb, size_t size,
++			      int(*compar)(const void *, const void *))
++{
++	if (nmemb > 1)
++		qsort(base, nmemb, size, compar);
++}
++
+ #ifndef REG_STARTEND
+ #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
+ #endif
+-- 
+2.10.0
 
-> > I also don't think tag ambiguity in short sha1s is all that interesting.
-> 
-> The Linux repository has this:
-> 
->    901069c:
->       901069c71415a76d commit iwlagn: change Copyright to 2011
->       901069c5c5b15532 tag    (v2.6.38-rc4) Linux 2.6.38-rc4
-
-Sure, I'm not surprised there's a collision. But I'd expect those to be
-a tiny fraction of collisions. Here's the breakdown of object types in
-my clone of linux.git:
-
-  $ git cat-file --batch-all-objects --batch-check='%(objecttype)' |
-    sort | uniq -c
-  1421198 blob
-   618073 commit
-      479 tag
-  2877913 tree
-
-That's a hundredth of a percent tag objects.  The chance that you have
-_a_ 7-hex collision with a tag is relatively high. But the chance that
-any given collision involves a tag is rather small.
-
--Peff
