@@ -2,91 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271E4207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 21:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E131020987
+	for <e@80x24.org>; Thu, 29 Sep 2016 21:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934206AbcI2V12 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 17:27:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61984 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932267AbcI2V10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 17:27:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78CD442CF3;
-        Thu, 29 Sep 2016 17:27:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gUEEkETx7QxadCwUeFt1ZUQWPV8=; b=lNGFM6
-        PsZXALHtbpvef/GLwNIUdh01jxLk5r7woYUpI3kL+pimMoq+N/OhnoCP5hOBrg1X
-        z9sZ19jrL5j/bJ/fVm7o/wFbwx33D/iSN6p0CfK/yq9ibBNgV3g2BB5Buccp4qcz
-        +i9WRYn53FrpQfJJVSa1aspDVOKCq0XvjmqcA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P5Zg5fYdajzezOeMNh6C4TrDLqpTrYAl
-        2BZh+dQfcdmL6aEe+AlAzU9exocN3SAx7d9UdGuEFZnytLPXKXP82SAIp+BuxNso
-        /Ak7qQ1fPA104XJVLAAbQU7cRMA7ipsfparjIbwmY6jMQJHsX+qgu6A2iQTzepuK
-        jBwzl030+TQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70D5D42CF2;
-        Thu, 29 Sep 2016 17:27:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E1E0742CF1;
-        Thu, 29 Sep 2016 17:27:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
-        <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
-        <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
-        <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
-        <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
-        <1A8A9127-4DF9-44AD-9497-F8A630AB1193@gmail.com>
-Date:   Thu, 29 Sep 2016 14:27:22 -0700
-In-Reply-To: <1A8A9127-4DF9-44AD-9497-F8A630AB1193@gmail.com> (Lars
-        Schneider's message of "Thu, 29 Sep 2016 19:57:43 +0200")
-Message-ID: <xmqq60pee6rp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S934361AbcI2V1h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 17:27:37 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33603 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932267AbcI2V1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 17:27:36 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p138so683464wmb.0
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:27:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=IAbLx8hvgJ0L4jBtIacvEdsYd39cIEBBjutYTYvxRqY=;
+        b=LHBgIcp3BAcUzFvXlBGKlb88ujww8hkkJ0U9Vq1fIUZz1q83XxkZIVOjJITOjCzKSR
+         Uj/YYbAfKmBIMtuRzQez7u9TkYVcHQ6jCdA/XLqsmf3J4hx19b4LXGahsHgw9TGpFMTB
+         STJYrxnthCS60inQvJ0oEJ8SiJdp9U4nJcldd6KHOUZRFrVbqhEXcTCSDFvon9cJPWiR
+         EBrGLLN91IgHOPczxgl37cz29RHQKPpozpNXLcFRxGGW46HR/3NyPolbQP4zWTdIDZwV
+         d5a7UFcmjuF/Wj78qsV0UKpJJDdMTmDbjBdZ9AzIJy/4xlAG9H9ZlCXBx/AXzxqVDMYb
+         0JzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=IAbLx8hvgJ0L4jBtIacvEdsYd39cIEBBjutYTYvxRqY=;
+        b=UpWU4+Ar6vxMMMHIWN4sCF6caH0uZ8A0oipetw+ezxDtSfM2fPD5dZord7p7UFKMGq
+         yDvPsSX/vl67l0jvoXZdf21Q9GjqmvCIFdeOvI8qT06MezYZoIRmf+PeCXu4wdzubnwR
+         4q3deC4qjqpRuC1X7duT+Mthv9za5eK2oEaEZCA9tLRzEj/teuHNt+HFy6wzGacjpuy3
+         jeLr7p4zEtndtijIoDOLzwJ5Rc4W1dunT3nfZW/GsAZOGscBwmn2cpYyJyvxktNaRuoT
+         EYPwqgjtWNQVj1v7z80W9wBBYQlrOKzawziLYvnCe945M/YvsJkWE5u6fWdxpJsJNOXv
+         8BrA==
+X-Gm-Message-State: AA6/9RmMsDNgoUXn0VixBXjNwq6xuLUF+EKdKCjAsR0up5CfPWPRRq6PA2cpZsPIunJX5w==
+X-Received: by 10.194.222.101 with SMTP id ql5mr3238516wjc.184.1475184453454;
+        Thu, 29 Sep 2016 14:27:33 -0700 (PDT)
+Received: from [192.168.1.26] (eln216.neoplus.adsl.tpnet.pl. [83.21.207.216])
+        by smtp.googlemail.com with ESMTPSA id yt4sm16159325wjc.48.2016.09.29.14.27.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Sep 2016 14:27:32 -0700 (PDT)
+Subject: Re: [PATCH v2 02/11] i18n: add--interactive: mark simple here
+ documents for translation
+To:     Junio C Hamano <gitster@pobox.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+ <1472646690-9699-3-git-send-email-vascomalmeida@sapo.pt>
+ <xmqqmvivy4i9.fsf@gitster.mtv.corp.google.com>
+ <1475159493.2435.7.camel@sapo.pt>
+ <xmqqfuoihc1m.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <07371844-7fde-5b7f-b9e1-7db1a54fdbb5@gmail.com>
+Date:   Thu, 29 Sep 2016 23:27:24 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 83BAE744-868B-11E6-BC39-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqfuoihc1m.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+W dniu 29.09.2016 o 19:05, Junio C Hamano pisze:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+> 
+>> On the other hand, would it make sense to translate these commands? If
+>> so, we would mark for translation the commands name of @cmd in
+>> main_loop().
+>>
+>>  sub main_loop {
+>> -       my @cmd = ([ 'status', \&status_cmd, ],
+>> -                  [ 'update', \&update_cmd, ],
+>> -                  [ 'revert', \&revert_cmd, ],
+>> -                  [ 'add untracked', \&add_untracked_cmd, ],
+>> -                  [ 'patch', \&patch_update_cmd, ],
+>> -                  [ 'diff', \&diff_cmd, ],
+>> -                  [ 'quit', \&quit_cmd, ],
+>> -                  [ 'help', \&help_cmd, ],
+>> +       my @cmd = ([ __('status'), \&status_cmd, ],
+>> +                  [ __('update'), \&update_cmd, ],
+>> +                  [ __('revert'), \&revert_cmd, ],
+>> +                  [ __('add untracked'), \&add_untracked_cmd, ],
+>> +                  [ __('patch'), \&patch_update_cmd, ],
+>> +                  [ __('diff'), \&diff_cmd, ],
+>> +                  [ __('quit'), \&quit_cmd, ],
+>> +                  [ __('help'), \&help_cmd, ],
+> 
+> I don't know offhand.  If the code to prompt and accept the command
+> given by the user can take the translated word (or a prefix of it),
+> theoretically I would say it could be made to work, but to me it is
+> dubious the benefit outweighs its downsides.  It would make teaching
+> Git and troubleshooting over the phone harder, I would guess.
+> 
+>  A: "Hi, I am in a 'git add -i' session."
+>  B: "Give 's' at the prompt."
+>  A: "My Git does not seem to take 's' as a valid command."
+>  B: "What? I've never seen that problem."
+>  ... back and forth wastes 10 minutes ...
+>  A: "By the way, I am running Git in Portuguese."
 
-> We discussed that issue in v4 and v6:
-> http://public-inbox.org/git/20160803225313.pk3tfe5ovz4y3i7l@sigill.intra.peff.net/
-> http://public-inbox.org/git/xmqqbn0a3wy3.fsf@gitster.mtv.corp.google.com/
->
-> My impression was that you don't want Git to wait for the filter process.
-> If Git waits for the filter process - how long should Git wait?
+Also, for one-letter commands to work (there is setting where you
+don't even need to press enter, IIRC) all those translations would
+have to be chosen to begin with different letter, isn't it?
 
-I am not sure where you got that impression.  I did say that I do
-not want Git to _KILL_ my filter process.  That does not mean I want
-Git to go away without waiting for me.
-
-If the filter process refuses to die forever when Git told it to
-shutdown (by closing the pipe to it, for example), that filter
-process is simply buggy.  I think we want users to become aware of
-that, instead of Git leaving it behind, which essentially is to
-sweep the problem under the rug.
-
-I agree with what Peff said elsewhere in the thread; if a filter
-process wants to take time to clean things up while letting Git
-proceed, it can do its own process management, but I think it is
-sensible for Git to wait the filter process it directly spawned.
+Best,
+-- 
+Jakub Narębski
 
