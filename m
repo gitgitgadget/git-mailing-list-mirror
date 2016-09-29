@@ -3,101 +3,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAF5209B1
-	for <e@80x24.org>; Thu, 29 Sep 2016 06:34:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F148620987
+	for <e@80x24.org>; Thu, 29 Sep 2016 08:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754864AbcI2GeU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 02:34:20 -0400
-Received: from mout.web.de ([217.72.192.78]:60617 "EHLO mout.web.de"
+        id S1755316AbcI2IdY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 04:33:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49772 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754810AbcI2GeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 02:34:12 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0M413W-1azBRY0UYE-00rW3G; Thu, 29 Sep 2016 08:33:54
- +0200
-Subject: Re: [PATCH v7 10/10] convert: add filter.<driver>.process option
-To:     Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-References: <20160908182132.50788-1-larsxschneider@gmail.com>
- <20160908182132.50788-11-larsxschneider@gmail.com>
- <20160910062919.GB11001@tb-raspi>
- <10020380-76ED-4371-A0BA-59D07AF33CE0@gmail.com>
- <96554f6d-988d-e0b8-7936-8d0f29a7564f@web.de>
- <xmqqvaxzvjj0.fsf@gitster.mtv.corp.google.com>
- <5E675A29-628F-4076-A5D9-E359CCF04295@gmail.com>
- <xmqq37l1nd42.fsf@gitster.mtv.corp.google.com>
-Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Git Mailing List <git@vger.kernel.org>, peff@peff.net,
-        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
-        mlbright@gmail.com, jacob.keller@gmail.com
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <30461d2d-5a9c-4b0c-25a0-aa3327622764@web.de>
-Date:   Thu, 29 Sep 2016 08:33:46 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.3.0
+        id S1755200AbcI2IdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 04:33:20 -0400
+Received: (qmail 10081 invoked by uid 109); 29 Sep 2016 08:33:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 08:33:18 +0000
+Received: (qmail 32017 invoked by uid 111); 29 Sep 2016 08:33:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 04:33:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 04:33:15 -0400
+Date:   Thu, 29 Sep 2016 04:33:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Kyle J. McKay" <mackyle@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] git log --oneline alternative with dates, times and
+ initials
+Message-ID: <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net>
+References: <git-log-times@mackyle-at-gmail-com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq37l1nd42.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:a1lCuCW/I0mDc78MhMKxWoHvqwuoZm+B0uJ9ZcK3vwMiYOQRbsB
- gHXW4bI2lPfwQSVyyrVYoxevWJvRiHazKuH3l79eQp0l5WJ+qpEkxjO/0tooORK6bZUEEXl
- uKLtpq2KFonEZcn8VTdjCnsD0phibjFvaDCeN7YDuwpXeXxoDrFNa4urTit7f/Q64mjj1SF
- SDTj0X0gKbnZu4vNHS6Dg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ybQKDloTaG0=:nlrJySIOr8qTkNPxAHL/J4
- JC20xllLxKsNQZnhgJiLTwWXnDbF6egQAdDe1iFKCW7mNa51ODBwbZUcw2Awji7Bfl8Au3HCr
- 1sLxBVQE3bOF4kOXaj4IH/bogJkG32wX484QB92ARkKuGtSvH6Brh5SaTPluvDxyCUo5T1yIt
- /r4S4seUeNEx34AKGJMTtmnNjGYORK5WZyhc03uBGYS48apCgviqlDzBOzEiUtpb0ye7Pi6U5
- pLzyVZU2kBeOLQSs81GHEijp18Y/p4MhMyL2hEajdcWmMiLrFkzUL1vVINkqQJTRLriaMOmMT
- oK5N0047jJ6ArX+m756WscRE4CflJwNTi99mkGy47nYRi1Y7OSEbOfB5L0n2E2O1ExBN97vFe
- gxnUNcBpd0HUAn5oi6waZHKHiw+WxoTGJbkdID/wjddQWZP6wZtRBozC49kLRExcyMRHnylr0
- r05OSBIz/QFagbONjj60gCmvUJtVOjRZOIldzAkdkdvj3tNLhyHiGIefHqGudZW4UwE+gD54w
- wzY5qSMwPFzsr1SyG2XIqs7keKscAPv0pcglWF33cYgSVs3oPrMYY6GiUqt5XbLbljN1TVVEg
- zUyZE6o3RuHqmEKlPKFxfR2Hedi91IKrPxwmvKrKZYs54v9PoJiYB1sLGpeu/0BKPN6p3F2Rq
- ZrGXqykNb8XYME9SpzAEjsn+EGPPNQTsS+6NXvtf9iytScdgMnaIcW2yKLTQ2sT20e44wTohL
- mbVRfp16Vx3HYV9alisYmPgyeD6EY7ghnYMBfCCQyGXSD9szGYU7JaiZ2mPOOLWYeo54AjHVe
- 3PDTBvr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <git-log-times@mackyle-at-gmail-com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15.09.16 22:04, Junio C Hamano wrote:
-> Lars Schneider <larsxschneider@gmail.com> writes:
+On Wed, Sep 28, 2016 at 10:34:51PM -0700, Kyle J. McKay wrote:
+
+> git log-times --graph --date-order --decorate --no-merges -n 5 v2.5.3
 > 
->> Wouldn't that complicate the pathname parsing on the filter side?
->> Can't we just define in our filter protocol documentation that our 
->> "pathname" packet _always_ has a trailing "\n"? That would mean the 
->> receiver would know a packet "pathname=ABC\n\n" encodes the path
->> "ABC\n" [1].
-> 
-> That's fine, too.  If you declare that pathname over the protocol is
-> a binary thing, you can also define that the packet does not have
-> the terminating \n, i.e. the example encodes the path "ABC\n\n",
-> which is also OK ;-)
-> 
-> As long as the rule is clearly documented, easy for filter
-> implementors to follow it, and hard for them to get it wrong, I'd be
-> perfectly happy.
->
+>     === 2015-09-17 ===
+>   * ee6ad5f4 12:16 jch (tag: v2.5.3) Git 2.5.3
+>     === 2015-09-09 ===
+>   * b9d66899 14:22 js  am --skip/--abort: merge HEAD/ORIG_HEAD tree into index
+>   |   === 2015-09-04 ===
+>   | * 27ea6f85 10:46 jch (tag: v2.5.2) Git 2.5.2
+>   * 74b67638 10:36 jch (tag: v2.4.9) Git 2.4.9
+>                        ..........
+>   * ecad27cf 10:32 jch (tag: v2.3.9) Git 2.3.9
 
-(Sorry for the late reply)
+I was surprised to see this as a separate script, but it is true that we
+cannot quite pull it off with --format. I think we are very close,
+though.  With the patches below I think you can do:
 
-In V8 the additional "\n" is clearly documented.
+  git log \
+    --commit-header='%C(auto,bold blue)== %as ==%C(auto,reset)'
+    --format='%C(auto)%h %C(auto,green)%ad %C(auto,red)%aS/%cS%C(auto)%d%C(auto,reset) %s' \
+    --graph --no-merges --author-date-order --date=format:%H:%M
 
-On the long run,
-I would suggest to be more clear what BINARY is:
+and get the same (or very similar) output.
 
---- a/Documentation/technical/protocol-common.txt
-+++ b/Documentation/technical/protocol-common.txt
-@@ -61,6 +61,9 @@ the length's hexadecimal representation.
- A pkt-line MAY contain binary data, so implementors MUST ensure
- pkt-line parsing/formatting routines are 8-bit clean.
- 
-+Each pkt-line that may contain ASCII control characters should
-+be treated as binary.
-+
+  [1/5]: pretty: allow formatting DATE_SHORT
+  [2/5]: pretty: allow formatting names as initials
+  [3/5]: graph: fix extra spaces in graph_padding_line
+  [4/5]: graph: helper functions for printing commit header
+  [5/5]: log: add --commit-header option
 
+Each of those commits[1] needs some minor polish, and as I'm not really
+that interested in fancy log output myself, I don't plan on working on
+them further. I was mostly curious just how close we were. But if you'd
+like to pursue it, feel free to use them as a starting point.
+
+-Peff
+
+[1] Actually, I think patch 3 is a legitimate bug fix on its own but I
+    do not think there is any way to actually trigger it in practice
+    without the rest of this series.
