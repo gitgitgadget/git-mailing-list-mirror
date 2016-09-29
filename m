@@ -6,119 +6,145 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0435C207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 21:56:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE133207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 22:36:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934401AbcI2V4j (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 17:56:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64153 "EHLO
+        id S934997AbcI2Wga (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 18:36:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64302 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933081AbcI2V4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 17:56:38 -0400
+        with ESMTP id S934868AbcI2Wg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 18:36:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C846F430C0;
-        Thu, 29 Sep 2016 17:56:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6854443638;
+        Thu, 29 Sep 2016 18:36:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mHFfIgj0PWHAldTOZG4gCLRF7wk=; b=w8Y6PH
-        8ynl5SS+9j7fi/n+9HGrPKjMQ2s3WC/RaG06Zces5IgcGx3BqJ5xBxyirhIk4NZ7
-        IQDcQZ5Si7U4AoduqwNk+LwlNF8bZVZSQl48IKWt8Bu7JS/OWVT8gU71O6RKDtP4
-        9jSCclkCvIoPtfWNEnPmQcWsvC0ckFDIB51mE=
+        :content-type:content-transfer-encoding; s=sasl; bh=WbNt/pDHu8MN
+        fASuqZubYgN4owo=; b=neihnCONopRW7sO/3wEYU5VTEoz4a1FFiJaJnIH8Ejeq
+        jJl+eICEC7tdiuG4HTbPvkbqtzXB7/igPdg2+12xw0o3LP/dVmTY5pvnVYBdRPqu
+        38KAl6lUk71nN2Fet+lO6MIDXZa4FaHm21pu2NgUP21tlq74ML7rthgWEkKiid8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=M6fnym8Vy05tJWjUv9RVmMYSJZnmDQYp
-        Cn0tLgRaJwtScPuNLrQy2EuuwJsVb1Qb9OyMtkBQHm4Qp1SRaZrRn6xBj28axCeJ
-        qpFuanvmeN1SuTCX0HIintDAbpyl6mZXkuKfJFBXJuBux0jHxZAVHZnaDwpSqO9Q
-        Hx9ymFwNEuY=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PIukZT
+        LZxSB7zk7TR5I/7ZFujxSJ9frvyEvT2fwZViL9OAuvxtTZiCvbNdrnvATJzJ3NQd
+        Bhs0IJww1I1GcnYBs6L0UbLlAT4qfIGQUBLelStMH8OAD8XSzTHSDgAY0ouWertz
+        WPU7doG4lL5PP1l/kSswWHbFcaJBSAcuy7pbY=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF162430BF;
-        Thu, 29 Sep 2016 17:56:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FA6343636;
+        Thu, 29 Sep 2016 18:36:27 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3D9AC430BD;
-        Thu, 29 Sep 2016 17:56:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4E2543635;
+        Thu, 29 Sep 2016 18:36:26 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] place cherry pick line below commit title
-References: <cover.1475176070.git.jonathantanmy@google.com>
-Date:   Thu, 29 Sep 2016 14:56:34 -0700
-In-Reply-To: <cover.1475176070.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 29 Sep 2016 12:21:36 -0700")
-Message-ID: <xmqqtwcycqul.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] add QSORT
+References: <67bddc37-4ee2-fef0-c852-e32645421e4c@web.de>
+Date:   Thu, 29 Sep 2016 15:36:24 -0700
+In-Reply-To: <67bddc37-4ee2-fef0-c852-e32645421e4c@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 29 Sep 2016 17:23:43 +0200")
+Message-ID: <xmqqponmcp07.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9790CFB4-868F-11E6-B505-C26412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 287CD9AA-8695-11E6-BBB9-C26412518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> This is somewhat of a follow-up to my previous e-mail with subject
-> "[PATCH] sequencer: support folding in rfc2822 footer" [1], in which I
-> proposed relaxing the definition of a commit message footer to allow
-> multiple-line field bodies (as described in RFC2822), but its strictness
-> was deemed deliberate.
-
-It does not necessarily mean we can never change it when we did
-something deliberately, though.  With a good enough justification,
-and with a transitition plan if the backward incompatibility is
-severe enough to warrant one, we can change things.
-
-I vaguely recall that there were some discussion on the definition
-of "what's a trailer line" with folks from the kernel land, perhaps
-while discussing the interpret-trailers topic.  IIRC, when somebody
-passes an improved version along, the resulting message's trailer
-block may look like this:
-
-    Signed-off-by: Original Author <original@author.xz>
-    [fixed typo in the variable names]
-    Signed-off-by: Somebhody Else <somebody@else.xz>
-
-and an obvious "wish" of theirs was to treat not just RFC2822-like
-"a line that begins with token followed by a colon" but also these
-short comments as part of the trailer block.  Your original wish in
-[*1*] is to also treat "a line that begin with a whitespace that
-follows a line that begins with token followed by a colon" as part
-of the trailer block and I personally think that is a reasonable
-thing to wish for, too.
-
-I recall that I was somewhat surprised and dissapointed to see no
-change to interpret-trailers when you tried [*1*], which was really
-about improving the definition of what the trailer block is, by the
-way.
-
-In any case, if we want to improve what the trailer block is, we
-would certainly need to make sure what is inserted by "cherry-pick -x"
-is also considered as part of the trailer block, so it may be necessary
-to change it to "Cherry-picked-from: ..." while doing so.  I dunno.
-
-> Below is a patch set that allows placing the "cherry picked from" line
-> without taking into account the definition of a commit message footer.
-> For example, "git cherry-pick -x" (with the appropriate configuration
-> variable or argument) would, to this commit message:
+> Add the macro QSORT, a convenient wrapper for qsort(3) that infers the
+> size of the array elements and supports the convention of initializing
+> empty arrays with a NULL pointer, which we use in some places.
 >
->   commit title
+> Calling qsort(3) directly with a NULL pointer is undefined -- even with
+> an element count of zero -- and allows the compiler to optimize away an=
+y
+> following NULL checks.  Using the macro avoids such surprises.
 >
->   This is an explanatory paragraph.
+> Add a semantic patch as well to demonstrate the macro's usage and to
+> automate the transformation of trivial cases.
 >
->   Footer: foo
->
-> place the "(cherry picked from ...)" line below "commit title".
->
-> Would this be better?
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  contrib/coccinelle/qsort.cocci | 19 +++++++++++++++++++
+>  git-compat-util.h              |  8 ++++++++
+>  2 files changed, 27 insertions(+)
+>  create mode 100644 contrib/coccinelle/qsort.cocci
 
-It is not immediately obvious what such a change buys us.  Wouldn't
-the current code place that line below "Footer: foo"?  I cannot
-think of any reason why anybody would want to place "cherry-picked
-from" immediately below the title and before the first line of the
-body.
+The direct calls to qsort(3) that this series leaves behind are
+interesting.
 
+1. builtin/index-pack.c has this:
 
-[Footnotes]
+	if (1 < opts->anomaly_nr)
+		qsort(opts->anomaly, opts->anomaly_nr, sizeof(uint32_t), cmp_uint32);
 
-*1* http://public-inbox.org/git/1472846322-5592-1-git-send-email-jonathantanmy@google.com/
+where opts->anomaly is coming from pack.h:
+
+    struct pack_idx_option {
+            unsigned flags;
+            ...
+            int anomaly_alloc, anomaly_nr;
+            uint32_t *anomaly;
+    };
+
+I cannot quite see how the automated conversion misses it?  It's not
+like base and nmemb are type-restricted in the rule (they are both
+just "expression"s).
+
+2. builtin/shortlog.c has this:
+
+	qsort(log->list.items, log->list.nr, sizeof(struct string_list_item),
+	      log->summary ? compare_by_counter : compare_by_list);
+
+where log->list is coming from shortlog.h:
+
+    struct shortlog {
+            struct string_list list;
+    };
+
+and string-list.h says:
+
+    struct string_list {
+            struct string_list_item *items;
+            unsigned int nr, alloc;
+            ...
+    };
+
+which seems to be a good candidate for this rule:
+
+    type T;
+    T *base;
+    expression nmemb, compar;
+    @@
+    - qsort(base, nmemb, sizeof(T), compar);
+    + QSORT(base, nmemb, compar);
+
+if we take "T =3D=3D struct string_list_item".
+
+3. builtin/show-branch.c does this:
+
+    qsort(ref_name + bottom, top - bottom, sizeof(ref_name[0]),
+          compare_ref_name);
+
+where ref_name[] is a file-scope global:
+
+    static char *ref_name[MAX_REVS + 1];
+
+and top and bottom are plain integers.  The sizeof() does not take
+the size of *base, so it is understandable that this does not get
+automatically converted.
+
+It seems that some calls to this function _could_ send the same top
+and bottom, asking for 0 element array to be sorted, by the way.
+
+Thanks for an amusing read.
+
