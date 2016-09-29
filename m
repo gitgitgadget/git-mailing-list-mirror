@@ -6,141 +6,128 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39A1020986
-	for <e@80x24.org>; Thu, 29 Sep 2016 08:39:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33DFC20986
+	for <e@80x24.org>; Thu, 29 Sep 2016 09:01:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755664AbcI2IjB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 04:39:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49800 "EHLO cloud.peff.net"
+        id S933015AbcI2JBX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 05:01:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49805 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755381AbcI2Iiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 04:38:54 -0400
-Received: (qmail 10580 invoked by uid 109); 29 Sep 2016 08:38:53 -0000
+        id S932929AbcI2JBM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 05:01:12 -0400
+Received: (qmail 11903 invoked by uid 109); 29 Sep 2016 09:01:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 08:38:53 +0000
-Received: (qmail 32165 invoked by uid 111); 29 Sep 2016 08:39:09 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 09:01:11 +0000
+Received: (qmail 32284 invoked by uid 111); 29 Sep 2016 09:01:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 04:39:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 04:38:51 -0400
-Date:   Thu, 29 Sep 2016 04:38:51 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 05:01:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 05:01:09 -0400
+Date:   Thu, 29 Sep 2016 05:01:09 -0400
 From:   Jeff King <peff@peff.net>
-To:     "Kyle J. McKay" <mackyle@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] log: add --commit-header option
-Message-ID: <20160929083851.kx6itvrh4n2rttrx@sigill.intra.peff.net>
-References: <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, torvalds@linux-foundation.org
+Subject: Re: [PATCH 2/4] t13xx: do not assume system config is empty
+Message-ID: <20160929090108.hf2jzfcvbcsfaxw7@sigill.intra.peff.net>
+References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
+ <20160928233047.14313-1-gitster@pobox.com>
+ <20160928233047.14313-3-gitster@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net>
+In-Reply-To: <20160928233047.14313-3-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This lets you stick a header right before a commit, but
-suppresses headers that are duplicates. This means you can
-do something like:
+On Wed, Sep 28, 2016 at 04:30:45PM -0700, Junio C Hamano wrote:
 
-  git log --graph --author-date-order --commit-header='== %as =='
+> The tests for show-origin codepath in "git config" however cannot be
+> tweaked with "--local" etc., because they wants to read also from
+> $HOME/.gitconfig and make sure what comes from where.  Disable
+> reading from the system-wide config with GIT_CONFIG_NOSYSTEM=1 for
+> these tests.
 
-to get a marker in the graph whenever the day changes.
+I think anytime you would use GIT_CONFIG_NOSYSTEM over --local, it is an
+indication that the test is trying to check how multiple sources
+interact. And the right thing to do for them is to set GIT_ETC_GITCONFIG
+to some known quantity. We just couldn't do that before, so we skipped
+it.
 
-This probably needs some refactoring around the setup of the
-pretty-print context.
+IOW, something like the patch below (on top of yours). Note that the
+commands that are doing a "--get" and not a "--list" don't actually seem
+to need either (because they are getting the values out of the local
+file anyway), so we could drop the setting of GIT_ETC_GITCONFIG from
+them entirely.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- log-tree.c | 31 +++++++++++++++++++++++++++++++
- revision.c |  4 ++++
- revision.h |  3 +++
- 3 files changed, 38 insertions(+)
-
-diff --git a/log-tree.c b/log-tree.c
-index 8c24157..76cef51 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -536,6 +536,28 @@ static void show_mergetag(struct rev_info *opt, struct commit *commit)
- 	for_each_mergetag(show_one_mergetag, commit, opt);
- }
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index b998568..d2476a8 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1234,6 +1234,11 @@ test_expect_success 'set up --show-origin tests' '
+ 		[user]
+ 			relative = include
+ 	EOF
++	cat >"$HOME"/etc-gitconfig <<-\EOF &&
++		[user]
++			system = true
++			override = system
++	EOF
+ 	cat >"$HOME"/.gitconfig <<-EOF &&
+ 		[user]
+ 			global = true
+@@ -1252,6 +1257,8 @@ test_expect_success 'set up --show-origin tests' '
  
-+static void show_commit_header(struct rev_info *opt,
-+			       struct pretty_print_context *pp,
-+			       struct commit *commit)
-+{
-+	struct strbuf out = STRBUF_INIT;
-+
-+	format_commit_message(commit, opt->commit_header, &out, pp);
-+	strbuf_complete_line(&out);
-+
-+	if (!strbuf_cmp(&out, &opt->last_commit_header)) {
-+		strbuf_release(&out);
-+		return;
-+	}
-+
-+	graph_show_precommit(opt->graph);
-+	graph_show_padding(opt->graph);
-+	fwrite(out.buf, 1, out.len, opt->diffopt.file);
-+
-+	strbuf_swap(&out, &opt->last_commit_header);
-+	strbuf_release(&out);
-+}
-+
- void show_log(struct rev_info *opt)
- {
- 	struct strbuf msgbuf = STRBUF_INIT;
-@@ -591,6 +613,15 @@ void show_log(struct rev_info *opt)
- 	}
- 	opt->shown_one = 1;
+ test_expect_success '--show-origin with --list' '
+ 	cat >expect <<-EOF &&
++		file:$HOME/etc-gitconfig	user.system=true
++		file:$HOME/etc-gitconfig	user.override=system
+ 		file:$HOME/.gitconfig	user.global=true
+ 		file:$HOME/.gitconfig	user.override=global
+ 		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
+@@ -1262,14 +1269,16 @@ test_expect_success '--show-origin with --list' '
+ 		file:.git/../include/relative.include	user.relative=include
+ 		command line:	user.cmdline=true
+ 	EOF
+-	GIT_CONFIG_NOSYSTEM=1 \
++	GIT_ETC_GITCONFIG=$HOME/etc-gitconfig \
+ 	git -c user.cmdline=true config --list --show-origin >output &&
+ 	test_cmp expect output
+ '
  
-+	if (opt->commit_header) {
-+		/*
-+		 * XXX probably the initialization of the pretty ctx from "opt"
-+		 * below should happen sooner so we can use it.
-+		 */
-+		ctx.color = opt->diffopt.use_color;
-+		show_commit_header(opt, &ctx, commit);
-+	}
-+
- 	/*
- 	 * If the history graph was requested,
- 	 * print the graph, up to this commit's line
-diff --git a/revision.c b/revision.c
-index 969b3d1..229ff86 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1361,6 +1361,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 	}
- 
- 	revs->notes_opt.use_default_notes = -1;
-+
-+	strbuf_init(&revs->last_commit_header, 0);
- }
- 
- static void add_pending_commit_list(struct rev_info *revs,
-@@ -1844,6 +1846,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->verbose_header = 1;
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+9, revs);
-+	} else if (skip_prefix(arg, "--commit-header=", &arg)) {
-+		revs->commit_header = arg;
- 	} else if (!strcmp(arg, "--expand-tabs")) {
- 		revs->expand_tabs_in_log = 8;
- 	} else if (!strcmp(arg, "--no-expand-tabs")) {
-diff --git a/revision.h b/revision.h
-index 9fac1a6..39ec092 100644
---- a/revision.h
-+++ b/revision.h
-@@ -170,6 +170,9 @@ struct rev_info {
- 	int		show_log_size;
- 	struct string_list *mailmap;
- 
-+	const char *commit_header;
-+	struct strbuf last_commit_header;
-+
- 	/* Filter by commit log message */
- 	struct grep_opt	grep_filter;
- 	/* Negate the match of grep_filter */
--- 
-2.10.0.566.g5365f87
+ test_expect_success '--show-origin with --list --null' '
+ 	cat >expect <<-EOF &&
+-		file:$HOME/.gitconfigQuser.global
++		file:$HOME/etc-gitconfigQuser.system
++		trueQfile:$HOME/etc-gitconfigQuser.override
++		systemQfile:$HOME/.gitconfigQuser.global
+ 		trueQfile:$HOME/.gitconfigQuser.override
+ 		globalQfile:$HOME/.gitconfigQinclude.path
+ 		$INCLUDE_DIR/absolute.includeQfile:$INCLUDE_DIR/absolute.includeQuser.absolute
+@@ -1280,7 +1289,7 @@ test_expect_success '--show-origin with --list --null' '
+ 		includeQcommand line:Quser.cmdline
+ 		trueQ
+ 	EOF
+-	GIT_CONFIG_NOSYSTEM=1 \
++	GIT_ETC_GITCONFIG=$HOME/etc-gitconfig \
+ 	git -c user.cmdline=true config --null --list --show-origin >output.raw &&
+ 	nul_to_q <output.raw >output &&
+ 	# The here-doc above adds a newline that the --null output would not
+@@ -1304,7 +1313,7 @@ test_expect_success '--show-origin with --get-regexp' '
+ 		file:$HOME/.gitconfig	user.global true
+ 		file:.git/config	user.local true
+ 	EOF
+-	GIT_CONFIG_NOSYSTEM=1 \
++	GIT_ETC_GITCONFIG=$HOME/etc-gitconfig \
+ 	git config --show-origin --get-regexp "user\.[g|l].*" >output &&
+ 	test_cmp expect output
+ '
+@@ -1313,7 +1322,7 @@ test_expect_success '--show-origin getting a single key' '
+ 	cat >expect <<-\EOF &&
+ 		file:.git/config	local
+ 	EOF
+-	GIT_CONFIG_NOSYSTEM=1 \
++	GIT_ETC_GITCONFIG=$HOME/etc-gitconfig \
+ 	git config --show-origin user.override >output &&
+ 	test_cmp expect output
+ '
