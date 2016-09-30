@@ -6,163 +6,129 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC294207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 19:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74A6A207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 19:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750970AbcI3TT4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 15:19:56 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53211 "EHLO
+        id S1751259AbcI3Te2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 15:34:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64287 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750703AbcI3TTz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 15:19:55 -0400
+        with ESMTP id S1751201AbcI3Te0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 15:34:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 031623E6DF;
-        Fri, 30 Sep 2016 15:19:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E0F3B42419;
+        Fri, 30 Sep 2016 15:34:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DhAiQmLdJdmusaykO0br0rmYv2c=; b=JFG974
-        4P+KLg3tQmVKTAsUvCJ/PAWzQPpDWZodYyh0SYPw0L7xKHLXnovT2YQgoYa2cgHw
-        Uu1IiNIgE8Nw+Aj3gSi84T7xrnyduzJeSGu/drXR+HSpA7zXVAkL+/TUXLLTevyZ
-        9X2oouL/biY8AxKdh28yTmYojYChDDrqNmuiw=
+        :content-type; s=sasl; bh=2RLvjJX+EIdWjwzPJ2pA+oI7360=; b=fT0uBl
+        256b4+O7o7mmuUgCQIEMdDgLrz2/N9GXmz86LSHnxldM14GfqSxw8EQcwhbBtcNX
+        neUeYZ9pmbfMJlP5GoEHgtuskFVtBqFuXEyKAauR3lpTEE4bP0PY/e148kqDn2uy
+        p4mwcYLpBvR/0WIKiqQoMTrA1R9WaRqaBC11k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dOS2X1RRnBeYCztZTegCcfqPFRfEDe8Z
-        Ufm1wkGb70LKAkbhj69pLw590XloitaJHt4ykBX54m+sLw4pJx+xr1WT55ry/kxs
-        PDozizUBp5ybSm2rpWrfPs3oopnyNTwWa50SaLzAVobPFZhmEF++Djkwce5f9jll
-        B3V/pkDc/Nk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EEFED3E6DE;
-        Fri, 30 Sep 2016 15:19:53 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ggEZsfi58oPGPBmcGtZ3mDixqWWqMQUR
+        GDj7QGU0MDBTBwTjDr6HyvAJxJIOSm3mAH+vgZlif80bGC7HgUGTmTNorrSvJNps
+        qGAr66oeA2pSoevcBOjATUSCjaoKIXNrN12e9YqF4X6rn/i4Owlw87eCUL20Bh6j
+        6XFG/Wslux8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D8F3B42418;
+        Fri, 30 Sep 2016 15:34:24 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71B6F3E6DD;
-        Fri, 30 Sep 2016 15:19:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5A4B742417;
+        Fri, 30 Sep 2016 15:34:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] diff_unique_abbrev(): document its assumtion and limitation
-References: <xmqqvaxd9ssy.fsf@gitster.mtv.corp.google.com>
-        <20160930180957.xj4jqoslbtevhqpb@sigill.intra.peff.net>
-Date:   Fri, 30 Sep 2016 12:19:51 -0700
-In-Reply-To: <20160930180957.xj4jqoslbtevhqpb@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 30 Sep 2016 14:09:57 -0400")
-Message-ID: <xmqqd1jl9ovc.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 0/2] place cherry pick line below commit title
+References: <cover.1475176070.git.jonathantanmy@google.com>
+        <xmqqtwcycqul.fsf@gitster.mtv.corp.google.com>
+        <11e41a94-df8c-494a-584b-e2bc8da2de3a@google.com>
+Date:   Fri, 30 Sep 2016 12:34:22 -0700
+In-Reply-To: <11e41a94-df8c-494a-584b-e2bc8da2de3a@google.com> (Jonathan Tan's
+        message of "Fri, 30 Sep 2016 11:22:05 -0700")
+Message-ID: <xmqq8tu99o75.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DD7B6512-8742-11E6-AAD2-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: E4944498-8744-11E6-AFCA-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> ... Now that function _would_
-> want to be updated as a result of the other conversation (it would need
-> to do something sensible with "-1", like turning it into "7", or
-> whatever else is deemed reasonable outside of a repository).
+>> I vaguely recall that there were some discussion on the definition
+>> of "what's a trailer line" with folks from the kernel land, perhaps
+>> while discussing the interpret-trailers topic.  IIRC, when somebody
+>> passes an improved version along, the resulting message's trailer
+>> block may look like this:
+>>
+>>     Signed-off-by: Original Author <original@author.xz>
+>>     [fixed typo in the variable names]
+>>     Signed-off-by: Somebhody Else <somebody@else.xz>
+>>
+>> and an obvious "wish" of theirs was to treat not just RFC2822-like
+>> "a line that begins with token followed by a colon" but also these
+>> short comments as part of the trailer block.  Your original wish in
+>> [*1*] is to also treat "a line that begin with a whitespace that
+>> follows a line that begins with token followed by a colon" as part
+>> of the trailer block and I personally think that is a reasonable
+>> thing to wish for, too.
 >
-> Anyway. I just wonder if you want to give it a better name while you are
-> at it.
+> If we allowed arbitrary lines in the trailer block, this would solve
+> my original problem, yes.
 
-I'd say the patch to introduce the new function that makes the old
-name potentially confusing is a good one to do the rename.  Until
-then I do not think there is no need to rename the existing one ;-)
+OK.
 
-Related tangent about "like turning it into", I am thinking adding
-something like this as a preparatory step to Linus's auto-sizing
-serires.  That way, we do not have to spell "7"
+> Looking at that, it seems that sequencer.c started interpreting the
+> last paragraph of the commit message as a footer and adding an
+> exception for "cherry picked from" in commit b971e04 ("sequencer.c:
+> always separate "(cherry picked from" from commit body",
+> 2013-02-12). So the interpretations of sequencer.c and
+> interpret-trailers were already divergent, but I should have probably
+> at least discussed that.
 
-Having to spell FALLBACK_DEFAULT_ABBREV over and over again would be
-more irritating than having to spell "7" often, but I think it would
-be a sign of a deeper problem if it turns out we have to repeat this
-constant in many places, so an irritatingly long name may serve as a
-canary in the coalmine ;-)
+It is not too late to discuss it.  I still think it is a good longer
+term plan to try to unify the definition of what a trailer block is
+and the implementation of the code that determines the boundary
+between the log message proper and the trailer block and that allows
+us to manipulate the trailer block, that currently is scattered
+across multiple places into one.  Historically, "commit -s" had one
+(because it needed to decide if it needs to see if the last sign-off
+is already the one it is adding, and to decide if a blank line is
+needed before the sing-off being added), "am -s" had another, and
+"cherry-pick" probably had one, too.  "interpret-trailers" was, at
+least originally, envisioned as an effort to develop a unified
+machinery that can be called from these codepaths, and to aid the
+development and encourage its use, it also had its own end-user
+facing command.  Your interest in the "trailer" topic may be a good
+trigger for us to further that original vision.
 
--- >8 --
-Subject: abbrev: add FALLBACK_DEFAULT_ABBREV to prepare for auto sizing
+> As for a reason:
+>
+> 1) I do not have a specific reason for placing it in that exact
+> position, but I would like to be able to place the "cherry picked
+> from" line without affecting the last paragraph (specifically, without
+> making the "cherry picked from" line the only line in the last
+> paragraph).
+> ...
+> 1a) (Avoiding the footer might also be a good way of more clearly
+> defining what the footer is. For example, currently, "cherry picked
+> from" is treated as a special case in sequencer.c but not in
+> trailer.c, as far as I can tell. If we consistently avoided the
+> footer, we wouldn't need such a special case anywhere.)
 
-We'll be introducing a new way to decide the default abbreviation
-length by initialising DEFAULT_ABBREV to -1 to signal the first call
-to "find unique abbreviation" codepath to compute a reasonable value
-based on the number of objects we have to avoid collisions.
+That is one of the numerous shortcomings of the "interpret-trailers"
+that is still not finished, I would say.
 
-We have long relied on DEFAULT_ABBREV being a positive concrete
-value that is used as the abbreviation length when no extra
-configuration or command line option has overridden it.  Some
-codepaths wants to use such a positive concrete default value
-even before making their first request to actually trigger the
-computation for the auto sized default.
+> 2) The Linux kernel's repository has some "commit ... upstream." lines
+> in this position (below the commit title) - for example, in commit
+> dacc0987fd2e.
 
-Introduce FALLBACK_DEFAULT_ABBREV and use it to the code that
-attempts to align the report from "git fetch".  For now, this
-macro is also used to initialize the default_abbrev variable,
-but the auto-sizing code will use -1 and then use the value of
-FALLBACK_DEFAULT_ABBREV as the starting point of auto-sizing.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- builtin/fetch.c | 3 +++
- cache.h         | 3 +++
- environment.c   | 2 +-
- transport.h     | 3 +--
- 4 files changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e4639d8eb1..5d6994d8e7 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -16,6 +16,9 @@
- #include "connected.h"
- #include "argv-array.h"
- 
-+#define TRANSPORT_SUMMARY(x) \
-+	(int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
-+
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
- 	N_("git fetch [<options>] <group>"),
-diff --git a/cache.h b/cache.h
-index 4ff196c259..677554c59f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1133,6 +1133,9 @@ static inline unsigned int hexval(unsigned char c)
- #define MINIMUM_ABBREV minimum_abbrev
- #define DEFAULT_ABBREV default_abbrev
- 
-+/* used when the code does not know or care what the default abbrev is */
-+#define FALLBACK_DEFAULT_ABBREV 7
-+
- struct object_context {
- 	unsigned char tree[20];
- 	char path[PATH_MAX];
-diff --git a/environment.c b/environment.c
-index 96160a75a5..c8860f722d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -16,7 +16,7 @@ int trust_executable_bit = 1;
- int trust_ctime = 1;
- int check_stat = 1;
- int has_symlinks = 1;
--int minimum_abbrev = 4, default_abbrev = 7;
-+int minimum_abbrev = 4, default_abbrev = FALLBACK_DEFAULT_ABBREV;
- int ignore_case;
- int assume_unchanged;
- int prefer_symlink_refs;
-diff --git a/transport.h b/transport.h
-index c68140892c..ea25e42317 100644
---- a/transport.h
-+++ b/transport.h
-@@ -135,8 +135,7 @@ struct transport {
- #define TRANSPORT_PUSH_CERT_IF_ASKED 4096
- #define TRANSPORT_PUSH_ATOMIC 8192
- 
--#define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
--#define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
-+#define TRANSPORT_SUMMARY_WIDTH (2 * FALLBACK_DEFAULT_ABBREV + 3)
- 
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
+"A group of people seem to prefer it there" does not lead to
+"therefore let's move it there for everybody".  It does open a
+possibility that we may want to add a new option to put it there,
+but does not justify changing what existing "-x" option does.
