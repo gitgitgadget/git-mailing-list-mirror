@@ -2,81 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A5521F4F8
-	for <e@80x24.org>; Fri, 30 Sep 2016 10:57:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58245207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 16:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbcI3K5f (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 06:57:35 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:51924 "EHLO
-        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751099AbcI3K5e (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 30 Sep 2016 06:57:34 -0400
-Received: from x590e26a0.dyn.telefonica.de ([89.14.38.160] helo=localhost.localdomain)
-        by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-        iface 141.3.10.81 id 1bpvVP-0004KZ-RE; Fri, 30 Sep 2016 12:57:29 +0200
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-        Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] pretty: allow formatting DATE_SHORT
-Date:   Fri, 30 Sep 2016 12:56:39 +0200
-Message-Id: <20160930105639.15589-1-szeder@ira.uka.de>
-X-Mailer: git-send-email 2.10.0.516.gccda3a9
-In-Reply-To: <CA+P7+xoxTpqn=jkuHYp5pKCCWfKLP5OKCTBYkcTVw_RhEw0KVw@mail.gmail.com>
-References: <CA+P7+xoxTpqn=jkuHYp5pKCCWfKLP5OKCTBYkcTVw_RhEw0KVw@mail.gmail.com>
+        id S933777AbcI3QQc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 12:16:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54572 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933082AbcI3QQa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 12:16:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 453D6402AC;
+        Fri, 30 Sep 2016 12:16:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Bf9/ELZQzBU9vQ6X94Voz73YHGY=; b=NkF5EG
+        Q526WCPlkbtcx847jV9oRKja9fNXnP4TuhZYkEE7wpfn/p5JA/PVyMFBSEVDrEre
+        25P2YxcOAGnC6YrBLEHZ35TRfI7DL9wf5suLgXNhjAFoBwYWMUKhu2TJgNGhLEZR
+        mg8egLbGHYuXzN19FJRuWy6kuHSIgSNvo9OV4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vuHMvXgXaBa9tC+PHM9byf49JiT8BD4N
+        nlqnSnLa3HZBKJCNRhLodKhlwbn/8FcCqT4pQr4YAtODhTHBxg9bpGGKcQaC+4DZ
+        GhQKDfYNVAvZ5mRrV5HDGMELCUMSWemxCYjrRAtKqQkjW2/uRIZWzo7uOucQw8Z0
+        JBiRSeXJ3s0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E2EE402A9;
+        Fri, 30 Sep 2016 12:16:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B8C69402A7;
+        Fri, 30 Sep 2016 12:16:28 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+        Alex <agrambot@gmail.com>
+Subject: Re: [PATCH v2] gpg-interface: use more status letters
+References: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
+        <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
+        <xmqqshsjiyn4.fsf@gitster.mtv.corp.google.com>
+        <24ecc903-3e5a-47f6-f073-00a1c709d5e8@ramsayjones.plus.com>
+        <85fa6296-17f0-0e8c-ec1b-54cd48c45223@drmicha.warpmail.net>
+Date:   Fri, 30 Sep 2016 09:16:26 -0700
+In-Reply-To: <85fa6296-17f0-0e8c-ec1b-54cd48c45223@drmicha.warpmail.net>
+        (Michael J. Gruber's message of "Fri, 30 Sep 2016 11:41:11 +0200")
+Message-ID: <xmqq60pdbbxh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1475233049.
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3E3347B8-8729-11E6-8AC6-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Thu, Sep 29, 2016 at 1:33 AM, Jeff King <peff@peff.net> wrote:
-> > There's no way to do this short of "%ad" and --date=short,
-> > but that limits you to having a single date format in the
-> > output.
-> >
-> > This would possibly be better done with something more like
-> > "%ad(short)".
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> >  pretty.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/pretty.c b/pretty.c
-> > index 493edb0..c532c17 100644
-> > --- a/pretty.c
-> > +++ b/pretty.c
-> > @@ -727,6 +727,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
-> >         case 'I':       /* date, ISO 8601 strict */
-> >                 strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
-> >                 return placeholder_len;
-> > +       case 's':
-> > +               strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
-> > +               return placeholder_len;
-> >         }
-> >
-> >  skip:
-> > --
-> > 2.10.0.566.g5365f87
-> >
-> 
-> Nice. I use date=short in some of my aliases and switching to this is
-> nicer. I assume this turns into "%(as)"?
-> 
-> What about documenting this in  pretty-formats.txt?
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Here you go :)
+> Also, I'm open to using another letter for EXPKEYSIG but couldn't decide
+> between 'Y', 'Z', 'K'. 'K' could be confused with REVKEYSIG, I'm afraid.
+> 'Y' is next to 'X' and contained in 'KEY', it would be my first choice.
 
-  http://public-inbox.org/git/1444235305-8718-1-git-send-email-szeder@ira.uka.de/
-
+Sounds good enough to me.  Thanks.
