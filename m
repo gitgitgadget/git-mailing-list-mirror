@@ -2,224 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C792520986
-	for <e@80x24.org>; Fri, 30 Sep 2016 19:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DDB5207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 19:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751803AbcI3TjR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 15:39:17 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33627 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751083AbcI3TjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 15:39:14 -0400
-Received: by mail-wm0-f68.google.com with SMTP id p138so4811316wmb.0
-        for <git@vger.kernel.org>; Fri, 30 Sep 2016 12:38:34 -0700 (PDT)
+        id S933477AbcI3TmL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 15:42:11 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:36330 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933418AbcI3TmK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 15:42:10 -0400
+Received: by mail-qk0-f194.google.com with SMTP id m184so6935860qkb.3
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 12:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Loync6T+zC904EjVwHcX3D+BQaCRqL963LJEhB4vzSQ=;
-        b=xQpssky7+rKcHi/nAt1VTH7ZkViP7ZQijNrn5y1PNVhH1jZQXv5WjCDQXzRShrGfuz
-         g2CABEq6ToRFvxfjwfKE+M302vJIQO0k2VRcP1QAsn5jqxoZKjlqwJTcwTruyIXIKFtH
-         5kqLWDjqqF60C8c4KYMBvnYnllSQqjGBa4eDlWfaVRQKUsjSx3yz0m3eGYouv7CQlQdG
-         7NXZeKdscqqtX4A1sX7oRQK0Rk+2Yb/LQ9CbjSCA6XC/caHlUDmD4J/nCDaPTUKIfUgf
-         jKXxuX3bT8YwBCqh6ljPcylBFUsjWMyNAHrtNhNB0T+U9IS7Xns68aEmpuvtkncaXvHq
-         paOg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4Do7oUWK8SrV5+7lu/x02Z3m4g5eeVyzPmkhGd67cCk=;
+        b=aasC54l1lp4+Lq8udFJuS78suW9YvrixwoiOmFSpSu59ds6Cg/pPSNnakvmQTKbZg5
+         0TZK+uZtLXWd4iujcUI+Tkx8K55nB0u1NGMMdRIK+9I0ak4a1fqX3sU5W6XPkHWY5dfG
+         gjsU/leQM1/KuXt8z/29pzu6az0VIefT7s0CHnK31eDXqN05GK0N22Olhp8rEMLwtHOF
+         gz/DyJXUShatphOI9++HGdxv10tt6Z2zkhhd7SSDYmuYr0pdMfEaZdadOcw/qnbamm8e
+         Uuv3hrK8KyrMxjJMshFjeV+gKKNEmZ0QZtiATDMk3WGL9vNwRrkslsZFpK1RZKCvQD2/
+         pTug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Loync6T+zC904EjVwHcX3D+BQaCRqL963LJEhB4vzSQ=;
-        b=MMWwl48BzyX/KWM1R/oQx7UQmi0OHG80AGw2ModaB+2TFkjUum98ddLhXtF4brg+07
-         TRFOWig7OMUb3ffuFF4uu+hkvuFZzWldAxNnn+TB+ucd7v0uaSsUKnQaTC9k79kRoe1q
-         MBff8wXrkRAi1yMilfOcNta/v1q9pzgS5BL+ODS0r4X8W0jefY2UzaNZmr+5c98P1UVM
-         qw8KLuwZ1bfg7YWfBwklqAwwql0R7vlGpaD+Z3u5Q0ZxEvq0XRhmQBEktzTvyB4KvKoJ
-         JGQilMdwehk77eTNY4fAXEKnraN5osiaBz6bJNXkihsef9X6hFTHHIUXqMPCGK08IhOP
-         pdnw==
-X-Gm-Message-State: AA6/9RkcJ7L/r1lDmaj3Wd/b19XGqWmgkMpUYH/YOIJ+jxGYzBV3WA4SxLiTkGPxR1TyLA==
-X-Received: by 10.194.190.37 with SMTP id gn5mr8293727wjc.168.1475264313457;
-        Fri, 30 Sep 2016 12:38:33 -0700 (PDT)
-Received: from remjtf6f32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id y2sm21137920wji.42.2016.09.30.12.38.31
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 30 Sep 2016 12:38:32 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v8 11/11] convert: add filter.<driver>.process option
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <2a604438-b6cd-876d-0ec2-90027dea99b9@gmail.com>
-Date:   Fri, 30 Sep 2016 21:38:31 +0200
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <EF3723DE-B34A-4314-94C9-E3EB38EAB92A@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <20160920190247.82189-12-larsxschneider@gmail.com> <2a604438-b6cd-876d-0ec2-90027dea99b9@gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4Do7oUWK8SrV5+7lu/x02Z3m4g5eeVyzPmkhGd67cCk=;
+        b=CzeaJJEfiG1PrBSU30AOH0cjBGisAB+D6kGFv6goHTBICrKNqOowvLyqvw1J/Lkf2f
+         FWbsBUEZ+W7LO+mQDZjyMWnghFnV3cMBQQIotT+HlPdsztqU6lTS6hpEsk2fy9P1Fq5/
+         3fheDc5LS6NzC8bGWKLw12bVOHaJoYYPk8bNB9kRj5s4Pvte2kXeG6H9Sl01garnZ7Yg
+         RehRfOR9dI8XHHooFPZkqA15Hpih6oqeHlnvaxY1d2/1XK1Ls+5RNgQrboXrC+ErsIBx
+         rOctu3JTHK10/AiPVpA4B1mgDtTmJZA2Wef2YpaPWmkifSF+7yv2umZzRg9Ec9au518I
+         M6XA==
+X-Gm-Message-State: AA6/9RkykTIu34rxaZriU6GSAay842tK02dtvLjQs8QrbdA8myI8XQgEvKjuerGTOIBh2y3WQN2jBqFl29J26g==
+X-Received: by 10.55.77.201 with SMTP id a192mr5601334qkb.198.1475264529616;
+ Fri, 30 Sep 2016 12:42:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.55.87.133 with HTTP; Fri, 30 Sep 2016 12:41:48 -0700 (PDT)
+In-Reply-To: <CA+55aFzjTB0peMDPoPA6JyeUy90x=Lh4qdfiYLNf6RQU3ey9Hg@mail.gmail.com>
+References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
+ <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
+ <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
+ <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+ <CA+55aFx9Utm9yDZceks+5q9c8ydc2QMYshWwJ0G0GHWWLwSsXQ@mail.gmail.com>
+ <20160930005638.almd66ralshknoxa@glandium.org> <CA+55aFzjTB0peMDPoPA6JyeUy90x=Lh4qdfiYLNf6RQU3ey9Hg@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 30 Sep 2016 21:41:48 +0200
+Message-ID: <CACBZZX4p8KEHnkDQ-c2La-1rkgiBs47T+dCNOfpji3tKs3YhVA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Sep 30, 2016 at 3:01 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Thu, Sep 29, 2016 at 5:56 PM, Mike Hommey <mh@glandium.org> wrote:
+>>
+>> OTOH, how often does one refer to trees or blobs with abbreviated sha1s?
+>> Most of the time, you'd use abbreviated sha1s for commits. And the number
+>> of commits in git and the kernel repositories are much lower than the
+>> number of overall objects.
+>
+> See that whole other discussion about this. I agree. If we only ever
+> worried about just commits, the abbreviation length wouldn't need to
+> be grown nearly as aggressively. The current default would still be
+> wrong for the kernel, but it wouldn't be as noticeably wrong, and
+> updating it to 8 or 9 would be fine.
+>
+> That said, people argued against that too. We *do* end up having
+> abbreviated SHA1's for blobs in the diff index. When I said that _I_
+> neer use it, somebody piped up to say that they do.
+>
+> So I'd rather just keep the existing semantics (a hash is a hash is a
+> hash), and just abbreviate at a sufficient point that we don't have to
+> worry too much about disambiguating further by object type.
 
-> On 27 Sep 2016, at 17:37, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->=20
-> Part second of the review of 11/11.
->=20
-> W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
->=20
->> +
->> +	if (!drv->process && (CAP_CLEAN & wanted_capability) && =
-drv->clean)
->=20
-> This is just a very minor nitpicking, but wouldn't it be easier
-> to read with those checks reordered?
->=20
->  +	if ((wanted_capability & CAP_CLEAN) && !drv->process && =
-drv->clean)
+I work on a repo that's around the size of linux.git in every way
+(commits, objects etc.), and growing twice as fast.
 
-OK
+So I also see 8 or 9 digit abbreviations on a daily basis, even with
+the current defaults core.abbrev, but I still think growing it so
+aggressively is the wrong thing to do.
 
+The fact that we have a core.abbrev option at all and nobody's talking
+about getting rid of it entirely means we all acknowledge the UX
+convenience of short SHA1s.
 
->> +
->> +	if (start_command(process)) {
->> +		error("cannot fork to run external filter '%s'", cmd);
->> +		kill_multi_file_filter(hashmap, entry);
->> +		return NULL;
->> +	}
->=20
-> I guess there is a reason why we init hashmap entry, try to start
-> external process, then kill entry of unable to start, instead of
-> trying to start external process, and adding hashmap entry when
-> we succeed?
+I don't think it's a good idea for such UX options to have defaults
+that really only make sense for repositories at the very far end of
+the bell curve, which is the case with linux.git and the repo I work
+on.
 
-Yes. This way I can reuse the kill_multi_file_filter() function.
+Either way you're going to waste somebody's time. I think it's a
+better trade-off that some kernel dev occasionally has to look at
+Peff's new disambiguation output, than have the wast hordes of
+everyday Git users have less screen real estate, need to recite longer
+sha1s over the phone during outages (people do that), and any number
+of other every day use cases.
 
-
->> +
->> +	sigchain_push(SIGPIPE, SIG_IGN);
->=20
-> I guess that this is here to handle errors writing to filter
-> by ourself, isn't it?
-
-Yes.
-
-
->> +		error("external filter '%s' does not support long =
-running filter protocol", cmd);
->=20
-> We could have described the error here better.
->=20
->  +		error("external filter '%s' does not support filter =
-protocol version 2", cmd);
-
-OK
-
-
->> +static void read_multi_file_filter_values(int fd, struct strbuf =
-*status) {
->=20
-> This is more
->=20
->  +static void read_multi_file_filter_status(int fd, struct strbuf =
-*status) {
->=20
-> It doesn't read arbitrary values, it examines 'metadata' from
-> filter for "status=3D<foo>" lines.
-
-True!
-
-
->> +		if (pair[0] && pair[0]->len && pair[1]) {
->> +			if (!strcmp(pair[0]->buf, "status=3D")) {
->> +				strbuf_reset(status);
->> +				strbuf_addbuf(status, pair[1]);
->> +			}
->=20
-> So it is last status=3D<foo> line wins behavior?
-
-Correct.
-
-
->=20
->> +		}
->=20
-> Shouldn't we free 'struct strbuf **pair', maybe allocated by the
-> strbuf_split_str() function, and reset to NULL?
-
-True. strbuf_list_free() should be enough.
-
-
->>=20
->> +	fflush(NULL);
->=20
-> Why this fflush(NULL) is needed here?
-
-This flushes all open output streams. The single filter does the same.
-
-
->>=20
->> +	if (fd >=3D 0 && !src) {
->> +		if (fstat(fd, &file_stat) =3D=3D -1)
->> +			return 0;
->> +		len =3D xsize_t(file_stat.st_size);
->> +	}
->=20
-> Errr... is it necessary?  The protocol no longer provides size=3D<n>
-> hint, and neither uses such hint if provided.
-
-We require the size in write_packetized_from_buf() later.
-
-
->> +
->> +	err =3D strlen(filter_type) > PKTLINE_DATA_MAXLEN;
->> +	if (err)
->> +		goto done;
->=20
-> Errr... this should never happen.  We control which capabilities
-> we pass, it can be only "clean" or "smudge", nothing else. Those
-> would always be shorter than PKTLINE_DATA_MAXLEN.
->=20
-> Never mind that that is "command=3Dsmudge\n" etc. that needs to
-> be shorter that PKTLINE_DATA_MAXLEN!
->=20
-> So, IMHO it should be at most assert, and needs to be corrected
-> anyway.
-
-OK!
-
-
-> This should never happen, PATH_MAX everywhere is much shorter
-> than PKTLINE_DATA_MAXLEN / LARGE_PACKET_MAX.  Or is it?
->=20
-> Anyway, we should probably explain or warn
->=20
->   		error("path name too long: '%s'", path);
-
-OK
-
-
->> +			/*
->> +			 * Something went wrong with the protocol =
-filter.
->> +			 * Force shutdown and restart if another blob =
-requires filtering!
->=20
-> Is this exclamation mark '!' here necessary?
->=20
-
-No.
-
-
-Thanks,
-Lars
-
+I think if anything we should be talking about making the default
+shorter & then have some clever auto-scaling by repository size as has
+been discussed in this thread to deal with the repositories at the far
+end of the bell curve.
