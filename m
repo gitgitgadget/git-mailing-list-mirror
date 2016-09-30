@@ -2,69 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58245207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 16:16:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2C81207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 16:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933777AbcI3QQc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 12:16:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54572 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933082AbcI3QQa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 12:16:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 453D6402AC;
-        Fri, 30 Sep 2016 12:16:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Bf9/ELZQzBU9vQ6X94Voz73YHGY=; b=NkF5EG
-        Q526WCPlkbtcx847jV9oRKja9fNXnP4TuhZYkEE7wpfn/p5JA/PVyMFBSEVDrEre
-        25P2YxcOAGnC6YrBLEHZ35TRfI7DL9wf5suLgXNhjAFoBwYWMUKhu2TJgNGhLEZR
-        mg8egLbGHYuXzN19FJRuWy6kuHSIgSNvo9OV4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vuHMvXgXaBa9tC+PHM9byf49JiT8BD4N
-        nlqnSnLa3HZBKJCNRhLodKhlwbn/8FcCqT4pQr4YAtODhTHBxg9bpGGKcQaC+4DZ
-        GhQKDfYNVAvZ5mRrV5HDGMELCUMSWemxCYjrRAtKqQkjW2/uRIZWzo7uOucQw8Z0
-        JBiRSeXJ3s0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E2EE402A9;
-        Fri, 30 Sep 2016 12:16:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B8C69402A7;
-        Fri, 30 Sep 2016 12:16:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        Alex <agrambot@gmail.com>
-Subject: Re: [PATCH v2] gpg-interface: use more status letters
-References: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
-        <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
-        <xmqqshsjiyn4.fsf@gitster.mtv.corp.google.com>
-        <24ecc903-3e5a-47f6-f073-00a1c709d5e8@ramsayjones.plus.com>
-        <85fa6296-17f0-0e8c-ec1b-54cd48c45223@drmicha.warpmail.net>
-Date:   Fri, 30 Sep 2016 09:16:26 -0700
-In-Reply-To: <85fa6296-17f0-0e8c-ec1b-54cd48c45223@drmicha.warpmail.net>
-        (Michael J. Gruber's message of "Fri, 30 Sep 2016 11:41:11 +0200")
-Message-ID: <xmqq60pdbbxh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E3347B8-8729-11E6-8AC6-C26412518317-77302942!pb-smtp1.pobox.com
+        id S934068AbcI3QYY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 12:24:24 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:57953 "EHLO
+        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933749AbcI3QYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 12:24:22 -0400
+X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Sep 2016 12:24:22 EDT
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+        by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id u8UGEDa4022370
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 19:14:15 +0300
+Date:   Fri, 30 Sep 2016 19:14:13 +0300
+From:   Konstantin Khomoutov <kostix+git@007spb.ru>
+To:     git@vger.kernel.org
+Subject: "Purposes, Concepts,Misfits, and a Redesign of Git" (a research
+ paper)
+Message-Id: <20160930191413.002049b94b3908b15881b77f@domain007.com>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.51 (www.roaringpenguin.com/mimedefang) on 192.168.2.20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+The "It Will Never Work in Theory" blog has just posted a summary of a
+study which tried to identify shortcomings in the design of Git.
 
-> Also, I'm open to using another letter for EXPKEYSIG but couldn't decide
-> between 'Y', 'Z', 'K'. 'K' could be confused with REVKEYSIG, I'm afraid.
-> 'Y' is next to 'X' and contained in 'KEY', it would be my first choice.
+In the hope it might be interesting, I post this summary here.
+URL: http://neverworkintheory.org/2016/09/30/rethinking-git.html
 
-Sounds good enough to me.  Thanks.
+The except from that resource written by Greg Wilson, the blog author:
+---------------->8----------------
+Santiago Perez De Rosso and Daniel Jackson: "[Purposes, Concepts,
+Misfits, and a Redesign of Git]
+(http://people.csail.mit.edu/sperezde/pre-print-oopsla16.pdf)", _SPLASH
+2016_. 
+
+> Git is a widely used version control system that is powerful but
+> complicated. Its complexity may not be an inevitable consequence of
+> its power but rather evidence of flaws in its design. To explore this
+> hypothesis, we analyzed the design of Git using a theory that
+> identifies concepts, purposes, and misfits. Some well-known
+> difficulties with Git are described, and explained as misfits in
+> which underlying concepts fail to meet their intended purpose. Based
+> on this analysis, we designed a reworking of Git (called Gitless)
+> that attempts to remedy these flaws. 
+> 
+> To correlate misfits with issues reported by users, we conducted a
+> study of Stack Overflow questions. And to determine whether users
+> experienced fewer complications using Gitless in place of Git, we
+> conducted a small user study. Results suggest our approach can be
+> profitable in identifying, analyzing, and fixing design problems. 
+
+This paper presents a detailed, well-founded critique of one of the
+most powerful, but frustrating, tools in widespread use today. A
+follow-up to earlier work published in 2013, it is distinguished from
+most other discussion of software design by three things: 
+
+  1. It clearly describes its design paradigm, which comprises
+_concepts_ (the major elements of the user's mental model of the
+system), _purposes_ (which motivate the concepts), and _misfits_ (which
+are instances where concepts do not satisfy purposes, or contradict one
+another). 
+
+  2. It lays out Git's concepts and purposes, analyzes its main
+features in terms of them, and uses that analysis to identify
+mis-matches. 
+
+  3. Crucially, it then analyzes independent discussion of Git (on
+Stack Overflow) to see if users are stumbling over the misfits
+identified in step 2. 
+
+That would count as a major contribution on its own, but the authors go
+further. They have designed a tool called Gitless that directly
+addresses the shortcomings they have identified, and the penultimate
+section of this paper presents a usability study that compares it to
+standard Git. Overall, subjects found Gitles more satisfying and less
+frustrating than Git, even though there was no big difference in
+efficiency, difficulty, or confusion. Quoting the paper, "This apparent
+contradiction might be due to the fact that all of the participants had
+used Git before but were encountering Gitless for the first time
+without any substantive training. Some participants (2 regular, 1
+expert) commented that indeed their problems with Gitless were mostly
+due to their lack of practice using it." 
+
+This paper is one of the best examples I have ever seen of how software
+designs ought to be critiqued. It combines an explicit, coherent
+conceptual base, detailed analysis of a specific system, design
+grounded in that analysis, and an empirical check of that design.
+Sadly, nothing shows the actual state of our profession more clearly
+than the way this work has been greeted: 
+
+> In some respects, this project has been a fool's errand. We picked a
+> product that was popular and widely used so as not to be investing
+> effort in analyzing a strawman design; we thought that its popularity
+> would mean that a larger audience would be interested in our
+> experiment. In sharing our research with colleagues, however, we have
+> discovered a significant polarization. Experts, who are deeply
+> familiar with the product, have learned its many intricacies,
+> developed complex, customized workflows, and regularly exploit its
+> most elaborate features, are often defensive and resistant to the
+> suggestion that the design has flaws. In contrast, less intensive
+> users, who have given up on understanding the product, and rely on
+> only a handful of memorized commands, are so frustrated by their
+> experience that an analysis like ours seems to them belaboring the
+> obvious.
+---------------->8----------------
+(This text is Copyright © Never Work in Theory, under the CC license.)
