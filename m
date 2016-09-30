@@ -7,83 +7,95 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14942207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 05:51:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05CC2207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 06:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964779AbcI3Fvn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 01:51:43 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36014 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934368AbcI3Fvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 01:51:41 -0400
-Received: by mail-yw0-f194.google.com with SMTP id r132so144040ywg.3
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 22:51:41 -0700 (PDT)
+        id S935896AbcI3GST (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 02:18:19 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:36387 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935528AbcI3GSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 02:18:18 -0400
+Received: by mail-yw0-f196.google.com with SMTP id r132so159867ywg.3
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 23:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=7djhP8vmEVGkxC0v4M/LAUjY98noWFOBLtN8OaMTisc=;
-        b=WaeobyMF1o4JeurGNnI8BXUIWyhM1GGoGqMMwlLLWZrS2sBDejwX1qIl6m5F6NY0AH
-         H7Uzn5FI3+FcYlv0iqI/AIRXg57jpEhrrK7R6A2clDqbEb6Np+oXoNVuZLhbFR1J1PhU
-         dGLfcaFdBsszZt9CqyE1PvAQq3uQpMqHpI2r6G+TCEQvkvDZSxtlvwACLhoVY5PiQIt3
-         y5/01Zj+FwlfX5QGeDKNvJPbuXH9RVqRPPSqqU7ZN1wcnsw+YvOHrx/h8NZjG2MGYDC+
-         GUCzVPG8cXVTDxIjptTc6Pg1zK/B6WLRTY1OU+uNOzf4lOEe18whjEwDPJor+1NtvhAy
-         SpjA==
+        bh=4K4DZV7zFxcqmB33VyShcLTs5Q790xRuJ543GWKsdM8=;
+        b=Mawh55Q/c4p1fqiM6WgQO45Mg4815K2EGInPBN3amjmxHA2B95Rvzu6yWVuGJ8p1Im
+         tU9kjcQbKq2QVlgoG4qG0v7nq06klfQ7nMxPipVPTbdTx3ZpY1kO5UvF9okZeP7jY9JY
+         WRImgfdQU7V0XFiBAMiRJeXL+RKyui4JEUb9gRlFCmd9y0Ck8QsYq+Y3oD9rQfZt0VKR
+         SvtGmMdcZ9HsYtCh2khleQtIKBQxA4OcDCNCaWztQXosfVXwf3zFJbF/5EevhYpQKAJx
+         9/PIQ1woFAclaKsm552hUIIzdhaWSOIyOCfY3x9fuqAMdpPZqOj8pn+sp0z8XNVWF1FB
+         NJAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=7djhP8vmEVGkxC0v4M/LAUjY98noWFOBLtN8OaMTisc=;
-        b=DHFw3hAxvPj5aKQ9hGkPwg1fsQClcSQeohFpdqYOF1SOddWVWBH19HCf3TDjqWn+p0
-         iyrB4ZLVMmIINgGNxAd/3nxY8pjEHtRig+pbMmWJwcewgwSbrkSHZf3GPz9/+8jrk1Pm
-         acXhSmvMVQZ91dxHLA1p2QdiCmwXXNPx3xZoScldgL3aC/tPbvQg7gy/VlUzW1Q4r9oQ
-         goW3xgc0IQzIfFAb0NK4CpkxJ+/YDaKz4oQ15E7N4LqlNifApckNw3EcZ7t3Tea0akpG
-         mpHaeqfzN7LBKmrk73VfLd5B9sQoXuPz1zPqtwoTkQ7xmpz7SsDBwiIQeEz054CQ1C0S
-         +Mkw==
-X-Gm-Message-State: AA6/9RkybRTgMsXzowTEqOXBYcQI4lT8Rl0th6xfX+rFGViBpvxkvCbyvL8uWfYkfxxRlrTqZJjdX4VsQ6ov5g==
-X-Received: by 10.129.76.6 with SMTP id z6mr3527214ywa.257.1475214701030; Thu,
- 29 Sep 2016 22:51:41 -0700 (PDT)
+        bh=4K4DZV7zFxcqmB33VyShcLTs5Q790xRuJ543GWKsdM8=;
+        b=YVscI3ciLyE+yu13dyVWlZlIbRLil8q3zAyqvhrekw844/RB5xvrdF7MVexxtiFfoz
+         /qonAlsAeNBRG3HsF/b41B7toDdld0slosuZl/GUoV+VGnVWZCyM0c0+Dy3kR3FI2F4S
+         9PvRPpUYxboMykSAotXxqMVWR6tWmy+8kcOM1v+ZEHwawvCchIkYM1Duj+RRNfoteEVh
+         LlSaRCahpVSWwRuSj0Q9efKITf0GGESDV5nHj4IFvowxa3wID0iD/o2Oc9BirSjx4rdE
+         b+D6oWw0c2J/ASZ8IVCs/49Zsnk2DY5PmExnoGgms0dTzXNi1bdKzwUajLk0TDZeWPrE
+         CSiw==
+X-Gm-Message-State: AA6/9Rl8NdUcgowlDlDeiay4QdNKxcEKBBwIidmUa92kkiqJt31SJsSW3VpHRlbM8SZxLwGZm+NjeZwlkGNb6w==
+X-Received: by 10.13.203.79 with SMTP id n76mr3015919ywd.122.1475216298035;
+ Thu, 29 Sep 2016 23:18:18 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Thu, 29 Sep 2016 22:51:20 -0700 (PDT)
-In-Reply-To: <xmqqbmz6hbdk.fsf@gitster.mtv.corp.google.com>
-References: <20160926115720.p2yb22lcq37gboon@sigill.intra.peff.net>
- <20160926120036.mqs435a36njeihq6@sigill.intra.peff.net> <2242637D-4C3B-4AF2-8BE4-823B3E1745D5@gmail.com>
- <20160929130322.562ng4t2ktk6qzok@sigill.intra.peff.net> <xmqqbmz6hbdk.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.96.195 with HTTP; Thu, 29 Sep 2016 23:17:57 -0700 (PDT)
+In-Reply-To: <20160929083342.ozo2tef45hu4ox7g@sigill.intra.peff.net>
+References: <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net> <20160929083342.ozo2tef45hu4ox7g@sigill.intra.peff.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 29 Sep 2016 22:51:20 -0700
-Message-ID: <CA+P7+xr4ZNCCJkS0=yR-FNu+MrL60YX-+Wsz9L_5LCNhnY_d=A@mail.gmail.com>
-Subject: Re: [PATCH 10/10] get_short_sha1: list ambiguous objects on error
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Thu, 29 Sep 2016 23:17:57 -0700
+Message-ID: <CA+P7+xoxTpqn=jkuHYp5pKCCWfKLP5OKCTBYkcTVw_RhEw0KVw@mail.gmail.com>
+Subject: Re: [PATCH 1/5] pretty: allow formatting DATE_SHORT
+To:     Jeff King <peff@peff.net>
+Cc:     "Kyle J. McKay" <mackyle@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->>   - "cat-file --batch-check" can show you the sha1 and type, but it
->>     won't abbreviate sha1s, and it won't show you commit/tag information
->>
->>   - "log --stdin --no-walk" will format the commit however you like, but
->>     skips the trees and blobs entirely, and the tag can only be seen via
->>     "%d"
->>
->>   - "for-each-ref" has flexible formatting, too, but wants to format
->>     refs, not objects (and doesn't read from stdin).
+On Thu, Sep 29, 2016 at 1:33 AM, Jeff King <peff@peff.net> wrote:
+> There's no way to do this short of "%ad" and --date=short,
+> but that limits you to having a single date format in the
+> output.
 >
->     - "name-rev" is used to give "describe --contains", and can read
->       from its standard input, but has no format customization.
->       Another downside of it is that it only wants to see
->       committishes.
+> This would possibly be better done with something more like
+> "%ad(short)".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  pretty.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/pretty.c b/pretty.c
+> index 493edb0..c532c17 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -727,6 +727,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
+>         case 'I':       /* date, ISO 8601 strict */
+>                 strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
+>                 return placeholder_len;
+> +       case 's':
+> +               strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
+> +               return placeholder_len;
+>         }
+>
+>  skip:
+> --
+> 2.10.0.566.g5365f87
 >
 
-Some tool which reads standard input and can be formatted would be
-nice. Extending name-rev with the same format options as for-each-ref
-would be nice.
+Nice. I use date=short in some of my aliases and switching to this is
+nicer. I assume this turns into "%(as)"?
+
+What about documenting this in  pretty-formats.txt?
 
 Thanks,
 Jake
