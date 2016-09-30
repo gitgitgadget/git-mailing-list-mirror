@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2946920986
-	for <e@80x24.org>; Fri, 30 Sep 2016 22:18:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60CBF20986
+	for <e@80x24.org>; Fri, 30 Sep 2016 22:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752059AbcI3WSV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 18:18:21 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:35268 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750832AbcI3WSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 18:18:15 -0400
-Received: by mail-qk0-f193.google.com with SMTP id j129so6751860qkd.2
-        for <git@vger.kernel.org>; Fri, 30 Sep 2016 15:18:14 -0700 (PDT)
+        id S933599AbcI3WS0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 18:18:26 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:34327 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932883AbcI3WSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 18:18:17 -0400
+Received: by mail-qk0-f195.google.com with SMTP id n189so4796878qke.1
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 15:18:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=C6/sOySnP2pp2ULMV/QuRU+VRFBNAe3Q6Xqbc+XfoT4=;
-        b=pAWmuxf+ebYzxFq2PjY6GEWJGtGz55TBQ1kRx48o0B1JFbl77g4QxfPe3uemldNNa5
-         5CGTDK+tpMlzPMJt8IEKqHEWRJ6a0SM+zq0vvcWKnWGaTY2lkHkHKONvA7AKl0Fv9iUU
-         c64Ee/6w0ktSNcNDGRPvWR4UgdPc7yg3hfFsAU4pNzkypBWQ7DoFC7COE0c4U22EUkvs
-         sBe4dVnkBRrs2WV3Tt9UAPaFrHZvWqoVR1zqk6R88yTuqAhHn8PCnPdvXlQCw3X7Xy1X
-         6K9/GnuiSRCRlYZPyaGRKEq4rKmDEndG3zIepdZkRwwdDrJpAyYUDSagLnGTPxRRuxAQ
-         x+qA==
+        bh=UvgxaKSazf0BMEZVzdUlL/iDEBPqfjfbfmeC2wSA8zo=;
+        b=1ETg9puEnx4kF083TWPGGvzM+paPzSNTpzgoWipy2TxQ6UkMbg6ULbewz7rlp/36Wk
+         ZmJ4ebAAwb7c7Gqf7lF0Z0IMTBnCf/72opFSxLoHs3vhbminovcnMTlbILBURh37NA9g
+         o1YLw+nBwvBzel4/dEjISGKqFjGwkTOf9jX/Rqv8zlwZ+WUjLsgGmdjibPzNLvcalWh8
+         VLtDSq30xg8td40QtvS2LevfTKG+bmCtfwK0AVUd1WxYpBVUkz3CGZLfhKze1R5//2HV
+         ldhWGL+3U2nDyD2n2B3e+Ny98ZdxJVuCULucvH9gs1LzwHQyh+bhaFcI/6QqxyJlD1Ec
+         5Drw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=C6/sOySnP2pp2ULMV/QuRU+VRFBNAe3Q6Xqbc+XfoT4=;
-        b=UjpWr7oUTnQ5F1YT2wc2RZhSo5ZkXZa978W2//xMwnfoJdtdW1yMH+pCxfUAltwszK
-         nD6pvW1yc7H/l4P0GMg1QCUQTgcJFgBbjp8zk4HznR6kZ0Jwc6AtYP2Dy1B/b8hMY3eB
-         de1MLdd1RQsSCE+iPKgGIJloF0x65ph43n6H3cM+NbfK6/a6SEPW/OLEKw40H05fLHZx
-         ye/FfzFI5OJhz9nQhyHmr9uKy2vaAhCBJkzFUl/C3BDF/Km695zqaBrWcUePUwDeCTff
-         BnOE3wvEdgoIVljpQkQLU/BrLAVK+1J3kqJAA2o9m+JNyZutixrQoKDM2sxrMhcYHSo0
-         VaWg==
-X-Gm-Message-State: AA6/9RlrjnCQobzuwVFprx/RxNrnsV0ASKurSzwTxR0jMilshq7pCchyhcVZLJ0ZCVDx2SkG
-X-Received: by 10.55.21.164 with SMTP id 36mr9812209qkv.215.1475273894018;
-        Fri, 30 Sep 2016 15:18:14 -0700 (PDT)
+        bh=UvgxaKSazf0BMEZVzdUlL/iDEBPqfjfbfmeC2wSA8zo=;
+        b=L5JAlkGKQBynqYp2uQfnbcmc4oPLGbDFkD+8nyevoRIy8JWbiKxbgdelR1IJsZCHDL
+         FUU5d2wfC6c2hqvuHW2w4hohqM9WNrVg53SFSnBhyquT6TVriB0hBsxpCq0JM4rrGNIT
+         Lw0xCuUXLz0lryz/KqdJUMp5yXRokp6oYbqSs7ywtzi+65OqBGRJHeZOdambL2Ha3ph+
+         ApTJXFfxG8eGZue3W4I12uxkqTNdvKvj6Nyu81uQ6IWnTCFtxGZSnY0zZnN7IReaCdAp
+         wiwvgDddOT2Z2esgB254RtqmjbtCBXASdYjyYw7uSYdvrv9j4VFXgwPra1aQVMet4vBZ
+         x61w==
+X-Gm-Message-State: AA6/9RndZMtNq3wh3LVoTT2Sn/rUFsGMGrN6VT8jYEuXMjSA2/LUOiXBaEhSa7vcBbyhOhNP
+X-Received: by 10.55.65.70 with SMTP id o67mr9279833qka.305.1475273896158;
+        Fri, 30 Sep 2016 15:18:16 -0700 (PDT)
 Received: from LykOS.localdomain (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
-        by smtp.gmail.com with ESMTPSA id x21sm11347615qkb.19.2016.09.30.15.18.13
+        by smtp.gmail.com with ESMTPSA id x21sm11347615qkb.19.2016.09.30.15.18.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 30 Sep 2016 15:18:13 -0700 (PDT)
+        Fri, 30 Sep 2016 15:18:15 -0700 (PDT)
 From:   santiago@nyu.edu
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas P <luk.puehringer@gmail.com>
-Subject: [PATCH v3 3/5] tag: add format specifier to gpg_verify_tag
-Date:   Fri, 30 Sep 2016 18:18:04 -0400
-Message-Id: <20160930221806.3398-4-santiago@nyu.edu>
+        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
+Subject: [PATCH v3 5/5] builtin/tag: add --format argument for tag -v
+Date:   Fri, 30 Sep 2016 18:18:06 -0400
+Message-Id: <20160930221806.3398-6-santiago@nyu.edu>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20160930221806.3398-1-santiago@nyu.edu>
 References: <20160930221806.3398-1-santiago@nyu.edu>
@@ -60,113 +60,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lukas P <luk.puehringer@gmail.com>
+From: Lukas Puehringer <luk.puehringer@gmail.com>
 
-Calling functions for gpg_verify_tag() may desire to print relevant
-information about the header for further verification. Add an optional
-format argument to print any desired information after GPG verification.
+Adding --format to git tag -v mutes the default output of the GPG
+verification and instead prints the formatted tag object.
+This allows callers to cross-check the tagname from refs/tags with
+the tagname from the tag object header upon GPG verification.
+
+The callback function for for_each_tag_name() didn't allow callers to
+pass custom data to their callback functions. Add a new opaque pointer
+to each_tag_name_fn's parameter to allow this.
 
 Signed-off-by: Lukas Puehringer <luk.puehringer@gmail.com>
 ---
- builtin/tag.c        |  2 +-
- builtin/verify-tag.c |  2 +-
- tag.c                | 17 +++++++++++------
- tag.h                |  4 ++--
- 4 files changed, 15 insertions(+), 10 deletions(-)
+ Documentation/git-tag.txt |  2 +-
+ builtin/tag.c             | 34 +++++++++++++++++++++++-----------
+ 2 files changed, 24 insertions(+), 12 deletions(-)
 
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 7ecca8e..3bb5e3c 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -15,7 +15,7 @@ SYNOPSIS
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+ 	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
+ 	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
+-'git tag' -v <tagname>...
++'git tag' -v [--format=<format>] <tagname>...
+ 
+ DESCRIPTION
+ -----------
 diff --git a/builtin/tag.c b/builtin/tag.c
-index 50e4ae5..14f3b48 100644
+index 14f3b48..7730fd0 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -105,7 +105,7 @@ static int delete_tag(const char *name, const char *ref,
- static int verify_tag(const char *name, const char *ref,
- 				const unsigned char *sha1)
- {
--	return gpg_verify_tag(sha1, name, GPG_VERIFY_VERBOSE);
-+	return verify_and_format_tag(sha1, name, NULL, GPG_VERIFY_VERBOSE);
+@@ -24,7 +24,7 @@ static const char * const git_tag_usage[] = {
+ 	N_("git tag -d <tagname>..."),
+ 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
+ 		"\n\t\t[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]"),
+-	N_("git tag -v <tagname>..."),
++	N_("git tag -v [--format=<format>] <tagname>..."),
+ 	NULL
+ };
+ 
+@@ -66,15 +66,17 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
  }
  
- static int do_sign(struct strbuf *buffer)
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 99f8148..de10198 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -51,7 +51,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 		const char *name = argv[i++];
- 		if (get_sha1(name, sha1))
- 			had_error = !!error("tag '%s' not found.", name);
--		else if (gpg_verify_tag(sha1, name, flags))
-+		else if (verify_and_format_tag(sha1, name, NULL, flags))
+ typedef int (*each_tag_name_fn)(const char *name, const char *ref,
+-				const unsigned char *sha1);
++				const unsigned char *sha1, void *cb_data);
+ 
+-static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
++static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
++		void *cb_data)
+ {
+ 	const char **p;
+ 	char ref[PATH_MAX];
+ 	int had_error = 0;
+ 	unsigned char sha1[20];
+ 
++
+ 	for (p = argv; *p; p++) {
+ 		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
+ 					>= sizeof(ref)) {
+@@ -87,14 +89,14 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
+ 			had_error = 1;
+ 			continue;
+ 		}
+-		if (fn(*p, ref, sha1))
++		if (fn(*p, ref, sha1, cb_data))
  			had_error = 1;
  	}
  	return had_error;
-diff --git a/tag.c b/tag.c
-index 291073f..d3512c0 100644
---- a/tag.c
-+++ b/tag.c
-@@ -4,6 +4,7 @@
- #include "tree.h"
- #include "blob.h"
- #include "gpg-interface.h"
-+#include "ref-filter.h"
- 
- const char *tag_type = "tag";
- 
-@@ -33,8 +34,8 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 	return ret;
  }
  
--int gpg_verify_tag(const unsigned char *sha1, const char *name_to_report,
--		unsigned flags)
-+int verify_and_format_tag(const unsigned char *sha1, const char *name,
-+		const char *fmt_pretty, unsigned flags)
+ static int delete_tag(const char *name, const char *ref,
+-				const unsigned char *sha1)
++				const unsigned char *sha1, void *cb_data)
  {
- 	enum object_type type;
- 	char *buf;
-@@ -44,21 +45,25 @@ int gpg_verify_tag(const unsigned char *sha1, const char *name_to_report,
- 	type = sha1_object_info(sha1, NULL);
- 	if (type != OBJ_TAG)
- 		return error("%s: cannot verify a non-tag object of type %s.",
--				name_to_report ?
--				name_to_report :
-+				name ?
-+				name :
- 				find_unique_abbrev(sha1, DEFAULT_ABBREV),
- 				typename(type));
+ 	if (delete_ref(ref, sha1, 0))
+ 		return 1;
+@@ -103,9 +105,16 @@ static int delete_tag(const char *name, const char *ref,
+ }
  
- 	buf = read_sha1_file(sha1, &type, &size);
- 	if (!buf)
- 		return error("%s: unable to read file.",
--				name_to_report ?
--				name_to_report :
-+				name ?
-+				name :
- 				find_unique_abbrev(sha1, DEFAULT_ABBREV));
- 
- 	ret = run_gpg_verify(buf, size, flags);
- 
- 	free(buf);
+ static int verify_tag(const char *name, const char *ref,
+-				const unsigned char *sha1)
++				const unsigned char *sha1, void *cb_data)
+ {
+-	return verify_and_format_tag(sha1, name, NULL, GPG_VERIFY_VERBOSE);
++	int flags;
++    char *fmt_pretty = cb_data;
++	flags = GPG_VERIFY_VERBOSE;
 +
 +	if (fmt_pretty)
-+		pretty_print_ref(name, sha1, fmt_pretty, FILTER_REFS_TAGS);
++		flags = GPG_VERIFY_QUIET;
 +
- 	return ret;
++	return verify_and_format_tag(sha1, name, fmt_pretty, flags);
  }
  
-diff --git a/tag.h b/tag.h
-index a5721b6..896b9c2 100644
---- a/tag.h
-+++ b/tag.h
-@@ -17,7 +17,7 @@ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long si
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
--extern int gpg_verify_tag(const unsigned char *sha1,
--		const char *name_to_report, unsigned flags);
-+extern int verify_and_format_tag(const unsigned char *sha1, const char *name,
-+		const char *fmt_pretty, unsigned flags);
+ static int do_sign(struct strbuf *buffer)
+@@ -334,7 +343,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct ref_filter filter;
+ 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+-	const char *format = NULL;
++	char *format = NULL;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+ 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+@@ -424,9 +433,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (filter.merge_commit)
+ 		die(_("--merged and --no-merged option are only allowed with -l"));
+ 	if (cmdmode == 'd')
+-		return for_each_tag_name(argv, delete_tag);
+-	if (cmdmode == 'v')
+-		return for_each_tag_name(argv, verify_tag);
++		return for_each_tag_name(argv, delete_tag, NULL);
++	if (cmdmode == 'v') {
++		if (format)
++			verify_ref_format(format);
++		return for_each_tag_name(argv, verify_tag, format);
++	}
  
- #endif /* TAG_H */
+ 	if (msg.given || msgfile) {
+ 		if (msg.given && msgfile)
 -- 
 2.10.0
 
