@@ -2,110 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1625207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 23:53:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3519C207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 00:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935044AbcI2Xx0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 19:53:26 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:49476 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934896AbcI2XxZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 29 Sep 2016 19:53:25 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S935052AbcI3AOO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 20:14:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52516 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S935005AbcI3AON (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 20:14:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59D1142132;
+        Thu, 29 Sep 2016 20:14:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LX2j197EBWawkNE49D2nMN3KMiY=; b=LE0jCr
+        jbCeY0C+jHqlCRqt0fTD78OqCpTw4ctNhW1BoAkcvPOgsmXLdNz7tcInA7y90Z1F
+        zucA42+zXHKK+jlA2vMa4i4zd6lp8pyJ5VCOEJYWUg6TAshxw+vFGbO+KH0xOVpE
+        KIsXiY45QUAb6f3P/ewawDMX9HqejAvdFJ/zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MfLoYsRiSzQlDu3ORRqV91Q1dGFjt5Ep
+        VOHuBoyDj9Wb6hmz6RZW2LqNGDfuF0Ux6tJQeJmeeMz9kNG2qeK9Y0qj7JmxNjHo
+        TNU5XdvVIkF2jFxFzAnRrL30Fp4A8xPIXRDssN1XqEA0Cg1IkWbJIaK2GnlTInhm
+        UO7RrHIv2dU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FB6542131;
+        Thu, 29 Sep 2016 20:14:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CA54B280AD;
-        Thu, 29 Sep 2016 23:53:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1475193203;
-        bh=vJel+T4NQoEDEDoTeSb5ls+Tkk5jNYDrj3mzPlLYE5w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UPB175BIgbiTNjmPSJboyC5Gm4fY1uWyjiHqqtyqWEqA76eSXiFjn2c9yRAM4/ajy
-         fSANPMocQI0bGpUJfhQl2JbCy663qIBGyg7UK8oTAQTPyrl8NcDAwGRAwGkQI5IfLA
-         Dke8AkXszY69VyWHPCAcv32mKXO8W5IbYX/6ZCDOvzoF1YeNhGaRakzWG9IF9SW7z3
-         0qQ/10Jh2VEUZW8rQTb0uafUMZqGQrMpnHDXDTxgK/1Y9aIFr39a08IFcs/aU16R5+
-         gwTvA5rhntW+HptyqUV/kPsi4+9Kgwogy/23rnTomaD66Mf127csrmw7M4nwovleoA
-         GC8u3BlBt0u5a7wVAydkkz3+MrWu/Z30ubS6Q01otLmyCwdVNDjVTf+zx3CnOl3C3B
-         pFE9yeMroWB/WDwpkWmteyQPHglZ+Kx+Nic9Ov4BOWaW+rljWJSbYrkkZEWFH2aMfV
-         U+JQDrb3XCpiiGlnGlv6vnTXl0yDeRY0X3OFz+QGiuv/ROkDdhV
-Date:   Thu, 29 Sep 2016 23:53:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Petr Stodulka <pstodulk@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] http: Control GSSAPI credential delegation.
-Message-ID: <20160929235320.ur3t66kypckmq4wl@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Petr Stodulka <pstodulk@redhat.com>, git@vger.kernel.org
-References: <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
- <1475085694-10056-1-git-send-email-pstodulk@redhat.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B8EFF42130;
+        Thu, 29 Sep 2016 20:14:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net
+Subject: Re: [PATCH v6 3/4] ls-files: pass through safe options for --recurse-submodules
+References: <1475099443-145608-1-git-send-email-bmwill@google.com>
+        <1475185723-36871-1-git-send-email-bmwill@google.com>
+        <1475185723-36871-4-git-send-email-bmwill@google.com>
+Date:   Thu, 29 Sep 2016 17:14:07 -0700
+In-Reply-To: <1475185723-36871-4-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Thu, 29 Sep 2016 14:48:42 -0700")
+Message-ID: <xmqqy42ab5ww.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4jy2bep6fssfhgfy"
-Content-Disposition: inline
-In-Reply-To: <1475085694-10056-1-git-send-email-pstodulk@redhat.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20160916 (1.7.0)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CF0A07CC-86A2-11E6-B79D-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Brandon Williams <bmwill@google.com> writes:
 
---4jy2bep6fssfhgfy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +static void compile_submodule_options(const struct dir_struct *dir, int show_tag)
+> +{
+> +	if (line_terminator == '\0')
+> +		argv_array_push(&submodules_options, "-z");
+> +	if (show_tag)
+> +		argv_array_push(&submodules_options, "-t");
+> +	if (show_valid_bit)
+> +		argv_array_push(&submodules_options, "-v");
+> +	if (show_cached)
+> +		argv_array_push(&submodules_options, "--cached");
+> +	if (show_deleted)
+> +		argv_array_push(&submodules_options, "--deleted");
+> +	if (show_modified)
+> +		argv_array_push(&submodules_options, "--modified");
+> +	if (show_others)
+> +		argv_array_push(&submodules_options, "--others");
+> +	if (dir->flags & DIR_SHOW_IGNORED)
+> +		argv_array_push(&submodules_options, "--ignored");
+> +	if (show_stage)
+> +		argv_array_push(&submodules_options, "--stage");
+> +	if (show_killed)
+> +		argv_array_push(&submodules_options, "--killed");
+> +	if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+> +		argv_array_push(&submodules_options, "--directory");
+> +	if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES))
+> +		argv_array_push(&submodules_options, "--empty-directory");
+> +	if (show_unmerged)
+> +		argv_array_push(&submodules_options, "--unmerged");
+> +	if (show_resolve_undo)
+> +		argv_array_push(&submodules_options, "--resolve-undo");
+> +	if (show_eol)
+> +		argv_array_push(&submodules_options, "--eol");
+> +	if (debug_mode)
+> +		argv_array_push(&submodules_options, "--debug");
+> +}
 
-On Wed, Sep 28, 2016 at 08:01:34PM +0200, Petr Stodulka wrote:
-> Delegation of credentials is disabled by default in libcurl since
-> version 7.21.7 due to security vulnerability CVE-2011-2192. Which
-> makes troubles with GSS/kerberos authentication when delegation
-> of credentials is required. This can be changed with option
-> CURLOPT_GSSAPI_DELEGATION in libcurl with set expected parameter
-> since libcurl version 7.22.0.
->=20
-> This patch provides new configuration variable http.delegation
-> which corresponds to curl parameter "--delegation" (see man 1 curl).
->=20
-> The following values are supported:
->=20
-> * none (default).
-> * policy
-> * always
+With this and 4/4 applied, the documentation still says "--cached"
+is the only supported option.
 
-I don't personally use Kerberos delegation with Git, but I don't see any
-problems with this patch.  It preserves the security properties of the
-current behavior, and I think adding "policy" as an option to allow
-per-realm configuration is a good idea.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Does it really make sense to pass all of these?  I understand "-z"
+and I suspect things like "-t" and "-v" that affect "how" things are
+shown may also happen to work, but I am not sure how much it makes
+sense for options that affect "what" things are shown.
 
---4jy2bep6fssfhgfy
-Content-Type: application/pgp-signature; name="signature.asc"
+What does it even mean to ask for say "--unmerged" to be shown, for
+example, from the superproject?  Recurse into submodules whose cache
+entries in the index of the superproject are unmerged, or something
+else?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.15 (GNU/Linux)
+I am inclined to say that it is probably better to keep the
+"--cached only" as documented, at least on the "what are shown"
+side.
 
-iQIcBAABCgAGBQJX7alwAAoJEL9TXYEfUvaLTGUQAJyBC3Ei+W5cW10wCUUMgZho
-9sWNL7Q5RK+ei96Uf9tf7NEWxZ8XtQjkgKV0gXqgd4h2N+oqwIZDfqTLmCwNxRPc
-/h3L1YxqTyP3bouOcvEsO8nA433SPFzlBpO6bRCERsIj3CRTs1vT54/9MGiQvYLN
-pyqKSHAi9cgU7eVZYO8XBpNqbaFLEjOx/DauY+/zghbYWUEH5hdIh/AQqiIleckS
-MUyf/jN1Zy4X7Hhc2+4YDIeXIvzrJvLuFI4UCKfQbZ1oTC0gtLrp9BazhKk8O7E/
-Ntun2Qk20cawmbREctHBOg+is0YWZRkCS5N0ikOrljjchllIDROyeAvYHvn/48Kh
-gaj9FzoUyOPfUca1ft7RoEYxUf0PgSu/UdkT95O10IHhn1iC71jt129bq038FiLQ
-F9Iq14jph/l61hIPATDjYS+JvtB5ExxIPgN+CGsiKXUL+3+O1EW7PNrXvBGK9zr1
-iAl2wd4egXD1WlsG9eHD2TSSCgRAzWRHdPYK+r7nYrn53fV+eup2Xa01EvzgkCuh
-Z0EXYuhtunszkG5TSly89l4vz/eiw362IOi4VvolWOs59itTVshH6yheoDTrt1MH
-ueb7RetCztzrD4O1+vbTM1VBF/8tMCoIVArKWJT8uCk8WjirGccL5CDmRNSxMq9i
-33Jy5xsV4Y7fVJYbboB+
-=Y23H
------END PGP SIGNATURE-----
-
---4jy2bep6fssfhgfy--
+Thanks.
