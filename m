@@ -2,113 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8E3F207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 20:01:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31D9A207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 20:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932887AbcI3UBU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 16:01:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57516 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932805AbcI3UBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 16:01:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 571783ECCB;
-        Fri, 30 Sep 2016 16:01:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dPQ4AkSFXQBPAt495BDnOMAQztw=; b=mlpCwX
-        LjLD9fEmm+7BbGHTgr5tUHa8gSWj2c0GR11pJJsSseGmKWX+IJUNmhnEP4LdoicY
-        Gck9pJetLzcbAQgrG00WqQz9GeuAwOxUhrK6kZqCDVtzCkHyKlAmRlG459OaEtwI
-        V/XC/42RolmurtkeDd3i5ocFR+62eK8zVydHo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YRhugXbO6EbsoY1b0n/imO5eoyigjpvq
-        YstpSHNG/FQk2vMyxMEXir/V6MaYcAbnFLmvzf5y8m+VkuY3l+1Hvt80zqapsqWv
-        te78RLnkDiwPyFvp07cU6Rrq70BBJ4/w3T6U7Geizcua56jCWl0V73yGAIPeHzY5
-        ZJMJ/bb+n/4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5017D3ECCA;
-        Fri, 30 Sep 2016 16:01:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CE1E83ECC9;
-        Fri, 30 Sep 2016 16:01:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-References: <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
-        <20160929191609.maxggcli76472t4g@sigill.intra.peff.net>
-        <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
-        <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
-        <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
-        <CA+55aFyXxQSygO-gqevLZDjuggOaHs7HsRO=P6GhpC3GStqwvQ@mail.gmail.com>
-        <CA+55aFxsfxvDQqi2M3TUVvAHUx3Qm1hHQ4DMyzXzN6V2v7o-3A@mail.gmail.com>
-        <CA+55aFyHn0Q-qPq4dPEJ7X_4jf5UbsVw2vE-4LoWYbPn6gS10g@mail.gmail.com>
-        <20160930080658.lyi7aovvazjmy346@sigill.intra.peff.net>
-        <CA+55aFxW1S6FNUh8YjSXkfC8=F5dka1rY-As6PWfG2rqmrsXXA@mail.gmail.com>
-        <CA+55aFxyF=xX84AXr8MG14MRHwdrQw00PBM20UfqBdidaeqdMg@mail.gmail.com>
-Date:   Fri, 30 Sep 2016 13:01:14 -0700
-In-Reply-To: <CA+55aFxyF=xX84AXr8MG14MRHwdrQw00PBM20UfqBdidaeqdMg@mail.gmail.com>
-        (Linus Torvalds's message of "Fri, 30 Sep 2016 11:21:08 -0700")
-Message-ID: <xmqq4m4x9myd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1751176AbcI3UXb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 16:23:31 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:34441 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750703AbcI3UXb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 16:23:31 -0400
+Received: by mail-pf0-f175.google.com with SMTP id u78so18121442pfa.1
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 13:23:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=KgifhP4I21weBgkNI9cp0PQlnDGuBYRlOXoUWmYAIH8=;
+        b=OrHd1uJjF0jCwN9c1suqDmSxmcuZpvVOzG0IuEAqUua1etoNqA4B3NLUYEFJyH7XgZ
+         +pUM33wzaM/GdSNiJGy0DDKQMr9V2O/wmCHIR4QLBjzjNR9bJDYx7yeFxU+n7QEZaRNr
+         E8aV2zHUwmp7nWwascaDL5In3y/h/YP5K8i2favlZ89kVstDCH5mwjlt1nhrTGSFIcB+
+         1AYM50euT7DVJyQeC3tOcIHriDvCHqj7YusJGalIHOFKxCIsb3yGDadZnkdRxUqjxX+D
+         TdHJD+Dexxaa9DJnTfRc2LdZv01/34+bC+YVfabT4/BbD4Xl/keE2lu3JYp+olt/snJS
+         pHsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=KgifhP4I21weBgkNI9cp0PQlnDGuBYRlOXoUWmYAIH8=;
+        b=O9l6EHdwL8msyJJh5naGyJw6Utq5YkoaC+iFlnMABYeHl8hjb4ddu8kL7vELeI4fj6
+         ESczo/8ipubjXzqfV/u6U1qUXz65B7o6fjB3KMFGfEkSXup+nAhfh4BzxgFzwqXwjSSz
+         3Fe/4Km42pTiASABvxIfwxGWkaSHNI4DCcn3P4avaXtRcu5pGCMyiEztkoeE6oTDv0Ex
+         w4qWA0DpietznISti2jcWpwbN43xuCN6ZTi6Q9Nxburxtv/U0uFRbO0mKVhlsZ2M2DIW
+         AIYBDeg8MdctcbHvsGeoNu+k8Vel2kuyKYmqv7CLTcqjklEZ7js1uHd13SnRShDkMnEo
+         Ca6g==
+X-Gm-Message-State: AA6/9RmJWObWhUOeRhBWG90MYzueI7MDPwwgDA0wAO+ltyWz0o1MGVO62cllnJo2dtow5ill
+X-Received: by 10.98.20.137 with SMTP id 131mr14712918pfu.11.1475267010194;
+        Fri, 30 Sep 2016 13:23:30 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:35e6:5cc4:12d6:7ce1])
+        by smtp.gmail.com with ESMTPSA id x66sm29832656pfb.86.2016.09.30.13.23.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Sep 2016 13:23:29 -0700 (PDT)
+Subject: Re: [RFC/PATCH 0/2] place cherry pick line below commit title
+To:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1475176070.git.jonathantanmy@google.com>
+ <xmqqtwcycqul.fsf@gitster.mtv.corp.google.com>
+ <11e41a94-df8c-494a-584b-e2bc8da2de3a@google.com>
+ <xmqq8tu99o75.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <42332581-e47a-0fc8-ed5c-44e7e1c19341@google.com>
+Date:   Fri, 30 Sep 2016 13:23:28 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5B05682-8748-11E6-BD53-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqq8tu99o75.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> On Fri, Sep 30, 2016 at 10:54 AM, Linus Torvalds
-> <torvalds@linux-foundation.org> wrote:
->>
->>> So IMHO, the best combination is the init_default_abbrev() you posted in
->>> [1], but initialized at the top of find_unique_abbrev(). And cached
->>> there, obviously, in a similar way.
->>
->> That's certainly possible, but I'm really not happy with how the
->> counting function looks.  And nobody actually stood up to say "yeah,
->> that gets alternate loose objects right" or "if you have tons of those
->> alternate loose objects you have other issues anyway". I think
->> somebody would have to "own" that counting function, the advantage of
->> just putting it into disambiguate_state is that we just get the
->> counting for free..
+On 09/30/2016 12:34 PM, Junio C Hamano wrote:
+>> 2) The Linux kernel's repository has some "commit ... upstream." lines
+>> in this position (below the commit title) - for example, in commit
+>> dacc0987fd2e.
 >
-> Side note: maybe we can mix the two approaches, and keep the counting
-> in the disambiguation state, and just make the counting function do
->
->     init_object_disambiguation();
->     find_short_object_filename(&ds);
->     find_short_packed_object(&ds);
->     finish_object_disambiguation(&ds, sha1);
->
-> and then just use "ds.nrobjects". So the counting would still be done
-> by the disambiguation code, it just woudln't be in get_short_sha1().
->
-> So here's another version that takes that approach. And if somebody
-> (hint hint) wants to do the counting differently, they can perhaps
-> send an incremental patch to do that.
->
-> (This patch also contains the few setup issues Junio found with the
-> new "default_abbrev is negative" model)
+> "A group of people seem to prefer it there" does not lead to
+> "therefore let's move it there for everybody".  It does open a
+> possibility that we may want to add a new option to put it there,
+> but does not justify changing what existing "-x" option does.
 
-Sorry, but I do not quite see the point in the difference between
-this one and your original that had a hook in get_short_sha1(), as
-it seemed to me that Peff's objection was about the counting done in
-find_short_object_filename() and find_short_packed_object(), which
-is (understandably) still here.
-
-
-
+To clarify, my patch adds the new option you described (to place it 
+below the title instead of at the bottom of the commit message). The 
+default is still the current behavior.
