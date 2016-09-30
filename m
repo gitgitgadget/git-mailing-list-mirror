@@ -2,71 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB89207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 21:38:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8610207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 22:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933294AbcI3ViU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 17:38:20 -0400
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:59789 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932883AbcI3ViS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 17:38:18 -0400
-X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Sep 2016 17:38:18 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 98DD410005D;
-        Fri, 30 Sep 2016 21:32:04 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id QfkEDmO397Qg; Fri, 30 Sep 2016 21:32:04 +0000 (GMT)
-Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id 886FD80035;
-        Fri, 30 Sep 2016 21:32:04 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Fri, 30 Sep 2016 21:32:04 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef]) by
- exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef%17]) with mapi id
- 15.00.1156.000; Fri, 30 Sep 2016 21:32:04 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Jeff King' <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH 3/6] tmp-objdir: introduce API for temporary object
- directories
-Thread-Topic: [PATCH 3/6] tmp-objdir: introduce API for temporary object
- directories
-Thread-Index: AQHSG1pMQwb/ldXAYUWzW5NCDp/JCaCSh1nA
-Date:   Fri, 30 Sep 2016 21:32:04 +0000
-Message-ID: <b7136f0690244aee94ff2db726a7edce@exmbdft7.ad.twosigma.com>
-References: <20160930193533.ynbepaago6oycg5t@sigill.intra.peff.net>
- <20160930193613.dwpjiw5xps6a3wgj@sigill.intra.peff.net>
-In-Reply-To: <20160930193613.dwpjiw5xps6a3wgj@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.13]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1751998AbcI3WFR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 18:05:17 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:34612 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751919AbcI3WFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 18:05:16 -0400
+Received: by mail-yb0-f196.google.com with SMTP id z8so1712222ybh.1
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 15:05:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Zi+BlSfYMQ5tnb+LG2KO7l1Mx4rB4EFtjrEc2eKqleg=;
+        b=XvmN2jseI7UpY0OP+EWGjc4+GWnLsv1/hkNXi1agHbCItiDoNnr84/UMYlBUhUjPOT
+         k5lqsfcM+oRvC+aofRFTmQOwZOQU0ug8XgoCKNWPKhAqlEmJhX9CdvUIuKMLwmyZqVPb
+         69/zA3gzDjbA3eTAPGYiOeuxqQrbMh1MJk3yRY4fCNaJmcYeAZIstHZAYvPpRWsFOhJ6
+         vBPBgaB6SMeiKvZp3LZNJ6vDeu8CCzvI391rtw2SwOEXKNLDgzUrBPudT+I0vG4KQONW
+         geFZBOraV1c9SO8iVZXJI5u/HZINB2IcpKEu1s12oqtcYVBizmdkrZRU7/mm/Km6W6Sr
+         AS1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Zi+BlSfYMQ5tnb+LG2KO7l1Mx4rB4EFtjrEc2eKqleg=;
+        b=IyewF+45sHmcagCQmjRnXMi/SkbPJQuxlyh8OrZ5EXuLW0F/iaaz+balAaP5jv6AOe
+         E4FXvaLGXhpiJDtKL5rfXUwmqRRrbM8b9oBeDkar/REhINuw+rkCmX9SB6KsHK4BZdoF
+         9uDJKGl9tdzPBL0pe6mzzfNJYbX+Vt2o0xv1ac+ntzz9gC+uEeUNQ30Qbrf1Sfkii5D2
+         B5kVdhnlrUlCM7lccsSY8mF1x70syPLnXs3603NMjtTJE5TglvX26BK0272yAUGLNvTz
+         eYBToVU0zzGpbDsbP3xOfi/Xkw1ZGndl4+b1OUHuo4Mzhj/cXyLpp+RMJhjYveo/ea0K
+         SLmA==
+X-Gm-Message-State: AA6/9RmStuvFDOCPy6vok1NCtnZK68q51S2sO0XKxeldYilJPG2nCdpQ7bbaDl52QZ8FxHj68vG1haysmIQ+4g==
+X-Received: by 10.37.163.104 with SMTP id d95mr6663860ybi.132.1475273115372;
+ Fri, 30 Sep 2016 15:05:15 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.37.96.195 with HTTP; Fri, 30 Sep 2016 15:04:54 -0700 (PDT)
+In-Reply-To: <20160930105639.15589-1-szeder@ira.uka.de>
+References: <CA+P7+xoxTpqn=jkuHYp5pKCCWfKLP5OKCTBYkcTVw_RhEw0KVw@mail.gmail.com>
+ <20160930105639.15589-1-szeder@ira.uka.de>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 30 Sep 2016 15:04:54 -0700
+Message-ID: <CA+P7+xpWi_qgRTVmLf-bJq1mn7dW0Hf6544wHsOgFniDQyHo2Q@mail.gmail.com>
+Subject: Re: [PATCH 1/5] pretty: allow formatting DATE_SHORT
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+Cc:     Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiArc3RhdGljIHZvaWQgZW52X2FwcGVuZChzdHJ1Y3QgYXJndl9hcnJheSAqZW52LCBjb25zdCBj
-aGFyICprZXksIGNvbnN0DQo+ICtjaGFyICp2YWwpIHsNCj4gKwljb25zdCBjaGFyICpvbGQgPSBn
-ZXRlbnYoa2V5KTsNCj4gKw0KPiArCWlmICghb2xkKQ0KPiArCQlhcmd2X2FycmF5X3B1c2hmKGVu
-diwgIiVzPSVzIiwga2V5LCB2YWwpOw0KPiArCWVsc2UNCj4gKwkJYXJndl9hcnJheV9wdXNoZihl
-bnYsICIlcz0lcyVjJXMiLCBrZXksIG9sZCwgUEFUSF9TRVAsDQo+IHZhbCk7IA0KPit9DQoNCkkg
-d291bGQgbGlrZSBhIGNvbW1lbnQgZXhwbGFpbmluZyB0aGlzIGZ1bmN0aW9uLiANCg0KPiArICog
-RmluYWxpemUgYSB0ZW1wb3Jhcnkgb2JqZWN0IGRpcmVjdG9yeSBieSBtaWdyYXRpbmcgaXRzIG9i
-amVjdHMgaW50bw0KPiArdGhlIG1haW4NCj4gKyAqIG9iamVjdCBkYXRhYmFzZS4NCj4gKyAqLw0K
-DQpUaGlzIHNob3VsZCBtZW50aW9uIHRoYXQgaXQgZnJlZXMgaXRzIGFyZ3VtZW50Lg0KDQo=
+On Fri, Sep 30, 2016 at 3:56 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de> wrot=
+e:
+>> On Thu, Sep 29, 2016 at 1:33 AM, Jeff King <peff@peff.net> wrote:
+>> > There's no way to do this short of "%ad" and --date=3Dshort,
+>> > but that limits you to having a single date format in the
+>> > output.
+>> >
+>> > This would possibly be better done with something more like
+>> > "%ad(short)".
+>> >
+>> > Signed-off-by: Jeff King <peff@peff.net>
+>> > ---
+>> >  pretty.c | 3 +++
+>> >  1 file changed, 3 insertions(+)
+>> >
+>> > diff --git a/pretty.c b/pretty.c
+>> > index 493edb0..c532c17 100644
+>> > --- a/pretty.c
+>> > +++ b/pretty.c
+>> > @@ -727,6 +727,9 @@ static size_t format_person_part(struct strbuf *sb=
+, char part,
+>> >         case 'I':       /* date, ISO 8601 strict */
+>> >                 strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO860=
+1_STRICT)));
+>> >                 return placeholder_len;
+>> > +       case 's':
+>> > +               strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)=
+));
+>> > +               return placeholder_len;
+>> >         }
+>> >
+>> >  skip:
+>> > --
+>> > 2.10.0.566.g5365f87
+>> >
+>>
+>> Nice. I use date=3Dshort in some of my aliases and switching to this is
+>> nicer. I assume this turns into "%(as)"?
+>>
+>> What about documenting this in  pretty-formats.txt?
+>
+> Here you go :)
+>
+>   http://public-inbox.org/git/1444235305-8718-1-git-send-email-szeder@ira=
+.uka.de/
+>
+
+Nice, thanks!
+
+Regards,
+Jake
