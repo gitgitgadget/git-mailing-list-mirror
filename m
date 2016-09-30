@@ -2,128 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F853207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 18:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CDD9207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 18:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932348AbcI3SlC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 14:41:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54076 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933227AbcI3SlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 14:41:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 105533E0CC;
-        Fri, 30 Sep 2016 14:40:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=s+kATFksqrcess8Hag5wOlYQJbU=; b=U0+O3p
-        n9nFSZDtPoDOQN0zpA/JnhiL+goTA1+WGCJMyggbsnWeoGpuonb5DN7TbNH3pW4N
-        IBdTx2tgFwYfqd6j0oLbqL9siNMt9JtUkeBuBD46oxiaTjxkJ8gQCBNOkS79KOjC
-        /q41oQW+UmCjDetSA6MRTp5qBlVinZwApGOf4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t3YwGxPEYvzmwlCviqBT7HGTTFINc1zK
-        obGTTQ3IAYK7uQjuztc56nU83QimCezvBHySQbiub7Ygl8R3KKoOaxyLOqjd605w
-        8y+EvtCWrUF+P5idwBr+JwNe2SVRGrytG9GEbmOmOSdK0nRP5gV2z3uG0xq8p1Zn
-        t1Jr7ZKpl+A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 07F953E0CB;
-        Fri, 30 Sep 2016 14:40:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8536F3E0CA;
-        Fri, 30 Sep 2016 14:40:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
+        id S933366AbcI3Svf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 14:51:35 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:32970 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932875AbcI3Svd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 14:51:33 -0400
+Received: by mail-oi0-f67.google.com with SMTP id w11so7735058oia.0
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 11:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=/MF5mC2ur97qXMKeJ5W84v4fzEg7OMr867VEGyUUdVU=;
+        b=faVMtrEEu36g2Vk34qciSmf4tG84NgZt7OFXMWEfB0mT3+DqAY88yUXvaVNgKXFNcQ
+         DhCKWY8BNJXWAN8wkE70FiEjto3nyC6R4qYsSt+Q/33YCqbfidL+MSEQprl42qApcue5
+         JuCdo8Of8S9GviVXLxHmNUfGyxS8qFY+LaWmhME+dFWBI9jtRM1RG7tPhp9VguCAWP37
+         MnMhVowyKfpYbfnPckIepjJNV7Pmk0+umB2HZ9CVddcTCIlm0CK9fmCLYU2KMV3S1I5C
+         GeDaD4UcDdY8paO5xI1XwDw0BqPMC2KNKrZ8JM7fcqPFD4apIZ9IaDA2Ol7xTz/LumHO
+         PdSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=/MF5mC2ur97qXMKeJ5W84v4fzEg7OMr867VEGyUUdVU=;
+        b=Z4IIg/U+Sdl8ES+1Z+luI8gBcvjkEJjo4WWGLRAGrYDrLFMPDPTV+1u9v08IHEY6q0
+         Rheoz0Zvj2UBDrr+vhuQYkQcs3Tuhwsk5o8JO6Wd3gxbbkdOCV+6S5Z3sykGbVKHkD24
+         IlSfOnz/Odv6dcGewUHUSoUWdoYYb9pSEvlE/UD4Sc1JvnxVnJnEz/KSqrjPeaqigVzF
+         9J3FgFRc9rc95feCJCyrkuCeQQLk8turG6AYN5IU8fTQeuinP+Yr2vfH5CYzAggFRj8I
+         JvzLnclr+Vsu7HoNb2+EScj79aSChvPHf7QazFMNQ3q5RpZmFNNfah352YdNzv5Nlu3m
+         tIHw==
+X-Gm-Message-State: AA6/9RnH7drphacAbexrNrKAtbDxiOcP3vm20lpsSYg+L9y36qX4Y2amCmgsTIiModcqM2HfhlFzsZwss+IiSA==
+X-Received: by 10.202.175.208 with SMTP id y199mr8470085oie.86.1475261476905;
+ Fri, 30 Sep 2016 11:51:16 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.182.241.106 with HTTP; Fri, 30 Sep 2016 11:51:15 -0700 (PDT)
+In-Reply-To: <xmqqmvip9qo7.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
+ <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
+ <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
+ <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+ <20160929191609.maxggcli76472t4g@sigill.intra.peff.net> <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
+ <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com> <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
+ <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com> <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
+ <CA+55aFyXxQSygO-gqevLZDjuggOaHs7HsRO=P6GhpC3GStqwvQ@mail.gmail.com>
+ <CA+55aFxsfxvDQqi2M3TUVvAHUx3Qm1hHQ4DMyzXzN6V2v7o-3A@mail.gmail.com>
+ <CA+55aFyHn0Q-qPq4dPEJ7X_4jf5UbsVw2vE-4LoWYbPn6gS10g@mail.gmail.com>
+ <xmqqtwcyavou.fsf@gitster.mtv.corp.google.com> <xmqqoa36auyx.fsf@gitster.mtv.corp.google.com>
+ <xmqqeg42au5w.fsf@gitster.mtv.corp.google.com> <xmqqmvip9qo7.fsf@gitster.mtv.corp.google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 30 Sep 2016 11:51:15 -0700
+X-Google-Sender-Auth: 6685ycl2_X_u3O6uzjoZIZMleyU
+Message-ID: <CA+55aFyDqYCBCvw0MjZ8fNhaVbRSjsSXNDH--unYkoeJNwVcVg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-        <20160928233047.14313-1-gitster@pobox.com>
-        <20160928233047.14313-5-gitster@pobox.com>
-        <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org>
-        <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
-        <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
-        <20160929191609.maxggcli76472t4g@sigill.intra.peff.net>
-        <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
-        <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
-        <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
-        <CA+55aFyXxQSygO-gqevLZDjuggOaHs7HsRO=P6GhpC3GStqwvQ@mail.gmail.com>
-        <CA+55aFxsfxvDQqi2M3TUVvAHUx3Qm1hHQ4DMyzXzN6V2v7o-3A@mail.gmail.com>
-        <CA+55aFyHn0Q-qPq4dPEJ7X_4jf5UbsVw2vE-4LoWYbPn6gS10g@mail.gmail.com>
-        <xmqqtwcyavou.fsf@gitster.mtv.corp.google.com>
-        <xmqqoa36auyx.fsf@gitster.mtv.corp.google.com>
-        <xmqqeg42au5w.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 30 Sep 2016 11:40:56 -0700
-In-Reply-To: <xmqqeg42au5w.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 29 Sep 2016 21:27:55 -0700")
-Message-ID: <xmqqmvip9qo7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6DC2849E-873D-11E6-BC81-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Thu, 29 Sep 2016 21:19:20 -0700
-> Subject: [PATCH] abbrev: adjust to the new world order
+On Fri, Sep 30, 2016 at 11:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The default_abbrev used to be a concrete value usable as the default
-> abbreviation length.  The code that sets custom abbreviation length,
-> in response to command line argument, often did something like:
->
-> 	if (skip_prefix(arg, "--abbrev=", &arg))
-> 		abbrev = atoi(arg);
-> 	else if (!strcmp("--abbrev", &arg))
-> 		abbrev = DEFAULT_ABBREV;
-> 	/* make the value sane */
-> 	if (abbrev < 0 || 40 < abbrev)
-> 		abbrev = ... some sane value ...
->
-> The new world order however is that the default_abbrev is a negative
-> value that signals find_unique_abbrev() that it needs to dynamically
-> find out a good default value.  We shouldn't coerce a negative value
-> into a random positive value like the above sample code.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> There is another instance buried deep in an obscure macro.  A
+> minimum fix may look like this, but I really hope somebody else
+> finds a better approach.
 
-There is another instance buried deep in an obscure macro.  A
-minimum fix may look like this, but I really hope somebody else
-finds a better approach.  Peff alluded to "when it is still -1
-substituting it with a reasonable value like 7" in a separate
-thread, and we probably would want a way to allow accessing that
-"reasonable value like 7" without triggering auto sizing logic
-too early.
+Heh. Yeah, that's just ugly. I assume this is why the odd git fetch
+pretty-printing test was off by one column..
 
-With this and the patch in the message I am responding to, your
-patch from the last night seems to pass all the tests for me.
+Considering that TRANSPORT_SUMMARY and TRANSPORT_SUMMARY_WIDTH are
+both used in exactly one place each, I'd suggest getting rid of that
+crazy macro, and just expanding it in those places to avoid these
+kinds of crazy "hiding variables inside complex defines thning".
 
- transport.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+And maybe just deciding to hardcode TRANSPORT_SUMMARY_WIDTH to 17
+(which was it's original default value and presumably is what the test
+is effectively hardcoded for too), and avoiding that complexity
+entirely.
 
-diff --git a/transport.h b/transport.h
-index 6fe3485325..8a96e22bb0 100644
---- a/transport.h
-+++ b/transport.h
-@@ -142,7 +142,7 @@ struct transport {
- #define TRANSPORT_PUSH_ATOMIC 8192
- #define TRANSPORT_PUSH_OPTIONS 16384
- 
--#define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
-+#define TRANSPORT_SUMMARY_WIDTH (2 * (DEFAULT_ABBREV < 0 ? 7 : DEFAULT_ABBREV) + 3)
- #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
- 
- /* Returns a transport suitable for the url */
+                Linus
