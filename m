@@ -2,135 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0FC9207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 22:13:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06678207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 22:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933498AbcI3WNY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 18:13:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50685 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751147AbcI3WNW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 18:13:22 -0400
-Received: (qmail 9426 invoked by uid 109); 30 Sep 2016 22:13:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Sep 2016 22:13:21 +0000
-Received: (qmail 14379 invoked by uid 111); 30 Sep 2016 22:13:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Sep 2016 18:13:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Sep 2016 18:13:19 -0400
-Date:   Fri, 30 Sep 2016 18:13:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, David Turner <dturner@twosigma.com>
-Subject: Re: [PATCH 3/6] tmp-objdir: introduce API for temporary object
- directories
-Message-ID: <20160930221319.a6dwhqarcj4v7vwu@sigill.intra.peff.net>
-References: <20160930193533.ynbepaago6oycg5t@sigill.intra.peff.net>
- <20160930193613.dwpjiw5xps6a3wgj@sigill.intra.peff.net>
- <xmqqponl84h4.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqponl84h4.fsf@gitster.mtv.corp.google.com>
+        id S1751866AbcI3WSN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 18:18:13 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:32854 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750832AbcI3WSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 18:18:12 -0400
+Received: by mail-qk0-f195.google.com with SMTP id n66so7139920qkf.0
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 15:18:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=kanM/AUxwbRmP8RVTNV9lpXEya7BbsIDv36Crktn3q4=;
+        b=y231WPSgE8pVZNTL18KIggVLilcIqcd/Xivb8Rhmwpk+jOCP2Fd5I5PBx9YYdqZG/P
+         BYI5UXPmvKjzVvxceZuKdmG11qoxkc6W2qDSDV9uH2FWNeKpoRrLV32ZiM4DqUpf5o8y
+         zkC1NHYHHcqMG8JzLwBZiJj/2yRWDf3i9ZoL86U6twKS/q1tqBMFtR+kEid6GHQDPfx+
+         clqsRa/yVUBC4rB8OigCvV4sL3Z5E3biqqa82r7ycXPsQuCXaogaaZKbd2xdW5dMJrVQ
+         OTXio+9FvjAdyWmDB+nWWCAytXvbBkiRte9uzN9ppNM7aicXv/qo9rzn9yhdLCoQkmm8
+         tWMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kanM/AUxwbRmP8RVTNV9lpXEya7BbsIDv36Crktn3q4=;
+        b=hTp+j20PO5XaG9u/ofo46+ZBpJohNoq+XE8onswg5pqyxEaEMjAvzWCa0pd7yF2OZ8
+         W5pSku68E0UL6I15nPyns25mDy1oqUNEUy2g1Ivj9x36UTOgxSdL30EAgEgZaCtwwJve
+         P7+lJdwSqcPymJVJ180Z5eGpY9RGD+1cHHpW9KtF/drR4ci7imRIJIMCm7ZScdnbtr0+
+         RHfes+84TMpdfGJwdjSjVhUMTL4b1JrJZfGEb0Ifly2pqrtg0nqyp0BsEvt6uxq4RlSE
+         st3S6ooBRjTAxT3PCmZiUbcEpR9CEJGdaNDWiYrKcRghDiZ8qhCRJvtQEVwz0S7h5AKB
+         ez2g==
+X-Gm-Message-State: AA6/9Rn9JEDvXmMY2PCXivue/GqDgngCMgtb+nTUOPzP4+7VCwenuAFTUb6nx32fI8MZr6tG
+X-Received: by 10.55.144.193 with SMTP id s184mr8956069qkd.286.1475273891806;
+        Fri, 30 Sep 2016 15:18:11 -0700 (PDT)
+Received: from LykOS.localdomain (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
+        by smtp.gmail.com with ESMTPSA id x21sm11347615qkb.19.2016.09.30.15.18.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Sep 2016 15:18:11 -0700 (PDT)
+From:   santiago@nyu.edu
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
+        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
+Subject: [PATCH v3 0/5] Add --format to tag verification
+Date:   Fri, 30 Sep 2016 18:18:01 -0400
+Message-Id: <20160930221806.3398-1-santiago@nyu.edu>
+X-Mailer: git-send-email 2.10.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 30, 2016 at 02:25:43PM -0700, Junio C Hamano wrote:
+From: Santiago Torres <santiago@nyu.edu>
 
-> > +void add_to_alternates_internal(const char *reference)
-> > +{
-> > +	prepare_alt_odb();
-> > +	link_alt_odb_entries(reference, strlen(reference), '\n', NULL, 0);
-> > +}
-> > +
-> 
-> A function _internal being extern felt a bit funny.  We are only
-> appending so the first one does not have to be reprepare.
+This is the third iteration of [1][2], and as a result of the discussion
+in [3].
 
-It's a match for add_to_alternates_file(). Suggestions for a better word
-are welcome.
+In this re-roll we:
 
-We do need to prepare_alt_odb(), as that is what sets up the
-alt_odb_tail pointer. And also, a later prepare() call would overwrite
-our entry.  We could refactor the alt_odb code, but it seemed simplest
-to just make sure we don't add to an unprepared list.
+* Fixed all the signed-off-by's
 
-> > +	t = xmalloc(sizeof(*t));
-> > +	strbuf_init(&t->path, 0);
-> > +	argv_array_init(&t->env);
-> > +
-> > +	strbuf_addf(&t->path, "%s/incoming-XXXXXX", get_object_directory());
-> 
-> I was wondering where you would put this in.  Inside .git/objects/
-> sounds good.
+[0002]
+* Renamed the function format_ref to pretty_print_ref instead, which
+  is a more descriptive name 
 
-The name "incoming" is kind of arbitrary and related to the fact that
-this is used for receive-pack (though if we were to use it on the
-fetching side, I think it would be equally correct). I don't think it
-really matters in practice.
+[0004] 
+* Added the respective line for the new --format parameter in the
+  documentation.
 
-> > +static int pack_copy_priority(const char *name)
-> > +{
-> > +	if (!starts_with(name, "pack"))
-> > +		return 0;
-> > +	if (ends_with(name, ".keep"))
-> > +		return 1;
-> > +	if (ends_with(name, ".pack"))
-> > +		return 2;
-> > +	if (ends_with(name, ".idx"))
-> > +		return 3;
-> > +	return 4;
-> > +}
-> 
-> Thanks for being careful.  A blind "cp -r" would have ruined the
-> day.
-> 
-> We do not do bitmaps upon receiving, I guess.
+[0005] 
+* Added mention of the --format flag in the documentation files. 
+* Fixed the function signatures, now they take an opaque void *cb_data pointer
+  so it can be used in a more general way (by e.g., delete_tag).
 
-But we don't, but they (and anything else) would just sort at the end,
-which is OK.
+This patch applies to 2.10.0 and master.
 
-> > + *	struct tmp_objdir *t = tmp_objdir_create();
-> > + *	if (!run_command_v_opt_cd_env(cmd, 0, NULL, tmp_objdir_env(t)) &&
-> > + *	    !tmp_objdir_migrate(t))
-> > + *		printf("success!\n");
-> > + *	else
-> > + *		die("failed...tmp_objdir will clean up for us");
-> 
-> Made me briefly wonder if a caller might want to use appropriate
-> environment to use the tmp-objdir given by the API in addition to
-> its own, but then such a caller just needs to prepare its own argv-array
-> and concatenate tmp_objdir_env() before making the opt_cd_env call,
-> so this is perfectly fine.
+[1] http://public-inbox.org/git/20160922185317.349-1-santiago@nyu.edu/
+[2] http://public-inbox.org/git/20160926224233.32702-1-santiago@nyu.edu/
+[3] http://public-inbox.org/git/20160607195608.16643-1-santiago@nyu.edu/
 
-Yep, and that's exactly what happens in one spot of the next patch.
-My original had just open-coded, but I was happy to see we have
-argv_array_pushv() these days, so it's a one-liner.
+Lukas Puehringer (4):
+  gpg-interface, tag: add GPG_VERIFY_QUIET flag
+  ref-filter: add function to print single ref_array_item
+  tag: add format specifier to gpg_verify_tag
+  builtin/tag: add --format argument for tag -v
 
-In the very original version, the receive-pack process did not need to
-access the new objects at all (not until ref update time anyway, at
-which point they've been migrated). And that's why the environment is
-intentionally kept separate, and the caller can feed it to whichever
-sub-programs it chooses. But a later version of git that handled shallow
-pushes required receive-pack to actually look at the objects, and I
-added the add_to_alternates_internal() call you see here.
+Santiago Torres (1):
+  builtin/verify-tag: add --format to verify-tag
 
-At that point, it does make me wonder if a better interface would be for
-tmp_objdir to just set up the environment variables in the parent
-process in the first place, and then restore them upon
-tmp_objdir_destroy(). It makes things a bit more automatic, which makes
-me hesitate, but I think it would be fine for receive-pack.
+ Documentation/git-tag.txt        |  2 +-
+ Documentation/git-verify-tag.txt |  2 +-
+ builtin/tag.c                    | 34 +++++++++++++++++++++++-----------
+ builtin/verify-tag.c             | 13 +++++++++++--
+ gpg-interface.h                  |  1 +
+ ref-filter.c                     | 10 ++++++++++
+ ref-filter.h                     |  3 +++
+ tag.c                            | 22 +++++++++++++++-------
+ tag.h                            |  4 ++--
+ 9 files changed, 67 insertions(+), 24 deletions(-)
 
-I dunno. I mostly left it alone because I did it this way long ago, and
-it wasn't broke. Polishing for upstream is an opportunity to fix old
-oddities, but I think there is some value in applying a more
-battle-tested patch.
-
--Peff
+-- 
+2.10.0
 
