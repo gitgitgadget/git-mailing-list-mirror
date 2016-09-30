@@ -2,183 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38DE3207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 17:53:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E9B1207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 17:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933315AbcI3RxG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 13:53:06 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35523 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932430AbcI3RxF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 13:53:05 -0400
-Received: by mail-wm0-f65.google.com with SMTP id b4so4487554wmb.2
-        for <git@vger.kernel.org>; Fri, 30 Sep 2016 10:53:04 -0700 (PDT)
+        id S933621AbcI3RyU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 13:54:20 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:36514 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932430AbcI3RyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 13:54:18 -0400
+Received: by mail-oi0-f45.google.com with SMTP id t83so138699398oie.3
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 10:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=XuptzI1HWUFAI/gbuZYLIiZcf7exPBNrySvPPMDFqeg=;
-        b=aR/a/81kbLXssXXirpcIA4an5COqdDJNm3OnXIhdIeNisPjZgUR69vMDNa2pwaJ5QA
-         0hdOuwnZII+kf2L3pc1VAx2+WHtXu36PfSSfhXiAnLf5TMbgUjTMH0r1mWTbgqAl30fg
-         Sa2lckbLikbiMxGEBdTY+1sYNlUMohqF158neKDZ1pP2aSn/Q/UBRypDnvWlVufpL8L2
-         lF7ZLvlSHOgZutheeNWaZc3op97hNt2hwwux2T1TRvWTmMRk7YUhSXqh+YzJqZPWwZ5A
-         IXIZi5uA0PYdhxuKYg8G3WwXagMZd77K6w541vghiEAsrSfeFgrvV3+BWYab3JWzNg5s
-         EkwQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=9ILMSiCGXbkyhRZDmAcr0hO7SSXL241XlWAlk5wLK9c=;
+        b=gX1mBTNugStz8md8OmI+zMneuMybFDMuvZdMxMUJXKNG61pU35DRUxt63vuCx51B5V
+         HWELHNA4EKRtGc3JUzWkbyLW6k3HLWcJWO82TMFzhpSV2A8sVvm2bMndjXbwTi2e4U3r
+         PQDvWNGZkFxO17BThSXXQaD2hxDu9+wCtEjBRvr/suuVFs4QPyHffdysiRApltpSzpIh
+         qf10uwrgJJMH/tfOoucIk+vIWcz4C3a3tbHoO5Gc776HKmxN7OGaCGd1cBazILC3mwf2
+         MU3/bmL3fvZ5BI1QI8WMmgW1QsNfhsr7q8JkievAlLML9zEAnYkfttphD6tX7GfiwRpU
+         nKFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=XuptzI1HWUFAI/gbuZYLIiZcf7exPBNrySvPPMDFqeg=;
-        b=V7fSQ8g0Yht2R9b87elaJziuw28uJbJUMmiuyxyDuxFHwQeivcc9SnS3b2a2j0Ks/n
-         SSTT3fZY9YSJQAfFZ0ku3yk0g17zCIa/mqddY9C3b7Q1AW753oKZXB6CM1coTuHRs0I8
-         ugRrAr0muuQGhwkkO7s2yH410wBZ3n00oBIGxgXiEIqIbBNgtLxyaM72qWY68aVoCkkC
-         K87VPZyoU8pikMSJuXTQo7taJBWoGiKPYJI2lXpLeRM3scHsYj7V4Xrt23MvBpj972zr
-         BJ+a8JlezYfVOFOsCuqQbZRKD+on8QNXJEoeHtj1YjkrJpg8Zmg7gewdUzg4lRZESb/2
-         VJkw==
-X-Gm-Message-State: AA6/9RnVmYHJGPZWcQqI/Aa3YLu3CyMFY0uX4dek/5cS9rUKE/85HL4y4dCOCAc7n+ZpTQ==
-X-Received: by 10.194.202.133 with SMTP id ki5mr7695556wjc.45.1475257983227;
-        Fri, 30 Sep 2016 10:53:03 -0700 (PDT)
-Received: from [192.168.1.26] (afo182.neoplus.adsl.tpnet.pl. [83.25.144.182])
-        by smtp.googlemail.com with ESMTPSA id zz9sm18183742wjb.36.2016.09.30.10.53.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 30 Sep 2016 10:53:01 -0700 (PDT)
-Subject: Re: [PATCH v2 03/11] i18n: add--interactive: mark strings with
- interpolation for translation
-To:     Vasco Almeida <vascomalmeida@sapo.pt>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
- <1472646690-9699-4-git-send-email-vascomalmeida@sapo.pt>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <b8c25ae3-143c-3e9b-0c7b-115a9b4756ae@gmail.com>
-Date:   Fri, 30 Sep 2016 19:52:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=9ILMSiCGXbkyhRZDmAcr0hO7SSXL241XlWAlk5wLK9c=;
+        b=kwwfcJgW7a1nXPYOGdvpQ99KdUWa7L0HGnBYXxZu0hX0HGbZszvQ7NsXPGP3QPNSVt
+         MvLW6nw8oPDC4VzFwsch5RRnI2fLD7n3OksQsMryy1bunzM3s7imhK4SO/ZcxbVlTtZP
+         zKYWddbPoqIeNYA5rb0AwW6WGj1F7quiDk/fGinv+W/KFKk9cJGB6twH63zdPopjeMip
+         VszlR9r1kMezcl8XcqwKlX6qT1GAUFNvWeDPUnr7VuBt5uZGQHiksxPf+jdOlX7SoQ/u
+         cWJp/Afsa5QZ66QMdujZ4MlOd7PEUqFvWhn95choeNbwSKSup6k5GNzbFWv5NMa91cJO
+         1b9A==
+X-Gm-Message-State: AA6/9RnhfaFXO7jNX4juFSuOGq3VLOqLicqpaw4RHqy+ZV4C412s9xnFVPJgHdBHcaPpiHEEEZIy/qBWUKwsrg==
+X-Received: by 10.202.220.194 with SMTP id t185mr8238713oig.116.1475258057976;
+ Fri, 30 Sep 2016 10:54:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1472646690-9699-4-git-send-email-vascomalmeida@sapo.pt>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.182.241.106 with HTTP; Fri, 30 Sep 2016 10:54:16 -0700 (PDT)
+In-Reply-To: <20160930080658.lyi7aovvazjmy346@sigill.intra.peff.net>
+References: <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+ <20160929191609.maxggcli76472t4g@sigill.intra.peff.net> <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
+ <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com> <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
+ <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com> <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
+ <CA+55aFyXxQSygO-gqevLZDjuggOaHs7HsRO=P6GhpC3GStqwvQ@mail.gmail.com>
+ <CA+55aFxsfxvDQqi2M3TUVvAHUx3Qm1hHQ4DMyzXzN6V2v7o-3A@mail.gmail.com>
+ <CA+55aFyHn0Q-qPq4dPEJ7X_4jf5UbsVw2vE-4LoWYbPn6gS10g@mail.gmail.com> <20160930080658.lyi7aovvazjmy346@sigill.intra.peff.net>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 30 Sep 2016 10:54:16 -0700
+X-Google-Sender-Auth: S2vv1yIcB2kKt_msPJolsuSKwOA
+Message-ID: <CA+55aFxW1S6FNUh8YjSXkfC8=F5dka1rY-As6PWfG2rqmrsXXA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 31.08.2016 o 14:31, Vasco Almeida pisze:
+On Fri, Sep 30, 2016 at 1:06 AM, Jeff King <peff@peff.net> wrote:
+>
+> I agree that this deals with the performance concerns by caching the
+> default_abbrev_len and starting there. I still think it's unnecessarily
+> invasive to touch get_short_sha1() at all, which is otherwise only a
+> reading function.
 
-> Use of sprintf following die or error_msg is necessary for placeholder
-> substitution take place.
+So the reason that d oesn't work is that the "disambiguate_state" data
+where we keep the number of objects is only visible within
+get_short_sha1().
 
-No, it is not.  Though I don't think that we have in out Git::I18N
-the support for Perl i18n placeholder substitution.
+So outside that function, you don't have any sane way to figure out
+how many objects. So then you have to do the extra counting function..
 
-From gettext manual:
-https://www.gnu.org/software/gettext/manual/gettext.html#perl_002dformat
+> So IMHO, the best combination is the init_default_abbrev() you posted in
+> [1], but initialized at the top of find_unique_abbrev(). And cached
+> there, obviously, in a similar way.
 
-  15.3.16 Perl Format Strings
+That's certainly possible, but I'm really not happy with how the
+counting function looks.  And nobody actually stood up to say "yeah,
+that gets alternate loose objects right" or "if you have tons of those
+alternate loose objects you have other issues anyway". I think
+somebody would have to "own" that counting function, the advantage of
+just putting it into disambiguate_state is that we just get the
+counting for free..
 
-  There are two kinds format strings in Perl: those acceptable to the Perl
-  built-in function printf, labelled as ‘perl-format’, and those acceptable
-  to the libintl-perl function __x, labelled as ‘perl-brace-format’.
-
-  Perl printf format strings are described in the sprintf section of
-  ‘man perlfunc’.
-
-  Perl brace format strings are described in the Locale::TextDomain(3pm)
-  manual page of the CPAN package libintl-perl. In brief, Perl format uses
-  placeholders put between braces (‘{’ and ‘}’). The placeholder must have
-  the syntax of simple identifiers.
- 
-Git doesn't use Locale::TextDomain, from what I understand, to provide
-fallback in no-gettext case.  Also, Locale::TextDomain is not in core.
-
-The syntax, with the help of shorthand helper function, looks like this:
-http://search.cpan.org/dist/libintl-perl/lib/Locale/TextDomain.pm#EXPORTED_FUNCTIONS
-https://metacpan.org/pod/Locale::TextDomain#EXPORTED-FUNCTIONS
-
-  __x MSGID, ID1 => VAL1, ID2 => VAL2, ...
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  One of the nicest features in Perl is its capability to interpolate
-  variables into strings:
-
-    print "This is the $color $thing.\n";
-
-  This nice feature might con you into thinking that you could now write
-
-    print __"This is the $color $thing.\n";
-
-  [But this doesn't work...]
-
-  [...] The Perl backend to GNU gettext has defined an alternative format
-  [to using printf / sprintf] for interpolatable strings:
-
-    "This is the {color} {thing}.\n";
-
-  Instead of Perl variables you use place-holders (legal Perl variables
-  are also legal place-holders) in curly braces, and then you call
-
-    print __x ("This is the {color} {thing}.\n", 
-               thing => $thang,
-               color => $color);
-
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
->  git-add--interactive.perl | 26 ++++++++++++++------------
->  1 file changed, 14 insertions(+), 12 deletions(-)
-> 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index e11a33d..4e1e857 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -612,12 +612,12 @@ sub list_and_choose {
->  			else {
->  				$bottom = $top = find_unique($choice, @stuff);
->  				if (!defined $bottom) {
-> -					error_msg "Huh ($choice)?\n";
-> +					error_msg sprintf(__("Huh (%s)?\n"), $choice);
-
-So this would be, self explained without need of comment
-for translators:
-
-  +					error_msg __x ("Huh ({choice})?\n"), choice => $choice);
-
-
->  					next TOPLOOP;
->  				}
-
-Though this is probably more work that you wanted to do.
-The __x might be defined like this (borrowing from Locale::TextDomain),
-which needs to be put into perl/Git/I18N.pm
-
-  sub __ ($);
-  sub __expand ($%);
-
-  # With interpolation.
-  sub __x ($@)
-  {
-  	my ($msgid, %vars) = @_;
-
-  	return __expand (__($msgid), %vars);
-  }
-  
-  sub __expand ($%)
-  {
-  	my ($translation, %args) = @_;
-    
-  	my $re = join '|', map { quotemeta $_ } keys %args;
-  	$translation =~ s/\{($re)\}/defined $args{$1} ? $args{$1} : "{$1}"/ge;
-
-  	return $translation;
-  }
-
-
-
-Best regards,
--- 
-Jakub Narębski
+                         Linus
