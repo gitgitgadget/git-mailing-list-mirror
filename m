@@ -2,120 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C81207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 16:24:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C744220986
+	for <e@80x24.org>; Fri, 30 Sep 2016 16:33:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934068AbcI3QYY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Sep 2016 12:24:24 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:57953 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933749AbcI3QYW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2016 12:24:22 -0400
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Sep 2016 12:24:22 EDT
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-        by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id u8UGEDa4022370
-        for <git@vger.kernel.org>; Fri, 30 Sep 2016 19:14:15 +0300
-Date:   Fri, 30 Sep 2016 19:14:13 +0300
-From:   Konstantin Khomoutov <kostix+git@007spb.ru>
-To:     git@vger.kernel.org
-Subject: "Purposes, Concepts,Misfits, and a Redesign of Git" (a research
- paper)
-Message-Id: <20160930191413.002049b94b3908b15881b77f@domain007.com>
-X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.51 (www.roaringpenguin.com/mimedefang) on 192.168.2.20
+        id S933576AbcI3Qdx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Sep 2016 12:33:53 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34274 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932988AbcI3Qdv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2016 12:33:51 -0400
+Received: by mail-pf0-f179.google.com with SMTP id u78so16482955pfa.1
+        for <git@vger.kernel.org>; Fri, 30 Sep 2016 09:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qB4lsv6Elpe21m/tDhlcHAnm2qVzkcrGkYQjxwZR20E=;
+        b=fhQCM6TZm2mLai5dd5edUcq2ZR8W9dUHCwiBIWyD7rG5hE1U5mYZajrUEkr4SzFvvm
+         +RtobMj3MXXtki4jzcGOvCP3sMCafKdLBErT2ANdYp7JJOIZxeMP8V70/VmZDGXZDUpK
+         QCHu5uzOlD1shSzizEvOClgj63kVuiFuTsy0h06sRf2HZ8UFK429CFwnzqKN5vcnXDy0
+         7rnfXLOBVNkp0GXWRTfKK989iDTyZUrFwzaiC1HCgijnJcB/r+dU8xDQew0GjbvC9ZtS
+         oh3GPBm7M8+OcaW0waINmyM9hZrY2tPJCiP5XuJjM7AJ/LkxdxMUXOa1SwemHVHB4vp0
+         D1kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qB4lsv6Elpe21m/tDhlcHAnm2qVzkcrGkYQjxwZR20E=;
+        b=ksl4ueSTWXppYSvM+mj07ZuWp4CIOSmLoHQVRlP2uWwZxynhevSkSYoD3V+Qcspg4P
+         iQ01ivnoTYbQd29JoD7Mg8KzAXTT/vdqueUz35e6iI7v3hH4bU+mtKjQKNfm8rF0oGWE
+         GXSNrnxE5Sew7HPtMfdA/gMAkTKOeNYPA0IU8MS9gl9JClo8823ssHlIq5PvnV1XozpA
+         kTRg4c1TUzI0BE7Wy8cRRIZcoQv7gzjKboC666ZZKqXuFlkMVo1TkGFMIGJBaoeibNzz
+         htdLJ51veyyQDwO5J+FJXSoCR8wAIRacOZgLHVGbhVNBlJDox4FHgXs4IDp/CX6pIhNE
+         MAbA==
+X-Gm-Message-State: AA6/9RngvGUKr7seWgkH2fG8hy7fmS+D/qAjMDZwGbAR+d7f7tU/hjczNbSp/vAqbwwrd0qq
+X-Received: by 10.98.59.146 with SMTP id w18mr12944965pfj.153.1475253230837;
+        Fri, 30 Sep 2016 09:33:50 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5e00:8826:94df:73a:c97f])
+        by smtp.gmail.com with ESMTPSA id y11sm29125031pfa.4.2016.09.30.09.33.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Sep 2016 09:33:50 -0700 (PDT)
+Date:   Fri, 30 Sep 2016 09:33:47 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net
+Subject: Re: [PATCH v6 3/4] ls-files: pass through safe options for
+ --recurse-submodules
+Message-ID: <20160930163347.GA11126@google.com>
+References: <1475099443-145608-1-git-send-email-bmwill@google.com>
+ <1475185723-36871-1-git-send-email-bmwill@google.com>
+ <1475185723-36871-4-git-send-email-bmwill@google.com>
+ <xmqqy42ab5ww.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy42ab5ww.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "It Will Never Work in Theory" blog has just posted a summary of a
-study which tried to identify shortcomings in the design of Git.
-
-In the hope it might be interesting, I post this summary here.
-URL: http://neverworkintheory.org/2016/09/30/rethinking-git.html
-
-The except from that resource written by Greg Wilson, the blog author:
----------------->8----------------
-Santiago Perez De Rosso and Daniel Jackson: "[Purposes, Concepts,
-Misfits, and a Redesign of Git]
-(http://people.csail.mit.edu/sperezde/pre-print-oopsla16.pdf)", _SPLASH
-2016_. 
-
-> Git is a widely used version control system that is powerful but
-> complicated. Its complexity may not be an inevitable consequence of
-> its power but rather evidence of flaws in its design. To explore this
-> hypothesis, we analyzed the design of Git using a theory that
-> identifies concepts, purposes, and misfits. Some well-known
-> difficulties with Git are described, and explained as misfits in
-> which underlying concepts fail to meet their intended purpose. Based
-> on this analysis, we designed a reworking of Git (called Gitless)
-> that attempts to remedy these flaws. 
+On 09/29, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> To correlate misfits with issues reported by users, we conducted a
-> study of Stack Overflow questions. And to determine whether users
-> experienced fewer complications using Gitless in place of Git, we
-> conducted a small user study. Results suggest our approach can be
-> profitable in identifying, analyzing, and fixing design problems. 
+> > +static void compile_submodule_options(const struct dir_struct *dir, int show_tag)
+> > +{
+> > +	if (line_terminator == '\0')
+> > +		argv_array_push(&submodules_options, "-z");
+> > +	if (show_tag)
+> > +		argv_array_push(&submodules_options, "-t");
+> > +	if (show_valid_bit)
+> > +		argv_array_push(&submodules_options, "-v");
+> > +	if (show_cached)
+> > +		argv_array_push(&submodules_options, "--cached");
+> > +	if (show_deleted)
+> > +		argv_array_push(&submodules_options, "--deleted");
+> > +	if (show_modified)
+> > +		argv_array_push(&submodules_options, "--modified");
+> > +	if (show_others)
+> > +		argv_array_push(&submodules_options, "--others");
+> > +	if (dir->flags & DIR_SHOW_IGNORED)
+> > +		argv_array_push(&submodules_options, "--ignored");
+> > +	if (show_stage)
+> > +		argv_array_push(&submodules_options, "--stage");
+> > +	if (show_killed)
+> > +		argv_array_push(&submodules_options, "--killed");
+> > +	if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+> > +		argv_array_push(&submodules_options, "--directory");
+> > +	if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES))
+> > +		argv_array_push(&submodules_options, "--empty-directory");
+> > +	if (show_unmerged)
+> > +		argv_array_push(&submodules_options, "--unmerged");
+> > +	if (show_resolve_undo)
+> > +		argv_array_push(&submodules_options, "--resolve-undo");
+> > +	if (show_eol)
+> > +		argv_array_push(&submodules_options, "--eol");
+> > +	if (debug_mode)
+> > +		argv_array_push(&submodules_options, "--debug");
+> > +}
+> 
+> With this and 4/4 applied, the documentation still says "--cached"
+> is the only supported option.
+> 
+> Does it really make sense to pass all of these?  I understand "-z"
+> and I suspect things like "-t" and "-v" that affect "how" things are
+> shown may also happen to work, but I am not sure how much it makes
+> sense for options that affect "what" things are shown.
+> 
+> What does it even mean to ask for say "--unmerged" to be shown, for
+> example, from the superproject?  Recurse into submodules whose cache
+> entries in the index of the superproject are unmerged, or something
+> else?
+> 
+> I am inclined to say that it is probably better to keep the
+> "--cached only" as documented, at least on the "what are shown"
+> side.
+> 
+> Thanks.
 
-This paper presents a detailed, well-founded critique of one of the
-most powerful, but frustrating, tools in widespread use today. A
-follow-up to earlier work published in 2013, it is distinguished from
-most other discussion of software design by three things: 
+You're right that probably makes the most sense for now.
 
-  1. It clearly describes its design paradigm, which comprises
-_concepts_ (the major elements of the user's mental model of the
-system), _purposes_ (which motivate the concepts), and _misfits_ (which
-are instances where concepts do not satisfy purposes, or contradict one
-another). 
-
-  2. It lays out Git's concepts and purposes, analyzes its main
-features in terms of them, and uses that analysis to identify
-mis-matches. 
-
-  3. Crucially, it then analyzes independent discussion of Git (on
-Stack Overflow) to see if users are stumbling over the misfits
-identified in step 2. 
-
-That would count as a major contribution on its own, but the authors go
-further. They have designed a tool called Gitless that directly
-addresses the shortcomings they have identified, and the penultimate
-section of this paper presents a usability study that compares it to
-standard Git. Overall, subjects found Gitles more satisfying and less
-frustrating than Git, even though there was no big difference in
-efficiency, difficulty, or confusion. Quoting the paper, "This apparent
-contradiction might be due to the fact that all of the participants had
-used Git before but were encountering Gitless for the first time
-without any substantive training. Some participants (2 regular, 1
-expert) commented that indeed their problems with Gitless were mostly
-due to their lack of practice using it." 
-
-This paper is one of the best examples I have ever seen of how software
-designs ought to be critiqued. It combines an explicit, coherent
-conceptual base, detailed analysis of a specific system, design
-grounded in that analysis, and an empirical check of that design.
-Sadly, nothing shows the actual state of our profession more clearly
-than the way this work has been greeted: 
-
-> In some respects, this project has been a fool's errand. We picked a
-> product that was popular and widely used so as not to be investing
-> effort in analyzing a strawman design; we thought that its popularity
-> would mean that a larger audience would be interested in our
-> experiment. In sharing our research with colleagues, however, we have
-> discovered a significant polarization. Experts, who are deeply
-> familiar with the product, have learned its many intricacies,
-> developed complex, customized workflows, and regularly exploit its
-> most elaborate features, are often defensive and resistant to the
-> suggestion that the design has flaws. In contrast, less intensive
-> users, who have given up on understanding the product, and rely on
-> only a handful of memorized commands, are so frustrated by their
-> experience that an analysis like ours seems to them belaboring the
-> obvious.
----------------->8----------------
-(This text is Copyright © Never Work in Theory, under the CC license.)
+-- 
+Brandon Williams
