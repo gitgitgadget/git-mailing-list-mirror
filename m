@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65194207EC
-	for <e@80x24.org>; Fri, 30 Sep 2016 00:20:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F278207EC
+	for <e@80x24.org>; Fri, 30 Sep 2016 00:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935125AbcI3AUu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 20:20:50 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:32916 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935085AbcI3AUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 20:20:49 -0400
-Received: by mail-oi0-f66.google.com with SMTP id w11so6141477oia.0
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 17:20:48 -0700 (PDT)
+        id S935224AbcI3A26 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 20:28:58 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:32968 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935150AbcI3A24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 20:28:56 -0400
+Received: by mail-oi0-f67.google.com with SMTP id w11so6149816oia.0
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 17:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=STXaw8gkGPC4By4vsVbvKHurPysC8sm32bEMOP+Wc+w=;
-        b=r0XyyKFh5l+033QYIsU5NtpeK716ksA+F8MkVwmBV+OgmktX8nzMm7dgLdnLWQTMjS
-         /xTf1IgDQS7KcitjGV8GN16Sk5fRBIMhpOY5VnzE4u/QTohZfVs99To8kaa8uPSw7bBa
-         DRYaHkGHR3Xf93TFMkyXcNcIo7t1NFXGLFl8w5dYfrJaez4AmhKSIQTXRo90Nc+jp6te
-         8CGF3Eq38QvbJG3EE0605JShdzY5Z1WBtSdNerJWDRAM4oto2i21QrVwralJ6myd4YKJ
-         JUrPBElxQ+O/yj88Marss6RHTGDHinn6b0LxQmuifF00WHwRr7FQUK2CnPtuavNzoPze
-         sRxA==
+        bh=AhMz71u6lTEXgy/lA05VdBl+MLBFU2q1Ft0c7s+rKAA=;
+        b=Qv5mqj1cjtDXh2LxeeMg6phLx2l6D7OMncV4bjVz/4+3gima53tD7v0iiACgKgwYyL
+         w1uScTXqa+ITZ1Ux5IpHVOW++AlRSNFB//Z/1m3K3+4sbM/qUVa2huGj+YMCdZR7pPe3
+         ophNXjUz3o/zI3qefnTcbYQFlAi+v+tl0g1ovbdQNuLAKD6+PZGOZlOhf9eIaDU8EUPK
+         TvwSmnQTXphjQnYc1L9sO5nQlBNftEWfrWKC1JKT7bt0uiicTbivdZTxsNnv1e8MDDJ4
+         kFcdDbtO2mnGjUO8XgQEE8nv602VR8ysWpK5VuU+IRMdytrk5AUJwpgB1yaYRT1H79Bx
+         x2zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=STXaw8gkGPC4By4vsVbvKHurPysC8sm32bEMOP+Wc+w=;
-        b=h6OH+v4sjC8f9q0uGw8qSahpVKXDJhNCLGAVyif05j0M6h+bOElDyWNlFmJaVjwxiz
-         xQ8eMYIQta7LHOYSXuVCjJAAKHdLs84AWu2FBRc2tE+FmVoDXa6Am1JV+UKPsSMs2+iV
-         txk6tavhOuJA9bPGSrIRCBYOnUaiHN/WpmeGaLd8ZXlUkPaeGSCv4WoRy6H6d9TxJV2l
-         2X7zMrjGjRTjBNxYsGJI+j/Er9NN5zYCGQQYRk6RanFWqp3T4dN/2xyDzIhphfxosV28
-         ZptEsHzICdFC7vMbVrUi7wXKfTdOZoXglFiZs8stZPNVSM9I9x5gQNaLCEmZCb71FKrt
-         p9Kw==
-X-Gm-Message-State: AA6/9RmB1qKejX1kUUv7BxL8J7+Q9PLrl9/BfsrFc1FTQyuGHXlxMYBQiC7C4Faqz912E6IofnG9MFGlpuRaXQ==
-X-Received: by 10.202.4.21 with SMTP id 21mr3980449oie.91.1475194848186; Thu,
- 29 Sep 2016 17:20:48 -0700 (PDT)
+        bh=AhMz71u6lTEXgy/lA05VdBl+MLBFU2q1Ft0c7s+rKAA=;
+        b=iAdmo17X4hc0XncndPdLO4PGOR96QX0N5JR3HZ+B2dOom4HGedksz43h1nN5/Gwfzs
+         HDe9lMlxb3uYJZlMlU1lPoJ9/PcDJQ7pfwWmDR1amh5ijGB0PnKak86deBuNoWzMzaa4
+         JT92kapimBLG/uIMWkjCuDzxmfmuFOOiiCh2tyu5tdJn16TLLZ4sHHEzWBZjWxN2f7PY
+         L2LwAQevkWItbI2ZOCbmUH+Y9xjH1arEeurMBYgffgtgRsyEl8EPOS59DU5LeG3BZB5C
+         eSQdCvvufQt9KljW9M5tRAs8rArZ6YV3sERV+YJEdiiY+eWBscDEHPFJS6jop10qURQM
+         pZBg==
+X-Gm-Message-State: AA6/9RnK+rY/0T5UdvZeideRwNjEF84Jn7Re95FrfP7yUP1KPRX8QQaBCiTxqJwuCgJ49v5u7qubobp02bCv7Q==
+X-Received: by 10.202.69.67 with SMTP id s64mr4099619oia.1.1475195335896; Thu,
+ 29 Sep 2016 17:28:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 17:20:47 -0700 (PDT)
-In-Reply-To: <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com>
+Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 17:28:55 -0700 (PDT)
+In-Reply-To: <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
 References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
  <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
  <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
@@ -53,11 +53,11 @@ References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
  <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
  <20160929191609.maxggcli76472t4g@sigill.intra.peff.net> <CA+55aFxNVbvyERNc_xEhrtfTVMGz3hkeAx1nv9vW+dhJwCpp6g@mail.gmail.com>
  <xmqqwphuebhd.fsf@gitster.mtv.corp.google.com> <CA+55aFyVEQ+8TBBUm5KG9APtd9wy8cp_mRO=3nj12DXZNLAC9A@mail.gmail.com>
- <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com>
+ <xmqqbmz6cna5.fsf@gitster.mtv.corp.google.com> <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
 From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 29 Sep 2016 17:20:47 -0700
-X-Google-Sender-Auth: ut8G9Ujx8jYT5g1ewwZWbFe0pr8
-Message-ID: <CA+55aFysvNc4p_nFcV=edctCizJBJtDjFOHJa-YYgVZQgBZfiA@mail.gmail.com>
+Date:   Thu, 29 Sep 2016 17:28:55 -0700
+X-Google-Sender-Auth: IUm_JEGBTPGM9ixvGNNsqGle4b8
+Message-ID: <CA+55aFyXxQSygO-gqevLZDjuggOaHs7HsRO=P6GhpC3GStqwvQ@mail.gmail.com>
 Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
@@ -68,28 +68,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 4:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Sep 29, 2016 at 5:20 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> One thing that worries me is if we are ready to start accessing the
-> object store in all codepaths when we ask for DEFAULT_ABBREV.
+> As you say, my original patch had neither of those issues.
 
-Yes. That was my main worry too. I also looked at just doing an explicit
+To be fair, my original patch had a different worry that I didn't
+bother with: what if one of the _other_ callers of "get_short_sha1()"
+passed in -1 to it.  I only handled the -1 case in th eone path care
+about in that first RFC for testing. So I'm *not* suggesting you
+should apply my first version,, It has issues too.
 
-     if (abbrev_commit && default_abbrev < 0)
-          default_abbrev = get_default_abbrev();
-
-and in many ways that would be nicer exactly because the point where
-this happens is then explicit, instead of being hidden behind that
-macro that may end up being done in random places.
-
-But it wasn't entirely obvious which all paths would need that
-initialization either, so on the whole it was very much a "six of one,
-half a dozen of the other" thing.
-
-As you say, my original patch had neither of those issues. It just
-stupidly re-did the loop over and over, and maybe the right thing to
-do is to have that original code, but just short-circuit the "over and
-over" behavior by just resetting default_abbrev to the value we do
-find.
+Let me see if I can massage my first hacky RFC test-patch into
+something more reliable.
 
               Linus
