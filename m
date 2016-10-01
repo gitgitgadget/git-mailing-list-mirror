@@ -2,224 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C330020986
-	for <e@80x24.org>; Sat,  1 Oct 2016 19:00:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8716120986
+	for <e@80x24.org>; Sat,  1 Oct 2016 19:52:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751621AbcJAS7x (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Oct 2016 14:59:53 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35863 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751152AbcJAS7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2016 14:59:51 -0400
-Received: by mail-wm0-f67.google.com with SMTP id b184so8184537wma.3
-        for <git@vger.kernel.org>; Sat, 01 Oct 2016 11:59:50 -0700 (PDT)
+        id S1751347AbcJATvw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Oct 2016 15:51:52 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36359 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751107AbcJATvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2016 15:51:51 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b184so8316109wma.3
+        for <git@vger.kernel.org>; Sat, 01 Oct 2016 12:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=lE1vC0lT6HDIsU6Dfl9gH1QIUx1lGn1mDfqYr4zBhQQ=;
-        b=oZQC9BRj4XuuRPjjmIoPc/DgHQZz1DrMYXP2NVNd5jWhXZw7L8nWuzPSPbAHEDQC6y
-         HiKPzM5XsMDN7eWhUSXdJuwQu+z0PihcvHZhLGlIT6KM0f+lOn1X9grV2zealOiM21Bv
-         GVnMz1dr9ZDRAWVu1ARnULdIqj95UdbR0U9Hi17viZqhLj6+qmbYi3GOZQ0PoghUh9N5
-         UujI9CyHT0WKsUsQgvLtl0MDlVsobvo791OFsAn9SVk2i9Qqs3dm/XoK1Gn5fttEHWWi
-         t6mwVa4QTnV1asCfqNij+cnps5ms6MYVlo64qlp7DoWoRXtawTmg1desK8H4ezIyze9m
-         md2w==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ZgyZRKaaU9exVjJze3Lt0ii6kzjQBiXG+IGgCRcYtgg=;
+        b=Eq81JovsSSgFUNdClZJB0wtDixjGzxgm1LXo73TrS7JalLYbF4Nyp3eaYymJw+y740
+         epuCZH8JtC4lZHBBJI6wFtCh43+ZTP8QdJQRpzilhx5aD233tsi83rBI3yhDAMAm7vBo
+         d1XuiDakXzL+jscsqnd+fnW/Z/MVjoqGoxbZtzM/31Qeqwv0gZHGFQdYmNzYNFvD8z6w
+         EOpc31WBN5S3uEMLKwjgQmXNU6geyJYs7EbCIFGh2zdfk/9F8uxR4XoBzMYmgeJhMera
+         9sHWw2FmeKnOkjGq/apPt02Oh3/ku806OZIQ6I9qEcePJg3igsJpc5nPtbnXsvxPzred
+         oifg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=lE1vC0lT6HDIsU6Dfl9gH1QIUx1lGn1mDfqYr4zBhQQ=;
-        b=LHXfTdSd7SaoSb6NIkECN4DVpGGLKnb9OhkFE0KeupTkQWM+SzeHxZ1jlkGDVManTr
-         0omSYiN9R8DAl/m/V2mitqC9MMdLS24odNiNLZONre68kcwsV3jiI9lJWC1DzBuwKcqw
-         DqLOrIXVCEJuc9+A5aEmrniSaLdHoIg65HKoXko51Rvj44FCGfyBdRvknPkXqbWUFjgp
-         n7InH/carjT33MSk7nZnaeB6f6CVyt9IL1+skO5KsqpfFsfyQHdRwAle9mk3NKF497Gr
-         zJANuoStugMr2wylBCCqsrPKceD+j029ngMNplztUAnG5J+tFMrGl06Q+6E+Z1iaD4vv
-         9h5Q==
-X-Gm-Message-State: AA6/9RkvkaoBYQXeZRibOmqP6xzUIHr4KBg+QOaH+tAaBfZTHp721mydkkLRd8SW5VP63Q==
-X-Received: by 10.28.155.203 with SMTP id d194mr3279764wme.72.1475348389913;
-        Sat, 01 Oct 2016 11:59:49 -0700 (PDT)
-Received: from slxbook4.fritz.box (p508BA8B3.dip0.t-ipconnect.de. [80.139.168.179])
-        by smtp.gmail.com with ESMTPSA id w138sm11262068wmd.1.2016.10.01.11.59.48
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Oct 2016 11:59:49 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq60pee6rp.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 1 Oct 2016 20:59:48 +0200
-Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C53500E8-7352-4AAC-9F53-40CCFA7F1418@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com> <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com> <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de> <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com> <1A8A9127-4DF9-44AD-9497-F8A630AB1193@gmail.com> <xmqq60pee6rp.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=ZgyZRKaaU9exVjJze3Lt0ii6kzjQBiXG+IGgCRcYtgg=;
+        b=AP1mvtuTbFdk+xj4AgAJpzOhDjbENPWLhPyTs0oGWuw3/AHG6OZxaiW0vlHPWoMvdV
+         9hbB736JZPWekqruH45B+sfO3xiP6tcKuib2Du4IIsyPl2XOni6vfEz9pvIr4DJ9AUmH
+         nqeQcqKyC1b46vN45h8GEl7uI1QHpI/sLHQ45zA7UrvmAxBWRyQ/9sKohrtkEF6fROXW
+         9ow3Ws6Q7UV0TO5+W3A5iW64vyUbMgcg024ekJ3O++HvTSorIJEtyDNSVBA03ouEdp8i
+         SK5nC/HnlHz4yu8m7I8v9Ype7WwKkvofajlNzz6082XXwtb+n730u1oAP2uiU0Nu1T2M
+         l+xw==
+X-Gm-Message-State: AA6/9Rl8si0gygpZhPElcIT1jhAsQn4UmXKSZeAfVqqho2fiW6rU8won6B0wh5HmECRbxg==
+X-Received: by 10.28.229.131 with SMTP id c125mr2981518wmh.97.1475351509784;
+        Sat, 01 Oct 2016 12:51:49 -0700 (PDT)
+Received: from [192.168.1.26] (abrc125.neoplus.adsl.tpnet.pl. [83.8.96.125])
+        by smtp.googlemail.com with ESMTPSA id v128sm4093585wmv.3.2016.10.01.12.51.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 01 Oct 2016 12:51:48 -0700 (PDT)
+Subject: Re: [PATCH v2 09/11] i18n: send-email: mark warnings and errors for
+ translation
+To:     Vasco Almeida <vascomalmeida@sapo.pt>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+ <1472646690-9699-10-git-send-email-vascomalmeida@sapo.pt>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <37c2efce-90b1-9415-eb85-64358e43b853@gmail.com>
+Date:   Sat, 1 Oct 2016 21:51:38 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+In-Reply-To: <1472646690-9699-10-git-send-email-vascomalmeida@sapo.pt>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+W dniu 31.08.2016 o 14:31, Vasco Almeida pisze:
 
-> On 29 Sep 2016, at 23:27, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->> We discussed that issue in v4 and v6:
->> =
-http://public-inbox.org/git/20160803225313.pk3tfe5ovz4y3i7l@sigill.intra.p=
-eff.net/
->> =
-http://public-inbox.org/git/xmqqbn0a3wy3.fsf@gitster.mtv.corp.google.com/
->>=20
->> My impression was that you don't want Git to wait for the filter =
-process.
->> If Git waits for the filter process - how long should Git wait?
->=20
-> I am not sure where you got that impression.  I did say that I do
-> not want Git to _KILL_ my filter process.  That does not mean I want
-> Git to go away without waiting for me.
->=20
-> If the filter process refuses to die forever when Git told it to
-> shutdown (by closing the pipe to it, for example), that filter
-> process is simply buggy.  I think we want users to become aware of
-> that, instead of Git leaving it behind, which essentially is to
-> sweep the problem under the rug.
->=20
-> I agree with what Peff said elsewhere in the thread; if a filter
-> process wants to take time to clean things up while letting Git
-> proceed, it can do its own process management, but I think it is
-> sensible for Git to wait the filter process it directly spawned.
+> Mark warnings, errors and other messages for translation.
+>
 
-To realize the approach above I prototyped the run-command patch below:
+Which discovered a few places with questionable code...
 
-I added an "exit_timeout" variable to the "child_process" struct.
-On exit, Git will close the pipe to the process and wait "exit_timeout"=20=
+(though there is one place with bad handling of translation)
+ 
+> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+> ---
+>  git-send-email.perl | 36 ++++++++++++++++++------------------
+>  1 file changed, 18 insertions(+), 18 deletions(-)
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 2521832..e7f712e 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -118,20 +118,20 @@ sub format_2822_time {
+>  	my $localmin = $localtm[1] + $localtm[2] * 60;
+>  	my $gmtmin = $gmttm[1] + $gmttm[2] * 60;
+>  	if ($localtm[0] != $gmttm[0]) {
+> -		die "local zone differs from GMT by a non-minute interval\n";
+> +		die __("local zone differs from GMT by a non-minute interval\n");
+>  	}
+>  	if ((($gmttm[6] + 1) % 7) == $localtm[6]) {
+>  		$localmin += 1440;
+>  	} elsif ((($gmttm[6] - 1) % 7) == $localtm[6]) {
+>  		$localmin -= 1440;
+>  	} elsif ($gmttm[6] != $localtm[6]) {
+> -		die "local time offset greater than or equal to 24 hours\n";
+> +		die __("local time offset greater than or equal to 24 hours\n");
 
-seconds until it kills the child process. If "exit_timeout" is negative
-then Git will wait until the process is done.
+As one can see that this is the same message as below, so I wondered
+why the same test is repeated... But it is even worse.  This test
+is first, wrongly described: it checks that the day of week is the
+same in local timezone and in UTC / GMT.  But second, it is WRONG!
 
-If we use that in the long running filter process, then we could make
-the timeout even configurable. E.g. with =
-"filter.<driver>.process-timeout".
+For example if UTC time is just before midnight, then any positive
+timezone has different day of week (next day); if UTC is just before
+midnight, then any negative timezone has different day of week (previous
+day).
 
-What do you think about this solution?=20
-
-Thanks,
-Lars
-
+  $ LC_ALL=C TZ=US/Hawaii date --date="2016-10-01 01:00 UTC"
+  Fri Sep 30 15:00:00 HST 2016
+  $ LC_ALL=C TZ=US/Hawaii date --date="2016-10-01 01:00 UTC" --utc
+  Sat Oct  1 01:00:00 UTC 2016
 
 
-diff --git a/run-command.c b/run-command.c
-index 3269362..a933066 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -21,6 +21,8 @@ void child_process_clear(struct child_process *child)
-=20
- struct child_to_clean {
- 	pid_t pid;
-+	int stdin;
-+	int timeout;
- 	struct child_to_clean *next;
- };
- static struct child_to_clean *children_to_clean;
-@@ -28,9 +30,30 @@ static int installed_child_cleanup_handler;
-=20
- static void cleanup_children(int sig, int in_signal)
- {
-+	int status;
-+	struct timeval tv;
-+	time_t secs;
-+
- 	while (children_to_clean) {
- 		struct child_to_clean *p =3D children_to_clean;
- 		children_to_clean =3D p->next;
-+
-+		if (p->timeout !=3D 0 && p->stdin > 0)
-+			close(p->stdin);
-+
-+		if (p->timeout < 0) {
-+			// Wait until the process finishes
-+			while ((waitpid(p->pid, &status, 0)) < 0 && =
-errno =3D=3D EINTR)
-+				;	/* nothing */
-+		} else if (p->timeout !=3D 0) {
-+			// Wait until the process finishes or timeout
-+			gettimeofday(&tv, NULL);
-+			secs =3D tv.tv_sec;
-+			while (getpgid(p->pid) >=3D 0 && tv.tv_sec - =
-secs < p->timeout) {
-+				gettimeofday(&tv, NULL);
-+			}
-+		}
-+
- 		kill(p->pid, sig);
- 		if (!in_signal)
- 			free(p);
-@@ -49,10 +72,12 @@ static void cleanup_children_on_exit(void)
- 	cleanup_children(SIGTERM, 0);
- }
-=20
--static void mark_child_for_cleanup(pid_t pid)
-+static void mark_child_for_cleanup(pid_t pid, int timeout, int stdin)
- {
- 	struct child_to_clean *p =3D xmalloc(sizeof(*p));
- 	p->pid =3D pid;
-+	p->stdin =3D stdin;
-+	p->timeout =3D timeout;
- 	p->next =3D children_to_clean;
- 	children_to_clean =3D p;
-=20
-@@ -422,7 +447,7 @@ int start_command(struct child_process *cmd)
- 	if (cmd->pid < 0)
- 		error_errno("cannot fork() for %s", cmd->argv[0]);
- 	else if (cmd->clean_on_exit)
--		mark_child_for_cleanup(cmd->pid);
-+		mark_child_for_cleanup(cmd->pid, cmd->exit_timeout, =
-cmd->in);
-=20
- 	/*
- 	 * Wait for child's execvp. If the execvp succeeds (or if fork()
-@@ -483,7 +508,7 @@ int start_command(struct child_process *cmd)
- 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno !=3D =
-ENOENT))
- 		error_errno("cannot spawn %s", cmd->argv[0]);
- 	if (cmd->clean_on_exit && cmd->pid >=3D 0)
--		mark_child_for_cleanup(cmd->pid);
-+		mark_child_for_cleanup(cmd->pid, cmd->exit_timeout, =
-cmd->in);
-=20
- 	argv_array_clear(&nargv);
- 	cmd->argv =3D sargv;
-@@ -765,7 +790,7 @@ int start_async(struct async *async)
- 		exit(!!async->proc(proc_in, proc_out, async->data));
- 	}
-=20
--	mark_child_for_cleanup(async->pid);
-+	mark_child_for_cleanup(async->pid, 0, -1);
-=20
- 	if (need_in)
- 		close(fdin[0]);
-diff --git a/run-command.h b/run-command.h
-index cf29a31..f2eca33 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -33,6 +33,7 @@ struct child_process {
- 	int in;
- 	int out;
- 	int err;
-+	int exit_timeout;
- 	const char *dir;
- 	const char *const *env;
- 	unsigned no_stdin:1;
+>  	}
+>  	my $offset = $localmin - $gmtmin;
+>  	my $offhour = $offset / 60;
+>  	my $offmin = abs($offset % 60);
+>  	if (abs($offhour) >= 24) {
+> -		die ("local time offset greater than or equal to 24 hours\n");
+> +		die __("local time offset greater than or equal to 24 hours\n");
 
+This is good test.
+
+>  	}
+>  
+>  	return sprintf("%s, %2d %s %d %02d:%02d:%02d %s%02d%02d",
+> @@ -199,13 +199,13 @@ sub do_edit {
+>  		map {
+>  			system('sh', '-c', $editor.' "$@"', $editor, $_);
+>  			if (($? & 127) || ($? >> 8)) {
+> -				die("the editor exited uncleanly, aborting everything");
+> +				die(__("the editor exited uncleanly, aborting everything"));
+>  			}
+>  		} @_;
+>  	} else {
+>  		system('sh', '-c', $editor.' "$@"', $editor, @_);
+>  		if (($? & 127) || ($? >> 8)) {
+> -			die("the editor exited uncleanly, aborting everything");
+> +			die(__("the editor exited uncleanly, aborting everything"));
+>  		}
+>  	}
+
+Here we see some unnecessary code duplication, and thus
+message duplication.
+
+
+> @@ -1410,7 +1410,7 @@ Message-Id: $message_id
+>  		$smtp->code =~ /250|200/ or die "Failed to send $subject\n".$smtp->message;
+>  	}
+>  	if ($quiet) {
+> -		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
+> +		printf (($dry_run ? "Dry-" : ""). __("Sent %s\n"), $subject);
+>  	} else {
+>  		print (($dry_run ? "Dry-" : ""). __("OK. Log says:\n"));
+>  		if (!file_name_is_absolute($smtp_server)) {
+
+You would want to translate Dry-Sent and Dry-OK.
+
+-- 
+Jakub Narębski
 
