@@ -6,69 +6,63 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBCE51F4F8
-	for <e@80x24.org>; Sat,  1 Oct 2016 09:16:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 099BD20987
+	for <e@80x24.org>; Sat,  1 Oct 2016 09:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751580AbcJAJQC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Oct 2016 05:16:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50800 "EHLO cloud.peff.net"
+        id S1750868AbcJAJSc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Oct 2016 05:18:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50805 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750912AbcJAJQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2016 05:16:01 -0400
-Received: (qmail 17510 invoked by uid 109); 1 Oct 2016 09:16:00 -0000
+        id S1750818AbcJAJSb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2016 05:18:31 -0400
+Received: (qmail 17651 invoked by uid 109); 1 Oct 2016 09:18:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Oct 2016 09:16:00 +0000
-Received: (qmail 16990 invoked by uid 111); 1 Oct 2016 09:16:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Oct 2016 09:18:30 +0000
+Received: (qmail 17013 invoked by uid 111); 1 Oct 2016 09:18:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Oct 2016 05:16:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Oct 2016 05:15:58 -0400
-Date:   Sat, 1 Oct 2016 05:15:58 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Oct 2016 05:18:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Oct 2016 05:18:28 -0400
+Date:   Sat, 1 Oct 2016 05:18:28 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] diff_unique_abbrev(): document its assumtion and
- limitation
-Message-ID: <20161001091558.guduirzlkog5fkzd@sigill.intra.peff.net>
-References: <xmqqvaxd9ssy.fsf@gitster.mtv.corp.google.com>
- <20160930180957.xj4jqoslbtevhqpb@sigill.intra.peff.net>
- <xmqqd1jl9ovc.fsf@gitster.mtv.corp.google.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        "Kyle J. McKay" <mackyle@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] pretty: allow formatting DATE_SHORT
+Message-ID: <20161001091828.k4odmjv73haa5vyl@sigill.intra.peff.net>
+References: <CA+P7+xoxTpqn=jkuHYp5pKCCWfKLP5OKCTBYkcTVw_RhEw0KVw@mail.gmail.com>
+ <20160930105639.15589-1-szeder@ira.uka.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqd1jl9ovc.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160930105639.15589-1-szeder@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 30, 2016 at 12:19:51PM -0700, Junio C Hamano wrote:
+On Fri, Sep 30, 2016 at 12:56:39PM +0200, SZEDER Gábor wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > Nice. I use date=short in some of my aliases and switching to this is
+> > nicer. I assume this turns into "%(as)"?
+> > 
+> > What about documenting this in  pretty-formats.txt?
 > 
-> > ... Now that function _would_
-> > want to be updated as a result of the other conversation (it would need
-> > to do something sensible with "-1", like turning it into "7", or
-> > whatever else is deemed reasonable outside of a repository).
-> >
-> > Anyway. I just wonder if you want to give it a better name while you are
-> > at it.
+> Here you go :)
 > 
-> I'd say the patch to introduce the new function that makes the old
-> name potentially confusing is a good one to do the rename.  Until
-> then I do not think there is no need to rename the existing one ;-)
+>   http://public-inbox.org/git/1444235305-8718-1-git-send-email-szeder@ira.uka.de/
 
-I guess my point was that the poor name may have contributed to the need
-to explain it. But I'm happy to deal with it in my series (I also
-updated it to use "struct oid"; I'll probably rebase mine on top of your
-comment to save you dealing with the nasty merge).
+The review on that thread is basically "do we want to add every
+abbreviation under the sun, or do we want to come up with a better
+placeholder scheme?". And that has come up several other times (e.g.,
+Ted's recent %gt placeholder).
 
-> Related tangent about "like turning it into", I am thinking adding
-> something like this as a preparatory step to Linus's auto-sizing
-> serires.  That way, we do not have to spell "7"
-> [...]
-> -- >8 --
-> Subject: abbrev: add FALLBACK_DEFAULT_ABBREV to prepare for auto sizing
-
-Yep, looks like a good idea.
+I _do_ think that's the right way forward, but as nobody has been
+pushing it that way, and these things come up from time to time, maybe
+we should just accept it and add the ones people want in the interim.
+It's not like it makes the situation significantly worse, or harder to
+migrate to %(authordate:short).
 
 -Peff
