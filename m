@@ -2,120 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3934620986
-	for <e@80x24.org>; Sat,  1 Oct 2016 19:57:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF8020987
+	for <e@80x24.org>; Sat,  1 Oct 2016 20:14:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750984AbcJAT4T (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Oct 2016 15:56:19 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33004 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750839AbcJAT4R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2016 15:56:17 -0400
-Received: by mail-wm0-f65.google.com with SMTP id p138so8334691wmb.0
-        for <git@vger.kernel.org>; Sat, 01 Oct 2016 12:56:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=4L+gqE4DoymJ0grY7MOfhhqiDqIPWPgimDtEXasw5kg=;
-        b=hDbsBaH71zLRNN/Aw8b8kisLc4AMEIJWgp8hfQDNW9OqPEs2SYkgW6ARwA25Av8yZO
-         upjjumLrW1HDjn1eCSK8kfTWd/3s0f+zVmN/FjhpPIL2+f0G/uaccDhvU1KBkU6uzE3U
-         H6RjkBv3DhJnp7t1pZ6pQhePL2gAl81ry/97+cXm6nzjyRIdEo53g3VGlaMXcfTkpNK4
-         LQOWZlxS/wd3v44X99F3VRURNq7DOSYbZIWQwrx+Ubz2ZDbWdSyibYNg2IW2hHI5XQ9V
-         yPSU2ktkVvCaAJFC8EaMUKOR0TqtJVUxQ6qpyDLfjWq3XhTSbb/5WA+JUbpd3Y14ECwT
-         T/9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=4L+gqE4DoymJ0grY7MOfhhqiDqIPWPgimDtEXasw5kg=;
-        b=UdS5BxcgWJiQf9G7YsDtOUtGgrUChUzfjJ0jejjTy6RwyN364Uyw3jIbWb07PiNVGY
-         aR+k25PpNzNacybhQg7dAEHQZtHtB+hbblFq00vlO++NmUWnC4ypWotCNdBH3B0Vz8UP
-         6S5gfod7/lUmptemMpB1eTpruR0460SXkXxTNmmfvLWxgcjlBJ6HCLzowG1QKoMx20Uh
-         8FzOy80fbmFfAG52bP66UGA+dcsZ7vcZ/UEsUo8n1TUeQV/mhnwzDnZigNXgAKWZTr2y
-         4TrzJQ4PyHKl6rtfxwjSjMJXG4P8Jyoqpac5Nuwr22l7s687SnmbU5fpWP2CPygxbk+u
-         ZMZw==
-X-Gm-Message-State: AA6/9RkutASofy21vbrZIufHJH0uz2OnsMIuRns8ptSCuqqiCtVyH82D9+UqhDWbr5nXTw==
-X-Received: by 10.194.85.106 with SMTP id g10mr8309772wjz.229.1475351775940;
-        Sat, 01 Oct 2016 12:56:15 -0700 (PDT)
-Received: from [192.168.1.26] (abrc125.neoplus.adsl.tpnet.pl. [83.8.96.125])
-        by smtp.googlemail.com with ESMTPSA id r2sm10598207wmf.14.2016.10.01.12.56.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 01 Oct 2016 12:56:15 -0700 (PDT)
-Subject: Re: [PATCH v2 11/11] i18n: difftool: mark warnings for translation
-To:     Junio C Hamano <gitster@pobox.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>
-References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
- <1472646690-9699-12-git-send-email-vascomalmeida@sapo.pt>
- <xmqqtwd3wooa.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <34c793f6-b297-3040-b5fa-29f4a9480cd2@gmail.com>
-Date:   Sat, 1 Oct 2016 21:56:04 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1751367AbcJAUN3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Oct 2016 16:13:29 -0400
+Received: from ikke.info ([178.21.113.177]:33804 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751025AbcJAUN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2016 16:13:27 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id A3DCC4400BF; Sat,  1 Oct 2016 22:13:25 +0200 (CEST)
+Date:   Sat, 1 Oct 2016 22:13:25 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     Konstantin Khomoutov <kostix+git@007spb.ru>, git@vger.kernel.org,
+        Santiago Perez De Rosso <sperezde@csail.mit.edu>,
+        Daniel Jackson <dnj@csail.mit.edu>,
+        Greg Wilson <gvwilson@third-bit.com>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@mat.umk.pl>
+Subject: Re: "Purposes, Concepts,Misfits, and a Redesign of Git" (a research
+ paper)
+Message-ID: <20161001201325.GA29588@ikke.info>
+References: <20160930191413.002049b94b3908b15881b77f@domain007.com>
+ <481910fd-5a5f-ffc6-b98c-61d48b4a2e49@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqtwd3wooa.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <481910fd-5a5f-ffc6-b98c-61d48b4a2e49@gmail.com>
+User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 26.09.2016 o 01:21, Junio C Hamano pisze:
-> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+On Sat, Oct 01, 2016 at 12:24:57AM +0200, Jakub Narębski wrote:
 > 
->> -			warn << 'EOF';
->> +			warn __ <<'EOF';
->>  Combined diff formats ('-c' and '--cc') are not supported in
->>  directory diff mode ('-d' and '--dir-diff').
->>  EOF
+> | 7.2.1 Discussion
+> [...]
+> | There could be other use cases for the
+> | staging area that Gitless doesn’t handle well but we expect
+> | these to be fairly infrequent.
 > 
-> Wow, didn't imagine gettext would pick this up.  Nice.
+> Like handling merge conflict...??? Infrequent doesn't mean
+> unimportant.
+> 
 
-From gettext documentation:
-https://www.gnu.org/software/gettext/manual/gettext.html
+For me the most important thing is that the lack of staging area leads
+on commits that have no clear goal, people just commit everything they
+have changed at some point, as a sort of checkpoint.
 
- 15 Other Programming Languages
- [...]
- 15.5 Individual Programming Languages
- [...]
- 15.5.18 Perl
- [...]
- 15.5.18.4 What are Strings And Quote-like Expressions?
+Although lots of people still do this with git currently, they don't
+even have the possibility[1] to improve on this.
 
- Perl offers a plethora of different string constructs. Those that
- can be used either as arguments to functions or inside braces for
- hash lookups are generally supported by xgettext.
+This makes history and features like git bisect less useful.
 
- [...]
 
- * here documents 
-
-       print gettext <<'EOF';
-       program not found in $PATH
-       EOF
-
-       print ngettext <<EOF, <<"EOF";
-       one file deleted
-       EOF
-       several files deleted
-       EOF
-
- Here-documents are recognized. If the delimiter is enclosed in single
- quotes, the string is not interpolated. If it is enclosed in double
- quotes or has no quotes at all, the string is interpolated.
-
- Delimiters that start with a digit are not supported!
-
--- 
-Jakub Narębski
-
+[1] At most they can specify the files they want to commit, but this is
+still a very crude way to group together changes.
