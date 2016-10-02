@@ -2,179 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 686B61F4F8
-	for <e@80x24.org>; Sun,  2 Oct 2016 22:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF001F4F8
+	for <e@80x24.org>; Sun,  2 Oct 2016 22:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751229AbcJBWXw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Oct 2016 18:23:52 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33058 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750822AbcJBWXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Oct 2016 18:23:51 -0400
-Received: by mail-wm0-f66.google.com with SMTP id p138so11998688wmb.0
-        for <git@vger.kernel.org>; Sun, 02 Oct 2016 15:23:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=nDvoUG752wGprC7+/Fimg/ReP+SAt98U9ifDw3NnkCk=;
-        b=t4nN2AMVi/49CP+3PbkJEtjVtLVCjSBvnYJdaqfWXLhczml33w/VFBzlL16+nvPR0t
-         73SVee9g+3v+UL2bUikD7bSDERwe1MEBUWMKau8Y0WZPhylldFAikyO8/fmoNp3/7YFt
-         gycwlo+Z9roiV0SzzMLjcFkC3el2KJypo41Zv3F/ywSIJkTnihvG91k997NVsNk5gFw0
-         N6ylcxi3dLw1/cfZCZq2vYufr17n9y5OKB+6uuWWryzkt+5vcjVDOErzE9vkXeLiDpS7
-         hQ8DqDOFhs8oR6QXD0KfJg6Ys5T8/sQ9XsVuAF5ZA81+JTi60TiavhVdSpFkaRaXRr0+
-         +7Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=nDvoUG752wGprC7+/Fimg/ReP+SAt98U9ifDw3NnkCk=;
-        b=lAbzXcTv2VugLFnrJ6yxo6xY2p0cGuIYnI/SiomCU23zbpjc3+myKfhFx2f9qNa6mt
-         fqVsZ+Uiypc+M1Gn5UmaVGP4pHlAyQAQlOSkPgNjNbQzEBfxes4bnkSEF8aVxj6hoHhm
-         KDSBSh1U2LLfcVHWVAYl2PJdppQ055ztukcgG2p6op5/qxBTXIGYboo2kvPdD7cugMWQ
-         hLbWuHq3dLFy9rF6zqwBSQjtNyOaBpV03E5L9d4dtXX8YqhPMZz+yKWhWsrzYSypi40h
-         rrwmpGwXi1ivUMvCdM9yWCHa450Tv9Qv5/8fHmiZgVHqjM8M1sIu5O0nc7KRxm+r8TdL
-         9f8Q==
-X-Gm-Message-State: AA6/9RnoeFVzmslJbNxCjFHogK7k8ERI2ggTZG7B/cLpiZetoYUSDIYCJe08pipRxz+8lA==
-X-Received: by 10.28.207.77 with SMTP id f74mr5028057wmg.35.1475447029996;
-        Sun, 02 Oct 2016 15:23:49 -0700 (PDT)
-Received: from [192.168.0.136] (ip5f5be580.dynamic.kabel-deutschland.de. [95.91.229.128])
-        by smtp.googlemail.com with ESMTPSA id ce6sm31265236wjc.27.2016.10.02.15.23.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Oct 2016 15:23:49 -0700 (PDT)
-Subject: Re: [PATCH] l10n: de.po: translate 260 new messages
-To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-References: <20161002165946.19656-1-ralf.thielow@gmail.com>
-Cc:     tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-        phillip.szelat@gmail.com, magnus.goerlitz@googlemail.com
-From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
-Message-ID: <0de216d5-8a47-bd1d-b9d6-8346a62bc489@gmail.com>
-Date:   Mon, 3 Oct 2016 00:23:46 +0200
+        id S1751675AbcJBW7C (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Oct 2016 18:59:02 -0400
+Received: from mout.web.de ([217.72.192.78]:59538 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751576AbcJBW7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Oct 2016 18:59:00 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LlniO-1bHUxd2OXo-00ZQjb; Mon, 03 Oct 2016 00:58:25
+ +0200
+Subject: Re: [PATCH] use strbuf_addstr() for adding constant strings to a
+ strbuf, part 2
+To:     Junio C Hamano <gitster@pobox.com>
+References: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
+ <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net>
+ <xmqqbmzpnex4.fsf@gitster.mtv.corp.google.com>
+ <20160915193804.d2mmmeard2rj6vye@sigill.intra.peff.net>
+ <79f6cfb5-3b9b-2ae7-d9a3-5c1c65c7d4cf@web.de>
+ <xmqq7fadnd9s.fsf@gitster.mtv.corp.google.com>
+ <67756074-836f-2238-37c3-0d186325bd00@web.de>
+ <xmqqwpiclu65.fsf@gitster.mtv.corp.google.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <9014c48e-9b9d-995b-47ba-9ecc48a10ac7@web.de>
+Date:   Mon, 3 Oct 2016 00:58:21 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.3.0
 MIME-Version: 1.0
-In-Reply-To: <20161002165946.19656-1-ralf.thielow@gmail.com>
+In-Reply-To: <xmqqwpiclu65.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:RD/AaUIdhlnysW0l1MscKX8m7JtsUzvDEgCM2qQzcCNRGu9Ukhp
+ y84WsUgzd2wgQz38aLmkGqZWpd+djpstZSmiihqeVyIC8pmRNFsMZzfnJtcnPvt7g100fQC
+ SOPF5WRTIIivndOkiVvts3khCxY8Jlb6t0koLwu4CjAbPsiJIy2Lfeu2edeU3W3fkikiHkN
+ KMeL+Cp+1iQqkaYUavcXw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QUl58NjpEF8=:Z7SMoh85flZKpXNEhes9ZN
+ QXREMAJUqMbQCWJuayekUCtP9v+kobpC9FPxhNdrakB9090i3bmMgnaoKJY345/TQvE1epFN2
+ SJ90BVpOlr/JuGVy6NRvQDYe5qmjWZL1ORHV6WqsnENabquvU/PgZB+06jBjqURhj38NbiYfJ
+ nem/DTzjcMquPQKkOu6cl8K3sbWmACAelTSByLYSDv16wzOhv46jWZLv9fxFWeBEYBgFqZ1T/
+ /piL9Wzy1vuaObGj9W/CXXMgpBpRCin1Jc924hDmSpLN0tL9xK1BfV58W8Hl/3Yd7oOO3W1uW
+ +7zWWA35o0+78mSKGnTzWhNFHGXOtiEb8NjwPMuqJ5y9VKJ+n+o4ZuBDZBIQZAobxgM9L4wP+
+ BMagsuFoWu0e3ALgJfCvfImVhpBjCivqUJEbmsNKogv3XApymLrIXnzmCpb9cPMl+kcEUYP4Y
+ SZI6r39DioJY4mJbCXnruwSA7PtvFia6VwJDka4nULUJmsKeDzJ1ZwB+LLoq22yNQomLIwwAU
+ FqAX3tzVN0bS1H01DfWwQaWAROD/EJodmOGEyNUXy0QlBzhHFS2zlQPj7zfpGpIh8SA4/DgIA
+ QHEvkqWS5rxVKtvz4/UsKvAqyEvlS/ZQm6QmH8QWQ2OBhwtXMsb7AG16QJskHIXAvtCbaiELM
+ kQUlB8Cwvdkhj1LmTQ9dQ+2ZxRc8pTd8PSDn9F6ml/i5BVA6x1lc6V28PAI++TI2vhR0o0pZh
+ 33DvS98Wosyd5D3cUlBpn4Uk2Y0ef6eT4AFv0YINA+xZzN9kaEjAQy0HlFQfGxIGNq/ni0Slt
+ ceLOmqu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ralf,
+Am 15.09.2016 um 23:39 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> Am 15.09.2016 um 22:01 schrieb Junio C Hamano:
+>>> René Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> Take this for example:
+>>>>
+>>>> -			strbuf_addf(&o->obuf, _("(bad commit)\n"));
+>>>> +			strbuf_addstr(&o->obuf, _("(bad commit)\n"));
+>>>>
+>>>> If there's a language that uses percent signs instead of parens or as
+>>>> regular letters, then they need to be escaped in the translated string
+>>>> before, but not after the patch.  As I wrote: silly.
+>>>
+>>> Ahh, OK, so "This use of addf only has format part and nothing else,
+>>> hence the format part can be taken as-is" which is the Coccinelle rule
+>>> used to produce this patch is incomplete and always needs manual
+>>> inspection, in case the format part wanted to give a literal % in
+>>> the output.  E.g. it is a bug to convert this
+>>>
+>>> 	strbuf_addf(&buf, _("this is 100%% wrong!"));
+>>>
+>>> to
+>>>
+>>> 	strbuf_addstr(&buf, _("this is 100%% wrong!"));
+>>
+>> Right.  Such strings seem to be quite rare in practice, though. 
+>>
+>>> Thanks for clarification.  Perhaps the strbuf.cocci rule file can
+>>> have some comment to warn the person who builds *.patch file to look
+>>> for % in E2, or something?
+>>
+>> Something like this?
+> 
+> Yup, with something like that I would understdood where that
+> puzzling question came from.
 
-many thanks for your translations!
+Here's something better than a comment:
 
-I reviewed them and only have some minor comments:
+-- >8 --
+Subject: [PATCH] coccicheck: make transformation for strbuf_addf(sb, "...") more precise
 
+We can replace strbuf_addf() calls that just add a simple string with
+calls to strbuf_addstr() to make the intent clearer.  We need to be
+careful if that string contains printf format specifications like %%,
+though, as a simple replacement would change the output.
 
->  #: bisect.c:967
-> -#, fuzzy, c-format
-> +#, c-format
->  msgid "%s was both %s and %s\n"
-> -msgstr "%s folgt sowohl %s als auch %s"
-> +msgstr "%s war %s als auch %s\n"
+Add checks to the semantic patch to make sure we only perform the
+transformation if the second argument is a string constant (possibly
+translated) that doesn't contain any percent signs.
 
-Maybe keeping the "sowohl" here:
-"%s war sowohl %s als auch %s"
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/strbuf.cocci | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-
-
->  #: setup.c:989
->  #, c-format
->  msgid ""
->  "Problem with core.sharedRepository filemode value (0%.3o).\n"
->  "The owner of files must always have read and write permissions."
->  msgstr ""
-> +"Problem mit Wert für Dateimodus (0%.3o) von core.sharedRepository.\n"
-> +"Der Besitzer der Dateien muss immer Lese- und Schreibberechtigung haben."
-
-I would translate "read and write permissions" to:
-
-Lese- und Schreibrechte
-
-
-
->  #: builtin/fsck.c:606
-> -#, fuzzy
->  msgid "show verbose names for reachable objects"
-> -msgstr "unerreichbare Objekte anzeigen"
-> +msgstr "erweiterten Namen für erreichbare Objekte anzeigen"
-
-Maybe "ausführlich" is the better choice for "verbose" here?
-"ausführliche Namen ..."
-
-
-
->  #: builtin/merge.c:960
->  #, c-format
->  msgid "Bad value '%s' in environment '%s'"
-> -msgstr ""
-> +msgstr "Fehlerhafter Wert '%s' in Umgebungsvariable '%s'"
-
-I do not know the context but I would translate it to:
-"... Umgebung '%s'"
-
-
-
->  #: builtin/push.c:546
-> -#, fuzzy
->  msgid "option to transmit"
-> -msgstr "nichts zu committen\n"
-> +msgstr "Optionen übertragen"
-
-Is the plural form correct in this context?
-Maybe "Option übertragen" ?
-
-
-
->  #: git-rebase--interactive.sh:147
->  msgid ""
->  "\n"
->  "Commands:\n"
->  " p, pick = use commit\n"
->  " r, reword = use commit, but edit the commit message\n"
->  " e, edit = use commit, but stop for amending\n"
->  " s, squash = use commit, but meld into previous commit\n"
->  " f, fixup = like \"squash\", but discard this commit's log message\n"
->  " x, exec = run command (the rest of the line) using shell\n"
->  " d, drop = remove commit\n"
->  "\n"
->  "These lines can be re-ordered; they are executed from top to bottom.\n"
->  msgstr ""
-> +"\n"
-> +"Befehle:\n"
-> +" p, pick = Commit verwenden\n"
-> +" r, reword = Commit verwenden, aber Commit-Beschreibung bearbeiten\n"
-> +" e, edit = Commit verwenden, aber zum Nachbessern anhalten\n"
-> +" s, squash = Commit verwenden, aber mit vorherigem Commit vereinen\n"
-> +" f, fixup = wie \"squash\", aber die Log-Nachricht des Commits verwerden\n"
-> +" x, exec = Befehl (Rest der Zeile) mittels Shell ausführen\n"
-> +" d, drop = Commit entfernen\n"
-> +"\n"
-> +"Diese Zeilen können umsortiert werden; Sie werden von oben nach unten\n"
-> +"ausgeführt.\n"
-
-In my opinion fixup needs a more detailed description here.
-Something like:
-
-"fixup: wie \"squash\", aber die Commit-Beschreibung vom Vorgänger
-verwenden\n".
-
-or:
-
-"fixup: wie \"squash\", aber diese Commit-Beschreibung verwerfen\n".
-
-
-
-
-Everything else looks great!
-
-
-Kind regards,
-Matthias
+diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
+index 1e24298..63995f2 100644
+--- a/contrib/coccinelle/strbuf.cocci
++++ b/contrib/coccinelle/strbuf.cocci
+@@ -1,8 +1,31 @@
++@ strbuf_addf_with_format_only @
++expression E;
++constant fmt;
+ @@
+-expression E1, E2;
++  strbuf_addf(E,
++(
++  fmt
++|
++  _(fmt)
++)
++  );
++
++@ script:python @
++fmt << strbuf_addf_with_format_only.fmt;
+ @@
+-- strbuf_addf(E1, E2);
+-+ strbuf_addstr(E1, E2);
++cocci.include_match("%" not in fmt)
++
++@ extends strbuf_addf_with_format_only @
++@@
++- strbuf_addf
+++ strbuf_addstr
++  (E,
++(
++  fmt
++|
++  _(fmt)
++)
++  );
+ 
+ @@
+ expression E1, E2;
+-- 
+2.10.0
