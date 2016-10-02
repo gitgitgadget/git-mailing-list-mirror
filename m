@@ -2,93 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 460EE20986
-	for <e@80x24.org>; Sat,  1 Oct 2016 23:07:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 133A2207EC
+	for <e@80x24.org>; Sun,  2 Oct 2016 09:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751625AbcJAXHd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Oct 2016 19:07:33 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:38422 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751025AbcJAXHd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2016 19:07:33 -0400
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout03 with smtp
-        id qP7T1t0070zhorE01P7UGo; Sun, 02 Oct 2016 00:07:29 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=YLLd8lOx c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=fHJeHCpVL1lYGcKT8XoA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] tmp-objdir: mark some file local symbols static
-Message-ID: <f5560f8b-75be-faa0-ce1c-5e2716ee82a5@ramsayjones.plus.com>
-Date:   Sun, 2 Oct 2016 00:07:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+        id S1751795AbcJBJIH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Oct 2016 05:08:07 -0400
+Received: from mout.web.de ([212.227.15.14]:56922 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751701AbcJBJIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Oct 2016 05:08:05 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0Mf0W1-1bX2aU0DCz-00OThB; Sun, 02 Oct 2016 11:07:43
+ +0200
+Subject: Re: [PATCH 2/6] sha1_file: always allow relative paths to alternates
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20160930193533.ynbepaago6oycg5t@sigill.intra.peff.net>
+ <20160930193604.hqspizasfpqa6bez@sigill.intra.peff.net>
+Cc:     David Turner <dturner@twosigma.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c27dc1a4-3c7a-2866-d9d8-f5d3eb161650@web.de>
+Date:   Sun, 2 Oct 2016 11:07:39 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.3.0
 MIME-Version: 1.0
+In-Reply-To: <20160930193604.hqspizasfpqa6bez@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:Wg32ZHPJ7X0UFoLOf9wtyZwZymAODKpbWTc+f+31vueALx45YOO
+ 83klm2usdfH4xGTt0/y78MTsFRmqrkupbKXRMOYJ1q0Mptt/zIMVdpN/nd+fPmGK/zMoASV
+ jJ7hymbvgke/oDvRZTyMfPsk03UnUsFJO2oKp7qOtE9sYv0n5PHd0N1hwfm5FbCnh1GrAkY
+ uFIYF+T9GVag3D1FTMVmQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GJmhYFydSoM=:9ISh8jK1c5l6pzk+C0PfKh
+ ZYvTMlUI6uWtHe1yDmrArPYdvZgdb8bjXtLBJOdWBbBKL83i6ZSdKAGnLbFP5mamMyAiMH+uN
+ JSu2iWhSPZsW5MC5Z14voT5BRTZsTqVyBFkU9sM7aTh/NbYIhNeynSfE9qFLcce1jlTkUvOD+
+ 6BMT1PHhQkCqTWW6czWxV8JZrp7rneIcicFWQ3tqcLEYshDQeowjzlFVVdC7VXRZt3wDDxNoC
+ Qa+q+I9JHtvCsR1Fhj53BjJ2uYg1CliRiez8kyFfYkcZ2A9P48dJqCs11aPNMaAN+n4BQeSyT
+ wHSa5PvmVuK7z/wqPK5hgmWTLQi1fkjyp6LTK6N7MNl6GcKFvBlJr6N7FRw1FG/clWETqCHzg
+ 0XIQkPTKdrGF2uqC/clA3gYlMgfWDwLTzRzhoP6HpoOFgqXIZN8DNHiru9nAqP83trQOhmZIU
+ APaIKp8n+yDsuHt1dondgF9I/IZ/joXIDF5NQW+zm0zvRs787XpgYxwyitW8xONMbWAGmenfl
+ AdmmWoWVmHO9WbkrIdxoJ6yVccpde/iDACATVtSrp9cK1e6bfp4r0tbYlH4H/RcfEXQ9mUL2p
+ 0GuLcwdIZPId2yxXrA8TMYTKbGU3wyUbIJG8t1WBb2oSDl0smV94Txoim/FHN6nIksSH4yxJO
+ 7SlsUXe8s4cZ8xSM22JTCUQw4wcvdQ4qIGVbm9Y+8VAXLSxKNdFGHqoqhkw9Z1tl3Fprc+MfH
+ QVQ3TbNkhcehVVuV6Ko8QFL6A+zyYwJMLdtmlMAmPzGGhSaLSBZFKjpR7Pgp8qAdJ9cimHohi
+ jnEwS5F
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 30.09.2016 um 21:36 schrieb Jeff King:
+> We adjust the test script here to demonstrate that this now
+> works. Unfortunately, we can't demonstrate that the
+> duplicate is suppressed, since it has no user-visible
+> behavior (it's just one less place for our object lookups to
+> go). But you can verify it manually via gdb, with something
+> like:
+> 
+>     for i in a b c; do
+>             git init --bare $i
+>             blob=$(echo $i | git -C $i hash-object -w --stdin)
+>     done
+>     echo "../../b/objects" >a/objects/info/alternates
+>     echo "../../c/objects" >>a/objects/info/alternates
+>     echo "../../c/objects" >b/objects/info/alternates
+>     gdb --args git cat-file -e $blob
+> 
+> After prepare_alt_odb() runs, we have only a single copy of
+> "/path/to/c/objects/" in the alt_odb list.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+A better way would be to provide a UI for that.  We could easily bolt
+it to the side of count-objects like in the patch below.  Feels a bit
+hackish, though.
 
-Hi Jeff,
+Per-ODB counting would be nice, but a lot more involved, I guess
+(didn't try).
 
-If you need to re-roll your 'jk/quarantine-received-objects' branch,
-could you please squash this into the relevant patches.
 
-[I also note that tmp_objdir_destroy(), declared to be part of the
-public interface, is not currently called from outside tmp_objdir.c.
-Despite being unlikely, it is at least plausible that this function
-may be useful in future. ;-) ]
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- builtin/receive-pack.c | 2 +-
- tmp-objdir.c           | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 25afa3f..4194088 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -87,7 +87,7 @@ static enum {
- } use_keepalive;
- static int keepalive_in_sec = 5;
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index ba92919..b2afe36 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -73,6 +73,12 @@ static int count_cruft(const char *basename, const char *path, void *data)
+ 	return 0;
+ }
  
--struct tmp_objdir *tmp_objdir;
-+static struct tmp_objdir *tmp_objdir;
- 
- static enum deny_action parse_deny_action(const char *var, const char *value)
++static int print_alt_odb(struct alternate_object_database *alt, void *data)
++{
++	puts(alt->base);
++	return 0;
++}
++
+ static char const * const count_objects_usage[] = {
+ 	N_("git count-objects [-v] [-H | --human-readable]"),
+ 	NULL
+@@ -81,10 +87,13 @@ static char const * const count_objects_usage[] = {
+ int cmd_count_objects(int argc, const char **argv, const char *prefix)
  {
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 2181a42..3a58404 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -17,7 +17,7 @@ struct tmp_objdir {
-  * more than one, and we can expand later if so.  You can have many such
-  * tmp_objdirs simultaneously in many processes, of course.
-  */
--struct tmp_objdir *the_tmp_objdir;
-+static struct tmp_objdir *the_tmp_objdir;
+ 	int human_readable = 0;
++	int list_alt_odb = 0;
+ 	struct option opts[] = {
+ 		OPT__VERBOSE(&verbose, N_("be verbose")),
+ 		OPT_BOOL('H', "human-readable", &human_readable,
+ 			 N_("print sizes in human readable format")),
++		OPT_BOOL(0, "list-alternates", &list_alt_odb,
++			 N_("print list of alternate object databases")),
+ 		OPT_END(),
+ 	};
  
- static void tmp_objdir_free(struct tmp_objdir *t)
- {
--- 
-2.10.0
+@@ -92,6 +101,12 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
+ 	/* we do not take arguments other than flags for now */
+ 	if (argc)
+ 		usage_with_options(count_objects_usage, opts);
++
++	if (list_alt_odb) {
++		foreach_alt_odb(print_alt_odb, NULL);
++		return 0;
++	}
++
+ 	if (verbose) {
+ 		report_garbage = real_report_garbage;
+ 		report_linked_checkout_garbage();
+
