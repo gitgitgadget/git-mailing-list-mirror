@@ -2,106 +2,292 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_BLACK
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BD98207EC
-	for <e@80x24.org>; Mon,  3 Oct 2016 23:15:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2823207EC
+	for <e@80x24.org>; Mon,  3 Oct 2016 23:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752765AbcJCXPp convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 3 Oct 2016 19:15:45 -0400
-Received: from know-smtprelay-omc-2.server.virginmedia.net ([80.0.253.66]:40495
-        "EHLO know-smtprelay-omc-2.server.virginmedia.net"
+        id S1752422AbcJCXrd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 19:47:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51639 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751725AbcJCXPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 19:15:44 -0400
-Received: from red.patthoyts.tk ([82.37.62.216])
-        by know-smtprelay-2-imp with bizsmtp
-        id rBFh1t00n4fw4HN01BFhQF; Tue, 04 Oct 2016 00:15:42 +0100
-X-Originating-IP: [82.37.62.216]
-X-Spam: 0
-X-Authority: v=2.1 cv=XKnNMlVE c=1 sm=1 tr=0 a=y+L2qvWGb0b1Khfuzk0aNQ==:117
- a=y+L2qvWGb0b1Khfuzk0aNQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=xqWC_Br6kY4A:10 a=1oJP67jkp3AA:10
- a=ZZnuYtJkoWoA:10 a=CH0kA5CcgfcA:10 a=A9qS8gIqAAAA:8 a=1XWaLZrsAAAA:8
- a=FP58Ms26AAAA:8 a=Rf460ibiAAAA:8 a=hOve97WsGiNgDeeztX0A:9 a=wPNLvfGTeEIA:10
- a=-FEs8UIgK8oA:10 a=NWVoK91CQyQA:10 a=H28RkzuXznr5akrmL4QT:22
- a=nJcEw6yWrPvoIXZ49MH8:22 a=6LVbBl2NLSWPyIBDCKCu:22 a=-X4ai1wA6IXBCEr1GZS2:22
-Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2001:470:1f1d:26c::2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by red.patthoyts.tk (Postfix) with ESMTPS id AC98A1960AB7;
-        Tue,  4 Oct 2016 00:15:41 +0100 (BST)
-From:   Pat Thoyts <patthoyts@users.sourceforge.net>
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] git-gui: stop using deprecated merge syntax
-References: <cbb1815e-0ebc-e103-927e-14d7d038245a@web.de>
-        <a5b001fd-3ba2-bcc0-2104-eb630796ab09@kdbg.org>
-        <xmqqvaxjygb2.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZZwum+97JGL8OFWTdODZeqrEyj4MVMC6o6ynFMOhiFLg@mail.gmail.com>
-        <87mvilx2ak.fsf@red.patthoyts.tk>
-        <5283506a-9399-6ddc-d714-1dd9d2b49704@web.de>
-X-Face:  .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-Reply-to: patthoyts@users.sourceforge.net
-X-Url:  http://www.patthoyts.tk/
-Date:   Tue, 04 Oct 2016 00:15:41 +0100
-In-Reply-To: <5283506a-9399-6ddc-d714-1dd9d2b49704@web.de>
- (=?iso-8859-1?Q?=22Ren=E9?= Scharfe"'s
-        message of "Mon, 3 Oct 2016 11:45:46 +0200")
-Message-ID: <87int9t46a.fsf@red.patthoyts.tk>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        id S1751500AbcJCXrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 19:47:31 -0400
+Received: (qmail 30598 invoked by uid 109); 3 Oct 2016 23:47:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 23:47:31 +0000
+Received: (qmail 31889 invoked by uid 111); 3 Oct 2016 23:47:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 19:47:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2016 19:47:28 -0400
+Date:   Mon, 3 Oct 2016 19:47:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] abbrev: auto size the default abbreviation
+Message-ID: <20161003234728.s5sadekukxoppcmw@sigill.intra.peff.net>
+References: <20161001001937.10884-1-gitster@pobox.com>
+ <20161001001937.10884-4-gitster@pobox.com>
+ <20161003222701.za5njew33rqc5b6g@sigill.intra.peff.net>
+ <CA+55aFydV+9c3-5C03XUj7v_wGJF5NyJNaP6742zLVgZs410FA@mail.gmail.com>
+ <20161003224028.ksvwaplxe7a3vtwv@sigill.intra.peff.net>
+ <xmqqoa313v0j.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqoa313v0j.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+On Mon, Oct 03, 2016 at 03:52:44PM -0700, Junio C Hamano wrote:
 
->Am 03.10.2016 um 10:30 schrieb Pat Thoyts:
->> The only problem I see here is that generally git-gui tries to continue
->> to work with older versions of git as well. So adding a guard using the
->> git-version procedure should maintain that backwards compatibility.
->
->Makes sense for a stand-alone tool.
->
->> I suggest:
->>
->> From c2716458f05893ca88c05ce211a295a330e74590 Mon Sep 17 00:00:00 2001
->> From:  René Scharfe <l.s.r@web.de>
->> Date: Sat, 24 Sep 2016 13:30:22 +0200
->> Subject: [PATCH] git-gui: stop using deprecated merge syntax
->>
->> Starting with v2.5.0 git merge can handle FETCH_HEAD internally and
->> warns when it's called like 'git merge <message> HEAD <commit>' because
->> that syntax is deprecated.  Use this feature in git-gui and get rid of
->> that warning.
->>
->> Tested-by: Johannes Sixt <j6t@kdbg.org>
->> Reviewed-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
->
->OK, but perhaps move me from From: to Original-patch-by: as the
->version check is a big enough change in itself.  Or add a separate
->commit for it.  Or at least mention that you added the check in the
->commit message.
->
->Thanks,
->René
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Mon, Oct 03, 2016 at 03:34:03PM -0700, Linus Torvalds wrote:
+> >
+> >> On Mon, Oct 3, 2016 at 3:27 PM, Jeff King <peff@peff.net> wrote:
+> >> >
+> >> > +       if (len < 0) {
+> >> > +               unsigned long count = approximate_object_count();
+> >> > +               len = (msb(count) + 1) / 2;
+> >> > +               if (len < 0)
+> >> > +                       len = FALLBACK_DEFAULT_ABBREV;
+> >> > +       }
+> >> 
+> >> that second "if (len < 0)" should probably be testing against
+> >> FALLBACK_DEFAULT_ABBREV, not zero. Or at the very least
+> >> MINIMUM_ABBREV. Because a two-character abbreviation won't even be
+> >> recognized, even if the git project is very small indeed.
+> >
+> > Oops, yes, clearly it should be FALLBACK_DEFAULT_ABBREV. What is there
+> > would not even pass the tests (it _does_ work on linux.git, of course,
+> > because it is much too large for that code to be triggered).
+> 
+> OK, as Linus's "count at the point of use" is already in 'next',
+> could you make it incremental with a log message?
 
-As this is one of the ones already staged to git's 'next' I'll make this
-as a separate commit on top.
+Sure. I wasn't sure if you actually liked my direction or not, so I was
+mostly just showing off what the completed one would look like.
 
+Here it is as an incremental on top of lt/abbrev-auto. I also tweaked
+the math a bit to round-up more aggressively, and commented it more (I
+could also just make the math look exactly like Linus's, counting up
+until hitting an expected collision. I dunno if that is more clear).
+
+-- >8 --
+Subject: [PATCH] find_unique_abbrev: move logic out of get_short_sha1()
+
+The get_short_sha1() is only about reading short sha1s; we
+do call it in a loop to check "is this long enough" for each
+object, but otherwise it should not need to know about
+things like our default_abbrev setting.
+
+So instead of asking it to set default_automatic_abbrev as a
+side-effect, let's just have find_unique_abbrev() pick the
+right place to start its loop.  This requires a separate
+approximate_object_count() function, but that naturally
+belongs with the rest of sha1_file.c.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ cache.h     |  7 ++++++-
+ sha1_file.c | 27 +++++++++++++++++++++++++++
+ sha1_name.c | 60 +++++++++++++++++++++++++++++++++++-------------------------
+ 3 files changed, 68 insertions(+), 26 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 0e2a059..f22ace5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1204,7 +1204,6 @@ struct object_context {
+ #define GET_SHA1_TREEISH          020
+ #define GET_SHA1_BLOB             040
+ #define GET_SHA1_FOLLOW_SYMLINKS 0100
+-#define GET_SHA1_AUTOMATIC	 0200
+ #define GET_SHA1_ONLY_TO_DIE    04000
+ 
+ #define GET_SHA1_DISAMBIGUATORS \
+@@ -1456,6 +1455,12 @@ extern void prepare_packed_git(void);
+ extern void reprepare_packed_git(void);
+ extern void install_packed_git(struct packed_git *pack);
+ 
++/*
++ * Give a rough count of objects in the repository. This sacrifices accuracy
++ * for speed.
++ */
++unsigned long approximate_object_count(void);
++
+ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ 					 struct packed_git *packs);
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index b9c1fa3..4882440 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1381,6 +1381,32 @@ static void prepare_packed_git_one(char *objdir, int local)
+ 	strbuf_release(&path);
+ }
+ 
++static int approximate_object_count_valid;
++
++/*
++ * Give a fast, rough count of the number of objects in the repository. This
++ * ignores loose objects completely. If you have a lot of them, then either
++ * you should repack because your performance will be awful, or they are
++ * all unreachable objects about to be pruned, in which case they're not really
++ * interesting as a measure of repo size in the first place.
++ */
++unsigned long approximate_object_count(void)
++{
++	static unsigned long count;
++	if (!approximate_object_count_valid) {
++		struct packed_git *p;
++
++		prepare_packed_git();
++		count = 0;
++		for (p = packed_git; p; p = p->next) {
++			if (open_pack_index(p))
++				continue;
++			count += p->num_objects;
++		}
++	}
++	return count;
++}
++
+ static void *get_next_packed_git(const void *p)
+ {
+ 	return ((const struct packed_git *)p)->next;
+@@ -1455,6 +1481,7 @@ void prepare_packed_git(void)
+ 
+ void reprepare_packed_git(void)
+ {
++	approximate_object_count_valid = 0;
+ 	prepare_packed_git_run_once = 0;
+ 	prepare_packed_git();
+ }
+diff --git a/sha1_name.c b/sha1_name.c
+index beb7ab5..76e6885 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -15,7 +15,6 @@ typedef int (*disambiguate_hint_fn)(const unsigned char *, void *);
+ 
+ struct disambiguate_state {
+ 	int len; /* length of prefix in hex chars */
+-	unsigned int nrobjects;
+ 	char hex_pfx[GIT_SHA1_HEXSZ + 1];
+ 	unsigned char bin_pfx[GIT_SHA1_RAWSZ];
+ 
+@@ -119,14 +118,6 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+ 
+ 			if (strlen(de->d_name) != 38)
+ 				continue;
+-
+-			/*
+-			 * We only look at the one subdirectory, and we assume
+-			 * each subdirectory is roughly similar, so each
+-			 * object we find probably has 255 other objects in
+-			 * the other fan-out directories.
+-			 */
+-			ds->nrobjects += 256;
+ 			if (memcmp(de->d_name, ds->hex_pfx + 2, ds->len - 2))
+ 				continue;
+ 			memcpy(hex + 2, de->d_name, 38);
+@@ -160,7 +151,6 @@ static void unique_in_pack(struct packed_git *p,
+ 
+ 	open_pack_index(p);
+ 	num = p->num_objects;
+-	ds->nrobjects += num;
+ 	last = num;
+ 	while (first < last) {
+ 		uint32_t mid = (first + last) / 2;
+@@ -390,9 +380,6 @@ static int show_ambiguous_object(const unsigned char *sha1, void *data)
+ 	return 0;
+ }
+ 
+-/* start from our historical default before the automatic abbreviation */
+-static int default_automatic_abbrev = FALLBACK_DEFAULT_ABBREV;
+-
+ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
+ 			  unsigned flags)
+ {
+@@ -439,14 +426,6 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
+ 		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
+ 	}
+ 
+-	if (len < 16 && !status && (flags & GET_SHA1_AUTOMATIC)) {
+-		unsigned int expect_collision = 1 << (len * 2);
+-		if (ds.nrobjects > expect_collision) {
+-			default_automatic_abbrev = len+1;
+-			return SHORT_NAME_AMBIGUOUS;
+-		}
+-	}
+-
+ 	return status;
+ }
+ 
+@@ -476,22 +455,53 @@ int for_each_abbrev(const char *prefix, each_abbrev_fn fn, void *cb_data)
+ 	return ret;
+ }
+ 
++/*
++ * Return the slot of the most-significant bit set in "val". There are various
++ * ways to do this quickly with fls() or __builtin_clzl(), but speed is
++ * probably not a big deal here.
++ */
++unsigned msb(unsigned long val)
++{
++	unsigned r = 0;
++	while (val >>= 1)
++		r++;
++	return r;
++}
++
+ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
+ {
+ 	int status, exists;
+-	int flags = GET_SHA1_QUIETLY;
+ 
+ 	if (len < 0) {
+-		flags |= GET_SHA1_AUTOMATIC;
+-		len = default_automatic_abbrev;
++		unsigned long count = approximate_object_count();
++		/*
++		 * Add one because the MSB only tells us the highest bit set,
++		 * not including the value of all the _other_ bits (so "15"
++		 * is only one off of 2^4, but the MSB is the 3rd bit.
++		 */
++		len = msb(count) + 1;
++		/*
++		 * We now know we have on the order of 2^len objects, which
++		 * expects a collision at 2^(len/2). But we also care about hex
++		 * chars, not bits, and there are 4 bits per hex. So all
++		 * together we need to divide by 2; but we also want to round
++		 * odd numbers up, hence adding one before dividing.
++		 */
++		len = (len + 1) / 2;
++		/*
++		 * For very small repos, we stick with our regular fallback.
++		 */
++		if (len < FALLBACK_DEFAULT_ABBREV)
++			len = FALLBACK_DEFAULT_ABBREV;
+ 	}
++
+ 	sha1_to_hex_r(hex, sha1);
+ 	if (len == 40 || !len)
+ 		return 40;
+ 	exists = has_sha1_file(sha1);
+ 	while (len < 40) {
+ 		unsigned char sha1_ret[20];
+-		status = get_short_sha1(hex, len, sha1_ret, flags);
++		status = get_short_sha1(hex, len, sha1_ret, GET_SHA1_QUIETLY);
+ 		if (exists
+ 		    ? !status
+ 		    : status == SHORT_NAME_NOT_FOUND) {
 -- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+2.10.0.618.g82cc264
+
