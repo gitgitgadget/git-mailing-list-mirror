@@ -6,28 +6,29 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBE22207EC
-	for <e@80x24.org>; Mon,  3 Oct 2016 20:34:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 420E8207EC
+	for <e@80x24.org>; Mon,  3 Oct 2016 20:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752783AbcJCUew (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 16:34:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51439 "EHLO cloud.peff.net"
+        id S1752796AbcJCUfH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 16:35:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51443 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752098AbcJCUev (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 16:34:51 -0400
-Received: (qmail 17305 invoked by uid 109); 3 Oct 2016 20:34:51 -0000
+        id S1751613AbcJCUfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 16:35:05 -0400
+Received: (qmail 17319 invoked by uid 109); 3 Oct 2016 20:35:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 20:34:51 +0000
-Received: (qmail 29756 invoked by uid 111); 3 Oct 2016 20:35:07 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 20:35:05 +0000
+Received: (qmail 29773 invoked by uid 111); 3 Oct 2016 20:35:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 16:35:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2016 16:34:48 -0400
-Date:   Mon, 3 Oct 2016 16:34:48 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 16:35:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2016 16:35:03 -0400
+Date:   Mon, 3 Oct 2016 16:35:03 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH 08/18] link_alt_odb_entry: refactor string handling
-Message-ID: <20161003203448.cdfbitl5jmhlpb5o@sigill.intra.peff.net>
+Subject: [PATCH 09/18] alternates: provide helper for adding to alternates
+ list
+Message-ID: <20161003203503.omjwvg4ocz7pjyzt@sigill.intra.peff.net>
 References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -38,165 +39,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The string handling in link_alt_odb_entry() is mostly an
-artifact of the original version, which took the path as a
-ptr/len combo, and did not have a NUL-terminated string
-until we created one in the alternate_object_database
-struct.  But since 5bdf0a8 (sha1_file: normalize alt_odb
-path before comparing and storing, 2011-09-07), the first
-thing we do is put the path into a strbuf, which gives us
-some easy opportunities for cleanup.
+The submodule code wants to temporarily add an alternate
+object store to our in-memory alt_odb list, but does it
+manually. Let's provide a helper so it can reuse the code in
+link_alt_odb_entry().
 
-In particular:
-
-  - we call strlen(pathbuf.buf), which is silly; we can look
-    at pathbuf.len.
-
-  - even though we have a strbuf, we don't maintain its
-    "len" field when chomping extra slashes from the
-    end, and instead keep a separate "pfxlen" variable. We
-    can fix this and then drop "pfxlen" entirely.
-
-  - we don't check whether the path is usable until after we
-    allocate the new struct, making extra cleanup work for
-    ourselves. Since we have a NUL-terminated string, we can
-    bump the "is it usable" checks higher in the function.
-    While we're at it, we can move that logic to its own
-    helper, which makes the flow of link_alt_odb_entry()
-    easier to follow.
+While we're adding our new add_to_alternates_memory(), let's
+document add_to_alternates_file(), as the two are related.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-And you can probably guess now how I found the issue in the last patch
-where pathbuf.len is totally bogus after calling normalize_path_copy. :)
+ cache.h     | 14 +++++++++++++-
+ sha1_file.c | 11 +++++++++++
+ submodule.c | 23 +----------------------
+ 3 files changed, 25 insertions(+), 23 deletions(-)
 
- sha1_file.c | 83 +++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 45 insertions(+), 38 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 68571bd..f396823 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -234,6 +234,36 @@ char *sha1_pack_index_name(const unsigned char *sha1)
- struct alternate_object_database *alt_odb_list;
- static struct alternate_object_database **alt_odb_tail;
+diff --git a/cache.h b/cache.h
+index ed3d5df..9a91378 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1388,10 +1388,22 @@ extern struct alternate_object_database {
+ extern void prepare_alt_odb(void);
+ extern void read_info_alternates(const char * relative_base, int depth);
+ extern char *compute_alternate_path(const char *path, struct strbuf *err);
+-extern void add_to_alternates_file(const char *reference);
+ typedef int alt_odb_fn(struct alternate_object_database *, void *);
+ extern int foreach_alt_odb(alt_odb_fn, void*);
  
 +/*
-+ * Return non-zero iff the path is usable as an alternate object database.
++ * Add the directory to the on-disk alternates file; the new entry will also
++ * take effect in the current process.
 + */
-+static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
++extern void add_to_alternates_file(const char *dir);
++
++/*
++ * Add the directory to the in-memory list of alternates (along with any
++ * recursive alternates it points to), but do not modify the on-disk alternates
++ * file.
++ */
++extern void add_to_alternates_memory(const char *dir);
++
+ struct pack_window {
+ 	struct pack_window *next;
+ 	unsigned char *base;
+diff --git a/sha1_file.c b/sha1_file.c
+index f396823..2e41b26 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -440,6 +440,17 @@ void add_to_alternates_file(const char *reference)
+ 	free(alts);
+ }
+ 
++void add_to_alternates_memory(const char *reference)
 +{
-+	struct alternate_object_database *alt;
-+
-+	/* Detect cases where alternate disappeared */
-+	if (!is_directory(path->buf)) {
-+		error("object directory %s does not exist; "
-+		      "check .git/objects/info/alternates.",
-+		      path->buf);
-+		return 0;
-+	}
-+
 +	/*
-+	 * Prevent the common mistake of listing the same
-+	 * thing twice, or object directory itself.
++	 * Make sure alternates are initialized, or else our entry may be
++	 * overwritten when they are.
 +	 */
-+	for (alt = alt_odb_list; alt; alt = alt->next) {
-+		if (path->len == alt->name - alt->base - 1 &&
-+		    !memcmp(path->buf, alt->base, path->len))
-+			return 0;
-+	}
-+	if (!fspathcmp(path->buf, normalized_objdir))
-+		return 0;
++	prepare_alt_odb();
 +
-+	return 1;
++	link_alt_odb_entries(reference, strlen(reference), '\n', NULL, 0);
 +}
 +
  /*
-  * Prepare alternate object database registry.
-  *
-@@ -253,8 +283,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
- 	int depth, const char *normalized_objdir)
+  * Compute the exact path an alternate is at and returns it. In case of
+  * error NULL is returned and the human readable error is added to `err`
+diff --git a/submodule.c b/submodule.c
+index 0ef2ff4..8b3274a 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -123,9 +123,7 @@ void stage_updated_gitmodules(void)
+ static int add_submodule_odb(const char *path)
  {
- 	struct alternate_object_database *ent;
--	struct alternate_object_database *alt;
--	size_t pfxlen, entlen;
-+	size_t entlen;
- 	struct strbuf pathbuf = STRBUF_INIT;
+ 	struct strbuf objects_directory = STRBUF_INIT;
+-	struct alternate_object_database *alt_odb;
+ 	int ret = 0;
+-	size_t alloc;
  
- 	if (!is_absolute_path(entry) && relative_base) {
-@@ -270,47 +299,26 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
- 		return -1;
+ 	ret = strbuf_git_path_submodule(&objects_directory, path, "objects/");
+ 	if (ret)
+@@ -134,26 +132,7 @@ static int add_submodule_odb(const char *path)
+ 		ret = -1;
+ 		goto done;
  	}
- 
--	pfxlen = strlen(pathbuf.buf);
+-	/* avoid adding it twice */
+-	prepare_alt_odb();
+-	for (alt_odb = alt_odb_list; alt_odb; alt_odb = alt_odb->next)
+-		if (alt_odb->name - alt_odb->base == objects_directory.len &&
+-				!strncmp(alt_odb->base, objects_directory.buf,
+-					objects_directory.len))
+-			goto done;
 -
- 	/*
- 	 * The trailing slash after the directory name is given by
- 	 * this function at the end. Remove duplicates.
- 	 */
--	while (pfxlen && pathbuf.buf[pfxlen-1] == '/')
--		pfxlen -= 1;
+-	alloc = st_add(objects_directory.len, 42); /* for "12/345..." sha1 */
+-	alt_odb = xmalloc(st_add(sizeof(*alt_odb), alloc));
+-	alt_odb->next = alt_odb_list;
+-	xsnprintf(alt_odb->base, alloc, "%s", objects_directory.buf);
+-	alt_odb->name = alt_odb->base + objects_directory.len;
+-	alt_odb->name[2] = '/';
+-	alt_odb->name[40] = '\0';
+-	alt_odb->name[41] = '\0';
+-	alt_odb_list = alt_odb;
 -
--	entlen = st_add(pfxlen, 43); /* '/' + 2 hex + '/' + 38 hex + NUL */
--	ent = xmalloc(st_add(sizeof(*ent), entlen));
--	memcpy(ent->base, pathbuf.buf, pfxlen);
--	strbuf_release(&pathbuf);
--
--	ent->name = ent->base + pfxlen + 1;
--	ent->base[pfxlen + 3] = '/';
--	ent->base[pfxlen] = ent->base[entlen-1] = 0;
-+	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
-+		strbuf_setlen(&pathbuf, pathbuf.len - 1);
- 
--	/* Detect cases where alternate disappeared */
--	if (!is_directory(ent->base)) {
--		error("object directory %s does not exist; "
--		      "check .git/objects/info/alternates.",
--		      ent->base);
--		free(ent);
-+	if (!alt_odb_usable(&pathbuf, normalized_objdir)) {
-+		strbuf_release(&pathbuf);
- 		return -1;
- 	}
- 
--	/* Prevent the common mistake of listing the same
--	 * thing twice, or object directory itself.
--	 */
--	for (alt = alt_odb_list; alt; alt = alt->next) {
--		if (pfxlen == alt->name - alt->base - 1 &&
--		    !memcmp(ent->base, alt->base, pfxlen)) {
--			free(ent);
--			return -1;
--		}
--	}
--	if (!fspathcmp(ent->base, normalized_objdir)) {
--		free(ent);
--		return -1;
--	}
-+	entlen = st_add(pathbuf.len, 43); /* '/' + 2 hex + '/' + 38 hex + NUL */
-+	ent = xmalloc(st_add(sizeof(*ent), entlen));
-+	memcpy(ent->base, pathbuf.buf, pathbuf.len);
-+
-+	ent->name = ent->base + pathbuf.len + 1;
-+	ent->base[pathbuf.len] = '/';
-+	ent->base[pathbuf.len + 3] = '/';
-+	ent->base[entlen-1] = 0;
- 
- 	/* add the alternate entry */
- 	*alt_odb_tail = ent;
-@@ -318,10 +326,9 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
- 	ent->next = NULL;
- 
- 	/* recursively add alternates */
--	read_info_alternates(ent->base, depth + 1);
--
--	ent->base[pfxlen] = '/';
-+	read_info_alternates(pathbuf.buf, depth + 1);
- 
-+	strbuf_release(&pathbuf);
- 	return 0;
- }
- 
+-	/* add possible alternates from the submodule */
+-	read_info_alternates(objects_directory.buf, 0);
++	add_to_alternates_memory(objects_directory.buf);
+ done:
+ 	strbuf_release(&objects_directory);
+ 	return ret;
 -- 
 2.10.0.618.g82cc264
 
