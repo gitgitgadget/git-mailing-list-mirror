@@ -2,105 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E1C7207EC
-	for <e@80x24.org>; Mon,  3 Oct 2016 14:49:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCDF820987
+	for <e@80x24.org>; Mon,  3 Oct 2016 15:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752879AbcJCOtH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 10:49:07 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:36107 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752316AbcJCOtG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 10:49:06 -0400
-Received: by mail-qt0-f179.google.com with SMTP id m5so24260414qtb.3
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 07:49:06 -0700 (PDT)
+        id S1751375AbcJCPTI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 11:19:08 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:34563 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750991AbcJCPTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 11:19:06 -0400
+Received: by mail-lf0-f48.google.com with SMTP id b81so40053440lfe.1
+        for <git@vger.kernel.org>; Mon, 03 Oct 2016 08:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/sJDjCyrogo95vDrvsV4HpQSQzEN/kKOv548yWgE5ak=;
-        b=kJKJqP/HFNbGSaFRJgJpGdY8Um+IycDCRao5ViR+MF8E66kMbIqjiRJXG4A8cKevco
-         g6cfPNCqmsmeRpXvOr1eFjBXH2Ft0m1RlFp/UzPZcwuqS2OKMTM5q9dAlWW59/d/ooVl
-         jSZPLx7PsNTxtjN5YXsgsgP56hlSCB/FkMfRzYZEDevp80wBFpOp+Kx9RbhZ36fuSYYa
-         MieYwxHkGh9hqZ8WeeeoMraQBH+j8anRtELJiCi4Ri6Z9QK8GkOfVCUhSLI6+ysO2y8u
-         +dZLwN37SAbll+7RoWzY/y6pEs9bnjyDO/o+sEYx4aMtSDEhDCkwooSKA34Lte1Vuc91
-         ILmw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=kYbfnXlolPd2qwQgwGPrqeFd+pGChYGHangNwCIemok=;
+        b=a1IQr00H9z4JwqL0uA6y/1f0WbZFVqQlHZXzSMsFxRyeWQXL5pMqRoh7UvuAqK/7zN
+         az6sSpO9qWW6f5apO+sT8iT6MYMsUAfa/M8pARipuV4VhWM2OVLiTJ5Y1nBiYwnoqsJ4
+         RsYmlRMRH5QD+70vAq0OJ5oB/Kld4VQL85UTFZk9STpr7xrBRsnKgR9Cz7iMmp2WJHI6
+         SXGnywZt2+Y9RQdT4esgzv7kYG1BGG/yT4gJmZ6MGY1+MSjOlUzTLdjW7VlrlSzRWNYY
+         V7swbThQ50iL+OkDKQlcT0gzFjLRA/JYZMZh/v8Cw2EgtdMYe13XCzkZ9Dwo3rarty+i
+         Stbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/sJDjCyrogo95vDrvsV4HpQSQzEN/kKOv548yWgE5ak=;
-        b=l1q+0stKkssVfzfAU2z4o/vYHxewHIIQudRzMIV+EOKfAQkCnpD2GaMW+q/An0ndrL
-         U7lzYFmdZeiriYQa2xfYck4Ah2/GV93dDPApdRDtfAF9r8yhqkQOX7ad9cbv+zxP8fsu
-         aw3Ck4mnWixQ/FNSXFQDjhi9RqwCVz9iwmOC0x5X3ZQNk9/es4u5xj+7qGI9Dozz3eBR
-         lYJVjwGmU97/WPgenG/rbR+Ud7SCyz0MaIlZSmKtdoIrkjozUA0d5a8gleeP6uvZRXvv
-         x+waJskSR90QxDMLqLh2pEp0XSmZgHZSucfHG5LTXky+i2Ubp8TNO3k6atI2ZkijQslj
-         dn7w==
-X-Gm-Message-State: AA6/9Rm7O6sHv1dNQNXLT+IJDCkOffDxX597M/HtrqfrAekmRaQcFxvxX9hsUiLMbC27G3Nv
-X-Received: by 10.200.36.66 with SMTP id d2mr21241014qtd.34.1475506144416;
-        Mon, 03 Oct 2016 07:49:04 -0700 (PDT)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-08.NATPOOL.NYU.EDU. [216.165.95.79])
-        by smtp.gmail.com with ESMTPSA id s23sm17240251qka.10.2016.10.03.07.49.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Oct 2016 07:49:03 -0700 (PDT)
-Date:   Mon, 3 Oct 2016 10:49:03 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org
-Subject: Re: [PATCH v3 0/5] Add --format to tag verification
-Message-ID: <20161003144901.4yainza537g5bujz@LykOS.localdomain>
-References: <20160930221806.3398-1-santiago@nyu.edu>
- <xmqqlgy97ys0.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=kYbfnXlolPd2qwQgwGPrqeFd+pGChYGHangNwCIemok=;
+        b=Lq2z29aCzbp2RLyf1va7PohDMTXgk1pn1We/NC44xPouNqe7nb1SdTQQuIyU/uaPzN
+         KqYSjKzWC7HgxeelsqQQcvA3i+BXeCFLJ/aKYw/mCujSyXb0UKAgwFlxzPNF8LoJHKZ+
+         H89ufDQj7+JVs3QZCgxhHTIOwoWy9AfOAHRmkAP2h609xQs6kJtjsetnqyLwwJhae6Gs
+         id61ResaZ/9OKRKDu8/P+j7seH85RXpBfQ4EbLN/r6Mo4rofuVNUx6/DHP1PqkA/8tfO
+         Vzm5dT0TsCCLMmLuv10hDLuJ2ivu7X2wKUmQYvlG9Gp3EvctFQmKnM3cJ7EfgDONG1tI
+         PdEg==
+X-Gm-Message-State: AA6/9RnRdPSQFT4XaQdizr/qqpz9baEvHlyMMlCq9MSAmcmJoFA9zjdJjHpTKGQVZQp/s5m2dPTZK2F8glMwyg==
+X-Received: by 10.25.195.209 with SMTP id t200mr6063815lff.172.1475507944956;
+ Mon, 03 Oct 2016 08:19:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="g33plddxxttvqqh4"
-Content-Disposition: inline
-In-Reply-To: <xmqqlgy97ys0.fsf@gitster.mtv.corp.google.com>
+Received: by 10.114.173.200 with HTTP; Mon, 3 Oct 2016 08:18:44 -0700 (PDT)
+In-Reply-To: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
+References: <88486231.114620.1475474318974.JavaMail.zimbra@redhat.com> <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
+From:   Anatoly Borodin <anatoly.borodin@gmail.com>
+Date:   Mon, 3 Oct 2016 17:18:44 +0200
+X-Google-Sender-Auth: XP9jDX6kdM_L2wfFLBbYKIEvJGo
+Message-ID: <CACNzp2mANqmciMzvCahM_+=RnZYtU1SK9DRS2BmQru1fZY_wUQ@mail.gmail.com>
+Subject: Re: Feature Request: user defined suffix for temp files created by git-mergetool
+To:     Josef Ridky <jridky@redhat.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Josef,
 
---g33plddxxttvqqh4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi, Junio.=20
-> I however notice that there is no new tests to protect these two new
-> features from future breakages.  Perhaps you want to add some in
-> [6/5]?
+On Mon, Oct 3, 2016 at 8:36 AM, Josef Ridky <jridky@redhat.com> wrote:
+> In several projects, we are using git mergetool for comparing files from =
+different folders.
+> Unfortunately, when we have opened three files  for comparing using meld =
+tool (e.q. Old_version -- Result -- New_version),
+> we can see only name of temporary files created by mergetool in the label=
+s (e.g. foo_REMOTE -- foo_BASE -- foo_LOCAL)
+> and users (and sometime even we) are confused, which of the files should =
+they edit and save.
 
-I'll be working on this. I spent some time looking around for example
-tests for format. Are there any that I should pay special attention to?
-(I'm looking at t7004 mostly right now).
+`git mergetool` just creates temporary files (with some temporary
+names) and calls `meld` (or `vimdiff`, etc) with the file names as
+parameters. So why wouldn't you call `meld` with the file names you
+want?
 
-Thanks!
--Santiago.
-
---g33plddxxttvqqh4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCAAGBQJX8m/dAAoJEEaPEizoFiKVDJsQAM1DKRlZhnDUp2uAwpoKxnsh
-PRXFvi6RA9whc41lsawqpDxNwyzx4ZwMXuVXivxi0PaKBjd/C5BPbUAcLT6Ox6CA
-y1ArIOQO2kK7R304ryPAyXYci+wsl1A2KJYlCTwR+txTPh04TV+YbSPCWH1e7G21
-XMlTEgWrm0fAaoCg4yryS8pG7+cNpuBzUFpIT2hBkg1P6aAV/DJxGdklE7p7Ens7
-rI1BrMYz2FXqODMG7D1BNCk3jhgad+IKVFjOlvSH3MZvcRCfvoMVBnhhS98yPdCd
-0aj1yzvDrCnkNKR5ZDv6+3/X9Y9XtoSEFNRnyy03Cz5dFjtsOClrnDsGeLbnTCic
-WJP19xUoRbvOLTDYJicH8hsvaBUQBsxv3rBvsJ2sRfNGiRWtv+a8frq4K/vL7yN+
-V5c9PE+WYuGoEvNTuLjUdj1/VVs7b6iJjqpuxSV/HMtlZe7Q1PwqfIT/KbsJN0e6
-msqydh1jlAHz7nXnjkKtX9IxhCPM2yhCMx4T0wbivpFiCHpD5qoSe+BmVU9/JKKd
-aIdePoWA3y4GNOEMAQtbtljqhnwxGXPzURw6pTBEyKdcap2oQ6D0y+aWDvuHMn33
-1MmWUMKdxXWGuekSXeaZ2KBKx2z5AttJcEcldZAwZs/ZysNfIYREGd9TaJ/A9Ew6
-7xEGYCp7dHnOWwULk6QJ
-=ahXl
------END PGP SIGNATURE-----
-
---g33plddxxttvqqh4--
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen,
+Anatoly Borodin
