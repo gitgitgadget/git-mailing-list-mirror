@@ -2,103 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6300220986
-	for <e@80x24.org>; Mon,  3 Oct 2016 06:45:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5D4A20986
+	for <e@80x24.org>; Mon,  3 Oct 2016 08:38:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752145AbcJCGpW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 02:45:22 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:38330 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751542AbcJCGpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 02:45:20 -0400
-Received: by mail-wm0-f53.google.com with SMTP id p138so132088839wmb.1
-        for <git@vger.kernel.org>; Sun, 02 Oct 2016 23:45:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tGMwJ/BOb6JTlOva/0FLBEIRUGN2KIYfbDS/ef0IuDM=;
-        b=tT6V32M79yDhySmLzZfSOmEV9vXuES4R1Iel7lT/htVj4VJUA31IBhNR6HuHGxi1YQ
-         /nuvCCNdAl4wE8VGmyoBkF8nZUNKAJ5GONjYfAbDhBFKhazd4MGM/BJpRrko5M7QwtoQ
-         kAtGQd7Ve/3i9sOl8pZFWVy02Pbw9WnO/+KiXsvbfR3CfRorCVcCZG02USumV8/3wGNd
-         qCvG8TkgA8p8kOgmb8RJ83MGKMYoEOw1gYijioQixADjWlGZhgcPZbsIzyz7thlUsywv
-         Z1nouUwMdNPgZd3jh+A+z8+cTN1jZgsI/AnDAOfKHvqL+EZTBy+L0kh5bFvPvNAc4MIx
-         OatQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tGMwJ/BOb6JTlOva/0FLBEIRUGN2KIYfbDS/ef0IuDM=;
-        b=HERZ9WTF8WrnYx6dZtlATB4TKSfwkYhlLbJ31lt0ah7VgNAQq8q/vWLqhhoTLVCfEt
-         +srtPJOJdgCZReLNyL653QTsFvWnBInnx7zXZ3v6vPuJra3HCr4zmKP3LWUYNuGapXb/
-         49ukLAJdTAjtjnp0GpSLp9s2LYkaRwrO/jZfzl7PRtPOAglIbSjz3BJy4GuautIeX/UM
-         gmFL/1vBobykn6IZiejJjphI/3m1skAo8cFnbtbp4G1ACrT3WXosRRzts0YYuBUQn5Em
-         iugkesX40Z/4mAe0e4aZldYn0cfk8Kx5h/n9GwER3lImi/mWjVcSyJ4D7FO65R5PxEr4
-         IL5w==
-X-Gm-Message-State: AA6/9RlNujiMR5X55rapwVapQ/qBpFzqP9qsK2EqeaK31WZeJOLchfIMWfZ3hU51YNpnF1xaX/HrZCg58fhnww==
-X-Received: by 10.194.101.131 with SMTP id fg3mr15957600wjb.33.1475477119156;
- Sun, 02 Oct 2016 23:45:19 -0700 (PDT)
+        id S1751521AbcJCIiv convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 3 Oct 2016 04:38:51 -0400
+Received: from know-smtprelay-omc-2.server.virginmedia.net ([80.0.253.66]:59813
+        "EHLO know-smtprelay-omc-2.server.virginmedia.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750991AbcJCIiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 04:38:50 -0400
+X-Greylist: delayed 501 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Oct 2016 04:38:50 EDT
+Received: from red.patthoyts.tk ([82.37.62.216])
+        by know-smtprelay-2-imp with bizsmtp
+        id qwWT1t00p4fw4HN01wWTBE; Mon, 03 Oct 2016 09:30:28 +0100
+X-Originating-IP: [82.37.62.216]
+X-Spam: 0
+X-Authority: v=2.1 cv=XKnNMlVE c=1 sm=1 tr=0 a=y+L2qvWGb0b1Khfuzk0aNQ==:117
+ a=y+L2qvWGb0b1Khfuzk0aNQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=xqWC_Br6kY4A:10 a=1oJP67jkp3AA:10
+ a=ZZnuYtJkoWoA:10 a=CH0kA5CcgfcA:10 a=1XWaLZrsAAAA:8 a=ybZZDoGAAAAA:8
+ a=A9qS8gIqAAAA:8 a=FP58Ms26AAAA:8 a=t4is9X1GrKjoCqsdY4MA:9 a=wPNLvfGTeEIA:10
+ a=nJcEw6yWrPvoIXZ49MH8:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=H28RkzuXznr5akrmL4QT:22
+ a=6LVbBl2NLSWPyIBDCKCu:22
+Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2001:470:1f1d:26c::2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by red.patthoyts.tk (Postfix) with ESMTPS id 7F097196F175;
+        Mon,  3 Oct 2016 09:30:27 +0100 (BST)
+From:   Pat Thoyts <patthoyts@users.sourceforge.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH] git-gui: stop using deprecated merge syntax
+References: <cbb1815e-0ebc-e103-927e-14d7d038245a@web.de>
+        <a5b001fd-3ba2-bcc0-2104-eb630796ab09@kdbg.org>
+        <xmqqvaxjygb2.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZZwum+97JGL8OFWTdODZeqrEyj4MVMC6o6ynFMOhiFLg@mail.gmail.com>
+X-Face:  .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+Reply-to: patthoyts@users.sourceforge.net
+X-Url:  http://www.patthoyts.tk/
+Date:   Mon, 03 Oct 2016 09:30:27 +0100
+In-Reply-To: <CAGZ79kZZwum+97JGL8OFWTdODZeqrEyj4MVMC6o6ynFMOhiFLg@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 26 Sep 2016 10:23:29 -0700")
+Message-ID: <87mvilx2ak.fsf@red.patthoyts.tk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.194.38.132 with HTTP; Sun, 2 Oct 2016 23:45:18 -0700 (PDT)
-In-Reply-To: <20161002130216.bburwjkx4dkzxiig@sigill.intra.peff.net>
-References: <20160930193533.ynbepaago6oycg5t@sigill.intra.peff.net>
- <CAP8UFD3Y1du+L9DRgz01wgbsCYiebu2DgyePH41MaDhjV24oHw@mail.gmail.com> <20161002130216.bburwjkx4dkzxiig@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 3 Oct 2016 08:45:18 +0200
-Message-ID: <CAP8UFD0FTe7P-0C_aqF3RVMMqVaa=s=Ld=pcoVyYirFw1h9Ogg@mail.gmail.com>
-Subject: Re: [PATCH 0/6] receive-pack: quarantine pushed objects
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>, David Turner <dturner@twosigma.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 2, 2016 at 3:02 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, Oct 02, 2016 at 11:20:59AM +0200, Christian Couder wrote:
->
->> I wonder if the patch you sent in:
+Stefan Beller <sbeller@google.com> writes:
+
+>On Sun, Sep 25, 2016 at 11:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Johannes Sixt <j6t@kdbg.org> writes:
 >>
->> https://public-inbox.org/git/20160816144642.5ikkta4l5hyx6act@sigill.intra.peff.net/
->>
->> is still useful or not.
+>>> Am 24.09.2016 um 13:30 schrieb René Scharfe:
+>>>> Starting with v2.5.0 git merge can handle FETCH_HEAD internally and
+>>>> warns when it's called like 'git merge <message> HEAD <commit>' because
+>>>> that syntax is deprecated.  Use this feature in git-gui and get rid of
+>>>> that warning.
+>>>>
+>>>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>>>> ---
+>>>> Tested only _very_ lightly!
+>>>>
+>>>>  git-gui/lib/merge.tcl | 7 +------
+>>>>  1 file changed, 1 insertion(+), 6 deletions(-)
+>>>>
+>>>> diff --git a/git-gui/lib/merge.tcl b/git-gui/lib/merge.tcl
+>>>> index 460d32f..5ab6f8f 100644
+>>>> --- a/git-gui/lib/merge.tcl
+>>>> +++ b/git-gui/lib/merge.tcl
+>>>> @@ -112,12 +112,7 @@ method _start {} {
+>>>>      close $fh
+>>>>      set _last_merged_branch $branch
+>>>>
+>>>> -    set cmd [list git]
+>>>> -    lappend cmd merge
+>>>> -    lappend cmd --strategy=recursive
+>>>> -    lappend cmd [git fmt-merge-msg <[gitdir FETCH_HEAD]]
+>>>> -    lappend cmd HEAD
+>>>> -    lappend cmd $name
+>>>> +    set cmd [list git merge --strategy=recursive FETCH_HEAD]
+>>>>
+>>>>      ui_status [mc "Merging %s and %s..." $current_branch $stitle]
+>>>>      set cons [console::new [mc "Merge"] "merge $stitle"]
+>>>>
+>>>
+>>> Much better than my version. I had left fmt-merge-msg and added
+>>> --no-log to treat merge.log config suitably. But this works too, and
+>>> is much more obvious.
+>>>
+>>> Tested-by: Johannes Sixt <j6t@kdbg.org>
 >
-> It is potentially still useful for other code paths besides
-> receive-pack. But if the main concern is pushes, then yeah, I think it
-> is not really doing anything.
+>Reviewed-by: Stefan Beller <sbeller@google.com>
 >
->> I guess if we fail the receive-pack because the pack is bigger than
->> receive.maxInputSize, then the "quarantine" directory will also be
->> removed, so the part of the pack that we received before failing the
->> receive-pack will be deleted.
->
-> Correct. _Any_ failure up to the tmp_objdir_migrate() call will drop the
-> objects. So that includes index-pack failing for any reason.
 
-Great, thanks for explaining!
+The only problem I see here is that generally git-gui tries to continue
+to work with older versions of git as well. So adding a guard using the
+git-version procedure should maintain that backwards compatibility.
 
->> >     These two patches set that up by letting index-pack and pre-receive
->> >     know that quarantine path and use it to store arbitrary files that
->> >     _don't_ get migrated to the main object database (i.e., the log file
->> >     mentioned above).
->>
->> It would be nice to have a diffstat for the whole series.
->
-> You mean in the cover letter? I do not mind including it if people find
-> them useful, but I personally have always just found them to be clutter
-> at that level.
+I suggest:
 
-I think it can help to quickly get an idea about what the series
-impacts, and it would have made it easier for me to see that the
-changes in the patch you sent previously
-(https://public-inbox.org/git/20160816144642.5ikkta4l5hyx6act@sigill.intra.peff.net/)
-are not part of this series.
+From c2716458f05893ca88c05ce211a295a330e74590 Mon Sep 17 00:00:00 2001
+From:  René Scharfe <l.s.r@web.de>
+Date: Sat, 24 Sep 2016 13:30:22 +0200
+Subject: [PATCH] git-gui: stop using deprecated merge syntax
 
-Thanks anyway,
-Christian.
+Starting with v2.5.0 git merge can handle FETCH_HEAD internally and
+warns when it's called like 'git merge <message> HEAD <commit>' because
+that syntax is deprecated.  Use this feature in git-gui and get rid of
+that warning.
+
+Tested-by: Johannes Sixt <j6t@kdbg.org>
+Reviewed-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+ lib/merge.tcl | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/lib/merge.tcl b/lib/merge.tcl
+index 460d32f..2361b78 100644
+--- a/lib/merge.tcl
++++ b/lib/merge.tcl
+@@ -112,13 +112,16 @@ method _start {} {
+ 	close $fh
+ 	set _last_merged_branch $branch
+ 
+-	set cmd [list git]
+-	lappend cmd merge
+-	lappend cmd --strategy=recursive
+-	lappend cmd [git fmt-merge-msg <[gitdir FETCH_HEAD]]
+-	lappend cmd HEAD
+-	lappend cmd $name
+-
++	if {[git-version >= "2.5.0"]} {
++		set cmd [list git merge --strategy=recursive FETCH_HEAD]
++	} else {
++		set cmd [list git]
++		lappend cmd merge
++		lappend cmd --strategy=recursive
++		lappend cmd [git fmt-merge-msg <[gitdir FETCH_HEAD]]
++		lappend cmd HEAD
++		lappend cmd $name
++	}
+ 	ui_status [mc "Merging %s and %s..." $current_branch $stitle]
+ 	set cons [console::new [mc "Merge"] "merge $stitle"]
+ 	console::exec $cons $cmd [cb _finish $cons]
+-- 
+2.10.0.windows.1
