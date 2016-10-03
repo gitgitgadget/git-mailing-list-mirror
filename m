@@ -2,82 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682AD20986
-	for <e@80x24.org>; Mon,  3 Oct 2016 11:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6E0C207EC
+	for <e@80x24.org>; Mon,  3 Oct 2016 12:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752638AbcJCL07 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 07:26:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51213 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751493AbcJCL05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 07:26:57 -0400
-Received: (qmail 13193 invoked by uid 109); 3 Oct 2016 11:26:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 11:26:56 +0000
-Received: (qmail 26579 invoked by uid 111); 3 Oct 2016 11:27:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 07:27:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2016 07:26:54 -0400
-Date:   Mon, 3 Oct 2016 07:26:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [Q] would it be bad to make /etc/gitconfig runtime configurable?
-Message-ID: <20161003112654.3vca4zmctslcudfz@sigill.intra.peff.net>
-References: <xmqqoa39p926.fsf@gitster.mtv.corp.google.com>
- <20160927192539.ybooc34iodnzs2ab@sigill.intra.peff.net>
- <alpine.DEB.2.20.1610031303000.35196@virtualbox>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1610031303000.35196@virtualbox>
+        id S1751699AbcJCMl7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 08:41:59 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:56272 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751171AbcJCMl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 08:41:57 -0400
+Received: (qmail 23545 invoked from network); 3 Oct 2016 12:41:54 -0000
+Received: (qmail 12176 invoked from network); 3 Oct 2016 12:41:52 -0000
+Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <jnareb@gmail.com>; 3 Oct 2016 12:41:47 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+Message-ID: <1475498507.1776.15.camel@sapo.pt>
+Subject: Re: [PATCH v2 03/11] i18n: add--interactive: mark strings with
+ interpolation for translation
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
+To:     Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Date:   Mon, 03 Oct 2016 12:41:47 +0000
+In-Reply-To: <b8c25ae3-143c-3e9b-0c7b-115a9b4756ae@gmail.com>
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+         <1472646690-9699-4-git-send-email-vascomalmeida@sapo.pt>
+         <b8c25ae3-143c-3e9b-0c7b-115a9b4756ae@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 03, 2016 at 01:06:10PM +0200, Johannes Schindelin wrote:
-
-> Hi,
+> W dniu 31.08.2016 o 14:31, Vasco Almeida pisze:
+> > Use of sprintf following die or error_msg is necessary for
+> > placeholder
+> > substitution take place.
 > 
-> On Tue, 27 Sep 2016, Jeff King wrote:
+> No, it is not.  Though I don't think that we have in out Git::I18N
+> the support for Perl i18n placeholder substitution.
+
+I will try to change the commit message to better reflect the reality.
+
+> From gettext manual:
+> https://www.gnu.org/software/gettext/manual/gettext.html#perl_002dfor
+> mat
 > 
-> > On Tue, Sep 27, 2016 at 10:05:37AM -0700, Junio C Hamano wrote:
-> > 
-> > > The subject says it all.  Would it be bad if we introduce an
-> > > environment variable, GIT_SYSTEM_CONFIG=/etc/gitconfig, that names
-> > > an alternative location of the system-wide configuration file?
-> > > 
-> > > That would supersede/deprecate GIT_CONFIG_NOSYSTEM that we
-> > > introduced primarily so that we can run our tests without getting
-> > > affected by the configuration that happens to be effective on the
-> > > host that the test is being run.
-> > 
-> > I can't think of a reason it would be bad.
+>   15.3.16 Perl Format Strings
 > 
-> I cannot think of any reason right now, either, but my gut tells me that
-> this needs to simmer a while in the backs of our minds, to give potential
-> reasons a chance to come forward.
+>   There are two kinds format strings in Perl: those acceptable to the
+> Perl
+>   built-in function printf, labelled as ‘perl-format’, and those
+> acceptable
+>   to the libintl-perl function __x, labelled as ‘perl-brace-format’.
 > 
-> What would be the use case, BTW? IOW what would it solve that cannot
-> already be solved by using XDG_CONFIG_HOME?
+>   Perl printf format strings are described in the sprintf section of
+>   ‘man perlfunc’.
+> 
+>   Perl brace format strings are described in the
+> Locale::TextDomain(3pm)
+>   manual page of the CPAN package libintl-perl. In brief, Perl format
+> uses
+>   placeholders put between braces (‘{’ and ‘}’). The placeholder must
+> have
+>   the syntax of simple identifiers.
+>  
+> Git doesn't use Locale::TextDomain, from what I understand, to
+> provide
+> fallback in no-gettext case.  Also, Locale::TextDomain is not in
+> core.
 
-The patches Junio posted later use it for the test suite (and I also
-have had to skip some tests in the past related to system config because
-of its lack).
+Yes that can be a reason not to use Locale::TextDomain. When Ævar
+Arnfjörð Bjarmason added gettext support and i18n stuff, he chose no to
+use TextDomain because it did more than he wanted it to do, and that
+could introduce bugs and unnecessary work.
 
-I would also use it when doing git experiments on GitHub servers. We
-keep several relevant config settings in /etc/gitconfig, so if I were to
-say, build a new version of git and test how it repacked torvalds/linux,
-I need to make sure it picks up the same config. Usually I do it by
-baking in the right /etc/gitconfig at build time, but it would be less
-annoying to be able to override it at run-time.
+5e9637c ("i18n: add infrastructure for translating Git with gettext",
+2011-11-18)
 
-I admit both of those are uses for git _developers_, though, not git
-_users_.
+https://public-inbox.org/git/AANLkTilYD_NyIZMyj9dHtVk-ylVBfvyxpCC7982LW
+nVd@mail.gmail.com/
 
--Peff
+
+> > diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> > index e11a33d..4e1e857 100755
+> > --- a/git-add--interactive.perl
+> > +++ b/git-add--interactive.perl
+> > @@ -612,12 +612,12 @@ sub list_and_choose {
+> >                       else {
+> >                               $bottom = $top = find_unique($choice, @stuff);
+> >                               if (!defined $bottom) {
+> > -                                     error_msg "Huh ($choice)?\n";
+> > +                                     error_msg sprintf(__("Huh (%s)?\n"), $choice);
+> 
+> So this would be, self explained without need of comment
+> for translators:
+> 
+>   +                                     error_msg __x ("Huh ({choice})?\n"), choice => $choice);
+> 
+> 
+> >                                       next TOPLOOP;
+> >                               }
+> 
+> Though this is probably more work that you wanted to do.
+> The __x might be defined like this (borrowing from Locale::TextDomain),
+> which needs to be put into perl/Git/I18N.pm
+> 
+>   sub __ ($);
+>   sub __expand ($%);
+> 
+>   # With interpolation.
+>   sub __x ($@)
+>   {
+>         my ($msgid, %vars) = @_;
+> 
+>         return __expand (__($msgid), %vars);
+>   }
+>   
+>   sub __expand ($%)
+>   {
+>         my ($translation, %args) = @_;
+>     
+>         my $re = join '|', map { quotemeta $_ } keys %args;
+>         $translation =~ s/\{($re)\}/defined $args{$1} ? $args{$1} : "{$1}"/ge;
+> 
+>         return $translation;
+>   }
+
+I wonder if it is worth the trouble to add and use these functions,
+when there is already a way that works and for me looks simpler. One
+reason, if valid, would be that translators already translate strings
+with %d and %s from C source which is where the majority of the English
+text comes from. Thus it would make little difference for them.
+If we use in perl string like in C there is a chance that there will be
+a match of some string and would lead to just one msgid instead of two
+in the git.pot template for translation. Actually this happens for the
+string with "Huh (%s)?" in clean.c.
+
+Unfortunately, I do not know if I would add these changes because I
+know little about perl and hence I am not comfortable to do so.
+
+Maybe if you see it is indeed worth adding these to Git I18N.pm, you
+could send a follow-up patch or a replacement for this one.
