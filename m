@@ -2,79 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 988DB207EC
-	for <e@80x24.org>; Mon,  3 Oct 2016 21:01:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3869120987
+	for <e@80x24.org>; Mon,  3 Oct 2016 21:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752286AbcJCVBF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 17:01:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51521 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751971AbcJCVBE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 17:01:04 -0400
-Received: (qmail 19227 invoked by uid 109); 3 Oct 2016 21:01:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 21:01:03 +0000
-Received: (qmail 30226 invoked by uid 111); 3 Oct 2016 21:01:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 17:01:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2016 17:01:01 -0400
-Date:   Mon, 3 Oct 2016 17:01:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net
-Subject: Re: [PATCH] http: http.emptyauth should allow empty (not just NULL)
- usernames
-Message-ID: <20161003210100.t5nqknwfotag3lmj@sigill.intra.peff.net>
-References: <1475515168-29679-1-git-send-email-dturner@twosigma.com>
+        id S1753492AbcJCVLn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 17:11:43 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:36531 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752074AbcJCVLm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 17:11:42 -0400
+Received: by mail-oi0-f65.google.com with SMTP id h186so8181841oia.3
+        for <git@vger.kernel.org>; Mon, 03 Oct 2016 14:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=Tgx2LGSznL858zV3c5XZ6DIhT8eEkcpl5XSAn+LnKF8=;
+        b=RCh+rrR0isaic1UuXI3JFH18qI+ShcaB7IlNoyM1IfZ4pMVhn5FobbOuRkBcB0EQzO
+         OQHew25/TZ30n5FyEejsZt8H/n4tOXnOTdZ/P1V7mpiX45uqaMBx5RXiXPZYuFF9F/sA
+         LBW9PwKnkTe5WSDdH+QOEOT4aA7okgBOmk+WjIC4j8simCym0+dgNE2kghsbGI/2YqDj
+         VzJ0vbon8V4FwKG4QwCrD+kTMvGAZYJ0dthSNpzOId84uOA0X74nS7qclQtMIA6obEw+
+         xsIMiv3MEyZuyB4h9rGKxDXU5OhejfD+PWagbnBwVhVLG7U1XwIjNcra6n7N5yvJaVBp
+         +Eow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=Tgx2LGSznL858zV3c5XZ6DIhT8eEkcpl5XSAn+LnKF8=;
+        b=BWRduQfYFERNWdvSG8OFlxG1vxuS1vMep5Lt+X2IgRk45XQq3Pwg2ElSVicUK2ekHK
+         sne0qDWaUWj51WpmulaSFOEoWq0pttusGsk4/2nLQTxUJkHBGWCrmO0bHpvScRUn4m2w
+         QhJo6bwasya/JT48SJ8+TNUuio2UySScXwJ0GvJMTOpw430+Uli//SHcGWCpewxLX3yC
+         1aNhbez/d9fJqL1tNPOrbXZOO+av2se4DFGEaSY7ByXS3E506CvNlWOZLaQl90jSjc7Y
+         s6MRokSt50HpBlM15pBVSJTLv5GhAEajsbAQS0MEuN9UQX0gkrkBOnvoMmb0biAtbqgK
+         XcNg==
+X-Gm-Message-State: AA6/9Rn2n2jfd0Gg/Ud3htK3RdXDbtcvkOFjgTtYmqSiW5+llJhqy6fRIlRZTVqZYdkH6fddPJHAiKPMNWdNxg==
+X-Received: by 10.157.43.124 with SMTP id f57mr47991otd.83.1475529096526; Mon,
+ 03 Oct 2016 14:11:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1475515168-29679-1-git-send-email-dturner@twosigma.com>
+Received: by 10.182.21.198 with HTTP; Mon, 3 Oct 2016 14:11:36 -0700 (PDT)
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Mon, 3 Oct 2016 14:11:36 -0700
+X-Google-Sender-Auth: 7FwThxscbStWIwEDl1U3CoD4gXg
+Message-ID: <CA+55aFyos78qODyw57V=w13Ux5-8SvBqObJFAq22K+XKPWVbAA@mail.gmail.com>
+Subject: Slow pushes on 'pu' - even when up-to-date..
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 03, 2016 at 01:19:28PM -0400, David Turner wrote:
+This seems to be because I'm now on 'pu' as of a day or two ago in
+order to test the abbrev logic, but lookie here:
 
-> When using kerberos authentication, one URL pattern which is
-> allowed is http://@gitserver.example.com.  This leads to a username
-> of zero-length, rather than a NULL username.  But the two cases
-> should be treated the same by http.emptyauth.
-> 
-> Signed-off-by: David Turner <dturner@twosigma.com>
-> ---
->  http.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/http.c b/http.c
-> index 82ed542..bd0dba2 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -351,7 +351,7 @@ static int http_options(const char *var, const char *value, void *cb)
->  
->  static void init_curl_http_auth(CURL *result)
->  {
-> -	if (!http_auth.username) {
-> +	if (!http_auth.username || !*http_auth.username) {
+    time git ls-remote ra.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux
+    .. shows all the branches and tags ..
+    real 0m0.655s
+    user 0m0.011s
+    sys 0m0.004s
 
-Hmm. This fixes this caller, but what about other users of the
-credential struct? I wonder if the correct fix is in
-credential_from_url(), which should avoid writing an empty
-field.
+so the remote is fast to connect to, and with network connection
+overhead and everything, it's just over half a second. But then:
 
-OTOH, I can imagine that "http://user:@example.com" would be a way to
-say "I have a username and the password is blank" without getting
-prompted.  Which makes me wonder if it is useful to say "my username is
-blank" in the same way.
+    time git push ra.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux
 
-I dunno. The code path you are changing _only_ affects anything
-if the http.emptyauth config is set. But I guess I just don't understand
-why you would say "http://@gitserver" in the first place. Is that a
-common thing?
+and it just sits there, and it's at 100% CPU the whole time, until it says:
 
--Peff
+    Everything up-to-date
+
+    real 1m7.307s
+    user 1m2.761s
+    sys 0m0.475s
+
+Whaa? It took a *minute* of CPU time to decide that everything was up-to-date?
+
+That's just not right. The branch is entirely up-to-date:
+
+    git rev-parse HEAD
+    af79ad2b1f337a00aa150b993635b10bc68dc842
+
+    git ls-remote ra.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux master
+    af79ad2b1f337a00aa150b993635b10bc68dc842 refs/heads/master
+
+so there should be no need for any history walking. But it sure is
+doing *something*. A minute of CPU time on my machine is actually a
+pretty damn big deal.
+
+Looking at the trace, there's no IO - there's no back-and-forth about
+"I have this, do you have it?" or anything like that. The system call
+trace is just a lot of allocations, which I think means that "git
+push" is walking a lot of objects but not doing anything useful.
+
+I bisected it to commit 60cd66f "push: change submodule default to
+check", which makes little sense since I have no submodules, but there
+you go.. Apparently RECURSE_SUBMODULES_CHECK is just terminally
+broken.
+
+                Linus
