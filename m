@@ -2,84 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35623207EC
-	for <e@80x24.org>; Mon,  3 Oct 2016 21:23:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D781C20987
+	for <e@80x24.org>; Mon,  3 Oct 2016 21:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753535AbcJCVXU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 17:23:20 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:38348 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752074AbcJCVXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 17:23:18 -0400
-Received: by mail-it0-f44.google.com with SMTP id o19so110062084ito.1
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 14:23:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=W0UtMuQ1UOYj29SrN2SEJDOL42GTQbjHdLB4zjiSh8Y=;
-        b=A/PkZf6kSSFfp36eR2zNikSthDa59j+VscmuZH3KPNfUBOgUD/eIklZSYfEOMdK0fm
-         sL6T0lTPhHFG+4maDEetQFDnNeHcr99QlWELXx7Ajdw6mkOOI/fHXEkT0fyiO9+KxI16
-         TClimwhzEzVIFJ9ovkvNvw4M6ndl8tkdyL+ABaigPIoyYVAHy5RL0C6H478+XGSEbdoN
-         6DcqK8zN875QYxF+b+FAyio4S7F+Sy3FLC+kaBkK+kh6qt1LpJ2HzfniSz0znmhUED8S
-         y3T+fig/GwLc3r/KWxMxGtk6PWrk+zKJopOLEAJIxRVZEgzg4/PA7BbwnfKv9CVB7DDt
-         k4aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=W0UtMuQ1UOYj29SrN2SEJDOL42GTQbjHdLB4zjiSh8Y=;
-        b=DKi0eO/3NjO2ETe/ObkwoHfdEENPwFYgRc/XtddadjGKQqA6cwvVVtVmR5DDrvdMDT
-         WGz0s/BTdkF+Kuw1vkV50QtEdDAHMHUl6vFs6+i15RiEPYHRZWNzlqrSqqWqGsVH/oMf
-         bfrZ40/FkzmtaebynewNZbQOdNWJgFjTgs5hXavl0n/jBHx97kgvoTrFh6wOdalvFkzY
-         m+qzYEO4YocC0lAR++2TO8aX25vJXW8AF1nqnI1uCZcPlHAD2+tlvyN9cF1CwK0codCv
-         79UrBoMMbM5zeQrN8sKYq3crM6EtTwTaJteBLyvkstd9WF5E2/+gGf/PpCW0tCp9C/n2
-         pbLA==
-X-Gm-Message-State: AA6/9Rk9qD55e6sUYRK6fcJW1YjgA1YuNqH910PZxJSOoQT7834be8ma4wGjMRg3UARdQkgF72W0YJcUShQ/FJ/i
-X-Received: by 10.36.192.193 with SMTP id u184mr18103575itf.91.1475529797542;
- Mon, 03 Oct 2016 14:23:17 -0700 (PDT)
+        id S1751821AbcJCVZ2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 17:25:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51959 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751500AbcJCVZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 17:25:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FA4141AF6;
+        Mon,  3 Oct 2016 17:25:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xrWMw6AzU/jSipU/937o142tMZI=; b=FeN30A
+        IMwDR62Hz6FrnZwGqF5aGK0kMJt6oyplohWmArgjhAUsOVvVwntpQXCa3hkx8tTF
+        bHj0SJRGRZ/XjTo44skl13iN9z7KfWx2OnFer+DtYLj9nDeXvsOSEELFD1aONs69
+        j79NZaQv3OirTzhBDPtGKKIa9NNO1vZLocfU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ANcJLOmdUHagn2zhkFqPOI6EZulkFrIg
+        SaCzUmsrJKFjOv//7EiMup1bWSiB4dFTJ7dVQTKCwDuMaDLBUdxkK1Sf89r45EiM
+        KrAJJt8ivQ2E93Bhuc7j1j4LCg8+2u4JMJQIwgYYCZ+PdU+BwbK09YCBI6LDQoV3
+        05IsoUTXFhg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0733C41AF5;
+        Mon,  3 Oct 2016 17:25:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 83B2E41AF2;
+        Mon,  3 Oct 2016 17:25:25 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, David Turner <dturner@twosigma.com>
+Subject: Re: [PATCH v2 0/5] receive-pack: quarantine pushed objects
+References: <20160930193533.ynbepaago6oycg5t@sigill.intra.peff.net>
+        <20161003204851.klwspo6agykx6s3q@sigill.intra.peff.net>
+Date:   Mon, 03 Oct 2016 14:25:23 -0700
+In-Reply-To: <20161003204851.klwspo6agykx6s3q@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 3 Oct 2016 16:48:51 -0400")
+Message-ID: <xmqqlgy55dmk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Mon, 3 Oct 2016 14:23:16 -0700 (PDT)
-In-Reply-To: <CAGZ79kYXx+a+U3o6FPBy2mHOy4BxxuF97t6iyedPLk0Qw1Jx1A@mail.gmail.com>
-References: <CA+55aFyos78qODyw57V=w13Ux5-8SvBqObJFAq22K+XKPWVbAA@mail.gmail.com>
- <CAGZ79kYXx+a+U3o6FPBy2mHOy4BxxuF97t6iyedPLk0Qw1Jx1A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 3 Oct 2016 14:23:16 -0700
-Message-ID: <CAGZ79kY6FpTD1VJQ=+wJ0FrXe9LjJ=NBwLsOku0R4FerAmQGJQ@mail.gmail.com>
-Subject: Re: Slow pushes on 'pu' - even when up-to-date..
-To:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: E62F4768-89AF-11E6-993D-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc Heiko
+Jeff King <peff@peff.net> writes:
 
-On Mon, Oct 3, 2016 at 2:17 PM, Stefan Beller <sbeller@google.com> wrote:
+> Here's a v2; the original was at:
 >
-> * sb/push-make-submodule-check-the-default (2016-08-24) 1 commit
->  - push: change submodule default to check
+>   http://public-inbox.org/git/20160930193533.ynbepaago6oycg5t@sigill.intra.peff.net/
 >
->  Turn the default of "push.recurseSubmodules" to "check".
+> which contains the rationale.  The required alternate-objects patches
+> (both the "allow recursive relative" one, and the helper to add an
+> internal alt-odb) have been pushed into their own series, that I posted
+> here:
 >
->     Will hold to wait for hv/submodule-not-yet-pushed-fix
+>   http://public-inbox.org/git/20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net/
 >
->     This reveals that the "check" mode is too inefficient to use in
->     real projects, even in ones as small as git itself.
->     cf. <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
+> This needs to be applied on top.
 
-So maybe we should eject this series from pu as long as
-hv/submodule-not-yet-pushed-fix is ejected to enable you
-running pu happily.
-
-Thanks,
-Stefan
+Sorry, you lost me.  So this 5-patch series comes on top of a brand
+new 18-patch clean-up series?
