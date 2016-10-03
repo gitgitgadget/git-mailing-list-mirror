@@ -2,84 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCDF820987
-	for <e@80x24.org>; Mon,  3 Oct 2016 15:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA1F120987
+	for <e@80x24.org>; Mon,  3 Oct 2016 15:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751375AbcJCPTI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 11:19:08 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:34563 "EHLO
-        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750991AbcJCPTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 11:19:06 -0400
-Received: by mail-lf0-f48.google.com with SMTP id b81so40053440lfe.1
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 08:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=kYbfnXlolPd2qwQgwGPrqeFd+pGChYGHangNwCIemok=;
-        b=a1IQr00H9z4JwqL0uA6y/1f0WbZFVqQlHZXzSMsFxRyeWQXL5pMqRoh7UvuAqK/7zN
-         az6sSpO9qWW6f5apO+sT8iT6MYMsUAfa/M8pARipuV4VhWM2OVLiTJ5Y1nBiYwnoqsJ4
-         RsYmlRMRH5QD+70vAq0OJ5oB/Kld4VQL85UTFZk9STpr7xrBRsnKgR9Cz7iMmp2WJHI6
-         SXGnywZt2+Y9RQdT4esgzv7kYG1BGG/yT4gJmZ6MGY1+MSjOlUzTLdjW7VlrlSzRWNYY
-         V7swbThQ50iL+OkDKQlcT0gzFjLRA/JYZMZh/v8Cw2EgtdMYe13XCzkZ9Dwo3rarty+i
-         Stbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=kYbfnXlolPd2qwQgwGPrqeFd+pGChYGHangNwCIemok=;
-        b=Lq2z29aCzbp2RLyf1va7PohDMTXgk1pn1We/NC44xPouNqe7nb1SdTQQuIyU/uaPzN
-         KqYSjKzWC7HgxeelsqQQcvA3i+BXeCFLJ/aKYw/mCujSyXb0UKAgwFlxzPNF8LoJHKZ+
-         H89ufDQj7+JVs3QZCgxhHTIOwoWy9AfOAHRmkAP2h609xQs6kJtjsetnqyLwwJhae6Gs
-         id61ResaZ/9OKRKDu8/P+j7seH85RXpBfQ4EbLN/r6Mo4rofuVNUx6/DHP1PqkA/8tfO
-         Vzm5dT0TsCCLMmLuv10hDLuJ2ivu7X2wKUmQYvlG9Gp3EvctFQmKnM3cJ7EfgDONG1tI
-         PdEg==
-X-Gm-Message-State: AA6/9RnRdPSQFT4XaQdizr/qqpz9baEvHlyMMlCq9MSAmcmJoFA9zjdJjHpTKGQVZQp/s5m2dPTZK2F8glMwyg==
-X-Received: by 10.25.195.209 with SMTP id t200mr6063815lff.172.1475507944956;
- Mon, 03 Oct 2016 08:19:04 -0700 (PDT)
+        id S1752597AbcJCPXK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 11:23:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55854 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752399AbcJCPXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 11:23:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD9E441CB6;
+        Mon,  3 Oct 2016 11:23:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3ZZyN73ZmF/jNkEISpWXExWhiLc=; b=qFDnl2
+        ZT8AD0qmcl+vvKPskW0ID10d/AbtK1g4HqAU04g0tIARc+w36je/XeHjMuW/Ipwj
+        q7ky/4e3SYlaDHUj5lJQ8m9RxFfAIhcbW8/iCXEoAekvdG0dD5ZeZzv0haFhRpH6
+        cZ1xL7Fd0So/eiphA1uWk34KyWrjAORXxzijI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xp4dUCHsipqx67Rvh/Bm7CnhfJkUICYC
+        6RmyeLMKB7CdXoGOPVLOPocnCtSaff2UYH6ZfPZUlD0UqkWsOkMT3Mj//YfVGSeV
+        +QZfGrzLvpVbB0Hflb8M/4R0rteoRM3hspR10Q7tLxSWDeeO6kT0OdEPBB3KPyIF
+        M5wOFADUtP4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C4AE641CB5;
+        Mon,  3 Oct 2016 11:23:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 508F241CB4;
+        Mon,  3 Oct 2016 11:23:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 0/2] place cherry pick line below commit title
+References: <cover.1475176070.git.jonathantanmy@google.com>
+        <xmqqtwcycqul.fsf@gitster.mtv.corp.google.com>
+        <11e41a94-df8c-494a-584b-e2bc8da2de3a@google.com>
+        <xmqq8tu99o75.fsf@gitster.mtv.corp.google.com>
+        <42332581-e47a-0fc8-ed5c-44e7e1c19341@google.com>
+Date:   Mon, 03 Oct 2016 08:23:05 -0700
+In-Reply-To: <42332581-e47a-0fc8-ed5c-44e7e1c19341@google.com> (Jonathan Tan's
+        message of "Fri, 30 Sep 2016 13:23:28 -0700")
+Message-ID: <xmqqa8el8nja.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.114.173.200 with HTTP; Mon, 3 Oct 2016 08:18:44 -0700 (PDT)
-In-Reply-To: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
-References: <88486231.114620.1475474318974.JavaMail.zimbra@redhat.com> <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
-From:   Anatoly Borodin <anatoly.borodin@gmail.com>
-Date:   Mon, 3 Oct 2016 17:18:44 +0200
-X-Google-Sender-Auth: XP9jDX6kdM_L2wfFLBbYKIEvJGo
-Message-ID: <CACNzp2mANqmciMzvCahM_+=RnZYtU1SK9DRS2BmQru1fZY_wUQ@mail.gmail.com>
-Subject: Re: Feature Request: user defined suffix for temp files created by git-mergetool
-To:     Josef Ridky <jridky@redhat.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4933C4F2-897D-11E6-B372-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Josef,
+Jonathan Tan <jonathantanmy@google.com> writes:
 
+> On 09/30/2016 12:34 PM, Junio C Hamano wrote:
+>>> 2) The Linux kernel's repository has some "commit ... upstream." lines
+>>> in this position (below the commit title) - for example, in commit
+>>> dacc0987fd2e.
+>>
+>> "A group of people seem to prefer it there" does not lead to
+>> "therefore let's move it there for everybody".  It does open a
+>> possibility that we may want to add a new option to put it there,
+>> but does not justify changing what existing "-x" option does.
+>
+> To clarify, my patch adds the new option you described (to place it
+> below the title instead of at the bottom of the commit message). The
+> default is still the current behavior.
 
-On Mon, Oct 3, 2016 at 8:36 AM, Josef Ridky <jridky@redhat.com> wrote:
-> In several projects, we are using git mergetool for comparing files from =
-different folders.
-> Unfortunately, when we have opened three files  for comparing using meld =
-tool (e.q. Old_version -- Result -- New_version),
-> we can see only name of temporary files created by mergetool in the label=
-s (e.g. foo_REMOTE -- foo_BASE -- foo_LOCAL)
-> and users (and sometime even we) are confused, which of the files should =
-they edit and save.
+Ah, sorry, I missed that.  No objection from me on this point then.
 
-`git mergetool` just creates temporary files (with some temporary
-names) and calls `meld` (or `vimdiff`, etc) with the file names as
-parameters. So why wouldn't you call `meld` with the file names you
-want?
-
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen,
-Anatoly Borodin
+Thanks.
