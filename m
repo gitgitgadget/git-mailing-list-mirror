@@ -2,82 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 145631F4F8
-	for <e@80x24.org>; Tue,  4 Oct 2016 10:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C56F1F4F8
+	for <e@80x24.org>; Tue,  4 Oct 2016 10:40:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752765AbcJDK0G (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 06:26:06 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50496 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752557AbcJDK0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 06:26:05 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M9JYE-1blMdL1QWE-00Ckbh; Tue, 04 Oct 2016 12:26:01
- +0200
-Date:   Tue, 4 Oct 2016 12:25:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     chris king <kingces95@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Repeatable Extraction
-In-Reply-To: <CAJQwtsidixAAJKp7-b2PmXgs=mS+PbT5ebOmKLJU1nEn7UJ2og@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1610041223010.35196@virtualbox>
-References: <CAJQwtsidixAAJKp7-b2PmXgs=mS+PbT5ebOmKLJU1nEn7UJ2og@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752765AbcJDKkq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 06:40:46 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:35839 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751671AbcJDKkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 06:40:45 -0400
+Received: by mail-lf0-f54.google.com with SMTP id l131so178941120lfl.2
+        for <git@vger.kernel.org>; Tue, 04 Oct 2016 03:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=TK9xI/05Is7RE3BDMBCUrmru1NOQ0g4GnRTED8Gp8MQ=;
+        b=hM1RiHG4nDMMsNOFoEWi6boWUr+PRvSaTAwcw2Hm2qXtYf7orkkpmRkvcX5HlHekqa
+         7Iyk04yHf1CEFc7NYxswJy5Qfe/TN2vHzaaCbolk/QVRST72yQtNga92FnH6B5HvyFax
+         bQY4gUPwOeez6cOQlJW8MqQSFFcyQNhNhPDFJW5iJ4GefJJuuxsgUl4CScpi9tH2UwYL
+         IjOPdoNxPw10tNTtc1PZTzBX2RKHw12g84ixhVtMf+HyzRtPWrx5HQ8gz2ggsfb52RsW
+         SR6ww8j3yCDWDL3ZYfCnT2PhvPrXFJ3VzLvILMvODQZK5yvZtDx0ec71P05IzZA3M0xK
+         5F5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:content-transfer-encoding;
+        bh=TK9xI/05Is7RE3BDMBCUrmru1NOQ0g4GnRTED8Gp8MQ=;
+        b=OgCr11+fAN5BNGFCjC861K9BwFpaRXd/Xu0QIjIU+yRK+7NmRN+VuR1MlVR4gKEuHO
+         7MdD8SKcZUaSiGRe+lzaoZ32zML2tjUhTKzZOS98aIPGfFG1+x/8mhP6g43zO8wdjjkY
+         r8fdNTPTcyLMcLoX7VaoLvRmyl9P7OZ5VAPpYonyZewxto+ZqHG31otJxvzAs54/Olk8
+         VPc5VqajauT/Z0XaH5GE8qYd9l90MIYGk9hSoOIS6O2odDyXJEWVHIWFxAwBJTFPvmPw
+         52fsUpg9uFhwqSlaO7cf8HFgtCxaVUuZFSchc982Ggm7vH9P18DhdoRq5M9zMXNw+9w7
+         fsSg==
+X-Gm-Message-State: AA6/9Rke0xpgds2imOt7DqWEXpKrybvrR6hpEK1BKBIDZV4/dox9rYEwA3JVKjB6RqRz1mAHSKmCjkz3HZBcxQ==
+X-Received: by 10.25.137.86 with SMTP id l83mr955092lfd.31.1475577643511; Tue,
+ 04 Oct 2016 03:40:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:d6Jwk/3CPHd6dFQg0dPwZN0hBZ/v3vGCaZOBoXOI4kjUYNtGuTJ
- pz8TrvGJp1/KCRsrVGg7VyZZUcRNrss0DfahpCJH+DujWbnrcSqRupz/heE9raNebBSAI4B
- erxVOILnE5uFNKob/cKXctIi6h5cAyxkxtUrhitnqpm/iMG/d7oSV5jaDqjezx/xi8Ywasq
- rMH/CkpNdkil0U/kJ1TlA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6CkLd/3U8M0=:7yDJPCcfqyTF6OuwO2P2SA
- 0WXso3U/YBqiU3Vn6UfGql5aM4XKSDPqfhTuFZ2ZS5TeeyclblUm6xuiyjwp998PTiAstmKuH
- 5vb5LG5vxfZ267WSlEbYo/CXDaaPNmGkmi8WMGSE63dxSFD0eLl9MGYsO79M37dWMoWLIqV2r
- hzK+N0F+QLzWVyprma/gn8G3BUMQW9tSTKyNsoPTG1oTp28+wPpNVmKFZ3wVfyFeOy6DfebLp
- jjtgpXs2j5KcOJxfXz1aq/k4/0/MTpC+KSHWDIl4GVoGjquz6Lf+adLpAvJI8hJl4UnQ0cNsF
- jkjn35ge4Wl8DT2gDeKqOOfEUijxBQ+Pivlps1DRyy2nQSUAy6fRqn3cx+uDF+mF0WnPEACd6
- uFlJxlXQMSXobi5AVooHEUppLdhsUk5Jj9GYw4LmdWgjynfyCK+48Y/xy7b2xsoTB8gWVkhUW
- jmU9tB45INxeZaoI+Boin+mpOkDZQnM6XZoTeL1y007gUtk+L3qufUe5iRa6RiDa1FMDy7bzq
- t8nbwGTvQjXMZIFdtTSiSegNtgHdRtKCqZBArYXU6Ex1+Jjefbb2gQcAf7gRzNq4EAqzPCL3A
- O0Z64hrJR8dJWFLFf/UXM4BjEBi87xTDHxKCtDC6DPSM0i60p8RFIkjkHrYDxIpYqFULA+FNE
- hdtljHKyH/UrBzSY0v3u6LHGUKMjWhMH1ABdQgF2e7iU1OPpaCNWSoi/Jw0tfT0xNlb1r1iSz
- NPHKEOkavHkTprCL5xVCLyp/LwcCK0sAg45do1ZK403dX4c3NtA9rcJovTccbmxmBG37OrIEU
- qqr8V2t
+Received: by 10.25.20.219 with HTTP; Tue, 4 Oct 2016 03:40:22 -0700 (PDT)
+From:   ern0 <ern0@linkbroker.hu>
+Date:   Tue, 4 Oct 2016 12:40:22 +0200
+X-Google-Sender-Auth: 8LUj7c-bBlGH8LaCz9jpPbTqeQ0
+Message-ID: <CALhephTkohVhEjdP7TwQAcBrEBiHGtp0Hd+UxPUiJHtubMWKGA@mail.gmail.com>
+Subject: GL bug: can not commit, reports error on changed submodule directory
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris,
+When I say:
+ $ gl commit -m "blah blah"
+It reports:
+ =E2=9C=98 Failed to read file into stream: Is a directory
 
-On Tue, 27 Sep 2016, chris king wrote:
+Reason: I have a submodule which has changes.
 
-> Is there a way automate extraction that will repeatably generate the
-> same files? Currently, each time I extract git portable many of the
-> binaries change slightly. For example, if I extract twice using
-> 
->     PortableGit-2.10.0-32-bit.7z.exe -y -gm2
-> 
-> then Beyond Compare tells me that many of the files in usr\bin have
-> changed at offset 0x88 and 0x89. Why is that?
+ $ git status
+ On branch develop
+ Your branch is up-to-date with 'origin/develop'.
+ Changes not staged for commit:
+   (use "git add/rm <file>..." to update what will be committed)
+   (use "git checkout -- <file>..." to discard changes in working directory=
+)
 
-The reason is that you look at 32-bit, where technical limitations force
-us to hard-code a certain base address for all of the includede MSYS2 .dll
-files (i.e. all libraries that require, or implement, the POSIX emulation
-layer called MSYS2).
+         modified:   remoting (new commits)
 
-To avoid clashes with other .dll files, that base address is adjusted via
-the post-install.bat script for your particular environment.
+ no changes added to commit (use "git add" and/or "git commit -a")
 
-If you want to avoid that, you will have to extract the installer via
-7-Zip: it is a self-extracting .7z archive (and the self-extractor
-automatically executes post-install.bat, which subsequently deletes
-itself).
+Workaround: I should sync the directory...
 
-Ciao,
-Johannes
+ $ cd remoting
+ $ git commit -am "yada"
+ $ cd ..
+ $ git commit -am "yada yada"
+ $ git push
+ $ echo I feel clean now
+ $ echo "# wow" >> test.py
+ $ gl commit -m "added wow"
+
+...and it works again.
+--=20
+ern0
+dataflow evangelist
