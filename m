@@ -2,292 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2823207EC
-	for <e@80x24.org>; Mon,  3 Oct 2016 23:47:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63072207EC
+	for <e@80x24.org>; Tue,  4 Oct 2016 00:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752422AbcJCXrd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 19:47:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51639 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751500AbcJCXrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2016 19:47:31 -0400
-Received: (qmail 30598 invoked by uid 109); 3 Oct 2016 23:47:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 23:47:31 +0000
-Received: (qmail 31889 invoked by uid 111); 3 Oct 2016 23:47:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Oct 2016 19:47:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Oct 2016 19:47:28 -0400
-Date:   Mon, 3 Oct 2016 19:47:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] abbrev: auto size the default abbreviation
-Message-ID: <20161003234728.s5sadekukxoppcmw@sigill.intra.peff.net>
-References: <20161001001937.10884-1-gitster@pobox.com>
- <20161001001937.10884-4-gitster@pobox.com>
- <20161003222701.za5njew33rqc5b6g@sigill.intra.peff.net>
- <CA+55aFydV+9c3-5C03XUj7v_wGJF5NyJNaP6742zLVgZs410FA@mail.gmail.com>
- <20161003224028.ksvwaplxe7a3vtwv@sigill.intra.peff.net>
- <xmqqoa313v0j.fsf@gitster.mtv.corp.google.com>
+        id S1751610AbcJDAHY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 20:07:24 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:50422 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751495AbcJDAHY (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Oct 2016 20:07:24 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2089A280AD;
+        Tue,  4 Oct 2016 00:07:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1475539641;
+        bh=QhqJjR5UVBGBk8T+XYKSogq69jFPrC/9OVjzcYuDn0U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=u+IcESavcazayYVg6gIRCsWbbxaQO6Z4OH6yVCCtDMVch2vNik9+0MP6rsXbUL4Cu
+         b8u+KivrEPTJSReq9hn8sueUA5dILyjMegp2KAJpuE4iRQ11XRiJ02hWHE0q++7GhX
+         hwGLqy4L5uERnvdfUfWynYDBTPqkEPqldXOXLDv2iEukEzC8jpMl3VCM/7l35ndNRZ
+         LlchLIABpF34+XiyIbr0QnG/KD8gQoOfPKMRyiIo1edCBhTrs+VACUFdAVZKf9USDQ
+         0qkik0Plgcp2QoJqdi5ngVKp2qp4VFD+1gRd6AjqjFYMZe79AmPq3EHw9FIkBMiLmS
+         o2b0Maals/i9h16mSVeqWGwGPX6izv7gIwqhvGPdJuEKfiIh4oP8BWXERs6+MWyrtn
+         ms1dkCp5F7UAsPzCA642HynWS02SLKqcdKX2NyBPW+O+7uBtRa+LOTZpsC9YBmmQz1
+         LY9Rq61jPNQ9d2qzyqVBdZF1zYgvQeRtDdIhPFEycs6KCIWVUrT
+Date:   Tue, 4 Oct 2016 00:07:15 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     David Turner <David.Turner@twosigma.com>
+Cc:     'Jeff King' <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] http: http.emptyauth should allow empty (not just NULL)
+ usernames
+Message-ID: <20161004000714.kbawbnh5y3x7h54l@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        David Turner <David.Turner@twosigma.com>,
+        'Jeff King' <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <1475515168-29679-1-git-send-email-dturner@twosigma.com>
+ <20161003210100.t5nqknwfotag3lmj@sigill.intra.peff.net>
+ <335996ca2642478386e94d9f3dc43223@exmbdft7.ad.twosigma.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="eguqufucy25uodsl"
 Content-Disposition: inline
-In-Reply-To: <xmqqoa313v0j.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <335996ca2642478386e94d9f3dc43223@exmbdft7.ad.twosigma.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-1-amd64)
+User-Agent: NeoMutt/20160916 (1.7.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 03, 2016 at 03:52:44PM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Mon, Oct 03, 2016 at 03:34:03PM -0700, Linus Torvalds wrote:
-> >
-> >> On Mon, Oct 3, 2016 at 3:27 PM, Jeff King <peff@peff.net> wrote:
-> >> >
-> >> > +       if (len < 0) {
-> >> > +               unsigned long count = approximate_object_count();
-> >> > +               len = (msb(count) + 1) / 2;
-> >> > +               if (len < 0)
-> >> > +                       len = FALLBACK_DEFAULT_ABBREV;
-> >> > +       }
-> >> 
-> >> that second "if (len < 0)" should probably be testing against
-> >> FALLBACK_DEFAULT_ABBREV, not zero. Or at the very least
-> >> MINIMUM_ABBREV. Because a two-character abbreviation won't even be
-> >> recognized, even if the git project is very small indeed.
-> >
-> > Oops, yes, clearly it should be FALLBACK_DEFAULT_ABBREV. What is there
-> > would not even pass the tests (it _does_ work on linux.git, of course,
-> > because it is much too large for that code to be triggered).
-> 
-> OK, as Linus's "count at the point of use" is already in 'next',
-> could you make it incremental with a log message?
+--eguqufucy25uodsl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure. I wasn't sure if you actually liked my direction or not, so I was
-mostly just showing off what the completed one would look like.
+On Mon, Oct 03, 2016 at 09:54:19PM +0000, David Turner wrote:
+>=20
+> > I dunno. The code path you are changing _only_ affects anything if the
+> > http.emptyauth config is set. But I guess I just don't understand why y=
+ou
+> > would say "http://@gitserver" in the first place. Is that a common thin=
+g?
+> >=20
+> > -Peff
+>=20
+> I have no idea if it is common.  I know that we do it.
 
-Here it is as an incremental on top of lt/abbrev-auto. I also tweaked
-the math a bit to round-up more aggressively, and commented it more (I
-could also just make the math look exactly like Linus's, counting up
-until hitting an expected collision. I dunno if that is more clear).
+I've never seen this.  RFC 3986 does seem to allow it:
 
--- >8 --
-Subject: [PATCH] find_unique_abbrev: move logic out of get_short_sha1()
+  authority   =3D [ userinfo "@" ] host [ ":" port ]
+  userinfo    =3D *( unreserved / pct-encoded / sub-delims / ":" )
 
-The get_short_sha1() is only about reading short sha1s; we
-do call it in a loop to check "is this long enough" for each
-object, but otherwise it should not need to know about
-things like our default_abbrev setting.
+I normally write it like one of these:
 
-So instead of asking it to set default_automatic_abbrev as a
-side-effect, let's just have find_unique_abbrev() pick the
-right place to start its loop.  This requires a separate
-approximate_object_count() function, but that naturally
-belongs with the rest of sha1_file.c.
+  https://bmc@git.crustytoothpaste.net/
+  https://:@git.crustytoothpaste.net/
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- cache.h     |  7 ++++++-
- sha1_file.c | 27 +++++++++++++++++++++++++++
- sha1_name.c | 60 +++++++++++++++++++++++++++++++++++-------------------------
- 3 files changed, 68 insertions(+), 26 deletions(-)
+Of course, the username is ignored in the first one, but it serves a
+documentary purpose for me.
 
-diff --git a/cache.h b/cache.h
-index 0e2a059..f22ace5 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1204,7 +1204,6 @@ struct object_context {
- #define GET_SHA1_TREEISH          020
- #define GET_SHA1_BLOB             040
- #define GET_SHA1_FOLLOW_SYMLINKS 0100
--#define GET_SHA1_AUTOMATIC	 0200
- #define GET_SHA1_ONLY_TO_DIE    04000
- 
- #define GET_SHA1_DISAMBIGUATORS \
-@@ -1456,6 +1455,12 @@ extern void prepare_packed_git(void);
- extern void reprepare_packed_git(void);
- extern void install_packed_git(struct packed_git *pack);
- 
-+/*
-+ * Give a rough count of objects in the repository. This sacrifices accuracy
-+ * for speed.
-+ */
-+unsigned long approximate_object_count(void);
-+
- extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
- 					 struct packed_git *packs);
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index b9c1fa3..4882440 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1381,6 +1381,32 @@ static void prepare_packed_git_one(char *objdir, int local)
- 	strbuf_release(&path);
- }
- 
-+static int approximate_object_count_valid;
-+
-+/*
-+ * Give a fast, rough count of the number of objects in the repository. This
-+ * ignores loose objects completely. If you have a lot of them, then either
-+ * you should repack because your performance will be awful, or they are
-+ * all unreachable objects about to be pruned, in which case they're not really
-+ * interesting as a measure of repo size in the first place.
-+ */
-+unsigned long approximate_object_count(void)
-+{
-+	static unsigned long count;
-+	if (!approximate_object_count_valid) {
-+		struct packed_git *p;
-+
-+		prepare_packed_git();
-+		count = 0;
-+		for (p = packed_git; p; p = p->next) {
-+			if (open_pack_index(p))
-+				continue;
-+			count += p->num_objects;
-+		}
-+	}
-+	return count;
-+}
-+
- static void *get_next_packed_git(const void *p)
- {
- 	return ((const struct packed_git *)p)->next;
-@@ -1455,6 +1481,7 @@ void prepare_packed_git(void)
- 
- void reprepare_packed_git(void)
- {
-+	approximate_object_count_valid = 0;
- 	prepare_packed_git_run_once = 0;
- 	prepare_packed_git();
- }
-diff --git a/sha1_name.c b/sha1_name.c
-index beb7ab5..76e6885 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -15,7 +15,6 @@ typedef int (*disambiguate_hint_fn)(const unsigned char *, void *);
- 
- struct disambiguate_state {
- 	int len; /* length of prefix in hex chars */
--	unsigned int nrobjects;
- 	char hex_pfx[GIT_SHA1_HEXSZ + 1];
- 	unsigned char bin_pfx[GIT_SHA1_RAWSZ];
- 
-@@ -119,14 +118,6 @@ static void find_short_object_filename(struct disambiguate_state *ds)
- 
- 			if (strlen(de->d_name) != 38)
- 				continue;
--
--			/*
--			 * We only look at the one subdirectory, and we assume
--			 * each subdirectory is roughly similar, so each
--			 * object we find probably has 255 other objects in
--			 * the other fan-out directories.
--			 */
--			ds->nrobjects += 256;
- 			if (memcmp(de->d_name, ds->hex_pfx + 2, ds->len - 2))
- 				continue;
- 			memcpy(hex + 2, de->d_name, 38);
-@@ -160,7 +151,6 @@ static void unique_in_pack(struct packed_git *p,
- 
- 	open_pack_index(p);
- 	num = p->num_objects;
--	ds->nrobjects += num;
- 	last = num;
- 	while (first < last) {
- 		uint32_t mid = (first + last) / 2;
-@@ -390,9 +380,6 @@ static int show_ambiguous_object(const unsigned char *sha1, void *data)
- 	return 0;
- }
- 
--/* start from our historical default before the automatic abbreviation */
--static int default_automatic_abbrev = FALLBACK_DEFAULT_ABBREV;
--
- static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 			  unsigned flags)
- {
-@@ -439,14 +426,6 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
- 	}
- 
--	if (len < 16 && !status && (flags & GET_SHA1_AUTOMATIC)) {
--		unsigned int expect_collision = 1 << (len * 2);
--		if (ds.nrobjects > expect_collision) {
--			default_automatic_abbrev = len+1;
--			return SHORT_NAME_AMBIGUOUS;
--		}
--	}
--
- 	return status;
- }
- 
-@@ -476,22 +455,53 @@ int for_each_abbrev(const char *prefix, each_abbrev_fn fn, void *cb_data)
- 	return ret;
- }
- 
-+/*
-+ * Return the slot of the most-significant bit set in "val". There are various
-+ * ways to do this quickly with fls() or __builtin_clzl(), but speed is
-+ * probably not a big deal here.
-+ */
-+unsigned msb(unsigned long val)
-+{
-+	unsigned r = 0;
-+	while (val >>= 1)
-+		r++;
-+	return r;
-+}
-+
- int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
- {
- 	int status, exists;
--	int flags = GET_SHA1_QUIETLY;
- 
- 	if (len < 0) {
--		flags |= GET_SHA1_AUTOMATIC;
--		len = default_automatic_abbrev;
-+		unsigned long count = approximate_object_count();
-+		/*
-+		 * Add one because the MSB only tells us the highest bit set,
-+		 * not including the value of all the _other_ bits (so "15"
-+		 * is only one off of 2^4, but the MSB is the 3rd bit.
-+		 */
-+		len = msb(count) + 1;
-+		/*
-+		 * We now know we have on the order of 2^len objects, which
-+		 * expects a collision at 2^(len/2). But we also care about hex
-+		 * chars, not bits, and there are 4 bits per hex. So all
-+		 * together we need to divide by 2; but we also want to round
-+		 * odd numbers up, hence adding one before dividing.
-+		 */
-+		len = (len + 1) / 2;
-+		/*
-+		 * For very small repos, we stick with our regular fallback.
-+		 */
-+		if (len < FALLBACK_DEFAULT_ABBREV)
-+			len = FALLBACK_DEFAULT_ABBREV;
- 	}
-+
- 	sha1_to_hex_r(hex, sha1);
- 	if (len == 40 || !len)
- 		return 40;
- 	exists = has_sha1_file(sha1);
- 	while (len < 40) {
- 		unsigned char sha1_ret[20];
--		status = get_short_sha1(hex, len, sha1_ret, flags);
-+		status = get_short_sha1(hex, len, sha1_ret, GET_SHA1_QUIETLY);
- 		if (exists
- 		    ? !status
- 		    : status == SHORT_NAME_NOT_FOUND) {
--- 
-2.10.0.618.g82cc264
+> The reason we have a required-to-be-blank username/password is
+> apparently Kerberos (or something about our particular Kerberos
+> configuration), which I treat as inscrutable black magic.
 
+The issue with git is usually that it uses libcurl, which won't do
+authentication unless it has a username or password, even if those are
+empty or ignored.  http.emptyAuth was designed for this case.
+
+With Kerberos (at least in my experience), the username doesn't actually
+get sent, since you send only ticket-related information over the
+channel, and that has your principal name embedded.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--eguqufucy25uodsl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.15 (GNU/Linux)
+
+iQIcBAABCgAGBQJX8vKyAAoJEL9TXYEfUvaLY2IQAKEf+4yEvoB5ISmUFwkxPq4O
+Firr+1g9ECsinZJuwfaW8Ahyg9A3RQUiDRiL/Ao3jdjbZFoFeYcCIqcOTDxRSpH4
+NVku+ltBcGebtkfBlELKijOANNUAZiMWziBFyJ37p49zuuu216eMA6t/A9/VU2DL
+oKLgN1aXEXTappb1PU4dYldYX7KMCgLdSGH+B5unk/HoE0yfOlUew6hSCs5dANCj
+OjEmLGAlgGXjZihEcQAcdvZb3sRjPrZFPZOHwQWQNdcoe16iPmrZf5LX4Shyebkn
+DXGIyy6ZWMKe9KhcmaF18Tzj7N1YBls8IG4wsMd7UJG7gjp84U7ajQ+PvT25VK0b
+cbpogbpZI8V9jytsk7a8sS8fJMzLD8mlbIckCFHoKhFWiQd1yLX1F141eoUIrfHH
+aHgoAWfjvkvmlYXIpFO6/eX/+SMsrGGJlWZhk3i8A4YGhankhHUlw49fx9o/E8QI
+vBdbSsLU8BPCgCX82QSVOvk6TrsE8OEd/bExvzPUuwZ8XuyCyfPQrZ6vp0DBEQun
+aS8kim9w8iDDWUkrmPqqovRGOjMsbgp982O6j7ZsqbUhA4QZBQXpv7en0DOH2cb+
+XknW8oHZKmCU2QuFYOF3qxITdvcDdbaitosvqR3aiC+Puea7Y8RGMtJi5pJDqTee
+gssGJfnd7MqlXiNWWUgm
+=0tXs
+-----END PGP SIGNATURE-----
+
+--eguqufucy25uodsl--
