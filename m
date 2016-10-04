@@ -2,94 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABC3E20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 20:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09C9A20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 20:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753974AbcJDUqa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 16:46:30 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:36345 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753441AbcJDUqa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 16:46:30 -0400
-Received: by mail-yw0-f193.google.com with SMTP id r132so4912168ywg.3
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 13:46:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LrrHH7YH8s4Jx9iaX1MmXGuEi02k1Nvkx/MiV8zX+yk=;
-        b=SfQU7V4X0J2GpdIH3hCxgC0GecWmP03/D2DLuo32djzn1gyTNkOhrARQw+nDG/s6Ss
-         YOmaZlcQJIqMHc9+0U2u1euR0ONv8fPmM2DsCmdlew1wuoGKs+Th+g1LXAsLJZCVKXgp
-         OEzTewLWc4UGN+sZeZd4or8oSpAx9+8NrPbT/QWupVEgpAoqfekb0Z2B+EvNjr+5GLeE
-         38AZAWSCqhJmYJmx8U+uG5Iudb3elYSdlAlmTxwioNyMcYUZd2p4UARwQcz0TX5h885o
-         ExNGDDHhG584K6tZ23cYf//hZL1Yom7oebb4irwWXhcf8dJ3O+EXFnqXmPQKGLOaPsst
-         V0ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LrrHH7YH8s4Jx9iaX1MmXGuEi02k1Nvkx/MiV8zX+yk=;
-        b=aHUeBZKWZyr80MIi2Res/MIL2gjkmE4Q8NdDn/y3j779GqayJzYX1p0K52DvRE2C45
-         25gRw0kXUWf7+XvqKPsrJkSPeEe//2OqLwYLKFHsqhcXzHPnlghu1qWCIxrkkCP4C9ng
-         Ms1s9v2i4ok2NhX8X3/EGM1PrH1Hz5nbwYlEya8pSbWfZAtzMDryIHyR5qo7rgDQfZ3z
-         /cPRdvimUpt4TEqKsV3W4Lit6GspDEyNUeyKQmTFO2AHJXPI0IzLv1UGrEHajVSNHhQc
-         K1g4Gm/J6CvQ8tjNPD9mOwheuvvb4wjNoGRH+LCDBfd8Hvqsryq6XvUSrZm2D6FOGESw
-         Nq+g==
-X-Gm-Message-State: AA6/9RlLmGlljG4N3uOwFBrvyY1TcMh0UXicv6zikC1qsCOFuPmTO7URE9EhYdXeKkp9IkFGSy4ChaGOsEv5Sg==
-X-Received: by 10.129.76.194 with SMTP id z185mr4597026ywa.257.1475613989265;
- Tue, 04 Oct 2016 13:46:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Tue, 4 Oct 2016 13:46:08 -0700 (PDT)
-In-Reply-To: <20161004135353.6ywgoxutjcbaali5@sigill.intra.peff.net>
-References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
- <20161003203448.cdfbitl5jmhlpb5o@sigill.intra.peff.net> <CA+P7+xrUOnDebwZnfu-xv-GuTJka4-eNUAfBudQf5ZhnkczU6w@mail.gmail.com>
- <20161004135353.6ywgoxutjcbaali5@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 4 Oct 2016 13:46:08 -0700
-Message-ID: <CA+P7+xqSzm7S4-Mc+keJ1JWioYUmF76es0A3xN+Hwq+EJ6dJSA@mail.gmail.com>
-Subject: Re: [PATCH 08/18] link_alt_odb_entry: refactor string handling
-To:     Jeff King <peff@peff.net>
+        id S1754190AbcJDUti (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 16:49:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52358 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754155AbcJDUth (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 16:49:37 -0400
+Received: (qmail 18559 invoked by uid 109); 4 Oct 2016 20:49:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 20:49:36 +0000
+Received: (qmail 9926 invoked by uid 111); 4 Oct 2016 20:49:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 16:49:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2016 16:49:34 -0400
+Date:   Tue, 4 Oct 2016 16:49:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jacob Keller <jacob.keller@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset=UTF-8
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 06/18] t5613: clarify "too deep" recursion tests
+Message-ID: <20161004204933.ygfhoy24g6psyf6h@sigill.intra.peff.net>
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
+ <20161003203412.bekizvlqtg4ls5fb@sigill.intra.peff.net>
+ <CA+P7+xok5PoNKO+8R6zF9SXYfDq6BboDTDz9WZYEczs0pFK+pw@mail.gmail.com>
+ <20161004134853.x3zq33ywyyzgbwsy@sigill.intra.peff.net>
+ <CA+P7+xok-8vhikxkp+t8pu53YJAyUjZ0NiAwejEW2j3+eP_2Xw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+P7+xok-8vhikxkp+t8pu53YJAyUjZ0NiAwejEW2j3+eP_2Xw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 4, 2016 at 6:53 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Oct 03, 2016 at 11:05:42PM -0700, Jacob Keller wrote:
->
->> This definitely makes reading the following function much easier,
->> though the diff is a bit funky. I think the end result is much
->> clearer.
->
-> Yeah, it's really hard to see that all of the "ent" setup is kept,
-> because it moves _and_ changes its content (from pfxlen to pathbuf.len).
->
-> I actually tried to split this into two patches to make the diff easier
-> to read, but there are two mutually dependent changes: moving to
-> pathbuf.len everywhere requires not-freeing pathbuf in the early code
-> path. But if you do that and don't move all of "is it usable" checks up,
-> then you have to add a bunch of new error-handling code that would just
-> get ripped out in the next patch.
->
-> There's definitely _some_ of that in this series already (e.g., the
-> counting logic in alt_sha1_path() added by patch 14 that just gets
-> ripped out in patch 15 when fill_sha1_path() learns to use a strbuf). I
-> tried to balance "show each individual obvious step" with "don't make
-> people review a bunch of scaffolding that's not going to be in the final
-> product".
->
-> -Peff
+On Tue, Oct 04, 2016 at 01:44:23PM -0700, Jacob Keller wrote:
 
-Mostly the diff is funky because of how the diff selected which chunks
-moved vs how your patch described what chunks moved.
+> On Tue, Oct 4, 2016 at 6:48 AM, Jeff King <peff@peff.net> wrote:
+> > On Mon, Oct 03, 2016 at 10:57:48PM -0700, Jacob Keller wrote:
+> >
+> >> > diff --git a/t/t5613-info-alternate.sh b/t/t5613-info-alternate.sh
+> >> > index 7bc1c3c..b393613 100755
+> >> > --- a/t/t5613-info-alternate.sh
+> >> > +++ b/t/t5613-info-alternate.sh
+> >> > @@ -39,6 +39,18 @@ test_expect_success 'preparing third repository' '
+> >> >         )
+> >> >  '
+> >> >
+> >> > +# Note: These tests depend on the hard-coded value of 5 as "too deep". We start
+> >> > +# the depth at 0 and count links, not repositories, so in a chain like:
+> >> > +#
+> >> > +#   A -> B -> C -> D -> E -> F -> G -> H
+> >> > +#      0    1    2    3    4    5    6
+> >> > +#
+> >>
+> >> Ok so we count links, but wouldn't we have 5 links when we hit F, and
+> >> not G? Or am I missing something here?
+> >
+> > This is what I was trying to get at with the "start the depth at 0". We
+> > disallow a depth greater than 5, but because we start at 0-counting,
+> > it's really six links. I guess saying "5 as too deep" is really the
+> > misleading part. It should be "5 as the maximum depth".
+> >
+> > -Peff
+> 
+> Right, but if A is 0, then:
+> 
+> B = 1
+> C = 2
+> D = 3
+> E = 4
+> F = 5
+> G = 6  (UhOh??)
+> H = 7
+> 
+> So do you mean that *B* = 0, and C = 1??? That is not clear from this commment.
 
-Thanks,
-Jake
+No, we count links, not repositories. So the "A->B" link is "0", "B->C"
+is "1", and so on.
+
+> So either way it still feels like "6" links is what is allowed? Or the
+> first link has to not count? That's really confusing.
+
+Right, 6 links _are_ allowed. Because we count links, and because we
+start the link-counting at "0" and allow through "5". The link labeled
+"6" (which is really the seventh link!) is the one that is forbidden.
+
+> Basically I G is the 7th letter, not the 6th, so even if we're
+> subtractnig 1 it's still 6 which is 1 too deep? That means we not only
+> discard 0 (the first repository) but we discount the 2nd one as well?
+
+It's basically two off-by-ones from what you might think is correct.  I
+agree it's unintuitive, but I'm just documenting what's there. We could
+change it; it's not like anybody cares about the exact value except
+"deep enough", but _since_ nobody cares, I preferred not to modify the
+code.
+
+-Peff
