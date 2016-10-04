@@ -6,153 +6,63 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FCB820987
-	for <e@80x24.org>; Tue,  4 Oct 2016 22:55:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B56CF20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 22:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752699AbcJDWzB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 18:55:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51259 "EHLO
+        id S1752054AbcJDW6O (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 18:58:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58729 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751602AbcJDWzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 18:55:00 -0400
+        with ESMTP id S1751201AbcJDW6O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 18:58:14 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 480CE43EBB;
-        Tue,  4 Oct 2016 18:54:59 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E284743EF0;
+        Tue,  4 Oct 2016 18:58:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=UQuP
-        CT2/5Ek5DwCCnQ3qUl0yR1Y=; b=iWZ6EfsqBCXhY3hmXFBu1cUA8Z+wNojbFp02
-        HY61PRIVjCcKy/f773IGiFvLRh0xg6LC98YK6xtlXoSihkOy8TqgTRSIHFN7JDUr
-        IVnWYUfNSre9Fs7vQ9AWiuIR64SuWUlmGTokpcwniN0Dl5V7bqQycWUbdlGwJ/mb
-        ze3XJII=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=KtAW245Frb2c
+        MTENfitTkv1oVmc=; b=lbUIuePS8V38lf4JizAypETNdh4ZEV9JAEvDaW00bspp
+        Dt0B5jEzx/SyVk+8OHEyrKWB2uYgKHybstIANl6shCpz4CADikb7UhpkU9ffARrT
+        VKwibJQpolmQizTaLKFzBDf7zmeigvu7ladv+aWJjtGKx4A/wRP95XO67wsmptI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        eTk7qmP1PbewaqKW1OJGv0v48ebakkb9MFSjti5mcmRL2aIw2ZtjN0ofSOW0e9xL
-        aoK7ltqLhTrPtu8Nx0P4ADIlFf0wHEKQ5tnikhfEGf36ZO3GrJrnkqUFWBjLn1xj
-        Zuyeuhzhso15TB7164ekFZliNDm5tqv/e9TOXJUzhTk=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qpx/lh
+        tHumNzoBfQfUX+gy98tuBOp+r2swwqzGF8Y84Q6Yc6p9ohMfhqh4+veskT8ldkeU
+        lmGJsuPwIhoSSP9yNSDpOk6mTbufuff6CHdbtN9N4JRFFwKiGjJF4WYT4HUVQVP3
+        HZm6BO0fI6BE2E6+A4uoYkfO/7bVOhmT9HiPU=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EF5643EBA;
-        Tue,  4 Oct 2016 18:54:59 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB5A743EEF;
+        Tue,  4 Oct 2016 18:58:12 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B822143EB9;
-        Tue,  4 Oct 2016 18:54:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7899C43EED;
+        Tue,  4 Oct 2016 18:58:11 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, strk@kbt.io
-Subject: [PATCH 3/4] diff.c: move ws-error-highlight parsing helpers up
-Date:   Tue,  4 Oct 2016 15:54:48 -0700
-Message-Id: <20161004225449.6759-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.10.1-510-g1ef781f2c1
-In-Reply-To: <20161004225449.6759-1-gitster@pobox.com>
-References: <xmqqk2douhe0.fsf@gitster.mtv.corp.google.com>
- <20161004225449.6759-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 9348A5CC-8A85-11E6-9CA3-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+To:     ern0 <ern0@linkbroker.hu>
+Cc:     git@vger.kernel.org
+Subject: Re: GL bug: can not commit, reports error on changed submodule directory
+References: <CALhephTkohVhEjdP7TwQAcBrEBiHGtp0Hd+UxPUiJHtubMWKGA@mail.gmail.com>
+Date:   Tue, 04 Oct 2016 15:58:09 -0700
+In-Reply-To: <CALhephTkohVhEjdP7TwQAcBrEBiHGtp0Hd+UxPUiJHtubMWKGA@mail.gmail.com>
+        (ern0@linkbroker.hu's message of "Tue, 4 Oct 2016 12:40:22 +0200")
+Message-ID: <xmqqy423rabi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 062A8DA8-8A86-11E6-9024-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These need to be usable from git_diff_ui_config() code to help
-parsing a configuration variable, so move them up.
+ern0 <ern0@linkbroker.hu> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 74 +++++++++++++++++++++++++++++++++---------------------------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
+> When I say:
+>  $ gl commit -m "blah blah"
+> It reports:
+>  =E2=9C=98 Failed to read file into stream: Is a directory
 
-diff --git a/diff.c b/diff.c
-index d346378600..bd625cf3f7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -163,6 +163,43 @@ long parse_algorithm_value(const char *value)
- 	return -1;
- }
- 
-+static int parse_one_token(const char **arg, const char *token)
-+{
-+	const char *rest;
-+	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
-+		*arg = rest;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+static int parse_ws_error_highlight(const char *arg)
-+{
-+	const char *orig_arg = arg;
-+	unsigned val = 0;
-+
-+	while (*arg) {
-+		if (parse_one_token(&arg, "none"))
-+			val = 0;
-+		else if (parse_one_token(&arg, "default"))
-+			val = WSEH_NEW;
-+		else if (parse_one_token(&arg, "all"))
-+			val = WSEH_NEW | WSEH_OLD | WSEH_CONTEXT;
-+		else if (parse_one_token(&arg, "new"))
-+			val |= WSEH_NEW;
-+		else if (parse_one_token(&arg, "old"))
-+			val |= WSEH_OLD;
-+		else if (parse_one_token(&arg, "context"))
-+			val |= WSEH_CONTEXT;
-+		else {
-+			return -1 - (int)(arg - orig_arg);
-+		}
-+		if (*arg)
-+			arg++;
-+	}
-+	return val;
-+}
-+
- /*
-  * These are to give UI layer defaults.
-  * The core-level commands such as git-diff-files should
-@@ -3656,43 +3693,6 @@ static void enable_patch_output(int *fmt) {
- 	*fmt |= DIFF_FORMAT_PATCH;
- }
- 
--static int parse_one_token(const char **arg, const char *token)
--{
--	const char *rest;
--	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
--		*arg = rest;
--		return 1;
--	}
--	return 0;
--}
--
--static int parse_ws_error_highlight(const char *arg)
--{
--	const char *orig_arg = arg;
--	unsigned val = 0;
--
--	while (*arg) {
--		if (parse_one_token(&arg, "none"))
--			val = 0;
--		else if (parse_one_token(&arg, "default"))
--			val = WSEH_NEW;
--		else if (parse_one_token(&arg, "all"))
--			val = WSEH_NEW | WSEH_OLD | WSEH_CONTEXT;
--		else if (parse_one_token(&arg, "new"))
--			val |= WSEH_NEW;
--		else if (parse_one_token(&arg, "old"))
--			val |= WSEH_OLD;
--		else if (parse_one_token(&arg, "context"))
--			val |= WSEH_CONTEXT;
--		else {
--			return -1 - (int)(arg - orig_arg);
--		}
--		if (*arg)
--			arg++;
--	}
--	return val;
--}
--
- static int parse_ws_error_highlight_opt(struct diff_options *opt, const char *arg)
- {
- 	int val = parse_ws_error_highlight(arg);
--- 
-2.10.1-510-g1ef781f2c1
-
+Not that I am interested in learning the answer to the question, but
+what the h*ck is "gl"?
