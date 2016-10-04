@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5248B207EC
-	for <e@80x24.org>; Tue,  4 Oct 2016 06:02:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36701207EC
+	for <e@80x24.org>; Tue,  4 Oct 2016 06:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751647AbcJDGCY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 02:02:24 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:33467 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750871AbcJDGCX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 02:02:23 -0400
-Received: by mail-yb0-f193.google.com with SMTP id e2so4144500ybi.0
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 23:02:18 -0700 (PDT)
+        id S1751951AbcJDGGF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 02:06:05 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:36380 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751126AbcJDGGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 02:06:04 -0400
+Received: by mail-yb0-f195.google.com with SMTP id 184so1651477yby.3
+        for <git@vger.kernel.org>; Mon, 03 Oct 2016 23:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ku9cZnlv5JQZzIW9zbcoQCTUzrGxQ8ApaxsG9ScwHZQ=;
-        b=wKVA8Cy8fXQzuwIbOlsDdCIQAatAGE8X1YgrdVS5akYuDljX62qoHaqz0ygdI49+pa
-         qvUxmvEDPxdYuCwHANh2DZVH3bca+WZ3XopKQRitMHIW2eULdNcGZ6vOZ9lTL0Utebr3
-         422SboNW82sSzVpPtivudNfPc5La0cTy5xvKGDqsUgM8KjcbvdPj1aYTcAVR+/8q7deC
-         DovjOpNd5LJ5HJbNdxMY/lq/K5yMGLvwPu5nuTiE789/9qAdE/lEPh5S7KxrDnQMM+q/
-         5VZjKAPt/SKoa8XtMZNGK9QWpxF+We6Tt0CMc+8GeNlJZ7zzAY09ouxpJQatDzlocb//
-         DTfA==
+        bh=Qvl6pUA3orlf6trYoXeKNa40pwurho9+2spNiW1tWSw=;
+        b=DUODh2ghgjI580GCjbBEEm87YcAfHH4mCgsAiQuwHMbzAsJQtKFq9eW8WEKBcq0RPZ
+         Hr3leylAJZPAzXWAMLBcqZjg5E2I78XCj9wWVtq2Mn8ft5xM5teJOJ56zr0EUhg22mfs
+         oOiQL4PcmmCCLZrOuip4GTfxxXgSAJszDwfGAG2b+wUHzYSDZbOQf9YT4cpFlYiQdXu8
+         IlBxL8Cv4dXJwyzm6n6A/Chm8IjHenrzDK2BGy6zDZnxdtvJrnU1WRzSrFjeb7CbFGcg
+         arKsFn+5I/O38Tdwxj9V/Pr7BFVNoip9eFUhrhJp2jr+8mTRBy/rEDeaygmlxAxu6LzL
+         hMfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ku9cZnlv5JQZzIW9zbcoQCTUzrGxQ8ApaxsG9ScwHZQ=;
-        b=W9MKvLGknylA+iBcXy96FC7HGXDHZ/Ntt3Di/hE2ymftMasbluehAEPiQiM7CXwxGx
-         OILA2lsTXhuZElwROXXnT2rLb8CV/auD2uLBAZLoPKoygH61rgonXSXbCXh8D41HGm4g
-         6aukrvHIlBdJ41CTkAN9ZOUeKEu58cVpHI1Bh4unMJI2tYY7ZUGXyvN1N79MboivfaP9
-         ZDIsxsH2pS09tpbUD05+vhj8hX6EIwEYEQGXNgt6u+W34GuOajlXZHEgAyZH2xsuLEEJ
-         S//+Y+r8VAB2cVBXthHG4gSvDKRo1Mrgh1Qndpd4xMJ4h482nPRGOSmjPgZ1CQfgG4pz
-         1Z3A==
-X-Gm-Message-State: AA6/9RlYDIsjYR9c4GJ1InvPTOH3B58kSfnpZPZGPn8JqxKm8TBLIguwMSXRrsRqR38o7sd4W9bbT4tkYfr2Fw==
-X-Received: by 10.37.163.104 with SMTP id d95mr1370220ybi.132.1475560937493;
- Mon, 03 Oct 2016 23:02:17 -0700 (PDT)
+        bh=Qvl6pUA3orlf6trYoXeKNa40pwurho9+2spNiW1tWSw=;
+        b=FFLUnEWI5/GFkNB7LRM4Db6+vbi47uqVE3JBbz8h8mjbfEQbokwHdCBLjuVrpyiT1V
+         qRxO9M65XNAv/eOmt+mUjuxwH2det9pTzwN12riCwHjV/Lw10T2lg4042jFQ8oA+rt3J
+         tueLWxrngmTgYUR6OHzdSoKsLKaW8WwKqFvFep0pPBR7l2eCYpgTZcuk98zoF/M0PeN7
+         u6F8e5ZloZCGyJmpHq3lsNA0UyUfqPSKZokU7ot4gaW7p0TdJPjp0iPobs3epUuIGA3U
+         kc2WGeBs5NzJCGeCjb3CFgB9XdAMTuLS5P2RXjAPG4UCjJJrmTqDsJxf9gwsjKO/bD99
+         MgBQ==
+X-Gm-Message-State: AA6/9RnM1j1NwHpMreAXGJkdwz+fnFtLXNhns1pEj+90wr0vkXuHOe6/B5j5VV95iQMSQbPGjpJCmXjym9319Q==
+X-Received: by 10.37.118.137 with SMTP id r131mr1337499ybc.57.1475561163326;
+ Mon, 03 Oct 2016 23:06:03 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Mon, 3 Oct 2016 23:01:57 -0700 (PDT)
-In-Reply-To: <20161003203417.izcgwt4yz3yspdnm@sigill.intra.peff.net>
-References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net> <20161003203417.izcgwt4yz3yspdnm@sigill.intra.peff.net>
+Received: by 10.37.96.195 with HTTP; Mon, 3 Oct 2016 23:05:42 -0700 (PDT)
+In-Reply-To: <20161003203448.cdfbitl5jmhlpb5o@sigill.intra.peff.net>
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net> <20161003203448.cdfbitl5jmhlpb5o@sigill.intra.peff.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 3 Oct 2016 23:01:57 -0700
-Message-ID: <CA+P7+xrJZatmKDJR=JY9U_JH5BOpQGZ_G2jBM9qi1utUmAM8YQ@mail.gmail.com>
-Subject: Re: [PATCH 07/18] link_alt_odb_entry: handle normalize_path errors
+Date:   Mon, 3 Oct 2016 23:05:42 -0700
+Message-ID: <CA+P7+xrUOnDebwZnfu-xv-GuTJka4-eNUAfBudQf5ZhnkczU6w@mail.gmail.com>
+Subject: Re: [PATCH 08/18] link_alt_odb_entry: refactor string handling
 To:     Jeff King <peff@peff.net>
 Cc:     Git mailing list <git@vger.kernel.org>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
@@ -61,141 +61,182 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Mon, Oct 3, 2016 at 1:34 PM, Jeff King <peff@peff.net> wrote:
-> When we add a new alternate to the list, we try to normalize
-> out any redundant "..", etc. However, we do not look at the
-> return value of normalize_path_copy(), and will happily
-> continue with a path that could not be normalized. Worse,
-> the normalizing process is done in-place, so we are left
-> with whatever half-finished working state the normalizing
-> function was in.
+> The string handling in link_alt_odb_entry() is mostly an
+> artifact of the original version, which took the path as a
+> ptr/len combo, and did not have a NUL-terminated string
+> until we created one in the alternate_object_database
+> struct.  But since 5bdf0a8 (sha1_file: normalize alt_odb
+> path before comparing and storing, 2011-09-07), the first
+> thing we do is put the path into a strbuf, which gives us
+> some easy opportunities for cleanup.
 >
-> Fortunately, this cannot cause us to read past the end of
-> our buffer, as that working state will always leave the
-> NUL from the original path in place. And we do tend to
-> notice problems when we check is_directory() on the path.
-> But you can see the nonsense that we feed to is_directory
-> with an entry like:
+> In particular:
 >
->   this/../../is/../../way/../../too/../../deep/../../to/../../resolve
->
-> in your objects/info/alternates, which yields:
->
->   error: object directory
->   /to/e/deep/too/way//ects/this/../../is/../../way/../../too/../../deep/../../to/../../resolve
->   does not exist; check .git/objects/info/alternates.
->
+>   - we call strlen(pathbuf.buf), which is silly; we can look
+>     at pathbuf.len.
 
-Yikes, that doesn't seem helpful.
-
-> We can easily fix this just by checking the return value.
-> But that makes it hard to generate a good error message,
-> since we're normalizing in-place and our input value has
-> been overwritten by cruft.
-
-Right. Definitely want to check the return value here...
+Right. This makes obvious sense.
 
 >
-> Instead, let's provide a strbuf helper that does an in-place
-> normalize, but restores the original contents on error. This
-> uses a second buffer under the hood, which is slightly less
-> efficient, but this is not a performance-critical code path.
+>   - even though we have a strbuf, we don't maintain its
+>     "len" field when chomping extra slashes from the
+>     end, and instead keep a separate "pfxlen" variable. We
+>     can fix this and then drop "pfxlen" entirely.
 >
 
-I agree, I don't think this duplication is really a big deal, since it
-helps ensure that the function doesn't modify its arguments on error.
+Makes sense.
 
-> The strbuf helper can also properly set the "len" parameter
-> of the strbuf before returning. Just doing:
->
->   normalize_path_copy(buf.buf, buf.buf);
->
-> will shorten the string, but leave buf.len at the original
-> length. That may be confusing to later code which uses the
-> strbuf.
+>   - we don't check whether the path is usable until after we
+>     allocate the new struct, making extra cleanup work for
+>     ourselves. Since we have a NUL-terminated string, we can
+>     bump the "is it usable" checks higher in the function.
+>     While we're at it, we can move that logic to its own
+>     helper, which makes the flow of link_alt_odb_entry()
+>     easier to follow.
 >
 
-Makes sense here. Properly setting the length will help prevent future issues.
-
-Thanks,
-Jake
+Also makes sense.
 
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  sha1_file.c | 11 +++++++++--
->  strbuf.c    | 20 ++++++++++++++++++++
->  strbuf.h    |  8 ++++++++
->  3 files changed, 37 insertions(+), 2 deletions(-)
+> And you can probably guess now how I found the issue in the last patch
+> where pathbuf.len is totally bogus after calling normalize_path_copy. :)
+>
+>  sha1_file.c | 83 +++++++++++++++++++++++++++++++++----------------------------
+>  1 file changed, 45 insertions(+), 38 deletions(-)
 >
 > diff --git a/sha1_file.c b/sha1_file.c
-> index b9c1fa3..68571bd 100644
+> index 68571bd..f396823 100644
 > --- a/sha1_file.c
 > +++ b/sha1_file.c
-> @@ -263,7 +263,12 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
->         }
->         strbuf_addstr(&pathbuf, entry);
+> @@ -234,6 +234,36 @@ char *sha1_pack_index_name(const unsigned char *sha1)
+>  struct alternate_object_database *alt_odb_list;
+>  static struct alternate_object_database **alt_odb_tail;
 >
-> -       normalize_path_copy(pathbuf.buf, pathbuf.buf);
-> +       if (strbuf_normalize_path(&pathbuf) < 0) {
-> +               error("unable to normalize alternate object path: %s",
-> +                     pathbuf.buf);
-> +               strbuf_release(&pathbuf);
-> +               return -1;
-> +       }
->
->         pfxlen = strlen(pathbuf.buf);
->
-> @@ -335,7 +340,9 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
->         }
->
->         strbuf_add_absolute_path(&objdirbuf, get_object_directory());
-> -       normalize_path_copy(objdirbuf.buf, objdirbuf.buf);
-> +       if (strbuf_normalize_path(&objdirbuf) < 0)
-> +               die("unable to normalize object directory: %s",
-> +                   objdirbuf.buf);
->
->         alt_copy = xmemdupz(alt, len);
->         string_list_split_in_place(&entries, alt_copy, sep, -1);
-> diff --git a/strbuf.c b/strbuf.c
-> index b839be4..8fec657 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -870,3 +870,23 @@ void strbuf_stripspace(struct strbuf *sb, int skip_comments)
->
->         strbuf_setlen(sb, j);
->  }
-> +
-> +int strbuf_normalize_path(struct strbuf *src)
+> +/*
+> + * Return non-zero iff the path is usable as an alternate object database.
+> + */
+> +static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
 > +{
-> +       struct strbuf dst = STRBUF_INIT;
+> +       struct alternate_object_database *alt;
 > +
-> +       strbuf_grow(&dst, src->len);
-> +       if (normalize_path_copy(dst.buf, src->buf) < 0) {
-> +               strbuf_release(&dst);
-> +               return -1;
+> +       /* Detect cases where alternate disappeared */
+> +       if (!is_directory(path->buf)) {
+> +               error("object directory %s does not exist; "
+> +                     "check .git/objects/info/alternates.",
+> +                     path->buf);
+> +               return 0;
 > +       }
 > +
 > +       /*
-> +        * normalize_path does not tell us the new length, so we have to
-> +        * compute it by looking for the new NUL it placed
+> +        * Prevent the common mistake of listing the same
+> +        * thing twice, or object directory itself.
 > +        */
+> +       for (alt = alt_odb_list; alt; alt = alt->next) {
+> +               if (path->len == alt->name - alt->base - 1 &&
+> +                   !memcmp(path->buf, alt->base, path->len))
+> +                       return 0;
+> +       }
+> +       if (!fspathcmp(path->buf, normalized_objdir))
+> +               return 0;
+> +
+> +       return 1;
+> +}
+> +
 
-And we can't correctly set the length inside normalize_path_copy
-because it just takes C strings directly and not actually a strbuf. Ok
-so it makes sense that we have to set it here.
+This definitely makes reading the following function much easier,
+though the diff is a bit funky. I think the end result is much
+clearer.
 
 Thanks,
 Jake
 
-> +       strbuf_setlen(&dst, strlen(dst.buf));
-> +       strbuf_swap(src, &dst);
-> +       strbuf_release(&dst);
-> +       return 0;
-> +}
-> diff --git a/strbuf.h b/strbuf.h
-> index ba8d5f1..2262b12 100644
-> --- a/strbuf.h
-> +++ b/strbuf.h
-> @@ -443,6 +443,14 @@ extern int strbuf_getcwd(struct strbuf *sb);
->   */
->  extern void strbuf_add_absolute_path(struct strbuf *sb, const char *path);
+>  /*
+>   * Prepare alternate object database registry.
+>   *
+> @@ -253,8 +283,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+>         int depth, const char *normalized_objdir)
+>  {
+>         struct alternate_object_database *ent;
+> -       struct alternate_object_database *alt;
+> -       size_t pfxlen, entlen;
+> +       size_t entlen;
+>         struct strbuf pathbuf = STRBUF_INIT;
+>
+>         if (!is_absolute_path(entry) && relative_base) {
+> @@ -270,47 +299,26 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+>                 return -1;
+>         }
+>
+> -       pfxlen = strlen(pathbuf.buf);
+> -
+>         /*
+>          * The trailing slash after the directory name is given by
+>          * this function at the end. Remove duplicates.
+>          */
+> -       while (pfxlen && pathbuf.buf[pfxlen-1] == '/')
+> -               pfxlen -= 1;
+> -
+> -       entlen = st_add(pfxlen, 43); /* '/' + 2 hex + '/' + 38 hex + NUL */
+> -       ent = xmalloc(st_add(sizeof(*ent), entlen));
+> -       memcpy(ent->base, pathbuf.buf, pfxlen);
+> -       strbuf_release(&pathbuf);
+> -
+> -       ent->name = ent->base + pfxlen + 1;
+> -       ent->base[pfxlen + 3] = '/';
+> -       ent->base[pfxlen] = ent->base[entlen-1] = 0;
+> +       while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+> +               strbuf_setlen(&pathbuf, pathbuf.len - 1);
+>
+> -       /* Detect cases where alternate disappeared */
+> -       if (!is_directory(ent->base)) {
+> -               error("object directory %s does not exist; "
+> -                     "check .git/objects/info/alternates.",
+> -                     ent->base);
+> -               free(ent);
+> +       if (!alt_odb_usable(&pathbuf, normalized_objdir)) {
+> +               strbuf_release(&pathbuf);
+>                 return -1;
+>         }
+>
+> -       /* Prevent the common mistake of listing the same
+> -        * thing twice, or object directory itself.
+> -        */
+> -       for (alt = alt_odb_list; alt; alt = alt->next) {
+> -               if (pfxlen == alt->name - alt->base - 1 &&
+> -                   !memcmp(ent->base, alt->base, pfxlen)) {
+> -                       free(ent);
+> -                       return -1;
+> -               }
+> -       }
+> -       if (!fspathcmp(ent->base, normalized_objdir)) {
+> -               free(ent);
+> -               return -1;
+> -       }
+> +       entlen = st_add(pathbuf.len, 43); /* '/' + 2 hex + '/' + 38 hex + NUL */
+> +       ent = xmalloc(st_add(sizeof(*ent), entlen));
+> +       memcpy(ent->base, pathbuf.buf, pathbuf.len);
+> +
+> +       ent->name = ent->base + pathbuf.len + 1;
+> +       ent->base[pathbuf.len] = '/';
+> +       ent->base[pathbuf.len + 3] = '/';
+> +       ent->base[entlen-1] = 0;
+>
+>         /* add the alternate entry */
+>         *alt_odb_tail = ent;
+> @@ -318,10 +326,9 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+>         ent->next = NULL;
+>
+>         /* recursively add alternates */
+> -       read_info_alternates(ent->base, depth + 1);
+> -
+> -       ent->base[pfxlen] = '/';
+> +       read_info_alternates(pathbuf.buf, depth + 1);
+>
+> +       strbuf_release(&pathbuf);
+>         return 0;
+>  }
+>
+> --
+> 2.10.0.618.g82cc264
 >
