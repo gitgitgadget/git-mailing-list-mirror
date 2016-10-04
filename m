@@ -2,82 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D610F20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 17:07:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3D320986
+	for <e@80x24.org>; Tue,  4 Oct 2016 17:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753442AbcJDRHL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 13:07:11 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:34186 "EHLO
-        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752572AbcJDRHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 13:07:10 -0400
-Received: by mail-oi0-f47.google.com with SMTP id n132so177619776oih.1
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 10:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lKPqxiMLNh3n8jEtcmduxh9/aPVl4AJQWpz4Yd3EIyM=;
-        b=KtuZloEgDB4gAUoKrnwGqM/vhoy5OspKPZ2wLH1eGRJTrwq5WbY2Q7TEm2R5EYQQqO
-         fUt1SzwBRn/bv5y/Zzkm4OGmdx68aoh5nR5eEcTX/ygnSm6dc33bJOvUqrFgv5LrTo+D
-         JbXsBMr1vYNRxoIgIMuHzoPiZkKa744txhzvsdzMJWJWk2/+UagIYKwn2qS1E3rJ/You
-         uRRwltaj7LUNhu3D1kjQJtlRhuZB55bH3B/PEkPL8r/bvIHF2MEZnnt3UKEAGXbwbKuZ
-         nLwPYuhLkj3IxzpOaVySagfa9xMVuuPAblTJ2A4imjm7g1iiwzXQEH30I5daUDzc6DTS
-         aUQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lKPqxiMLNh3n8jEtcmduxh9/aPVl4AJQWpz4Yd3EIyM=;
-        b=cIKCQjHt7xU5LIHL/APJ8mYDXA5+aEQSjV1uXelqcslfES2rnS4b7PzthiAt5J9hkj
-         CnEF3EW/AzZmttWFIlpwwPATKuUmH46jRMFzWQ1scaxDXzMDs/aWilzNh8AtOt8LXoCX
-         BfFS1dBu4r+Qzr6uAg6uJzEo5TLDQLdV0lJynvK9CvmTyq/QjV35lm5tVjgRYr2zxQjI
-         LA92bmq3sdSmt8OZ6FbEvgG/h7iF8GmXf/BcG7lv1Vv/rugzrlGJWDxukql+4YMc1SXZ
-         c+Cjk5xdtFXUhzzkYHa/ZGEdRMq6Dg/auClfHutNeh14ydtImJczA58mj3XJ4OvCHp3q
-         46VQ==
-X-Gm-Message-State: AA6/9RktgorY1oOIe3zZZ87EhlA7uYhr76Ko6DacWv9/Pq/D3GnokLEzsIjqBFi0Q9Rml+HxWgJ0dqoF4L5rdBaX
-X-Received: by 10.157.60.154 with SMTP id z26mr3094775otc.91.1475600829512;
- Tue, 04 Oct 2016 10:07:09 -0700 (PDT)
+        id S1752902AbcJDRKn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 13:10:43 -0400
+Received: from mout.gmx.net ([212.227.15.18]:65010 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752452AbcJDRKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 13:10:42 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MA9Yv-1bkZUN1vsv-00BLfY; Tue, 04 Oct 2016 19:10:38
+ +0200
+Date:   Tue, 4 Oct 2016 19:10:37 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: [ANNOUNCE] Git for Windows 2.10.1
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.182.250.67 with HTTP; Tue, 4 Oct 2016 10:07:09 -0700 (PDT)
-In-Reply-To: <20161004113625.GB20309@book.hvoigt.net>
-References: <57F29FEF.30700@game-point.net> <xmqqfuod6yw2.fsf@gitster.mtv.corp.google.com>
- <20161004113625.GB20309@book.hvoigt.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Oct 2016 10:07:09 -0700
-Message-ID: <CAGZ79kZWtAU6YG4Qz9_Gwk2db5L2kPCCKrN+64hMYDovRjiLRw@mail.gmail.com>
-Subject: Re: Reference a submodule branch instead of a commit
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jeremy Morton <admin@game-point.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; BOUNDARY="8323329-926233871-1475601038=:35196"
+Message-ID: <0MQRWm-1bUHYY2H52-00ThV3@mail.gmx.com>
+X-Provags-ID: V03:K0:qfedBxV1pOh/1eZxpiDp6bjJ8e62QFgpdCfaixcLaYsa1bqNsB3
+ hPuQ99drgRN7BQhjXZzNBqZBW/qMTeDkls0HmU+coO6w/OmDgrrfsiL2ru+bcd5yTUFNQML
+ BDmzSC2ChWsLhbGC2EfnyyampukKP98V1sFqHPOWug9Sr+I4JYnGZ2xDGihZW4xn/Wt1apD
+ kK799N+PG4/yxpMEQdZow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:T0yrCvl/rq8=:HtXInjNmHgi6/gw+F9IDSN
+ AQhnJMXoxZZ+tJQFigr69hCg1i3ws/ffDeTT0dGUZFGOZpohg4oTFantAY/PRD+jb+yOGQpDJ
+ SPkr0XXfnOApTAmWbD7WRN5EzlGzWmz0qSZ2YiF8BsFuvxxQ8f8GjgtgMJQ7Nh/VV+wV9zouk
+ Z1BP4L2vwdnsyo4tuL8+8hVb+4rAecfo8DEIM3UiduEsdm9qVBfXf2PW2sr/wx6AMTVHpUKnD
+ DoDgc8qLj3D7GDsBjg0p9+IC+8iJD8g43AeZk24+Wk7mW6D/5NYlzFk0/kfRpk1+XBysQ71I2
+ MOMqWWDJQf3YkeVKboQ2X7JdcZoanbFsbh0Jo+Uix6kkt2XES3iAx0Vf/4cXnbp224E5UOdfC
+ DiME8Woz3uWGypjRGb2JSVhRdNdexwZJTBev40UrS6uNnkbA1cHuBsOhMq0Hk/cmOY+qD457u
+ T4S6wF6qCs+XRDauoQXx4ygsOfzfEwSfM1eK7rN/iqy9PWujsOat9BdmOmI1ZBVMwqtSrjao3
+ Nqp2WqZTu0FKPCGrgehtP04C7kBvN/HPO6WfRwUvxwA1pNsvpwSk8+R85SSeB2sfjJzNuXOE0
+ DvWk8MldkL+a/YYFTatQ1+ZGIYjXd03CZYP+Qy5oyFaZAZ1Q3/RGpajxVsSpO8DY/6G+d3eEJ
+ 975wSvlPk4muM1jr3eNai79CvywehekNJ9685gKvqJdzPYmvfBvi4dj9RmDiqxW+vnnNtTdJx
+ sCBIUNs9myg1Zr2N3Rl8qPZuC2yVvlIWJN/HorczTABnAiu/+vpU+SW8hatxeLiRgjOBbO9mM
+ +7B4Cle
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> We already have options to support these kinds of workflows. Look at the
-> option '--remote' for 'git submodule update'.
->
-> You then only have to commit the submodule if you do not want to see it
-> as dirty locally, but you will always get the tip of a remote tracking
-> branch when updating.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I wonder if we could make that convenient for users by not tracking
-the submodule,
-i.e.
-* we have the information in the .gitmodules file
-* the path itself is in the .gitignore
-* no tree entry
+--8323329-926233871-1475601038=:35196
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Then you can update to the remote latest branch, without Git reporting
-a dirty submodule locally, in fact it reports nothing for the submodule.
+Dear Git users,
 
-It sounds like a hack, but maybe it's worth looking into that when
-people want to see that workflow.
+It is my pleasure to announce that Git for Windows 2.10.1 is available from=
+:
+
+=09https://git-for-windows.github.io/
+
+Changes since Git for Windows v2.10.0 (September 3rd 2016)
+
+New Features
+
+  =E2=80=A2 Comes with Git v2.10.1.
+  =E2=80=A2 Comes with Git Credential Manager v1.7.0.
+  =E2=80=A2 Comes with Git Flow v1.10.0.
+  =E2=80=A2 We now produce nice diffs for .docm and .dotm files, just as we=
+ did
+    for .docx files already.
+
+Bug Fixes
+
+  =E2=80=A2 The icon in the Explorer integration ("Git Bash Here"), which w=
+as
+    lost by mistake in v2.10.0, is back.
+  =E2=80=A2 Fixed a crash when calling git diff -G<regex> on new-born files
+    without configured user diff drivers.
+  =E2=80=A2 Interactive GPG signing of commits and tags was fixed.
+  =E2=80=A2 Calling Git with --date=3Dformat:<invalid-format> no longer res=
+ults
+    in an out-of-memory but reports the problem and aborts instead.
+  =E2=80=A2 Git Bash now opens properly even for Azure AD accounts.
+  =E2=80=A2 Git GUI respects the commit.gpgsign setting again.
+  =E2=80=A2 Upgrades the bundled OpenSSL to v1.0.2j.
+
+Filename | SHA-256
+-------- | -------
+Git-2.10.1-64-bit.exe | 0fcb5a3d5795d5bfa1c0d35d1cada37f25b5e62c776a7099f27=
+cfebc31362d95
+Git-2.10.1-32-bit.exe | 66e0748cb0eb0b63506f38fb8bf1abb5c361ce647af86cb0f75=
+4bc5b6a17775b
+PortableGit-2.10.1-64-bit.7z.exe | aa0634e026c70fe8b50207b8b125a18f45e259ea=
+c32cea246e068577a6546718
+PortableGit-2.10.1-32-bit.7z.exe | 3ca6f426e3b2e6675a11b680f719c23affa7e4dc=
+060e315375c6a262ed2658a5
+MinGit-2.10.1-64-bit.zip | a7268f4ab447e62940347d52fe01321403cfa3e9e94b8e5c=
+ac4d6ded28962d64
+MinGit-2.10.1-32-bit.zip | bcdeb7c00771f0e8e96689f704d158e8dcf67fdb4178f1ea=
+3f388e877398a2c7
+Git-2.10.1-64-bit.tar.bz2 | c0a541a60be3ea6264a269b90689b15da3e27811218e8c2=
+14359ec44593faa8e
+Git-2.10.1-32-bit.tar.bz2 | 3c77a702911512708126e83673c5906af78807bcb9daad5=
+223b0ab04ea81f4ea
+
+Ciao,
+Johannes
+--8323329-926233871-1475601038=:35196--
