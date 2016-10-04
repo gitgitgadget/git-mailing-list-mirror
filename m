@@ -7,96 +7,157 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFD0220986
-	for <e@80x24.org>; Tue,  4 Oct 2016 13:05:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9DC20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 13:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753973AbcJDNFu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 09:05:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56579 "EHLO mout.gmx.net"
+        id S1754004AbcJDNF4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 09:05:56 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49896 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753807AbcJDNFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 09:05:50 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lm7MT-1bHnY11gBt-00ZhOK; Tue, 04 Oct 2016 15:05:44
+        id S1753807AbcJDNFz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 09:05:55 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LzHZ7-1an3Gz21nV-014TbL; Tue, 04 Oct 2016 15:05:52
  +0200
-Date:   Tue, 4 Oct 2016 15:05:29 +0200 (CEST)
+Date:   Tue, 4 Oct 2016 15:05:51 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/6] Export also the has_un{staged,committed}_changed()
- functions
+Subject: [PATCH v3 5/6] wt-status: teach has_{unstaged,uncommitted}_changes()
+ about submodules
 In-Reply-To: <cover.1475586229.git.johannes.schindelin@gmx.de>
-Message-ID: <017586232230ad87dd7cde5801e011cce9255bc0.1475586229.git.johannes.schindelin@gmx.de>
+Message-ID: <3825aa3ed793d328e1d3327ed939a7e29c6faa7a.1475586229.git.johannes.schindelin@gmx.de>
 References: <cover.1473580914.git.johannes.schindelin@gmx.de> <cover.1475586229.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:1FgjfPblTeIBAzKbd8w5FeMRjnk2pPkYWloSnNBZOYegKbJC+Lz
- vuxz1cufalj64J6VIPklX4w6NZ5Acq78FegL4TlHb2ePZkn/874W9aHXFj3uA8QQccsWf0+
- mi1qSxL+kTDk1d6cbFQe0j6ethOnudGMTcHTw4XxwlI3CqCMuhqvOViQiolgIClRrCTTEL9
- tcJGL9ZnapvAyyfuqL3aA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6ZfeP0jpER4=:1p9Hl0aItRKBjB2/P1QOcP
- VKDOwUYIMZC8W634w7bVZzp0ayyykAkm6lKL+SyATmWpBzx1cdLbaZbw6zy0WUwRb2fuDTFj4
- ov/P1F6JwBBGXUMdOEc+3v3pmo5g6BuK29ZaR2qe7+jJsHP49h4TgwORaqUvjvIGEZQdlqffd
- 8BT7TM9VvGTA1xqi5dsq7oHCG6A8hQOqXc0/rgd8kK0ibhEtH3S6QzDD+UlazyIpj3jgdV2NG
- dgeS/kZTRAPZEDIKu5kvy0Xs6Ock+spFDlQ9wOA3toZwVq/7dB4Eb5cikUmadKZEz8d+yfslS
- otRKGVruJVWurMgANu7CPduMVOQUxIojJsOcxvShHLYE9L0LwIiTMDfrdbczKQ2sZKu/ceM13
- BqCbxMFCtkxa+24W35UPCz9N8Xd4Mmlc7l6lCrpDdoQMLEijoP4taPb1xRZKVXZ9h21rPgtUv
- eOqxgsaYhddjd4bxt4/U2ezuDVfmFKnXz79/F6Kq+Bz9gyBtX4q9R3Ql9/bIYzdkeP6ado3cM
- 10jvLOGheFG664/Ce5KUa6ThWUl4iF+QpvRQUVYmNYr6a/AGnuCpTmnjYCIaqANIS2HR7rnUP
- nFCloqxs6pgIlKGRusiIqoeW4Zatszy1Mko39ol13KmgR1J1nZD/7pVVFU4z2KopEUJD4jBOX
- 9TkBDXsLNJVo97yx6Xl61IHwWGA7H7J816uwX6QiyoLlqJCIZIVdEAS2W+d2cPxuoKfQtVZ7F
- KjEo1GuYYZLQnZLJP2FDT3OWS9k5yauTQERiojjuJu6QzpwmxoFNawk8R2cw23SggqWZ1cdgq
- PYGdLKC
+X-Provags-ID: V03:K0:4eMNqrJc3ngHDKbEZ8f366qmTM65AxVlbc/NXeAL/U9KS1kVv81
+ XWWCk++xmm2UrMLo065Th17yqWxhmdUsYeoXbAFlF302mhR3rbPUGk6Duj0bIaDuFLuSTO+
+ 4ZggqX4qlOUIzmDaWdGBK6SC6gJHvtJU1QZ8iSETM14HONE/s4bb0gTC7AnPjKRN2GwE34s
+ 28lmWyAiy977iTBDewM4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:byJlBZRfCx4=:POYLu1H/+YiqBagzPyskoY
+ ogvhJaZ5CgAE43DZGHlADFqJXUP1RQI8EUyxSo1xYYpkK90L6Dv1lulHBDyy3j22qtC4dPNJK
+ JKS9gOYJebRgEmDE6fsGpbIFS3DC8eorL11Gy9Qy2jIh0uWqiu/bvu6RhXklEpCM3rxSpLtY/
+ 8EFDjEmjuXrh56aNdFx34zKiiWG3k7Yjyr2KqB2+zKiY8GYKh/aBC2BuyKPl5aCnA+sMGKZsC
+ TYNObwFW4xawPiVUgc8LMVMIaFpF6lw55qqY/hB8COIhNwqRKNi+gyMESqgJUQ06TsMRBA3iv
+ kAEkfPJSD8hQyhoEP6V+vQI4covozCXm2d+VrGem0TFpGB2ZRKrkwDQJnKbY+7FzHgA/U6fE0
+ Czpngrc3s/yKnY6QJO7eguGlmBoxbKP8MPDE46uBMGL5ZcL17/jB6+APSAXdn25NmXIuMT22S
+ CGcejnUQpk0/LQ4P+q06uRbuPF6J9QPGdZ8eMSjvS77DlsG01XnURi5lfwVDEbxlaCMQR7j4/
+ L85TJw+mSZf3AUgWalITuK26lPCdkL0QC8PSvzwoOFG0Z78PmsAVGHs4seokf5UVW2RcTSjjO
+ UR5gOW0JGf3NdtiNlMiszm+lD6w3QhLhGo+RwsUEvdAHRk9E8fx9kk8NXyJ+PCx+xJce8XC+P
+ yPBGyJCgGU32xge2HAkUnfJQn/W7yndisdXgq6M/jsZK1QqmTKo8buqaJJW7JHh90CZMy+XgY
+ DpiG2i4BWV/s1hct+UogbpHywV8LwouO9tho5qvyPKOys3JBG5FsJq2dukmf0ociROKnYHYKI
+ JxC/Oay
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They will be used in the upcoming rebase helper.
+Sometimes we are *actually* interested in those changes... For
+example when an interactive rebase wants to continue with a staged
+submodule update.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- wt-status.c | 4 ++--
- wt-status.h | 4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ builtin/pull.c |  2 +-
+ wt-status.c    | 16 +++++++++-------
+ wt-status.h    |  7 ++++---
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 14ef8b5..c639167 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -810,7 +810,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 
+ 		if (!autostash)
+ 			require_clean_work_tree(N_("pull with rebase"),
+-				"Please commit or stash them.", 0);
++				"Please commit or stash them.", 1, 0);
+ 
+ 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+ 			hashclr(rebase_fork_point);
 diff --git a/wt-status.c b/wt-status.c
-index b92c54d..f4103e4 100644
+index f4103e4..061597a 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -2214,7 +2214,7 @@ void wt_status_print(struct wt_status *s)
+@@ -2214,13 +2214,14 @@ void wt_status_print(struct wt_status *s)
  /**
   * Returns 1 if there are unstaged changes, 0 otherwise.
   */
--static int has_unstaged_changes(void)
-+int has_unstaged_changes(void)
+-int has_unstaged_changes(void)
++int has_unstaged_changes(int ignore_submodules)
  {
  	struct rev_info rev_info;
  	int result;
-@@ -2230,7 +2230,7 @@ static int has_unstaged_changes(void)
+ 
+ 	init_revisions(&rev_info, NULL);
+-	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	if (ignore_submodules)
++		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+ 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+ 	diff_setup_done(&rev_info.diffopt);
+ 	result = run_diff_files(&rev_info, 0);
+@@ -2230,7 +2231,7 @@ int has_unstaged_changes(void)
  /**
   * Returns 1 if there are uncommitted changes, 0 otherwise.
   */
--static int has_uncommitted_changes(void)
-+int has_uncommitted_changes(void)
+-int has_uncommitted_changes(void)
++int has_uncommitted_changes(int ignore_submodules)
  {
  	struct rev_info rev_info;
  	int result;
+@@ -2239,7 +2240,8 @@ int has_uncommitted_changes(void)
+ 		return 0;
+ 
+ 	init_revisions(&rev_info, NULL);
+-	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	if (ignore_submodules)
++		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+ 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+ 	add_head_to_pending(&rev_info);
+ 	diff_setup_done(&rev_info.diffopt);
+@@ -2251,7 +2253,7 @@ int has_uncommitted_changes(void)
+  * If the work tree has unstaged or uncommitted changes, dies with the
+  * appropriate message.
+  */
+-int require_clean_work_tree(const char *action, const char *hint, int gently)
++int require_clean_work_tree(const char *action, const char *hint, int ignore_submodules, int gently)
+ {
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+ 	int err = 0;
+@@ -2261,13 +2263,13 @@ int require_clean_work_tree(const char *action, const char *hint, int gently)
+ 	update_index_if_able(&the_index, lock_file);
+ 	rollback_lock_file(lock_file);
+ 
+-	if (has_unstaged_changes()) {
++	if (has_unstaged_changes(ignore_submodules)) {
+ 		/* TRANSLATORS: the action is e.g. "pull with rebase" */
+ 		error(_("Cannot %s: You have unstaged changes."), _(action));
+ 		err = 1;
+ 	}
+ 
+-	if (has_uncommitted_changes()) {
++	if (has_uncommitted_changes(ignore_submodules)) {
+ 		if (err)
+ 			error(_("Additionally, your index contains uncommitted changes."));
+ 		else
 diff --git a/wt-status.h b/wt-status.h
-index 03ecf53..68e367a 100644
+index 68e367a..54fec77 100644
 --- a/wt-status.h
 +++ b/wt-status.h
-@@ -128,7 +128,9 @@ void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, .
- __attribute__((format (printf, 3, 4)))
+@@ -129,8 +129,9 @@ __attribute__((format (printf, 3, 4)))
  void status_printf(struct wt_status *s, const char *color, const char *fmt, ...);
  
--/* The following function expect that the caller took care of reading the index. */
-+/* The following functions expect that the caller took care of reading the index. */
-+int has_unstaged_changes(void);
-+int has_uncommitted_changes(void);
- int require_clean_work_tree(const char *action, const char *hint, int gently);
+ /* The following functions expect that the caller took care of reading the index. */
+-int has_unstaged_changes(void);
+-int has_uncommitted_changes(void);
+-int require_clean_work_tree(const char *action, const char *hint, int gently);
++int has_unstaged_changes(int ignore_submodules);
++int has_uncommitted_changes(int ignore_submodules);
++int require_clean_work_tree(const char *action, const char *hint,
++	int ignore_submodules, int gently);
  
  #endif /* STATUS_H */
 -- 
