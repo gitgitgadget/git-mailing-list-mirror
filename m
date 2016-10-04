@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F54920986
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA69520986
 	for <e@80x24.org>; Tue,  4 Oct 2016 13:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754154AbcJDNA1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 09:00:27 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36451 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753861AbcJDM75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 08:59:57 -0400
-Received: by mail-wm0-f66.google.com with SMTP id b184so19579838wma.3
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 05:59:56 -0700 (PDT)
+        id S1754078AbcJDNAd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 09:00:33 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36435 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753510AbcJDM7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 08:59:55 -0400
+Received: by mail-wm0-f68.google.com with SMTP id b184so19579780wma.3
+        for <git@vger.kernel.org>; Tue, 04 Oct 2016 05:59:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oAd0zkwN7G1S3Q+id4ZS/GuBCUvVFy0XQYfq6kfV6EM=;
-        b=vUtwYauSs5+BNzW18XmJ/Pnbkshczla5SxeFvylCOMB4OF9nsaFv7oADQVKAonE97i
-         +ZPq7iDRULoa5OlcmPawj09Dm+CxH8UpKAdKPHIjDLubwe4dP4HbVu6+o383UxztzPS8
-         lmyen7zx5jzLIZbc1g0IFvgJ8gz4GBVNUcLgSNW5+D1rp/nDYCdHLmc7Tk8WazYT+G+P
-         EdndciKzrcWfK+z14YUn5U6b6iY0k/GbQjv/pJncfNibw+owhG6mHtUPPewCsYpBtqIr
-         /tImacUePl45xc361SWIvpxfiiEbzGOO1HTn2LVPTJNBekLsdGY95LobCyTqv9i4bXdX
-         nxnQ==
+        bh=VZBwd1knIN4y/ZgFSGhdb3wJg5s/1XW1zziSiPgbFkc=;
+        b=x8fEpBrJm282vOQ3/fPueuTXfOoz35PXHvcXnURLhpLJi0nZbkTTS+MxoOr1HY1Q+8
+         6FwVwlyOyUZ32TKWVk6tlaUcsOKO0Hs13xMWV4/W8AG4hl0FZnobBLGtxWS2EiYZ1lag
+         qe2jdi7mvhj+soUXrY0i9w07mJCFjGQ+tNK4AZj1do/R60sKqRWd6KiCsEQIYk+tkcni
+         idZOAkm1MtzC+RhbayZI7kL3kKg5jpWsOu4S6Cukp1OEdmow1w8UlGkuM+iQ99BMem/v
+         M07gT92ugF2QvmlAUkn8wIZAvjl7+0lu/Z6CLxybrPk2pz0s0NeMTZiDi0rLnJ3K0ElF
+         Q6YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=oAd0zkwN7G1S3Q+id4ZS/GuBCUvVFy0XQYfq6kfV6EM=;
-        b=haVSiKtTQZH7Ka5EBu5XRFjjyke/h4r+gkj6nXgPoXnWi7xHXRcF1w78S2v8hqkS6A
-         XWkaaOXtBsdkeVT0N90wqT/Fb/0mihbhMv8KS3pseH/z8oN7YOjb7MyY5eZDy04ok9fc
-         gF33ugKfhwFn8ieTAH0T3ckT+JcOz9muroQJir8sL3BWIpLh+A1MWKYhbaWH+s5IU3jW
-         kwwbXLb4x9ybp+9hw7Us6xYoW530KVQOohl02G/Q9Ld4U4jB/zlkd4aGTMPWCY5XRIDn
-         pszaVsXsoM76LlCTlXoX1OhDCERfNBPA57XZ6yVROXnHC3he6q8cfdPoBR2GflrZoAtB
-         cUWw==
-X-Gm-Message-State: AA6/9RnYBbDK/cKRzha5Ak60ApqMb+0snHuq+69GiBxRwJGl+71yplq/HDxi4xII9LDHiA==
-X-Received: by 10.28.191.85 with SMTP id p82mr9840995wmf.33.1475585995387;
-        Tue, 04 Oct 2016 05:59:55 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id qo8sm3426934wjc.46.2016.10.04.05.59.54
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        bh=VZBwd1knIN4y/ZgFSGhdb3wJg5s/1XW1zziSiPgbFkc=;
+        b=nDe/DGWC3dQHs8JVpMJviqVf7uM3bwGFEQCIAuC5Q807NObnZkNmttRpngO7TVCYU3
+         tTD2rlaUNcr6buWDJLDMIT3S3JKRu16tJvwU474J28ycmaNirgJ1N7t8+0c/LLDLYkPd
+         G4b6A9q1Bi1rD7ZZoF6lg1B2g+hegBc2fZt8zO/926Vamvs2fLMoZQGQ6kIitKIY9qKk
+         /pyWpcJRoEij081SEwi4i/HiEoDnp8VPdwVvkCs0Oo6S3lXSbfQ6rW6OMLVXSP2WSfXo
+         b1L+BPCtLyiCgxz6vq+cOLSktNBE+ujY7b5oihxul+Flg44NxlVixP0SsJYqMYcxKGYe
+         dBAw==
+X-Gm-Message-State: AA6/9RkpgsVtdS2eWtiaBgVo7BQgSmY8JV4doWNzvbwUEmiMKpYIy3Vl898OlHS0cF64nA==
+X-Received: by 10.28.92.82 with SMTP id q79mr3498660wmb.113.1475585994291;
         Tue, 04 Oct 2016 05:59:54 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id qo8sm3426934wjc.46.2016.10.04.05.59.53
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 04 Oct 2016 05:59:53 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     ramsay@ramsayjones.plus.com, jnareb@gmail.com, gitster@pobox.com,
         j6t@kdbg.org, tboegi@web.de, peff@peff.net, mlbright@gmail.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v9 04/14] run-command: add wait_on_exit
-Date:   Tue,  4 Oct 2016 14:59:37 +0200
-Message-Id: <20161004125947.67104-5-larsxschneider@gmail.com>
+Subject: [PATCH v9 03/14] run-command: move check_pipe() from write_or_die to run_command
+Date:   Tue,  4 Oct 2016 14:59:36 +0200
+Message-Id: <20161004125947.67104-4-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20161004125947.67104-1-larsxschneider@gmail.com>
 References: <20161004125947.67104-1-larsxschneider@gmail.com>
@@ -64,150 +64,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-The flag 'clean_on_exit' kills child processes spawned by Git on exit.
-A hard kill like this might not be desired in all cases.
+Move check_pipe() to run_command and make it public. This is necessary
+to call the function from pkt-line in a subsequent patch.
 
-Add 'wait_on_exit' which closes the child's stdin on Git exit and waits
-until the child process has terminated.
-
-The flag is used in a subsequent patch.
+While at it, make async_exit() static to run_command.c as it is no
+longer used from outside.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- run-command.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++--------
- run-command.h |  3 +++
- 2 files changed, 50 insertions(+), 8 deletions(-)
+ run-command.c  | 17 +++++++++++++++--
+ run-command.h  |  2 +-
+ write_or_die.c | 13 -------------
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/run-command.c b/run-command.c
-index 3269362..96c54fe 100644
+index 5a4dbb6..3269362 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -21,6 +21,9 @@ void child_process_clear(struct child_process *child)
-
- struct child_to_clean {
- 	pid_t pid;
-+	char *name;
-+	int stdin;
-+	int wait;
- 	struct child_to_clean *next;
- };
- static struct child_to_clean *children_to_clean;
-@@ -28,12 +31,33 @@ static int installed_child_cleanup_handler;
-
- static void cleanup_children(int sig, int in_signal)
+@@ -634,7 +634,7 @@ int in_async(void)
+ 	return !pthread_equal(main_thread, pthread_self());
+ }
+ 
+-void NORETURN async_exit(int code)
++static void NORETURN async_exit(int code)
  {
-+	int status;
-+	struct child_to_clean *p = children_to_clean;
-+
-+	/* Close the the child's stdin as indicator that Git will exit soon */
-+	while (p) {
-+		if (p->wait)
-+			if (p->stdin > 0)
-+				close(p->stdin);
-+		p = p->next;
-+	}
-+
- 	while (children_to_clean) {
--		struct child_to_clean *p = children_to_clean;
-+		p = children_to_clean;
- 		children_to_clean = p->next;
-+
-+		if (p->wait) {
-+			fprintf(stderr, _("Waiting for '%s' to finish..."), p->name);
-+			while ((waitpid(p->pid, &status, 0)) < 0 && errno == EINTR)
-+				;	/* nothing */
-+			fprintf(stderr, _("done!\n"));
-+		}
-+
- 		kill(p->pid, sig);
--		if (!in_signal)
-+		if (!in_signal) {
-+			free(p->name);
- 			free(p);
-+		}
- 	}
+ 	pthread_exit((void *)(intptr_t)code);
  }
-
-@@ -49,10 +73,16 @@ static void cleanup_children_on_exit(void)
- 	cleanup_children(SIGTERM, 0);
+@@ -684,13 +684,26 @@ int in_async(void)
+ 	return process_is_async;
  }
-
--static void mark_child_for_cleanup(pid_t pid)
-+static void mark_child_for_cleanup(pid_t pid, const char *name, int stdin, int wait)
+ 
+-void NORETURN async_exit(int code)
++static void NORETURN async_exit(int code)
  {
- 	struct child_to_clean *p = xmalloc(sizeof(*p));
- 	p->pid = pid;
-+	p->wait = wait;
-+	p->stdin = stdin;
-+	if (name)
-+		p->name = xstrdup(name);
-+	else
-+		p->name = "process";
- 	p->next = children_to_clean;
- 	children_to_clean = p;
-
-@@ -63,6 +93,13 @@ static void mark_child_for_cleanup(pid_t pid)
- 	}
+ 	exit(code);
  }
-
-+#ifdef NO_PTHREADS
-+static void mark_child_for_cleanup_no_wait(pid_t pid, const char *name, int timeout, int stdin)
+ 
+ #endif
+ 
++void check_pipe(int err)
 +{
-+	mark_child_for_cleanup(pid, NULL, 0, 0);
-+}
-+#endif
++	if (err == EPIPE) {
++		if (in_async())
++			async_exit(141);
 +
- static void clear_child_for_cleanup(pid_t pid)
++		signal(SIGPIPE, SIG_DFL);
++		raise(SIGPIPE);
++		/* Should never happen, but just in case... */
++		exit(141);
++	}
++}
++
+ int start_async(struct async *async)
  {
- 	struct child_to_clean **pp;
-@@ -421,8 +458,9 @@ int start_command(struct child_process *cmd)
- 	}
- 	if (cmd->pid < 0)
- 		error_errno("cannot fork() for %s", cmd->argv[0]);
--	else if (cmd->clean_on_exit)
--		mark_child_for_cleanup(cmd->pid);
-+	else if (cmd->clean_on_exit || cmd->wait_on_exit)
-+		mark_child_for_cleanup(
-+			cmd->pid, cmd->argv[0], cmd->in, cmd->wait_on_exit);
-
- 	/*
- 	 * Wait for child's execvp. If the execvp succeeds (or if fork()
-@@ -482,8 +520,9 @@ int start_command(struct child_process *cmd)
- 	failed_errno = errno;
- 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
- 		error_errno("cannot spawn %s", cmd->argv[0]);
--	if (cmd->clean_on_exit && cmd->pid >= 0)
--		mark_child_for_cleanup(cmd->pid);
-+	if ((cmd->clean_on_exit || cmd->wait_on_exit) && cmd->pid >= 0)
-+		mark_child_for_cleanup(
-+			cmd->pid, cmd->argv[0], cmd->in, cmd->clean_on_exit_timeout);
-
- 	argv_array_clear(&nargv);
- 	cmd->argv = sargv;
-@@ -765,7 +804,7 @@ int start_async(struct async *async)
- 		exit(!!async->proc(proc_in, proc_out, async->data));
- 	}
-
--	mark_child_for_cleanup(async->pid);
-+	mark_child_for_cleanup_no_wait(async->pid);
-
- 	if (need_in)
- 		close(fdin[0]);
+ 	int need_in, need_out;
 diff --git a/run-command.h b/run-command.h
-index cf29a31..f7b9907 100644
+index 5066649..cf29a31 100644
 --- a/run-command.h
 +++ b/run-command.h
-@@ -42,7 +42,10 @@ struct child_process {
- 	unsigned silent_exec_failure:1;
- 	unsigned stdout_to_stderr:1;
- 	unsigned use_shell:1;
-+	 /* kill the child on Git exit */
- 	unsigned clean_on_exit:1;
-+	/* close the child's stdin on Git exit and wait until it terminates */
-+	unsigned wait_on_exit:1;
- };
-
- #define CHILD_PROCESS_INIT { NULL, ARGV_ARRAY_INIT, ARGV_ARRAY_INIT }
---
+@@ -139,7 +139,7 @@ struct async {
+ int start_async(struct async *async);
+ int finish_async(struct async *async);
+ int in_async(void);
+-void NORETURN async_exit(int code);
++void check_pipe(int err);
+ 
+ /**
+  * This callback should initialize the child process and preload the
+diff --git a/write_or_die.c b/write_or_die.c
+index 0734432..eab8c8d 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -1,19 +1,6 @@
+ #include "cache.h"
+ #include "run-command.h"
+ 
+-static void check_pipe(int err)
+-{
+-	if (err == EPIPE) {
+-		if (in_async())
+-			async_exit(141);
+-
+-		signal(SIGPIPE, SIG_DFL);
+-		raise(SIGPIPE);
+-		/* Should never happen, but just in case... */
+-		exit(141);
+-	}
+-}
+-
+ /*
+  * Some cases use stdio, but want to flush after the write
+  * to get error handling (and to get better interactive
+-- 
 2.10.0
 
