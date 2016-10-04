@@ -2,141 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65BB41F4F8
-	for <e@80x24.org>; Tue,  4 Oct 2016 06:52:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 897DB1F4F8
+	for <e@80x24.org>; Tue,  4 Oct 2016 08:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752265AbcJDGwV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 02:52:21 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:33665 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751660AbcJDGwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 02:52:20 -0400
-Received: by mail-yb0-f196.google.com with SMTP id e2so4163500ybi.0
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 23:52:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zibmR1pjQXcgl7WEWIulTBtY+8gJu6zQ3FnZQupdLS0=;
-        b=PzlPA31PhOCMxy9sMfgeg/3R/ga72pLW0q/rLUBmJSUBEKO+0MoRaoRYkNXImv49Nw
-         B/hIfX72ARY4VW81/MrjIuhWQQyOVmCX9qezkWAzhoaPbznp+lw/ad0PgeHGxB6ZF9qh
-         DdOk2E5bEGcUWZctlUZqCWIXDhqNSUeSDwkmk4PHZcWAmipdjisA3JqS6ruaJRTA9eHn
-         /CI4Pb9MekqlRdcKxiL7i6EWh3Eo7QD95qCHvqTsSo6Y+xFtj+bx43+HIIM9ZibMFXlK
-         Xe3fUyUriJKdUYT6HCgnnJiuHMxykNQsh18fgNx0Nr0/yAj37+WCsiC1+8Te/6SUsNNk
-         3H4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zibmR1pjQXcgl7WEWIulTBtY+8gJu6zQ3FnZQupdLS0=;
-        b=HfC/L20TFGmgwvfE27/oM1iXI49EwHQs7ulvcBMoMhHaBbQQ6j3QlAosx2eS6yLC12
-         7J38s9uNeMmqhTzmfn6KSMA9nhD9Af8JvsDhjVLlZFchELJ9sI0C8doSSgST3dJpQTGQ
-         lWj/tZe/qflrXeW2OrWzqtIx/ybcqT+08kiyt1yYFOUQzpVuM8vU0hGOr8NYPFrV66E7
-         UiRY7mAXQbRS1i0KwCNfAwbs4M6N1S8YdWKZ5Z1knbIyo2NhPY4rAWxTlGpVA5abIAEh
-         YlLbmRWyKltVBfwVUfUK/Bzr5CkXWa0e8x04ZOx4eZ9mXSP+b0d9zk+DSQfmyu+dQ8OR
-         cFbQ==
-X-Gm-Message-State: AA6/9RnRCdy4e+NsabwcPleLxIeLAoJJLFidcDWYOPzvkID2pm6APzsUIfgAZKJ39XJU2C2FCxfDmdDk+amOLg==
-X-Received: by 10.37.174.1 with SMTP id a1mr1508541ybj.6.1475563939852; Mon,
- 03 Oct 2016 23:52:19 -0700 (PDT)
+        id S1753117AbcJDIGh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 04:06:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58313 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752905AbcJDIGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 04:06:36 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LcmN9-1b9iT30xRn-00k54H; Tue, 04 Oct 2016 10:06:30
+ +0200
+Date:   Tue, 4 Oct 2016 10:06:28 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2016, #07; Fri, 23)
+In-Reply-To: <xmqqd1jpkkea.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610032008370.35196@virtualbox>
+References: <xmqqlgyiz0lr.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1609242101100.129229@virtualbox> <xmqqd1jpkkea.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Mon, 3 Oct 2016 23:51:59 -0700 (PDT)
-In-Reply-To: <20161003203626.styj2vwcmgwnpx4v@sigill.intra.peff.net>
-References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net> <20161003203626.styj2vwcmgwnpx4v@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 3 Oct 2016 23:51:59 -0700
-Message-ID: <CA+P7+xqhuYmp-H=b-SrNdZjN5urWGHPuNkWbeVgCBF1UuhQZKQ@mail.gmail.com>
-Subject: Re: [PATCH 18/18] alternates: use fspathcmp to detect duplicates
-To:     Jeff King <peff@peff.net>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:dWEM5J0Mkw7dPQdn0dgXHQ2KfFNZrYFS3AyvQL4YNJjLkdNx/Ic
+ 77Jv8GOj3Xjy/Em+cq0Z81FDNmKMrZc5aywcSHIAvYoWe1eRV51xAbJYCfDREiuSutOmkWe
+ rFkZaJT3Wb2HTfdh1G8axQ76XXqzBKP0rLhFtG4XrWdBXeuMmIJ2572P6F6v3wuQElHt3eS
+ l9eL9Rm8xQ1xE86Im888Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YJ/BZeShWk8=:W0SVDpToBa9qp+19gzA5Hs
+ oOzypV+LZmdt0nTr1mHddQV5dJ1JK/u8IMGqhfPRgEHd5nBVPPMaJ5T5gR0eAxm8cH4fIl+ww
+ sQUnYLPMcTqQDNoLAI290RzCq72KwpHrd+NWs6fu7D/NLAjfdYaQEpJfn8PMyp2k8KXxaaYtl
+ t8uKEHL/NLbOTgEKfs197WG/ivEx3vljlRlhH4jNd9R9RjAFLQhEBClPyWFF/6WkwGwlYpg2O
+ dtxZaRBkAjMqGimy7FScCwcGjqkTYMj8lD4kPg6nskbp6DH4ONVvDdEfjcjrHYd7MYpIJE+Mv
+ 34xfigt0kqferdn7KkGsoNEYTlSrrWlvMq8lPfEqvXsxkGqDbrMMDuqzQAjm9a+KrkzcYMlsi
+ R4H3JngRlNmuHspQb1aGyJYRbaJa2je7tSBWD6Mgq2XQ5pkglt9MgyMCArUBUialvWUwQjPaz
+ zkD5Q9T+/9+gSoMg9DNfXmzhTM80Buf7Ax8R8v8imfSXX3/WqJjzRejpXg6klmvj4fkCdl+T/
+ SBUxalMexpjDj9f1fACeU6TrxQoPkE/f5s7m0/K/eNPPhekreMWZa94h5Vy6A7Otf97bA5K7c
+ WeDcmUgDgnSM4pAqhOfkr2IAbFEs3xZlUkrubjzphqFxqQE4/0EwtcGezPp8zM0Knnl3iUlAN
+ nEso9tF+kAxGwakilPyoGd3xvi2ovFBZ68iALRdmFdm7iNecNmND3aH9XuIwuBIa4luHRwaDM
+ OT8WJt81vYEPwhLx0LLdyYdTftoThEv8gZROTne6I7P1gY+ZD/ePVeo4kKkKTOTp+0fjZIdrP
+ ibLXTAk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 3, 2016 at 1:36 PM, Jeff King <peff@peff.net> wrote:
-> On a case-insensitive filesystem, we should realize that
-> "a/objects" and "A/objects" are the same path. We already
-> use fspathcmp() to check against the main object directory,
-> but until recently we couldn't use it for comparing against
-> other alternates (because their paths were not
-> NUL-terminated strings). But now we can, so let's do so.
->
+Hi Junio,
 
-Yep, makes sense.
+On Tue, 27 Sep 2016, Junio C Hamano wrote:
 
-> Note that we also need to adjust count-objects to load the
-> config, so that it can see the setting of core.ignorecase
-> (this is required by the test, but is also a general bugfix
-> for users of count-objects).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > In your previous kitchen status ("What's cooking") you hinted at a
+> > possible v2.10.1 soon. I have a couple of bugfixes lined up for Git
+> > for Windows and would like to avoid unnecessarily frequent release
+> > engineering... Any more concrete ideas on a date for this version?
+> 
+> I scanned RelNotes for 2.11 and identified these topics that we'd want
+> to have in 'maint'.
+> 
+>     bw/pathspec-remove-unused-extern-decl # 1 (6 days ago) 
+>     rs/checkout-some-states-are-const # 1 (6 days ago) 
+>     rs/strbuf-remove-fix # 1 (6 days ago) 
+>     rs/unpack-trees-reduce-file-scope-global # 1 (6 days ago) 
+>     mr/vcs-svn-printf-ulong # 1 (6 days ago) 
+>     sy/git-gui-i18n-ja # 7 (12 days ago) 
+>     jk/fix-remote-curl-url-wo-proto # 1 (12 days ago) 
+>     js/git-gui-commit-gpgsign # 2 (12 days ago) 
+>     jk/patch-ids-no-merges # 2 (6 days ago) 
+>     ew/http-do-not-forget-to-call-curl-multi-remove-handle # 3 (6 days ago) 
+>     rs/xdiff-merge-overlapping-hunks-for-W-context # 1 (6 days ago) 
+>     ks/perf-build-with-autoconf # 1 (6 days ago) 
+>     jt/format-patch-base-info-above-sig # 1 (6 days ago) 
+>     jk/rebase-i-drop-ident-check # 1 (6 days ago) 
+>     jk/reduce-gc-aggressive-depth # 1 (6 days ago) 
+>     et/add-chmod-x # 1 (6 days ago) 
+>     tg/add-chmod+x-fix # 7 (24 hours ago) 
+> 
+> Most are internal clean-ups that I do not mind leaving out, but I
+> think we want to have that "add --chmod=+x" fix in.  As it hasn't
+> been enough time passed since the topic was merged to 'master', I'd
+> say either
+> 
+>  (1) 2.10.1 with everything other than the last two in a few days
+>      and 2.10.2 late next week with "add --chmod=+x" fix, or
+> 
+>  (2) just a single 2.10.1 with everything late next week.
+> 
+> I can go either way and welcome suggestions.  I'd start merging
+> older topics in the above list to 'maint' soonish, but not today.
 
-Also makes sense.
+Sorry for the delay in answering. By now, it was probably obvious to you
+that (2) was my preference ;-)
 
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/count-objects.c   |  2 ++
->  sha1_file.c               |  2 +-
->  t/t5613-info-alternate.sh | 17 +++++++++++++++++
->  3 files changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-> index a700409..a04b4f2 100644
-> --- a/builtin/count-objects.c
-> +++ b/builtin/count-objects.c
-> @@ -97,6 +97,8 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
->                 OPT_END(),
->         };
->
-> +       git_config(git_default_config, NULL);
-> +
->         argc = parse_options(argc, argv, prefix, opts, count_objects_usage, 0);
->         /* we do not take arguments other than flags for now */
->         if (argc)
-> diff --git a/sha1_file.c b/sha1_file.c
-> index b514167..b05ec9c 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -260,7 +260,7 @@ static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
->          * thing twice, or object directory itself.
->          */
->         for (alt = alt_odb_list; alt; alt = alt->next) {
-> -               if (!strcmp(path->buf, alt->path))
-> +               if (!fspathcmp(path->buf, alt->path))
->                         return 0;
->         }
->         if (!fspathcmp(path->buf, normalized_objdir))
-> diff --git a/t/t5613-info-alternate.sh b/t/t5613-info-alternate.sh
-> index 76525a0..926fe14 100755
-> --- a/t/t5613-info-alternate.sh
-> +++ b/t/t5613-info-alternate.sh
-> @@ -116,4 +116,21 @@ test_expect_success 'relative duplicates are eliminated' '
->         test_cmp expect actual.alternates
->  '
->
-> +test_expect_success CASE_INSENSITIVE_FS 'dup finding can be case-insensitive' '
-> +       git init --bare insensitive.git &&
-> +       # the previous entry for "A" will have used uppercase
-> +       cat >insensitive.git/objects/info/alternates <<-\EOF &&
-> +       ../../C/.git/objects
-> +       ../../a/.git/objects
-> +       EOF
-> +       cat >expect <<-EOF &&
-> +       alternate: $(pwd)/C/.git/objects
-> +       alternate: $(pwd)/B/.git/objects
-> +       alternate: $(pwd)/A/.git/objects
-> +       EOF
-> +       git -C insensitive.git count-objects -v >actual &&
-> +       grep ^alternate: actual >actual.alternates &&
-> +       test_cmp expect actual.alternates
-> +'
-> +
->  test_done
-> --
-> 2.10.0.618.g82cc264
+Thanks,
+Dscho
