@@ -2,85 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C552820986
-	for <e@80x24.org>; Tue,  4 Oct 2016 21:50:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 511FC20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 21:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752022AbcJDVum (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 17:50:42 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:35122 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751263AbcJDVul (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 17:50:41 -0400
-Received: by mail-yw0-f169.google.com with SMTP id t193so64725581ywc.2
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 14:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=uwIgLpBtfcC2QyPfJ4TbjjZTatHHVlr5NJihYvFep4E=;
-        b=HPvm8xV5b+FuRS6hrVY7q0SSWn7Sd/F4TvOBQ2c4NApgW/c0wfJQ3acJ0gPHWTqPj7
-         ++pghGcfI8UAupGRLKwml13E8YtcZF1g15KZ+b8NDaIAq95wofEVwrC73e/ANueqWhnr
-         JSKGgNoWSiOhbtvSXEuINF2DBThlFMc50087DazslDsk7oLJiXbvf2UhA1OEMw8PKsYq
-         IwfH/Np3h/HF23DzPmzVyaq1oe5fgS9K/JGRhS/XlSFeT1b2LB5yST0mzPN4MMuIaIUJ
-         itkdFYJuBhXa/bNzzAhvJuo7JP4FxCcvWG1JJfG5IfCo2OIHRqp2vVh/XXd8lrtIGssE
-         3HWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=uwIgLpBtfcC2QyPfJ4TbjjZTatHHVlr5NJihYvFep4E=;
-        b=G4kIDf2YTyj936Tdp+AjQhlBzeM7yQgYR7jJA3oCDqeMrYWwfUGBLr3Qtcc5lHnu9s
-         gyVy6jAqBcEUZhLSZ5z21MW2fc+owd7UNevnEOLD3Ks8HbdpOKakI4PIJWq4cki5H+Ek
-         t3UO3HN/tT5KVQ0rqxuJjvK9zmH/PYWSJZGiTTRvtuXQDATUwPpuFKRsiYbKCRBbtZjT
-         0M4aMSEeLj1ZtIKoThbtC5mfo1ozkcIGWn9ZYtFFbZ64al6NLm6pZGzvEd+znhb22GTd
-         ofrmduBHouDI+WPyMuxQvJCSirHPynAFYqVEb7PP8888aF08lfgDh+5DdS+FvehKNVkM
-         Srog==
-X-Gm-Message-State: AA6/9RmlU5nGUMOhz+Q1kuulZbVw3YbDUmNidhJ5BonPup05UHyzUBhdLgtJ+NiMXDGFbYF9FB3/TpgUNDqDnQ==
-X-Received: by 10.129.177.3 with SMTP id p3mr4635406ywh.318.1475617840548;
- Tue, 04 Oct 2016 14:50:40 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Tue, 4 Oct 2016 14:50:20 -0700 (PDT)
-In-Reply-To: <20161004214914.kgkot337awszhojs@sigill.intra.peff.net>
+        id S1752029AbcJDVvn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 17:51:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52466 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751263AbcJDVvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 17:51:43 -0400
+Received: (qmail 22961 invoked by uid 109); 4 Oct 2016 21:51:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 21:51:42 +0000
+Received: (qmail 11288 invoked by uid 111); 4 Oct 2016 21:51:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 17:51:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2016 17:51:39 -0400
+Date:   Tue, 4 Oct 2016 17:51:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 12/18] alternates: use a separate scratch space
+Message-ID: <20161004215139.pi4xomnxzctb46vc@sigill.intra.peff.net>
 References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
- <20161003203412.bekizvlqtg4ls5fb@sigill.intra.peff.net> <CA+P7+xok5PoNKO+8R6zF9SXYfDq6BboDTDz9WZYEczs0pFK+pw@mail.gmail.com>
- <20161004134853.x3zq33ywyyzgbwsy@sigill.intra.peff.net> <CA+P7+xok-8vhikxkp+t8pu53YJAyUjZ0NiAwejEW2j3+eP_2Xw@mail.gmail.com>
- <20161004204933.ygfhoy24g6psyf6h@sigill.intra.peff.net> <CA+P7+xo3nxy1EOjDqHvKQuK128c=b73XN=6qqn6g6oRGh2VdFg@mail.gmail.com>
- <20161004205510.6bhisw7ixbgcvvwn@sigill.intra.peff.net> <CA+P7+xoDz2sOPrDrJhAhrqDQsRR8NVU-8kh6+G=8FJeXEJ1dtg@mail.gmail.com>
- <20161004214914.kgkot337awszhojs@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 4 Oct 2016 14:50:20 -0700
-Message-ID: <CA+P7+xqzqWk5ddZLjSmmfOMJ+QOW=J6S=8WSiCPYK_VE_pHLiQ@mail.gmail.com>
-Subject: Re: [PATCH 06/18] t5613: clarify "too deep" recursion tests
-To:     Jeff King <peff@peff.net>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset=UTF-8
+ <20161003203551.tmqp5rll6nqkewxz@sigill.intra.peff.net>
+ <xmqqk2dnssz9.fsf@gitster.mtv.corp.google.com>
+ <20161004213241.ihzkl7cohliavydg@sigill.intra.peff.net>
+ <xmqq7f9nss1y.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7f9nss1y.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 4, 2016 at 2:49 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 04, 2016 at 02:43:24PM -0700, Jacob Keller wrote:
->
->> > Hmm. Now I am puzzled, because I _did_ line up them specifically to make
->> > this clear. I put the numbers under the ">" of the arrow. Did I screw up
->> > the spacing somehow so that isn't how they look to you? Or are you just
->> > saying you would prefer them under the "-" of the arrow?
->>
->> I bet they line up in a monospace font and I just happened to be
->> viewing this from GMail which isn't showing it in monospace and so it
->> doesn't line up. Ignore me and carry on
->
-> Oh, good. I was wondering if I was going crazy. :)
->
-> -Peff
+On Tue, Oct 04, 2016 at 02:49:45PM -0700, Junio C Hamano wrote:
 
-Only one of us is going crazy, but I'm not sure who ;)
+> >> It is not wrong per-se, but I am a bit surprised to see that the
+> >> code keeps FLEX_ARRAY _and_ uses a separate malloc'ed area pointed
+> >> at by the scratch pointer.
+> >
+> > Yeah, there's really no reason "path" could not become a non-flex
+> > buffer. I mostly left it there out of inertia. If you have a preference,
+> > I'm happy to change it.
+> 
+> My preference, before reaching the end of the series, actually was
+> to overallocate just once and point with *scratch into path[] beyond
+> the end of the fixed "where is the object directory?" string.
+> 
+> Of course, that would not mesh very well with the plan this series
+> had after this step to use strbuf for keeping scratch ;-)  And the
+> end result looks fine to me.
 
--Jake
+Heh, yeah, I did not think of that (because I had the strbuf end-game in
+mind the whole time). I agree that would be nicer if we were keeping the
+raw buffer, if only because one could free the whole thing in one shot
+(OTOH, we do not ever free these structs at all :) ).
+
+-Peff
