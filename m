@@ -2,130 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63072207EC
-	for <e@80x24.org>; Tue,  4 Oct 2016 00:07:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCBBE207EC
+	for <e@80x24.org>; Tue,  4 Oct 2016 00:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751610AbcJDAHY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Oct 2016 20:07:24 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:50422 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751495AbcJDAHY (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Oct 2016 20:07:24 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2089A280AD;
-        Tue,  4 Oct 2016 00:07:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1475539641;
-        bh=QhqJjR5UVBGBk8T+XYKSogq69jFPrC/9OVjzcYuDn0U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=u+IcESavcazayYVg6gIRCsWbbxaQO6Z4OH6yVCCtDMVch2vNik9+0MP6rsXbUL4Cu
-         b8u+KivrEPTJSReq9hn8sueUA5dILyjMegp2KAJpuE4iRQ11XRiJ02hWHE0q++7GhX
-         hwGLqy4L5uERnvdfUfWynYDBTPqkEPqldXOXLDv2iEukEzC8jpMl3VCM/7l35ndNRZ
-         LlchLIABpF34+XiyIbr0QnG/KD8gQoOfPKMRyiIo1edCBhTrs+VACUFdAVZKf9USDQ
-         0qkik0Plgcp2QoJqdi5ngVKp2qp4VFD+1gRd6AjqjFYMZe79AmPq3EHw9FIkBMiLmS
-         o2b0Maals/i9h16mSVeqWGwGPX6izv7gIwqhvGPdJuEKfiIh4oP8BWXERs6+MWyrtn
-         ms1dkCp5F7UAsPzCA642HynWS02SLKqcdKX2NyBPW+O+7uBtRa+LOTZpsC9YBmmQz1
-         LY9Rq61jPNQ9d2qzyqVBdZF1zYgvQeRtDdIhPFEycs6KCIWVUrT
-Date:   Tue, 4 Oct 2016 00:07:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     David Turner <David.Turner@twosigma.com>
-Cc:     'Jeff King' <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] http: http.emptyauth should allow empty (not just NULL)
- usernames
-Message-ID: <20161004000714.kbawbnh5y3x7h54l@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Turner <David.Turner@twosigma.com>,
-        'Jeff King' <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <1475515168-29679-1-git-send-email-dturner@twosigma.com>
- <20161003210100.t5nqknwfotag3lmj@sigill.intra.peff.net>
- <335996ca2642478386e94d9f3dc43223@exmbdft7.ad.twosigma.com>
+        id S1752856AbcJDAIG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Oct 2016 20:08:06 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:36726 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752772AbcJDAIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2016 20:08:05 -0400
+Received: by mail-pf0-f170.google.com with SMTP id i85so17550602pfa.3
+        for <git@vger.kernel.org>; Mon, 03 Oct 2016 17:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ZbNE+y5qOUkDd4dgthop21cQk5uX46TlgWrrMGjrKys=;
+        b=SBXrpZW2Oacf5Gq5EnngEui2Z2v429eJhjTSuj1Ry3PmJkJqM3Ten2I6UjxmAK2qjH
+         cMz4Ls9DM89TqJ7mPSdz7vqadTIATa3uTXBHuOPw28v42jp1iq6jd65eTPFaaoT5Qip0
+         48ACXgQwfiNhWxP9VoadSTQk1CUQOJbNTQNHXwgG0UA5MdpnBtREd7ABQK0EeO/q9CZm
+         CELitioB2/nvyBZ0EOE88u7qAX2uQ2U5ZoIMmQd+NyXneJyjGYDHpFESBv9tZDK/oc0B
+         KJ90/gEAXo92dPQRwQcq54MW9xhc64H15fMrUFjezeKZRXkhEzZ65lezZIBvJQa9h7oT
+         HvOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=ZbNE+y5qOUkDd4dgthop21cQk5uX46TlgWrrMGjrKys=;
+        b=TUUHyChdPJgcmaDcAyJgV7VIIdJOwDy6Dq3vbCx8XqrM4QqM4FVj5SDvC2/snEqiJW
+         KNa8FKP8aKLRhfdmqoL9BHjtXAvhh/NOe51cyk3etYWo5qNDHaSaZ7wFKm2LcOmNCcUr
+         om9eFKnM2qhcZeTztMTXkuWu18uRni6+bPiwv6hKflZEt8ZXpt77Tcuv992e6QuFlhZI
+         v1hyM+wRLX7TFhon+9nPuR2jvqa/thp2XpXcq5cL8kN3xDoj4Fc2SLIsBaZ3SjDc4i5U
+         tf04fhR1FWNnFdGqJkZ6dJdlXijzZTVvJ0tNMaOA+MQ6xGbx44Yl2LId6Zagj/lIbset
+         7XEw==
+X-Gm-Message-State: AA6/9RmCftS87r9Ahi863RJehVLddjwRsOqsIjrCBcj6FJhNYDJeY8Yw5gzfGZyoa6YHCGTE
+X-Received: by 10.98.200.153 with SMTP id i25mr1283736pfk.156.1475539684562;
+        Mon, 03 Oct 2016 17:08:04 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:a8c4:ef1c:855a:28ff])
+        by smtp.gmail.com with ESMTPSA id q14sm49741309pfg.63.2016.10.03.17.08.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Oct 2016 17:08:03 -0700 (PDT)
+Subject: Re: [RFC/PATCH 0/2] place cherry pick line below commit title
+To:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1475176070.git.jonathantanmy@google.com>
+ <xmqqtwcycqul.fsf@gitster.mtv.corp.google.com>
+ <11e41a94-df8c-494a-584b-e2bc8da2de3a@google.com>
+ <xmqq8tu99o75.fsf@gitster.mtv.corp.google.com>
+ <xmqqtwcx8669.fsf@gitster.mtv.corp.google.com>
+ <e03fdabd-6690-5244-5f79-1715b0364845@google.com>
+ <xmqqbmz16y42.fsf@gitster.mtv.corp.google.com>
+ <d3df0636-1975-1d08-2f34-384984c72e5d@google.com>
+ <xmqq8tu55bel.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <84f28caa-2e4b-1231-1a76-3b7e765c0b61@google.com>
+Date:   Mon, 3 Oct 2016 17:08:02 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eguqufucy25uodsl"
-Content-Disposition: inline
-In-Reply-To: <335996ca2642478386e94d9f3dc43223@exmbdft7.ad.twosigma.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20160916 (1.7.0)
+In-Reply-To: <xmqq8tu55bel.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/03/2016 03:13 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>
+>> There are other options like checking for indentation or checking for
+>> balanced parentheses/brackets, but I think that these would lead to
+>> surprising behavior for the user (this would mean that whitespace or
+>> certain characters could turn a valid trailer into an invalid one or
+>> vice versa, or change the behavior of trailer.ifexists, especially
+>> "replace").
+>
+> Yes, that is exactly why I said that it may be necessary for the
+> code to analize the lines in a block identified as "likely to be a
+> trailing block" more carefully.  We can afford to be loose as long
+> as the only allowed operation is to append one at the end, but once
+> we start removing/replacing an existing entry, etc., the definition
+> of what an entry is becomes very much relevant.
 
---eguqufucy25uodsl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I agree, and I was trying to discuss the possible alternatives for the 
+definition of what an entry is in my previous e-mail.
 
-On Mon, Oct 03, 2016 at 09:54:19PM +0000, David Turner wrote:
->=20
-> > I dunno. The code path you are changing _only_ affects anything if the
-> > http.emptyauth config is set. But I guess I just don't understand why y=
-ou
-> > would say "http://@gitserver" in the first place. Is that a common thin=
-g?
-> >=20
-> > -Peff
->=20
-> I have no idea if it is common.  I know that we do it.
+If you think that the alternatives are still too loose, I'm not sure if 
+we can make it any tighter. As far as I know, we're dealing with 
+trailers like the following:
 
-I've never seen this.  RFC 3986 does seem to allow it:
+   Signed-off-by: A <author@example.com>
+   [This has nothing to do with the above line]
+   Signed-off-by: B <buthor@example.com>
 
-  authority   =3D [ userinfo "@" ] host [ ":" port ]
-  userinfo    =3D *( unreserved / pct-encoded / sub-delims / ":" )
+and:
 
-I normally write it like one of these:
+   Link 1: a link
+     a continuation of the above
 
-  https://bmc@git.crustytoothpaste.net/
-  https://:@git.crustytoothpaste.net/
+and:
 
-Of course, the username is ignored in the first one, but it serves a
-documentary purpose for me.
+   Signed-off-by: Some body <some@body.xz> (comment
+   on two lines)
 
-> The reason we have a required-to-be-blank username/password is
-> apparently Kerberos (or something about our particular Kerberos
-> configuration), which I treat as inscrutable black magic.
+As I stated in the quoted paragraph, one possibility is to use 
+indentation and/or balanced parentheses/brackets to determine if a 
+trailer line continues onto the next line, and this would handle all the 
+above cases, but I still think that these would lead to surprising 
+behavior. Hence my suggestion to just simply define it as a single 
+physical line. But if you think that the pros (of the more complicated 
+approach) outweigh the cons, I'm OK with that.
 
-The issue with git is usually that it uses libcurl, which won't do
-authentication unless it has a username or password, even if those are
-empty or ignored.  http.emptyAuth was designed for this case.
-
-With Kerberos (at least in my experience), the username doesn't actually
-get sent, since you send only ticket-related information over the
-channel, and that has your principal name embedded.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---eguqufucy25uodsl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.15 (GNU/Linux)
-
-iQIcBAABCgAGBQJX8vKyAAoJEL9TXYEfUvaLY2IQAKEf+4yEvoB5ISmUFwkxPq4O
-Firr+1g9ECsinZJuwfaW8Ahyg9A3RQUiDRiL/Ao3jdjbZFoFeYcCIqcOTDxRSpH4
-NVku+ltBcGebtkfBlELKijOANNUAZiMWziBFyJ37p49zuuu216eMA6t/A9/VU2DL
-oKLgN1aXEXTappb1PU4dYldYX7KMCgLdSGH+B5unk/HoE0yfOlUew6hSCs5dANCj
-OjEmLGAlgGXjZihEcQAcdvZb3sRjPrZFPZOHwQWQNdcoe16iPmrZf5LX4Shyebkn
-DXGIyy6ZWMKe9KhcmaF18Tzj7N1YBls8IG4wsMd7UJG7gjp84U7ajQ+PvT25VK0b
-cbpogbpZI8V9jytsk7a8sS8fJMzLD8mlbIckCFHoKhFWiQd1yLX1F141eoUIrfHH
-aHgoAWfjvkvmlYXIpFO6/eX/+SMsrGGJlWZhk3i8A4YGhankhHUlw49fx9o/E8QI
-vBdbSsLU8BPCgCX82QSVOvk6TrsE8OEd/bExvzPUuwZ8XuyCyfPQrZ6vp0DBEQun
-aS8kim9w8iDDWUkrmPqqovRGOjMsbgp982O6j7ZsqbUhA4QZBQXpv7en0DOH2cb+
-XknW8oHZKmCU2QuFYOF3qxITdvcDdbaitosvqR3aiC+Puea7Y8RGMtJi5pJDqTee
-gssGJfnd7MqlXiNWWUgm
-=0tXs
------END PGP SIGNATURE-----
-
---eguqufucy25uodsl--
+One alternative is to postpone this decision by changing sequencer only 
+(and not trailer) to tolerate other lines in the trailer. This would 
+make them even more divergent (sequencer supports arbitrary lines while 
+trailer doesn't), but they were divergent already (sequencer supports 
+"(cherry picked by" but trailer doesn't).
