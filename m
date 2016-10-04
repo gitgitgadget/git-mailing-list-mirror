@@ -2,146 +2,216 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CB9620986
-	for <e@80x24.org>; Tue,  4 Oct 2016 17:56:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6923C20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 17:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752672AbcJDR4W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 13:56:22 -0400
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:36474 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752002AbcJDR4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 13:56:21 -0400
-Received: by mail-qt0-f172.google.com with SMTP id m5so40788645qtb.3
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 10:56:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Z3M+dzyElcbKGBOc1r8jQkwWOyEYLGEmajJl+B4BULQ=;
-        b=RCn0xjJvM3WfuFZX4FOBi/a9OgYb3Pj32/ME7w2gGElWj7YdUQtV26ghqr3hgggkuv
-         Fdlsf4i0zDOsEQ8CgbQkxmc/aRdfQiJQ6dpgIbg5vBCgvjFvqbWd8OIapeg/8WjhpOPq
-         Q2IqelswPSzr2e6zXfVhv/8+NdBXMGax6laSQEemJDIUm78tbXVA3VkOK1QvvxZQEY97
-         MwvELPIeu5CEC4z7qtuXwACqUTeRWte36yJsi7IE7ltTqFEKbKvVyBWadsqEIqqQHeH7
-         vBL7RaQAvvGrA4mMNwifPQxzNrNC+z6Sg0eyVxb3n25+4eu4bLwTj/aeRPnh39kDdBmo
-         /neg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Z3M+dzyElcbKGBOc1r8jQkwWOyEYLGEmajJl+B4BULQ=;
-        b=lhsb6zHEWthEN/JXhv5wOtN10C3zOK63LG8cUpK65/jxGUauwJSVrvFJ/dO2TX8iWy
-         7NHh1OSU2PzMrdY6XqkC1kLhbm9mWMDrPVjOY9VnyxaJ0fJ/XUtV+2PHqUa8hPq4+4t+
-         2vLihdvwUqFn6vgX8BX/+dEpqpq7gSIGHpTiKT0gSMreNWUk47xcYh2NPIS4AC1+EU8m
-         uVZCgAWPBYs9iAeUb8XenAEnPJihdmw9dsDa32F6NUz1vOfV6a+59OwWRm9hboxZ6e7n
-         YJrLgYhzzn6mldl7N6RM7CYbKpkfGCEOAtY7nAgU8d/uv4b9ruSYNZc1bLoKwc8dZkZl
-         xvEg==
-X-Gm-Message-State: AA6/9RnvCrPmWHzpM6cvE03xvHO6BN0P8BC5FCxcHPdzvPYgRirhddM6LjyIT1dMsAl0heaO2JM4ZcQF8YCpMgYQ
-X-Received: by 10.200.46.227 with SMTP id i32mr5180920qta.1.1475603780180;
- Tue, 04 Oct 2016 10:56:20 -0700 (PDT)
+        id S1752755AbcJDR5Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 13:57:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53170 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752072AbcJDR5P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 13:57:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 294F5411D1;
+        Tue,  4 Oct 2016 13:57:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iWixm0nrk5jqSqyC5G4sV0fR+XM=; b=Jw3Le4
+        xZdU7+G0uh3GgK6uaEAWzukdqMa3BBiYxS53vnarQuolDYcHTdoV31Eptt/pxupa
+        DyXtLVSzzK0Kkm5EVTEB2cY/Qy97qdfILlwVZ+cRCGYsVfBoObkNHCO1KdGkQyyv
+        BF+y7xwtgESCtyhdFODv8KYOGfRNJgOgkOwyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=g5PjO+sPBvZ9Dnus5qKd/Byo3yJ1O405
+        0+OGxwGvAo2L7tBNrRgd6LCI/PleO0tESD3iODEh3q5BtxxWnZMwUV8dMA0xcDd5
+        Lrtgv4/xJhgkRsmRQcZEdreVQTGzIvRI5T5ql9PAwDs6WmBgWPqGkMmgPbajz4pI
+        frG874qkqEs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20C81411D0;
+        Tue,  4 Oct 2016 13:57:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7D5C5411CF;
+        Tue,  4 Oct 2016 13:57:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sandro Santilli <strk@kbt.io>, git@vger.kernel.org
+Subject: Re: color.diff.whitespace unused on removed lines
+References: <20161004081429.GC17002@localhost>
+        <20161004152954.74bojbyagxr2xefz@sigill.intra.peff.net>
+        <20161004153523.GA2798@localhost>
+        <20161004161323.53qec37i2tujaxcy@sigill.intra.peff.net>
+Date:   Tue, 04 Oct 2016 10:57:11 -0700
+In-Reply-To: <20161004161323.53qec37i2tujaxcy@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 4 Oct 2016 12:13:24 -0400")
+Message-ID: <xmqqk2douhe0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 4 Oct 2016 10:56:19 -0700 (PDT)
-In-Reply-To: <1475185723-36871-5-git-send-email-bmwill@google.com>
-References: <1475099443-145608-1-git-send-email-bmwill@google.com>
- <1475185723-36871-1-git-send-email-bmwill@google.com> <1475185723-36871-5-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Oct 2016 10:56:19 -0700
-Message-ID: <CAGZ79kbFiK0Wb6zpuyybwUOeXo-H=9oDpO8wnXihYmP8VwAHFQ@mail.gmail.com>
-Subject: Re: [PATCH v6 4/4] ls-files: add pathspec matching for submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: FAC55A12-8A5B-11E6-8C6E-60E27A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 2:48 PM, Brandon Williams <bmwill@google.com> wrote:
-> Pathspecs can be a bit tricky when trying to apply them to submodules.
-> The main challenge is that the pathspecs will be with respect to the
-> superproject and not with respect to paths in the submodule.  The
-> approach this patch takes is to pass in the identical pathspec from the
-> superproject to the submodule in addition to the submodule-prefix, which
-> is the path from the root of the superproject to the submodule, and then
-> we can compare an entry in the submodule prepended with the
-> submodule-prefix to the pathspec in order to determine if there is a
-> match.
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Oct 04, 2016 at 05:35:23PM +0200, Sandro Santilli wrote:
 >
-> This patch also permits the pathspec logic to perform a prefix match against
-> submodules since a pathspec could refer to a file inside of a submodule.
-> Due to limitations in the wildmatch logic, a prefix match is only done
-> literally.  If any wildcard character is encountered we'll simply punt
-> and produce a false positive match.  More accurate matching will be done
-> once inside the submodule.  This is due to the superproject not knowing
-> what files could exist in the submodule.
+>> > We later did b8767f7 (diff.c: --ws-error-highlight=<kind> option,
+>> > 2015-05-26) to let you see them on other lines, though. I think that
+>> > would do what you want.
+>> 
+>> Thanks, it does do what I want.
+>> Any chance to specify it in the config file that I want it
+>> always to behave in a certain way ?
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  Documentation/git-ls-files.txt         |   3 +-
->  builtin/ls-files.c                     |  27 +++++++--
->  dir.c                                  |  46 +++++++++++++-
->  dir.h                                  |   4 ++
->  t/t3007-ls-files-recurse-submodules.sh | 108 ++++++++++++++++++++++++++++++++-
->  5 files changed, 175 insertions(+), 13 deletions(-)
->
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-> index ea01d45..51ec9a1 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -140,8 +140,7 @@ a space) at the start of each line:
->
->  --recurse-submodules::
->         Recursively calls ls-files on each submodule in the repository.
-> -       Currently there is only support for the --cached mode without a
-> -       pathspec.
-> +       Currently there is only support for the --cached.
+> No, I don't think there's currently a matching config option. You can
+> use an alias, or propose a patch to add a config option.
 
-s/--cached/--cached mode/ ?
-The "the" in front of --cached sounds a bit strange for a non native
-speaker here.
+The final shape of such a patch would include something like the
+attached.  It would need to be split into a few patches and then get
+additional tests and documentation written, so I won't be committing
+it myself in this shape.
 
 
-> +       /*
-> +        * Find common prefix for all pathspec's
-> +        * This is used as a performance optimization which unfortunately cannot
-> +        * be done when recursing into submodules
-> +        */
-> +       if (recurse_submodules)
-> +               max_prefix = NULL;
-> +       else
-> +               max_prefix = common_prefix(&pathspec);
+ diff.c | 84 +++++++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 50 insertions(+), 34 deletions(-)
 
-Nit of the day:
-While this is readable, you may want to explore how this reads shorter as
-
-    max_prefix = recurse_submodules ? NULL : common_prefix(&pathspec);
-
-?
-
-> +       git ls-files --recurse-submodules "sub" >actual &&
-> +       test_cmp expect actual &&
-> +       git ls-files --recurse-submodules "sub/" >actual &&
-> +       test_cmp expect actual &&
-> +       git ls-files --recurse-submodules "sub/file" >actual &&
-> +       test_cmp expect actual &&
-> +       git ls-files --recurse-submodules "su*/file" >actual &&
-> +       test_cmp expect actual &&
-> +       git ls-files --recurse-submodules "su?/file" >actual &&
-> +       test_cmp expect actual
-> +'
-
-> +
-> +       git ls-files --recurse-submodules "s??/file" >actual &&
-> +       test_cmp expect actual &&
-> +       git ls-files --recurse-submodules "s???file" >actual &&
-> +       test_cmp expect actual &&
-> +       git ls-files --recurse-submodules "s*file" >actual &&
-> +       test_cmp expect actual
->  '
-
-Thanks for the tests!
+diff --git a/diff.c b/diff.c
+index a178ed39bc..a2193c3aea 100644
+--- a/diff.c
++++ b/diff.c
+@@ -43,6 +43,7 @@ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
+ static long diff_algorithm;
++static unsigned ws_error_highlight_default = WSEH_NEW;
+ 
+ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+@@ -172,6 +173,42 @@ long parse_algorithm_value(const char *value)
+ 	return -1;
+ }
+ 
++static int parse_one_token(const char **arg, const char *token)
++{
++	const char *rest;
++	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
++		*arg = rest;
++		return 1;
++	}
++	return 0;
++}
++
++static int parse_ws_error_highlight(const char *arg)
++{
++	const char *orig_arg = arg;
++	unsigned val = 0;
++	while (*arg) {
++		if (parse_one_token(&arg, "none"))
++			val = 0;
++		else if (parse_one_token(&arg, "default"))
++			val = WSEH_NEW;
++		else if (parse_one_token(&arg, "all"))
++			val = WSEH_NEW | WSEH_OLD | WSEH_CONTEXT;
++		else if (parse_one_token(&arg, "new"))
++			val |= WSEH_NEW;
++		else if (parse_one_token(&arg, "old"))
++			val |= WSEH_OLD;
++		else if (parse_one_token(&arg, "context"))
++			val |= WSEH_CONTEXT;
++		else {
++			return (orig_arg - arg);
++		}
++		if (*arg)
++			arg++;
++	}
++	return val;
++}
++
+ /*
+  * These are to give UI layer defaults.
+  * The core-level commands such as git-diff-files should
+@@ -254,6 +291,11 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "diff.wserrorhighlight")) {
++		ws_error_highlight_default = parse_ws_error_highlight(value);
++		return 0;
++	}
++
+ 	if (git_diff_heuristic_config(var, value, cb) < 0)
+ 		return -1;
+ 	if (git_color_config(var, value, cb) < 0)
+@@ -3307,7 +3349,7 @@ void diff_setup(struct diff_options *options)
+ 	options->rename_limit = -1;
+ 	options->dirstat_permille = diff_dirstat_permille_default;
+ 	options->context = diff_context_default;
+-	options->ws_error_highlight = WSEH_NEW;
++	options->ws_error_highlight = ws_error_highlight_default;
+ 	DIFF_OPT_SET(options, RENAME_EMPTY);
+ 
+ 	/* pathchange left =NULL by default */
+@@ -3698,40 +3740,14 @@ static void enable_patch_output(int *fmt) {
+ 	*fmt |= DIFF_FORMAT_PATCH;
+ }
+ 
+-static int parse_one_token(const char **arg, const char *token)
++static int parse_ws_error_highlight_opt(struct diff_options *opt, const char *arg)
+ {
+-	const char *rest;
+-	if (skip_prefix(*arg, token, &rest) && (!*rest || *rest == ',')) {
+-		*arg = rest;
+-		return 1;
+-	}
+-	return 0;
+-}
++	int val = parse_ws_error_highlight(arg);
+ 
+-static int parse_ws_error_highlight(struct diff_options *opt, const char *arg)
+-{
+-	const char *orig_arg = arg;
+-	unsigned val = 0;
+-	while (*arg) {
+-		if (parse_one_token(&arg, "none"))
+-			val = 0;
+-		else if (parse_one_token(&arg, "default"))
+-			val = WSEH_NEW;
+-		else if (parse_one_token(&arg, "all"))
+-			val = WSEH_NEW | WSEH_OLD | WSEH_CONTEXT;
+-		else if (parse_one_token(&arg, "new"))
+-			val |= WSEH_NEW;
+-		else if (parse_one_token(&arg, "old"))
+-			val |= WSEH_OLD;
+-		else if (parse_one_token(&arg, "context"))
+-			val |= WSEH_CONTEXT;
+-		else {
+-			error("unknown value after ws-error-highlight=%.*s",
+-			      (int)(arg - orig_arg), orig_arg);
+-			return 0;
+-		}
+-		if (*arg)
+-			arg++;
++	if (val < 0) {
++		error("unknown value after ws-error-highlight=%.*s",
++		      -val, arg);
++		return 0;
+ 	}
+ 	opt->ws_error_highlight = val;
+ 	return 1;
+@@ -3950,7 +3966,7 @@ int diff_opt_parse(struct diff_options *options,
+ 	else if (skip_prefix(arg, "--submodule=", &arg))
+ 		return parse_submodule_opt(options, arg);
+ 	else if (skip_prefix(arg, "--ws-error-highlight=", &arg))
+-		return parse_ws_error_highlight(options, arg);
++		return parse_ws_error_highlight_opt(options, arg);
+ 
+ 	/* misc options */
+ 	else if (!strcmp(arg, "-z"))
