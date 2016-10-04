@@ -2,147 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B60020986
-	for <e@80x24.org>; Tue,  4 Oct 2016 19:51:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0F320986
+	for <e@80x24.org>; Tue,  4 Oct 2016 19:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754078AbcJDTv3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 15:51:29 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:33988 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752594AbcJDTv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 15:51:28 -0400
-Received: by mail-qk0-f177.google.com with SMTP id j129so193308191qkd.1
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 12:51:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GQeP5tLBnpHT5v5Go6djBYTTrcZTKLvuIitOW9k2zSo=;
-        b=RAALabbqXgaUWE2cDgRzy1E+SglymClmK1i6MBw3Q7DYZ4f3Drlq1Jviy1g+3VJyJy
-         mQE7jZPAe8W3CwpOFF3FMe/F9lEaMrestT8C5jfxn0QjkTtB3S7jN5yZM+GqtmnbHxxf
-         deHSlAG1PmKdfvTWkepFtuaxDaeGr5r50KdIxP6Tjwyt5Bbz6kNC02RGOUCUqOr3ZMo1
-         PyBC4PmWNuiPlmR4JCt70YIftMYrpqkerxUL78VFMqqfhGO+OmqFmDeGIJO5kjC+JkEx
-         ibfcMA2ercrvU/T+k4RmskbsJmpS1I8o/OOG+LDDaY6HGm2YHImbJtbsvz551agloOOv
-         zVgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GQeP5tLBnpHT5v5Go6djBYTTrcZTKLvuIitOW9k2zSo=;
-        b=Jj1ubJ8/Gf1s42YGihE0Tk2tM42qCQXplHvsr8nKvHMfrMafdhnOG5XmU1+/Zkzs5V
-         5zw0WTQIFAf8sH7FSr9s4rR4Uo5CtOwtNjzSCnqW/69oAoVN6AowcvWxhN6FnxmLs3rf
-         rtMoae1FxcRPMHsiK1TlWyQNm8W40R/fqfZSQvXLp8T10Ioq6u/o+W79OzRsut3LrylY
-         WfDw6mHznAdClH6b/Vx9PKZYJ5vKm/8Ob/mGgnolVFFIEXKgO8v+6U8b85hphZ2OLsIV
-         NOia/wuDE9Zv4dbR1rv6TTsx5N6+9pF5XAw1Ak4BxJ1YGCovRouURDIRFIOeYH4uUIfG
-         P1bA==
-X-Gm-Message-State: AA6/9RmLazf3vxc1f7VkOkICX0JOf6tXCpCmg6OLwTY7ZgqsyocKP3AwmGK6vmEf2o4xUSWJLzmVyfyIsb5C69fr
-X-Received: by 10.55.36.131 with SMTP id k3mr5227913qkk.86.1475610687411; Tue,
- 04 Oct 2016 12:51:27 -0700 (PDT)
+        id S1753953AbcJDTxz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 15:53:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57637 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752780AbcJDTxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 15:53:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A15942434;
+        Tue,  4 Oct 2016 15:53:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qZ1IJURqpwxHe8HFCnUvxahCbUY=; b=QG6Xgg
+        xEHzZyhrC7xe4WH6s6wfuV/BTVdB80fwYCjXqZzie0LggiEeqMeDcviYcS8NN7tz
+        vNuZC1HzE9HHdINBMIlTRmIq1sFz3G4ztqURK+dXUAbjEmxssVer3Vt9Dgsg0LQW
+        De0cq5CPQwG1FYMAi++EbIAJ28Eg2I/d89iDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xcJhGu4torgTz/N1YQCkRkbuAthm8x3j
+        m7X7aXW6ujB2PP9MRA8jUwF+V1S/XRBP8VUXDN04lf6uDgYLxCXFNPQtiyq7vl5E
+        xr/lP6ZentS15zM6EB5TaixYgeJR361F7u7g7h+XYFqpO0inPNlCo+I7KtZv1Ne7
+        +Mvt/hmGJLw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5221442433;
+        Tue,  4 Oct 2016 15:53:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C663A42431;
+        Tue,  4 Oct 2016 15:53:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, ramsay@ramsayjones.plus.com, jnareb@gmail.com,
+        j6t@kdbg.org, tboegi@web.de, peff@peff.net, mlbright@gmail.com
+Subject: Re: [PATCH v9 10/14] pkt-line: add functions to read/write flush terminated packet streams
+References: <20161004125947.67104-1-larsxschneider@gmail.com>
+        <20161004125947.67104-11-larsxschneider@gmail.com>
+Date:   Tue, 04 Oct 2016 12:53:50 -0700
+In-Reply-To: <20161004125947.67104-11-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Tue, 4 Oct 2016 14:59:43
+        +0200")
+Message-ID: <xmqq8tu3ubzl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 4 Oct 2016 12:51:26 -0700 (PDT)
-In-Reply-To: <20161004193926.32w7yivkakqoadm2@sigill.intra.peff.net>
-References: <20161004182801.j3fdpewybatmibpo@sigill.intra.peff.net>
- <20161004192910.30649-1-sbeller@google.com> <20161004193926.32w7yivkakqoadm2@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Oct 2016 12:51:26 -0700
-Message-ID: <CAGZ79kbt+SZoogKTV_-rVfOOFzf6xrhWytrBo2H3r6NQw34WTw@mail.gmail.com>
-Subject: Re: [PATCHv2 1/2] push: change submodule default to check when
- submodules exist
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 46B3617A-8A6C-11E6-8BFF-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 4, 2016 at 12:39 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 04, 2016 at 12:29:09PM -0700, Stefan Beller wrote:
+larsxschneider@gmail.com writes:
+
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
->> Jeff wrote:
->> > Consulting .git/config is fine, I think. It's not like we don't read it
->> > (sometimes multiple times!) during the normal course of the program
->> > anyway. It's just a question of whether it makes more sense for the
->> > heuristic to kick in after "init", or only after "update". I don't know
->> > enough to have an opinion.
->>
->> I think there is no difference in practice, however the "after update"
->> is way easier to implement and hence more maintainable (one lstat instead of
->> fiddeling with the config; that can go wrong easily).
+> write_packetized_from_fd() and write_packetized_from_buf() write a
+> stream of packets. All content packets use the maximal packet size
+> except for the last one. After the last content packet a `flush` control
+> packet is written.
 >
-> Hmm, I would have thought it is the opposite; can't submodules exist in
-> the working tree in their own ".git" directory? I know that's the "old"
-> way of doing it, but I didn't know if it was totally deprecated.
-
-Oo, right. :(
-
-The proposed patch would not change the current behavior for a layout of
-.git directories inside the submodule working trees, actually.
-It would however also not have the desired effect of enabling the check for
-push.
-
-However these not-yet-deprecated layouts are likely in use by people
-who know what they are doing, so maybe we can punt on that.
-
+> read_packetized_to_strbuf() reads arbitrary sized packets until it
+> detects a `flush` packet.
 >
-> Anyway, the config version is probably just:
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  pkt-line.c | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  pkt-line.h |  8 ++++++++
+>  2 files changed, 77 insertions(+)
 >
->   int config_check_submodule(const char *var, const char *value, void *data)
->   {
->         if (starts_with(var, "submodule.") && ends_with(var, ".path"))
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 3fd4dc0..8ffde22 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -196,6 +196,47 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+>  	va_end(args);
+>  }
+>  
+> +int write_packetized_from_fd(int fd_in, int fd_out)
+> +{
+> +	static char buf[LARGE_PACKET_DATA_MAX];
+> +	int err = 0;
+> +	ssize_t bytes_to_write;
+> +
+> +	while (!err) {
+> +		bytes_to_write = xread(fd_in, buf, sizeof(buf));
+> +		if (bytes_to_write < 0)
+> +			return COPY_READ_ERROR;
+> +		if (bytes_to_write == 0)
+> +			break;
+> +		err = packet_write_gently(fd_out, buf, bytes_to_write);
+> +	}
+> +	if (!err)
+> +		err = packet_flush_gently(fd_out);
+> +	return err;
+> +}
 
-s/.path/.url/ but I get the point. I do dislike this solution for
-another reasons though:
+OK.
 
-In the future when worktree supports submodules we either
-have the url per worktree,so we'd need to process all working tree
-configs as well
-or we do it the proper way, which is replacing the submodule.$name.url variable
-with 2 options, one is purely used to configure the URL and the other is purely
-used to indicate the existence of a submodule.  Piling on the mixed use case of
-urls today feels sad.
+> +int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
+> +{
+> +	static char buf[LARGE_PACKET_DATA_MAX];
+> +	int err = 0;
+> +	size_t bytes_written = 0;
+> +	size_t bytes_to_write;
+> +
+> +	while (!err) {
+> +		if ((len - bytes_written) > sizeof(buf))
+> +			bytes_to_write = sizeof(buf);
+> +		else
+> +			bytes_to_write = len - bytes_written;
+> +		if (bytes_to_write == 0)
+> +			break;
+> +		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
+> +		bytes_written += bytes_to_write;
+> +	}
+> +	if (!err)
+> +		err = packet_flush_gently(fd_out);
+> +	return err;
+> +}
 
+Hmph, what is buf[] used for, other than its sizeof() taken to yield
+a constant LARGE_PACKET_DATA_MAX?
 
->                 *(int *)data = 1;
->         return 0;
->   }
->
->   ...
->   int have_submodule = 0;
->   git_config(config_check_submodule, &have_submodule);
->
-> But I don't care too much either way. that's just for reference.
->
->> @@ -31,6 +32,19 @@ static const char **refspec;
->>  static int refspec_nr;
->>  static int refspec_alloc;
->>
->> +static void preset_submodule_default(void)
->> +{
->> +     struct strbuf sb = STRBUF_INIT;
->> +     strbuf_addf(&sb, "%s/modules", get_git_dir());
->> +
->> +     if (file_exists(sb.buf))
->
-> Maybe just:
->
->   if (file_exists(git_path("modules"))
+> @@ -305,3 +346,31 @@ char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+>  {
+>  	return packet_read_line_generic(-1, src, src_len, dst_len);
+>  }
+> +
+> +ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
+> +{
+> +	int packet_len;
+> +
+> +	size_t orig_len = sb_out->len;
+> +	size_t orig_alloc = sb_out->alloc;
+> +
+> +	for (;;) {
+> +		strbuf_grow(sb_out, LARGE_PACKET_DATA_MAX);
+> +		packet_len = packet_read(fd_in, NULL, NULL,
+> +			// TODO: explain + 1
 
-Sounds good.
+No // C99 comment please.
 
-So I'll see if I can get the version running you propose here, otherwise
-I'll resend with these changes.
+And I agree that the +1 needs to be explained.
 
+> +			sb_out->buf + sb_out->len, LARGE_PACKET_DATA_MAX+1,
+> +			PACKET_READ_GENTLE_ON_EOF);
+> +		if (packet_len <= 0)
+> +			break;
 
->
-> ?
->
-> -Peff
+Hmph.  So at the end of a data stream, we ask packet_read() to read
+64kB or so, packet_read() gets the packet length by calling
+get_packet_data() and then another get_packet_data() reads that much
+and return.  What happens during the next round?  The first call to
+get_packet_data() in packet_read() will find that the stream has
+ended and returns -1, which is stored in packet_len here?  But then
+the data is discarded after the loop when packet_len is negative.
+
+I must be missing something.  Is the other side always supposed to
+give a flush packet or something?  Perhaps that is what is happening
+here.  If so, I am OK with that, even though it somehow sounds a bit
+wasteful.
+
