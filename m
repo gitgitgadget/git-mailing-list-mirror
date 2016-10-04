@@ -2,78 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D40A20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 23:12:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEDCD20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 23:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754042AbcJDXL7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 19:11:59 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:33055 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753980AbcJDXL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 19:11:58 -0400
-Received: by mail-qt0-f178.google.com with SMTP id s49so30451755qta.0
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 16:11:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CWKIOR/nnfzIzR2ky20LCHGFt60H7J89cI/8vEGJgCU=;
-        b=RE9zUVKEtCx9HxQisvezGmyJxUYFaDLbQL+nNjxlnraBbragHO8qCwB5RyR2J5Rq5j
-         +dbiNanUwPkq4qDni+e0wQStQCAvIW+JjAKDHGxWM+nfBYu+GKaiP3eXk80SKzvqLCa0
-         TIkpFUbW8xoGZlx/7+XMOV/uQJEbySHc6xMXQBQ1v4JIrVRKSMm3YzVQd1s+qljU6RTV
-         +foc3H31mesnz8eRv0DshVuQQi1aNV7g/sZw9eAFvMBSI5VknwpcUFAS2lcVO1y+vV6h
-         nKLnjUsinX8phk5Aipefvhtc2vuXnLpwv49yE62fD7w/b+mHquuVwPUzVzkBPe8v1gAI
-         XmBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CWKIOR/nnfzIzR2ky20LCHGFt60H7J89cI/8vEGJgCU=;
-        b=h2fT6v3+iweSMCwLRjLu7+3sL6JRlB4kJD0/2VDzFyeBw746jalN91QnlZPPcS/f48
-         E8+/L2QTZhF2RzsS5QQg3cU7BjstsjOK/wm6u+L7ELry1VHr9sVW8nQZ1FhCVxnckDwu
-         V/+yNATz10CQzPj2+b4muZB87FFA025HTRxv6/8rqVw7OyCjvWFbp2fwtIwqbwRDvdIg
-         saC5XnVhiADsaAFmBKyTiAwv/5runqgPe0FR/YJwrSfTWDX1a4gPhTR+OXa3LoNqqfRu
-         i1HXmwHSJYTpRu2g9Wzn2ajrFjU+zLqVz+ZjUMkj+DoQjpxt2tzdVJYWBXqR4rhbAJZl
-         JKEw==
-X-Gm-Message-State: AA6/9Rl+O/3/myDeLE2hwNElDBeqad84BZ2CZ5g5bQNsK0HVVw+GLBsYIalrVnnjSuN/QE4WH0YY8cJJotbqUIjc
-X-Received: by 10.200.51.240 with SMTP id d45mr2149640qtb.18.1475622327259;
- Tue, 04 Oct 2016 16:05:27 -0700 (PDT)
+        id S1753268AbcJDXOC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 19:14:02 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50246 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752877AbcJDXOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 19:14:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1960643144;
+        Tue,  4 Oct 2016 19:14:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BiCNp7XVFY1RYRHyf1F3eSqnsaU=; b=vzJCXj
+        V/L4vaIFu/72oLAzm5I13EGGdBCY3hU1levajHQAXhw9K7Dn8XNZRDWzOrK6nOdm
+        xMS3osl+Uqr9VAskimKrQyyodgKw7vOAYZ5Fi3VlVg6tOEXf7KbqpsrawAmAazrt
+        BolhWJurEi6cWy3emzJ0SqN+Y9ZGkJeeksMqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nuFlD6XP1oW6cEvmTvPGHp5CJLMoZxQu
+        9BJMCNI3xk8NFOO6VDErCA6ZuYybgzp7I7pWwex8OetMIVC3N2GjP0nYxpoxrOY0
+        CuDJQZe9IETJDdLgw0dohhJIupoqFRY5NPlyDgoT9FYlQHbOCHlsqAB0RkLU52G3
+        HYCvfQt4ceg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1047343143;
+        Tue,  4 Oct 2016 19:14:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8556143142;
+        Tue,  4 Oct 2016 19:13:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com
+Subject: Re: [RFC/PATCH] attr: Document a new possible thread safe API
+References: <20161004221433.23747-1-sbeller@google.com>
+Date:   Tue, 04 Oct 2016 16:13:57 -0700
+In-Reply-To: <20161004221433.23747-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 4 Oct 2016 15:14:33 -0700")
+Message-ID: <xmqqtwcrr9l6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 4 Oct 2016 16:05:26 -0700 (PDT)
-In-Reply-To: <xmqqy423rabi.fsf@gitster.mtv.corp.google.com>
-References: <CALhephTkohVhEjdP7TwQAcBrEBiHGtp0Hd+UxPUiJHtubMWKGA@mail.gmail.com>
- <xmqqy423rabi.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Oct 2016 16:05:26 -0700
-Message-ID: <CAGZ79ka=0H-tanoN8_O06p=4PNm-8AvKFU_dAwUOkgocm+TV0Q@mail.gmail.com>
-Subject: Re: GL bug: can not commit, reports error on changed submodule directory
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ern0 <ern0@linkbroker.hu>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3B3FC1D2-8A88-11E6-913C-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 4, 2016 at 3:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> ern0 <ern0@linkbroker.hu> writes:
->
->> When I say:
->>  $ gl commit -m "blah blah"
->> It reports:
->>  =E2=9C=98 Failed to read file into stream: Is a directory
->
-> Not that I am interested in learning the answer to the question, but
-> what the h*ck is "gl"?
+Stefan Beller <sbeller@google.com> writes:
 
-http://gitless.com/
+> diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+> index 92fc32a..940617e 100644
+> --- a/Documentation/technical/api-gitattributes.txt
+> +++ b/Documentation/technical/api-gitattributes.txt
+> @@ -59,7 +59,10 @@ Querying Specific Attributes
+>    empty `struct git_attr_check` can be prepared by calling
+>    `git_attr_check_alloc()` function and then attributes you want to
+>    ask about can be added to it with `git_attr_check_append()`
+> -  function.
+> +  function. git_attr_check_initl is thread safe, i.e. you can call it
+> +  from different threads at the same time; internally however only one
+> +  call at a time is processed. If the calls from different threads have
+> +  the same arguments, the returned `git_attr_check` may be the same.
 
-See 20160930191413.002049b94b3908b15881b77f@domain007.com
-"Purposes, Concepts,Misfits, and a Redesign of Git" (a research paper)
+I do not think this is enough.  Look at the example for _initl() and
+notice that it keeps the "singleton static check that is initialized
+by the very first caller if the caller notices it is NULL" pattern.
+
+One way to hide that may be to pass the address of that singleton
+pointer to _initl(), so that it can do the "has it been initialized?
+If not, let's prepare the thing" under lock.
+
+> @@ -89,15 +92,21 @@ static void setup_check(void)
+>  
+>  ------------
+>  	const char *path;
+> +	struct git_attr_check *result;
+>  
+>  	setup_check();
+> -	git_check_attr(path, check);
+> +	result = git_check_attr(path, check);
+
+I haven't formed a firm opinion, but I suspect your thinking might
+be clouded by too much staring at the current implementation that
+has <attr>,<value> pairs inside git_attr_check.  Traditionally, the
+attr subsystem used the same type for the query question and the
+query answer the same type, but it does not have to stay to be the
+case at all.  Have you considered that we are allowed to make these
+two types distinct?  A caller can share the same question instance
+(i.e. the set of interned <attr>, in git_attr_check) with other
+threads as that is a read-only thing, but each of the callers would
+want to have the result array on its own stack if possible
+(e.g. when asking for a known set of attributes, which is the
+majority of the case) to avoid allocation cost.  I'd expect the most
+typical caller to be
+
+	static struct git_attr_check *check;
+	struct git_attr_result result[2]; /* we want two */
+	
+	git_attr_check_initl(&check, "crlf", "ident", NULL);
+	git_check_attr(path, check, result);
+	/* result[0] has "crlf", result[1] has "ident" */
+
+or something like that.
