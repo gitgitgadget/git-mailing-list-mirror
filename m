@@ -2,138 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3E121F4F8
-	for <e@80x24.org>; Tue,  4 Oct 2016 10:19:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 145631F4F8
+	for <e@80x24.org>; Tue,  4 Oct 2016 10:26:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753422AbcJDKTO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 06:19:14 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34985 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752469AbcJDKTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 06:19:13 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f193so14284850wmg.2
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 03:19:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=JRqEirEEiD/af/W0MdOLgKOMcxYoqTCNDEQuojHwavo=;
-        b=svWbvhCuf6/puyq9b4199UGtiL1a+BnsmsMHpkywKZ+iLrOA8CIBJZGkAh3FBnCdgI
-         lBxlBkittT2pU4+CUCRTyFTZ7lri+gsUgg4HvVpGqcEql9dr+r1QyU6X7rsM5q9674RU
-         qy2cb7vdN+FvDnAngcDMNXOVdUTRqPErpYEIAGML3z3PyNwd0msBopnWQdKvVc0nwYCx
-         zOWmPeTIF9/G9T7pwjYsyxrhATiHeQpXNPE1h00xE+/zUKJ6LXHDyoHSWtxIWnaYuHHB
-         8E65jfmNFeHS7huDOgnqeihSO7EVDoRk+hrnmjv+i8jLYSNCJWcn3tywveo3lALyjgjG
-         NS/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=JRqEirEEiD/af/W0MdOLgKOMcxYoqTCNDEQuojHwavo=;
-        b=nHtXdA4RFEyCZQX4J1gSu0nLZT9/s2bPjobDxtIw9vDRCIZdWnBUDgZtd7dCzo4TR5
-         XmkecHslunWjVo2e/db5cON/O6T4ZnB0hbcYFOHiiEw0H/9wsNAK7SoAFpdc2/Q1CiiZ
-         +63R6+Q4/lOiUbt0E9VgRTcCLRyr5qnQVO+Cy+Y+X8oAwikuFbO5oOVpewi2nEfIAvUT
-         cTkRdoXxFnY6C6ql8IuyCFxBoEyB53IJVm0kgSiQZ+wBJECM1B0cP6g4aCadPdEegfyJ
-         1ZYct1DITPKdmoqcacII3JTN3tucuo0aWsslpKYyaQm/QHkEyEbMaj0J3CPHJhmaCCpX
-         y/Fw==
-X-Gm-Message-State: AA6/9RnUUnC9wHJbLFfGeKz984gFGYWIb+L42vdMm3a7SrXd22r5tmvstaKbw9413OknzQ==
-X-Received: by 10.28.137.212 with SMTP id l203mr14423528wmd.26.1475576352494;
-        Tue, 04 Oct 2016 03:19:12 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w9sm2689425wjf.47.2016.10.04.03.19.11
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Oct 2016 03:19:11 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: Merge conflicts in .gitattributes can cause trouble
-Date:   Tue, 4 Oct 2016 12:19:09 +0200
-Message-Id: <248A6E81-8D5C-4183-9756-51A0D5193E3E@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Johannes.Schindelin@gmx.de,
-        me@ttaylorr.com
-To:     git <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        id S1752765AbcJDK0G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 06:26:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50496 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752557AbcJDK0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 06:26:05 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M9JYE-1blMdL1QWE-00Ckbh; Tue, 04 Oct 2016 12:26:01
+ +0200
+Date:   Tue, 4 Oct 2016 12:25:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     chris king <kingces95@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Repeatable Extraction
+In-Reply-To: <CAJQwtsidixAAJKp7-b2PmXgs=mS+PbT5ebOmKLJU1nEn7UJ2og@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1610041223010.35196@virtualbox>
+References: <CAJQwtsidixAAJKp7-b2PmXgs=mS+PbT5ebOmKLJU1nEn7UJ2og@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:d6Jwk/3CPHd6dFQg0dPwZN0hBZ/v3vGCaZOBoXOI4kjUYNtGuTJ
+ pz8TrvGJp1/KCRsrVGg7VyZZUcRNrss0DfahpCJH+DujWbnrcSqRupz/heE9raNebBSAI4B
+ erxVOILnE5uFNKob/cKXctIi6h5cAyxkxtUrhitnqpm/iMG/d7oSV5jaDqjezx/xi8Ywasq
+ rMH/CkpNdkil0U/kJ1TlA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6CkLd/3U8M0=:7yDJPCcfqyTF6OuwO2P2SA
+ 0WXso3U/YBqiU3Vn6UfGql5aM4XKSDPqfhTuFZ2ZS5TeeyclblUm6xuiyjwp998PTiAstmKuH
+ 5vb5LG5vxfZ267WSlEbYo/CXDaaPNmGkmi8WMGSE63dxSFD0eLl9MGYsO79M37dWMoWLIqV2r
+ hzK+N0F+QLzWVyprma/gn8G3BUMQW9tSTKyNsoPTG1oTp28+wPpNVmKFZ3wVfyFeOy6DfebLp
+ jjtgpXs2j5KcOJxfXz1aq/k4/0/MTpC+KSHWDIl4GVoGjquz6Lf+adLpAvJI8hJl4UnQ0cNsF
+ jkjn35ge4Wl8DT2gDeKqOOfEUijxBQ+Pivlps1DRyy2nQSUAy6fRqn3cx+uDF+mF0WnPEACd6
+ uFlJxlXQMSXobi5AVooHEUppLdhsUk5Jj9GYw4LmdWgjynfyCK+48Y/xy7b2xsoTB8gWVkhUW
+ jmU9tB45INxeZaoI+Boin+mpOkDZQnM6XZoTeL1y007gUtk+L3qufUe5iRa6RiDa1FMDy7bzq
+ t8nbwGTvQjXMZIFdtTSiSegNtgHdRtKCqZBArYXU6Ex1+Jjefbb2gQcAf7gRzNq4EAqzPCL3A
+ O0Z64hrJR8dJWFLFf/UXM4BjEBi87xTDHxKCtDC6DPSM0i60p8RFIkjkHrYDxIpYqFULA+FNE
+ hdtljHKyH/UrBzSY0v3u6LHGUKMjWhMH1ABdQgF2e7iU1OPpaCNWSoi/Jw0tfT0xNlb1r1iSz
+ NPHKEOkavHkTprCL5xVCLyp/LwcCK0sAg45do1ZK403dX4c3NtA9rcJovTccbmxmBG37OrIEU
+ qqr8V2t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Chris,
 
+On Tue, 27 Sep 2016, chris king wrote:
 
-If there is a conflict in the .gitattributes during a merge then it =
-looks=20
-like as if the attributes are not applied (which kind of makes sense as =
-Git=20
-would not know what to do). As a result Git can treat e.g. binary files=20=
+> Is there a way automate extraction that will repeatably generate the
+> same files? Currently, each time I extract git portable many of the
+> binaries change slightly. For example, if I extract twice using
+> 
+>     PortableGit-2.10.0-32-bit.7z.exe -y -gm2
+> 
+> then Beyond Compare tells me that many of the files in usr\bin have
+> changed at offset 0x88 and 0x89. Why is that?
 
-as text and they can end up with changed line endings in the working =
-tree.=20
-After resolving the conflict in .gitattributes all files would be marked=20=
+The reason is that you look at 32-bit, where technical limitations force
+us to hard-code a certain base address for all of the includede MSYS2 .dll
+files (i.e. all libraries that require, or implement, the POSIX emulation
+layer called MSYS2).
 
-as binary, again, and the user can easily commit the wrongly changed =
-line=20
-endings.
+To avoid clashes with other .dll files, that base address is adjusted via
+the post-install.bat script for your particular environment.
 
-Consider this script on Windows:
+If you want to avoid that, you will have to extract the installer via
+7-Zip: it is a self-extracting .7z archive (and the self-extractor
+automatically executes post-install.bat, which subsequently deletes
+itself).
 
-$ git init .
-$ touch first.commit
-$ git add .
-$ git commit -m "first commit"
-
-$ git checkout -b branch
-$ printf "*.bin binary\n" >> .gitattributes
-$ git add .
-$ git commit -m "tracking *.bin files"
-
-$ git checkout master
-$ printf "binary\ndata\n" > file.dat # <-- Unix line ending!
-$ printf "*.dat binary\n" >> .gitattributes # <-- Tell Git to keep Unix =
-line ending!
-$ git add .
-$ git commit -m "tracking *.dat files"
-$ git cat-file -p :file.dat | od -c
-0000000   b   i   n   a   r   y  \n   d   a   t   a  \n=20
-                                ^^^^                ^^^^  <-- Correct!
-$ git checkout branch
-$ git merge master # <-- Causes merge conflict!
-$ printf "*.bin binary\n*.dat binary\n" > .gitattributes # <-- Fix merge =
-conflict!
-$ git add .
-$ git commit -m "merged"
-$ git cat-file -p :file.dat | od -c
-0000000   b   i   n   a   r   y  \r  \n   d   a   t   a  \r  \n
-                                ^^^^^^^^                ^^^^^^^^  <-- =
-Wrong!
-
-Possible solutions:
-
-1. We could print an appropriate warning if we detect a merge conflict=20=
-
-   in .gitattributes
-
-2. We could disable all line ending conversions in case of a merge =
-conflict
-   (I am not exactly sure about all the implications, though)
-
-3. We could salvage what we could of the .gitattributes file,=20
-   perhaps by using the version from HEAD (or more likely, the ours =
-stage of
-   the index) -- suggested by Peff on the related GitHub issue mentioned =
-below
-
-Thoughts?
-
-Thanks,
-Lars
-
-
-PS: I noticed that behavior while working with Git LFS and started a =
-discussion
-about it here: https://github.com/github/git-lfs/issues/1544=20=
+Ciao,
+Johannes
