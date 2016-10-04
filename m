@@ -2,62 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E04121F4F8
-	for <e@80x24.org>; Tue,  4 Oct 2016 08:14:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19EE61F4F8
+	for <e@80x24.org>; Tue,  4 Oct 2016 08:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754013AbcJDIOg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 04:14:36 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:34375 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753803AbcJDIOe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 04:14:34 -0400
-Received: from mfilter38-d.gandi.net (mfilter38-d.gandi.net [217.70.178.169])
-        by relay3-d.mail.gandi.net (Postfix) with ESMTP id 41412A80C1;
-        Tue,  4 Oct 2016 10:14:33 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter38-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([IPv6:::ffff:217.70.183.195])
-        by mfilter38-d.gandi.net (mfilter38-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id Py8K16QFumVy; Tue,  4 Oct 2016 10:14:31 +0200 (CEST)
-X-Originating-IP: 46.232.148.34
-Received: from localhost (ip-46-232-148-34.static.adsl.cheapnet.it [46.232.148.34])
-        (Authenticated sender: strk@kbt.io)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 881B8A80CB;
-        Tue,  4 Oct 2016 10:14:30 +0200 (CEST)
-Date:   Tue, 4 Oct 2016 10:14:29 +0200
-From:   Sandro Santilli <strk@kbt.io>
-To:     git@vger.kernel.org
-Subject: color.diff.whitespace unused on removed lines
-Message-ID: <20161004081429.GC17002@localhost>
+        id S1752253AbcJDIwW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 04:52:22 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:32942 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751795AbcJDIwV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 04:52:21 -0400
+Received: by mail-lf0-f50.google.com with SMTP id t81so108660701lfe.0
+        for <git@vger.kernel.org>; Tue, 04 Oct 2016 01:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=zono3iYuw8ZN6oVJiGUcXcsAtym6XnLB0dNOayZZ1GU=;
+        b=AHs0xrUWKpFLxcaOxRrKmj0U2HjWF3oprJVV80M/0bYCcck0rM8spQt4BwhlFmRuLP
+         FtDkQnBNS5lo+iwc00SVBiyiznXHxZjdXItWsXSCyqDmQPSjRZk8Bs/+slo2p89+mqiS
+         Tbj0vtWoN78420RC0PH+eYWHTVVPaYudc/scm0vkkSTQGz8GrEpghgPaGAMTrhLRgKem
+         rtC28INdhKt7+HZEBi764iRPh5CeMxUPlLVDWq3R07lTrb/cdEnzML7uxn+4LDuLRnIO
+         BOZmNqAODKjUL33YE6p7ugpAVHqVXXN3ue4dwy+5L3cWRrkaLb28SzHLZAxV/MTGG7GA
+         Pu8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=zono3iYuw8ZN6oVJiGUcXcsAtym6XnLB0dNOayZZ1GU=;
+        b=UGAGWJLGIbnpj4SBqEZXCbMfXLQjsmkntRs8J7WgSQvJJouoI4G3vAxa/RGCZF47s+
+         c69nmExvuKqKLpyX8bI93ZdCtkrFiHY6FH36oVE9a9DWxzwoxgEkQlzoCjzyAmOWDrxs
+         FBRyK+INoytIYPUKIbXcawlBD/IjfmaLOkAcHsco11EDm9JOSBLA5hWv2AUvXAd6eNmi
+         n7m2/h91aAtfn63kvTq+whcy5o6X59RBs6Pyju4SAm2Z91Uu9HjHea1I08ljip13C/JS
+         ZlxIgmrh6nfzVkC+//bGqv+EhSIqpYT65tAtWEP+hdMaMyOKEqIAhlZmYJ5rNk1TsIXU
+         /DJQ==
+X-Gm-Message-State: AA6/9RlbK5oMiRbk2tkrjZKZld7IqUchY0sDeG0Htx/T3z+6Ck2igfjNNMi5eBp1QyOklQ==
+X-Received: by 10.25.33.195 with SMTP id h186mr984767lfh.102.1475571139784;
+        Tue, 04 Oct 2016 01:52:19 -0700 (PDT)
+Received: from [192.168.20.21] ([89.113.128.32])
+        by smtp.gmail.com with ESMTPSA id h78sm495148ljh.45.2016.10.04.01.52.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 04 Oct 2016 01:52:19 -0700 (PDT)
+From:   Andrey Rybak <rybak.a.v@gmail.com>
+To:     Sandro Santilli <strk@kbt.io>
+Cc:     git@vger.kernel.org
+Subject: Re: broken post-via-gmane link from https://git-scm.com/community
+References: <20161004081157.GB17002@localhost>
+Message-ID: <36c73304-aceb-7c51-2788-5ba4cdbc862f@gmail.com>
+Date:   Tue, 4 Oct 2016 11:52:18 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20161004081157.GB17002@localhost>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The color.diff.whitespace configuration is not used on
-removed lines, but only on added lines.
+Hi,
 
-As I'm removing trailing whitespaces all my diffs fail to
-give me any information about the real action being taken,
-due to this lack of support.
+On 04.10.2016 11:11, Sandro Santilli wrote:
+> The "post via gmane" link on https://git-scm.com/community points
+> to an unexistent server 'post.gmane.org':
+> http://post.gmane.org/post.php?group=gmane.comp.version-control.git
+It would probably be better to address this on git-scm.com
+github page, where the source for the site is hosted:
+https://github.com/git/git-scm.com/issues
 
-As a workaround, I've found the -R switch for "git show" [1]
-but I thought about asking if this is a bug or intended behavior,
-and in case it is intended I'd like to know why.
-
-Thanks in advance.
-
-[1]
-http://stackoverflow.com/questions/5257553/coloring-white-space-in-git-diffs-output/11509388#11509388
-
---strk; 
-
-  ()   Free GIS & Flash consultant/developer
-  /\   https://strk.kbt.io/services.html
