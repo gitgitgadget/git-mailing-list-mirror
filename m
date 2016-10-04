@@ -2,89 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91EBE20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 17:31:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B42C620986
+	for <e@80x24.org>; Tue,  4 Oct 2016 17:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753096AbcJDRbx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 13:31:53 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:38745 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752452AbcJDRbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 13:31:52 -0400
-Received: by mail-it0-f44.google.com with SMTP id o19so134830405ito.1
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 10:31:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DZBY+Sak1KEKXjO0mqgfcblb51HsZ3Zh1ZYMvfeSDyE=;
-        b=f7vVTHG3kq6L1vveKgDiQ9mPSFhD8GLA37e7TOF78wQIfZ1ba8FCqcdFDxgIzS6GuT
-         d0uqCANGT5XSg6OOYbC1I23vGekwjEAc42Yr0tmRYOX5l5GOlSrI7R5/wSLCImr1khEn
-         jW4vY74j3z70QJgdXYDYi7oxkhkb3bNtLBBEmcvTQAlYKNePEGeAJrTLJkrrqso6akAI
-         eT4KOoMJPEDORd85X7G6MJ54vnRb3++9AiVmNBYvMv6KEirbubzs6JYsHvo5xNsUAvwi
-         J8WRPqL+sHb0K6qWSgUdWqxw37jj/FkMXi7n45CcvP9aAiFagtUK57kaSLOnwHEcEf5G
-         PRiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DZBY+Sak1KEKXjO0mqgfcblb51HsZ3Zh1ZYMvfeSDyE=;
-        b=a3+rypoy6llQyC/ywLagdg3x7e/kmHTdkhit3NDpYV8g69f/X1btRA0roDlZAKM5C+
-         /nKfr71ffuJ8f8lWGYxW8Cft1PWL+M5ifCKv0/myMs3i5kK/YwS/NlWxPxo+Wr/6z/o2
-         yS32RsKIUeziD0jkSa0Ymv0Ouibivg+F2xMPo50orXTXjDJ7NLLUCleyNhB5TqyOPcAZ
-         WkPVQQOBIG3haV2EHePmaXn6Uqegeky6pcyVaSB/pW4N6flWUgSbZbr1MxEoiTicouwc
-         I2gSQgFz3SBhZ1RS3ZEwiB119KJmVLGcKsNL9rfve8ZsnOz+NmCLMW9lEJiSmJC4moWp
-         zy+A==
-X-Gm-Message-State: AA6/9RlmhbDQo0TH4tvgo2NB7mwr5Sm/EiWzH0l1sl7mFNe8rfOGIhokBGewCiW748Is5aTQRUSXL7ZJYpyh2GnY
-X-Received: by 10.36.192.193 with SMTP id u184mr22598794itf.91.1475602312009;
- Tue, 04 Oct 2016 10:31:52 -0700 (PDT)
+        id S1751969AbcJDRef (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 13:34:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52174 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751872AbcJDRed (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 13:34:33 -0400
+Received: (qmail 5123 invoked by uid 109); 4 Oct 2016 17:34:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 17:34:33 +0000
+Received: (qmail 7519 invoked by uid 111); 4 Oct 2016 17:34:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 13:34:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2016 13:34:30 -0400
+Date:   Tue, 4 Oct 2016 13:34:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, hvoigt@hvoigt.net,
+        torvalds@linux-foundation.org
+Subject: Re: [PATCH] push: change submodule default to check
+Message-ID: <20161004173430.eax4ptohyonc5bw2@sigill.intra.peff.net>
+References: <20161004162102.rwofudnx3g3fsyul@sigill.intra.peff.net>
+ <20161004164036.6584-1-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.107.167.203 with HTTP; Tue, 4 Oct 2016 10:31:51 -0700 (PDT)
-In-Reply-To: <1475185723-36871-2-git-send-email-bmwill@google.com>
-References: <1475099443-145608-1-git-send-email-bmwill@google.com>
- <1475185723-36871-1-git-send-email-bmwill@google.com> <1475185723-36871-2-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Oct 2016 10:31:51 -0700
-Message-ID: <CAGZ79kax9g-FLMhPnDBP+7wJwYT884B5bGodpopo9GKgnE6+PQ@mail.gmail.com>
-Subject: Re: [PATCH v6 1/4] git: make super-prefix option
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161004164036.6584-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 2:48 PM, Brandon Williams <bmwill@google.com> wrote:
+On Tue, Oct 04, 2016 at 09:40:36AM -0700, Stefan Beller wrote:
 
->
-> +const char *get_super_prefix(void)
+> >> Why should we even have a default different from today's?  If most
+> >> repositories don't have submodules enabled at all, we can just let
+> >> those working with submodules enabled to toggle their configuration
+> >> and that is an very easy to understand solution, no?
+> >
+> > You will not see any complaint from me on that. I was taking for granted
+> > that the current default is inconvenient to submodule users, but I don't
+> > have any experience myself.
+> >
+> 
+> And there I was trying to help submodule users not shoot in their foot.
+
+Sorry if my reply came off as snarky. I really did mean it literally. I
+do not know if the end goal is good or not, so all of my discussion was
+just assuming it was.
+
+So in that vein...
+
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 3bb9d6b..d7d664a 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -22,7 +22,7 @@ static int deleterefs;
+>  static const char *receivepack;
+>  static int verbosity;
+>  static int progress = -1;
+> -static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+> +static int recurse_submodules;
+>  static enum transport_family family;
+>  
+>  static struct push_cas_option cas;
+> @@ -31,6 +31,14 @@ static const char **refspec;
+>  static int refspec_nr;
+>  static int refspec_alloc;
+>  
+> +static void preset_submodule_default(void)
 > +{
-> +       if (!super_prefix)
-> +               super_prefix = getenv(GIT_SUPER_PREFIX_ENVIRONMENT);
-> +       return super_prefix;
+> +	if (file_exists(".gitmodules"))
+> +		recurse_submodules = RECURSE_SUBMODULES_CHECK;
+> +	else
+> +		recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
 > +}
-> +
 
-As said earlier, is the following a valid thought:
+This does seem like a reasonable heuristic. I wonder if you want to
+confirm that we actually have a worktree (and are in it) before looking
+at file_exists(). It's unlikely that looking at ".gitmodules" in a bare
+repo would trigger in practice, but it does not hurt to be careful.
 
-> The getenv() function returns a pointer to the value in the
-> environment, or NULL if there is no match.
-> So in case this is not set (when e.g. the user did not specify the
-> super prefix), we would probe it a couple of times.
-> The caching effect only occurs when the string is set. So this looks
-> like we save repetitive calls, but we do not always do that.
-
->
-> +       if (get_super_prefix()) {
-> +               die("%s doesn't support --super-prefix", argv[0]);
-> +       }
-> +
-
-Nit: no braces, please.
+-Peff
