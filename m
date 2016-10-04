@@ -2,75 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1CBA20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 17:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19D5020986
+	for <e@80x24.org>; Tue,  4 Oct 2016 17:39:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751554AbcJDRjI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 13:39:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52193 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751125AbcJDRjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 13:39:07 -0400
-Received: (qmail 5437 invoked by uid 109); 4 Oct 2016 17:39:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 17:39:07 +0000
-Received: (qmail 7624 invoked by uid 111); 4 Oct 2016 17:39:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 13:39:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2016 13:39:04 -0400
-Date:   Tue, 4 Oct 2016 13:39:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 1/4] git: make super-prefix option
-Message-ID: <20161004173904.tu37rqn4rl26gabx@sigill.intra.peff.net>
-References: <1475099443-145608-1-git-send-email-bmwill@google.com>
- <1475185723-36871-1-git-send-email-bmwill@google.com>
- <1475185723-36871-2-git-send-email-bmwill@google.com>
- <CAGZ79kax9g-FLMhPnDBP+7wJwYT884B5bGodpopo9GKgnE6+PQ@mail.gmail.com>
+        id S1752123AbcJDRjh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 13:39:37 -0400
+Received: from 216-12-86-13.cv.mvl.ntelos.net ([216.12.86.13]:55454 "EHLO
+        brightrain.aerifal.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752017AbcJDRjg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 13:39:36 -0400
+Received: from dalias by brightrain.aerifal.cx with local (Exim 3.15 #2)
+        id 1brTgc-0002oM-00; Tue, 04 Oct 2016 17:39:26 +0000
+Date:   Tue, 4 Oct 2016 13:39:26 -0400
+From:   Rich Felker <dalias@libc.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        musl@lists.openwall.com
+Subject: Re: [musl] Re: Regression: git no longer works with musl libc's
+ regex impl
+Message-ID: <20161004173926.GA19318@brightrain.aerifal.cx>
+References: <20161004150848.GA7949@brightrain.aerifal.cx>
+ <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
+ <20161004154045.GT19318@brightrain.aerifal.cx>
+ <alpine.DEB.2.20.1610041802310.35196@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kax9g-FLMhPnDBP+7wJwYT884B5bGodpopo9GKgnE6+PQ@mail.gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1610041802310.35196@virtualbox>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 04, 2016 at 10:31:51AM -0700, Stefan Beller wrote:
-
-> On Thu, Sep 29, 2016 at 2:48 PM, Brandon Williams <bmwill@google.com> wrote:
+On Tue, Oct 04, 2016 at 06:08:33PM +0200, Johannes Schindelin wrote:
+> Hi Rich,
 > 
-> >
-> > +const char *get_super_prefix(void)
-> > +{
-> > +       if (!super_prefix)
-> > +               super_prefix = getenv(GIT_SUPER_PREFIX_ENVIRONMENT);
-> > +       return super_prefix;
-> > +}
-> > +
+> On Tue, 4 Oct 2016, Rich Felker wrote:
 > 
-> As said earlier, is the following a valid thought:
+> > On Tue, Oct 04, 2016 at 11:27:22AM -0400, Jeff King wrote:
+> > > On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> > > 
+> > > > 1. is nonzero mod page size, it just works; the remainder of the last
+> > > >    page reads as zero bytes when mmapped.
+> > > 
+> > > Is that a portable assumption?
+> > 
+> > Yes.
 > 
-> > The getenv() function returns a pointer to the value in the
-> > environment, or NULL if there is no match.
-> > So in case this is not set (when e.g. the user did not specify the
-> > super prefix), we would probe it a couple of times.
-> > The caching effect only occurs when the string is set. So this looks
-> > like we save repetitive calls, but we do not always do that.
+> No, it is not. You quote POSIX, but the matter of the fact is that we use
+> a subset of POSIX in order to be able to keep things running on Windows.
+> 
+> And quite honestly, there are lots of reasons to keep things running on
+> Windows, and even to favor Windows support over musl support. Over four
+> million reasons: the Git for Windows users.
+> 
+> So rather than getting into an ideological discussion about "broken"
+> systems, it would be good to keep things practical, realizing that those
+> users make up a very real chunk of all of Git's users.
+> 
+> As to making NO_REGEX conditional on REG_STARTEND: you are talking about
+> apples and oranges here. NO_REGEX is a Makefile flag, while REG_STARTEND
+> is a C preprocessor macro.
 
-I think your concern is valid. If it is not set, we will do an O(n)
-search through the whole environment on each call.
+It seems like you could just always compile the source file, and just
+have it all inside #if defined(NO_REGEX) || !defined(REG_STARTEND) or
+similar.
 
-I also think the result of getenv() needs to be copied. In some
-implementations it persists for the life of the program, but that's not
-guaranteed; it may be overwritten by unrelated calls to getenv() or
-setenv().
+> And lastly, the best alternative would be to teach musl about
+> REG_STARTEND, as it is rather useful a feature.
 
--Peff
+Maybe, but it seems fundamentally costly to support -- it's extra
+state in the inner loops that imposes costly spill/reload on archs
+with too few registers (x86). I'll look at doing this when we
+overhaul/replace the regex implementation, and I'm happy to do some
+performance-regression tests for adding it now if someone has a simple
+patch (as was mentioned on the musl list).
+
+Rich
