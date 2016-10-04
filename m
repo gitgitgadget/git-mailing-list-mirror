@@ -6,141 +6,118 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7D220986
-	for <e@80x24.org>; Tue,  4 Oct 2016 22:54:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E59C20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 22:55:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752063AbcJDWy5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 18:54:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62972 "EHLO
+        id S1752557AbcJDWy7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 18:54:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51288 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751602AbcJDWy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 18:54:56 -0400
+        with ESMTP id S1751602AbcJDWy6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 18:54:58 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD23743EB7;
-        Tue,  4 Oct 2016 18:54:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E64E544BF1;
+        Tue,  4 Oct 2016 18:54:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=jl33
-        KKuuEF0AkBJroK43ekBPXzE=; b=VYn++yjLE7v+u1h9DW66O8fzTzDEcOCv97NV
-        zp6hdbPPbjuPJUDQi5F/iPYtqyO5OLJhIXnmATIeUgNGfGDV0+FXRC0PhFxfd46T
-        sSpauw57rEkrBHmjU3I1IrKt4iiqP9n+PkaXpWljnctarx/QKACxiIgtA/FuEFh2
-        WNjRqlo=
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=bAOf
+        heXAo1ayq6jJF5q1AAr/qME=; b=H9IQnOxgwHiKVs3GsFJILW98hijnBkzjQTOV
+        Tef9dPu0yBu/oLu/eVS0K6zxlLUEysDhg/d7QxwGpcBt3L95z+PWiD0JL4Fwuolm
+        i50on2oW2gl1Cgc1J4GzB48K3uPoJQqxa7V60XDOPw/taL3/A3fxhVRZcYZS1dur
+        FyqZiZA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        LO8zF8KFVjRTbjwz2kjPn0HCEx9GpChrMKEfrcQeArTVntnW6aFWesZyBZIylogR
-        tEErsa9gEQsKSYW9VQV8oB+XfHkKYuIEP/6BnjFOsbQd0/W3DG2kpkt8HN073tny
-        jcZOSitxQintSBsHxiYJjEDV5LPxn6Ppp2qpeasu6TU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6FDB43EB6;
-        Tue,  4 Oct 2016 18:54:54 -0400 (EDT)
+        cYhZQxt4cRniOVIjJjrLhmvWlpzBLQoUv8LhIulM7y4Vb8vuilrnSjng8rAQ3TN5
+        Td1ivnbpCL6jLONdkt/HFfHqDZvHi/m1Zi28J5O3YfbOvKGGPID7VCDEO6Z2lHEk
+        JX0W81Fqvo/d08Z5nw9hXO3fmRwmFJVn2DCyAIYk5T4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE06F44BF0;
+        Tue,  4 Oct 2016 18:54:56 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1BA3343EB3;
-        Tue,  4 Oct 2016 18:54:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C5F144BEE;
+        Tue,  4 Oct 2016 18:54:56 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, strk@kbt.io
-Subject: [PATCH 1/4] t4015: split out the "setup" part of ws-error-highlight test
-Date:   Tue,  4 Oct 2016 15:54:46 -0700
-Message-Id: <20161004225449.6759-2-gitster@pobox.com>
+Subject: [PATCH 2/4] diff.c: refactor parse_ws_error_highlight()
+Date:   Tue,  4 Oct 2016 15:54:47 -0700
+Message-Id: <20161004225449.6759-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.10.1-510-g1ef781f2c1
 In-Reply-To: <20161004225449.6759-1-gitster@pobox.com>
 References: <xmqqk2douhe0.fsf@gitster.mtv.corp.google.com>
  <20161004225449.6759-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 9084E9D6-8A85-11E6-A848-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 91DDDCE8-8A85-11E6-81DD-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We'd want to run this same set of test twice, once with the option
-and another time with an equivalent configuration setting.  Split
-out the step that prepares the test data and expected output and
-move the test for the command line option into a separate test.
+Rename the function to parse_ws_error_highlight_opt(), because it is
+meant to parse a command line option, and then refactor the meat of
+the function into a helper function that reports the parsed result
+which is typically a small unsigned int (these are OR'ed bitmask
+after all), or a negative offset that indicates where in the input
+string a parse error happened.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t4015-diff-whitespace.sh | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ diff.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 2434157aa7..4a4f374824 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -869,7 +869,8 @@ test_expect_success 'diff that introduces and removes ws breakages' '
- 	test_cmp expected current
- '
+diff --git a/diff.c b/diff.c
+index 46260ed7a1..d346378600 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3666,10 +3666,11 @@ static int parse_one_token(const char **arg, const char *token)
+ 	return 0;
+ }
  
--test_expect_success 'the same with --ws-error-highlight' '
-+test_expect_success 'ws-error-highlight test setup' '
+-static int parse_ws_error_highlight(struct diff_options *opt, const char *arg)
++static int parse_ws_error_highlight(const char *arg)
+ {
+ 	const char *orig_arg = arg;
+ 	unsigned val = 0;
 +
- 	git reset --hard &&
- 	{
- 		echo "0. blank-at-eol " &&
-@@ -882,10 +883,7 @@ test_expect_success 'the same with --ws-error-highlight' '
- 		echo "2. and a new line "
- 	} >x &&
+ 	while (*arg) {
+ 		if (parse_one_token(&arg, "none"))
+ 			val = 0;
+@@ -3684,13 +3685,23 @@ static int parse_ws_error_highlight(struct diff_options *opt, const char *arg)
+ 		else if (parse_one_token(&arg, "context"))
+ 			val |= WSEH_CONTEXT;
+ 		else {
+-			error("unknown value after ws-error-highlight=%.*s",
+-			      (int)(arg - orig_arg), orig_arg);
+-			return 0;
++			return -1 - (int)(arg - orig_arg);
+ 		}
+ 		if (*arg)
+ 			arg++;
+ 	}
++	return val;
++}
++
++static int parse_ws_error_highlight_opt(struct diff_options *opt, const char *arg)
++{
++	int val = parse_ws_error_highlight(arg);
++
++	if (val < 0) {
++		error("unknown value after ws-error-highlight=%.*s",
++		      -1 - val, arg);
++		return 0;
++	}
+ 	opt->ws_error_highlight = val;
+ 	return 1;
+ }
+@@ -3894,7 +3905,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	else if (skip_prefix(arg, "--submodule=", &arg))
+ 		return parse_submodule_opt(options, arg);
+ 	else if (skip_prefix(arg, "--ws-error-highlight=", &arg))
+-		return parse_ws_error_highlight(options, arg);
++		return parse_ws_error_highlight_opt(options, arg);
  
--	git -c color.diff=always diff --ws-error-highlight=default,old |
--	test_decode_color >current &&
--
--	cat >expected <<-\EOF &&
-+	cat >expect.default-old <<-\EOF &&
- 	<BOLD>diff --git a/x b/x<RESET>
- 	<BOLD>index d0233a2..700886e 100644<RESET>
- 	<BOLD>--- a/x<RESET>
-@@ -897,12 +895,7 @@ test_expect_success 'the same with --ws-error-highlight' '
- 	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
- 	EOF
- 
--	test_cmp expected current &&
--
--	git -c color.diff=always diff --ws-error-highlight=all |
--	test_decode_color >current &&
--
--	cat >expected <<-\EOF &&
-+	cat >expect.all <<-\EOF &&
- 	<BOLD>diff --git a/x b/x<RESET>
- 	<BOLD>index d0233a2..700886e 100644<RESET>
- 	<BOLD>--- a/x<RESET>
-@@ -914,12 +907,7 @@ test_expect_success 'the same with --ws-error-highlight' '
- 	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
- 	EOF
- 
--	test_cmp expected current &&
--
--	git -c color.diff=always diff --ws-error-highlight=none |
--	test_decode_color >current &&
--
--	cat >expected <<-\EOF &&
-+	cat >expect.none <<-\EOF
- 	<BOLD>diff --git a/x b/x<RESET>
- 	<BOLD>index d0233a2..700886e 100644<RESET>
- 	<BOLD>--- a/x<RESET>
-@@ -931,7 +919,22 @@ test_expect_success 'the same with --ws-error-highlight' '
- 	<GREEN>+2. and a new line <RESET>
- 	EOF
- 
--	test_cmp expected current
-+'
-+
-+test_expect_success 'test --ws-error-highlight option' '
-+
-+	git -c color.diff=always diff --ws-error-highlight=default,old |
-+	test_decode_color >current &&
-+	test_cmp expect.default-old current &&
-+
-+	git -c color.diff=always diff --ws-error-highlight=all |
-+	test_decode_color >current &&
-+	test_cmp expect.all current &&
-+
-+	git -c color.diff=always diff --ws-error-highlight=none |
-+	test_decode_color >current &&
-+	test_cmp expect.none current
-+
- '
- 
- test_done
+ 	/* misc options */
+ 	else if (!strcmp(arg, "-z"))
 -- 
 2.10.1-510-g1ef781f2c1
 
