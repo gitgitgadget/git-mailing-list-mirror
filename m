@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C56F1F4F8
-	for <e@80x24.org>; Tue,  4 Oct 2016 10:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA6611F4F8
+	for <e@80x24.org>; Tue,  4 Oct 2016 11:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752765AbcJDKkq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 06:40:46 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:35839 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751671AbcJDKkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 06:40:45 -0400
-Received: by mail-lf0-f54.google.com with SMTP id l131so178941120lfl.2
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 03:40:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=TK9xI/05Is7RE3BDMBCUrmru1NOQ0g4GnRTED8Gp8MQ=;
-        b=hM1RiHG4nDMMsNOFoEWi6boWUr+PRvSaTAwcw2Hm2qXtYf7orkkpmRkvcX5HlHekqa
-         7Iyk04yHf1CEFc7NYxswJy5Qfe/TN2vHzaaCbolk/QVRST72yQtNga92FnH6B5HvyFax
-         bQY4gUPwOeez6cOQlJW8MqQSFFcyQNhNhPDFJW5iJ4GefJJuuxsgUl4CScpi9tH2UwYL
-         IjOPdoNxPw10tNTtc1PZTzBX2RKHw12g84ixhVtMf+HyzRtPWrx5HQ8gz2ggsfb52RsW
-         SR6ww8j3yCDWDL3ZYfCnT2PhvPrXFJ3VzLvILMvODQZK5yvZtDx0ec71P05IzZA3M0xK
-         5F5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=TK9xI/05Is7RE3BDMBCUrmru1NOQ0g4GnRTED8Gp8MQ=;
-        b=OgCr11+fAN5BNGFCjC861K9BwFpaRXd/Xu0QIjIU+yRK+7NmRN+VuR1MlVR4gKEuHO
-         7MdD8SKcZUaSiGRe+lzaoZ32zML2tjUhTKzZOS98aIPGfFG1+x/8mhP6g43zO8wdjjkY
-         r8fdNTPTcyLMcLoX7VaoLvRmyl9P7OZ5VAPpYonyZewxto+ZqHG31otJxvzAs54/Olk8
-         VPc5VqajauT/Z0XaH5GE8qYd9l90MIYGk9hSoOIS6O2odDyXJEWVHIWFxAwBJTFPvmPw
-         52fsUpg9uFhwqSlaO7cf8HFgtCxaVUuZFSchc982Ggm7vH9P18DhdoRq5M9zMXNw+9w7
-         fsSg==
-X-Gm-Message-State: AA6/9Rke0xpgds2imOt7DqWEXpKrybvrR6hpEK1BKBIDZV4/dox9rYEwA3JVKjB6RqRz1mAHSKmCjkz3HZBcxQ==
-X-Received: by 10.25.137.86 with SMTP id l83mr955092lfd.31.1475577643511; Tue,
- 04 Oct 2016 03:40:43 -0700 (PDT)
+        id S1752253AbcJDLSw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 07:18:52 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:57056 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751821AbcJDLSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 07:18:51 -0400
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1brNkF-0000Ia-8x; Tue, 04 Oct 2016 13:18:47 +0200
+Date:   Tue, 4 Oct 2016 13:18:45 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Slow pushes on 'pu' - even when up-to-date..
+Message-ID: <20161004111845.GA20309@book.hvoigt.net>
+References: <CA+55aFyos78qODyw57V=w13Ux5-8SvBqObJFAq22K+XKPWVbAA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.25.20.219 with HTTP; Tue, 4 Oct 2016 03:40:22 -0700 (PDT)
-From:   ern0 <ern0@linkbroker.hu>
-Date:   Tue, 4 Oct 2016 12:40:22 +0200
-X-Google-Sender-Auth: 8LUj7c-bBlGH8LaCz9jpPbTqeQ0
-Message-ID: <CALhephTkohVhEjdP7TwQAcBrEBiHGtp0Hd+UxPUiJHtubMWKGA@mail.gmail.com>
-Subject: GL bug: can not commit, reports error on changed submodule directory
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+55aFyos78qODyw57V=w13Ux5-8SvBqObJFAq22K+XKPWVbAA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I say:
- $ gl commit -m "blah blah"
-It reports:
- =E2=9C=98 Failed to read file into stream: Is a directory
+Hi,
 
-Reason: I have a submodule which has changes.
+On Mon, Oct 03, 2016 at 02:11:36PM -0700, Linus Torvalds wrote:
+> This seems to be because I'm now on 'pu' as of a day or two ago in
+> order to test the abbrev logic, but lookie here:
+> 
+>     time git ls-remote ra.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux
+>     .. shows all the branches and tags ..
+>     real 0m0.655s
+>     user 0m0.011s
+>     sys 0m0.004s
+> 
+> so the remote is fast to connect to, and with network connection
+> overhead and everything, it's just over half a second. But then:
+> 
+>     time git push ra.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux
 
- $ git status
- On branch develop
- Your branch is up-to-date with 'origin/develop'.
- Changes not staged for commit:
-   (use "git add/rm <file>..." to update what will be committed)
-   (use "git checkout -- <file>..." to discard changes in working directory=
-)
+The reason behind this is when pushing to an address we do not easily
+have the remote refs to compare available. When pushing an existing ref
+it would be easy and could get a shortcut but it gets more complicated
+for new refs. Currently we fall back to walking the whole history since
+that is "the most correct way" we have. But obviously it is not a
+practical solution in any way.
 
-         modified:   remoting (new commits)
+I mentioned this fact when discussing the current state and my patches
+to make this check less painful. So we still need to think about a
+solution for this check when passing an address.
 
- no changes added to commit (use "git add" and/or "git commit -a")
+IMO: It's definitely not ready to be switched on as default, unless we
+find something a lot cheaper for the above case.
 
-Workaround: I should sync the directory...
+My idea of a solution goes like this:
+  * collect all SHA1's of the remotes refs
+  * check if we have them locally
+  * if not we abort and tell the user to fetch them somehow into local
+    refs or disable the check
+  * when we have them locally we proceed passing those SHA1's as bases
+    instead of --remotes=<name>
 
- $ cd remoting
- $ git commit -am "yada"
- $ cd ..
- $ git commit -am "yada yada"
- $ git push
- $ echo I feel clean now
- $ echo "# wow" >> test.py
- $ gl commit -m "added wow"
-
-...and it works again.
---=20
-ern0
-dataflow evangelist
+Cheers Heiko
