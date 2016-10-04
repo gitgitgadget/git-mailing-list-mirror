@@ -7,65 +7,97 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 522DC20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 16:02:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F30B20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 16:08:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754092AbcJDQBv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 12:01:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51355 "EHLO mout.gmx.net"
+        id S1752738AbcJDQI5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 12:08:57 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58429 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752672AbcJDQBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 12:01:50 -0400
+        id S1752289AbcJDQI4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 12:08:56 -0400
 Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LjIBr-1bKbZu0KgJ-00dYvC; Tue, 04 Oct 2016 18:01:29
+ ESMTPSA (Nemesis) id 0LvVYZ-1aqrlh26SJ-010Zui; Tue, 04 Oct 2016 18:08:34
  +0200
-Date:   Tue, 4 Oct 2016 18:01:25 +0200 (CEST)
+Date:   Tue, 4 Oct 2016 18:08:33 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Rich Felker <dalias@libc.org>, git@vger.kernel.org,
+To:     Rich Felker <dalias@libc.org>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         musl@lists.openwall.com
 Subject: Re: Regression: git no longer works with musl libc's regex impl
-In-Reply-To: <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1610041801130.35196@virtualbox>
-References: <20161004150848.GA7949@brightrain.aerifal.cx> <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
+In-Reply-To: <20161004154045.GT19318@brightrain.aerifal.cx>
+Message-ID: <alpine.DEB.2.20.1610041802310.35196@virtualbox>
+References: <20161004150848.GA7949@brightrain.aerifal.cx> <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net> <20161004154045.GT19318@brightrain.aerifal.cx>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VakdgbLkIQxk5U2kLtG8nCPZZs6y0QNFu9quruWOMV3DKgVTNOw
- Yide4djZSHnYNFhDd//cdxEoZr+5RNLFLyvH/ao03gyC5tRxHwkio7WEKgeG2Ir+kKFRnbm
- oAtVPnAezx/dX4TLCzteyoU//5VJGIJeASz7b1Hwa+LXEt2qjMSKFSRBBonnR7AMlF3d9Av
- 2RRXRGnN9ZTQfhYIjZ/qw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YNO7rwasL8Y=:5UeyqLrpeB8xXZq3lE+mEq
- uJapNpbjh6A0RJIdrF3kmN22GxdKfPvwoN7MKcJsbcezD0DapGoA2i1t3bP75t+VycF/1Mdue
- 21meuRcNW4sARqSamL9AREJh4E/JOOwXdSmfbwIICKz6U2LyskfTxpChdT+95VXX8UnBap9zD
- p9cGQa/s2sHAn1vfEoUIgXKqwlabBTLOnETZ/Axl3qnFezYMnmsCdjWvlor7vwckyXK92nAwX
- iZvI7MtxcWIBN9jj7kvHs2KMJn01bFcZ3AuD1fp/o99xcEIPlVbpS7DyzupJv7hyzeByywGDW
- L9Krtmvcm5hLEpfGxx7jb0ajHglev+rDpDNeAaoBQuoWz5KG65odzvdukoF7ZfO9DPzcK6PK+
- si/qMJzApaoNKhJ8lyEuz2gnq7VWqzKYCMvl2wAytBBx6P54MNMiH+kLYasLvDmugSDzwkIy3
- p+ReMPSIgMaTC6zmB2dfMpaxwsS6LmnPnWAXfMYf/lrivYtk+LxbS+zyC1e0IK+bQ1qrGBHTf
- qTFfiVzu/d1SvzFTvzeXzvnGC/Oc6ChaySZCw4mZLfYhJ+UfPOJwshKwIF1tOKOouJg6WR4jz
- WoNUu2f1PiBRdjLJQn2qobv7aMzQ6lnikVmaDoj7n8Zb1nxpOk2h8Xm7fhupWPIV9j5iQBEaZ
- i3c56PxOuSf68rnTSUJN8FFxzt5R81YeZkDgWiTof4whcIPJoXWijuPr+s/xH6OO0raNwD0sS
- bvkwvxf3HGIGXMjDKAo8hkqc3s7sG81c4Co+gnmBFkn2TYWv1vIv0Ti0oozNngSIp51RZZq9y
- wWDEmTp
+X-Provags-ID: V03:K0:DFmm6IEQpezu6RxuY24iQj+0qN00Y0KqutLnkaF0IhQcjYmk9DG
+ p6qm2VCDKS1S7hwEJ5Q2GXiPz95jSvNkD9KhNCrQMdH7MrUS5AoGwtYYFbkXW4/gFiqtbLT
+ 6+iMtONckNP3cNOOs65le2CG06gUJfbagvToXWER4Kk8ocJceksw0+b3Rt7FtWdk/UA/M7b
+ VUtg2AuSlGz3+I3sMDqAw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0BGGI6S7jZY=:MNHr7DkAW2oKNXxLPVE4am
+ suRTTRyc+qwc/mkCB7neNsykYL1s+D7jNwKJgYv1BNrThchBL6CpapGdncGsjRzBCLavw0aOE
+ nk3Vg+RfieWPvk4ZJEK1fd0r1SDn/gQIlSqvbzWPkUV1y+SAeVOcyVD0NDnmFtaQmaU2g9CBH
+ oTZ4zR6qR0JX+cJnXUxxBLKKODPP7MB/JHt+PRTR8UH/yW4x7s7vd9jZVVtgukbTN0kokNWNh
+ 2R2xwvFI5vGwnBaQ3TFBQn0IgOv5XEjhH/N5f6c+rLg/TFXHeel7NQhnQ9esMonJgw1HS+Ut9
+ xiyH5Y2HlKji21gjw251Cz1Q2ai1fUs2rWNoUeEa0iUgNI3V0B/D/PvzwT9KwhrGQYfdBiygv
+ 0+MSAK0BLoN2a1ZHz2hPdl0Q8Qt8Debl3H0QiJzrt7XI2AY//kGoK6K0kKlq1fqcx8nu8df7Z
+ CAzZkpfZOzotvb6Ei0OUtOD7Qpmh3Ck8id1JbIdnCeRSa6mdnPqYfKF/CzRBzWi3Iyw9sxGjA
+ s7bCuCTi424tmQfHXoDStoECbe+Ac4gELMfq7ueb2AWUr4oRT5AV8VyVSOtc+gZSsIZYvL1Ju
+ Tr0WzsLpQxJXDRhvEmui1PydT9DSRQl7Bn3oDuimFMUKFqOC76JQ4zHMh3lXRX9ICSH/KFWjl
+ Bih6Ki6KczMAtwU+Dc8ydaDlkRkE8mHNAOVA4CmI6Bo40Ai6UrcYbeXulXW/3bQbyzeDafmmI
+ J1rTR63OhvdfoiFZUMcHHy0kSwwZvYC21fl/joDYbvomMN4QqQvRoXISBmmV0MgjapIWVZpsL
+ kDKkLH3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Rich,
 
-On Tue, 4 Oct 2016, Jeff King wrote:
+On Tue, 4 Oct 2016, Rich Felker wrote:
 
-> On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> On Tue, Oct 04, 2016 at 11:27:22AM -0400, Jeff King wrote:
+> > On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> > 
+> > > 1. is nonzero mod page size, it just works; the remainder of the last
+> > >    page reads as zero bytes when mmapped.
+> > 
+> > Is that a portable assumption?
 > 
-> > 1. is nonzero mod page size, it just works; the remainder of the last
-> >    page reads as zero bytes when mmapped.
-> 
-> Is that a portable assumption?
+> Yes.
 
-No.
+No, it is not. You quote POSIX, but the matter of the fact is that we use
+a subset of POSIX in order to be able to keep things running on Windows.
+
+And quite honestly, there are lots of reasons to keep things running on
+Windows, and even to favor Windows support over musl support. Over four
+million reasons: the Git for Windows users.
+
+So rather than getting into an ideological discussion about "broken"
+systems, it would be good to keep things practical, realizing that those
+users make up a very real chunk of all of Git's users.
+
+As to making NO_REGEX conditional on REG_STARTEND: you are talking about
+apples and oranges here. NO_REGEX is a Makefile flag, while REG_STARTEND
+is a C preprocessor macro.
+
+Unless you can convince the rest of the Git developers (you would not
+convince me) to simulate autoconf by compiling an executable every time
+`make` is run, to determine whether REG_STARTEND is defined, this is a
+no-go.
+
+However, you *can* use autoconf directly, and come up with a patch to our
+configure.ac that detects the absence of REG_STARTEND and sets NO_REGEX=1.
+
+Alternatively, you can set NO_REGEX=1 in your config.mak.
+
+Or, if you use one of the auto-detected cases in config.mak.uname, you
+could patch it to set NO_REGEX=1.
+
+And lastly, the best alternative would be to teach musl about
+REG_STARTEND, as it is rather useful a feature.
 
 Ciao,
-Dscho
+Johannes
