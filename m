@@ -2,94 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56F9220986
-	for <e@80x24.org>; Tue,  4 Oct 2016 15:46:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 522DC20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 16:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753492AbcJDPqr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 11:46:47 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:36600 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753192AbcJDPqq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 11:46:46 -0400
-Received: by mail-oi0-f54.google.com with SMTP id m72so68843382oik.3
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 08:46:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/RZ/KAGEY7sMdhZ7Gx0Q1HQKw9+Gx3HBEL7w2JeZTe4=;
-        b=Duhm63rVv8QUbgRGXr2D9c2JaaVaRJFK6LZTOSYwYWKt0o1YIgbSBigJqNAiHlK4m/
-         o2wY6PYw2j9smPMvTBJNMuskT1mvTUJ62dQPyRvVB9Gl0V6U2pHlUpfg4THKbvpzEgiS
-         sHRrGrrChXi0mumJh3abmk4/Q0GmKn78XkcKTUkEedfQ3He2ekBOSD/w29K+sIl3WjL+
-         KinFqHr4ZWdTbmGPKqTXltY3RCRiOK5Cxbamq4B3RY8jXkepAHGk07y2GA2kRd5kJu+i
-         a03O5Gjub3jbqpLGJhkbxOCC3oxLnx9sDAkencuocIHC/x8VzgQfNh1Wj0EgyHxwyssz
-         mwWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/RZ/KAGEY7sMdhZ7Gx0Q1HQKw9+Gx3HBEL7w2JeZTe4=;
-        b=fW+GbRtDUcvAca8t4TKGgfUf1LhfMWS+2tQIEM68x6hUGgiL2Oi2HBtb5/adCnpXIF
-         HD5V+rfZY1qfYtycT7fM3orb6wusKknq5ZhxH9S9tTANKTOVUxR8FmpqH85tXC08Oo0+
-         VVzD0x9+s43nL4haN4vsw4AKXRiaaeZAYzfuP2ZGaFqLvUmhsyPFUSm5u4WH1z9IoAjg
-         os5lqMHGkPyh6GmrDnoA50ytn+Lyd5MynIxuKTF+syFF2FnxauHi+RytC2dQAKbwmu53
-         nVm45XLFKlobyvg1HNFlUnrNad2VQFZrc/Iz5gMLCR07UucYEOuqhOiIYHoCJCd25gDF
-         2yAQ==
-X-Gm-Message-State: AA6/9RmnXL+KdDX9JCZ5/XOEn6li5M8JBIGtF8/KbA5/AKkb+qZkZuR+korUTTz0R5fwNkJu96ZwX6a3PViRbQ==
-X-Received: by 10.157.63.216 with SMTP id i24mr2662206ote.178.1475596006033;
- Tue, 04 Oct 2016 08:46:46 -0700 (PDT)
+        id S1754092AbcJDQBv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 12:01:51 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51355 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752672AbcJDQBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 12:01:50 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LjIBr-1bKbZu0KgJ-00dYvC; Tue, 04 Oct 2016 18:01:29
+ +0200
+Date:   Tue, 4 Oct 2016 18:01:25 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Rich Felker <dalias@libc.org>, git@vger.kernel.org,
+        musl@lists.openwall.com
+Subject: Re: Regression: git no longer works with musl libc's regex impl
+In-Reply-To: <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1610041801130.35196@virtualbox>
+References: <20161004150848.GA7949@brightrain.aerifal.cx> <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.202.189.4 with HTTP; Tue, 4 Oct 2016 08:46:45 -0700 (PDT)
-In-Reply-To: <20160914202907.GD7613@sandbox>
-References: <CAPOqYV+C-P9M2zcUBBkD2LALPm4K3sxSut+BjAkZ9T1AKLEr+A@mail.gmail.com>
- <20160914202907.GD7613@sandbox>
-From:   =?UTF-8?Q?Thomas_B=C3=A9tous?= <th.betous@gmail.com>
-Date:   Tue, 4 Oct 2016 17:46:45 +0200
-Message-ID: <CAPOqYV+xsrLk7y1hJYHZFY8OfkxVRwPcZBdqhdgrhThqdZysQA@mail.gmail.com>
-Subject: Re: Bug Report: "git submodule deinit" fails right after a clone
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:VakdgbLkIQxk5U2kLtG8nCPZZs6y0QNFu9quruWOMV3DKgVTNOw
+ Yide4djZSHnYNFhDd//cdxEoZr+5RNLFLyvH/ao03gyC5tRxHwkio7WEKgeG2Ir+kKFRnbm
+ oAtVPnAezx/dX4TLCzteyoU//5VJGIJeASz7b1Hwa+LXEt2qjMSKFSRBBonnR7AMlF3d9Av
+ 2RRXRGnN9ZTQfhYIjZ/qw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YNO7rwasL8Y=:5UeyqLrpeB8xXZq3lE+mEq
+ uJapNpbjh6A0RJIdrF3kmN22GxdKfPvwoN7MKcJsbcezD0DapGoA2i1t3bP75t+VycF/1Mdue
+ 21meuRcNW4sARqSamL9AREJh4E/JOOwXdSmfbwIICKz6U2LyskfTxpChdT+95VXX8UnBap9zD
+ p9cGQa/s2sHAn1vfEoUIgXKqwlabBTLOnETZ/Axl3qnFezYMnmsCdjWvlor7vwckyXK92nAwX
+ iZvI7MtxcWIBN9jj7kvHs2KMJn01bFcZ3AuD1fp/o99xcEIPlVbpS7DyzupJv7hyzeByywGDW
+ L9Krtmvcm5hLEpfGxx7jb0ajHglev+rDpDNeAaoBQuoWz5KG65odzvdukoF7ZfO9DPzcK6PK+
+ si/qMJzApaoNKhJ8lyEuz2gnq7VWqzKYCMvl2wAytBBx6P54MNMiH+kLYasLvDmugSDzwkIy3
+ p+ReMPSIgMaTC6zmB2dfMpaxwsS6LmnPnWAXfMYf/lrivYtk+LxbS+zyC1e0IK+bQ1qrGBHTf
+ qTFfiVzu/d1SvzFTvzeXzvnGC/Oc6ChaySZCw4mZLfYhJ+UfPOJwshKwIF1tOKOouJg6WR4jz
+ WoNUu2f1PiBRdjLJQn2qobv7aMzQ6lnikVmaDoj7n8Zb1nxpOk2h8Xm7fhupWPIV9j5iQBEaZ
+ i3c56PxOuSf68rnTSUJN8FFxzt5R81YeZkDgWiTof4whcIPJoXWijuPr+s/xH6OO0raNwD0sS
+ bvkwvxf3HGIGXMjDKAo8hkqc3s7sG81c4Co+gnmBFkn2TYWv1vIv0Ti0oozNngSIp51RZZq9y
+ wWDEmTp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your answer and sorry for the delay (I was on vacation...).
+Hi,
 
-I am using git 2.9.0.windows.1 (run on Windows 7 via git bash).
+On Tue, 4 Oct 2016, Jeff King wrote:
 
-I tested it on this repo:
-https://github.com/githubtraining/example-dependency.git
-The same problem occurs.
-Here a small script to reproduce the error on my PC:
-#!/bin/bash
-git clone https://github.com/githubtraining/example-dependency.git
-cd example-dependency
-git submodule deinit js
+> On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> 
+> > 1. is nonzero mod page size, it just works; the remainder of the last
+> >    page reads as zero bytes when mmapped.
+> 
+> Is that a portable assumption?
 
-It ends with this error:
-fatal: Please stage your changes to .gitmodules or stash them to proceed
-Submodule work tree 'js' contains local modifications; use '-f' to discard =
-them
+No.
 
-Is the script working on your PC?
-
-Thank you in advance.
-
-Thomas
-
-On Wed, Sep 14, 2016 at 10:29 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> On Tue, Aug 30, 2016 at 01:45:56PM +0200, Thomas B=C3=A9tous wrote:
->> Are you able to reproduce this problem?
->
-> No. I just did a clone and an immediate deinit afterwards and no error.
-> Maybe you can provide a script to reproduce? Which System was this on?
->
-> Cheers Heiko
+Ciao,
+Dscho
