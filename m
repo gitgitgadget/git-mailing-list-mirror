@@ -2,79 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A32BA20987
-	for <e@80x24.org>; Tue,  4 Oct 2016 12:22:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7529B20986
+	for <e@80x24.org>; Tue,  4 Oct 2016 13:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753852AbcJDMSU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 08:18:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51899 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753742AbcJDMST (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 08:18:19 -0400
-Received: (qmail 15843 invoked by uid 109); 4 Oct 2016 12:18:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 12:18:19 +0000
-Received: (qmail 3785 invoked by uid 111); 4 Oct 2016 12:18:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Oct 2016 08:18:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Oct 2016 08:18:16 -0400
-Date:   Tue, 4 Oct 2016 08:18:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] abbrev: auto size the default abbreviation
-Message-ID: <20161004121816.yjvxymv46cgmnf5p@sigill.intra.peff.net>
-References: <20161001001937.10884-1-gitster@pobox.com>
- <20161001001937.10884-4-gitster@pobox.com>
- <20161003222701.za5njew33rqc5b6g@sigill.intra.peff.net>
- <CA+55aFydV+9c3-5C03XUj7v_wGJF5NyJNaP6742zLVgZs410FA@mail.gmail.com>
- <20161003224028.ksvwaplxe7a3vtwv@sigill.intra.peff.net>
- <xmqqoa313v0j.fsf@gitster.mtv.corp.google.com>
- <20161003234728.s5sadekukxoppcmw@sigill.intra.peff.net>
- <xmqqbmz051yp.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbmz051yp.fsf@gitster.mtv.corp.google.com>
+        id S1754101AbcJDM76 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 08:59:58 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35605 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753963AbcJDM7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 08:59:54 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f193so14972414wmg.2
+        for <git@vger.kernel.org>; Tue, 04 Oct 2016 05:59:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GTKboHWq4z90mJKyXhu3MWJTw/mrHcpWidZ8F5KFJQk=;
+        b=wcnDyaOLx1hs1JZr2m6jBFiRZBOVT8ojeh2ineU2FyNsp2ewaVZ4L8LdJVBRj9kBkl
+         vHpC01jsz0/SnNCkU2uBQ9dOir5kLXcVgJ7fcTRjOWtfK+0N1hmj3BfFXqImv8baDGI0
+         +Nd1+mVShq6YUwTWD+/6I00UvFA0x8axW5zxxGxF/pXEbxyifVbtbFDqyRbbxmC54Jta
+         odNW12DGsKGof4cHdTbHNf0hxJ6e7ldsRJPrbhDDv7e4YzoqOtt9G9TN5XUXspMP8anO
+         WHGswqS3S8o8sRPogbGcfduR8h9lP0vBtGUkH4OtWijyZC62e4Aw1YnZjkbvf/jsaJ+T
+         Gl7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=GTKboHWq4z90mJKyXhu3MWJTw/mrHcpWidZ8F5KFJQk=;
+        b=jCx145STPi8hLZgzsK1bUML4GTObUz2V2JgZ0VMSz03FJ5up3DDcmlTpiHyMzxuO3/
+         KtCE8Z46nk9Fmj3vaq462k8ByT5Bffqje7NfcLfqADqUpO4QgnQfMNpdOA10kVmPIhHB
+         XWogmZMt07gAByFHvbTzCDOaw/EoIXjIyNHU9eN493Co1eHI4XkD4B1cNdMeFKeCOyO8
+         QRWsq8dS5XqdjagdgTKwGtiAZROreIMqClMt+E54AdovJgV5a9jdKgrodklr+saVrtzt
+         dswr4suWKSEOSL8uh5GUoWjwh34aTi6wTei4s4mOHmdetPJI1pbY65qInG/NuQqzLY2k
+         esvg==
+X-Gm-Message-State: AA6/9Rnfs3tyUcp/qui0XTKsb3odzNRgGegx4KEICIPoc+ajTMp7zcSVnMCnyRT1FsnJ6A==
+X-Received: by 10.28.86.8 with SMTP id k8mr3556742wmb.33.1475585993444;
+        Tue, 04 Oct 2016 05:59:53 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id qo8sm3426934wjc.46.2016.10.04.05.59.52
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 04 Oct 2016 05:59:53 -0700 (PDT)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     ramsay@ramsayjones.plus.com, jnareb@gmail.com, gitster@pobox.com,
+        j6t@kdbg.org, tboegi@web.de, peff@peff.net, mlbright@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v9 02/14] convert: modernize tests
+Date:   Tue,  4 Oct 2016 14:59:35 +0200
+Message-Id: <20161004125947.67104-3-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.10.0
+In-Reply-To: <20161004125947.67104-1-larsxschneider@gmail.com>
+References: <20161004125947.67104-1-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 03, 2016 at 06:37:18PM -0700, Junio C Hamano wrote:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> OK, as Linus's "count at the point of use" is already in 'next',
-> >> could you make it incremental with a log message?
-> >
-> > Sure. I wasn't sure if you actually liked my direction or not, so I was
-> > mostly just showing off what the completed one would look like.
-> 
-> To be quite honest, I am not just unsure if I liked your direction;
-> rather I am not sure if I actually understood what you perceived as
-> a difference that matters between the two approaches.  I wanted to
-> hear you explain the difference in terms of "Linus's does this, but
-> it is bad in X and Y way, so let's avoid it and do it like Z
-> instead".  One effective way to extract that out of you was to force
-> you to justify the "incremental" update.
-> 
-> And it seems that I succeeded ;-).
-> 
-> I am still not sure if I 100% agree with your first paragraph, but
-> at least now I think I see where you are coming from.
+Use `test_config` to set the config, check that files are empty with
+`test_must_be_empty`, compare files with `test_cmp`, and remove spaces
+after ">" and "<".
 
-For the record, I am OK with Linus's patch as-is. It's mostly "that's
-not how I would have done it, and the flow seems confusing to me". But
-that's subjective; I don't think there are any functional flaws in it.
+Please note that the "rot13" filter configured in "setup" keeps using
+`git config` instead of `test_config` because subsequent tests might
+depend on it.
 
-> You probably will hear from Ramsay about extern-ness of msb().
+Reviewed-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t0021-conversion.sh | 58 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-Heh. I seem to have a real problem with that lately.
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index e799e59..dc50938 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -38,8 +38,8 @@ script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
+ 
+ test_expect_success check '
+ 
+-	cmp test.o test &&
+-	cmp test.o test.t &&
++	test_cmp test.o test &&
++	test_cmp test.o test.t &&
+ 
+ 	# ident should be stripped in the repository
+ 	git diff --raw --exit-code :test :test.i &&
+@@ -47,10 +47,10 @@ test_expect_success check '
+ 	embedded=$(sed -ne "$script" test.i) &&
+ 	test "z$id" = "z$embedded" &&
+ 
+-	git cat-file blob :test.t > test.r &&
++	git cat-file blob :test.t >test.r &&
+ 
+-	./rot13.sh < test.o > test.t &&
+-	cmp test.r test.t
++	./rot13.sh <test.o >test.t &&
++	test_cmp test.r test.t
+ '
+ 
+ # If an expanded ident ever gets into the repository, we want to make sure that
+@@ -130,7 +130,7 @@ test_expect_success 'filter shell-escaped filenames' '
+ 
+ 	# delete the files and check them out again, using a smudge filter
+ 	# that will count the args and echo the command-line back to us
+-	git config filter.argc.smudge "sh ./argc.sh %f" &&
++	test_config filter.argc.smudge "sh ./argc.sh %f" &&
+ 	rm "$normal" "$special" &&
+ 	git checkout -- "$normal" "$special" &&
+ 
+@@ -141,7 +141,7 @@ test_expect_success 'filter shell-escaped filenames' '
+ 	test_cmp expect "$special" &&
+ 
+ 	# do the same thing, but with more args in the filter expression
+-	git config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
++	test_config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
+ 	rm "$normal" "$special" &&
+ 	git checkout -- "$normal" "$special" &&
+ 
+@@ -154,9 +154,9 @@ test_expect_success 'filter shell-escaped filenames' '
+ '
+ 
+ test_expect_success 'required filter should filter data' '
+-	git config filter.required.smudge ./rot13.sh &&
+-	git config filter.required.clean ./rot13.sh &&
+-	git config filter.required.required true &&
++	test_config filter.required.smudge ./rot13.sh &&
++	test_config filter.required.clean ./rot13.sh &&
++	test_config filter.required.required true &&
+ 
+ 	echo "*.r filter=required" >.gitattributes &&
+ 
+@@ -165,17 +165,17 @@ test_expect_success 'required filter should filter data' '
+ 
+ 	rm -f test.r &&
+ 	git checkout -- test.r &&
+-	cmp test.o test.r &&
++	test_cmp test.o test.r &&
+ 
+ 	./rot13.sh <test.o >expected &&
+ 	git cat-file blob :test.r >actual &&
+-	cmp expected actual
++	test_cmp expected actual
+ '
+ 
+ test_expect_success 'required filter smudge failure' '
+-	git config filter.failsmudge.smudge false &&
+-	git config filter.failsmudge.clean cat &&
+-	git config filter.failsmudge.required true &&
++	test_config filter.failsmudge.smudge false &&
++	test_config filter.failsmudge.clean cat &&
++	test_config filter.failsmudge.required true &&
+ 
+ 	echo "*.fs filter=failsmudge" >.gitattributes &&
+ 
+@@ -186,9 +186,9 @@ test_expect_success 'required filter smudge failure' '
+ '
+ 
+ test_expect_success 'required filter clean failure' '
+-	git config filter.failclean.smudge cat &&
+-	git config filter.failclean.clean false &&
+-	git config filter.failclean.required true &&
++	test_config filter.failclean.smudge cat &&
++	test_config filter.failclean.clean false &&
++	test_config filter.failclean.required true &&
+ 
+ 	echo "*.fc filter=failclean" >.gitattributes &&
+ 
+@@ -197,8 +197,8 @@ test_expect_success 'required filter clean failure' '
+ '
+ 
+ test_expect_success 'filtering large input to small output should use little memory' '
+-	git config filter.devnull.clean "cat >/dev/null" &&
+-	git config filter.devnull.required true &&
++	test_config filter.devnull.clean "cat >/dev/null" &&
++	test_config filter.devnull.required true &&
+ 	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+ 	echo "30MB filter=devnull" >.gitattributes &&
+ 	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
+@@ -207,7 +207,7 @@ test_expect_success 'filtering large input to small output should use little mem
+ test_expect_success 'filter that does not read is fine' '
+ 	test-genrandom foo $((128 * 1024 + 1)) >big &&
+ 	echo "big filter=epipe" >.gitattributes &&
+-	git config filter.epipe.clean "echo xyzzy" &&
++	test_config filter.epipe.clean "echo xyzzy" &&
+ 	git add big &&
+ 	git cat-file blob :big >actual &&
+ 	echo xyzzy >expect &&
+@@ -215,20 +215,20 @@ test_expect_success 'filter that does not read is fine' '
+ '
+ 
+ test_expect_success EXPENSIVE 'filter large file' '
+-	git config filter.largefile.smudge cat &&
+-	git config filter.largefile.clean cat &&
++	test_config filter.largefile.smudge cat &&
++	test_config filter.largefile.clean cat &&
+ 	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
+ 	echo "2GB filter=largefile" >.gitattributes &&
+ 	git add 2GB 2>err &&
+-	! test -s err &&
++	test_must_be_empty err &&
+ 	rm -f 2GB &&
+ 	git checkout -- 2GB 2>err &&
+-	! test -s err
++	test_must_be_empty err
+ '
+ 
+ test_expect_success "filter: clean empty file" '
+-	git config filter.in-repo-header.clean  "echo cleaned && cat" &&
+-	git config filter.in-repo-header.smudge "sed 1d" &&
++	test_config filter.in-repo-header.clean  "echo cleaned && cat" &&
++	test_config filter.in-repo-header.smudge "sed 1d" &&
+ 
+ 	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
+ 	>empty-in-worktree &&
+@@ -240,8 +240,8 @@ test_expect_success "filter: clean empty file" '
+ '
+ 
+ test_expect_success "filter: smudge empty file" '
+-	git config filter.empty-in-repo.clean "cat >/dev/null" &&
+-	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
++	test_config filter.empty-in-repo.clean "cat >/dev/null" &&
++	test_config filter.empty-in-repo.smudge "echo smudged && cat" &&
+ 
+ 	echo "empty-in-repo filter=empty-in-repo" >>.gitattributes &&
+ 	echo dead data walking >empty-in-repo &&
+-- 
+2.10.0
 
--Peff
