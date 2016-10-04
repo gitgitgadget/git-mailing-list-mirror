@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4283207EC
-	for <e@80x24.org>; Tue,  4 Oct 2016 05:50:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 637A6207EC
+	for <e@80x24.org>; Tue,  4 Oct 2016 05:51:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752145AbcJDFuv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 01:50:51 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:32797 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751150AbcJDFuu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 01:50:50 -0400
-Received: by mail-yb0-f194.google.com with SMTP id e2so4141022ybi.0
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 22:50:49 -0700 (PDT)
+        id S1752210AbcJDFvh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 01:51:37 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:34506 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751150AbcJDFvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 01:51:36 -0400
+Received: by mail-yw0-f193.google.com with SMTP id u124so1824641ywg.1
+        for <git@vger.kernel.org>; Mon, 03 Oct 2016 22:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Ssf17zM/wiF7QyiQXNs0CCt9kzVqqHDbfhOL+xG/9cc=;
-        b=ZeutHUZZeNYJDwM5XIWZvwJmI733L2u3bcYMwGHiX11CyIaqvERfFZgKd2MbzU6bXo
-         BV+1xvcv27HAVbMN1fdKmyxgciBDJwMvjGhd/pML/nRJR8SrxDBdBaTU6IeGtEBdguje
-         /7DNXD+JpieKhS7xci4CATdqR0LiAzwqkyYLGiHt8+nlDJwKgyFvucCRZdKuaYKKn4XT
-         iAWWMi3OJB8oF/GeRQy3iA/QQ0n7Q5ARyw6ewoGyir8J+J3vuYQn/GMwfkK7kVkSBypk
-         vDa2hmNcfc96OajpwSc2FwbCu/XRtwleEPJB0G/rA/+NbJHGlMPo0/cN99tqrkTn8UKS
-         +q1Q==
+        bh=R6VylSzjwaiO4KLdP8EKIgqG43CVh8DuDETCjPmkAvY=;
+        b=xMDphHQhn1GvKeaMqUE9nYQscDtjh6lbHHVo0rPIL0QBizYzlWtxvyt/mdpLo/HyhG
+         1+uvF71Yk1M4NVfaR92CYtWqr6wIOLrT/CmNmPy1UR7Yt5rmNx8HfRK+OUGmsRJRnESF
+         PL6DqZCr7uXGY9+TJYpDOiwwaHzcfwqAYk8qR3pbCR82unRu45iEdFHmjTljqyZt9I1n
+         zAbqc/HZb18n8xDTc7+ygjFTVQKOiTkDw9IlHS7WnPZTKFrNFdbpXvOgpeoI6QKrRq+G
+         AroTbwDoRwHxDXzY8xWgpe1AJThATUJJX1r/HcbtHC6e4K1+CiEY7jTzox9JM2bURnRE
+         eQ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Ssf17zM/wiF7QyiQXNs0CCt9kzVqqHDbfhOL+xG/9cc=;
-        b=Hs2Hu16s3xiEhMQ95UY8g5YZWzjcq0ngpQ7+XUg5khYd+1ksVLJWLjovTAfZI64LqX
-         Q9U0qWXe4fTDuqjmdHSwkU1mJ/oGb86Ya1SlWAGVjKs5MInuvS+mPzLL6oDkl9lT2YrS
-         7KNE8+HV19RNs7pLyw1DQCIK40TCjQSVZmFFjaZMMP7DUSZmOtQWo3tnoJaYCcpC7bgx
-         oVszmXdrdrIT84HkuivJDgYEecy4C5hc2bHgTdeKiSSdwrHzAxxRFleqUCICHogyeMRf
-         s28zMxMdS6Yioj+b6muz7FXQlMOJYNE+hF8oZMINsSqTbtZZ8Csnvkuj4V8TCNUzFB0v
-         0Raw==
-X-Gm-Message-State: AA6/9Rk2ZMZamXY1/+trtRhwf60eWkavPiQU/w6sBnySMKqs/LZhVJuaJzbGDYewHxjHyCuBuCePxYQH5CrkHg==
-X-Received: by 10.37.174.1 with SMTP id a1mr1380006ybj.6.1475560249464; Mon,
- 03 Oct 2016 22:50:49 -0700 (PDT)
+        bh=R6VylSzjwaiO4KLdP8EKIgqG43CVh8DuDETCjPmkAvY=;
+        b=MVxLgVuSVREdyqVmNfCguC79H3NOOISB4frcNCswfWm0mPRvpatk9FlH6UvpBUH/eS
+         jT67LwmTtjy7Knuw4s3wIijoFn/vFwdWsRISEl6VCJQlo+O0BP+efi7IFZvzKGMIyat7
+         arEp2KdkN9u8nO6uchk+LGdljaWeuyydy4UYg4H9UYbX8T0tk0lwd7vrlGeToiaFeWVV
+         /1fvNtyS2Xm4WC2b95sfdBGcIQ3OE9tHLzraSfTDvzlgT9Snx3dm60pMPPzM9aJ22WnK
+         gN2Aznxw6GKsuyboNhdNoXI0erLyhytFCRtUIMxs5A7Q/Kb6M0/JdbBwRympWQOtFCpI
+         WNSA==
+X-Gm-Message-State: AA6/9RnHGObCYe7IR2BULtF08pOPZC+2qTZXzhqhmisU3LNCpgdGSYDvUHRQH6cYKfvJijvS4YX7JywC7Tlgwg==
+X-Received: by 10.129.102.85 with SMTP id a82mr1311445ywc.160.1475560295983;
+ Mon, 03 Oct 2016 22:51:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Mon, 3 Oct 2016 22:50:29 -0700 (PDT)
-In-Reply-To: <20161003203357.3cpeg2jyalzykm65@sigill.intra.peff.net>
-References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net> <20161003203357.3cpeg2jyalzykm65@sigill.intra.peff.net>
+Received: by 10.37.96.195 with HTTP; Mon, 3 Oct 2016 22:51:15 -0700 (PDT)
+In-Reply-To: <20161003203401.d4awnljukgqbku2n@sigill.intra.peff.net>
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net> <20161003203401.d4awnljukgqbku2n@sigill.intra.peff.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 3 Oct 2016 22:50:29 -0700
-Message-ID: <CA+P7+xoUbOCRh0C6CAFHgw2NKLstUs_jGHbMQwvqTidfOoEHqQ@mail.gmail.com>
-Subject: Re: [PATCH 02/18] t5613: drop test_valid_repo function
+Date:   Mon, 3 Oct 2016 22:51:15 -0700
+Message-ID: <CA+P7+xqnSt5qe4OLi2kDO9+y_keyFtVK2=qx4Q5skusBWXD31Q@mail.gmail.com>
+Subject: Re: [PATCH 03/18] t5613: use test_must_fail
 To:     Jeff King <peff@peff.net>
 Cc:     Git mailing list <git@vger.kernel.org>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
@@ -60,42 +60,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 3, 2016 at 1:33 PM, Jeff King <peff@peff.net> wrote:
-> This function makes sure that "git fsck" does not report any
-> errors. But "--full" has been the default since f29cd39
-> (fsck: default to "git fsck --full", 2009-10-20), and we can
-> use the exit code (instead of counting the lines) since
-> e2b4f63 (fsck: exit with non-zero status upon errors,
-> 2007-03-05).
+On Mon, Oct 3, 2016 at 1:34 PM, Jeff King <peff@peff.net> wrote:
+> Besides being our normal style, this correctly checks for an
+> error exit() versus signal death.
 >
-> So we can just use "git fsck", which is shorter and more
-> flexible (e.g., we can use "git -C").
 
-This seems obviously correct. I didn't understand your comment about
-the use of "git -C" at first, because I was confused about why "git
--C" doesn't work with "git --full", but then I realized you can't use
-"git -C" with the shell test_valid_repo function.
+Another very simple but obvious improvement.
 
-Thanks,
+Regards,
 Jake
 
->
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  t/t5613-info-alternate.sh | 19 +++++++------------
->  1 file changed, 7 insertions(+), 12 deletions(-)
+>  t/t5613-info-alternate.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 >
 > diff --git a/t/t5613-info-alternate.sh b/t/t5613-info-alternate.sh
-> index e13f57d..4548fb0 100755
+> index 4548fb0..65074dd 100755
 > --- a/t/t5613-info-alternate.sh
 > +++ b/t/t5613-info-alternate.sh
-> @@ -6,11 +6,6 @@
->  test_description='test transitive info/alternate entries'
->  . ./test-lib.sh
+> @@ -46,10 +46,9 @@ git clone -l -s F G &&
+>  git clone --bare -l -s G H'
 >
-> -test_valid_repo() {
-> -       git fsck --full > fsck.log &&
-> -       test_line_count = 0 fsck.log
-> -}
-> -
->  base_dir=$(pwd)
+>  test_expect_success 'invalidity of deepest repository' \
+> -'cd H && {
+> -       git fsck
+> -       test $? -ne 0
+> -}'
+> +'cd H &&
+> +test_must_fail git fsck
+> +'
+>
+>  cd "$base_dir"
+>
+> @@ -75,7 +74,8 @@ cd "$base_dir"
+>  test_expect_success 'that info/alternates is necessary' \
+>  'cd C &&
+>  rm -f .git/objects/info/alternates &&
+> -! (git fsck)'
+> +test_must_fail git fsck
+> +'
+>
+>  cd "$base_dir"
+>
+> @@ -89,7 +89,7 @@ cd "$base_dir"
+>  test_expect_success \
+>      'that relative alternate is only possible for current dir' '
+>      cd D &&
+> -    ! (git fsck)
+> +    test_must_fail git fsck
+>  '
+>
+>  cd "$base_dir"
+> --
+> 2.10.0.618.g82cc264
+>
