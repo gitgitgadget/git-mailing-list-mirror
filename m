@@ -2,155 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14BF420986
-	for <e@80x24.org>; Tue,  4 Oct 2016 19:29:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CD6920986
+	for <e@80x24.org>; Tue,  4 Oct 2016 19:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754167AbcJDT33 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 15:29:29 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:35829 "EHLO
-        mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752815AbcJDT3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 15:29:16 -0400
-Received: by mail-pa0-f48.google.com with SMTP id ik13so22766286pac.2
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 12:29:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gsdx1m3gktPuIsPQZ6VvNBcQ3eTcIipSNzh0eR5VwNs=;
-        b=mB3BCcbxX2rKhElBEfOCWBP4VsYbmKkHG/kdtmf7FuhlT2wi1d5DMpwJTPNbfI/rKf
-         Cv3m52wIXad4C6xZeLNGYQnqL4FkyPZdX9XOxLVBj/bKnXpcuzdPCrbJPfuq5RFdWAEV
-         OhLif9+OBo/cjZTZfxxI/aOkoVSkFVwlt5zEum3s1njDztXOqs8jo6gHymoFNZf97tB+
-         /tjdmzRM7BtWz0/vFpeNB6noW+JA0UZVcczkXMkScreyLLbcKbsYYfF4y9tgwblwr6re
-         Uq50ZuUx+2W0V8uTpLa9ZxomR7cISUNYe8iSZGIXX06sAde/XPpNqCP2YpVmtetwy9MN
-         RU0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gsdx1m3gktPuIsPQZ6VvNBcQ3eTcIipSNzh0eR5VwNs=;
-        b=Z1JOZnQhvxF2ghmfHzMAvegOrUD0gA3tn6qQG4soqFq/F8wXGGUPAOxs8IjO4+1Rf4
-         9Ls0+7Fs8F/CYmgWUjZlDTS/EGw1Avd0jYm/3Lzb1a1Vu65XAIQdjwsH9WyDb1S8CjN8
-         RKmEJYa5lBiDQw04UHc9MyxVhJQK64zrbABFflC9k5ZlZk2Pli4D3+oTlYyPZJWUbNOV
-         zo2WNVotpO854vxFj7whxliiI30p2/1IOLjZVhel+k4bPS1XoLL13u1FjUrWp7kp6XM0
-         YSiP9cJY4ERF3anJmTO1sdd2ZcFL22YN+Sp8fM8xufgQyNt4561Ht2+X8X7Td7b3Nskh
-         /o/g==
-X-Gm-Message-State: AA6/9Rna9Ua5clqPkpm7VfAA//Qk7DzapWYERIGj90gH9q5jcYfLqkvV5NWpiCS5uNps2iUM
-X-Received: by 10.66.50.40 with SMTP id z8mr7510134pan.109.1475609355087;
-        Tue, 04 Oct 2016 12:29:15 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:d1d:42df:48d7:33a4])
-        by smtp.gmail.com with ESMTPSA id p77sm20358155pfi.27.2016.10.04.12.29.14
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 04 Oct 2016 12:29:14 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, peff@peff.net, hvoigt@hvoigt.net,
-        torvalds@linux-foundation.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 1/2] push: change submodule default to check when submodules exist
-Date:   Tue,  4 Oct 2016 12:29:09 -0700
-Message-Id: <20161004192910.30649-1-sbeller@google.com>
-X-Mailer: git-send-email 2.10.0.129.g35f6318
-In-Reply-To: <20161004182801.j3fdpewybatmibpo@sigill.intra.peff.net>
-References: <20161004182801.j3fdpewybatmibpo@sigill.intra.peff.net>
+        id S1754213AbcJDTaw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 15:30:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55175 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752140AbcJDTav (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 15:30:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9169842029;
+        Tue,  4 Oct 2016 15:30:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ln6x5ze2vnr+018QxV/9WMZPRw4=; b=D6empV
+        VXOJwhjjjToHDu+jlDwLf7x0UxzZ+YQYDYORyebcN1zbO0yEXfxTwDmEXevNuJr5
+        vVUByPOOblOMdFBsH1yRoox6Wu0LQkbJZw1g3v4YmhJmS+ujEH9iz5sjxCWwgDeU
+        Y7/HfYZ13uhaQwtF6UVjItEFM3nT6MHn0uyuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iDDx3BahWdgLi2S4+utt7A4rv3+igHFt
+        djil5vEFTVf/PNNiegWa7cZ8VxnEhGBk4+oMbza2aSk8JdsXTx3iKsKOGnPGeCZk
+        d9tijVdeuLRCHEMH21PzBKvOva5jOIAooZUjwo76Xb4vFbKnJ1P+bLgqm+K+hUrC
+        OsBr6AFZP7Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 866BB42028;
+        Tue,  4 Oct 2016 15:30:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D96EB42025;
+        Tue,  4 Oct 2016 15:30:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, ramsay@ramsayjones.plus.com, jnareb@gmail.com,
+        j6t@kdbg.org, tboegi@web.de, peff@peff.net, mlbright@gmail.com
+Subject: Re: [PATCH v9 04/14] run-command: add wait_on_exit
+References: <20161004125947.67104-1-larsxschneider@gmail.com>
+        <20161004125947.67104-5-larsxschneider@gmail.com>
+Date:   Tue, 04 Oct 2016 12:30:47 -0700
+In-Reply-To: <20161004125947.67104-5-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Tue, 4 Oct 2016 14:59:37
+        +0200")
+Message-ID: <xmqqh98rud20.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0E6EBA10-8A69-11E6-BF0F-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When working with submodules, it is easy to forget to push the submodules.
-The setting 'check', which checks if any existing submodule is present on
-at least one remote of the submodule remotes, is designed to prevent this
-mistake.
+larsxschneider@gmail.com writes:
 
-Flipping the default to check for submodules is safer than the current
-default of ignoring submodules while pushing.
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> The flag 'clean_on_exit' kills child processes spawned by Git on exit.
+> A hard kill like this might not be desired in all cases.
+>
+> Add 'wait_on_exit' which closes the child's stdin on Git exit and waits
+> until the child process has terminated.
+>
+> The flag is used in a subsequent patch.
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  run-command.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++--------
+>  run-command.h |  3 +++
+>  2 files changed, 50 insertions(+), 8 deletions(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 3269362..96c54fe 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -21,6 +21,9 @@ void child_process_clear(struct child_process *child)
+>
+>  struct child_to_clean {
+>  	pid_t pid;
+> +	char *name;
+> +	int stdin;
+> +	int wait;
+>  	struct child_to_clean *next;
+>  };
+>  static struct child_to_clean *children_to_clean;
+> @@ -28,12 +31,33 @@ static int installed_child_cleanup_handler;
+>
+>  static void cleanup_children(int sig, int in_signal)
+>  {
+> +	int status;
+> +	struct child_to_clean *p = children_to_clean;
+> +
+> +	/* Close the the child's stdin as indicator that Git will exit soon */
+> +	while (p) {
+> +		if (p->wait)
+> +			if (p->stdin > 0)
+> +				close(p->stdin);
+> +		p = p->next;
+> +	}
 
-However checking for submodules requires additional work[1], which annoys
-users that do not use submodules, so we turn on the check for submodules
-based on a cheap heuristic, the existence of the .git/modules directory.
-That directory doesn't exist when no submodules are used and is only
-created and populated when submodules are cloned/added.
-
-When the submodule directory doesn't exist, a user may have changed the
-gitlinks via plumbing commands. Currently the default is to not check.
-RECURSE_SUBMODULES_DEFAULT is effectively RECURSE_SUBMODULES_OFF currently,
-though it may change in the future. When no submodules exist such a check
-is pointless as it would fail anyway, so let's just turn it off.
-
-[1] https://public-inbox.org/git/CA+55aFyos78qODyw57V=w13Ux5-8SvBqObJFAq22K+XKPWVbAA@mail.gmail.com/
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-Jeff wrote:
-> Consulting .git/config is fine, I think. It's not like we don't read it
-> (sometimes multiple times!) during the normal course of the program
-> anyway. It's just a question of whether it makes more sense for the
-> heuristic to kick in after "init", or only after "update". I don't know
-> enough to have an opinion.
-
-I think there is no difference in practice, however the "after update"
-is way easier to implement and hence more maintainable (one lstat instead of
-fiddeling with the config; that can go wrong easily). 
-
-Thanks,
-Stefan
-
- builtin/push.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/push.c b/builtin/push.c
-index 3bb9d6b..06fd3bd 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -3,6 +3,7 @@
-  */
- #include "cache.h"
- #include "refs.h"
-+#include "dir.h"
- #include "run-command.h"
- #include "builtin.h"
- #include "remote.h"
-@@ -22,7 +23,7 @@ static int deleterefs;
- static const char *receivepack;
- static int verbosity;
- static int progress = -1;
--static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-+static int recurse_submodules;
- static enum transport_family family;
- 
- static struct push_cas_option cas;
-@@ -31,6 +32,19 @@ static const char **refspec;
- static int refspec_nr;
- static int refspec_alloc;
- 
-+static void preset_submodule_default(void)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	strbuf_addf(&sb, "%s/modules", get_git_dir());
-+
-+	if (file_exists(sb.buf))
-+		recurse_submodules = RECURSE_SUBMODULES_CHECK;
-+	else
-+		recurse_submodules = RECURSE_SUBMODULES_OFF;
-+
-+	strbuf_release(&sb);
-+}
-+
- static void add_refspec(const char *ref)
- {
- 	refspec_nr++;
-@@ -552,6 +566,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	packet_trace_identity("push");
-+	preset_submodule_default();
- 	git_config(git_push_config, &flags);
- 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
- 	set_push_cert_flags(&flags, push_cert);
--- 
-2.10.0.129.g35f6318
-
+This part and the "stdin" field feels a bit too specific to the
+caller you are adding.  Allowing the user of the API to specify what
+clean-up cation needs to be taken in the form of a callback function
+may not be that much more effort and would be more flexible and
+useful, I would imagine?
