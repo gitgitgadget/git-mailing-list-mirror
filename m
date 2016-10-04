@@ -7,108 +7,86 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3D320986
-	for <e@80x24.org>; Tue,  4 Oct 2016 17:10:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D60C820986
+	for <e@80x24.org>; Tue,  4 Oct 2016 17:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752902AbcJDRKn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 13:10:43 -0400
-Received: from mout.gmx.net ([212.227.15.18]:65010 "EHLO mout.gmx.net"
+        id S1753087AbcJDRQd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 13:16:33 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50299 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752452AbcJDRKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 13:10:42 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MA9Yv-1bkZUN1vsv-00BLfY; Tue, 04 Oct 2016 19:10:38
+        id S1752572AbcJDRQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 13:16:33 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MVrQS-1bOnQW1jJo-00X2sa; Tue, 04 Oct 2016 19:16:08
  +0200
-Date:   Tue, 4 Oct 2016 19:10:37 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Tue, 4 Oct 2016 19:16:04 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Subject: [ANNOUNCE] Git for Windows 2.10.1
+To:     Rich Felker <dalias@libc.org>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        musl@lists.openwall.com
+Subject: Re: Regression: git no longer works with musl libc's regex impl
+In-Reply-To: <20161004161130.GX19318@brightrain.aerifal.cx>
+Message-ID: <alpine.DEB.2.20.1610041915320.35196@virtualbox>
+References: <20161004150848.GA7949@brightrain.aerifal.cx> <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net> <20161004154045.GT19318@brightrain.aerifal.cx> <alpine.DEB.2.20.1610041802310.35196@virtualbox> <20161004161130.GX19318@brightrain.aerifal.cx>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-926233871-1475601038=:35196"
-Message-ID: <0MQRWm-1bUHYY2H52-00ThV3@mail.gmx.com>
-X-Provags-ID: V03:K0:qfedBxV1pOh/1eZxpiDp6bjJ8e62QFgpdCfaixcLaYsa1bqNsB3
- hPuQ99drgRN7BQhjXZzNBqZBW/qMTeDkls0HmU+coO6w/OmDgrrfsiL2ru+bcd5yTUFNQML
- BDmzSC2ChWsLhbGC2EfnyyampukKP98V1sFqHPOWug9Sr+I4JYnGZ2xDGihZW4xn/Wt1apD
- kK799N+PG4/yxpMEQdZow==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:T0yrCvl/rq8=:HtXInjNmHgi6/gw+F9IDSN
- AQhnJMXoxZZ+tJQFigr69hCg1i3ws/ffDeTT0dGUZFGOZpohg4oTFantAY/PRD+jb+yOGQpDJ
- SPkr0XXfnOApTAmWbD7WRN5EzlGzWmz0qSZ2YiF8BsFuvxxQ8f8GjgtgMJQ7Nh/VV+wV9zouk
- Z1BP4L2vwdnsyo4tuL8+8hVb+4rAecfo8DEIM3UiduEsdm9qVBfXf2PW2sr/wx6AMTVHpUKnD
- DoDgc8qLj3D7GDsBjg0p9+IC+8iJD8g43AeZk24+Wk7mW6D/5NYlzFk0/kfRpk1+XBysQ71I2
- MOMqWWDJQf3YkeVKboQ2X7JdcZoanbFsbh0Jo+Uix6kkt2XES3iAx0Vf/4cXnbp224E5UOdfC
- DiME8Woz3uWGypjRGb2JSVhRdNdexwZJTBev40UrS6uNnkbA1cHuBsOhMq0Hk/cmOY+qD457u
- T4S6wF6qCs+XRDauoQXx4ygsOfzfEwSfM1eK7rN/iqy9PWujsOat9BdmOmI1ZBVMwqtSrjao3
- Nqp2WqZTu0FKPCGrgehtP04C7kBvN/HPO6WfRwUvxwA1pNsvpwSk8+R85SSeB2sfjJzNuXOE0
- DvWk8MldkL+a/YYFTatQ1+ZGIYjXd03CZYP+Qy5oyFaZAZ1Q3/RGpajxVsSpO8DY/6G+d3eEJ
- 975wSvlPk4muM1jr3eNai79CvywehekNJ9685gKvqJdzPYmvfBvi4dj9RmDiqxW+vnnNtTdJx
- sCBIUNs9myg1Zr2N3Rl8qPZuC2yVvlIWJN/HorczTABnAiu/+vpU+SW8hatxeLiRgjOBbO9mM
- +7B4Cle
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:KEm9/0QVP7u/okA2r9rGUM98VUW+5T7xTQOeC6CNUnGIVAHyP5f
+ k/tiO03tpSAmYRsEWoB9sd9TNYdcPRYCziCAhhHpxd70LMEXTOxFmFRZpskkEqsix6FqzSJ
+ thXE0eisqK8irk9eEkTAZUqWhDsneqzviycjgw1+o/62BzcAaxGv1nRhzGVp9wwxfaX9KWD
+ YYQxgB2QKmCWezfCDl00Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vMgvTVJiI/I=:H4fR+s//xwIYE4vmmChjAg
+ oHCaIhmMxrF9ZWAVO1C4exQZDrjtDRQtg9BprhBzijq5fi5Gl1LQ6CxB6Wc5aspupBmj/jTHY
+ TeXCawR1BjfQmpJNG+TjiTaYQoBCwMAaACYY6TFL5hHYp/QM9hGoOkcI/hpOvtB2rqIWNxNa3
+ 1iF28DMQ1ztxgZlCXaSH6qp9DLp3Q0vf8yxWLB5uqsoPmF15sUlADeb8QtGss26OjMpF1Ylrr
+ BCRqx/+g1tZoHPtdpzOGY8KzzJHbt20Qw4n2+n/vMJM/ZHjEBhIHJcJh/qNwyWNkd73zoOUHg
+ 7Lwe4avgX1/sCCe8z+eqcoc/T1CL3nDnaBwPW2Av3xdZFYxNbgZ3dr26L8RWlMYbf9p7Gvl4/
+ YLwfOQbhcr7C5oZTPDsWz0QVqif/mpy69iB44XW1uo8XvINcdAKiTROgSwfKxAYHjKc6AUbrt
+ toxlBK1vLB+kzJVHznXUY+2CizA5FGgptDP4PZaKoDWGhjbGbviiFTZOcEB8luXMGzmvxA0EE
+ AIFh0rLLbWFz1/ARHyVAxtPdYzZO+GiuEs0TRwW4PdzgQFy4Qy6uGBrwEGyNt9Pn0SSsBFj9+
+ a2ysXbVdpBn85WhzaSNJq2bHR6rwrr2MigdNtO4uq+OJcUor45Ys8V8S84oLNYyvH7UgmV2AB
+ JrNyvbdGlUAulWKhlEoqOSX3cKkSHnqM5hg+ix15PHKI0/wNGckbBdcFnQoj39AFPSvtLy1ZW
+ B/Zcw5FwuQWiCs09D0b/jgclqNDCX8yB/Wqr808afvr8Ofstg53f+Tz5R3Y3iyE1rgIDR5n4o
+ mU14AbG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Rich,
 
---8323329-926233871-1475601038=:35196
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Tue, 4 Oct 2016, Rich Felker wrote:
 
-Dear Git users,
+> On Tue, Oct 04, 2016 at 06:08:33PM +0200, Johannes Schindelin wrote:
+> > Hi Rich,
+> > 
+> > On Tue, 4 Oct 2016, Rich Felker wrote:
+> > 
+> > > On Tue, Oct 04, 2016 at 11:27:22AM -0400, Jeff King wrote:
+> > > > On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> > > > 
+> > > > > 1. is nonzero mod page size, it just works; the remainder of the last
+> > > > >    page reads as zero bytes when mmapped.
+> > > > 
+> > > > Is that a portable assumption?
+> > > 
+> > > Yes.
+> > 
+> > No, it is not. You quote POSIX, but the matter of the fact is that we use
+> > a subset of POSIX in order to be able to keep things running on Windows.
+> > 
+> > And quite honestly, there are lots of reasons to keep things running on
+> > Windows, and even to favor Windows support over musl support. Over four
+> > million reasons: the Git for Windows users.
+> 
+> I would hope that in the future, git-for-windows users will be using
+> musl, via midipix, rather than the painfully slow and awful version
+> they're stuck with now...
 
-It is my pleasure to announce that Git for Windows 2.10.1 is available from=
-:
+Git for Windows actually uses the MSVC runtime, which is blazing fast.
 
-=09https://git-for-windows.github.io/
-
-Changes since Git for Windows v2.10.0 (September 3rd 2016)
-
-New Features
-
-  =E2=80=A2 Comes with Git v2.10.1.
-  =E2=80=A2 Comes with Git Credential Manager v1.7.0.
-  =E2=80=A2 Comes with Git Flow v1.10.0.
-  =E2=80=A2 We now produce nice diffs for .docm and .dotm files, just as we=
- did
-    for .docx files already.
-
-Bug Fixes
-
-  =E2=80=A2 The icon in the Explorer integration ("Git Bash Here"), which w=
-as
-    lost by mistake in v2.10.0, is back.
-  =E2=80=A2 Fixed a crash when calling git diff -G<regex> on new-born files
-    without configured user diff drivers.
-  =E2=80=A2 Interactive GPG signing of commits and tags was fixed.
-  =E2=80=A2 Calling Git with --date=3Dformat:<invalid-format> no longer res=
-ults
-    in an out-of-memory but reports the problem and aborts instead.
-  =E2=80=A2 Git Bash now opens properly even for Azure AD accounts.
-  =E2=80=A2 Git GUI respects the commit.gpgsign setting again.
-  =E2=80=A2 Upgrades the bundled OpenSSL to v1.0.2j.
-
-Filename | SHA-256
--------- | -------
-Git-2.10.1-64-bit.exe | 0fcb5a3d5795d5bfa1c0d35d1cada37f25b5e62c776a7099f27=
-cfebc31362d95
-Git-2.10.1-32-bit.exe | 66e0748cb0eb0b63506f38fb8bf1abb5c361ce647af86cb0f75=
-4bc5b6a17775b
-PortableGit-2.10.1-64-bit.7z.exe | aa0634e026c70fe8b50207b8b125a18f45e259ea=
-c32cea246e068577a6546718
-PortableGit-2.10.1-32-bit.7z.exe | 3ca6f426e3b2e6675a11b680f719c23affa7e4dc=
-060e315375c6a262ed2658a5
-MinGit-2.10.1-64-bit.zip | a7268f4ab447e62940347d52fe01321403cfa3e9e94b8e5c=
-ac4d6ded28962d64
-MinGit-2.10.1-32-bit.zip | bcdeb7c00771f0e8e96689f704d158e8dcf67fdb4178f1ea=
-3f388e877398a2c7
-Git-2.10.1-64-bit.tar.bz2 | c0a541a60be3ea6264a269b90689b15da3e27811218e8c2=
-14359ec44593faa8e
-Git-2.10.1-32-bit.tar.bz2 | 3c77a702911512708126e83673c5906af78807bcb9daad5=
-223b0ab04ea81f4ea
+You are probably confusing Git for Windows with Cygwin Git.
 
 Ciao,
 Johannes
---8323329-926233871-1475601038=:35196--
