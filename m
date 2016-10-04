@@ -2,173 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 657291F4F8
-	for <e@80x24.org>; Tue,  4 Oct 2016 06:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6D01F4F8
+	for <e@80x24.org>; Tue,  4 Oct 2016 06:46:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751764AbcJDGo7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 02:44:59 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:34093 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751469AbcJDGo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 02:44:58 -0400
-Received: by mail-yw0-f196.google.com with SMTP id u124so1857173ywg.1
-        for <git@vger.kernel.org>; Mon, 03 Oct 2016 23:44:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=G1nrNNL2UBOy1Q4cp5T/itoF+w1CY63CTKtfzUXS8Ic=;
-        b=vT9bDilexjbqq93F2YVb3TvaipO8IEMaUpcQMALjA6x6G8ZNKjIZFGyqCTf5XtXgxN
-         fyZl3RuLgyEWMBvGOs0QEQWbGONtLgQ8M4zo2F33QJ8aslz8tE/tBMICl0jcl3f3k5J+
-         f5BJDaQIgCgZ745bWcPn5Z1WvMJpZBNSCo4WBmEevnG4SavZwyyqKjapCMwWRJx9Iyqw
-         BNTqOf7l7hpmrIMJbY0GTozX59cFBJiofIY3bRjyX689XleUJPrAny+ExPQ6Sag4zOtj
-         uNpC/M7tqF81awY84e4cgu2kD70QtYDGaZp3UBydKotqWFV1yjz8vyb/mjhnZ3HTXRIZ
-         dRVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=G1nrNNL2UBOy1Q4cp5T/itoF+w1CY63CTKtfzUXS8Ic=;
-        b=UG1ynCPi1JDla00EoGt5Fi82GyIS2Hxk2bGn/QzZ5s2xT+Bpmsuxk2JFL4CVPylhZW
-         otpHobLQAnOVBtM2IGZH6K9vAlIwUsxANf5NukL++/uJwDwfKTpFQbBIgmFrZNyeGa/X
-         om/Nn3/mlDb00ka8WxvTjOv4yIsEdQcyez9GAhr8K+sQydO8zSMz2S7gUgj/pZaqdE1p
-         dt9XPrf70tXpset2aLwv+a3cg7wOg6hRG1oayat65VqPAgf7W7inPMTEQlMA14JTHaGE
-         JZt3CVq0CatJNdFKc8wmLf6a1lEJtn5EPcDHGNQm7Qwk7NcCuElmXow4rvt9IZHV9qYH
-         dHQw==
-X-Gm-Message-State: AA6/9RkKzWLJBUnv0etA3KP/j5qS8Qc4+g1CRjnl7lTrdzHXrJqmP62P6/NfqrRqiWvTDB6lYEqlYyT2jcbWVg==
-X-Received: by 10.13.244.129 with SMTP id d123mr1322028ywf.276.1475563497840;
- Mon, 03 Oct 2016 23:44:57 -0700 (PDT)
+        id S1752151AbcJDGqC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Oct 2016 02:46:02 -0400
+Received: from 5.mo5.mail-out.ovh.net ([87.98.173.103]:54106 "EHLO
+        5.mo5.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751597AbcJDGqC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2016 02:46:02 -0400
+X-Greylist: delayed 4616 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Oct 2016 02:46:01 EDT
+Received: from player692.ha.ovh.net (b7.ovh.net [213.186.33.57])
+        by mo5.mail-out.ovh.net (Postfix) with ESMTP id 89202261E8
+        for <git@vger.kernel.org>; Tue,  4 Oct 2016 07:28:57 +0200 (CEST)
+Received: from [192.168.1.10] (89-166-15-32.bb.dnainternet.fi [89.166.15.32])
+        (Authenticated sender: kevin@bracey.fi)
+        by player692.ha.ovh.net (Postfix) with ESMTPSA id F067860006B;
+        Tue,  4 Oct 2016 07:28:55 +0200 (CEST)
+Message-ID: <57F33E12.4020900@bracey.fi>
+Date:   Tue, 04 Oct 2016 08:28:50 +0300
+From:   Kevin Bracey <kevin@bracey.fi>
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Mon, 3 Oct 2016 23:44:37 -0700 (PDT)
-In-Reply-To: <20161003203609.4hig3e24lyvswdcf@sigill.intra.peff.net>
-References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net> <20161003203609.4hig3e24lyvswdcf@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 3 Oct 2016 23:44:37 -0700
-Message-ID: <CA+P7+xrVSsNfHo_+tT2+tmXkzAiETVRDVwud-2ADGX8G42W+GQ@mail.gmail.com>
-Subject: Re: [PATCH 15/18] fill_sha1_file: write into a strbuf
-To:     Jeff King <peff@peff.net>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset=UTF-8
+To:     GIT Mailing-list <git@vger.kernel.org>
+CC:     =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH 1/3] add QSORT
+References: <67bddc37-4ee2-fef0-c852-e32645421e4c@web.de> <xmqqponmcp07.fsf@gitster.mtv.corp.google.com> <83398160-555f-adab-6b1e-3283c533b5ff@web.de> <57F290DC.5080303@bracey.fi> <9ff725eb-3536-638b-1ec0-ff9130478abc@web.de>
+In-Reply-To: <9ff725eb-3536-638b-1ec0-ff9130478abc@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 4474607706328633565
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelvddrvdeigdeljecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 3, 2016 at 1:36 PM, Jeff King <peff@peff.net> wrote:
-> It's currently the responsibility of the caller to give
-> fill_sha1_file() enough bytes to write into, leading them to
-> manually compute the required lengths. Instead, let's just
-> write into a strbuf so that it's impossible to get this
-> wrong.
+On 04/10/2016 01:00, René Scharfe wrote:
+> Am 03.10.2016 um 19:09 schrieb Kevin Bracey:
+>> As such, NULL checks can still be elided even with your change. If you
+>> effectively change your example to:
+>>
+>>     if (nmemb > 1)
+>>         qsort(array, nmemb, size, cmp);
+>>     if (!array)
+>>         printf("array is NULL\n");
+>>
+>> array may only be checked for NULL if nmemb <= 1. You can see GCC doing
+>> that in the compiler explorer - it effectively turns that into "else
+>> if".
+>
+> We don't support array == NULL together with nmemb > 1, so a segfault 
+> is to be expected in such cases, and thus NULL checks can be removed 
+> safely.
+>
+Possibly true in practice.
 
-Yea this makes sense.
+But technically wrong by the C standard - behaviour is undefined if the 
+qsort pointer is invalid. You can't formally expect the defined 
+behaviour of a segfault when sending NULL into qsort. (Hell, maybe the 
+qsort has its own NULL check and silently returns! cf printf - some 
+printfs will segfault when passed NULL, some print "(null)"). I've 
+worked on systems that don't fault reads to NULL, only writes, so those 
+might not segfault there, if NULL appeared sorted...
 
->
-> The alt_odb caller already has a strbuf, so this makes
-> things strictly simpler. The other caller, sha1_file_name(),
-> uses a static PATH_MAX buffer and dies when it would
-> overflow. We can convert this to a static strbuf, which
-> means our allocation cost is amortized (and as a bonus, we
-> no longer have to worry about PATH_MAX being too short for
-> normal use).
->
-> This does introduce some small overhead in fill_sha1_file(),
-> as each strbuf_addchar() will check whether it needs to
-> grow. However, between the optimization in fec501d
-> (strbuf_addch: avoid calling strbuf_grow, 2015-04-16) and
-> the fact that this is not generally called in a tight loop
-> (after all, the next step is typically to access the file!)
-> this probably doesn't matter. And even if it did, the right
-> place to micro-optimize is inside fill_sha1_file(), by
-> calling a single strbuf_grow() there.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  sha1_file.c | 34 ++++++++++------------------------
->  1 file changed, 10 insertions(+), 24 deletions(-)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index efc8cee..80a3333 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -172,36 +172,28 @@ enum scld_error safe_create_leading_directories_const(const char *path)
->         return result;
->  }
->
-> -static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
-> +static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
->  {
->         int i;
->         for (i = 0; i < 20; i++) {
->                 static char hex[] = "0123456789abcdef";
->                 unsigned int val = sha1[i];
-> -               *pathbuf++ = hex[val >> 4];
-> -               *pathbuf++ = hex[val & 0xf];
-> +               strbuf_addch(buf, hex[val >> 4]);
-> +               strbuf_addch(buf, hex[val & 0xf]);
->                 if (!i)
-> -                       *pathbuf++ = '/';
-> +                       strbuf_addch(buf, '/');
->         }
-> -       *pathbuf = '\0';
->  }
->
->  const char *sha1_file_name(const unsigned char *sha1)
->  {
-> -       static char buf[PATH_MAX];
-> -       const char *objdir;
-> -       int len;
-> +       static struct strbuf buf = STRBUF_INIT;
->
-> -       objdir = get_object_directory();
-> -       len = strlen(objdir);
-> +       strbuf_reset(&buf);
-> +       strbuf_addf(&buf, "%s/", get_object_directory());
->
-> -       /* '/' + sha1(2) + '/' + sha1(38) + '\0' */
-> -       if (len + 43 > PATH_MAX)
-> -               die("insanely long object directory %s", objdir);
-> -       memcpy(buf, objdir, len);
-> -       buf[len] = '/';
-> -       fill_sha1_path(buf + len + 1, sha1);
-> -       return buf;
+And obviously there's the language lawyer favourite possibility of the 
+call causing nasal flying monkeys or whatever.
 
-I'm definitely a fan of seeing the magic number here go away.
+So if it's not a program error for array to be NULL and nmemb to be zero 
+in your code, and you want a diagnostic for array=NULL, nmemb non-zero, 
+I think you should put that diagnostic into sane_qsort as an assert or 
+something, not rely on qsort's undefined behaviour being a segfault.
 
-> +       fill_sha1_path(&buf, sha1);
-> +       return buf.buf;
->  }
->
->  struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
-> @@ -213,14 +205,8 @@ struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
->  static const char *alt_sha1_path(struct alternate_object_database *alt,
->                                  const unsigned char *sha1)
->  {
-> -       /* hex sha1 plus internal "/" */
-> -       size_t len = GIT_SHA1_HEXSZ + 1;
->         struct strbuf *buf = alt_scratch_buf(alt);
+     sane_qsort(blah)
+     {
+          if (nmemb >= 1) {
+              assert(array);
+              qsort(array, nmemb, ...);
+          }
+     }
 
-Funny story.. While reviewing this code on my screen, my monitor has a
-nice little bit of gunk just between the lines that made this one look
-like it was being deleted. So I was really confused as to what strbuf
-you were using and why you removed a call to alt_scratch_buf()..
-Obviously this line just isn't being removed.
+Can't invoke undefined behaviour from NULL without triggering the 
+assert. (Could still have other invalid pointers, of course).
 
-> -
-> -       strbuf_grow(buf, len);
-> -       fill_sha1_path(buf->buf + buf->len, sha1);
-> -       strbuf_setlen(buf, buf->len + len);
-> -
-> +       fill_sha1_path(buf, sha1);
->         return buf->buf;
->  }
+Usually I am on the side of "no NULL checks", as I make the assumption 
+that we will get a segfault as soon as NULL pointers are used, and those 
+are generally easy to diagnose. But seeing a compiler invoking this sort 
+of new trickery due to invoking undefined behaviour is making me more 
+nervous about doing so...
+
+>> To make that check really work, you have to do:
+>>
+>>     if (array)
+>>         qsort(array, nmemb, size, cmp);
+>>     else
+>>         printf("array is NULL\n");
+>>
+>> So maybe your "sane_qsort" should be checking array, not nmemb.
 >
-> --
-> 2.10.0.618.g82cc264
->
+> It would be safe, but arguably too much so, because non-empty arrays 
+> with NULL wouldn't segfault anymore, and thus become harder to 
+> identify as the programming errors they are.
+Well, you get the print. Although I guess you're worrying about the 
+second if being real code, not a debugging check.
+
+I must say, this is quite a courageous new optimisation from GCC. It 
+strikes me as finding a language lawyer loophole that seems to have been 
+intended for something else (mapping library functions directly onto 
+CISCy CPU intrinsics), and using it to invent a whole new optimisation 
+that seems more likely to trigger bugs than optimise any significant 
+amount of code in a desirable way.
+
+Doubly weird as there's no (standard) language support for this. I don't 
+know how you'd define "my_qsort" that triggered the same optimisations.
+
+I've seen similar 
+library-knowledge-without-any-way-to-reproduce-in-user-code 
+optimisations like "malloc returns a new pointer that doesn't alias with 
+anything existing" (and no way to reproduce the optimisation with 
+my_malloc_wrapper). But those seemed to have a clear performance 
+benefit, without any obvious traps. Doubtful about this one.
+
+Kevin
+
