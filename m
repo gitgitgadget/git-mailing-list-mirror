@@ -2,106 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E4631F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 16:28:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 102B61F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 16:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751968AbcJEQ2A (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 12:28:00 -0400
-Received: from 216-12-86-13.cv.mvl.ntelos.net ([216.12.86.13]:55572 "EHLO
-        brightrain.aerifal.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750807AbcJEQ17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 12:27:59 -0400
-Received: from dalias by brightrain.aerifal.cx with local (Exim 3.15 #2)
-        id 1brp2V-0007pS-00; Wed, 05 Oct 2016 16:27:27 +0000
-Date:   Wed, 5 Oct 2016 12:27:27 -0400
-From:   Rich Felker <dalias@libc.org>
-To:     Jeff King <peff@peff.net>
-Cc:     James B <jamesbond3142@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        musl@lists.openwall.com, git@vger.kernel.org
-Subject: Re: [musl] Re: Regression: git no longer works with musl libc's
- regex impl
-Message-ID: <20161005162727.GK19318@brightrain.aerifal.cx>
-References: <20161004150848.GA7949@brightrain.aerifal.cx>
- <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
- <20161004154045.GT19318@brightrain.aerifal.cx>
- <alpine.DEB.2.20.1610041802310.35196@virtualbox>
- <20161005090625.683fdbbfac8164125dee6469@gmail.com>
- <alpine.DEB.2.20.1610051231390.35196@virtualbox>
- <20161005225934.770d73b7d491d4bf4816411d@gmail.com>
- <20161005161158.62o7qmpwxdgf6zzk@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161005161158.62o7qmpwxdgf6zzk@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S1751803AbcJEQhO convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 5 Oct 2016 12:37:14 -0400
+Received: from p3plsmtp15-02-2.prod.phx3.secureserver.net ([173.201.193.36]:54022
+        "EHLO p3plwbeout15-02.prod.phx3.secureserver.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751304AbcJEQhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 12:37:13 -0400
+Received: from localhost ([173.201.193.12])
+        by p3plwbeout15-02.prod.phx3.secureserver.net with bizsmtp
+        id rsdC1t0020GWrr901sdCVk; Wed, 05 Oct 2016 09:37:12 -0700
+X-SID:  rsdC1t0020GWrr901
+Received: (qmail 6823 invoked by uid 99); 5 Oct 2016 16:37:12 -0000
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="utf-8"
+X-Originating-IP: 128.143.170.15
+User-Agent: Workspace Webmail 6.5.1
+Message-Id: <20161005093711.dc30d64f61e5ec441c34ffd4f788e58e.4f463e82c1.wbe@email15.godaddy.com>
+From:   <writeonce@midipix.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     musl@lists.openwall.com, git@vger.kernel.org,
+        "Jeff King" <peff@peff.net>
+Subject: RE: [musl] Re: Regression: git no longer works with musl libc's regex impl
+Date:   Wed, 05 Oct 2016 09:37:11 -0700
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 05, 2016 at 12:11:58PM -0400, Jeff King wrote:
-> On Wed, Oct 05, 2016 at 10:59:34PM +1100, James B wrote:
+Hi Johannes,
+
 > 
-> > Number downloads does not make first-tier platform. You know that as
-> > well as everyone else.
+> 
+> -------- Original Message --------
+> Subject: RE: [musl] Re: Regression: git no longer works with musl libc's
+> regex impl
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Date: Wed, October 05, 2016 3:49 am
+> To: writeonce@midipix.org
+> Cc: musl@lists.openwall.com, git@vger.kernel.org, Jeff King
+> <peff@peff.net>
+> 
+> Hi writeonce,
+> 
+> On Tue, 4 Oct 2016, writeonce@midipix.org wrote:
+> 
+> > < On Tue, 4 Oct 2016, Rich Felker wrote:
+> > < 
+> > < > On Tue, Oct 04, 2016 at 11:27:22AM -0400, Jeff King wrote:
+> > < > > On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> > < > > 
+> > < > > > 1. is nonzero mod page size, it just works; the remainder of the
+> > < > > > last page reads as zero bytes when mmapped.
+> > < > > 
+> > < > > Is that a portable assumption?
+> > < > 
+> > < > Yes.
+> > < 
+> > < No, it is not. You quote POSIX, but the matter of the fact is that we
+> > < use a subset of POSIX in order to be able to keep things running on
+> > < Windows.
 > > 
-> > First-tier support is the decision made by the maintainers that the
-> > entire features of the software must be available on those first tier
-> > platforms. So if Windows is indeed first-tier platform for git, it
-> > means any features that don't work on git version of Windows must not
-> > be used/developed or even castrated. That's a scary thought.
+> > As far as I can tell (and as the attached program may help demonstrate),
+> > the above assumption has been valid on all versions of Windows since at
+> > least Windows 2000.
 > 
-> Prepare to be scared, then, I guess. Ever since the msysgit project
-> started years ago, we have made concessions in the code to work both
-> with POSIX-ish systems and with the msys layer. E.g., see how git-daemon
-> does not fork(), but actually re-spawns itself to handle connections.
+> And since W2K is already past its end of life, it would be safe for
+> practical considerations.
 > 
-> When possible we try to put our abstractions at a level where they can
-> be implemented in a performant way on all platforms (the git-daemon
-> things is probably the _most_ ugly in that respect; I think nobody has
-> really cared about the performance enough to add back in a forking code
-> path for POSIX systems).
+> However, I have to add two comments to that:
 > 
-> > So this decision that "Windows is now a first-tier platform for git" -
-> > is your own opinion, or is this the collective opinion of *all* the
-> > git maintainers?
+> - it is *not* guaranteed. The behavior is undefined, even if you see
+>  consistent behavior so far. Future Windows versions might break that
+>  assumption freely, though.
 > 
-> There is only one maintainer of git: Junio. However, you'll note that I
-> also used "we" in the paragraphs above. And that is because the approach
-> I am talking about is something that has been done over the course of
-> many years by many members of the development community.
-> 
-> You may disagree with that approach, but it is nothing new. The msysgit
-> project started in 2007.
 
-The goal of the midipix project is to make the need for FOSS projects
-supporting Windows to do hacks like this obsolete. It still has a
-little ways to go to be ready for mainstream use, but it's already
-running a lot, and I hope you'll consider it for the future since it
-simplifies things A LOT when you can just write to POSIX instead of
-having to come up with abstraction layers that cater to Windows'
-brokenness.
+That is of course the official language, and generally speaking a good
+rule of thumb. However... there is enough information to suggest that
+when it comes to mapping of file-backed sections, the NT kernel
+developers will choose to keep things the way they are. In brief, here's
+why:
 
-> > Well thank you for being honest. I can see now why you responded the
-> > way you did (and still do). By being employed by Microsoft, and
-> > especially paid to work on Git for Windows, you have all the
-> > incentives to make it work best on Windows, and to make it as its
-> > first-tier platform within the limitation of Windows.
+Given a "gray zone" that spans from EOF to end-of-page, there are in
+essence three possible behaviors:
+
+[1] bytes in the gray zone are accessible and are all zero's. This is
+the current behavior.
+[2] bytes in the gray zone are not accessible; trying to read past EOF
+would result in a segfault.
+[3] bytes in the gray zone are accessible but might contain random data
+or junk.
+
+Assessment:
+
+[1] backward-compatible, POSIX-compliant, single code path for both
+WIN32 and LXW.
+[2] requires changing memory access granularity from 4096 bytes to a
+single byte, and is therefore extremely costly.
+[3] introduces a whole new class of security vulnerabilities, and will
+thus be a lot of fun to watch:-)
+
+All in all taken, then, I'd argue that relying on the current behavior
+is very reasonable. If you, too, find the above assessment valid, and
+since you mentioned that you were a Microsoft employee, it would be
+great if you could make a good-faith effort to have the current behavior
+added to the Driver Documentation and thus guaranteed.
+
+PS. this isn't to say that the regex extension should or should not be
+used, only that a decision on the matter should not be based on the
+undocumentedness of current behavior.
+
+midipix
+
+> - some implementations of the REG_STARTEND feature have the nice property
+>  that they can read past NUL characters. Granted, not all of them do
+>  (AFAIU one example is FreeBSD itself, the first platform to sport
+>  REG_STARTEND), but we at least reap the benefit whenever using a regex
+>  that *can* read past NUL characters.
 > 
-> Please don't insinuate that Johannes is a Microsoft shill. He has been
-> working on the Windows port of Git for over 9 years, and was only
-> employed by Microsoft this year. Furthermore, his original REG_STARTEND
-> patch actually did a run-time fallback of NUL-terminating the input
-> buffers. It was _I_ who suggested that we should simply push people
-> towards our compat/regex routines instead. So if you want to be mad at
-> somebody, be mad at me.
+> > In this context, one thing to remember is that the page-size for the mod
+> > operation is 4096, whereas the POSIX page-size (for the purpose of mmap
+> > and mremap) is 65536.
+> 
+> Indeed. A colleague of mine spotted the segfault when diffing a file that
+> was *exactly* 4,096 bytes.
+> 
+> > Note also that in the case of file-backed mapped sections, using
+> > kernel32.dll or msvcrt.dll or cygwin/newlib or midipix/musl is of little
+> > significance, specifically since all invoke ZwCreateSection and
+> > ZwMapViewOfSection under the hood.
+> 
+> Right. It's all backed by the very same kernel functions.
+> 
+> Ciao,
+> Johannes
 
-I hope we can get this thread away from accusing and attacking people
-and on to doing productive things to make the software better.
-
-Rich
