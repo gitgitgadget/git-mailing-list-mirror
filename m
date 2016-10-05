@@ -2,146 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 102B61F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 16:37:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09E031F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 16:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751803AbcJEQhO convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 5 Oct 2016 12:37:14 -0400
-Received: from p3plsmtp15-02-2.prod.phx3.secureserver.net ([173.201.193.36]:54022
-        "EHLO p3plwbeout15-02.prod.phx3.secureserver.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751304AbcJEQhN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 12:37:13 -0400
-Received: from localhost ([173.201.193.12])
-        by p3plwbeout15-02.prod.phx3.secureserver.net with bizsmtp
-        id rsdC1t0020GWrr901sdCVk; Wed, 05 Oct 2016 09:37:12 -0700
-X-SID:  rsdC1t0020GWrr901
-Received: (qmail 6823 invoked by uid 99); 5 Oct 2016 16:37:12 -0000
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="utf-8"
-X-Originating-IP: 128.143.170.15
-User-Agent: Workspace Webmail 6.5.1
-Message-Id: <20161005093711.dc30d64f61e5ec441c34ffd4f788e58e.4f463e82c1.wbe@email15.godaddy.com>
-From:   <writeonce@midipix.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     musl@lists.openwall.com, git@vger.kernel.org,
-        "Jeff King" <peff@peff.net>
-Subject: RE: [musl] Re: Regression: git no longer works with musl libc's regex impl
-Date:   Wed, 05 Oct 2016 09:37:11 -0700
-Mime-Version: 1.0
+        id S1753052AbcJEQrW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 12:47:22 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33022 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751968AbcJEQrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 12:47:21 -0400
+Received: by mail-yw0-f196.google.com with SMTP id g192so9855207ywh.0
+        for <git@vger.kernel.org>; Wed, 05 Oct 2016 09:47:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=pDn8vBL/UP8K2BL3HlMKKElhAziJzm3EjHUBTiZZ854=;
+        b=OEGlUnj5kt7eTASIBMsnSnCJH96Vo/tjSQYUNyoA8Gyr8G26RWSlWln5Uw2kVELiBW
+         rPdJ19mqN3S7DjVLwXslft6hhNulKxY2tWNXFzMPU6dgyyzvC/3ATUyV6jZiNDXaXAu7
+         H2q3Wm4y1siS3Xwglw+HnbbclOxTUSRFjygZWnzwIgK3rm43GpiumT1iAQM3bi1U6dGa
+         X0IYWtEJppSP11yqyUlJSbxsXVKXrpodIE/HxydiGcwvmHDdEQUuffr85Wd3970C+qc5
+         qmWXveB3iADRkphHPisF5OFJOgNrmXf9jCS/FCqjUUCzXB8rk+mrM577KXokAg9uUuIt
+         wkxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pDn8vBL/UP8K2BL3HlMKKElhAziJzm3EjHUBTiZZ854=;
+        b=awj5fXR9Jvgn2G6dhQAHwhEshgVJM8/X9wrDDWVga4Quob5WEkFPhvD6JTXmUbb+UH
+         0ZEF/0zs6GXiLKqtt9XNhyTkAUkkiTIGrIuit2kmvO6nP/mMZ9oKu0GbF2aFarZtDWgd
+         a9DU5IK2XTuZl/8fzmD1Br3hScr1zDYqFGcFQgF+V+X/rOkz1bg7xgdyASSYnbyq5iiH
+         POkhkrmkCJZC8/4zXS5eK3HT39sdZEu3qxFXbuM1C8NF87xdbCwjSclRmDKXjVIkl1pD
+         sQIppVuSMYff6tepBZUxv4PMXdaZLJyVKqlKE8G83hf50Ksh8mf7P/D2BjmMYIEX2iSm
+         e3pQ==
+X-Gm-Message-State: AA6/9RkW9ty7f8zlCKPAXLz60ScOeRDUCp1LSxSGQiPAIXOCBI4V71XNd7iUulkwBaa7h4Gzgvjj7+C6G8O21w==
+X-Received: by 10.13.244.129 with SMTP id d123mr7279546ywf.276.1475686040523;
+ Wed, 05 Oct 2016 09:47:20 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.37.96.195 with HTTP; Wed, 5 Oct 2016 09:47:00 -0700 (PDT)
+In-Reply-To: <20161005144028.tjuvk3hkoqm3qjfd@sigill.intra.peff.net>
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
+ <20161003203412.bekizvlqtg4ls5fb@sigill.intra.peff.net> <CA+P7+xok5PoNKO+8R6zF9SXYfDq6BboDTDz9WZYEczs0pFK+pw@mail.gmail.com>
+ <20161004134853.x3zq33ywyyzgbwsy@sigill.intra.peff.net> <CA+P7+xok-8vhikxkp+t8pu53YJAyUjZ0NiAwejEW2j3+eP_2Xw@mail.gmail.com>
+ <20161004204933.ygfhoy24g6psyf6h@sigill.intra.peff.net> <CA+P7+xo3nxy1EOjDqHvKQuK128c=b73XN=6qqn6g6oRGh2VdFg@mail.gmail.com>
+ <20161004205510.6bhisw7ixbgcvvwn@sigill.intra.peff.net> <CAGZ79kap2ndp=FK4YdqrL4tJ8_VDuuAcSCk1dtX5X2H3aaj6kQ@mail.gmail.com>
+ <2ea2f077-ab02-2631-4ce9-93cdd22c3c6b@gmail.com> <20161005144028.tjuvk3hkoqm3qjfd@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 5 Oct 2016 09:47:00 -0700
+Message-ID: <CA+P7+xrhs0j+9sK22+5qR9bM6bwkua1rDZDkCg6HrtL5BDZBNA@mail.gmail.com>
+Subject: Re: [PATCH 06/18] t5613: clarify "too deep" recursion tests
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Wed, Oct 5, 2016 at 7:40 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Oct 05, 2016 at 03:58:53PM +0200, Jakub Nar=C4=99bski wrote:
+>
+>> I would prefer the following:
+>>
+>> #   A --> B --> C --> D --> E --> F --> G --> H
+>> #      0     1     2     3     4     5     6
+>
+> Yeah, that is also more visually pleasing.
+>
+> Here's a squashable update that uses that and clarifies the points in
+> the discussion with Jacob.
+>
+> Junio, do you mind squashing this in to jk/alt-odb-cleanup?
+>
+> diff --git a/t/t5613-info-alternate.sh b/t/t5613-info-alternate.sh
+> index b393613..62170b7 100755
+> --- a/t/t5613-info-alternate.sh
+> +++ b/t/t5613-info-alternate.sh
+> @@ -39,13 +39,16 @@ test_expect_success 'preparing third repository' '
+>         )
+>  '
+>
+> -# Note: These tests depend on the hard-coded value of 5 as "too deep". W=
+e start
+> -# the depth at 0 and count links, not repositories, so in a chain like:
+> +# Note: These tests depend on the hard-coded value of 5 as the maximum d=
+epth
+> +# we will follow recursion. We start the depth at 0 and count links, not
+> +# repositories. This means that in a chain like:
+>  #
+> -#   A -> B -> C -> D -> E -> F -> G -> H
+> -#      0    1    2    3    4    5    6
+> +#   A --> B --> C --> D --> E --> F --> G --> H
+> +#      0     1     2     3     4     5     6
 
-> 
-> 
-> -------- Original Message --------
-> Subject: RE: [musl] Re: Regression: git no longer works with musl libc's
-> regex impl
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Date: Wed, October 05, 2016 3:49 am
-> To: writeonce@midipix.org
-> Cc: musl@lists.openwall.com, git@vger.kernel.org, Jeff King
-> <peff@peff.net>
-> 
-> Hi writeonce,
-> 
-> On Tue, 4 Oct 2016, writeonce@midipix.org wrote:
-> 
-> > < On Tue, 4 Oct 2016, Rich Felker wrote:
-> > < 
-> > < > On Tue, Oct 04, 2016 at 11:27:22AM -0400, Jeff King wrote:
-> > < > > On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
-> > < > > 
-> > < > > > 1. is nonzero mod page size, it just works; the remainder of the
-> > < > > > last page reads as zero bytes when mmapped.
-> > < > > 
-> > < > > Is that a portable assumption?
-> > < > 
-> > < > Yes.
-> > < 
-> > < No, it is not. You quote POSIX, but the matter of the fact is that we
-> > < use a subset of POSIX in order to be able to keep things running on
-> > < Windows.
-> > 
-> > As far as I can tell (and as the attached program may help demonstrate),
-> > the above assumption has been valid on all versions of Windows since at
-> > least Windows 2000.
-> 
-> And since W2K is already past its end of life, it would be safe for
-> practical considerations.
-> 
-> However, I have to add two comments to that:
-> 
-> - it is *not* guaranteed. The behavior is undefined, even if you see
->  consistent behavior so far. Future Windows versions might break that
->  assumption freely, though.
-> 
+Yea this looks much better (when I view it locally, gmail still looks
+aweful here but...)
 
-That is of course the official language, and generally speaking a good
-rule of thumb. However... there is enough information to suggest that
-when it comes to mapping of file-backed sections, the NT kernel
-developers will choose to keep things the way they are. In brief, here's
-why:
+>  #
+> -# we are OK at "G", but break at "H".
+> +# we are OK at "G", but break at "H", even though "H" is actually the 8t=
+h
+> +# repository, not the 6th, which you might expect. Counting the links al=
+lows
+> +# N+1 repositories, and counting from 0 to 5 inclusive allows 6 links.
+>  #
 
-Given a "gray zone" that spans from EOF to end-of-page, there are in
-essence three possible behaviors:
+... This is much more clear wording that helps me understand this a
+lot more. Thanks!
 
-[1] bytes in the gray zone are accessible and are all zero's. This is
-the current behavior.
-[2] bytes in the gray zone are not accessible; trying to read past EOF
-would result in a segfault.
-[3] bytes in the gray zone are accessible but might contain random data
-or junk.
+Regards,
+Jake
 
-Assessment:
-
-[1] backward-compatible, POSIX-compliant, single code path for both
-WIN32 and LXW.
-[2] requires changing memory access granularity from 4096 bytes to a
-single byte, and is therefore extremely costly.
-[3] introduces a whole new class of security vulnerabilities, and will
-thus be a lot of fun to watch:-)
-
-All in all taken, then, I'd argue that relying on the current behavior
-is very reasonable. If you, too, find the above assessment valid, and
-since you mentioned that you were a Microsoft employee, it would be
-great if you could make a good-faith effort to have the current behavior
-added to the Driver Documentation and thus guaranteed.
-
-PS. this isn't to say that the regex extension should or should not be
-used, only that a decision on the matter should not be based on the
-undocumentedness of current behavior.
-
-midipix
-
-> - some implementations of the REG_STARTEND feature have the nice property
->  that they can read past NUL characters. Granted, not all of them do
->  (AFAIU one example is FreeBSD itself, the first platform to sport
->  REG_STARTEND), but we at least reap the benefit whenever using a regex
->  that *can* read past NUL characters.
-> 
-> > In this context, one thing to remember is that the page-size for the mod
-> > operation is 4096, whereas the POSIX page-size (for the purpose of mmap
-> > and mremap) is 65536.
-> 
-> Indeed. A colleague of mine spotted the segfault when diffing a file that
-> was *exactly* 4,096 bytes.
-> 
-> > Note also that in the case of file-backed mapped sections, using
-> > kernel32.dll or msvcrt.dll or cygwin/newlib or midipix/musl is of little
-> > significance, specifically since all invoke ZwCreateSection and
-> > ZwMapViewOfSection under the hood.
-> 
-> Right. It's all backed by the very same kernel functions.
-> 
-> Ciao,
-> Johannes
-
+>  # Note also that we must use "--bare -l" to make the link to H. The "-l"
+>  # ensures we do not do a connectivity check, and the "--bare" makes sure
+> @@ -59,11 +62,11 @@ test_expect_success 'creating too deep nesting' '
+>         git clone --bare -l -s G H
+>  '
+>
+> -test_expect_success 'validity of fifth-deep repository' '
+> +test_expect_success 'validity of seventh repository' '
+>         git -C G fsck
+>  '
+>
+> -test_expect_success 'invalidity of sixth-deep repository' '
+> +test_expect_success 'invalidity of eighth repository' '
+>         test_must_fail git -C H fsck
+>  '
+>
