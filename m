@@ -2,144 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADB9E20986
-	for <e@80x24.org>; Tue,  4 Oct 2016 23:28:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DEC220986
+	for <e@80x24.org>; Wed,  5 Oct 2016 01:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753334AbcJDXZ3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Oct 2016 19:25:29 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:36173 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752877AbcJDXZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2016 19:25:28 -0400
-Received: by mail-qt0-f173.google.com with SMTP id m5so44239573qtb.3
-        for <git@vger.kernel.org>; Tue, 04 Oct 2016 16:25:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Du+7G3Ns1tj4Vb2PSkTJKN3F+i5fUDJdahsZXLI4Zgg=;
-        b=fGPYO28MTOExAs78JuetP4GVW4QPDGzlC2fTCyy9ZMDIfG7JvzNp/vj3xq7BgzR8Kg
-         kvika4XMUQ7I0TByupKZ2vKDxD1rtNEjfvAPAmX9bfzrcP+CvLwh1M7/PCuWBDAkn7FU
-         Xg6Nn/IQF3qAyPsB1YjL/jiyYS2T6flek2Be+ar9TCZMXzbCvjhGll4TmfKuxyNtoVGb
-         5oA8roGA5j6naVL2Bkag7em2B97iYVbEZTxU77KT5rt3iEZDV2zoVMZUTOJpHenv1Tu9
-         bzJgF1N9so9d7J+pZ+oKDwvMMpAOQ/S2Sgta+aPXAgnnYqoOqeirDTbijRsbGmL0Tl9N
-         msqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Du+7G3Ns1tj4Vb2PSkTJKN3F+i5fUDJdahsZXLI4Zgg=;
-        b=I/q3HCy0dC2iCnQjS+pcXBHAj6nQ9Pr374/76RU7WOOPMOWEoy0JKPgDogV6hjUXE2
-         t8i5/KYnnmY2rJSuB5CYmTNbYiEdlIKjjmZ7tz00JKywuw+fs3e2YP/KsyO9omiyCd8u
-         CFjbwEPN94kZ2GDYNRYc0oMz2FVkb2++JkXgkyMAD0POa+xzd3zmvFAaD0D01GIEoW9Z
-         JEsfER1fKyP7qbpZHwJrfZYBkv3L6xw2da9FuaZVuACgoPbN3gJSyymPsm+z+YmKywpw
-         StTlraG0Q2Z0erxa0vkNFjARZEbr1Ig6NTs08q4DW3VtEFfydPLmcmiePQDET8je3ng6
-         5LEQ==
-X-Gm-Message-State: AA6/9RmDW2sXMxHuhLrSM0CoEvU9ek+SDA1qtbPY1/d2tAW9t9gb6K6wSU/+ZeaxzGGrxG0+f3Y/QlZhFYhfPR+U
-X-Received: by 10.237.33.203 with SMTP id m11mr6536548qtc.61.1475623527483;
- Tue, 04 Oct 2016 16:25:27 -0700 (PDT)
+        id S1753861AbcJEBeE convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 4 Oct 2016 21:34:04 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:53080 "EHLO
+        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752651AbcJEBeD (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 4 Oct 2016 21:34:03 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail)
+        by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+        iface 141.3.10.81 id 1brb5l-0001G9-Er; Wed, 05 Oct 2016 03:33:53 +0200
+Received: from apache by webmail with local (Exim 4.84_2)
+        (envelope-from <szeder@ira.uka.de>)
+        id 1brb5l-0004pl-CV; Wed, 05 Oct 2016 03:33:53 +0200
+Received: from x4db0ff72.dyn.telefonica.de (x4db0ff72.dyn.telefonica.de
+ [77.176.255.114]) by webmail.informatik.kit.edu (Horde Framework) with
+ HTTPS; Wed, 05 Oct 2016 03:33:53 +0200
+Date:   Wed, 05 Oct 2016 03:33:53 +0200
+Message-ID: <20161005033353.Horde.33pf2naqnF4HgwPWSy9DaHV@webmail.informatik.kit.edu>
+From:   SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Leho Kraav <leho@conversionready.com>,
+        =?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 5/5] versioncmp: cope with common leading parts in
+ versionsort.prereleaseSuffix
+References: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
+ <20160907151251.30978-1-szeder@ira.uka.de>
+ <20160907151251.30978-6-szeder@ira.uka.de>
+ <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
+In-Reply-To: <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
+User-Agent: Horde Application Framework 5
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 4 Oct 2016 16:25:27 -0700 (PDT)
-In-Reply-To: <xmqqtwcrr9l6.fsf@gitster.mtv.corp.google.com>
-References: <20161004221433.23747-1-sbeller@google.com> <xmqqtwcrr9l6.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Oct 2016 16:25:27 -0700
-Message-ID: <CAGZ79kaFx++yipGmq=D2EPN4Gw9JhRXf_i4pFivTnkJmJXjFfg@mail.gmail.com>
-Subject: Re: [RFC/PATCH] attr: Document a new possible thread safe API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1475631233.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 4, 2016 at 4:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
->> index 92fc32a..940617e 100644
->> --- a/Documentation/technical/api-gitattributes.txt
->> +++ b/Documentation/technical/api-gitattributes.txt
->> @@ -59,7 +59,10 @@ Querying Specific Attributes
->>    empty `struct git_attr_check` can be prepared by calling
->>    `git_attr_check_alloc()` function and then attributes you want to
->>    ask about can be added to it with `git_attr_check_append()`
->> -  function.
->> +  function. git_attr_check_initl is thread safe, i.e. you can call it
->> +  from different threads at the same time; internally however only one
->> +  call at a time is processed. If the calls from different threads have
->> +  the same arguments, the returned `git_attr_check` may be the same.
->
-> I do not think this is enough.  Look at the example for _initl() and
-> notice that it keeps the "singleton static check that is initialized
-> by the very first caller if the caller notices it is NULL" pattern.
->
-> One way to hide that may be to pass the address of that singleton
-> pointer to _initl(), so that it can do the "has it been initialized?
-> If not, let's prepare the thing" under lock.
 
-Oh, I see. Yeah that makes sense.
+Quoting SZEDER Gábor <szeder@ira.uka.de>:
 
+> Quoting SZEDER Gábor <szeder@ira.uka.de>:
 >
->> @@ -89,15 +92,21 @@ static void setup_check(void)
+>> Version sort with prerelease reordering sometimes puts tagnames in the
+>> wrong order, when the common part of two compared tagnames ends with
+>> the leading character(s) of one or more configured prerelease
+>> suffixes.
 >>
->>  ------------
->>       const char *path;
->> +     struct git_attr_check *result;
+>> $ git config --get-all versionsort.prereleaseSuffix
+>> -beta
+>> $ git tag -l --sort=version:refname v2.1.*
+>> v2.1.0-beta-2
+>> v2.1.0-beta-3
+>> v2.1.0
+>> v2.1.0-RC1
+>> v2.1.0-RC2
+>> v2.1.0-beta-1
+>> v2.1.1
+>> v2.1.2
 >>
->>       setup_check();
->> -     git_check_attr(path, check);
->> +     result = git_check_attr(path, check);
+>> The reason is that when comparing a pair of tagnames, first
+>> versioncmp() looks for the first different character in a pair of
+>> tagnames, and then the swap_prereleases() helper function checks for
+>> prerelease suffixes _starting at_ that character.  Thus, when in the
+>> above example the sorting algorithm happens to compare the tagnames
+>> "v2.1.0-beta-1" and "v2.1.0-RC2", swap_prereleases() will try to match
+>> the suffix "-beta" against "beta-1" to no avail, and the two tagnames
+>> erroneously end up being ordered lexicographically.
+>>
+>> To fix this issue change swap_prereleases() to look for configured
+>> prerelease suffixes containing that first different character.
 >
-> I haven't formed a firm opinion, but I suspect your thinking might
-> be clouded by too much staring at the current implementation that
-> has <attr>,<value> pairs inside git_attr_check.  Traditionally, the
-> attr subsystem used the same type for the query question and the
-> query answer the same type, but it does not have to stay to be the
-> case at all.  Have you considered that we are allowed to make these
-> two types distinct?
-
-I thought about that, but as I concluded that the get_all_attrs doesn't need
-conversion to a threading environment, we can keep it as is.
-
-When keeping the get_all_attrs as is, we need to keep the data structures
-as is, (i.e. key,value pair inside git_check_attr), so introducing a new
-data type seemed not useful for the threaded part.
-
->  A caller can share the same question instance
-> (i.e. the set of interned <attr>, in git_attr_check) with other
-> threads as that is a read-only thing, but each of the callers would
-> want to have the result array on its own stack if possible
-> (e.g. when asking for a known set of attributes, which is the
-> majority of the case) to avoid allocation cost.  I'd expect the most
-> typical caller to be
+> Now, while I believe this is the right thing to do to fix this bug,
+> there is a corner case, where multiple configured prerelease suffixes
+> might match the same tagname:
 >
->         static struct git_attr_check *check;
->         struct git_attr_result result[2]; /* we want two */
+>  $ git config --get-all versionsort.prereleaseSuffix
+>  -bar
+>  -baz
+>  -foo-bar
+>  $ ~/src/git/git tag -l --sort=version:refname
+>  v1.0-foo-bar
+>  v1.0-foo-baz
 >
->         git_attr_check_initl(&check, "crlf", "ident", NULL);
->         git_check_attr(path, check, result);
->         /* result[0] has "crlf", result[1] has "ident" */
+> I.e. when comparing these two tags, both "-bar" and "-foo-bar" would
+> match "v1.0-foo-bar", and as "-bar" comes first in the config file,
+> it wins, and "v1.0-foo-bar" is ordered first.  An argument could be
+> made to prefer longer matches, in which case "v1.0-foo-bar" would be
+> ordered according to "-foo-bar", i.e. as second.  However, I don't
+> know what that argument could be, to me neither behavior is better
+> than the other, but the implementation of the "longest match counts"
+> would certainly be more complicated.
 >
-> or something like that.
+> The argument I would make is that this is a pathological corner case
+> that doesn't worth worrying about.
 
-I see, that seems to be a clean API. So git_attr_check_initl
-will lock the mutex and once it got the mutex it can either
-* return early as someone else did the work
-* needs to do the actual work
-and then unlock. In any case the work was done.
+After having slept on this a couple of times, I think the longest
+matching prerelease suffix should determine the sorting order.
 
-git_check_attr, which runs in all threads points to the same check,
-but gets the different results.
+A release tag usually consists of an optional prefix, e.g. 'v' or
+'snapshot-', followed by the actual version number, followed by an
+optional suffix.  In the contrived example quoted above this suffix
+is '-foo-bar', thus it feels wrong to match '-bar' against it, when
+the user explicitly configured '-foo-bar' as prerelease suffix as
+well.
 
-Ok, I'll go in that direction then.
+Then here is a more realistic case for sorting based on the longest
+matching suffix, where
 
-Thanks,
-Stefan
+   - a longer suffix starts with the shorter one,
+   - and the longer suffix comes after the shorter one in the
+     configuration.
+
+With my patches it looks like this:
+
+    $ git -c versionsort.prereleasesuffix=-pre \
+          -c versionsort.prereleasesuffix=-prerelease \
+          tag -l --sort=version:refname
+    v1.0.0-prerelease1
+    v1.0.0-pre1
+    v1.0.0-pre2
+    v1.0.0
+
+Yeah, having both '-pre' and '-prerelease' suffixes seems somewhat
+silly, but who knows what similar but more reasonable prerelease
+suffixes e.g. non-English speaking users might use in their native
+language.
+
+Anyway, my intuition says that any '-prereleaseX' tags should come
+after all the '-preX' tags.  (Ironically, current git just happens
+to get this particular case right.)
+
+My patches get this wrong, because they look for prerelease suffixes
+_containing_ the first different character.  However, when a '-preX'
+and a '-prereleaseX' tag are compared, then the whole '-pre' suffix
+is part of the common part, thus it doesn't match, only '-prerelease'
+matches.
+
+So, to sort this case right the implementation should
+
+   - look for a prerelease suffix containing the first different
+     character or ending right before the first different character,
+     (This means that when comparing 'v1.0.0-pre1' and 'v1.0.0-pre2'
+     swap_prereleases() would match '-pre' in both: no big deal, it
+     should return "undecided" and let the caller do the right thing
+     by sorting based on '1' and '2')
+
+   - and sort a tag based on the longest matching prerelease suffix.
+     (In my quoted email above I alluded that its implementation must
+     be more complicated.  No, it turns out that it actually isn't.)
+
+(Just for the record: it's still not 100% foolproof, though.  Someone
+asking for trouble might use letters instead of numbers to indicate
+subsequent prereleases, and might have tags 'v1.0-prea', 'v1.0-preb',
+..., 'v1.0-prer', and 'v1.0-prerelease'.  In this case the sorting
+algorithm might happen to decide to compare 'v1.0-prer' and
+'v1.0-prerelease', and since the common part is 'v1.0-prer' it will
+fail to recognize the '-pre' suffix.  I don't see how this case could
+be supported in a sane way, or why it's worth to support it.)
+
+And a final sidenote: sorting based on the longest matching suffix
+also allows us to (ab)use version sort with prerelease suffixes to
+sort postrelease tags as we please, too:
+
+   $ ~/src/git/git -c versionsort.prereleasesuffix=-alpha \
+                   -c versionsort.prereleasesuffix=-beta \
+                   -c versionsort.prereleasesuffix= \
+                   -c versionsort.prereleasesuffix=-gamma \
+                   -c versionsort.prereleasesuffix=-delta \
+                   tag -l --sort=version:refname 'v3.0*'
+   v3.0-alpha1
+   v3.0-beta1
+   v3.0
+   v3.0-gamma1
+   v3.0-delta1
+
+So, unless I hear a counterargument, I will submit a reroll with
+longest matching suffix determining sort order added on top once I
+get around to finish up its commit message.
+
+Best,
+Gábor
+
