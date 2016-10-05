@@ -2,56 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDD87207EC
-	for <e@80x24.org>; Wed,  5 Oct 2016 11:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E49D207EC
+	for <e@80x24.org>; Wed,  5 Oct 2016 11:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754824AbcJELl4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 07:41:56 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54061 "EHLO mout.gmx.net"
+        id S1754775AbcJELqU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 07:46:20 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53426 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752289AbcJELlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 07:41:55 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M6ilI-1avGAa1Wku-00wUmH; Wed, 05 Oct 2016 13:41:48
+        id S1752516AbcJELqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 07:46:19 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M0Kp7-1b27rV29iH-00udtb; Wed, 05 Oct 2016 13:46:04
  +0200
-Date:   Wed, 5 Oct 2016 13:41:46 +0200 (CEST)
+Date:   Wed, 5 Oct 2016 13:46:03 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 05/25] sequencer: allow the sequencer to take custody
- of malloc()ed data
-In-Reply-To: <xmqqzinc295y.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610051338530.35196@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>        <cover.1473590966.git.johannes.schindelin@gmx.de>        <942aa559a0af9b52e079c5c78fa313f49b87d50d.1473590966.git.johannes.schindelin@gmx.de>
- <xmqqzinc295y.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 04/25] sequencer: future-proof
+ remove_sequencer_state()
+In-Reply-To: <xmqqinu028tx.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610051342490.35196@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de> <d6b92cd7aa56ceb515c50467a0e6030401e2e1bc.1473590966.git.johannes.schindelin@gmx.de> <xmqqinu028tx.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iWXQVeZdOZzrLX6l+s9yJhOI7pss4nM0diWPGQJXcn9E1EsmhOf
- +9NWAA9g2YE/vm88/m8nFwNzQTlsEYx4vORySaDjTDi3fhCuDL32TePLT6CRBxxSqLR7wF+
- fofXhyUYyezUz8wbDuRz4031VF1uWLq1j1HsCUyOwwTCRjpRnG2sjXi3YN0yr0tJGEa5N15
- cd/5Nd3sUcolu0HlbdYXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gx4SCNXna48=:QosL5wmY97JxZrT2BseszM
- VQEvtFvX605s7a8YivE8OhHbarU89DU92IRPeNQTco7lQAjFENtxBjxnTNLShZV9VhGGGJtyy
- +d8rBzbvvy7Nuc6OeEBgsqcuL0aMouFa1pFi4cmbpy6+kuinpTLE6wgLCXpTMzzfRcEX1Wy34
- Bzoe0uEsMAY0Cfcfw0oKRJKXdh/AZ74gvecYfgHA3En+2umRfEUIL9wwdiYBZsXc6yh+y9xlG
- jh53XZ+9Osh+mUiFfit4uUTdoEBCwFaoSMYnAPi+vllNYwMEdYiEX/cwgYvKOeiAigzzEE3Tg
- dH90vot6Q/VZ4oTBDb9dITnk6jt7D9V4ppVaGwzWOaQx4sqfZhWDJmNNwTX0c0DR4pCsbFIFh
- uHvgDREd/V996BCKYkORGnrLfK9Ttgag0iDBXCrwZE6SBVbWNAhLa/ktvpGkk4ge1xcnCKW2q
- tcreqgk18LpXnPGAHepiZMLDNg2UbluPhMwNVWnQTxVWASgof4zjMgzFS2SP9W/2HkBuhnBew
- a8V+wBvylQViwQURl7q5JKY2Y0H4Lq9sRWlgT0ZPQ8Wp3NqSNpksz2+geuBkhz9TK4f/9tusl
- GrqSSSBwf7jgbiNtWp21jDwAHnUbdiUqv343LHsiwkK+80bFhZxgjrbXsklSMNx2PVKjeUU3V
- VYdzc93LpmjzRFVdU0ovhwIRimQMbAWHoRkAG0zJr4klfGJ8GfxWdUQVbRgFgOZlrPDiytLkt
- BC3QVRSxN2I43XyVr80aNdgOthYOCXEHXQEsQiQExDFVaAnd0+tojhhGwW7j/Ixwa0StK5f8k
- jzoIdk5
+X-Provags-ID: V03:K0:ap6QXZ4s5arnRbDv2gfkAWL+hIcbq4wapfspVs1s09xXgFElHD4
+ 1nwXb5fYzzfb7UdGm9fq9hr3mIWL5kbqtsM6eSCJe7CPl5GOCkGv/o/1f4bgmP0pVVwes4X
+ Wn9yU7wucNip93bAiIHzr67rhUP/vR4GzB467tfH7Z7wCwFT50Qd3DGrGHPgZr2CXWYfyry
+ QVhprjlYHe0OYm22XHWng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cvNo6asQgQw=:r+c6tv+CSvWrQirh86UvQV
+ 1xEb4j4Vr0invDbvHfbYABjsAJUXW7i1A5VTHfqgfvihTQivVds1HzrgBhb09jZfHdFPmRT2f
+ hJtTlw/017NXgDlmiFJfW6qoSRTkn/0CEekLVa/T3t5qF+AXpwvpBOabdBp6cIowlM0oXH4l/
+ 4qT4FnubvvJoHKiczEGhLArKkN+21BzL7pfdOCBMbGRNhyM5N0K2nBhUojXkmFGaYxtpARb1X
+ PtXNoetL2BGBwFl6BRsKQcltdQE+avVF65xTpC/tNtIFCHBufKmDFTfogZ3865iYzHDjVEDuv
+ kBxmVl+RO8pOMKV/8CfdbtLKxCJJGm7nla3Cph+fzJuTIuzHDxa9E07SThqv+9lg8ZnkLlOK3
+ BLs8mJaNqwF9krWHYpGghIFh08+iqkSNUzDQadntywei8MpwhZsimWFfM3lZp236HVxM8RqUO
+ cNrg5BV6AX1FtHV4Edsys0qkSz/G2nXOZcdFuUSZHXgLdoUZF+6Jnxiwnv5p7sFmv5TOj5MzS
+ qxKUbgdzlcv717m795vBYa06LBV/aQrC+mf7+vG2Ws/UAgIkQMgM20CuREXNUlDcrCHhi1ek2
+ uGMn44yuKbVdXH44+2SuA7wZfe68qrPzngz74KWw82viJVlwtsFT2PTsk7cchMnskJasI4QXk
+ 1GEGojZOPteDx8cIA+H0AOOJuIsfkAKR7MmApSK2I7xDbMgyGELGL+Y0vaJQZYOkiqzMOw7xq
+ cic+5V++tZ+PC0XBJmiNA5zdx6g1wxdA7wCMHumA+ojaU/LJhDREhNPxn/DgmmiEBtMb8nLSt
+ my5rhuy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,39 +62,26 @@ On Mon, 12 Sep 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
-> > like a one-shot command when it reads its configuration: memory is
-> > allocated and released only when the command exits.
-> >
-> > This is kind of okay for git-cherry-pick, which *is* a one-shot
-> > command. All the work to make the sequencer its work horse was
-> > done to allow using the functionality as a library function, though,
-> > including proper clean-up after use.
-> >
-> > This patch introduces an API to pass the responsibility of releasing
-> > certain memory to the sequencer. Example:
-> >
-> > 	const char *label =
-> > 		sequencer_entrust(opts, xstrfmt("From: %s", email));
+> > +static const char *get_dir(const struct replay_opts *opts)
+> > +{
+> > +	return git_path_seq_dir();
+> > +}
 > 
-> I thought we (not just me) were already pretty clear during the last
-> round of review that we will not want this entrust() thing.
+> Presumably this is what "In a couple of commits" meant, i.e. opts
+> will be used soonish.
 
-That does not match my understanding.
+Exactly. The sequencer code was taught to use a state directory different
+from rebase -i's (even if it quite clearly imitated rebase -i's approach),
+to allow for rebase -i to run at the same time as the sequencer (by
+calling it via cherry-pick).
 
-The problem is that we are building functionality for libgit.a, not merely
-for a builtin that we know will simply exit() and take all allocated
-memory with it.
+So we need to be able to use different seq_dir locations, depending on the
+mode we are running in.
 
-The additional problem is that the sequencer was *already* meant for
-libgit.a, yet simply strdup()s data left and right and assigns it to const
-fields, purposefully wasting memory.
-
-Sure, I can leave those memory leaks in, but then I also have to introduce
-new ones via the rebase -i support.
-
-If you prefer to accept such sloppy work, I will change it of course,
-feeling dirty that it has my name on it.
+I briefly considered consolidating them and using .git/rebase-merge/ as
+state directory also for cherry-pick/revert, but that would cause
+problems: I am surely not the only user who cherry-picks commits manually
+while running interactive rebases.
 
 Ciao,
 Dscho
