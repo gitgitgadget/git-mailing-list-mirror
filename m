@@ -2,100 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD5F1F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 19:23:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C20321F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 19:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754787AbcJETXn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 15:23:43 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36748 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754597AbcJETXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 15:23:41 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 123so124908wmb.3
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 12:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=LFDHriTjhXrbaxECEfxJ1dzi8iv/ej0S2RrChdAhhSc=;
-        b=KoaI2rQWYGiQLIKdIYV0+aX7ecimSfrBER4NRZEJn6W1TX+VKqqgKiOczzRzwoEBEe
-         Lpmc5QiHPnJ6pzy8utbN+ARhP9F33Xm6aSgSZIDxq2pv/cwCns5EynjI4jrxvvWMmnj1
-         Y+8unuF5J4ShFP6qWAfPdBANZCMyVA4PgYXD42Xbw3mmOh7uuIXcCrZORojqIr0XvpJc
-         o6zGCBjsV4Tgs9/0xzlBgbqC0z8TDEmwarIra7XkCJFFdUjzanomXu379aDcyJSrscJ1
-         ilblpQavkUmqSyW6EXizrqgogHmuu8MydQVjVNFzSYipxo6zJrmReRrCy90Xway06v2H
-         oQVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=LFDHriTjhXrbaxECEfxJ1dzi8iv/ej0S2RrChdAhhSc=;
-        b=IqnIxS6GkrnVIhTu2scoDyuaax7Ke/uJ+XPC+oWbzv7xZQgdbbgKOaAhu/UdeFmdtg
-         dN3G2kUm759WxAw+ZuaGarq05ZHGxSuHBdpKJ3dkkQ11CiyGiebCdvyYltmRU+75Clri
-         iptyoXf6fMPdcs+pNR16k5n1AOwhjsxMhUBHzu0BCqLYeLNvE72VMoPl5DwKv3Q0AkVc
-         bW+hN4mYdS+eYhL3Re0pD93diryN9ZuIML9e4ny/e0ejA9Kjv7WqOps6ihDiMFh/Jtdl
-         r7Tole9SI9SSmlq8hNKyOuVmIoxlw3lVzLtbu8dtoPYLkPOT7vKNEakLvFBst2cQDYie
-         WLhA==
-X-Gm-Message-State: AA6/9Rn7fsDbU5eZOMrCt7JtyKsyAbsBuMFzYROjtQlfsm54TEg268YHujwJFe4dIIpqWQ==
-X-Received: by 10.194.236.68 with SMTP id us4mr9029664wjc.12.1475695419513;
-        Wed, 05 Oct 2016 12:23:39 -0700 (PDT)
-Received: from [192.168.1.26] (acte13.neoplus.adsl.tpnet.pl. [83.11.58.13])
-        by smtp.googlemail.com with ESMTPSA id xy4sm10460132wjc.2.2016.10.05.12.23.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Oct 2016 12:23:38 -0700 (PDT)
-Subject: Re: [PATCH v3 6/6] wt-status: begin error messages with lower-case
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <cover.1473580914.git.johannes.schindelin@gmx.de>
- <cover.1475586229.git.johannes.schindelin@gmx.de>
- <1d2639277473010731ace0af8358bafd3c622a8d.1475586229.git.johannes.schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <615ff493-5de4-5d73-dd6f-2ff818ac9ac1@gmail.com>
-Date:   Wed, 5 Oct 2016 21:23:24 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1755067AbcJETfj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 15:35:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63015 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755053AbcJETfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 15:35:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C1BA44F1D;
+        Wed,  5 Oct 2016 15:35:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UEghV4xBwuP1+P/vPE6Q2ggycmc=; b=TVsbdX
+        mcYmBURFUigD90ZF/ZGwuWzCy0smTyV8FWj2oqKMGTrIm8e/mo5c9OTs10+i/Cq3
+        1GyQ98yzmvkmEdc7iyYDTlNtxXme9Wsr+PX3OmFQy7lDvSptoJYQLHUL2CuTTaDT
+        f1zDBIwrACZyuIbLfFMHAX+6tn+P1Dlb6f/X8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kSi4QzuQ/8ppyCjjAIoeUP3DLOuRDsmO
+        +NpXG298tc2cJsT9S8f27cj4HJaxX4s7CIpSI31CnYzfzkYnHeSHLzUcqh+GTmyd
+        2pnzFjzKxE+jR240wfjR7ju+oiT1rFzrmAlRwI17uQDdfAZX3Yv7zOVHbJKU0Gro
+        Ejulit+VCS0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1884844F1C;
+        Wed,  5 Oct 2016 15:35:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8459544F19;
+        Wed,  5 Oct 2016 15:35:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 13/18] fill_sha1_file: write "boring" characters
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
+        <20161003203555.6xadycotmmkuf34h@sigill.intra.peff.net>
+        <CA+P7+xpOxoRBDZGF_CU1Q-SYiQZtMx2vuwQKS0og864awZod5g@mail.gmail.com>
+        <xmqqbmyzss6z.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xrBX684an5EzUUk+_Dtu6Ep_F+nB1JyWDWsZjUANWcFoA@mail.gmail.com>
+Date:   Wed, 05 Oct 2016 12:35:33 -0700
+In-Reply-To: <CA+P7+xrBX684an5EzUUk+_Dtu6Ep_F+nB1JyWDWsZjUANWcFoA@mail.gmail.com>
+        (Jacob Keller's message of "Tue, 4 Oct 2016 14:49:10 -0700")
+Message-ID: <xmqqvax6oagq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1d2639277473010731ace0af8358bafd3c622a8d.1475586229.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E31A6844-8B32-11E6-923C-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 04.10.2016 o 15:06, Johannes Schindelin pisze:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> The previous code still followed the old git-pull.sh code which did not
-> adhere to our new convention.
+>> The cost of fill function having to do the same thing repeatedly is
+>> negligible, so I am OK with the result, but for fairness, this was
+>> not "make the callers do this extra thing", but was "the caller can
+>> prepare these unchanging parts just once, and the fill function that
+>> is repeatedly run does not have to."
+>
+> Sure, but it's a pretty minor optimization and I think the result is
+> easier to understand.
 
-Good to know why it used its own convention.
- 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/pull.c | 2 +-
->  wt-status.c    | 6 +++---
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index c639167..0bf9802 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -810,7 +810,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->  
->  		if (!autostash)
->  			require_clean_work_tree(N_("pull with rebase"),
-> -				"Please commit or stash them.", 1, 0);
-> +				"please commit or stash them.", 1, 0);
->  
-
-Shouldn't those also be marked for translation with N_() or _()?
-
-Best,
--- 
-Jakub Narębski
-
+Yes; in case it wasn't clear, my comment was merely for fairness to
+the original code.  I do agree that the end result of this series
+makes a very pleasant read.
