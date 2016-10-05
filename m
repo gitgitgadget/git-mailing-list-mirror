@@ -2,195 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57DD3207EC
-	for <e@80x24.org>; Wed,  5 Oct 2016 10:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F199207EC
+	for <e@80x24.org>; Wed,  5 Oct 2016 10:50:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754158AbcJEKnD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 06:43:03 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:38123 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752319AbcJEKnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 06:43:02 -0400
-Received: by mail-it0-f51.google.com with SMTP id o19so165284719ito.1
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 03:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VRo2DA8lTRPyDo60dHVnsF+1fx5a7etXjm9US1CYFRE=;
-        b=Q5vfWILpAML82W+MUNHW+XmjtaKcmk6g1rc0iffOD01MP3fPQ5ZepPQQZg4Xwpc7lv
-         T2GVfdz+kXychharaRUVlTPMfCqsh0OLvyW1iO6dcqol0iT2uav+i4c4PHG9mujzeyYw
-         IV7FlwKaII9vRiCzwtjZ2VSh4bL95UxjjRjcrnieQPj5tfPLP8JJMhDEltnXR4pwpRmQ
-         tmzK8/Md5jYM9YsHEmo/Ya1KyUySa0k+OpSSZGZt8AXcClyRhcLZjvS1trCyy5vqL79w
-         jBtetyU+4FaUuEStRFmI7na//0PxNADQeSsNIzf3AO0sNkzXqAr2/DF0OfOxz5udc+dh
-         xUPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VRo2DA8lTRPyDo60dHVnsF+1fx5a7etXjm9US1CYFRE=;
-        b=V9acN8ZCivdmT7DewZtXb2Ik9mBlu1tfx3Ss9igHkne8/NZ4ifxsHrfDBXiSDX3CFk
-         8QtTn5FSsbhKcW0dxSnCCMKEtZGCVPkEvIgrUKaSdnl7yiFMrtPnZt+Ag68EmJtW1hO5
-         crzrIMhTdQmcKtOi42DwwPQvBYwIQQBLCXzR3ZD2b+fJJ+9MzdlT6sjgrjM9BCwc8S1O
-         0zA99FzK7QU5tgRtJtZCRstVgdoyEXLDgs3saGZ8yVMNNzJi9twQI7Ujl3gUXEJqZtTd
-         /3rIpNJYW3FexRNOxI9c7THtrltCZpiQ+jbTiuZuG9Uy9FQwB97jeal0MB9LexHbts79
-         E68A==
-X-Gm-Message-State: AA6/9Rns6tyfv559Mrz13CX8hE1nDniNLbaaBKZpyGHhSZHGwO3r4/tn+QcWX0su5dphLgRxw9RrYrIwsuj+Vg==
-X-Received: by 10.107.59.6 with SMTP id i6mr5748019ioa.176.1475664181140; Wed,
- 05 Oct 2016 03:43:01 -0700 (PDT)
+        id S1752367AbcJEKuQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 06:50:16 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51368 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751803AbcJEKuP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 06:50:15 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MVIva-1bOWyv1pug-00YhCo; Wed, 05 Oct 2016 12:49:51
+ +0200
+Date:   Wed, 5 Oct 2016 12:49:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     writeonce@midipix.org
+cc:     musl@lists.openwall.com, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: RE: [musl] Re: Regression: git no longer works with musl libc's
+ regex impl
+In-Reply-To: <20161004200057.dc30d64f61e5ec441c34ffd4f788e58e.efa66ead67.wbe@email15.godaddy.com>
+Message-ID: <alpine.DEB.2.20.1610051243530.35196@virtualbox>
+References: <20161004200057.dc30d64f61e5ec441c34ffd4f788e58e.efa66ead67.wbe@email15.godaddy.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.21.6 with HTTP; Wed, 5 Oct 2016 03:42:30 -0700 (PDT)
-In-Reply-To: <CANQwDwcj15bk3uvjqnOwqqLFN_qOZCoWATssNBwD4kDTDfS6Hw@mail.gmail.com>
-References: <20160930191413.002049b94b3908b15881b77f@domain007.com>
- <481910fd-5a5f-ffc6-b98c-61d48b4a2e49@gmail.com> <CAKbZu+BUOAjixTmEC4octseyJbMnFuaCTtLT9hx3H10=AECeKw@mail.gmail.com>
- <CANQwDwcj15bk3uvjqnOwqqLFN_qOZCoWATssNBwD4kDTDfS6Hw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Oct 2016 17:42:30 +0700
-Message-ID: <CACsJy8A8QGAtmv0BGOb2ZgXP=_iXz-oDZ82ebq+gmRe7TWoWBQ@mail.gmail.com>
-Subject: Re: "Purposes, Concepts,Misfits, and a Redesign of Git" (a research paper)
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Santiago Perez De Rosso <sperezde@csail.mit.edu>,
-        Konstantin Khomoutov <kostix+git@007spb.ru>,
-        git <git@vger.kernel.org>, Daniel Jackson <dnj@mit.edu>,
-        Greg Wilson <gvwilson@third-bit.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:c5EjhnIrtFZOI5WTEGnHVQEOoAVkMrgL5dfcxCqZqAbHGbcDk68
+ njTyUQzKqXCOshgJO82bMJQMEL1KlghUGssv+Q1uQL/kfoboqCqrYC+98dkfaNDyLthg/3v
+ 718aDVG531SEnRc2OGvs5RDuAYglaoYFXG+FdAm8TSRKvAzmz8pElgtqa+iHg215myxXbim
+ ZcPayQsEfmBEZnOC4Dl5w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EYgfrucGVoE=:xu66oXZPAgFRkiZmVKmcV3
+ hB/RsQpzekIm8jawI4T+TX/19aYwEWRJ4II7Em/GcAIU9pQ3zTQptPbNx1a2QQfcDd0pL3Frm
+ Axf0eNfvnexdsP5KSklbtpDWDRaO6t+CrLghKQpv9tI0ZdchB7wGbjSvusyx+lwQClPEjXGFR
+ ZhnnK7TUo20t2YK9lAeBRQQWqht6mgXmdXtoQMNWvRb8v+WX4lnUqC5zL1J1PloVv8eDksYyl
+ A16TlOV9IEJ376Dl23xrqUgtnN84mrsZ/QV/Z2SJ01iorbuHcOBiK2brYRC+aAUrzJxBZ5BwR
+ 4+HFNlZaVgAfRoWvW1srGcWHRVdIAEBoSjnCONFRiu5+S/UOMwqxeHkHw5nztMZX/EbaQn64a
+ vbmXw5LZYVh2Qr5LoFmKvRLIr63yk3uFfTzfSgLmj18nQ1k0/WAX8faPAfMzCg9Bhut9vrTwv
+ gukWLjCPaWZ1Ej7NYSiFgiBsqa9M+TxMhkmeyJn20LvX4YUj41wqiJ0qw5S6ZLlBQQeF4+kd+
+ 7JJWLEldIDAqwf36cb6vEIbiJxn6CiS4EoUDbNRpH/WOw6MDIDAHF+t1fELJjBROQMRIc1TVb
+ qJw8vMbZNfkJ5w0gkcRxUzd8xCC3oIsHB9jNb/4BEayBwyviotbO+D2G3OcdkotBWxn4C5YZU
+ 0ZLB1aOiLxQWYU1Y+gnFXA/sXrFqd37UgTQPUFS53gSNH8helZFYfodcVNWGB6kfERgcD10yo
+ bP7tzuJFRuvJ7chJqbG31LkjUCHt1IO0MuPvIYnqR4/7HrypOSa8geX1opXo4xd5wdl/OToE9
+ et+b3vw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 5, 2016 at 5:14 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> wrot=
-e:
-> [git@vger.kernel.org does not accept HTML emails]
->
-> I just hope that this email don't get mangled too much...
->
-> On 5 October 2016 at 04:55, Santiago Perez De Rosso
-> <sperezde@csail.mit.edu> wrote:
->> On Fri, Sep 30, 2016 at 6:25 PM Jakub Nar=C4=99bski <jnareb@gmail.com> w=
-rote:
->>> W dniu 30.09.2016 o 18:14, Konstantin Khomoutov pisze:
->>>
->>>> The "It Will Never Work in Theory" blog has just posted a summary of a
->>>> study which tried to identify shortcomings in the design of Git.
->>>>
->>>> In the hope it might be interesting, I post this summary here.
->>>> URL: http://neverworkintheory.org/2016/09/30/rethinking-git.html
->>>
->>> I will comment on the article itself, not just on the summary.
->>>
->>> | 2.2 Git
->>> [...]
->>> | But tracked files cannot be ignored; to ignore a tracked file
->>> | one has to mark it as =E2=80=9Cassume unchanged.=E2=80=9D This =E2=80=
-=9Cassume
->>> | unchanged=E2=80=9D file will not be recognized by add; to make it
->>> | tracked again this marking has to be removed.
->>>
->>> WRONG!  Git has tracked files, untracked unignored files, and
->>> untracked ignored files (mostly considered unimportant).
->>>
->>> The "assume unchanged" bit is _performance_ optimization. It is not,
->>> and cannot be a 'ignore tracked files' bit - here lies lost work!!!
->>> You can use (imperfectly) "prefer worktree" bit hack instead.
->>>
->>> You can say, if 'ignoring change to tracked files' is motivation,
->>> or purpose, it lacks direct concept.
->>
->>
->> I don't see what's wrong with the paragraph you mention. I am aware of t=
-he
->> fact that assumed unchanged is intended to be used as a performance
->> optimization but that doesn't seem to be the way it is used in practice.
->> Users have appropriated the optimization and effectively turned into a
->> concept that serves the purpose of preventing the commit of a file. For
->> example:
->>
->> from http://gitready.com/intermediate/2009/02/18/temporarily-ignoring-fi=
-les.html
->>
->>  So, to temporarily ignore changes in a certain file, run:
->>  git update-index --assume-unchanged <file>
->>  ...
->>
->> from http://stackoverflow.com/questions/17195861/undo-git-update-index-a=
-ssume-unchanged-file
->>  The way you git ignore watching/tracking a particular dir/file.
->>  you just run this:
->>  git update-index --assume-unchanged <file>
->> ...
->>
->>
->> btw, this appropriation suggests that users want to be able to ignore
->> tracked files and they do what they can with what they are given (which
->> in this case means abusing the assumed unchanged bit).
->
-> Yes, this is true that users may want to be able to ignore changes to
-> tracked files (commit with dirty tree), but using `assume-unchanged` is
-> wrong and dangerous solution.  Unfortunately the advice to use it is
-> surprisingly pervasive.  I would thank you to not further this error.
-> (Well, `skip-worktree` is newer, that's why it is lesser known, perhaps)
->
-> To ignore tracked files you need to use `skip-worktree` bit.
->
-> You can find the difference between `assume-unchanged` and
-> `skip-worktree`, and when use which in:
-> http://stackoverflow.com/questions/13630849/git-difference-between-assume=
--unchanged-and-skip-worktree
-> http://fallengamer.livejournal.com/93321.html
-> http://blog.stephan-partzsch.de/how-to-ignore-changes-in-tracked-files-wi=
-th-git/
->
-> The difference is that skip-worktree will not overwrite a file that is
-> different from the version in the index, but assume-unchanged can.  This
-> means that the latter can OVERWRITE YOUR PRECIOUS CHANGES!
->
-> Some people started to recommend it
-> http://stackoverflow.com/questions/32251037/ignore-changes-to-a-tracked-f=
-ile
-> http://www.virtuouscode.com/2011/05/20/keep-local-modifications-in-git-tr=
-acked-files/
+Hi writeonce,
 
-And since skip-worktree bits may be set/cleared freely when sparse
-checkout mode is on, you should never manipulate these bits directly
-if you also use sparse checkout.
+On Tue, 4 Oct 2016, writeonce@midipix.org wrote:
 
->>> | *Detached Head* Suppose you are working on some branch
->>> | and realize that the last few commits you did are wrong, so
->>> | you decide to go back to an old commit to start over again.
->>> | You checkout that old commit and keep working creating
->>> | commits. You might be surprised to discover that these new
->>> | commits you=E2=80=99ve been working on belong to no branch at all.
->>> | To avoid losing them you need to create a new branch or reset
->>> | an existing one to point to the last commit.
->>>
->>> It would be hard to be surprised unless one is in habit of
->>> disregarding multi-line warning from Git... ;-)
->>
->> True if you are an expert user, but I can assure you novices will
->> find that situation baffling, even with the multi-line warnings.
+> < On Tue, 4 Oct 2016, Rich Felker wrote:
+> < 
+> < > On Tue, Oct 04, 2016 at 11:27:22AM -0400, Jeff King wrote:
+> < > > On Tue, Oct 04, 2016 at 11:08:48AM -0400, Rich Felker wrote:
+> < > > 
+> < > > > 1. is nonzero mod page size, it just works; the remainder of the
+> < > > > last page reads as zero bytes when mmapped.
+> < > > 
+> < > > Is that a portable assumption?
+> < > 
+> < > Yes.
+> < 
+> < No, it is not. You quote POSIX, but the matter of the fact is that we
+> < use a subset of POSIX in order to be able to keep things running on
+> < Windows.
+> 
+> As far as I can tell (and as the attached program may help demonstrate),
+> the above assumption has been valid on all versions of Windows since at
+> least Windows 2000.
 
-Hmm...  when you switch away from a detached HEAD, you are advised to
-do "git branch <new-name> blah blah". How is it baffling? Genuine
-question, maybe I have been using git for too long I just fail to see
-it.
+And since W2K is already past its end of life, it would be safe for
+practical considerations.
 
-> True, the "detached HEAD" case (aka "unnamed branch") can be puzzling
-> for Git users, and it has few uses (e.g. checking out the state of
-> tag temporarily, to test it).
->
-> I wonder if `git status` should be enhanced to tell user how to get
-> out of "detached HEAD" situation -- it has lots of advices in it.
+However, I have to add two comments to that:
 
-Detached HEAD is also present in interactive rebase or any command
-that has --abort/--continue options. I don't think we need to tell the
-user to get out of detached HEAD in that case. Just two cents if
-someone is going to add this advice to git-status.
---=20
-Duy
+- it is *not* guaranteed. The behavior is undefined, even if you see
+  consistent behavior so far. Future Windows versions might break that
+  assumption freely, though.
+
+- some implementations of the REG_STARTEND feature have the nice property
+  that they can read past NUL characters. Granted, not all of them do
+  (AFAIU one example is FreeBSD itself, the first platform to sport
+  REG_STARTEND), but we at least reap the benefit whenever using a regex
+  that *can* read past NUL characters.
+
+> In this context, one thing to remember is that the page-size for the mod
+> operation is 4096, whereas the POSIX page-size (for the purpose of mmap
+> and mremap) is 65536.
+
+Indeed. A colleague of mine spotted the segfault when diffing a file that
+was *exactly* 4,096 bytes.
+
+> Note also that in the case of file-backed mapped sections, using
+> kernel32.dll or msvcrt.dll or cygwin/newlib or midipix/musl is of little
+> significance, specifically since all invoke ZwCreateSection and
+> ZwMapViewOfSection under the hood.
+
+Right. It's all backed by the very same kernel functions.
+
+Ciao,
+Johannes
