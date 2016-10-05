@@ -2,97 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1C3C1F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 16:12:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEC121F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 16:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754384AbcJEQMC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 12:12:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52814 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754260AbcJEQMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 12:12:01 -0400
-Received: (qmail 29677 invoked by uid 109); 5 Oct 2016 16:12:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Oct 2016 16:12:01 +0000
-Received: (qmail 18074 invoked by uid 111); 5 Oct 2016 16:12:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 05 Oct 2016 12:12:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Oct 2016 12:11:58 -0400
-Date:   Wed, 5 Oct 2016 12:11:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     James B <jamesbond3142@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        musl@lists.openwall.com, Rich Felker <dalias@libc.org>,
-        git@vger.kernel.org
-Subject: Re: [musl] Re: Regression: git no longer works with musl libc's
- regex impl
-Message-ID: <20161005161158.62o7qmpwxdgf6zzk@sigill.intra.peff.net>
-References: <20161004150848.GA7949@brightrain.aerifal.cx>
- <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
- <20161004154045.GT19318@brightrain.aerifal.cx>
- <alpine.DEB.2.20.1610041802310.35196@virtualbox>
- <20161005090625.683fdbbfac8164125dee6469@gmail.com>
- <alpine.DEB.2.20.1610051231390.35196@virtualbox>
- <20161005225934.770d73b7d491d4bf4816411d@gmail.com>
+        id S1754350AbcJEQN5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 12:13:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60679 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752027AbcJEQN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 12:13:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDD4A4197B;
+        Wed,  5 Oct 2016 12:13:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WKBWpkosoaaZOH/byRZtA0a9lA0=; b=ihjCFu
+        2gevb001t3sbBWRVtDu2yTHAVBqgDm+tk+cj/OeKEAW866N/ytGYpnxZQECTD/49
+        DeCF4IUtX9rAbBimie5gHhtisjXSqjb0nGu5e/ZBUSMgK7jwz2wwJg743Dg4gIST
+        +iKXi9ih7BSF/cAaVl97zkh8IlYJzgqiAjGeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nJctAPRy1p+kQK/0sr+7daawSIVbMLTy
+        1h9K/a1yNto0MfogIDFAAfePt3tGW7YU2IPLYp/wzZeGgodNCmSVBk4AHU5mj/vz
+        rBjLaI2rrlDova1eIZQqO0PYnv+iOjByYuOF2R2Fo0M36W5zjkUyn6evWdjAaaN+
+        qG3u6oCJgME=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5C574197A;
+        Wed,  5 Oct 2016 12:13:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3795941979;
+        Wed,  5 Oct 2016 12:13:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jeremy Morton <admin@game-point.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Reference a submodule branch instead of a commit
+References: <57F29FEF.30700@game-point.net>
+        <xmqqfuod6yw2.fsf@gitster.mtv.corp.google.com>
+        <20161004113625.GB20309@book.hvoigt.net>
+        <CAGZ79kZWtAU6YG4Qz9_Gwk2db5L2kPCCKrN+64hMYDovRjiLRw@mail.gmail.com>
+        <xmqqshscuilh.fsf@gitster.mtv.corp.google.com>
+        <xmqqlgy4szuu.fsf@gitster.mtv.corp.google.com>
+        <20161005141439.GD30930@book.hvoigt.net>
+Date:   Wed, 05 Oct 2016 09:13:53 -0700
+In-Reply-To: <20161005141439.GD30930@book.hvoigt.net> (Heiko Voigt's message
+        of "Wed, 5 Oct 2016 16:14:39 +0200")
+Message-ID: <xmqqlgy2rcxq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161005225934.770d73b7d491d4bf4816411d@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B6B765B6-8B16-11E6-B3E3-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 05, 2016 at 10:59:34PM +1100, James B wrote:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-> Number downloads does not make first-tier platform. You know that as
-> well as everyone else.
-> 
-> First-tier support is the decision made by the maintainers that the
-> entire features of the software must be available on those first tier
-> platforms. So if Windows is indeed first-tier platform for git, it
-> means any features that don't work on git version of Windows must not
-> be used/developed or even castrated. That's a scary thought.
+>> It IS a hack, but having this information in .git<something> would
+>> mean that it can be forced to be in machine readable form, unlike a
+>> mention in README.  I do not know if the .gitmodules/.gitignore
+>> combination is a sensible thing to use, but it does smell like a
+>> potentially useful hack.
+>
+> IIRC the tree entries are the reference for submodules in the code. We
+> are iterating over the tree entries in many places so that change does
+> not seem so easy to me.
+>
+> But you are right maybe we should stop arguing against this workflow and
+> just let people use it until they find out whats wrong with it ;)
 
-Prepare to be scared, then, I guess. Ever since the msysgit project
-started years ago, we have made concessions in the code to work both
-with POSIX-ish systems and with the msys layer. E.g., see how git-daemon
-does not fork(), but actually re-spawns itself to handle connections.
+I didn't say that, though.  I am fairly firm on _not_ changing what
+the superproject records in its tree for the submodule, i.e. it must
+record the exact commit, not "a branch name", for reproducibility. 
 
-When possible we try to put our abstractions at a level where they can
-be implemented in a performant way on all platforms (the git-daemon
-things is probably the _most_ ugly in that respect; I think nobody has
-really cared about the performance enough to add back in a forking code
-path for POSIX systems).
+I am OK if people ignored the unmatch between the recorded commit
+from a submodule and what they had in the submodule directory while
+they developed and tested the superproject commit.  After all, it is
+not an error to make a commit while having a local uncommitted
+changes to tracked files, and it is equally valid to have a commit
+checked out in a submodule directory that is different from what
+goes in the superproject commit.  But we do show "modified but not
+committed" in the status output.  In that light, submodule.*.ignore
+may have been a mistake.
 
-> So this decision that "Windows is now a first-tier platform for git" -
-> is your own opinion, or is this the collective opinion of *all* the
-> git maintainers?
-
-There is only one maintainer of git: Junio. However, you'll note that I
-also used "we" in the paragraphs above. And that is because the approach
-I am talking about is something that has been done over the course of
-many years by many members of the development community.
-
-You may disagree with that approach, but it is nothing new. The msysgit
-project started in 2007.
-
-> Well thank you for being honest. I can see now why you responded the
-> way you did (and still do). By being employed by Microsoft, and
-> especially paid to work on Git for Windows, you have all the
-> incentives to make it work best on Windows, and to make it as its
-> first-tier platform within the limitation of Windows.
-
-Please don't insinuate that Johannes is a Microsoft shill. He has been
-working on the Windows port of Git for over 9 years, and was only
-employed by Microsoft this year. Furthermore, his original REG_STARTEND
-patch actually did a run-time fallback of NUL-terminating the input
-buffers. It was _I_ who suggested that we should simply push people
-towards our compat/regex routines instead. So if you want to be mad at
-somebody, be mad at me.
-
--Peff
