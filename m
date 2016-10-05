@@ -2,38 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC3DC1F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 20:49:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D08ED1F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 20:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752815AbcJEUtg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 16:49:36 -0400
-Received: from mail.javad.com ([54.86.164.124]:37863 "EHLO mail.javad.com"
+        id S1753651AbcJEUyg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 16:54:36 -0400
+Received: from mail.javad.com ([54.86.164.124]:49863 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750935AbcJEUtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 16:49:36 -0400
-X-Greylist: delayed 462 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Oct 2016 16:49:36 EDT
+        id S1750935AbcJEUyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 16:54:36 -0400
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 87D0160BD1;
-        Wed,  5 Oct 2016 20:41:52 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 0CAE5633DB;
+        Wed,  5 Oct 2016 20:44:46 +0000 (UTC)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1brt0g-0001iT-Na; Wed, 05 Oct 2016 23:41:50 +0300
+        id 1brt3U-0001in-JJ; Wed, 05 Oct 2016 23:44:44 +0300
 From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/6] git-merge: clarify "usage" by adding "-m <msg>"
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 4/6] Documentation/git-merge.txt: improve short description in NAME
 References: <cover.1475678515.git.sorganov@gmail.com>
-        <773a11751c91c31a05c967ade902b0c8279aab56.1475678515.git.sorganov@gmail.com>
-        <xmqqint6pu3b.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 05 Oct 2016 23:41:50 +0300
-In-Reply-To: <xmqqint6pu3b.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 05 Oct 2016 10:46:16 -0700")
-Message-ID: <87k2dmr0j5.fsf@javad.com>
+        <a33dd3ec3da0dc2dad72ed85edd29ff01f898831.1475678515.git.sorganov@gmail.com>
+        <20161005175512.aruzndaow3g2jmt7@sigill.intra.peff.net>
+Date:   Wed, 05 Oct 2016 23:44:44 +0300
+In-Reply-To: <20161005175512.aruzndaow3g2jmt7@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 5 Oct 2016 13:55:13 -0400")
+Message-ID: <87fuoar0eb.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -42,39 +41,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> sorganov@gmail.com writes:
+> On Wed, Oct 05, 2016 at 05:46:22PM +0300, sorganov@gmail.com wrote:
 >
->> From: Sergey Organov <sorganov@gmail.com>
->>
->> "-m <msg>" is one of essential distinctions between obsolete
->> invocation form and the recent one. Add it to the "usage" returned by
->> 'git merge -h' for more clarity.
->>
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
->>  builtin/merge.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/builtin/merge.c b/builtin/merge.c
->> index a8b57c7..0e367ba 100644
->> --- a/builtin/merge.c
->> +++ b/builtin/merge.c
->> @@ -43,7 +43,7 @@ struct strategy {
->>  };
+>> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+>> index 216d2f4..cc0329d 100644
+>> --- a/Documentation/git-merge.txt
+>> +++ b/Documentation/git-merge.txt
+>> @@ -3,7 +3,8 @@ git-merge(1)
 >>  
->>  static const char * const builtin_merge_usage[] = {
->> -	N_("git merge [<options>] [<commit>...]"),
->> +	N_("git merge [<options>] [-m <msg>] [<commit>...]"),
->>  	N_("git merge [<options>] <msg> HEAD <commit>"),
->>  	N_("git merge --abort"),
->>  	NULL
+>>  NAME
+>>  ----
+>> -git-merge - Join two or more development histories together
+>> +
+>> +git-merge - Merge one or more branches to the current branch
 >
-> While this is not wrong per-se, as the deprecated form will go away
-> soon, I hope you do not mind if I had to drop this one from the
-> series to avoid merge conflicts to 'pu' (I do not know how bad the
-> conflict would be yet; I am just reviewing in my MUA).
+> I wonder if we should be more clear that you don't have to merge a
+> branch; you can merge any commit. I do agree that the original was
+> unnecessarily general. And I think "the current branch" is accurate
+> (technically it can be to a detached HEAD, but that is pedantry that
+> doesn't need to make it into the synopsis).
+>
+> So maybe "Merge one or more commits into the current branch".  I guess
+> that is a bit vague, too. It is really "commit tips" or "lines of
+> development" that we are merging. Bringing them in of course brings in
+> many commits, but the "or more" there is meant to hint at multi-parent
+> merges.
+>
+> So perhaps "one or more branches", while not completely accurate, is the
+> best we can do. I dunno.
 
-Yeah, sure. I was not aware obsolete form description is to go away
-soon.
+You've basically repeated my entire line of thinking that lead to the
+patch.
+
+-- Sergey.
