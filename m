@@ -2,111 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 364091F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 13:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFBFD1F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 14:14:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752512AbcJEN7Z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 09:59:25 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34308 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752164AbcJEN7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 09:59:24 -0400
-Received: by mail-wm0-f68.google.com with SMTP id b201so19568751wmb.1
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 06:59:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=ptSFv8JQDSJXR01baksDqdLSCml+czXqEOdS3YeJIJE=;
-        b=gCP3TDW3PyAu1HeEUjKytiS8QQ0GOqQLmyRk5Ha768kWefoLRU7dx5raxvgKPH91jH
-         M/3hoCuV5tOV3dQfE/4c2eaHPkr/Ya0f81HmYGCGwx+eyVGOIFkchlHZkut4uPXiGNgK
-         Uah/qMJbtJS1gWO9dbLDld3h3ptgz/a20vgy+GKvlLl4bYh9naOHTcSKQhtsw03TGiIz
-         tnvszl/JZbuzyvNRNKuCo0nFtKbatBv48HFuAcDsRtP4u/81e1xomJDJGfDulqDctO9B
-         Lc0HFZaj8SYviFMed3HOlpGrp+Rwjl38sH/GZdbl3cXCzVxIalHkgwBPRj60TA6sk3s/
-         lAbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=ptSFv8JQDSJXR01baksDqdLSCml+czXqEOdS3YeJIJE=;
-        b=moaD2EOuSx35bRdAx+l05urmOkywoOwp8P7EUXeCCvbPnfUDnPhJHuNJa29Gn9AY+4
-         bZdys11s8GMg4jcMZJFu7nEWPorcdg1ciPs7uDjoOxjGsWgO8yN/207cK+dlqpysyzXo
-         ZTnii5pxKhXOAhPpyKbziMWDYr3hmaw2U7onkJ1ToZgaCt6AGzNmsjVeIC5IEX8azzTH
-         0XxIefLUqTxsk5AcfE1dZpLPvmK5uQNo74ghZBRS8WhjDR22ral9C2Bcvs4yBYZu5/J0
-         WSY8ezEEO3CtLrLwb4FUgoeSa9+hDD7pDteXWN5SIn8xgE/JJfwPCyUyDiBUkIyvi86b
-         TVFA==
-X-Gm-Message-State: AA6/9RkieKrgNp2WWQAFSMkYx7OBg/iSKSzG3TF6mQHvNM1Ncr2OJw5Ec3nbj9wd1PqiJw==
-X-Received: by 10.194.250.106 with SMTP id zb10mr7471711wjc.99.1475675949425;
-        Wed, 05 Oct 2016 06:59:09 -0700 (PDT)
-Received: from [192.168.1.26] (acte13.neoplus.adsl.tpnet.pl. [83.11.58.13])
-        by smtp.googlemail.com with ESMTPSA id ce6sm9152146wjc.27.2016.10.05.06.59.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Oct 2016 06:59:08 -0700 (PDT)
-Subject: Re: [PATCH 06/18] t5613: clarify "too deep" recursion tests
-To:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
- <20161003203412.bekizvlqtg4ls5fb@sigill.intra.peff.net>
- <CA+P7+xok5PoNKO+8R6zF9SXYfDq6BboDTDz9WZYEczs0pFK+pw@mail.gmail.com>
- <20161004134853.x3zq33ywyyzgbwsy@sigill.intra.peff.net>
- <CA+P7+xok-8vhikxkp+t8pu53YJAyUjZ0NiAwejEW2j3+eP_2Xw@mail.gmail.com>
- <20161004204933.ygfhoy24g6psyf6h@sigill.intra.peff.net>
- <CA+P7+xo3nxy1EOjDqHvKQuK128c=b73XN=6qqn6g6oRGh2VdFg@mail.gmail.com>
- <20161004205510.6bhisw7ixbgcvvwn@sigill.intra.peff.net>
- <CAGZ79kap2ndp=FK4YdqrL4tJ8_VDuuAcSCk1dtX5X2H3aaj6kQ@mail.gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Newsgroups: gmane.comp.version-control.git
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <2ea2f077-ab02-2631-4ce9-93cdd22c3c6b@gmail.com>
-Date:   Wed, 5 Oct 2016 15:58:53 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1754412AbcJEOOq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 10:14:46 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.32]:41545 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753488AbcJEOOp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 10:14:45 -0400
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1brmy0-00017Y-Tt; Wed, 05 Oct 2016 16:14:41 +0200
+Date:   Wed, 5 Oct 2016 16:14:39 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jeremy Morton <admin@game-point.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Reference a submodule branch instead of a commit
+Message-ID: <20161005141439.GD30930@book.hvoigt.net>
+References: <57F29FEF.30700@game-point.net>
+ <xmqqfuod6yw2.fsf@gitster.mtv.corp.google.com>
+ <20161004113625.GB20309@book.hvoigt.net>
+ <CAGZ79kZWtAU6YG4Qz9_Gwk2db5L2kPCCKrN+64hMYDovRjiLRw@mail.gmail.com>
+ <xmqqshscuilh.fsf@gitster.mtv.corp.google.com>
+ <xmqqlgy4szuu.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kap2ndp=FK4YdqrL4tJ8_VDuuAcSCk1dtX5X2H3aaj6kQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlgy4szuu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 04.10.2016 o 22:58, Stefan Beller pisze:
-> On Tue, Oct 4, 2016 at 1:55 PM, Jeff King <peff@peff.net> wrote:
->> On Tue, Oct 04, 2016 at 01:52:19PM -0700, Jacob Keller wrote:
->>
->>>>>>>> +# Note: These tests depend on the hard-coded value of 5 as "too deep". We start
->>>>>>>> +# the depth at 0 and count links, not repositories, so in a chain like:
->>>>>>>> +#
->>>>>>>> +#   A -> B -> C -> D -> E -> F -> G -> H
->>>>>>>> +#      0    1    2    3    4    5    6
->>>>>>>> +#
-
+On Tue, Oct 04, 2016 at 12:01:13PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> Input from a self-claimed design expert for ASCII art. ;)
-> What about this?
+> > Stefan Beller <sbeller@google.com> writes:
+> >
+> >> I wonder if we could make that convenient for users by not tracking
+> >> the submodule,
+> >> i.e.
+> >> * we have the information in the .gitmodules file
+> >> * the path itself is in the .gitignore
+> >> * no tree entry
+> >>
+> >> Then you can update to the remote latest branch, without Git reporting
+> >> a dirty submodule locally, in fact it reports nothing for the submodule.
+> >>
+> >> It sounds like a hack, but maybe it's worth looking into that when
+> >> people want to see that workflow.
+> >
+> > It IS a hack.  
+> >
+> > But if you do not touch .git<anything> file and instead say "clone
+> > this other project at that path yourself" in README, that would
+> > probably be sufficient.
 > 
-> #   A  -0->  B  -1->  C  -2->  ...
+> eh,... hit send too early.
+> 
+> It IS a hack, but having this information in .git<something> would
+> mean that it can be forced to be in machine readable form, unlike a
+> mention in README.  I do not know if the .gitmodules/.gitignore
+> combination is a sensible thing to use, but it does smell like a
+> potentially useful hack.
 
-I would prefer the following:
+IIRC the tree entries are the reference for submodules in the code. We
+are iterating over the tree entries in many places so that change does
+not seem so easy to me.
 
-#   A --> B --> C --> D --> E --> F --> G --> H
-#      0     1     2     3     4     5     6
+But you are right maybe we should stop arguing against this workflow and
+just let people use it until they find out whats wrong with it ;)
 
-that is, the number below the middle of the arrow
-(which could have been even longer)
+I have another tip for Jeremy:
 
-#   A ---> B ---> C ---> D ---> E ---> F ---> G ---> H
-#      0      1      2      3      4      5      6
+	git config submodule.<name>.ignore all
 
+and you will not see any changes to the submodule. Put that into your
+.gitmodules and you do not see any changes to the submodules anymore.
 
-Let's paint this bikeshed _plaid_ ;-))))
--- 
-Jakub Narębski
+So now the only thing missing for complete convenience is a config
+option for the --remote option in 'git submodule update'.
 
+Jeremy, does the ignore option combined with --remote what you want?
+
+Cheers Heiko
