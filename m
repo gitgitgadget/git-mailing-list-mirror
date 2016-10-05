@@ -6,97 +6,123 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 777251F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 16:16:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 826F91F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 16:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754726AbcJEQQ1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 12:16:27 -0400
-Received: from 3.mo3.mail-out.ovh.net ([46.105.44.175]:52689 "EHLO
-        3.mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754336AbcJEQQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754718AbcJEQQ0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 12:16:26 -0400
+Received: from 216-12-86-13.cv.mvl.ntelos.net ([216.12.86.13]:55554 "EHLO
+        brightrain.aerifal.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753290AbcJEQQZ (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 5 Oct 2016 12:16:25 -0400
-X-Greylist: delayed 169026 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Oct 2016 12:16:25 EDT
-Received: from player771.ha.ovh.net (b9.ovh.net [213.186.33.59])
-        by mo3.mail-out.ovh.net (Postfix) with ESMTP id 0D9671D40B
-        for <git@vger.kernel.org>; Wed,  5 Oct 2016 17:00:13 +0200 (CEST)
-Received: from [192.168.1.10] (89-166-15-32.bb.dnainternet.fi [89.166.15.32])
-        (Authenticated sender: kevin@bracey.fi)
-        by player771.ha.ovh.net (Postfix) with ESMTPSA id 89F09840079;
-        Wed,  5 Oct 2016 17:00:12 +0200 (CEST)
-Message-ID: <57F51577.10709@bracey.fi>
-Date:   Wed, 05 Oct 2016 18:00:07 +0300
-From:   Kevin Bracey <kevin@bracey.fi>
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+Received: from dalias by brightrain.aerifal.cx with local (Exim 3.15 #2)
+        id 1broqx-0007ib-00; Wed, 05 Oct 2016 16:15:31 +0000
+Date:   Wed, 5 Oct 2016 12:15:31 -0400
+From:   Rich Felker <dalias@libc.org>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     musl@lists.openwall.com, James B <jamesbond3142@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [musl] Re: Regression: git no longer works with musl libc's
+ regex impl
+Message-ID: <20161005161531.GH19318@brightrain.aerifal.cx>
+References: <20161004150848.GA7949@brightrain.aerifal.cx>
+ <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
+ <20161004154045.GT19318@brightrain.aerifal.cx>
+ <alpine.DEB.2.20.1610041802310.35196@virtualbox>
+ <20161005090625.683fdbbfac8164125dee6469@gmail.com>
+ <20161004223322.GE19318@brightrain.aerifal.cx>
+ <bc3da1a4-4b99-737f-050e-54ef5844c402@gmail.com>
 MIME-Version: 1.0
-To:     =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-CC:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] add QSORT
-References: <67bddc37-4ee2-fef0-c852-e32645421e4c@web.de> <xmqqponmcp07.fsf@gitster.mtv.corp.google.com> <83398160-555f-adab-6b1e-3283c533b5ff@web.de> <57F290DC.5080303@bracey.fi> <9ff725eb-3536-638b-1ec0-ff9130478abc@web.de> <57F33E12.4020900@bracey.fi> <29d3dde0-c527-3ab8-914c-6fbdc5e81e1c@web.de>
-In-Reply-To: <29d3dde0-c527-3ab8-914c-6fbdc5e81e1c@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 1548393847937470690
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelvddrfedtgdekfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+In-Reply-To: <bc3da1a4-4b99-737f-050e-54ef5844c402@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/10/2016 23:31, René Scharfe wrote:
+On Wed, Oct 05, 2016 at 03:11:05PM +0200, Jakub Narębski wrote:
+> W dniu 05.10.2016 o 00:33, Rich Felker pisze:
+> > On Wed, Oct 05, 2016 at 09:06:25AM +1100, James B wrote:
+> >> On Tue, 4 Oct 2016 18:08:33 +0200 (CEST)
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >>>
+> >>> No, it is not. You quote POSIX, but the matter of the fact is that we use
+> >>> a subset of POSIX in order to be able to keep things running on Windows.
+> >>>
+> >>> And quite honestly, there are lots of reasons to keep things running on
+> >>> Windows, and even to favor Windows support over musl support. Over four
+> >>> million reasons: the Git for Windows users.
+> >>
+> >> Wow, I don't know that Windows is a git's first-tier platform now,
+> >> and Linux/POSIX second. Are we talking about the same git that was
+> >> originally written in Linus Torvalds, and is used to manage Linux
+> >> kernel? Are you by any chance employed by Redmond, directly or
+> >> indirectly?
+> >>
+> >> Sorry - can't help it.
+> 
+> Windows is one of the major platforms, yes.  I think there much, much
+> more people using Git on Windows, than using Git with musl.  More
+> users = more important.
+> 
+> Also, working with some inconvenience (requiring compilation with
+> NO_REGEX=1) is better than not working at all.
+> 
+> In CodingGuidelines we say:
+> 
+>  - Most importantly, we never say "It's in POSIX; we'll happily
+>    ignore your needs should your system not conform to it."
+>    We live in the real world.
+> 
+>  - However, we often say "Let's stay away from that construct,
+>    it's not even in POSIX".
 
->
-> So let's summarize; here's the effect of a raw qsort(3) call:
->
-> array == NULL  nmemb  bug  QSORT  following NULL check
-> -------------  -----  ---  -----  --------------------
->             0      0  no   qsort  is skipped
->             0     >0  no   qsort  is skipped
->             1      0  no   qsort  is skipped (bad!) ******
->             1     >0  yes  qsort  is skipped ******
->
-Right - row 3 may not be a bug from the point of view of your internals, 
-but it means you violate the API of qsort.Therefore a fix is required.
+I agree wholeheartedly with these points.
 
-> With the micro-optimization removed (nmemb > 0) the matrix gets simpler:
->
-> array == NULL  nmemb  bug  QSORT  following NULL check
-> -------------  -----  ---  -----  --------------------
->             0      0  no   noop   is executed
->             0     >0  no   qsort  is skipped
->             1      0  no   noop   is executed
->             1     >0  yes  qsort  is skipped ******
->
-> And with your NULL check (array != NULL) we'd get:
->
-> array == NULL  nmemb  bug  QSORT  following NULL check
-> -------------  -----  ---  -----  --------------------
->             0      0  no   qsort  reuses check result
->             0     >0  no   qsort  reuses check result
->             1      0  no   noop   reuses check result
->             1     >0  yes  noop   reuses check result
->
-> Did I get it right?  AFAICS all variants (except raw qsort) are safe 
-> -- no useful NULL checks are removed, and buggy code should be noticed 
-> by segfaults in code accessing the sorted array.
-I think your tables are correct.
+> 
+>  - In spite of the above two rules, we sometimes say "Although
+>    this is not in POSIX, it (is so convenient | makes the code
+>    much more readable | has other good characteristics) and
+>    practically all the platforms we care about support it, so
+>    let's use it".
+> 
+> The REG_STARTEND is 3rd point,
 
-But I disagree that you could ever call invoking the "****" lines safe. 
-Unless you have documentation on what limit GCC (and your other 
-compilers) are prepared to put on the undefined behaviour of violating 
-that "non-null" constraint.
+To begin with I wasn't clear that REG_STARDEND being nonstandard was
+even noticed or compatibility considered when adding the dependency on
+it, but it seems such discussion did take place and most targets have
+it. Perhaps this means it should be proposed for standardization in
+the next issue of POSIX.
 
-Up to now dereferencing a null pointer has been implicitly (or 
-explicitly?) defined as simply generating SIGSEGV. And that has 
-naturally extended into NULL passed to library implementations. But 
-that's no longer true - it seems bets are somewhat off.
+> mmap shenningans looks like 1st...
+> 
+> ....on the other hand midipix <writeonce@midipix.org> wrote in
+> http://public-inbox.org/git/20161004200057.dc30d64f61e5ec441c34ffd4f788e58e.efa66ead67.wbe@email15.godaddy.com/
+> that the proposed fix should work on all Windows version we are
+> interested in (I think).  Test program included / attached.
+> 
+> The above-mentioned email also explains that the problem was
+> caught on MS Windows; it triggers if file end falls on the mmapped
+> page boundary, which is more likely to happen with 4096 mod size
+> on Windows rather than 65536 mod size on Linux.
 
-But, as long as you are confident you never invoke that line without a 
-program bug - ie an API precondition of your own QSORT is that NULL is 
-legal iff nmemb is zero, then I guess it's fine. Behaviour is defined, 
-as long as you don't violate your internal preconditions.
+On Linux page-size (mmap granularity) varies by arch but it's 4k on
+basically all archs that people care about. I think midipix's author
+was talking about real page size on Windows (4k) vs the minimum
+logical page size (mmap granularity) that can be used to get
+POSIX-matching semantics in midipix (which is 64k due to some
+technical reasons I forget, which he could probably remind me of).
 
-Kevin
+> On the other hand, while the proposed solution of "add padding as
+> to not end at page boundary, if necessary" doesn't have the
+> performance impact of "memcpy into NUL-terminated buffer" that
+> was originally proposed in patch series, it is still extra code
+> to maintain.
 
+*nod*
 
+Rich
