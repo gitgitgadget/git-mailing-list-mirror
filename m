@@ -2,135 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AB071F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 17:36:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40E451F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 17:41:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755405AbcJERgI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 13:36:08 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34666 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755439AbcJERfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 13:35:42 -0400
-Received: by mail-wm0-f67.google.com with SMTP id b201so20465354wmb.1
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 10:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kfGeOYpjL6Npk4yK58nnkpnDV3PP+4DaOQYTYrZqI18=;
-        b=E8bdWNvT3oDAYM7fSQxJ/Tk3aDteo9PWfV0hJmMqE4tOroAYVtzMPakDNvGN2b+Mwr
-         LfFlAtLdLXGRp76ysJab9YY0mIo+nrlFPrEtJ2fcjhe4JpEwgSp/bhxJ1NTKDnAIRB02
-         EoCjvg5j2WADif7jXrI6D25XkhdvfGBFqlTIwlFtpAYpDmzIfoVQvC9MRoo+Ll2jibBH
-         1rolG8xAKcKsxAFj5aRrPE1gtu8r/tO68kg0iqUETZzB7At4iBj2vfuYQtL5KCxFe7NZ
-         j/k68lPix3dbKAFZRxgntTpZkDSGACxIoOkmAAinlVifgjBo/5lifF+1CWfVTKvpOqUx
-         9qjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kfGeOYpjL6Npk4yK58nnkpnDV3PP+4DaOQYTYrZqI18=;
-        b=j7ZGZ0ALntuek8frHAx4En+DFMBykU7kWu4y0Pk5N+om5Skom4qMFnjGtzgZ1M8quU
-         EviKaAPYQBd/CjeGcMbTkCkfYmJlPevmirHGRm0sC7eEwSnbfP7v8xoRRT/b54bDyJxN
-         keis9rRAkZx7CwvhhQlqMN+lLfP7lhRIBH6RDL4docQPXg1Pv3mp4BQWjMtfd2LD/W/y
-         Qeadr41oZOTxYr2w/ntwnpGcM46E4uDoyTVWMzyQpTCcjs2AuWQdSJ2tAHIeVQCRmEuo
-         rM6r0Ed8msZxeaSw+L6XAfwN8IaCWRAwHrYtogdWE0r1HDUOQ44oZ+rnj6TwM/Kn02K6
-         YFRw==
-X-Gm-Message-State: AA6/9RlFgrjXUTVBAfU0XxMne9PIVp/7oIWiHtL+Tt3cganLYw5d+0XDI4tybbkh+Cewmw==
-X-Received: by 10.28.210.21 with SMTP id j21mr10603974wmg.74.1475688940621;
-        Wed, 05 Oct 2016 10:35:40 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id a84sm30979508wme.6.2016.10.05.10.35.39
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Oct 2016 10:35:39 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v9 10/14] pkt-line: add functions to read/write flush terminated packet streams
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq8tu3ubzl.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 5 Oct 2016 19:35:38 +0200
-Cc:     git <git@vger.kernel.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>, mlbright@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <40D4374E-3784-4AF8-B9F3-E0C117A05631@gmail.com>
-References: <20161004125947.67104-1-larsxschneider@gmail.com> <20161004125947.67104-11-larsxschneider@gmail.com> <xmqq8tu3ubzl.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S934239AbcJERlc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 13:41:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61223 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933544AbcJERl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 13:41:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3E5944936;
+        Wed,  5 Oct 2016 13:41:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HZqTrVKy2+zmefYwX+9D4FRlriM=; b=htszx7
+        N5BMIay8Ooz3fuk6xVueMDsNKWiVL+zruTQ1MJmeqa5e5dYgHCz5PaeZ4KYxrE7k
+        8JtaJoiNjtcOIKrmO91ptAsoiP2Of/EvK9CwFFfzUf+/6sjF8jzj1O+Iv0Esq42N
+        /O63n7rPsUEEsZE4JlMc+4PA/d5UTqc4n8sCA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=E+H0gKudxPpZYyG7VBHx3i9Ev6/cr0Oa
+        STNVCCDPZpiXglUbCj9TJD/z5LuBF0GV+5S0K9vBQt2t2JleF13TAneg39kCdg+7
+        6net1rg1SndpJbatSDerqHgVDDQnzsa+jZ8e2H2f9CW8QQnlj7NAlCMBYRVeL7r4
+        3LhbpNElJt8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBB2044935;
+        Wed,  5 Oct 2016 13:41:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2607244934;
+        Wed,  5 Oct 2016 13:41:26 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 04/25] sequencer: future-proof remove_sequencer_state()
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+        <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <d6b92cd7aa56ceb515c50467a0e6030401e2e1bc.1473590966.git.johannes.schindelin@gmx.de>
+        <xmqqinu028tx.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610051342490.35196@virtualbox>
+Date:   Wed, 05 Oct 2016 10:41:24 -0700
+In-Reply-To: <alpine.DEB.2.20.1610051342490.35196@virtualbox> (Johannes
+        Schindelin's message of "Wed, 5 Oct 2016 13:46:03 +0200 (CEST)")
+Message-ID: <xmqqr37upubf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F083FB68-8B22-11E6-9494-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 04 Oct 2016, at 21:53, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> larsxschneider@gmail.com writes:
->=20
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->=20
->> +int write_packetized_from_buf(const char *src_in, size_t len, int =
-fd_out)
->> +{
->> +	static char buf[LARGE_PACKET_DATA_MAX];
->> +	int err =3D 0;
->> +	size_t bytes_written =3D 0;
->> +	size_t bytes_to_write;
->> +
->> +	while (!err) {
->> +		if ((len - bytes_written) > sizeof(buf))
->> +			bytes_to_write =3D sizeof(buf);
->> +		else
->> +			bytes_to_write =3D len - bytes_written;
->> +		if (bytes_to_write =3D=3D 0)
->> +			break;
->> +		err =3D packet_write_gently(fd_out, src_in + =
-bytes_written, bytes_to_write);
->> +		bytes_written +=3D bytes_to_write;
->> +	}
->> +	if (!err)
->> +		err =3D packet_flush_gently(fd_out);
->> +	return err;
->> +}
->=20
-> Hmph, what is buf[] used for, other than its sizeof() taken to yield
-> a constant LARGE_PACKET_DATA_MAX?
+> I briefly considered consolidating them and using .git/rebase-merge/ as
+> state directory also for cherry-pick/revert, but that would cause
+> problems: I am surely not the only user who cherry-picks commits manually
+> while running interactive rebases.
 
-Agreed. This is stupid. I will fix it.
-
-
->>=20
->> +	for (;;) {
->> +		strbuf_grow(sb_out, LARGE_PACKET_DATA_MAX);
->> +		packet_len =3D packet_read(fd_in, NULL, NULL,
->> +			// TODO: explain + 1
->=20
-> No // C99 comment please.
->=20
-> And I agree that the +1 needs to be explained.
-
-Oh. I did not send the very latest version :-(
-
-Is this explanation OK?
-
-+       strbuf_grow(sb_out, LARGE_PACKET_DATA_MAX);
-+       packet_len =3D packet_read(fd_in, NULL, NULL,
-+           /* strbuf_grow() above always allocates one extra byte to
-+            * store a '\0' at the end of the string. packet_read()
-+            * writes a '\0' extra byte at the end, too. Let it know
-+            * that there is already room for the extra byte.
-+            */
-+           sb_out->buf + sb_out->len, LARGE_PACKET_DATA_MAX+1,
-+           PACKET_READ_GENTLE_ON_EOF);
-
-
-Thanks,
-Lars=
+Good thinking.
