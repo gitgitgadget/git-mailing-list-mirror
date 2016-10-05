@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4600E1F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 21:02:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 959051F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 21:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755196AbcJEVCV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 17:02:21 -0400
-Received: from mail.javad.com ([54.86.164.124]:48639 "EHLO mail.javad.com"
+        id S932141AbcJEVDO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 17:03:14 -0400
+Received: from mail.javad.com ([54.86.164.124]:35112 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754973AbcJEVCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 17:02:02 -0400
+        id S1752815AbcJEVDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 17:03:14 -0400
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id A73F560BD1;
-        Wed,  5 Oct 2016 21:02:00 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id CBEB960BD1;
+        Wed,  5 Oct 2016 21:03:12 +0000 (UTC)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1brtKB-0001pa-0u; Thu, 06 Oct 2016 00:01:59 +0300
+        id 1brtLK-0001ps-WC; Thu, 06 Oct 2016 00:03:11 +0300
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/6] Documentation/git-merge.txt: improve short description in NAME
+Subject: Re: [PATCH 2/6] Documentation/git-merge.txt: remove list of options from SYNOPSIS
 References: <cover.1475678515.git.sorganov@gmail.com>
-        <a33dd3ec3da0dc2dad72ed85edd29ff01f898831.1475678515.git.sorganov@gmail.com>
-        <xmqqa8eiptt2.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 06 Oct 2016 00:01:59 +0300
-In-Reply-To: <xmqqa8eiptt2.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 05 Oct 2016 10:52:25 -0700")
-Message-ID: <87a8eiqzlk.fsf@javad.com>
+        <fa4e150ab54f9a01b4b7ca496dfe514d5e106ff6.1475678515.git.sorganov@gmail.com>
+        <xmqqeg3upu0m.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 06 Oct 2016 00:03:10 +0300
+In-Reply-To: <xmqqeg3upu0m.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 05 Oct 2016 10:47:53 -0700")
+Message-ID: <8760p6qzjl.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -47,52 +47,39 @@ Junio C Hamano <gitster@pobox.com> writes:
 >
 >> From: Sergey Organov <sorganov@gmail.com>
 >>
->> Old description not only raised the question of why the tool is called
->> git-merge rather than git-join, but "join histories" also sounds like
->> very simple operation, something like what "git-merge -s ours" does.
+>> This partial list of option is confusing as it lacks a lot of
+>> available options. It also clutters the SYNOPSIS making differences
+>> between forms of invocation less clear.
 >>
 >> Signed-off-by: Sergey Organov <sorganov@gmail.com>
 >> ---
->>  Documentation/git-merge.txt | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>  Documentation/git-merge.txt | 5 +----
+>>  1 file changed, 1 insertion(+), 4 deletions(-)
 >>
 >> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
->> index 216d2f4..cc0329d 100644
+>> index b758d55..90342eb 100644
 >> --- a/Documentation/git-merge.txt
 >> +++ b/Documentation/git-merge.txt
->> @@ -3,7 +3,8 @@ git-merge(1)
->>  
->>  NAME
->>  ----
->> -git-merge - Join two or more development histories together
->> +
->> +git-merge - Merge one or more branches to the current branch
+>> @@ -9,10 +9,7 @@ git-merge - Join two or more development histories together
+>>  SYNOPSIS
+>>  --------
+>>  [verse]
+>> -'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+>> -	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+>> -	[--[no-]allow-unrelated-histories]
+>> -	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
+>> +'git merge' [options] [-m <msg>] [<commit>...]
+>>  'git merge' <msg> HEAD <commit>...
+>>  'git merge' --abort
 >
-> This patch, evaluated by itself, looks like a regression in that it
-> tries to explain "merge" by using verb "merge", making it fuzzier to
-> those who do not yet know what a "merge" is.  That was why it tried
-> to explain "merge" as an operation to join histories.
-
-My thought was that "merge", the operation, is so well-known term that
-it could well go into the NAME section without explanation.
-
-Besides:
-
-$ man merge
-NAME
-       merge - three-way file merge
-[...]
-
-Uses the same pattern.
-
+> Same comment as 1/6; as we'd hopefully be removing the deprecated
+> form soonish, it would probably make sense to leave only two, i.e.
 >
-> However, the next one, 5/6, resurrects the "join history" in the
-> description part to help them, so the damage is not so severe when
-> we take them together.
+> 	git merge [options] [<commit>...]
+> 	git merge --abort
+>
+> in synposis.
 
-Damage? In SCM world we can track the issue back to:
-
-$ man -k rcsmerge
-rcsmerge (1)         - merge RCS revisions
+Same "yes" as in 1/6, obviously.
 
 -- Sergey
