@@ -2,82 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B06A0207EC
-	for <e@80x24.org>; Wed,  5 Oct 2016 11:38:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDD87207EC
+	for <e@80x24.org>; Wed,  5 Oct 2016 11:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752359AbcJELid (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 07:38:33 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:38397 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751448AbcJELid (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 07:38:33 -0400
-Received: by mail-wm0-f45.google.com with SMTP id p138so268688400wmb.1
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 04:38:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=y+N1rmFjTOzbljwimcZZHwKpsk/3JRaAe+Cu17ct2xQ=;
-        b=V5LAzWGuziv1ifkzaaa3Tcd/33oBNihgwpwsGiIOx6frvYxXSDwdgOEVKvw9Kzo6SO
-         L9QC/CscDbVUqfrcx3zt79/V4f9LpgMF8MDo5LyVtFMzFnTbEbc7+WO58l9jALmMyJZH
-         NzWg3Y86trDPZQZnjZRJ0BcXkfU2aH0n3TdrdbxqRZp6hx//vQvLcAoloiOZqFaX/OCn
-         cBO08nSF+O+VcuBTSLcbsu8q1E8PBuh9xD0Q7Z3/e+vrSfizAnSRPiST+IPngIATHEK7
-         r57Br0vzvu+CAH1q9gYLayT936qVlJ32S3im3bh9jzqmtEerVKVt1kN4656CMHmPxYmE
-         HUmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=y+N1rmFjTOzbljwimcZZHwKpsk/3JRaAe+Cu17ct2xQ=;
-        b=PTxR76fA7o0VoarC8pSdMKZojcNPxw8fGvlqJwehb6co5RjCryJT2Gk3fna2A0CQtO
-         +CwKBBaxBUCdExf6wNxvURgqXyjjU9QTBOb0IdhDZP+uu1hs4FAdzJHUwokAK8vIEukP
-         oqFPoKYooIekWKua/62h05jxTbrCCJprFM8p/8S9tJs6AUAMxUazfeH7WOBAWeE5jNPC
-         yG1hEnRU93CHQkGVf9jBAhz65IHidsESISHl8MssCA6btw//8panY2eMJZiiZtD+9cHs
-         m+EEPWe0ESWXihDefOjzSRbM4bmYsM/tXyrohKvpMocCpr/FNedTVQr/tGuy0qLM4uOK
-         2qfQ==
-X-Gm-Message-State: AA6/9RlS7/Rth/bPtm/H3dkNS2Mdv7hOf2TRp8GsGN3kj8WIzqIfq55VPk/gm6OqiFQpvw==
-X-Received: by 10.194.28.5 with SMTP id x5mr8399151wjg.63.1475667511153;
-        Wed, 05 Oct 2016 04:38:31 -0700 (PDT)
-Received: from juno.home.vuxu.org ([2001:4ca0:0:f231:a288:b4ff:fea1:ce50])
-        by smtp.gmail.com with ESMTPSA id lj2sm8505495wjc.38.2016.10.05.04.38.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Oct 2016 04:38:29 -0700 (PDT)
-Received: from localhost (juno.home.vuxu.org [local])
-        by juno.home.vuxu.org (OpenSMTPD) with ESMTPA id 04137a71;
-        Wed, 5 Oct 2016 11:38:28 +0000 (UTC)
-From:   Christian Neukirchen <chneukirchen@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: git commit -p with file arguments
-References: <87zinmhx68.fsf@juno.home.vuxu.org>
-        <CACsJy8DOqoW8quz-6qSVR2+3aJau2V=qXCx_SoZvBpmU+9+Oxw@mail.gmail.com>
-        <20161005102633.GA9948@ash>
-Date:   Wed, 05 Oct 2016 13:38:28 +0200
-In-Reply-To: <20161005102633.GA9948@ash> (Duy Nguyen's message of "Wed, 5 Oct
-        2016 17:26:33 +0700")
-Message-ID: <87k2dnowjv.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754824AbcJELl4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 07:41:56 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54061 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752289AbcJELlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 07:41:55 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M6ilI-1avGAa1Wku-00wUmH; Wed, 05 Oct 2016 13:41:48
+ +0200
+Date:   Wed, 5 Oct 2016 13:41:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 05/25] sequencer: allow the sequencer to take custody
+ of malloc()ed data
+In-Reply-To: <xmqqzinc295y.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610051338530.35196@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>        <cover.1473590966.git.johannes.schindelin@gmx.de>        <942aa559a0af9b52e079c5c78fa313f49b87d50d.1473590966.git.johannes.schindelin@gmx.de>
+ <xmqqzinc295y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:iWXQVeZdOZzrLX6l+s9yJhOI7pss4nM0diWPGQJXcn9E1EsmhOf
+ +9NWAA9g2YE/vm88/m8nFwNzQTlsEYx4vORySaDjTDi3fhCuDL32TePLT6CRBxxSqLR7wF+
+ fofXhyUYyezUz8wbDuRz4031VF1uWLq1j1HsCUyOwwTCRjpRnG2sjXi3YN0yr0tJGEa5N15
+ cd/5Nd3sUcolu0HlbdYXQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gx4SCNXna48=:QosL5wmY97JxZrT2BseszM
+ VQEvtFvX605s7a8YivE8OhHbarU89DU92IRPeNQTco7lQAjFENtxBjxnTNLShZV9VhGGGJtyy
+ +d8rBzbvvy7Nuc6OeEBgsqcuL0aMouFa1pFi4cmbpy6+kuinpTLE6wgLCXpTMzzfRcEX1Wy34
+ Bzoe0uEsMAY0Cfcfw0oKRJKXdh/AZ74gvecYfgHA3En+2umRfEUIL9wwdiYBZsXc6yh+y9xlG
+ jh53XZ+9Osh+mUiFfit4uUTdoEBCwFaoSMYnAPi+vllNYwMEdYiEX/cwgYvKOeiAigzzEE3Tg
+ dH90vot6Q/VZ4oTBDb9dITnk6jt7D9V4ppVaGwzWOaQx4sqfZhWDJmNNwTX0c0DR4pCsbFIFh
+ uHvgDREd/V996BCKYkORGnrLfK9Ttgag0iDBXCrwZE6SBVbWNAhLa/ktvpGkk4ge1xcnCKW2q
+ tcreqgk18LpXnPGAHepiZMLDNg2UbluPhMwNVWnQTxVWASgof4zjMgzFS2SP9W/2HkBuhnBew
+ a8V+wBvylQViwQURl7q5JKY2Y0H4Lq9sRWlgT0ZPQ8Wp3NqSNpksz2+geuBkhz9TK4f/9tusl
+ GrqSSSBwf7jgbiNtWp21jDwAHnUbdiUqv343LHsiwkK+80bFhZxgjrbXsklSMNx2PVKjeUU3V
+ VYdzc93LpmjzRFVdU0ovhwIRimQMbAWHoRkAG0zJr4klfGJ8GfxWdUQVbRgFgOZlrPDiytLkt
+ BC3QVRSxN2I43XyVr80aNdgOthYOCXEHXQEsQiQExDFVaAnd0+tojhhGwW7j/Ixwa0StK5f8k
+ jzoIdk5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi Junio,
 
->> At the least I think we should clarify this in the document.
->
-> How about something like this? Would it help?
+On Mon, 12 Sep 2016, Junio C Hamano wrote:
 
-I think it captures the current behavior well.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
+> > like a one-shot command when it reads its configuration: memory is
+> > allocated and released only when the command exits.
+> >
+> > This is kind of okay for git-cherry-pick, which *is* a one-shot
+> > command. All the work to make the sequencer its work horse was
+> > done to allow using the functionality as a library function, though,
+> > including proper clean-up after use.
+> >
+> > This patch introduces an API to pass the responsibility of releasing
+> > certain memory to the sequencer. Example:
+> >
+> > 	const char *label =
+> > 		sequencer_entrust(opts, xstrfmt("From: %s", email));
+> 
+> I thought we (not just me) were already pretty clear during the last
+> round of review that we will not want this entrust() thing.
 
--- 
-Christian Neukirchen  <chneukirchen@gmail.com>  http://chneukirchen.org
+That does not match my understanding.
+
+The problem is that we are building functionality for libgit.a, not merely
+for a builtin that we know will simply exit() and take all allocated
+memory with it.
+
+The additional problem is that the sequencer was *already* meant for
+libgit.a, yet simply strdup()s data left and right and assigns it to const
+fields, purposefully wasting memory.
+
+Sure, I can leave those memory leaks in, but then I also have to introduce
+new ones via the rebase -i support.
+
+If you prefer to accept such sloppy work, I will change it of course,
+feeling dirty that it has my name on it.
+
+Ciao,
+Dscho
