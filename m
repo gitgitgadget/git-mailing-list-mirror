@@ -6,70 +6,81 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77D51F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 22:10:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 711721F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 22:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941066AbcJEWJ7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 18:09:59 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62611 "EHLO
+        id S941810AbcJEWPU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 18:15:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60474 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S941034AbcJEWJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 18:09:54 -0400
+        with ESMTP id S934248AbcJEWPS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 18:15:18 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A8B744847;
-        Wed,  5 Oct 2016 18:09:52 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7023B43930;
+        Wed,  5 Oct 2016 18:15:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=i+/2pU+OiLaxPSU7HebP3VNHxZM=; b=wiytHL
-        4+b7kMye4ITS7B/MxgTAbPw10JHiS8nIzlzI+iSyrb4CHlb6deu01pC/D+UJz5/Y
-        ZbSeVTxWo39mBA8xVcwW4PsAKTED7EKDrroIZXplQlsFge4mVb21j7i5ITtGYWwT
-        UaTd/sdOi/dmf9Q5hX5RPBWRPPRRwIaDwYAsg=
+        :content-type:content-transfer-encoding; s=sasl; bh=nvGkSL2S2hiV
+        Sx0jJ1oDrVVnxW0=; b=wGeA87tPYybo7jtht4+a9G/G06eefJt8wgWtVWyOhho2
+        hWTz7OIByHFeM/L0qfT/JlovIOCeWnpWwOzO3zzpRrMoZv0RyUzMjggjyiYXjOw6
+        t5PD/2qdgVMQMvkwZvdg96T2viclOzRqMDsjXIkmjWVji+ywXJvs2tgYvNd5vQ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=k+j0EG6FCP4QZIBAbT5MIpU/nLzOOP78
-        jwWAT9Mkh5+D4hEm/odPLM9Zrn2cxT9U4lcANRRXrb0WL45zgcu1ATdGOVJkK1xi
-        cpB4lFmRSTgP7R1OrG/Ru0AfPYi9v2z5h+XeWRnWNaTZtlX/FwQVYxp6EUaMJLb+
-        OU4DzrPRyvA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82D4F44845;
-        Wed,  5 Oct 2016 18:09:52 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bhX1r0
+        NxEwAPljMmoMWBl0iZe/14oNDfilNXDnNvTvjZh62r1QpuWOMi18HnLF73qM6Fvh
+        FDTpKnNbjsC1C958p31KeyBuRmWljoATiGmCKBotYOaNMfniUy+xQECh8oJq08ES
+        vqYHZR5D1xcpc5yZeCQRHnLxiOfDaFEj3ovPs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67FAA4392E;
+        Wed,  5 Oct 2016 18:15:16 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 03AB444843;
-        Wed,  5 Oct 2016 18:09:51 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DF2924392C;
+        Wed,  5 Oct 2016 18:15:15 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [RFC/PATCH] attr: Document a new possible thread safe API
-References: <20161004221433.23747-1-sbeller@google.com>
-        <xmqqtwcrr9l6.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaFx++yipGmq=D2EPN4Gw9JhRXf_i4pFivTnkJmJXjFfg@mail.gmail.com>
-        <xmqq8tu2ras4.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZ7zNkXBVUFq5aLSup9xsdCbZpy_x8z5=uAQqftmOq26A@mail.gmail.com>
-Date:   Wed, 05 Oct 2016 15:09:49 -0700
-In-Reply-To: <CAGZ79kZ7zNkXBVUFq5aLSup9xsdCbZpy_x8z5=uAQqftmOq26A@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 5 Oct 2016 10:04:43 -0700")
-Message-ID: <xmqq1szuo3bm.fsf@gitster.mtv.corp.google.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+Cc:     Jeff King <peff@peff.net>, Leho Kraav <leho@conversionready.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 5/5] versioncmp: cope with common leading parts in versionsort.prereleaseSuffix
+References: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
+        <20160907151251.30978-1-szeder@ira.uka.de>
+        <20160907151251.30978-6-szeder@ira.uka.de>
+        <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
+        <20161005033353.Horde.33pf2naqnF4HgwPWSy9DaHV@webmail.informatik.kit.edu>
+        <xmqq4m4qrapv.fsf@gitster.mtv.corp.google.com>
+        <20161005232609.Horde.VetzEIKHDJUdcaOod9sHxuK@webmail.informatik.kit.edu>
+Date:   Wed, 05 Oct 2016 15:15:13 -0700
+In-Reply-To: <20161005232609.Horde.VetzEIKHDJUdcaOod9sHxuK@webmail.informatik.kit.edu>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 05 Oct 2016 23:26:09
+ +0200")
+Message-ID: <xmqqwphmmoi6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 705B0FBE-8B48-11E6-AEF0-F99D12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3169AE22-8B49-11E6-B3C8-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-> I think so, instead of resending the documentation, maybe the header
-> file shows that we're on the same page, I converted everything except
-> attr.c to follow this header attr.h:
+> Gut feeling tells me that I should take this as a subtle
+> encouragement to look into adding 'versionsort.postreleasesuffix',
+> shouldn't I ;)
 
-OK.  The function signature of git_check_attr() looks suspect (it
-does not match the "typical case" illustration in the message you
-are responding to), but other than that I think this matches my
-expectation.
+It is more like "this made me realize that these are merely 'suffix'
+after the real release name, no pre- or post- about them", also
+known as "I think PREreleasesuffix was a mistake and we weren't
+thinking clearly enough when we added it."
 
-Thanks for taking this over.
+To me, this looks like a list of possible suffixes that can include
+an empty suffix to denote "the real thing", e.g.
+
+    versionsort.suffix =3D "-alpha" "-beta" "" "-gamma" "-delta"
+
+and that position in the list determines the order of things inside
+the same family of versions that share the same "non-suffix" part.
