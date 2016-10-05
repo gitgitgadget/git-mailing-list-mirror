@@ -2,71 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FAB41F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 21:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 923771F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 21:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753211AbcJEVnX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 17:43:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62075 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751020AbcJEVnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 17:43:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95633442E4;
-        Wed,  5 Oct 2016 17:43:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p1N9T9rRQzncy+a0RgPiBBeO59w=; b=W/yKR+
-        mV7WO2bjvE34uanWTvqyJUVvscAoENmObsTPVMmo/6Q3GaVttoL8GXyB0Joc8E1g
-        6zEJ+pVT/F+8VEsScUapfvd2WxfiR4FFxIZlTQGlprlnBEdKLhpK+GDGsBY418Z1
-        6VfdSTSkzEnf5VpAjr9awI8QJ3t4AYiynEqBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OQmUeAZU6QsuKFF/J48UslAGlkkMGEr3
-        EYLnwhTpaTf1Lzq/kI8m+rXtJp3ivC0o76LHf0q7tmAwK3ZAmDQ+DZ6qocYCC2xV
-        Ayvwo/knkV+YX0CPChGSPNq2FG+Pw+I8qSNwBM5Yg/j6+XXVHdJH+gdb96eQXb4G
-        opztjPqTKRQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E1A8442E3;
-        Wed,  5 Oct 2016 17:43:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D9DC442E2;
-        Wed,  5 Oct 2016 17:43:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/6] Documentation/git-merge.txt: get rid of irrelevant references to git-pull
-References: <cover.1475678515.git.sorganov@gmail.com>
-        <b91ef5e97c60a85cce1a13f88a19218fd0f05655.1475678515.git.sorganov@gmail.com>
-        <xmqqzimioc7s.fsf@gitster.mtv.corp.google.com>
-        <87shsapjiz.fsf@javad.com>
-Date:   Wed, 05 Oct 2016 14:43:19 -0700
-In-Reply-To: <87shsapjiz.fsf@javad.com> (Sergey Organov's message of "Thu, 06
-        Oct 2016 00:34:28 +0300")
-Message-ID: <xmqq60p6o4js.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754535AbcJEVuy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 17:50:54 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32771 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754120AbcJEVux (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 17:50:53 -0400
+Received: by mail-wm0-f68.google.com with SMTP id p138so621593wmb.0
+        for <git@vger.kernel.org>; Wed, 05 Oct 2016 14:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=aH4hNDZkVW2quDAPa9Bk/yu03e+tfIfsPF31U6bNPH8=;
+        b=uMQS/HTjBuJEagDFVb6gIS+n1oC0kFr1jH1PeWxZaNVIEV97PbyAvimwF5zpMe0+gJ
+         ELL5/VJegHcdUMUegwwkK44YHIHzGuf9MaA1BlNnOOj2Trn4+We3FSfVYFrg06Mtsk3R
+         bPQxrDnr43gtRGOQFD3gTfTaNHpH92jRDuTCax8CvC5VHtNX21fFgooTPBbILvSOX/wX
+         9m16TsiIi4Thv1uzQ7rbmEP+hXOUumVtDCjP967kkp22IZGOr4a9VnJ9j2v3c/1w3jX4
+         H5fL84aL1rbAWcw2Vte7EvCGcsoL/L1c8+EBy7Q8B67hpvs8ykm7Lt207OpA56yqPJZV
+         tCSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=aH4hNDZkVW2quDAPa9Bk/yu03e+tfIfsPF31U6bNPH8=;
+        b=XVJO6HpDzfKkenOz46UHPAIFWw28mPDviMyxXu+WOFhUV6XuHnvfXqaUFBkoGhW+zC
+         8D88gY1ifSkNnpG2YETVCbdlwiOZVFGbu7E4+EXm6WsE9teulAxZLbYjcibIoCmHH02Y
+         QMLTROD6hc2fE0PlKEbfjYPjeNyEW0nzCFCeSKGPlvdUCTwMO4/t3BVpfo4USnbRvoQO
+         OmlikDtnp+5HljYTq3E+qAp4qOzoa2nHGN9q7+0bL4S0i5jKSSBQX1V6ekWlumJGaH1c
+         qf2l0oOI4s2RvXnjv8n4Bkh/tRc8sQECAlp33mCB/tAB1t75VaZRpmhiwuylXlxPanrv
+         3HtQ==
+X-Gm-Message-State: AA6/9Rm14jCWvJP4xaqD0dojFDqFaN1BpjLmziWb2fOSAtFNVrkWu9MKFgP6KdsvdkebbA==
+X-Received: by 10.28.7.71 with SMTP id 68mr20110237wmh.38.1475704251195;
+        Wed, 05 Oct 2016 14:50:51 -0700 (PDT)
+Received: from [192.168.1.26] (epq191.neoplus.adsl.tpnet.pl. [83.20.58.191])
+        by smtp.googlemail.com with ESMTPSA id jr3sm10955504wjb.13.2016.10.05.14.50.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Oct 2016 14:50:50 -0700 (PDT)
+Subject: Re: [PATCH v3 00/14] Mark strings in Perl scripts for translation
+To:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org
+References: <20161005172110.30801-1-vascomalmeida@sapo.pt>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
+        David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <44a32c9e-55dd-e4ce-a5da-b16660edd587@gmail.com>
+Date:   Wed, 5 Oct 2016 23:50:34 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BC1184A0-8B44-11E6-915C-F99D12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20161005172110.30801-1-vascomalmeida@sapo.pt>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+W dniu 05.10.2016 o 19:20, Vasco Almeida pisze:
+> Mark messages in some perl scripts for translation.
+> 
+> Thanks for the reviews of Junio Hamano and Jakub Narębski.  Although I think
+> Jakub Narębski's suggestions are overall good, I am not willing to go that path
+> because I cannot see huge benefits from them given what we already have and
+> also I lack Perl skills.
 
-> So I believe this change is inline with the rest of the patch. The
-> reference to git-pull (if it remains) should be a side-note, not part of
-> explanation of operation.
+All right.  While I think that Locale::TextDomain-like interpolation
+in translated strings (__x, __xn / __nx, etc.), which is labelled as
+'perl-brace-format' by gettext, is more Perl-ish and better for unbiased
+translators, the printf based interpolation, labelled as ‘perl-format’
+(and identical to 'c-format', I think), may be preferred in this case.
 
-Not really.  The thing is, "This is the most common" needs to be
-close to "Often...".  "git merge" directly invoked by the end user
-is much less likely to encounter a fast forward situation; getting
-invoked indirectly by "git pull" makes it common.
+The 'perl-brace-format' doesn't need TRANSLATOR comments to explain
+what placeholders are, and placeholders are easier to reorder.  On
+the other hand translator needs to know to not translate contents
+of placeholders.
+
+  "This is the {color} {thing}.\n"
+
+With 'perl-format' / 'c-format' the translator might need to know
+how to change order of placeholders, but he or she should know
+how to do it translating strings from C code.
+
+  "This is the %s %s.\n"
+
+Also, if Perl code shares translation strings with C code, as in
+most cases here, then printf format is needed to do translation
+only once.
+
+tldr; I am reversing my opinion, and agree with your solution.
+
+> 
+> Interdiff bellow.
+
+One thing I have noticed in the interdiff is using *translated*
+strings in hash content (translation takes time, and might not
+be necessary), that is:
+
+   $hashref = {
+	KEY => __('value'),
+   }
+
+   ... $hashref->{KEY} ...
+
+instead of marking value for translation, and doing translation
+only on print, when it is necessary
+
+   $hashref = {
+	KEY => N__('value'),
+   }
+
+   ... __($hashref->{KEY}) ...
+
+> 
+> Vasco Almeida (14):
+[...]
+
+I'll try to review those later.
+
+Thank you for your work,
+-- 
+Jakub Narębski
 
