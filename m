@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9501F4F8
+	by dcvr.yhbt.net (Postfix) with ESMTP id 879A81F4F8
 	for <e@80x24.org>; Wed,  5 Oct 2016 17:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754686AbcJERVq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 13:21:46 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:44352 "EHLO sapo.pt"
+        id S1754701AbcJERVx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 13:21:53 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:54588 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753175AbcJERVn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 13:21:43 -0400
-Received: (qmail 21818 invoked from network); 5 Oct 2016 17:21:42 -0000
-Received: (qmail 6550 invoked from network); 5 Oct 2016 17:21:41 -0000
+        id S1753207AbcJERVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 13:21:52 -0400
+Received: (qmail 24876 invoked from network); 5 Oct 2016 17:21:49 -0000
+Received: (qmail 7945 invoked from network); 5 Oct 2016 17:21:49 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 5 Oct 2016 17:21:36 -0000
+          for <git@vger.kernel.org>; 5 Oct 2016 17:21:44 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/14] i18n: add--interactive: mark simple here-documents for translation
-Date:   Wed,  5 Oct 2016 17:20:58 +0000
-Message-Id: <20161005172110.30801-3-vascomalmeida@sapo.pt>
+Subject: [PATCH v3 04/14] i18n: clean.c: match string with git-add--interactive.perl
+Date:   Wed,  5 Oct 2016 17:21:00 +0000
+Message-Id: <20161005172110.30801-5-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.10.1.366.g8a57a7a
 In-Reply-To: <20161005172110.30801-1-vascomalmeida@sapo.pt>
 References: <20161005172110.30801-1-vascomalmeida@sapo.pt>
@@ -46,54 +46,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark messages in here-document without interpolation for translation.
-
-The here-document delimiter \EOF, which is the same as 'EOF', indicate
-that the text is to be treated literally without interpolation of its
-content.  Unfortunately xgettext is not able to extract here documents
-with delimiter \EOF but it is with delimiter enclosed in single quotes.
-Then change \EOF to 'EOF', although in this case does not make
-difference what variation of here-document to use since there is nothing
-to interpolate.
+Change strings for help to match the ones in git-add--interactive.perl.
+The strings now represent one entry to translate each rather then two
+entries each different only by an ending newline character.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ builtin/clean.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index da0255b..3c10ced 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -639,7 +639,7 @@ sub list_and_choose {
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 0371010..d6bc3aa 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -287,11 +287,11 @@ static void pretty_print_menus(struct string_list *menu_list)
+ static void prompt_help_cmd(int singleton)
+ {
+ 	clean_print_color(CLEAN_COLOR_HELP);
+-	printf_ln(singleton ?
++	printf(singleton ?
+ 		  _("Prompt help:\n"
+ 		    "1          - select a numbered item\n"
+ 		    "foo        - select item based on unique prefix\n"
+-		    "           - (empty) select nothing") :
++		    "           - (empty) select nothing\n") :
+ 		  _("Prompt help:\n"
+ 		    "1          - select a single item\n"
+ 		    "3-5        - select a range of items\n"
+@@ -299,7 +299,7 @@ static void prompt_help_cmd(int singleton)
+ 		    "foo        - select item based on unique prefix\n"
+ 		    "-...       - unselect specified items\n"
+ 		    "*          - choose all items\n"
+-		    "           - (empty) finish selecting"));
++		    "           - (empty) finish selecting\n"));
+ 	clean_print_color(CLEAN_COLOR_RESET);
  }
  
- sub singleton_prompt_help_cmd {
--	print colored $help_color, <<\EOF ;
-+	print colored $help_color, __ <<'EOF' ;
- Prompt help:
- 1          - select a numbered item
- foo        - select item based on unique prefix
-@@ -648,7 +648,7 @@ EOF
+@@ -508,7 +508,7 @@ static int parse_choice(struct menu_stuff *menu_stuff,
+ 		if (top <= 0 || bottom <= 0 || top > menu_stuff->nr || bottom > top ||
+ 		    (is_single && bottom != top)) {
+ 			clean_print_color(CLEAN_COLOR_ERROR);
+-			printf_ln(_("Huh (%s)?"), (*ptr)->buf);
++			printf(_("Huh (%s)?\n"), (*ptr)->buf);
+ 			clean_print_color(CLEAN_COLOR_RESET);
+ 			continue;
+ 		}
+@@ -774,7 +774,7 @@ static int ask_each_cmd(void)
+ static int quit_cmd(void)
+ {
+ 	string_list_clear(&del_list, 0);
+-	printf_ln(_("Bye."));
++	printf(_("Bye.\n"));
+ 	return MENU_RETURN_NO_LOOP;
  }
  
- sub prompt_help_cmd {
--	print colored $help_color, <<\EOF ;
-+	print colored $help_color, __ <<'EOF' ;
- Prompt help:
- 1          - select a single item
- 3-5        - select a range of items
-@@ -1584,7 +1584,9 @@ sub quit_cmd {
- }
- 
- sub help_cmd {
--	print colored $help_color, <<\EOF ;
-+# TRANSLATORS: please do not translate the command names
-+# 'status', 'update', 'revert', etc.
-+	print colored $help_color, __ <<'EOF' ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
 -- 
 2.7.4
 
