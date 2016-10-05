@@ -2,104 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D1141F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 18:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A867D1F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 18:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754653AbcJESV6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 14:21:58 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.26]:58779 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754187AbcJESV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 14:21:57 -0400
-Received: from [84.131.248.67] (helo=sandbox)
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1brqpD-0003j5-Vs; Wed, 05 Oct 2016 20:21:52 +0200
-Date:   Wed, 5 Oct 2016 20:21:50 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jeremy Morton <admin@game-point.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Reference a submodule branch instead of a commit
-Message-ID: <20161005182150.GA10927@sandbox>
-References: <57F29FEF.30700@game-point.net>
- <xmqqfuod6yw2.fsf@gitster.mtv.corp.google.com>
- <20161004113625.GB20309@book.hvoigt.net>
- <CAGZ79kZWtAU6YG4Qz9_Gwk2db5L2kPCCKrN+64hMYDovRjiLRw@mail.gmail.com>
- <xmqqshscuilh.fsf@gitster.mtv.corp.google.com>
- <xmqqlgy4szuu.fsf@gitster.mtv.corp.google.com>
- <20161005141439.GD30930@book.hvoigt.net>
- <xmqqlgy2rcxq.fsf@gitster.mtv.corp.google.com>
+        id S1752439AbcJESrf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 14:47:35 -0400
+Received: from mout.web.de ([217.72.192.78]:50926 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752015AbcJESrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 14:47:35 -0400
+Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0M25B9-1b3auy1f91-00tyFN; Wed, 05 Oct 2016 20:47:27
+ +0200
+Subject: Re: [PATCH 0/18] alternate object database cleanups
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <62a7966c-fe98-f987-db10-3fc3b5f4b7e6@web.de>
+Date:   Wed, 5 Oct 2016 20:47:23 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlgy2rcxq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:impEKtfLq8GAq0td37t/1/Sodin34HHHAMyRpVbOCT05jAxqkOl
+ E4fIsnSsMpHLlMIuyjMcWIuATOdkYQIYv0HSOaQ/DScRFW5lzmwx+XdTT6+d/BTofkkqexl
+ IlOqT6HqaTtWl8kFwRkPjHHbWI1sGQHA8h4BaRXDMRPfZiEbiQ3QV2VNpsyr28D2r2HbUBK
+ beY5SdzfsE5zHBgPUK4Eg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PUkhVvllW/o=:yuI81nloYTs62I1mmpzUTq
+ BnNdh4l7CnL8OpkmS8rPMa8pQLCemcWu+z5ILmqwVuouQoJO2jWMuB+jpuDr7soS/fA8//b1l
+ VsqVOUr5jQR8n1LJ8aJ0J4OsbhMBvzF23FuIAzJSWQAo+tLE87v9AMtTXCoNjI/FPlIm3fIQu
+ 0sTyhmk1+S2Y0L4dxTMLBCPdDHdxZl0bFw9E7BRV9JAOE6aA2JLGxRvGDRMb+oXqfoW3a5mBp
+ z/EcVf0jmaxQsG/v+J1hbqpGQwURm/ziPlDuJ2zbtFrEJqcCQwZJBhfUwk/JVVRjFpY5hNbx3
+ ++GdUmyPR9pOgUqW022CAdmTuCec1gZPlaT59XMGpXOFzaxeNcrvFWLK+p8uUXs73DkGi+sy2
+ 9xCOaLiH+uQ3mS0bUlG9bylhucg0Z8KvyR/3BtMleptdYF+ztmhpoXM+LS2GtiVOKWOcycjrl
+ ldEXTwv1fYcxM3bpobBNVBPjPMm06n1tDH/zicRIeORoeTjgsohb86NmFFeNUKe04gWmJ6un1
+ dxzrHtzEaxj+X5zOteLv6G+YO4W79OX9t4LD7YgChR5RfoBs0l8eZnEBuUzdj3g/5IC2a/XtU
+ VdlIW/aRzv9Gkcvk4T1TBuhPrg8+ISu0MaIz4DqF9iXWMNc6/y+ZlEhj5e0TkD/v+nCzYMr6m
+ jq9sQ7ojmEVzJmuHiquQvi5IJg1FRLrxRoZ7Q3eixrJycvej239YAsk27Vb51bUt0NnOb/y8R
+ SikDGIaHQS1fiIQth6giutouSnH7Gt/hacLoRRdVMIt9rL7V65o25zuX/oLZRAPMPT6BhZ5wV
+ +5WDsb6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 05, 2016 at 09:13:53AM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> >> It IS a hack, but having this information in .git<something> would
-> >> mean that it can be forced to be in machine readable form, unlike a
-> >> mention in README.  I do not know if the .gitmodules/.gitignore
-> >> combination is a sensible thing to use, but it does smell like a
-> >> potentially useful hack.
-> >
-> > IIRC the tree entries are the reference for submodules in the code. We
-> > are iterating over the tree entries in many places so that change does
-> > not seem so easy to me.
-> >
-> > But you are right maybe we should stop arguing against this workflow and
-> > just let people use it until they find out whats wrong with it ;)
-> 
-> I didn't say that, though.  I am fairly firm on _not_ changing what
-> the superproject records in its tree for the submodule, i.e. it must
-> record the exact commit, not "a branch name", for reproducibility. 
+Am 03.10.2016 um 22:33 schrieb Jeff King:
+> This series is the result of René nerd-sniping me with the claim that we
+> could "easily" teach count-objects to print out the list of alternates
+> in:
+>
+>   http://public-inbox.org/git/c27dc1a4-3c7a-2866-d9d8-f5d3eb161650@web.de/
 
-I was not talking about changing what the superproject records in its
-tree. I was just talking about changing where we look for submodules
-(e.g. for updating and such). I.e. in .git* instead of just the tree as
-it is at the moment. Thats what I understood from the discussion above.
-Sorry that might have been ambiguous.
+1. Send crappy patch
+2. ????
+3. PROFIT!!!
 
-I agree that there should always be a commit as a reference for a
-submodule. But as far as I understand for some projects its to much
-overhead to record every change of a submodule but still they want to
-use the latest code during development. Those projects might only want
-to record the actual commit when they release something. At least thats
-what I imagine.
+Sometimes it works. :)
 
-> I am OK if people ignored the unmatch between the recorded commit
-> from a submodule and what they had in the submodule directory while
-> they developed and tested the superproject commit.  After all, it is
-> not an error to make a commit while having a local uncommitted
-> changes to tracked files, and it is equally valid to have a commit
-> checked out in a submodule directory that is different from what
-> goes in the superproject commit.  But we do show "modified but not
-> committed" in the status output.  In that light, submodule.*.ignore
-> may have been a mistake.
-
-The original intend for submodule.*.ignore was to help people not
-showing submodules as dirty when they had untracked files in them. That
-was after status learned to look into submodules. 'untracked' to avoid the
-performance overhead and 'dirty' for the people that accidentally worked
-with dirty submodules. I agree 'all' might have been to much.
-
-For the above workflow what user might actually want is something that
-ignores all changes as long as they are part of the remote branch. But I
-am just guessing here. My gut feeling is still that most people that
-request this feature come from svn. Thats why I asked whether the
-options I described provide the behavior that Jeremy wants.
-
-Cheers Heiko
+Thank you!
+René
