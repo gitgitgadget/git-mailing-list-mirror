@@ -2,178 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 298AD207EC
-	for <e@80x24.org>; Wed,  5 Oct 2016 07:47:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08BE8207EC
+	for <e@80x24.org>; Wed,  5 Oct 2016 09:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753725AbcJEHrM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 03:47:12 -0400
-Received: from mx5-phx2.redhat.com ([209.132.183.37]:48317 "EHLO
-        mx5-phx2.redhat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751591AbcJEHrM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 03:47:12 -0400
-Received: from zmail26.collab.prod.int.phx2.redhat.com (zmail26.collab.prod.int.phx2.redhat.com [10.5.83.33])
-        by mx5-phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u957lB78019857
-        for <git@vger.kernel.org>; Wed, 5 Oct 2016 03:47:11 -0400
-Date:   Wed, 5 Oct 2016 03:47:11 -0400 (EDT)
-From:   Josef Ridky <jridky@redhat.com>
-To:     git@vger.kernel.org
-Message-ID: <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
-References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
-Subject: Re: Feature Request: user defined suffix for temp files created by
- git-mergetool
+        id S1754611AbcJEJnq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 05:43:46 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:32852 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752185AbcJEJno (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 05:43:44 -0400
+Received: by mail-it0-f66.google.com with SMTP id o21so3315247itb.0
+        for <git@vger.kernel.org>; Wed, 05 Oct 2016 02:43:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mmtKzeu/aPEsQvATAbd4aUi0NrusgFzt+bqwzjmrgAM=;
+        b=CsmmXRC+6ArKVIfSrqo7tSHDgxWCWqRgY9/L0w6xImLKuvWbf09z3DrH8LbtlDfKTV
+         7+LlHYIoH7X1ChFFsJoFW0ANmPYcwcK6Knm+SDAmlnWS93UKbULh5PJ0P3W1ghFoR/f5
+         pdlU+OeNADBfebPVfQ3m5N0VL/G+vDrHayLC3tmyCokNnOxj+/nkNN791f/1HnscGpxb
+         Q7qRtXMT5bJ3HJHCBC24Iu7D9WWj7n6O/mqBXmalE5PaMbTr9I3jH0DwFUMxuB6JUosI
+         iy9lpo7CPRVSHYXqeVyHboJZLypCymoO9ATbktfTkjsptJa8gmpfkRg8Mxn265DVQqYo
+         daIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mmtKzeu/aPEsQvATAbd4aUi0NrusgFzt+bqwzjmrgAM=;
+        b=ap+Qxlrne0+J3oj6Anr1wBAOAVQwCSvXpHFWLW/fUU3IOrkqNs0QGLgKD9intNVHSD
+         8X7YojOta+8PjEa6VKBI6K4s01gjvxppEpT5MewNuulNTgxIAX4tmfRNbblO74Qs442G
+         YwsFSxGT9N8IWffN2wP8Cl/QbwVXv5RkeUDrKUiVPPSynFPwf1cFI98FPzhsOAWwcXAF
+         b0c55SA9zf7VcObNyD7zPMgnIeHxdiS8lcF6Fx/XnSOgHc8CNSKQNRgTEYep6pyPnDST
+         /jPr+plp3f0OpWAtcs/DSSo5axryZydZW8jq0HHCbRcDDa6QlrLWCyMvibqpIThXd8TC
+         +Cyg==
+X-Gm-Message-State: AA6/9RkLFHgtY/Vkwgvppp2Tlh8ZRNy4/Ix+kz4xe60cMvJ0mhvF9tMg4hjX+/5N7jcrbufhGttzzj33Q7f0mA==
+X-Received: by 10.107.202.4 with SMTP id a4mr9110953iog.19.1475660624007; Wed,
+ 05 Oct 2016 02:43:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.34.4.141]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF48 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Feature Request: user defined suffix for temp files created by git-mergetool
-Thread-Index: A+voVj8tnKTYRSU9gTivl6CydTDZDWbBH6y3
+Received: by 10.64.21.6 with HTTP; Wed, 5 Oct 2016 02:43:13 -0700 (PDT)
+In-Reply-To: <xmqqd1jgw0nx.fsf@gitster.mtv.corp.google.com>
+References: <20160928114348.1470-1-pclouds@gmail.com> <20160928114348.1470-2-pclouds@gmail.com>
+ <xmqqzimrj03j.fsf@gitster.mtv.corp.google.com> <CACsJy8D28iq3r3O_uzjyyJT--KQunAySRgUthF3FMrb1VM6XKw@mail.gmail.com>
+ <xmqqd1jgw0nx.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 5 Oct 2016 16:43:13 +0700
+Message-ID: <CACsJy8D7c8Z_ugasn_scf391+C6GxJp1CYwHY4ndvVtLiJzxnQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] Resurrect "diff-lib.c: adjust position of i-t-a
+ entries in diff"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, 
+On Tue, Oct 4, 2016 at 11:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> We don't use it internally _yet_. I need to go through all the
+>> external diff code and see --shift-ita should be there. The end goal
+>> is still changing the default behavior and getting rid of --shift-ita,
+>
+> I do not agree with that endgame, and quite honestly I do not want
+> to waste time reviewing such a series.
 
-I have just realize, that my attachment has been cut off from my previous message.
-Below you can find patch with requested change.
-
-Add support for user defined suffix part of name of temporary files
-created by git mergetool
----
- Documentation/git-mergetool.txt | 26 ++++++++++++++++++++-
- git-mergetool.sh                | 52 +++++++++++++++++++++++++++++++++++++----
- 2 files changed, 72 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index e846c2e..6cf5935 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -8,7 +8,7 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
- SYNOPSIS
- --------
- [verse]
--'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
-+'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -79,6 +79,30 @@ success of the resolution after the custom tool has exited.
- 	Prompt before each invocation of the merge resolution program
- 	to give the user a chance to skip the path.
- 
-+--local=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (local) for merging. If not used or is equal with any
-+	other (remote|backup|base), default value is used.
-+	Default suffix is LOCAL.
-+
-+--remote=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (remote) for merging. If not used or is equal with any
-+	other (local|backup|base), default value is used.
-+	Default suffix is REMOTE.
-+
-+--backup=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (backup) for merging. If not used or is equal with any
-+	other (local|remote|base), default value is used.
-+	Default suffix is BACKUP.
-+
-+--base=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (base) for merging. If not used or is equal with any
-+	other (local|remote|backup), default value is used.
-+	Default suffix is BASE.
-+
- TEMPORARY FILES
- ---------------
- `git mergetool` creates `*.orig` backup files while resolving merges.
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index bf86270..e3433ee 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -8,11 +8,18 @@
- # at the discretion of Junio C Hamano.
- #
- 
--USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
-+USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [--local=name] [--remote=name] [--backup=name] [--base=name] [file to merge] ...'
- SUBDIRECTORY_OK=Yes
- NONGIT_OK=Yes
- OPTIONS_SPEC=
- TOOL_MODE=merge
-+
-+#optional name space convention
-+local_name=""
-+remote_name=""
-+base_name=""
-+backup_name=""
-+
- . git-sh-setup
- . git-mergetool--lib
- 
-@@ -271,10 +278,33 @@ merge_file () {
- 		BASE=${BASE##*/}
- 	fi
- 
--	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
--	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
--	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
--	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
-+	if [ "$local_name" != "" ]  && [ "$local_name" != "$remote_name" ] && [ "$local_name" != "$backup_name" ] && [ "$local_name" != "$base_name" ]
-+	then
-+		LOCAL="$MERGETOOL_TMPDIR/${BASE}_${local_name}_$$$ext"
-+	else
-+		LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
-+	fi
-+
-+	if [ "$remote_name" != "" ] && [ "$remote_name" != "$local_name" ] && [ "$remote_name" != "$backup_name" ] && [ "$remote_name" != "$base_name" ]
-+	then
-+		REMOTE="$MERGETOOL_TMPDIR/${BASE}_${remote_name}_$$$ext"
-+	else
-+		REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
-+	fi
-+
-+	if [ "$backup_name" != "" ] && [ "$backup_name" != "$local_name" ] && [ "$backup_name" != "$remote_name" ] && [ "$backup_name" != "$base_name" ]
-+	then
-+		BACKUP="$MERGETOOL_TMPDIR/${BASE}_${backup_name}_$$$ext"
-+	else
-+		BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
-+	fi
-+
-+	if [ "$base_name" != "" ] && [ "$base_name" != "$local_name" ] && [ "$base_name" != "$remote_name" ] && [ "$base_name" != "$backup_name" ]
-+	then
-+		BASE="$MERGETOOL_TMPDIR/${BASE}_${base_name}_$$$ext"
-+	else
-+		BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
-+	fi
- 
- 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
- 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
-@@ -396,6 +426,18 @@ do
- 	--prompt)
- 		prompt=true
- 		;;
-+	--local=*)
-+		local_name=${1#--local=}
-+		;;
-+	--remote=*)
-+		remote_name=${1#--remote=}
-+		;;
-+	--base=*)
-+		base_name=${1#--base=}
-+		;;
-+	--backup=*)
-+		backup_name=${1#--backup=}
-+		;;
- 	--)
- 		shift
- 		break
+I do not believe current "diff" behavior wrt. i-t-a entries is right
+either. There's no point in pursuing this series then. Feel free to
+revert 3f6d56d (commit: ignore intent-to-add entries instead of
+refusing - 2012-02-07) and bring back the old i-t-a behavior. All the
+problems would go away.
 -- 
-2.7.4
+Duy
