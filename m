@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4AB207EC
-	for <e@80x24.org>; Wed,  5 Oct 2016 11:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 923CB207EC
+	for <e@80x24.org>; Wed,  5 Oct 2016 11:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754598AbcJELZU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 07:25:20 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57179 "EHLO mout.gmx.net"
+        id S1753846AbcJELfK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 07:35:10 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64726 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753725AbcJELZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 07:25:17 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MfiFU-1bUbIh2Q44-00N6FK; Wed, 05 Oct 2016 13:25:03
+        id S1751121AbcJELfJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 07:35:09 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LrNoG-1at14d0vXA-0134fU; Wed, 05 Oct 2016 13:35:03
  +0200
-Date:   Wed, 5 Oct 2016 13:25:02 +0200 (CEST)
+Date:   Wed, 5 Oct 2016 13:35:01 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 3/6] Make the require_clean_work_tree() function
- reusable
-In-Reply-To: <xmqqy424t097.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610051324270.35196@virtualbox>
-References: <cover.1473580914.git.johannes.schindelin@gmx.de> <cover.1475586229.git.johannes.schindelin@gmx.de> <3b4f46b761589d84b7713c869d00d3231ab346fd.1475586229.git.johannes.schindelin@gmx.de> <xmqqy424t097.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 0/6] Pull out require_clean_work_tree() functionality
+ from builtin/pull.c
+In-Reply-To: <xmqqpongt034.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610051325280.35196@virtualbox>
+References: <cover.1473580914.git.johannes.schindelin@gmx.de> <cover.1475586229.git.johannes.schindelin@gmx.de> <xmqqpongt034.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RhpKANwIYASgSAeahjWlFWEosDAAlj7MhDxDQwwlEuQPO9DQaey
- V7znuRMsN8tO7yYLzIzHvk0XL/ndO/U38qDXj+inSaogtmVGn8eJRIRjw4smbRE6k2tefzn
- zRiMx30XBfiknXlh60+dCL6Na7hHptfEudxE8CvJIjhto+NPo8zZvBrPERDVieh7vX5cdmM
- Wu2kUnA+se1pHj5WTTdQg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GF0RLsFOXf8=:kuWaVGm4JlW4NkKt1voydK
- o2mlHYoo7IQWe7yVEIkmO2yI6stoQLhlfMEJnKfWaEl/sT28aHpji/M1fUEI/qe4X0fnwa5Lu
- rW9UDr9LwL4n6xO4HTXY1CMsIVmrMbxugM8oUJUxIHPYaEq31pveKYKBMmlkBbj+bJdcXekK/
- LasRs+m2+cru4q8J4nGl2q/T8l1HN/fAUtICRBjpytcXSJ2XkPCU6XqmfYHYvOQkquQRoilLo
- z+h1+2oCkN9283Y7lgF3JAPRytZWGRbSXar7TKUN8BxAwic1dY60zc7HUyXcc3HUHvXkova88
- PQQqjXKRNlD+jzVwCVk9/pA5oMUvDtWqBB0X5DNyRxD855Xpz7ESYbpe1Y/bXBKw/S32zRfgS
- Ah3FidtkEU1r+EhhPd06YOFHPUniL1XeK4POOCYrjgHsuSJBp81Pr0us93C60HhsOQNAzqBEQ
- kx9UXHHDcCopBqBstMlSIrVABXr1sT4+NObJNeRAhthu9o7cpVSlaDmdN3CpX17W7zqXqWqlC
- XiaHOEBSn2GkQrmn2/PmVnKEQoFAhSNUbPgDMaYUf0YnJvawjTtn94WttxLvYq9Wev6s3kZ+9
- ifeu0Y6iwOc2CVS6APTt9Yj5EQoEs9x9mrScVGRZMCoDd6jIv+7zHLMD6GMFQ6dEym33nQ0Yt
- WBFSou+o1mtmk/QXZtVOThMFAJ+j2/15BFQ4c+FXoZfv1efZEomrwrr1BMHZJ/CX+AOk54opY
- A0QEVVQRs32dyQRHfwiB0P+vB24rZ183WG9FZ0iznTr+u55Uo1/PH4lrXddtDXMcfhDrrYrBh
- 2egRTkc
+X-Provags-ID: V03:K0:rWGHIjwHNS1CtLZ0iu+LTQ2sXCuBU8tnkHzqQbTtIrSJ0hko9u+
+ GxdxvrX1ijcWytfnVDKGYkgHSrOePuvFi3RPZx5R5kEjDWzIpe8fMyiNwujAztR/lSz2724
+ 5H+zz4nLOfGZAK3D6Jj5+5AIqPH9Q7kw/r8ZlVaDWlAg7uZpLgZrutCR8BUvlUG//asN5ff
+ pJ4MGphHUzK+eLYf9EUpw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a9VnE39568E=:By6JKupe+Fef33JWKWuJZF
+ o13Ozj6i0Gcp9w9QEVS36Nn1yYnoSiEHrbDrlzHsvvYE7tcVI1KaDagm27NVewY/JrKg+na7G
+ 8QhRzdB7mSxRC1kG8P5CF+VwdCgDw4fsBMcaUsWjZZmF5cJfOoKrENU38wUDbiOhoLJ4GiDvn
+ Ezykdz3Sf1SnI3/A5SQJJsdw7ZACN75jrap191BXPu6PDjutDLLqulUKygSDD/AEmVGCUloNp
+ Ku+6rlAJ3793cvbNfy6FKCDeFDLEwaJjGo9ya5vJ1D96+EHczD6cjJD8i1y6FrB7hKwaGN8Ar
+ 7GVhwI+TMdpPb8gdXmrr9RbVun13aOdwopTdzwfEwrcGA6U8tpXamg/yCenEhMnjnU+WGdJpX
+ nV1+8GmyJTNuXkJW6AEY0rZecEnu8H88ca5Y7yn7nRtfsOppjx/lHE2rOLtu+8eB2xDJs64bH
+ OuHUBSw9K4kkk+9PbrKXSDz4Q06FiilOkQYHQzO5vzeLSYAizGhVgOEf9YqHmttwR3reOHuR2
+ Qdz0WuMGdlpN+k2HuHzV3WH0TzXUafN6WXDhvh3DfeUo66FDqLxKIDY4h4/D5NHxoOiUozd6e
+ GTmA3y3/s2XbhIeVUMBkC051VOC7iQwqNAqktbQjLc5wPHmeq4wWgsNQ3a7H/ImlySrcEj1zF
+ hrNPp0/vPUHX/5ccbcd6sAnHPhyNCiHsmO/dBB34ZWnJpji1txd/ES5D0DBkj7DEieyKhOCom
+ 86ii68Ek3gioKWJ/QhUKk6Wyrmaibe43RmlSCDXjcubKwySNG2MrxIduoaHAA0ax4I/CgsO0A
+ Ekatfd0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,18 +58,42 @@ Hi Junio,
 
 On Tue, 4 Oct 2016, Junio C Hamano wrote:
 
-> I'd tweak the message while queuing, though.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
->     wt-status: make the require_clean_work_tree() function reusable
->     
->     The function "git pull" uses to stop the user when the working
->     tree has changes is useful in other places.
+> > This is the 5th last patch series of my work to accelerate interactive
+> > rebases in particular on Windows.
+> 
+> Offtopic, but I am always confused by what you might mean by this
+> "nth last patch series".  Is this series 5th from the last and we
+> have four more to go?
 
-I stumbled over this sentence. How about
+Yes, we have four more to go:
 
-	The function used by "git pull" to stop [...]
+- the patch series (called "prepare-sequencer" in my fork) preparing the
+  sequencer code for the next patch series, such as revamping the parser
+  for the edit script (or "todo script" as I used to say all the time, or
+  "insn sheet" as sequencer calls it),
 
-instead?
+- the patch series ("sequencer-i") teaching the sequencer to parse and
+  execute the commands of rebase -i's git-rebase-todo file,
 
-Thanks,
+- the patch series ("rebase--helper") introducing the builtin, and using
+  it from rebase -i, and finally
+
+- the patch series ("rebase-i-extra") that moves more performance critical
+  bits and pieces from git-rebase--interactive.sh into the rebase--helper.
+
+I had originally planned to stop at rebase--helper and invite other
+developers to join the fun of making rebase -i a true builtin, but the
+performance improvement was surprisingly disappointing before the
+rebase--helper learned to skip unnecessary picks, to verify that the
+script is valid, to expand/collapse the SHA-1s, and to rearrange
+fixup!/squash!  lines.
+
+> In any case, after a quick re-read and comparison with the last
+> round, I think this is in a good shape.  I'd say that we would wait
+> for a few days for others to comment and then merge it to 'next' if
+> we missed nothing glaringly wrong.
+
+Perfect!
 Dscho
