@@ -2,152 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4121F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 18:07:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D1141F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 18:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754750AbcJESHL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 14:07:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53223 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754577AbcJESHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 14:07:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8580544E87;
-        Wed,  5 Oct 2016 14:07:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gGn6TnbSOPTnVbjVcD+dfD9lHDc=; b=a2Mliv
-        gRJAfeB/+uf+jpdLvPZZESVJpunR5um0vwlVNfavTNyCZ5fw4ToCSQnP7YLYpJye
-        8nM4aY/iOEO3bBG61Nuv8y2FQssStMzRe5dakBpkkNbOfs8k2ljzAYWZOKJrnHf3
-        YDnHtXWqhXyzJEqYdWOhKkq1ME7F5RMgAXKcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ncDCP1mol2DvgUI9tcrV+NR2ePsyiobx
-        Fjv4XA5aRBWyOl267ntPl5bckSl03whRGscQTLsVZiKq7BXCyOvNlqW8l2ZFeN/3
-        59pnvvHTeZX+1Gcnyz81F/sfZ1XZVakpLJVIsCSJEChifPcIigbQNlHPxRvJVovi
-        zHnzxu33f+A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EF5B44E86;
-        Wed,  5 Oct 2016 14:07:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF20044E85;
-        Wed,  5 Oct 2016 14:07:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     sorganov@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/6] Documentation/git-merge.txt: improve short description in DESCRIPTION
-References: <cover.1475678515.git.sorganov@gmail.com>
-        <e74ae8afc1bfc4cd9161ccaa56d926a89439551e.1475678515.git.sorganov@gmail.com>
-Date:   Wed, 05 Oct 2016 11:07:07 -0700
-In-Reply-To: <e74ae8afc1bfc4cd9161ccaa56d926a89439551e.1475678515.git.sorganov@gmail.com>
-        (sorganov@gmail.com's message of "Wed, 5 Oct 2016 17:46:23 +0300")
-Message-ID: <xmqq60p6pt4k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754653AbcJESV6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 14:21:58 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.26]:58779 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754187AbcJESV5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 14:21:57 -0400
+Received: from [84.131.248.67] (helo=sandbox)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1brqpD-0003j5-Vs; Wed, 05 Oct 2016 20:21:52 +0200
+Date:   Wed, 5 Oct 2016 20:21:50 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jeremy Morton <admin@game-point.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Reference a submodule branch instead of a commit
+Message-ID: <20161005182150.GA10927@sandbox>
+References: <57F29FEF.30700@game-point.net>
+ <xmqqfuod6yw2.fsf@gitster.mtv.corp.google.com>
+ <20161004113625.GB20309@book.hvoigt.net>
+ <CAGZ79kZWtAU6YG4Qz9_Gwk2db5L2kPCCKrN+64hMYDovRjiLRw@mail.gmail.com>
+ <xmqqshscuilh.fsf@gitster.mtv.corp.google.com>
+ <xmqqlgy4szuu.fsf@gitster.mtv.corp.google.com>
+ <20161005141439.GD30930@book.hvoigt.net>
+ <xmqqlgy2rcxq.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 881C643A-8B26-11E6-9C6F-F99D12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlgy2rcxq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-sorganov@gmail.com writes:
+On Wed, Oct 05, 2016 at 09:13:53AM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> >> It IS a hack, but having this information in .git<something> would
+> >> mean that it can be forced to be in machine readable form, unlike a
+> >> mention in README.  I do not know if the .gitmodules/.gitignore
+> >> combination is a sensible thing to use, but it does smell like a
+> >> potentially useful hack.
+> >
+> > IIRC the tree entries are the reference for submodules in the code. We
+> > are iterating over the tree entries in many places so that change does
+> > not seem so easy to me.
+> >
+> > But you are right maybe we should stop arguing against this workflow and
+> > just let people use it until they find out whats wrong with it ;)
+> 
+> I didn't say that, though.  I am fairly firm on _not_ changing what
+> the superproject records in its tree for the submodule, i.e. it must
+> record the exact commit, not "a branch name", for reproducibility. 
 
-> From: Sergey Organov <sorganov@gmail.com>
->
-> Old description had a few problems:
->
-> - sounded as if commits have changes
->
-> - stated that changes are taken since some "divergence point"
->   that was not defined.
->
-> New description rather uses "common ancestor" and "merge base",
-> definitions of which are easily discoverable in the rest of GIT
-> documentation.
->
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  Documentation/git-merge.txt | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
->
-> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> index cc0329d..351b8fc 100644
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -16,11 +16,16 @@ SYNOPSIS
->  
->  DESCRIPTION
->  -----------
-> -Incorporates changes from the named commits (since the time their
-> -histories diverged from the current branch) into the current
-> -branch.  This command is used by 'git pull' to incorporate changes
-> -from another repository and can be used by hand to merge changes
-> -from one branch into another.
-> +
-> +Incorporates changes that lead to the named commits into the current
-> +branch, and joins corresponding histories. The best common ancestor of
-> +named commits and the current branch, called "merge base", is
-> +calculated, and then net changes taken from the merge base to
-> +the named commits are applied.
-> +
-> +This command is used by 'git pull' to incorporate changes from another
-> +repository, and can be used by hand to merge changes from one branch
-> +into another.
+I was not talking about changing what the superproject records in its
+tree. I was just talking about changing where we look for submodules
+(e.g. for updating and such). I.e. in .git* instead of just the tree as
+it is at the moment. Thats what I understood from the discussion above.
+Sorry that might have been ambiguous.
 
-Content change together with re-flowing the text makes it more
-costly than necessary to review a change like this.  Please avoid
-doing so in your future patches.
+I agree that there should always be a commit as a reference for a
+submodule. But as far as I understand for some projects its to much
+overhead to record every change of a submodule but still they want to
+use the latest code during development. Those projects might only want
+to record the actual commit when they release something. At least thats
+what I imagine.
 
-I like what the updated description says very much.  I however
-wonder if "and can be used by hand..." is still appropriate, or
-needs a bit of modernizing.  It feels a bit awkward by making it
-sound as if 'git merge' is primarily an implementation detail of
-'git pull' but it can also be used as the first-class command, which
-used to be the case in the old days back when "git pull . other" was
-also perfectly good way to merge the 'other' branch from your own
-repository, but I think your update is meant to clarify that we no
-longer live in that old world ;-)
+> I am OK if people ignored the unmatch between the recorded commit
+> from a submodule and what they had in the submodule directory while
+> they developed and tested the superproject commit.  After all, it is
+> not an error to make a commit while having a local uncommitted
+> changes to tracked files, and it is equally valid to have a commit
+> checked out in a submodule directory that is different from what
+> goes in the superproject commit.  But we do show "modified but not
+> committed" in the status output.  In that light, submodule.*.ignore
+> may have been a mistake.
 
-> @@ -31,11 +36,11 @@ Assume the following history exists and the current branch is
->      D---E---F---G master
->  ------------
->  
-> -Then "`git merge topic`" will replay the changes made on the
-> -`topic` branch since it diverged from `master` (i.e., `E`) until
-> -its current commit (`C`) on top of `master`, and record the result
-> -in a new commit along with the names of the two parent commits and
-> -a log message from the user describing the changes.
+The original intend for submodule.*.ignore was to help people not
+showing submodules as dirty when they had untracked files in them. That
+was after status learned to look into submodules. 'untracked' to avoid the
+performance overhead and 'dirty' for the people that accidentally worked
+with dirty submodules. I agree 'all' might have been to much.
 
-> -Then "`git merge topic`" will replay the changes made on the `topic`
-> -branch since it diverged from `master` (i.e., `E`) until its current
-> -commit (`C`) on top of `master`, and record the result in a new commit
-> -along with the names of the two parent commits and a log message from
-> -the user describing the changes.
+For the above workflow what user might actually want is something that
+ignores all changes as long as they are part of the remote branch. But I
+am just guessing here. My gut feeling is still that most people that
+request this feature come from svn. Thats why I asked whether the
+options I described provide the behavior that Jeremy wants.
 
-> +Then "`git merge topic`" will replay the changes made on the `topic`
-> +branch since it diverged from `master` (i.e., `E`) until its current
-> +commit (`C`) on top of `master`, and record the result in a new commit
-> +along with references to the two parent commits and a log message from
-> +the user describing the changes.
-
-Content change together with re-flowing the text makes it more
-costly than necessary to review a change like this.  Please avoid
-doing so in your future patches.
-
-I had to re-flow the original you removed to match how you flowed in
-the updated one and stare at it for a while to spot that the only
-change was to rephrase "the names of the parents" to "references to
-the parents".  I do not know if the updated phrasing is better.  The
-"name" in the original was meant to be a short-hand for "object name",
-and I would support a change to spell it out to clarify; "reference"
-can be a vague word that can mean different things in Git, and when
-the word is given without context, most Git people would think that
-the word refers to "refs", but that is definitely not what the new
-commit records, so...
+Cheers Heiko
