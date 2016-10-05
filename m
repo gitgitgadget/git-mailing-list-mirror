@@ -2,102 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 446FB1F4F8
-	for <e@80x24.org>; Wed,  5 Oct 2016 15:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD9A1F4F8
+	for <e@80x24.org>; Wed,  5 Oct 2016 16:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932262AbcJEPyf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 11:54:35 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:35879 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932227AbcJEPye (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 11:54:34 -0400
-Received: by mail-qt0-f179.google.com with SMTP id m5so52697182qtb.3
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 08:54:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JdqkHiv4ZWrajuTcWtplT6I+zvlMNVI77fsWjzxxn9o=;
-        b=AK2a/pmINnnM6OYLGW6mY36K59XQ2KA1pp1LBvBY5lHY4oA4IlC6a3IkGZjIWuSYdv
-         CTAOrp6zuqlo7pEPNI8tTjylTuHlk2fdKXdfu5iwGJuyVAcvmbmlZce4739uclN8Wvek
-         jA3ArPafKQtU/pyxDogWv5g2lCD9TKmeEW0nGNu2YRR2u1ycG3JmMo6QGLWwHOkAh4G/
-         0oxltz46uxo1XsYv5C+mUB0MTQPfNmzCSxRRUvcphshC5kiZqAPLd9mr3e6x+UC/SbdG
-         wAr65JPo/URs1Y4w7VE+dy3MLFkYXLC+UuXckUPahaZul42zynSOJDT16tv/VW08BJCX
-         F1Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JdqkHiv4ZWrajuTcWtplT6I+zvlMNVI77fsWjzxxn9o=;
-        b=eqqYtjwAK7YggEP8az6vB301pZd7ROWjJO6guVRnfuwdPAQD4j2jvN01utC1plkg34
-         mq8jprFG7SD+/xHDoGgBaF0qkIiK5mrw3/Npez2j8GVZJqa+EIPT5xcwl1xoK6ZEUdgq
-         13O64TYBRohgqgulkqADfT8XyHQ9xRAdOLatnPY2qUOy2J4fK2NvJt/16SK9xNQNUlQY
-         b4+Oscu5CoUp4nIq7IYSDRFWRHtNJe04ZDGXGbeCkdB38jrQVGx48DfpUH68xI8VEeKH
-         s9M5arY5jbAPAHhxGHzY/ACDIow9+3t3wD+w3bm8Mvdu69oVI6v2CD3QvAAvAaBcYyjZ
-         vI/g==
-X-Gm-Message-State: AA6/9RkBpgZVyStnayb9ys2J2eBpCJq6KL4g9Ptws8r5sep/hMe2J4A851/bv+qILZUqljTES8rrpGnJeimCRrJo
-X-Received: by 10.200.44.162 with SMTP id 31mr2840789qtw.1.1475682860145; Wed,
- 05 Oct 2016 08:54:20 -0700 (PDT)
+        id S1754261AbcJEQGF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Oct 2016 12:06:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55776 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754077AbcJEQGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2016 12:06:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78DFD4180F;
+        Wed,  5 Oct 2016 12:06:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aPi9PFnHyOfGliez6YlcJ8wWYvg=; b=ReLjav
+        HYYWz/PEUmogH4VdwVAcK9S78H+O4IGLsffUOSfmU7lxOAp7poFkxLuGYwccaYgo
+        ULkONG1rL6Ot7hqpTDVla9Oi3VAqUkR+AJnk/BL0XyTTJs+C+1LY998thnEmMk7z
+        UrcStnx/m5bFc3Tg6Zjs07dPTzsbaQivAI0mA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r2P7BQ4LVfocip8RExxnWwIf5mkWbXaL
+        woxF0CA8IFyL5dMZ0mXS+QCyZT/WgKAz82NxprA+xo/ds2B1hsOfIb/+XoVejpMU
+        dE8VLmLf+BQSm2ChHe9+1PRLBoNH2Q0fcF9K/y+0w4RAx/Dv+KghetcC2urPA1bR
+        dLXQnkWEywM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E1DC4180B;
+        Wed,  5 Oct 2016 12:06:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CADE4180A;
+        Wed,  5 Oct 2016 12:06:01 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josef Ridky <jridky@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature Request: user defined suffix for temp files created by git-mergetool
+References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
+        <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
+Date:   Wed, 05 Oct 2016 09:05:59 -0700
+In-Reply-To: <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
+        (Josef Ridky's message of "Wed, 5 Oct 2016 03:47:11 -0400 (EDT)")
+Message-ID: <xmqqponerdaw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Wed, 5 Oct 2016 08:54:19 -0700 (PDT)
-In-Reply-To: <20161005154715.qmmcwpkt2yudbc2d@sigill.intra.peff.net>
-References: <CAGZ79kbt+SZoogKTV_-rVfOOFzf6xrhWytrBo2H3r6NQw34WTw@mail.gmail.com>
- <20161004210359.15266-1-sbeller@google.com> <20161005154715.qmmcwpkt2yudbc2d@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 5 Oct 2016 08:54:19 -0700
-Message-ID: <CAGZ79kaWsS489YRHY3Djjb2pPoVJa5F0MaFhwhne5izg4oG55g@mail.gmail.com>
-Subject: Re: [PATCHv3 1/2] push: change submodule default to check when
- submodules exist
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9C5C78EC-8B15-11E6-B22F-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 5, 2016 at 8:47 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 04, 2016 at 02:03:58PM -0700, Stefan Beller wrote:
->
->> thanks for the suggestions, both git_path(..) as well as checking the config,
->> this seems quite readable to me:
->>
->>  builtin/push.c | 14 +++++++++++++-
->>  1 file changed, 13 insertions(+), 1 deletion(-)
->
-> Yeah, this seems like a good compromise to me.
->
-> I did have one other thought, but I don't think it's worth pursuing now.
-> We care about finding gitlinks in objects we're pushing; is there any
-> process which is already looking at those objects? Genreally, the
-> "pack-objects" doing the push has to. Not to actually push the objects,
-> which often are sent blindly off disk, but to determine the set of
-> reachable objects in the first place. So in theory we could prepare the
-> list of objects to pack, and as a side effect it could say "and here are
-> gitlinks referenced by those objects". But that doesn't work if bitmaps
-> are in effect, because then we don't access the objects directly at all.
-> I think you could solve that by extending the bitmap format to include a
-> bit for gitlinks that are reachable (but not necessarily included in the
-> pack).
->
-> So I don't think that's worth thinking too much about now, but it might
-> be an interesting optimization down the road.
->
-> -Peff
+Josef Ridky <jridky@redhat.com> writes:
 
-That sounds like what we'd want down the road. In my imagination the
-submodules of the future may live completely inside the superproject,
-i.e. they do not necessarily have their own URL. They can be obtained
-via fetching the superproject, that automagically also transmits the objects
-of the submodules.
+> Hi, 
+>
+> I have just realize, that my attachment has been cut off from my previous message.
+> Below you can find patch with requested change.
+>
+> Add support for user defined suffix part of name of temporary files
+> created by git mergetool
+> ---
 
-Thanks for the hint w.r.t. the bimaps!
-Stefan
+The first two paragraphs above do not look like they are meant for
+the commit log for this change.
+
+Please sign-off your patch.
+
+> -USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
+> +USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [--local=name] [--remote=name] [--backup=name] [--base=name] [file to merge] ...'
+>  SUBDIRECTORY_OK=Yes
+>  NONGIT_OK=Yes
+>  OPTIONS_SPEC=
+>  TOOL_MODE=merge
+> +
+> +#optional name space convention
+> +local_name=""
+> +remote_name=""
+> +base_name=""
+> +backup_name=""
+
+If you initialize these to LOCAL, REMOTE, etc. instead of empty,
+wouldn't it make the remainder of the code a lot simpler?  For
+example,
+
+> +	if [ "$local_name" != "" ]  && [ "$local_name" != "$remote_name" ] && [ "$local_name" != "$backup_name" ] && [ "$local_name" != "$base_name" ]
+> +	then
+> +		LOCAL="$MERGETOOL_TMPDIR/${BASE}_${local_name}_$$$ext"
+> +	else
+> +		LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
+> +	fi
+
+This can just be made an unconditional
+
+	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${local_name}_$$$ext"
+
+without any "if" check in front.  The same for all others.
+
+The conditional you added is doing two unrelated things.  It is
+trying to switch between an unset $local_name and default LOCAL,
+while it tries to make sure the user did not give the same string
+for two different things (which is a nonsense).  It is probably
+better to check for nonsense just once just before all these
+assuments of LOCAL, REMOTE, etc. begins, not at each point where
+they are set like this patch does.
