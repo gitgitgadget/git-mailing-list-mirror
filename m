@@ -2,98 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07AD51F4F8
-	for <e@80x24.org>; Thu,  6 Oct 2016 00:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A47001F4F8
+	for <e@80x24.org>; Thu,  6 Oct 2016 04:01:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751581AbcJFAlC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Oct 2016 20:41:02 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:34068 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750873AbcJFAlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2016 20:41:01 -0400
-Received: by mail-yw0-f172.google.com with SMTP id g192so3793467ywh.1
-        for <git@vger.kernel.org>; Wed, 05 Oct 2016 17:41:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9TeDrfkY48akXViwdStjjGlGLUcabhydteMA+0y6bKY=;
-        b=bATstC8XM+BFUoBXedYOODjt5/6Ft1vnKCC7SxkLVDbS8MjZAjM4I6MwroCwB1Ec/A
-         XsKf3l+GP5P0fmBh5Hoa7FOixeo8p9sFsgCbPMkLanM5cKM9MlBfNX+1h62ipKrgpDXI
-         CYZeb20nG18O2lIuYnpP2/8LsgGY/jduWKBk4tZbQWuMU5k90U1IaSR55OxArAOREkTS
-         cUEeZzq4xt9TPB+uSDijuafKeW+LceMTYJYs7o0gN2NWlraJhEMVCE4FQEC9QSxK+GVc
-         5xbynXp8DRxSRiWJf+ZVuPSnamWGxnEk5/vYP4g/UinFvTb7YmtE1rotuPXtVmfY6Z6c
-         u6aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9TeDrfkY48akXViwdStjjGlGLUcabhydteMA+0y6bKY=;
-        b=Mz+WyhBDQHF5NAKUHfZsLX3CqB7ZjK7DipDQn9I2PDV4iAcT+C7znoizDraHv/1mpP
-         ed+a2QHJTuzjqba92gPbGkcHlD+YiwWj3HvfXRLPiy2VrnKJAw4pqg60fQpzWKq0VlsP
-         +7OYeC58BwzIUP/n21z+kSbTF/Rsq4yiAi3pMBS2J/G3JvIBmD5O2KmmQ/mQQk+yGDJO
-         nH/ih64VRvs8i5NG3FCjU8bc+08+9Rtt29rDlptTVpWYb5f/L/ho/E8ZukvQ/pLR1OQE
-         WZiz664Rt+WSxlATBEZUcwxRb/q2ZJ+I9hCnf2+D0Nh1Zx+XM7SgwqHqFyJj+/FOAMGz
-         w/dA==
-X-Gm-Message-State: AA6/9RmWIKTVSEBo+CU1IeWxXJMg6AshxYuvGipq+u1XAwCfjxMs7ERT+b0LHgzkOUd+V7ewKN8LNAvdMv9XRA==
-X-Received: by 10.129.76.194 with SMTP id z185mr9643875ywa.257.1475714460374;
- Wed, 05 Oct 2016 17:41:00 -0700 (PDT)
+        id S1751439AbcJFEBQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 00:01:16 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:48248 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750999AbcJFEBP (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 6 Oct 2016 00:01:15 -0400
+X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Oct 2016 00:01:15 EDT
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 745F9208E6;
+        Wed,  5 Oct 2016 23:55:13 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 05 Oct 2016 23:55:13 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=fadxCtahWP8be2K
+        Axn4RaY3rWds=; b=ZVIl90jU/fQdKaoZX7RK72qI0nrQw4sQSzeAz3TY1UjgqCk
+        SsRGmAYmK1kcicLjga8pgep/yD7dGLYfTgOfi0qEdFVzdj6yfIXiD3dfo0QzHxHq
+        y6Vu/dT+eCtxFQ0CgWsaZpNpKACE2xOZ/gN5t9q/fg2U6u0hboTlQfXOeus4=
+X-Sasl-enc: Q2nZu/NjCoHa+xOyUSjBU5mSIeuMHAqCOV6FyaT1+Vpa 1475726112
+Received: from [192.168.1.72] (unknown [113.53.200.161])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 5B308F29D2;
+        Wed,  5 Oct 2016 23:55:12 -0400 (EDT)
+Subject: Re: Setting pager.add=true breaks add --patch
+To:     Anatoly Borodin <anatoly.borodin@gmail.com>
+References: <e8bdb434-432b-57c6-5cb4-283aca08ab0b@hale.ee>
+ <CACNzp2kd6wdE6pGsb5d5+cvkJa9M-gzG+5=oLhZr9dLn4o8gOQ@mail.gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+From:   Tom Hale <tom@hale.ee>
+Message-ID: <829bc648-dd9a-d166-c36e-3ad1508f0ba5@hale.ee>
+Date:   Thu, 6 Oct 2016 10:55:11 +0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Wed, 5 Oct 2016 17:40:39 -0700 (PDT)
-In-Reply-To: <xmqqwphmmoi6.fsf@gitster.mtv.corp.google.com>
-References: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
- <20160907151251.30978-1-szeder@ira.uka.de> <20160907151251.30978-6-szeder@ira.uka.de>
- <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
- <20161005033353.Horde.33pf2naqnF4HgwPWSy9DaHV@webmail.informatik.kit.edu>
- <xmqq4m4qrapv.fsf@gitster.mtv.corp.google.com> <20161005232609.Horde.VetzEIKHDJUdcaOod9sHxuK@webmail.informatik.kit.edu>
- <xmqqwphmmoi6.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 5 Oct 2016 17:40:39 -0700
-Message-ID: <CA+P7+xr4tYG6xoq4jTSxWyoQBwJSfZp7z=2BstTgaBSsgrs5+A@mail.gmail.com>
-Subject: Re: [PATCH 5/5] versioncmp: cope with common leading parts in versionsort.prereleaseSuffix
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-        Jeff King <peff@peff.net>,
-        Leho Kraav <leho@conversionready.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACNzp2kd6wdE6pGsb5d5+cvkJa9M-gzG+5=oLhZr9dLn4o8gOQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 5, 2016 at 3:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On 2016-10-03 00:00, Anatoly Borodin wrote:
+> I've reported this one bug recently:
 >
->> Gut feeling tells me that I should take this as a subtle
->> encouragement to look into adding 'versionsort.postreleasesuffix',
->> shouldn't I ;)
+> https://public-inbox.org/git/nrmbrl$hsk$1@blaine.gmane.org/
 >
-> It is more like "this made me realize that these are merely 'suffix'
-> after the real release name, no pre- or post- about them", also
-> known as "I think PREreleasesuffix was a mistake and we weren't
-> thinking clearly enough when we added it."
->
-> To me, this looks like a list of possible suffixes that can include
-> an empty suffix to denote "the real thing", e.g.
->
->     versionsort.suffix =3D "-alpha" "-beta" "" "-gamma" "-delta"
->
-> and that position in the list determines the order of things inside
-> the same family of versions that share the same "non-suffix" part.
+> The developers know about it, but it will require some deeper refactoring.
 
-This is what makes sense to me. Perhaps migrade to "releasesuffix" and
-deprecate "prereleasesuffix"? I don't think that's too painful
-especially if git accepts the old value and warns about it's
-deprecation? That or we can just stick with calling it pre-release and
-they sort based on order with '' being the empty value?
+Thanks Anatoly for reporting this.
 
-Thanks,
-Jake
+[Meta] All: For updates, is there an issue I can watch, or a way to 
+subscribe/monitor only this one thread?
+
+-- 
+Cheers,
+Tom
