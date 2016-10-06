@@ -2,171 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B609207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 13:09:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59FC9207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 13:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932541AbcJFNJ2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 09:09:28 -0400
-Received: from mx3-phx2.redhat.com ([209.132.183.24]:41418 "EHLO
-        mx3-phx2.redhat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751418AbcJFNJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 09:09:27 -0400
-Received: from zmail26.collab.prod.int.phx2.redhat.com (zmail26.collab.prod.int.phx2.redhat.com [10.5.83.33])
-        by mx3-phx2.redhat.com (8.13.8/8.13.8) with ESMTP id u96D9QYj018142
-        for <git@vger.kernel.org>; Thu, 6 Oct 2016 09:09:26 -0400
-Date:   Thu, 6 Oct 2016 09:09:26 -0400 (EDT)
-From:   Josef Ridky <jridky@redhat.com>
-To:     git@vger.kernel.org
-Message-ID: <255814448.2197583.1475759366093.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
-References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com> <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com> <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org> <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com> <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
-Subject: [PATCH 2/2] Feature Request: user defined suffix for temp files
- created by git-mergetool
-MIME-Version: 1.0
+        id S1752145AbcJFNNY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 09:13:24 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34096 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751316AbcJFNNW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 09:13:22 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b201so3491678wmb.1
+        for <git@vger.kernel.org>; Thu, 06 Oct 2016 06:13:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=fbzovT2Wg92bn975Coo2YpQuKmL/RJZUirOesQfd8OM=;
+        b=oYRVsawYSQ7N/MGzhEyqYOEFwHn0XoOXc36fcfCeedta1dkD6dwU/5DzjdXcU5/w3P
+         B/zMKgfT5CC4+XLRt4z1qnGKip67qlhnoqUxvrSFX/v0Nh3jkf7I8KRsNeFLcD/DvNcb
+         y4qxRInQf4A2XHLSddAktiRWPhoItrmudnaGYzM/+2UZ3NCCoFeJCLBx0tuLuJd2FIdo
+         ck4nfiVescPL0DbYUqLkD4zqjhkglt4Q21eFwcIF6M3WQVztp3uxMQye4D2wiKsYV1sg
+         NeqVvZzZqGE0e2vD8+dXr8rhtBqY0aPxEBdq5+mfGsEw0jZ4Nm145twlebvLyW4+aO46
+         q+Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=fbzovT2Wg92bn975Coo2YpQuKmL/RJZUirOesQfd8OM=;
+        b=B9EiEArkgbLLth+axvtizESqEbNwuSijZqJCeOU208CpRNcsdTRpNrwZxD7AR/H+Q1
+         XVIcBfTFmDiBQdchoy/ojhW9ty7NnJIjDM7BSWmkY3B8aaWV5AnncBQ9730cc92vi3Kv
+         dUYOXGSUijD/EuOjIEHHGcZ0T6Es+rH+pArtUBeyjl23qOGy4EV4tM1A+uqSyIIW9Cy6
+         KuiuGfx6gXNBxv9ARS0ZzwK6KU9B7t/SclHK9fFU2IExlsD9/INDLBa4m44yDcHcBUjB
+         5urByQTxx9JjGiKCHYqJPwdNQE77F56ek9JTVacYbh18oaTf1WFU1wbUcW8rMmoEcDAA
+         rjvw==
+X-Gm-Message-State: AA6/9Rlt/GR8mjH2D5rJQv/4BD3Ndxp1nlRczx92co6Msz3/g8mGV185nYNupM7NrtEvFA==
+X-Received: by 10.194.161.193 with SMTP id xu1mr299576wjb.67.1475759600712;
+        Thu, 06 Oct 2016 06:13:20 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w138sm37451619wmd.1.2016.10.06.06.13.19
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 06 Oct 2016 06:13:20 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.34.4.141]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF48 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Feature Request: user defined suffix for temp files created by git-mergetool
-Thread-Index: EzKs5iPhG+22gQ06GVmFwHQAiYHtK568p9cafRh67sk=
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v8 00/11] Git filter protocol
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <f7f9ca4c-229c-390a-beb0-a58e0d3d66b3@gmail.com>
+Date:   Thu, 6 Oct 2016 15:13:19 +0200
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5C30800A-C821-4B39-BEB7-7D55D86BD7EA@gmail.com>
+References: <20160920190247.82189-1-larsxschneider@gmail.com> <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com> <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com> <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de> <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com> <1A8A9127-4DF9-44AD-9497-F8A630AB1193@gmail.com> <xmqq60pee6rp.fsf@gitster.mtv.corp.google.com> <C53500E8-7352-4AAC-9F53-40CCFA7F1418@gmail.com> <15ff438f-ec58-e649-b927-b1de4751cc45@gmail.com> <E9946E9F-6EE5-492B-B122-9078CEB88044@gmail.com> <f7f9ca4c-229c-390a-beb0-a58e0d3d66b3@gmail.com>
+To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the second of two variant for request to add option to change
-suffix of name of temporary files generated by git mergetool. This
-change is requested for cases, when is git mergetool used for local
-comparison between two version of same package during package rebase.
 
-Signed-off-by: Josef Ridky <jridky@redhat.com>
----
- Documentation/git-mergetool.txt | 26 ++++++++++++++++++++++++-
- git-mergetool.sh                | 43 ++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 63 insertions(+), 6 deletions(-)
+> On 04 Oct 2016, at 21:04, Jakub Nar=C4=99bski <jnareb@gmail.com> =
+wrote:
+>=20
+> W dniu 03.10.2016 o 19:13, Lars Schneider pisze:=20
+>>> On 01 Oct 2016, at 22:48, Jakub Nar=C4=99bski <jnareb@gmail.com> =
+wrote:
+>>> W dniu 01.10.2016 o 20:59, Lars Schneider pisze:=20
+>>>> On 29 Sep 2016, at 23:27, Junio C Hamano <gitster@pobox.com> wrote:
+>>>>> Lars Schneider <larsxschneider@gmail.com> writes:
+>>>>>=20
+>>>>> If the filter process refuses to die forever when Git told it to
+>>>>> shutdown (by closing the pipe to it, for example), that filter
+>>>>> process is simply buggy.  I think we want users to become aware of
+>>>>> that, instead of Git leaving it behind, which essentially is to
+>>>>> sweep the problem under the rug.
+>>>=20
+>>> Well, it would be good to tell users _why_ Git is hanging, see =
+below.
+>>=20
+>> Agreed. Do you think it is OK to write the message to stderr?
+>=20
+> On the other hand, this is why GIT_TRACE (and GIT_TRACE_PERFORMANCE)
+> was invented for.  We do not signal troubles with single-shot filters,
+> so I guess doing it for multi-file filters is not needed.
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index e846c2e..6cf5935 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -8,7 +8,7 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
- SYNOPSIS
- --------
- [verse]
--'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
-+'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -79,6 +79,30 @@ success of the resolution after the custom tool has exited.
- 	Prompt before each invocation of the merge resolution program
- 	to give the user a chance to skip the path.
- 
-+--local=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (local) for merging. If not used or is equal with any
-+	other (remote|backup|base), default value is used.
-+	Default suffix is LOCAL.
-+
-+--remote=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (remote) for merging. If not used or is equal with any
-+	other (local|backup|base), default value is used.
-+	Default suffix is REMOTE.
-+
-+--backup=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (backup) for merging. If not used or is equal with any
-+	other (local|remote|base), default value is used.
-+	Default suffix is BACKUP.
-+
-+--base=<name>::
-+	Use string from <name> as part of suffix of name of temporary
-+	file (base) for merging. If not used or is equal with any
-+	other (local|remote|backup), default value is used.
-+	Default suffix is BASE.
-+
- TEMPORARY FILES
- ---------------
- `git mergetool` creates `*.orig` backup files while resolving merges.
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index bf86270..096ee5e 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -8,7 +8,7 @@
- # at the discretion of Junio C Hamano.
- #
- 
--USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
-+USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [--local=name] [--remote=name] [--backup=name] [--base=name] [file to merge] ...'
- SUBDIRECTORY_OK=Yes
- NONGIT_OK=Yes
- OPTIONS_SPEC=
-@@ -16,6 +16,12 @@ TOOL_MODE=merge
- . git-sh-setup
- . git-mergetool--lib
- 
-+# Can be changed by user
-+LOCAL_NAME='LOCAL'
-+BASE_NAME='BASE'
-+BACKUP_NAME='BACKUP'
-+REMOTE_NAME='REMOTE'
-+
- # Returns true if the mode reflects a symlink
- is_symlink () {
- 	test "$1" = 120000
-@@ -271,10 +277,10 @@ merge_file () {
- 		BASE=${BASE##*/}
- 	fi
- 
--	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
--	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
--	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
--	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
-+	BACKUP="$MERGETOOL_TMPDIR/${BASE}_${BACKUP_NAME}_$$$ext"
-+	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${LOCAL_NAME}_$$$ext"
-+	REMOTE="$MERGETOOL_TMPDIR/${BASE}_${REMOTE_NAME}_$$$ext"
-+	BASE="$MERGETOOL_TMPDIR/${BASE}_${BASE_NAME}_$$$ext"
- 
- 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
- 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
-@@ -396,6 +402,33 @@ do
- 	--prompt)
- 		prompt=true
- 		;;
-+	--local=*)
-+		temp_name=${1#--local=}
-+		if [ "$temp_name" != "" ] && [ "$temp_name" != "$REMOTE_NAME" ] && [ "$temp_name" != "$BASE_NAME" ] && [ "$temp_name" != "$BACKUP_NAME" ]
-+		then
-+			LOCAL_NAME=$temp_name
-+		fi
-+		;;
-+	--remote=*)
-+		temp_name=${1#--remote=}
-+		if [ "$temp_name" != "" ] && [ "$temp_name" != "$LOCAL_NAME" ] && [ "$temp_name" != "$BASE_NAME" ] && [ "$temp_name" != "$BACKUP_NAME" ]
-+		then
-+			REMOTE_NAME=$temp_name
-+		fi
-+		;;
-+	--base=*)
-+		temp_name=${1#--base=}
-+		if [ "$temp_name" != "" ] && [ "$temp_name" != "$LOCAL_NAME" ] && [ "$temp_name" != "$REMOTE_NAME" ] && [ "$temp_name" != "$BACKUP_NAME" ]
-+		then
-+			BASE_NAME=$temp_name
-+		fi
-+		;;
-+	--backup=*)
-+		temp_name=${1#--backup=}
-+		if [ "$temp_name" != "" ] && [ "$temp_name" != "$LOCAL_NAME" ] && [ "$temp_name" != "$REMOTE_NAME" ] && [ "$temp_name" != "$BASE_NAME" ]
-+			BACKUP_NAME=$temp_name
-+		fi
-+		;;
- 	--)
- 		shift
- 		break
--- 
-2.7.4
+I am on the fence with this one.
+
+@Junio/Peff:
+Where would you prefer to see a "Waiting for filter 'XYZ'... " message?
+On stderr or via GIT_TRACE?
+
+
+>=20
+>>>>> I agree with what Peff said elsewhere in the thread; if a filter
+>>>>> process wants to take time to clean things up while letting Git
+>>>>> proceed, it can do its own process management, but I think it is
+>>>>> sensible for Git to wait the filter process it directly spawned.
+>>>>=20
+>>>> To realize the approach above I prototyped the run-command patch =
+below:
+>>>>=20
+>>>> I added an "exit_timeout" variable to the "child_process" struct.
+>>>> On exit, Git will close the pipe to the process and wait =
+"exit_timeout"=20
+>>>> seconds until it kills the child process. If "exit_timeout" is =
+negative
+>>>> then Git will wait until the process is done.
+>>>=20
+>>> That might be good approach.  Probably the default would be to wait.
+>>=20
+>> I think I would prefer a 2sec timeout or something as default. This =
+way
+>> we can ensure Git would not wait indefinitely for a buggy filter by =
+default.
+>=20
+> Actually this waiting for multi-file filter is only about waiting for
+> the shutdown process of the filter.  The filter could still hang =
+during
+> processing a file, and git would hang too, if I understand it =
+correctly.
+
+Correct.
+
+
+>> [...] this function is also used with the async struct...=20
+>=20
+> Hmmm... now I wonder if it is a good idea (similar treatment for
+> single-file async-invoked filter, and multi-file pkt-line filters).
+>=20
+> For single-file one-shot filter (correct me if I am wrong):
+>=20
+> - git sends contents to filter, signals end with EOF
+>   (after process is started)
+> - in an async process:
+>   - process is started
+>   - git reads contents from filter, until EOF
+>   - if process did not end, it is killed
+>=20
+>=20
+> For multi-process pkt-line based filter (simplified):
+>=20
+> - process is started
+> - handshake
+> - for each file
+>   - file is send to filter process over pkt-line,
+>     end signalled with flush packet
+>   - git reads from filter from pkt-line, until flush
+> - ...
+>=20
+>=20
+> See how single-shot filter is sent EOF, though in different part
+> of code.  We need to signal multi-file filter that no more files
+> will be coming.  Simplest solution is to send EOF (we could send
+> "command=3Dshutdown" for example...) to filter, and wait for EOF
+> from filter (or for "status=3Dfinished" and EOF).
+
+That's what we do. EOF does signal the multi-filter to shutdown.
+
+
+> For full patch, you would need also to add to Documentation/config.txt
+
+Why config.txt?
+
+
+Thanks,
+Lars=
