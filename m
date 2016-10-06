@@ -2,84 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97CFF20986
-	for <e@80x24.org>; Thu,  6 Oct 2016 10:45:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9057920986
+	for <e@80x24.org>; Thu,  6 Oct 2016 11:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751974AbcJFKpk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 06:45:40 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59548 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751294AbcJFKpj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 06:45:39 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MbJTE-1bZTO03KKq-00IpCw; Thu, 06 Oct 2016 12:44:40
- +0200
-Date:   Thu, 6 Oct 2016 12:44:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     James B <jamesbond3142@gmail.com>
-cc:     musl@lists.openwall.com, Rich Felker <dalias@libc.org>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [musl] Re: Regression: git no longer works with musl libc's
- regex impl
-In-Reply-To: <20161005225934.770d73b7d491d4bf4816411d@gmail.com>
-Message-ID: <alpine.DEB.2.20.1610061239480.35196@virtualbox>
-References: <20161004150848.GA7949@brightrain.aerifal.cx> <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net> <20161004154045.GT19318@brightrain.aerifal.cx> <alpine.DEB.2.20.1610041802310.35196@virtualbox> <20161005090625.683fdbbfac8164125dee6469@gmail.com>
- <alpine.DEB.2.20.1610051231390.35196@virtualbox> <20161005225934.770d73b7d491d4bf4816411d@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1755626AbcJFLlr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 07:41:47 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33623 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751559AbcJFLlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 07:41:46 -0400
+Received: by mail-pf0-f193.google.com with SMTP id i85so1050511pfa.0
+        for <git@vger.kernel.org>; Thu, 06 Oct 2016 04:41:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1NovFCbIY6nSZPRa2YRFe1iMu9sS9IlhGD36+yxAYhg=;
+        b=NSSGynEZ4vhWWlin53RMV28xXDHCgck2EFsM7Aul1vQWGDiVFbu7HBM+psBsTppRID
+         bWbm0bV5+I3aXy0rAnuckvkwNeOhe70FqseZllfGfQQLzIfmPGnqcgNtBMZZYxGdl60Y
+         OZCzdeSmO2YD5FAcqanoM5KObDUDhHO9FTpaoYzz+BBjHIVJBMR5ny0MZNN8H1/rG/Qs
+         kQoMayNRF19pxUcQ+xSsj2/JyGAh7uvoLpNLcYbY5lraQ17OKXsE1p78UigBEyUXfmla
+         lXONO7QRrGCT6L6hZWvov3v3y5f32nwqD8+IjyYjVSalMYjes7jDiqWRpAw87Tiot4ez
+         vVCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1NovFCbIY6nSZPRa2YRFe1iMu9sS9IlhGD36+yxAYhg=;
+        b=Bv0SYZVRDnHURpdaCwcUsLaUOEqEl+mm0xYG5TiYmD6EAnIEYozEJ9d22sra2UGhG+
+         ICH8/ILzG25/bLHYDDYJf3DRvz/PaWu8mPZdNudIhRgQXfd/SxZZLm6OAv2glsboEyOw
+         KHzvp7cTX1JfMEGuuShKAf+//vfsia7jAiQlImL/f7/qpOATaKzuyresV7NXcixq5smk
+         dfTdWt/lc1EdS6mkRwu/n/2mWpKWbK+yS208XBlwukwbbjaRyKWcHsJ7azfTzaetsZiq
+         FCK63p8K0SNO7kZxy22vWU3ZB+hdpjLNAST+M5QrgCBGmtgieAHJj91i/0nMZV+uoaYW
+         StwA==
+X-Gm-Message-State: AA6/9RleZEsBA/VIEOBtZoMd2OcuHEtDDiai1XeGvsAxjqtfvhBNfKS68G1kpEyOR1H1iQ==
+X-Received: by 10.98.83.130 with SMTP id h124mr17480150pfb.154.1475754105207;
+        Thu, 06 Oct 2016 04:41:45 -0700 (PDT)
+Received: from ash ([115.76.130.63])
+        by smtp.gmail.com with ESMTPSA id id6sm22057085pad.28.2016.10.06.04.41.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Oct 2016 04:41:44 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 06 Oct 2016 18:41:39 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+Date:   Thu,  6 Oct 2016 18:41:24 +0700
+Message-Id: <20161006114124.4966-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:svWy1U2b1BTtlRod1AGvFAl4OtqN+y999PeDpxJwmSOZTsFB69X
- RkR1Ft70jeOJdCdhh3uzk6rZ0nKI7Lrzg7qdGyfp8q83rSbYWW5bbjteHE6I7sL0Wg30TkX
- bzWfe0ZYVhtAmauUxGzIXe9c8AQ5HzK9bOA0YjNUWU5Z1M4bsNfIHa6el/NB9iFfMmfbxEz
- 9A2TmejEbAUSncUltpkEQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/3BuwSutYes=:ozjkoGpB1Guu1noQUKndqH
- aMJhKzH/+tlDvePlbTzwS0bDRUgHDzf8/I/5yrqrpI6kCpMzoQ+oL3sUmUiT5kY1VgE0gUjHD
- GczrteBuUV1/XsbwI4e8BVrZwZnaeMdl+oI3KrBf+ZrD+SMse6AkrcS6sHnTqqjgkEZNw9Gh9
- +E+xMQ3NXegiNp+8RG4qXrN4uzHmFNQajxKDdNtvwtKOkpaK+Q1GVPK5q4lTJN9HnFhLxPenN
- 9wWXvy1/1LNBukSc30/xe5fHrJL2Jkjtey6L/k3Z5YKEZUsxIFDsAbtGkjzKwNgbbHaKR4Y/V
- 1WQvcfJLuZprO/fAvyUyia/zDsDcOBQDmm6CQeLDjqGSso0uGBcXlakF0x4tRvLggs/JD2ftO
- lAHaZysozUfXI62VpEUvfLO9Z5rMh4kF9vI1UrhboZbU4NkawU+cuR9CPWi1+XYXw/0IrGpSE
- Hh0pE1nDaVC21jSodl8vPAmzWYmM9fmlBQJx5VZ/w/o+9c8NGyXzE5D+NMVtXNb7bo3dozOkM
- IlTJlPcCZlXZaHSZGHf9ehCsSn1tbH1qyoMjd+1ZZfHwd7NU4kv/cgBhHR6Cfm2mmqJMaUetW
- SNj/mTAKP0kM5GHCrlZcS+1hFY9dlVB7ENnbA4lRn+gwHtnDPlVX9+UHDi/cPIi40Lh6IbzhN
- lyVLMCojpJlHxdTTnOMgXSNYk/Fik50sCIIjdA2x2krFaic0dHSmNr/3HZ3Pgv6EnKnmrK5U7
- J9WZqpiAOvfIl+asPEwwgUsro9il7BSaoaZrn2Rb87gaFyO+u4e6JQyQOHBVD/rCLvqWFmE0F
- 4RmkdE1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi James,
+Throwing something at the mailing list to see if anybody is
+interested.
 
-On Wed, 5 Oct 2016, James B wrote:
+Current '!' aliases move cwd to $GIT_WORK_TREE first, which could make
+handling path arguments hard because they are relative to the original
+cwd. We set GIT_PREFIX to work around it, but I still think it's more
+natural to keep cwd where it is.
 
-> On Wed, 5 Oct 2016 12:41:50 +0200 (CEST)
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> It's a very sad day for a tool that was developed originally to maintain
-> Linux kernel, by the Linux kernel author, now is restricted to avoid
-> use/optimise on Linux/POSIX features *because* it has to run on another
-> Windows ...
+We have a way to do that now after 441981b (git: simplify environment
+save/restore logic - 2016-01-26). It's just a matter of choosing the
+right syntax. I'm going with '!!'. I'm not very happy with it. But I
+do like this type of alias.
 
-Please note that this thread started because Git tried to shed the
-restrictions of POSIX by using REG_STARTEND. In other words, we tried very
-much *not* to be restricted.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ git.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-And pragmatically, I must add that the REG_STARTEND feature is a very,
-very useful one.
+diff --git a/git.c b/git.c
+index 296857a..4c1dcf4 100644
+--- a/git.c
++++ b/git.c
+@@ -252,6 +252,10 @@ static int handle_alias(int *argcp, const char ***argv)
+ 
+ 			alias_string++;
+ 			commit_pager_choice();
++			if (*alias_string == '!') {
++				keep_cwd = 0;
++				alias_string++;
++			}
+ 			restore_env(keep_cwd);
+ 
+ 			child.use_shell = 1;
+-- 
+2.8.2.524.g6ff3d78
 
-If you want to turn your sadness into something productive (you will allow
-me that little prod after all you said in your mail), why don't you
-dig back through the Git mailing list, fish out my original patch that
-fell back to the "malloc();memcpy();/*add NUL*/" strategy, and contribute
-that as a patch to the Git project, making a case that musl requires it?
-
-Ciao,
-Johannes
