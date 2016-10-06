@@ -3,80 +3,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FEA7207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 12:13:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273C5207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 12:31:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753240AbcJFMNf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 08:13:35 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57847 "EHLO mx1.imag.fr"
+        id S1755882AbcJFMbT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 08:31:19 -0400
+Received: from mail.javad.com ([54.86.164.124]:60310 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751591AbcJFMNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 08:13:34 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u96CDKZQ006971
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Thu, 6 Oct 2016 14:13:20 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u96CDLE8018060;
-        Thu, 6 Oct 2016 14:13:21 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johan Herland <johan@herland.net>,
-        Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] push: Re-include "push.default=tracking" in the documentation
-References: <20161006084905.14944-1-avarab@gmail.com>
-Date:   Thu, 06 Oct 2016 14:13:21 +0200
-In-Reply-To: <20161006084905.14944-1-avarab@gmail.com> (=?iso-8859-1?Q?=22?=
- =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?=
-        Bjarmason"'s message of "Thu, 6 Oct 2016 08:49:05 +0000")
-Message-ID: <vpq1sztsmji.fsf@anie.imag.fr>
+        id S1755616AbcJFMbS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 08:31:18 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 3896F633DB;
+        Thu,  6 Oct 2016 12:30:59 +0000 (UTC)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1bs7pB-0003Pl-DT; Thu, 06 Oct 2016 15:30:57 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/6] Documentation/git-merge.txt: improve short description in DESCRIPTION
+References: <cover.1475678515.git.sorganov@gmail.com>
+        <e74ae8afc1bfc4cd9161ccaa56d926a89439551e.1475678515.git.sorganov@gmail.com>
+        <xmqq60p6pt4k.fsf@gitster.mtv.corp.google.com>
+        <871szuqyjo.fsf@javad.com>
+        <xmqqa8eio4n9.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 06 Oct 2016 15:30:57 +0300
+In-Reply-To: <xmqqa8eio4n9.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 05 Oct 2016 14:41:14 -0700")
+Message-ID: <87mvihpsla.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 06 Oct 2016 14:13:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u96CDKZQ006971
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1476360804.50831@Db6QXkF+9fSISBQd0I7V0g
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> That's bad, either we shouldn't support it at all, or we should
-> document what it does. This patch does the latter.
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> OK, I see. So, what is the best way to handle this? Immediately follow
+>> content change patch with another patch that only re-flows?
+>
+> Or no reflowing at all.
+>
+>>> the parents".  I do not know if the updated phrasing is better.  The
+>>> "name" in the original was meant to be a short-hand for "object name",
+>>> and I would support a change to spell it out to clarify; "reference"
+>>> can be a vague word that can mean different things in Git, and when
+>>> the word is given without context, most Git people would think that
+>>> the word refers to "refs", but that is definitely not what the new
+>>> commit records, so...
+>>
+>> I won't insist on the change, but "name" sounded wrong to me, and
+>> "reference" was most general term I was able to come up with in this
+>> context.
+>> ...
+>> Last, if "reference" is not good enough and we get to internals anyway,
+>> why not say SHA1 then?
+>
+> Because that is still colloquial? I think s/name/object name/ is a
+> sensible change, but not s/name/reference/.
 
-I vaguely remember a similar discussion and probably even a patch in the
-past (maybe by you actually). I think the proposal was to add a mention
-of tracking but avoid promoting it at the same level as the others.
+No, "reference" is more sensible here than any of "name", "object name",
+or "SHA-1", the same way as here:
 
-I have a slight preference for a patch adding stg like "`tracking` is a
-deprecated alias supported only for backward compatibility" to the item
-of `upstream`, but I'm OK with the current patch too.
+$ git help glossary
+[...]
+chain
+        A list of objects, where each object in the list contains a
+        reference to its successor (for example, the successor of a
+        commit could be one of its parents).
+[...]
+$
 
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2344,6 +2344,10 @@ push.default::
->    pushing to the same repository you would normally pull from
->    (i.e. central workflow).
->  
-> +* `tracking` - Deprecated synonym for `upstream`, which we still
-> +  support for backwards compatibility with existing configuration
-> +  files.
+The resulting merge commit is an origin for 2 chains, so it stores 2
+references to its successors. No need to be aware of any [object] names
+to understand all this.
 
-Nit: I think the doc normally doesn't use "we" this way (we = the Git
-developers or the Git tool). Hence my s/which we still support/still
-supported/ above.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- Sergey
