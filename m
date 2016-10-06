@@ -2,57 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0AC220986
-	for <e@80x24.org>; Thu,  6 Oct 2016 09:23:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04A5820986
+	for <e@80x24.org>; Thu,  6 Oct 2016 09:33:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965868AbcJFJXk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 05:23:40 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.42]:47569 "EHLO
-        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965567AbcJFJXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 05:23:38 -0400
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1bs4tq-0005tH-3j; Thu, 06 Oct 2016 11:23:34 +0200
-Date:   Thu, 6 Oct 2016 11:23:32 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
-        torvalds@linux-foundation.org
-Subject: Re: [PATCHv3 1/2] push: change submodule default to check when
- submodules exist
-Message-ID: <20161006092332.GB38550@book.hvoigt.net>
-References: <CAGZ79kbt+SZoogKTV_-rVfOOFzf6xrhWytrBo2H3r6NQw34WTw@mail.gmail.com>
- <20161004210359.15266-1-sbeller@google.com>
- <20161005135325.GC30930@book.hvoigt.net>
+        id S965308AbcJFJdR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 05:33:17 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57046 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751294AbcJFJdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 05:33:15 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M2WgT-1b0fe00Blt-00sR0b; Thu, 06 Oct 2016 11:32:49
+ +0200
+Date:   Thu, 6 Oct 2016 11:32:47 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
+        ramsay@ramsayjones.plus.com, jnareb@gmail.com, j6t@kdbg.org,
+        tboegi@web.de, peff@peff.net, mlbright@gmail.com
+Subject: Re: [PATCH v9 04/14] run-command: add wait_on_exit
+In-Reply-To: <xmqqeg3uo5yt.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610061129430.35196@virtualbox>
+References: <20161004125947.67104-1-larsxschneider@gmail.com>        <20161004125947.67104-5-larsxschneider@gmail.com>        <xmqqh98rud20.fsf@gitster.mtv.corp.google.com>        <1FD7FB64-0F40-47F0-A047-25B91B170E66@gmail.com>
+ <xmqqeg3uo5yt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161005135325.GC30930@book.hvoigt.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:9SvVecqp4r06LiOVUp+22mrg+kSPDF2oJdsvLPBqJ0F2TZ1a87i
+ G84eFso/XXKitqp6EXtQ8qJ9yzG6/imQj38ELkj6DESyFad6iLpsbYEk5LbBBYWSbxtN+bY
+ zdnAYvCY9fodiM5BLkDGpeQTOIV9Q3LRgltAku6CWCZfNVNprtjeyT1I/C4LEjuthKuOfUK
+ 9f/q6TQ/7OErv5SaspdEA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bv+SX2PgaCI=:i19O03Hfw3LkwpAcQUZPnv
+ lJ52dgE7B2PycyKzbyk0KRKRQJlG9fgBLyPmojDXpRDA/G9jW9D+DvHCW0o9cGinzouSKxJ5C
+ pb43Y0HNWA/6t6DDylj/pU2d4fviLFY61gtgh23Zvx2iwPyudk18nQ+heJ6ooBul9hu41tWFg
+ E4poThtL3x6U4zIjKfdBRCOMBK3Ypj676dWfpu2QdWFBUaXcPFIBdaCXJPrY5Fpm+uHQYLMjJ
+ Roe/7X2CpoqQZIILbPjv62cNRhg4x33yoEHv7S3OIqkKcVpqnalxRrUx1FdPTmWck41u96cRV
+ woSyuSik+gtMUwiHNFm/DTdWXvl7phuAS05IQgnBToGhhItzNSXxNqqxBK4hbozLeZD10Kvts
+ XkOIfNcTpNxOBbHOfXLpojCB6bR9bWjks7OnLD1/Se7iy536y87188EPbsO7oCu9rRdbqNIRK
+ WWFQPgl7P+vnxDrW9uTgftLA6GO1E5hPQKYuvLNEEcVlG7q/vYu7Tsp+RTVhQRrZil10jzJiA
+ fQFkK/RaHcNmwLTpOwE6zHvuNODAxyWCy4jwETa6CLAxG1PIJU8ZWj+STVgoIk/H07BvPeK+U
+ 7XhFzwrKK6QriTtKoR08WCBBao0TQL/qhbLxpqpCmeL9AvsraMtGrkYOe+BANFKmV6LtXj/ZQ
+ 4FNgE0AkGg5VqvqSYaYu5Q2gb+Sea3WNm2C1d6LJpkXGDvYovxFBFUdIm2al2kkueG9oVkrs/
+ aKD52+3A06/RhxWScsj/Ms/GMn2YoUbbegYR8Okd3WYpLwVe/cjH/5W8mfx247XdYLOpzmxRz
+ Akmz/Cx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 05, 2016 at 03:53:25PM +0200, Heiko Voigt wrote:
-> On Tue, Oct 04, 2016 at 02:03:58PM -0700, Stefan Beller wrote:
-> > Jeff,
-> > thanks for the suggestions, both git_path(..) as well as checking the config,
-> > this seems quite readable to me:
+Hi Junio & Lars,
+
+On Wed, 5 Oct 2016, Junio C Hamano wrote:
+
+> Lars Schneider <larsxschneider@gmail.com> writes:
 > 
-> When reading the discussion I thought the same: What about the
-> "old-style" repositories. I like this one. Checking both locations
-> is nice.
+> > OK. Something like the patch below would work nicely.
+> 
+> Yeah, something along that line; it would eliminate the need to
+> worry about a field named "stdin" ;-)
 
-BTW, since it seems we all agree on the direction. Should we add some
-tests?
+Not only a need to worry. Git for Windows' SDK's headers define
 
-Cheers Heiko
+	#define stdin (&__iob_func()[0])
+
+leading to the compile error
+
+	In file included from git-compat-util.h:159:0,
+                 from cache.h:4,
+                 from run-command.c:1:
+	run-command.c:25:6: error: expected identifier or '(' before '&' token
+	  int stdin;
+	      ^
+
+I meant to investigate this build failure of `pu` earlier but only got
+around to do it today.
+
+Ciao,
+Dscho
