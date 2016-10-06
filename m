@@ -2,109 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1637E20986
-	for <e@80x24.org>; Thu,  6 Oct 2016 09:12:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9332720986
+	for <e@80x24.org>; Thu,  6 Oct 2016 09:20:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967117AbcJFJM2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 05:12:28 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35218 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967112AbcJFJM1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 05:12:27 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f193so2470167wmg.2
-        for <git@vger.kernel.org>; Thu, 06 Oct 2016 02:12:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=D/v8ZCRJZ7gWeDMepwJibf0glx87tauOeMDgrFIeep4=;
-        b=sS+mts+7qFKu+FTzyXTTe7/3pm6J1K10uYJ+7wtr9trtKb2UtJtFeiRzRKYRd8j6CT
-         NwPd8/Wzn7YmL5Umlto8bPz7JjFIvGkGuKwCnBwocNGP/62DkR700sAZNC5J+1t3bSwz
-         ZQUBH2+Urju9e8dod62kNUuB7yGlPzuFXQS650icRXeJqNAHp/G9ZVATGIeicw51qZKR
-         6H6SZp67KL6La7NybjWwzIaC3oEUy72X4StQc67VJmwM6xvdJmAFwAeDNPAqTL4nOXmO
-         iI1y4pWBIGNMauS7ti/KKkkq7GBwRlIXDNDBDuxhdqkG1vQC0J1d5IRpSzoVDnibq2K3
-         hZbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=D/v8ZCRJZ7gWeDMepwJibf0glx87tauOeMDgrFIeep4=;
-        b=NgrAxvu3XfcjRPnF7DLnv4r0PbX7N8TO8E0yazC+POFuTrd7L47QlgSaObie3KTN9h
-         6tLothTjFppky7UOXkXhprUVye83eOnMUlY+ilq7UHGb9h6/5RnoS5UI3eZLOMegDSQH
-         tyDBjfRDvhf06Vf8bkoFVHkD9jlREJ1Bp/ZjQnMK6Aj5nx81NBHnaRksK6Au1hcBmo7n
-         oE6OVEbK5PYMngjlksBPPQ77GYr31Rjn86U2VNP8Dgf0aX/O71INxBROAPPh2BVmV836
-         Oeu2vbHE0ibwbAg7gorfGgRYOvVAcurgZv+zvF1ynVlNP+fsyF+DPHDBTNdYcj3Z1F0R
-         0thQ==
-X-Gm-Message-State: AA6/9Rmey67TBMLpDAiZwk+ogQPe7RCn9jtDaUK1BIchsqIZn6pXanTLPvX5ijeQ6pIW5Q==
-X-Received: by 10.194.118.131 with SMTP id km3mr11095610wjb.173.1475745145317;
-        Thu, 06 Oct 2016 02:12:25 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 137sm34169946wmi.16.2016.10.06.02.12.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 06 Oct 2016 02:12:24 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/3] gitweb: Link to 7-char+ SHA1s, not only 8-char+
-Date:   Thu,  6 Oct 2016 09:11:34 +0000
-Message-Id: <20161006091135.29590-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20161006091135.29590-1-avarab@gmail.com>
-References: <20161006091135.29590-1-avarab@gmail.com>
+        id S966463AbcJFJUs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 05:20:48 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:34984 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966445AbcJFJUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 05:20:46 -0400
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1bs4r4-0004Ny-G9; Thu, 06 Oct 2016 11:20:42 +0200
+Date:   Thu, 6 Oct 2016 11:20:41 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Thomas =?iso-8859-1?Q?B=E9tous?= <th.betous@gmail.com>
+Cc:     git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+Subject: Re: Bug Report: "git submodule deinit" fails right after a clone
+Message-ID: <20161006092040.GA38550@book.hvoigt.net>
+References: <CAPOqYV+C-P9M2zcUBBkD2LALPm4K3sxSut+BjAkZ9T1AKLEr+A@mail.gmail.com>
+ <20160914202907.GD7613@sandbox>
+ <CAPOqYV+xsrLk7y1hJYHZFY8OfkxVRwPcZBdqhdgrhThqdZysQA@mail.gmail.com>
+ <20161005133650.GB30930@book.hvoigt.net>
+ <CAPOqYV+SR8=E24HR18ygJ-J-rV7=FedU+gGpq9mp+a7Mfk2LiQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPOqYV+SR8=E24HR18ygJ-J-rV7=FedU+gGpq9mp+a7Mfk2LiQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the minimum length of an abbreviated object identifier in the
-commit message gitweb tries to turn into link from 8 hexchars to 7.
+Hi,
 
-This arbitrary minimum length of 8 was introduced in bfe2191 ("gitweb:
-SHA-1 in commit log message links to "object" view", 2006-12-10), but
-the default abbreviation length is 7, and has been for a long time.
+please also keep the mailinglist in the CC so everyone can read this.
 
-It's still possible to reference SHA1s down to 4 characters in length,
-see v1.7.4-1-gdce9648's MINIMUM_ABBREV, but I can't see how to make
-git actually produce that, so I doubt anyone is putting that into log
-messages in practice, but people definitely do put 7 character SHA1s
-into log messages.
+On Thu, Oct 06, 2016 at 09:11:05AM +0200, Thomas B�tous wrote:
+> On Wed, Oct 5, 2016 at 3:36 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> 
+> >
+> > My initial reaction is that this might be a problem with line endings. Did
+> > you
+> > check whether you get any diff when you do a 'git diff' after the clone?
+> >
+> > Maybe the variable 'core.autocrlf' is set to 'input' ? Have a look at 'git
+> > help
+> > config'
+> 
+> 
+> When I do a 'git diff' right after the clone, nothing appears.
+> Moreover my global setting for core.autocrlf is true. (This was configured
+> on purpose as I work on Windows whereas the repositories are hosted on an
+> UNIX server.)
 
-I think it's fairly dubious to link to things matching [0-9a-fA-F]
-here as opposed to just [0-9a-f], that dates back to the initial
-version of gitweb from 161332a ("first working version",
-2005-08-07). Git will accept all-caps SHA1s, but didn't ever produce
-them as far as I can tell.
+So I guess the same applies to 'git status'?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- gitweb/gitweb.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Nevertheless when I change core.autocrlf to 'input', the error disappears
+> and I got the expected behavior for git submodule deinit...
+> So I guess it is just a configuration problem but I do not understand why
+> core.autocrlf should be set to 'input' to remove this error. Do you have
+> any idea?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cba7405..92b5e91 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2036,7 +2036,7 @@ sub format_log_line_html {
- 	my $line = shift;
- 
- 	$line = esc_html($line, -nbsp=>1);
--	$line =~ s{\b([0-9a-fA-F]{8,40})\b}{
-+	$line =~ s{\b([0-9a-fA-F]{7,40})\b}{
- 		$cgi->a({-href => href(action=>"object", hash=>$1),
- 					-class => "text"}, $1);
- 	}eg;
--- 
-2.9.3
+This is indeed strange. That's why I asked whether 'git diff' shows
+anything. I was suspecting that the .gitmodules is somehow checked out
+in UNIX format. And the fact that setting core.autocrlf to
+'input' seems to fix it supports that.
 
+I currently do not have access to a windows machine as the moment to
+test this. Copying the windows mailing list maybe someone over there
+can reproduce and help with the issue[1].
+
+Cheers Heiko
+
+[1] http://public-inbox.org/git/%3CCAPOqYV+xsrLk7y1hJYHZFY8OfkxVRwPcZBdqhdgrhThqdZysQA@mail.gmail.com%3E/
