@@ -2,59 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79DD11F4F8
-	for <e@80x24.org>; Thu,  6 Oct 2016 04:52:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED6CF1F4F8
+	for <e@80x24.org>; Thu,  6 Oct 2016 05:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751515AbcJFEwy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 00:52:54 -0400
-Received: from ikke.info ([178.21.113.177]:45952 "EHLO vps892.directvps.nl"
+        id S1751979AbcJFFOK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 01:14:10 -0400
+Received: from mout.web.de ([212.227.17.12]:63788 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750979AbcJFEwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 00:52:53 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 9A3874401D4; Thu,  6 Oct 2016 06:52:50 +0200 (CEST)
-Date:   Thu, 6 Oct 2016 06:52:50 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Tom Hale <tom@hale.ee>
-Cc:     Anatoly Borodin <anatoly.borodin@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Setting pager.add=true breaks add --patch
-Message-ID: <20161006045250.GA25613@ikke.info>
-References: <e8bdb434-432b-57c6-5cb4-283aca08ab0b@hale.ee>
- <CACNzp2kd6wdE6pGsb5d5+cvkJa9M-gzG+5=oLhZr9dLn4o8gOQ@mail.gmail.com>
- <829bc648-dd9a-d166-c36e-3ad1508f0ba5@hale.ee>
+        id S1751722AbcJFFOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 01:14:09 -0400
+Received: from [192.168.209.54] ([195.252.60.88]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0LeLKb-1b6JBo3PYr-00qEf2; Thu, 06 Oct 2016 07:13:57
+ +0200
+Subject: Re: [PATCH] run-command: fix build on cygwin (stdin is a macro)
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <f9b6abf6-8305-4a32-29af-765f08fee94b@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <7de3821f-5111-47ac-b7e5-20fe1216ba58@web.de>
+Date:   Thu, 6 Oct 2016 07:13:59 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <829bc648-dd9a-d166-c36e-3ad1508f0ba5@hale.ee>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+In-Reply-To: <f9b6abf6-8305-4a32-29af-765f08fee94b@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:2ZCGwFlftxyJPV5y0agTeP+I0fzAdXGAv0iixLMWO/hJ7tY91Rh
+ Bz42pE+18yUcgrP/gsxQuzvKEVOW2Tq/BLdRBGJJnGd1E98lqjMwcBrR4e8SN2Ag9qLvQZR
+ 7uenbAwZPl4GYr8W4LD/nHPmOeFKS1V5EQSNAKwbXDYBuWsdZgIRcC3F8J9M2rCr+tgtgTT
+ eRICEsjIjRBYV6oGOEgSA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UZ9L1N5XVis=:oHJonZJtNKZLBgzAJd5+cF
+ xrvD/sPnqJhqzN+bfAqOqhAtbuBn1iy29eeMMZCN/KXsK842tvmI47aRdaBV2LkEEROTcjG4g
+ U6i3TskCRDonDMLr+jj46Z8d7JnkXVdmtm6s5tC+UlJwslbGigASyyv+dxeSq1SyZQgR3CkHw
+ ME5LSGU5FrMWxaWocGHH6eqIiq+Al9lENaP85NEQrHXk8+MU5Z6KblYs5mix514sHgWAVUMdv
+ +gALISgo4XIcAEJIc5fiaNm0bSbmf/qnfjxvZOXFxKGiGyEf+JZ1yQ+hD3nEpLTWQTXW/sGq2
+ GViU3af9xfjYmlvG8XaRwH0bARtkS1O1R7w49gIHbbhLzkADsaNq1DWT0FzcAye5ew5sqToGr
+ dmLHE1urP5hYGyxVF4AeGoSVZeRiWDb/o2vV/Q4+qpGgtyo7IOvgFCOMB5kou5pmEAbMPJnH0
+ iCjE8AMx5jorCXJpAJjUuQGRCFfrA0dfTLZK5f6mP6+aAbaz4nAW/r1gIuoaVAJNY5P8aeAta
+ 2K4pK8DuDH80+u5WXDkaWuWgRbJXcVoQNvGb34qHHm+IdgSb2gd6ozHouoOpP2TnKM7YVJBxG
+ OufLFJusZJ5y77vpbbxF/e5+HsCOd2/7m0reLk94rjl0j0okbWiVfoVUf6Jcl+PmBss0H4LUu
+ sJJYcxGW15r/g3eegsmHFqSKv3e3EN4jFL7/pBO1rSHgGVZFZ+rl72/WlfN1RxrFR4KDMZgkN
+ RQuFz30237c6VU42ZRQFDm2Vva3jAEdzpfpZE7qGkAPaSpRF9l8X00LVjIQkkJEl80hwmp7Xe
+ Dhak1JY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 06, 2016 at 10:55:11AM +0700, Tom Hale wrote:
-> On 2016-10-03 00:00, Anatoly Borodin wrote:
-> > I've reported this one bug recently:
-> > 
-> > https://public-inbox.org/git/nrmbrl$hsk$1@blaine.gmane.org/
-> > 
-> > The developers know about it, but it will require some deeper refactoring.
-> 
-> Thanks Anatoly for reporting this.
-> 
-> [Meta] All: For updates, is there an issue I can watch, or a way to
-> subscribe/monitor only this one thread?
-> 
+ >I am not suggesting that you apply this exact patch (stdin_ is not a good
+choice
 
-public-inbox.org provides an atom feed[0] which you could add to a
-reader.
-
-I don't think you can just subscribe to a single thread in the mailing
-list, but you can ask to be cc-ed in that thread.
-
-[0]:https://public-inbox.org/git/nrmbrl$hsk$1@blaine.gmane.org/t.atom
+How about fd_stdin ?
