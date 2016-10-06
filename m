@@ -2,82 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75BD9207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 22:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5490207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 22:53:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935408AbcJFWmL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 18:42:11 -0400
-Received: from avasout02.plus.net ([212.159.14.17]:47076 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933672AbcJFWmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 18:42:08 -0400
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout02 with smtp
-        id sNi21t0070zhorE01Ni3Eq; Thu, 06 Oct 2016 23:42:06 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=G/5eKJs5 c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=IkcTkHD0fZMA:10 a=S3BrH6ej_XDh2nDupuMA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: Regression: git no longer works with musl libc's regex impl
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20161004150848.GA7949@brightrain.aerifal.cx>
- <20161004152722.ex2nox43oj5ak4yi@sigill.intra.peff.net>
- <20161004154045.GT19318@brightrain.aerifal.cx>
- <alpine.DEB.2.20.1610041802310.35196@virtualbox>
- <CACBZZX4XPqZauD_M_ieOwVauT1fi3MQb4+6taELQaRG9M-Kz_w@mail.gmail.com>
-Cc:     Rich Felker <dalias@libc.org>, Jeff King <peff@peff.net>,
-        Git <git@vger.kernel.org>, musl@lists.openwall.com
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <20336ac7-a494-d725-f928-834b1b3194fe@ramsayjones.plus.com>
-Date:   Thu, 6 Oct 2016 23:42:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S935371AbcJFWxk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 18:53:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56796 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934752AbcJFWxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 18:53:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD47B43C2E;
+        Thu,  6 Oct 2016 18:53:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4aiVpWhw4tI3
+        KETDnJQ2DRg3EK4=; b=TWscQ8tJA/cmSgE9wWHHyxFVbMl4Bo6gy2fYWBwDP43p
+        SRzSqi+hpolMi6JtnlvLkEk3WkoBeYUc58t9TwyVOIJq1LP3KOzBRBLp1XDXQmtq
+        XSrsYcVFoFpvS0cvSH2Dm/yZllfHIK1mBhAw0wllGDZNc5cXQ3QJJhGZj+YZU1Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=chyMwR
+        638K1OyUfVsTZdMBy/EBkOdTZkYcHbQXrvE2cjyd5A5LWCg2MbqnPrPPS/cEr3/Z
+        OIstHvK4cvtM500V6azEpMUjV0AGFw7VnYUtweiGwyCZhH4x545mKvZGoB7Zln5S
+        Us8KObOs1lkoZXkknum+xXo49k+LbDkzbU278=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4D5843C2D;
+        Thu,  6 Oct 2016 18:53:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 44EE943C2C;
+        Thu,  6 Oct 2016 18:53:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 05/25] sequencer: allow the sequencer to take custody of malloc()ed data
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+        <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <942aa559a0af9b52e079c5c78fa313f49b87d50d.1473590966.git.johannes.schindelin@gmx.de>
+        <xmqqzinc295y.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610051338530.35196@virtualbox>
+        <xmqqeg3tjn7n.fsf@gitster.mtv.corp.google.com>
+        <28935e27-5ba8-c261-ba44-424f7b91cdda@gmail.com>
+Date:   Thu, 06 Oct 2016 15:53:35 -0700
+In-Reply-To: <28935e27-5ba8-c261-ba44-424f7b91cdda@gmail.com> ("Jakub
+        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Fri, 7 Oct 2016 00:40:59 +0200")
+Message-ID: <xmqq8tu1hyxc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX4XPqZauD_M_ieOwVauT1fi3MQb4+6taELQaRG9M-Kz_w@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: B79647B6-8C17-11E6-AAA8-F99D12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
+>> We manage lifetime of a field in a structure in one of three ways in
+>> our codebase [*1*].
+>>=20
+>>  ...
+>>  * A field can sometimes own and sometimes borrow the memory, and it
+>>    is accompanied by another field to tell which case it is, so that
+>>    cleaning-up can tell when it needs to be free(3)d.  This is a
+>>    minority case, and we generally avoid it especially in modern
+>>    code for small allocation, as it makes the lifetime rule more
+>>    complex than it is worth.
+> ...
+> On the other hand the _entrust() mechanism might be a good solution
+> if the amount of memory was large, for example order of magnitude more
+> than what would be needed to keep ownership info *and* borrowing would
+> not be possible for some reason.
 
-On 06/10/16 20:18, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Oct 4, 2016 at 6:08 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> As to making NO_REGEX conditional on REG_STARTEND: you are talking about
->> apples and oranges here. NO_REGEX is a Makefile flag, while REG_STARTEND
->> is a C preprocessor macro.
->>
->> Unless you can convince the rest of the Git developers (you would not
->> convince me) to simulate autoconf by compiling an executable every time
->> `make` is run, to determine whether REG_STARTEND is defined, this is a
->> no-go.
-> 
-> But just to clarify, does anyone have any objection to making our
-> configure.ac compile a C program to check for this sort of thing?
-> Because that seems like the easiest solution to this class of problem.
-
-Err, you do know that we already do that, right?
-
-[see commit a1e3b669 ("autoconf: don't use platform regex if it lacks REG_STARTEND", 17-08-2010)]
-
-In fact, if you run the auto tools on cygwin, you get a different setting
-for NO_REGEX than via config.mak.uname. Which is why I don't run configure
-on cygwin. :-D
-
-[The issue is exposed by t7008-grep-binary.sh, where the cygwin native
-regex library matches '.' in a pattern with the NUL character. ie the
-test_expect_failure test passes.]
-
-ATB,
-Ramsay Jones
-
-
+We have approach #3 exactly for that usage pattern.
