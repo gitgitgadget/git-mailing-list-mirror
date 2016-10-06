@@ -6,57 +6,52 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A781F207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 19:07:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87CD1207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 19:11:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755638AbcJFTHY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 15:07:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53553 "EHLO cloud.peff.net"
+        id S1752821AbcJFTLg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 15:11:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53557 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755595AbcJFTHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 15:07:22 -0400
-Received: (qmail 30102 invoked by uid 109); 6 Oct 2016 19:07:22 -0000
+        id S1751230AbcJFTLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 15:11:35 -0400
+Received: (qmail 30333 invoked by uid 109); 6 Oct 2016 19:11:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 19:07:22 +0000
-Received: (qmail 30560 invoked by uid 111); 6 Oct 2016 19:07:39 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 19:11:29 +0000
+Received: (qmail 30582 invoked by uid 111); 6 Oct 2016 19:11:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 15:07:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2016 15:07:20 -0400
-Date:   Thu, 6 Oct 2016 15:07:20 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 15:11:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2016 15:11:27 -0400
+Date:   Thu, 6 Oct 2016 15:11:27 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To:     Richard Lloyd <richard.lloyd@connectinternetsolutions.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
-Message-ID: <20161006190720.4ecf3ptl6msztoya@sigill.intra.peff.net>
-References: <20161006114124.4966-1-pclouds@gmail.com>
- <20161006190014.owmqr2eqyk5h5cau@sigill.intra.peff.net>
+Subject: Re: Systems with old regex system headers/libraries don't pick up
+ git's compat/regex header file
+Message-ID: <20161006191127.2vjtmxl7ygjeqcbk@sigill.intra.peff.net>
+References: <9f43a2f1-5d7e-3a2e-5a83-40e92ab0d7b5@connectinternetsolutions.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161006190014.owmqr2eqyk5h5cau@sigill.intra.peff.net>
+In-Reply-To: <9f43a2f1-5d7e-3a2e-5a83-40e92ab0d7b5@connectinternetsolutions.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 06, 2016 at 03:00:14PM -0400, Jeff King wrote:
+On Thu, Oct 06, 2016 at 10:15:49AM +0100, Richard Lloyd wrote:
 
-> PS I think your "!!" syntax conflicts with something like:
+> Unfortunately, on systems with an older regex shipped as
+> standard (e.g. HP-UX 11), the include path picks up
+> /usr/include/regex.h first, which doesn't define REG_STARTEND
+> and the git-compat-util.h check fails.
 > 
->     git -c alias.has-changes='!! git diff --quiet' has-changes
-> 
->    I don't know if that is worth worrying about or not. I also notice
->    that using "!!git diff" with no space seems broken, as it seems to
->    skip using the shell. I wonder if that is a bug in run-command.
+> The fix I applied on HP-UX 11 was to add -Icompat/regex
+> to the CFLAGS ahead of other -I directives. Another possible
+> change needed might be to line 69 of compat/regex/regex.c:
 
-Nevermind this last bit. It is the shell that is complaining
-(rightfully) about "!git"; the error message is just confusing because
-it mentions $0, which contains the whole script:
-
-  $ git -c alias.has-changes='!!git diff --quiet' has-changes
-  !git diff --quiet: 1: !git diff --quiet: !git: not found
-
-The "!! git diff" syntax sill has the conflict I mentioned (though note
-I screwed up the quotes in what I wrote above).
+Junio mentioned the NO_REGEX knob in the Makefile. If that works for
+you, the next step is probably to add a line to the HP-UX section of
+config.mak.uname, so that it just works out of the box.
 
 -Peff
