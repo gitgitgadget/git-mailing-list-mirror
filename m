@@ -2,111 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57B02207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 16:49:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BDEC207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 17:00:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755763AbcJFQtB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 12:49:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53483 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751645AbcJFQs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 12:48:58 -0400
-Received: (qmail 22398 invoked by uid 109); 6 Oct 2016 16:48:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 16:48:27 +0000
-Received: (qmail 29529 invoked by uid 111); 6 Oct 2016 16:48:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 12:48:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2016 12:48:25 -0400
-Date:   Thu, 6 Oct 2016 12:48:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 1/2] files_read_raw_ref: avoid infinite loop on broken
- symlinks
-Message-ID: <20161006164825.otms5ovz2vzanimw@sigill.intra.peff.net>
-References: <20161006164723.ocg2nbgtulpjcksp@sigill.intra.peff.net>
+        id S942171AbcJFRAm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 13:00:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53389 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S964816AbcJFRAl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 13:00:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A838243AB2;
+        Thu,  6 Oct 2016 12:59:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s/NLGNgPNzUzCsZbwHatorT5MHI=; b=FlIZpw
+        bt/aretjAWXVlnid6hGl6N8H8LllxVNYW8Uylcxel885+eR3YOM/+cVT7VNlpi44
+        DFuztpV037qnCkVjYNZtltBk66n3fhosIgWjn9G9DKr+yZniOic7imXa4N9J0xw9
+        VHSXxKkc5Z9DQTHCDoQ/sAjcEKdSslMdRlEfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iU+FMLpWK8Pwk0A5ISgszdXwBZI+RVY3
+        b1z4LiIy1RLX2IDG+6Eue2zGIxxyjGrqUiRvSksHb6mzTmQGoySd9nfMadH8dxh2
+        Z+Mn8waeSfeAIeYJwWR8Rh9jLtOvR22jAj2GgAC/hpPJ7WN1krcrsyysbl0V/2Ol
+        XCX/EDPWJtg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E1EF43AB1;
+        Thu,  6 Oct 2016 12:59:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFFB743AB0;
+        Thu,  6 Oct 2016 12:58:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josef Ridky <jridky@redhat.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: Feature Request: user defined suffix for temp files created by git-mergetool
+References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
+        <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
+        <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
+        <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
+Date:   Thu, 06 Oct 2016 09:58:57 -0700
+In-Reply-To: <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
+        (Josef Ridky's message of "Thu, 6 Oct 2016 03:21:49 -0400 (EDT)")
+Message-ID: <xmqqbmyxmn1q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161006164723.ocg2nbgtulpjcksp@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2D4A51BE-8BE6-11E6-8930-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our ref resolution first runs lstat() on any path we try to
-look up, because we want to treat symlinks specially (by
-resolving them manually and considering them symrefs). But
-if the results of `readlink` do _not_ look like a ref, we
-fall through to treating it like a normal file, and just
-read the contents of the linked path.
+Josef Ridky <jridky@redhat.com> writes:
 
-Since fcb7c76 (resolve_ref_unsafe(): close race condition
-reading loose refs, 2013-06-19), that "normal file" code
-path will stat() the file and if we see ENOENT, will jump
-back to the lstat(), thinking we've seen inconsistent
-results between the two calls. But for a symbolic ref, this
-isn't a race: the lstat() found the symlink, and the stat()
-is looking at the path it points to. We end up in an
-infinite loop calling lstat() and stat().
+> I agree, that this patch is written as general as possible and can
+> possibly bring more confusion than benefits.
 
-We can fix this by avoiding the retry-on-inconsistent jump
-when we know that we found a symlink. While we're at it,
-let's add a comment explaining why the symlink case gets to
-this code in the first place; without that, it is not
-obvious that the correct solution isn't to avoid the stat()
-code path entirely.
+I am not sure about that.  Other people would have similar but
+different workflow needs where they compare local new one with local
+old one that would be helped by renaming local to old and remote to
+new (i.e. the other way around from your need).  If you just add a
+toggle between local-remote vs new-old, that would be just an
+additional code baggage that does not help people other than you.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs/files-backend.c        | 7 ++++++-
- t/t1503-rev-parse-verify.sh | 5 +++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0709f60..d826557 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1403,6 +1403,11 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 			ret = 0;
- 			goto out;
- 		}
-+		/*
-+		 * It doesn't look like a refname; fall through to just
-+		 * treating it like a non-symlink, and reading whatever it
-+		 * points to.
-+		 */
- 	}
- 
- 	/* Is it a directory? */
-@@ -1426,7 +1431,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	 */
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0) {
--		if (errno == ENOENT)
-+		if (errno == ENOENT && !S_ISLNK(st.st_mode))
- 			/* inconsistent with lstat; retry */
- 			goto stat_ref;
- 		else
-diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
-index ab27d0d..69d5135 100755
---- a/t/t1503-rev-parse-verify.sh
-+++ b/t/t1503-rev-parse-verify.sh
-@@ -139,4 +139,9 @@ test_expect_success 'master@{n} for various n' '
- 	test_must_fail git rev-parse --verify master@{$Np1}
- '
- 
-+test_expect_success SYMLINKS 'ref resolution not confused by broken symlinks' '
-+	ln -s does-not-exist .git/broken &&
-+	test_must_fail git rev-parse --verify broken
-+'
-+
- test_done
--- 
-2.10.1.506.g904834d
+I think J6t's "EDIT THIS" hits the center of the issue.  If users
+are trained to know LOCAL is the one to be edited, would the current
+UI work well enough for them thru your custom workflow tools?  If we
+rename LOCAL to "EDIT THIS" and do nothing else, would such UI work
+well for even untrained users thru your custom workflow tools?
 
