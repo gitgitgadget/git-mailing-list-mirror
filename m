@@ -2,111 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 870B3207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 13:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6630C207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 13:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936454AbcJFNQz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 09:16:55 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:38868 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754816AbcJFNQx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 09:16:53 -0400
-Received: by mail-wm0-f45.google.com with SMTP id i130so2837848wmg.1
-        for <git@vger.kernel.org>; Thu, 06 Oct 2016 06:16:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=32u3mbITQwJCrbmDtRDtP+0aDEvSSchWhpoEoS0jXW8=;
-        b=im8orcdMibLSNvVF0cotxkkv5g+ta1nKvK5MrqEvIGlqv5po4d1pKp1YdgElBWqDAv
-         rsNY7GbTDGOcZKqb3RyhJ1xUxlVXFL6x3dTSrFNYgqTV7y6tZP1Yqm7zI7m6cWapr2+w
-         lRswrWz6s36p6eWg0Xh77W5xveIR+VdvxucXWAyvYqkM7ybiMIYD1uHmkUIX+rZ1R36E
-         qnEnWRM7StD7GYB/aQpcLELdR21xps+p0huxX4k4ypKj2fb27AD4rfDSoc23MPKMaimQ
-         v8REVIMTsfRVJDgM+dLhxQommn9ysQrUy+lscLWvwnC8PcLWLShZeRbTPslEGvr7ZqN5
-         vwkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=32u3mbITQwJCrbmDtRDtP+0aDEvSSchWhpoEoS0jXW8=;
-        b=mFCnAqh0Q3xEXI1ShSyovlFE6OdqUt6bUyeBA1worT8usDYh/lOzLFJAIEtSS2S/Yl
-         sycJLqNz5zE1yg+o/upF6lJNY3dZvxBg0Yta+vMoz5mehpKsG4KzUCIt8oTTbY/eZTSp
-         lJJ7RSNmg57S9VK4hAqKAPZXJELEfz508Dq45qvWqMIgbFKpgbItbPA6YJXy9OtPaDhE
-         xEEAkU0FhnTHfotOC+fl4zCWDki8r48yziaAf0UXytIUNDxNZ0rcejDlotWQjLLxlE0a
-         BuGohaHqUYDOcxNKI9sb0Y/pL2oaiAkSr88BeFY/qd452HfUi0phfcp/3YX4sOy9BShM
-         NpMQ==
-X-Gm-Message-State: AA6/9RlZu59tCEXKloKcJRpc6KIqFeeDHpYOd8bhc78P5pYCGvUIfcoJqUgjx0i/vNBZzA==
-X-Received: by 10.28.109.207 with SMTP id b76mr13331192wmi.66.1475759811916;
-        Thu, 06 Oct 2016 06:16:51 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id v128sm15062304wmv.3.2016.10.06.06.16.51
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 06 Oct 2016 06:16:51 -0700 (PDT)
+        id S933351AbcJFNV2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 09:21:28 -0400
+Received: from mail.javad.com ([54.86.164.124]:50583 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752387AbcJFNV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 09:21:26 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 07354613EF;
+        Thu,  6 Oct 2016 13:21:25 +0000 (UTC)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1bs8bz-0003Uh-1C; Thu, 06 Oct 2016 16:21:23 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] Documentation/git-merge.txt: improve short description in DESCRIPTION
+References: <cover.1475678515.git.sorganov@gmail.com>
+        <e74ae8afc1bfc4cd9161ccaa56d926a89439551e.1475678515.git.sorganov@gmail.com>
+        <e03a84ad-9aa6-8ada-5828-7b28f76baaaf@gmail.com>
+Date:   Thu, 06 Oct 2016 16:21:23 +0300
+In-Reply-To: <e03a84ad-9aa6-8ada-5828-7b28f76baaaf@gmail.com> ("Jakub
+        \=\?utf-8\?Q\?Nar\=C4\=99bski\=22's\?\= message of "Wed, 5 Oct 2016 18:58:10 +0200")
+Message-ID: <87a8ehpq98.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v8 11/11] convert: add filter.<driver>.process option
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <2c53b837-4690-dae8-60ff-e7907a9b13ef@gmail.com>
-Date:   Thu, 6 Oct 2016 15:16:50 +0200
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <52356944-49B6-482A-8951-2B7F8D8032F7@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <20160920190247.82189-12-larsxschneider@gmail.com> <91589466-439e-7200-7256-b9288beae685@gmail.com> <4DE57A65-1020-4F17-81F2-9F319834BB2D@gmail.com> <2c53b837-4690-dae8-60ff-e7907a9b13ef@gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jakub Narębski <jnareb@gmail.com> writes:
 
-> On 04 Oct 2016, at 22:50, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->=20
-> [Some of answers may get invalidated by v9]
->=20
-> W dniu 30.09.2016 o 20:56, Lars Schneider pisze:
->>> On 27 Sep 2016, at 00:41, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->>>=20
->>>> +
->>>> +After the filter has processed a blob it is expected to wait for
->>>> +the next "key=3Dvalue" list containing a command. Git will close
->>>> +the command pipe on exit. The filter is expected to detect EOF
->>>> +and exit gracefully on its own.
->=20
-> Is this still true?
+> W dniu 05.10.2016 o 16:46, sorganov@gmail.com pisze:
+>> From: Sergey Organov <sorganov@gmail.com>
+>> 
+>> Old description had a few problems:
+>> 
+>> - sounded as if commits have changes
+>> 
+>> - stated that changes are taken since some "divergence point"
+>>   that was not defined.
+>> 
+>> New description rather uses "common ancestor" and "merge base",
+>> definitions of which are easily discoverable in the rest of GIT
+>> documentation.
+>
+> This is a step in a good direction, but it has a few issues.
+>
+>> 
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  Documentation/git-merge.txt | 25 +++++++++++++++----------
+>>  1 file changed, 15 insertions(+), 10 deletions(-)
+>> 
+>> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+>> index cc0329d..351b8fc 100644
+>> --- a/Documentation/git-merge.txt
+>> +++ b/Documentation/git-merge.txt
+>> @@ -16,11 +16,16 @@ SYNOPSIS
+>>  
+>>  DESCRIPTION
+>>  -----------
+>> -Incorporates changes from the named commits (since the time their
+>> -histories diverged from the current branch) into the current
+>> -branch.  This command is used by 'git pull' to incorporate changes
+>> -from another repository and can be used by hand to merge changes
+>> -from one branch into another.
+>> +
+>> +Incorporates changes that lead to the named commits into the current
+>> +branch, and joins corresponding histories. The best common ancestor of
+>> +named commits and the current branch, called "merge base", is
+>> +calculated, and then net changes taken from the merge base to
+>> +the named commits are applied.
+>
+> The first sentence is all right; it reads better than the original
+> without the introduced part in parentheses.  The only minor issue
+> is with "joins corresponding histories" - it is a good description,
+> but may imply that the branch we are merging vanishes: it doesn't.
+> But all in all, it is a good change.
 
-Yes
+I've got "joins corresponding histories" from original NAME section, so
+it's likely to be good enough.
 
+>
+> Second sentence has some problems.  First, while it is a good idea
+> to use well defined term "merge base", I think writing "since the
+> time their histories diverged" or "(which is the point where histories
+> diverged)" would be a good plain language description; it was removed
+> entirely in the proposal.
 
->>>=20
->>> Good to have it documented. =20
->>>=20
->>> Anyway, as it is Git command that spawns the filter driver process,
->>> assuming that the filter process doesn't daemonize itself, wouldn't
->>> the operating system reap it after its parent process, that is the
->>> git command it invoked, dies? So detecting EOF is good, but not
->>> strictly necessary for simple filter that do not need to free
->>> its resources, or can leave freeing resources to the operating
->>> system? But I may be wrong here.
->>=20
->> The filter process runs independent of Git.
->=20
-> Ah.  So without some way to tell long-lived filter process that
-> it can shut down, because no further data will be incoming, or
-> killing it by Git, it would hang indefinitely?
+I was not sure about it myself, but it sounded as if it could be the
+case that I might need to resolve the same conflicts again and again, as
+changes are taken from some "divergence point" that is apparently fixed.
 
-Yes
+OTOH, "merge base" not only is well-defined term, but it also doesn't
+sound as some fixed point in history.
 
-- Lars=
+>
+> Second, while "common ancestor" and "least common ancestor" are well
+> defined in mathematics of graphs, "best common ancestor" isn't...
+> but this is what git-merge-base(1) documentation uses.
+
+That's were I took it from indeed, git-merge-base manual page. I wanted
+things we mention to be discoverable.
+
+> Also, the "best common ancestor" doesn't need to be only one.  There
+> might be many such ancestors... though Git would generate then a
+> virtual best common ancestor thanks to recursive merge strategy.
+> And usually there is only one "best common ancestor", that is a single
+> merge base.  So this may need clarification, but it is not much of
+> a problem.
+>
+> Third, and most important, is that "net changes taken from the merge
+> base to the named commits are applied" is simply not true.  The
+> `git merge` command does not reapply changes - that is what rebase
+> and cherry-pick do.
+
+"are applied" meant to be generic enough in this context to cover, say,
+"-s ours" as well. Perhaps "are integrated" you suggest below, or "are
+incorporated" that is already used in the beginning of DESCRIPTION, is
+better indeed.
+
+As for merge vs rebase (or cherry-pick), the only essential difference
+for me is that merge applies net (cumulative, integrated) changes, while
+rebase applies each change sequentially, one commit to another. Please
+correct me if I'm wrong.
+
+BTW, one can imagine "rebase" merge strategy: make a new chain of
+commits on top of destination, then squash all that to get a new single
+merge commit.
+
+> The merge operation uses 3-way merge strategy (diff3) between
+> merge-base, current branch, and merged commit. That is, it finds
+> differences between differences, and "applies" that.
+
+The problem is that at this point we need to cover other merge
+strategies as well, so we can't writ the description as if 3-way merge
+is the only strategy.
+
+> See
+> "A Formal Investigation of Diff3" paper by Sanjeev Khanna, Keshav
+> Kunal, and Benjamin C. Pierce:
+> http://www.cis.upenn.edu/~bcpierce/papers/diff3-short.pdf
+>
+> I'm not sure how to explain it succintly.  Perhaps
+>
+>   net changes between merge base to the current (merged into)
+>   branch and named commits are integrated
+>
+> There is description of trivial 3-way merge somewhere in Git docs,
+> though in very unobvious place; we can link it.
+
+As it's "TRUE MERGE" section that mentions 3-way merge for the first
+time, it'd be the natural place for the link, I think.
+
+>> +
+>> +This command is used by 'git pull' to incorporate changes from another
+>> +repository, and can be used by hand to merge changes from one branch
+>> +into another.
+>
+> Rather "can be used by 'git pull'", or "is used by 'git pull' (unless
+> configured otherwise)"...
+>
+> Separating this information makes a very good sense.  Thanks.
+
+Yeah, but I've rather deleted it entirely in 6/6.
+
+-- Sergey.
