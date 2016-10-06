@@ -2,133 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B3B207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 19:41:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63280207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 19:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753709AbcJFTlM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 15:41:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53614 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751225AbcJFTlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 15:41:10 -0400
-Received: (qmail 32071 invoked by uid 109); 6 Oct 2016 19:41:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 19:41:10 +0000
-Received: (qmail 31174 invoked by uid 111); 6 Oct 2016 19:41:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 15:41:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2016 15:41:08 -0400
-Date:   Thu, 6 Oct 2016 15:41:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 1/2] files_read_raw_ref: avoid infinite loop on broken
- symlinks
-Message-ID: <20161006194108.qy7qpg6qpodpeacx@sigill.intra.peff.net>
-References: <20161006164723.ocg2nbgtulpjcksp@sigill.intra.peff.net>
- <20161006164825.otms5ovz2vzanimw@sigill.intra.peff.net>
- <1c39b371-eb41-05d9-3c48-bd41764c9c9a@kdbg.org>
+        id S933468AbcJFTp2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 15:45:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62049 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933376AbcJFTp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 15:45:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E20F343E49;
+        Thu,  6 Oct 2016 15:44:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=dVr0mVWcrKQq
+        1h7oU6IkXHYp8y0=; b=M9HjCSqeNcMn94Arhxi/lxBVszbExrKid3yt+OhVINt6
+        g0zMXPZLQsllopUNU16mkIL5k5ukdC0mOYzmgYucSey4s9yGR9IsgFr5cseVmwPN
+        OPh3YpqQ1ld4P1LtW60n7kkQsN4qoP1fJsFV00R98eB5iltDh1X2x1snEZ5GgzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vVob1Y
+        8NRycjyZkeFYFzRRTvoMzVaJ2vGY7exLdIHKr4mSVStOQfjM2WgKFAMRQdFx77BC
+        mCYWtiV7lEA3AUBxxQI+BkcUjsUOAkeD4aue/culWEvOc0HJFQSzX0TIC7TW+5vV
+        bJGAlrJhnKZYioqQT9OwgbbCV9mWrgn9WCOTk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D68D343E47;
+        Thu,  6 Oct 2016 15:44:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54CFF43E45;
+        Thu,  6 Oct 2016 15:44:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 2/3] gitweb: Link to 7-char+ SHA1s, not only 8-char+
+References: <20161006091135.29590-1-avarab@gmail.com>
+        <20161006091135.29590-3-avarab@gmail.com>
+Date:   Thu, 06 Oct 2016 12:44:57 -0700
+In-Reply-To: <20161006091135.29590-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 6 Oct 2016 09:11:34 +0000")
+Message-ID: <xmqq37k9jm86.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1c39b371-eb41-05d9-3c48-bd41764c9c9a@kdbg.org>
+X-Pobox-Relay-ID: 5D890CFA-8BFD-11E6-B39B-F99D12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 06, 2016 at 09:31:22PM +0200, Johannes Sixt wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Am 06.10.2016 um 18:48 schrieb Jeff King:
-> > +test_expect_success SYMLINKS 'ref resolution not confused by broken symlinks' '
-> > +	ln -s does-not-exist .git/broken &&
-> > +	test_must_fail git rev-parse --verify broken
-> 
-> Hm, lower-case named refs directly in .git are frowned upon, no? If we ever
-> decide to forbid them outright, this ref-parse might still fail, but for the
-> wrong reason. Should you not better pick an example below ref/?
+> Change the minimum length of an abbreviated object identifier in the
+> commit message gitweb tries to turn into link from 8 hexchars to 7.
+>
+> This arbitrary minimum length of 8 was introduced in bfe2191 ("gitweb:
+> SHA-1 in commit log message links to "object" view", 2006-12-10), but
+> the default abbreviation length is 7, and has been for a long time.
+>
+> It's still possible to reference SHA1s down to 4 characters in length,
+> see v1.7.4-1-gdce9648's MINIMUM_ABBREV, but I can't see how to make
+> git actually produce that, so I doubt anyone is putting that into log
+> messages in practice, but people definitely do put 7 character SHA1s
+> into log messages.
+>
+> I think it's fairly dubious to link to things matching [0-9a-fA-F]
+> here as opposed to just [0-9a-f], that dates back to the initial
+> version of gitweb from 161332a ("first working version",
+> 2005-08-07). Git will accept all-caps SHA1s, but didn't ever produce
+> them as far as I can tell.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
 
-I suppose so. The test case was adapted from a real-world example, but
-it fails equally well with .git/refs/heads/broken. The only restriction
-is that the symlink _destination_ cannot look like "refs/heads/...".
+s/SHA1/SHA-1/g.  I agree that A-F are dubious.
 
-Here's a replacement 1/2. The second patch remains unchanged.
-
--- >8 --
-Subject: files_read_raw_ref: avoid infinite loop on broken symlinks
-
-Our ref resolution first runs lstat() on any path we try to
-look up, because we want to treat symlinks specially (by
-resolving them manually and considering them symrefs). But
-if the results of `readlink` do _not_ look like a ref, we
-fall through to treating it like a normal file, and just
-read the contents of the linked path.
-
-Since fcb7c76 (resolve_ref_unsafe(): close race condition
-reading loose refs, 2013-06-19), that "normal file" code
-path will stat() the file and if we see ENOENT, will jump
-back to the lstat(), thinking we've seen inconsistent
-results between the two calls. But for a symbolic ref, this
-isn't a race: the lstat() found the symlink, and the stat()
-is looking at the path it points to. We end up in an
-infinite loop calling lstat() and stat().
-
-We can fix this by avoiding the retry-on-inconsistent jump
-when we know that we found a symlink. While we're at it,
-let's add a comment explaining why the symlink case gets to
-this code in the first place; without that, it is not
-obvious that the correct solution isn't to avoid the stat()
-code path entirely.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs/files-backend.c        | 7 ++++++-
- t/t1503-rev-parse-verify.sh | 5 +++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0709f60..d826557 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1403,6 +1403,11 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 			ret = 0;
- 			goto out;
- 		}
-+		/*
-+		 * It doesn't look like a refname; fall through to just
-+		 * treating it like a non-symlink, and reading whatever it
-+		 * points to.
-+		 */
- 	}
- 
- 	/* Is it a directory? */
-@@ -1426,7 +1431,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	 */
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0) {
--		if (errno == ENOENT)
-+		if (errno == ENOENT && !S_ISLNK(st.st_mode))
- 			/* inconsistent with lstat; retry */
- 			goto stat_ref;
- 		else
-diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
-index ab27d0d..492edff 100755
---- a/t/t1503-rev-parse-verify.sh
-+++ b/t/t1503-rev-parse-verify.sh
-@@ -139,4 +139,9 @@ test_expect_success 'master@{n} for various n' '
- 	test_must_fail git rev-parse --verify master@{$Np1}
- '
- 
-+test_expect_success SYMLINKS 'ref resolution not confused by broken symlinks' '
-+	ln -s does-not-exist .git/refs/heads/broken &&
-+	test_must_fail git rev-parse --verify broken
-+'
-+
- test_done
--- 
-2.10.1.506.g904834d
-
+>  gitweb/gitweb.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index cba7405..92b5e91 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2036,7 +2036,7 @@ sub format_log_line_html {
+>  	my $line =3D shift;
+> =20
+>  	$line =3D esc_html($line, -nbsp=3D>1);
+> -	$line =3D~ s{\b([0-9a-fA-F]{8,40})\b}{
+> +	$line =3D~ s{\b([0-9a-fA-F]{7,40})\b}{
+>  		$cgi->a({-href =3D> href(action=3D>"object", hash=3D>$1),
+>  					-class =3D> "text"}, $1);
+>  	}eg;
