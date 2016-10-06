@@ -2,118 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 957BF20986
-	for <e@80x24.org>; Thu,  6 Oct 2016 07:21:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE20120986
+	for <e@80x24.org>; Thu,  6 Oct 2016 08:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753593AbcJFHVx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 03:21:53 -0400
-Received: from mx6-phx2.redhat.com ([209.132.183.39]:41299 "EHLO
-        mx6-phx2.redhat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753298AbcJFHVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 03:21:53 -0400
-Received: from zmail26.collab.prod.int.phx2.redhat.com (zmail26.collab.prod.int.phx2.redhat.com [10.5.83.33])
-        by mx6-phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u967LnRj052964;
-        Thu, 6 Oct 2016 03:21:49 -0400
-Date:   Thu, 6 Oct 2016 03:21:49 -0400 (EDT)
-From:   Josef Ridky <jridky@redhat.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Message-ID: <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
-In-Reply-To: <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
-References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com> <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com> <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
-Subject: Re: Feature Request: user defined suffix for temp files created by
- git-mergetool
+        id S965629AbcJFIte (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 04:49:34 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34725 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965610AbcJFItb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 04:49:31 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b201so2387375wmb.1
+        for <git@vger.kernel.org>; Thu, 06 Oct 2016 01:49:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N8IaCCQy0zF6xz6mvvuYqPASJNKcWsoIUWE6Q6e+jH0=;
+        b=ksAXI3or9cFx6J0fBkCWQ/9o8EMm8aRwVkZdjRSKLr18+lJcU9k4s40Xf0Nbw4KQ6D
+         RSfKcyqhXGLVrchQZWms02iHCHstgBsc3uFZzmUQeZetlTnEFd84MTYKyKGGgohcis4F
+         TjNYx+49S+3c/2tOC/mi3Ft5YoarMD/oRsDjCDVM/aC9SuYP5dFQyOPKNzBdMBqS6AA7
+         pNmDGKJ8UgkJJfrA/w23cM/YhHdz/pjRxTqo3fJs/whtr6T6xuObq89qWFfNv+spiQ3p
+         bHHAa1adFaTgb+psggVZuEuKf0Ran4poATBqYHEF4P2zbbkmzxQO+Em/Hfa+7nDShR/E
+         8dmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N8IaCCQy0zF6xz6mvvuYqPASJNKcWsoIUWE6Q6e+jH0=;
+        b=FYu9RaCfUcsSSnTVmohcJEelehbEvYSDoBsMm+XNp1zp9QBdPgud8Qgt/UHouY1Yx3
+         UFxuvSMbWMCrOuYQECDQzYqWZjyjXcJPMrMsvXZRU0nyIikEerwftHlpJVd+ZBvElQ2+
+         oxpUZLH5Imnwc9ojO1lzX31MRqztn5eAPKVU1lmoz+jse/BjoKWpauAksqPortumEvX/
+         4s6FRQHK7EsU0rxrBwMHklrvMcbXmtEY00ZvygyEumqJuenNPuHyTAllGdOr4ggvBxoV
+         ipnxrqYaHbDXpL8tWzFhL4lzNj0ceomX8kXPKQp1aH1UoNCLo7Owrfe6R5DD3WG7wJXV
+         3mLw==
+X-Gm-Message-State: AA6/9RmTRSP1I2QdoVBgrax8n2Bmrrpkag/ygcAi4vv41W2nftjsMrPGPuH1/hp6qetSUA==
+X-Received: by 10.28.175.204 with SMTP id y195mr3606457wme.92.1475743769342;
+        Thu, 06 Oct 2016 01:49:29 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id jt8sm8889769wjc.33.2016.10.06.01.49.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 06 Oct 2016 01:49:28 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johan Herland <johan@herland.net>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] push: Re-include "push.default=tracking" in the documentation
+Date:   Thu,  6 Oct 2016 08:49:05 +0000
+Message-Id: <20161006084905.14944-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.9.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.34.4.141]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF48 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Feature Request: user defined suffix for temp files created by git-mergetool
-Thread-Index: EzKs5iPhG+22gQ06GVmFwHQAiYHtKw==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Change the documentation for push.tracking=* to re-include a mention
+of what "tracking" does.
 
-thank you very much for this reply.
+The "tracking" option was renamed to "upstream" back in
+53c4031 ("push.default: Rename 'tracking' to 'upstream'", 2011-02-16),
+this section was then subsequently rewritten in 87a70e4 ("config doc:
+rewrite push.default section", 2013-06-19) to remove any mention of
+"tracking".
 
-| Sent: Wednesday, October 5, 2016 11:04:17 PM
-| 
-| Am 05.10.2016 um 09:47 schrieb Josef Ridky:
-| > Add support for user defined suffix part of name of temporary files
-| > created by git mergetool
-| 
-| Do I understand correctly that your users have problems to identify
-| which of the "_BASE_", "_LOCAL_", "_REMOTE_" and "_BACKUP_" files they
-| must edit? I agree that there is some room for improvement.
-| 
-| The goal is that you want the user to see the label, e.g., "_EDIT_THIS_"
-| instead of "_LOCAL_". Now you have to teach your users that they have to
-| pass --local=_EDIT_THIS_. Why don't you just teach your users to edit
-| the file labeled "_LOCAL_"?
+Maybe we should just warn or die nowadays if this option is in the
+config, but I had some old config of mine use this option, I'd
+forgotten that it was a synonym, and nothing in git's documentation
+mentioned that.
 
-The goal of this request is not to teach our users, how to change labels using git mergetool.
-The point is, that git mergetool is used by several of our packages in specific use-case. 
+That's bad, either we shouldn't support it at all, or we should
+document what it does. This patch does the latter.
 
-If I understand well, git mergetool expecting comparing LOCAL changes against REMOTE status in git repository.
-We use git mergetool to compare LOCAL OLD version of package with LOCAL NEW version of package.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/config.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-In this use-case is really nonsense to label old version of package as LOCAL and new version of package as REMOTE.
-This is point of confusion. This is the reason, why I am asking for the possibility to change the suffix of temporary files, which are shown to user for comparison.
-
-And as well, users do not open these files themselves, these files are automatically opened by our packages, so users are not responsible for the name of temporary files. They just see the results.
-
-| 
-| Therefore, I think that your patch as written does not help to reduce
-| the confusion. It may be a building block for further improvement, but
-| if you stop here, it is pointless.
-| 
-
-I agree, that this patch is written as general as possible and can possibly bring more confusion than benefits.
-I will make new version of this patch, where will be just simple switch between LOCAL/REMOTE and NEW/OLD.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 32f065c..f30d52a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2344,6 +2344,10 @@ push.default::
+   pushing to the same repository you would normally pull from
+   (i.e. central workflow).
  
-| >  SYNOPSIS
-| >  --------
-| >  [verse]
-| > -'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
-| > +'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>]
-| > [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
-| >
-| >  DESCRIPTION
-| >  -----------
-| > @@ -79,6 +79,30 @@ success of the resolution after the custom tool has
-| > exited.
-| >  	Prompt before each invocation of the merge resolution program
-| >  	to give the user a chance to skip the path.
-| >
-| > +--local=<name>::
-| > +	Use string from <name> as part of suffix of name of temporary
-| > +	file (local) for merging. If not used or is equal with any
-| > +	other (remote|backup|base), default value is used.
-| > +	Default suffix is LOCAL.
-| > +
-| > +--remote=<name>::
-| > +	Use string from <name> as part of suffix of name of temporary
-| > +	file (remote) for merging. If not used or is equal with any
-| > +	other (local|backup|base), default value is used.
-| > +	Default suffix is REMOTE.
-| > +
-| > +--backup=<name>::
-| > +	Use string from <name> as part of suffix of name of temporary
-| > +	file (backup) for merging. If not used or is equal with any
-| > +	other (local|remote|base), default value is used.
-| > +	Default suffix is BACKUP.
-| > +
-| > +--base=<name>::
-| > +	Use string from <name> as part of suffix of name of temporary
-| > +	file (base) for merging. If not used or is equal with any
-| > +	other (local|remote|backup), default value is used.
-| > +	Default suffix is BASE.
-| 
-| 
++* `tracking` - Deprecated synonym for `upstream`, which we still
++  support for backwards compatibility with existing configuration
++  files.
++
+ * `simple` - in centralized workflow, work like `upstream` with an
+   added safety to refuse to push if the upstream branch's name is
+   different from the local one.
+-- 
+2.9.3
+
