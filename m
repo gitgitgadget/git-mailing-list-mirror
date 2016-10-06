@@ -2,82 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E92F4207EC
-	for <e@80x24.org>; Thu,  6 Oct 2016 13:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B609207EC
+	for <e@80x24.org>; Thu,  6 Oct 2016 13:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753572AbcJFNJJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 09:09:09 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63038 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753197AbcJFNJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 09:09:08 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MI5JG-1bsfqj2PJW-003s6Q; Thu, 06 Oct 2016 15:08:55
- +0200
-Date:   Thu, 6 Oct 2016 15:08:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 20/25] sequencer: left-trim lines read from the
- script
-In-Reply-To: <xmqqr38p3z1i.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610061459390.35196@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>        <cover.1473590966.git.johannes.schindelin@gmx.de>        <09e05e7ac23164625f2076ff06d2b034101878da.1473590966.git.johannes.schindelin@gmx.de>        <xmqqsht657ls.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1609121019290.129229@virtualbox> <xmqqr38p3z1i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932541AbcJFNJ2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Oct 2016 09:09:28 -0400
+Received: from mx3-phx2.redhat.com ([209.132.183.24]:41418 "EHLO
+        mx3-phx2.redhat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751418AbcJFNJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2016 09:09:27 -0400
+Received: from zmail26.collab.prod.int.phx2.redhat.com (zmail26.collab.prod.int.phx2.redhat.com [10.5.83.33])
+        by mx3-phx2.redhat.com (8.13.8/8.13.8) with ESMTP id u96D9QYj018142
+        for <git@vger.kernel.org>; Thu, 6 Oct 2016 09:09:26 -0400
+Date:   Thu, 6 Oct 2016 09:09:26 -0400 (EDT)
+From:   Josef Ridky <jridky@redhat.com>
+To:     git@vger.kernel.org
+Message-ID: <255814448.2197583.1475759366093.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
+References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com> <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com> <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org> <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com> <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
+Subject: [PATCH 2/2] Feature Request: user defined suffix for temp files
+ created by git-mergetool
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:L5tWybAp89ZYs5E34YWFreMQg9w/3+rFyDAQu4/3ndd88BEjmRg
- gu0AqqiuG3f+Kni0425J9OOtRPbKVB0E6eyt0fQ8O04h/6EtDxTAVbBacbMqzUZ9Xz1gNgp
- SWWWDz0CHlLuWFJsybPGJ3G+AIRgXgXEWmL8bIHvTgx7kE09xzSH4iHGzea9WJuQ1eWH/jo
- ABG8Y+jcThiL7bQ56BZkA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tEaauvMJB5I=:KStYZuVkCm+rhWRV3au1ES
- /t09C+qmNUK7jLzwVvFDN/nsP0ybUm0OOIHdat3w2zkuPOCtxkgadLHpxghmgO0VFJUqOAmrJ
- 9ZHnlfx2iOJ29P+sPz7P1ZNq2aPcnLDVsY7KzoC7y7Rw3OkrXmBSb6CFEqzKeVWj86Ufs22QI
- IhUXwLpt5Jjtt6bHlyBKXV3sWshMZUS24yz44ABCzYnJ6SEg2+R+Hed2AD6nXgIshMrphk1OC
- DL0w2dVJ5zdmVxIzDJkAtOYLNKSjWbJqRjeSyQPU4LPXEkhlD0EevCNSMmEl/bxKEizl8VUH4
- Z9X9T6IsUzHLZyf7COiVKT8Esj/EhcpMipprUxDSMWilaPjJpOulD21bnW26Vvutlg3f23FfA
- /MR90YyLWoIHN4BMRaUUpn7/BsajZ3NaOqS99lyg8x8FpfOlhZd2KvEbhLotTeoeKFZ8yf+ac
- LdMnuku604mFIqbZTNEKTUBqrGZf8aMX1TJdavn69nt8j3dLpONBCz0G3faCA0tmcM9YwGkzr
- mQk2apRr4RFccnh8fSugudwUwOg/Ef5RriCpf3kV+3Z7VUI64Vx8eLl7B2i/BE6m4hChGkRi0
- +gmXleIVESSqm3goV7dW6RME161jUPAhZ7hyT5xc1HMCtarauxzsC//gwUv71kir5w4HGqhLG
- BfrDrVcX1PW5ZnT5x5eyeJCZmjLChbX8LTyFNit1iQ+z+aG5eAKiGj5gywvoUAFPDJnmhxavW
- 1x6qpnTnMp5OrD51H37MNVfa0mSg/trPhbCE5DIZPEvfT903Bkiy82Jum5FrI00xjlTeQH8+A
- xhZW9c2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.34.4.141]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF48 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Feature Request: user defined suffix for temp files created by git-mergetool
+Thread-Index: EzKs5iPhG+22gQ06GVmFwHQAiYHtK568p9cafRh67sk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This is the second of two variant for request to add option to change
+suffix of name of temporary files generated by git mergetool. This
+change is requested for cases, when is git mergetool used for local
+comparison between two version of same package during package rebase.
 
-On Mon, 12 Sep 2016, Junio C Hamano wrote:
+Signed-off-by: Josef Ridky <jridky@redhat.com>
+---
+ Documentation/git-mergetool.txt | 26 ++++++++++++++++++++++++-
+ git-mergetool.sh                | 43 ++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 63 insertions(+), 6 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> I do not offhand see why we want to be lenient here,
-> >> especially only to the left.
-> >
-> > Postel's Law.
-> 
-> How would that compare/relate to yagni, though?
-
-I did need it, though. Blame it on being overworked or simply tired: I
-ended up inserting a spurious space before a "fixup" command. This command
-was handled as intended by the scripted rebase -i, and with the patch in
-question the rebase--helper agreed, too.
-
-Note: we have no problem to the right because we do handle variable-length
-whitespace between command and SHA-1, and we do not care one iota about
-the exact form of the oneline (hence right-stripping is not necessary).
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index e846c2e..6cf5935 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -8,7 +8,7 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
+ SYNOPSIS
+ --------
+ [verse]
+-'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
++'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -79,6 +79,30 @@ success of the resolution after the custom tool has exited.
+ 	Prompt before each invocation of the merge resolution program
+ 	to give the user a chance to skip the path.
+ 
++--local=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (local) for merging. If not used or is equal with any
++	other (remote|backup|base), default value is used.
++	Default suffix is LOCAL.
++
++--remote=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (remote) for merging. If not used or is equal with any
++	other (local|backup|base), default value is used.
++	Default suffix is REMOTE.
++
++--backup=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (backup) for merging. If not used or is equal with any
++	other (local|remote|base), default value is used.
++	Default suffix is BACKUP.
++
++--base=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (base) for merging. If not used or is equal with any
++	other (local|remote|backup), default value is used.
++	Default suffix is BASE.
++
+ TEMPORARY FILES
+ ---------------
+ `git mergetool` creates `*.orig` backup files while resolving merges.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index bf86270..096ee5e 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -8,7 +8,7 @@
+ # at the discretion of Junio C Hamano.
+ #
+ 
+-USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
++USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [--local=name] [--remote=name] [--backup=name] [--base=name] [file to merge] ...'
+ SUBDIRECTORY_OK=Yes
+ NONGIT_OK=Yes
+ OPTIONS_SPEC=
+@@ -16,6 +16,12 @@ TOOL_MODE=merge
+ . git-sh-setup
+ . git-mergetool--lib
+ 
++# Can be changed by user
++LOCAL_NAME='LOCAL'
++BASE_NAME='BASE'
++BACKUP_NAME='BACKUP'
++REMOTE_NAME='REMOTE'
++
+ # Returns true if the mode reflects a symlink
+ is_symlink () {
+ 	test "$1" = 120000
+@@ -271,10 +277,10 @@ merge_file () {
+ 		BASE=${BASE##*/}
+ 	fi
+ 
+-	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+-	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
+-	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
+-	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
++	BACKUP="$MERGETOOL_TMPDIR/${BASE}_${BACKUP_NAME}_$$$ext"
++	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${LOCAL_NAME}_$$$ext"
++	REMOTE="$MERGETOOL_TMPDIR/${BASE}_${REMOTE_NAME}_$$$ext"
++	BASE="$MERGETOOL_TMPDIR/${BASE}_${BASE_NAME}_$$$ext"
+ 
+ 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+ 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+@@ -396,6 +402,33 @@ do
+ 	--prompt)
+ 		prompt=true
+ 		;;
++	--local=*)
++		temp_name=${1#--local=}
++		if [ "$temp_name" != "" ] && [ "$temp_name" != "$REMOTE_NAME" ] && [ "$temp_name" != "$BASE_NAME" ] && [ "$temp_name" != "$BACKUP_NAME" ]
++		then
++			LOCAL_NAME=$temp_name
++		fi
++		;;
++	--remote=*)
++		temp_name=${1#--remote=}
++		if [ "$temp_name" != "" ] && [ "$temp_name" != "$LOCAL_NAME" ] && [ "$temp_name" != "$BASE_NAME" ] && [ "$temp_name" != "$BACKUP_NAME" ]
++		then
++			REMOTE_NAME=$temp_name
++		fi
++		;;
++	--base=*)
++		temp_name=${1#--base=}
++		if [ "$temp_name" != "" ] && [ "$temp_name" != "$LOCAL_NAME" ] && [ "$temp_name" != "$REMOTE_NAME" ] && [ "$temp_name" != "$BACKUP_NAME" ]
++		then
++			BASE_NAME=$temp_name
++		fi
++		;;
++	--backup=*)
++		temp_name=${1#--backup=}
++		if [ "$temp_name" != "" ] && [ "$temp_name" != "$LOCAL_NAME" ] && [ "$temp_name" != "$REMOTE_NAME" ] && [ "$temp_name" != "$BASE_NAME" ]
++			BACKUP_NAME=$temp_name
++		fi
++		;;
+ 	--)
+ 		shift
+ 		break
+-- 
+2.7.4
