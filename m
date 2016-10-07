@@ -2,106 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49D06207EC
-	for <e@80x24.org>; Fri,  7 Oct 2016 00:53:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 726D6207EC
+	for <e@80x24.org>; Fri,  7 Oct 2016 04:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936176AbcJGAxU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Oct 2016 20:53:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53758 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935974AbcJGAxT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2016 20:53:19 -0400
-Received: (qmail 16562 invoked by uid 109); 7 Oct 2016 00:46:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Oct 2016 00:46:37 +0000
-Received: (qmail 1632 invoked by uid 111); 7 Oct 2016 00:46:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Oct 2016 20:46:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Oct 2016 20:46:35 -0400
-Date:   Thu, 6 Oct 2016 20:46:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] use strbuf_add_unique_abbrev() for adding short
- hashes, part 2
-Message-ID: <20161007004635.xbuaxvc6eyfkyyma@sigill.intra.peff.net>
-References: <b7a61c78-3c46-375c-4cc3-7c363e551bc6@web.de>
- <29e75b7b-6dd0-8c52-e444-cad1ba613cd0@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <29e75b7b-6dd0-8c52-e444-cad1ba613cd0@web.de>
+        id S1752592AbcJGEFL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 00:05:11 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:34369 "EHLO
+        mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752522AbcJGEFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 00:05:10 -0400
+Received: by mail-pa0-f67.google.com with SMTP id r9so2063697paz.1
+        for <git@vger.kernel.org>; Thu, 06 Oct 2016 21:05:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Zqh/wDDbaYU3bYiUy6CjT9a8Yi34d686YKzUZ7PF1LU=;
+        b=R+hxbjNOpw3qsmPkcbCgNwXgLRYmI3KNnDvpO4pex6kRKeXOs1P8Gia6j2Q0T+cSmM
+         2T6oOq1zj9C5mgRGWp4SLxGE/hQ09ILEOhixsDRdMebYL8p07FF+nagubkq6KJwt8R+S
+         9b+oNWm3ZS0ANTKkh3xPu7uCF1p9Z23jMHcoeOowGxNaxcFf+5iZMaWO2SrxB2kmBUTT
+         OdN9YxDet6lScY66ptetuXnwjCwdRGkcp4y8MqC50Gv60SRaFqqrDRzwSQGCXJBXiVjk
+         ubyroS22Mtzr2FX8BStglfbA4gQ0wGCiUh7xnvRAc9YCuQ1zQiAZm7KmU54oLUl0okNS
+         yNaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Zqh/wDDbaYU3bYiUy6CjT9a8Yi34d686YKzUZ7PF1LU=;
+        b=Y8pcNvd23z4GJ4DGzXwWokuvk3GgaJboq/y3Ru417T/7fAgJNw2tgDqsrVykyyo/KD
+         l+dPX/NtT4X53BdZUWkF6GB31bfMOkqqSRW4O4mqbvVGxN8sv+e6zW16aEYO1DbcAXNu
+         SvqF/Yq6XEJOi/eaKa4ZL1bFeM+YYuSGymvwnGno9vUqymdWGbwQ0l/BWqUa7KkmYmCW
+         /h2Lq/rErtyCl+LMuL6/Jtk2DtkgN1ka2UhDst2NaASwQKFd1q2YQVJOYxEoAP5UM2E1
+         1vCiEZMFEKXJK57nE9iuzmjfn4L7nFR0nu6v93/1+Vg/rg5rblDxXK62ToT+ZfytBZBS
+         KCRg==
+X-Gm-Message-State: AA6/9Rm8waQk8TotzIp5HIjjhlHgLn91aXKbjfV5hp+OTce4p6dmgXl6o8xbxkubDbkgAw==
+X-Received: by 10.66.10.132 with SMTP id i4mr27401898pab.101.1475813108615;
+        Thu, 06 Oct 2016 21:05:08 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id v24sm9404117pfd.1.2016.10.06.21.05.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Oct 2016 21:05:06 -0700 (PDT)
+From:   David Aguilar <davvid@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Luis Gutierrez <luisgutz@gmail.com>
+Subject: [PATCH v2 4/4] mergetool: honor -O<orderfile>
+Date:   Thu,  6 Oct 2016 21:05:02 -0700
+Message-Id: <20161007040502.16801-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.10.1.386.g42aabb0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2016 at 09:11:58PM +0200, René Scharfe wrote:
+Teach mergetool to pass "-O<orderfile>" down to `git diff` when
+specified on the command-line.
 
-> Call strbuf_add_unique_abbrev() to add abbreviated hashes to strbufs
-> instead of taking detours through find_unique_abbrev() and its static
-> buffer.  This is shorter and a bit more efficient.
-> [...]
-> diff --git a/diff.c b/diff.c
-> index a178ed3..be11e4e 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3109,7 +3109,7 @@ static void fill_metainfo(struct strbuf *msg,
->  		}
->  		strbuf_addf(msg, "%s%sindex %s..", line_prefix, set,
->  			    find_unique_abbrev(one->oid.hash, abbrev));
-> -		strbuf_addstr(msg, find_unique_abbrev(two->oid.hash, abbrev));
-> +		strbuf_add_unique_abbrev(msg, two->oid.hash, abbrev);
->  		if (one->mode == two->mode)
->  			strbuf_addf(msg, " %06o", one->mode);
->  		strbuf_addf(msg, "%s\n", reset);
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+This is a replacement patch for 4/4 from the original series.
 
-This one is an interesting case, and maybe a good example of why blind
-coccinelle usage can have some pitfalls. :)
+The changes are stylistic -- the "order_file" variable name and
+"-O<order-file>" in the usage were changed to "orderfile" and
+"-O<orderfile>" for consistency with the documentation.
 
-We get rid of the strbuf_addstr(), but notice that we leave untouched
-the find_unique_abbrev() call immediately above. There was a symmetry to
-the two that has been lost.
+ Documentation/git-mergetool.txt | 10 ++++++----
+ git-mergetool.sh                | 14 ++++++++++++--
+ t/t7610-mergetool.sh            | 27 +++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 6 deletions(-)
 
-Probably either:
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index c4c1a9b..3622d66 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -79,10 +79,12 @@ success of the resolution after the custom tool has exited.
+ 	Prompt before each invocation of the merge resolution program
+ 	to give the user a chance to skip the path.
+ 
+-DIFF ORDER FILES
+-----------------
+-`git mergetool` honors the `diff.orderFile` configuration variable
+-used by `git diff`.  See linkgit:git-config[1] for more details.
++-O<orderfile>::
++	Process files in the order specified in the
++	<orderfile>, which has one shell glob pattern per line.
++	This overrides the `diff.orderFile` configuration variable
++	(see linkgit:git-config[1]).  To cancel `diff.orderFile`,
++	use `-O/dev/null`.
+ 
+ TEMPORARY FILES
+ ---------------
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 65696d8..1a0fe7a 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -9,7 +9,7 @@
+ # at the discretion of Junio C Hamano.
+ #
+ 
+-USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
++USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [-O<orderfile>] [file to merge] ...'
+ SUBDIRECTORY_OK=Yes
+ NONGIT_OK=Yes
+ OPTIONS_SPEC=
+@@ -390,6 +390,7 @@ print_noop_and_exit () {
+ main () {
+ 	prompt=$(git config --bool mergetool.prompt)
+ 	guessed_merge_tool=false
++	orderfile=
+ 
+ 	while test $# != 0
+ 	do
+@@ -419,6 +420,9 @@ main () {
+ 		--prompt)
+ 			prompt=true
+ 			;;
++		-O*)
++			orderfile="$1"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -459,8 +463,14 @@ main () {
+ 		fi
+ 	fi
+ 
++	if test -n "$orderfile"
++	then
++		set -- "$orderfile" -- "$@"
++	else
++		set -- -- "$@"
++	fi
+ 	files=$(git -c core.quotePath=false \
+-		diff --name-only --diff-filter=U -- "$@")
++		diff --name-only --diff-filter=U "$@")
+ 
+ 	cd_to_toplevel
+ 
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index fb2aeef..0f9869a 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -637,6 +637,33 @@ test_expect_success 'diff.orderFile configuration is honored' '
+ 	test_cmp expect actual &&
+ 	git reset --hard >/dev/null
+ '
++
++test_expect_success 'mergetool -Oorder-file is honored' '
++	test_config diff.orderFile order-file &&
++	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
++	test_config mergetool.myecho.trustExitCode true &&
++	test_must_fail git merge order-file-side1 &&
++	cat >expect <<-\EOF &&
++		Merging:
++		a
++		b
++	EOF
++	git mergetool -O/dev/null --no-prompt --tool myecho |
++	grep -A 2 Merging: >actual &&
++	test_cmp expect actual &&
++	git reset --hard >/dev/null 2>&1 &&
++
++	git config --unset diff.orderFile &&
++	test_must_fail git merge order-file-side1 &&
++	cat >expect <<-\EOF &&
++		Merging:
++		b
++		a
++	EOF
++	git mergetool -Oorder-file --no-prompt --tool myecho |
++	grep -A 2 Merging: >actual &&
++	test_cmp expect actual &&
++	git reset --hard >/dev/null 2>&1
+ '
+ 
+ test_done
+-- 
+2.10.1.386.g42aabb0
 
-  strbuf_addf(msg, "%s%sindex %s..%s", line_prefix, set
-	find_unique_abbrev(one->oid.hash, abbrev),
-	find_unique_abbrev(two->oid.hash, abbrev));
-
-or:
-
-  strbuf_addf(msg, "%s%sindex ", line_prefix, set);
-  strbuf_add_unique_abbrev(msg, one->oid.hash, abbrev);
-  strbuf_addstr(msg, "..");
-  strbuf_add_unique_abbrev(msg, two->oid.hash, abbrev);
-
-would be a more appropriate refactoring. The problem is in the original
-patch (which also lacks symmetry; either this predates the multi-buffer
-find_unique_abbrev, or the original author didn't know about it), but I
-think your refactor makes it slightly worse.
-
-I noticed because I have another series which touches these lines, and
-it wants to symmetrically swap out find_unique_abbrev for something
-else. :) I don't think it's a big enough deal to switch now (and I've
-already rebased my series which will touch these lines), but I wanted to
-mention it as a thing to watch out for as we do more of these kinds of
-automated transformations.
-
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -396,7 +396,7 @@ static void show_submodule_header(FILE *f, const char *path,
->  			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
->  	if (!fast_backward && !fast_forward)
->  		strbuf_addch(&sb, '.');
-> -	strbuf_addstr(&sb, find_unique_abbrev(two->hash, DEFAULT_ABBREV));
-> +	strbuf_add_unique_abbrev(&sb->hash, two, DEFAULT_ABBREV);
-
-This one is a similar situation, I think.
-
--Peff
