@@ -2,82 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF25720986
-	for <e@80x24.org>; Fri,  7 Oct 2016 16:37:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF82720986
+	for <e@80x24.org>; Fri,  7 Oct 2016 16:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964849AbcJGQh2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 12:37:28 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:34130 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964789AbcJGQh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 12:37:27 -0400
-Received: by mail-wm0-f42.google.com with SMTP id i130so4924430wmg.1
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 09:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Lq2gOt5pTvva5L15uoK1IPJ9Wkn7HgNtFXsZ0aRR/d4=;
-        b=dGO3+taD7wsbMij39VpcLv4c9SHZipSRkkurAGNBXC47HTliXLsnBJw8YFzNwkTHhG
-         VpTVj59k+vwIjN/3pu/muRBRezjcCYqmFHuYD31qoVtCUzxuayNk8J/tKTC70KWH6uG8
-         Y2WMlX0izldH1gIU9jIsyHP4B0C5RBTHPVa1GfzBFoqxO86u4GLQXP4E35Fd2+LALDo1
-         3G4BJbXLdCprCzpYx1y+AvMDBVlsDIQzDkiXqqZs7UVXVZyG/jmaE+YnnApUGbkIsars
-         FRj5UDGqEA5Y5Arz4Ri36/udbrYdyE/5XhsqxiupyC7CXpuwOUMUQmknU7FhFH/6vdk9
-         l+XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Lq2gOt5pTvva5L15uoK1IPJ9Wkn7HgNtFXsZ0aRR/d4=;
-        b=A75NTXMUPsHGjE0jTrLif94H+PJWLt1nJoI5oEJX0Vdp2iGhOOjCDulFM85FPn5DZC
-         hNNuE6td1vg4/+OK8jcxtxJh/pD3ARYSuvcjHdy5mlMvNTesyQqtj/2qdioRRCwUq2P+
-         aluKSxKirTjXwLY1L6BI6dIk8L4Hg4iwxvBQ4Q5W0ihv+lrcd+ISNB25HaLiaxMxURyy
-         uC9Z2aXNvGR73ehv5f4ZeYiRDkI4lVgo0vP5CAGiX9e8BzyqveE/fGpszscgREpDrBgj
-         FnPd8iKvSo48X3XoFY5ezLomH65VFMJ4oq07XD/j1jsvGD5VsBQnieru5J0xzYI3RwD9
-         OFTg==
-X-Gm-Message-State: AA6/9RkXfms+K/ao3AboTavk7/305Qufg6MZEE1KKO46gPeKuxoF/okBnCKgntZYDVzntQ==
-X-Received: by 10.28.54.39 with SMTP id d39mr21656158wma.11.1475858246154;
-        Fri, 07 Oct 2016 09:37:26 -0700 (PDT)
-Received: from [192.168.1.26] (afc148.neoplus.adsl.tpnet.pl. [83.25.132.148])
-        by smtp.googlemail.com with ESMTPSA id pe5sm15721024wjb.15.2016.10.07.09.37.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Oct 2016 09:37:24 -0700 (PDT)
-Subject: Re: [PATCH v4 0/6] Pull out require_clean_work_tree() functionality
- from builtin/pull.c
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <cover.1475586229.git.johannes.schindelin@gmx.de>
- <cover.1475856491.git.johannes.schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <14f54c84-cc6c-6a0e-0100-4ced02b54bee@gmail.com>
-Date:   Fri, 7 Oct 2016 18:37:23 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S941230AbcJGQkm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 12:40:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54674 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S938859AbcJGQkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 12:40:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AA75416AD;
+        Fri,  7 Oct 2016 12:40:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eMG+FuTwGsidflwanvJPsZMX6f0=; b=Czjkm+
+        w9AOP8SbJA2B/kAZC5X6ZHzAHTpZitA3vkIHQ0RRBxeuK4/he5H5MT5trmjVNotS
+        2gmO9ZU2bULMl4F74kZtE09smhZ47LA4W97N+dT5ZwMmJlWNJG9gaENs4px6eWcQ
+        Q/CqA+cgkJ3PXKOgBM3CZwIBGKQDpAIy/m28k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=a07VkqUK0x8RNmaRuSXxrTWqMZb0/s0o
+        mDhTVD8mIf7slHclcySlJNmV/FRk867rPla8A/HQUd5NARlw4qW//xuaoJRAUASZ
+        qk4C4Oa8vHyrq9RKmoA4guc8PzJD3rWtgr76J1QO40s6MyohDE29RoSuf1z8eIqc
+        A6kx4QhZ10E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 571E8416AA;
+        Fri,  7 Oct 2016 12:40:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76FDA416A9;
+        Fri,  7 Oct 2016 12:40:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2016, #02; Thu, 6)
+References: <xmqqd1jdi0a6.fsf@gitster.mtv.corp.google.com>
+        <20161007045613.GB25613@ikke.info>
+Date:   Fri, 07 Oct 2016 09:40:01 -0700
+In-Reply-To: <20161007045613.GB25613@ikke.info> (Kevin Daudt's message of
+        "Fri, 7 Oct 2016 06:56:13 +0200")
+Message-ID: <xmqqzimggljy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <cover.1475856491.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B24D246A-8CAC-11E6-ACAF-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 07.10.2016 o 18:08, Johannes Schindelin pisze:
+Kevin Daudt <me@ikke.info> writes:
 
-> - marked the hint "please commit or stash them" (reintroduced from the
->   original git-pull.sh script) as translatable.
+> Just wondering why the topic "kd/mailinfo-quoted-string (2016-09-28) 2
+> commits" is not listed anymore. Previous what's cooking said it was
+> merged to "next".
 
-I wonder if we can make automatic check if everything introduced is
-translatable, for example with something akin to "English (XT)"
-autogenerated pseudo-localization that Android uses?
+Thanks for your contribution.
 
-Just food for thought.
--- 
-Jakub Narębski
+The topic was listed as graduated to 'master' in issue #1 of this
+month:
 
+    http://public-inbox.org/git/<xmqqtwct3w0p.fsf@gitster.mtv.corp.google.com>
+
+After a topic graduates, it will not be included in the report.
