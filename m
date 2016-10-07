@@ -2,144 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3340920986
-	for <e@80x24.org>; Fri,  7 Oct 2016 19:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12B0F20986
+	for <e@80x24.org>; Fri,  7 Oct 2016 20:45:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932711AbcJGT7T (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 15:59:19 -0400
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:34704 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932441AbcJGT7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 15:59:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 25875100052;
-        Fri,  7 Oct 2016 19:59:14 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id zL7LkIXizcet; Fri,  7 Oct 2016 19:59:14 +0000 (GMT)
-Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id 13F2A80035;
-        Fri,  7 Oct 2016 19:59:14 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Fri, 7 Oct 2016 19:59:13 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef]) by
- exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef%17]) with mapi id
- 15.00.1156.000; Fri, 7 Oct 2016 19:59:13 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Stefan Beller' <sbeller@google.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Uninitialized submodules as symlinks
-Thread-Topic: Uninitialized submodules as symlinks
-Thread-Index: AdIgxgX2aZUXw1O6SWms0VMYgKmgtQABm2GAAAG546A=
-Date:   Fri, 7 Oct 2016 19:59:13 +0000
-Message-ID: <f0c11de1bd4d414d8a9464e6ccc1d58a@exmbdft7.ad.twosigma.com>
-References: <fd5bcf57f92944c0b7f6f2f8342c342c@exmbdft7.ad.twosigma.com>
- <CAGZ79ka1rJCks5np9Q__HAHYFDrdGDFLtquhb3fY_iL8q9DEkw@mail.gmail.com>
-In-Reply-To: <CAGZ79ka1rJCks5np9Q__HAHYFDrdGDFLtquhb3fY_iL8q9DEkw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.14]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1757161AbcJGUpl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 16:45:41 -0400
+Received: from mout.web.de ([212.227.15.4]:54020 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1757143AbcJGUpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 16:45:39 -0400
+Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0M3Bv5-1b3x6W3sGd-00sxx8; Fri, 07 Oct 2016 22:45:20
+ +0200
+Subject: Re: [PATCH 2/2] use strbuf_add_unique_abbrev() for adding short
+ hashes, part 2
+To:     Jeff King <peff@peff.net>
+References: <b7a61c78-3c46-375c-4cc3-7c363e551bc6@web.de>
+ <29e75b7b-6dd0-8c52-e444-cad1ba613cd0@web.de>
+ <20161007004635.xbuaxvc6eyfkyyma@sigill.intra.peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <baff7c23-1c0b-3df5-bb4e-661bf0383fe4@web.de>
+Date:   Fri, 7 Oct 2016 22:45:12 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
+In-Reply-To: <20161007004635.xbuaxvc6eyfkyyma@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:noIiyda9OggHjlfsJtulDCTvQBuDAM0vgyQm0q4WEYuQHTtKhJj
+ 5QerosDaqAFc5QbTL7+Nfx1rErrGwr70LPaL6e2I29xkHLdNvfoC1A64YYpO6FcrTiIXAyx
+ zR4+UZmQmXaMaXyhlnzJY6fQ+UTnHF2utts/XLteTzy4b8TR1KxFoLAzp5AQU9k3r2baCtG
+ tESTlRqM/lj8f6uJHyslQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:egLyR5ITQkQ=:sbCmWk4i6kBjrDu8+k+abv
+ p2gEyDoCfqAgqJj/Rp2q65I+uWMb4fKowmRzAM9oQNJK6FRsaChssCTM+jTMzILdHR+v/SQFr
+ mGXEgYKL1C6HHbe794CdgFifK9qJLzb7LoL19N+8Syb4VmcNettn7+J2mN1iFd1j7vsL9wnUD
+ zHfHWI7dIDhn5KA54s8SjNfARLBgLSeNcERlyvL6R1L47T5qd3QREmCD8KMoiGUvAOkttZiEj
+ NA8mVo4zgE2mnrREOC1dEvVC/Ut205hdNdzX+UE5OcqKVritTh940dAbOgDVCygV1iAsASiY7
+ 8iPmY1YglCXq3xZ/0gD8QU5jCnHzAbG815pGnxqTMckoCh6/l15CGmaZ+CbpIiOsUzpCYfkv+
+ uxTQUaqn1tqxFc5SuRgza6IZWGDZBzzzGx8sM48sAAZwU7/iNvo7/nAeL+5MB3F+APxjPNzGl
+ S7RvEK6I0kTtPgRkYFIeBs81dLVtoxSlg19z9FjQyas2Gb0rKx9ARrFNB06/havitEs8JVWAP
+ gPlrtVZookbRDAU5hHHlwvpgDNDczAs9AD5rYXAJZz6vmtM1YRV24D1aQD3+GBsYnF7+7WgAf
+ v/S4KQnoioxlToE+z8F+/GivGjW55ABQv+s3NHHTQq+/pHzRY6F98LULknKkA8T0R5wU4b6+U
+ SN27rGGljQEJj9/GNQ1GYxdocolqWdLhrBoCdaeu7OypDTJD5geKbIkLtu/jhbs7XTKDxvPAQ
+ R1Xjq1lXBD0tPkbAbcl+ji5I5L0QH9L9b6lLS3ND7lmpWxTaGHLeqI0SMUZZ1y+1yaCD0EARE
+ uHkaGvM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogU3RlZmFuIEJlbGxlciBb
-bWFpbHRvOnNiZWxsZXJAZ29vZ2xlLmNvbV0NCj4gU2VudDogRnJpZGF5LCBPY3RvYmVyIDA3LCAy
-MDE2IDI6NTYgUE0NCj4gVG86IERhdmlkIFR1cm5lcg0KPiBDYzogZ2l0QHZnZXIua2VybmVsLm9y
-Zw0KPiBTdWJqZWN0OiBSZTogVW5pbml0aWFsaXplZCBzdWJtb2R1bGVzIGFzIHN5bWxpbmtzDQo+
-IA0KPiBPbiBGcmksIE9jdCA3LCAyMDE2IGF0IDExOjE3IEFNLCBEYXZpZCBUdXJuZXIgPERhdmlk
-LlR1cm5lckB0d29zaWdtYS5jb20+DQo+IHdyb3RlOg0KPiA+IFByZXNlbnRseSwgdW5pbml0aWFs
-aXplZCBzdWJtb2R1bGVzIGFyZSBtYXRlcmlhbGl6ZWQgaW4gdGhlIHdvcmtpbmcgdHJlZQ0KPiA+
-IGFzIGVtcHR5IGRpcmVjdG9yaWVzLg0KPiANCj4gUmlnaHQsIHRoZXJlIGhhcyB0byBiZSBzb21l
-dGhpbmcsIHRvIGhpbnQgYXQgdGhlIHVzZXIgdGhhdCBjcmVhdGluZyBhIGZpbGUNCj4gd2l0aCB0
-aGF0IHBhdGggaXMgcHJvYmFibHkgbm90IHdoYXQgdGhleSB3YW50Lg0KPiANCj4gPiAgV2Ugd291
-bGQgbGlrZSB0byBjb25zaWRlciBoYXZpbmcgdGhlbSBiZSBzeW1saW5rcy4gIFNwZWNpZmljYWxs
-eSwgd2UnZA0KPiA+IGxpa2UgdGhlbSB0byBiZSBzeW1saW5rcyBpbnRvIGEgRlVTRSBmaWxlc3lz
-dGVtIHdoaWNoIHJldHJpZXZlcyBmaWxlcyBvbg0KPiA+IGRlbWFuZC4NCj4gPg0KPiA+IFdlJ3Zl
-IGFjdHVhbGx5IGFscmVhZHkgZ290IGEgRlVTRSBmaWxlc3lzdGVtIHdyaXR0ZW4sIGJ1dCB3ZSB1
-c2UgYQ0KPiA+IGRpZmZlcmVudCAoc2VtaS1tYW51YWwpIG1lYW5zIHRvIGNvbm5lY3QgaXQgdG8g
-dGhlIGluaXRpYWxpemVkIHN1Ym1vZHVsZXMuDQo+IA0KPiBTbyB5b3UgY3VycmVudGx5IGRvIGEN
-Cj4gDQo+ICAgICBnaXQgc3VibW9kdWxlIGluaXQgPHBhdGhzcGVjPg0KPiAgICAgY3VzdG9tLXN1
-Ym1vZHVsZSBtYWtlLXN5bWxpbmsgPHBhdGhzcGVjPg0KPiANCj4gPw0KDQpXZSBkbyBzb21ldGhp
-bmcgbGlrZQ0KDQpGb3IgZWFjaCBpbml0aWFsaXplZCBzdWJtb2R1bGU6IHN5bWxpbmsgaXQgaW50
-byB0aGUgcmlnaHQgcGxhY2UgaW4gLi4uL3NvbWVkaXINCkZvciBlYWNoIHVuaW5pdGlhbGl6ZWQg
-c3VibW9kdWxlOiBzeW1saW5rIGZyb20gdGhlIEZVU0UgaW50byB0aGUgcmlnaHQgcGxhY2UgaW4g
-Li4uL3NvbWVkaXINCg0KU28gLi4uL3NvbWVkaXIgaGFzIHRoZSBzdHJ1Y3R1cmUgb2YgdGhlIGdp
-dCBtYWluIHJlcG8sIGJ1dCBpcyBhbGwgc3ltbGlua3MgLS0gc29tZSBpbnRvIEZVU0UsIHNvbWUg
-aW50byB0aGUgZ2l0IHJlcG8uDQoNClRoaXMgbWVhbnMgdGhhdCB3aGVuIHdlIGluaXRpYWxpemUg
-KG9yIGRlaW5pdGlhbGl6ZSkgYSBzdWJtb2R1bGUsIHdlIG5lZWQgdG8gcmUtcnVuIHRoZSBsaW5r
-aW5nIHNjcmlwdC4gIA0KDQo+ID4gV2UgaG9wZSB0byByZWxlYXNlIHRoaXMgRlVTRSBmaWxlc3lz
-dGVtIGFzIGZyZWUgc29mdHdhcmUgYXQgc29tZSBwb2ludA0KPiA+IHNvb24sIGJ1dCB3ZSBkbyBu
-b3QgeWV0IGhhdmUgYSBmaXhlZCBzY2hlZHVsZSBmb3IgZG9pbmcgc28uICBIYXZpbmcgdG8gcnVu
-DQo+ID4gYSBjb21tYW5kIHRvIGNyZWF0ZSB0aGUgc3ltbGluay1iYXNlZCAidW5pb24iIGZpbGVz
-eXN0ZW0gaXMgbm90IG9wdGltYWwNCj4gPiAoc2luY2Ugd2UgaGF2ZSB0byByZS1ydW4gaXQgZXZl
-cnkgdGltZSB3ZSBpbml0aWFsaXplIG9yIGRlaW5pdGlhbGl6ZSBhDQo+ID4gc3VibW9kdWxlKS4N
-Cj4gPg0KPiA+IEJ1dCBpZiB0aGUgdW5pbml0aWFsaXplZCBzdWJtb2R1bGVzIGNvdWxkIGJlIHN5
-bWxpbmtzIGludG8gdGhlIEZVU0UNCj4gPiBmaWxlc3lzdGVtLCB3ZSB3b3VsZG4ndCBoYXZlIHRo
-aXMgcHJvYmxlbS4gIFRoaXMgc29sdXRpb24gaXNuJ3QNCj4gPiBuZWNlc3NhcmlseSBGVVNFLXNw
-ZWNpZmljIC0tIHBlcmhhcHMgc29tZW9uZSB3b3VsZCB3YW50IGNvcGllcyBvZiB0aGUgc2FtZQ0K
-PiA+IHN1Ym1vZHVsZSBpbiBtdWx0aXBsZSByZXBvcywgYW5kIHdvdWxkIHdhbnQgdG8gc2F2ZSBk
-aXNrIHNwYWNlIGJ5IGhhdmluZw0KPiA+IGFsbCBjb3BpZXMgcG9pbnQgdG8gdGhlIHNhbWUgcGxh
-Y2UuICBTbyB0aGUgc3ltbGlua3Mgd291bGQgYmUgY29uZmlndXJlZA0KPiA+IGJ5IGEgcGVyLXN1
-Ym1vZHVsZSBjb25maWcgdmFyaWFibGUuDQo+IA0KPiBJJ2QgaW1hZ2luZSB0aGF0IHlvdSB3YW50
-IGJvdGggYSBwZXItc3VibW9kdWxlIGNvbmZpZyB2YXJpYWJsZSBhcyB3ZWxsIGFzDQo+IGEgZ2xv
-YmFsIHZhcmlhYmxlIHRoYXQgaXMgYSBkZWZhdWx0IGZvciBhbGwgc3VibW9kdWxlcz8NCj4gDQo+
-ICAgICBnaXQgY29uZmlnIHN1Ym1vZHVsZS50cnlTeW1saW5rRGVmYXVsdCAvbW91bnRlZC9mdXNl
-Lw0KPiAgICAgIyBhbnkgKG5ldykgc3VibW9kdWxlIHRyaWVzIHRvIGJlIGxpbmtlZCB0byAvbW91
-bnRlZC9mdXNlLzxwYXRoPg0KPiAgICAgZ2l0IGNvbmZpZyBzdWJtb2R1bGUuPG5hbWU+LnN5bWxp
-bmtlZCB+L215L3ByaXZhdGUvc3ltbGlua2VkDQo+ICAgICAjIFRoZSA8bmFtZT4gc3VibW9kdWxl
-IGdvZXMgaW50byBhbm90aGVyIHBhdGguDQo+IA0KPiBBcyB5b3UgcHJvcG9zZSB0aGUgRlVTRSBm
-aWxlc3lzdGVtIGZldGNoZXMgZmlsZXMgb24gZGVtYW5kLCB5b3UgcHJvYmFibHkNCj4gd2FudCB0
-byBkaXNhYmxlIHRoaW5ncyB0aGF0IHNjYW4gdGhlIHdob2xlIHN1Ym1vZHVsZSwgZS5nLiBsb29r
-IGF0DQo+IHN1Ym1vZHVsZS48bmFtZT4uaWdub3JlIHRvIHN1cHByZXNzIHN0YXR1cyBsb29raW5n
-IGF0IGFsbCBmaWxlcy4NCg0KSSB3b3VsZCBhY3R1YWxseSBleHBlY3QgdGhhdCBnaXQgd291bGQg
-ZGV0ZWN0IHRoYXQgdGhlIHN5bWxpbmsgaXMgdW5tb2RpZmllZCBmcm9tIHRoZSBjb25maWd1cmVk
-IHN5bWxpbmsgYW5kIGF1dG9tYXRpY2FsbHkgZGVjaWRlIG5vdCB0byBsb29rIHRoZXJlLg0KIA0K
-PiBXaGVuIGxvb2tpbmcgdGhyb3VnaCB0aGUgb3B0aW9ucywgeW91IGNvdWxkIGFkZCB0aGUgdmFs
-dWUgInN5bWxpbmsiIHRvDQo+IHN1Ym1vZHVsZS48bmFtZT4udXBkYXRlLCB3aGljaCB0aGVuIHJl
-c3BlY3RzIHRoZQ0KPiBzdWJtb2R1bGUudHJ5U3ltbGlua0RlZmF1bHQgaWYgcHJlc2VudCwgc3Vj
-aCB0aGF0DQo+IA0KPiAgICAgZ2l0IGNsb25lIC0tcmVjdXJzZS1zdWJtb2R1bGVzIC4uLg0KPiAN
-Cj4gd29ya3MgYW5kIHNldHMgdXAgdGhlIEZVU0UgdGhpbmcgY29ycmVjdGx5Lg0KPiANCj4gSG93
-IGRvZXMgdGhlIEZVU0Ugc3lzdGVtIGhhbmRsZSBkaWZmZXJlbnQgdmVyc2lvbnMsIGkuZS4NCj4g
-YGdpdCBzdWJtb2R1bGUgdXBkYXRlYCB0byBjaGVja291dCBhbm90aGVyIHZlcnNpb24gb2YgdGhl
-IHN1Ym1vZHVsZT8NCj4gKGJ0dywgSSBwbGFuIG9uIHdvcmtpbmcgb24gaW50ZWdyYXRpbmcgc3Vi
-bW9kdWxlcyB0byAiZ2l0IGNoZWNrb3V0Iiwgc28NCj4gInN1Ym1vZHVsZSB1cGRhdGUiIHdvdWxk
-IG5vdCBuZWVkIHRvIGJlIHJ1biB0aGVyZSwgYnV0IHdlJ2QgaG9vayBpdCBpbnRvDQo+IGNoZWNr
-b3V0IGluc3RlYWQpDQoNClRoZSBmdXNlIGhhcyBhICh2aXJ0dWFsKSBkaXJlY3RvcnkgZm9yIGVh
-Y2ggU0hBIG9mIHRoZSBtYWluIHJlcG8sIHdpdGggZWFjaCBzdWJtb2R1bGUgbWFwcGVkIHRvIHRo
-ZSB0aGVuLWN1cnJlbnQgdmVyc2lvbiBvZiB0aGUgc3VibW9kdWxlJ3MgY29kZS4gQWN0dWFsbHks
-IGl0J3MgYSBiaXQgbW9yZSBjb21wbGljYXRlZCBiZWNhdXNlIHRoZSB1bmluaXRpYWxpemVkIG1v
-ZHVsZXMgcG9pbnQgdG8gYWxyZWFkeS1idWlsdCBiaW5hcmllcyAtLSB0aGF0IGlzLCB0aGUgc3lt
-bGluayBpcyB0byBzb21ldGhpbmcgbGlrZSAkZnVzZS8kU0hBL2J1aWx0LyRzdWJtb2R1bGUuIA0K
-DQpJZiB5b3UgY2hlY2sgb3V0IGEgbmV3IHZlcnNpb24gb2YgdGhlIG1haW4gbW9kdWxlLCBpbiBv
-dXIgY3VycmVudCBzZXR1cCwgeW91IG5lZWQgdG8gYWdhaW4gdXBkYXRlIGFsbCBvZiB0aGUgc3Vi
-bW9kdWxlIHN5bWxpbmtzIChhcyBkZXNjcmliZWQgYWJvdmUpLiANCg0KVW5kZXIgbXkgcHJvcG9z
-YWwsIEkgZ3Vlc3MgdGhpcyB3b3VsZCBzdGlsbCBuZWVkIHRvIGhhcHBlbi4gIEEgcG9zdC1jaGVj
-a291dCBob29rIGNvdWxkIGhhbmRsZSBpdCBlaXRoZXIgd2F5LiAgRGVzcGl0ZSB0aGlzIGZsYXcs
-IHN3aXRjaGluZyBhIHN1Ym1vZHVsZSBiZXR3ZWVuIGFuIGluaXRpYWxpemVkIGFuZCBkZWluaXRp
-YWxpemVkIHN0YXRlIHdvdWxkIHN0aWxsIGJlIG1vcmUgc2VhbWxlc3Mgd2l0aCB0aGUgc3ltbGlu
-a3MuDQoNCj4gPiBOYXR1cmFsbHksIHRoaXMgd291bGQgcmVxdWlyZSBzb21lIGNoYW5nZXMgdG8g
-Y29kZSB0aGF0IGV4YW1pbmVzIHRoZQ0KPiB3b3JraW5nIHRyZWUgLS0gZ2l0IHN0YXR1cywgZ2l0
-IGRpZmYsIGV0Yy4gIFRoZXkgd291bGQgaGF2ZSB0byByZXBvcnQNCj4gInVuY2hhbmdlZCIgZm9y
-IHN1Ym1vZHVsZXMgd2hpY2ggd2VyZSBzdGlsbCBzeW1saW5rcyB0byB0aGUgY29uZmlndXJlZA0K
-PiBsb2NhdGlvbi4gIEkgaGF2ZSBub3QgeWV0IGxvb2tlZCBhdCB0aGUgaW1wbGVtZW50YXRpb24g
-ZGV0YWlscyBiZXlvbmQNCj4gdGhpcy4NCj4gPg0KPiA+IERvZXMgdGhpcyBpZGVhIG1ha2UgYW55
-IHNlbnNlPyAgSWYgSSB3ZXJlIHRvIGltcGxlbWVudCBpdCAocHJvYmFibHkgaW4gYQ0KPiBmZXcg
-bW9udGhzLCBidXQgbm8gb2ZmaWNpYWwgdGltZWxpbmUgeWV0KSwgd291bGQgcGF0Y2hlcyBiZSBj
-b25zaWRlcmVkPw0KPiANCj4gSSBhbSBoYXBweSB0byByZXZpZXcgcGF0Y2hlcy4NCg0KVGhhbmtz
-Lg0K
+Am 07.10.2016 um 02:46 schrieb Jeff King:
+> On Tue, Sep 27, 2016 at 09:11:58PM +0200, René Scharfe wrote:
+>
+>> Call strbuf_add_unique_abbrev() to add abbreviated hashes to strbufs
+>> instead of taking detours through find_unique_abbrev() and its static
+>> buffer.  This is shorter and a bit more efficient.
+>> [...]
+>> diff --git a/diff.c b/diff.c
+>> index a178ed3..be11e4e 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -3109,7 +3109,7 @@ static void fill_metainfo(struct strbuf *msg,
+>>  		}
+>>  		strbuf_addf(msg, "%s%sindex %s..", line_prefix, set,
+>>  			    find_unique_abbrev(one->oid.hash, abbrev));
+>> -		strbuf_addstr(msg, find_unique_abbrev(two->oid.hash, abbrev));
+>> +		strbuf_add_unique_abbrev(msg, two->oid.hash, abbrev);
+>>  		if (one->mode == two->mode)
+>>  			strbuf_addf(msg, " %06o", one->mode);
+>>  		strbuf_addf(msg, "%s\n", reset);
+>
+> This one is an interesting case, and maybe a good example of why blind
+> coccinelle usage can have some pitfalls. :)
+
+Thank you for paying attention. :)  In general I agree that the 
+surrounding code of such changes should be checked; the issue at hand 
+could be part of a bigger problem.
+
+> We get rid of the strbuf_addstr(), but notice that we leave untouched
+> the find_unique_abbrev() call immediately above. There was a symmetry to
+> the two that has been lost.
+>
+> Probably either:
+>
+>   strbuf_addf(msg, "%s%sindex %s..%s", line_prefix, set
+> 	find_unique_abbrev(one->oid.hash, abbrev),
+> 	find_unique_abbrev(two->oid.hash, abbrev));
+>
+> or:
+>
+>   strbuf_addf(msg, "%s%sindex ", line_prefix, set);
+>   strbuf_add_unique_abbrev(msg, one->oid.hash, abbrev);
+>   strbuf_addstr(msg, "..");
+>   strbuf_add_unique_abbrev(msg, two->oid.hash, abbrev);
+>
+> would be a more appropriate refactoring. The problem is in the original
+> patch (which also lacks symmetry; either this predates the multi-buffer
+> find_unique_abbrev, or the original author didn't know about it), but I
+> think your refactor makes it slightly worse.
+
+I still think the automatically generated patch is a net win, but we 
+shouldn't stop there.
+
+> I noticed because I have another series which touches these lines, and
+> it wants to symmetrically swap out find_unique_abbrev for something
+> else. :) I don't think it's a big enough deal to switch now (and I've
+> already rebased my series which will touch these lines), but I wanted to
+> mention it as a thing to watch out for as we do more of these kinds of
+> automated transformations.
+
+OK, then I'll wait for that series to land.
+
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -396,7 +396,7 @@ static void show_submodule_header(FILE *f, const char *path,
+>>  			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
+>>  	if (!fast_backward && !fast_forward)
+>>  		strbuf_addch(&sb, '.');
+>> -	strbuf_addstr(&sb, find_unique_abbrev(two->hash, DEFAULT_ABBREV));
+>> +	strbuf_add_unique_abbrev(&sb->hash, two, DEFAULT_ABBREV);
+>
+> This one is a similar situation, I think.
+
+Yes, and there are some more.  Will take a look.
+
+I don't know how to crack printf-style formats using semantic patches. 
+It's easy for fixed formats (silly example):
+
+	- strbuf_addf(sb, "%s%s", a, b);
+	+ strbuf_addf(sb, "%s", a);
+	+ strbuf_addf(sb, "%s", b);
+
+But how to do that for arbitrary formats?  Probably not worth it..
+
+René
