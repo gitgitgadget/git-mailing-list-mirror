@@ -2,138 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9127420986
-	for <e@80x24.org>; Fri,  7 Oct 2016 13:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E583620986
+	for <e@80x24.org>; Fri,  7 Oct 2016 13:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756488AbcJGNMF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 09:12:05 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34621 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755437AbcJGNMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 09:12:03 -0400
-Received: by mail-io0-f193.google.com with SMTP id i202so2701011ioi.1
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 06:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+jM0TnHphRrYh2PKIzDt6AIOelxKid+V5hLFPfu8n4w=;
-        b=XSArt08TuIM4JYkSlWJs+XVhGJTlK51hL/4qgl9kHHhGo3SnCIv70MFdzdZrLZwEL2
-         FwfbMHDUos11Q4iCyCtSIFdRYrjteUXiXMy3yvxGpO9ZwkAlvbNgJakKaoqiaBduVH/i
-         c0x2DBJHRLcHMQZTQOZSe+ztZJk1JgrdvtsTUf3h+yysr1O3VKOoSgIPI1P61A5XhTF3
-         BTnqXZLdsZgO9I47oDHdIOAFx59nh0pXntJRWfDky6LLtLB2rLNlxdN/hRcCGCi5v4C+
-         DeI46+e6/0NOJUTO1LYCMhqHy1hMeM7OvM72cgyP7AQgKHB79h3JNGSC/1WzQe9dpmDm
-         YfOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+jM0TnHphRrYh2PKIzDt6AIOelxKid+V5hLFPfu8n4w=;
-        b=SLdWlZ8iGoJ+TI4hPx3SiR/EYpGAvqAhDdKObej4Xkur9pB0b0/cUaD3TeUA43FxFt
-         QnVI/y+VBxd7IuUVZnJCtCSqhNDcVFQPWE6c9+g+N+9/UOsoz2nKOlzG2uObR3D0nEI2
-         Znv+/bi8Peem/Rcvf240Yv/BfYmouHQrj2Nd2kvvaKlLM0Muz9Jd3weXlY3fSu5zJEUQ
-         AWsQ9rzimvrifEoqrRYp25RgfZgltFT0mZh8O9CTgyCYrTR4WoHhsXtoI6bjImlMa5ih
-         RvZI3LUV0wQ/6yBbcuWC9Cv+/x2vuLPA16QPBXMoJq3RDF9oG7JZKzv94O3tOZjShLKX
-         VqdA==
-X-Gm-Message-State: AA6/9RknhfB5nBlAaUKbJe75BkY6weXkBKFb3G3yOeORz0OOfhB+iGW1Nqa3xJzsqHRiml28+GArjIEPDdmOBg==
-X-Received: by 10.107.202.4 with SMTP id a4mr20733864iog.19.1475845037910;
- Fri, 07 Oct 2016 05:57:17 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.230.206 with HTTP; Fri, 7 Oct 2016 05:56:47 -0700 (PDT)
-In-Reply-To: <xmqqwphljnlj.fsf@gitster.mtv.corp.google.com>
-References: <20160928114348.1470-1-pclouds@gmail.com> <20160928114348.1470-2-pclouds@gmail.com>
- <xmqqzimrj03j.fsf@gitster.mtv.corp.google.com> <CACsJy8D28iq3r3O_uzjyyJT--KQunAySRgUthF3FMrb1VM6XKw@mail.gmail.com>
- <xmqqd1jgw0nx.fsf@gitster.mtv.corp.google.com> <CACsJy8D7c8Z_ugasn_scf391+C6GxJp1CYwHY4ndvVtLiJzxnQ@mail.gmail.com>
- <xmqqwphljnlj.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 7 Oct 2016 19:56:47 +0700
-Message-ID: <CACsJy8DiGoaKZZ1je=3L3y4odVHB7wLvvKs9pccjiN=-UeqeVw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] Resurrect "diff-lib.c: adjust position of i-t-a
- entries in diff"
+        id S1756002AbcJGNNy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 09:13:54 -0400
+Received: from mail.javad.com ([54.86.164.124]:59554 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751939AbcJGNNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 09:13:52 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 04EAF61059;
+        Fri,  7 Oct 2016 13:13:46 +0000 (UTC)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1bsUy8-0005r0-3k; Fri, 07 Oct 2016 16:13:44 +0300
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/6] Documentation/git-merge.txt: improve short description in DESCRIPTION
+References: <cover.1475678515.git.sorganov@gmail.com>
+        <e74ae8afc1bfc4cd9161ccaa56d926a89439551e.1475678515.git.sorganov@gmail.com>
+        <xmqq60p6pt4k.fsf@gitster.mtv.corp.google.com>
+        <871szuqyjo.fsf@javad.com>
+        <xmqqa8eio4n9.fsf@gitster.mtv.corp.google.com>
+        <87mvihpsla.fsf@javad.com>
+        <xmqqshs9l69h.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 07 Oct 2016 16:13:44 +0300
+In-Reply-To: <xmqqshs9l69h.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 06 Oct 2016 10:46:50 -0700")
+Message-ID: <878tu0mhdj.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 7, 2016 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->> On Tue, Oct 4, 2016 at 11:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Duy Nguyen <pclouds@gmail.com> writes:
+>>>> Last, if "reference" is not good enough and we get to internals anyway,
+>>>> why not say SHA1 then?
 >>>
->>>> We don't use it internally _yet_. I need to go through all the
->>>> external diff code and see --shift-ita should be there. The end goal
->>>> is still changing the default behavior and getting rid of --shift-ita,
->>>
->>> I do not agree with that endgame, and quite honestly I do not want
->>> to waste time reviewing such a series.
+>>> Because that is still colloquial? I think s/name/object name/ is a
+>>> sensible change, but not s/name/reference/.
+>>
+>> No, "reference" is more sensible here than any of "name", "object name",
+>> or "SHA-1", the same way as here:
+>>
+>> $ git help glossary
+>> [...]
+>> chain
+>>         A list of objects, where each object in the list contains a
+>>         reference to its successor (for example, the successor of a
+>>         commit could be one of its parents).
+>> [...]
 >
-> I definitely shouldn't have said that, especially "waste".  Many
-> issues around i-t-a and diff make my head hurt when I think about
-> them [*1*], but not wanting to spend time that gets my
-> head hurt and not wanting to waste time are totally different
-> things.  My apologies.
-
-No problem. I do appreciate a straight shoot down though. Many of my
-topics have been going on for months (ones not in 'pu') and seeing it
-rejected near the end is worse than stopping working on them early.
-
-> I missed something curious in your statement above, i.e. "external
-> diff".  I thought we have pretty much got rid of all the invocation
-> of "git diff" via the run_command() interface and we do not need the
-> command line option (we only need the options->shift_ita so that
-> callers like "git status" can seletively ask for it when making
-> internal calls), and that is why I didn't want to see it.
-
-I don't know if we have had any external diff calls in our shell-based
-commands. I don't read them often. Regardless, people do use "git
-diff" and it should show the "right thing" (I know it's subjective).
-Or at least be consistent with both git-commit and git-status.
-
-> [Footnote]
+> The entry for "chain" and the description under discussion have
+> stress on different aspect, though.  The description of "chain" is
+> more general: an object refers to another object by referring to it,
+> by unspecified means.  The reason why it is left unspecified is
+> because the way a tree object refers to blobs and trees is different
+> from the way a commit object refers to its parents (the former has
+> object names of blobs and trees in the tree entries; the latter uses
+> "parent" entries in the object header part to record object names of
+> parent commits).  It wants to stress more on the fact that there is
+> some mechanism to associate one object to others, than how that
+> association/linkage is expressed.
 >
-> Here is one of the things around i-t-a and diff.  If you make "git
-> diff" (between the index and the working tree) report "new" file, it
-> would imply that "git apply" run without "--index" should create an
+> The way the resulting commit is described in the original text of
+> "git merge" description stresses more on "how" by being a lot more
+> specific to commit objects.  It does not just say "refers to parents
+> (by unspecified means)"; instead it tries to say what exactly are
+> recorded, i.e. the parents are referred to by recording the object
+> names of them in a new commit object.  It stresses more on "how"
+> (because it can afford to be more specific, unlike the description
+> of more general concept of a "chain").
 
-Off topic. This reminds me of an old patch about apply and ita [1] but
-that one is not the same here
+That's were our disagreement actually is, and that's what I've tried to
+fix with s/name/reference/, and that's why I'm against s/name/object
+name/.
 
-> ita entry in the index for symmetry, wouldn't it?  That by itself
-> can be seen as an improvement (we no longer would have to say that
-> "git apply patchfile && git commit -a" that is run in a clean state
-> will forget new files the patchfile creates), but it also means we
-> now need a repository in order to run "git apply" (without "--index"),
-> which is a problem, as "git apply" is often used as a better "patch".
+Rather than being more (and more) specific at every opportunity, one
+needs a good reason to get more specific. In this particular case,
+general DAG terminology seems to be enough to describe git-merge
+semantics, thus using GIT specifics is unfounded.
 
-We could detect "no repo available" and ignore the index, I guess.
+> It may be debatable if we want to give the description of what is
+> exactly recorded at that point of the document,
 
-> "git apply --cached" may also become "interesting".  A patch that
-> would apply cleanly to HEAD should apply cleanly if you did this:
->
->     $ git read-tree HEAD
->     $ git apply --cached <patch
->
-> no matter what the working tree state is.  Should a patch that
-> creates a "new" file add contents to the index, or just an i-t-a
-> entry?  I could argue it both ways, but either is quite satisfactory
-> and makes my head hurt.
+Exactly. My point in this particular discussion is that details of
+recording of references to parents don't belong here, even though to
+tell the truth I think they don't belong to git _user_ documentation at
+all.
 
---cached tells you to put new contents in the index. I-ta entries,
-being a reminder to add stuff, don't really fit in here because you
-want to add contents _now_, i think. After a successful "git apply
---cached", a "git commit" should contain exactly what the applied
-patch has. If new files are i-t-a entries instead, then the new commit
-would not be the same as the patch.
+> but I personally
+> think that the users deserve a chance to learn how a merge is
+> recorded in "git merge" documentation.
 
-[1] https://public-inbox.org/git/1451181092-26054-4-git-send-email-pclouds@gmail.com/
--- 
-Duy
+I doubt a user will gain anything from this sacred knowledge suddenly
+being thrown on him when what she is looking for is understanding of
+basic merge semantics in GIT.
+
+That said, if you still disagree, please feel free to just drop the
+patch.
+
+-- Sergey
