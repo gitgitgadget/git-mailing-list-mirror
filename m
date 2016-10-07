@@ -6,108 +6,111 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC99720986
-	for <e@80x24.org>; Fri,  7 Oct 2016 21:08:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A909F20986
+	for <e@80x24.org>; Fri,  7 Oct 2016 21:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756143AbcJGVIO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 17:08:14 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:34765 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754816AbcJGVIL (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1756258AbcJGVIP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 17:08:15 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:36136 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752532AbcJGVIL (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 7 Oct 2016 17:08:11 -0400
-Received: by mail-qk0-f194.google.com with SMTP id n189so3236811qke.1
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 14:07:29 -0700 (PDT)
+Received: by mail-qk0-f196.google.com with SMTP id z190so3229613qkc.3
+        for <git@vger.kernel.org>; Fri, 07 Oct 2016 14:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xD/oSj8lsk8tah5/YyWF8aUGlFZ3WJdYLuoIXxfQ4GQ=;
-        b=BUTRhf4ExM/znOfi4txhiLFytd6ZRsxEcs/Vy9uDKTmYV1qVlxtlsBTxbOzqW8Olhh
-         WjFKnHdOhJj87oExO3qO1yYVjq/vxQKIIp9lO7iYrbc619Tb4gQfhnCrKMad47PPbyra
-         QTXXb8CbjXpCiwGJqEXWuXgUkErBZWKCXWw/mST0LjcGBEBEu8tzk5AfQwNIgayqmjaP
-         RdfPPoIS/GlEQZLjDEa33oJU9E1A+etaoycHHF4i6bGq3JR15Yu6rmtfOaXeqEO2PBVc
-         uduiEdY2N/N+PcqlSueE6n8P9w8j4srl54rw+uYL9cfA9W0Yslr59vNrxBqgfDDvDNyA
-         D7jA==
+        h=from:to:cc:subject:date:message-id;
+        bh=iPtqgvHWO8j74+K9F71lWCG4ANk2vy3b4iiR0vB1eLo=;
+        b=d3z/Y4xd6cD5cUBs5umJbBxuYFJV63ph1ijOdtAAdE34uT92MbVKGbKvvZp7j6s6/c
+         30mkehIC1jfeCmkwnS5bV8ureK7DHQGtP0IsYGHTG3ueYmS+7xwUf2djsrA8hgjCib1a
+         pLmjg8/YasCYsT2Xn6foMDLF+UHaNQRh9UQawxg7Q65+iFVf560yQnQy1r3NvGbSJq0z
+         2SsZMrf7DAFhH6+geLHrETlA6AuFxN7AEbCpAfdbFxyc6X7t1KL5FOVEuMLvtjSy7OmG
+         pZySMCfuuv2YqABOGAxSp4CT2DZ7SlhInM+onR9CzbuTlxMfunCsuL+udZhevE4Pwqft
+         duwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=xD/oSj8lsk8tah5/YyWF8aUGlFZ3WJdYLuoIXxfQ4GQ=;
-        b=TsysO0MljomxW173VZmAnjxpFB93EJr0LsWPNB790vptjEbWAM477FZ71nXeGlwDgy
-         g+lgOsHxyUKAgYvsYMmYk7JIuOUQM0Qg9LS9Vtl8vxMQwGFWxX+adIvhJMyR9I+YPJzT
-         ocQjk0Y4dY5sS00S6Zdn1ZyX5L+gTgk+O6MxOmLviVgoOvHr3PC47J0cOsjo/Rmjlsa6
-         ioRyFv0+b0Pk55SB1hZiSdohVFpqjNdwIAwuIBzIiSg7GJn7ZdbrJh4msUHleWfzMICo
-         VgR0Zh8iP7r7IaCyLbEw8IuolZFRteFp0oXRx6tdj5GskH7qDx5z9Dpen9KD4mzkTpWh
-         K7Gg==
-X-Gm-Message-State: AA6/9Rmp0ZT3H3UgVkgzpkDDO9vBsM9Ais0TszPEC8GTkBMGW6zUEJw5zjb9Lqq3mjWWg9n8
-X-Received: by 10.55.22.15 with SMTP id g15mr21750653qkh.75.1475874449009;
-        Fri, 07 Oct 2016 14:07:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=iPtqgvHWO8j74+K9F71lWCG4ANk2vy3b4iiR0vB1eLo=;
+        b=Spi9wS50w6dghKwmECdstWmnXlUr4GjMiqle8nK/DpMJTaStJMqxOG9pCgFoj1RYDV
+         yqxnYYZc5cL/VVNyUjrCfZYdywxCdTAVMYJeYr3Fwm/wZQkzeDggSlQba+1ryLqiOBYW
+         w6pp7xdlyUo0Ai3we/vEwV52O5KW2LTG8HfergaTxRusQkNq5H0NkK97Bz3YzpU1AHBB
+         3aIZczcTrYRfg+HzDSL0wY2weP6+ERwuvnTMxNCVqi0l0OP44PJXrfG9bae9lCi/P7ZT
+         F3SO28nXxvXs1uwBWc7QmY/QzUiGgw5oUpAxA+KcgIjx3bBrMcQyAjV1zoEpF3g1zDPY
+         JBhg==
+X-Gm-Message-State: AA6/9Rn0CToFDbDioEhn8foiH1x7YR1DV1A+nIMrhxuQDou3zWHXLiaevGO0NaM9dA66y5yB
+X-Received: by 10.55.97.198 with SMTP id v189mr21188647qkb.51.1475874447062;
+        Fri, 07 Oct 2016 14:07:27 -0700 (PDT)
 Received: from LykOS.nyu.edu (NYUFWA-WLESSAUTHCLIENTS-05.NATPOOL.NYU.EDU. [216.165.95.76])
-        by smtp.gmail.com with ESMTPSA id a192sm7544808qkc.26.2016.10.07.14.07.28
+        by smtp.gmail.com with ESMTPSA id a192sm7544808qkc.26.2016.10.07.14.07.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Oct 2016 14:07:28 -0700 (PDT)
+        Fri, 07 Oct 2016 14:07:26 -0700 (PDT)
 From:   santiago@nyu.edu
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
-Subject: [PATCH v4 2/7] ref-filter: add function to print single ref_array_item
-Date:   Fri,  7 Oct 2016 17:07:16 -0400
-Message-Id: <20161007210721.20437-3-santiago@nyu.edu>
+        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
+Subject: [PATCH v4 0/7] Add --format to tag verification
+Date:   Fri,  7 Oct 2016 17:07:14 -0400
+Message-Id: <20161007210721.20437-1-santiago@nyu.edu>
 X-Mailer: git-send-email 2.10.0
-In-Reply-To: <20161007210721.20437-1-santiago@nyu.edu>
-References: <20161007210721.20437-1-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lukas Puehringer <luk.puehringer@gmail.com>
+From: Santiago Torres <santiago@nyu.edu>
 
-ref-filter functions are useful for printing git object information
-using a format specifier. However, some other modules may not want to use
-this functionality on a ref-array but only print a single item.
+This is the fourth iteration of the series in [1][2][3], which comes as a
+result of the discussion in [4]. The main goal of this patch series is to bring
+--format to git tag verification so that upper-layer tools can inspect the
+content of a tag and make decisions based on those contents.
 
-Expose a pretty_print_ref function to create, pretty print and free
-individual ref-items.
+In this re-woll we:
 
-Signed-off-by: Lukas Puehringer <luk.puehringer@gmail.com>
----
- ref-filter.c | 10 ++++++++++
- ref-filter.h |  3 +++
- 2 files changed, 13 insertions(+)
+* Fixed the author fields and signed off by's throughout the patch
+  series
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 9adbb8a..cfbcd73 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1637,6 +1637,16 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 	putchar('\n');
- }
- 
-+void pretty_print_ref(const char *name, const unsigned char *sha1,
-+		const char *format, unsigned kind)
-+{
-+	struct ref_array_item *ref_item;
-+	ref_item = new_ref_array_item(name, sha1, 0);
-+	ref_item->kind = kind;
-+	show_ref_array_item(ref_item, format, 0);
-+	free_array_item(ref_item);
-+}
-+
- /*  If no sorting option is given, use refname to sort as default */
- struct ref_sorting *ref_default_sorting(void)
- {
-diff --git a/ref-filter.h b/ref-filter.h
-index 14d435e..3d23090 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -107,4 +107,7 @@ struct ref_sorting *ref_default_sorting(void);
- /*  Function to parse --merged and --no-merged options */
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
- 
-+void pretty_print_ref(const char *name, const unsigned char *sha1,
-+		const char *format, unsigned kind);
-+
- #endif /*  REF_FILTER_H  */
+* Added two more patches with unit tests to ensure the format specifier
+  behaves as expected
+
+* Fixed a missing initialization for the format specifier in verify-tag which
+  caused a crash.
+
+* Fixed an outdated git commit message that had the previous name of a
+  function definition.
+
+Thanks,
+-Santiago
+
+[1] http://public-inbox.org/git/20160930221806.3398-1-santiago@nyu.edu/
+[2] http://public-inbox.org/git/20160922185317.349-1-santiago@nyu.edu/
+[3] http://public-inbox.org/git/20160926224233.32702-1-santiago@nyu.edu/
+[4] http://public-inbox.org/git/20160607195608.16643-1-santiago@nyu.edu/
+
+
+Lukas Puehringer (4):
+  tag: add format specifier to gpg_verify_tag
+  gpg-interface, tag: add GPG_VERIFY_QUIET flag
+  ref-filter: add function to print single ref_array_item
+  builtin/tag: add --format argument for tag -v
+
+Santiago Torres (3):
+  builtin/verify-tag: add --format to verify-tag
+  t/t7030-verify-tag: Add --format specifier tests
+  t/t7004-tag: Add --format specifier tests
+
+ Documentation/git-tag.txt        |  2 +-
+ Documentation/git-verify-tag.txt |  2 +-
+ builtin/tag.c                    | 34 +++++++++++++++++++++++-----------
+ builtin/verify-tag.c             | 13 +++++++++++--
+ gpg-interface.h                  |  1 +
+ ref-filter.c                     | 10 ++++++++++
+ ref-filter.h                     |  3 +++
+ t/t7004-tag.sh                   | 16 ++++++++++++++++
+ t/t7030-verify-tag.sh            | 16 ++++++++++++++++
+ tag.c                            | 22 +++++++++++++++-------
+ tag.h                            |  4 ++--
+ 11 files changed, 99 insertions(+), 24 deletions(-)
+
 -- 
 2.10.0
 
