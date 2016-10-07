@@ -2,156 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C02720986
-	for <e@80x24.org>; Fri,  7 Oct 2016 15:07:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2AE120986
+	for <e@80x24.org>; Fri,  7 Oct 2016 15:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756763AbcJGPHZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 11:07:25 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.41]:54818 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756431AbcJGPHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 11:07:15 -0400
-Received: from [84.131.252.35] (helo=localhost)
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1bsWjv-0006Bl-O3; Fri, 07 Oct 2016 17:07:11 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        Jens.Lehmann@web.de, Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: [PATCH v2 3/3] batch check whether submodule needs pushing into one call
-Date:   Fri,  7 Oct 2016 17:06:36 +0200
-Message-Id: <67d4c48dc0129f20041c88d27a49c7a21188c882.1475851621.git.hvoigt@hvoigt.net>
-X-Mailer: git-send-email 2.10.1.637.g09b28c5
-In-Reply-To: <cover.1475851621.git.hvoigt@hvoigt.net>
-References: <cover.1475851621.git.hvoigt@hvoigt.net>
-In-Reply-To: <cover.1475851621.git.hvoigt@hvoigt.net>
-References: <cover.1475851621.git.hvoigt@hvoigt.net>
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+        id S1757070AbcJGPpV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 11:45:21 -0400
+Received: from blade12.connectinternetsolutions.com ([193.110.243.152]:40430
+        "EHLO blade12.connectinternetsolutions.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756979AbcJGPpQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 Oct 2016 11:45:16 -0400
+Received: from [192.168.1.111] (rklrkl.plus.com [84.92.54.184])
+        (authenticated bits=0)
+        by blade12.connectinternetsolutions.com (8.13.8/8.13.8) with ESMTP id u97Fj81t003178
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Fri, 7 Oct 2016 16:45:09 +0100
+Subject: Re: Systems with old regex system headers/libraries don't pick up
+ git's compat/regex header file
+To:     Jeff King <peff@peff.net>
+References: <9f43a2f1-5d7e-3a2e-5a83-40e92ab0d7b5@connectinternetsolutions.com>
+ <20161006191127.2vjtmxl7ygjeqcbk@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org
+From:   Richard Lloyd <richard.lloyd@connectinternetsolutions.com>
+Message-ID: <4ac0ce84-ca6c-3650-ef5e-e13c54c60504@connectinternetsolutions.com>
+Date:   Fri, 7 Oct 2016 16:45:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+In-Reply-To: <20161006191127.2vjtmxl7ygjeqcbk@sigill.intra.peff.net>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Company-Sig: added
+X-MD-Spam-Report: score=0.919 required=8 tests=SPF_FAIL
+X-Scanned-By: MIMEDefang 2.70 on 172.25.243.152
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (blade12.connectinternetsolutions.com [172.25.243.152]); Fri, 07 Oct 2016 16:45:10 +0100 (BST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We run a command for each sha1 change in a submodule. This is
-unnecessary since we can simply batch all sha1's we want to check into
-one command. Lets do it so we can speedup the check when many submodule
-changes are in need of checking.
+On 06/10/16 20:11, Jeff King wrote:
+> Junio mentioned the NO_REGEX knob in the Makefile. If that works for
+> you, the next step is probably to add a line to the HP-UX section of
+> config.mak.uname, so that it just works out of the box.
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- submodule.c | 63 +++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 34 insertions(+), 29 deletions(-)
+This doesn't work because the check in git-compat-util.h only looks
+for REG_STARTEND being defined (if it isn't, it #error's out).
 
-diff --git a/submodule.c b/submodule.c
-index 5044afc2f8..a05c2a34b1 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -529,27 +529,49 @@ static int append_hash_to_argv(const unsigned char sha1[20], void *data)
- 	return 0;
- }
- 
--static int submodule_needs_pushing(const char *path, const unsigned char sha1[20])
-+static int check_has_hash(const unsigned char sha1[20], void *data)
- {
--	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
-+	int *has_hash = (int *) data;
-+
-+	if (!lookup_commit_reference(sha1))
-+		*has_hash = 0;
-+
-+	return 0;
-+}
-+
-+static int submodule_has_hashes(const char *path, struct sha1_array *hashes)
-+{
-+	int has_hash = 1;
-+
-+	if (add_submodule_odb(path))
-+		return 0;
-+
-+	sha1_array_for_each_unique(hashes, check_has_hash, &has_hash);
-+	return has_hash;
-+}
-+
-+static int submodule_needs_pushing(const char *path, struct sha1_array *hashes)
-+{
-+	if (!submodule_has_hashes(path, hashes))
- 		return 0;
- 
- 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
--		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
- 		struct strbuf buf = STRBUF_INIT;
- 		int needs_pushing = 0;
- 
--		argv[1] = sha1_to_hex(sha1);
--		cp.argv = argv;
-+		argv_array_push(&cp.args, "rev-list");
-+		sha1_array_for_each_unique(hashes, append_hash_to_argv, &cp.args);
-+		argv_array_pushl(&cp.args, "--not", "--remotes", "-n", "1" , NULL);
-+
- 		prepare_submodule_repo_env(&cp.env_array);
- 		cp.git_cmd = 1;
- 		cp.no_stdin = 1;
- 		cp.out = -1;
- 		cp.dir = path;
- 		if (start_command(&cp))
--			die("Could not run 'git rev-list %s --not --remotes -n 1' command in submodule %s",
--				sha1_to_hex(sha1), path);
-+			die("Could not run 'git rev-list <hashes> --not --remotes -n 1' command in submodule %s",
-+					path);
- 		if (strbuf_read(&buf, cp.out, 41))
- 			needs_pushing = 1;
- 		finish_command(&cp);
-@@ -604,21 +626,6 @@ static void find_unpushed_submodule_commits(struct commit *commit,
- 	diff_tree_combined_merge(commit, 1, &rev);
- }
- 
--struct collect_submodule_from_sha1s_data {
--	char *submodule_path;
--	struct string_list *needs_pushing;
--};
--
--static void collect_submodules_from_sha1s(const unsigned char sha1[20],
--		void *data)
--{
--	struct collect_submodule_from_sha1s_data *me =
--		(struct collect_submodule_from_sha1s_data *) data;
--
--	if (submodule_needs_pushing(me->submodule_path, sha1))
--		string_list_insert(me->needs_pushing, me->submodule_path);
--}
--
- static void free_submodules_sha1s(struct string_list *submodules)
- {
- 	int i;
-@@ -658,13 +665,11 @@ int find_unpushed_submodules(struct sha1_array *hashes,
- 	argv_array_clear(&argv);
- 
- 	for (i = 0; i < submodules.nr; i++) {
--		struct string_list_item *item = &submodules.items[i];
--		struct collect_submodule_from_sha1s_data data;
--		data.submodule_path = item->string;
--		data.needs_pushing = needs_pushing;
--		sha1_array_for_each_unique((struct sha1_array *) item->util,
--				collect_submodules_from_sha1s,
--				&data);
-+		struct string_list_item *submodule = &submodules.items[i];
-+		struct sha1_array *hashes = (struct sha1_array *) submodule->util;
-+
-+		if (submodule_needs_pushing(submodule->string, hashes))
-+			string_list_insert(needs_pushing, submodule->string);
- 	}
- 	free_submodules_sha1s(&submodules);
- 
+That define is not mentioned anywhere else other than in the
+compat/regex tree, which is why I used -Icompat/regex to pick up
+<regex.h> from there - this was the "easiest" solution for me on
+HP-UX 11.
+
+Note that with this inclusion change, the source compiled and linked
+fine on HP-UX 11 and git passed its tests, including the regex-based ones.
+
+Richard K. Lloyd,           E-mail: richard.lloyd@connectinternetsolutions.com
+Connect Internet Solutions,    WWW: https://www.connectinternetsolutions.com/
+4th Floor, New Barratt House,
+47, North John Street,
+Liverpool,
+Merseyside, UK. L2 6SG
+
+
+
+
+>
+> -Peff
+>
+
+
+
+
 -- 
-2.10.1.637.g09b28c5
+This e-mail (and any attachments) is private and confidential. If you have 
+received it in error, please notify the sender immediately and delete it 
+from your system. Do not use, copy or disclose the information in any way 
+nor act in reliance on it.
 
+Any views expressed in this message are those of the individual sender,
+except where the sender specifically states them to be the views of Connect
+Internet Solutions Ltd. This e-mail and any attachments are believed to be
+virus free but it is the recipient's responsibility to ensure that they are.
+
+Connect Internet Solutions Ltd
+(A company registered in England No: 04424350)
+Registered Office: 4th Floor, New Barratt House, 47 North John Street,
+Liverpool, L2 6SG
+Telephone: +44 (0) 151 282 4321
+VAT registration number: 758 2838 85
