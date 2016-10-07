@@ -2,117 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E583620986
-	for <e@80x24.org>; Fri,  7 Oct 2016 13:13:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F0EC20986
+	for <e@80x24.org>; Fri,  7 Oct 2016 13:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756002AbcJGNNy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 09:13:54 -0400
-Received: from mail.javad.com ([54.86.164.124]:59554 "EHLO mail.javad.com"
+        id S1756513AbcJGN1G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 09:27:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59055 "EHLO mx2.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751939AbcJGNNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 09:13:52 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 04EAF61059;
-        Fri,  7 Oct 2016 13:13:46 +0000 (UTC)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1bsUy8-0005r0-3k; Fri, 07 Oct 2016 16:13:44 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/6] Documentation/git-merge.txt: improve short description in DESCRIPTION
-References: <cover.1475678515.git.sorganov@gmail.com>
-        <e74ae8afc1bfc4cd9161ccaa56d926a89439551e.1475678515.git.sorganov@gmail.com>
-        <xmqq60p6pt4k.fsf@gitster.mtv.corp.google.com>
-        <871szuqyjo.fsf@javad.com>
-        <xmqqa8eio4n9.fsf@gitster.mtv.corp.google.com>
-        <87mvihpsla.fsf@javad.com>
-        <xmqqshs9l69h.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 07 Oct 2016 16:13:44 +0300
-In-Reply-To: <xmqqshs9l69h.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 06 Oct 2016 10:46:50 -0700")
-Message-ID: <878tu0mhdj.fsf@javad.com>
+        id S1756504AbcJGN1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 09:27:06 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u97ClKdV016266
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Fri, 7 Oct 2016 14:47:35 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u97ClLbl010625;
+        Fri, 7 Oct 2016 14:47:21 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+References: <20161006114124.4966-1-pclouds@gmail.com>
+        <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610071319520.35196@virtualbox>
+        <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
+Date:   Fri, 07 Oct 2016 14:47:21 +0200
+In-Reply-To: <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 7 Oct 2016 19:27:53 +0700")
+Message-ID: <vpqmvig5ns6.fsf@anie.imag.fr>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u97ClKdV016266
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1476449276.29555@h0FtlsM2x/NnjrNO7edwBw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->>>> Last, if "reference" is not good enough and we get to internals anyway,
->>>> why not say SHA1 then?
+> On Fri, Oct 7, 2016 at 6:20 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Hi Junio,
+>>
+>> On Thu, 6 Oct 2016, Junio C Hamano wrote:
+>>
+>>> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 >>>
->>> Because that is still colloquial? I think s/name/object name/ is a
->>> sensible change, but not s/name/reference/.
+>>> > Throwing something at the mailing list to see if anybody is
+>>> > interested.
+>>> >
+>>> > Current '!' aliases move cwd to $GIT_WORK_TREE first, which could
+>>> > make
+>>> > handling path arguments hard because they are relative to the
+>>> > original
+>>> > cwd. We set GIT_PREFIX to work around it, but I still think it's
+>>> > more
+>>> > natural to keep cwd where it is.
+>>> >
+>>> > We have a way to do that now after 441981b (git: simplify
+>>> > environment
+>>> > save/restore logic - 2016-01-26). It's just a matter of choosing
+>>> > the
+>>> > right syntax. I'm going with '!!'. I'm not very happy with it.
+>>> > But I
+>>> > do like this type of alias.
+>>>
+>>> I do not know why you are not happy with the syntax, but I
+>>> personally think it brilliant, both the idea and the preliminary
+>>> clean-up that made this possible with a simple patch like this.
 >>
->> No, "reference" is more sensible here than any of "name", "object name",
->> or "SHA-1", the same way as here:
->>
->> $ git help glossary
->> [...]
->> chain
->>         A list of objects, where each object in the list contains a
->>         reference to its successor (for example, the successor of a
->>         commit could be one of its parents).
->> [...]
+>> I guess he is not happy with it because "!!" is quite unintuitive a
+>> construct. I know that *I* would have been puzzled by it, asking
+>> "What the
+>> heck does this do?".
 >
-> The entry for "chain" and the description under discussion have
-> stress on different aspect, though.  The description of "chain" is
-> more general: an object refers to another object by referring to it,
-> by unspecified means.  The reason why it is left unspecified is
-> because the way a tree object refers to blobs and trees is different
-> from the way a commit object refers to its parents (the former has
-> object names of blobs and trees in the tree entries; the latter uses
-> "parent" entries in the object header part to record object names of
-> parent commits).  It wants to stress more on the fact that there is
-> some mechanism to associate one object to others, than how that
-> association/linkage is expressed.
->
-> The way the resulting commit is described in the original text of
-> "git merge" description stresses more on "how" by being a lot more
-> specific to commit objects.  It does not just say "refers to parents
-> (by unspecified means)"; instead it tries to say what exactly are
-> recorded, i.e. the parents are referred to by recording the object
-> names of them in a new commit object.  It stresses more on "how"
-> (because it can afford to be more specific, unlike the description
-> of more general concept of a "chain").
+> Yep. And I wouldn't want to set a tradition for the next alias type
+> '!!!'. There's no good choice to represent a new alias type with a
+> leading symbol. This just occurred to me, however, what do you think
+> about a new config group for it? With can have something like
+> externalAlias.* (or some other name) that lives in parallel with
+> alias.*. Then we don't need '!' (or '!!') at all.
 
-That's were our disagreement actually is, and that's what I've tried to
-fix with s/name/reference/, and that's why I'm against s/name/object
-name/.
+Another possibility: !(nocd), which leaves room
+for !(keyword1,keyword2,...) if needed later. Also, it is consistent
+with the :(word) syntax of pathspecs.
 
-Rather than being more (and more) specific at every opportunity, one
-needs a good reason to get more specific. In this particular case,
-general DAG terminology seems to be enough to describe git-merge
-semantics, thus using GIT specifics is unfounded.
-
-> It may be debatable if we want to give the description of what is
-> exactly recorded at that point of the document,
-
-Exactly. My point in this particular discussion is that details of
-recording of references to parents don't belong here, even though to
-tell the truth I think they don't belong to git _user_ documentation at
-all.
-
-> but I personally
-> think that the users deserve a chance to learn how a merge is
-> recorded in "git merge" documentation.
-
-I doubt a user will gain anything from this sacred knowledge suddenly
-being thrown on him when what she is looking for is understanding of
-basic merge semantics in GIT.
-
-That said, if you still disagree, please feel free to just drop the
-patch.
-
--- Sergey
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
