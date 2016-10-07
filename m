@@ -7,125 +7,135 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F33520986
-	for <e@80x24.org>; Fri,  7 Oct 2016 16:08:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A79820986
+	for <e@80x24.org>; Fri,  7 Oct 2016 16:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938927AbcJGQIl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 12:08:41 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56136 "EHLO mout.gmx.net"
+        id S938945AbcJGQIt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 12:08:49 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59005 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754082AbcJGQIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 12:08:38 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MUpFU-1bOp3G3B5o-00Y7Ix; Fri, 07 Oct 2016 18:08:26
+        id S938937AbcJGQIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 12:08:47 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MYfJW-1bNBDd1VKc-00VPYk; Fri, 07 Oct 2016 18:08:35
  +0200
-Date:   Fri, 7 Oct 2016 18:08:25 +0200 (CEST)
+Date:   Fri, 7 Oct 2016 18:08:34 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 0/6] Pull out require_clean_work_tree() functionality from
- builtin/pull.c
-In-Reply-To: <cover.1475586229.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1475856491.git.johannes.schindelin@gmx.de>
-References: <cover.1475586229.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v4 2/6] pull: make code more similar to the shell script
+ again
+In-Reply-To: <cover.1475856491.git.johannes.schindelin@gmx.de>
+Message-ID: <5c016337b8affc4d51c7235334eef64a0f59879a.1475856491.git.johannes.schindelin@gmx.de>
+References: <cover.1475586229.git.johannes.schindelin@gmx.de> <cover.1475856491.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KkqIimFA8sepsdSUivVxnN7zXdhB/PItTFNoKOehj1c3YFjQ+/X
- a7GbU6WRzl2Hzy2Q5pcz0wYrH9I8S/4fu/s9iIoj5Oho23dHEXZbzlr0XCo90E3s5RMstPd
- Z4S1Aook7fUhFvBua6WFaV/qgrsSDMzp/1dqayqquR6gqzp7ZrvIMtDCTdfIADHoDgQYyRP
- fuAR8Oc3pTKIndd/posig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:P0H5dTli6Vo=:sR/5yZ9kLUcm2BVjyyWYVA
- Daw1T5V4OlrVv5mpFYKrFCt3+VmHn0mS9uCVj2c3xzLazGdd2deCWG7zGP1q1yzarOHKyauP4
- pZVQPFRCrgCvrO+qvyRiCFH1KrqWoUvz7WFMVrM+JxrLgNcUS02wqpAPjnSdiHRuu/77B+8v6
- iiNU74z/bxgeDCVj0sTDsg1NLrPLo3ZLYs7xYtUCER+GqCBY9MYV/OdVYZU8Hvac2nWD2bTff
- RhZcqetcJVnFwyjoUMcIM/QDq7/MhoR8Rxu/o9Hn3nGA8RVMOxzwCbBywyeISOcTQqQXbe73V
- ok/iJlGQHCrzMWhFV5s7YwZODA/oSZlHBfSybU/jZn7sV+DT2X5Pm+aEEyQYKYWc7ebn0L8tu
- BVQdHsB3spiDMqI9bBn+z3iOcgNwpXbRK88P+H3JB4t94i2s/3C49VUrAo114xiI1OHp/8qtK
- Ow3XBdbx3eycd8SHFJO7IUlRpKo+uZjWZBounAy3c1o3Pob5dk51T6wlIykAuD8Z5PxSZ/bXz
- INCiNGPW7so6JrSM4cgm9X1hzDpXtQ3BmiWs+25xThgtUpdkqwsbAwS3PPv+F4vQzIRQdOzL2
- puszqScsTl3+8aJmYBH53xYidol8Jc00Q+4pdW+lwIK1EBg48nmO1LZJYGLmBoYpFDck7+Q8A
- LO5RlhN7DUSqCunqdYPN3lOjHz2MibaE1xyMGv8h6thqea72wugi8eK2bctmO5Y+vmz4cLCPN
- /g7x+8z9wDEsPrhMWNXAMlUUKNNLkAE3dpw9fWA/aaQ8qGeF97l4vPig+LmAr+c5QumTEqNdz
- UlaTdUz
+X-Provags-ID: V03:K0:/1aC3htvde+Kh0rIT7knqlXVspSdYrPqtlhts3WTk2k+zsir+V1
+ /HDNVXwtwNHnWyht/nWrt/C/t5R3+01DjYErnFTCPfoxphRhN9ZWFuJ0f70MFlcXsCRcJLN
+ AuVlx44D00bd8TInsvo9OktNCe3pI9vIWQoC6ifIECnQY/rwhDiZAwmZr5SyBiWzloNI74P
+ rdj+oOanh4YGtADcSY/HA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:URshYypuAbY=:aGjEYSrRe7hujqx95/uJHc
+ laVvus9702LbE2NLpb9CkTpHKx54qwMWrow92na3R9Lv3oe+073sfzm0+msh1zMiBR7SM7Ww+
+ KUPJD+B6F+fcwJkN3+XOePOJEvs/Alg1w21VsdFYfcGtIAG3iBQkgWHfXEoZsVlvB/gjFV3wK
+ O1to0ObP6/X+qqtnNJT2cJbhRSPw+IiyxN3sCvsdyArJcDT5M9ii5c//LbldV7pMaEk3INH5w
+ lgw/2Bb4MLkAvhepyA3L61EKkFyCZv2VkPCf9YIXRy7ROUQmmVTs/F2q/pZvAWY9fCibbN0Ql
+ YHAtvGDvHL6ZREK61wx6UctDpkPUVVhdB6i21EAP9nk0RivwFc9rj8/qOJ0f0EIrlI3Rpabbs
+ sBn0rY2hXiLRsFM3HIU54mz8zysN8E14ty8ScmUWE4O73rNU1+8dITQ2M+JUMnL0gyF3cuuR1
+ 5YzhMcecOg21VLyZc/vQXbHIr2KaSl5fQoXAUzi5cPK91A5wAVwXha4OvOFGRF2B4WQsMfny+
+ kjwEu0FhVvn7XfDWixMDSH8ZW42/+oHrF3Spg8REXTT57ME4cUbSQ84gJnMijUmwcwH/mlCrI
+ JpJsdQqTJYBoczsuIzcS5fADz/n539hrwp6AYSKhx67vZxE/iL9sl+Z4O7CML1tykYLf1978b
+ MEZQzUa2Paa8sM8gefCc/Z8MRuJfpTc5ftyMaymfpNgYhdVbbMOi3FZ6r+IG3zGNzuyCWd0tP
+ VLYZ5SB+DoVAuGyIbqRCtYVFSDHk4xhu3byEEH6tytdPOAI38rfJkUg1kzUJbtjHg9LD3q08E
+ ITYUZPj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the 5th last patch series of my work to accelerate interactive
-rebases in particular on Windows.
+When converting the pull command to a builtin, the
+require_clean_work_tree() function was renamed and the pull-specific
+parts hard-coded.
 
-Basically, all it does is to make reusable some functions that were
-ported over from git-pull.sh but made private to builtin/pull.c.
+This makes it impossible to reuse the code, so let's modify the code to
+make it more similar to the original shell script again.
 
-Changes since v3:
+Note: when the hint "Please commit or stash them" was introduced first,
+Git did not have the convention of continuing error messages in lower
+case, but now we do have that convention, therefore we reintroduce this
+hint down-cased, obeying said convention.
 
-- reworded 3/5's commit message according to Junio's suggestion.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/pull.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-- fixed a tyop in 4/5's commit message, pointed out by Jakub.
-
-- marked the hint "please commit or stash them" (reintroduced from the
-  original git-pull.sh script) as translatable.
-
-- changed the exit code to 128 (emulating a die()) if
-  require_clean_work-tree() was asked to be non-gentle.
-
-- fixed a tyop in 3/6 (which was replaced in 4/6, but it is good not to
-  introduce bugs only to fix them right away).
-
-- prefixed the commit message of 4/6 with the "wt-status:" prefix,
-  replicating Junio's commit message in the `pu` branch.
-
-
-Johannes Schindelin (6):
-  pull: drop confusing prefix parameter of die_on_unclean_work_tree()
-  pull: make code more similar to the shell script again
-  wt-status: make the require_clean_work_tree() function reusable
-  wt-status: export also the has_un{staged,committed}_changes()
-    functions
-  wt-status: teach has_{unstaged,uncommitted}_changes() about submodules
-  wt-status: begin error messages with lower-case
-
- builtin/pull.c | 71 +++-------------------------------------------------
- wt-status.c    | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.h    |  6 +++++
- 3 files changed, 87 insertions(+), 68 deletions(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/require-clean-work-tree-v4
-Fetch-It-Via: git fetch https://github.com/dscho/git require-clean-work-tree-v4
-
-Interdiff vs v3:
-
- diff --git a/builtin/pull.c b/builtin/pull.c
- index 0bf9802..d6e46ee 100644
- --- a/builtin/pull.c
- +++ b/builtin/pull.c
- @@ -810,7 +810,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
-  
-  		if (!autostash)
-  			require_clean_work_tree(N_("pull with rebase"),
- -				"please commit or stash them.", 1, 0);
- +				_("please commit or stash them."), 1, 0);
-  
-  		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
-  			hashclr(rebase_fork_point);
- diff --git a/wt-status.c b/wt-status.c
- index ef67593..e8e5de4 100644
- --- a/wt-status.c
- +++ b/wt-status.c
- @@ -2281,7 +2281,7 @@ int require_clean_work_tree(const char *action, const char *hint, int ignore_sub
-  		if (hint)
-  			error("%s", hint);
-  		if (!gently)
- -			exit(err);
- +			exit(128);
-  	}
-  
-  	return err;
-
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d4bd635..58fc176 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -365,10 +365,11 @@ static int has_uncommitted_changes(void)
+  * If the work tree has unstaged or uncommitted changes, dies with the
+  * appropriate message.
+  */
+-static void die_on_unclean_work_tree(void)
++static int require_clean_work_tree(const char *action, const char *hint,
++		int gently)
+ {
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+-	int do_die = 0;
++	int err = 0;
+ 
+ 	hold_locked_index(lock_file, 0);
+ 	refresh_cache(REFRESH_QUIET);
+@@ -376,20 +377,28 @@ static void die_on_unclean_work_tree(void)
+ 	rollback_lock_file(lock_file);
+ 
+ 	if (has_unstaged_changes()) {
+-		error(_("Cannot pull with rebase: You have unstaged changes."));
+-		do_die = 1;
++		/* TRANSLATORS: the action is e.g. "pull with rebase" */
++		error(_("Cannot %s: You have unstaged changes."), _(action));
++		err = 1;
+ 	}
+ 
+ 	if (has_uncommitted_changes()) {
+-		if (do_die)
++		if (err)
+ 			error(_("Additionally, your index contains uncommitted changes."));
+ 		else
+-			error(_("Cannot pull with rebase: Your index contains uncommitted changes."));
+-		do_die = 1;
++			error(_("Cannot %s: Your index contains uncommitted changes."),
++			      _(action));
++		err = 1;
+ 	}
+ 
+-	if (do_die)
+-		exit(1);
++	if (err) {
++		if (hint)
++			error("%s", hint);
++		if (!gently)
++			exit(128);
++	}
++
++	return err;
+ }
+ 
+ /**
+@@ -875,7 +884,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			die(_("Updating an unborn branch with changes added to the index."));
+ 
+ 		if (!autostash)
+-			die_on_unclean_work_tree();
++			require_clean_work_tree(N_("pull with rebase"),
++				_("please commit or stash them."), 0);
+ 
+ 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+ 			hashclr(rebase_fork_point);
 -- 
 2.10.0.windows.1.325.ge6089c1
 
-base-commit: a23ca1b8dc42ffd4de2ef30d67ce1e21ded29886
+
