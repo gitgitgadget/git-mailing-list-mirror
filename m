@@ -2,102 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E619620986
-	for <e@80x24.org>; Fri,  7 Oct 2016 21:08:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC55420986
+	for <e@80x24.org>; Fri,  7 Oct 2016 23:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756482AbcJGVI3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 17:08:29 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:36123 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756106AbcJGVIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 17:08:12 -0400
-Received: by mail-qt0-f193.google.com with SMTP id y38so1614135qta.3
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 14:07:32 -0700 (PDT)
+        id S932849AbcJGX6L (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 19:58:11 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36415 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751068AbcJGX6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 19:58:10 -0400
+Received: by mail-pf0-f194.google.com with SMTP id 128so1969322pfz.3
+        for <git@vger.kernel.org>; Fri, 07 Oct 2016 16:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ACaUHKzN20nbDE/IMGPwF3S7Hnnq+KWB/+bFkedncPc=;
-        b=jU01Md3YB+vx84vC5vlbJJ1bbYZtfjn9tr/PmpYPSnjPYGBFFRlhKhZKRuNaElMd8O
-         NdfBN3SYUX9xl6PiBaf09Knt8K2MHOs8I4lJxJ8t1e0pgBWE+b+k7lYJQPGrKy1Qj37q
-         66KWu+SGQK5P082GLE7Z5xKCWt2X+8NU1HMpNkiRB0ipJ6LyiUI6k4gIvpHMKOW2tJSQ
-         74nPMibHEEeSa3H3eCL0lgFEtocK/KXJqm5RFPgVahYSvb/WBYLCRtBkNu0QaSjIRTNE
-         nni9NQ4SL3YPmnWCA+Y33cE2XSXJ3d7ONp+H+k2MttovET2se5NlyGb5O7Bu7+mdgl5H
-         6OyA==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=g+Yy+BURvi2rnoCzTVWgUYMILZiJIehhra6MIUQkjr4=;
+        b=ZQ6+BUA8xzYFZ5aVs54vfFIUM46kqpxYlfS1cjF9ds669VE65hNSxF2rztEaKpSO4N
+         dAlPNXHdhw6anokw+xtk0tLI7DY4hqP/PKHHcjsBlQq3Ui/8DoPf894O6GpUsqoS/dzj
+         hSI66r4CKN/xGaZSZSyw2shkqDucXsdt9GJfzMRS7Hdv4YluR7Q8vJI5UkS/DISB5sy/
+         KazaI8jdUY46xy2lzVwnm5MtsOv+MFGFbRHdjf6pPP2S5fXJlxjggnTwMaxWxZhLqniq
+         Z6lL8a8Lz4wzyKrDRvG70mAHIefVzLQEuwQKZT3HM1ZuA9D66HNM3yviFtF3jKL24nTd
+         f7GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ACaUHKzN20nbDE/IMGPwF3S7Hnnq+KWB/+bFkedncPc=;
-        b=BJofOAaz6PgAZVrvpj9nGAysbMcGGVVQHSsAv9sAsgldzZWG/n6UjgYlvhEriVpCle
-         Cjt4GsV7D4NNbQEhlg9ampu+eVaqu4MH1hUuKrJzBIRMYwIfC+eGiMLNC8avzIauoZRX
-         TT2RFGRSXoop6iigze3kY48D+OGlGCV20oY90hl8ASDIZKHa2LQHTCIpnqcSSY2BfX1z
-         //A4xGUigM5Yso6rYparpvwAZTjhBFONSH4rCfMRej9Pv3Xm10hSuBB0gsNvVPQkncVL
-         Xc9WzAVzBs4dvbxxg0PRc1E4KrdV06qPqEW3LeaMhVNgmkk7GfgIjvI6aR3U4ufI3SUu
-         Hbjw==
-X-Gm-Message-State: AA6/9RlGZjrUtNgkg6DFzcC7yvCsQ5IaJ/hBKr+tGeQnDPJII1X4V5ArVYkouPfGreRbzhMd
-X-Received: by 10.237.36.28 with SMTP id r28mr13496560qtc.99.1475874452420;
-        Fri, 07 Oct 2016 14:07:32 -0700 (PDT)
-Received: from LykOS.nyu.edu (NYUFWA-WLESSAUTHCLIENTS-05.NATPOOL.NYU.EDU. [216.165.95.76])
-        by smtp.gmail.com with ESMTPSA id a192sm7544808qkc.26.2016.10.07.14.07.31
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=g+Yy+BURvi2rnoCzTVWgUYMILZiJIehhra6MIUQkjr4=;
+        b=cAJNEN3ZbXEnNOy8CA0pXYRosWBXK6x5mHHcZmp72jS2O9EBZ/CyPMKDXS1vUHe/vc
+         ILMj56mF05JLs/HSpCm/mVIsQ9uyEJsBrHrsocassQZH5t50Z2y0BRevMQj86m14KIjS
+         BRmXhr6bR9016Cf7C64rPzXLPgunpfuvtJVVIZo0Z7Gj8bD4x4u6BwVI1LZlk03fBX0t
+         eyjdewQT8oMu5ITGytJOO+fGTGhmhckUNSy5p1BRR+ZHapq4x2QnhuUjfXfAolnP7OcY
+         Ku8A4NRRo+NzISZRtIAnPJ6mU1p3AX/kamV9AE7DPI7uBylxwt8Bp0VutcLu+ukBn/V7
+         jObQ==
+X-Gm-Message-State: AA6/9RkyeDfV0/n8F32IsDJ7J6ajfjc99iQXi213em5VbrQMS6fpvny9JJpddz+FML98Kg==
+X-Received: by 10.98.200.153 with SMTP id i25mr23314531pfk.156.1475884689594;
+        Fri, 07 Oct 2016 16:58:09 -0700 (PDT)
+Received: from raptor.fas.fa.disney.com (wdas-1.disneyanimation.com. [198.187.190.1])
+        by smtp.gmail.com with ESMTPSA id c27sm16662890pfe.6.2016.10.07.16.58.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Oct 2016 14:07:31 -0700 (PDT)
-From:   santiago@nyu.edu
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
-Subject: [PATCH v4 7/7] t/t7004-tag: Add --format specifier tests
-Date:   Fri,  7 Oct 2016 17:07:21 -0400
-Message-Id: <20161007210721.20437-8-santiago@nyu.edu>
-X-Mailer: git-send-email 2.10.0
-In-Reply-To: <20161007210721.20437-1-santiago@nyu.edu>
-References: <20161007210721.20437-1-santiago@nyu.edu>
+        Fri, 07 Oct 2016 16:58:08 -0700 (PDT)
+From:   David Aguilar <davvid@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Luis Gutierrez <luisgutz@gmail.com>
+Subject: [PATCH v3 1/4] mergetool: add copyright
+Date:   Fri,  7 Oct 2016 16:58:03 -0700
+Message-Id: <20161007235806.22247-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.10.1.386.g8ee99a0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Santiago Torres <santiago@nyu.edu>
-
-tag -v now supports --format specifiers to inspect the contents of a tag
-upon verification. Add two tests to ensure this behavior is respected in
-future changes.
-
-Signed-off-by: Santiago Torres <santiago@nyu.edu>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- t/t7004-tag.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Unchanged since v1; included for completeness.
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 8b0f71a..633b089 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -847,6 +847,22 @@ test_expect_success GPG 'verifying a forged tag should fail' '
- 	test_must_fail git tag -v forged-tag
- '
- 
-+test_expect_success 'verifying a proper tag with --format pass and format accordingly' '
-+	cat >expect <<-\EOF &&
-+	tagname : signed-tag
-+	EOF
-+	git tag -v --format="tagname : %(tag)" "signed-tag" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'verifying a forged tag with --format fail and format accordingly' '
-+	cat >expect <<-\EOF &&
-+	tagname : forged-tag
-+	EOF
-+	test_must_fail git tag -v --format="tagname : %(tag)" "forged-tag" >actual &&
-+	test_cmp expect actual
-+'
-+
- # blank and empty messages for signed tags:
- 
- get_tag_header empty-signed-tag $commit commit $time >expect
+ git-mergetool.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index bf86270..300ce7f 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -3,6 +3,7 @@
+ # This program resolves merge conflicts in git
+ #
+ # Copyright (c) 2006 Theodore Y. Ts'o
++# Copyright (c) 2009-2016 David Aguilar
+ #
+ # This file is licensed under the GPL v2, or a later version
+ # at the discretion of Junio C Hamano.
 -- 
-2.10.0
+2.10.1.386.g8ee99a0
 
