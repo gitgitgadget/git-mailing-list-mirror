@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCB7620986
-	for <e@80x24.org>; Fri,  7 Oct 2016 18:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 594C720986
+	for <e@80x24.org>; Fri,  7 Oct 2016 18:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754476AbcJGSTW (ORCPT <rfc822;e@80x24.org>);
+        id S1754915AbcJGSTZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 14:19:25 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:34147 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754345AbcJGSTW (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 7 Oct 2016 14:19:22 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34275 "EHLO
-        mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753136AbcJGSTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 14:19:20 -0400
-Received: by mail-pa0-f44.google.com with SMTP id rz1so25807080pab.1
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 11:19:20 -0700 (PDT)
+Received: by mail-pf0-f173.google.com with SMTP id e6so26865105pfk.1
+        for <git@vger.kernel.org>; Fri, 07 Oct 2016 11:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QFNN/yaRj9iHwSF5uwUvxu5EkHj9JlKuOWU42py0Z+Q=;
-        b=Om3UBFlV/N08jVPpUDDVFmnaTa0XwRF1ogCrzh6b4rUGLagupV+V2lhgIfh9sXC7B9
-         Dqlm/yXg1qOKEfHGjew7h5jaxU4DEUaA6vFsM5f9+Z83/zNFXLbOua9Dr85ykbuRAOZj
-         2iQ6YyUlxIDRu6D9KMlmOQe1PJ/rCzLagu87ADDOMp9ZGUWlosHw67cianHCIeq94HFB
-         gBZ0O7It+DMhxNyZzl0jp+HebzPim1eTqc951Vq0wqImRpvImW+xnrAG3HEqm290TqRj
-         Ck9YiKOZVgdPYzIQXN65MDdevtZ/WKFNcHO1mPX1uC9ds2B80UkHN+mkXdvL7a67CIpi
-         A6JQ==
+        bh=tuUgoVpISR4jLOMr8zlXLxpJxFtVpW09ju76MYQnxMs=;
+        b=DyQc7XCpVRXZoGdHH4PlD+LKmc7Zbzx08dpZiJO/hjZaqUu0TTDPOLplkAnm+8O5kw
+         3vBBHSCX6aTHQpzKZXlbznhRvWHJAsN4aggRRZxhD6eu/Nz8nWy8fX4bNRpWnGr+kjaK
+         WHdRoem48kAgQ1IAcODf4ncTb8Ql28gwIyyEolOc0BdZSkjP4F8LpJtV8poA4vltC076
+         Iwozli+9RWr6FvT+LM16m+Ec4utJkEshEUKBHz9/nWcnayFMAQ3CoBaTViMSC2fCm0Dj
+         e8vT+l2kHkkvImv5zHz55Ws1TnT+FanZ1YKJ8ltp7RvuHFwmn88aBAeftVEqxhzL57db
+         Ti/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QFNN/yaRj9iHwSF5uwUvxu5EkHj9JlKuOWU42py0Z+Q=;
-        b=CmxZS0remBOlww1OOauu5lqRFoFS7NkpjaPYJPlCWImro/KtmhLnrkq9ImV+YMtdWX
-         TShxgQz0x3CWOo42NbOyo/1npICTd8a69yc5vxluTJQrrq9sIiqi/SpIObqDi/arxfxW
-         gE0Aed9z0gXLhSgQdURWznp02dDhpMKp4DA0Nvh7GFcIWvp6e+h+HP4r67Qb/zjnrKgh
-         VTOsf42z3rTFgdUgo0JvSNOsOhuPTNcrCFZUV41zF6yPxmeftKrbU9eHiSl2Xc9PpJ7/
-         eOs+R4OmAoCV56SKytc6g8VgurE9yOWrOL1UDfno3Y3xqSvh4LEsMCwPzfw9xY7VIcyv
-         YSqw==
-X-Gm-Message-State: AA6/9RmNzqbkjCpmaDYHbYFJ1nfurgEc0ANsRv9rQhKRig1zSdoE2yoyswvg5bqYKSvx7LUt
-X-Received: by 10.66.5.7 with SMTP id o7mr16671468pao.19.1475864359728;
-        Fri, 07 Oct 2016 11:19:19 -0700 (PDT)
+        bh=tuUgoVpISR4jLOMr8zlXLxpJxFtVpW09ju76MYQnxMs=;
+        b=g/0wczUenShbTq1Jz7cjVlMbdYE+e46YpQbsn/7XeKRghJlTI/cvWw64DL43lZ+Rvz
+         YIUJ1mBt/JYdU63xua8cfhW2A1tx+9YAlTYrxX93Kn3FH2mLJOVwoWQaUX9tQDjQXCJ9
+         J8fih1Kmdt8zmCEXXH89T9DW/AakL+yg4RDMa0WItRzS2pmnH8tBbAga1/7slMJVJjuJ
+         rrvwfX4RNhnlSUmj9y0xNNV2+O4GDwzxY15S/dHhno5pKSliVyU/OINCxnpmoyjD35Gx
+         75Fw76qFzyuzhTXtzdk5z2K/WvILxj7pZiD5S3Ir+PiAtCZOnrC9dU2lIXULsisxiQRY
+         F6jw==
+X-Gm-Message-State: AA6/9RlHayAEJ6/E+FAZvnW1cy77eqQpT21tj3083KRTfzMjyjUHiApvIQdYMFIpAYTXNjiC
+X-Received: by 10.98.37.130 with SMTP id l124mr30268438pfl.60.1475864361074;
+        Fri, 07 Oct 2016 11:19:21 -0700 (PDT)
 Received: from nalthis.roam.corp.google.com.com ([172.19.36.144])
-        by smtp.gmail.com with ESMTPSA id s74sm15641281pfk.61.2016.10.07.11.19.18
+        by smtp.gmail.com with ESMTPSA id s74sm15641281pfk.61.2016.10.07.11.19.19
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 07 Oct 2016 11:19:18 -0700 (PDT)
+        Fri, 07 Oct 2016 11:19:20 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         peff@peff.net, gitster@pobox.com
-Subject: [PATCH v7 1/4] git: make super-prefix option
-Date:   Fri,  7 Oct 2016 11:18:48 -0700
-Message-Id: <20161007181851.15063-2-bmwill@google.com>
+Subject: [PATCH v7 2/4] ls-files: optionally recurse into submodules
+Date:   Fri,  7 Oct 2016 11:18:49 -0700
+Message-Id: <20161007181851.15063-3-bmwill@google.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20161007181851.15063-1-bmwill@google.com>
 References: <1475185723-36871-1-git-send-email-bmwill@google.com>
@@ -62,166 +61,375 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a super-prefix environment variable 'GIT_INTERNAL_SUPER_PREFIX'
-which can be used to specify a path from above a repository down to its
-root.  When such a super-prefix is specified, the paths reported by Git
-are prefixed with it to make them relative to that directory "above".
-The paths given by the user on the command line
-(e.g. "git subcmd --output-file=path/to/a/file" and pathspecs) are taken
-relative to the directory "above" to match.
-
-The immediate use of this option is by commands which have a
---recurse-submodule option in order to give context to submodules about
-how they were invoked.  This option is currently only allowed for
-builtins which support a super-prefix.
+Allow ls-files to recognize submodules in order to retrieve a list of
+files from a repository's submodules.  This is done by forking off a
+process to recursively call ls-files on all submodules. Use top-level
+--super-prefix option to pass a path to the submodule which it can
+use to prepend to output or pathspec matching logic.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/git.txt |  6 ++++++
- cache.h               |  2 ++
- environment.c         | 13 +++++++++++++
- git.c                 | 25 +++++++++++++++++++++++++
- 4 files changed, 46 insertions(+)
+ Documentation/git-ls-files.txt         |   8 +-
+ builtin/ls-files.c                     | 138 ++++++++++++++++++++++++---------
+ git.c                                  |   2 +-
+ t/t3007-ls-files-recurse-submodules.sh | 100 ++++++++++++++++++++++++
+ 4 files changed, 208 insertions(+), 40 deletions(-)
+ create mode 100755 t/t3007-ls-files-recurse-submodules.sh
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7913fc2..2188ae6 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
-     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-     [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-+    [--super-prefix=<path>]
-     <command> [<args>]
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 0d933ac..ea01d45 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -18,7 +18,8 @@ SYNOPSIS
+ 		[--exclude-per-directory=<file>]
+ 		[--exclude-standard]
+ 		[--error-unmatch] [--with-tree=<tree-ish>]
+-		[--full-name] [--abbrev] [--] [<file>...]
++		[--full-name] [--recurse-submodules]
++		[--abbrev] [--] [<file>...]
  
  DESCRIPTION
-@@ -601,6 +602,11 @@ foo.bar= ...`) sets `foo.bar` to the empty string.
- 	details.  Equivalent to setting the `GIT_NAMESPACE` environment
- 	variable.
+ -----------
+@@ -137,6 +138,11 @@ a space) at the start of each line:
+ 	option forces paths to be output relative to the project
+ 	top directory.
  
-+--super-prefix=<path>::
-+	Currently for internal use only.  Set a prefix which gives a path from
-+	above a repository down to its root.  One use is to give submodules
-+	context about the superproject that invoked it.
++--recurse-submodules::
++	Recursively calls ls-files on each submodule in the repository.
++	Currently there is only support for the --cached mode without a
++	pathspec.
 +
- --bare::
- 	Treat the repository as a bare repository.  If GIT_DIR
- 	environment is not set, it is set to the current working
-diff --git a/cache.h b/cache.h
-index 3556326..8cf495d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -408,6 +408,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_NAMESPACE_ENVIRONMENT "GIT_NAMESPACE"
- #define GIT_WORK_TREE_ENVIRONMENT "GIT_WORK_TREE"
- #define GIT_PREFIX_ENVIRONMENT "GIT_PREFIX"
-+#define GIT_SUPER_PREFIX_ENVIRONMENT "GIT_INTERNAL_SUPER_PREFIX"
- #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
- #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
- #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
-@@ -468,6 +469,7 @@ extern int get_common_dir_noenv(struct strbuf *sb, const char *gitdir);
- extern int get_common_dir(struct strbuf *sb, const char *gitdir);
- extern const char *get_git_namespace(void);
- extern const char *strip_namespace(const char *namespaced_ref);
-+extern const char *get_super_prefix(void);
- extern const char *get_git_work_tree(void);
+ --abbrev[=<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+ 	lines, show only a partial prefix.
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 00ea91a..63befed 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -14,6 +14,7 @@
+ #include "resolve-undo.h"
+ #include "string-list.h"
+ #include "pathspec.h"
++#include "run-command.h"
  
- /*
-diff --git a/environment.c b/environment.c
-index ca72464..d12d7db 100644
---- a/environment.c
-+++ b/environment.c
-@@ -100,6 +100,8 @@ static char *work_tree;
- static const char *namespace;
- static size_t namespace_len;
+ static int abbrev;
+ static int show_deleted;
+@@ -28,8 +29,10 @@ static int show_valid_bit;
+ static int line_terminator = '\n';
+ static int debug_mode;
+ static int show_eol;
++static int recurse_submodules;
  
+ static const char *prefix;
 +static const char *super_prefix;
+ static int max_prefix_len;
+ static int prefix_len;
+ static struct pathspec pathspec;
+@@ -68,11 +71,24 @@ static void write_eolinfo(const struct cache_entry *ce, const char *path)
+ static void write_name(const char *name)
+ {
+ 	/*
++	 * Prepend the super_prefix to name to construct the full_name to be
++	 * written.
++	 */
++	struct strbuf full_name = STRBUF_INIT;
++	if (super_prefix) {
++		strbuf_addstr(&full_name, super_prefix);
++		strbuf_addstr(&full_name, name);
++		name = full_name.buf;
++	}
 +
- static const char *git_dir, *git_common_dir;
- static char *git_object_dir, *git_index_file, *git_graft_file;
- int git_db_env, git_index_env, git_graft_env, git_common_dir_env;
-@@ -120,6 +122,7 @@ const char * const local_repo_env[] = {
- 	NO_REPLACE_OBJECTS_ENVIRONMENT,
- 	GIT_REPLACE_REF_BASE_ENVIRONMENT,
- 	GIT_PREFIX_ENVIRONMENT,
-+	GIT_SUPER_PREFIX_ENVIRONMENT,
- 	GIT_SHALLOW_FILE_ENVIRONMENT,
- 	GIT_COMMON_DIR_ENVIRONMENT,
- 	NULL
-@@ -222,6 +225,16 @@ const char *strip_namespace(const char *namespaced_ref)
- 	return namespaced_ref + namespace_len;
++	/*
+ 	 * With "--full-name", prefix_len=0; this caller needs to pass
+ 	 * an empty string in that case (a NULL is good for "").
+ 	 */
+ 	write_name_quoted_relative(name, prefix_len ? prefix : NULL,
+ 				   stdout, line_terminator);
++
++	strbuf_release(&full_name);
  }
  
-+const char *get_super_prefix(void)
+ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+@@ -152,55 +168,84 @@ static void show_killed_files(struct dir_struct *dir)
+ 	}
+ }
+ 
++/**
++ * Recursively call ls-files on a submodule
++ */
++static void show_gitlink(const struct cache_entry *ce)
 +{
-+	static int initialized;
-+	if (!initialized) {
-+		super_prefix = getenv(GIT_SUPER_PREFIX_ENVIRONMENT);
-+		initialized = 1;
-+	}
-+	return super_prefix;
++	struct child_process cp = CHILD_PROCESS_INIT;
++	int status;
++
++	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
++			 super_prefix ? super_prefix : "",
++			 ce->name);
++	argv_array_push(&cp.args, "ls-files");
++	argv_array_push(&cp.args, "--recurse-submodules");
++
++	cp.git_cmd = 1;
++	cp.dir = ce->name;
++	status = run_command(&cp);
++	if (status)
++		exit(status);
 +}
 +
- static int git_work_tree_initialized;
+ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
+ {
++	struct strbuf name = STRBUF_INIT;
+ 	int len = max_prefix_len;
++	if (super_prefix)
++		strbuf_addstr(&name, super_prefix);
++	strbuf_addstr(&name, ce->name);
  
- /*
-diff --git a/git.c b/git.c
-index 1c61151..469a83f 100644
---- a/git.c
-+++ b/git.c
-@@ -164,6 +164,20 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_WORK_TREE_ENVIRONMENT, cmd, 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--super-prefix")) {
-+			if (*argc < 2) {
-+				fprintf(stderr, "No prefix given for --super-prefix.\n" );
-+				usage(git_usage_string);
+ 	if (len >= ce_namelen(ce))
+ 		die("git ls-files: internal error - cache entry not superset of prefix");
+ 
+-	if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+-			    len, ps_matched,
+-			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
+-		return;
++	if (recurse_submodules && S_ISGITLINK(ce->ce_mode)) {
++		show_gitlink(ce);
++	} else if (match_pathspec(&pathspec, name.buf, name.len,
++				  len, ps_matched,
++				  S_ISDIR(ce->ce_mode) ||
++				  S_ISGITLINK(ce->ce_mode))) {
++		if (tag && *tag && show_valid_bit &&
++		    (ce->ce_flags & CE_VALID)) {
++			static char alttag[4];
++			memcpy(alttag, tag, 3);
++			if (isalpha(tag[0]))
++				alttag[0] = tolower(tag[0]);
++			else if (tag[0] == '?')
++				alttag[0] = '!';
++			else {
++				alttag[0] = 'v';
++				alttag[1] = tag[0];
++				alttag[2] = ' ';
++				alttag[3] = 0;
 +			}
-+			setenv(GIT_SUPER_PREFIX_ENVIRONMENT, (*argv)[1], 1);
-+			if (envchanged)
-+				*envchanged = 1;
-+			(*argv)++;
-+			(*argc)--;
-+		} else if (skip_prefix(cmd, "--super-prefix=", &cmd)) {
-+			setenv(GIT_SUPER_PREFIX_ENVIRONMENT, cmd, 1);
-+			if (envchanged)
-+				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--bare")) {
- 			char *cwd = xgetcwd();
- 			is_bare_repository_cfg = 1;
-@@ -310,6 +324,7 @@ static int handle_alias(int *argcp, const char ***argv)
-  * RUN_SETUP for reading from the configuration file.
-  */
- #define NEED_WORK_TREE		(1<<3)
-+#define SUPPORT_SUPER_PREFIX	(1<<4)
++			tag = alttag;
++		}
  
- struct cmd_struct {
- 	const char *cmd;
-@@ -344,6 +359,13 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 	}
- 	commit_pager_choice();
- 
-+	if (!help && get_super_prefix()) {
-+		if (!(p->option & SUPPORT_SUPER_PREFIX))
-+			die("%s doesn't support --super-prefix", p->cmd);
-+		if (prefix)
-+			die("can't use --super-prefix from a subdirectory");
-+	}
+-	if (tag && *tag && show_valid_bit &&
+-	    (ce->ce_flags & CE_VALID)) {
+-		static char alttag[4];
+-		memcpy(alttag, tag, 3);
+-		if (isalpha(tag[0]))
+-			alttag[0] = tolower(tag[0]);
+-		else if (tag[0] == '?')
+-			alttag[0] = '!';
+-		else {
+-			alttag[0] = 'v';
+-			alttag[1] = tag[0];
+-			alttag[2] = ' ';
+-			alttag[3] = 0;
++		if (!show_stage) {
++			fputs(tag, stdout);
++		} else {
++			printf("%s%06o %s %d\t",
++			       tag,
++			       ce->ce_mode,
++			       find_unique_abbrev(ce->sha1,abbrev),
++			       ce_stage(ce));
++		}
++		write_eolinfo(ce, ce->name);
++		write_name(ce->name);
++		if (debug_mode) {
++			const struct stat_data *sd = &ce->ce_stat_data;
 +
- 	if (!help && p->option & NEED_WORK_TREE)
++			printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
++			printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
++			printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
++			printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
++			printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
+ 		}
+-		tag = alttag;
+ 	}
+ 
+-	if (!show_stage) {
+-		fputs(tag, stdout);
+-	} else {
+-		printf("%s%06o %s %d\t",
+-		       tag,
+-		       ce->ce_mode,
+-		       find_unique_abbrev(ce->sha1,abbrev),
+-		       ce_stage(ce));
+-	}
+-	write_eolinfo(ce, ce->name);
+-	write_name(ce->name);
+-	if (debug_mode) {
+-		const struct stat_data *sd = &ce->ce_stat_data;
+-
+-		printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
+-		printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
+-		printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
+-		printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
+-		printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
+-	}
++	strbuf_release(&name);
+ }
+ 
+ static void show_ru_info(void)
+@@ -468,6 +513,8 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		{ OPTION_SET_INT, 0, "full-name", &prefix_len, NULL,
+ 			N_("make the output relative to the project top directory"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL },
++		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
++			N_("recurse through submodules")),
+ 		OPT_BOOL(0, "error-unmatch", &error_unmatch,
+ 			N_("if any <file> is not in the index, treat this as an error")),
+ 		OPT_STRING(0, "with-tree", &with_tree, N_("tree-ish"),
+@@ -484,6 +531,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	prefix = cmd_prefix;
+ 	if (prefix)
+ 		prefix_len = strlen(prefix);
++	super_prefix = get_super_prefix();
+ 	git_config(git_default_config, NULL);
+ 
+ 	if (read_cache() < 0)
+@@ -519,6 +567,20 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	if (require_work_tree && !is_inside_work_tree())
  		setup_work_tree();
  
-@@ -558,6 +580,9 @@ static void execv_dashed_external(const char **argv)
- 	const char *tmp;
- 	int status;
- 
-+	if (get_super_prefix())
-+		die("%s doesn't support --super-prefix", argv[0]);
++	if (recurse_submodules &&
++	    (show_stage || show_deleted || show_others || show_unmerged ||
++	     show_killed || show_modified || show_resolve_undo ||
++	     show_valid_bit || show_tag || show_eol || with_tree ||
++	     (line_terminator == '\0')))
++		die("ls-files --recurse-submodules unsupported mode");
 +
- 	if (use_pager == -1)
- 		use_pager = check_pager_config(argv[0]);
- 	commit_pager_choice();
++	if (recurse_submodules && error_unmatch)
++		die("ls-files --recurse-submodules does not support "
++		    "--error-unmatch");
++
++	if (recurse_submodules && argc)
++		die("ls-files --recurse-submodules does not support pathspec");
++
+ 	parse_pathspec(&pathspec, 0,
+ 		       PATHSPEC_PREFER_CWD |
+ 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+diff --git a/git.c b/git.c
+index 469a83f..df73768 100644
+--- a/git.c
++++ b/git.c
+@@ -443,7 +443,7 @@ static struct cmd_struct commands[] = {
+ 	{ "init-db", cmd_init_db },
+ 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+ 	{ "log", cmd_log, RUN_SETUP },
+-	{ "ls-files", cmd_ls_files, RUN_SETUP },
++	{ "ls-files", cmd_ls_files, RUN_SETUP | SUPPORT_SUPER_PREFIX },
+ 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
+ 	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
+ 	{ "mailinfo", cmd_mailinfo },
+diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+new file mode 100755
+index 0000000..b5a53c3
+--- /dev/null
++++ b/t/t3007-ls-files-recurse-submodules.sh
+@@ -0,0 +1,100 @@
++#!/bin/sh
++
++test_description='Test ls-files recurse-submodules feature
++
++This test verifies the recurse-submodules feature correctly lists files from
++submodules.
++'
++
++. ./test-lib.sh
++
++test_expect_success 'setup directory structure and submodules' '
++	echo a >a &&
++	mkdir b &&
++	echo b >b/b &&
++	git add a b &&
++	git commit -m "add a and b" &&
++	git init submodule &&
++	echo c >submodule/c &&
++	git -C submodule add c &&
++	git -C submodule commit -m "add c" &&
++	git submodule add ./submodule &&
++	git commit -m "added submodule"
++'
++
++test_expect_success 'ls-files correctly outputs files in submodule' '
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	submodule/c
++	EOF
++
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ls-files does not output files not added to a repo' '
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	submodule/c
++	EOF
++
++	echo a >not_added &&
++	echo b >b/not_added &&
++	echo c >submodule/not_added &&
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ls-files recurses more than 1 level' '
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	submodule/.gitmodules
++	submodule/c
++	submodule/subsub/d
++	EOF
++
++	git init submodule/subsub &&
++	echo d >submodule/subsub/d &&
++	git -C submodule/subsub add d &&
++	git -C submodule/subsub commit -m "add d" &&
++	git -C submodule submodule add ./subsub &&
++	git -C submodule commit -m "added subsub" &&
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules does not support using path arguments' '
++	test_must_fail git ls-files --recurse-submodules b 2>actual &&
++	test_i18ngrep "does not support pathspec" actual
++'
++
++test_expect_success '--recurse-submodules does not support --error-unmatch' '
++	test_must_fail git ls-files --recurse-submodules --error-unmatch 2>actual &&
++	test_i18ngrep "does not support --error-unmatch" actual
++'
++
++test_incompatible_with_recurse_submodules () {
++	test_expect_success "--recurse-submodules and $1 are incompatible" "
++		test_must_fail git ls-files --recurse-submodules $1 2>actual &&
++		test_i18ngrep 'unsupported mode' actual
++	"
++}
++
++test_incompatible_with_recurse_submodules -z
++test_incompatible_with_recurse_submodules -v
++test_incompatible_with_recurse_submodules -t
++test_incompatible_with_recurse_submodules --deleted
++test_incompatible_with_recurse_submodules --modified
++test_incompatible_with_recurse_submodules --others
++test_incompatible_with_recurse_submodules --stage
++test_incompatible_with_recurse_submodules --killed
++test_incompatible_with_recurse_submodules --unmerged
++test_incompatible_with_recurse_submodules --eol
++
++test_done
 -- 
 2.10.0
 
