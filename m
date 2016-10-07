@@ -7,49 +7,50 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A15520987
-	for <e@80x24.org>; Fri,  7 Oct 2016 18:34:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C542920986
+	for <e@80x24.org>; Fri,  7 Oct 2016 18:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754680AbcJGSeS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 14:34:18 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:33322 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753430AbcJGSeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 14:34:17 -0400
-Received: by mail-qt0-f178.google.com with SMTP id s49so25071474qta.0
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 11:34:16 -0700 (PDT)
+        id S1754890AbcJGSgo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 14:36:44 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:35699 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754771AbcJGSgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 14:36:43 -0400
+Received: by mail-qk0-f171.google.com with SMTP id z190so38092850qkc.2
+        for <git@vger.kernel.org>; Fri, 07 Oct 2016 11:35:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Ii/FL1c/yQykP56TCAEbJgN8twYcd0Dgi038LzURYBo=;
-        b=UL4HNSI7ZL2zylCYiDb6MRFxWB/OKx7+jegbOvt8eiVHE7igo5LweLjbZegMsj97pw
-         TcnznOO/0Bp/e3SQu8wftED3N6Cfz6I8ipT+RNUjl1Y6+l/+PO57hCAhesvNi2tJbG8+
-         pnB6pS1b2sAJQJFam9/X//QYn58knIkUVkbKCS5kG0SlEIYcBZLVJXuJpoADwRDliIVD
-         vky4aQadl1O38c8W80cASp1vFM5orkFRWyoXxXbp0jRElukf2Bxs17a2sCLiTPJ+Embp
-         Pw3/kVLCkHbCk9/nl2neX2bCxff25tqfQxvZT08SJpx8XcxgtBlMiymjrddrY8p44k8m
-         QUNg==
+        bh=7gQsYokiiLMxgI1a2NVR5IZb5fRJXI7lNSHaBg6H5Cs=;
+        b=CKoLSy2ag5KBDZFul0XYCFr1wljSppX+/uZsynI/ZRadu/VhOuAcRRMKdb0QtidsPF
+         pDA1capXs8J7cktOh524uuaoEV/CAhd6luFjCmcbakuIVwTnftDtq9Lu9X+LSqIRlyKe
+         0q51GT80MfayslZt/5w30VOoCmtOXTTu2exeMXGDDkXP1zTYhxZYz3f9214Em3dHaiHw
+         DPjzFikVl2gsfnUTHmXtb3P12AlmG9gT6bpZL9DNDubPRY4//ayQAmgwWITo/3BW61RI
+         9PmCIgJByilSpkotaWDGLPbG5g2D9CxG1BQgcJooM+SV5VHetna6ZxPMgD03mFMuyZla
+         eo2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Ii/FL1c/yQykP56TCAEbJgN8twYcd0Dgi038LzURYBo=;
-        b=KYMguXnuFMLlgTix7M/K+bMrp5xIUowme+A1Plj03/ycVb+tatqXweqvUf4haqVASu
-         EchreaapdTFQ25tWMggJFaVQt3UlW11R48dTwUHNOAf0ksA3EAD4kltra+cWJm0b9Ezh
-         scIvzUamYR49CnEkc1Qb6lEj2Qv+KfSGQCL8AXKSMxvrEggo0Lasq91MNiv4dqqoOjcO
-         N5oUB7BHqkqlqzg0hcDunqPo8YXxV73cJch7t1n5KQD7IjYBSyLdaxguB07Q0VgxSm5E
-         Rz4EsbMnVe87fRpglj08L+hOaZYQ9XFuiI40WNIm2Ap8frMGkm/rRYWkrnWkA0YXROQs
-         MWsA==
-X-Gm-Message-State: AA6/9Rm8kHcZXVrZgtpr3y1q8s7VfqYjMv8bqdXDDrr4G5qji/DVvlasfc7RpnSt9Nj4+mYOzzAWXQsO8O7MjZqX
-X-Received: by 10.200.34.6 with SMTP id o6mr8493769qto.88.1475865250892; Fri,
- 07 Oct 2016 11:34:10 -0700 (PDT)
+        bh=7gQsYokiiLMxgI1a2NVR5IZb5fRJXI7lNSHaBg6H5Cs=;
+        b=NAK530st1P1zDbp5C5Z6eZ4vNwQY/ppDuj0GDnGpEgpA/2nf5XHLhElbr0TbGviJpb
+         DNNJ+LwBL9IzU4VB17RxPXSJJwkf6xlBKWSrKkhBMZNrGwa3E991DowqNj8749RmMTIM
+         r83AXThH0DiaZd6k4xjr6dKdRo2kObqB4Bip0aFlC70M23xX592vYkT0PslIIb34TaKm
+         mXoDbyGw6jMXsAd/pMXMSV+CxPHBJUsycx5hVmQnA2fm5e3auMg5BgWhez7twzgtC4Wf
+         KAUt/5Bm6OPbzDgAncSCLQtU0EtTEEIfAsNWtojV157F3qLEdf8IChS/IFX3yna5CuEX
+         gnRw==
+X-Gm-Message-State: AA6/9RkT9UVmog/D3ZVNLvfnZ8dT8PRURLH+UrzI/ygSf/GxPJtYzPy1JUdlfEaPui5U40dW7ozRXoF5+p535ZfO
+X-Received: by 10.55.184.2 with SMTP id i2mr21646869qkf.47.1475865356554; Fri,
+ 07 Oct 2016 11:35:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Fri, 7 Oct 2016 11:34:10 -0700 (PDT)
-In-Reply-To: <20161007181851.15063-1-bmwill@google.com>
-References: <1475185723-36871-1-git-send-email-bmwill@google.com> <20161007181851.15063-1-bmwill@google.com>
+Received: by 10.12.135.40 with HTTP; Fri, 7 Oct 2016 11:35:55 -0700 (PDT)
+In-Reply-To: <CAGZ79kacgsPg-dzx7JRyhA2bq9JMb2Cyg9PjWbnKi9ZMTPw7RQ@mail.gmail.com>
+References: <1475185723-36871-1-git-send-email-bmwill@google.com>
+ <20161007181851.15063-1-bmwill@google.com> <CAGZ79kacgsPg-dzx7JRyhA2bq9JMb2Cyg9PjWbnKi9ZMTPw7RQ@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 7 Oct 2016 11:34:10 -0700
-Message-ID: <CAGZ79kacgsPg-dzx7JRyhA2bq9JMb2Cyg9PjWbnKi9ZMTPw7RQ@mail.gmail.com>
+Date:   Fri, 7 Oct 2016 11:35:55 -0700
+Message-ID: <CAGZ79kZo-hL5-rCdw2VA5ce+xpizbGUdkS8ddb6eMC8qQoRSVw@mail.gmail.com>
 Subject: Re: [PATCH v7 0/4] recursive support for ls-files
 To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
@@ -60,15 +61,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 7, 2016 at 11:18 AM, Brandon Williams <bmwill@google.com> wrote:
-> Few minor fixes pointed out Stefan
+On Fri, Oct 7, 2016 at 11:34 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Oct 7, 2016 at 11:18 AM, Brandon Williams <bmwill@google.com> wrote:
+>> Few minor fixes pointed out Stefan
+>
 
-Nit: This is not very informative, so you could provide an "interdiff"
-to the last patch, (see https://github.com/trast/tbdiff for a
-sophisticated tool,
-I usually do a git diff origin/sb/<what-junio-queued>)
-That helps reviewers as they do not need to review it all again, but
-they may remember what they annotated and see how you addressed it.
+The series itself looks good though. :)
 
 Thanks,
 Stefan
