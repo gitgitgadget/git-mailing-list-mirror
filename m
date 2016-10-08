@@ -2,60 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4C1F20986
-	for <e@80x24.org>; Fri,  7 Oct 2016 23:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0286C20986
+	for <e@80x24.org>; Sat,  8 Oct 2016 00:01:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932870AbcJGX6V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Oct 2016 19:58:21 -0400
-Received: from mail-pa0-f67.google.com ([209.85.220.67]:35217 "EHLO
-        mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932857AbcJGX6P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2016 19:58:15 -0400
-Received: by mail-pa0-f67.google.com with SMTP id qn10so3349530pac.2
-        for <git@vger.kernel.org>; Fri, 07 Oct 2016 16:58:15 -0700 (PDT)
+        id S932775AbcJHABf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Oct 2016 20:01:35 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34361 "EHLO
+        mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753684AbcJHABd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2016 20:01:33 -0400
+Received: by mail-pa0-f66.google.com with SMTP id r9so3370545paz.1
+        for <git@vger.kernel.org>; Fri, 07 Oct 2016 17:01:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/ogn81q5jUVjVcZr32TiPljY2K5NcpLJzqv6zpxHi0Y=;
-        b=RzFwq1t1dvJJ+M6B17UeP5mxEUkKy/CrWUaFrxcvj16mkBc5hnlAvRX7SYblvDtmEU
-         +nBqSP1L5e590qZ7vcwDztCsYLoIeKZw84ShSMTBLGCV1MdF8IlyI1VBQLG2bHNpv5NM
-         zMu+gYnvdr5StYEVcoMeSeiFDKI+yIy9LkVOmLfpJJajR6ftsF324Z4WGyXvo18YBcGe
-         dkbzSNwCyduBcvr50k+0qal/yGpEeLrh0FKI+P1RnRC0Vdo1gqFj4GljrRpG9hZ0PqHd
-         ClZDwaHW3cfeZ2EO84ZWnca9ZWmAIgnNMycW+jA/MS2aFfs92VA1Ww8h3c6IsAcS9Sww
-         bzmQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=x0Ce8bPBcakzP8zSOFVl8OsiSkUOClUPR0qaw1p0ONc=;
+        b=oiKykKgHeLiwvgWv1h05J80g1F8G0P0sv0EK52gJ5wally9D0whMQDNt5s+qwrRq6k
+         5isCEbPtLW9RtQSbGBe1EDXgEzGwtp8kNrSSPaF6jNwqrESRjVcorcA+cUo0EicI5L2b
+         ryt+JkifoiXeXZNa8H1p7lD2HPQBhhCr5coNTCZiAJEjUyi5AFKF0m3fJlPfqaSCH8cA
+         Zj8GAsGb1YKFCP196GPB3pozZ5q5jVEaYN2e9eM7rkDhoZQPYh2wXHNKlEO/RGoExq37
+         S9UbCLesUzPilYvi9P4zLlyfItI+gjw7AXr7tvsvK+wOcGFln+1Fl18GWuSB6rit4N9+
+         Shxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/ogn81q5jUVjVcZr32TiPljY2K5NcpLJzqv6zpxHi0Y=;
-        b=kDsfZ1efOIW408r129AKAyvN6Tc98B3A2JivZWjnBy1zum+LR9POnxRHK2jGWnAaoZ
-         K46myp8sn818PgNp4Phjv+Z2gLUirdppzlFynKIDP1XKg743o4xbU9wOMcQdZHA50LgO
-         oxA1I5TnAK7+/2z44boayn2my+GwVKHdNYXv2I9CHvXCQeEjs8ZcTYoJvPvA7nlL+i8G
-         cvvFhpDCZqjVDJVN9ev4uy69Cm0YkmwOXwzZ6iUZOn+yFxk4YX3mEysxmAPjauuPmfwm
-         2j1MSTsliCixRYR5Lrql7oyvJ0lmuZKTzuWQ1H30+ArfmfdisdBPLcC6lKXPjATBsKsK
-         kUww==
-X-Gm-Message-State: AA6/9Rl2GzJvZJRTTzf+/4xIds4bW9K9/2gQeTStcr6f15tCuIBKIxO82L3n8PjdCmLhlA==
-X-Received: by 10.66.26.209 with SMTP id n17mr34253961pag.69.1475884694261;
-        Fri, 07 Oct 2016 16:58:14 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=x0Ce8bPBcakzP8zSOFVl8OsiSkUOClUPR0qaw1p0ONc=;
+        b=jjfzPzgiQwgk4RXpm4jAtH006xntn7jYAtzD0VVqF/ahX4oINWEVXZ1+/kX1EpX0Th
+         L+ZQRTa4ZGjPmaCUNJo8W0Iqf7CQfsFaaziKv1qAgyC49h3dJgdos0YklOoo2z3DeDT/
+         OR9JMbQUBEiekCRf/CXpDnQ3eVcZq/7LUoV5f/u/j2a0E7c12bB6qKUK+0UhOmrxO1/j
+         B7k+K+D+2B4kR94sAErKq+jwu1xtCDskzP7pNMpFCwZVIUVeKWx/siROtkREsGdZzY1O
+         vsgSaquMciVQbrJsSjVUEcF1jjIMSJo3Nyq/cAdB6zqAZAM9/REbfBTalx07b/bn2+x4
+         24BQ==
+X-Gm-Message-State: AA6/9Rljuj39pp0KnOpa5A5wGVcozCp93uX68WH/FbezJWJtUf2gs+sjEp+R+K7UZ6MUew==
+X-Received: by 10.66.190.4 with SMTP id gm4mr34212585pac.210.1475884892981;
+        Fri, 07 Oct 2016 17:01:32 -0700 (PDT)
 Received: from raptor.fas.fa.disney.com (wdas-1.disneyanimation.com. [198.187.190.1])
-        by smtp.gmail.com with ESMTPSA id c27sm16662890pfe.6.2016.10.07.16.58.12
+        by smtp.gmail.com with ESMTPSA id ps2sm33694463pab.31.2016.10.07.17.01.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Oct 2016 16:58:13 -0700 (PDT)
+        Fri, 07 Oct 2016 17:01:32 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Luis Gutierrez <luisgutz@gmail.com>
-Subject: [PATCH v3 4/4] mergetool: honor -O<orderfile>
-Date:   Fri,  7 Oct 2016 16:58:06 -0700
-Message-Id: <20161007235806.22247-4-davvid@gmail.com>
+Subject: [PATCH v4 4/4] mergetool: honor -O<orderfile>
+Date:   Fri,  7 Oct 2016 17:01:30 -0700
+Message-Id: <20161008000130.22858-1-davvid@gmail.com>
 X-Mailer: git-send-email 2.10.1.386.g8ee99a0
-In-Reply-To: <20161007235806.22247-1-davvid@gmail.com>
-References: <20161007235806.22247-1-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,14 +64,10 @@ specified on the command-line.
 Helped-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-Changes since v2:
+Since v3:
 
-The tests no longer rely on "grep -A" and instead use "git grep"
-for portability.  The mergetool output in the test is redirected
-to a file so that we can catch its exit code.
-
-The $orderfile variable is now passed using ${xxx:+"$xxx"}
-to avoid conditional logic.
+I missed one last piped invocation of "git mergetool" in the tests,
+which has been fixed.
 
  Documentation/git-mergetool.txt | 10 ++++++----
  git-mergetool.sh                |  9 +++++++--
@@ -144,7 +137,7 @@ index 65696d8..e52b4e4 100755
  	cd_to_toplevel
  
 diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 38c1e4d..5cfad76 100755
+index 38c1e4d..6d9f215 100755
 --- a/t/t7610-mergetool.sh
 +++ b/t/t7610-mergetool.sh
 @@ -638,5 +638,32 @@ test_expect_success 'diff.orderFile configuration is honored' '
@@ -161,8 +154,8 @@ index 38c1e4d..5cfad76 100755
 +		a
 +		b
 +	EOF
-+	git mergetool -O/dev/null --no-prompt --tool myecho |
-+	grep -A 2 Merging: >actual &&
++	git mergetool -O/dev/null --no-prompt --tool myecho >output &&
++	git grep --no-index -h -A2 Merging: output >actual &&
 +	test_cmp expect actual &&
 +	git reset --hard >/dev/null 2>&1 &&
 +
