@@ -7,81 +7,111 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7887E207EC
-	for <e@80x24.org>; Sat,  8 Oct 2016 08:40:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF819207EC
+	for <e@80x24.org>; Sat,  8 Oct 2016 09:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755137AbcJHIhK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Oct 2016 04:37:10 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52245 "EHLO mout.gmx.net"
+        id S1753287AbcJHJMG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Oct 2016 05:12:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60365 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753343AbcJHIhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2016 04:37:06 -0400
+        id S1752731AbcJHJME (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2016 05:12:04 -0400
 Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LrNoG-1as0Qx1CeK-0134g7; Sat, 08 Oct 2016 10:36:44
+ ESMTPSA (Nemesis) id 0LpsmR-1bGysR0zJ9-00fl8n; Sat, 08 Oct 2016 11:11:52
  +0200
-Date:   Sat, 8 Oct 2016 10:36:13 +0200 (CEST)
+Date:   Sat, 8 Oct 2016 11:11:50 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
-In-Reply-To: <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1610081034430.35196@virtualbox>
-References: <20161006114124.4966-1-pclouds@gmail.com> <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610071319520.35196@virtualbox> <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com> <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
- <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 05/25] sequencer: allow the sequencer to take custody
+ of malloc()ed data
+In-Reply-To: <xmqqeg3tjn7n.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610081108520.35196@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de> <942aa559a0af9b52e079c5c78fa313f49b87d50d.1473590966.git.johannes.schindelin@gmx.de> <xmqqzinc295y.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610051338530.35196@virtualbox> <xmqqeg3tjn7n.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:akLzXfXZDkdbIjoLpWHxbtaAJWimeOAsuFWnlV2YHpyIV4cFVgw
- rllDAcHg3dptfheYyBOuafBRcdI9blspB1RzF2KmgQewEixWn1P7y4puHS4z0DghvH/PK7w
- z1gzQ+hwabuVhTLmdLxjYg8NfBFqOXxn7A0uPCI451bWFvo0GClMEN+N40foc4MGuhNEEM/
- 0bsRTLNnz6uZtZsunAOLQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ip4YIlXOHRE=:9mRnEADR49ng2CoCEFkYuM
- ciEz4oT2h/nuTGiINb4If9fCZbA61kWxpffMI8FzOFSR2hfaVWvULh642LFdA3kmyUr6euhtf
- GVF1X2pN+RXf6nZ9oaGlAdxt6bL9d4jPvVesDuILl6YmCh0WNJILbTV7beSOhI3xPSTJzPafr
- 7mQwz6GMcGQ71Rj3gvfS+ksO4v8/QzPWIRo5CSAVRvdNu4ghetNWcEuFwKtn0hpcCRTHi1Eiw
- /Q/Y7wCHo0g3VAzwvOgrYWNI/HqZqzCn+zCP2NooKBoXIT1gZJDmVW9LiZYMHXywD9G+RhZsy
- xFa76b9qXPowO7Ga/QeoHak1nDZ2JnUn4ruymiYd7lwfi3UYum3mijIJmbbm51Q+2rl3hyNaW
- UoyUmzKTZLmn9XSu5voRwQqPCibhBZ71ixl8XjO68V/ygdFkzG0OFWzooUKmKeaqitUkCFn1E
- AhrGAUfvLqlNysSxNMDfS3U84gp8b5VYj4ZkyrRmYl84ROhuWu4OyBvf2XrgAGVG7oitjwRhu
- cjpVpLtSVE/VkhCZHkf6VtaYLiArHxgFABY5vOnhdqKibk73/nn7II7ZU47RWx1uggNNxzYk7
- CONSDTfOLuDQcVucp/stfB/zcPyLqADxbmXCwNyZex/7ShnsxRErqAGhR2BQuL2rYl7nI+ArW
- PxaquETfc4gelRFq1NMJbYWo40sReYMVwCC9ljjbNKI7Ac9h8DFDHluTzuzmlpQM6FziANIMf
- wL+uKj1ZM6PNDg1yeeLUuSasSghjS5yFoABAcLgQDDVTIWffOG129gxGpLifLuRho6fLxyIKl
- 9WKyyKL
+X-Provags-ID: V03:K0:KzjwBVoxZEIZIwgem0dpzwr1VU3oW6qJSFJbKaNzMJNcOEo+MeA
+ 8eJmDAAPl+Yuee27VVu0JaiiIUoplp7C4j+BKUi8zEu4UseO82/P4XKNX5+qBtumw/fITM0
+ UD02wyjI+gdzBndvPw79exfGssOCO4rBHmu3e7/68+dlci8hXQvqYQnm4/sPYG8pIoX0E1M
+ UzCwA2U58QCX5xCfxynSQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e8vvY/+OV28=:Txs/+IWC3QVPcfwoQpPcFU
+ MNDIG1mBm8jBCGpgDm3JKCD0UyNqUqXPn1BfGJVF9O8YPFzgIHy6/gmorQupeS4KT96MzOvOI
+ NFIBeJmqs2+brOGBm+2rt7iCpmVFGBwQk9GLt8I8VjYz8YB2IjmpzxZkvmyTZCfB9l82BkJna
+ 9RUI1i8+BQJVGQOjPx+SmmYBnykQ5JB7PWYzJZpOHP7GRc6N9iONxxFT2k0c1Z5ouzhGchhKG
+ dcCdcQ2up+9LvSOQrud2OaUM+fAHSviiJhZhZyM6P7ATz8NAibgTcsQsUnsMMUfa29Yt3J/V3
+ 1vTyUtCx6o9cPal7S9ZxQbSzHR1QUwaTo9rQ33lT8wFvOYZ4wGav91MtVWVWeGoWihxehhtwS
+ 3i5BxpD4LS7wQRXvrtcWxmowDCRSIuOV6/bMT71AOQ8ONIiVkACqNwStwJNWoEz8fs3y6klyI
+ G357hBG0fM8JeivpdNofSWh7Oa/lsuNdrxneLFiKf9t5DgK04aoJE6JNghyCbcLMspfdF7IXC
+ f+bXG4EOyvoLhLPVK5yBfZUA8m0QEmJJWhzzBS5zSAGqC42pdXDx26Q7wdy3NXVgnB5xVK0jO
+ jsSCf7XbQ1yZk1prByXVYuLSGtouGK19UEXb4PwFlO0Du9Xr0TbWN/Z0q4/Vns4foAuvg21ic
+ IwDexcIeIRzk9F+h91saxE7k2j6ukJBDfLAMG2gKrNNlnbymyAr83QXfbWVlSJdZHiLA84Ho/
+ L/M89lKWMysJ/BMnH4yo6lL1IVotHqOUt1n846UfBFJeBI4SJByhlRmfrnQQ29bOe81umW9KN
+ egWGgMn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff & Hannes,
+Hi Junio,
 
-On Fri, 7 Oct 2016, Jeff King wrote:
+On Thu, 6 Oct 2016, Junio C Hamano wrote:
 
-> On Fri, Oct 07, 2016 at 07:42:35PM +0200, Johannes Sixt wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Maybe it's time to aim for
-> > 
-> >   git config alias.d2u.shell \
-> >        'f() { git ls-files "$@" | xargs dos2unix; }; f'
-> >   git config alias.d2u.cdup false
-> >   git d2u *.c   # yada!
+> > If you prefer to accept such sloppy work, I will change it of course,
+> > feeling dirty that it has my name on it.
 > 
-> That would be nice. It would also allow "alias.foo_bar.shell"; right now
-> "alias.foo_bar" is forbidden because of the config syntax, which does
-> not allow underscores outside of the "subsection" name.
+> I do want neither leaks nor sloppyness, and I thought that was
+> understood by everybody, hence I thought the last round made it
+> clear that _entrust() must not exist.
 
-So what about this?
+Well, you leave me with but one choice. With shame in my face I will send
+out the next re-roll with this construct:
 
-	[alias]
-		d2u = !dos2unix
-	[alias "d2u"]
-		shell = 'f() { git ls-files "$@" | xargs dos2unix; }; f'
-		exec = C:/cygwin64/bin/dos2unix.exe
+@@ -796,24 +1002,52 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+                opts->allow_ff = git_config_bool_or_int(key, value, &error_flag);
+        else if (!strcmp(key, "options.mainline"))
+                opts->mainline = git_config_int(key, value);
+-       else if (!strcmp(key, "options.strategy"))
+-               git_config_string(&opts->strategy, key, value);
+-       else if (!strcmp(key, "options.gpg-sign"))
+-               git_config_string(&opts->gpg_sign, key, value);
++       else if (!strcmp(key, "options.strategy")) {
++               if (!value)
++                       config_error_nonbool(key);
++               else {
++                       free(opts->strategy);
++                       opts->strategy = xstrdup(value);
++               }
++       }
++       else if (!strcmp(key, "options.gpg-sign")) {
++               if (!value)
++                       config_error_nonbool(key);
++               else {
++                       free(opts->gpg_sign);
++                       opts->gpg_sign = xstrdup(value);
++               }
++       }
+...
+@@ -37,18 +26,32 @@ struct replay_opts {
 
-You introduce all kinds of ambiguities here that did not exist before...
+        int mainline;
+
+-       const char *gpg_sign;
++       char *gpg_sign;
+
+        /* Merge strategy */
+-       const char *strategy;
+-       const char **xopts;
++       char *strategy;
++       char **xopts;
+
+(this is not the complete diff, of course, but you get the idea.)
 
 Ciao,
 Dscho
