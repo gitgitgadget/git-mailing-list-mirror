@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCF4207EC
-	for <e@80x24.org>; Sat,  8 Oct 2016 11:26:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB8CB207EC
+	for <e@80x24.org>; Sat,  8 Oct 2016 11:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932764AbcJHL0K (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Oct 2016 07:26:10 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33114 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935058AbcJHLZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2016 07:25:51 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i130so6638410wmg.0
-        for <git@vger.kernel.org>; Sat, 08 Oct 2016 04:25:50 -0700 (PDT)
+        id S935119AbcJHL0M (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Oct 2016 07:26:12 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35587 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932750AbcJHLZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2016 07:25:53 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f193so6634998wmg.2
+        for <git@vger.kernel.org>; Sat, 08 Oct 2016 04:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yRxk9oy8nJzCZ07ANCmhFLaXcMjX60DE3UvJYcoQcYo=;
-        b=fBQm9MQEJtIRHZPF1W7phhf7Q2DxXUzOWfxPFe5FQ7rKS7/fbh53TMrKqQqjQ5Kz3f
-         80rAPkiyrsVgCNzRwTiTT4D12TM/DQLqmTF5rNNq79yFbFam5oMddyYMBIzQ/WI5e0d6
-         nlCwoaDwIzXmEmCFl+e250iXv6doZLePS5nI2uUo5gdoPHS71eErXU3frujYcKH7JWpN
-         8I5aIYvVV4S/WO/UGC58dT2c8A/qkH4jDnWfDM2Nb8nFSb5nPIGSYpXhjWm5rx+cI+Ug
-         fRVMShpqreVmItcpxG98WvIfBrk8iL8ZYq/5KNwcpN7BhXa4hEs08L6cW89RpNHkgE4n
-         o6Lw==
+        bh=IQ2hG4bGRVXrYZLcozRb/QBEBzTemEuIT+uH9yb1mno=;
+        b=FEBW9BGIexCbW2KSgGYAOpOAUOSDFDZ0DxWoXKwaVRUzQ0X9jAMtDNpnSKoSQ/XM4v
+         wvlKJVMi/4wSjb4ZEZC43J7RLk6UmVeGL/RBmb1WrBGm34dkPdIYbQ9GUr18GXkQHXGU
+         /Wn/bF0WtRC1iXl0SipsKTFo1ilsDUoTDKCrIb4ixyE4NsMGOPvrd1iANA42b2f1s1vV
+         mkVfY96po80XS385cp4Si44LuaDMyQklDX9ubqQedS73DDKEZoQNwkR+BsHw0+XV8e37
+         T54mP7PFImGUmZk0Z3hfwz/sDx+9xcLtULaI96TqNjhNC4TvZgaWg+GF7zfOquIjXS/g
+         +z2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yRxk9oy8nJzCZ07ANCmhFLaXcMjX60DE3UvJYcoQcYo=;
-        b=CW67HHJMi4Xi70/9fMc1dvitQr2MNnBkoUNu+7YGPt8PgsYybJ23+RTY8vurF9zHd3
-         0ZUH8r+O9+kSqEm7s83NIMYxwabXIJI+OKRLoHS1eAtWwlXY8JuDAHOwBlk0+ziGlbey
-         UFdpNzXih36fj3qHmJfi2hXoIgUqUD/nTowv8G7AUYClg1qd2rxYdyNIIjfRvPFvxNwd
-         VqgpIUQrMED7ciC2RnhorhbPdp4pmkga4lXP79NFu8kOqLsnvWP8KAAX6U5Ve9RjUTA6
-         ljtjwu4Ktp+X//iK7nuUbQCJApkVkLngXgXwgEA2iKj2Fu8p4NkMsi/U97zKn7ttksa6
-         Aj2Q==
-X-Gm-Message-State: AA6/9RlgLEYkQ5wgmSpq+g8fuhzVfzVqrsTMpAKx+kT7AEYsn08rUTAu28X+HUiQk/sTEQ==
-X-Received: by 10.194.123.5 with SMTP id lw5mr20575031wjb.174.1475925949469;
-        Sat, 08 Oct 2016 04:25:49 -0700 (PDT)
+        bh=IQ2hG4bGRVXrYZLcozRb/QBEBzTemEuIT+uH9yb1mno=;
+        b=QBObVJqMcvb3Bs7ItVId0z1rYyesFtat/qM8Q7kIii88+GoPNxvF+wJafKZIbzS0XA
+         zGj+lvNzzb/17SVMVamxP++JCtMuiBbgSFJL2WjgRuAPIqhEc8W9N+zoDybvi4xkJ6tQ
+         3qKn+xBqqgRUFBIKJnND9GGv7zG89ANlKMoIoUu+7dpZRAQH2N/DswDCoFFpcvxbIM4Q
+         j6b5dY/HPL3TrfhNu8rAsVua2RWWjjQVM0U1mI131OKRoVobaXuX2KyC+UKEGaahJEf1
+         7K5NvNj37/gLmegHJlvFV/IHLH//5KqqxkN5f3JZF0I4Cozzi7nDc/CTc8KL5fmMReWu
+         QUoQ==
+X-Gm-Message-State: AA6/9RmfTD7TGRHLj7GAy8gvQ1HQKhzs0gOqPD/pTnkYbBAnO/3TKsJLlcN/XO+Anmmfew==
+X-Received: by 10.28.169.198 with SMTP id s189mr2481430wme.23.1475925946097;
+        Sat, 08 Oct 2016 04:25:46 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB73B1.dip0.t-ipconnect.de. [93.219.115.177])
-        by smtp.gmail.com with ESMTPSA id a1sm24599623wju.41.2016.10.08.04.25.48
+        by smtp.gmail.com with ESMTPSA id a1sm24599623wju.41.2016.10.08.04.25.44
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 08 Oct 2016 04:25:48 -0700 (PDT)
+        Sat, 08 Oct 2016 04:25:45 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, jnareb@gmail.com, peff@peff.net,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v10 13/14] convert: add filter.<driver>.process option
-Date:   Sat,  8 Oct 2016 13:25:29 +0200
-Message-Id: <20161008112530.15506-14-larsxschneider@gmail.com>
+Subject: [PATCH v10 10/14] pkt-line: add functions to read/write flush terminated packet streams
+Date:   Sat,  8 Oct 2016 13:25:26 +0200
+Message-Id: <20161008112530.15506-11-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20161008112530.15506-1-larsxschneider@gmail.com>
 References: <20161008112530.15506-1-larsxschneider@gmail.com>
@@ -63,1262 +63,136 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Git's clean/smudge mechanism invokes an external filter process for
-every single blob that is affected by a filter. If Git filters a lot of
-blobs then the startup time of the external filter processes can become
-a significant part of the overall Git execution time.
+write_packetized_from_fd() and write_packetized_from_buf() write a
+stream of packets. All content packets use the maximal packet size
+except for the last one. After the last content packet a `flush` control
+packet is written.
 
-In a preliminary performance test this developer used a clean/smudge
-filter written in golang to filter 12,000 files. This process took 364s
-with the existing filter mechanism and 5s with the new mechanism. See
-details here: https://github.com/github/git-lfs/pull/1382
+read_packetized_to_strbuf() reads arbitrary sized packets until it
+detects a `flush` packet.
 
-This patch adds the `filter.<driver>.process` string option which, if
-used, keeps the external filter process running and processes all blobs
-with the packet format (pkt-line) based protocol over standard input and
-standard output. The full protocol is explained in detail in
-`Documentation/gitattributes.txt`.
-
-A few key decisions:
-
-* The long running filter process is referred to as filter protocol
-  version 2 because the existing single shot filter invocation is
-  considered version 1.
-* Git sends a welcome message and expects a response right after the
-  external filter process has started. This ensures that Git will not
-  hang if a version 1 filter is incorrectly used with the
-  filter.<driver>.process option for version 2 filters. In addition,
-  Git can detect this kind of error and warn the user.
-* The status of a filter operation (e.g. "success" or "error) is set
-  before the actual response and (if necessary!) re-set after the
-  response. The advantage of this two step status response is that if
-  the filter detects an error early, then the filter can communicate
-  this and Git does not even need to create structures to read the
-  response.
-* All status responses are pkt-line lists terminated with a flush
-  packet. This allows us to send other status fields with the same
-  protocol in the future.
-
-Helped-by: Martin-Louis Bright <mlbright@gmail.com>
-Reviewed-by: Jakub Narebski <jnareb@gmail.com>
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/gitattributes.txt | 157 +++++++++++++-
- convert.c                       | 297 +++++++++++++++++++++++++-
- t/t0021-conversion.sh           | 447 +++++++++++++++++++++++++++++++++++++++-
- t/t0021/rot13-filter.pl         | 191 +++++++++++++++++
- 4 files changed, 1082 insertions(+), 10 deletions(-)
- create mode 100755 t/t0021/rot13-filter.pl
+ pkt-line.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pkt-line.h |  8 +++++++
+ 2 files changed, 80 insertions(+)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 7aff940..5868f00 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -293,7 +293,13 @@ checkout, when the `smudge` command is specified, the command is
- fed the blob object from its standard input, and its standard
- output is used to update the worktree file.  Similarly, the
- `clean` command is used to convert the contents of worktree file
--upon checkin.
-+upon checkin. By default these commands process only a single
-+blob and terminate.  If a long running `process` filter is used
-+in place of `clean` and/or `smudge` filters, then Git can process
-+all blobs with a single filter command invocation for the entire
-+life of a single Git command, for example `git add --all`.  See
-+section below for the description of the protocol used to
-+communicate with a `process` filter.
+diff --git a/pkt-line.c b/pkt-line.c
+index dca5a64..0b5125f 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -197,6 +197,46 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	va_end(args);
+ }
  
- One use of the content filtering is to massage the content into a shape
- that is more convenient for the platform, filesystem, and the user to use.
-@@ -373,6 +379,155 @@ not exist, or may have different contents. So, smudge and clean commands
- should not try to access the file on disk, but only act as filters on the
- content provided to them on standard input.
- 
-+Long Running Filter Process
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
++int write_packetized_from_fd(int fd_in, int fd_out)
++{
++	static char buf[LARGE_PACKET_DATA_MAX];
++	int err = 0;
++	ssize_t bytes_to_write;
 +
-+If the filter command (a string value) is defined via
-+`filter.<driver>.process` then Git can process all blobs with a
-+single filter invocation for the entire life of a single Git
-+command. This is achieved by using a packet format (pkt-line,
-+see technical/protocol-common.txt) based protocol over standard
-+input and standard output as follows. All packets, except for the
-+"*CONTENT" packets and the "0000" flush packet, are considered
-+text and therefore are terminated by a LF.
++	while (!err) {
++		bytes_to_write = xread(fd_in, buf, sizeof(buf));
++		if (bytes_to_write < 0)
++			return COPY_READ_ERROR;
++		if (bytes_to_write == 0)
++			break;
++		err = packet_write_gently(fd_out, buf, bytes_to_write);
++	}
++	if (!err)
++		err = packet_flush_gently(fd_out);
++	return err;
++}
 +
-+Git starts the filter when it encounters the first file
-+that needs to be cleaned or smudged. After the filter started
-+Git sends a welcome message ("git-filter-client"), a list of
-+supported protocol version numbers, and a flush packet. Git expects
-+to read a welcome response message ("git-filter-server") and exactly
-+one protocol version number from the previously sent list. All further
-+communication will be based on the selected version. The remaining
-+protocol description below documents "version=2". Please note that
-+"version=42" in the example below does not exist and is only there
-+to illustrate how the protocol would look like with more than one
-+version.
++int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
++{
++	int err = 0;
++	size_t bytes_written = 0;
++	size_t bytes_to_write;
 +
-+After the version negotiation Git sends a list of all capabilities that
-+it supports and a flush packet. Git expects to read a list of desired
-+capabilities, which must be a subset of the supported capabilities list,
-+and a flush packet as response:
-+------------------------
-+packet:          git> git-filter-client
-+packet:          git> version=2
-+packet:          git> version=42
-+packet:          git> 0000
-+packet:          git< git-filter-server
-+packet:          git< version=2
-+packet:          git> clean=true
-+packet:          git> smudge=true
-+packet:          git> not-yet-invented=true
-+packet:          git> 0000
-+packet:          git< clean=true
-+packet:          git< smudge=true
-+packet:          git< 0000
-+------------------------
-+Supported filter capabilities in version 2 are "clean" and
-+"smudge".
++	while (!err) {
++		if ((len - bytes_written) > LARGE_PACKET_DATA_MAX)
++			bytes_to_write = LARGE_PACKET_DATA_MAX;
++		else
++			bytes_to_write = len - bytes_written;
++		if (bytes_to_write == 0)
++			break;
++		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
++		bytes_written += bytes_to_write;
++	}
++	if (!err)
++		err = packet_flush_gently(fd_out);
++	return err;
++}
 +
-+Afterwards Git sends a list of "key=value" pairs terminated with
-+a flush packet. The list will contain at least the filter command
-+(based on the supported capabilities) and the pathname of the file
-+to filter relative to the repository root. Right after these packets
-+Git sends the content split in zero or more pkt-line packets and a
-+flush packet to terminate content. Please note, that the filter
-+must not send any response before it received the content and the
-+final flush packet.
-+------------------------
-+packet:          git> command=smudge
-+packet:          git> pathname=path/testfile.dat
-+packet:          git> 0000
-+packet:          git> CONTENT
-+packet:          git> 0000
-+------------------------
+ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+ 			   void *dst, unsigned size, int options)
+ {
+@@ -306,3 +346,35 @@ char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+ {
+ 	return packet_read_line_generic(-1, src, src_len, dst_len);
+ }
 +
-+The filter is expected to respond with a list of "key=value" pairs
-+terminated with a flush packet. If the filter does not experience
-+problems then the list must contain a "success" status. Right after
-+these packets the filter is expected to send the content in zero
-+or more pkt-line packets and a flush packet at the end. Finally, a
-+second list of "key=value" pairs terminated with a flush packet
-+is expected. The filter can change the status in the second list.
-+------------------------
-+packet:          git< status=success
-+packet:          git< 0000
-+packet:          git< SMUDGED_CONTENT
-+packet:          git< 0000
-+packet:          git< 0000  # empty list, keep "status=success" unchanged!
-+------------------------
++ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
++{
++	int packet_len;
 +
-+If the result content is empty then the filter is expected to respond
-+with a "success" status and an empty list.
-+------------------------
-+packet:          git< status=success
-+packet:          git< 0000
-+packet:          git< 0000  # empty content!
-+packet:          git< 0000  # empty list, keep "status=success" unchanged!
-+------------------------
++	size_t orig_len = sb_out->len;
++	size_t orig_alloc = sb_out->alloc;
 +
-+In case the filter cannot or does not want to process the content,
-+it is expected to respond with an "error" status. Depending on the
-+`filter.<driver>.required` flag Git will interpret that as error
-+but it will not stop or restart the filter process.
-+------------------------
-+packet:          git< status=error
-+packet:          git< 0000
-+------------------------
++	for (;;) {
++		strbuf_grow(sb_out, LARGE_PACKET_DATA_MAX);
++		packet_len = packet_read(fd_in, NULL, NULL,
++			/* strbuf_grow() above always allocates one extra byte to
++			 * store a '\0' at the end of the string. packet_read()
++			 * writes a '\0' extra byte at the end, too. Let it know
++			 * that there is already room for the extra byte.
++			 */
++			sb_out->buf + sb_out->len, LARGE_PACKET_DATA_MAX+1,
++			PACKET_READ_GENTLE_ON_EOF);
++		if (packet_len <= 0)
++			break;
++		sb_out->len += packet_len;
++	}
 +
-+If the filter experiences an error during processing, then it can
-+send the status "error" after the content was (partially or
-+completely) sent. Depending on the `filter.<driver>.required` flag
-+Git will interpret that as error but it will not stop or restart the
-+filter process.
-+------------------------
-+packet:          git< status=success
-+packet:          git< 0000
-+packet:          git< HALF_WRITTEN_ERRONEOUS_CONTENT
-+packet:          git< 0000
-+packet:          git< status=error
-+packet:          git< 0000
-+------------------------
-+
-+If the filter dies during the communication or does not adhere to
-+the protocol then Git will stop the filter process and restart it
-+with the next file that needs to be processed. Depending on the
-+`filter.<driver>.required` flag Git will interpret that as error.
-+
-+The error handling for all cases above mimic the behavior of
-+the `filter.<driver>.clean` / `filter.<driver>.smudge` error
-+handling.
-+
-+In case the filter cannot or does not want to process the content
-+as well as any future content for the lifetime of the Git process,
-+it is expected to respond with an "abort" status at any point in
-+the protocol. Depending on the `filter.<driver>.required` flag Git
-+will interpret that as error for the content as well as any future
-+content for the lifetime of the Git process but it will not stop or
-+restart the filter process.
-+------------------------
-+packet:          git< status=abort
-+packet:          git< 0000
-+------------------------
-+
-+After the filter has processed a blob it is expected to wait for
-+the next "key=value" list containing a command. Git will close
-+the command pipe on exit. The filter is expected to detect EOF
-+and exit gracefully on its own.
-+
-+If you develop your own long running filter
-+process then the `GIT_TRACE_PACKET` environment variables can be
-+very helpful for debugging (see linkgit:git[1]).
-+
-+If a `filter.<driver>.process` command is configured then it
-+always takes precedence over a configured `filter.<driver>.clean`
-+or `filter.<driver>.smudge` command.
-+
-+Please note that you cannot use an existing `filter.<driver>.clean`
-+or `filter.<driver>.smudge` command with `filter.<driver>.process`
-+because the former two use a different inter process communication
-+protocol than the latter one.
-+
-+
- Interaction between checkin/checkout attributes
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
-diff --git a/convert.c b/convert.c
-index 71e11ff..1d89632 100644
---- a/convert.c
-+++ b/convert.c
-@@ -3,6 +3,7 @@
- #include "run-command.h"
- #include "quote.h"
- #include "sigchain.h"
-+#include "pkt-line.h"
++	if (packet_len < 0) {
++		if (orig_alloc == 0)
++			strbuf_release(sb_out);
++		else
++			strbuf_setlen(sb_out, orig_len);
++		return packet_len;
++	}
++	return sb_out->len - orig_len;
++}
+diff --git a/pkt-line.h b/pkt-line.h
+index 3fa0899..18eac64 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -25,6 +25,8 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int write_packetized_from_fd(int fd_in, int fd_out);
++int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
  
  /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -490,11 +491,289 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
- #define CAP_CLEAN    (1u<<0)
- #define CAP_SMUDGE   (1u<<1)
+  * Read a packetized line into the buffer, which must be at least size bytes
+@@ -77,8 +79,14 @@ char *packet_read_line(int fd, int *size);
+  */
+ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
  
-+struct cmd2process {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	unsigned int supported_capabilities;
-+	const char *cmd;
-+	struct child_process process;
-+};
++/*
++ * Reads a stream of variable sized packets until a flush packet is detected.
++ */
++ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
 +
-+static int cmd_process_map_initialized;
-+static struct hashmap cmd_process_map;
-+
-+static int cmd2process_cmp(const struct cmd2process *e1,
-+			   const struct cmd2process *e2,
-+			   const void *unused)
-+{
-+	return strcmp(e1->cmd, e2->cmd);
-+}
-+
-+static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
-+{
-+	struct cmd2process key;
-+	hashmap_entry_init(&key, strhash(cmd));
-+	key.cmd = cmd;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
-+
-+static int packet_write_list(int fd, const char *line, ...)
-+{
-+	va_list args;
-+	int err;
-+	va_start(args, line);
-+	for (;;) {
-+		if (!line)
-+			break;
-+		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-+			return -1;
-+		err = packet_write_fmt_gently(fd, "%s\n", line);
-+		if (err)
-+			return err;
-+		line = va_arg(args, const char*);
-+	}
-+	va_end(args);
-+	return packet_flush_gently(fd);
-+}
-+
-+static void read_multi_file_filter_status(int fd, struct strbuf *status) {
-+	struct strbuf **pair;
-+	char *line;
-+	for (;;) {
-+		line = packet_read_line(fd, NULL);
-+		if (!line)
-+			break;
-+		pair = strbuf_split_str(line, '=', 2);
-+		if (pair[0] && pair[0]->len && pair[1]) {
-+			/* the last "status=<foo>" line wins */
-+			if (!strcmp(pair[0]->buf, "status=")) {
-+				strbuf_reset(status);
-+				strbuf_addbuf(status, pair[1]);
-+			}
-+		}
-+		strbuf_list_free(pair);
-+	}
-+}
-+
-+static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *entry)
-+{
-+	if (!entry)
-+		return;
-+
-+	entry->process.clean_on_exit = 0;
-+	kill(entry->process.pid, SIGTERM);
-+	finish_command(&entry->process);
-+
-+	hashmap_remove(hashmap, entry, NULL);
-+	free(entry);
-+}
-+
-+void stop_multi_file_filter(struct child_process *process)
-+{
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	/* Closing the pipe signals the filter to initiate a shutdown. */
-+	close(process->in);
-+	close(process->out);
-+	sigchain_pop(SIGPIPE);
-+	/* Finish command will wait until the shutdown is complete. */
-+	finish_command(process);
-+}
-+
-+static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
-+{
-+	int err;
-+	struct cmd2process *entry;
-+	struct child_process *process;
-+	const char *argv[] = { cmd, NULL };
-+	struct string_list cap_list = STRING_LIST_INIT_NODUP;
-+	char *cap_buf;
-+	const char *cap_name;
-+
-+	entry = xmalloc(sizeof(*entry));
-+	entry->cmd = cmd;
-+	entry->supported_capabilities = 0;
-+	process = &entry->process;
-+
-+	child_process_init(process);
-+	process->argv = argv;
-+	process->use_shell = 1;
-+	process->in = -1;
-+	process->out = -1;
-+	process->clean_on_exit = 1;
-+	process->clean_on_exit_handler = stop_multi_file_filter;
-+
-+	if (start_command(process)) {
-+		error("cannot fork to run external filter '%s'", cmd);
-+		return NULL;
-+	}
-+
-+	hashmap_entry_init(entry, strhash(cmd));
-+
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+
-+	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
-+	if (err)
-+		goto done;
-+
-+	err = strcmp(packet_read_line(process->out, NULL), "git-filter-server");
-+	if (err) {
-+		error("external filter '%s' does not support filter protocol version 2", cmd);
-+		goto done;
-+	}
-+	err = strcmp(packet_read_line(process->out, NULL), "version=2");
-+	if (err)
-+		goto done;
-+
-+	err = packet_write_list(process->in, "clean=true", "smudge=true", NULL);
-+
-+	for (;;) {
-+		cap_buf = packet_read_line(process->out, NULL);
-+		if (!cap_buf)
-+			break;
-+		string_list_split_in_place(&cap_list, cap_buf, '=', 1);
-+
-+		if (cap_list.nr != 2 || strcmp(cap_list.items[1].string, "true"))
-+			continue;
-+
-+		cap_name = cap_list.items[0].string;
-+		if (!strcmp(cap_name, "clean")) {
-+			entry->supported_capabilities |= CAP_CLEAN;
-+		} else if (!strcmp(cap_name, "smudge")) {
-+			entry->supported_capabilities |= CAP_SMUDGE;
-+		} else {
-+			warning(
-+				"external filter '%s' requested unsupported filter capability '%s'",
-+				cmd, cap_name
-+			);
-+		}
-+
-+		string_list_clear(&cap_list, 0);
-+	}
-+
-+done:
-+	sigchain_pop(SIGPIPE);
-+
-+	if (err || errno == EPIPE) {
-+		error("initialization for external filter '%s' failed", cmd);
-+		kill_multi_file_filter(hashmap, entry);
-+		return NULL;
-+	}
-+
-+	hashmap_add(hashmap, entry);
-+	return entry;
-+}
-+
-+static int apply_multi_file_filter(const char *path, const char *src, size_t len,
-+				   int fd, struct strbuf *dst, const char *cmd,
-+				   const unsigned int wanted_capability)
-+{
-+	int err;
-+	struct cmd2process *entry;
-+	struct child_process *process;
-+	struct strbuf nbuf = STRBUF_INIT;
-+	struct strbuf filter_status = STRBUF_INIT;
-+	const char *filter_type;
-+
-+	if (!cmd_process_map_initialized) {
-+		cmd_process_map_initialized = 1;
-+		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
-+		entry = NULL;
-+	} else {
-+		entry = find_multi_file_filter_entry(&cmd_process_map, cmd);
-+	}
-+
-+	fflush(NULL);
-+
-+	if (!entry) {
-+		entry = start_multi_file_filter(&cmd_process_map, cmd);
-+		if (!entry)
-+			return 0;
-+	}
-+	process = &entry->process;
-+
-+	if (!(wanted_capability & entry->supported_capabilities))
-+		return 0;
-+
-+	if (CAP_CLEAN & wanted_capability)
-+		filter_type = "clean";
-+	else if (CAP_SMUDGE & wanted_capability)
-+		filter_type = "smudge";
-+	else
-+		die("unexpected filter type");
-+
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+
-+	assert(strlen(filter_type) < LARGE_PACKET_DATA_MAX - strlen("command=\n"));
-+	err = packet_write_fmt_gently(process->in, "command=%s\n", filter_type);
-+	if (err)
-+		goto done;
-+
-+	err = strlen(path) > LARGE_PACKET_DATA_MAX - strlen("pathname=\n");
-+	if (err) {
-+		error("path name too long for external filter");
-+		goto done;
-+	}
-+
-+	err = packet_write_fmt_gently(process->in, "pathname=%s\n", path);
-+	if (err)
-+		goto done;
-+
-+	err = packet_flush_gently(process->in);
-+	if (err)
-+		goto done;
-+
-+	if (fd >= 0)
-+		err = write_packetized_from_fd(fd, process->in);
-+	else
-+		err = write_packetized_from_buf(src, len, process->in);
-+	if (err)
-+		goto done;
-+
-+	read_multi_file_filter_status(process->out, &filter_status);
-+	err = strcmp(filter_status.buf, "success");
-+	if (err)
-+		goto done;
-+
-+	err = read_packetized_to_strbuf(process->out, &nbuf) < 0;
-+	if (err)
-+		goto done;
-+
-+	read_multi_file_filter_status(process->out, &filter_status);
-+	err = strcmp(filter_status.buf, "success");
-+
-+done:
-+	sigchain_pop(SIGPIPE);
-+
-+	if (err || errno == EPIPE) {
-+		if (!strcmp(filter_status.buf, "error")) {
-+			/* The filter signaled a problem with the file. */
-+		} else if (!strcmp(filter_status.buf, "abort")) {
-+			/*
-+			 * The filter signaled a permanent problem. Don't try to filter
-+			 * files with the same command for the lifetime of the current
-+			 * Git process.
-+			 */
-+			 entry->supported_capabilities &= ~wanted_capability;
-+		} else {
-+			/*
-+			 * Something went wrong with the protocol filter.
-+			 * Force shutdown and restart if another blob requires filtering.
-+			 */
-+			error("external filter '%s' failed", cmd);
-+			kill_multi_file_filter(&cmd_process_map, entry);
-+		}
-+	} else {
-+		strbuf_swap(dst, &nbuf);
-+	}
-+	strbuf_release(&nbuf);
-+	return !err;
-+}
-+
- static struct convert_driver {
- 	const char *name;
- 	struct convert_driver *next;
- 	const char *smudge;
- 	const char *clean;
-+	const char *process;
- 	int required;
- } *user_convert, **user_convert_tail;
+ #define DEFAULT_PACKET_MAX 1000
+ #define LARGE_PACKET_MAX 65520
++#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
+ extern char packet_buffer[LARGE_PACKET_MAX];
  
-@@ -510,13 +789,15 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 	if (!dst)
- 		return 1;
- 
--	if ((CAP_CLEAN & wanted_capability) && drv->clean)
-+	if ((CAP_CLEAN & wanted_capability) && !drv->process && drv->clean)
- 		cmd = drv->clean;
--	else if ((CAP_SMUDGE & wanted_capability) && drv->smudge)
-+	else if ((CAP_SMUDGE & wanted_capability) && !drv->process && drv->smudge)
- 		cmd = drv->smudge;
- 
- 	if (cmd && *cmd)
- 		return apply_single_file_filter(path, src, len, fd, dst, cmd);
-+	else if (drv->process && *drv->process)
-+		return apply_multi_file_filter(path, src, len, fd, dst, drv->process, wanted_capability);
- 
- 	return 0;
- }
-@@ -558,6 +839,9 @@ static int read_convert_config(const char *var, const char *value, void *cb)
- 	if (!strcmp("clean", key))
- 		return git_config_string(&drv->clean, var, value);
- 
-+	if (!strcmp("process", key))
-+		return git_config_string(&drv->process, var, value);
-+
- 	if (!strcmp("required", key)) {
- 		drv->required = git_config_bool(var, value);
- 		return 0;
-@@ -919,7 +1203,7 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
- 	convert_attrs(&ca, path);
- 
- 	assert(ca.drv);
--	assert(ca.drv->clean);
-+	assert(ca.drv->clean || ca.drv->process);
- 
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN))
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
-@@ -944,9 +1228,10 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
- 	}
- 	/*
- 	 * CRLF conversion can be skipped if normalizing, unless there
--	 * is a smudge filter.  The filter might expect CRLFs.
-+	 * is a smudge or process filter (even if the process filter doesn't
-+	 * support smudge).  The filters might expect CRLFs.
- 	 */
--	if ((ca.drv && ca.drv->smudge) || !normalizing) {
-+	if ((ca.drv && (ca.drv->smudge || ca.drv->process)) || !normalizing) {
- 		ret |= crlf_to_worktree(path, src, len, dst, ca.crlf_action);
- 		if (ret) {
- 			src = dst->buf;
-@@ -1407,7 +1692,7 @@ struct stream_filter *get_stream_filter(const char *path, const unsigned char *s
- 	struct stream_filter *filter = NULL;
- 
- 	convert_attrs(&ca, path);
--	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
-+	if (ca.drv && (ca.drv->process || ca.drv->smudge || ca.drv->clean))
- 		return NULL;
- 
- 	if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index dc50938..9f892c0 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -4,13 +4,75 @@ test_description='blob conversion via gitattributes'
- 
- . ./test-lib.sh
- 
--cat <<EOF >rot13.sh
-+TEST_ROOT="$(pwd)"
-+
-+cat <<EOF >"$TEST_ROOT/rot13.sh"
- #!$SHELL_PATH
- tr \
-   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' \
-   'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM'
- EOF
--chmod +x rot13.sh
-+chmod +x "$TEST_ROOT/rot13.sh"
-+
-+generate_random_characters () {
-+	LEN=$1
-+	NAME=$2
-+	test-genrandom some-seed $LEN |
-+		perl -pe "s/./chr((ord($&) % 26) + ord('a'))/sge" >"$TEST_ROOT/$NAME"
-+}
-+
-+file_size () {
-+	cat "$1" | wc -c | sed "s/^[ ]*//"
-+}
-+
-+filter_git () {
-+	rm -f rot13-filter.log &&
-+	git "$@" 2>git-stderr.log &&
-+	rm -f git-stderr.log
-+}
-+
-+# Count unique lines in two files and compare them.
-+test_cmp_count () {
-+	for FILE in $@
-+	do
-+		sort $FILE | uniq -c | sed "s/^[ ]*//" >$FILE.tmp
-+		cat $FILE.tmp >$FILE
-+	done &&
-+	test_cmp $@
-+}
-+
-+# Count unique lines except clean invocations in two files and compare
-+# them. Clean invocations are not counted because their number can vary.
-+# c.f. http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
-+test_cmp_count_except_clean () {
-+	for FILE in $@
-+	do
-+		sort $FILE | uniq -c | sed "s/^[ ]*//" |
-+			sed "s/^\([0-9]\) IN: clean/x IN: clean/" >$FILE.tmp
-+		cat $FILE.tmp >$FILE
-+	done &&
-+	test_cmp $@
-+}
-+
-+# Compare two files but exclude clean invocations because they can vary.
-+# c.f. http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
-+test_cmp_exclude_clean () {
-+	for FILE in $@
-+	do
-+		grep -v "IN: clean" $FILE >$FILE.tmp
-+		cat $FILE.tmp >$FILE
-+	done &&
-+	test_cmp $@
-+}
-+
-+# Check that the contents of two files are equal and that their rot13 version
-+# is equal to the committed content.
-+test_cmp_committed_rot13 () {
-+	test_cmp "$1" "$2" &&
-+	"$TEST_ROOT/rot13.sh" <"$1" >expected &&
-+	git cat-file blob :"$2" >actual &&
-+	test_cmp expected actual
-+}
- 
- test_expect_success setup '
- 	git config filter.rot13.smudge ./rot13.sh &&
-@@ -31,7 +93,10 @@ test_expect_success setup '
- 	cat test >test.i &&
- 	git add test test.t test.i &&
- 	rm -f test test.t test.i &&
--	git checkout -- test test.t test.i
-+	git checkout -- test test.t test.i &&
-+
-+	echo "content-test2" >test2.o &&
-+	echo "content-test3 - filename with special characters" >"test3 '\''sq'\'',\$x.o"
- '
- 
- script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
-@@ -279,4 +344,380 @@ test_expect_success 'diff does not reuse worktree files that need cleaning' '
- 	test_line_count = 0 count
- '
- 
-+test_expect_success PERL 'required process filter should filter data' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.required true &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "git-stderr.log" >.gitignore &&
-+		echo "*.r filter=protocol" >.gitattributes &&
-+		git add . &&
-+		git commit . -m "test commit 1" &&
-+		git branch empty-branch &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		cp "$TEST_ROOT/test2.o" test2.r &&
-+		mkdir testsubdir &&
-+		cp "$TEST_ROOT/test3 '\''sq'\'',\$x.o" "testsubdir/test3 '\''sq'\'',\$x.r" &&
-+		>test4-empty.r &&
-+
-+		S=$(file_size test.r) &&
-+		S2=$(file_size test2.r) &&
-+		S3=$(file_size "testsubdir/test3 '\''sq'\'',\$x.r") &&
-+
-+		filter_git add . &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
-+			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			STOP
-+		EOF
-+		test_cmp_count expected.log rot13-filter.log &&
-+
-+		filter_git commit . -m "test commit 2" &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
-+			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
-+			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			STOP
-+		EOF
-+		test_cmp_count_except_clean expected.log rot13-filter.log &&
-+
-+		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x.r" &&
-+
-+		filter_git checkout --quiet --no-progress . &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		filter_git checkout --quiet --no-progress empty-branch &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		filter_git checkout --quiet --no-progress master &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
-+			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge test4-empty.r 0 [OK] -- OUT: 0  [OK]
-+			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
-+		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
-+		test_cmp_committed_rot13 "$TEST_ROOT/test3 '\''sq'\'',\$x.o" "testsubdir/test3 '\''sq'\'',\$x.r"
-+	)
-+'
-+
-+test_expect_success PERL 'required process filter takes precedence' '
-+	test_config_global filter.protocol.clean false &&
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean" &&
-+	test_config_global filter.protocol.required true &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		S=$(file_size test.r) &&
-+
-+		# Check that the process filter is invoked here
-+		filter_git add . &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			STOP
-+		EOF
-+		test_cmp_count expected.log rot13-filter.log
-+	)
-+'
-+
-+test_expect_success PERL 'required process filter should be used only for "clean" operation only' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean" &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		S=$(file_size test.r) &&
-+
-+		filter_git add . &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			STOP
-+		EOF
-+		test_cmp_count expected.log rot13-filter.log &&
-+
-+		rm test.r &&
-+
-+		filter_git checkout --quiet --no-progress . &&
-+		# If the filter would be used for "smudge", too, we would see
-+		# "IN: smudge test.r 57 [OK] -- OUT: 57 . [OK]" here
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log
-+	)
-+'
-+
-+test_expect_success PERL 'required process filter should process multiple packets' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.required true &&
-+
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		# Generate data requiring 1, 2, 3 packets
-+		S=65516 && # PKTLINE_DATA_MAXLEN -> Maximal size of a packet
-+		generate_random_characters $(($S    )) 1pkt_1__.file &&
-+		generate_random_characters $(($S  +1)) 2pkt_1+1.file &&
-+		generate_random_characters $(($S*2-1)) 2pkt_2-1.file &&
-+		generate_random_characters $(($S*2  )) 2pkt_2__.file &&
-+		generate_random_characters $(($S*2+1)) 3pkt_2+1.file &&
-+
-+		for FILE in "$TEST_ROOT"/*.file
-+		do
-+			cp "$FILE" . &&
-+			"$TEST_ROOT/rot13.sh" <"$FILE" >"$FILE.rot13"
-+		done &&
-+
-+		echo "*.file filter=protocol" >.gitattributes &&
-+		filter_git add *.file .gitattributes &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: clean 1pkt_1__.file $(($S    )) [OK] -- OUT: $(($S    )) . [OK]
-+			IN: clean 2pkt_1+1.file $(($S  +1)) [OK] -- OUT: $(($S  +1)) .. [OK]
-+			IN: clean 2pkt_2-1.file $(($S*2-1)) [OK] -- OUT: $(($S*2-1)) .. [OK]
-+			IN: clean 2pkt_2__.file $(($S*2  )) [OK] -- OUT: $(($S*2  )) .. [OK]
-+			IN: clean 3pkt_2+1.file $(($S*2+1)) [OK] -- OUT: $(($S*2+1)) ... [OK]
-+			STOP
-+		EOF
-+		test_cmp_count expected.log rot13-filter.log &&
-+
-+		rm -f *.file &&
-+
-+		filter_git checkout --quiet --no-progress -- *.file &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: smudge 1pkt_1__.file $(($S    )) [OK] -- OUT: $(($S    )) . [OK]
-+			IN: smudge 2pkt_1+1.file $(($S  +1)) [OK] -- OUT: $(($S  +1)) .. [OK]
-+			IN: smudge 2pkt_2-1.file $(($S*2-1)) [OK] -- OUT: $(($S*2-1)) .. [OK]
-+			IN: smudge 2pkt_2__.file $(($S*2  )) [OK] -- OUT: $(($S*2  )) .. [OK]
-+			IN: smudge 3pkt_2+1.file $(($S*2+1)) [OK] -- OUT: $(($S*2+1)) ... [OK]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		for FILE in *.file
-+		do
-+			test_cmp_committed_rot13 "$TEST_ROOT/$FILE" $FILE
-+		done
-+	)
-+'
-+
-+test_expect_success PERL 'required process filter with clean error should fail' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.required true &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		echo "this is going to fail" >clean-write-fail.r &&
-+		echo "content-test3-subdir" >test3.r &&
-+
-+		test_must_fail git add .
-+	)
-+'
-+
-+test_expect_success PERL 'process filter should restart after unexpected write failure' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean smudge" &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		cp "$TEST_ROOT/test2.o" test2.r &&
-+		echo "this is going to fail" >smudge-write-fail.o &&
-+		cp smudge-write-fail.o smudge-write-fail.r &&
-+
-+		S=$(file_size test.r) &&
-+		S2=$(file_size test2.r) &&
-+		SF=$(file_size smudge-write-fail.r) &&
-+
-+		git add . &&
-+		rm -f *.r &&
-+
-+		rm -f rot13-filter.log &&
-+		git checkout --quiet --no-progress . 2>git-stderr.log &&
-+
-+		grep "smudge write error at" git-stderr.log &&
-+		grep "error: external filter" git-stderr.log &&
-+
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: smudge smudge-write-fail.r $SF [OK] -- OUT: $SF [WRITE FAIL]
-+			START
-+			init handshake complete
-+			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
-+			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
-+		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
-+
-+		# Smudge failed
-+		! test_cmp smudge-write-fail.o smudge-write-fail.r &&
-+		"$TEST_ROOT/rot13.sh" <smudge-write-fail.o >expected &&
-+		git cat-file blob :smudge-write-fail.r >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success PERL 'process filter should not be restarted if it signals an error' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean smudge" &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		cp "$TEST_ROOT/test2.o" test2.r &&
-+		echo "this will cause an error" >error.o &&
-+		cp error.o error.r &&
-+
-+		S=$(file_size test.r) &&
-+		S2=$(file_size test2.r) &&
-+		SE=$(file_size error.r) &&
-+
-+		git add . &&
-+		rm -f *.r &&
-+
-+		filter_git checkout --quiet --no-progress . &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: smudge error.r $SE [OK] -- OUT: 0 [ERROR]
-+			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
-+			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
-+		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
-+		test_cmp error.o error.r
-+	)
-+'
-+
-+test_expect_success PERL 'process filter abort stops processing of all further files' '
-+	test_config_global filter.protocol.process "$TEST_DIRECTORY/t0021/rot13-filter.pl clean smudge" &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		cp "$TEST_ROOT/test2.o" test2.r &&
-+		echo "error this blob and all future blobs" >abort.o &&
-+		cp abort.o abort.r &&
-+
-+		SA=$(file_size abort.r) &&
-+
-+		git add . &&
-+		rm -f *.r &&
-+
-+		# Note: This test assumes that Git filters files in alphabetical
-+		# order ("abort.r" before "test.r").
-+		filter_git checkout --quiet --no-progress . &&
-+		cat >expected.log <<-EOF &&
-+			START
-+			init handshake complete
-+			IN: smudge abort.r $SA [OK] -- OUT: 0 [ABORT]
-+			STOP
-+		EOF
-+		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+
-+		test_cmp "$TEST_ROOT/test.o" test.r &&
-+		test_cmp "$TEST_ROOT/test2.o" test2.r &&
-+		test_cmp abort.o abort.r
-+	)
-+'
-+
-+test_expect_success PERL 'invalid process filter must fail (and not hang!)' '
-+	test_config_global filter.protocol.process cat &&
-+	test_config_global filter.protocol.required true &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		test_must_fail git add . 2>git-stderr.log &&
-+		grep "does not support filter protocol version" git-stderr.log
-+	)
-+'
-+
- test_done
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-new file mode 100755
-index 0000000..1a6959c
---- /dev/null
-+++ b/t/t0021/rot13-filter.pl
-@@ -0,0 +1,191 @@
-+#!/usr/bin/perl
-+#
-+# Example implementation for the Git filter protocol version 2
-+# See Documentation/gitattributes.txt, section "Filter Protocol"
-+#
-+# The script takes the list of supported protocol capabilities as
-+# arguments ("clean", "smudge", etc).
-+#
-+# This implementation supports special test cases:
-+# (1) If data with the pathname "clean-write-fail.r" is processed with
-+#     a "clean" operation then the write operation will die.
-+# (2) If data with the pathname "smudge-write-fail.r" is processed with
-+#     a "smudge" operation then the write operation will die.
-+# (3) If data with the pathname "error.r" is processed with any
-+#     operation then the filter signals that it cannot or does not want
-+#     to process the file.
-+# (4) If data with the pathname "abort.r" is processed with any
-+#     operation then the filter signals that it cannot or does not want
-+#     to process the file and any file after that is processed with the
-+#     same command.
-+#
-+
-+use strict;
-+use warnings;
-+
-+my $MAX_PACKET_CONTENT_SIZE = 65516;
-+my @capabilities            = @ARGV;
-+
-+open my $debug, ">>", "rot13-filter.log" or die "cannot open log file: $!";
-+
-+sub rot13 {
-+	my $str = shift;
-+	$str =~ y/A-Za-z/N-ZA-Mn-za-m/;
-+	return $str;
-+}
-+
-+sub packet_bin_read {
-+	my $buffer;
-+	my $bytes_read = read STDIN, $buffer, 4;
-+	if ( $bytes_read == 0 ) {
-+		# EOF - Git stopped talking to us!
-+		print $debug "STOP\n";
-+		exit();
-+	}
-+	elsif ( $bytes_read != 4 ) {
-+		die "invalid packet: '$buffer'";
-+	}
-+	my $pkt_size = hex($buffer);
-+	if ( $pkt_size == 0 ) {
-+		return ( 1, "" );
-+	}
-+	elsif ( $pkt_size > 4 ) {
-+		my $content_size = $pkt_size - 4;
-+		$bytes_read = read STDIN, $buffer, $content_size;
-+		if ( $bytes_read != $content_size ) {
-+			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
-+		}
-+		return ( 0, $buffer );
-+	}
-+	else {
-+		die "invalid packet size: $pkt_size";
-+	}
-+}
-+
-+sub packet_txt_read {
-+	my ( $res, $buf ) = packet_bin_read();
-+	unless ( $buf =~ s/\n$// ) {
-+		die "A non-binary line MUST be terminated by an LF.";
-+	}
-+	return ( $res, $buf );
-+}
-+
-+sub packet_bin_write {
-+	my $buf = shift;
-+	print STDOUT sprintf( "%04x", length($buf) + 4 );
-+	print STDOUT $buf;
-+	STDOUT->flush();
-+}
-+
-+sub packet_txt_write {
-+	packet_bin_write( $_[0] . "\n" );
-+}
-+
-+sub packet_flush {
-+	print STDOUT sprintf( "%04x", 0 );
-+	STDOUT->flush();
-+}
-+
-+print $debug "START\n";
-+$debug->flush();
-+
-+( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
-+( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
-+( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-+
-+packet_txt_write("git-filter-server");
-+packet_txt_write("version=2");
-+
-+( packet_txt_read() eq ( 0, "clean=true" ) )  || die "bad capability";
-+( packet_txt_read() eq ( 0, "smudge=true" ) ) || die "bad capability";
-+( packet_bin_read() eq ( 1, "" ) )            || die "bad capability end";
-+
-+foreach (@capabilities) {
-+	packet_txt_write( $_ . "=true" );
-+}
-+packet_flush();
-+print $debug "init handshake complete\n";
-+$debug->flush();
-+
-+while (1) {
-+	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
-+	print $debug "IN: $command";
-+	$debug->flush();
-+
-+	my ($pathname) = packet_txt_read() =~ /^pathname=([^=]+)$/;
-+	print $debug " $pathname";
-+	$debug->flush();
-+
-+	# Flush
-+	packet_bin_read();
-+
-+	my $input = "";
-+	{
-+		binmode(STDIN);
-+		my $buffer;
-+		my $done = 0;
-+		while ( !$done ) {
-+			( $done, $buffer ) = packet_bin_read();
-+			$input .= $buffer;
-+		}
-+		print $debug " " . length($input) . " [OK] -- ";
-+		$debug->flush();
-+	}
-+
-+	my $output;
-+	if ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
-+		$output = "";
-+	}
-+	elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
-+		$output = rot13($input);
-+	}
-+	elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
-+		$output = rot13($input);
-+	}
-+	else {
-+		die "bad command '$command'";
-+	}
-+
-+	print $debug "OUT: " . length($output) . " ";
-+	$debug->flush();
-+
-+	if ( $pathname eq "error.r" ) {
-+		print $debug "[ERROR]\n";
-+		$debug->flush();
-+		packet_txt_write("status=error");
-+		packet_flush();
-+	}
-+	elsif ( $pathname eq "abort.r" ) {
-+		print $debug "[ABORT]\n";
-+		$debug->flush();
-+		packet_txt_write("status=abort");
-+		packet_flush();
-+	}
-+	else {
-+		packet_txt_write("status=success");
-+		packet_flush();
-+
-+		if ( $pathname eq "${command}-write-fail.r" ) {
-+			print $debug "[WRITE FAIL]\n";
-+			$debug->flush();
-+			die "${command} write error";
-+		}
-+
-+		while ( length($output) > 0 ) {
-+			my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
-+			packet_bin_write($packet);
-+			# dots represent the number of packets
-+			print $debug ".";
-+			if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
-+				$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
-+			}
-+			else {
-+				$output = "";
-+			}
-+		}
-+		packet_flush();
-+		print $debug " [OK]\n";
-+		$debug->flush();
-+		packet_flush();
-+	}
-+}
+ #endif
 -- 
 2.10.0
 
