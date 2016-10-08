@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F217A207EC
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD4FD207EC
 	for <e@80x24.org>; Sat,  8 Oct 2016 11:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935086AbcJHLZ4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Oct 2016 07:25:56 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35536 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932882AbcJHLZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2016 07:25:44 -0400
-Received: by mail-wm0-f65.google.com with SMTP id f193so6634640wmg.2
+        id S935080AbcJHLZx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Oct 2016 07:25:53 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36424 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935049AbcJHLZp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2016 07:25:45 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 123so6631340wmb.3
         for <git@vger.kernel.org>; Sat, 08 Oct 2016 04:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QJ69OdN9IyjWhdItkTwhJzX9iN1XESeF0JRao84JDSQ=;
-        b=eShZYDHNywuN3ZOqkPrys0PfBq5IYZInEhKGvHaINM3CHZ3L6icaLr5tHTqon1gYns
-         7fogeh7EiHLSj4ZnknNJ1xTIlMm4LVNHd6dXFSpC1LQpiDRq1MvSXusTrVJKz6bk5q4l
-         Qn+Ju6uNUd1+WhZjinQnqUkC7t57kwArU/kf+aooQFP1Wd1KGlAqIhvKmV9Qmom5i3HK
-         QxpZjow02A8nzwQprzAOyy4B9/uzC/uGu3l36TGKhW83vmRHbgRWVsRA7c8RiROuX0kA
-         KeiWefooEX5dsuHRu4CFjRGHwyRPSXpb6w04qW4b2EJxNGTD4XHr3vBQWyy0710xD1/b
-         54Lg==
+        bh=o6Lg0Z6S9nQOfGaApobmqUYu6f/1vq5DjfcUkP1rQKY=;
+        b=jEear3fuw7IO1oWhuNP7GTIODVARMxUQlNMlhu1CJgnY9RuP2ui6lTpkgogNfZNVpx
+         ZJsZ4N511MwIfUV8TwJD0eKSXNny/zDDjadURI8mAPur8autEATE3rssndxFOodOObq2
+         cW0lJw3aaKtBtXnq0keuGVVdOdA69dmkXQ2EY4s3z+NZH2jhhZR1e0DlhFZ/NU1pyHDD
+         RX8p+i2MTW+uCANkjKAMTgA7Ml/31LpnLPbKgF5RCuHdORTe1qo3Fnd2Tnl9e6avNG8z
+         avWaKZ0NQiOBHy1pT4knDx/zab6ED2EJ/7eoEtHYsDu9PqIk5BxWSeL/N98IcpaK+8h7
+         h6uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QJ69OdN9IyjWhdItkTwhJzX9iN1XESeF0JRao84JDSQ=;
-        b=Yn9YR8pUbiu/K6DJ1C37V0EF6tPkHnBKWQMIsy83/qxF86VuYin8VxJ1vhcNQqXLHv
-         4CC+kK3FQr7z7zlIXVG8yNUCO6/upZz/hAai28vN95gr2iXWU8ufAEJYocbVsL1OK0jL
-         y9mqL7fCDZWNH/sN4XF1wT+kBvBujHNsLvjPagU8sUwj6dsmKLdq8B8IzuhQSVXTzeqO
-         NIndOqoon6QkNkFlhaEAru1iESgRq7+5zvz/lcnDOVl53WjdS9yjk9/EyGjdMmlaBjWk
-         K1GUxN0UPsA8QYpNJNyIaaaFQc7oD7co00Zs0VjE381UfiNIzbCml9TnQNWYaP69XHEj
-         Wy0A==
-X-Gm-Message-State: AA6/9RkeUX3GXex0551Z5V6yWYVgUv7bTnl/KcWqJJByFdPU9yyPtGkxdPap92l6Xqm1cg==
-X-Received: by 10.28.54.39 with SMTP id d39mr2999801wma.11.1475925942598;
-        Sat, 08 Oct 2016 04:25:42 -0700 (PDT)
+        bh=o6Lg0Z6S9nQOfGaApobmqUYu6f/1vq5DjfcUkP1rQKY=;
+        b=ZoKUuW1y5sPpZ7/bYrQh/IJoJjLrXbrlsV8ZDCC3nX7+RAYvRMvyxMnaw8cYBvyciv
+         JWP27cpL3f1/kL2sPvTnxhYYx2tqb4aCfc1wXLO0E4D43fBN8hsCIMJlyP96A5esUESP
+         IQGOaufmY8ogslZIqT8DVyXyPGYOSkZxsCMg8ifYUzCELhkh/hKPaBVrxQtrFOm7x5Ib
+         FkCQMMTGzmL+zpwoPuDDjyic0R0IHtjC+61IFVC9s+qbttkPA//6o19x7ljX+KyiD5lr
+         iL2YnsU5nFCzpjeBdjLMRqojihgwxNLdQyvBV4tAk/IphOFtw1MceWugne59ZByga06Z
+         rnng==
+X-Gm-Message-State: AA6/9Rk+3N3ohI55TPHoBMycjAKhER4975B0+/s/UFtOuz62Rr1s9goO76D1wfekPeI93w==
+X-Received: by 10.28.6.6 with SMTP id 6mr2932409wmg.27.1475925943762;
+        Sat, 08 Oct 2016 04:25:43 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB73B1.dip0.t-ipconnect.de. [93.219.115.177])
-        by smtp.gmail.com with ESMTPSA id a1sm24599623wju.41.2016.10.08.04.25.41
+        by smtp.gmail.com with ESMTPSA id a1sm24599623wju.41.2016.10.08.04.25.42
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 08 Oct 2016 04:25:41 -0700 (PDT)
+        Sat, 08 Oct 2016 04:25:43 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, jnareb@gmail.com, peff@peff.net,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v10 07/14] pkt-line: add packet_write_fmt_gently()
-Date:   Sat,  8 Oct 2016 13:25:23 +0200
-Message-Id: <20161008112530.15506-8-larsxschneider@gmail.com>
+Subject: [PATCH v10 08/14] pkt-line: add packet_flush_gently()
+Date:   Sat,  8 Oct 2016 13:25:24 +0200
+Message-Id: <20161008112530.15506-9-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20161008112530.15506-1-larsxschneider@gmail.com>
 References: <20161008112530.15506-1-larsxschneider@gmail.com>
@@ -63,81 +63,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-packet_write_fmt() would die in case of a write error even though for
-some callers an error would be acceptable. Add packet_write_fmt_gently()
-which writes a formatted pkt-line like packet_write_fmt() but does not
-die in case of an error. The function is used in a subsequent patch.
+packet_flush() would die in case of a write error even though for some
+callers an error would be acceptable. Add packet_flush_gently() which
+writes a pkt-line flush packet like packet_flush() but does not die in
+case of an error. The function is used in a subsequent patch.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- pkt-line.c | 34 ++++++++++++++++++++++++++++++----
- pkt-line.h |  1 +
- 2 files changed, 31 insertions(+), 4 deletions(-)
+ pkt-line.c | 8 ++++++++
+ pkt-line.h | 1 +
+ 2 files changed, 9 insertions(+)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index e8adc0f..56915f0 100644
+index 56915f0..286eb09 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -125,16 +125,42 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
- 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
+@@ -91,6 +91,14 @@ void packet_flush(int fd)
+ 	write_or_die(fd, "0000", 4);
  }
  
-+static int packet_write_fmt_1(int fd, int gently,
-+			      const char *fmt, va_list args)
++int packet_flush_gently(int fd)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	ssize_t count;
-+
-+	format_packet(&buf, fmt, args);
-+	count = write_in_full(fd, buf.buf, buf.len);
-+	if (count == buf.len)
++	packet_trace("0000", 4, 1);
++	if (write_in_full(fd, "0000", 4) == 4)
 +		return 0;
-+
-+	if (!gently) {
-+		check_pipe(errno);
-+		die_errno("packet write with format failed");
-+	}
-+	return error("packet write with format failed");
++	return error("flush packet write failed");
 +}
 +
- void packet_write_fmt(int fd, const char *fmt, ...)
+ void packet_buf_flush(struct strbuf *buf)
  {
--	static struct strbuf buf = STRBUF_INIT;
- 	va_list args;
- 
--	strbuf_reset(&buf);
- 	va_start(args, fmt);
--	format_packet(&buf, fmt, args);
-+	packet_write_fmt_1(fd, 0, fmt, args);
-+	va_end(args);
-+}
-+
-+int packet_write_fmt_gently(int fd, const char *fmt, ...)
-+{
-+	int status;
-+	va_list args;
-+
-+	va_start(args, fmt);
-+	status = packet_write_fmt_1(fd, 1, fmt, args);
- 	va_end(args);
--	write_or_die(fd, buf.buf, buf.len);
-+	return status;
- }
- 
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	packet_trace("0000", 4, 1);
 diff --git a/pkt-line.h b/pkt-line.h
-index 1902fb3..3caea77 100644
+index 3caea77..3fa0899 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
 @@ -23,6 +23,7 @@ void packet_flush(int fd);
  void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
  void packet_buf_flush(struct strbuf *buf);
  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
  
  /*
-  * Read a packetized line into the buffer, which must be at least size bytes
 -- 
 2.10.0
 
