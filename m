@@ -2,226 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8B23207EC
-	for <e@80x24.org>; Sat,  8 Oct 2016 11:26:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5DC61F4F8
+	for <e@80x24.org>; Sat,  8 Oct 2016 13:38:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935127AbcJHL0Q (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Oct 2016 07:26:16 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34661 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935070AbcJHLZw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2016 07:25:52 -0400
-Received: by mail-wm0-f67.google.com with SMTP id b201so6642439wmb.1
-        for <git@vger.kernel.org>; Sat, 08 Oct 2016 04:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AhmYdBfsyzdPElgyDiCUzB/BRkiWg+oJdiwRZ5/90XI=;
-        b=JK/d2FaAxv8dF+4/tYoKdIbPvCjB/fCHCLE1tW/5YY3QGC941SL0dq3C0qyTxDxDGL
-         UnVCYyVF7n/zL+tdMPaXSnGU8PfCXh0lFOGwbK+mSGyx1ovhuq+bN0c0GEZenrFZLY4W
-         d4uWCzAEmfQAwoy9//lhJi6z0Z6KGq1kSsCBarZWfkBRvoRDlzUF56BYMv9Aa0upL19W
-         ZPmR0VQ1W+DkWS2I7YlVUzismdlmsSEqHhrvOIAqjKgemwv0+eEqR4PWaF3Byz0aqH1G
-         LzPVr99Rj3Mt3g1GfWrSZzlmj7AuMpxWWad8MbsoTE32ASeN3pKxJG0y03XKbc6Iw/YO
-         ABlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=AhmYdBfsyzdPElgyDiCUzB/BRkiWg+oJdiwRZ5/90XI=;
-        b=g3rAYMTl1qurjENBgexOdx5cRfA4p3tuQSr4Zmh5CSskNzvaj2Ccl6baey+DWCcuCl
-         L/+726sPiZ24XPdW0InCyeDkZ9NItptD/ulk1afzBO4XG8qar7r8iE6aurP4U40J00gE
-         NHh9gc5qZVitdzLuOVmAWGgLjhFZmraykfO/uSBaw1ldqW+vJdNVCRnl0Rx5WpI9IxxU
-         az/xWl2zW896bjY/X4I2ulU1u6xwlx2oYVP0F6ea4h1qQFLTVhSbg0HO/o/SaBBN8Ghr
-         r44RlF5o7mrS0VcWMfYdgsVdkg4WXkq20oj1RJ4gAbReDuFFbuyn14G7TnuxxYBuu1Oo
-         /tmA==
-X-Gm-Message-State: AA6/9RmpH1c3xHbpIXthpUNoSwm5yAicA8HfVhZU/8DSXDJl1Q3M7J7ue8aVVzS3tKJRkw==
-X-Received: by 10.194.30.137 with SMTP id s9mr20818176wjh.77.1475925950446;
-        Sat, 08 Oct 2016 04:25:50 -0700 (PDT)
-Received: from slxBook4.fritz.box (p5DDB73B1.dip0.t-ipconnect.de. [93.219.115.177])
-        by smtp.gmail.com with ESMTPSA id a1sm24599623wju.41.2016.10.08.04.25.49
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 08 Oct 2016 04:25:49 -0700 (PDT)
-From:   larsxschneider@gmail.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, jnareb@gmail.com, peff@peff.net,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v10 14/14] contrib/long-running-filter: add long running filter example
-Date:   Sat,  8 Oct 2016 13:25:30 +0200
-Message-Id: <20161008112530.15506-15-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.10.0
-In-Reply-To: <20161008112530.15506-1-larsxschneider@gmail.com>
-References: <20161008112530.15506-1-larsxschneider@gmail.com>
+        id S1753255AbcJHNij (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Oct 2016 09:38:39 -0400
+Received: from mout.web.de ([217.72.192.78]:62946 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751168AbcJHNii (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2016 09:38:38 -0400
+Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Lkh7Q-1bKcwV3FUS-00aVoY; Sat, 08 Oct 2016 15:38:31
+ +0200
+Subject: Re: [PATCH] remote.c: free previous results when looking for a ref
+ match
+To:     Stefan Beller <sbeller@google.com>, gitster@pobox.com
+References: <20161007235857.20382-1-sbeller@google.com>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e9f58e04-a534-6794-feac-f6a47ca8bb65@web.de>
+Date:   Sat, 8 Oct 2016 15:38:24 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <20161007235857.20382-1-sbeller@google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:zYd0V3uSjBoNWiysmS9yA9iFB8CKI253iXQ+NkuIxGIyKra9wZO
+ Vn9f3bjieac6zvnWZjBqNVNsWX9N7WUFy3VnKqzY1N4gCaGCgmSBYrchxVfMUgTyenb2EvH
+ fr+b0AB9I+ZFQxHBZWqgENV9z8f/sV8RAk0aO483cJo1X0N38Tjm7z6PgiW4aqb7ZwUClBT
+ nxzqBBkiIfx9DEMddDcnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0jK9EmgMj5U=:ekSOzPwu5lwyL/U/O5VaVy
+ Z7m4AVkLpT4/ZFfqrLS+iJo4U/Lmg+BmpUEVvOoFCrKfyeZ7ryQKzDugtS+gu1OWrMa5hmPye
+ 0VafVFqJoHd8z/VLbvkzHQbsc2J38QI69f9dA11aGeti/GDNDpLNvxk5SKrw+UZBMRJQo8c46
+ kdhRwecHvXELudO4eVG1P9fY1NTRilgosftGSw4jmloKtkAQB6xfzU0QcmZvdjNWJDLRg7jYq
+ DjbzRQtL3CmycyGi90LZ8BsXt28RCE9mPzGambjHv/YAk4pLfcxQv+mp6rmf8APLCq7WS4nTr
+ 8bcn2sXgK2ByzOnFdqcRjbAp68+jEtDGFVvTJgqFR+2vaDeiT86poCNm+JuED9OUZ19tNHGg0
+ Xyo/ggHfyJA3XLVrVSuh6eHx3uMnyskRFTnZjEm8Fz6FKcdfEvlCmW93Fy/2eFoFWrFtX3HcT
+ G2tsjmnsCfSyQlZBuOSTs+6mbTLGVvLfq5jVTWb3sFqE0zNZvG24AGf4dFcMa71BiycvwPMp1
+ iyaZ+7bCRtARSHZUkoIW6yywfYP8PVyvJy3ndreaCjWVmCxCQ91KaStmeXc+YFCGsGUL4yGLy
+ xtAnQTHlPJYoJ71ZyPlZoPM9v9IoWXBqT1A4eDrOAtCH3fElWs8IZD/N6Hs7SycRdFLqdwPo3
+ aRTCB8xMf/F+UmdPXftPEYR5GgOqoLdYNCgat2FQHeR6Madfprt2fzitxC6SX8FXmD+yLaVBA
+ dO6psQp1eVwSmb2MSCSFQ5ICbT1QetR9WrcPOUnDwpfoCIOcsyXGSwOA9bIi+x6p7yERiF527
+ GbjGkog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Am 08.10.2016 um 01:58 schrieb Stefan Beller:
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  remote.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/remote.c b/remote.c
+> index ad6c542..5f9afb4 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -833,6 +833,8 @@ static int match_name_with_pattern(const char *key, const char *name,
+>  		strbuf_add(&sb, value, vstar - value);
+>  		strbuf_add(&sb, name + klen, namelen - klen - ksuffixlen);
+>  		strbuf_addstr(&sb, vstar + 1);
+> +		if (*result)
+> +			free(*result);
 
-Add a simple pass-thru filter as example implementation for the Git
-filter protocol version 2. See Documentation/gitattributes.txt, section
-"Filter Protocol" for more info.
+free(3) can handle NULL pointers; this check is not necessary.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- Documentation/gitattributes.txt        |   4 +-
- contrib/long-running-filter/example.pl | 127 +++++++++++++++++++++++++++++++++
- 2 files changed, 130 insertions(+), 1 deletion(-)
- create mode 100755 contrib/long-running-filter/example.pl
+Is it wise to release memory for callers?  I'd expect them to be 
+responsible for that.  Some of them can pass uninitialized pointers; 
+this is not allowed anymore after the change.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 5868f00..a182ef2 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -514,7 +514,9 @@ the next "key=value" list containing a command. Git will close
- the command pipe on exit. The filter is expected to detect EOF
- and exit gracefully on its own.
- 
--If you develop your own long running filter
-+A long running filter demo implementation can be found in
-+`contrib/long-running-filter/example.pl` located in the Git
-+core repository. If you develop your own long running filter
- process then the `GIT_TRACE_PACKET` environment variables can be
- very helpful for debugging (see linkgit:git[1]).
- 
-diff --git a/contrib/long-running-filter/example.pl b/contrib/long-running-filter/example.pl
-new file mode 100755
-index 0000000..f4102d2
---- /dev/null
-+++ b/contrib/long-running-filter/example.pl
-@@ -0,0 +1,127 @@
-+#!/usr/bin/perl
-+#
-+# Example implementation for the Git filter protocol version 2
-+# See Documentation/gitattributes.txt, section "Filter Protocol"
-+#
-+# Please note, this pass-thru filter is a minimal skeleton. No proper
-+# error handling was implemented.
-+#
-+
-+use strict;
-+use warnings;
-+
-+my $MAX_PACKET_CONTENT_SIZE = 65516;
-+
-+sub packet_bin_read {
-+	my $buffer;
-+	my $bytes_read = read STDIN, $buffer, 4;
-+	if ( $bytes_read == 0 ) {
-+
-+		# EOF - Git stopped talking to us!
-+		exit();
-+	}
-+	elsif ( $bytes_read != 4 ) {
-+		die "invalid packet: '$buffer'";
-+	}
-+	my $pkt_size = hex($buffer);
-+	if ( $pkt_size == 0 ) {
-+		return ( 1, "" );
-+	}
-+	elsif ( $pkt_size > 4 ) {
-+		my $content_size = $pkt_size - 4;
-+		$bytes_read = read STDIN, $buffer, $content_size;
-+		if ( $bytes_read != $content_size ) {
-+			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
-+		}
-+		return ( 0, $buffer );
-+	}
-+	else {
-+		die "invalid packet size: $pkt_size";
-+	}
-+}
-+
-+sub packet_txt_read {
-+	my ( $res, $buf ) = packet_bin_read();
-+	unless ( $buf =~ s/\n$// ) {
-+		die "A non-binary line MUST be terminated by an LF.";
-+	}
-+	return ( $res, $buf );
-+}
-+
-+sub packet_bin_write {
-+	my $buf = shift;
-+	print STDOUT sprintf( "%04x", length($buf) + 4 );
-+	print STDOUT $buf;
-+	STDOUT->flush();
-+}
-+
-+sub packet_txt_write {
-+	packet_bin_write( $_[0] . "\n" );
-+}
-+
-+sub packet_flush {
-+	print STDOUT sprintf( "%04x", 0 );
-+	STDOUT->flush();
-+}
-+
-+( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
-+( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
-+( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-+
-+packet_txt_write("git-filter-server");
-+packet_txt_write("version=2");
-+
-+( packet_txt_read() eq ( 0, "clean=true" ) )  || die "bad capability";
-+( packet_txt_read() eq ( 0, "smudge=true" ) ) || die "bad capability";
-+( packet_bin_read() eq ( 1, "" ) )            || die "bad capability end";
-+
-+packet_txt_write("clean=true");
-+packet_txt_write("smudge=true");
-+packet_flush();
-+
-+while (1) {
-+	my ($command)  = packet_txt_read() =~ /^command=([^=]+)$/;
-+	my ($pathname) = packet_txt_read() =~ /^pathname=([^=]+)$/;
-+
-+	packet_bin_read();
-+
-+	my $input = "";
-+	{
-+		binmode(STDIN);
-+		my $buffer;
-+		my $done = 0;
-+		while ( !$done ) {
-+			( $done, $buffer ) = packet_bin_read();
-+			$input .= $buffer;
-+		}
-+	}
-+
-+	my $output;
-+	if ( $command eq "clean" ) {
-+		### Perform clean here ###
-+		$output = $input;
-+	}
-+	elsif ( $command eq "smudge" ) {
-+		### Perform smudge here ###
-+		$output = $input;
-+	}
-+	else {
-+		die "bad command '$command'";
-+	}
-+
-+	packet_txt_write("status=success");
-+	packet_flush();
-+	while ( length($output) > 0 ) {
-+		my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
-+		packet_bin_write($packet);
-+		if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
-+			$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
-+		}
-+		else {
-+			$output = "";
-+		}
-+	}
-+	packet_flush();    # flush content!
-+	packet_flush();    # empty list, keep "status=success" unchanged!
-+
-+}
--- 
-2.10.0
+>  		*result = strbuf_detach(&sb, NULL);
+>  	}
+>  	return ret;
+> @@ -1262,6 +1264,8 @@ static char *get_ref_match(const struct refspec *rs, int rs_nr, const struct ref
+>  		 */
+>  		if (!send_mirror && !starts_with(ref->name, "refs/heads/"))
+>  			return NULL;
+> +		if (name)
+> +			free(name);
+
+Again, this check is not necessary.  If I read the code correctly the 
+pointer could be uninitialized at that point, though, causing free(3) to 
+crash.
+
+>  		name = xstrdup(ref->name);
+>  	}
+>  	if (ret_pat)
+>
 
