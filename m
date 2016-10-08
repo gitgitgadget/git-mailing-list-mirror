@@ -7,93 +7,89 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5DC61F4F8
-	for <e@80x24.org>; Sat,  8 Oct 2016 13:38:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 510191F4F8
+	for <e@80x24.org>; Sat,  8 Oct 2016 14:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753255AbcJHNij (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Oct 2016 09:38:39 -0400
-Received: from mout.web.de ([217.72.192.78]:62946 "EHLO mout.web.de"
+        id S934972AbcJHOPt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Oct 2016 10:15:49 -0400
+Received: from mout.web.de ([212.227.15.3]:51021 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751168AbcJHNii (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2016 09:38:38 -0400
-Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0Lkh7Q-1bKcwV3FUS-00aVoY; Sat, 08 Oct 2016 15:38:31
+        id S1756611AbcJHOPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2016 10:15:13 -0400
+Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0MS1tK-1bQiKR2wyA-00TERb; Sat, 08 Oct 2016 16:15:05
  +0200
-Subject: Re: [PATCH] remote.c: free previous results when looking for a ref
- match
-To:     Stefan Beller <sbeller@google.com>, gitster@pobox.com
-References: <20161007235857.20382-1-sbeller@google.com>
-Cc:     git@vger.kernel.org
+X-Mozilla-News-Host: news://news.gmane.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Paul Tan <pyokagan@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <e9f58e04-a534-6794-feac-f6a47ca8bb65@web.de>
-Date:   Sat, 8 Oct 2016 15:38:24 +0200
+Subject: [PATCH] remove unnecessary NULL check before free(3)
+Message-ID: <0528736a-d47a-df2f-fa91-8161075be487@web.de>
+Date:   Sat, 8 Oct 2016 16:14:57 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <20161007235857.20382-1-sbeller@google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:zYd0V3uSjBoNWiysmS9yA9iFB8CKI253iXQ+NkuIxGIyKra9wZO
- Vn9f3bjieac6zvnWZjBqNVNsWX9N7WUFy3VnKqzY1N4gCaGCgmSBYrchxVfMUgTyenb2EvH
- fr+b0AB9I+ZFQxHBZWqgENV9z8f/sV8RAk0aO483cJo1X0N38Tjm7z6PgiW4aqb7ZwUClBT
- nxzqBBkiIfx9DEMddDcnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0jK9EmgMj5U=:ekSOzPwu5lwyL/U/O5VaVy
- Z7m4AVkLpT4/ZFfqrLS+iJo4U/Lmg+BmpUEVvOoFCrKfyeZ7ryQKzDugtS+gu1OWrMa5hmPye
- 0VafVFqJoHd8z/VLbvkzHQbsc2J38QI69f9dA11aGeti/GDNDpLNvxk5SKrw+UZBMRJQo8c46
- kdhRwecHvXELudO4eVG1P9fY1NTRilgosftGSw4jmloKtkAQB6xfzU0QcmZvdjNWJDLRg7jYq
- DjbzRQtL3CmycyGi90LZ8BsXt28RCE9mPzGambjHv/YAk4pLfcxQv+mp6rmf8APLCq7WS4nTr
- 8bcn2sXgK2ByzOnFdqcRjbAp68+jEtDGFVvTJgqFR+2vaDeiT86poCNm+JuED9OUZ19tNHGg0
- Xyo/ggHfyJA3XLVrVSuh6eHx3uMnyskRFTnZjEm8Fz6FKcdfEvlCmW93Fy/2eFoFWrFtX3HcT
- G2tsjmnsCfSyQlZBuOSTs+6mbTLGVvLfq5jVTWb3sFqE0zNZvG24AGf4dFcMa71BiycvwPMp1
- iyaZ+7bCRtARSHZUkoIW6yywfYP8PVyvJy3ndreaCjWVmCxCQ91KaStmeXc+YFCGsGUL4yGLy
- xtAnQTHlPJYoJ71ZyPlZoPM9v9IoWXBqT1A4eDrOAtCH3fElWs8IZD/N6Hs7SycRdFLqdwPo3
- aRTCB8xMf/F+UmdPXftPEYR5GgOqoLdYNCgat2FQHeR6Madfprt2fzitxC6SX8FXmD+yLaVBA
- dO6psQp1eVwSmb2MSCSFQ5ICbT1QetR9WrcPOUnDwpfoCIOcsyXGSwOA9bIi+x6p7yERiF527
- GbjGkog
+X-Provags-ID: V03:K0:kg8bBIuEJ4cO0fqdUSgaGoQudyLmHcT1k4M3W+Xvdr+r2H6mtn9
+ nbNaWpuyQcmlbcv7ZNwdLpIG7J210+khGQd+LHn0nGQkb/mCcP8i/adkzWrk/5jJA37NVAZ
+ TtfPhDfHSS/f2cayGhvT7YTTiK6tDJaAH/5VfSZnmVGrMynNGm8iBv9LSPoJ1a0gn565T8L
+ SfiG07zcsFsRblqJbI64Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gpKcZjm3Xqs=:d4dmLu8D/aqlCPkwywESEp
+ eAlJA+MhoemmLR+GRfzT8Fkkw/s9YEHZuJ3zJVWAq7N9ntDxeMwB0BA8zDJ0iWxrQJNSHTP0Q
+ +LF9w5fkB9GPflW6ph4uluqMflF/bwdTdJsonfMIKEJVYQQR6I0Wr7BCN+0rBvYBgS73mooic
+ 7Zz5dFk2X3oagLmSZk5oWS+df46H0qAgHbRS1G/9i/i6sNxYFrc0OuT+X2lyDjlja2Dr/DHm8
+ d6Ikee3SlTCjHQ+dCXlxZU2mgIF6BH9Fug9+/XAzRJLe6wXhIzJrx92kwT64vs8IIFNLPIysM
+ zj2fqs3mQWNuajTOLbRdITUKDlPDQpoT9eqnbcGPzus3ozpQgRF4jCDOsKmd40WtH/DWQlEEH
+ dq/c20aIplhTXwBVIPe+HKIT2ALMdl3TFC7GMD0ynwZDKiIWNzIrX6XGTdAy9ycSRV0DIaxAT
+ nGwXWGVUxuIgV4g/X/SfPolbQ3gC9dsskxkR+0zrt9jqjmttUCeMRgFrOwip6FE35KqCZaY7d
+ upF8Zfo3tjX95+vV8dnLtNKH8RwauWpwQpP/mnwZfoU7Hr2peCVuG1TBESysqFpXgzg43W6JI
+ 4zuh30ZXIsiPyX9q+O7JvK/AGGvKH9MztqoIRcLGCrnmUmd0qHnFqCt9dspwfDbKQUP3gX3+O
+ 3cfplWhD5MZ5gibcKPAHGDQGprsGRAktW1RQ2IK+yQRtGEUi8QC2ByPcSie1TfwakOdkfKenl
+ lH0A42SuJUqaj0yozftnOPpgwrQ88P7fmUwTNOtEWlmv/nPiAp7nxs1um5sq3xyxQED9j2hTM
+ +s7CnS+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.10.2016 um 01:58 schrieb Stefan Beller:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  remote.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/remote.c b/remote.c
-> index ad6c542..5f9afb4 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -833,6 +833,8 @@ static int match_name_with_pattern(const char *key, const char *name,
->  		strbuf_add(&sb, value, vstar - value);
->  		strbuf_add(&sb, name + klen, namelen - klen - ksuffixlen);
->  		strbuf_addstr(&sb, vstar + 1);
-> +		if (*result)
-> +			free(*result);
+free(3) handles NULL pointers just fine.  Add a semantic patch for
+removing unnecessary NULL checks before calling this function, and
+apply it on the code base.
 
-free(3) can handle NULL pointers; this check is not necessary.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/free.cocci | 5 +++++
+ parse-options-cb.c            | 3 +--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+ create mode 100644 contrib/coccinelle/free.cocci
 
-Is it wise to release memory for callers?  I'd expect them to be 
-responsible for that.  Some of them can pass uninitialized pointers; 
-this is not allowed anymore after the change.
-
->  		*result = strbuf_detach(&sb, NULL);
->  	}
->  	return ret;
-> @@ -1262,6 +1264,8 @@ static char *get_ref_match(const struct refspec *rs, int rs_nr, const struct ref
->  		 */
->  		if (!send_mirror && !starts_with(ref->name, "refs/heads/"))
->  			return NULL;
-> +		if (name)
-> +			free(name);
-
-Again, this check is not necessary.  If I read the code correctly the 
-pointer could be uninitialized at that point, though, causing free(3) to 
-crash.
-
->  		name = xstrdup(ref->name);
->  	}
->  	if (ret_pat)
->
+diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
+new file mode 100644
+index 0000000..e282131
+--- /dev/null
++++ b/contrib/coccinelle/free.cocci
+@@ -0,0 +1,5 @@
++@@
++expression E;
++@@
++- if (E)
++  free(E);
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index b5d9209..b7d8f7d 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -211,8 +211,7 @@ int parse_opt_passthru(const struct option *opt, const char *arg, int unset)
+ 	if (recreate_opt(&sb, opt, arg, unset) < 0)
+ 		return -1;
+ 
+-	if (*opt_value)
+-		free(*opt_value);
++	free(*opt_value);
+ 
+ 	*opt_value = strbuf_detach(&sb, NULL);
+ 
+-- 
+2.10.0
 
