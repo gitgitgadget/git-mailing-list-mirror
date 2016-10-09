@@ -2,104 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D304520986
-	for <e@80x24.org>; Sun,  9 Oct 2016 10:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C162B20986
+	for <e@80x24.org>; Sun,  9 Oct 2016 10:45:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932189AbcJIK1N (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 06:27:13 -0400
-Received: from mout.web.de ([212.227.17.11]:58679 "EHLO mout.web.de"
+        id S1753865AbcJIKpL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 06:45:11 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:43912 "EHLO bsmtp.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751167AbcJIK1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 06:27:12 -0400
-Received: from [192.168.209.54] ([195.252.60.88]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LlWKh-1bKwpf2CpD-00bL4H; Sun, 09 Oct 2016 12:27:08
- +0200
-Subject: Re: A head scratcher, clone results in modified files (tested linux
- and cygwin) - .gitattributes file?
-To:     git@vger.kernel.org, jpyeron@pdinc.us
-References: <7E06D61EACFB462AB96DD60720930968@black7>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <c9c90c24-3bf7-cd57-cad6-db28db16f323@web.de>
-Date:   Sun, 9 Oct 2016 12:27:11 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.3.0
+        id S1751167AbcJIKpL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 06:45:11 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3ssKdx09pRz5tlC;
+        Sun,  9 Oct 2016 12:45:08 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 61F3852D9;
+        Sun,  9 Oct 2016 12:45:08 +0200 (CEST)
+Subject: Re: [PATCH v2 20/25] sequencer: left-trim lines read from the script
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+ <cover.1473590966.git.johannes.schindelin@gmx.de>
+ <09e05e7ac23164625f2076ff06d2b034101878da.1473590966.git.johannes.schindelin@gmx.de>
+ <xmqqsht657ls.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1609121019290.129229@virtualbox>
+ <xmqqr38p3z1i.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610061459390.35196@virtualbox>
+ <5ed8aaea-9fbe-11b0-49b7-1b42567d4918@kdbg.org>
+ <alpine.DEB.2.20.1610091054490.35196@virtualbox>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <5d9ab6f1-211c-37fc-9396-0742426b2c45@kdbg.org>
+Date:   Sun, 9 Oct 2016 12:45:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-In-Reply-To: <7E06D61EACFB462AB96DD60720930968@black7>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <alpine.DEB.2.20.1610091054490.35196@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:8K7eijiZcnUqtWAZ5/TnFSf0iZ8l8X8khbfZdwHUWl+M+k0gRBU
- DsbOA9LHK7+8e45MjqhfgH9Yk/IcZk5xVCPsHXP5FnWvqNeeBWe/ju+TkfoxvGuGp55GJJM
- 1NK0gOdNb3XUEXa4aJmE4sGbi6IUKejkKRFGInJPE7+vzRcGb8l8COv3p5Z6yhPk6UErkeM
- HlVZ91369/MDNHth2ydIA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LD6TzQ85dV0=:ZcO4REHafm2vSDiNINw3je
- GuZffEgmmx4oVop/S6qbxmE/79PxpHFVeoCfZjbIPp36EZra197FW2pWW6eNWG3ATuylngtql
- 6utdUF9MWLb/o3cAt6cQNitruA42Txx5Mu5OCGRL1ISSdFS2fl2upPLfLoCYYYPE6Xa2zZ4PJ
- XoMNtjdlf7bIq7HoTVKnwdQ0ragk9LJAsiDDz4lotO41lyvMke2h4oocjxcdx4mzogTYaUtgW
- osX7349vWgiQVlLFUFgRd85j5js1Y6UCy3DArWzRDVkXdOb3WXDDtTeE3iN4Oumxb9YA9ak2N
- GIrmXbYhwatR6zNc9LqebftKNxOF2fss8xrw0M0p3l3BhzX+QiuhbsEsJX09wQrtprLhLA0xN
- z62p+y+qG3uENk972jDdB7AXAEzS4p2rpHYMNxsxIpa7EQ80p0R/O8CsyEl/BdjzQyPb22zjQ
- lS3ZKe922939+Dc0PcwCoYffYJLIWpNOLd5HliTx7kqHgCwzH9YtA0AuBRKK3fsQ5ixhuRD+6
- GTAUewPvAcD2EzEE++x4Fkrr9MSccMGDP5pE556b2grX3og9qXnXSNKLSibaZ5Arq+8hmIuOZ
- sNcxCeNDiogN6UZYG878/uyTavYJN/Ki4l7jK7xu33Hj2HFpOg2h6n6b5uzArTD5S5Rp9kM3Y
- HLoa5tey/mHkHjrN+J6LmvwOa/g+XDR2z11XNmtNYEbPzSNL+cIw/prdqQVxB0mEXM6xlE8uE
- tiBrwk52cnCpcZw7mXD00nz0CitgSmxhVX7WznMkd4c7mdrpuAOVBw7Mh1R0MPEsQwh8olIHh
- EHoP6Qc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 09.10.2016 um 10:57 schrieb Johannes Schindelin:
+> Good point. I decided to do it at a different level, though:
+> parse_insn_line() should already receive the line without trailing
+> end-of-line markers (this was already the case for LF-only todo scripts).
+>
+> I reused your commit message and touched it up a bit, hope you don't mind!
 
+I don't mind at all.
 
-On 09/10/16 08:48, Jason Pyeron wrote:
-
-
-The whole .gitattributes needs to be adopted, I think
-
-Git 2.10 or higher has "git ls-files --eol":
-
-git ls-files --eol   | grep "i/crlf.*auto"
-i/crlf  w/crlf  attr/text=auto src/site/xdoc/upgradeto2_3.xml
-i/crlf  w/crlf  attr/text=auto 
-src/test/resources/org/apache/commons/io/FileUtilsTestDataCRLF.dat
-i/crlf  w/crlf  attr/text=auto src/test/resources/test-file-gbk.bin
-i/crlf  w/crlf  attr/text=auto 
-src/test/resources/test-file-iso8859-1-shortlines-win-linebr.bin
-i/crlf  w/crlf  attr/text=auto src/test/resources/test-file-utf8-win-linebr.bin
-i/crlf  w/crlf  attr/text=auto src/test/resources/test-file-windows-31j.bin
-i/crlf  w/crlf  attr/text=auto src/test/resources/test-file-x-windows-949.bin
-i/crlf  w/crlf  attr/text=auto src/test/resources/test-file-x-windows-950.bin
-############
-Problem:
-xml file had been commited  with CRLF : either normalize it or declare "-text".
-
-The same is valid for the other files as well.
-They are identified by auto as text, and commited with CRLF.
-My feeling is that they should be declared as "-text".
-Or, to be more compatible, with "-crlf":
-
-Solution:
-Make up your mind about the xml file and the html files.
-If they are text, they need to be normalized.
-
-
-Question:
-What happens, if you do this:
-# Auto detect text files and perform LF normalization
-*        crlf=auto
-
-*.bin    -crlf
-*.dat    -crlf
-*.java   crlf diff=java
-*.html   crlf diff=html
-*.css    crlf
-*.js     crlf
-*.sql    crlf
-
-
+Thanks,
+-- Hannes
 
