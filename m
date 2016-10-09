@@ -2,66 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E1A207EC
-	for <e@80x24.org>; Sun,  9 Oct 2016 19:22:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A516207EC
+	for <e@80x24.org>; Sun,  9 Oct 2016 20:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752171AbcJITWx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 15:22:53 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:34531 "EHLO
-        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752139AbcJITWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 15:22:53 -0400
-Received: by mail-lf0-f48.google.com with SMTP id b81so87885356lfe.1
-        for <git@vger.kernel.org>; Sun, 09 Oct 2016 12:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CC4cNmw5+acWRrMqyfWwW7lx34iQDkI1jOOUw4JQGoY=;
-        b=ZTJKZejCm8NXh7vjm8+nqaUqy5lCO0Oqsj6ejYksmeGkngzR0CNKrMdrmWCG+H11Ba
-         PczDwZEjeca51s2e8FYqzH9sXQNCc8IgLk7m3X7Uz+xQwAbCLvzJ1Jj7fVvu4uvbOJIW
-         s1qED8wXOxbfBjyOd23wvp2l+DHx5MtOtOPoEvObnL2yYFl3eKZ96w0NCat39/PLQbZf
-         huo0WxIO7NSw9LGTOFLp9DZij++fsuaOObhtUqtzdlhLx+a4cHRDez4RaROFAw/kONrV
-         9612VQL//opZjZHvEAMPez+nFcKlpYnDtenHqbh4XkBNkK91oyUFz2fwxuUP3LB9Tz8L
-         fVpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CC4cNmw5+acWRrMqyfWwW7lx34iQDkI1jOOUw4JQGoY=;
-        b=PA9NAZ9q2Mkkl6tVCnHv4ZCZ2LmDmnqby8b3Q0iYFuVIUUq6n4iECUQL+2T3ugN7hr
-         UBFxfHfLwyqz4XFruhr/I1VIoI8ROHhm+KHE51v3GALOCad2kSXv12jfZ0tWZOSTzYlK
-         qyl4jLkXvG9lwDGv1DGHDBqVlLCacrvDVBeKOS9cgRUa10YIeC8zkrqyBhugsZxMNOS/
-         O7cFmJktNQjbkPsmPNqhxHXXd2oseBeJYwMM+TC256Q8oY3XNo6nf7msI01wVH7Xr3XF
-         5UBJkyNUQ+zxE/OpVZwMQ6lv5Tm9HqdgQUBkvaeRJeQsu0G5Nw7mfcT+lLJadkXvmrZW
-         oV7w==
-X-Gm-Message-State: AA6/9RnVJ1r4/gmq1j93sbU5Y9Gk0dWvocGBCxY2J/jUenqqwaWlJPmQirUsTcvObppP2akjjvvI9azg11etWA==
-X-Received: by 10.194.115.230 with SMTP id jr6mr10385150wjb.3.1476040970925;
- Sun, 09 Oct 2016 12:22:50 -0700 (PDT)
+        id S1752136AbcJIU7A (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 16:59:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54729 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751674AbcJIU67 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 16:58:59 -0400
+Received: (qmail 27538 invoked by uid 109); 9 Oct 2016 20:58:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Oct 2016 20:58:56 +0000
+Received: (qmail 24893 invoked by uid 111); 9 Oct 2016 20:59:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Oct 2016 16:59:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Oct 2016 16:58:54 -0400
+Date:   Sun, 9 Oct 2016 16:58:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+Message-ID: <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net>
+References: <20161006114124.4966-1-pclouds@gmail.com>
+ <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610071319520.35196@virtualbox>
+ <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
+ <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
+ <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1610081034430.35196@virtualbox>
+ <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net>
+ <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.80.143.33 with HTTP; Sun, 9 Oct 2016 12:22:50 -0700 (PDT)
-In-Reply-To: <CAL4Sumj7r-RNXBi2Oh_=KAkcksM13sJjLzJEpszWXPXZ8hP6Kw@mail.gmail.com>
-References: <CAL4SumgJbrirymt5+iyNbpo++xXfzJZRiHDm8=0+eCArpCX=DA@mail.gmail.com>
- <1476035501.26041.1.camel@kaarsemaker.net> <CAL4Sumj7r-RNXBi2Oh_=KAkcksM13sJjLzJEpszWXPXZ8hP6Kw@mail.gmail.com>
-From:   "venv21@gmail.com" <venv21@gmail.com>
-Date:   Sun, 9 Oct 2016 21:22:50 +0200
-Message-ID: <CAL4Sumjc0Fo3JLBZxdM50Z3o8ZhGk731905Gxg=R=GXsPMKzmA@mail.gmail.com>
-Subject: Re: Problem with submodules
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hm okay, it works with 2.10.0, when I remove the word 'epiphany' from
-the urls in line 13 and 15
+On Sun, Oct 09, 2016 at 06:32:38PM +0700, Duy Nguyen wrote:
 
-2016-10-09 21:15 GMT+02:00 venv21@gmail.com <venv21@gmail.com>:
-> Sure, http://pastebin.com/bUFBDj0Q
+> > If you mean ambiguity between the old "alias.X" and the new "alias.X.*",
+> > then yes, I think that's an unavoidable part of the transition.  IMHO,
+> > the new should take precedence over the old, and people will gradually
+> > move from one to the other.
+> 
+> Do we really need to treat this differently than
+> 
+> [alias]
+>     d2u = !dos2unix
+>     d2u = C:/cygwin/bin/dos3unix.exe
+> 
+> ?
+> 
+> Another similar case is one d2u (could be either old syntax or new) is
+> defined in ~/.gitconfig and the other d2u in $GIT_DIR/config. In
+> either case, the "latest" d2u definition wins.
+
+Yeah, that's reasonable, too. So:
+
+  [alias]
+    d2u = "!dos2unix"
+
+acts exactly as if:
+
+  [alias "d2u"]
+    command = dos2unix
+    type = shell
+
+was specified at that point, which is easy to understand.
+
+> > If you mean the ambiguity between alias.X.shell and alias.X.exec in your
+> > example, the problem is that you have keys with overlapping meanings.
+> > One solution is "don't do that" (so have a key like "cmd", and another
+> > to select "shell or git-cmd", etc). Another is to define some rule, like
+> > "last one wins" (so "exec" overrides "shell" in your example).
+> [...]
+> 
+> Any suggestion? I suppose we can have _one_ key for the command. How
+> to execute that command (exec, shell, nocd...) are boolean options.
+> People can still write conflicting things. We have been nice so far,
+> always dying when the user specify conflicting command line options.
+> We could do the same here, I guess.
+
+Having separate exec/shell boolean options just punts the overlap from
+the command key to those keys. If you have two mutually exclusive
+options, I think the best thing is a single option, like:
+
+  type = <shell | exec | whatever>
+
+and then it is obvious that a second appearance of "type" overrides an
+earlier one, by our usual "last one wins" convention. As opposed to:
+
+  shell = true
+  exec = true
+
+where you have to understand the meaning of each option to know that
+"exec" overrides "shell".
+
+-Peff
