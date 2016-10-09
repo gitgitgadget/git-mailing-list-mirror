@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BC6C20986
-	for <e@80x24.org>; Sun,  9 Oct 2016 09:57:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0E9E20986
+	for <e@80x24.org>; Sun,  9 Oct 2016 09:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932218AbcJIJ5k (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 05:57:40 -0400
-Received: from mout.web.de ([212.227.15.14]:52956 "EHLO mout.web.de"
+        id S932262AbcJIJ5n (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 05:57:43 -0400
+Received: from mout.web.de ([212.227.15.3]:60544 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753478AbcJIJ5i (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753513AbcJIJ5i (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 9 Oct 2016 05:57:38 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MNg5K-1bm1BU11TO-007GCw; Sun, 09 Oct 2016 11:56:54
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MfqSa-1bYK393lye-00NDgI; Sun, 09 Oct 2016 11:56:55
  +0200
 From:   tboegi@web.de
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/2] read-cache: factor out get_sha1_from_index() helper
-Date:   Sun,  9 Oct 2016 11:56:52 +0200
-Message-Id: <20161009095652.1925-1-tboegi@web.de>
+Subject: [PATCH v1 2/2] convert.c: stream and early out
+Date:   Sun,  9 Oct 2016 11:56:54 +0200
+Message-Id: <20161009095654.1964-1-tboegi@web.de>
 X-Mailer: git-send-email 2.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:7WCeUl5Gdb+S10dVBH9nGORsBYQuf+rKgrOnkn6OdAi0EIjdGvP
- BI2f61vmhpC4QHeFfz8KnO5RZsJH5LX1d4ArVLoYTrCo58cZnk6WBUwTde0Oky5rgwwk+Is
- GmWJro8CpvtE20Alp4EqS5M+nmVgJ4qDXeGQ/U++j8u7HuY/tJGak1pTmEudnOGiPyUppjU
- j4Wg98fl1b0+bfbx8h5mw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fOeRF6FZHnY=:fSARKW6WMZvPbnFEtM5+Zs
- zNUnIrmllqUCnOpBTP7UYos5lG8hfDQYGYshV1xDjunYGHwY1x/uW0LjH178dNi8k6iZCqFQN
- NQWthpJqUr1CYEeQUgDhMTOcRmtQbpQirCAFwOhbDmTFPHl7evBdaof/V+5ArCAOlK0DQEgzs
- 9Ki1n+7vtTe3qSw18NJDgEofd5UijtPkkpeMcVNu5qzbS8jNHPjf3JzdBiajV8kMs28t0QImp
- dj8qpnRg/yUMoKJNBMLwE46K+6X85oSjWz6VMTBn6QMRRp2cFPz5vxu6D9ERrCzyq6otc9AD6
- AdBCnE8C7+J6SNslBNiHh91JLJysSfQURVPafqRHSkPLcWI8IKgArj//5Ij0gcfy2x3fIay8+
- CGulblfqS3t3pRE+K5paM+aUQxCvNXvxXr0QQGiabAZf2au3h2nRHPp1TsC6Qf8+CkPgIgMCU
- yQ52WXTuHjSMwK35b5HX47ibCP9HX2SgGQOjOoHWEtCE5HlY+VyfvtMPHorNNZ3QG35BQczz3
- TktxS8XDTIH9Nph3BvjaROzzZWfySvvQ2WBEDK91o+QGdHQNNz+MfxVBoKulcVEdJJyinNCgF
- v8R2FRfPG8EjjVpA0jYjtufnh5Rji4jPPhohUWM9t2qEe9qmCaWepyY+5H8qhZ1ps8TGOeF+Q
- 9FF+8P/6m2zI6X/9OANqPOpR1VqG1eBOlfdmm6ZzrHFHOh66KCCUW7grWbAO68pD/ZjWo8/Kx
- KW1isSju/XbNIv7tV/PbHK02zLe3L1ImRg3grnOg0y3KaCIryIIXKc5iXjm7G3fcZLc4LXNLG
- 7UQUdD1
+X-Provags-ID: V03:K0:93GJ32Tq9B0sQTrsmBKlVVJtX0yLMkwCVQIR2ap+d7ycP2R1WiW
+ q9eL7H5FYpr2TZPcxYMLXcVVaTkL5yA1Yq7hPsapKKPRddg4+NcXExBq8gTCFL/Rxm49Rxu
+ swN/Kup39s61I8aR3Zcd46Zo+3KzDgvB8YupEvqJzkOycqRUOjNThEcmpvNk9xwz9KlHo61
+ 2aV6UtD+GELFjQIrzfpfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DtAQMdk0/jQ=:+/RtFSpsgLxnSRRoMP2Kxm
+ SmkU5rIxOICdddxfa58gHOxd1I6VWgeeZkn1HVkE018pzXatpECXI1bxckVmQX9aWWGeiK2xz
+ J3iNUMm0AqnF9pPjzjmcq5jWscdSIF7U2BFFzKAE3ECbz2+8FHD84P+N02qfMhUaqxM0wHanz
+ xbnzv7wsed4QWIyqG2tuU3WW/MKdbI8nR6gwNm5dRIQWJXyl5afYwaD5PW4An5KYG9x/B1vHV
+ ohZ8fbdmxvk3QC1SQwyQ7p4ixa1Fsk5NAS4F19BL6iJXrycfvyGgcyOkL0L/Xm++i2U7FZKRU
+ QRqJNDiR+H9XJlgQEDDlwcPUvJ0fB5PfZV9sEfjWQNDGiWbwFTiSxLwhOIGP3vgIxx1pTCc4X
+ r8fBcKZfkYJjsgH4Sl+n5A/VBnxTCYdnJgJUwcxyfbJ5NfqwJYIV0qaHwtbYD5w6XtHKGXTiA
+ bIQ0AScaN908qbl7WAliMM7yYdczooxRjly1K1tagvFqxsui+1Nfve8MBnv/ejypYiyRBLZpc
+ vrm+GxYMs/clkgnS/mRmUDSvZa5y5yFyYPA3Bdu2jh72Nh/ikv6bdNHSjJAsCZniuzDE6pBfx
+ MNzS8nNGhy5YT7RmMjCdF/aJpNljoFoKeJsz7IIXJe4T5IHPRuA8LGVzNJaFIreEvBTRL4YPZ
+ ytjw7P6exW3s2M2YMgOrGMh1M4/WDcC9cbixHFYXvKGdRCVAVBiBcUrfnO88dqScM9YQHeiqq
+ y4laWfPT9MomfJZJ/1oeHRk/80FpwfEkqvM0kYTFNEUjLbtOAOU1e+PGW8g6gV7FaxwhiUWce
+ IJzp1d5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -53,91 +53,388 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Torsten Bögershausen <tboegi@web.de>
 
-Factor out the retrieval of the sha1 for a given path in
-read_blob_data_from_index() into the function get_sha1_from_index().
+When statistics are done for the autocrlf handling, the search in
+the content can be stopped, if e.g
+- a search for binary is done, and a NUL character is found
+- a search for CRLF is done, and the first CRLF is found.
 
-This will be used in the next commit, when convert.c can do the
-analyze for "text=auto" without slurping the whole blob into memory
-at once.
+Similar when statistics for binary vs non-binary are gathered:
+Whenever a lone CR or NUL is found, the search can be aborted.
 
-Add a wrapper definition get_sha1_from_cache().
+When checking out files in "auto" mode, any file that has a "lone CR"
+or a CRLF will not be converted, so the search can be aborted early.
+
+Add the new bit, CONVERT_STAT_BITS_ANY_CR,
+which is set for either lone CR or CRLF.
+
+Many binary files have a NUL very early (within the first few bytes,
+latest within the first 1..2K).
+It is often not necessary to load the whole content of a file or blob
+into memory.
+
+Use a streaming handling for blobs and files in the worktree.
 ---
- cache.h      |  3 +++
- read-cache.c | 29 ++++++++++++++++++-----------
- 2 files changed, 21 insertions(+), 11 deletions(-)
+ convert.c | 195 +++++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 130 insertions(+), 65 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 1604e29..04de209 100644
---- a/cache.h
-+++ b/cache.h
-@@ -380,6 +380,7 @@ extern void free_name_hash(struct index_state *istate);
- #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, at)
- #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
- #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
-+#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (path))
- #endif
+diff --git a/convert.c b/convert.c
+index 077f5e6..6a625e5 100644
+--- a/convert.c
++++ b/convert.c
+@@ -3,6 +3,7 @@
+ #include "run-command.h"
+ #include "quote.h"
+ #include "sigchain.h"
++#include "streaming.h"
  
- enum object_type {
-@@ -1089,6 +1090,8 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
- 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJECT);
+ /*
+  * convert.c - convert a file when checking it out and checking it in.
+@@ -13,10 +14,10 @@
+  * translation when the "text" attribute or "auto_crlf" option is set.
+  */
+ 
+-/* Stat bits: When BIN is set, the txt bits are unset */
+ #define CONVERT_STAT_BITS_TXT_LF    0x1
+ #define CONVERT_STAT_BITS_TXT_CRLF  0x2
+ #define CONVERT_STAT_BITS_BIN       0x4
++#define CONVERT_STAT_BITS_ANY_CR    0x8
+ 
+ enum crlf_action {
+ 	CRLF_UNDEFINED,
+@@ -31,30 +32,36 @@ enum crlf_action {
+ 
+ struct text_stat {
+ 	/* NUL, CR, LF and CRLF counts */
+-	unsigned nul, lonecr, lonelf, crlf;
++	unsigned stat_bits, lonecr, lonelf, crlf;
+ 
+ 	/* These are just approximations! */
+ 	unsigned printable, nonprintable;
+ };
+ 
+-static void gather_stats(const char *buf, unsigned long size, struct text_stat *stats)
++static void gather_stats_partly(const char *buf, unsigned long len,
++				struct text_stat *stats, unsigned earlyout)
+ {
+ 	unsigned long i;
+ 
+-	memset(stats, 0, sizeof(*stats));
+-
+-	for (i = 0; i < size; i++) {
++	if (!buf || !len)
++		return;
++	for (i = 0; i < len; i++) {
+ 		unsigned char c = buf[i];
+ 		if (c == '\r') {
+-			if (i+1 < size && buf[i+1] == '\n') {
++			stats->stat_bits |= CONVERT_STAT_BITS_ANY_CR;
++			if (i+1 < len && buf[i+1] == '\n') {
+ 				stats->crlf++;
+ 				i++;
+-			} else
++				stats->stat_bits |= CONVERT_STAT_BITS_TXT_CRLF;
++			} else {
+ 				stats->lonecr++;
++				stats->stat_bits |= CONVERT_STAT_BITS_BIN;
++			}
+ 			continue;
+ 		}
+ 		if (c == '\n') {
+ 			stats->lonelf++;
++			stats->stat_bits |= CONVERT_STAT_BITS_TXT_LF;
+ 			continue;
+ 		}
+ 		if (c == 127)
+@@ -67,7 +74,7 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+ 				stats->printable++;
+ 				break;
+ 			case 0:
+-				stats->nul++;
++				stats->stat_bits |= CONVERT_STAT_BITS_BIN;
+ 				/* fall through */
+ 			default:
+ 				stats->nonprintable++;
+@@ -75,10 +82,12 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+ 		}
+ 		else
+ 			stats->printable++;
++		if (stats->stat_bits & earlyout)
++			break; /* We found what we have been searching for */
+ 	}
+ 
+ 	/* If file ends with EOF then don't count this EOF as non-printable. */
+-	if (size >= 1 && buf[size-1] == '\032')
++	if (len >= 1 && buf[len-1] == '\032')
+ 		stats->nonprintable--;
  }
  
-+const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path);
-+
- /*
-  * This internal function is only declared here for the benefit of
-  * lookup_replace_object().  Please do not call it directly.
-diff --git a/read-cache.c b/read-cache.c
-index 38d67fa..5a1df14 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2290,13 +2290,27 @@ int index_name_is_other(const struct index_state *istate, const char *name,
- 
- void *read_blob_data_from_index(struct index_state *istate, const char *path, unsigned long *size)
+@@ -86,41 +95,62 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+  * The same heuristics as diff.c::mmfile_is_binary()
+  * We treat files with bare CR as binary
+  */
+-static int convert_is_binary(unsigned long size, const struct text_stat *stats)
++static void convert_nonprintable(struct text_stat *stats)
  {
--	int pos, len;
-+	const unsigned char *sha1;
- 	unsigned long sz;
- 	enum object_type type;
- 	void *data;
+-	if (stats->lonecr)
+-		return 1;
+-	if (stats->nul)
+-		return 1;
+ 	if ((stats->printable >> 7) < stats->nonprintable)
+-		return 1;
+-	return 0;
++		stats->stat_bits |= CONVERT_STAT_BITS_BIN;
+ }
  
--	len = strlen(path);
--	pos = index_name_pos(istate, path, len);
-+	sha1 = get_sha1_from_index(istate, path);
-+	if (!sha1)
-+		return NULL;
-+	data = read_sha1_file(sha1, &type, &sz);
-+	if (!data || type != OBJ_BLOB) {
-+		free(data);
-+		return NULL;
-+	}
-+	if (size)
-+		*size = sz;
-+	return data;
+-static unsigned int gather_convert_stats(const char *data, unsigned long size)
++static void gather_stats(const char *buf, unsigned long size,
++			 struct text_stat *stats, unsigned earlyout)
+ {
++	memset(stats, 0, sizeof(*stats));
++	gather_stats_partly(buf, size, stats, earlyout);
++	convert_nonprintable(stats);
 +}
 +
-+const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path)
++
++static unsigned get_convert_stats_sha1(unsigned const char *sha1,
++				       unsigned earlyout)
 +{
-+	int pos = index_name_pos(istate, path, strlen(path));
- 	if (pos < 0) {
- 		/*
- 		 * We might be in the middle of a merge, in which
-@@ -2312,14 +2326,7 @@ void *read_blob_data_from_index(struct index_state *istate, const char *path, un
- 	}
- 	if (pos < 0)
- 		return NULL;
--	data = read_sha1_file(istate->cache[pos]->oid.hash, &type, &sz);
--	if (!data || type != OBJ_BLOB) {
--		free(data);
--		return NULL;
--	}
--	if (size)
--		*size = sz;
--	return data;
-+	return istate->cache[pos]->oid.hash;
++	struct git_istream *st;
+ 	struct text_stat stats;
+-	int ret = 0;
+-	if (!data || !size)
+-		return 0;
+-	gather_stats(data, size, &stats);
+-	if (convert_is_binary(size, &stats))
+-		ret |= CONVERT_STAT_BITS_BIN;
+-	if (stats.crlf)
+-		ret |= CONVERT_STAT_BITS_TXT_CRLF;
+-	if (stats.lonelf)
+-		ret |=  CONVERT_STAT_BITS_TXT_LF;
++	enum object_type type;
++	unsigned long sz;
+ 
+-	return ret;
++	if (!sha1)
++		return 0;
++	memset(&stats, 0, sizeof(stats));
++	st = open_istream(sha1, &type, &sz, NULL);
++	if (!st) {
++		return 0;
++	}
++	if (type != OBJ_BLOB)
++		goto close_and_exit_i;
++	for (;;) {
++		char buf[2*1024];
++		ssize_t readlen = read_istream(st, buf, sizeof(buf));
++		if (readlen < 0)
++			break;
++		if (!readlen)
++			break;
++		gather_stats_partly(buf, (unsigned long)readlen, &stats, earlyout);
++		if (stats.stat_bits & earlyout)
++			break; /* We found what we have been searching for */
++	}
++close_and_exit_i:
++	close_istream(st);
++	convert_nonprintable(&stats);
++	return stats.stat_bits;
  }
  
- void stat_validity_clear(struct stat_validity *sv)
+-static const char *gather_convert_stats_ascii(const char *data, unsigned long size)
++static const char *convert_stats_ascii(unsigned convert_stats)
+ {
+-	unsigned int convert_stats = gather_convert_stats(data, size);
+-
++	const unsigned mask = CONVERT_STAT_BITS_TXT_LF |
++		CONVERT_STAT_BITS_TXT_CRLF;
+ 	if (convert_stats & CONVERT_STAT_BITS_BIN)
+ 		return "-text";
+-	switch (convert_stats) {
++	switch (convert_stats & mask) {
+ 	case CONVERT_STAT_BITS_TXT_LF:
+ 		return "lf";
+ 	case CONVERT_STAT_BITS_TXT_CRLF:
+@@ -132,24 +162,45 @@ static const char *gather_convert_stats_ascii(const char *data, unsigned long si
+ 	}
+ }
+ 
++static unsigned get_convert_stats_wt(const char *path)
++{
++	struct text_stat stats;
++	unsigned earlyout = CONVERT_STAT_BITS_BIN;
++	int fd;
++	memset(&stats, 0, sizeof(stats));
++	fd = open(path, O_RDONLY);
++	if (fd < 0)
++		return 0;
++	for (;;) {
++		char buf[2*1024];
++		ssize_t readlen = read(fd, buf, sizeof(buf));
++		if (readlen < 0)
++			break;
++		if (!readlen)
++			break;
++		gather_stats_partly(buf, (unsigned long)readlen, &stats, earlyout);
++		if (stats.stat_bits & earlyout)
++			break; /* We found what we have been searching for */
++	}
++	close(fd);
++	convert_nonprintable(&stats);
++	return stats.stat_bits;
++}
++
+ const char *get_cached_convert_stats_ascii(const char *path)
+ {
+-	const char *ret;
+-	unsigned long sz;
+-	void *data = read_blob_data_from_cache(path, &sz);
+-	ret = gather_convert_stats_ascii(data, sz);
+-	free(data);
+-	return ret;
++	unsigned convert_stats;
++	unsigned earlyout = CONVERT_STAT_BITS_BIN;
++	convert_stats = get_convert_stats_sha1(get_sha1_from_cache(path),
++					       earlyout);
++	return convert_stats_ascii(convert_stats);
+ }
+ 
+ const char *get_wt_convert_stats_ascii(const char *path)
+ {
+-	const char *ret = "";
+-	struct strbuf sb = STRBUF_INIT;
+-	if (strbuf_read_file(&sb, path, 0) >= 0)
+-		ret = gather_convert_stats_ascii(sb.buf, sb.len);
+-	strbuf_release(&sb);
+-	return ret;
++	unsigned convert_stats;
++	convert_stats = get_convert_stats_wt(path);
++	return convert_stats_ascii(convert_stats);
+ }
+ 
+ static int text_eol_is_crlf(void)
+@@ -213,16 +264,10 @@ static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
+ 
+ static int has_cr_in_index(const char *path)
+ {
+-	unsigned long sz;
+-	void *data;
+-	int has_cr;
+-
+-	data = read_blob_data_from_cache(path, &sz);
+-	if (!data)
+-		return 0;
+-	has_cr = memchr(data, '\r', sz) != NULL;
+-	free(data);
+-	return has_cr;
++	unsigned convert_stats;
++	convert_stats = get_convert_stats_sha1(get_sha1_from_cache(path),
++					       CONVERT_STAT_BITS_ANY_CR);
++	return convert_stats & CONVERT_STAT_BITS_ANY_CR;
+ }
+ 
+ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
+@@ -234,13 +279,13 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
+ 	if (!stats->lonelf)
+ 		return 0;
+ 
+-	if (crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_INPUT || crlf_action == CRLF_AUTO_CRLF) {
++	if (crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_CRLF) {
+ 		/* If we have any CR or CRLF line endings, we do not touch it */
+ 		/* This is the new safer autocrlf-handling */
+ 		if (stats->lonecr || stats->crlf)
+ 			return 0;
+ 
+-		if (convert_is_binary(len, stats))
++		if (stats->stat_bits & CONVERT_STAT_BITS_BIN)
+ 			return 0;
+ 	}
+ 	return 1;
+@@ -253,7 +298,8 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ {
+ 	struct text_stat stats;
+ 	char *dst;
+-	int convert_crlf_into_lf;
++	int has_crlf_to_convert;
++	unsigned earlyout = 0;
+ 
+ 	if (crlf_action == CRLF_BINARY ||
+ 	    (src && !len))
+@@ -266,12 +312,16 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 	if (!buf && !src)
+ 		return 1;
+ 
+-	gather_stats(src, len, &stats);
++	if (crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_INPUT || crlf_action == CRLF_AUTO_CRLF)
++		earlyout = CONVERT_STAT_BITS_BIN;
++
++	gather_stats(src, len, &stats, earlyout);
++
+ 	/* Optimization: No CRLF? Nothing to convert, regardless. */
+-	convert_crlf_into_lf = !!stats.crlf;
++	has_crlf_to_convert = !!stats.crlf;
+ 
+ 	if (crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_INPUT || crlf_action == CRLF_AUTO_CRLF) {
+-		if (convert_is_binary(len, &stats))
++		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
+ 			return 0;
+ 		/*
+ 		 * If the file in the index has any CR in it, do not convert.
+@@ -280,24 +330,35 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 		if (checksafe == SAFE_CRLF_RENORMALIZE)
+ 			checksafe = SAFE_CRLF_FALSE;
+ 		else if (has_cr_in_index(path))
+-			convert_crlf_into_lf = 0;
++			has_crlf_to_convert = 0;
+ 	}
+ 	if (checksafe && len) {
+ 		struct text_stat new_stats;
+ 		memcpy(&new_stats, &stats, sizeof(new_stats));
+ 		/* simulate "git add" */
+-		if (convert_crlf_into_lf) {
++		if (has_crlf_to_convert) {
+ 			new_stats.lonelf += new_stats.crlf;
+ 			new_stats.crlf = 0;
++			/* all crlf, if any, are gone. Update the bits */
++			new_stats.stat_bits = stats.stat_bits & CONVERT_STAT_BITS_BIN;
++			if (new_stats.lonelf)
++				new_stats.stat_bits |= CONVERT_STAT_BITS_TXT_LF;
++			if (new_stats.lonecr)
++				new_stats.stat_bits |= CONVERT_STAT_BITS_ANY_CR;
+ 		}
+ 		/* simulate "git checkout" */
+ 		if (will_convert_lf_to_crlf(len, &new_stats, crlf_action)) {
+ 			new_stats.crlf += new_stats.lonelf;
+ 			new_stats.lonelf = 0;
++			new_stats.stat_bits = stats.stat_bits & CONVERT_STAT_BITS_BIN;
++			if (new_stats.crlf)
++				new_stats.stat_bits |= CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_ANY_CR;
++			if (new_stats.lonecr)
++				new_stats.stat_bits |= CONVERT_STAT_BITS_ANY_CR;
+ 		}
+ 		check_safe_crlf(path, crlf_action, &stats, &new_stats, checksafe);
+ 	}
+-	if (!convert_crlf_into_lf)
++	if (!has_crlf_to_convert)
+ 		return 0;
+ 
+ 	/*
+@@ -338,11 +399,15 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
+ {
+ 	char *to_free = NULL;
+ 	struct text_stat stats;
++	unsigned earlyout = 0;
+ 
+ 	if (!len || output_eol(crlf_action) != EOL_CRLF)
+ 		return 0;
+ 
+-	gather_stats(src, len, &stats);
++	if (crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_CRLF)
++		earlyout = CONVERT_STAT_BITS_ANY_CR | CONVERT_STAT_BITS_BIN;
++
++	gather_stats(src, len, &stats, earlyout);
+ 	if (!will_convert_lf_to_crlf(len, &stats, crlf_action))
+ 		return 0;
+ 
 -- 
 2.10.0
 
