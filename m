@@ -7,79 +7,137 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D59E420986
-	for <e@80x24.org>; Sun,  9 Oct 2016 09:04:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BC6C20986
+	for <e@80x24.org>; Sun,  9 Oct 2016 09:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753327AbcJIJEG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 05:04:06 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54921 "EHLO mout.gmx.net"
+        id S932218AbcJIJ5k (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 05:57:40 -0400
+Received: from mout.web.de ([212.227.15.14]:52956 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752787AbcJIJEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 05:04:05 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lx8vJ-1anVQh2Aaf-016dB8; Sun, 09 Oct 2016 10:57:22
+        id S1753478AbcJIJ5i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 05:57:38 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0MNg5K-1bm1BU11TO-007GCw; Sun, 09 Oct 2016 11:56:54
  +0200
-Date:   Sun, 9 Oct 2016 10:57:20 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v2 20/25] sequencer: left-trim lines read from the
- script
-In-Reply-To: <5ed8aaea-9fbe-11b0-49b7-1b42567d4918@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1610091054490.35196@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de> <09e05e7ac23164625f2076ff06d2b034101878da.1473590966.git.johannes.schindelin@gmx.de> <xmqqsht657ls.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1609121019290.129229@virtualbox> <xmqqr38p3z1i.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610061459390.35196@virtualbox> <5ed8aaea-9fbe-11b0-49b7-1b42567d4918@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1 1/2] read-cache: factor out get_sha1_from_index() helper
+Date:   Sun,  9 Oct 2016 11:56:52 +0200
+Message-Id: <20161009095652.1925-1-tboegi@web.de>
+X-Mailer: git-send-email 2.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nvQUNwu6605Z2kik28YDCOe4JIDhRDl4MamyBtIs00LK8mRPXrA
- AUvlnKEVaMkWwns5BplR9WY9kV7SV19vtPTfz5XGk4lOg+3ar7q9rFLigYCtON4Lt/TdelG
- B9FubqDlO99Botso1Y/5KNTuOmB4U51m7/feZkPOaMMAJ3UrlVCtgmG8jxK6Qvn1NxXDNuR
- UrCof8z1A0NiLYVLKvrbg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fejcEk4ZZJ8=:n2Q6EKl67/INE+Xm2Jx6DV
- cNmCbsokj4hLoMi3lOFL9BIq09eukUWTCre29DB5xdDOqdNAOWs8+91bL3WDV1zgEig5ZfhUP
- JzoVaRcOks1R9xo/NOQUPU9fxgoG06Ii95nGNeJG7SEKcRfhK63nFfT8k24Z7Cwl3TkMAmeIh
- PvK+LdFpYaO6bzKeAcnjFzKgQbUWrVeFV8vrC7Tej7q5K4JlazmlEOtEtwE///de8HgPBI+LB
- OOzfThQZTE1PEc2SVUVLyYa7XJI8hktlJkKSvoPVmHjNvlr1Rx5m4KArecoQxrhS8ZHDYMyuJ
- AK9zQYbVWCwhf0Gc2XkcBea7ncOWvJtsQ0te71ISKVvwsVGdhPOERp116yWosvEmuxtr9jYgK
- Wtqcz9mOdkauf3Ptqk4p1wOoYJszgi0JWVlkOQDky+7CqGly6YaalHypjMlgzPdaI0WS1jTKU
- UqUzuadwTBH1EUt1V0bkvWLUuKRMU984DcL21Xa6MvUv1Zr5wH0ZKYPlkrBCE5O/laIcQibwj
- ju9ZCkx1bmSwiKfQLfII0wLpM3uzq/0p9kIOl3zPhRDr0i16NflJlhMHRh7PQ1e61VIzNzI/p
- 5kTwxZ1q9gAW5Emc/pqDfEbMCYhMbpHznpBb9oUiFSRtVZZXrkdJWkWMc1lGc56xGN2E2s0jp
- uKeOhoFSqXYqbBlbmGNTSxfNMcX4qEoqPRWsI4n641zr3GuV5qCpv1GOrPdvykPAlGrrWLGMm
- mslOH4myywP88+SWEnRxU+ci1saRI7k6/a2cY0W8Zmxd6QMoXqlUhcQSxxGBVpBMdHlrTP47o
- 8MTlJRr
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:7WCeUl5Gdb+S10dVBH9nGORsBYQuf+rKgrOnkn6OdAi0EIjdGvP
+ BI2f61vmhpC4QHeFfz8KnO5RZsJH5LX1d4ArVLoYTrCo58cZnk6WBUwTde0Oky5rgwwk+Is
+ GmWJro8CpvtE20Alp4EqS5M+nmVgJ4qDXeGQ/U++j8u7HuY/tJGak1pTmEudnOGiPyUppjU
+ j4Wg98fl1b0+bfbx8h5mw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fOeRF6FZHnY=:fSARKW6WMZvPbnFEtM5+Zs
+ zNUnIrmllqUCnOpBTP7UYos5lG8hfDQYGYshV1xDjunYGHwY1x/uW0LjH178dNi8k6iZCqFQN
+ NQWthpJqUr1CYEeQUgDhMTOcRmtQbpQirCAFwOhbDmTFPHl7evBdaof/V+5ArCAOlK0DQEgzs
+ 9Ki1n+7vtTe3qSw18NJDgEofd5UijtPkkpeMcVNu5qzbS8jNHPjf3JzdBiajV8kMs28t0QImp
+ dj8qpnRg/yUMoKJNBMLwE46K+6X85oSjWz6VMTBn6QMRRp2cFPz5vxu6D9ERrCzyq6otc9AD6
+ AdBCnE8C7+J6SNslBNiHh91JLJysSfQURVPafqRHSkPLcWI8IKgArj//5Ij0gcfy2x3fIay8+
+ CGulblfqS3t3pRE+K5paM+aUQxCvNXvxXr0QQGiabAZf2au3h2nRHPp1TsC6Qf8+CkPgIgMCU
+ yQ52WXTuHjSMwK35b5HX47ibCP9HX2SgGQOjOoHWEtCE5HlY+VyfvtMPHorNNZ3QG35BQczz3
+ TktxS8XDTIH9Nph3BvjaROzzZWfySvvQ2WBEDK91o+QGdHQNNz+MfxVBoKulcVEdJJyinNCgF
+ v8R2FRfPG8EjjVpA0jYjtufnh5Rji4jPPhohUWM9t2qEe9qmCaWepyY+5H8qhZ1ps8TGOeF+Q
+ 9FF+8P/6m2zI6X/9OANqPOpR1VqG1eBOlfdmm6ZzrHFHOh66KCCUW7grWbAO68pD/ZjWo8/Kx
+ KW1isSju/XbNIv7tV/PbHK02zLe3L1ImRg3grnOg0y3KaCIryIIXKc5iXjm7G3fcZLc4LXNLG
+ 7UQUdD1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+From: Torsten Bögershausen <tboegi@web.de>
 
-On Thu, 6 Oct 2016, Johannes Sixt wrote:
+Factor out the retrieval of the sha1 for a given path in
+read_blob_data_from_index() into the function get_sha1_from_index().
 
-> [PATCH] sequencer: strip CR from the end of exec insns
-> 
-> It is not unheard of that editors on Windows write CRLF even if the file
-> originally had only LF. This is particularly awkward for exec lines of a
-> rebase -i todo sheet. Take for example the insn "exec echo": The shell
-> script parser (either of the sequencer or of the shell that is invoked,
-> I do not know) splits at the LF and leaves the CR attached to "echo",
-> which leads to the unknown command "echo\r".
-> 
-> Work it around by stripping CR before the command specified with exec is
-> passed to the shell.
-> 
-> This happens to fix t9903.14 and .15 in my environment: the insn sheet
-> constructed here contains CRLF thanks to MSYS1's bash cleverness.
+This will be used in the next commit, when convert.c can do the
+analyze for "text=auto" without slurping the whole blob into memory
+at once.
 
-Good point. I decided to do it at a different level, though:
-parse_insn_line() should already receive the line without trailing
-end-of-line markers (this was already the case for LF-only todo scripts).
+Add a wrapper definition get_sha1_from_cache().
+---
+ cache.h      |  3 +++
+ read-cache.c | 29 ++++++++++++++++++-----------
+ 2 files changed, 21 insertions(+), 11 deletions(-)
 
-I reused your commit message and touched it up a bit, hope you don't mind!
+diff --git a/cache.h b/cache.h
+index 1604e29..04de209 100644
+--- a/cache.h
++++ b/cache.h
+@@ -380,6 +380,7 @@ extern void free_name_hash(struct index_state *istate);
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, at)
+ #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+ #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
++#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (path))
+ #endif
+ 
+ enum object_type {
+@@ -1089,6 +1090,8 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
+ 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJECT);
+ }
+ 
++const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path);
++
+ /*
+  * This internal function is only declared here for the benefit of
+  * lookup_replace_object().  Please do not call it directly.
+diff --git a/read-cache.c b/read-cache.c
+index 38d67fa..5a1df14 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2290,13 +2290,27 @@ int index_name_is_other(const struct index_state *istate, const char *name,
+ 
+ void *read_blob_data_from_index(struct index_state *istate, const char *path, unsigned long *size)
+ {
+-	int pos, len;
++	const unsigned char *sha1;
+ 	unsigned long sz;
+ 	enum object_type type;
+ 	void *data;
+ 
+-	len = strlen(path);
+-	pos = index_name_pos(istate, path, len);
++	sha1 = get_sha1_from_index(istate, path);
++	if (!sha1)
++		return NULL;
++	data = read_sha1_file(sha1, &type, &sz);
++	if (!data || type != OBJ_BLOB) {
++		free(data);
++		return NULL;
++	}
++	if (size)
++		*size = sz;
++	return data;
++}
++
++const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path)
++{
++	int pos = index_name_pos(istate, path, strlen(path));
+ 	if (pos < 0) {
+ 		/*
+ 		 * We might be in the middle of a merge, in which
+@@ -2312,14 +2326,7 @@ void *read_blob_data_from_index(struct index_state *istate, const char *path, un
+ 	}
+ 	if (pos < 0)
+ 		return NULL;
+-	data = read_sha1_file(istate->cache[pos]->oid.hash, &type, &sz);
+-	if (!data || type != OBJ_BLOB) {
+-		free(data);
+-		return NULL;
+-	}
+-	if (size)
+-		*size = sz;
+-	return data;
++	return istate->cache[pos]->oid.hash;
+ }
+ 
+ void stat_validity_clear(struct stat_validity *sv)
+-- 
+2.10.0
 
-Ciao,
-Dscho
