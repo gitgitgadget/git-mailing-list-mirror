@@ -2,65 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B28D7207EC
-	for <e@80x24.org>; Sun,  9 Oct 2016 21:26:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3691207EC
+	for <e@80x24.org>; Sun,  9 Oct 2016 23:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751579AbcJIV0V (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 17:26:21 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:49900 "EHLO mail.pdinc.us"
+        id S1751015AbcJIXqV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 19:46:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54754 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751378AbcJIV0V (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 17:26:21 -0400
-Received: from black7 (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail.pdinc.us (8.14.4/8.14.4) with ESMTP id u99LQHR5025821;
-        Sun, 9 Oct 2016 17:26:17 -0400
-Reply-To: <git@vger.kernel.org>, "Ian Kelling" <ian@iankelling.org>
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Cc:     "'Ian Kelling'" <ian@iankelling.org>
-References: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com>
-In-Reply-To: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com>
-Subject: RE: How to watch a mailing list & repo for patches which affect a certain area of code?
-Date:   Sun, 9 Oct 2016 17:26:16 -0400
-Organization: PD Inc
-Message-ID: <4B3747D8D2724E98B6AC000FE4072A09@black7>
+        id S1750971AbcJIXqV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 19:46:21 -0400
+Received: (qmail 5075 invoked by uid 109); 9 Oct 2016 23:46:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Oct 2016 23:46:20 +0000
+Received: (qmail 25415 invoked by uid 111); 9 Oct 2016 23:46:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Oct 2016 19:46:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Oct 2016 19:46:18 -0400
+Date:   Sun, 9 Oct 2016 19:46:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: %C(auto) not working as expected
+Message-ID: <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
+References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
+ <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
+ <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
+ <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AdIiYPPSsvD7r163S/aaGnei2tZQIAADeZNw
-X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.23403
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Ian Kelling
-> Sent: Sunday, October 09, 2016 15:03
+On Sun, Oct 09, 2016 at 03:24:17PM +0200, René Scharfe wrote:
+
+> Offering a way to enable terminal-detection for all color codes of a
+> format would be useful, but using the existing "auto," prefix for that
+> would be a behaviour change that could surprise users.
+
+Yeah. In retrospect, it probably would have been saner to make %C(red) a
+noop when --color is not in effect (either because of --no-color, or
+more likely when --color=auto is in effect and stdout is not a
+terminal). But that ship has long since sailed, I think.
+
+If we do a revamp of the pretty-formats to bring them more in line with
+ref-filter (e.g., something like "%(color:red)") maybe that would be an
+opportunity to make minor adjustments. Though, hmm, it looks like
+for-each-ref already knows "%(color:red)", and it's unconditional.
+<sigh> So perhaps we would need to go through some deprecation period or
+other transition.
+
+> ---
+>  Documentation/pretty-formats.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> I've got patches in various projects, and I don't have time to keep up
-> with the mailing list, but I'd like to help out with 
-> maintenance of that
-> code, or the functions/files it touches. People don't cc me. 
-> I figure I
-> could filter the list, test patches submitted, commits made, 
-> mentions of
-> files/functions, build filters based on the code I have in 
-> the repo even
-> if it's been moved or changed subsequently. I'm wondering what other
-> people have implemented already for automation around this, or general
-> thoughts. Web search is not showing me much.
-> 
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index a942d57..89e3bc6 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -166,7 +166,8 @@ endif::git-rev-list[]
+>  - '%Cgreen': switch color to green
+>  - '%Cblue': switch color to blue
+>  - '%Creset': reset color
+> -- '%C(...)': color specification, as described in color.branch.* config option;
+> +- '%C(...)': color specification, as described under Values, color in the
+> +  "CONFIGURATION FILE" section of linkgit:git-config[1];
 
-One thought would be to apply every patch automatically (to the branches of interest?). Then trigger on the [successful] changed
-code. This would simplify the logic to working on the source only and not parsing the emails.
+I like the intent here, though I found "Values, color" hard to parse (it
+was not immediately clear that you mean "the color paragraph of the
+Values section", as commas are already being used in that sentence for
+the parenthetical phrase).
 
--Jason
+I'm not sure how to say that succinctly, as we are four levels deep
+(git-config -> configuration file -> values -> color). Too bad there is
+no good link syntax for it. Maybe:
 
+  ...color specification, as described in linkgit:git-config[1] (see the
+  paragraph on colors in the "Values" section, under "CONFIGURATION
+  FILE")
+
+or something.
+
+-Peff
