@@ -7,73 +7,71 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B986C1F4F8
-	for <e@80x24.org>; Sun,  9 Oct 2016 05:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA92D1F4F8
+	for <e@80x24.org>; Sun,  9 Oct 2016 05:42:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752360AbcJIFdP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 01:33:15 -0400
-Received: from mout.web.de ([217.72.192.78]:64160 "EHLO mout.web.de"
+        id S1753101AbcJIFmd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 01:42:33 -0400
+Received: from mout.web.de ([212.227.17.11]:53725 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750982AbcJIFdO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 01:33:14 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0LilJB-1bIP0B2rFd-00d0GM; Sun, 09 Oct 2016 07:32:50
+        id S1751388AbcJIFmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 01:42:32 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MZUWH-1ba43M0KKb-00LIP3; Sun, 09 Oct 2016 07:42:21
  +0200
-Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
-To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v10 14/14] contrib/long-running-filter: add long running
+ filter example
+To:     larsxschneider@gmail.com, git@vger.kernel.org
 References: <20161008112530.15506-1-larsxschneider@gmail.com>
- <20161008112530.15506-14-larsxschneider@gmail.com>
- <e09a63ee-dad2-a8fb-e47f-0559d9507e1c@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+ <20161008112530.15506-15-larsxschneider@gmail.com>
+Cc:     gitster@pobox.com, jnareb@gmail.com, peff@peff.net
 From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <a80f6399-b344-b979-d849-1dc7f899fabe@web.de>
-Date:   Sun, 9 Oct 2016 07:32:40 +0200
+Message-ID: <3bdfebab-aae9-3263-218e-c8ae394084fc@web.de>
+Date:   Sun, 9 Oct 2016 07:42:18 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
  Gecko/20100101 Thunderbird/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <e09a63ee-dad2-a8fb-e47f-0559d9507e1c@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:an4gOK5Gijjs2iva+uRwrcLnYflRMwuPaPQ1J8ulV6+qUAz4gWy
- GGcmX9FbqT3U2UkdmI+UNxH9M5DtSvYv5eKlt+HRAC+u8tJtR9vDi/h65gOcAY2V+HJucME
- Xf3qgRlKrr/svrO+ez4nI7rOd6HgAuyRleuiJocscKVmIgIbHbFQT6ZOogUbNpA0Q3g+5op
- CcPOVpoqdolZPKQOo1fgw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NlRor8cj4ts=:YpdIXysdBLUpssdK2fBuOx
- Hcaid/EjrOo4xknRIR+nEPIaFhD8AS71cuiNFsQpglv2byhYD7mQV9vCq0L6pC10iC0AAKDl2
- 2K+c/IwXfH6TANLcY2DRKKeQA9GG+IT5aLHpuGejgRB5+sSRacp5EerjdbaqMW/il66vE9Ijv
- xORp8h8sL88+gEzKbzJVloPfv4suGrKZhocCeGpLob4xQC2srF+SiIaIdLCXE6Rw+pTgUOgbb
- hkH1eC9ly2NBVDNXYNNEhJjUlO+pVPfJCJczcKepJkkjQDYiDC0iMp3hDKTYxDUW3JEnScFiz
- cEfgKOOxh8K6zSllnIOLjXDW6jpRdDALD/MmWhIqhvRRPnZ40OGOI4+ipYX7trlLZdTjubNBK
- uWDzjBMYLHok59pkt/QVOVLhlqm+1nyEKVbgrWF01se5bCpxbCZaAA+kiw8wjPSBHZzEW3PuG
- ceS1SpZqzwmovcFwMpGTXrBp3jD042vW+74BsXVnDG59+As3rHmNIXbpIDpKdQ72yCkgUHRgp
- 1SFax3KzxMlu49KTOXtoqg8Xx6ftKPV9P1ZRIJwnh9hMbbRBP4iDu+DJTCuCu1eZ2bu8DdN55
- 5g38Q3Nnjiz4seitKQWYQjGQASVbq3Q0H03YhdeX7U4PdYB8IhS09ijTW1XnbjhOdLyf/Dzp6
- mwNpsaq20b1QfFT+V2PmbKP1Wd0PIyvHVZmxhEtw+H0PPXyJY6C9Cc/oIcQBW+fsDDg3fHZ26
- Z6+hZOF3l7HwU+5fP9XkCyLfDKOEKJDHJvBFfTLLpHhifFp3HTOkINh7QSwFYf8xxRKaTbd5o
- 09W1LSG
+In-Reply-To: <20161008112530.15506-15-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:mLQjrygEQutUN0y9Npts6T98KDql/q6bZHHhWrmSCqtR79quTSe
+ gVrj14rhHU+KyfhlMoGlfdXf9kO3Dzpmcyrn5z74gjtEsvnGqVVYCZTrhJ5RaHYFwRNDHaD
+ PDFnSa9nxqDERQ7GOxYwe06ZmciaGHEEOz4LB+HyStRbIIhmmX5gKBI7KigBw9WzpSEgh6c
+ terAQEanpg0P/HfjL3K1w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GzWqA/xd/Dw=:I2+/0oTY9TU8q55l38pyEW
+ dE7Covj+wFqorTRgmpLTxWHPOZ8xsw8zmY5DVtbexDHdgMvF+S0xQgy14hVWLbjABDtHuF9Q8
+ TmM21AIPV+baclyGlu9KX/il8NsBnHLGaOoE1Bvvf2A6W2jyXNghNIhR2FnB5MFL28qt56Kha
+ BkzrVNEGECaJib2Ec3RPQZ2Xp6JDfAPRYd7MHY9Zzlty7ykD44nDPNi4usHrSdSxTMUOkOMIU
+ lg6T6iXK1iAL6BuLVBVaZNAj+UDLttnKZBHf0noEg5/yi3Q60b+/M5Jj503OdRDzvaxISgVW9
+ dtZS6gD+w/cW6ccgPZ372oIkR0R9CCeH0xiepFgXM6gNKk9f84eD1eWraeEZ+ww7sTD+7udgS
+ 0HP2uWaqiKJEYQYPnd5CxMG4dgh9jhhIrTZj2OxBQO2mOLleoNDe3eLNSshWw2A4iex3QGIzj
+ pY+RudzWVD472mogSPUXjhO4wixj0xl1zPOloGa5tTdb4MxlIeDsYE6EWEZKW4yqVx9YnjXzY
+ RTMmAnH2k8GWLqJSe0lIaUso5Xptgi4gs0i9fJqVPHdlIpDvlAYG729wMjFibKhJZKB8gaYm/
+ Ved3YoC+BI56EG07afEOUbpLeUiItppVzhnbw9yVDm/HGrnF1BkAmWcmj39ThxcX3ZGnO4duk
+ t94LGQHje37v4b57CA5HJJGxo8WSYy+9cPli8DNFaMn1BpOF+1GYWYI8ynOrY414xzl4Ipj+p
+ jP4Hi2xAMnwpQmura7o4Tm4ZBj/fdRngACY4TGUEwwIcBgFbztEa+3ZkMO1TfwGQQbeuIgGuz
+ qAIURkt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09.10.16 01:06, Jakub Narębski wrote:
->> +------------------------
->> > +packet:          git< status=abort
->> > +packet:          git< 0000
->> > +------------------------
->> > +
->> > +After the filter has processed a blob it is expected to wait for
->> > +the next "key=value" list containing a command. Git will close
->> > +the command pipe on exit. The filter is expected to detect EOF
->> > +and exit gracefully on its own.
-> Any "kill filter" solutions should probably be put here.  I guess
-> that filter exiting means EOF on its standard output when read
-> by Git command, isn't it?
->
-Isn't it that Git closes the command pipe, then filter sees EOF on it's stdin
+On 08.10.16 13:25, larsxschneider@gmail.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> Add a simple pass-thru filter as example implementation for the Git
+> filter protocol version 2. See Documentation/gitattributes.txt, section
+> "Filter Protocol" for more info.
+> 
 
-and does a graceful exit.
+Nothing wrong with code in contrib.
+I may have missed parts of the discussion, was there a good reason to
+drop the test case completely?
 
+>When adding a new feature, make sure that you have new tests to show
+>the feature triggers the new behavior when it should, and to show the
+>feature does not trigger when it shouldn't.  After any code change, make
+>sure that the entire test suite passes.
 
+Or is there a plan to add them later ?
 
