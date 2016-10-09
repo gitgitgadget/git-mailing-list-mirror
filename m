@@ -2,173 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 158BF20986
-	for <e@80x24.org>; Sun,  9 Oct 2016 10:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A40F20986
+	for <e@80x24.org>; Sun,  9 Oct 2016 11:12:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751219AbcJIKwo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 06:52:44 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:36214 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750850AbcJIKwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 06:52:42 -0400
-Received: by mail-io0-f171.google.com with SMTP id j37so86206313ioo.3
-        for <git@vger.kernel.org>; Sun, 09 Oct 2016 03:52:42 -0700 (PDT)
+        id S1751441AbcJILMD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 07:12:03 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:35455 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751229AbcJILMC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 07:12:02 -0400
+Received: by mail-it0-f44.google.com with SMTP id o21so50310449itb.0
+        for <git@vger.kernel.org>; Sun, 09 Oct 2016 04:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=F3bwp+eALn0Xrpnbh/D9w4QOamerRadxIZl5aLPnT+c=;
-        b=A1u9Yl+YFOpfUkpltj3AKQeL1ghcr7Ih1QkNYYWS3cwciNB14KILK8e/xE4tNWxJzq
-         Q06tlqAAoPVc//Y5RKx5OBYrUwiii3aF/9FGU5mNkOQgZV/x8V4koomEQlcgI9QwlZ4f
-         n6xychqj+t4yeN2CdnkPCd2rv7egkLrdBmx3SzC/uBpQ4RFHqkwe8jHBhAKBlyakb9xd
-         e8Y38pe9JERO11BY/WGP7Kz3uCqTcVpSS3cjz6/3Qt2vDPKXGWEptywwqe5ZAD5aX7HN
-         9YQK+IbT4bJDroL+Bgs/SjHjVq2PsCeiYoPKEAKLhuq02cjN5qfCqjyq8H4nRiznDOeV
-         3TOQ==
+         :cc:content-transfer-encoding;
+        bh=qsnrpBKrQWIglc4dt7r5IGJIsc/OtzXzc/YuVE0W+Uk=;
+        b=AYfrx9PrcCY0p431nXDFqaRrA/J+ciOkDFNvuFjp9aeOd9UEyj3lFsrl9huzURu5/O
+         kEylAtRtGX7tCNDbQ7n6Xc49LoD6npIgsjModLKgIU3sSN3Iv71XN7eCuUJOIkI0KWh/
+         3GLf8Lh/2g2DIXBDukOxTlkMC5r8DkGbP4c5oeT6SMvMYSiCLpDd2w4uVXBgV6fRtiXp
+         CIlneukDLsx1KAYbQXVOd5Un7nbIcKInfw7euhM2M08uCA0cHGByFvXbXQOISS/Y5kVO
+         uuLEEogiv9ET+ve/SB0zcClNmgKXKLz2D4qLgHOWBkwmKrUYRN3XRyjpejWYNcWEtNHm
+         3WNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=F3bwp+eALn0Xrpnbh/D9w4QOamerRadxIZl5aLPnT+c=;
-        b=JJ9Ni5zTGocx8idLmCznPTXFG7hdJ10Yui5qigI5sucmVFDLuJr7WUVYTpXfPMITht
-         S7LpQvqC/YWBLSAt6nRwAb51HZhEY63Z264lPU0ToouE+sblODsmEtpkirz5xsRDHdhp
-         dpSMmvznQiAabgdVFOLywkmh4WYyHepsV6N1+DrTMwBcC8y1oaxXgaHIaUsPjTq1TZGv
-         8pH4uETz4O4m7JiLzszCYtKqPZRYJCPLGgDhDGxs18FdWFWjS+027OlgTojiaP1Fr2NR
-         zqCeeA909jzRKPEStKNvTYw7HTXow969tHclJ8zHS9cII4FGik7M0y/vPwTju2Jwbgst
-         Fq/g==
-X-Gm-Message-State: AA6/9RkKO2gGwLdqTo6xMLIYiwoCE9SrLW78XooZCnyFjZik6SVaFWmAd/cmzDJwtkCj6BCglkzd0ESJMtfV0Q==
-X-Received: by 10.107.44.17 with SMTP id s17mr27124175ios.212.1476010362057;
- Sun, 09 Oct 2016 03:52:42 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qsnrpBKrQWIglc4dt7r5IGJIsc/OtzXzc/YuVE0W+Uk=;
+        b=eo7OQp1DtaqGrK/uRfv4sCx2ylbEl4u1QJ4DPDXzQQs7ruCih1umbp/FQDgxg+o2tD
+         YgI5tgj1ZIOsfHlfGsLXjWpV7UAPExjeRgpgjjGX0np6UXJTyVrdNXvbskeZrHyFkS7y
+         vWfPtuFt3s0erWqiV87AFT/kXWfpWACnq1iXPrfR66GG+OZMaUduQysFkJFuBHbISIRd
+         A9F4ld9lrvjvAoSCOEYLtncOOi0bCCSZSPyaGtvip060QecceU4bCaWkLKXBL7CxOzal
+         hHYkxXtSXsHF1Dhf2FSakaW1q5ohgQWZ6vVOYKaYnEKNEdHMh7w5lwNY20JR6ZfHkVAY
+         lfXw==
+X-Gm-Message-State: AA6/9RlF76B0qt33k1KZl7dzM9xgFlBiinTW6lk+qzLhPPukGxIItPqa50mcUGEOqcMf6MPReQN/O69jkUuAVA==
+X-Received: by 10.36.36.214 with SMTP id f205mr5720342ita.50.1476011521958;
+ Sun, 09 Oct 2016 04:12:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.230.206 with HTTP; Sun, 9 Oct 2016 03:52:11 -0700 (PDT)
-In-Reply-To: <1475999513.7410.8.camel@kaarsemaker.net>
-References: <CAOi_75+2SG2WYHBMQhfGj96eKsZ66niJzOevVGM5eJv-qqrVNg@mail.gmail.com>
- <1475999513.7410.8.camel@kaarsemaker.net>
+Received: by 10.64.230.206 with HTTP; Sun, 9 Oct 2016 04:11:31 -0700 (PDT)
+In-Reply-To: <CADKxhpe3S4L9CPV9yxh2yhrtJMa9wyZAPC45u_S=RiuzY1Xrkg@mail.gmail.com>
+References: <CADKxhpe3S4L9CPV9yxh2yhrtJMa9wyZAPC45u_S=RiuzY1Xrkg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 9 Oct 2016 17:52:11 +0700
-Message-ID: <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
-Subject: Re: Bug? git worktree fails with master on bare repo
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     Michael Tutty <mtutty@gforgegroup.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Michael Rappazzo <rappazzo@gmail.com>
+Date:   Sun, 9 Oct 2016 18:11:31 +0700
+Message-ID: <CACsJy8C0kyKor4gCLSJrreRCazazbexvaSdbBg+Cka=-beZU_g@mail.gmail.com>
+Subject: Re: Feature request: use relative path in worktree config files
+To:     =?UTF-8?Q?St=C3=A9phane_Klein?= <contact@stephane-klein.info>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 9, 2016 at 2:51 PM, Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
-> On Sat, 2016-10-08 at 19:30 -0500, Michael Tutty wrote:
->> Hey all,
->> I'm working on some server-side software to do a merge. By using git
->> worktree it's possible to check out a given branch for a bare repo and
->> merge another branch into it. It's very fast, even with large
->> repositories.
->>
->> The only exception seems to be merging to master. When I do git
->> worktree add /tmp/path/to/worktree master I get an error:
->>
->> [fatal: 'master' is already checked out at '/path/to/bare/repo']
->>
->> But this is clearly not true, git worktree list gives:
->>
->> [/path/to/bare/repo (bare)]
->>
->> ...and of course, there is no work tree at that path, just the bare
->> repo files you'd expect.
+On Sat, Oct 8, 2016 at 4:35 PM, St=C3=A9phane Klein
+<contact@stephane-klein.info> wrote:
+> Hi,
 >
-> The worktree code treats the base repo as a worktree, even if it's
-> bare. For the purpose of being able to do a checkout of the main branch
-> of a bare repo, this patch should do:
+> "git worktree add" write absolute path in ".git/gitdir"
 >
-> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> index 4bcc335..b618d6b 100755
-> --- a/t/t2025-worktree-add.sh
-> +++ b/t/t2025-worktree-add.sh
-> @@ -138,6 +138,14 @@ test_expect_success 'checkout from a bare repo without "add"' '
->         )
->  '
+> The code source is here
+> https://git.kernel.org/cgit/git/git.git/tree/builtin/worktree.c?h=3Dv2.10=
+.1#n256
 >
-> +test_expect_success '"add" default branch of a bare repo' '
-> +       (
-> +               git clone --bare . bare2 &&
-> +               cd bare2 &&
-> +               git worktree add ../there3 master
-> +       )
-> +'
-> +
->  test_expect_success 'checkout with grafts' '
->         test_when_finished rm .git/info/grafts &&
->         test_commit abc &&
-> diff --git a/worktree.c b/worktree.c
-> index 5acfe4c..35e95b7 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -345,6 +345,8 @@ const struct worktree *find_shared_symref(const char *symref,
+> Is it possible to use relative path in this config files:
 >
->         for (i = 0; worktrees[i]; i++) {
->                 struct worktree *wt = worktrees[i];
-> +               if(wt->is_bare)
-> +                       continue;
->
->                 if (wt->is_detached && !strcmp(symref, "HEAD")) {
->                         if (is_worktree_being_rebased(wt, target)) {
->
->
+> * [main_worktree]/.git/worktrees/[worktree_foobar]/gitdir
 
-You're fast :) I'm still studying  8d9fdd7 (worktree.c: check whether
-branch is rebased in another worktree - 2016-04-22). But yeah that
-should fix it.
+The problem with relative is the question "relative to where" and the
+answer has to be the same when asked from any worktree. For this file,
+it may be ok after we find a good anchor point (which I have avoided
+because it gives me headache and absolute paths just work).
 
-> But I'm wondering why the worktree code does this. A bare repo isn't a
-> worktree and I think it shouldn't treat it as one. A patch that rips
-> out this feature and updates the tests to match would look like this:
+> * [worktree_foobar]/.git
+
+This is made absolute on purpose. So that if you move worktree_foobar
+away manually, it can still point back to
+"[main_worktree]/.git/worktrees/[woktree_foobar]". I'm not sure if we
+want relative paths here.
+
+> Why:
 >
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 5c4854d..3600530 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -382,15 +382,11 @@ static int add(int ac, const char **av, const char *prefix)
->  static void show_worktree_porcelain(struct worktree *wt)
->  {
->         printf("worktree %s\n", wt->path);
-> -       if (wt->is_bare)
-> -               printf("bare\n");
-> -       else {
-> -               printf("HEAD %s\n", sha1_to_hex(wt->head_sha1));
-> -               if (wt->is_detached)
-> -                       printf("detached\n");
-> -               else
-> -                       printf("branch %s\n", wt->head_ref);
-> -       }
-> +       printf("HEAD %s\n", sha1_to_hex(wt->head_sha1));
-> +       if (wt->is_detached)
-> +               printf("detached\n");
-> +       else
-> +               printf("branch %s\n", wt->head_ref);
->         printf("\n");
->  }
+> 1. I configure worktree on my host
+> 2. next I use this git working copy in Docker with volume share
+> 3. next I've some git error in Docker because config files use absolute p=
+ath
 
-This goes back to the first very first commit of "git worktree list":
-bb9c03b (worktree: add 'list' command - 2015-10-08) and was sort of
-pointed out during review [1] but nobody answered it.
-
-A bare repo does not have an associated worktree. However only main
-worktree can be bare. If we take this out, "git worktree list"'s first
-line will no longer be about the main worktree (because it does not
-exist). That may cause trouble since we promised in "git-worktree.txt"
-that the main worktree is listed first. I don't think we have any way
-else to determine if the main worktree exists. Showing "bare" may be
-the way to see if we have a main worktree or not. So we probably want
-to keep this function unchanged.
-
-[1] https://public-inbox.org/git/%3CCANoM8SWeqxD2vWLQmEfxxxn8Dz4yPfjGOoOH=Azn1A3So+wz2Q@mail.gmail.com%3E/
--- 
+I think the common way of dealing with this in docker is put things in
+the same path where it actually is outside docker. If you have stuff
+at /path/to/foo, then you create the same /path/to/foo inside docker
+and bind the data to that path. Does that work?
+--=20
 Duy
