@@ -2,103 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB07E20986
-	for <e@80x24.org>; Sun,  9 Oct 2016 06:48:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C632120986
+	for <e@80x24.org>; Sun,  9 Oct 2016 06:48:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751582AbcJIGsZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 02:48:25 -0400
-Received: from mout.web.de ([212.227.17.11]:60882 "EHLO mout.web.de"
+        id S1752338AbcJIGsw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 02:48:52 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:48752 "EHLO mail.pdinc.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751130AbcJIGsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 02:48:24 -0400
-Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MAdol-1biMX8460p-00Bwby; Sun, 09 Oct 2016 08:47:34
- +0200
-Subject: Re: %C(auto) not working as expected
-To:     Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>
-References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
-Date:   Sun, 9 Oct 2016 08:47:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1751722AbcJIGsv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 02:48:51 -0400
+Received: from black7 (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail.pdinc.us (8.14.4/8.14.4) with ESMTP id u996moCj016465
+        for <git@vger.kernel.org>; Sun, 9 Oct 2016 02:48:50 -0400
+Reply-To: <git@vger.kernel.org>
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+Subject: A head scratcher, clone results in modified files (tested linux and cygwin) - .gitattributes file?
+Date:   Sun, 9 Oct 2016 02:48:49 -0400
+Organization: PD Inc
+Message-ID: <7E06D61EACFB462AB96DD60720930968@black7>
 MIME-Version: 1.0
-In-Reply-To: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:YJproU3FolskAAsbvd4XECWCAFlaUJlduJJ8V84Kj0S2Msahyce
- t94wl+UjrkeYsikqwod9c0Zve1qxJjD2BySJbpaCa/tZFSAjVIfe36Cs8/ZgPgsKaRNnwv1
- 4QaTcheU8ZXe3q2ew8kQTlD7iRU1C7QOFwv5kP0XXpa5UYVxxPi/f/9joKRuEOu7tfzDV9F
- +2R6J9xRFSnmawaJqrHpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ebta8xDwlS0=:NfZ89yXm+pLqjIKgw5VTdt
- 0LEsmaW3amRZeXR/A/WZETZoabmLBnWhC2Ad7SRH87Zz62HkhDgUbsoA9MijLhL3fOahUMedk
- OfGW1OeI0xMYTFAgSOcmBoCHXRFHetEU6BPL+RcZMuTZ16HjDi9771soBmw4ZXc6vawomiiVk
- UyXdmsr/lckAiPbmRtE/AGoOW/cI8ttSNTFT00TA6oa9aRP9r1Uc832MNvmQUJVsqIB8r7y5W
- Yam30DzAP3XAQt+lvY3axON0BwM5YLqC7Duxaq1BDxu/etTZE4Y0XBAWfL+QRVDjrtC8GBjiZ
- n1jVs7DNrMLCI+eRYudqCOyL9eR49xEpIocD7IUlld8xtkebEpBKoaVqOjRFcjzaKx9Rc+i/9
- l12mCPWG3wRmPL1AN7Pac5rFgCuP2weIK95boLufCB/gyC5r9GXzraTe5lT6KILIZAC3P9RTk
- ea/5B+3Fy3iP7AzJB8UyRJAK00Yi74GbBDUi1AA6QLa+nVkNRa+3dXxl9EtGp8tMLKFvNxq9y
- rwvhOClF3whnlylYltUnMcLhaZuf3KB3uxkk8AxqNmrnDWpttBCNfxbRzrK3UjQ5lBNenAGMf
- vrHRGhNv9kg5yr3K9t/cZ7YfMqADFX2ahZUS4qYTo6WcoDXJcKlFVgf3Asac4OCfL83BcbT6v
- bUMhJ03pl8lMJlW+Y/m4zcuBf9x2GbTbMyOEokJrHPFxG7Hul2mNmGnk82GmyoKWoZq67hSzJ
- vA9TehPQ802SDoChJshgyPKf5t3uoR9+MMcHyP6lH2pws3r7PyX1fvXfu4Y+I6/vkOieFHsqM
- fImxjkaOiL+AuKXPhSZp3KglAcIt0UGocaI6UXdjlZaaWmK+J9wkf3O3vmuxOfSofFaTtwLqB
- XJVd58pMgY4V/vhCol+g==
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdIh+TDwbC4OlgFdTxquF4p4hNVmAw==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.23403
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.10.2016 um 07:43 schrieb Tom Hale:
-> $ ~/repo/git/git --version
-> git version 2.10.0.GIT
->
-> The `git-log` man page says:
->
-> `auto` alone (i.e.  %C(auto)) will turn on auto coloring on the next
-> placeholders until the color is switched again.
->
-> In this example:
->
-> http://i.imgur.com/y3yLxk7.png
->
-> I turn on auto colouring for green, but it seems that this is not being
-> respected when piped through `cat`.
->
-> Am I misunderstanding the manual?
+Does anyone have any ideas as to why this clone resulted in modified files and how to prevent it?
 
-So this colors the ref name decoration and the short hash:
+There is a .gitattributes in the tree, which says:
 
-	$ git log -n1 --format="%C(auto)%d %C(auto)%Cgreen%h"
+*        text=auto
+*.java   text diff=java
+*.html   text diff=html
+*.css    text
+*.js     text
+*.sql    text
 
-And this only colors the short hash:
+But even then the *.bin files full of non-ascii garbage are impacted?! But I cannot find a difference:
 
-	$ git log -n1 --format="%C(auto)%d %C(auto)%Cgreen%h" | cat
+root@YYYYYYY /projects/commons-io
+$ git cat-file -p 7c9cd59c8a00e0bd3f18da42b32cd40024ad1505 | hexdump -C
+00000000  a9 fa bf e9 a4 6c a8 ca  0d 0a c1 63 c5 e9 a4 a4  |.....l.....c....|
+00000010  a4 e5 0d 0a                                       |....|
+00000014
 
-%C(auto) respects the color-related configuration settings; that's 
-mentioned on the man page for git log in the section on %C(...).  You 
-probably have color.ui=auto or color.diff=auto in your config, which 
-means that output to terminals is to be colored, but output to files and 
-pipes isn't.  You could override that setting e.g. by adding the command 
-line option --color=always.
+root@YYYYYYY /projects/commons-io
+$ git cat-file -p 7c9cd59c8a00e0bd3f18da42b32cd40024ad1505 | sha1sum.exe
+d69820e1282801ccd627e35fb213e8832949c6ac *-
 
-%Cgreen emits color codes unconditionally.  %C(auto,green) would respect 
-the config settings.
+root@YYYYYYY /projects/commons-io
+$ hexdump.exe -C src/test/resources/test-file-x-windows-950.bin
+00000000  a9 fa bf e9 a4 6c a8 ca  0d 0a c1 63 c5 e9 a4 a4  |.....l.....c....|
+00000010  a4 e5 0d 0a                                       |....|
+00000014
 
-Your second %C(auto) has no effect because it is overridden by the 
-immediately following %Cgreen.
+root@YYYYYYY /projects/commons-io
+$ sha1sum.exe src/test/resources/test-file-x-windows-950.bin
+d69820e1282801ccd627e35fb213e8832949c6ac *src/test/resources/test-file-x-windows-950.bin
 
-You may want to add a %Creset at the end to avoid colors bleeding out 
-over the end of the line.  You can see that happening e.g. with:
+Deleting the .gitattributes and the checkout -- did not help. No luck deleting the file then restoring it either.
 
-	$ git log -n3 --format="normal %C(green)green" | cat
+Not even git clone git://git.apache.org/commons-io.git --config core.attributesFile=/dev/null fixed it. Details below.
 
-Without cat bash seems to add a reset automatically.
+-Jason
 
-René
+Cygwin test:
+
+root@YYYYYYY /projects
+$ git clone git://git.apache.org/commons-io.git
+Cloning into 'commons-io'...
+remote: Counting objects: 21203, done.
+remote: Compressing objects: 100% (3454/3454), done.
+remote: Total 21203 (delta 10822), reused 21129 (delta 10794)
+Receiving objects: 100% (21203/21203), 2.51 MiB | 607.00 KiB/s, done.
+Resolving deltas: 100% (10822/10822), done.
+Checking connectivity... done.
+
+root@YYYYYYY /projects
+$ cd commons-io/
+
+root@YYYYYYY /projects/commons-io
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   src/main/java/org/apache/commons/io/serialization/package.html
+        modified:   src/site/xdoc/upgradeto2_3.xml
+        modified:   src/test/resources/org/apache/commons/io/FileUtilsTestDataCRLF.dat
+        modified:   src/test/resources/test-file-gbk.bin
+        modified:   src/test/resources/test-file-iso8859-1-shortlines-win-linebr.bin
+        modified:   src/test/resources/test-file-utf8-win-linebr.bin
+        modified:   src/test/resources/test-file-windows-31j.bin
+        modified:   src/test/resources/test-file-x-windows-949.bin
+        modified:   src/test/resources/test-file-x-windows-950.bin
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+root@YYYYYYY /projects/commons-io
+$ git rev-parse HEAD
+c5f2e40e7a8234fe48e08d451d3152ba58a03ac6
+
+root@YYYYYYY /projects/commons-io
+$ git version
+git version 2.8.3
+
+root@YYYYYYY /projects/commons-io
+$ git config --list
+user.email=jpyeron@pdinc.us
+user.name=Jason Pyeron
+credential.helper=cache --timeout=9999999999
+push.default=simple
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+core.ignorecase=true
+remote.origin.url=git://git.apache.org/commons-io.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+
+$ uname -a
+CYGWIN_NT-6.1-WOW YYYYYYY 2.5.2(0.297/5/3) 2016-06-23 14:27 i686 Cygwin
+
+root@YYYYYYY /projects/commons-io
+$
+
+Linux test:
+
+root@XXXXXX /tmp
+# git clone git://git.apache.org/commons-io.git
+Cloning into 'commons-io'...
+remote: Counting objects: 21203, done.
+remote: Compressing objects: 100% (3454/3454), done.
+remote: Total 21203 (delta 10822), reused 21129 (delta 10794)
+Receiving objects: 100% (21203/21203), 2.51 MiB | 176 KiB/s, done.
+Resolving deltas: 100% (10822/10822), done.
+
+root@XXXXXX /tmp
+# cd commons-io/
+
+root@XXXXXX /tmp/commons-io
+# git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   src/main/java/org/apache/commons/io/serialization/package.html
+#       modified:   src/site/xdoc/upgradeto2_3.xml
+#       modified:   src/test/resources/org/apache/commons/io/FileUtilsTestDataCRLF.dat
+#       modified:   src/test/resources/test-file-gbk.bin
+#       modified:   src/test/resources/test-file-iso8859-1-shortlines-win-linebr.bin
+#       modified:   src/test/resources/test-file-utf8-win-linebr.bin
+#       modified:   src/test/resources/test-file-windows-31j.bin
+#       modified:   src/test/resources/test-file-x-windows-949.bin
+#       modified:   src/test/resources/test-file-x-windows-950.bin
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+root@XXXXXX /tmp/commons-io
+# git rev-parse HEAD
+c5f2e40e7a8234fe48e08d451d3152ba58a03ac6
+
+root@XXXXXX /tmp/commons-io
+# git version
+git version 1.7.9.6
+
+root@XXXXXX /tmp/commons-io
+# git config --list
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+remote.origin.url=git://git.apache.org/commons-io.git
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+
+root@XXXXXX /tmp/commons-io
+# uname -a
+Linux XXXXXX.internal.pdinc.us 2.6.9-103.ELsmp #1 SMP Fri Dec 9 04:43:08 EST 2011 x86_64 x86_64 x86_64 GNU/Linux
+
+root@XXXXXX /tmp/commons-io
+#
 
