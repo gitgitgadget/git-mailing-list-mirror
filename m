@@ -2,155 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	URIBL_RED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BFD1207EC
-	for <e@80x24.org>; Sun,  9 Oct 2016 13:24:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96993207EC
+	for <e@80x24.org>; Sun,  9 Oct 2016 13:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751488AbcJINYq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 09:24:46 -0400
-Received: from mout.web.de ([217.72.192.78]:49338 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751152AbcJINYq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 09:24:46 -0400
-Received: from [192.168.178.36] ([79.213.121.94]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0M3SxQ-1b2V0l0EV6-00qwnn; Sun, 09 Oct 2016 15:24:27
- +0200
-Subject: Re: %C(auto) not working as expected
-To:     Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>
-References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
- <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
- <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Message-ID: <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
-Date:   Sun, 9 Oct 2016 15:24:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1751487AbcJINm6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 09:42:58 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:36838 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751032AbcJINm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 09:42:57 -0400
+Received: by mail-qk0-f173.google.com with SMTP id o68so79139288qkf.3
+        for <git@vger.kernel.org>; Sun, 09 Oct 2016 06:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gforgegroup-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=g1QJZqQMrS66FcYYz1YH4/+Ht+Wzg4Ygm2l9CHDxyio=;
+        b=WztQ+gz7125DZZUp5xu2qPvbyX3EPSP3HMSkRVe86DfO4NtImSP0Aacd7xrQA775zd
+         caKJAxqQRQ5+TItye/y/7aiapjS0KVFnM+/8tnYMxNVO4kDxyATQ70gb95QFQf7RuI1X
+         kkMPgkoEH9yCc8np7AIm4yOWjgTvKOs01D8qIe9ClBSSXfzHa+Vtn6MMnmd1fzNoeTOn
+         j9s1B/9P/0EpjYvOgzWwlbbtBeuMFgCTYxIyS0DUdgQmbJPNMPN45oi09qdI6bNiiSIy
+         m0zDMjTsPKxmx1a83zoekanEF8IKWSMSN/EHdQO7/0rVqGXAG89j0+Xf2v/fsAPxHWKE
+         Wl9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=g1QJZqQMrS66FcYYz1YH4/+Ht+Wzg4Ygm2l9CHDxyio=;
+        b=ay+s+Qv9f7Y6uOJKDqcMANrGHf9OB/DBzGI8jEgfv5qV6v4kQza4ieSSIl8M/86UNo
+         zuDzpa9IWBVWbpnRX7TfZWuJpR+89Z3h6e5xJklCuZKC+T/sjirciV15qBsUi0InTFMr
+         rDuwJ6ndJsXjBXhdRV6ILYNa7ITnoNyYkABH2K3XTauZfnxnFB/Ajn7we+VCpASKozPU
+         BBpXP2ncRXGtc373//inziezu/c1de/7Qu17ipzWkio/O35m1dA6nAgVQGQqIAZ9sJRC
+         IgOYAFwamdE79YG6KQjXmq8iYUSzH/NMbcc1arDPXGOHHoA29Q8C+DtLF609Z9AMrUCb
+         J1dg==
+X-Gm-Message-State: AA6/9Rk2mb8uXfrvjOG40/dSXgJ691EtEOHJ/zMwlylcXXNmr6jn+0wCkhQDfcwS1uK5/0DRVODKjZIvChGMghPz
+X-Received: by 10.55.221.146 with SMTP id u18mr25744218qku.42.1476020576492;
+ Sun, 09 Oct 2016 06:42:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:slNZaSMgmHwBU9L6wUouIXuEpGupQxEP8FtnccSwFH0hmUDnNX7
- DjGI0NBjXKSAeY6nmeRWExye315ie9U9ovuOscFssRr3BQbrobKnuFAuqTKlJiWZ/gurZ9i
- ScGnJOmi8E2n3AC93VjIQytc/SI1WquMBTIMcNqWFuYp7UYU9YwSefZDWNlC6bltOT8Y4BP
- tcT/tl+6vdrIyZ1plTakA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+UuU4d0bN/8=:ZLtQGl8TOCRdbHNtpvbSV1
- sQEex5aFg4dUo16k9SytUnJvGN+Rd/7Qz/ckYQytYOlM6hEgZtglfXWbciCKnUIihDftbMK6W
- GRRjffSbClyRUVn+/+N0uhGpFU4WVbRuQhDojAiRFnKZKq13jsVV0MS+gfuvK0wLToZFYpNcr
- B4JgkwdiLlgJOgQG6dgK7xImUAgPIDYhccilYK+qnkyqV74f40pJL66SzuMgt9Sex2hOs7s/o
- g9YfTD/RW6TXKMw/5a1GSWYInHKF3vbGPJ9kiDklksdVDzLCVBothl9OChWIm7bHHbJmYoXX/
- /skvSOuqlT+pL5SL16jv9WbtE9BEn9KF821IF0UVrXzPDlvuQ8s3z3/9KE5MuBD2UdJstSeE9
- lrBoQMw4IN6kosTPB5EKR0GwzZX5YeJMdL/Sd5uNgz3En5X2O16iDZyKH5JlkWXoTUUcuTajB
- tKyhO+hvYIBx70+QuG+YZpcG4kv+jK4phy5Hk+sYrINPpaIAY548nlOSdEmjNpSmcMKAKwHt0
- QAwt3Yqgy5zSbt8t7yog+lLN/a/+oeacSdWK+TeILuJJ5BUZiXmh8ZPOqrwuSrY2FDUEsMnXV
- 43ksTV+XJE6GxWhDBDH35PyVEYjc1LEeJcsvHK0H7fwNZ3ic1IP179TyrS4wD//1otiLVm/kt
- sMWxofAwBB9LawFiZFhXJUepjuR4cxmoyNDiPaj/MwMjaoTa7SluPMEFUV5LkTk/fgsmH08t6
- N1m3gmxHW6grS+8RkxQOlTBRwo5aYchR4FdkTsNcQsekjGR2e/5zaKiiXeRbyAWM62bVloLMg
- uRzB2n9
+Received: by 10.12.164.69 with HTTP; Sun, 9 Oct 2016 06:42:55 -0700 (PDT)
+In-Reply-To: <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
+References: <CAOi_75+2SG2WYHBMQhfGj96eKsZ66niJzOevVGM5eJv-qqrVNg@mail.gmail.com>
+ <1475999513.7410.8.camel@kaarsemaker.net> <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
+From:   Michael Tutty <mtutty@gforgegroup.com>
+Date:   Sun, 9 Oct 2016 08:42:55 -0500
+Message-ID: <CAOi_75+Zoeeq5FD1HKgG4MjeL9LkBshsSfdrMOTi8m-Mt-OQNQ@mail.gmail.com>
+Subject: Re: Bug? git worktree fails with master on bare repo
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Michael Rappazzo <rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.10.2016 um 12:04 schrieb Tom Hale:
-> On 2016-10-09 13:47, René Scharfe wrote:
-> 
->> %Cgreen emits color codes unconditionally.  %C(auto,green) would respect
->> the config settings.
-> 
-> Thanks, I've never seen the (,) syntax documented before!
+Dennis,
+Thanks for the great response, and for spending time on my issue.
+I'll try that first patch and see what happens.
 
-Both the prefix "auto," for terminal-detection and "%C(auto)" for
-choosing colors automatically are mentioned in the manpage for git log
-(from Documentation/pretty-formats.txt):
+In the meantime, it got weirder...
 
-- '%C(...)': color specification, as described in color.branch.* config option;
-  adding `auto,` at the beginning will emit color only when colors are
-  enabled for log output (by `color.diff`, `color.ui`, or `--color`, and
-  respecting the `auto` settings of the former if we are going to a
-  terminal). `auto` alone (i.e. `%C(auto)`) will turn on auto coloring
-  on the next placeholders until the color is switched again.
+I created a brand-new (bare) repo and was able to git add worktree
+/path master.  I was able to do this repeatedly, even using the
+worktree to merge other branches to master.  I didn't find any
+condition or step that caused some kind of orphan master work tree,
+which was what I thought the underlying problem might be.
 
-> What's strange is that this works:
->   %C(auto,green bold)
-> but
->   %C(auto,green,bold)
-> does not.
+So, on the one hand, you found code validating my initial experience.
+But on the other hand, I found a test case that didn't appear to have
+that problem.
 
-Looking at the code that's not surprising; colors and attributes are
-interpreted as a space-separated list.  The prefix "auto," is handled
-specially.  For a user it may look strange, admittedly.
+WAT.
+      M.
 
-Supporting "auto " as well would be easy.  Supporting it in such a way
-that it can be mixed freely with colors and attributes as in
-%C(bold auto green) would be a bit harder.  Could this lead to confusion
-between the auto for terminal-detection and the one for automatic color
-selection?
+On Sun, Oct 9, 2016 at 5:52 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Oct 9, 2016 at 2:51 PM, Dennis Kaarsemaker
+> <dennis@kaarsemaker.net> wrote:
+>> On Sat, 2016-10-08 at 19:30 -0500, Michael Tutty wrote:
+>>> Hey all,
+>>> I'm working on some server-side software to do a merge. By using git
+>>> worktree it's possible to check out a given branch for a bare repo and
+>>> merge another branch into it. It's very fast, even with large
+>>> repositories.
+>>>
+>>> The only exception seems to be merging to master. When I do git
+>>> worktree add /tmp/path/to/worktree master I get an error:
+>>>
+>>> [fatal: 'master' is already checked out at '/path/to/bare/repo']
+>>>
+>>> But this is clearly not true, git worktree list gives:
+>>>
+>>> [/path/to/bare/repo (bare)]
+>>>
+>>> ...and of course, there is no work tree at that path, just the bare
+>>> repo files you'd expect.
+>>
+>> The worktree code treats the base repo as a worktree, even if it's
+>> bare. For the purpose of being able to do a checkout of the main branch
+>> of a bare repo, this patch should do:
+>>
+>> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+>> index 4bcc335..b618d6b 100755
+>> --- a/t/t2025-worktree-add.sh
+>> +++ b/t/t2025-worktree-add.sh
+>> @@ -138,6 +138,14 @@ test_expect_success 'checkout from a bare repo without "add"' '
+>>         )
+>>  '
+>>
+>> +test_expect_success '"add" default branch of a bare repo' '
+>> +       (
+>> +               git clone --bare . bare2 &&
+>> +               cd bare2 &&
+>> +               git worktree add ../there3 master
+>> +       )
+>> +'
+>> +
+>>  test_expect_success 'checkout with grafts' '
+>>         test_when_finished rm .git/info/grafts &&
+>>         test_commit abc &&
+>> diff --git a/worktree.c b/worktree.c
+>> index 5acfe4c..35e95b7 100644
+>> --- a/worktree.c
+>> +++ b/worktree.c
+>> @@ -345,6 +345,8 @@ const struct worktree *find_shared_symref(const char *symref,
+>>
+>>         for (i = 0; worktrees[i]; i++) {
+>>                 struct worktree *wt = worktrees[i];
+>> +               if(wt->is_bare)
+>> +                       continue;
+>>
+>>                 if (wt->is_detached && !strcmp(symref, "HEAD")) {
+>>                         if (is_worktree_being_rebased(wt, target)) {
+>>
+>>
+>
+> You're fast :) I'm still studying  8d9fdd7 (worktree.c: check whether
+> branch is rebased in another worktree - 2016-04-22). But yeah that
+> should fix it.
+>
+>> But I'm wondering why the worktree code does this. A bare repo isn't a
+>> worktree and I think it shouldn't treat it as one. A patch that rips
+>> out this feature and updates the tests to match would look like this:
+>>
+>>
+>> diff --git a/builtin/worktree.c b/builtin/worktree.c
+>> index 5c4854d..3600530 100644
+>> --- a/builtin/worktree.c
+>> +++ b/builtin/worktree.c
+>> @@ -382,15 +382,11 @@ static int add(int ac, const char **av, const char *prefix)
+>>  static void show_worktree_porcelain(struct worktree *wt)
+>>  {
+>>         printf("worktree %s\n", wt->path);
+>> -       if (wt->is_bare)
+>> -               printf("bare\n");
+>> -       else {
+>> -               printf("HEAD %s\n", sha1_to_hex(wt->head_sha1));
+>> -               if (wt->is_detached)
+>> -                       printf("detached\n");
+>> -               else
+>> -                       printf("branch %s\n", wt->head_ref);
+>> -       }
+>> +       printf("HEAD %s\n", sha1_to_hex(wt->head_sha1));
+>> +       if (wt->is_detached)
+>> +               printf("detached\n");
+>> +       else
+>> +               printf("branch %s\n", wt->head_ref);
+>>         printf("\n");
+>>  }
+>
+> This goes back to the first very first commit of "git worktree list":
+> bb9c03b (worktree: add 'list' command - 2015-10-08) and was sort of
+> pointed out during review [1] but nobody answered it.
+>
+> A bare repo does not have an associated worktree. However only main
+> worktree can be bare. If we take this out, "git worktree list"'s first
+> line will no longer be about the main worktree (because it does not
+> exist). That may cause trouble since we promised in "git-worktree.txt"
+> that the main worktree is listed first. I don't think we have any way
+> else to determine if the main worktree exists. Showing "bare" may be
+> the way to see if we have a main worktree or not. So we probably want
+> to keep this function unchanged.
+>
+> [1] https://public-inbox.org/git/%3CCANoM8SWeqxD2vWLQmEfxxxn8Dz4yPfjGOoOH=Azn1A3So+wz2Q@mail.gmail.com%3E/
+> --
+> Duy
 
-The documentation cited above says the color specification was explained
-together with the color.branch.* config option, but that part only says
-(from Documentation/config.txt):
-
-color.branch.<slot>::
-        Use customized color for branch coloration. `<slot>` is one of
-        `current` (the current branch), `local` (a local branch),
-        `remote` (a remote-tracking branch in refs/remotes/),
-        `upstream` (upstream tracking branch), `plain` (other
-        refs).
-
-It really is described earlier in the same file, in the Values section
-(a fitting place, I think).  Here's just the first sentence:
-
-color::
-       The value for a variable that takes a color is a list of
-       colors (at most two, one for foreground and one for background)
-       and attributes (as many as you want), separated by spaces.
-
-Patch below.  Does it help a little?
-
-> Also:
-> Given it's very rare to want only part of a string to emit colour codes,
-> if something like "bold" carries through until a "no-bold", why doesn't
-> "auto" do the same thing?
-
-No state is kept for "auto,".  Attributes and colors are switched
-separately by terminals, that's why e.g. bold stays in effect through
-a color change -- unless you specify an attribute change as well.
-
-Offering a way to enable terminal-detection for all color codes of a
-format would be useful, but using the existing "auto," prefix for that
-would be a behaviour change that could surprise users.
-
-René
 
 
--- >8 --
-Subject: [PATCH] pretty: fix document reference for color specification
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- Documentation/pretty-formats.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index a942d57..89e3bc6 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -166,7 +166,8 @@ endif::git-rev-list[]
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
- - '%Creset': reset color
--- '%C(...)': color specification, as described in color.branch.* config option;
-+- '%C(...)': color specification, as described under Values, color in the
-+  "CONFIGURATION FILE" section of linkgit:git-config[1];
-   adding `auto,` at the beginning will emit color only when colors are
-   enabled for log output (by `color.diff`, `color.ui`, or `--color`, and
-   respecting the `auto` settings of the former if we are going to a
 -- 
-2.10.1
+Michael Tutty, CTO
 
+e: mtutty@gforgegroup.com
+t: @mtutty, @gforgegroup
+v: 515-789-0772
+w: http://gforgegroup.com, http://gforge.com
