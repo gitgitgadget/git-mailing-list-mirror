@@ -6,96 +6,80 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F6220989
-	for <e@80x24.org>; Mon, 10 Oct 2016 18:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F7E220989
+	for <e@80x24.org>; Mon, 10 Oct 2016 18:21:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752404AbcJJSTL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 14:19:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55194 "EHLO cloud.peff.net"
+        id S1752017AbcJJSVo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 14:21:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55199 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752110AbcJJSTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 14:19:10 -0400
-Received: (qmail 7114 invoked by uid 109); 10 Oct 2016 18:19:09 -0000
+        id S1751691AbcJJSVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 14:21:43 -0400
+Received: (qmail 7247 invoked by uid 109); 10 Oct 2016 18:21:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 18:19:09 +0000
-Received: (qmail 354 invoked by uid 111); 10 Oct 2016 18:19:28 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 18:21:31 +0000
+Received: (qmail 375 invoked by uid 111); 10 Oct 2016 18:21:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 14:19:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 14:19:07 -0400
-Date:   Mon, 10 Oct 2016 14:19:07 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 14:21:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 14:21:29 -0400
+Date:   Mon, 10 Oct 2016 14:21:29 -0400
 From:   Jeff King <peff@peff.net>
-To:     Seaders Oloinsigh <seaders69@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git filter-branch --subdirectory-filter not working as expected,
- history of other folders is preserved
-Message-ID: <20161010181907.bqekupn6npuimbir@sigill.intra.peff.net>
-References: <CAN40BKqPdPP2+K4FBzgDDfYiGkzk1gYcOeP==_t+pr5w0rj0EQ@mail.gmail.com>
- <20161010153032.v2x773cbs4ifvzec@sigill.intra.peff.net>
- <CAN40BKoWroM4ZJHHdMvO8YvvCho0FnWzV9BG9E5xnCZbYOO2pg@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+Message-ID: <20161010182129.fta7j7m3lxcgsn2d@sigill.intra.peff.net>
+References: <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610071319520.35196@virtualbox>
+ <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
+ <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
+ <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1610081034430.35196@virtualbox>
+ <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net>
+ <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
+ <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net>
+ <xmqqzimcf5wl.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAN40BKoWroM4ZJHHdMvO8YvvCho0FnWzV9BG9E5xnCZbYOO2pg@mail.gmail.com>
+In-Reply-To: <xmqqzimcf5wl.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 05:12:25PM +0100, Seaders Oloinsigh wrote:
+On Mon, Oct 10, 2016 at 10:52:26AM -0700, Junio C Hamano wrote:
 
-> Due to the structure of this repo, it looks like there are some
-> branches that never had anything to do with the android/ subdirectory,
-> so they're not getting wiped out.  My branch is in a better state to
-> how I want it, but still, if I run your suggestion,
-> [...]
+> Jeff King <peff@peff.net> writes:
+> 
+> > Having separate exec/shell boolean options just punts the overlap from
+> > the command key to those keys. If you have two mutually exclusive
+> > options, I think the best thing is a single option, like:
+> >
+> >   type = <shell | exec | whatever>
+> >
+> > and then it is obvious that a second appearance of "type" overrides an
+> > earlier one, by our usual "last one wins" convention. As opposed to:
+> >
+> >   shell = true
+> >   exec = true
+> >
+> > where you have to understand the meaning of each option to know that
+> > "exec" overrides "shell".
+> 
+> Good.  
+> 
+> Duy's "do we want to chdir or stay?" would be an orthogonal axis to
+> "what does the command line look like?" and "how is the command line
+> run?" so it adds one member to the "alias.<string>.*" family of
+> variables, I guess.
 
-Hmm. Yeah, I think this is an artifact of the way that filter-branch
-works with pathspec limiting. It keeps a mapping of commits that it has
-rewritten (including ones that were rewritten only because their
-ancestors were), and realizes that a branch ref needs updated when the
-commit it points to was rewritten.
-
-But if we don't touch _any_ commits in the history reachable from a
-branch (because they didn't even show up in our pathspec-limited
-rev-list), then it doesn't realize we touched the branch's history at
-all.
-
-I agree that the right outcome is for it to delete those branches
-entirely. I suspect the fix would be pretty tricky, though.
-
-In the meantime, I think you can work around it by either:
-
-  1. Make a pass beforehand for refs that do not touch your desired
-     paths at all, like:
-
-       path=android ;# or whatever
-       git for-each-ref --format='%(refname)' |
-       while read ref; do
-         if test "$(git rev-list --count "$ref" -- "$path")" = 0; then
-	   echo "delete $ref"
-	 fi
-       done |
-       git update-ref --stdin
-
-     and then filter what's left:
-
-       git filter-branch --subdirectory-filter $path -- --all
-
-or
-
-  2. Do the filter-branch, and because you know you specified --all and
-     that your filters would touch all histories, any ref which _wasn't_
-     touched can be deleted. That list is anything which didn't get a
-     backup entry in refs/original. So something like:
-
-       git for-each-ref --format='%(refname)' |
-       perl -lne 'print $1 if m{^refs/original/(.*)}' >backups
-
-       git for-each-ref --format='%(refname)' |
-       grep -v ^refs/original >refs
-
-       comm -23 refs backups |
-       sed "s/^/delete /" |
-       git update-ref --stdin
+Yeah, exactly. There may be other orthogonal axes to add, too, but I do
+not have any in mind myself. My main motive in switching to the
+"alias.$cmd.key" syntax is that it fixes the ancient mistake of putting
+arbitrary content into the key (just like pager.*, as we've discussed
+elsewhere).
 
 -Peff
