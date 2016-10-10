@@ -2,92 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA02B20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 17:53:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC06120989
+	for <e@80x24.org>; Mon, 10 Oct 2016 17:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753186AbcJJRxV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 13:53:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62613 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752879AbcJJRxS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 13:53:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B68C43834;
-        Mon, 10 Oct 2016 13:52:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=79TGRYakImqSGeARFXeOqg5COew=; b=X1+tK9
-        ko7nC4F5RLoTgykUDp42skJc32xYuN/RlTewjrJkeXFGLJj1PXujKvUR8xJKnbG6
-        ngxAAXjuDNmF19yf5vzuGgLu9nl77iErzRd2V5ivigWPe0W24rnsIUdCBhzAxOkc
-        YaS7+7DvRAONtBQ0yLHkcKNK3wxwabVewbKnw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=T2cPpvD1r+BdGvdCOz1pdij72AwOHY97
-        MDt7mWb0qKdumeLtlLHlUughKW53en5CZTJlsn2uNg3Jv1knNOirDtuiv5CM9qpN
-        yFPe+E5Kaeofm0bXlLRw4SW58YYZZSW0T5rhgHYHa+vpAyQmQVIw3TBLHvtdCPfz
-        x0inuNJ4oPQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2381E43833;
-        Mon, 10 Oct 2016 13:52:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8436A43832;
-        Mon, 10 Oct 2016 13:52:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
-References: <20161006114124.4966-1-pclouds@gmail.com>
-        <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610071319520.35196@virtualbox>
-        <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
-        <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
-        <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1610081034430.35196@virtualbox>
-        <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net>
-        <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
-        <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net>
-Date:   Mon, 10 Oct 2016 10:52:26 -0700
-In-Reply-To: <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net> (Jeff
-        King's message of "Sun, 9 Oct 2016 16:58:54 -0400")
-Message-ID: <xmqqzimcf5wl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4F646260-8F12-11E6-B976-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1752865AbcJJRxU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 13:53:20 -0400
+Received: from gproxy8-pub.mail.unifiedlayer.com ([67.222.33.93]:56065 "HELO
+        gproxy8-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S1752963AbcJJRxS (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 Oct 2016 13:53:18 -0400
+Received: (qmail 32378 invoked by uid 0); 10 Oct 2016 17:52:28 -0000
+Received: from unknown (HELO cmgw3) (10.0.90.84)
+  by gproxy8.mail.unifiedlayer.com with SMTP; 10 Oct 2016 17:52:28 -0000
+Received: from box531.bluehost.com ([74.220.219.131])
+        by cmgw3 with 
+        id ttsQ1t00p2qhmhE01tsTae; Mon, 10 Oct 2016 11:52:28 -0600
+X-Authority-Analysis: v=2.1 cv=KLfJUj1o c=1 sm=1 tr=0
+ a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=CH0kA5CcgfcA:10 a=D2PNT0XgWV_Vb4ERK7cA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID;
+         bh=rRn0lBlhk0JDmcmlLgb9y9xcAqBzn7crwhf68IH3BrY=; b=DYqECmyq2yej7qfWldSOxxjpo
+        lT5YsZP+9SWuFu/W/5uxpI13zFUagKz7FDwYlFsq9iAG84p85vpqXc7dwBeykAsBl79pLU1WyY3Qw
+        uiJV5jxP15YmELp4j7gejx3f4c;
+Received: from pool-173-76-103-154.bstnma.fios.verizon.net ([173.76.103.154]:34632 helo=homebase)
+        by box531.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.86_1)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1btekS-0003io-NW; Mon, 10 Oct 2016 11:52:24 -0600
+Message-ID: <1476121942.15746.99.camel@mad-scientist.net>
+Subject: Re: git merge deletes my changes
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Eduard Egorov <Eduard.Egorov@icl-services.com>,
+        "'git@vger.kernel.org'" <git@vger.kernel.org>
+Date:   Mon, 10 Oct 2016 13:52:22 -0400
+In-Reply-To: <AM4PR03MB1636EA0DEB4C8095F04AB92ADBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
+References: <AM4PR03MB1636BE3423E2BC4F0E998159DBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
+         <AM4PR03MB1636EA0DEB4C8095F04AB92ADBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
+Organization: Please remain calm: I may be mad but I am a professional --
+ Mad Scientist
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5-0ubuntu1~ubuntu16.04.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box531.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 173.76.103.154
+X-Exim-ID: 1btekS-0003io-NW
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-173-76-103-154.bstnma.fios.verizon.net (homebase) [173.76.103.154]:34632
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTMxLmJsdWVob3N0LmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, 2016-10-10 at 10:19 +0000, Eduard Egorov wrote:
+> # ~/gitbuild/git-2.10.1/git merge -s subtree --squash ceph_ansible
+> 
+> Can somebody confirm this please? Doesn't "merge -s subtree" really
+> merges branches?
 
-> Having separate exec/shell boolean options just punts the overlap from
-> the command key to those keys. If you have two mutually exclusive
-> options, I think the best thing is a single option, like:
->
->   type = <shell | exec | whatever>
->
-> and then it is obvious that a second appearance of "type" overrides an
-> earlier one, by our usual "last one wins" convention. As opposed to:
->
->   shell = true
->   exec = true
->
-> where you have to understand the meaning of each option to know that
-> "exec" overrides "shell".
+I think possibly you're not fully understanding what the --squash flag
+does... that's what's causing your issue here, not the "-s" option.
 
-Good.  
+A squash merge takes the commits that would be merged from the origin
+branch and squashes them into a single patch and applies them to the
+current branch as a new commit... but this new commit is not a merge
+commit (that is, when you look at it with "git show" etc. the commit
+will have only one parent, not two--or more--parents like a normal merge
+commit).
 
-Duy's "do we want to chdir or stay?" would be an orthogonal axis to
-"what does the command line look like?" and "how is the command line
-run?" so it adds one member to the "alias.<string>.*" family of
-variables, I guess.
+Basically, it's syntactic sugar for a diff plus patch operation plus
+some Git goodness wrapped around it to make it easier to use.
+
+But ultimately once you're done, Git has no idea that this new commit
+has any relationship whatsoever to the origin branch.  So the next time
+you merge, Git doesn't know that there was a previous merge and it will
+try to merge everything from scratch rather than starting at the
+previous common merge point.
+
+So either you'll have to use a normal, non-squash merge, or else you'll
+have to tell Git by hand what the previous common merge point was (as
+Jeff King's excellent email suggests).  Or else, you'll have to live
+with this behavior.
