@@ -2,80 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6120C20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 19:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9659820989
+	for <e@80x24.org>; Mon, 10 Oct 2016 19:23:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751749AbcJJTTw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 15:19:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54777 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751710AbcJJTTv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 15:19:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 69B1245BA5;
-        Mon, 10 Oct 2016 15:14:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v8D5S7aScCiLFcoDI8WHFCJ+v4Q=; b=qxIxaI
-        clwQRQxnGRKuSugVKHyIZeUXiI1vJ2p7LYs26u+4Mmwhs4Lp9RCopN7ZWvJpRdP9
-        OMuS6kMqoGCXkbDcXkmYzIKaVTI5pnICvu262ADNZGmtMLK4VgrBOnUm+A1oigA9
-        rJxttKHeCxLyY+bHLFJ1C2xjvOcXxw+mDKlqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O42+kg/tudPfhrKqcuxvV4GePZGHtlFX
-        MM7OP0KTZjsI5DMGKCcsOCJgXFsDCSowHyMdcKZtT79UeiQNVSFDX22wQ5ebmTjR
-        Gu7d0rh3EhyZi/gvbpK+4YmInbXmw/RZgBzv/FO8/k3IIv5sXmAf9BdftxFHa2tz
-        6YQL74WnwU4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61FEC45BA4;
-        Mon, 10 Oct 2016 15:14:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D25BD45BA3;
-        Mon, 10 Oct 2016 15:14:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-Subject: Re: [PATCH] clean up confusing suggestion for commit references
-References: <20161007095638.GA55445@book.hvoigt.net>
-        <20161007143200.qw77pdsymbdmjhbw@sigill.intra.peff.net>
-        <xmqqh98kf4fy.fsf@gitster.mtv.corp.google.com>
-        <20161010182623.hsczlsfc6oaa2byj@sigill.intra.peff.net>
-Date:   Mon, 10 Oct 2016 12:14:14 -0700
-In-Reply-To: <20161010182623.hsczlsfc6oaa2byj@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 10 Oct 2016 14:26:23 -0400")
-Message-ID: <xmqqoa2sdnjt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1751317AbcJJTXO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 15:23:14 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:13421 "EHLO bsmtp5.bon.at"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751100AbcJJTXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 15:23:13 -0400
+Received: from bsmtp.bon.at (unknown [192.168.181.101])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 3st8wX6wMrz5tqV
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 21:15:40 +0200 (CEST)
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3st8tr01N3z5tlB;
+        Mon, 10 Oct 2016 21:14:11 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 3768F52E5;
+        Mon, 10 Oct 2016 21:14:11 +0200 (CEST)
+Subject: Re: git 2.10.1 test regression in t3700-add.sh
+To:     Junio C Hamano <gitster@pobox.com>
+References: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
+ <98EB348E-221D-488C-A466-1FACB1C768FF@freedesktop.org>
+ <6CA5F44F-38C1-4C15-9B85-FE84FB93E616@freedesktop.org>
+ <49BF26B2-8E6D-40B1-87A2-1FDDF9A76B8E@freedesktop.org>
+ <xmqq8ttwgkyo.fsf@gitster.mtv.corp.google.com>
+Cc:     Jeremy Huddleston Sequoia <jeremyhu@freedesktop.org>,
+        t.gummerer@gmail.com, git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <dddae1eb-347c-a285-0699-31f30eb924d8@kdbg.org>
+Date:   Mon, 10 Oct 2016 21:14:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BCFB1C6E-8F1D-11E6-AD7A-F99D12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqq8ttwgkyo.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Am 10.10.2016 um 19:41 schrieb Junio C Hamano:
+> I also notice that the problematic test uses "chmod 755"; don't we
+> need POSIXPERM prerequisite on this test, too, I wonder?
 
-> On Mon, Oct 10, 2016 at 11:24:01AM -0700, Junio C Hamano wrote:
->
->> I no longer have preference either way myself, even though I was in
->> favor of no-quotes simply because I had an alias to produce that
->> format and was used to it.
->
-> I'll admit that I don't care _that_ much and am happy to leave it up to
-> individual authors, as long as nobody quotes SubmittingPatches at me as
-> some kind of gospel when I use the no-quotes form.
+Good point. Without POSIXPERM the test demonstrate that, since chmod 755 
+is basically a noop, the following add --chmod=-x does not leave an x 
+bit in the index when there was none there in the first place. I think 
+it does not hurt to keep the test even though it does not quite test the 
+same thing as on POSIXPERM enabled systems.
 
-;-).  
-
-I just do not want to hear "gitk (or was it git-gui) produces quoted
-form, why are you recommending no-quoted form in SubmittingPatches?"
-
-I'd say "use common sense; sometimes it is less confusing to read
-without quotes and it is perfectly OK to do so if that is the case".
+-- Hannes
 
