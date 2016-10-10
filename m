@@ -2,104 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA24A20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 20:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 873FD20989
+	for <e@80x24.org>; Mon, 10 Oct 2016 20:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751743AbcJJUFA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 16:05:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55299 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751412AbcJJUFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 16:05:00 -0400
-Received: (qmail 13531 invoked by uid 109); 10 Oct 2016 20:04:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 20:04:59 +0000
-Received: (qmail 1413 invoked by uid 111); 10 Oct 2016 20:05:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 16:05:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 16:04:57 -0400
-Date:   Mon, 10 Oct 2016 16:04:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Tom Hale <tom@hale.ee>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pretty: respect color settings for %C placeholders
-Message-ID: <20161010200457.6dzcrkhoi5id3z4x@sigill.intra.peff.net>
-References: <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
- <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
- <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
- <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
- <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
- <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
- <20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net>
- <42b3be14-fadb-4801-f377-59fb42b7ccdf@web.de>
- <20161010174257.b4uxplavefjyr6rl@sigill.intra.peff.net>
- <19e59db7-f3dd-35ec-8cf1-b070b1c05abe@web.de>
+        id S1751895AbcJJUTS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 16:19:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63644 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751154AbcJJUTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 16:19:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B2444681B;
+        Mon, 10 Oct 2016 16:19:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lSDnryQNWLscrUbw6bGhLHsJjDg=; b=MXL7HN
+        OP2OLeHUVuacQg5GguSXIUp3GvEtmvlEQ1vHYT2KNN1qKXgHKzahUvzh6mHZ0JYu
+        u8RkuPrzbOW/seSm0YMmSpTQbstEHvxOuh0GZdDUshxhodY914lvCqlBvu+B3kmv
+        Hh467JModRZeF1MfTSoF9+vDDoAhAZq0wcUwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QHAfTKiOXWy/6iTVS3N0BnD37+CibvF3
+        7sIWKa5J/PWmc4Sc9HjmuYz1qZcUwmlbAGcsLp2r18X4EMYKf/3l12C2aX8hBMj6
+        8VNfnJ7rUHOPMkNHEt8MkiAqu0vs3akvB53pz5vKgwaDPBF72YkTVAaiLeCANE08
+        IeQ2suJJ068=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 81DEC4681A;
+        Mon, 10 Oct 2016 16:19:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F22E646819;
+        Mon, 10 Oct 2016 16:19:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1 2/2] convert.c: stream and early out
+References: <20161009095654.1964-1-tboegi@web.de>
+Date:   Mon, 10 Oct 2016 13:19:12 -0700
+In-Reply-To: <20161009095654.1964-1-tboegi@web.de> (tboegi@web.de's message of
+        "Sun, 9 Oct 2016 11:56:54 +0200")
+Message-ID: <xmqqd1j8dkjj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <19e59db7-f3dd-35ec-8cf1-b070b1c05abe@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D072063C-8F26-11E6-B2EB-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 09:59:17PM +0200, René Scharfe wrote:
+tboegi@web.de writes:
 
-> > > Shouldn't we have an "else" here?
-> > 
-> > I'm not sure what you mean; can you write it out?
-> 
-> > -		if (skip_prefix(begin, "auto,", &begin)) {
-> > +
-> > +		if (!skip_prefix(begin, "always,", &begin)) {
-> >  			if (!want_color(c->pretty_ctx->color))
-> >  				return end - placeholder + 1;
-> >  		}
-> 
-> 		else {	/* here */
-> 
-> > +		/* this is a historical noop */
-> > +		skip_prefix(begin, "auto,", &begin);
-> 
-> 		}
-> 
-> Otherwise "always,auto," would be allowed and mean the same as "always,",
-> which just seems wrong.  Not a biggie.
+> -static void gather_stats(const char *buf, unsigned long size, struct text_stat *stats)
+> +static void gather_stats_partly(const char *buf, unsigned long len,
+> +				struct text_stat *stats, unsigned earlyout)
+>  {
 
-I don't think that will parse "%C(auto,foo)", as we hit the
-!skip_prefix() of the conditional, and do not look for "auto," at all.
+I think it is OK not to rename the function (you'd be passing earlyout=0
+for callers that want exact stat, right?).
 
-I think you'd have to move the check for "auto," inside the if block.
+>  	unsigned long i;
+>  
+> -	memset(stats, 0, sizeof(*stats));
+> -
+> -	for (i = 0; i < size; i++) {
+> +	if (!buf || !len)
+> +		return;
+> +	for (i = 0; i < len; i++) {
+>  		unsigned char c = buf[i];
+>  		if (c == '\r') {
+> -			if (i+1 < size && buf[i+1] == '\n') {
+> +			stats->stat_bits |= CONVERT_STAT_BITS_ANY_CR;
+> +			if (i+1 < len && buf[i+1] == '\n') {
+>  				stats->crlf++;
+>  				i++;
+> -			} else
+> +				stats->stat_bits |= CONVERT_STAT_BITS_TXT_CRLF;
+> +			} else {
+>  				stats->lonecr++;
+> +				stats->stat_bits |= CONVERT_STAT_BITS_BIN;
+> +			}
+>  			continue;
+>  		}
+>  		if (c == '\n') {
+>  			stats->lonelf++;
+> +			stats->stat_bits |= CONVERT_STAT_BITS_TXT_LF;
+>  			continue;
+>  		}
+>  		if (c == 127)
+> @@ -67,7 +74,7 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+>  				stats->printable++;
+>  				break;
+>  			case 0:
+> -				stats->nul++;
+> +				stats->stat_bits |= CONVERT_STAT_BITS_BIN;
+>  				/* fall through */
+>  			default:
+>  				stats->nonprintable++;
 
-I'm leaning towards just writing it out the long way, though, as I did
-in my reply to Junio.
 
-> > > Perhaps it's a funtion like add_color(sb, ctx, color) or similar would be
-> > > nice?
-> > 
-> > I actually wrote it that way first (I called it "maybe_add_color()"),
-> > but it felt a little funny to have a separate function that people might
-> > be tempted to reuse (the right solution is generally to check
-> > want_color() early as above, but we can't do that here because we have
-> > to find the end of each placeholder).
-> 
-> OK.  A variable then?  Lazy pseudo-code:
-> 
-> 	if (RED)
-> 		color = red;
-> 	else if (GREEN)
-> 		...
-> 
-> 	if (want_color())
-> 		strbuf_addstr(sb, color);
+So depending on the distribution of the bytes in the file, the
+bitfields in stats->stat_bits will be filled one bit at a time in
+random order.
 
-Yeah, that is a bit more clear (the final conditional just needs to
-check that we actually found a color).
+> @@ -75,10 +82,12 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+>  		}
+>  		else
+>  			stats->printable++;
+> +		if (stats->stat_bits & earlyout)
+> +			break; /* We found what we have been searching for */
 
--Peff
+But an "earlyout" says that if "any" of the earlyout bit is seen, we
+can return.
+
+It somehow felt a bit too limited to me in my initial reading, but I
+guess I shouldn't be surprised to see that such a limited interface
+is sufficient for a file-local helper function ;-).  
+
+The only caller that the semantics of this exit condition matters is
+the one that wants to know "do we have NUL or CR anywhere?", so I
+guess this should be sufficient.
+
+>  	}
+>  
+>  	/* If file ends with EOF then don't count this EOF as non-printable. */
+> -	if (size >= 1 && buf[size-1] == '\032')
+> +	if (len >= 1 && buf[len-1] == '\032')
+>  		stats->nonprintable--;
+
+This noise is somewhat irritating.  Was there a reason why size was
+a bad name for the variable?
+
+> +static const char *convert_stats_ascii(unsigned convert_stats)
+>  {
+> -	unsigned int convert_stats = gather_convert_stats(data, size);
+> -
+> +	const unsigned mask = CONVERT_STAT_BITS_TXT_LF |
+> +		CONVERT_STAT_BITS_TXT_CRLF;
+>  	if (convert_stats & CONVERT_STAT_BITS_BIN)
+>  		return "-text";
+> -	switch (convert_stats) {
+> +	switch (convert_stats & mask) {
+>  	case CONVERT_STAT_BITS_TXT_LF:
+>  		return "lf";
+>  	case CONVERT_STAT_BITS_TXT_CRLF:
+
+Subtle.  The caller runs the stat colllection with early-out set to
+BITS_BIN, so that this can set "-text" early.  It knows that without
+BITS_BIN, the stat was taken for the whole contents and the check lf
+or crlf can be reliable.
+
+I wonder if we can/need to do something to remove this subtleness
+out of this callchain, which could be a source of confusion.
+
+> @@ -132,24 +162,45 @@ static const char *gather_convert_stats_ascii(const char *data, unsigned long si
+>  	}
+>  }
+>  
+> +static unsigned get_convert_stats_wt(const char *path)
+> +{
+> +	struct text_stat stats;
+> +	unsigned earlyout = CONVERT_STAT_BITS_BIN;
+> +	int fd;
+> +	memset(&stats, 0, sizeof(stats));
+> +	fd = open(path, O_RDONLY);
+> +	if (fd < 0)
+> +		return 0;
+> +	for (;;) {
+> +		char buf[2*1024];
+
+Where is this 2kB come from?  Out of thin air?
+
