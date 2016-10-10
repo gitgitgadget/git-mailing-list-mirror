@@ -7,337 +7,96 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C84E20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 17:33:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A04FC20989
+	for <e@80x24.org>; Mon, 10 Oct 2016 17:33:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753422AbcJJRdL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 13:33:11 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56579 "EHLO mout.gmx.net"
+        id S1753425AbcJJRdU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 13:33:20 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53807 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753155AbcJJRdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 13:33:10 -0400
+        id S1753033AbcJJRdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 13:33:20 -0400
 Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Lvkwm-1aoO3B3psq-017Rji; Mon, 10 Oct 2016 19:26:34
+ ESMTPSA (Nemesis) id 0Lk7fW-1bHYRU1ejC-00cDPm; Mon, 10 Oct 2016 19:26:42
  +0200
-Date:   Mon, 10 Oct 2016 19:26:32 +0200 (CEST)
+Date:   Mon, 10 Oct 2016 19:26:36 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 24/25] sequencer: start error messages consistently with
- lower case
+Subject: [PATCH v3 25/25] sequencer: mark all error messages for
+ translation
 In-Reply-To: <cover.1476120229.git.johannes.schindelin@gmx.de>
-Message-ID: <499955168c1da6240c32d6d12786f35ecc1cd048.1476120229.git.johannes.schindelin@gmx.de>
+Message-ID: <e38bf77ff57d06ca3250bc3ec71a34088b49abd0.1476120229.git.johannes.schindelin@gmx.de>
 References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:om2IUJuAKqdosM6wkP2Dnd7siNz5m1ZC90Pv8BMToNWMHNbA4Pm
- FK3krecZzO0pTHWCUBfEssle3rYrigzJydubx24NUBzis70h7G2zJZXcKpm/oan5xwhxNMb
- khsRf5k+XrsKjSqgN4/GHpLi0Am5JAzSUmqqP/SUV1wlTAJW9W86tAtT45T+gUif8tLYg4M
- oYcR6Eq3g+LT83ZjQZACw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/tK6H04EIsY=:OSzWZZXmxCzvz/Qx7ear+P
- H8aOGhYeVj/iwZB3fsxeAzNp3T+YzepSMhSq1TNGOxDHhlj97jOacYOSYayV8J7o+WJ3mdlrQ
- 2QNzxpkxsm+sTNvlORyTsYuJntL2YGN59PK2dbPyUSspaj23evFXFSrz8c+C8aDeHc6OXh7zQ
- bM2VDRrCm5i6oejhusyErWDDh+BVh1nVzLoJbvH1GvfelqZ0ci6V8mVkpksvqnTE2fDITxog7
- PVDEoCyMeluwreaDNsIBdXzRePqqT7iMw2IB9dtFWEQJfuMYrHKK0PHlNyXwd2GB67Y22ciVi
- b/RgahmagRlh7UeH+4ENBMWYrn03a3TLxdEOHXQQdTbNMdLpeUTO+C0dER0OJOegoPtK0nlAt
- uVn0J7Nf6+v3dgRbtsS8XmakloPrEAlT5J5iOwVCG6ERokDLWQZBV/kIp/T57EeE8Jd7yeSi4
- xVOLwwlV0yXULK4aW7xqqG5Gq5MxdgBSGcNw22AtCLVPN31daY+0sv1/IR+Y00MTUORy+NG3y
- wGnUawmWqIR15dR1X4ACVTP3/+sLtZ3X1yGdIL55RX7flCD6Q8Q4RAcGH5wE+k7Ug+lLqNJ8x
- GAf9ehtGOcK9/9Dvw9Aw9uXJxuPHZxeGMnNCqSiPOieLp9I42583v1TWtUJl7LuiljFNsohgz
- NJ3QZvKn+xTwUznWAl0HnnvypQaTuh21OZwicBeko/6tZGCrs8sO6rbaD1E5Q4vD2kF5r704I
- foJMZlf6R0ATxbgde5jb+rjQWT6iaj/wQPKwVYSRSsGA0YRSsdy1E5e7ViIOrrqsC6KhV69id
- YpclUzz
+X-Provags-ID: V03:K0:TaiZQN+QuPVcpSxD1W9bEEWt9XCWBYoVHNtFxXs+M1YaJzi/dt0
+ TgORnpHk+qbN80OOXyK5onZR2QoEmFFTel8kcrCmsros6qu2hl3OWtF9WoHz9EUsIxKnt49
+ X0ePjBH3p8XkCNjD96oMj196ulIuatixEpI7vqVMUrAJzWjP+X+ZsNUfE4ED9f6nr0xAK8O
+ RI75vF3cihe7DRI5y3b2g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zNly6TgKfvw=:MKx/CXgBWJ2w6POA5W4sRU
+ mCcILvLAY96yiYFzf5NVOqI4V32crsbnuEEW2LslFqbu4rauvMX9yDue6TVSMt7KFsQkv/O/N
+ AahjQSV9vUILSUMgCJGetf437uJmQc/fJeITgbtrYIW3TQD40p8baNl1D3tEIxlUzI5VKVapg
+ DbmsQhUlRmhFjcUekK7AjUW4VQ1aNDiZtQ9RYmHqtsPpXQf7fdQ4A4FtONYNWFqTrpDdovvX4
+ bK96LGpuCt61Ql93CbpGL1fPf6qHJtaFAKt+6Ul2nN3PnXBM1lpT6y8P0N9YTJHcAKoxi0EPs
+ yKN+JHCchFmaSMQjqTiRH052y2xgiQtNy5UJ/u83hnJBcROZIyY1F2wZ2POwgUhDaUb7fNHlj
+ aSTzxM6AwgQ2y6pkIoeLjyXckRrUzfAbkr197Fgo6fTmokl3yFBN/CxROQRwv+yv6zjQyz4tV
+ NXM+7Vm0PQdvrFOcdnUPZFRivPfR9bVEJa8dJuRqJQzsxx51OvGchEQWXXQw+wsn4gprqltoa
+ 3PZjKNThCGI7zC2HdBxmi0ORp5j8x1sBV2k9iSykRz5/+0pWQ638+KyZ4abgvdxoD84BF5nAF
+ Lk8BYvRE/uTKKRxLKqYzIZSBRGeVBU9eF4AnD/DhvsFLEsDaHlgfL043RmYm23XBijsVd1/+n
+ dSvjPuEUi3RLr7YIK+79UIHXSaI0KHYUaOXjt0+hg7V2HJ/JJckpY7E+uj+buv2EWaeG8CDtc
+ WE1d3HstdmZBSolo5M6y3Hr1Q6q/h0JKoKGM0ZfUfqd98qmoLzUzPfR++/vBrOuhlvH5mIxuu
+ D25Mhcy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Quite a few error messages touched by this developer during the work to
-speed up rebase -i started with an upper case letter, violating our
-current conventions. Instead of sneaking in this fix (and forgetting
-quite a few error messages), let's just have one wholesale patch fixing
-all of the error messages in the sequencer.
-
-While at it, the funny "error: Error wrapping up..." was changed to a
-less funny, but more helpful, "error: failed to finalize...".
-
-Pointed out by Junio Hamano.
+There was actually only one error message that was not yet marked for
+translation.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c                   | 68 +++++++++++++++++++++----------------------
- t/t3501-revert-cherry-pick.sh |  2 +-
- 2 files changed, 35 insertions(+), 35 deletions(-)
+ sequencer.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 4596540..676f16c 100644
+index 676f16c..86d86ce 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -241,18 +241,18 @@ static int write_with_lock_file(const char *filename,
- 
- 	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
- 	if (msg_fd < 0)
--		return error_errno(_("Could not lock '%s'"), filename);
-+		return error_errno(_("could not lock '%s'"), filename);
- 	if (write_in_full(msg_fd, buf, len) < 0) {
- 		rollback_lock_file(&msg_file);
--		return error_errno(_("Could not write to '%s'"), filename);
-+		return error_errno(_("could not write to '%s'"), filename);
- 	}
- 	if (append_eol && write(msg_fd, "\n", 1) < 0) {
- 		rollback_lock_file(&msg_file);
--		return error_errno(_("Could not write eol to '%s"), filename);
-+		return error_errno(_("could not write eol to '%s"), filename);
- 	}
- 	if (commit_lock_file(&msg_file) < 0) {
- 		rollback_lock_file(&msg_file);
--		return error(_("Error wrapping up '%s'."), filename);
-+		return error(_("failed to finalize '%s'."), filename);
- 	}
- 
- 	return 0;
-@@ -312,11 +312,11 @@ static int error_dirty_index(struct replay_opts *opts)
- 	if (read_cache_unmerged())
- 		return error_resolve_conflict(_(action_name(opts)));
- 
--	error(_("Your local changes would be overwritten by %s."),
-+	error(_("your local changes would be overwritten by %s."),
- 		_(action_name(opts)));
- 
- 	if (advice_commit_before_merge)
--		advise(_("Commit your changes or stash them to proceed."));
-+		advise(_("commit your changes or stash them to proceed."));
- 	return -1;
- }
- 
-@@ -425,7 +425,7 @@ static int is_index_unchanged(void)
- 	struct commit *head_commit;
- 
- 	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
--		return error(_("Could not resolve HEAD commit\n"));
-+		return error(_("could not resolve HEAD commit\n"));
- 
- 	head_commit = lookup_commit(head_sha1);
- 
-@@ -445,7 +445,7 @@ static int is_index_unchanged(void)
- 
- 	if (!cache_tree_fully_valid(active_cache_tree))
- 		if (cache_tree_update(&the_index, 0))
--			return error(_("Unable to update cache tree\n"));
-+			return error(_("unable to update cache tree\n"));
- 
- 	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.oid.hash);
- }
-@@ -515,7 +515,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+@@ -515,16 +515,19 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
  		if (!env) {
  			const char *gpg_opt = gpg_sign_opt_quoted(opts);
  
--			return error("You have staged changes in your working "
-+			return error("you have staged changes in your working "
- 				"tree. If these changes are meant to be\n"
- 				"squashed into the previous commit, run:\n\n"
- 				"  git commit --amend %s\n\n"
-@@ -568,12 +568,12 @@ static int is_original_commit_empty(struct commit *commit)
- 	const unsigned char *ptree_sha1;
- 
- 	if (parse_commit(commit))
--		return error(_("Could not parse commit %s\n"),
-+		return error(_("could not parse commit %s\n"),
- 			     oid_to_hex(&commit->object.oid));
- 	if (commit->parents) {
- 		struct commit *parent = commit->parents->item;
- 		if (parse_commit(parent))
--			return error(_("Could not parse parent commit %s\n"),
-+			return error(_("could not parse parent commit %s\n"),
- 				oid_to_hex(&parent->object.oid));
- 		ptree_sha1 = parent->tree->object.oid.hash;
- 	} else {
-@@ -657,7 +657,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		 * to work on.
- 		 */
- 		if (write_cache_as_tree(head, 0, NULL))
--			return error(_("Your index file is unmerged."));
-+			return error(_("your index file is unmerged."));
- 	} else {
- 		unborn = get_sha1("HEAD", head);
- 		if (unborn)
-@@ -676,7 +676,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		struct commit_list *p;
- 
- 		if (!opts->mainline)
--			return error(_("Commit %s is a merge but no -m option was given."),
-+			return error(_("commit %s is a merge but no -m option was given."),
- 				oid_to_hex(&commit->object.oid));
- 
- 		for (cnt = 1, p = commit->parents;
-@@ -684,11 +684,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		     cnt++)
- 			p = p->next;
- 		if (cnt != opts->mainline || !p)
--			return error(_("Commit %s does not have parent %d"),
-+			return error(_("commit %s does not have parent %d"),
- 				oid_to_hex(&commit->object.oid), opts->mainline);
- 		parent = p->item;
- 	} else if (0 < opts->mainline)
--		return error(_("Mainline was specified but commit %s is not a merge."),
-+		return error(_("mainline was specified but commit %s is not a merge."),
- 			oid_to_hex(&commit->object.oid));
- 	else
- 		parent = commit->parents->item;
-@@ -708,7 +708,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 			oid_to_hex(&parent->object.oid));
- 
- 	if (get_message(commit, &msg) != 0)
--		return error(_("Cannot get commit message for %s"),
-+		return error(_("cannot get commit message for %s"),
- 			oid_to_hex(&commit->object.oid));
- 
- 	/*
-@@ -944,13 +944,13 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
- 		item = append_new_todo(todo_list);
- 		item->offset_in_buf = p - todo_list->buf.buf;
- 		if (parse_insn_line(item, p, eol)) {
--			res = error(_("Invalid line %d: %.*s"),
-+			res = error(_("invalid line %d: %.*s"),
- 				i, (int)(eol - p), p);
- 			item->command = -1;
+-			return error("you have staged changes in your working "
+-				"tree. If these changes are meant to be\n"
+-				"squashed into the previous commit, run:\n\n"
+-				"  git commit --amend %s\n\n"
+-				"If they are meant to go into a new commit, "
+-				"run:\n\n"
+-				"  git commit %s\n\n"
+-				"In both cases, once you're done, continue "
+-				"with:\n\n"
+-				"  git rebase --continue\n", gpg_opt, gpg_opt);
++			return error(_("you have staged changes in your "
++				       "working tree. If these changes are "
++				       "meant to be\n"
++				       "squashed into the previous commit, "
++				       "run:\n\n"
++				       "  git commit --amend %s\n\n"
++				       "If they are meant to go into a new "
++				       "commit, run:\n\n"
++				       "  git commit %s\n\n"
++				       "In both cases, once you're done, "
++				       "continue with:\n\n"
++				       "  git rebase --continue\n"),
++				     gpg_opt, gpg_opt);
  		}
  	}
- 	if (!todo_list->nr)
--		return error(_("No commits parsed."));
-+		return error(_("no commits parsed."));
- 	return res;
- }
- 
-@@ -963,16 +963,16 @@ static int read_populate_todo(struct todo_list *todo_list,
- 	strbuf_reset(&todo_list->buf);
- 	fd = open(todo_file, O_RDONLY);
- 	if (fd < 0)
--		return error_errno(_("Could not open '%s'"), todo_file);
-+		return error_errno(_("could not open '%s'"), todo_file);
- 	if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
- 		close(fd);
--		return error(_("Could not read '%s'."), todo_file);
-+		return error(_("could not read '%s'."), todo_file);
- 	}
- 	close(fd);
- 
- 	res = parse_insn_buffer(todo_list->buf.buf, todo_list);
- 	if (res)
--		return error(_("Unusable instruction sheet: '%s'"), todo_file);
-+		return error(_("unusable instruction sheet: '%s'"), todo_file);
- 
- 	if (!is_rebase_i(opts)) {
- 		enum todo_command valid =
-@@ -983,9 +983,9 @@ static int read_populate_todo(struct todo_list *todo_list,
- 			if (valid == todo_list->items[i].command)
- 				continue;
- 			else if (valid == TODO_PICK)
--				return error(_("Cannot cherry-pick during a revert."));
-+				return error(_("cannot cherry-pick during a revert."));
- 			else
--				return error(_("Cannot revert during a cherry-pick."));
-+				return error(_("cannot revert during a cherry-pick."));
- 	}
- 
- 	return 0;
-@@ -1030,10 +1030,10 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
- 		ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_alloc);
- 		opts->xopts[opts->xopts_nr++] = xstrdup(value);
- 	} else
--		return error(_("Invalid key: %s"), key);
-+		return error(_("invalid key: %s"), key);
- 
- 	if (!error_flag)
--		return error(_("Invalid value for %s: %s"), key, value);
-+		return error(_("invalid value for %s: %s"), key, value);
- 
- 	return 0;
- }
-@@ -1065,7 +1065,7 @@ static int read_populate_opts(struct replay_opts *opts)
- 	 * are pretty certain that it is syntactically correct.
- 	 */
- 	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) < 0)
--		return error(_("Malformed options sheet: '%s'"),
-+		return error(_("malformed options sheet: '%s'"),
- 			git_path_opts_file());
- 	return 0;
- }
-@@ -1108,7 +1108,7 @@ static int create_seq_dir(void)
- 		return -1;
- 	}
- 	else if (mkdir(git_path_seq_dir(), 0777) < 0)
--		return error_errno(_("Could not create sequencer directory '%s'"),
-+		return error_errno(_("could not create sequencer directory '%s'"),
- 				   git_path_seq_dir());
- 	return 0;
- }
-@@ -1122,17 +1122,17 @@ static int save_head(const char *head)
- 	fd = hold_lock_file_for_update(&head_lock, git_path_head_file(), 0);
- 	if (fd < 0) {
- 		rollback_lock_file(&head_lock);
--		return error_errno(_("Could not lock HEAD"));
-+		return error_errno(_("could not lock HEAD"));
- 	}
- 	strbuf_addf(&buf, "%s\n", head);
- 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
- 		rollback_lock_file(&head_lock);
--		return error_errno(_("Could not write to '%s'"),
-+		return error_errno(_("could not write to '%s'"),
- 				   git_path_head_file());
- 	}
- 	if (commit_lock_file(&head_lock) < 0) {
- 		rollback_lock_file(&head_lock);
--		return error(_("Error wrapping up '%s'."), git_path_head_file());
-+		return error(_("failed to finalize '%s'."), git_path_head_file());
- 	}
- 	return 0;
- }
-@@ -1211,14 +1211,14 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
- 
- 	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
- 	if (fd < 0)
--		return error_errno(_("Could not lock '%s'"), todo_path);
-+		return error_errno(_("could not lock '%s'"), todo_path);
- 	offset = next < todo_list->nr ?
- 		todo_list->items[next].offset_in_buf : todo_list->buf.len;
- 	if (write_in_full(fd, todo_list->buf.buf + offset,
- 			todo_list->buf.len - offset) < 0)
--		return error_errno(_("Could not write to '%s'"), todo_path);
-+		return error_errno(_("could not write to '%s'"), todo_path);
- 	if (commit_lock_file(&todo_lock) < 0)
--		return error(_("Error wrapping up '%s'."), todo_path);
-+		return error(_("failed to finalize '%s'."), todo_path);
- 	return 0;
- }
- 
-@@ -1393,7 +1393,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 			create_seq_dir() < 0)
- 		return -1;
- 	if (get_sha1("HEAD", sha1) && (opts->action == REPLAY_REVERT))
--		return error(_("Can't revert as initial commit"));
-+		return error(_("can't revert as initial commit"));
- 	if (save_head(sha1_to_hex(sha1)))
- 		return -1;
- 	if (save_opts(opts))
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 51f3bbb..394f000 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -96,7 +96,7 @@ test_expect_success 'revert forbidden on dirty working tree' '
- 	echo content >extra_file &&
- 	git add extra_file &&
- 	test_must_fail git revert HEAD 2>errors &&
--	test_i18ngrep "Your local changes would be overwritten by " errors
-+	test_i18ngrep "your local changes would be overwritten by " errors
- 
- '
  
 -- 
 2.10.0.windows.1.325.ge6089c1
-
-
