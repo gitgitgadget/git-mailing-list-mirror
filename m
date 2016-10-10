@@ -6,297 +6,90 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAB92209BC
-	for <e@80x24.org>; Mon, 10 Oct 2016 15:15:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AD5220989
+	for <e@80x24.org>; Mon, 10 Oct 2016 15:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752538AbcJJPPW convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 10 Oct 2016 11:15:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55036 "EHLO cloud.peff.net"
+        id S1752553AbcJJP0v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 11:26:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55040 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752220AbcJJPPV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 11:15:21 -0400
-Received: (qmail 28449 invoked by uid 109); 10 Oct 2016 15:15:19 -0000
+        id S1752497AbcJJP0u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 11:26:50 -0400
+Received: (qmail 29159 invoked by uid 109); 10 Oct 2016 15:26:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 15:15:19 +0000
-Received: (qmail 31232 invoked by uid 111); 10 Oct 2016 15:15:38 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 15:26:28 +0000
+Received: (qmail 31271 invoked by uid 111); 10 Oct 2016 15:26:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 11:15:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 11:15:17 -0400
-Date:   Mon, 10 Oct 2016 11:15:17 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 11:26:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 11:26:26 -0400
+Date:   Mon, 10 Oct 2016 11:26:26 -0400
 From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] pretty: respect color settings for %C placeholders
-Message-ID: <20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net>
-References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
- <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
- <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
- <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
- <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
- <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
- <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
+To:     Eduard Egorov <Eduard.Egorov@icl-services.com>
+Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
+Subject: Re: git merge deletes my changes
+Message-ID: <20161010152626.frc3ypflwnhzidea@sigill.intra.peff.net>
+References: <AM4PR03MB1636D18D727968F332F16021DBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
+In-Reply-To: <AM4PR03MB1636D18D727968F332F16021DBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 10:28:18AM -0400, Jeff King wrote:
+On Mon, Oct 10, 2016 at 09:39:13AM +0000, Eduard Egorov wrote:
 
-> > We could add some new tag to change the behavior of all following %C
-> > tags. Something like %C(tty) maybe (probably a bad name), then
-> > discourage the use if "%C(auto" for terminal detection?
+> A week ago, I've reset a state of 'ceph-ansible' folder in %current%
+> branch with code from corresponding branch (that tracks an upstream
+> from github):
 > 
-> Yeah, adding a "%C(enable-auto-color)" or something would be backwards
-> compatible and less painful than using "%C(auto)" everywhere. I do
-> wonder if anybody actually _wants_ the "always show color, even if
-> --no-color" behavior. I'm having trouble thinking of a good use for it.
+> # git read-tree --prefix=ceph-ansible/ -u ceph_ansible
+
+This pulls in the subtree files, but there's no actual relationship with
+the commit history in ceph_ansible.
+
+So later...
+
+> Then I've committed several changes, including:
 > 
-> IOW, I'm wondering if anyone would disagree that the current behavior is
-> simply buggy. Reading the thread at:
+> 1. Renamed file and commited:
+> # git mv site.yml.sample site.yml
 > 
->   http://public-inbox.org/git/7v4njkmq07.fsf@alter.siamese.dyndns.org/
+> 2. Made some changes and committed
 > 
-> I don't really see any compelling reason against it (there was some
-> question of which config to use, but we already answered that with
-> "%C(auto)", and use the value from the pretty_ctx).
+> 3. Pulled updates from original branch by:
+> # git merge -s subtree --squash ceph_ansible
+> 
+> It said:
+>     Auto-merging ceph-ansible/site.yml.sample
+>     blablabla
+>     Squash commit -- not updating HEAD
+>     Automatic merge went well; stopped before committing as requested
 
-So here's what a patch to do that would look like. I admit that "I can't
-think of a good use" does not mean there _isn't_ one, but perhaps by
-posting this, it might provoke other people to think on it, too. And if
-nobody can come up with, maybe it's a good idea.
+When you merge from ceph_ansible, there is no shared history, and git
+uses the empty tree as a common ancestor. It looks like the other side
+added site.yml.sample, for instance, because that is a change from the
+empty tree.
 
--- >8 --
-Subject: pretty: respect color settings for %C placeholders
+> A post on SO: http://stackoverflow.com/questions/39954265/git-merge-deletes-my-changes
 
-The color placeholders have traditionally been
-unconditional, showing colors even when git is not otherwise
-configured to do so. This was not so bad for their original
-use, which was on the command-line (and the user could
-decide at that moment whether to add colors or not). But
-these days we have configured formats via pretty.*, and
-those should operate in multiple contexts.
+As you noted on SO, modern git disallows merges of unrelated history by
+default, because it's usually a mistake to do so.
 
-In 3082517 (log --format: teach %C(auto,black) to respect
-color config, 2012-12-17), we gave an extended placeholder
-that could be used to accomplish this. But it's rather
-clunky to use, because you have to specify it individually
-for each color (and their matching resets) in the format.
-We shied away from just switching the default to auto,
-because it is technically breaking backwards compatibility.
+If you are doing repeated merges into the subtree, you need to somehow
+tell git how the histories are related. The obvious answer is to do a
+"git merge -s ours ceph_ansible" after your initial read-tree, so that
+git knows you've pulled in the changes up to that point. But I'd guess
+from your use of "--squash" that you don't want to carry the
+ceph_ansible history in your project.
 
-However, there's not really a use case for unconditional
-colors. The most plausible reason you would want them
-unconditional is to redirect "git log" output to a file. But
-there, the right answer is --color=always, as it does the
-right thing both with custom user-format colors and
-git-generated colors.
+So you need to record the original upstream commit somewhere (probably
+in the commit message when you commit the read-tree result), and then
+ask git to use that as the merge-base during subsequent merges (which
+will require using plumbing codes, as git-merge wants to compute the
+merge base itself).  I believe the git-subtree command (in
+contrib/subtree of git.git) handles this use case, but I haven't used it
+myself.
 
-So let's switch to the more useful default. In the
-off-chance that somebody really does find a use for
-unconditional colors without wanting to enable the rest of
-git's colors, we can provide %C(always,...) to enable the
-old behavior.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-The tests unsurprisingly needed updating, as we're breaking the old
-behavior. The diff is easier to read read with "-w".
-
- Documentation/pretty-formats.txt | 13 +++---
- pretty.c                         | 19 +++++---
- t/t6006-rev-list-format.sh       | 94 ++++++++++++++++++++--------------------
- 3 files changed, 70 insertions(+), 56 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index a942d57..7aa1a8b 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -167,11 +167,14 @@ endif::git-rev-list[]
- - '%Cblue': switch color to blue
- - '%Creset': reset color
- - '%C(...)': color specification, as described in color.branch.* config option;
--  adding `auto,` at the beginning will emit color only when colors are
--  enabled for log output (by `color.diff`, `color.ui`, or `--color`, and
--  respecting the `auto` settings of the former if we are going to a
--  terminal). `auto` alone (i.e. `%C(auto)`) will turn on auto coloring
--  on the next placeholders until the color is switched again.
-+  By default, colors are shown only when enabled for log output (by
-+  `color.diff`, `color.ui`, or `--color`, and respecting the `auto`
-+  settings of the former if we are going to a terminal). `%C(auto,...)`
-+  is accepted as a historical synonym for the default. Specifying
-+  `%C(always,...) will show the colors always, even when colors are not
-+  otherwise enabled (to enable this behavior for the whole format, use
-+  `--color=always`). `auto` alone (i.e. `%C(auto)`) will turn on auto
-+  coloring on the next placeholders until the color is switched again.
- - '%m': left (`<`), right (`>`) or boundary (`-`) mark
- - '%n': newline
- - '%%': a raw '%'
-diff --git a/pretty.c b/pretty.c
-index 25efbca..73e58b5 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -965,22 +965,31 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 
- 		if (!end)
- 			return 0;
--		if (skip_prefix(begin, "auto,", &begin)) {
-+
-+		if (!skip_prefix(begin, "always,", &begin)) {
- 			if (!want_color(c->pretty_ctx->color))
- 				return end - placeholder + 1;
- 		}
-+
-+		/* this is a historical noop */
-+		skip_prefix(begin, "auto,", &begin);
-+
- 		if (color_parse_mem(begin, end - begin, color) < 0)
- 			die(_("unable to parse --pretty format"));
- 		strbuf_addstr(sb, color);
- 		return end - placeholder + 1;
- 	}
--	if (skip_prefix(placeholder + 1, "red", &rest))
-+	if (skip_prefix(placeholder + 1, "red", &rest) &&
-+	    want_color(c->pretty_ctx->color))
- 		strbuf_addstr(sb, GIT_COLOR_RED);
--	else if (skip_prefix(placeholder + 1, "green", &rest))
-+	else if (skip_prefix(placeholder + 1, "green", &rest) &&
-+		 want_color(c->pretty_ctx->color))
- 		strbuf_addstr(sb, GIT_COLOR_GREEN);
--	else if (skip_prefix(placeholder + 1, "blue", &rest))
-+	else if (skip_prefix(placeholder + 1, "blue", &rest) &&
-+		 want_color(c->pretty_ctx->color))
- 		strbuf_addstr(sb, GIT_COLOR_BLUE);
--	else if (skip_prefix(placeholder + 1, "reset", &rest))
-+	else if (skip_prefix(placeholder + 1, "reset", &rest) &&
-+		 want_color(c->pretty_ctx->color))
- 		strbuf_addstr(sb, GIT_COLOR_RESET);
- 	return rest - placeholder;
- }
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index a1dcdb8..29b1a1a 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -59,7 +59,10 @@ test_format () {
- }
- 
- # Feed to --format to provide predictable colored sequences.
-+BASIC_COLOR='%Credfoo%Creset'
-+COLOR='%C(red)foo%C(reset)'
- AUTO_COLOR='%C(auto,red)foo%C(auto,reset)'
-+ALWAYS_COLOR='%C(always,red)foo%C(always,reset)'
- has_color () {
- 	printf '\033[31mfoo\033[m\n' >expect &&
- 	test_cmp expect "$1"
-@@ -170,57 +173,56 @@ $added
- 
- EOF
- 
--test_format colors %Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy <<EOF
--commit $head2
--[31mfoo[32mbar[34mbaz[mxyzzy
--commit $head1
--[31mfoo[32mbar[34mbaz[mxyzzy
--EOF
--
--test_format advanced-colors '%C(red yellow bold)foo%C(reset)' <<EOF
--commit $head2
--[1;31;43mfoo[m
--commit $head1
--[1;31;43mfoo[m
--EOF
--
--test_expect_success '%C(auto,...) does not enable color by default' '
--	git log --format=$AUTO_COLOR -1 >actual &&
--	has_no_color actual
--'
--
--test_expect_success '%C(auto,...) enables colors for color.diff' '
--	git -c color.diff=always log --format=$AUTO_COLOR -1 >actual &&
--	has_color actual
--'
-+for spec in \
-+	"%Cred:$BASIC_COLOR" \
-+	"%C(...):$COLOR" \
-+	"%C(auto,...):$AUTO_COLOR"
-+do
-+	desc=${spec%%:*}
-+	color=${spec#*:}
-+	test_expect_success "$desc does not enable color by default" '
-+		git log --format=$color -1 >actual &&
-+		has_no_color actual
-+	'
- 
--test_expect_success '%C(auto,...) enables colors for color.ui' '
--	git -c color.ui=always log --format=$AUTO_COLOR -1 >actual &&
--	has_color actual
--'
-+	test_expect_success "$desc enables colors for color.diff" '
-+		git -c color.diff=always log --format=$color -1 >actual &&
-+		has_color actual
-+	'
- 
--test_expect_success '%C(auto,...) respects --color' '
--	git log --format=$AUTO_COLOR -1 --color >actual &&
--	has_color actual
--'
-+	test_expect_success "$desc enables colors for color.ui" '
-+		git -c color.ui=always log --format=$color -1 >actual &&
-+		has_color actual
-+	'
- 
--test_expect_success '%C(auto,...) respects --no-color' '
--	git -c color.ui=always log --format=$AUTO_COLOR -1 --no-color >actual &&
--	has_no_color actual
--'
-+	test_expect_success "$desc respects --color" '
-+		git log --format=$color -1 --color >actual &&
-+		has_color actual
-+	'
- 
--test_expect_success TTY '%C(auto,...) respects --color=auto (stdout is tty)' '
--	test_terminal env TERM=vt100 \
--		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
--	has_color actual
--'
--
--test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
--	(
--		TERM=vt100 && export TERM &&
--		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
-+	test_expect_success "$desc respects --no-color" '
-+		git -c color.ui=always log --format=$color -1 --no-color >actual &&
- 		has_no_color actual
--	)
-+	'
-+
-+	test_expect_success TTY "$desc respects --color=auto (stdout is tty)" '
-+		test_terminal env TERM=vt100 \
-+			git log --format=$color -1 --color=auto >actual &&
-+		has_color actual
-+	'
-+
-+	test_expect_success "$desc respects --color=auto (stdout not tty)" '
-+		(
-+			TERM=vt100 && export TERM &&
-+			git log --format=$color -1 --color=auto >actual &&
-+			has_no_color actual
-+		)
-+	'
-+done
-+
-+test_expect_success '%C(always,...) enables color even without tty' '
-+	git log --format=$ALWAYS_COLOR -1 >actual &&
-+	has_color actual
- '
- 
- test_expect_success '%C(auto) respects --color' '
--- 
-2.10.1.527.g93d4615
-
+-Peff
