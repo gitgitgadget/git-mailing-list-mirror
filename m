@@ -2,84 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C942B20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 19:58:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261B820989
+	for <e@80x24.org>; Mon, 10 Oct 2016 19:59:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751708AbcJJT6l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 15:58:41 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:36522 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751609AbcJJT6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 15:58:40 -0400
-Received: by mail-lf0-f65.google.com with SMTP id b75so11746562lfg.3
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 12:58:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kAczJs5BzO/p3l1OrLQBCAHpxeJMxNrdSmIDSVyD7vk=;
-        b=LrZqOw4FXsM2dHosJLoE3xnh80veidlLSLQokXYjSDjWZ6JM0Jves+sK9Dc3bqHi9b
-         ztJmXNbue88hJOFBMbuQSkxERZG4XGj/baxuwMorIwq9wbsDpAOQe84Lns+hq4NGZe+b
-         Cqr0oKjXTDgauAlFo/DUDYko+oiFO9DdmgcFkRxyjc33SVNAWBnmo+l54qeCNe1TD1Op
-         ilSh7hy3W1wcMYaS+QU7OvxAG05PM7H0DMi9XFncRzKRAlNcjAKxyYTOGYU2M1P3RfWr
-         nr7//WRqPl2IsUtu8UX7VQRRQYfd3lTrU6NcrxDnDAM8vvNW7oM/F2jLzqaj4TgNFEgD
-         9xgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kAczJs5BzO/p3l1OrLQBCAHpxeJMxNrdSmIDSVyD7vk=;
-        b=Q1i7+6ovUSIphUPNsQDKwUcC4fvZc0pyPo9XbKVqNjg1wb0QLEd3DD+7lrtmkiWLTI
-         sLQFCSZlZtEOy7Y6wF+IZOFmoSNx++ApPbICyU9A94CMtgCR0QioT7gTMCiX76x7oaOs
-         sRLz7b5n6P3xOip3zxDKCjrd1oorQh3U58gq8MGXhbRLklYY+f2uxfbIUhQb+2ufpRbS
-         mpsCcZybKKLSeuduq1rLOhHMUpF/OYs02yI9v0tPK46EDHe/u44/aB3iOv+4aPf4tn4i
-         Wmm0HN7VIsdJBMruitYqeimC5N7DMTYshyjpnpVWxy9sz0AV/9Bzrs8GqZU9A/jpJ+52
-         kVow==
-X-Gm-Message-State: AA6/9RkfGV7C/6VFxwnmqeQgfHfNlSq8m9KWP8zNbHtsjoDIMjTMYuNQPnXYh0IJJPfwlA==
-X-Received: by 10.194.113.35 with SMTP id iv3mr31423136wjb.169.1476129518163;
-        Mon, 10 Oct 2016 12:58:38 -0700 (PDT)
-Received: from [10.42.1.91] ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id y2sm42689621wji.42.2016.10.10.12.58.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Oct 2016 12:58:37 -0700 (PDT)
-Message-ID: <1476129516.7457.6.camel@kaarsemaker.net>
-Subject: Re: [PATCH 1/2] submodule: ignore trailing slash on superproject URL
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Stefan Beller <sbeller@google.com>, gitster@pobox.com
-Cc:     git@vger.kernel.org, venv21@gmail.com
-Date:   Mon, 10 Oct 2016 21:58:36 +0200
-In-Reply-To: <20161010175611.1058-1-sbeller@google.com>
-References: <20161010175611.1058-1-sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.0-2ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1751573AbcJJT7m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 15:59:42 -0400
+Received: from mout.web.de ([212.227.17.11]:58283 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751171AbcJJT7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 15:59:41 -0400
+Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MYeys-1bODZq2puc-00VOFe; Mon, 10 Oct 2016 21:59:28
+ +0200
+Subject: Re: [PATCH] pretty: respect color settings for %C placeholders
+To:     Jeff King <peff@peff.net>
+References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
+ <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
+ <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
+ <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
+ <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
+ <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
+ <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
+ <20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net>
+ <42b3be14-fadb-4801-f377-59fb42b7ccdf@web.de>
+ <20161010174257.b4uxplavefjyr6rl@sigill.intra.peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Tom Hale <tom@hale.ee>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <19e59db7-f3dd-35ec-8cf1-b070b1c05abe@web.de>
+Date:   Mon, 10 Oct 2016 21:59:17 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <20161010174257.b4uxplavefjyr6rl@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:7dRr1SPQIcpysdrf2RVfgNMCxaYJ0HV9d6TUCF2pYbJNsFmmiKx
+ fXiZrP+bFU3U12PgSaBso+DBRyfAUvsD55EAsVfD5hKd5jITre7TjKuk+xh13QKsMtZoTeJ
+ 22RqrT6QnCzm5MUFSp3eOW2NQdvuwq6v84On+kjFaGG+6Eo/hJeWAGaPQb5CkkQ9qmpIko+
+ fD/mjyycfsq7jVq3ILLdA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MuRgzcg6k+o=:ZTu/KRN1Rf14HGACZKVAdK
+ 1Vk/Xeb83bd2vslvXjywhaL5q02Sd9FkHkvPLlvhaEr4h8CmdzwaO9SKaXajXkvknvl+9L7mJ
+ bLPS6pjEhS5jy7v6CBlgjiHkV5g9Jo7d6GJbLZ/FsQqAeDE3Y0fUno3tbw8eBtpSLYZfU8DeS
+ 3r/Uri1+/ZWReR8gPiX9F7Swbz7fUQhBHUXxZNIgeUp4+lukPGJYEqDPVHNfqGCG+rx2VynPQ
+ AKLoydprkVv+ABrRzJFw4cGRABODs8knbnLeOky+vkapBiFhQhxc9BLyd2lT9gzcWKKWARkM0
+ nFCXay93qp2flsZug2HBbBwjkxEgcu06gimUydO08/6FiToDZeyn0XzkJZgjk7SaBTfF6YWo3
+ VbIoXM9/KZACX+7Q4vGlN1CLYapp6JsL/CDeUrDSFJGzs3vyMk0rJD38hbNpaRBhNUcW6M9rf
+ VKVgpofDEw9v172WhiGTyZovT7Tl5CiwGNYzUSdTz8q2vex1RuUvCS/9FLjFeEVt/FRDufYOe
+ TqjzRXfrVjxevIcN9JxCs5J1PEhtj5NFopUmXItTy6iDG2RKiuV8DlPbDDvARf5bJ144//0zu
+ xX1F/SCBfZWAHEkBZkROsGjNaJfQb2+dZB9zVwswjFF/Mc0SO1EWCxRpAHnbE5TrXMzuQJGkJ
+ hxk+mmwWRnV6dE5cgfDmSXihe8eFA7T1jsB6b3kh5k9Bd74mftubEpMwNtxGO5DQNKcZljkZV
+ j/+rLUGRjjkTzXSLX//MKlNajVnEzP9tLTVVeFGrSCUIuKlDTeO82yiYs9oaWpIpjCCEc5pkB
+ C6//LIt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[And now with CC to the list, sorry Stefan]
+Am 10.10.2016 um 19:42 schrieb Jeff King:
+> On Mon, Oct 10, 2016 at 07:09:12PM +0200, René Scharfe wrote:
+>
+>>> diff --git a/pretty.c b/pretty.c
+>>> index 25efbca..73e58b5 100644
+>>> --- a/pretty.c
+>>> +++ b/pretty.c
+>>> @@ -965,22 +965,31 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+>>>
+>>>  		if (!end)
+>>>  			return 0;
+>>> -		if (skip_prefix(begin, "auto,", &begin)) {
+>>> +
+>>> +		if (!skip_prefix(begin, "always,", &begin)) {
+>>>  			if (!want_color(c->pretty_ctx->color))
+>>>  				return end - placeholder + 1;
+>>>  		}
+>>
+>> Shouldn't we have an "else" here?
+>
+> I'm not sure what you mean; can you write it out?
 
-On Mon, 2016-10-10 at 10:56 -0700, Stefan Beller wrote:
-> Before 63e95beb0 (2016-04-15, submodule: port resolve_relative_url from
-> shell to C), it did not matter if the superprojects URL had a trailing
-> slash or not. It was just chopped off as one of the first steps
-> (The "remoteurl=${remoteurl%/}" near the beginning of
-> resolve_relative_url(), which was removed in said commit).
-> 
-> When porting this to the C version, an off-by-one error was introduced
-> and we did not check the actual last character to be a slash, but the
-> NULL delimiter.
-> 
-> Reintroduce the behavior from before 63e95beb0, to ignore the trailing
-> slash.
+ > -		if (skip_prefix(begin, "auto,", &begin)) {
+ > +
+ > +		if (!skip_prefix(begin, "always,", &begin)) {
+ >  			if (!want_color(c->pretty_ctx->color))
+ >  				return end - placeholder + 1;
+ >  		}
 
-Looks good to me, and fixes my simple testcase and cloning epiphany
-with trailing slash. Thanks!
+		else {	/* here */
 
-D.
+ > +		/* this is a historical noop */
+ > +		skip_prefix(begin, "auto,", &begin);
+
+		}
+
+Otherwise "always,auto," would be allowed and mean the same as 
+"always,", which just seems wrong.  Not a biggie.
+
+>>> -	if (skip_prefix(placeholder + 1, "red", &rest))
+>>> +	if (skip_prefix(placeholder + 1, "red", &rest) &&
+>>> +	    want_color(c->pretty_ctx->color))
+>>>  		strbuf_addstr(sb, GIT_COLOR_RED);
+>>> -	else if (skip_prefix(placeholder + 1, "green", &rest))
+>>> +	else if (skip_prefix(placeholder + 1, "green", &rest) &&
+>>> +		 want_color(c->pretty_ctx->color))
+>>>  		strbuf_addstr(sb, GIT_COLOR_GREEN);
+>>> -	else if (skip_prefix(placeholder + 1, "blue", &rest))
+>>> +	else if (skip_prefix(placeholder + 1, "blue", &rest) &&
+>>> +		 want_color(c->pretty_ctx->color))
+>>>  		strbuf_addstr(sb, GIT_COLOR_BLUE);
+>>> -	else if (skip_prefix(placeholder + 1, "reset", &rest))
+>>> +	else if (skip_prefix(placeholder + 1, "reset", &rest) &&
+>>> +		 want_color(c->pretty_ctx->color))
+>>>  		strbuf_addstr(sb, GIT_COLOR_RESET);
+>>>  	return rest - placeholder;
+>>>  }
+>>
+>> Perhaps it's a funtion like add_color(sb, ctx, color) or similar would be
+>> nice?
+>
+> I actually wrote it that way first (I called it "maybe_add_color()"),
+> but it felt a little funny to have a separate function that people might
+> be tempted to reuse (the right solution is generally to check
+> want_color() early as above, but we can't do that here because we have
+> to find the end of each placeholder).
+
+OK.  A variable then?  Lazy pseudo-code:
+
+	if (RED)
+		color = red;
+	else if (GREEN)
+		...
+
+	if (want_color())
+		strbuf_addstr(sb, color);
+
+> What I have here is a little funny, too, though, as it keeps trying
+> other color names if it finds "red" but want_color() returns 0.
+
+Oh, missed that somehow.. O_o
