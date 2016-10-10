@@ -6,35 +6,36 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAE9E207EC
-	for <e@80x24.org>; Mon, 10 Oct 2016 00:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D36E8207EC
+	for <e@80x24.org>; Mon, 10 Oct 2016 00:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751691AbcJJAdp (ORCPT <rfc822;e@80x24.org>);
+        id S1751689AbcJJAdp (ORCPT <rfc822;e@80x24.org>);
         Sun, 9 Oct 2016 20:33:45 -0400
-Received: from tc.outersquare.org ([75.144.255.93]:33583 "EHLO
+Received: from tc.outersquare.org ([75.144.255.93]:48080 "EHLO
         cid.outersquare.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751229AbcJJAdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 20:33:45 -0400
+        with ESMTP id S1751056AbcJJAdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 20:33:44 -0400
+X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Oct 2016 20:33:44 EDT
 Received: from localhost (localhost [127.0.0.1])
-        by cid.outersquare.org (Postfix) with ESMTP id ABC9A6788D32;
-        Sun,  9 Oct 2016 17:15:33 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTP id A0E4D6788D2C;
+        Sun,  9 Oct 2016 17:15:32 -0700 (PDT)
 X-Virus-Scanned: amavisd-new at mydomain = outersquare.org
 Received: from cid.outersquare.org ([127.0.0.1])
         by localhost (cid.outersquare.org [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id boqoButNjkvv; Sun,  9 Oct 2016 17:15:29 -0700 (PDT)
+        with ESMTP id tROw3f41-_ek; Sun,  9 Oct 2016 17:15:30 -0700 (PDT)
 Received: from [10.0.30.3] (tc.outersquare.org [75.144.255.93])
-        by cid.outersquare.org (Postfix) with ESMTPSA id CBF356788D08;
-        Sun,  9 Oct 2016 17:15:29 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTPSA id 1A8A06788D12;
+        Sun,  9 Oct 2016 17:15:30 -0700 (PDT)
 From:   Jeremy Huddleston Sequoia <jeremyhu@freedesktop.org>
 Content-Type: multipart/signed;
- boundary="Apple-Mail=_D9CCD314-EF87-4CA7-9E9B-1A68513300DC";
+ boundary="Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894";
  protocol="application/pkcs7-signature"; micalg=sha1
 Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3249\))
-Subject: git 2.10.1 test regression in t4014-format-patch.sh
-Message-Id: <3CE95FD5-C5A9-4DE3-8B57-80B858769D1B@freedesktop.org>
-Date:   Sun, 9 Oct 2016 17:15:22 -0700
+Subject: git 2.10.1 test regression in t3700-add.sh
+Message-Id: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
+Date:   Sun, 9 Oct 2016 17:15:24 -0700
 Cc:     gitster@pobox.com, git@vger.kernel.org
-To:     Josh Triplett <josh@joshtriplett.org>
+To:     t.gummerer@gmail.com
 X-Mailer: Apple Mail (2.3249)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -42,14 +43,12 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Apple-Mail=_D9CCD314-EF87-4CA7-9E9B-1A68513300DC
+--Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
 	charset=us-ascii
 
-Hey Josh,
-
-Hope you're doing well.
+Hi Thomas,
 
 I wanted to let you know that this patch of yours, which landed in git =
 2.10.1, introduced some test failures, seen on macOS.
@@ -59,60 +58,43 @@ Let me know if you need any additional information to track these down.
 Thanks,
 Jeremy
 
-
-not ok 65 - format-patch default signature
+not ok 40 - git add --chmod=3D[+-]x changes index with already added =
+file
 #=09
-#		git format-patch --stdout -1 | tail -n 3 >output &&
-#		signature >expect &&
-#		test_cmp expect output
-#=09
-
-not ok 132 - format-patch --base
-#=09
-#		git checkout side &&
-#		git format-patch --stdout --base=3DHEAD~3 -1 | tail -n 7 =
->actual &&
-#		echo >expected &&
-#		echo "base-commit: $(git rev-parse HEAD~3)" >>expected =
-&&
-#		echo "prerequisite-patch-id: $(git show --patch HEAD~2 | =
-git patch-id --stable | awk "{print \$1}")" >>expected &&
-#		echo "prerequisite-patch-id: $(git show --patch HEAD~1 | =
-git patch-id --stable | awk "{print \$1}")" >>expected &&
-#		signature >> expected &&
-#		test_cmp expected actual
+#		echo foo >foo3 &&
+#		git add foo3 &&
+#		git add --chmod=3D+x foo3 &&
+#		test_mode_in_index 100755 foo3 &&
+#		echo foo >xfoo3 &&
+#		chmod 755 xfoo3 &&
+#		git add xfoo3 &&
+#		git add --chmod=3D-x xfoo3 &&
+#		test_mode_in_index 100644 xfoo3
 #=09
 
+commit 610d55af0f082f6b866dc858e144c03d8ed4424c
+Author: Thomas Gummerer <t.gummerer@gmail.com>
+Date:   Wed Sep 14 22:07:47 2016 +0100
 
-commit 480871e09ed2e5275b4ba16b278681e5a8c122ae
-Author: Josh Triplett <josh@joshtriplett.org>
-Date:   Wed Sep 7 18:12:01 2016 -0700
-
-    format-patch: show base info before email signature
+    add: modify already added files when --chmod is given
    =20
-    Any text below the "-- " for the email signature gets treated as =
-part of
-    the signature, and many mail clients will trim it from the quoted =
-text
-    for a reply.  Move it above the signature, so people can reply to it
-    more easily.
+    When the chmod option was added to git add, it was hooked up to the =
+diff
+    machinery, meaning that it only works when the version in the index
+    differs from the version on disk.
    =20
-    Similarly, when producing the patch as a MIME attachment, the
-    original code placed the base info after the attached part, which
-    would be discarded.  Move the base info to the end of the part,
-    still inside the part boundary.
+    As the option was supposed to mirror the chmod option in =
+update-index,
+    which always changes the mode in the index, regardless of the status =
+of
+    the file, make sure the option behaves the same way in git add.
    =20
-    Add tests for the exact format of the email signature, and add tests
-    to ensure that the base info appears before the email signature when
-    producing a plain-text output, and that it appears before the part
-    boundary when producing a MIME attachment.
-   =20
-    Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+    Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
 
 
---Apple-Mail=_D9CCD314-EF87-4CA7-9E9B-1A68513300DC
+--Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -181,21 +163,21 @@ DOhlN/np0KmCWDYx8UgdJHhEyhyAKSWWltf2U4bPpEI4BbOKwegeRJJqK1oRW9cxggROMIIESgIB
 ATCBiTB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcGA1UECxMgU3Rh
 cnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0Q29tIENsYXNzIDIg
 Q2xpZW50IENBAhAX8MOmbUCDPWU+X4TKPzSUMAkGBSsOAwIaBQCgggGZMBgGCSqGSIb3DQEJAzEL
-BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAwMTUyM1owIwYJKoZIhvcNAQkEMRYE
-FJuYFWglI5d22t5PzpnpjTGSU5xLMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
+BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAwMTUyNFowIwYJKoZIhvcNAQkEMRYE
+FCLP9iL452Y+IMdR6CzvIyVyREygMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
 FjAUBgNVBAoTDVN0YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24g
 QXV0aG9yaXR5MSMwIQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1l
 Pl+Eyj80lDCBnAYLKoZIhvcNAQkQAgsxgYyggYkwdTELMAkGA1UEBhMCSUwxFjAUBgNVBAoTDVN0
 YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MSMw
 IQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1lPl+Eyj80lDANBgkq
-hkiG9w0BAQEFAASCAgDOkR4GIug+7WegNbGeeTgXXX1e9cedXNGD/wfJ70Ptf+WnozwZnU+gaP0G
-+d0tOOtuX//Qb5IPZf/yuihP8sXPDBCS6XnPamtfSfR+Ve0pNVRTP3eaDirpcZTCR3tjt2sg62Bh
-nHRMoqoZNLSiYsxm4q+vkkXWA/YUKpp1cIR1cptJP5Opjwl//3AaphGypfn5HUaVoqf+E/vGaOnF
-gEwYLTSow0K76TTsrtLnu11nvn+bIfMm5B8S2AXgJXVSxU0NdO3S/nQKkYxwYup3rtK+4g4dMYZA
-ZURuKoMRFE8+749Dqj4q8eH7zTwWpsxxz0c6uwlxXLW0deGxA6M6p/3O41qzX+LiR7+pBQfH1QiH
-1d7FgF1bIa0vtCAab/stZgwDGGy/T4QL+WBt5SKwhTqcflrBepacvEiPWN4guUZxvJuyQDwrBB1z
-HEwO6qA0D/mbFoEfTPf0wTo9oh4GLNcaswU/FihYpDHG4aU14WeYwSwkIf+u9lbV8sCsxDmtg1Bb
-KgHRsceauEkegtSilXYl/T/65PEuLx+g+ShIKq/CgznDexS3/z7LRWxT8+yIb15uOR0c/OPSlcCx
-6KzoHn4ATWDsOm0xTgnNGO+XQwWMIWXj85b98pc5Ujq/3IRafdN5L2WkTXIZDX4pHBbThsT4lnVs
-vdOH8L3EHxci4m2LxQAAAAAAAA==
---Apple-Mail=_D9CCD314-EF87-4CA7-9E9B-1A68513300DC--
+hkiG9w0BAQEFAASCAgBA95J429oUHttH9O9931oEyoRbN8NW6L+7avgIgp+lE6pZMHMkprF4perK
+n03twixENk85QT8bKiToVZuwOPSzeLUTm9ZkKBKsZk0a/2+KYSwejz96nOysiqoYIxPc6U246zRu
+qH1721ZZESKLYMzxBMUh7BEZzBwQtaEyl0ikeA5i8WxrQIhXDiiEjkTQffFY7PxcxVh5tJ5lhlh0
+xXE5BTTQ8iigqKllR2jdpK8lxjWOkoivStwPskdDBacCsOrLbLKYUOlAgjWg3TCZN39IyqbGMNBR
+I5HF0cjgJGkH0UR2cxOocltk9i0xbk4sPey73LmDtmqUqzsfN0eZ7JI5v9ujFkP3r6Iz1IVGCiod
+XoTLajBJYrA5C6S/AXitXBTqT+r99tpyZNh3k4Q5ebNbyaN/sjhFFOXAAOo7r7GIz+bMfxUpqrCn
+YPtBF4x52aUyAuCUGz1iwk2sbP+GePZJnPhRMnI7mVoYzjmmnLv/spwd6CeuTiYvBhRiSEhkrLNh
+Psh12WcG8DOqJzABXhS/GOBjoF4RihvmA0ftCp9FbL0eIPDYsNIFNTGasMyXyBaZfC1Nd5ejpexe
+YpSrT0JdcIPI2T5+nXW2pREGQfSItTv04R9AX5mFB/dnKCw8QAloMXv7cxqwVgIqIyW4HJClB+W9
+53nWVvtgjxAaOb2XYAAAAAAAAA==
+--Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894--
