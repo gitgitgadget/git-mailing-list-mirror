@@ -2,85 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9AB520989
-	for <e@80x24.org>; Mon, 10 Oct 2016 23:08:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE7C420989
+	for <e@80x24.org>; Mon, 10 Oct 2016 23:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752387AbcJJXIT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 19:08:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62886 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752289AbcJJXIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 19:08:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6E0544A65;
-        Mon, 10 Oct 2016 19:08:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Y4h7sBvdksSOKWrGrlVFYcKYHtc=; b=Vie7dT
-        X3x9sfE7F8qM2mxtXOjF6Ioxo1S/BBm0QG/ECWtIJMmqAxCKavVb6pU8JLc+d7Se
-        nNVVXlnDy7By080DB6LlvtGkUQXp4vMBmukZDlfgW9LDOtvZewoKm/erJoE0a1dM
-        6/vfpprht7pd4b8/0F/Wnjf5y7s8eP2MF0QR8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZbhXibnGlK71nI15EEUIfzaIV82Xw92H
-        FHZNe2vY99FNV1Mv5mwko/ep53k24XI+6zPMkxT2OH/hQK2Qhml2FhdPOfcyCw5x
-        iihtldfvGxuiY92RQQL0bXbslj+vcizRF4RycH0jpwU0ujxS+FL8ekF7OCZhgbnE
-        M71UmiVuG3k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FE7344A64;
-        Mon, 10 Oct 2016 19:08:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1E21A44A63;
-        Mon, 10 Oct 2016 19:08:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] Resurrect "diff-lib.c: adjust position of i-t-a entries in diff"
-References: <20160928114348.1470-1-pclouds@gmail.com>
-        <20160928114348.1470-2-pclouds@gmail.com>
-        <xmqqzimrj03j.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8D28iq3r3O_uzjyyJT--KQunAySRgUthF3FMrb1VM6XKw@mail.gmail.com>
-        <xmqqd1jgw0nx.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8D7c8Z_ugasn_scf391+C6GxJp1CYwHY4ndvVtLiJzxnQ@mail.gmail.com>
-        <xmqqwphljnlj.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8DiGoaKZZ1je=3L3y4odVHB7wLvvKs9pccjiN=-UeqeVw@mail.gmail.com>
-Date:   Mon, 10 Oct 2016 16:08:14 -0700
-In-Reply-To: <CACsJy8DiGoaKZZ1je=3L3y4odVHB7wLvvKs9pccjiN=-UeqeVw@mail.gmail.com>
-        (Duy Nguyen's message of "Fri, 7 Oct 2016 19:56:47 +0700")
-Message-ID: <xmqqh98jby5d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752419AbcJJXfE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 19:35:04 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:35878 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752252AbcJJXfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 19:35:04 -0400
+Received: by mail-oi0-f45.google.com with SMTP id m72so5494300oik.3
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 16:35:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=iEA6PvwwvH0ZE5eIvXNfpdE9eAAN6Erml+8hhRKILqo=;
+        b=Ld5fmMaqJJoU5hRM0n2NZTyZJsqhbO/jWRyrAtx1+crJpqjxwADM/6wMtNAdoNBOu4
+         Q1XB9EW471njAYhh42CRqR9aVnUj+F/Jj3ppSEfAPfv8FTNFL5aH6/1yyEWtkzknUktZ
+         PhDQtUVGu0JYdVASgbFAJ1+aYwUOpw1FuEKSEKjU1zSQ9bToVDNtYdjs5mAmgfdVFoMz
+         W2B+FPudwULEIPdXJIEuw9KRfrRJhyidjGHlBxmmUwiK7BzgF5Zf+cjJdK0QB3jwEYzB
+         jHY2B2gpHBFZ4tV0L5T+rW/nD7LW8JwwkLvHUTVJZhIXtp9favaor4F1mMlVd+sT1CEi
+         8+HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:subject:to:references:cc:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=iEA6PvwwvH0ZE5eIvXNfpdE9eAAN6Erml+8hhRKILqo=;
+        b=d02f+IiXeAL2Mg3fxszAVAkWA4u95SNwdGia+SyjMpdQfKNZexZgDl4O8kD/lnny7b
+         orsU4hDtnHR24oRHTO259IOkv77Gd+Qt19xX5WJoHeeA/Mdo9mvwYUYZVfszDxt3ey1C
+         FZ8l1bU02R04+0OL7S6K3theMFCCy7Y++mxMJvGhbiNMfseabjUeNZuoUwNUS8WtJjcB
+         VfWmHDXk9cwTp9EqgastsOCB7aFIwLrWEmyaGPPpSBG25wPIsHhwi1b5UlOxw74GC6wp
+         Z48JGeIIzghXMvCmOnx1CAFO0jTtjHpfGMaRyaZcyxVlo4aF0qZzyrRH4KobZvHOzjqx
+         oYtA==
+X-Gm-Message-State: AA6/9RlDxXAERK+pB4Ffk6v1O4yk09EAHiZvfgeLL0+Qgkc8ZEP2I5j9kIROtdH0/Ru7sQ==
+X-Received: by 10.157.44.214 with SMTP id e22mr438845otd.89.1476142503303;
+        Mon, 10 Oct 2016 16:35:03 -0700 (PDT)
+Received: from larrylap.suse (cpe-24-31-249-175.kc.res.rr.com. [24.31.249.175])
+        by smtp.gmail.com with ESMTPSA id s23sm209129ots.1.2016.10.10.16.35.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Oct 2016 16:35:02 -0700 (PDT)
+Subject: Re: Formatting problem send_mail in version 2.10.0
+To:     Jeff King <peff@peff.net>
+References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
+ <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
+ <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+Cc:     Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+        Jorge Juan Garcia Garcia 
+        <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+From:   Larry Finger <Larry.Finger@lwfinger.net>
+Message-ID: <577f6873-c320-7aa6-b42f-475f2afb9b92@lwfinger.net>
+Date:   Mon, 10 Oct 2016 18:35:01 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6DA0C2C4-8F3E-11E6-8F13-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On 10/10/2016 04:57 PM, Jeff King wrote:
+> [+cc authors of b1c8a11, which regressed this case; I'll quote liberally
+>      to give context]
+>
+> On Mon, Oct 10, 2016 at 05:48:56PM -0400, Jeff King wrote:
+>
+>> I can't reproduce the problem with this simple setup:
+>>
+>> 	git init
+>> 	echo content >file && git add file
+>> 	git commit -F- <<-\EOF
+>> 	the subject
+>>
+>> 	the body
+>>
+>> 	Cc: Stable <stable@vger.kernel.org> [4.8+]
+>> 	EOF
+>>
+>> If I then run:
+>>
+>> 	git send-email -1 --to=peff@peff.net --dry-run
+>>
+>> I get:
+>>
+>> 	/tmp/MH8SfHOjCv/0001-the-subject.patch
+>> 	(mbox) Adding cc: Jeff King <peff@peff.net> from line 'From: Jeff King <peff@peff.net>'
+>> 	(body) Adding cc: Stable <stable@vger.kernel.org> [4.8+] from line 'Cc: Stable <stable@vger.kernel.org> [4.8+]'
+>> 	Dry-OK. Log says:
+>> 	Sendmail: /usr/sbin/sendmail -i peff@peff.net stable@vger.kernel.org
+>> 	From: Jeff King <peff@peff.net>
+>> 	To: peff@peff.net
+>> 	Cc: "Stable [4.8+]" <stable@vger.kernel.org>
+>> 	Subject: [PATCH] the subject
+>> 	Date: Mon, 10 Oct 2016 17:44:25 -0400
+>> 	Message-Id: <20161010214425.9761-1-peff@peff.net>
+>> 	X-Mailer: git-send-email 2.10.1.527.g93d4615
+>> 	
+>> 	Result: OK
+>>
+>> So it looks like it parsed the address, and shifted the "4.8+" bit into
+>> the name, which seems reasonable. Does my example behave differently on
+>> your system? If not, can you see what's different between your
+>> real-world case and the example?
+>>
+>> It might also be related to which perl modules are available. We'll use
+>> Mail::Address if you have it, but some fallback routines if you don't.
+>> They may behave differently.
+>>
+>> Alternatively, if this used to work, you might try bisecting it.
+>
+> Ah, it is Mail::Address. It gets this case right, but if I uninstall it,
+> then the cc becomes:
+>
+>   Cc: Stable <stable@vger.kernel.org[4.8+]>
+>
+> that you saw, which is broken. Older versions of git, even without
+> Mail::Address, got this right. The breakage bisects to b1c8a11
+> (send-email: allow multiple emails using --cc, --to and --bcc,
+> 2015-06-30) from v2.6.0, but I didn't dig deeper into the cause.
 
-> Off topic. This reminds me of an old patch about apply and ita [1] but
-> that one is not the same here
+I did not have Mail::Address installed, but adding it did not help.
 
-... Yeah, and re-reading that one, I think that sort-of makes
-sense.  I am hesitant to take it out of context, though.  I wonder
-how it would interact with that broken mode of "git apply" where it
-can take patches to the same path number of times...
+I solved my immediate problem by moving the [4.8+] between Stable and the 
+starting <. The result is spaced funny, but at least the info is there.
 
-> [1] https://public-inbox.org/git/1451181092-26054-4-git-send-email-pclouds@gmail.com/
+Larry
 
->> ita entry in the index for symmetry, wouldn't it?  That by itself
->> can be seen as an improvement (we no longer would have to say that
->> "git apply patchfile && git commit -a" that is run in a clean state
->> will forget new files the patchfile creates), but it also means ...
-
-Another downside is that "git reset --hard" after "git apply" will
-suddenly start removing them.  Perhaps that can be seen a feature?
-I dunno.
 
