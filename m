@@ -2,172 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8CEA20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 19:40:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A704520989
+	for <e@80x24.org>; Mon, 10 Oct 2016 19:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751547AbcJJTkS convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 10 Oct 2016 15:40:18 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:51574 "EHLO mail.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751307AbcJJTkQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 15:40:16 -0400
-Received: from black7 (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail.pdinc.us (8.14.4/8.14.4) with ESMTP id u9AJeArp005637;
-        Mon, 10 Oct 2016 15:40:10 -0400
-Reply-To: "Stefan Beller" <sbeller@google.com>, <git@vger.kernel.org>,
-          "Ian Kelling" <ian@iankelling.org>,
-          "Xiaolong Ye" <xiaolong.ye@intel.com>
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Cc:     "'Ian Kelling'" <ian@iankelling.org>,
-        "'Xiaolong Ye'" <xiaolong.ye@intel.com>,
-        "'Stefan Beller'" <sbeller@google.com>
-References: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com> <4B3747D8D2724E98B6AC000FE4072A09@black7> <CAGZ79kaHOBaVCsVPen-K_5LyitcDzVbjL_kAqMkYKk_fQxH4PQ@mail.gmail.com> <AB0A757A7BE241B39C8193A633C61FED@black7> <CAGZ79kb2HWmaW3XpfHRj8vcOStPoQmR_NZe7RCRhw=FnnHbZ8A@mail.gmail.com>
-In-Reply-To: <CAGZ79kb2HWmaW3XpfHRj8vcOStPoQmR_NZe7RCRhw=FnnHbZ8A@mail.gmail.com>
-Subject: RE: How to watch a mailing list & repo for patches which affect a certain area of code? [OT]
-Date:   Mon, 10 Oct 2016 15:40:08 -0400
-Organization: PD Inc
-Message-ID: <52BC7ECD34B54548BE67AE3E51EC1C74@black7>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AdIjKbJZDx61SatPTOiBedNrwv0IgQAArv8Q
-X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.23403
+        id S1751423AbcJJTom (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 15:44:42 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33863 "EHLO
+        mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751307AbcJJTol (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 15:44:41 -0400
+Received: by mail-pa0-f43.google.com with SMTP id rz1so60380368pab.1
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 12:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=FEhu7jYKmIcWa4IQ7JozSOlp09EXHC/VRLT4OxbxKp0=;
+        b=GDSiqahrmlnHWDf/wVKEt+YxEuwbq1M+fFzK8Kri/2bw59gcV9w+UbRlXshVvjqL89
+         3UqtF2hJS1lKjroDlX10SKBV+jvamzDVb3FUFOdSaHZzkBP3B7QamYKM3YtprR+8cFZK
+         zfShQfm2MUdQeF25l9gCvMeaWT1wp5S2wAMKvycEiKdlJPi1JPoYfu/o8XjSbanfy+iW
+         rh4FmZPTj+9FYSOBSMrhrRdFincZp2IsQMOfAReV7uIm1U6x2ws+dKjDbaqil6QlwoC8
+         MK5izlgKIqMifTQBqlhboXHxwuwoib78ylDRQVajEYdkzXO/X8KNX+h5Qd7EE+emYIUU
+         FlEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=FEhu7jYKmIcWa4IQ7JozSOlp09EXHC/VRLT4OxbxKp0=;
+        b=aQWqjRrIn67K0yl6u+D8HFmC9fvPuOR5Ywg1xXglYvtPegcD29fLaqrt7e9zKkY+DB
+         DMO258hBnipXe3kbRl4odf48V3zt8fbt1VQ6Pe3Ur4W9sNQAEgZd2IOd1MLEhKjPbahZ
+         ZMMTS7FuMJp+NXdqSooA96BFnvi6MUVPi3E5WiRkGL+/BKiI/CsSI3dw2je1xN1ejOi/
+         JVXwujjLi3pQWuFgE9eTOlqQ39yPs09sSpgP0kw404WDsAbKx/vWbNM1Qc0ZFbQBQYbU
+         iQQba9vhUuIVFTs7Azrh05LbPwihwVZ1kwOkCFIi8706JuQWfiQhmqrGT5qRUHNbSyGO
+         xfOw==
+X-Gm-Message-State: AA6/9RmEowJjkrW4LqZuUOZ/HkPPNzqUN/MxzqOaroQNi83l6sEdKGVNCYhVDCCBFJ3ExBWB
+X-Received: by 10.66.77.170 with SMTP id t10mr16658301paw.40.1476128205746;
+        Mon, 10 Oct 2016 12:36:45 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
+        by smtp.gmail.com with ESMTPSA id qd12sm52897388pab.22.2016.10.10.12.36.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 10 Oct 2016 12:36:45 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Jens.Lehmann@web.de, hvoigt@hvoigt.net,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2] documentation: improve submodule.<name>.{url, path} description
+Date:   Mon, 10 Oct 2016 12:36:41 -0700
+Message-Id: <20161010193641.16489-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
+In-Reply-To: <xmqqshs4dnq1.fsf@gitster.mtv.corp.google.com>
+References: <xmqqshs4dnq1.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Stefan Beller
-> Sent: Monday, October 10, 2016 15:08
-> 
-> On Mon, Oct 10, 2016 at 11:56 AM, Jason Pyeron wrote:
-> >> -----Original Message-----
-> >> From: Stefan Beller
-> >> Sent: Monday, October 10, 2016 14:43
-> >>
-> >> +cc Xiaolong Ye <xiaolong.ye@intel.com>
-> >>
-> >> On Sun, Oct 9, 2016 at 2:26 PM, Jason Pyeron wrote:
-> >> >> -----Original Message-----
-> >> >> From: Ian Kelling
-> >> >> Sent: Sunday, October 09, 2016 15:03
-> >> >>
-> >> >> I've got patches in various projects, and I don't have
-> >> time to keep up
-> >> >> with the mailing list, but I'd like to help out with
-> >> >> maintenance of that
-> >> >> code, or the functions/files it touches. People don't cc me.
-> >> >> I figure I
-> >> >> could filter the list, test patches submitted, commits made,
-> >> >> mentions of
-> >> >> files/functions, build filters based on the code I have in
-> >> >> the repo even
-> >> >> if it's been moved or changed subsequently. I'm wondering
-> >> what other
-> >> >> people have implemented already for automation around
-> >> this, or general
-> >> >> thoughts. Web search is not showing me much.
-> >> >>
-> >> >
-> >> > One thought would be to apply every patch automatically (to
-> >> the branches of interest?). Then trigger on the 
-> [successful] changed
-> >> > code. This would simplify the logic to working on the
-> >> source only and not parsing the emails.
-> >> >
-> >> > -Jason
-> >> >
-> >>
-> >> I think this is currently attempted by some kernel people.
-> >> However it is very hard to tell where to apply a patch, as it
-> >
-> > This is one of the reasons why I use bundles instead of 
-> format patch.
-> 
-> Oh! That sounds interesting for solving the problem where to apply
-> a change, but the big disadvantage of bundles to patches is 
-> the inability
-> to just comment on it with an inline response. 
+Unlike the url variable a user cannot override the the path variable,
+as it is part of the content together with the gitlink at the given
+path. To avoid confusion do not mention the .path variable in the config
+section and rely on the documentation provided in gitmodules[5].
 
-Yep. It is a big one. I have a personal project to add a footer to a format patch with the missing "binary" data. The thoughts were for the main cases using a RLE bitmap for the whitespace in the above patch and the remainder of the commit blob data. This would allow minimal duplicate information in the email but pure text changes would be binary perfect so the commit id will still be correct.
+Enhance the description of submodule.<name>.url and mention its two use
+cases separately.
 
-Sigh, never have enough free time.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> So I assume you follow
-> a different workflow than git or the kernel do. Which project 
-> do you use it
-> for and do you have some documentation/blog that explains 
-> that workflow?
+I think the gitmodules[5] is enough for .path, so let's just
+do this one instead.
 
-This is used when collaborating cross enterprise. In these situations enterprise A will not give access to enterprise B on their CI system, or git repo, etc...
+Thanks,
+Stefan
 
-We all have a mailing list in common (encrypted/signed emails when it contains sensitive info). The rules prevent us from using cloud solutions for almost all of our work.
 
-I have also worked on git for cross domain (tin foil hat time) source code transfer.
+ Documentation/config.txt | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-As to a blog, never thought about it. Ask questions on the list and I will help.
-
-> 
-> 
-> >
-> >> is not formalized.
-> >> See the series that was merged at 72ce3ff7b51c
-> >> ('xy/format-patch-base'),
-> >> which adds a footer to the patch, that tells you where
-> >> exactly a patch ought
-> >> to be applied.
-> >
-> > Cant wait for that.
-> 
-> Well it is found in 2.9 and later. Currently the base footer is
-> opt-in, e.g. you'd
-> need to convince people to run `git config format.useAutoBase 
-> true` or to
-> manually add the base to the patch via `format-patch --base=<commit>`.
-
-Please make default in 2.10.2 .
-
-> 
-> >
-> >>
-> >> The intention behind that series was to have some CI 
-> system hooked up
-> >> and report failures to the mailing list as well IIUC. Maybe
-> >> that helps with
-> >> your use case, too?
-> >
-> > I envisioned that it would try for each head he was interested in.
-> >
-> 
-> Well the test system can be smart enough to differentiate between:
-
-For the OP's case 
-
-Test 1: does it cleanly apply to any head, if no for all raise flag.
-
-> * the patch you sent did not even compile on your base, so why
->    are you sending bogus patches?
-
-Test 2: is it in an area I care about, if not stop.
-
-Test 3: does it compile for clean application, if no for all raise flag.
-
-> * the patch you sent was fine as you sent it, but in the mean time
->   the target head progressed, and it doesn't compile/test any more.
->   collaboration is hard.
-
-Yes, especially when you have no time, or management is in the way.
-
-> * or an extension to the prior point: this patch is fine but is broken
->   by the series xyz that is also in flight, please coordinate with
->   name@email.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e78293b..fd775b4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2811,12 +2811,13 @@ stash.showStat::
+ 	option will show diffstat of the stash.  Defaults to true.
+ 	See description of 'show' command in linkgit:git-stash[1].
+ 
+-submodule.<name>.path::
+ submodule.<name>.url::
+-	The path within this project and URL for a submodule. These
+-	variables are initially populated by 'git submodule init'. See
+-	linkgit:git-submodule[1] and linkgit:gitmodules[5] for
+-	details.
++	The URL for a submodule. This variable is copied from the .gitmodules
++	file to the git config via 'git submodule init'. The user can change
++	the configured URL before obtaining the submodule via 'git submodule
++	update'. After obtaining the submodule, the presence of this variable
++	is used as a sign whether the submodule is of interest to git commands.
++	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+ 
+ submodule.<name>.update::
+ 	The default update procedure for a submodule. This variable
+-- 
+2.10.1.382.ga23ca1b.dirty
 
