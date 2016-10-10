@@ -6,38 +6,39 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D12C207EC
-	for <e@80x24.org>; Mon, 10 Oct 2016 03:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD058207EC
+	for <e@80x24.org>; Mon, 10 Oct 2016 03:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751749AbcJJDXI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 23:23:08 -0400
-Received: from tc.outersquare.org ([75.144.255.93]:33869 "EHLO
+        id S1752152AbcJJDqM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 23:46:12 -0400
+Received: from tc.outersquare.org ([75.144.255.93]:45653 "EHLO
         cid.outersquare.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751598AbcJJDXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 23:23:07 -0400
+        with ESMTP id S1751537AbcJJDqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 23:46:11 -0400
 Received: from localhost (localhost [127.0.0.1])
-        by cid.outersquare.org (Postfix) with ESMTP id D7DC6678B743;
-        Sun,  9 Oct 2016 20:22:54 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTP id 35590678BD4A;
+        Sun,  9 Oct 2016 20:46:10 -0700 (PDT)
 X-Virus-Scanned: amavisd-new at mydomain = outersquare.org
 Received: from cid.outersquare.org ([127.0.0.1])
         by localhost (cid.outersquare.org [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id uwDbSfK4NmgS; Sun,  9 Oct 2016 20:22:53 -0700 (PDT)
+        with ESMTP id HZ3g0oVpDiwS; Sun,  9 Oct 2016 20:46:09 -0700 (PDT)
 Received: from [10.0.30.3] (tc.outersquare.org [75.144.255.93])
-        by cid.outersquare.org (Postfix) with ESMTPSA id C7BDA678B72C;
-        Sun,  9 Oct 2016 20:22:53 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTPSA id E12EC678BD31;
+        Sun,  9 Oct 2016 20:46:08 -0700 (PDT)
 From:   Jeremy Huddleston Sequoia <jeremyhu@freedesktop.org>
-Message-Id: <6CA5F44F-38C1-4C15-9B85-FE84FB93E616@freedesktop.org>
+Message-Id: <49BF26B2-8E6D-40B1-87A2-1FDDF9A76B8E@freedesktop.org>
 Content-Type: multipart/signed;
- boundary="Apple-Mail=_E7D5FA70-80C9-4907-8247-E2010A5B61CA";
+ boundary="Apple-Mail=_E60BC6C5-EFA4-4C95-BFC3-319366EC884F";
  protocol="application/pkcs7-signature"; micalg=sha1
 Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3249\))
 Subject: Re: git 2.10.1 test regression in t3700-add.sh
-Date:   Sun, 9 Oct 2016 20:22:54 -0700
-In-Reply-To: <98EB348E-221D-488C-A466-1FACB1C768FF@freedesktop.org>
+Date:   Sun, 9 Oct 2016 20:46:08 -0700
+In-Reply-To: <6CA5F44F-38C1-4C15-9B85-FE84FB93E616@freedesktop.org>
 Cc:     gitster@pobox.com, git@vger.kernel.org
 To:     t.gummerer@gmail.com
 References: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
  <98EB348E-221D-488C-A466-1FACB1C768FF@freedesktop.org>
+ <6CA5F44F-38C1-4C15-9B85-FE84FB93E616@freedesktop.org>
 X-Mailer: Apple Mail (2.3249)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -45,34 +46,96 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Apple-Mail=_E7D5FA70-80C9-4907-8247-E2010A5B61CA
+--Apple-Mail=_E60BC6C5-EFA4-4C95-BFC3-319366EC884F
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
 	charset=us-ascii
 
-The issue is that the whitespace before the filename in $(git ls-files =
+
+> On Oct 9, 2016, at 20:22, Jeremy Huddleston Sequoia =
+<jeremyhu@freedesktop.org> wrote:
+>=20
+> The issue is that the whitespace before the filename in $(git ls-files =
 -s "$2") is a tab, and test_mode_in_index only looks for a space.
 
-><
+Actually, looks like that as just a rabbit hole.  The real issue looks =
+to be because an earlier test drops down xfoo3 as a symlink, which =
+causes this test to fail due to the collision.  I'll get out a patch in =
+a bit.
 
-> On Oct 9, 2016, at 19:51, Jeremy Huddleston Sequoia =
-<jeremyhu@freedesktop.org> wrote:
 >=20
+>> <
 >=20
->> On Oct 9, 2016, at 17:15, Jeremy Huddleston Sequoia =
+>> On Oct 9, 2016, at 19:51, Jeremy Huddleston Sequoia =
 <jeremyhu@freedesktop.org> wrote:
 >>=20
->> Hi Thomas,
 >>=20
->> I wanted to let you know that this patch of yours, which landed in =
+>>> On Oct 9, 2016, at 17:15, Jeremy Huddleston Sequoia =
+<jeremyhu@freedesktop.org> wrote:
+>>>=20
+>>> Hi Thomas,
+>>>=20
+>>> I wanted to let you know that this patch of yours, which landed in =
 git 2.10.1, introduced some test failures, seen on macOS.
->>=20
->> Let me know if you need any additional information to track these =
+>>>=20
+>>> Let me know if you need any additional information to track these =
 down.
+>>>=20
+>>> Thanks,
+>>> Jeremy
+>>>=20
+>>> not ok 40 - git add --chmod=3D[+-]x changes index with already added =
+file
+>>> #=09
+>>> #		echo foo >foo3 &&
+>>> #		git add foo3 &&
+>>> #		git add --chmod=3D+x foo3 &&
+>>> #		test_mode_in_index 100755 foo3 &&
+>>> #		echo foo >xfoo3 &&
+>>> #		chmod 755 xfoo3 &&
+>>> #		git add xfoo3 &&
+>>> #		git add --chmod=3D-x xfoo3 &&
+>>> #		test_mode_in_index 100644 xfoo3
+>>> #=09
+>>>=20
+>>> commit 610d55af0f082f6b866dc858e144c03d8ed4424c
+>>> Author: Thomas Gummerer <t.gummerer@gmail.com>
+>>> Date:   Wed Sep 14 22:07:47 2016 +0100
+>>>=20
+>>>  add: modify already added files when --chmod is given
+>>>=20
+>>>  When the chmod option was added to git add, it was hooked up to the =
+diff
+>>>  machinery, meaning that it only works when the version in the index
+>>>  differs from the version on disk.
+>>>=20
+>>>  As the option was supposed to mirror the chmod option in =
+update-index,
+>>>  which always changes the mode in the index, regardless of the =
+status of
+>>>  the file, make sure the option behaves the same way in git add.
+>>>=20
+>>>  Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+>>>  Signed-off-by: Junio C Hamano <gitster@pobox.com>
 >>=20
->> Thanks,
->> Jeremy
 >>=20
+>> This failure looks odd.  I'll dig into it a bit more as it looks like =
+something odd is going on here...
+>>=20
+>> expecting success:=20
+>> 	echo foo >foo3 &&
+>> 	git add foo3 &&
+>> 	git add --chmod=3D+x foo3 &&
+>> 	test_mode_in_index 100755 foo3 &&
+>> 	echo foo >xfoo3 &&
+>> 	chmod 755 xfoo3 &&
+>> 	git add xfoo3 &&
+>> 	git add --chmod=3D-x xfoo3 &&
+>> 	test_mode_in_index 100644 xfoo3
+>>=20
+>> pass
+>> cannot chmod 'xfoo3'fail
+>> 120000 c5c4ca97a3a080c32920941b665e94a997901491 0	xfoo3
 >> not ok 40 - git add --chmod=3D[+-]x changes index with already added =
 file
 >> #=09
@@ -87,61 +150,10 @@ file
 >> #		test_mode_in_index 100644 xfoo3
 >> #=09
 >>=20
->> commit 610d55af0f082f6b866dc858e144c03d8ed4424c
->> Author: Thomas Gummerer <t.gummerer@gmail.com>
->> Date:   Wed Sep 14 22:07:47 2016 +0100
->>=20
->>   add: modify already added files when --chmod is given
->>=20
->>   When the chmod option was added to git add, it was hooked up to the =
-diff
->>   machinery, meaning that it only works when the version in the index
->>   differs from the version on disk.
->>=20
->>   As the option was supposed to mirror the chmod option in =
-update-index,
->>   which always changes the mode in the index, regardless of the =
-status of
->>   the file, make sure the option behaves the same way in git add.
->>=20
->>   Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->>   Signed-off-by: Junio C Hamano <gitster@pobox.com>
->=20
->=20
-> This failure looks odd.  I'll dig into it a bit more as it looks like =
-something odd is going on here...
->=20
-> expecting success:=20
-> 	echo foo >foo3 &&
-> 	git add foo3 &&
-> 	git add --chmod=3D+x foo3 &&
-> 	test_mode_in_index 100755 foo3 &&
-> 	echo foo >xfoo3 &&
-> 	chmod 755 xfoo3 &&
-> 	git add xfoo3 &&
-> 	git add --chmod=3D-x xfoo3 &&
-> 	test_mode_in_index 100644 xfoo3
->=20
-> pass
-> cannot chmod 'xfoo3'fail
-> 120000 c5c4ca97a3a080c32920941b665e94a997901491 0	xfoo3
-> not ok 40 - git add --chmod=3D[+-]x changes index with already added =
-file
-> #=09
-> #		echo foo >foo3 &&
-> #		git add foo3 &&
-> #		git add --chmod=3D+x foo3 &&
-> #		test_mode_in_index 100755 foo3 &&
-> #		echo foo >xfoo3 &&
-> #		chmod 755 xfoo3 &&
-> #		git add xfoo3 &&
-> #		git add --chmod=3D-x xfoo3 &&
-> #		test_mode_in_index 100644 xfoo3
-> #=09
 >=20
 
 
---Apple-Mail=_E7D5FA70-80C9-4907-8247-E2010A5B61CA
+--Apple-Mail=_E60BC6C5-EFA4-4C95-BFC3-319366EC884F
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -210,21 +222,21 @@ DOhlN/np0KmCWDYx8UgdJHhEyhyAKSWWltf2U4bPpEI4BbOKwegeRJJqK1oRW9cxggROMIIESgIB
 ATCBiTB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcGA1UECxMgU3Rh
 cnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0Q29tIENsYXNzIDIg
 Q2xpZW50IENBAhAX8MOmbUCDPWU+X4TKPzSUMAkGBSsOAwIaBQCgggGZMBgGCSqGSIb3DQEJAzEL
-BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAzMjI1NFowIwYJKoZIhvcNAQkEMRYE
-FJ72Fy5TkmE7dW4AYoYbD12hsN7sMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
+BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAzNDYwOFowIwYJKoZIhvcNAQkEMRYE
+FGToJ7bN7jp4WzzvTh7revcWZioqMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
 FjAUBgNVBAoTDVN0YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24g
 QXV0aG9yaXR5MSMwIQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1l
 Pl+Eyj80lDCBnAYLKoZIhvcNAQkQAgsxgYyggYkwdTELMAkGA1UEBhMCSUwxFjAUBgNVBAoTDVN0
 YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MSMw
 IQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1lPl+Eyj80lDANBgkq
-hkiG9w0BAQEFAASCAgA4t1vwhQaX2PaDXjztlwVnHj19IFi8g7wi6Bm8AaAF6nuwxWSi/eLpkxMD
-F9izro8LGwhMuRnF1RnpuiZZzKIT4yrFF2VwEK8bL2r9lRzi5fp+bHwfpEYyYHwVJb9UekV9sGZ0
-IhyZ6SjTFRXmLGWHtPD7FRGxsUNvb27JLLfadPwcvZclvKT0wzc4PyoDC52GamnvkL7D2SEr4Tcl
-LQoOp0uhjCywm86Bousgo+zqk06msuCylv8SHYhBW3PfVW0klNF+u4/r4Nw9zEgolugKPTEMUuM2
-I7VOmVjclVQ0rKZNl1X3ayRJGy2EF01Dfb2mmJThHqFy86WJPsOzjMA553plGs8y+cTG6ltT3ENi
-d9oHekQ2kgmbvuZmOTG7amwNFnrhUNkfKs7Dwa3Wnspm5fYLiqIcdO8doMhP+TMjYPxreQO3AMp4
-Gor2TlOxktKH5KkYs/bNEQnBDEsR3uzuKQwqyn9VJdvLOMmBIXW35cicHHJ2wX/hE11YYcNxYaBm
-2OO2mDadUjZduo/nZP0iHYZXlsGD1faUbevQt8xRAhxfsQGf/AqdeJ49bgG3DbueMr5qd3JzLJeD
-LiWnxEuvPWTZlQ2kadYPvPdSXm+Oo0R/MlEAJue7aK0suW6Ftgd+RhxtnRrHZNhjj0u+In9NEabT
-CHSucArSaWSTK1rC/gAAAAAAAA==
---Apple-Mail=_E7D5FA70-80C9-4907-8247-E2010A5B61CA--
+hkiG9w0BAQEFAASCAgCImEnhGqJORYbfPZObYP2mRbYk1jbWsCTagOSUpH9nZZV6oRXSiKHZNy9I
+K4DyGaQLOGeL3vB5F/61MxnkNkNDZsZqRppUs+MllXZuv7KHohUkrPRZqTdinBtgtx2Hg0CM4M4Q
+Azt0uGzWvX5vs9RKchSwstdmVZT7L/Khlpp2M9hiiY6iSd1qiv8AcVIO+tUsAJ1J3veogSGkzuml
+iR6JULonkyMV2rTMJZPq2mFs/k2OOeJBWi8OvogHIDdemdUKzhgLERzD5KEeB+UnMX5exDmdBTQ8
+t1ATYY9AFnr+VV4ILWMCytWx3HBTGFkvqkjdJdRDenl962wERYdCmxlEXLtPQbVSPhls3LcRjIxW
+8XuICCboM8/kG9x2jxDdPzvITBMVHMN45MIT6blLc30HTK/zoNYSQdMhuMIeHT8Sbn/QLZZq1DVS
+mV9Xvj4Lc1bZqEUnJ2IDIZFFer/RlQ4BANTge6IhAlxGZ4/BzdIF6lvjS7m3gFbUSMx/d5DWb/yg
+JxzKg/E4XQHwY0C5ACRl3YCSrxdUsfntr5mK2OHGsj67FtqKde0Gd5/iOO6fXAIII1RFxT7ET4uz
+jSzorO0MP/UIsQt81q6wUZT6egkhblZMiSX33K5rDfq+azcJt1+yzntFJiHiyGcvYmn+BjrfeJF2
+GJq5a3VtUfU6ZpuSnQAAAAAAAA==
+--Apple-Mail=_E60BC6C5-EFA4-4C95-BFC3-319366EC884F--
