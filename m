@@ -6,36 +6,37 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D36E8207EC
-	for <e@80x24.org>; Mon, 10 Oct 2016 00:33:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AC23207EC
+	for <e@80x24.org>; Mon, 10 Oct 2016 02:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751689AbcJJAdp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 20:33:45 -0400
-Received: from tc.outersquare.org ([75.144.255.93]:48080 "EHLO
+        id S1751947AbcJJCvw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 22:51:52 -0400
+Received: from tc.outersquare.org ([75.144.255.93]:49095 "EHLO
         cid.outersquare.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751056AbcJJAdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 20:33:44 -0400
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Oct 2016 20:33:44 EDT
+        with ESMTP id S1751521AbcJJCvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 22:51:51 -0400
 Received: from localhost (localhost [127.0.0.1])
-        by cid.outersquare.org (Postfix) with ESMTP id A0E4D6788D2C;
-        Sun,  9 Oct 2016 17:15:32 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTP id 7512B678B0A3;
+        Sun,  9 Oct 2016 19:51:50 -0700 (PDT)
 X-Virus-Scanned: amavisd-new at mydomain = outersquare.org
 Received: from cid.outersquare.org ([127.0.0.1])
         by localhost (cid.outersquare.org [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id tROw3f41-_ek; Sun,  9 Oct 2016 17:15:30 -0700 (PDT)
+        with ESMTP id eZyXQhqXhWCj; Sun,  9 Oct 2016 19:51:49 -0700 (PDT)
 Received: from [10.0.30.3] (tc.outersquare.org [75.144.255.93])
-        by cid.outersquare.org (Postfix) with ESMTPSA id 1A8A06788D12;
-        Sun,  9 Oct 2016 17:15:30 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTPSA id 08345678B092;
+        Sun,  9 Oct 2016 19:51:49 -0700 (PDT)
 From:   Jeremy Huddleston Sequoia <jeremyhu@freedesktop.org>
+Message-Id: <98EB348E-221D-488C-A466-1FACB1C768FF@freedesktop.org>
 Content-Type: multipart/signed;
- boundary="Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894";
+ boundary="Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1";
  protocol="application/pkcs7-signature"; micalg=sha1
 Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3249\))
-Subject: git 2.10.1 test regression in t3700-add.sh
-Message-Id: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
-Date:   Sun, 9 Oct 2016 17:15:24 -0700
+Subject: Re: git 2.10.1 test regression in t3700-add.sh
+Date:   Sun, 9 Oct 2016 19:51:49 -0700
+In-Reply-To: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
 Cc:     gitster@pobox.com, git@vger.kernel.org
 To:     t.gummerer@gmail.com
+References: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
 X-Mailer: Apple Mail (2.3249)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -43,21 +44,78 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894
+--Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
 	charset=us-ascii
 
-Hi Thomas,
 
-I wanted to let you know that this patch of yours, which landed in git =
+> On Oct 9, 2016, at 17:15, Jeremy Huddleston Sequoia =
+<jeremyhu@freedesktop.org> wrote:
+>=20
+> Hi Thomas,
+>=20
+> I wanted to let you know that this patch of yours, which landed in git =
 2.10.1, introduced some test failures, seen on macOS.
+>=20
+> Let me know if you need any additional information to track these =
+down.
+>=20
+> Thanks,
+> Jeremy
+>=20
+> not ok 40 - git add --chmod=3D[+-]x changes index with already added =
+file
+> #=09
+> #		echo foo >foo3 &&
+> #		git add foo3 &&
+> #		git add --chmod=3D+x foo3 &&
+> #		test_mode_in_index 100755 foo3 &&
+> #		echo foo >xfoo3 &&
+> #		chmod 755 xfoo3 &&
+> #		git add xfoo3 &&
+> #		git add --chmod=3D-x xfoo3 &&
+> #		test_mode_in_index 100644 xfoo3
+> #=09
+>=20
+> commit 610d55af0f082f6b866dc858e144c03d8ed4424c
+> Author: Thomas Gummerer <t.gummerer@gmail.com>
+> Date:   Wed Sep 14 22:07:47 2016 +0100
+>=20
+>    add: modify already added files when --chmod is given
+>=20
+>    When the chmod option was added to git add, it was hooked up to the =
+diff
+>    machinery, meaning that it only works when the version in the index
+>    differs from the version on disk.
+>=20
+>    As the option was supposed to mirror the chmod option in =
+update-index,
+>    which always changes the mode in the index, regardless of the =
+status of
+>    the file, make sure the option behaves the same way in git add.
+>=20
+>    Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+>    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Let me know if you need any additional information to track these down.
 
-Thanks,
-Jeremy
+This failure looks odd.  I'll dig into it a bit more as it looks like =
+something odd is going on here...
 
+expecting success:=20
+	echo foo >foo3 &&
+	git add foo3 &&
+	git add --chmod=3D+x foo3 &&
+	test_mode_in_index 100755 foo3 &&
+	echo foo >xfoo3 &&
+	chmod 755 xfoo3 &&
+	git add xfoo3 &&
+	git add --chmod=3D-x xfoo3 &&
+	test_mode_in_index 100644 xfoo3
+
+pass
+cannot chmod 'xfoo3'fail
+120000 c5c4ca97a3a080c32920941b665e94a997901491 0	xfoo3
 not ok 40 - git add --chmod=3D[+-]x changes index with already added =
 file
 #=09
@@ -72,29 +130,8 @@ file
 #		test_mode_in_index 100644 xfoo3
 #=09
 
-commit 610d55af0f082f6b866dc858e144c03d8ed4424c
-Author: Thomas Gummerer <t.gummerer@gmail.com>
-Date:   Wed Sep 14 22:07:47 2016 +0100
 
-    add: modify already added files when --chmod is given
-   =20
-    When the chmod option was added to git add, it was hooked up to the =
-diff
-    machinery, meaning that it only works when the version in the index
-    differs from the version on disk.
-   =20
-    As the option was supposed to mirror the chmod option in =
-update-index,
-    which always changes the mode in the index, regardless of the status =
-of
-    the file, make sure the option behaves the same way in git add.
-   =20
-    Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
-
---Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894
+--Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -163,21 +200,21 @@ DOhlN/np0KmCWDYx8UgdJHhEyhyAKSWWltf2U4bPpEI4BbOKwegeRJJqK1oRW9cxggROMIIESgIB
 ATCBiTB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcGA1UECxMgU3Rh
 cnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0Q29tIENsYXNzIDIg
 Q2xpZW50IENBAhAX8MOmbUCDPWU+X4TKPzSUMAkGBSsOAwIaBQCgggGZMBgGCSqGSIb3DQEJAzEL
-BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAwMTUyNFowIwYJKoZIhvcNAQkEMRYE
-FCLP9iL452Y+IMdR6CzvIyVyREygMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
+BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAyNTE0OVowIwYJKoZIhvcNAQkEMRYE
+FIrw65xyVKZcTC7I90sOytxeLREtMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
 FjAUBgNVBAoTDVN0YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24g
 QXV0aG9yaXR5MSMwIQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1l
 Pl+Eyj80lDCBnAYLKoZIhvcNAQkQAgsxgYyggYkwdTELMAkGA1UEBhMCSUwxFjAUBgNVBAoTDVN0
 YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MSMw
 IQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1lPl+Eyj80lDANBgkq
-hkiG9w0BAQEFAASCAgBA95J429oUHttH9O9931oEyoRbN8NW6L+7avgIgp+lE6pZMHMkprF4perK
-n03twixENk85QT8bKiToVZuwOPSzeLUTm9ZkKBKsZk0a/2+KYSwejz96nOysiqoYIxPc6U246zRu
-qH1721ZZESKLYMzxBMUh7BEZzBwQtaEyl0ikeA5i8WxrQIhXDiiEjkTQffFY7PxcxVh5tJ5lhlh0
-xXE5BTTQ8iigqKllR2jdpK8lxjWOkoivStwPskdDBacCsOrLbLKYUOlAgjWg3TCZN39IyqbGMNBR
-I5HF0cjgJGkH0UR2cxOocltk9i0xbk4sPey73LmDtmqUqzsfN0eZ7JI5v9ujFkP3r6Iz1IVGCiod
-XoTLajBJYrA5C6S/AXitXBTqT+r99tpyZNh3k4Q5ebNbyaN/sjhFFOXAAOo7r7GIz+bMfxUpqrCn
-YPtBF4x52aUyAuCUGz1iwk2sbP+GePZJnPhRMnI7mVoYzjmmnLv/spwd6CeuTiYvBhRiSEhkrLNh
-Psh12WcG8DOqJzABXhS/GOBjoF4RihvmA0ftCp9FbL0eIPDYsNIFNTGasMyXyBaZfC1Nd5ejpexe
-YpSrT0JdcIPI2T5+nXW2pREGQfSItTv04R9AX5mFB/dnKCw8QAloMXv7cxqwVgIqIyW4HJClB+W9
-53nWVvtgjxAaOb2XYAAAAAAAAA==
---Apple-Mail=_F569407C-86AC-4AF7-90F6-E334DE1A8894--
+hkiG9w0BAQEFAASCAgAGPv/BKCTjWDEbVzAmVD4qiQg6WyzAMhqdfMuXr6jQXP1tWxU0VIQgdTQV
+DupkIc+MKHFKbnpGVVhiB2+cISdf9QrTBH5zH3SErrPJ4PQ2aNkvAqOvvrxZPIUpYqYsdnybAeAK
+3OrW72ioTueTNEdd6WysgZ0yoUjdfiZz8BJGaa3QZ2uHwmqBne4dQeZ79A4aeJGpA4OHfd0SoJqN
+/DtuATBuIiht23uydfjIYGrz0wXdQkTk8E8TSWFD+U5meKh8/5XzYEJEPTwOwU9/dM7/oXoXtmPH
+SgWw9W8OP3BYAwVEcYMDtaKDWCBHHmeC2m/7k4tDwv1VuZ/x6EE1f7ZJzcX42id3oK/QpomPu34L
+DGMQipLvd5VjcA7QuoYZBH10f+/JhYsKdYxSfGnyTzJN5jSH/XRewzJXWC/L8DE26V/WvJaA7iA9
+63nMIFcyNtiuqRQbF1tx/FzEF/nK4CW4Cr+Gvwj8CsZFVAC1BMpAnha1kMQbWUZKTnn4QevrlLDg
+6d88LFj2dq3rauCoWvtpFfo/+68HK8gLZmvhJ0baNqPKpUQJakTpfe+vZInwhFrZSgjD1+lMEpO1
+sk6yQtoy3Nqz912Efk11Sbh+uvk+qaadt8xM2Fn4ntNSe4eMSLuE/cxm58GzPS/1Y3Sgy8yMLsNO
+QLJ8RKKOtGk4brdQMQAAAAAAAA==
+--Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1--
