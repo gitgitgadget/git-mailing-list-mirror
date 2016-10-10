@@ -2,110 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E689220986
-	for <e@80x24.org>; Mon, 10 Oct 2016 13:09:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F45420986
+	for <e@80x24.org>; Mon, 10 Oct 2016 13:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752415AbcJJNH0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 09:07:26 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:33007 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752319AbcJJNGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 09:06:48 -0400
-Received: by mail-qk0-f173.google.com with SMTP id n189so109607633qke.0
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 06:06:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gforgegroup-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UM+7AW6GVTw1UyQTj/MjVWlM7eL0pskVi013PYda85I=;
-        b=le71uf5bYtEOPcJxnvJzO0VC7tkPX8qAu6lmdgCSmDpJgqcN0wGK/5OcTqVRvNdXai
-         sDAiDRgDn0Q9LHs2N5JlufF/twsQ9IUQhlbxiEKH5MLqPTLd9MAPCPZOx1BwOr7pyb4w
-         88V8qeb5fvlnBgQ8EmRl6aAgbN+obOjjjtUph+NM0xFt2VXcSO+wz2xVxpwAw3/1kVY/
-         yriElbhHN40ruisGY9YdFATpyS2Z7rE/fwvMAirZm9L+H2w3tgJiFhY9pWMLRrsialtv
-         Il7kp23d5CVw/wo+X9uguZPyIX814/RTjZQptFJpAddJNwydOx4I9fS8crk+XBI/wu69
-         koCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UM+7AW6GVTw1UyQTj/MjVWlM7eL0pskVi013PYda85I=;
-        b=c18PA6gq6TK0JD3MEprNw2XnIqPOKM3dwouq+clobKfBSnE+XCterqjXYi4azTW6gC
-         BzmPg7Hu+BsIfF7YcKBc6HmTP7VHCt0Spc1iz2GJoLrto2rX+HSM+UEb6k5G2OkUPdjd
-         H3iHNGzbeXsxtIzMWrd0OXUlxQDCPr4X+cMgcVwlNV2nje85wXzny0bIGAqk0WfgW7kJ
-         TLByjn9cVLNXub5+pKS6ei+KKokMf138iuje8egWAhCZ+NDxOA6Akk4iN99gWY79FTPD
-         qxDuxAesGzTZJhWdXugVxhDmgr7p6Z5Rw16jC5YMK1sy136YkthQGfclnCVOMsogKu2R
-         kOvQ==
-X-Gm-Message-State: AA6/9RluakFvhvNQkAHFI+j9WZmplMEsCPbfB620ZQLxdztC6jlx+2tgJSmI413p0j/1FNZ4GQpWcLyBIVTvewz6
-X-Received: by 10.55.221.146 with SMTP id u18mr29521313qku.42.1476104807722;
- Mon, 10 Oct 2016 06:06:47 -0700 (PDT)
+        id S1752400AbcJJNK5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 09:10:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54975 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752218AbcJJNKn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 09:10:43 -0400
+Received: (qmail 21104 invoked by uid 109); 10 Oct 2016 13:10:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 13:10:42 +0000
+Received: (qmail 30308 invoked by uid 111); 10 Oct 2016 13:11:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 09:11:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 09:10:41 -0400
+Date:   Mon, 10 Oct 2016 09:10:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+Cc:     git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t4014-format-patch: Adjust git_version regex to better
+ handle distro changes to DEF_VER
+Message-ID: <20161010131041.lpdh4a7nol24hsz2@sigill.intra.peff.net>
+References: <20161010025323.9415-1-jeremyhu@apple.com>
 MIME-Version: 1.0
-Received: by 10.12.164.69 with HTTP; Mon, 10 Oct 2016 06:06:47 -0700 (PDT)
-In-Reply-To: <CACsJy8DMKWeZ+DuQ0uoY6rdPfusq8D1SfBCkPyn+6X9S589ncg@mail.gmail.com>
-References: <CAOi_75+2SG2WYHBMQhfGj96eKsZ66niJzOevVGM5eJv-qqrVNg@mail.gmail.com>
- <1475999513.7410.8.camel@kaarsemaker.net> <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
- <CAOi_75+Zoeeq5FD1HKgG4MjeL9LkBshsSfdrMOTi8m-Mt-OQNQ@mail.gmail.com> <CACsJy8DMKWeZ+DuQ0uoY6rdPfusq8D1SfBCkPyn+6X9S589ncg@mail.gmail.com>
-From:   Michael Tutty <mtutty@gforgegroup.com>
-Date:   Mon, 10 Oct 2016 08:06:47 -0500
-Message-ID: <CAOi_75KR+AEAD540L=GtQ7jH5ngTFdHMq53+FzjzAfsZtTqfwg@mail.gmail.com>
-Subject: Re: Bug? git worktree fails with master on bare repo
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Michael Rappazzo <rappazzo@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161010025323.9415-1-jeremyhu@apple.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> If I create a bare _clone_, then "HEAD" could be detached, or point to some branch, depending on where "HEAD" is in the source repo
+On Sun, Oct 09, 2016 at 07:53:23PM -0700, Jeremy Huddleston Sequoia wrote:
 
-I didn't mean a clone, I meant a brand-new (bare) repo.  Then I would
-clone it somewhere, add commits and branches, and push them to the
-bare repo.
-
-
-> If source repo's HEAD is "master", I got the same behavior (worktree add fails)
-
-So if it's possible for a bare repo to have HEAD pointing at master,
-is there a safe way for me to change this (e.g., as a cleanup step
-before doing my actual merge process)?
-
-On Mon, Oct 10, 2016 at 4:45 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Oct 9, 2016 at 8:42 PM, Michael Tutty <mtutty@gforgegroup.com> wrote:
->> Dennis,
->> Thanks for the great response, and for spending time on my issue.
->> I'll try that first patch and see what happens.
->>
->> In the meantime, it got weirder...
->>
->> I created a brand-new (bare) repo
+> Subject: Re: [PATCH] t4014-format-patch: Adjust git_version regex to better
+>  handle distro changes to DEF_VER
 >
-> Elaboration needed here. If I create a bare _clone_, then "HEAD" could
-> be detached, or point to some branch, depending on where "HEAD" is in
-> the source repo. If source repo's HEAD is "master", I got the same
-> behavior (worktree add fails). If it's detached or points to some
-> other branch, it's ok. If this is "git init --bare" then I got "fatal:
-> invalid reference: master".
->
->> and was able to git add worktree
->> /path master.  I was able to do this repeatedly, even using the
->> worktree to merge other branches to master.  I didn't find any
->> condition or step that caused some kind of orphan master work tree,
->> which was what I thought the underlying problem might be.
-> --
-> Duy
+> Regressed-in: 480871e09ed2e5275b4ba16b278681e5a8c122ae
+> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
 
+I see there was a discussion elsewhere on the list about exactly what
+you are putting into DEF_VAR that causes the problem. Perhaps the commit
+message here would be a good place to mention that, why the current
+regex breaks it, and why your new version fixes not only it, but other
+possible values of DEF_VAR.
 
-
--- 
-Michael Tutty, CTO
-
-e: mtutty@gforgegroup.com
-t: @mtutty, @gforgegroup
-v: 515-789-0772
-w: http://gforgegroup.com, http://gforge.com
+-Peff
