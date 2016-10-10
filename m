@@ -2,59 +2,301 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B79720986
-	for <e@80x24.org>; Mon, 10 Oct 2016 15:11:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAB92209BC
+	for <e@80x24.org>; Mon, 10 Oct 2016 15:15:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752553AbcJJPLU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 11:11:20 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33176 "EHLO dcvr.yhbt.net"
+        id S1752538AbcJJPPW convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 10 Oct 2016 11:15:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55036 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752363AbcJJPLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 11:11:20 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 4A4E720986;
-        Mon, 10 Oct 2016 15:11:18 +0000 (UTC)
-Date:   Mon, 10 Oct 2016 15:11:18 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Ian Kelling <ian@iankelling.org>
-Cc:     git@vger.kernel.org
-Subject: Re: How to watch a mailing list & repo for patches which affect a
- certain area of code?
-Message-ID: <20161010151118.GA19486@starla>
-References: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com>
+        id S1752220AbcJJPPV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 11:15:21 -0400
+Received: (qmail 28449 invoked by uid 109); 10 Oct 2016 15:15:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 15:15:19 +0000
+Received: (qmail 31232 invoked by uid 111); 10 Oct 2016 15:15:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 11:15:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 11:15:17 -0400
+Date:   Mon, 10 Oct 2016 11:15:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] pretty: respect color settings for %C placeholders
+Message-ID: <20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net>
+References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
+ <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
+ <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
+ <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
+ <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
+ <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
+ <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com>
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ian Kelling <ian@iankelling.org> wrote:
-> I've got patches in various projects, and I don't have time to keep up
-> with the mailing list, but I'd like to help out with maintenance of that
-> code, or the functions/files it touches. People don't cc me. I figure I
-> could filter the list, test patches submitted, commits made, mentions of
-> files/functions, build filters based on the code I have in the repo even
-> if it's been moved or changed subsequently. I'm wondering what other
-> people have implemented already for automation around this, or general
-> thoughts. Web search is not showing me much.
+On Mon, Oct 10, 2016 at 10:28:18AM -0400, Jeff King wrote:
 
-For the mailing list, you can try following an Atom feed for
-any specific search query.
-https://public-inbox.org/git/?q=FILE_OR_FUNCTION&x=A
-(the "x=A" makes it an Atom feed)
+> > We could add some new tag to change the behavior of all following %C
+> > tags. Something like %C(tty) maybe (probably a bad name), then
+> > discourage the use if "%C(auto" for terminal detection?
+> 
+> Yeah, adding a "%C(enable-auto-color)" or something would be backwards
+> compatible and less painful than using "%C(auto)" everywhere. I do
+> wonder if anybody actually _wants_ the "always show color, even if
+> --no-color" behavior. I'm having trouble thinking of a good use for it.
+> 
+> IOW, I'm wondering if anyone would disagree that the current behavior is
+> simply buggy. Reading the thread at:
+> 
+>   http://public-inbox.org/git/7v4njkmq07.fsf@alter.siamese.dyndns.org/
+> 
+> I don't really see any compelling reason against it (there was some
+> question of which config to use, but we already answered that with
+> "%C(auto)", and use the value from the pretty_ctx).
 
-It's all still a work-in-progress but there'll be better
-filename and diff handling in public-inbox soon.
+So here's what a patch to do that would look like. I admit that "I can't
+think of a good use" does not mean there _isn't_ one, but perhaps by
+posting this, it might provoke other people to think on it, too. And if
+nobody can come up with, maybe it's a good idea.
 
+-- >8 --
+Subject: pretty: respect color settings for %C placeholders
 
-It's all AGPL and the data is only sourced from this mailing
-list, so 100% reproducible as I'm incapable of running a
-reliable server :>   Clone instructions at the bottom of
-https://public-inbox.org/git/
+The color placeholders have traditionally been
+unconditional, showing colors even when git is not otherwise
+configured to do so. This was not so bad for their original
+use, which was on the command-line (and the user could
+decide at that moment whether to add colors or not). But
+these days we have configured formats via pretty.*, and
+those should operate in multiple contexts.
+
+In 3082517 (log --format: teach %C(auto,black) to respect
+color config, 2012-12-17), we gave an extended placeholder
+that could be used to accomplish this. But it's rather
+clunky to use, because you have to specify it individually
+for each color (and their matching resets) in the format.
+We shied away from just switching the default to auto,
+because it is technically breaking backwards compatibility.
+
+However, there's not really a use case for unconditional
+colors. The most plausible reason you would want them
+unconditional is to redirect "git log" output to a file. But
+there, the right answer is --color=always, as it does the
+right thing both with custom user-format colors and
+git-generated colors.
+
+So let's switch to the more useful default. In the
+off-chance that somebody really does find a use for
+unconditional colors without wanting to enable the rest of
+git's colors, we can provide %C(always,...) to enable the
+old behavior.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The tests unsurprisingly needed updating, as we're breaking the old
+behavior. The diff is easier to read read with "-w".
+
+ Documentation/pretty-formats.txt | 13 +++---
+ pretty.c                         | 19 +++++---
+ t/t6006-rev-list-format.sh       | 94 ++++++++++++++++++++--------------------
+ 3 files changed, 70 insertions(+), 56 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index a942d57..7aa1a8b 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -167,11 +167,14 @@ endif::git-rev-list[]
+ - '%Cblue': switch color to blue
+ - '%Creset': reset color
+ - '%C(...)': color specification, as described in color.branch.* config option;
+-  adding `auto,` at the beginning will emit color only when colors are
+-  enabled for log output (by `color.diff`, `color.ui`, or `--color`, and
+-  respecting the `auto` settings of the former if we are going to a
+-  terminal). `auto` alone (i.e. `%C(auto)`) will turn on auto coloring
+-  on the next placeholders until the color is switched again.
++  By default, colors are shown only when enabled for log output (by
++  `color.diff`, `color.ui`, or `--color`, and respecting the `auto`
++  settings of the former if we are going to a terminal). `%C(auto,...)`
++  is accepted as a historical synonym for the default. Specifying
++  `%C(always,...) will show the colors always, even when colors are not
++  otherwise enabled (to enable this behavior for the whole format, use
++  `--color=always`). `auto` alone (i.e. `%C(auto)`) will turn on auto
++  coloring on the next placeholders until the color is switched again.
+ - '%m': left (`<`), right (`>`) or boundary (`-`) mark
+ - '%n': newline
+ - '%%': a raw '%'
+diff --git a/pretty.c b/pretty.c
+index 25efbca..73e58b5 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -965,22 +965,31 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 
+ 		if (!end)
+ 			return 0;
+-		if (skip_prefix(begin, "auto,", &begin)) {
++
++		if (!skip_prefix(begin, "always,", &begin)) {
+ 			if (!want_color(c->pretty_ctx->color))
+ 				return end - placeholder + 1;
+ 		}
++
++		/* this is a historical noop */
++		skip_prefix(begin, "auto,", &begin);
++
+ 		if (color_parse_mem(begin, end - begin, color) < 0)
+ 			die(_("unable to parse --pretty format"));
+ 		strbuf_addstr(sb, color);
+ 		return end - placeholder + 1;
+ 	}
+-	if (skip_prefix(placeholder + 1, "red", &rest))
++	if (skip_prefix(placeholder + 1, "red", &rest) &&
++	    want_color(c->pretty_ctx->color))
+ 		strbuf_addstr(sb, GIT_COLOR_RED);
+-	else if (skip_prefix(placeholder + 1, "green", &rest))
++	else if (skip_prefix(placeholder + 1, "green", &rest) &&
++		 want_color(c->pretty_ctx->color))
+ 		strbuf_addstr(sb, GIT_COLOR_GREEN);
+-	else if (skip_prefix(placeholder + 1, "blue", &rest))
++	else if (skip_prefix(placeholder + 1, "blue", &rest) &&
++		 want_color(c->pretty_ctx->color))
+ 		strbuf_addstr(sb, GIT_COLOR_BLUE);
+-	else if (skip_prefix(placeholder + 1, "reset", &rest))
++	else if (skip_prefix(placeholder + 1, "reset", &rest) &&
++		 want_color(c->pretty_ctx->color))
+ 		strbuf_addstr(sb, GIT_COLOR_RESET);
+ 	return rest - placeholder;
+ }
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index a1dcdb8..29b1a1a 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -59,7 +59,10 @@ test_format () {
+ }
+ 
+ # Feed to --format to provide predictable colored sequences.
++BASIC_COLOR='%Credfoo%Creset'
++COLOR='%C(red)foo%C(reset)'
+ AUTO_COLOR='%C(auto,red)foo%C(auto,reset)'
++ALWAYS_COLOR='%C(always,red)foo%C(always,reset)'
+ has_color () {
+ 	printf '\033[31mfoo\033[m\n' >expect &&
+ 	test_cmp expect "$1"
+@@ -170,57 +173,56 @@ $added
+ 
+ EOF
+ 
+-test_format colors %Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy <<EOF
+-commit $head2
+-[31mfoo[32mbar[34mbaz[mxyzzy
+-commit $head1
+-[31mfoo[32mbar[34mbaz[mxyzzy
+-EOF
+-
+-test_format advanced-colors '%C(red yellow bold)foo%C(reset)' <<EOF
+-commit $head2
+-[1;31;43mfoo[m
+-commit $head1
+-[1;31;43mfoo[m
+-EOF
+-
+-test_expect_success '%C(auto,...) does not enable color by default' '
+-	git log --format=$AUTO_COLOR -1 >actual &&
+-	has_no_color actual
+-'
+-
+-test_expect_success '%C(auto,...) enables colors for color.diff' '
+-	git -c color.diff=always log --format=$AUTO_COLOR -1 >actual &&
+-	has_color actual
+-'
++for spec in \
++	"%Cred:$BASIC_COLOR" \
++	"%C(...):$COLOR" \
++	"%C(auto,...):$AUTO_COLOR"
++do
++	desc=${spec%%:*}
++	color=${spec#*:}
++	test_expect_success "$desc does not enable color by default" '
++		git log --format=$color -1 >actual &&
++		has_no_color actual
++	'
+ 
+-test_expect_success '%C(auto,...) enables colors for color.ui' '
+-	git -c color.ui=always log --format=$AUTO_COLOR -1 >actual &&
+-	has_color actual
+-'
++	test_expect_success "$desc enables colors for color.diff" '
++		git -c color.diff=always log --format=$color -1 >actual &&
++		has_color actual
++	'
+ 
+-test_expect_success '%C(auto,...) respects --color' '
+-	git log --format=$AUTO_COLOR -1 --color >actual &&
+-	has_color actual
+-'
++	test_expect_success "$desc enables colors for color.ui" '
++		git -c color.ui=always log --format=$color -1 >actual &&
++		has_color actual
++	'
+ 
+-test_expect_success '%C(auto,...) respects --no-color' '
+-	git -c color.ui=always log --format=$AUTO_COLOR -1 --no-color >actual &&
+-	has_no_color actual
+-'
++	test_expect_success "$desc respects --color" '
++		git log --format=$color -1 --color >actual &&
++		has_color actual
++	'
+ 
+-test_expect_success TTY '%C(auto,...) respects --color=auto (stdout is tty)' '
+-	test_terminal env TERM=vt100 \
+-		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+-	has_color actual
+-'
+-
+-test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
+-	(
+-		TERM=vt100 && export TERM &&
+-		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
++	test_expect_success "$desc respects --no-color" '
++		git -c color.ui=always log --format=$color -1 --no-color >actual &&
+ 		has_no_color actual
+-	)
++	'
++
++	test_expect_success TTY "$desc respects --color=auto (stdout is tty)" '
++		test_terminal env TERM=vt100 \
++			git log --format=$color -1 --color=auto >actual &&
++		has_color actual
++	'
++
++	test_expect_success "$desc respects --color=auto (stdout not tty)" '
++		(
++			TERM=vt100 && export TERM &&
++			git log --format=$color -1 --color=auto >actual &&
++			has_no_color actual
++		)
++	'
++done
++
++test_expect_success '%C(always,...) enables color even without tty' '
++	git log --format=$ALWAYS_COLOR -1 >actual &&
++	has_color actual
+ '
+ 
+ test_expect_success '%C(auto) respects --color' '
+-- 
+2.10.1.527.g93d4615
+
