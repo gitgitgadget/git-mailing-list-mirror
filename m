@@ -7,111 +7,78 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2477920989
-	for <e@80x24.org>; Mon, 10 Oct 2016 17:26:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5EBF20989
+	for <e@80x24.org>; Mon, 10 Oct 2016 17:26:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753280AbcJJR0C (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 13:26:02 -0400
-Received: from mout.gmx.net ([212.227.15.19]:58640 "EHLO mout.gmx.net"
+        id S1753270AbcJJR0B (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 13:26:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59067 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753225AbcJJR0A (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752989AbcJJR0A (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 10 Oct 2016 13:26:00 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LoEPJ-1bDRov2McT-00gKCA; Mon, 10 Oct 2016 19:25:36
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MV6EP-1bNRhc0UbF-00YOJN; Mon, 10 Oct 2016 19:25:29
  +0200
-Date:   Mon, 10 Oct 2016 19:25:35 +0200 (CEST)
+Date:   Mon, 10 Oct 2016 19:25:14 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 11/25] sequencer: refactor the code to obtain a short
- commit name
+Subject: [PATCH v3 09/25] sequencer: avoid completely different messages for
+ different actions
 In-Reply-To: <cover.1476120229.git.johannes.schindelin@gmx.de>
-Message-ID: <0244a3f187fed257c96d33c0d6fec705215769f6.1476120229.git.johannes.schindelin@gmx.de>
+Message-ID: <1b7c940b274e1ac0887ea310ee4d629b8b6b200f.1476120229.git.johannes.schindelin@gmx.de>
 References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:31VNuB6YzK5pXU4lybfKTkx9wdinaY/fDnR6baFpL4ZXZq1iBcz
- nnlGtm5vR1l0Bu+d5x3etcVPbROS2fBygSPL/bgD8IkdvyMZFgD3k+8Ssq5AKELkxk5APzS
- yilS5oKgR3pEnaAOEL9+ZGoIdHa9530iOzDnbnM+6kDrwtCzVEww7DdeRTCz0UtUgrAynrM
- FSzy0uBPFVuUcjWHSq+Yw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dWsWwYfv8Do=:a1WJdLFnsNWGAFTX88ELtv
- Vg11JbaLLdEgan9fQcisyT+ZFnurM8eVdlkaW3OhJMizeqEf64pMOlt9a9a6ilwt4pfto1cA+
- jEfH/S0LKGyx6/jCud+O+gqhS/fw0Ch8dXzD7HYZ8o7uLCzQYnm6gx7h9N8kyn1mn3MdTGr/C
- 81KWxvYp/6FSEx2RwcCU0N+mRZVbwEpHSTObOYZI8JeZKYhE2zmQlGChDpFucu0pnQBZm2Sxt
- dN0crnBq0dbRoft/nj+c17+rOCcpA3w1vfb8u6wbUhQOS5ruDeiqxVu4rVmjH+KrkEoRp76A1
- z9de2Y7VBdkOjAOdZIqVZTTWlEd0HZdp5UPB4tf3u9Er+mfw6l032LAbP/TBq+o9+vZnG9ZLD
- R0MmY5eYlxGhuZEdMvXoF/OdT7KCxKXl1T6I7l0+g0W1/dH7ltMfk6t/P/po0aeQ4XNsG6Fm9
- hrt17LKClJfR/PYhoK0Tfhj8cAgV3s32tfkqFsP5ogoZI4/n1HfVfCOP4AE3/+fnKZo0Lzqjt
- 23ZBuDmp0fWCTNvziG8nq2U2xmwldxbYra2KUGLCVP1FsyZoHTj8rwFkHHUtyYqQ3E3y6n4pl
- U0M0TdvwZriuJiNjrZJ/ih1OW+ONUJESp23YYMV11P4XEeZKBYgORzU1K7rqHzJKE+zys+o4+
- my1o2VsNroV8M65s3SLIvQtVLO96PdUXIoTByP+sOmhf6/U/XqLwhc69VyHelcrK2dA3/KpN9
- q+vM2XMHY//T9cs7m0lodH7xWKPziJkPasuE3aZwxuGZTWZH0dET2BdwvPu7O0kqSR4CkzM3T
- 3Ebgplj
+X-Provags-ID: V03:K0:fE0iBgWzpx4+1PAmHZDLl7fziTLHuW/WggK76ZG+M/MyY48vq1+
+ /G130QEUx2TU++xyOQMF3SfcLt3NgMz4Tg5hW7zptBxSUox+JXoKVS/w3YhFW6Yet9q6EP7
+ 9HUD/M4T9u5+ITQ+1Mw9oaPMi2t0qdf4ZjHTOVpJEF1/j2711qrD/VtkkScC09iLH26TVv1
+ D+bxviFj61S4Zk7pvwXqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aowu/MinaUU=:5YQ2z4m7LvgiI/ptRaxW4l
+ nF1f61l5VQPn1DBTdzWFPZqE5mr2VUvfxu+e6GPneMRl6V/wxuw29Wa/vM5230jAcGJ2DORir
+ vqd9InMsmTlo+ATDtN7w4LGhT84jjXpnmHcIGgqy5571Xn+W0bmlpxfD0T4S46JG28Ibg7Nhq
+ 0hmBIU/W3gJ3AMgQ6jMDwOnc7Kn5JIRsi3ehLgtyfD2eoFEMjPOWBahnuSHyZ7E5MGJ/b9aMs
+ CPWLKBF1PcZaCGBG6ragrcotocW8u5BPbgUbdwrj9MfJBEeiZvysopVt8Pasuvj+Xv34GBwUn
+ lKagzDxxaKwNLmSNx3Pr8QC8Jp8w5l1rowdye2BHCaaqR8g28Ry1N9cOC7lg9HmAE3QqDgQ7i
+ o2bvkU0gEFTkUh4Il9titl0AmcQ8IR8Co0gtEgX4TuX/GomFytvjprnF2XJqSI9dSH6aGW9Li
+ Ncp2qmotqfNj4BEVmvCKC5nvnIl8ThpRRa4VzPC6Q6dBXLsinP6XmY6usUyQ1qd7OxY6w6DcU
+ kdIcuE0rty2Qq//bBZ8Mwsjpk2R4dsAnrpNyS5Q11ZgLH6ONkrr4EPBakzGrf5aXPXsNwp9Pw
+ cGw8tpkxnK92YgATN04JBBXtHnF39lWdOLUI4e1SQYzQAL1wh/wfa1LWY0z8cuVu97fax1KtD
+ BFSREOIRH59Uz9oi0WUZdMNQJpP3wglGgEZKG1CA6EybCN+pLXja7WPDn0NDwTZqdrTs1oyOX
+ SX4zIPlVGJTcP8EcWLA3DkiQQnvqoPI+Gy8sJ7l4vCgKPmF5rDp0xg+5h/JCDFxkOAO1ha2Ct
+ OdjHxIz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not only does this DRY up the code (providing a better documentation what
-the code is about, as well as allowing to change the behavior in a single
-place), it also makes it substantially shorter to use the same
-functionality in functions to be introduced when we teach the sequencer to
-process interactive-rebase's git-rebase-todo file.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ sequencer.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 14b1746..afc494e 100644
+index cee7e50..443a238 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -149,13 +149,18 @@ struct commit_message {
- 	const char *message;
- };
+@@ -224,11 +224,8 @@ static int error_dirty_index(struct replay_opts *opts)
+ 	if (read_cache_unmerged())
+ 		return error_resolve_conflict(action_name(opts));
  
-+static const char *short_commit_name(struct commit *commit)
-+{
-+	return find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
-+}
-+
- static int get_message(struct commit *commit, struct commit_message *out)
- {
- 	const char *abbrev, *subject;
- 	int subject_len;
+-	/* Different translation strings for cherry-pick and revert */
+-	if (opts->action == REPLAY_PICK)
+-		error(_("Your local changes would be overwritten by cherry-pick."));
+-	else
+-		error(_("Your local changes would be overwritten by revert."));
++	error(_("Your local changes would be overwritten by %s."),
++		action_name(opts));
  
- 	out->message = logmsg_reencode(commit, NULL, get_commit_output_encoding());
--	abbrev = find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
-+	abbrev = short_commit_name(commit);
- 
- 	subject_len = find_commit_subject(out->message, &subject);
- 
-@@ -642,8 +647,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		error(command == TODO_REVERT
- 		      ? _("could not revert %s... %s")
- 		      : _("could not apply %s... %s"),
--		      find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV),
--		      msg.subject);
-+		      short_commit_name(commit), msg.subject);
- 		print_advice(res == 1, opts);
- 		rerere(opts->allow_rerere_auto);
- 		goto leave;
-@@ -910,9 +914,7 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
- 		item->offset_in_buf = todo_list->buf.len;
- 		subject_len = find_commit_subject(commit_buffer, &subject);
- 		strbuf_addf(&todo_list->buf, "%s %s %.*s\n", command_string,
--			find_unique_abbrev(commit->object.oid.hash,
--				DEFAULT_ABBREV),
--			subject_len, subject);
-+			short_commit_name(commit), subject_len, subject);
- 		unuse_commit_buffer(commit, commit_buffer);
- 	}
- 	return 0;
+ 	if (advice_commit_before_merge)
+ 		advise(_("Commit your changes or stash them to proceed."));
 -- 
 2.10.0.windows.1.325.ge6089c1
 
