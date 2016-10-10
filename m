@@ -2,133 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BA65209B4
-	for <e@80x24.org>; Mon, 10 Oct 2016 17:26:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA2E720989
+	for <e@80x24.org>; Mon, 10 Oct 2016 17:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753371AbcJJR00 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 13:26:26 -0400
-Received: from mout.gmx.net ([212.227.15.19]:60902 "EHLO mout.gmx.net"
+        id S1753273AbcJJRdJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 13:33:09 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56644 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753359AbcJJR0Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 13:26:25 -0400
+        id S1753155AbcJJRdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 13:33:09 -0400
 Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lug4m-1atslx1dHk-00zkNz; Mon, 10 Oct 2016 19:26:21
+ ESMTPSA (Nemesis) id 0MJByE-1bqtBs2uHS-002seR; Mon, 10 Oct 2016 19:26:30
  +0200
-Date:   Mon, 10 Oct 2016 19:26:20 +0200 (CEST)
+Date:   Mon, 10 Oct 2016 19:26:29 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 20/25] sequencer: refactor write_message()
+Subject: [PATCH v3 23/25] sequencer: quote filenames in error messages
 In-Reply-To: <cover.1476120229.git.johannes.schindelin@gmx.de>
-Message-ID: <2365ff42eec1c795a4b9caf1f419cd5eb8137965.1476120229.git.johannes.schindelin@gmx.de>
+Message-ID: <5f2a1aacfba5e661d8a3782358a1c651b21d57e8.1476120229.git.johannes.schindelin@gmx.de>
 References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+lc9RbgxWUuUIChmQoiO3+jumPHTVQvovxJPMd5VKEcplDYp+Ki
- U3JV/1Scf5lj7koivKSiKriUlhjOjHlQoFa+3+F1KneGceV5vfQSFKUtdC9NG2Q9MQgtLLb
- S3BgEmBkqXKXNGEh61a71Mqbke0VBl2Fj+5Hle3ApDDDH/irTopy1w7QofP8HT5aFPc5OPI
- wz2NKSvNoRNZopojRdIAw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jwArQWnAmUU=:h4ZIoRMKlH4ZwvouphZqof
- 4ElQl2p6kE+70xAcr5JEI4ZqW/XUuczqzX6eTGt36Zyj2nRgM9XDKmEHD25w6yXQM/RdvaTzv
- qjh9ibG56m05sNl07fhKGN/z16mrFvMe3a08zvikUhGlGqTir7YWH3TdWW6lYAAfIs9qhyJhX
- u+yFBvels07gK95bTWHGIoQT04XrE7RMHHiQL32qIVrpNIEPSecGdWtdC1TfC9C5rneCGLizv
- RSuN8ZWqAhaByuS2J4Kjo678lj5LqgkVbgHl9s4r4e4rIzZNyPqCERovBT6DMF6FdtOIz+AJb
- eGVYwZdrwppQKA0KKmvcMZuaFyxRBfs3C1OvQjhaGri4hCZzc1h+dOFjcMERBJVOCVQ8gMTHM
- +kB/KycsxkgpQ09yCyt14yXWVri65gRBGwxq8uUJ40Pbl0odd/+Sb9PXy7JApCTWN8OPxLPbC
- sFtatMsZgpEPUJwq+eR57K6HdG/FAGv47BQPzr+9vAsRT3cROElq6LD4UmCJOYvzfDlohoOQb
- m24/PP/BKX+ma8NDutzwEPoEOSBrAZ+0nZBeTUAuts+MTwanYI2ML7MjnL5uEX8XeuCaoCTz1
- 1xwAO/NXjPgK8iZM5t6bhYkEFTQ/LvbzQK48zWM/UtcxbLgib0A06q/wsA38+aMttYI5HgM8f
- UvJKQHinwELvcEtWQvLU7T5DsjiaAqgRq3JVTRZwQkYMk+z8lZtQpFOkWSjjH4XhY9f+IaNqP
- 0/wmefCH+Hw5GkwOjbogFsHdh7Yfkc1+EpFdkHV5o1db1kl9YN65Lz0aMMygCBBwFxI4qnwip
- FK/HG5u
+Content-Type: multipart/mixed; BOUNDARY="8323329-475627690-1476120390=:35196"
+X-Provags-ID: V03:K0:yiPHgj98psKbjvdGMEkvjxxhqyJzZujW/2w2xShUEwGLV/UvfXZ
+ NbaTsOmVtDSl4YruJiD/9+o9Tg5dKY4A+6msLgIaDyRBqqjTHZhTQqV0Pzmxr1qmJI799Ox
+ fMiQ+x2np/G0o1trphEVCMbHx/7d3QkCr9TjreAVt9wwRE/QRyr0OP/BjAr2BsGLKioY8uv
+ T05SjLbnFCTXj9UlWvF2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8mikAyEyD2U=:y9t5Hk5ie9Wcl5dEssxvxQ
+ pQzsBkXcOLTcMSQ3oKjn1bkWFrIr6dtw2QvFPLjQBxLRrz9SNb1aQ92KltEDjsSOA/f3E/MoL
+ T7pqaA5JXFnj7N2d/89r7mUB4rpIfuhNUIYCmFxQeRFlYLWmabPPpHFPvGWhGfNdO7sk7yDGg
+ 1i1tIN37SxrpjtqBPG8s2JSgEQmbKATe/2qszegYfx/XzgTYICp+dYUQO23Y0HTxiNcoTf+NE
+ 6Vapx39tzaKclZPIJ03C8fHvLFrfE7Q5anL7ggwRc1016Q8Sq0U9CcIwALmBerJcEFc3mjCUD
+ gqg9RwDWzTExyYXyLQJgSFrftYIrnr9blQzMmNgQlVGp2UIDHoeqRwLHo53H8oY+1AVJCMhiN
+ PKcxVNG6CtbjjLqP+maiDf8qsxeXW3ixvMfDqo9jx44RoIWRc6z7cYX9kl3g0jclFi7VuK8bI
+ F+lp+XpLdeoAoVKPYrJQ1pW2Hjv4qrkYKKQzmAmiFt6DlKgQn5221HLM2neB1/QNS8JVnsCLG
+ ZliLTIAO15LI6EWSaBqBwQAhgaazShLn1FOe0eIyzsWMClPJU74HidLBv3J2D4j68+h3nDy/l
+ AKtzj2Xw/TV82LPNozvbIIt1RLQYbQ0AaDPTPg6kvW/rHNDqjuYSWSlkykjiZnaBJ6ZzJWTml
+ eht6sL9LsUZ2Cbda0PJJ0K0U/EpdKcKak0fJiebFWerCEa/Wfj0KgPLQQMkz+5E1QnTOEAcp7
+ IDOoIo9jrkdRrnKXwtlMO28TTVej3GUCVEvQXpOdydb/4fZ/aCiVCGAQMU0JZW+XOguZQMhK7
+ CYgKxH2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The write_message() function safely writes an strbuf to a file.
-Sometimes it is inconvenient to require an strbuf, though: the text to
-be written may not be stored in a strbuf, or the strbuf should not be
-released after writing.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Let's refactor "safely writing string to a file" into
-write_with_lock_file(), and make write_message() use it. The new
-function makes it easy to create new convenience function
-write_file_gently(); as some of the upcoming callers of this new
-function would want to append a newline character, add a flag for it in
-write_file_gently(), and thus in write_with_lock_file().
+--8323329-475627690-1476120390=:35196
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-While at it, roll back the locked files in case of failure, as pointed
-out by Hannes Sixt.
+This makes the code consistent by fixing quite a couple of error messages.
+
+Suggested by Jakub Nar=C4=99bski.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ sequencer.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 45a3651..5cca8d8 100644
+index 40ef33c..4596540 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -234,22 +234,43 @@ static void print_advice(int show_hint, struct replay_opts *opts)
- 	}
+@@ -252,7 +252,7 @@ static int write_with_lock_file(const char *filename,
+ =09}
+ =09if (commit_lock_file(&msg_file) < 0) {
+ =09=09rollback_lock_file(&msg_file);
+-=09=09return error(_("Error wrapping up %s."), filename);
++=09=09return error(_("Error wrapping up '%s'."), filename);
+ =09}
+=20
+ =09return 0;
+@@ -963,16 +963,16 @@ static int read_populate_todo(struct todo_list *todo_=
+list,
+ =09strbuf_reset(&todo_list->buf);
+ =09fd =3D open(todo_file, O_RDONLY);
+ =09if (fd < 0)
+-=09=09return error_errno(_("Could not open %s"), todo_file);
++=09=09return error_errno(_("Could not open '%s'"), todo_file);
+ =09if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
+ =09=09close(fd);
+-=09=09return error(_("Could not read %s."), todo_file);
++=09=09return error(_("Could not read '%s'."), todo_file);
+ =09}
+ =09close(fd);
+=20
+ =09res =3D parse_insn_buffer(todo_list->buf.buf, todo_list);
+ =09if (res)
+-=09=09return error(_("Unusable instruction sheet: %s"), todo_file);
++=09=09return error(_("Unusable instruction sheet: '%s'"), todo_file);
+=20
+ =09if (!is_rebase_i(opts)) {
+ =09=09enum todo_command valid =3D
+@@ -1065,7 +1065,7 @@ static int read_populate_opts(struct replay_opts *opt=
+s)
+ =09 * are pretty certain that it is syntactically correct.
+ =09 */
+ =09if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) =
+< 0)
+-=09=09return error(_("Malformed options sheet: %s"),
++=09=09return error(_("Malformed options sheet: '%s'"),
+ =09=09=09git_path_opts_file());
+ =09return 0;
  }
- 
--static int write_message(struct strbuf *msgbuf, const char *filename)
-+static int write_with_lock_file(const char *filename,
-+				const void *buf, size_t len, int append_eol)
- {
- 	static struct lock_file msg_file;
- 
- 	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
- 	if (msg_fd < 0)
- 		return error_errno(_("Could not lock '%s'"), filename);
--	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
--		return error_errno(_("Could not write to %s"), filename);
--	strbuf_release(msgbuf);
--	if (commit_lock_file(&msg_file) < 0)
-+	if (write_in_full(msg_fd, buf, len) < 0) {
-+		rollback_lock_file(&msg_file);
-+		return error_errno(_("Could not write to '%s'"), filename);
-+	}
-+	if (append_eol && write(msg_fd, "\n", 1) < 0) {
-+		rollback_lock_file(&msg_file);
-+		return error_errno(_("Could not write eol to '%s"), filename);
-+	}
-+	if (commit_lock_file(&msg_file) < 0) {
-+		rollback_lock_file(&msg_file);
- 		return error(_("Error wrapping up %s."), filename);
-+	}
- 
- 	return 0;
+@@ -1108,7 +1108,7 @@ static int create_seq_dir(void)
+ =09=09return -1;
+ =09}
+ =09else if (mkdir(git_path_seq_dir(), 0777) < 0)
+-=09=09return error_errno(_("Could not create sequencer directory %s"),
++=09=09return error_errno(_("Could not create sequencer directory '%s'"),
+ =09=09=09=09   git_path_seq_dir());
+ =09return 0;
  }
- 
-+static int write_message(struct strbuf *msgbuf, const char *filename)
-+{
-+	int res = write_with_lock_file(filename, msgbuf->buf, msgbuf->len, 0);
-+	strbuf_release(msgbuf);
-+	return res;
-+}
-+
-+static int write_file_gently(const char *filename,
-+			     const char *text, int append_eol)
-+{
-+	return write_with_lock_file(filename, text, strlen(text), append_eol);
-+}
-+
- /*
-  * Reads a file that was presumably written by a shell script, i.e.
-  * with an end-of-line marker that needs to be stripped.
--- 
+@@ -1127,12 +1127,12 @@ static int save_head(const char *head)
+ =09strbuf_addf(&buf, "%s\n", head);
+ =09if (write_in_full(fd, buf.buf, buf.len) < 0) {
+ =09=09rollback_lock_file(&head_lock);
+-=09=09return error_errno(_("Could not write to %s"),
++=09=09return error_errno(_("Could not write to '%s'"),
+ =09=09=09=09   git_path_head_file());
+ =09}
+ =09if (commit_lock_file(&head_lock) < 0) {
+ =09=09rollback_lock_file(&head_lock);
+-=09=09return error(_("Error wrapping up %s."), git_path_head_file());
++=09=09return error(_("Error wrapping up '%s'."), git_path_head_file());
+ =09}
+ =09return 0;
+ }
+@@ -1177,9 +1177,9 @@ int sequencer_rollback(struct replay_opts *opts)
+ =09=09return rollback_single_pick();
+ =09}
+ =09if (!f)
+-=09=09return error_errno(_("cannot open %s"), git_path_head_file());
++=09=09return error_errno(_("cannot open '%s'"), git_path_head_file());
+ =09if (strbuf_getline_lf(&buf, f)) {
+-=09=09error(_("cannot read %s: %s"), git_path_head_file(),
++=09=09error(_("cannot read '%s': %s"), git_path_head_file(),
+ =09=09      ferror(f) ?  strerror(errno) : _("unexpected end of file"));
+ =09=09fclose(f);
+ =09=09goto fail;
+@@ -1218,7 +1218,7 @@ static int save_todo(struct todo_list *todo_list, str=
+uct replay_opts *opts)
+ =09=09=09todo_list->buf.len - offset) < 0)
+ =09=09return error_errno(_("Could not write to '%s'"), todo_path);
+ =09if (commit_lock_file(&todo_lock) < 0)
+-=09=09return error(_("Error wrapping up %s."), todo_path);
++=09=09return error(_("Error wrapping up '%s'."), todo_path);
+ =09return 0;
+ }
+=20
+--=20
 2.10.0.windows.1.325.ge6089c1
 
 
+--8323329-475627690-1476120390=:35196--
