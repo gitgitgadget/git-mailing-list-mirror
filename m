@@ -2,162 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3897A20986
-	for <e@80x24.org>; Mon, 10 Oct 2016 13:00:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E689220986
+	for <e@80x24.org>; Mon, 10 Oct 2016 13:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752363AbcJJNAA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 09:00:00 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:48110 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751598AbcJJM76 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 10 Oct 2016 08:59:58 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 4028E207B4;
-        Mon, 10 Oct 2016 08:59:52 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 10 Oct 2016 08:59:52 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=bOAKHn2Do+EXGCrwwypPBgzRgEQ=; b=Fn7Xcl
-        9i8jEoUlgygmPDlEyx6N9CWDqBEMppC1BsZNswZbzxIB0Huqw3ldRZOxiIbJ34n/
-        8nAQpT1QW/+V5IhiYk1l/fP+wBBj7PCYVAmg4r3a0WRMRMFC3VJDxH/EX7NJZgpp
-        9FZeXTZ3di3AE7fpFUhPUA5LlTvibXC1kwOIk=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=bOAKHn2Do+EXGCr
-        wwypPBgzRgEQ=; b=oVl4IJYFp3wzcBq1G6X9+VltGhTb6cl8vjCk4JTGgwzUi/w
-        wU8WcZSmkj7dcAU8BIz3vFnpBPhVq7pktZo/h8zQSZmfO0yMs0jCHZz1Z8cCQnad
-        Kd34V2xWCGX+q27+PypYn/MizJvsAJS/JlsdyWMoe8NtLc/a87jZPT1SCbPU=
-X-Sasl-enc: VjEEQM17zRHoMCUaSjud+1LYpAgFQHI5OkwL3cgbfmjG 1476104391
-Received: from UltraSam.fritz.box (ip147.236.mip.uni-hannover.de [130.75.236.147])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 8478CCC083;
-        Mon, 10 Oct 2016 08:59:50 -0400 (EDT)
-Subject: Re: [PATCH v2] gpg-interface: use more status letters
-To:     Junio C Hamano <gitster@pobox.com>
-References: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
- <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
- <xmqqshsjiyn4.fsf@gitster.mtv.corp.google.com>
- <24ecc903-3e5a-47f6-f073-00a1c709d5e8@ramsayjones.plus.com>
- <85fa6296-17f0-0e8c-ec1b-54cd48c45223@drmicha.warpmail.net>
- <xmqq60pdbbxh.fsf@gitster.mtv.corp.google.com>
- <xmqqk2dli25w.fsf@gitster.mtv.corp.google.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        Alex <agrambot@gmail.com>
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <8e496061-ce6c-450f-7c9e-785572d50b79@drmicha.warpmail.net>
-Date:   Mon, 10 Oct 2016 14:59:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1752415AbcJJNH0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 09:07:26 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:33007 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752319AbcJJNGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 09:06:48 -0400
+Received: by mail-qk0-f173.google.com with SMTP id n189so109607633qke.0
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 06:06:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gforgegroup-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UM+7AW6GVTw1UyQTj/MjVWlM7eL0pskVi013PYda85I=;
+        b=le71uf5bYtEOPcJxnvJzO0VC7tkPX8qAu6lmdgCSmDpJgqcN0wGK/5OcTqVRvNdXai
+         sDAiDRgDn0Q9LHs2N5JlufF/twsQ9IUQhlbxiEKH5MLqPTLd9MAPCPZOx1BwOr7pyb4w
+         88V8qeb5fvlnBgQ8EmRl6aAgbN+obOjjjtUph+NM0xFt2VXcSO+wz2xVxpwAw3/1kVY/
+         yriElbhHN40ruisGY9YdFATpyS2Z7rE/fwvMAirZm9L+H2w3tgJiFhY9pWMLRrsialtv
+         Il7kp23d5CVw/wo+X9uguZPyIX814/RTjZQptFJpAddJNwydOx4I9fS8crk+XBI/wu69
+         koCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UM+7AW6GVTw1UyQTj/MjVWlM7eL0pskVi013PYda85I=;
+        b=c18PA6gq6TK0JD3MEprNw2XnIqPOKM3dwouq+clobKfBSnE+XCterqjXYi4azTW6gC
+         BzmPg7Hu+BsIfF7YcKBc6HmTP7VHCt0Spc1iz2GJoLrto2rX+HSM+UEb6k5G2OkUPdjd
+         H3iHNGzbeXsxtIzMWrd0OXUlxQDCPr4X+cMgcVwlNV2nje85wXzny0bIGAqk0WfgW7kJ
+         TLByjn9cVLNXub5+pKS6ei+KKokMf138iuje8egWAhCZ+NDxOA6Akk4iN99gWY79FTPD
+         qxDuxAesGzTZJhWdXugVxhDmgr7p6Z5Rw16jC5YMK1sy136YkthQGfclnCVOMsogKu2R
+         kOvQ==
+X-Gm-Message-State: AA6/9RluakFvhvNQkAHFI+j9WZmplMEsCPbfB620ZQLxdztC6jlx+2tgJSmI413p0j/1FNZ4GQpWcLyBIVTvewz6
+X-Received: by 10.55.221.146 with SMTP id u18mr29521313qku.42.1476104807722;
+ Mon, 10 Oct 2016 06:06:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk2dli25w.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.164.69 with HTTP; Mon, 10 Oct 2016 06:06:47 -0700 (PDT)
+In-Reply-To: <CACsJy8DMKWeZ+DuQ0uoY6rdPfusq8D1SfBCkPyn+6X9S589ncg@mail.gmail.com>
+References: <CAOi_75+2SG2WYHBMQhfGj96eKsZ66niJzOevVGM5eJv-qqrVNg@mail.gmail.com>
+ <1475999513.7410.8.camel@kaarsemaker.net> <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
+ <CAOi_75+Zoeeq5FD1HKgG4MjeL9LkBshsSfdrMOTi8m-Mt-OQNQ@mail.gmail.com> <CACsJy8DMKWeZ+DuQ0uoY6rdPfusq8D1SfBCkPyn+6X9S589ncg@mail.gmail.com>
+From:   Michael Tutty <mtutty@gforgegroup.com>
+Date:   Mon, 10 Oct 2016 08:06:47 -0500
+Message-ID: <CAOi_75KR+AEAD540L=GtQ7jH5ngTFdHMq53+FzjzAfsZtTqfwg@mail.gmail.com>
+Subject: Re: Bug? git worktree fails with master on bare repo
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Michael Rappazzo <rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 06.10.2016 23:43:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> If I create a bare _clone_, then "HEAD" could be detached, or point to some branch, depending on where "HEAD" is in the source repo
+
+I didn't mean a clone, I meant a brand-new (bare) repo.  Then I would
+clone it somewhere, add commits and branches, and push them to the
+bare repo.
+
+
+> If source repo's HEAD is "master", I got the same behavior (worktree add fails)
+
+So if it's possible for a bare repo to have HEAD pointing at master,
+is there a safe way for me to change this (e.g., as a cleanup step
+before doing my actual merge process)?
+
+On Mon, Oct 10, 2016 at 4:45 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Oct 9, 2016 at 8:42 PM, Michael Tutty <mtutty@gforgegroup.com> wrote:
+>> Dennis,
+>> Thanks for the great response, and for spending time on my issue.
+>> I'll try that first patch and see what happens.
 >>
->>> Also, I'm open to using another letter for EXPKEYSIG but couldn't decide
->>> between 'Y', 'Z', 'K'. 'K' could be confused with REVKEYSIG, I'm afraid.
->>> 'Y' is next to 'X' and contained in 'KEY', it would be my first choice.
+>> In the meantime, it got weirder...
 >>
->> Sounds good enough to me.  Thanks.
-> 
-> I really do not want to leave too many topics listed in the "What's
-> cooking" report to be in undecided / waiting state.  How about
-> squashing this in, with a fully updated log message to replace?
+>> I created a brand-new (bare) repo
+>
+> Elaboration needed here. If I create a bare _clone_, then "HEAD" could
+> be detached, or point to some branch, depending on where "HEAD" is in
+> the source repo. If source repo's HEAD is "master", I got the same
+> behavior (worktree add fails). If it's detached or points to some
+> other branch, it's ok. If this is "git init --bare" then I got "fatal:
+> invalid reference: master".
+>
+>> and was able to git add worktree
+>> /path master.  I was able to do this repeatedly, even using the
+>> worktree to merge other branches to master.  I didn't find any
+>> condition or step that caused some kind of orphan master work tree,
+>> which was what I thought the underlying problem might be.
+> --
+> Duy
 
-Sorry, this got "lost in vacation". Before that, I was looking for an
-easy way to test expired signatures, but gpg1 and gpg2 behave somewhat
-differently in that respect (2 does not allow to create already expired
-signatures).
 
-Is there anything I should or could do now?
 
-Michael
+-- 
+Michael Tutty, CTO
 
-> -- >8 --
-> From: Michael J Gruber <git@drmicha.warpmail.net>
-> Date: Wed, 28 Sep 2016 16:24:13 +0200
-> Subject: [PATCH] SQUASH: gpg-interface: use more status letters
-> 
-> According to gpg2's doc/DETAILS:
-> 
->     For each signature only one of the codes GOODSIG, BADSIG,
->     EXPSIG, EXPKEYSIG, REVKEYSIG or ERRSIG will be emitted.
-> 
-> gpg1 ("classic") behaves the same (although doc/DETAILS differs).
-> 
-> Currently, we parse gpg's status output for GOODSIG, BADSIG and
-> trust information and translate that into status codes G, B, U, N
-> for the %G?  format specifier.
-> 
-> git-verify-* returns success in the GOODSIG case only. This is
-> somewhat in disagreement with gpg, which considers the first 5 of
-> the 6 above as VALIDSIG, but we err on the very safe side.
-> 
-> Introduce additional status codes E, X, Y, R for ERRSIG, EXPSIG,
-> EXPKEYSIG, and REVKEYSIG so that a user of %G? gets more information
-> about the absence of a 'G' on first glance.
-> 
-> Requested-by: Alex <agrambot@gmail.com>
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/pretty-formats.txt | 3 ++-
->  gpg-interface.c                  | 2 +-
->  pretty.c                         | 1 +
->  3 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index c28ff2b919..179c9389aa 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -146,7 +146,8 @@ endif::git-rev-list[]
->  - '%G?': show "G" for a good (valid) signature,
->    "B" for a bad signature,
->    "U" for a good signature with unknown validity,
-> -  "X" for a good expired signature, or good signature made by an expired key,
-> +  "X" for a good signature that has expired,
-> +  "Y" for a good signature made by an expired key,
->    "R" for a good signature made by a revoked key,
->    "E" if the signature cannot be checked (e.g. missing key)
->    and "N" for no signature
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 6999e7b469..e44cc27da1 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -35,7 +35,7 @@ static struct {
->  	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
->  	{ 'E', "\n[GNUPG:] ERRSIG "},
->  	{ 'X', "\n[GNUPG:] EXPSIG "},
-> -	{ 'X', "\n[GNUPG:] EXPKEYSIG "},
-> +	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
->  	{ 'R', "\n[GNUPG:] REVKEYSIG "},
->  };
->  
-> diff --git a/pretty.c b/pretty.c
-> index 39a36cd825..f98b271069 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -1236,6 +1236,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
->  			case 'U':
->  			case 'N':
->  			case 'X':
-> +			case 'Y':
->  			case 'R':
->  				strbuf_addch(sb, c->signature_check.result);
->  			}
-> 
-
+e: mtutty@gforgegroup.com
+t: @mtutty, @gforgegroup
+v: 515-789-0772
+w: http://gforgegroup.com, http://gforge.com
