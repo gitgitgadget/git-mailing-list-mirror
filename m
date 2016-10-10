@@ -6,37 +6,38 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AC23207EC
-	for <e@80x24.org>; Mon, 10 Oct 2016 02:51:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82444207EC
+	for <e@80x24.org>; Mon, 10 Oct 2016 02:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751947AbcJJCvw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Oct 2016 22:51:52 -0400
-Received: from tc.outersquare.org ([75.144.255.93]:49095 "EHLO
+        id S1751581AbcJJCz4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Oct 2016 22:55:56 -0400
+Received: from tc.outersquare.org ([75.144.255.93]:36810 "EHLO
         cid.outersquare.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751521AbcJJCvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2016 22:51:51 -0400
+        with ESMTP id S1751437AbcJJCzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2016 22:55:55 -0400
 Received: from localhost (localhost [127.0.0.1])
-        by cid.outersquare.org (Postfix) with ESMTP id 7512B678B0A3;
-        Sun,  9 Oct 2016 19:51:50 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTP id 7E77D678B179;
+        Sun,  9 Oct 2016 19:55:27 -0700 (PDT)
 X-Virus-Scanned: amavisd-new at mydomain = outersquare.org
 Received: from cid.outersquare.org ([127.0.0.1])
         by localhost (cid.outersquare.org [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id eZyXQhqXhWCj; Sun,  9 Oct 2016 19:51:49 -0700 (PDT)
+        with ESMTP id ngz_Su1cVQ4g; Sun,  9 Oct 2016 19:55:26 -0700 (PDT)
 Received: from [10.0.30.3] (tc.outersquare.org [75.144.255.93])
-        by cid.outersquare.org (Postfix) with ESMTPSA id 08345678B092;
-        Sun,  9 Oct 2016 19:51:49 -0700 (PDT)
+        by cid.outersquare.org (Postfix) with ESMTPSA id 74F53678B168;
+        Sun,  9 Oct 2016 19:55:26 -0700 (PDT)
 From:   Jeremy Huddleston Sequoia <jeremyhu@freedesktop.org>
-Message-Id: <98EB348E-221D-488C-A466-1FACB1C768FF@freedesktop.org>
+Message-Id: <DEE09909-A5C9-47D8-B71E-0EC0D6C11B3D@freedesktop.org>
 Content-Type: multipart/signed;
- boundary="Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1";
+ boundary="Apple-Mail=_2DA1D6B0-0E39-4237-BBB1-9601E62864E8";
  protocol="application/pkcs7-signature"; micalg=sha1
 Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3249\))
-Subject: Re: git 2.10.1 test regression in t3700-add.sh
-Date:   Sun, 9 Oct 2016 19:51:49 -0700
-In-Reply-To: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
+Subject: Re: git 2.10.1 test regression in t4014-format-patch.sh
+Date:   Sun, 9 Oct 2016 19:55:26 -0700
+In-Reply-To: <F069D0FD-C3CF-4F40-9338-D84E76DB310B@joshtriplett.org>
 Cc:     gitster@pobox.com, git@vger.kernel.org
-To:     t.gummerer@gmail.com
-References: <A433322C-2B75-4B4B-A8CC-BAC3179EE7A7@freedesktop.org>
+To:     Josh Triplett <josh@joshtriplett.org>
+References: <3CE95FD5-C5A9-4DE3-8B57-80B858769D1B@freedesktop.org>
+ <F069D0FD-C3CF-4F40-9338-D84E76DB310B@joshtriplett.org>
 X-Mailer: Apple Mail (2.3249)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -44,94 +45,79 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1
+--Apple-Mail=_2DA1D6B0-0E39-4237-BBB1-9601E62864E8
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
 	charset=us-ascii
 
 
-> On Oct 9, 2016, at 17:15, Jeremy Huddleston Sequoia =
+> On Oct 9, 2016, at 17:18, Josh Triplett <josh@joshtriplett.org> wrote:
+>=20
+> On October 9, 2016 5:15:22 PM PDT, Jeremy Huddleston Sequoia =
 <jeremyhu@freedesktop.org> wrote:
->=20
-> Hi Thomas,
->=20
-> I wanted to let you know that this patch of yours, which landed in git =
-2.10.1, introduced some test failures, seen on macOS.
->=20
-> Let me know if you need any additional information to track these =
+>> Hey Josh,
+>>=20
+>> Hope you're doing well.
+>>=20
+>> I wanted to let you know that this patch of yours, which landed in =
+git
+>> 2.10.1, introduced some test failures, seen on macOS.
+>>=20
+>> Let me know if you need any additional information to track these =
 down.
+>>=20
+>> Thanks,
+>> Jeremy
+>>=20
+>>=20
+>> not ok 65 - format-patch default signature
+>> #=09
+>> #		git format-patch --stdout -1 | tail -n 3 >output &&
+>> #		signature >expect &&
+>> #		test_cmp expect output
+>> #=09
+>>=20
+>> not ok 132 - format-patch --base
+>> #=09
+>> #		git checkout side &&
+>> #		git format-patch --stdout --base=3DHEAD~3 -1 | tail -n 7 =
+>actual &&
+>> #		echo >expected &&
+>> #		echo "base-commit: $(git rev-parse HEAD~3)" >>expected =
+&&
+>> #		echo "prerequisite-patch-id: $(git show --patch HEAD~2 | =
+git
+>> patch-id --stable | awk "{print \$1}")" >>expected &&
+>> #		echo "prerequisite-patch-id: $(git show --patch HEAD~1 | =
+git
+>> patch-id --stable | awk "{print \$1}")" >>expected &&
+>> #		signature >> expected &&
+>> #		test_cmp expected actual
+>> #=09
 >=20
-> Thanks,
-> Jeremy
->=20
-> not ok 40 - git add --chmod=3D[+-]x changes index with already added =
-file
-> #=09
-> #		echo foo >foo3 &&
-> #		git add foo3 &&
-> #		git add --chmod=3D+x foo3 &&
-> #		test_mode_in_index 100755 foo3 &&
-> #		echo foo >xfoo3 &&
-> #		chmod 755 xfoo3 &&
-> #		git add xfoo3 &&
-> #		git add --chmod=3D-x xfoo3 &&
-> #		test_mode_in_index 100644 xfoo3
-> #=09
->=20
-> commit 610d55af0f082f6b866dc858e144c03d8ed4424c
-> Author: Thomas Gummerer <t.gummerer@gmail.com>
-> Date:   Wed Sep 14 22:07:47 2016 +0100
->=20
->    add: modify already added files when --chmod is given
->=20
->    When the chmod option was added to git add, it was hooked up to the =
-diff
->    machinery, meaning that it only works when the version in the index
->    differs from the version on disk.
->=20
->    As the option was supposed to mirror the chmod option in =
-update-index,
->    which always changes the mode in the index, regardless of the =
-status of
->    the file, make sure the option behaves the same way in git add.
->=20
->    Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Can you run the test with the option to show the expected and actual =
+strings?
+> Did the testsuite run with the wrong git somehow?
+
+Nope, it's the right version being tested.  The failure seems due to =
+your git_version change not liking our formatting
+
+$ git --version
+git version 2.10.1 (Apple Git-99)
+
+(the 'Apple Git-XX' being added because this was from a build that had =
+Apple's patch series, including =
+https://github.com/jeremyhu/git/commit/f99905d0752d923e5ec61e14c675a300c6d=
+04284)
+
+We modify DEF_VER, which confused your regex.  Simple patch inc in a =
+separate email.
+
+Thanks,
+Jeremy
 
 
-This failure looks odd.  I'll dig into it a bit more as it looks like =
-something odd is going on here...
-
-expecting success:=20
-	echo foo >foo3 &&
-	git add foo3 &&
-	git add --chmod=3D+x foo3 &&
-	test_mode_in_index 100755 foo3 &&
-	echo foo >xfoo3 &&
-	chmod 755 xfoo3 &&
-	git add xfoo3 &&
-	git add --chmod=3D-x xfoo3 &&
-	test_mode_in_index 100644 xfoo3
-
-pass
-cannot chmod 'xfoo3'fail
-120000 c5c4ca97a3a080c32920941b665e94a997901491 0	xfoo3
-not ok 40 - git add --chmod=3D[+-]x changes index with already added =
-file
-#=09
-#		echo foo >foo3 &&
-#		git add foo3 &&
-#		git add --chmod=3D+x foo3 &&
-#		test_mode_in_index 100755 foo3 &&
-#		echo foo >xfoo3 &&
-#		chmod 755 xfoo3 &&
-#		git add xfoo3 &&
-#		git add --chmod=3D-x xfoo3 &&
-#		test_mode_in_index 100644 xfoo3
-#=09
-
-
---Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1
+--Apple-Mail=_2DA1D6B0-0E39-4237-BBB1-9601E62864E8
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -200,21 +186,21 @@ DOhlN/np0KmCWDYx8UgdJHhEyhyAKSWWltf2U4bPpEI4BbOKwegeRJJqK1oRW9cxggROMIIESgIB
 ATCBiTB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcGA1UECxMgU3Rh
 cnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0Q29tIENsYXNzIDIg
 Q2xpZW50IENBAhAX8MOmbUCDPWU+X4TKPzSUMAkGBSsOAwIaBQCgggGZMBgGCSqGSIb3DQEJAzEL
-BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAyNTE0OVowIwYJKoZIhvcNAQkEMRYE
-FIrw65xyVKZcTC7I90sOytxeLREtMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
+BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE2MTAxMDAyNTUyN1owIwYJKoZIhvcNAQkEMRYE
+FAgL0A6MWQHfQFhCnXwiKOYHxi5YMIGaBgkrBgEEAYI3EAQxgYwwgYkwdTELMAkGA1UEBhMCSUwx
 FjAUBgNVBAoTDVN0YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24g
 QXV0aG9yaXR5MSMwIQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1l
 Pl+Eyj80lDCBnAYLKoZIhvcNAQkQAgsxgYyggYkwdTELMAkGA1UEBhMCSUwxFjAUBgNVBAoTDVN0
 YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MSMw
 IQYDVQQDExpTdGFydENvbSBDbGFzcyAyIENsaWVudCBDQQIQF/DDpm1Agz1lPl+Eyj80lDANBgkq
-hkiG9w0BAQEFAASCAgAGPv/BKCTjWDEbVzAmVD4qiQg6WyzAMhqdfMuXr6jQXP1tWxU0VIQgdTQV
-DupkIc+MKHFKbnpGVVhiB2+cISdf9QrTBH5zH3SErrPJ4PQ2aNkvAqOvvrxZPIUpYqYsdnybAeAK
-3OrW72ioTueTNEdd6WysgZ0yoUjdfiZz8BJGaa3QZ2uHwmqBne4dQeZ79A4aeJGpA4OHfd0SoJqN
-/DtuATBuIiht23uydfjIYGrz0wXdQkTk8E8TSWFD+U5meKh8/5XzYEJEPTwOwU9/dM7/oXoXtmPH
-SgWw9W8OP3BYAwVEcYMDtaKDWCBHHmeC2m/7k4tDwv1VuZ/x6EE1f7ZJzcX42id3oK/QpomPu34L
-DGMQipLvd5VjcA7QuoYZBH10f+/JhYsKdYxSfGnyTzJN5jSH/XRewzJXWC/L8DE26V/WvJaA7iA9
-63nMIFcyNtiuqRQbF1tx/FzEF/nK4CW4Cr+Gvwj8CsZFVAC1BMpAnha1kMQbWUZKTnn4QevrlLDg
-6d88LFj2dq3rauCoWvtpFfo/+68HK8gLZmvhJ0baNqPKpUQJakTpfe+vZInwhFrZSgjD1+lMEpO1
-sk6yQtoy3Nqz912Efk11Sbh+uvk+qaadt8xM2Fn4ntNSe4eMSLuE/cxm58GzPS/1Y3Sgy8yMLsNO
-QLJ8RKKOtGk4brdQMQAAAAAAAA==
---Apple-Mail=_D67C3ECE-6131-4801-81D5-4A73923215C1--
+hkiG9w0BAQEFAASCAgCNblA9ymzmxW+a63VOy/BdkY7sMcxYsn9YnSWixvA7ANu8PgqkBsDGhpFG
+X8KjT7loWrEN8JcjZTGOltizUnKaZFlJeGIEihUcwsJQ2M2oUz45kwiIIc2UROhBqnHTnVn1VKK2
+ZNF4BCW6tSBxNV47TR+mPcPsiKe6We1fSn9indRQs2wgmu+1HzEdrCBBryF24ov/Z6vz42cknmEo
+nOMiNavMZ17WsaW6PPGklwEVqAjT8R5eVTj5hwYJBOElmDlLTCKfwYWuWmNAIJvAB6dhFQu2IQS5
+zDqllTIpIvtnRl6rbq8HlYxawrqGfWz8jwfMA/VwaLYG7TSj33E1VPXriOcCkovfP66cL8TUqpi9
++dLoZ7HKzRHBtnGcl1Q/r8nCso3tbO2+bvvyzYboR3gukMvXsXFdh2H5GYAkLy44GDXCprYUzP3P
+97QEmmc47RtkxhIs1jqOI9gUxW++q1f103m/vhlxA1UvtYq8m+XDT4HYqaAUfOH1ciyHDACGiU4x
+8FQQ5Zv/0FN6N1jc6Xeubw+QdbtYpc4KEj2+SIrhaXVpO4kAputKq369du7NehYyiOEHoepQCc3N
+HTXiDAQpMQ1gnHYTOmTURKpObl6nM+XpY7eu0UqX0UBqt6bbx3jatMlF5Lz5OBKUnMyVMLikglN2
+sVW32bFdiXMdlF7yQgAAAAAAAA==
+--Apple-Mail=_2DA1D6B0-0E39-4237-BBB1-9601E62864E8--
