@@ -7,288 +7,101 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05D8320989
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B446209B4
 	for <e@80x24.org>; Mon, 10 Oct 2016 17:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753283AbcJJR0H (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 13:26:07 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50283 "EHLO mout.gmx.net"
+        id S1753335AbcJJR0R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 13:26:17 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55888 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753088AbcJJR0A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 13:26:00 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M6vSj-1az5Im2BRl-00whyo; Mon, 10 Oct 2016 19:25:33
+        id S1752636AbcJJR0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 13:26:16 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MRjd7-1bQjU23meH-00Sy5w; Mon, 10 Oct 2016 19:26:12
  +0200
-Date:   Mon, 10 Oct 2016 19:25:32 +0200 (CEST)
+Date:   Mon, 10 Oct 2016 19:26:11 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 10/25] sequencer: get rid of the subcommand field
+Subject: [PATCH v3 17/25] sequencer: support cleaning up commit messages
 In-Reply-To: <cover.1476120229.git.johannes.schindelin@gmx.de>
-Message-ID: <08ddd5f5ba1a9829cdeb09da834b8d71664de19d.1476120229.git.johannes.schindelin@gmx.de>
+Message-ID: <a0e8254fef108586d3c7a660861b5b1ae8d6e788.1476120229.git.johannes.schindelin@gmx.de>
 References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fAUT3XcvE6X3QbCiIYFzqQViJ7KpfiQWangolzmr2grM7BjJC9m
- unIHFokGUzSpLARuFI/5T4wkWUAR6P/XZpXJfwcGx0iowF+CRg70CPvuuh5/wRHQUGfQHGz
- YpFvK0r8cqXetk5m917/v0YHi3n3d1W0O04isbPtjssMbv1M68J+wLe0FVf3J+8mB5Ta7Fb
- AMMquP4mWXPl3oRPDMVjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OPIxUl4WVtM=:2TqQJmS19Gyb+tnc0cqJN6
- /QtRRnK8Qs36jpnoh9lubxEph0P7bUMMlLsf/qDDIO1evmElY2y00XFsq6KEvUWDxo7msVahi
- y2fzyoA3vpkJEHSVKVdrXTcWFucKY1ON74CIafA6U7vPlB+6OOmGfkQRjDf7ohB72qTobzpbV
- XfYfmKTVDvle1UTUKJbhp/JyFOD94BohSVfrLfmE4R2J1UlKbHRUd1K5fLFldAwwSsf0jzAGr
- 8tQdwbbcGzfb0Ji6XMSAchV1ws7Jp7hHZ4zsSyS2PkfYC2LGcTednHevD/HhQP4kL6EzlpyWn
- QMHvFhp6R5GkgPesHgwSMMl3iKNKsKgmO6ijx4TwN/TRypLyMejhsvlyn2chTTjuyDSHEzQzb
- BVovveIAvlk2/5cm+NdZio6wQHfUNJIVUHq27qYTO7R/CPsro3r0lwcd5Q/D1ZMcdeYkPWnlj
- ywmOAAhqMIp4SBTxr4Id5MdTExgzz5K4WGA3XRgkgoV4fY3oY7kSck6ahI0ckRmhOQSZ9lV4K
- xQM+ZoZi/vveNbRkuc3TihfH8FoatjKqyrVRrOrOwKFG7PEvWxRXb+l+OqaRKSdIXSYF+SPyk
- ifRlipKmP8kmAsAQteEgwzxxgkImy9MytffYN5dF2pWQ3m0NxMOQ1UD+KQuuPB+3sRUoRz7M8
- VGc/vmZJBExQjngcQmBkGbG2Da5GJj1MLdDf27xiUxZe4+GSfS6XzQtjo5A55Lku0PyJkeo8S
- bD2BiXbYWdQ1bgEiDGUCuHFbMoguhjYPVoIPdsrZd0vnrr4dX3axHal0RHu/oxcQGBvDxNJgA
- qK1lBYH
+X-Provags-ID: V03:K0:EXoRod68K8pHw1bVer6x3zWIVUKVgVGeJ+i0iAjXeq6J6EX/psf
+ Ny5YI7f84BA3+tgS3qxG5nXQK1PDDTWfuzxCHkK6iI0rPUdwr+kSdekU81mZgDvdCJDLW0n
+ n49HUEtLjLly2UoHlxNiUfSlYI3dmOgTfoLIIfswRSuRIm4QdyqvZTzZeUIsGuopVAp7J3y
+ fw2KX7xzTM9Mnq96zZjoA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:d+s6z5M1YEI=:ubza/B/OeAmKrFMNTxIdBd
+ YREpGwFhCh+3Z8an0dAJZ/TEufOz1uS92uzxAxwnFclTxevWXAfbf8mLWC4dj9qgOwlGxaNL0
+ zGKT04T9qjYWf6/85kVnfogXCOLEFHayGw6jcFgNH16p+PojZuopb/3lucBOeq/faDb61wMAK
+ 0SoEyXHKf4/NnD3VDFHddpm+OenfzXd/lhbnC79luQFftwnpRNRiQE8uUwduNLx2bmEMneubb
+ oXgssk21CxKiSPnc0pbc/VCex4DPCDMoSAGe5Bko7O1Y68UOTZ4rSsTg01IvPSb0zvZMzkuFY
+ IaRnTfxzOXB5/JwyYxm0JaFZWKiJDir25+ZD9FkGFeFwjHVr5SoWHFRKttGl1OHrPHr12fYzw
+ H4HYhKiZY7SLXbGDLKV5dZ2QRONOnAze8FGbw0Fyi+5Shf3vIT/92Fwc0xbsF1Z2Mp2h/FvZh
+ tVHY2J0BJqt4kMBXh5cNC48wVHqKdVwgzHkqZ+QT8pxWgA6gK/M7LbgQRAMjWc730gWKEVUEa
+ nrnZ0V2n3efi5oGu8T5jArJx7XioGi1dXgzbEsXe4XFLJqzmJRLmrPDlN1tfOG25b0DGLu6vJ
+ 0Bab29pMFOlbU8K+Wj7Y3oSA02f8EwoPd4lGVqvnllM6RRgWXKDVnmS4f+X8pngWji6hJu8GC
+ FZvYqeyJHtVKtITjQdZ93UZ0j+QhVbiLG0Bv4EhYDlrHQVXjczWsrM6qzJkurx/X5jNKQRwkS
+ GCyDmJRDIVx78prtqhzwZZlMXEI6bZLKa278uHFZlBiL92uH4TwprqmuT85iBnmZPgCAtMeYN
+ jD4I2lY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The subcommands are used exactly once, at the very beginning of
-sequencer_pick_revisions(), to determine what to do. This is an
-unnecessary level of indirection: we can simply call the correct
-function to begin with. So let's do that.
-
-While at it, ensure that the subcommands return an error code so that
-they do not have to die() all over the place (bad practice for library
-functions...).
+The run_git_commit() function already knows how to amend commits, and
+with this new option, it can also clean up commit messages (i.e. strip
+out commented lines). This is needed to implement rebase -i's 'fixup'
+and 'squash' commands as sequencer commands.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/revert.c | 36 ++++++++++++++++--------------------
- sequencer.c      | 35 +++++++++++------------------------
- sequencer.h      | 13 ++++---------
- 3 files changed, 31 insertions(+), 53 deletions(-)
+ sequencer.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index fce9c75..0a7b5f4 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -71,7 +71,7 @@ static void verify_opt_compatible(const char *me, const char *base_opt, ...)
- 		die(_("%s: %s cannot be used with %s"), me, this_opt, base_opt);
- }
- 
--static void parse_args(int argc, const char **argv, struct replay_opts *opts)
-+static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- {
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
- 	const char *me = action_name(opts);
-@@ -115,25 +115,15 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	if (opts->keep_redundant_commits)
- 		opts->allow_empty = 1;
- 
--	/* Set the subcommand */
--	if (cmd == 'q')
--		opts->subcommand = REPLAY_REMOVE_STATE;
--	else if (cmd == 'c')
--		opts->subcommand = REPLAY_CONTINUE;
--	else if (cmd == 'a')
--		opts->subcommand = REPLAY_ROLLBACK;
--	else
--		opts->subcommand = REPLAY_NONE;
--
- 	/* Check for incompatible command line arguments */
--	if (opts->subcommand != REPLAY_NONE) {
-+	if (cmd) {
- 		char *this_operation;
--		if (opts->subcommand == REPLAY_REMOVE_STATE)
-+		if (cmd == 'q')
- 			this_operation = "--quit";
--		else if (opts->subcommand == REPLAY_CONTINUE)
-+		else if (cmd == 'c')
- 			this_operation = "--continue";
- 		else {
--			assert(opts->subcommand == REPLAY_ROLLBACK);
-+			assert(cmd == 'a');
- 			this_operation = "--abort";
- 		}
- 
-@@ -156,7 +146,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 				"--edit", opts->edit,
- 				NULL);
- 
--	if (opts->subcommand != REPLAY_NONE) {
-+	if (cmd) {
- 		opts->revs = NULL;
- 	} else {
- 		struct setup_revision_opt s_r_opt;
-@@ -180,6 +170,14 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		opts->gpg_sign = xstrdup(opts->gpg_sign);
- 	if (opts->strategy)
- 		opts->strategy = xstrdup(opts->strategy);
-+
-+	if (cmd == 'q')
-+		return sequencer_remove_state(opts);
-+	if (cmd == 'c')
-+		return sequencer_continue(opts);
-+	if (cmd == 'a')
-+		return sequencer_rollback(opts);
-+	return sequencer_pick_revisions(opts);
- }
- 
- int cmd_revert(int argc, const char **argv, const char *prefix)
-@@ -191,8 +189,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 		opts.edit = 1;
- 	opts.action = REPLAY_REVERT;
- 	git_config(git_default_config, NULL);
--	parse_args(argc, argv, &opts);
--	res = sequencer_pick_revisions(&opts);
-+	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("revert failed"));
- 	return res;
-@@ -205,8 +202,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 
- 	opts.action = REPLAY_PICK;
- 	git_config(git_default_config, NULL);
--	parse_args(argc, argv, &opts);
--	res = sequencer_pick_revisions(&opts);
-+	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("cherry-pick failed"));
- 	return res;
 diff --git a/sequencer.c b/sequencer.c
-index 443a238..14b1746 100644
+index 403a4f0..108bca8 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -119,7 +119,7 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
- 	return 1;
- }
- 
--static void remove_sequencer_state(const struct replay_opts *opts)
-+int sequencer_remove_state(struct replay_opts *opts)
+@@ -481,7 +481,8 @@ static char **read_author_script(void)
+  * author metadata.
+  */
+ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+-			  int allow_empty, int edit, int amend)
++			  int allow_empty, int edit, int amend,
++			  int cleanup_commit_message)
  {
- 	struct strbuf dir = STRBUF_INIT;
- 	int i;
-@@ -133,6 +133,8 @@ static void remove_sequencer_state(const struct replay_opts *opts)
- 	strbuf_addf(&dir, "%s", get_dir(opts));
- 	remove_dir_recursively(&dir, 0);
- 	strbuf_release(&dir);
-+
-+	return 0;
- }
+ 	char **env = NULL;
+ 	struct argv_array array;
+@@ -518,9 +519,12 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&array, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&array, "-F", defmsg, NULL);
++	if (cleanup_commit_message)
++		argv_array_push(&array, "--cleanup=strip");
+ 	if (edit)
+ 		argv_array_push(&array, "-e");
+-	else if (!opts->signoff && !opts->record_origin &&
++	else if (!cleanup_commit_message &&
++		 !opts->signoff && !opts->record_origin &&
+ 		 git_config_get_value("commit.cleanup", &value))
+ 		argv_array_push(&array, "--cleanup=verbatim");
  
- static const char *action_name(const struct replay_opts *opts)
-@@ -977,7 +979,7 @@ static int rollback_single_pick(void)
- 	return reset_for_rollback(head_sha1);
- }
- 
--static int sequencer_rollback(struct replay_opts *opts)
-+int sequencer_rollback(struct replay_opts *opts)
- {
- 	FILE *f;
- 	unsigned char sha1[20];
-@@ -1012,9 +1014,8 @@ static int sequencer_rollback(struct replay_opts *opts)
+@@ -787,7 +791,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
  	}
- 	if (reset_for_rollback(sha1))
- 		goto fail;
--	remove_sequencer_state(opts);
- 	strbuf_release(&buf);
--	return 0;
-+	return sequencer_remove_state(opts);
- fail:
- 	strbuf_release(&buf);
- 	return -1;
-@@ -1099,8 +1100,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 	 * Sequence of picks finished successfully; cleanup by
- 	 * removing the .git/sequencer directory
- 	 */
--	remove_sequencer_state(opts);
--	return 0;
-+	return sequencer_remove_state(opts);
- }
+ 	if (!opts->no_commit)
+ 		res = run_git_commit(opts->edit ? NULL : git_path_merge_msg(),
+-				     opts, allow, opts->edit, 0);
++				     opts, allow, opts->edit, 0, 0);
  
- static int continue_single_pick(void)
-@@ -1113,11 +1113,14 @@ static int continue_single_pick(void)
- 	return run_command_v_opt(argv, RUN_GIT_CMD);
- }
- 
--static int sequencer_continue(struct replay_opts *opts)
-+int sequencer_continue(struct replay_opts *opts)
- {
- 	struct todo_list todo_list = TODO_LIST_INIT;
- 	int res;
- 
-+	if (read_and_refresh_cache(opts))
-+		return -1;
-+
- 	if (!file_exists(get_todo_path(opts)))
- 		return continue_single_pick();
- 	if (read_populate_opts(opts))
-@@ -1156,26 +1159,10 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	unsigned char sha1[20];
- 	int i, res;
- 
--	if (opts->subcommand == REPLAY_NONE)
--		assert(opts->revs);
--
-+	assert(opts->revs);
- 	if (read_and_refresh_cache(opts))
- 		return -1;
- 
--	/*
--	 * Decide what to do depending on the arguments; a fresh
--	 * cherry-pick should be handled differently from an existing
--	 * one that is being continued
--	 */
--	if (opts->subcommand == REPLAY_REMOVE_STATE) {
--		remove_sequencer_state(opts);
--		return 0;
--	}
--	if (opts->subcommand == REPLAY_ROLLBACK)
--		return sequencer_rollback(opts);
--	if (opts->subcommand == REPLAY_CONTINUE)
--		return sequencer_continue(opts);
--
- 	for (i = 0; i < opts->revs->pending.nr; i++) {
- 		unsigned char sha1[20];
- 		const char *name = opts->revs->pending.objects[i].name;
-diff --git a/sequencer.h b/sequencer.h
-index 8453669..7a513c5 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -10,16 +10,8 @@ enum replay_action {
- 	REPLAY_PICK
- };
- 
--enum replay_subcommand {
--	REPLAY_NONE,
--	REPLAY_REMOVE_STATE,
--	REPLAY_CONTINUE,
--	REPLAY_ROLLBACK
--};
--
- struct replay_opts {
- 	enum replay_action action;
--	enum replay_subcommand subcommand;
- 
- 	/* Boolean options */
- 	int edit;
-@@ -44,9 +36,12 @@ struct replay_opts {
- 	/* Only used by REPLAY_NONE */
- 	struct rev_info *revs;
- };
--#define REPLAY_OPTS_INIT { -1, -1 }
-+#define REPLAY_OPTS_INIT { -1 }
- 
- int sequencer_pick_revisions(struct replay_opts *opts);
-+int sequencer_continue(struct replay_opts *opts);
-+int sequencer_rollback(struct replay_opts *opts);
-+int sequencer_remove_state(struct replay_opts *opts);
- 
- extern const char sign_off_header[];
- 
+ leave:
+ 	free_message(commit, &msg);
 -- 
 2.10.0.windows.1.325.ge6089c1
 
