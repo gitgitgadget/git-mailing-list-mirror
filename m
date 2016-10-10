@@ -2,98 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05F7920989
-	for <e@80x24.org>; Mon, 10 Oct 2016 18:43:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1C4720989
+	for <e@80x24.org>; Mon, 10 Oct 2016 18:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751056AbcJJSns (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 14:43:48 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:33340 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751027AbcJJSnr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 14:43:47 -0400
-Received: by mail-qk0-f174.google.com with SMTP id n189so126048738qke.0
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 11:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=JIq2OeAT7GbPM/ez6jiizE9IhWxE+ZB6pYMJ0EidLpE=;
-        b=AbpHJaZ4zNTL7Bk9ZWm19AsNyzbKDNez03GH5mSiu2vS3upPt4ktETWamX4TIJDKqe
-         nFfi1xpziTft6Tiu+HsT7YbDGyDlkGpHp8R307AyKCCkBLzK5KGgbWWkyN38zK7mJ+To
-         DCN3HQYwrww1mCJnbjUqgL8z3T+lLtwE6kRKGRd1a0klHkoOGSVDJJqhL6amapx9/mBy
-         rhyaeFZqFOZEVLDaItOYvUyyk0DEIGdYJ+Wv/gD46yfzOuBlHP2cDAsIA5j/SgTiqYQv
-         0fOAbtnYSzWMixSA5nhMY0+5XWxgJzPcdHOJ6yElSyxbe6mV0K2iRAesM5uVaamsQawM
-         pArA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=JIq2OeAT7GbPM/ez6jiizE9IhWxE+ZB6pYMJ0EidLpE=;
-        b=e5JceMeD/LTRmh99sy97KCnvg65ZoATAU2HxT75f4/U9HhKSeRnWMxZHf/fMqyUNH2
-         h5bZUhET4jKKDhnbqTPE8GGNu9Jqq1uolfjl3KfyK5lRGdFsfhziAvXzRYl8L8SFn72x
-         AD3zJmiJ1qTPeJP/7UPuDBXHx+OY1B7n9u+KURbNOzG9HSD6fVk9TnztJFcaQE1ZKWmM
-         nzJEdUSXNUPd3Gx6d3UsGnopRQmQxjQVPonHrEegNT+GqQ4Pq7QMjvEMyq1uRgqvZP82
-         mP8Heemephv0JGIpOlI+z+e4TTgXkUrRL5qaGBZXpKpEWukz/1pfP1CbBEvCsSwrjPXP
-         OWoQ==
-X-Gm-Message-State: AA6/9Rl923kvFQ/iEc5557R7gWYG6V8VrXEDEaH77eRCq20ZoYeGvdK7UgeLoN9jM7+mPEIcJp6NZMcK285VqBOc
-X-Received: by 10.55.129.1 with SMTP id c1mr31481798qkd.53.1476124980133; Mon,
- 10 Oct 2016 11:43:00 -0700 (PDT)
+        id S1750989AbcJJSwT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 14:52:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54139 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750830AbcJJSwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 14:52:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 851E7442DD;
+        Mon, 10 Oct 2016 14:52:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NRiRBARwV4kO6c6uEl1c/CB2Phk=; b=JOl/ky
+        yMmc3plDF1p4kowffeah2kKJ5/d+KCsEG7J2nrzebuK/WCqNP7zN9MdSwaY2S/XD
+        X8J08FswVxgqqEJsdUg4PcRrNjtiJ298JGV78dlilM5cw89fTVgmYzjJk/GkA3Cj
+        Rfxj5ZE8/g8paJPzS+w7Q9LwqiZ5jXeV/14JU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CqwXReSjhTbUmYlbH3tmGxOX3XDhcDqw
+        7i8YE2UuMwvGK6YUL/h/8MhXU1TKb/6BLNltBXrTpGj4rJ+7WNusEy1CRQyO1rWP
+        GzsB2jJJGCpbuhjacAfYu17qtLMCS9nrm/I+ahtEFrC8TmMK4O8Qj6z02zotMgmR
+        fsf2wBkm7Fk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79EC3442DC;
+        Mon, 10 Oct 2016 14:52:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E18E3442DB;
+        Mon, 10 Oct 2016 14:52:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] pretty: respect color settings for %C placeholders
+References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
+        <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
+        <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
+        <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
+        <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
+        <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
+        <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
+        <20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net>
+Date:   Mon, 10 Oct 2016 11:52:14 -0700
+In-Reply-To: <20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 10 Oct 2016 11:15:17 -0400")
+Message-ID: <xmqq1szof34x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 10 Oct 2016 11:42:59 -0700 (PDT)
-In-Reply-To: <4B3747D8D2724E98B6AC000FE4072A09@black7>
-References: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com>
- <4B3747D8D2724E98B6AC000FE4072A09@black7>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 10 Oct 2016 11:42:59 -0700
-Message-ID: <CAGZ79kaHOBaVCsVPen-K_5LyitcDzVbjL_kAqMkYKk_fQxH4PQ@mail.gmail.com>
-Subject: Re: How to watch a mailing list & repo for patches which affect a
- certain area of code?
-To:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Ian Kelling <ian@iankelling.org>,
-        Xiaolong Ye <xiaolong.ye@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA3C75C6-8F1A-11E6-82ED-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc Xiaolong Ye <xiaolong.ye@intel.com>
+Jeff King <peff@peff.net> writes:
 
-On Sun, Oct 9, 2016 at 2:26 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
->> -----Original Message-----
->> From: Ian Kelling
->> Sent: Sunday, October 09, 2016 15:03
->>
->> I've got patches in various projects, and I don't have time to keep up
->> with the mailing list, but I'd like to help out with
->> maintenance of that
->> code, or the functions/files it touches. People don't cc me.
->> I figure I
->> could filter the list, test patches submitted, commits made,
->> mentions of
->> files/functions, build filters based on the code I have in
->> the repo even
->> if it's been moved or changed subsequently. I'm wondering what other
->> people have implemented already for automation around this, or general
->> thoughts. Web search is not showing me much.
->>
->
-> One thought would be to apply every patch automatically (to the branches of interest?). Then trigger on the [successful] changed
-> code. This would simplify the logic to working on the source only and not parsing the emails.
->
-> -Jason
->
+> So here's what a patch to do that would look like. I admit that "I can't
+> think of a good use" does not mean there _isn't_ one, but perhaps by
+> posting this, it might provoke other people to think on it, too. And if
+> nobody can come up with, maybe it's a good idea.
 
-I think this is currently attempted by some kernel people.
-However it is very hard to tell where to apply a patch, as it is not formalized.
-See the series that was merged at 72ce3ff7b51c ('xy/format-patch-base'),
-which adds a footer to the patch, that tells you where exactly a patch ought
-to be applied.
+I do not have a fundamental opposition to this approach myself,
+modulo a minor nit.
 
-The intention behind that series was to have some CI system hooked up
-and report failures to the mailing list as well IIUC. Maybe that helps with
-your use case, too?
+> +  By default, colors are shown only when enabled for log output (by
+> +  `color.diff`, `color.ui`, or `--color`, and respecting the `auto`
+> +  settings of the former if we are going to a terminal). `%C(auto,...)`
+> +  is accepted as a historical synonym for the default. Specifying
+> +  `%C(always,...) will show the colors always, even when colors are not
+> +  otherwise enabled (to enable this behavior for the whole format, use
+> +  `--color=always`).
+
+It is not just "for the whole format", but also affects other parts
+of the output, no?  I am thinking about "git log -p --format=...".
+
+> diff --git a/pretty.c b/pretty.c
+> index 25efbca..73e58b5 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -965,22 +965,31 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+>  
+>  		if (!end)
+>  			return 0;
+> -		if (skip_prefix(begin, "auto,", &begin)) {
+> +
+> +		if (!skip_prefix(begin, "always,", &begin)) {
+>  			if (!want_color(c->pretty_ctx->color))
+>  				return end - placeholder + 1;
+>  		}
+
+As a way to say "when color is not enabled, ignore everything unless
+it begins with 'always,'", this was a bit hard to read.  Perhaps an
+in-code comment is in order?
+
+> +
+> +		/* this is a historical noop */
+> +		skip_prefix(begin, "auto,", &begin);
+> +
+>  		if (color_parse_mem(begin, end - begin, color) < 0)
+>  			die(_("unable to parse --pretty format"));
+>  		strbuf_addstr(sb, color);
+>  		return end - placeholder + 1;
+>  	}
+> -	if (skip_prefix(placeholder + 1, "red", &rest))
+> +	if (skip_prefix(placeholder + 1, "red", &rest) &&
+> +	    want_color(c->pretty_ctx->color))
+>  		strbuf_addstr(sb, GIT_COLOR_RED);
+
+Hmm.  If we are in "no I do not want color" mode and "always,red"
+was given, we countermanded !want_color() check up above and come
+here.  Then we check want_color() again and refuse to paint it red?
+
+I must be reading the patch incorrectly, but I cannot quite tell
+where I want astray...
