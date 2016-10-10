@@ -2,84 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1853120989
-	for <e@80x24.org>; Mon, 10 Oct 2016 20:52:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86EE5209B4
+	for <e@80x24.org>; Mon, 10 Oct 2016 20:53:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752136AbcJJUwr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 16:52:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55336 "EHLO cloud.peff.net"
+        id S1752184AbcJJUxM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 16:53:12 -0400
+Received: from mout.web.de ([212.227.15.14]:55518 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751594AbcJJUwq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 16:52:46 -0400
-Received: (qmail 16431 invoked by uid 109); 10 Oct 2016 20:52:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 20:52:46 +0000
-Received: (qmail 1859 invoked by uid 111); 10 Oct 2016 20:53:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Oct 2016 16:53:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Oct 2016 16:52:44 -0400
-Date:   Mon, 10 Oct 2016 16:52:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use strbuf_add_unique_abbrev() for adding short hashes,
- part 3
-Message-ID: <20161010205243.fejhhvoos5tmqggh@sigill.intra.peff.net>
-References: <c830e99d-4fc9-b001-cce3-38f66dc2c678@web.de>
- <20161010000035.mfcf55wqfcbcnarh@sigill.intra.peff.net>
- <af55f6d7-e1b1-272b-4fbe-a6eb2422b3be@web.de>
+        id S1751594AbcJJUxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 16:53:11 -0400
+Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MIN5j-1brlDx1Uq7-0048Q5; Mon, 10 Oct 2016 22:52:58
+ +0200
+Subject: Re: %C(auto) not working as expected
+To:     Jeff King <peff@peff.net>
+References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee>
+ <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
+ <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee>
+ <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
+ <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
+Cc:     Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <6689ae49-6095-7bb4-ea06-1aaded174811@web.de>
+Date:   Mon, 10 Oct 2016 22:52:47 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
+In-Reply-To: <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <af55f6d7-e1b1-272b-4fbe-a6eb2422b3be@web.de>
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:udeRIHbVL5BXPa7rP3GdDSw/K6Scn7L7UXhJ/N9ZUh1d2FpFZA2
+ S6s7hkeKSjgY4MlB/O6cBG84uo3Z0E4+OsnZNVY6n/yECkay2imQkTjTZeWPZMaIxT8ht7q
+ jHlkSySW/be54Vv0BcLX6cimN2vRS9+Ov/NFFIDt9N/TJQPMxqGjeRzI8SblNJUY09r2H3R
+ p4S+7yCfvYHAySw0pkYxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ddC8d/CS3Ts=:njPJLH1am0K2Kc1PfHSJ5D
+ cy5Zy2DqTdU3L8bc1AdcGAGRdA3DbIOSQMAFP8/AkZFYk3pLWKe6YeOHCx+VkSXaTgA6oQy5h
+ tITXaT+65zyHVwpZlm/8bJTbS5XnzHX7Xz7PRi5sIzG7Hbh0h5r22E5TgAtv6+dxWxLAkgP3d
+ GXnv9/yBwOaUQSLWhS/8Axn/qqjzGMuUXweoVO0SLOuh0mVFOQFK0NTc0a9ZUaM7MAxynQ4KA
+ wq/7sjrtcqFMYf7V8RiDXHglzTpYlN93qiHIU979Z55WamIPs/fIm3++D5lwv+h/UY7R3vTmt
+ d6Cx4mAXac3Xp3NqNcktBgbZEw8L6FhPw2molGGaMCP/VOq9Bx3+T/FID5RbK+ejX/4RwviBJ
+ SR/YtD4P3QR8GNLv5xg4ZVsxzmcvKLlrgSOxI44guiY9PN9XXbvIyfeEm/r9HE29e7EnTHC+4
+ ZZSdDKUVJxJHIw72EtkwK1qgzDsavPuEV4BLt9itF5YXunebvIqEa8RyOeO2eiKHr8NpdGiDT
+ 1FAqCvboQKw24fvj737JSZl4gZiiK7jja9i0DTwpoxn0NC/FWiaJvxEx6LfuLYubJcXj7td47
+ 3qJ77VgsE828r5+krFwMtBqrGwyDkBLZHdD+ZmCK7B7XlCkv7RHz2nPHPwCGoEbgPBxcBn+xM
+ ZHz00beSzr5uT4jBicjVARGL1SJvjP394OsA36oJd2oNuEX8AiecQMnmYIsD6/zeYmZfG4Tde
+ qegkk46iIgAm848ETh5+7l2qkK4OyNUp6pnd9ypqyee5kJUFcKrQF5qf7FJB3EmbZQjwSdeZj
+ tjMMOpm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 10:46:21PM +0200, René Scharfe wrote:
-
-> Good question.  ALLOC_GROW() doesn't double exactly, but indeed the
-> number of reallocations depends on the size of the added pieces.  I
-> always thought of strbuf_addf() as an expensive function for
-> convenience, but never timed it.
+Am 10.10.2016 um 01:46 schrieb Jeff King:
+>> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+>> index a942d57..89e3bc6 100644
+>> --- a/Documentation/pretty-formats.txt
+>> +++ b/Documentation/pretty-formats.txt
+>> @@ -166,7 +166,8 @@ endif::git-rev-list[]
+>>  - '%Cgreen': switch color to green
+>>  - '%Cblue': switch color to blue
+>>  - '%Creset': reset color
+>> -- '%C(...)': color specification, as described in color.branch.* config option;
+>> +- '%C(...)': color specification, as described under Values, color in the
+>> +  "CONFIGURATION FILE" section of linkgit:git-config[1];
 > 
-> Numbers vary a bit, but here's what I get for the crude test program
-> at the end:
+> I like the intent here, though I found "Values, color" hard to parse (it
+> was not immediately clear that you mean "the color paragraph of the
+> Values section", as commas are already being used in that sentence for
+> the parenthetical phrase).
 > 
-> $ time t/helper/test-strbuf strbuf_addf 123 123456789012345678901234567890
-> 123123456789012345678901234567890
+> I'm not sure how to say that succinctly, as we are four levels deep
+> (git-config -> configuration file -> values -> color). Too bad there is
+> no good link syntax for it. Maybe:
 > 
-> real    0m0.168s
-> user    0m0.164s
-> sys     0m0.000s
-> $ time t/helper/test-strbuf strbuf_addstr 123 123456789012345678901234567890
-> 123123456789012345678901234567890
+>   ...color specification, as described in linkgit:git-config[1] (see the
+>   paragraph on colors in the "Values" section, under "CONFIGURATION
+>   FILE")
 > 
-> real    0m0.141s
-> user    0m0.140s
-> sys     0m0.000s
-> 
-> Just a data-point, but it confirms my bias, so I stop here. :)
+> or something.
 
-Heh. I'm surprised it's that big a difference, as processing simple
-printf strings should be pretty quick. I guess what happens in your
-program is that your strings almost always require a re-allocation
-(because you've just released, and we start small), and we literally end
-up doing a partial copy via vsnprintf(), realizing we're out of space,
-reallocating, and then running it again.
+That's better.  Or we could remove the "color" part and trust readers to
+find the right paragraph in the Values sub-section?
 
-So it's noticeably worse when we _do_ reallocate, but usually that
-should be amortized across many calls (and if it isn't, then you are
-paying the much bigger price of lots of mallocs, and you should optimize
-that first :) ).
-
-That being said, it doesn't seem like it would be _worse_ to move from
-addf to multiple addstrs.
-
--Peff
+-- '%C(...)': color specification, as described in color.branch.* config option;
++- '%C(...)': color specification, as described under Values in the
++  "CONFIGURATION FILE" section of linkgit:git-config[1];
