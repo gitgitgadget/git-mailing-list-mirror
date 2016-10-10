@@ -2,93 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 492E41F4F8
-	for <e@80x24.org>; Mon, 10 Oct 2016 09:27:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E28001F4F8
+	for <e@80x24.org>; Mon, 10 Oct 2016 09:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751214AbcJJJ1a (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 05:27:30 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:34517 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751027AbcJJJ13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 05:27:29 -0400
-Received: by mail-io0-f170.google.com with SMTP id r30so104973448ioi.1
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 02:26:49 -0700 (PDT)
+        id S1751288AbcJJJpe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 05:45:34 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:38714 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751229AbcJJJpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 05:45:33 -0400
+Received: by mail-it0-f44.google.com with SMTP id o19so74336287ito.1
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 02:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=r+pTHE8WVFbukA0TWX2lm1TQ4WhAoJZXgm76DM7ITiI=;
-        b=KFQtEyYSsOZ9O/TH9l5Gw7I3gJzykr6qJ3hvoyxU5OkB5I35VhuBjkTwO2vWFaeKf5
-         gG3ts9DCgdk9zxn8AXJhsQPwx8QtcAqhB6vYMK/HqFlcrjqda3SaDsRWJoeWVtgGDwGv
-         SMSykKO7lyxJr0aMTjD96tx4meHQIXIg31wNPvKt7TLDHiUiq+ugk6j23IFJBrKf8gG4
-         D33Qsmc9V2kx8iUbKwn3996mO2P02NxVKyei1v6/07t5ckCE1PJFWCG6fk2g1NIidOW4
-         C+KMgdpXWRcoI6hj9BeGjzxNsZIrAWHkB2mLwcDyR+6/G3d+f2MIqEts3TAp0RUv5ayv
-         3SUA==
+         :cc;
+        bh=86NaNXNAyrqoMG+rB5GWZX8ETcDfGaeuK6L8kQBRGbU=;
+        b=UzHaFwKpYft3QNxBUBOhYZnysAD0D6OBP7acDdpdqsxMHa9BxZKOmbWDli7b48Pxiq
+         AwqxvnSuqo8DkmsDxB8bYt3oRCAoGmC5sbJrL2ntmpNA15zQc3XlEpW5dzEndcp4rpE5
+         iOMtRNZQ4TNNTPozCzANBeFXGvhS7sIhBDsrYHoHm1YhqPEftrkEeuO7by+uARyPjiYO
+         sqLk9GkYGQUuUHLcoKJO2RgBwC11UPlEbMzcGf8Su6s345WmbGdzvAhkTHO11gdEfDWA
+         cF9mJ4/1Y0DTZs/Wa4NW0qSiUANC/xMonAo3hieAcxQHi4qhqeF0Kg+H3NXCKmp/pg6c
+         c7dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=r+pTHE8WVFbukA0TWX2lm1TQ4WhAoJZXgm76DM7ITiI=;
-        b=RZENm4HmofG69LTZTP0SqEazCM/WqsnAPiyNH6QDlHIzlGOorSx8lLJ/Rpfof+UVWF
-         2E3P6NHelLZnop7NQMGZ5fFSOetvq2R5te+tM3ry2kYWx0NXggBbiA479MZ4qM7paPNh
-         nW85vsUahK1qcTP2TPsBhmdDyfOk92lQvVRy2Jouw2/FmYxZwW+wSXVVD97oOEhubz3A
-         mooteoxPsyHjQU4p/JXIhomWZp0Hyado98o17CvbElUW4aBcSZQOqcyHvghOBSAwjfH5
-         XvztHPC1DBMMiIuLF7NgzZWw/PzU0+oyZJuoc9eKpGfUUWAnYhv8LUicYJp4GVxAaBOc
-         UNIw==
-X-Gm-Message-State: AA6/9RnZeyvFqFxxJw6Hp0hF1cWcGGdohbfRaBJnH8JdaQXzDIiDjWHkYyWUNdD6RF2D7Kcm8kR0EJErWty96A==
-X-Received: by 10.107.44.17 with SMTP id s17mr31371564ios.212.1476091609200;
- Mon, 10 Oct 2016 02:26:49 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=86NaNXNAyrqoMG+rB5GWZX8ETcDfGaeuK6L8kQBRGbU=;
+        b=jctoRIXNa/EOIC4Xwr4VlnrLd82/7lhf4xCBSEZdrZS9MymfCGhOnWb2ypAzquCf3P
+         okLRrunkDxJztaIaSTG3Qiu8y7wo030ce9FXyInfXVYZufgATSoRo7B5ghaefatRya8y
+         i75Mxg4Zxxo7e+pHmUGKmE2Xm+dfbe7UMuaMCIYEBdKns+ccWlEaEhhD7RJjVqdEwJyQ
+         48mNJQSyO/+7JD8M/lw6NHklEJ1O7VhEoFBRoznXIHVb2caZoUUjVm9BHFWKzJxY+m+y
+         18jkz0sKbdQDLdmfeeX/OGL6H8qP7MSBMCOP6+InfE1pJuQDnqbONImqzj9Ij8+CKRtT
+         X9kA==
+X-Gm-Message-State: AA6/9Rkzkj9YSVPMwbAdPcZi3bFF5YEHgUhmaWl/X7n5x/34rME3BXjzK2ente5AFUqDhPQtTo5jf1NWacLEuA==
+X-Received: by 10.36.70.142 with SMTP id j136mr2772298itb.50.1476092732348;
+ Mon, 10 Oct 2016 02:45:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.230.206 with HTTP; Mon, 10 Oct 2016 02:26:18 -0700 (PDT)
-In-Reply-To: <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
-References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee> <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
- <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee> <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
- <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net>
+Received: by 10.64.230.206 with HTTP; Mon, 10 Oct 2016 02:45:01 -0700 (PDT)
+In-Reply-To: <CAOi_75+Zoeeq5FD1HKgG4MjeL9LkBshsSfdrMOTi8m-Mt-OQNQ@mail.gmail.com>
+References: <CAOi_75+2SG2WYHBMQhfGj96eKsZ66niJzOevVGM5eJv-qqrVNg@mail.gmail.com>
+ <1475999513.7410.8.camel@kaarsemaker.net> <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
+ <CAOi_75+Zoeeq5FD1HKgG4MjeL9LkBshsSfdrMOTi8m-Mt-OQNQ@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 10 Oct 2016 16:26:18 +0700
-Message-ID: <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
-Subject: Re: %C(auto) not working as expected
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 10 Oct 2016 16:45:01 +0700
+Message-ID: <CACsJy8DMKWeZ+DuQ0uoY6rdPfusq8D1SfBCkPyn+6X9S589ncg@mail.gmail.com>
+Subject: Re: Bug? git worktree fails with master on bare repo
+To:     Michael Tutty <mtutty@gforgegroup.com>
+Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Michael Rappazzo <rappazzo@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 6:46 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Oct 09, 2016 at 03:24:17PM +0200, Ren=C3=A9 Scharfe wrote:
+On Sun, Oct 9, 2016 at 8:42 PM, Michael Tutty <mtutty@gforgegroup.com> wrote:
+> Dennis,
+> Thanks for the great response, and for spending time on my issue.
+> I'll try that first patch and see what happens.
 >
->> Offering a way to enable terminal-detection for all color codes of a
->> format would be useful, but using the existing "auto," prefix for that
->> would be a behaviour change that could surprise users.
-
-I wonder if we made a mistake associating terminal-detection with
-%C(auto,...). The more likely use case is enable or disable all
-colors, not "the next tag".
-
-> Yeah. In retrospect, it probably would have been saner to make %C(red) a
-> noop when --color is not in effect (either because of --no-color, or
-> more likely when --color=3Dauto is in effect and stdout is not a
-> terminal). But that ship has long since sailed, I think.
+> In the meantime, it got weirder...
 >
-> If we do a revamp of the pretty-formats to bring them more in line with
-> ref-filter (e.g., something like "%(color:red)") maybe that would be an
-> opportunity to make minor adjustments. Though, hmm, it looks like
-> for-each-ref already knows "%(color:red)", and it's unconditional.
-> <sigh> So perhaps we would need to go through some deprecation period or
-> other transition.
+> I created a brand-new (bare) repo
 
-We could add some new tag to change the behavior of all following %C
-tags. Something like %C(tty) maybe (probably a bad name), then
-discourage the use if "%C(auto" for terminal detection?
---=20
+Elaboration needed here. If I create a bare _clone_, then "HEAD" could
+be detached, or point to some branch, depending on where "HEAD" is in
+the source repo. If source repo's HEAD is "master", I got the same
+behavior (worktree add fails). If it's detached or points to some
+other branch, it's ok. If this is "git init --bare" then I got "fatal:
+invalid reference: master".
+
+> and was able to git add worktree
+> /path master.  I was able to do this repeatedly, even using the
+> worktree to merge other branches to master.  I didn't find any
+> condition or step that caused some kind of orphan master work tree,
+> which was what I thought the underlying problem might be.
+-- 
 Duy
