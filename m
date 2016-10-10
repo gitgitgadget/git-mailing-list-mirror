@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_PH_SURBL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 964A720986
-	for <e@80x24.org>; Mon, 10 Oct 2016 12:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9879020986
+	for <e@80x24.org>; Mon, 10 Oct 2016 12:55:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752204AbcJJMzi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 08:55:38 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:53677 "EHLO sapo.pt"
+        id S1752216AbcJJMzm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 08:55:42 -0400
+Received: from relay2.ptmail.sapo.pt ([212.55.154.22]:37474 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751713AbcJJMzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 08:55:36 -0400
-Received: (qmail 10292 invoked from network); 10 Oct 2016 12:55:34 -0000
-Received: (qmail 11725 invoked from network); 10 Oct 2016 12:55:32 -0000
+        id S1751917AbcJJMzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 08:55:41 -0400
+Received: (qmail 11209 invoked from network); 10 Oct 2016 12:55:39 -0000
+Received: (qmail 12978 invoked from network); 10 Oct 2016 12:55:38 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 10 Oct 2016 12:55:27 -0000
+          for <git@vger.kernel.org>; 10 Oct 2016 12:55:33 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,193 +35,133 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 00/14] Mark strings in Perl scripts for translation
-Date:   Mon, 10 Oct 2016 12:54:35 +0000
-Message-Id: <20161010125449.7929-1-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 01/14] i18n: add--interactive: mark strings for translation
+Date:   Mon, 10 Oct 2016 12:54:36 +0000
+Message-Id: <20161010125449.7929-2-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.10.1.396.g621fe23
-MIME-Version: 1.0
+In-Reply-To: <20161010125449.7929-1-vascomalmeida@sapo.pt>
+References: <20161010125449.7929-1-vascomalmeida@sapo.pt>
 In-Reply-To: <20161005172110.30801-1-vascomalmeida@sapo.pt>
 References: <20161005172110.30801-1-vascomalmeida@sapo.pt>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark messages in some perl scripts for translation.
+Mark simple strings (without interpolation) for translation.
 
-Fix minor stuff and follow Jakub Narębski's suggestion to use N__() instead of
-__() in the hash tables.
+Brackets around first parameter of ternary operator is necessary because
+otherwise xgettext fails to extract strings marked for translation from
+the rest of the file.
 
-Interdiff included below.
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ git-add--interactive.perl | 76 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 42 insertions(+), 34 deletions(-)
 
-Vasco Almeida (14):
-  i18n: add--interactive: mark strings for translation
-  i18n: add--interactive: mark simple here-documents for translation
-  i18n: add--interactive: mark strings with interpolation for
-    translation
-  i18n: clean.c: match string with git-add--interactive.perl
-  i18n: add--interactive: mark plural strings
-  i18n: add--interactive: mark patch prompt for translation
-  i18n: add--interactive: i18n of help_patch_cmd
-  i18n: add--interactive: mark edit_hunk_manually message for
-    translation
-  i18n: add--interactive: remove %patch_modes entries
-  i18n: add--interactive: mark status words for translation
-  i18n: send-email: mark strings for translation
-  i18n: send-email: mark warnings and errors for translation
-  i18n: send-email: mark string with interpolation for translation
-  i18n: difftool: mark warnings for translation
-
- Makefile                  |   3 +-
- builtin/clean.c           |  10 +-
- git-add--interactive.perl | 322 ++++++++++++++++++++++++++++++----------------
- git-difftool.perl         |  22 ++--
- git-send-email.perl       | 176 +++++++++++++------------
- perl/Git/I18N.pm          |  17 ++-
- t/t0202/test.pl           |  14 +-
- 7 files changed, 353 insertions(+), 211 deletions(-)
-
-
-diff --git a/Makefile b/Makefile
-index 4ef0344..9dc95cb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2112,7 +2112,7 @@ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
- XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
- 	--keyword=gettextln --keyword=eval_gettextln
- XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
--	--keyword=__ --keyword="__n:1,2"
-+	--keyword=__ --keyword=N__ --keyword="__n:1,2"
- LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
- LOCALIZED_SH = $(SCRIPT_SH)
- LOCALIZED_SH += git-parse-remote.sh
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 0b4a27c..4754104 100755
+index ee3d812..cf216ec 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -601,7 +601,7 @@ sub list_and_choose {
- 				}
- 			}
- 			if ($opts->{SINGLETON} && $bottom != $top) {
--				error_msg sprintf(__("Huh (%s)?"), $choice);
-+				error_msg sprintf(__("Huh (%s)?\n"), $choice);
- 				next TOPLOOP;
- 			}
- 			for ($i = $bottom-1; $i <= $top-1; $i++) {
-@@ -704,7 +704,7 @@ sub revert_cmd {
- 				    $_->{INDEX_ADDDEL} eq 'create') {
- 					system(qw(git update-index --force-remove --),
- 					       $_->{VALUE});
--					print "note: $_->{VALUE} is untracked now.\n";
-+					printf(__("note: %s is untracked now.\n"), $_->{VALUE});
- 				}
- 			}
+@@ -4,6 +4,7 @@ use 5.008;
+ use strict;
+ use warnings;
+ use Git;
++use Git::I18N;
+ 
+ binmode(STDOUT, ":raw");
+ 
+@@ -253,8 +254,9 @@ sub list_untracked {
+ 	run_cmd_pipe(qw(git ls-files --others --exclude-standard --), @ARGV);
+ }
+ 
+-my $status_fmt = '%12s %12s %s';
+-my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
++# TRANSLATORS: you can adjust this to align "git add -i" status menu
++my $status_fmt = __('%12s %12s %s');
++my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'));
+ 
+ {
+ 	my $initial;
+@@ -680,7 +682,7 @@ sub update_cmd {
+ 	my @mods = list_modified('file-only');
+ 	return if (!@mods);
+ 
+-	my @update = list_and_choose({ PROMPT => 'Update',
++	my @update = list_and_choose({ PROMPT => __('Update'),
+ 				       HEADER => $status_head, },
+ 				     @mods);
+ 	if (@update) {
+@@ -692,7 +694,7 @@ sub update_cmd {
+ }
+ 
+ sub revert_cmd {
+-	my @update = list_and_choose({ PROMPT => 'Revert',
++	my @update = list_and_choose({ PROMPT => __('Revert'),
+ 				       HEADER => $status_head, },
+ 				     list_modified());
+ 	if (@update) {
+@@ -726,13 +728,13 @@ sub revert_cmd {
+ }
+ 
+ sub add_untracked_cmd {
+-	my @add = list_and_choose({ PROMPT => 'Add untracked' },
++	my @add = list_and_choose({ PROMPT => __('Add untracked') },
+ 				  list_untracked());
+ 	if (@add) {
+ 		system(qw(git update-index --add --), @add);
+ 		say_n_paths('added', @add);
+ 	} else {
+-		print "No untracked files.\n";
++		print __("No untracked files.\n");
+ 	}
+ 	print "\n";
+ }
+@@ -1166,8 +1168,14 @@ sub edit_hunk_loop {
  		}
-@@ -1038,25 +1038,25 @@ sub color_diff {
- }
+ 		else {
+ 			prompt_yesno(
+-				'Your edited hunk does not apply. Edit again '
+-				. '(saying "no" discards!) [y/n]? '
++				# TRANSLATORS: do not translate [y/n]
++				# The program will only accept that input
++				# at this point.
++				# Consider translating (saying "no" discards!) as
++				# (saying "n" for "no" discards!) if the translation
++				# of the word "no" does not start with n.
++				__('Your edited hunk does not apply. Edit again '
++				   . '(saying "no" discards!) [y/n]? ')
+ 				) or return undef;
+ 		}
+ 	}
+@@ -1213,11 +1221,11 @@ sub apply_patch_for_checkout_commit {
+ 		run_git_apply 'apply '.$reverse, @_;
+ 		return 1;
+ 	} elsif (!$applies_index) {
+-		print colored $error_color, "The selected hunks do not apply to the index!\n";
+-		if (prompt_yesno "Apply them to the worktree anyway? ") {
++		print colored $error_color, __("The selected hunks do not apply to the index!\n");
++		if (prompt_yesno __("Apply them to the worktree anyway? ")) {
+ 			return run_git_apply 'apply '.$reverse, @_;
+ 		} else {
+-			print colored $error_color, "Nothing was applied.\n";
++			print colored $error_color, __("Nothing was applied.\n");
+ 			return 0;
+ 		}
+ 	} else {
+@@ -1237,9 +1245,9 @@ sub patch_update_cmd {
  
- my %edit_hunk_manually_modes = (
--	stage => __(
-+	stage => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for staging."),
--	stash => __(
-+	stash => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for stashing."),
--	reset_head => __(
-+	reset_head => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for unstaging."),
--	reset_nothead => __(
-+	reset_nothead => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for applying."),
--	checkout_index => __(
-+	checkout_index => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for discarding"),
--	checkout_head => __(
-+	checkout_head => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for discarding."),
--	checkout_nothead => __(
-+	checkout_nothead => N__(
- "# If the patch applies cleanly, the edited hunk will immediately be
- # marked for applying."),
- );
-@@ -1078,7 +1078,7 @@ sub edit_hunk_manually {
- # To remove '%s' lines, delete them.
- # Lines starting with # will be removed.
- #\n"), $remove_minus, $remove_plus),
--$edit_hunk_manually_modes{$patch_mode}, __(
-+__($edit_hunk_manually_modes{$patch_mode}), __(
- # TRANSLATORS: 'it' refers to the patch mentioned in the previous messages.
- " If it does not apply cleanly, you will be given
- # an opportunity to edit again. If all lines of the hunk are removed,
-@@ -1192,43 +1192,43 @@ sub edit_hunk_loop {
- }
- 
- my %help_patch_modes = (
--	stage => __(
-+	stage => N__(
- "y - stage this hunk
- n - do not stage this hunk
- q - quit; do not stage this hunk or any of the remaining ones
- a - stage this hunk and all later hunks in the file
- d - do not stage this hunk or any of the later hunks in the file"),
--	stash => __(
-+	stash => N__(
- "y - stash this hunk
- n - do not stash this hunk
- q - quit; do not stash this hunk or any of the remaining ones
- a - stash this hunk and all later hunks in the file
- d - do not stash this hunk or any of the later hunks in the file"),
--	reset_head => __(
-+	reset_head => N__(
- "y - unstage this hunk
- n - do not unstage this hunk
- q - quit; do not unstage this hunk or any of the remaining ones
- a - unstage this hunk and all later hunks in the file
- d - do not unstage this hunk or any of the later hunks in the file"),
--	reset_nothead => __(
-+	reset_nothead => N__(
- "y - apply this hunk to index
- n - do not apply this hunk to index
- q - quit; do not apply this hunk or any of the remaining ones
- a - apply this hunk and all later hunks in the file
- d - do not apply this hunk or any of the later hunks in the file"),
--	checkout_index => __(
-+	checkout_index => N__(
- "y - discard this hunk from worktree
- n - do not discard this hunk from worktree
- q - quit; do not discard this hunk or any of the remaining ones
- a - discard this hunk and all later hunks in the file
- d - do not discard this hunk or any of the later hunks in the file"),
--	checkout_head => __(
-+	checkout_head => N__(
- "y - discard this hunk from index and worktree
- n - do not discard this hunk from index and worktree
- q - quit; do not discard this hunk or any of the remaining ones
- a - discard this hunk and all later hunks in the file
- d - do not discard this hunk or any of the later hunks in the file"),
--	checkout_nothead => __(
-+	checkout_nothead => N__(
- "y - apply this hunk to index and worktree
- n - do not apply this hunk to index and worktree
- q - quit; do not apply this hunk or any of the remaining ones
-@@ -1237,7 +1237,7 @@ d - do not apply this hunk or any of the later hunks in the file"),
- );
- 
- sub help_patch_cmd {
--	print colored $help_color, $help_patch_modes{$patch_mode}, "\n", __ <<EOF ;
-+	print colored $help_color, __($help_patch_modes{$patch_mode}), "\n", __ <<EOF ;
- g - select a hunk to go to
- / - search for a hunk matching the given regex
- j - leave this hunk undecided, see next undecided hunk
-@@ -1303,7 +1303,7 @@ sub patch_update_cmd {
+ 	if (!@mods) {
+ 		if (@all_mods) {
+-			print STDERR "Only binary files changed.\n";
++			print STDERR __("Only binary files changed.\n");
+ 		} else {
+-			print STDERR "No changes.\n";
++			print STDERR __("No changes.\n");
+ 		}
+ 		return 0;
+ 	}
+@@ -1247,7 +1255,7 @@ sub patch_update_cmd {
  		@them = @mods;
  	}
  	else {
@@ -230,148 +170,148 @@ index 0b4a27c..4754104 100755
  					  HEADER => $status_head, },
  					@mods);
  	}
-@@ -1355,39 +1355,39 @@ sub display_hunks {
+@@ -1397,12 +1405,12 @@ sub patch_update_file {
+ 				my $response = $1;
+ 				my $no = $ix > 10 ? $ix - 10 : 0;
+ 				while ($response eq '') {
+-					my $extra = "";
+ 					$no = display_hunks(\@hunk, $no);
+ 					if ($no < $num) {
+-						$extra = " (<ret> to see more)";
++						print __("go to which hunk (<ret> to see more)? ");
++					} else {
++						print __("go to which hunk? ");
+ 					}
+-					print "go to which hunk$extra? ";
+ 					$response = <STDIN>;
+ 					if (!defined $response) {
+ 						$response = '';
+@@ -1439,7 +1447,7 @@ sub patch_update_file {
+ 			elsif ($line =~ m|^/(.*)|) {
+ 				my $regex = $1;
+ 				if ($1 eq "") {
+-					print colored $prompt_color, "search for regex? ";
++					print colored $prompt_color, __("search for regex? ");
+ 					$regex = <STDIN>;
+ 					if (defined $regex) {
+ 						chomp $regex;
+@@ -1462,7 +1470,7 @@ sub patch_update_file {
+ 					$iy++;
+ 					$iy = 0 if ($iy >= $num);
+ 					if ($ix == $iy) {
+-						error_msg "No hunk matches the given pattern\n";
++						error_msg __("No hunk matches the given pattern\n");
+ 						last;
+ 					}
+ 				}
+@@ -1474,7 +1482,7 @@ sub patch_update_file {
+ 					$ix--;
+ 				}
+ 				else {
+-					error_msg "No previous hunk\n";
++					error_msg __("No previous hunk\n");
+ 				}
+ 				next;
+ 			}
+@@ -1483,7 +1491,7 @@ sub patch_update_file {
+ 					$ix++;
+ 				}
+ 				else {
+-					error_msg "No next hunk\n";
++					error_msg __("No next hunk\n");
+ 				}
+ 				next;
+ 			}
+@@ -1496,13 +1504,13 @@ sub patch_update_file {
+ 					}
+ 				}
+ 				else {
+-					error_msg "No previous hunk\n";
++					error_msg __("No previous hunk\n");
+ 				}
+ 				next;
+ 			}
+ 			elsif ($line =~ /^j/) {
+ 				if ($other !~ /j/) {
+-					error_msg "No next hunk\n";
++					error_msg __("No next hunk\n");
+ 					next;
+ 				}
+ 			}
+@@ -1560,18 +1568,18 @@ sub diff_cmd {
+ 	my @mods = list_modified('index-only');
+ 	@mods = grep { !($_->{BINARY}) } @mods;
+ 	return if (!@mods);
+-	my (@them) = list_and_choose({ PROMPT => 'Review diff',
++	my (@them) = list_and_choose({ PROMPT => __('Review diff'),
+ 				     IMMEDIATE => 1,
+ 				     HEADER => $status_head, },
+ 				   @mods);
+ 	return if (!@them);
+-	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
++	my $reference = (is_initial_commit()) ? get_empty_tree() : 'HEAD';
+ 	system(qw(git diff -p --cached), $reference, '--',
+ 		map { $_->{VALUE} } @them);
+ }
  
- my %patch_update_prompt_modes = (
- 	stage => {
--		mode => __("Stage mode change [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Stage deletion [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Stage this hunk [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Stage mode change [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Stage deletion [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Stage this hunk [y,n,q,a,d,/%s,?]? "),
- 	},
- 	stash => {
--		mode => __("Stash mode change [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Stash deletion [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Stash this hunk [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Stash mode change [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Stash deletion [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Stash this hunk [y,n,q,a,d,/%s,?]? "),
- 	},
- 	reset_head => {
--		mode => __("Unstage mode change [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Unstage deletion [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Unstage this hunk [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Unstage mode change [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Unstage deletion [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Unstage this hunk [y,n,q,a,d,/%s,?]? "),
- 	},
- 	reset_nothead => {
--		mode => __("Apply mode change to index [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Apply deletion to index [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Apply this hunk to index [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Apply mode change to index [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Apply deletion to index [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Apply this hunk to index [y,n,q,a,d,/%s,?]? "),
- 	},
- 	checkout_index => {
--		mode => __("Discard mode change from worktree [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Discard deletion from worktree [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Discard this hunk from worktree [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Discard mode change from worktree [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Discard deletion from worktree [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Discard this hunk from worktree [y,n,q,a,d,/%s,?]? "),
- 	},
- 	checkout_head => {
--		mode => __("Discard mode change from index and worktree [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Discard deletion from index and worktree [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Discard this hunk from index and worktree [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Discard mode change from index and worktree [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Discard deletion from index and worktree [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Discard this hunk from index and worktree [y,n,q,a,d,/%s,?]? "),
- 	},
- 	checkout_nothead => {
--		mode => __("Apply mode change to index and worktree [y,n,q,a,d,/%s,?]? "),
--		deletion => __("Apply deletion to index and worktree [y,n,q,a,d,/%s,?]? "),
--		hunk => __("Apply this hunk to index and worktree [y,n,q,a,d,/%s,?]? "),
-+		mode => N__("Apply mode change to index and worktree [y,n,q,a,d,/%s,?]? "),
-+		deletion => N__("Apply deletion to index and worktree [y,n,q,a,d,/%s,?]? "),
-+		hunk => N__("Apply this hunk to index and worktree [y,n,q,a,d,/%s,?]? "),
- 	},
- );
+ sub quit_cmd {
+-	print "Bye.\n";
++	print __("Bye.\n");
+ 	exit(0);
+ }
  
-@@ -1464,7 +1464,7 @@ sub patch_update_file {
- 			print;
+@@ -1594,32 +1602,32 @@ sub process_args {
+ 			if ($1 eq 'reset') {
+ 				$patch_mode = 'reset_head';
+ 				$patch_mode_revision = 'HEAD';
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 				if ($arg ne '--') {
+ 					$patch_mode_revision = $arg;
+ 					$patch_mode = ($arg eq 'HEAD' ?
+ 						       'reset_head' : 'reset_nothead');
+-					$arg = shift @ARGV or die "missing --";
++					$arg = shift @ARGV or die __("missing --");
+ 				}
+ 			} elsif ($1 eq 'checkout') {
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 				if ($arg eq '--') {
+ 					$patch_mode = 'checkout_index';
+ 				} else {
+ 					$patch_mode_revision = $arg;
+ 					$patch_mode = ($arg eq 'HEAD' ?
+ 						       'checkout_head' : 'checkout_nothead');
+-					$arg = shift @ARGV or die "missing --";
++					$arg = shift @ARGV or die __("missing --");
+ 				}
+ 			} elsif ($1 eq 'stage' or $1 eq 'stash') {
+ 				$patch_mode = $1;
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 			} else {
+ 				die "unknown --patch mode: $1";
+ 			}
+ 		} else {
+ 			$patch_mode = 'stage';
+-			$arg = shift @ARGV or die "missing --";
++			$arg = shift @ARGV or die __("missing --");
  		}
- 		print colored $prompt_color,
--			sprintf($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}, $other);
-+			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}), $other);
- 
- 		my $line = prompt_single_character;
- 		last unless defined $line;
-diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
-index 3f7ac25..32c4568 100644
---- a/perl/Git/I18N.pm
-+++ b/perl/Git/I18N.pm
-@@ -13,7 +13,7 @@ BEGIN {
- 	}
- }
- 
--our @EXPORT = qw(__ __n);
-+our @EXPORT = qw(__ __n N__);
- our @EXPORT_OK = @EXPORT;
- 
- sub __bootstrap_locale_messages {
-@@ -54,6 +54,8 @@ BEGIN
- 		*__ = sub ($) { $_[0] };
- 		*__n = sub ($$$) { $_[2] == 1 ? $_[0] : $_[1] };
- 	};
-+
-+	sub N__($) { return shift; }
- }
- 
- 1;
-@@ -74,6 +76,7 @@ Git::I18N - Perl interface to Git's Gettext localizations
- 
- 	printf __n("commited %d file", "commited %d files", $files), $files;
- 
-+
- =head1 DESCRIPTION
- 
- Git's internal Perl interface to gettext via L<Locale::Messages>. If
-@@ -94,6 +97,11 @@ passthrough fallback function.
- =head2 __n($$$)
- L<Locale::Messages>'s ngettext function or passthrough fallback function.
- 
-+=head2 N__($)
-+No-op that only returns its argument. Use this if you want xgettext to
-+extract the text to the pot template but do not want to trigger retrival of
-+the translation at run time.
-+
- =head1 AUTHOR
- 
- E<AElig>var ArnfjE<ouml>rE<eth> Bjarmason <avarab@gmail.com>
-diff --git a/t/t0202/test.pl b/t/t0202/test.pl
-index 4101833..2cbf7b9 100755
---- a/t/t0202/test.pl
-+++ b/t/t0202/test.pl
-@@ -4,7 +4,7 @@ use lib (split(/:/, $ENV{GITPERLLIB}));
- use strict;
- use warnings;
- use POSIX qw(:locale_h);
--use Test::More tests => 11;
-+use Test::More tests => 13;
- use Git::I18N;
- 
- my $has_gettext_library = $Git::I18N::__HAS_LIBRARY;
-@@ -32,6 +32,7 @@ is_deeply(\@Git::I18N::EXPORT, \@Git::I18N::EXPORT_OK, "sanity: Git::I18N export
- 	my %prototypes = (qw(
- 		__	$
- 		__n	$$$
-+		N__	$
- 	));
- 	while (my ($sub, $proto) = each %prototypes) {
- 		is(prototype(\&{"Git::I18N::$sub"}), $proto, "sanity: $sub has a $proto prototype");
-@@ -55,6 +56,8 @@ is_deeply(\@Git::I18N::EXPORT, \@Git::I18N::EXPORT_OK, "sanity: Git::I18N export
- 		"Get singular string through __n() in C locale");
- 	is(__n($got_singular, $got_plural, 2), $expect_plural,
- 		"Get plural string through __n() in C locale");
-+
-+	is(N__($got), $expect, "Passing a string through N__() in the C locale works");
- }
- 
- # Test a basic message on different locales
+ 		die "invalid argument $arg, expecting --"
+ 		    unless $arg eq "--";
+@@ -1641,10 +1649,10 @@ sub main_loop {
+ 		   [ 'help', \&help_cmd, ],
+ 	);
+ 	while (1) {
+-		my ($it) = list_and_choose({ PROMPT => 'What now',
++		my ($it) = list_and_choose({ PROMPT => __('What now'),
+ 					     SINGLETON => 1,
+ 					     LIST_FLAT => 4,
+-					     HEADER => '*** Commands ***',
++					     HEADER => __('*** Commands ***'),
+ 					     ON_EOF => \&quit_cmd,
+ 					     IMMEDIATE => 1 }, @cmd);
+ 		if ($it) {
 -- 
 2.7.4
 
