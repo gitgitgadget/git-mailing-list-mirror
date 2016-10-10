@@ -2,109 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A704520989
-	for <e@80x24.org>; Mon, 10 Oct 2016 19:44:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7587020989
+	for <e@80x24.org>; Mon, 10 Oct 2016 19:58:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751423AbcJJTom (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 15:44:42 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33863 "EHLO
-        mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751307AbcJJTol (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 15:44:41 -0400
-Received: by mail-pa0-f43.google.com with SMTP id rz1so60380368pab.1
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 12:44:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FEhu7jYKmIcWa4IQ7JozSOlp09EXHC/VRLT4OxbxKp0=;
-        b=GDSiqahrmlnHWDf/wVKEt+YxEuwbq1M+fFzK8Kri/2bw59gcV9w+UbRlXshVvjqL89
-         3UqtF2hJS1lKjroDlX10SKBV+jvamzDVb3FUFOdSaHZzkBP3B7QamYKM3YtprR+8cFZK
-         zfShQfm2MUdQeF25l9gCvMeaWT1wp5S2wAMKvycEiKdlJPi1JPoYfu/o8XjSbanfy+iW
-         rh4FmZPTj+9FYSOBSMrhrRdFincZp2IsQMOfAReV7uIm1U6x2ws+dKjDbaqil6QlwoC8
-         MK5izlgKIqMifTQBqlhboXHxwuwoib78ylDRQVajEYdkzXO/X8KNX+h5Qd7EE+emYIUU
-         FlEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FEhu7jYKmIcWa4IQ7JozSOlp09EXHC/VRLT4OxbxKp0=;
-        b=aQWqjRrIn67K0yl6u+D8HFmC9fvPuOR5Ywg1xXglYvtPegcD29fLaqrt7e9zKkY+DB
-         DMO258hBnipXe3kbRl4odf48V3zt8fbt1VQ6Pe3Ur4W9sNQAEgZd2IOd1MLEhKjPbahZ
-         ZMMTS7FuMJp+NXdqSooA96BFnvi6MUVPi3E5WiRkGL+/BKiI/CsSI3dw2je1xN1ejOi/
-         JVXwujjLi3pQWuFgE9eTOlqQ39yPs09sSpgP0kw404WDsAbKx/vWbNM1Qc0ZFbQBQYbU
-         iQQba9vhUuIVFTs7Azrh05LbPwihwVZ1kwOkCFIi8706JuQWfiQhmqrGT5qRUHNbSyGO
-         xfOw==
-X-Gm-Message-State: AA6/9RmEowJjkrW4LqZuUOZ/HkPPNzqUN/MxzqOaroQNi83l6sEdKGVNCYhVDCCBFJ3ExBWB
-X-Received: by 10.66.77.170 with SMTP id t10mr16658301paw.40.1476128205746;
-        Mon, 10 Oct 2016 12:36:45 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
-        by smtp.gmail.com with ESMTPSA id qd12sm52897388pab.22.2016.10.10.12.36.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Oct 2016 12:36:45 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jens.Lehmann@web.de, hvoigt@hvoigt.net,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2] documentation: improve submodule.<name>.{url, path} description
-Date:   Mon, 10 Oct 2016 12:36:41 -0700
-Message-Id: <20161010193641.16489-1-sbeller@google.com>
-X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
-In-Reply-To: <xmqqshs4dnq1.fsf@gitster.mtv.corp.google.com>
-References: <xmqqshs4dnq1.fsf@gitster.mtv.corp.google.com>
+        id S1751521AbcJJT6I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 15:58:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53134 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751154AbcJJT6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 15:58:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5E9B44E7B;
+        Mon, 10 Oct 2016 15:58:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EIVrYDkEh7HDUwgXzoPhzUgYmbU=; b=m1QHhz
+        fMmkI79XCvRXMQwCussioSMYBaG7Jc7zh6Nc9wnb5/fcdgrOoncvgRxaLfSgRwfq
+        bWj1mohXmqG1avyFwY+Ji9iJdl6Fmm+cfMXMvqrxRPSWD1DHE1z/2a/vjdUB4tZT
+        3gltewn0BhrKaB25LdCsdkZwnaqKlsgzrirfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XLdueFiN0kZOq7Me7aLzsLpDNZTYPcXG
+        eDr2s2ymPYqaM0V7ZcsFjv9Xi/fX6GW5DNI6kQ6Z1VeiOlatnUWjvx4F7/micEKg
+        gd2CXvq/Dv/97bfItpQZW/1iegUjIPilN1EQl8sYz3agMm9DH1wkf+h3jDmcQToX
+        6DBRBxmLdBE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC66C44E7A;
+        Mon, 10 Oct 2016 15:58:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A26144E79;
+        Mon, 10 Oct 2016 15:58:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, jnareb@gmail.com, peff@peff.net
+Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
+References: <20161008112530.15506-1-larsxschneider@gmail.com>
+        <20161008112530.15506-14-larsxschneider@gmail.com>
+Date:   Mon, 10 Oct 2016 12:58:03 -0700
+In-Reply-To: <20161008112530.15506-14-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Sat, 8 Oct 2016 13:25:29
+        +0200")
+Message-ID: <xmqqint0dlis.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DBA782F0-8F23-11E6-87C2-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unlike the url variable a user cannot override the the path variable,
-as it is part of the content together with the gitlink at the given
-path. To avoid confusion do not mention the .path variable in the config
-section and rely on the documentation provided in gitmodules[5].
+larsxschneider@gmail.com writes:
 
-Enhance the description of submodule.<name>.url and mention its two use
-cases separately.
+> +# Count unique lines in two files and compare them.
+> +test_cmp_count () {
+> +	for FILE in $@
+> +	do
+> +		sort $FILE | uniq -c | sed "s/^[ ]*//" >$FILE.tmp
+> +		cat $FILE.tmp >$FILE
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Unquoted references to $FILE bothers me.  Are you relying on them
+getting split at IFS boundaries?  Otherwise write this (and other
+similar ones) like so:
 
-I think the gitmodules[5] is enough for .path, so let's just
-do this one instead.
+	for FILE in "$@"
+	do
+		do-this-to "$FILE" | ... >"$FILE.tmp" &&
+		cat "$FILE.tmp" >"$FILE" &&
+		rm -f "$FILE.tmp"
 
-Thanks,
-Stefan
+> +	done &&
+> +	test_cmp $@
 
+The use of "$@" here is quite pointless, as you _know_ all of them
+are filenames, and you _know_ that test_cmp takes only two
+filenames.  Be explicit and say
 
- Documentation/config.txt | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+	test_cmp "$1" "$2"
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e78293b..fd775b4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2811,12 +2811,13 @@ stash.showStat::
- 	option will show diffstat of the stash.  Defaults to true.
- 	See description of 'show' command in linkgit:git-stash[1].
- 
--submodule.<name>.path::
- submodule.<name>.url::
--	The path within this project and URL for a submodule. These
--	variables are initially populated by 'git submodule init'. See
--	linkgit:git-submodule[1] and linkgit:gitmodules[5] for
--	details.
-+	The URL for a submodule. This variable is copied from the .gitmodules
-+	file to the git config via 'git submodule init'. The user can change
-+	the configured URL before obtaining the submodule via 'git submodule
-+	update'. After obtaining the submodule, the presence of this variable
-+	is used as a sign whether the submodule is of interest to git commands.
-+	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
- 
- submodule.<name>.update::
- 	The default update procedure for a submodule. This variable
--- 
-2.10.1.382.ga23ca1b.dirty
+or even
 
+	test_cmp_count () {
+	expect=$1 actual=$2
+	for FILE in "$expect" "$actual"
+	do
+		...
+	done &&
+	test_cmp "$expect" "$actual"
+
+> +# Count unique lines except clean invocations in two files and compare
+> +# them. Clean invocations are not counted because their number can vary.
+> +# c.f. http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
+> +test_cmp_count_except_clean () {
+> +	for FILE in $@
+> +	do
+> +		sort $FILE | uniq -c | sed "s/^[ ]*//" |
+> +			sed "s/^\([0-9]\) IN: clean/x IN: clean/" >$FILE.tmp
+> +		cat $FILE.tmp >$FILE
+> +	done &&
+> +	test_cmp $@
+> +}
+
+Why do you even _care_ about the number of invocations?  While I
+told you why "clean" could be called multiple times under racy Git
+as an example, that was not meant to be an exhaustive example.  I
+wouldn't be surprised if we needed to run smudge twice, for example,
+in some weirdly racy cases in the future.
+
+Can we just have the correctness (i.e. "we expect that the working
+tree file gets this as the result of checking it out, and we made
+sure that is the case") test without getting into such an
+implementation detail?
+
+Thanks.
