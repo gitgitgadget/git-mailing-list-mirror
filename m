@@ -2,87 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE9BC20989
-	for <e@80x24.org>; Mon, 10 Oct 2016 18:36:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F7920989
+	for <e@80x24.org>; Mon, 10 Oct 2016 18:43:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751299AbcJJSgx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 14:36:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58978 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751203AbcJJSgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 14:36:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1031B4403E;
-        Mon, 10 Oct 2016 14:36:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uPuQt9ffMFN9J9zEgZ+HuQW2jBQ=; b=Y3k5um
-        vKJdcu+rSuuID9StRAeJitSMwrRKSReZL13OW/sm6E/cw+/9H8UeJn9/MTMjEH3d
-        xxvynjpBpYWjJTKGBWhaAlkihQCv+Bi91OJpnCJvuJJZwokihgBQt1HtJ2tRs5w5
-        GfyZcKv+rFmMYDK4Uqrk6Ij8puK5MxqDxh1JY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bx7UhThL7QSnvg26c5LU//XUq/864RAs
-        HMTQps9Z+J204KJG+CiXsjMvH8iRmvAApKr94JKSxE6IhoWzYIxi7TeYB4NtmSfM
-        EgL6hkxv5aRhhN//TefbLwynpboA92aWZlo1FXGnG7Itp5I6+kbkU0agnfcjytsI
-        ijUCrVyLThM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0911C4403C;
-        Mon, 10 Oct 2016 14:36:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 838BA4403B;
-        Mon, 10 Oct 2016 14:36:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?Q?St=C3=A9phane?= Klein <contact@stephane-klein.info>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Feature request: use relative path in worktree config files
-References: <CADKxhpe3S4L9CPV9yxh2yhrtJMa9wyZAPC45u_S=RiuzY1Xrkg@mail.gmail.com>
-        <CACsJy8C0kyKor4gCLSJrreRCazazbexvaSdbBg+Cka=-beZU_g@mail.gmail.com>
-        <CADKxhpd-gDczp05Ny6wP57RXafWWCimArfA9ki2phh+-gHez4A@mail.gmail.com>
-        <CACsJy8DGvyWz2_VBsEfmDWOPGUGAUhKYhCa1qLEMcOdn83ocSQ@mail.gmail.com>
-Date:   Mon, 10 Oct 2016 11:36:48 -0700
-In-Reply-To: <CACsJy8DGvyWz2_VBsEfmDWOPGUGAUhKYhCa1qLEMcOdn83ocSQ@mail.gmail.com>
-        (Duy Nguyen's message of "Sun, 9 Oct 2016 18:37:27 +0700")
-Message-ID: <xmqq60p0f3un.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1751056AbcJJSns (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 14:43:48 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:33340 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751027AbcJJSnr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 14:43:47 -0400
+Received: by mail-qk0-f174.google.com with SMTP id n189so126048738qke.0
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 11:43:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=JIq2OeAT7GbPM/ez6jiizE9IhWxE+ZB6pYMJ0EidLpE=;
+        b=AbpHJaZ4zNTL7Bk9ZWm19AsNyzbKDNez03GH5mSiu2vS3upPt4ktETWamX4TIJDKqe
+         nFfi1xpziTft6Tiu+HsT7YbDGyDlkGpHp8R307AyKCCkBLzK5KGgbWWkyN38zK7mJ+To
+         DCN3HQYwrww1mCJnbjUqgL8z3T+lLtwE6kRKGRd1a0klHkoOGSVDJJqhL6amapx9/mBy
+         rhyaeFZqFOZEVLDaItOYvUyyk0DEIGdYJ+Wv/gD46yfzOuBlHP2cDAsIA5j/SgTiqYQv
+         0fOAbtnYSzWMixSA5nhMY0+5XWxgJzPcdHOJ6yElSyxbe6mV0K2iRAesM5uVaamsQawM
+         pArA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=JIq2OeAT7GbPM/ez6jiizE9IhWxE+ZB6pYMJ0EidLpE=;
+        b=e5JceMeD/LTRmh99sy97KCnvg65ZoATAU2HxT75f4/U9HhKSeRnWMxZHf/fMqyUNH2
+         h5bZUhET4jKKDhnbqTPE8GGNu9Jqq1uolfjl3KfyK5lRGdFsfhziAvXzRYl8L8SFn72x
+         AD3zJmiJ1qTPeJP/7UPuDBXHx+OY1B7n9u+KURbNOzG9HSD6fVk9TnztJFcaQE1ZKWmM
+         nzJEdUSXNUPd3Gx6d3UsGnopRQmQxjQVPonHrEegNT+GqQ4Pq7QMjvEMyq1uRgqvZP82
+         mP8Heemephv0JGIpOlI+z+e4TTgXkUrRL5qaGBZXpKpEWukz/1pfP1CbBEvCsSwrjPXP
+         OWoQ==
+X-Gm-Message-State: AA6/9Rl923kvFQ/iEc5557R7gWYG6V8VrXEDEaH77eRCq20ZoYeGvdK7UgeLoN9jM7+mPEIcJp6NZMcK285VqBOc
+X-Received: by 10.55.129.1 with SMTP id c1mr31481798qkd.53.1476124980133; Mon,
+ 10 Oct 2016 11:43:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8210AF60-8F18-11E6-887B-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.135.40 with HTTP; Mon, 10 Oct 2016 11:42:59 -0700 (PDT)
+In-Reply-To: <4B3747D8D2724E98B6AC000FE4072A09@black7>
+References: <1476039798.3060702.750483225.1DE6C48B@webmail.messagingengine.com>
+ <4B3747D8D2724E98B6AC000FE4072A09@black7>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Oct 2016 11:42:59 -0700
+Message-ID: <CAGZ79kaHOBaVCsVPen-K_5LyitcDzVbjL_kAqMkYKk_fQxH4PQ@mail.gmail.com>
+Subject: Re: How to watch a mailing list & repo for patches which affect a
+ certain area of code?
+To:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Ian Kelling <ian@iankelling.org>,
+        Xiaolong Ye <xiaolong.ye@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
++cc Xiaolong Ye <xiaolong.ye@intel.com>
 
->> I think there are some pros and some cons for relative path and absolute path.
->> Maybe append a "--relative" option with `git worktree add` ?
+On Sun, Oct 9, 2016 at 2:26 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
+>> -----Original Message-----
+>> From: Ian Kelling
+>> Sent: Sunday, October 09, 2016 15:03
 >>
->> I've converted all path to relative and all work with success.
+>> I've got patches in various projects, and I don't have time to keep up
+>> with the mailing list, but I'd like to help out with
+>> maintenance of that
+>> code, or the functions/files it touches. People don't cc me.
+>> I figure I
+>> could filter the list, test patches submitted, commits made,
+>> mentions of
+>> files/functions, build filters based on the code I have in
+>> the repo even
+>> if it's been moved or changed subsequently. I'm wondering what other
+>> people have implemented already for automation around this, or general
+>> thoughts. Web search is not showing me much.
 >>
->> What do you think to append this --relative option.
 >
-> Patches are welcome.
+> One thought would be to apply every patch automatically (to the branches of interest?). Then trigger on the [successful] changed
+> code. This would simplify the logic to working on the source only and not parsing the emails.
+>
+> -Jason
+>
 
-Hmm, are they really welcome? 
+I think this is currently attempted by some kernel people.
+However it is very hard to tell where to apply a patch, as it is not formalized.
+See the series that was merged at 72ce3ff7b51c ('xy/format-patch-base'),
+which adds a footer to the patch, that tells you where exactly a patch ought
+to be applied.
 
-Is an invocation of "git worktree add" really the right point in the
-workflow to decide if these references to other repositories should
-be relative or absolute?  When you are moving referrer, it is more
-convenient if the reference uses absolute path to name the
-referrent.  When you are moving both referrer and referrent, it is
-more convenient to use relative.  
-
-I somehow doubt that users know which future move they would be
-making when doing "git worktree add".
-
-To me, this almost looks like a need for a new subcommand to "git
-worktree" that lets you move existing worktree to elsewhere, or turn
-absolute reference to relative and vice versa.
+The intention behind that series was to have some CI system hooked up
+and report failures to the mailing list as well IIUC. Maybe that helps with
+your use case, too?
