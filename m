@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAC9920986
-	for <e@80x24.org>; Mon, 10 Oct 2016 12:55:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73A7420986
+	for <e@80x24.org>; Mon, 10 Oct 2016 12:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752299AbcJJMzq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 08:55:46 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:53758 "EHLO sapo.pt"
+        id S1752313AbcJJMzw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 08:55:52 -0400
+Received: from relay2.ptmail.sapo.pt ([212.55.154.22]:37546 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752220AbcJJMzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 08:55:45 -0400
-Received: (qmail 10504 invoked from network); 10 Oct 2016 12:55:44 -0000
-Received: (qmail 14051 invoked from network); 10 Oct 2016 12:55:43 -0000
+        id S1752218AbcJJMzv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 08:55:51 -0400
+Received: (qmail 11409 invoked from network); 10 Oct 2016 12:55:49 -0000
+Received: (qmail 15349 invoked from network); 10 Oct 2016 12:55:49 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 10 Oct 2016 12:55:41 -0000
+          for <git@vger.kernel.org>; 10 Oct 2016 12:55:44 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 03/14] i18n: add--interactive: mark strings with interpolation for translation
-Date:   Mon, 10 Oct 2016 12:54:38 +0000
-Message-Id: <20161010125449.7929-4-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 04/14] i18n: clean.c: match string with git-add--interactive.perl
+Date:   Mon, 10 Oct 2016 12:54:39 +0000
+Message-Id: <20161010125449.7929-5-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.10.1.396.g621fe23
 In-Reply-To: <20161010125449.7929-1-vascomalmeida@sapo.pt>
 References: <20161010125449.7929-1-vascomalmeida@sapo.pt>
@@ -48,110 +48,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since at this point Git::I18N.perl lacks support for Perl i18n
-placeholder substitution, use of sprintf following die or error_msg is
-necessary for placeholder substitution take place.
+Change strings for help to match the ones in git-add--interactive.perl.
+The strings now represent one entry to translate each rather then two
+entries each different only by an ending newline character.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ builtin/clean.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 5800010..d05ac60 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -615,12 +615,12 @@ sub list_and_choose {
- 			else {
- 				$bottom = $top = find_unique($choice, @stuff);
- 				if (!defined $bottom) {
--					error_msg "Huh ($choice)?\n";
-+					error_msg sprintf(__("Huh (%s)?\n"), $choice);
- 					next TOPLOOP;
- 				}
- 			}
- 			if ($opts->{SINGLETON} && $bottom != $top) {
--				error_msg "Huh ($choice)?\n";
-+				error_msg sprintf(__("Huh (%s)?\n"), $choice);
- 				next TOPLOOP;
- 			}
- 			for ($i = $bottom-1; $i <= $top-1; $i++) {
-@@ -717,7 +717,7 @@ sub revert_cmd {
- 				    $_->{INDEX_ADDDEL} eq 'create') {
- 					system(qw(git update-index --force-remove --),
- 					       $_->{VALUE});
--					print "note: $_->{VALUE} is untracked now.\n";
-+					printf(__("note: %s is untracked now.\n"), $_->{VALUE});
- 				}
- 			}
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 0371010..d6bc3aa 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -287,11 +287,11 @@ static void pretty_print_menus(struct string_list *menu_list)
+ static void prompt_help_cmd(int singleton)
+ {
+ 	clean_print_color(CLEAN_COLOR_HELP);
+-	printf_ln(singleton ?
++	printf(singleton ?
+ 		  _("Prompt help:\n"
+ 		    "1          - select a numbered item\n"
+ 		    "foo        - select item based on unique prefix\n"
+-		    "           - (empty) select nothing") :
++		    "           - (empty) select nothing\n") :
+ 		  _("Prompt help:\n"
+ 		    "1          - select a single item\n"
+ 		    "3-5        - select a range of items\n"
+@@ -299,7 +299,7 @@ static void prompt_help_cmd(int singleton)
+ 		    "foo        - select item based on unique prefix\n"
+ 		    "-...       - unselect specified items\n"
+ 		    "*          - choose all items\n"
+-		    "           - (empty) finish selecting"));
++		    "           - (empty) finish selecting\n"));
+ 	clean_print_color(CLEAN_COLOR_RESET);
+ }
+ 
+@@ -508,7 +508,7 @@ static int parse_choice(struct menu_stuff *menu_stuff,
+ 		if (top <= 0 || bottom <= 0 || top > menu_stuff->nr || bottom > top ||
+ 		    (is_single && bottom != top)) {
+ 			clean_print_color(CLEAN_COLOR_ERROR);
+-			printf_ln(_("Huh (%s)?"), (*ptr)->buf);
++			printf(_("Huh (%s)?\n"), (*ptr)->buf);
+ 			clean_print_color(CLEAN_COLOR_RESET);
+ 			continue;
  		}
-@@ -1056,7 +1056,7 @@ sub edit_hunk_manually {
- 	my $hunkfile = $repo->repo_path . "/addp-hunk-edit.diff";
- 	my $fh;
- 	open $fh, '>', $hunkfile
--		or die "failed to open hunk edit file for writing: " . $!;
-+		or die sprintf(__("failed to open hunk edit file for writing: %s"), $!);
- 	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
- 	print $fh @$oldtext;
- 	my $participle = $patch_mode_flavour{PARTICIPLE};
-@@ -1083,7 +1083,7 @@ EOF
- 	}
- 
- 	open $fh, '<', $hunkfile
--		or die "failed to open hunk edit file for reading: " . $!;
-+		or die sprintf(__("failed to open hunk edit file for reading: %s"), $!);
- 	my @newtext = grep { !/^#/ } <$fh>;
- 	close $fh;
- 	unlink $hunkfile;
-@@ -1236,7 +1236,7 @@ sub apply_patch_for_checkout_commit {
- 
- sub patch_update_cmd {
- 	my @all_mods = list_modified($patch_mode_flavour{FILTER});
--	error_msg "ignoring unmerged: $_->{VALUE}\n"
-+	error_msg sprintf(__("ignoring unmerged: %s\n"), $_->{VALUE})
- 		for grep { $_->{UNMERGED} } @all_mods;
- 	@all_mods = grep { !$_->{UNMERGED} } @all_mods;
- 
-@@ -1418,7 +1418,8 @@ sub patch_update_file {
- 					chomp $response;
- 				}
- 				if ($response !~ /^\s*\d+\s*$/) {
--					error_msg "Invalid number: '$response'\n";
-+					error_msg sprintf(__("Invalid number: '%s'\n"),
-+							     $response);
- 				} elsif (0 < $response && $response <= $num) {
- 					$ix = $response - 1;
- 				} else {
-@@ -1460,7 +1461,7 @@ sub patch_update_file {
- 				if ($@) {
- 					my ($err,$exp) = ($@, $1);
- 					$err =~ s/ at .*git-add--interactive line \d+, <STDIN> line \d+.*$//;
--					error_msg "Malformed search regexp $exp: $err\n";
-+					error_msg sprintf(__("Malformed search regexp %s: %s\n"), $exp, $err);
- 					next;
- 				}
- 				my $iy = $ix;
-@@ -1625,18 +1626,18 @@ sub process_args {
- 				$patch_mode = $1;
- 				$arg = shift @ARGV or die __("missing --");
- 			} else {
--				die "unknown --patch mode: $1";
-+				die sprintf(__("unknown --patch mode: %s"), $1);
- 			}
- 		} else {
- 			$patch_mode = 'stage';
- 			$arg = shift @ARGV or die __("missing --");
- 		}
--		die "invalid argument $arg, expecting --"
--		    unless $arg eq "--";
-+		die sprintf(__("invalid argument %s, expecting --"),
-+			       $arg) unless $arg eq "--";
- 		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
- 	}
- 	elsif ($arg ne "--") {
--		die "invalid argument $arg, expecting --";
-+		die sprintf(__("invalid argument %s, expecting --"), $arg);
- 	}
+@@ -774,7 +774,7 @@ static int ask_each_cmd(void)
+ static int quit_cmd(void)
+ {
+ 	string_list_clear(&del_list, 0);
+-	printf_ln(_("Bye."));
++	printf(_("Bye.\n"));
+ 	return MENU_RETURN_NO_LOOP;
  }
  
 -- 
