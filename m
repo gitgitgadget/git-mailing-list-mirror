@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F365420986
-	for <e@80x24.org>; Mon, 10 Oct 2016 12:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 153CD20987
+	for <e@80x24.org>; Mon, 10 Oct 2016 12:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752461AbcJJM4F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 08:56:05 -0400
-Received: from relay2.ptmail.sapo.pt ([212.55.154.22]:37663 "EHLO sapo.pt"
+        id S1752274AbcJJM4I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 08:56:08 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:53916 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752447AbcJJM4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 08:56:04 -0400
-Received: (qmail 11696 invoked from network); 10 Oct 2016 12:56:03 -0000
-Received: (qmail 18072 invoked from network); 10 Oct 2016 12:56:02 -0000
+        id S1752163AbcJJM4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 08:56:08 -0400
+Received: (qmail 10925 invoked from network); 10 Oct 2016 12:56:05 -0000
+Received: (qmail 18638 invoked from network); 10 Oct 2016 12:56:05 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 10 Oct 2016 12:56:00 -0000
+          for <git@vger.kernel.org>; 10 Oct 2016 12:56:02 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 07/14] i18n: add--interactive: i18n of help_patch_cmd
-Date:   Mon, 10 Oct 2016 12:54:42 +0000
-Message-Id: <20161010125449.7929-8-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 08/14] i18n: add--interactive: mark edit_hunk_manually message for translation
+Date:   Mon, 10 Oct 2016 12:54:43 +0000
+Message-Id: <20161010125449.7929-9-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.10.1.396.g621fe23
 In-Reply-To: <20161010125449.7929-1-vascomalmeida@sapo.pt>
 References: <20161010125449.7929-1-vascomalmeida@sapo.pt>
@@ -48,81 +48,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark help message of help_patch_cmd for translation.  The message must
-be unfolded to be free of variables so we can have high quality
-translations.
+Mark message of edit_hunk_manually displayed in the editing file when
+user chooses 'e' option.  The message had to be unfolded to allow
+translation of the $participle verb.
+
+Some messages end up being exactly the same for some uses cases, but
+left it for easier change in the future, e.g., wanting to change wording
+of one particular use case.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 54 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 46 insertions(+), 8 deletions(-)
+ git-add--interactive.perl | 45 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 34 insertions(+), 11 deletions(-)
 
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index b7d382b..045b847 100755
+index 045b847..861f7b0 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -1189,15 +1189,53 @@ sub edit_hunk_loop {
- 	}
+@@ -1058,6 +1058,30 @@ sub color_diff {
+ 	} @_;
  }
  
-+my %help_patch_modes = (
++my %edit_hunk_manually_modes = (
 +	stage => N__(
-+"y - stage this hunk
-+n - do not stage this hunk
-+q - quit; do not stage this hunk or any of the remaining ones
-+a - stage this hunk and all later hunks in the file
-+d - do not stage this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for staging."),
 +	stash => N__(
-+"y - stash this hunk
-+n - do not stash this hunk
-+q - quit; do not stash this hunk or any of the remaining ones
-+a - stash this hunk and all later hunks in the file
-+d - do not stash this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for stashing."),
 +	reset_head => N__(
-+"y - unstage this hunk
-+n - do not unstage this hunk
-+q - quit; do not unstage this hunk or any of the remaining ones
-+a - unstage this hunk and all later hunks in the file
-+d - do not unstage this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for unstaging."),
 +	reset_nothead => N__(
-+"y - apply this hunk to index
-+n - do not apply this hunk to index
-+q - quit; do not apply this hunk or any of the remaining ones
-+a - apply this hunk and all later hunks in the file
-+d - do not apply this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for applying."),
 +	checkout_index => N__(
-+"y - discard this hunk from worktree
-+n - do not discard this hunk from worktree
-+q - quit; do not discard this hunk or any of the remaining ones
-+a - discard this hunk and all later hunks in the file
-+d - do not discard this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for discarding"),
 +	checkout_head => N__(
-+"y - discard this hunk from index and worktree
-+n - do not discard this hunk from index and worktree
-+q - quit; do not discard this hunk or any of the remaining ones
-+a - discard this hunk and all later hunks in the file
-+d - do not discard this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for discarding."),
 +	checkout_nothead => N__(
-+"y - apply this hunk to index and worktree
-+n - do not apply this hunk to index and worktree
-+q - quit; do not apply this hunk or any of the remaining ones
-+a - apply this hunk and all later hunks in the file
-+d - do not apply this hunk or any of the later hunks in the file"),
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for applying."),
 +);
 +
- sub help_patch_cmd {
--	my $verb = lc $patch_mode_flavour{VERB};
--	my $target = $patch_mode_flavour{TARGET};
--	print colored $help_color, <<EOF ;
--y - $verb this hunk$target
--n - do not $verb this hunk$target
--q - quit; do not $verb this hunk or any of the remaining ones
--a - $verb this hunk and all later hunks in the file
--d - do not $verb this hunk or any of the later hunks in the file
-+	print colored $help_color, __($help_patch_modes{$patch_mode}), "\n", __ <<EOF ;
- g - select a hunk to go to
- / - search for a hunk matching the given regex
- j - leave this hunk undecided, see next undecided hunk
+ sub edit_hunk_manually {
+ 	my ($oldtext) = @_;
+ 
+@@ -1065,22 +1089,21 @@ sub edit_hunk_manually {
+ 	my $fh;
+ 	open $fh, '>', $hunkfile
+ 		or die sprintf(__("failed to open hunk edit file for writing: %s"), $!);
+-	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
++	print $fh __("# Manual hunk edit mode -- see bottom for a quick guide\n");
+ 	print $fh @$oldtext;
+-	my $participle = $patch_mode_flavour{PARTICIPLE};
+ 	my $is_reverse = $patch_mode_flavour{IS_REVERSE};
+ 	my ($remove_plus, $remove_minus) = $is_reverse ? ('-', '+') : ('+', '-');
+-	print $fh <<EOF;
+-# ---
+-# To remove '$remove_minus' lines, make them ' ' lines (context).
+-# To remove '$remove_plus' lines, delete them.
++	print $fh sprintf(__(
++"# ---
++# To remove '%s' lines, make them ' ' lines (context).
++# To remove '%s' lines, delete them.
+ # Lines starting with # will be removed.
+-#
+-# If the patch applies cleanly, the edited hunk will immediately be
+-# marked for $participle. If it does not apply cleanly, you will be given
++#\n"), $remove_minus, $remove_plus),
++__($edit_hunk_manually_modes{$patch_mode}), __(
++# TRANSLATORS: 'it' refers to the patch mentioned in the previous messages.
++" If it does not apply cleanly, you will be given
+ # an opportunity to edit again. If all lines of the hunk are removed,
+-# then the edit is aborted and the hunk is left unchanged.
+-EOF
++# then the edit is aborted and the hunk is left unchanged.\n");
+ 	close $fh;
+ 
+ 	chomp(my $editor = run_cmd_pipe(qw(git var GIT_EDITOR)));
 -- 
 2.7.4
 
