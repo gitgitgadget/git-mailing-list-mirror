@@ -2,65 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 042541F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 21:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CC8B1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 21:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbcJKVCn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 17:02:43 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:35229 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751993AbcJKVCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 17:02:42 -0400
-Received: by mail-qk0-f182.google.com with SMTP id z190so7753603qkc.2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 14:01:55 -0700 (PDT)
+        id S1752710AbcJKVEx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 17:04:53 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35913 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752266AbcJKVEw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 17:04:52 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b80so589451wme.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 14:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lq18JNKKirA2mUgPQgu3pjhd4QNns3mXNy0Lw+mfZQI=;
-        b=cTfLX606v4+Qors+oG+qMgdVncbx4LPCdCuLwLkgOtHTOgsUDCmOX3/TDpNlv8f05A
-         xo5ZxwpWbbSx2lTLl048zBPBXem4MEIwdpZ2UtTgU4+hy0piGzec/JbtoJZW+r0KIltA
-         gLB7IbQCzjVP7S0Ft5Tb0V7I0kr9e79B1vKZ9kVsVXUnzPvRrGiYwTAZXkzizUEPPxkN
-         dlCwH6HypM7O/qpHcEfX/GrBS6gSyy9SPC2/ghNdKjMfdWhxC0dtZ9mwJE0a2Sr1coEL
-         xvLKhoICrcuTjfWhOtqkhtvHRz0UbFujFYWi15eFcHnmptAhREbFze+5yP1GqG19D4Uy
-         N9kA==
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=gzpIEiL4Vzd2Yb+tiNghaYBbMEdRwh3zOWP7xyuG7vU=;
+        b=Znu1e0VAb5zMtlVkmB1M07eRRboFveJr80oGT1TUDcZcISgPrvEEEvGBP9zyXRxhaC
+         0Y5j3PNwzYD2+wPLMpkI2SVqF9UxPQ8cbtq4vDDhU6GC5lAm9pyosKLUxd11RvbEmL/2
+         8MoAESAGqCN+Y6gKWqHfh9fHgyScMoZpeu/evFeTpS3HCznYed++QV+Xj9cU1jWRsocG
+         CZqJ/LDHrPetPGqQ7pO36sykJ0ef/I3LPBUYgpBNZea+90e5uJS+spo++RLTDIOfXvTO
+         Q0JlkB/elralIH0DUUJUFpGTmpoKQBQQ+MFHCZjSTai5yStnBW8GT7Gq6Xff4SsivaoG
+         nkFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lq18JNKKirA2mUgPQgu3pjhd4QNns3mXNy0Lw+mfZQI=;
-        b=BmqGnSROxY1a0ak5jMByZ79Ydfd4y/3vcHf7O5+lfkFCwcqFnd6cmPYL10ZTYYwBtn
-         1chN4ahkXbxY1ArHvYQpPxjOrMUWuFTPqwtV4XMSQLl+UECA4rAas8cId/cpYkQxwm4M
-         akdHnktR019iPcwi5RwCsART2Ts/Wf45/KRhsywkSgbDdKp4IOhxuQu+MMysoiO0tdAP
-         cphGGIkqOPmsfCpDgEILCBMUlcs6uMYolRXwXsmyYngX1dAL8oX/Qrvg6fmmlj9Jv9ED
-         Mmi6Eapf+oA5z1GhOQGR40rWxpE575fehouzVMyHu46caJ9GPWXe3MN9Qiyq2Uc0FNe8
-         TuFA==
-X-Gm-Message-State: AA6/9Rm3Mz8/O383QMT1fxO9MvWDArcpjWr5gEku4ZgjV6FzDmJn+DcJs4TTpUFQAzEbJpT1HM8AtpeWtM/5f3+X
-X-Received: by 10.55.64.80 with SMTP id n77mr5891673qka.173.1476219322564;
- Tue, 11 Oct 2016 13:55:22 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=gzpIEiL4Vzd2Yb+tiNghaYBbMEdRwh3zOWP7xyuG7vU=;
+        b=JqQASp3R0KNR6K4w4W4LHtEDbSLpjsJJm45Ko8GnxVeO3GExk4ffDiYxZ+EAoTgxF7
+         M7ZdIg0rmqlqEzikVfXVMzgS1Y8flzVOBKxh0lx1ydSv1OlP894Xw5c2T49a17+T4+15
+         sCvvGEWSP/Aujc/DeNgH0QRoxZdYqALEGh9ExlI5JYnF9nu3Jm8FWq3fdnmsgzkkJBNg
+         pG5jQiaALZ2BkykI6ubRGtzqI4h5QCGBsoq1Z0gYP9pnJGBbOdFw7ZGEGlzz9MPwcKQn
+         HwTvf0RsttOWDAZHdnIHJ93izvsjzZ4ZH/t3uOSLvUelK3z76f60Hx0k6+Jt+D47pIsJ
+         1irQ==
+X-Gm-Message-State: AA6/9Rn7xLgWjnF5Pr2t82JFpiloEVwfSlycZl3gx94duCauajGg248zDkzlvE66CjX63g==
+X-Received: by 10.194.105.196 with SMTP id go4mr7026874wjb.60.1476219003369;
+        Tue, 11 Oct 2016 13:50:03 -0700 (PDT)
+Received: from [192.168.1.26] (adaq66.neoplus.adsl.tpnet.pl. [83.11.252.66])
+        by smtp.googlemail.com with ESMTPSA id kg7sm8891780wjb.34.2016.10.11.13.50.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Oct 2016 13:50:01 -0700 (PDT)
+Subject: Re: [PATCH 2/2] reset: support the --stdin option
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+ <2c7a52e43be710c7f37c4886629bda38df183c21.1476202100.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <dc76476b-9ad5-a3b6-f12f-33cda2ca5814@gmail.com>
+Date:   Tue, 11 Oct 2016 22:49:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 13:55:22 -0700 (PDT)
-In-Reply-To: <20161011190745.w2asu6eoromkrccu@droplet>
-References: <20161011190745.w2asu6eoromkrccu@droplet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Oct 2016 13:55:22 -0700
-Message-ID: <CAGZ79kYg3sZ42W-PEE7MgCDvt_h7hEQ7KWZsVKMb3DY=x5VK+w@mail.gmail.com>
-Subject: Re: interactive rebase should better highlight the not-applying commit
-To:     Joshua N Pritikin <jpritikin@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <2c7a52e43be710c7f37c4886629bda38df183c21.1476202100.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
-> I assume somebody familiar with GIT's code base could make this change
-> in about 10 minutes.
+W dniu 11.10.2016 o 18:09, Johannes Schindelin pisze:
 
-Can you elaborate how you come to that estimate?
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git reset' [-q] [<tree-ish>] [--] <paths>...
+> +'git reset' [-q] [--stdin [-z]] [<tree-ish>] [--] <paths>...
+
+I think you meant here
+
+  +'git reset' [-q] [--stdin [-z]] [<tree-ish>]
+
+Because you say "*Instead*" below.
+
+> +--stdin::
+> +	Instead of taking list of paths from the command line,
+> +	read list of paths from the standard input.  Paths are
+> +	separated by LF (i.e. one path per line) by default.
+
+And die if <paths> were supplied:
+
+> +		if (pathspec.nr)
+> +			die(_("--stdin is incompatible with path arguments"));
+
+Of course you need to fix it in built-in synopsis as well:
+
+> +	N_("git reset [-q] [--stdin [-z]] [<tree-ish>] [--] <paths>..."),
+>  	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
+
+-- 
+Jakub Narębski
+
