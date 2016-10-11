@@ -2,93 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B2B21F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 21:36:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81D0A1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 21:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753367AbcJKVgg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 17:36:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63697 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753342AbcJKVgf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 17:36:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED32543EFD;
-        Tue, 11 Oct 2016 17:36:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wRyrk+tmNldBxPxt4jBBzAIrvxc=; b=CxADHg
-        mH3Eq+XcM9XLmqBOzPob5AmoS43YO6gGB+/L3GkZo2FbG25OyhV428uPav8Jkt0C
-        e0WfUoCWkrH8opAbe58xHfoK/lYpgw2TxtRhLR2Ly3OjJhzQ4gBGw1tBivocY7uf
-        shapF7PAkFroT5+Pp5CYpY05mFNqlRwQhFz1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HJAcfuQdvhcm6f2+/s3zEZ8ZRQVA+mWt
-        mJ7IA1hqfYPmOc8FMEDMXvsIiZItwIWziCM87JKgekAlPxsYC2ffyQBM6L6ZBjB/
-        VL27TNxEKU7MKkKFRg8RKb9cl8lgcWRvw+p2p7HLqiTA4c3oMfUN37dVXLZq8CKY
-        gzLFiP2HC/I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E26D343EFC;
-        Tue, 11 Oct 2016 17:36:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 42B2D43EF6;
-        Tue, 11 Oct 2016 17:36:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Support `git reset --stdin`
-References: <cover.1476202100.git.johannes.schindelin@gmx.de>
-        <20161011183448.yasglfjelo4kgrq4@sigill.intra.peff.net>
-        <xmqqshs28z52.fsf@gitster.mtv.corp.google.com>
-        <20161011212644.zzqidtcgatu3qsei@sigill.intra.peff.net>
-Date:   Tue, 11 Oct 2016 14:36:31 -0700
-In-Reply-To: <20161011212644.zzqidtcgatu3qsei@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 11 Oct 2016 17:26:44 -0400")
-Message-ID: <xmqqoa2q7elc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752909AbcJKVjY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 17:39:24 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:33808 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752718AbcJKVjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 17:39:23 -0400
+Received: by mail-qk0-f178.google.com with SMTP id f128so8163613qkb.1
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 14:39:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kbmhYZMIctC2qD3dw581rFZUXy/b7KikcnSS5TIgC8w=;
+        b=or6f3j55yJ5TiSLjHPu6TZSv7tG0WzCEjQzzfiUMWFtpFWMrTyZgFQHp/Rscafai7m
+         1+Ka3ijV1mtaZmFE1X79QFCj+Zx+ursvj7H2jDtmUwOiZIv4Lfu/z+msTJMarusVwoCH
+         NYlLQRGlzujwMihzlXCxljOlzj6MEg2rbI4ysK79tDATXCFJV7AFdh8M+DfqKWJ/6Uu3
+         Q0j+OfPRnH7+N5nJCmi9WShGsCiw7ieWckHxqVbkQku18M+jmwuVnKdt7WYb4t80n2SJ
+         bJDjPWh6Xp1G4Ynz3IkoDq5yEdLfEs8yKvNnKehvTD8TVqrFYIUuZ9o3YUlY/3RgUyAZ
+         02bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kbmhYZMIctC2qD3dw581rFZUXy/b7KikcnSS5TIgC8w=;
+        b=JqzE5VvsyzMA+i5JAOWO/naCV56gfj92e+m1dSWZARFivUVqt2L2rsDJU47lFJMtqF
+         wQueMIwKNFmvwS+EBVb1+Y8C1lDbZJ9cK+ccIyb90O78AWAIFXJOu2Fam71sqGIzz+Kb
+         4ZX9C3bXi7lP87LTZU8w38623FAoxcSlkr9ufW8aGkVvoxyQ5OttbgGTXmjrC5/z3imm
+         ZR4d5pro+y19amfYo/FOaYh0Eq24D1YpdHJdm+abW28v+EsUtPeJ7HEze5ezZwzRte8R
+         1L4/iy86y7pZbvr2iSNIX2j5aCMuw6xj+hVzqRT2LBv3Mue+PKvaX+FYac1SmMQRJ7qt
+         crBw==
+X-Gm-Message-State: AA6/9Rn/r588f4mneolGeQ3ugISBuWO0ELXg1PpSw3xuO3QLS2mhGWFXODSdW96zelJAoOBhTaWX7dgspRgcWSA5
+X-Received: by 10.55.36.131 with SMTP id k3mr5092788qkk.86.1476221962625; Tue,
+ 11 Oct 2016 14:39:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C77DD478-8FFA-11E6-B1FD-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 14:39:22 -0700 (PDT)
+In-Reply-To: <xmqq1szm8ukf.fsf@gitster.mtv.corp.google.com>
+References: <xmqq1szm8ukf.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Oct 2016 14:39:22 -0700
+Message-ID: <CAGZ79kZu71+6QmvKgXJ5t+97jvTeAhSRtHpMQR9Rmk4Ep5RHhw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2016, #03; Tue, 11)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> If read-tree had pathspec support (i.e. "read these and only these
->> paths given from the command line into the index from a given
->> tree-ish"), that would have been the most natural place to extend
->> with "oh, by the way, instead of the command line, you can feed the
->> paths on the standard input".
->> 
->> But it doesn't have one.
+On Tue, Oct 11, 2016 at 2:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> True. I'd have done something more like:
+> * sb/submodule-ignore-trailing-slash (2016-10-10) 2 commits
+>   (merged to 'next' on 2016-10-11 at e37425ed17)
+>  + submodule: ignore trailing slash in relative url
+>  + submodule: ignore trailing slash on superproject URL
 >
->   git ls-tree -r $paths | git update-index --index-info
+>  A minor regression fix for "git submodule".
 >
-> but there are some corner cases around deleting paths from the index.
+>  Will merge to 'master'.
+>
 
-Ah, I would think read-tree has the exact same issue, even if we
-added pathspec support, around removal.
-
-So it is more like
-
-	(
-		printf "0 0000000000000000000000000000000000000000\t%s\n" $paths
-		git --literal-pathspecs ls-tree -r --ignore-missing $paths
-	) | git update-index --index-info
-
-which does not look too bad, even though this
-
-	printf "%s\n" $paths | git reset --stdin
-
-does look shorter.
-
+Going by the bug report, this *may* be more than
+minor and worth merging down to maint as well, eventually.
