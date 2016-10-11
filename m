@@ -2,181 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E85951F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 18:56:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B57C71F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 18:56:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754376AbcJKS4N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 14:56:13 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:36053 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753933AbcJKS4G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 14:56:06 -0400
-Received: by mail-qk0-f172.google.com with SMTP id o68so49723462qkf.3
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 11:56:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cgYJ8fw5bX50HLwwKmeInd/f5yGffpbTDgn2Jgpt/kY=;
-        b=SxQB5lbIlm5iebWjduW46ZXimniBcFjCbd5vxjNf+Y/8HQy7uqtOCmaq9aP6TqzMJf
-         gbqiGAy9wbSMcAFelScK6XL0WXsNhVQgba9zdz9Bcm6NC4BAq/eSVfoshjJB8xCLNpEj
-         PqHHpHKg/NTrTu+3BcIc4RNMT989usOHyIyfM+O1q6MAzpb21S2H8WeDdUUjWYGGNZsZ
-         lka8lAhKmEmSjSVze2qOFPGWE2OcH3/wof/jAdNuMnl5GMWK2LJMybII6eI85sSz9Tsf
-         /aZli38cZhWU+Rz6bBAW3qQ5eQyAYhRbh6xBCOjSim+y9NLU7WfyMRpPeFQ2jw/Lsatg
-         9nGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cgYJ8fw5bX50HLwwKmeInd/f5yGffpbTDgn2Jgpt/kY=;
-        b=cPvTQd52IklONcX1lWU5IA2CQwYD56XJ5emTbRh8QUhDv4HYTV0aBmcZipWDo6BzfC
-         CbyYOEslXdYScA4dtv6YGS1ktRV1/aveMhPDeg4JwRCVZ7GRanz9ve8X0Il9pLX5gchz
-         qdrAEottqDEQtP775mFW6gxLulPG1sEF1YelCIEv5gqjmtitgC/Y5wjbmxP50M2CJG9X
-         Ah3z5GJv+Go1P+VrxxE0NZ3iff5Lt2fEqq8pCkMqgOs5EVKfUzbeApTOwyarFlHhSxpb
-         ClCvxjABa1OLAeVSKTSeBvAVx9I4kpC8uvfiQrHa1IoAKry4Ikzc2X+OOfkWduGH4mR2
-         MIFg==
-X-Gm-Message-State: AA6/9RnGXES47j7GBByn9SvIcZo+N5YJnGpp31L5LD3TqSY2rU0UlTAeIe5wWnnBdkzEi9WRJPVQlM0FGZ09kxOe
-X-Received: by 10.55.56.11 with SMTP id f11mr4451690qka.255.1476212165100;
- Tue, 11 Oct 2016 11:56:05 -0700 (PDT)
+        id S1754411AbcJKS4W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 14:56:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60733 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754272AbcJKSyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 14:54:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C20F8447FE;
+        Tue, 11 Oct 2016 14:54:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SsEgk8egeSn3OtFrPH++Hb6DjpA=; b=hv68JG
+        gOGJCGtmf3k/DBlzCznphlie571SGVvOS3JHZkLYbJvf+4EY+TI1+ukFVWebzd05
+        TVg2EjnS7Wq0H8F0mRKYoomfNXBhj/8DLxCaLAQ/s/smczPmHVKzfyzed2S/NcHa
+        F8634wrm8z+aiIjX23nK/WxhvEjNWevSmwv4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VWBPPxLO7AhWXTCnmk2nqL8J8QzZlLdG
+        kF1vcZqmaApnQuS4cIAb4yCsB9jcEAf5AAZwZvmTGmRy3km6V0yp74gnsMr9/nVW
+        rR6pDd8K+7VfZ5G3BTlg6FVcAPtOLj5WPqy/Ez2kFhrSZXXxBN/K2OQ6vxv7VgUO
+        6C+x99ilx84=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAA00447FD;
+        Tue, 11 Oct 2016 14:54:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35C2C447FC;
+        Tue, 11 Oct 2016 14:54:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 08/25] sequencer: strip CR from the todo script
+References: <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <cover.1476120229.git.johannes.schindelin@gmx.de>
+        <5a639610c09bf1dacc8143603f321a8ea23cd270.1476120229.git.johannes.schindelin@gmx.de>
+Date:   Tue, 11 Oct 2016 11:54:47 -0700
+In-Reply-To: <5a639610c09bf1dacc8143603f321a8ea23cd270.1476120229.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Mon, 10 Oct 2016 19:25:11 +0200
+        (CEST)")
+Message-ID: <xmqq60oyaf7s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 11:56:04 -0700 (PDT)
-In-Reply-To: <xmqqa8eaagoq.fsf@gitster.mtv.corp.google.com>
-References: <20161011002115.23312-1-sbeller@google.com> <20161011002115.23312-29-sbeller@google.com>
- <xmqqmviaaina.fsf@gitster.mtv.corp.google.com> <CAGZ79kaQKDdJfMOjDKEK_dZJhgj+R7rByQS++B3OOBy6uO1x2w@mail.gmail.com>
- <xmqqa8eaagoq.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Oct 2016 11:56:04 -0700
-Message-ID: <CAGZ79kbdvs88Gt_XW801DPs7rj8kvcfPqCV7kjL_Jz9XiVn7fg@mail.gmail.com>
-Subject: Re: [PATCH 28/28] attr: convert to new threadsafe API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2F6C842E-8FE4-11E6-8803-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 11:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> It is not unheard of that editors on Windows write CR/LF even if the
+> file originally had only LF. This is particularly awkward for exec lines
+> of a rebase -i todo sheet. Take for example the insn "exec echo": The
+> shell script parser splits at the LF and leaves the CR attached to
+> "echo", which leads to the unknown command "echo\r".
 >
->>> I find this description a bit confusing.  At least the way I
->>> envisioned was that when this piece of code is run by multiple
->>> people at the same time,
->>>
->>>         static struct git_attr_check *check = NULL;
->>>         git_attr_check_initl(&check, ...);
->>>
->>> we won't waste the "check" by allocated by the first one by
->>> overwriting it with another one allocated by the second one.  So
->>> "the same arguments" does not come into the picture.  A single
->>> variable is either
->>>
->>>  * already allocated and initialised by the an earlier call to
->>>    initl() by somebody else, or
->>>
->>>  * originally NULL when you call initl(), and the implementation
->>>    makes sure that other people wait while you allocate, initialise
->>>    and assign it to the variable, or
->>>
->>>  * originally NULL when you call initl(), but the implementation
->>>    notices that somebody else is doing the second bullet point
->>>    above, and you wait until that somebody else finishes and then
->>>    you return without doing anything (because by that time, "check"
->>>    is filled by that other party doing the second bullet point
->>>    above).
->>>
->>> There is no need to check for "the same arguments".
->>>
->>
->> I see. So we assume that there are no different arguments at the same time,
->> i.e. all threads run the same code when it comes to attrs.
+> Work around that by stripping CR when reading the todo commands, as we
+> already do for LF.
 >
-> Sorry, but I fail to see how you can jump to that conclusion.
-> Puzzled.
+> This happens to fix t9903.14 and .15 in MSYS1 environments (with the
+> rebase--helper patches based on this patch series): the todo script
+> constructed in such a setup contains CR/LF thanks to MSYS1 runtime's
+> cleverness.
 >
-> You can have many different callsites (think: hits "git grep" finds)
-> that call git_attr_check_initl() and they all may be asking for
-> different set of attributes.  As long as they are using different
-> "check" instance to receive these sets of attributes, they are OK.
-
-Right, but that requires a mutex per callsite; up to now I imagined
-a global mutex only, which is how I came to the conclusion.
-
+> Based on a report and a patch by Johannes Sixt.
 >
-> It is insane to use the same "check" variable to receive sets of
-> attributes for different attributes,
-
-I agree.
-
-> be it from the same call or
-> different one, it is insane to do this:
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  sequencer.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
->         func(char *anotherattr)
->         {
->                 static struct git_attr_check *check = NULL;
->                 git_attr_check_initl(&check, "one", anotherattr, ...);
->
->                 ... use "check" to ask question ...
->         }
->
-> The whole point of having a static, initialize-once instance of
-> "check" is so that initl() can do potentially heavy preparation just
-> once and keep reusing it.  Allowing a later caller of func() to pass
-> a value of anotherattr that is different from the one used in the
-> first call that did cause initl() to allocate-initialise-assign to
-> "check" is simply insane, even there is no threading issue.
+> diff --git a/sequencer.c b/sequencer.c
+> index 678fdf3..cee7e50 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -774,6 +774,9 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
+>  
+>  		next_p = *eol ? eol + 1 /* skip LF */ : eol;
+>  
+> +		if (p != eol && eol[-1] == '\r')
+> +			eol--; /* skip Carriage Return */
 
-I was imagining a file.c like that:
+micronit: s/skip/strip/ ;-)
 
-static struct git_attr_check *check = NULL;
-
-void one_func()
-{
-    git_attr_check_initl(&check, "one", ...);
-    ...
-}
-
-void two_func()
-{
-    git_attr_check_initl(&check, "two", ...);
-    ...
-}
-
-
-int foo_cmd(const char *prefix int argc, char **argv)
-{
-    foreach_path(get_paths(...))
-        one_func();
-    check = NULL;
-    foreach_path(get_paths(...))
-        two_func();
-}
-
-This is correct single threaded code, but as soon as you want to
-put phase one,two into threads, as they can be parallelized, this
-goes horribly wrong.
-
-
->
-> And in a threaded environment it is even worse; the first thread may
-> call initl() to get one set of attributes in "check" and it may be
-> about to ask the question, while the second call may call initl()
-> and by your definition it will notice they have different sets of
-> attributes and returns different "check"?  Either the earlier one is
-> leaked, or it gets destroyed even though the first thread hasn't
-> finished with "check" it got.
->
-> It is perfectly OK to drop "static" from the above example code.
-> Then it no longer is insane--it is perfectly normal code whose
-> inefficiency cannot be avoided because it wants to do dynamic
-> queries.
-
-I think we had a misunderstanding here, as I was just assuming a
-single mutex later on.
+> +
+>  		item = append_new_todo(todo_list);
+>  		item->offset_in_buf = p - todo_list->buf.buf;
+>  		if (parse_insn_line(item, p, eol)) {
