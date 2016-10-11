@@ -2,222 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55FCB1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 17:58:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF3041F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 17:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752992AbcJKR5b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 13:57:31 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:34691 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753225AbcJKR4T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 13:56:19 -0400
-Received: by mail-qk0-f173.google.com with SMTP id f128so1937514qkb.1
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 10:56:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=58hC82e6qv14d5c89MuW3+DuEA2o3Pljwgxmqa2aUSA=;
-        b=PoWU/Gx2nynEtKARVTs+Z+yzFjDZ6N5I785+gcnwgp2EkKr6K44tOSb/HGgBSq0c6b
-         HheReVEBm4qMXw8hQYs/shJGjCvdHg1oCtPdmsGjh9l18HkIH5Y9ydGuZ399Ps0l4pvq
-         /6kmWo8USdYa5Mm6+cdSKzKbWXVW1RvfXsofQg9gtwpEXZazSTfKNlKDH0dGy4XxC3jS
-         Y9XdpnJTyxj43L+HHWzJ8oHY8/Inm+VglLoG1d8VuNdj5lSqYQ6TI11oQs85tAw92gNU
-         ua/JmnzOvqG1pj0n3wWyowrRObu3sivirt9Zw/yID+8dFhOWPbkr7TGxHF8CZQZbn8mk
-         AI3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=58hC82e6qv14d5c89MuW3+DuEA2o3Pljwgxmqa2aUSA=;
-        b=ktaugkRWQwTpBsh4SDQfWQpa0CA5mns4ZbLmWuVRH8dYDohPrrQalf7kvwdS2vMTlD
-         FR6Ti/jVKvzWWhK3tYyqMLOvuKzPtSCJkgRna2V/soo+C3xFV7z0x5t5r26q8dHqbNqn
-         zOT9pnpQTLpXN39THw4NLg5h4oiaM/EFhBqEDpiY4qFGbpdS0vJukJfwWZernKJqcDYL
-         mlRNgBSED9UYdrnvIPSG3vNN7/IsGPs1yxLGfzMhM6E4F2LHku8iXbxDLz+p+eC7fIi/
-         lvcu5lBr9qMa2b4GAR5+toEhOcgpy7J1iQmhzJGvTwaL2XvBmZgEVSLPKafFgE9r4jAq
-         lI0g==
-X-Gm-Message-State: AA6/9RmoEF5DVmJilLTedoTKWJzwBYWDkGCmUEFPMOCGGU0LO6sMzJKPNxwOGc3eV/VV1LuF+h66UNLNaeAkBr8T
-X-Received: by 10.55.64.80 with SMTP id n77mr5065678qka.173.1476208577849;
- Tue, 11 Oct 2016 10:56:17 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 10:56:17 -0700 (PDT)
-In-Reply-To: <xmqqmviaaina.fsf@gitster.mtv.corp.google.com>
-References: <20161011002115.23312-1-sbeller@google.com> <20161011002115.23312-29-sbeller@google.com>
- <xmqqmviaaina.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Oct 2016 10:56:17 -0700
-Message-ID: <CAGZ79kaQKDdJfMOjDKEK_dZJhgj+R7rByQS++B3OOBy6uO1x2w@mail.gmail.com>
+        id S1753237AbcJKR61 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 13:58:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62687 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932752AbcJKRkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 13:40:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B86743B23;
+        Tue, 11 Oct 2016 13:40:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=T7krl6UIvJ+Y937MeOLts533aX0=; b=BgRRxG
+        PyW709a90kD1Lw6+YDhY4h/giwUCXEjl7B+yUsrglGqijXzp821XGGsefQPBw2aG
+        XiSyKAKSXAz+4cOCwVjXvmCdM5hqu2yZtGhdjxGbtYcfbqNhOGKm4E0wU/cnduhU
+        QhG1lAkdJiSHzClCdFWa+3MnJz33TQM5RDpDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Xl7o6W/IvclvFElfEu2h/AIfHhZQ6MEH
+        mNDJulIC17qe91EI1N+kUkc8nAOV+LPmV7ztQi0yR1VEiaEVBgVHWuntlZWpDHwB
+        ZXfKsmdfUimY2bAws/SuRw3hAugiDzCROSn8P1theEIuyB/wfnlovXjA7qqYWZql
+        lVFAz21Enzg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 645B943B22;
+        Tue, 11 Oct 2016 13:40:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4BCC43B21;
+        Tue, 11 Oct 2016 13:40:43 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com
 Subject: Re: [PATCH 28/28] attr: convert to new threadsafe API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+References: <20161011002115.23312-1-sbeller@google.com>
+        <20161011002115.23312-29-sbeller@google.com>
+Date:   Tue, 11 Oct 2016 10:40:41 -0700
+In-Reply-To: <20161011002115.23312-29-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 10 Oct 2016 17:21:15 -0700")
+Message-ID: <xmqqmviaaina.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D5BFFE7E-8FD9-11E6-83D2-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 10:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This revamps the API of the attr subsystem to be thread safe.
->> Before we had the question and its results in one struct type.
->> The typical usage of the API was
->>
->>     static struct git_attr_check;
->
-> I think you meant "*check" at the end, perhaps?
->
->>
->>     if (!check)
->>         check = git_attr_check_initl("text", NULL);
->>
->>     git_check_attr(path, check);
->>     act_on(check->value[0]);
->>
->> * While the check for attributes to be questioned only need to
->>   be initalized once as that part will be read only after its
->>   initialisation, the answer may be different for each path.
->>   Because of that we need to decouple the check and the answer,
->>   such that each thread can obtain an answer for the path it
->>   is currently processing.
->
-> Yes, it is good to separate questions and answers.  I think answers
-> should be owned by the caller, though.  I do not think of a good
-> reason why you want to make it impossible to do something like this:
->
->         struct git_attr_check_result *result_1 = ...allocate...;
->         struct git_attr_check_result *result_2 = ...allocate...;
->
->         loop {
->                 struct strbuf path = next_path();
->                 git_check_attr(result_1, path.buf, check_1);
->                 if (strbuf_strip_suffix(&path, ".c")) {
->                         strbuf_addstr(&path, ".h");
->                         git_check_attr(result_2, path.buf, check_2);
->                         do something using result_1[] and result_2[];
->                 } else {
->                         do something using result_1[];
->                 }
->         }
->
-> Do we already have a design of the "result" thing that is concrete
-> enough to require us to declare that the result is owned by the
-> implementation and asking another question has to destroy the answer
-> to the previous question?  Otherwise, I'd rather not to see us make
-> the API unnecessarily hard to use.  While I do want us to avoid
-> overengineering for excessive flexibility, I somehow feel "you
-> cannot control the lifetime of the result, it is owned by the
-> subsystem" falls the other side of the line.
+Stefan Beller <sbeller@google.com> writes:
 
-True, we had that issue for other APIs (IIRC path related things,
-with 4 static buffers that round robin). I did not like that design decision,
-but I felt it was okay, as the above did not occur to me.
-
-In the case above, we could just copy the result_1->values and
-then re-use the result_1, but I agree that this may be somewhat error prone
-if you're not familiar with the decisions in this series.
-
-So in case of the caller owning the result, we could pull the static
-trick for now
-and only use a different approach when we use it in actual threaded code, i.e.
-the code in convert.c could become:
-
-    static struct git_attr_check *check;
-    static struct git_attr_result *result;
-
-    if (!check) {
-        check = git_attr_check_initl("crlf", "ident",
-            "filter", "eol", "text", NULL);
-        result = git_attr_result_alloc(5);
-        user_convert_tail = &user_convert;
-        git_config(read_convert_config, NULL);
-    }
-
-    if (!git_check_attr(path, check, result)) {
-        ...
-
->> +  empty `struct git_attr_check` as alloced by git_attr_check_alloc()
+> This revamps the API of the attr subsystem to be thread safe.
+> Before we had the question and its results in one struct type.
+> The typical usage of the API was
 >
-> "allocated", not "alloced".
+>     static struct git_attr_check;
 
-ok.
+I think you meant "*check" at the end, perhaps?
 
 >
->> +  can be prepared by calling `git_attr_check_alloc()` function and
->> +  then attributes you want to ask about can be added to it with
->> +  `git_attr_check_append()` function.
->> +  git_attr_check_initl is thread safe, i.e. you can call it
+>     if (!check)
+>         check = git_attr_check_initl("text", NULL);
 >
-> Spell it `git_attr_check_initl()` for consistency.
+>     git_check_attr(path, check);
+>     act_on(check->value[0]);
+>
+> * While the check for attributes to be questioned only need to
+>   be initalized once as that part will be read only after its
+>   initialisation, the answer may be different for each path.
+>   Because of that we need to decouple the check and the answer,
+>   such that each thread can obtain an answer for the path it
+>   is currently processing.
 
-ok.
+Yes, it is good to separate questions and answers.  I think answers
+should be owned by the caller, though.  I do not think of a good
+reason why you want to make it impossible to do something like this:
 
->
->> +  from different threads at the same time; internally however only one
->> +  call at a time is processed. If the calls from different threads have
->> +  the same arguments, the returned `git_attr_check` may be the same.
->
-> I find this description a bit confusing.  At least the way I
-> envisioned was that when this piece of code is run by multiple
-> people at the same time,
->
->         static struct git_attr_check *check = NULL;
->         git_attr_check_initl(&check, ...);
->
-> we won't waste the "check" by allocated by the first one by
-> overwriting it with another one allocated by the second one.  So
-> "the same arguments" does not come into the picture.  A single
-> variable is either
->
->  * already allocated and initialised by the an earlier call to
->    initl() by somebody else, or
->
->  * originally NULL when you call initl(), and the implementation
->    makes sure that other people wait while you allocate, initialise
->    and assign it to the variable, or
->
->  * originally NULL when you call initl(), but the implementation
->    notices that somebody else is doing the second bullet point
->    above, and you wait until that somebody else finishes and then
->    you return without doing anything (because by that time, "check"
->    is filled by that other party doing the second bullet point
->    above).
->
-> There is no need to check for "the same arguments".
->
+	struct git_attr_check_result *result_1 = ...allocate...;
+	struct git_attr_check_result *result_2 = ...allocate...;
 
-I see. So we assume that there are no different arguments at the same time,
-i.e. all threads run the same code when it comes to attrs.
+	loop {
+                struct strbuf path = next_path();
+                git_check_attr(result_1, path.buf, check_1);
+                if (strbuf_strip_suffix(&path, ".c")) {
+                        strbuf_addstr(&path, ".h");
+                        git_check_attr(result_2, path.buf, check_2);
+                        do something using result_1[] and result_2[];
+                } else {
+			do something using result_1[];
+		}
+	}
 
-Brandon wrote:
-> On 10/10, Stefan Beller wrote:
->>   be initalized once as that part will be read only after its
->>       initialized
->>   initialisation, the answer may be different for each path.
-> should this be the US spelling 'initialization'?
+Do we already have a design of the "result" thing that is concrete
+enough to require us to declare that the result is owned by the
+implementation and asking another question has to destroy the answer
+to the previous question?  Otherwise, I'd rather not to see us make
+the API unnecessarily hard to use.  While I do want us to avoid
+overengineering for excessive flexibility, I somehow feel "you
+cannot control the lifetime of the result, it is owned by the
+subsystem" falls the other side of the line.
 
-Yes, we'd want to be consistent, indeed. Sometimes the British spelling
-slips through as that's what I learned in high school.
+> diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+> index 92fc32a..2059aab 100644
+> --- a/Documentation/technical/api-gitattributes.txt
+> +++ b/Documentation/technical/api-gitattributes.txt
+> @@ -8,6 +8,18 @@ attributes to set of paths.
+>  Data Structure
+>  --------------
+>  
+> +extern struct git_attr *git_attr(const char *);
+> +
+> +/*
+> + * Return the name of the attribute represented by the argument.  The
+> + * return value is a pointer to a null-delimited string that is part
+> + * of the internal data structure; it should not be modified or freed.
+> + */
+> +extern const char *git_attr_name(const struct git_attr *);
+> +
+> +extern int attr_name_valid(const char *name, size_t namelen);
+> +extern void invalid_attr_name_message(struct strbuf *, const char *, int);
+> +
+>  `struct git_attr`::
+>  
+>  	An attribute is an opaque object that is identified by its name.
+> @@ -16,15 +28,17 @@ Data Structure
+>  	of no interest to the calling programs.  The name of the
+>  	attribute can be retrieved by calling `git_attr_name()`.
+>  
+> -`struct git_attr_check_elem`::
+> -
+> -	This structure represents one attribute and its value.
+> -
+>  `struct git_attr_check`::
+>  
+> -	This structure represents a collection of `git_attr_check_elem`.
+> +	This structure represents a collection of `struct git_attrs`.
+>  	It is passed to `git_check_attr()` function, specifying the
+> -	attributes to check, and receives their values.
+> +	attributes to check, and receives their values into a corresponding
+> +	`struct git_attr_result`.
+> +
+> +`struct git_attr_result`::
+> +
+> +	This structure represents a collection of results to its
+> +	corresponding `struct git_attr_check`, that has the same order.
+>  
+>  
+>  Attribute Values
+> @@ -56,16 +70,22 @@ Querying Specific Attributes
+>  * Prepare `struct git_attr_check` using git_attr_check_initl()
+>    function, enumerating the names of attributes whose values you are
+>    interested in, terminated with a NULL pointer.  Alternatively, an
+> -  empty `struct git_attr_check` can be prepared by calling
+> -  `git_attr_check_alloc()` function and then attributes you want to
+> -  ask about can be added to it with `git_attr_check_append()`
+> -  function.
+> +  empty `struct git_attr_check` as alloced by git_attr_check_alloc()
 
-Specifically for initialise:
+"allocated", not "alloced".
 
-$ git grep initialise
-contrib/examples/git-notes.sh:                  die "Will not
-initialise with empty tree"
-object.h: * it can return "yes we have, and here is a half-initialised object"
-object.h: * half-initialised objects, the caller is expected to initialize them
-revision.c:static struct treesame_state *initialise_treesame(struct
-rev_info *revs, struct commit *commit)
-revision.c:                             ts = initialise_treesame(revs, commit);
-+ a lot of french translations.
+> +  can be prepared by calling `git_attr_check_alloc()` function and
+> +  then attributes you want to ask about can be added to it with
+> +  `git_attr_check_append()` function.
+> +  git_attr_check_initl is thread safe, i.e. you can call it
 
-The American spelling is found a lot more.
+Spell it `git_attr_check_initl()` for consistency.
 
-Thanks,
-Stefan
+> +  from different threads at the same time; internally however only one
+> +  call at a time is processed. If the calls from different threads have
+> +  the same arguments, the returned `git_attr_check` may be the same.
+
+I find this description a bit confusing.  At least the way I
+envisioned was that when this piece of code is run by multiple
+people at the same time,
+
+	static struct git_attr_check *check = NULL;
+	git_attr_check_initl(&check, ...);
+
+we won't waste the "check" by allocated by the first one by
+overwriting it with another one allocated by the second one.  So
+"the same arguments" does not come into the picture.  A single
+variable is either 
+
+ * already allocated and initialised by the an earlier call to
+   initl() by somebody else, or
+
+ * originally NULL when you call initl(), and the implementation
+   makes sure that other people wait while you allocate, initialise
+   and assign it to the variable, or
+
+ * originally NULL when you call initl(), but the implementation
+   notices that somebody else is doing the second bullet point
+   above, and you wait until that somebody else finishes and then
+   you return without doing anything (because by that time, "check"
+   is filled by that other party doing the second bullet point
+   above).
+
+There is no need to check for "the same arguments".
+
