@@ -2,103 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65C681F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 20:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D57301F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 20:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752514AbcJKUcS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 16:32:18 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35674 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751971AbcJKUcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 16:32:17 -0400
-Received: by mail-wm0-f51.google.com with SMTP id f193so7784824wmg.0
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 13:32:16 -0700 (PDT)
+        id S1753735AbcJKUxK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 16:53:10 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:36256 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753100AbcJKUxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 16:53:04 -0400
+Received: by mail-qk0-f181.google.com with SMTP id o68so53018691qkf.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 13:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GF4FjVHQLuzD2r8S3OoB8rQ7/yqbxPMsA50guITT6Uo=;
-        b=cH2nCJ4AwWWaIedDGFy+qDy6keAMzc6pNITFE0doRgZp9Muo18AyJBBmoERs+VwNRx
-         RTrYNzJvhHcCeIWv/Ml646p9gGYroHaUZeQcJ4T3AXTMeHZszsdYgPmp58p2UwhmCBWq
-         25Jo9w3fCnpc0uApI3jHRHb1adWeJTwrEu1n+TXPqi6f1842DzloKL0+R7km4x7QAmnt
-         ymNhf7hXFX2mi2hNnD0ZrYgxfae6QMqXXP3a6d8yC77dSsAZJJymBE/pmN1gQsXdqW2D
-         9hCfmucGHNBTzsX4yGmQ+ciqAZh9fFGNFahYrAlOwbXE5vt4hQ8rHk9rJBBVT7ZU2ObV
-         H+Qw==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qeXBfKoKy6niU0RYqecIt1iZhXhXKXNKtV4pzcOyCP8=;
+        b=Px6b+ZkNVH0EpLsThxCYudfo+LB3KYQo716iZiHRhkxf8jDx/rbLZQrH4r3GWjLq4f
+         iXQIQEZoRhQBze7T37FEnY56gOuuOodHwf1F8tG9sE174F/L8dsDYQiuiq0xcwVaD0K2
+         Hriy9h8Y3UKvh96mztC1/WAM27Mp6DKB1Xp00yFEFtkT17HMObU4LB8FU4i+eesHmPT7
+         H91LYk+1DgyFJ23mCu1kbfpBTSqs8JjzQd9FgvoQkerX5xYVtvkVu2qY6AsMRmKU8fEv
+         A/DS15B1yDcA7OT54lf4pgQQTq16iOKdZEprn5O1bQ6IbVw3eMBk5ypcjVAOswqMbG2P
+         eJtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GF4FjVHQLuzD2r8S3OoB8rQ7/yqbxPMsA50guITT6Uo=;
-        b=TNCSIgCv3rg8mS06R7nnYddgOpRRTjR8IZq03OVPPdi02OFlEapR2d4FIjwHIpmk7u
-         od3/jK7JmRKxK47h9h47d8N5ChprKsYR2IDfl+0it1diGq3o+puBqESIyTrIr/2/D/1+
-         5qWK3D5SUM0BsOYbILqeVNZuMpFgz+75xdcxqu3Bu4LozlqQOT4mMR/RHaq90N42QsDX
-         PtZe3xldeCsDFUkLSHYDS9xBzrsGCWRZYC0Srthz0XPYm6M95VA+ZZ2nX6diAuHoDJoG
-         XtQbB0NeutCUWFYyesNvFe/uaHj0tt8G9M9Xsrb9UujA8rr6qSIBx+KJV+G8NlWfdxU0
-         Oifg==
-X-Gm-Message-State: AA6/9RmzHAjGl1qDAnEbH++AFy/oJ/MTY9DXT+x0/pSa4R8OpX+3xuZCXa0JMqSOhcxV3w==
-X-Received: by 10.28.4.13 with SMTP id 13mr419620wme.92.1476217936047;
-        Tue, 11 Oct 2016 13:32:16 -0700 (PDT)
-Received: from [10.42.1.91] ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id r1sm8811768wjc.43.2016.10.11.13.32.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Oct 2016 13:32:15 -0700 (PDT)
-Message-ID: <1476217934.3876.12.camel@kaarsemaker.net>
-Subject: Re: [PATCH] contrib: add credential helper for libsecret
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Mantas =?UTF-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
-        git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-Date:   Tue, 11 Oct 2016 22:32:14 +0200
-In-Reply-To: <xmqqa8ea8wzy.fsf@gitster.mtv.corp.google.com>
-References: <20161009123417.147239-1-grawity@gmail.com>
-         <1476198080.3876.8.camel@kaarsemaker.net>
-         <xmqqoa2q8ypl.fsf@gitster.mtv.corp.google.com>
-         <c87e4dd4-7253-d7c2-010b-6d8c7f587093@gmail.com>
-         <1476216585.3876.10.camel@kaarsemaker.net>
-         <xmqqa8ea8wzy.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.0-2ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qeXBfKoKy6niU0RYqecIt1iZhXhXKXNKtV4pzcOyCP8=;
+        b=X8CsyCgFpR/zvH/+OQNFSKYKzQtRuCDGd6E9VP3kcGvw2jdRs17lTcc9cIO/iumZNl
+         C+wsedDPfN2Ngxd08Yo/0j+NoqbYnnqOlhMs70ApJVIejwmODOqa+FjWtTNzZQ6i0m9K
+         az9MaC0pZCFKVaMxj3Il8V13ZssQhBOBix4dlrlPFm1D1hDgyc1mhP+G+Rubg2m59VJ2
+         zpVYevhA+s3kkAOj5rXlu+nSOdr6Bellv3ABvPCRDaDHZDZ26EDZo2LsxKjCKK93UXRM
+         Sy7bT1XOQEPQbpFDLFQ+fGBaoufyBBH0HAArj1ya5+MJZ3zCKSZkp6vu5qjrYMOs7Js3
+         G8RQ==
+X-Gm-Message-State: AA6/9Rnyv8xJTlaFsAXBAkXxmZyqoE9koZuyvfp0ZVmMcvixFM1wI9W2KGGN6F2Xa7oJw9tPzIgKgnZsk34LvcrL
+X-Received: by 10.55.56.11 with SMTP id f11mr4938565qka.255.1476219183642;
+ Tue, 11 Oct 2016 13:53:03 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 13:53:03 -0700 (PDT)
+In-Reply-To: <CANXboVZvfPkTQ10PWop+LgPFpc2bD3-u-e5ix0itGawiwCxOuQ@mail.gmail.com>
+References: <CANXboVZvfPkTQ10PWop+LgPFpc2bD3-u-e5ix0itGawiwCxOuQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Oct 2016 13:53:03 -0700
+Message-ID: <CAGZ79kZmrYZqi4+bSkRykn+Upt7bEyZ0N8VhiQ-h8DhSMym-FA@mail.gmail.com>
+Subject: Re: Make `git fetch --all` parallel?
+To:     Ram Rachum <ram@rachum.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2016-10-11 at 13:13 -0700, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
-> 
-> > On Tue, 2016-10-11 at 22:48 +0300, Mantas Mikulėnas wrote:
-> > > On 2016-10-11 22:36, Junio C Hamano wrote:
-> > > > Thanks for a review.  I'll wait until one of (1) a squashable patch
-> > > > to address the "we do not want unconditional overwrite" issue, (2) a
-> > > > reroll from Mantas to do the same, or (3) a counter-argument from
-> > > > somebody to explain why unconditional overwrite is a good idea here
-> > > > (but not in the original) appears.
-> > > 
-> > > 
-> > > 
-> > > I overlooked that. I can write a patch, but it shouldn't make any
-> > > difference in practice – if c->username *was* set, then it would also
-> > > get added to the search attribute list, therefore the search couldn't
-> > > possibly return any results with a different username anyway.
-> > 
-> > 
-> > Makes sense, so a (3) it is.
-> 
-> 
-> So... does it mean the gnome-keyring one needs a bugfix?
+On Tue, Oct 11, 2016 at 1:12 PM, Ram Rachum <ram@rachum.com> wrote:
+> Hi everyone!
+>
+> I have a repo that has a bunch of different remotes, and I noticed
+> slowness when doing `git fetch --all`. Is it currently made
+> sequentially? Do you think that maybe it could be done in parallel so
+> it could be much faster?
+>
+> Thanks,
+> Ram.
 
-I'd say both behaviours are correct.
+If you were to run fetching from each remote in parallel
+assuming the work load is unchanged, this would speed up the
+execution by the number of remotes.
 
-When you do a search without a username, both helpers fill in the
-username returned by the actual credential storage. When you do a
-search with a username, the gnome-keyring helper won't overwrite the
-value passed in and the libsecret helper overwrites it with the same
-value, as the search can only return matches that have the same value.
+This translation sounds pretty easy at first, but when looking into
+the details it is not as easy any more:
 
-D.
+What if 2 remotes have the same object (e.g. the same commit)?
+Currently this is easy: The first remote to fetch from will deliver that
+object to you.
+
+When fetching in parallel, we would want to download that object from
+just one remote, preferably the remote with better network connectivity(?)
+
+So I do think it would be much faster, but I also think patches for this would
+require some thought and a lot of refactoring of the fetch code.
+
+The current fetch protocol is roughly:
+
+remote: I have these refs:
+8a36cd87b7c85a651ab388d403629865ffa3ba0d HEAD
+10d26b0d1ef1ebfd09418ec61bdadc299ac988e2 refs/heads/ab/gitweb-abbrev-links
+77947bbe24e0306d1ce5605c962c4a25f5aca22f refs/heads/ab/gitweb-link-html-escape
+...
+
+client: I want 8a36cd87b7c85a651ab388d403629865ffa3ba0d,
+and I have 231ce93d2a0b0b4210c810e865eb5db7ba3032b2
+and I have 02d0927973782f4b8b7317b499979fada1105be6
+and I have 1172e16af07d6e15bca6398f0ded18a0ae7b9249
+
+remote: I don't know about 231ce93d2a0b0b4210c810e865eb5db7ba3032b2,
+nor 02d0927973782f4b8b7317b499979fada1105be6, but
+I know about 1172e16af07d6e15bca6398f0ded18a0ae7b9249
+
+.... conversation continues...
+
+remote: Ok I figured out what you need, here is a packfile:
+<binary stuff>
+
+
+During the negotiation phase a client would have to be able to change its
+mind (add more "haves", or in case of the parallel fetching these become
+"will-have-soons", although the remote figured out the client did not have it
+earlier.)
+
+If you want to see more details, see Documentation/technical/pack-protocol.txt
