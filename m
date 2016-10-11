@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC2112098A
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDF5B20989
 	for <e@80x24.org>; Tue, 11 Oct 2016 00:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752711AbcJKAVh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 20:21:37 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35866 "EHLO
-        mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752690AbcJKAVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 20:21:35 -0400
-Received: by mail-pa0-f44.google.com with SMTP id ry6so3886109pac.3
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:35 -0700 (PDT)
+        id S1752684AbcJKAVe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 20:21:34 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35850 "EHLO
+        mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752499AbcJKAVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 20:21:32 -0400
+Received: by mail-pa0-f43.google.com with SMTP id ry6so3885156pac.3
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eQ6yy/RmwoZy1QwoFKo1ZtTr5JKY/4q7osB4j5O792U=;
-        b=gkvSAGVkrFLhSPcQahYt7K1eAcxhMBY28tR0/ZOgI+8noXANVC2CxkiQ23odFMUEV2
-         p7j4tQNAZEQgTKf7pxRLRHfobeENmVf0xd4Rn/hAi2eayhvveF7wuR4FNgdnL2UXEEze
-         1iGfUrfu4MwQsBMyYorrJqSvMDR/MLSJBS+1/ICHkUJNYlaqx1HfTOsEnhtqZSqLnWKN
-         KCCAZxE95kvQX4PoB8wKP9FF6u2QP5rDQrhKqN/dTBHHPhHKzV0xPCxofzbIoLCJvwZ+
-         ZvvyBFKdxAFURdA/HT56euykh/f8KdflNBubUISeDEfT107UUZAV6/PhnAYZ7OkPg/DX
-         MT2A==
+        bh=iB3jPxU/daqlj5fDykNFaagcnttajX2400aSm6Lfjuw=;
+        b=Uz5dDDL3ae64oOb34Vrt46XQx2sInc0F2nBmtttYuJr4NBEpCq5EMQXnE7B7z365Km
+         smz6gvnsQTXE+Y2TLNg81cCoHrzDjmpBrElRbFgTRSFlpUngS7M5503I0ZeHajqhBMKu
+         VbwAgRbrlTlKO2DJVSJcbPMjWSbHpajOTdEAhUIPulwWjz8Qt59MZy6J6uVo2a1w1trc
+         KcYUhwY1JJwBsUscAJabp4B6IW4kj2wD9ILNMvlKt45TeLd9KsII1cSHkqpX/0y+OZX8
+         5aNbXopLoFJ5DwEmiZS9GhReNgrolApqhtqjfudhmuZq30JE4G9OHyZ17eamV/nn8Alu
+         jOjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=eQ6yy/RmwoZy1QwoFKo1ZtTr5JKY/4q7osB4j5O792U=;
-        b=WFfUN0vrpehjZ9QWbSsGvYsq/HksCEaZOdxlHyCXIAO/H1/gvxxMPF1GtDrFVT0TL9
-         7zhrR+rYGt129V1rknq6LUIpLDhfQyjiAwN7HUMKQ2fFtTanrNgVpl8IR6ObuGgrBwit
-         ChyzFDViX/l7hdNWJWDVaXtseWzZxEIZac9OE9L3p91e/5fpRKNXnf25kQ3g0/cxKZsh
-         lvKzMJeeG9KujVqeFmB9ypv5i25n9kBu8GHzRVxD82MPb2ftja20atkTmcR+/sF1svwv
-         MiFlf98/A50H1iD1aCtIT2vF/Hb6pgrjy3oJGK76lCRZ3Qrla1OH1VBSGGlvEoPsJ2Os
-         rryw==
-X-Gm-Message-State: AA6/9RnrYIYPGJvOWAy4k/jaEfYS7dPl+qsgwtL947OmdH1ZHqkhLdv9wiaZ9nExmAUqYJD6
-X-Received: by 10.66.232.106 with SMTP id tn10mr1743540pac.17.1476145295026;
-        Mon, 10 Oct 2016 17:21:35 -0700 (PDT)
+        bh=iB3jPxU/daqlj5fDykNFaagcnttajX2400aSm6Lfjuw=;
+        b=D6hOvgJlBbKhYJNBtIxwcygAaHHs5rwH3INLMgBsx4dS3Wyz2LxgHzpnJr7bm6GOow
+         rtr9xROIo3mrTTZO6Rq7RUQSRPcgnYGomlpJebjzSP0uPN/i4/ayd3aDZQrB5InoRnWV
+         f5UJCqrJtx0rHxcHE1be7wsCw+46KVPekuAgb5JApGapIvfE5WZTpaj6pNOaoi8j5h5J
+         wZLSpvjToFOulq2k1tSvqDBrEeGlu721ibYWM1aGDsMmedV+uBwRSe6B3BoJHRetxFnS
+         JPjoXdGYTDSg3Da2evtEuSnWWcEWAXvwXeMS6vY8lNE2kisqZ5m1e2AGsKr7+raJNCcM
+         bOLA==
+X-Gm-Message-State: AA6/9Rk7fkz73dQGTVwMHZvKLSjvqnsk59xiDHoJHcnJI7eZHs6vODfuqRciC0nkY441kUMD
+X-Received: by 10.66.163.132 with SMTP id yi4mr1720693pab.162.1476145291363;
+        Mon, 10 Oct 2016 17:21:31 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
-        by smtp.gmail.com with ESMTPSA id 4sm509230pfg.66.2016.10.10.17.21.34
+        by smtp.gmail.com with ESMTPSA id f1sm527239pff.34.2016.10.10.17.21.30
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Oct 2016 17:21:34 -0700 (PDT)
+        Mon, 10 Oct 2016 17:21:31 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 07/28] attr.c: simplify macroexpand_one()
-Date:   Mon, 10 Oct 2016 17:20:54 -0700
-Message-Id: <20161011002115.23312-8-sbeller@google.com>
+Subject: [PATCH 05/28] attr.c: complete a sentence in a comment
+Date:   Mon, 10 Oct 2016 17:20:52 -0700
+Message-Id: <20161011002115.23312-6-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
 In-Reply-To: <20161011002115.23312-1-sbeller@google.com>
 References: <20161011002115.23312-1-sbeller@google.com>
@@ -63,51 +63,25 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-The double-loop wants to do an early return immediately when one
-matching macro is found.  Eliminate the extra variable 'a' used for
-that purpose and rewrite the "assign the found item to 'a' to make
-it non-NULL and force the loop(s) to terminate" with a direct return
-from there.
-
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ attr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/attr.c b/attr.c
-index 95416d3..7bfeef3 100644
+index 05db667..a7f2c3f 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -701,24 +701,21 @@ static int fill(const char *path, int pathlen, int basename_offset,
- static int macroexpand_one(int nr, int rem)
- {
- 	struct attr_stack *stk;
--	struct match_attr *a = NULL;
- 	int i;
+@@ -300,7 +300,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+  * directory (again, reading the file from top to bottom) down to the
+  * current directory, and then scan the list backwards to find the first match.
+  * This is exactly the same as what is_excluded() does in dir.c to deal with
+- * .gitignore
++ * .gitignore file and info/excludes file as a fallback.
+  */
  
- 	if (check_all_attr[nr].value != ATTR__TRUE ||
- 	    !check_all_attr[nr].attr->maybe_macro)
- 		return rem;
- 
--	for (stk = attr_stack; !a && stk; stk = stk->prev)
--		for (i = stk->num_matches - 1; !a && 0 <= i; i--) {
-+	for (stk = attr_stack; stk; stk = stk->prev) {
-+		for (i = stk->num_matches - 1; 0 <= i; i--) {
- 			struct match_attr *ma = stk->attrs[i];
- 			if (!ma->is_macro)
- 				continue;
- 			if (ma->u.attr->attr_nr == nr)
--				a = ma;
-+				return fill_one("expand", ma, rem);
- 		}
--
--	if (a)
--		rem = fill_one("expand", a, rem);
-+	}
- 
- 	return rem;
- }
+ static struct attr_stack {
 -- 
 2.10.1.382.ga23ca1b.dirty
 
