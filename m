@@ -2,79 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 174E51F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 21:50:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD7F1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 21:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753614AbcJKVuS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 17:50:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65479 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753121AbcJKVuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 17:50:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E54F443093;
-        Tue, 11 Oct 2016 17:45:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9JjIcBNwllaztIg5iAdL3orB13Y=; b=gns+le
-        CSiFMlPZumjtNJ8zn63VVUKf4dLXdffv0bEnsLWeLa8u3e4DuRHP++w7Z8lDCgCA
-        ZvkT28g02vst+DXfytWAjoU45OWR2Zd1SyGd/6GtTAB7UEydLww+yjOnvjfaQpLs
-        xt50uhyTose3uu9zfR5LZv/ZrzGsln4JVSk8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nyw2OIIpDV0PmGZwq3mur9zOiSVcffEl
-        slHbXqLelZG8boFSK5A5O0GrDgF3v5P5dx+w8AdPz6GKWn4zZUHrE8F9Q+z7f+FH
-        92MF/u58ihoqComA0LV8bk3jJVKBfqToGl9qxTepdyqIYF9jS0r3we4NLpT7aKwz
-        z4MJtQTCAsE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DDE6C43092;
-        Tue, 11 Oct 2016 17:45:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2266E43091;
-        Tue, 11 Oct 2016 17:45:09 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Oct 2016, #03; Tue, 11)
-References: <xmqq1szm8ukf.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZu71+6QmvKgXJ5t+97jvTeAhSRtHpMQR9Rmk4Ep5RHhw@mail.gmail.com>
-Date:   Tue, 11 Oct 2016 14:45:07 -0700
-In-Reply-To: <CAGZ79kZu71+6QmvKgXJ5t+97jvTeAhSRtHpMQR9Rmk4Ep5RHhw@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 11 Oct 2016 14:39:22 -0700")
-Message-ID: <xmqqk2de7e70.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754208AbcJKVxQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 17:53:16 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:36337 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753032AbcJKVxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 17:53:15 -0400
+Received: by mail-qt0-f173.google.com with SMTP id m5so4944058qtb.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 14:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lJuharL3qkicefU7hMe+tWwxJxfco96Z0TPZ7HceDq0=;
+        b=YrMIXk5NtKydN66sF9AgUAZ4uhYTquSh6zQ+sBSCB0QO7lC7X3C3N9caFYC5DmmxKr
+         wR2E4qt5wzJBijT3g8WBMEOyveRJEutqxZSS6EDnUjt1ukviuk1P3rNJtGg3U6Nsr3RY
+         3O8wO4ZjzhZvWBKkJ//41a37fDV3AVpZc8QPBEPKOkGt9chlmxh/gZcWAPv9vUPXcHOw
+         wH7TIfAV4bMQv5Dlzi5Iw/LnuFdrJa39BjVQvq9Z6BZMl8ND7EQnOe+6NKxagNvqaiYT
+         2aRtsKns8clFdN1Ouge6s7UzEsiE8e3CSK4iup6RDiOqkYn188grcx16A/lboibODTzu
+         B4nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lJuharL3qkicefU7hMe+tWwxJxfco96Z0TPZ7HceDq0=;
+        b=Thko+THpg9ddgFchtvfmo49FziCm7lznNFutKWBWbLJLJUgLc1fogD/x9TGo/XVIMz
+         5qTUH81p+ux7hW/bRVqFb0sKn3Iuo175cy1sh5I5zVhkqCEIGPJpuR2GMwmAnopW72WU
+         Uw4isNgi+xbUz6sMVnyz6iHExVKvhNwCZ1y8eFUl/8ecSzzZ2B3FL5Jl5EUnlvbtEZ8J
+         SN3WFt3m5mebqxPURBK5ugAcvkSIqWIlOQdLfp/0MWAA5zA2rtwGrY5DJ1Qirts19Ycr
+         BSD1E1CFq+Wbg5IVlvHtUoWIh730UcjyBgCumyC91Wk56nkmH8kRYI6/AUQeqjPAN0Ld
+         Dp5w==
+X-Gm-Message-State: AA6/9RnYDenaCayx4rTF6jhOtOARMw99O4uQ3Fe4il5w9JElZ9MKrGxIltneGy+p3KEyy0WAgsNa+IJBObOI8www
+X-Received: by 10.237.47.194 with SMTP id m60mr5644881qtd.55.1476222794730;
+ Tue, 11 Oct 2016 14:53:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FAF88E82-8FFB-11E6-8044-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 14:53:14 -0700 (PDT)
+In-Reply-To: <20161011173749.GC9085@google.com>
+References: <20161011002115.23312-1-sbeller@google.com> <20161011002115.23312-27-sbeller@google.com>
+ <20161011173749.GC9085@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Oct 2016 14:53:14 -0700
+Message-ID: <CAGZ79kYYW9VE1yWvLgNHXg=UG2FTh0V9c=38aSLnLVvrpU2Pmw@mail.gmail.com>
+Subject: Re: [PATCH 26/28] attr: make git_attr_counted static
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Tue, Oct 11, 2016 at 2:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Oct 11, 2016 at 10:37 AM, Brandon Williams <bmwill@google.com> wrote:
+> On 10/10, Stefan Beller wrote:
+>> It's not used outside the attr code, so let's keep it private.
 >>
->> * sb/submodule-ignore-trailing-slash (2016-10-10) 2 commits
->>   (merged to 'next' on 2016-10-11 at e37425ed17)
->>  + submodule: ignore trailing slash in relative url
->>  + submodule: ignore trailing slash on superproject URL
->>
->>  A minor regression fix for "git submodule".
->>
->>  Will merge to 'master'.
+>> Change-Id: I0d15e0f2ea944b31d68b9cf1a4edecac0ca2170d
 >
-> Going by the bug report, this *may* be more than
-> minor and worth merging down to maint as well, eventually.
+> Looks like you forgot to remove this :)
 
-The topic was forked at a reasonably old commit so that it can be
-merged as far down to maint-2.9 if we wanted to.  Which means the
-regression was fairly old and fix is not all that urgent as well.
+will be fixed in a reroll.
+thanks!
 
-Thanks.
+>
+> --
+> Brandon Williams
