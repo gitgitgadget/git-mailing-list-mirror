@@ -2,150 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D87E2098A
-	for <e@80x24.org>; Tue, 11 Oct 2016 10:18:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5E1207EC
+	for <e@80x24.org>; Tue, 11 Oct 2016 10:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753224AbcJKKRx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 06:17:53 -0400
-Received: from mout.web.de ([212.227.15.4]:58093 "EHLO mout.web.de"
+        id S1753187AbcJKKUt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 06:20:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60173 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752798AbcJKKRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 06:17:52 -0400
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0LfAfQ-1b56mK3GVE-00oqNU; Tue, 11 Oct 2016 12:09:48
+        id S1752684AbcJKKUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 06:20:46 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MEXHd-1beioI0fu5-00Fldb; Tue, 11 Oct 2016 12:20:39
  +0200
-Date:   Tue, 11 Oct 2016 10:09:46 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        peff@peff.net
-Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
-Message-ID: <20161011100946.GA13745@tb-raspi>
-References: <20161008112530.15506-1-larsxschneider@gmail.com>
- <20161008112530.15506-14-larsxschneider@gmail.com>
- <xmqqint0dlis.fsf@gitster.mtv.corp.google.com>
- <02E73D87-B036-40CA-AF54-F93415A028BC@gmail.com>
+Date:   Tue, 11 Oct 2016 12:20:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 07/25] sequencer: completely revamp the "todo" script
+ parsing
+In-Reply-To: <xmqqlgxvdf90.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610111212090.35196@virtualbox>
+References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <4e73ba3e8c1700259ffcc3224d1f66e6a760142d.1476120229.git.johannes.schindelin@gmx.de> <xmqqlgxvdf90.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <02E73D87-B036-40CA-AF54-F93415A028BC@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:3soyq+1Hp9pLkJ9k29u7JQHeXslMUevwVODc3MUkB88ykxMFY8t
- AFOnNfX8Zocp5bYV1MupQLY6SiLzPcxuPe4eetaKGx2mdo8u0aT5ZTurUOjlaIb10gGUt1n
- 4MkZsFdpO5kvDOoFonbDzAIqRKx5fDX2WntV2GXzyHr0vqxy/7xgM1iKPYTygPc2+5bs3r3
- F5ExWj82CXb5RA8sPUyNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EdNHG3weW90=:u/M3O1raAKLS79XXR7Jzcq
- HSO/AQDGmxHn2wBk1TzxVovvR+cKNdTALicZzmd2REgf6P7h8sE1vjly/fi/NVIo81QrL73eX
- vNXvsA9xg0teVCiaYeARXBE3YQZahoWlcs63K01xYPy3oEimZC/5x+W+f9nOkx3MTaGr7b14o
- pB59/EcJQw5L/d4n23SvNQPLsVPaNBVwcL8PshiqtW9qCFJOdZs0VYG7Tv1G/CVSNzgaMCg0q
- 7ZO8uYn/UqHNi258BBp6r3wsFBQxUTTWb2FQWG84f8CzlsB73zKDb+LV67blu3sH6ItBcRzxg
- 5NMrCHeDulpFej3s+7crCnGJxtMamrhQHkuFKWZn+6rV2jEMcCQJzT/X1aaCzTzmCTNUVZ+Yg
- isHWYdpNomvg25KIzlrxmmcJqT2nM8WwJxdnfJxNhH6m+hQqlWMiNAIDElrFOWLaeDnzyUOz3
- ZmbwtGTmpoiymdSxvJ3RLtzpUqXH0Frp9xN971We2ibjNXUe/GKZ4QyHshBUnxCI/fAcmq4ZI
- 8ZoDA5lqN6KfxQ8SskvHbAZiKXeMOn/fVBXRyEm8VQyUfzC+QgXHw6SkXnOh1l16cKDwJm4yt
- MsDJCji2R2OEok07mVLY/UfM2LRt3+shjIfzOtxAy4wkOyiGHKrOQwJeV3XQjSBg6oTYaAlrP
- 9ZJf4vcXczaXFRpwoOG+b+Yr1yiz7GLlj7ojkIdeZNfONzOAB6WC0mcgsyZGWYBEkltxJN/2p
- 4oXojODMyBpPScLcEIiUoyzdriMG6hywaQcZXbcNiGyYRIWncp4xN9YPvn4=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:bN946kIEoNdsa6knJ6Ivbldlfren1RDmXJu/vsDPT3ecO5lyGo3
+ WBOIDcWIdgehtR/GqDo4B5us7tAc5keCS3wb3hAlebDmyvRsuIY7ijAeV36lHn6+7e1Nq56
+ xv3CloMkTVBHhc2OenBLVvevpXPbJPdRqTUu3z8qZwkBqeMVHB7ve/9UMmyP4t96zE8YJ4P
+ RSY6V6pQyDbFqecQRyjng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DHAwAQPYsk8=:/ZXz4ILLM1yroh5qaPW/rO
+ niOeNZqTvZ67rTZrsxiSkaK0ZpHNIVQwhH2hJQmR/G7/FBpY/CH42FJL0YZ7WKQSnoEh5LY5V
+ 2D1LC7QNw4Y0AjwVQ4JStTY+Fe1maFA7QFP7gjArKnl10etKxjA8PHA0asOYTtmkcXDI5NBMA
+ HhtjXNPNCtY/KriL3DgSQnasld/LazSd/HeHNRoXFwsiwoVZLRml2CYy0csIuD+Cby+Ud+Dah
+ 6F6IBJq4GGhGEMubi/zbTQosY+knv5KVFiFxXik/+98VTaSnrNc1OXcpUPfF9YvNjiidfM5wz
+ ZObvPUvuF8t840RwULxieB4dvC1SH/EILGJSa9gjjnecBOujuu0GgzZbkGWCP0nKVh9RAN9AP
+ vpQB1o23NJsiu2ah7hu9wFzeHSYVzewQ3opDfZgAUYFEwT6Svh27HBklvIS7IqseKK0Nx2xA8
+ u/seUTeynjsN5JYIYDmjAkoEH0XdF6v4eboyHPgyyCXSxnRJFf3ogDq0mxf2lgKbaybiC8CeU
+ R2nP2+inkbC6+9VBPuYkcHmwNauGqCEBvNinO0/nw37cHzrtKfn1tVuiyl5OdXXrbJc66zfhv
+ 71E6FsvVq/4GNTd/gFy2xOxO9lB/7EpUxcwotAaAOxkvkDaBwqBdZ4mX55esDsffPaAAzfZMA
+ INNfZdIrIprmABkZoBJdLoYfRhS1owiE9ITHgNWbunbfvwAXkVdHNIWh685ttDhP8wsWprTOv
+ +aqQSViclhXIEz1pmkvA/3OKPNJjHNpRUXYoicHIZ0TAbAv1elLmIdh9SRxD6+NXJov+RcBa4
+ Efrv2S2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 10:11:22AM +0200, Lars Schneider wrote:
-> 
-> > On 10 Oct 2016, at 21:58, Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> > larsxschneider@gmail.com writes:
-> > 
-> > [...]
-> >> +# Count unique lines except clean invocations in two files and compare
-> >> +# them. Clean invocations are not counted because their number can vary.
-> >> +# c.f. http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
-> >> +test_cmp_count_except_clean () {
-> >> +	for FILE in $@
-> >> +	do
-> >> +		sort $FILE | uniq -c | sed "s/^[ ]*//" |
-> >> +			sed "s/^\([0-9]\) IN: clean/x IN: clean/" >$FILE.tmp
-> >> +		cat $FILE.tmp >$FILE
-> >> +	done &&
-> >> +	test_cmp $@
-> >> +}
-> > 
-> > Why do you even _care_ about the number of invocations?  While I
-> > told you why "clean" could be called multiple times under racy Git
-> > as an example, that was not meant to be an exhaustive example.  I
-> > wouldn't be surprised if we needed to run smudge twice, for example,
-> > in some weirdly racy cases in the future.
-> > 
-> > Can we just have the correctness (i.e. "we expect that the working
-> > tree file gets this as the result of checking it out, and we made
-> > sure that is the case") test without getting into such an
-> > implementation detail?
-> 
-> My goal is to check that clean/smudge is invoked at least once. I could
-> just run `uniq` to achieve that but then all other filter commands could
-> happen multiple times and the test would not detect that.
-> 
-> I also prefer to check the filter commands to ensure the filter is 
-> working as expected (e.g. no multiple start ups etc) in addition to 
-> checking the working tree.
-> 
-> Would the patch below work for you? If yes, then please squash it into
-> "convert: add filter.<driver>.process option".
-> 
-> Thank you,
-> Lars
-> 
-> 
-> 
-> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> index 9f892c0..714f706 100755
-> --- a/t/t0021-conversion.sh
-> +++ b/t/t0021-conversion.sh
-> @@ -31,38 +31,33 @@ filter_git () {
->  	rm -f git-stderr.log
->  }
->  
-> -# Count unique lines in two files and compare them.
-> -test_cmp_count () {
-> -	for FILE in $@
-> -	do
-> -		sort $FILE | uniq -c | sed "s/^[ ]*//" >$FILE.tmp
-> -		cat $FILE.tmp >$FILE
-> -	done &&
-> -	test_cmp $@
-> -}
-> -
-> -# Count unique lines except clean invocations in two files and compare
-> -# them. Clean invocations are not counted because their number can vary.
-> +# Compare two files and ensure that `clean` and `smudge` respectively are
-> +# called at least once if specified in the `expect` file. The actual
-> +# invocation count is not relevant because their number can vary.
->  # c.f. http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
-> -test_cmp_count_except_clean () {
-> -	for FILE in $@
+Hi Junio,
 
-> +test_cmp_count () {
-> +	expect=$1 actual=$2
+On Mon, 10 Oct 2016, Junio C Hamano wrote:
 
-That could be 
-expect="$1"
-actual="$2"
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> >  	if (parent && parse_commit(parent) < 0)
+> > -		/* TRANSLATORS: The first %s will be "revert" or
+> > -		   "cherry-pick", the second %s a SHA1 */
+> > +		/*
+> > +		 * TRANSLATORS: The first %s will be a "todo" command like
+> > +		 * "revert" or "pick", the second %s a SHA1.
+> > +		 */
+> 
+> You may want to double check this with i18n folks; IIRC the tool
+> that extracts TRANSLATORS: comment was somewhat particular about
+> where that magic "TRANSLATORS:" token resides on a comment line and
+> that is why we have this multi-line comment formatted in an unusual
+> way.
+> 
+> Ahh, no you do not have to bug i18n folks.  47fbfded53 ("i18n: only
+> extract comments marked with "TRANSLATORS:"", 2014-04-17) is an
+> example of such an adjustment.
 
-> +	for FILE in "$expect" "$actual"
->  	do
+Urgh. Thanks for pointing this out to me, though. Will be fixed in the
+next iteration.
 
-> +		sort "$FILE" | uniq -c | sed "s/^[ ]*//" |
-> +			sed "s/^\([0-9]\) IN: clean/x IN: clean/" |
-> +			sed "s/^\([0-9]\) IN: smudge/x IN: smudge/" >"$FILE.tmp" &&
-> +		cat "$FILE.tmp" >"$FILE"
+> > +	while ((commit = get_revision(opts->revs))) {
+> > +		struct todo_item *item = append_new_todo(todo_list);
+> > +		const char *commit_buffer = get_commit_buffer(commit, NULL);
+> > +		const char *subject;
+> > +		int subject_len;
+> > +
+> > +		item->command = command;
+> > +		item->commit = commit;
+> > +		item->offset_in_buf = todo_list->buf.len;
+> > +		subject_len = find_commit_subject(commit_buffer, &subject);
+> > +		strbuf_addf(&todo_list->buf, "%s %s %.*s\n", command_string,
+> > +			find_unique_abbrev(commit->object.oid.hash,
+> > +				DEFAULT_ABBREV),
+> > +			subject_len, subject);
+> 
+> I am personally fine with this line; two things come to mind:
+> 
+>  - This would work just fine as-is with Linus's change to turn
+>    DEFAULT_ABBREV to -1.
+> 
+>  - It appears that it is more fashionable to use
+>    strbuf_add_unique_abbrev() these days.
 
-How about 
-		cp "$FILE.tmp" "$FILE"
+Right, I actually looked at this place when I tried to decide where I
+could use that function. Somehow I thought I'd not break up the flow here.
 
+But since you asked so nicely, I'll squash this in (I personally find it
+uglier, and longer, but it does use strbuf_add_unique_abbrev() now):
+
+-- snipsnap --
+@@ -906,11 +904,13 @@ static int walk_revs_populate_todo(struct todo_list
+*todo_list,
+                item->command = command;
+                item->commit = commit;
+                item->offset_in_buf = todo_list->buf.len;
++               strbuf_addstr(&todo_list->buf, command);
++               strbuf_addch(&todo_list->buf, ' ');
++               strbuf_add_unique_abbrev(&todo_list->buf,
++                                        commit->object.oid.hash,
++                                        DEFAULT_ABBREV);
+                subject_len = find_commit_subject(commit_buffer, &subject);
+-               strbuf_addf(&todo_list->buf, "%s %s %.*s\n",
+                command_string,
+-                       find_unique_abbrev(commit->object.oid.hash,
+-                               DEFAULT_ABBREV),
+-                       subject_len, subject);
++               strbuf_add(&todo_list->buf, subject, subject_len);
+                unuse_commit_buffer(commit, commit_buffer);
+        }
+        return 0;
