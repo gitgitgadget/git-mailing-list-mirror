@@ -2,79 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E0E32098A
-	for <e@80x24.org>; Tue, 11 Oct 2016 17:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A25E1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 17:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754036AbcJKRGz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 13:06:55 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35799 "EHLO
-        mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753890AbcJKRGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 13:06:54 -0400
-Received: by mail-pa0-f46.google.com with SMTP id qn10so17908144pac.2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 10:06:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5yqRQe7zyP6Vk+MRXB5kLxkid1TMWU3zl7GBxbXtmXo=;
-        b=dtx/eBJ3TExx5vjCiXEfZdw/jtbHEJWAU3IER0rZKZMmS+5Yb2Vhkdlb0iV6sqtipj
-         BJ9GcsDhEyXXJJGfbWFBYk62wR/JwqYAqAo+b51L9s56CTBo/pIlhcGFVcm1gqMbzUzA
-         eCR0cEG78BDyNs/p30gL5YVogzVJJL312cHwHSWIniV/tMJ1q4R2bL6KBWR87DK6CYiV
-         kWK7LHKVCx4HvJcP/uXvgwxiLrVRZKhg0T6JgvIOhs5vKXjvmG3mU6o58+KiGv98FTrF
-         zG9x/TJl1DQ1S6NI2ggwLfoXcPaE3BhAtz1rDH9OzIjOR6CzBX20P/KkA1VQ6scg5Chh
-         egEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5yqRQe7zyP6Vk+MRXB5kLxkid1TMWU3zl7GBxbXtmXo=;
-        b=jalISWivfPsflzkiUjoas53fvwoKnPTfnSk6NaTioLKqyeEGbWCN+Ux84Mg5+HtXRP
-         Vhf0vySuh7Z7mrkwpoea9hd9Dp5zgYVkk2ntPyNPxfKL1fEeQwG+Nw6GdMN6CE5A5vdD
-         uw/DQ4JdSkk9d1bGhw3ESJoKaIcatzLXlg20QKe4cu8be1OC0JFfboyiJmTAyjRNLDyB
-         LUpyKf/uz1Bo5rTn0fbvPI9zOP558mlqwmZBvw+vOip5ZAwv6zhz/lxo7re736BEyAyW
-         8NzX3FkJWdaXgevC4/cjCpzvx53UUKDwA0Zmut1YazxFImuYvWU24DGVI7Q3OqHp8kZ3
-         Biyg==
-X-Gm-Message-State: AA6/9Rk02407L+ARhJSU2FyUuauUAYfqR0JLUtpIKz+RQdq3UteGgF4LFyA8AQdk5JnptDnr
-X-Received: by 10.66.78.193 with SMTP id d1mr8567713pax.4.1476205176956;
-        Tue, 11 Oct 2016 09:59:36 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5e00:19ef:1eb0:a061:def1])
-        by smtp.gmail.com with ESMTPSA id b128sm5575138pfg.45.2016.10.11.09.59.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Oct 2016 09:59:36 -0700 (PDT)
-Date:   Tue, 11 Oct 2016 09:59:36 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH 11/28] attr: (re)introduce git_check_attr() and struct
- git_attr_check
-Message-ID: <20161011165936.GA9085@google.com>
-References: <20161011002115.23312-1-sbeller@google.com>
- <20161011002115.23312-12-sbeller@google.com>
+        id S1754128AbcJKRKS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 13:10:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56604 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754042AbcJKRKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 13:10:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A139540B37;
+        Tue, 11 Oct 2016 12:58:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DAWsZraC1K/5fylViBQ8xXLJDLc=; b=KeIi+l
+        t3lJW/X7yFuZo3nHi/+BVF7+kyTNZKF+QM5YW0Mzrt6mqECDUSODdGSCDbM5qynF
+        Mi07iDH9flOlinnN0GgEG/3nbThgi5eP6JpgOxRV+EwFn9ZpWLJGK4x6ipATnfel
+        QzB/+Gb6HNavvfHP2YkevYbrFHeKN4obJYOYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CDFj42A+8s/PjCGORGP8Ju5ZoyddKuyJ
+        W0WLFuWd3uysGUabmXIjI+ezNn3m8FeWWTyeadk2fyL6oW/n/TCS3S4fq+q674ol
+        KUWgAWrn+S4B1CLLyxnSUKjrmvVWTyr9DKBl1V5E7GXBQZGc0zWgwdwsFBbWoZxT
+        GJjxJ7ERAYA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9815240B36;
+        Tue, 11 Oct 2016 12:58:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1B82140B34;
+        Tue, 11 Oct 2016 12:58:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 07/25] sequencer: completely revamp the "todo" script parsing
+References: <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <cover.1476120229.git.johannes.schindelin@gmx.de>
+        <4e73ba3e8c1700259ffcc3224d1f66e6a760142d.1476120229.git.johannes.schindelin@gmx.de>
+        <xmqqlgxvdf90.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610111212090.35196@virtualbox>
+        <alpine.DEB.2.20.1610111221530.35196@virtualbox>
+        <alpine.DEB.2.20.1610111238470.35196@virtualbox>
+Date:   Tue, 11 Oct 2016 09:58:01 -0700
+In-Reply-To: <alpine.DEB.2.20.1610111238470.35196@virtualbox> (Johannes
+        Schindelin's message of "Tue, 11 Oct 2016 12:55:14 +0200 (CEST)")
+Message-ID: <xmqqvawyakme.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161011002115.23312-12-sbeller@google.com>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+Content-Type: text/plain
+X-Pobox-Relay-ID: DF7566BC-8FD3-11E6-9511-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/10, Stefan Beller wrote:
-> From: Junio C Hamano <gitster@pobox.com>
-> 
-> A common pattern to check N attributes for many paths is to
-> 
->  (1) prepare an array A of N git_attr_check_elem items;
->  (2) call git_attr() to intern the N attribute names and fill A;
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Does the word 'intern' here mean internalize?  It took me a few reads to
-stop picturing college students running around an office :)
+> In the end, I decided to actually *not* use strbuf_add_unique_abbrev()
+> here because it really makes the code very much too ugly after the
+> introduction of short_commit_name():
 
--- 
-Brandon Williams
+It's perfectly fine not to use that function when it does not make
+sense; we shouldn't use it (or anything for that matter) just for
+the sake of using it.
