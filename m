@@ -6,201 +6,92 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 176F520989
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33A1B2098A
 	for <e@80x24.org>; Tue, 11 Oct 2016 00:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752840AbcJKAWA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 20:22:00 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:32851 "EHLO
-        mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752690AbcJKAVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 20:21:55 -0400
-Received: by mail-pa0-f48.google.com with SMTP id vu5so3988640pab.0
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:55 -0700 (PDT)
+        id S1752844AbcJKAWC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 20:22:02 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:34660 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752690AbcJKAWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 20:22:01 -0400
+Received: by mail-pf0-f174.google.com with SMTP id 190so1941767pfv.1
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kGP0WrCoC4YrmqDSNCGmfomMTJAOYGm1TKkyJPmtDZg=;
-        b=jyNW6yx1ZE9enKZf6CQzR/QDlvZebLccn2JVoGXLBJcX3U55WDDFMs2r0JBJtpvUNZ
-         rfhlhdYcdATPkq54J4On7TRMvcs8tzahAIqSTfcEZVwRwSBQwsjL9amuYzEVjfHb4Gq8
-         TzqmjCKgf5wvVAlkyE380/fO1kOFW6HTlrCuDXQeH3X3rAxuxuQIgILbkk79gghTVoE0
-         oTeKeiPrjbbFFZfdFLqWATYIw8aeXIKYqdiKiDRKGNqWajQo47Bki/o8k3ynEstXZnTM
-         M2letG1sJ3e7H/qDwGR47HiqKfW17pybhs6MEGjM+Yo6oNIL9IzvX3lQUhqguy3O7KH3
-         A9nQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hhmaLMZt3pIgilFjP/ugwWhRjAE3FSQyiuCjNWL56zQ=;
+        b=CQZ4fPrNMFvbOSFgX+98/OGM6CbHETonsac7ru3bKdIcbFMADmsEuuTbFkNv+MpmcG
+         GNjJUUWIIgFcbgt1XZL/KVCxZrmoc64rfTObRrE4cOuz9Ga4BLbMny59Lxib6law6f+q
+         FBZVF5H/rIgTws4mOmrenEbMTRyPmLNmLru1u4SJ5MAWg8ZmN8/0M3ORoQwPf0T8xDxG
+         RYn1Klo4jCi7EyTm3ancmIVJ/Xonvk/0qGMGcxm8VAryhwOHJIj8R+uCDxTFK9QPxwyl
+         IZwH0bh2RDMgauCNTFzLFukI35/s84M3xfdaGo2YAdku6athXM/NMlNw0Ha/aCSQW05X
+         oAMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kGP0WrCoC4YrmqDSNCGmfomMTJAOYGm1TKkyJPmtDZg=;
-        b=WGb33pD7GQXT2RXoaeuF0dClhlxZLZ/8MgmsxL2M+83DrOO/Ef6iLaAOXA7AGdM0Bf
-         Td2yjVM0M/dlc3+TFC6+36E5aUh5AW75ks7R7G6rXKC7Vlva5PfVWHTjaEOw0Hzrm4U6
-         FwK4Hu3XFSTk0ycccyzOz2/0bFr1LZ/k8frvqJ2TNJPRHxlX0pNSdgCDC8mZ2aSUoWu+
-         hV/7tqaxs+u2JoZRpSM/jBUcYL1zZJjkpKhsQBYWk+8sb/FPZz6DnithsEe5Dmu+ATPo
-         IY3LyBmw+RUOj4xr+I+1O0VsJ97+15bW0vjzPUmGmk8clHo6Y5e70J8wMolA/tmqVuQb
-         OIzQ==
-X-Gm-Message-State: AA6/9Rl5TIxX1JGqIzff08baSo4+j4lGatmICI2mqgmJNqQIZ/yQBj0gpaivhwWruoVzgdYi
-X-Received: by 10.66.216.162 with SMTP id or2mr1761109pac.44.1476145314924;
-        Mon, 10 Oct 2016 17:21:54 -0700 (PDT)
+         :references;
+        bh=hhmaLMZt3pIgilFjP/ugwWhRjAE3FSQyiuCjNWL56zQ=;
+        b=i7zxn55dNrKLqklPtl+YPFv7KtgZtZwM0sK7RmlPJGQi4cPzLFYSje3koEtKVz0IT1
+         xgxEV98Me7nuJOnVGzuvB8g+KOitqJRULWKD6smuC42KVTbAWqhK3Lt0gy48ARnOan8r
+         WrcJp3/GYp3dOY12hsRePZhuFHDxTGm3Q6CRDupR2Sf2JdydV4x1IXnmUzza9q0Gs0LM
+         qohO/7clGSr9NQZ4mHhi3iHu8j05C6h67J2UH+1mOlgnC/pqQ4+T7chaMkmGuP5NBUgE
+         OZU4M7gVuqjTpHVQ0Icngz3ZkSd1VMggURrOoPkgrhnCmQOQz/NpF0Tu1aSakqi0GyXQ
+         EpfA==
+X-Gm-Message-State: AA6/9RlK1+mCzoxQCNfEHUwuSfmZ1BzL8i+lTCCqDfa1x5YZSPRezJWWDxDKWF5jqwUy1MsG
+X-Received: by 10.99.102.69 with SMTP id a66mr162144pgc.71.1476145320277;
+        Mon, 10 Oct 2016 17:22:00 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
-        by smtp.gmail.com with ESMTPSA id e6sm514290pfb.57.2016.10.10.17.21.54
+        by smtp.gmail.com with ESMTPSA id f1sm531314pfa.29.2016.10.10.17.21.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Oct 2016 17:21:54 -0700 (PDT)
+        Mon, 10 Oct 2016 17:21:59 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 18/28] attr: support quoting pathname patterns in C style
-Date:   Mon, 10 Oct 2016 17:21:05 -0700
-Message-Id: <20161011002115.23312-19-sbeller@google.com>
+Subject: [PATCH 21/28] attr.c: rename a local variable check
+Date:   Mon, 10 Oct 2016 17:21:08 -0700
+Message-Id: <20161011002115.23312-22-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
 In-Reply-To: <20161011002115.23312-1-sbeller@google.com>
 References: <20161011002115.23312-1-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 
-Full pattern must be quoted. So 'pat"t"ern attr' will give exactly
-'pat"t"ern', not 'pattern'. Also clarify that leading whitespaces are
-not part of the pattern and document comment syntax.
+Throughout this series, we are trying to use "check" to name an
+instance of "git_attr_check" structure; let's rename a "check" that
+refers to an array whose elements are git_attr_check_elem to avoid
+confusion.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/gitattributes.txt |  8 +++++---
- attr.c                          | 15 +++++++++++++--
- t/t0003-attributes.sh           | 26 ++++++++++++++++++++++++++
- 3 files changed, 44 insertions(+), 5 deletions(-)
+ attr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 7aff940..8a061af 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -21,9 +21,11 @@ Each line in `gitattributes` file is of form:
- 	pattern	attr1 attr2 ...
- 
- That is, a pattern followed by an attributes list,
--separated by whitespaces.  When the pattern matches the
--path in question, the attributes listed on the line are given to
--the path.
-+separated by whitespaces. Leading and trailing whitespaces are
-+ignored. Lines that begin with '#' are ignored. Patterns
-+that begin with a double quote are quoted in C style.
-+When the pattern matches the path in question, the attributes
-+listed on the line are given to the path.
- 
- Each attribute can be in one of these states for a given path:
- 
 diff --git a/attr.c b/attr.c
-index 6e3bd25..6a14c9a 100644
+index c1d5222..abf23d8 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -13,6 +13,7 @@
- #include "attr.h"
- #include "dir.h"
- #include "utf8.h"
-+#include "quote.h"
+@@ -682,12 +682,12 @@ static int macroexpand_one(int attr_nr, int rem);
  
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-@@ -225,12 +226,21 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 	const char *cp, *name, *states;
- 	struct match_attr *res = NULL;
- 	int is_macro;
-+	struct strbuf pattern = STRBUF_INIT;
+ static int fill_one(const char *what, struct match_attr *a, int rem)
+ {
+-	struct git_attr_check_elem *check = check_all_attr;
++	struct git_attr_check_elem *celem = check_all_attr;
+ 	int i;
  
- 	cp = line + strspn(line, blank);
- 	if (!*cp || *cp == '#')
- 		return NULL;
- 	name = cp;
--	namelen = strcspn(name, blank);
-+
-+	if (*cp == '"' && !unquote_c_style(&pattern, name, &states)) {
-+		name = pattern.buf;
-+		namelen = pattern.len;
-+	} else {
-+		namelen = strcspn(name, blank);
-+		states = name + namelen;
-+	}
-+
- 	if (strlen(ATTRIBUTE_MACRO_PREFIX) < namelen &&
- 	    starts_with(name, ATTRIBUTE_MACRO_PREFIX)) {
- 		if (!macro_ok) {
-@@ -250,7 +260,6 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 	else
- 		is_macro = 0;
+ 	for (i = a->num_attr - 1; 0 < rem && 0 <= i; i--) {
+ 		struct git_attr *attr = a->state[i].attr;
+-		const char **n = &(check[attr->attr_nr].value);
++		const char **n = &(celem[attr->attr_nr].value);
+ 		const char *v = a->state[i].setto;
  
--	states = name + namelen;
- 	states += strspn(states, blank);
- 
- 	/* First pass to count the attr_states */
-@@ -293,9 +302,11 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 			cannot_trust_maybe_real = 1;
- 	}
- 
-+	strbuf_release(&pattern);
- 	return res;
- 
- fail_return:
-+	strbuf_release(&pattern);
- 	free(res);
- 	return NULL;
- }
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index f0fbb42..f19ae4f 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -13,10 +13,31 @@ attr_check () {
- 	test_line_count = 0 err
- }
- 
-+attr_check_quote () {
-+
-+	path="$1"
-+	quoted_path="$2"
-+	expect="$3"
-+
-+	git check-attr test -- "$path" >actual &&
-+	echo "\"$quoted_path\": test: $expect" >expect &&
-+	test_cmp expect actual
-+
-+}
-+
-+test_expect_success 'open-quoted pathname' '
-+	echo "\"a test=a" >.gitattributes &&
-+	test_must_fail attr_check a a
-+'
-+
-+
- test_expect_success 'setup' '
- 	mkdir -p a/b/d a/c b &&
- 	(
- 		echo "[attr]notest !test"
-+		echo "\" d \"	test=d"
-+		echo " e	test=e"
-+		echo " e\"	test=e"
- 		echo "f	test=f"
- 		echo "a/i test=a/i"
- 		echo "onoff test -test"
-@@ -69,6 +90,11 @@ test_expect_success 'command line checks' '
- '
- 
- test_expect_success 'attribute test' '
-+
-+	attr_check " d " d &&
-+	attr_check e e &&
-+	attr_check_quote e\" e\\\" e &&
-+
- 	attr_check f f &&
- 	attr_check a/f f &&
- 	attr_check a/c/f f &&
+ 		if (*n == ATTR__UNKNOWN) {
 -- 
 2.10.1.382.ga23ca1b.dirty
 
