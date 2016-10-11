@@ -2,94 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_06_12,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A43FA1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 22:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 634641F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 22:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754437AbcJKW0R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 18:26:17 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35400 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754265AbcJKW0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 18:26:15 -0400
-Received: by mail-pf0-f194.google.com with SMTP id s8so1372586pfj.2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 15:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=tz5eU1PmTnDjFrSzYI92nFDMUBH+fL4UiVzvttzbjKE=;
-        b=F3H7nKJR8am9dkM9vjKYOh1vOdCZD9Uhwlst09HJgRvYLINdxiE+2aPedVJ3AKT82l
-         aVcYMFsfM9OtsezhHDnKK93bYZA6EuE1voH94lCUH/ztaqIia6Inmfu+ES56hnyZ3qAp
-         uGITlWZLheN3CxEVHgu/Abykp3svnmOKOOfTaXpmV8msQ08eoXaLxF6Y3PLYTgcQUq87
-         Y1I4PsILu8JFzE6WG4PJQuneZUWpINR6S3CE1otcsYVUv5IlaFdMKfH+J95AwaHWva9+
-         JNXg7i2hsBcX+XlLFDbVeI9qga7NkkTQuaO2IpT8ThwbSnyqsUuvFJpQgpw3nXOqbd7M
-         rtBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=tz5eU1PmTnDjFrSzYI92nFDMUBH+fL4UiVzvttzbjKE=;
-        b=dDKZo6TXseiY0gY3NAL99We+0ZC9FZLIk+u2XbjkGgupjfCFOL7k3HjQ0wzFik3fCK
-         nPKr7K999cJRtC6i685V1z73EkRsArEMHCfBn5T22zSZHRl/bmtyCejmB1r3fLJdke71
-         HghaNmwKLg3nbmlHziC+IIdz72Dg32u8FmG17umdrsSfRpSK+jpwePhiKNNVts1N6eq4
-         bCAFF8CeTGBEczGoUlVfbgfBHRt3L6sQ+We9aQu44bzhNXTCzoPJ2XXSnYBs96JtplxV
-         d7WZY7r4xM0GV3d3Omlx3LgF0NJO00wkXKGIBvAOzIKV2atifal1myDAMi+DG7+CmSca
-         mnMQ==
-X-Gm-Message-State: AA6/9Rlb6Q7xY1tBImLGCVbYDz6Bxcnlhk1dSUGssKNDmvEkf7QABygWkxK2KJLPck8s1w==
-X-Received: by 10.98.205.207 with SMTP id o198mr365185pfg.114.1476224761882;
-        Tue, 11 Oct 2016 15:26:01 -0700 (PDT)
-Received: from [10.80.3.199] ([209.37.102.131])
-        by smtp.gmail.com with ESMTPSA id e6sm6669561pfb.57.2016.10.11.15.26.00
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Oct 2016 15:26:01 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <a80f6399-b344-b979-d849-1dc7f899fabe@web.de>
-Date:   Tue, 11 Oct 2016 17:29:07 +0200
-Cc:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7ED32498-0757-4499-93AC-DC9116738799@gmail.com>
-References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-14-larsxschneider@gmail.com> <e09a63ee-dad2-a8fb-e47f-0559d9507e1c@gmail.com> <a80f6399-b344-b979-d849-1dc7f899fabe@web.de>
-To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1754663AbcJKWjw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 18:39:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61214 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754655AbcJKWjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 18:39:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E50D46ED6;
+        Tue, 11 Oct 2016 18:37:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rPGbxF5FDe4ofQ3FTKNAPJg1axs=; b=BcD9gm
+        aVnPuUEd6iMz+XHN+OXGAz4N6GmA+ROOfsD6qHRUSTVCjUJBCNhOUcE3nQXdf0BN
+        CH1Zbml4KWLw3cHqtkwfLeSZaI+TeTflhOecYW9mWaAv+mZl5QV69a0UprGlL8fU
+        WLvRkuWXbAtjkqOxVmHG5KBj5NQYtr2wjNuY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=D+20RVScAR8exktK9E09UnyVJgepFvrj
+        VWhRCA9vZuUWFuPwcLr5eBIe64N+kqGbryNZIW/f13ctFG3IADpA/w3uvlj0suH8
+        4DHfA6yBmLsPauECdKTMJG3QCYTBXA0qbvSoQnigbZXnOgAU/WFsLfbW702ipa+S
+        3DTRpPlToQ8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7544346ED5;
+        Tue, 11 Oct 2016 18:37:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ECB8746ED4;
+        Tue, 11 Oct 2016 18:37:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Ram Rachum <ram@rachum.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Make `git fetch --all` parallel?
+References: <CANXboVZvfPkTQ10PWop+LgPFpc2bD3-u-e5ix0itGawiwCxOuQ@mail.gmail.com>
+        <CAGZ79kZmrYZqi4+bSkRykn+Upt7bEyZ0N8VhiQ-h8DhSMym-FA@mail.gmail.com>
+Date:   Tue, 11 Oct 2016 15:37:02 -0700
+In-Reply-To: <CAGZ79kZmrYZqi4+bSkRykn+Upt7bEyZ0N8VhiQ-h8DhSMym-FA@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 11 Oct 2016 13:53:03 -0700")
+Message-ID: <xmqqa8ea7bsh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3B8D9BD4-9003-11E6-80F1-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
-> On 09 Oct 2016, at 07:32, Torsten B=C3=B6gershausen <tboegi@web.de> =
-wrote:
->=20
-> On 09.10.16 01:06, Jakub Nar=C4=99bski wrote:
->>> +------------------------
->>>> +packet:          git< status=3Dabort
->>>> +packet:          git< 0000
->>>> +------------------------
->>>> +
->>>> +After the filter has processed a blob it is expected to wait for
->>>> +the next "key=3Dvalue" list containing a command. Git will close
->>>> +the command pipe on exit. The filter is expected to detect EOF
->>>> +and exit gracefully on its own.
->> Any "kill filter" solutions should probably be put here.  I guess
->> that filter exiting means EOF on its standard output when read
->> by Git command, isn't it?
->>=20
-> Isn't it that Git closes the command pipe, then filter sees EOF on =
-it's stdin
->=20
-> and does a graceful exit.
+> So I do think it would be much faster, but I also think patches for this would
+> require some thought and a lot of refactoring of the fetch code.
+> ...
+> During the negotiation phase a client would have to be able to change its
+> mind (add more "haves", or in case of the parallel fetching these become
+> "will-have-soons", although the remote figured out the client did not have it
+> earlier.)
 
-Correct!
+Even though a fancy optimization as you outlined might be ideal, I
+suspect that users would be happier if the network bandwidth is
+utilized to talk to multiple remotes at the same time even if they
+end up receiving the same recent objects from more than one place in
+the end.
 
-- Lars=
+Is the order in which "git fetch --all" iterates over "all remotes"
+predictable and documented?  If so, listing the remotes from more
+powerful and well connected place to slower ones and then doing an
+equivalent of stupid
+
+	for remote in $list_of_remotes_ordered_in_such_a_way
+	do
+		git fetch "$remote" &
+		sleep 2
+	done
+
+might be fairly easy thing to bring happiness.
