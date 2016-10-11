@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F32020989
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49B8220989
 	for <e@80x24.org>; Tue, 11 Oct 2016 00:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752885AbcJKAWJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 20:22:09 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:36017 "EHLO
-        mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752871AbcJKAWI (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752869AbcJKAWI (ORCPT <rfc822;e@80x24.org>);
         Mon, 10 Oct 2016 20:22:08 -0400
-Received: by mail-pa0-f46.google.com with SMTP id ry6so3894261pac.3
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:22:08 -0700 (PDT)
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:36500 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752824AbcJKAV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 20:21:59 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e6so1650709pfk.3
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3Hnh8213sWJqok2fI7sb34pC1OVRdjxIfogdB3v0T10=;
-        b=pXzht6OFp3CP7UMvQpRm6vnBAoGzWdzlSGROsAQjNhTXWrD0lOjjjKfyoxbe8Ax1WK
-         dSXE94iWgE67AHmVZZ7OEYM0a9+l7YA5PVAuA82SXvCX/B4eGjc7aASbzpGE9wnSVJJF
-         z5ACBmXGfJ0I7YTvl7oIPbxhEdq/XcYO8crHFUahuUpTb0iIdx21gzgwZB98+LTw8gKo
-         TcjbDnSpureSTa5u2kCkjrK/Z2M4paeSXw8MdM976OvwZbXQRmKU6U9Y3Fev2+Pbrnn7
-         HZgV9/V/LOpIethhgkoQOA/NQBYvNm4iJ1V4DM+x/R0Y274HOMHzyFmT+T4PVvgRRl5s
-         A7cQ==
+        bh=ns/gU03T5OqNRebmBT6MFFhMHa+qkDIbof4nE1z8K5g=;
+        b=ZtriOfy6SEYcm84OrP8CHvcFtdUX5sBD1K9F9FFCF7Fgl4fxZCILovmIGKHm2Wcn8y
+         x0IQY4VKePO4yYvXpMjFNExRGNP7V022JKdTlXAlRTpR5wQ7KEDv7rvtUmd3V6/mFWob
+         NRT/1aN66bfyzP51C4g99kERU4BXruZyMz1Rz+5X8fm+Fz0vKimJ8Be51EarPmTIeYW9
+         UoC8pmzaW2XF8ac2mFx1Z6J+tdl21IsjHI2gEyW53I4v41FembIW1oLacOj9eSnFfCJ7
+         CiCA1BELoWyRzuyyqx9GTKPJJgd+TIrDxX007EHfMGcDEQD/J5ZEL8/SrwS2WfmxQ7MM
+         U9Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=3Hnh8213sWJqok2fI7sb34pC1OVRdjxIfogdB3v0T10=;
-        b=fmaqZwegMS4jEJYUegv5h6Eq3+rEXlKONdg/CjXMx3q7aIrLx93yw3u3c1L/ztNJ0s
-         GoYmekVEyJk83Wd98HOxjFRPEK9HHAiOE1Girg41Q1LV5haVysl0K4P/VYi63CdGGT2q
-         gep2oWJgiTGUidM3SG5iJtItregHkUmK+SQ0gPQZpZoPZGNjzxX1VFMogBkdjsqHZaH3
-         xxSAJdca/WDY39cy5+sibmccFyWJUAYIpHNg+BLxhC89dwldF+3xjzaoFYrUOsBGjO82
-         bAs/3CMRlMvYJs1bfKrkrH50SFUMagzVbiUxWofE3fTZJGGg42ucTet7IYDWHuIkIRp/
-         9cJQ==
-X-Gm-Message-State: AA6/9RnMX5J9+c4pZtJZK+p/6zxUmFQ8YySUTBJ496T6gEN2Vx3t54hbXUOw0snzJGuXxnUr
-X-Received: by 10.66.184.74 with SMTP id es10mr1626073pac.187.1476145327590;
-        Mon, 10 Oct 2016 17:22:07 -0700 (PDT)
+        bh=ns/gU03T5OqNRebmBT6MFFhMHa+qkDIbof4nE1z8K5g=;
+        b=hAZoz66ZCiBNtg7IOQLMtNj8S9349yBVG55CfUlzxXtlIFV3KrPdassnIxlUPyHqpu
+         73f+bkwmXXYtf+iFi9hW9hOkijRo8vE9I/gSFtYCZ56R4FS6nOMEkG//WFXGxiQToqLU
+         OowGuhod5uNf5TACsc1p6c8uw6K0sb7x4q87w3/XzlWpB4FgvboklLOa/MZwHuz19UJW
+         HwT87m1X84qkzocbcYMiMqtHriLeP0DTWHft7KUnWiuWEFOKsAopF2Mxm14qvvCBT+nd
+         Pi3k0/tpzsRmp76O6ZOKTr5GZQwfEs5a2fFvozL1DqHHq4qiBMSt4V2h9qvbirph3UCF
+         T+8A==
+X-Gm-Message-State: AA6/9Rm3Bn/LQKvvnq+5gJjGJHmKtTnLjdhC9uPF6pnWkMuCxwYGhYteYHqAmnVKfj2BAlYm
+X-Received: by 10.99.67.7 with SMTP id q7mr170827pga.74.1476145318492;
+        Mon, 10 Oct 2016 17:21:58 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
-        by smtp.gmail.com with ESMTPSA id x190sm531428pfd.20.2016.10.10.17.22.07
+        by smtp.gmail.com with ESMTPSA id y2sm515477pfk.54.2016.10.10.17.21.57
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Oct 2016 17:22:07 -0700 (PDT)
+        Mon, 10 Oct 2016 17:21:58 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 25/28] attr.c: outline the future plans by heavily commenting
-Date:   Mon, 10 Oct 2016 17:21:12 -0700
-Message-Id: <20161011002115.23312-26-sbeller@google.com>
+Subject: [PATCH 20/28] attr.c: pass struct git_attr_check down the callchain
+Date:   Mon, 10 Oct 2016 17:21:07 -0700
+Message-Id: <20161011002115.23312-21-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
 In-Reply-To: <20161011002115.23312-1-sbeller@google.com>
 References: <20161011002115.23312-1-sbeller@google.com>
@@ -63,94 +62,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
+The callchain that starts from git_check_attrs() down to
+collect_some_attrs() used to take an array of git_attr_check_elem
+as their parameters.  Pass the enclosing git_attr_check instance
+instead, so that they will have access to new fields we will add to
+the data structure.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ attr.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index a08783a..e34b4c4 100644
+index f9ebdd1..c1d5222 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -30,6 +30,11 @@ static const char git_attr__unknown[] = "(builtin)unknown";
- #define DEBUG_ATTR 0
- #endif
- 
-+/*
-+ * NEEDSWORK: the global dictionary of the interned attributes
-+ * must stay a singleton even after we become thread-ready.
-+ * Access to these must be surrounded with mutex when it happens.
-+ */
- struct git_attr {
- 	struct git_attr *next;
- 	unsigned h;
-@@ -39,10 +44,19 @@ struct git_attr {
- 	char name[FLEX_ARRAY];
- };
- static int attr_nr;
-+static struct git_attr *(git_attr_hash[HASHSIZE]);
-+
-+/*
-+ * NEEDSWORK: maybe-real, maybe-macro are not property of
-+ * an attribute, as it depends on what .gitattributes are
-+ * read.  Once we introduce per git_attr_check attr_stack
-+ * and check_all_attr, the optimization based on them will
-+ * become unnecessary and can go away.  So is this variable.
-+ */
- static int cannot_trust_maybe_real;
- 
-+/* NEEDSWORK: This will become per git_attr_check */
- static struct git_attr_check_elem *check_all_attr;
--static struct git_attr *(git_attr_hash[HASHSIZE]);
- 
- const char *git_attr_name(const struct git_attr *attr)
- {
-@@ -117,6 +131,11 @@ struct git_attr *git_attr_counted(const char *name, size_t len)
- 	a->maybe_real = 0;
- 	git_attr_hash[pos] = a;
- 
-+	/*
-+	 * NEEDSWORK: per git_attr_check check_all_attr
-+	 * will be initialized a lot more lazily, not
-+	 * like this, and not here.
-+	 */
- 	REALLOC_ARRAY(check_all_attr, attr_nr);
- 	check_all_attr[a->attr_nr].attr = a;
- 	check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
-@@ -329,6 +348,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
-  * .gitignore file and info/excludes file as a fallback.
+@@ -751,14 +751,25 @@ static int attr_check_is_dynamic(const struct git_attr_check *check)
+  * check_all_attr. If num is non-zero, only attributes in check[] are
+  * collected. Otherwise all attributes are collected.
   */
+-static void collect_some_attrs(const char *path, int pathlen, int num,
+-			       struct git_attr_check_elem *check)
++static void collect_some_attrs(const char *path, int pathlen,
++			       struct git_attr_check *check)
  
-+/* NEEDSWORK: This will become per git_attr_check */
- static struct attr_stack {
- 	struct attr_stack *prev;
- 	char *origin;
-@@ -393,6 +413,24 @@ static struct attr_stack *read_attr_from_array(const char **list)
- 	return res;
+ {
+ 	struct attr_stack *stk;
+ 	int i, rem, dirlen;
+ 	const char *cp, *last_slash = NULL;
+ 	int basename_offset;
++	int num;
++	struct git_attr_check_elem *celem;
++
++	if (!check) {
++		/* Yuck - ugly git_all_attrs() hack! */
++		celem = NULL;
++		num = 0;
++	} else {
++		celem = check->check;
++		num = check->check_nr;
++	}
+ 
+ 	for (cp = path; cp < path + pathlen; cp++) {
+ 		if (*cp == '/' && cp[1])
+@@ -778,9 +789,9 @@ static void collect_some_attrs(const char *path, int pathlen, int num,
+ 	if (num && !cannot_trust_maybe_real) {
+ 		rem = 0;
+ 		for (i = 0; i < num; i++) {
+-			if (!check[i].attr->maybe_real) {
++			if (!celem[i].attr->maybe_real) {
+ 				struct git_attr_check_elem *c;
+-				c = check_all_attr + check[i].attr->attr_nr;
++				c = check_all_attr + celem[i].attr->attr_nr;
+ 				c->value = ATTR__UNSET;
+ 				rem++;
+ 			}
+@@ -794,18 +805,19 @@ static void collect_some_attrs(const char *path, int pathlen, int num,
+ 		rem = fill(path, pathlen, basename_offset, stk, rem);
  }
  
-+/*
-+ * NEEDSWORK: these two are tricky.  The callers assume there is a
-+ * single, system-wide global state "where we read attributes from?"
-+ * and when the state is flipped by calling git_attr_set_direction(),
-+ * attr_stack is discarded so that subsequent attr_check will lazily
-+ * read from the right place.  And they do not know or care who called
-+ * by them uses the attribute subsystem, hence have no knowledge of
-+ * existing git_attr_check instances or future ones that will be
-+ * created).
-+ *
-+ * Probably we need a thread_local that holds these two variables,
-+ * and a list of git_attr_check instances (which need to be maintained
-+ * by hooking into git_attr_check_alloc(), git_attr_check_initl(), and
-+ * git_attr_check_clear().  Then git_attr_set_direction() updates the
-+ * fields in that thread_local for these two variables, iterate over
-+ * all the active git_attr_check instances and discard the attr_stack
-+ * they hold.  Yuck, but it sounds doable.
-+ */
- static enum git_attr_direction direction;
- static struct index_state *use_index;
+-static int git_check_attrs(const char *path, int pathlen, int num,
+-			   struct git_attr_check_elem *check)
++static int git_check_attrs(const char *path, int pathlen,
++			   struct git_attr_check *check)
+ {
+ 	int i;
++	struct git_attr_check_elem *celem = check->check;
  
+-	collect_some_attrs(path, pathlen, num, check);
++	collect_some_attrs(path, pathlen, check);
+ 
+-	for (i = 0; i < num; i++) {
+-		const char *value = check_all_attr[check[i].attr->attr_nr].value;
++	for (i = 0; i < check->check_nr; i++) {
++		const char *value = check_all_attr[celem[i].attr->attr_nr].value;
+ 		if (value == ATTR__UNKNOWN)
+ 			value = ATTR__UNSET;
+-		check[i].value = value;
++		celem[i].value = value;
+ 	}
+ 
+ 	return 0;
+@@ -816,7 +828,7 @@ void git_all_attrs(const char *path, struct git_attr_check *check)
+ 	int i;
+ 
+ 	git_attr_check_clear(check);
+-	collect_some_attrs(path, strlen(path), 0, NULL);
++	collect_some_attrs(path, strlen(path), NULL);
+ 
+ 	for (i = 0; i < attr_nr; i++) {
+ 		const char *name = check_all_attr[i].attr->name;
+@@ -845,7 +857,7 @@ int git_check_attr_counted(const char *path, int pathlen,
+ 			   struct git_attr_check *check)
+ {
+ 	check->finalized = 1;
+-	return git_check_attrs(path, pathlen, check->check_nr, check->check);
++	return git_check_attrs(path, pathlen, check);
+ }
+ 
+ int git_check_attr(const char *path, struct git_attr_check *check)
 -- 
 2.10.1.382.ga23ca1b.dirty
 
