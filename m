@@ -2,84 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE6851F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 16:55:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF671F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 16:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753376AbcJKQzs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 12:55:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50366 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752263AbcJKQzr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 12:55:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99BA843260;
-        Tue, 11 Oct 2016 12:54:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0mHBiZDdp73whLNhAqJBEyTy6nc=; b=YBRlCM
-        g+mdxXvOxWyPQ4tQjn5cC4verOUPswOmep5pgQp3SLEhT+mglEOFgmbRsOaxp6RX
-        T39Y6VcPcJS2NCCHWLZGtjcA3oznHKGsLBQKU/wgbM4ivr91xFVH0xjeObElRV0X
-        WvA+OdK+uLQugr+M1ULArkzmGcVWbZdg3faSI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HFmxnoFm+ptRx+iVmrjTNQLOcqEZ0Gyt
-        1auuACH2PqSu+zZHsZBdRZgpDSqtFii0PrEIHUF1XEtqfcBjQT+d+Pince+HDogu
-        4xWz5iWxEWEV56BbmsgcXVpkajG6Td7XfMs285kCI2KkB0RGeqSEiYLXLK3C8K7h
-        HIQ8A87vtSg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 900F14325F;
-        Tue, 11 Oct 2016 12:54:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E5FD14325C;
-        Tue, 11 Oct 2016 12:54:34 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 07/25] sequencer: completely revamp the "todo" script parsing
-References: <cover.1473590966.git.johannes.schindelin@gmx.de>
-        <cover.1476120229.git.johannes.schindelin@gmx.de>
-        <4e73ba3e8c1700259ffcc3224d1f66e6a760142d.1476120229.git.johannes.schindelin@gmx.de>
-        <xmqqlgxvdf90.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610111212090.35196@virtualbox>
-Date:   Tue, 11 Oct 2016 09:54:33 -0700
-In-Reply-To: <alpine.DEB.2.20.1610111212090.35196@virtualbox> (Johannes
-        Schindelin's message of "Tue, 11 Oct 2016 12:20:38 +0200 (CEST)")
-Message-ID: <xmqqzimaaks6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753979AbcJKQ5L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 12:57:11 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36732 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753832AbcJKQ5K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 12:57:10 -0400
+Received: by mail-pf0-f195.google.com with SMTP id r16so820441pfg.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 09:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=krGGntcQY8vg7KnRsYtI3ML4EFB4tyZqEmZU0yd1aXk=;
+        b=ULt/V6kF+M14aQt3Ox/3E8baYI9VGBfybhNRzfBIpllDYkDDiVUF4td7MXaXwBc8EI
+         oOVTEwWzqN379KnFn4XP/piYLw6cwnWHodFKzznSu0wCglLnsWWuinkDTbCGpxblg5SX
+         lwcWmm2ZUTpcFOPkcXPf6Z7QY/LjMfGcRAxTxRrTLKs2uyko3uMCN+f8i9h40NhCBIGy
+         XAHyAs9xtj3KlC1CqSUysuaqXtX/Spr7TC8/5UwuayJjTVF7WBPzsPOVMjJ6IIpRJK/p
+         clai9QUwTnxYBLAVK6i9aZ/QqlIWBbpSRhJO2+pBZLtiNrymiLtbElVCB+KgfZWqVeCB
+         k4XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=krGGntcQY8vg7KnRsYtI3ML4EFB4tyZqEmZU0yd1aXk=;
+        b=cQnKZdAFp4ye/KseRSdcUH/cIFuep+VcU7+MOyBnSFCwxGIcyNOhsTXv9Hr+BMZ0St
+         0L9AOtINs7BC0v2//DV84kOlsEpjxiOmRVZMvqacDIOF2ug+IQ7BkBIWzCiOL478xVcD
+         Z5cBJrZg+0cVR/4p0UBmQ4aliDANVZimq4I5pmibthG8Vuv2bEy0UOJ274dH84eZumZg
+         ysEJcLfqXLLNdnLsx7tqEybKoDEOJfcFgneAwNqmIiKvbPkn+Romng5r25Brs/ZFfPnK
+         SuhnEfLgyB2uRGfJpweCyZ2q9BTaNJyJbbAo+PIONqkBe2C11L1mw1ELH+eKRKLan0Zb
+         5JWA==
+X-Gm-Message-State: AA6/9RmM79b3vW/kCyswHrseXQp2JsQtDn149jXAlashQGrKupmv7/tc7vnXcFE1R6yuWQ==
+X-Received: by 10.99.119.72 with SMTP id s69mr2351707pgc.11.1476203870425;
+        Tue, 11 Oct 2016 09:37:50 -0700 (PDT)
+Received: from localhost.localdomain (i60-35-227-248.s41.a017.ap.plala.or.jp. [60.35.227.248])
+        by smtp.gmail.com with ESMTPSA id f82sm5441811pfe.92.2016.10.11.09.37.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 11 Oct 2016 09:37:45 -0700 (PDT)
+From:   Satoshi Yasushima <s.yasushima@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Satothi Yasushima <s.yasushima@gmail.com>
+Subject: [PATCH] gitk: Fix Japanese translation for "marked commit"
+Date:   Wed, 12 Oct 2016 01:36:31 +0900
+Message-Id: <20161011163631.8560-1-s.yasushima@gmail.com>
+X-Mailer: git-send-email 2.10.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 63613D8A-8FD3-11E6-AA1B-F99D12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Signed-off-by: Satoshi Yasushima <s.yasushima@gmail.com>
+---
+ po/ja.po | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
->> I am personally fine with this line; two things come to mind:
->> 
->>  - This would work just fine as-is with Linus's change to turn
->>    DEFAULT_ABBREV to -1.
->> 
->>  - It appears that it is more fashionable to use
->>    strbuf_add_unique_abbrev() these days.
->
-> Right, I actually looked at this place when I tried to decide where I
-> could use that function. Somehow I thought I'd not break up the flow here.
->
-> But since you asked so nicely,...
+diff --git a/po/ja.po b/po/ja.po
+index f143753..510306b 100644
+--- a/po/ja.po
++++ b/po/ja.po
+@@ -2,16 +2,17 @@
+ # Copyright (C) 2005-2015 Paul Mackerras
+ # This file is distributed under the same license as the gitk package.
+ #
+-# YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>, 2015.
+ # Mizar <mizar.jp@gmail.com>, 2009.
+ # Junio C Hamano <gitster@pobox.com>, 2009.
++# YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>, 2015.
++# Satoshi Yasushima <s.yasushima@gmail.com>, 2016.
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: gitk\n"
+ "Report-Msgid-Bugs-To: \n"
+ "POT-Creation-Date: 2015-05-17 14:32+1000\n"
+ "PO-Revision-Date: 2015-11-12 13:00+0900\n"
+-"Last-Translator: YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>\n"
++"Last-Translator: Satoshi Yasushima <s.yasushima@gmail.com>\n"
+ "Language-Team: Japanese\n"
+ "Language: ja\n"
+ "MIME-Version: 1.0\n"
+@@ -314,11 +315,11 @@ msgstr "マークを付けたコミットと比較する"
+ 
+ #: gitk:2630 gitk:2641
+ msgid "Diff this -> marked commit"
+-msgstr "これと選択したコミットのdiffを見る"
++msgstr "これとマークを付けたコミットのdiffを見る"
+ 
+ #: gitk:2631 gitk:2642
+ msgid "Diff marked commit -> this"
+-msgstr "選択したコミットとこれのdiffを見る"
++msgstr "マークを付けたコミットとこれのdiffを見る"
+ 
+ #: gitk:2632
+ msgid "Revert this commit"
+-- 
+2.10.0.windows.1
 
-When I say "I am fine", I am not asking you to change anything.
-
-Some of the places that have been updated recently to use
-strbuf_add_unique_abbrev() in other topics did improve the
-readability of the code, but I do not think it would universally
-be true.
