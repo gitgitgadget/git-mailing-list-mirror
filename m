@@ -2,74 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 148321F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 17:37:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 695A41F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 17:44:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932510AbcJKRhz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 13:37:55 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34144 "EHLO
-        mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932252AbcJKRhw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 13:37:52 -0400
-Received: by mail-pa0-f44.google.com with SMTP id rz1so18416873pab.1
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 10:37:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0p6A/tYP1vsZIdnMiKx0OjozpOjspnSOHOgmE3t8x14=;
-        b=USflsU2huZ2SzUKazMMsrcq95b5WauaKUJncJ65LhKn6LQbYLd8k8YHzUORNIfeyf3
-         M2Ew0ZekdcGlj2n+07oW0X+Ib2n8qlKBAZBCDuoqkuCbsTWGZZF9FmyQnuqinjIBV/kl
-         FFHniOV/Qoz62BzMBM4BJxVEod0uFdnKdnu6HMLxQnDEKYWoAKxUs77K+E0XWMcz3Vty
-         QIfXjtaQ2OnkTE1EFeYzo6ExabS/XO19O6UZ1QHT2VwUCtWr8c7jzl2fmy+MvJUtGfgI
-         +QOM3wTCql1PaaDEGS4AaSUNXJbaTAIecuVaYKHcbXdoMhdwnV5SwjTT7EWh1VNv0kKo
-         4g1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0p6A/tYP1vsZIdnMiKx0OjozpOjspnSOHOgmE3t8x14=;
-        b=X6ClPE+WYArgdxmbS/3OANoAKRnppKmQCcc/BbbZAZdI/zpel8CpeK8nJVyTMN96Fp
-         zfoWCKIdA7fkGKOtCB1MzM7fVAZW6F818t09tx6P+l2Z9/CG4kaUTP+PHEErb2y/DbPc
-         B0mB/X0vfrlJkkDVLuNuJ2PQYJlIyZp8EYZo6uJfqdCht2FbyTqArRR9C9OLKhje4FQi
-         AZ0C0ev2/A9q8B4fOc2Zc6q5UNo2JC4r1DKfjOmy1sJQtgOIOOYk6Dx68OE1Y0UShLa1
-         Gp8FcDTGZzWDj4yZbEl+dnaZm/KMGwGpemOUWYDZHcfw40SU4/jrdWm7nwp6ymJmiDz6
-         aObQ==
-X-Gm-Message-State: AA6/9RkbS8R66J9miqRx3nBH33NDATOueAN02Ju7LADaKYEEdgITKp0Tm/3RAbyu/hemF9vD
-X-Received: by 10.66.235.10 with SMTP id ui10mr8446143pac.81.1476207471750;
-        Tue, 11 Oct 2016 10:37:51 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5e00:19ef:1eb0:a061:def1])
-        by smtp.gmail.com with ESMTPSA id p88sm5732688pfi.51.2016.10.11.10.37.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Oct 2016 10:37:51 -0700 (PDT)
-Date:   Tue, 11 Oct 2016 10:37:49 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH 26/28] attr: make git_attr_counted static
-Message-ID: <20161011173749.GC9085@google.com>
+        id S932260AbcJKRo1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 13:44:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59024 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932254AbcJKRms (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 13:42:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23D4741407;
+        Tue, 11 Oct 2016 13:42:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0fq/eOJntnNjbFaxTMh5NdXiaMg=; b=ttbzI+
+        cWaZr1J8W+veBz9LbcfEjJEZopndy4waPw4fTqILlBH1uv2Q+iSrObRos1OC4ubj
+        bbkDTfrHmCup2uPuoo9n92Y3KYx25hxE9pQ3XatfM1/swIWK9UYj6QiFh31/vp90
+        sf3nJU+EtQjydDwoP7jcRwZ6X+ugW7mJi44Qc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hWCeUvRiNQLgn5CAudQS0ZVtIvlrm0eo
+        G3QLsOyTpWR5z5iB+JOYF4o2iZvkU3/WDlr+YIfSSmtqslGKMizQu1wwSjaTPj8/
+        jzLAPXntRhZ7ZHuS0h8eO72C3VF50KxHmnMyK1eDD1JwZSRyBEyktmHVURrqTTGG
+        z38cQlp7bI8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C74641405;
+        Tue, 11 Oct 2016 13:42:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CD7341401;
+        Tue, 11 Oct 2016 13:42:21 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        pclouds@gmail.com
+Subject: Re: [PATCH 11/28] attr: (re)introduce git_check_attr() and struct git_attr_check
 References: <20161011002115.23312-1-sbeller@google.com>
- <20161011002115.23312-27-sbeller@google.com>
+        <20161011002115.23312-12-sbeller@google.com>
+        <20161011165936.GA9085@google.com>
+Date:   Tue, 11 Oct 2016 10:42:19 -0700
+In-Reply-To: <20161011165936.GA9085@google.com> (Brandon Williams's message of
+        "Tue, 11 Oct 2016 09:59:36 -0700")
+Message-ID: <xmqqinsyaikk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161011002115.23312-27-sbeller@google.com>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0FFC8C92-8FDA-11E6-8FFB-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/10, Stefan Beller wrote:
-> It's not used outside the attr code, so let's keep it private.
-> 
-> Change-Id: I0d15e0f2ea944b31d68b9cf1a4edecac0ca2170d
+Brandon Williams <bmwill@google.com> writes:
 
-Looks like you forgot to remove this :)
+> On 10/10, Stefan Beller wrote:
+>> From: Junio C Hamano <gitster@pobox.com>
+>> 
+>> A common pattern to check N attributes for many paths is to
+>> 
+>>  (1) prepare an array A of N git_attr_check_elem items;
+>>  (2) call git_attr() to intern the N attribute names and fill A;
+>
+> Does the word 'intern' here mean internalize?  It took me a few reads to
+> stop picturing college students running around an office :)
 
--- 
-Brandon Williams
+The verb comes from Lisp world where you "intern" a string to make a
+symbol.
+
