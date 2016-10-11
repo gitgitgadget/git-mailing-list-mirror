@@ -2,79 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B041B1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 16:19:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 590CA1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 16:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753844AbcJKQT0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 12:19:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49884 "EHLO mx1.imag.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753070AbcJKQTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 12:19:02 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9BGIjDO014002
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Tue, 11 Oct 2016 18:18:45 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9BGIltH024794;
-        Tue, 11 Oct 2016 18:18:47 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Larry Finger <Larry.Finger@lwfinger.net>
-Cc:     Jeff King <peff@peff.net>,
-        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Jorge Juan Garcia Garcia 
-        <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-        git@vger.kernel.org
-Subject: Re: Formatting problem send_mail in version 2.10.0
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
-        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
-        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
-        <vpqfuo3l4fl.fsf@anie.imag.fr>
-        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
-Date:   Tue, 11 Oct 2016 18:18:47 +0200
-In-Reply-To: <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net> (Larry
-        Finger's message of "Tue, 11 Oct 2016 10:42:04 -0500")
-Message-ID: <vpq4m4iamfs.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1753550AbcJKQa3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 12:30:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54008 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752263AbcJKQa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 12:30:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D810406FF;
+        Tue, 11 Oct 2016 12:30:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xXEHgHzIhOA5boHDDUODizAVNp4=; b=EbEwjE
+        TohpIxjKzqKimfDO0rLQIZZhMe+87GcqxbH251lh03uV4kz660KhfeWgQR3K2KaC
+        z5MeiIcPkRVRxGNXRQoFTFYg28Kx89kwF7+9JMtjNwcnkg+OyxLpyAmCGi2H7a2M
+        6i1udN4GivD4wnWSRzBuJRgGEZd0xw6fhbQiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oMntS2MM7+zLy+i9UeweZL3VpkeewGxB
+        TfJP4YrdWVVhmIXM5HRwaObNo7Y02aedAQ4k1+plVU7hUCaKkc/HCjY8KGeVH9kr
+        TwOhCeJ/YSMDtSs5vgPyTkYxs8ymlxXMntpYNsFYsHp9F9qJgNtuqK1YCkbady37
+        LJ6l70raf2U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 558AC406FE;
+        Tue, 11 Oct 2016 12:30:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CAE7E406FD;
+        Tue, 11 Oct 2016 12:30:25 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 05/25] sequencer: eventually release memory allocated for the option values
+References: <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <cover.1476120229.git.johannes.schindelin@gmx.de>
+        <a67af02ef363311b526bddba864c7f1ca9087b43.1476120229.git.johannes.schindelin@gmx.de>
+        <xmqqzimbc0gw.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 11 Oct 2016 09:30:23 -0700
+In-Reply-To: <xmqqzimbc0gw.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 10 Oct 2016 15:18:07 -0700")
+Message-ID: <xmqq4m4ic0gw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 11 Oct 2016 18:18:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u9BGIjDO014002
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1476807527.46117@beSdppf6aSomnUmIdWbEhg
+X-Pobox-Relay-ID: 03A43D0A-8FD0-11E6-A15A-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Larry Finger <Larry.Finger@lwfinger.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> That added information at the end is intended to be passed on to the
-> stable group. In this case, the patch needs to be applied to kernel
-> versions 4.8 and later.
+> This certainly is good, but I wonder if a new variant of OPT_STRING
+> and OPTION_STRING that does the strdup for you, something along the
+> lines of ...
+> ... may make it even more pleasant to use?  Only for two fields in
+> this patch that may probably be an overkill, but we may eventually 
+> benefit from such an approach when we audit and plug leaks in
+> parse-options users.  I dunno.
 
-OK, but where do people fetch this information from?
+After sleeping on it, I do think this is an overkill.  The pattern I
+would expect for the most normal (boring) code to use is rather:
 
-When you use git send-email, the content of the Cc: trailers ends up
-both in the body of the message and in the Cc: field of the same
-message.
+    struct app_specific app;
+    const char *opt_x = NULL;
+    struct option options[] = {
+	...
+	OPT_STRING(0, "xopt", &opt_x, N_("x option"), ...),
+        ...
+	OPT_END()
+    };
 
-If you need the mention to appear in the body of the message, then using
-parenthesis is fine: git send-email won't remove it (more precisely,
-"send-email" will call "format-patch" which won't remove it).
+    parse_options(ac, av, prefix, options, ...);
+    app.x_field = xstrdup_or_null(opt_x);
+    ... other values set to app's field based on
+    ... not just command line options but from
+    ... other sources.
 
-Not an objection to patching send-email anyway, but if there's a simple
-and RFC-compliant way to do what you're looking for, we can as well use
-it (possibly in addition to patching).
+The only reason why the OPT_STRDUP appeared convenient was because
+options[] element happened to use a field in the structure directly.
+The patch under discussion does an equivalent of
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+    app.x_field = xstrdup_or_null(opt_x);
+
+but the "opt_x" happens to be the same "app.x_field" in this case,
+so in that sense, it follows the normal and boring pattern.
+
+The "struct app_specific" may not even exist in the same scope as
+the caller of parse_options(), but may have to be initialized in a
+function that is three-level deep in the callchain, with opt_x
+variable passed through as a parameter.  So OPT_STRDUP may not be a
+bad or horrible idea, but it is not such a great one, either.
+
