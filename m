@@ -2,112 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88C64207EC
-	for <e@80x24.org>; Tue, 11 Oct 2016 11:51:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9097F1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 12:13:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752622AbcJKLvQ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 11 Oct 2016 07:51:16 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:38622 "EHLO
-        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751479AbcJKLvP (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 11 Oct 2016 07:51:15 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail)
-        by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-        iface 141.3.10.81 id 1btvaN-0006Xr-Vj; Tue, 11 Oct 2016 13:51:08 +0200
-Received: from apache by webmail with local (Exim 4.84_2)
-        (envelope-from <szeder@ira.uka.de>)
-        id 1btvaN-0003zX-TF; Tue, 11 Oct 2016 13:51:07 +0200
-Received: from x590ca9e0.dyn.telefonica.de (x590ca9e0.dyn.telefonica.de
- [89.12.169.224]) by webmail.informatik.kit.edu (Horde Framework) with HTTPS;
- Tue, 11 Oct 2016 13:51:07 +0200
-Date:   Tue, 11 Oct 2016 13:51:07 +0200
-Message-ID: <20161011135107.Horde.XsPGOYSpK0L1qW2xMcGqD1i@webmail.informatik.kit.edu>
-From:   SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jakub =?utf-8?b?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
-References: <20161006114124.4966-1-pclouds@gmail.com>
- <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610071319520.35196@virtualbox>
- <e1b432bc-97b4-15be-aa44-71921c64cd15@gmail.com>
- <alpine.DEB.2.20.1610071616390.35196@virtualbox>
- <f41a1371-7771-1960-27e0-cba0ee5b1461@gmail.com>
- <CACsJy8Bip0mscutDHib-2O1g+eN2twO0m+OyOg2BTUudjOdwfw@mail.gmail.com>
-In-Reply-To: <CACsJy8Bip0mscutDHib-2O1g+eN2twO0m+OyOg2BTUudjOdwfw@mail.gmail.com>
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+        id S1752278AbcJKMNG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 08:13:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:56041 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751953AbcJKMNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 08:13:05 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MSHax-1bS8CV1c3X-00TWMF; Tue, 11 Oct 2016 14:12:12
+ +0200
+Date:   Tue, 11 Oct 2016 14:12:09 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+        peff@peff.net
+Subject: Re: [PATCH v10 04/14] run-command: add clean_on_exit_handler
+In-Reply-To: <20161008112530.15506-5-larsxschneider@gmail.com>
+Message-ID: <alpine.DEB.2.20.1610111407080.3492@virtualbox>
+References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-5-larsxschneider@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1476186668.
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lkv9BK+gKjZw8pva17FNMURysGnomePkShM6pxsWAuWAbHBBHPM
+ DdmhQpZKeslJTaXELtcQUZb+43uwkxPWMeqFqzYEKJoIclmOMBCHUhaiYPVfU4LicmMkVo6
+ 3xIpWo3h/gnus3w/IraFAq0Je46p8u8kk+mQYaJSxTpzmsGbh3q9AINi63LEmipDhAG/nPw
+ u6fNkgMXe0lVrc30vlLAw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bCG9o00l5RA=:KsIr1P2KTUdHcYodIbe3/A
+ OmA9nwwv2ttbH/18w1VD4bxA7RR4eO6jC0feicJu6MTfstqjCFIdrzKbjxGrW1EjbQGQom+5y
+ GocY7C4xsoXwZyMANwJQbkv7bBbke6/lv1PvlEL4XG0Hx8i8+XgozLhpsKxEnxwF+BxtU7slp
+ pDIMuab7bPkPxCb9K9wKQVhZXYOLgs8VQ8sTBTCY2br9QEq2btzKNs4RDJpyosomyl2PdG9Le
+ iE8yMJRSwhz7ewmC3WHyjiGKSYFm2mJGtcvzlg4QEkAUY6TsWOBw8R3SNmCgMiRR2MLX6dTQ8
+ YmGEYDSK9rv/MXR37IAKWlThsmvCYZSR3QOelIEGzZgDAqdb5/bsvbxcGl8E0G6k/Q0p0nubj
+ 9bnvkgpeZicm1MW7jMN6LdXUj+lSEppgQH1JCmm2/WmosAwZl7I6N1X5VjViNahcscmJAUeA8
+ QCMEZxZ9U5aGtqEoRa8fyfeyBNgk4HmU4Tw6N8jfgTSaa1NIJu/AGV/AKP4R1cJYzMrigDlKX
+ NHvLC/Hy5akntKK9z2NkcPX7aFx+juMQ3kguEXlF6nJSftEdRN9W7jGsD7vysOU009pk+I4es
+ bY37kad4S71rzOv/M+9veNFZoN3pGEEed/zWrnc0dTlK/xNXSu1+J4zJCd5aAuTsKstfoUZTG
+ TP7bxV3Fx1n3p0+SPAOZjfAJdnMGKT0iQsX4wRroq+IW/7Z05Ga911CbD0vNAXX4lDtf41XmW
+ gpPCzeEFMvjge6PPNcLekfwEMDcSyFsw8Zh26u62MOnJPTNWnvMILshLFtKt5q+fFkz+uWy4z
+ Zif7kN6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Lars,
 
-Quoting Duy Nguyen <pclouds@gmail.com>:
+On Sat, 8 Oct 2016, larsxschneider@gmail.com wrote:
 
-> On Fri, Oct 7, 2016 at 10:55 PM, Jakub Narębski <jnareb@gmail.com> wrote:
->> W dniu 07.10.2016 o 16:19, Johannes Schindelin pisze:
->>> On Fri, 7 Oct 2016, Jakub Narębski wrote:
->>
->>>> Note that we would have to teach git completion about new syntax;
->>>> or new configuration variable if we go that route.
->>>
->>> Why would we? Git's completion does not expand aliases, it only completes
->>> the aliases' names, not their values.
->>
->> Because Git completion finds out which _options_ and _arguments_
->> to complete for an alias based on its expansion.
->>
->> Yes, this is nice bit of trickery...
->
-> It's c63437c (bash: improve aliased command recognition - 2010-02-23)
-> isn't it? This may favor j6t's approach [1] because retrieving alias
-> attributes is much easier.
->
-> [1]
-> https://public-inbox.org/git/20161006190720.4ecf3ptl6msztoya@sigill.intra.peff.net/T/#mb1d7b8f31d595b05105b8ea2137756761e13dbf4
-> --
-> Duy
+> @@ -31,6 +32,15 @@ static void cleanup_children(int sig, int in_signal)
+>  	while (children_to_clean) {
+>  		struct child_to_clean *p = children_to_clean;
+>  		children_to_clean = p->next;
+> +
+> +		if (p->process && !in_signal) {
+> +			struct child_process *process = p->process;
+> +			if (process->clean_on_exit_handler) {
+> +				trace_printf("trace: run_command: running exit handler for pid %d", p->pid);
 
-The completion script is concerned in three ways:
+On Windows, pid_t translates to long long int, resulting in this build
+error:
 
-   1. it has to get the names of all aliases, to offer them along with
-      git commands for 'git <TAB>' or 'git help <TAB>',
+-- snip --
+ In file included from cache.h:10:0,
+                  from run-command.c:1:
+ run-command.c: In function 'cleanup_children':
+ run-command.c:39:18: error: format '%d' expects argument of type 'int', but argument 5 has type 'pid_t {aka long long int}' [-Werror=format=]
+      trace_printf("trace: run_command: running exit handler for pid %d", p->pid);
+                   ^
+ trace.h:81:53: note: in definition of macro 'trace_printf'
+   trace_printf_key_fl(TRACE_CONTEXT, __LINE__, NULL, __VA_ARGS__)
+                                                      ^~~~~~~~~~~
+ cc1.exe: all warnings being treated as errors
+ make: *** [Makefile:1987: run-command.o] Error 1
+-- snap --
 
-   2. it has to get the command executed in place of the alias, and
+Maybe use PRIuMAX as we do elsewhere (see output of `git grep
+printf.*pid`):
 
-   3. strip everything that can't be a git command, so it can offer the
-      right options for the aliased command.
+	trace_printf("trace: run_command: running exit handler for pid %"
+		     PRIuMAX, (uintmax_t)p->pid);
 
-
-The '!!' syntax is the easiest, I think it will just work even with
-the current completion code, no changes necessary.
-
-The '(nocd)' form is still easy, we only have to add this '(nocd)' to
-that list of stripped words for (3), but no further changes necessary
-for (1) and (2).
-
-'alias.d2u.command' is tricky.  Both (1) and (2) require adjustments,
-preferably in a way that doesn't involve additional git processes, at
-least for (1), as it is executed often, for every 'git <TAB>', for the
-sake of users on platforms with not particularly stellar fork()+exec()
-performance.  I think it would be possible to have only one 'git
-config --get-regexp' and a little bit of post processing in each case,
-but I didn't think too hard about possible pitfalls, especially when
-dealing with ambiguity when both 'alias.d2u' and 'alias.d2u.command'
-are set.  And I won't think any more about it until a conclusion is
-reached that we'll go this route :)
-
-
+Ciao,
+Dscho
