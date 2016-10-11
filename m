@@ -2,122 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79854207EC
-	for <e@80x24.org>; Tue, 11 Oct 2016 10:54:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16386207EC
+	for <e@80x24.org>; Tue, 11 Oct 2016 10:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752209AbcJKKyB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 06:54:01 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:33990 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752170AbcJKKyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 06:54:00 -0400
-Received: by mail-it0-f65.google.com with SMTP id e203so1351772itc.1
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 03:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8/Ev7ap2X1L0Ywb9daPNkaeZBTAwFWIC0eR2EAbClu8=;
-        b=oXfMy/pelCnC3JQp5PtQmHQM9A+VeunxRqYXSqdsXjCcvHi/kA8xNeYp2B7mlWWtc4
-         hu2ErdFJwn2NgP6VKB4jvZmVKEFIlwBEB5Q7GmEfobP4FCoxeqkeMq0JQdEqB0WZUpxh
-         ow58653PiV+Vh8YzSv8IgMFsW3dItXpN1PYgzU8Jzk3zBeuvD2E01knL0Mp6mKpsIx3A
-         L+8ZOM6ZMVDD9Vlmv25ytk2cjgW2BolI0pLZUO2Pkryi3M2ZGBwmXByIN4zGk78ypD6i
-         e8RjbYMJKeiNPaYa8SwurUFap77oJ/RQIVTD/DpNeloosdrFKlpY5esGOyut3/bfu/Oq
-         SECA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8/Ev7ap2X1L0Ywb9daPNkaeZBTAwFWIC0eR2EAbClu8=;
-        b=bp//d/3hbpINLhCB2fw4AQ5zvUPspaPmb19Opt41v9wSGXXzdwrqpqLU5FMBUkyxkg
-         RE72xCa3u0m7ZW6a9ZXsGRRVrbBtzDZ5bz/Rmwgcb0O/4XJAa8pCtzf0EuGzTYeFbGuZ
-         oSk/Q4oMuONrt2VsRf+rF5iqjjLbb5s2+mTfmqMYvuFU6njFGzDtbgyBsT02AwvkdKhF
-         fQ1bbnliklJbGHKLAf/aaFBqaQYAyx7WrJxZjUZJ8OrXcc6JrUc62RRVi69gWOI/XQyD
-         pUIFS4Tbgi7UFe0Y9c13y/YJYqyYxcb46MBulRLTTKjm/e1ZA7X2V3gAJG9pTdcuLsB4
-         E67g==
-X-Gm-Message-State: AA6/9RnJIz0C048GDOQDRtJ7WNQNjAxBbod+mIODn7MNjPcLvVV1a/aKAqaIVmSuQ7syjjr6wMvMTG+r1hym2w==
-X-Received: by 10.36.112.135 with SMTP id f129mr16422036itc.3.1476183234140;
- Tue, 11 Oct 2016 03:53:54 -0700 (PDT)
+        id S1752362AbcJKKz0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 06:55:26 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59149 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752019AbcJKKzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 06:55:25 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Ldttv-1bCdkW2lrX-00j5NV; Tue, 11 Oct 2016 12:55:15
+ +0200
+Date:   Tue, 11 Oct 2016 12:55:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 07/25] sequencer: completely revamp the "todo" script
+ parsing
+In-Reply-To: <alpine.DEB.2.20.1610111221530.35196@virtualbox>
+Message-ID: <alpine.DEB.2.20.1610111238470.35196@virtualbox>
+References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <4e73ba3e8c1700259ffcc3224d1f66e6a760142d.1476120229.git.johannes.schindelin@gmx.de> <xmqqlgxvdf90.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610111212090.35196@virtualbox> <alpine.DEB.2.20.1610111221530.35196@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.230.206 with HTTP; Tue, 11 Oct 2016 03:53:23 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1610111142490.35196@virtualbox>
-References: <20161006114124.4966-1-pclouds@gmail.com> <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610071319520.35196@virtualbox> <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
- <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org> <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
- <alpine.DEB.2.20.1610081034430.35196@virtualbox> <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net>
- <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
- <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net> <alpine.DEB.2.20.1610111142490.35196@virtualbox>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 11 Oct 2016 17:53:23 +0700
-Message-ID: <CACsJy8Aufm7g9SnckiXbMCOOvsLMqESRHLR+Zd94HxPeJj=gTw@mail.gmail.com>
-Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:f+JvxhzEXtcyqVSXsyRBhg7cRyLDhsq7dAzhcbpe3O3xUF0JdKg
+ 06SsCiFV1lPrAwWFrjusI+BwMTlsrs8RHd93uWjjQuYhnLoSsxh+YO/2KKRbw7fWeoPnO7U
+ lN2vvEg8B8JZM+qqsXffaodk/OIM5ywZ8Uet1xL0oCrmxSg0he+3t/27q+A03FnfLY1yhAZ
+ jJCs4J788uk6Z5ZEq3Ipw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dcQgtAZMc7M=:DuRkQGicgT8tBXqPRRlX1p
+ zk44s7zCWvSjzDAivl1jgkgX055nONL3FrgP6A2t5oqL93bkf9Hg52Cl0jLxcgMPYHGhWqUPE
+ xzAmv72TvKYp0h9prqCWjjaFoVNIHOI2BIGNL8mN3a3a2ow/QHVtKRqmLcuU8uYAK1u0xu6Xd
+ Mwv8fLSzLv+/0Wc3MEMDAozW1lzNx7VcfLGc2/U5d9r2djnyldxKTiT0vfDgcSQXsKFdK+cRX
+ I/rHFbopt4zSKg32uYsiHfNSr0K0KT4ak5g1TBraqhuke9TN9xS7lUh4Qqya5zCA/tGItPPB1
+ vgACJVvqpJDZDksBsWN5UMTwmrljSYp7yd5hNl2P7z4eOlkLSqd/zXgtg4+c5Ki6Lb7CQRqZ3
+ 7ydZE+cTfL/sxF1tK/IJRV6xbnEbVlcpIZWPlhjrxQOyf/f1yuiW5Of+KN0wPpKfiNnEQRi95
+ gkVcu4we8WmHSw7PF22xkWyDaG/jFQ4dj1OdiapABliI4FaL3U/hwJHpHDkUqAXvrPOSIpVLl
+ EMGAVdG5p9Np24Fc+RGR2Jnb2wK33wY3LEKuIBQ45VwcCEvonKVp3ks4AacJ/0EcKCaEa2gDl
+ k57Dxdj5yf2Sq0XKrJR+4STC5EKoPdumA3/vSveGxaO8liQ6F4vfpxTrhcHa610QreClRbkCk
+ BMyZ4Ji1oIzv/ykofddM+xdxRRC5Sn7fwk405yD6F00p7CnxhdpBKwuWgcgZ5FW70KDmtqNzM
+ PaaNRHTmcyUWxpwjiHa25i+gXvikb3z6FGQvG7+J8Wr0cEDioMS/KM5frY1t/NakZ/2n6/uZq
+ du+7nM3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 4:44 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Sun, 9 Oct 2016, Jeff King wrote:
->
->> On Sun, Oct 09, 2016 at 06:32:38PM +0700, Duy Nguyen wrote:
->>
->> > > If you mean ambiguity between the old "alias.X" and the new "alias.X.*",
->> > > then yes, I think that's an unavoidable part of the transition.  IMHO,
->> > > the new should take precedence over the old, and people will gradually
->> > > move from one to the other.
->> >
->> > Do we really need to treat this differently than
->> >
->> > [alias]
->> >     d2u = !dos2unix
->> >     d2u = C:/cygwin/bin/dos3unix.exe
->> >
->> > ?
->> >
->> > Another similar case is one d2u (could be either old syntax or new) is
->> > defined in ~/.gitconfig and the other d2u in $GIT_DIR/config. In
->> > either case, the "latest" d2u definition wins.
->>
->> Yeah, that's reasonable, too. So:
->>
->>   [alias]
->>     d2u = "!dos2unix"
->>
->> acts exactly as if:
->>
->>   [alias "d2u"]
->>     command = dos2unix
->>     type = shell
->>
->> was specified at that point, which is easy to understand.
->
-> It is easy to understand, and even easier to get wrong or out of sync. I
-> really liked the ease of *one* `git config` call to add new aliases.
+Hi Junio,
 
-I was about to bring this up. Although to me, "git config --global
-alias.foo bar" is more convenient, but not using it is not exactly
-easy to get wrong or out of sync. For adding alias.$name.* I was
-thinking about "git config --global --edit", not executing "git
-config" multiple times.
+On Tue, 11 Oct 2016, Johannes Schindelin wrote:
 
-> Not sure that I like the need for more such calls just to add *one* alias (one
-> config call for "shell", one for "don't cd up", etc).
+> On Tue, 11 Oct 2016, Johannes Schindelin wrote:
+> 
+> > -- snipsnap --
+> > @@ -906,11 +904,13 @@ static int walk_revs_populate_todo(struct todo_list
+> > *todo_list,
+> >                 item->command = command;
+> >                 item->commit = commit;
+> >                 item->offset_in_buf = todo_list->buf.len;
+> > +               strbuf_addstr(&todo_list->buf, command);
+> 
+> This would be command_string instead of command, of course.
+> 
+> > +               strbuf_addch(&todo_list->buf, ' ');
+> > +               strbuf_add_unique_abbrev(&todo_list->buf,
+> > +                                        commit->object.oid.hash,
+> > +                                        DEFAULT_ABBREV);
+> >                 subject_len = find_commit_subject(commit_buffer, &subject);
+> > -               strbuf_addf(&todo_list->buf, "%s %s %.*s\n",
+> >                 command_string,
+> > -                       find_unique_abbrev(commit->object.oid.hash,
+> > -                               DEFAULT_ABBREV),
+> > -                       subject_len, subject);
+> > +               strbuf_add(&todo_list->buf, subject, subject_len);
+> >                 unuse_commit_buffer(commit, commit_buffer);
+> >         }
+> >         return 0;
 
-We could add git-alias if more alias types pop up (and in my opinion
-git-alias is the right call, we've been abusing git-config for alias
-manipulation for a long time).
--- 
-Duy
+In the end, I decided to actually *not* use strbuf_add_unique_abbrev()
+here because it really makes the code very much too ugly after the
+introduction of short_commit_name():
+
+-- snip --
+@@ -1093,10 +1093,16 @@ static int walk_revs_populate_todo(struct
+todo_list *todo_list,
+                item->arg = NULL;
+                item->arg_len = 0;
+                item->offset_in_buf = todo_list->buf.len;
++               strbuf_addstr(&todo_list->buf, command_string);
++               strbuf_addch(&todo_list->buf, ' ');
++               strbuf_add_unique_abbrev(&todo_list->buf,
++                                        commit->object.oid.hash,
++                                        DEFAULT_ABBREV);
++               strbuf_addch(&todo_list->buf, ' ');
+                subject_len = find_commit_subject(commit_buffer, &subject);
+-               strbuf_addf(&todo_list->buf, "%s %s %.*s\n",
+                command_string,
+-                       short_commit_name(commit), subject_len, subject);
++               strbuf_add(&todo_list->buf, subject, subject_len);
+                unuse_commit_buffer(commit, commit_buffer);
++               strbuf_addch(&todo_list->buf, '\n');
+        }
+        return 0;
+ }
+-- snap --
+
+I hope you will forgive me disagreeing with you here.
+
+To make it easier to accept, I reordered the short_commit_name() patch so
+it comes before revamping the todo parsing.
+
+Ciao,
+Dscho
