@@ -7,73 +7,72 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC1FB1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 16:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 681741F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 16:16:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753528AbcJKQPs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 12:15:48 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52821 "EHLO mout.gmx.net"
+        id S1753566AbcJKQQZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 12:16:25 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59721 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753492AbcJKQPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 12:15:47 -0400
+        id S1753492AbcJKQQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 12:16:24 -0400
 Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MBmvH-1bkOgt1lh9-00AnkM; Tue, 11 Oct 2016 18:09:08
+ ESMTPSA (Nemesis) id 0MJjOu-1bst9L2DG0-001DJt; Tue, 11 Oct 2016 18:09:00
  +0200
-Date:   Tue, 11 Oct 2016 18:09:03 +0200 (CEST)
+Date:   Tue, 11 Oct 2016 18:08:56 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] reset: fix usage
-In-Reply-To: <cover.1476202100.git.johannes.schindelin@gmx.de>
-Message-ID: <6b6defb4164b07f4722c7e3cfa21648f7d4c0e87.1476202100.git.johannes.schindelin@gmx.de>
-References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 0/2] Support `git reset --stdin`
+Message-ID: <cover.1476202100.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UFrl1UL2yxUnP8kHTXQdbAROD4saJ+ROoGAq7Vzs+nggZBRLgSR
- xhMdeui5dGUV1L7M8oy12oq4hxn4sSDHI37AioVD/0OHRIvYX059zFGwOOza2szrlk2sNw1
- bO/Fr+42Z3pl5E8zBkuwLWebhM8KtZkd9iS/W9N6Cq0PcS1FQu8YYeolOQ/ssqTSO7EKwBX
- I/f/bd3Yb0WclKtfSnXCQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aiQ0jWhtrxg=:tMTEaFD3h4rix9NCqxEGsl
- 6Cw6Vum7SKMjwn+LtqLiP6zpiVSpNKC2KWJT0CTdZRhQncXS+LjrpSr/Ulxq+gW3/IjFcpQIQ
- LzPor9V6eh70TDw/QJia38y9MgOZUUlO5iXXQKC1t1OHnexonI3n9Z6rzlZvjjXdzZn74kvq5
- MstWAVKCHKMjESB5COI82gnySt5rDV0nbmg0pJYpR+wyYDAFMgZsykg5Zw6ei8rDRiNJC46Pw
- ZjhQu1f3ZltbdzZ1PvW4xPMOrnrFJv84B8LegnojIXcd57ziK+64thCnshzsTcIJ34c0uCF2U
- KqbN3E7qjPVH0Zb+IkFhp0g+myqsBAJsgrtrewJnDibE6NtT8pJhCq1apy7zD+wqaa6xHUG3L
- mlVGxfCbqFbxe1Sn1TL/rVlu61HXiVfgt6Br6J+fnK0wewGMn4xZzaROzDO89S2fatDa4cpN0
- MrwcAfpxoqr9/o21zLxDqKnQYniwc78OBMOUD6C42t6nHdG3v035lDO3kJP0bZi3Wdjim1aA5
- rlM6djR4K+CsL3g3A7Z44Z4DpOOCZ0oEc8lCJ7maFI7HCrvSc+hCOH0kF63np0nSeUNciLHCR
- u21u7adieKAE8z+nVl5n899gmMEMFR799jq/Va7AXNQAP3OrfPtM8n9suydpaFYp5PZOoe6mz
- EzRYX7kJa8Z5a6jXLQu4W7qmpmrpJIahq29AjRLN1AWnkN5uJJ5mzwzzGoQU+xx/DCkOFndvV
- vjcMNMcSxGBnt5hx0a3ISRBtDTlefD0azRxMvNfoLi5cVKiyAB2WJSuqKhhOTcodZ5FLxLgON
- UQlDUkt
+X-Provags-ID: V03:K0:bmwXZtKGWySM3v6WOh9r6FK2jdVeUA6YUrXhpFyWBA1VOK3Lm7y
+ XmYXZ0Yk4YHCQHNY0XWhLM1i0YV5NEiIfRatndYGs4bQRAporEqit97EYt9Y5WDRoLPmZDv
+ igUny3zdTfNpseesOXr+cDlc7FqlYN4eYyHqXt4Aza3BLqIt3XhqWrEuWfC7V7hIdduDLlv
+ ZFLZtaNUZ6t0Yllxxa44g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JwMXkO2Cgl0=:Py8BlpAGpzJ9dzhJ9Y2bJP
+ 6vmPdUCz6dOiUX2C4ohpua6gEmepO73OUHt6Lt1YP/OUnlcwsPQUDNqFlD2qbcjmCe+F3CSSK
+ Kf+a9ZcDHi1X+mNi3nW5UtFsmaca8M4QkqrejrlCUidNpL1keQgHn0MIWB7Caz/AQD5pLwCf3
+ H7DJouw0OpMnTCu/M8ud9LaOf8OjjVtYh2TCkEH6KuvaLvM7kRh95Am3tWgpGC2NNJkSbdIsn
+ 3OksYujNLWBOB09rRyv1ifKacT12fsKjbjjug/2oyPoiocwEcJCN/iv5PXHKNoOss1SwUTv2z
+ HiEoEG0t27nNeGKdKMKunDH+b4E8HBqwYI1w/kkZ6p7jsJIPsuHHLvTLSBHjrPsmIl73nX3tP
+ G2AE3gMj+ehxwUp3sNbYjOa5SXMbuzQEVodXBFYkfCAzJUId7k07A2ZTM/qSx2eWQZxTcLr8e
+ tUjGDGXtpIMRcp08eKm2l71X6UyqrYDvPSYHmAMdwtFxmffd5zZM2SzUdUke1wzdEEP+5/3PV
+ +KMSzptXjQfCbO9F82exKtTuHLkgbAqWcNo/WEeyUHlQvnETTdt5gLRRKgDn/XhOXitQvGc0+
+ oWJJ4aYeTTflDtwYlHqWwkxALbE+pGaUmOHc+UiRy/SHNdTOizclnfsFL/boQdaI0aZ53oVX2
+ iK98dLZwuSXqKzkdWRXJ+zZknqpG8MYnJNXqG8BlnZ4Mr+6SaDttcunzGom1/hAmkRWdLnV7K
+ mpEHPAx5F4YyBOTw6amlgikyVNa7/l7BOw53InsRwFfzqTP0syOfw7TEHmW9tb8vOy1sHmvS6
+ 73MOYEn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The <tree-ish> parameter is actually optional (see man page).
+This feature was missing, and made it cumbersome for third-party
+tools to reset a lot of paths in one go.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Support for --stdin has been added, following builtin/checkout-index.c's
+example.
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 5aa8607..c04ac07 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -24,7 +24,7 @@
- 
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
--	N_("git reset [-q] <tree-ish> [--] <paths>..."),
-+	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
- 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
- 	NULL
- };
+
+Johannes Schindelin (2):
+  reset: fix usage
+  reset: support the --stdin option
+
+ Documentation/git-reset.txt | 10 +++++++-
+ builtin/reset.c             | 56 +++++++++++++++++++++++++++++++++++++++++++--
+ t/t7107-reset-stdin.sh      | 33 ++++++++++++++++++++++++++
+ 3 files changed, 96 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7107-reset-stdin.sh
+
+
+base-commit: 8a36cd87b7c85a651ab388d403629865ffa3ba0d
+Published-As: https://github.com/dscho/git/releases/tag/reset-stdin-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git reset-stdin-v1
+
 -- 
 2.10.1.513.g00ef6dd
-
 
