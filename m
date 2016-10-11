@@ -2,120 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68DCD1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 15:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F36B41F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 15:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753191AbcJKPmI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 11:42:08 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:34443 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753133AbcJKPmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 11:42:07 -0400
-Received: by mail-oi0-f46.google.com with SMTP id t73so28176735oie.1
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 08:42:06 -0700 (PDT)
+        id S1753548AbcJKP47 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 11:56:59 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:36730 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753111AbcJKP46 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 11:56:58 -0400
+Received: by mail-lf0-f68.google.com with SMTP id b75so4457006lfg.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 08:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=lTsJbIBksegImIxMv5fHC+3vxT7OZclc0coXn0KFixs=;
-        b=GehHehP9lIQW3ld8mFVTD1LCxeFdfNzHvbcvLfZBQZzDzg4k+E0Lbp16LpBEUP9rvp
-         V09r7VkFCbNO7EEDjrhlcrbPIjUEqPMEqY+aoD8HggDbb91EU9gz33G3QO1GlbI+aiMh
-         nsX8+nJ7eoDjNajlb30VLsvAD4ACcKda5AM92DWVFIlBNgPCXKASulAuvZPGUbwqoqne
-         gddsTiH8es/Oe1tJd59z7B0QUeC0pKLpeonQHIZ+mYUZIx1ijWcJA6YFfpmbL3DIfwFm
-         DIiI1YN3Qmg3iaBr763J/9BrXTGnMDaya8iOo17bcX0d0pg+qyrKXzGk9hsL04RDthu+
-         Yiwg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=9eez3PGfy7AceGOOHsrnP3O24fozgL3+kRtxbiZMsBc=;
+        b=mWJJSjcv8znrXChKhgoOYpyinPM27/r78OFe86ZrXagEfz1HpA2ChHdlGy0ix9xjM+
+         Ni+Jdm77qYqE5Tcio+PMEm5W+RxLZEgLXDdnTeC/48e3+PpTKo4aGnAJ4VVt7z/7PRWu
+         nR7FDAtnWzhWdANl/bZ1/bla/XYpDMwSWVnc67J2Q/N1+ITg1a1MeoY7tWsNQkv0UmUz
+         I/U7CPeRbVnb3BAB/dc7XsB9HYJb0g4wt2U3gUtH1CrjeMJVrijfiNXKVGi08nlHpW24
+         KmlcQEwyg4bNviaox/2X+xUEbALyB0Q85GRYJY17/TkmIOANBmrJD+pWTWnkRsrIw9U0
+         ioGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:subject:to:references:cc:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=lTsJbIBksegImIxMv5fHC+3vxT7OZclc0coXn0KFixs=;
-        b=lSmfcm06qgbrK6/uHKDaaEH4WI4cZAScKKpRipvDdJQujAM4KMhCVwLCh6mpjRZbZS
-         QGMGKIlwnUMKiO+jyEVM0CH78uChVUO/us+PTAgy7+H5Z0uM0NqdACy1JG36iscXyyMr
-         NGH7IydDW82Q4euSRKiK/46HDCZNjl8rZKuda2DhOKBM0T4bfX906IYaP8nBXpg9j27r
-         DP7bcrpEYIz6M0kpo4yTzP+eZGspoZygi3y9DzdGDBOyWHw8M5/GOpn39oqzqMWpHFwC
-         lyVZviCe9nHp4cToPgAsjWQ8gC9Q9C3WOCcxVNTxXLUcIkBwkRlLhEXbK8NzRhL0/2Qv
-         O3AQ==
-X-Gm-Message-State: AA6/9RlXoRSkUjdXlQlpFEJ15WJ+dsWN3ikVq4oUbyNwwJ+4JQduhyp0mmEV4DD/dwbjwA==
-X-Received: by 10.202.171.202 with SMTP id u193mr2298723oie.7.1476200526296;
-        Tue, 11 Oct 2016 08:42:06 -0700 (PDT)
-Received: from larrylap.suse (cpe-24-31-249-175.kc.res.rr.com. [24.31.249.175])
-        by smtp.gmail.com with ESMTPSA id 77sm1314983otf.18.2016.10.11.08.42.04
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=9eez3PGfy7AceGOOHsrnP3O24fozgL3+kRtxbiZMsBc=;
+        b=hNcwwG3qCdR+KyseVeJErnQGMa6tmDRQoHRK5TJGM+8soi1KIDFkE6bGN5cpJ8/vZ6
+         lfLpwnppeDQEiEapZdkrgC6tUZkcpLAG0chLOdWedKvbS47eSjfGNiygwTt5q2xBpHhQ
+         OMjxibct4BHOWqtqBZMB5e9BNn6D9Tchl101GeI/YLQSmgJAfujWFrcJOlhi8IKgkCaT
+         kxIQ/E4ZPyn0qbOJ0bcCWD2XVhg0FcJluKFKncYM/ul37CDs9n/h30148C8rT6R1HaMS
+         DowYVKGyIO+vY40uCy8n+fdBqDPC31CtKjHDO17+vThB2/CPu1l4+fa0mpUdHFfWNF2Y
+         6Tjw==
+X-Gm-Message-State: AA6/9RlEL0gyDLFQOehRW5kaqeiqlq+LETF5Mm5MUc7LE2olLZWcmrn2j2RTAMVO9NrIBw==
+X-Received: by 10.25.27.69 with SMTP id b66mr1706495lfb.36.1476201416516;
+        Tue, 11 Oct 2016 08:56:56 -0700 (PDT)
+Received: from [192.168.1.26] (adaq66.neoplus.adsl.tpnet.pl. [83.11.252.66])
+        by smtp.googlemail.com with ESMTPSA id g7sm1230197ljg.44.2016.10.11.08.56.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Oct 2016 08:42:05 -0700 (PDT)
-Subject: Re: Formatting problem send_mail in version 2.10.0
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Jeff King <peff@peff.net>
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
- <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
- <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
- <vpqfuo3l4fl.fsf@anie.imag.fr>
-Cc:     Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Jorge Juan Garcia Garcia 
-        <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-        git@vger.kernel.org
-From:   Larry Finger <Larry.Finger@lwfinger.net>
-Message-ID: <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
-Date:   Tue, 11 Oct 2016 10:42:04 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        Tue, 11 Oct 2016 08:56:55 -0700 (PDT)
+Subject: Re: git merge deletes my changes
+To:     Paul Smith <paul@mad-scientist.net>,
+        Eduard Egorov <Eduard.Egorov@icl-services.com>,
+        "'git@vger.kernel.org'" <git@vger.kernel.org>
+References: <AM4PR03MB1636BE3423E2BC4F0E998159DBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
+ <AM4PR03MB1636EA0DEB4C8095F04AB92ADBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
+ <1476121942.15746.99.camel@mad-scientist.net>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <94ff5fb3-6957-8983-4aa7-e1d5e2692e82@gmail.com>
+Date:   Tue, 11 Oct 2016 17:56:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <vpqfuo3l4fl.fsf@anie.imag.fr>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <1476121942.15746.99.camel@mad-scientist.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/11/2016 02:39 AM, Matthieu Moy wrote:
-> Jeff King <peff@peff.net> writes:
->
->> [+cc authors of b1c8a11, which regressed this case; I'll quote liberally
->>      to give context]
+W dniu 10.10.2016 o 19:52, Paul Smith pisze:
+> On Mon, 2016-10-10 at 10:19 +0000, Eduard Egorov wrote:
+>> # ~/gitbuild/git-2.10.1/git merge -s subtree --squash ceph_ansible
 >>
->> On Mon, Oct 10, 2016 at 05:48:56PM -0400, Jeff King wrote:
->>
->>> I can't reproduce the problem with this simple setup:
->>>
->>> 	git init
->>> 	echo content >file && git add file
->>> 	git commit -F- <<-\EOF
->>> 	the subject
->>>
->>> 	the body
->>>
->>> 	Cc: Stable <stable@vger.kernel.org> [4.8+]
->
-> Is this RFC2822 compliant (https://tools.ietf.org/html/rfc2822)? Not an
-> expert of the norm, but my understanding is that you're allowed to use
-> either "Name <addr@domain.com>" (name-addr) or addr@domain.com
-> (addr-spec), and that comments are allowed within parenthesis like
-> "Stable <stable@vger.kernel.org> (4.8+)".
->
-> What is this [4.8+] supposed to mean?
->
-> The guilty function is parse_mailboxes in perl/Git.pm. It should be
-> rather easy to modify it but I need to understand the spec before I can
-> try to implement anything.
+>> Can somebody confirm this please? Doesn't "merge -s subtree" really
+>> merges branches?
+> 
+> I think possibly you're not fully understanding what the --squash flag
+> does... that's what's causing your issue here, not the "-s" option.
+> 
+> A squash merge takes the commits that would be merged from the origin
+> branch and squashes them into a single patch and applies them to the
+> current branch as a new commit... but this new commit is not a merge
+> commit (that is, when you look at it with "git show" etc. the commit
+> will have only one parent, not two--or more--parents like a normal merge
+> commit).
+> 
+> Basically, it's syntactic sugar for a diff plus patch operation plus
+> some Git goodness wrapped around it to make it easier to use.
 
-That added information at the end is intended to be passed on to the stable 
-group. In this case, the patch needs to be applied to kernel versions 4.8 and later.
+Actually this is full merge + commit surgery (as if you did merge with
+--no-commit, then deleted MERGE_HEAD); the state of worktree is as if
+it were after a merge.
 
-Placing the info inside parentheses causes it to be dropped from the outgoing 
-mail as follows:
+> 
+> But ultimately once you're done, Git has no idea that this new commit
+> has any relationship whatsoever to the origin branch.  So the next time
+> you merge, Git doesn't know that there was a previous merge and it will
+> try to merge everything from scratch rather than starting at the
+> previous common merge point.
+> 
+> So either you'll have to use a normal, non-squash merge, or else you'll
+> have to tell Git by hand what the previous common merge point was (as
+> Jeff King's excellent email suggests).  Or else, you'll have to live
+> with this behavior.
 
-(body) Adding cc: Stable <stable@vger.kernel.org> (4.8+) from line 'Cc: Stable 
-<stable@vger.kernel.org> (4.8+)'
---snip--
-Cc:     Stable <stable@vger.kernel.org>,
+The `git subtree` command (from contrib) allows yet another way: it
+squashes *history* of merged subproject (as if with interactive rebase
+'squash'), then merges this squash commit.
 
-Larry
-
-
+Now I know why this feature is here...
+-- 
+Jakub Narębski
 
