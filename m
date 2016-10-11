@@ -2,89 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99DB720989
-	for <e@80x24.org>; Tue, 11 Oct 2016 05:06:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6F30207EC
+	for <e@80x24.org>; Tue, 11 Oct 2016 07:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751997AbcJKFGk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 01:06:40 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:35479 "EHLO
-        mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750976AbcJKFG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 01:06:29 -0400
-Received: by mail-pa0-f65.google.com with SMTP id qn10so839997pac.2
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 22:06:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kFdUzyh0Dg+xRYRWMwzkJSDRRG7NHSafRFugiumpsHs=;
-        b=wULq/5FAlWyUJfJ83q4x9MMO8YcMVd5lvjr2bgRT9clqMPtZCahQ4vfG+0j13eOuQh
-         ZPqHL7lZpRQZjOziZzHp4XfyeO1lz7DRq+3/xoxD/aGMKTOEeVpKHfpMYyagT6FAp7KM
-         n7aPT7bS36FQIyfGCNcmlk48B3yht3aJYDMY98SNAkss2CWM0frodrKZBQK8UNTfQcZp
-         SIhxKEWAb5aoEA6jnKqSMBGJcfnL2R/RLjtn+2l5Bjifn4+qWvM/VYHjihlmRqWIybYB
-         eK7zM4zXowBi2bZAWG8HHSEHgvDZiLI2+SHk2cs731h/bwAdM3jERIDS/7DQf1hPQTJg
-         Nesg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kFdUzyh0Dg+xRYRWMwzkJSDRRG7NHSafRFugiumpsHs=;
-        b=FZ1YRsY5LoIvz1YIGnRx0nw3cW2akQ1ej9vMUsSQDWUbUspe7Ybmz+jmNn1jIUdGMP
-         BZSPXvqS1VOnFjRShN/grwqMi0CDry6vy3iZfYV7b1EwQ4TUHlbZQYZM0/IQw1SA0ES1
-         P0ZFVL54AVRfmQUZ7PosQwBMGCvLpFXbUHGnSQ8D/nylL5bQ6peNBowaXk2ABNNRwLi1
-         Le9PMYO2exYpiJFNe0OKoQEeqEviHFl93wCQwOeS2zceWv7Bo6sOtzNY+NJr+JrHHxDD
-         ypqMNqyJeCIUT3t0+uoDJ+b8sJm0uNqgbOs4YSQM0hrdpuCzOAQlYS8C4hzKIJprIrog
-         lKHg==
-X-Gm-Message-State: AA6/9Rm2vQSxmol671WJxWP5xIuaBdHiGnbPTsfKn5OqqVg1sGuMc6G+G6Zqavz5Os0YUw==
-X-Received: by 10.66.11.104 with SMTP id p8mr3645173pab.202.1476162388834;
-        Mon, 10 Oct 2016 22:06:28 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by smtp.gmail.com with ESMTPSA id a78sm1554729pfj.44.2016.10.10.22.06.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Oct 2016 22:06:27 -0700 (PDT)
-Date:   Mon, 10 Oct 2016 22:06:23 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Luis Gutierrez <luisgutz@gmail.com>
-Subject: Re: [PATCH v4 4/4] mergetool: honor -O<orderfile>
-Message-ID: <20161011050623.GA14278@gmail.com>
-References: <20161008000130.22858-1-davvid@gmail.com>
- <xmqqa8ecf48c.fsf@gitster.mtv.corp.google.com>
+        id S1751895AbcJKHkg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 03:40:36 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34364 "EHLO mx1.imag.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751635AbcJKHkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 03:40:35 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9B7dvHx021418
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Tue, 11 Oct 2016 09:39:57 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9B7dv6w012049;
+        Tue, 11 Oct 2016 09:39:57 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Jeff King <peff@peff.net>
+Cc:     Larry Finger <Larry.Finger@lwfinger.net>,
+        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+        Jorge Juan Garcia Garcia 
+        <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        git@vger.kernel.org
+Subject: Re: Formatting problem send_mail in version 2.10.0
+References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
+        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
+        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+Date:   Tue, 11 Oct 2016 09:39:58 +0200
+In-Reply-To: <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 10 Oct 2016 17:57:11 -0400")
+Message-ID: <vpqfuo3l4fl.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa8ecf48c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 11 Oct 2016 09:39:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9B7dvHx021418
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1476776399.04305@yOp1pqszi5V+QX51IAxQMA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 11:28:35AM -0700, Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > Teach mergetool to pass "-O<orderfile>" down to `git diff` when
-> > specified on the command-line.
-> >
-> > Helped-by: Johannes Sixt <j6t@kdbg.org>
-> > Signed-off-by: David Aguilar <davvid@gmail.com>
-> > ---
-> > Since v3:
-> >
-> > I missed one last piped invocation of "git mergetool" in the tests,
-> > which has been fixed.
-> 
-> I only see 4/4 in v4; am I correct to assume that 1-3/4 of v4 are
-> the same as their counterparts in v3?
+Jeff King <peff@peff.net> writes:
 
-Yes, 1-3 are unchanged since v3.
-Thanks for checking,
+> [+cc authors of b1c8a11, which regressed this case; I'll quote liberally
+>      to give context]
+>
+> On Mon, Oct 10, 2016 at 05:48:56PM -0400, Jeff King wrote:
+>
+>> I can't reproduce the problem with this simple setup:
+>> 
+>> 	git init
+>> 	echo content >file && git add file
+>> 	git commit -F- <<-\EOF
+>> 	the subject
+>> 
+>> 	the body
+>> 
+>> 	Cc: Stable <stable@vger.kernel.org> [4.8+]
+
+Is this RFC2822 compliant (https://tools.ietf.org/html/rfc2822)? Not an
+expert of the norm, but my understanding is that you're allowed to use
+either "Name <addr@domain.com>" (name-addr) or addr@domain.com
+(addr-spec), and that comments are allowed within parenthesis like
+"Stable <stable@vger.kernel.org> (4.8+)".
+
+What is this [4.8+] supposed to mean?
+
+The guilty function is parse_mailboxes in perl/Git.pm. It should be
+rather easy to modify it but I need to understand the spec before I can
+try to implement anything.
+
 -- 
-David
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
