@@ -2,163 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1B1207EC
-	for <e@80x24.org>; Tue, 11 Oct 2016 07:45:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D6FD207EC
+	for <e@80x24.org>; Tue, 11 Oct 2016 08:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751788AbcJKHpq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 03:45:46 -0400
-Received: from mail-he1eur01on0090.outbound.protection.outlook.com ([104.47.0.90]:46260
-        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751368AbcJKHpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 03:45:45 -0400
-X-Greylist: delayed 77155 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Oct 2016 03:45:45 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icl-services.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=t5cLlDccMeUAVwzkVT9gxduuEuQ9URqSBi8n2xDZd6Q=;
- b=N7do0hDpK4XN3Tdoq862mvRNAFyyhemf/+n/zXtSdi+mNDnRP/EtqYymTdo+kSRSf6iXos4dwXnq8rUVyMTNvuy7I3qLwql/juzdRq4PBK3wwX00au+9CuTEqUY4D0ZUHnnmh0KMjD5L2/h3E4Je01Y++x4a6F8t3PNwlbpl4G4=
-Received: from AM4PR03MB1636.eurprd03.prod.outlook.com (10.165.243.150) by
- AM4PR03MB1633.eurprd03.prod.outlook.com (10.165.243.147) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.659.11; Tue, 11 Oct 2016 07:11:19 +0000
-Received: from AM4PR03MB1636.eurprd03.prod.outlook.com ([10.165.243.150]) by
- AM4PR03MB1636.eurprd03.prod.outlook.com ([10.165.243.150]) with mapi id
- 15.01.0659.020; Tue, 11 Oct 2016 07:11:19 +0000
-From:   Eduard Egorov <Eduard.Egorov@icl-services.com>
-To:     'Jeff King' <peff@peff.net>,
-        "'paul@mad-scientist.net'" <paul@mad-scientist.net>
-CC:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Subject: RE: git merge deletes my changes
-Thread-Topic: git merge deletes my changes
-Thread-Index: AQHSIwqqW96gMpbvRJCzILaaCvDyAKCiuzDQ
-Date:   Tue, 11 Oct 2016 07:11:19 +0000
-Message-ID: <AM4PR03MB163637D73077F3DDEDCF21A9DBDA0@AM4PR03MB1636.eurprd03.prod.outlook.com>
-References: <AM4PR03MB1636D18D727968F332F16021DBDB0@AM4PR03MB1636.eurprd03.prod.outlook.com>
- <20161010152626.frc3ypflwnhzidea@sigill.intra.peff.net>
-In-Reply-To: <20161010152626.frc3ypflwnhzidea@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: ru-RU
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Eduard.Egorov@icl-services.com; 
-x-originating-ip: [91.217.156.154]
-x-ms-office365-filtering-correlation-id: 61d14283-2bcf-4a65-496c-08d3f1a5ccc7
-x-microsoft-exchange-diagnostics: 1;AM4PR03MB1633;6:2iPf1hRAtiyeu2kBaidmCw/R28mxlplK2j2Zh40De1gwVmDkglVqo1LoxNQn3brX0OWMm61jcpTgpxTvToikrJeAN8J3RlW+fp/kWCReEYyrbzobcEjYS/r4Jv6jnyfNc7tnPP6q8y7OFbGo76YKQxd8GjyPgkqzeEl0qqIkcl7a5rqkBRjRj84B1jDDkT+PepOysj+C2PoVE7LB3tFDDUmqWJXXfytIkqriBHIlEgFYxiVEKkX6GU6Beb5zAb+KzcuJefilsUyGvyhPAp5GmHcVPV0ag16FzqE+DR15rIqiWglaacqbYZMR8Tw4MbZE;5:eyr344lEmtdSYoonYNyZpuRiF8HBxU8uXVYF6GuutUydu1R0rbVOXY4npm7NfpMSqASojimHbox1FRA67XZjZT8+fyX8p+FTXpzZgQot/yGVHTe88M3xEnW3RcGpdJBo15390Y+Q4co9PgJKqwHznQ==;24:oTLXgRmeEa/flDFIE9BNMcui4W3/VV6Sdeo6BNSqvgOJ97vZTei9y8RZhB02rGca9Hc3iSETJohO+n5Mjzad6NtPPL2zBzCoS5JbZA/zPMQ=;7:DI1Pbb0IrssUjyXWvWmm3QqgQd4GQgauMnjIyk9iZtaHp1Bb+wyIBcCA2ueuekArtZ/iLu46AGtO5Qy78MEL9aBamnnC2Su6Bg8qzqMKFYVLemPuAJB312LUddivD2vTkuWwH3AWYnUnCW1s7UMXgSAlgb7fblW2rMKPnA7U9/Ns+GcocbbfPqkkVJNnT3cpjYjaEHG8vLSyrE+QZqb8GtZT0xO7ee8EcFSGqlSRVHlK1WVRPKhsPTOE8V/vSqGvzVhcp2cMhlRcHWi62D93/JN04Hj6iBBYQ3Ws9wtCdDgFJQsUQJ9gtTOwIO3O7n7N13FMmNHv5NCjR6KHftyqK1BIDbon818EJ6K2jjHYPe8=
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:AM4PR03MB1633;
-x-microsoft-antispam-prvs: <AM4PR03MB1633C6458A1D67644CF28B43DBDA0@AM4PR03MB1633.eurprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(9452136761055)(185212123834332);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040176)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046);SRVR:AM4PR03MB1633;BCL:0;PCL:0;RULEID:;SRVR:AM4PR03MB1633;
-x-forefront-prvs: 00922518D8
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(24454002)(189002)(377424004)(13464003)(199003)(45984002)(377454003)(1720100001)(15975445007)(3280700002)(2950100002)(106116001)(4326007)(2900100001)(77096005)(5660300001)(7696004)(5002640100001)(92566002)(101416001)(76176999)(54356999)(66066001)(105586002)(8936002)(33656002)(50986999)(7846002)(2906002)(106356001)(15395725005)(74316002)(305945005)(7736002)(76576001)(81156014)(19580395003)(19580405001)(81166006)(122556002)(3846002)(6116002)(68736007)(11100500001)(86362001)(102836003)(189998001)(586003)(97736004)(5001770100001)(10400500002)(3660700001)(4001150100001)(87936001)(8676002)(9686002)(491001);DIR:OUT;SFP:1102;SCL:1;SRVR:AM4PR03MB1633;H:AM4PR03MB1636.eurprd03.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-received-spf: None (protection.outlook.com: icl-services.com does not
- designate permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-OriginatorOrg: icl-services.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Oct 2016 07:11:19.5951
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8c6039a2-9be8-4677-87ed-cd9c68a6779e
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM4PR03MB1633
+        id S1752298AbcJKIMb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 04:12:31 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:36712 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751982AbcJKIMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 04:12:08 -0400
+Received: by mail-lf0-f66.google.com with SMTP id b75so2278272lfg.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 01:11:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=BBzEn/Sc+tZq/Rui5vNrF9A7szUVSS3Gec4/GR2BBMs=;
+        b=LmJy36fUJiQ8SUR4tSgQitMIdeUCOOR3KdmNQiXW2GFjz1Yo798wSSI1zz25ba4SWt
+         2IXEi3DnLJc/MH/cWNsMKvk4TTWnSZ7N2EDLWgiuBGjbIyM557e/BQqczyPhGTxYeYNJ
+         wW6K3tTiqWcXSnpLln2uedOG/rGiIhS45bSt4z6DWe6fHVExGVT6L7umpKTNerB7Py3B
+         ziXoKL/RhCYG6gzzH0QxyNqa4JkluLaFSN+MYc60FPG5MQNsRvbjoO4yoeGpDxK2VeHr
+         NiMIBky9d6HFeKzWwH/JBilxJ8xulbCt+2rGNm7A4vXTp0HXasWbngh9W6O0rAPNK85Y
+         tBJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=BBzEn/Sc+tZq/Rui5vNrF9A7szUVSS3Gec4/GR2BBMs=;
+        b=WpXZZW9filMA1bYcWhpV0NXKddOGR4+RUs1KhLGUhj8jUGef6NaYPCwPvss0mxgoWl
+         a8UhGzhdDhYE/5AxWf0v+dXEvDi33I04+4o8EmwkuEo8SN8OhQx1yW74MSgExf81Lxe+
+         Np1rxmDBVnqf9fetHG4BXevAGJvEGK60+sfJz1YK3RLdauOwAsLqvtwSl3BSul8nCels
+         U6reimgh/bpqwopB/X8+y8ZBikHw/Mci4GrT88iztLrBAcyCNgr0+8PHPO6YTmOVTiRB
+         l9/oo43uFjckg/1sMH/jiUFIh56QAryjLDvdgvuTLpop7WCE23PvrtLuecBFWt2ygNFb
+         H6Mw==
+X-Gm-Message-State: AA6/9RkCarfJ06isftE1iFEyR47lkyj6QFHjx608ja9RpKCDWmUDFNWk2q6BNj0rmW3BlA==
+X-Received: by 10.194.127.5 with SMTP id nc5mr3226089wjb.16.1476173483486;
+        Tue, 11 Oct 2016 01:11:23 -0700 (PDT)
+Received: from [10.54.172.123] ([88.128.80.187])
+        by smtp.gmail.com with ESMTPSA id y2sm4274508wjx.20.2016.10.11.01.11.22
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 11 Oct 2016 01:11:22 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqint0dlis.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 11 Oct 2016 10:11:22 +0200
+Cc:     git <git@vger.kernel.org>,
+        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>, peff@peff.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <02E73D87-B036-40CA-AF54-F93415A028BC@gmail.com>
+References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-14-larsxschneider@gmail.com> <xmqqint0dlis.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8gSmVmZiwgUGF1bA0KDQpUaGFua3MgYSBsb3QgZm9yIHNoYXJpbmcgeW91ciB0aW1lIQ0K
-DQpBcyB5b3UgY29ycmVjdGx5IHN0YXRlZCwgSSB1c2VkICAiLS1zcXVhc2giIGZvciBwcmV2ZW50
-aW5nIG15IHByb2plY3QgaGlzdG9yeSBiZWluZyBmbG9vZGVkIHdpdGggdGhlIGNlcGhfYW5zaWJs
-ZSdzIGNvbW1pdHMgYW5kICBJIGRpZG4ndCByZWFsbHkgdW5kZXJzdGFuZCB0aGF0IHRoaXMgaXMg
-Y3JpdGljYWwgZm9yIGhhdmluZyByZWxhdGlvbnNoaXAgaGlzdG9yeSB3aXRoIG90aGVyIHJlcG9z
-aXRvcnkuDQoNCkFsc28gSSByZWFsaXplZCB0aGF0IG1hZGUgYW5vdGhlciBiaWcgbWlzdGFrZSAt
-IEkgc2hvdWxkIHVzZSBhbm90aGVyIGJyYW5jaCAodGhhdCBpcyBkaXJlY3RseSBicmFuY2hlZCBm
-cm9tICdjZXBoLWFuc2libGUnIG9uZSkgZm9yIHN0b3JpbmcgbXkgY2VwaC1hbnNpYmxlJ3MgY29k
-ZSB1cGRhdGVzLiBBbmQsIHBlcmlvZGljYWxseSwgdGhpcyBicmFuY2ggd2lsbCBiZSBtZXJnZWQg
-aW50byBteSBtYWluIHJlcG8gd2l0aCAnLXMgc3VidHJlZSAtLXNxdWFzaCcgd2l0aG91dCB3b3Jy
-eWluZyBhYm91dCBtZXJnZSBjb25mbGljdHMgc2luY2UgdGhpcyBmb2xkZXIgd291bGQgbmV2ZXIg
-YmUgY2hhbmdlZCBpbiBtYWluIHJlcG8ncyBicmFuY2hlcy4NCg0KQWdhaW4gLSB0aGFuayB5b3Ug
-dmVyeSBtdWNoIGZvciB5b3VyIGhlbHAhDQoNClAuUy4gUGxlYXNlIGZlZWwgZnJlZSB0byBjb3B5
-LXBhc3RlIHRoaXMgdGhyZWFkIGFzIGFuIGFuc3dlciBvbiBTTyAoaHR0cDovL3N0YWNrb3ZlcmZs
-b3cuY29tL3F1ZXN0aW9ucy8zOTk1NDI2NS9naXQtbWVyZ2Utcy1zdWJ0cmVlLXdvcmtzLWluY29y
-cmVjdGx5ICkgLSBJIHdpbGwgYWNjZXB0IGl0IHdpdGggZ3JlYXQgcGxlYXN1cmUgOy0pDQoNCldp
-dGggYmVzdCByZWdhcmRzDQpFZHVhcmQgRWdvcm92DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0t
-LS0tDQpGcm9tOiBQYXVsIFNtaXRoIFttYWlsdG86cGF1bEBtYWQtc2NpZW50aXN0Lm5ldF0gDQpT
-ZW50OiBNb25kYXksIE9jdG9iZXIgMTAsIDIwMTYgODo1MiBQTQ0KVG86IEVkdWFyZCBFZ29yb3Yg
-PEVkdWFyZC5FZ29yb3ZAaWNsLXNlcnZpY2VzLmNvbT47ICdnaXRAdmdlci5rZXJuZWwub3JnJyA8
-Z2l0QHZnZXIua2VybmVsLm9yZz4NClN1YmplY3Q6IFJlOiBnaXQgbWVyZ2UgZGVsZXRlcyBteSBj
-aGFuZ2VzDQoNCk9uIE1vbiwgMjAxNi0xMC0xMCBhdCAxMDoxOSArMDAwMCwgRWR1YXJkIEVnb3Jv
-diB3cm90ZToNCj4gIyB+L2dpdGJ1aWxkL2dpdC0yLjEwLjEvZ2l0IG1lcmdlIC1zIHN1YnRyZWUg
-LS1zcXVhc2ggY2VwaF9hbnNpYmxlDQo+IA0KPiBDYW4gc29tZWJvZHkgY29uZmlybSB0aGlzIHBs
-ZWFzZT8gRG9lc24ndCAibWVyZ2UgLXMgc3VidHJlZSIgcmVhbGx5IA0KPiBtZXJnZXMgYnJhbmNo
-ZXM/DQoNCkkgdGhpbmsgcG9zc2libHkgeW91J3JlIG5vdCBmdWxseSB1bmRlcnN0YW5kaW5nIHdo
-YXQgdGhlIC0tc3F1YXNoIGZsYWcgZG9lcy4uLiB0aGF0J3Mgd2hhdCdzIGNhdXNpbmcgeW91ciBp
-c3N1ZSBoZXJlLCBub3QgdGhlICItcyIgb3B0aW9uLg0KDQpBIHNxdWFzaCBtZXJnZSB0YWtlcyB0
-aGUgY29tbWl0cyB0aGF0IHdvdWxkIGJlIG1lcmdlZCBmcm9tIHRoZSBvcmlnaW4gYnJhbmNoIGFu
-ZCBzcXVhc2hlcyB0aGVtIGludG8gYSBzaW5nbGUgcGF0Y2ggYW5kIGFwcGxpZXMgdGhlbSB0byB0
-aGUgY3VycmVudCBicmFuY2ggYXMgYSBuZXcgY29tbWl0Li4uIGJ1dCB0aGlzIG5ldyBjb21taXQg
-aXMgbm90IGEgbWVyZ2UgY29tbWl0ICh0aGF0IGlzLCB3aGVuIHlvdSBsb29rIGF0IGl0IHdpdGgg
-ImdpdCBzaG93IiBldGMuIHRoZSBjb21taXQgd2lsbCBoYXZlIG9ubHkgb25lIHBhcmVudCwgbm90
-IHR3by0tb3IgbW9yZS0tcGFyZW50cyBsaWtlIGEgbm9ybWFsIG1lcmdlIGNvbW1pdCkuDQoNCkJh
-c2ljYWxseSwgaXQncyBzeW50YWN0aWMgc3VnYXIgZm9yIGEgZGlmZiBwbHVzIHBhdGNoIG9wZXJh
-dGlvbiBwbHVzIHNvbWUgR2l0IGdvb2RuZXNzIHdyYXBwZWQgYXJvdW5kIGl0IHRvIG1ha2UgaXQg
-ZWFzaWVyIHRvIHVzZS4NCg0KQnV0IHVsdGltYXRlbHkgb25jZSB5b3UncmUgZG9uZSwgR2l0IGhh
-cyBubyBpZGVhIHRoYXQgdGhpcyBuZXcgY29tbWl0IGhhcyBhbnkgcmVsYXRpb25zaGlwIHdoYXRz
-b2V2ZXIgdG8gdGhlIG9yaWdpbiBicmFuY2guICBTbyB0aGUgbmV4dCB0aW1lIHlvdSBtZXJnZSwg
-R2l0IGRvZXNuJ3Qga25vdyB0aGF0IHRoZXJlIHdhcyBhIHByZXZpb3VzIG1lcmdlIGFuZCBpdCB3
-aWxsIHRyeSB0byBtZXJnZSBldmVyeXRoaW5nIGZyb20gc2NyYXRjaCByYXRoZXIgdGhhbiBzdGFy
-dGluZyBhdCB0aGUgcHJldmlvdXMgY29tbW9uIG1lcmdlIHBvaW50Lg0KDQpTbyBlaXRoZXIgeW91
-J2xsIGhhdmUgdG8gdXNlIGEgbm9ybWFsLCBub24tc3F1YXNoIG1lcmdlLCBvciBlbHNlIHlvdSds
-bCBoYXZlIHRvIHRlbGwgR2l0IGJ5IGhhbmQgd2hhdCB0aGUgcHJldmlvdXMgY29tbW9uIG1lcmdl
-IHBvaW50IHdhcyAoYXMgSmVmZiBLaW5nJ3MgZXhjZWxsZW50IGVtYWlsIHN1Z2dlc3RzKS4gIE9y
-IGVsc2UsIHlvdSdsbCBoYXZlIHRvIGxpdmUgd2l0aCB0aGlzIGJlaGF2aW9yLg0KDQotLS0tLU9y
-aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogSmVmZiBLaW5nIFttYWlsdG86cGVmZkBwZWZmLm5l
-dF0gDQpTZW50OiBNb25kYXksIE9jdG9iZXIgMTAsIDIwMTYgNjoyNiBQTQ0KVG86IEVkdWFyZCBF
-Z29yb3YgPEVkdWFyZC5FZ29yb3ZAaWNsLXNlcnZpY2VzLmNvbT4NCkNjOiAnZ2l0QHZnZXIua2Vy
-bmVsLm9yZycgPGdpdEB2Z2VyLmtlcm5lbC5vcmc+DQpTdWJqZWN0OiBSZTogZ2l0IG1lcmdlIGRl
-bGV0ZXMgbXkgY2hhbmdlcw0KDQpPbiBNb24sIE9jdCAxMCwgMjAxNiBhdCAwOTozOToxM0FNICsw
-MDAwLCBFZHVhcmQgRWdvcm92IHdyb3RlOg0KDQo+IEEgd2VlayBhZ28sIEkndmUgcmVzZXQgYSBz
-dGF0ZSBvZiAnY2VwaC1hbnNpYmxlJyBmb2xkZXIgaW4gJWN1cnJlbnQlIA0KPiBicmFuY2ggd2l0
-aCBjb2RlIGZyb20gY29ycmVzcG9uZGluZyBicmFuY2ggKHRoYXQgdHJhY2tzIGFuIHVwc3RyZWFt
-IA0KPiBmcm9tIGdpdGh1Yik6DQo+IA0KPiAjIGdpdCByZWFkLXRyZWUgLS1wcmVmaXg9Y2VwaC1h
-bnNpYmxlLyAtdSBjZXBoX2Fuc2libGUNCg0KVGhpcyBwdWxscyBpbiB0aGUgc3VidHJlZSBmaWxl
-cywgYnV0IHRoZXJlJ3Mgbm8gYWN0dWFsIHJlbGF0aW9uc2hpcCB3aXRoIHRoZSBjb21taXQgaGlz
-dG9yeSBpbiBjZXBoX2Fuc2libGUuDQoNClNvIGxhdGVyLi4uDQoNCj4gVGhlbiBJJ3ZlIGNvbW1p
-dHRlZCBzZXZlcmFsIGNoYW5nZXMsIGluY2x1ZGluZzoNCj4gDQo+IDEuIFJlbmFtZWQgZmlsZSBh
-bmQgY29tbWl0ZWQ6DQo+ICMgZ2l0IG12IHNpdGUueW1sLnNhbXBsZSBzaXRlLnltbA0KPiANCj4g
-Mi4gTWFkZSBzb21lIGNoYW5nZXMgYW5kIGNvbW1pdHRlZA0KPiANCj4gMy4gUHVsbGVkIHVwZGF0
-ZXMgZnJvbSBvcmlnaW5hbCBicmFuY2ggYnk6DQo+ICMgZ2l0IG1lcmdlIC1zIHN1YnRyZWUgLS1z
-cXVhc2ggY2VwaF9hbnNpYmxlDQo+IA0KPiBJdCBzYWlkOg0KPiAgICAgQXV0by1tZXJnaW5nIGNl
-cGgtYW5zaWJsZS9zaXRlLnltbC5zYW1wbGUNCj4gICAgIGJsYWJsYWJsYQ0KPiAgICAgU3F1YXNo
-IGNvbW1pdCAtLSBub3QgdXBkYXRpbmcgSEVBRA0KPiAgICAgQXV0b21hdGljIG1lcmdlIHdlbnQg
-d2VsbDsgc3RvcHBlZCBiZWZvcmUgY29tbWl0dGluZyBhcyByZXF1ZXN0ZWQNCg0KV2hlbiB5b3Ug
-bWVyZ2UgZnJvbSBjZXBoX2Fuc2libGUsIHRoZXJlIGlzIG5vIHNoYXJlZCBoaXN0b3J5LCBhbmQg
-Z2l0IHVzZXMgdGhlIGVtcHR5IHRyZWUgYXMgYSBjb21tb24gYW5jZXN0b3IuIEl0IGxvb2tzIGxp
-a2UgdGhlIG90aGVyIHNpZGUgYWRkZWQgc2l0ZS55bWwuc2FtcGxlLCBmb3IgaW5zdGFuY2UsIGJl
-Y2F1c2UgdGhhdCBpcyBhIGNoYW5nZSBmcm9tIHRoZSBlbXB0eSB0cmVlLg0KDQo+IEEgcG9zdCBv
-biBTTzogDQo+IGh0dHA6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzk5NTQyNjUvZ2l0
-LW1lcmdlLWRlbGV0ZXMtbXktY2hhbmcNCj4gZXMNCg0KQXMgeW91IG5vdGVkIG9uIFNPLCBtb2Rl
-cm4gZ2l0IGRpc2FsbG93cyBtZXJnZXMgb2YgdW5yZWxhdGVkIGhpc3RvcnkgYnkgZGVmYXVsdCwg
-YmVjYXVzZSBpdCdzIHVzdWFsbHkgYSBtaXN0YWtlIHRvIGRvIHNvLg0KDQpJZiB5b3UgYXJlIGRv
-aW5nIHJlcGVhdGVkIG1lcmdlcyBpbnRvIHRoZSBzdWJ0cmVlLCB5b3UgbmVlZCB0byBzb21laG93
-IHRlbGwgZ2l0IGhvdyB0aGUgaGlzdG9yaWVzIGFyZSByZWxhdGVkLiBUaGUgb2J2aW91cyBhbnN3
-ZXIgaXMgdG8gZG8gYSAiZ2l0IG1lcmdlIC1zIG91cnMgY2VwaF9hbnNpYmxlIiBhZnRlciB5b3Vy
-IGluaXRpYWwgcmVhZC10cmVlLCBzbyB0aGF0IGdpdCBrbm93cyB5b3UndmUgcHVsbGVkIGluIHRo
-ZSBjaGFuZ2VzIHVwIHRvIHRoYXQgcG9pbnQuIEJ1dCBJJ2QgZ3Vlc3MgZnJvbSB5b3VyIHVzZSBv
-ZiAiLS1zcXVhc2giIHRoYXQgeW91IGRvbid0IHdhbnQgdG8gY2FycnkgdGhlIGNlcGhfYW5zaWJs
-ZSBoaXN0b3J5IGluIHlvdXIgcHJvamVjdC4NCg0KU28geW91IG5lZWQgdG8gcmVjb3JkIHRoZSBv
-cmlnaW5hbCB1cHN0cmVhbSBjb21taXQgc29tZXdoZXJlIChwcm9iYWJseSBpbiB0aGUgY29tbWl0
-IG1lc3NhZ2Ugd2hlbiB5b3UgY29tbWl0IHRoZSByZWFkLXRyZWUgcmVzdWx0KSwgYW5kIHRoZW4g
-YXNrIGdpdCB0byB1c2UgdGhhdCBhcyB0aGUgbWVyZ2UtYmFzZSBkdXJpbmcgc3Vic2VxdWVudCBt
-ZXJnZXMgKHdoaWNoIHdpbGwgcmVxdWlyZSB1c2luZyBwbHVtYmluZyBjb2RlcywgYXMgZ2l0LW1l
-cmdlIHdhbnRzIHRvIGNvbXB1dGUgdGhlIG1lcmdlIGJhc2UgaXRzZWxmKS4gIEkgYmVsaWV2ZSB0
-aGUgZ2l0LXN1YnRyZWUgY29tbWFuZCAoaW4gY29udHJpYi9zdWJ0cmVlIG9mIGdpdC5naXQpIGhh
-bmRsZXMgdGhpcyB1c2UgY2FzZSwgYnV0IEkgaGF2ZW4ndCB1c2VkIGl0IG15c2VsZi4NCg0KLVBl
-ZmYNCg==
+
+> On 10 Oct 2016, at 21:58, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> larsxschneider@gmail.com writes:
+>=20
+> [...]
+>> +# Count unique lines except clean invocations in two files and =
+compare
+>> +# them. Clean invocations are not counted because their number can =
+vary.
+>> +# c.f. =
+http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
+>> +test_cmp_count_except_clean () {
+>> +	for FILE in $@
+>> +	do
+>> +		sort $FILE | uniq -c | sed "s/^[ ]*//" |
+>> +			sed "s/^\([0-9]\) IN: clean/x IN: clean/" =
+>$FILE.tmp
+>> +		cat $FILE.tmp >$FILE
+>> +	done &&
+>> +	test_cmp $@
+>> +}
+>=20
+> Why do you even _care_ about the number of invocations?  While I
+> told you why "clean" could be called multiple times under racy Git
+> as an example, that was not meant to be an exhaustive example.  I
+> wouldn't be surprised if we needed to run smudge twice, for example,
+> in some weirdly racy cases in the future.
+>=20
+> Can we just have the correctness (i.e. "we expect that the working
+> tree file gets this as the result of checking it out, and we made
+> sure that is the case") test without getting into such an
+> implementation detail?
+
+My goal is to check that clean/smudge is invoked at least once. I could
+just run `uniq` to achieve that but then all other filter commands could
+happen multiple times and the test would not detect that.
+
+I also prefer to check the filter commands to ensure the filter is=20
+working as expected (e.g. no multiple start ups etc) in addition to=20
+checking the working tree.
+
+Would the patch below work for you? If yes, then please squash it into
+"convert: add filter.<driver>.process option".
+
+Thank you,
+Lars
+
+
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 9f892c0..714f706 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -31,38 +31,33 @@ filter_git () {
+ 	rm -f git-stderr.log
+ }
+=20
+-# Count unique lines in two files and compare them.
+-test_cmp_count () {
+-	for FILE in $@
+-	do
+-		sort $FILE | uniq -c | sed "s/^[ ]*//" >$FILE.tmp
+-		cat $FILE.tmp >$FILE
+-	done &&
+-	test_cmp $@
+-}
+-
+-# Count unique lines except clean invocations in two files and compare
+-# them. Clean invocations are not counted because their number can =
+vary.
++# Compare two files and ensure that `clean` and `smudge` respectively =
+are
++# called at least once if specified in the `expect` file. The actual
++# invocation count is not relevant because their number can vary.
+ # c.f. =
+http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
+-test_cmp_count_except_clean () {
+-	for FILE in $@
++test_cmp_count () {
++	expect=3D$1 actual=3D$2
++	for FILE in "$expect" "$actual"
+ 	do
+-		sort $FILE | uniq -c | sed "s/^[ ]*//" |
+-			sed "s/^\([0-9]\) IN: clean/x IN: clean/" =
+>$FILE.tmp
+-		cat $FILE.tmp >$FILE
++		sort "$FILE" | uniq -c | sed "s/^[ ]*//" |
++			sed "s/^\([0-9]\) IN: clean/x IN: clean/" |
++			sed "s/^\([0-9]\) IN: smudge/x IN: smudge/" =
+>"$FILE.tmp" &&
++		cat "$FILE.tmp" >"$FILE"
+ 	done &&
+-	test_cmp $@
++	test_cmp "$expect" "$actual"
+ }
+=20
+-# Compare two files but exclude clean invocations because they can =
+vary.
++# Compare two files but exclude all `clean` invocations because Git can
++# call `clean` zero or more times.
+ # c.f. =
+http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
+ test_cmp_exclude_clean () {
+-	for FILE in $@
++	expect=3D$1 actual=3D$2
++	for FILE in "$expect" "$actual"
+ 	do
+-		grep -v "IN: clean" $FILE >$FILE.tmp
+-		cat $FILE.tmp >$FILE
++		grep -v "IN: clean" "$FILE" >"$FILE.tmp" &&
++		cat "$FILE.tmp" >"$FILE"
+ 	done &&
+-	test_cmp $@
++	test_cmp "$expect" "$actual"
+ }
+=20
+ # Check that the contents of two files are equal and that their rot13 =
+version
+@@ -395,7 +390,7 @@ test_expect_success PERL 'required process filter =
+should filter data' '
+ 			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 =
+[OK] -- OUT: $S3 . [OK]
+ 			STOP
+ 		EOF
+-		test_cmp_count_except_clean expected.log =
+rot13-filter.log &&
++		test_cmp_count expected.log rot13-filter.log &&
+=20
+ 		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x.r" &&
+
