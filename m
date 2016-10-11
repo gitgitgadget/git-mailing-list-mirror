@@ -2,109 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF671F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 16:57:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99DB01F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 17:05:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753979AbcJKQ5L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 12:57:11 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36732 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753832AbcJKQ5K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 12:57:10 -0400
-Received: by mail-pf0-f195.google.com with SMTP id r16so820441pfg.3
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 09:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=krGGntcQY8vg7KnRsYtI3ML4EFB4tyZqEmZU0yd1aXk=;
-        b=ULt/V6kF+M14aQt3Ox/3E8baYI9VGBfybhNRzfBIpllDYkDDiVUF4td7MXaXwBc8EI
-         oOVTEwWzqN379KnFn4XP/piYLw6cwnWHodFKzznSu0wCglLnsWWuinkDTbCGpxblg5SX
-         lwcWmm2ZUTpcFOPkcXPf6Z7QY/LjMfGcRAxTxRrTLKs2uyko3uMCN+f8i9h40NhCBIGy
-         XAHyAs9xtj3KlC1CqSUysuaqXtX/Spr7TC8/5UwuayJjTVF7WBPzsPOVMjJ6IIpRJK/p
-         clai9QUwTnxYBLAVK6i9aZ/QqlIWBbpSRhJO2+pBZLtiNrymiLtbElVCB+KgfZWqVeCB
-         k4XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=krGGntcQY8vg7KnRsYtI3ML4EFB4tyZqEmZU0yd1aXk=;
-        b=cQnKZdAFp4ye/KseRSdcUH/cIFuep+VcU7+MOyBnSFCwxGIcyNOhsTXv9Hr+BMZ0St
-         0L9AOtINs7BC0v2//DV84kOlsEpjxiOmRVZMvqacDIOF2ug+IQ7BkBIWzCiOL478xVcD
-         Z5cBJrZg+0cVR/4p0UBmQ4aliDANVZimq4I5pmibthG8Vuv2bEy0UOJ274dH84eZumZg
-         ysEJcLfqXLLNdnLsx7tqEybKoDEOJfcFgneAwNqmIiKvbPkn+Romng5r25Brs/ZFfPnK
-         SuhnEfLgyB2uRGfJpweCyZ2q9BTaNJyJbbAo+PIONqkBe2C11L1mw1ELH+eKRKLan0Zb
-         5JWA==
-X-Gm-Message-State: AA6/9RmM79b3vW/kCyswHrseXQp2JsQtDn149jXAlashQGrKupmv7/tc7vnXcFE1R6yuWQ==
-X-Received: by 10.99.119.72 with SMTP id s69mr2351707pgc.11.1476203870425;
-        Tue, 11 Oct 2016 09:37:50 -0700 (PDT)
-Received: from localhost.localdomain (i60-35-227-248.s41.a017.ap.plala.or.jp. [60.35.227.248])
-        by smtp.gmail.com with ESMTPSA id f82sm5441811pfe.92.2016.10.11.09.37.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Oct 2016 09:37:45 -0700 (PDT)
-From:   Satoshi Yasushima <s.yasushima@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Satothi Yasushima <s.yasushima@gmail.com>
-Subject: [PATCH] gitk: Fix Japanese translation for "marked commit"
-Date:   Wed, 12 Oct 2016 01:36:31 +0900
-Message-Id: <20161011163631.8560-1-s.yasushima@gmail.com>
-X-Mailer: git-send-email 2.10.0.windows.1
+        id S1753899AbcJKRFL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 13:05:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58343 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752183AbcJKRFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 13:05:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A6894349A;
+        Tue, 11 Oct 2016 13:05:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wBrEVw76GiA2WfkAMjFowEy8LoA=; b=mM4Oyy
+        8DsdZng8lDPuGnvWqbQokf2A49Ln+eN1hSLAPXbSLcBNPTAMWYyITAP5xVyM8rVb
+        h1o0TgZqdUMxz+R/Sjpt3V4ihPR+qXQfxA7kJQIz+E8XuHjyZLR/klADuP9Plei/
+        /nVb+BWTbKEKLz4zDv1Trc9/eMEWhbqpwrfpg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iPEMTXIa1l/994OQclXwwAxkF4WK3tUY
+        WoNYTMt/QGij/wZwGLAq03kHBKXPjMIEMhO8yFYmfoHHTCU7vkgoysCV6aqEyP1s
+        uNRyjaZYv4qDrpaNOZ/N1vsN0Irnl4yjCXEAC4xK09vysxPiZ18UBNYTpy9rztsy
+        cX+6oNVk2WA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9294943495;
+        Tue, 11 Oct 2016 13:05:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C74443494;
+        Tue, 11 Oct 2016 13:05:08 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Luis Gutierrez <luisgutz@gmail.com>
+Subject: Re: [PATCH v4 4/4] mergetool: honor -O<orderfile>
+References: <20161008000130.22858-1-davvid@gmail.com>
+        <xmqqa8ecf48c.fsf@gitster.mtv.corp.google.com>
+        <20161011050623.GA14278@gmail.com>
+Date:   Tue, 11 Oct 2016 10:05:07 -0700
+In-Reply-To: <20161011050623.GA14278@gmail.com> (David Aguilar's message of
+        "Mon, 10 Oct 2016 22:06:23 -0700")
+Message-ID: <xmqqr37makak.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: DD568900-8FD4-11E6-81AC-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Satoshi Yasushima <s.yasushima@gmail.com>
----
- po/ja.po | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+David Aguilar <davvid@gmail.com> writes:
 
-diff --git a/po/ja.po b/po/ja.po
-index f143753..510306b 100644
---- a/po/ja.po
-+++ b/po/ja.po
-@@ -2,16 +2,17 @@
- # Copyright (C) 2005-2015 Paul Mackerras
- # This file is distributed under the same license as the gitk package.
- #
--# YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>, 2015.
- # Mizar <mizar.jp@gmail.com>, 2009.
- # Junio C Hamano <gitster@pobox.com>, 2009.
-+# YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>, 2015.
-+# Satoshi Yasushima <s.yasushima@gmail.com>, 2016.
- msgid ""
- msgstr ""
- "Project-Id-Version: gitk\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2015-05-17 14:32+1000\n"
- "PO-Revision-Date: 2015-11-12 13:00+0900\n"
--"Last-Translator: YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>\n"
-+"Last-Translator: Satoshi Yasushima <s.yasushima@gmail.com>\n"
- "Language-Team: Japanese\n"
- "Language: ja\n"
- "MIME-Version: 1.0\n"
-@@ -314,11 +315,11 @@ msgstr "マークを付けたコミットと比較する"
- 
- #: gitk:2630 gitk:2641
- msgid "Diff this -> marked commit"
--msgstr "これと選択したコミットのdiffを見る"
-+msgstr "これとマークを付けたコミットのdiffを見る"
- 
- #: gitk:2631 gitk:2642
- msgid "Diff marked commit -> this"
--msgstr "選択したコミットとこれのdiffを見る"
-+msgstr "マークを付けたコミットとこれのdiffを見る"
- 
- #: gitk:2632
- msgid "Revert this commit"
--- 
-2.10.0.windows.1
+>> I only see 4/4 in v4; am I correct to assume that 1-3/4 of v4 are
+>> the same as their counterparts in v3?
+>
+> Yes, 1-3 are unchanged since v3.
+> Thanks for checking,
 
+I'll queue these four with Reviewed-by's from j6t.
+
+Thanks, both.
