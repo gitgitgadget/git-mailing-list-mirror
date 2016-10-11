@@ -2,112 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A582098A
-	for <e@80x24.org>; Tue, 11 Oct 2016 16:03:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC1FB1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 16:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753979AbcJKQCt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 12:02:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55820 "EHLO cloud.peff.net"
+        id S1753528AbcJKQPs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 12:15:48 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52821 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753492AbcJKQCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 12:02:37 -0400
-Received: (qmail 22024 invoked by uid 109); 11 Oct 2016 16:02:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Oct 2016 16:02:36 +0000
-Received: (qmail 9802 invoked by uid 111); 11 Oct 2016 16:02:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Oct 2016 12:02:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Oct 2016 12:02:35 -0400
-Date:   Tue, 11 Oct 2016 12:02:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Larry Finger <Larry.Finger@lwfinger.net>,
-        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Jorge Juan Garcia Garcia 
-        <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-        git@vger.kernel.org
-Subject: Re: Formatting problem send_mail in version 2.10.0
-Message-ID: <20161011160234.ve72wdqujdz4zrrq@sigill.intra.peff.net>
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
- <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
- <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
- <vpqfuo3l4fl.fsf@anie.imag.fr>
+        id S1753492AbcJKQPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 12:15:47 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MBmvH-1bkOgt1lh9-00AnkM; Tue, 11 Oct 2016 18:09:08
+ +0200
+Date:   Tue, 11 Oct 2016 18:09:03 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] reset: fix usage
+In-Reply-To: <cover.1476202100.git.johannes.schindelin@gmx.de>
+Message-ID: <6b6defb4164b07f4722c7e3cfa21648f7d4c0e87.1476202100.git.johannes.schindelin@gmx.de>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <vpqfuo3l4fl.fsf@anie.imag.fr>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:UFrl1UL2yxUnP8kHTXQdbAROD4saJ+ROoGAq7Vzs+nggZBRLgSR
+ xhMdeui5dGUV1L7M8oy12oq4hxn4sSDHI37AioVD/0OHRIvYX059zFGwOOza2szrlk2sNw1
+ bO/Fr+42Z3pl5E8zBkuwLWebhM8KtZkd9iS/W9N6Cq0PcS1FQu8YYeolOQ/ssqTSO7EKwBX
+ I/f/bd3Yb0WclKtfSnXCQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aiQ0jWhtrxg=:tMTEaFD3h4rix9NCqxEGsl
+ 6Cw6Vum7SKMjwn+LtqLiP6zpiVSpNKC2KWJT0CTdZRhQncXS+LjrpSr/Ulxq+gW3/IjFcpQIQ
+ LzPor9V6eh70TDw/QJia38y9MgOZUUlO5iXXQKC1t1OHnexonI3n9Z6rzlZvjjXdzZn74kvq5
+ MstWAVKCHKMjESB5COI82gnySt5rDV0nbmg0pJYpR+wyYDAFMgZsykg5Zw6ei8rDRiNJC46Pw
+ ZjhQu1f3ZltbdzZ1PvW4xPMOrnrFJv84B8LegnojIXcd57ziK+64thCnshzsTcIJ34c0uCF2U
+ KqbN3E7qjPVH0Zb+IkFhp0g+myqsBAJsgrtrewJnDibE6NtT8pJhCq1apy7zD+wqaa6xHUG3L
+ mlVGxfCbqFbxe1Sn1TL/rVlu61HXiVfgt6Br6J+fnK0wewGMn4xZzaROzDO89S2fatDa4cpN0
+ MrwcAfpxoqr9/o21zLxDqKnQYniwc78OBMOUD6C42t6nHdG3v035lDO3kJP0bZi3Wdjim1aA5
+ rlM6djR4K+CsL3g3A7Z44Z4DpOOCZ0oEc8lCJ7maFI7HCrvSc+hCOH0kF63np0nSeUNciLHCR
+ u21u7adieKAE8z+nVl5n899gmMEMFR799jq/Va7AXNQAP3OrfPtM8n9suydpaFYp5PZOoe6mz
+ EzRYX7kJa8Z5a6jXLQu4W7qmpmrpJIahq29AjRLN1AWnkN5uJJ5mzwzzGoQU+xx/DCkOFndvV
+ vjcMNMcSxGBnt5hx0a3ISRBtDTlefD0azRxMvNfoLi5cVKiyAB2WJSuqKhhOTcodZ5FLxLgON
+ UQlDUkt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 09:39:58AM +0200, Matthieu Moy wrote:
+The <tree-ish> parameter is actually optional (see man page).
 
-> >> I can't reproduce the problem with this simple setup:
-> >> 
-> >> 	git init
-> >> 	echo content >file && git add file
-> >> 	git commit -F- <<-\EOF
-> >> 	the subject
-> >> 
-> >> 	the body
-> >> 
-> >> 	Cc: Stable <stable@vger.kernel.org> [4.8+]
-> 
-> Is this RFC2822 compliant (https://tools.ietf.org/html/rfc2822)? Not an
-> expert of the norm, but my understanding is that you're allowed to use
-> either "Name <addr@domain.com>" (name-addr) or addr@domain.com
-> (addr-spec), and that comments are allowed within parenthesis like
-> "Stable <stable@vger.kernel.org> (4.8+)".
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'm not sure. I don't recall seeing anything like it in the wild before,
-but I find it interesting that we behave differently than Mail::Address
-(which I generally assume to adhere to a mix of spec and common
-practice). I couldn't find anything relevant in rfc2822.
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 5aa8607..c04ac07 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -24,7 +24,7 @@
+ 
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+-	N_("git reset [-q] <tree-ish> [--] <paths>..."),
++	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
+ 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
+ 	NULL
+ };
+-- 
+2.10.1.513.g00ef6dd
 
-> What is this [4.8+] supposed to mean?
-> 
-> The guilty function is parse_mailboxes in perl/Git.pm. It should be
-> rather easy to modify it but I need to understand the spec before I can
-> try to implement anything.
 
-It seems to be syntactically invalid as an rfc2822 address. If it's in
-common use on trailer lines[1], I think the only sane things are to drop
-it, or to stick it in the name. Between the two, I'd argue for the
-latter, as that matches what Git historically has done.
-
-I also found it interesting that:
-
-  Cc: Stable [4.8+] <stable@vger.kernel.org>
-
-ends up as:
-
-  Cc: "Stable [ v4 . 8+ ]" <stable@vger.kernel.org>
-
-I think this is also syntactically invalid as an rfc2822 address, but we
-have a habit in Git of treating single-line "name <email>" in a pretty
-lax manner, and just letting any character except "<" exist in the name
-field. I wonder if we should do something similar here.
-
--Peff
-
-[1] Running `git log | grep -i '^ *cc:' | grep '\['` on linux.git
-    shows that it is a common pattern there, though there are other uses
-    of brackets that probably would not want to include their contents
-    in the name.
-
-    It also looks like:
-
-      Cc: stable@vger.kernel.org # 4.8+
-
-    is a common pattern.
-
-    So I suspect we really are in the realm of micro-formats here, and
-    it is less about what rfc2822 says, and what people would find it
-    useful for send-email to do with these bits after the address (and
-    possibly what other people's scripts do with them).
