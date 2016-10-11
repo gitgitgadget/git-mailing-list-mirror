@@ -2,197 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D6FD207EC
-	for <e@80x24.org>; Tue, 11 Oct 2016 08:12:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B8AF207EC
+	for <e@80x24.org>; Tue, 11 Oct 2016 09:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbcJKIMb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 04:12:31 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36712 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751982AbcJKIMI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 04:12:08 -0400
-Received: by mail-lf0-f66.google.com with SMTP id b75so2278272lfg.3
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 01:11:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=BBzEn/Sc+tZq/Rui5vNrF9A7szUVSS3Gec4/GR2BBMs=;
-        b=LmJy36fUJiQ8SUR4tSgQitMIdeUCOOR3KdmNQiXW2GFjz1Yo798wSSI1zz25ba4SWt
-         2IXEi3DnLJc/MH/cWNsMKvk4TTWnSZ7N2EDLWgiuBGjbIyM557e/BQqczyPhGTxYeYNJ
-         wW6K3tTiqWcXSnpLln2uedOG/rGiIhS45bSt4z6DWe6fHVExGVT6L7umpKTNerB7Py3B
-         ziXoKL/RhCYG6gzzH0QxyNqa4JkluLaFSN+MYc60FPG5MQNsRvbjoO4yoeGpDxK2VeHr
-         NiMIBky9d6HFeKzWwH/JBilxJ8xulbCt+2rGNm7A4vXTp0HXasWbngh9W6O0rAPNK85Y
-         tBJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=BBzEn/Sc+tZq/Rui5vNrF9A7szUVSS3Gec4/GR2BBMs=;
-        b=WpXZZW9filMA1bYcWhpV0NXKddOGR4+RUs1KhLGUhj8jUGef6NaYPCwPvss0mxgoWl
-         a8UhGzhdDhYE/5AxWf0v+dXEvDi33I04+4o8EmwkuEo8SN8OhQx1yW74MSgExf81Lxe+
-         Np1rxmDBVnqf9fetHG4BXevAGJvEGK60+sfJz1YK3RLdauOwAsLqvtwSl3BSul8nCels
-         U6reimgh/bpqwopB/X8+y8ZBikHw/Mci4GrT88iztLrBAcyCNgr0+8PHPO6YTmOVTiRB
-         l9/oo43uFjckg/1sMH/jiUFIh56QAryjLDvdgvuTLpop7WCE23PvrtLuecBFWt2ygNFb
-         H6Mw==
-X-Gm-Message-State: AA6/9RkCarfJ06isftE1iFEyR47lkyj6QFHjx608ja9RpKCDWmUDFNWk2q6BNj0rmW3BlA==
-X-Received: by 10.194.127.5 with SMTP id nc5mr3226089wjb.16.1476173483486;
-        Tue, 11 Oct 2016 01:11:23 -0700 (PDT)
-Received: from [10.54.172.123] ([88.128.80.187])
-        by smtp.gmail.com with ESMTPSA id y2sm4274508wjx.20.2016.10.11.01.11.22
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Oct 2016 01:11:22 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqint0dlis.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 11 Oct 2016 10:11:22 +0200
-Cc:     git <git@vger.kernel.org>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>, peff@peff.net
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <02E73D87-B036-40CA-AF54-F93415A028BC@gmail.com>
-References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-14-larsxschneider@gmail.com> <xmqqint0dlis.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1752585AbcJKJq3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 05:46:29 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52449 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753063AbcJKJpI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 05:45:08 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MaIsi-1baAuK2ndY-00JrRq; Tue, 11 Oct 2016 11:44:52
+ +0200
+Date:   Tue, 11 Oct 2016 11:44:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+In-Reply-To: <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1610111142490.35196@virtualbox>
+References: <20161006114124.4966-1-pclouds@gmail.com> <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610071319520.35196@virtualbox> <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com> <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
+ <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net> <alpine.DEB.2.20.1610081034430.35196@virtualbox> <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net> <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
+ <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:JKscRPjlokbB3fj6FEoQZrTw2UgISh/8kdND9kmEABGv9d/LFNO
+ hPHjH5xb/HWECklzsrBvhNsaGmaxPAUGSLP0UH055L7j2sekEIGeiRwzuWwPUsdgn2mM56d
+ wz0CY/jxF4KahoQV1njCgzlgIIR5HMc6LHfFvoevwdApJiPcs/IKeI/07cpnkoQ3Z6/xPVq
+ mQrlCYWIWsQnqVdcCL2QA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EQVJA/2bIZk=:FPn8JFjQ3f4yvM5OfYRmed
+ 5fXJjRwRBE2w6xa7trxtwIg9S5tG+uWfcjIrlEbQ6iQsbcNMIwq/eQ5MT45o8feLSBEjF2dyX
+ uTbZ1/CbrJ4tIF2kJl67eMoboM6PrJLgEMm4/ZzN5aqDxSgnPqbIU375RsLb9P/zztN9Gja3y
+ sQmmYYKLxbWL0j9k56gBVfRaJDE/R4HudRugNFJfSOt6gEOIV6V/t7e4e+1aD/dzaNGMlWmwo
+ 1QL3eLmje0AYCmynyNkBcqO+7Vdua9rqPirGPfvg28/bCUP9HqiiL2skTA8OBk4Qs3TR97bF+
+ EV8EnkerAYzwuFKl4euEKKiyJ5EPGp4HjDZ/Wf3OlLW6tdhvWjfUDXIBctWic/Wd6EFy3d21+
+ pLjRe0IkplwqKuWqR6qEjCnG5nLNgHH9sSLW6fwtzrUM31RM1oeiV46AuJ+YnLsqjSPpAE25F
+ NO1OxjMB3BOOfZJJSoXnU1zVvYld7UPoQb+85yOOWmJeHGrs9ZqmYgE4cRSs+haob8zUw2ddc
+ d3T8jwQzyeN07c1f7dwG/WCXzGO5+F6YyDRloxcdv6WzTZ1/MMyw6fvPZxBjUb/OySOShDAE3
+ wCim+f/61WzGbJlpNstQoD7G8aUMbWDKXTBJis97kup0ibTYPIwVT/KNocag3sjEw7E/bTPkK
+ EyfsBdkInyF8pHeLi+Rkf6QmSZZX1F6wCzN1ftvG4SEh5UpeNJemSq38uWAVKtn5pJe4y1Ziu
+ gUmEkO13W2/fVd7UQhAkkCXe1dN2r8yHAMC5p4BpHUrc8zGaToc2NOcXdGCI64OtSoeUJU5yB
+ OUjCx5O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-> On 10 Oct 2016, at 21:58, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> larsxschneider@gmail.com writes:
->=20
-> [...]
->> +# Count unique lines except clean invocations in two files and =
-compare
->> +# them. Clean invocations are not counted because their number can =
-vary.
->> +# c.f. =
-http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
->> +test_cmp_count_except_clean () {
->> +	for FILE in $@
->> +	do
->> +		sort $FILE | uniq -c | sed "s/^[ ]*//" |
->> +			sed "s/^\([0-9]\) IN: clean/x IN: clean/" =
->$FILE.tmp
->> +		cat $FILE.tmp >$FILE
->> +	done &&
->> +	test_cmp $@
->> +}
->=20
-> Why do you even _care_ about the number of invocations?  While I
-> told you why "clean" could be called multiple times under racy Git
-> as an example, that was not meant to be an exhaustive example.  I
-> wouldn't be surprised if we needed to run smudge twice, for example,
-> in some weirdly racy cases in the future.
->=20
-> Can we just have the correctness (i.e. "we expect that the working
-> tree file gets this as the result of checking it out, and we made
-> sure that is the case") test without getting into such an
-> implementation detail?
+On Sun, 9 Oct 2016, Jeff King wrote:
 
-My goal is to check that clean/smudge is invoked at least once. I could
-just run `uniq` to achieve that but then all other filter commands could
-happen multiple times and the test would not detect that.
+> On Sun, Oct 09, 2016 at 06:32:38PM +0700, Duy Nguyen wrote:
+> 
+> > > If you mean ambiguity between the old "alias.X" and the new "alias.X.*",
+> > > then yes, I think that's an unavoidable part of the transition.  IMHO,
+> > > the new should take precedence over the old, and people will gradually
+> > > move from one to the other.
+> > 
+> > Do we really need to treat this differently than
+> > 
+> > [alias]
+> >     d2u = !dos2unix
+> >     d2u = C:/cygwin/bin/dos3unix.exe
+> > 
+> > ?
+> > 
+> > Another similar case is one d2u (could be either old syntax or new) is
+> > defined in ~/.gitconfig and the other d2u in $GIT_DIR/config. In
+> > either case, the "latest" d2u definition wins.
+> 
+> Yeah, that's reasonable, too. So:
+> 
+>   [alias]
+>     d2u = "!dos2unix"
+> 
+> acts exactly as if:
+> 
+>   [alias "d2u"]
+>     command = dos2unix
+>     type = shell
+> 
+> was specified at that point, which is easy to understand.
 
-I also prefer to check the filter commands to ensure the filter is=20
-working as expected (e.g. no multiple start ups etc) in addition to=20
-checking the working tree.
+It is easy to understand, and even easier to get wrong or out of sync. I
+really liked the ease of *one* `git config` call to add new aliases. Not
+sure that I like the need for more such calls just to add *one* alias (one
+config call for "shell", one for "don't cd up", etc).
 
-Would the patch below work for you? If yes, then please squash it into
-"convert: add filter.<driver>.process option".
-
-Thank you,
-Lars
-
-
-
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 9f892c0..714f706 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -31,38 +31,33 @@ filter_git () {
- 	rm -f git-stderr.log
- }
-=20
--# Count unique lines in two files and compare them.
--test_cmp_count () {
--	for FILE in $@
--	do
--		sort $FILE | uniq -c | sed "s/^[ ]*//" >$FILE.tmp
--		cat $FILE.tmp >$FILE
--	done &&
--	test_cmp $@
--}
--
--# Count unique lines except clean invocations in two files and compare
--# them. Clean invocations are not counted because their number can =
-vary.
-+# Compare two files and ensure that `clean` and `smudge` respectively =
-are
-+# called at least once if specified in the `expect` file. The actual
-+# invocation count is not relevant because their number can vary.
- # c.f. =
-http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
--test_cmp_count_except_clean () {
--	for FILE in $@
-+test_cmp_count () {
-+	expect=3D$1 actual=3D$2
-+	for FILE in "$expect" "$actual"
- 	do
--		sort $FILE | uniq -c | sed "s/^[ ]*//" |
--			sed "s/^\([0-9]\) IN: clean/x IN: clean/" =
->$FILE.tmp
--		cat $FILE.tmp >$FILE
-+		sort "$FILE" | uniq -c | sed "s/^[ ]*//" |
-+			sed "s/^\([0-9]\) IN: clean/x IN: clean/" |
-+			sed "s/^\([0-9]\) IN: smudge/x IN: smudge/" =
->"$FILE.tmp" &&
-+		cat "$FILE.tmp" >"$FILE"
- 	done &&
--	test_cmp $@
-+	test_cmp "$expect" "$actual"
- }
-=20
--# Compare two files but exclude clean invocations because they can =
-vary.
-+# Compare two files but exclude all `clean` invocations because Git can
-+# call `clean` zero or more times.
- # c.f. =
-http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
- test_cmp_exclude_clean () {
--	for FILE in $@
-+	expect=3D$1 actual=3D$2
-+	for FILE in "$expect" "$actual"
- 	do
--		grep -v "IN: clean" $FILE >$FILE.tmp
--		cat $FILE.tmp >$FILE
-+		grep -v "IN: clean" "$FILE" >"$FILE.tmp" &&
-+		cat "$FILE.tmp" >"$FILE"
- 	done &&
--	test_cmp $@
-+	test_cmp "$expect" "$actual"
- }
-=20
- # Check that the contents of two files are equal and that their rot13 =
-version
-@@ -395,7 +390,7 @@ test_expect_success PERL 'required process filter =
-should filter data' '
- 			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 =
-[OK] -- OUT: $S3 . [OK]
- 			STOP
- 		EOF
--		test_cmp_count_except_clean expected.log =
-rot13-filter.log &&
-+		test_cmp_count expected.log rot13-filter.log &&
-=20
- 		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x.r" &&
-
+Ciao,
+Dscho
