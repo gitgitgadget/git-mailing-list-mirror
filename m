@@ -2,106 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC7F4207EC
-	for <e@80x24.org>; Tue, 11 Oct 2016 11:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7064207EC
+	for <e@80x24.org>; Tue, 11 Oct 2016 11:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752121AbcJKLSa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 07:18:30 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:34513 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751203AbcJKLS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 07:18:28 -0400
-Received: by mail-it0-f52.google.com with SMTP id 189so17853037ity.1
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 04:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LjaJI51hia0rGL9dF8h0hw1Oz040cTVhUhD9pWVSVT0=;
-        b=cAQV6xCFhNTHZfQIjGrnvB4Cbwq84syWReoMRvuf6F5Zoj7yafi3+G8ho8sXAiHO3P
-         f01CgMNvmGEb5Dq3TsHxQn4cOoHhKpDCEoSE8T7C5BXc26JDP0Rag8WAqQTtkzH84f5r
-         YzK2Apfx6AHPY6Wbk9H4is5evw0cR0HL1ODETeCX9N6LxdJxhu9gaEOH/8R3G3+srOBq
-         VnRZjgq/Ctdlm5ZJag74cLYpARxGBaLR8vKJRsXPnEKBpJ0dJEf39tK5xEnQIz4pLSgK
-         LSmo4fEE9D/mQ4kU9rlvZjEBXWaQ0Y2Fw78nf1cIlEpENp6/laZRT3cR5VkgwRR14sA8
-         8K6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LjaJI51hia0rGL9dF8h0hw1Oz040cTVhUhD9pWVSVT0=;
-        b=WL3PTulKc+461iwgL0HXvLrkZ/2Jq08NWdDqmuABwgc8G4edDH3MvFWpv4+G2kVO5U
-         49xmXcKApEEGgTGbCJ7Q4NJ4hS68nMspqUp49EquWpJQ3/PhyxxL9lojl9bhKQJGGeza
-         X6Vd+xvhZ6HKH7edarMGYkf4EhBs7XRUovIoIpb5IYr4k+YqLK4ratLYnhfI8lMxzGYp
-         ZD/S0sp+igqnA2EJz5ew8ecLecUY9hGrZ6MFOU8P5ieHPjMuqG+rjVZP6tNgxpQYsSEe
-         HXxXPuNk7Ps0y37oFb7y/NLA8IgFJqthKHL85sBEgI1lfD6qQaU7nDWHRfHzVvCQFZz+
-         yVgw==
-X-Gm-Message-State: AA6/9RnNtWEEMtPNt5vSL3s02sQxqeZkAhHDAD5q5gsHBphe32Mo0axDd7mdtVrsrcvsMWC+Oqy+VtjxcDTfHQ==
-X-Received: by 10.36.76.15 with SMTP id a15mr5138449itb.74.1476184601952; Tue,
- 11 Oct 2016 04:16:41 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.230.206 with HTTP; Tue, 11 Oct 2016 04:16:11 -0700 (PDT)
-In-Reply-To: <xmqq60p0f3un.fsf@gitster.mtv.corp.google.com>
-References: <CADKxhpe3S4L9CPV9yxh2yhrtJMa9wyZAPC45u_S=RiuzY1Xrkg@mail.gmail.com>
- <CACsJy8C0kyKor4gCLSJrreRCazazbexvaSdbBg+Cka=-beZU_g@mail.gmail.com>
- <CADKxhpd-gDczp05Ny6wP57RXafWWCimArfA9ki2phh+-gHez4A@mail.gmail.com>
- <CACsJy8DGvyWz2_VBsEfmDWOPGUGAUhKYhCa1qLEMcOdn83ocSQ@mail.gmail.com> <xmqq60p0f3un.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 11 Oct 2016 18:16:11 +0700
-Message-ID: <CACsJy8AZVWNQNgsw21EF2UOk42oFeyHSRntw_rpeZz_OT1xdMw@mail.gmail.com>
-Subject: Re: Feature request: use relative path in worktree config files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?St=C3=A9phane_Klein?= <contact@stephane-klein.info>,
+        id S1752355AbcJKL2v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 07:28:51 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56297 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752225AbcJKL2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 07:28:50 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LvEZe-1auhoE0TMQ-010ISl; Tue, 11 Oct 2016 13:28:20
+ +0200
+Date:   Tue, 11 Oct 2016 13:28:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+In-Reply-To: <CACsJy8Aufm7g9SnckiXbMCOOvsLMqESRHLR+Zd94HxPeJj=gTw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1610111325070.35196@virtualbox>
+References: <20161006114124.4966-1-pclouds@gmail.com> <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610071319520.35196@virtualbox> <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com> <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
+ <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net> <alpine.DEB.2.20.1610081034430.35196@virtualbox> <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net> <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
+ <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net> <alpine.DEB.2.20.1610111142490.35196@virtualbox> <CACsJy8Aufm7g9SnckiXbMCOOvsLMqESRHLR+Zd94HxPeJj=gTw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:44fK5v3ioVDD12+WUUeU9xBsG7ew+f9cZwnIEjfAYLHLZQMENB/
+ lE16/mOF0s+JaOVzB1eX7Jn7kZabMYx/QDhGUC2YvsO6OutMNyGKVir6ab7Th94VySGBmAV
+ IKuAk/HSIKpaZjzzChG1/zUEKtHDj5i2fLQdxrZqD7rNQMXIM3JOpKwDiOfP2DtjEf3ZP9w
+ wTK1N/++t+Xw5zVkWGEew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DOO7jTPuI9g=:I8/9hybK1WiQGOjgaMXFDc
+ 7yRPFlqyWCxRM0GHtwVaGxJU3nM6rRCyKed27aiJjx809cpxciUVNJAGvHhlBNGe4B/sEUrbg
+ fXjewaezaARWmRMhwoDR4CWbg8Yx3CofwFdVHAARNw0zQSESwbILwE9cffGmY7kCc49OjMDTc
+ SPc8i6/Es07/nJca8jQpPWM9yuIA7oB247DXDposKGYMWeGdflLLG9i6++TCXnUKUp2nSefvD
+ 9L+BL5PbBPmYQ7/IcTsjHvp0CVf4/pLKTqXWTpxDrNrP4stAxOoQaU4qRLLry7P7Kx6y7R/8W
+ zKDmpB0aImjOKDIzfnZPDzIx61QULkpx/tbM5K50LvjXXoM0bO9xoncNNpA1vOKrplXLb0T79
+ LoruUJsF7OmwALgRquoPOoPIWFNoIPQW/vg+3EFCr+Bufg8sLf7QA06AIEnhGEQTeHc8dJDeW
+ UJY57PZQpwaAL9JcmvYshL7n2AiP/BL9EM7rhWgdKmBImlHG7HTYoVmwyozn/s9Jqvnpix3A0
+ +xAyJKNMpfBq/6tipKChS42iL6f/maKnhuMqE1Nf6f1fuDU1ZlyGk/imS58yyk+0cYKORm0e2
+ Oacm/I6KCsjKSpbGahDUOcl6x1tFh52r6iAbMwC+V49fBUCYk0ggSpADyc+9oGff9+WgT5mNS
+ dRjoZXfbgma+CcgmR4QKMgWIwpJTDyPtH8cZfhWcbkzLJT+3vLrhTQ/+jplPb2qqjaEqjacrn
+ Sv9tdHXhxIxIRkt3lk/wn5jSAXEYv2I1TmMMnfMV2DRzRLhQV/kHqeLJL5sA53NoXe6SPB1tw
+ vV27FxL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 1:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->>> I think there are some pros and some cons for relative path and absolute path.
->>> Maybe append a "--relative" option with `git worktree add` ?
->>>
->>> I've converted all path to relative and all work with success.
->>>
->>> What do you think to append this --relative option.
->>
->> Patches are welcome.
->
-> Hmm, are they really welcome?
->
-> Is an invocation of "git worktree add" really the right point in the
-> workflow to decide if these references to other repositories should
-> be relative or absolute?  When you are moving referrer, it is more
-> convenient if the reference uses absolute path to name the
-> referrent.  When you are moving both referrer and referrent, it is
-> more convenient to use relative.
+Hi Duy,
 
-You're right (thanks for thinking this through). There's another case
-that benefits from relative paths besides Stephane's use case: if you
-put the entire repo and all associated worktrees on a portable disk,
-the disk could be mounted on different paths each time, so absolute
-paths do not fly.
+On Tue, 11 Oct 2016, Duy Nguyen wrote:
 
-> I somehow doubt that users know which future move they would be
-> making when doing "git worktree add".
->
-> To me, this almost looks like a need for a new subcommand to "git
-> worktree" that lets you move existing worktree to elsewhere, or turn
-> absolute reference to relative and vice versa.
+> On Tue, Oct 11, 2016 at 4:44 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Sun, 9 Oct 2016, Jeff King wrote:
+> >
+> >> On Sun, Oct 09, 2016 at 06:32:38PM +0700, Duy Nguyen wrote:
+> >>
+> >> > > If you mean ambiguity between the old "alias.X" and the new "alias.X.*",
+> >> > > then yes, I think that's an unavoidable part of the transition.  IMHO,
+> >> > > the new should take precedence over the old, and people will gradually
+> >> > > move from one to the other.
+> >> >
+> >> > Do we really need to treat this differently than
+> >> >
+> >> > [alias]
+> >> >     d2u = !dos2unix
+> >> >     d2u = C:/cygwin/bin/dos3unix.exe
+> >> >
+> >> > ?
+> >> >
+> >> > Another similar case is one d2u (could be either old syntax or new) is
+> >> > defined in ~/.gitconfig and the other d2u in $GIT_DIR/config. In
+> >> > either case, the "latest" d2u definition wins.
+> >>
+> >> Yeah, that's reasonable, too. So:
+> >>
+> >>   [alias]
+> >>     d2u = "!dos2unix"
+> >>
+> >> acts exactly as if:
+> >>
+> >>   [alias "d2u"]
+> >>     command = dos2unix
+> >>     type = shell
+> >>
+> >> was specified at that point, which is easy to understand.
+> >
+> > It is easy to understand, and even easier to get wrong or out of sync. I
+> > really liked the ease of *one* `git config` call to add new aliases.
+> 
+> I was about to bring this up. Although to me, "git config --global
+> alias.foo bar" is more convenient, but not using it is not exactly
+> easy to get wrong or out of sync. For adding alias.$name.* I was
+> thinking about "git config --global --edit", not executing "git
+> config" multiple times.
 
-An alternative is always use relative paths. You have to move
-worktrees with "git worktree move". Which simplifies things a bit
-(absolute -> relative conversion on existing worktrees could be done
-at move time). But I'm not sure if it's a good idea to kill manual
-move support. If you accidentally move a worktree, it'll be
-disconnected and you have to fix that by yourself.
--- 
-Duy
+Right, but many of my aliases get set by scripts, so your `--edit` idea
+won't work for me.
+
+> > Not sure that I like the need for more such calls just to add *one* alias (one
+> > config call for "shell", one for "don't cd up", etc).
+> 
+> We could add git-alias if more alias types pop up (and in my opinion
+> git-alias is the right call, we've been abusing git-config for alias
+> manipulation for a long time).
+
+Maybe.
+
+It is also possible that this issue is a good indicator that we are
+complicating things [*1*] more than necessary...
+
+Ciao,
+Dscho
+
+Footnote *1*:
+http://thedailywtf.com/articles/The_Complicator_0x27_s_Gloves
