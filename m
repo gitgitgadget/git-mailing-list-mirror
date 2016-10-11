@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3901D2098A
-	for <e@80x24.org>; Tue, 11 Oct 2016 00:22:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F039D2098A
+	for <e@80x24.org>; Tue, 11 Oct 2016 00:22:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752818AbcJKAV4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 20:21:56 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34557 "EHLO
-        mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752789AbcJKAVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 20:21:54 -0400
-Received: by mail-pa0-f51.google.com with SMTP id rz1so3953310pab.1
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:53 -0700 (PDT)
+        id S1752806AbcJKAVx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 20:21:53 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:32828 "EHLO
+        mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752789AbcJKAVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 20:21:51 -0400
+Received: by mail-pa0-f41.google.com with SMTP id vu5so3987370pab.0
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dD0zTFaFb98SZpIDaNd635oI14v+C24NSqt/Cyp7lwU=;
-        b=bbNc0wH4Frn29wjbmM6vfS5lJVCnbEpGISKqs2thjldibpPwC6SdSTWqHwCapycZLj
-         wSaasXPOARmrBB5MtkIVGvgzk1f68hX5m4RNCU9L6K4DsKmvvf+m62Cfm3EyJhEUuG/2
-         KZkZcteEahpJDFd52kxfK0nuy+PF0TIn8iA1XZqmj7E0TLqUBF0w1RtJUOHdFJ4q1CAf
-         pN/6MXRaBoeH4UJSYW3MumcuN7l7EQbxrKw26ELEKb4NHMVKArVhSg5Gr3YUNggND4AK
-         iPieaqdbTlF8R5k0y0hfXH8pGi+hWyM2fRsrThb4cfZu8jAvfFhfUU0ZGow9oJ79vEF1
-         lI5Q==
+        bh=lnZu8CfnYVAfb76EFR9NUQG7gbiHKlhENyvxZV1I12g=;
+        b=jT6ddylEnr+6laDAjlnEm44983ZVuEKzA7nZA6r5emnnzK2a3LbFVlnigX/dw2jZD6
+         eZgiauRqBmfTBB8huwyS8lX1vcE0wBYqhqwsZv7zK/PcdeCcPMrNiopdz57EAxr7Us8I
+         oJTVq/SSAH2o/SdKKfPgPANRCCl4FIB8nCMmXd1DZNHPO7lUTvDSkv5b0Kn6q7FM6GE4
+         FgV+ZZV3SOvl9CkLb8lVBlEqgvn07a5UlaeyC7HGEt26TUDbKHWiship/FuVuQp6Qjtb
+         TzuTMV9DhfkcFK7uVMt8Zw8KrX7XkbtQZlQ2lVbUJ8K2ZiJHl697MEFsdWhqkAxZuPls
+         wFHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dD0zTFaFb98SZpIDaNd635oI14v+C24NSqt/Cyp7lwU=;
-        b=DnAcrIIovlLtZl2RrdqaGIKCE5ldr3asMm+9RVZtIT5oaUBbnrmZLl+ZLN2acJRRpg
-         c3641dgmozAUWt/N2SalaDE9GWghmCVzFMHgxCp92LQTU58/WbsaWbMOLRs5lbvyVSSy
-         ijGL7XpiLEP18z4esOGSrUQgKLOstsIkwQvGVqgq3dnbkZKP6bljyr/XXm4n62lrTUHM
-         bF4ki2slEWv2/bLj+eWjvmcpYuVyACOa9eFqqW7mIMK7BgsCLwOT6GV0mqZPhZlw64RJ
-         dftDLDEhVOX5VsONELivK9/vJmWBT3y6fDy9IbI+PdfOV7BYicirghO9FLuZqKexE8+Y
-         ClWA==
-X-Gm-Message-State: AA6/9RmbGPABhhba5hmXfJEonvj+2wnFja0jRMORrwuwc4tRe86dAFuOGiqxDJYnf3/6oUXu
-X-Received: by 10.66.160.72 with SMTP id xi8mr1724579pab.78.1476145313112;
-        Mon, 10 Oct 2016 17:21:53 -0700 (PDT)
+        bh=lnZu8CfnYVAfb76EFR9NUQG7gbiHKlhENyvxZV1I12g=;
+        b=JuRtbsP0HWMVq0aPTHXkW6TegWeddzz1bnT9fHxn5Q1c9bEewNRSyHoLHV/fLerEmd
+         s4cfThK44lzVweDDljEtf1PCQOQnv7zdPyMNgwGEzJsTum1lBOndA4slOOavdeK/WVz5
+         K7RX/pZ6Wrjhwr6vGXa7jRG8GXdrBQ2i6oN+LqUYkJkEpOuVC3wLK8fnAeVmHBhgpEKd
+         r4xhZogsxgbgDiCzI8QLRFWq3c4t+q5TLsJv8hOMPnWhZqCdAUgdTn0/rW8fqf0nA+eV
+         /CQsIcZcrG/FJxui45UZzIuCh3r/M52L4Pe4HYj4Hx0IlbYIceZN7kVJXF8oNthqKnK5
+         98DA==
+X-Gm-Message-State: AA6/9RkujyCGgKs5yuftwBZ9Gsp0PPMfSZ+NLjkss2lwMhj3DZnytYzAzxlwaszMD9uXAj1M
+X-Received: by 10.66.141.197 with SMTP id rq5mr1680608pab.75.1476145309473;
+        Mon, 10 Oct 2016 17:21:49 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
-        by smtp.gmail.com with ESMTPSA id bx5sm538934pad.6.2016.10.10.17.21.52
+        by smtp.gmail.com with ESMTPSA id h87sm502003pfj.78.2016.10.10.17.21.48
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Oct 2016 17:21:52 -0700 (PDT)
+        Mon, 10 Oct 2016 17:21:49 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 17/28] attr: expose validity check for attribute names
-Date:   Mon, 10 Oct 2016 17:21:04 -0700
-Message-Id: <20161011002115.23312-18-sbeller@google.com>
+Subject: [PATCH 15/28] attr: add counted string version of git_check_attr()
+Date:   Mon, 10 Oct 2016 17:21:02 -0700
+Message-Id: <20161011002115.23312-16-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
 In-Reply-To: <20161011002115.23312-1-sbeller@google.com>
 References: <20161011002115.23312-1-sbeller@google.com>
@@ -63,124 +62,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-Export attr_name_valid() function, and a helper function that
-returns the message to be given when a given <name, len> pair
-is not a good name for an attribute.
+Often a potential caller has <path, pathlen> pair that
+represents the path it wants to ask attributes for; when
+path[pathlen] is not NUL, the caller has to xmemdupz()
+only to call git_check_attr().
 
-We could later update the message to exactly spell out what the
-rules for a good attribute name are, etc.
+Add git_check_attr_counted() that takes such a counted
+string instead of "const char *path".
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 39 +++++++++++++++++++++++++--------------
- attr.h |  3 +++
- 2 files changed, 28 insertions(+), 14 deletions(-)
+ attr.c | 23 ++++++++++++++---------
+ attr.h |  1 +
+ 2 files changed, 15 insertions(+), 9 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 90dbacd..6e3bd25 100644
+index d427798..9bec243 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -59,23 +59,38 @@ static unsigned hash_name(const char *name, int namelen)
- 	return val;
- }
+@@ -734,20 +734,19 @@ static int attr_check_is_dynamic(const struct git_attr_check *check)
+  * check_all_attr. If num is non-zero, only attributes in check[] are
+  * collected. Otherwise all attributes are collected.
+  */
+-static void collect_some_attrs(const char *path, int num,
++static void collect_some_attrs(const char *path, int pathlen, int num,
+ 			       struct git_attr_check_elem *check)
  
--static int invalid_attr_name(const char *name, int namelen)
-+int attr_name_valid(const char *name, size_t namelen)
  {
- 	/*
- 	 * Attribute name cannot begin with '-' and must consist of
- 	 * characters from [-A-Za-z0-9_.].
- 	 */
- 	if (namelen <= 0 || *name == '-')
--		return -1;
-+		return 0;
- 	while (namelen--) {
- 		char ch = *name++;
- 		if (! (ch == '-' || ch == '.' || ch == '_' ||
- 		       ('0' <= ch && ch <= '9') ||
- 		       ('a' <= ch && ch <= 'z') ||
- 		       ('A' <= ch && ch <= 'Z')) )
--			return -1;
-+			return 0;
+ 	struct attr_stack *stk;
+-	int i, pathlen, rem, dirlen;
++	int i, rem, dirlen;
+ 	const char *cp, *last_slash = NULL;
+ 	int basename_offset;
+ 
+-	for (cp = path; *cp; cp++) {
++	for (cp = path; cp < path + pathlen; cp++) {
+ 		if (*cp == '/' && cp[1])
+ 			last_slash = cp;
  	}
--	return 0;
-+	return -1;
-+}
-+
-+void invalid_attr_name_message(struct strbuf *err, const char *name, int len)
-+{
-+	strbuf_addf(err, _("%.*s is not a valid attribute name"),
-+		    len, name);
-+}
-+
-+static void report_invalid_attr(const char *name, size_t len,
-+				const char *src, int lineno)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	invalid_attr_name_message(&err, name, len);
-+	fprintf(stderr, "%s: %s:%d\n", err.buf, src, lineno);
-+	strbuf_release(&err);
+-	pathlen = cp - path;
+ 	if (last_slash) {
+ 		basename_offset = last_slash + 1 - path;
+ 		dirlen = last_slash - path;
+@@ -778,12 +777,12 @@ static void collect_some_attrs(const char *path, int num,
+ 		rem = fill(path, pathlen, basename_offset, stk, rem);
  }
  
- struct git_attr *git_attr_counted(const char *name, size_t len)
-@@ -90,7 +105,7 @@ struct git_attr *git_attr_counted(const char *name, size_t len)
- 			return a;
- 	}
+-static int git_check_attrs(const char *path, int num,
++static int git_check_attrs(const char *path, int pathlen, int num,
+ 			   struct git_attr_check_elem *check)
+ {
+ 	int i;
  
--	if (invalid_attr_name(name, len))
-+	if (!attr_name_valid(name, len))
- 		return NULL;
+-	collect_some_attrs(path, num, check);
++	collect_some_attrs(path, pathlen, num, check);
  
- 	FLEX_ALLOC_MEM(a, name, name, len);
-@@ -176,17 +191,15 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
- 			cp++;
- 			len--;
- 		}
--		if (invalid_attr_name(cp, len)) {
--			fprintf(stderr,
--				"%.*s is not a valid attribute name: %s:%d\n",
--				len, cp, src, lineno);
-+		if (!attr_name_valid(cp, len)) {
-+			report_invalid_attr(cp, len, src, lineno);
- 			return NULL;
- 		}
- 	} else {
- 		/*
- 		 * As this function is always called twice, once with
- 		 * e == NULL in the first pass and then e != NULL in
--		 * the second pass, no need for invalid_attr_name()
-+		 * the second pass, no need for attr_name_valid()
- 		 * check here.
- 		 */
- 		if (*cp == '-' || *cp == '!') {
-@@ -229,10 +242,8 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
- 		name += strspn(name, blank);
- 		namelen = strcspn(name, blank);
--		if (invalid_attr_name(name, namelen)) {
--			fprintf(stderr,
--				"%.*s is not a valid attribute name: %s:%d\n",
--				namelen, name, src, lineno);
-+		if (!attr_name_valid(name, namelen)) {
-+			report_invalid_attr(name, namelen, src, lineno);
- 			goto fail_return;
- 		}
- 	}
+ 	for (i = 0; i < num; i++) {
+ 		const char *value = check_all_attr[check[i].attr->attr_nr].value;
+@@ -800,7 +799,7 @@ void git_all_attrs(const char *path, struct git_attr_check *check)
+ 	int i;
+ 
+ 	git_attr_check_clear(check);
+-	collect_some_attrs(path, 0, NULL);
++	collect_some_attrs(path, strlen(path), 0, NULL);
+ 
+ 	for (i = 0; i < attr_nr; i++) {
+ 		const char *name = check_all_attr[i].attr->name;
+@@ -825,10 +824,16 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
+ 	use_index = istate;
+ }
+ 
+-int git_check_attr(const char *path, struct git_attr_check *check)
++int git_check_attr_counted(const char *path, int pathlen,
++			   struct git_attr_check *check)
+ {
+ 	check->finalized = 1;
+-	return git_check_attrs(path, check->check_nr, check->check);
++	return git_check_attrs(path, pathlen, check->check_nr, check->check);
++}
++
++int git_check_attr(const char *path, struct git_attr_check *check)
++{
++	return git_check_attr_counted(path, strlen(path), check);
+ }
+ 
+ struct git_attr_check *git_attr_check_initl(const char *one, ...)
 diff --git a/attr.h b/attr.h
-index bcedf92..40abc16 100644
+index 506db0c..c84f164 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -13,6 +13,9 @@ extern struct git_attr *git_attr(const char *);
- /* The same, but with counted string */
- extern struct git_attr *git_attr_counted(const char *, size_t);
+@@ -38,6 +38,7 @@ struct git_attr_check {
  
-+extern int attr_name_valid(const char *name, size_t namelen);
-+extern void invalid_attr_name_message(struct strbuf *, const char *, int);
-+
- /* Internal use */
- extern const char git_attr__true[];
- extern const char git_attr__false[];
+ extern struct git_attr_check *git_attr_check_initl(const char *, ...);
+ extern int git_check_attr(const char *path, struct git_attr_check *);
++extern int git_check_attr_counted(const char *, int, struct git_attr_check *);
+ 
+ extern struct git_attr_check *git_attr_check_alloc(void);
+ extern struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *, const struct git_attr *);
 -- 
 2.10.1.382.ga23ca1b.dirty
 
