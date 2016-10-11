@@ -2,79 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CF301F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 21:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E8DD1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 21:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753142AbcJKVjr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 17:39:47 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:36456 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752998AbcJKVjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 17:39:46 -0400
-Received: by mail-qt0-f179.google.com with SMTP id m5so4796022qtb.3
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 14:39:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=piKLPtu8pn7cskxLHYLlBFc8CwGt09fpXTz8VHLYgS0=;
-        b=drc4CQbFQg89pRUBiVRjljS67PFStym6al52fVZw+Hkha6YbxRMy477PL6InXQMfOg
-         hOLLSQ+gF7QWcjfPQOqY/hYKFu7D3g0sooChEHSlhb0QucI1nPMPz9DYRHLNJX4vvlF9
-         dKoWuZXfn8rBiN3QDuvZlcCHyBkVugUMHnhUD60eTTlpdhDoALGyWiDh9FMFcqklJEVh
-         lv4qSlzVKHRprxcCHKvhL6KbguhHVIeO0PZpVPw71wFz/FnBe3B03OFOMWajSmgAGiok
-         sOr2tzuQOkRz6IqLnQg6BGWmmlxuogx8hT15TKhyCUsyr7n2Yp3xasOiS6eHaKPFShE7
-         dT9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=piKLPtu8pn7cskxLHYLlBFc8CwGt09fpXTz8VHLYgS0=;
-        b=e3OUPr+dMq2F9XOcqZTgrYvPsENEJ41Gjc0WG/cQMIN5eWaBpgvLaL0hOT27eh8kDH
-         duxSe1qjSrAYxW9FraI5nr5Mt5FKlCzhTVZ4hGPI/7OCRgoSIH73K5LsRrGep1xfTnin
-         CnJUEG5kyPGw3o1DJOh/upzjG6VkUl5HtY5bd1EUSqsPVWQPLFNueB3Bju6kY6Otxkn+
-         MTZlu4ukRFKNSYeepIs+8l7rwm++C3qiTNkCZFn93ytagsRVW8gqokuhftHzoqx0feb5
-         J8co1bq58DHEVnUjup81c4I2EWkLp/8SEwD7FP2fsON2sO4rdZNRr009lvHfH45mR/CZ
-         aKsA==
-X-Gm-Message-State: AA6/9RmdVg2nbyQ9vxq10oL5Ss3wLWfBaVsRUL12MYtIt0AjvtedUSijkpwwPBrd0gHWJpkTuOSga65El5mqeNWo
-X-Received: by 10.237.33.225 with SMTP id m30mr5690809qtc.61.1476221985850;
- Tue, 11 Oct 2016 14:39:45 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 14:39:45 -0700 (PDT)
-In-Reply-To: <CAGZ79kZu71+6QmvKgXJ5t+97jvTeAhSRtHpMQR9Rmk4Ep5RHhw@mail.gmail.com>
-References: <xmqq1szm8ukf.fsf@gitster.mtv.corp.google.com> <CAGZ79kZu71+6QmvKgXJ5t+97jvTeAhSRtHpMQR9Rmk4Ep5RHhw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Oct 2016 14:39:45 -0700
-Message-ID: <CAGZ79kZGerbcQWmK0=OjJEH4DpYVFSEeRzR5TssPGunK-Lf0nw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2016, #03; Tue, 11)
+        id S1753156AbcJKVsH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 17:48:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56107 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752814AbcJKVsG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 17:48:06 -0400
+Received: (qmail 10613 invoked by uid 109); 11 Oct 2016 21:47:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Oct 2016 21:47:15 +0000
+Received: (qmail 13619 invoked by uid 111); 11 Oct 2016 21:47:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Oct 2016 17:47:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Oct 2016 17:47:14 -0400
+Date:   Tue, 11 Oct 2016 17:47:14 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Support `git reset --stdin`
+Message-ID: <20161011214713.y2fpjkrx6sspks4a@sigill.intra.peff.net>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+ <20161011183448.yasglfjelo4kgrq4@sigill.intra.peff.net>
+ <xmqqshs28z52.fsf@gitster.mtv.corp.google.com>
+ <20161011212644.zzqidtcgatu3qsei@sigill.intra.peff.net>
+ <xmqqoa2q7elc.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqoa2q7elc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 2:39 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Oct 11, 2016 at 2:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * sb/submodule-ignore-trailing-slash (2016-10-10) 2 commits
->>   (merged to 'next' on 2016-10-11 at e37425ed17)
->>  + submodule: ignore trailing slash in relative url
->>  + submodule: ignore trailing slash on superproject URL
->>
->>  A minor regression fix for "git submodule".
->>
->>  Will merge to 'master'.
->>
->
-> Going by the bug report, this *may* be more than
-> minor and worth merging down to maint as well, eventually.
+On Tue, Oct 11, 2016 at 02:36:31PM -0700, Junio C Hamano wrote:
 
-and here is the actual bug report:
+> > True. I'd have done something more like:
+> >
+> >   git ls-tree -r $paths | git update-index --index-info
+> >
+> > but there are some corner cases around deleting paths from the index.
+> 
+> Ah, I would think read-tree has the exact same issue, even if we
+> added pathspec support, around removal.
+> 
+> So it is more like
+> 
+> 	(
+> 		printf "0 0000000000000000000000000000000000000000\t%s\n" $paths
+> 		git --literal-pathspecs ls-tree -r --ignore-missing $paths
+> 	) | git update-index --index-info
+> 
+> which does not look too bad, even though this
+> 
+> 	printf "%s\n" $paths | git reset --stdin
+> 
+> does look shorter.
 
-https://public-inbox.org/git/CAL4SumgJbrirymt5+iyNbpo++xXfzJZRiHDm8=0+eCArpCX=DA@mail.gmail.com/
+Of course neither of ours solutions works when "$paths" is coming on
+stdin, rather than in a variable, which I suspect was Dscho's original
+motivation. :)
+
+One reason not to do the unconditional $z40 in yours is that without it,
+I would hope that update-index is smart enough not to discard the stat
+information for entries which are unchanged.
+
+I suspect the best answer is more like:
+
+  git diff-index --cached HEAD | git update-index --index-info
+
+except that you have to munge the data in between, because update-index
+does not know how to pick the correct data out of the --raw diff output.
+But that's probably closer to what git-reset does internally.
+
+Anyway, the existence of this discussion is probably a good argument in
+favor of Dscho's patch. I was mostly curious how close our plumbing
+tools could come.
+
+-Peff
