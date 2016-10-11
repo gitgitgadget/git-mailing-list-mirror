@@ -7,123 +7,82 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6007820989
-	for <e@80x24.org>; Tue, 11 Oct 2016 00:21:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB72320989
+	for <e@80x24.org>; Tue, 11 Oct 2016 00:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752546AbcJKAVY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Oct 2016 20:21:24 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33739 "EHLO
-        mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752418AbcJKAVX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2016 20:21:23 -0400
-Received: by mail-pa0-f51.google.com with SMTP id vu5so3981173pab.0
-        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:23 -0700 (PDT)
+        id S1752583AbcJKAV0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Oct 2016 20:21:26 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:33745 "EHLO
+        mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752418AbcJKAVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2016 20:21:25 -0400
+Received: by mail-pa0-f46.google.com with SMTP id vu5so3981501pab.0
+        for <git@vger.kernel.org>; Mon, 10 Oct 2016 17:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5K3dHdfA22pKCCHL9OZQ1/DKN7mDttNToiE+Vbrm/Jc=;
-        b=nrP/h7cslTMNv2K46GwYkAAJDvzvSa8tswefjrdtMSxmcL93+cfmM4kRm+zZlOJGQN
-         eAWypHahbQWuMcF/UYucSpi5IrafZVIqj/mknGjgsrQAd/wn73xDkSSC5jfDV7YVFnRZ
-         4lOI5RIxtvTrjUylbkqh58OG3huuCUtGJAR99pE+aE2SyCFlxlt1KcHfJhEHsE1hrGMF
-         59DsUudC4NnbrrhQ4FR6O5c480bq6u1SLcTmnBKrzXmbTpoJXzg2N7QxL9b0fBVf3DgZ
-         RhGVAQpdcbd2zN5JiMQoyNtzeJ/52QhXkp2A7B1Mf+hmWfyQadKvnuOHYQdq5+rGXdVb
-         li4g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=U92o2E7Za+E2SoBNRIHrBkxGNmmwss0HOJ7upwc067Q=;
+        b=pCfPrtQFdv8B78CEzY48qPyARUV8HlMKZ/WHx9dy2z0/aqhzkYgupi0o/H+0iitEgl
+         8xYs3NuWJ7EAK1OfXqEo9GHpL58p37+i8yYk3xN2GJAZzZHZMH3rZhqLALly/+BXO4/z
+         CPMIPoRfDM8BnIY075YUfUnrzBKJzDP+w4Kfn73ZPCQElrjlxejlEtn6/ByZLNBgDTUu
+         hBUIwS0zsSASgI0yR9RN3PwqHuT6NMp+DL9A4jg1123I1P43bkEFVnYPQWP+f/XFT0jI
+         LQ/cV85q/ncbKkMWjLbxS9AuHBigDV2V0/B9d+qTwQtzKaELrtgiw7YTsO12LWpeIvU7
+         3RZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5K3dHdfA22pKCCHL9OZQ1/DKN7mDttNToiE+Vbrm/Jc=;
-        b=fEYjLcd7Cfwzoq+Xa2s2PsTPH2hcSEI6PiRdHgXk1vsIkbtGzAjGXf7CGRz3z89KRN
-         r7KdRg7GrS4tPlILnJ7ABZP1Yuu2kEYTEZvycwvl7Z3+zN9DUlPlGVhFnPo+tVLv84ON
-         BM4c6k+y2UrFG1MYnX3KeOmg8MRGW2el6lX71fy/tmbq5IM4fYolA7Nai/Qx56ZJqzzy
-         gfbxbkhqcIW07/gYdJN2yyha7KKApQDqLgai5IwfrnB3fojOnOAALetGU8s2b8F9cvnb
-         Yb3QwAvZd5xEWY/SZsIyJUsDyK9Rv7KHJhMqBT7I1HW+e8LVjymrxUAgjgBf2qZ8ZrKt
-         UaUQ==
-X-Gm-Message-State: AA6/9RnAt4bQRgnyn+DVzo3PVVxRFqoBc1JarQXLmFGwVMm9BvHoZNjvGCSpydHEcVQ4cxX0
-X-Received: by 10.66.193.199 with SMTP id hq7mr1738230pac.70.1476145282157;
-        Mon, 10 Oct 2016 17:21:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=U92o2E7Za+E2SoBNRIHrBkxGNmmwss0HOJ7upwc067Q=;
+        b=Y6sqeuubFa93AOUf2FPqM2tUynOVWJvpgdffzuZB4qH+UOQBGrjwBsNtxdyPdvJCT9
+         Jg1+ktdUwwm4R/+gSctTXahHeh7KZRSaoLEAFVDZkBDCo0nUb45SUcnH7/gkyhyp2i7J
+         +iaSwbKB+e5Jaw3H43+loXkvloM8s9SYjqcmgmt6vBS8jhCRQe0awTnUh/mV8nIHmwAq
+         zhQbB1lIeFpZ66GpGZpjG4ubpVx+ta3c9OLUmzmkzvWsxnIaj1hr6Z7Xd3EVyyiFuSMk
+         8qUC1CAthRG3mWfst/6kXC/mrSKoCFw4qHfa5lUw1MpLkWVSjtW/AFQ2YDSJ9CMFGb3B
+         6Xlw==
+X-Gm-Message-State: AA6/9RmxwgUQDG1jUx0K1JAZFwJDAjRUn4AtsDw54d3Jrj+B5bioHGJGksp1YuRzW0Aa+xX5
+X-Received: by 10.66.124.198 with SMTP id mk6mr1715640pab.74.1476145284124;
+        Mon, 10 Oct 2016 17:21:24 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b8ee:61f5:e989:77a7])
-        by smtp.gmail.com with ESMTPSA id o82sm531985pfk.24.2016.10.10.17.21.21
+        by smtp.gmail.com with ESMTPSA id zg12sm540220pab.5.2016.10.10.17.21.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Oct 2016 17:21:21 -0700 (PDT)
+        Mon, 10 Oct 2016 17:21:23 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 00/28] Revamping the attr subsystem!
-Date:   Mon, 10 Oct 2016 17:20:47 -0700
-Message-Id: <20161011002115.23312-1-sbeller@google.com>
+Subject: [PATCH 01/28] commit.c: use strchrnul() to scan for one line
+Date:   Mon, 10 Oct 2016 17:20:48 -0700
+Message-Id: <20161011002115.23312-2-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.382.ga23ca1b.dirty
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20161011002115.23312-1-sbeller@google.com>
+References: <20161011002115.23312-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a series that
-* replaces jc/attr-more. I did merge one fixup! commit at the appropriate place,
-  as well as resolving a minor merge conflict when rebasing to the latest master
-* revamps the API of the attr subsystem, such that it can be made thread safe
-  in a later step easily, because the expected changes are only in attr.c
-  
-I think this is a start to the minimal set of changes such that we can rebase
-sb/pathspec-label and sb/submodule-default-paths on top of these eventually.
+From: Junio C Hamano <gitster@pobox.com>
 
-Thanks,
-Stefan
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ commit.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Junio C Hamano (24):
-  commit.c: use strchrnul() to scan for one line
-  attr.c: use strchrnul() to scan for one line
-  attr.c: update a stale comment on "struct match_attr"
-  attr.c: explain the lack of attr-name syntax check in parse_attr()
-  attr.c: complete a sentence in a comment
-  attr.c: mark where #if DEBUG ends more clearly
-  attr.c: simplify macroexpand_one()
-  attr.c: tighten constness around "git_attr" structure
-  attr.c: plug small leak in parse_attr_line()
-  attr: rename function and struct related to checking attributes
-  attr: (re)introduce git_check_attr() and struct git_attr_check
-  attr: convert git_all_attrs() to use "struct git_attr_check"
-  attr: convert git_check_attrs() callers to use the new API
-  attr: retire git_check_attrs() API
-  attr: add counted string version of git_check_attr()
-  attr: add counted string version of git_attr()
-  attr: expose validity check for attribute names
-  attr.c: add push_stack() helper
-  attr.c: pass struct git_attr_check down the callchain
-  attr.c: rename a local variable check
-  attr.c: correct ugly hack for git_all_attrs()
-  attr.c: introduce empty_attr_check_elems()
-  attr.c: always pass check[] to collect_some_attrs()
-  attr.c: outline the future plans by heavily commenting
-
-Nguyễn Thái Ngọc Duy (1):
-  attr: support quoting pathname patterns in C style
-
-Stefan Beller (3):
-  attr: make git_attr_counted static
-  attr: make git_check_attr_counted static
-  attr: convert to new threadsafe API
-
- Documentation/gitattributes.txt               |   8 +-
- Documentation/technical/api-gitattributes.txt | 114 +++++--
- archive.c                                     |  27 +-
- attr.c                                        | 413 ++++++++++++++++++--------
- attr.h                                        |  69 +++--
- builtin/check-attr.c                          |  59 ++--
- builtin/pack-objects.c                        |  22 +-
- commit.c                                      |   3 +-
- convert.c                                     |  44 ++-
- ll-merge.c                                    |  38 +--
- t/t0003-attributes.sh                         |  26 ++
- userdiff.c                                    |  22 +-
- ws.c                                          |  22 +-
- 13 files changed, 561 insertions(+), 306 deletions(-)
-
+diff --git a/commit.c b/commit.c
+index 856fd4a..41b2fdd 100644
+--- a/commit.c
++++ b/commit.c
+@@ -415,8 +415,7 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
+ 		p++;
+ 	if (*p) {
+ 		p = skip_blank_lines(p + 2);
+-		for (eol = p; *eol && *eol != '\n'; eol++)
+-			; /* do nothing */
++		eol = strchrnul(p, '\n');
+ 	} else
+ 		eol = p;
+ 
 -- 
 2.10.1.382.ga23ca1b.dirty
 
