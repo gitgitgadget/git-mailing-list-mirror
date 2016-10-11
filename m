@@ -6,80 +6,73 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02FAB1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 19:36:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD1C11F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 19:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752247AbcJKTgr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 15:36:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63973 "EHLO
+        id S1752020AbcJKTkg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 15:40:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59272 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752144AbcJKTgr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 15:36:47 -0400
+        with ESMTP id S1751966AbcJKTkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 15:40:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A24A44FCA;
-        Tue, 11 Oct 2016 15:36:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A23A542792;
+        Tue, 11 Oct 2016 15:27:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=cIfQyEWYphv6
-        km3FUqV5LVEjyZo=; b=Fkfwg+h//wqOs1MylkDS6iEfF0RMquCEoD8vqqxKI+3k
-        mLNDWwjKHlMg8JDN84qZF9wMETkCc2NY6Qu2T4x/WkqE+HYPFmoHqHk3pqisLalZ
-        7M5XOcMleMk6Tp4SrNTBqJLaiaTBxk7yNgUWwCJQlaDfa6jRB7cvDjG7w50JrDU=
+        :content-type; s=sasl; bh=beQCOl4TFEVLKtdnPbjrRmGOagY=; b=brbaqO
+        /W3kOuFvg2NUqTb7L/ClHjKXzcIhYSwPhPqb/mvZQm7cgbSY/qAaJnknw/KTzxDO
+        Q/5piBqEehVvC5d4/epXFyW1jfxVWGzqg6jxJf5DeCgs68v6ZrVBlXIay635UX/y
+        Wx3x8kZzTrKMHuZAodgE3RDx7Mjj28uNTFwNo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GgcCHl
-        96V+hMiRRsbiOqGPbZVIvf7QZzaR0RStFSOloLtFrUCthkQjiO+wUaXXsTUHHmJ6
-        DcmxNq0HvPqBAILndTNS3vaRBGEpb39L3uz/+IozElUmu3HnuNJ+QJEHxu7eS+LJ
-        Si6I9U0Rr7WyBsX8zfvp4I9O1EyQuNLCxY4pM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02EA344FC9;
-        Tue, 11 Oct 2016 15:36:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=F8NNnuk/s7sg/DNk857qaJCqbulE6rf4
+        iNcib0/ukG/OsLqpjI5gRYSspSvdqnkTb+mYzM/L5GuXZT3HMKo6cZiJ1AV15GuX
+        tB/90bUP2o1fTqDvrkCe8d+OdTKGT3zwo7T1SaEXo8v6FO6f45y41f9pZgVuDpUV
+        2xDNz5gMWZc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9853A42790;
+        Tue, 11 Oct 2016 15:27:23 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7884644FC7;
-        Tue, 11 Oct 2016 15:36:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 176CD4278F;
+        Tue, 11 Oct 2016 15:27:23 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     Mantas =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org
-Subject: Re: [PATCH] contrib: add credential helper for libsecret
-References: <20161009123417.147239-1-grawity@gmail.com>
-        <1476198080.3876.8.camel@kaarsemaker.net>
-Date:   Tue, 11 Oct 2016 12:36:38 -0700
-In-Reply-To: <1476198080.3876.8.camel@kaarsemaker.net> (Dennis Kaarsemaker's
-        message of "Tue, 11 Oct 2016 17:01:20 +0200")
-Message-ID: <xmqqoa2q8ypl.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 0/2] Support `git reset --stdin`
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
+        <20161011183448.yasglfjelo4kgrq4@sigill.intra.peff.net>
+Date:   Tue, 11 Oct 2016 12:27:21 -0700
+In-Reply-To: <20161011183448.yasglfjelo4kgrq4@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 11 Oct 2016 14:34:49 -0400")
+Message-ID: <xmqqshs28z52.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0842FF08-8FEA-11E6-8D35-F99D12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: BC066450-8FE8-11E6-B3B4-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Sun, 2016-10-09 at 15:34 +0300, Mantas Mikul=C4=97nas wrote:
+> Is git-reset the right layer to add scripting features? I thought we
+> usually pushed people doing mass index manipulation to use update-index
+> or read-tree. Is there something that reset makes easy that is hard with
+> those tools (I could imagine "--hard", but I see it is not supported
+> with your patch).
 >
->> +		s =3D g_hash_table_lookup(attributes, "user");
->> +		if (s) {
->> +			g_free(c->username);
->> +			c->username =3D g_strdup(s);
->> +		}
->
-> This always overwrites c->username, the original gnome-keyring version
-> only does that when the username isn't set. Other than that it looks
-> good to me.
->
-> Reviewed-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> Tested-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+> Not that I'm necessarily opposed to the patch, I was just surprised.
 
-Thanks for a review.  I'll wait until one of (1) a squashable patch
-to address the "we do not want unconditional overwrite" issue, (2) a
-reroll from Mantas to do the same, or (3) a counter-argument from
-somebody to explain why unconditional overwrite is a good idea here
-(but not in the original) appears.
+If read-tree had pathspec support (i.e. "read these and only these
+paths given from the command line into the index from a given
+tree-ish"), that would have been the most natural place to extend
+with "oh, by the way, instead of the command line, you can feed the
+paths on the standard input".  
 
+But it doesn't have one.
 
