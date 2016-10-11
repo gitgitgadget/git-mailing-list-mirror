@@ -2,113 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93ADC1F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 17:56:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55FCB1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 17:58:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753223AbcJKRzx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 13:55:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63518 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751226AbcJKRx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 13:53:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A01C143D2C;
-        Tue, 11 Oct 2016 13:53:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yvmm4tpEnXLo6hH1IlzwEAqhiqA=; b=H63N6B
-        80T6MU8zZh9LrrOCwyePJVXSmgQrGFhB8YeuL4wlbZLv424zS4c4e0M89+eU4wQu
-        6TErj9p8Ws/NIlo2x6oW0WO4/JmBIayxMcJtfWQUfd80Fb3c0Q+CrLvEqLiJJhlh
-        Cs85hiB/LICRNzKCzMW3Odq1LoYuDnDyTx4GE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kqAVHnnCsYRLRxTdGHEfbNKVhW3690vL
-        Jp4pPC4nZRNlxYUGpYG4YORVQNuyCH+8PZCfdsNEExL7leptX1IaJ9OpS9JqzE4b
-        UC8aXjT3iUR5m+hfr9sb4MMUI68vlRQorPJGZlBZ+FZymUo6grnbcfUA+VjcfNiB
-        SLDCulk/qeo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98CB243D2B;
-        Tue, 11 Oct 2016 13:53:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14F2943D2A;
-        Tue, 11 Oct 2016 13:53:55 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] reset: support the --stdin option
-References: <cover.1476202100.git.johannes.schindelin@gmx.de>
-        <2c7a52e43be710c7f37c4886629bda38df183c21.1476202100.git.johannes.schindelin@gmx.de>
-Date:   Tue, 11 Oct 2016 10:53:52 -0700
-In-Reply-To: <2c7a52e43be710c7f37c4886629bda38df183c21.1476202100.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 11 Oct 2016 18:09:11 +0200
-        (CEST)")
-Message-ID: <xmqqeg3mai1b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752992AbcJKR5b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 13:57:31 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:34691 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753225AbcJKR4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 13:56:19 -0400
+Received: by mail-qk0-f173.google.com with SMTP id f128so1937514qkb.1
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 10:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=58hC82e6qv14d5c89MuW3+DuEA2o3Pljwgxmqa2aUSA=;
+        b=PoWU/Gx2nynEtKARVTs+Z+yzFjDZ6N5I785+gcnwgp2EkKr6K44tOSb/HGgBSq0c6b
+         HheReVEBm4qMXw8hQYs/shJGjCvdHg1oCtPdmsGjh9l18HkIH5Y9ydGuZ399Ps0l4pvq
+         /6kmWo8USdYa5Mm6+cdSKzKbWXVW1RvfXsofQg9gtwpEXZazSTfKNlKDH0dGy4XxC3jS
+         Y9XdpnJTyxj43L+HHWzJ8oHY8/Inm+VglLoG1d8VuNdj5lSqYQ6TI11oQs85tAw92gNU
+         ua/JmnzOvqG1pj0n3wWyowrRObu3sivirt9Zw/yID+8dFhOWPbkr7TGxHF8CZQZbn8mk
+         AI3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=58hC82e6qv14d5c89MuW3+DuEA2o3Pljwgxmqa2aUSA=;
+        b=ktaugkRWQwTpBsh4SDQfWQpa0CA5mns4ZbLmWuVRH8dYDohPrrQalf7kvwdS2vMTlD
+         FR6Ti/jVKvzWWhK3tYyqMLOvuKzPtSCJkgRna2V/soo+C3xFV7z0x5t5r26q8dHqbNqn
+         zOT9pnpQTLpXN39THw4NLg5h4oiaM/EFhBqEDpiY4qFGbpdS0vJukJfwWZernKJqcDYL
+         mlRNgBSED9UYdrnvIPSG3vNN7/IsGPs1yxLGfzMhM6E4F2LHku8iXbxDLz+p+eC7fIi/
+         lvcu5lBr9qMa2b4GAR5+toEhOcgpy7J1iQmhzJGvTwaL2XvBmZgEVSLPKafFgE9r4jAq
+         lI0g==
+X-Gm-Message-State: AA6/9RmoEF5DVmJilLTedoTKWJzwBYWDkGCmUEFPMOCGGU0LO6sMzJKPNxwOGc3eV/VV1LuF+h66UNLNaeAkBr8T
+X-Received: by 10.55.64.80 with SMTP id n77mr5065678qka.173.1476208577849;
+ Tue, 11 Oct 2016 10:56:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD63C85A-8FDB-11E6-9BEA-F99D12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 10:56:17 -0700 (PDT)
+In-Reply-To: <xmqqmviaaina.fsf@gitster.mtv.corp.google.com>
+References: <20161011002115.23312-1-sbeller@google.com> <20161011002115.23312-29-sbeller@google.com>
+ <xmqqmviaaina.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Oct 2016 10:56:17 -0700
+Message-ID: <CAGZ79kaQKDdJfMOjDKEK_dZJhgj+R7rByQS++B3OOBy6uO1x2w@mail.gmail.com>
+Subject: Re: [PATCH 28/28] attr: convert to new threadsafe API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Tue, Oct 11, 2016 at 10:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> This revamps the API of the attr subsystem to be thread safe.
+>> Before we had the question and its results in one struct type.
+>> The typical usage of the API was
+>>
+>>     static struct git_attr_check;
+>
+> I think you meant "*check" at the end, perhaps?
+>
+>>
+>>     if (!check)
+>>         check = git_attr_check_initl("text", NULL);
+>>
+>>     git_check_attr(path, check);
+>>     act_on(check->value[0]);
+>>
+>> * While the check for attributes to be questioned only need to
+>>   be initalized once as that part will be read only after its
+>>   initialisation, the answer may be different for each path.
+>>   Because of that we need to decouple the check and the answer,
+>>   such that each thread can obtain an answer for the path it
+>>   is currently processing.
+>
+> Yes, it is good to separate questions and answers.  I think answers
+> should be owned by the caller, though.  I do not think of a good
+> reason why you want to make it impossible to do something like this:
+>
+>         struct git_attr_check_result *result_1 = ...allocate...;
+>         struct git_attr_check_result *result_2 = ...allocate...;
+>
+>         loop {
+>                 struct strbuf path = next_path();
+>                 git_check_attr(result_1, path.buf, check_1);
+>                 if (strbuf_strip_suffix(&path, ".c")) {
+>                         strbuf_addstr(&path, ".h");
+>                         git_check_attr(result_2, path.buf, check_2);
+>                         do something using result_1[] and result_2[];
+>                 } else {
+>                         do something using result_1[];
+>                 }
+>         }
+>
+> Do we already have a design of the "result" thing that is concrete
+> enough to require us to declare that the result is owned by the
+> implementation and asking another question has to destroy the answer
+> to the previous question?  Otherwise, I'd rather not to see us make
+> the API unnecessarily hard to use.  While I do want us to avoid
+> overengineering for excessive flexibility, I somehow feel "you
+> cannot control the lifetime of the result, it is owned by the
+> subsystem" falls the other side of the line.
 
-> +	if (read_from_stdin) {
-> +		strbuf_getline_fn getline_fn = nul_term_line ?
-> +			strbuf_getline_nul : strbuf_getline_lf;
-> +		int flags = PATHSPEC_PREFER_FULL |
-> +			PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP;
-> +		struct strbuf buf = STRBUF_INIT;
-> +		struct strbuf unquoted = STRBUF_INIT;
-> +
-> +		if (patch_mode)
-> +			die(_("--stdin is incompatible with --patch"));
-> +
-> +		if (pathspec.nr)
-> +			die(_("--stdin is incompatible with path arguments"));
-> +
-> +		if (patch_mode)
-> +			flags |= PATHSPEC_PREFIX_ORIGIN;
+True, we had that issue for other APIs (IIRC path related things,
+with 4 static buffers that round robin). I did not like that design decision,
+but I felt it was okay, as the above did not occur to me.
 
-Didn't we already die above under that mode?
+In the case above, we could just copy the result_1->values and
+then re-use the result_1, but I agree that this may be somewhat error prone
+if you're not familiar with the decisions in this series.
 
-> +		while (getline_fn(&buf, stdin) != EOF) {
-> +			if (!nul_term_line && buf.buf[0] == '"') {
-> +				strbuf_reset(&unquoted);
-> +				if (unquote_c_style(&unquoted, buf.buf, NULL))
-> +					die(_("line is badly quoted"));
-> +				strbuf_swap(&buf, &unquoted);
-> +			}
-> +			ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
-> +			stdin_paths[stdin_nr++] = xstrdup(buf.buf);
-> +			strbuf_reset(&buf);
-> +		}
-> +		strbuf_release(&unquoted);
-> +		strbuf_release(&buf);
-> +
-> +		ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
-> +		stdin_paths[stdin_nr++] = NULL;
+So in case of the caller owning the result, we could pull the static
+trick for now
+and only use a different approach when we use it in actual threaded code, i.e.
+the code in convert.c could become:
 
-It makes sense to collect, but...
+    static struct git_attr_check *check;
+    static struct git_attr_result *result;
 
-> +		parse_pathspec(&pathspec, 0, flags, prefix,
-> +			       (const char **)stdin_paths);
+    if (!check) {
+        check = git_attr_check_initl("crlf", "ident",
+            "filter", "eol", "text", NULL);
+        result = git_attr_result_alloc(5);
+        user_convert_tail = &user_convert;
+        git_config(read_convert_config, NULL);
+    }
 
-...letting them be used as if they are pathspec is wrong when
-stdin_paths[] contain wildcard, isn't it?  
+    if (!git_check_attr(path, check, result)) {
+        ...
 
-I think flags |= PATHSPEC_LITERAL_PATH can help fixing it.  0/2 said
-this mimicks checkout-index and I think it should by not treating
-the input as wildcarded patterns (i.e. "echo '*.c' | reset --stdin"
-shouldn't be the way to reset all .c files --- that's something we
-would want to add to the test, I guess).
+>> +  empty `struct git_attr_check` as alloced by git_attr_check_alloc()
+>
+> "allocated", not "alloced".
 
-Thanks.
+ok.
 
+>
+>> +  can be prepared by calling `git_attr_check_alloc()` function and
+>> +  then attributes you want to ask about can be added to it with
+>> +  `git_attr_check_append()` function.
+>> +  git_attr_check_initl is thread safe, i.e. you can call it
+>
+> Spell it `git_attr_check_initl()` for consistency.
+
+ok.
+
+>
+>> +  from different threads at the same time; internally however only one
+>> +  call at a time is processed. If the calls from different threads have
+>> +  the same arguments, the returned `git_attr_check` may be the same.
+>
+> I find this description a bit confusing.  At least the way I
+> envisioned was that when this piece of code is run by multiple
+> people at the same time,
+>
+>         static struct git_attr_check *check = NULL;
+>         git_attr_check_initl(&check, ...);
+>
+> we won't waste the "check" by allocated by the first one by
+> overwriting it with another one allocated by the second one.  So
+> "the same arguments" does not come into the picture.  A single
+> variable is either
+>
+>  * already allocated and initialised by the an earlier call to
+>    initl() by somebody else, or
+>
+>  * originally NULL when you call initl(), and the implementation
+>    makes sure that other people wait while you allocate, initialise
+>    and assign it to the variable, or
+>
+>  * originally NULL when you call initl(), but the implementation
+>    notices that somebody else is doing the second bullet point
+>    above, and you wait until that somebody else finishes and then
+>    you return without doing anything (because by that time, "check"
+>    is filled by that other party doing the second bullet point
+>    above).
+>
+> There is no need to check for "the same arguments".
+>
+
+I see. So we assume that there are no different arguments at the same time,
+i.e. all threads run the same code when it comes to attrs.
+
+Brandon wrote:
+> On 10/10, Stefan Beller wrote:
+>>   be initalized once as that part will be read only after its
+>>       initialized
+>>   initialisation, the answer may be different for each path.
+> should this be the US spelling 'initialization'?
+
+Yes, we'd want to be consistent, indeed. Sometimes the British spelling
+slips through as that's what I learned in high school.
+
+Specifically for initialise:
+
+$ git grep initialise
+contrib/examples/git-notes.sh:                  die "Will not
+initialise with empty tree"
+object.h: * it can return "yes we have, and here is a half-initialised object"
+object.h: * half-initialised objects, the caller is expected to initialize them
+revision.c:static struct treesame_state *initialise_treesame(struct
+rev_info *revs, struct commit *commit)
+revision.c:                             ts = initialise_treesame(revs, commit);
++ a lot of french translations.
+
+The American spelling is found a lot more.
+
+Thanks,
+Stefan
