@@ -7,72 +7,231 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 681741F4F8
-	for <e@80x24.org>; Tue, 11 Oct 2016 16:16:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 300BA1F4F8
+	for <e@80x24.org>; Tue, 11 Oct 2016 16:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753566AbcJKQQZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 12:16:25 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59721 "EHLO mout.gmx.net"
+        id S1753768AbcJKQTG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 12:19:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56667 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753492AbcJKQQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 12:16:24 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MJjOu-1bst9L2DG0-001DJt; Tue, 11 Oct 2016 18:09:00
+        id S1752037AbcJKQTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 12:19:01 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MTkNU-1bThKA1bii-00QPmh; Tue, 11 Oct 2016 18:09:26
  +0200
-Date:   Tue, 11 Oct 2016 18:08:56 +0200 (CEST)
+Date:   Tue, 11 Oct 2016 18:09:11 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] Support `git reset --stdin`
-Message-ID: <cover.1476202100.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 2/2] reset: support the --stdin option
+In-Reply-To: <cover.1476202100.git.johannes.schindelin@gmx.de>
+Message-ID: <2c7a52e43be710c7f37c4886629bda38df183c21.1476202100.git.johannes.schindelin@gmx.de>
+References: <cover.1476202100.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bmwXZtKGWySM3v6WOh9r6FK2jdVeUA6YUrXhpFyWBA1VOK3Lm7y
- XmYXZ0Yk4YHCQHNY0XWhLM1i0YV5NEiIfRatndYGs4bQRAporEqit97EYt9Y5WDRoLPmZDv
- igUny3zdTfNpseesOXr+cDlc7FqlYN4eYyHqXt4Aza3BLqIt3XhqWrEuWfC7V7hIdduDLlv
- ZFLZtaNUZ6t0Yllxxa44g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JwMXkO2Cgl0=:Py8BlpAGpzJ9dzhJ9Y2bJP
- 6vmPdUCz6dOiUX2C4ohpua6gEmepO73OUHt6Lt1YP/OUnlcwsPQUDNqFlD2qbcjmCe+F3CSSK
- Kf+a9ZcDHi1X+mNi3nW5UtFsmaca8M4QkqrejrlCUidNpL1keQgHn0MIWB7Caz/AQD5pLwCf3
- H7DJouw0OpMnTCu/M8ud9LaOf8OjjVtYh2TCkEH6KuvaLvM7kRh95Am3tWgpGC2NNJkSbdIsn
- 3OksYujNLWBOB09rRyv1ifKacT12fsKjbjjug/2oyPoiocwEcJCN/iv5PXHKNoOss1SwUTv2z
- HiEoEG0t27nNeGKdKMKunDH+b4E8HBqwYI1w/kkZ6p7jsJIPsuHHLvTLSBHjrPsmIl73nX3tP
- G2AE3gMj+ehxwUp3sNbYjOa5SXMbuzQEVodXBFYkfCAzJUId7k07A2ZTM/qSx2eWQZxTcLr8e
- tUjGDGXtpIMRcp08eKm2l71X6UyqrYDvPSYHmAMdwtFxmffd5zZM2SzUdUke1wzdEEP+5/3PV
- +KMSzptXjQfCbO9F82exKtTuHLkgbAqWcNo/WEeyUHlQvnETTdt5gLRRKgDn/XhOXitQvGc0+
- oWJJ4aYeTTflDtwYlHqWwkxALbE+pGaUmOHc+UiRy/SHNdTOizclnfsFL/boQdaI0aZ53oVX2
- iK98dLZwuSXqKzkdWRXJ+zZknqpG8MYnJNXqG8BlnZ4Mr+6SaDttcunzGom1/hAmkRWdLnV7K
- mpEHPAx5F4YyBOTw6amlgikyVNa7/l7BOw53InsRwFfzqTP0syOfw7TEHmW9tb8vOy1sHmvS6
- 73MOYEn
+X-Provags-ID: V03:K0:T+Sg4qg3FF/jTYi+jXer9kl0VIWnTEl20wTlMn1ISYeNYZh95F7
+ PQ3T3sq6jsShVgoX2klmkN1RwWAmvakZxunzY9O7nG7B6yw6BJoRxL3tYvsxv5oj344INuV
+ lHrbXbnZC+bR5hCBVMk074P3IfslmZr4MTEV7bNtLNUETu+ucegcHiJMORtMmhm7T88gB6S
+ 89eiBhffPe/Gn+q30pOeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fuUtxr8Aajk=:AmhXdji9pM+nBLofybb54S
+ l1DETHsSVck4IwVVfzR88Rr9oTK1oLjBJItQaky38WWHoQdOKmPZTSO7in63qwvdfKywh2N4T
+ EZ9vAgsLbGv9ltgEEVmQJSz1IRKlc7Y4kRoGVUyqFST0+etlve9oyBluI4+VdXc71QklyrkXo
+ nwAAdEt/RIguY/G/cEvBbjRPNLJx2a9A3bOy1jb2k/QURfOde9e6TaK1YzzWMN8zodtewsPZ6
+ lG1JnnxMv3p9oR4h9VLm2pc6xHfv2sMbr5rxI5DaKyf2bfARp0WdZoEr0Uyl4rgtIBkIdq7L/
+ /01xmGpmykETVVto30XwkdgCtsxqXD562yKSc05lLpd9/vmRJKZbFXG9SSxx/dTuMRv92kRGO
+ 6LMMiVC0qlevDxWYT3nES2m1mn7bZz327z+cLIAyPVnvGwQfP0Iv3qsF70m4ohgZMbcQvlA9d
+ ts5RD1r3sPKEzxCf60Hwk4yE+1BQHqXaNcEdUuuNo/vSvmULEoFrbi+nYrRK8qRtFsbzI5OFo
+ aTQ9SBSRvEbkNzr+7w0NJR8+rXsYecHe08zpNmuwn1EQ2KkUmPACCyPIa7S9UZB+XDQiYN5Eh
+ YO7ATLQLGCI29UmYZmeUH3loRmzgotubQsKIpLmAYUBRJbUKh14vwnOCy7vEl/QTWBGPnxDD/
+ zWS6/Qn9CSJvOupD9J7jUrsXcirIhS9kks1Ua1hEkUJN5rVt0tL4AyeHZY6yIUNnrlo7YEs0Z
+ Wb9QEBPvS6trGTZbGzPj/dUdXnoZkeH+ep+a1WJRWUxK9VybLnJsS2KRUgQxUPE3LCilOfngd
+ vPP90i9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This feature was missing, and made it cumbersome for third-party
-tools to reset a lot of paths in one go.
+Just like with other Git commands, this option makes it read the paths
+from the standard input. It comes in handy when resetting many, many
+paths at once and wildcards are not an option (e.g. when the paths are
+generated by a tool).
 
-Support for --stdin has been added, following builtin/checkout-index.c's
-example.
+Note: to keep things simple, we first parse the entire list and perform
+the actual reset action only in a second phase.
 
-
-Johannes Schindelin (2):
-  reset: fix usage
-  reset: support the --stdin option
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  Documentation/git-reset.txt | 10 +++++++-
  builtin/reset.c             | 56 +++++++++++++++++++++++++++++++++++++++++++--
  t/t7107-reset-stdin.sh      | 33 ++++++++++++++++++++++++++
  3 files changed, 96 insertions(+), 3 deletions(-)
  create mode 100755 t/t7107-reset-stdin.sh
 
-
-base-commit: 8a36cd87b7c85a651ab388d403629865ffa3ba0d
-Published-As: https://github.com/dscho/git/releases/tag/reset-stdin-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git reset-stdin-v1
-
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 25432d9..533ef69 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -8,7 +8,7 @@ git-reset - Reset current HEAD to the specified state
+ SYNOPSIS
+ --------
+ [verse]
+-'git reset' [-q] [<tree-ish>] [--] <paths>...
++'git reset' [-q] [--stdin [-z]] [<tree-ish>] [--] <paths>...
+ 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
+ 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+ 
+@@ -97,6 +97,14 @@ OPTIONS
+ --quiet::
+ 	Be quiet, only report errors.
+ 
++--stdin::
++	Instead of taking list of paths from the command line,
++	read list of paths from the standard input.  Paths are
++	separated by LF (i.e. one path per line) by default.
++
++-z::
++	Only meaningful with `--stdin`; paths are separated with
++	NUL character instead of LF.
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin/reset.c b/builtin/reset.c
+index c04ac07..018735f 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -21,10 +21,12 @@
+ #include "parse-options.h"
+ #include "unpack-trees.h"
+ #include "cache-tree.h"
++#include "strbuf.h"
++#include "quote.h"
+ 
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+-	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
++	N_("git reset [-q] [--stdin [-z]] [<tree-ish>] [--] <paths>..."),
+ 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
+ 	NULL
+ };
+@@ -267,7 +269,9 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
+-	int patch_mode = 0, unborn;
++	int patch_mode = 0, nul_term_line = 0, read_from_stdin = 0, unborn;
++	char **stdin_paths = NULL;
++	int stdin_nr = 0, stdin_alloc = 0;
+ 	const char *rev;
+ 	struct object_id oid;
+ 	struct pathspec pathspec;
+@@ -286,6 +290,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
+ 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
+ 				N_("record only the fact that removed paths will be added later")),
++		OPT_BOOL('z', NULL, &nul_term_line,
++			N_("paths are separated with NUL character")),
++		OPT_BOOL(0, "stdin", &read_from_stdin,
++				N_("read paths from <stdin>")),
+ 		OPT_END()
+ 	};
+ 
+@@ -295,6 +303,44 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 						PARSE_OPT_KEEP_DASHDASH);
+ 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+ 
++	if (read_from_stdin) {
++		strbuf_getline_fn getline_fn = nul_term_line ?
++			strbuf_getline_nul : strbuf_getline_lf;
++		int flags = PATHSPEC_PREFER_FULL |
++			PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP;
++		struct strbuf buf = STRBUF_INIT;
++		struct strbuf unquoted = STRBUF_INIT;
++
++		if (patch_mode)
++			die(_("--stdin is incompatible with --patch"));
++
++		if (pathspec.nr)
++			die(_("--stdin is incompatible with path arguments"));
++
++		if (patch_mode)
++			flags |= PATHSPEC_PREFIX_ORIGIN;
++
++		while (getline_fn(&buf, stdin) != EOF) {
++			if (!nul_term_line && buf.buf[0] == '"') {
++				strbuf_reset(&unquoted);
++				if (unquote_c_style(&unquoted, buf.buf, NULL))
++					die(_("line is badly quoted"));
++				strbuf_swap(&buf, &unquoted);
++			}
++			ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
++			stdin_paths[stdin_nr++] = xstrdup(buf.buf);
++			strbuf_reset(&buf);
++		}
++		strbuf_release(&unquoted);
++		strbuf_release(&buf);
++
++		ALLOC_GROW(stdin_paths, stdin_nr + 1, stdin_alloc);
++		stdin_paths[stdin_nr++] = NULL;
++		parse_pathspec(&pathspec, 0, flags, prefix,
++			       (const char **)stdin_paths);
++	} else if (nul_term_line)
++		die(_("-z requires --stdin"));
++
+ 	unborn = !strcmp(rev, "HEAD") && get_sha1("HEAD", oid.hash);
+ 	if (unborn) {
+ 		/* reset on unborn branch: treat as reset to empty tree */
+@@ -385,5 +431,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (!pathspec.nr)
+ 		remove_branch_state();
+ 
++	if (stdin_paths) {
++		while (stdin_nr)
++			free(stdin_paths[--stdin_nr]);
++		free(stdin_paths);
++	}
++
+ 	return update_ref_status;
+ }
+diff --git a/t/t7107-reset-stdin.sh b/t/t7107-reset-stdin.sh
+new file mode 100755
+index 0000000..997dc42
+--- /dev/null
++++ b/t/t7107-reset-stdin.sh
+@@ -0,0 +1,33 @@
++#!/bin/sh
++
++test_description='reset --stdin'
++
++. ./test-lib.sh
++
++test_expect_success 'reset --stdin' '
++	test_commit hello &&
++	git rm hello.t &&
++	test -z "$(git ls-files hello.t)" &&
++	echo hello.t | git reset --stdin &&
++	test hello.t = "$(git ls-files hello.t)"
++'
++
++test_expect_success 'reset --stdin -z' '
++	test_commit world &&
++	git rm hello.t world.t &&
++	test -z "$(git ls-files hello.t world.t)" &&
++	printf world.tQworld.tQhello.tQ | q_to_nul | git reset --stdin -z &&
++	printf "hello.t\nworld.t\n" >expect &&
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--stdin requires --mixed' '
++	echo hello.t >list &&
++	test_must_fail git reset --soft --stdin <list &&
++	test_must_fail git reset --hard --stdin <list &&
++	git reset --mixed --stdin <list
++'
++
++test_done
++
 -- 
 2.10.1.513.g00ef6dd
-
