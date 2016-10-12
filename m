@@ -2,154 +2,245 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FFF3207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 18:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4FEC207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 18:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933300AbcJLSBV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 14:01:21 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:36382 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755266AbcJLSBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 14:01:11 -0400
-Received: by mail-qk0-f182.google.com with SMTP id o68so91498535qkf.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 11:01:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gforgegroup-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NoIwhW4G3CGtvWqvxjyhJ0y1956wBJnDie/yqltRBO4=;
-        b=YIfCngoG6KW1W8Af//WHjSLCJuLW2v3d8gOVglR3hjJDm+9OzDZGL04BoIcTUiBHgi
-         EGC/dvQOy41broQcsRyGZAvjUaQiH9xP5inQ0oQbxv6bkfMMKbyF36ocuR0d+g4dgV6+
-         KYxy6TBWpx9ULyPGrCwceAasta6/XDaLsTWwCTrfu63pnSnRtwR5KeEKRGB5+YZolOZg
-         fYZ6UUEaBFsAsnhkgP2KLNijGPWCfdceOQwP8p3aYcBW4deWZHJ6/SH4Pywa9adRCLOa
-         tTIUewRLj3hlYkVNr3axvVIo7yPAcEBN7NW2LAz+5XE3KJFz1EBaRwJyyI/y3bdfb7VS
-         bueg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NoIwhW4G3CGtvWqvxjyhJ0y1956wBJnDie/yqltRBO4=;
-        b=meebwrS4imTg+1L4OlsmvF/X9zoCGq8cM8Pm+R1JymHL8dea3hN1xFmcZ908ZIp3Jx
-         nchmUI/ms7CS/+ON10RQxHB3eYr290c8FP49IzPC6EOrx2XTVHJ/pdKfExYF3CSSEl9H
-         jJJ9jJAsUPKSIeeiui/e3BiZH9oVG91dkZizXiRJmHBRkGfVOPPp3GgiFnhrQGkKz84S
-         mO/EXKUKOpf8uGW7Beq5OP5t9mnCNKTWE3eBKB4RXeVPqiIrtC8sqhZA7cxWJ4VH04tn
-         IQHfzJWS6JDHe5InjlREYZWj7y4i7F/GF50RzQ8naIgjs1ky7NMn/pz0UTP9rEX1pEdw
-         +j3w==
-X-Gm-Message-State: AA6/9Rkom6rOqVaioPgL23r7R/hnBn946tSc73/3/UfGd408DUYludICnQrDKgDMXClZ2Em0vIZgwFlIIyB9y/MM
-X-Received: by 10.55.26.87 with SMTP id a84mr2185422qka.187.1476293756840;
- Wed, 12 Oct 2016 10:35:56 -0700 (PDT)
+        id S933595AbcJLSFA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 14:05:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60493 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933417AbcJLSEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 14:04:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11DF544179;
+        Wed, 12 Oct 2016 13:59:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0ihTBW6utYlrdoMlxCjVplZkYrY=; b=E4aJHr
+        C7+i0EqJtmA8FnS5d2Cp5lZvm1Z0ylhKM0mRclQVT8/AO8VQUBgBWBo9vCgrnbIc
+        CoMuZxiCJ0cWBok+G9i59p2GS3fs+JtG5MvyxzJ15ozZzawU/mm35C/rDHZXyciP
+        GFZyNSlm/PyAZcY2XRgzGrkjc0hfyfdXPaRqs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=keq3OWw/H3S55I3/DKII2ITNpaNBNtgo
+        1TsL5CKWEd0o0W/Cw3+Z6M83COdPyonl7fifnPyCq19FpawkW1ZvsS5Ybc+2Gxkd
+        lfZwFAuo0PM3xPkQss23dDPvtfhAYpQmnWWeRfrtkAJmgKJLQyPmo/iQ17VE0YIc
+        +wx8sPHxnyE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 080F444178;
+        Wed, 12 Oct 2016 13:59:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6961044175;
+        Wed, 12 Oct 2016 13:59:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     git@vger.kernel.org, Josef Ridky <jridky@redhat.com>
+Subject: Re: [PATCH v2 2/2] Feature Request: user defined suffix for temp files created by git-mergetool
+References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
+        <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
+        <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
+        <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
+        <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
+        <255814448.2197583.1475759366093.JavaMail.zimbra@redhat.com>
+        <xmqq7f9lmmol.fsf@gitster.mtv.corp.google.com>
+        <1550673688.5271111.1476260677732.JavaMail.zimbra@redhat.com>
+Date:   Wed, 12 Oct 2016 10:59:46 -0700
+In-Reply-To: <1550673688.5271111.1476260677732.JavaMail.zimbra@redhat.com>
+        (Josef Ridky's message of "Wed, 12 Oct 2016 04:24:37 -0400 (EDT)")
+Message-ID: <xmqqpon54fe5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.164.69 with HTTP; Wed, 12 Oct 2016 10:35:56 -0700 (PDT)
-In-Reply-To: <20161012164104.zcxpcwqrp5h65qmc@hurricane>
-References: <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
- <20161012164104.zcxpcwqrp5h65qmc@hurricane>
-From:   Michael Tutty <mtutty@gforgegroup.com>
-Date:   Wed, 12 Oct 2016 12:35:56 -0500
-Message-ID: <CAOi_75JKPuOhL4BqE8nYkCAN9-wzDkD65TUvN6YDJWkB6HqSAA@mail.gmail.com>
-Subject: Re: [PATCH] worktree: allow the main brach of a bare repository to be
- checked out
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Michael Rappazzo <rappazzo@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA6A252A-90A5-11E6-9588-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have tested this successfully with git 2.10.1 built from source
-(failing), then patched as above (passing).
-Thanks!
-     M.
+Josef Ridky <jridky@redhat.com> writes:
 
-
-On Wed, Oct 12, 2016 at 11:41 AM, Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
-> In bare repositories, get_worktrees() still returns the main repository,
-> so git worktree list can show it. ignore it in find_shared_symref so we
-> can still check out the main branch.
+> This is update of the second variant for request to add option to change
+> suffix of name of temporary files generated by git mergetool. This
+> change is requested for cases, when is git mergetool used for local
+> comparison between two version of same package during package rebase.
 >
-> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+> Signed-off-by: Josef Ridky <jridky@redhat.com>
 > ---
->  t/t2025-worktree-add.sh | 8 ++++++++
->  worktree.c              | 2 ++
->  2 files changed, 10 insertions(+)
+
+David, what do you think?
+
+I don't think you were ever CC'ed on any of the messages in
+this thread, and I don't think you've commented on the topic.  The
+thread begins here:
+
+  https://public-inbox.org/git/1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com/
+
+
+In any case, I suggest update to the log message to something like
+this:
+
+    Subject: mergetool: allow custom naming for temporary files
+
+    A front-end program that is spawned by "git mergetool" is given
+    three temporary files (e.g. it may get "x_LOCAL.txt",
+    "x_REMOTE.txt", and "x_BASE.txt" while merging "x.txt").  
+
+    Custom wrappers to "git mergetool" benefits if they are allowed
+    to rename these hardcoded suffixes to match the workflow they
+    implement.  For example, they may be used to compare and merge
+    two versions that is available locally, and OLD/NEW may be more
+    appropriate than LOCAL/REMOTE in such a context.
+
+primarily because "the second variant" is meaningless thing to say
+in our long term history, when the first variant never was recorded
+there.  Josef may want to elaborate more on the latter paragraph.
+
+>  Documentation/git-mergetool.txt | 22 ++++++++++++++-
+>  git-mergetool.sh                | 60 +++++++++++++++++++++++++++++++++++++----
+>  2 files changed, 76 insertions(+), 6 deletions(-)
 >
-> On Sun, 2016-10-09 at 17:52 +0700, Duy Nguyen wrote:
->> On Sun, Oct 9, 2016 at 2:51 PM, Dennis Kaarsemaker > <dennis@kaarsemaker.net> wrote:
->> > On Sat, 2016-10-08 at 19:30 -0500, Michael Tutty wrote:
->> > >
->> > > The only exception seems to be merging to master. When I do git
->> > > worktree add /tmp/path/to/worktree master I get an error:
->> > >
->> > > [fatal: 'master' is already checked out at '/path/to/bare/repo']
->> > >
->> >
->> > The worktree code treats the base repo as a worktree, even if it's
->> > bare. For the purpose of being able to do a checkout of the main branch
->> > of a bare repo, this patch should do:
->> >
->> --snip--
->>
->> You're fast :) I'm still studying  8d9fdd7 (worktree.c: check whether
->> branch is rebased in another worktree - 2016-04-22). But yeah that
->> should fix it.
->
-> OK, so here it is as a proper patch.
->
-> D.
->
-> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> index 4bcc335..2996c38 100755
-> --- a/t/t2025-worktree-add.sh
-> +++ b/t/t2025-worktree-add.sh
-> @@ -138,6 +138,14 @@ test_expect_success 'checkout from a bare repo without "add"' '
->         )
->  '
->
-> ++test_expect_success '"add" default branch of a bare repo' '
-> +       (
-> +               git clone --bare . bare2 &&
-> +               cd bare2 &&
-> +               git worktree add ../there3 master
-> +       )
-> +'
+> diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+> index e846c2e..a0466ac 100644
+> --- a/Documentation/git-mergetool.txt
+> +++ b/Documentation/git-mergetool.txt
+> @@ -8,7 +8,7 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
+> +'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -79,6 +79,26 @@ success of the resolution after the custom tool has exited.
+>  	Prompt before each invocation of the merge resolution program
+>  	to give the user a chance to skip the path.
+>  
+> +--local=<name>::
+> +	Use string from <name> as part of suffix of name of temporary
+> +	file (local) for merging. If not set, default value is used.
+> +	Default suffix is LOCAL.
 > +
->  test_expect_success 'checkout with grafts' '
->         test_when_finished rm .git/info/grafts &&
->         test_commit abc &&
-> diff --git a/worktree.c b/worktree.c
-> index 5acfe4c..35e95b7 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -345,6 +345,8 @@ const struct worktree *find_shared_symref(const char *symref,
->
->         for (i = 0; worktrees[i]; i++) {
->                 struct worktree *wt = worktrees[i];
-> +               if(wt->is_bare)
-> +                       continue;
->
->                 if (wt->is_detached && !strcmp(symref, "HEAD")) {
->                         if (is_worktree_being_rebased(wt, target)) {
-> --
-> 2.10.1-356-g947a599
->
->
-> --
-> Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> http://twitter.com/seveas
-
-
-
--- 
-Michael Tutty, CTO
-
-e: mtutty@gforgegroup.com
-t: @mtutty, @gforgegroup
-v: 515-789-0772
-w: http://gforgegroup.com, http://gforge.com
+> +--remote=<name>::
+> +	Use string from <name> as part of suffix of name of temporary
+> +	file (remote) for merging. If not set, default value is used.
+> +	Default suffix is REMOTE.
+> +
+> +--backup=<name>::
+> +	Use string from <name> as part of suffix of name of temporary
+> +	file (backup) for merging. If not set, default value is used.
+> +	Default suffix is BACKUP.
+> +
+> +--base=<name>::
+> +	Use string from <name> as part of suffix of name of temporary
+> +	file (base) for merging. If not set, default value is used.
+> +	Default suffix is BASE.
+> +
+>  TEMPORARY FILES
+>  ---------------
+>  `git mergetool` creates `*.orig` backup files while resolving merges.
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index bf86270..ed9ba82 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -8,7 +8,7 @@
+>  # at the discretion of Junio C Hamano.
+>  #
+>  
+> -USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
+> +USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [--local=name] [--remote=name] [--backup=name] [--base=name] [file to merge] ...'
+>  SUBDIRECTORY_OK=Yes
+>  NONGIT_OK=Yes
+>  OPTIONS_SPEC=
+> @@ -16,6 +16,13 @@ TOOL_MODE=merge
+>  . git-sh-setup
+>  . git-mergetool--lib
+>  
+> +# Can be changed by user
+> +LOCAL_NAME='LOCAL'
+> +BASE_NAME='BASE'
+> +BACKUP_NAME='BACKUP'
+> +REMOTE_NAME='REMOTE'
+> +
+> +
+>  # Returns true if the mode reflects a symlink
+>  is_symlink () {
+>  	test "$1" = 120000
+> @@ -271,10 +278,10 @@ merge_file () {
+>  		BASE=${BASE##*/}
+>  	fi
+>  
+> -	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+> -	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
+> -	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
+> -	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
+> +	BACKUP="$MERGETOOL_TMPDIR/${BASE}_${BACKUP_NAME}_$$$ext"
+> +	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${LOCAL_NAME}_$$$ext"
+> +	REMOTE="$MERGETOOL_TMPDIR/${BASE}_${REMOTE_NAME}_$$$ext"
+> +	BASE="$MERGETOOL_TMPDIR/${BASE}_${BASE_NAME}_$$$ext"
+>  
+>  	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+>  	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+> @@ -396,6 +403,18 @@ do
+>  	--prompt)
+>  		prompt=true
+>  		;;
+> +	--local=*)
+> +		LOCAL_NAME=${1#--local=}
+> +		;;
+> +	--remote=*)
+> +		REMOTE_NAME=${1#--remote=}
+> +		;;
+> +	--base=*)
+> +		BASE_NAME=${1#--base=}
+> +		;;
+> +	--backup=*)
+> +		BACKUP_NAME=${1#--backup=}
+> +		;;
+>  	--)
+>  		shift
+>  		break
+> @@ -410,6 +429,37 @@ do
+>  	shift
+>  done
+>  
+> +# sanity check after parsing command line
+> +case "" in
+> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --local/remote/base/backup to empty."
+> +	;;
+> +esac
+> +
+> +case "$LOCAL_NAME" in
+> +"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --remote/base/backup to same as --local."
+> +	;;
+> +esac
+> +
+> +case "$REMOTE_NAME" in
+> +"$LOCAL_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --local/base/backup to same as --remote."
+> +	;;
+> +esac
+> +
+> +case "$BASE_NAME" in
+> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --local/remote/backup to same as --base."
+> +	;;
+> +esac
+> +
+> +case "$BACKUP_NAME" in
+> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME")
+> +	die "You cannot set any of --local/remote/base to same as --backup."
+> +	;;
+> +esac
+> +
+>  prompt_after_failed_merge () {
+>  	while true
+>  	do
