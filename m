@@ -2,88 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B55A7215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 21:45:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08A0A215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 22:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933258AbcJLVpb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 17:45:31 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:36159 "EHLO
-        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932694AbcJLVp3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 17:45:29 -0400
-Received: by mail-yw0-f177.google.com with SMTP id u124so41372535ywg.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 14:45:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8qNMG/RPbkzH1mFiJ1XFChg3FLtkKEEcGVsgdUhi38E=;
-        b=loASklJo22zoaaLkzsZyS8zIqVq1PY8zlZKEa/sydsOZQzRPYtOChl+/7PlOrasvmr
-         H6BYEwjwnGsm9BVXqWslSGwYO90//SmU1zKZdQoM4MGuEq2veezbtJsGGUg7z0ERm4DA
-         TIE3COqu2mg3j9zvq8Ev0ympA/BqRb+IaoIyeGtwfY3ZyoVEVgTvfDVyP2nzy8y0f2/b
-         ynNRR2bibLmVhsTLVlR+ZhAM756cvhtig9+7CGquqTxatIZ2XuKIM0H86LpUa5i5Ntod
-         Vaj/e9sZLRP48DOK11SKlM+AeQRYNmNPK+gpCwqlYk32kOlBfCVETkvYcWb2sC3OLLLf
-         QzZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8qNMG/RPbkzH1mFiJ1XFChg3FLtkKEEcGVsgdUhi38E=;
-        b=FFc2v37Whhecd2ROlokoC4ukeMwnREECuoaxLpuE8Z67iO6JiH3ZC41bKujw4CFZSa
-         arjupp27PP84KnIZbONz33alTsVgZLuTrWL2nZ7/uEueSxywiqiKrmovudrj2h44WMwm
-         Yz2vbFHZv+v1K6DOdGJCkiH5f9MevuOAjhBMl2oyCfiBPb5F2Nwl9rhCyC+0REXZB6Xc
-         ZW3aOEXQlaal49yjtoVT2mCUiu64kwtqB1u7c7rign0q2nlpODTcI+jtglYPbwE6gpEE
-         31h8fvIwRGMiMrO5NR1RZm07JAohM9/TMin+XuQZz1HpNarneKHK6FME7dUuGkSKoOyh
-         nVtg==
-X-Gm-Message-State: AA6/9RloIp63y0a/1+wpi4FDMeYM/rizE9McPQxlk1H7XhouKGLDPSU3k9Era0CE3B+Ki8Gct4YDCbosJLxYwQ==
-X-Received: by 10.13.244.129 with SMTP id d123mr2825236ywf.276.1476308728933;
- Wed, 12 Oct 2016 14:45:28 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.10.2 with HTTP; Wed, 12 Oct 2016 14:45:08 -0700 (PDT)
-In-Reply-To: <44c554b8-7ac1-047d-59f0-b4d5331ed496@kdbg.org>
-References: <20161011235951.8358-1-sbeller@google.com> <44c554b8-7ac1-047d-59f0-b4d5331ed496@kdbg.org>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 12 Oct 2016 14:45:08 -0700
-Message-ID: <CA+P7+xqBUT3jUsxciVydO+nRoR+iJygWG=y_ARpiQSs+-kcH2A@mail.gmail.com>
+        id S933061AbcJLWOx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 18:14:53 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59612 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753189AbcJLWOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 18:14:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C63FA4646E;
+        Wed, 12 Oct 2016 16:59:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=F6I7jINHNZrH8tDyBqBpDW0fWWk=; b=Foq4p6
+        psjLiB0g4NTehv/vBFOPT4nJtxEUPxkLwBp2KTsHdubiGHHssTLk1NMIsW6CcLbu
+        aKWhYudtS5FNMlL81Zmt6DGOx058YHkaEKvoqLwRPUw5E9N0rcOAEF3JgAzJhQlQ
+        Ii0GnFoikT7EIbpKZLaXu72ikJ/s9WgIhbF/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZRrwxIA2nXjZfRQv+RJief5cVxhgP53D
+        wqV9EYTfFMt/ePBCK/EyW+lNur5Ger2lG0DpNEY5pN2RQU0WH+syDnw9WWwYbegF
+        SkGovGnXmH+zAdVPdrksYGxO1Xg1SoLLWRqerdsZbZwOL1KxZzOCLvbyM0x6FZIx
+        GJX81pOO0bQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD0D64646C;
+        Wed, 12 Oct 2016 16:59:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 442EA46469;
+        Wed, 12 Oct 2016 16:59:39 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
 Subject: Re: [PATCHv2] attr: convert to new threadsafe API
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>, bmwill@google.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <20161011235951.8358-1-sbeller@google.com>
+        <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZrNSmPAQ6SmBzFDJtSmdCbqKcgQu4KDLfoYVkSXvo-og@mail.gmail.com>
+        <xmqqfuo15yjm.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaBhXHLDEK0XMLjm3QofmtaGZspA3EEx5x4-qCYY--wZA@mail.gmail.com>
+Date:   Wed, 12 Oct 2016 13:59:37 -0700
+In-Reply-To: <CAGZ79kaBhXHLDEK0XMLjm3QofmtaGZspA3EEx5x4-qCYY--wZA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 12 Oct 2016 13:02:40 -0700")
+Message-ID: <xmqqpon52shy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: CA428324-90BE-11E6-8F44-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 12, 2016 at 1:07 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Sigh. DCLP, the Double Checked Locking Pattern. These days, it should be
-> common knowledge among professionals that this na=C3=AFve version _does_n=
-ot_work_
-> [1]!
->
-> I suggest you go without it, then measure, and only *then* optimize if it=
- is
-> a bottleneck. Did I read "we do not expect much contention" somewhere?
->
-> [1] http://www.aristeia.com/Papers/DDJ_Jul_Aug_2004_revised.pdf C++ centr=
-ic,
-> but applies to C just as well
->
-> -- Hannes
->
+Stefan Beller <sbeller@google.com> writes:
 
+>>> Well all of the hunks in the patch are not threaded, so they
+>>> don't follow a threading pattern, but the static pattern to not be
+>>> more expensive than needed.
+>>
+>> Is it too invasive a change to make them as if they are thread-ready
+>> users of API that happen to know their callers are not threading?
+>> It would be ideal if we can prepare them so that the way they
+>> interact with the attr subsystem will not have to change after this
+>> step.
+>
+> As far as I see the future, we do not need to change those in the future,
+> unless we add the threading to the current callers, which is usually a very
+> invasive thing?
 
-You know, I always wondered why Linux Kernel code needed memory
-barriers but userspace programs didn't seem to use them.. turns out
-they actually *do* need them for the same exact types of problems...
+It does not matter how invasive the thread set-up and teardown that
+happens in the callers.
 
-Thanks,
-Jake
+I am talking about the part of _THIS_ code that you are updating,
+that interacts with attr API.  The way they prepare "check" and
+"result", the way they ask questions by calling git_check_attr()
+function.
+
+Think of a thread-safe library function (like malloc()).  If you
+write 
+
+	func (...) {
+		buf = malloc(20);
+		...
+		free(buf);
+	}
+
+in a function that happens to be only called in a non-threaded
+program today, you do not have to update these calls to malloc(3)
+and free(3) when you update the callchain to threadable, right?
+
+That kind of thread-preparedness is what I am trying to see if we
+can achieve with this update.
