@@ -2,124 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7DE1F4F8
-	for <e@80x24.org>; Wed, 12 Oct 2016 06:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 155DF20989
+	for <e@80x24.org>; Wed, 12 Oct 2016 06:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753508AbcJLGXV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 02:23:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51731 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752738AbcJLGXU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 02:23:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EAFF3C755;
-        Wed, 12 Oct 2016 02:23:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E4tuqPJzeRkPBTTDKDX/Ug/DNkA=; b=NUirw9
-        I4qSMH2ohOApUzyakfFqZJhyr3RrNb06rn4aQo1NoNLOv2vIwCFKIuwux1qP1Uz7
-        FjApfDBPngYhcE4FQXvJRSrT7wl2abSPE1t1jsT1f/QXKgKV7PVL4UZ5fqNhiHWf
-        2IuSxmq+hApNFgX1OCllzBsLmbRB/bZa/1JI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=U5rc23yIEua3IKUVJ4T6QpUORnThVlic
-        szZxz4K4b1IQxgJ62YzNtZPfWKN9STLuQ3+dQ7iG3l5MpXKxqEvCf5g9kGVM4pK2
-        AGm5CvRZ4JtKvlks/SFGEApVDCHJ+sBg/8oKzws5/+lUu8LBPFX/ylOLg5AsSoF5
-        OEP8ckiupfo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 769D13C754;
-        Wed, 12 Oct 2016 02:23:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6F8D3C753;
-        Wed, 12 Oct 2016 02:23:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH 5/5] trailer: support values folded to multiple lines
-References: <cover.1476232683.git.jonathantanmy@google.com>
-        <cover.1476232683.git.jonathantanmy@google.com>
-        <4b8616732b719ede04b90c87ab240c29b4e3a0bb.1476232683.git.jonathantanmy@google.com>
-Date:   Tue, 11 Oct 2016 23:23:16 -0700
-In-Reply-To: <4b8616732b719ede04b90c87ab240c29b4e3a0bb.1476232683.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 11 Oct 2016 18:23:29 -0700")
-Message-ID: <xmqqr37m5bmz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753315AbcJLGsO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 02:48:14 -0400
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:33537 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753126AbcJLGsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 02:48:13 -0400
+Received: by mail-qk0-f182.google.com with SMTP id n189so18056471qke.0
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 23:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=a9BqryqF/JcSrn3Bi1wFp8C+Fzyfs6chlfxeFJzc/jQ=;
+        b=fcy+mDI2rlfglaJK9zu5HDLruVWY6riZivvMWYAYOCRx2/+6UyJDlZyQMrz7ZqvCOB
+         0xZEV34ucNqpuSK7c8qAvgyMJ2Vo6fx4aayImRRavqUFYe0F8HBHyVsG58/7jtRX9cB9
+         t1o2aFLu+XM7dkpAn0KRprF0jSzsonOBD3VtYQ4u3/Z4P655vzhq4IQzSNwB7NAIZrxT
+         0Ta00BFP8T0Sg+XnrH3SOji1ItXKe2elkhxb/qMEz6Un+3PhYe5IIMz5y8hO1CNcNi5Q
+         qklXrfXMghN/U1Ay78EODPBlJbxaoGT+sh5lo8xC+FeoQUAOKqqC5J95tk2BEQ6FFrxs
+         BOxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=a9BqryqF/JcSrn3Bi1wFp8C+Fzyfs6chlfxeFJzc/jQ=;
+        b=EW1137IvX+CC1y53VCT0uRQfIZYNHxLNHscmapwTTjiarhltzKRv9U07BCU9ZbQOLY
+         ojAKlFVbBAd4fC6kIR23YC+cgmwM3nz2yPnR+PXHuT4ZdvKOkm0zdyTcCEuOtLkY4T5K
+         +UvilhS6DdbQXWpU64a2Gw9F8UPfvnT8yUqo/Kb3m5h+PuTt0dRsZus1rdGQd0Bs4fAm
+         ukSppuaVrVuT8C116loUK0s+QNszkzVx3HDufMbxrFJyKaPExlSru6BwhU4PjJtAgCJl
+         jP5NbFbrh0IqrmwOshdycyFEjFLnF8kkvo93Mj9SIAA5kxT8sGSAZdPboDU1i/DgUZCI
+         SbyQ==
+X-Gm-Message-State: AA6/9RmmnGt7Ohg+zMm7n0g1vLClufPltePnL4kQUGUTsL+tCFpOfTwGCAMWuR8Vt+ZJMXaxLAnu3oKJW/hyFPcw
+X-Received: by 10.55.36.131 with SMTP id k3mr6517954qkk.86.1476254875722; Tue,
+ 11 Oct 2016 23:47:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5D57B6F0-9044-11E6-9FD2-F99D12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 23:47:55 -0700 (PDT)
+In-Reply-To: <20161012015224.g2eb24jexepeewob@sigill.intra.peff.net>
+References: <CANXboVZvfPkTQ10PWop+LgPFpc2bD3-u-e5ix0itGawiwCxOuQ@mail.gmail.com>
+ <CAGZ79kZmrYZqi4+bSkRykn+Upt7bEyZ0N8VhiQ-h8DhSMym-FA@mail.gmail.com>
+ <xmqqa8ea7bsh.fsf@gitster.mtv.corp.google.com> <CAGZ79kZNvTvk4uZa8xhxZABKtzS9A5HoumJ37AacuZnHaZ4+Xw@mail.gmail.com>
+ <20161011225942.tvqbbzxglvu7lldi@sigill.intra.peff.net> <CAGZ79kaKOiy-HJboaujXXc66P6CLupteDw4JyPOGetREfz_q_Q@mail.gmail.com>
+ <20161012013428.swxmrbyxv2wo37xf@sigill.intra.peff.net> <20161012015224.g2eb24jexepeewob@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Oct 2016 23:47:55 -0700
+Message-ID: <CAGZ79kbvdEUj5JKQX2MJ9THG03Bwfr0nSE5z-VPTmE3H+6TY2g@mail.gmail.com>
+Subject: Re: Make `git fetch --all` parallel?
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Ram Rachum <ram@rachum.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> Currently, interpret-trailers requires that a trailer be only on 1 line.
-> For example:
+On Tue, Oct 11, 2016 at 6:52 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Oct 11, 2016 at 09:34:28PM -0400, Jeff King wrote:
 >
->   a: first line
->      second line
+>> > Ok, time to present data... Let's assume a degenerate case first:
+>> > "up-to-date with all remotes" because that is easy to reproduce.
+>> >
+>> > I have 14 remotes currently:
+>> >
+>> > $ time git fetch --all
+>> > real 0m18.016s
+>> > user 0m2.027s
+>> > sys 0m1.235s
+>> >
+>> > $ time git config --get-regexp remote.*.url |awk '{print $2}' |xargs
+>> > -P 14 -I % git fetch %
+>> > real 0m5.168s
+>> > user 0m2.312s
+>> > sys 0m1.167s
+>>
+>> So first, thank you (and =C3=86var) for providing real numbers. It's cle=
+ar
+>> that I was talking nonsense.
+>>
+>> Second, I wonder where all that time is going. Clearly there's an
+>> end-to-end latency issue, but I'm not sure where it is. Is it startup
+>> time for git-fetch? Is it in getting and processing the ref
+>> advertisement from the other side? What I'm wondering is if there are
+>> opportunities to speed up the serial case (but nobody really cared
+>> before because it doesn't matter unless you're doing 14 of them back to
+>> back).
 >
-> would be interpreted as one trailer line followed by one non-trailer line.
+> Hmm. I think it really might be just network latency. Here's my fetch
+> time:
 >
-> Make interpret-trailers support RFC 822-style folding, treating those
-> lines as one logical trailer.
+>   $ git config remote.origin.url
+>   git://github.com/gitster/git.git
+>
+>   $ time git fetch origin
+>   real    0m0.183s
+>   user    0m0.072s
+>   sys     0m0.008s
+>
+> 14 of those in a row shouldn't take more than about 2.5 seconds, which
+> is still twice as fast as your parallel case. So what's going on?
+>
+> One is that I live about a hundred miles from GitHub's data center, and
+> my ping time there is ~13ms. The other side of the country, let alone
+> Europe, is going to be noticeably slower just for the TCP handshake.
+>
+> The second is that git:// is really cheap and simple. git-over-ssh is
+> over twice as slow:
+>
+>   $ time git fetch git@github.com:gitster/git
+>   ...
+>   real    0m0.432s
+>   user    0m0.100s
+>   sys     0m0.032s
+>
+> HTTP fares better than I would have thought, but is also slower:
+>
+>   $ time git fetch https://github.com/gitster/git
+>   ...
+>   real    0m0.258s
+>   user    0m0.080s
+>   sys     0m0.032s
+>
+> -Peff
 
-Let's see how the code handles one minor detail when we see 822
-folding, namely, "what happens to the leading whitespace that signals
-the beginning of the second and subsequent lines?".
+Well 9/14 are https for me, the rest is git://
+Also 9/14 (but a different set) is github, the rest is
+either internal or kernel.org.
 
-> diff --git a/trailer.c b/trailer.c
-> index 97e96a9..907baa0 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -31,7 +31,7 @@ struct trailer_item {
->  	 * (excluding the terminating newline) and token is NULL.
->  	 */
->  	char *token;
-> -	char *value;
-> +	struct strbuf value;
->  };
+Fetching from github (https) is only 0.9s from here
+(SF bay area, I'm not in Europe any more ;) )
 
-Is the length of value very frequently used once the list of trailer
-lines are fully parsed?  If not, I'd rather not to have "struct
-strbuf" in a long-living structure like this one and instead prefer
-keeping it a simple and stupid "char *value".
-
-Yes, I know the existing code in trailers overuses strbuf when there
-is no need, primarily because it uses the lazy "split into an array
-of strbufs" function.  We shouldn't make it worse.
-
-> @@ -767,16 +773,24 @@ static int process_input_file(FILE *outfile,
->  
->  	/* Parse trailer lines */
->  	for (i = trailer_start; i < trailer_end; i++) {
-> +		if (last && isspace(lines[i]->buf[0])) {
-
-It is convenient if "value" is a strbuf to do this,
-
-> +			/* continuation line of the last trailer item */
-> +			strbuf_addch(&last->value, '\n');
-> +			strbuf_addbuf(&last->value, lines[i]);
-> +			strbuf_strip_suffix(&last->value, "\n");
-
-but it is easy to introduce a temporary strbuf in this scope and use
-it only to create the final value and detach it to last->value, i.e.
-
-		if (last && isspace(*lines[i]->buf)) {
-			struct strbuf buf = STRBUF_INIT;
-			strbuf_addf(&buf, "%s\n%s", last->value, lines[i]->buf);
-			strbuf_strip_suffix(&buf, "\n");
-			free(last->value);
-			last->value = strbuf_detach(&buf, NULL);
-
-By the way, I now see that the code handles the "minor detail" to
-keep the leading whitespace, which is good.
-
-Thanks.
+I would have expected to have a speedup
+of roughly 2 + latency gains. Factor 2 because
+in the current state of affairs either the client or the
+remote is working, i.e. the other sie is idle/waiting, so
+factor 2 seemed reasonable (and ofc the latency), so I
+was a bit surprised to see a higher yield.
