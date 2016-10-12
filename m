@@ -2,123 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2D69207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 16:55:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C30DA207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 17:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755766AbcJLQzu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 12:55:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50677 "EHLO
+        id S1755179AbcJLRGF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 13:06:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62074 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753712AbcJLQzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 12:55:48 -0400
+        with ESMTP id S1754469AbcJLRGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 13:06:02 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 278E44534B;
-        Wed, 12 Oct 2016 12:55:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6RsRF7d/EUSoPOawXT0NgVXzyDU=; b=ShkfDM
-        mjMXeZmeVHPwGyuWQqMnaY6CkATN0RIQ5CxXatmC2KRZpZClR/8JlhPO8WhrKKYo
-        4qseiJzyDgj1NlQVSIEFyf/pU9yF+toyHhmQjcRxJkmoQy1x4znxDkSf5KtFISP5
-        pCPQBG85/JG4GKRvsuBUTtmG8mPfpVSloVx4E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UhVTQZ9714wQojmlog34krQHDFE/liw1
-        WU624kdTmyx5xWyQy2NnjjgOh5DUORfgKUufMpXTzQn3n7+bYdIQYRiSCTGBR6a8
-        zL/NEi/8l3K5pIlFtPMJDAyxJmga2/zYkLTpNps7XrXcmYsWomjRpiRTU+GMUqJG
-        k0O8RBoMX74=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F1EC4534A;
-        Wed, 12 Oct 2016 12:55:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCE8045620;
+        Wed, 12 Oct 2016 13:02:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=fshWR+5ElNQnSb2Dovmp+V6qt4Y=; b=MONfEFG
+        5MppFJHoxDpc70Sxvz149LCvCcmfJEz2D1xuehenMVaP+8/7S5kw+lN1L6rI/4wI
+        n3FfiKgFuAjMuzUcpntJVNYK0khg+l47LioHdvDFyNFb71WcfK2pkUj+PYzOWXlC
+        S4Ipi5zKCq3NJ58VDX41G9fexwmgv8Erw9Bo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=leZu4xP8cem72slSnWnQbNm7jP6PoQvNC
+        S3gRSwSrTwxRHk5rUeh7pHf5oOyBvp6+dWLXMqUyDVet/JsnG/j1sKavQqb5vLTV
+        6hYrQIh+W61fBA7SRj26XZEHZt+fGI5SZp9sNxK/XWfjnZ/1yAaFoZQM3BYtc+Y5
+        BHHoniei20=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4BCF4561F;
+        Wed, 12 Oct 2016 13:02:09 -0400 (EDT)
+Received: from pobox.com (unknown [128.172.245.7])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89AEF45349;
-        Wed, 12 Oct 2016 12:55:46 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 47EB04561C;
+        Wed, 12 Oct 2016 13:02:08 -0400 (EDT)
+Received: by pobox.com (sSMTP sendmail emulation); Wed, 12 Oct 2016 13:02:07 -0400
+Date:   Wed, 12 Oct 2016 13:02:07 -0400
+From:   Joshua N Pritikin <jpritikin@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 13/25] sequencer: prepare for rebase -i's commit functionality
-References: <cover.1473590966.git.johannes.schindelin@gmx.de>
-        <cover.1476120229.git.johannes.schindelin@gmx.de>
-        <9b2782e64f678ab2d261042b63fafc3e4a519295.1476120229.git.johannes.schindelin@gmx.de>
-        <xmqqwphe8zl2.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610121356510.3492@virtualbox>
-Date:   Wed, 12 Oct 2016 09:55:44 -0700
-In-Reply-To: <alpine.DEB.2.20.1610121356510.3492@virtualbox> (Johannes
-        Schindelin's message of "Wed, 12 Oct 2016 14:00:21 +0200 (CEST)")
-Message-ID: <xmqq60ox5wxb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: interactive rebase should better highlight the not-applying
+ commit
+Message-ID: <20161012170207.lapdv5h5aws4k4pw@droplet>
+References: <20161011190745.w2asu6eoromkrccu@droplet>
+ <CAGZ79kZSQx7aOCgQ2dwzJeCLX-k-+x1SKabEBG7CktNfeXAbvg@mail.gmail.com>
+ <20161012132740.dvyofl36qtualxgk@droplet>
+ <alpine.DEB.2.20.1610121815160.197091@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B87BA8EA-909C-11E6-868F-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1610121815160.197091@virtualbox>
+X-PGP-Key: http://people.virginia.edu/~jnp3bc/pubkey.asc
+X-PGP-Fingerprint: 275A 6673 208B 1E36 CDEC  5188 281A 7053 6127 B3F7
+X-PGP-ID: 0x6127B3F7
+User-Agent: NeoMutt/ (1.7.0)
+X-Pobox-Relay-ID: 9C0C49A2-909D-11E6-AD36-F99D12518317-03616332!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Oct 12, 2016 at 06:24:37PM +0200, Johannes Schindelin wrote:
+> No, a false belief in your own shortcomings, as you thought it would be
+> easier to address your wishes for somebody else than you.
 
->> Hmph, didn't we recently add parse_key_value_squoted() to build
->> read_author_script() in builtin/am.c on top of it, so that this
->> piece of code can also take advantage of and share the parser?
->
-> I already pointed out that the author-script file may *not* be quoted.
+Ah, shucks, I guess I could jump in.
 
-I think my puzzlement comes from here.  What makes it OK for "am" to
-expect the contents of author-script file to be quoted but it is not
-OK to expect the same here?  What makes it not quoted for _this_
-reader, in other words?
+> But maybe I read it all wrong and you do want to make this happen
+> yourself, and you simply want a little advice how to go about it?
 
-I am not sure what you meant by "nominally related", but the purpose
-of the author-script in these two codepaths is the same, isn't it?
-Somebody leaves the author information from the source (either from
-an e-mailed patch or an existing commit), so that a later step can
-use that pieces of information left in the file when (re)creating a
-commit to record the tree made by using pieces of information from
-the source.
+Ugh, if you insist. You really know how to hold someone's feet to the 
+fire, eh?
 
-Are our use in the author-script in these two codepaths _already_
-inconsistent?  IOW, "am" never writes malformed unquoted values,
-while the sequencer writes out in a way that is randomly quoted or
-not quoted, iow, if you fed such an author-file to "am", it wouldn't
-understand it?
+> > On Tue, Oct 11, 2016 at 02:25:19PM -0700, Stefan Beller wrote:
+> > > On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
+> > > However IIUC currently rebase is completely rewritten/ported to C 
+> > > where it is easier to add color support as we do have some color 
+> > > support in there already.
+> > 
+> > Sounds great. Is there a beta release that I can try out?
+> 
+> There is no release as such, unless you count Git for Windows v2.10.0.
 
-I fully support your position to use different codepaths, if the
-file that has the same name and that is used for the same purpose
-uses different format in these two separate codepaths and the users
-already expect them to be different.  We obviously need to have two
-separate parsers.
+Nope, that doesn't count. ;-)
 
-But if that is not the case, IOW, if "am"'s author-script shares the
-same issue (i.e. "'am' initially writes the file properly quoted,
-but this or that can happen to change its quoting and we need to
-read from such a file"), then perhaps sharing needs to happen the
-other way around?  This patch may prepare "rebase -i" side for the
-"this or that" (I still do not know what they are) to allow the
-resulting file read correctly, but the same "this or that" can break
-what "am" has used and is in use there if that is the case, no?
+> But you can try the `interactive-rebase` branch of
+> https://github.com/dscho/git; please note, though, that my main aim was to
+> be as faithful as possible in the conversion (modulo speed, of course).
 
-What makes it OK for "am" to expect the contents of author-script
-file to be quoted but it is not OK to expect the same here?  What
-makes it not quoted for _this_ reader, and doesn't "am" share the
-same issue?
+Hm OK
 
->> > +/*
->> 
->> Offtopic: this line and the beginning of the new comment block that
->> begins with "Read the author-script" above show a suboptimal marking
->> of what is added and what is left.  I wonder "diff-indent-heuristic"
->> topic by Michael can help to make it look better.
->
-> Maybe. I'll try to look into that once the more serious questions about
-> this patch series have been addressed.
+> > Sometimes I do a rebase to fix some tiny thing 10-15 commits from HEAD.
+> > Maybe only 1 file is affected and there are no merge conflicts, but when
+> > rebase reapplies all the commits, the timestamps of lots of unmodified
+> > files change even though they are unmodified compared to before the
+> > rebase.
+> 
+> Well, they *were* modified, right?
 
-You do not have to; the remark was meant for Michael (newly cc'ed in
-the message you are responding to).
+Were they? Isn't that just an artefact of the implementation?
+
+> A workaround would be to create a new worktree using the awesome `git
+> worktree` command, perform the rebase there (on an unnamed branch -- AKA
+> "detached HEAD", no relation to Helloween), and then come back to the
+> original worktree and reset --hard to the new revision. That reset would
+> detect that there are actually no changes required to said files.
+
+What would be the problem with doing this by default? Or could it be a 
+configuration option that can be enabled?
+
+-- 
+Joshua N. Pritikin, Ph.D.
+Virginia Institute for Psychiatric and Behavioral Genetics
+Virginia Commonwealth University
+PO Box 980126
+800 E Leigh St, Biotech One, Suite 1-133
+Richmond, VA 23219
+http://people.virginia.edu/~jnp3bc
