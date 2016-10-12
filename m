@@ -7,50 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96DE320989
-	for <e@80x24.org>; Wed, 12 Oct 2016 11:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC4D620989
+	for <e@80x24.org>; Wed, 12 Oct 2016 11:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753781AbcJLLvO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 07:51:14 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62070 "EHLO mout.gmx.net"
+        id S1753933AbcJLLx4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 07:53:56 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58484 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753558AbcJLLvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 07:51:12 -0400
+        id S1753558AbcJLLxz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 07:53:55 -0400
 Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M3igT-1b3yQr1Ehd-00rJCl; Wed, 12 Oct 2016 13:49:28
+ ESMTPSA (Nemesis) id 0MHoC5-1brHK22fxl-003amL; Wed, 12 Oct 2016 13:46:51
  +0200
-Date:   Wed, 12 Oct 2016 13:49:27 +0200 (CEST)
+Date:   Wed, 12 Oct 2016 13:46:50 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 12/25] sequencer: remember the onelines when parsing
- the todo file
-In-Reply-To: <xmqq1szmaemr.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610121347361.3492@virtualbox>
-References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <f22bdcda3f748813e6b9fd08dc65f11c6f9f4b1e.1476120229.git.johannes.schindelin@gmx.de> <xmqq1szmaemr.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 08/25] sequencer: strip CR from the todo script
+In-Reply-To: <xmqq60oyaf7s.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610121346360.3492@virtualbox>
+References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <5a639610c09bf1dacc8143603f321a8ea23cd270.1476120229.git.johannes.schindelin@gmx.de> <xmqq60oyaf7s.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FQ319KQJQ8iK69lL0WyEWo+GUuaECCDtmcb9JspFX91ehTMsuVz
- PKKt2RKCWrXrkAcLsjRKk7W4jOT12d1lnfwbC6RZy2jpXIiUe3yapmWfULllQwZWZgZaaxm
- 6FJXnCyec5uuwJ/jSeo0WeDgQnqw+vUzgiK63l6Ox7QG2A3zC0PgCkn8Wc4ZQAYscMNA7CV
- rVmth0QIANSGjE7tBX0XA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uiquAF18KRE=:Aje7c9vvcXarnKDHGt7Yj7
- xq6nk5kyc8wnGRQrxDSCqSFBT5Wl1OUtMvIGsCxmloBh1o7sYBilMJPONcAdo3WF0x9E4KSj6
- x5JuAtfwjXI+bGC9ycFWOMZykRkmC+9Me9QdGxuRYiQozEpWmZ/veiNlmPIak+92dMhJdEWSv
- PHB9PBhdq9v/DKuQsQbKZripsNOXdBQPV3zmyoBTLkJugQJMIytK5rbzlaDOh4H92JV+vXbkB
- Tn4B+nrsmcKxzWn6rmqh9dGrCeXSKWIMkixdiKmu27XBS2mom4N3i4bXGz/6KEOMCiW+bLK4Q
- rRJKYV8/mrhzRejdczbnXaf17kMlxaFKc5tXV4iO3HTgbpO6So8Preau6QHLC1fNjGUJp7Q81
- n8xtjOVDkvt4tbMsohabi1jsF/p1SXlZVZ2B90OeGBsWUUpe/bt4v6ksD+miulgPzwFMmgT9q
- 1YA4AW4Jckzf7Uh3DCXZkqYJWvKfrGzcMAoOXxI4IAtL3K8WVHWBhDZl4NE+hkCXPJBAU/Gtk
- 3zS+DNwF0ok/C5so6gGg3R7JDyvPZHqdVcqH3mPknoLB7xHXM09tijdJATsaUTaB5VsLaB6/B
- wM58+qSPssbdPJD5IxKD0TyqSTmShHWX35G9uf881eIVc/qbvRG+y3gpg4LpblnTa+B+VwKdj
- vkYEkw1CLofoNhRsBib1Or2f4o/nROXERtlCZW023OfmSLx1i/kRhpco7pvhIyx/sba4Lrg4i
- 9g4PB5PYJHvmCwtZqOla7PLJKc+aT/iCxRyvdniB37EBUWUYKkY2Yfu9atLnLbJbL1qUE7w0P
- eQDs/Q4
+X-Provags-ID: V03:K0:/lTGUPb999RdEEVAofDR7H9M55tOm0Qr08Mc1oFHRJ38nBAQCrR
+ HL30zgkuZXUsPBCj+A8kfsJY3kF5g0k6nc9DTsTiC47MFLGc6eDm1irVexHeJNVIHLhh/6+
+ FY67NawwRYR9Vgmt8o5b0JeDWf3+ETgVuL2PkHMayXNS/3yGpR/MQGrvcXgtXaqJLctewr9
+ YDEP/6Tk1bxRJLCEeBTvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0DT0uChfHYU=:zO52AyDoP/MpP27X7/Jklx
+ DI3MBI9Rc4ErvWZix/m8XCrJmzB1WK5v9Xb46zXkvZJS6BTfB2plnhDbY6fw2mgWG/hkFMDtd
+ rGa2eAkc1xJPv6XaBvuQpHcdScxIRDBypIM2sC9v1QXMfkZgPcQPehXHvphrCVFg6iQu9XWl3
+ bSuW4H83+SgxWEFV0+ufkuDuvQ0kfCz/px32xDVTrFlyfsUDJcTiK4PSl2pUXDCQaFd5AJYwE
+ jZ39htBb7qUUPu0Ycq6rqPx+qHQs01Ypmr8K+eOyhdR6MqfFsyAvG1YA4oa8Cp0EwktxX/kSJ
+ SHpeeVZorLWsGXdorLsAGPlngX7FYIKNYVBspbVVLtRu6KNtjyOZxATkrU0uXhbZfiIQgnEtn
+ 3dkGxGJTKH3cVFmo+E/vBm4VO2PrX8D9SkPfXdFF5WKzuDCluaMxDhdaFcDCrXhNvudYBnWvj
+ KurOSXAiUUiqakSCRt34T7/wtMggCkxnC24If/hpXqliTpUVe2rEzyAi3ffdmuiKboCmzYPMe
+ Er66IdIzRsDuG41Q9MrG9LP93Qms5HZJqJKYMKLFedyvpsqObB9pGeV6DPFZ2ZFPpVAYe9GKQ
+ Y16lCzfCq3UdoTjkj9Cv02Bh24ZJPL0jN1H2jfX00Uu6rxxLuTv2WrgyFRiuKJE+UgtHCvL3O
+ 120gnEclwgI2evU3wBkfZCC+8+uQEWj3+YMfCBkcGs/qOd//Xi2419oyVo43BZQdeUGzy2wka
+ dorhA+a/4k1BhqT3ra7tcKdVVkf4OQezDdUj6BQTh5RoVjVZFDcD3ehXtnCWJNRq1/PKcG6qp
+ GYP9LV+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,22 +62,17 @@ On Tue, 11 Oct 2016, Junio C Hamano wrote:
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
 > > diff --git a/sequencer.c b/sequencer.c
-> > index afc494e..7ba5e07 100644
+> > index 678fdf3..cee7e50 100644
 > > --- a/sequencer.c
 > > +++ b/sequencer.c
-> > @@ -708,6 +708,8 @@ static int read_and_refresh_cache(struct replay_opts *opts)
-> >  struct todo_item {
-> >  	enum todo_command command;
-> >  	struct commit *commit;
-> > +	const char *arg;
-> > +	int arg_len;
-> >  	size_t offset_in_buf;
+> > @@ -774,6 +774,9 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
+> >  
+> >  		next_p = *eol ? eol + 1 /* skip LF */ : eol;
+> >  
+> > +		if (p != eol && eol[-1] == '\r')
+> > +			eol--; /* skip Carriage Return */
 > 
-> micronit: you can make it to size_t and lose the cast below, no?
+> micronit: s/skip/strip/ ;-)
 
-No. The primary users of arg_len call a printf() style function with %.*s,
-expecting an int. So your suggestion would lose one cast, but introduce at
-least four casts in return.
-
-Ciao,
+Okay,
 Dscho
