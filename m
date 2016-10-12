@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08A0A215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 22:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B35D5215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 22:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933061AbcJLWOx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 18:14:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59612 "EHLO
+        id S1753902AbcJLWZV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 18:25:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60574 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753189AbcJLWOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 18:14:51 -0400
+        with ESMTP id S1753866AbcJLWZT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 18:25:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C63FA4646E;
-        Wed, 12 Oct 2016 16:59:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DDEE459BA;
+        Wed, 12 Oct 2016 17:50:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F6I7jINHNZrH8tDyBqBpDW0fWWk=; b=Foq4p6
-        psjLiB0g4NTehv/vBFOPT4nJtxEUPxkLwBp2KTsHdubiGHHssTLk1NMIsW6CcLbu
-        aKWhYudtS5FNMlL81Zmt6DGOx058YHkaEKvoqLwRPUw5E9N0rcOAEF3JgAzJhQlQ
-        Ii0GnFoikT7EIbpKZLaXu72ikJ/s9WgIhbF/4=
+        :content-type; s=sasl; bh=rPD66ylfNFFBqiERtJ2jdgaZh/A=; b=Kq1ZBq
+        fmBmqjMNucDsnMoBc2X6QAc+/C1VlOH90Dar8p7rPHUAAlpWSP8/UYEXWd0xPhj7
+        h5ZXbyVGJGLxqJg92C0pozo1iMNLuYykYIidC8tnO7Z2PFs++s9s72KPx8riq35N
+        fD2+/nCwHvjQsMKe7ppBSbyyXJAfNCXdx89oI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZRrwxIA2nXjZfRQv+RJief5cVxhgP53D
-        wqV9EYTfFMt/ePBCK/EyW+lNur5Ger2lG0DpNEY5pN2RQU0WH+syDnw9WWwYbegF
-        SkGovGnXmH+zAdVPdrksYGxO1Xg1SoLLWRqerdsZbZwOL1KxZzOCLvbyM0x6FZIx
-        GJX81pOO0bQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD0D64646C;
-        Wed, 12 Oct 2016 16:59:39 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=sESZ5mCamRUsNZbZr600pX4SjH7LnkBq
+        ttDgrAaU4/Cj5XH+cddHYVYkMVJxk+/+rUrUssHJE8piI9Bhq4tbCE4nEvSKQ8Nr
+        Crb/JhhR7qtQj4dTrM7Rai80PGtuzNvSEfCouBeEavLaKAmT1/QhMqeKlGlFckiN
+        Qf2lg8/9N7A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86877459B9;
+        Wed, 12 Oct 2016 17:50:45 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 442EA46469;
-        Wed, 12 Oct 2016 16:59:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06A9E459B8;
+        Wed, 12 Oct 2016 17:50:44 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
         Brandon Williams <bmwill@google.com>
 Subject: Re: [PATCHv2] attr: convert to new threadsafe API
 References: <20161011235951.8358-1-sbeller@google.com>
-        <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZrNSmPAQ6SmBzFDJtSmdCbqKcgQu4KDLfoYVkSXvo-og@mail.gmail.com>
-        <xmqqfuo15yjm.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaBhXHLDEK0XMLjm3QofmtaGZspA3EEx5x4-qCYY--wZA@mail.gmail.com>
-Date:   Wed, 12 Oct 2016 13:59:37 -0700
-In-Reply-To: <CAGZ79kaBhXHLDEK0XMLjm3QofmtaGZspA3EEx5x4-qCYY--wZA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 12 Oct 2016 13:02:40 -0700")
-Message-ID: <xmqqpon52shy.fsf@gitster.mtv.corp.google.com>
+        <44c554b8-7ac1-047d-59f0-b4d5331ed496@kdbg.org>
+        <xmqq8ttt2qpp.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kb-xKDNG-LC56i8Y-FAaYZwr8zzXuC9snj1PavnQ6cdCA@mail.gmail.com>
+Date:   Wed, 12 Oct 2016 14:50:43 -0700
+In-Reply-To: <CAGZ79kb-xKDNG-LC56i8Y-FAaYZwr8zzXuC9snj1PavnQ6cdCA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 12 Oct 2016 14:42:37 -0700")
+Message-ID: <xmqqwphd1bkc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CA428324-90BE-11E6-8F44-F99D12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ED96F128-90C5-11E6-A68A-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,40 +63,27 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
->>> Well all of the hunks in the patch are not threaded, so they
->>> don't follow a threading pattern, but the static pattern to not be
->>> more expensive than needed.
+> On Wed, Oct 12, 2016 at 2:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Johannes Sixt <j6t@kdbg.org> writes:
 >>
->> Is it too invasive a change to make them as if they are thread-ready
->> users of API that happen to know their callers are not threading?
->> It would be ideal if we can prepare them so that the way they
->> interact with the attr subsystem will not have to change after this
->> step.
+>>> Sigh. DCLP, the Double Checked Locking Pattern. ...
+>>> I suggest you go without it, then measure, and only *then* optimize if
+>>> it is a bottleneck.
+>>
+>> That comes from me in earlier discussion before the patch, namely in
+>> <xmqqeg3m8y6y.fsf@gitster.mtv.corp.google.com>, where I wondered if
+>> a cheap check outside the lock may be a possible optimization
+>> opportunity, as this is a classic singleton that will not be
+>> deinitialized, and once the codepath gets exercised, we would be
+>> taking the "nothing to do" route 100% of the time.
 >
-> As far as I see the future, we do not need to change those in the future,
-> unless we add the threading to the current callers, which is usually a very
-> invasive thing?
+> Having followed that advice (and internally having a DCLP), I think
+> we have Triple Checked Locking Pattern in this patch.  Nobody wrote
+> a paper on how that would not work, yet. ;)
+>
+> In the reroll I plan to reduce it to a Single Checked (inside a mutex)
+> Locking Pattern, though I would expect that performance (or lack thereof)
+> will show then. But let's postpone measuring until we have a working patch.
 
-It does not matter how invasive the thread set-up and teardown that
-happens in the callers.
-
-I am talking about the part of _THIS_ code that you are updating,
-that interacts with attr API.  The way they prepare "check" and
-"result", the way they ask questions by calling git_check_attr()
-function.
-
-Think of a thread-safe library function (like malloc()).  If you
-write 
-
-	func (...) {
-		buf = malloc(20);
-		...
-		free(buf);
-	}
-
-in a function that happens to be only called in a non-threaded
-program today, you do not have to update these calls to malloc(3)
-and free(3) when you update the callchain to threadable, right?
-
-That kind of thread-preparedness is what I am trying to see if we
-can achieve with this update.
+Oh, that wasn't even an "advice" (read it again).  I fully agree
+that starting simple would be the way to go.
