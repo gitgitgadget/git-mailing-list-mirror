@@ -6,129 +6,120 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCA2A1F4F8
-	for <e@80x24.org>; Wed, 12 Oct 2016 06:13:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7DE1F4F8
+	for <e@80x24.org>; Wed, 12 Oct 2016 06:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753624AbcJLGNH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 02:13:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51742 "EHLO
+        id S1753508AbcJLGXV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 02:23:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51731 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752026AbcJLGMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 02:12:52 -0400
+        with ESMTP id S1752738AbcJLGXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 02:23:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E8483E620;
-        Wed, 12 Oct 2016 02:12:48 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EAFF3C755;
+        Wed, 12 Oct 2016 02:23:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dAJf8LUPWgI4h12EIRN36i2PKEY=; b=VwPV7j
-        y58sySPQdMTus6wjerqAY77JsT9tju9Ns3Qtw/wc01X1QXzWwKAfKvh5LfTw8Lm/
-        9PpqhL6xRcSLO0D+qWiwLj2+zRKaGL9BdK8KVljZdoN/KkDOKgoSNfbAfrNEB5rK
-        dOqXeXVD+K2tbnk6qhAyN4dZw4hkMdHdt3IG4=
+        :content-type; s=sasl; bh=E4tuqPJzeRkPBTTDKDX/Ug/DNkA=; b=NUirw9
+        I4qSMH2ohOApUzyakfFqZJhyr3RrNb06rn4aQo1NoNLOv2vIwCFKIuwux1qP1Uz7
+        FjApfDBPngYhcE4FQXvJRSrT7wl2abSPE1t1jsT1f/QXKgKV7PVL4UZ5fqNhiHWf
+        2IuSxmq+hApNFgX1OCllzBsLmbRB/bZa/1JI0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DiRHTumiSyBVfnu6vVOkyGZgc8mPOfOM
-        qzarmSTCmJn33bHcLCSs0fWhYx/p5cyPbBLPOysAM02O6X/DSR04c2KjSCUrV6Cv
-        1lgiNKV0i/Inyr63HlGa/k5xVrWUCJz5nJSDU1tiSy2X9/49kgklErGYTeWTePWJ
-        MqiqCtdqyuk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 462DC3E61D;
-        Wed, 12 Oct 2016 02:12:48 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=U5rc23yIEua3IKUVJ4T6QpUORnThVlic
+        szZxz4K4b1IQxgJ62YzNtZPfWKN9STLuQ3+dQ7iG3l5MpXKxqEvCf5g9kGVM4pK2
+        AGm5CvRZ4JtKvlks/SFGEApVDCHJ+sBg/8oKzws5/+lUu8LBPFX/ylOLg5AsSoF5
+        OEP8ckiupfo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 769D13C754;
+        Wed, 12 Oct 2016 02:23:18 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA14A3E61C;
-        Wed, 12 Oct 2016 02:12:47 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6F8D3C753;
+        Wed, 12 Oct 2016 02:23:17 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com
-Subject: Re: [PATCHv2] attr: convert to new threadsafe API
-References: <20161011235951.8358-1-sbeller@google.com>
-Date:   Tue, 11 Oct 2016 23:12:45 -0700
-In-Reply-To: <20161011235951.8358-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 11 Oct 2016 16:59:51 -0700")
-Message-ID: <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com
+Subject: Re: [PATCH 5/5] trailer: support values folded to multiple lines
+References: <cover.1476232683.git.jonathantanmy@google.com>
+        <cover.1476232683.git.jonathantanmy@google.com>
+        <4b8616732b719ede04b90c87ab240c29b4e3a0bb.1476232683.git.jonathantanmy@google.com>
+Date:   Tue, 11 Oct 2016 23:23:16 -0700
+In-Reply-To: <4b8616732b719ede04b90c87ab240c29b4e3a0bb.1476232683.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Tue, 11 Oct 2016 18:23:29 -0700")
+Message-ID: <xmqqr37m5bmz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E5BA0F04-9042-11E6-9306-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5D57B6F0-9044-11E6-9FD2-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> I think this patch is the most interesting patch, so I'll refrain from
-> resending the other 27 patches, though I have adressed the review comments
-> locally. I'll resend everything once we are in agreement for this one.
+> Currently, interpret-trailers requires that a trailer be only on 1 line.
+> For example:
+>
+>   a: first line
+>      second line
+>
+> would be interpreted as one trailer line followed by one non-trailer line.
+>
+> Make interpret-trailers support RFC 822-style folding, treating those
+> lines as one logical trailer.
 
-What is the primary purpose of this patch?  Is it to prepare callers
-so that the way they interact with the attr subsystem will not have to
-change when they become threaded and the attr subsystem becomes
-thread ready?
+Let's see how the code handles one minor detail when we see 822
+folding, namely, "what happens to the leading whitespace that signals
+the beginning of the second and subsequent lines?".
 
-I am not sure if the updates to the callers fulfill that purpose.
-For example, look at this hunk.
+> diff --git a/trailer.c b/trailer.c
+> index 97e96a9..907baa0 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -31,7 +31,7 @@ struct trailer_item {
+>  	 * (excluding the terminating newline) and token is NULL.
+>  	 */
+>  	char *token;
+> -	char *value;
+> +	struct strbuf value;
+>  };
 
-> @@ -111,6 +111,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->  	struct archiver_args *args = c->args;
->  	write_archive_entry_fn_t write_entry = c->write_entry;
->  	static struct git_attr_check *check;
-> +	static struct git_attr_result result;
+Is the length of value very frequently used once the list of trailer
+lines are fully parsed?  If not, I'd rather not to have "struct
+strbuf" in a long-living structure like this one and instead prefer
+keeping it a simple and stupid "char *value".
 
-As we discussed, this caller, even when threaded, will always want
-to ask for a fixed two attributes, so "check" being static and
-shared across threads is perfectly fine.  But we do not want to see
-"result" shared, do we?
+Yes, I know the existing code in trailers overuses strbuf when there
+is no need, primarily because it uses the lazy "split into an array
+of strbufs" function.  We shouldn't make it worse.
 
->  	const char *path_without_prefix;
->  	int err;
+> @@ -767,16 +773,24 @@ static int process_input_file(FILE *outfile,
 >  
-> @@ -124,12 +125,15 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->  		strbuf_addch(&path, '/');
->  	path_without_prefix = path.buf + args->baselen;
->  
-> -	if (!check)
-> -		check = git_attr_check_initl("export-ignore", "export-subst", NULL);
-> -	if (!git_check_attr(path_without_prefix, check)) {
-> -		if (ATTR_TRUE(check->check[0].value))
-> +	if (!check) {
-> +		git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
-> +		git_attr_result_init(&result, check);
-> +	}
+>  	/* Parse trailer lines */
+>  	for (i = trailer_start; i < trailer_end; i++) {
+> +		if (last && isspace(lines[i]->buf[0])) {
 
-Are we assuming that storing and checking of a single pointer is
-atomic?  I would not expose that assumption to the callers.  On a
-platform where that assumption holds, "if check is not NULL,
-somebody must have done it already, so return without doing nothing"
-can be the first thing git_attr_check_initl()'s implementation does,
-though.  Or it may not hold anywhere without some barriers.  All
-that implementation details should be hidden inside _initl()'s
-implementation.  So this caller should instead just do an
-unconditional:
+It is convenient if "value" is a strbuf to do this,
 
-	git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
-	
-Also, as "result" should be per running thread, hence non-static,
-and because we do not want repeated heap allocations and releases
-but luckily most callers _know_ not just how many but what exact
-attributes they are interested in (I think there are only two
-callers that do not know it; check-all-attrs one, and your pathspec
-magic one that does not exist at this point in the series), I would
-think it is much more preferrable to allow the caller to prepare an
-on-stack array and call it "initialized already".  
+> +			/* continuation line of the last trailer item */
+> +			strbuf_addch(&last->value, '\n');
+> +			strbuf_addbuf(&last->value, lines[i]);
+> +			strbuf_strip_suffix(&last->value, "\n");
 
-In other words, ideally, I think this part of the patch should
-rather read like this:
+but it is easy to introduce a temporary strbuf in this scope and use
+it only to create the final value and detach it to last->value, i.e.
 
-	static struct git_attr_check *check;
-	struct git_attr_result result[2];
+		if (last && isspace(*lines[i]->buf)) {
+			struct strbuf buf = STRBUF_INIT;
+			strbuf_addf(&buf, "%s\n%s", last->value, lines[i]->buf);
+			strbuf_strip_suffix(&buf, "\n");
+			free(last->value);
+			last->value = strbuf_detach(&buf, NULL);
 
-	...
-	git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
-	if (!git_check_attr(path_without_prefix, check, result)) {
-		... use result[0] and result[1] ...
+By the way, I now see that the code handles the "minor detail" to
+keep the leading whitespace, which is good.
 
-For sanity checking, it is OK to add ARRAY_SIZE(result) as the final
-and extra parameter to git_check_attr() so that the function can
-make sure it matches (or exceeds) check->nr.
+Thanks.
