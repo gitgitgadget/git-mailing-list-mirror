@@ -2,85 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05F0E207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 16:14:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09C85207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 16:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754096AbcJLQOp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 12:14:45 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49957 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753823AbcJLQOm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 12:14:42 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LrePN-1armYG1ikX-013Qhe; Wed, 12 Oct 2016 18:14:33
- +0200
-Date:   Wed, 12 Oct 2016 18:14:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     Joshua N Pritikin <jpritikin@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: interactive rebase should better highlight the not-applying
- commit
-In-Reply-To: <CAGZ79kYg3sZ42W-PEE7MgCDvt_h7hEQ7KWZsVKMb3DY=x5VK+w@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1610121811250.197091@virtualbox>
-References: <20161011190745.w2asu6eoromkrccu@droplet> <CAGZ79kYg3sZ42W-PEE7MgCDvt_h7hEQ7KWZsVKMb3DY=x5VK+w@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1755534AbcJLQUe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 12:20:34 -0400
+Received: from box.datamaskinaggie.xyz ([45.55.255.105]:54969 "EHLO
+        box.datamaskinaggie.xyz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753785AbcJLQUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 12:20:30 -0400
+X-Greylist: delayed 908 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Oct 2016 12:20:30 EDT
+Received: from authenticated-user (box.datamaskinaggie.xyz [45.55.255.105])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by box.datamaskinaggie.xyz (Postfix) with ESMTPSA id 06ECA1400D0
+        for <git@vger.kernel.org>; Wed, 12 Oct 2016 12:05:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=davidwbrown.name;
+        s=mail; t=1476288320;
+        bh=Nxn0lTMXoKesqsw0FqwMmHuJXPmgcHir8l/cLZeabUQ=;
+        h=Date:From:To:Subject:From;
+        b=pHSUxN17E58ZIs8bVapy33n80iiaICMusgD1RPMKN6UvDIZnvRLpcaGMxzYwC/Ik0
+         NvdNQqZM94FaTsVn00LfzWUjIzfSinYx+ZmWv0kdMEVIV/YZrpkwWxV9YB8KZj8/JJ
+         jybBBCLh0Su+tQeLaVjlzerebAnur9pE/YHRZaL8HaVOeFgJG7K+r0PjOuCrKLSIfv
+         sIi7+4Msv8fsovBaMW4nGa1vBz6jRi+9fd9BDJunk6AnexsHERc4ebP16r6UCVom4T
+         Mx98iW4vR79M5VGyj0JndILyfbeMdMuuB0zmATo2ztBkCr4CxN0IsxgNcVMg3hrBkJ
+         AK8OhdGvsw7xA==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:cPDUJZ4yIjgiIn0b3dZO0LladlH66a292/WeHuHCe2j/qmOL8Wz
- s8M4ZWpJZZGKVT8bEFeATCDcPQvtR35vpLAVYQQfoWTipGE/A33PuZDuBbH5iYjHajE/WkK
- zMnR38M+IR3y40/xehb/1EJSS5hvCrfAzK+H/zoOdCw70Jq1/VepxG1RIom+KlOFWUa9jAh
- RmmNIFyt5BK+jQL2CsMSg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:T+TtNfw87Xw=:oeKN67mPfsFOvyr1SCuIMN
- Nlr+lbqYiFALpou4Biast2v1Zga1/pnrydPF+goC5xa8l3d9LhtzTbgQ3bhEmC1WA83muw2K3
- 1XDGRvWApKRqtxHlV/ZhTYvmlGT+q3DQ8CrwzM5RivPYhzACDFptNfzbHM8Y/uBOi2sPgkfzM
- o52+MGqhUkvXbMxazbQbalzb5s5n+pOXtZtnQX5TCYyBqAR2eg//rA5pYdFUeNklawI0lE2um
- ndYevlSbLGfVfQpZJ1xl/dtbg9KmNmGluehyKuTZwh/xRTd04Q+SJx2UzeSB9kQSdzpK7zcg3
- 68sNrS69y0mRY4Hv6858/wSIalRAFctwuVgwh1q1YpkFMQ6u9Bb22I8gZpYnWJv+F8zv4xxHr
- PbCYFKZ4D7faW3FwvA8HMZae9PQeNqvD7TYsq50db/1OT5QzG9FSrCJoDrnqocvzq1L//uar5
- Cxq2aYvDqr9uTM6DsPPMkWYgkafEOe60ZE4Kc4FuvUiD01+WXw/tDsfms8YDbbZTdTy43YzUI
- +oUtJpHv0BDnZtEEtwzVepuscEGsT6Clv3/5oa0smucTwj9TqCO7rc31wwIg0+pxaKzUYBmM2
- 2vuGeDRAdNcrzXf8jjCk5VFG52nGrkwydJYx7t3A6Zcj77hrL1PhyECH8gsMAW10SbiPgkW0d
- klSC5ifdZRXq6lBD+UVSUoYIEOjRAYZnXGQN9De+meXy+vfOUUGc6SFPyycRlv7MOyF41G8Vz
- gbi2ZNH8d9uhfh7xniJ5seL2TpP5iqfaUvBbg7jlA/M2Bwvwbx7Ij0ZdVTRXEFduBkujA2W+F
- 3K8t/Tb
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 12 Oct 2016 11:05:19 -0500
+From:   David Brown <david@davidwbrown.name>
+To:     git@vger.kernel.org
+Subject: 2 directories same spelling one directory is camel cased
+Message-ID: <e0a3eb0590552c98638d486db8ad4a12@davidwbrown.name>
+X-Sender: david@davidwbrown.name
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Howdy git gurus,
 
-On Tue, 11 Oct 2016, Stefan Beller wrote:
+I have the dubious distinction of working with a remote repo (master) 
+that has a class loader run-time error when cloned, built and executed.
 
-> On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
-> > I assume somebody familiar with GIT's code base could make this change
-> > in about 10 minutes.
-> 
-> Can you elaborate how you come to that estimate?
+The reason for the runtime issue is a directory hierarchical path has to 
+directories (folders) with the same name spelling but one of the 
+directories is camel-cased. The package names are the same.
 
-Why do you ask? He obviously has "a very good brain" ;-)
+The compiler doesn't care but the run-time class loader has an issue 
+with the 2 'same like named' classes.
 
-Seriously again, Git's source code is not that hard to read, and the Git
-developer community is pretty helpful when anybody asks for pointers what
-code to change.
+How to remove the offending directories and files at the locally cloned 
+repo but not push 'deleted' directories and files back to origin/master 
+the remote repo?
 
-Having said that, I did reimplement some parts of the shell script that is
-git-rebase--interactive.sh [*1*] in C and am in the process of getting
-those integrated into the next (or hopefully not a *much* later) version
-of Git.
+Please advise.
 
-So what I'd like to see is an *exact* copy-paste of a message in question,
-and a *concrete* proposal how it should look like instead.
-
-Ciao,
-Johannes
-
-Footnote *1*:
-https://github.com/git/git/blob/master/git-rebase--interactive.sh
+Regards.
