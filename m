@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 836DF1F4F8
-	for <e@80x24.org>; Wed, 12 Oct 2016 01:29:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AEBB1F4F8
+	for <e@80x24.org>; Wed, 12 Oct 2016 01:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752449AbcJLB3N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Oct 2016 21:29:13 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34633 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751949AbcJLB3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2016 21:29:13 -0400
-Received: by mail-pf0-f173.google.com with SMTP id 190so10798232pfv.1
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 18:29:12 -0700 (PDT)
+        id S1752488AbcJLBbz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Oct 2016 21:31:55 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:36280 "EHLO
+        mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752089AbcJLBbx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2016 21:31:53 -0400
+Received: by mail-pa0-f41.google.com with SMTP id ry6so23020287pac.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 18:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=y9t6vhCtkpBTj7UyzsHtNmw0a9BoqdSNZkog7WVM1cc=;
-        b=FNZqnrMBe04+F0nAp3iWFot2yjRPe/63sNvHAqoY/kzmYmYjrr8T/lBcJZxgoKd+De
-         P4o4cqSSNjDULjvur4sYIk/HtjkGBbDW9A1rtL8v7muqG5HqrOU3fTSJXSXFBkrNiBVV
-         lMeSiNR6Cc4wtmUc19Wj58fVrx4P/NEhmiIz+0aFAsmV24MPAVuGvfh5tZ3gdzStuOdt
-         lg+exxMuaZFDECM52lG3cNbLt63e920WELPygtiOm9avevKQGHShtn5ZmFx8o78Sb02I
-         rZcD1n1ECG8xslPdZj7fiyIeHyo/Pbsl/FC69boLCW6u38bYDWFQpeaPU02gRji8IOWI
-         m2iw==
+        bh=eC0BhWhlwilo/Ow2U17yZk5IAObCQ2Ts3QSFINpqT74=;
+        b=I22uR6OCIHCfsII6S2zYsZ/KDtR0qRsxxZUQ4d7/QbReHOp0y+eA5+3HPp86BfLeVL
+         uB793pZ8OLn/CUZ4nm6Xp1Wj+9/6HP+x+suO1OJDkLaR/cPEiEL8sfa75T5R17cfyg4G
+         KULWndecYcECIwzaDKqtQK9aKPX+el5xsVV7VO7qrs7s4h92spCp+aaDZ2IC32CPyWOW
+         sIMsh6G/kHBU8I5guiAnVTCBZd3FSUYtNO1MZJNTKluLUewy40AtfMvWlD/CTXMZjpxQ
+         r8tHNxZJgNZh72Lzz8hpZaS9pue4KKRU6mZG3cyZv80Zjx7djJH/8Fi7Oc2gVjT0YMyM
+         PpJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=y9t6vhCtkpBTj7UyzsHtNmw0a9BoqdSNZkog7WVM1cc=;
-        b=atlMNmDG2zM2UsBFepZzsPCy7anD0cB4Wh6BieVNVRKftTknfrj6moOqHAyoUbQi/0
-         paGB8TWWU+Z9EEA5zL/NtnI9LPCHoeGCG27vfzcRht5ZzDDHK6kUNBsVqLnUvtYcQQ8T
-         rWipwSbybNuFEqQKJm23ukm+iQgUxiiNNSnX6Z9f75XEs729cPPUoeuXrEhCv28CT2Qu
-         obtNCIzHlsiurwda6/M4SXVTWwZEiGdwVAYlG3sZxU9Kwy9jGcbnvKSWQCj+Pck8WJte
-         1u5hsG2JCXnhE58JvWBjtcMCWywWFL7SXolWipjQWFxjq1aj94L9N/ry7ha2Qe/sMI4f
-         KOaQ==
-X-Gm-Message-State: AA6/9RnRU7NIVdDe++z50Ezz/54avWTlxa//oaqs/6yoQi6I5nFsPUFF9xacpiMJRaCGJRpS
-X-Received: by 10.98.141.2 with SMTP id z2mr1288290pfd.3.1476235421227;
-        Tue, 11 Oct 2016 18:23:41 -0700 (PDT)
+        bh=eC0BhWhlwilo/Ow2U17yZk5IAObCQ2Ts3QSFINpqT74=;
+        b=G8FoNaE6V6vRzL68Ya2FXwSgtOR2+2zMb076OoM83al6C/r1rP+mCQ9KRCtZboi6Hg
+         nupzsMbcx2CsLa0mxAeex+9lisYXvZyVEfJXoo5vZdNzUYEZugU+rUH9CAD3yEvV7+hP
+         ZHerqaM5AFPBN5w/txyesLjBmQWTI4dr0IKKkQHI1lUSrixn6EICe6mPpFxXg3xMwNAX
+         fQqGoLmwW15Rodx97M+MQB4dMqFTDgcdsg7HZzA63ALsZRg3ou1/hny3/QvCfLKe4sB4
+         6vKvsmFq6twYBXGcAcszN9k2WzFmTwSWFRkkS7/hEviowP96ifNAnitxjqiCSLfqGbj+
+         v/kA==
+X-Gm-Message-State: AA6/9RnEVnbd//MlZeZRSneEYHzkVlYfPkMi92ULaRCT6WOftI2GW0tifriqLylm4e7tRqB3
+X-Received: by 10.66.248.229 with SMTP id yp5mr11164534pac.31.1476235417068;
+        Tue, 11 Oct 2016 18:23:37 -0700 (PDT)
 Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
-        by smtp.gmail.com with ESMTPSA id b11sm7175042pfb.49.2016.10.11.18.23.39
+        by smtp.gmail.com with ESMTPSA id b11sm7175042pfb.49.2016.10.11.18.23.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Oct 2016 18:23:40 -0700 (PDT)
+        Tue, 11 Oct 2016 18:23:35 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
         christian.couder@gmail.com, gitster@pobox.com
-Subject: [PATCH 5/5] trailer: support values folded to multiple lines
-Date:   Tue, 11 Oct 2016 18:23:29 -0700
-Message-Id: <4b8616732b719ede04b90c87ab240c29b4e3a0bb.1476232683.git.jonathantanmy@google.com>
+Subject: [PATCH 2/5] trailer: streamline trailer item create and add
+Date:   Tue, 11 Oct 2016 18:23:26 -0700
+Message-Id: <99b6b334e61ac12e93cdc76a8c60e87d7d1c39cc.1476232683.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <cover.1476232683.git.jonathantanmy@google.com>
 References: <cover.1476232683.git.jonathantanmy@google.com>
@@ -64,312 +63,211 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, interpret-trailers requires that a trailer be only on 1 line.
-For example:
-
-  a: first line
-     second line
-
-would be interpreted as one trailer line followed by one non-trailer line.
-
-Make interpret-trailers support RFC 822-style folding, treating those
-lines as one logical trailer.
+Currently, creation and addition (to a list) of trailer items are spread
+across multiple functions. Streamline this by only having 2 functions:
+one to parse the user-supplied string, and one to add the parsed
+information to a list.
 ---
- Documentation/git-interpret-trailers.txt |   7 +-
- t/t7513-interpret-trailers.sh            | 139 +++++++++++++++++++++++++++++++
- trailer.c                                |  40 ++++++---
- 3 files changed, 170 insertions(+), 16 deletions(-)
+ trailer.c | 135 +++++++++++++++++++++++++++++---------------------------------
+ 1 file changed, 62 insertions(+), 73 deletions(-)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index c480da6..cfec636 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -57,11 +57,12 @@ minus signs start the patch part of the message.
- 
- When reading trailers, there can be whitespaces before and after the
- token, the separator and the value. There can also be whitespaces
--inside the token and the value.
-+inside the token and the value. The value may be split over multiple lines with
-+each subsequent line starting with whitespace, like the "folding" in RFC 822.
- 
- Note that 'trailers' do not follow and are not intended to follow many
--rules for RFC 822 headers. For example they do not follow the line
--folding rules, the encoding rules and probably many other rules.
-+rules for RFC 822 headers. For example they do not follow
-+the encoding rules and probably many other rules.
- 
- OPTIONS
- -------
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 7f5cd2a..195cdd3 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -157,6 +157,145 @@ test_expect_success 'with non-trailer lines only' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'multiline field treated as atomic for placement' '
-+	q_to_tab >patch <<-\EOF &&
-+
-+		another: trailer
-+		name: value on
-+		Qmultiple lines
-+		another: trailer
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		name: value on
-+		Qmultiple lines
-+		name: value
-+		another: trailer
-+	EOF
-+	test_config trailer.name.where after &&
-+	git interpret-trailers --trailer "name: value" patch >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'multiline field treated as atomic for replacement' '
-+	q_to_tab >patch <<-\EOF &&
-+
-+		another: trailer
-+		name: value on
-+		Qmultiple lines
-+		another: trailer
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		another: trailer
-+		name: value
-+	EOF
-+	test_config trailer.name.ifexists replace &&
-+	git interpret-trailers --trailer "name: value" patch >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'multiline field treated as atomic for difference check' '
-+	q_to_tab >patch <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		another: trailer
-+	EOF
-+	test_config trailer.name.ifexists addIfDifferent &&
-+
-+	q_to_tab >trailer <<-\EOF &&
-+		name: first line
-+		Qsecond line
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		another: trailer
-+	EOF
-+	git interpret-trailers --trailer "$(cat trailer)" patch >actual &&
-+	test_cmp expected actual &&
-+
-+	q_to_tab >trailer <<-\EOF &&
-+		name: first line
-+		Qsecond line *DIFFERENT*
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		another: trailer
-+		name: first line
-+		Qsecond line *DIFFERENT*
-+	EOF
-+	git interpret-trailers --trailer "$(cat trailer)" patch >actual &&
-+	test_cmp expected actual &&
-+
-+	q_to_tab >trailer <<-\EOF &&
-+		name: first line *DIFFERENT*
-+		Qsecond line
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		another: trailer
-+		name: first line *DIFFERENT*
-+		Qsecond line
-+	EOF
-+	git interpret-trailers --trailer "$(cat trailer)" patch >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'multiline field treated as atomic for neighbor check' '
-+	q_to_tab >patch <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		another: trailer
-+	EOF
-+	test_config trailer.name.where after &&
-+	test_config trailer.name.ifexists addIfDifferentNeighbor &&
-+
-+	q_to_tab >trailer <<-\EOF &&
-+		name: first line
-+		Qsecond line
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		another: trailer
-+	EOF
-+	git interpret-trailers --trailer "$(cat trailer)" patch >actual &&
-+	test_cmp expected actual &&
-+
-+	q_to_tab >trailer <<-\EOF &&
-+		name: first line
-+		Qsecond line *DIFFERENT*
-+	EOF
-+	q_to_tab >expected <<-\EOF &&
-+
-+		another: trailer
-+		name: first line
-+		Qsecond line
-+		name: first line
-+		Qsecond line *DIFFERENT*
-+		another: trailer
-+	EOF
-+	git interpret-trailers --trailer "$(cat trailer)" patch >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'with config setup' '
- 	git config trailer.ack.key "Acked-by: " &&
- 	cat >expected <<-\EOF &&
 diff --git a/trailer.c b/trailer.c
-index 97e96a9..907baa0 100644
+index bf3d7d0..e8b1bfb 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -31,7 +31,7 @@ struct trailer_item {
- 	 * (excluding the terminating newline) and token is NULL.
- 	 */
- 	char *token;
--	char *value;
-+	struct strbuf value;
- };
- 
- struct arg_item {
-@@ -81,7 +81,7 @@ static int same_token(const struct trailer_item *a, const struct arg_item *b)
- 
- static int same_value(const struct trailer_item *a, const struct arg_item *b)
- {
--	return !strcasecmp(a->value, b->value);
-+	return !strcasecmp(a->value.buf, b->value);
- }
- 
- static int same_trailer(const struct trailer_item *a, const struct arg_item *b)
-@@ -107,7 +107,7 @@ static inline void strbuf_replace(struct strbuf *sb, const char *a, const char *
- static void free_trailer_item(struct trailer_item *item)
- {
- 	free(item->token);
--	free(item->value);
-+	strbuf_release(&item->value);
- 	free(item);
- }
- 
-@@ -152,8 +152,8 @@ static void print_all(FILE *outfile, struct trailer_item *first, int trim_empty)
- {
- 	struct trailer_item *item;
- 	for (item = first; item; item = item->next) {
--		if (!trim_empty || strlen(item->value) > 0)
--			print_tok_val(outfile, item->token, item->value);
-+		if (!trim_empty || item->value.len > 0)
-+			print_tok_val(outfile, item->token, item->value.buf);
- 	}
- }
- 
-@@ -195,8 +195,8 @@ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg
- 		if (arg_tok->value && arg_tok->value[0]) {
- 			arg = arg_tok->value;
- 		} else {
--			if (in_tok && in_tok->value)
--				arg = xstrdup(in_tok->value);
-+			if (in_tok)
-+				arg = xstrdup(in_tok->value.buf);
- 			else
- 				arg = xstrdup("");
- 		}
-@@ -209,7 +209,9 @@ static struct trailer_item *trailer_from_arg(struct arg_item *arg_tok)
- {
- 	struct trailer_item *new = xcalloc(sizeof(*new), 1);
- 	new->token = arg_tok->token;
--	new->value = arg_tok->value;
-+	strbuf_init(&new->value, 0);
-+	strbuf_attach(&new->value, arg_tok->value, strlen(arg_tok->value),
-+		      strlen(arg_tok->value));
- 	arg_tok->token = arg_tok->value = NULL;
- 	free_arg_item(arg_tok);
- 	return new;
-@@ -587,14 +589,17 @@ static int parse_trailer(struct strbuf *tok, struct strbuf *val,
+@@ -335,7 +335,7 @@ static int set_if_missing(struct conf_info *item, const char *value)
  	return 0;
  }
  
--static void add_trailer_item(struct trailer_item ***tail, char *tok, char *val)
-+static struct trailer_item *add_trailer_item(struct trailer_item ***tail, char *tok,
-+					     char *val)
+-static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
++static void duplicate_conf(struct conf_info *dst, const struct conf_info *src)
  {
- 	struct trailer_item *new = xcalloc(sizeof(*new), 1);
- 	new->token = tok;
--	new->value = val;
-+	strbuf_init(&new->value, 0);
-+	strbuf_attach(&new->value, val, strlen(val), strlen(val));
- 
- 	**tail = new;
- 	*tail = &new->next;
-+	return new;
+ 	*dst = *src;
+ 	if (src->name)
+@@ -467,10 +467,30 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 	return 0;
  }
  
- static void add_arg_item(struct arg_item ***tail, char *tok, char *val,
-@@ -750,6 +755,7 @@ static int process_input_file(FILE *outfile,
+-static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
++static const char *token_from_item(struct trailer_item *item, char *tok)
++{
++	if (item->conf.key)
++		return item->conf.key;
++	if (tok)
++		return tok;
++	return item->conf.name;
++}
++
++static int token_matches_item(const char *tok, struct trailer_item *item, int tok_len)
++{
++	if (!strncasecmp(tok, item->conf.name, tok_len))
++		return 1;
++	return item->conf.key ? !strncasecmp(tok, item->conf.key, tok_len) : 0;
++}
++
++static int parse_trailer(struct strbuf *tok, struct strbuf *val,
++			 const struct conf_info **conf, const char *trailer)
+ {
+ 	size_t len;
+ 	struct strbuf seps = STRBUF_INIT;
++	struct trailer_item *item;
++	int tok_len;
++
+ 	strbuf_addstr(&seps, separators);
+ 	strbuf_addch(&seps, '=');
+ 	len = strcspn(trailer, seps.buf);
+@@ -490,73 +510,31 @@ static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tra
+ 		strbuf_addstr(tok, trailer);
+ 		strbuf_trim(tok);
+ 	}
+-	return 0;
+-}
+-
+-static const char *token_from_item(struct trailer_item *item, char *tok)
+-{
+-	if (item->conf.key)
+-		return item->conf.key;
+-	if (tok)
+-		return tok;
+-	return item->conf.name;
+-}
+-
+-static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
+-					     char *tok, char *val)
+-{
+-	struct trailer_item *new = xcalloc(sizeof(*new), 1);
+-	new->value = val ? val : xstrdup("");
+-
+-	if (conf_item) {
+-		duplicate_conf(&new->conf, &conf_item->conf);
+-		new->token = xstrdup(token_from_item(conf_item, tok));
+-		free(tok);
+-	} else {
+-		duplicate_conf(&new->conf, &default_conf_info);
+-		new->token = tok;
+-	}
+-
+-	return new;
+-}
+-
+-static int token_matches_item(const char *tok, struct trailer_item *item, int tok_len)
+-{
+-	if (!strncasecmp(tok, item->conf.name, tok_len))
+-		return 1;
+-	return item->conf.key ? !strncasecmp(tok, item->conf.key, tok_len) : 0;
+-}
+-
+-static struct trailer_item *create_trailer_item(const char *string)
+-{
+-	struct strbuf tok = STRBUF_INIT;
+-	struct strbuf val = STRBUF_INIT;
+-	struct trailer_item *item;
+-	int tok_len;
+-
+-	if (parse_trailer(&tok, &val, string))
+-		return NULL;
+-
+-	tok_len = token_len_without_separator(tok.buf, tok.len);
+ 
+ 	/* Lookup if the token matches something in the config */
++	tok_len = token_len_without_separator(tok->buf, tok->len);
++	*conf = &default_conf_info;
+ 	for (item = first_conf_item; item; item = item->next) {
+-		if (token_matches_item(tok.buf, item, tok_len))
+-			return new_trailer_item(item,
+-						strbuf_detach(&tok, NULL),
+-						strbuf_detach(&val, NULL));
++		if (token_matches_item(tok->buf, item, tok_len)) {
++			char *tok_buf = strbuf_detach(tok, NULL);
++			*conf = &item->conf;
++			strbuf_addstr(tok, token_from_item(item, tok_buf));
++			free(tok_buf);
++			break;
++		}
+ 	}
+ 
+-	return new_trailer_item(NULL,
+-				strbuf_detach(&tok, NULL),
+-				strbuf_detach(&val, NULL));
++	return 0;
+ }
+ 
+-static void add_trailer_item(struct trailer_item ***tail,
+-			     struct trailer_item *new)
++static void add_trailer_item(struct trailer_item ***tail, char *tok, char *val,
++			     const struct conf_info *conf)
+ {
+-	if (!new)
+-		return;
++	struct trailer_item *new = xcalloc(sizeof(*new), 1);
++	new->token = tok;
++	new->value = val;
++	duplicate_conf(&new->conf, conf);
++
+ 	**tail = new;
+ 	*tail = &new->next;
+ }
+@@ -567,19 +545,25 @@ static struct trailer_item *process_command_line_args(struct string_list *traile
+ 	struct trailer_item **arg_tok_tail = &arg_tok_head;
+ 	struct string_list_item *tr;
+ 	struct trailer_item *item;
++	struct strbuf tok = STRBUF_INIT;
++	struct strbuf val = STRBUF_INIT;
++	const struct conf_info *conf;
+ 
+ 	/* Add a trailer item for each configured trailer with a command */
+-	for (item = first_conf_item; item; item = item->next) {
+-		if (item->conf.command) {
+-			struct trailer_item *new = new_trailer_item(item, NULL, NULL);
+-			add_trailer_item(&arg_tok_tail, new);
+-		}
+-	}
++	for (item = first_conf_item; item; item = item->next)
++		if (item->conf.command)
++			add_trailer_item(&arg_tok_tail,
++					 xstrdup(token_from_item(item, NULL)),
++					 xstrdup(""),
++					 &item->conf);
+ 
+ 	/* Add a trailer item for each trailer on the command line */
+ 	for_each_string_list_item(tr, trailers) {
+-		struct trailer_item *new = create_trailer_item(tr->string);
+-		add_trailer_item(&arg_tok_tail, new);
++		if (!parse_trailer(&tok, &val, &conf, tr->string))
++			add_trailer_item(&arg_tok_tail,
++					 strbuf_detach(&tok, NULL),
++					 strbuf_detach(&val, NULL),
++					 conf);
+ 	}
+ 
+ 	return arg_tok_head;
+@@ -702,6 +686,9 @@ static int process_input_file(FILE *outfile,
+ {
+ 	int count = 0;
  	int patch_start, trailer_start, trailer_end, i;
- 	struct strbuf tok = STRBUF_INIT;
- 	struct strbuf val = STRBUF_INIT;
-+	struct trailer_item *last = NULL;
++	struct strbuf tok = STRBUF_INIT;
++	struct strbuf val = STRBUF_INIT;
++	const struct conf_info *conf;
  
  	/* Get the line count */
  	while (lines[count])
-@@ -767,16 +773,24 @@ static int process_input_file(FILE *outfile,
+@@ -719,10 +706,12 @@ static int process_input_file(FILE *outfile,
  
  	/* Parse trailer lines */
  	for (i = trailer_start; i < trailer_end; i++) {
-+		if (last && isspace(lines[i]->buf[0])) {
-+			/* continuation line of the last trailer item */
-+			strbuf_addch(&last->value, '\n');
-+			strbuf_addbuf(&last->value, lines[i]);
-+			strbuf_strip_suffix(&last->value, "\n");
-+			continue;
-+		}
- 		if (!parse_trailer(&tok, &val, NULL, lines[i]->buf, 0))
--			add_trailer_item(in_tok_tail,
--					 strbuf_detach(&tok, NULL),
--					 strbuf_detach(&val, NULL));
-+			last = add_trailer_item(in_tok_tail,
-+						strbuf_detach(&tok, NULL),
-+						strbuf_detach(&val, NULL));
- 		else {
- 			strbuf_addbuf(&val, lines[i]);
- 			strbuf_strip_suffix(&val, "\n");
- 			add_trailer_item(in_tok_tail,
- 					 NULL,
- 					 strbuf_detach(&val, NULL));
-+			last = NULL;
- 		}
+-		if (lines[i]->buf[0] != comment_line_char) {
+-			struct trailer_item *new = create_trailer_item(lines[i]->buf);
+-			add_trailer_item(in_tok_tail, new);
+-		}
++		if (lines[i]->buf[0] != comment_line_char &&
++		    !parse_trailer(&tok, &val, &conf, lines[i]->buf))
++			add_trailer_item(in_tok_tail,
++					 strbuf_detach(&tok, NULL),
++					 strbuf_detach(&val, NULL),
++					 conf);
  	}
  
+ 	return trailer_end;
 -- 
 2.8.0.rc3.226.g39d4020
 
