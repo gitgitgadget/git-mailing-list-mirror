@@ -2,84 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6323320989
-	for <e@80x24.org>; Wed, 12 Oct 2016 08:01:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759B320989
+	for <e@80x24.org>; Wed, 12 Oct 2016 08:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754255AbcJLIBw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 04:01:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39051 "EHLO mx1.imag.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754121AbcJLIBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 04:01:50 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9C7aFwn011720
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Wed, 12 Oct 2016 09:36:16 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9C7aGJe003333;
-        Wed, 12 Oct 2016 09:36:16 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Larry Finger <Larry.Finger@lwfinger.net>
-Cc:     Jeff King <peff@peff.net>,
-        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-        git@vger.kernel.org
-Subject: Re: Formatting problem send_mail in version 2.10.0
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
-        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
-        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
-        <vpqfuo3l4fl.fsf@anie.imag.fr>
-        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
-        <vpq4m4iamfs.fsf@anie.imag.fr>
-        <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
-Date:   Wed, 12 Oct 2016 09:36:16 +0200
-In-Reply-To: <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net> (Larry
-        Finger's message of "Tue, 11 Oct 2016 23:28:30 -0500")
-Message-ID: <vpq60oy589b.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S932201AbcJLIcW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 04:32:22 -0400
+Received: from mx4-phx2.redhat.com ([209.132.183.25]:36100 "EHLO
+        mx4-phx2.redhat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754367AbcJLIcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 04:32:19 -0400
+Received: from zmail26.collab.prod.int.phx2.redhat.com (zmail26.collab.prod.int.phx2.redhat.com [10.5.83.33])
+        by mx4-phx2.redhat.com (8.13.8/8.13.8) with ESMTP id u9C8ObMa013462;
+        Wed, 12 Oct 2016 04:24:37 -0400
+Date:   Wed, 12 Oct 2016 04:24:37 -0400 (EDT)
+From:   Josef Ridky <jridky@redhat.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Message-ID: <1550673688.5271111.1476260677732.JavaMail.zimbra@redhat.com>
+In-Reply-To: <xmqq7f9lmmol.fsf@gitster.mtv.corp.google.com>
+References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com> <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com> <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org> <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com> <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com> <255814448.2197583.1475759366093.JavaMail.zimbra@redhat.com> <xmqq7f9lmmol.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 2/2] Feature Request: user defined suffix for temp
+ files created by git-mergetool
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Wed, 12 Oct 2016 09:36:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u9C7aFwn011720
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1476862578.96858@ro1pqJsn9GRjQGAKx8fePA
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.34.4.141]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF48 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Feature Request: user defined suffix for temp files created by git-mergetool
+Thread-Index: Pzithe4cj1yHWesdPDGdx4YxmvsDkw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Larry Finger <Larry.Finger@lwfinger.net> writes:
+This is update of the second variant for request to add option to change
+suffix of name of temporary files generated by git mergetool. This
+change is requested for cases, when is git mergetool used for local
+comparison between two version of same package during package rebase.
 
-> On 10/11/2016 11:18 AM, Matthieu Moy wrote:
->> Larry Finger <Larry.Finger@lwfinger.net> writes:
->>
->>> That added information at the end is intended to be passed on to the
->>> stable group. In this case, the patch needs to be applied to kernel
->>> versions 4.8 and later.
->>
->> OK, but where do people fetch this information from?
->
-> This format is used in a patch for the kernel. When the patch is
-> merged into mainline, stable@vger.kernel.org gets sent an E-mail with
-> a copy of the original patch. Maintainers of the indicated systems
-> then merge the patch with their stable version.
+Signed-off-by: Josef Ridky <jridky@redhat.com>
+---
+ Documentation/git-mergetool.txt | 22 ++++++++++++++-
+ git-mergetool.sh                | 60 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 76 insertions(+), 6 deletions(-)
 
-Sorry, but this does not answer my question. I'll rephrase: when
-people behind stable@vger.kernel.org get the message, how do they know
-which version of the kernel they should apply it to?
-
-> I do not want it in the body of the message. I just want to pass a
-> hint to the stable maintainer(s).
-
-If it's not in the body of the message, then where is it?
-
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index e846c2e..a0466ac 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -8,7 +8,7 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
+ SYNOPSIS
+ --------
+ [verse]
+-'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
++'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -79,6 +79,26 @@ success of the resolution after the custom tool has exited.
+ 	Prompt before each invocation of the merge resolution program
+ 	to give the user a chance to skip the path.
+ 
++--local=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (local) for merging. If not set, default value is used.
++	Default suffix is LOCAL.
++
++--remote=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (remote) for merging. If not set, default value is used.
++	Default suffix is REMOTE.
++
++--backup=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (backup) for merging. If not set, default value is used.
++	Default suffix is BACKUP.
++
++--base=<name>::
++	Use string from <name> as part of suffix of name of temporary
++	file (base) for merging. If not set, default value is used.
++	Default suffix is BASE.
++
+ TEMPORARY FILES
+ ---------------
+ `git mergetool` creates `*.orig` backup files while resolving merges.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index bf86270..ed9ba82 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -8,7 +8,7 @@
+ # at the discretion of Junio C Hamano.
+ #
+ 
+-USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
++USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [--local=name] [--remote=name] [--backup=name] [--base=name] [file to merge] ...'
+ SUBDIRECTORY_OK=Yes
+ NONGIT_OK=Yes
+ OPTIONS_SPEC=
+@@ -16,6 +16,13 @@ TOOL_MODE=merge
+ . git-sh-setup
+ . git-mergetool--lib
+ 
++# Can be changed by user
++LOCAL_NAME='LOCAL'
++BASE_NAME='BASE'
++BACKUP_NAME='BACKUP'
++REMOTE_NAME='REMOTE'
++
++
+ # Returns true if the mode reflects a symlink
+ is_symlink () {
+ 	test "$1" = 120000
+@@ -271,10 +278,10 @@ merge_file () {
+ 		BASE=${BASE##*/}
+ 	fi
+ 
+-	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+-	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
+-	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
+-	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
++	BACKUP="$MERGETOOL_TMPDIR/${BASE}_${BACKUP_NAME}_$$$ext"
++	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${LOCAL_NAME}_$$$ext"
++	REMOTE="$MERGETOOL_TMPDIR/${BASE}_${REMOTE_NAME}_$$$ext"
++	BASE="$MERGETOOL_TMPDIR/${BASE}_${BASE_NAME}_$$$ext"
+ 
+ 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+ 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+@@ -396,6 +403,18 @@ do
+ 	--prompt)
+ 		prompt=true
+ 		;;
++	--local=*)
++		LOCAL_NAME=${1#--local=}
++		;;
++	--remote=*)
++		REMOTE_NAME=${1#--remote=}
++		;;
++	--base=*)
++		BASE_NAME=${1#--base=}
++		;;
++	--backup=*)
++		BACKUP_NAME=${1#--backup=}
++		;;
+ 	--)
+ 		shift
+ 		break
+@@ -410,6 +429,37 @@ do
+ 	shift
+ done
+ 
++# sanity check after parsing command line
++case "" in
++"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
++	die "You cannot set any of --local/remote/base/backup to empty."
++	;;
++esac
++
++case "$LOCAL_NAME" in
++"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
++	die "You cannot set any of --remote/base/backup to same as --local."
++	;;
++esac
++
++case "$REMOTE_NAME" in
++"$LOCAL_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
++	die "You cannot set any of --local/base/backup to same as --remote."
++	;;
++esac
++
++case "$BASE_NAME" in
++"$LOCAL_NAME"|"$REMOTE_NAME"|"$BACKUP_NAME")
++	die "You cannot set any of --local/remote/backup to same as --base."
++	;;
++esac
++
++case "$BACKUP_NAME" in
++"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME")
++	die "You cannot set any of --local/remote/base to same as --backup."
++	;;
++esac
++
+ prompt_after_failed_merge () {
+ 	while true
+ 	do
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.7.4
