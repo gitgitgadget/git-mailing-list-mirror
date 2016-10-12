@@ -2,164 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 223EC215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 20:54:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAEDA215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 21:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934302AbcJLUx6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 16:53:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62021 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934111AbcJLUx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 16:53:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1D2745E9B;
-        Wed, 12 Oct 2016 16:53:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tqc9lahQz0FstBsqoHu7pCxoS1k=; b=C651wp
-        IlUrrZ1rA/3nNVmw+6tJgY3o5GKZSumM8EuX1FK2ZX0/ooYbJbsN2PlMxm4f2978
-        Xugi+D9f2CwdFtBFiyeHGEDz54vecKHeHtJakVfElUpCjVnzo5RxodKWDFda6eOa
-        hw/GbOhVEOJo+LEYSwr0/Kj8E62P86GIIa7kM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JURIgD5yjdNcpuxnvAQEoKemXIhpafmA
-        t1jzddjC7SrbCoL+L7mYS6Ul4uOCsn91ZKbwuPY5CaRchblm5YIykzFYmBdOLUE3
-        rx+8OpooZq4J2vSifZHTU822vLrEQYji4e0Nl26L54HSi3cuW2sNRZBAhLinwLbz
-        GtfAbIhKjVs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A60645E99;
-        Wed, 12 Oct 2016 16:53:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13B1B45E97;
-        Wed, 12 Oct 2016 16:53:55 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Larry Finger <Larry.Finger@lwfinger.net>,
-        Jeff King <peff@peff.net>,
-        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-        git@vger.kernel.org
-Subject: Re: Formatting problem send_mail in version 2.10.0
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
-        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
-        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
-        <vpqfuo3l4fl.fsf@anie.imag.fr>
-        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
-        <vpq4m4iamfs.fsf@anie.imag.fr>
-        <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
-        <vpq60oy589b.fsf@anie.imag.fr>
-        <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
-        <vpq8tttr2ps.fsf@anie.imag.fr>
-Date:   Wed, 12 Oct 2016 13:53:52 -0700
-In-Reply-To: <vpq8tttr2ps.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-        12 Oct 2016 17:45:03 +0200")
-Message-ID: <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S934249AbcJLVKU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 17:10:20 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:34397 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934247AbcJLVKS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 17:10:18 -0400
+Received: by mail-qk0-f176.google.com with SMTP id f128so53076410qkb.1
+        for <git@vger.kernel.org>; Wed, 12 Oct 2016 14:10:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cOnhMajKIJiaadHL4XLi2fIAhrX22Sar3VTOc6FMCvQ=;
+        b=ijqyAvc+8z1uTzszXbbhzLswazxFXItrPw0SHtYFT81uyO/h+uOXXmriQBPbp/f4c+
+         IVzaDagM6bokQmvtK+B5fLU9kRo3arcxRtS+mNkFIKNBBblH9F4H2XK7weKUJHSUD4eK
+         6wfELDWfsAYarcgvTDHyaV/JwTzswgEbgy6F1r4HsnnUJYsmOI0nbZQPN6I6ZlRAaqPK
+         kLliW0f1eA/BzU5/u+QNRFs8fmxB1T0IWKBlIKDum0e0rbNh0JNhYM3McfgLKaMAmEIl
+         /AOZvQ/9MDW4R/HhBHk9vgfZNB7Gt29wvAtjVybQxC78LtHm8zwTpmlBQMTsZ5CUx/oG
+         UQoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cOnhMajKIJiaadHL4XLi2fIAhrX22Sar3VTOc6FMCvQ=;
+        b=BBEFLfrzw0xTMcfkJlIxGPecC8Qz0NHcJie+zz/va1UfAejr3/Abb8soc/Tyux3cYi
+         K4Dj0ItdE0/vHu7iSteJ3GKj7u0czqxI5UeavKj8fgrYT1en9a2ThJ/y5X9XcWs3L3OL
+         DwgAfvC5qtLykcgEx5lv2uhEEsrFsLMaxg7hb63ivE06Z7JocrM/LrYp/U55gxSw8l/B
+         k3oLaD5Sly5OGvhcRfLQvb2rw2r1Sk01TWY4zyBmCDRzZGNsclGjI8MSM1pf2vBxQXTP
+         IVtI9mdPCT+yPWgk7QHzI0joM9TK0ruyGnB1+ylSpPv9uYGfmmkHzeqEcXBkMc4AtnIj
+         D3NQ==
+X-Gm-Message-State: AA6/9RlK4BWbis0CXsapn0Jt91W3z89Ud/oIPHJtXgVwlgFhZgKs8dchxz0wNnZAkedNWS9W9heKeDh2de1MIITe
+X-Received: by 10.55.36.131 with SMTP id k3mr3061787qkk.86.1476306312381; Wed,
+ 12 Oct 2016 14:05:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FD23D154-90BD-11E6-AE0E-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.135.40 with HTTP; Wed, 12 Oct 2016 14:05:11 -0700 (PDT)
+In-Reply-To: <6c83c905-b10a-7f54-873f-54186faacfc8@FreeBSD.org>
+References: <6c83c905-b10a-7f54-873f-54186faacfc8@FreeBSD.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 12 Oct 2016 14:05:11 -0700
+Message-ID: <CAGZ79kZo5W1r0s26G3foB7caP6+u66mdzqzyneqXBX_B7A0RKg@mail.gmail.com>
+Subject: Re: problem with git worktree and git svn
+To:     Mathieu Arnold <mat@freebsd.org>, Duy Nguyen <pclouds@gmail.com>,
+        Eric Wong <e@80x24.org>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
++cc Duy who knows about worktree,
++cc Eric Wong, who knows about git-svn
 
->>> If it's not in the body of the message, then where is it?
->>
->> This point is clarified in the thread
->> http://marc.info/?l=linux-wireless&m=147625930203434&w=2, which is
->> with my upstream maintainer.
+
+
+On Wed, Oct 12, 2016 at 7:45 AM, Mathieu Arnold <mat@freebsd.org> wrote:
+> Hi,
 >
-> Which explicitly states that the syntax is not [$number], but # $number,
-> right?
+> I'm a FreeBSD ports developer, and while our main repository is in
+> Subversion, some of us use git-svn a lot for development.
+>
+> I discovered git worktree earlier this week, and I found it a great
+> asset to be able to have more than one branch of my worktree accessible
+> at the same time...
+>
+> Anyway, back to my problem, the way git-svn works, is that it looks for
+> a directory named "svn" in its gitdir and if it is not present, decide
+> the repository is using git-svn version 1 (whatever that is) and goes to
+> parse all the revisions to recreate the svn directory.
+> So I can only use git svn commands in my main worktree, the one with the
+> real gitdir.
+> To fix that, all I had to do is to add a symlink named svn in each
+> worktree's gitdir and pointing to ../../svn.
 
-But I do not think that works, either.  Let's step back.
+For some definition of fix. ;)
+Sure it fixes your local setup now, but would we want to use that as well here?
+My gut reaction:
 
-People write things like these
+* not all platforms know symlinks
+* IIRC there is some worktree magic that tells you the "main" dir,
+  so if that was used in git-svn instead it should "just work".
 
-    Cc: Stable <stable@vger.kernel.org> # 4.8
-    Cc: Stable <stable@vger.kernel.org> [4.8+]
-
-in the trailer part in the body of the message.  Are these lines
-meant to be usable if they appear as Cc: headers of an outgoing
-piece of e-mail as-is?
-
-That question has two subissues.
-
- * Are these RFC compliant?
- * Do real-world servers accept them?
-
-I did a quick test with my e-mail provider, by sending a test
-message with the above (with <stable@vger.kernel.org> replaced with
-my address, of course) on Cc: and the answer to the second question
-appears to be no.
-
-When I send the former, I get this:
-
-    550 5.1.1 <4.8>: Recipient address rejected: User unknown...'
-    errormsg='recipient address 4.8 not accepted by the server'
-
-The latter gives me this:
-
-    550 5.1.1 <[4.8+]>: Recipient address rejected: User unknown...'
-    errormsg='recipient address 4.8 not accepted by the server'
-
-So even if these were accepted by some servers, it is not sane
-to assume that these lines are meant to be copied to Cc: headers
-when sending out.  "send-email --cc" needs to salvage these
-malformed lines.
-
-For me, it seems that I get correct envelope rcpt-to addresses for
-both of them (i.e. "stable@vger.kernel.org" and nothing else appears
-on the command line of sendmail invocation), even though I seem to
-get a strange Cc: that are visible to humans:
-
-    Cc: "Stable # 4 . 8" <stable@vger.kernel.org>,
-        "Stable [4.8+]" <stable@vger.kernel.org>
-
-I seem to have libmailtools-perl 2.12 on my system.
-
-Just like Peff who tried to disable Mail::Address, it seems that
-I get complaint on both of them.
-
-"error: unable to extract a valid address from:" is followed by
-
-    Stable <stable@vger.kernel.org#4.8>
-    Stable <stable@vger.kernel.org[4.8+]>
-
-which is not ideal.
-
-If I were to issue a decree, I would say that people should stop
-suggesting to put RFC-bogus things on the Cc: line.  As you
-mentioned, things like:
-
-    Cc: Stable (4.8+) <stable@vger.kernel.org>
-    Cc: "Stable 4.8+" <stable@vger.kernel.org>
-
-are perfectly readable alternative that are still RFC-kosher.
-
-Things may have appeared to work by accident, and things may still
-work by accident, depending on the vintage and availability of
-Mail::Address package (which seems to be the case), but it is not
-worth risking random breakages that depends on what other people
-use in the first place, no?
-
-That is, even though people seem to expect "send-email --cc" to
-somehow be able to judge that " # 4.8" and " [4.8+]" are cruft not
-meant as part of a valid address, I do not think it is a realistic
-expectation.  How would it know "Cc: Stable <add@re.ss> 4.8, 4.9"
-has garbage " 4.8, 4.9" that needs to be stripped, while "Cc: Stable
-<add@re.ss> 4.8, torvalds@linux-foundation.org" has two valid
-addresses that need to be CC'ed and " 4.8" is the only thing that is
-unwanted?
-
-I'd welcome to be proven wrong with a working patch that makes
-"send-email --cc" to be hyper intelligent ;-), though.
-
+>
+> I think all that needs to happen is that when adding a new worktree, if
+> the main git directory has a "svn" directory, add a symlink to it in the
+> worktree's gitdir.
+>
+> --
+> Mathieu Arnold
+>
+>
