@@ -2,129 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25AC2207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 13:35:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45C52207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 13:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933781AbcJLNew (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 09:34:52 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.98]:45280 "EHLO
-        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932754AbcJLNee (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 09:34:34 -0400
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-        by smtprelay05.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1buJfB-00028p-N3; Wed, 12 Oct 2016 15:33:41 +0200
-Date:   Wed, 12 Oct 2016 15:33:38 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        git@vger.kernel.org, Jens.Lehmann@web.de,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: [PATCH v2 3/3] batch check whether submodule needs pushing into
- one call
-Message-ID: <20161012133338.GD84247@book.hvoigt.net>
-References: <cover.1475851621.git.hvoigt@hvoigt.net>
- <cover.1475851621.git.hvoigt@hvoigt.net>
- <67d4c48dc0129f20041c88d27a49c7a21188c882.1475851621.git.hvoigt@hvoigt.net>
- <xmqqlgxvbype.fsf@gitster.mtv.corp.google.com>
+        id S1755101AbcJLNsh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 09:48:37 -0400
+Received: from mout.web.de ([217.72.192.78]:61403 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754954AbcJLNsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 09:48:15 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0M5wrF-1axNZO0ziz-00xpfo; Wed, 12 Oct 2016 15:47:27
+ +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2 1/2] read-cache: factor out get_sha1_from_index() helper
+Date:   Wed, 12 Oct 2016 15:47:26 +0200
+Message-Id: <20161012134726.28326-1-tboegi@web.de>
+X-Mailer: git-send-email 2.10.0
+In-Reply-To: <20161009095649.1886-1-tboegi@web.de>
+References: <20161009095649.1886-1-tboegi@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlgxvbype.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:WUf1AVjX7N87ecUZ5icmIjOg+R63WVUWGuMFBmlP09Zxv1roU+2
+ R2q46Ixh2Dwz4F/tpEqpPY3maKWvd/2BsshKBZhmQfNmEs76mSpBNR98HZ7q/Rhjce1FhQz
+ Fdh+0zlKHl1KcZhR40iAnqXt87oAEqTdMZHoc7vguxvCstUI9SN5fv58Et/I5B461okuFQg
+ GVVkZt3zcF9AC8ODbIB2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eEmq8nEdnuo=:oXGXCzR2QYCBvbpnO7IZj0
+ lMLACYXaN1oj9kqIsIYgbBms0kwWWuXzZmepB2Rw93iE1n3Kfd520zgJOrrp2daY1LaAWSsSz
+ nm+5CoefF6ts3ZEDRG4ZIcJsRUS+t/OzCLbUnk6TWdbOWb5Hj2GOF7vMftLBoHddPVAyooRuh
+ i6rP3gGbJVJdg1ytHtxYROQvxUiM6QBkL0J39fbOZmYyy02HjBNMUWFeKsl90Lj0vizIa0Bfz
+ 4C7o3thArQxXx7iOjVDQFoX5ERvoo+odxxP7VTJ7wgKkm+d4Dmcgm7+AOvV0zhLwgb9Y0Wdbp
+ 6rCA5wmLtDaYNnWTeZfjddNt5HASAyoPP4e0ekVwsG9Ogz7yn8c0yXpInVBPNYQDX4KgP06+e
+ dzDBqa46FXdohAwY+ijlmd4r5V4hSR0y3XhqReomGqN8TiVOlMbsE6tfl+2hgc+UvfsJMsv9Y
+ VM/MtbODfG3+3wziBIeRPNkfwQxegUEtL8uuJc7s/u3jJLgBCuTW3o8TCXH/hJHySdSKY/OBL
+ akA8DjUxD/BWDZw+k0ihHZ6yYprb+fT0rX6Ci1oymX9NXEpmr8fBbVdko7vnU8jjC6lzgE0O4
+ XXtGhqZx9OQuLnx6/7YmFe8TWPzS8spCGjEf/jjEmPis/e41LGHZExx/hFTGR58p5f9CubfsT
+ WBQRHfQmuZmA00mKELiq41WRHfPKPUWZcvrLootVXlZHL6v55SziryC06r4GTE35h6BIBgIN7
+ cgmL0pd9uQ9R8ZmSerqnr4yPKtAI8PGFq+Cy2eIldcghGcQCMtZASAwznDdurY/m9AKAmEYsw
+ bfAoNiW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2016 at 03:56:13PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > -static int submodule_needs_pushing(const char *path, const unsigned char sha1[20])
-> > +static int check_has_hash(const unsigned char sha1[20], void *data)
-> >  {
-> > -	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
-> > +	int *has_hash = (int *) data;
-> > +
-> > +	if (!lookup_commit_reference(sha1))
-> > +		*has_hash = 0;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int submodule_has_hashes(const char *path, struct sha1_array *hashes)
-> > +{
-> > +	int has_hash = 1;
-> > +
-> > +	if (add_submodule_odb(path))
-> > +		return 0;
-> > +
-> > +	sha1_array_for_each_unique(hashes, check_has_hash, &has_hash);
-> > +	return has_hash;
-> > +}
-> > +
-> > +static int submodule_needs_pushing(const char *path, struct sha1_array *hashes)
-> > +{
-> > +	if (!submodule_has_hashes(path, hashes))
-> >  		return 0;
-> 
-> Same comment about naming.  
-> 
-> What do check-has-hash and submodule-has-hashes exactly mean by
-> "hash" in their names?  Because I think what is checked here is
-> "does the local submodule repository have _all_ the commits
-> referenced from the superproject commit we are pushing?", so I'd
-> prefer to see "commit" in their names.
-> 
-> If we do not even have these commits locally, then there is no point
-> attempting to push, so returning 0 (i.e. it is not "needs pushing"
-> situation) is correct but it is a but subtle.  It's not "we know
-> they already have them", but it is "even if we tried to push, it
-> won't do us or the other side any good."  A single-liner in-code
-> comment may help.
+From: Torsten Bögershausen <tboegi@web.de>
 
-First the naming part. How about:
+Factor out the retrieval of the sha1 for a given path in
+read_blob_data_from_index() into the function get_sha1_from_index().
 
-	submodule_has_commits()
+This will be used in the next commit, when convert.c can do the
+analyze for "text=auto" without slurping the whole blob into memory
+at once.
 
-?
+Add a wrapper definition get_sha1_from_cache().
 
-Second as mentioned a previous answer[1] to this part: I would actually
-like to have a die() here instead of blindly proceeding. Since the user
-either specified --recurse-submodules=... at the commandline or it was
-implicitly enabled because we have submodules in the tree we should be
-careful and not push revisions referencing submodules that are not
-available at a remote. If we can not properly figure it out I would
-suggest to stop and tell the user how to solve the situation. E.g.
-either she clones the appropriate submodules or specifies
---no-recurse-submodules on the commandline to tell git that she does not
-care.
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ cache.h      |  3 +++
+ read-cache.c | 29 ++++++++++++++++++-----------
+ 2 files changed, 21 insertions(+), 11 deletions(-)
 
-Returning 0 here means: "No push needed" but the correct answer would
-be: "We do not know". Question is what we should do here which I am
-planning to address in a separate patch series since that will be
-changing behavior.
+diff --git a/cache.h b/cache.h
+index 1604e29..04de209 100644
+--- a/cache.h
++++ b/cache.h
+@@ -380,6 +380,7 @@ extern void free_name_hash(struct index_state *istate);
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, at)
+ #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+ #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
++#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (path))
+ #endif
+ 
+ enum object_type {
+@@ -1089,6 +1090,8 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
+ 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJECT);
+ }
+ 
++const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path);
++
+ /*
+  * This internal function is only declared here for the benefit of
+  * lookup_replace_object().  Please do not call it directly.
+diff --git a/read-cache.c b/read-cache.c
+index 38d67fa..5a1df14 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2290,13 +2290,27 @@ int index_name_is_other(const struct index_state *istate, const char *name,
+ 
+ void *read_blob_data_from_index(struct index_state *istate, const char *path, unsigned long *size)
+ {
+-	int pos, len;
++	const unsigned char *sha1;
+ 	unsigned long sz;
+ 	enum object_type type;
+ 	void *data;
+ 
+-	len = strlen(path);
+-	pos = index_name_pos(istate, path, len);
++	sha1 = get_sha1_from_index(istate, path);
++	if (!sha1)
++		return NULL;
++	data = read_sha1_file(sha1, &type, &sz);
++	if (!data || type != OBJ_BLOB) {
++		free(data);
++		return NULL;
++	}
++	if (size)
++		*size = sz;
++	return data;
++}
++
++const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path)
++{
++	int pos = index_name_pos(istate, path, strlen(path));
+ 	if (pos < 0) {
+ 		/*
+ 		 * We might be in the middle of a merge, in which
+@@ -2312,14 +2326,7 @@ void *read_blob_data_from_index(struct index_state *istate, const char *path, un
+ 	}
+ 	if (pos < 0)
+ 		return NULL;
+-	data = read_sha1_file(istate->cache[pos]->oid.hash, &type, &sz);
+-	if (!data || type != OBJ_BLOB) {
+-		free(data);
+-		return NULL;
+-	}
+-	if (size)
+-		*size = sz;
+-	return data;
++	return istate->cache[pos]->oid.hash;
+ }
+ 
+ void stat_validity_clear(struct stat_validity *sv)
+-- 
+2.10.0
 
-So how about:
-
-
-	if (!submodule_has_hashes(path, hashes))
-		/* NEEDSWORK: The correct answer here is "We do not
-		 * know" instead of "No". We currently proceed pushing
-		 * here as if the submodules commits are available on a
-		 * remote, which is not always correct. */
-		return 0;
-
-What do you think?
-
-Cheers Heiko
-
-[1] http://public-inbox.org/git/20160919195812.GC62429@book.hvoigt.net/
