@@ -2,123 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF2952098A
-	for <e@80x24.org>; Wed, 12 Oct 2016 16:20:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E77C0207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 16:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755340AbcJLQUv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 12:20:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54326 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754923AbcJLQUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 12:20:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E01744F0F;
-        Wed, 12 Oct 2016 12:20:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iYFWA0DFcjmR0p6+BCoCHLsRYhE=; b=kDujTJ
-        DAYNu3dEZWr7f+9KGvSYd9/z5kGE/i4cam4BPnzqiYnmGlkD4PqwqS4nCILWk+bK
-        dS+h2wQmdTLuQcru77rqaCp5HA2qWAOkFbSjX44In/Q2Ns59+EH+In/rU7U1lna9
-        Uow41b+w9a37Lt2KEF69C6U6qsfW69WGgIgNY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=i5wbr0c9kYiL/vNYoQAD8Xb0HdxIE6/g
-        Nl//bMwik9qHoD+bdWOH1FrzYZ3qFM2Y/B3uiWxEB8ya40p2cJMVyei0O4jicIS0
-        aiyQE2bKFlGUQH9c1U1gE8BqtDjf20YcXsThkbrBAmRWRzfunNO/zvC5SM8fIBjO
-        YjQf4qVIjBc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 45D5244F0E;
-        Wed, 12 Oct 2016 12:20:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD6F944F0D;
-        Wed, 12 Oct 2016 12:20:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCHv2] attr: convert to new threadsafe API
-References: <20161011235951.8358-1-sbeller@google.com>
-        <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZrNSmPAQ6SmBzFDJtSmdCbqKcgQu4KDLfoYVkSXvo-og@mail.gmail.com>
-Date:   Wed, 12 Oct 2016 09:20:45 -0700
-In-Reply-To: <CAGZ79kZrNSmPAQ6SmBzFDJtSmdCbqKcgQu4KDLfoYVkSXvo-og@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 11 Oct 2016 23:51:56 -0700")
-Message-ID: <xmqqfuo15yjm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753712AbcJLQYr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 12:24:47 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54040 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753422AbcJLQYq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 12:24:46 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LrqNe-1aqxRo2IVq-013gWS; Wed, 12 Oct 2016 18:24:38
+ +0200
+Date:   Wed, 12 Oct 2016 18:24:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Joshua N Pritikin <jpritikin@pobox.com>
+cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: interactive rebase should better highlight the not-applying
+ commit
+In-Reply-To: <20161012132740.dvyofl36qtualxgk@droplet>
+Message-ID: <alpine.DEB.2.20.1610121815160.197091@virtualbox>
+References: <20161011190745.w2asu6eoromkrccu@droplet> <CAGZ79kZSQx7aOCgQ2dwzJeCLX-k-+x1SKabEBG7CktNfeXAbvg@mail.gmail.com> <20161012132740.dvyofl36qtualxgk@droplet>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D581D478-9097-11E6-9FDF-F99D12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:mgZF0EOUJ6z6h1TA8HHJrO3nO+lEM+OXVH8xCOf8CfCemgnwwiA
+ 9rZR5ZBZu6cwzUU/AFAeHeGvWb3EUgoibCHgF2RPRBji2pv5P3P7tAtIjWxfeCKhOyrt/F8
+ zb3k28e8NUVVr37XvSomLb7yTo5UT/WdXMQyUehou44wVqEW5MK/xrFd4d66bI+kqWe3k5D
+ /Ht/C2kscDrXQKCek4kMg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5Aq3u3FwBp8=:uTawJehYBr/kES4FeobX8q
+ wHgfNspgAuBBuwpDnkKUJe12ck7h86rMWYDrhBb9+y83ak7i1t9SFahlz0AUAMrIJ3jnzCMWg
+ svYpEcdvORHLo0PQ17bVT3sSawiWg8yVC08hAPTjDNG8Xzf6sUPSiEzOQJ+0HkG3SSbJFMeCP
+ +2Sc6cQuwhBYgmYBvS0CZW+y57iSqjKCYiPitB/fxPOLCamCd4VtZXPONx0LQWhyFGXRZWcZo
+ 2DzcoEy5Of78FjXteVCGMV4WoHLsPkDDu7PtMKf27qkrS5Xy0puRHZOMLs3ho6ph9NNCDmAQ2
+ z54mRQywJAMvMV+10T8NGh32a9oa71SZbC9gR8yaUFcxrIHHjYIMCckDbuev3IigTBVnNV+NR
+ mCQWoCR9WO1LyGgL9lTnuwFFhQThIwDk3lj7kUH4QX1lRayk0kh7+0BUoOF0h/1xpMv3O2lyD
+ uRwPukXpmrazW/qjF2DxRQ8RBtnpl6CuaPpYD224olZZx8DGGhitmZYlRXpfKZ6+j352kQqW2
+ hVU6GR8ZsliwvY1uK635u7OfKg9Zyzqf3+KYdqOp7dfnZBEKzQ/GSC5bZOHkl/6ZIIhUlt7Yb
+ 4aw2ArxN4mKsFRQ/IO4T1ApX47G5i6nXfXk0R3n2O1khyIsj2gYGI1ybMWn2olwN3fFzh2Bzo
+ H0AgK1Bw7MR3CFNJaB7kTaPUrxqD95JfjX6XI7BQoaacPurZJ3tA6/0vKzFZ2FCE1wZ/z6NBm
+ Qfdma2opsZ2Iy9s7EaM5MI2M1SVWtGvq/DDiRVeeaq+aNLayX/b8y0Omu+xDmQMWIbI6TnZin
+ kCi2wE4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi Joshua,
 
->> I am not sure if the updates to the callers fulfill that purpose.
->> For example, look at this hunk.
->>
->>> @@ -111,6 +111,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->>>       struct archiver_args *args = c->args;
->>>       write_archive_entry_fn_t write_entry = c->write_entry;
->>>       static struct git_attr_check *check;
->>> +     static struct git_attr_result result;
->>
->> As we discussed, this caller, even when threaded, will always want
->> to ask for a fixed two attributes, so "check" being static and
->> shared across threads is perfectly fine.  But we do not want to see
->> "result" shared, do we?
+On Wed, 12 Oct 2016, Joshua N Pritikin wrote:
+
+> On Tue, Oct 11, 2016 at 01:55:22PM -0700, Stefan Beller wrote:
+> > On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
+> > > I assume somebody familiar with GIT's code base could make this
+> > > change in about 10 minutes.
+> >
+> > Can you elaborate how you come to that estimate?
 > 
-> Well all of the hunks in the patch are not threaded, so they
-> don't follow a threading pattern, but the static pattern to not be
-> more expensive than needed.
+> Hm, a false belief in the general awesomeness of GIT developers?
 
-Is it too invasive a change to make them as if they are thread-ready
-users of API that happen to know their callers are not threading?
-It would be ideal if we can prepare them so that the way they
-interact with the attr subsystem will not have to change after this
-step.
+No, a false belief in your own shortcomings, as you thought it would be
+easier to address your wishes for somebody else than you.
 
->> In other words, ideally, I think this part of the patch should
->> rather read like this:
->>
->>         static struct git_attr_check *check;
->>         struct git_attr_result result[2];
->>
->>         ...
->>         git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
->>         if (!git_check_attr(path_without_prefix, check, result)) {
->>                 ... use result[0] and result[1] ...
->>
->> For sanity checking, it is OK to add ARRAY_SIZE(result) as the final
->> and extra parameter to git_check_attr() so that the function can
->> make sure it matches (or exceeds) check->nr.
->
-> That seems tempting from a callers perspective; I'll look into that.
+> On Tue, Oct 11, 2016 at 02:25:19PM -0700, Stefan Beller wrote:
+> > On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
+> > > As of GIT 2.8.1, if you do an interactive rebase and get some conflict
+> > > in the stack of patches then the commit with the conflict is buried in
+> > > 4-5 lines of output. It is visually difficult to immediately pick out
+> > > which commit did not apply cleanly. I suggest highlighting the 1 line
+> > > commit summary in red or green or some color to help it stand out from
+> > > all the other output.
+> > >
+> > > I decided to suggest this change after I realized that I probably
+> > > skipped a commit during an interactive rebase instead of resolving the
+> > > conflict. I knew I had to skip some commit so I assumed that I just need
+> > > to skip without reading the commit summary carefully. Now it is 7-15
+> > > days after I did the erroneous rebase. I had to spend a few hours today
+> > > with GIT's archaeology tools to find the lost code.
+> > 
+> > Looking at the actual code, this is not as easy as one might assume, 
+> > because rebase is written in shell. (One of the last remaining large 
+> > commands in shell), and there is no color support in the die(..) 
+> > function.
+> 
+> I'm sorry to hear that.
+> 
+> > However IIUC currently rebase is completely rewritten/ported to C 
+> > where it is easier to add color support as we do have some color 
+> > support in there already.
+> 
+> Sounds great. Is there a beta release that I can try out?
 
-For callers that prepare "check" and "result" before asking
-check-attr about the attributes in "check" for many paths, it is OK
-to use your "allocate with attr_result_init()" pattern.  The "result"
-still needs to be made non-static, though.
+There is no release as such, unless you count Git for Windows v2.10.0.
 
-But many callers do not follow that; rather they do
+But you can try the `interactive-rebase` branch of
+https://github.com/dscho/git; please note, though, that my main aim was to
+be as faithful as possible in the conversion (modulo speed, of course).
 
-	loop to iterate over paths {
-		call a helper func to learn attr X for path
-		use the value of attr X
-	}
+> Also, I have another wishlist item for (interactive) rebase.
 
-using a callchain that embeds a helper function deep inside, and
-"check" is kept in the helper, check-attr function is called from
-there, and "result" is not passed from the caller to the helper
-(obviously, because it does not exist in the current API).  See the
-callchain that leads down to convert.c::convert_attrs() for a
-typical example.  When converted to the new API, it needs to have a
-new "result" structure every time it is called, and cannot reuse the
-one that was used in its previous call.
+Hmm. You know, I cannot say that I am a fan of wishlists for Git, unless
+the originator of said wishlist takes on their responsibility as an Open
+Source user to make their wishes come true.
+
+But maybe I read it all wrong and you do want to make this happen
+yourself, and you simply want a little advice how to go about it?
+
+> Sometimes I do a rebase to fix some tiny thing 10-15 commits from HEAD.
+> Maybe only 1 file is affected and there are no merge conflicts, but when
+> rebase reapplies all the commits, the timestamps of lots of unmodified
+> files change even though they are unmodified compared to before the
+> rebase.
+
+Well, they *were* modified, right?
+
+A workaround would be to create a new worktree using the awesome `git
+worktree` command, perform the rebase there (on an unnamed branch -- AKA
+"detached HEAD", no relation to Helloween), and then come back to the
+original worktree and reset --hard to the new revision. That reset would
+detect that there are actually no changes required to said files.
+
+> Since the modification times are used by 'make' to compute dependencies, 
+> this creates a lot of useless recompilation that slows things down. It 
+> would be great if rebase only changed the timestamps of files that were 
+> actually modified.
+
+Rebase will always have to change those timestamps. Because it really
+changes those files. So the mtimes *need* to be updated. As far as rebase
+is concerned, it does not matter that the final contents are identical to
+*some* previous version...
+
+Ciao,
+Johannes
