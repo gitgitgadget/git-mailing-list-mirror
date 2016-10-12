@@ -2,94 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07411215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 22:48:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2BD2215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 23:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753562AbcJLWsL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 18:48:11 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:36589 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752488AbcJLWsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 18:48:09 -0400
-Received: by mail-qt0-f179.google.com with SMTP id m5so27420501qtb.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 15:48:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LPpSDzRkhwh4r9I2g317BapNRbGZBOETGrhL2Ady73Q=;
-        b=ZV3NAX+OBkUY4TZ92cWrk9DdWOzO5M50ynYPX3eZn9CJTTpCX3LDHGNLHWLXzNLnI1
-         Qxi6uelO648J8H1TY+v+AbOd38ZptIn+3c2+nEHVVa1LtPsNLLGRnIw/6yP7vikONeN2
-         uL6gk2TqgoEFN3tp5vc+S3vEmDS1qnedaBKU1mTZMSakeiVFNkjJQOsM/Lb0xESMCxcR
-         FYVOQe/jXyjXoQyJLGPXmgi69WlAiBN2DiTVoYvwj3BIPefTjs84YAA+1redRNseEH5n
-         fKB13aXa6SKn09h3sJSrHXS1GIc5mKJgsg35C/Hs+JcTqEYgTx+gJ1ZvtH5/gPPOqwhy
-         7ecw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LPpSDzRkhwh4r9I2g317BapNRbGZBOETGrhL2Ady73Q=;
-        b=ALUjuu/dDcSZxehEMgDas0D1ciiGXMmjcxKE+KXpGIJbdvrY4FgsxlNilKZuDPvBk7
-         DXkdEv0amwacUqWcz2yJH4pbh6NqDFIdOHBFl09aWnH0qbdNIX6vwDFOemKprdII3XzT
-         If/RhikzY0h1YJls33dLj1b+qf9rCIXpxdt/qUCeXU7m5X9BGT7/TV49sDX7ItC0FKOn
-         X7YPH3Ub03WYnmZ87w0b67wxB7u/hPE9HBovsf/7+imMAlkqtQLlFUhQgXz8e7yFzXZu
-         5KiupuxwVZOi12JOMFuN7+h9bKlwV2BM24La7X0n9Qm51VrT8VQASozRcXF+8azu+fih
-         ddeQ==
-X-Gm-Message-State: AA6/9RlKAnWAHpnZi8awbfOCryNP+H1nMarDPlcViVszw5FzReqpQ04ik+AOmqKl16yXqP6pTQo6gl/M6ZUTIqJx
-X-Received: by 10.200.34.145 with SMTP id f17mr3537536qta.149.1476308838075;
- Wed, 12 Oct 2016 14:47:18 -0700 (PDT)
+        id S932937AbcJLXCa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 19:02:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56704 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752434AbcJLXC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 19:02:29 -0400
+Received: (qmail 2208 invoked by uid 109); 12 Oct 2016 23:01:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Oct 2016 23:01:46 +0000
+Received: (qmail 24636 invoked by uid 111); 12 Oct 2016 23:02:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Oct 2016 19:02:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2016 19:01:43 -0400
+Date:   Wed, 12 Oct 2016 19:01:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     git@vger.kernel.org,
+        Quentin Casasnovas <quentin.casasnovas@oracle.com>,
+        Shawn Pearce <spearce@spearce.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Huge performance bottleneck reading packs
+Message-ID: <20161012230143.5kxcmtityaasra5j@sigill.intra.peff.net>
+References: <ea8db41f-2ea4-b37b-e6f8-1f1d428aea5d@oracle.com>
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Wed, 12 Oct 2016 14:47:17 -0700 (PDT)
-In-Reply-To: <CA+P7+xqBUT3jUsxciVydO+nRoR+iJygWG=y_ARpiQSs+-kcH2A@mail.gmail.com>
-References: <20161011235951.8358-1-sbeller@google.com> <44c554b8-7ac1-047d-59f0-b4d5331ed496@kdbg.org>
- <CA+P7+xqBUT3jUsxciVydO+nRoR+iJygWG=y_ARpiQSs+-kcH2A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 12 Oct 2016 14:47:17 -0700
-Message-ID: <CAGZ79ka5qkDri0gCCLQQcUgqFpOi=np+jm-x046Foc9NOpE6NA@mail.gmail.com>
-Subject: Re: [PATCHv2] attr: convert to new threadsafe API
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ea8db41f-2ea4-b37b-e6f8-1f1d428aea5d@oracle.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 12, 2016 at 2:45 PM, Jacob Keller <jacob.keller@gmail.com> wrot=
-e:
-> On Wed, Oct 12, 2016 at 1:07 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->>
->> Sigh. DCLP, the Double Checked Locking Pattern. These days, it should be
->> common knowledge among professionals that this na=C3=AFve version _does_=
-not_work_
->> [1]!
->>
->> I suggest you go without it, then measure, and only *then* optimize if i=
-t is
->> a bottleneck. Did I read "we do not expect much contention" somewhere?
->>
->> [1] http://www.aristeia.com/Papers/DDJ_Jul_Aug_2004_revised.pdf C++ cent=
-ric,
->> but applies to C just as well
->>
->> -- Hannes
->>
->
->
-> You know, I always wondered why Linux Kernel code needed memory
-> barriers but userspace programs didn't seem to use them.. turns out
-> they actually *do* need them for the same exact types of problems...
->
-> Thanks,
-> Jake
+On Thu, Oct 13, 2016 at 12:30:52AM +0200, Vegard Nossum wrote:
 
-In a former job I made use of them, too. So I am kinda embarrassed.
-(I cannot claim I did not know about these patterns and memory
-fencing, it just escaped my consciousness).
+> However, the commit found by 'git blame' above appears just fine to me,
+> I haven't been able to spot a bug in it.
+> 
+> A closer inspection reveals the problem to really be that this is an
+> extremely hot path with more than -- holy cow -- 4,106,756,451
+> iterations on the 'packed_git' list for a single 'git fetch' on my
+> repository. I'm guessing the patch above just made the inner loop
+> ever so slightly slower.
+> 
+> My .git/objects/pack/ has ~2088 files (1042 idx files, 1042 pack files,
+> and 4 tmp_pack_* files).
+
+Yeah. I agree that the commit you found makes the check a little more
+expensive, but I think the root of the problem is calling
+prepare_packed_git_one many times. This _should_ happen once for each
+pack at program startup, and possibly again if we need to re-scan the
+pack directory to account for racing with a simultaneous repack.
+
+The latter is generally triggered when we fail to look up an object we
+expect to exist. So I'd suspect 45e8a74 (has_sha1_file: re-check pack
+directory before giving up, 2013-08-30) is playing a part. We dealt with
+that to some degree in 0eeb077 (index-pack: avoid excessive re-reading
+of pack directory, 2015-06-09), but it would not surprise me if there is
+another spot that needs similar treatment.
+
+Does the patch below help?
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index d5329f9..c0f3c2c 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -243,7 +243,7 @@ static void find_non_local_tags(struct transport *transport,
+ 		if (ends_with(ref->name, "^{}")) {
+ 			if (item && !has_object_file(&ref->old_oid) &&
+ 			    !will_fetch(head, ref->old_oid.hash) &&
+-			    !has_sha1_file(item->util) &&
++			    !has_sha1_file_with_flags(item->util, HAS_SHA1_QUICK) &&
+ 			    !will_fetch(head, item->util))
+ 				item->util = NULL;
+ 			item = NULL;
+@@ -256,7 +256,8 @@ static void find_non_local_tags(struct transport *transport,
+ 		 * to check if it is a lightweight tag that we want to
+ 		 * fetch.
+ 		 */
+-		if (item && !has_sha1_file(item->util) &&
++		if (item &&
++		    !has_sha1_file_with_flags(item->util, HAS_SHA1_QUICK) &&
+ 		    !will_fetch(head, item->util))
+ 			item->util = NULL;
+ 
+@@ -276,7 +277,8 @@ static void find_non_local_tags(struct transport *transport,
+ 	 * We may have a final lightweight tag that needs to be
+ 	 * checked to see if it needs fetching.
+ 	 */
+-	if (item && !has_sha1_file(item->util) &&
++	if (item &&
++	    !has_sha1_file_with_flags(item->util, HAS_SHA1_QUICK) &&
+ 	    !will_fetch(head, item->util))
+ 		item->util = NULL;
+ 
+
+-Peff
