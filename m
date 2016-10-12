@@ -2,138 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FCDF207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 16:41:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2D69207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 16:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755529AbcJLQlN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 12:41:13 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:36335 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755427AbcJLQlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 12:41:11 -0400
-Received: by mail-lf0-f65.google.com with SMTP id b75so7875684lfg.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 09:41:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0//+wO2nwqRr9MxBe35VfFaO6lQEL3T3Ga9QbRkZsss=;
-        b=G4j9nCCgjlGwyRITy/95svj30WpwCWhcBzmgdzr09DcEqP6AOpAnLbW8cVDmOuTChg
-         2tr5fJGPDHMTSuoOy4WeQp88pHQkz1tbCQSRwadeRT3LYvn7V5bhXCWkzuzgqAQG69a6
-         Fm5VsdU+o+c+xFIR4sNwaswXRNNcvJVXegBgOJs9Owjjaijr8QMG+8wf/RThyUDvfxJp
-         p6AsgEYuUlv0bY1rQNRuApGdE/ddklIMn/+XA94iU60aZ5hZRn3B2xGvhjxk6iLNHalW
-         DiEjsnwzN8nILV+rDXzbkHR/LdCoOp/K7o3V0c0J7vzY0yMLtiFNhXBosnmMB/tb87F3
-         hA4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0//+wO2nwqRr9MxBe35VfFaO6lQEL3T3Ga9QbRkZsss=;
-        b=ZgAqNd5CxsN1rfKmAjKBx2QtbyBC2QL1/1ALgqntHO26vYXPScyD1vG9oSpDkCnYzt
-         RiAywkLucdmCkBwS06W5rVJPZX4+pgpOczKJVSC3NEdjdV8M4GxwyEiAGlEbBaTLBm+U
-         SBBdEbMfTBzf5iq6DuflWsfcPn1Op2fSb9tkHFNVzaq2mQ9uv3cOTNkOrU4/inVKFlA6
-         5OIkmufIA61Pf5gWtZNOI6r2uFk9AXUCX0DBfAC9C9AOuCSzHxkbmVDsj+Vznyjdu8oQ
-         tWrL7//ltTFefT6ItRsxq5Lp7mOWfkbRaWnWHBKhX+QN/QngOOIqYR7GUyEXX0HsocKg
-         gAtg==
-X-Gm-Message-State: AA6/9RnPOFMyNRtGGQ/AbQULsHre45GadauNGkBIgSOON3l1Qyjn0mIO+Ycz4bZSRlNOxQ==
-X-Received: by 10.194.63.145 with SMTP id g17mr2789979wjs.166.1476290469659;
-        Wed, 12 Oct 2016 09:41:09 -0700 (PDT)
-Received: from hurricane ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id h10sm14127965wje.48.2016.10.12.09.41.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Oct 2016 09:41:09 -0700 (PDT)
-Date:   Wed, 12 Oct 2016 18:41:07 +0200
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, mtutty@gforgegroup.com, rappazzo@gmail.com
-Subject: [PATCH] worktree: allow the main brach of a bare repository to be
- checked out
-Message-ID: <20161012164104.zcxpcwqrp5h65qmc@hurricane>
-References: <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
+        id S1755766AbcJLQzu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 12:55:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50677 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753712AbcJLQzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 12:55:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 278E44534B;
+        Wed, 12 Oct 2016 12:55:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6RsRF7d/EUSoPOawXT0NgVXzyDU=; b=ShkfDM
+        mjMXeZmeVHPwGyuWQqMnaY6CkATN0RIQ5CxXatmC2KRZpZClR/8JlhPO8WhrKKYo
+        4qseiJzyDgj1NlQVSIEFyf/pU9yF+toyHhmQjcRxJkmoQy1x4znxDkSf5KtFISP5
+        pCPQBG85/JG4GKRvsuBUTtmG8mPfpVSloVx4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UhVTQZ9714wQojmlog34krQHDFE/liw1
+        WU624kdTmyx5xWyQy2NnjjgOh5DUORfgKUufMpXTzQn3n7+bYdIQYRiSCTGBR6a8
+        zL/NEi/8l3K5pIlFtPMJDAyxJmga2/zYkLTpNps7XrXcmYsWomjRpiRTU+GMUqJG
+        k0O8RBoMX74=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F1EC4534A;
+        Wed, 12 Oct 2016 12:55:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89AEF45349;
+        Wed, 12 Oct 2016 12:55:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 13/25] sequencer: prepare for rebase -i's commit functionality
+References: <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <cover.1476120229.git.johannes.schindelin@gmx.de>
+        <9b2782e64f678ab2d261042b63fafc3e4a519295.1476120229.git.johannes.schindelin@gmx.de>
+        <xmqqwphe8zl2.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610121356510.3492@virtualbox>
+Date:   Wed, 12 Oct 2016 09:55:44 -0700
+In-Reply-To: <alpine.DEB.2.20.1610121356510.3492@virtualbox> (Johannes
+        Schindelin's message of "Wed, 12 Oct 2016 14:00:21 +0200 (CEST)")
+Message-ID: <xmqq60ox5wxb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
-User-Agent: Mutt/1.6.2-neo (2016-08-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B87BA8EA-909C-11E6-868F-5F377B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In bare repositories, get_worktrees() still returns the main repository,
-so git worktree list can show it. ignore it in find_shared_symref so we
-can still check out the main branch.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
----
- t/t2025-worktree-add.sh | 8 ++++++++
- worktree.c              | 2 ++
- 2 files changed, 10 insertions(+)
+>> Hmph, didn't we recently add parse_key_value_squoted() to build
+>> read_author_script() in builtin/am.c on top of it, so that this
+>> piece of code can also take advantage of and share the parser?
+>
+> I already pointed out that the author-script file may *not* be quoted.
 
-On Sun, 2016-10-09 at 17:52 +0700, Duy Nguyen wrote:
-> On Sun, Oct 9, 2016 at 2:51 PM, Dennis Kaarsemaker > <dennis@kaarsemaker.net> wrote:
-> > On Sat, 2016-10-08 at 19:30 -0500, Michael Tutty wrote:
-> > > 
-> > > The only exception seems to be merging to master. When I do git
-> > > worktree add /tmp/path/to/worktree master I get an error:
-> > > 
-> > > [fatal: 'master' is already checked out at '/path/to/bare/repo']
-> > > 
-> > 
-> > The worktree code treats the base repo as a worktree, even if it's
-> > bare. For the purpose of being able to do a checkout of the main branch
-> > of a bare repo, this patch should do:
-> > 
-> --snip--
-> 
-> You're fast :) I'm still studying  8d9fdd7 (worktree.c: check whether
-> branch is rebased in another worktree - 2016-04-22). But yeah that
-> should fix it.
+I think my puzzlement comes from here.  What makes it OK for "am" to
+expect the contents of author-script file to be quoted but it is not
+OK to expect the same here?  What makes it not quoted for _this_
+reader, in other words?
 
-OK, so here it is as a proper patch.
+I am not sure what you meant by "nominally related", but the purpose
+of the author-script in these two codepaths is the same, isn't it?
+Somebody leaves the author information from the source (either from
+an e-mailed patch or an existing commit), so that a later step can
+use that pieces of information left in the file when (re)creating a
+commit to record the tree made by using pieces of information from
+the source.
 
-D.
+Are our use in the author-script in these two codepaths _already_
+inconsistent?  IOW, "am" never writes malformed unquoted values,
+while the sequencer writes out in a way that is randomly quoted or
+not quoted, iow, if you fed such an author-file to "am", it wouldn't
+understand it?
 
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 4bcc335..2996c38 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -138,6 +138,14 @@ test_expect_success 'checkout from a bare repo without "add"' '
- 	)
- '
- 
-++test_expect_success '"add" default branch of a bare repo' '
-+	(
-+		git clone --bare . bare2 &&
-+		cd bare2 &&
-+		git worktree add ../there3 master
-+	)
-+'
-+
- test_expect_success 'checkout with grafts' '
- 	test_when_finished rm .git/info/grafts &&
- 	test_commit abc &&
-diff --git a/worktree.c b/worktree.c
-index 5acfe4c..35e95b7 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -345,6 +345,8 @@ const struct worktree *find_shared_symref(const char *symref,
- 
- 	for (i = 0; worktrees[i]; i++) {
- 		struct worktree *wt = worktrees[i];
-+		if(wt->is_bare)
-+			continue;
- 
- 		if (wt->is_detached && !strcmp(symref, "HEAD")) {
- 			if (is_worktree_being_rebased(wt, target)) {
--- 
-2.10.1-356-g947a599
+I fully support your position to use different codepaths, if the
+file that has the same name and that is used for the same purpose
+uses different format in these two separate codepaths and the users
+already expect them to be different.  We obviously need to have two
+separate parsers.
 
+But if that is not the case, IOW, if "am"'s author-script shares the
+same issue (i.e. "'am' initially writes the file properly quoted,
+but this or that can happen to change its quoting and we need to
+read from such a file"), then perhaps sharing needs to happen the
+other way around?  This patch may prepare "rebase -i" side for the
+"this or that" (I still do not know what they are) to allow the
+resulting file read correctly, but the same "this or that" can break
+what "am" has used and is in use there if that is the case, no?
 
--- 
-Dennis Kaarsemaker <dennis@kaarsemaker.net>
-http://twitter.com/seveas
+What makes it OK for "am" to expect the contents of author-script
+file to be quoted but it is not OK to expect the same here?  What
+makes it not quoted for _this_ reader, and doesn't "am" share the
+same issue?
+
+>> > +/*
+>> 
+>> Offtopic: this line and the beginning of the new comment block that
+>> begins with "Read the author-script" above show a suboptimal marking
+>> of what is added and what is left.  I wonder "diff-indent-heuristic"
+>> topic by Michael can help to make it look better.
+>
+> Maybe. I'll try to look into that once the more serious questions about
+> this patch series have been addressed.
+
+You do not have to; the remark was meant for Michael (newly cc'ed in
+the message you are responding to).
