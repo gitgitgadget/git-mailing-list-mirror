@@ -2,136 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EB01207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 17:37:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FFF3207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 18:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755840AbcJLRhl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 13:37:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51016 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755806AbcJLRhi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 13:37:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D35F745DDD;
-        Wed, 12 Oct 2016 13:37:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=raUPDrQ7SFBCoE1Q2ursfxINRGw=; b=U/+BzR
-        EtNT2rdxcLW91UcB70kkXFsIl+FsXWa50Jizl0Xw3WfRCo35lPJgH4wzhpH1h2hg
-        p/UAkdE934glLuyrsUSuQJXzNHo5jEuBEFwWgWWwlYgVRIcfzwot1iUPMUuT4g6E
-        hQxvZbqszgvchL9xdC4EV4L2j/vx+l/OzIs+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=atSajpMC8BJ2o/dS/9dwuVwSSTqyWvYn
-        /jAfPruRuFx8oc/JCXPOS7Nt7p9QFw37WpVfQeaYJAEPImzBk9TG/HcnT9m+hRgc
-        f1k/fIpRyj3henxDUKj0Kh1GWRvXsvq2n7cdX5LNU/75wWb0kEsEyBGu6BOqmg+0
-        PVaSyLh6O2w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9C4845DDC;
-        Wed, 12 Oct 2016 13:37:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32D1D45DDB;
-        Wed, 12 Oct 2016 13:37:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        git@vger.kernel.org, Jens.Lehmann@web.de,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: [PATCH v2 3/3] batch check whether submodule needs pushing into one call
-References: <cover.1475851621.git.hvoigt@hvoigt.net>
-        <cover.1475851621.git.hvoigt@hvoigt.net>
-        <67d4c48dc0129f20041c88d27a49c7a21188c882.1475851621.git.hvoigt@hvoigt.net>
-        <xmqqlgxvbype.fsf@gitster.mtv.corp.google.com>
-        <20161012133338.GD84247@book.hvoigt.net>
-Date:   Wed, 12 Oct 2016 10:37:33 -0700
-In-Reply-To: <20161012133338.GD84247@book.hvoigt.net> (Heiko Voigt's message
-        of "Wed, 12 Oct 2016 15:33:38 +0200")
-Message-ID: <xmqqwphd4gf6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933300AbcJLSBV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 14:01:21 -0400
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:36382 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755266AbcJLSBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 14:01:11 -0400
+Received: by mail-qk0-f182.google.com with SMTP id o68so91498535qkf.3
+        for <git@vger.kernel.org>; Wed, 12 Oct 2016 11:01:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gforgegroup-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NoIwhW4G3CGtvWqvxjyhJ0y1956wBJnDie/yqltRBO4=;
+        b=YIfCngoG6KW1W8Af//WHjSLCJuLW2v3d8gOVglR3hjJDm+9OzDZGL04BoIcTUiBHgi
+         EGC/dvQOy41broQcsRyGZAvjUaQiH9xP5inQ0oQbxv6bkfMMKbyF36ocuR0d+g4dgV6+
+         KYxy6TBWpx9ULyPGrCwceAasta6/XDaLsTWwCTrfu63pnSnRtwR5KeEKRGB5+YZolOZg
+         fYZ6UUEaBFsAsnhkgP2KLNijGPWCfdceOQwP8p3aYcBW4deWZHJ6/SH4Pywa9adRCLOa
+         tTIUewRLj3hlYkVNr3axvVIo7yPAcEBN7NW2LAz+5XE3KJFz1EBaRwJyyI/y3bdfb7VS
+         bueg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NoIwhW4G3CGtvWqvxjyhJ0y1956wBJnDie/yqltRBO4=;
+        b=meebwrS4imTg+1L4OlsmvF/X9zoCGq8cM8Pm+R1JymHL8dea3hN1xFmcZ908ZIp3Jx
+         nchmUI/ms7CS/+ON10RQxHB3eYr290c8FP49IzPC6EOrx2XTVHJ/pdKfExYF3CSSEl9H
+         jJJ9jJAsUPKSIeeiui/e3BiZH9oVG91dkZizXiRJmHBRkGfVOPPp3GgiFnhrQGkKz84S
+         mO/EXKUKOpf8uGW7Beq5OP5t9mnCNKTWE3eBKB4RXeVPqiIrtC8sqhZA7cxWJ4VH04tn
+         IQHfzJWS6JDHe5InjlREYZWj7y4i7F/GF50RzQ8naIgjs1ky7NMn/pz0UTP9rEX1pEdw
+         +j3w==
+X-Gm-Message-State: AA6/9Rkom6rOqVaioPgL23r7R/hnBn946tSc73/3/UfGd408DUYludICnQrDKgDMXClZ2Em0vIZgwFlIIyB9y/MM
+X-Received: by 10.55.26.87 with SMTP id a84mr2185422qka.187.1476293756840;
+ Wed, 12 Oct 2016 10:35:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8FC9B63E-90A2-11E6-88AF-F99D12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.164.69 with HTTP; Wed, 12 Oct 2016 10:35:56 -0700 (PDT)
+In-Reply-To: <20161012164104.zcxpcwqrp5h65qmc@hurricane>
+References: <CACsJy8CmgmGLEi0xQUY9Eo-4FkA4eDNk9WJ2LtEDVFQBjbFdCA@mail.gmail.com>
+ <20161012164104.zcxpcwqrp5h65qmc@hurricane>
+From:   Michael Tutty <mtutty@gforgegroup.com>
+Date:   Wed, 12 Oct 2016 12:35:56 -0500
+Message-ID: <CAOi_75JKPuOhL4BqE8nYkCAN9-wzDkD65TUvN6YDJWkB6HqSAA@mail.gmail.com>
+Subject: Re: [PATCH] worktree: allow the main brach of a bare repository to be
+ checked out
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Michael Rappazzo <rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+I have tested this successfully with git 2.10.1 built from source
+(failing), then patched as above (passing).
+Thanks!
+     M.
 
->> If we do not even have these commits locally, then there is no point
->> attempting to push, so returning 0 (i.e. it is not "needs pushing"
->> situation) is correct but it is a but subtle.  It's not "we know
->> they already have them", but it is "even if we tried to push, it
->> won't do us or the other side any good."  A single-liner in-code
->> comment may help.
+
+On Wed, Oct 12, 2016 at 11:41 AM, Dennis Kaarsemaker
+<dennis@kaarsemaker.net> wrote:
+> In bare repositories, get_worktrees() still returns the main repository,
+> so git worktree list can show it. ignore it in find_shared_symref so we
+> can still check out the main branch.
 >
-> First the naming part. How about:
+> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+> ---
+>  t/t2025-worktree-add.sh | 8 ++++++++
+>  worktree.c              | 2 ++
+>  2 files changed, 10 insertions(+)
 >
-> 	submodule_has_commits()
-
-Nice.
-
-> Returning 0 here means: "No push needed" but the correct answer would
-> be: "We do not know". 
-
-Is it?  Perhaps I am misreading the "submodule-has-commits"; I
-thought it was "the remote may or may not need updating, but we
-ourselves don't have what they may need to have commits in their
-submodule that are referenced by their superproject, so it would not
-help them even if we pushed our submodule to them".  It indeed is
-different from "No push needed" (rather, "our pushing would be
-pointless").
-
-> So how about:
+> On Sun, 2016-10-09 at 17:52 +0700, Duy Nguyen wrote:
+>> On Sun, Oct 9, 2016 at 2:51 PM, Dennis Kaarsemaker > <dennis@kaarsemaker.net> wrote:
+>> > On Sat, 2016-10-08 at 19:30 -0500, Michael Tutty wrote:
+>> > >
+>> > > The only exception seems to be merging to master. When I do git
+>> > > worktree add /tmp/path/to/worktree master I get an error:
+>> > >
+>> > > [fatal: 'master' is already checked out at '/path/to/bare/repo']
+>> > >
+>> >
+>> > The worktree code treats the base repo as a worktree, even if it's
+>> > bare. For the purpose of being able to do a checkout of the main branch
+>> > of a bare repo, this patch should do:
+>> >
+>> --snip--
+>>
+>> You're fast :) I'm still studying  8d9fdd7 (worktree.c: check whether
+>> branch is rebased in another worktree - 2016-04-22). But yeah that
+>> should fix it.
+>
+> OK, so here it is as a proper patch.
+>
+> D.
+>
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> index 4bcc335..2996c38 100755
+> --- a/t/t2025-worktree-add.sh
+> +++ b/t/t2025-worktree-add.sh
+> @@ -138,6 +138,14 @@ test_expect_success 'checkout from a bare repo without "add"' '
+>         )
+>  '
+>
+> ++test_expect_success '"add" default branch of a bare repo' '
+> +       (
+> +               git clone --bare . bare2 &&
+> +               cd bare2 &&
+> +               git worktree add ../there3 master
+> +       )
+> +'
+> +
+>  test_expect_success 'checkout with grafts' '
+>         test_when_finished rm .git/info/grafts &&
+>         test_commit abc &&
+> diff --git a/worktree.c b/worktree.c
+> index 5acfe4c..35e95b7 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -345,6 +345,8 @@ const struct worktree *find_shared_symref(const char *symref,
+>
+>         for (i = 0; worktrees[i]; i++) {
+>                 struct worktree *wt = worktrees[i];
+> +               if(wt->is_bare)
+> +                       continue;
+>
+>                 if (wt->is_detached && !strcmp(symref, "HEAD")) {
+>                         if (is_worktree_being_rebased(wt, target)) {
+> --
+> 2.10.1-356-g947a599
 >
 >
-> 	if (!submodule_has_hashes(path, hashes))
-> 		/* NEEDSWORK: The correct answer here is "We do not
-> 		 * know" instead of "No". We currently proceed pushing
-> 		 * here as if the submodules commits are available on a
-> 		 * remote, which is not always correct. */
-> 		return 0;
-
-I am not sure.  
-
-What should happen in this scenario?
-
- * We have two remotes, A and B, for our superproject.
-
- * We are not interested in one submodule at path X.  Our repository
-   is primarily used to work on the superproject and possibly other
-   submodules but not the one at path X.
-
- * We pulled from A to update ourselves.  They were actively working
-   on the submodule we are not interested in, and path X in the
-   superproject records a new commit that we do not have.
-
- * We are now trying to push to B.
-
-Should different things happen in these two subcases?
-
- - We are not interested in submodule at path X, so we haven't even
-   done "submodule init" on it.
-
- - We are not interested in submodule at path X, so even though we
-   do have a rather stale clone of it, we do not usually bother
-   updating what is checked out at path X and commit our changes
-   outside that area.
-
-I tend to think that in these two cases the same thing should
-happen.  I am not sure if that same thing should be rejection
-(i.e. "you do not know for sure that the commit at path X of the
-superproject you are pushing exists in the submodule repository at
-the receiving end, so I'd refuse to push the superproject"), as it
-makes the only remedy for the situation is for you to make a full
-clone of the submodule you are not interested in and you have never
-touched yourself in either of these two subcases.
+> --
+> Dennis Kaarsemaker <dennis@kaarsemaker.net>
+> http://twitter.com/seveas
 
 
+
+-- 
+Michael Tutty, CTO
+
+e: mtutty@gforgegroup.com
+t: @mtutty, @gforgegroup
+v: 515-789-0772
+w: http://gforgegroup.com, http://gforge.com
