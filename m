@@ -2,76 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BD9A20989
-	for <e@80x24.org>; Wed, 12 Oct 2016 07:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6323320989
+	for <e@80x24.org>; Wed, 12 Oct 2016 08:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753209AbcJLHA3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 03:00:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54996 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753967AbcJLHA0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 03:00:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A68B53E6FD;
-        Wed, 12 Oct 2016 02:24:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Rrw2r+Muqd0qsHfVFTSreXYyzwU=; b=uNnywW
-        /qlNVkhOjWH6lFCao4J+BFDnWMYzDLg07JShU6eMzPN/fUEpeeWFL/MSRZaIQCB5
-        4EIsxjU3VThQQxQioXs23nF2SEPYgwFGmsgPM67x5baKnty1ARXUHSdfz3Uj1Yni
-        RX9U8xjFpgvTh5JDDMtAcY3ty2Y5TinOQvbvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FJO6W/CRfIYBCOEhol3RZewljFrjJ6NM
-        zpttQDr7hWQGmZIeP5zjsNTora+Lxoj3Thjb5fvJNrChw4gzIezIFLF8PM8hAU06
-        rf3DsAh9WwUcL7IKSzLIlPJXFwgbUWxsEVvDhVsCbYXhfrcpE6fbHwX/DRYcPNly
-        eWF8rHTLfIQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E3663E6FC;
-        Wed, 12 Oct 2016 02:24:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14F1E3E6FB;
-        Wed, 12 Oct 2016 02:24:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH 1/5] trailer: use singly-linked list, not doubly
-References: <cover.1476232683.git.jonathantanmy@google.com>
-        <cover.1476232683.git.jonathantanmy@google.com>
-        <8e12e0954f0a23d7c7905c58a3f7d8084d9338be.1476232683.git.jonathantanmy@google.com>
-Date:   Tue, 11 Oct 2016 23:24:48 -0700
-In-Reply-To: <8e12e0954f0a23d7c7905c58a3f7d8084d9338be.1476232683.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 11 Oct 2016 18:23:25 -0700")
-Message-ID: <xmqqmvia5bkf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754255AbcJLIBw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 04:01:52 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39051 "EHLO mx1.imag.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754121AbcJLIBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 04:01:50 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9C7aFwn011720
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Wed, 12 Oct 2016 09:36:16 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9C7aGJe003333;
+        Wed, 12 Oct 2016 09:36:16 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Larry Finger <Larry.Finger@lwfinger.net>
+Cc:     Jeff King <peff@peff.net>,
+        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        git@vger.kernel.org
+Subject: Re: Formatting problem send_mail in version 2.10.0
+References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
+        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
+        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+        <vpqfuo3l4fl.fsf@anie.imag.fr>
+        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
+        <vpq4m4iamfs.fsf@anie.imag.fr>
+        <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
+Date:   Wed, 12 Oct 2016 09:36:16 +0200
+In-Reply-To: <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net> (Larry
+        Finger's message of "Tue, 11 Oct 2016 23:28:30 -0500")
+Message-ID: <vpq60oy589b.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 944367C2-9044-11E6-8886-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Wed, 12 Oct 2016 09:36:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9C7aFwn011720
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1476862578.96858@ro1pqJsn9GRjQGAKx8fePA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Larry Finger <Larry.Finger@lwfinger.net> writes:
 
-> Use singly-linked lists (instead of doubly-linked lists) in trailer to
-> keep track of arguments (whether implicit from configuration or explicit
-> from the command line) and trailer items.
+> On 10/11/2016 11:18 AM, Matthieu Moy wrote:
+>> Larry Finger <Larry.Finger@lwfinger.net> writes:
+>>
+>>> That added information at the end is intended to be passed on to the
+>>> stable group. In this case, the patch needs to be applied to kernel
+>>> versions 4.8 and later.
+>>
+>> OK, but where do people fetch this information from?
 >
-> This change significantly reduces the code length and simplifies the code.
-> There are now fewer pointers to be manipulated, but most trailer
-> manipulations now require seeking from beginning to end, so there might
-> be a slight net decrease in performance; however the number of trailers
-> is usually small (10 to 15 at the most) so this should not cause a big
-> impact.
+> This format is used in a patch for the kernel. When the patch is
+> merged into mainline, stable@vger.kernel.org gets sent an E-mail with
+> a copy of the original patch. Maintainers of the indicated systems
+> then merge the patch with their stable version.
 
-It is overall a very good change, but can you split this into two
-independent patches?  s/struct trailer_item/const &/ sprinkled all
-over the place is more or less unrelated change and it is very
-distracting to see the primary change of the way lists are handled.
+Sorry, but this does not answer my question. I'll rephrase: when
+people behind stable@vger.kernel.org get the message, how do they know
+which version of the kernel they should apply it to?
+
+> I do not want it in the body of the message. I just want to pass a
+> hint to the stable maintainer(s).
+
+If it's not in the body of the message, then where is it?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
