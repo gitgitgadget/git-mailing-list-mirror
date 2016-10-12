@@ -2,134 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1B1E215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 23:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA0B8215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 23:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932872AbcJLXKS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 19:10:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53111 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752488AbcJLXKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 19:10:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF32246355;
-        Wed, 12 Oct 2016 18:57:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ey4SExMNThw5es5nVO00feIv6UA=; b=CcNhdz
-        g2XvUr+oScinDC63AkJkVpqgq8OYorqXWxZlKTvxoSwJnrpCA8MAQpV/h8Id7Fub
-        HsavqHAdEgpHTNsjhCta+Hz8GdpLc3MxpOdvQltGouWOMlgOBCT5a1/X/KtRlUwu
-        LtpG3IrA/gUCcxxYjbGLse1oLIEOHcYlYxYwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OHRakhDNr0imWZAJxN+Jazts54YqTQEh
-        Hgl8py3cA+/cgq/9fJh0k+10Zv26bFVXA50ylCd0pH1Oi9lFYKPBwJTjSNZ4S9w+
-        20q48uNcjHM9I7ppaYAGWbOWra2rYpd9Y2+TBTb1ZuCdtrK4vf6Woj+JbDnlmw5X
-        XKXFAVtm0w8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7BA846354;
-        Wed, 12 Oct 2016 18:57:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 38C3646351;
-        Wed, 12 Oct 2016 18:57:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCHv2] attr: convert to new threadsafe API
-References: <20161011235951.8358-1-sbeller@google.com>
-        <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZrNSmPAQ6SmBzFDJtSmdCbqKcgQu4KDLfoYVkSXvo-og@mail.gmail.com>
-        <xmqqfuo15yjm.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaBhXHLDEK0XMLjm3QofmtaGZspA3EEx5x4-qCYY--wZA@mail.gmail.com>
-Date:   Wed, 12 Oct 2016 15:57:31 -0700
-In-Reply-To: <CAGZ79kaBhXHLDEK0XMLjm3QofmtaGZspA3EEx5x4-qCYY--wZA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 12 Oct 2016 13:02:40 -0700")
-Message-ID: <xmqqlgxt18h0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932963AbcJLXNf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 19:13:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56717 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753915AbcJLXNe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 19:13:34 -0400
+Received: (qmail 2884 invoked by uid 109); 12 Oct 2016 23:13:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Oct 2016 23:13:24 +0000
+Received: (qmail 24706 invoked by uid 111); 12 Oct 2016 23:13:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Oct 2016 19:13:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2016 19:13:22 -0400
+Date:   Wed, 12 Oct 2016 19:13:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Larry Finger <Larry.Finger@lwfinger.net>,
+        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        git@vger.kernel.org
+Subject: Re: Formatting problem send_mail in version 2.10.0
+Message-ID: <20161012231321.ar2csdmvhdya2q7r@sigill.intra.peff.net>
+References: <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
+ <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+ <vpqfuo3l4fl.fsf@anie.imag.fr>
+ <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
+ <vpq4m4iamfs.fsf@anie.imag.fr>
+ <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
+ <vpq60oy589b.fsf@anie.imag.fr>
+ <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
+ <vpq8tttr2ps.fsf@anie.imag.fr>
+ <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 42AA3158-90CF-11E6-A930-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Oct 12, 2016 at 01:53:52PM -0700, Junio C Hamano wrote:
 
->> But many callers do not follow that; rather they do
->>
->>         loop to iterate over paths {
->>                 call a helper func to learn attr X for path
->>                 use the value of attr X
->>         }
->>
->> using a callchain that embeds a helper function deep inside, and
->> "check" is kept in the helper, check-attr function is called from
->> there, and "result" is not passed from the caller to the helper
->> (obviously, because it does not exist in the current API).  See the
->> callchain that leads down to convert.c::convert_attrs() for a
->> typical example.  When converted to the new API, it needs to have a
->> new "result" structure every time it is called, and cannot reuse the
->> one that was used in its previous call.
->
-> Why would that be? i.e. I do not understand the reasoning/motivation
-> as well as what you propose to change here.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> >>> If it's not in the body of the message, then where is it?
+> >>
+> >> This point is clarified in the thread
+> >> http://marc.info/?l=linux-wireless&m=147625930203434&w=2, which is
+> >> with my upstream maintainer.
+> >
+> > Which explicitly states that the syntax is not [$number], but # $number,
+> > right?
+> 
+> But I do not think that works, either.  Let's step back.
+> 
+> People write things like these
+> 
+>     Cc: Stable <stable@vger.kernel.org> # 4.8
+>     Cc: Stable <stable@vger.kernel.org> [4.8+]
+> 
+> in the trailer part in the body of the message.  Are these lines
+> meant to be usable if they appear as Cc: headers of an outgoing
+> piece of e-mail as-is?
 
-The leaf function may look like
+I think the answer is pretty clearly no. It's just that historically we
+have auto-munged it into something useful. I think the viable options
+are basically:
 
-	check_eol(const char *path)
-	{
-                static struct git_attr_check *check;
+  1. Tell people not to do that, and to do something RFC compliant like
+     "Stable [4.8+]" <stable@vger.kernel.org>. This is a little funny
+     for git because we otherwise do not require things like
+     rfc-compliant quoting for our name/email pairs. But it Just Works
+     without anybody having to write extra code, or worry about corner
+     cases in parsing.
 
-		initl(&check, "eol", NULL);
-		git_check_attr(&check, path, result);
-		return nth_element_in_result(result, 0);
-	}                
+  2. Drop everything after the trailing ">". This gives a valid rfc2822
+     cc, and people can pick the "# 4.8" from the cc line in the body.
 
-and we want "result" to be thread-ready.  
+  3. Rewrite
 
-A naive and undesired way to put it on stack is like so:
+       A <B@C> D
 
-	const char *check_eol(const char *path)
-	{
-                static struct git_attr_check *check;
-		struct git_attr_result result = RESULT_INIT;
-		const char *eol;
+     into
 
-		initl(&check, "eol", NULL);
-		init_result(&check, &result);
-		git_check_attr(&check, path, &result);
-		eol = nth_element_in_result(&result, 0);
-		clear_result(&result);
-		return eol;
-	}                
+       A D <B@C>
 
-where your "struct git_attr_result" has a fixed size, and the actual
-result array is allocated via ALLOC_GROW() etc.  That's overhead
-that we do not want.  Instead can't we do this?
+     regardless of what is in "D". This retains the information in the
+     rfc2822 cc.
 
-	const char *check_eol(const char *path)
-	{
-                static struct git_attr_check *check;
-		/* we know we only want one */
-		struct git_attr_result result[1];
-		const char *eol;
+Starting from scratch, I'd say that (2) seems like a good combination of
+simplicity and friendliness.  But (3) matches what we have done
+historically (and still do at least for some values of "D", and
+depending on the presence of Mail::Address).
 
-		initl(&check, "eol", NULL);
-		git_check_attr(&check, path, result);
-		return result[0];
-	}                
+Once we decide on a behavior, it seems like we should be able to apply
+it consistently with or without Mail::Address by grabbing the bits after
+the final ">".
 
-That way, we won't be doing ALLOC_GROW() in init_result() or free in
-clear_result().
+Larry seems to be against (2), but I'm not sure I understand why pulling
+the value from the in-body cc (which gets copied into the commit message
+by git-am, too) would be a problem.
 
-If you use a structure that has pointer to an array (i.e. the "naive
-and undesired way" above), you cannot amortize the alloc/free by
-making result "static" if you want to be thread-ready.
+-Peff
