@@ -2,88 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B35D5215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 22:25:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50789215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 22:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753902AbcJLWZV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 18:25:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60574 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753866AbcJLWZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 18:25:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DDEE459BA;
-        Wed, 12 Oct 2016 17:50:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rPD66ylfNFFBqiERtJ2jdgaZh/A=; b=Kq1ZBq
-        fmBmqjMNucDsnMoBc2X6QAc+/C1VlOH90Dar8p7rPHUAAlpWSP8/UYEXWd0xPhj7
-        h5ZXbyVGJGLxqJg92C0pozo1iMNLuYykYIidC8tnO7Z2PFs++s9s72KPx8riq35N
-        fD2+/nCwHvjQsMKe7ppBSbyyXJAfNCXdx89oI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sESZ5mCamRUsNZbZr600pX4SjH7LnkBq
-        ttDgrAaU4/Cj5XH+cddHYVYkMVJxk+/+rUrUssHJE8piI9Bhq4tbCE4nEvSKQ8Nr
-        Crb/JhhR7qtQj4dTrM7Rai80PGtuzNvSEfCouBeEavLaKAmT1/QhMqeKlGlFckiN
-        Qf2lg8/9N7A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86877459B9;
-        Wed, 12 Oct 2016 17:50:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06A9E459B8;
-        Wed, 12 Oct 2016 17:50:44 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCHv2] attr: convert to new threadsafe API
-References: <20161011235951.8358-1-sbeller@google.com>
-        <44c554b8-7ac1-047d-59f0-b4d5331ed496@kdbg.org>
-        <xmqq8ttt2qpp.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kb-xKDNG-LC56i8Y-FAaYZwr8zzXuC9snj1PavnQ6cdCA@mail.gmail.com>
-Date:   Wed, 12 Oct 2016 14:50:43 -0700
-In-Reply-To: <CAGZ79kb-xKDNG-LC56i8Y-FAaYZwr8zzXuC9snj1PavnQ6cdCA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 12 Oct 2016 14:42:37 -0700")
-Message-ID: <xmqqwphd1bkc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754687AbcJLWbg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 18:31:36 -0400
+Received: from aserp1040.oracle.com ([141.146.126.69]:45990 "EHLO
+        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754474AbcJLWbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 18:31:34 -0400
+Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
+        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u9CMUuNO024655
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 12 Oct 2016 22:30:57 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by aserv0022.oracle.com (8.14.4/8.13.8) with ESMTP id u9CMUulC007434
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 12 Oct 2016 22:30:56 GMT
+Received: from abhmp0012.oracle.com (abhmp0012.oracle.com [141.146.116.18])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id u9CMUtaN002286;
+        Wed, 12 Oct 2016 22:30:55 GMT
+Received: from [10.175.246.82] (/10.175.246.82)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 12 Oct 2016 15:30:55 -0700
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+Subject: Huge performance bottleneck reading packs
+To:     git@vger.kernel.org
+Cc:     Quentin Casasnovas <quentin.casasnovas@oracle.com>,
+        Shawn Pearce <spearce@spearce.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Message-ID: <ea8db41f-2ea4-b37b-e6f8-1f1d428aea5d@oracle.com>
+Date:   Thu, 13 Oct 2016 00:30:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ED96F128-90C5-11E6-A68A-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Source-IP: aserv0022.oracle.com [141.146.126.234]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi all,
 
-> On Wed, Oct 12, 2016 at 2:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Johannes Sixt <j6t@kdbg.org> writes:
->>
->>> Sigh. DCLP, the Double Checked Locking Pattern. ...
->>> I suggest you go without it, then measure, and only *then* optimize if
->>> it is a bottleneck.
->>
->> That comes from me in earlier discussion before the patch, namely in
->> <xmqqeg3m8y6y.fsf@gitster.mtv.corp.google.com>, where I wondered if
->> a cheap check outside the lock may be a possible optimization
->> opportunity, as this is a classic singleton that will not be
->> deinitialized, and once the codepath gets exercised, we would be
->> taking the "nothing to do" route 100% of the time.
->
-> Having followed that advice (and internally having a DCLP), I think
-> we have Triple Checked Locking Pattern in this patch.  Nobody wrote
-> a paper on how that would not work, yet. ;)
->
-> In the reroll I plan to reduce it to a Single Checked (inside a mutex)
-> Locking Pattern, though I would expect that performance (or lack thereof)
-> will show then. But let's postpone measuring until we have a working patch.
+I've bisected a performance regression (noticed by Quentin and myself)
+which caused a 'git fetch' to go from ~1m30s to ~2m40s:
 
-Oh, that wasn't even an "advice" (read it again).  I fully agree
-that starting simple would be the way to go.
+commit 47bf4b0fc52f3ad5823185a85f5f82325787c84b
+Author: Jeff King <peff@peff.net>
+Date:   Mon Jun 30 13:04:03 2014 -0400
+
+     prepare_packed_git_one: refactor duplicate-pack check
+
+Reverting this commit from a recent mainline master brings the time back
+down from ~2m24s to ~1m19s.
+
+The bisect log:
+
+v2.8.1 -- 2m41s, 2m50s (bad)
+v1.9.0 -- 1m39s, 1m46s (good)
+
+2.3.4.312.gea1fd48 -- 2m40s
+2.1.0.18.gc285171 -- 2m42s
+2.0.0.140.g6753d8a -- 1m27s
+2.0.1.480.g60e2f5a -- 1m34s
+2.0.2.631.gad25da0 -- 2m39s
+2.0.1.565.ge0a064a -- 1m30s
+2.0.1.622.g2e42338 -- 2m29s
+2.0.0.rc1.32.g5165dd5 -- 1m30s
+2.0.1.607.g5418212 -- 1m32s
+2.0.1.7.g6dda4e6 -- 1m28s
+2.0.1.619.g6e40947 -- 2m25s
+2.0.1.9.g47bf4b0 -- 2m18s
+2.0.1.8.gd6cd00c -- 1m36.542s
+
+However, the commit found by 'git blame' above appears just fine to me,
+I haven't been able to spot a bug in it.
+
+A closer inspection reveals the problem to really be that this is an
+extremely hot path with more than -- holy cow -- 4,106,756,451
+iterations on the 'packed_git' list for a single 'git fetch' on my
+repository. I'm guessing the patch above just made the inner loop
+ever so slightly slower.
+
+My .git/objects/pack/ has ~2088 files (1042 idx files, 1042 pack files,
+and 4 tmp_pack_* files).
+
+I am convinced that it is not necessary to rescan the entire pack
+directory 11,348 times or do all 4 _BILLION_ memcmp() calls for a single
+'git fetch', even for a large repository like mine.
+
+I could try to write a patch to reduce the number of times we rescan the
+pack directory. However, I've never even looked at the file before
+today, so any hints regarding what would need to be done would be
+appreciated.
+
+Thanks,
+
+(Cced some people with changes in the area.)
+
+
+Vegard
