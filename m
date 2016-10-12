@@ -2,123 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B98A6207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 16:01:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F0E207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 16:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753126AbcJLQBT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 12:01:19 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:36564 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753173AbcJLQBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 12:01:17 -0400
-Received: by mail-oi0-f68.google.com with SMTP id e12so3775849oib.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 08:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=iebQDdIN7+tHS1+KD+v1J9hFKdmCU2g+hmAwkNAA29M=;
-        b=uS62COTJfmJJ0XAPLx/CvO7SEy/w/YBQiGgDTNPOTR9OU/HXycPcGCz7/zQaCRxcmk
-         rv9tQLhNZKEBEwxQIZv7vCvTfAHJOstH1fkc6Tx3Cjl5gDDPZ8wL9iPJ+fOtEHsdYLxF
-         0ES88VR5U94EZC7MV69Mku7CxGLzkXS1IGu5viWfQ3XXfB8Kx+j3UaeqRXx7TV2pGeV/
-         1yQegaVX7HTYJlwkOGUHN8sVwKuRGr+sMRHSfyD9DY+O2vCM7NFbpB6M26Pt30yKI3Wh
-         Oov0DZ8+YqUazBwd91A0X2Oh/AXLXRvMpOg2avKsSfAWGLFL618ky88zQznzFkqFvDNK
-         lcdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:subject:to:references:cc:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=iebQDdIN7+tHS1+KD+v1J9hFKdmCU2g+hmAwkNAA29M=;
-        b=GSgKWAElNfyj6gvd/W1FJuVMdZLAO1rL/OpsJQhi12pLhwvVYQzJEhryhYyqWtf5sJ
-         j1QFmGQezPK6TFAbGzwWvkJK3hBxrH8ihYAppIllHYWQhlgLNFDleqB04xSG+G37a953
-         pWPizWGeAJKANx0CyhlQcxbChn8M1LIxgYBo+CgI9hAFPxjXpw2wv0ifbUl+Uvg16MWF
-         ucwZpKoFQgioq9EaKtPJJeIbj9pl2llQrxpxfWauwFVEvhsV00+1fYQT0MdtUMBHVA1W
-         CiiXQ370X+WENyyzcfzToqdkE4QlH6reNuBfELO1k+/BUsglZ/jBi3zC0tuiFzkkwEGE
-         Xocg==
-X-Gm-Message-State: AA6/9RmQ0EmlLtOYQv9dO54P3fcwDSnODfx8uq6HFDnP6oCD9scVt0jS7mukypvpo6txUw==
-X-Received: by 10.202.212.195 with SMTP id l186mr1102291oig.175.1476287998329;
-        Wed, 12 Oct 2016 08:59:58 -0700 (PDT)
-Received: from larrylap.suse (cpe-24-31-249-175.kc.res.rr.com. [24.31.249.175])
-        by smtp.gmail.com with ESMTPSA id q9sm3067732otq.22.2016.10.12.08.59.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Oct 2016 08:59:57 -0700 (PDT)
-Subject: Re: Formatting problem send_mail in version 2.10.0
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
- <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
- <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
- <vpqfuo3l4fl.fsf@anie.imag.fr>
- <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
- <vpq4m4iamfs.fsf@anie.imag.fr>
- <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
- <vpq60oy589b.fsf@anie.imag.fr>
- <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
- <vpq8tttr2ps.fsf@anie.imag.fr>
-Cc:     Jeff King <peff@peff.net>,
-        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
-        git@vger.kernel.org
-From:   Larry Finger <Larry.Finger@lwfinger.net>
-Message-ID: <6b518c10-d7d0-23b8-f959-33ce4897a0a0@lwfinger.net>
-Date:   Wed, 12 Oct 2016 10:59:56 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1754096AbcJLQOp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 12:14:45 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49957 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753823AbcJLQOm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 12:14:42 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LrePN-1armYG1ikX-013Qhe; Wed, 12 Oct 2016 18:14:33
+ +0200
+Date:   Wed, 12 Oct 2016 18:14:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     Joshua N Pritikin <jpritikin@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: interactive rebase should better highlight the not-applying
+ commit
+In-Reply-To: <CAGZ79kYg3sZ42W-PEE7MgCDvt_h7hEQ7KWZsVKMb3DY=x5VK+w@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1610121811250.197091@virtualbox>
+References: <20161011190745.w2asu6eoromkrccu@droplet> <CAGZ79kYg3sZ42W-PEE7MgCDvt_h7hEQ7KWZsVKMb3DY=x5VK+w@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <vpq8tttr2ps.fsf@anie.imag.fr>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:cPDUJZ4yIjgiIn0b3dZO0LladlH66a292/WeHuHCe2j/qmOL8Wz
+ s8M4ZWpJZZGKVT8bEFeATCDcPQvtR35vpLAVYQQfoWTipGE/A33PuZDuBbH5iYjHajE/WkK
+ zMnR38M+IR3y40/xehb/1EJSS5hvCrfAzK+H/zoOdCw70Jq1/VepxG1RIom+KlOFWUa9jAh
+ RmmNIFyt5BK+jQL2CsMSg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:T+TtNfw87Xw=:oeKN67mPfsFOvyr1SCuIMN
+ Nlr+lbqYiFALpou4Biast2v1Zga1/pnrydPF+goC5xa8l3d9LhtzTbgQ3bhEmC1WA83muw2K3
+ 1XDGRvWApKRqtxHlV/ZhTYvmlGT+q3DQ8CrwzM5RivPYhzACDFptNfzbHM8Y/uBOi2sPgkfzM
+ o52+MGqhUkvXbMxazbQbalzb5s5n+pOXtZtnQX5TCYyBqAR2eg//rA5pYdFUeNklawI0lE2um
+ ndYevlSbLGfVfQpZJ1xl/dtbg9KmNmGluehyKuTZwh/xRTd04Q+SJx2UzeSB9kQSdzpK7zcg3
+ 68sNrS69y0mRY4Hv6858/wSIalRAFctwuVgwh1q1YpkFMQ6u9Bb22I8gZpYnWJv+F8zv4xxHr
+ PbCYFKZ4D7faW3FwvA8HMZae9PQeNqvD7TYsq50db/1OT5QzG9FSrCJoDrnqocvzq1L//uar5
+ Cxq2aYvDqr9uTM6DsPPMkWYgkafEOe60ZE4Kc4FuvUiD01+WXw/tDsfms8YDbbZTdTy43YzUI
+ +oUtJpHv0BDnZtEEtwzVepuscEGsT6Clv3/5oa0smucTwj9TqCO7rc31wwIg0+pxaKzUYBmM2
+ 2vuGeDRAdNcrzXf8jjCk5VFG52nGrkwydJYx7t3A6Zcj77hrL1PhyECH8gsMAW10SbiPgkW0d
+ klSC5ifdZRXq6lBD+UVSUoYIEOjRAYZnXGQN9De+meXy+vfOUUGc6SFPyycRlv7MOyF41G8Vz
+ gbi2ZNH8d9uhfh7xniJ5seL2TpP5iqfaUvBbg7jlA/M2Bwvwbx7Ij0ZdVTRXEFduBkujA2W+F
+ 3K8t/Tb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12/2016 10:45 AM, Matthieu Moy wrote:
-> Larry Finger <Larry.Finger@lwfinger.net> writes:
->
->> On 10/12/2016 02:36 AM, Matthieu Moy wrote:
->>> Larry Finger <Larry.Finger@lwfinger.net> writes:
->>>
->>>> On 10/11/2016 11:18 AM, Matthieu Moy wrote:
->>>>> Larry Finger <Larry.Finger@lwfinger.net> writes:
->>>>>
->>>>>> That added information at the end is intended to be passed on to the
->>>>>> stable group. In this case, the patch needs to be applied to kernel
->>>>>> versions 4.8 and later.
->>>>>
->>>>> OK, but where do people fetch this information from?
->>>>
->>>> This format is used in a patch for the kernel. When the patch is
->>>> merged into mainline, stable@vger.kernel.org gets sent an E-mail with
->>>> a copy of the original patch. Maintainers of the indicated systems
->>>> then merge the patch with their stable version.
->>>
->>> Sorry, but this does not answer my question. I'll rephrase: when
->>> people behind stable@vger.kernel.org get the message, how do they know
->>> which version of the kernel they should apply it to?
->>>
->>>> I do not want it in the body of the message. I just want to pass a
->>>> hint to the stable maintainer(s).
->>>
->>> If it's not in the body of the message, then where is it?
->>
->> This point is clarified in the thread
->> http://marc.info/?l=linux-wireless&m=147625930203434&w=2, which is
->> with my upstream maintainer.
->
-> Which explicitly states that the syntax is not [$number], but # $number,
-> right?
+Hi Stefan,
 
-Yes it does; however v2.10.0 mangles this into
+On Tue, 11 Oct 2016, Stefan Beller wrote:
 
-Stable <stable@vger.kernel.org#4.8+>
+> On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
+> > I assume somebody familiar with GIT's code base could make this change
+> > in about 10 minutes.
+> 
+> Can you elaborate how you come to that estimate?
 
-and my mailer refuses to send that.
+Why do you ask? He obviously has "a very good brain" ;-)
 
-Larry
+Seriously again, Git's source code is not that hard to read, and the Git
+developer community is pretty helpful when anybody asks for pointers what
+code to change.
 
+Having said that, I did reimplement some parts of the shell script that is
+git-rebase--interactive.sh [*1*] in C and am in the process of getting
+those integrated into the next (or hopefully not a *much* later) version
+of Git.
 
+So what I'd like to see is an *exact* copy-paste of a message in question,
+and a *concrete* proposal how it should look like instead.
+
+Ciao,
+Johannes
+
+Footnote *1*:
+https://github.com/git/git/blob/master/git-rebase--interactive.sh
