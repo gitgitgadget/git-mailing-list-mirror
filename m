@@ -2,88 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2B38207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 17:26:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EB01207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 17:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755656AbcJLR03 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 13:26:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56563 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754963AbcJLR00 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 13:26:26 -0400
-Received: (qmail 16430 invoked by uid 109); 12 Oct 2016 17:26:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Oct 2016 17:26:08 +0000
-Received: (qmail 22584 invoked by uid 111); 12 Oct 2016 17:26:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Oct 2016 13:26:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Oct 2016 13:26:06 -0400
-Date:   Wed, 12 Oct 2016 13:26:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] trailer: use singly-linked list, not doubly
-Message-ID: <20161012172605.tudfyg657cn4e5sj@sigill.intra.peff.net>
-References: <cover.1476232683.git.jonathantanmy@google.com>
- <8e12e0954f0a23d7c7905c58a3f7d8084d9338be.1476232683.git.jonathantanmy@google.com>
- <CAP8UFD03sOgVVb5-VEgHxHaXBBUPJ9UTB0=Y=th8YnUCk+Aa4Q@mail.gmail.com>
+        id S1755840AbcJLRhl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 13:37:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51016 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755806AbcJLRhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 13:37:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D35F745DDD;
+        Wed, 12 Oct 2016 13:37:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=raUPDrQ7SFBCoE1Q2ursfxINRGw=; b=U/+BzR
+        EtNT2rdxcLW91UcB70kkXFsIl+FsXWa50Jizl0Xw3WfRCo35lPJgH4wzhpH1h2hg
+        p/UAkdE934glLuyrsUSuQJXzNHo5jEuBEFwWgWWwlYgVRIcfzwot1iUPMUuT4g6E
+        hQxvZbqszgvchL9xdC4EV4L2j/vx+l/OzIs+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=atSajpMC8BJ2o/dS/9dwuVwSSTqyWvYn
+        /jAfPruRuFx8oc/JCXPOS7Nt7p9QFw37WpVfQeaYJAEPImzBk9TG/HcnT9m+hRgc
+        f1k/fIpRyj3henxDUKj0Kh1GWRvXsvq2n7cdX5LNU/75wWb0kEsEyBGu6BOqmg+0
+        PVaSyLh6O2w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9C4845DDC;
+        Wed, 12 Oct 2016 13:37:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32D1D45DDB;
+        Wed, 12 Oct 2016 13:37:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        git@vger.kernel.org, Jens.Lehmann@web.de,
+        Fredrik Gustafsson <iveqy@iveqy.com>,
+        Leandro Lucarella <leandro.lucarella@sociomantic.com>
+Subject: Re: [PATCH v2 3/3] batch check whether submodule needs pushing into one call
+References: <cover.1475851621.git.hvoigt@hvoigt.net>
+        <cover.1475851621.git.hvoigt@hvoigt.net>
+        <67d4c48dc0129f20041c88d27a49c7a21188c882.1475851621.git.hvoigt@hvoigt.net>
+        <xmqqlgxvbype.fsf@gitster.mtv.corp.google.com>
+        <20161012133338.GD84247@book.hvoigt.net>
+Date:   Wed, 12 Oct 2016 10:37:33 -0700
+In-Reply-To: <20161012133338.GD84247@book.hvoigt.net> (Heiko Voigt's message
+        of "Wed, 12 Oct 2016 15:33:38 +0200")
+Message-ID: <xmqqwphd4gf6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD03sOgVVb5-VEgHxHaXBBUPJ9UTB0=Y=th8YnUCk+Aa4Q@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8FC9B63E-90A2-11E6-88AF-F99D12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 12, 2016 at 05:38:14PM +0200, Christian Couder wrote:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-> On Wed, Oct 12, 2016 at 3:23 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> > Use singly-linked lists (instead of doubly-linked lists) in trailer to
-> > keep track of arguments (whether implicit from configuration or explicit
-> > from the command line) and trailer items.
-> >
-> > This change significantly reduces the code length and simplifies the code.
-> 
-> It's true that the code can be simplified a lot by using a
-> singly-linked list, but if we already had and used some generic
-> functions or macros to handle doubly-linked list, I doubt there would
-> be a significant simplification (as the generic code could not be
-> deleted in this case).
+>> If we do not even have these commits locally, then there is no point
+>> attempting to push, so returning 0 (i.e. it is not "needs pushing"
+>> situation) is correct but it is a but subtle.  It's not "we know
+>> they already have them", but it is "even if we tried to push, it
+>> won't do us or the other side any good."  A single-liner in-code
+>> comment may help.
+>
+> First the naming part. How about:
+>
+> 	submodule_has_commits()
 
-We didn't have such generic macros when you wrote the trailer code
-originally, but we do now, in list.h (they come from the kernel's
-doubly-linked list implementation). I used them recently in a series and
-found them pretty pleasant and complete.
+Nice.
 
-Maybe it's worth trying the conversion here to see if it simplifies the
-code.
+> Returning 0 here means: "No push needed" but the correct answer would
+> be: "We do not know". 
 
-> > There are now fewer pointers to be manipulated, but most trailer
-> > manipulations now require seeking from beginning to end, so there might
-> > be a slight net decrease in performance; however the number of trailers
-> > is usually small (10 to 15 at the most) so this should not cause a big
-> > impact.
-> 
-> By default we append new trailers at the end of the trailer list, so a
-> singly-linked list is theoretically not well suited at all for
-> handling trailer lists.
-> 
-> You say that at most there is a small number of trailers, and that may
-> be true indeed for the Linux kernel and most projects these days, but
-> I am not sure it is a good assumption to make in general.
+Is it?  Perhaps I am misreading the "submodule-has-commits"; I
+thought it was "the remote may or may not need updating, but we
+ourselves don't have what they may need to have commits in their
+submodule that are referenced by their superproject, so it would not
+help them even if we pushed our submodule to them".  It indeed is
+different from "No push needed" (rather, "our pushing would be
+pointless").
 
-I agree. As somebody who has fixed quite a number of accidentally
-quadratic cases in the number of refs, width of the commit graph, etc,
-over the years, these things have a way of creeping up or finding
-pathological cases.
+> So how about:
+>
+>
+> 	if (!submodule_has_hashes(path, hashes))
+> 		/* NEEDSWORK: The correct answer here is "We do not
+> 		 * know" instead of "No". We currently proceed pushing
+> 		 * here as if the submodules commits are available on a
+> 		 * remote, which is not always correct. */
+> 		return 0;
 
-You _can_ append to a singly linked list in O(1) if you keep a tail
-pointer, but I think using list.h would be even nicer.
+I am not sure.  
 
--Peff
+What should happen in this scenario?
+
+ * We have two remotes, A and B, for our superproject.
+
+ * We are not interested in one submodule at path X.  Our repository
+   is primarily used to work on the superproject and possibly other
+   submodules but not the one at path X.
+
+ * We pulled from A to update ourselves.  They were actively working
+   on the submodule we are not interested in, and path X in the
+   superproject records a new commit that we do not have.
+
+ * We are now trying to push to B.
+
+Should different things happen in these two subcases?
+
+ - We are not interested in submodule at path X, so we haven't even
+   done "submodule init" on it.
+
+ - We are not interested in submodule at path X, so even though we
+   do have a rather stale clone of it, we do not usually bother
+   updating what is checked out at path X and commit our changes
+   outside that area.
+
+I tend to think that in these two cases the same thing should
+happen.  I am not sure if that same thing should be rejection
+(i.e. "you do not know for sure that the commit at path X of the
+superproject you are pushing exists in the submodule repository at
+the receiving end, so I'd refuse to push the superproject"), as it
+makes the only remedy for the situation is for you to make a full
+clone of the submodule you are not interested in and you have never
+touched yourself in either of these two subcases.
+
+
