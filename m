@@ -6,22 +6,22 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87CA3207EC
-	for <e@80x24.org>; Wed, 12 Oct 2016 15:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADB77207EC
+	for <e@80x24.org>; Wed, 12 Oct 2016 15:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933773AbcJLPlE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 11:41:04 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52610 "EHLO mx1.imag.fr"
+        id S933630AbcJLPpP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 11:45:15 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41541 "EHLO mx2.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932245AbcJLPlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 11:41:02 -0400
+        id S933584AbcJLPpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 11:45:14 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9CFeoZN020743
+        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u9CFj1P0028851
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Wed, 12 Oct 2016 17:40:50 +0200
+        Wed, 12 Oct 2016 17:45:01 +0200
 Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9CFeqEu015220;
-        Wed, 12 Oct 2016 17:40:52 +0200
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9CFj3DQ015290;
+        Wed, 12 Oct 2016 17:45:03 +0200
 From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To:     Larry Finger <Larry.Finger@lwfinger.net>
 Cc:     Jeff King <peff@peff.net>,
@@ -37,21 +37,21 @@ References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
         <vpq4m4iamfs.fsf@anie.imag.fr>
         <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
         <vpq60oy589b.fsf@anie.imag.fr>
-        <02cfe81b-9f6a-ddbd-3411-2839e8a58b1e@lwfinger.net>
-Date:   Wed, 12 Oct 2016 17:40:52 +0200
-In-Reply-To: <02cfe81b-9f6a-ddbd-3411-2839e8a58b1e@lwfinger.net> (Larry
-        Finger's message of "Wed, 12 Oct 2016 10:27:57 -0500")
-Message-ID: <vpqeg3lr2wr.fsf@anie.imag.fr>
+        <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
+Date:   Wed, 12 Oct 2016 17:45:03 +0200
+In-Reply-To: <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net> (Larry
+        Finger's message of "Wed, 12 Oct 2016 10:40:21 -0500")
+Message-ID: <vpq8tttr2ps.fsf@anie.imag.fr>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Wed, 12 Oct 2016 17:40:50 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 12 Oct 2016 17:45:01 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u9CFeoZN020743
+X-MailScanner-ID: u9CFj1P0028851
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1476891651.55332@zpPT983MXTQApkrcW/vibg
+MailScanner-NULL-Check: 1476891901.92308@UDKn4uoOYeQcGTqjXy4Ecg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -85,21 +85,12 @@ Larry Finger <Larry.Finger@lwfinger.net> writes:
 >>
 >> If it's not in the body of the message, then where is it?
 >
-> That information is supplied in the "Cc: Stable" line at the end.
+> This point is clarified in the thread
+> http://marc.info/?l=linux-wireless&m=147625930203434&w=2, which is
+> with my upstream maintainer.
 
-OK, so it *is* in the body of the email message.
-
-If I understand correctly, the important is that:
-
-* "git send-email" should accept sending a message for a commit
-  containing a Cc: <address@host> [number] line.
-
-* The message should be sent to <address@host>
-
-But I still don't get why using the (4.8+) notation wouldn't work. It
-would still end up in the Cc: line in the body of the message, and the
-message would still be sent to the same address. It is *not* dropped
-from the message, just from the email headers of the message being sent.
+Which explicitly states that the syntax is not [$number], but # $number,
+right?
 
 -- 
 Matthieu Moy
