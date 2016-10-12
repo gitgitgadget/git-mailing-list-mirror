@@ -7,142 +7,140 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 155DF20989
-	for <e@80x24.org>; Wed, 12 Oct 2016 06:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC3220989
+	for <e@80x24.org>; Wed, 12 Oct 2016 06:52:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753315AbcJLGsO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 02:48:14 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:33537 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753126AbcJLGsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 02:48:13 -0400
-Received: by mail-qk0-f182.google.com with SMTP id n189so18056471qke.0
-        for <git@vger.kernel.org>; Tue, 11 Oct 2016 23:47:56 -0700 (PDT)
+        id S1753870AbcJLGv7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 02:51:59 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:36317 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753831AbcJLGv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 02:51:57 -0400
+Received: by mail-oi0-f44.google.com with SMTP id m72so50988280oik.3
+        for <git@vger.kernel.org>; Tue, 11 Oct 2016 23:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=a9BqryqF/JcSrn3Bi1wFp8C+Fzyfs6chlfxeFJzc/jQ=;
-        b=fcy+mDI2rlfglaJK9zu5HDLruVWY6riZivvMWYAYOCRx2/+6UyJDlZyQMrz7ZqvCOB
-         0xZEV34ucNqpuSK7c8qAvgyMJ2Vo6fx4aayImRRavqUFYe0F8HBHyVsG58/7jtRX9cB9
-         t1o2aFLu+XM7dkpAn0KRprF0jSzsonOBD3VtYQ4u3/Z4P655vzhq4IQzSNwB7NAIZrxT
-         0Ta00BFP8T0Sg+XnrH3SOji1ItXKe2elkhxb/qMEz6Un+3PhYe5IIMz5y8hO1CNcNi5Q
-         qklXrfXMghN/U1Ay78EODPBlJbxaoGT+sh5lo8xC+FeoQUAOKqqC5J95tk2BEQ6FFrxs
-         BOxw==
+         :cc;
+        bh=jmiTNHOKc2nkJ9K8H4jCbp2bZSKi96PVSBPFxjsRDfE=;
+        b=a1efSwCf7On0wtSqTrTMGpJm/9sZC7/THZXfiakOuf2jDMhjP7S20kzKsV6U5/VXIM
+         3wKOUWEfijRu6fWttW4aSXfXGy7lIjLfILX/HC/mAjAdL5ga2ECl333BMKgfsS2Lqyoh
+         9scCIV2btEn4j5JWAbbnMlBY7+SiM5s+ge+1/J8vFqZr4rn7C4mFsLWiUZOudikbEHTK
+         NTAVbWgsvmboG3CwtNJxohOaUwe/5074sloJLZIuP8sZ1mUiqu1/VyK50VZjtGVjbgeh
+         M54PduWGsnRb2O5lJYCRE2TMQryZhfaH4IJ1A/V9+tR46jenkEzW5ml9gQk9tfVrEHbB
+         319w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=a9BqryqF/JcSrn3Bi1wFp8C+Fzyfs6chlfxeFJzc/jQ=;
-        b=EW1137IvX+CC1y53VCT0uRQfIZYNHxLNHscmapwTTjiarhltzKRv9U07BCU9ZbQOLY
-         ojAKlFVbBAd4fC6kIR23YC+cgmwM3nz2yPnR+PXHuT4ZdvKOkm0zdyTcCEuOtLkY4T5K
-         +UvilhS6DdbQXWpU64a2Gw9F8UPfvnT8yUqo/Kb3m5h+PuTt0dRsZus1rdGQd0Bs4fAm
-         ukSppuaVrVuT8C116loUK0s+QNszkzVx3HDufMbxrFJyKaPExlSru6BwhU4PjJtAgCJl
-         jP5NbFbrh0IqrmwOshdycyFEjFLnF8kkvo93Mj9SIAA5kxT8sGSAZdPboDU1i/DgUZCI
-         SbyQ==
-X-Gm-Message-State: AA6/9RmmnGt7Ohg+zMm7n0g1vLClufPltePnL4kQUGUTsL+tCFpOfTwGCAMWuR8Vt+ZJMXaxLAnu3oKJW/hyFPcw
-X-Received: by 10.55.36.131 with SMTP id k3mr6517954qkk.86.1476254875722; Tue,
- 11 Oct 2016 23:47:55 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=jmiTNHOKc2nkJ9K8H4jCbp2bZSKi96PVSBPFxjsRDfE=;
+        b=XfgeLhdHkwJB+QNW+pTw80wkhPDVrQUCtSpDD8TlBf4SC5OLS071Ocmi3nTFfJ6fMr
+         JCJdF8Tq08f1so+p4J4rQlOSFXhKGH80IiKkqda/WMaTczT4gOYvuNs91/Azf+XK9o3T
+         2ifa9LsH5Ianb6dCAV8ewKSEgeWOnQ0x3077/MmLSsy+paGi1Q42KUatTS+JI6mUYFQH
+         otjBQelE8AqyCdbhsWZgZlQEjj+nyyFsy1U5anwEDkogFWgj6Vi4tWMN71Oop2pTKD/3
+         +D3LohcDUO47S8l2jjnPNLH4svlqBnkWCl1n6G822sjlETHeDITl6TpSwGWPW8/gIAnR
+         +tgw==
+X-Gm-Message-State: AA6/9RmuX1ma+FZZIKYu06OFq6ceIluI1Tk4lIW7iEtHWmbnN1PpjJuFivGFsXg0CgWJotiU1gwPQJWdmgNp9KVd
+X-Received: by 10.202.244.20 with SMTP id s20mr3601493oih.143.1476255116707;
+ Tue, 11 Oct 2016 23:51:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 11 Oct 2016 23:47:55 -0700 (PDT)
-In-Reply-To: <20161012015224.g2eb24jexepeewob@sigill.intra.peff.net>
-References: <CANXboVZvfPkTQ10PWop+LgPFpc2bD3-u-e5ix0itGawiwCxOuQ@mail.gmail.com>
- <CAGZ79kZmrYZqi4+bSkRykn+Upt7bEyZ0N8VhiQ-h8DhSMym-FA@mail.gmail.com>
- <xmqqa8ea7bsh.fsf@gitster.mtv.corp.google.com> <CAGZ79kZNvTvk4uZa8xhxZABKtzS9A5HoumJ37AacuZnHaZ4+Xw@mail.gmail.com>
- <20161011225942.tvqbbzxglvu7lldi@sigill.intra.peff.net> <CAGZ79kaKOiy-HJboaujXXc66P6CLupteDw4JyPOGetREfz_q_Q@mail.gmail.com>
- <20161012013428.swxmrbyxv2wo37xf@sigill.intra.peff.net> <20161012015224.g2eb24jexepeewob@sigill.intra.peff.net>
+Received: by 10.182.250.67 with HTTP; Tue, 11 Oct 2016 23:51:56 -0700 (PDT)
+In-Reply-To: <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
+References: <20161011235951.8358-1-sbeller@google.com> <xmqqvawy5c4i.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Oct 2016 23:47:55 -0700
-Message-ID: <CAGZ79kbvdEUj5JKQX2MJ9THG03Bwfr0nSE5z-VPTmE3H+6TY2g@mail.gmail.com>
-Subject: Re: Make `git fetch --all` parallel?
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Ram Rachum <ram@rachum.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 11 Oct 2016 23:51:56 -0700
+Message-ID: <CAGZ79kZrNSmPAQ6SmBzFDJtSmdCbqKcgQu4KDLfoYVkSXvo-og@mail.gmail.com>
+Subject: Re: [PATCHv2] attr: convert to new threadsafe API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2016 at 6:52 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 11, 2016 at 09:34:28PM -0400, Jeff King wrote:
+On Tue, Oct 11, 2016 at 11:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->> > Ok, time to present data... Let's assume a degenerate case first:
->> > "up-to-date with all remotes" because that is easy to reproduce.
->> >
->> > I have 14 remotes currently:
->> >
->> > $ time git fetch --all
->> > real 0m18.016s
->> > user 0m2.027s
->> > sys 0m1.235s
->> >
->> > $ time git config --get-regexp remote.*.url |awk '{print $2}' |xargs
->> > -P 14 -I % git fetch %
->> > real 0m5.168s
->> > user 0m2.312s
->> > sys 0m1.167s
+>> I think this patch is the most interesting patch, so I'll refrain from
+>> resending the other 27 patches, though I have adressed the review comments
+>> locally. I'll resend everything once we are in agreement for this one.
+>
+> What is the primary purpose of this patch?  Is it to prepare callers
+> so that the way they interact with the attr subsystem will not have to
+> change when they become threaded and the attr subsystem becomes
+> thread ready?
+>
+> I am not sure if the updates to the callers fulfill that purpose.
+> For example, look at this hunk.
+>
+>> @@ -111,6 +111,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+>>       struct archiver_args *args = c->args;
+>>       write_archive_entry_fn_t write_entry = c->write_entry;
+>>       static struct git_attr_check *check;
+>> +     static struct git_attr_result result;
+>
+> As we discussed, this caller, even when threaded, will always want
+> to ask for a fixed two attributes, so "check" being static and
+> shared across threads is perfectly fine.  But we do not want to see
+> "result" shared, do we?
+
+Well all of the hunks in the patch are not threaded, so they
+don't follow a threading pattern, but the static pattern to not be
+more expensive than needed.
+
+>
+>>       const char *path_without_prefix;
+>>       int err;
 >>
->> So first, thank you (and =C3=86var) for providing real numbers. It's cle=
-ar
->> that I was talking nonsense.
+>> @@ -124,12 +125,15 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+>>               strbuf_addch(&path, '/');
+>>       path_without_prefix = path.buf + args->baselen;
 >>
->> Second, I wonder where all that time is going. Clearly there's an
->> end-to-end latency issue, but I'm not sure where it is. Is it startup
->> time for git-fetch? Is it in getting and processing the ref
->> advertisement from the other side? What I'm wondering is if there are
->> opportunities to speed up the serial case (but nobody really cared
->> before because it doesn't matter unless you're doing 14 of them back to
->> back).
+>> -     if (!check)
+>> -             check = git_attr_check_initl("export-ignore", "export-subst", NULL);
+>> -     if (!git_check_attr(path_without_prefix, check)) {
+>> -             if (ATTR_TRUE(check->check[0].value))
+>> +     if (!check) {
+>> +             git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
+>> +             git_attr_result_init(&result, check);
+>> +     }
 >
-> Hmm. I think it really might be just network latency. Here's my fetch
-> time:
+> Are we assuming that storing and checking of a single pointer is
+> atomic?  I would not expose that assumption to the callers.  On a
+> platform where that assumption holds, "if check is not NULL,
+> somebody must have done it already, so return without doing nothing"
+> can be the first thing git_attr_check_initl()'s implementation does,
+> though.  Or it may not hold anywhere without some barriers.  All
+> that implementation details should be hidden inside _initl()'s
+> implementation.  So this caller should instead just do an
+> unconditional:
 >
->   $ git config remote.origin.url
->   git://github.com/gitster/git.git
+>         git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
 >
->   $ time git fetch origin
->   real    0m0.183s
->   user    0m0.072s
->   sys     0m0.008s
+> Also, as "result" should be per running thread, hence non-static,
+> and because we do not want repeated heap allocations and releases
+> but luckily most callers _know_ not just how many but what exact
+> attributes they are interested in (I think there are only two
+> callers that do not know it; check-all-attrs one, and your pathspec
+> magic one that does not exist at this point in the series), I would
+> think it is much more preferrable to allow the caller to prepare an
+> on-stack array and call it "initialized already".
 >
-> 14 of those in a row shouldn't take more than about 2.5 seconds, which
-> is still twice as fast as your parallel case. So what's going on?
+> In other words, ideally, I think this part of the patch should
+> rather read like this:
 >
-> One is that I live about a hundred miles from GitHub's data center, and
-> my ping time there is ~13ms. The other side of the country, let alone
-> Europe, is going to be noticeably slower just for the TCP handshake.
+>         static struct git_attr_check *check;
+>         struct git_attr_result result[2];
 >
-> The second is that git:// is really cheap and simple. git-over-ssh is
-> over twice as slow:
+>         ...
+>         git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
+>         if (!git_check_attr(path_without_prefix, check, result)) {
+>                 ... use result[0] and result[1] ...
 >
->   $ time git fetch git@github.com:gitster/git
->   ...
->   real    0m0.432s
->   user    0m0.100s
->   sys     0m0.032s
->
-> HTTP fares better than I would have thought, but is also slower:
->
->   $ time git fetch https://github.com/gitster/git
->   ...
->   real    0m0.258s
->   user    0m0.080s
->   sys     0m0.032s
->
-> -Peff
+> For sanity checking, it is OK to add ARRAY_SIZE(result) as the final
+> and extra parameter to git_check_attr() so that the function can
+> make sure it matches (or exceeds) check->nr.
 
-Well 9/14 are https for me, the rest is git://
-Also 9/14 (but a different set) is github, the rest is
-either internal or kernel.org.
-
-Fetching from github (https) is only 0.9s from here
-(SF bay area, I'm not in Europe any more ;) )
-
-I would have expected to have a speedup
-of roughly 2 + latency gains. Factor 2 because
-in the current state of affairs either the client or the
-remote is working, i.e. the other sie is idle/waiting, so
-factor 2 seemed reasonable (and ofc the latency), so I
-was a bit surprised to see a higher yield.
+That seems tempting from a callers perspective; I'll look into that.
