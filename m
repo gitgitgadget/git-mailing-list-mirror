@@ -2,191 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A979215F6
-	for <e@80x24.org>; Wed, 12 Oct 2016 23:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32CF6215F6
+	for <e@80x24.org>; Wed, 12 Oct 2016 23:40:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933429AbcJLXkS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 19:40:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55482 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932370AbcJLXkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 19:40:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5B93467DC;
-        Wed, 12 Oct 2016 19:33:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h1DGkJJ0ORcstuzPW3eOLLDdbXE=; b=UA9ieD
-        UMUXmDCOYHzAQE0sMTcpRjmMIm2vClAY3GxFAIybyleC0PoAxksKpjUOc9NI9QbV
-        OR0yMzp1RPPnNU3t4EjytcJ3kPQGUYiqdvxu6C7KM3/g+pJwO5USFH8deUfcRsMP
-        0FsQKjfXgASM5VO8VbyWia2DZS22m9Uti8AOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ge8XU7BYBfjO53EiGioQWRIWGtrK8nJW
-        9DaQ6rSkQHi2VMH0T+nEhEA3be1KkyJespGH8gePh1Ew1eb4OW9XsZ9hzOCmByT7
-        lkKhKwT42365arBOHctPnHoptfs/ACTprumIl8/LdqD0IVC5NMRlFRxPm71p8mBp
-        Qg6Sbsdvw5I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CDD2F467DB;
-        Wed, 12 Oct 2016 19:33:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 20A99467DA;
-        Wed, 12 Oct 2016 19:33:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     bmwill@google.com, git@vger.kernel.org, j6t@kdbg.org,
-        jacob.keller@gmail.com
-Subject: Re: [PATCHv3] attr: convert to new threadsafe API
-References: <20161012224109.23410-1-sbeller@google.com>
-Date:   Wed, 12 Oct 2016 16:33:31 -0700
-In-Reply-To: <20161012224109.23410-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 12 Oct 2016 15:41:09 -0700")
-Message-ID: <xmqqfuo116t0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A11CD02-90D4-11E6-8DB7-5F377B1B28F4-77302942!pb-smtp2.pobox.com
+        id S933430AbcJLXk2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Oct 2016 19:40:28 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35412 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932370AbcJLXk0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2016 19:40:26 -0400
+Received: by mail-pf0-f182.google.com with SMTP id s8so25440175pfj.2
+        for <git@vger.kernel.org>; Wed, 12 Oct 2016 16:40:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Y9SaIGgNO3jfUvo1XO9hq+u6LGsnYqVjog9r+M23ROM=;
+        b=JqEbIwAatFIvKtP2itxlgRsZ72VsfvGEp/QG4+eOo+XbiejuCTumC2vjXLnJzpXiSa
+         0GbjIA7I6ZB5TojPQkFgwcp+V04+1H3m9B5arIPZVx2+gzXa0VpBlgZ1OGp+gLyjK8Lv
+         cBzdbFiX+ExWb6JhhhAUU8QFFlXOCQ7jqEvCF0yZUuY9XKc0WSR5Nk2aJ5/UTGZ3xjE4
+         mVIi8VwQEMOtu5otn5Sr3r6aiPSZGQ+HDukYlDyIzjEoLjZf/IjKS5HsHhYyWVz3U0kJ
+         oNymsoqlFG5Qb4i0ly5ThzqyT+F9JvxAlWmIiy0XqaK59Ird9t9ZMNl2EUEsiSGSKN81
+         K7Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Y9SaIGgNO3jfUvo1XO9hq+u6LGsnYqVjog9r+M23ROM=;
+        b=aWQ2Prxto75ORklUJEyW6XJ5j4gguzE0FSrdDfjLdP2yzjk1a9DeuWCtjzk6fhZbPp
+         8IfvXzkpOWhhvJQGdzfRENfm6tW8Xn8Fj5lt4vgiQbewqdtuiC2gDRVrK9qBf+7SlXYw
+         q4IkkK4RVUXw+kQAzLDKsX+5GKui0AUN8VQETuwgDkMq6g5IIsdoXDxowZ8XUZuL1Ggf
+         sA8q6vrBZzRVtTfvmZ4/c/ULT9XrGQ5SwHbulObNhZAej880gMyBIR/YNbkEOkBwDGqI
+         rriZ1T5Ldo3fXAhB3vn1cdWUaWt3sNNB0YBnFe7dJ+GQCC4FNWZr20dClPiuBLVS5ebj
+         JUJA==
+X-Gm-Message-State: AA6/9Rnj/DU51ijQEjlk2YriCn+6lanHLBqH4IyG5zqwPpFkEFd9HCeB6Q9H5sPmClgC8q63
+X-Received: by 10.99.61.11 with SMTP id k11mr4604006pga.139.1476315625472;
+        Wed, 12 Oct 2016 16:40:25 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id k67sm14294945pfb.86.2016.10.12.16.40.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 12 Oct 2016 16:40:24 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        peff@peff.net, christian.couder@gmail.com
+Subject: [PATCH v2 0/6] allow non-trailers and multiple-line trailers
+Date:   Wed, 12 Oct 2016 16:40:15 -0700
+Message-Id: <cover.1476314576.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <cover.1476232683.git.jonathantanmy@google.com>
+References: <cover.1476232683.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Thanks, Peff, for the pointer to list.h. Using list.h does simplify the
+code by a similar amount to switching it to a singly-linked list, so I
+have done that (replacing my earlier "trailer: use singly-linked list,
+not doubly" patch). Another advantage is that I no longer need to change
+the algorithm, making for a smaller patch.
 
-> @@ -89,15 +114,20 @@ static void setup_check(void)
->  
->  ------------
->  	const char *path;
-> +	struct git_attr_result *result;
->  
->  	setup_check();
-> -	git_check_attr(path, check);
-> +	result = git_check_attr(path, check);
+(There are some quirks resulting from list.h implementing a circular
+list, like needing to pass "head" as a sentinel when iterating from the
+middle of the list, but those are minor, and my original singly-linked
+list implementation had quirks too anyway like needing to pass a pointer
+to the next pointer.)
 
-This looks stale by a few revisions of the other parts of the patch?
+Updates:
+ (-> 1/6)
+ - Added separate patch for const correctness changes
+ (1/5 -> 2/6)
+ - Dropped singly-linked list patch, instead replacing existing
+   doubly-linked list implementation with list.h
+ (5/5 -> 6/6)
+ - Used "char *" instead of "struct strbuf"
+ - Modified test slightly to test whitespace at beginning of line
 
-> diff --git a/archive.c b/archive.c
-> index 11e3951..15849a8 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -107,10 +107,12 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->  		void *context)
->  {
->  	static struct strbuf path = STRBUF_INIT;
-> +	static struct git_attr_check *check;
-> +
->  	struct archiver_context *c = context;
->  	struct archiver_args *args = c->args;
->  	write_archive_entry_fn_t write_entry = c->write_entry;
-> -	static struct git_attr_check *check;
-> +	struct git_attr_result result = GIT_ATTR_RESULT_INIT;
->  	const char *path_without_prefix;
->  	int err;
->  
-> @@ -124,12 +126,16 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->  		strbuf_addch(&path, '/');
->  	path_without_prefix = path.buf + args->baselen;
->  
-> -	if (!check)
-> -		check = git_attr_check_initl("export-ignore", "export-subst", NULL);
-> -	if (!git_check_attr(path_without_prefix, check)) {
-> -		if (ATTR_TRUE(check->check[0].value))
-> +	git_attr_check_initl(&check, "export-ignore", "export-subst", NULL);
-> +	git_attr_result_init(&result, check);
-> +
-> +	if (!git_check_attr(path_without_prefix, check, &result)) {
-> +		if (ATTR_TRUE(result.value[0])) {
-> +			git_attr_result_clear(&result);
->  			return 0;
-> -		args->convert = ATTR_TRUE(check->check[1].value);
-> +		}
-> +		args->convert = ATTR_TRUE(result.value[1]);
-> +		git_attr_result_clear(&result);
->  	}
+Jonathan Tan (6):
+  trailer: improve const correctness
+  trailer: use list.h for doubly-linked list
+  trailer: streamline trailer item create and add
+  trailer: make args have their own struct
+  trailer: allow non-trailers in trailer block
+  trailer: support values folded to multiple lines
 
-This is exactly what I meant by "can we avoid alloc/free of result
-in leaf function when we _know_ how many attributes we are
-interested in already, which is the majority of the case?".
+ Documentation/git-interpret-trailers.txt |  10 +-
+ t/t7513-interpret-trailers.sh            | 174 ++++++++++
+ trailer.c                                | 538 +++++++++++++++----------------
+ 3 files changed, 444 insertions(+), 278 deletions(-)
 
-Starting with a simple but unoptimized internal implementation of
-the attr subsystem is one thing (which is good).  Exposing an API that
-cannot be optimally implemented later without changing the callers
-is another (which is bad).
+-- 
+2.8.0.rc3.226.g39d4020
 
-By encapsulating each element into "struct git_attr_result", we can
-extend the API without changing the API user [*1*].  
-
-But I do not think of a way to allow an efficient implementation
-later unless the source of the API user somehow says "this user is
-only interested in this many attributes", like having this
-
-	struct git_attr_result result[2];
-
-(because this caller only wants "ignore" and "subst") on the API
-user's side [*2*].  Without such a clue (like the patch above, that
-only says "there is a structure called 'result'"), I do not think of
-a way to avoid dynamic allocation on the API implementation side.
-
-All the other callers in the patch (pack-objects, convert, ll-merge,
-etc.) seem to share the exact same pattern.  Each of the leaf
-functions knows a fixed set of attributes it is interested in, the
-caller iterates over many paths and makes calls to these leaf
-functions, and it is a waste to pay alloc/free overhead for each and
-every iteration when we know how many elements result needs to
-store.
-
-
-[Footnote]
-
-*1* Would we need a wrapping struct around the array of results?  If
-    that is the case, we may need something ugly like this on the
-    API user side:
-
-	GIT_ATTR_RESULT_TYPE(2) result = {2,};
-
-    with something like the following on the API implementation
-    side:
-
-        #define GIT_ATTR_RESULT_TYPE(n) \
-            struct { \
-                    int num_slots; \
-                    const char *value[n]; \
-            }
-
-        struct git_attr_result {
-                int num_slots;
-                const char *value[FLEX_ARRAY];
-        };
-        git_attr_result_init(void *result_, struct git_attr_check *check)
-        {
-                struct git_attr_result *result = result_;
-
-                assert(result->num_slots, check->num_attrs);
-                ...
-        }                
-        git_check_attr(const char *path,
-                       struct git_attr_check *check,
-                       void *result_)
-        {                       
-                struct git_attr_result *result = result_;
-
-                assert(result->num_slots, check->num_attrs);
-                for (i = 0; i < check_num_attrs; i++)
-                        result->value[i] = ... found value ...;
-        }
-
-
-*2* Or the uglier
-
-	GIT_ATTR_RESULT_TYPE(2) result = {2,};
-
-    I can see why the "check" side would benefit from a structure
-    that contains an array, but I do not see why "result" side would
-    want to, so I am hoping that we won't have to do this uglier
-    variant and just go with the simple "array of resulting values".
