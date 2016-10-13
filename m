@@ -2,88 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56D1420989
-	for <e@80x24.org>; Thu, 13 Oct 2016 16:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A45320989
+	for <e@80x24.org>; Thu, 13 Oct 2016 16:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756547AbcJMQFE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 12:05:04 -0400
-Received: from mout.web.de ([217.72.192.78]:54333 "EHLO mout.web.de"
+        id S1754592AbcJMQI7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 12:08:59 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51434 "EHLO mx2.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756557AbcJMQE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 12:04:58 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MEmgA-1bej7X1gRG-00G3dn for <git@vger.kernel.org>; Thu,
- 13 Oct 2016 18:03:25 +0200
-Subject: Re: 2 directories same spelling one directory is camel cased
-To:     git@vger.kernel.org
-References: <e0a3eb0590552c98638d486db8ad4a12@davidwbrown.name>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <967e9ca6-1e0a-7995-6e11-a3f0f255f087@web.de>
-Date:   Thu, 13 Oct 2016 18:03:23 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.4.0
+        id S1753729AbcJMQI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 12:08:57 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u9DG5SBJ020466
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Thu, 13 Oct 2016 18:05:28 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9DG5Uwi007971;
+        Thu, 13 Oct 2016 18:05:30 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Larry Finger <Larry.Finger@lwfinger.net>,
+        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        git@vger.kernel.org
+Subject: Re: Formatting problem send_mail in version 2.10.0
+References: <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+        <vpqfuo3l4fl.fsf@anie.imag.fr>
+        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
+        <vpq4m4iamfs.fsf@anie.imag.fr>
+        <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
+        <vpq60oy589b.fsf@anie.imag.fr>
+        <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
+        <vpq8tttr2ps.fsf@anie.imag.fr>
+        <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com>
+        <20161012231321.ar2csdmvhdya2q7r@sigill.intra.peff.net>
+        <20161013153317.GA1698@ikke.info>
+Date:   Thu, 13 Oct 2016 18:05:30 +0200
+In-Reply-To: <20161013153317.GA1698@ikke.info> (Kevin Daudt's message of "Thu,
+        13 Oct 2016 17:33:17 +0200")
+Message-ID: <vpqtwcg9qut.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <e0a3eb0590552c98638d486db8ad4a12@davidwbrown.name>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:+tmowvqlp3eYf9Dwi9OtUxJQCQtK8YZJ1CNjKBgrur7LtV0Wkbc
- cuVnYro3rv4HKKLUES0mSj5DdAubgubE2XdO4OQNPudWlOjEdLJ4mP4gO67kxl3sOrZx/Ai
- cJSz2P6fABvXg+/jL2Bk5VJQjbC+nhrIlHYitFZKSq4D+O6MSqfi9vVoRED5rQGDMCPnjXg
- K54HX/uKCbyB9Vm5Vy12Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OYzWs828AOc=:X3zlyzS+H3uOfvqIxVEY+Q
- T6qjHmMv/fj19Gxi7mdRSKlACFevLri7PXyRP9IUdUjXy3oDNRIzqepbZdMNav4bPl1v/gwiD
- eE09wIxYrVa69fgnBKrdOMCsQfo6XX++b9x8c65LmltjTnThJVdyZVAV8PqlhaJwp9cs8ldC9
- hMsP/OddqaxWID8ntEQq/3YcsLQJRWmuXuREZ+EJq/MMpFcxHjOvyLi8vufSRkT5dR0CmGhaS
- rFZ+3NcLnRKQo9gq/yWy+DBbvb9vNjomQyXyLZFNP1EYZdLafJ14TkJaNPJ5umptteCnCEhn8
- r5W1edoZbQOov54OfnEnM2J5OhM4iCnU2cmu0Gs5IeSFbt5QKi3or0etOeCEPMyCf3ic9x6Yd
- UlkATuRPMwqJzU+p/lp0Hl+b/xjhmLxHBnftpXshn8UOei3MzcIy7FEB+LI1q7a5ODAIgfuny
- MEXh1uBhgreEyrV3JEtROKhIkeWYMRc5evU5iK5tNrqI+llxN34AtqRFsj8V4Y8PzI2Tv4q3a
- pVVfwVuo27Fi7bhFbJ8DF7dzefKsdeH7O+Ig+AJgPG8SYIUbhnFJZlQgQYEv0oJ5Vbzu4Rr0R
- O95VHzcvZi7I3TrC2Q8ApfpkNeoygv+O2RtSvagH46+P29cs8JqWnn/TocA4JA8qccMsQ6Mhx
- monLulmoldmMOqJI/pvk8F3fI3HQu9ot/PpGqKKXZCY9AS0f5ASd10g2o4np5wdNsSwrO9kl/
- xdL4jJHShFWg27cuBNt6TLnVtcvrTujWtWriITDjnHLMBoB0VVjejItYyItvB7kD25mnTl+ST
- QR2izCE
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 13 Oct 2016 18:05:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9DG5SBJ020466
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1476979530.81062@m4xeDBKfQEqOSYMYzjL0og
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12.10.16 18:05, David Brown wrote:
-> Howdy git gurus,
-> 
-> I have the dubious distinction of working with a remote repo (master) that has a class loader run-time error when cloned, built and executed.
-> 
-> The reason for the runtime issue is a directory hierarchical path has to directories (folders) with the same name spelling but one of the directories is camel-cased. The package names are the same.
-> 
-> The compiler doesn't care but the run-time class loader has an issue with the 2 'same like named' classes.
-> 
-> How to remove the offending directories and files at the locally cloned repo but not push 'deleted' directories and files back to origin/master the remote repo?
-> 
-> Please advise.
-> 
-> Regards.
-This email did not resolve from here: David Brown <david@davidwbrown.name>
+Kevin Daudt <me@ikke.info> writes:
 
-It is somewhat unclear, which issue the class loader has.
-What does 
-git ls-files | grep -i "sameNameBitDifferent"
-say ?
+> On Wed, Oct 12, 2016 at 07:13:22PM -0400, Jeff King wrote:
+>
+>> I think the answer is pretty clearly no. It's just that historically we
+>> have auto-munged it into something useful. I think the viable options
+>> are basically:
+>> 
+>>   1. Tell people not to do that, and to do something RFC compliant like
+>>      "Stable [4.8+]" <stable@vger.kernel.org>. This is a little funny
+>>      for git because we otherwise do not require things like
+>>      rfc-compliant quoting for our name/email pairs. But it Just Works
+>>      without anybody having to write extra code, or worry about corner
+>>      cases in parsing.
+>> 
+>>   2. Drop everything after the trailing ">". This gives a valid rfc2822
+>>      cc, and people can pick the "# 4.8" from the cc line in the body.
+>
+> Comments, surrounded by parenthesis are allowed after the ">" according
+> to the RFC, just plain dropping everything comming after that would
+> break that support.
 
-What do you mean with 
-"How to remove the offending directories" ?
+Our in-house parser does consider (...) comments, and my patch does not
+change how they are handled: they are still kept after the address part.
 
-Just run
-rm -rf "offending directories" ?
+However, another piece of code does strip everything behind ">":
 
-Or, may be
-git mv dir1 NewDir1
+sub sanitize_address {
+        ...
+	# remove garbage after email address
+	$recipient =~ s/(.*>).*$/$1/;
 
-If you don't want to push, you don't have to, or what do I miss ?
+introduced in 831a488b76e0 (git-send-email: remove garbage after email
+address, 2012-11-22).
 
+IMHO, it's OK to continue doing this: removing comments from To: and Cc:
+is not really a problem (and I think we've seen nobody complain about it
+since 2012). But after my patch, these two lines can probably safely be
+removed, as there can no longer be "garbage" after the email, only
+comments.
 
-
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
