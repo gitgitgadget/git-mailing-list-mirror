@@ -2,119 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE12D209A9
-	for <e@80x24.org>; Fri, 14 Oct 2016 00:48:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D661F209A9
+	for <e@80x24.org>; Fri, 14 Oct 2016 01:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754127AbcJNAsX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 20:48:23 -0400
-Received: from know-smtprelay-omc-10.server.virginmedia.net ([80.0.253.74]:52619
-        "EHLO know-smtprelay-omc-10.server.virginmedia.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753942AbcJNAsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 20:48:22 -0400
-Received: from red.patthoyts.tk ([82.37.62.216])
-        by know-smtprelay-10-imp with bizsmtp
-        id vCml1t00B4fw4HN01CmlXp; Fri, 14 Oct 2016 01:46:45 +0100
-X-Originating-IP: [82.37.62.216]
-X-Spam: 0
-X-Authority: v=2.1 cv=Ha/pNXw8 c=1 sm=1 tr=0 a=y+L2qvWGb0b1Khfuzk0aNQ==:117
- a=y+L2qvWGb0b1Khfuzk0aNQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=xqWC_Br6kY4A:10 a=1oJP67jkp3AA:10 a=CH0kA5CcgfcA:10
- a=ZZnuYtJkoWoA:10 a=zl2uJyVoAAAA:8 a=Rf460ibiAAAA:8 a=WoIh_kDzt6LkAJalV2gA:9
- a=-FEs8UIgK8oA:10 a=NWVoK91CQyQA:10 a=E0KdIPxdrRkKdVweLlsj:22
- a=-X4ai1wA6IXBCEr1GZS2:22
-Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2001:470:1f1d:26c::2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by red.patthoyts.tk (Postfix) with ESMTPS id F33D41962B25;
-        Fri, 14 Oct 2016 01:46:44 +0100 (BST)
-From:   Pat Thoyts <patthoyts@users.sourceforge.net>
-To:     Alexander Shopov <ash@kambanaria.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [GIT GUI l18n 1/2] git-gui: Mark 'All' in remote.tcl for translation
-References: <20161013184349.42950-1-ash@kambanaria.org>
-X-Face:  .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-Reply-to: patthoyts@users.sourceforge.net
-X-Url:  http://www.patthoyts.tk/
-Date:   Fri, 14 Oct 2016 01:46:44 +0100
-In-Reply-To: <20161013184349.42950-1-ash@kambanaria.org> (Alexander Shopov's
-        message of "Thu, 13 Oct 2016 21:43:48 +0300")
-Message-ID: <87a8e73ggb.fsf@red.patthoyts.tk>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        id S1756057AbcJNBfr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 21:35:47 -0400
+Received: from mail-db5eur01on0069.outbound.protection.outlook.com ([104.47.2.69]:27456
+        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752495AbcJNBfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 21:35:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=conceptek.onmicrosoft.com; s=selector1-csscorporate-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=8QSdUjFJX1Mn2IsWzK7a1nGe6uMQyQT5NkXCCG+GccU=;
+ b=cLG3e6NqdQVV76Nwrp83okcb+xMaWU7rzwO11N2uZRDxo1KtibcIR06mY4Conh9BSxuM9UcwOblbL2bNCk3DcpQdA7++gF/POQAKCgQf0S6AjidkHKEZnvZ+3nHD1yz9YB4NxEMvL/CiXqTaeKaSqJOPQimpd0wkphAgkEzaoc4=
+Received: from HE1PR0101MB2187.eurprd01.prod.exchangelabs.com (10.168.29.20)
+ by HE1PR0101MB1675.eurprd01.prod.exchangelabs.com (10.166.119.11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.659.11; Thu, 13
+ Oct 2016 15:57:55 +0000
+Received: from HE1PR0101MB2187.eurprd01.prod.exchangelabs.com ([10.168.29.20])
+ by HE1PR0101MB2187.eurprd01.prod.exchangelabs.com ([10.168.29.20]) with mapi
+ id 15.01.0659.018; Thu, 13 Oct 2016 15:57:55 +0000
+From:   Daniel Lopez <dlopez@csscorporate.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Francisco Carreira <fcarreira@csscorporate.com>
+Subject: Change Default merge strategy options
+Thread-Topic: Change Default merge strategy options
+Thread-Index: AQHSJWIBGDoUWeiC306sVyf/efipiaCmiegv
+Date:   Thu, 13 Oct 2016 15:57:55 +0000
+Message-ID: <HE1PR0101MB218771966DAC7634B9735634BDDC0@HE1PR0101MB2187.eurprd01.prod.exchangelabs.com>
+References: <HE1PR0101MB2187D29367CB67F42373647CBDDC0@HE1PR0101MB2187.eurprd01.prod.exchangelabs.com>
+In-Reply-To: <HE1PR0101MB2187D29367CB67F42373647CBDDC0@HE1PR0101MB2187.eurprd01.prod.exchangelabs.com>
+Accept-Language: pt-PT, en-US
+Content-Language: pt-PT
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dlopez@csscorporate.com; 
+x-originating-ip: [25.165.214.132]
+x-ms-office365-filtering-correlation-id: b65fe976-e095-40ef-e45a-08d3f381b249
+x-microsoft-exchange-diagnostics: 1;HE1PR0101MB1675;7:fRSqiws6r6KTnpUWPDFyTCs7hMJNgbGQHU4OPvlOXL3Qzl53PD1HD5I8lTYNPKRoe77oC6tCNcpful3ifmV06/1q4/UIn0tpEwLtStwgIK21Bz0clwOwOyV2K5SMUrEaOHicbCmN2NuNzSxjB/lI7mSNeEbJ/BlQo5ltf/nmqnBw27AyB2WV1cPJBI41VPmFJbvyPt2RCtk9dgGOsvEr97liCrv/Ukssz7HW5jnRB2XO4yY1JFUGTeIXb/VkNWCCdOBqLGonFkW9bbA3yT+nW/5opMqGEMmVBlayR1rJAmhbqFs99zoJ3HZvElqasLVIVMs34Vpc9PLPeiQpTcnUww0qCY4uXMUZve1l0so3hZI=
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:HE1PR0101MB1675;
+x-microsoft-antispam-prvs: <HE1PR0101MB1675BCDA1607F8EAD39832D0BDDC0@HE1PR0101MB1675.eurprd01.prod.exchangelabs.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040176)(601004)(2401047)(5005006)(8121501046)(3002001)(10201501046)(6042046)(6043046);SRVR:HE1PR0101MB1675;BCL:0;PCL:0;RULEID:;SRVR:HE1PR0101MB1675;
+x-forefront-prvs: 0094E3478A
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(7916002)(252514010)(189002)(199003)(33656002)(6916009)(8676002)(50986999)(10400500002)(15974865002)(2501003)(9686002)(4326007)(7696004)(86362001)(107886002)(81166006)(1730700003)(2906002)(97736004)(66066001)(5660300001)(2900100001)(19580405001)(87936001)(7846002)(54356999)(450100001)(4001430100002)(11100500001)(2950100002)(101416001)(68736007)(7736002)(102836003)(6116002)(74316002)(81156014)(76176999)(5002640100001)(77096005)(122556002)(586003)(3660700001)(3846002)(305945005)(189998001)(110136003)(106116001)(3280700002)(19580395003)(8936002)(229853001)(92566002)(2351001)(105586002)(106356001)(460985005);DIR:OUT;SFP:1101;SCL:1;SRVR:HE1PR0101MB1675;H:HE1PR0101MB2187.eurprd01.prod.exchangelabs.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: csscorporate.com does not
+ designate permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
+X-OriginatorOrg: csscorporate.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2016 15:57:55.5078
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: e0797f8b-8d5f-4a4e-b4ec-0ee12d07fd55
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR0101MB1675
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexander Shopov <ash@kambanaria.org> writes:
+Hi,
 
->Signed-off-by: Alexander Shopov <ash@kambanaria.org>
->---
-> lib/remote.tcl | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
->diff --git a/lib/remote.tcl b/lib/remote.tcl
->index 4e5c784..26af8ae 100644
->--- a/lib/remote.tcl
->+++ b/lib/remote.tcl
->@@ -250,12 +250,12 @@ proc update_all_remotes_menu_entry {} {
-> 
-> 			$fetch_m insert end separator
-> 			$fetch_m insert end command \
->-				-label "All" \
->+			    -label [mc "All"] \
-> 				-command fetch_from_all
-> 
-> 			$prune_m insert end separator
-> 			$prune_m insert end command \
->-				-label "All" \
->+			    -label [mc "All" ]\
-> 				-command prune_from_all
-> 		}
-> 	} else {
-
-OK - this looks fine except the line just above compares the text of
-this entry so also needs [mc] adding. I've applied it as:
-
--- a/lib/remote.tcl
-+++ b/lib/remote.tcl
-@@ -246,22 +246,22 @@ proc update_all_remotes_menu_entry {} {
-        if {$have_remote > 1} {
-                make_sure_remote_submenues_exist $remote_m
-                if {[$fetch_m type end] eq "command" \
--                       && [$fetch_m entrycget end -label] ne "All"} {
-+                               && [$fetch_m entrycget end -label] ne [mc "All"]} {
- 
-                        $fetch_m insert end separator
-                        $fetch_m insert end command \
--                               -label "All" \
-+                               -label [mc "All"] \
-                                -command fetch_from_all
- 
-                        $prune_m insert end separator
-                        $prune_m insert end command \
--                               -label "All" \
-+                               -label [mc "All"] \
-                                -command prune_from_all
-                }
-        } else {
-                if {[winfo exists $fetch_m]} {
-                        if {[$fetch_m type end] eq "command" \
--                               && [$fetch_m entrycget end -label] eq "All"} {
-+                                       && [$fetch_m entrycget end -label] eq [mc "All"]} {
- 
-                                delete_from_menu $fetch_m end
-                                delete_from_menu $fetch_m end
+How to use 'git config --global' to set default strategy like recursive.
 
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Example:
+Currently , when we want to enforce a specific strategic we need to include=
+=A0 its reference on the command line :=A0
+git.exe merge --strategy=3Drecursive --strategy-option=3Dignore-all-space d=
+ev-local
+
+
+we would like to define it as the default strategic to follow and be able t=
+o simplify the command line to:
+
+git.exe merge dev-fix1.3-local=20
+
+Using alias is not an option as the git is being called from TortoiseGit (o=
+ur current gui tool).
+
+
+Daniel Lopez
+Concept Developer
+
+Tel: +351 289 100683 | Email:=A0dlopez@csscorporate.com=A0|=A0www.csscorpor=
+ate.com=A0|=A0=A0=A0
+
