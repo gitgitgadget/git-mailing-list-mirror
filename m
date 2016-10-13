@@ -2,93 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23E641F4F8
-	for <e@80x24.org>; Thu, 13 Oct 2016 10:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C7391F4F8
+	for <e@80x24.org>; Thu, 13 Oct 2016 10:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753933AbcJMKg7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 06:36:59 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:36456 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752940AbcJMKg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 06:36:57 -0400
-Received: by mail-it0-f46.google.com with SMTP id l13so176607854itl.1
-        for <git@vger.kernel.org>; Thu, 13 Oct 2016 03:36:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=v4ELhSjiYq5jlvl9HOU5KfWIPcgT1CE0XnftRShstJg=;
-        b=CLLMuuM5Lxk6PK7hwzoNGEioUQQZTAXFDTWtFUDdu/z53LbK4YkDbgj1eAedgXfWgX
-         HblnHqpfsnsabPJYrmDiSGsiVMhs8+4HmwK3W6QlMP2sBK44uMNLl66NJz3tjKLi/Q6+
-         cJXJapAFqtJ2HkiMbTM899+jgZP3p5G1RtI28Uew6ao4U04NavLsfpCfDjQy88bhwcg1
-         7Yb4c1g7X+STlagtG/lg0Y5uLXtHafcBrid8HEBrg3ELLrbiJER6JRdV/M/jQ6ebZnNg
-         fzAR9I6GUZw3T/GhxP7UvobnT+tQfNlgTdKctu4UJ6a+NgfjXxSUXHBS6GjgEjrtmv5Y
-         CEWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=v4ELhSjiYq5jlvl9HOU5KfWIPcgT1CE0XnftRShstJg=;
-        b=YFJnJTayoiW8yf1C6WQMxPZmC9UidAASxlBNYMQauWL8bvMMQhBsw90+TMMm2FJiS1
-         wRxKJCBlPGKqFp8nUzpwyE7RC/tt+uDsYSEckIa7iDuqsQqSgmcCRTLOyspltpsMDuk7
-         pND5ZVNBvOWWol8j8EqqwTq1CV4qiOUmvTgrLOYJWizqfzLWlqvW8s3BmJgFV1IQPQbG
-         GLZI1YJu8hRmZVDph0FpEu3qfpK/3Sdh90sE4EY6ePdKrQKBEsjFUdqRJ1cAFprJgxb3
-         CYtwjaDU3dNbf+Yd+uCbrR770NKyAziJD2gu5k/x/QH/Fnj8IJ7W0TQylF78RtLCZzR7
-         coYA==
-X-Gm-Message-State: AA6/9RnvCCuTq3MIt38DiO8TRgGeFRxEa1tu/rrmFbgxTwl376GbtDq4B2mXHX9j0icZPebZKtrW8KPepthdDA==
-X-Received: by 10.36.36.214 with SMTP id f205mr7129441ita.50.1476354597721;
- Thu, 13 Oct 2016 03:29:57 -0700 (PDT)
+        id S1752481AbcJMKkS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 06:40:18 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58486 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753715AbcJMKkP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 06:40:15 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MRSeC-1bRwVi1phw-00SgzR; Thu, 13 Oct 2016 12:40:06
+ +0200
+Date:   Thu, 13 Oct 2016 12:40:05 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Joshua N Pritikin <jpritikin@pobox.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: interactive rebase should better highlight the not-applying
+ commit
+In-Reply-To: <20161012170207.lapdv5h5aws4k4pw@droplet>
+Message-ID: <alpine.DEB.2.20.1610131230370.197091@virtualbox>
+References: <20161011190745.w2asu6eoromkrccu@droplet> <CAGZ79kZSQx7aOCgQ2dwzJeCLX-k-+x1SKabEBG7CktNfeXAbvg@mail.gmail.com> <20161012132740.dvyofl36qtualxgk@droplet> <alpine.DEB.2.20.1610121815160.197091@virtualbox> <20161012170207.lapdv5h5aws4k4pw@droplet>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.230.206 with HTTP; Thu, 13 Oct 2016 03:29:27 -0700 (PDT)
-In-Reply-To: <20161013015233.GA18001@whir>
-References: <6c83c905-b10a-7f54-873f-54186faacfc8@FreeBSD.org>
- <CAGZ79kZo5W1r0s26G3foB7caP6+u66mdzqzyneqXBX_B7A0RKg@mail.gmail.com> <20161013015233.GA18001@whir>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 13 Oct 2016 17:29:27 +0700
-Message-ID: <CACsJy8ADmHLW5ba4bVTGN9ccqpMDNFgkqE_5JvnqZ0BxWcaCvw@mail.gmail.com>
-Subject: Re: problem with git worktree and git svn
-To:     Eric Wong <e@80x24.org>
-Cc:     Mathieu Arnold <mat@freebsd.org>,
-        Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:YLLiY71EFx8dCkuJcFlqq+KG8Rg/813D4uR3+Buz2cyHFYG1zma
+ oSjOoL9gMJnG2hj31JX2Y7ZEBndyahgEVVtYAjLMc0ZgJ3xoVuyGRno4uiH4wi7qrfQmwPU
+ VFNPxO2CnZ0OB07rq5fho/iSMric4gFi/F3Q8KLm6rqmuiNI2A9h/jsr6NbJkVBaJ5N78uB
+ dFM8+Lukloa1V02xN0lVg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wFSuRqvUOsw=:rpysufR1ZoEt3YVdRUzCm/
+ qHrmZq4xQxlXetzO0xYe+rMmgTGk+jrfaMGs8krO8pCwL+/a4G07xdOH258Vaqh8q9BTkPrJV
+ RyaQxi9m/bDW7p38TuxX2GrxUtTpPJr83vv0h/T5r/Ye14Ebj1WxXQN2VsVceyFgQRdHRr5qj
+ aHc8RJppJ0Jekk9O7eFtw4It9I1gPCW9FIP6lNHMUWckNJURkB0hDMvC525GjcMwPHnByNKAL
+ xTJLiZ+L2V54s+ZKyxcs83PpdmO2r/ZvCxKBf96e28TOlnC2QvboEpOnw//Z3O16U6TsOcgKN
+ DDDGMowAjWtxPtGK6PMiOFnpb1j7oeofp41cjLKzS12JzPFy/GSCoueos+FDNydEOS6T07EqW
+ 9K/g3EODwYpIeeTV7U3uQQOMtJsBlYjny9kYIIIjjxkrr9WpXUjSpwqCJTjpWIqUFKgIYTgWI
+ QHZYcJjUmCanss58jW//lrJplnTO7SQLAnV2PfP8dUz3OyqSMC83tWdL7KGNl6BJ9x5oD/JQA
+ euqWNaxDBEwzMjyTcoohcrpQEcU9SlZSQqXXhvamvX2kPIFIQGPjRTroxAHnruIwYoR7OvqSU
+ Dr40jqYFr5oapD856WObIsLfKonXmP6R/0GSknjNeVSSN8mrzTvyy5w1T46XkA0spGG93TGdK
+ Fw/emp+Laa1hA8PLBI51mRPSmiJxvsUXqirkHOslmXZCP4p0jU22ZFmt4a5Ka0HXADASKkF53
+ yDF9mBfJGsQaF9PSj4QZn3zw/5ICyedEYkWYW3l4VEagM7BzttA3FJwSbWABdW1CF6cYoYrPt
+ xodp7ic
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 13, 2016 at 8:52 AM, Eric Wong <e@80x24.org> wrote:
-> +sub svn_dir {
-> +       my $git_dir = scalar @_ ? $_[0] : $ENV{GIT_DIR};
-> +       my $common = $ENV{GIT_COMMON_DIR} || "$git_dir/commondir";
-> +       $git_dir .= '/'.::file_to_s($common) if -e $common;
-> +       my $svn_dir = $git_dir . '/svn';
-> +       $svn_dir =~ tr!/!/!s;
-> +       $svn_dir;
-> +}
+Hi Joshua,
 
+On Wed, 12 Oct 2016, Joshua N Pritikin wrote:
 
-If this is shell script, this function could be just
+> On Wed, Oct 12, 2016 at 06:24:37PM +0200, Johannes Schindelin wrote:
+> 
+> > But maybe I read it all wrong and you do want to make this happen
+> > yourself, and you simply want a little advice how to go about it?
+> 
+> Ugh, if you insist.
 
-svn_dir() {
-    git rev-parse --git-path svn
-}
+I don't. If you want that feature to see the light of day, you should
+insist yourself ;-)
 
-which should give you correct path in either single or multi-worktree
-context and you don't need to bother with details like
-$GIT_COMMON_DIR. But I don't know how Perl bindings are implemented, I
-don't know if we have something similar (or easy to add it, like
-Git::git_path()).
+> > > On Tue, Oct 11, 2016 at 02:25:19PM -0700, Stefan Beller wrote:
+> > > > On Tue, Oct 11, 2016 at 12:07 PM, Joshua N Pritikin <jpritikin@pobox.com> wrote:
+> > > > However IIUC currently rebase is completely rewritten/ported to C 
+> > > > where it is easier to add color support as we do have some color 
+> > > > support in there already.
+> > > 
+> > > Sounds great. Is there a beta release that I can try out?
+> > 
+> > There is no release as such, unless you count Git for Windows v2.10.0.
+> 
+> Nope, that doesn't count. ;-)
 
-I don't know much about git-svn, but from the look of it I agree
-replacing $ENV{GIT_DIR}/svn with svn_dir() should fix it, assuming
-that you don't hard code $ENV{GIT_DIR}/blahblah somewhere else. I
-don't see any other potential problems (from multi-worktree
-perspective).
--- 
-Duy
+Sometimes honesty goes too far. You basically told me that what I work on
+does not count. That does not exactly curry my favor.
+
+> > But you can try the `interactive-rebase` branch of
+> > https://github.com/dscho/git; please note, though, that my main aim
+> > was to be as faithful as possible in the conversion (modulo speed, of
+> > course).
+> 
+> Hm OK
+> 
+> > > Sometimes I do a rebase to fix some tiny thing 10-15 commits from HEAD.
+> > > Maybe only 1 file is affected and there are no merge conflicts, but when
+> > > rebase reapplies all the commits, the timestamps of lots of unmodified
+> > > files change even though they are unmodified compared to before the
+> > > rebase.
+> > 
+> > Well, they *were* modified, right?
+> 
+> Were they? Isn't that just an artefact of the implementation?
+
+Yes, they were modified, as the todo script you saved for the interactive
+rebase to perform told it to cherry-pick those changes. That is a worktree
+operation, performing on files, not a repository operation working on
+objects in Git's database.
+
+> > A workaround would be to create a new worktree using the awesome `git
+> > worktree` command, perform the rebase there (on an unnamed branch --
+> > AKA "detached HEAD", no relation to Helloween), and then come back to
+> > the original worktree and reset --hard to the new revision. That reset
+> > would detect that there are actually no changes required to said
+> > files.
+> 
+> What would be the problem with doing this by default? Or could it be a
+> configuration option that can be enabled?
+
+It could definitely be a new feature that is triggered by a new (opt-in)
+configuration option.
+
+It cannot be on by default, at least not in the short run, because those
+cherry-picks can fail with merge conflicts and power users of the
+interactive rebase expect those conflicts to show in the current worktree.
+
+Ciao,
+Johannes
