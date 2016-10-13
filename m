@@ -2,106 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E795209AE
-	for <e@80x24.org>; Thu, 13 Oct 2016 05:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 077E7209AE
+	for <e@80x24.org>; Thu, 13 Oct 2016 05:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755076AbcJMFNf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 01:13:35 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35475 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754944AbcJMFNd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 01:13:33 -0400
-Received: by mail-pf0-f194.google.com with SMTP id s8so4220314pfj.2
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 22:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DH8Cck5d1vFYZNQumwikkUpgMgldin0o+fw5YKFf72M=;
-        b=InY7+sjG/hs76wKNLFZZsRkdaTytsnizVRHL8OBVk8JPe2REsysdd/7mY1Sacw4tSY
-         FXm+y1OurdWsccKN5ZRi4LRN8hJLKpRUfDr1rEc5NoCrAEnaGCeZlfhX+BUg62mKLc+a
-         +MUGtno7jMacKvyK1U4WJr9TwK/KxQzcHOpySTlCBCi/WklbKbrcuYU8/eIG9GgwPkRE
-         sS+p6Ap43GVnEW+hEDOSd+EVu5vbx46B2nVdbihH4oT4jEi8OJoSwP1tpmPKMETH8uDr
-         FIEwCOW8tMgZz4YyfT1bRTOH2u0Ro0MdYBWvLV5GFrdJkOMB8wwJilZYwvR9aWLo29w7
-         Zapw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DH8Cck5d1vFYZNQumwikkUpgMgldin0o+fw5YKFf72M=;
-        b=OZ37z+FxC/3nBocKfT5V2ahah3w7Mlya3EhQhTDbmj/zKWklGcPRbKXynRimWKsu6c
-         PAwfCCH68FePkEagVa83QKK1kz0ZTGgqIm0Ik3YMLY2J24OldkxBBUIQRT3DeFcWXL5J
-         ZXHEWd1r5o4dGJd83dfEuPCZhZWMa0+oOxps3qcTU48kA269S0O67XdA+aFh0a7dybMy
-         zXUtZq4EbwV7XymL7ACc9xvdaV5AwCkSWC40nFpOHOdDiaF62dXdrykwbdzXCg2GggYT
-         8eqpyGqCSvrHenONfm0yg/J+VlE4LGLhvvgIrI7Jzph3BYEWEEcDcPhkmvt81L8/Gn4v
-         fJdA==
-X-Gm-Message-State: AA6/9RlrT+RiJKUJ0U7eLc4Pt5Vkm7j+Smt+nUYCLm8DN3WxxP/norzmM/7CxPIF/mBDvw==
-X-Received: by 10.99.0.204 with SMTP id 195mr5941463pga.78.1476335612792;
-        Wed, 12 Oct 2016 22:13:32 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by smtp.gmail.com with ESMTPSA id a4sm15737535pax.8.2016.10.12.22.13.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Oct 2016 22:13:31 -0700 (PDT)
-Date:   Wed, 12 Oct 2016 22:13:29 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     Josef Ridky <jridky@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] Feature Request: user defined suffix for temp files
- created by git-mergetool
-Message-ID: <20161013051329.GA26538@gmail.com>
-References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
- <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
- <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
- <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
- <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
+        id S1755203AbcJMFdX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 01:33:23 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38304 "EHLO mx1.imag.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754650AbcJMFdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 01:33:21 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9D5WQOd018454
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Thu, 13 Oct 2016 07:32:26 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9D5WQhX025041;
+        Thu, 13 Oct 2016 07:32:26 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Larry Finger <Larry.Finger@lwfinger.net>,
+        Jeff King <peff@peff.net>,
+        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        git@vger.kernel.org
+Subject: Re: Formatting problem send_mail in version 2.10.0
+References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
+        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
+        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
+        <vpqfuo3l4fl.fsf@anie.imag.fr>
+        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
+        <vpq4m4iamfs.fsf@anie.imag.fr>
+        <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
+        <vpq60oy589b.fsf@anie.imag.fr>
+        <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
+        <vpq8tttr2ps.fsf@anie.imag.fr>
+        <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 13 Oct 2016 07:32:26 +0200
+In-Reply-To: <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 12 Oct 2016 13:53:52 -0700")
+Message-ID: <vpq1szkolud.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 13 Oct 2016 07:32:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9D5WQOd018454
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1476941547.55047@S0QsB0MHKXnTs02OxNuIww
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 06, 2016 at 08:43:02AM -0400, Josef Ridky wrote:
-> This is the first of two variant for request to add option to change
-> suffix of name of temporary files generated by git mergetool. This
-> change is requested for cases, when is git mergetool used for local
-> comparision between two version of same package during package rebase.
-> 
-> Signed-off-by: Josef Ridky <jridky@redhat.com>
-> ---
->  Documentation/git-mergetool.txt |  7 ++++++-
->  git-mergetool.sh                | 23 ++++++++++++++++++-----
->  2 files changed, 24 insertions(+), 6 deletions(-)
+Junio C Hamano <gitster@pobox.com> writes:
 
-While I do like that this variant only uses a single flag, I was
-curious whether it would make sense for us to change our
-defaults to OLD/NEW?  I'm thinking "no" since it's totally legit
-to merge "old" branches so I'll stop there.
+> People write things like these
+>
+>     Cc: Stable <stable@vger.kernel.org> # 4.8
+>     Cc: Stable <stable@vger.kernel.org> [4.8+]
+>
+> in the trailer part in the body of the message.  Are these lines
+> meant to be usable if they appear as Cc: headers of an outgoing
+> piece of e-mail as-is?
 
-What I really wanted to mention was...
+I think this is not the right question. The relevant one is: should
+these lines be accepted by git and turned into something usable if they
+appear as Cc: headers of an outgoing piece of e-mail?
 
-If the patch does not update t/t7610-mergetool.sh then there is
-no guarantee that my clumsy fingers won't break the new feature
-in the future ;-)  So please make sure to update the tests once
-we decide on the final direction.  It makes sense we wouldn't
-want to update them just yet (in this patch) since this is still
-RFC, but the final one should include it.
+I.e. "Be liberal in what you accept, and conservative in what you send".
 
-I'm still leaning towards environment variables personally,
-and would have no qualms against taking a patch that teaches it
-to support environment variables as long as it adds a test case
-for the new feature.
+If you have Mail::Address installed, this is already possible. With
+pre-2.6, I did not re-test, but I think it was using the addresses
+as-is, which probably worked but AFAICT created non-RCF-compliant
+emails.
 
-Thanks for sticking with it, Josef!
+> "error: unable to extract a valid address from:" is followed by
+>
+>     Stable <stable@vger.kernel.org#4.8>
+>     Stable <stable@vger.kernel.org[4.8+]>
+>
+> which is not ideal.
 
-cheers,
+I'd actually even say "broken" ;-). If we decide to reject these, we
+should at least give a sensible error message.
+
+> If I were to issue a decree, I would say that people should stop
+> suggesting to put RFC-bogus things on the Cc: line.  As you
+> mentioned, things like:
+>
+>     Cc: Stable (4.8+) <stable@vger.kernel.org>
+>     Cc: "Stable 4.8+" <stable@vger.kernel.org>
+>
+> are perfectly readable alternative that are still RFC-kosher.
+
+I do support those, but if there's an established tradition of using
+# ... trailer, then I don't think we should be the ones forcing it to
+stop.
+
+> Things may have appeared to work by accident, and things may still
+> work by accident, depending on the vintage and availability of
+> Mail::Address package (which seems to be the case), but it is not
+> worth risking random breakages that depends on what other people
+> use in the first place, no?
+
+The "depending on the availability of Mail::Address" is what bothers me
+most. Suppose we make a strong statement here that this # 4.8 should
+stop. Then some users will listen to that statements, but others won't
+read the thread, test with their own git that it works, and recommend it
+to users for whom it doesn't.
+
+> That is, even though people seem to expect "send-email --cc" to
+> somehow be able to judge that " # 4.8" and " [4.8+]" are cruft not
+> meant as part of a valid address, I do not think it is a realistic
+> expectation.  How would it know "Cc: Stable <add@re.ss> 4.8, 4.9"
+> has garbage " 4.8, 4.9" that needs to be stripped, while "Cc: Stable
+> <add@re.ss> 4.8, torvalds@linux-foundation.org" has two valid
+> addresses that need to be CC'ed and " 4.8" is the only thing that is
+> unwanted?
+
+We clearly can't guess, but we can be consistent with Mail::Address, so
+that git's behavior depends less on its availability.
+
+Patch follows doing that.
+
 -- 
-David
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
