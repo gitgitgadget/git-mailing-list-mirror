@@ -2,107 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64F6C1F4F8
-	for <e@80x24.org>; Thu, 13 Oct 2016 09:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD64B1F4F8
+	for <e@80x24.org>; Thu, 13 Oct 2016 09:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752831AbcJMJHm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 05:07:42 -0400
-Received: from userp1040.oracle.com ([156.151.31.81]:42157 "EHLO
-        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752720AbcJMJHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 05:07:40 -0400
-Received: from aserv0021.oracle.com (aserv0021.oracle.com [141.146.126.233])
-        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u9D94v7v007342
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-        Thu, 13 Oct 2016 09:04:57 GMT
+        id S1753144AbcJMJ5j (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 05:57:39 -0400
+Received: from aserp1050.oracle.com ([141.146.126.70]:44133 "EHLO
+        aserp1050.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752883AbcJMJ5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 05:57:37 -0400
+Received: from aserp1040.oracle.com (aserp1040.oracle.com [141.146.126.69])
+        by aserp1050.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u9D7JLur029392
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Thu, 13 Oct 2016 07:19:21 GMT
+Received: from userv0022.oracle.com (userv0022.oracle.com [156.151.31.74])
+        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u9D7Hd9s024122
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 13 Oct 2016 07:17:39 GMT
 Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserv0021.oracle.com (8.13.8/8.13.8) with ESMTP id u9D94uqs004127
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-        Thu, 13 Oct 2016 09:04:57 GMT
-Received: from abhmp0002.oracle.com (abhmp0002.oracle.com [141.146.116.8])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id u9D94uSs015113;
-        Thu, 13 Oct 2016 09:04:56 GMT
+        by userv0022.oracle.com (8.14.4/8.14.4) with ESMTP id u9D7Hdlk026960
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 13 Oct 2016 07:17:39 GMT
+Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id u9D7Hcfh029936;
+        Thu, 13 Oct 2016 07:17:38 GMT
 Received: from [10.175.172.71] (/10.175.172.71)
         by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Thu, 13 Oct 2016 02:04:55 -0700
+        with ESMTP ; Thu, 13 Oct 2016 00:17:37 -0700
 Subject: Re: Huge performance bottleneck reading packs
-To:     Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 References: <ea8db41f-2ea4-b37b-e6f8-1f1d428aea5d@oracle.com>
- <20161012230143.5kxcmtityaasra5j@sigill.intra.peff.net>
- <20161012231807.syockv2emrsjf55r@sigill.intra.peff.net>
- <20161012234753.tbqhuc7qdyklpfzv@sigill.intra.peff.net>
+ <xmqqpon5190s.fsf@gitster.mtv.corp.google.com>
 Cc:     git@vger.kernel.org,
         Quentin Casasnovas <quentin.casasnovas@oracle.com>,
-        Shawn Pearce <spearce@spearce.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+        Shawn Pearce <spearce@spearce.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 From:   Vegard Nossum <vegard.nossum@oracle.com>
-Message-ID: <fb66dc02-fb75-5aad-74e5-01b969cf9f9a@oracle.com>
-Date:   Thu, 13 Oct 2016 11:04:52 +0200
+Message-ID: <1d5dd36b-7a9e-ac00-352a-d71e0e277002@oracle.com>
+Date:   Thu, 13 Oct 2016 09:17:34 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.2.0
 MIME-Version: 1.0
-In-Reply-To: <20161012234753.tbqhuc7qdyklpfzv@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <xmqqpon5190s.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0021.oracle.com [141.146.126.233]
+X-Source-IP: aserp1040.oracle.com [141.146.126.69]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/13/2016 01:47 AM, Jeff King wrote:
-> On Wed, Oct 12, 2016 at 07:18:07PM -0400, Jeff King wrote:
->
->> Also, is it possible to make the repository in question available? I
->> might be able to reproduce based on your description, but it would save
->> time if I could directly run gdb on your example.
+On 10/13/2016 12:45 AM, Junio C Hamano wrote:
+ > Vegard Nossum <vegard.nossum@oracle.com> writes:
+ >
+ >> A closer inspection reveals the problem to really be that this is an
+ >> extremely hot path with more than -- holy cow -- 4,106,756,451
+ >> iterations on the 'packed_git' list for a single 'git fetch' on my
+ >> repository. I'm guessing the patch above just made the inner loop
+ >> ever so slightly slower.
+ >
+ > Very plausible, and this ...
+ >
+ >> My .git/objects/pack/ has ~2088 files (1042 idx files, 1042 pack files,
+ >> and 4 tmp_pack_* files).
+ >
+ > ... may explain why nobody else has seen a difference.
+ >
+ > Is there a reason why your repository has that many pack files?  Is
+ > automatic GC not working for some reason?
 
-I won't be able to make the repository available, sorry.
+Oops. I disabled gc a while ago; one reason I did that is that it takes
+a long time to run and it has a tendency to kick in at the worst time. I
+guess I should really put it in cron then.
 
-> I tried this by making a bunch of packs in linux.git (my standard "this
-> is pretty big" repo), like so:
->
->   for i in $(seq 1000); do
->     git rev-list --objects HEAD~$((i+1))..HEAD~$i |
->     git pack-objects --delta-base-offset .git/objects/pack/pack
->   done
->
-> and then doing a 25,000-object fetch from upstream (no significance to
-> the number; that's just how far behind upstream I happened to be).
->
-> However, I didn't notice any regression. In fact, it was much _slower_
-> than v1.9.0, because that older version didn't have threaded index-pack.
->
-> If you can't share the repo directly, can you tell us more about your
-> fetch? How many objects are in your repository? How many objects are
-> fetched? How many refs are there on the remote side?
+I'm not sure if this is related, but I also had a problem with GitPython
+and large pack files in the past (" ValueError: Couldn't obtain fanout
+table or warning: packfile ./objects/pack/....pack cannot be accessed")
+and I have pack.packSizeLimit set to 512m to fix that.
+Although the whole repo is 17G so I guess it shouldn't be necessary to
+have that many pack files.
 
-The fetch doesn't actually get anything from the remote as everything is
-already up to date (that makes the 2m40s times even more frustrating in
-a way :-)). Here's count-objects:
-
-$ git count-objects -v
-warning: garbage found: .git/objects/pack/tmp_pack_pAZcu4
-warning: garbage found: .git/objects/pack/tmp_pack_KhzrrI
-warning: garbage found: .git/objects/pack/tmp_pack_mycfro
-warning: garbage found: .git/objects/pack/tmp_pack_2kxKOn
-count: 51609
-size: 288768
-in-pack: 23902336
-packs: 1044
-size-pack: 16588157
-prune-packable: 48628
-garbage: 4
-size-garbage: 84792
-
-There are some 20k refs on the remote, closer to 25k locally.
-
-I'll try to get a profile (without your patch) before doing a gc run.
+Will try Jeff's patch, then a gc. Thanks!
 
 
 Vegard
