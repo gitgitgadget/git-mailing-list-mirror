@@ -2,101 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2134120989
-	for <e@80x24.org>; Thu, 13 Oct 2016 20:36:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC97320989
+	for <e@80x24.org>; Thu, 13 Oct 2016 20:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755872AbcJMUgk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 16:36:40 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:2022 "EHLO bsmtp5.bon.at"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753764AbcJMUgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 16:36:36 -0400
-Received: from bsmtp.bon.at (unknown [192.168.181.102])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 3sw2ZC3Rhsz5tvL
-        for <git@vger.kernel.org>; Thu, 13 Oct 2016 22:36:19 +0200 (CEST)
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3sw2Y108gwz5tlD;
-        Thu, 13 Oct 2016 22:35:16 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id F1CA25329;
-        Thu, 13 Oct 2016 22:35:15 +0200 (CEST)
-Subject: Re: [PATCH v3 25/25] sequencer: mark all error messages for
- translation
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1473590966.git.johannes.schindelin@gmx.de>
- <cover.1476120229.git.johannes.schindelin@gmx.de>
- <e38bf77ff57d06ca3250bc3ec71a34088b49abd0.1476120229.git.johannes.schindelin@gmx.de>
- <d24a3823-1ed0-ad97-f02d-febab7a97590@kdbg.org>
- <xmqqlgxt2rch.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610131518220.197091@virtualbox>
+        id S1756855AbcJMUpQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 16:45:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57157 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756758AbcJMUpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 16:45:14 -0400
+Received: (qmail 8463 invoked by uid 109); 13 Oct 2016 20:43:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Oct 2016 20:43:54 +0000
+Received: (qmail 32281 invoked by uid 111); 13 Oct 2016 20:44:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Oct 2016 16:44:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Oct 2016 16:43:51 -0400
+Date:   Thu, 13 Oct 2016 16:43:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
 Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <4f283639-7cca-c62a-b8dc-5e7dbcf8315f@kdbg.org>
-Date:   Thu, 13 Oct 2016 22:35:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        Quentin Casasnovas <quentin.casasnovas@oracle.com>,
+        Shawn Pearce <spearce@spearce.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Huge performance bottleneck reading packs
+Message-ID: <20161013204351.rezqssvw63343l4g@sigill.intra.peff.net>
+References: <20161013152632.ynsabbv3yrthgidy@sigill.intra.peff.net>
+ <d727ee5d-5f0f-e6df-3f83-35fe74641ace@oracle.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1610131518220.197091@virtualbox>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d727ee5d-5f0f-e6df-3f83-35fe74641ace@oracle.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.10.2016 um 16:56 schrieb Johannes Schindelin:
-> On Wed, 12 Oct 2016, Junio C Hamano wrote:
->> You have at least two independent changes relative to Dscho's
->> version.
->>
->>  (1) Show line breaks more prominently by avoiding "\n\n" and
->>      breaking the string at "\n"; this matches the way how the
->>      result would be displayed more closely to how the source looks
->>      like.
->>
->>  (2) Ignore the usual indentation rule and have messages start at
->>      the left end of the source.
->>
->> Which one are you saying "makes sense" to?  Both?
->>
->> I guess both can be grouped together into one theme: match the way
->> the final output and the source code look like.
+On Thu, Oct 13, 2016 at 08:18:11PM +0200, Vegard Nossum wrote:
 
-Yes, that summarizes it pretty well.
+> > My guess is that the number is relatively high. And that would explain
+> > why nobody else has really complained much; such a pattern is probably
+> > uncommon.
+> 
+> I get ~3,700 objects "they are advertising that we don't have".
+> 
+> They are all indeed tags which I don't have (nor want) locally.
 
-> I agree with that motivation, but I decided to go about it in a way that
-> is more in line with the existing source code:
->
-> -- snipsnap --
-> diff --git a/sequencer.c b/sequencer.c
-> index 8e10bb5..1cf70f7 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -483,6 +483,20 @@ static char **read_author_script(void)
->  	return env;
->  }
->
-> +static const char staged_changes_advice[] =
-> +N_("you have staged changes in your working tree\n"
-> +"If these changes are meant to be squashed into the previous commit, run:\n"
-> +"\n"
-> +"  git commit --amend %s\n"
-> +"\n"
-> +"If they are meant to go into a new commit, run:\n"
-> +"\n"
-> +"  git commit %s\n"
-> +"\n"
-> +"In both cases, once you're done, continue with:\n"
-> +"\n"
-> +"  git rebase --continue\n");
+Thanks. That's about what I expected.
 
-Much better! Thank you.
+> So without your patch I get these numbers:
+> 
+>   %   cumulative   self              self     total
+>  time   seconds   seconds    calls   s/call   s/call  name
+>  37.34     29.83    29.83 1948265116     0.00     0.00  strip_suffix_mem
+>  27.56     51.85    22.02    11358     0.00     0.01 prepare_packed_git_one
+>  14.24     63.23    11.38 1924457702     0.00     0.00  strip_suffix
+>   4.88     67.13     3.90 26045319     0.00     0.00  find_pack_entry_one
+>   4.17     70.46     3.33 84828149     0.00     0.00  hashcmp
+>   3.28     73.08     2.62 79760199     0.00     0.00  hashcmp
+>   2.44     75.03     1.95                             const_error
+> 
+> the call graph data shows all the reprepare_packed_git() calls to come
+> from a chain like this:
+> 
+> do_for_each_ref
+> do_for_each_ref_iterator
+> ref_iterator_advance
+> files_ref_iterator_advance
+> ref_resolves_to_object
+> has_sha1_file
+> has_sha1_file_with_flags
+> reprepare_packed_git
 
--- Hannes
+Hrm. It seems weird that we'd hit reprepare_packed_git() via
+do_for_each_ref(), because that's looking at _your_ refs. So any time
+that code path hits reprepare_packed_git(), it should be complaining
+about repository corruption to stderr.
 
+And that also wouldn't make sense that my patch would improve it. Are
+you sure you've read the perf output correctly (I'll admit that I am
+often confused by the way it reports call graphs)?
+
+> With your (first) patch I get this instead:
+> 
+>   %   cumulative   self              self     total
+>  time   seconds   seconds    calls  ms/call  ms/call  name
+>  29.41      0.25     0.25  4490399     0.00     0.00  hashcmp
+>  16.47      0.39     0.14   843447     0.00     0.00  find_pack_entry_one
+
+These functions appearing at the top are probably a sign that you have
+too many packs (these are just object lookup, which has to linearly try
+each pack).
+
+So I'd expect things to improve after a git-gc (and especially if you
+turn off the packSizeLimit).
+
+> Do you have all the profile data you were interested in before I try a
+> 'git gc'?
+
+Yes, I think so. At least I'm satisfied that there's not another
+HAS_SHA1_QUICK case that I'm missing.
+
+> I really appreciate the quick response and the work you put into fixing
+> this, even when it's my fault for disabling gc, thanks!
+
+No problem. I do think you'll benefit a lot from packing everything into
+a single pack, but it's also clear that Git was doing more work than it
+needed to be. This was a known issue when we added the racy-check to
+has_sha1_file(), and knew that we might have to field reports like this
+one.
+
+-Peff
