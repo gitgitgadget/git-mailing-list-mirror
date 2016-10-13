@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 929D01F4F8
-	for <e@80x24.org>; Thu, 13 Oct 2016 10:57:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8C71F4F8
+	for <e@80x24.org>; Thu, 13 Oct 2016 10:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753576AbcJMK5V (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 06:57:21 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56049 "EHLO mout.gmx.net"
+        id S1754120AbcJMK6A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 06:58:00 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55313 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752940AbcJMK5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 06:57:19 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MTBLi-1bSTmh2JwU-00S3XY; Thu, 13 Oct 2016 12:50:17
+        id S1754107AbcJMK5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 06:57:52 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MQ2zr-1bpQXr3epn-005ETM; Thu, 13 Oct 2016 12:51:13
  +0200
-Date:   Thu, 13 Oct 2016 12:50:16 +0200 (CEST)
+Date:   Thu, 13 Oct 2016 12:51:11 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 13/25] sequencer: prepare for rebase -i's commit
- functionality
-In-Reply-To: <xmqq60ox5wxb.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610131242100.197091@virtualbox>
-References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <9b2782e64f678ab2d261042b63fafc3e4a519295.1476120229.git.johannes.schindelin@gmx.de> <xmqqwphe8zl2.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610121356510.3492@virtualbox> <xmqq60ox5wxb.fsf@gitster.mtv.corp.google.com>
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: Re* [PATCH v3 05/25] sequencer: eventually release memory
+ allocated for the option values
+In-Reply-To: <xmqqk2dd4efs.fsf_-_@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610131251000.197091@virtualbox>
+References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <a67af02ef363311b526bddba864c7f1ca9087b43.1476120229.git.johannes.schindelin@gmx.de> <xmqqzimbc0gw.fsf@gitster.mtv.corp.google.com>
+ <xmqq4m4ic0gw.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610121405410.3492@virtualbox> <xmqqk2dd4efs.fsf_-_@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aYWg6VAZBGXMdnR7HW3hAjO9FchmfGIJCvE6XAt+fmrgLxxZrB6
- kULNok55YTnPWSm1p9tKwbdsUew7pNAaznEKRSvF/DZd9iLN0kr5wRsn42pySYDKppwgRzi
- FuQvbolQ/KmamjbQd8ulLKfQF6Q/T9xqm7EeLMZZPAQULYXJZx6PA/ACKOoDJKRxnfsQmUa
- 0habsGOiYJpNtxIHRQeNg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aa/qviEsGRE=:PUjID0GyKpeT+koUbOpcxz
- oqqD1hw99Q77Spt9hzXGqT/tREJBGiRYdsjfznB6PbVidVHEM1uQpCZKiLnzln7DI3lzx56W0
- OQWbnWUR80qTRLQySifo968FH/F5HRTRBDTjRlj/oJcNmzhLdO/OHXJkyTF9I5cF50crf3BhV
- RgsqgPlDxsi8AM0hjEgKqCsp8kXVS5+bvxE0XlujW5HpOirguRt0y1+2/JZgpMavNTSvrysXU
- 4zKx/quhwCX+oCud/x/HgoB3Oc5ObpPaEoHykc51T3DVXpeWkiwmQtnhFGkP8n1+iBG8MKm4S
- Z/cWj2qRuPy5XXIHrylXhGDlk7Wvzfm9OK6fyVR1/oHeP8Mrh62ZXPJ/rwwdN0gNIIYPg0FWJ
- ddrZvbGJcceADsnfbcc4Y0KHSy+d1gorGk2/bM1mWI9mjdcQA9crPBytTKoaJC4jwgw5+F6OD
- kn4RI8filqR+5VV0fkRb16VjEPZddq2nvNR/Q0gtLE78aaZkKwshj/DQy47HIGFQbnhu/r8LR
- ElxiA5A54QgUordW7HTwcdIYw7Gbs/VygAU4Ne9QyX/PNX6VOybhVoJb+XL8F6eAoxbMVTyNQ
- rFXi870/CnvD/48+RIvkSEs3mqeUb6x0n+06zcnOADct7/2XpRugdSNPgC2BXL6psiDsnt8QP
- 5KtC3KNFu095ge2lrDLA5PA3Si01IUA4nbgkK3D3yjcd777Y0rC9HOdg7hFF3YWV1RbcSAvcT
- dK/j6qY0Tx8YWo0idaIWr+PAd1IIAu+RJ+TS42Wqr7hCiGStL/hi8sK81ylH/FdaeU4owL+jg
- UsBItd0
+X-Provags-ID: V03:K0:0UPWq21iMA98BJwCL7vGxWUixpn2pscdfqLzk4FzdgbUDwOEAD0
+ 8Jt6xj3dlmA0+AoHzE4/KJA9kUngg5Z1BPsvb7J7Dt8sY/uARHVaJO5FA+xuv73L8TZQ/3Q
+ twfL22/nm3XhrNWq9/qvPpc6z4pRzLToaslJXVhEdyWJdRm+71GRt7qXRDS71CW/pi3qkWy
+ Ods2PXloRzKmVHpwC1KiA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vRuLXVVcDXk=:Uek8TS37QUGleRIUCDb/2f
+ RwiBp+Y4ZF8mCUw7B5OnZ6F2bsb3WOi072LnHfs9Z702jSX5zT83s0CVIzvgmgbsGXGKrevyu
+ hR6I0BzzS3q6oIq1ecKmBjrqVsydH2rdaCz8AUk+uCLEngY2f3BCr6uws29DmOXdPtjTxrdGZ
+ Jtyux3k4c2OLeazWCldZNNVvammdZNMFh0KsqILE2J9QPfmgMEJDvHXxntmJ3H74LuMNR460w
+ rh/gD7Hsl4SWTyJJBguZQR6FdBztMwKo/spE/UK2VYC/VpDkjkey+hx8y9MRKOC5BnjIa9Pb3
+ r3a0X3/AF4Yihr7L2mO8ZRlVP3VIiFxI6UOLtoWFatubRoxDhf6B5aysPX9qm8JoGsih3wegj
+ 2Tcfcr43iIt15NAkJRZj9BwDnX8kA5MQWbBZDpIS+FJmwjItJ0HXK3PzvpfBYzl854/T/6Fsv
+ J3qMG9fGYCuUVaj7h6o4Y/eh4EVBL3iAA1pr1L8crDpgITlNwUJfGLaWq6t+0ZEk91JDDxYNk
+ rnEA5dPRVespfNzDQ7S7Tx1bnsdDI1a0xL09Y+ml+j4YXuxtm3L15ar+ToUUJhe6sBQRn+HwP
+ rQF5Q/6aB71NUFeayUzD7TbjAvvediyC9U0widr0iaQ694E7R9lYmBkBGNB9vZat3iw8vj5Lj
+ 6OOQXKObLR4bxmBmbuOK1YRo7tHJGRZjIpTecm1GctfxFvG0vED4vBMcpXTd+jU3+ePmUVomJ
+ sbanxrLFF2wsELWnocewxCEyOvSwl/nI1+flVrLoAcAD5G76OuoyM/uDZsTYpOf+ErhdQJiJZ
+ ukUioba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,81 +64,20 @@ On Wed, 12 Oct 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> >> Hmph, didn't we recently add parse_key_value_squoted() to build
-> >> read_author_script() in builtin/am.c on top of it, so that this
-> >> piece of code can also take advantage of and share the parser?
+> > On Tue, 11 Oct 2016, Junio C Hamano wrote:
 > >
-> > I already pointed out that the author-script file may *not* be quoted.
+> >> The only reason why the OPT_STRDUP appeared convenient was because
+> >> options[] element happened to use a field in the structure directly.
+> >> The patch under discussion does an equivalent of
+> >> 
+> >>     app.x_field = xstrdup_or_null(opt_x);
+> >
+> > Oh, that xstrdup_or_null() function slipped by me. My local patches use it
+> > now.
 > 
-> I think my puzzlement comes from here.  What makes it OK for "am" to
-> expect the contents of author-script file to be quoted but it is not
-> OK to expect the same here?  What makes it not quoted for _this_
-> reader, in other words?
+> It has slipped many people ;-)
 
-The `git am` command is inherently *not* interactive, while the
-interactive rebase, well, is.
-
-As such, we must assume that enterprisey users did come up with scripts
-that edit, or create, author-script files, and exploited the fact that the
-interactive rebase previously sourced them.
-
-Come to think of it, there is a bigger problem here, as users might have
-abused the author-script to execute commands in rebase -i's own context.
-Not sure we can do anything about that.
-
-But the point stands, if anybody used unquoted, or differently quoted,
-values in author-script, we should at least attempt within reason to
-support that.
-
-> I am not sure what you meant by "nominally related", but the purpose
-> of the author-script in these two codepaths is the same, isn't it?
-
-The purpose is, but the means aren't. As I pointed out above, the
-interactive rebase is inherently much more interactive, and needs to be
-much more forgiving in its input, than `git am`.
-
-> Somebody leaves the author information from the source (either from
-> an e-mailed patch or an existing commit), so that a later step can
-> use that pieces of information left in the file when (re)creating a
-> commit to record the tree made by using pieces of information from
-> the source.
-> 
-> Are our use in the author-script in these two codepaths _already_
-> inconsistent?  IOW, "am" never writes malformed unquoted values,
-> while the sequencer writes out in a way that is randomly quoted or
-> not quoted, iow, if you fed such an author-file to "am", it wouldn't
-> understand it?
-
-We heed Postel's Law: what the sequencer writes is in a very strict
-format, but what the sequencer accepts need not be.
-
-> I fully support your position to use different codepaths, if the
-> file that has the same name and that is used for the same purpose
-> uses different format in these two separate codepaths and the users
-> already expect them to be different.  We obviously need to have two
-> separate parsers.
-
-Well, traditionally we *do* have separate parsers. I do not say that we
-need to keep that, but given what I said above, it might not be a bad idea
-to keep the lenient parser required by `git rebase -i` separate from the
-one used by `git am` so that the latter can be faster (by making
-assumptions the other parser cannot).
-
-> But if that is not the case, IOW, if "am"'s author-script shares the
-> same issue (i.e. "'am' initially writes the file properly quoted,
-> but this or that can happen to change its quoting and we need to
-> read from such a file"), then perhaps sharing needs to happen the
-> other way around?  This patch may prepare "rebase -i" side for the
-> "this or that" (I still do not know what they are) to allow the
-> resulting file read correctly, but the same "this or that" can break
-> what "am" has used and is in use there if that is the case, no?
-> 
-> What makes it OK for "am" to expect the contents of author-script
-> file to be quoted but it is not OK to expect the same here?  What
-> makes it not quoted for _this_ reader, and doesn't "am" share the
-> same issue?
-
-The fact that `git am` is *non-interactive*.
+Thanks, I feel better now ;-)
 
 Ciao,
 Dscho
