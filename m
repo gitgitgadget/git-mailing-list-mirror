@@ -2,199 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B61209AE
-	for <e@80x24.org>; Thu, 13 Oct 2016 04:55:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E795209AE
+	for <e@80x24.org>; Thu, 13 Oct 2016 05:13:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754944AbcJMEzy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 00:55:54 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34099 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754838AbcJMEzw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 00:55:52 -0400
-Received: by mail-pf0-f195.google.com with SMTP id 128so4198877pfz.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2016 21:55:39 -0700 (PDT)
+        id S1755076AbcJMFNf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 01:13:35 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35475 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754944AbcJMFNd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 01:13:33 -0400
+Received: by mail-pf0-f194.google.com with SMTP id s8so4220314pfj.2
+        for <git@vger.kernel.org>; Wed, 12 Oct 2016 22:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=sml2FBzKd5RCvJDhVo3BTVV6Onq5hsgZSQCzmEJ1L+U=;
-        b=EerJdoT9T6dlt9ykzflUAuln9UDKZOOBZlXkNgqGPp38sad+UxA4QyddHRabaarKc/
-         VnqA5pWAAGkNUzsdf60d+3O2tH+dd05ToYCfUtPjS/0Nw8ft9z5fDr6LL4nOc4dI01he
-         +5GiQ4WilO37+NNbmABZiY/KbhxmcEzbzt5/LFOU3DeGqGFkn6iZEiiltsdROgrT3+dO
-         8/JAbsht/7ODAmTPyJ8RPtRqv2+mVxB3yUvcPL69tdgvIH3/Bivvc2LX8rXE9DeslLc5
-         B+0qo1aEfsL3Zc+8QykBil1D2MtV5IHFNQ3rNquFbAZZIYs1QPzhU/dTr97ksBprYrt2
-         dZ6w==
+        bh=DH8Cck5d1vFYZNQumwikkUpgMgldin0o+fw5YKFf72M=;
+        b=InY7+sjG/hs76wKNLFZZsRkdaTytsnizVRHL8OBVk8JPe2REsysdd/7mY1Sacw4tSY
+         FXm+y1OurdWsccKN5ZRi4LRN8hJLKpRUfDr1rEc5NoCrAEnaGCeZlfhX+BUg62mKLc+a
+         +MUGtno7jMacKvyK1U4WJr9TwK/KxQzcHOpySTlCBCi/WklbKbrcuYU8/eIG9GgwPkRE
+         sS+p6Ap43GVnEW+hEDOSd+EVu5vbx46B2nVdbihH4oT4jEi8OJoSwP1tpmPKMETH8uDr
+         FIEwCOW8tMgZz4YyfT1bRTOH2u0Ro0MdYBWvLV5GFrdJkOMB8wwJilZYwvR9aWLo29w7
+         Zapw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sml2FBzKd5RCvJDhVo3BTVV6Onq5hsgZSQCzmEJ1L+U=;
-        b=cwW/dH7iKtq6pjv3wFpysuoTyPvZQxtH4AFnglhQkrFh0Id8M2Xi4MF8xG5FO3tHIw
-         SJkWyT5LE2MCyNoLD6pEISAnsphqXtgYmI9FzdU039+827JEESN6znnK0Pb+Yui8xHpO
-         S0DilEiqCevegCTLRNxXXfhwlBRlauAa+tEQP1lhlINHlP0IUE+VDNKdczlCe1iUHy7V
-         6lqYrqva+664J5YgkVWTluObI0YFZ1x/JJUb4VA/3sg54ir46EiMmk8Q+W2GcTWBhSk6
-         1aDBOU44xlp6gXWeM8abvpJ0ZR9qLDwZZkbGADQtkXafCpdWzKxjuYj7vWOt9rphoQ3f
-         r9Og==
-X-Gm-Message-State: AA6/9RlHM8MpVZjqBVhV4dqyY0izYdqqHNVOcz22A4SU6uW+7ag8CnZbTpNiyLE2yAf0jQ==
-X-Received: by 10.99.61.8 with SMTP id k8mr5987327pga.10.1476334538418;
-        Wed, 12 Oct 2016 21:55:38 -0700 (PDT)
+        bh=DH8Cck5d1vFYZNQumwikkUpgMgldin0o+fw5YKFf72M=;
+        b=OZ37z+FxC/3nBocKfT5V2ahah3w7Mlya3EhQhTDbmj/zKWklGcPRbKXynRimWKsu6c
+         PAwfCCH68FePkEagVa83QKK1kz0ZTGgqIm0Ik3YMLY2J24OldkxBBUIQRT3DeFcWXL5J
+         ZXHEWd1r5o4dGJd83dfEuPCZhZWMa0+oOxps3qcTU48kA269S0O67XdA+aFh0a7dybMy
+         zXUtZq4EbwV7XymL7ACc9xvdaV5AwCkSWC40nFpOHOdDiaF62dXdrykwbdzXCg2GggYT
+         8eqpyGqCSvrHenONfm0yg/J+VlE4LGLhvvgIrI7Jzph3BYEWEEcDcPhkmvt81L8/Gn4v
+         fJdA==
+X-Gm-Message-State: AA6/9RlrT+RiJKUJ0U7eLc4Pt5Vkm7j+Smt+nUYCLm8DN3WxxP/norzmM/7CxPIF/mBDvw==
+X-Received: by 10.99.0.204 with SMTP id 195mr5941463pga.78.1476335612792;
+        Wed, 12 Oct 2016 22:13:32 -0700 (PDT)
 Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by smtp.gmail.com with ESMTPSA id w70sm15514002pfa.89.2016.10.12.21.55.34
+        by smtp.gmail.com with ESMTPSA id a4sm15737535pax.8.2016.10.12.22.13.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Oct 2016 21:55:36 -0700 (PDT)
-Date:   Wed, 12 Oct 2016 21:55:32 -0700
+        Wed, 12 Oct 2016 22:13:31 -0700 (PDT)
+Date:   Wed, 12 Oct 2016 22:13:29 -0700
 From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Josef Ridky <jridky@redhat.com>
-Subject: Re: [PATCH v2 2/2] Feature Request: user defined suffix for temp
- files created by git-mergetool
-Message-ID: <20161013045532.GA25745@gmail.com>
+To:     Josef Ridky <jridky@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] Feature Request: user defined suffix for temp files
+ created by git-mergetool
+Message-ID: <20161013051329.GA26538@gmail.com>
 References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
  <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
  <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
  <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
  <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
- <255814448.2197583.1475759366093.JavaMail.zimbra@redhat.com>
- <xmqq7f9lmmol.fsf@gitster.mtv.corp.google.com>
- <1550673688.5271111.1476260677732.JavaMail.zimbra@redhat.com>
- <xmqqpon54fe5.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqpon54fe5.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
 User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 12, 2016 at 10:59:46AM -0700, Junio C Hamano wrote:
-> Josef Ridky <jridky@redhat.com> writes:
+On Thu, Oct 06, 2016 at 08:43:02AM -0400, Josef Ridky wrote:
+> This is the first of two variant for request to add option to change
+> suffix of name of temporary files generated by git mergetool. This
+> change is requested for cases, when is git mergetool used for local
+> comparision between two version of same package during package rebase.
 > 
-> > This is update of the second variant for request to add option to change
-> > suffix of name of temporary files generated by git mergetool. This
-> > change is requested for cases, when is git mergetool used for local
-> > comparison between two version of same package during package rebase.
-> >
-> > Signed-off-by: Josef Ridky <jridky@redhat.com>
-> > ---
-> 
-> David, what do you think?
-> 
-> I don't think you were ever CC'ed on any of the messages in
-> this thread, and I don't think you've commented on the topic.  The
-> thread begins here:
-> 
->   https://public-inbox.org/git/1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com/
-> 
-> 
-> In any case, I suggest update to the log message to something like
-> this:
-> 
->     Subject: mergetool: allow custom naming for temporary files
-> 
->     A front-end program that is spawned by "git mergetool" is given
->     three temporary files (e.g. it may get "x_LOCAL.txt",
->     "x_REMOTE.txt", and "x_BASE.txt" while merging "x.txt").  
-> 
->     Custom wrappers to "git mergetool" benefits if they are allowed
->     to rename these hardcoded suffixes to match the workflow they
->     implement.  For example, they may be used to compare and merge
->     two versions that is available locally, and OLD/NEW may be more
->     appropriate than LOCAL/REMOTE in such a context.
-> 
-> primarily because "the second variant" is meaningless thing to say
-> in our long term history, when the first variant never was recorded
-> there.  Josef may want to elaborate more on the latter paragraph.
+> Signed-off-by: Josef Ridky <jridky@redhat.com>
+> ---
+>  Documentation/git-mergetool.txt |  7 ++++++-
+>  git-mergetool.sh                | 23 ++++++++++++++++++-----
+>  2 files changed, 24 insertions(+), 6 deletions(-)
 
+While I do like that this variant only uses a single flag, I was
+curious whether it would make sense for us to change our
+defaults to OLD/NEW?  I'm thinking "no" since it's totally legit
+to merge "old" branches so I'll stop there.
 
-I do see why this can be helpful but what makes me reluctant is,
+What I really wanted to mention was...
 
-> > +'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
+If the patch does not update t/t7610-mergetool.sh then there is
+no guarantee that my clumsy fingers won't break the new feature
+in the future ;-)  So please make sure to update the tests once
+we decide on the final direction.  It makes sense we wouldn't
+want to update them just yet (in this patch) since this is still
+RFC, but the final one should include it.
 
-We're parking on 4 new flags that are really all about changing
-one small aspect of the program.
+I'm still leaning towards environment variables personally,
+and would have no qualms against taking a patch that teaches it
+to support environment variables as long as it adds a test case
+for the new feature.
 
-I don't typically like going overboard with environment
-variables but for this use case they seem to be a good fit.
+Thanks for sticking with it, Josef!
 
-It's already been expressed that the intention is for these to
-be supplied by some other tool, and environment variables have
-the nice property that you can update all your tools without
-needing to touch anything except the environment.
-
-Another nice thing is that the the user can choose to set it
-globally, or to set it local to specific tools.
-
-Another reason why I think it's a good fit is,
-
-> +# Can be changed by user
-> +LOCAL_NAME='LOCAL'
-> +BASE_NAME='BASE'
-> +BACKUP_NAME='BACKUP'
-> +REMOTE_NAME='REMOTE'
-
-These lines would become simply,
-
-LOCAL_NAME=${GIT_MERGETOOL_LOCAL_NAME:-LOCAL}
-BASE_NAME=${GIT_MERGETOOL_BASE_NAME:-BASE}
-BACKUP_NAME=${GIT_MERGETOOL_BACKUP_NAME:-BACKUP}
-REMOTE_NAME=${GIT_MERGETOOL_REMOTE_NAME:-REMOTE}
-
-and we wouldn't need any other change besides this part:
-
-> -	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
-> -	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
-> -	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
-> -	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
-> +	BACKUP="$MERGETOOL_TMPDIR/${BASE}_${BACKUP_NAME}_$$$ext"
-> +	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${LOCAL_NAME}_$$$ext"
-> +	REMOTE="$MERGETOOL_TMPDIR/${BASE}_${REMOTE_NAME}_$$$ext"
-> +	BASE="$MERGETOOL_TMPDIR/${BASE}_${BASE_NAME}_$$$ext"
-
-
-Then, just update the documentation to mention the environment
-variables instead of the flags and we're all set.
-
-We also won't need this part if we go down that route:
-
-> +# sanity check after parsing command line
-> +case "" in
-> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
-> +	die "You cannot set any of --local/remote/base/backup to empty."
-> +	;;
-> +esac
-> +
-> +case "$LOCAL_NAME" in
-> +"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
-> +	die "You cannot set any of --remote/base/backup to same as --local."
-> +	;;
-> +esac
-> +
-> +case "$REMOTE_NAME" in
-> +"$LOCAL_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
-> +	die "You cannot set any of --local/base/backup to same as --remote."
-> +	;;
-> +esac
-> +
-> +case "$BASE_NAME" in
-> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BACKUP_NAME")
-> +	die "You cannot set any of --local/remote/backup to same as --base."
-> +	;;
-> +esac
-> +
-> +case "$BACKUP_NAME" in
-> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME")
-> +	die "You cannot set any of --local/remote/base to same as --backup."
-> +	;;
-> +esac
-
-
-What do you think?
+cheers,
 -- 
 David
