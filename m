@@ -2,107 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FC5020989
-	for <e@80x24.org>; Thu, 13 Oct 2016 13:57:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B050C20989
+	for <e@80x24.org>; Thu, 13 Oct 2016 14:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932513AbcJMN47 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 09:56:59 -0400
-Received: from mclniron02-ext.bah.com ([128.229.5.22]:2775 "EHLO
-        mclniron02-ext.bah.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932426AbcJMN4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 09:56:50 -0400
-X-Greylist: delayed 633 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Oct 2016 09:56:50 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=bah.com; i=@bah.com; q=dns/txt; s=20160504;
-  t=1476367010; x=1507903010;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=m4jiPiheDAhdtm/PhgR8+/0EZbuAIwpT8G5SGo+v1TQ=;
-  b=jwmVPnVVTrBo7O8jNU3b3EnIfCjDyAEDnldHfFg2jIF7ith3aCzjb4sD
-   V5Nj0Pfe2A/ywHfB73M4XiL1y44uzDZX4kQkof0vTI0CpN+/7R+KVZfz4
-   8Pkc/HAmxlDEdx/Cvk+jSMYDxMCO/Ozwlj8a+2yvlHsGbC6XIM6v7qxfO
-   E=;
-x-SBRS: None
-X-REMOTE-IP: 10.12.10.201
-X-RELAYED: True
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2FsAwCYjv9X/8kKDApcGgEBAQECAQEBAQgBAQEBgzwBAQEBAXR8B6QxlXxCJ4V6AoJNAQIBAQEBAQIDgQKCVQE5PAEBAQEBASMCDV4BAQEDATo/BQcEAgEIDQQEAQELFAkHMhQDAQUIAQEEDgUIiEAWwzwBAQEBAQEBAQEBAQEBAQEBAQEBAQEYBYsShEmDLoIvBZoCAYYmk1aFdYhOhCuDf4YIcoY1KoEFgQABAQE
-X-IPAS-Result: A2FsAwCYjv9X/8kKDApcGgEBAQECAQEBAQgBAQEBgzwBAQEBAXR8B6QxlXxCJ4V6AoJNAQIBAQEBAQIDgQKCVQE5PAEBAQEBASMCDV4BAQEDATo/BQcEAgEIDQQEAQELFAkHMhQDAQUIAQEEDgUIiEAWwzwBAQEBAQEBAQEBAQEBAQEBAQEBAQEYBYsShEmDLoIvBZoCAYYmk1aFdYhOhCuDf4YIcoY1KoEFgQABAQE
-X-IronPort-AV: E=Sophos;i="5.31,339,1473134400"; 
-   d="scan'208";a="849653614"
-Received: from unknown (HELO ASHBCSHB02.resource.ds.bah.com) ([10.12.10.201])
-  by mclniron02-int.bah.com with ESMTP; 13 Oct 2016 09:45:23 -0400
-Received: from ASHBDAG1M3.resource.ds.bah.com ([fe80::e408:2edf:8022:481d]) by
- ASHBCSHB02.resource.ds.bah.com ([::1]) with mapi id 14.03.0279.002; Thu, 13
- Oct 2016 09:45:22 -0400
-From:   "Vacha, Brian [USA]" <vacha_brian@bah.com>
-To:     Konstantin Khomoutov <kostix+git@007spb.ru>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [External] Re: Fork Errors
-Thread-Topic: [External] Re: Fork Errors
-Thread-Index: AdIf2jpv4xmwQsngS26RjrVKKVCazQAJukSAAVWRB+A=
-Date:   Thu, 13 Oct 2016 13:45:20 +0000
-Message-ID: <2E2ADD8A4AA3FA44A8D8FB00E2B24154B5EA4463@ASHBDAG1M3.resource.ds.bah.com>
-References: <2E2ADD8A4AA3FA44A8D8FB00E2B24154B5E9E1C6@ASHBDAG1M3.resource.ds.bah.com>
- <20161006174041.4225c2b52bd144e5b3db8a85@domain007.com>
-In-Reply-To: <20161006174041.4225c2b52bd144e5b3db8a85@domain007.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.12.4.235]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1753217AbcJMOuL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 10:50:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56997 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752063AbcJMOuJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 10:50:09 -0400
+Received: (qmail 21864 invoked by uid 109); 13 Oct 2016 14:50:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Oct 2016 14:50:08 +0000
+Received: (qmail 30278 invoked by uid 111); 13 Oct 2016 14:50:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Oct 2016 10:50:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Oct 2016 10:50:06 -0400
+Date:   Thu, 13 Oct 2016 10:50:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Quentin Casasnovas <quentin.casasnovas@oracle.com>,
+        Shawn Pearce <spearce@spearce.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: Huge performance bottleneck reading packs
+Message-ID: <20161013145006.mouzqmz3fssrjad4@sigill.intra.peff.net>
+References: <ea8db41f-2ea4-b37b-e6f8-1f1d428aea5d@oracle.com>
+ <xmqqpon5190s.fsf@gitster.mtv.corp.google.com>
+ <1d5dd36b-7a9e-ac00-352a-d71e0e277002@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1d5dd36b-7a9e-ac00-352a-d71e0e277002@oracle.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, Khomoutov.  I turned out that when I went back to version 2.7.0 of =
-Git (as mentioned in this post https://github.com/git-for-windows/git/issue=
-s/776) that I no longer received the fork errors.  However, then I received=
- a Permission error and also wasn't thrilled that I had to use an old Git. =
- After some installing and uninstalling different ways, I remembered that w=
-hen things were working for me in the past, I had the GitHub shell installe=
-d.  So, I installed the GitHub shell with the newest version of Git and was=
- able to use its  Git Shell without problem.  Now, I can build my app with =
-npm successfully.
+On Thu, Oct 13, 2016 at 09:17:34AM +0200, Vegard Nossum wrote:
 
+> Oops. I disabled gc a while ago; one reason I did that is that it takes
+> a long time to run and it has a tendency to kick in at the worst time. I
+> guess I should really put it in cron then.
+> 
+> I'm not sure if this is related, but I also had a problem with GitPython
+> and large pack files in the past (" ValueError: Couldn't obtain fanout
+> table or warning: packfile ./objects/pack/....pack cannot be accessed")
 
------Original Message-----
-From: Konstantin Khomoutov [mailto:kostix+git@007spb.ru]=20
-Sent: Thursday, October 06, 2016 10:41 AM
-To: Vacha, Brian [USA] <vacha_brian@bah.com>
-Cc: git@vger.kernel.org
-Subject: [External] Re: Fork Errors
+Sounds like they didn't correctly implement the extra index fanout that
+happens for pack above 2G. The old Grit library had a similar bug.
 
-On Thu, 6 Oct 2016 14:02:09 +0000
-"Vacha, Brian [USA]" <vacha_brian@bah.com> wrote:
+> and I have pack.packSizeLimit set to 512m to fix that.
+> Although the whole repo is 17G so I guess it shouldn't be necessary to
+> have that many pack files.
 
-> When starting Git Bash, I receive the following errors:
-> 0 [main] bash 18088 fork: child 14072 - died waiting for dll loading,=20
-> errno 11 bash: fork: retry: No child processes
-> 1190419 [main] bash 18088 fork: child 8744 - died waiting for dll=20
-> loading, errno 11 bash: fork: retry: No child processes
-> 3343518 [main] bash 18088 fork: child 12324 - died waiting for dll=20
-> loading, errno 11 bash: fork: retry: No child processes
-> 7480858 [main] bash 18088 fork: child 17008 - died waiting for dll=20
-> loading, errno 11 bash: fork: retry: No child processes
-> 15635036 [main] bash 18088 fork: child 8108 - died waiting for dll=20
-> loading, errno 11 bash: fork: Resource temporarily unavailable=20
-> bash-4.3$
->=20
-> My connection is great at 72 Mbps download and 93 Mbps upload.  I=20
-> don't receive other errors so it appears to be a Git Bash issue to me.
+Using packSizeLimit does "solve" that problem, but it comes with its own
+set of issues. There is a very good chance that your repository would be
+much smaller than 17G as a single packfile, because Git does not allow
+deltas across packs, and it does not optimize the placement of objects
+to keep delta-related objects in a single pack. So you'll quite often be
+storing full copies of objects that could otherwise be stored as a tiny
+delta.
 
-Have you tried searching through Git for Windows bugtracker [1] for your pr=
-oblem.  I'm pretty sure it was recently discussed there.
-The issue #776 [2] looks like the one you're experiencing.
+You might want to compare the resulting size for a full repack with and
+without pack.packSizeLimit.
 
-1. https://github.com/git-for-windows/git/issues
-2. https://github.com/git-for-windows/git/issues/776
+But I agree that is not the cause of your thousand packs. They are more
+likely the accumulated cruft of a thousand fetches.
+
+-Peff
