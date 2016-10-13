@@ -2,233 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D3D1215F6
-	for <e@80x24.org>; Thu, 13 Oct 2016 02:11:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5B61209AE
+	for <e@80x24.org>; Thu, 13 Oct 2016 04:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933610AbcJMCJM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Oct 2016 22:09:12 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:42378 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933475AbcJMCJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2016 22:09:10 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 65D11215F6;
-        Thu, 13 Oct 2016 01:52:33 +0000 (UTC)
-Date:   Thu, 13 Oct 2016 01:52:33 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Mathieu Arnold <mat@freebsd.org>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        git@vger.kernel.org
-Subject: Re: problem with git worktree and git svn
-Message-ID: <20161013015233.GA18001@whir>
-References: <6c83c905-b10a-7f54-873f-54186faacfc8@FreeBSD.org>
- <CAGZ79kZo5W1r0s26G3foB7caP6+u66mdzqzyneqXBX_B7A0RKg@mail.gmail.com>
+        id S1754944AbcJMEzy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 00:55:54 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34099 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754838AbcJMEzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 00:55:52 -0400
+Received: by mail-pf0-f195.google.com with SMTP id 128so4198877pfz.1
+        for <git@vger.kernel.org>; Wed, 12 Oct 2016 21:55:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sml2FBzKd5RCvJDhVo3BTVV6Onq5hsgZSQCzmEJ1L+U=;
+        b=EerJdoT9T6dlt9ykzflUAuln9UDKZOOBZlXkNgqGPp38sad+UxA4QyddHRabaarKc/
+         VnqA5pWAAGkNUzsdf60d+3O2tH+dd05ToYCfUtPjS/0Nw8ft9z5fDr6LL4nOc4dI01he
+         +5GiQ4WilO37+NNbmABZiY/KbhxmcEzbzt5/LFOU3DeGqGFkn6iZEiiltsdROgrT3+dO
+         8/JAbsht/7ODAmTPyJ8RPtRqv2+mVxB3yUvcPL69tdgvIH3/Bivvc2LX8rXE9DeslLc5
+         B+0qo1aEfsL3Zc+8QykBil1D2MtV5IHFNQ3rNquFbAZZIYs1QPzhU/dTr97ksBprYrt2
+         dZ6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sml2FBzKd5RCvJDhVo3BTVV6Onq5hsgZSQCzmEJ1L+U=;
+        b=cwW/dH7iKtq6pjv3wFpysuoTyPvZQxtH4AFnglhQkrFh0Id8M2Xi4MF8xG5FO3tHIw
+         SJkWyT5LE2MCyNoLD6pEISAnsphqXtgYmI9FzdU039+827JEESN6znnK0Pb+Yui8xHpO
+         S0DilEiqCevegCTLRNxXXfhwlBRlauAa+tEQP1lhlINHlP0IUE+VDNKdczlCe1iUHy7V
+         6lqYrqva+664J5YgkVWTluObI0YFZ1x/JJUb4VA/3sg54ir46EiMmk8Q+W2GcTWBhSk6
+         1aDBOU44xlp6gXWeM8abvpJ0ZR9qLDwZZkbGADQtkXafCpdWzKxjuYj7vWOt9rphoQ3f
+         r9Og==
+X-Gm-Message-State: AA6/9RlHM8MpVZjqBVhV4dqyY0izYdqqHNVOcz22A4SU6uW+7ag8CnZbTpNiyLE2yAf0jQ==
+X-Received: by 10.99.61.8 with SMTP id k8mr5987327pga.10.1476334538418;
+        Wed, 12 Oct 2016 21:55:38 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id w70sm15514002pfa.89.2016.10.12.21.55.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Oct 2016 21:55:36 -0700 (PDT)
+Date:   Wed, 12 Oct 2016 21:55:32 -0700
+From:   David Aguilar <davvid@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Josef Ridky <jridky@redhat.com>
+Subject: Re: [PATCH v2 2/2] Feature Request: user defined suffix for temp
+ files created by git-mergetool
+Message-ID: <20161013045532.GA25745@gmail.com>
+References: <1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com>
+ <1499287628.1324571.1475653631366.JavaMail.zimbra@redhat.com>
+ <e3306f5a-1fb3-bd66-48ac-72b75fc7681c@kdbg.org>
+ <1214659824.1976049.1475738509473.JavaMail.zimbra@redhat.com>
+ <1911899288.2172724.1475757782111.JavaMail.zimbra@redhat.com>
+ <255814448.2197583.1475759366093.JavaMail.zimbra@redhat.com>
+ <xmqq7f9lmmol.fsf@gitster.mtv.corp.google.com>
+ <1550673688.5271111.1476260677732.JavaMail.zimbra@redhat.com>
+ <xmqqpon54fe5.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZo5W1r0s26G3foB7caP6+u66mdzqzyneqXBX_B7A0RKg@mail.gmail.com>
+In-Reply-To: <xmqqpon54fe5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Oct 12, 2016 at 7:45 AM, Mathieu Arnold <mat@freebsd.org> wrote:
+On Wed, Oct 12, 2016 at 10:59:46AM -0700, Junio C Hamano wrote:
+> Josef Ridky <jridky@redhat.com> writes:
 > 
-> > I discovered git worktree earlier this week, and I found it a great
-> > asset to be able to have more than one branch of my worktree accessible
-> > at the same time...
+> > This is update of the second variant for request to add option to change
+> > suffix of name of temporary files generated by git mergetool. This
+> > change is requested for cases, when is git mergetool used for local
+> > comparison between two version of same package during package rebase.
 > >
-> > Anyway, back to my problem, the way git-svn works, is that it looks for
-> > a directory named "svn" in its gitdir and if it is not present, decide
-> > the repository is using git-svn version 1 (whatever that is) and goes to
-> > parse all the revisions to recreate the svn directory.
-> > So I can only use git svn commands in my main worktree, the one with the
-> > real gitdir.
-
-Right, I haven't updated git-svn to be worktree-aware, yet, but
-a work-in-progress is below
-
-> > To fix that, all I had to do is to add a symlink named svn in each
-> > worktree's gitdir and pointing to ../../svn.
+> > Signed-off-by: Josef Ridky <jridky@redhat.com>
+> > ---
 > 
-> For some definition of fix. ;)
-> Sure it fixes your local setup now, but would we want to use that as well here?
-> My gut reaction:
+> David, what do you think?
 > 
-> * not all platforms know symlinks
-> * IIRC there is some worktree magic that tells you the "main" dir,
->   so if that was used in git-svn instead it should "just work".
+> I don't think you were ever CC'ed on any of the messages in
+> this thread, and I don't think you've commented on the topic.  The
+> thread begins here:
 > 
-> >
-> > I think all that needs to happen is that when adding a new worktree, if
-> > the main git directory has a "svn" directory, add a symlink to it in the
-> > worktree's gitdir.
+>   https://public-inbox.org/git/1329039097.128066.1475476591437.JavaMail.zimbra@redhat.com/
+> 
+> 
+> In any case, I suggest update to the log message to something like
+> this:
+> 
+>     Subject: mergetool: allow custom naming for temporary files
+> 
+>     A front-end program that is spawned by "git mergetool" is given
+>     three temporary files (e.g. it may get "x_LOCAL.txt",
+>     "x_REMOTE.txt", and "x_BASE.txt" while merging "x.txt").  
+> 
+>     Custom wrappers to "git mergetool" benefits if they are allowed
+>     to rename these hardcoded suffixes to match the workflow they
+>     implement.  For example, they may be used to compare and merge
+>     two versions that is available locally, and OLD/NEW may be more
+>     appropriate than LOCAL/REMOTE in such a context.
+> 
+> primarily because "the second variant" is meaningless thing to say
+> in our long term history, when the first variant never was recorded
+> there.  Josef may want to elaborate more on the latter paragraph.
 
-I'm fairly sure the worktree C code should not care about how
-git-svn works, but rather git-svn should be made aware of
-worktree bits...
 
-I haven't studied worktrees much nor do I use git-svn much,
-but the following seems to work for fetch/rebase/dcommit:
+I do see why this can be helpful but what makes me reluctant is,
 
-------------8<-----------
-Subject: [PATCH] git-svn: WIP worktree awareness
+> > +'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [--local=<name>] [--remote=<name>] [--backup=<name>] [--base=<name>] [<file>...]
 
----
- perl/Git/SVN.pm           | 29 ++++++++++++++++++++---------
- perl/Git/SVN/Migration.pm | 23 ++++++++++++-----------
- 2 files changed, 32 insertions(+), 20 deletions(-)
+We're parking on 4 new flags that are really all about changing
+one small aspect of the program.
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 018beb8..267cc09 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -807,10 +807,20 @@ sub get_fetch_range {
- 	(++$min, $max);
- }
- 
-+sub svn_dir {
-+	my $git_dir = scalar @_ ? $_[0] : $ENV{GIT_DIR};
-+	my $common = $ENV{GIT_COMMON_DIR} || "$git_dir/commondir";
-+	$git_dir .= '/'.::file_to_s($common) if -e $common;
-+	my $svn_dir = $git_dir . '/svn';
-+	$svn_dir =~ tr!/!/!s;
-+	$svn_dir;
-+}
-+
- sub tmp_config {
- 	my (@args) = @_;
--	my $old_def_config = "$ENV{GIT_DIR}/svn/config";
--	my $config = "$ENV{GIT_DIR}/svn/.metadata";
-+	my $svn_dir = svn_dir();
-+	my $old_def_config = "$svn_dir/config";
-+	my $config = "$svn_dir/.metadata";
- 	if (! -f $config && -f $old_def_config) {
- 		rename $old_def_config, $config or
- 		       die "Failed rename $old_def_config => $config: $!\n";
-@@ -1671,7 +1681,7 @@ sub tie_for_persistent_memoization {
- 		return if $memoized;
- 		$memoized = 1;
- 
--		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
-+		my $cache_path = svn_dir() . '/.caches/';
- 		mkpath([$cache_path]) unless -d $cache_path;
- 
- 		my %lookup_svn_merge_cache;
-@@ -1712,7 +1722,7 @@ sub tie_for_persistent_memoization {
- 	sub clear_memoized_mergeinfo_caches {
- 		die "Only call this method in non-memoized context" if ($memoized);
- 
--		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
-+		my $cache_path = svn_dir() . '/.caches/';
- 		return unless -d $cache_path;
- 
- 		for my $cache_file (("$cache_path/lookup_svn_merge",
-@@ -2446,12 +2456,13 @@ sub _new {
- 		             "refs/remotes/$prefix$default_ref_id";
- 	}
- 	$_[1] = $repo_id;
--	my $dir = "$ENV{GIT_DIR}/svn/$ref_id";
-+	my $svn_dir = svn_dir();
-+	my $dir = "$svn_dir/$ref_id";
- 
--	# Older repos imported by us used $GIT_DIR/svn/foo instead of
--	# $GIT_DIR/svn/refs/remotes/foo when tracking refs/remotes/foo
-+	# Older repos imported by us used $svn_dir/foo instead of
-+	# $svn_dir/refs/remotes/foo when tracking refs/remotes/foo
- 	if ($ref_id =~ m{^refs/remotes/(.+)}) {
--		my $old_dir = "$ENV{GIT_DIR}/svn/$1";
-+		my $old_dir = "$svn_dir/$1";
- 		if (-d $old_dir && ! -d $dir) {
- 			$dir = $old_dir;
- 		}
-@@ -2461,7 +2472,7 @@ sub _new {
- 	mkpath([$dir]);
- 	my $obj = bless {
- 		ref_id => $ref_id, dir => $dir, index => "$dir/index",
--	        config => "$ENV{GIT_DIR}/svn/config",
-+	        config => "$svn_dir/config",
- 	        map_root => "$dir/.rev_map", repo_id => $repo_id }, $class;
- 
- 	# Ensure it gets canonicalized
-diff --git a/perl/Git/SVN/Migration.pm b/perl/Git/SVN/Migration.pm
-index cf6ffa7..887fd93 100644
---- a/perl/Git/SVN/Migration.pm
-+++ b/perl/Git/SVN/Migration.pm
-@@ -45,6 +45,7 @@ use Git qw(
- 	command_output_pipe
- 	command_close_pipe
- );
-+use Git::SVN;
- 
- sub migrate_from_v0 {
- 	my $git_dir = $ENV{GIT_DIR};
-@@ -82,7 +83,7 @@ sub migrate_from_v1 {
- 	my $git_dir = $ENV{GIT_DIR};
- 	my $migrated = 0;
- 	return $migrated unless -d $git_dir;
--	my $svn_dir = "$git_dir/svn";
-+	my $svn_dir = Git::SVN::svn_dir($git_dir);
- 
- 	# just in case somebody used 'svn' as their $id at some point...
- 	return $migrated if -d $svn_dir && ! -f "$svn_dir/info/url";
-@@ -100,24 +101,23 @@ sub migrate_from_v1 {
- 		next unless -f "$git_dir/$x/info/url";
- 		my $u = eval { ::file_to_s("$git_dir/$x/info/url") };
- 		next unless $u;
--		my $dn = dirname("$git_dir/svn/$x");
-+		my $dn = dirname("$svn_dir/$x");
- 		mkpath([$dn]) unless -d $dn;
- 		if ($x eq 'svn') { # they used 'svn' as GIT_SVN_ID:
--			mkpath(["$git_dir/svn/svn"]);
-+			mkpath(["$svn_dir/svn"]);
- 			print STDERR " - $git_dir/$x/info => ",
--			                "$git_dir/svn/$x/info\n";
--			rename "$git_dir/$x/info", "$git_dir/svn/$x/info" or
-+			                "$svn_dir/$x/info\n";
-+			rename "$git_dir/$x/info", "$svn_dir/$x/info" or
- 			       croak "$!: $x";
- 			# don't worry too much about these, they probably
- 			# don't exist with repos this old (save for index,
- 			# and we can easily regenerate that)
- 			foreach my $f (qw/unhandled.log index .rev_db/) {
--				rename "$git_dir/$x/$f", "$git_dir/svn/$x/$f";
-+				rename "$git_dir/$x/$f", "$svn_dir/$x/$f";
- 			}
- 		} else {
--			print STDERR " - $git_dir/$x => $git_dir/svn/$x\n";
--			rename "$git_dir/$x", "$git_dir/svn/$x" or
--			       croak "$!: $x";
-+			print STDERR " - $git_dir/$x => $svn_dir/$x\n";
-+			rename "$git_dir/$x", "$svn_dir/$x" or croak "$!: $x";
- 		}
- 		$migrated++;
- 	}
-@@ -139,9 +139,10 @@ sub read_old_urls {
- 			push @dir, $_;
- 		}
- 	}
-+	my $svn_dir = Git::SVN::svn_dir();
- 	foreach (@dir) {
- 		my $x = $_;
--		$x =~ s!^\Q$ENV{GIT_DIR}\E/svn/!!o;
-+		$x =~ s!^\Q$svn_dir\E/!!o;
- 		read_old_urls($l_map, $x, $_);
- 	}
- }
-@@ -150,7 +151,7 @@ sub migrate_from_v2 {
- 	my @cfg = command(qw/config -l/);
- 	return if grep /^svn-remote\..+\.url=/, @cfg;
- 	my %l_map;
--	read_old_urls(\%l_map, '', "$ENV{GIT_DIR}/svn");
-+	read_old_urls(\%l_map, '', Git::SVN::svn_dir());
- 	my $migrated = 0;
- 
- 	require Git::SVN;
+I don't typically like going overboard with environment
+variables but for this use case they seem to be a good fit.
+
+It's already been expressed that the intention is for these to
+be supplied by some other tool, and environment variables have
+the nice property that you can update all your tools without
+needing to touch anything except the environment.
+
+Another nice thing is that the the user can choose to set it
+globally, or to set it local to specific tools.
+
+Another reason why I think it's a good fit is,
+
+> +# Can be changed by user
+> +LOCAL_NAME='LOCAL'
+> +BASE_NAME='BASE'
+> +BACKUP_NAME='BACKUP'
+> +REMOTE_NAME='REMOTE'
+
+These lines would become simply,
+
+LOCAL_NAME=${GIT_MERGETOOL_LOCAL_NAME:-LOCAL}
+BASE_NAME=${GIT_MERGETOOL_BASE_NAME:-BASE}
+BACKUP_NAME=${GIT_MERGETOOL_BACKUP_NAME:-BACKUP}
+REMOTE_NAME=${GIT_MERGETOOL_REMOTE_NAME:-REMOTE}
+
+and we wouldn't need any other change besides this part:
+
+> -	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+> -	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
+> -	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
+> -	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
+> +	BACKUP="$MERGETOOL_TMPDIR/${BASE}_${BACKUP_NAME}_$$$ext"
+> +	LOCAL="$MERGETOOL_TMPDIR/${BASE}_${LOCAL_NAME}_$$$ext"
+> +	REMOTE="$MERGETOOL_TMPDIR/${BASE}_${REMOTE_NAME}_$$$ext"
+> +	BASE="$MERGETOOL_TMPDIR/${BASE}_${BASE_NAME}_$$$ext"
+
+
+Then, just update the documentation to mention the environment
+variables instead of the flags and we're all set.
+
+We also won't need this part if we go down that route:
+
+> +# sanity check after parsing command line
+> +case "" in
+> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --local/remote/base/backup to empty."
+> +	;;
+> +esac
+> +
+> +case "$LOCAL_NAME" in
+> +"$REMOTE_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --remote/base/backup to same as --local."
+> +	;;
+> +esac
+> +
+> +case "$REMOTE_NAME" in
+> +"$LOCAL_NAME"|"$BASE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --local/base/backup to same as --remote."
+> +	;;
+> +esac
+> +
+> +case "$BASE_NAME" in
+> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BACKUP_NAME")
+> +	die "You cannot set any of --local/remote/backup to same as --base."
+> +	;;
+> +esac
+> +
+> +case "$BACKUP_NAME" in
+> +"$LOCAL_NAME"|"$REMOTE_NAME"|"$BASE_NAME")
+> +	die "You cannot set any of --local/remote/base to same as --backup."
+> +	;;
+> +esac
+
+
+What do you think?
 -- 
-EW
+David
