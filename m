@@ -2,24 +2,24 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F49E1F4F8
+	by dcvr.yhbt.net (Postfix) with ESMTP id 351AF1F4F8
 	for <e@80x24.org>; Fri, 14 Oct 2016 13:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932802AbcJNNUN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:20:13 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52974 "EHLO mout.gmx.net"
+        id S932820AbcJNNUQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:20:16 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57593 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755834AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1755685AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 14 Oct 2016 09:18:10 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LhjeH-1chaY03RM9-00mutK; Fri, 14 Oct 2016 15:17:57
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M92ZJ-1c7RUZ3Tqv-00CTO6; Fri, 14 Oct 2016 15:17:42
  +0200
-Date:   Fri, 14 Oct 2016 15:17:57 +0200 (CEST)
+Date:   Fri, 14 Oct 2016 15:17:27 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,59 +27,102 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 10/25] sequencer: avoid completely different messages for
- different actions
+Subject: [PATCH v4 06/25] sequencer: future-proof read_populate_todo()
 In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
-Message-ID: <21954fadd458bc4dab27e9eb6c31c29bcf21191e.1476450940.git.johannes.schindelin@gmx.de>
+Message-ID: <be30c373782e0022075c41541c15bf4ade026c3f.1476450940.git.johannes.schindelin@gmx.de>
 References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tWlZFHbDSXkD2VR1yRrZmIY6oay2WVd8Y9X3YacRm+JQBtaTkTR
- Qk6NB39853zh4jEPOPU5qVhvfK77qpsc0rMVAC5nrDisRmSUzE+aOuDzQX/OkqPBjH2AhDg
- zjwjvU0z1l0TsNoG1hgulGoV6ViLo2ofUweU6zwDLO/QsEb+FDKiTLOZhcrLNkjVEFhzpfc
- PUEmf0fGJabwrLfnSIQFg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qqrMvFmJxoI=:YEB4LgPVNSAmCnMZWNVFeY
- Zg/IEsANwG4pCUYTLMXiuMM0eNP0+QMIiXolgjVKYcsivYCWk7zduyKo7CPTNLl+b9Sd4uM1e
- NUyNp7MwJCu3b8IAp63vhhoynTAwPooBOP73QPRCT2RV0XUVVcASz1KSk5tUEWZwhR3PX51Tp
- phGmx8BCxoe70LiSbfGt75XOqQK2y6RIBsisWuNhDYy9cSRpy2sdeQI+WcaOmNjk8GEl12cb4
- on7DEjRN0uTQ2FOOo7uazaSPtylyLq2eWuvBjU4ekx5JzbyNv4n0Cjk3yA5Od7A6hFueRbGr3
- rztVsILr8DMvZiYW+VaYhWwD34khiLQSE9UViX/i0xr1wxNi50MXNbGQVPjm1CwE2lMv0LaGs
- C5K3dRu/FHATkBPP0UmEdPFC5ocojaI6+cHkWZVpJmCtaAzh9J/hLEEnFZn20n1xU8I4dCTgF
- aA+4ij6t08Fcul3VL1nhHCk4Wb/WN0Wetxc8y/Lz0w0uVEPKreIctYmbljEeFoOjDc57zI5PQ
- MZms4KYnSiDcDOKcRdqTUUVZnqp0k0GAIFJ8OWPKUdoxDw8NEcjLv/2DeSOXF/y7RlGI/Meuf
- cdBPMVCLpgOg8iADKF4PnwSLMpSGV1h6GMRdGMIHsrV/8OfODprMouCnw/uy+pdq3u2IXcjES
- riGFlVJBzxQZ8IR6pI5ZKzk3/OnNpEOvSz2AWc3EVbyxmwDp1M/Abb+dU2jzGk3tdwmUP9JwE
- tDvqNKYH3X+qwaxGvO43eGcc4fjtkQB7gR6eQCF29M8hoIfr/D51V4G80e8mroqnhgRtW/41A
- 58xfdcj
+X-Provags-ID: V03:K0:mr5PggJBsZfhu/2WonHjJ2pet1YtNQlhn0oDA8/PmWUumyIVGdO
+ gLHLnEteLrQz7G4akx5iRbegmn+uxhznelA2v0wYOsO0hbUvfk0RKc5StDh2k6pwLKlXg8f
+ Jf+cB047HPoTXcYibif2w4s7FOR0bo8mFbS/PM6ys4c/4/GD7ueg52JsXIoi44srtiTqMpy
+ zuIzH5gJO83E5JqM/hk6g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UNKyn907jbM=:3JV2h4VIaBC5mjCdhS8Zvf
+ qnDd++iel5Aq9d3lpEj5DZ7WHVXpfe9qtUDEwV3izTEQw/NUeNKMJ54xLF4pk2AY2CVb+k2re
+ O4jdn2ZLbsEWWfyTLbej+SW0FoHFLOr+iym59UyxBQ6dHEoMuphoVSnYPhOUUcPTbT5oDcv/c
+ 111SRVsoNYTstXu0kz1jB4lXdySTeclXo7qx4aYQ6aKAgRloqQ5kowpI56/q0prVEPV3Wzwhf
+ aFrTTriV9125+ffidFfsgtPKeo68wrVGSLO9yYoyCKtixIj6Qv8sGxhyky64bup0Mpj2Ud6X4
+ eYPFXzvSiUbweu25y2s4TfwyavoEKSBNgyZm1SwlXPiuv+ZeJgnPPD47H219ZY7To1zBQLy+H
+ aXWEMGetXKCR+QU6STWdV4f/D1NrUo5+CVVgM4h7CZt50EZrNd8ma9UpT9mOzotkE8hp5GYZO
+ v3tpp/kjEoPvjgzUDEx4x35pGYgYlB5ZH8NP4VYTVRpAvlb7lJr33BSMRHlNTnzb/Ln1ba867
+ BCSohgbAPsjOjnB14DtutILZiELiqs/erxkyxANRL3BilaXIgKlB6VORDvItvT70GFLfHBQnJ
+ KX/SnEJIn1pKkKVClnlhNhuIuZoCiPLukiIe7K2NeG7A5bSzs3SkrfIXz583iuWW/MNGxmR3Q
+ jAtn1BuMgpXz2QZXm5b/2L+/bVBa6/uCXVlRwmthbWl/3kCl2kQmpP+omTSdvOvbrlR+AvI+e
+ sek2nkqMROlt6sYTppITKVhN3+vgb1weL4vNzVV5i2ydSw+tcviPtcDRHD1Iy4em8PdpW6Kl7
+ h2GIxlO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Over the next commits, we will work on improving the sequencer to the
+point where it can process the todo script of an interactive rebase. To
+that end, we will need to teach the sequencer to read interactive
+rebase's todo file. In preparation, we consolidate all places where
+that todo file is needed to call a function that we will later extend.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sequencer.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index eac531b..9bca056 100644
+index 04c55f2..fb0b94b 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -229,11 +229,8 @@ static int error_dirty_index(struct replay_opts *opts)
- 	if (read_cache_unmerged())
- 		return error_resolve_conflict(action_name(opts));
+@@ -32,6 +32,11 @@ static const char *get_dir(const struct replay_opts *opts)
+ 	return git_path_seq_dir();
+ }
  
--	/* Different translation strings for cherry-pick and revert */
--	if (opts->action == REPLAY_PICK)
--		error(_("Your local changes would be overwritten by cherry-pick."));
--	else
--		error(_("Your local changes would be overwritten by revert."));
-+	error(_("Your local changes would be overwritten by %s."),
-+		action_name(opts));
++static const char *get_todo_path(const struct replay_opts *opts)
++{
++	return git_path_todo_file();
++}
++
+ static int is_rfc2822_line(const char *buf, int len)
+ {
+ 	int i;
+@@ -769,25 +774,24 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
+ static int read_populate_todo(struct commit_list **todo_list,
+ 			struct replay_opts *opts)
+ {
++	const char *todo_file = get_todo_path(opts);
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int fd, res;
  
- 	if (advice_commit_before_merge)
- 		advise(_("Commit your changes or stash them to proceed."));
+-	fd = open(git_path_todo_file(), O_RDONLY);
++	fd = open(todo_file, O_RDONLY);
+ 	if (fd < 0)
+-		return error_errno(_("Could not open %s"),
+-				   git_path_todo_file());
++		return error_errno(_("Could not open %s"), todo_file);
+ 	if (strbuf_read(&buf, fd, 0) < 0) {
+ 		close(fd);
+ 		strbuf_release(&buf);
+-		return error(_("Could not read %s."), git_path_todo_file());
++		return error(_("Could not read %s."), todo_file);
+ 	}
+ 	close(fd);
+ 
+ 	res = parse_insn_buffer(buf.buf, todo_list, opts);
+ 	strbuf_release(&buf);
+ 	if (res)
+-		return error(_("Unusable instruction sheet: %s"),
+-			git_path_todo_file());
++		return error(_("Unusable instruction sheet: %s"), todo_file);
+ 	return 0;
+ }
+ 
+@@ -1075,7 +1079,7 @@ static int sequencer_continue(struct replay_opts *opts)
+ {
+ 	struct commit_list *todo_list = NULL;
+ 
+-	if (!file_exists(git_path_todo_file()))
++	if (!file_exists(get_todo_path(opts)))
+ 		return continue_single_pick();
+ 	if (read_populate_opts(opts) ||
+ 			read_populate_todo(&todo_list, opts))
 -- 
 2.10.1.513.g00ef6dd
 
