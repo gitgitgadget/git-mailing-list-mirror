@@ -3,81 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 005BD1F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 17:05:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58B571F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 17:34:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932678AbcJNRFA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 13:05:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59031 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932631AbcJNRE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 13:04:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92F274503B;
-        Fri, 14 Oct 2016 13:04:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vJ8LAMm44rwROsfbrBK692gWSOg=; b=Sr+j61
-        vhnTliR6Sl478wy4ccZRxeB8yOe13azKYjzfz2BtHhSGP8LO2RAywpWqWFD/dQj5
-        GY7Pqn5wsLRLGnkZm8me/4QhLqgIgTMYauZMsXdWn9hckfsWtIBDWr+lhJ/e6U7b
-        VtivvgUQlZXVya4yrlG6N9iUzR6nRiVsx8UaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t+omLnrfXrbI8RJrVGC3Mq/5jVzMv1ZA
-        5bPZDYvCgAOGm6MY7PyXdp1MiyGo2/0Rzq1riXnD89Qb66fSs/I7NrtEmsyB880w
-        e26FticvvoSywSzVoUNfJvu9FztIbjmL86z9Fguolhpj+cHQz4unS3wjDB9W0KcC
-        1y408jPhhhY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A9B94503A;
-        Fri, 14 Oct 2016 13:04:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06C4D45038;
-        Fri, 14 Oct 2016 13:04:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Larry Finger <Larry.Finger@lwfinger.net>,
-        Jeff King <peff@peff.net>,
-        Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>,
+        id S1754010AbcJNReS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 13:34:18 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35197 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753679AbcJNReR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 13:34:17 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b80so710263wme.2
+        for <git@vger.kernel.org>; Fri, 14 Oct 2016 10:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=hrsop6ckJQk7Tmh9bZHF/WWAUMjV30NfRx5XJvovoQE=;
+        b=dhxeofPQjOroGXLoqznRIt/DLwcif6xmU7TChhAKAJEi36R9jxZWbfgRLikTYHnqyc
+         idld58hiYX4xuCwejxqq7SSp1t68MoAOBd6NyjtWeiEgpbnxjJERvzoTXksfojoOhZOB
+         +BkEnSF1dL6c7Q/dMR//f+JM4bJWhA/oyCWLWA8qIFfSj/UT57Xlb01EZ/fsxN7h8fJr
+         fhBFIDZfriL0x6sEQBjmnjQnu03o7FvOMAiAxaGN15uRRKTOXnYI57yTjysz3E8qsicw
+         wwxa913yJP9Hgcd0UwQMJ44DISzPox3mVgIVn0sHUGHRMPFd84YDg9zw3HrFjNKC1SeI
+         cQgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=hrsop6ckJQk7Tmh9bZHF/WWAUMjV30NfRx5XJvovoQE=;
+        b=NjK4qyzPcwrpJ4XPuCfs6h3shNWafci62nA775E44PaE1ZTbLdZYQIva6rvcar/L8q
+         Oj0Tt8Ukwutl8huRihB3eoNwBLdSWOBjVVbT2uSktqnUfa7O/GA6hlsYQKHB/O01CFi2
+         IY9VzGzv08HlaRIOwYQ+ZAHOxFUheXQ2ZHhW+dk5smr5eD6I63Joz2t8KPy18xSoKz+A
+         5k8Z6w4E+wwj+TDCUFV7Im65erTLC0sSeRjkxxomhA424YJB0Z4EPv2wlI8Xq/bLlPzZ
+         cCK2GVNvV74LYmjtzvwkOfqGonoUO7FBWVN3MDKokRfFMdWgZbctKtyRCOBOQDwRub+D
+         DoPQ==
+X-Gm-Message-State: AA6/9Rl74cjHdgbPAh6+9PQa7a/KnbvyHZZWDRyVvYOZ1o1qwvJN0FS7nwEPqOGU+PM6UA==
+X-Received: by 10.194.108.230 with SMTP id hn6mr3009416wjb.122.1476466455297;
+        Fri, 14 Oct 2016 10:34:15 -0700 (PDT)
+Received: from [192.168.1.26] (agd104.neoplus.adsl.tpnet.pl. [83.25.159.104])
+        by smtp.googlemail.com with ESMTPSA id s195sm848980wmb.10.2016.10.14.10.34.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 14 Oct 2016 10:34:14 -0700 (PDT)
+Subject: Re: [PATCH v2 1/3] gitweb: Fix a typo in a comment
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
-Subject: Re: Formatting problem send_mail in version 2.10.0
-References: <41164484-309b-bfff-ddbb-55153495d41a@lwfinger.net>
-        <20161010214856.fobd3jgsv2cnscs3@sigill.intra.peff.net>
-        <20161010215711.oqnoiz7qfmxm27cr@sigill.intra.peff.net>
-        <vpqfuo3l4fl.fsf@anie.imag.fr>
-        <45cfc4e5-c30e-19cb-ec3e-407ceb4e3ad5@lwfinger.net>
-        <vpq4m4iamfs.fsf@anie.imag.fr>
-        <b8f93bf9-bfa5-2405-437e-6bf9abf77c87@lwfinger.net>
-        <vpq60oy589b.fsf@anie.imag.fr>
-        <5978b674-02eb-59ad-9468-93203533575f@lwfinger.net>
-        <vpq8tttr2ps.fsf@anie.imag.fr>
-        <xmqqtwch2srj.fsf@gitster.mtv.corp.google.com>
-        <vpq1szkolud.fsf@anie.imag.fr>
-Date:   Fri, 14 Oct 2016 10:04:49 -0700
-In-Reply-To: <vpq1szkolud.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-        13 Oct 2016 07:32:26 +0200")
-Message-ID: <xmqqk2dazwsu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+References: <20161006091135.29590-1-avarab@gmail.com>
+ <20161006091135.29590-2-avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <51eb6aba-9cd2-47f4-a26e-6dbbabdaa282@gmail.com>
+Date:   Fri, 14 Oct 2016 19:34:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 51DF5CEA-9230-11E6-A0E3-987C12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20161006091135.29590-2-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+W dniu 06.10.2016 o 11:11, Ævar Arnfjörð Bjarmason napisał:
 
-> We clearly can't guess, but we can be consistent with Mail::Address, so
-> that git's behavior depends less on its availability.
->
-> Patch follows doing that.
+> Change a typo'd MIME type in a comment. The Content-Type is
+> application/xhtml+xml, not application/xhtm+xml.
+> 
+> Fixes up code originally added in 53c4031 ("gitweb: Strip
+> non-printable characters from syntax highlighter output", 2011-09-16).
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-Thanks.  I love that somebody counters with a much better way to
-solve it whenever I suggest an outrageous non-solution to a problem
-around here ;-)
+Good.  Thanks for taking care of this.
+For what is worth for such a trivial patch:
+
+Acked-by: Jakub Narębski <jnareb@gmail.com>
+
+> ---
+>  gitweb/gitweb.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 44094f4..cba7405 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1616,7 +1616,7 @@ sub esc_path {
+>  	return $str;
+>  }
+>  
+> -# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
+> +# Sanitize for use in XHTML + application/xml+xhtml (valid XML 1.0)
+>  sub sanitize {
+>  	my $str = shift;
+>  
+> 
+
