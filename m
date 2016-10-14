@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 678CC1F4F8
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22C22209AB
 	for <e@80x24.org>; Fri, 14 Oct 2016 13:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932878AbcJNNUW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:20:22 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58066 "EHLO mout.gmx.net"
+        id S932871AbcJNNUV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:20:21 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63205 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755618AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754527AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 14 Oct 2016 09:18:10 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lm7MT-1cUNBa1hzN-00ZhTp; Fri, 14 Oct 2016 15:17:47
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MC4R6-1c3s4200TQ-008sjE; Fri, 14 Oct 2016 15:17:14
  +0200
-Date:   Fri, 14 Oct 2016 15:17:46 +0200 (CEST)
+Date:   Fri, 14 Oct 2016 15:17:12 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,81 +27,100 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 07/25] sequencer: refactor the code to obtain a short
- commit name
+Subject: [PATCH v4 02/25] sequencer: use memoized sequencer directory path
 In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
-Message-ID: <da12dda5acf5ac3c1c1d08c1a941de0f193909ea.1476450940.git.johannes.schindelin@gmx.de>
+Message-ID: <e2d2ec17acd459f2f52476604ea564ed87e44228.1476450940.git.johannes.schindelin@gmx.de>
 References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RUaN7EReaIrwajJU+CSPleyMmz4FUZ01ijffy22FqK6EVG4aUHY
- pg7OzxHTolo3GliY4Thh3s5YvtnEnMUnbOf/LWRVlOA0Ast+PEDNnd1L9LmcYef9/162Eye
- 14Z9pzpM1MwMZzTTuFyQPbhRui5Pw0w6llVjbz5LVmwvno1wJgiVBlj+xtDiQbkmIlCnS3v
- XeVCHaCG34RYF0E/M+0Eg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5680Hp/36NM=:Xjbgkb2YqvcL9hhAus+Rms
- AGitpwNahwgB4boYi7krf2vWJgN+7L+IBh6OKRBJZ29XHQUyKqUW4ZHfBHnbgeyPzkACLjRNR
- LSnc1qxsh829Bsb2qDGAmuOFieJr60j7hc1pPwxJoNm7We7Jcj+NWv7feIOiEk11OvRHqfzgz
- MjeWqZzAIKGNh9rFbWv2oY3TZLSsn0G28AaLUeo9RvZ+AhdXQXikEexFQRqCVj2wrnwBiQWuz
- aUwfGhhNO0MdDUuIpAZtHZ39T0xgy+1sJYMRATvT4WnDnXiNLA+7kY1KVjiKIcQh9WF6nZXbL
- gGe2L50+SHKwGYj9MoEQIaFH401QLTOEoUjqJ8y7FSlJd15BNu3doLpX2049gLXcnaRhIHpl/
- AOlJgcjGVLpkI+sUXOahWm3WALOeSc8p9iQ4suXFzcE1g7NHYm9FynLsAvwdAL32GLsbg3OgW
- XgLMG7OY6CRS+kZEBb3PHoedh4wxBXVSVsdMeKzf+mksq5vOlXg6dAckgBHgviP/TCCnHQ9FE
- uRw/N4fGvID0u85Kach/FQAz7pPPjoPIPZkWi16oRHvcD70/CD5LToEHP+NxGhoGMG0C9ai0/
- Ag9y+hyTV0c60R8WlFZznBMfRf6NFaVICFidzSuDjg0ZRBwrvRdaf7bbpK+yN1abivd0ILFn1
- MibrO0KgoNGuqWHQOgv86Zgd8ATFZ5juYVEAcFobengg1DvLlZJQHLxjUQe63qZjl+1PwUbhW
- 3KySWVZ4/icDFsuMQY/XsW194AatGuIKJgf4ApiDujIaVvJxISQnbTBuuoFwVgMamUTq+l7HS
- ne35u/e
+X-Provags-ID: V03:K0:U4oZL/dcNzKA8xsI2CphcVlDkw4bGs6MN/wsmdKw4gx56ulAmS2
+ aO5KEyRR+tloWSx5SpK/W+ntUJKi9IUdOkltikkGVDRbnpXyOf9DfvixiTmX8NCDp5HH0E7
+ m+rsOvrC1X8sMbckQ6IbLq7qRz+xsviI9gU2Zrt+nmgP3c436Agovbb1xyjtn1Ma+GPAAOM
+ La8IsjM14XLe76CaB8heQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AtvPY1+4b30=:CwLpUM6NeBWgvjj4Qz8j6u
+ 5+R/Bqfm/QrUMaurdW+DMTTSu3hJoAqQ1zn++SuamfKJKv4AOZRhga53h5bO6fLBiBNQDSgVz
+ ntB5V/Hl+NFv1S9PsXwUSB7OfnvqUmUmHXEYyDgxTGwTaOgSwzoJp6hnQ38cM6HzQ86q/HuIA
+ YlGYkq5TvpuX9ygzZkgMsGVM7aTC1EU83c23ykofxV7WLr3S8JC/yfpZXxsUgmZpybabhBzVm
+ yw8dGW7HoiSWjujV92ndzNnHhpDJejeC7XOPxLi0hNvwG04+qThJ9ZPHzUME68f+YpmPUZNFS
+ kePr53fTap9qEW/nvf4y+PWxkZ9L6tlNUkf28j2Egv1hywfCfXPelQ9xnF3N3/k3uyrwpjUrT
+ StHM8Q+QQ/qMATl/hsiO5SRGAnsvXNsFGfW0hj5mfJXH4RLwVvzCL20l+7Zr3jcS4rXKgNhPb
+ W+Jekh3rp7SM+Mm6AxqLY1CmEa/HX0/bcX/SkaoksVmWwkD3CxwM/DXxa+DfxSWBkBGhpjrd/
+ 1K5J9d5tQly9YwF2h15n2m91M5NjRVAaJHRipHCBhTWxxpMIRc5Q4q4YjUjjQxH+zJzIJdiyu
+ KI6CsQIExMU0r9+tzkhbz8yD/zshU35pO7rFlJMi4nJxtg8cE/UxDGCnBhf8bYVmDXlCNGb4+
+ 8ZaOjF8OLc4e3fr2Tt1Ns7Sy3d/CyFkqRDEMXrKG3RzNHkFdsYzX/d4WAnQkp9YqPPUTCgk8q
+ R0HP2y4CKoNso2WM/n4oFO6FwwBbtOWL4eXgwnhbUuofiis1So1P6f7JzAvCuMUGReUbC/eyz
+ 5x9JssQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not only does this DRY up the code (providing a better documentation what
-the code is about, as well as allowing to change the behavior in a single
-place), it also makes it substantially shorter to use the same
-functionality in functions to be introduced when we teach the sequencer to
-process interactive-rebase's git-rebase-todo file.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ builtin/commit.c |  2 +-
+ sequencer.c      | 11 ++++++-----
+ sequencer.h      |  5 +----
+ 3 files changed, 8 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1cba3b7..9fddb19 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -183,7 +183,7 @@ static void determine_whence(struct wt_status *s)
+ 		whence = FROM_MERGE;
+ 	else if (file_exists(git_path_cherry_pick_head())) {
+ 		whence = FROM_CHERRY_PICK;
+-		if (file_exists(git_path(SEQ_DIR)))
++		if (file_exists(git_path_seq_dir()))
+ 			sequencer_in_use = 1;
+ 	}
+ 	else
 diff --git a/sequencer.c b/sequencer.c
-index fb0b94b..499f5ee 100644
+index eec8a60..cb16cbd 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -147,13 +147,18 @@ struct commit_message {
- 	const char *message;
- };
+@@ -21,10 +21,11 @@
+ const char sign_off_header[] = "Signed-off-by: ";
+ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
  
-+static const char *short_commit_name(struct commit *commit)
-+{
-+	return find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
-+}
+-static GIT_PATH_FUNC(git_path_todo_file, SEQ_TODO_FILE)
+-static GIT_PATH_FUNC(git_path_opts_file, SEQ_OPTS_FILE)
+-static GIT_PATH_FUNC(git_path_seq_dir, SEQ_DIR)
+-static GIT_PATH_FUNC(git_path_head_file, SEQ_HEAD_FILE)
++GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
 +
- static int get_message(struct commit *commit, struct commit_message *out)
++static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
++static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
++static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+ 
+ static int is_rfc2822_line(const char *buf, int len)
  {
- 	const char *abbrev, *subject;
- 	int subject_len;
+@@ -112,7 +113,7 @@ static void remove_sequencer_state(void)
+ {
+ 	struct strbuf seq_dir = STRBUF_INIT;
  
- 	out->message = logmsg_reencode(commit, NULL, get_commit_output_encoding());
--	abbrev = find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
-+	abbrev = short_commit_name(commit);
+-	strbuf_addstr(&seq_dir, git_path(SEQ_DIR));
++	strbuf_addstr(&seq_dir, git_path_seq_dir());
+ 	remove_dir_recursively(&seq_dir, 0);
+ 	strbuf_release(&seq_dir);
+ }
+diff --git a/sequencer.h b/sequencer.h
+index db425ad..dd4d33a 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -1,10 +1,7 @@
+ #ifndef SEQUENCER_H
+ #define SEQUENCER_H
  
- 	subject_len = find_commit_subject(out->message, &subject);
+-#define SEQ_DIR		"sequencer"
+-#define SEQ_HEAD_FILE	"sequencer/head"
+-#define SEQ_TODO_FILE	"sequencer/todo"
+-#define SEQ_OPTS_FILE	"sequencer/opts"
++const char *git_path_seq_dir(void);
  
-@@ -621,8 +626,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		error(opts->action == REPLAY_REVERT
- 		      ? _("could not revert %s... %s")
- 		      : _("could not apply %s... %s"),
--		      find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV),
--		      msg.subject);
-+		      short_commit_name(commit), msg.subject);
- 		print_advice(res == 1, opts);
- 		rerere(opts->allow_rerere_auto);
- 		goto leave;
+ #define APPEND_SIGNOFF_DEDUP (1u << 0)
+ 
 -- 
 2.10.1.513.g00ef6dd
 
