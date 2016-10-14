@@ -2,71 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 320D71F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 13:42:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7A51F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 13:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756475AbcJNNmS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:42:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57391 "EHLO cloud.peff.net"
+        id S1754552AbcJNNqy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:46:54 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34449 "EHLO mx2.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754789AbcJNNmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 09:42:17 -0400
-Received: (qmail 2498 invoked by uid 109); 14 Oct 2016 13:42:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Oct 2016 13:42:16 +0000
-Received: (qmail 5673 invoked by uid 111); 14 Oct 2016 13:42:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Oct 2016 09:42:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2016 09:42:14 -0400
-Date:   Fri, 14 Oct 2016 09:42:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Petr Stodulka <pstodulk@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2]  infinite loop in "git ls-tree" for broken symlink
-Message-ID: <20161014134214.z3jzlx36y57cdqhu@sigill.intra.peff.net>
-References: <1476451012-9925-1-git-send-email-pstodulk@redhat.com>
+        id S1756873AbcJNNqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 09:46:50 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u9EDkikD008493
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Fri, 14 Oct 2016 15:46:44 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9EDkkvg027862;
+        Fri, 14 Oct 2016 15:46:46 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Can we make interactive add easier to use?
+References: <CAHd499AnuVximRgM0MKdq5JC-hwkrhox6bK_KA+XGrawoz2W+g@mail.gmail.com>
+Date:   Fri, 14 Oct 2016 15:46:46 +0200
+In-Reply-To: <CAHd499AnuVximRgM0MKdq5JC-hwkrhox6bK_KA+XGrawoz2W+g@mail.gmail.com>
+        (Robert Dailey's message of "Fri, 14 Oct 2016 08:20:40 -0500")
+Message-ID: <vpqfunz2gc9.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1476451012-9925-1-git-send-email-pstodulk@redhat.com>
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 14 Oct 2016 15:46:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9EDkikD008493
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1477057605.49763@MzuzyJNwGhlU2/Qh01NUNg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2016 at 03:16:50PM +0200, Petr Stodulka wrote:
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-> I have realized that this wasn't fixed after all when refs.c
-> was "rewritten". Issue is caused by broken symlink under refs/heads,
-> which causes infinite loop for "git ls-tree" command. It was replied
-> earlier [0] and Michael previously fixed that in better way probably,
-> then my proposed patch 2/2, but it contains more changes and I have not
-> enough time to study changes in refs* code, so I propose now just my
-> little patch, which was previously modified by Michael.
-> 
-> If you prefer different solution, I am ok with this. It is really
-> just quick proposal. Patch 1/2 contains test for this issue. If you
-> will prefer different solution with different exit code, test should
-> be corrected. Basic idea is, that timeout should'n expire with
-> exit code 124.
-> 
-> [0] http://marc.info/?l=git&m=142712669103790&w=2
-> [1] https://github.com/mhagger/git, branch "ref-broken-symlinks"
+> Normally when I use interactive add, I just want to add files to the
+> index via simple numbers, instead of typing paths. So I'll do this as
+> quick as I can:
+>
+> 1. Type `git add -i`
+> 2. Press `u` after prompt appears
+> 3. Press numbers for the files I want to add, ENTER key
+> 4. ENTER key again to go back to main add -i menu
+> 5. Press `q` to exit interactive add
+> 6. Type `git commit`
+>
+> This feels very tedious. Is there a simplified workflow for this?
 
-I think I fixed this semi-independently last week; see the thread at:
+My workflow is to ... not use "git add -i" ;-).
 
-  http://public-inbox.org/git/20161006164723.ocg2nbgtulpjcksp@sigill.intra.peff.net/
+To add patch hunks individually, "git add -p" jumps directly to the
+"patch" inner loop of "git add -i".
 
-I say semi-independently because I didn't actually know about your
-previous report, but saw it in the wild myself. But I did talk with
-Michael off-list, and he suggested the belt-and-suspenders retry counter
-in my second patch.
+To add whole individual files, a plain "git add" using zsh's smart
+completion (autocompletes only files for which "git add" is not a
+no-op), or globs.
 
-The fix is at e8c42cb in Junio's tree, and it's currently merged to
-'next'.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
