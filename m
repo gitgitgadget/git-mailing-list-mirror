@@ -2,128 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351AF1F4F8
+	by dcvr.yhbt.net (Postfix) with ESMTP id 687831F4F8
 	for <e@80x24.org>; Fri, 14 Oct 2016 13:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932820AbcJNNUQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:20:16 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57593 "EHLO mout.gmx.net"
+        id S932929AbcJNNUx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:20:53 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:46428 "EHLO mx1.redhat.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755685AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 09:18:10 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M92ZJ-1c7RUZ3Tqv-00CTO6; Fri, 14 Oct 2016 15:17:42
- +0200
-Date:   Fri, 14 Oct 2016 15:17:27 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S932911AbcJNNUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 09:20:51 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id C07A8A7560;
+        Fri, 14 Oct 2016 13:20:50 +0000 (UTC)
+Received: from [10.36.4.60] (vpn1-4-60.ams2.redhat.com [10.36.4.60])
+        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u9EDKlrb003629
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+        Fri, 14 Oct 2016 09:20:49 -0400
+Subject: Re: [PATCH 2/2] resolve_ref_unsafe(): limit the number of "stat_ref"
+ retries
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 06/25] sequencer: future-proof read_populate_todo()
-In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
-Message-ID: <be30c373782e0022075c41541c15bf4ade026c3f.1476450940.git.johannes.schindelin@gmx.de>
-References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+References: <1476451012-9925-1-git-send-email-pstodulk@redhat.com>
+ <1476451012-9925-3-git-send-email-pstodulk@redhat.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>
+From:   Petr Stodulka <pstodulk@redhat.com>
+Message-ID: <855173d3-12b1-5b6c-4910-f19a8f3395b7@redhat.com>
+Date:   Fri, 14 Oct 2016 15:20:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mr5PggJBsZfhu/2WonHjJ2pet1YtNQlhn0oDA8/PmWUumyIVGdO
- gLHLnEteLrQz7G4akx5iRbegmn+uxhznelA2v0wYOsO0hbUvfk0RKc5StDh2k6pwLKlXg8f
- Jf+cB047HPoTXcYibif2w4s7FOR0bo8mFbS/PM6ys4c/4/GD7ueg52JsXIoi44srtiTqMpy
- zuIzH5gJO83E5JqM/hk6g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UNKyn907jbM=:3JV2h4VIaBC5mjCdhS8Zvf
- qnDd++iel5Aq9d3lpEj5DZ7WHVXpfe9qtUDEwV3izTEQw/NUeNKMJ54xLF4pk2AY2CVb+k2re
- O4jdn2ZLbsEWWfyTLbej+SW0FoHFLOr+iym59UyxBQ6dHEoMuphoVSnYPhOUUcPTbT5oDcv/c
- 111SRVsoNYTstXu0kz1jB4lXdySTeclXo7qx4aYQ6aKAgRloqQ5kowpI56/q0prVEPV3Wzwhf
- aFrTTriV9125+ffidFfsgtPKeo68wrVGSLO9yYoyCKtixIj6Qv8sGxhyky64bup0Mpj2Ud6X4
- eYPFXzvSiUbweu25y2s4TfwyavoEKSBNgyZm1SwlXPiuv+ZeJgnPPD47H219ZY7To1zBQLy+H
- aXWEMGetXKCR+QU6STWdV4f/D1NrUo5+CVVgM4h7CZt50EZrNd8ma9UpT9mOzotkE8hp5GYZO
- v3tpp/kjEoPvjgzUDEx4x35pGYgYlB5ZH8NP4VYTVRpAvlb7lJr33BSMRHlNTnzb/Ln1ba867
- BCSohgbAPsjOjnB14DtutILZiELiqs/erxkyxANRL3BilaXIgKlB6VORDvItvT70GFLfHBQnJ
- KX/SnEJIn1pKkKVClnlhNhuIuZoCiPLukiIe7K2NeG7A5bSzs3SkrfIXz583iuWW/MNGxmR3Q
- jAtn1BuMgpXz2QZXm5b/2L+/bVBa6/uCXVlRwmthbWl/3kCl2kQmpP+omTSdvOvbrlR+AvI+e
- sek2nkqMROlt6sYTppITKVhN3+vgb1weL4vNzVV5i2ydSw+tcviPtcDRHD1Iy4em8PdpW6Kl7
- h2GIxlO
+In-Reply-To: <1476451012-9925-3-git-send-email-pstodulk@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="h7pju3rdwOo1xmOl2aNWvWPldWHxJjvDb"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Fri, 14 Oct 2016 13:20:50 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Over the next commits, we will work on improving the sequencer to the
-point where it can process the todo script of an interactive rebase. To
-that end, we will need to teach the sequencer to read interactive
-rebase's todo file. In preparation, we consolidate all places where
-that todo file is needed to call a function that we will later extend.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--h7pju3rdwOo1xmOl2aNWvWPldWHxJjvDb
+Content-Type: multipart/mixed; boundary="kPo8273c9ouPd0UgrtxwDr7wMVR1DftUH";
+ protected-headers="v1"
+From: Petr Stodulka <pstodulk@redhat.com>
+To: git@vger.kernel.org
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <855173d3-12b1-5b6c-4910-f19a8f3395b7@redhat.com>
+Subject: Re: [PATCH 2/2] resolve_ref_unsafe(): limit the number of "stat_ref"
+ retries
+References: <1476451012-9925-1-git-send-email-pstodulk@redhat.com>
+ <1476451012-9925-3-git-send-email-pstodulk@redhat.com>
+In-Reply-To: <1476451012-9925-3-git-send-email-pstodulk@redhat.com>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+--kPo8273c9ouPd0UgrtxwDr7wMVR1DftUH
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/sequencer.c b/sequencer.c
-index 04c55f2..fb0b94b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -32,6 +32,11 @@ static const char *get_dir(const struct replay_opts *opts)
- 	return git_path_seq_dir();
- }
- 
-+static const char *get_todo_path(const struct replay_opts *opts)
-+{
-+	return git_path_todo_file();
-+}
-+
- static int is_rfc2822_line(const char *buf, int len)
- {
- 	int i;
-@@ -769,25 +774,24 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
- static int read_populate_todo(struct commit_list **todo_list,
- 			struct replay_opts *opts)
- {
-+	const char *todo_file = get_todo_path(opts);
- 	struct strbuf buf = STRBUF_INIT;
- 	int fd, res;
- 
--	fd = open(git_path_todo_file(), O_RDONLY);
-+	fd = open(todo_file, O_RDONLY);
- 	if (fd < 0)
--		return error_errno(_("Could not open %s"),
--				   git_path_todo_file());
-+		return error_errno(_("Could not open %s"), todo_file);
- 	if (strbuf_read(&buf, fd, 0) < 0) {
- 		close(fd);
- 		strbuf_release(&buf);
--		return error(_("Could not read %s."), git_path_todo_file());
-+		return error(_("Could not read %s."), todo_file);
- 	}
- 	close(fd);
- 
- 	res = parse_insn_buffer(buf.buf, todo_list, opts);
- 	strbuf_release(&buf);
- 	if (res)
--		return error(_("Unusable instruction sheet: %s"),
--			git_path_todo_file());
-+		return error(_("Unusable instruction sheet: %s"), todo_file);
- 	return 0;
- }
- 
-@@ -1075,7 +1079,7 @@ static int sequencer_continue(struct replay_opts *opts)
- {
- 	struct commit_list *todo_list = NULL;
- 
--	if (!file_exists(git_path_todo_file()))
-+	if (!file_exists(get_todo_path(opts)))
- 		return continue_single_pick();
- 	if (read_populate_opts(opts) ||
- 			read_populate_todo(&todo_list, opts))
--- 
-2.10.1.513.g00ef6dd
+FYI,
+I modified the patch slightly.
+
+On 14.10.2016 15:16, Petr Stodulka wrote:
+> From: Michael Haggerty <mhagger@alum.mit.edu>
+>=20
+> If there is a broken symlink where a loose reference file is expected,
+> then the attempt to open() it fails with ENOENT. This error is
+> misinterpreted to mean that the loose reference file itself has
+> disappeared due to a race, causing the lookup to be retried. But in
+> this scenario, the retries all suffer from the same problem, causing
+> an infinite loop.
+>=20
+> So put a limit (of 5) on the number of times that the stat_ref step
+> can be retried.
+>=20
+> Based-on-patch-by: Petr Stodulka <pstodulk@redhat.com>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs/files-backend.c | 6 ++++--
+>  refs/refs-internal.h | 6 ++++++
+>  2 files changed, 10 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index d16feb1..245a0b5 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -1353,6 +1353,7 @@ static int files_read_raw_ref(struct ref_store *r=
+ef_store,
+>  	int fd;
+>  	int ret =3D -1;
+>  	int save_errno;
+> +	int retries =3D 0;
+> =20
+>  	*type =3D 0;
+>  	strbuf_reset(&sb_path);
+> @@ -1390,7 +1391,8 @@ static int files_read_raw_ref(struct ref_store *r=
+ef_store,
+>  	if (S_ISLNK(st.st_mode)) {
+>  		strbuf_reset(&sb_contents);
+>  		if (strbuf_readlink(&sb_contents, path, 0) < 0) {
+> -			if (errno =3D=3D ENOENT || errno =3D=3D EINVAL)
+> +			if ((errno =3D=3D ENOENT || errno =3D=3D EINVAL) &&
+> +				retries++ < MAXRETRIES)=20
+>  				/* inconsistent with lstat; retry */
+>  				goto stat_ref;
+>  			else
+> @@ -1426,7 +1428,7 @@ static int files_read_raw_ref(struct ref_store *r=
+ef_store,
+>  	 */
+>  	fd =3D open(path, O_RDONLY);
+>  	if (fd < 0) {
+> -		if (errno =3D=3D ENOENT)
+> +		if (errno =3D=3D ENOENT && retries++ < MAXRETRIES)
+>  			/* inconsistent with lstat; retry */
+>  			goto stat_ref;
+>  		else
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 708b260..37e6b99 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -255,6 +255,12 @@ int rename_ref_available(const char *old_refname, =
+const char *new_refname);
+>  /* We allow "recursive" symbolic refs. Only within reason, though */
+>  #define SYMREF_MAXDEPTH 5
+> =20
+> +/*=20
+> + * We allow only MAXRETRIES tries to jump on stat_ref, because of poss=
+ible
+> + * infinite loop
+> + */
+> +#define MAXRETRIES 5
+> +
+>  /* Include broken references in a do_for_each_ref*() iteration: */
+>  #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+> =20
+>=20
 
 
+--kPo8273c9ouPd0UgrtxwDr7wMVR1DftUH--
+
+--h7pju3rdwOo1xmOl2aNWvWPldWHxJjvDb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJYANurAAoJEPiGu5hNgNqPc+AQAJ80tgoLOwGw0713NNnBxhhA
+YXqMpIZZsl34h7fU7nfI12ZwvWlTF4K6h0iiDdHv9ydwT8E2Kow2H/ya57+VRsPO
+/RtkUa/A9gsNhtfCoT3WaJtMfurqMo2sKtGe0JAaGs+L84408rR2KHccKfvKJ/f1
+F5tKgV7Ffdv7FKUeq2C+4XkyXprS8HPheVFAHkRPY4k85kc7DuKkMtWUSt74hSp2
+P9LyMH4RtLr10/zlBLA6VuNjCSq2GmfUycWnCfmuMwhJ/d7GA89lkEqnCiJNLPF1
+Iz3b0SZJV4yFcFQJLzeMLhimIOL1B35QJVYUSXc4vz2ztzNOGOzYC3ep6WRAR7f7
+6sd309PpSpbIAtZrMAsr18UcU7x+AuUE/nWTr71vnl+uk07aFiDQilK0Rrfdyu+p
+V+RDZzkV2Q6tE3K/a+zEuVqvXxcNYWAYHdCgKpqDkdNSwXcsBl7hHMGY7RZ6chb5
+EPm/VjJWfTVOM4iTSAADpY9V7tAKPyLpwofGEsDZz7fQ+YTPYaae6dF86cHAzuns
+zYV3HbkF+khXI+tQUs3dwL+r4EBNhk4KkGUg7r+z/GnAWXqBofsK4atOmbURUHcE
+lIQwALfaqP8qO3g563OFDoA/f0fZWH5J1kh0sQk9+mkL/nHmEykoeivQo5nwWy8Q
+nWpoduWjQlSOkFWODF9x
+=sPcb
+-----END PGP SIGNATURE-----
+
+--h7pju3rdwOo1xmOl2aNWvWPldWHxJjvDb--
