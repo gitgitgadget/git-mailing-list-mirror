@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 283891F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 13:20:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDCFD209AB
+	for <e@80x24.org>; Fri, 14 Oct 2016 13:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932778AbcJNNT6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:19:58 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49927 "EHLO mout.gmx.net"
+        id S932742AbcJNNTv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:19:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49550 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755430AbcJNNTX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 09:19:23 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Lbujs-1ce2KG0i3w-00jKJ7; Fri, 14 Oct 2016 15:19:16
+        id S932444AbcJNNTd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 09:19:33 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LwW8p-1d2xhA17GB-018Ius; Fri, 14 Oct 2016 15:19:27
  +0200
-Date:   Fri, 14 Oct 2016 15:19:15 +0200 (CEST)
+Date:   Fri, 14 Oct 2016 15:19:26 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,112 +27,87 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 22/25] sequencer: mark action_name() for translation
+Subject: [PATCH v4 25/25] sequencer: mark all error messages for
+ translation
 In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
-Message-ID: <a6900b2ae43c92354d52a335facc4f931878f16d.1476450940.git.johannes.schindelin@gmx.de>
+Message-ID: <a9e1ee4e2315a106337d598d17089304f4d93643.1476450940.git.johannes.schindelin@gmx.de>
 References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ArkRPa+ek5L2RdwtLZm291X6I3ZuOSU7lSir3XRqh5Kk6jTBf0j
- 1FUOQH/qQZo5LcDc+bgc2d9f3ax/tG2DsuImn8HA4b3NwoEr9k5G4czJizgl8G3xfdaZ595
- K3xCnGF+SWqYZmJAmEbLMnK/5KjzPS03hatbJBjBYlz8YETtNZqJg1yjv6GPZbllP0gZ5I5
- CZa13TjBmEbeZiUMZdMBg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:am90qn6v0R8=:gRGmKjRSMzkCV2jRA7gRNk
- B3B0C9mx9IN+yBRqkWHiHWbNBsqz50zqdGvqp9KCvDGhgm071tY5AOcBmgSCu+cFAIhNQuAj8
- PVa9jLnG+4npYkVVxQn1yM4S6A5opzy+Kx781qXgJ6NJJm3zEAjHsFzX79x6J1hpWeNmLo6m8
- k2xAaCZ8JhPGuhk9SsedmpMxZLvksz6y2jumu6u4eLi26DdlnKGe1QVDUsw7DiS7IeVKw4dG6
- R9uRKElRsc2y0rMYuxcPdPkp52c0heyg9a0nnyK3IsmlZKTTjPJyFZBeSn75tBdeloDq1FMR0
- Kv/6+poncbGtpw1AioYZ0+AB+f4YZcBMkzbjLivbrYSd84yRX4irhkKMRHS2N4471+/xTa3tD
- /VI+IG2o0p9l+VE0S286gH/KGNHAHmdaQXUNUboePQjbYVwPdQlCghQewcv768nXWYW5ofRKq
- Kmudui7kMWIc+dx8XdZtMnmdXbNMUHw94mFmqUtNFjxtwp4rSyYSQ3TM6uSL62wWHcaawpccb
- GhH2hxM/NA80PK58OPzeIDxZnFmE9hjC6NAWY3W7/sPSYy+UpjZXdB/4oyjN58U2rnnh2b00Y
- tCY0XOsVjLvnzTlY9Wm23azNKA2YOqqGyIxfysfV5M8p7HXtVjNPhMSF4Y02XNPZFvxd1FsMT
- CYEr0smaciS7WlD9wh0wZMSfeBEfUpGT0/jaWF5vPMjTSycc39Xo5LW7/uIOYfZMYFcfycu/B
- MhcQ7i/of9A9RWiP2qqf99B8vfEnqd2FX3IV1J4hddlX0hoyDHGPUy/5BnNgBaQX3pTFZlbck
- u2NEIDo
+X-Provags-ID: V03:K0:FTb0+Ze76nYfV4SCWvBDTL7mRMml2aDcozg5039h/sXgNAYz3/r
+ 52wGMRHBbW4ae/gSty0WL+sxWuWZOhj6NiI+UHMa4OiCGMX/CsNthfkqs33wAL3p8wmIDRL
+ MCJaFOv9580sXCY3iIhGiS0gDGbaobDGKmqLvFTl3UpL/uuROdzYo/Lb7aK5bsorPrHHTP6
+ Hk5jqX4/6eLyM5gFvzqkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tY51rLuegWE=:YyrRWxFmuE0xKhd9pCPXoO
+ t1Q6ZqPdUrnsS8YGarJG8JLqBr7hHVyEkV1l1glr4Q/qchzNY2fCqlLsaKLuTj5egpMz9fVXV
+ qbwqdDRoosjRqxDhJh06KqZDoW6yk0BrHLcNZSA6+Nflx4xOCPkHIjheUMp2Yxva4fVAc8ifx
+ 51EYyU+Ram26E/339gTB4RbE+xvR5zzptldsXww3aqXCy3p1MITJFtXfzzFSIHTZ3Tjn9+66g
+ 9fv9Fv8mXNQeiTzHpQ2QpPXZbZvSwtJQHITXmhrMIyHL+LVRAq3XzM/WYXizXV/y1MOSegYO0
+ ks2c8A+54G97ZzR9YLIzvJbjWuOgtzXe+kQxRBoHgcK5pn/G57rYOIeFvHfoK39oMEppKVH6b
+ VQZhrUr4lGdbVFChHwPzX+jFz6NWyjW93SMnKhn1X73Pols2CQLBzBJt6JVbvXHW+nSmfumqO
+ aSwFRwpwRe5YsM0co6ev3Q5WNzzV7d4imEABIeTb/T1ydlTSq5X5n+cQahUmL5oipsFVFUBqJ
+ 0uN2cvNBwsKWz50KtmRezSzILgFIaNA0b4z+YpKGLnZ3W4M2AjJjcKULD5iKFzc/EDV4gTatm
+ 5o8jorqehQCc8sS1HGt8r53n4xlSrHi8QbqbP9OANW1jEuGSR1xfYhYBxuoawYfr7DRAKPPwF
+ 2qrzp8yyLppS0lk2oyrB8bPfmzCv1rEc39cVMt3BwcDnwHfy3vgBPShWaoiwGS1oerTu/wFbJ
+ 3CUjcFrU8yDm4zCZteeLyvk3+IUmmlPxDMNu70vp63nLo2mLpGtsZapCtVinznnBYAmhJ0aYB
+ GVqxqFW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The definition of this function goes back all the way to 043a449
-(sequencer: factor code out of revert builtin, 2012-01-11), long before a
-serious effort was made to translate all the error messages.
-
-It is slightly out of the context of the current patch series (whose
-purpose it is to re-implement the performance critical parts of the
-interactive rebase in C) to make the error messages in the sequencer
-translatable, but what the heck. We'll just do it while we're looking at
-this part of the code.
+There was actually only one error message that was not yet marked for
+translation.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ sequencer.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 36c24b6..af88753 100644
+index 57c5c0c..1cf70f7 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -168,7 +168,7 @@ int sequencer_remove_state(struct replay_opts *opts)
- 
- static const char *action_name(const struct replay_opts *opts)
- {
--	return opts->action == REPLAY_REVERT ? "revert" : "cherry-pick";
-+	return opts->action == REPLAY_REVERT ? N_("revert") : N_("cherry-pick");
+@@ -483,6 +483,20 @@ static char **read_author_script(void)
+ 	return env;
  }
  
- struct commit_message {
-@@ -304,10 +304,10 @@ static struct tree *empty_tree(void)
- static int error_dirty_index(struct replay_opts *opts)
- {
- 	if (read_cache_unmerged())
--		return error_resolve_conflict(action_name(opts));
-+		return error_resolve_conflict(_(action_name(opts)));
++static const char staged_changes_advice[] =
++N_("you have staged changes in your working tree\n"
++"If these changes are meant to be squashed into the previous commit, run:\n"
++"\n"
++"  git commit --amend %s\n"
++"\n"
++"If they are meant to go into a new commit, run:\n"
++"\n"
++"  git commit %s\n"
++"\n"
++"In both cases, once you're done, continue with:\n"
++"\n"
++"  git rebase --continue\n");
++
+ /*
+  * If we are cherry-pick, and if the merge did not result in
+  * hand-editing, we will hit this commit and inherit the original
+@@ -509,16 +523,8 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		if (!env) {
+ 			const char *gpg_opt = gpg_sign_opt_quoted(opts);
  
- 	error(_("Your local changes would be overwritten by %s."),
--		action_name(opts));
-+		_(action_name(opts)));
- 
- 	if (advice_commit_before_merge)
- 		advise(_("Commit your changes or stash them to proceed."));
-@@ -325,7 +325,7 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
- 	if (checkout_fast_forward(from, to, 1))
- 		return -1; /* the callee should have complained already */
- 
--	strbuf_addf(&sb, _("%s: fast-forward"), action_name(opts));
-+	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
-@@ -401,7 +401,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
- 		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
- 		return error(_("%s: Unable to write new index file"),
--			action_name(opts));
-+			_(action_name(opts)));
- 	rollback_lock_file(&index_lock);
- 
- 	if (opts->signoff)
-@@ -836,14 +836,14 @@ static int read_and_refresh_cache(struct replay_opts *opts)
- 	if (read_index_preload(&the_index, NULL) < 0) {
- 		rollback_lock_file(&index_lock);
- 		return error(_("git %s: failed to read the index"),
--			action_name(opts));
-+			_(action_name(opts)));
- 	}
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
- 	if (the_index.cache_changed && index_fd >= 0) {
- 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK)) {
- 			rollback_lock_file(&index_lock);
- 			return error(_("git %s: failed to refresh the index"),
--				action_name(opts));
-+				_(action_name(opts)));
+-			return error("you have staged changes in your working "
+-				"tree. If these changes are meant to be\n"
+-				"squashed into the previous commit, run:\n\n"
+-				"  git commit --amend %s\n\n"
+-				"If they are meant to go into a new commit, "
+-				"run:\n\n"
+-				"  git commit %s\n\n"
+-				"In both cases, once you're done, continue "
+-				"with:\n\n"
+-				"  git rebase --continue\n", gpg_opt, gpg_opt);
++			return error(_(staged_changes_advice),
++				     gpg_opt, gpg_opt);
  		}
  	}
- 	rollback_lock_file(&index_lock);
+ 
 -- 
 2.10.1.513.g00ef6dd
-
-
