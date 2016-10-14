@@ -2,78 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A43F209AB
-	for <e@80x24.org>; Fri, 14 Oct 2016 13:21:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E1091F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 13:25:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932915AbcJNNUp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:20:45 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:33901 "EHLO
-        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932911AbcJNNUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 09:20:42 -0400
-Received: by mail-vk0-f41.google.com with SMTP id b186so113841014vkb.1
-        for <git@vger.kernel.org>; Fri, 14 Oct 2016 06:20:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=SxrlJkWSqydcIfXlMQljh0iA5AmQr9RKveMZSr3ve+4=;
-        b=xpqQc6xeA9Sj3kQ2GtHolxXrgC1re/vPRrU0yvrklO+qD0cuhmkKHWUaqNafVSayBJ
-         122xI5Vqwm2BkiiyI2ddAGDGZ+6i8ZH9yc6ZsbUZCKap4xVj3etrJFGyjqfOo2dzjhay
-         vgoZov5CEqyKOQKEek+PqrUoryaPVu2spE9Rgs6nA3glDtoWmwQDuJ1jIgstlfR+F/FP
-         J/V85B4UeysCbF/YYgcZRbFoZPypApJMOTz/sa81blMzVJ4gYxqiEqMlpUalGi72QxYz
-         HqOfjHahGt4kGqVYcCCG23wWrTvSw9PQhKkcXfxpSkNFF/BHbxOJMJo/btOwDbMgq+Mx
-         U3tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=SxrlJkWSqydcIfXlMQljh0iA5AmQr9RKveMZSr3ve+4=;
-        b=QT5VrljlvnRIn6PYmxhH4q/+KQXkGWDEiy+ORUaKmQXezIfPIJpHpy6nxeVEA5BOla
-         7KQpGyuwivJB/ZKcnjtCEXGbW3J1J5EwucKAPw17ff3qX8K21YGFScCfYzrG6NWvGdKQ
-         At2vWevu/BjuMDS3ZVCdzX6hrRT+TaLqA0h1yk8JPSCbgYnp+H2U940k+b3EI5SCECzf
-         sfrwR3QTKHYrFi6YxGGobCu3kbLjA8jEt/3G3MaTpdI9AEhDGY/hyT+dhTzfgGl7Ah9E
-         +qb+rBsGVJyusDvrStht4gcV7qk4NBQjs8+R1kZrHra7HSvrcoyN7gFvva/ubYwkZ3R5
-         IdPQ==
-X-Gm-Message-State: AA6/9RkL8UcMJxq1G4q9Ikf6tOBqlp6r+3Nfvs1lV86iiYnmuLIpB33YNkg0PoKnQPrnSkU/IgRx3xZDOl6smw==
-X-Received: by 10.31.140.147 with SMTP id o141mr7418684vkd.149.1476451241385;
- Fri, 14 Oct 2016 06:20:41 -0700 (PDT)
+        id S932830AbcJNNYe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:24:34 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54435 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932483AbcJNNYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 09:24:06 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MP1PX-1c1LbA3qQJ-006Ml2; Fri, 14 Oct 2016 15:16:12
+ +0200
+Date:   Fri, 14 Oct 2016 15:15:56 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v4 01/25] sequencer: use static initializers for
+ replay_opts
+In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
+Message-ID: <a0441930fb5d0a0483a81dc6895056ca05336dbf.1476450940.git.johannes.schindelin@gmx.de>
+References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.68.97 with HTTP; Fri, 14 Oct 2016 06:20:40 -0700 (PDT)
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Fri, 14 Oct 2016 08:20:40 -0500
-X-Google-Sender-Auth: 1hF31ZRcyizK5AiKTapK0vHh284
-Message-ID: <CAHd499AnuVximRgM0MKdq5JC-hwkrhox6bK_KA+XGrawoz2W+g@mail.gmail.com>
-Subject: Can we make interactive add easier to use?
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:0CuiPUrguZi+nCvJfOj/OvJbFKabnC8dhTB5IGOaA2CjGBMK6pN
+ r0d5t1AFj7ZEtqN7BOi6QK4u813ex+LNZ9hQN4EFy113pw8tmI+ioVN3L4M52/no0DMpY89
+ n9T2WEv/RweKdxjTc2W4zKEWw5tCR7PLVx9EwYMUIwcpNLTRUOBWUbXwVdudwLG4KiX4Hsz
+ bgK2uC/D/Uckiki6PvRNA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kfSdaxnzJDE=:7HeEg3+Y+56Ni8RcANtje3
+ V89BKdUlcnl+O1RkT3Ehb39NekfNUp5mwoLpSs8hAHwJl2Br9jMMMl2gMVnMzAOvhhr7QmfnB
+ kUQGNGbTt62YH6/UJm48UfSjdI6WOOr52WujKWd7lS3Fuow/L0Cr+F+22CEIbGijHhs+b413e
+ oP6HQZU2MmK/kw/FIgDehfdrLYJx+u4ctwH6zzrWq1sqDeZeK6iFdbRQKD0m8TJKa+RoQlU95
+ DBi0LMLhiw5unT1kjYWd3Ml6r+8cIVgVhmbOM/RPbbe1mmiIzdCL9vfLP/LSE9sk7wzTUD9k0
+ zkPZEuL6dnuIk9IztGTdlNDZ+bfl7agGX2Df4UatyDIi1f9BLpGJKMB3tWdwdLHyGxCV7t5jI
+ DNxYECNbcSI3LrQq1239CDdgGXWOg6b/tBtXXy0d0AhaS79NP35dkBEiElVgGO6di/t4UYabM
+ jJrhaykVTFUE7FzmrcEyccPIb7F0hjM2pOIjZJ0UNKqmj1hOWy+8BMeXe2kENzL9Jl9zoQhTR
+ /DIdINHtZ2hzPMpAslsiMXQOVhjjTR4iO7tU1BfjtkHK62Suhxqhksvn+Riqc9hcxAdhLvk4L
+ QIn8PiVSfT1gyOrGOfv/MHTZJoTDSrdvAUOjUPIYR9s31+9P3GlOHdneeQ7/gofYjxYut/Z5P
+ F0kQ2vj1McKdn5n8p7RH4denjTjRrT1bXp0uyyVLsBsCRU9m8Af5m5Ft5HVIY0JTNAkjadR6Z
+ k6R8pWzGlp6QWb3QC1HmM0peZXcf/UwAiRzjpOgttIEw9AiRMKP1IszAZMYASN8DGhljIRMCN
+ ejiQd/W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Normally when I use interactive add, I just want to add files to the
-index via simple numbers, instead of typing paths. So I'll do this as
-quick as I can:
+This change is not completely faithful: instead of initializing all fields
+to 0, we choose to initialize command and subcommand to -1 (instead of
+defaulting to REPLAY_REVERT and REPLAY_NONE, respectively). Practically,
+it makes no difference at all, but future-proofs the code to require
+explicit assignments for both fields.
 
-1. Type `git add -i`
-2. Press `u` after prompt appears
-3. Press numbers for the files I want to add, ENTER key
-4. ENTER key again to go back to main add -i menu
-5. Press `q` to exit interactive add
-6. Type `git commit`
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/revert.c | 6 ++----
+ sequencer.h      | 1 +
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-This feels very tedious. Is there a simplified workflow for this? I
-remember using a "git index" unofficial extension to git that let you
-do a `git status` that showed numbers next to each item (including
-untracked files!) and you could do `git add 1, 2, 3-5`, etc.
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 4e69380..7365559 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -178,10 +178,9 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 
+ int cmd_revert(int argc, const char **argv, const char *prefix)
+ {
+-	struct replay_opts opts;
++	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
+ 
+-	memset(&opts, 0, sizeof(opts));
+ 	if (isatty(0))
+ 		opts.edit = 1;
+ 	opts.action = REPLAY_REVERT;
+@@ -195,10 +194,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 
+ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
+-	struct replay_opts opts;
++	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
+ 
+-	memset(&opts, 0, sizeof(opts));
+ 	opts.action = REPLAY_PICK;
+ 	git_config(git_default_config, NULL);
+ 	parse_args(argc, argv, &opts);
+diff --git a/sequencer.h b/sequencer.h
+index 5ed5cb1..db425ad 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -47,6 +47,7 @@ struct replay_opts {
+ 	/* Only used by REPLAY_NONE */
+ 	struct rev_info *revs;
+ };
++#define REPLAY_OPTS_INIT { -1, -1 }
+ 
+ int sequencer_pick_revisions(struct replay_opts *opts);
+ 
+-- 
+2.10.1.513.g00ef6dd
 
-Thoughts? Even though this feels like I'm complaining, honestly I am
-just consulting the experts here to see if I'm missing out on some
-usability features. Thanks in advance!!
+
