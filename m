@@ -2,114 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7C0209AA
-	for <e@80x24.org>; Sat, 15 Oct 2016 08:27:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4C21F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 18:40:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753456AbcJOI1R (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Oct 2016 04:27:17 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:36033 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753343AbcJOI0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Oct 2016 04:26:45 -0400
-Received: by mail-qk0-f195.google.com with SMTP id z190so10120373qkc.3
-        for <git@vger.kernel.org>; Sat, 15 Oct 2016 01:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nhF/kAgi7UwO6JC2YVTadNcKN5RX260mE0zRBqBm4NU=;
-        b=ksLi8xhYlqOcVn3RxKjMaUGXzxrQ3GJp9dHyYEUtdDo0yoX3Ty5YLqTrV0ZNxCXVHy
-         aEZMXUC832dYqHacednImoxgfPjd1s/8XV3nvIDHFH+YBfAGZzXaZttqXsZfgdQ3CqA6
-         H4ZkwDfVX8fz6N42H1YKqRBe1u2tIH55EkZSgoZjPjyYf1fifDHL57hgj17756mm/ecC
-         UPwGaSR8ZZKcNxuI+b2XkJERsXHZFKRjcukuRRzLfZE9SBGJcppme6idzL2mO5ECc93J
-         Bs55ptQw+MeAKqUvv4ZQ34u+BY5ZRGSu0zJQHa49t8cGy0Ec84JQ9VZIm1CIsMQz0kSm
-         Mf8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nhF/kAgi7UwO6JC2YVTadNcKN5RX260mE0zRBqBm4NU=;
-        b=HaCMsJFPHiJKP5DlpTfIpJq9CzKMR9/FC3Ayw4djKbhs6ZllqNEOapwXlqxkPgssxq
-         WKW+Zn0UUpF+f8P5m889NECnuIWisM3hld9TPs9CGks3oSjLRUgbMbNy31Ce3LfR99aV
-         qnS5rnOWzRIqJmuJrVafWoM3R3mnq5unD5slcfNVCt1+iW3R2fHIFFQpeCduAoQJF4nX
-         EHNLTbkQ/TuDw2YpZTdILMTVfeFOuWYXX5CFHJFHzE5paYSBfbat8nunRmkYQt4lgIAb
-         EQMWtBJtHln55VDbE3Y0BrJFbwaET3a7EyqrRCpn7bPKf9iCH75M0XGAdugfSM579TEf
-         FnXA==
-X-Gm-Message-State: AA6/9Rld36aDXZuxFgcz4ZopkB5oOlfcTCshXs/UIFH2CUdxvn1hVV4R5bGuOaNTgg/3WcX0QqNuy3x5pEMMYQ==
-X-Received: by 10.233.222.71 with SMTP id s68mr17890211qkf.203.1476519111208;
- Sat, 15 Oct 2016 01:11:51 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.55.217.79 with HTTP; Sat, 15 Oct 2016 01:11:30 -0700 (PDT)
-In-Reply-To: <xmqq37jyzsdk.fsf@gitster.mtv.corp.google.com>
-References: <20161006091135.29590-1-avarab@gmail.com> <20161006091135.29590-3-avarab@gmail.com>
- <3fa9902f-3b01-5ec6-8129-34cff4c7cac9@gmail.com> <xmqq37jyzsdk.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 15 Oct 2016 10:11:30 +0200
-Message-ID: <CACBZZX4FK+zrVyBTpbJAbSAxQ9LuCTXcExeEqZE6D3nwHbNxZA@mail.gmail.com>
+        id S932724AbcJNSkd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 14:40:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63010 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752591AbcJNSkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 14:40:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B41C044E99;
+        Fri, 14 Oct 2016 14:40:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4I06YG4F2DWc
+        bfbXSmmr40RhSPo=; b=JAxAaIYbjhcmIs0plOIN6ZXsPc35jej81dIRkFDpbn6N
+        zGxtakp6w0SxjTfi0496bjpp/UmuKoL5vNh2YaUFL1bCh//XpDKoU1OGc3I2Jil9
+        vVg81DdFG+Alwc+Pj2BChlRRapx1Y3Kf6tFixzF/aVqye+VVE0WbGv1E+8a+YOE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TTVr9/
+        WPxgDTl7s8YSj/PpyfALzwjspFae40IYTsKox/veDPO13itEelSrear0/j9BKhIT
+        gxoPM+kBod4F3DaH9vcVs7m22aoFty9odT/W04Yh7lEV3qpuK7et9v+wFhO8lD75
+        uK18GILMw3Dr/ToygKnJ64HbRqXsL1XIWGhq4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD33644E98;
+        Fri, 14 Oct 2016 14:40:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3159044E96;
+        Fri, 14 Oct 2016 14:40:25 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
 Subject: Re: [PATCH v2 2/3] gitweb: Link to 7-char+ SHA1s, not only 8-char+
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+References: <20161006091135.29590-1-avarab@gmail.com>
+        <20161006091135.29590-3-avarab@gmail.com>
+        <3fa9902f-3b01-5ec6-8129-34cff4c7cac9@gmail.com>
+Date:   Fri, 14 Oct 2016 11:40:23 -0700
+In-Reply-To: <3fa9902f-3b01-5ec6-8129-34cff4c7cac9@gmail.com> ("Jakub
+        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Fri, 14 Oct 2016 19:45:12
+ +0200")
+Message-ID: <xmqq37jyzsdk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: ABAB30D4-923D-11E6-B3BA-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2016 at 8:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->
->> s/SHA1/SHA-1/g in above paragraph (for correctness and consistency).
->>>
->>> I think it's fairly dubious to link to things matching [0-9a-fA-F]
->>> here as opposed to just [0-9a-f], that dates back to the initial
->>> version of gitweb from 161332a ("first working version",
->>> 2005-08-07). Git will accept all-caps SHA1s, but didn't ever produce
->>> them as far as I can tell.
->>
->> All right.  If we decide to be more strict in what we accept, we can
->> do it in a separate commit.
->>
->>>
->>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
->>
->> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
->
-> Thanks for a review.  As the topic is not yet in 'next', I'll squish
-> in your Acked-by: to them.  I saw them only for 1 & 2/3; would
-> another for 3/3 be coming soon?
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-As far as I can tell the only outstanding "change this" is your
-s/SHA1/SHA-1/ in <xmqq37k9jm86.fsf@gitster.mtv.corp.google.com>, do
-you want to fix that up or should I submit another series?
+> s/SHA1/SHA-1/g in above paragraph (for correctness and consistency).
+>>=20
+>> I think it's fairly dubious to link to things matching [0-9a-fA-F]
+>> here as opposed to just [0-9a-f], that dates back to the initial
+>> version of gitweb from 161332a ("first working version",
+>> 2005-08-07). Git will accept all-caps SHA1s, but didn't ever produce
+>> them as far as I can tell.
+>
+> All right.  If we decide to be more strict in what we accept, we can
+> do it in a separate commit.
+>
+>>=20
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+>
+> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
 
->>
->>> ---
->>>  gitweb/gitweb.perl | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>> index cba7405..92b5e91 100755
->>> --- a/gitweb/gitweb.perl
->>> +++ b/gitweb/gitweb.perl
->>> @@ -2036,7 +2036,7 @@ sub format_log_line_html {
->>>      my $line =3D shift;
->>>
->>>      $line =3D esc_html($line, -nbsp=3D>1);
->>> -    $line =3D~ s{\b([0-9a-fA-F]{8,40})\b}{
->>> +    $line =3D~ s{\b([0-9a-fA-F]{7,40})\b}{
->>
->> By the way, it is quite long commit message for one character change.
->> Not that it is a bad thing...
->>
->>>              $cgi->a({-href =3D> href(action=3D>"object", hash=3D>$1),
->>>                                      -class =3D> "text"}, $1);
->>>      }eg;
->>>
+Thanks for a review.  As the topic is not yet in 'next', I'll squish
+in your Acked-by: to them.  I saw them only for 1 & 2/3; would
+another for 3/3 be coming soon?
+
+>
+>> ---
+>>  gitweb/gitweb.perl | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>=20
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index cba7405..92b5e91 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -2036,7 +2036,7 @@ sub format_log_line_html {
+>>  	my $line =3D shift;
+>> =20
+>>  	$line =3D esc_html($line, -nbsp=3D>1);
+>> -	$line =3D~ s{\b([0-9a-fA-F]{8,40})\b}{
+>> +	$line =3D~ s{\b([0-9a-fA-F]{7,40})\b}{
+>
+> By the way, it is quite long commit message for one character change.
+> Not that it is a bad thing...
+>
+>>  		$cgi->a({-href =3D> href(action=3D>"object", hash=3D>$1),
+>>  					-class =3D> "text"}, $1);
+>>  	}eg;
+>>=20
