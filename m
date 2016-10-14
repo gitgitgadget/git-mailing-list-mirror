@@ -2,99 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C97E320989
-	for <e@80x24.org>; Thu, 13 Oct 2016 22:16:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE12D209A9
+	for <e@80x24.org>; Fri, 14 Oct 2016 00:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757083AbcJMWQi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Oct 2016 18:16:38 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:33061 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756324AbcJMWQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2016 18:16:35 -0400
-Received: by mail-qk0-f179.google.com with SMTP id n189so118796308qke.0
-        for <git@vger.kernel.org>; Thu, 13 Oct 2016 15:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=S4MOGBBi958xvXjuxcCvdzOqFP9jmTycrxIjesLg4cE=;
-        b=Dh3/FkAklJeffjoyJ+lbuJwnai/GsbHW0XW4N85mKvFEdHx5esUuSQ42YgarLk8fnM
-         iyPWwGqJqXwLH8NDa0ljB7B0kvD8bPZudAL3ILTPdeRvTKN5d7kbCxHecgFkFx3D6H6i
-         mjFLe6X1zgcvt/QbOSTURVNQGPhDAf25ONB7nbn3zEerxvGv6hpFUeC+RlpR3fXViOs8
-         JhRXqkVaMW1SMdBrU8i7ljslEM4zfcJLQ2gjzVY4wDIPAurHQFrOvs5qM6TCCFjrGrQH
-         6nXsYtDhAHXCuIn1CDfdFn8eAu2C48llTy2mYCOmxB5kXSQddVdT5/KWUcCvIWuinfQi
-         JiVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=S4MOGBBi958xvXjuxcCvdzOqFP9jmTycrxIjesLg4cE=;
-        b=V6r5egUevDuYRkaJ18JS4JpY+xVsWmminBqqptJ2D2b+Qt+t0YpKlUI7qd/n+JpfpI
-         M7ZKdaZZe7r/PUgJ+YC+uz7lnIuPYHOxHrs8R1F7ZkgF+ZA7wtMro7tXGlLhCEVYPTlt
-         NIVstxzE6rLjyR1j4jxmeISWraayg+X0fl2cg44W0K2to7CZQtTQz0wRdf/xliZX4ghm
-         r0XwHZARIA3faTyMTeEfjKu74c8xd22lg3nOnnV5L79KNL+n2P6uWGnb3d8bzAjI389w
-         OK+zxkM8NOU+3UU4lSpbjAFcQFC5GYlSYm2dNrXi4aqfqSyKFdNLyV0Bp5q5zU7LMkbD
-         H6PQ==
-X-Gm-Message-State: AA6/9Rl2qtVXKM/Rnj4X84Lsj2Penh7dcLOpcgxkPLudif21Uk4sjGLTbZ7LvpL2mTBc+AcJ0ez3SF5c7z/j8dbK
-X-Received: by 10.55.184.2 with SMTP id i2mr9991420qkf.47.1476396515487; Thu,
- 13 Oct 2016 15:08:35 -0700 (PDT)
+        id S1754127AbcJNAsX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Oct 2016 20:48:23 -0400
+Received: from know-smtprelay-omc-10.server.virginmedia.net ([80.0.253.74]:52619
+        "EHLO know-smtprelay-omc-10.server.virginmedia.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753942AbcJNAsW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2016 20:48:22 -0400
+Received: from red.patthoyts.tk ([82.37.62.216])
+        by know-smtprelay-10-imp with bizsmtp
+        id vCml1t00B4fw4HN01CmlXp; Fri, 14 Oct 2016 01:46:45 +0100
+X-Originating-IP: [82.37.62.216]
+X-Spam: 0
+X-Authority: v=2.1 cv=Ha/pNXw8 c=1 sm=1 tr=0 a=y+L2qvWGb0b1Khfuzk0aNQ==:117
+ a=y+L2qvWGb0b1Khfuzk0aNQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=xqWC_Br6kY4A:10 a=1oJP67jkp3AA:10 a=CH0kA5CcgfcA:10
+ a=ZZnuYtJkoWoA:10 a=zl2uJyVoAAAA:8 a=Rf460ibiAAAA:8 a=WoIh_kDzt6LkAJalV2gA:9
+ a=-FEs8UIgK8oA:10 a=NWVoK91CQyQA:10 a=E0KdIPxdrRkKdVweLlsj:22
+ a=-X4ai1wA6IXBCEr1GZS2:22
+Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2001:470:1f1d:26c::2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by red.patthoyts.tk (Postfix) with ESMTPS id F33D41962B25;
+        Fri, 14 Oct 2016 01:46:44 +0100 (BST)
+From:   Pat Thoyts <patthoyts@users.sourceforge.net>
+To:     Alexander Shopov <ash@kambanaria.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [GIT GUI l18n 1/2] git-gui: Mark 'All' in remote.tcl for translation
+References: <20161013184349.42950-1-ash@kambanaria.org>
+X-Face:  .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+Reply-to: patthoyts@users.sourceforge.net
+X-Url:  http://www.patthoyts.tk/
+Date:   Fri, 14 Oct 2016 01:46:44 +0100
+In-Reply-To: <20161013184349.42950-1-ash@kambanaria.org> (Alexander Shopov's
+        message of "Thu, 13 Oct 2016 21:43:48 +0300")
+Message-ID: <87a8e73ggb.fsf@red.patthoyts.tk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Thu, 13 Oct 2016 15:08:35 -0700 (PDT)
-In-Reply-To: <CAGZ79kYEefzKJT5TLXaGV0ZYoW=OUzrRBPTOovDG0ofO8-i5Jg@mail.gmail.com>
-References: <20161012224109.23410-1-sbeller@google.com> <xmqqfuo116t0.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYEefzKJT5TLXaGV0ZYoW=OUzrRBPTOovDG0ofO8-i5Jg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Oct 2016 15:08:35 -0700
-Message-ID: <CAGZ79kasCEWijdUe24mTy9n--BX2=ar4V-hvjXHqEm2sVzjk+g@mail.gmail.com>
-Subject: Re: [PATCHv3] attr: convert to new threadsafe API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Wed, Oct 12, 2016 at 4:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> so I am hoping that we won't have to do this uglier variant
+Alexander Shopov <ash@kambanaria.org> writes:
 
----8<--- attr.h:
-...
-struct git_attr_result {
-    int check_nr;
-    /* Whether is was statically allocated and cannot be resized. */
-    int static_alloc;
-    const char *value[FLEX_ARRAY];
-};
+>Signed-off-by: Alexander Shopov <ash@kambanaria.org>
+>---
+> lib/remote.tcl | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+>diff --git a/lib/remote.tcl b/lib/remote.tcl
+>index 4e5c784..26af8ae 100644
+>--- a/lib/remote.tcl
+>+++ b/lib/remote.tcl
+>@@ -250,12 +250,12 @@ proc update_all_remotes_menu_entry {} {
+> 
+> 			$fetch_m insert end separator
+> 			$fetch_m insert end command \
+>-				-label "All" \
+>+			    -label [mc "All"] \
+> 				-command fetch_from_all
+> 
+> 			$prune_m insert end separator
+> 			$prune_m insert end command \
+>-				-label "All" \
+>+			    -label [mc "All" ]\
+> 				-command prune_from_all
+> 		}
+> 	} else {
 
-/* create a pointer pointing to a git_attr_result with a given size: */
-#define GIT_ATTR_RESULT_INIT_FOR(name, size) \
-    struct { \
-        int check_nr; \
-        int static_alloc; \
-        const char *value[size]; \
-    } local_##name; \
-    struct git_attr_result *name = \
-        (struct git_attr_result *)&(local_##name); \
-    local_##name.static_alloc = 1;
-...
----8<--- e.g. ws.c:
+OK - this looks fine except the line just above compares the text of
+this entry so also needs [mc] adding. I've applied it as:
 
-    static struct git_attr_check *attr_whitespace_rule;
-    GIT_ATTR_RESULT_INIT_FOR(result, 1);
+-- a/lib/remote.tcl
++++ b/lib/remote.tcl
+@@ -246,22 +246,22 @@ proc update_all_remotes_menu_entry {} {
+        if {$have_remote > 1} {
+                make_sure_remote_submenues_exist $remote_m
+                if {[$fetch_m type end] eq "command" \
+-                       && [$fetch_m entrycget end -label] ne "All"} {
++                               && [$fetch_m entrycget end -label] ne [mc "All"]} {
+ 
+                        $fetch_m insert end separator
+                        $fetch_m insert end command \
+-                               -label "All" \
++                               -label [mc "All"] \
+                                -command fetch_from_all
+ 
+                        $prune_m insert end separator
+                        $prune_m insert end command \
+-                               -label "All" \
++                               -label [mc "All"] \
+                                -command prune_from_all
+                }
+        } else {
+                if {[winfo exists $fetch_m]} {
+                        if {[$fetch_m type end] eq "command" \
+-                               && [$fetch_m entrycget end -label] eq "All"} {
++                                       && [$fetch_m entrycget end -label] eq [mc "All"]} {
+ 
+                                delete_from_menu $fetch_m end
+                                delete_from_menu $fetch_m end
 
-    git_attr_check_initl(&attr_whitespace_rule, "whitespace", NULL);
 
-    if (!git_check_attr(pathname, attr_whitespace_rule, result)) {
-        if (ATTR_TRUE(result->value[0])) {
-            ...
-        } else if (ATTR_FALSE(result->value[0])) {
-            ...
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
