@@ -2,24 +2,24 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA8D6209AB
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE13209AB
 	for <e@80x24.org>; Fri, 14 Oct 2016 13:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755912AbcJNNTP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:19:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55777 "EHLO mout.gmx.net"
+        id S932678AbcJNNTG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:19:06 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56271 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755409AbcJNNSW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 09:18:22 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MXZbS-1cRR6R2Q8k-00WS7W; Fri, 14 Oct 2016 15:18:13
+        id S1755912AbcJNNS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 09:18:29 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MBIAz-1c5FWd3zkb-00ACAD; Fri, 14 Oct 2016 15:18:23
  +0200
-Date:   Fri, 14 Oct 2016 15:18:12 +0200 (CEST)
+Date:   Fri, 14 Oct 2016 15:18:22 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,92 +27,171 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 12/25] sequencer: remember the onelines when parsing the
- todo file
+Subject: [PATCH v4 15/25] sequencer: allow editing the commit message on a
+ case-by-case basis
 In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
-Message-ID: <e356ddc226718e496d11bd5de5670dcb9eb64c77.1476450940.git.johannes.schindelin@gmx.de>
+Message-ID: <344d5d872f32e796d39eb515ff034cfe704eea5a.1476450940.git.johannes.schindelin@gmx.de>
 References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:R3ByCD5pm6vqcDBSiv/QCKX4bUfn0+SKXrOgx0YclhTaD08KmR4
- jkMi6zFvVBP9VSb3wEHvKLviqHu460sJrCCfXPEfWXdLoHM9QTf/6FuSx4aGRTGBxNsbEbi
- id9E+JFy5n/l0AneR0sdzcwA/3BejRb98qfrIcDSmD0s7xNF8nIQtIAGhUB5WMtfygY9wGI
- GYXBvuiwhvRhvOLOKpLdA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wK0/N4170qw=:S0KI41U9/erzNoR5Wj2hxd
- vYki0xWW6DQwHLlLwkhLLRdSXSmB2bXAitSqHzryi01W4xv/QOXxLcL5l/hMxW9QpLhhenB75
- ig2YqtUVbCnIA+NJz3WkvefH4gsJonvBXFW+yvoPHJO107m9VDFUk6/3Pxi81/6Q+BgiGC1SR
- smKkiCJ01WGmp+7kCc4dqCYdGhA1yKXfFFqpLlsJEPwA4igk7c6lM/Az+CKw0X1jDwMvqox0H
- o7moI1NxNjDYTGNyX0rqiVzQs32d7np8J0S+vHLSHMBYU8HG46Qmf5ryzR/d0ZxDcc5AN2aqo
- LVgTM4A2cuBDidnQ5WZzClquE6oX2tBYrkBXR+ywVZmKeeoE4yaxmxw4tPmLTiOuXHc73Alfh
- ZyqbbSW1byucHqVlSEQoyVGEfkip1fyQJZ7IRdjCSpG/ocf9G+/s0zVmvyajU1dVSX7LJqvx0
- 9X95T2IS0jKzhZ6QZqzWzrQrPYClthuCfx6lKJBDDIkt0XZsHaQg0TpT3ANM3OsQN4+KmJK2S
- o6FPTyvZMqDexRF0Z5EaqK4o+8YMYnAe2pUq/ByKoRpwbL6yLRqXtQwXCupyhtpfI7Hq2rV11
- G4oi4zcTkUwnCDC1qN4qTfLp40q++JtWEgT/oB6uzNJyNvOU0/COMaSqePicM8w4ZJcal9Be3
- Brwg+CJPyouPT4020H/99n4ym0mwkEifqX1XahIb2oa5dwmKxIg3X7XXmbaj8KzAv8NOLWs+t
- EnKZeVGjWr013ElIu/RfhP+3dtGCwgf0nzYB9tqS/a7xGOgMP//r1PuV/dM/dYSnFIG5xg8rM
- 2eepOw6
+X-Provags-ID: V03:K0:c+PA7/BFhIHonctd6KHy9T7QN/DC3IFGX2H/cZWyCU+8C2g/7YM
+ 2k5mwVTSWvCcIdvM6ETGCWViVlF+uERoJRvECLCvj73JEg++geKj2vyu1/c53bVdlYxuvw7
+ 5TF21wddbBfRzrNadHE1akwizYryXLxN7zXH0SNveK43Q1mS3qPQwvOnP0R7UsJGMc7AFXl
+ emCAXGCgRsIJTyQBipyIQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JxI8OkBR7v8=:Z0HotJXXKGazVj8rycAFwL
+ yAXlocjz+2wPnHcrODkjqkDKGEJ6EAjEdVcZM5G1BmJTOkDgIJszQPNY7hOSWkdbcU/FrrBE2
+ 46WUFmlxZKTlFeDkeKNoTPN5mg7WMskYfBJYrA4aCjaQ+2F4FMB6TVfIRPTHDarAH/U2xWWUG
+ Gg3ftqX2ELlWD//qxPMVk5sgBmRNCCuweJT85EhAhePzQmJ7p+LWyl8M8tn63f03xFxIUMzIA
+ sljsHaGB7TiMkuGHG5f/fMpyKRypqu/ca7xVO+ckAdh7936Zewznnfko6T0cjm2+Mfnsen/6N
+ ztyytd6sXXOdGS6RFIm9g7stUYm2oHF/paqJylD1k2h/XOqNA+hxsPwxgdtem7rdpk2qVTWff
+ lyPTWQiDbElMfycMk4ibAJa/1bmwby9BeBBMahr8y9bFGGeHiuqDAh8Dvpr/xb0PzwguYKRk2
+ HQdJstd/cqcmPLpAjabHm5HNBfwsLuGMQM/JpCarznPaY5eqMsO9C/7mtJRlGbWlkkyUONs9h
+ YAlFHGqdZGzFfh/zFbW/vB6A6GEWcA3Nd6i33yendaJSneU+qG3J4j5HJcEzIX/lY3mSDEwoB
+ eSRMqKcaIaHCEDnqPzeOKP/EWpVQru9YSQf522O89CK13H/esl+8nyR1RsFOSNZHe01Dt9uMB
+ wb0/KbPdkUNaWuLVgk1E82hIHkI3tKWlorPWeI+r/YfK/+8XKnZPKWz7NfrHcrcBfLDu+3q1D
+ ZDOyxn5GxKgoLEU5qwxHLuUn7SJ4XB5uxjfJlAbLiLnfzuACrWe/I6UgFIHsqLczItxuiAPda
+ htgPade
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `git-rebase-todo` file contains a list of commands. Most of those
-commands have the form
+In the upcoming commits, we will implement more and more of rebase -i's
+functionality inside the sequencer. One particular feature of the
+commands to come is that some of them allow editing the commit message
+while others don't, i.e. we cannot define in the replay_opts whether the
+commit message should be edited or not.
 
-	<verb> <sha1> <oneline>
-
-The <oneline> is displayed primarily for the user's convenience, as
-rebase -i really interprets only the <verb> <sha1> part. However, there
-are *some* places in interactive rebase where the <oneline> is used to
-display messages, e.g. for reporting at which commit we stopped.
-
-So let's just remember it when parsing the todo file; we keep a copy of
-the entire todo file anyway (to write out the new `done` and
-`git-rebase-todo` file just before processing each command), so all we
-need to do is remember the begin offsets and lengths.
-
-As we will have to parse and remember the command-line for `exec` commands
-later, we do not call the field "oneline" but rather "arg" (and will reuse
-that for exec's command-line).
+Let's add a new parameter to the run_git_commit() function. Previously,
+it was the duty of the caller to ensure that the opts->edit setting
+indicates whether to let the user edit the commit message or not,
+indicating that it is an "all or nothing" setting, i.e. that the
+sequencer wants to let the user edit *all* commit message, or none at
+all. In the upcoming rebase -i mode, it will depend on the particular
+command that is currently executed, though.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sequencer.c | 48 ++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 40 insertions(+), 8 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 5e4bf23..caef51e 100644
+index de6b95f..2ef80e7 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -706,6 +706,8 @@ static int read_and_refresh_cache(struct replay_opts *opts)
- struct todo_item {
- 	enum todo_command command;
- 	struct commit *commit;
-+	const char *arg;
-+	int arg_len;
- 	size_t offset_in_buf;
- };
+@@ -15,6 +15,7 @@
+ #include "merge-recursive.h"
+ #include "refs.h"
+ #include "argv-array.h"
++#include "quote.h"
  
-@@ -757,6 +759,9 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- 	status = get_sha1(bol, commit_sha1);
- 	*end_of_object_name = saved;
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
  
-+	item->arg = end_of_object_name + strspn(end_of_object_name, " \t");
-+	item->arg_len = (int)(eol - item->arg);
+@@ -33,6 +34,11 @@ static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+  * being rebased.
+  */
+ static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
++/*
++ * The following files are written by git-rebase just after parsing the
++ * command-line (and are only consumed, not modified, by the sequencer).
++ */
++static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
+ 
+ /* We will introduce the 'interactive rebase' mode later */
+ static inline int is_rebase_i(const struct replay_opts *opts)
+@@ -132,6 +138,16 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	return 1;
+ }
+ 
++static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
++{
++	static struct strbuf buf = STRBUF_INIT;
 +
- 	if (status < 0)
- 		return -1;
++	strbuf_reset(&buf);
++	if (opts->gpg_sign)
++		sq_quotef(&buf, "-S%s", opts->gpg_sign);
++	return buf.buf;
++}
++
+ int sequencer_remove_state(struct replay_opts *opts)
+ {
+ 	struct strbuf dir = STRBUF_INIT;
+@@ -465,7 +481,7 @@ static char **read_author_script(void)
+  * author metadata.
+  */
+ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+-			  int allow_empty)
++			  int allow_empty, int edit)
+ {
+ 	char **env = NULL;
+ 	struct argv_array array;
+@@ -474,17 +490,20 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
  
-@@ -907,6 +912,8 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
+ 	if (is_rebase_i(opts)) {
+ 		env = read_author_script();
+-		if (!env)
++		if (!env) {
++			const char *gpg_opt = gpg_sign_opt_quoted(opts);
++
+ 			return error("You have staged changes in your working "
+ 				"tree. If these changes are meant to be\n"
+ 				"squashed into the previous commit, run:\n\n"
+-				"  git commit --amend $gpg_sign_opt_quoted\n\n"
++				"  git commit --amend %s\n\n"
+ 				"If they are meant to go into a new commit, "
+ 				"run:\n\n"
+-				"  git commit $gpg_sign_opt_quoted\n\n"
++				"  git commit %s\n\n"
+ 				"In both cases, once you're done, continue "
+ 				"with:\n\n"
+-				"  git rebase --continue\n");
++				"  git rebase --continue\n", gpg_opt, gpg_opt);
++		}
+ 	}
  
- 		item->command = command;
- 		item->commit = commit;
-+		item->arg = NULL;
-+		item->arg_len = 0;
- 		item->offset_in_buf = todo_list->buf.len;
- 		subject_len = find_commit_subject(commit_buffer, &subject);
- 		strbuf_addf(&todo_list->buf, "%s %s %.*s\n", command_string,
+ 	argv_array_init(&array);
+@@ -497,7 +516,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&array, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&array, "-F", defmsg, NULL);
+-	if (opts->edit)
++	if (edit)
+ 		argv_array_push(&array, "-e");
+ 	else if (!opts->signoff && !opts->record_origin &&
+ 		 git_config_get_value("commit.cleanup", &value))
+@@ -764,7 +783,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	}
+ 	if (!opts->no_commit)
+ 		res = run_git_commit(opts->edit ? NULL : git_path_merge_msg(),
+-				     opts, allow);
++				     opts, allow, opts->edit);
+ 
+ leave:
+ 	free_message(commit, &msg);
+@@ -986,8 +1005,21 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+ 
+ static int read_populate_opts(struct replay_opts *opts)
+ {
+-	if (is_rebase_i(opts))
++	if (is_rebase_i(opts)) {
++		struct strbuf buf = STRBUF_INIT;
++
++		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1)) {
++			if (!starts_with(buf.buf, "-S"))
++				strbuf_reset(&buf);
++			else {
++				free(opts->gpg_sign);
++				opts->gpg_sign = xstrdup(buf.buf + 2);
++			}
++		}
++		strbuf_release(&buf);
++
+ 		return 0;
++	}
+ 
+ 	if (!file_exists(git_path_opts_file()))
+ 		return 0;
 -- 
 2.10.1.513.g00ef6dd
 
