@@ -2,259 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F108A20988
-	for <e@80x24.org>; Sat, 15 Oct 2016 14:45:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3BEC1F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 18:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754065AbcJOOpy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Oct 2016 10:45:54 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34198 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753993AbcJOOpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Oct 2016 10:45:52 -0400
-Received: by mail-pf0-f171.google.com with SMTP id r16so38173019pfg.1
-        for <git@vger.kernel.org>; Sat, 15 Oct 2016 07:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=ozyX3d6w15/mCxT80s2T7TNnl2OCXLDnF/UDVcUoO/Q=;
-        b=aQwwo4eVSP1U8qG/Npy8CGumf2l5Kzb95QKrPIRDBiD6TpBi6vF8J3ZEkUgF2sm/N0
-         7uz1Yb2Cihu9cL1H4xNbl4V6UZt15QvrKc3jwd3forUT3NOFWZSOkcLF2lqH3jsfe86x
-         MY4dGoVMA7NkFh97EYto6CYbyfygjoIe+4lO09q0kGX8Artzlb7XeY+B8Z/z6v6o4QxD
-         vCHKjN+9rK7/p9cIQJ87IeES6r2FE2qYi5Cb0fzy2DJFdfDB4QGMPaSpozt1illaEZzI
-         VCFktasuOyX3QRxhNT7mJey9pgVaq+tsPEdmYVl+HwIoVhTkGEr/awQLG5rwd+WD/rOb
-         eZQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=ozyX3d6w15/mCxT80s2T7TNnl2OCXLDnF/UDVcUoO/Q=;
-        b=RT4rGds9FiPY8O+/SV3Dp1rYi/OO8BodkDk+2qq04wqtwjDKr6IGz5gJt8tUG6LVH0
-         iMb9tfNZxPmNrsRaVINRF04quhN/sc/LWfkGa/N73CpJz6MpJngoonAvfUeHZA987P6o
-         TNJpzogl+W42wFn5hSFQhevxX00DyZJc/0B1zAoOT4wrpO5WX3Pq3K7CwHM4GxBAiviC
-         fPjbXxA/ohao5uiHLNHH3wIb3GsnIC/BI0bOe7JY1OR51F+dm4NfxTz9nCOxAY5M1tWh
-         pFDBOkfl+w+3FZDA+gEWjtsJXsdL1gnuJC9rj1OfwJ80aMhhAiAlrQ2LMxBeHfVncXx2
-         eCYg==
-X-Gm-Message-State: AA6/9Rm5S/fu0kBXIH5dwv6tYF2Kzn44jKhfG2BlEDvUA2mqF6mrznSAAWFZYn+3BXXPRQ==
-X-Received: by 10.99.3.77 with SMTP id 74mr21762903pgd.174.1476542751702;
-        Sat, 15 Oct 2016 07:45:51 -0700 (PDT)
-Received: from mtl3z26wz1.ads.autodesk.com (adsk-nat-ip11.autodesk.com. [132.188.71.11])
-        by smtp.gmail.com with ESMTPSA id yk6sm35695825pab.43.2016.10.15.07.45.49
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Oct 2016 07:45:49 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v10 13/14] convert: add filter.<driver>.process option
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <37c12539-3edd-e04b-6e09-e977a854661c@gmail.com>
-Date:   Sat, 15 Oct 2016 07:45:48 -0700
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3732E902-2FE9-4C99-B27D-69B9A3FF8639@gmail.com>
-References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-14-larsxschneider@gmail.com> <e09a63ee-dad2-a8fb-e47f-0559d9507e1c@gmail.com> <03278DA5-34B8-42F1-B52E-A42A3BCD5FB8@gmail.com> <37c12539-3edd-e04b-6e09-e977a854661c@gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S1756274AbcJNS1c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 14:27:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65476 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754568AbcJNS1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 14:27:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EF6A45C77;
+        Fri, 14 Oct 2016 14:27:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4bgm2Io9ctzLoL8iJQyely66lnc=; b=h19ghP
+        40aD2Y4BnYUBpJ8dQvXpaZL7r47QYN8pV9vSsrydZmnIHVOB6oKLZXUMFUijMt7j
+        I+qujENHuAxMS7xhQpjMuRqQVhgLZL4R2IDWIMM9qr7iX2Dzv849jRxtwT9Hlacr
+        +bqCR3uWODBR2ImH8FRh26DydJqRim/U4bFsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YrooppV4CHo5gBQ+i+CL89CMb8Df5LVK
+        jyS4MXZuFG7zbE7tKxC7+n1QNvwEBk7UvRYC1UpXzVX3tyduQCTqW6tp+cTsSyBX
+        LtsuGAExt8V2nKXX8ZfIAxeIi/OhaURBVu7gT23TD9myuskDIiprCSvUgO+WbY1m
+        pap2G2RHKbs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06C7B45C76;
+        Fri, 14 Oct 2016 14:27:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7990C45C75;
+        Fri, 14 Oct 2016 14:27:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, christian.couder@gmail.com
+Subject: Re: [PATCH v2 2/6] trailer: use list.h for doubly-linked list
+References: <cover.1476314576.git.jonathantanmy@google.com>
+        <cover.1476232683.git.jonathantanmy@google.com>
+        <cover.1476314576.git.jonathantanmy@google.com>
+        <a7b9f79ea1b61b80d1177740d5d78fcca848a4f6.1476314576.git.jonathantanmy@google.com>
+Date:   Fri, 14 Oct 2016 11:27:17 -0700
+In-Reply-To: <a7b9f79ea1b61b80d1177740d5d78fcca848a4f6.1476314576.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 12 Oct 2016 16:40:17 -0700")
+Message-ID: <xmqq7f9azsze.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D75AAA54-923B-11E6-ACC5-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-@Peff: If you have time, it would be great if you could comment on
-one question below prefixed with "@Peff". Thanks!
+Jonathan Tan <jonathantanmy@google.com> writes:
 
+> Replace the existing handwritten implementation of a doubly-linked list
+> in trailer.c with the functions and macros from list.h. This
+> significantly simplifies the code.
+> ---
 
-> On 12 Oct 2016, at 03:54, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->=20
-> W dniu 12.10.2016 o 00:26, Lars Schneider pisze:=20
->>> On 09 Oct 2016, at 01:06, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->>>>=20
->>=20
->>>> After the filter started
->>>> Git sends a welcome message ("git-filter-client"), a list of
->>>> supported protocol version numbers, and a flush packet. Git expects
->>>> +to read a welcome response message ("git-filter-server") and =
-exactly
->>>> +one protocol version number from the previously sent list. All =
-further
->>>> +communication will be based on the selected version. The remaining
->>>> +protocol description below documents "version=3D2". Please note =
-that
->>>> +"version=3D42" in the example below does not exist and is only =
-there
->>>> +to illustrate how the protocol would look like with more than one
->>>> +version.
->>>> +
->>>> +After the version negotiation Git sends a list of all capabilities =
-that
->>>> +it supports and a flush packet. Git expects to read a list of =
-desired
->>>> +capabilities, which must be a subset of the supported capabilities =
-list,
->>>> +and a flush packet as response:
->>>> +------------------------
->>>> +packet:          git> git-filter-client
->>>> +packet:          git> version=3D2
->>>> +packet:          git> version=3D42
->>>> +packet:          git> 0000
->>>> +packet:          git< git-filter-server
->>>> +packet:          git< version=3D2
->>>> +packet:          git> clean=3Dtrue
->>>> +packet:          git> smudge=3Dtrue
->>>> +packet:          git> not-yet-invented=3Dtrue
->>>> +packet:          git> 0000
->>>> +packet:          git< clean=3Dtrue
->>>> +packet:          git< smudge=3Dtrue
->>>> +packet:          git< 0000
->>>=20
->>> WARNING: This example is different from description!!!
->>=20
->> Can you try to explain the difference more clearly? I read it =
-multiple
->> times and I think this is sound.
->=20
-> I'm sorry it was *my mistake*.  I have read the example exchange =
-wrong.
->=20
-> On the other hand that means that I have other comment, which I though
-> was addressed already in v10, namely that not all exchanges ends with
-> flush packet (inconsistency, and I think a bit of lack of =
-extendability).
+The handcrafted one in trailer.c somehow did not use the common
+practice of using a doubly-linked cycle as a doubly-linked list with
+a designated fake element as the pointers to the first and to the
+last elements of the list (instead it used NULL as the "this is the
+end in this direction" convention just like a common singly-linked
+list), and this update removes the need for special cases handling
+the elements at the beginning and at the end that comes from that
+choice by switching to list.h macros.  update_last/update_first can
+go, two parameters that were passed to point at the variables for
+the beginning and the end can go, the special cases for the initial
+condition in add_trailer_item() can go, all thanks to this change.
 
-Well, this part of the protocol is not supposed to be extensible because
-it is supposed to deal *only* with the version number. It needs to keep=20=
+Very nice.
 
-the same structure to ensure forward and backward compatibility.
-
-However, for consistency sake I will add a flush packet.
-
-
->>> In description above the example you have 4-part handshake, not =
-3-part;
->>> the filter is described to send list of supported capabilities last
->>> (a subset of what Git command supports).
->>=20
->> Part 1: Git sends a welcome message...
->> Part 2: Git expects to read a welcome response message...
->> Part 3: After the version negotiation Git sends a list of all =
-capabilities...
->> Part 4: Git expects to read a list of desired capabilities...
->>=20
->> I think example and text match, no?
->=20
-> Yes, it does; as I have said already, I have misread the example.=20
->=20
-> Anyway, in some cases 4-way handshake, where Git sends list of
-> supported capabilities first, is better.  If the protocol has
-> to prepare something for each of capabilities, and perhaps check
-> those preparation status, it can do it after Git sends what it
-> could need, and before it sends what it does support.
->=20
-> Though it looks a bit strange that client (as Git is client here)
-> sends its capabilities first...
-
-Git tells the filter what it can do. Then the filter decides what
-features it supports. I would prefer to keep it that way as I don't
-see a strong advantage for the other way around.
-
-
->>> By the way, now I look at it, the argument for using the
->>> "<capability>=3Dtrue" format instead of "capability=3D<capability>"
->>> (or "supported-command=3D<capability>") is weak.  The argument for
->>> using "<variable>=3D<value>" to make it easier to implement parsing
->>> is sound, but the argument for "<capability>=3Dtrue" is weak.
->>>=20
->>> The argument was that with "<capability>=3Dtrue" one can simply
->>> parse metadata into hash / dictionary / hashmap, and choose
->>> response based on that.  Hash / hashmap / associative array
->>> needs different keys, so the reasoning went for "<capability>=3Dtrue"
->>> over "capability=3D<capability>"... but the filter process still
->>> needs to handle lines with repeating keys, namely "version=3D<N>"
->>> lines!
->>>=20
->>> So the argument doesn't hold water IMVHO, and we can choose
->>> version which reads better / is more natural.
->>=20
->> I have to agree that "capability=3D<capability>" might read a
->> little bit nicer. However, Peff suggested "<capability>=3Dtrue"=20
->> as his preference and this is absolutely OK with me.
->=20
-> =46rom what I remember it was Peff stating that he thinks "<foo>=3Dtrue"=
-
-> is easier for parsing (it is, but we still need to support the harder
-> way parsing anyway), and offered that "<foo>" is good enough (if less
-> consistent).
->=20
->> I am happy to change that if a second reviewer shares your
->> opinion.
->=20
-> Also, with "capability=3D<foo>" we can be more self descriptive,
-> for example "supported-command=3D<foo>"; though "capability" is good
-> enough for me.
->=20
-> For example
->=20
-> packet:          git> wants=3Dclean
-> packet:          git> wants=3Dsmudge
-> packet:          git> wants=3Dsize
-> packet:          git> 0000
-> packet:          git< supports=3Dclean
-> packet:          git< supports=3Dsmudge
-> packet:          git< 0000
->=20
-> Though coming up with good names is hard; and as I said "capability"
-> is good enough; OTOH with "smudge=3Dtrue" etc. we don't need to come
-> up with good name at all... though I wonder if it is a good thing =
-`\_o,_/
-
-How about this (I borrowed these terms from contract negotiation)?
-
-packet:          git> offers=3Dclean
-packet:          git> offers=3Dsmudge
-packet:          git> offers=3Dsize
-packet:          git> 0000
-packet:          git< accepts=3Dclean
-packet:          git< accepts=3Dsmudge
-packet:          git< 0000
-
-@Peff: Would that be OK for you?
-
-
->>>> +------------------------
->>>> +packet:          git< status=3Dabort
->>>> +packet:          git< 0000
->>>> +------------------------
->>>> +
->>>> +After the filter has processed a blob it is expected to wait for
->>>> +the next "key=3Dvalue" list containing a command. Git will close
->>>> +the command pipe on exit. The filter is expected to detect EOF
->>>> +and exit gracefully on its own.
->>>=20
->>> Any "kill filter" solutions should probably be put here.
->>=20
->> Agreed.=20
->>=20
->>> I guess
->>> that filter exiting means EOF on its standard output when read
->>> by Git command, isn't it?
->>=20
->> Yes, but at this point Git is not listening anymore.
->=20
-> I think it might be good idea to have here the information about
-> what filter process should do if it needs maybe lengthy closing
-> process, to not hold/stop Git command or to not be killed.
-
-I've added:
-
-"Git will wait until the filter process has stopped."
-
-
-Thanks,
-Lars=
+>  trailer.c | 258 ++++++++++++++++++++++----------------------------------------
+>  1 file changed, 91 insertions(+), 167 deletions(-)
