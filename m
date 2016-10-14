@@ -2,83 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3BEC1F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 18:27:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0FCB1F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 20:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756274AbcJNS1c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 14:27:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65476 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754568AbcJNS1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 14:27:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EF6A45C77;
-        Fri, 14 Oct 2016 14:27:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4bgm2Io9ctzLoL8iJQyely66lnc=; b=h19ghP
-        40aD2Y4BnYUBpJ8dQvXpaZL7r47QYN8pV9vSsrydZmnIHVOB6oKLZXUMFUijMt7j
-        I+qujENHuAxMS7xhQpjMuRqQVhgLZL4R2IDWIMM9qr7iX2Dzv849jRxtwT9Hlacr
-        +bqCR3uWODBR2ImH8FRh26DydJqRim/U4bFsk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YrooppV4CHo5gBQ+i+CL89CMb8Df5LVK
-        jyS4MXZuFG7zbE7tKxC7+n1QNvwEBk7UvRYC1UpXzVX3tyduQCTqW6tp+cTsSyBX
-        LtsuGAExt8V2nKXX8ZfIAxeIi/OhaURBVu7gT23TD9myuskDIiprCSvUgO+WbY1m
-        pap2G2RHKbs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06C7B45C76;
-        Fri, 14 Oct 2016 14:27:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7990C45C75;
-        Fri, 14 Oct 2016 14:27:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, christian.couder@gmail.com
-Subject: Re: [PATCH v2 2/6] trailer: use list.h for doubly-linked list
-References: <cover.1476314576.git.jonathantanmy@google.com>
-        <cover.1476232683.git.jonathantanmy@google.com>
-        <cover.1476314576.git.jonathantanmy@google.com>
-        <a7b9f79ea1b61b80d1177740d5d78fcca848a4f6.1476314576.git.jonathantanmy@google.com>
-Date:   Fri, 14 Oct 2016 11:27:17 -0700
-In-Reply-To: <a7b9f79ea1b61b80d1177740d5d78fcca848a4f6.1476314576.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Wed, 12 Oct 2016 16:40:17 -0700")
-Message-ID: <xmqq7f9azsze.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932273AbcJNU0O (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 16:26:14 -0400
+Received: from mail-yb0-f170.google.com ([209.85.213.170]:34389 "EHLO
+        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933112AbcJNU0L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 16:26:11 -0400
+Received: by mail-yb0-f170.google.com with SMTP id o189so21143159yba.1
+        for <git@vger.kernel.org>; Fri, 14 Oct 2016 13:26:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=KRpY4UTUs5RqWQgtEOUqcyy6gST94CVjn6IoLpfQ0e0=;
+        b=PJz7Q4MB5FYB3I27QO/hZP0BMKgTod4GMzj2wqeKYK3lKgS68FuMY3UeGBlhfA+5P5
+         On58gzwId1HISYGowO5iCkozfGyXpRRDca8hrhUCKf4+ICtajyDcv2k2t7EYzFLEai0g
+         +jmadXAq7ILR2ZVJD0xlnizc/KPeaka3LBnKnFSsuzfn21W3SY4m0UqdIuFDoWQIGR7l
+         alAmP43BRerm9V09NLKafyL8R6xkNh6gYaAbhLUgvif3enGAqNhjWXQHspUl8XwXtlXY
+         B2e5TcdoLgRj3HCnmCyexcyAjPkiZD+y/VKe4EVatY8Svl/6YDhMF1XhYk6KtQauHB1W
+         S4Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KRpY4UTUs5RqWQgtEOUqcyy6gST94CVjn6IoLpfQ0e0=;
+        b=cmgwvuHUEnCDcRaPOJDgK5MO8700B5WWfXRfemavGNp49poDKKUi0HLErepSF5hqWC
+         UlAC6wVjXkSiPr5TqcL2CGgV/xM0Y3WmNohL0DoGyLpxf0pBLjf1dtgP9W4/wt+BG8vO
+         ffRCNoGHCtxIRMpTNA7U4+s1dwjolinmiWcykOkb7+gnO6e9DdA+GEs63HrJqMB/L2tC
+         /EKMIX7WRti9G/xxTOMFm4lL8cbmLRF15MrfLkdcGzu1Ij/jHbtt/gjVSbREBxec/ze5
+         hV02x1gvW7pakadjphPIlVMBDFQigQI5WgnQ3hYsUYb4PZ+iPCr1QpJnbtLA8idhzd4t
+         0ljQ==
+X-Gm-Message-State: AA6/9RkQN1S6j+axPad2lpkeBeyOd3j5HPMhVVqBnrUSpZh3ULrvwByeF/VEv0kcg7712TzObVyXsvj4J9kukg==
+X-Received: by 10.37.228.2 with SMTP id b2mr7277983ybh.5.1476476770280; Fri,
+ 14 Oct 2016 13:26:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D75AAA54-923B-11E6-ACC5-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.13.208.3 with HTTP; Fri, 14 Oct 2016 13:25:49 -0700 (PDT)
+From:   Martin Langhoff <martin.langhoff@gmail.com>
+Date:   Fri, 14 Oct 2016 16:25:49 -0400
+Message-ID: <CACPiFC+8+wVEcDt9JZgTW1dwCCFKszyXD6ysDxNQorcNkom7Lw@mail.gmail.com>
+Subject: Automagic `git checkout branchname` mysteriously fails
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+In a (private) repo project I have, I recently tried (and failed) to do:
 
-> Replace the existing handwritten implementation of a doubly-linked list
-> in trailer.c with the functions and macros from list.h. This
-> significantly simplifies the code.
-> ---
+  git checkout v4.1-support
 
-The handcrafted one in trailer.c somehow did not use the common
-practice of using a doubly-linked cycle as a doubly-linked list with
-a designated fake element as the pointers to the first and to the
-last elements of the list (instead it used NULL as the "this is the
-end in this direction" convention just like a common singly-linked
-list), and this update removes the need for special cases handling
-the elements at the beginning and at the end that comes from that
-choice by switching to list.h macros.  update_last/update_first can
-go, two parameters that were passed to point at the variables for
-the beginning and the end can go, the special cases for the initial
-condition in add_trailer_item() can go, all thanks to this change.
+getting a "pathspec did not match any files known to git" error.
 
-Very nice.
+There's an origin/v4.1-support, there is no v4.1-support "local"
+branch. Creating the tracking branch explicitly worked.
 
->  trailer.c | 258 ++++++++++++++++++++++----------------------------------------
->  1 file changed, 91 insertions(+), 167 deletions(-)
+Other similar branches in existence upstream did work. Autocomplete
+matched git's own behaviour for this; where git checkout foo woudn't
+work, autocomplete would not offer a completion.
+
+Why is this?
+
+One theory I have not explored is that I have other remotes, and some
+have a v4.1-support branch. If that's the case, the error message is
+not very helpful, and could be improved.
+
+git --version
+2.7.4
+
+DWIM in git is remarkably good, even addictive... when it works :-)
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
+ - don't be distracted        ~  http://github.com/martin-langhoff
+   by shiny stuff
