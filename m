@@ -2,102 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58B571F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 17:34:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7A9F1F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 17:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754010AbcJNReS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 13:34:18 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35197 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753679AbcJNReR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 13:34:17 -0400
-Received: by mail-wm0-f66.google.com with SMTP id b80so710263wme.2
-        for <git@vger.kernel.org>; Fri, 14 Oct 2016 10:34:16 -0700 (PDT)
+        id S1752591AbcJNRiJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 13:38:09 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35926 "EHLO
+        mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751453AbcJNRiI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 13:38:08 -0400
+Received: by mail-pa0-f54.google.com with SMTP id ry6so48750599pac.3
+        for <git@vger.kernel.org>; Fri, 14 Oct 2016 10:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=hrsop6ckJQk7Tmh9bZHF/WWAUMjV30NfRx5XJvovoQE=;
-        b=dhxeofPQjOroGXLoqznRIt/DLwcif6xmU7TChhAKAJEi36R9jxZWbfgRLikTYHnqyc
-         idld58hiYX4xuCwejxqq7SSp1t68MoAOBd6NyjtWeiEgpbnxjJERvzoTXksfojoOhZOB
-         +BkEnSF1dL6c7Q/dMR//f+JM4bJWhA/oyCWLWA8qIFfSj/UT57Xlb01EZ/fsxN7h8fJr
-         fhBFIDZfriL0x6sEQBjmnjQnu03o7FvOMAiAxaGN15uRRKTOXnYI57yTjysz3E8qsicw
-         wwxa913yJP9Hgcd0UwQMJ44DISzPox3mVgIVn0sHUGHRMPFd84YDg9zw3HrFjNKC1SeI
-         cQgQ==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=sQqNryc4yXtjRZHXxl8UCcfLFBsjP3BTB717IvEP91Y=;
+        b=nmz8n2pgPOey6XCajbWhuqtyEvsyM9s4wtT3+/hJtHodGKxXBNvzSCWq6yAiBohvFI
+         So6BWkiUBOKyB1G6JU/6R3n+AjTqfFD01gSEIduM8AlikvyNIKXFiAAoWiQCCS08FJnF
+         qCNVHahKRLsE3/LMFbQ9SOqESgG27HqMUmyAlkXr/cZyPxm2BV06mVAsAF8aGek4+Fx2
+         30SsUcXraXwQkmd0KN3FcdI0K8ja0aSWVfLG2lUtidsnkDOP3zG0kNUe4BU6MQgYE+/c
+         3XX29ZP8XdZ3mvZ6nD88zFLCB5Yf1VRA5796Vd6xDFsK4sgk4gIEgFLjYtGJHwoMiBR+
+         xwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=hrsop6ckJQk7Tmh9bZHF/WWAUMjV30NfRx5XJvovoQE=;
-        b=NjK4qyzPcwrpJ4XPuCfs6h3shNWafci62nA775E44PaE1ZTbLdZYQIva6rvcar/L8q
-         Oj0Tt8Ukwutl8huRihB3eoNwBLdSWOBjVVbT2uSktqnUfa7O/GA6hlsYQKHB/O01CFi2
-         IY9VzGzv08HlaRIOwYQ+ZAHOxFUheXQ2ZHhW+dk5smr5eD6I63Joz2t8KPy18xSoKz+A
-         5k8Z6w4E+wwj+TDCUFV7Im65erTLC0sSeRjkxxomhA424YJB0Z4EPv2wlI8Xq/bLlPzZ
-         cCK2GVNvV74LYmjtzvwkOfqGonoUO7FBWVN3MDKokRfFMdWgZbctKtyRCOBOQDwRub+D
-         DoPQ==
-X-Gm-Message-State: AA6/9Rl74cjHdgbPAh6+9PQa7a/KnbvyHZZWDRyVvYOZ1o1qwvJN0FS7nwEPqOGU+PM6UA==
-X-Received: by 10.194.108.230 with SMTP id hn6mr3009416wjb.122.1476466455297;
-        Fri, 14 Oct 2016 10:34:15 -0700 (PDT)
-Received: from [192.168.1.26] (agd104.neoplus.adsl.tpnet.pl. [83.25.159.104])
-        by smtp.googlemail.com with ESMTPSA id s195sm848980wmb.10.2016.10.14.10.34.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Oct 2016 10:34:14 -0700 (PDT)
-Subject: Re: [PATCH v2 1/3] gitweb: Fix a typo in a comment
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <20161006091135.29590-1-avarab@gmail.com>
- <20161006091135.29590-2-avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <51eb6aba-9cd2-47f4-a26e-6dbbabdaa282@gmail.com>
-Date:   Fri, 14 Oct 2016 19:34:04 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161006091135.29590-2-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=sQqNryc4yXtjRZHXxl8UCcfLFBsjP3BTB717IvEP91Y=;
+        b=foTqv1hi+kJPucxN2IYrkeykASlVDWKsd4JV0beeXQcQMu55fBvb5bwafcOThOSxBr
+         SLuN4fCebH1WvBnStNy3yR14J0iUmFabShLrFg0P0J0Gv61MQ4dotWfRR7R9Ra0AEZMi
+         gPaY8GgJd0oICsbEz5U7lvxQqr6/uV3vXDG8tNX4pooFEwIaEKiiqd1rDxCQrOqO9rLL
+         5m4Br/heG3XrI2ZywzoZvM8VXptXveLFiTceHIYMfX5xDIhhBmEu47YgwY/nbB+H92yh
+         4+pX0UQewDpl4mcpQXTP93jfg6p8MEcYRUcwA4XWh7/KtfGgBTfMBN51N1saoW5A2KeO
+         +ZnA==
+X-Gm-Message-State: AA6/9RmDjDQiDJhBsBn/FrNLOQWqJDDdON1l/TbEi3gx4mNgc+R4TbveFQWPMumlJPumZjCA
+X-Received: by 10.66.9.199 with SMTP id c7mr16667803pab.19.1476466687069;
+        Fri, 14 Oct 2016 10:38:07 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id b88sm28955706pfe.72.2016.10.14.10.38.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 14 Oct 2016 10:38:05 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        jnareb@gmail.com
+Subject: [PATCH v3 0/6] allow non-trailers and multiple-line trailers
+Date:   Fri, 14 Oct 2016 10:37:57 -0700
+Message-Id: <cover.1476466609.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <cover.1476232683.git.jonathantanmy@google.com>
+References: <cover.1476232683.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 06.10.2016 o 11:11, Ævar Arnfjörð Bjarmason napisał:
+Ah, I knew I forgot something. These are exactly the same as v2, except
+that these are signed off.
 
-> Change a typo'd MIME type in a comment. The Content-Type is
-> application/xhtml+xml, not application/xhtm+xml.
-> 
-> Fixes up code originally added in 53c4031 ("gitweb: Strip
-> non-printable characters from syntax highlighter output", 2011-09-16).
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Jonathan Tan (6):
+  trailer: improve const correctness
+  trailer: use list.h for doubly-linked list
+  trailer: streamline trailer item create and add
+  trailer: make args have their own struct
+  trailer: allow non-trailers in trailer block
+  trailer: support values folded to multiple lines
 
-Good.  Thanks for taking care of this.
-For what is worth for such a trivial patch:
+ Documentation/git-interpret-trailers.txt |  10 +-
+ t/t7513-interpret-trailers.sh            | 174 ++++++++++
+ trailer.c                                | 538 +++++++++++++++----------------
+ 3 files changed, 444 insertions(+), 278 deletions(-)
 
-Acked-by: Jakub Narębski <jnareb@gmail.com>
-
-> ---
->  gitweb/gitweb.perl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 44094f4..cba7405 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1616,7 +1616,7 @@ sub esc_path {
->  	return $str;
->  }
->  
-> -# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
-> +# Sanitize for use in XHTML + application/xml+xhtml (valid XML 1.0)
->  sub sanitize {
->  	my $str = shift;
->  
-> 
+-- 
+2.8.0.rc3.226.g39d4020
 
