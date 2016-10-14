@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 535D11F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 17:38:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5338209AB
+	for <e@80x24.org>; Fri, 14 Oct 2016 17:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754503AbcJNRiQ (ORCPT <rfc822;e@80x24.org>);
+        id S1754942AbcJNRiV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 13:38:21 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35944 "EHLO
+        mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753920AbcJNRiQ (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 14 Oct 2016 13:38:16 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35936 "EHLO
-        mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752941AbcJNRiM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 13:38:12 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ry6so48750985pac.3
-        for <git@vger.kernel.org>; Fri, 14 Oct 2016 10:38:12 -0700 (PDT)
+Received: by mail-pa0-f42.google.com with SMTP id ry6so48751269pac.3
+        for <git@vger.kernel.org>; Fri, 14 Oct 2016 10:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=xkArObchbBO+Yh4gPqCEH4H/tsbJdVFYrjEmlkXmxPg=;
-        b=VKyQNr0N+TPPkpARSDSWI3hbTEokIqneG6gIHfD3ri7b6cwOkb5ThfeD5guSExaSvn
-         z4SjT02t3+OUZm7+Z13gLygmk+ZJMPovYb1obXCwJbMy0GhNNA5Cz9ApKPlPK4pisWHi
-         Z0hvXbISRRbGk7vr1RBtdftRuoNCJMbn8Ji1jns49QBXWgZqmcAmvvdSu9MEifOoqIY3
-         LyJL1viIIe7HsS+cMt8O3q0X6Ju60r537QB6z0svnu3IcL0B/oNHEYEb5ePxp2aTSwdB
-         gcIHiHcBg3vHP/ua8qJczynXG87lrHzADU8/GwCShagv6IbBE1X49VId50S0GONrQfva
-         IMOQ==
+        bh=4qzqqRctjtC8Oi8sxce+HiwsLYL+vl5sDJq/EAPQqS0=;
+        b=QzbLDlkL/kdxOXlRG2B29JXHpE4JpzRXZFoo62bzH6I5AgQ3/3LtU5MrVnTAJ2XOnI
+         pKw1kECl0F+/uA15YYB1+XSD/M9nhrHANm/ISVvRHmV9RE5Rsje3hX6NciOPOMeweyqr
+         XIYPGKlb62XKTI+zZ/RhY+FYvSqLUp36Qaq4K9buQ35N/J/bPF0Pi8eWBDYSBqPmBfk0
+         xo99v4DErf/6NZ0F/6QDRf5e2G/CNAwN+UlUaDZv4J+GY5mH6S4arf3pjOPZ2Dkbr8Qe
+         9KUp9snxDjIwkVCwnGogjq4jS8rVr3aBJFd4v28+IlmkZBsLOo+etUDa0WFEpMC+N2zj
+         VgOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=xkArObchbBO+Yh4gPqCEH4H/tsbJdVFYrjEmlkXmxPg=;
-        b=P7B+2/w5Rypz0wanndXYoi8U8i6FCA9dUPQcyQ6psC3ubnaWabV32v13RbTSbB5Yrl
-         ihayy19tKrzMCvoiUtuaXwRvQh2bzRylceCIiL7G8VWgEhB0f8bkUbuOeAcFV0xjHstV
-         y5m4FtfKUfKA6IEEKWbUy0aBl1xezqYa5b+ZfDd+yHtSfcZQlFcIYbdf3Ss9sLC3wy/8
-         iIkQ6pEFac5csKljJIhaVe9ZeOqC7u+vZjL8mirYyOo9QqtJ2eirCrukifySUTU9198o
-         qHQVg02osleTm5HfC6gezfqPxdrrlc6qCt+C/wgVeWraatynLV+sKzzbcNCVFFPG0hVQ
-         mkbg==
-X-Gm-Message-State: AA6/9RlAukpoUi67tjRdy9eQuCigqY0mykx9jwe5/HR1EXpC3t2IFLQLTr9V+bXRKETK33G+
-X-Received: by 10.66.163.197 with SMTP id yk5mr10809559pab.152.1476466691523;
-        Fri, 14 Oct 2016 10:38:11 -0700 (PDT)
+        bh=4qzqqRctjtC8Oi8sxce+HiwsLYL+vl5sDJq/EAPQqS0=;
+        b=GVJ6ttHp33XWD+Gs7awLzXmy4Fm1cYRR8qMVoZmb2JWFO3HSNWmaNp5xy/yxSEVDbK
+         o5IlfQtAiLGfP/okxER6CoqjOW8MFh9gbIFM8pmpc0osrVUAHj5LNDG3q6sRwU6dNHwz
+         y2lIYmUXXlAOobyqN5RZUr7KX2lzGofd6/V5pXkITWKoTiolqwXFXz1NIfavuo7KHqCE
+         /J5F/kQdruxvJSiXUjsYz4FT5U9udisEC5giRdCdW1cTLRxV182gCvhgwjOnqRza+zv/
+         8Q5USwz4g1CNUMXOwxufWvvWB8EklZomqCeFXyU53uMJ8A8Eh70XAtN7d3FDXqh4YNmo
+         cs1Q==
+X-Gm-Message-State: AA6/9RmzZ3wfS1UZj3AKsKHrOMameTq4CsElMEanEtwVcCRfaT2xud/IpngIw1kiC9rtkxeM
+X-Received: by 10.67.23.201 with SMTP id ic9mr16422830pad.143.1476466694997;
+        Fri, 14 Oct 2016 10:38:14 -0700 (PDT)
 Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
-        by smtp.gmail.com with ESMTPSA id b88sm28955706pfe.72.2016.10.14.10.38.09
+        by smtp.gmail.com with ESMTPSA id b88sm28955706pfe.72.2016.10.14.10.38.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 14 Oct 2016 10:38:10 -0700 (PDT)
+        Fri, 14 Oct 2016 10:38:13 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         jnareb@gmail.com
-Subject: [PATCH v3 3/6] trailer: streamline trailer item create and add
-Date:   Fri, 14 Oct 2016 10:38:00 -0700
-Message-Id: <b09fb7693069a14d2ed9ec47545e49294ac3015e.1476466609.git.jonathantanmy@google.com>
+Subject: [PATCH v3 5/6] trailer: allow non-trailers in trailer block
+Date:   Fri, 14 Oct 2016 10:38:02 -0700
+Message-Id: <1b3fe84e4b6126884a801e721d0a93c41fcb4184.1476466609.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <cover.1476466609.git.jonathantanmy@google.com>
 References: <cover.1476466609.git.jonathantanmy@google.com>
@@ -63,203 +64,282 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, creation and addition (to a list) of trailer items are spread
-across multiple functions. Streamline this by only having 2 functions:
-one to parse the user-supplied string, and one to add the parsed
-information to a list.
+Currently, interpret-trailers requires all lines of a trailer block to
+be trailers (or comments) - if not it would not identify that block as a
+trailer block, and thus create its own trailer block, inserting a blank
+line.  For example:
+
+  echo -e "\na: b\nnot trailer" |
+  git interpret-trailers --trailer "c: d"
+
+would result in:
+
+  a: b
+  not trailer
+
+  c: d
+
+Relax the definition of a trailer block to only require 1 trailer, so
+that trailers can be directly added to such blocks, resulting in:
+
+  a: b
+  not trailer
+  c: d
+
+This allows arbitrary lines to be included in trailer blocks, like those
+in [1], and still allow interpret-trailers to be used.
+
+This change also makes comments in the trailer block be treated as any
+other non-trailer line, preserving them in the output of
+interpret-trailers.
+
+[1]
+https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/linux-stable/+/e7d316a02f683864a12389f8808570e37fb90aa3
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- trailer.c | 130 +++++++++++++++++++++++++++++---------------------------------
- 1 file changed, 60 insertions(+), 70 deletions(-)
+ Documentation/git-interpret-trailers.txt |  3 +-
+ t/t7513-interpret-trailers.sh            | 35 +++++++++++++++
+ trailer.c                                | 77 ++++++++++++++++++++++----------
+ 3 files changed, 90 insertions(+), 25 deletions(-)
 
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 93d1db6..c480da6 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -48,7 +48,8 @@ with only spaces at the end of the commit message part, one blank line
+ will be added before the new trailer.
+ 
+ Existing trailers are extracted from the input message by looking for
+-a group of one or more lines that contain a colon (by default), where
++a group of one or more lines in which at least one line contains a 
++colon (by default), where
+ the group is preceded by one or more empty (or whitespace-only) lines.
+ The group must either be at the end of the message or be the last
+ non-whitespace lines before a line that starts with '---'. Such three
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index aee785c..7f5cd2a 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -126,6 +126,37 @@ test_expect_success 'with multiline title in the message' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with non-trailer lines mixed with trailer lines' '
++	cat >patch <<-\EOF &&
++
++		this: is a trailer
++		this is not a trailer
++	EOF
++	cat >expected <<-\EOF &&
++
++		this: is a trailer
++		this is not a trailer
++		token: value
++	EOF
++	git interpret-trailers --trailer "token: value" patch >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'with non-trailer lines only' '
++	cat >patch <<-\EOF &&
++
++		this is not a trailer
++	EOF
++	cat >expected <<-\EOF &&
++
++		this is not a trailer
++
++		token: value
++	EOF
++	git interpret-trailers --trailer "token: value" patch >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'with config setup' '
+ 	git config trailer.ack.key "Acked-by: " &&
+ 	cat >expected <<-\EOF &&
+@@ -257,6 +288,8 @@ test_expect_success 'with message that has comments' '
+ 	cat >>expected <<-\EOF &&
+ 		# comment
+ 
++		# other comment
++		# yet another comment
+ 		Reviewed-by: Johan
+ 		Cc: Peff
+ 		# last comment
+@@ -286,6 +319,8 @@ test_expect_success 'with message that has an old style conflict block' '
+ 	cat >>expected <<-\EOF &&
+ 		# comment
+ 
++		# other comment
++		# yet another comment
+ 		Reviewed-by: Johan
+ 		Cc: Peff
+ 		# last comment
 diff --git a/trailer.c b/trailer.c
-index 0afa240..54cc930 100644
+index a9ed3f8..d6dfc7a 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -500,10 +500,31 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 	return 0;
+@@ -27,6 +27,10 @@ static struct conf_info default_conf_info;
+ 
+ struct trailer_item {
+ 	struct list_head list;
++	/*
++	 * If this is not a trailer line, the line is stored in value
++	 * (excluding the terminating newline) and token is NULL.
++	 */
+ 	char *token;
+ 	char *value;
+ };
+@@ -70,9 +74,14 @@ static size_t token_len_without_separator(const char *token, size_t len)
+ 
+ static int same_token(struct trailer_item *a, struct arg_item *b)
+ {
+-	size_t a_len = token_len_without_separator(a->token, strlen(a->token));
+-	size_t b_len = token_len_without_separator(b->token, strlen(b->token));
+-	size_t min_len = (a_len > b_len) ? b_len : a_len;
++	size_t a_len, b_len, min_len;
++
++	if (!a->token)
++		return 0;
++
++	a_len = token_len_without_separator(a->token, strlen(a->token));
++	b_len = token_len_without_separator(b->token, strlen(b->token));
++	min_len = (a_len > b_len) ? b_len : a_len;
+ 
+ 	return !strncasecmp(a->token, b->token, min_len);
+ }
+@@ -130,7 +139,14 @@ static char last_non_space_char(const char *s)
+ 
+ static void print_tok_val(FILE *outfile, const char *tok, const char *val)
+ {
+-	char c = last_non_space_char(tok);
++	char c;
++
++	if (!tok) {
++		fprintf(outfile, "%s\n", val);
++		return;
++	}
++
++	c = last_non_space_char(tok);
+ 	if (!c)
+ 		return;
+ 	if (strchr(separators, c))
+@@ -543,8 +559,16 @@ static int token_matches_item(const char *tok, struct arg_item *item, int tok_le
+ 	return item->conf.key ? !strncasecmp(tok, item->conf.key, tok_len) : 0;
  }
  
--static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
-+static const char *token_from_item(struct trailer_item *item, char *tok)
-+{
-+	if (item->conf.key)
-+		return item->conf.key;
-+	if (tok)
-+		return tok;
-+	return item->conf.name;
-+}
-+
-+static int token_matches_item(const char *tok, struct trailer_item *item, int tok_len)
-+{
-+	if (!strncasecmp(tok, item->conf.name, tok_len))
-+		return 1;
-+	return item->conf.key ? !strncasecmp(tok, item->conf.key, tok_len) : 0;
-+}
-+
-+static int parse_trailer(struct strbuf *tok, struct strbuf *val,
-+			 const struct conf_info **conf, const char *trailer)
++/*
++ * Parse the given trailer into token and value parts.
++ *
++ * If the given trailer does not have a separator (and thus cannot be separated
++ * into token and value parts), it is treated as a token (if parse_as_arg) or
++ * as a non-trailer line (if not parse_as_arg).
++ */
+ static int parse_trailer(struct strbuf *tok, struct strbuf *val,
+-			 const struct conf_info **conf, const char *trailer)
++			 const struct conf_info **conf, const char *trailer,
++			 int parse_as_arg)
  {
  	size_t len;
  	struct strbuf seps = STRBUF_INIT;
-+	struct trailer_item *item;
-+	int tok_len;
-+	struct list_head *pos;
-+
- 	strbuf_addstr(&seps, separators);
- 	strbuf_addch(&seps, '=');
+@@ -557,11 +581,18 @@ static int parse_trailer(struct strbuf *tok, struct strbuf *val,
  	len = strcspn(trailer, seps.buf);
-@@ -523,74 +544,31 @@ static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tra
- 		strbuf_addstr(tok, trailer);
+ 	strbuf_release(&seps);
+ 	if (len == 0) {
+-		int l = strlen(trailer);
++		int l;
++		if (!parse_as_arg)
++			return -1;
++
++		l = strlen(trailer);
+ 		while (l > 0 && isspace(trailer[l - 1]))
+ 			l--;
+ 		return error(_("empty trailer token in trailer '%.*s'"), l, trailer);
+ 	}
++	if (!parse_as_arg && len == strlen(trailer))
++		return -1;
++
+ 	if (len < strlen(trailer)) {
+ 		strbuf_add(tok, trailer, len);
  		strbuf_trim(tok);
- 	}
--	return 0;
--}
--
--static const char *token_from_item(struct trailer_item *item, char *tok)
--{
--	if (item->conf.key)
--		return item->conf.key;
--	if (tok)
--		return tok;
--	return item->conf.name;
--}
--
--static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
--					     char *tok, char *val)
--{
--	struct trailer_item *new = xcalloc(sizeof(*new), 1);
--	new->value = val ? val : xstrdup("");
--
--	if (conf_item) {
--		duplicate_conf(&new->conf, &conf_item->conf);
--		new->token = xstrdup(token_from_item(conf_item, tok));
--		free(tok);
--	} else {
--		duplicate_conf(&new->conf, &default_conf_info);
--		new->token = tok;
--	}
--
--	return new;
--}
--
--static int token_matches_item(const char *tok, struct trailer_item *item, int tok_len)
--{
--	if (!strncasecmp(tok, item->conf.name, tok_len))
--		return 1;
--	return item->conf.key ? !strncasecmp(tok, item->conf.key, tok_len) : 0;
--}
--
--static struct trailer_item *create_trailer_item(const char *string)
--{
--	struct strbuf tok = STRBUF_INIT;
--	struct strbuf val = STRBUF_INIT;
--	struct trailer_item *item;
--	int tok_len;
--	struct list_head *pos;
--
--	if (parse_trailer(&tok, &val, string))
--		return NULL;
--
--	tok_len = token_len_without_separator(tok.buf, tok.len);
+@@ -631,7 +662,7 @@ static void process_command_line_args(struct list_head *arg_head,
  
- 	/* Lookup if the token matches something in the config */
-+	tok_len = token_len_without_separator(tok->buf, tok->len);
-+	*conf = &default_conf_info;
- 	list_for_each(pos, &conf_head) {
- 		item = list_entry(pos, struct trailer_item, list);
--		if (token_matches_item(tok.buf, item, tok_len))
--			return new_trailer_item(item,
--						strbuf_detach(&tok, NULL),
--						strbuf_detach(&val, NULL));
-+		if (token_matches_item(tok->buf, item, tok_len)) {
-+			char *tok_buf = strbuf_detach(tok, NULL);
-+			*conf = &item->conf;
-+			strbuf_addstr(tok, token_from_item(item, tok_buf));
-+			free(tok_buf);
-+			break;
-+		}
- 	}
- 
--	return new_trailer_item(NULL,
--				strbuf_detach(&tok, NULL),
--				strbuf_detach(&val, NULL));
-+	return 0;
- }
- 
--static void add_trailer_item(struct list_head *head, struct trailer_item *new)
-+static void add_trailer_item(struct list_head *head, char *tok, char *val,
-+			     const struct conf_info *conf)
- {
--	if (!new)
--		return;
-+	struct trailer_item *new = xcalloc(sizeof(*new), 1);
-+	new->token = tok;
-+	new->value = val;
-+	duplicate_conf(&new->conf, conf);
- 	list_add_tail(&new->list, head);
- }
- 
-@@ -599,21 +577,28 @@ static void process_command_line_args(struct list_head *arg_head,
- {
- 	struct string_list_item *tr;
- 	struct trailer_item *item;
-+	struct strbuf tok = STRBUF_INIT;
-+	struct strbuf val = STRBUF_INIT;
-+	const struct conf_info *conf;
- 	struct list_head *pos;
- 
- 	/* Add a trailer item for each configured trailer with a command */
- 	list_for_each(pos, &conf_head) {
- 		item = list_entry(pos, struct trailer_item, list);
--		if (item->conf.command) {
--			struct trailer_item *new = new_trailer_item(item, NULL, NULL);
--			add_trailer_item(arg_head, new);
--		}
-+		if (item->conf.command)
-+			add_trailer_item(arg_head,
-+					 xstrdup(token_from_item(item, NULL)),
-+					 xstrdup(""),
-+					 &item->conf);
- 	}
- 
- 	/* Add a trailer item for each trailer on the command line */
+ 	/* Add an arg item for each trailer on the command line */
  	for_each_string_list_item(tr, trailers) {
--		struct trailer_item *new = create_trailer_item(tr->string);
--		add_trailer_item(arg_head, new);
-+		if (!parse_trailer(&tok, &val, &conf, tr->string))
-+			add_trailer_item(arg_head,
-+					 strbuf_detach(&tok, NULL),
-+					 strbuf_detach(&val, NULL),
-+					 conf);
+-		if (!parse_trailer(&tok, &val, &conf, tr->string))
++		if (!parse_trailer(&tok, &val, &conf, tr->string, 1))
+ 			add_arg_item(arg_head,
+ 				     strbuf_detach(&tok, NULL),
+ 				     strbuf_detach(&val, NULL),
+@@ -683,7 +714,7 @@ static int find_patch_start(struct strbuf **lines, int count)
+  */
+ static int find_trailer_start(struct strbuf **lines, int count)
+ {
+-	int start, end_of_title, only_spaces = 1;
++	int start, end_of_title, only_spaces = 1, trailer_found = 0;
+ 
+ 	/* The first paragraph is the title and cannot be trailers */
+ 	for (start = 0; start < count; start++) {
+@@ -699,22 +730,17 @@ static int find_trailer_start(struct strbuf **lines, int count)
+ 	 * for a line with only spaces before lines with one separator.
+ 	 */
+ 	for (start = count - 1; start >= end_of_title; start--) {
+-		if (lines[start]->buf[0] == comment_line_char)
+-			continue;
+ 		if (contains_only_spaces(lines[start]->buf)) {
+ 			if (only_spaces)
+ 				continue;
+-			return start + 1;
++			return trailer_found ? start + 1 : count;
+ 		}
+-		if (strcspn(lines[start]->buf, separators) < lines[start]->len) {
+-			if (only_spaces)
+-				only_spaces = 0;
+-			continue;
+-		}
+-		return count;
++		only_spaces = 0;
++		if (strcspn(lines[start]->buf, separators) < lines[start]->len)
++			trailer_found = 1;
  	}
+ 
+-	return only_spaces ? count : 0;
++	return count;
  }
  
-@@ -734,6 +719,9 @@ static int process_input_file(FILE *outfile,
- {
- 	int count = 0;
- 	int patch_start, trailer_start, trailer_end, i;
-+	struct strbuf tok = STRBUF_INIT;
-+	struct strbuf val = STRBUF_INIT;
-+	const struct conf_info *conf;
+ /* Get the index of the end of the trailers */
+@@ -735,11 +761,8 @@ static int find_trailer_end(struct strbuf **lines, int patch_start)
  
- 	/* Get the line count */
- 	while (lines[count])
-@@ -751,10 +739,12 @@ static int process_input_file(FILE *outfile,
+ static int has_blank_line_before(struct strbuf **lines, int start)
+ {
+-	for (;start >= 0; start--) {
+-		if (lines[start]->buf[0] == comment_line_char)
+-			continue;
++	if (start >= 0)
+ 		return contains_only_spaces(lines[start]->buf);
+-	}
+ 	return 0;
+ }
+ 
+@@ -775,11 +798,17 @@ static int process_input_file(FILE *outfile,
  
  	/* Parse trailer lines */
  	for (i = trailer_start; i < trailer_end; i++) {
--		if (lines[i]->buf[0] != comment_line_char) {
--			struct trailer_item *new = create_trailer_item(lines[i]->buf);
--			add_trailer_item(head, new);
--		}
-+		if (lines[i]->buf[0] != comment_line_char &&
-+		    !parse_trailer(&tok, &val, &conf, lines[i]->buf))
+-		if (lines[i]->buf[0] != comment_line_char &&
+-		    !parse_trailer(&tok, &val, NULL, lines[i]->buf))
++		if (!parse_trailer(&tok, &val, NULL, lines[i]->buf, 0))
+ 			add_trailer_item(head,
+ 					 strbuf_detach(&tok, NULL),
+ 					 strbuf_detach(&val, NULL));
++		else {
++			strbuf_addbuf(&val, lines[i]);
++			strbuf_strip_suffix(&val, "\n");
 +			add_trailer_item(head,
-+					 strbuf_detach(&tok, NULL),
-+					 strbuf_detach(&val, NULL),
-+					 conf);
++					 NULL,
++					 strbuf_detach(&val, NULL));
++		}
  	}
  
  	return trailer_end;
