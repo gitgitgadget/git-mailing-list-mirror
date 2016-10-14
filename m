@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F885209AB
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECDFB209AB
 	for <e@80x24.org>; Fri, 14 Oct 2016 13:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932845AbcJNNUR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 09:20:17 -0400
-Received: from mout.gmx.net ([212.227.15.18]:63805 "EHLO mout.gmx.net"
+        id S932858AbcJNNUT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 09:20:19 -0400
+Received: from mout.gmx.net ([212.227.17.21]:65192 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755814AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754552AbcJNNSK (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 14 Oct 2016 09:18:10 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MePcd-1cL4FJ2UnP-00QAxS; Fri, 14 Oct 2016 15:17:54
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MHbpA-1byKg51mHs-003OuO; Fri, 14 Oct 2016 15:17:17
  +0200
-Date:   Fri, 14 Oct 2016 15:17:53 +0200 (CEST)
+Date:   Fri, 14 Oct 2016 15:17:16 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,70 +27,74 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v4 09/25] sequencer: strip CR from the todo script
+Subject: [PATCH v4 03/25] sequencer: avoid unnecessary indirection
 In-Reply-To: <cover.1476450940.git.johannes.schindelin@gmx.de>
-Message-ID: <782293991f2ccbc2d0553d2e2e89d70c394901ff.1476450940.git.johannes.schindelin@gmx.de>
+Message-ID: <5d5694fc202ad7e4b4255c3a460c8bb3d9cb3d9f.1476450940.git.johannes.schindelin@gmx.de>
 References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kMjjqkk6nBBDDPsn0Wbrraqz1eaqt8cVLgDYz8Un2Zlh+E89q+j
- 3awMnQ+3Xom43lViSYKxI2ebSiVcgXhj6Qfal4kBHdrfz6x9vcEtFdN2Or2U3Ydr9KmLk0E
- wJlBnaRp13x4mGhMKdtE6YuB49j7Pn54rKP2h7J0haIb8WnI8uiCe+ez1V0fP+4BO/w9Mwd
- 3MmnL+jTnXhVJALN2i99A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kERBLthMyk4=:qI9fsZYPXUUpLVFWgfkJ7S
- 8jOzLeH8Vs5YlP5YlahKQvihImBSri4+2DW8GuWgbJQTICysU2djoq9rtPCBtQ1b7tOka0faJ
- Ao2sPcab4eR7YhZi3Z/0vk5fIvFkRsqPuBa6TDZYnq2dGNQyYiThh2mWpgTVvNC1DPLR4qXuC
- H36LJDTKNTi38aYbdTfmcfIL5wwuzVZe3Qiq34IuA1xGgwZ7QdZMSD+sYrPJlrRZ76d62XVry
- AVZcK6yxepzU1d/g2Hco19R6hOx/oAvcxM0NEiIxgqtbCe6jFUicWBR5HFi5+4mrCNxXKpMH5
- mNOLSzdTd/4WTKNRpyAwYg24iqU7q1F2wogiuI7so/w11Ox5NF1zhCIM36FflrFX2II4d33+9
- 5KQsIhV4RcVnB5tomvgyTiMlDRXNWeNXasBY10ak4jrADrUE4Of8oy4G+vexrpWd6R1uHrVFR
- n8UDmVFxULisZ0hUVL5eQ653QtveuvJ+5Oz+PX4prrQe85R/OzwHlaJRPkLY3w/kbcSJU2fYn
- kKUCo5iRh69CSFl6sNH0tTHPCCpWejlU79igkDjCONRSsnryTj7AqS506BgGrjwj1dSiPz7Us
- VBAJ7rsnrShNnYp6ZAMNuCZCIjcgCLJZ9oj6V5AxEK5Hoy9/531HllIgyU3HcUY8/c/0y2XYa
- S6wSTxvxZPEW1+rJSmNQs807/8NbruMFikJBMf2WF9F9Phy3soDqXKT1UBdu9yt21a2uncWaD
- AJjh38oe77Q/+nih+d21CnrbynweMTRooXDZZeTLTAl8e0VwfffIVrAgvwyLbcN4ALzXAjtdc
- 9+dIneD
+X-Provags-ID: V03:K0:MMH+2FNGjRqhBSyf3Vdx7pfL3VZq08f5YuprdnveP9A8epZSOrR
+ 9SMGW+Y6dfcS0SCAFY2IPlK0ET6lPNorKz3XhM7J7WspsKN6PfE9gKgHnyind4DzXp/bcZM
+ nKZREO7usUTh15YRB0mYLfysY3kMkPV6uemljRKxkt2+wSucgePnoDfPrBQOqsylDQluAJO
+ U3PLYHQ77xQQiQax5kc2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uAo8PQnFYd0=:MOKxNvI2NDfl57DOAXevr+
+ QX37dY19wIxjJj6Ga5VHpm8MLv7vkpwQnLGo3QXZEo9RCwg9aOT6JH5sHmI7P6GOaTJ/MY0bC
+ TtXnSnQytJNNErXYLdHVRVKtkkoJLJIaoZsJv9MhX+j6nvhA9pD0c0IFn/xBjYRaCrECegtbk
+ pFsCoktPFtsKTwnlVasfbGGuYc4vk0IMgp6yAnj/8VjgimPsSPrC+aPHpETIeO78zBRQgDH4m
+ esiBUwhHVtSfrXB356ya2M7B0FGsmboKfo4sJZ68oDC3DKv6asqpoR618EcC6aCEHNAsCELuU
+ 5zn84KPE7z48QqRnbpPqQoHVuToLM+bH9NPvRvTI2qId7cA1gZ7UX35UEuM2TmcHzPpbYxCeK
+ BZxyvvehS2qPVgxx4Kt2jKStDOg6qun3zX4NLAvsL2rL++kR1+AJTdEF4mmjiG6QBPkerCq+O
+ +2xqkTiHOcAzwD/C9raQ2OCI0MhQW6XI0XkEZd471fYFpsN4EwM7lmmdDFjSjNNqW4+ETtbq5
+ BekoV8hNg/gFUzvx8PExjfQfyngTkHGMWc3/Ce1XQqb6SAMGFvgYZF+TVbcuMg5IUde+ee7aq
+ PrtTVfi+LH0Rf1rjT014MA5R+JAEVHyu4wxxHjpNefra7ubGOtziT72GSk7BzKob9NioRTH23
+ Y4/UekgiNeAChMUG1Hubwk/FmERQEDSvRB7F+Ju2CcnnS5BSN3coDYWVsduOHRwEkyp4kHjso
+ ioAQYfjm1pjzr8E3x/6Sjk6zSXx0gqH6gAb9JhfHiZ5izKKeYDtKcsq9ifLYa66QST0duWrQW
+ L3bFpsn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is not unheard of that editors on Windows write CR/LF even if the
-file originally had only LF. This is particularly awkward for exec lines
-of a rebase -i todo sheet. Take for example the insn "exec echo": The
-shell script parser splits at the LF and leaves the CR attached to
-"echo", which leads to the unknown command "echo\r".
-
-Work around that by stripping CR when reading the todo commands, as we
-already do for LF.
-
-This happens to fix t9903.14 and .15 in MSYS1 environments (with the
-rebase--helper patches based on this patch series): the todo script
-constructed in such a setup contains CR/LF thanks to MSYS1 runtime's
-cleverness.
-
-Based on a report and a patch by Johannes Sixt.
+We really do not need the *pointer to a* pointer to the options in
+the read_populate_opts() function.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sequencer.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index f797e8a..eac531b 100644
+index cb16cbd..c2fbf6f 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -776,6 +776,9 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
+@@ -813,7 +813,7 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+ 	return 0;
+ }
  
- 		next_p = *eol ? eol + 1 /* strip LF */ : eol;
+-static int read_populate_opts(struct replay_opts **opts)
++static int read_populate_opts(struct replay_opts *opts)
+ {
+ 	if (!file_exists(git_path_opts_file()))
+ 		return 0;
+@@ -823,7 +823,7 @@ static int read_populate_opts(struct replay_opts **opts)
+ 	 * about this case, though, because we wrote that file ourselves, so we
+ 	 * are pretty certain that it is syntactically correct.
+ 	 */
+-	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
++	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) < 0)
+ 		return error(_("Malformed options sheet: %s"),
+ 			git_path_opts_file());
+ 	return 0;
+@@ -1054,7 +1054,7 @@ static int sequencer_continue(struct replay_opts *opts)
  
-+		if (p != eol && eol[-1] == '\r')
-+			eol--; /* strip Carriage Return */
-+
- 		item = append_new_todo(todo_list);
- 		item->offset_in_buf = p - todo_list->buf.buf;
- 		if (parse_insn_line(item, p, eol)) {
+ 	if (!file_exists(git_path_todo_file()))
+ 		return continue_single_pick();
+-	if (read_populate_opts(&opts) ||
++	if (read_populate_opts(opts) ||
+ 			read_populate_todo(&todo_list, opts))
+ 		return -1;
+ 
 -- 
 2.10.1.513.g00ef6dd
 
