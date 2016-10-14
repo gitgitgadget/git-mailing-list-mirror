@@ -6,136 +6,78 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 540511F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 16:41:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B93591F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 16:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755107AbcJNQlu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 12:41:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65091 "EHLO
+        id S1752203AbcJNQsW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 12:48:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54503 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754822AbcJNQlt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 12:41:49 -0400
+        with ESMTP id S1750922AbcJNQsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 12:48:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A40F44BF6;
-        Fri, 14 Oct 2016 12:41:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 490E344D25;
+        Fri, 14 Oct 2016 12:48:19 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0WlF903oNIn0n+G9MnuYJOyfa3g=; b=HZk/ZB
-        Ucsa0s2Gnx+hAr50uLo3vYm00FkIJs6h5gX1ZlrJRAmxfoYfltKnaXE94eGzGf9U
-        fDtbuDKNs9/3zP/rVs/1m0NcF1l0cBR5R5VaKBDlBx7QKEFFMq0255jjNKZR2e1j
-        R/gCzM3jq5AEa4J/6TnpDyqLlCU64vUTloHc8=
+        :content-type; s=sasl; bh=E8ZMcIFNXPIrUjEbZVeNsQDAEPY=; b=gGUoh2
+        6LoVdcujkbpKVmQgBD3Jh5DFtSOd1Q++pxTC5BwjdiUK2M7bhhaDyICf0/OlTcXu
+        JOlLh3H5zt2q7rfv8/QafjBtAuzh2BqdA4MCPSp16R/UVnZ0CkmcomENid+KNZ50
+        M2inj9ANf9+aaOF6YO3cZcp19tuRCl+sbM+To=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Iobns7KdBCKdXyU9U1nEAReyC3DWStbM
-        L4rbNQDAG9E/bXP7VaE8SXYCOFw6ClDZ3d4SZWs1V4ONGsUQfVdEJrjjyGO7GyMH
-        /eUDZzIOlrWKcrAA1QLC0fhDFzebz1/xyNBbFKWmOOC22jRrlLmI5InmuaOFnCF1
-        x2JB9XHedOU=
+        :content-type; q=dns; s=sasl; b=SopZ9zlB0eFqgTWFash0he791ZRObZfh
+        ymZSdaeDzr6FYb1gO9lGvMdto1Y0OfxqL5G2K8xBuVNT32FsXkQFWvTTpsQhb187
+        8+ErRtVHknkwoJww3z3fm2ONgegcIPxQDVv+TK+sUWZLAZJFm8ig5BsBDoE9Ng23
+        tqq0NXqXRUU=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFD0944BF4;
-        Fri, 14 Oct 2016 12:41:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EA7044D1E;
+        Fri, 14 Oct 2016 12:48:19 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B55344BF3;
-        Fri, 14 Oct 2016 12:41:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAFA144D1B;
+        Fri, 14 Oct 2016 12:48:18 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 13/25] sequencer: prepare for rebase -i's commit functionality
-References: <cover.1473590966.git.johannes.schindelin@gmx.de>
-        <cover.1476120229.git.johannes.schindelin@gmx.de>
-        <9b2782e64f678ab2d261042b63fafc3e4a519295.1476120229.git.johannes.schindelin@gmx.de>
-        <xmqqwphe8zl2.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610121356510.3492@virtualbox>
-        <xmqq60ox5wxb.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610131242100.197091@virtualbox>
-Date:   Fri, 14 Oct 2016 09:41:06 -0700
-In-Reply-To: <alpine.DEB.2.20.1610131242100.197091@virtualbox> (Johannes
-        Schindelin's message of "Thu, 13 Oct 2016 12:50:16 +0200 (CEST)")
-Message-ID: <xmqqvawuzxwd.fsf@gitster.mtv.corp.google.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
+        David Turner <David.Turner@twosigma.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Uninitialized submodules as symlinks
+References: <fd5bcf57f92944c0b7f6f2f8342c342c@exmbdft7.ad.twosigma.com>
+        <20161013161017.GC29710@book.hvoigt.net>
+        <20161013193558.GC1698@ikke.info>
+Date:   Fri, 14 Oct 2016 09:48:16 -0700
+In-Reply-To: <20161013193558.GC1698@ikke.info> (Kevin Daudt's message of "Thu,
+        13 Oct 2016 21:35:58 +0200")
+Message-ID: <xmqqr37izxkf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 01E7812A-922D-11E6-82ED-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 02668942-922E-11E6-B4C5-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Kevin Daudt <me@ikke.info> writes:
 
->> I think my puzzlement comes from here.  What makes it OK for "am" to
->> expect the contents of author-script file to be quoted but it is not
->> OK to expect the same here?  What makes it not quoted for _this_
->> reader, in other words?
+> On Thu, Oct 13, 2016 at 06:10:17PM +0200, Heiko Voigt wrote:
+>> On Fri, Oct 07, 2016 at 06:17:05PM +0000, David Turner wrote:
+>> > Presently, uninitialized submodules are materialized in the working
+>> > tree as empty directories.  We would like to consider having them be
+>> > symlinks.  Specifically, we'd like them to be symlinks into a FUSE
+>> > filesystem which retrieves files on demand.
+>> 
+>> How about portability? This feature would only work on Unix like
+>> operating systems. You have to be careful to not break Windows since
+>> they do not have symlinks.
 >
-> The `git am` command is inherently *not* interactive, while the
-> interactive rebase, well, is.
->
-> As such, we must assume that enterprisey users did come up with scripts
-> that edit, or create, author-script files, and exploited the fact that the
-> interactive rebase previously sourced them.
+> NTFS does have symlinks, but you need admin right to create them though
+> (unless you change the policy).
 
-It's like saying "While the program is waiting for user interaction,
-the user can attach a debugger to tweak the contents of this string
-variable.  Hence we must not assume that the string is always NUL
-terminated to protect ourselves."
-
-A correct response to such a user is to tell them not to do that,
-and do so at two levels.  
-
-The first level may be "it may be physically possible to tweak the
-string via debugger but don't do that in such a way that breaks the
-invariants our program relies on, or you are on your own", but more
-important is the response at the second level.  Why is the user
-futzing with that string in the first place with the debugger?  In
-the context of author-script, the question is "Why is the user
-futzing with the author-script file"?  To attribute the resulting
-commit to a different author, of course.  But we need to step back
-and think why the user needs to resort to editing that file to
-achieve that.
-
-If that is a common thing users would want to do, then we should
-offer an official way to do so, and it should not be "you can futz
-with author-script file with your editor".  Something like "have
-'exec git commit --amend' in the todo file" may be more appropriate
-and if it is important enough, the sequencer command language may
-want to learn an extra verb to update the author.
-
-Besides, the opportunity easiest for the user to futz with the
-contents of author-script file (or "attach the debugger while we
-wait for user interaction") arises when "rebase -i" or "am" stops
-waiting for conflict resolution.  Even when you run "am" without its
-"-i" option, it is equally susceptible to the "user futzing with the
-file", which means your "am is not interactive but 'rebase -i' is"
-is irrelevant to the issue.  Oh, also, did I say "am" has "-i"
-option, which is a short-hand for "--interactive"?
-
-What disturbs me the most is that I know you know the system well
-enough to realize how bogus your argument to claim that "rebase -i"
-and "am" are different was and to come up with what I wrote above
-yourself.  Which means that I need to conclude that you have some
-other reasons why you want to keep this parser different, but I
-still do not know what they are.
-
-I guess it entirely is possible that one of the reasons is because
-some later patches in the larger "rebase-i to sequencer" series
-writes author-script file in a syntax that cannot be read by the
-recently refactored code "am" uses to read the author-script file,
-and reusing the existing code may end up breaking the endgame
-"rebase -i" you have.
-
-As I do not feel like arguing with you on this any longer, and as I
-certainly do not want to be blamed for breaking your "rebase -i", I
-do not insist the code to be refactored to share with the existing
-codepath.  But still I do not see the need to keep them separate (as
-I already said in the previous message, I am OK if the one used in
-"am" is updated to match).
-
-
+That sounds like saying "It has, but it practically is not usable by
+Git as a mechanism to achieve this goal" to me.
 
 
 
