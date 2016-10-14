@@ -2,98 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDD7B20988
-	for <e@80x24.org>; Sat, 15 Oct 2016 14:47:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D91691F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 19:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754386AbcJOOra (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Oct 2016 10:47:30 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:36367 "EHLO
-        mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753808AbcJOOr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Oct 2016 10:47:29 -0400
-Received: by mail-pa0-f68.google.com with SMTP id os4so3232096pac.3
-        for <git@vger.kernel.org>; Sat, 15 Oct 2016 07:47:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=pAwoyIG28zx18gmjWfVGDclG0ox1N/cT11Vi3KKuvQY=;
-        b=czP8wungVrFAYRu+3CPWNSUZLad8RgL47XENMN0XgweF8mA0hdFqwUrMAvauT6UAbF
-         KnJ5qwHn3taCX302vamB/CeLrnWwsbsutl3AnG3FIwvIAtzUNyyLYX27emtRIgaMk18z
-         qpj/JfiSjvpwA0Q9REpeUYHak0qI/kan1pff2Ez1iGDOZHriW9D/0p+iamD1ZWPe7+/e
-         ekO26OZRv5Os0Qx1LXAsOgVny9b27l27TLKN6dIWwcF4PonH7gxA/xWk0aRev5+0Y5p8
-         5JsILZ0KAPZ/69MT4AeM150cRd8owlcFabiTfHQ5/Jlq9mvRFvDaTCB+HZZWrpncnv0p
-         +kfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=pAwoyIG28zx18gmjWfVGDclG0ox1N/cT11Vi3KKuvQY=;
-        b=WrNClj06+6GF6qcGVpOs7Q2KfNRVWa6969mTPF7ABTcsTIbz1WAUPG/YLeIAPg8mZV
-         x8jKCFV8SFm+KcjLHR/3HfroxLdo0LF97hnhVCT3H2IQpOR2SRDsbdfjMZDyRRGBZ6wT
-         6NTParYVfZVbMyHlFVqr+1KxrhJfA1Rd6Vy1dJ9JK3RLwGRZUvnBbOVaixVIaY3FzLuJ
-         CmznvbE17yjVc1mNyhF2TJy4Ui7KKc3439xlXXYIBPDOQ1hUMrLCPsjVRzbjdz7MF+m+
-         ahdW9Pk+EpL8wp2cwhO02hXHBwhtBXnWCIBafpoS8QtJQcmD9INSS7Z+nzN2P0bIKlT6
-         C0iA==
-X-Gm-Message-State: AA6/9Rn4rOUG6m4u3YmqyRA7F4v/ZNPWUcALrarNAZMrNtljaoGNuqn6ZBX0k2drLTS1dg==
-X-Received: by 10.66.222.169 with SMTP id qn9mr21813481pac.133.1476542848451;
-        Sat, 15 Oct 2016 07:47:28 -0700 (PDT)
-Received: from mtl3z26wz1.ads.autodesk.com (adsk-nat-ip11.autodesk.com. [132.188.71.11])
-        by smtp.gmail.com with ESMTPSA id m188sm35667076pfc.40.2016.10.15.07.47.27
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Oct 2016 07:47:27 -0700 (PDT)
-Content-Type: text/plain; charset=windows-1252
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v10 14/14] contrib/long-running-filter: add long running filter example
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <3bdfebab-aae9-3263-218e-c8ae394084fc@web.de>
-Date:   Sat, 15 Oct 2016 07:47:26 -0700
-Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-        peff@peff.net
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <EE051B9A-B3F8-4AB7-8028-0105C51BFE2E@gmail.com>
-References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-15-larsxschneider@gmail.com> <3bdfebab-aae9-3263-218e-c8ae394084fc@web.de>
-To:     =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
+        id S932730AbcJNTAs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 15:00:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57593 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752516AbcJNTAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2016 15:00:45 -0400
+Received: (qmail 22240 invoked by uid 109); 14 Oct 2016 18:59:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Oct 2016 18:59:55 +0000
+Received: (qmail 8074 invoked by uid 111); 14 Oct 2016 19:00:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Oct 2016 15:00:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2016 14:59:53 -0400
+Date:   Fri, 14 Oct 2016 14:59:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org,
+        Quentin Casasnovas <quentin.casasnovas@oracle.com>,
+        Shawn Pearce <spearce@spearce.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] fetch: use "quick" has_sha1_file for tag following
+Message-ID: <20161014185953.k4b5xwihlgvxurjc@sigill.intra.peff.net>
+References: <fb66dc02-fb75-5aad-74e5-01b969cf9f9a@oracle.com>
+ <af801f22-0e24-525d-a862-f2114941719a@oracle.com>
+ <20161013152632.ynsabbv3yrthgidy@sigill.intra.peff.net>
+ <20161013165344.jv7hyj74q33yb4ip@sigill.intra.peff.net>
+ <20161013170443.43slna3zvcvrse5r@sigill.intra.peff.net>
+ <20161013200644.lnustevmpvufbg5y@sigill.intra.peff.net>
+ <xmqqfunyzv6f.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfunyzv6f.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Oct 14, 2016 at 10:39:52AM -0700, Junio C Hamano wrote:
 
-> On 08 Oct 2016, at 22:42, Torsten B=F6gershausen <tboegi@web.de> =
-wrote:
->=20
-> On 08.10.16 13:25, larsxschneider@gmail.com wrote:
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->> Add a simple pass-thru filter as example implementation for the Git
->> filter protocol version 2. See Documentation/gitattributes.txt, =
-section
->> "Filter Protocol" for more info.
->>=20
->=20
-> Nothing wrong with code in contrib.
-> I may have missed parts of the discussion, was there a good reason to
-> drop the test case completely?
->=20
->> When adding a new feature, make sure that you have new tests to show
->> the feature triggers the new behavior when it should, and to show the
->> feature does not trigger when it shouldn't.  After any code change, =
-make
->> sure that the entire test suite passes.
->=20
-> Or is there a plan to add them later ?
+> Jeff King <peff@peff.net> writes:
+> 
+> > So it's certainly better. But 7500 packs is just silly, and squeezing
+> > out ~400ms there is hardly worth it. If you repack this same case into a
+> > single pack, the command drops to 5ms. So yes, there's close to an order
+> > of magnitude speedup here, but you get that _and_ another order of
+> > magnitude just by repacking.
+> 
+> "7500 is silly" equally applies to the "quick" (and sloppy, if I am
+> reading your "Failing in this direction doesn't make me feel great."
+> correctly) approach, I think, which argues for not taking either
+> change X-<.
 
-The test is part of the "main feature patch" 13/14:
-=
-http://public-inbox.org/git/20161008112530.15506-14-larsxschneider@gmail.c=
-om/
+I wouldn't quite agree that they're the same. 7500 packs is silly
+because a bunch of _other_ things are going to get equally or more slow
+before the prepare_packed_git() slowdown is noticeable. And it's in your
+power to clean up, and we should encourage users to do so.
 
-Cheers,
-Lars=
+Whereas having a bunch of unfetched tags is a state that may linger
+indefinitely, and be outside the user's control.
+
+I _am_ open to the argument that calling reprepare_packed_git() over and
+over doesn't really matter much if you have a sane number of packs. If
+you tweak my perf test like so:
+
+diff --git a/t/perf/p5550-fetch-tags.sh b/t/perf/p5550-fetch-tags.sh
+index a5dc39f..7e7ae24 100755
+--- a/t/perf/p5550-fetch-tags.sh
++++ b/t/perf/p5550-fetch-tags.sh
+@@ -86,7 +86,7 @@ test_expect_success 'create child packs' '
+ 		cd child &&
+ 		git config gc.auto 0 &&
+ 		git config gc.autopacklimit 0 &&
+-		create_packs 500
++		create_packs 10
+ 	)
+ '
+ 
+
+you get:
+
+Test            origin            quick                 
+--------------------------------------------------------
+5550.4: fetch   0.06(0.02+0.02)   0.02(0.01+0.00) -66.7%
+
+Still an impressive speedup as a percentage, but negligible in absolute
+terms. But that's on a local filesystem on a Linux machine. I'd worry
+much more about a system with a slow readdir(), e.g., due to NFS.
+Somebody's real-world NFS case[1] was what prompted us to do 0eeb077
+(index-pack: avoid excessive re-reading of pack directory, 2015-06-09).
+
+It looks like I _did_ look into optimizing this into a single stat()
+call in the thread at [1]. I completely forgot about that. I did find
+there that naively using stat_validity() on a directory is racy, though
+I wonder if we could do something clever with gettimeofday() instead.
+IOW, the patches there only bothered to re-read when they saw the mtime
+on the directory jump, which suffers from 1-second precision problems.
+But if we instead compared the mtime to the current time, we could err
+in favor of re-reading the packs, and get false positives for at most 1
+second.
+
+[1] http://public-inbox.org/git/7FAE15F0A93C0144AD8B5FBD584E1C5519758FC3@C111KXTEMBX51.ERF.thomson.com/
+
+> I agree that the fallout from the inaccuracy of "quick" approach is
+> probably acceptable and the next "fetch" will correct it anyway, so
+> let's do the "quick but inaccurate" for now and perhaps cook it in
+> 'next' for a bit longer than other topics?
+
+I doubt that cooking in 'next' for longer will turn up anything useful.
+The case we care about is the race between a repack and a fetch. We
+lived with the "quick" version of has_sha1_file() everywhere for 8
+years. I only noticed the race on a hosting cluster which puts through
+millions of operations per day (I could in theory test the patch on that
+same cluster, but we actually don't do very many fetches).
+
+-Peff
