@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4119E209AB
-	for <e@80x24.org>; Fri, 14 Oct 2016 14:14:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3127E1F4F8
+	for <e@80x24.org>; Fri, 14 Oct 2016 14:15:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757400AbcJNOOt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 10:14:49 -0400
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:52100
+        id S1757405AbcJNOOx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Oct 2016 10:14:53 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:52102
         "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1757311AbcJNOOT (ORCPT
+        by vger.kernel.org with ESMTP id S1757305AbcJNOOT (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 14 Oct 2016 10:14:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1476454455;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1476454456;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=nlDHvF65iBwbhB89HoLPSa5xZEtBm48KMBjmz1a5zhY=;
-        b=aESyHJJGiRUEIlk1dOwQqkgXOPZIAZ5z2cgQ51VJmyCDLBF8Nq/WF5BzHFyoetiK
-        KIJk/GB8nIAXn/zyDSmOpixjnYdpRRRW1dX9SFR7weZpfORAvdEoSSlHeVFYA8F4HO+
-        1XzJuscy3JGoUfnfUcyXCMUcQU9jFVYeEE0G1Gwk=
+        bh=wiGLWpmaoIOYPhvew05MgKhSQ1XGVz1Y8t1R52HqThk=;
+        b=JFbKNUHx5IWWSIpx0GIBQ3L4mmbl88xaEYUuuWxhA8SJm1p0ZN04zqi9hB4pqJ5W
+        NEMfGj6DdQHymmuWXgoLuJDgEa6yGA/1FkkWzGWcxWui6Nj4qUzkFcFYjXIub8a8huk
+        c/o2Nc+0+0aeGYyWS20OvkcNgv1JATd/uDbsd9rU=
 From:   Pranit Bauva <pranit.bauva@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v15 01/27] bisect--helper: use OPT_CMDMODE instead of
- OPT_BOOL
+Message-ID: <01020157c38b1ad3-ea75ed97-2514-427e-8e57-9f10efd4e6e9-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v15 13/27] bisect--helper: `bisect_start` shell function
+ partially in C
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 14 Oct 2016 14:14:15 +0000
+Date:   Fri, 14 Oct 2016 14:14:16 +0000
 X-SES-Outgoing: 2016.10.14-54.240.7.17
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
@@ -41,56 +41,458 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`--next-all` is meant to be used as a subcommand to support multiple
-"operation mode" though the current implementation does not contain any
-other subcommand along side with `--next-all` but further commits will
-include some more subcommands.
+Reimplement the `bisect_start` shell function partially in C and add
+`bisect-start` subcommand to `git bisect--helper` to call it from
+git-bisect.sh .
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+The last part is not converted because it calls another shell function
+`bisect_start` shell function will be completed after the `bisect_next`
+shell function is ported in C.
+
+Using `--bisect-start` subcommand is a temporary measure to port shell
+function in C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired and will be called by some
+other methods.
+
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
- builtin/bisect--helper.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ builtin/bisect--helper.c | 217 ++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 133 +----------------------------
+ 2 files changed, 217 insertions(+), 133 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3324229..8111c91 100644
+index 6a5878c..1d3e17f 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -10,11 +10,11 @@ static const char * const git_bisect_helper_usage[] = {
+@@ -7,6 +7,7 @@
+ #include "argv-array.h"
+ #include "run-command.h"
+ #include "prompt.h"
++#include "quote.h"
  
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+@@ -14,6 +15,8 @@ static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+ static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
++static GIT_PATH_FUNC(git_path_head_name, "head-name")
++static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ 
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+@@ -24,6 +27,8 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
+ 	N_("git bisect--helper --bisect-next-check [<term>] <TERM_GOOD> <TERM_BAD"),
+ 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
++	N_("git bisect--helper --bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
++					      "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
+ 	NULL
+ };
+ 
+@@ -403,6 +408,205 @@ static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
+ 	return 0;
+ }
+ 
++static int bisect_start(struct bisect_terms *terms, int no_checkout,
++			const char **argv, int argc)
++{
++	int i, has_double_dash = 0, must_write_terms = 0, bad_seen = 0;
++	int flags, pathspec_pos, retval = 0;
++	struct string_list revs = STRING_LIST_INIT_DUP;
++	struct string_list states = STRING_LIST_INIT_DUP;
++	struct strbuf start_head = STRBUF_INIT;
++	struct strbuf bisect_names = STRBUF_INIT;
++	struct strbuf orig_args = STRBUF_INIT;
++	const char *head;
++	unsigned char sha1[20];
++	FILE *fp = NULL;
++	struct object_id oid;
++
++	if (is_bare_repository())
++		no_checkout = 1;
++
++	for (i = 0; i < argc; i++) {
++		if (!strcmp(argv[i], "--")) {
++			has_double_dash = 1;
++			break;
++		}
++	}
++
++	for (i = 0; i < argc; i++) {
++		const char *commit_id = xstrfmt("%s^{commit}", argv[i]);
++		const char *arg = argv[i];
++		if (!strcmp(argv[i], "--")) {
++			has_double_dash = 1;
++			break;
++		} else if (!strcmp(arg, "--no-checkout")) {
++			no_checkout = 1;
++		} else if (!strcmp(arg, "--term-good") ||
++			 !strcmp(arg, "--term-old")) {
++			must_write_terms = 1;
++			terms->term_good = xstrdup(argv[++i]);
++		} else if (skip_prefix(arg, "--term-good=", &arg)) {
++			must_write_terms = 1;
++			terms->term_good = xstrdup(arg);
++		} else if (skip_prefix(arg, "--term-old=", &arg)) {
++			must_write_terms = 1;
++			terms->term_good = xstrdup(arg);
++		} else if (!strcmp(arg, "--term-bad") ||
++			 !strcmp(arg, "--term-new")) {
++			must_write_terms = 1;
++			terms->term_bad = xstrdup(argv[++i]);
++		} else if (skip_prefix(arg, "--term-bad=", &arg)) {
++			must_write_terms = 1;
++			terms->term_bad = xstrdup(arg);
++		} else if (skip_prefix(arg, "--term-new=", &arg)) {
++			must_write_terms = 1;
++			terms->term_good = xstrdup(arg);
++		} else if (starts_with(arg, "--") &&
++			 !one_of(arg, "--term-good", "--term-bad", NULL)) {
++			die(_("unrecognised option: '%s'"), arg);
++		} else if (get_oid(commit_id, &oid) && has_double_dash) {
++			die(_("'%s' does not appear to be a valid revision"), argv[i]);
++		} else {
++			string_list_append(&revs, oid_to_hex(&oid));
++		}
++	}
++	pathspec_pos = i;
++
++	/*
++	 * The user ran "git bisect start <sha1> <sha1>", hence did not
++	 * explicitly specify the terms, but we are already starting to
++	 * set references named with the default terms, and won't be able
++	 * to change afterwards.
++	 */
++	must_write_terms |= !!revs.nr;
++	for (i = 0; i < revs.nr; i++) {
++		if (bad_seen) {
++			string_list_append(&states, terms->term_good);
++		} else {
++			bad_seen = 1;
++			string_list_append(&states, terms->term_bad);
++		}
++	}
++
++	/*
++	 * Verify HEAD
++	 */
++	head = resolve_ref_unsafe("HEAD", 0, sha1, &flags);
++	if (!head)
++		if (get_sha1("HEAD", sha1))
++			die(_("Bad HEAD - I need a HEAD"));
++
++	if (!is_empty_or_missing_file(git_path_bisect_start())) {
++		/* Reset to the rev from where we started */
++		strbuf_read_file(&start_head, git_path_bisect_start(), 0);
++		strbuf_trim(&start_head);
++		if (!no_checkout) {
++			struct argv_array argv = ARGV_ARRAY_INIT;
++			argv_array_pushl(&argv, "checkout", start_head.buf,
++					 "--", NULL);
++			if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
++				error(_("checking out '%s' failed. Try 'git "
++					"bisect start <valid-branch>'."),
++				      start_head.buf);
++				retval = -1;
++				goto finish;
++			}
++		}
++	} else {
++		if (!get_sha1(head, sha1) &&
++		    !starts_with(head, "refs/heads/")) {
++			strbuf_reset(&start_head);
++			strbuf_addstr(&start_head, sha1_to_hex(sha1));
++		} else if (!get_sha1(head, sha1) &&
++			   skip_prefix(head, "refs/heads/", &head)) {
++			/*
++			 * This error message should only be triggered by
++			 * cogito usage, and cogito users should understand
++			 * it relates to cg-seek.
++			 */
++			if (!is_empty_or_missing_file(git_path_head_name()))
++				die(_("won't bisect on cg-seek'ed tree"));
++			strbuf_addstr(&start_head, head);
++		} else {
++			die(_("Bad HEAD - strange symbolic ref"));
++		}
++	}
++
++	/*
++	 * Get rid of any old bisect state.
++	 */
++	if (bisect_clean_state()) {
++		return -1;
++	}
++	/*
++	 * In case of mistaken revs or checkout error, or signals received,
++	 * "bisect_auto_next" below may exit or misbehave.
++	 * We have to trap this to be able to clean up using
++	 * "bisect_clean_state".
++	 */
++
++	/*
++	 * Write new start state
++	 */
++	write_file(git_path_bisect_start(), "%s\n", start_head.buf);
++
++	if (no_checkout) {
++		get_oid(start_head.buf, &oid);
++		if (update_ref(NULL, "BISECT_HEAD", oid.hash, NULL, 0,
++			       UPDATE_REFS_MSG_ON_ERR)) {
++			retval = -1;
++			goto finish;
++		}
++	}
++
++	if (pathspec_pos < argc - 1)
++		sq_quote_argv(&bisect_names, argv + pathspec_pos, 0);
++	write_file(git_path_bisect_names(), "%s\n", bisect_names.buf);
++
++	for (i = 0; i < states.nr; i++) {
++		if (bisect_write(states.items[i].string,
++				 revs.items[i].string, terms, 1)) {
++			retval = -1;
++			goto finish;
++		}
++	}
++
++	if (must_write_terms)
++		if (write_terms(terms->term_bad, terms->term_good)) {
++			retval = -1;
++			goto finish;
++		}
++
++	fp = fopen(git_path_bisect_log(), "a");
++	if (!fp)
++		return -1;
++
++	if (fprintf(fp, "git bisect start") < 1) {
++		retval = -1;
++		goto finish;
++	}
++
++	sq_quote_argv(&orig_args, argv, 0);
++	if (fprintf(fp, "%s", orig_args.buf) < 0) {
++		retval = -1;
++		goto finish;
++	}
++	if (fprintf(fp, "\n") < 1) {
++		retval = -1;
++		goto finish;
++	}
++	goto finish;
++finish:
++	if (fp)
++		fclose(fp);
++	string_list_clear(&revs, 0);
++	string_list_clear(&states, 0);
++	strbuf_release(&start_head);
++	strbuf_release(&bisect_names);
++	strbuf_release(&orig_args);
++	return retval;
++}
++
  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  {
--	int next_all = 0;
-+	enum { NEXT_ALL = 1 } cmdmode = 0;
- 	int no_checkout = 0;
+ 	enum {
+@@ -414,7 +618,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_WRITE,
+ 		CHECK_AND_SET_TERMS,
+ 		BISECT_NEXT_CHECK,
+-		BISECT_TERMS
++		BISECT_TERMS,
++		BISECT_START
+ 	} cmdmode = 0;
+ 	int no_checkout = 0, res = 0;
  	struct option options[] = {
--		OPT_BOOL(0, "next-all", &next_all,
--			 N_("perform 'git bisect next'")),
-+		OPT_CMDMODE(0, "next-all", &cmdmode,
-+			 N_("perform 'git bisect next'"), NEXT_ALL),
+@@ -436,6 +641,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
+ 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
+ 			 N_("print out the bisect terms"), BISECT_TERMS),
++		OPT_CMDMODE(0, "bisect-start", &cmdmode,
++			 N_("start the bisect session"), BISECT_START),
  		OPT_BOOL(0, "no-checkout", &no_checkout,
  			 N_("update BISECT_HEAD instead of checking out the current commit")),
  		OPT_END()
-@@ -23,9 +23,14 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+@@ -443,7 +650,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	struct bisect_terms terms;
+ 
  	argc = parse_options(argc, argv, prefix, options,
- 			     git_bisect_helper_usage, 0);
+-			     git_bisect_helper_usage, PARSE_OPT_KEEP_UNKNOWN);
++			     git_bisect_helper_usage,
++			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN);
  
--	if (!next_all)
-+	if (!cmdmode)
+ 	if (!cmdmode)
  		usage_with_options(git_bisect_helper_usage, options);
- 
--	/* next-all */
--	return bisect_next_all(prefix, no_checkout);
-+	switch (cmdmode) {
-+	case NEXT_ALL:
-+		return bisect_next_all(prefix, no_checkout);
-+	default:
-+		die("BUG: unknown subcommand '%d'", cmdmode);
-+	}
-+	return 0;
+@@ -497,6 +705,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			die(_("--bisect-terms requires 0 or 1 argument"));
+ 		res = bisect_terms(&terms, argv, argc);
+ 		break;
++	case BISECT_START:
++		terms.term_good = "good";
++		terms.term_bad = "bad";
++		res = bisect_start(&terms, no_checkout, argv, argc);
++		break;
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index d6c8b5a..f0896b3 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -71,122 +71,7 @@ bisect_autostart() {
  }
+ 
+ bisect_start() {
+-	#
+-	# Check for one bad and then some good revisions.
+-	#
+-	has_double_dash=0
+-	for arg; do
+-		case "$arg" in --) has_double_dash=1; break ;; esac
+-	done
+-	orig_args=$(git rev-parse --sq-quote "$@")
+-	bad_seen=0
+-	eval=''
+-	must_write_terms=0
+-	revs=''
+-	if test "z$(git rev-parse --is-bare-repository)" != zfalse
+-	then
+-		mode=--no-checkout
+-	else
+-		mode=''
+-	fi
+-	while [ $# -gt 0 ]; do
+-		arg="$1"
+-		case "$arg" in
+-		--)
+-			shift
+-			break
+-		;;
+-		--no-checkout)
+-			mode=--no-checkout
+-			shift ;;
+-		--term-good|--term-old)
+-			shift
+-			must_write_terms=1
+-			TERM_GOOD=$1
+-			shift ;;
+-		--term-good=*|--term-old=*)
+-			must_write_terms=1
+-			TERM_GOOD=${1#*=}
+-			shift ;;
+-		--term-bad|--term-new)
+-			shift
+-			must_write_terms=1
+-			TERM_BAD=$1
+-			shift ;;
+-		--term-bad=*|--term-new=*)
+-			must_write_terms=1
+-			TERM_BAD=${1#*=}
+-			shift ;;
+-		--*)
+-			die "$(eval_gettext "unrecognised option: '\$arg'")" ;;
+-		*)
+-			rev=$(git rev-parse -q --verify "$arg^{commit}") || {
+-				test $has_double_dash -eq 1 &&
+-				die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
+-				break
+-			}
+-			revs="$revs $rev"
+-			shift
+-			;;
+-		esac
+-	done
+-
+-	for rev in $revs
+-	do
+-		# The user ran "git bisect start <sha1>
+-		# <sha1>", hence did not explicitly specify
+-		# the terms, but we are already starting to
+-		# set references named with the default terms,
+-		# and won't be able to change afterwards.
+-		must_write_terms=1
+-
+-		case $bad_seen in
+-		0) state=$TERM_BAD ; bad_seen=1 ;;
+-		*) state=$TERM_GOOD ;;
+-		esac
+-		eval="$eval git bisect--helper --bisect-write '$state' '$rev' '$TERM_GOOD' '$TERM_BAD' 'nolog' &&"
+-	done
+-	#
+-	# Verify HEAD.
+-	#
+-	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref -q HEAD) ||
+-	head=$(GIT_DIR="$GIT_DIR" git rev-parse --verify HEAD) ||
+-	die "$(gettext "Bad HEAD - I need a HEAD")"
+-
+-	#
+-	# Check if we are bisecting.
+-	#
+-	start_head=''
+-	if test -s "$GIT_DIR/BISECT_START"
+-	then
+-		# Reset to the rev from where we started.
+-		start_head=$(cat "$GIT_DIR/BISECT_START")
+-		if test "z$mode" != "z--no-checkout"
+-		then
+-			git checkout "$start_head" -- ||
+-			die "$(eval_gettext "Checking out '\$start_head' failed. Try 'git bisect reset <valid-branch>'.")"
+-		fi
+-	else
+-		# Get rev from where we start.
+-		case "$head" in
+-		refs/heads/*|$_x40)
+-			# This error message should only be triggered by
+-			# cogito usage, and cogito users should understand
+-			# it relates to cg-seek.
+-			[ -s "$GIT_DIR/head-name" ] &&
+-				die "$(gettext "won't bisect on cg-seek'ed tree")"
+-			start_head="${head#refs/heads/}"
+-			;;
+-		*)
+-			die "$(gettext "Bad HEAD - strange symbolic ref")"
+-			;;
+-		esac
+-	fi
+-
+-	#
+-	# Get rid of any old bisect state.
+-	#
+-	git bisect--helper --bisect-clean-state || exit
++	git bisect--helper --bisect-start $@ || exit
+ 
+ 	#
+ 	# Change state.
+@@ -197,24 +82,10 @@ bisect_start() {
+ 	#
+ 	trap 'git bisect--helper --bisect-clean-state' 0
+ 	trap 'exit 255' 1 2 3 15
+-
+-	#
+-	# Write new start state.
+-	#
+-	echo "$start_head" >"$GIT_DIR/BISECT_START" && {
+-		test "z$mode" != "z--no-checkout" ||
+-		git update-ref --no-deref BISECT_HEAD "$start_head"
+-	} &&
+-	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
+-	eval "$eval true" &&
+-	if test $must_write_terms -eq 1
+-	then
+-		git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD"
+-	fi &&
+-	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+ 	#
+ 	# Check if we can proceed to the next bisect state.
+ 	#
++	get_terms
+ 	bisect_auto_next
+ 
+ 	trap '-' 0
 
 --
 https://github.com/git/git/pull/287
