@@ -2,70 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDF941F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 17:55:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7026209A9
+	for <e@80x24.org>; Sat, 15 Oct 2016 08:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751697AbcJNRz6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 13:55:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65528 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751537AbcJNRz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 13:55:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 81A954578E;
-        Fri, 14 Oct 2016 13:55:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Uz81DqBuawSdTkY33cBjPqKFE70=; b=GkYKXV
-        A8VBuLHRfV7vN4GW2VFLfRxpeSMYx6Z8UPrqhX6T1fo3Basxd95gB1r8rks6QoQi
-        2plQBigJLYqPEgSJzwKkHqXXV4WV0khJFAM7nmRbbGsixReGYIoxZy85BbAgzKHt
-        Iway4994dpBTwIsWlb8BdleLRXYn9Wiu8wM04=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kOLi7nwNVZKq0LXYsg6WhuQRjDt50It7
-        w3nh5o4eggbfRpYTW8sKJjzS/uVGbTrpCrRPfhOCQx5+KWWOERor3MwjqUT3otDx
-        RswzXdPdjkjm1MKsxqxH7L63fKlNcDvTOWo1WFjTDK+Ik73iKgKs0l7pIoCQKKc4
-        B+BtG5L2Jy0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 776684578C;
-        Fri, 14 Oct 2016 13:55:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFB0D4578B;
-        Fri, 14 Oct 2016 13:55:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Subject: Re: [PATCH 1/3] i18n: apply: mark plural string for translation
-References: <20161014114337.18684-1-vascomalmeida@sapo.pt>
-Date:   Fri, 14 Oct 2016 10:55:52 -0700
-In-Reply-To: <20161014114337.18684-1-vascomalmeida@sapo.pt> (Vasco Almeida's
-        message of "Fri, 14 Oct 2016 11:43:35 +0000")
-Message-ID: <xmqqbmymzufr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753405AbcJOIq3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Oct 2016 04:46:29 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:34386 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752975AbcJOIq1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Oct 2016 04:46:27 -0400
+Received: by mail-it0-f65.google.com with SMTP id e203so718768itc.1
+        for <git@vger.kernel.org>; Sat, 15 Oct 2016 01:46:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Z02Gm+T9jJzpo5cfR9igRMkeIiKzZTsNzwkpG9Rw7i0=;
+        b=BDXmbJMTiUkWDcRfRIzx0ww/77O2UsVdw9v68maUSLD7b4SoV05Y48mSWyZ8E305f5
+         qDwih6T1/xuiunj9/Mfh2lvmu0D7Nl9t83QSMoyMBUehLRUlS1mFpy30tM8zq2yRs1nG
+         LGv2J1emuPuTS0oBPhYaXXAfUBLBbOjiM5ZhGkG1v4eKT8F04udNErIl6ClRAplTHQ84
+         TP7lO1/o+oZGeQFr/vseShbLCZeOgxx8/HpSQeFiRdDYWbUa1l4UjAkIuSp4xFYa2pEM
+         AS/J8NzyrChURXpPNcnDblqdbDgjWpSyRVurlt8nGBNdN1SoVcziM6qJYe+DS/dRbFt9
+         Ww+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Z02Gm+T9jJzpo5cfR9igRMkeIiKzZTsNzwkpG9Rw7i0=;
+        b=RDJkPopjogd19VNLNQDIhJcEwDPRkluERtHvZmIj+Tgv2NWMrBg8FwpaSSDpaTmHCB
+         c0ipgfI/C2UiTIYc58IZEylxBp488cEA2r/unLYM/VXRYhSe2O2JI8cVIefzcD77DlZV
+         MK5xKylbrUzrJZIxFCvKHe0eimkEAhrbn3F0YOj8t/QZBQ7rq0tGUsq1s4pCswMvgZUH
+         DHfbeTWB7qCMdGNho9OJudoKe/945t7/Cgc9Na25XAS6bNwqTHEQUhrEPJ+vWFq8Pebv
+         KW++OXjO5758Ff4d/32NPtwseEKKdpfzy8MILcEanefkdIlxhY7546AOx/RQdiARhDkS
+         Sdrg==
+X-Gm-Message-State: AA6/9RkNyz7k9XAKKfrysLynjsufqej3luvXpmbzn/Som90jyMsI1TpRK6qnFLZrcRwIymd38P8AGfrml+vZuQ==
+X-Received: by 10.36.225.193 with SMTP id n184mr1134852ith.100.1476521186513;
+ Sat, 15 Oct 2016 01:46:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74180C88-9237-11E6-865E-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.79.38.215 with HTTP; Sat, 15 Oct 2016 01:46:26 -0700 (PDT)
+In-Reply-To: <xmqqr37iy5bw.fsf@gitster.mtv.corp.google.com>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1adc-d5fa6b9a-ce13-4ee9-874e-e45fac99fba6-000000@eu-west-1.amazonses.com>
+ <xmqqr37iy5bw.fsf@gitster.mtv.corp.google.com>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Sat, 15 Oct 2016 14:16:26 +0530
+Message-ID: <CAFZEwPMjJ90k1BwK+Bc2Ca9LXzscvs2c2BuX347N+XyREDG98Q@mail.gmail.com>
+Subject: Re: [PATCH v15 14/27] t6030: no cleanup with bad merge base
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Hey Junio,
 
-> Mark plural string for translation using Q_().
+On Sat, Oct 15, 2016 at 3:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
 >
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
+>> +test_expect_success 'check whether bisection cleanup is not done with bad merges' '
+>> +     git bisect start $HASH7 $SIDE_HASH7 &&
+>> +     test_expect_failure git bisect bad >out 2>out &&
+>
+> I think you meant "test_must_fail" here.
 
-Thanks for waiting (patiently) for 'master' to become ready to take
-these three patches.
+Oh yes! Thanks for pointing it out. I see that you have already
+submitted a patch to catch this mistake which was previously ignored.
+Thanks!
 
-
+Regards,
+Pranit Bauva
