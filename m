@@ -2,90 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAE3820988
-	for <e@80x24.org>; Sat, 15 Oct 2016 16:23:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDD7B20988
+	for <e@80x24.org>; Sat, 15 Oct 2016 14:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754512AbcJOQXc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Oct 2016 12:23:32 -0400
-Received: from mout.web.de ([212.227.17.11]:53420 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754268AbcJOQXb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Oct 2016 12:23:31 -0400
-Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MHXxg-1bykaz4908-003NMa; Sat, 15 Oct 2016 18:23:14
- +0200
-X-Mozilla-News-Host: news://news.gmane.org:119
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject:  [PATCH] avoid pointer arithmetic involving NULL in FLEX_ALLOC_MEM
-Message-ID: <ccb15072-d949-fc84-ee45-45ba013f53c4@web.de>
-Date:   Sat, 15 Oct 2016 18:23:11 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:J/zH1mXQcNBYBqztD57zCy7R4d5JNbOfFC/11KC0YGggam5f9AK
- rLihlSpfwOKtlM8xMxF/8UvKHnvebk9oPqUMVnLv+IrxS38CtuGkKPbB4AjYK3bqXVbr6Jq
- 0b6MXBDRa4dMzH19mwX07ccDuO9JIzOoWL4p5MMJxGSxGdUsetoSLjx4/uRKEH6+eHOazju
- OG+Uiu/xPY/aIba+kSYTA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ut0RHVCidsk=:aYsHxG5KRiHAI+v6Kp3u0N
- BEqGyN3SfjiC6dE1Sfd7NlxsVReys0B0fC+kZlvVteSPR8iUvpXnyYLIVcQBptwli2owCL/+q
- BCGnH7NNCGrAQDH7W+yVCBQstnHNoXCLmZOP2CyPG/gKonAgyAsAsfoFbxBLdnbYGsk5WK7Tp
- FCdUfk7ENKgR7h8Gd1FBSBBmY5ToJJ+lCbiVWLVdHbJE3FhpfcpCR18B6Bg6QOkvEKfr5QY6q
- REJbQqJOh/nBgszy1zY3vIR8lC95DuzobCzImLf0GN0DPZ8vCslOTJ6JvkHwMGN5QixaS4ta6
- tUU4/2ezF+NzJFUAfFx8XT07Z1Io17lJgX1ke14/GJPS7jGjsNykxEqiVnmPdZObmVyTQwypN
- cj8Viom1Zu6SMwEARF7Nk9JYtMdEfZ7ZU0i7orZiLFbbLAV8PeJQBE84N1ZrBKYk6tXitSwH7
- YDolAUFJfnawra0zOd/nrpHo/QytOcbKVCSdW7VWvIbQ6q02z619Udtfon8WjKu5lCeBH02Go
- 3CYhue1xLYKpMn/d2kUP1YRzt7b575IdQqu81dgxZB3iLK0duPUC06MgUuFWS28bqGl1qwgtI
- arAhQ0tZDYTFVV5Hazqt6Rf9COfNPZnNfY+kRpmL9RmpvgaMkTvJFongZqs+qA6+HohdOU84U
- UbO21iizAKAYmSResNvQWwH3YXWKyaClmrctyOt0B4iEggXADU/V3RhjasNIchmKB25YBGK0r
- 7vospTFudLqg/pu0viCyJDv/3vfcyCFghoiFeKS7FrhjZOEic3qTw50N1m2ZQNuFVRbYDZFFd
- 9XEAp9w
+        id S1754386AbcJOOra (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Oct 2016 10:47:30 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36367 "EHLO
+        mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753808AbcJOOr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Oct 2016 10:47:29 -0400
+Received: by mail-pa0-f68.google.com with SMTP id os4so3232096pac.3
+        for <git@vger.kernel.org>; Sat, 15 Oct 2016 07:47:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=pAwoyIG28zx18gmjWfVGDclG0ox1N/cT11Vi3KKuvQY=;
+        b=czP8wungVrFAYRu+3CPWNSUZLad8RgL47XENMN0XgweF8mA0hdFqwUrMAvauT6UAbF
+         KnJ5qwHn3taCX302vamB/CeLrnWwsbsutl3AnG3FIwvIAtzUNyyLYX27emtRIgaMk18z
+         qpj/JfiSjvpwA0Q9REpeUYHak0qI/kan1pff2Ez1iGDOZHriW9D/0p+iamD1ZWPe7+/e
+         ekO26OZRv5Os0Qx1LXAsOgVny9b27l27TLKN6dIWwcF4PonH7gxA/xWk0aRev5+0Y5p8
+         5JsILZ0KAPZ/69MT4AeM150cRd8owlcFabiTfHQ5/Jlq9mvRFvDaTCB+HZZWrpncnv0p
+         +kfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=pAwoyIG28zx18gmjWfVGDclG0ox1N/cT11Vi3KKuvQY=;
+        b=WrNClj06+6GF6qcGVpOs7Q2KfNRVWa6969mTPF7ABTcsTIbz1WAUPG/YLeIAPg8mZV
+         x8jKCFV8SFm+KcjLHR/3HfroxLdo0LF97hnhVCT3H2IQpOR2SRDsbdfjMZDyRRGBZ6wT
+         6NTParYVfZVbMyHlFVqr+1KxrhJfA1Rd6Vy1dJ9JK3RLwGRZUvnBbOVaixVIaY3FzLuJ
+         CmznvbE17yjVc1mNyhF2TJy4Ui7KKc3439xlXXYIBPDOQ1hUMrLCPsjVRzbjdz7MF+m+
+         ahdW9Pk+EpL8wp2cwhO02hXHBwhtBXnWCIBafpoS8QtJQcmD9INSS7Z+nzN2P0bIKlT6
+         C0iA==
+X-Gm-Message-State: AA6/9Rn4rOUG6m4u3YmqyRA7F4v/ZNPWUcALrarNAZMrNtljaoGNuqn6ZBX0k2drLTS1dg==
+X-Received: by 10.66.222.169 with SMTP id qn9mr21813481pac.133.1476542848451;
+        Sat, 15 Oct 2016 07:47:28 -0700 (PDT)
+Received: from mtl3z26wz1.ads.autodesk.com (adsk-nat-ip11.autodesk.com. [132.188.71.11])
+        by smtp.gmail.com with ESMTPSA id m188sm35667076pfc.40.2016.10.15.07.47.27
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 15 Oct 2016 07:47:27 -0700 (PDT)
+Content-Type: text/plain; charset=windows-1252
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v10 14/14] contrib/long-running-filter: add long running filter example
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <3bdfebab-aae9-3263-218e-c8ae394084fc@web.de>
+Date:   Sat, 15 Oct 2016 07:47:26 -0700
+Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+        peff@peff.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EE051B9A-B3F8-4AB7-8028-0105C51BFE2E@gmail.com>
+References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-15-larsxschneider@gmail.com> <3bdfebab-aae9-3263-218e-c8ae394084fc@web.de>
+To:     =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calculating offsets involving a NULL pointer is undefined.  It works in
-practice (for now?), but we should not rely on it.  Allocate first and
-then simply refer to the flexible array member by its name instead of
-performing pointer arithmetic up front.  The resulting code is slightly
-shorter, easier to read and doesn't rely on undefined behaviour.
 
-NB: The cast to a (non-const) void pointer is necessary to keep support
-for flexible array members declared as const.
+> On 08 Oct 2016, at 22:42, Torsten B=F6gershausen <tboegi@web.de> =
+wrote:
+>=20
+> On 08.10.16 13:25, larsxschneider@gmail.com wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> Add a simple pass-thru filter as example implementation for the Git
+>> filter protocol version 2. See Documentation/gitattributes.txt, =
+section
+>> "Filter Protocol" for more info.
+>>=20
+>=20
+> Nothing wrong with code in contrib.
+> I may have missed parts of the discussion, was there a good reason to
+> drop the test case completely?
+>=20
+>> When adding a new feature, make sure that you have new tests to show
+>> the feature triggers the new behavior when it should, and to show the
+>> feature does not trigger when it shouldn't.  After any code change, =
+make
+>> sure that the entire test suite passes.
+>=20
+> Or is there a plan to add them later ?
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-This patch allows the test suite to largely pass (t7063 still fails)
-for clang 3.8 with -fsanitize=undefined and -DNO_UNALIGNED_LOADS.
+The test is part of the "main feature patch" 13/14:
+=
+http://public-inbox.org/git/20161008112530.15506-14-larsxschneider@gmail.c=
+om/
 
- git-compat-util.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 43718da..f964e36 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -851,8 +851,9 @@ static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
-  * times, and it must be assignable as an lvalue.
-  */
- #define FLEX_ALLOC_MEM(x, flexname, buf, len) do { \
--	(x) = NULL; /* silence -Wuninitialized for offset calculation */ \
--	(x) = xalloc_flex(sizeof(*(x)), (char *)(&((x)->flexname)) - (char *)(x), (buf), (len)); \
-+	size_t flex_array_len_ = (len); \
-+	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
-+	memcpy((void *)(x)->flexname, (buf), flex_array_len_); \
- } while (0)
- #define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
- 	(x) = xalloc_flex(sizeof(*(x)), sizeof(*(x)), (buf), (len)); \
--- 
-2.10.1
-
+Cheers,
+Lars=
