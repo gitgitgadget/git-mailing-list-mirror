@@ -2,99 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 228B820988
-	for <e@80x24.org>; Sat, 15 Oct 2016 13:45:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C943620988
+	for <e@80x24.org>; Sat, 15 Oct 2016 15:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754451AbcJONpM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Oct 2016 09:45:12 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53250 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754349AbcJONpK (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 15 Oct 2016 09:45:10 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 295CF280AD;
-        Sat, 15 Oct 2016 13:45:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1476539108;
-        bh=gQhQRWcuPlvgqwL6aRKQLwOsoMOfS+X0d8JETtJZpYE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=D2GOwMh3g3Tvu2yWzpshkmoP448RLKV0YrP3yF6mP9DvV1B3N07tef/GcQJhC2PIx
-         Q36nO9Ud9zcMEHx+tfnc1OOCjthKEuCPhyZGH2czAW47DJoADz37FlAMTsB6XFMPfm
-         e4CiafMi9FjMCHqeh1Bpmgp+Va6meCz7xDFZM8JVdoJ/UY+tBS/PyhrLd+wzevsYXS
-         Ynv5P3cCgDSyms5EXEYstn329vh7xt1uCxnZywth2IrFQPkjTX2NSU/c+SkAeoot2H
-         e8KmGG9RFnoT6gv0e2c3+OSIt4WfkKc5tMLCPGkAq7gNBNu/C2vg8+Dkke9d3OKzex
-         M2yFMB8zPv8bgEwIftOPHJKCr23EZXbFQaQv/toCdRJijnB9QLbOjqGMfdlpODA7W3
-         o8UdxG8vMgPMdxEWye/cWJBpbFm8Ocw1oxkYq9eKmUsprsbFnA5196I9azQ6zL//2A
-         US6dqCgmiWXs3QTFKFimTxkk0wJWYGJn00kr2mTWu6xazh7bBaK
-Date:   Sat, 15 Oct 2016 13:45:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cocci: avoid self-references in object_id transformations
-Message-ID: <20161015134503.u3aznujploqee2le@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <a5ed26c0-7fea-259c-74c1-0cd870a35290@web.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ghdewvhguvx3qbnb"
-Content-Disposition: inline
-In-Reply-To: <a5ed26c0-7fea-259c-74c1-0cd870a35290@web.de>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20160916 (1.7.0)
+        id S1754293AbcJOPDL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Oct 2016 11:03:11 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35940 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754311AbcJOPDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Oct 2016 11:03:09 -0400
+Received: by mail-pf0-f194.google.com with SMTP id r16so9345995pfg.3
+        for <git@vger.kernel.org>; Sat, 15 Oct 2016 08:02:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=3fUV+a73fOMsRJgm/lquI09MXyF5694/0kQyhpUaLF8=;
+        b=wI7dOFTdsiPgbLhkPG8Sa1YteJ0sOFZv9lFs8CDX2DgrqI4eoOj9nNJ5QnhyvKfTkQ
+         7gS2uPcvky0bylkPt0oJnRYC1skll0KsVXE5tZqD0lxbBmWL4rfL4HYyEFLcu9hOUtAS
+         mi1o8dnpSakMarpcNCTD9JuL2vtXK5nGZm6LZc3Buqbi5Vyta6DUflyKj2MJ3wJH48hR
+         ArvFrRYXqoQE2Q1zPOaeIJURsw/Ma/NmxB87x9/wki7ejO2G6EUzReeg0FlGZwnsP0BR
+         kSehxOwpf3C8us3KSUVyp6/mEc4wlm2lH2grNqPgptQ9OmXJLchLzH+oKd3yapJyfsAs
+         xfVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=3fUV+a73fOMsRJgm/lquI09MXyF5694/0kQyhpUaLF8=;
+        b=KfKKkfH+or24vLgPod3gZNKm+1AJBo9oo6VrYfebjMT2Wp95SckxakFt3P7vOJTdMG
+         q9/Y8UL2JGWQJx//UMDhhIAzD4gDQ/iPDBfjqGzjGmxzoG+lLhjXn2UPA0LHn1sHrwCW
+         aWHOQvMowxv7pBeH2CSKz44mg1GJmKKZT18PoFkgEsOLmF/zd73btA1T6rThE68Ej7rp
+         xLVZwskaNOkZTA29jn2TJCaReCszHTjJ5dHDmZqjYh47oiGfb5bqSzWS6qBPmJ9zRkOb
+         xLNdkERvYxUNstxyH8wwE5r+FDQ3WF2Of5WVJddbT0MsesGqU4X9TQOKh2sV6k1nHpw4
+         0d3Q==
+X-Gm-Message-State: AA6/9RleB+KBfsuhb5Fuzsz/1Z08NnSMTtIRRI8vk8R4Z1Y1O+8CaglIAFmz931jbTpvHg==
+X-Received: by 10.98.134.78 with SMTP id x75mr26082419pfd.6.1476543762412;
+        Sat, 15 Oct 2016 08:02:42 -0700 (PDT)
+Received: from mtl3z26wz1.ads.autodesk.com (adsk-nat-ip11.autodesk.com. [132.188.71.11])
+        by smtp.gmail.com with ESMTPSA id xn11sm35809273pac.38.2016.10.15.08.02.41
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 15 Oct 2016 08:02:41 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v10 04/14] run-command: add clean_on_exit_handler
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1610111407080.3492@virtualbox>
+Date:   Sat, 15 Oct 2016 08:02:40 -0700
+Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+        peff@peff.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9C686FFB-CB07-445E-B812-97781CAB113D@gmail.com>
+References: <20161008112530.15506-1-larsxschneider@gmail.com> <20161008112530.15506-5-larsxschneider@gmail.com> <alpine.DEB.2.20.1610111407080.3492@virtualbox>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ghdewvhguvx3qbnb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 11 Oct 2016, at 05:12, Johannes Schindelin =
+<johannes.schindelin@gmx.de> wrote:
+>=20
+> Hi Lars,
+>=20
+> On Sat, 8 Oct 2016, larsxschneider@gmail.com wrote:
+>=20
+>> @@ -31,6 +32,15 @@ static void cleanup_children(int sig, int =
+in_signal)
+>> 	while (children_to_clean) {
+>> 		struct child_to_clean *p =3D children_to_clean;
+>> 		children_to_clean =3D p->next;
+>> +
+>> +		if (p->process && !in_signal) {
+>> +			struct child_process *process =3D p->process;
+>> +			if (process->clean_on_exit_handler) {
+>> +				trace_printf("trace: run_command: =
+running exit handler for pid %d", p->pid);
+>=20
+> On Windows, pid_t translates to long long int, resulting in this build
+> error:
+>=20
+> -- snip --
+> In file included from cache.h:10:0,
+>                  from run-command.c:1:
+> run-command.c: In function 'cleanup_children':
+> run-command.c:39:18: error: format '%d' expects argument of type =
+'int', but argument 5 has type 'pid_t {aka long long int}' =
+[-Werror=3Dformat=3D]
+>      trace_printf("trace: run_command: running exit handler for pid =
+%d", p->pid);
+>                   ^
+> trace.h:81:53: note: in definition of macro 'trace_printf'
+>   trace_printf_key_fl(TRACE_CONTEXT, __LINE__, NULL, __VA_ARGS__)
+>                                                      ^~~~~~~~~~~
+> cc1.exe: all warnings being treated as errors
+> make: *** [Makefile:1987: run-command.o] Error 1
+> -- snap --
+>=20
+> Maybe use PRIuMAX as we do elsewhere (see output of `git grep
+> printf.*pid`):
+>=20
+> 	trace_printf("trace: run_command: running exit handler for pid =
+%"
+> 		     PRIuMAX, (uintmax_t)p->pid);
 
-On Sat, Oct 15, 2016 at 10:25:34AM +0200, Ren=C3=A9 Scharfe wrote:
-> The object_id functions oid_to_hex, oid_to_hex_r, oidclr, oidcmp, and
-> oidcpy are defined as wrappers of their legacy counterparts sha1_to_hex,
-> sha1_to_hex_r, hashclr, hashcmp, and hashcpy, respectively.  Make sure
-> that the Coccinelle transformations for converting legacy function calls
-> are not applied to these wrappers themselves, which would result in
-> tautological declarations.
+Thanks for hint! I'll change it!
 
-Ah, yes, this is a good idea.  I've had to hack around this, but this is
-much better than having to fix it up by hand.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+However, I am building on Win 8.1 with your latest SDK and I cannot
+reproduce the error. Any idea why that might be the case?
 
---ghdewvhguvx3qbnb
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
+Lars
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.15 (GNU/Linux)
-
-iQIcBAABCgAGBQJYAjLfAAoJEL9TXYEfUvaL5wIQAK+9ZToMzpwfdar/tbxeki7b
-CHNpHg5axD75lLo2R+hvZFLyq6B51TVXDUXFv2oEs+oWdw+oPzuUAPXJPI6eXFlr
-FgDJRngLCqBPRICqzk7CY3VsCC6EAFct8f0C2R4yu78ZAejPKBwkJIGdxdhJH9YV
-mvWeBcO8XRcIGbEGxY1R7U6yxzOPvHwzX9lEkbVqHm8P+kzD+RPz9mBbW4qyHipV
-D1cwOBrp8GoCJ/R68Gsu7/pt1wadh6qO9nsypZ6166pvDL6ACsnQF/avkF5G08XS
-yHkQbGx5Q96bz3gjfK0GXuLpU9/IS0251EKOpWAaWvjElKQqPKBHAiPaLL8S/ST0
-scN4wWwM4EjWq1CRlsFYk/QryyYuzeGC7cp4T9S/tTRKI4pTSjZu9C6yw0bE/93l
-TJ51jQZ6CB1AkZCEIHbIqtn0zimG1LJcGUmpBo6c3J92+AS/obPdeHXh2fnuRK0z
-plA80ca/5BMNeD4O5LnM3SjYe7r3H3B60G/WNg2nUHAdjwddi24TSgRAzV60D9V8
-XjzE9Y1PAPPjDJpdk6kUxOifPIztnDPTvLWSAsVygB33/zQ5RVAtlc3p0wvN1p59
-0rvWgfs8CZXN+A9sUH/iMf0lT4Fl6DtBsdTLYgR6bWHSw+2HUhuaJcO+LFgbWp2B
-GqmFBrd3rzQGrjXjF2KK
-=ujCf
------END PGP SIGNATURE-----
-
---ghdewvhguvx3qbnb--
