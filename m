@@ -2,133 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E85C1F4F8
-	for <e@80x24.org>; Fri, 14 Oct 2016 23:57:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAE3820988
+	for <e@80x24.org>; Sat, 15 Oct 2016 16:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751510AbcJNX5X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Oct 2016 19:57:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57724 "EHLO cloud.peff.net"
+        id S1754512AbcJOQXc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Oct 2016 12:23:32 -0400
+Received: from mout.web.de ([212.227.17.11]:53420 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751195AbcJNX5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2016 19:57:21 -0400
-Received: (qmail 8412 invoked by uid 109); 14 Oct 2016 23:57:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Oct 2016 23:57:21 +0000
-Received: (qmail 11585 invoked by uid 111); 14 Oct 2016 23:57:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Oct 2016 19:57:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Oct 2016 19:57:18 -0400
-Date:   Fri, 14 Oct 2016 19:57:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] test-lib: detect common misuse of test_expect_failure
-Message-ID: <20161014235718.2rbejrzs5axhopt7@sigill.intra.peff.net>
-References: <xmqqk2day2ry.fsf@gitster.mtv.corp.google.com>
+        id S1754268AbcJOQXb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Oct 2016 12:23:31 -0400
+Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MHXxg-1bykaz4908-003NMa; Sat, 15 Oct 2016 18:23:14
+ +0200
+X-Mozilla-News-Host: news://news.gmane.org:119
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject:  [PATCH] avoid pointer arithmetic involving NULL in FLEX_ALLOC_MEM
+Message-ID: <ccb15072-d949-fc84-ee45-45ba013f53c4@web.de>
+Date:   Sat, 15 Oct 2016 18:23:11 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk2day2ry.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:J/zH1mXQcNBYBqztD57zCy7R4d5JNbOfFC/11KC0YGggam5f9AK
+ rLihlSpfwOKtlM8xMxF/8UvKHnvebk9oPqUMVnLv+IrxS38CtuGkKPbB4AjYK3bqXVbr6Jq
+ 0b6MXBDRa4dMzH19mwX07ccDuO9JIzOoWL4p5MMJxGSxGdUsetoSLjx4/uRKEH6+eHOazju
+ OG+Uiu/xPY/aIba+kSYTA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ut0RHVCidsk=:aYsHxG5KRiHAI+v6Kp3u0N
+ BEqGyN3SfjiC6dE1Sfd7NlxsVReys0B0fC+kZlvVteSPR8iUvpXnyYLIVcQBptwli2owCL/+q
+ BCGnH7NNCGrAQDH7W+yVCBQstnHNoXCLmZOP2CyPG/gKonAgyAsAsfoFbxBLdnbYGsk5WK7Tp
+ FCdUfk7ENKgR7h8Gd1FBSBBmY5ToJJ+lCbiVWLVdHbJE3FhpfcpCR18B6Bg6QOkvEKfr5QY6q
+ REJbQqJOh/nBgszy1zY3vIR8lC95DuzobCzImLf0GN0DPZ8vCslOTJ6JvkHwMGN5QixaS4ta6
+ tUU4/2ezF+NzJFUAfFx8XT07Z1Io17lJgX1ke14/GJPS7jGjsNykxEqiVnmPdZObmVyTQwypN
+ cj8Viom1Zu6SMwEARF7Nk9JYtMdEfZ7ZU0i7orZiLFbbLAV8PeJQBE84N1ZrBKYk6tXitSwH7
+ YDolAUFJfnawra0zOd/nrpHo/QytOcbKVCSdW7VWvIbQ6q02z619Udtfon8WjKu5lCeBH02Go
+ 3CYhue1xLYKpMn/d2kUP1YRzt7b575IdQqu81dgxZB3iLK0duPUC06MgUuFWS28bqGl1qwgtI
+ arAhQ0tZDYTFVV5Hazqt6Rf9COfNPZnNfY+kRpmL9RmpvgaMkTvJFongZqs+qA6+HohdOU84U
+ UbO21iizAKAYmSResNvQWwH3YXWKyaClmrctyOt0B4iEggXADU/V3RhjasNIchmKB25YBGK0r
+ 7vospTFudLqg/pu0viCyJDv/3vfcyCFghoiFeKS7FrhjZOEic3qTw50N1m2ZQNuFVRbYDZFFd
+ 9XEAp9w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2016 at 03:38:41PM -0700, Junio C Hamano wrote:
+Calculating offsets involving a NULL pointer is undefined.  It works in
+practice (for now?), but we should not rely on it.  Allocate first and
+then simply refer to the flexible array member by its name instead of
+performing pointer arithmetic up front.  The resulting code is slightly
+shorter, easier to read and doesn't rely on undefined behaviour.
 
-> It is a very easy mistake to make to say test_expect_failure when
-> making sure a step in the test fails, which must be spelled
-> "test_must_fail".  By introducing a toggle $test_in_progress that is
-> turned on at the beginning of test_start_() and off at the end of
-> test_finish_() helper, we can detect this fairly easily.
-> 
-> Strictly speaking, writing "test_expect_success" inside another
-> test_expect_success (or inside test_expect_failure for that matter)
-> can be detected with the same mechanism if we really wanted to, but
-> that is a lot less likely confusion, so let's not bother.
+NB: The cast to a (non-const) void pointer is necessary to keep support
+for flexible array members declared as const.
 
-I like the general idea, but I'm not sure how this would interact with
-the tests in t0000 that test the test suite. It looks like that always
-happens in a full sub-shell invocation (via run_sub_test_lib_test), so
-we're OK as long as test_in_progress is not exported (and obviously the
-subshell cannot accidentally overwrite our variable with a 0 when it is
-finished).
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+This patch allows the test suite to largely pass (t7063 still fails)
+for clang 3.8 with -fsanitize=undefined and -DNO_UNALIGNED_LOADS.
 
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index fdaeb3a96b..fc8c10a061 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -381,6 +381,10 @@ test_verify_prereq () {
->  }
->  
->  test_expect_failure () {
-> +	if test "$test_in_progress" = 1
-> +	then
-> +		error "bug in the test script: did you mean test_must_fail instead of test_expect_failure?"
-> +	fi
+ git-compat-util.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-This follows existing practice for things like the &&-lint-checker, and
-bails out on the whole test script. That sometimes makes it hard to find
-the problematic test, especially if you're running via something like
-"prove", because it doesn't make valid TAP output.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 43718da..f964e36 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -851,8 +851,9 @@ static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
+  * times, and it must be assignable as an lvalue.
+  */
+ #define FLEX_ALLOC_MEM(x, flexname, buf, len) do { \
+-	(x) = NULL; /* silence -Wuninitialized for offset calculation */ \
+-	(x) = xalloc_flex(sizeof(*(x)), (char *)(&((x)->flexname)) - (char *)(x), (buf), (len)); \
++	size_t flex_array_len_ = (len); \
++	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
++	memcpy((void *)(x)->flexname, (buf), flex_array_len_); \
+ } while (0)
+ #define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
+ 	(x) = xalloc_flex(sizeof(*(x)), sizeof(*(x)), (buf), (len)); \
+-- 
+2.10.1
 
-It might be nicer if we just said "this test is malformed, and therefore
-fails", and then you get all the usual niceties for recording and
-finding the failed test.
-
-I don't think it would be robust enough to try to propagate the error up
-to the outer test_expect_success block (and anyway, you'd also want to
-know about it in a test_expect_failure block; it's a bug in the test,
-not a known breakage). But perhaps error() could dump some TAP-like
-output with a "virtual" failed test.
-
-Something like:
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 11562bd..dc6b1f5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -299,9 +299,8 @@ TERM=dumb
- export TERM
- 
- error () {
--	say_color error "error: $*"
--	GIT_EXIT_OK=t
--	exit 1
-+	test_failure_ "$@"
-+	test_done
- }
- 
- say () {
-@@ -600,7 +599,7 @@ test_run_ () {
- 		# code of other programs
- 		test_eval_ "(exit 117) && $1"
- 		if test "$?" != 117; then
--			error "bug in the test script: broken &&-chain: $1"
-+			error "bug in the test script: broken &&-chain" "$1"
- 		fi
- 		trace=$trace_tmp
- 	fi
-
-which lets "make prove" collect the broken test number.
-
-It would perhaps need to cover the case when $test_count is "0"
-separately. I dunno. It would be nicer still if we could continue
-running other tests in the script, but I think it's impossible to
-robustly jump back to the outer script.
-
-These kinds of "bug in the test suite" are presumably rare enough that
-the niceties don't matter that much, but I trigger the &&-checker
-reasonably frequently (that and test_line_count, because I can never
-remember the correct invocation).
-
-Anyway. That's all orthogonal to your patch. I just wondered if we could
-do better, but AFAICT the right way to do better is to hook into
-error(), which means your patch would not have to care exactly how it
-fails.
-
--Peff
