@@ -2,140 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C3AE1F4F8
-	for <e@80x24.org>; Sun, 16 Oct 2016 10:06:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F283E2098B
+	for <e@80x24.org>; Sun, 16 Oct 2016 12:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755727AbcJPKGZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Oct 2016 06:06:25 -0400
-Received: from mout.web.de ([212.227.17.12]:64682 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755686AbcJPKGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2016 06:06:22 -0400
-Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MRl5x-1cO0iz3whl-00Sumy; Sun, 16 Oct 2016 12:06:05
- +0200
-Subject: Re: [PATCH] avoid pointer arithmetic involving NULL in FLEX_ALLOC_MEM
-To:     Jeff King <peff@peff.net>
-References: <ccb15072-d949-fc84-ee45-45ba013f53c4@web.de>
- <20161015171325.k2jggjezfmhk3tz7@sigill.intra.peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c99474f2-dac3-e42a-5e4a-02464cac3982@web.de>
-Date:   Sun, 16 Oct 2016 12:06:02 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1756103AbcJPMYa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Oct 2016 08:24:30 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:35675 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755896AbcJPMY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2016 08:24:28 -0400
+Received: by mail-qk0-f174.google.com with SMTP id z190so197308934qkc.2
+        for <git@vger.kernel.org>; Sun, 16 Oct 2016 05:23:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=WMwMUTarYV+44gTfXPChTaZm/S7Wl6ndm3LgWhH4oEQ=;
+        b=lcA4iuOnaKBaa4mpHSVSebDryz7sMgCkQaNVD2tE5isCoKfrBJ+xzmr0DD7HM52XWW
+         N3Vb16ue3vmI4xkm6THL9QqCpgr0cIp8GMByBpTHTAqCKP1Wysk7NJKaTaNBqQWHthQL
+         UlDWBoQIBcLqAxr2G9GVeAUYxqdLCHUIweuK/eCviHfHyBh4/Hy4V+m/PVkDh2N9lCG0
+         R8bxx+ZuXxlFBcIG9U0kcKy2sqQy5r6GRYOoAPgLFXIEMg+Ym6A8otMf83bW/CEUBNfG
+         TRhY5ZvpnQwkq9DXlVUa4ACTtbyo2gBgqKr5DRv8wjhqF2WRMm1rjkBHrAL28mpewzOL
+         5arQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=WMwMUTarYV+44gTfXPChTaZm/S7Wl6ndm3LgWhH4oEQ=;
+        b=HD2SMrOKqDgpFEwW4UmDzX9ikzyTDyl1u4f3B/5iyBslhraZhrEz4FxYZAIrF/TRh4
+         75HA1g+3SgdzmUGOcJ1s0xBVpzLSkMvFB6ZhuYoR2DjfK3N0OdG6DYEBLpVNxG8WOgCs
+         6uptSGDzEpcwwYySdNlq30WqBVZgMKjdNddiNU9ixE9c//yJ4GfTjAZpDeoZlXzelqZ8
+         0miZ7+GhPFvwat259H4wjHUQ+923Pnb0GiA1p/oWAAGMN4jzhlrXy/tOjeaqG9dg50PC
+         bl7etZF7Ygd7bS+zhSxN1vg7BS/mA2j6cgqii+FSdI3ChKBitq9S2yFUEO7TMQ1dMS6t
+         cdkA==
+X-Gm-Message-State: AA6/9Rk3WMgtQKjvpn/3/bUOo/p9oTrBKFgfAZRRdKYGvpMJLvr7Fiasj/noRBrdd4Q08Wq96hk/VhIYsbKZ9A==
+X-Received: by 10.55.107.198 with SMTP id g189mr18628097qkc.287.1476620635114;
+ Sun, 16 Oct 2016 05:23:55 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20161015171325.k2jggjezfmhk3tz7@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:iz4+GoYsdY7qanhQqHMQgwxu0+jNy8crspGi8J4t32JT+0UhVfM
- PD+oKvBnBKGyJWG6ZlPkZlM20eN88nHw4vDyKa+e3yDBAYyOPtnp9K8HmshzirtamE913gc
- 95M20+u8w5OpJ/sLkzwnrt2RiBrGkMgLokBzb4rZh2TR/Nqq/aQ5sYHzkExto/FF4zegA5e
- K/7Zmewo8gds6GOi01Oqw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OBQ4dme6mXE=:FqeNV+541eC6IrsiThF8AU
- li4V8oN/E/JqD2FaOuISfqaGdkmntbKD9/nNRuWJ+LTyVC+ITJIDDgBsXxwUfMBfc00j31wlZ
- zJc/zXrH6+YSRBfO15VXJqU/lmo+qGzGuche0EOqwrAVaVlSgKv9DHQZBQkayDSj3G714ZapB
- cUPPkpdewWUtBhtmC8J7bPeMKZ4ln1UD2xE2R814C+IxYijGW+9hBwasHA29THwzBI93q8X7C
- EvDwA96MIGJljYIpONwZbXmr8tFHVtoCxoMSegZ6w8OVk/eYJTdRElp7YWetLC6z5e4e/66Ci
- K5kyqCg+lNwBeeczsazBM4/Rl0CAe6fIQbHBgW8A36G/OwK80oXXrXo0iqMgH1CV0dPTvXIDW
- yVAjCe4R9wsphKXKnpJJ3W8CA/3BBQh0/wL0QBtJs5+pABBkkZ8O9eLqZXPlPAL6FHFSBZGxW
- eln1zqMD2mHHEuNKF3oT/OIaVhv4/HmR4s7OiUrqBUU+rwf9SNcwIktOaHFjn4DVy2c6GjkDg
- 8EXPGRKb9vrmVTk2nhE8+0GTDB6n/tciDa+KXdTG6VKZepujWVg0mS7M9XKEk5UOMZvQ9zdQj
- j2W7ul+6uu2PhU84eB1Ghd2hnYEqj5k0qVZRlhq2fkJZEWitS0I3/iSH6nEZhCLADmI/lUtIa
- dgRlbFmwErLH35dEaj2CLaXGmLLeZXd1EWj8lSl5z4pZtqmdYK0b8rFYcZFHQtvlYIy6ZLgiH
- ZVFCM+ZYJdi8vuy/705ucPTmZDmHo1B8YDo1zDid9EDmBghcS1byfUHkqOZ+bQpDriT1ekDse
- 82sxBGQ
+Received: by 10.12.148.163 with HTTP; Sun, 16 Oct 2016 05:23:54 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sun, 16 Oct 2016 20:23:54 +0800
+Message-ID: <CANYiYbEip5fu9gz24ts_xcPBfPRLMOBrhjfF9gjs=bZym1aizg@mail.gmail.com>
+Subject: [GIT PULL] l10n updates for 2.10.0 maint branch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.10.2016 um 19:13 schrieb Jeff King:
-> On Sat, Oct 15, 2016 at 06:23:11PM +0200, René Scharfe wrote:
-> 
->> Calculating offsets involving a NULL pointer is undefined.  It works in
->> practice (for now?), but we should not rely on it.  Allocate first and
->> then simply refer to the flexible array member by its name instead of
->> performing pointer arithmetic up front.  The resulting code is slightly
->> shorter, easier to read and doesn't rely on undefined behaviour.
-> 
-> Yeah, this NULL computation is pretty nasty. I recall trying to get rid
-> of it, but I think it is impossible to do so portably while still using
-> the generic xalloc_flex() helper.
+Hi Junio,
 
-The only way I see is to pass the type to the macro explicitly (because
-typeof is an extention), and that would make call sites ugly.
+Please pull the following l10n updates for Git 2.10 to the maint branch.
 
->>  #define FLEX_ALLOC_MEM(x, flexname, buf, len) do { \
->> -	(x) = NULL; /* silence -Wuninitialized for offset calculation */ \
->> -	(x) = xalloc_flex(sizeof(*(x)), (char *)(&((x)->flexname)) - (char *)(x), (buf), (len)); \
->> +	size_t flex_array_len_ = (len); \
->> +	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
->> +	memcpy((void *)(x)->flexname, (buf), flex_array_len_); \
-> 
-> This looks correct. I wondered at first why you bothered with
-> flex_array_len, but it is to avoid evaluating the "len" parameter
-> multiple times.
+The following changes since commit 9a4b694c539fead26833c2104c1a93d3a2b4c50a:
 
-Right; we could drop that feature of the original macros and require
-users to pass length expressions that don't have side effects -- all of
-them already do that anyway.  But let's keep it in this round; it just
-costs one extra line.
+  l10n: zh_CN: review for git v2.10.0 l10n (2016-09-11 21:34:23 +0800)
 
->>  } while (0)
->>  #define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
->>  	(x) = xalloc_flex(sizeof(*(x)), sizeof(*(x)), (buf), (len)); \
-> 
-> Now that xalloc_flex() has only this one caller remaining, perhaps it
-> should just be inlined here, too, for simplicity.
+are available in the git repository at:
 
--- >8 --
-Subject: [PATCH 2/1] inline xalloc_flex() into FLEXPTR_ALLOC_MEM
+  git://github.com/git-l10n/git-po tags/l10n-2.10.0-rnd2.4
 
-Allocate and copy directly in FLEXPTR_ALLOC_MEM and remove the now
-unused helper function xalloc_flex().  The resulting code is shorter
-and the offset arithmetic is a bit simpler.
+for you to fetch changes up to 4dc2ce92fa170b797c850e0c17083bc376c01a85:
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- git-compat-util.h | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+  Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-ru
+(2016-10-16 20:11:41 +0800)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f964e36..49ca28c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -856,7 +856,9 @@ static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
- 	memcpy((void *)(x)->flexname, (buf), flex_array_len_); \
- } while (0)
- #define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
--	(x) = xalloc_flex(sizeof(*(x)), sizeof(*(x)), (buf), (len)); \
-+	size_t flex_array_len_ = (len); \
-+	(x) = xcalloc(1, st_add3(sizeof(*(x)), flex_array_len_, 1)); \
-+	memcpy((x) + 1, (buf), flex_array_len_); \
- 	(x)->ptrname = (void *)((x)+1); \
- } while(0)
- #define FLEX_ALLOC_STR(x, flexname, str) \
-@@ -864,14 +866,6 @@ static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
- #define FLEXPTR_ALLOC_STR(x, ptrname, str) \
- 	FLEXPTR_ALLOC_MEM((x), ptrname, (str), strlen(str))
- 
--static inline void *xalloc_flex(size_t base_len, size_t offset,
--				const void *src, size_t src_len)
--{
--	unsigned char *ret = xcalloc(1, st_add3(base_len, src_len, 1));
--	memcpy(ret + offset, src, src_len);
--	return ret;
--}
--
- static inline char *xstrdup_or_null(const char *str)
- {
- 	return str ? xstrdup(str) : NULL;
--- 
-2.10.1
+----------------------------------------------------------------
+l10n-2.10.0-rnd2.4
+
+----------------------------------------------------------------
+Dimitriy Ryazantcev (1):
+      l10n: ru.po: update Russian translation
+
+Jiang Xin (1):
+      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-ru
+
+Ralf Thielow (2):
+      l10n: de.po: fix translation of autostash
+      l10n: de.po: translate 260 new messages
+
+ po/de.po | 5182 +++++++++++++++++++++++++++++++++-----------------------------
+ po/ru.po |   52 +-
+ 2 files changed, 2815 insertions(+), 2419 deletions(-)
+
+--
+Jiang Xin
