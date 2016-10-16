@@ -6,75 +6,78 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7A142098B
-	for <e@80x24.org>; Sun, 16 Oct 2016 19:43:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B1822098B
+	for <e@80x24.org>; Sun, 16 Oct 2016 19:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757156AbcJPTnL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Oct 2016 15:43:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58081 "EHLO cloud.peff.net"
+        id S1757455AbcJPTqL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Oct 2016 15:46:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58091 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756546AbcJPTnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2016 15:43:10 -0400
-Received: (qmail 28109 invoked by uid 109); 16 Oct 2016 19:42:41 -0000
+        id S1755684AbcJPTqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2016 15:46:10 -0400
+Received: (qmail 28378 invoked by uid 109); 16 Oct 2016 19:46:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 16 Oct 2016 19:42:41 +0000
-Received: (qmail 23537 invoked by uid 111); 16 Oct 2016 19:43:01 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 16 Oct 2016 19:46:10 +0000
+Received: (qmail 23573 invoked by uid 111); 16 Oct 2016 19:46:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 16 Oct 2016 15:43:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Oct 2016 15:42:38 -0400
-Date:   Sun, 16 Oct 2016 15:42:38 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 16 Oct 2016 15:46:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Oct 2016 15:46:08 -0400
+Date:   Sun, 16 Oct 2016 15:46:08 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 07/25] sequencer: completely revamp the "todo" script
- parsing
-Message-ID: <20161016194238.wbge2pas5xr46av7@sigill.intra.peff.net>
-References: <cover.1473590966.git.johannes.schindelin@gmx.de>
- <cover.1476120229.git.johannes.schindelin@gmx.de>
- <4e73ba3e8c1700259ffcc3224d1f66e6a760142d.1476120229.git.johannes.schindelin@gmx.de>
- <933b13d6-5f24-c03a-a1a0-712ceb8ddcc8@web.de>
- <20161015171926.qgtvrjcaqwb436hx@sigill.intra.peff.net>
- <d9f4f658-94fb-cb9e-7da8-3a2fac120a9e@web.de>
- <20161015174656.fmgk3le2b34nnjpx@sigill.intra.peff.net>
- <alpine.DEB.2.20.1610161006080.197091@virtualbox>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] avoid pointer arithmetic involving NULL in FLEX_ALLOC_MEM
+Message-ID: <20161016194607.a6mhmdida57rhe23@sigill.intra.peff.net>
+References: <ccb15072-d949-fc84-ee45-45ba013f53c4@web.de>
+ <20161015171325.k2jggjezfmhk3tz7@sigill.intra.peff.net>
+ <c99474f2-dac3-e42a-5e4a-02464cac3982@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1610161006080.197091@virtualbox>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c99474f2-dac3-e42a-5e4a-02464cac3982@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 16, 2016 at 10:09:12AM +0200, Johannes Schindelin wrote:
+On Sun, Oct 16, 2016 at 12:06:02PM +0200, René Scharfe wrote:
 
-> > Good catch. It technically needs to check the lower bound, too. In
-> > theory, if somebody wanted to add an enum value that is negative, you'd
-> > use a signed cast and check against both 0 and ARRAY_SIZE(). In
-> > practice, that is nonsense for this case, and using an unsigned type
-> > means that any negative values become large, and the check catches them.
+> > Yeah, this NULL computation is pretty nasty. I recall trying to get rid
+> > of it, but I think it is impossible to do so portably while still using
+> > the generic xalloc_flex() helper.
 > 
-> I am pretty certain that I disagree with that warning: enums have been
-> used as equivalents of ints for a long time, and will be, for a long time
-> to come.
+> The only way I see is to pass the type to the macro explicitly (because
+> typeof is an extention), and that would make call sites ugly.
 
-I'm not sure I agree. IIRC, Assigning values outside the range of an enum has
-always been fishy according to the standard, and a compiler really is
-allowed to allocate a single bit for storage for this enum.
+Yep, exactly. I really wish we could use typeof(); there are a couple
+things that could be made less error-prone and ugly. But it's not even a
+matter of C99; it's a GNU-ism, so I don't think we are even close to
+having support for it everywhere.
 
-> Given that this test is modified to `if (command < TODO_NOOP)` later, I
-> hope that you agree that it is not worth the trouble to appease that
-> compiler overreaction?
+> > This looks correct. I wondered at first why you bothered with
+> > flex_array_len, but it is to avoid evaluating the "len" parameter
+> > multiple times.
+> 
+> Right; we could drop that feature of the original macros and require
+> users to pass length expressions that don't have side effects -- all of
+> them already do that anyway.  But let's keep it in this round; it just
+> costs one extra line.
 
-I don't mind if there are transient warnings on some compilers in the
-middle of a series, but I'm not sure when "later" is. The tip of "pu"
-has this warning right now when built with clang.
+Oh, I think it's worth keeping forever, if only because it makes the
+macro interface have one fewer gotcha. Spending a line of code on that
+is OK with me.
 
-I'm happy to test the TODO_NOOP version against clang (and prepare a
-patch on top if it still complains), but that doesn't seem to have
-Junio's tree at all yet.
+> > Now that xalloc_flex() has only this one caller remaining, perhaps it
+> > should just be inlined here, too, for simplicity.
+> 
+> -- >8 --
+> Subject: [PATCH 2/1] inline xalloc_flex() into FLEXPTR_ALLOC_MEM
+> 
+> Allocate and copy directly in FLEXPTR_ALLOC_MEM and remove the now
+> unused helper function xalloc_flex().  The resulting code is shorter
+> and the offset arithmetic is a bit simpler.
+
+Looks good. Thanks for following up.
 
 -Peff
