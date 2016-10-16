@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B64AD2098B
-	for <e@80x24.org>; Sun, 16 Oct 2016 23:20:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 252F82098B
+	for <e@80x24.org>; Sun, 16 Oct 2016 23:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756171AbcJPXUs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Oct 2016 19:20:48 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:33439 "EHLO
+        id S1756247AbcJPXUv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Oct 2016 19:20:51 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:34221 "EHLO
         mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754974AbcJPXUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2016 19:20:46 -0400
-Received: by mail-pa0-f65.google.com with SMTP id hh10so8539536pac.0
-        for <git@vger.kernel.org>; Sun, 16 Oct 2016 16:20:46 -0700 (PDT)
+        with ESMTP id S1755992AbcJPXUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2016 19:20:47 -0400
+Received: by mail-pa0-f65.google.com with SMTP id fn2so7624676pad.1
+        for <git@vger.kernel.org>; Sun, 16 Oct 2016 16:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yrzgIBvtvrHCvICiQYnRQrYeRbiyutEjyFUkgwqd5sI=;
-        b=YtHWyvwUmXG5XEcY97U1PXBIlT6qyjpTSOGnltTIqYaclgFIVsIm6V2uCrAsBpDo9e
-         6cCZbfPCmDF/lVD3uUHePsKMVZ6qRiTozeyhs0duPYOrzNpoMq7Yd4OB/mQCd18fHpOV
-         5IR0LrfbGKBMRYAaNHw2BBsYmcfRucXC1Px9JMlDiFAywkW/VnOf6OcDgj5VfrZVA13n
-         vx0jYnvoWvioZZ4rApH9MRE1SNSALJEji7OZgYucsxSoSwBneO7JBcM55XSf7WaUvutk
-         9EHA9HDIBNiB7nMOPr+K5ItXmEKvhuGIdMJq2I24DDXscYV6FBQaIVROSifzFQmls6dU
-         Z0lQ==
+        bh=GTKboHWq4z90mJKyXhu3MWJTw/mrHcpWidZ8F5KFJQk=;
+        b=LM2A3ulsL7PEIg5EX8wCHDrO9qR5PihpG/q075Z0+ksggb1/zBklJ8Hybt/Tbh0P/x
+         3Q7uh9xhAbu404/SwrLrijkoaYDk0YjaBk5hS246FP8Yipf/yjQnGugsXw6jvsx8Iv7S
+         pQZd3YXNCB+6bOK0JPnwUUvpQrI0lLsu6bX0mR3xQWiX+XQxKWoqmN4K7uSun3qV1M/v
+         N0g86ZeUbu11MMffdd/Ij1SstzyzcLYajKWj0Rg5y9chKejbtX544moARuwZioYkXIPi
+         Np2oq2R0Vyk+cT1tPYHCzMfeun57jbbH0aWncFIz1QoBq/SMOsERUTu+A202+ifSnWZN
+         3UmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yrzgIBvtvrHCvICiQYnRQrYeRbiyutEjyFUkgwqd5sI=;
-        b=O1gZzr2LQvFrjywx23RkgW0JyZg6QOuz665jVN5T+2KtPVWd8w1HCqJbaDG2BneAyH
-         gIf5eoU5ut4xyNTvNSqhA+Hrddexievcy8pjayDctWWA07Z+wzCTnYk+dXgdc+6KzvdG
-         0lyGD2p/YiWeQjXyMDw1zjAvg3NxzkMykuE5CCIEZ4KHFr8ErnSGGbDJXIwMMvxzsa7Y
-         LSATVfjqL84aswjoimI33PT7o3lTyN6SxMlCTVHOMGfupYEim9RD084ziH2UNq+DAIxr
-         p8PWD/sHEls48uRuRxFsEOsbsDL7idMmjhNcCFwosKjgBxZBF0Pb+7HqbSHbgJmEfcti
-         SKEw==
-X-Gm-Message-State: AA6/9Rlp/1t7bSfkt06mo3+Ffvq81sTCH7MxodxubWmm5yc00KYHupYbOY5OFpgprTEcIg==
-X-Received: by 10.66.21.137 with SMTP id v9mr28334721pae.100.1476660045125;
-        Sun, 16 Oct 2016 16:20:45 -0700 (PDT)
+        bh=GTKboHWq4z90mJKyXhu3MWJTw/mrHcpWidZ8F5KFJQk=;
+        b=nAX/kEQzY+th7v3Aq+FOjGlgzPDigRE5iuk2i51pZwiKuTXKPI/o9zD0phoLaH+EwR
+         Vp1k+YW+ctgOo7Z2fDbLKXGMv6BJMHs/5LcER3RtWPSF8OPzNrf3cRopr88awMYCTUUJ
+         m6BZQChOmwEgKN+twj+5IsIX33pXF1Dh9ausr4PebgVGsaihHuNLbu/Za+IOvyfHwHlb
+         1WLqmYs7WJFf4XYRSiqeNEgMU6zd5VJ5htHz5dJb4CTCPCrWGZZdkdmvREggKVlQih4T
+         NOmtwM8CVklDOX66KpW/TJEA5Jvdc452140zU7ovlH+DBSeCSoKjYOkeO7yPXwAPWo3w
+         WThw==
+X-Gm-Message-State: AA6/9RnqUNpG4a0K0ITU63BKg52FT1HW4NHOTTvPW4NveXrz9/mBYBnPjTbO3D9U2YsOHQ==
+X-Received: by 10.66.9.227 with SMTP id d3mr28557886pab.43.1476660046685;
+        Sun, 16 Oct 2016 16:20:46 -0700 (PDT)
 Received: from rem3n8pj12.ads.autodesk.com (adsk-nat-ip4.autodesk.com. [132.188.71.4])
-        by smtp.gmail.com with ESMTPSA id cp2sm10325691pad.3.2016.10.16.16.20.43
+        by smtp.gmail.com with ESMTPSA id cp2sm10325691pad.3.2016.10.16.16.20.45
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 16 Oct 2016 16:20:44 -0700 (PDT)
+        Sun, 16 Oct 2016 16:20:46 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, jnareb@gmail.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, tboegi@web.de,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v11 01/14] convert: quote filter names in error messages
-Date:   Sun, 16 Oct 2016 16:20:25 -0700
-Message-Id: <20161016232038.84951-2-larsxschneider@gmail.com>
+Subject: [PATCH v11 02/14] convert: modernize tests
+Date:   Sun, 16 Oct 2016 16:20:26 -0700
+Message-Id: <20161016232038.84951-3-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20161016232038.84951-1-larsxschneider@gmail.com>
 References: <20161016232038.84951-1-larsxschneider@gmail.com>
@@ -64,63 +64,175 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard
-to read in error messages. Quote them to improve the readability.
+Use `test_config` to set the config, check that files are empty with
+`test_must_be_empty`, compare files with `test_cmp`, and remove spaces
+after ">" and "<".
 
+Please note that the "rot13" filter configured in "setup" keeps using
+`git config` instead of `test_config` because subsequent tests might
+depend on it.
+
+Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- convert.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t0021-conversion.sh | 58 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index 077f5e6..986c239 100644
---- a/convert.c
-+++ b/convert.c
-@@ -412,7 +412,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	child_process.out = out;
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index e799e59..dc50938 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -38,8 +38,8 @@ script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
  
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", params->cmd);
-+		return error("cannot fork to run external filter '%s'", params->cmd);
+ test_expect_success check '
  
- 	sigchain_push(SIGPIPE, SIG_IGN);
+-	cmp test.o test &&
+-	cmp test.o test.t &&
++	test_cmp test.o test &&
++	test_cmp test.o test.t &&
  
-@@ -430,13 +430,13 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", params->cmd);
-+		error("cannot feed the input to external filter '%s'", params->cmd);
+ 	# ident should be stripped in the repository
+ 	git diff --raw --exit-code :test :test.i &&
+@@ -47,10 +47,10 @@ test_expect_success check '
+ 	embedded=$(sed -ne "$script" test.i) &&
+ 	test "z$id" = "z$embedded" &&
  
- 	sigchain_pop(SIGPIPE);
+-	git cat-file blob :test.t > test.r &&
++	git cat-file blob :test.t >test.r &&
  
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", params->cmd, status);
-+		error("external filter '%s' failed %d", params->cmd, status);
+-	./rot13.sh < test.o > test.t &&
+-	cmp test.r test.t
++	./rot13.sh <test.o >test.t &&
++	test_cmp test.r test.t
+ '
  
- 	strbuf_release(&cmd);
- 	return (write_err || status);
-@@ -477,15 +477,15 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
- 		return 0;	/* error was already reported */
+ # If an expanded ident ever gets into the repository, we want to make sure that
+@@ -130,7 +130,7 @@ test_expect_success 'filter shell-escaped filenames' '
  
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (close(async.out)) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (finish_async(&async)) {
--		error("external filter %s failed", cmd);
-+		error("external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
+ 	# delete the files and check them out again, using a smudge filter
+ 	# that will count the args and echo the command-line back to us
+-	git config filter.argc.smudge "sh ./argc.sh %f" &&
++	test_config filter.argc.smudge "sh ./argc.sh %f" &&
+ 	rm "$normal" "$special" &&
+ 	git checkout -- "$normal" "$special" &&
  
+@@ -141,7 +141,7 @@ test_expect_success 'filter shell-escaped filenames' '
+ 	test_cmp expect "$special" &&
+ 
+ 	# do the same thing, but with more args in the filter expression
+-	git config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
++	test_config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
+ 	rm "$normal" "$special" &&
+ 	git checkout -- "$normal" "$special" &&
+ 
+@@ -154,9 +154,9 @@ test_expect_success 'filter shell-escaped filenames' '
+ '
+ 
+ test_expect_success 'required filter should filter data' '
+-	git config filter.required.smudge ./rot13.sh &&
+-	git config filter.required.clean ./rot13.sh &&
+-	git config filter.required.required true &&
++	test_config filter.required.smudge ./rot13.sh &&
++	test_config filter.required.clean ./rot13.sh &&
++	test_config filter.required.required true &&
+ 
+ 	echo "*.r filter=required" >.gitattributes &&
+ 
+@@ -165,17 +165,17 @@ test_expect_success 'required filter should filter data' '
+ 
+ 	rm -f test.r &&
+ 	git checkout -- test.r &&
+-	cmp test.o test.r &&
++	test_cmp test.o test.r &&
+ 
+ 	./rot13.sh <test.o >expected &&
+ 	git cat-file blob :test.r >actual &&
+-	cmp expected actual
++	test_cmp expected actual
+ '
+ 
+ test_expect_success 'required filter smudge failure' '
+-	git config filter.failsmudge.smudge false &&
+-	git config filter.failsmudge.clean cat &&
+-	git config filter.failsmudge.required true &&
++	test_config filter.failsmudge.smudge false &&
++	test_config filter.failsmudge.clean cat &&
++	test_config filter.failsmudge.required true &&
+ 
+ 	echo "*.fs filter=failsmudge" >.gitattributes &&
+ 
+@@ -186,9 +186,9 @@ test_expect_success 'required filter smudge failure' '
+ '
+ 
+ test_expect_success 'required filter clean failure' '
+-	git config filter.failclean.smudge cat &&
+-	git config filter.failclean.clean false &&
+-	git config filter.failclean.required true &&
++	test_config filter.failclean.smudge cat &&
++	test_config filter.failclean.clean false &&
++	test_config filter.failclean.required true &&
+ 
+ 	echo "*.fc filter=failclean" >.gitattributes &&
+ 
+@@ -197,8 +197,8 @@ test_expect_success 'required filter clean failure' '
+ '
+ 
+ test_expect_success 'filtering large input to small output should use little memory' '
+-	git config filter.devnull.clean "cat >/dev/null" &&
+-	git config filter.devnull.required true &&
++	test_config filter.devnull.clean "cat >/dev/null" &&
++	test_config filter.devnull.required true &&
+ 	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+ 	echo "30MB filter=devnull" >.gitattributes &&
+ 	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
+@@ -207,7 +207,7 @@ test_expect_success 'filtering large input to small output should use little mem
+ test_expect_success 'filter that does not read is fine' '
+ 	test-genrandom foo $((128 * 1024 + 1)) >big &&
+ 	echo "big filter=epipe" >.gitattributes &&
+-	git config filter.epipe.clean "echo xyzzy" &&
++	test_config filter.epipe.clean "echo xyzzy" &&
+ 	git add big &&
+ 	git cat-file blob :big >actual &&
+ 	echo xyzzy >expect &&
+@@ -215,20 +215,20 @@ test_expect_success 'filter that does not read is fine' '
+ '
+ 
+ test_expect_success EXPENSIVE 'filter large file' '
+-	git config filter.largefile.smudge cat &&
+-	git config filter.largefile.clean cat &&
++	test_config filter.largefile.smudge cat &&
++	test_config filter.largefile.clean cat &&
+ 	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
+ 	echo "2GB filter=largefile" >.gitattributes &&
+ 	git add 2GB 2>err &&
+-	! test -s err &&
++	test_must_be_empty err &&
+ 	rm -f 2GB &&
+ 	git checkout -- 2GB 2>err &&
+-	! test -s err
++	test_must_be_empty err
+ '
+ 
+ test_expect_success "filter: clean empty file" '
+-	git config filter.in-repo-header.clean  "echo cleaned && cat" &&
+-	git config filter.in-repo-header.smudge "sed 1d" &&
++	test_config filter.in-repo-header.clean  "echo cleaned && cat" &&
++	test_config filter.in-repo-header.smudge "sed 1d" &&
+ 
+ 	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
+ 	>empty-in-worktree &&
+@@ -240,8 +240,8 @@ test_expect_success "filter: clean empty file" '
+ '
+ 
+ test_expect_success "filter: smudge empty file" '
+-	git config filter.empty-in-repo.clean "cat >/dev/null" &&
+-	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
++	test_config filter.empty-in-repo.clean "cat >/dev/null" &&
++	test_config filter.empty-in-repo.smudge "echo smudged && cat" &&
+ 
+ 	echo "empty-in-repo filter=empty-in-repo" >>.gitattributes &&
+ 	echo dead data walking >empty-in-repo &&
 -- 
 2.10.0
 
