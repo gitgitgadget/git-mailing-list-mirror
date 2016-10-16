@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E349C209A9
-	for <e@80x24.org>; Sun, 16 Oct 2016 23:21:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03CD32098B
+	for <e@80x24.org>; Sun, 16 Oct 2016 23:21:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757042AbcJPXVW (ORCPT <rfc822;e@80x24.org>);
+        id S1757075AbcJPXV0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Oct 2016 19:21:26 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35641 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756898AbcJPXVW (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 16 Oct 2016 19:21:22 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35610 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756898AbcJPXVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2016 19:21:11 -0400
-Received: by mail-pf0-f194.google.com with SMTP id s8so11496723pfj.2
-        for <git@vger.kernel.org>; Sun, 16 Oct 2016 16:21:10 -0700 (PDT)
+Received: by mail-pf0-f193.google.com with SMTP id s8so11496955pfj.2
+        for <git@vger.kernel.org>; Sun, 16 Oct 2016 16:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kIC8By4pmiqU3y9AajtksPZWvst7S+B7n8pWHpbtFW0=;
-        b=b2AuFoVL/Icp1Q9EkxP6N4037n35wN+NTOcSRlng9HagWMjMH/cCzE0B5ujAQAd6ox
-         oaIZryv+yoK9spwDifC14c6gOZC2poytPNllfrcm3HCQJLlozvTL7J0SXPALjpOs4UmK
-         MoV77j/QxEcu4xr/mn/MKVXIqzFmsWY/RKSUJrAUCk4c5SWNOf7+LkPLRZKAdchWsLXI
-         0DKX3BScsgU2JcdKOwZKHnmk+erV1yqhiU9lVpiiyvP2BWNwxou+ZQ6nAn8XHjYHgU8B
-         G9ObS2VMei1S+bxFviBWVZuRee5H5P1JSgN4xH0593X92PyHSAoWYYw5adQdYHXhYxk0
-         ORCg==
+        bh=O/9Q/v9hxIqIS2YIr/9vDTJhOS1LfGeml2APWi+Y4U4=;
+        b=KKNNT2e3wg4Nh1ambuj1T8Hkvv7g2uajpKjMl+JXgCYky19HRoqfHYTtbJP8bzZKoH
+         lRfAFl+Ta4kPBu+J8jtN5R58VC2RFxWiu0V9YHvhXb4GZA7M6w3C8nPaL8k3fpJtmEd9
+         xl/RL2rog1+nwz8U+yHw/YXsPqR/kye8V1KcuUb3vXRJ7YIitj67VZkFojOsbtgjEuqx
+         0pUDzGBJhLMkhdyTtCUzteT+oVnNTq4moM46vneX3XqVD9i2DagcM2kXKdz4lzoqYNWI
+         yFgGwSBSi4puv2sgUYsI2SQ2GtrS5mlJWAzOE+0kFSxYG3tOClzhWh34lkVLsusXDtZX
+         GPgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=kIC8By4pmiqU3y9AajtksPZWvst7S+B7n8pWHpbtFW0=;
-        b=R94ljXIlZFzUJMdJVWks7lSbrgYJ/89y6Pmo/zTB7z4hg7N5BtEx6xYalwflca2G4a
-         mxwU0xLY62Y0gaJiQqo/S+/qZcYUOwbpuRHJewXcryYr/IkSOHsJNebP7SlbE5Jonrbj
-         6J5j0AkK+TiNLi+dkT4fpy41mHM5acjKHEEboqz9FYtq6wRyzsV+vNnyW1FYJPRvi1/f
-         i/99Cl8IGAVmgWMzX7/s/EAhnK1uaKsgzABlLfoLNo3h3jBKqoAwKn9+wmgYemTggQPQ
-         RWrx/weoJ+Wc8hT91NZ4Wgyp6XgNd+61abmpT3wJ1RdTmAsL3D2LxeDh4vwGw79gYLvm
-         jfsA==
-X-Gm-Message-State: AA6/9RnnJ4RfY6Q6gBV2ENb/m8cJTIMw+sYpbbQQzZUGSCGHf9/1SXN+E7n8vWwd3TSYLg==
-X-Received: by 10.99.116.76 with SMTP id e12mr27970308pgn.20.1476660070102;
-        Sun, 16 Oct 2016 16:21:10 -0700 (PDT)
+        bh=O/9Q/v9hxIqIS2YIr/9vDTJhOS1LfGeml2APWi+Y4U4=;
+        b=kor2THzKQRzcxjirXAvAtTHIP+cW7L5usPoRtK3d9+4N3lMK9j9aLz1YAtJAZF5LBb
+         JvXZpYTmEoeA/ntWHMS3ZVGr3Ji/5qIlLn5XIyHbXzgVflvGkspH3e9G26LPAZiwnh+J
+         Y2I67RVv76qUpPSJH7eMSyZ6NLcuEMM9PgUdLjMBdh8qqFscLjK+wpXYdXE7jDfblWxZ
+         ZAdhG0UxZ+tdpTr6x+yt85KA0Og9k7GobMNkxn0ZXe6Hx06AajYqUO1NKhCI93qzmUjp
+         ybIQGkTivdrDIm9LpCdHk5U2nnWN95Ws0Zz5KMBfvw4WUBMpg45u8wosMqu1v+Da0a0p
+         8lGQ==
+X-Gm-Message-State: AA6/9RnfrwaO6cpWdSggsvXvSNB87xgjNnAR9XZsnsmrbdFO2Qoe7TqH4lFD27AuI9oClQ==
+X-Received: by 10.99.107.130 with SMTP id g124mr27453918pgc.76.1476660081935;
+        Sun, 16 Oct 2016 16:21:21 -0700 (PDT)
 Received: from rem3n8pj12.ads.autodesk.com (adsk-nat-ip4.autodesk.com. [132.188.71.4])
-        by smtp.gmail.com with ESMTPSA id cp2sm10325691pad.3.2016.10.16.16.21.03
+        by smtp.gmail.com with ESMTPSA id cp2sm10325691pad.3.2016.10.16.16.21.15
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 16 Oct 2016 16:21:05 -0700 (PDT)
+        Sun, 16 Oct 2016 16:21:16 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, jnareb@gmail.com, peff@peff.net,
         ramsay@ramsayjones.plus.com, tboegi@web.de,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v11 06/14] pkt-line: extract set_packet_header()
-Date:   Sun, 16 Oct 2016 16:20:30 -0700
-Message-Id: <20161016232038.84951-7-larsxschneider@gmail.com>
+Subject: [PATCH v11 09/14] pkt-line: add packet_write_gently()
+Date:   Sun, 16 Oct 2016 16:20:33 -0700
+Message-Id: <20161016232038.84951-10-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20161016232038.84951-1-larsxschneider@gmail.com>
 References: <20161016232038.84951-1-larsxschneider@gmail.com>
@@ -64,55 +64,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Extracted set_packet_header() function converts an integer to a 4 byte
-hex string. Make this function locally available so that other pkt-line
-functions could use it.
+packet_write_fmt_gently() uses format_packet() which lets the caller
+only send string data via "%s". That means it cannot be used for
+arbitrary data that may contain NULs.
+
+Add packet_write_gently() which writes arbitrary data and does not die
+in case of an error. The function is used by other pkt-line functions in
+a subsequent patch.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- pkt-line.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ pkt-line.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index 0a9b61c..e8adc0f 100644
+index 286eb09..dca5a64 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -97,10 +97,20 @@ void packet_buf_flush(struct strbuf *buf)
- 	strbuf_add(buf, "0000", 4);
+@@ -171,6 +171,23 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+ 	return status;
  }
  
--#define hex(a) (hexchar[(a) & 15])
--static void format_packet(struct strbuf *out, const char *fmt, va_list args)
-+static void set_packet_header(char *buf, const int size)
- {
- 	static char hexchar[] = "0123456789abcdef";
++static int packet_write_gently(const int fd_out, const char *buf, size_t size)
++{
++	static char packet_write_buffer[LARGE_PACKET_MAX];
++	size_t packet_size;
 +
-+	#define hex(a) (hexchar[(a) & 15])
-+	buf[0] = hex(size >> 12);
-+	buf[1] = hex(size >> 8);
-+	buf[2] = hex(size >> 4);
-+	buf[3] = hex(size);
-+	#undef hex
++	if (size > sizeof(packet_write_buffer) - 4)
++		return error("packet write failed - data exceeds max packet size");
++
++	packet_trace(buf, size, 1);
++	packet_size = size + 4;
++	set_packet_header(packet_write_buffer, packet_size);
++	memcpy(packet_write_buffer + 4, buf, size);
++	if (write_in_full(fd_out, packet_write_buffer, packet_size) == packet_size)
++		return 0;
++	return error("packet write failed");
 +}
 +
-+static void format_packet(struct strbuf *out, const char *fmt, va_list args)
-+{
- 	size_t orig_len, n;
- 
- 	orig_len = out->len;
-@@ -111,10 +121,7 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
- 	if (n > LARGE_PACKET_MAX)
- 		die("protocol error: impossibly long line");
- 
--	out->buf[orig_len + 0] = hex(n >> 12);
--	out->buf[orig_len + 1] = hex(n >> 8);
--	out->buf[orig_len + 2] = hex(n >> 4);
--	out->buf[orig_len + 3] = hex(n);
-+	set_packet_header(&out->buf[orig_len], n);
- 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
- }
- 
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ {
+ 	va_list args;
 -- 
 2.10.0
 
