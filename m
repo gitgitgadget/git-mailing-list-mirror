@@ -2,128 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 114C61F4F8
-	for <e@80x24.org>; Mon, 17 Oct 2016 18:58:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6F21F4F8
+	for <e@80x24.org>; Mon, 17 Oct 2016 19:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934765AbcJQS6z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 14:58:55 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:33291 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932712AbcJQS6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 14:58:54 -0400
-Received: by mail-qk0-f176.google.com with SMTP id n189so252124987qke.0
-        for <git@vger.kernel.org>; Mon, 17 Oct 2016 11:58:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Wja3OZo7r3BnAkjqz6j1r8wS0X4ZfotQyXuaNlq6cQ0=;
-        b=gK5G7tPnaVajFfhvwWMofXn9iRrbm8R8XA0Tjh8dlOjeHV5Badlrc9NwTRhFjSR79m
-         L2007Bp9I0c3Hwqp5IoNoEMnrKNIG6XdwuBJIcdOlUyX0mYEjdJ7E5N4YWqc60ylQ2DJ
-         vNMHfTMNmPUIbhJ++aIXHhXXSJKSFCxHP+VZH337NrIhGop0PXB9B345mDwWVvXUqhzC
-         4ReYYDUxHr2K9H+fnL2S1OkM19zQwZLU/9u06VmFb/mFoP90b0eDIFnjJ9vBPZy2Qmnk
-         P2nNZ/kNMJgBk+KhrJjLvM2z6PGkgy1kvrLuXwJfyoDFwxpwpuAfTyLn4AERKAmWyEtv
-         +U0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Wja3OZo7r3BnAkjqz6j1r8wS0X4ZfotQyXuaNlq6cQ0=;
-        b=TlvFKt+fouPb8uz5YN4SvY+li2sMpAYETO2y+qKttLigcUMjmHDU5PSAFYuI/9R/9M
-         AvzuFXMbISPGZFN9nXQ2eXpGEPWB3Dk13n1Il8wG5O0Zkj8Iq00ZjgW6rx/36v4K+1YV
-         Ueu+gUUxTIM9+SMGX4DrOl7od2DY1BXErp05dUepUhhyINm0g2+wOh04sckG8GMvBSN+
-         dvfvyto/IeRR5QFkziANoGHlyOUl4eSbvkciQkCLxHsF7JYzLYi3Hmmw7BTn01GlqM9k
-         anatOne0sSEB/XQL0721sR8VoIgC/MlGIdIoPDu0R0tdeUVNx8NxnbmYIU3uppS/qsDF
-         qtvA==
-X-Gm-Message-State: AA6/9RmgScAYIDFmC4QRRRn6Sdp4h5mPKl9SrBBQUFb2qkhQH5kLjK92E/KUinEpjHo4bXmNT7vWb8nA8zDhW5mY
-X-Received: by 10.55.45.193 with SMTP id t184mr23648694qkh.58.1476730733111;
- Mon, 17 Oct 2016 11:58:53 -0700 (PDT)
+        id S1757758AbcJQTGS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 15:06:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59415 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1757604AbcJQTGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 15:06:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CE6245A97;
+        Mon, 17 Oct 2016 15:06:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=44+mdrzubEWzFECKxjzpiauiAbE=; b=SpJOP/
+        zCGXQauRno+CeHRqjByLw5RHWl33LQwW7iypHOJ03D4y+xoCHflu1VNsbGOXKyNK
+        VxlvJIT52QbNwCq/NN0XtEgyGNh46WdhScwUBBdjecANQSwi4enCNv7xQzYwNhFp
+        RgxIXZwBLURm6GeZeV72UbHJQt3MgROzYqYe0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xOASgu28WjFqBu0YsB5ledxnGC6JB8Zw
+        Dk6KH3EpL1M9GLb4u/qFg3e3xSAOtdA5M/GnUnVIy/2mKPTIJxVUa26QqYHXwTdN
+        Q2qSWVOrtnLWqClS+7cOZrM440ZLdE3INX3VODMHFYJwhEpRKL8u5zcsIob+Q7BC
+        2LU/P9MphuQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13F1A45A96;
+        Mon, 17 Oct 2016 15:06:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4493A45A94;
+        Mon, 17 Oct 2016 15:06:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 05/25] sequencer: eventually release memory allocated for the option values
+References: <cover.1476120229.git.johannes.schindelin@gmx.de>
+        <cover.1476450940.git.johannes.schindelin@gmx.de>
+        <b771bfbc88734b74acda0c377446e984ca81fd9c.1476450940.git.johannes.schindelin@gmx.de>
+Date:   Mon, 17 Oct 2016 12:06:04 -0700
+In-Reply-To: <b771bfbc88734b74acda0c377446e984ca81fd9c.1476450940.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 14 Oct 2016 15:17:24 +0200
+        (CEST)")
+Message-ID: <xmqq4m4avlr7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 17 Oct 2016 11:58:52 -0700 (PDT)
-In-Reply-To: <xmqqh98avnhh.fsf@gitster.mtv.corp.google.com>
-References: <20161010175611.1058-1-sbeller@google.com> <alpine.DEB.2.20.1610121501390.3492@virtualbox>
- <CAGZ79kYDpth7YDbN0VRD0dcpp7aeQ-y4HSEhsmd_c46ggZoXsg@mail.gmail.com>
- <alpine.DEB.2.20.1610131255001.197091@virtualbox> <xmqqfunvxxgu.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYW2qK1GKxoKy_mkVkjjqEUzkh5aPSzDEfRd6U=PYDdzw@mail.gmail.com> <xmqqh98avnhh.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 17 Oct 2016 11:58:52 -0700
-Message-ID: <CAGZ79kZvRf0gHA7tBh1veS9YzAWZ0j0SMGL3c9QQOrERMjmuyQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] submodule: ignore trailing slash on superproject URL
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Karl A." <venv21@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C20F7126-949C-11E6-8EC1-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 17, 2016 at 11:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> In any case, I find it more disturbing that we somehow ended up with
->>> a system where these three things are expected to behave differently:
->>>
->>>         A - path/to/dir
->>>         B - path/to/dir/
->>>         C - path/to/dir/.
->>>
->>> Is that something we can fix?
->>
->> Well A, B are the same.
->> C is "obviously" different, when it comes to counting slashes for relative
->> path/url purposes, in the way that there are characters after the last slash
->> and just by coincidence '.' refers to the directory itself, C behaving like
->> 'path/to/dir/sub' seems right to me.
->
-> It doesn't look right to me at all.  If you were contrasting
->
->         cd path/to/dir/sub && cd ..
->         cd path/to/dir/bus && cd ..
->
-> then I would understand, but why should these two
->
->         cd path/to/dir/. && cd ..
->         cd path/to/dir/sub && cd ..
->
-> behave the same?
->
->> So how do you imagine this fix going forward?
->> * Breaking existing users with /. at the end? by treating it the same as A,B
->> * Do some check based on time/version of Git and cover the old data?
->> * Forbid /. at the end from now on?
->
-> Where at the end-user facing level does this trailing "/." surface
-> and how does the difference appear to them?  I think that is the
-> crucial question.
->
-> Unless there is some convincing argument why "." is not special
-> (i.e. counter-argument to the above "bus vs sub" and ". vs sub"
-> example), I would think "existing users with /." does not matter.
-> If they are "relying" on the behaviour, I would think it is not
-> because they find that behaviour intuitive, but only because they
-> learned to live with it.  IOW, treating all of A/B/C the same way
-> would appear to them a strict bugfix, I would think.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-I see, so we should adapt the windows style and chop off '/.'
-to make A,B,C all the same, because internally we never produced
-C AFAICT.
-
-These came in via hand edited .gitmodules files.
-
+> The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
+> like a one-shot command when it reads its configuration: memory is
+> allocated and released only when the command exits.
 >
-> It is totally a different matter if OUR code that consumes the
-> output from the submodule-helper --resolve-relative" internally is
-> confused and relies on "../. relative to path/to/dir/. is the same
-> as ../. relative to path/to/dir/sub" for whatever reason.  Without
-> fixing that, I would not surprised if fixing things to treat A/B/C
-> the same way would surface differences in the end-user observable
-> behaviour in a negative way.
+> This is kind of okay for git-cherry-pick, which *is* a one-shot
+> command. All the work to make the sequencer its work horse was
+> done to allow using the functionality as a library function, though,
+> including proper clean-up after use.
 >
+> To remedy that, we now take custody of the option values in question,
+> requiring those values to be malloc()ed or strdup()ed
+
+That is the approach this patch takes, so "eventually release" in
+the title is no longer accurate, I would think.
+
+> Sadly, the current approach makes the code uglier, as we now have to
+> take care to strdup() the values passed via the command-line.
+
+I obviously disagree with that statement and the _entrust was too
+ugly to live, but it is obviously subjective, and it boils down to
+who has a better taste.  Let's not go there.
+
+> +
+> +	/* These option values will be free()d */
+> +	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
+> +	opts->strategy = xstrdup_or_null(opts->strategy);
+
+xstrdup-or-null does make things cleaner.
+
+> +static int git_config_string_dup(char **dest,
+> +				 const char *var, const char *value)
+> +{
+> +	if (!value)
+> +		return config_error_nonbool(var);
+> +	free(*dest);
+> +	*dest = xstrdup(value);
+> +	return 0;
+> +}
+
+So does this.
