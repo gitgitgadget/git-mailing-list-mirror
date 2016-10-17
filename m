@@ -2,70 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8582D20988
-	for <e@80x24.org>; Mon, 17 Oct 2016 08:57:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8647320988
+	for <e@80x24.org>; Mon, 17 Oct 2016 09:05:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933195AbcJQI54 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 04:57:56 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50109 "EHLO mout.gmx.net"
+        id S933165AbcJQJFA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 05:05:00 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59925 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932306AbcJQI5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 04:57:54 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MB2G8-1c3nVz39jo-00A1MV; Mon, 17 Oct 2016 10:57:51
+        id S932309AbcJQJE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 05:04:58 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Lp3sy-1cYOrR0Ws0-00ewar; Mon, 17 Oct 2016 11:04:21
  +0200
-Date:   Mon, 17 Oct 2016 10:57:51 +0200 (CEST)
+Date:   Mon, 17 Oct 2016 11:04:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [RFC] Case insensitive Git attributes
-In-Reply-To: <CAGZ79kZ6KaQ5gjGiEFQ-pRJCDAyS0oH=_4dK0nCU9hx8wZwdfw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1610171056170.197091@virtualbox>
-References: <C83BE22D-EAC8-49E2-AEE3-22D4A99AE205@gmail.com> <CAGZ79kZ6KaQ5gjGiEFQ-pRJCDAyS0oH=_4dK0nCU9hx8wZwdfw@mail.gmail.com>
+To:     Jeff King <peff@peff.net>
+cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] convert: mark a file-local symbol static
+In-Reply-To: <20161017021825.jgpsew7qqfjrirhw@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1610171058580.197091@virtualbox>
+References: <b21c8a92-4dd5-56d6-ec6a-5709028eaf5f@ramsayjones.plus.com> <A430A9E0-B2A2-4857-8DEA-EBD7AA2C9E29@gmail.com> <de24ed05-2857-9c17-920f-66770f898f80@ramsayjones.plus.com> <B7662EA0-3181-413E-A40B-69C88FC46F96@gmail.com>
+ <5a9a1c44-8a3f-1894-c4c5-8f1fa96b63b9@ramsayjones.plus.com> <20161017021825.jgpsew7qqfjrirhw@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Sok9/2jsE3jM/qHDBoqWQ+iqYIlGQjlgBP8IhZ0OKjIF2p5/f6F
- kn3cTD6pOoaIaTJrw2ydgc60gBBxZRGuNat3boQiSiCwKG8v7xCSKlyRLI5RPNoBAj4roPN
- kiuiwTDpVurkZaqhX0iHBdPqkBirQacfVMho7zSi7cQH9UEjCeJrY+Happ+JygK4SdSZ38t
- Bgvdg6bnEW8MGzKoTJ78A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:30uOqvKEFb0=:7Jf/egSrPgqtG++Qm0dXnD
- SPOj95+WiQlQwfIAomHDNcNGsaudJqlIlQLnIcb/x7oFibTY3eFb/j0MBHVyQ7GDSJEJ9fDPp
- vqdL0InDTQWK02mmEcuFmyliWPD56YSqRKnot8BfVwg5e4JjwK+CXd1iZUsAl5yQi4eIypPOl
- 3qKp1SfjvwU8yhu+f6exw0sCddsAlAzVzngGijafG6ozPMZi/XicQCMRQu9bRin1f4YewWGU7
- 0PPyXKti7GWXMZXXxVVnA3PnfT2HsFt/SEGQdTHL633JTEInSnLiuUokEzpAO/j4wEERu7ZKG
- +njXrQahXVcg+B8QEFXZLHp++C0w6/RGakRyzGH8HD4xMrilC2pONPvVP2IBc0yaVpCk/kSQ5
- NCiQaF+0xtnj2GmuCLOFh6sG3ZY+nKKgz32jjWLhTwf+J67T1oNoawJQkiPBo4KQeXVaeRASA
- DpIEBjhTc4yO6l49jt8rNl5o5XvI0XTV6OhfhH21UfBA1o/EEqNdHblBrq0rqIpY478jlWryA
- qb3QkKW9pUsHibsdbjbVU9MPwTkZR6BcoaTvorJq8122bWnF6Pil0yc67KIHWvqUez9cmfsdI
- sd3ORgP+XWgY0/gsYiru+eGNFHBLmqSM0KRUkUGW8sP9HUavhw5rLPwVHmMR8TXuFFucc/rVn
- brjuG6pnfNaoJR412NTJziJnqnQqRazk6r/JVblpxixKnfiQ/7svq7yv9Lra5WsxiiOO+z0hi
- iyhfKl7e6lUHK0UAjV9ztrgqIxWd8fg8/ydmM1i1msvxSAWy/YxjPu0Poh18T3YMynjc1j/5l
- L9Asde0
+X-Provags-ID: V03:K0:VSlcdHL1aphxhcVSWue05CwLnNYiD+Eddt8C8Ao6VLSAYaBc+UB
+ bXGG2Hgllj4Hti2+DXRwIO2ZER1+QPspQltAwnfd7nmQHq4ye8/Hebon9tBD9Zr3wVnsiVD
+ KbR/1P79xMBilfVmVFHy10g/Mjano6vknEbe6iKBSnbQlkU+y0r/zIxFYbD8PNnrqA5JOkU
+ LUc8Nh2L5RZOUSPkHij7A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CQBbtzh0wxU=:8Myeu9PKwFKdwlOfngX0uT
+ N3dypHz97AfCjfd2J2xy5Lbt9ovJ5CXoAKPLBt1rEY1f6L5YFl/8qCsRLbRFCsvabJ9ujEwqQ
+ FsP/YaQneQwzY8G0TtZwscdnv4Pqdf+ORPhDVzgcXFqa/BU32M0JWLG7jJca+w85FB+iurySv
+ izPJer2GADvAeK4PQnPDtnOBceiwpcbXfQprMKY9lxHDmPUFNu8gzgSNhOMkAQ0sa+8Z3boJj
+ FJbnu52w/OQmxFq75q2Dn752fqSrxj/+YYxgNymGtL5VtbZmCtckEjmj87n32k8ENwnAcG+Cb
+ II+yvXuRzG3pF9lrT4j3n6x60eTw8mAtXk6ymkSYr8bzq9WEUQp5c7J8E/DZjj7+xb+w1C5t1
+ jkrYvCQVZmS/MLmBKHw/E9nVhRypDNb0AebDS4NSNWzr7gF0gKl8XA6iS5tA3FoHQrbBh7eQ/
+ YehR1noxGAY9i8OYDaKxILv4AxSZpIJJktI1v0fWmCC797zM/UlSSKlk43VI7ghtdykcXlo4E
+ I74OJNpURg309xw7IW9InFW+afIyHxhujfx4nKfTi8AQ52YXIiTBhigCW3Sk8A+U8EH5VbNSi
+ oWSqHL2fOilHh1lIqYIZkdIkRV+xxhAfXfDkL4MvEphr7rzW2e5boDeuud6BRKOZRf3lKPwQi
+ PIYf3ga9oa1Lmr1S4NuGqFdx9zLwlc4F8E1YxYUGhcKPeTJ71q/QpGTRx90ikL69CelfqMJSo
+ KGcmKH/RoH4/j5rmeMLt6RA7nSjyiIme/tsaKwmwhA4S4YtvEdqSQdyD0/rSBh+8LhCFCnj/r
+ MA7m8H5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Ramsay & Peff,
 
-On Sun, 16 Oct 2016, Stefan Beller wrote:
+On Sun, 16 Oct 2016, Jeff King wrote:
 
-> Conceptually I would prefer if we had a single switch that indicates a
-> case insensitive FS.
+> On Mon, Oct 17, 2016 at 02:37:58AM +0100, Ramsay Jones wrote:
+> 
+> > Hmm, well, you have to remember that 'make clean' sometimes doesn't
+> > make clean. Ever since the Makefile was changed to only remove
+> > $(OBJECTS), rather than *.o xdiff/*.o etc., you have to remember to
+> > 'make clean' _before_ you switch branches. Otherwise, you risk leaving
+> > some objects laying around. Since the script runs 'nm' on all objects
+> > it finds, any stale ones can cause problems.  (Of course, I almost
+> > always forget, so I frequently have to manually check for and remove
+> > stale objects!)
+> 
+> Gross. I would not be opposed to a Makefile rule that outputs the
+> correct set of OBJECTS so this (or other) scripts could build on it.
 
-AFAIU Lars' use case is where the FS is *case sensitive*, but he still
-needs the .gitattributes to be *case insensitive* because that file
-originates from a developer with such a file system.
+You could also use the method I use in Git for Windows to "extend" the
+Makefile:
 
-Otherwise he would simply tack onto the core.ignoreCase flag.
+-- snipsnap --
+cat >dummy.mak <<EOF
+include Makefile
 
-Ciao,
-Dscho
+blub: $(OBJECTS)
+	do-something-with $^
+EOF
+
+make -f dummy.mak blub
