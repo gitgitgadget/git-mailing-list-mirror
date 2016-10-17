@@ -2,87 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	TVD_SPACE_RATIO,TVD_SPACE_RATIO_MINFP,ZIPFILE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 005EF1F4F8
-	for <e@80x24.org>; Mon, 17 Oct 2016 18:08:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAD171F4F8
+	for <e@80x24.org>; Mon, 17 Oct 2016 18:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755677AbcJQSIY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 14:08:24 -0400
-Received: from 111-246-178-15.dynamic.hinet.net ([111.246.178.15]:45441 "HELO
-        hinet.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-        id S1753877AbcJQSIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 14:08:23 -0400
-X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Oct 2016 14:08:21 EDT
-Message-ID: <147672769597.30464.1360085918092483004@hinet.net>
-From:   <vvkamoe@pvlearners.net>
-To:     <git@vger.kernel.org>
-Subject: 318104029946614 git
-Date:   Mon, 17 Oct 2016 18:08:15 -0000
-Importance: High
+        id S1756779AbcJQSIj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 14:08:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55616 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755769AbcJQSIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 14:08:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AED5E450E5;
+        Mon, 17 Oct 2016 14:08:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=RoPD10fJk49lm/BJpghYohLtB
+        O0=; b=KO1XUim3FlQajXHRL5wLi2puqDufRffzz+O76lqRkguPmHGP3lG09xoNW
+        bzb34Gkd7XfIGfuOmkyB7gN1J/bjQ0id4hs5APFZMjRsw5evn97410WdpXHhIm2n
+        MiSAchqrJqr75qvXCZNbXQ/MHMJ9QWKMtq97MJLSPHoxwZ4AEw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=LEcgITO88p2uUFCmFWN
+        H2JoijI+yJt4U76esfNk5H9bL45kfpv5vHzP+zejURNSyF226pxzj4QWd0TfltWH
+        pfNKJItpcWB9IQliWlwmdv9aWX1cgJIxs0Aaz1gFwdsJlcfruRi6ihfQ7y6H/CGj
+        mg0kRKSaRTAv/cTocDG7oSd0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6CDC450E4;
+        Mon, 17 Oct 2016 14:08:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 17E77450E3;
+        Mon, 17 Oct 2016 14:08:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] cocci: avoid self-references in object_id transformations
+References: <a5ed26c0-7fea-259c-74c1-0cd870a35290@web.de>
+        <20161015134503.u3aznujploqee2le@vauxhall.crustytoothpaste.net>
+Date:   Mon, 17 Oct 2016 11:08:33 -0700
+Message-ID: <xmqqlgxmvof2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: application/zip; name="EMAIL_26302347391886_git.zip"
-Content-Disposition: attachment
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B8FE55F0-9494-11E6-A736-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On Sat, Oct 15, 2016 at 10:25:34AM +0200, Ren=C3=A9 Scharfe wrote:
+>> The object_id functions oid_to_hex, oid_to_hex_r, oidclr, oidcmp, and
+>> oidcpy are defined as wrappers of their legacy counterparts sha1_to_he=
+x,
+>> sha1_to_hex_r, hashclr, hashcmp, and hashcpy, respectively.  Make sure
+>> that the Coccinelle transformations for converting legacy function cal=
+ls
+>> are not applied to these wrappers themselves, which would result in
+>> tautological declarations.
+>
+> Ah, yes, this is a good idea.  I've had to hack around this, but this i=
+s
+> much better than having to fix it up by hand.
+
+Yes, seeing an empty *.cocci.patch files after running coccicheck is
+a great feeling, but without something like this patch, we can never
+reach that goal ;-)
+
+Thanks.
+
+... oops.  Totally unrelated to this patch, but I see these in
+strbuf.cocci.patch (this is at the tip of 'pu'), which are total
+nonsense.  Perhaps I am running a way-stale spatch?  It claims to be
+"spatch version 1.0.0-rc19 with Python support and with PCRE support"
+
+--- date.c
++++ /tmp/cocci-output-21568-bd3448-date.c
+@@ -179,7 +179,7 @@ const char *show_date(unsigned long time
+=20
+ 	if (mode->type =3D=3D DATE_UNIX) {
+ 		strbuf_reset(&timebuf);
+-		strbuf_addf(&timebuf, "%lu", time);
++		strbuf_addstr(&timebuf, time);
+ 		return timebuf.buf;
+ 	}
+=20
+--- log-tree.c
++++ /tmp/cocci-output-21608-b02087-log-tree.c
+@@ -400,7 +400,7 @@ void log_write_email_headers(struct rev_
+ 		extra_headers =3D subject_buffer;
+=20
+ 		if (opt->numbered_files)
+-			strbuf_addf(&filename, "%d", opt->nr);
++			strbuf_addstr(&filename, opt->nr);
+ 		else
+ 			fmt_output_commit(&filename, commit, opt);
+ 		snprintf(buffer, sizeof(buffer) - 1,
+
