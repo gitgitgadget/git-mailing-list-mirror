@@ -2,106 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 283B31F4F8
-	for <e@80x24.org>; Mon, 17 Oct 2016 19:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97A971F4F8
+	for <e@80x24.org>; Mon, 17 Oct 2016 20:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756007AbcJQTqz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 15:46:55 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:35081 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758570AbcJQTqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 15:46:42 -0400
-Received: by mail-qk0-f182.google.com with SMTP id z190so254638625qkc.2
-        for <git@vger.kernel.org>; Mon, 17 Oct 2016 12:46:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=z9ZKIMEk63KqepIb+MG3pbirFrsGvROL4JrhjIQZCpA=;
-        b=Og/PbS1Pw/mbWlDy1aXD1y37doB+DP2HHW9o2ndFAH6Q44jsJGYM1lFVvTw7CjHX2m
-         80mOuNFepjDazXmz351DUvZBRBK7cuUYU01QkLKcvOFA+RO/Dh4+1bwozXfdz9dTyTXv
-         PE4vWWiweQ56BmUjZ4zI62mMGhI7oGXerTTq7Rjb8+QfUpW3Q5NP+ez6IR78vG44gW0H
-         Vzvh3R4lwV1Ake3ROMQ6XWR9v5Y+z5N3GVl31lywyn3waJF4eRC/3tJIRn1a6Vk3PmbD
-         Ul9pjtAzaLEW1ONmaH77oReV7SAVtnPbNBaOslUQt31/lbxj9Z1YizOBy1kygw1DOFXS
-         Robw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=z9ZKIMEk63KqepIb+MG3pbirFrsGvROL4JrhjIQZCpA=;
-        b=JtKSRzUKVPW7RDod3AMWZ8TdLyD/tzIdVVRrGNwCfbO/jAGRkJDFosLr0R0mPR0YVi
-         4hbevK3mqDJntOXoAMDeC8SMgTIsLbQbQOUA3j7dkFW1mrRg19E+yCTTnd0Hs5zd+i53
-         sN5OiEyZgahUmQ/l5OOxy2ny5A6g7XDQIy60TsRyOutxDJRPg5c/xkKTjWmvLBGrVRWe
-         keRbSQQPMt2Cy3KEgdIYTfbTje8/wR5MdDwNo2ij75U+WSiKc3wcqzYNdV9RvAill8nu
-         YfWmISoAOad9X0kTIsr9+WIgv2raQIIonMONHXKtyfUBw852+c7eThZRc4CglDHKqRds
-         Im8A==
-X-Gm-Message-State: AA6/9RlKimn8QGu/ARdW5u96fs/qGIPnH1ufiH7ZJUxOXU38a9qCm7d17/uDlQMmVUekzBmudnk3W0UC3ICMFg==
-X-Received: by 10.55.77.148 with SMTP id a142mr30590400qkb.157.1476733602084;
- Mon, 17 Oct 2016 12:46:42 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.55.217.79 with HTTP; Mon, 17 Oct 2016 12:46:21 -0700 (PDT)
-In-Reply-To: <xmqqbmyiykzz.fsf@gitster.mtv.corp.google.com>
-References: <20161006091135.29590-1-avarab@gmail.com> <20161006091135.29590-3-avarab@gmail.com>
- <3fa9902f-3b01-5ec6-8129-34cff4c7cac9@gmail.com> <xmqq37jyzsdk.fsf@gitster.mtv.corp.google.com>
- <CACBZZX4FK+zrVyBTpbJAbSAxQ9LuCTXcExeEqZE6D3nwHbNxZA@mail.gmail.com> <xmqqbmyiykzz.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 17 Oct 2016 21:46:21 +0200
-Message-ID: <CACBZZX5v79g=xMEQiWHNm8563+OaQb-L_cmr6VnoxevapHqesg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] gitweb: Link to 7-char+ SHA1s, not only 8-char+
+        id S1758039AbcJQUFO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 16:05:14 -0400
+Received: from mout.web.de ([212.227.17.11]:56058 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756739AbcJQUFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 16:05:11 -0400
+Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Lw0ht-1d1DyV1MuT-017lJL; Mon, 17 Oct 2016 22:04:46
+ +0200
+Subject: Re: [PATCH] cocci: avoid self-references in object_id transformations
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <a5ed26c0-7fea-259c-74c1-0cd870a35290@web.de>
+ <20161015134503.u3aznujploqee2le@vauxhall.crustytoothpaste.net>
+ <xmqqlgxmvof2.fsf@gitster.mtv.corp.google.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <014ef44e-9dd8-40b3-a3ec-b483f938ee02@web.de>
+Date:   Mon, 17 Oct 2016 22:04:43 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqlgxmvof2.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:+5BQ6vFQWMpjmig0w6+F72Ua7NEa4HNoIjpRYRZhc3ops4+JByf
+ +R3vjogMzuI7L1B+tpeo7I1fa81GcnPyNRqa/LL/7nnE7t0e4ctii/bcJ459YtkiqkTesrR
+ 2WOc5OYp8tTBBgvlfODdxrfwlorwtjvGqE1iASl6wCldr72bMVwoqC+yhVfrDp7p0KUPpEY
+ 45xWnuYaX7vi6wtMY6swA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ovBy6oXJY9A=:uVWK7wzag22Fis9TrTLPkm
+ rTMLqTe1p9lfjiCQGhtHs/G66IiFa/oH26hIbFT/cX8xzaN4StEinSJ0Bm29drdCjGJWiI1Uq
+ Md46OIhCj9nCBZkIH4YVhKhaXdO3bT7zTjDWQWpkq0fsRsaVUUstBRC8W7ws2f+9dm9EcGEDs
+ 8vMsNM9VdD1jCdd0lN9R31NBp1pl77mBRFWHzG6MaK+DGlmGCQyof8g6imIturPLxwAZSw/8Q
+ r0eqL00gQlZ517Y2bwvgyHAgX1kHvC5SZey7AKlReCNeQLm6HznNkCB05nL/Ew2u37Kk40hB/
+ pdU3SnSL1Bn1dGUgG07Ms/Hd+nB8uMB0YrKXcLs4Ux2dlBUe6Q3ONQw5CNQdU/ugOoJiUIv7D
+ otKjcahd8JZYF03DlNyCu8WqqSqASoPbsfkcXaR+5Rd6hdB4x4nplsSbQB7cfsj5QrOVH5EIO
+ BsQgaFqJBDzBHPma7C0j1YHN55DdbKCzpcNW6im3tpfFUEfdd8W80YEEt2sVtVwDJPkbwjgGI
+ /rgvpTp81c6G6vMepEZGxK1YGsSzyPIkDRt1dWKa5Obee+sjE7HfVrU7nBQQGlVXvyyvs4RjK
+ bgOSidCtG5xZvETCa4TgvipRHgllBYjZtqq3wenqYxtzbrRi2OoeF1J2iw+WtBathYFufGwtZ
+ 5vEPdi0DdjSDLgdisi1HsMp0I5SQ8euFs2YSQH1xbnvCt/C9EOPyovlXUZBEhvXUNyME+XnAH
+ q2ugcHZfa/cdPrW0uzANL4rgZcUHMjU3nOZ9MwgzkKFdwMTFe+WglxBtuNG5xZ2i9MDrB1yBW
+ vn75oZE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 17, 2016 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> As far as I can tell the only outstanding "change this" is your
->> s/SHA1/SHA-1/ in <xmqq37k9jm86.fsf@gitster.mtv.corp.google.com>, do
->> you want to fix that up or should I submit another series?
->
-> I think I did that already myself while queuing.  Could you fetch
-> what I queued on 'pu' to double check?
+Am 17.10.2016 um 20:08 schrieb Junio C Hamano:
+> ... oops.  Totally unrelated to this patch, but I see these in
+> strbuf.cocci.patch (this is at the tip of 'pu'), which are total
+> nonsense.  Perhaps I am running a way-stale spatch?  It claims to be
+> "spatch version 1.0.0-rc19 with Python support and with PCRE support"
+> 
+> --- date.c
+> +++ /tmp/cocci-output-21568-bd3448-date.c
+> @@ -179,7 +179,7 @@ const char *show_date(unsigned long time
+>  
+>  	if (mode->type == DATE_UNIX) {
+>  		strbuf_reset(&timebuf);
+> -		strbuf_addf(&timebuf, "%lu", time);
+> +		strbuf_addstr(&timebuf, time);
+>  		return timebuf.buf;
+>  	}
+>  
+> --- log-tree.c
+> +++ /tmp/cocci-output-21608-b02087-log-tree.c
+> @@ -400,7 +400,7 @@ void log_write_email_headers(struct rev_
+>  		extra_headers = subject_buffer;
+>  
+>  		if (opt->numbered_files)
+> -			strbuf_addf(&filename, "%d", opt->nr);
+> +			strbuf_addstr(&filename, opt->nr);
+>  		else
+>  			fmt_output_commit(&filename, commit, opt);
+>  		snprintf(buffer, sizeof(buffer) - 1,
 
-Thanks, looked at it, looks good to me!
-> I think the diff between what was posted and what is queued (I just
-> checked) looks like this:
->
-> -gitweb: Link to 7-char+ SHA1s, not only 8-char+
-> +gitweb: link to 7-char+ SHA-1s, not only 8-char+
->
->  Change the minimum length of an abbreviated object identifier in the
->  commit message gitweb tries to turn into link from 8 hexchars to 7.
->
-> @@ -5,16 +12,18 @@
->  SHA-1 in commit log message links to "object" view", 2006-12-10), but
->  the default abbreviation length is 7, and has been for a long time.
->
-> -It's still possible to reference SHA1s down to 4 characters in length,
-> +It's still possible to reference SHA-1s down to 4 characters in length,
->  see v1.7.4-1-gdce9648's MINIMUM_ABBREV, but I can't see how to make
->  git actually produce that, so I doubt anyone is putting that into log
-> -messages in practice, but people definitely do put 7 character SHA1s
-> +messages in practice, but people definitely do put 7 character SHA-1s
->  into log messages.
->
->  I think it's fairly dubious to link to things matching [0-9a-fA-F]
->  here as opposed to just [0-9a-f], that dates back to the initial
->  version of gitweb from 161332a ("first working version",
-> -2005-08-07). Git will accept all-caps SHA1s, but didn't ever produce
-> +2005-08-07). Git will accept all-caps SHA-1s, but didn't ever produce
->  them as far as I can tell.
->
->  Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> +Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> +Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I get these instead with 6513eabcbcbcfa684d4bb2d57f61c662b870b5ca on
+Debian testing with its "spatch version 1.0.4 with Python support and
+with PCRE support", which look legit:
+
+--- sequencer.c
++++ /tmp/cocci-output-40365-db7a71-sequencer.c
+@@ -159,7 +159,7 @@ int sequencer_remove_state(struct replay
+ 		free(opts->xopts[i]);
+ 	free(opts->xopts);
+ 
+-	strbuf_addf(&dir, "%s", get_dir(opts));
++	strbuf_addstr(&dir, get_dir(opts));
+ 	remove_dir_recursively(&dir, 0);
+ 	strbuf_release(&dir);
+ 
+--- builtin/branch.c
++++ /tmp/cocci-output-40858-a86d1a-branch.c
+@@ -316,7 +316,7 @@ static char *build_format(struct ref_fil
+ 
+ 	if (filter->verbose) {
+ 		strbuf_addf(&local, "%%(align:%d,left)%%(refname:strip=2)%%(end)", maxwidth);
+-		strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
++		strbuf_addstr(&local, branch_get_color(BRANCH_COLOR_RESET));
+ 		strbuf_addf(&local, " %%(objectname:short=7) ");
+ 
+ 		if (filter->verbose > 1)
