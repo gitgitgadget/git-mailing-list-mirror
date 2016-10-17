@@ -6,115 +6,97 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1D301F4F8
-	for <e@80x24.org>; Mon, 17 Oct 2016 18:28:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C207C1F4F8
+	for <e@80x24.org>; Mon, 17 Oct 2016 18:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758551AbcJQS2s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 14:28:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54402 "EHLO
+        id S934123AbcJQSra (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 14:47:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59508 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1758541AbcJQS2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 14:28:46 -0400
+        with ESMTP id S932403AbcJQSr0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 14:47:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 634B645447;
-        Mon, 17 Oct 2016 14:28:45 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B590D475F7;
+        Mon, 17 Oct 2016 14:47:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h4i0XbJDodLNWa9cLkMlsXSPA94=; b=d9D7uZ
-        wsFQygpz6rP5hRaskMSj5BPNitziE6rBvQ1wv5rV5Q/DXQj7f0VX/09k0UCGIXRR
-        aKt7vmbtDt2mj1TuKr3qDikkVHoCeNWKGg/BQ5NMa4G1fAcLrMcxm1xAvhVrE96d
-        8x7uVZt2hWWVKUVL1ceZaBwT8Ok3gb907gtRc=
+        :content-type; s=sasl; bh=oDWvbhYhUzeTC6Tm3yVOYNkGhvY=; b=uRW02j
+        +1LVEdr3wa/AxWHGslOTurFlIWb2UQEoC7I7n+pB3mcTGVRO1PkoJAPLur+WOdTa
+        c6t7m7by8Hz1u+RloOzDQpp7DAx4O6csGyOYJrAgyKTtbI94qm2eZmWpT0HR/liZ
+        Glq2lGq3yU8yr4JBzUAaf8I/PbOJLyF3/KBkw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lkwHNpwq6pnkEU9fOduHrVxffy3+q7zP
-        TH8SYMOKNHGtJA1b/69IaQ6EAzy8aRKsOstqB7OybqkSkccE0XX5m0MhpI3uVkfU
-        k7kYzbtkFGJQI4amrInQh3INDhWYGFINWMfFSmQyoRt5Pv0zVSzQnoCF9jDfaJqe
-        9d6i36dFNJI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AB4945446;
-        Mon, 17 Oct 2016 14:28:45 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ZsJhNSyI6Tq2ZkaU37nYK0AE0o+8oZJm
+        Y1q3bdZayvyr/1seEgyw+jmmtYN+UxI4u/KVVyFRNMDfgw0Szos5VmK2xgHHvjC0
+        ttu9u+EFomomavRq4rQ9C/hB35U85f9f3nQ4Irfq7szHwkvuZLYWq3c/MrVe+dqn
+        fFQkf9akhB8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD394475F6;
+        Mon, 17 Oct 2016 14:47:24 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C84BA45445;
-        Mon, 17 Oct 2016 14:28:44 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2A36C475F5;
+        Mon, 17 Oct 2016 14:47:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "Karl A." <venv21@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH 1/2] submodule: ignore trailing slash on superproject URL
-References: <20161010175611.1058-1-sbeller@google.com>
-        <alpine.DEB.2.20.1610121501390.3492@virtualbox>
-        <CAGZ79kYDpth7YDbN0VRD0dcpp7aeQ-y4HSEhsmd_c46ggZoXsg@mail.gmail.com>
-        <alpine.DEB.2.20.1610131255001.197091@virtualbox>
-        <xmqqfunvxxgu.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYW2qK1GKxoKy_mkVkjjqEUzkh5aPSzDEfRd6U=PYDdzw@mail.gmail.com>
-Date:   Mon, 17 Oct 2016 11:28:42 -0700
-In-Reply-To: <CAGZ79kYW2qK1GKxoKy_mkVkjjqEUzkh5aPSzDEfRd6U=PYDdzw@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 17 Oct 2016 10:58:59 -0700")
-Message-ID: <xmqqh98avnhh.fsf@gitster.mtv.corp.google.com>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, jnareb@gmail.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, tboegi@web.de
+Subject: Re: [PATCH v11 00/14] Git filter protocol
+References: <20161016232038.84951-1-larsxschneider@gmail.com>
+Date:   Mon, 17 Oct 2016 11:47:22 -0700
+In-Reply-To: <20161016232038.84951-1-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Sun, 16 Oct 2016 16:20:24
+        -0700")
+Message-ID: <xmqqd1iyvmmd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 897340AE-9497-11E6-B631-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 24AC49C4-949A-11E6-B036-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+larsxschneider@gmail.com writes:
 
->> In any case, I find it more disturbing that we somehow ended up with
->> a system where these three things are expected to behave differently:
->>
->>         A - path/to/dir
->>         B - path/to/dir/
->>         C - path/to/dir/.
->>
->> Is that something we can fix?
+> The goal of this series is to avoid launching a new clean/smudge filter
+> process for each file that is filtered.
 >
-> Well A, B are the same.
-> C is "obviously" different, when it comes to counting slashes for relative
-> path/url purposes, in the way that there are characters after the last slash
-> and just by coincidence '.' refers to the directory itself, C behaving like
-> 'path/to/dir/sub' seems right to me.
+> A short summary about v1 to v5 can be found here:
+> https://git.github.io/rev_news/2016/08/17/edition-18/
+>
+> This series is also published on web:
+> https://github.com/larsxschneider/git/pull/15
+>
+> Patches 1 and 2 are cleanups and not strictly necessary for the series.
+> Patches 3 to 12 are required preparation. Patch 13 is the main patch.
+> Patch 14 adds an example how to use the Git filter protocol in contrib.
 
-It doesn't look right to me at all.  If you were contrasting
+Will replace.  If you ever need tor reroll 13, please squash the
+following in (which I already did locally so there is no need to
+resend only to correct it).
 
-	cd path/to/dir/sub && cd ..
-	cd path/to/dir/bus && cd ..
+Thanks.
 
-then I would understand, but why should these two
+ convert.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-	cd path/to/dir/. && cd ..
-	cd path/to/dir/sub && cd ..
+diff --git a/convert.c b/convert.c
+index 9d2aa68df9..bc242276ff 100644
+--- a/convert.c
++++ b/convert.c
+@@ -535,7 +535,8 @@ static int packet_write_list(int fd, const char *line, ...)
+ 	return packet_flush_gently(fd);
+ }
+ 
+-static void read_multi_file_filter_status(int fd, struct strbuf *status) {
++static void read_multi_file_filter_status(int fd, struct strbuf *status)
++{
+ 	struct strbuf **pair;
+ 	char *line;
+ 	for (;;) {
+-- 
+2.10.1-613-g6ad57fc60c
 
-behave the same?
-
-> So how do you imagine this fix going forward?
-> * Breaking existing users with /. at the end? by treating it the same as A,B
-> * Do some check based on time/version of Git and cover the old data?
-> * Forbid /. at the end from now on?
-
-Where at the end-user facing level does this trailing "/." surface
-and how does the difference appear to them?  I think that is the
-crucial question.
-
-Unless there is some convincing argument why "." is not special
-(i.e. counter-argument to the above "bus vs sub" and ". vs sub"
-example), I would think "existing users with /." does not matter.
-If they are "relying" on the behaviour, I would think it is not
-because they find that behaviour intuitive, but only because they
-learned to live with it.  IOW, treating all of A/B/C the same way
-would appear to them a strict bugfix, I would think.
-
-It is totally a different matter if OUR code that consumes the
-output from the submodule-helper --resolve-relative" internally is
-confused and relies on "../. relative to path/to/dir/. is the same
-as ../. relative to path/to/dir/sub" for whatever reason.  Without
-fixing that, I would not surprised if fixing things to treat A/B/C
-the same way would surface differences in the end-user observable
-behaviour in a negative way.
 
