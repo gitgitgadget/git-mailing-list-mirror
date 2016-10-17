@@ -7,95 +7,90 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B5FE2098B
-	for <e@80x24.org>; Mon, 17 Oct 2016 00:26:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A24D2098B
+	for <e@80x24.org>; Mon, 17 Oct 2016 01:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756519AbcJQA0E (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Oct 2016 20:26:04 -0400
-Received: from mail-pa0-f67.google.com ([209.85.220.67]:35990 "EHLO
-        mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756171AbcJQA0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2016 20:26:02 -0400
-Received: by mail-pa0-f67.google.com with SMTP id os4so4493506pac.3
-        for <git@vger.kernel.org>; Sun, 16 Oct 2016 17:26:01 -0700 (PDT)
+        id S1757139AbcJQBEh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Oct 2016 21:04:37 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:32872 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757071AbcJQBE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2016 21:04:29 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 128so72517645pfz.0
+        for <git@vger.kernel.org>; Sun, 16 Oct 2016 18:04:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fs9PlhXrJgEaZ07Fjuuj5K+QMAfd4xxTWaEKUnbK6AI=;
-        b=RjRPirIMu2QDcfm/gJk2VHWRMf/ayLnwNfGpglevXZ9y2U4PpU+3OJI2LjmfTwHUUv
-         AswqNU/eRlxnexPs9ckDLdLd2J8POshJ3gPQ5Y8xHHHhPxWeoQNBmOvE5oeRo532ozFe
-         0HIU98GoLDCsliUx09Szde15Px+vM2QNoKl0rkleSs2H5ZG7g3CT1kxLsPVbtLYIsgTx
-         JKh9LrQunvchAbiWQcrDBo3er+QH8Q8Hg1pqHRdMuHFMtZvURQ0X8oaYhiBXkD7Z2wJf
-         5duh6U66rVC+SfuLj93DCAcTNOtO0TvpdKUKqX3S1eiyTiOIKpIp3K8sDvzOm8EJoRME
-         CvMQ==
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=faOtRuWc/d+MmY+WnlNL131nXpIaZAbLEBTkmzSLalY=;
+        b=vWiWJNm5xHF0QVQUad7+cBT6HsZ5Tj2ko1MhENbgz7bFaXg2KEkYTSbiQucJ6rs5cm
+         44jTYAvOgZrA4GiIJoP3daVftqU+f15c/XJ0ytouzQNbKRIQoeIcJ5OAPjfilrLyOTp6
+         FZV52YMGNtLES+VdMXmYpmsUPCLIk9Yaotv8bj+geu/ioPBMxMlspkA6XraYr5gNmDVm
+         72iHWFwk9PAfzuRcZv1VBpCJNcpOsFbpiYc7lvqsyAt+hm6fWWiyo5dVfD9pvbO4Fg+J
+         tb24RBYosi2nJceKlj5J3cOaNFlAg+CMEetBBpsrY8Ol8LKjbTtXdkJa87Uog9OzM8Ms
+         47dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fs9PlhXrJgEaZ07Fjuuj5K+QMAfd4xxTWaEKUnbK6AI=;
-        b=gn24PoZkO3KC3h4R9dYZ6iuUXqJ+qh6aib/MgbTUYxJzfKQrMqepdwAb0yb8/Ucdfj
-         Xlcaj2OBUo0ykv7iGITcBUUlSiFPR27Ppq/2NbXegxk38ytz69nS3b16ZWZskkGuk7GT
-         pHYfWuxIdnJHMm2jcssZLGUcM27PVy7nLZQ/iddcPEr0N30Nco25scb9WBAYW1TXhPjH
-         LeAy5GQOUPA3UC59rzPm0RjsTKzSTfx58HSZipaVSidqVGDEmAl2O4Qdf5UKwmBfGTh0
-         tgwFVAud7fgkoaZDNOU954JWClUMEwnlYCng/4CneP4f9Bg/4502Mt+9UNTA4y+c0/m5
-         gnlQ==
-X-Gm-Message-State: AA6/9RmogG8ottX15jrVG/jNWPWcKpar7/5q2iQQEndsB99H/O8+ikWNbHKgF8XIhHSg3Q==
-X-Received: by 10.66.190.201 with SMTP id gs9mr28762080pac.42.1476663961032;
-        Sun, 16 Oct 2016 17:26:01 -0700 (PDT)
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=faOtRuWc/d+MmY+WnlNL131nXpIaZAbLEBTkmzSLalY=;
+        b=Fin6xSkK/I/TKxft8cTDEt1t67x2SrT7NGEJhi52LDXMx3dIwgNcpG7dSsQodYsBOL
+         bbIkbWZHqPzkh7rbDp/S9G+H4BXwWBHhudixsVzE6StsXoepPCjBiE59w67UoApuW9Ru
+         7AzqwiPisVEzljYMZ0av+1Dbv3TdKKxD71YZYOh8iFKCxYpwFn9ftkp8xEEwhqsDyFpF
+         V9xfl7BJ9RwCz3GBpIYHWDqCPo5D9kB5sXesQ3gDQfWBc8ez86T5eiKH8PYxC5IJl1ev
+         FgXWefgLY4sbZx68TU79ccZHNTfiHZ0464SdWc3qcTFRAOfZ56LAnc0h+DgXx+aIHqyD
+         nS1g==
+X-Gm-Message-State: AA6/9Rk5MUm3i4HGHk7RixE+pk6JuDn0VC7Ia4YAH3mPN3P3wN+yR95PukH3+UshkvJ33Q==
+X-Received: by 10.98.141.217 with SMTP id p86mr29448829pfk.109.1476666268617;
+        Sun, 16 Oct 2016 18:04:28 -0700 (PDT)
 Received: from rem3n8pj12.ads.autodesk.com (adsk-nat-ip4.autodesk.com. [132.188.71.4])
-        by smtp.gmail.com with ESMTPSA id 3sm42882343pfo.31.2016.10.16.17.25.59
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 16 Oct 2016 17:26:00 -0700 (PDT)
-From:   larsxschneider@gmail.com
-To:     git@vger.kernel.org
-Cc:     tboegi@web.de, gitster@pobox.com,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v1 2/2] travis-ci: disable GIT_TEST_HTTPD for macOS
-Date:   Sun, 16 Oct 2016 17:25:50 -0700
-Message-Id: <20161017002550.88782-3-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.10.0
-In-Reply-To: <20161017002550.88782-1-larsxschneider@gmail.com>
-References: <20161017002550.88782-1-larsxschneider@gmail.com>
+        by smtp.gmail.com with ESMTPSA id f1sm42964486pfa.29.2016.10.16.18.04.27
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 16 Oct 2016 18:04:27 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Subject: [RFC] Case insensitive Git attributes
+Message-Id: <C83BE22D-EAC8-49E2-AEE3-22D4A99AE205@gmail.com>
+Date:   Sun, 16 Oct 2016 18:04:26 -0700
+To:     git <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Hi,
 
-TravisCI changed their default macOS image from 10.10 to 10.11 [1].
-Unfortunately the HTTPD tests do not run out of the box using the
-pre-installed Apache web server anymore. Therefore we enable these
-tests only for Linux and disable them for macOS.
+Git attributes for path names are generally case sensitive. However, on 
+a case insensitive file system (e.g. macOS/Windows) they appear to be
+case insensitive (`*.bar` would match `foo.bar` and `foo.BAR`). That 
+works great until a Git users joins the party with a case sensitive file 
+system. For this Git user only files that match the exact case of the 
+attribute pattern get the attributes (only `foo.bar`).
 
-[1] https://blog.travis-ci.com/2016-10-04-osx-73-default-image-live/
+This inconsistent behavior can confuse Git users. An advanced Git user
+could use a glob pattern (e.g. `*.[bB][aA][rR]) to match files in a
+case insensitive way. However, this can get confusing quickly, too.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- .travis.yml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I wonder if we can do something about this. One idea could be to add an
+attribute "case-sensitive" (or "caseSensitive") and set it to false 
+(if desired) for all files in .gitattributes for a given repo.
 
-diff --git a/.travis.yml b/.travis.yml
-index 37a1e1f..d752447 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -32,7 +32,6 @@ env:
-     - DEFAULT_TEST_TARGET=prove
-     - GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-     - GIT_TEST_OPTS="--verbose --tee"
--    - GIT_TEST_HTTPD=true
-     - GIT_TEST_CLONE_2GB=YesPlease
-     # t9810 occasionally fails on Travis CI OS X
-     # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
-@@ -57,6 +56,8 @@ before_install:
-   - >
-     case "${TRAVIS_OS_NAME:-linux}" in
-     linux)
-+      export GIT_TEST_HTTPD=YesPlease
-+
-       mkdir --parents custom/p4
-       pushd custom/p4
-         wget --quiet http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION/bin.linux26x86_64/p4d
--- 
-2.10.0
+### .gitattributes example ###
+
+* case-sensitive=false
+*.bar something
+
+###
+
+I haven't looked into the feasibility of an implementation, yet. However,
+would that be an acceptable approach?
+
+Thanks,
+Lars
+
+
 
