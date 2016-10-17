@@ -2,113 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97A971F4F8
-	for <e@80x24.org>; Mon, 17 Oct 2016 20:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84E781F4F8
+	for <e@80x24.org>; Mon, 17 Oct 2016 20:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758039AbcJQUFO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 16:05:14 -0400
-Received: from mout.web.de ([212.227.17.11]:56058 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756739AbcJQUFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 16:05:11 -0400
-Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0Lw0ht-1d1DyV1MuT-017lJL; Mon, 17 Oct 2016 22:04:46
- +0200
-Subject: Re: [PATCH] cocci: avoid self-references in object_id transformations
-To:     Junio C Hamano <gitster@pobox.com>
-References: <a5ed26c0-7fea-259c-74c1-0cd870a35290@web.de>
- <20161015134503.u3aznujploqee2le@vauxhall.crustytoothpaste.net>
- <xmqqlgxmvof2.fsf@gitster.mtv.corp.google.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <014ef44e-9dd8-40b3-a3ec-b483f938ee02@web.de>
-Date:   Mon, 17 Oct 2016 22:04:43 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1758392AbcJQUHK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 16:07:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64489 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754426AbcJQUHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 16:07:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D785048809;
+        Mon, 17 Oct 2016 16:07:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ECXU1Iayv3YEAQ/sPGLhJiKmRSc=; b=o+CicK
+        gc+RmCHGo7F271X90iztYhAhgSki9gCyKmTDQLmP2PMlxQu7fk+6MD6hlEcmo41w
+        AqvfMEmD18piU0Ohi4gvCUXTeCek3yeGKE5qe8jeSRWdNNKcc1qxCKp+tRFOGLBx
+        wuFoDdMRaBsRaFxcU55zMEr5tqbGtF7/IzJ0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OjtqpvtNvwRUFEqHHA+3gvzIMlN1ofOD
+        QE14x39lG0mlRaV9f5yy3Zw1JzRCP0p5TQLXjuFDKVwUPSOwpYqpEcAk7bH1INpG
+        drCRyilUGI0T9eYY5K1Y6Z5ltltdYrscsnVhhagy8zx7YnqAmTnTJ2WuPKsw94D+
+        mC3KPEUmO5w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CE98F48808;
+        Mon, 17 Oct 2016 16:07:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3518C48807;
+        Mon, 17 Oct 2016 16:07:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "Karl A." <venv21@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH 1/2] submodule: ignore trailing slash on superproject URL
+References: <20161010175611.1058-1-sbeller@google.com>
+        <alpine.DEB.2.20.1610121501390.3492@virtualbox>
+        <CAGZ79kYDpth7YDbN0VRD0dcpp7aeQ-y4HSEhsmd_c46ggZoXsg@mail.gmail.com>
+        <alpine.DEB.2.20.1610131255001.197091@virtualbox>
+        <xmqqfunvxxgu.fsf@gitster.mtv.corp.google.com>
+        <2aa41392-a7ed-cd48-2737-bd852757ab35@kdbg.org>
+Date:   Mon, 17 Oct 2016 13:07:04 -0700
+In-Reply-To: <2aa41392-a7ed-cd48-2737-bd852757ab35@kdbg.org> (Johannes Sixt's
+        message of "Mon, 17 Oct 2016 21:32:52 +0200")
+Message-ID: <xmqqr37eu4d3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqlgxmvof2.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:+5BQ6vFQWMpjmig0w6+F72Ua7NEa4HNoIjpRYRZhc3ops4+JByf
- +R3vjogMzuI7L1B+tpeo7I1fa81GcnPyNRqa/LL/7nnE7t0e4ctii/bcJ459YtkiqkTesrR
- 2WOc5OYp8tTBBgvlfODdxrfwlorwtjvGqE1iASl6wCldr72bMVwoqC+yhVfrDp7p0KUPpEY
- 45xWnuYaX7vi6wtMY6swA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ovBy6oXJY9A=:uVWK7wzag22Fis9TrTLPkm
- rTMLqTe1p9lfjiCQGhtHs/G66IiFa/oH26hIbFT/cX8xzaN4StEinSJ0Bm29drdCjGJWiI1Uq
- Md46OIhCj9nCBZkIH4YVhKhaXdO3bT7zTjDWQWpkq0fsRsaVUUstBRC8W7ws2f+9dm9EcGEDs
- 8vMsNM9VdD1jCdd0lN9R31NBp1pl77mBRFWHzG6MaK+DGlmGCQyof8g6imIturPLxwAZSw/8Q
- r0eqL00gQlZ517Y2bwvgyHAgX1kHvC5SZey7AKlReCNeQLm6HznNkCB05nL/Ew2u37Kk40hB/
- pdU3SnSL1Bn1dGUgG07Ms/Hd+nB8uMB0YrKXcLs4Ux2dlBUe6Q3ONQw5CNQdU/ugOoJiUIv7D
- otKjcahd8JZYF03DlNyCu8WqqSqASoPbsfkcXaR+5Rd6hdB4x4nplsSbQB7cfsj5QrOVH5EIO
- BsQgaFqJBDzBHPma7C0j1YHN55DdbKCzpcNW6im3tpfFUEfdd8W80YEEt2sVtVwDJPkbwjgGI
- /rgvpTp81c6G6vMepEZGxK1YGsSzyPIkDRt1dWKa5Obee+sjE7HfVrU7nBQQGlVXvyyvs4RjK
- bgOSidCtG5xZvETCa4TgvipRHgllBYjZtqq3wenqYxtzbrRi2OoeF1J2iw+WtBathYFufGwtZ
- 5vEPdi0DdjSDLgdisi1HsMp0I5SQ8euFs2YSQH1xbnvCt/C9EOPyovlXUZBEhvXUNyME+XnAH
- q2ugcHZfa/cdPrW0uzANL4rgZcUHMjU3nOZ9MwgzkKFdwMTFe+WglxBtuNG5xZ2i9MDrB1yBW
- vn75oZE
+Content-Type: text/plain
+X-Pobox-Relay-ID: 46FE576E-94A5-11E6-BB54-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.10.2016 um 20:08 schrieb Junio C Hamano:
-> ... oops.  Totally unrelated to this patch, but I see these in
-> strbuf.cocci.patch (this is at the tip of 'pu'), which are total
-> nonsense.  Perhaps I am running a way-stale spatch?  It claims to be
-> "spatch version 1.0.0-rc19 with Python support and with PCRE support"
-> 
-> --- date.c
-> +++ /tmp/cocci-output-21568-bd3448-date.c
-> @@ -179,7 +179,7 @@ const char *show_date(unsigned long time
->  
->  	if (mode->type == DATE_UNIX) {
->  		strbuf_reset(&timebuf);
-> -		strbuf_addf(&timebuf, "%lu", time);
-> +		strbuf_addstr(&timebuf, time);
->  		return timebuf.buf;
->  	}
->  
-> --- log-tree.c
-> +++ /tmp/cocci-output-21608-b02087-log-tree.c
-> @@ -400,7 +400,7 @@ void log_write_email_headers(struct rev_
->  		extra_headers = subject_buffer;
->  
->  		if (opt->numbered_files)
-> -			strbuf_addf(&filename, "%d", opt->nr);
-> +			strbuf_addstr(&filename, opt->nr);
->  		else
->  			fmt_output_commit(&filename, commit, opt);
->  		snprintf(buffer, sizeof(buffer) - 1,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I get these instead with 6513eabcbcbcfa684d4bb2d57f61c662b870b5ca on
-Debian testing with its "spatch version 1.0.4 with Python support and
-with PCRE support", which look legit:
+>>     "../." taken relative to "$(pwd)/." must be "$(pwd)/."
+>>     "../." taken relative to "$PWD/." must be "$(pwd)/."
+>>
+>> test, because of the limitation of your bash, cannot have the latter
+>> half of the pair, so you'd need to comment it out with in-code
+>> explanation, perhaps?
+>
+> No, we do not have to test both cases. Git, the program, never sees
+> Unixy input. It cannot distinguish the two cases.
 
---- sequencer.c
-+++ /tmp/cocci-output-40365-db7a71-sequencer.c
-@@ -159,7 +159,7 @@ int sequencer_remove_state(struct replay
- 		free(opts->xopts[i]);
- 	free(opts->xopts);
- 
--	strbuf_addf(&dir, "%s", get_dir(opts));
-+	strbuf_addstr(&dir, get_dir(opts));
- 	remove_dir_recursively(&dir, 0);
- 	strbuf_release(&dir);
- 
---- builtin/branch.c
-+++ /tmp/cocci-output-40858-a86d1a-branch.c
-@@ -316,7 +316,7 @@ static char *build_format(struct ref_fil
- 
- 	if (filter->verbose) {
- 		strbuf_addf(&local, "%%(align:%d,left)%%(refname:strip=2)%%(end)", maxwidth);
--		strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
-+		strbuf_addstr(&local, branch_get_color(BRANCH_COLOR_RESET));
- 		strbuf_addf(&local, " %%(objectname:short=7) ");
- 
- 		if (filter->verbose > 1)
+Thanks.
