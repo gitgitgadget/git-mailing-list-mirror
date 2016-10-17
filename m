@@ -2,178 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,URIBL_RED shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0C5A20988
-	for <e@80x24.org>; Mon, 17 Oct 2016 07:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05CC020988
+	for <e@80x24.org>; Mon, 17 Oct 2016 08:38:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757553AbcJQHKP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 03:10:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57591 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756546AbcJQHKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 03:10:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86A044076C;
-        Mon, 17 Oct 2016 03:10:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Sgmx6fasbkyVXKqj4QZxJ/5UEgk=; b=sahobc
-        fVdJeUPDY8N5u7LiHCl3RYiFxYa81BGikLr/6sRB3kVCUqMD2ELhtSBjESoAWDts
-        hxeMPn6IE5tsAUp7/Wz7S7j+16iXt0TPnLXZySrvM7t6mjgGvPuXreYGePKAZrM6
-        zVa1wmnhEV9Em5yV59d/aerdHHll40bM2N3H0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mmbIECC8Bp9U2FcabBNtfc0PSa0agV+X
-        qf+GxVF2gQAzANr9/5sGPpdgxjym6WeG5M7iKZHw8Ht7b4OxbZQPQkbYJmO7Jh1h
-        ejrexPZvSYNAiSHSXDfmXxa1g8blobPLv4scwsfhNFbU1G06s3yS51gn3XkP0vHq
-        Qt07Yy07MuI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DF9C40769;
-        Mon, 17 Oct 2016 03:10:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E53E540768;
-        Mon, 17 Oct 2016 03:10:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "Karl A." <venv21@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH 1/2] submodule: ignore trailing slash on superproject URL
-References: <20161010175611.1058-1-sbeller@google.com>
-        <alpine.DEB.2.20.1610121501390.3492@virtualbox>
-        <CAGZ79kYDpth7YDbN0VRD0dcpp7aeQ-y4HSEhsmd_c46ggZoXsg@mail.gmail.com>
-        <alpine.DEB.2.20.1610131255001.197091@virtualbox>
-Date:   Mon, 17 Oct 2016 00:10:09 -0700
-In-Reply-To: <alpine.DEB.2.20.1610131255001.197091@virtualbox> (Johannes
-        Schindelin's message of "Thu, 13 Oct 2016 13:11:51 +0200 (CEST)")
-Message-ID: <xmqqfunvxxgu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1758566AbcJQIiI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 04:38:08 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52722 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758316AbcJQIiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 04:38:06 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LxxKu-1cyvaP22Ka-015GEn; Mon, 17 Oct 2016 10:37:53
+ +0200
+Date:   Mon, 17 Oct 2016 10:37:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 07/25] sequencer: completely revamp the "todo" script
+ parsing
+In-Reply-To: <20161016194238.wbge2pas5xr46av7@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1610171025470.197091@virtualbox>
+References: <cover.1473590966.git.johannes.schindelin@gmx.de> <cover.1476120229.git.johannes.schindelin@gmx.de> <4e73ba3e8c1700259ffcc3224d1f66e6a760142d.1476120229.git.johannes.schindelin@gmx.de> <933b13d6-5f24-c03a-a1a0-712ceb8ddcc8@web.de>
+ <20161015171926.qgtvrjcaqwb436hx@sigill.intra.peff.net> <d9f4f658-94fb-cb9e-7da8-3a2fac120a9e@web.de> <20161015174656.fmgk3le2b34nnjpx@sigill.intra.peff.net> <alpine.DEB.2.20.1610161006080.197091@virtualbox>
+ <20161016194238.wbge2pas5xr46av7@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BEB7D14E-9438-11E6-A4B4-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:b1qIW+Ro/6ygzXY/Zrz7LNijutn9F1QRpa3K4D8SnoStq2rF3Z+
+ XGma+1jX6eserr0w5VvhysN4z8EsCEBgjbVRrRSqzQrjWYqLqy4BgExd5yJXpraMbi+y5U4
+ lza6XdK6p4j4ofv+HlcJ6S4ZcOY6OlIsMMup+9T+vPv2ouKA45MTGgMjxQtkNZ6Alkk8Wz9
+ WpBNYBb39zRJ2sQRfs9qQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:r4FI2jpqFHw=:vR82RzRa7iintYCUx//nGa
+ QaQviXnpMoPQNTFVOcsOMspXidOPBNKIQ+/J2LVSIxt1lwcEA3ZQYjrwWtlVTlC6e7jZGHF6+
+ lo8gP/0qQ7hAXdBvHtorrtyWAi/3sUElbnNFT3zWx1M5rGpKuEeTyanaNtJern1nluQl6ljZT
+ 1MKYBqYvgfiIqXtKXgbYb0oARw0xX152QRFNcZuM1gEmGhcEiczG9XsHTvjm+IZlmfSKdZ9F6
+ Vwt9RS8ePlpnQwkSb0AkpP5ank0AWeVLWExScwQeyLzgAMY/wqQWjSodr871HBjTeICgVGs6n
+ lotSyZzcpY+a3nK/7xiCan0/ZRxnoKWbfpX5lTzNWIHunQoKgua0Dz/K/rqtEk63rot6HC1uM
+ z8qhYzmHZVgCFYixfUUENcDwrF8ZrcZeE5wYRRZ2khEtodCe5Z3n5FigOWQbOGIDaXGll34De
+ 5ENEUCxbyKnpCROM8mVqTqB0/zNN7FKILP7ZnzxC0rwttqZpQbKe6DKz8MEaHbwLVwp7irRa4
+ KbORXQHjRdBjOuIYA5kJPrb4NqXo4gPeHzaWFd1gTNtu1AtFlnYZHrIBL4OWU2Oclw7TIARHW
+ cVxAxDxoaHVJRNiRZTuLlmZhweJzpL0dbjhUgyO7Ovj7uXje8mL+ZyEoZUwawszYmzXvLt3G8
+ PikoJXfeCFHt59tbHt1Fz/8/bxjnUH32j+DjcNvUoLRv9RfhcyaDtwRkdEhRQH2K+MSpWqnan
+ AvF0xmoRyXObY8qDQbrFvi7wI48Rbt0kAhiabwxnKCfu62ULG47i7d7oV09ReZlM0xtY9edQI
+ eVFEpnz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Peff,
 
->> > expecting success:
->> >                 actual=$(git submodule--helper resolve-relative-url-test '(null)' '/usr/src/git/wip/t/trash directory.t0060-path-utils/.' '../.') &&
->> >                 test "$actual" = 'C:/git-sdk-64/usr/src/git/wip/t/trash directory.t0060-path-utils/.'
->> >
->> > +++ git submodule--helper resolve-relative-url-test '(null)' '/usr/src/git/wip/t/trash directory.t0060-path-utils/.' ../.
->> > ++ actual=C:/git-sdk-64/usr/src/git/wip/t/.
->> > ++ test C:/git-sdk-64/usr/src/git/wip/t/. = 'C:/git-sdk-64/usr/src/git/wip/t/trash directory.t0060-path-utils/.'
+On Sun, 16 Oct 2016, Jeff King wrote:
 
-This may well be total misunderstanding on my side, but is the
-expectation of this test even correct?  If it wants to take "../."
-relative to "$LEAD/t/trash utils/.", should't it go one level up
-with ".." to $LEAD/t and then stay there with ".", expecting
-"$LEAD/t" which is what the above is giving us?
+> On Sun, Oct 16, 2016 at 10:09:12AM +0200, Johannes Schindelin wrote:
+> 
+> > > Good catch. It technically needs to check the lower bound, too. In
+> > > theory, if somebody wanted to add an enum value that is negative, you'd
+> > > use a signed cast and check against both 0 and ARRAY_SIZE(). In
+> > > practice, that is nonsense for this case, and using an unsigned type
+> > > means that any negative values become large, and the check catches them.
+> > 
+> > I am pretty certain that I disagree with that warning: enums have been
+> > used as equivalents of ints for a long time, and will be, for a long time
+> > to come.
+> 
+> I'm not sure I agree. IIRC, Assigning values outside the range of an enum has
+> always been fishy according to the standard, and a compiler really is
+> allowed to allocate a single bit for storage for this enum.
 
-IOW, the above makes me wonder why having one of these as the base
+Really? I did see my share of code that completely violated this freedom,
+by assuming that it was really okay to cast a -1 to an enum and then test
+for that value later, when -1 was not a legal enum value.
 
-	A - path/to/dir
-	B - path/to/dir/
-	C - path/to/dir/.
+In any case, the fact that even one compiler used to build Git *may*
+violate that standard, and that we therefore need such safety guards as
+the one under discussion, still makes me think that this warning, while
+certainly well-intentioned, is poison for cross-platform projects.
 
-to resolve the relative "../." give different results.  Whether bash
-on Windows removes the dot at the end of C to turn it into B, as
-long as A and B give us the same result we wouldn't be hitting the
-problem, no?
+> > Given that this test is modified to `if (command < TODO_NOOP)` later, I
+> > hope that you agree that it is not worth the trouble to appease that
+> > compiler overreaction?
+> 
+> I don't mind if there are transient warnings on some compilers in the
+> middle of a series, but I'm not sure when "later" is. The tip of "pu"
+> has this warning right now when built with clang.
 
->> >  test_submodule_relative_url "(null)" "$PWD/subsuper_update_r" "../subsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
->> >  test_submodule_relative_url "(null)" "$PWD/super_update_r2" "../subsuper_update_r" "$(pwd)/subsuper_update_r"
->> > -test_submodule_relative_url "(null)" "$PWD/." "../." "$(pwd)/."
->> > +test_submodule_relative_url "(null)" "$(pwd)/." "../." "$(pwd)/."
+"Later" is the sequencer-i patch series I already sent out for review
+[*1*], in particular the patch titled "sequencer (rebase -i):
+differentiate between comments and 'noop'" [*2*].
 
->> > The reasons this is ugly: we specifically test for *Unixy* paths when we
->> > use $PWD, as opposed to *Windowsy* paths when using $(pwd).
+> I'm happy to test the TODO_NOOP version against clang (and prepare a
+> patch on top if it still complains), but that doesn't seem to have
+> Junio's tree at all yet.
 
-Just to ensure I am following this correctly, two tests that come
-before the one you are touching above have $PWD on the input side
-and $(pwd) on the expectation side.  That is what you mean by the
-next paragraph, right?  They want to make sure that you honor the
-Unixy user input on Windows and still produce Windowsy result, that
-is.
+Junio chose to pick up only one patch series out of the rebase--helper
+thicket at a time, it seems. I did send out at least one revision per
+patch series prior to integrating them into Git for Windows v2.10.0,
+though. Plus, I kept updating the `interactive-rebase` branch in my
+repository on GitHub (https://github.com/dscho/git).
 
->> > We do this to
->> > ensure a certain level of confidence that running things such as
->> >
->> >         git clone --recurse-submodules /z/project/.
->> >
->> > work. And now that does not work anymore.
+Ciao,
+Dscho
 
-And I agree from that point of view that having to spell both sides
-as $(pwd) would mean you are not testing that "Unixy input to
-Windowsy output" expectation, but at the same time, I think you
-would want "Windowsy input to Windowsy output" combination also does
-produce correct result, which is not tested in the three tests shown
-above.  IOW, probably you would want to test both (at least on any
-platform where $PWD and $(pwd) textually disagree) for all these
-[*1*], and the pair
+Footnote *1*:
+https://public-inbox.org/git/cover.1472633606.git.johannes.schindelin@gmx.de/
 
-    "../." taken relative to "$(pwd)/." must be "$(pwd)/."
-    "../." taken relative to "$PWD/." must be "$(pwd)/."
+Footnote *2*:
+https://public-inbox.org/git/736bcb8e860c876e32e8f89f68b0b901abedc187.1472633606.git.johannes.schindelin@gmx.de/t/#u
 
-test, because of the limitation of your bash, cannot have the latter
-half of the pair, so you'd need to comment it out with in-code
-explanation, perhaps?  IOW something along the lines of...
-
- -- >8 -- snip -- >8 --
-
-test_submodule_relative_url "(null)" "$(pwd)/subsuper_update_r" "../subsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
-test_submodule_relative_url "(null)" "$(pwd)/super_update_r2" "../subsuper_update_r" "$(pwd)/subsuper_update_r"
-test_submodule_relative_url "(null)" "$(pwd)/." "../." "$(pwd)/."
-
-if test_have_prereq MINGW
-then
-
-test_submodule_relative_url "(null)" "$PWD/subsuper_update_r" "../subsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
-test_submodule_relative_url "(null)" "$PWD/super_update_r2" "../subsuper_update_r" "$(pwd)/subsuper_update_r"
-# This does not work correctly because Win-Bash strips . at the end
-# "of $PWD/."
-# test_submodule_relative_url "(null)" "$PWD/." "../." "$(pwd)/."
-
-fi
-
- -- >8 -- snip -- >8 --
-
-In any case, I find it more disturbing that we somehow ended up with
-a system where these three things are expected to behave differently:
-
-	A - path/to/dir
-	B - path/to/dir/
-	C - path/to/dir/.
-
-Is that something we can fix?
-
-
-[Footnote]
-
-*1* It is tempting to update the above test sequence using
-    a helper like:
-
-    tsru () {
-	test_submodule_relative_url "(null)" "$(pwd)/$1" "$2" "$(pwd)/$3"
-	if test_have_prereq MINGW
-	then
-	    test_submodule_relative_url "(null)" "$PWD/$1" "$2" "$(pwd)/$3"
-	fi
-    }
-
-    then write the above three tests like so:
-
-	tsru subsuper_update_r ../subsubsuper_update_r subsubsuper_update_r
-	tsru super_update_r2 ../subsuper_update_r subsuper_update_r
-	tsru . ../. .
-
-    but you would want to disable the MINGW half for only the third
-    test, we cannot quite do that.
+P.S.: I cannot wait for the day when somebody with an artistic touch
+provides .css for the public-inbox.org site so it stops threatening
+causing eye cancer to me.
