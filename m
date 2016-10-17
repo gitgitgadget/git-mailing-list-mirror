@@ -2,119 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F162920988
-	for <e@80x24.org>; Mon, 17 Oct 2016 11:03:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E448920988
+	for <e@80x24.org>; Mon, 17 Oct 2016 11:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934917AbcJQLDX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 07:03:23 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:37930 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932761AbcJQLDV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 07:03:21 -0400
-Received: by mail-it0-f52.google.com with SMTP id 66so4481051itl.1
-        for <git@vger.kernel.org>; Mon, 17 Oct 2016 04:03:21 -0700 (PDT)
+        id S932205AbcJQLkS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 07:40:18 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:34698 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753104AbcJQLkR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 07:40:17 -0400
+Received: by mail-it0-f44.google.com with SMTP id e187so12362593itc.1
+        for <git@vger.kernel.org>; Mon, 17 Oct 2016 04:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=1qslefoU5Oszx86NCvuWsgIG3AV5Ecq/Ibeb6FU0WVE=;
-        b=TopzItwP8PnsTu23HkAb5BSa6gvL2ZbkVj4aI5MtsSqIcuCNt3cYtUpcRdLzQSvVkC
-         nFgvppRX0m8BYycV2m9JjuonlBG9T7sU5VveqvFOWuwOQA3ODmybgCSrqBS3MGT+aAtR
-         fWmiF1dzcdbIv6i6f93C4UToM4NC7lTS3YJv3+91/yuoPd+AWblWRh5GoA/TZLyT5jEV
-         bnVGc9voGHsx433HnbVYpNL+oqrsbic57yxJpsbZ7WyZqkvbYwzSDcr/fUsE9081hVZX
-         3f1ykundRDXIdJYNmRCWCgK93HbMI3KEybNQk5Bmot7PloNmmcrKdbPUIUkMswHhgAQB
-         rN/g==
+        bh=6E6Iqc7Y5mEnsj959Oxb2oxdpQSjDiRWJsoOGCsoAkI=;
+        b=FWCy8Alcn+pV7/Qkpj/O0DyQLQ53hjsQlC7CQQIte3+kPgAJCCoFEB1187OsHKppDO
+         Td6cboE6AvjJJYLN1myT1LmM/rhpNOj/wcHt85YrraT+QlAldM9g1+h6rpF8LmXdIJ5B
+         hDbZGj8EJ2kp9e2qh4kRBfTF/WMxuKuNJ8p6COYrvI8Dn5sR2VuEVH0rb03TzTA+5EtW
+         /dDBctc2YfpXlCHI4colHduBlWcdcZU7PveH92Gc4RgTVdNxp1BD8FPrbx2jpinDMNyn
+         1dMxVQ3bOx8Gtuq4siIlmuj1qAAofI2OALTtFtwGs53tj+sMLbkLs2CTRHwfjvrwMz1u
+         8AcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=1qslefoU5Oszx86NCvuWsgIG3AV5Ecq/Ibeb6FU0WVE=;
-        b=itk93+iI9NzB1TCt0O8BpUzov64yIdkiVxdo7FFtd6/3iZJAU5ArKGMmYBsNN7DCS7
-         aD9uXZBFHprHTxHwFO0XEuDValXgKVEFLk0QJA+z4jXUEvUIFCQAVYgiau5BvNpuWE94
-         Dt5FHt+00qwW0LreIqk3zywJsVLLEYF77vgxt9Fu8rz3iQ8NjiHGK7FChoBtPEx1TXhE
-         qeDy08JOgGtNl3I57Xx2i4KEbIOf9BeUsdQfI26lyybrWVGSc5frkztZZWHeOPmgl/MH
-         rSHLD8zsut6s3rssQF9JKZf0sph/+hpp3X8kaSJCIxiHBy0Mr8SIy5hklzGPnG8MD36f
-         5MZQ==
-X-Gm-Message-State: AA6/9RmsR8XLTS0DAIezHcCYETIs1PqxMWrfkyBSw+W1EZ5hrb/Ak0VNNGhFw2QKNv5Xqf3yXwy1MpegO0YaGQ==
-X-Received: by 10.36.216.4 with SMTP id b4mr8649934itg.74.1476702200942; Mon,
- 17 Oct 2016 04:03:20 -0700 (PDT)
+        bh=6E6Iqc7Y5mEnsj959Oxb2oxdpQSjDiRWJsoOGCsoAkI=;
+        b=WN+BXIg9mfVMTDSBIXWm7DvliXHtK9ssHomkj9RX6RHV9m5VYCnYrQ5GnNFsRL9+8C
+         k+TmhcwKhPBHAfQqvayUPA8pvDgaESn5xLZOpvjVYmJGiCUlPV095ts4ek6pjXPikVue
+         LDxhFsEnxskr2xz2r2H8wqk1OqdT95sHHf6/p0cNSw0/h9RoXwvb066s3WIqZUoDU5OI
+         MdN1wnoD0Xdgx9IVRGUaIxAReGVIrJDpm/uGfX7s6MUcRKd+dSaPqyjDa5ad6tAXWrNp
+         7LHDIA6+QZ0IOWheTRi4SuVTNcX89WVyAANVCLUD1iAFWznXLoHXiyAXEW44L2ScqrdU
+         vbjA==
+X-Gm-Message-State: AA6/9Rmnd9OoA5j3fBpCTN2sNEb4Q9Lw0DxJeh0EvU96wwaAVQsEA036LKjmjhVwBRAMN+BNykCD5hFVyMWT+Q==
+X-Received: by 10.36.76.15 with SMTP id a15mr8750705itb.74.1476704417040; Mon,
+ 17 Oct 2016 04:40:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Mon, 17 Oct 2016 04:02:50 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1610171241240.197091@virtualbox>
-References: <C83BE22D-EAC8-49E2-AEE3-22D4A99AE205@gmail.com>
- <CAGZ79kZ6KaQ5gjGiEFQ-pRJCDAyS0oH=_4dK0nCU9hx8wZwdfw@mail.gmail.com>
- <alpine.DEB.2.20.1610171056170.197091@virtualbox> <CACsJy8BBLcZvB1FswcEKS1KgvjMjo_uaVqOTgjmMJkjnmoye+w@mail.gmail.com>
- <alpine.DEB.2.20.1610171241240.197091@virtualbox>
+Received: by 10.64.164.102 with HTTP; Mon, 17 Oct 2016 04:39:46 -0700 (PDT)
+In-Reply-To: <CACPiFCJFXGmsJX97kQuA2h3trVX7L3SacwKrD4mpEU5SPxkLAA@mail.gmail.com>
+References: <CACPiFC+8+wVEcDt9JZgTW1dwCCFKszyXD6ysDxNQorcNkom7Lw@mail.gmail.com>
+ <20161014205842.GA6350@ikke.info> <CACPiFCJFXGmsJX97kQuA2h3trVX7L3SacwKrD4mpEU5SPxkLAA@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 17 Oct 2016 18:02:50 +0700
-Message-ID: <CACsJy8ASnvryrrWvr4ACWL_9oeKgE_4SUqcRHGf+Y6kcaeDUhg@mail.gmail.com>
-Subject: Re: [RFC] Case insensitive Git attributes
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>
+Date:   Mon, 17 Oct 2016 18:39:46 +0700
+Message-ID: <CACsJy8A252mU8hgp2d+LQ8vku1w-sL9eP=t=G1AX61WJi8SUfA@mail.gmail.com>
+Subject: Re: Automagic `git checkout branchname` mysteriously fails
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+Cc:     Kevin Daudt <me@ikke.info>, Git <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 17, 2016 at 5:46 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Duy,
+On Sat, Oct 15, 2016 at 4:06 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Fri, Oct 14, 2016 at 4:58 PM, Kevin Daudt <me@ikke.info> wrote:
+>> Correct, this only works when it's unambiguous what branch you actually
+>> mean.
 >
-> On Mon, 17 Oct 2016, Duy Nguyen wrote:
+> That's not surprising, but there isn't a warning. IMHO, finding
+> several branch matches is a strong indication that it'll be worth
+> reporting to the user that the DWIM machinery got hits, but couldn't
+> work it out.
 >
->> On Mon, Oct 17, 2016 at 3:57 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->> > Hi Stefan,
->> >
->> > On Sun, 16 Oct 2016, Stefan Beller wrote:
->> >
->> >> Conceptually I would prefer if we had a single switch that indicates a
->> >> case insensitive FS.
->> >
->> > AFAIU Lars' use case is where the FS is *case sensitive*, but he still
->> > needs the .gitattributes to be *case insensitive* because that file
->> > originates from a developer with such a file system.
->> >
->> > Otherwise he would simply tack onto the core.ignoreCase flag.
->>
->> That sounds to me like setting core.ignoreCase to true (on all devs'
->> repo) would "solve" this.
+> I get that process is not geared towards making a friendly msg easy,
+> but we could print to stderr something like:
 >
-> It is good that you quoted this verb, because it does not solve things.
-> Instead, it would try to use the flag for two slightly incompatible
-> purposes at the same time.
->
-> The first (and so far, only) purpose is to tell Git that the current file
-> system is case insensitive.
->
-> The new purpose you described would be to tell Git that the *user* does
-> not care about the file names' case, even if the file system does.
->
-> I do not think that this leads to a better situation than before. Instead,
-> I am convinced that it will cause new and sometimes "entertaining"
-> problems because you can no longer discern between those two purposes
-> based on core.ignoreCase, you would have to teach Git to test every single
-> time whether the file system is case-sensitive or not.
+>  "branch" matches more than one candidate ref, cannot choose automatically.
+>  If you mean to check out a branch, try git branch command.
+>  If you mean to check out a file, use -- before the pathname to
+>  disambiguate.
 
-I agree. Which is why I wrote "we probably want something in the same
-spirit but limited to .gitattributes and .gitignore only". In other
-words we could have core.someName that makes .gitattributes and
-.gitignore patterns case-insensitive (or core-sensitive). If it's
-present, it overrides core.ignoreCase. If it's not present,
-core.ignoreCase decides. I'm just not sure if the new config should
-cover everything involving filename's case in git. That's too big to
-fit in my head.
-
-> Needless to say, I'd rather not see that happening. Many users, including
-> my colleagues and myself, rely on Git being a rock solid piece of
-> software, and that change would make it less so.
+Or even better, list all ambiguous candidates like Jeff did for
+ambiguous short SHA-1 in 1ffa26c (get_short_sha1: list ambiguous
+objects on error - 2016-09-26).There were a few occasions I was
+confused by ambiguous refs and displaying them all would help me see
+what problem was much faster.
 -- 
 Duy
