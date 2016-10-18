@@ -2,108 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E960420988
-	for <e@80x24.org>; Tue, 18 Oct 2016 17:15:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81AAD20988
+	for <e@80x24.org>; Tue, 18 Oct 2016 17:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760629AbcJRRPR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 13:15:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58415 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756000AbcJRRPP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 13:15:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 486CB4765C;
-        Tue, 18 Oct 2016 13:15:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RRjB8M8aQBKUixa2okG5RwzptGo=; b=GgO+a+
-        GwQNJTzDoD/BGT7TBXLetMA9ms5wpsMI/CnOqVlzJJBTLSd53In7vcoJQjV83huP
-        a51PihSFya15zjrg/fVgOGk8mnZofE/NBGqttdSzXv1KSAlN41yC3eIA5wMZUmFk
-        yYw84enxg27lxRwDIIuOtvjp2Cr5Yth2qKEr4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vxb29pEjcDqeAvGTYw581EqYwNQzweUr
-        yetp7KJhk7HIlIPnZhqug6BbpyecqFc2kXIdFlmROZ9oerY4spXnIXF+IUksg16t
-        5hrLSx1qXxl6XCjUWrt8OJc3X7H7l5MLElOZg1kOm+1CFY03PpBCren29UPZq2Lm
-        f7chWLOXd0Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F64947659;
-        Tue, 18 Oct 2016 13:15:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C99F47654;
-        Tue, 18 Oct 2016 13:15:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     j6t@kdbg.org, Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        venv21@gmail.com, dennis@kaarsemaker.net, jrnieder@gmail.com
-Subject: Re: [PATCH] submodule--helper: normalize funny urls
-References: <20161017221623.7299-1-sbeller@google.com>
-        <xmqqbmyisiae.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 18 Oct 2016 10:15:10 -0700
-In-Reply-To: <xmqqbmyisiae.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 17 Oct 2016 15:49:13 -0700")
-Message-ID: <xmqqr37dpoip.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S965078AbcJRRRr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 13:17:47 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:35025 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964785AbcJRRRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 13:17:46 -0400
+Received: by mail-qk0-f174.google.com with SMTP id z190so229766qkc.2
+        for <git@vger.kernel.org>; Tue, 18 Oct 2016 10:17:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jMV2uE2lqZvzi2QQiTaVxBcS4ypjVgCZ3hgHImIjm2Y=;
+        b=gjQagRj3pxHy4TSvInZoJtfFdvyOh0LpBAgABPhGGmKUocB2eLW0mm1KrQ0NSdxK8F
+         bdlKpZx6+LMzR66bCnL6DsOlM+sAeRI3Fa+5kNfG9e2VQTjUoQSlxySY/xMH9Jiz1bwQ
+         EmsqRy2VT3NrIs2Sqm3esNj47Q3J85SSvZqwfB8+xy6z5SzeojEE9ZaEERtd/9jbegz3
+         sJqDQPMkWCYjWiCNZyDWpUYl/aULOysm3FKBQJpOR/FoK/pNEJPRMxeS/QvdroFk1z8v
+         Q7bGXhzNJXEv3xNXLP33d7vr0xEA1XTQ4jJcKy90++nK6IiwYnAGUWDx1VepnM5wOYve
+         IzFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jMV2uE2lqZvzi2QQiTaVxBcS4ypjVgCZ3hgHImIjm2Y=;
+        b=ErlkQJFUDw91NpVi03v0dYZnV31IeTvNHEnCkn34fO7BjpJPe9iQpQy/tKYIuOEbTf
+         eMGAL2oBx2c92jIqgnC+nN16VcWxng+gMEXidT0bhte1hU/IXdkXe2Xes2a6pG130So2
+         sHjGrbAxQFFvAFHeK57v2CXlH7czXUsvxYx5OTHuthJu78TpUfojFLcZbVLlrjvmZxr5
+         zgoOsmASzjN01FzQdKYNqd0wSdyggd8uEh4TfPqBLkpjhbyBCoboMdnKXLWnHJav55zN
+         stDmmnapP2crAo9uA8y0davf4GT8tAL1gvonIK87iE0RIDzmIqKrUhLiHGn3NyQYh2GY
+         UMMw==
+X-Gm-Message-State: ABUngveIuMmQgBhBiI1UpGk4cEzH2/fhZRNuE5CdV0ryroqTfa/afLiRWVY0en11boFOAOelwxu2N+RoZuzcT7uw
+X-Received: by 10.55.56.11 with SMTP id f11mr1535381qka.255.1476811065253;
+ Tue, 18 Oct 2016 10:17:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6E092A9E-9556-11E6-8407-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.135.40 with HTTP; Tue, 18 Oct 2016 10:17:44 -0700 (PDT)
+In-Reply-To: <xmqqr37dpoip.fsf@gitster.mtv.corp.google.com>
+References: <20161017221623.7299-1-sbeller@google.com> <xmqqbmyisiae.fsf@gitster.mtv.corp.google.com>
+ <xmqqr37dpoip.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 18 Oct 2016 10:17:44 -0700
+Message-ID: <CAGZ79kZEFanPpdrE4sD64LJHmyrBiHafo1VzoGtoGh+wO_HCuw@mail.gmail.com>
+Subject: Re: [PATCH] submodule--helper: normalize funny urls
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Karl A." <venv21@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Oct 18, 2016 at 10:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I also somehow find the "check-url-stripping" variable ugly.
+>
+>         while (URL still has something that could be stripped) {
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> +static void strip_url_ending(char *url, size_t *_len)
->> +{
->> +	int check_url_stripping = 1;
->> +	size_t len = _len ? *_len : strlen(url);
->> +
->> +	while (check_url_stripping) {
->> +		check_url_stripping = 0;
->> +		if (is_dir_sep(url[len-2]) && url[len-1] == '.') {
->
-> This is "strip /. at the end" it seems.
->
-> Does anything in the loop control guarantees 2 <= len at this point?
->
->> +			url[len-2] = '\0';
->> +			len -= 2;
->> +			check_url_stripping = 1;
->> +		}
->> +
->> +		if (is_dir_sep(url[len-1])) {
->
-> This is "strip / at the end" it seems.
->
-> Does anything in the loop control guarantees 1 <= len at this point?
->
->> +			url[len-1] = '\0';
->> +			len--;
->> +			check_url_stripping = 1;
->> +		}
->> +	}
+for(;;) {
 
-I also somehow find the "check-url-stripping" variable ugly.
+here ? (this code would not need a variable, and
+for wins over while:
+$ git grep "while (1)" |wc -l
+107
+$ git grep "for (;;)" |wc -l
+128
+)
 
-	while (URL still has something that could be stripped) {
-		if (ends with "/.") {
-			strip "/.";
-			continue;
-		}
-		if (ends with "/") {
-			strip "/";
-			continue;
-		}
-		break;
-	}
-
-perhaps?
+>                 if (ends with "/.") {
+>                         strip "/.";
+>                         continue;
+>                 }
+>                 if (ends with "/") {
+>                         strip "/";
+>                         continue;
+>                 }
+>                 break;
+>         }
+>
+> perhaps?
