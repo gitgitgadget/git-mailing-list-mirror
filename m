@@ -2,127 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9926C20988
-	for <e@80x24.org>; Tue, 18 Oct 2016 19:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75D6B20988
+	for <e@80x24.org>; Tue, 18 Oct 2016 20:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933242AbcJRTtq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 15:49:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58141 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933100AbcJRTto (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 15:49:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF3EF47556;
-        Tue, 18 Oct 2016 15:49:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jSLV25pmwLsmb9Q640LnFnJnrlQ=; b=PTiY4V
-        dntriQdwASYdmqU62C4C7lLRnxHUdqX0CpkcTSNAZe6K6q2AL++f/a4pQziBwgsV
-        p8uAC8MW2W31xQpXqiEnBdMvXShJStMs2YepU8GdOg+4MSbxTO8bpcWZteTXbcg5
-        6YuHfcDbL+dUfVI0Qak2Y3E7k++oXItoth4WU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mfE80uPkJC6NY+UryPjyoY8RSywrW9q1
-        tNzo1oRGomqJFpShDpOF6TwicYPW2rnLa0Kt1g4AmBgVytyQrkU6q7PJcC2eUcnt
-        FI3RgRZOFKMFCfwPwW+VkrplVPe+qutec+1V5LXB6YDVcY8c+UPoVIQMD1wNQ6DW
-        2cZN4uCNWtU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C712547555;
-        Tue, 18 Oct 2016 15:49:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4596E47554;
-        Tue, 18 Oct 2016 15:49:43 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, j6t@kdbg.org, Johannes.Schindelin@gmx.de,
-        venv21@gmail.com, dennis@kaarsemaker.net, jrnieder@gmail.com,
-        bmwill@google.com
-Subject: Re: [PATCH] submodule--helper: normalize funny urls
-References: <20161018175247.28326-1-sbeller@google.com>
-Date:   Tue, 18 Oct 2016 12:49:40 -0700
-In-Reply-To: <20161018175247.28326-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 18 Oct 2016 10:52:47 -0700")
-Message-ID: <xmqq8ttlphd7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753749AbcJRUGM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 16:06:12 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:19070 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751476AbcJRUGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 16:06:11 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3sz5g44GBYz5tlQ;
+        Tue, 18 Oct 2016 22:06:08 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C733C5349;
+        Tue, 18 Oct 2016 22:06:07 +0200 (CEST)
+Subject: Re: [PATCH 1/2] submodule: ignore trailing slash on superproject URL
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20161010175611.1058-1-sbeller@google.com>
+ <alpine.DEB.2.20.1610121501390.3492@virtualbox>
+ <CAGZ79kYDpth7YDbN0VRD0dcpp7aeQ-y4HSEhsmd_c46ggZoXsg@mail.gmail.com>
+ <alpine.DEB.2.20.1610131255001.197091@virtualbox>
+ <xmqqfunvxxgu.fsf@gitster.mtv.corp.google.com>
+ <2aa41392-a7ed-cd48-2737-bd852757ab35@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Karl A." <venv21@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <2908451e-4273-8826-8989-5572263cc283@kdbg.org>
+Date:   Tue, 18 Oct 2016 22:06:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 03C52B72-956C-11E6-80CD-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <2aa41392-a7ed-cd48-2737-bd852757ab35@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Am 17.10.2016 um 21:32 schrieb Johannes Sixt:
+> I think that we could reduce the confusion by converting all $PWD to
+> $(pwd) in these test cases. I don't remember why I suggested to use $PWD
+> for one of the arguments of the test cases (the second must be $(pwd)),
+> but the most likely reason is only that we save a process.
 
-> Some users may rely on this by always cloning with '/.' and having
-> an additional '../' in the relative path for the submodule, and this
-> patch breaks them. So why introduce this patch?
->
-> The fix in c12922024 (submodule: ignore trailing slash on superproject
-> URL, 2016-10-10) and prior discussion revealed, that Git and Git
-> for Windows treat URLs differently, as currently Git for Windows
-> strips off a trailing dot from paths when calling a Git binary
-> unlike when running a shell. Which means Git for Windows is already
-> doing the right thing for the case mentioned above, but it would fail
-> our current tests, that test for the broken behavior and it would
-> confuse users working across platforms. So we'd rather fix it
-> in Git to ignore any of these trailing no ops in the path properly.
->
-> We never produce the URLs with a trailing '/.' in Git ourselves,
-> they come to us, because the user used it as the URL for cloning
-> a superproject. Normalize these paths.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->
->  * reworded the commit message, taken from Junio, but added more explanation
->    why we want to introduce this patch. 
+Something like this works for me on Windows. I can update the patch
+after the "normalize funny urls" topic settles.
 
-The additional explanation is very good.
+---- 8< ----
+t0060: sidestep surprising path mangling results on Windows
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 260f46f..ac03cb3 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -76,6 +76,29 @@ static int chop_last_dir(char **remoteurl, int is_relative)
->  	return 0;
->  }
->  
-> +static void strip_url_ending(char *url, size_t *_len)
-> +{
-> +	size_t len = _len ? *_len : strlen(url);
+When an MSYS program (such as the bash that drives the test suite)
+invokes git on Windows, absolute Unix style paths are transformed into
+Windows native absolute paths (drive letter form). However, this
+transformation also includes some simplifications that are not just
+straight-forward textual substitutions:
 
-Stare at our codebase and you'd notice that we avoid using names
-with leading underscore deliberately and use trailing one instead
-when we name a throw-away name like this.  Let's do the same here.
-I.e.
+- When the path ends in "/.", then the dot is stripped, but not the
+  directory separator.
 
-	static void strip_url_ending(char *url, size_t *len_)
-	{
-		size_t len = len_ ? *len_ : strlen(url);
+- When the path contains "..", then it is optimized away if possible,
+  e.g., "/c/dir/foo/../bar" becomes "c:/dir/bar".
 
-> +	for (;;) {
-> +		if (len > 1 && is_dir_sep(url[len-2]) && url[len-1] == '.') {
-> +			url[len-2] = '\0';
+These additional transformations violate the assumptions of some
+submodule path tests. We can avoid them when the input is already a
+Windows native path, because then MSYS leaves the path unmolested.
 
-"len-1" and "len-2" are usually spelled with SP on both sides of
-binary operators.
+Convert the uses of $PWD to $(pwd); the latter returns a native Windows
+path.
 
-> +			len -= 2;
-> +			continue;
-> +		}
-> +		if (len > 0 && is_dir_sep(url[len-1])) {
-> +			url[len-1] = '\0';
-> +			len --;
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t0060-path-utils.sh | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-And post-decrement sticks to whatever it is decrementing without SP.
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 25b48e5..444b5a4 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -305,8 +305,9 @@ test_git_path GIT_COMMON_DIR=bar config                   bar/config
+ test_git_path GIT_COMMON_DIR=bar packed-refs              bar/packed-refs
+ test_git_path GIT_COMMON_DIR=bar shallow                  bar/shallow
+ 
+-# In the tests below, the distinction between $PWD and $(pwd) is important:
+-# on Windows, $PWD is POSIX style (/c/foo), $(pwd) has drive letter (c:/foo).
++# In the tests below, $(pwd) must be used because it is a native path on
++# Windows and avoids MSYS's path mangling (which simplifies "foo/../bar" and
++# strips the dot from trailing "/.").
+ 
+ test_submodule_relative_url "../" "../foo" "../submodule" "../../submodule"
+ test_submodule_relative_url "../" "../foo/bar" "../submodule" "../../foo/submodule"
+@@ -314,7 +315,7 @@ test_submodule_relative_url "../" "../foo/submodule" "../submodule" "../../foo/s
+ test_submodule_relative_url "../" "./foo" "../submodule" "../submodule"
+ test_submodule_relative_url "../" "./foo/bar" "../submodule" "../foo/submodule"
+ test_submodule_relative_url "../../../" "../foo/bar" "../sub/a/b/c" "../../../../foo/sub/a/b/c"
+-test_submodule_relative_url "../" "$PWD/addtest" "../repo" "$(pwd)/repo"
++test_submodule_relative_url "../" "$(pwd)/addtest" "../repo" "$(pwd)/repo"
+ test_submodule_relative_url "../" "foo/bar" "../submodule" "../foo/submodule"
+ test_submodule_relative_url "../" "foo" "../submodule" "../submodule"
+ 
+@@ -327,16 +328,16 @@ test_submodule_relative_url "(null)" "../foo" "../submodule" "../submodule"
+ test_submodule_relative_url "(null)" "./foo/bar" "../submodule" "foo/submodule"
+ test_submodule_relative_url "(null)" "./foo" "../submodule" "submodule"
+ test_submodule_relative_url "(null)" "//somewhere else/repo" "../subrepo" "//somewhere else/subrepo"
+-test_submodule_relative_url "(null)" "$PWD/subsuper_update_r" "../subsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
+-test_submodule_relative_url "(null)" "$PWD/super_update_r2" "../subsuper_update_r" "$(pwd)/subsuper_update_r"
+-test_submodule_relative_url "(null)" "$PWD/." "../." "$(pwd)/."
+-test_submodule_relative_url "(null)" "$PWD" "./." "$(pwd)/."
+-test_submodule_relative_url "(null)" "$PWD/addtest" "../repo" "$(pwd)/repo"
+-test_submodule_relative_url "(null)" "$PWD" "./å äö" "$(pwd)/å äö"
+-test_submodule_relative_url "(null)" "$PWD/." "../submodule" "$(pwd)/submodule"
+-test_submodule_relative_url "(null)" "$PWD/submodule" "../submodule" "$(pwd)/submodule"
+-test_submodule_relative_url "(null)" "$PWD/home2/../remote" "../bundle1" "$(pwd)/home2/../bundle1"
+-test_submodule_relative_url "(null)" "$PWD/submodule_update_repo" "./." "$(pwd)/submodule_update_repo/."
++test_submodule_relative_url "(null)" "$(pwd)/subsuper_update_r" "../subsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
++test_submodule_relative_url "(null)" "$(pwd)/super_update_r2" "../subsuper_update_r" "$(pwd)/subsuper_update_r"
++test_submodule_relative_url "(null)" "$(pwd)/." "../." "$(pwd)/."
++test_submodule_relative_url "(null)" "$(pwd)" "./." "$(pwd)/."
++test_submodule_relative_url "(null)" "$(pwd)/addtest" "../repo" "$(pwd)/repo"
++test_submodule_relative_url "(null)" "$(pwd)" "./å äö" "$(pwd)/å äö"
++test_submodule_relative_url "(null)" "$(pwd)/." "../submodule" "$(pwd)/submodule"
++test_submodule_relative_url "(null)" "$(pwd)/submodule" "../submodule" "$(pwd)/submodule"
++test_submodule_relative_url "(null)" "$(pwd)/home2/../remote" "../bundle1" "$(pwd)/home2/../bundle1"
++test_submodule_relative_url "(null)" "$(pwd)/submodule_update_repo" "./." "$(pwd)/submodule_update_repo/."
+ test_submodule_relative_url "(null)" "file:///tmp/repo" "../subrepo" "file:///tmp/subrepo"
+ test_submodule_relative_url "(null)" "foo/bar" "../submodule" "foo/submodule"
+ test_submodule_relative_url "(null)" "foo" "../submodule" "submodule"
+-- 
+2.10.0.343.g37bc62b
 
-> +			continue;
-> +		}
