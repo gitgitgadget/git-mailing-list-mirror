@@ -2,170 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A50C220988
-	for <e@80x24.org>; Tue, 18 Oct 2016 23:25:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2AB520988
+	for <e@80x24.org>; Tue, 18 Oct 2016 23:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752193AbcJRXZL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 19:25:11 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:33932 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751288AbcJRXZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 19:25:10 -0400
-Received: by mail-qk0-f174.google.com with SMTP id f128so11729213qkb.1
-        for <git@vger.kernel.org>; Tue, 18 Oct 2016 16:25:09 -0700 (PDT)
+        id S934123AbcJRXwz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 19:52:55 -0400
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:32953 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934102AbcJRXwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 19:52:53 -0400
+Received: by mail-qt0-f178.google.com with SMTP id s49so6216161qta.0
+        for <git@vger.kernel.org>; Tue, 18 Oct 2016 16:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=lNyU4hmIhIe/fCUTlHNLSv3rUytQDDuCAeDbsyrHTa0=;
-        b=JS6+438rCGUUSVuWh0fU3NmtxpDj6HXO/d7eN7GwS7rN50NUAccA8X85GHa9ifrcG9
-         ek3oOFGC8sVwy/au7Hd70ksyxmHoQ43tmszPd1nLoiKT39FjPzgdUXxIMwgEgSKb26Uq
-         ozIZqU/MQQTrjLPhd3vOmBxZ/mniGlt1Kq94Dem9SJnBlGeceDfiVkVhvF9D4GrUYIRJ
-         U7b7Yt+FN7PQVnNleTRWtQfbma7oZ97YANbyxXuseJTZtMhIDJDOFmZFBy1PFN9nBw7t
-         4PUv0VtpgfM8ZcOaJbeaiI/K96LrGFMJ7TL96gUFErKheCjp8Y7squGtiVsLprZ8yL7R
-         V+qw==
+        bh=dmmwZ/jDwOwOI2IPn0deWk13FMrL14EG3iCBkAPdEcM=;
+        b=XBIbOEfziBifOU6tblGzsOZ242MtK3KrI94et23OOCEWvr7PmYdYhHVPsjvrSyM7cY
+         oBPSn5bozMr/5o9FAjP8tSoYWF/1bb8TU9FuBh1tDvskdQigzZRTXq8CHP3rh/nDsLUN
+         29AzxqB9A/6vk1mjJM1iTyMBnPbc0hS7WLslL9hcLRAxQ+1QwYQPtMmL5IVO8u5GfZsT
+         nalzreC7qVJOeBCRlAv8mg/x+rdZKISRFuXQRuoLNxs7To49j+IV+FeaDjzTM5KCX8aM
+         US/3rAFa7Ohf+xOEdp+b93t0hnTAR8dP/L/S7obqKRXxJ84amwtwa3iwfMbgKuW6uL64
+         q4mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=lNyU4hmIhIe/fCUTlHNLSv3rUytQDDuCAeDbsyrHTa0=;
-        b=HQJNqqUK6OUeV0MkKWSX2QwGGkrF2YiyCdO0Gq7/O9khGT9jFsbesmwEV7p6mNRYRu
-         3VHTz6+9+V2K9s9DLVp4pA54P4ft3rZGQ71GYUcacUZADNO9Suo39c+aOUjYChsdh74G
-         2O8BiKYTWErvVZ7nLqP1E/zAz0YU7rPiDIcGPq6iVXk5gcq5qwgw1qRYir6gCWbtWMb9
-         BQ+gagGowm+X8SKrmIFTJ5N4jItv0jVaMq4Jr0Aa+yCfEz1Oat8fI1lY/FI/FaooFXVm
-         ZtFcfZ4GPZgfjcX5GfJXrN2QMefZa/7/meiLt31NAuu5icSy1nO4Ei+dhTsuFmktbktF
-         J+wA==
-X-Gm-Message-State: ABUngvcFCTxG6zW7POT7XMt/KNIXocblzXVApDeubGGUyBeUseDYne5PkKPOZIiTK2bzg4WdCuWx75Ld1XhON57u
-X-Received: by 10.55.43.194 with SMTP id r63mr3090305qkr.86.1476833109085;
- Tue, 18 Oct 2016 16:25:09 -0700 (PDT)
+        bh=dmmwZ/jDwOwOI2IPn0deWk13FMrL14EG3iCBkAPdEcM=;
+        b=OkepyAX6JEYRFYVZ2WTe+r+JUzePAydiMmoK6fkoIXhiHHAyXhFjH895BzIXKAV5fM
+         fRAdf4VJg4sMeBAwV6hkMQDFczXgynmqh0QN2y9VAD4KLEM/r9L1q4r3kIbXqu3zIM0E
+         8a9AfqBs59m65olRIx4RmwNJKcMe5Bo/jd2xRWr+e9sgnP21ph2Dwi49CbkbnJ66JAhL
+         iH+SZEE73y1sUN6FWW2s59M3ldjKQplwOfjvjDs4lyUHfKHweNWcxxeliaMBkbm57Xob
+         qW7efRGBTVZAK8Ev5zCr31K/pFzTrUroYI4kyq20FZLBSV7jbLWkSJTzG8rUX/DpFfHc
+         pCqQ==
+X-Gm-Message-State: AA6/9Rlpk1u/SZ0YxdcxsmoLue2PUWRoL4GIDvR8VO6DEQMvWrG4gqCfBT/cdh5jfZLyzJAYjg9x5/HDvxH7jE80
+X-Received: by 10.200.44.162 with SMTP id 31mr3477938qtw.1.1476834772419; Tue,
+ 18 Oct 2016 16:52:52 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 18 Oct 2016 16:25:08 -0700 (PDT)
-In-Reply-To: <xmqqshrtnynj.fsf@gitster.mtv.corp.google.com>
-References: <20161018210623.32696-1-sbeller@google.com> <xmqqzim1nyz0.fsf@gitster.mtv.corp.google.com>
- <xmqqshrtnynj.fsf@gitster.mtv.corp.google.com>
+Received: by 10.12.135.40 with HTTP; Tue, 18 Oct 2016 16:52:51 -0700 (PDT)
+In-Reply-To: <xmqq8ttr0wny.fsf@gitster.mtv.corp.google.com>
+References: <20161012224109.23410-1-sbeller@google.com> <xmqqfuo116t0.fsf@gitster.mtv.corp.google.com>
+ <xmqq8ttr0wny.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 18 Oct 2016 16:25:08 -0700
-Message-ID: <CAGZ79kZHLVpxbJ_C-dM2LDA64-_TJNyY+52fTWkOvLvvAq2XDg@mail.gmail.com>
-Subject: Re: [PATCHv3] submodule--helper: normalize funny urls
+Date:   Tue, 18 Oct 2016 16:52:51 -0700
+Message-ID: <CAGZ79kbS4mP7sVTCM+QJXTwKsgZ40xvVDng-F3igZnJWLYek0A@mail.gmail.com>
+Subject: Re: [PATCHv3] attr: convert to new threadsafe API
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc:     Brandon Williams <bmwill@google.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Karl A." <venv21@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
+        Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 18, 2016 at 2:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Oct 14, 2016 at 8:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > Junio C Hamano <gitster@pobox.com> writes:
 >
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> The remote URL for the submodule can be specified relative
->>> ...
->>> v3:
->>>  * fixed the coding style.
->>
->> Ah, thanks.  I had a squash queued on top but will replace with this
->> one.
+>> *1* Would we need a wrapping struct around the array of results?
 >
-> Heh, I guess I shouldn't have responded before seeing what this
-> breaks.  Applied on top of sb/submodule-ignore-trailing-slash, these
-> seem to break.
+> By the way, I do see a merit on the "check" side (tl;dr: but I do
+> not think "result" needs it, hence I do not see the need for the
+> "ugly" variants).
 
-Ugh. (I should have tested more than just t0060).
+So we'd rather go with const char **result instead of our own new struct there.
+Ok, got it.
 
-The underlying issue is two fold:
+>
+> Take "archive" for example.  For each path, it wants to see the
+> attribute "export-ignore" to decide if it is to be omitted.  In
+> addition, the usual set of attributes used to smudge blobs into the
+> working tree representation are inspected by the convert.c API as
+> part of its implementation of convert_to_working_tree().  This
+> program has at least two sets of <"check", "result"> that are used
+> by two git_check_attr() callsites that are unaware of each other.
+>
+> One of the optimizations we discussed is to trim down the attr-stack
+> (which caches the attributes read from .gitattributes files that are
+> in effect for the "last" directory that has the path for which
+> attrbiutes are queried for) by reading/keeping only the entries that
+> affect the attributes the caller is interested in.  But when there
+> are multiple callsites that are interested in different sets of
+> attributes, we obviously cannot do such an optimization without
+> taking too much cache-invalidation hit.  Because these callsites are
+> not unaware of each other, I do not think we can say "keep the
+> entries that affects the union of all active callsites" very easily,
+> even if it were possible.
+>
+> But we could tie this cache to "check", which keeps a constant
+> subset of attributes that the caller is interested in (i.e. each
+> callsite would keep its own cache that is useful for its query).
+> While we are single-threaded, "struct git_attr_check" being a
+> wrapping struct around the array of "what attributes are of
+> interest?" is a good place to add that per-check attr-stack cache.
+> When we go multi-threaded, the attr-stack cache must become
+> per-thread, and needs to be moved to per-thread storage, and such a
+> per-thread storage would have multiple attr-stack, one per "check"
+> instance (i.e. looking up the attr-stack may have to say "who/what
+> thread am I?" to first go to the thread-local storage for the
+> current thread, where a table of pointers to attr-stacks is kept and
+> from there, index into that table to find the attr-stack that
+> corresponds to the particular "check").  We could use the address of
+> "check" as the key into this table, but "struct git_attr_check" that
+> wraps the array gives us another option to allocate a small
+> consecutive integer every time initl() creates a new "check" and use
+> it as the index into that attr-stack table, as that integer index
+> can be in the struct that wraps the array of wanted attributes.
+>
+>         Note. none of the above is a suggestion to do the attr
+>         caching the way exactly described.  The above is primarily
+>         to illustrate how a wrapping struct may give us future
+>         flexibility without affecting a single line of code in the
+>         user of API.
+>
+> It may turn out that we do not need to have anything other than the
+> array of wanted attributes in the "check" struct, but unlike
+> "result", "check" is shared across threads, and do not have to live
+> directly on the stack, so we can prepare for flexibility.
+>
+> I do not foresee a similar need for wrapping struct for "result",
+> and given that we do want to keep the option of having them directly
+> on the stack, I am inclined to say we shouldn't introduce one.
+>
+> If we were still to do the wrapping for result, I would say that
+> basing it around the FLEX_ARRAY idiom, i.e.
+>
+>>         struct git_attr_result {
+>>                 int num_slots;
+>>                 const char *value[FLEX_ARRAY];
+>>         };
+>
+> is a horrible idea.  It would be less horrible if it were
+>
+>         struct git_attr_result {
+>                 int num_slots;
+>                 const char **value;
+>         };
 
-* in t3600 we'd need
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index d046d98..545d32f 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -616,7 +616,7 @@ test_expect_success 'setup subsubmodule' '
-        git submodule update &&
-        (cd submod &&
-                git update-index --add --cacheinfo 160000 $(git
-rev-parse HEAD) subsubmod &&
--               git config -f .gitmodules submodule.sub.url ../. &&
-+               git config -f .gitmodules submodule.sub.url ./. &&
-                git config -f .gitmodules submodule.sub.path subsubmod &&
-                git submodule init &&
-                git add .gitmodules &&
+So const char** but with an additional number of slots, all we do
+would be to compare this number of slots to the checks number of slots and
+die("BUG:..."),  which is just a burden and no help.
 
-because the sub-submodule URL is actually the same as the submodule
-(because we'd test lazily)
+>
+> then make the API user write via a convenience macro something like
+> this
+>
+>         const char *result_values[NUM_ATTRS_OF_INTEREST];
+>         struct git_attr_result result = {
+>                 ARRAY_SIZE(result_values), &result_values
+>         };
+>
+> instead.  That way, at least the side that implements git_check_attr()
+> would not have to be type-unsafe like the example of ugliness in the
+> message I am following-up on.
 
-This looks ok from a bug fixers perspective.
-
-However in t7403, we have a construct like:
-
-    git clone . super
-
-which then results in
-
-    git -C super remote -v
-...../git/t/trash directory.t7403-submodule-sync/. (fetch)
-
-And the commit message of this patch claimed we'd never use
-the /. syntax ourselves. (We could argue the stupid users in the test
-suite are doing it wrong, because in practice nobody would use clone
-to create a nested repository? Not sure I agree.)
-
-However instead of fixing the levels of nesting, the fix is as easy as:
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 0726799..525d32b 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -15,7 +15,9 @@ test_expect_success setup '
-        git add file &&
-        test_tick &&
-        git commit -m upstream &&
--       git clone . super &&
-+       # avoid cloning a repository with a url ending in /.
-+       git clone . root &&
-+       git clone root super &&
-        git clone super submodule &&
-        (
-                cd submodule &&
-
-Same goes for t740{6,7} as well as t7506.
-
-I think this change to the test suite is not warranted, because
-we want to have the current behavior as-is as it seems like a nice
-hack:
-
-* Maybe we'd want to think about checking for the URL in git clone
-  normalize the URL before configuring remote.origin.URL
-
-* an often observed work flow for submodule tests seems:
-
-    mkdir sub1 &&
-    git -C sub1 init  &&
-    ...
-
-    git clone . super &&
-    git -C super submodule add ../sub1
-    ... # the ../sub1 looks intuitively correct
-    # because from the current directory which is
-    # super the relative path is ../sub1
-    #
-    # However in reality this ought to be a relative URL,
-    # and as super sits in the same directory as sub1
-    # ./sub1 would be "correct" according to the documentation
-    # However as the super remote URL ends with /.
-    # we had a bug that we needed to add one layer of unnesting
-    # and that is how ../sub1 worked.
-
-
-Not sure about this patch any more.
-
-Stefan
+Ok I will reroll with the const char** instead of the macro stuff that
+I came up with,
+(that would be type safe though uglier than the pure variant).
