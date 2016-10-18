@@ -2,56 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 392C720988
-	for <e@80x24.org>; Tue, 18 Oct 2016 12:26:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D2C220988
+	for <e@80x24.org>; Tue, 18 Oct 2016 12:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754507AbcJRM0X (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 08:26:23 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53143 "EHLO mout.gmx.net"
+        id S1755108AbcJRMjZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 08:39:25 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49736 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753541AbcJRM0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 08:26:22 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LbxQO-1cdXRn1jSm-00jFv9; Tue, 18 Oct 2016 14:26:11
+        id S1754966AbcJRMjY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 08:39:24 -0400
+Received: from virtualbox ([95.208.59.171]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0McEDD-1cClKv2mEp-00JXT6; Tue, 18 Oct 2016 14:39:06
  +0200
-Date:   Tue, 18 Oct 2016 14:25:57 +0200 (CEST)
+Date:   Tue, 18 Oct 2016 14:39:04 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v4 08/25] sequencer: completely revamp the "todo" script
- parsing
-In-Reply-To: <xmqqfunusj1d.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610181425440.197091@virtualbox>
-References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de> <a5f5d784fcacc16555237b9750380d612387d0cb.1476450940.git.johannes.schindelin@gmx.de> <xmqqfunusj1d.fsf@gitster.mtv.corp.google.com>
+cc:     Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        me@ttaylorr.com
+Subject: Re: Merge conflicts in .gitattributes can cause trouble
+In-Reply-To: <xmqqvawqvp6y.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610181437180.197091@virtualbox>
+References: <248A6E81-8D5C-4183-9756-51A0D5193E3E@gmail.com>        <alpine.DEB.2.20.1610171803400.197091@virtualbox> <xmqqvawqvp6y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:W2PEeVmyd+1nAEFpl6UMFiM4BFZeQ0NZbvu7acFtJaynS+wiLQP
- gwe2s1R9m8+ZSo66r5GToT+uhbx6M5gCjHF/+9c+GCVqcyVrwKh5r2Flol4/9lNb3rlP+xn
- oZNNhGjzJFFA3ztDQ9h+ZKnqO+j/hhclxpxTvE37q6mWaT9jHrWHcKu2mX92hR9mNRzVzI2
- GTSZhFx5119t+YQaGl0KA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+s/alB8Z5Rg=:9QLx0HxgVFOZpooZ65X9j/
- sHS1SByrrQSqP4vtf2Xm9SnFb00kptpVbcHFUo/T9NNzX5y0KSlQxqltS63BSZTCuZ1F+vMmr
- hLXAcBEaudomo94ocWARUGD6G5cHpdSuCzOkUA7LpOHGGokaf7fNwemRlbkOwygBXHvXiQjlB
- nKOe2A6IrQUeuIILt8ziRhR+E6OXbWxy75CXz9v4LKJ35NcOTIreVXWqpDsL+ZNfM1cUo1Pvu
- U/IM3rP9gqQCn7MqwNYPy+OF4y6JsAvwp6EnKX8Huw9XSTITauvnuRG6Jw/s8wc8Plwp2LKCI
- hVNra5gOspD4Y4cSj5aH75M8jdL1H6RPMYYv7O+NxNv0sx00R+WlFKkiuB87hTaxCzt/yp4zc
- ZxdWatho6MVTC+BWCe3VozKr4Oc9g/oXrMMqRyhMiOkykcHqEr37U0OCR8Hj4blqktvIIBmcV
- k40wga20GCqlk77MefnqgU0qGclZfUVC2w9bNkVzD7zFSScC7c0kScstF/Med28gBusdjRy2m
- CwRFjdwoDdDljsE5lHds3G5wPBuwdl6P5CjAqfryxulJY2p/eUyzX2hKi/4nRwEfudkn3u/DL
- EtRsrJ9GyBwG8K8oKM+ZJ11/b6S+1wKnV8KhyYHGNqa+Ms0lQ8dIBjmkAMwK+a2s8zd8x1J12
- MD9mEvlkoKRp88ESBqiQhg+5b8Xi0hAWu03xmjriGxcC5InFYF3rQ0YZQlwavXHoRraT6LCzm
- dTu8eoH+/SNCq+vngePqkd0lyPCNKxp1xN7F0fErIkiSDMqp0bdSn/MI6iSB8wV69LKXsluvp
- MwnEWet
+X-Provags-ID: V03:K0:z3LDIEyBXn21geVHAmA8j/lLPcJp2cmLODvRk/8cq3oqjC7i8A/
+ khmh7NwupSwj6lAUtkDNZVNYyftFO53hNt1ueD2o8eSkvH8x2sM00XiEcIPQ+tq0xElcg2f
+ 65epJQK+9b+VwVpB2nEDFtQpzfLniLupEy+cXK8jSLHdczj0Q0IG1SObRcQVWGExsrJ5AF3
+ GGPbuide8uQp20ls0a1lQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zzAw+ENWfHY=:t2RQxdaLA+h9y8vTmaJJjU
+ tyUQ6bU1Hg7Gd48vJY9ryd+kHo64QFkgvqAjOYDu2lBi7depA9BA5fdUNwkDDarvqXEfjrA/T
+ b99MKLbx+fowKPu3hSnSvMaeIWz+jCwq+mCIbUt0Rx99KNVfXEAoOVSL291M6VfUre8LINzXl
+ EUFClBX5dxk6M9ICCb8dxxMTa15RJENi1XMKjFs9YD95N7L461a4aGNmPKyL3f+9Nt0VP6AxV
+ uY8EqJybuYSmx1GU/ocSqg0pt6uyZDpx3ZLAePb4eO7Pk4Q/JmwnedmM5zFnSYcZ6JRet4u6K
+ 1kfoZ8Urqj2uzQamJil35Qpn2f6v5XTjUHJJ8dUunUiZyXUDlxZTMwnPpXB5rb4aRBKcsI1IA
+ pE39T2zUuTkRS55PlNMdOx5rq+MBW5FpxyQekFWHIHQ0++5Rk+gqgvm230B3/3BLRl4cPB89+
+ +3kfr6yBB5+l5CGkoftDhC8mrpEzwK+0Y3fohJPhB1+fN8kkXjHJkKGlKLPmnZyY/xtLlQ13B
+ U/3Tlaz92ZZ7rHNLHi+bMKKe7y+k7fcUsSguU7x7+N+wuGkr91HKbPh2TQcE3lmznFXmBGw5s
+ p/Z/zAYxjsj8c2bOvwyMGU+jgg723pTcDcOSAh2CksGyTdMC6F/fPkVCkmIaVFspKags7ZCaK
+ XgFU4SmDD66l0Rc0zpk1r3yULdBkFW53By8ESL9SRah8ECtPjfHrsvtJ2jCt2GHNAp4BW7K4S
+ JR69sRP3XXDKKEeWPCVqZNHeBNklWYjSDX8Sl2qHSCVCGyPDKHW9E53f0HoWwt4t0UgLZIsG7
+ LcSxjqJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,23 +59,22 @@ Hi Junio,
 
 On Mon, 17 Oct 2016, Junio C Hamano wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > -	for (i = 1; *p; i++) {
-> > +	for (i = 1; *p; i++, p = next_p) {
-> >  		char *eol = strchrnul(p, '\n');
-> > -		commit = parse_insn_line(p, eol, opts);
-> > -		if (!commit)
-> > -			return error(_("Could not parse line %d."), i);
-> > -		next = commit_list_append(commit, next);
-> > -		p = *eol ? eol + 1 : eol;
-> > +
-> > +		next_p = *eol ? eol + 1 /* strip LF */ : eol;
+> > I would vote for:
+> >
+> > 4. We keep letting Git read in the *current* version of .gitattributes
+> >    *before* the merge, and apply those attributes while performing the
+> >    merge.
 > 
-> This one was explained as "skip LF" in the previous round, and that
-> is more correct than "strip", I think.  The +1 here is not done to
-> "strip" the LF out of the end result, but to "skip" one to move to
-> the beginning of the next line.
+> Even though this needs a major surgery to the way the attr subsystem
+> reads from these files, I think it is conceptually the cleanest.
 
-Changed,
+To the contrary. As far as I can see, when calling `git merge`, Git
+currently *does* read .gitattributes from the file, and if that fails,
+falls back to reading that file from the index.
+
+In other words, option 4. is the current behavior no change required.
+
+Ciao,
 Dscho
