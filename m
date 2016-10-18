@@ -6,84 +6,98 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFB8720988
-	for <e@80x24.org>; Tue, 18 Oct 2016 15:56:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F86120988
+	for <e@80x24.org>; Tue, 18 Oct 2016 16:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938148AbcJRP4p (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 11:56:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65484 "EHLO
+        id S965089AbcJRQFi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 12:05:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60637 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935562AbcJRP4n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 11:56:43 -0400
+        with ESMTP id S964914AbcJRQFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 12:05:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09D4F476C0;
-        Tue, 18 Oct 2016 11:56:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 22CB647990;
+        Tue, 18 Oct 2016 12:05:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+ANh2l6Gi17+QyW20pi6AmT1Vic=; b=whUx5G
-        XKSnV1XLhcbsFZE6L9LfAiAMyM6u1+I6FjzkZN9pyHqeyWo+EaGl+rd6jYpjKdsM
-        agYZxG4C04t5CFE4cs0TIrV8XjA1PnE5016ePreoFuBDBvHfnYgLb11cw3OsVvrn
-        xrQgT/rQBvPg4vztVjxMYWGzMMCOlx7YlXVTU=
+        :content-type; s=sasl; bh=lHz0Nq8DcAUf9tNrN/J5/87Klcc=; b=Y9uyQc
+        RYytBWEIIuRUJhT6YGunkUlIglyH4FT7rfvglihIYgi9ZUpb3x590d0bEk+YD4Aj
+        /kVEfJDVSfQDBVJJy+yYKoGR13Ybr5zJ19rEOcCVJcu/beFLrOcT9++lmuT/B8dC
+        PbwOpqPh8pDuA/yLLEc1zaYB4fizwNDDG4yVw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jHGJkj13frbMzbDClxcPw9GD8OWA72Zy
-        slw4mOBJxEOuHYHtD8Zphh2ndNoAYFpdie/gaG9etJkBsk/u/EJWG1tMBd8stHgS
-        3mdLQg2ZhgCUTIL8wSoX+MbR/3MvFJMemojE8ngBByjbXRrBcor1K7ycLdb8lFdD
-        IXpX8Gz51FI=
+        :content-type; q=dns; s=sasl; b=QPGLUPgIbVuF6p8fpGaw967p012pGFTy
+        pLyZzX7lE0qQnKZ4+cIhKzDCaOqUjv63tXzDBQ4bmVnH8XSxikSpkWmHDaftjcHN
+        Lu4PQEo/6y0WoHxPZ4F06OfKzhlTO2w82J/Kc6VJxLyHV70ev1QN11tU8edl6LO/
+        o60VPteePpA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01C51476BE;
-        Tue, 18 Oct 2016 11:56:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A0ED4798F;
+        Tue, 18 Oct 2016 12:05:34 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E249476BD;
-        Tue, 18 Oct 2016 11:56:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 818484798E;
+        Tue, 18 Oct 2016 12:05:33 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 16/25] sequencer: support amending commits
-References: <cover.1473590966.git.johannes.schindelin@gmx.de>
-        <cover.1476120229.git.johannes.schindelin@gmx.de>
-        <ec146dc2f3a3698bd433bbec4d7ecbab762c1bfb.1476120229.git.johannes.schindelin@gmx.de>
-        <xmqqinsqx54y.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610181352010.197091@virtualbox>
-Date:   Tue, 18 Oct 2016 08:56:39 -0700
-In-Reply-To: <alpine.DEB.2.20.1610181352010.197091@virtualbox> (Johannes
-        Schindelin's message of "Tue, 18 Oct 2016 13:53:10 +0200 (CEST)")
-Message-ID: <xmqqlgxlr6q0.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 4/6] trailer: make args have their own struct
+References: <cover.1476232683.git.jonathantanmy@google.com>
+        <cover.1476466609.git.jonathantanmy@google.com>
+        <2357e9e6418fc5b30a60efe16dd8f72bf7544fef.1476466609.git.jonathantanmy@google.com>
+        <CAGZ79kYuaHvO-aXeCocDseTLe13g=PesKxQgOrcOREtM1CsWcg@mail.gmail.com>
+Date:   Tue, 18 Oct 2016 09:05:31 -0700
+In-Reply-To: <CAGZ79kYuaHvO-aXeCocDseTLe13g=PesKxQgOrcOREtM1CsWcg@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 17 Oct 2016 16:20:05 -0700")
+Message-ID: <xmqqh989r6b8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 75DED1C0-954B-11E6-948E-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B30E4BF6-954C-11E6-868B-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Mon, 17 Oct 2016, Junio C Hamano wrote:
+>> @@ -29,6 +29,12 @@ struct trailer_item {
+>>         struct list_head list;
+>>         char *token;
+>>         char *value;
+>> +};
+>> +
+>> +struct arg_item {
+>> +       struct list_head list;
+>> +       char *token;
+>> +       char *value;
+>>         struct conf_info conf;
+>>  };
 >
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->> 
->> > This teaches the run_git_commit() function to take an argument that will
->> > allow us to implement "todo" commands that need to amend the commit
->> > messages ("fixup", "squash" and "reword").
->> 
->> Likewise to 15/25, i.e. Good, though the growth by these two steps
->> starts to make me wonder if these three options should be crammed
->> into an unsigned "flags" bitword.
->
-> After looking at the diff with the added complications of ORing and ANDing
-> the flags, I'd much rather prefer to stay with the three flags being kept
-> separately. It's not like we need to save bits, but we need to preserve
-> readability as much as possible, I'd wager.
+> (Unrelated side note:) When first seeing this diff, I assumed the diff
+> heuristic is going wild, because it doesn't add a full struct.
+> But on a second closer look, I realize this is the only correct diff,
+> because we do not account for moved lines from one struct to the
+> other.
 
-That's OK.  I just wanted to make sure pros-and-cons have been
-already considered.
+It probably is not "the only" correct diff, as you actually could
+shift it the other way by one to three lines.  I am not sure which
+one among four possible diff is the easiest to grok, though.  Both
+the above (picking the highest possible position) and the below (the
+other extreme) are probably easier to read than anything in between.
 
-The primary merit of using flags bitword is not to save bits; it is
-done to limit the damage to the codebase when we need to add yet
-another knob, by the way.
+ struct trailer_item {
++	struct list_head list;
++	char *token;
++	char *value;
++};
++
++struct arg_item {
+ 	struct list_head list;
+ 	char *token;
+ 	char *value;
+ 	struct conf_info conf;
+ };
+ 
