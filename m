@@ -6,98 +6,116 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F86120988
-	for <e@80x24.org>; Tue, 18 Oct 2016 16:05:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D953C20988
+	for <e@80x24.org>; Tue, 18 Oct 2016 16:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965089AbcJRQFi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 12:05:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60637 "EHLO
+        id S1754868AbcJRQg2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 12:36:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61116 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S964914AbcJRQFf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 12:05:35 -0400
+        with ESMTP id S1754585AbcJRQg0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 12:36:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 22CB647990;
-        Tue, 18 Oct 2016 12:05:34 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4689748174;
+        Tue, 18 Oct 2016 12:36:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lHz0Nq8DcAUf9tNrN/J5/87Klcc=; b=Y9uyQc
-        RYytBWEIIuRUJhT6YGunkUlIglyH4FT7rfvglihIYgi9ZUpb3x590d0bEk+YD4Aj
-        /kVEfJDVSfQDBVJJy+yYKoGR13Ybr5zJ19rEOcCVJcu/beFLrOcT9++lmuT/B8dC
-        PbwOpqPh8pDuA/yLLEc1zaYB4fizwNDDG4yVw=
+        :content-type; s=sasl; bh=PCtjY7oXVZ5iJ0KGhlCQGB0LkZk=; b=AsXQz1
+        B4l/6PrN+Ky9amP3hJEuxfdSeG0n84Gucn2pPAQOqUpZNRo+WPhdoMBuQDBNGgdr
+        LAPJUFUNnQy/8Jlgm1kPkHamJZL1z0Pu8Grjno43swqvevold5QS6olNmeuhOUvn
+        zx4RuMxYoTtodQGeq4jMYqQ+IrNshmJL+B19M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QPGLUPgIbVuF6p8fpGaw967p012pGFTy
-        pLyZzX7lE0qQnKZ4+cIhKzDCaOqUjv63tXzDBQ4bmVnH8XSxikSpkWmHDaftjcHN
-        Lu4PQEo/6y0WoHxPZ4F06OfKzhlTO2w82J/Kc6VJxLyHV70ev1QN11tU8edl6LO/
-        o60VPteePpA=
+        :content-type; q=dns; s=sasl; b=fV+VXt/Lp90h7UYSZ4TYS+1d4VOmbXlx
+        sEVL0vCkRQsdxL0DyDh1vv71UXwuetVdh3/3uIl5eWzGM+I0xK3jD/m7kkHF5EVK
+        0Ik/e/I6S3syWnIikCBi3l9N4MdPeBy9sFtlP85Ggl1qV258xLYZ/kcAeq2+O7aY
+        T/vzXpe9Am0=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A0ED4798F;
-        Tue, 18 Oct 2016 12:05:34 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DF2648173;
+        Tue, 18 Oct 2016 12:36:25 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 818484798E;
-        Tue, 18 Oct 2016 12:05:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF61D48172;
+        Tue, 18 Oct 2016 12:36:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
         "git\@vger.kernel.org" <git@vger.kernel.org>,
         Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 4/6] trailer: make args have their own struct
+Subject: Re: [PATCH v3 5/6] trailer: allow non-trailers in trailer block
 References: <cover.1476232683.git.jonathantanmy@google.com>
         <cover.1476466609.git.jonathantanmy@google.com>
-        <2357e9e6418fc5b30a60efe16dd8f72bf7544fef.1476466609.git.jonathantanmy@google.com>
-        <CAGZ79kYuaHvO-aXeCocDseTLe13g=PesKxQgOrcOREtM1CsWcg@mail.gmail.com>
-Date:   Tue, 18 Oct 2016 09:05:31 -0700
-In-Reply-To: <CAGZ79kYuaHvO-aXeCocDseTLe13g=PesKxQgOrcOREtM1CsWcg@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 17 Oct 2016 16:20:05 -0700")
-Message-ID: <xmqqh989r6b8.fsf@gitster.mtv.corp.google.com>
+        <1b3fe84e4b6126884a801e721d0a93c41fcb4184.1476466609.git.jonathantanmy@google.com>
+        <CAGZ79kYLq1qA4_Qg2x5Fiu5AmGBZdozm4zk6K7LkU+uJ1LNUTw@mail.gmail.com>
+        <xmqq7f96sa9i.fsf@gitster.mtv.corp.google.com>
+        <cb622421-1857-d136-2618-ec62d438790d@google.com>
+Date:   Tue, 18 Oct 2016 09:36:22 -0700
+In-Reply-To: <cb622421-1857-d136-2618-ec62d438790d@google.com> (Jonathan Tan's
+        message of "Mon, 17 Oct 2016 19:02:46 -0700")
+Message-ID: <xmqqbmyhr4vt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B30E4BF6-954C-11E6-868B-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0272C2E0-9551-11E6-A8AC-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->> @@ -29,6 +29,12 @@ struct trailer_item {
->>         struct list_head list;
->>         char *token;
->>         char *value;
->> +};
->> +
->> +struct arg_item {
->> +       struct list_head list;
->> +       char *token;
->> +       char *value;
->>         struct conf_info conf;
->>  };
+>>     * rs/c-auto-resets-attributes:
+>>       pretty: avoid adding reset for %C(auto) if output is empty
+>>
+>> And neither of the two colon containing line remotely resembles how
+>> a typical RFC-822 header is formatted.  So that may serve as a hint
+>> to how we can tighten it without introducing false negative.
 >
-> (Unrelated side note:) When first seeing this diff, I assumed the diff
-> heuristic is going wild, because it doesn't add a full struct.
-> But on a second closer look, I realize this is the only correct diff,
-> because we do not account for moved lines from one struct to the
-> other.
+> The only "offending" character is the space (according to RFC 822),
+> but that sounds like a good rule to have.
 
-It probably is not "the only" correct diff, as you actually could
-shift it the other way by one to three lines.  I am not sure which
-one among four possible diff is the easiest to grok, though.  Both
-the above (picking the highest possible position) and the below (the
-other extreme) are probably easier to read than anything in between.
+I suspect that we should be willing to deviate from the letter of
+RFC to reject misidentification.  I saw things like
 
- struct trailer_item {
-+	struct list_head list;
-+	char *token;
-+	char *value;
-+};
-+
-+struct arg_item {
- 	struct list_head list;
- 	char *token;
- 	char *value;
- 	struct conf_info conf;
- };
- 
+	Thanks to: Jonathan Tan <jt@host.xz>
+	Signed-off-by: A U Thor <au@th.or>
+
+in the wild (notice the SP between Thanks and to), for example.
+Rejecting leading whitespace as a line that does *not* start the
+header (hence its colon does not count) may be a good compromise.
+
+> I think that "Signed-off-by:" is not guaranteed to be
+> present.
+
+But do we really care about that case where there is no S-o-b:?  I
+personally do not think so.
+
+> Defining a trailer line as "a line starting with a token,
+> then optional whitespace, then separator", maybe the following rule:
+> - at least one trailer line generated by Git ("(cherry picked by" or
+> "Signed-off-by") or configured in the "trailer" section in gitconfig
+> OR
+> - at least 3/4 logical trailer lines (I'm wondering if this should be
+> 100% trailer lines)
+
+I'd strongly suggest turning that OR to AND.  We will not safely be
+able to write a commit log message that describes how S-o-b lines
+are handled in its last paragraph otherwise.
+
+I do not care too deeply about 3/4, but I meant to allow 75% cruft
+but no more than that, and the fact that the threashold is set at
+way more than 50% is important.  IOW, if you have
+
+	Ordinary log message here...
+
+	S-o-b: A U Thor <au@th.or>
+	[a short description that is typically a single liner
+        in the real world use pattern we saw in the world, but
+	could overflow to become multi line cruft]
+	S-o-b: R E Layer <re@lay.er>
+
+"last paragraph" is 5 lines long, among which 60% are cruft that is
+below the 75% threshold, and "am -s" can still add the S-o-b of the
+committer at the end of that existing last paragraph.  Making it too
+strict would raise the false negative ratio.
