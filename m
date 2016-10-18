@@ -2,103 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E02220988
-	for <e@80x24.org>; Tue, 18 Oct 2016 19:35:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10FF120988
+	for <e@80x24.org>; Tue, 18 Oct 2016 19:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754279AbcJRTfu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Oct 2016 15:35:50 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:33831 "EHLO
-        mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751492AbcJRTfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2016 15:35:48 -0400
-Received: by mail-vk0-f51.google.com with SMTP id b186so5641580vkb.1
-        for <git@vger.kernel.org>; Tue, 18 Oct 2016 12:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=wMBsRL1eQ+AzFPNYCQvqamFrAez65P4BLqtyjf6AnuM=;
-        b=Jvqv+9Bep0EOQucAGVRpBFBuWOF0clM8MIVvHlTjz9nc0ditxPddZPoq1bLEUCASS8
-         fB1nINycDgFfX/0nPvdmlVphCREGBTBAViQ88lMmow5xSkF8LeLPztKkNGsZBlznE7MF
-         Wyfu0MCT8CC2g9V/bjhnE2U3VTiAIwCDWl621Jou8QqxyuI9gMIEKYmYfz3FcqYfZCPE
-         RYld9RCQhZNYzo6SultVSMC6s46UzJ3yfG0q0XlyO7rkhtqhbaRTUau4gqI06aPCjtGK
-         8clj5Uy09MNK6GgFldb4vxqE2IKDmEyjgBg1YBJDIv2VQZdwhrV+ZJLfG2CGVoM/lH4s
-         tjOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=wMBsRL1eQ+AzFPNYCQvqamFrAez65P4BLqtyjf6AnuM=;
-        b=FVJsPMYWlX7rGEz1xvfweMdbnxCQHzqP2wYbHj7WwOJVAoJaHM882jJfRyqZAXP0LK
-         sLULN7El/EgapXoZ1JXfJRw6j+p5R/6BHu0P7NQcCXl8OciXScTapSEPzNYkqgwMDjrS
-         7EpEV/IzP9JGeNBkq7k8cJ+9wutsRAeOXiyA3wKA7l6m4n9ZEgyKEB7bTyx/y+rR5qMz
-         qje8T2E9Kn6aGC3h59kyGNNE7Qddr69QxcDWqD1LFCOQ9I9n5MydFmrFyotUjJMGG8BK
-         1G+RfSo3pSwiTdP/2sxlD2K0mPMt++qDNeLvbkTK0yWnLXUBnv6DPsQGBAULpTD63g5l
-         oHmA==
-X-Gm-Message-State: AA6/9RkA3ivjKdP1KolxAcCci+AzYdBcIXGMcT4dOzPIThy32k0/l440QiYVRQUQQ4wR2hsDTmSiO4vmJq27dg==
-X-Received: by 10.31.6.207 with SMTP id 198mr1949306vkg.19.1476819347380; Tue,
- 18 Oct 2016 12:35:47 -0700 (PDT)
+        id S1756192AbcJRTnA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Oct 2016 15:43:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61959 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754177AbcJRTm6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2016 15:42:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA85548BFB;
+        Tue, 18 Oct 2016 15:42:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=a
+        fkN4mRDbZmMm7jhsSQNXmjk+tQ=; b=E0DIDAR5cGziNs5m6Pe7kgBq1jVVsAwhL
+        E+20wDo/HFwK61QJ9Oyqv1fPbGrrTR1EAmLYUw1lN4/1q+J8vaXuUXSrU6hDVIJH
+        Ytt+1GhNYKA+X+vniWSfjMfTidnFsDUzO4y+BuqwW8DneBGno7aY8+DoCOBUkeo0
+        v9Hpi/uM9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type; q=dns; s=
+        sasl; b=pw04EK/owAx6HFLjGTrEnNw26KQY1EjQBHtYJ29GG6fRG/txZOEUputH
+        Zrgh7b3dHNgkTMMtHr5vNc6qXHm6gVHUQbft4X+qR1Rk2oM+W8IsWfU+BvUtatqM
+        cWqgvnPxblJisyJAqNS/SS+qZdJu3p+QeSlvo28WquxIM402tlg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A184848BFA;
+        Tue, 18 Oct 2016 15:42:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 256D348BF9;
+        Tue, 18 Oct 2016 15:42:57 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] sha1_name: remove ONELINE_SEEN bit
+Date:   Tue, 18 Oct 2016 12:42:55 -0700
+Message-ID: <xmqqd1ixphog.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.68.97 with HTTP; Tue, 18 Oct 2016 12:35:47 -0700 (PDT)
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Tue, 18 Oct 2016 14:35:47 -0500
-X-Google-Sender-Auth: 5hZm9xbtenf9dE85nU2cSLyw9VM
-Message-ID: <CAHd499AN2VHL66c6JWxHqS-1bQ6y4PrGjZJiR_ad6HJsCGpeDQ@mail.gmail.com>
-Subject: Integrating submodules with no side effects
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 11A8A08A-956B-11E6-8F7F-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello git experts,
+28a4d94044 ("object name: introduce ':/<oneline prefix>' notation",
+2007-02-24) started using its own bit from object->flags to mark
+commits used while parsing the ":/token" extended SHA-1 syntax to
+name a commit temporarily, and this was kept even when f7bff00314
+("sha1_name.c: fix parsing of ":/token" syntax", 2010-08-02) found
+and fixed a bug in its implementation.
 
-I have in the past attempted to integrate submodules into my primary
-repository using the same directory name. However, this has always
-caused headache when going to and from branches that take you between
-when this integration occurred and when it didn't. It's a bit hard to
-explain. Basically, if I have a submodule "foo", and I delete that
-submodule and physically add its files under the same directory "foo",
-when I do a pull to get this change from another clone, it fails
-saying:
+The use of that flag bit, however, is limited to a single function,
+get_sha1_oneline(), which first sets it for the commits sitting at
+the tips of refs, uses the bit to avoid duplicate traversal while
+walking the history, and then cleans the bit from all commits it
+walked.
 
-error: The following untracked working tree files would be overwritten
-by checkout:
-        foo/somefile.txt
-Please move or remove them before you switch branches.
-Aborting
-could not detach HEAD
+Which is exactly what the general-purpose TMP_MARK bit meant to be
+used for isolated case was invented for.  Replace ONELINE_SEEN with
+TMP_MARK and retire the former.
 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ object.h    |  1 -
+ sha1_name.c | 10 ++++------
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
-Obviously, git can't delete the submodule because the files have also
-been added directly. I don't think it is built to handle this
-scenario. Here is the series of commands I ran to "integrate" the
-submodule (replace the submodule with a directory containing the exact
-contents of the submodule itself):
-
-#!/usr/bin/env bash
-mv "$1" "${1}_"
-git submodule deinit "$1"
-git rm "$1"
-mv "${1}_" "$1"
-git add "$1/**"
-
-The above script is named git-integrate-submodule, I run it like so:
-
-$ git integrate-submodule foo
-
-Then I do:
-
-$ git commit -m 'Integrated foo submodule'
-
-Is there any way to make this work nicely? The only solution I've
-found is to obviously rename the directory before adding the physical
-files, for example name it foo1. Because they're different, they never
-"clash".
+diff --git a/object.h b/object.h
+index f8b644263f..f8e218eccd 100644
+--- a/object.h
++++ b/object.h
+@@ -37,7 +37,6 @@ struct object_array {
+  * bundle.c:                               16
+  * http-push.c:                            16-----19
+  * commit.c:                               16-----19
+- * sha1_name.c:                                     20
+  */
+ #define FLAG_BITS  27
+ 
+diff --git a/sha1_name.c b/sha1_name.c
+index ca7ddd6f2c..fa0e6701a3 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -7,6 +7,7 @@
+ #include "refs.h"
+ #include "remote.h"
+ #include "dir.h"
++#include "revision.h"
+ 
+ static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
+ 
+@@ -855,9 +856,6 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
+  * For future extension, all other sequences beginning with ':/!' are reserved.
+  */
+ 
+-/* Remember to update object flag allocation in object.h */
+-#define ONELINE_SEEN (1u<<20)
+-
+ static int handle_one_ref(const char *path, const struct object_id *oid,
+ 			  int flag, void *cb_data)
+ {
+@@ -899,7 +897,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ 		return -1;
+ 
+ 	for (l = list; l; l = l->next) {
+-		l->item->object.flags |= ONELINE_SEEN;
++		l->item->object.flags |= TMP_MARK;
+ 		commit_list_insert(l->item, &backup);
+ 	}
+ 	while (list) {
+@@ -907,7 +905,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ 		struct commit *commit;
+ 		int matches;
+ 
+-		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
++		commit = pop_most_recent_commit(&list, TMP_MARK);
+ 		if (!parse_object(commit->object.oid.hash))
+ 			continue;
+ 		buf = get_commit_buffer(commit, NULL);
+@@ -924,7 +922,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ 	regfree(&regex);
+ 	free_commit_list(list);
+ 	for (l = backup; l; l = l->next)
+-		clear_commit_marks(l->item, ONELINE_SEEN);
++		clear_commit_marks(l->item, TMP_MARK);
+ 	free_commit_list(backup);
+ 	return found ? 0 : -1;
+ }
