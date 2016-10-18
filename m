@@ -2,82 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61B171F4F8
-	for <e@80x24.org>; Tue, 18 Oct 2016 00:56:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65601F4F8
+	for <e@80x24.org>; Tue, 18 Oct 2016 01:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935399AbcJRA4A (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Oct 2016 20:56:00 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:33877 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933577AbcJRAz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2016 20:55:58 -0400
-Received: by mail-qk0-f180.google.com with SMTP id f128so253987590qkb.1
-        for <git@vger.kernel.org>; Mon, 17 Oct 2016 17:55:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=n8zLGtunuf8qv9LQHmaGte163mrKbHonZUasOhYZsIE=;
-        b=LhXo+oaj+RBVF45tsgTU6tda/W6hvvzE8ZgdkTQk5bf1/jzcfi4LUKklonRoJ4G6xb
-         /UcfD+JraBS8ykNcpLjz8/Y4TxJ1IN5WpzT9JGpdUe9d/FynM/MVcHBoHlfhmm/AAl/g
-         n0LjTkSgONvVAZyQwJB5+t8vXC84EB9io7GdiGxE6686kXXbCSkBqcS4JVNPQo9xc08r
-         m4wD/eJX6rXAmnSR0tGP5Z96j8nod4IT+cam/bzuQezE4VGxUOEFbFzk6Wbbf2azNawU
-         oo4hTI79JIIqwnkduJ9yU64L0iitO8+pJABtXCoCJFLj0W0749E+H6UU6AAS2WxZQOHi
-         RnxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=n8zLGtunuf8qv9LQHmaGte163mrKbHonZUasOhYZsIE=;
-        b=TTExEpkO09Olp9cK7MBj+dfSj477+1SAxyTeoCJoM0Lkx7yJBEP4QW5Ipu983wY3Qz
-         Z5vS6O9LjudKoMC063r7k3dUM26aGFbokTcVGsOZVJQjj/aXrFfIi9C1yWIGi1YDqclA
-         mTVMjkAvF7wtjglm8ZbsvgEUV/O33i466yA9Kwctf+3Ff/LmSILbsubMDlkrFJfl7TCN
-         vFAHRQIDY37HpWDSc2mh7vAYe0rUSEtWkt9Kgjdd8LHBFxnDz1TvkrxoDvWnVDcE+UYR
-         vFK4ZphFapIwoaUpE/6l7/pukf/PsodfZtkWnBF7JDYlpW/YJW4Xh/o46Mx/KtdT8hGV
-         mmRQ==
-X-Gm-Message-State: AA6/9RkCA2dC+m4Q1evyfnrNrGi7O+qDatHGlTMaX6OMZQoEQOB1JrhM6CeyAaCTzqHztb0hzZqlbFb+4JDT7uRK
-X-Received: by 10.55.45.193 with SMTP id t184mr240912qkh.58.1476752157683;
- Mon, 17 Oct 2016 17:55:57 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 17 Oct 2016 17:55:57 -0700 (PDT)
-In-Reply-To: <0a187897454a5bce946d675f6f6c93283b411f31.1476466609.git.jonathantanmy@google.com>
+        id S934504AbcJRBmj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Oct 2016 21:42:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55339 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934237AbcJRBmh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2016 21:42:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE1CB48588;
+        Mon, 17 Oct 2016 21:42:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/S1vtdw25mmLqjtjUIJJlGgkE3c=; b=na3n3F
+        FM22UWwyFncpNd7nw/nM/RKw7Se3l4IV77MrrSfp3yqCcC3F28UP6HyEu0mztIKX
+        X9D1nxJoqx8mfsq+RBMeCG4v2WYSpedZLzyDZ2vSjcj/PQX2sBYuWhW8G1nwmrIs
+        xTVt/8bYVPE5GaZK1A/2jrSg9YYyZoBMJKyr0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uBlNcmkzbLpM0Gw1Yp0bkzyUVB8jKYPE
+        KPRzxpPG+K5Vl9I01694E84Sjrqn/55pkHUh2zAgeeSewuOhtE6h0V5d9I+KCui4
+        mSfCfbKINocQw2zc1u+jXcDS9V3oxJY/BBp5ShWjc02QsQd3wTYcaRxXZieQco/o
+        E0D5hyNHVuc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E3E7448587;
+        Mon, 17 Oct 2016 21:42:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 65D7C48585;
+        Mon, 17 Oct 2016 21:42:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 5/6] trailer: allow non-trailers in trailer block
 References: <cover.1476232683.git.jonathantanmy@google.com>
- <cover.1476466609.git.jonathantanmy@google.com> <0a187897454a5bce946d675f6f6c93283b411f31.1476466609.git.jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 17 Oct 2016 17:55:57 -0700
-Message-ID: <CAGZ79kYiTNVRCzk--97qPLLWq2O4xsLPgGCLwJyKAvjvGMu66A@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] trailer: support values folded to multiple lines
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        <cover.1476466609.git.jonathantanmy@google.com>
+        <1b3fe84e4b6126884a801e721d0a93c41fcb4184.1476466609.git.jonathantanmy@google.com>
+        <CAGZ79kYLq1qA4_Qg2x5Fiu5AmGBZdozm4zk6K7LkU+uJ1LNUTw@mail.gmail.com>
+Date:   Mon, 17 Oct 2016 18:42:33 -0700
+In-Reply-To: <CAGZ79kYLq1qA4_Qg2x5Fiu5AmGBZdozm4zk6K7LkU+uJ1LNUTw@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 17 Oct 2016 17:49:19 -0700")
+Message-ID: <xmqq7f96sa9i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24E4CD6E-94D4-11E6-B0A2-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2016 at 10:38 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Currently, interpret-trailers requires that a trailer be only on 1 line.
-> For example:
->
->   a: first line
->      second line
->
-> would be interpreted as one trailer line followed by one non-trailer line.
->
-> Make interpret-trailers support RFC 822-style folding, treating those
-> lines as one logical trailer.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
+Stefan Beller <sbeller@google.com> writes:
 
-Looks good,
+> On Fri, Oct 14, 2016 at 10:38 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
+>>
+>>  Existing trailers are extracted from the input message by looking for
+>> -a group of one or more lines that contain a colon (by default), where
+>> +a group of one or more lines in which at least one line contains a
+>> +colon (by default), where
+>
+> Please see commit
+> 578e6021c0819d7be1179e05e7ce0e6fdb2a01b7
+> for an example where I think this is overly broad.
 
-Thanks,
-Stefan
+Hmph.  That's a merge.
+
+    Merge branch 'rs/c-auto-resets-attributes'
+
+    When "%C(auto)" appears at the very beginning of the pretty format
+    string, it did not need to issue the reset sequence, but it did.
+
+    * rs/c-auto-resets-attributes:
+      pretty: avoid adding reset for %C(auto) if output is empty
+
+And neither of the two colon containing line remotely resembles how
+a typical RFC-822 header is formatted.  So that may serve as a hint
+to how we can tighten it without introducing false negative.
+
+> Another made up example, that I'd want to feed
+> in commit -s eventually:
+>
+> --8<--
+> demonstrate colons in Java
+>
+> First paragraph is not interesting.
+>
+> Also if using another Language such as Java, where I point out
+> Class::function() to be problematic
+> --8<--
+>
+> This would lack the white space between the last paragraph and
+> the Sign off ?
+>
+> So for this patch I am mostly concerned about false positives hidden
+> in actual text.
+
+Yes.  
+
+These are exactly why I mentioned "if certian number or percentage"
+in my earlier suggestion.
+
+I think in practice, "A paragraph with at least one Signed-off-by:
+line, and has no more than 3/4 of the (logical) lines that do not
+resemble how a typical RFC-822 header is formatted" or something
+along that line would give us a reasonable safety.  
+
+Your Java example will fail the criteria in two ways, so we'd be
+safe ;-)
