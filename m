@@ -6,57 +6,94 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6229C2098B
-	for <e@80x24.org>; Wed, 19 Oct 2016 15:38:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDA562098B
+	for <e@80x24.org>; Wed, 19 Oct 2016 15:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S945206AbcJSPij (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 11:38:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59452 "EHLO cloud.peff.net"
+        id S945288AbcJSPlC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Oct 2016 11:41:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59458 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S945190AbcJSPia (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2016 11:38:30 -0400
-Received: (qmail 7357 invoked by uid 109); 19 Oct 2016 09:23:28 -0000
+        id S943609AbcJSPlA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 11:41:00 -0400
+Received: (qmail 6422 invoked by uid 109); 19 Oct 2016 09:10:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 09:23:28 +0000
-Received: (qmail 11949 invoked by uid 111); 19 Oct 2016 09:23:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 09:10:45 +0000
+Received: (qmail 11280 invoked by uid 111); 19 Oct 2016 09:11:07 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 05:23:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2016 05:23:27 -0400
-Date:   Wed, 19 Oct 2016 05:23:27 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 05:11:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2016 05:10:44 -0400
+Date:   Wed, 19 Oct 2016 05:10:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2016, #03; Tue, 11)
-Message-ID: <20161019092326.lcuwe5hxwjf4ndpx@sigill.intra.peff.net>
-References: <xmqq1szm8ukf.fsf@gitster.mtv.corp.google.com>
- <20161018133518.hwbv3gbeddjjfvcz@LykOS.localdomain>
- <xmqqtwc9r6uv.fsf@gitster.mtv.corp.google.com>
+To:     santiago@nyu.edu
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
+Subject: Re: [PATCH v4 5/7] builtin/tag: add --format argument for tag -v
+Message-ID: <20161019091044.k3ewbfxjj6ihv5o5@sigill.intra.peff.net>
+References: <20161007210721.20437-1-santiago@nyu.edu>
+ <20161007210721.20437-6-santiago@nyu.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqtwc9r6uv.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20161007210721.20437-6-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 18, 2016 at 08:53:44AM -0700, Junio C Hamano wrote:
+On Fri, Oct 07, 2016 at 05:07:19PM -0400, santiago@nyu.edu wrote:
 
-> >> * st/verify-tag (2016-10-10) 7 commits
-> [...]
-> > Hi, I saw this on the previous "what's cooking." Is there anything I
-> > need to do on my side to make sure this is ready for next?
-> 
-> Posting this exact message to the list would be an excellent way
-> ;-).
-> 
-> Hopefully some competent reviewer comes and points me at a thread
-> where s/he says the series was already reviewed and in good shape
-> soonish, and your message may be a good trigger to make it happen.
+> Adding --format to git tag -v mutes the default output of the GPG
+> verification and instead prints the formatted tag object.
 
-Another from my list of "things I have been meaning to review". :)
+The same comments apply to "mutes" here, as to the previous patch (which
+is to say I think we may want something more, but this is probably OK
+for now).
 
-I think this is close, but I had a few nits to pick with the ref-filter
-printing interface. I sent comments for each patch in the v4 thread.
+> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+> index 7ecca8e..3bb5e3c 100644
+> --- a/Documentation/git-tag.txt
+> +++ b/Documentation/git-tag.txt
+> @@ -15,7 +15,7 @@ SYNOPSIS
+>  'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+>  	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
+>  	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
+> -'git tag' -v <tagname>...
+> +'git tag' -v [--format=<format>] <tagname>...
+
+Just thinking out loud, but if we had ref-filter placeholders that
+triggered GPG verification, you could do this all with the listing mode,
+like:
+
+  git tag --format='%(gpgstatus) %(tag) %(refname:short)'
+
+and verify multiple tags (or give a single tag to limit it to just one).
+
+I don't think that's any kind of blocker for this series. We already
+have "-v", and adding --format to it is reasonable, even if we
+eventually move to a world where people can use the listing mode. Like I
+said, just thinking out loud.
+
+> +static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
+> +		void *cb_data)
+>  {
+>  	const char **p;
+>  	char ref[PATH_MAX];
+>  	int had_error = 0;
+>  	unsigned char sha1[20];
+>  
+> +
+>  	for (p = argv; *p; p++) {
+
+Extra space?
+
+>  static int verify_tag(const char *name, const char *ref,
+> -				const unsigned char *sha1)
+> +				const unsigned char *sha1, void *cb_data)
+>  {
+> -	return verify_and_format_tag(sha1, name, NULL, GPG_VERIFY_VERBOSE);
+> +	int flags;
+
+Probably doesn't matter much, but these flags are defined as "unsigned"
+elsewhere.
 
 -Peff
