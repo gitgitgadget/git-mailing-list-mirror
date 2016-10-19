@@ -2,90 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D87D720986
-	for <e@80x24.org>; Wed, 19 Oct 2016 20:56:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72A5420986
+	for <e@80x24.org>; Wed, 19 Oct 2016 21:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941680AbcJSU4m (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 16:56:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59661 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S941094AbcJSU4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2016 16:56:41 -0400
-Received: (qmail 17945 invoked by uid 109); 19 Oct 2016 20:56:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 20:56:41 +0000
-Received: (qmail 17497 invoked by uid 111); 19 Oct 2016 20:57:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 16:57:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2016 16:56:39 -0400
-Date:   Wed, 19 Oct 2016 16:56:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: Drastic jump in the time required for the test suite
-Message-ID: <20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
- <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
+        id S932610AbcJSVE4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Oct 2016 17:04:56 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36433 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756310AbcJSVEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 17:04:55 -0400
+Received: by mail-lf0-f67.google.com with SMTP id b75so4008429lfg.3
+        for <git@vger.kernel.org>; Wed, 19 Oct 2016 14:04:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nmqOXRU9WhGjsCJX/WAt2pUkKgMRWDcduBdmUHC39UU=;
+        b=co3/0DddLMQo9u6txxd8W7js8FRsQ3XhpuZ+8j0/2zEcMDVu64FOMKHyHZYXCakSAe
+         Vd9Aton/4MSZ/ioQckAZkchMTfgkah+Pi+hVwEQEguxQqc5WPV+RXuGS3Q8l6QMAhjRL
+         mXiYkNE6CR7stVmIDwvnw6cPtaXy/dHKZ0QZ5noM50UUV0VowLOd4nvc2KudILB34J8j
+         1RfFd7hrpeXOMaH39LSFMFTrq+pnmgHGPgpZQXstBksHxJ2c1R7MCndNqXlyKHHiie1Q
+         Zp+6g0OcSfEyCpfVr+vlz30iHxerMx17VZDrRaZspfgTb/I22vIOo383dqa/iGMVUrV0
+         1egg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nmqOXRU9WhGjsCJX/WAt2pUkKgMRWDcduBdmUHC39UU=;
+        b=EyP7/nAhV+snORcSIhZZmVCPEGym40JWISyrR4e07nLHN6poqNis4l6hcF+tfURKfO
+         8jGmHSRto6O3tx8C2b5iDkQOMevbTjlrdX7mt/ZnA3r65s+5vChFBSZR7e/FT562zMQR
+         VRG6aQLNauUFoxwJGVx+ZaHfi+pMgCuhqvOZ25ss6S06zLvG+B/dFZ2uG7dvtZxN5Tm7
+         8e65NuS71BErPS+mU8Dpn+FYfWcOT/UyNap3l4g0VZ++TCzEO6y53HYuvAB/tlLjfaLX
+         l79urCHLqo7TTSFB8cWoASiPsNuTKLcSLMBGNyjo1XGryx7+hochChWudzxWT+Vod9lz
+         mSwA==
+X-Gm-Message-State: AA6/9RmzQ9zwqL6Fp7Zy6S/PzC9g/3K+I9B5fdquCj1tzWwsm+TPmMqAnbm2AA3aHYh5Hw==
+X-Received: by 10.194.235.103 with SMTP id ul7mr6173459wjc.201.1476911093462;
+        Wed, 19 Oct 2016 14:04:53 -0700 (PDT)
+Received: from hurricane ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id h10sm72072307wje.48.2016.10.19.14.04.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 19 Oct 2016 14:04:53 -0700 (PDT)
+Date:   Wed, 19 Oct 2016 23:04:51 +0200
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     git@vger.kernel.org
+Cc:     jacob.e.keller@intel.com, stefanbeller@gmail.com, peff@peff.net,
+        j6t@kdbg.org, jacob.keller@gmail.com
+Subject: [PATCH] rev-list: restore the NUL commit separator in --header mode
+Message-ID: <20161019210448.aupphybw5qar6mqe@hurricane>
+References: <1476908699.26043.9.camel@kaarsemaker.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1476908699.26043.9.camel@kaarsemaker.net>
+User-Agent: Mutt/1.6.2-neo (2016-08-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 19, 2016 at 10:32:12AM -0700, Junio C Hamano wrote:
+Commit 660e113 (graph: add support for --line-prefix on all graph-aware
+output) changed the way commits were shown. Unfortunately this dropped
+the NUL between commits in --header mode. Restore the NUL and add a test
+for this feature.
 
-> > Maybe we should start optimizing the tests...
-> 
-> Yup, two things that come to mind are to identify long ones and see
-> if each of them can be split into two halves that can be run in
-> parallel, and to go through the tests with fine toothed comb and
-> remove the ones that test exactly the same thing as another test.
-> The latter would be very time consuming, though.
+Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+---
+ builtin/rev-list.c       | 4 ++++
+ t/t6000-rev-list-misc.sh | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-FWIW, I have made attempts at "split long ones into two" before, and
-didn't come up with much. There _are_ some tests that are much longer
-than others[1], but they are not longer than the whole suite takes to
-run. So running in slow-to-fast order means they start first, are run in
-parallel with the other tests, and the CPUs stay relatively full through
-the whole run.
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 8479f6e..cfa6a7d 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -157,6 +157,10 @@ static void show_commit(struct commit *commit, void *data)
+ 			if (revs->commit_format == CMIT_FMT_ONELINE)
+ 				putchar('\n');
+ 		}
++		if (revs->commit_format == CMIT_FMT_RAW) {
++			putchar(info->hdr_termination);
++		}
++
+ 		strbuf_release(&buf);
+ 	} else {
+ 		if (graph_show_remainder(revs->graph))
+diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+index 3e752ce..a2acff3 100755
+--- a/t/t6000-rev-list-misc.sh
++++ b/t/t6000-rev-list-misc.sh
+@@ -100,4 +100,11 @@ test_expect_success '--bisect and --first-parent can not be combined' '
+ 	test_must_fail git rev-list --bisect --first-parent HEAD
+ '
+ 
++test_expect_success '--header shows a NUL after each commit' '
++	touch expect &&
++	printf "\0" > expect &&
++	git rev-list --header --max-count=1 HEAD | tail -n1 >actual &&
++	test_cmp_bin expect actual
++'
++
+ test_done
+-- 
+2.10.1-449-gab0f84c
 
-Of course YMMV; the long tests on Windows may be different, or
-proportionally much longer (I note the worst cases almost all involve
-rebase, which as a shell script is presumably worse on Windows than
-elsewhere). And of course any reasoning about slow-to-fast order does
-not apply if you are not using a tool to do that for you. :)
 
--Peff
-
-[1] After running "make prove" (time are in seconds):
-
-    $ perl -MYAML -e '
-        $_ = do { local $/; <> };
-        # prove puts this non-YAML cruft at the end
-        s/\.\.\.$//s;
-
-        my $t = YAML::Load($_)->{tests};
-        print "$_->[1] $_->[0]\n" for
-          sort { $b->[1] <=> $a->[1] }
-          map { [$_, $t->{$_}->{elapsed}] }
-          keys(%$t);
-      ' .prove | head
-
-    43.216765165329 t3404-rebase-interactive.sh
-    30.6568658351898 t3421-rebase-topology-linear.sh
-    27.92564702034 t9001-send-email.sh
-    15.5906939506531 t9500-gitweb-standalone-no-errors.sh
-    15.4882569313049 t6030-bisect-porcelain.sh
-    14.487174987793 t7610-mergetool.sh
-    13.8276169300079 t3425-rebase-topology-merges.sh
-    12.7450480461121 t3426-rebase-submodule.sh
-    12.4915001392365 t3415-rebase-autosquash.sh
-    11.8122401237488 t5572-pull-submodule.sh
+-- 
+Dennis Kaarsemaker <dennis@kaarsemaker.net>
+http://twitter.com/seveas
