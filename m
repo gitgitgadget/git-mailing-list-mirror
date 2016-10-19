@@ -2,169 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 230202098B
-	for <e@80x24.org>; Wed, 19 Oct 2016 14:34:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D977D2098B
+	for <e@80x24.org>; Wed, 19 Oct 2016 15:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S942078AbcJSOeQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 10:34:16 -0400
-Received: from mail-ua0-f177.google.com ([209.85.217.177]:32915 "EHLO
-        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S942094AbcJSOeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2016 10:34:14 -0400
-Received: by mail-ua0-f177.google.com with SMTP id p25so10905150uaa.0
-        for <git@vger.kernel.org>; Wed, 19 Oct 2016 07:34:13 -0700 (PDT)
+        id S944585AbcJSPSy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Oct 2016 11:18:54 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:35075 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S944131AbcJSPSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 11:18:51 -0400
+Received: by mail-qk0-f181.google.com with SMTP id z190so40954113qkc.2
+        for <git@vger.kernel.org>; Wed, 19 Oct 2016 08:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=1jj0oSjdamVVyTvV1k7xkUDSRDmFErx5LYKd+gtbpGk=;
-        b=o4k7XkBBynWeC00SxpM8d0wkT2z7H4qH9weq2liaBYrC/4iRTnGjeAGCk/WOUfzOgg
-         hNWW5KaGjHlAXSw29M+6EzmmbfmQdxfv/+j91ZERLagxCTe0TqJMzFgpe724C2TE33bp
-         0i1c8y9anvGYB4MNxHFCjjs48jPRSIsqDg/HpNnw+mKP2aDTCwRG4wJPXbMNPleusgWY
-         BHsx9F2Q7VnMeFD3GezJErrB4ZXfxXVfl55Mqy4iPp7R4ENCRe9uFdXelQdj3iP6oPkX
-         frGC9WQhS49LDD+HUPms8MGjGhFA/wxAzahAO545W6FfSdUPPL8WXPMYrkTN/zC00BN1
-         pZQw==
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=9JfZ1w6hvbDrjjLTijhvmIG5NhQB94nQaocwF+OKUiA=;
+        b=Wg7wbpHBWEJ6bml8p03QVGcuwm5XlaTsQdYNsz3Ho4PfVIy829JSYc7STKlDz/ydYe
+         bpd+870DI2lBr3TBJq5YKRr6/9tWjyIN0EyieoAx+aRG2TWPaOkl3ImQm1rHTf+y3FWX
+         7rOMEy1R63I6HgV7qizs6s35k57+b5QdPfROFCZx32pw9v4pvw6Gp2HWl9MUhKLTQinA
+         UUxaeS9XedkxGv9hblIv9DW0W6zt2WfRcnBP+0mZRbhxAvvGEBQCACgJGQiXqWDOe4Q0
+         5qr1bL8HJnIEx9FVP7hrnz3YeGwnycABifbMNrQ6D+BplYoVp53WX9QS49qtYtrxt9rc
+         EWXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=1jj0oSjdamVVyTvV1k7xkUDSRDmFErx5LYKd+gtbpGk=;
-        b=jtSJnVCz7s/FzBI17nAu2BEFY29dwV27nheyDrd/9ltsaUPUivJmJa+/DYRzGMzFhO
-         oaXVwRN96RdRD+xvEZ3QkAKJo3e1Y7JYLoOvuhnYxVzGpZdUgX/KZ5m2Or5IL1GPj08U
-         gDbkHk9ZD8eAs+pmrhBCbgau9X/WayOBb6ywzDQT3+woLrGQ9lSHyO1Bukwg+gXVkoqz
-         FSVF/Kvqa49JKGg6iJhrLxkj9AmMhRSLvRRP3CnSy8/lVdNCx9gaPh0MOwR0gx6BtXCF
-         KM2GSZIhSTnCnVYhbG3UcCYPZWooKpZ5RLRNR0ATImM0SCu5jIt23S7az7/GlJl+E4wc
-         sKWQ==
-X-Gm-Message-State: AA6/9Rl0jRKlbNRET3IJIWgq7/+4QfgqHmLu2i8uIQDHYTBBLnAWmmFJP2KQZqj21dqzafImw+mpPZSU2SZztQ==
-X-Received: by 10.159.48.22 with SMTP id h22mr1887895uab.45.1476883662187;
- Wed, 19 Oct 2016 06:27:42 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=9JfZ1w6hvbDrjjLTijhvmIG5NhQB94nQaocwF+OKUiA=;
+        b=Lgcm0zI2XweCM9S8zObAQyv8f4S6ifcImpBYgD+0YsZ3OG6AzYCjsvM1Yvr6I7A2Wt
+         9frttREqL1YNXPngDejrOlZVPfGHQwkkLjVTtSTOjI72Z7AHDNP/jvsTSyNcU5LJjNkg
+         qhUIFTihzfZ6PnfYp2j8Y4JimT7qMNwIkCR1bTXRBRlbvdGA62SSr+JoWKw3OqqcijtS
+         UdiqPFRFH0j2VpDL+EQQ+6S9ky47Z+0MqJyKvVH6arDHypQF8Y3gfqufrEcbsdNcQrNm
+         /dv98qMqmkXQtyX8UNsukquEIE7QS6oW8vJEI4ACElHzNB0/7/rZeemR8wR3ItQlqf8W
+         mPMA==
+X-Gm-Message-State: AA6/9Rld6qCBv5C9+PslBhfMTPXrgjXOexN+XSB9cbC7/jIDX8nWbxAV8RhqcZG+wyAgeEIWZL/+IMH12tYDbw==
+X-Received: by 10.194.179.170 with SMTP id dh10mr4775413wjc.94.1476875757492;
+ Wed, 19 Oct 2016 04:15:57 -0700 (PDT)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.68.97 with HTTP; Wed, 19 Oct 2016 06:27:41 -0700 (PDT)
-In-Reply-To: <CAGZ79kaFtzQDZrSJhJZ59xvBzn+6+UVDO65Ac+T6aFxMQaM_xQ@mail.gmail.com>
-References: <CAHd499AN2VHL66c6JWxHqS-1bQ6y4PrGjZJiR_ad6HJsCGpeDQ@mail.gmail.com>
- <CAGZ79kaFtzQDZrSJhJZ59xvBzn+6+UVDO65Ac+T6aFxMQaM_xQ@mail.gmail.com>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Wed, 19 Oct 2016 08:27:41 -0500
-X-Google-Sender-Auth: jUSAEZwCDLbE5ZWAezriynFvz4g
-Message-ID: <CAHd499CN3+cHVwjOEirwXVu3DsJwPrmJwEgSJL2CHD5CvoYxxg@mail.gmail.com>
-Subject: Re: Integrating submodules with no side effects
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git <git@vger.kernel.org>
+Received: by 10.28.210.210 with HTTP; Wed, 19 Oct 2016 04:15:56 -0700 (PDT)
+From:   Jan Keromnes <janx@linux.com>
+Date:   Wed, 19 Oct 2016 13:15:56 +0200
+X-Google-Sender-Auth: ANrEEdzUAN6GnQ4sp-yia8TMnQ0
+Message-ID: <CAA6PgK5vtnZSqqZafMVGoy0Rv38=8e__uQvXaf2SyPePHuPjJA@mail.gmail.com>
+Subject: [regression] `make profile-install` fails in 2.10.1
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 18, 2016 at 4:17 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Oct 18, 2016 at 12:35 PM, Robert Dailey
-> <rcdailey.lists@gmail.com> wrote:
->> Hello git experts,
->>
->> I have in the past attempted to integrate submodules into my primary
->> repository using the same directory name. However, this has always
->> caused headache when going to and from branches that take you between
->> when this integration occurred and when it didn't. It's a bit hard to
->> explain. Basically, if I have a submodule "foo", and I delete that
->> submodule and physically add its files under the same directory "foo",
->> when I do a pull to get this change from another clone, it fails
->> saying:
->>
->> error: The following untracked working tree files would be overwritten
->> by checkout:
->>         foo/somefile.txt
->> Please move or remove them before you switch branches.
->> Aborting
->> could not detach HEAD
->>
->>
->> Obviously, git can't delete the submodule because the files have also
->> been added directly. I don't think it is built to handle this
->> scenario. Here is the series of commands I ran to "integrate" the
->> submodule (replace the submodule with a directory containing the exact
->> contents of the submodule itself):
->>
->> #!/usr/bin/env bash
->> mv "$1" "${1}_"
->> git submodule deinit "$1"
->
-> This removes the submodule entries from .git/config
-> (and it would remove the contents of that submodule, but they are moved)
->
->> git rm "$1"
->
-> Removing the git link here.
->
-> So we still have the entries in the .gitmodules file there.
-> Maybe add:
->
->     name=$(git submodule-helper name $1)
->     git config -f .gitmodules --unset submodule.$name.*
->     git add .gitmodules
->
-> ? (Could be optional)
+Hello,
 
-Actually I verified that it seems `git rm` is specialized for
-submodules somewhere, because when I run that command on a submodule
-the relevant entries in the .gitmodules file are removed. I did not
-have to do this as a separate step.
+TL;DR - Probably a regression of a previously reported bug. [0]
 
->> mv "${1}_" "$1"
->> git add "$1/**"
->
-> Moving back into place and adding all files in there.
->
->>
->> The above script is named git-integrate-submodule, I run it like so:
->>
->> $ git integrate-submodule foo
->>
->> Then I do:
->>
->> $ git commit -m 'Integrated foo submodule'
->>
->> Is there any way to make this work nicely?
->
-> I think you can just remove the gitlink from the index and not from the working
-> tree ("git rm --cached $1")
+I'm trying to `profile-install` Git from source on Ubuntu 16.04, to
+have the latest stable Git optimized for my machine.
 
-What is the goal of doing it this way? What does this simplify?
+However, this often fails, because the profile build runs all Git
+tests (to get an idea of how Git behaves on my hardware, and optimize
+for it), but it bails out if there are any test failures (for me, this
+has happened on most Git version upgrades this year, see also [0] and
+[1]).
 
->> The only solution I've
->> found is to obviously rename the directory before adding the physical
->> files, for example name it foo1. Because they're different, they never
->> "clash".
->
-> Also look at the difference between plumbing and porcelain commands[1],
-> as plumbing is more stable than the porcelain, so it will be easier to maintain
-> this script.
+- Problem: Is there a way to `make profile-install` but ignore
+occasional test failures, as these are not critical to get a useful
+hardware profile? (Note: In a previous thread, Dennis Kaarsemaker
+mentioned this is fixing a symptom, not the root cause, but it would
+still be great to get a working profile in spite of occasional test
+failures.)
 
-Which plumbing commands did you have in mind?
+- Related problem: `t3700-add.sh` fails again in 2.10.1 for me. More
+details below, and I can provide further debug information if you
+don't already know the problem.
 
-> I think this would be an actually reasonable feature, which Git itself
-> could support via "git submodule [de]integrate", but then we'd also want
-> to see the reverse, i.e. take a sub directory and make it a submodule.
+Thanks,
+Jan
 
-Integrating this as a feature might be fine, I think when you bring up
-the question of retaining history makes things much harder.
-Fortunately for me that is not a requirement in this case, so I'm able
-to do things with much less effort.
+[0] "`make profile-install` fails in 2.9.3" -
+https://marc.info/?l=git&m=147274608823171&w=2
 
-However the primary purpose of my post was to find out how to
-integrate the submodule without the error on next pull by other
-collaborators of my repository. It's a real pain to recover your
-working copy when going inbetween commits where the submodule
-integration happened inbetween them. I did quote the exact error
-message I got in my original post.
+[1] "Fwd: Git 2.8.1 fails test 32 of t7300-clean.sh, breaks profile
+build" - https://marc.info/?l=git&m=146193443529229&w=2
 
-Do you have any info on how I can prevent that error? Ideally I want
-the integration to go smoothly and transparently, not just for the
-person doing the actual transition (me) but for everyone else that
-gets those changes from upstream. They should not even notice that it
-happened (i.e. no failed commands, awkward behavior, or manual steps).
+---
+
+Steps to reproduce:
+
+    curl https://www.kernel.org/pub/software/scm/git/git-2.10.1.tar.xz
+| tar xJ \
+     && cd git-2.10.1 \
+     && make prefix=/usr profile-install install-man -j18
+
+Expected result:
+
+    - runs all tests to get a profile (ignoring occasional failures)
+    - rebuilds Git with the profile
+    - installs Git
+
+Actual result:
+
+    - runs all tests to get a profile
+    - at least one test fails, interrupting the whole process
+    - Git is not installed
+
+Failure log:
+
+    (snip)
+    *** t3700-add.sh ***
+    ok 1 - Test of git add
+    ok 2 - Post-check that foo is in the index
+    ok 3 - Test that "git add -- -q" works
+    ok 4 - git add: Test that executable bit is not used if core.filemode=0
+    ok 5 - git add: filemode=0 should not get confused by symlink
+    (snip)
+    ok 38 - git add --chmod=[+-]x stages correctly
+    ok 39 - git add --chmod=+x with symlinks
+    not ok 40 - git add --chmod=[+-]x changes index with already added file
+    #
+    #               echo foo >foo3 &&
+    #               git add foo3 &&
+    #               git add --chmod=+x foo3 &&
+    #               test_mode_in_index 100755 foo3 &&
+    #               echo foo >xfoo3 &&
+    #               chmod 755 xfoo3 &&
+    #               git add xfoo3 &&
+    #               git add --chmod=-x xfoo3 &&
+    #               test_mode_in_index 100644 xfoo3
+    #
+    ok 41 - git add --chmod=[+-]x does not change the working tree
+    ok 42 - no file status change if no pathspec is given
+    ok 43 - no file status change if no pathspec is given in subdir
+    ok 44 - all statuses changed in folder if . is given
+    # failed 1 among 44 test(s)
+    1..44
+    Makefile:43: recipe for target 't3700-add.sh' failed
+    make[3]: Leaving directory '/tmp/git/git-2.10.1/t'
+    make[3]: *** [t3700-add.sh] Error 1
+    Makefile:36: recipe for target 'test' failed
+    make[2]: Leaving directory '/tmp/git/git-2.10.1/t'
+    make[2]: *** [test] Error 2
+    Makefile:2273: recipe for target 'test' failed
+    make[1]: *** [test] Error 2
+    make[1]: Leaving directory '/tmp/git/git-2.10.1'
+    Makefile:1679: recipe for target 'profile' failed
+    make: *** [profile] Error 2
+    The command '/bin/sh -c mkdir /tmp/git  && cd /tmp/git  && curl
+https://www.kernel.org/pub/software/scm/git/git-2.10.1.tar.xz | tar xJ
+ && cd git-2.10.1  && make prefix=/usr profile-install install-man
+-j18  && rm -rf /tmp/git' returned a non-zero code: 2
