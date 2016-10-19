@@ -2,83 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6640E2098B
-	for <e@80x24.org>; Wed, 19 Oct 2016 14:14:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3A992098B
+	for <e@80x24.org>; Wed, 19 Oct 2016 14:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936201AbcJSONt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 10:13:49 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35554 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935738AbcJSONo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2016 10:13:44 -0400
-Received: by mail-lf0-f67.google.com with SMTP id x79so2253555lff.2
-        for <git@vger.kernel.org>; Wed, 19 Oct 2016 07:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=XT+iMLGzKh7ornaE++RUSD6LM9jrJBM1FAGfxn8Q0rA=;
-        b=RrmFf6AlfWLUIEBGB46rzZIwjbWoV0KZvLQF7JDysqA7+VE3ubdhQ/kANO2nkhi5Ha
-         H5pOiX31cwEUxJDbqTNILlQe5skeu7whwAWApYpa4bbtuC5p2dh7AA6k2k/xUQGugbpu
-         kTEM43UK815wI7XTLQKvesAvFh/0hvMjiMnpCuqOHoorB/839UNv+RfdmbJREuI55Q3A
-         X6gKeBkMphVQiV8dpUZohGAw95zd2CVQ0uizhfwT4ZUgXOascgDTtbb3iy4xqreS34eB
-         IIvBLFfqWv8szmqLBJMmKo4JkGbqRLm5N78AmmHxxBKIZODmouOIfPPwDQjJxl67IxMA
-         AT8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=XT+iMLGzKh7ornaE++RUSD6LM9jrJBM1FAGfxn8Q0rA=;
-        b=eYeQXl+YVEyvRzWhg0X9pTWQ4S+IqL9d4mkr6PPVfsDy6gVJEjrHyFdvb5I+kDRUUY
-         yKnSvdyjP/XwVX/CumSLY/RZXe7nEOXlXZa324Wf0vW6HWNO7Qz2MYBm/q0TT4QaUOz0
-         XR5C93+VCsuRatZw9ZN71s11R+yFkM/Gof15HogQJs1ezDXMltf7yUXjJhJtoj2XIYmc
-         A6K23v7r1SR4PLYvo/emI31WKZyJvisXwvfkfd9jlReTSh+F7AO6g4ioWFFuN/+KL6BN
-         W17B7J3D2kh8r0sZ1y/pKEyteuqjP3gINSD+qqKVOnweATi814uNbFY9YF7jFo2MXbFr
-         L8UA==
-X-Gm-Message-State: AA6/9RlI75w3VtWuR34wUWj9fXgdQ/MqyABtcmbNOH70kmmZyU5/EetvwvjQn9BXt+asfLNBEqSJ3+im+WsXfQ==
-X-Received: by 10.25.28.197 with SMTP id c188mr3330742lfc.81.1476886422801;
- Wed, 19 Oct 2016 07:13:42 -0700 (PDT)
+        id S941151AbcJSORE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Oct 2016 10:17:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59394 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933448AbcJSORA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 10:17:00 -0400
+Received: (qmail 1082 invoked by uid 109); 19 Oct 2016 07:46:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 07:46:49 +0000
+Received: (qmail 10729 invoked by uid 111); 19 Oct 2016 07:47:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 03:47:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2016 03:46:48 -0400
+Date:   Wed, 19 Oct 2016 03:46:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2016, #04; Mon, 17)
+Message-ID: <20161019074648.nuk2c2mpvmedjrhb@sigill.intra.peff.net>
+References: <xmqqtwcasj8y.fsf@gitster.mtv.corp.google.com>
+ <9F780406-FC77-4B3E-AEEB-7F6215E6702C@gmail.com>
+ <xmqq4m49pffk.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.25.163.84 with HTTP; Wed, 19 Oct 2016 07:13:42 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 19 Oct 2016 16:13:42 +0200
-Message-ID: <CAP8UFD2WN4nGzAp=fHMUpzBsmCeGN3aMN_dEVgCnkyJECY=93w@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 20
-To:     git <git@vger.kernel.org>
-Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, lwn@lwn.net,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Kevin Daudt <me@ikke.info>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Stephan Beyer <s-beyer@gmx.net>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Andrew Johnson <ajohnson388@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Rich Felker <dalias@libc.org>,
-        "Kyle J. McKay" <mackyle@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4m49pffk.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Tue, Oct 18, 2016 at 01:31:27PM -0700, Junio C Hamano wrote:
 
-I'm happy announce that the 20th edition of Git Rev News is now published:
+> >> * ls/filter-process (2016-10-17) 14 commits
+> [...]
+> > what do you think about v11? Do you feel the series is becoming mature
+> > enough for `next`?
+> 
+> I've already had that feeling a few rounds ago, but I haven't had a
+> chance to read the most recent one carefully myself to answer that
+> question honestly.
 
-https://git.github.io/rev_news/2016/10/19/edition-20/
+FWIW, I gave it a fairly thorough read-over (something I'd been meaning
+to do for quite a while, but kept never quite getting around to). I
+think overall it is OK for next. I did find one or two nits, but I think
+they are things we can fix up in-tree if and when they become a problem
+(e.g., I noticed that test-genrandom gets piped to "perl -pe". I'm not
+sure if perl will complain about funny multibyte characters on some
+systems. I suggest we ignore it until somebody demonstrates that it
+actually matters).
 
-Thanks a lot to all the contributors and helpers, especially Jakub,
-Dennis, Dscho, Lars and Peff!
-
-Enjoy,
-Christian and Thomas.
+-Peff
