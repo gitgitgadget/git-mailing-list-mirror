@@ -2,66 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9A820986
-	for <e@80x24.org>; Wed, 19 Oct 2016 22:38:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7517E20986
+	for <e@80x24.org>; Wed, 19 Oct 2016 22:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752323AbcJSWio (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 18:38:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59756 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751297AbcJSWin (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2016 18:38:43 -0400
-Received: (qmail 24400 invoked by uid 109); 19 Oct 2016 22:38:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 22:38:43 +0000
-Received: (qmail 18696 invoked by uid 111); 19 Oct 2016 22:39:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Oct 2016 18:39:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Oct 2016 18:38:40 -0400
-Date:   Wed, 19 Oct 2016 18:38:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jan Keromnes <janx@linux.com>, git@vger.kernel.org
-Subject: Re: [regression] `make profile-install` fails in 2.10.1
-Message-ID: <20161019223840.j3lvfswazuozxkjo@sigill.intra.peff.net>
-References: <CAA6PgK5vtnZSqqZafMVGoy0Rv38=8e__uQvXaf2SyPePHuPjJA@mail.gmail.com>
- <20161019210519.ubk5q54rrvbafch7@sigill.intra.peff.net>
- <xmqqh988j7oo.fsf@gitster.mtv.corp.google.com>
- <xmqqd1iwj7jf.fsf@gitster.mtv.corp.google.com>
+        id S1754652AbcJSWkF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Oct 2016 18:40:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64921 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754593AbcJSWkE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 18:40:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7099C478B0;
+        Wed, 19 Oct 2016 18:40:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3BDreyT9Zxt/N1QMCz/ls1ePEW4=; b=PviMQo
+        lPTOngQ9l/iF/vUu/pzCXoAeWx7Hhf2Yjf34FsDGwXTH47gIwqY8CladRx0FSBNg
+        +WNm+MfXacv+6v7e9+yd8EWK4f3bWYgjUBIscA+dxnZcXaefBhuZwwk8s0nUrSM3
+        Y7zWFMrhKlXEP5IKa6r5ZkB99IAa/orI5vMxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OylK9pYxUH3xNTv1iD5hnEQgNCLb6TFp
+        i0wa0layQTZ2E8kRhBDPDhpcqQK6aCA1fJ6UDjxaHotjWOFVxz9ht1M4lTXC6M86
+        H5ZZaJ/mNz4ZgfVlBBj7UBSq/JKl7NH7YFc6iB9k8ap/i5rAjnY8Ilugm6knMMlX
+        vWzLRlCvwKY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5BAB9478AF;
+        Wed, 19 Oct 2016 18:40:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A4C97478AC;
+        Wed, 19 Oct 2016 18:40:01 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] rev-list: restore the NUL commit separator in --header mode
+References: <1476908699.26043.9.camel@kaarsemaker.net>
+        <20161019210448.aupphybw5qar6mqe@hurricane>
+        <CA+P7+xogHOCbPV+rx7yrur85m=HX5ms9kGQYvTpQ7n2i7Hzuvw@mail.gmail.com>
+Date:   Wed, 19 Oct 2016 15:39:59 -0700
+In-Reply-To: <CA+P7+xogHOCbPV+rx7yrur85m=HX5ms9kGQYvTpQ7n2i7Hzuvw@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 19 Oct 2016 15:15:36 -0700")
+Message-ID: <xmqq8ttkj740.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd1iwj7jf.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F8D1C720-964C-11E6-B335-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 19, 2016 at 03:30:44PM -0700, Junio C Hamano wrote:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> > Ouch.  Thanks for a reminder.  How about doing this for now?
-> 
-> And the hack I used to quickly test it looks like this:
-> 
->     $ cd t
->     $ GIT_I_AM_INSANE=Yes sh ./t3700-add.sh
-> 
-> We may want a more general 
-> 
->     GIT_OVERRIDE_PREREQ='!SANITY,!POSIXPERM,MINGW' make test
-> 
-> or something like that, though.
+> Hi,
+>
+> On Wed, Oct 19, 2016 at 2:04 PM, Dennis Kaarsemaker
+> <dennis@kaarsemaker.net> wrote:
+>> Commit 660e113 (graph: add support for --line-prefix on all graph-aware
+>> output) changed the way commits were shown. Unfortunately this dropped
+>> the NUL between commits in --header mode. Restore the NUL and add a test
+>> for this feature.
+>>
+>
+> Oops! Thanks for the bug fix.
+>
+>> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+>> ---
+>>  builtin/rev-list.c       | 4 ++++
+>>  t/t6000-rev-list-misc.sh | 7 +++++++
+>>  2 files changed, 11 insertions(+)
+>>
+>> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+>> index 8479f6e..cfa6a7d 100644
+>> --- a/builtin/rev-list.c
+>> +++ b/builtin/rev-list.c
+>> @@ -157,6 +157,10 @@ static void show_commit(struct commit *commit, void *data)
+>>                         if (revs->commit_format == CMIT_FMT_ONELINE)
+>>                                 putchar('\n');
+>>                 }
+>> +               if (revs->commit_format == CMIT_FMT_RAW) {
+>> +                       putchar(info->hdr_termination);
+>> +               }
+>> +
+>
+> This seems right to me. My one concern is that we make sure we restore
+> it for every case (in case it needs to be there for other formats?)
+> I'm not entirely sure about whether other non-raw modes need this or
+> not?
 
-I don't think I've ever wanted to do that myself, but I can see how it
-might be useful (e.g., claiming we don't support symlinks is another
-one).
+Right.  The original didn't do anything special for CMIT_FMT_RAW,
+and 660e113 did not remove anything special for CMIT_FMT_RAW, so it
+isn't immediately obvious why this patch is sufficient.  
 
-I usually just try to recreate the actual environment (e.g., run the
-tests as root, run them on a loopback case-insensitive fs, etc) as that
-gives a more realistic recreation.
-
--Peff
+Dennis, care to elaborate?
