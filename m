@@ -2,99 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CFDA2098B
-	for <e@80x24.org>; Wed, 19 Oct 2016 14:28:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 230202098B
+	for <e@80x24.org>; Wed, 19 Oct 2016 14:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941780AbcJSO2B (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 10:28:01 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36607 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S941117AbcJSO17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2016 10:27:59 -0400
-Received: by mail-it0-f51.google.com with SMTP id 139so105945268itm.1
-        for <git@vger.kernel.org>; Wed, 19 Oct 2016 07:27:59 -0700 (PDT)
+        id S942078AbcJSOeQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Oct 2016 10:34:16 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:32915 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S942094AbcJSOeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 10:34:14 -0400
+Received: by mail-ua0-f177.google.com with SMTP id p25so10905150uaa.0
+        for <git@vger.kernel.org>; Wed, 19 Oct 2016 07:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5Id5f8+akYVLK++THT4agoJAOFibow4aWWvBU4O6+kg=;
-        b=spZDazx2iN8u3MNmMhaHOd8vGpymv+XHxObSAJP1ARo/NG1EPXxvAwMlN3JKJef6C/
-         zjgWTVK8NiE7gVavVNP5gaocQ28qMc4muQvJAufQJgc5JB3CJeg/tpOsnW0kJo510KtF
-         nFwHBZRauofqidjMEDvb3sh+b7O3CzGLFXuCTUi71MRAF6ObkKxl9bXtIk9TCu9MSulP
-         jIVAKZ+5npzmcntWG3ledCbo0PEA7aCCvPPjA3qVtub7rGhLlewHwzCe1pIxH3/Ofttm
-         5fUt/zWqyXa2VgYMfWYVpGUEcxh8PUK05ZycFSvq6pShlnWlm9brcnCAaXVeGK/J8C0m
-         b6Ng==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=1jj0oSjdamVVyTvV1k7xkUDSRDmFErx5LYKd+gtbpGk=;
+        b=o4k7XkBBynWeC00SxpM8d0wkT2z7H4qH9weq2liaBYrC/4iRTnGjeAGCk/WOUfzOgg
+         hNWW5KaGjHlAXSw29M+6EzmmbfmQdxfv/+j91ZERLagxCTe0TqJMzFgpe724C2TE33bp
+         0i1c8y9anvGYB4MNxHFCjjs48jPRSIsqDg/HpNnw+mKP2aDTCwRG4wJPXbMNPleusgWY
+         BHsx9F2Q7VnMeFD3GezJErrB4ZXfxXVfl55Mqy4iPp7R4ENCRe9uFdXelQdj3iP6oPkX
+         frGC9WQhS49LDD+HUPms8MGjGhFA/wxAzahAO545W6FfSdUPPL8WXPMYrkTN/zC00BN1
+         pZQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5Id5f8+akYVLK++THT4agoJAOFibow4aWWvBU4O6+kg=;
-        b=cEtPhWDikL0JO8UgbU8xCfeBvk5ZbhJ5YG1AetcBdpfQeHyuL6EF6VGNYv+APMk+No
-         Q1GbbQ4rO5jdsSIy1Lscbz5D8cwNbmT6QOubLKY7FHTD6xLj2oHxEilxegCGr4YpapdM
-         n90puDZ5aoLUyHLZtXUb1djPfJUa/3Ih/MInAKqYBHgWXy2tS1Cw+iQOGa5xU5PFQfb+
-         Xpwi29K/G48xdfFYmBxDxRXnIfckE8wAf8cG/HeAe8lfIABG9Td+xiky9b3IKP4r2O7J
-         9Ew2CG+dAzQzeAqYucVefsw4eeXmY9m92lhffoioEyO1wROFCS2imihYwNEU0rDg2hhN
-         1PIw==
-X-Gm-Message-State: AA6/9Rmh/GZ2nsCaeJGbF2OwFaOuf+1wHrV/93+z4fVyJYJoTqMBjMYqjHHGQ4vso3S1b0Pk91JQZb3EuVHL2A==
-X-Received: by 10.36.76.15 with SMTP id a15mr6665016itb.74.1476883693822; Wed,
- 19 Oct 2016 06:28:13 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=1jj0oSjdamVVyTvV1k7xkUDSRDmFErx5LYKd+gtbpGk=;
+        b=jtSJnVCz7s/FzBI17nAu2BEFY29dwV27nheyDrd/9ltsaUPUivJmJa+/DYRzGMzFhO
+         oaXVwRN96RdRD+xvEZ3QkAKJo3e1Y7JYLoOvuhnYxVzGpZdUgX/KZ5m2Or5IL1GPj08U
+         gDbkHk9ZD8eAs+pmrhBCbgau9X/WayOBb6ywzDQT3+woLrGQ9lSHyO1Bukwg+gXVkoqz
+         FSVF/Kvqa49JKGg6iJhrLxkj9AmMhRSLvRRP3CnSy8/lVdNCx9gaPh0MOwR0gx6BtXCF
+         KM2GSZIhSTnCnVYhbG3UcCYPZWooKpZ5RLRNR0ATImM0SCu5jIt23S7az7/GlJl+E4wc
+         sKWQ==
+X-Gm-Message-State: AA6/9Rl0jRKlbNRET3IJIWgq7/+4QfgqHmLu2i8uIQDHYTBBLnAWmmFJP2KQZqj21dqzafImw+mpPZSU2SZztQ==
+X-Received: by 10.159.48.22 with SMTP id h22mr1887895uab.45.1476883662187;
+ Wed, 19 Oct 2016 06:27:42 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Wed, 19 Oct 2016 06:27:43 -0700 (PDT)
-In-Reply-To: <6B2BE996-F696-4EB4-91CA-849D40B8802D@gmail.com>
-References: <6B2BE996-F696-4EB4-91CA-849D40B8802D@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 19 Oct 2016 20:27:43 +0700
-Message-ID: <CACsJy8B50daiHWfu7zfVQnn_i_=HbUK3gBPmv1U=EUw7ZyuGPw@mail.gmail.com>
-Subject: Re: git checkout crashes after server being updated to Debian X86_64
-To:     Raffael Reichelt <raffael.reichelt@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.68.97 with HTTP; Wed, 19 Oct 2016 06:27:41 -0700 (PDT)
+In-Reply-To: <CAGZ79kaFtzQDZrSJhJZ59xvBzn+6+UVDO65Ac+T6aFxMQaM_xQ@mail.gmail.com>
+References: <CAHd499AN2VHL66c6JWxHqS-1bQ6y4PrGjZJiR_ad6HJsCGpeDQ@mail.gmail.com>
+ <CAGZ79kaFtzQDZrSJhJZ59xvBzn+6+UVDO65Ac+T6aFxMQaM_xQ@mail.gmail.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Wed, 19 Oct 2016 08:27:41 -0500
+X-Google-Sender-Auth: jUSAEZwCDLbE5ZWAezriynFvz4g
+Message-ID: <CAHd499CN3+cHVwjOEirwXVu3DsJwPrmJwEgSJL2CHD5CvoYxxg@mail.gmail.com>
+Subject: Re: Integrating submodules with no side effects
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 18, 2016 at 10:17 PM, Raffael Reichelt
-<raffael.reichelt@gmail.com> wrote:
-> Hello!
+On Tue, Oct 18, 2016 at 4:17 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Oct 18, 2016 at 12:35 PM, Robert Dailey
+> <rcdailey.lists@gmail.com> wrote:
+>> Hello git experts,
+>>
+>> I have in the past attempted to integrate submodules into my primary
+>> repository using the same directory name. However, this has always
+>> caused headache when going to and from branches that take you between
+>> when this integration occurred and when it didn't. It's a bit hard to
+>> explain. Basically, if I have a submodule "foo", and I delete that
+>> submodule and physically add its files under the same directory "foo",
+>> when I do a pull to get this change from another clone, it fails
+>> saying:
+>>
+>> error: The following untracked working tree files would be overwritten
+>> by checkout:
+>>         foo/somefile.txt
+>> Please move or remove them before you switch branches.
+>> Aborting
+>> could not detach HEAD
+>>
+>>
+>> Obviously, git can't delete the submodule because the files have also
+>> been added directly. I don't think it is built to handle this
+>> scenario. Here is the series of commands I ran to "integrate" the
+>> submodule (replace the submodule with a directory containing the exact
+>> contents of the submodule itself):
+>>
+>> #!/usr/bin/env bash
+>> mv "$1" "${1}_"
+>> git submodule deinit "$1"
 >
-> I have a serious problem with git, After my provider had updated to a X86=
-_64 architecture git crashes with various memory-related errors. This is ha=
-ppening remote when pushing to the repository from my local machine as well=
- as trying it on a shell on the server itself.
+> This removes the submodule entries from .git/config
+> (and it would remove the contents of that submodule, but they are moved)
 >
-> This are the error-messages:
+>> git rm "$1"
 >
-> fatal: Out of memory, realloc failed
-> fatal: recursion detected in die handler
-> fatal: recursion detected in die handler
+> Removing the git link here.
+>
+> So we still have the entries in the .gitmodules file there.
+> Maybe add:
+>
+>     name=$(git submodule-helper name $1)
+>     git config -f .gitmodules --unset submodule.$name.*
+>     git add .gitmodules
+>
+> ? (Could be optional)
 
-You other mail said memory is capped at 600MB, which should be a lot
-for normal repositories. If you set the environment variable
-GIT_ALLOC_LIMIT to maybe 500MB or lower (convert it to kilobytes
-first) and git attempts to allocate more than that (just that one
-time, not total mem) then it's caught and we get a glimpse of how much
-memory git may need. Unfortunately we can't get a stack trace or
-anything like that unless you rebuild Git from source.
+Actually I verified that it seems `git rm` is specialized for
+submodules somewhere, because when I run that command on a submodule
+the relevant entries in the .gitmodules file are removed. I did not
+have to do this as a separate step.
 
-> or
-> fatal: unable to create threaded lstat
-> fatal: recursion detected in die handler
+>> mv "${1}_" "$1"
+>> git add "$1/**"
+>
+> Moving back into place and adding all files in there.
+>
+>>
+>> The above script is named git-integrate-submodule, I run it like so:
+>>
+>> $ git integrate-submodule foo
+>>
+>> Then I do:
+>>
+>> $ git commit -m 'Integrated foo submodule'
+>>
+>> Is there any way to make this work nicely?
+>
+> I think you can just remove the gitlink from the index and not from the working
+> tree ("git rm --cached $1")
 
-Hmm.. with "max user processes (-u) 42" we should be fine because we
-only create 20 threads max. What happens if you set core.preloadindex
-to false? Can it run until the end or hit some other fatal errors?
+What is the goal of doing it this way? What does this simplify?
 
-There's room for improvement in preload_index(). If we hit resource
-limit like this, it's not the end of the world and we should be able
-to keep going. But threaded lstat has been available for a long time
-and this is the first time I see a report like this, not sure if it's
-worth fixing.
---=20
-Duy
+>> The only solution I've
+>> found is to obviously rename the directory before adding the physical
+>> files, for example name it foo1. Because they're different, they never
+>> "clash".
+>
+> Also look at the difference between plumbing and porcelain commands[1],
+> as plumbing is more stable than the porcelain, so it will be easier to maintain
+> this script.
+
+Which plumbing commands did you have in mind?
+
+> I think this would be an actually reasonable feature, which Git itself
+> could support via "git submodule [de]integrate", but then we'd also want
+> to see the reverse, i.e. take a sub directory and make it a submodule.
+
+Integrating this as a feature might be fine, I think when you bring up
+the question of retaining history makes things much harder.
+Fortunately for me that is not a requirement in this case, so I'm able
+to do things with much less effort.
+
+However the primary purpose of my post was to find out how to
+integrate the submodule without the error on next pull by other
+collaborators of my repository. It's a real pain to recover your
+working copy when going inbetween commits where the submodule
+integration happened inbetween them. I did quote the exact error
+message I got in my original post.
+
+Do you have any info on how I can prevent that error? Ideally I want
+the integration to go smoothly and transparently, not just for the
+person doing the actual transition (me) but for everyone else that
+gets those changes from upstream. They should not even notice that it
+happened (i.e. no failed commands, awkward behavior, or manual steps).
