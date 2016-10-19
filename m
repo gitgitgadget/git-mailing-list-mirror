@@ -6,150 +6,136 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B514D20988
-	for <e@80x24.org>; Wed, 19 Oct 2016 04:24:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3BFA20988
+	for <e@80x24.org>; Wed, 19 Oct 2016 04:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751010AbcJSEX7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Oct 2016 00:23:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60324 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750832AbcJSEX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1750896AbcJSEX4 (ORCPT <rfc822;e@80x24.org>);
         Wed, 19 Oct 2016 00:23:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61192 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750712AbcJSEXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2016 00:23:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33EEC47E18;
-        Wed, 19 Oct 2016 00:23:55 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A055649EAA;
+        Wed, 19 Oct 2016 00:23:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=kuEc
-        8pgnWGAG5VsmvKtNQU/YbdU=; b=J7o3kX46z6IK4bbVoZFOVOJJUlz6M2/+K0ei
-        nkGCD2s4lqQgkLcXLZrqbeVFQkeHPOO+KRjHldTPKynjTP9B+eai0PVRxLaGqp6f
-        yd61FBh8vrhewCWtJW+Qo4RCxRN6sDd3Cz98FYej4I8X45SKQAAwjTMwoIYxenWS
-        PXijsJE=
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=pef2
+        RWhefuRbjl3VtKtdPUnZdLk=; b=pIRjodEW4cOpwELwx/D1VXOMTaR9LTRguqsM
+        i6lVOr8I3FTwuvbwQfhWPjzaaNDuNVn08Kc3vQVYN3iRLYOe4AFjq8898h5XbOHd
+        oZfhvzKxgWWrY+LPOr4igfjSL6rhx5o00zM+cBwy0WN2/pCLuDQNZEm1iQJ+oIVg
+        Kl58yqQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:in-reply-to:references; q=dns; s=sasl; b=dQMSaA
-        UaHMnHwc0aKsx2INq7sJ/z2+QriIGiXWb57WXvXy9+v2ZsCaBoY6fv0T0wsBd2qn
-        FjCjV8rekjzW6L/Qr6odds0tEf/KoojTRGRoXkJz/sRVixCd1ivEG5XwA4FSYGO8
-        3bzL+7GEnJ/mjreqw2fs8osf4A51xAAz7MPs0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B0AC47E17;
-        Wed, 19 Oct 2016 00:23:55 -0400 (EDT)
+        :date:message-id:in-reply-to:references; q=dns; s=sasl; b=s+p2q4
+        Dsex1SLCw8OUlk8DtxC+zcZnvgBs3NfEzZ7Pbl/ijc/6fCuHsMWqb6usTyMw7btl
+        Kb2J0qGGkEnX9f1n2T+oLZZkkfUllinwFkr36MwFKN8YPN6+XZNOAh5372UM3zqT
+        Kq90aiJz8OEHXtSr7LYJjHp29mkUV76VZNfaw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9624349EA9;
+        Wed, 19 Oct 2016 00:23:52 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97C0E47E16;
-        Wed, 19 Oct 2016 00:23:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14DAD49EA8;
+        Wed, 19 Oct 2016 00:23:52 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 3/7] merge-base: stop moving commits around in remove_redundant()
-Date:   Tue, 18 Oct 2016 21:23:41 -0700
-Message-Id: <20161019042345.29766-4-gitster@pobox.com>
+Subject: [PATCH 2/7] sha1_name: remove ONELINE_SEEN bit
+Date:   Tue, 18 Oct 2016 21:23:40 -0700
+Message-Id: <20161019042345.29766-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.10.1-631-gb2c64dcf30
 In-Reply-To: <20161019042345.29766-1-gitster@pobox.com>
 References: <xmqqmvi2sj8f.fsf@gitster.mtv.corp.google.com>
  <20161019042345.29766-1-gitster@pobox.com>
-X-Pobox-Relay-ID: D88FCF1E-95B3-11E6-A8EE-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D70C7DFE-95B3-11E6-A961-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The merge-base computation is performed in two steps.  First,
-paint_down_to_common() traverses the history to find all possible
-merge bases (and more), and then remove_redundant() checks the
-result and culls the ones that can be reached from another commit
-in the result.
+28a4d94044 ("object name: introduce ':/<oneline prefix>' notation",
+2007-02-24) started using its own bit from object->flags to mark
+commits used while parsing the ":/token" extended SHA-1 syntax to
+name a commit temporarily, and this was kept even when f7bff00314
+("sha1_name.c: fix parsing of ":/token" syntax", 2010-08-02) found
+and fixed a bug in its implementation.
 
-The latter received an array of commits, and then returned the same
-array after reordering the elements in it, moving the surviving ones
-to the front and returning the number of surviving ones.
+The use of that flag bit, however, is limited to a single function,
+get_sha1_oneline(), which first sets it for the commits sitting at
+the tips of refs, uses the bit to avoid duplicate traversal while
+walking the history, and then cleans the bit from all commits it
+walked.
 
-This arrangement works, but it makes it cumbersome for the callers
-when they want to see the array's contents intact (e.g. the caller
-may want to keep an additional per-commit data in an independent
-array that parallels the array of commits).
-
-Stop moving commits around in the array, and instead mark the ones
-that are not merge bases with the STALE bit in their object->flags
-bitword.
+Which is exactly what the general-purpose TMP_MARK bit meant to be
+used for isolated case was invented for.  Replace ONELINE_SEEN with
+TMP_MARK and retire the former.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- commit.c | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ object.h    |  1 -
+ sha1_name.c | 10 ++++------
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 6266c0380c..59bd18e67c 100644
---- a/commit.c
-+++ b/commit.c
-@@ -888,11 +888,11 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
- 	return ret;
- }
+diff --git a/object.h b/object.h
+index f8b644263f..f8e218eccd 100644
+--- a/object.h
++++ b/object.h
+@@ -37,7 +37,6 @@ struct object_array {
+  * bundle.c:                               16
+  * http-push.c:                            16-----19
+  * commit.c:                               16-----19
+- * sha1_name.c:                                     20
+  */
+ #define FLAG_BITS  27
  
--static int remove_redundant(struct commit **array, int cnt)
-+static void mark_redundant(struct commit **array, int cnt)
+diff --git a/sha1_name.c b/sha1_name.c
+index ca7ddd6f2c..fa0e6701a3 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -7,6 +7,7 @@
+ #include "refs.h"
+ #include "remote.h"
+ #include "dir.h"
++#include "revision.h"
+ 
+ static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
+ 
+@@ -855,9 +856,6 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
+  * For future extension, all other sequences beginning with ':/!' are reserved.
+  */
+ 
+-/* Remember to update object flag allocation in object.h */
+-#define ONELINE_SEEN (1u<<20)
+-
+ static int handle_one_ref(const char *path, const struct object_id *oid,
+ 			  int flag, void *cb_data)
  {
- 	/*
- 	 * Some commit in the array may be an ancestor of
--	 * another commit.  Move such commit to the end of
-+	 * another commit.  Mark such commit as STALE in
- 	 * the array, and return the number of commits that
- 	 * are independent from each other.
- 	 */
-@@ -930,18 +930,16 @@ static int remove_redundant(struct commit **array, int cnt)
- 		free_commit_list(common);
+@@ -899,7 +897,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ 		return -1;
+ 
+ 	for (l = list; l; l = l->next) {
+-		l->item->object.flags |= ONELINE_SEEN;
++		l->item->object.flags |= TMP_MARK;
+ 		commit_list_insert(l->item, &backup);
  	}
+ 	while (list) {
+@@ -907,7 +905,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ 		struct commit *commit;
+ 		int matches;
  
--	/* Now collect the result */
--	COPY_ARRAY(work, array, cnt);
--	for (i = filled = 0; i < cnt; i++)
--		if (!redundant[i])
--			array[filled++] = work[i];
--	for (j = filled, i = 0; i < cnt; i++)
-+	/* Mark the result */
-+	for (i = 0; i < cnt; i++)
- 		if (redundant[i])
--			array[j++] = work[i];
-+			array[i]->object.flags |= STALE;
-+		else
-+			array[i]->object.flags &= ~STALE;
-+
- 	free(work);
- 	free(redundant);
- 	free(filled_index);
--	return filled;
+-		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
++		commit = pop_most_recent_commit(&list, TMP_MARK);
+ 		if (!parse_object(commit->object.oid.hash))
+ 			continue;
+ 		buf = get_commit_buffer(commit, NULL);
+@@ -924,7 +922,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ 	regfree(&regex);
+ 	free_commit_list(list);
+ 	for (l = backup; l; l = l->next)
+-		clear_commit_marks(l->item, ONELINE_SEEN);
++		clear_commit_marks(l->item, TMP_MARK);
+ 	free_commit_list(backup);
+ 	return found ? 0 : -1;
  }
- 
- static struct commit_list *get_merge_bases_many_0(struct commit *one,
-@@ -984,10 +982,13 @@ static struct commit_list *get_merge_bases_many_0(struct commit *one,
- 	clear_commit_marks(one, all_flags);
- 	clear_commit_marks_many(n, twos, all_flags);
- 
--	cnt = remove_redundant(rslt, cnt);
-+	mark_redundant(rslt, cnt);
- 	result = NULL;
- 	for (i = 0; i < cnt; i++)
--		commit_list_insert_by_date(rslt[i], &result);
-+		if (!(rslt[i]->object.flags & STALE))
-+			commit_list_insert_by_date(rslt[i], &result);
-+		else
-+			rslt[i]->object.flags &= ~STALE;
- 	free(rslt);
- 	return result;
- }
-@@ -1086,9 +1087,12 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 			p->item->object.flags &= ~STALE;
- 		}
- 	}
--	num_head = remove_redundant(array, num_head);
-+	mark_redundant(array, num_head);
- 	for (i = 0; i < num_head; i++)
--		tail = &commit_list_insert(array[i], tail)->next;
-+		if (!(array[i]->object.flags & STALE))
-+			tail = &commit_list_insert(array[i], tail)->next;
-+		else
-+			array[i]->object.flags &= ~STALE;
- 	return result;
- }
- 
 -- 
 2.10.1-631-gb2c64dcf30
 
