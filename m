@@ -2,144 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D37AD20229
-	for <e@80x24.org>; Thu, 20 Oct 2016 19:54:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A08A1F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 20:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933700AbcJTTye (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 15:54:34 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:36397 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933216AbcJTTyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 15:54:33 -0400
-Received: by mail-qk0-f176.google.com with SMTP id o68so115453922qkf.3
-        for <git@vger.kernel.org>; Thu, 20 Oct 2016 12:54:33 -0700 (PDT)
+        id S933536AbcJTUDw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 16:03:52 -0400
+Received: from mail-yw0-f182.google.com ([209.85.161.182]:32848 "EHLO
+        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933446AbcJTUDv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 16:03:51 -0400
+Received: by mail-yw0-f182.google.com with SMTP id t192so70603231ywf.0
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 13:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=XhGRK39QHPg29TmOBOCiCHer+pGZ0+NdHagTW9Ak+vs=;
-        b=A9ZWyzkluNafCQnu+oArnkIbcDl++q8aC8AqiqalV+J7DXTWKeainj5RI8kY1iHMFb
-         ZJdAfOynDB3aRqarpMIxMZnv/YRwaEvFdbi0B1AAMbzvzfVsXrOI/8g7pOvCxFBYWITJ
-         vqFPBmBCutCqFfXnq/lr5a8tg1AzUqs662QJJXpOZJ1FQCftA4qpbvyx+RiNSPr2K1r+
-         cccyyXXyaWNrnm8hOPDQfDtaus/LL9D1ostiQvsKvN730X2+ERYnkhgE2nzPrr7CwiRL
-         cRsM2/ecZwOMaC9WXoPS/y9/HETow6Fy1ZPCCKEmNd+rnMVxa23Q3TK5KWMzRcPtxSCj
-         Qyjg==
+        bh=Fhzr1fjCOemcmQsJQrTNNuJwhH8mfubxXrLM2aH3ivE=;
+        b=Lc54aQcZv/BFJf7WvFfjqjukpQqiNkH+c/MMAcLTwSm4XVgLguEUPtFbHEv+8ezTkc
+         qkJkg9LQfK0+GacrljaPRHUG0007VeVYSJqf9e/bY30pfzuk81imvB7yR8BH+UE5VgVj
+         2IdSllJVOFeyySdLiWlLdCFLHQKUmc2BlhYWWfxuCwXn4TSlE4fWUhLF3YHYK1fZPwxp
+         9essPsUP8G+wk9aSygnleLK9hrb1n1yCCY7mu8F6J7QtI9JZKlNez5LKqlNtTLNONNXk
+         sWEoD5ScLu9ytQzi0HCUc+7usV1aXTWmfHconY1aLoxaPWzkCTG/ae0/kBisrmb9fUCA
+         LXQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=XhGRK39QHPg29TmOBOCiCHer+pGZ0+NdHagTW9Ak+vs=;
-        b=DFsmUwDt9kLi5mYX3ic9Uuw1CUENGLPo8KGlSgCThzkiHvhjY28ruNERbCmCe7e+95
-         WDZZFDgzvgWoH0ZoQj9R3ZCe49AdIZ+AKZeFHpGcuZhggSCcDgsdTuqLzMDkT5+xeJ+0
-         M4twBAERfvM5YcVZWGrByRL1YsE1TxisORhLImxMZRC+gabahNvyZO+M9Qze84rPuCsD
-         shhzXTvCJ6rk/qso28jgBW+Pn2WOFQGWT1KkNlSt9mgRMFBT4yveErwOuid/Rn1GaVcE
-         7Uvgaw7RDtfKoTwfsfAg1De6gcUvFkRdNXv+Lcecxc6nKQXH/VbzUVHPxqjXORErF3/n
-         4Snw==
-X-Gm-Message-State: ABUngvfil0JQd6kgPImOqJ7YnxdeeFS7xn3y9Z6ArFIWJoRir63oB1EvYEfJL27vpemk8fA7SV1Vck5X9w8ORhta
-X-Received: by 10.55.129.1 with SMTP id c1mr1975673qkd.53.1476993272638; Thu,
- 20 Oct 2016 12:54:32 -0700 (PDT)
+        bh=Fhzr1fjCOemcmQsJQrTNNuJwhH8mfubxXrLM2aH3ivE=;
+        b=fzcKlwWtuLZYTwgFowaDDI2sLivcq01YuW1cyaDxXoIhkMj9DuU8Gi9isaXfHIXJUM
+         oCf8QI/RrZEf1/mOcsAJ1x4LFmbBXSBgH9vjYEVH1+2IWL/xcDiNFGBRu/OIOQ0RvTTH
+         Ejejgrl6wwsDWiAka4oP25YjTwB/WSrByIgA58g5Aj770B6gLJcO4vg2eY0RG6XIX3kY
+         e0bMmjpgWDY7ekmp2UGLPcivFrO4NRF5VBENFZZwwEQJGdtlGruyQIEUZJ+wDwEULtVj
+         nc9VXijfRs/PSKSOs5ZcbhWsSqOcyz3CDaiU6p5rddjUhikKNHpqdSy/fmktKYZ2AS7c
+         6Kwg==
+X-Gm-Message-State: AA6/9Rm1wQGlo/9xxZqLkAL6hy8SGfUSKd4IO8Z2UZUP3L5JsVI6rVqIpvEx5Te+72CF69O1iP0ZDNYDiuDQsw==
+X-Received: by 10.129.130.193 with SMTP id s184mr3360099ywf.276.1476993829512;
+ Thu, 20 Oct 2016 13:03:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Thu, 20 Oct 2016 12:54:32 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1610201218060.3264@virtualbox>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
- <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com> <20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net>
- <alpine.DEB.2.20.1610201218060.3264@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 20 Oct 2016 12:54:32 -0700
-Message-ID: <CAGZ79kZpj5xXHmnA+JfLKdGmgzp7Mut1OsKMOeowpw8m1+aKGA@mail.gmail.com>
-Subject: Re: Drastic jump in the time required for the test suite
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.37.10.2 with HTTP; Thu, 20 Oct 2016 13:03:28 -0700 (PDT)
+In-Reply-To: <xmqqfunqhnhf.fsf@gitster.mtv.corp.google.com>
+References: <CA+P7+xqFOn4NSfZ2zpa_y1za3uHZrGGG3ktEtuOcvJLCrAYUhQ@mail.gmail.com>
+ <20161019224211.k4anavgqrhmunz6p@sigill.intra.peff.net> <CA+P7+xprKV1Y7VShLR9uNgcpVdZk39xoTfkwiin1bVQYTe_TAA@mail.gmail.com>
+ <20161020021323.tav5glu7xy4u7mtj@sigill.intra.peff.net> <xmqqa8dzhtki.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xq25LcdmtzmBNChiGhGratcdp7m0EOsQuEh68=gJQ9HNQ@mail.gmail.com>
+ <xmqqwph2hqdg.fsf@gitster.mtv.corp.google.com> <CA+P7+xqbqfCTOHJZJ9ZGXv3oeSvKUdJByc8mdzoAoXRd7UZ6HA@mail.gmail.com>
+ <xmqqfunqhnhf.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 20 Oct 2016 13:03:28 -0700
+Message-ID: <CA+P7+xoHovFefort6gx6oT4WtT_Toey_0wmmaavLsM=Y1rjx8w@mail.gmail.com>
+Subject: Re: tools for easily "uncommitting" parts of a patch I just commited?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2016 at 3:50 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi peff,
+On Thu, Oct 20, 2016 at 11:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
 >
-> On Wed, 19 Oct 2016, Jeff King wrote:
->
->> On Wed, Oct 19, 2016 at 10:32:12AM -0700, Junio C Hamano wrote:
+>>> I am not sure if that is OK.  I think it is less not-OK than the use
+>>> case I mentioned in my earlier message, in that this is not a case
+>>> that "please don't do it" breaks.  It however is an inconvenience
+>>> that the user has to say "git add file" before the "git commit" (or
+>>> "git commit file") to conclude the sequence.
+>>>
+>>> So I dunno.
 >>
->> > > Maybe we should start optimizing the tests...
->> >
+>> Hmmm.. Ya ok I don't think we can actually distinguish between these
+>> two work flows.
+>
+> What we might want to have in "git commit <paths>" is a new mode
+> that is totally different from -i/-o that says roughly "Start from
+> the tree of HEAD, pretend as if you removed all the paths that match
+> the given pathspec from the tree, and then added all the entries in
+> the index that match that pathspec.  Write that tree and commit.
+> Take nothing from the working tree".  I have a feeling that when
+> people do
+>
+>         $ git add -p file1 file2 file3
+>         $ git commit file2
+>
+> and ends up including _all_ changes made to file2, not just the ones
+> they picked in the earlier part of the workflow, they are expecting
+> such a behaviour.
+>
 
-Maybe we should stop introducing un-optimized tests.
-For other reasons I just stumbled upon t7064
-(porcelain V2 output for git status)
+Right now I think people who use it intentionally do expect it to work
+that way. I just happen to not have wanted to add <file> but did so
+anyways without considering, and thus I ended up including changes
+that were for the next commit.
 
+As long as there is a way to change "git commit" default from that
+mode then we could make the default work and then let people configure
+it to what makes sense.
 
-This is how an arbitrary test looks like:
-
-test_expect_success 'staged changes in added submodule (AM S.M.)' '
-    (    cd super_repo &&
-        ## stage the changes in the submodule.
-        (    cd sub1 &&
-            git add file_in_sub
-        ) &&
-
-        HMOD=$(git hash-object -t blob -- .gitmodules) &&
-        HSUP=$(git rev-parse HEAD) &&
-        HSUB=$HSUP &&
-
-        cat >expect <<-EOF &&
-        # branch.oid $HSUP
-        # branch.head master
-        # branch.upstream origin/master
-        # branch.ab +0 -0
-        1 A. N... 000000 100644 100644 $_z40 $HMOD .gitmodules
-        1 AM S.M. 000000 160000 160000 $_z40 $HSUB sub1
-        EOF
-
-        git status --porcelain=v2 --branch --untracked-files=all >actual &&
-        test_cmp expect actual
-    )
-'
-
-Following "modern" Git tests I would have expected:
-
-* heavy use of the "git -C <dir>" pattern. When applying that
-  thouroughly we'd save spanning the subshells.
-* no `cd` on the same line as the opening paren.
-  (This is style and would derail the performance discussion)
-
-test_expect_success 'staged changes in added submodule (AM S.M.)' '
-    git -C super_repo/sub1 add file_in_sub &&
-    HMOD=$(git -C super_repo hash-object -t blob -- .gitmodules) &&
-    HSUP=$(git -C super_repo rev-parse HEAD) &&
-    # as a comment: HSUB is equal to HSUP, because ...
-
-    cat >expect <<-EOF &&
-    # branch.oid $HSUP
-    # branch.head master
-    # branch.upstream origin/master
-    # branch.ab +0 -0
-    1 A. N... 000000 100644 100644 $_z40 $HMOD .gitmodules
-    1 AM S.M. 000000 160000 160000 $_z40 $HSUP sub1
-    EOF
-
-    git -C super_repo status --porcelain=v2 --branch
---untracked-files=all >../actual &&
-    test_cmp expect actual
-'
-
-That said I really like the idea of having a helper that would eliminate the cat
-for you, e.g. :
-
-git_test_helper_equal_stdin_or_diff_and_die -C super_repo status
---porcelain=v2 --branch --untracked-files=all <<-EOF
-1 A. N... 000000 100644 100644 $_z40 $HMOD .gitmodules
-1 AM S.M. 000000 160000 160000 $_z40 $HSUP sub1
-EOF
+I'll take a look at going this route.
 
 Thanks,
-Stefan
+Jake
