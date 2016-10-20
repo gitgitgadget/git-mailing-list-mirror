@@ -2,83 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C62EC1F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 16:17:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B41220988
+	for <e@80x24.org>; Thu, 20 Oct 2016 16:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933162AbcJTQRA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 12:17:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60162 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932817AbcJTQQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 12:16:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B215046B0C;
-        Thu, 20 Oct 2016 12:16:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vMWAhlBaxUcvV1bYO059yfw1w0k=; b=fTBYf0
-        dla9WBU5gkTngNkjsdFpU7+khM6C9A/hiLukovCysUU5mzFPj24HUi8ODoFcTQgw
-        W0CXb8eYOCbmL8hg0s7ft8o9HN/HcLr/H0z90uTM7Nk0RQN14Nf/DVZOj84cFQoT
-        3RvOMhtoYwy+Eav5JeVKs3KZaIokOpcSqnqZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YJgCoUtuQwKqxl5gJdMMQYMKcjchTA8S
-        iNzW4TNiODKarnXGtjEnQHpbKFal/xln8KuFHS1v0GaaHnQ7NWW5g0GOn1zz6Pd4
-        k0BkyiPLxAaG2O7q8UeVubDfYbgHEN3fHo0w7idvvO5NbUb5W3o9j9YY9d4S9tzr
-        uwXrxrKjx/c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA8DC46B0B;
-        Thu, 20 Oct 2016 12:16:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 316CF46B0A;
-        Thu, 20 Oct 2016 12:16:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Drastic jump in the time required for the test suite
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
-        <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610201154070.3264@virtualbox>
-Date:   Thu, 20 Oct 2016 09:16:56 -0700
-In-Reply-To: <alpine.DEB.2.20.1610201154070.3264@virtualbox> (Johannes
-        Schindelin's message of "Thu, 20 Oct 2016 12:17:33 +0200 (CEST)")
-Message-ID: <xmqqmvhzhu6f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9FFA2176-96E0-11E6-ADD2-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+        id S1755215AbcJTQVK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 12:21:10 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:58194 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1754883AbcJTQVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 12:21:09 -0400
+Received: (qmail 883 invoked from network); 20 Oct 2016 16:21:07 -0000
+Received: (qmail 28016 invoked from network); 20 Oct 2016 16:21:07 -0000
+Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <gitster@pobox.com>; 20 Oct 2016 16:21:02 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+Message-ID: <1476980461.14459.10.camel@sapo.pt>
+Subject: Re: [PATCH v4 01/14] i18n: add--interactive: mark strings for
+ translation
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        =?ISO-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
+        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Date:   Thu, 20 Oct 2016 16:21:01 +0000
+In-Reply-To: <xmqqy41kkxzd.fsf@gitster.mtv.corp.google.com>
+References: <20161010125449.7929-1-vascomalmeida@sapo.pt>
+         <20161005172110.30801-1-vascomalmeida@sapo.pt>
+         <20161010125449.7929-2-vascomalmeida@sapo.pt>
+         <xmqqy41kkxzd.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+A Qua, 19-10-2016 às 11:14 -0700, Junio C Hamano escreveu:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+> 
+> > 
+> >  	} else {
+> > -		print "No untracked files.\n";
+> > +		print __("No untracked files.\n");
+> >  	}
+> 
+> Not a big deal, but this makes me wonder if we want to do this
+> instead
+> 
+> 		print __("No untracked files.") . "\n";
+> 
+> so that translators do not have to remember to keep the final LF.
 
-> Of course, if you continue to resist (because the problem is obviously not
-> affecting you personally, so why would you care), I won't even try to find
-> the time to start on that project.
+This can be a good idea. On the other hand, I think translators are
+cautious to not forget the final LF since there is a lot of them from C
+source. Also I think msgfmt checks if English source and translation
+both end with newline or not. So if a translator forgets to put a \n
+then msgfmt would return an error. If it is not the translator to find
+the error herself, someone else will, like the Translation coordinator.
 
-Sorry, but I did not know I was resisting, as I didn't see any
-proposal to resist against in the first place.  I was trying to help
-by mentioning two tricks that may be helping my test runtime that
-may help you as well.
+I will leave this patch as is.
 
-Are you proposing to replace the tests written as shell scripts with
-scripts in another language or framework that run equivalent
-sequences of git commands that is as portable as, if not more,
-Bourne shell?  If that is what you are proposing, well, I won't stop
-you and I may even help you in there, but I fail to guess what
-alternative you have in mind.  I certainly do not have a suggestion
-myself and I won't suggest migrate to tclsh or perl for that matter.
-
-If that is not what you are trying to propose, and if parallelism
-has already been employed, then there may or may not be other tricks
-you are not yet using that helps to speed up your shell execution
-that others are using---being confrontational is not an effective
-way to ask others about them.
+https://www.gnu.org/software/gettext/FAQ.html#newline
