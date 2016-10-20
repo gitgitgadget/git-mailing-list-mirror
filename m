@@ -2,85 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9712B20987
-	for <e@80x24.org>; Thu, 20 Oct 2016 11:03:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD82B20987
+	for <e@80x24.org>; Thu, 20 Oct 2016 11:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932582AbcJTLDZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 07:03:25 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37648 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932548AbcJTLDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 07:03:24 -0400
-Received: by mail-it0-f44.google.com with SMTP id m138so86321344itm.0
-        for <git@vger.kernel.org>; Thu, 20 Oct 2016 04:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=B4ojl/k0HGdZOqWsRL3R+xS5y+laM5UC8OHKr2LFqb4=;
-        b=dg5dqHEJXaqF3IfJkGQ9fv/fQpzsiRcSQlAAY/hwc3pmuJ98a4GbHwTvM+V4I1P87z
-         eJiMF86P+H0yOou+pqdXA1HbWhYNscWH8nHN/hzUkgUhTXTd9jA32/QQdnoRTz6g1w1h
-         ulQ7XZtamii22tZMyeqo4GMrDYjq26jG0XDQTpF4v5+N3DbV+mOn8784n4cmbk4tXx0H
-         QhwCWcQsy78nT9UC/zkSKAzDij+DFlzNPA5694ebekbapFAiAr0zIWzvHO/GP3fB2C53
-         nx+DIQ8EoPbRTfgHd0pXqwQrMrHCY70m3LxZMUOe8V8slYjPAKdFLKWX2cZMg5RHEYgy
-         5vxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=B4ojl/k0HGdZOqWsRL3R+xS5y+laM5UC8OHKr2LFqb4=;
-        b=aIblHkEk4edx0BP9lNmMiPBQO7mX7vXCKbzDoUNoZrwve+tFyiYERSvjqQ1uZz8xWO
-         Xl7+G9aDUvx6ajTL5iwQlT1zj/+elVmNv/zXe9X+9WR8zl21Brz0PPE+7i44gA+By7LU
-         Z/EQAxgU4Nf3Y5cAeBhmRApygkzdLAg611qoGzd1vF7/Iy3G/994CIq9nQChGu1JUjk5
-         qgD8/GUfPDyKgLswuuxWOJhAEUag2LFvsD/pGHqFWtFiPgS756YfFtiny0P2ADwsOZRz
-         HCCHEmg5JfJ3WHOBTEdqxNMWrkOeiaM2LUjQj0cawUixa4NgCCSde4/vwBroK7pmdeIS
-         N4UA==
-X-Gm-Message-State: ABUngveBa6BlkhSD+j5E7Tj0RqbnCCcnwL3Uc0shxZp9xl3TArwIWhtWqqphx0LfHhqeriFaSSeKILgc13o+aQ==
-X-Received: by 10.107.15.222 with SMTP id 91mr55588iop.19.1476961394761; Thu,
- 20 Oct 2016 04:03:14 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Thu, 20 Oct 2016 04:02:43 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 20 Oct 2016 18:02:43 +0700
-Message-ID: <CACsJy8ALRjnvgM6sW5ioFHtquSR6zgQHkQ6-LUnKFnqXV9eDCQ@mail.gmail.com>
-Subject: Re: Drastic jump in the time required for the test suite
+        id S1755817AbcJTLjN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 07:39:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59979 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752975AbcJTLjM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 07:39:12 -0400
+Received: (qmail 3922 invoked by uid 109); 20 Oct 2016 11:39:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Oct 2016 11:39:05 +0000
+Received: (qmail 26089 invoked by uid 111); 20 Oct 2016 11:39:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Oct 2016 07:39:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2016 07:39:03 -0400
+Date:   Thu, 20 Oct 2016 07:39:03 -0400
+From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Drastic jump in the time required for the test suite
+Message-ID: <20161020113903.tx6aqkhc2g25ba3p@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+ <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
+ <20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1610201218060.3264@virtualbox>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1610201218060.3264@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 19, 2016 at 4:18 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Junio,
->
-> I know you are a fan of testing things thoroughly in the test suite, but I
-> have to say that it is getting out of hand, in particular due to our
-> over-use of shell script idioms (which really only run fast on Linux, not
-> a good idea for a portable software).
->
-> My builds of `pu` now time out, after running for 3h straight in the VM
-> dedicated to perform the daily routine of building and testing the git.git
-> branches in Git for Windows' SDK. For comparison, `next` passes build &
-> tests in 2.6h. That is quite the jump.
+On Thu, Oct 20, 2016 at 12:50:32PM +0200, Johannes Schindelin wrote:
 
-I'm just curious, will running git.exe from WSL [1] help speed things
-up a bit (or, hopefully, a lot)? I'm assuming that shell's speed in
-WSL is quite fast.
+> That reflects my findings, too. I want to add that I found preciously
+> little difference between running slow-to-fast and running in numeric
+> order, so I gave up on optimizing on that front.
 
-I'm pretty sure the test suite would need some adaptation, but if the
-speedup is significant, maybe it's worth spending time on.
+Interesting. It makes a 10-15% difference here.
 
-[1] https://news.ycombinator.com/item?id=12748395
--- 
-Duy
+I also point "--root" at a ram disk. The tests are very I/O heavy and
+sometimes fsync; even on a system with an SSD, this saves another ~10%.
+
+I know that's small potatoes compared to the Windows vs Linux times, but
+it might be worth exploring.
+
+> Further, I found that the Subversion tests (which run at the end) are so
+> close in their running time that running the tests in parallel with -j5
+> does not result in any noticeable improvement when reordered.
+
+I normally don't run the Subversion tests at all. Installing cvs, cvsps,
+subversion, and libsvn-perl nearly doubles the runtime of the test suite
+for me (I imagine adding p4 to the mix would bump it further). While
+it's certainly possible to break them with a change in core git, it
+doesn't seem like a good tradeoff if I'm not touching them often.
+
+As the GfW maintainer, you probably should be running them, at least
+before a release. But cutting them might be a good way to speed up your
+day-to-day runs.
+
+I also use -j16 on a quad-core (+hyperthreads) machine, which I arrived
+at experimentally. At least on Linux, it's definitely worth having more
+threads than processors, to keep the processors busy.
+
+> I guess I will have to bite into the sour apple and try to profile, say,
+> t3404 somehow, including all the shell scripting stuff, to identify where
+> exactly all that time is lost. My guess is that it boils down to
+> gazillions of calls to programs like expr.exe or merely subshells.
+
+I'm not so sure it isn't gazillions of calls to git. It is testing
+rebase, after all, which is itself a shell script. GIT_TRACE_PERFORMANCE
+gives sort of a crude measure; it reports only builtins (so it will
+underestimate the total time spent in git), but it also doesn't make
+clear which programs call which, so some times are double-counted (if a
+builtin shells out to another builtin). But:
+
+  $ export GIT_TRACE_PERFORMANCE=/tmp/foo.out
+  $ rm /tmp/foo.out
+  $ time ./t3404-rebase-interactive.sh
+  real    0m29.755s
+  user    0m1.444s
+  sys     0m2.268s
+
+  $ perl -lne '
+      /performance: ([0-9.]+)/ and $total += $1;
+      END { print $total }
+    ' /tmp/foo.out
+  32.851352624
+
+Clearly that's not 100% accurate, as it claims we spent longer in git
+than the script actually took to run. Given the caveats above, I'm not
+even sure if it is in the right ballpark. But there are 11,000 git
+builtins run as part of that script. Even at 2ms each, that's still most
+of the time going to git.
+
+And obviously the fix involves converting git-rebase, which you're
+already working on. But it's not clear to me that the test
+infrastructure or shell scripts are the primary cause of the slowness in
+this particular case.
+
+-Peff
