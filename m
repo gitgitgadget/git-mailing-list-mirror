@@ -2,91 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17B8B1F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 19:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D37AD20229
+	for <e@80x24.org>; Thu, 20 Oct 2016 19:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933448AbcJTTxz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 15:53:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51719 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933216AbcJTTxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 15:53:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 860A148B49;
-        Thu, 20 Oct 2016 15:53:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LO+a+q5Uv9/TjTA0DonwptQuaUQ=; b=v5aNtX
-        Jb0iEHeuvq/nKLNxBWjhL3vm39bIAexfi2TgFaAUupJnuaPlsCzr+UrCDfOrBTOi
-        m8ZZ+jcakNAaHHcD8w94uaX6OnC16pc+Lbc2vmxsxz3QgWtnz2YyvCSOeN/BwwYJ
-        3Q7DI1olG1PfIf87AT/w72IC/R+KT6Cca1KlM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Nt1xDdBuPY1x6pq4QqXOKyClbudb7Ias
-        IBmb6Io5QUrhoE/rkRwUoQXfVTSzhDWp7rW6cKMxywsTZqM5ukkROxeaiAgtvzsN
-        GPlgqmeSRa1F+2gKUp5RcvWTAzdlabXrs+/P49wc97jB1mJvHl5/JSHu3f4lsuOj
-        QcRpTLnIf9U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E16D48B48;
-        Thu, 20 Oct 2016 15:53:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F2BE848B46;
-        Thu, 20 Oct 2016 15:53:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "Karl A." <venv21@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv3] submodule--helper: normalize funny urls
-References: <20161018210623.32696-1-sbeller@google.com>
-        <xmqqzim1nyz0.fsf@gitster.mtv.corp.google.com>
-        <xmqqshrtnynj.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZHLVpxbJ_C-dM2LDA64-_TJNyY+52fTWkOvLvvAq2XDg@mail.gmail.com>
-        <xmqq60opnolz.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYrKGLEOO72aWuX5OOM-AecdFZFXRqBkRzhdAM-VbPFxA@mail.gmail.com>
-        <xmqqwph5m6th.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kY4u-k8v3g5Jmod4acwJ81AnJYeYMQZ2tarx6UMGj8Xew@mail.gmail.com>
-        <xmqqzilyg6tk.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZyCXKnt9kTbnD8KrnsjJVb_7juW2epmdP9XqcRGfg=GA@mail.gmail.com>
-Date:   Thu, 20 Oct 2016 12:53:50 -0700
-In-Reply-To: <CAGZ79kZyCXKnt9kTbnD8KrnsjJVb_7juW2epmdP9XqcRGfg=GA@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 20 Oct 2016 12:34:13 -0700")
-Message-ID: <xmqqvawmg5kh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933700AbcJTTye (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 15:54:34 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:36397 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933216AbcJTTyd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 15:54:33 -0400
+Received: by mail-qk0-f176.google.com with SMTP id o68so115453922qkf.3
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 12:54:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XhGRK39QHPg29TmOBOCiCHer+pGZ0+NdHagTW9Ak+vs=;
+        b=A9ZWyzkluNafCQnu+oArnkIbcDl++q8aC8AqiqalV+J7DXTWKeainj5RI8kY1iHMFb
+         ZJdAfOynDB3aRqarpMIxMZnv/YRwaEvFdbi0B1AAMbzvzfVsXrOI/8g7pOvCxFBYWITJ
+         vqFPBmBCutCqFfXnq/lr5a8tg1AzUqs662QJJXpOZJ1FQCftA4qpbvyx+RiNSPr2K1r+
+         cccyyXXyaWNrnm8hOPDQfDtaus/LL9D1ostiQvsKvN730X2+ERYnkhgE2nzPrr7CwiRL
+         cRsM2/ecZwOMaC9WXoPS/y9/HETow6Fy1ZPCCKEmNd+rnMVxa23Q3TK5KWMzRcPtxSCj
+         Qyjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XhGRK39QHPg29TmOBOCiCHer+pGZ0+NdHagTW9Ak+vs=;
+        b=DFsmUwDt9kLi5mYX3ic9Uuw1CUENGLPo8KGlSgCThzkiHvhjY28ruNERbCmCe7e+95
+         WDZZFDgzvgWoH0ZoQj9R3ZCe49AdIZ+AKZeFHpGcuZhggSCcDgsdTuqLzMDkT5+xeJ+0
+         M4twBAERfvM5YcVZWGrByRL1YsE1TxisORhLImxMZRC+gabahNvyZO+M9Qze84rPuCsD
+         shhzXTvCJ6rk/qso28jgBW+Pn2WOFQGWT1KkNlSt9mgRMFBT4yveErwOuid/Rn1GaVcE
+         7Uvgaw7RDtfKoTwfsfAg1De6gcUvFkRdNXv+Lcecxc6nKQXH/VbzUVHPxqjXORErF3/n
+         4Snw==
+X-Gm-Message-State: ABUngvfil0JQd6kgPImOqJ7YnxdeeFS7xn3y9Z6ArFIWJoRir63oB1EvYEfJL27vpemk8fA7SV1Vck5X9w8ORhta
+X-Received: by 10.55.129.1 with SMTP id c1mr1975673qkd.53.1476993272638; Thu,
+ 20 Oct 2016 12:54:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ECD6CFBC-96FE-11E6-9A12-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Thu, 20 Oct 2016 12:54:32 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1610201218060.3264@virtualbox>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+ <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com> <20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1610201218060.3264@virtualbox>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 20 Oct 2016 12:54:32 -0700
+Message-ID: <CAGZ79kZpj5xXHmnA+JfLKdGmgzp7Mut1OsKMOeowpw8m1+aKGA@mail.gmail.com>
+Subject: Re: Drastic jump in the time required for the test suite
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> My thought was to fix it nevertheless, such that the url recorded as
-> remote.origin.url is always the first case (no l or /. at the end).
+On Thu, Oct 20, 2016 at 3:50 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi peff,
 >
-> If we were to add this fix to clone, then it may be easier to debug
-> submodule url schemes for users as the submodule url would then
-> be a concatenation of remote.origin.url and the relative part.
+> On Wed, 19 Oct 2016, Jeff King wrote:
 >
-> That seems easier to understand than ${remote.origin.url%%/.} +
-> relative path, maybe? (Because then the user doesn't need to guess
-> or remember historical behavior that is wrong on how this)
+>> On Wed, Oct 19, 2016 at 10:32:12AM -0700, Junio C Hamano wrote:
+>>
+>> > > Maybe we should start optimizing the tests...
+>> >
 
-Are you declaring that trailing / or /. will now be illegal?  If you
-are declaring that, then I agree that new codepaths no longer have
-to worry about "strip / or /. before concatenating" and will
-simplify things for them.  But otherwise, such a "fix" also would
-have an effect of hiding bugs from codepaths.  They still need to be
-prepared to see any of the three variants and cope with them
-correctly, right?
+Maybe we should stop introducing un-optimized tests.
+For other reasons I just stumbled upon t7064
+(porcelain V2 output for git status)
+
+
+This is how an arbitrary test looks like:
+
+test_expect_success 'staged changes in added submodule (AM S.M.)' '
+    (    cd super_repo &&
+        ## stage the changes in the submodule.
+        (    cd sub1 &&
+            git add file_in_sub
+        ) &&
+
+        HMOD=$(git hash-object -t blob -- .gitmodules) &&
+        HSUP=$(git rev-parse HEAD) &&
+        HSUB=$HSUP &&
+
+        cat >expect <<-EOF &&
+        # branch.oid $HSUP
+        # branch.head master
+        # branch.upstream origin/master
+        # branch.ab +0 -0
+        1 A. N... 000000 100644 100644 $_z40 $HMOD .gitmodules
+        1 AM S.M. 000000 160000 160000 $_z40 $HSUB sub1
+        EOF
+
+        git status --porcelain=v2 --branch --untracked-files=all >actual &&
+        test_cmp expect actual
+    )
+'
+
+Following "modern" Git tests I would have expected:
+
+* heavy use of the "git -C <dir>" pattern. When applying that
+  thouroughly we'd save spanning the subshells.
+* no `cd` on the same line as the opening paren.
+  (This is style and would derail the performance discussion)
+
+test_expect_success 'staged changes in added submodule (AM S.M.)' '
+    git -C super_repo/sub1 add file_in_sub &&
+    HMOD=$(git -C super_repo hash-object -t blob -- .gitmodules) &&
+    HSUP=$(git -C super_repo rev-parse HEAD) &&
+    # as a comment: HSUB is equal to HSUP, because ...
+
+    cat >expect <<-EOF &&
+    # branch.oid $HSUP
+    # branch.head master
+    # branch.upstream origin/master
+    # branch.ab +0 -0
+    1 A. N... 000000 100644 100644 $_z40 $HMOD .gitmodules
+    1 AM S.M. 000000 160000 160000 $_z40 $HSUP sub1
+    EOF
+
+    git -C super_repo status --porcelain=v2 --branch
+--untracked-files=all >../actual &&
+    test_cmp expect actual
+'
+
+That said I really like the idea of having a helper that would eliminate the cat
+for you, e.g. :
+
+git_test_helper_equal_stdin_or_diff_and_die -C super_repo status
+--porcelain=v2 --branch --untracked-files=all <<-EOF
+1 A. N... 000000 100644 100644 $_z40 $HMOD .gitmodules
+1 AM S.M. 000000 160000 160000 $_z40 $HSUP sub1
+EOF
+
+Thanks,
+Stefan
