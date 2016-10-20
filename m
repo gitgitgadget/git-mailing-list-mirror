@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C38831F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 18:04:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 856301F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 18:05:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752894AbcJTSEf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 14:04:35 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:36261 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750938AbcJTSEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 14:04:34 -0400
-Received: by mail-lf0-f68.google.com with SMTP id b75so1586928lfg.3
-        for <git@vger.kernel.org>; Thu, 20 Oct 2016 11:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=us9JHpsrBeUSNE6bZNSpgFfyEDlW2duCGrYncMuSAMU=;
-        b=Tqwbm1HUG8r76nEXc8pLLWtF4VJEgPetD8eQy+Q/Oy4+ItGjUX8rc08/HxEd6OZUWj
-         B2XhQfKKmD6BAr5mzuhpSKmHKQTa1rtFbEU4exVqCFHc3R591HOR/Rx5bi9P2cvhU3gf
-         J9g18tmy5ISrfOYDiKhjHztOP77aXgqGEvUJ78T+XnY3CmwH4DeTb8A8nTPwgs16o1iA
-         lYJsc2G9JjuQC4LsWLmz/ZyHZzE0v8I2CqcLo/o2DPoGRSHemkspAO7zfW9unnFyNB8W
-         3cdnEAsP4Ey2chEFvsmX4HVttSN4VcG6NFroOMBU7u/2IrS6qJkvXP9p5l0ukopy3FEJ
-         0XjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=us9JHpsrBeUSNE6bZNSpgFfyEDlW2duCGrYncMuSAMU=;
-        b=M4AaxS0GB1JmCoiYN2mu9OWEMfwEwEKst1htcRF5RdFtelnOCPiCm892E695mulArw
-         GjvktWgaT0lMFzqQZea1KbB6b9v3X+gruKneBbZYixdAR4nW54VyVevKPnqELwVlavL/
-         /RY2AVBS3ZIWhdbgT6jo69Th7UhnkBdCXZC5CoJ9D81H9hmipA0g3yF55nYQW0EchFpu
-         zqP4O6aGkwiYOU9MYYnmJ4G4SNP91syP044A9xqGBbqDRPFWLWa/kjGB0lgvbN2PtYow
-         81Qk5U3M0TI6oBSuCldgXV93H80GNG5RJWVBOQEZGK4B5paYGylU+t0OLIHRoWSS94o7
-         FLHA==
-X-Gm-Message-State: ABUngvdvycmurwlwf3EZNCroaNQiD+RRwRj4RVzfua1f/dIm0qF7T9Jw8+iS59dLqBeNMw==
-X-Received: by 10.194.23.4 with SMTP id i4mr1056513wjf.185.1476986673033;
-        Thu, 20 Oct 2016 11:04:33 -0700 (PDT)
-Received: from [10.42.1.91] ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id pe5sm80801833wjb.15.2016.10.20.11.04.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Oct 2016 11:04:32 -0700 (PDT)
-Message-ID: <1476986671.28685.5.camel@kaarsemaker.net>
-Subject: Re: [PATCH] rev-list: restore the NUL commit separator in --header
- mode
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, jacob.e.keller@intel.com,
-        stefanbeller@gmail.com, peff@peff.net, j6t@kdbg.org,
-        jacob.keller@gmail.com
-Date:   Thu, 20 Oct 2016 20:04:31 +0200
-In-Reply-To: <xmqq4m48j70o.fsf@gitster.mtv.corp.google.com>
-References: <1476908699.26043.9.camel@kaarsemaker.net>
-         <20161019210448.aupphybw5qar6mqe@hurricane>
-         <xmqq4m48j70o.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.0-2ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1754585AbcJTSFX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 14:05:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58971 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754453AbcJTSFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 14:05:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C463A472E9;
+        Thu, 20 Oct 2016 14:05:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WoZKqySJFsmPq571bX5xFDbvQJE=; b=pwj4LZ
+        CJRje9rZBaz2qh283C8pYOX/Yt0L/Ro0Nxq37xUtO89wl0swQqH82wlgPkXzEDl1
+        JdDbZixS7dKGyftMY6nseUDCgHC70fRG4xSDi5UVORCdCfaJm0xeiJpQ3mN/JinJ
+        I3RbskkRuMBCV/DhOU9PwWf2VvUMqJ9Zdg0TM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lglvyuRXokVHc+YYfqSX/c2Sq3fnJ2Pm
+        c+jQ5EMEGPm47mDf5EqOKA6wePGv5EF46KJITenPRzbB0rMxUUeEzkxIRr6qtxbP
+        CBl2BJ2ystFcm70+G/5ezIJm0VvDard8y8m9O+w6BzsiK8gK1mFLma43Zn2yhBkV
+        OrcQssDvqZQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB2FA472E7;
+        Thu, 20 Oct 2016 14:05:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D6C0472E6;
+        Thu, 20 Oct 2016 14:05:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: Fwd: New Defects reported by Coverity Scan for git
+References: <580893d5a4736_4ed37b53181837@ss1435.mail>
+        <CAGZ79kabVPhp0_z-e_4jJOFq+jzSE2SsgmFuY-2RUgrEviGKyA@mail.gmail.com>
+        <xmqqshrqhpua.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYTwsWy+oxnPKghWKGLEaO9qWZbrQOOejeEBOe0c-o0Pg@mail.gmail.com>
+Date:   Thu, 20 Oct 2016 11:05:17 -0700
+In-Reply-To: <CAGZ79kYTwsWy+oxnPKghWKGLEaO9qWZbrQOOejeEBOe0c-o0Pg@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 20 Oct 2016 10:58:39 -0700")
+Message-ID: <xmqqoa2ehp5u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C2E6F1C8-96EF-11E6-8C5F-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2016-10-19 at 15:41 -0700, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
-> 
-> > +	touch expect &&
-> > +	printf "\0" > expect &&
-> 
-> 
-> What's the point of that "touch", especially if you are going to
-> overwrite it immediately after?
+Stefan Beller <sbeller@google.com> writes:
 
-Leftover debugging crud. I tried various ways of generating an
-actual/expect to compare.
+> I do it most of the time, but I did not start managing it.
+> And I have been pretty lax/liberal about handing out rights to do stuff,
+> because I did not want to tip on anyone's toes giving to few rights
+> and thereby annoying them.
 
-> > +	git rev-list --header --max-count=1 HEAD | tail -n1 >actual &&
-> 
-> 
-> As "tail" is a tool for text files, it is likely unportable to use
-> "tail -n1" to grab the "last incomplete line that happens to contain
-> a single NUL".
-> 
-> > +	test_cmp_bin expect actual
-> > +'
+Good to know that you have been managing it; I was mostly worried
+about not having anybody managing it (i.e. imagining Coverity
+nominated/volunteered me as manager with everybody else as viewers)
+and the new viewer requests get totally ignored by the project as
+the whole.
 
-Yeah, I was fearing that. I didn't find anything in the testsuite that
-helps answering the question "does this file end with a NUL" and would
-appreciate a hint :)
+> I see that some of these emails may be inconvenient to you, I can
+> change your role to defect viewer/contributor if you prefer.
 
-D.
+It is not a huge inconvenience to me, because any piece of e-mail
+that is addressed directly to gitster@ without CC'ing to git@vger
+and is not a follow-up to any earlier message goes to a separate
+lowest-priority mailbox that I rarely look at.  But if it is easy
+to recategorize me, please do so.
+
+Thanks.
