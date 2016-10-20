@@ -2,58 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4E271F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 20:38:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11E7E1F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 20:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754103AbcJTUi1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 16:38:27 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:27387 "EHLO bsmtp.bon.at"
+        id S1754923AbcJTUib (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 16:38:31 -0400
+Received: from mga06.intel.com ([134.134.136.31]:38936 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752658AbcJTUi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 16:38:26 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t0LHN0D4Hz5tlJ;
-        Thu, 20 Oct 2016 22:38:23 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 6BDE5534C;
-        Thu, 20 Oct 2016 22:38:23 +0200 (CEST)
-Subject: Re: Drastic jump in the time required for the test suite
-To:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
- <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610201154070.3264@virtualbox>
- <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <530a3bca-e251-cb43-fb6a-e99c1e64a0a7@kdbg.org>
-Date:   Thu, 20 Oct 2016 22:38:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        id S1752658AbcJTUia (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 16:38:30 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga104.jf.intel.com with ESMTP; 20 Oct 2016 13:38:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.31,372,1473145200"; 
+   d="scan'208";a="1056813694"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
+  by fmsmga001.fm.intel.com with ESMTP; 20 Oct 2016 13:38:30 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v2] rev-list: use hdr_termination instead of a always using a newline
+Date:   Thu, 20 Oct 2016 13:38:25 -0700
+Message-Id: <4d43c7686b2c39b3615ad303066fd222f8d2ed75.1476995794.git-series.jacob.keller@gmail.com>
+X-Mailer: git-send-email 2.10.1.637.g1dc9b33
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.10.2016 um 14:31 schrieb Jeff King:
-> Close to 1/3 of those processes are just invoking the bin-wrapper
-> script to set up the EXEC_PATH, etc. I imagine it would not be too hard
-> to just do that in the test script. In fact, it looks like:
->
->   make prefix=/wherever install
->   GIT_TEST_INSTALLED=/wherever/bin make test
->
-> might give you an immediate speedup by skipping bin-wrappers entirely.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Running the tests with --with-dashes should give you the same effect, no?
+When adding support for prefixing output of log and other commands using
+--line-prefix, commit 660e113ce118 ("graph: add support for
+--line-prefix on all graph-aware output", 2016-08-31) accidentally
+broke rev-list --header output.
 
--- Hannes
+In order to make the output appear with a line-prefix, the flow was
+changed to always use the graph subsystem for display. Unfortunately
+the graph flow in rev-list did not use info->hdr_termination as it was
+assumed that graph output would never need to putput NULs.
 
+Since we now always use the graph code in order to handle the case of
+line-prefix, simply replace putchar('\n') with
+putchar(info->hdr_termination) which will correct this issue.
+
+Add a test for the --header case to make sure we don't break it in the
+future. Implement a helper function test_ends_with_nul() to make it more
+obvious what sort of check we are looking for.
+
+Reported-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+
+Changes in v2
+* Squash Junio's suggested (better) test
+* Add Junio's signed-off-by since he wrote the new test
+
+ builtin/rev-list.c       |  2 +-
+ t/t6000-rev-list-misc.sh | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git c/builtin/rev-list.c c/builtin/rev-list.c
+index 8479f6ed28aa..c43decda7011 100644
+--- c/builtin/rev-list.c
++++ c/builtin/rev-list.c
+@@ -145,7 +145,7 @@ static void show_commit(struct commit *commit, void *data)
+ 			 */
+ 			if (buf.len && buf.buf[buf.len - 1] == '\n')
+ 				graph_show_padding(revs->graph);
+-			putchar('\n');
++			putchar(info->hdr_termination);
+ 		} else {
+ 			/*
+ 			 * If the message buffer is empty, just show
+diff --git c/t/t6000-rev-list-misc.sh c/t/t6000-rev-list-misc.sh
+index 3e752ce03280..969e4e9e5261 100755
+--- c/t/t6000-rev-list-misc.sh
++++ c/t/t6000-rev-list-misc.sh
+@@ -100,4 +100,18 @@ test_expect_success '--bisect and --first-parent can not be combined' '
+ 	test_must_fail git rev-list --bisect --first-parent HEAD
+ '
+ 
++test_expect_success '--header shows a NUL after each commit' '
++	# We know that there is no Q in the true payload; names and
++	# addresses of the authors and the committers do not have
++	# any, and object names or header names do not, either.
++	git rev-list --header --max-count=2 HEAD |
++	nul_to_q |
++	grep "^Q" >actual &&
++	cat >expect <<-EOF &&
++	Q$(git rev-parse HEAD~1)
++	Q
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+
+base-commit: 659889482ac63411daea38b2c3d127842ea04e4d
+-- 
+git-series 0.8.10
