@@ -2,134 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E4081F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 12:31:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBB6B1F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 13:23:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932267AbcJTMbP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 08:31:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60003 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752104AbcJTMbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 08:31:15 -0400
-Received: (qmail 6744 invoked by uid 109); 20 Oct 2016 12:31:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Oct 2016 12:31:13 +0000
-Received: (qmail 26387 invoked by uid 111); 20 Oct 2016 12:31:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Oct 2016 08:31:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Oct 2016 08:31:11 -0400
-Date:   Thu, 20 Oct 2016 08:31:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Drastic jump in the time required for the test suite
-Message-ID: <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
- <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610201154070.3264@virtualbox>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1610201154070.3264@virtualbox>
+        id S935962AbcJTNXP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 09:23:15 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34733 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934025AbcJTNXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 09:23:15 -0400
+Received: by mail-qk0-f194.google.com with SMTP id n189so4537502qke.1
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 06:23:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Ong5QN9BSnthFB9fndZ7utoixutJmy66Qu+CJXWPKA4=;
+        b=JUZt5uBNTqjCigFrou01ffhpQ5u0Bkt5dOgvaDoH3JzqLB0o0cR4bibOYqL8rphpc9
+         ZHRk3nbmxWd56zJAugOyEBibwi8Dawyx0SUSq2kfHz+TY5hN4b0vD+U2g24OUnFpmYIL
+         ZMjRZYL9STxL/pPAoW4ajMj++u0/h5jy8aJEw36hQ0sKf9Z9e49We1yvopy3uMcCyOqG
+         O9MgWCC2oYW/AJ9vIVFN344GBubpZjtZtSS1eu2BGPPpJNaqyD4J9Yipqr25PfVm4HEI
+         0V6HjO2ffNtJ3PtRj2Jqam+lIl3rqOa/UpIwrnXR7/xh/99ADumgFBovE493AdDl/mmT
+         /kmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Ong5QN9BSnthFB9fndZ7utoixutJmy66Qu+CJXWPKA4=;
+        b=mYOYYx9F8RpIA9pmJutRfuDCNclQQJmdaSTdzQhscT7w9BFkID73CQ7imspo2lqxyf
+         Ej7ZpR6/KkHlhPv3/HuLvDmbcr3GjjhhR50w2d+N+llJNwqopNBXWkaAsyq5IkZ/I1lB
+         5nvQqiJys7jTL0OuEu5uPocaw6USiUITjCqFc51wwzFI2+z2QhhrT8G48MW1IJsGavBF
+         +vWuMu0Qkl9vzMCD+hr8yBdwriGUBIUP2h6UFYuiPJH/bM3vox02pSUGg9/uz/hcA40c
+         y/LuqU7BCb5qhXLa+2hUVoNujkk8KD6Ls00suv8K2sgVkH5d09MlbO6HtMiy1tSyd/81
+         QSUg==
+X-Gm-Message-State: ABUngvc/5JQ7qrUXe9uFgd9ubdo3XCm7B0rJUj2JBvRHnW9/0hNG/uk6eKJTdEfp+K/1Kw==
+X-Received: by 10.194.57.195 with SMTP id k3mr436388wjq.168.1476969793988;
+        Thu, 20 Oct 2016 06:23:13 -0700 (PDT)
+Received: from odin.lrde.epita.fr ([163.5.55.13])
+        by smtp.gmail.com with ESMTPSA id af4sm69279325wjc.17.2016.10.20.06.23.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Oct 2016 06:23:13 -0700 (PDT)
+From:   Younes Khoudli <younes.khoudli@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <junkio@cox.net>,
+        Younes Khoudli <younes.khoudli@gmail.com>
+Subject: [PATCH] doc: remove reference to the traditional layout in git-tag.txt
+Date:   Thu, 20 Oct 2016 15:21:44 +0200
+Message-Id: <20161020132144.6018-1-younes.khoudli@gmail.com>
+X-Mailer: git-send-email 2.10.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2016 at 12:17:33PM +0200, Johannes Schindelin wrote:
+This is the only place in the documentation that the traditional layout
+is mentioned, and it is confusing. Remove it.
 
-> If you want to know just how harmful this reliance on shell scripting is
-> to our goal of keeping Git portable: already moving from Linux to MacOSX
-> costs you roughly 3x as long to run the build & test (~12mins vs ~36mins
-> for GCC, according to https://travis-ci.org/git/git/builds/159125647).
+* Documentation/git-tag.txt: Here.
 
-Wait, shell scripts are slow on MacOS now?
+Signed-off-by: Younes Khoudli <younes.khoudli@gmail.com>
+---
+ Documentation/git-tag.txt | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Perhaps, but it seems more likely that one or more of the following is
-true:
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 7ecca8e..80019c5 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -253,9 +253,8 @@ On Automatic following
+ ~~~~~~~~~~~~~~~~~~~~~~
+ 
+ If you are following somebody else's tree, you are most likely
+-using remote-tracking branches (`refs/heads/origin` in traditional
+-layout, or `refs/remotes/origin/master` in the separate-remote
+-layout).  You usually want the tags from the other end.
++using remote-tracking branches (eg. `refs/remotes/origin/master`).
++You usually want the tags from the other end.
+ 
+ On the other hand, if you are fetching because you would want a
+ one-shot merge from somebody else, you typically do not want to
+-- 
+2.10.0
 
-  - setup of the OS X VM takes longer (it does; if you click-through to
-    the test results, you'll see that the "make test" step goes from
-    647s on Linux to 1108s on MacOS. That's much worse, but not even
-    twice as slow, let alone 3x).
-
-  - Travis Linux and OSX VMs do not have identical hardware. Looking at
-    https://docs.travis-ci.com/user/ci-environment/, it appears that
-    Linux containers get twice as many cores.
-
-  - Git performance on Linux may be better than MacOS. The test suite is
-    very filesystem-heavy because it creates and destroys a lot of files
-    and repositories. If the kernel vfs performance is worse, it's
-    likely to show up in the test suite (especially if the issue is
-    latency and you aren't doing it massively in parallel).
-
-    I don't have a real way to measure that, but it seems like a
-    plausible factor.
-
-So that sucks that the MacOS Travis build takes a half hour to run. But
-I don't think that shell scripting is the culprit.
-
-> So the only thing that would really count as an improvement would be to
-> change the test suite in such a manner that it relies more on helpers in
-> t/helper/ and less on heavy-duty shell scripting.
-> 
-> Of course, if you continue to resist (because the problem is obviously not
-> affecting you personally, so why would you care), I won't even try to find
-> the time to start on that project.
-
-I'm not sure what you mean by "resist". The tests suite has been a set
-of shell scripts for over a decade. As far as I know there is not
-currently a viable alternative. If you have patches that make it faster
-without negatively impact the ease of writing tests, I'd be happy to see
-them.  If you have more t/helper programs that can eliminate expensive
-bits of the shell scripts and speed up the test run, great. If you have
-some other proposal entirely, I'd love to hear it.  But I do not see
-that there is any proposal to "resist" at this point.
-
-I'm also not entirely convinced that the test suite being a shell script
-is the main culprit for its slowness. We run git a lot of times, and
-that's inherent in testing it. I ran the whole test suite under
-"strace -f -e execve". There are ~335K execs. Here's the breakdown of
-the top ones:
-
-$ perl -lne '/execve\("(.*?)"/ and print $1' /tmp/foo.out | sort | uniq -c | sort -rn | head
- 152271 /home/peff/compile/git/git
-  57340 /home/peff/compile/git/t/../bin-wrappers/git
-  16865 /bin/sed
-  12650 /bin/rm
-  11257 /bin/cat
-   9326 /home/peff/compile/git/git-sh-i18n--envsubst
-   9079 /usr/bin/diff
-   8013 /usr/bin/wc
-   5924 /bin/mv
-   4566 /bin/grep
-
-Almost half are running git itself. Let's assume that can't be changed.
-That leaves ~180K of shell-related overhead (versus the optimal case,
-that the entire test suite becomes one monolithic program ;) ).
-
-Close to 1/3 of those processes are just invoking the bin-wrapper
-script to set up the EXEC_PATH, etc. I imagine it would not be too hard
-to just do that in the test script. In fact, it looks like:
-
-  make prefix=/wherever install
-  GIT_TEST_INSTALLED=/wherever/bin make test
-
-might give you an immediate speedup by skipping bin-wrappers entirely.
-
-The rest of it is harder. I think you'd have to move the test suite to a
-language like perl that can do more of that as builtins (I'm sure you'd
-enjoy the portability implications of _that_).  It would almost be
-easier to build a variant of the shell that has sed, rm, cat, and a few
-others compiled in.
-
--Peff
-
-PS I haven't kept up with all of this POSIX-layer stuff that's been
-   announced in Windows the past few months. Is it a viable path forward
-   that would have better performance (obviously not in the short term,
-   but where we may arrive in a few years)?
