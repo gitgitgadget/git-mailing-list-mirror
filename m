@@ -2,111 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11E7E1F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 20:38:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D165B1F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 20:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754923AbcJTUib (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 16:38:31 -0400
-Received: from mga06.intel.com ([134.134.136.31]:38936 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752658AbcJTUia (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 16:38:30 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga104.jf.intel.com with ESMTP; 20 Oct 2016 13:38:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.31,372,1473145200"; 
-   d="scan'208";a="1056813694"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
-  by fmsmga001.fm.intel.com with ESMTP; 20 Oct 2016 13:38:30 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2] rev-list: use hdr_termination instead of a always using a newline
-Date:   Thu, 20 Oct 2016 13:38:25 -0700
-Message-Id: <4d43c7686b2c39b3615ad303066fd222f8d2ed75.1476995794.git-series.jacob.keller@gmail.com>
-X-Mailer: git-send-email 2.10.1.637.g1dc9b33
+        id S1754812AbcJTUkU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 16:40:20 -0400
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:36731 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752476AbcJTUkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 16:40:20 -0400
+Received: by mail-qt0-f178.google.com with SMTP id m5so68994183qtb.3
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 13:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zG1ot/9ryZHcam1ak7NIyG6HMan7Xf6DvEtWh1BwDW8=;
+        b=1zVxZL8nkyst4khBgSLnnuNjWwvgti0nBGBQUxYC2sfiwzDEzSSaRUNFoc8WngdiuI
+         OyCzweovm1Bf6rZj1WAXeivAH+7K9CLUqcSK5zCSECkprqs+AdUKZcdmAYwuW5GkMfss
+         jqarZDHYd27O3NN6Cb0plivAH+ndePYd5AiIWcf0SpEeZAG0ECgKvDT73cUVB6M6mJeT
+         2RkVVDSsb1yhhLPEo1/3WsOdFG9zbGCLE3TbrqCAcRGnngTX1CMj0igRqWHr+CnuVRAG
+         1BW9rw4m5BQb0eGyLap/4rFhfOeakq6TfudDagzmFFLkwDY/h+eMYQPCCiPSrYGUOKeH
+         5b6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zG1ot/9ryZHcam1ak7NIyG6HMan7Xf6DvEtWh1BwDW8=;
+        b=epnOT+O800b3J/7FSWjnqP20vXNMFokU4EXjk+MP6KtphiLbsRWANBIFcD3kPHVx9H
+         +ZHbSIT8x26xOc4h2vHOm0uUQA7xxBMpOcRA1FX9izz3EBum2WqGFe2k2mzGgcbGNTn6
+         fh2VWhdXhRxguuYLQ6KkJ1d+H04L404GFAn65raRxo4cMI5OduU907wRoaAX4boxeFTz
+         J4KBHLhNZSTbHBpL77sB/1FLGXao9yrdDV278xQ3KAyT53Q5rkv5U2HIHx0SZoO0iRu5
+         /adhdE9ORLOMhXXW9em1NLhSrg2OlEwzuLpZmxBMXXWXKNkqv7SBvUXnrTX73UKPa285
+         2DkA==
+X-Gm-Message-State: AA6/9RmtLJ5Pk2HtBWE3qgjIaySREBjpy/+1kxI2ASPLR0z+whjmv3K75vdg4/9EES5q6g==
+X-Received: by 10.28.209.142 with SMTP id i136mr7407749wmg.1.1476996019113;
+        Thu, 20 Oct 2016 13:40:19 -0700 (PDT)
+Received: from [10.42.1.91] ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id yo1sm81419759wjc.16.2016.10.20.13.40.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 20 Oct 2016 13:40:18 -0700 (PDT)
+Message-ID: <1476996017.28685.10.camel@kaarsemaker.net>
+Subject: Re: Drastic jump in the time required for the test suite
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Date:   Thu, 20 Oct 2016 22:40:17 +0200
+In-Reply-To: <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+         <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
+         <alpine.DEB.2.20.1610201154070.3264@virtualbox>
+         <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.0-2ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Thu, 2016-10-20 at 08:31 -0400, Jeff King wrote:
 
-When adding support for prefixing output of log and other commands using
---line-prefix, commit 660e113ce118 ("graph: add support for
---line-prefix on all graph-aware output", 2016-08-31) accidentally
-broke rev-list --header output.
+> I'm also not entirely convinced that the test suite being a shell script
+> is the main culprit for its slowness. We run git a lot of times, and
+> that's inherent in testing it. I ran the whole test suite under
+> "strace -f -e execve". There are ~335K execs. Here's the breakdown of
+> the top ones:
 
-In order to make the output appear with a line-prefix, the flow was
-changed to always use the graph subsystem for display. Unfortunately
-the graph flow in rev-list did not use info->hdr_termination as it was
-assumed that graph output would never need to putput NULs.
+You're measuring execve's, but fork (well, fork emulation. There's no
+actual fork) is also expensive on windows iirc, so subshells add a lot
+to this cost. That said, strace -eclone says that a 'make test' forks
+~408k times, and while this is significantly more than the amount of
+execs in your example, this does include cvs and svn tests and it's
+still in the same ballpark.
 
-Since we now always use the graph code in order to handle the case of
-line-prefix, simply replace putchar('\n') with
-putchar(info->hdr_termination) which will correct this issue.
-
-Add a test for the --header case to make sure we don't break it in the
-future. Implement a helper function test_ends_with_nul() to make it more
-obvious what sort of check we are looking for.
-
-Reported-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-
-Changes in v2
-* Squash Junio's suggested (better) test
-* Add Junio's signed-off-by since he wrote the new test
-
- builtin/rev-list.c       |  2 +-
- t/t6000-rev-list-misc.sh | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
-
-diff --git c/builtin/rev-list.c c/builtin/rev-list.c
-index 8479f6ed28aa..c43decda7011 100644
---- c/builtin/rev-list.c
-+++ c/builtin/rev-list.c
-@@ -145,7 +145,7 @@ static void show_commit(struct commit *commit, void *data)
- 			 */
- 			if (buf.len && buf.buf[buf.len - 1] == '\n')
- 				graph_show_padding(revs->graph);
--			putchar('\n');
-+			putchar(info->hdr_termination);
- 		} else {
- 			/*
- 			 * If the message buffer is empty, just show
-diff --git c/t/t6000-rev-list-misc.sh c/t/t6000-rev-list-misc.sh
-index 3e752ce03280..969e4e9e5261 100755
---- c/t/t6000-rev-list-misc.sh
-+++ c/t/t6000-rev-list-misc.sh
-@@ -100,4 +100,18 @@ test_expect_success '--bisect and --first-parent can not be combined' '
- 	test_must_fail git rev-list --bisect --first-parent HEAD
- '
- 
-+test_expect_success '--header shows a NUL after each commit' '
-+	# We know that there is no Q in the true payload; names and
-+	# addresses of the authors and the committers do not have
-+	# any, and object names or header names do not, either.
-+	git rev-list --header --max-count=2 HEAD |
-+	nul_to_q |
-+	grep "^Q" >actual &&
-+	cat >expect <<-EOF &&
-+	Q$(git rev-parse HEAD~1)
-+	Q
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-
-base-commit: 659889482ac63411daea38b2c3d127842ea04e4d
--- 
-git-series 0.8.10
+D.
