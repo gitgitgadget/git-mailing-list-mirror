@@ -2,170 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCF320987
-	for <e@80x24.org>; Thu, 20 Oct 2016 11:40:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 810361F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 12:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754039AbcJTLkH convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 20 Oct 2016 07:40:07 -0400
-Received: from know-smtprelay-omc-4.server.virginmedia.net ([80.0.253.68]:50000
-        "EHLO know-smtprelay-omc-4.server.virginmedia.net"
+        id S1754381AbcJTMHO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 08:07:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57185 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750953AbcJTLkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 07:40:05 -0400
-Received: from red.patthoyts.tk ([82.37.62.216])
-        by know-smtprelay-4-imp with bizsmtp
-        id xng21t00S4fw4HN01ng2Jn; Thu, 20 Oct 2016 12:40:02 +0100
-X-Originating-IP: [82.37.62.216]
-X-Spam: 0
-X-Authority: v=2.1 cv=KbMvylsD c=1 sm=1 tr=0 a=y+L2qvWGb0b1Khfuzk0aNQ==:117
- a=y+L2qvWGb0b1Khfuzk0aNQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=xqWC_Br6kY4A:10 a=1oJP67jkp3AA:10
- a=CH0kA5CcgfcA:10 a=ZZnuYtJkoWoA:10 a=XaLoG6Yh2RhfHgP-Qn0A:9 a=wPNLvfGTeEIA:10
-Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2001:470:1f1d:26c::2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by red.patthoyts.tk (Postfix) with ESMTPS id BAD04196F6D4;
-        Thu, 20 Oct 2016 12:40:00 +0100 (BST)
-From:   Pat Thoyts <patthoyts@users.sourceforge.net>
+        id S1754099AbcJTMHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 08:07:12 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MK0bZ-1byZZN2OZx-001SQg; Thu, 20 Oct 2016 14:07:04
+ +0200
+Date:   Thu, 20 Oct 2016 14:07:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "GitList" <git@vger.kernel.org>
-Subject: [REQUEST PULL] git-gui 0.20.0 to 0.21.0
-X-Face:  .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-Reply-to: patthoyts@users.sourceforge.net
-X-Url:  http://www.patthoyts.tk/
-Date:   Thu, 20 Oct 2016 12:39:58 +0100
-Message-ID: <878ttji701.fsf@red.patthoyts.tk>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 14/25] sequencer: introduce a helper to read files
+ written by scripts
+In-Reply-To: <xmqqpomxr6t6.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610201406560.3264@virtualbox>
+References: <cover.1473590966.git.johannes.schindelin@gmx.de>        <cover.1476120229.git.johannes.schindelin@gmx.de>        <b554346c600fafa71d2a3461fda8402e377b596e.1476120229.git.johannes.schindelin@gmx.de>        <xmqqr37ex5ck.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610181339550.197091@virtualbox> <xmqqpomxr6t6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:YMMAgF5fOdKaSwrhBbRHoleP8CGYGxFfoipAoJxaJv/vfeZyY1l
+ ddClThxgcdHZH7wliApL+pbCSWeB/G1UamFfry9GCz80l3XdyolaACfeBykzj3UKeqS7uZX
+ dDBgwqm18EwRpztKBgcD5gp2etY1ZKj9jpQR+k4eJy4gffHgLxM/Tnyk3UwUmqGFKwofwEh
+ Z1svqFTi308DotP8SG2PQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qsaLD5IAIr0=:BJcw2AKK1XtcWL2KywgwPK
+ QIn+67R3u4u88BfEdfTGk/fqWIrkaMd9luDmu9frLpp9xKaFlAk2SHsOmq48Lrpo3sQldug1f
+ lvUmd+/Q0ad6HwK5qJqwZoycJdjCw2M2ihDVCcB2uZM6Ia9xA1BdbyENpZVkhGyM5ee4950Kl
+ 2JOFQHGSKoGjBqDBANl5rVagxbKiqsYhzlV3HbPPcMYJVZlLfTWhTt/MGjoD3Uo4kvg81dXGY
+ 95elz9teoxhz0+DYRLDC2T+WT0h/1FoOnkOjTfhg/L085+P5hn+mGO2U53n9W8YCIavPEBSws
+ pppLtLGn/EB1LfFfbS5Goeci6ZA6Jl8yIuo2ELL6BTYvjjxXxCegQgVzPLoybIaBQl42fSoLO
+ xMp+FQqm7xqyVZUX3uWKQFpAW99drq53sTR2JkzpzFxI04WFLKcYOxMKZtJQi1HtwIYEQZAoP
+ pFT64vqr+3rAXfIXfkkXz/2XkUwPodzoZUD1/MNgM9Zy8zNj2GH9BEWw8gHVAjZjzIcMcLg0r
+ sic1xZdCm7wa1NIR0Jebi851QBQayN69zqt0YB09Pq8ZmsMrCN+N6NGboh2NtIP/dnY3GvHkk
+ YTCqI2NfAwrt5TyqUUn+yTK0HRspBYAaLHjq2z0mLJnlDF48NVAxdP4KqSkv8yKyMDl8bkXYI
+ qSDtsY/+OqrhUieQMKyIAFlfPRfoFAohwHQOeZbvGL8EI+x0aZX1PUrBTrMQdphuyM2OmtluK
+ 1c1ZxsaYjCTNY2kAiJTLXj1qRCpTUxPaodShK8dARvuoItYe6gwEvGvV7bjidWZj+zhAc+LR+
+ pcegAQZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The following changes since commit 4498b3a50a0e839788682f672df267cbc1ba9292:
+Hi Junio,
 
-  git-gui: set version 0.20 (2015-04-18 12:15:32 +0100)
+On Tue, 18 Oct 2016, Junio C Hamano wrote:
 
-are available in the git repository at:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > In the meantime, I'd be happy to just add a comment that this function is
+> > intended for oneliners, but that it will also read multi-line files and
+> > only strip off the EOL marker from the last line.
+> >
+> > Would that work for you?
+> 
+> That would be ideal, I would think.
 
-  git://repo.or.cz/git-gui.git tags/gitgui-0.21.0
-
-for you to fetch changes up to ccc985126f23ff5d9ac610cb820bca48405ff5ef:
-
-  git-gui: set version 0.21 (2016-10-20 11:19:43 +0100)
-
-----------------------------------------------------------------
-git-gui 0.21.0
-
-----------------------------------------------------------------
-Alex Riesen (2):
-      git-gui: support for $FILENAMES in tool definitions
-      git-gui: ensure the file in the diff pane is in the list of selected files
-
-Alexander Shopov (2):
-      git-gui i18n: Updated Bulgarian translation (565,0f,0u)
-      git-gui: Mark 'All' in remote.tcl for translation
-
-Dimitriy Ryazantcev (1):
-      git-gui: Update Russian translation
-
-Elia Pinto (1):
-      git-gui/po/glossary/txt-to-pot.sh: use the $( ... ) construct for command substitution
-
-Johannes Schindelin (1):
-      git-gui: respect commit.gpgsign again
-
-Karsten Blees (2):
-      git-gui: unicode file name support on windows
-      git-gui: handle the encoding of Git's output correctly
-
-Olaf Hering (1):
-      git-gui: sort entries in tclIndex
-
-Orgad Shaneh (1):
-      git-gui: Do not reset author details on amend
-
-Pat Thoyts (19):
-      Allow keyboard control to work in the staging widgets.
-      Amend tab ordering and text widget border and highlighting.
-      git-gui: fix detection of Cygwin
-      git-gui (Windows): use git-gui.exe in `Create Desktop Shortcut`
-      Merge branch 'sy/i18n' into pu
-      Merge branch 'js/commit-gpgsign' into pu
-      Merge branch 'rs/use-modern-git-merge-syntax' into pu
-      Merge branch 'va/i18n' into pu
-      Merge branch 'patches' into pu
-      Merge branch 'pt/git4win-mods' into pu
-      Merge branch 'pt/non-mouse-usage' into pu
-      Merge branch 'va/i18n_2' into pu
-      git-gui: maintain backwards compatibility for merge syntax
-      Merge branch 'dr/ru' into pu
-      git-gui: avoid persisting modified author identity
-      Merge branch 'kb/unicode' into pu
-      Merge branch 'os/preserve-author' into pu
-      Merge branch 'as/bulgarian' into pu
-      git-gui: set version 0.21
-
-René Scharfe (1):
-      git-gui: stop using deprecated merge syntax
-
-Satoshi Yasushima (6):
-      git-gui: consistently use the same word for "remote" in Japanese
-      git-gui: consistently use the same word for "blame" in Japanese
-      git-gui: apply po template to Japanese translation
-      git-gui: add Japanese language code
-      git-gui: update Japanese translation
-      git-gui: update Japanese information
-
-Vasco Almeida (6):
-      git-gui i18n: mark strings for translation
-      git-gui: l10n: add Portuguese translation
-      git-gui i18n: internationalize use of colon punctuation
-      git-gui i18n: mark "usage:" strings for translation
-      git-gui: fix incorrect use of Tcl append command
-      git-gui i18n: mark string in lib/error.tcl for translation
-
-yaras (1):
-      git-gui: fix initial git gui message encoding
-
- GIT-VERSION-GEN              |    2 +-
- Makefile                     |    2 +-
- git-gui.sh                   |  154 +-
- lib/blame.tcl                |    2 +-
- lib/branch_checkout.tcl      |    2 +-
- lib/branch_create.tcl        |    2 +-
- lib/branch_delete.tcl        |    4 +-
- lib/branch_rename.tcl        |    2 +-
- lib/browser.tcl              |    6 +-
- lib/commit.tcl               |   39 +-
- lib/database.tcl             |    4 +-
- lib/diff.tcl                 |   14 +-
- lib/error.tcl                |    8 +-
- lib/index.tcl                |   12 +-
- lib/merge.tcl                |   18 +-
- lib/option.tcl               |    8 +-
- lib/remote.tcl               |    8 +-
- lib/remote_add.tcl           |    2 +-
- lib/remote_branch_delete.tcl |    2 +-
- lib/shortcut.tcl             |   17 +-
- lib/themed.tcl               |   87 +-
- lib/tools.tcl                |    3 +
- lib/tools_dlg.tcl            |    6 +-
- lib/transport.tcl            |    2 +-
- po/bg.po                     | 3543 ++++++++++++++++++++++--------------------
- po/glossary/pt_pt.po         |  293 ++++
- po/glossary/txt-to-pot.sh    |    4 +-
- po/ja.po                     | 3077 ++++++++++++++++++------------------
- po/pt_pt.po                  | 2716 ++++++++++++++++++++++++++++++++
- po/ru.po                     |  680 +++-----
- 30 files changed, 6957 insertions(+), 3762 deletions(-)
- create mode 100644 po/glossary/pt_pt.po
- create mode 100644 po/pt_pt.po
+Done,
+Dscho
