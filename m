@@ -2,83 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AC211F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 20:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4E271F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 20:38:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754817AbcJTU25 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 16:28:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63740 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753319AbcJTU24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 16:28:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 582F1465CA;
-        Thu, 20 Oct 2016 16:28:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=aa3resyMbB+M
-        URYTfBFhCKXsnNo=; b=sp4l4sly1EwzDY6HjxaMpv1ylYRk/DCdM2JfXcHIy+MJ
-        ugKCh2bb2zHX49DUxJY1ugCyx7v8G5WyqpS2W/LtU99uz/A17LvrBf4g6pVOR6GD
-        gZI7go8SKVaOExlb3b22cGNoqPz0Dwpmh3jWM+OzRZhRboZCP9vdBNhJWx2BD6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LKSpXP
-        +UVQLcaeHskNSwmd2BKX6XZS8TXBI3zI6ChUGeq2YdvDYnhHNFHCp/w8PK9cG17a
-        J3Xe8was5c41UVA5G6b3Q/FPHvQO7LZfn2cK6El0FOs6nM/LMiiB1GyNfK93wgci
-        Ciy+L+El/UA4Pcwuo+F4DkwQJAzsaaZbxkoCw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F273465C9;
-        Thu, 20 Oct 2016 16:28:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BED19465C8;
-        Thu, 20 Oct 2016 16:28:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v4 23/25] sequencer: quote filenames in error messages
-References: <cover.1476120229.git.johannes.schindelin@gmx.de>
-        <cover.1476450940.git.johannes.schindelin@gmx.de>
-        <930ea31d6f10973807276c7a9f35f0d692d1ada6.1476450940.git.johannes.schindelin@gmx.de>
-        <xmqq8ttig3zn.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 20 Oct 2016 13:28:52 -0700
-In-Reply-To: <xmqq8ttig3zn.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 20 Oct 2016 13:27:56 -0700")
-Message-ID: <xmqq4m46g3y3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754103AbcJTUi1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 16:38:27 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:27387 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752658AbcJTUi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 16:38:26 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t0LHN0D4Hz5tlJ;
+        Thu, 20 Oct 2016 22:38:23 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 6BDE5534C;
+        Thu, 20 Oct 2016 22:38:23 +0200 (CEST)
+Subject: Re: Drastic jump in the time required for the test suite
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+ <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610201154070.3264@virtualbox>
+ <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <530a3bca-e251-cb43-fb6a-e99c1e64a0a7@kdbg.org>
+Date:   Thu, 20 Oct 2016 22:38:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D2290AEA-9703-11E6-9646-987C12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Am 20.10.2016 um 14:31 schrieb Jeff King:
+> Close to 1/3 of those processes are just invoking the bin-wrapper
+> script to set up the EXEC_PATH, etc. I imagine it would not be too hard
+> to just do that in the test script. In fact, it looks like:
 >
->> This makes the code consistent by fixing quite a couple of error messa=
-ges.
->>
->> Suggested by Jakub Nar=C4=99bski.
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
+>   make prefix=/wherever install
+>   GIT_TEST_INSTALLED=/wherever/bin make test
 >
-> These finishing touches in 21-23 look all sensible to me.
+> might give you an immediate speedup by skipping bin-wrappers entirely.
 
-Make that 21-25.  I finished reading to the end and it was mostly a
-pleasnt read, except for a few things I noticed and sent reviews
-separately.
+Running the tests with --with-dashes should give you the same effect, no?
 
-Thanks.
+-- Hannes
+
