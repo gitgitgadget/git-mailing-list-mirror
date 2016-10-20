@@ -7,103 +7,110 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A08A1F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 20:03:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9831F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 20:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933536AbcJTUDw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 16:03:52 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:32848 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933446AbcJTUDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 16:03:51 -0400
-Received: by mail-yw0-f182.google.com with SMTP id t192so70603231ywf.0
-        for <git@vger.kernel.org>; Thu, 20 Oct 2016 13:03:50 -0700 (PDT)
+        id S1752333AbcJTUGF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 16:06:05 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34182 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751015AbcJTUGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 16:06:04 -0400
+Received: by mail-yw0-f194.google.com with SMTP id u124so2285266ywg.1
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 13:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Fhzr1fjCOemcmQsJQrTNNuJwhH8mfubxXrLM2aH3ivE=;
-        b=Lc54aQcZv/BFJf7WvFfjqjukpQqiNkH+c/MMAcLTwSm4XVgLguEUPtFbHEv+8ezTkc
-         qkJkg9LQfK0+GacrljaPRHUG0007VeVYSJqf9e/bY30pfzuk81imvB7yR8BH+UE5VgVj
-         2IdSllJVOFeyySdLiWlLdCFLHQKUmc2BlhYWWfxuCwXn4TSlE4fWUhLF3YHYK1fZPwxp
-         9essPsUP8G+wk9aSygnleLK9hrb1n1yCCY7mu8F6J7QtI9JZKlNez5LKqlNtTLNONNXk
-         sWEoD5ScLu9ytQzi0HCUc+7usV1aXTWmfHconY1aLoxaPWzkCTG/ae0/kBisrmb9fUCA
-         LXQg==
+        bh=iYhg+SGIjLM6wlJLsEUA0eGjEjobabfV9ujvaxE7ZbA=;
+        b=xU8SA0/GgwoqiaXCv0xXqHcGoxmORmaLgqziaO3kT4Yn6d0q8OdkuIgxglOdsAwOTD
+         g/0qSmZ2eJAyinXzwaFJ+T+lcMTzXQo4c04RWY9Fvb+nuinSD+aQcg0uXaLzPIh4Fn86
+         PLvCqRrNn40rBttatDHnJT6utGry3+YPrPd2ZkT9omQV3cukLwygLnqNs6Fxrgt/6k+e
+         oWvYLQ9aLCD3JqvHvpC9Z+echpYp7TkWb9gikMwoGdjQeNx8p47gTr0TzxQmFnAG/OLQ
+         MM43YxYZm1HsuIusqI6QAqEqTDNhuXZuC0AmnmgTKoRombMhL1NmJu44v9YFqW+xukFU
+         mdNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Fhzr1fjCOemcmQsJQrTNNuJwhH8mfubxXrLM2aH3ivE=;
-        b=fzcKlwWtuLZYTwgFowaDDI2sLivcq01YuW1cyaDxXoIhkMj9DuU8Gi9isaXfHIXJUM
-         oCf8QI/RrZEf1/mOcsAJ1x4LFmbBXSBgH9vjYEVH1+2IWL/xcDiNFGBRu/OIOQ0RvTTH
-         Ejejgrl6wwsDWiAka4oP25YjTwB/WSrByIgA58g5Aj770B6gLJcO4vg2eY0RG6XIX3kY
-         e0bMmjpgWDY7ekmp2UGLPcivFrO4NRF5VBENFZZwwEQJGdtlGruyQIEUZJ+wDwEULtVj
-         nc9VXijfRs/PSKSOs5ZcbhWsSqOcyz3CDaiU6p5rddjUhikKNHpqdSy/fmktKYZ2AS7c
-         6Kwg==
-X-Gm-Message-State: AA6/9Rm1wQGlo/9xxZqLkAL6hy8SGfUSKd4IO8Z2UZUP3L5JsVI6rVqIpvEx5Te+72CF69O1iP0ZDNYDiuDQsw==
-X-Received: by 10.129.130.193 with SMTP id s184mr3360099ywf.276.1476993829512;
- Thu, 20 Oct 2016 13:03:49 -0700 (PDT)
+        bh=iYhg+SGIjLM6wlJLsEUA0eGjEjobabfV9ujvaxE7ZbA=;
+        b=M/vGeo8jpoPCU8nJs4FOyyBS5KO9bEhg2t+KO7PwNkQ7c/6HSNgubz6uacjaNo97ha
+         xNEF7zvd4kdGvrdOo17WsMEgLy5bOcDfvm8ajX8qkDk3hY1KSlYl+ludCgbXLpgNWWP8
+         APRM1UVdocbXTXgzVPBcAUB7213c17buYyXikm+BwGddIqYsSxI3nWqpdi2Sq8smZ85m
+         TfsJRLLSe5bPeJCTig5LaRQSzfFHIwJRMsRUi//dKzWNQbshbYIFShw0gJzflEPlnO7e
+         JYaz85x/NDPlLcCTsDn/gL10Rn0X/0NfRVh3Q+kZ/Q1mU8VNCh1GEIaLYJNSntuL7nF9
+         q/sA==
+X-Gm-Message-State: AA6/9Rmfn+l0GSnStkBfwzoGAA7PgJvfpj3zuH3nFkfKjgRZCmusA2Uj7aS2iA9oIcWcnvuqS8a0Qy+aMs+TRw==
+X-Received: by 10.13.231.131 with SMTP id q125mr3493554ywe.122.1476993963002;
+ Thu, 20 Oct 2016 13:06:03 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.10.2 with HTTP; Thu, 20 Oct 2016 13:03:28 -0700 (PDT)
-In-Reply-To: <xmqqfunqhnhf.fsf@gitster.mtv.corp.google.com>
-References: <CA+P7+xqFOn4NSfZ2zpa_y1za3uHZrGGG3ktEtuOcvJLCrAYUhQ@mail.gmail.com>
- <20161019224211.k4anavgqrhmunz6p@sigill.intra.peff.net> <CA+P7+xprKV1Y7VShLR9uNgcpVdZk39xoTfkwiin1bVQYTe_TAA@mail.gmail.com>
- <20161020021323.tav5glu7xy4u7mtj@sigill.intra.peff.net> <xmqqa8dzhtki.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xq25LcdmtzmBNChiGhGratcdp7m0EOsQuEh68=gJQ9HNQ@mail.gmail.com>
- <xmqqwph2hqdg.fsf@gitster.mtv.corp.google.com> <CA+P7+xqbqfCTOHJZJ9ZGXv3oeSvKUdJByc8mdzoAoXRd7UZ6HA@mail.gmail.com>
- <xmqqfunqhnhf.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.10.2 with HTTP; Thu, 20 Oct 2016 13:05:42 -0700 (PDT)
+In-Reply-To: <xmqq4m46hmvq.fsf@gitster.mtv.corp.google.com>
+References: <20161020181930.21084-1-jacob.e.keller@intel.com> <xmqq4m46hmvq.fsf@gitster.mtv.corp.google.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 20 Oct 2016 13:03:28 -0700
-Message-ID: <CA+P7+xoHovFefort6gx6oT4WtT_Toey_0wmmaavLsM=Y1rjx8w@mail.gmail.com>
-Subject: Re: tools for easily "uncommitting" parts of a patch I just commited?
+Date:   Thu, 20 Oct 2016 13:05:42 -0700
+Message-ID: <CA+P7+xp1GevYkrSfDo2OtEve3RCXokawEf6c=5gF0daZOUF00Q@mail.gmail.com>
+Subject: Re: [PATCH] rev-list: use hdr_termination instead of a always using a newline
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2016 at 11:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
+On Thu, Oct 20, 2016 at 11:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->>> I am not sure if that is OK.  I think it is less not-OK than the use
->>> case I mentioned in my earlier message, in that this is not a case
->>> that "please don't do it" breaks.  It however is an inconvenience
->>> that the user has to say "git add file" before the "git commit" (or
->>> "git commit file") to conclude the sequence.
->>>
->>> So I dunno.
->>
->> Hmmm.. Ya ok I don't think we can actually distinguish between these
->> two work flows.
->
-> What we might want to have in "git commit <paths>" is a new mode
-> that is totally different from -i/-o that says roughly "Start from
-> the tree of HEAD, pretend as if you removed all the paths that match
-> the given pathspec from the tree, and then added all the entries in
-> the index that match that pathspec.  Write that tree and commit.
-> Take nothing from the working tree".  I have a feeling that when
-> people do
->
->         $ git add -p file1 file2 file3
->         $ git commit file2
->
-> and ends up including _all_ changes made to file2, not just the ones
-> they picked in the earlier part of the workflow, they are expecting
-> such a behaviour.
+> The main part of the patch looks good.  For "passing NUL to sed",
+> I'd probably work it around like so:
 >
 
-Right now I think people who use it intentionally do expect it to work
-that way. I just happen to not have wanted to add <file> but did so
-anyways without considering, and thus I ended up including changes
-that were for the next commit.
+Yep. I wasn't sure on the test as it was, because of the portability concern.
 
-As long as there is a way to change "git commit" default from that
-mode then we could make the default work and then let people configure
-it to what makes sense.
+>  t/t6000-rev-list-misc.sh | 19 +++++++++++--------
+>  1 file changed, 11 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+> index e8c6979baf..737026c34f 100755
+> --- a/t/t6000-rev-list-misc.sh
+> +++ b/t/t6000-rev-list-misc.sh
+> @@ -4,12 +4,6 @@ test_description='miscellaneous rev-list tests'
+>
+>  . ./test-lib.sh
+>
+> -test_ends_with_nul() {
+> -       printf "\0" >nul
+> -       sed '$!d' "$@" >contents
+> -       test_cmp_bin nul contents
+> -}
+> -
+>  test_expect_success setup '
+>         echo content1 >wanted_file &&
+>         echo content2 >unwanted_file &&
+> @@ -107,8 +101,17 @@ test_expect_success '--bisect and --first-parent can not be combined' '
+>  '
+>
+>  test_expect_success '--header shows a NUL after each commit' '
+> -       git rev-list --header --max-count=1 HEAD | sed \$!d >actual &&
+> -       test_ends_with_nul actual
+> +       # We know there is no Q in the true payload; names and
+> +       # addresses of the authors and the committers do not have
+> +       # any, and object names or header names do not, either.
+> +       git rev-list --header --max-count=2 HEAD |
+> +       nul_to_q |
+> +       grep "^Q" >actual &&
+> +       cat >expect <<-EOF &&
+> +       Q$(git rev-parse HEAD~1)
+> +       Q
+> +       EOF
+> +       test_cmp expect actual
+>  '
+>
+>  test_done
 
-I'll take a look at going this route.
+I will squash this in and re-send.
 
 Thanks,
 Jake
