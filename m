@@ -2,94 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24B6B1F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 16:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FCF61F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 16:57:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934842AbcJTQk3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 12:40:29 -0400
-Received: from mout.web.de ([217.72.192.78]:50286 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753428AbcJTQk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 12:40:28 -0400
-Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LnS4I-1caARO0El4-00hcT3; Thu, 20 Oct 2016 18:40:20
- +0200
-Subject: Re: Drastic jump in the time required for the test suite
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
- <CACsJy8ALRjnvgM6sW5ioFHtquSR6zgQHkQ6-LUnKFnqXV9eDCQ@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <e0e320ce-14a1-b4a8-aa07-6bc4f3c4a424@web.de>
-Date:   Thu, 20 Oct 2016 18:40:18 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1752565AbcJTQ5E (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 12:57:04 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:35219 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751203AbcJTQ5D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 12:57:03 -0400
+Received: by mail-qt0-f195.google.com with SMTP id g49so2223122qtc.2
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 09:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=TnvnVW4LWp4rA0UNR3PcniHxaBxQLixONwVvYvDDQLg=;
+        b=GSBpqNrHI+j7PSbl5coc6awRIHCyRZtvhfoNV0nweRqFNovtU5W+rghhroHrdkJIe+
+         8B2s6EgBDJWYDiCUXY5H62NNDpNDLTOxf4ZqYPy1aR2nJT+n7aulA5MTrJG18J9u45fI
+         8E8X2lqpGMcAKzmWnzGNvCJg7qeTsBt8kHoYceMUWRx/x9q/MbYDxiNwjBiTbftY4fEM
+         mCVKcFUloCaPW2IwrPenCtt8Ir8yOiVnrx/z77aHw3EhGXmYjEFNmRsARNseZ9WP7peq
+         ASTZ/Tjto4GcynScMc5C0dlXHWq0YN1TtS5XweJgRYN+pZN17MGgenErjjqijTCegAQo
+         Ohag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TnvnVW4LWp4rA0UNR3PcniHxaBxQLixONwVvYvDDQLg=;
+        b=NHQ++M6yvkao0hYvJBofm7TmAQpR9fWO4UtZVjX+4a0FhD0YNe9ty/2kVc6PFihJMH
+         LjxerLIbYzgcvEtbzmrsNJmg8yesAGR3GaC62c6di1t7HUS2foacv0bbTBZTFwakoeFA
+         bczQFZiIhi4gYN23nKBhug1S1cDwRLMcIXprdqLOevXKbCHSunMKMyeOgCh54/U7oiJO
+         0lPHzMpW6xcHaPNsYC7FAxIRijg+gS0GrhPm7EDWJM5EHvXAymMnHPdKTeWZFedyExlX
+         xxwi7mWtlDNff13oOA9GghWYh8qHP0KAdYk2hV3dB//BD37J/6mBImSWhQzDZAa14d/m
+         sFZQ==
+X-Gm-Message-State: ABUngvflF5lIGtMeCKKsTkEt3WcQpFqfxveUehQbpThIbEMoCw9y/uoh++PAWyPnxU4EBJDi
+X-Received: by 10.237.33.147 with SMTP id l19mr1342016qtc.58.1476982622564;
+        Thu, 20 Oct 2016 09:57:02 -0700 (PDT)
+Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-12.NATPOOL.NYU.EDU. [216.165.95.1])
+        by smtp.gmail.com with ESMTPSA id z188sm24046208qkb.8.2016.10.20.09.57.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Oct 2016 09:57:01 -0700 (PDT)
+Date:   Thu, 20 Oct 2016 12:57:01 -0400
+From:   Santiago Torres <santiago@nyu.edu>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+        walters@verbum.org, Lukas Puehringer <luk.puehringer@gmail.com>
+Subject: Re: [PATCH 2/2] tag: send fully qualified refnames to
+ verify_tag_and_format
+Message-ID: <20161020165700.qwgli5mbya3d7nzz@LykOS.localdomain>
+References: <20161019203520.zevkb75at2nrogdm@sigill.intra.peff.net>
+ <20161019203943.epjxnfci7vcqg4xv@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8ALRjnvgM6sW5ioFHtquSR6zgQHkQ6-LUnKFnqXV9eDCQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:hgw1Ydj8R97/FnxH35wo52+uFjc4srA5LSIobjsHDjt+igE22yR
- kjdexPimCZFhVkHkFJSEQj0tndbsO+iVbHeKGL0jXlenKBPK1fOMlT+INLR2tPksdHyyKy4
- al6tX4Evh8IwBlvhuvhH9lXo2TvWyMS8XsJCXerwzer9sQaEuMT4vr7OBc1QAPtwUHYXQFi
- t79d9nCsuq1qB89KL58QQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:A/pLpZ965WA=:9lAdiMrO8kOx11Ry+pji/l
- llFXi4qBbskT+OiJIjUUc9kMcOAgpEuRLtVZi+DJodcPCbektQthyzCuEhFMqXz6zYMFPCP24
- +AzWHxd0a0HCrHlER2pXoIyEawwaVobLcLrqb1F2oEp57sFGelJUIl93h7TTo4K+N4ZcaMEe2
- xUZIK/Ye8s3YjKqw9gvbgm8iM6HSRRxCRCVpk9Yv+H6FRj606k/1CIZLm/93okNR2PWPZXp7Q
- uOfGNpFfkytI77/AE87bTOqGminC9oYxxwe95ntQSwfYWKsKhxpuk+xXmokrak9buabWOHG8Y
- H+Xuf2IwsTciLj2hzpbWNHZUytXaSCez+bsxCFnmgtctbAC5ni2QWIna0hJc/p89ucm67noD2
- euN4R4zQx6x/TuHTwPGLguWwnm48aLsyVGm6bBxHaIM+HTm7OGg5dru5OOnf9wLIb7QGYJdaL
- 3w7zvVPuDFd0Y0jzOnz8oSinHZ3mE09lp0VcGVWYVir45YnIq3zzy5rTrwCvoBfberrPW8vkY
- 9etcfDJEeoJNbA7HV+nzz6//Cda8cwymaHhETevki9FlfPkbCOuanfXojuN3rAudvMaJbmva9
- wbKPsTHYevC/IX6h2czqPVESCAmM2EczQHr1CWFgMcCc+zwQgcYI1gv0vAT2MxT7QQ597fd8V
- jy6XjiwHLCdNTuB4H6Hqa4cWm5WTRaNsNnPOVtx7R629Tcshe72yT5cDzHRxm+lns5eqTU42r
- yjqMu6sARDM+6H61r5DccmTRP9Jri+tl/tnk4fjcXJGb6Iq4m/2dXJEn5gyEstMQnxiRY8kvU
- E7XNxJg
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="bncfmi72et2upbvt"
+Content-Disposition: inline
+In-Reply-To: <20161019203943.epjxnfci7vcqg4xv@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.10.2016 um 13:02 schrieb Duy Nguyen:
-> On Wed, Oct 19, 2016 at 4:18 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi Junio,
->>
->> I know you are a fan of testing things thoroughly in the test suite, but I
->> have to say that it is getting out of hand, in particular due to our
->> over-use of shell script idioms (which really only run fast on Linux, not
->> a good idea for a portable software).
->>
->> My builds of `pu` now time out, after running for 3h straight in the VM
->> dedicated to perform the daily routine of building and testing the git.git
->> branches in Git for Windows' SDK. For comparison, `next` passes build &
->> tests in 2.6h. That is quite the jump.
-> 
-> I'm just curious, will running git.exe from WSL [1] help speed things
-> up a bit (or, hopefully, a lot)? I'm assuming that shell's speed in
-> WSL is quite fast.
-> 
-> I'm pretty sure the test suite would need some adaptation, but if the
-> speedup is significant, maybe it's worth spending time on.
-> 
-> [1] https://news.ycombinator.com/item?id=12748395
 
-I get this on WSL with prove -j8:
+--bncfmi72et2upbvt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Files=750, Tests=13657, 906 wallclock secs ( 8.51 usr 17.17 sys + 282.62 cusr 3731.85 csys = 4040.15 CPU)
+On Wed, Oct 19, 2016 at 04:39:44PM -0400, Jeff King wrote:
+> The ref-filter code generally expects to see fully qualified
+> refs, so that things like "%(refname)" and "%(refname:short)"
+> work as expected. We can do so easily from git-tag, which
+> always works with refnames in the refs/tags namespace. As a
+> bonus, we can drop the "kind" parameter from
+> pretty_print_ref() and just deduce it automatically.
+>=20
+> Unfortunately, things are not so simple for verify-tag,
+> which takes an arbitrary sha1 expression. It has no clue if
+> a refname as used or not, and whether it was in the
+> refs/tags namespace.
+>=20
+> In an ideal world, get_sha1_with_context() would optionally
+> tell us about any refs we resolved while it was working, and
+> we could just feed that refname (and then in cases where we
+> didn't use a ref at all, like a bare sha1, we could fallback
+> to just showing the sha1 name the user gave us).
+>=20
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I think you'd really just squash the various bits of this into your
+> series at the right spots, though I don't mind it on top, either.
+>=20
+> The big question is to what degree we should care about the verify-tag
+> case. I don't think it's any worse off with this change than it is with
+> your series (its "kind" becomes "OTHER", but I don't think that is
+> actually used for display at all; the name remains the same). I'd be OK
+> with leaving it like this, as a known bug, until get_sha1_with_context()
+> learns to tell us about the ref. It's an unhandled corner case in a
+> brand-new feature, not a regression in an existing one.
 
-And this for a run on Debian inside a Hyper-V VM on the same system:
+I see now, I think I can sprinkle some of these changes on 2/7 then. The
+rest should be doing 4/7 and 5/7. Does this sound ok?
 
-Files=759, Tests=13895, 99 wallclock secs ( 4.81 usr  1.06 sys + 39.70 cusr 25.82 csys = 71.39 CPU)
+--bncfmi72et2upbvt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-All tests pass on master.
+-----BEGIN PGP SIGNATURE-----
 
-René
+iQIcBAEBCAAGBQJYCPdaAAoJEEaPEizoFiKV+k0P/0XIEZJ0pLb0H0QnWPzyyIk3
+AQfVVqVPaOVpJd2AptT9wh12dETuL3gezXHHj7NI1GA3+QEfi7R9rCHU6Lsl6ASy
+pUotJHc/T0f9EilDm+4DVLk8NKzestyDAWdnjDTHHH27uSr0SIKtM2bn1sn5taze
+qSKO67rvA1ZDtLzDoqdFzbxVt0rk+/e2ABzokNEBPAtXuOqKViZKLbotfBS07CqB
+MHH09iCIEcMO6k0qPxm32+VFKyKDf7nc8J8vh13oNSRRYR9sz5O6CmALM8QoeISw
+6iUwIlV6FyYdd4Uk5zvmmh1T7BhVW1u3PwITEBZYtmIlOWKLY/DUbADNGua8DQ9h
+8UM9Q0U3FzRaVsn3joVaKgygC2xElMSYsgSBhP8LzDSeQsBB6fiXiEVeg3XC3pzL
+rROIWQmUplZzy3A+IvJR21CXz6lmg458blcdjPX+KvCrPBZlo0xgO9VbJ0GOiYH0
+ZDXQbNkFkYZPEUlZPWE4kAidbr4a90ljrdhgU8yHLVg5PhLURGas8+9TelJPSaQp
+r3wGvf5LlQuzsR4lxxBXGmj5GbEHKB/lgHlsZG0qFl6ousCRuTQ83n/EEVckTSTZ
+g4Fyhou1m09VZ2yL1NchTKgjz1UXS2Kpd20VSwsref//2y4TEgJl14Ycy/eochjF
+TR6kcnkpiGYGfT5plkZm
+=QaoJ
+-----END PGP SIGNATURE-----
 
+--bncfmi72et2upbvt--
