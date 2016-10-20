@@ -2,103 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76E4C20987
-	for <e@80x24.org>; Thu, 20 Oct 2016 10:50:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9712B20987
+	for <e@80x24.org>; Thu, 20 Oct 2016 11:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755896AbcJTKu5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 06:50:57 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55662 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752274AbcJTKu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 06:50:56 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MHrk1-1bwMVz0Fqv-003dhE; Thu, 20 Oct 2016 12:50:34
- +0200
-Date:   Thu, 20 Oct 2016 12:50:32 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Drastic jump in the time required for the test suite
-In-Reply-To: <20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1610201218060.3264@virtualbox>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox> <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com> <20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932582AbcJTLDZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 07:03:25 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:37648 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932548AbcJTLDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 07:03:24 -0400
+Received: by mail-it0-f44.google.com with SMTP id m138so86321344itm.0
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 04:03:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=B4ojl/k0HGdZOqWsRL3R+xS5y+laM5UC8OHKr2LFqb4=;
+        b=dg5dqHEJXaqF3IfJkGQ9fv/fQpzsiRcSQlAAY/hwc3pmuJ98a4GbHwTvM+V4I1P87z
+         eJiMF86P+H0yOou+pqdXA1HbWhYNscWH8nHN/hzUkgUhTXTd9jA32/QQdnoRTz6g1w1h
+         ulQ7XZtamii22tZMyeqo4GMrDYjq26jG0XDQTpF4v5+N3DbV+mOn8784n4cmbk4tXx0H
+         QhwCWcQsy78nT9UC/zkSKAzDij+DFlzNPA5694ebekbapFAiAr0zIWzvHO/GP3fB2C53
+         nx+DIQ8EoPbRTfgHd0pXqwQrMrHCY70m3LxZMUOe8V8slYjPAKdFLKWX2cZMg5RHEYgy
+         5vxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=B4ojl/k0HGdZOqWsRL3R+xS5y+laM5UC8OHKr2LFqb4=;
+        b=aIblHkEk4edx0BP9lNmMiPBQO7mX7vXCKbzDoUNoZrwve+tFyiYERSvjqQ1uZz8xWO
+         Xl7+G9aDUvx6ajTL5iwQlT1zj/+elVmNv/zXe9X+9WR8zl21Brz0PPE+7i44gA+By7LU
+         Z/EQAxgU4Nf3Y5cAeBhmRApygkzdLAg611qoGzd1vF7/Iy3G/994CIq9nQChGu1JUjk5
+         qgD8/GUfPDyKgLswuuxWOJhAEUag2LFvsD/pGHqFWtFiPgS756YfFtiny0P2ADwsOZRz
+         HCCHEmg5JfJ3WHOBTEdqxNMWrkOeiaM2LUjQj0cawUixa4NgCCSde4/vwBroK7pmdeIS
+         N4UA==
+X-Gm-Message-State: ABUngveBa6BlkhSD+j5E7Tj0RqbnCCcnwL3Uc0shxZp9xl3TArwIWhtWqqphx0LfHhqeriFaSSeKILgc13o+aQ==
+X-Received: by 10.107.15.222 with SMTP id 91mr55588iop.19.1476961394761; Thu,
+ 20 Oct 2016 04:03:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:23UjxaJov4i2McovPy5IcjzicSPZf0HKdifI1IjwuR/vPjiZyJJ
- P5K2JZsHWAMRf/y6iDBXOYrKTeeF0huxZfWDbsgvNAeb1zaBHvtBw5q/Bm9CJUj2SC9nHdz
- 65pgTeigGiKsn2pZmShMRIHb95xUW/3aBbKeru/+8Es0dWTQsrSE90zWiSZimcNYTB25+1s
- qGpg+lGytD4PXJaF1Axeg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LLCPmknGroA=:TZhAXK+6UHuf5ZwAQ8GSIk
- ekvauuQDtbAGaexbbSMYzgVlfViBZEzSpE5l5M1ForxD5mLcElncWwsc3D69DCTeE2/+FmkCG
- PVc20tVbmT35WXKYGtiho6Ug4NlqP+TDF5cgbxRgHyvYxVHON8fxvyNERQB0YRBcBWjVDs/0+
- uh0uT04azr6O/JnJSPC4FXR/27kZnS+SmRK5lnV6QcMjXS3M/ANkSWFJw+5tyiBxwsjP87Van
- MqYW5WxTkYGqeG5z+/SMPX42hxDc0YMRZkcmd+6FN2nnGGUfnJKGXhoiOpjQuPYFAvQSTpDWR
- Bk58sUI2xszIn5AEozdxuWBdp3+V4LaH5+tywlMRSCTUMTu13/B0umoqENjERh3iEjxIeC62Y
- bxtnYUwU2e/y3nrI7sVyiZSsCZ1qzoM99D0wfcdiPEprETmDRMAcj7Mo5I+UV6/6SChdVktTM
- 04zA2GIxdRGwHeI+C01zjfDUnZ3aWQlzbNggdnmnJS1TERsmRa5AVr+eWnkzPu+DX2eyx3+A9
- pBvCFpC9hpuz5QJLfNGuAANCqnMNkuFfrrnnzPLcwGz80R5KEzA9oAqFyzdcm6PloJ7T/YHJ0
- Ey5iGpOaI2MNZXar1tmKGEhQxdJYLVI24xFdIm/G4FSt34s104DuRuoTZPxOA2RYU0ZV1sSZd
- 2yYaDKaobrnwlPJ6Gp+hPyWarK69Lwkk7Z+UYtb8WHSFy8GkgjHEc5ir9SbwvhP9SsrV6SAaP
- gKy9eK7LcJWztvPqmgCrd7G7rgNbmAm0P1WVKdKOrpRPxYXh0797VkDpeqleG168nZf4FUX0q
- 5/xW8lg
+Received: by 10.64.164.102 with HTTP; Thu, 20 Oct 2016 04:02:43 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 20 Oct 2016 18:02:43 +0700
+Message-ID: <CACsJy8ALRjnvgM6sW5ioFHtquSR6zgQHkQ6-LUnKFnqXV9eDCQ@mail.gmail.com>
+Subject: Re: Drastic jump in the time required for the test suite
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi peff,
+On Wed, Oct 19, 2016 at 4:18 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Junio,
+>
+> I know you are a fan of testing things thoroughly in the test suite, but I
+> have to say that it is getting out of hand, in particular due to our
+> over-use of shell script idioms (which really only run fast on Linux, not
+> a good idea for a portable software).
+>
+> My builds of `pu` now time out, after running for 3h straight in the VM
+> dedicated to perform the daily routine of building and testing the git.git
+> branches in Git for Windows' SDK. For comparison, `next` passes build &
+> tests in 2.6h. That is quite the jump.
 
-On Wed, 19 Oct 2016, Jeff King wrote:
+I'm just curious, will running git.exe from WSL [1] help speed things
+up a bit (or, hopefully, a lot)? I'm assuming that shell's speed in
+WSL is quite fast.
 
-> On Wed, Oct 19, 2016 at 10:32:12AM -0700, Junio C Hamano wrote:
-> 
-> > > Maybe we should start optimizing the tests...
-> > 
-> > Yup, two things that come to mind are to identify long ones and see if
-> > each of them can be split into two halves that can be run in parallel,
-> > and to go through the tests with fine toothed comb and remove the ones
-> > that test exactly the same thing as another test.  The latter would be
-> > very time consuming, though.
-> 
-> FWIW, I have made attempts at "split long ones into two" before, and
-> didn't come up with much. There _are_ some tests that are much longer
-> than others[1], but they are not longer than the whole suite takes to
-> run. So running in slow-to-fast order means they start first, are run in
-> parallel with the other tests, and the CPUs stay relatively full through
-> the whole run.
+I'm pretty sure the test suite would need some adaptation, but if the
+speedup is significant, maybe it's worth spending time on.
 
-That reflects my findings, too. I want to add that I found preciously
-little difference between running slow-to-fast and running in numeric
-order, so I gave up on optimizing on that front.
-
->     43.216765165329 t3404-rebase-interactive.sh
->     30.6568658351898 t3421-rebase-topology-linear.sh
->     27.92564702034 t9001-send-email.sh
->     15.5906939506531 t9500-gitweb-standalone-no-errors.sh
->     15.4882569313049 t6030-bisect-porcelain.sh
->     14.487174987793 t7610-mergetool.sh
->     13.8276169300079 t3425-rebase-topology-merges.sh
->     12.7450480461121 t3426-rebase-submodule.sh
->     12.4915001392365 t3415-rebase-autosquash.sh
->     11.8122401237488 t5572-pull-submodule.sh
-
-That looks very similar to what I found: t3404 on top, followed by t3421.
-
-Further, I found that the Subversion tests (which run at the end) are so
-close in their running time that running the tests in parallel with -j5
-does not result in any noticeable improvement when reordered.
-
-I guess I will have to bite into the sour apple and try to profile, say,
-t3404 somehow, including all the shell scripting stuff, to identify where
-exactly all that time is lost. My guess is that it boils down to
-gazillions of calls to programs like expr.exe or merely subshells.
-
-Ciao,
-Dscho
+[1] https://news.ycombinator.com/item?id=12748395
+-- 
+Duy
