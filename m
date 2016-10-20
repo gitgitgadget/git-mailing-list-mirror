@@ -2,119 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F41DA1F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 23:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 587731F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 23:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754127AbcJTXkT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 19:40:19 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:64119 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752409AbcJTXkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 19:40:18 -0400
-Received: from localhost.localdomain ([92.22.58.114])
-        by smtp.talktalk.net with SMTP
-        id xMwZb9jI7HGLwxMwZbUMLN; Fri, 21 Oct 2016 00:40:15 +0100
-X-Originating-IP: [92.22.58.114]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=2Ll0YfBpv7lGbMD0z8GrYw==:117
- a=2Ll0YfBpv7lGbMD0z8GrYw==:17 a=anyJmfQTAAAA:8 a=5rxgeBVgAAAA:8
- a=1XWaLZrsAAAA:8 a=xtxXYLxNAAAA:8 a=3MHgWqVLjBDDWhyfIgMA:9
- a=6RyHdP9wf0s6W1bbVaoE2bQoMl4=:19 a=YJ_ntbLOlx1v6PCnmBeL:22
- a=PwKx63F5tFurRwaNxrlG:22 a=nJcEw6yWrPvoIXZ49MH8:22 a=xts0dhWdiJbonKbuqhAr:22
-From:   Philip Oakley <philipoakley@iee.org>
-To:     GitList <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH] doc: fix merge-base ASCII art tab spacing
-Date:   Fri, 21 Oct 2016 00:40:09 +0100
-Message-Id: <20161020234009.1768-1-philipoakley@iee.org>
-X-Mailer: git-send-email 2.9.0.windows.1.323.g0305acf
-X-CMAE-Envelope: MS4wfALkqIh6N33coFFjix3k5VRaX8Nte9O4lOwUguu77m6vuHV8VHyKOnwg3u4dVTg1XXkFkbClb+DVPsgFBiwRLJL/dGGm56ttw15hvfLv+6nivKRYxSgA
- QttuaoWTv+9YGiqQcEzjWA/rSvNO1HIEv/Po3BLr/HDQTIqJPOPvWEK0J+wfSq1fMDlcyXKpKWmBFRuQurlRmQePbudJenzqYMkGaC4ehM67UCc1/UEA5bSH
- CVstM+DmfescCqr3qdTD2Q==
+        id S1752778AbcJTXvI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 19:51:08 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:35617 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752343AbcJTXvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 19:51:07 -0400
+Received: by mail-qt0-f181.google.com with SMTP id f6so74015838qtd.2
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 16:51:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=53HGEzPJlndHwjvjODlrVAvtB1nrPyomh7+xgDWJOXI=;
+        b=Aau3qskRUPRZeowvLAdqgfuxqEHKv5pExvI+g9tOUWLH44/Vc937aLnMvEgGcwO4sW
+         20W95wHlFdk4uWPcAwO9BJbkX3gwOPLfZpo1xZje9U9fyq8r6MPEX18rqeYXJqNE0PUf
+         LFkErF4Q8NX3nHPw6SvwTcxOcGVn/D6TsqXdksJJx0sYw/2tmZN7livw3nj72Z6LlrBG
+         RV2gkfpiMkebcuOV3bqBZZzmCaOjYJ/TKWaccz3QQZtGV5jW1AUs7P0gq7Ii03oWl0WZ
+         OzsL8RMsOeD1D6Cv4cB0mwhNscw81cl8O/FXY4e3YTn11+OamYQufA7yIIwKz3mTl/0V
+         L6vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=53HGEzPJlndHwjvjODlrVAvtB1nrPyomh7+xgDWJOXI=;
+        b=MkPoiyf19xOjG0wa/OiJYwxKJZmW7RIk38WAbvanu/kZiv9lJPvbh1HvzUyVczh2sh
+         HpXrxzRoEt2+0mJP4llC+kamPx1+PbqMjLuE/8XJmSllfsBuzFLDlSzQcriBXu168pEK
+         KRz2NoYW716Czv7FjWLNUuuo9f3uaZVkZrau/ZnPDl8virbegsk+df4/wNlXnWfxBZvE
+         Orv7bfIVYFLRBf7YvH0CJWwpQeSby9h+YQj5kAZebcVJz/LGifnq9UpLW+TWv10gstIo
+         JWI/rNtdzM1OmokFIV50obORAJtBZ5q5Yu6kwPVfuGZrJRGFEkLLow+H+WY7WVoyvoVT
+         Ap/A==
+X-Gm-Message-State: ABUngvfDYnMisZkCDkCDjgTso49M68osbikl7N8CtHM1B211BPTZZrE5j8B7mJe1bl/oK4CClUzwepDTC3Eh+wee
+X-Received: by 10.200.51.240 with SMTP id d45mr3135156qtb.18.1477007466637;
+ Thu, 20 Oct 2016 16:51:06 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.135.40 with HTTP; Thu, 20 Oct 2016 16:51:06 -0700 (PDT)
+In-Reply-To: <20161020232915.GB3667@pug.qqx.org>
+References: <20161020232915.GB3667@pug.qqx.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 20 Oct 2016 16:51:06 -0700
+Message-ID: <CAGZ79kY69xtmPrwXWk6O6iSAYnViaO_R6_QY4KaX+qF51ouD6Q@mail.gmail.com>
+Subject: Re: A couple errors dealing with uninitialized submodules
+To:     Aaron Schrab <aaron@schrab.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The doc-tool stack does not always respect the 'tab = 8 spaces' rule,
-particularly the git-scm doc pages https://git-scm.com/docs/git-merge-base
-and the Git generated html pages.
+On Thu, Oct 20, 2016 at 4:29 PM, Aaron Schrab <aaron@schrab.com> wrote:
+> I was working with a fresh clone of a repository where I'd forgotten that
+> one of the directories was setup as a submodule, so I hadn't initialized it.
+>
+> I tried to add a symlink to a location outside the repository and this
+> failed with an assertion (exact text in comment below). When looking into
+> that I realized that the directory was meant to be a submodule and decided
+> to try to change that.  So I tried to remove the submodule, and got an error
+> (misleadingly) saying that couldn't be done because it uses a .git
+> directory.
+>
+> I first noticed this with git 2.9.3 from Debian unstable, but I also see it
+> building from v2.10.1-502-g6598894 fetched from master recently.
+>
+> The following script replicates both of these issues. These could both be
+> classified as "don't do that", although at lease the assertion is quite
+> ugly.
+>
+> --- >8 ----
+> #!/bin/sh -e
+>
+> directory=$(mktemp -d)
+> echo "Using directory '$directory'"
+> cd $directory
+> git init --quiet orig
+> (
+>  cd orig
+>  # Using a random, small repository for the submodule.
+>  git submodule --quiet add https://github.com/diepm/vim-rest-console.git sub
+>  git commit -m init >/dev/null
+> )
+> git clone --quiet orig dup
+> cd dup
+>
+> (
+>  cd sub
+>  ln -s /tmp/dont_care
+>  # Next command aborts with
+>  # git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len <=
+> item->len && item->prefix <= item->len' failed.`
 
-Use just spaces within the block of the ascii art.
+For this bug see
+https://public-inbox.org/git/CAFOYHZDw-P0ST8WKoSVxBpbFCiACZpgiDPMfw5MRtFTMosO0rg@mail.gmail.com/
+Specifically try this patch
+https://public-inbox.org/git/CAGZ79kZaZCwZ-cesB_voq0s0Qt+ipcgb6TkdzLE+EWSF_qRj7A@mail.gmail.com/
 
-Noticed when reviewing Junio's suggested update to `git merge-base`
-https://public-inbox.org/git/xmqqmvi2sj8f.fsf@gitster.mtv.corp.google.com/T/#u
-
-
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
-
-A fixed consistent prefix of tabs is OK, but once that lead is done, stay
-with spaces only.
-
-This complements the jc/merge-base-fp-only series.
-
----
- Documentation/git-merge-base.txt | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/Documentation/git-merge-base.txt b/Documentation/git-merge-base.txt
-index 808426f..b968b64 100644
---- a/Documentation/git-merge-base.txt
-+++ b/Documentation/git-merge-base.txt
-@@ -80,8 +80,8 @@ which is reachable from both 'A' and 'B' through the parent relationship.
- 
- For example, with this topology:
- 
--		 o---o---o---B
--		/
-+	         o---o---o---B
-+	        /
- 	---o---1---o---o---o---A
- 
- the merge base between 'A' and 'B' is '1'.
-@@ -116,11 +116,11 @@ the best common ancestor of all commits.
- When the history involves criss-cross merges, there can be more than one
- 'best' common ancestor for two commits.  For example, with this topology:
- 
--       ---1---o---A
--	   \ /
--	    X
--	   / \
--       ---2---o---o---B
-+	---1---o---A
-+	    \ /
-+	     X
-+	    / \
-+	---2---o---o---B
- 
- both '1' and '2' are merge-bases of A and B.  Neither one is better than
- the other (both are 'best' merge bases).  When the `--all` option is not given,
-@@ -154,13 +154,13 @@ topic origin/master`, the history of remote-tracking branch
- `origin/master` may have been rewound and rebuilt, leading to a
- history of this shape:
- 
--			 o---B1
--			/
-+	                 o---B1
-+	                /
- 	---o---o---B2--o---o---o---B (origin/master)
--		\
--		 B3
--		  \
--		   Derived (topic)
-+	        \
-+	         B3
-+	          \
-+	           Derived (topic)
- 
- where `origin/master` used to point at commits B3, B2, B1 and now it
- points at B, and your `topic` branch was started on top of it back
--- 
-2.9.0.windows.1.323.g0305acf
-
+>  git add . || : expected to fail
+> )
+>
+> rm -f .git/index.lock
+> # Next command fails with error wrongly saying that the submodule uses a
+> .git
+> # directory.  I believe that the real problem is that the uninitialized
+> # submodule has content.
+> git rm sub
