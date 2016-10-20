@@ -2,107 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84EF11F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 18:14:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72F181F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 18:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932222AbcJTSOT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 14:14:19 -0400
-Received: from mail-yb0-f177.google.com ([209.85.213.177]:35275 "EHLO
-        mail-yb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752894AbcJTSOS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 14:14:18 -0400
-Received: by mail-yb0-f177.google.com with SMTP id 184so31157400yby.2
-        for <git@vger.kernel.org>; Thu, 20 Oct 2016 11:14:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FGDnwZR2kRgk1XrUj6WfbQ3yqZkRh5iLjKWEhDHDrh0=;
-        b=Xau4ZAd+R9JddiEZBUUJeq8kQXkRohGe9EuLKeofdcmI4VqslaPhUBEK0cEB44dOxa
-         GJPxs/RYf1eDBWsvQugqP8Y4iKviEUjgzgdE24kGlVGtnsZZqnQi9xNnJv2MG9ubXmrg
-         uF7l6L5TM5fYaOJPJrYn8GUF40QoZm1RFdrnhUw+wIw/z2ypQSDp9ReluKYTR1E2tPVx
-         niuJ2lmV2UvVzoAvT85jyJlBWuH7ga2x09y/DM1hjCV3X+RicrTw0543Ae/VEa2a07X7
-         FVJcRN5Ei6FDu7Egc7bSl0/+VIDdjXmwbkx3Z7dBEsM2S+uDhwCzW/8+4l2aDIA4r8Gt
-         HYZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FGDnwZR2kRgk1XrUj6WfbQ3yqZkRh5iLjKWEhDHDrh0=;
-        b=EhpqQxRaHP7nraT9gbantMf4ZKJEZS5S1jRb3uf42fuLzRR0Y3txtfw1Mfut9Cyzgs
-         i6yG4alDE3oNhZoEV+BCY6S1umCP+AroP4OnZEpbznKG4GAqfCw1udMxRXw96kxXu5M5
-         lOfAtGFNWj6SrjD+rUbASfRPvHtzO+FhTdG6HVWuJAOynRStKi+OQI78doiChRwX+kmB
-         pd9mwXiMVf6N2PGJ0ofbc91n43/EI5/s3SzfIh/M9/aHqyU5aDhxbH1Jd1EPqY12gSyN
-         EPr4iDDju6gZdTI578z+LRtcwoZdBSb83xlYzq9W1h6FoGIgUDhsZUmMZeWtMKtzs8kP
-         oo+Q==
-X-Gm-Message-State: AA6/9RkXcrTh06/NT3hlFBIirsNkNohYLuTvSXPv7t/uKUiWZYUWTzQMjqgZmemyUciEJ9YsJuwCj81JoxxNXA==
-X-Received: by 10.37.61.198 with SMTP id k189mr3380806yba.57.1476987257968;
- Thu, 20 Oct 2016 11:14:17 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.10.2 with HTTP; Thu, 20 Oct 2016 11:13:57 -0700 (PDT)
-In-Reply-To: <xmqqwph2hqdg.fsf@gitster.mtv.corp.google.com>
-References: <CA+P7+xqFOn4NSfZ2zpa_y1za3uHZrGGG3ktEtuOcvJLCrAYUhQ@mail.gmail.com>
- <20161019224211.k4anavgqrhmunz6p@sigill.intra.peff.net> <CA+P7+xprKV1Y7VShLR9uNgcpVdZk39xoTfkwiin1bVQYTe_TAA@mail.gmail.com>
- <20161020021323.tav5glu7xy4u7mtj@sigill.intra.peff.net> <xmqqa8dzhtki.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xq25LcdmtzmBNChiGhGratcdp7m0EOsQuEh68=gJQ9HNQ@mail.gmail.com> <xmqqwph2hqdg.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 20 Oct 2016 11:13:57 -0700
-Message-ID: <CA+P7+xqbqfCTOHJZJ9ZGXv3oeSvKUdJByc8mdzoAoXRd7UZ6HA@mail.gmail.com>
-Subject: Re: tools for easily "uncommitting" parts of a patch I just commited?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1753483AbcJTSTe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 14:19:34 -0400
+Received: from mga06.intel.com ([134.134.136.31]:64875 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752101AbcJTSTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 14:19:34 -0400
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga104.jf.intel.com with ESMTP; 20 Oct 2016 11:19:33 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.31,372,1473145200"; 
+   d="scan'208";a="21777808"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
+  by fmsmga006.fm.intel.com with ESMTP; 20 Oct 2016 11:19:33 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH] rev-list: use hdr_termination instead of a always using a newline
+Date:   Thu, 20 Oct 2016 11:19:30 -0700
+Message-Id: <20161020181930.21084-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.10.0.560.g867c144
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2016 at 10:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->> I still think we're misunderstanding. I want git commit to complain
->> *only* under the following circumstance:
->>
->> I run "git add -p" and put a partial change into the index in <file>.
->> There are still other parts which were not added to the index yet.
->> Thus, the index version of the file and the actual file differ.
->>
->> Then, I (accidentally) run "git commit <file>"
->
-> I agree that this case is different.
->
-> Again, users are different, and I also often do
->
->     $ edit file; think; decide it is a good enough first cut
->     $ git add file
->     $ edit file; think; decide it is getting better
->     $ git add file
->     $ edit file; think; decide it is now perfect
->     $ git commit file
->
-> Because I do not think you can differentiate the above workflow from
-> the case where "git add -p" was used earlier, I think your updated
-> "git commit" needs to complain at this point.
->
-> I am not sure if that is OK.  I think it is less not-OK than the use
-> case I mentioned in my earlier message, in that this is not a case
-> that "please don't do it" breaks.  It however is an inconvenience
-> that the user has to say "git add file" before the "git commit" (or
-> "git commit file") to conclude the sequence.
->
-> So I dunno.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Hmmm.. Ya ok I don't think we can actually distinguish between these
-two work flows.
+When adding support for prefixing output of log and other commands using
+--line-prefix, commit 660e113ce118 ("graph: add support for
+--line-prefix on all graph-aware output", 2016-08-31) accidentally
+broke rev-list --header output.
 
-Given that I now know how to fix my mistake easily (git reset -p) I
-think I will just go ahead and not bother with this as it's much less
-of a pain now.
+In order to make the output appear with a line-prefix, the flow was
+changed to always use the graph subsystem for display. Unfortunately
+the graph flow in rev-list did not use info->hdr_termination as it was
+assumed that graph output would never need to putput NULs.
 
-Thanks,
-Jake
+Since we now always use the graph code in order to handle the case of
+line-prefix, simply replace putchar('\n') with
+putchar(info->hdr_termination) which will correct this issue.
+
+Add a test for the --header case to make sure we don't break it in the
+future. Implement a helper function test_ends_with_nul() to make it more
+obvious what sort of check we are looking for.
+
+Reported-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+
+Here's my solution, with an updated test using a helper function based
+on using sed (which I think is more portable than tail -n1 ?). The
+change actually is very simple. I ran the test suite and it appears to
+be not breaking anyone else since the normal case is
+hdr_termination="\n" except in the cases where it needs to be NUL.
+
+Thanks for the bug report!
+
+ builtin/rev-list.c       |  2 +-
+ t/t6000-rev-list-misc.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 8479f6ed28aa..c43decda7011 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -145,7 +145,7 @@ static void show_commit(struct commit *commit, void *data)
+ 			 */
+ 			if (buf.len && buf.buf[buf.len - 1] == '\n')
+ 				graph_show_padding(revs->graph);
+-			putchar('\n');
++			putchar(info->hdr_termination);
+ 		} else {
+ 			/*
+ 			 * If the message buffer is empty, just show
+diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+index 3e752ce03280..e8c6979baf59 100755
+--- a/t/t6000-rev-list-misc.sh
++++ b/t/t6000-rev-list-misc.sh
+@@ -4,6 +4,12 @@ test_description='miscellaneous rev-list tests'
+ 
+ . ./test-lib.sh
+ 
++test_ends_with_nul() {
++	printf "\0" >nul
++	sed '$!d' "$@" >contents
++	test_cmp_bin nul contents
++}
++
+ test_expect_success setup '
+ 	echo content1 >wanted_file &&
+ 	echo content2 >unwanted_file &&
+@@ -100,4 +106,9 @@ test_expect_success '--bisect and --first-parent can not be combined' '
+ 	test_must_fail git rev-list --bisect --first-parent HEAD
+ '
+ 
++test_expect_success '--header shows a NUL after each commit' '
++	git rev-list --header --max-count=1 HEAD | sed \$!d >actual &&
++	test_ends_with_nul actual
++'
++
+ test_done
+-- 
+2.10.0.560.g867c144
+
