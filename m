@@ -2,90 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 841891F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 17:11:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 938C81F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 17:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934052AbcJTRLG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 13:11:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50331 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933403AbcJTRLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 13:11:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F379467CC;
-        Thu, 20 Oct 2016 13:11:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vSEVdz89a24U
-        9C8p+6M1csQ3Pbs=; b=aoGyMHJxTveqKBD7xgSiJKk6Fp87eVDfnhB6ZdyS4d+/
-        Y9A7Gg1oveyUp8xNYF6h+c3OOfx7mJKYbMdeXooJSAs1vXnoViAFFXi8CGLgg+eG
-        qVckd58EsFXPKp5NiYeLBFS5f/lsqaYzsn8ZTBBvfAHdhDbsMmuJ9pbtoB1P200=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jNdz5/
-        83zn4NSxXs8WrjTswcit6adsLmAOhY04LujeoSGo1rY4bBxxiWOZJdsZRk2K72/7
-        1akBPh8thkrDnuz5GRmEBhTboHPID9CRezl1hM3R02csDPiiY31k2a0dNWAzbonj
-        HVcijaRNWLgW9hB2olABMIIrfriln4KnKiKRE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12491467CB;
-        Thu, 20 Oct 2016 13:11:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68533467CA;
-        Thu, 20 Oct 2016 13:11:03 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-        Jakub =?utf-8?Q?Na?= =?utf-8?Q?r=C4=99bski?= <jnareb@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v4 05/14] i18n: add--interactive: mark plural strings
-References: <20161010125449.7929-1-vascomalmeida@sapo.pt>
-        <20161010125449.7929-6-vascomalmeida@sapo.pt>
-        <1476981335.14459.19.camel@sapo.pt>
-Date:   Thu, 20 Oct 2016 10:11:00 -0700
-In-Reply-To: <1476981335.14459.19.camel@sapo.pt> (Vasco Almeida's message of
-        "Thu, 20 Oct 2016 16:35:35 +0000")
-Message-ID: <xmqq37jrhrob.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S936469AbcJTROG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 13:14:06 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33235 "EHLO mx1.imag.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933403AbcJTRNy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 13:13:54 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9KHDjce005783
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Thu, 20 Oct 2016 19:13:46 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9KHDlKN029374;
+        Thu, 20 Oct 2016 19:13:47 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Drastic jump in the time required for the test suite
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+        <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1610201154070.3264@virtualbox>
+        <xmqqmvhzhu6f.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 20 Oct 2016 19:13:47 +0200
+In-Reply-To: <xmqqmvhzhu6f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 20 Oct 2016 09:16:56 -0700")
+Message-ID: <vpqinsnndtg.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2E48A78E-96E8-11E6-9320-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 20 Oct 2016 19:13:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9KHDjce005783
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1477588426.43702@FsH3v/YVRT74rEDFzVZtSQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> A Seg, 10-10-2016 =C3=A0s 12:54 +0000, Vasco Almeida escreveu:
->> @@ -70,6 +72,8 @@ Git::I18N - Perl interface to Git's Gettext localiza=
-tions
->> =20
->>         printf __("The following error occurred: %s\n"), $error;
->> =20
->> +       printf __n("commited %d file", "commited %d files", $files), $=
-files;
->> +
->
-> I forgot to add \n to this example as suggested in
-> <xmqqoa2ymnb1.fsf@gitster.mtv.corp.google.com>
->
-> What should I do? Should I wait for more reviews and then send a new
-> re-roll fixing this?
+> Are you proposing to replace the tests written as shell scripts with
+> scripts in another language or framework that run equivalent
+> sequences of git commands that is as portable as, if not more,
+> Bourne shell?
 
-You fix it up locally not to forget, in case you need a reroll, and
-wait for more reviews.  In the meantime, I'll also fix it up locally
-not to forget ;-)  That way, if it turns out that this round is good
-enough to be the final version, people will see my fixup, and if what
-I have needs to be replaced with your new version, your fixup will
-be in there.
+The language (/bin/sh) is probably not the biggest issue. The way we use
+it may be.
 
-Thanks.
+I don't have benchmark to tell what slows down the testsuite, but for
+example we often write
+
+	cat >expected <<EOF &&
+	content
+	EOF
+	git foo >actual &&
+	test_cmp expected actual
+
+We create 2 files, fork one 'cat' and one 'diff'. Now, suppose we can
+write instead
+
+	test_check_output git foo <<EOF
+	content
+	EOF
+
+where test_check_output would be a compiled program running "git foo"
+with popen(), reading the expected output on stdin, and comparing both
+(and possibly creating files and forking 'diff', but only on the error
+path). That would reduce the overhead of test a lot: on fork+exec to
+create the "test_check_output" process + plain string comparison.
+
+Obviously, I don't expect this change to drastically reduce the time
+(Peff's numbers seem to suggest that there's not so much to gain), but
+maybe getting a few C helpers and "optimized" idioms in our testsuite
+could lead to measurable improvements.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
