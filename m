@@ -2,84 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CF671F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 16:30:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC961F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 16:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754314AbcJTQaM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 12:30:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54888 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753907AbcJTQaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 12:30:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8350846A2C;
-        Thu, 20 Oct 2016 12:30:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fOUb11qIQKpLJp+bNlA412kiclQ=; b=JHIjow
-        qnkQH/SBB06JaTIPPOebh1jCl9mYzN5p15/5Veuqg4fCPkVjxviS+C7Yw6HPy/Q7
-        AR/EuT0MMd364k1548Dz4x0tbhhGPv+sw9PomVZnfZ/mZNkjPz2oA4oM6Cyejzp2
-        3e8zpTHdoWtONiV4RG3vxpBlVv90o9rgdQ+1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YVk+RB/dFhcypylr+YZAecWQ0XlUodJO
-        wDRpc3eofl7shoGAroVKvuOpfyZqxZFgiziTdP6b4CcMW3kN+eJtWfpcHNp+U4ul
-        xG8uuMPUX2Jlv5fktyV59v2K+5718rrjwlqo8VrATwl2pQa35Y35Xi9exyZRF2Ii
-        pti/gBxlQyc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A9E946A23;
-        Thu, 20 Oct 2016 12:30:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E2BB646A21;
-        Thu, 20 Oct 2016 12:30:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: tools for easily "uncommitting" parts of a patch I just commited?
-References: <CA+P7+xqFOn4NSfZ2zpa_y1za3uHZrGGG3ktEtuOcvJLCrAYUhQ@mail.gmail.com>
-        <20161019224211.k4anavgqrhmunz6p@sigill.intra.peff.net>
-        <CA+P7+xprKV1Y7VShLR9uNgcpVdZk39xoTfkwiin1bVQYTe_TAA@mail.gmail.com>
-        <20161020021323.tav5glu7xy4u7mtj@sigill.intra.peff.net>
-Date:   Thu, 20 Oct 2016 09:30:05 -0700
-In-Reply-To: <20161020021323.tav5glu7xy4u7mtj@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 19 Oct 2016 22:13:23 -0400")
-Message-ID: <xmqqa8dzhtki.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1755937AbcJTQaa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 12:30:30 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:35751 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755009AbcJTQa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 12:30:29 -0400
+Received: by mail-qk0-f171.google.com with SMTP id z190so103743599qkc.2
+        for <git@vger.kernel.org>; Thu, 20 Oct 2016 09:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Sk4vYEXd9DJCQAq3cEwWv6QgEQMobWHf8+06Qtp+HWc=;
+        b=NLTNIOzbOMy+meQ+xqHAwhGxUdEGaidNBZ/gRl9KIJApgg8O+UVJ5RwZmBpzpINu2p
+         MR6n6tRxBMbZuq1mtxljco8zg0Z+76lOGQyL2bkRPqGlfx68GV/g4iKsHsyOW4/tAm+o
+         kJF4/jJcqnxxWF1PeaVVTYw9PZalP2fTSNbd+yeTEEZ9114eqw8eFy72+mA9T/plc5DB
+         Dk9SD/e6/xcqsQEYb9ufvrDv6QmHIXpZv4Gpgg7cbIFxtmH9SfE6/aWjvOSp+O9Co80B
+         EY/Xcx2Fb8offKWphv28Q/tiOhPb1OundB0f3PVbZ5LCDoDwiLtxUvUavPKB550sxG1N
+         0Spg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Sk4vYEXd9DJCQAq3cEwWv6QgEQMobWHf8+06Qtp+HWc=;
+        b=LeQ1jC2YvSxUG1oaiZ32TCOyDT0RFJ2MiW7/IbjirY0LCdQqazDTIlEuEMrBNZbXo1
+         MUulDHGOSt3/gRDeRcQhRhTCl1Hjd77JWL8mtXEm0VNT8Yh7XumZEt+ANps5RRff5p0v
+         CcJvuKQqKgszdeTWJ6vk3CIbANv3Tu5ffTVKc+u/ctDVTSVSrbtmaALw0YyMYdJO2wjF
+         3X4bLQEREoFzt/dsIyoWLC7FkquzwYQPGr1NE/QtqYNdh1rUE044Fc0SdvVArl4vPyaq
+         88gXtzudaChFFwZgNhP9KFs1Koxj4SUapt9ehuYeiVEDeuvBRgM8rwEb/Vz4HKN7Xo1/
+         o+3A==
+X-Gm-Message-State: ABUngvdcZMoEegOx8UleGKD1f2T4xU3YKrXCDIS26OcRNYqECjmRt5ICCgMnrLYAoBbbYqFHmSpgJqQ0da7WzFHe
+X-Received: by 10.55.142.130 with SMTP id q124mr1278814qkd.220.1476981027634;
+ Thu, 20 Oct 2016 09:30:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 76B1224A-96E2-11E6-94B0-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Thu, 20 Oct 2016 09:30:27 -0700 (PDT)
+In-Reply-To: <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+ <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610201154070.3264@virtualbox>
+ <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 20 Oct 2016 09:30:27 -0700
+Message-ID: <CAGZ79ka_McRkOyKH3diCXJSdCm+4pNZfqAqJW_tQLFdhb26tRQ@mail.gmail.com>
+Subject: Re: Drastic jump in the time required for the test suite
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Oct 20, 2016 at 5:31 AM, Jeff King <peff@peff.net> wrote:
 
->> I still think it's worth while to add a check for git-commit which
->> does something like check when we say "git commit <files>" and if the
->> index already has those files marked as being changed, compare them
->> with the current contents of the file as in the checkout and quick
->> saying "please don't do that" so as to avoid the problem in the first
->> place.
-> ...
-> I suspect both of those would complain about legitimate workflows.
 >
-> I dunno.  I do not ever use "git commit <file>" myself.
+> $ perl -lne '/execve\("(.*?)"/ and print $1' /tmp/foo.out | sort | uniq -c | sort -rn | head
+>  152271 /home/peff/compile/git/git
+>   57340 /home/peff/compile/git/t/../bin-wrappers/git
+>   16865 /bin/sed
+>   12650 /bin/rm
+>   11257 /bin/cat
+>    9326 /home/peff/compile/git/git-sh-i18n--envsubst
+>    9079 /usr/bin/diff
+>    8013 /usr/bin/wc
+>    5924 /bin/mv
+>    4566 /bin/grep
+>
 
-Users are different.  I do use this all the time, and it is not
-unusual at all to have changed contents on paths other than <file>
-already added to the index when I do so, i.e. an unrelated small
-typofix in <file> jumping ahead of the real changes I am working on
-in other parts of the tree.
-
-"Please don't do that" would break.  Jacob says "avoid the problem",
-but I do not see a problem in allowing it (it could be that the
-problem Jacob has is in other parts of his workflow, but I do not
-know what it is offhand).
+I am not an expert on perl nor tracing, but is it feasible to find out
+how many internal calls there are? i.e. either some shell script (rebase,
+submodule) calling git itself a couple of times or even from compile/git/git
+itself, e.g. some submodule operations use forking in there.
