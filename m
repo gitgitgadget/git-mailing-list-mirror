@@ -6,91 +6,80 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AEA51F4F8
-	for <e@80x24.org>; Thu, 20 Oct 2016 17:39:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEF31F4F8
+	for <e@80x24.org>; Thu, 20 Oct 2016 17:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754793AbcJTRjL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Oct 2016 13:39:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54296 "EHLO
+        id S1753804AbcJTRum (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Oct 2016 13:50:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63385 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752366AbcJTRjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2016 13:39:10 -0400
+        with ESMTP id S1752106AbcJTRul (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2016 13:50:41 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A28AA46CF4;
-        Thu, 20 Oct 2016 13:39:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9ED1547E8F;
+        Thu, 20 Oct 2016 13:50:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=QosJf1B4NiaVC9zdskn7FKalMDs=; b=rSXyAC
-        5GWROyzToKf14nlKvvUR+GRjA0mTca5Mn90GZpzeRlxXd9gntxr6gECHFfBx74L/
-        K83IJ+3pUh6Q1E8pI5D/HCg3d46hb8l2aGB6kbFMbIu5ezJsJieTwUpnU46Kthip
-        RouyZGdgK6dfph9A0WAedfpZgKxCr6uPBKoYs=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Bu4N0vz6T8VhyjxtU4tfvXdA7Dw=; b=u7bJIe
+        Bx/Kf+MtszGKKAgQGzXdlrNWYWY/Alh+HzDio36hAwYgHYr4OxDwawWpcNH8agCJ
+        NrEAfXsugTwozxSmIZiJDMWwpW8e+HW/2R+q4yM1BdRAGucnPqMrbn3XJrqJcG7Y
+        QtmCeW9YTcPd5LVPlR5LFU93EiBC/wFpPYCS0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Pb30Mr9tRkScBioeY/77rtyLYEp2Y65e
-        f3c0vtAbmhSF/Grat/OVRNNHKsq/oioDUtAoMRwMKOCdLF2ijZFImXyU4+ar5R95
-        N2vWLXKWPIZBxtEslGOHPrVYtU2njIVK368v7OvdLDKavr4A2e4oJ0Tz6IZo9wgP
-        ur8jSVnUdvo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 968D946CF3;
-        Thu, 20 Oct 2016 13:39:09 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=X4RK879YaH2zDuEbWep8szHmFFVcoTnB
+        lJ6YzTZsZKrAz68kvFBA2MTpChHOMDbbr3PpF+oNyV7zJYo1gQylezOvzdTz4KPj
+        0v8q/mztNsqql7mgti/HzM3WnG+e9XFhRlfeW6J1gGnd0pmKPZd7anuxXkF1Wdxz
+        Wp1NYSzXnNk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95D5947E8E;
+        Thu, 20 Oct 2016 13:50:39 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0269346CEF;
-        Thu, 20 Oct 2016 13:39:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17C1347E8D;
+        Thu, 20 Oct 2016 13:50:39 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
-Subject: Re: tools for easily "uncommitting" parts of a patch I just commited?
-In-Reply-To: <CA+P7+xq25LcdmtzmBNChiGhGratcdp7m0EOsQuEh68=gJQ9HNQ@mail.gmail.com>
-        (Jacob Keller's message of "Thu, 20 Oct 2016 10:27:58 -0700")
-References: <CA+P7+xqFOn4NSfZ2zpa_y1za3uHZrGGG3ktEtuOcvJLCrAYUhQ@mail.gmail.com>
-        <20161019224211.k4anavgqrhmunz6p@sigill.intra.peff.net>
-        <CA+P7+xprKV1Y7VShLR9uNgcpVdZk39xoTfkwiin1bVQYTe_TAA@mail.gmail.com>
-        <20161020021323.tav5glu7xy4u7mtj@sigill.intra.peff.net>
-        <xmqqa8dzhtki.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xq25LcdmtzmBNChiGhGratcdp7m0EOsQuEh68=gJQ9HNQ@mail.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: Fwd: New Defects reported by Coverity Scan for git
+References: <580893d5a4736_4ed37b53181837@ss1435.mail>
+        <CAGZ79kabVPhp0_z-e_4jJOFq+jzSE2SsgmFuY-2RUgrEviGKyA@mail.gmail.com>
+Date:   Thu, 20 Oct 2016 10:50:37 -0700
+In-Reply-To: <CAGZ79kabVPhp0_z-e_4jJOFq+jzSE2SsgmFuY-2RUgrEviGKyA@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 20 Oct 2016 10:05:38 -0700")
+Message-ID: <xmqqshrqhpua.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-Date:   Thu, 20 Oct 2016 10:39:07 -0700
-Message-ID: <xmqqwph2hqdg.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1AF796E6-96EC-11E6-BB2D-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: B64A7130-96ED-11E6-B28E-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> I still think we're misunderstanding. I want git commit to complain
-> *only* under the following circumstance:
+> Not sure what triggered the new finding of coverity as seen below as the
+> parse_commit() was not touched. Junios series regarding the merge base
+> optimization touches a bit of code nearby though.
 >
-> I run "git add -p" and put a partial change into the index in <file>.
-> There are still other parts which were not added to the index yet.
-> Thus, the index version of the file and the actual file differ.
->
-> Then, I (accidentally) run "git commit <file>"
+> Do we want to replace the unchecked places of parse_commit with
+> parse_commit_or_die ?
 
-I agree that this case is different.
+The reason parse_commit() would fail at this point would be because
+the repository is corrupt, I do not think it would hurt to do such a
+change.  
 
-Again, users are different, and I also often do
+I agree that it is curious why it shows up as a "new defect",
+though.
 
-    $ edit file; think; decide it is a good enough first cut
-    $ git add file
-    $ edit file; think; decide it is getting better
-    $ git add file
-    $ edit file; think; decide it is now perfect
-    $ git commit file
+By the way, do you know who is managing the service on our end
+(e.g. approving new people to be "defect viewer")?  The site seems
+to think I have the power to manage others' subscription, which I do
+not think I have (I do not go to the site myself).  As it spewed
+quite a many false positives into my mailbox in the past, I do not
+pay very close attention to these reports these days, but I still
+read the e-mailed reports every once in a while.
 
-Because I do not think you can differentiate the above workflow from
-the case where "git add -p" was used earlier, I think your updated
-"git commit" needs to complain at this point.
-
-I am not sure if that is OK.  I think it is less not-OK than the use
-case I mentioned in my earlier message, in that this is not a case
-that "please don't do it" breaks.  It however is an inconvenience
-that the user has to say "git add file" before the "git commit" (or
-"git commit file") to conclude the sequence.
-
-So I dunno.
+Thanks.
