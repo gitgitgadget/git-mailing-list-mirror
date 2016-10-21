@@ -2,91 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01E520229
-	for <e@80x24.org>; Fri, 21 Oct 2016 19:03:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A978620229
+	for <e@80x24.org>; Fri, 21 Oct 2016 19:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935010AbcJUTDQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 15:03:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51581 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754986AbcJUTDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 15:03:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49A9148FA6;
-        Fri, 21 Oct 2016 15:03:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+NfqAdZx1H75JUc1pD+vqYA6GXg=; b=aqeOwX
-        zIkAC6vpaHAsPY7q/laaJl11m3Un9a+APyvJHN13LILtv9cuJRLGE2kgFispyS8x
-        CtCCaAwO2wk8YnJXaiWLGqtMb31O0GQI2h/T/yNnZePYErnJcmRcvtQnlP8jRgaO
-        Sp1sn12wDGT6GqKP2g9LKa+8NU+Zy7uaraQqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aWze4Snmz4ztbMBDab/EPQhpoLq/n/m8
-        rYVe0wFNeqBq3P1gsMl8GY6f+vYOHboRqprIXeFB3nk6euolQLIY/9luEL2bi/bO
-        YP3nhTewFLqcPwxu5B+6H6eAro0t0jBPURBG2bjFrOCPwjWPF5gcopDET2qfRV0Q
-        q16/0rZkAZs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40D9148FA5;
-        Fri, 21 Oct 2016 15:03:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A737548FA3;
-        Fri, 21 Oct 2016 15:03:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: RFC Failover url for fetches?
-References: <CAGZ79kaPdSfY_DXL6BDQ9pAma8p61r4m1n81VTxPHYi8zQuZfA@mail.gmail.com>
-Date:   Fri, 21 Oct 2016 12:03:11 -0700
-In-Reply-To: <CAGZ79kaPdSfY_DXL6BDQ9pAma8p61r4m1n81VTxPHYi8zQuZfA@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 21 Oct 2016 11:19:42 -0700")
-Message-ID: <xmqqeg39bk40.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S935908AbcJUT5h (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 15:57:37 -0400
+Received: from mout.web.de ([212.227.15.4]:62919 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935106AbcJUT5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 15:57:36 -0400
+Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LaIRi-1ce8Yj2X9C-00m5CB; Fri, 21 Oct 2016 21:57:27
+ +0200
+Subject: Re: Drastic jump in the time required for the test suite
+To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+ <CACsJy8ALRjnvgM6sW5ioFHtquSR6zgQHkQ6-LUnKFnqXV9eDCQ@mail.gmail.com>
+ <e0e320ce-14a1-b4a8-aa07-6bc4f3c4a424@web.de> <vpqd1itdf02.fsf@anie.imag.fr>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <6616be42-7c47-0b6c-28a3-e3ec70e624bf@web.de>
+Date:   Fri, 21 Oct 2016 21:57:24 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 043E4212-97C1-11E6-9FE1-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <vpqd1itdf02.fsf@anie.imag.fr>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:eoaV3qOgmY+KEXRkAyQLOvBYfqqLdDoqSm7C1XZ8Bl0GVmcxHzs
+ //IZBudRkFucOWOLnNmcC9XB95sDVWTI7o4P7iWfl0lj3q0dFaRJsgYJhx5tioIp+OYmk+t
+ N73dQ7ikaICaGRVnQhUSC7Srmtn5Hhs45QASjC7UJ8g834Ywylz2ALoo7jCFkSkrSSn+Yd7
+ kpC9OKeaVrQdpKnQO1Vwg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oU7LfkV//dg=:m1Bo70ffFUCgpuyiOLeO41
+ ec/vtCSEragCtF0Q6AwZJROVn6n+pMuCJtxQHONtVUyo6yoBnMvTW8F8SeOLn49sbAuGyMdJF
+ ANT3pLRKZQWKH1cAfAWbJ9jmHDwyiOM+1S9RGy4DKCHRonNZg81ynxbFRYb60dm5KKeyhbF83
+ wRukDxodXFb8wvkzBeEeG8DTFCF/onuT14hH8JPUAyI2rgsQ/zCmEnWb3fk6Ud1W1js2VC0dS
+ i53JWGSlhOyMr+v7GKL5xd28ktImwnAtbpwSetYFwD/bV61pb1fKZ9oEEt5KYn+I304tX5gAA
+ CkA0Ht0MEtnl850vNYzz5SisQcNXPXs1Ms8y5j72TzOJAozFX9q757mU7K8Rc9z1A16xHG0xO
+ WT3Prsd3n018Ggi1vqvXvhHZunyC6f9/DZ+suKjfUfDPnRhxayK2+Bo8p+Foudk8guclbXOPr
+ hBbQW1YKQxfwBUZgcA6Itp6dHKrekn6S+brKQmtDZMYzLRP4ZCX6Jcdjrg5fzbm/PiDqVIWKp
+ Pw4X0bieP9qXp21ooOcd4Ev/LV3j/FFq/ny6ou4efgEzvL/fddxcfL6YPGMQr8mDfptoin162
+ rMVNsz/QP5aRRGbBgmI9gUUBIktzjW44hHypPDqUTpwzD651cS/VuggSBGGX6+oibsz3RAld+
+ atKmsSz7cgtYJSRX+a5ELnBF/E9eDQrZ8YZiTAviNx5xJamkCZifwe8lS2EfKEZJoGW9luycA
+ MJN1onEcYRa7dHeofTZBUXbriAwx0OaT4E/OVAu6v4aaIyjEOMs9z0SeQDs0VBocJWVmLbz1h
+ cf1J/gW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Am 21.10.2016 um 15:10 schrieb Matthieu Moy:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> I get this on WSL with prove -j8:
+>>
+>> Files=750, Tests=13657, 906 wallclock secs ( 8.51 usr 17.17 sys + 282.62 cusr 3731.85 csys = 4040.15 CPU)
+>>
+>> And this for a run on Debian inside a Hyper-V VM on the same system:
+>>
+>> Files=759, Tests=13895, 99 wallclock secs ( 4.81 usr  1.06 sys + 39.70 cusr 25.82 csys = 71.39 CPU)
+> 
+> What about the same without WSL on windows?
 
-> So when pushing it is possible to have multiple urls
-> (remote.<name>.url) configured.
->
-> When fetching only the first configured url is considered.
-> Would it make sense to allow multiple urls and
-> try them one by one until one works?
+Files=755, Tests=14894, 1774 wallclock secs ( 9.31 usr  9.58 sys + 821.87 cusr 1961.23 csys = 2801.99 CPU)
 
-I do not think the two are related.  Pushing to multiple is not "I
-want to update at least one of them" in the first place.
-
-As to fetching from two or more places as "fallback", I am
-moderately negative to add it as a dumb feature that does nothing
-more than "My fetch from A failed, so let's blindly try it from B".
-I'd prefer to keep the "My fetch from A is failing" knowledge near
-the surface of end user's consciousness as a mechanism to pressure A
-to fix it--that way everybody who is fetching from A benefits.
-After all, doing "git remote add B" once (you'd need to tell the URL
-for B anyway to Git) and issuing "git fetch B" after seeing your
-regular "git fetch" fails once in a blue moon is not all that
-cumbersome, I would think.
-
-Some people _may_ have objection based on A and B going out of sync,
-especially B may fall behind even yourself and cause non-ff errors,
-but I personally am not worried about that, because when somebody
-configures B as a fallback for A, there is an expectation that B is
-kept reasonably up to date.  It would be a problem if some refs are
-expected to be constantly rewound at A (e.g. 'pu' in my tree) and
-configured to always force-fetch, though.  A stale B would silently
-set such a branch in your repository back without failing.
-
-
+René
 
