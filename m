@@ -2,127 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_PH_SURBL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6962B20986
-	for <e@80x24.org>; Fri, 21 Oct 2016 09:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0304820986
+	for <e@80x24.org>; Fri, 21 Oct 2016 09:21:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932386AbcJUJAd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 05:00:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60535 "EHLO cloud.peff.net"
+        id S933935AbcJUJUn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 05:20:43 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50188 "EHLO mx1.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932178AbcJUJAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 05:00:32 -0400
-Received: (qmail 12015 invoked by uid 109); 21 Oct 2016 09:00:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 09:00:31 +0000
-Received: (qmail 1207 invoked by uid 111); 21 Oct 2016 09:00:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 05:00:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 05:00:29 -0400
-Date:   Fri, 21 Oct 2016 05:00:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     git <git@vger.kernel.org>
-Subject: Re: [BUG] [PATCH]: run-command.c
-Message-ID: <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
-References: <20161021055013.GA31554@dimstar.local.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161021055013.GA31554@dimstar.local.net>
+        id S933900AbcJUJUk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 05:20:40 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u9L9KUOS027387
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Fri, 21 Oct 2016 11:20:30 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u9L9KUiL009711;
+        Fri, 21 Oct 2016 11:20:30 +0200
+From:   Matthieu Moy <Matthieu.Moy@imag.fr>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2] t9000-addresses: update expected results after fix
+Date:   Fri, 21 Oct 2016 11:20:23 +0200
+Message-Id: <20161021092024.15861-1-Matthieu.Moy@imag.fr>
+X-Mailer: git-send-email 2.10.1.651.gffd0de0
+In-Reply-To: <xmqq1szaeda9.fsf@gitster.mtv.corp.google.com>
+References: <xmqq1szaeda9.fsf@gitster.mtv.corp.google.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 21 Oct 2016 11:20:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u9L9KUOS027387
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1477646432.18986@I6p0N6Low8w5bQy9rOPOyg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 04:50:13PM +1100, Duncan Roe wrote:
+e3fdbcc8e1 (parse_mailboxes: accept extra text after <...> address,
+2016-10-13) improved our in-house address parser and made it closer to
+Mail::Address. As a consequence, some tests comparing it to
+Mail::Address now pass, but e3fdbcc8e1 forgot to update the test.
 
-> For example, if .git/config has this alias (the sleep is to leave time to
-> examine output from ps, &c.):
-> 
-> [alias]
-> 	tryme = "!echo $PWD;sleep 600"
->
-> [...]
-> 16:42:06$ ps axf|grep -A2 trym[e]
->  2599 pts/4    S+     0:00      \_ git tryme
->  2601 pts/4    S+     0:00          \_ /bin/sh -c echo $PWD;sleep 600 echo $PWD;sleep 600
->  2602 pts/4    S+     0:00              \_ sleep 600
-> 16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
-> /bin/sh
-> -c
-> echo $PWD;sleep 600
-> echo $PWD;sleep 600
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ t/t9000/test.pl | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-This duplicated argument is expected and normal. The arguments after "-c
-whatever" become positional parameters $0, $1, etc. The actual script
-arguments start at "$1", and "$0" is typically the "script name".
-So you have to stick some placeholder value in the "$0" slot, so that
-the sub-script can find the actual arguments. E.g., try:
+diff --git a/t/t9000/test.pl b/t/t9000/test.pl
+index 2d05d3eeab..dfeaa9c655 100755
+--- a/t/t9000/test.pl
++++ b/t/t9000/test.pl
+@@ -32,15 +32,15 @@ my @success_list = (q[Jane],
+ 	q["Jane\" Doe" <jdoe@example.com>],
+ 	q[Doe, jane <jdoe@example.com>],
+ 	q["Jane Doe <jdoe@example.com>],
+-	q['Jane 'Doe' <jdoe@example.com>]);
++	q['Jane 'Doe' <jdoe@example.com>],
++	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
++	q[Jane <jdoe@example.com> Doe],
++	q[<jdoe@example.com> Jane Doe]);
+ 
+ my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
+ 	q["Doe, Ja"ne <jdoe@example.com>],
+ 	q["Doe, Katarina" Jane <jdoe@example.com>],
+-	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
+ 	q[Jane jdoe@example.com],
+-	q[<jdoe@example.com> Jane Doe],
+-	q[Jane <jdoe@example.com> Doe],
+ 	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
+ 	q[Jane Doe],
+ 	q[Jane "Doe <jdoe@example.com>"],
+-- 
+2.10.1.651.gffd0de0
 
-  sh -c '
-    for i in "$@"; do
-      echo "got $i"
-    done
-  ' one two three
-
-it will print only:
-
-  got two
-  got three
-
-But if you stick a placeholder there, it works:
-
-  sh -c '
-    for i in "$@"; do
-      echo "got $i"
-    done
-  ' placeholder one two three
-
-The value of the placeholder does not matter to the shell. But it is
-accessible to the script inside via $0:
-
-  sh -c '
-    echo "\$0 = $0"
-    echo "\$1 = $1"
-    echo "\$2 = $2"
-    echo "\$3 = $3"
-  ' placeholder one two three
-
-Since our script does not have a filename, we just stick the script
-contents there (which is really just a convention, and one I doubt
-anybody is really relying on, but there's no point in breaking it now).
-
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -182,8 +182,8 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
->  		else
->  			argv_array_pushf(out, "%s \"$@\"", argv[0]);
->  	}
-> -
-> -	argv_array_pushv(out, argv);
-> +	else
-> +		argv_array_pushv(out, argv);
->  	return out->argv;
->  }
-
-Try running "make test" with this. Lots of things break, because we are
-not sending the positional parameters to the shell script at all.
-
-If we just cared about the positional parmeters, we _could_ do something
-like:
-
-  if (argv[0]) {
-	argv_array_push(out, "sh");
-	argv_array_pushv(out, argv + 1);
-  }
-
-That would omit "$0" entirely when we have no positional parameters (and
-the shell generally fills in "sh" there itself), and provide a dummy
-"sh" value when we need to use it as a placeholder.
-
-But again, there's no real value in breaking the existing convention.
-
--Peff
