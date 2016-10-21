@@ -2,89 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31E8220986
-	for <e@80x24.org>; Fri, 21 Oct 2016 11:04:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9283220986
+	for <e@80x24.org>; Fri, 21 Oct 2016 11:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932171AbcJULEG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 07:04:06 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:38315 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932247AbcJULEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 07:04:05 -0400
-Received: by mail-it0-f50.google.com with SMTP id 66so152014646itl.1
-        for <git@vger.kernel.org>; Fri, 21 Oct 2016 04:04:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BfcsPrKzbJSD/uYhLVDi9TaT0J/2Sz3RmKQUzWSmNJY=;
-        b=W3ug4IJDpasGupJttpUbG61OM+h1IoGbJ9+V5gjmYIc+w2zH64z3UWh7asreSMpFNC
-         LWwX55KxYVhumRsBeAkdm+YslULNMR0dYxxFyU0RqZOWtbGqOKVD0f4x1FR76geVeVHq
-         ln2eJPkKt0Pbgc99/mpUZsupbuw1FsbJhBxwBD61m2RzFUw1hn6HCRL5eCfwPROi2vRS
-         eSYGad+/oHuwVIXJa1HU5MjRmMYeU98/KZzg+WErdWVH1v6anRxKeZsuY4ejHpApt1t1
-         sZRdFaH7BtB5yI2mDHQ18Ecq8CMjK2lZ9d42UlIjsP45OGLFPsCGsCLD3Qob70M17nJf
-         Y/8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BfcsPrKzbJSD/uYhLVDi9TaT0J/2Sz3RmKQUzWSmNJY=;
-        b=eR/xSoQj7oeYTdzMBhtPTs9cWjVTWbH2DLpi+Gh1wB3wJXGL7YlVUnI/OnFN0ls9ii
-         A+p5QNFX3mFvjRg7bAtyC+17hgRLWds7vAWd3X3SFBGhoLvWiR8+6z/Q4gNzJS6GvvhB
-         tLFf2PgvE4dPy3MttDRO1J1WgpCPRZ+kUIBv163Ws/pNeov0j1NpO8D2gt7RbpsE4EWD
-         b7Cs+byl4lp2WO7ZUvvt5Uy5KOoeHdCh4BiYTOFvIs7RoF0LVSOHmpI9Jko8ys8G8Axu
-         fORJblNaKsCDofpabKr7zmui8zuCA7iZvk8loiJjp/FKk98E6cCX7dyoJFsgMnRIMB7X
-         S8OQ==
-X-Gm-Message-State: ABUngvd2YA2FtySbyrimrk3QuE4XE6Ue7Z/Wk9HjH5NBaJ4j6VUrYQWu7omCsTnVF6N4Y01ogdYmrzm1S0jg7Q==
-X-Received: by 10.107.59.6 with SMTP id i6mr289510ioa.176.1477047843757; Fri,
- 21 Oct 2016 04:04:03 -0700 (PDT)
+        id S932280AbcJULHz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 07:07:55 -0400
+Received: from mail106.syd.optusnet.com.au ([211.29.132.42]:35539 "EHLO
+        mail106.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932247AbcJULHy (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 21 Oct 2016 07:07:54 -0400
+Received: from dimstar.local.net (c110-22-56-26.eburwd6.vic.optusnet.com.au [110.22.56.26])
+        by mail106.syd.optusnet.com.au (Postfix) with ESMTP id 8C7F33C593B
+        for <git@vger.kernel.org>; Fri, 21 Oct 2016 22:07:38 +1100 (AEDT)
+Received: (qmail 3564 invoked by uid 501); 21 Oct 2016 11:07:28 -0000
+Date:   Fri, 21 Oct 2016 22:07:28 +1100
+From:   Duncan Roe <duncan_roe@acslink.net.au>
+To:     git <git@vger.kernel.org>
+Subject: Re: [BUG] [PATCH]: run-command.c
+Message-ID: <20161021110728.GB31554@dimstar.local.net>
+Mail-Followup-To: git <git@vger.kernel.org>
+References: <20161021055013.GA31554@dimstar.local.net>
+ <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Fri, 21 Oct 2016 04:03:32 -0700 (PDT)
-In-Reply-To: <1476996017.28685.10.camel@kaarsemaker.net>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
- <xmqqbmygmehv.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610201154070.3264@virtualbox>
- <20161020123111.qnbsainul2g54z4z@sigill.intra.peff.net> <1476996017.28685.10.camel@kaarsemaker.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 21 Oct 2016 18:03:32 +0700
-Message-ID: <CACsJy8DDO_k-gtSj-Nbc9=DvTC1FFQRmc=OtTmh-c4rc=xC_+w@mail.gmail.com>
-Subject: Re: Drastic jump in the time required for the test suite
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
+User-Agent: Mutt/1.6.1 (2016-04-27)
+X-Optus-CM-Score: 0
+X-Optus-CM-Analysis: v=2.1 cv=RIxOZNW+ c=1 sm=1 tr=0
+        a=/xIuaNGu1NPzt0yKkvdCVQ==:117 a=/xIuaNGu1NPzt0yKkvdCVQ==:17
+        a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+        a=CH0kA5CcgfcA:10 a=XPUPcRBtb2EO3jOn9e4A:9 a=CjuIK1q_8ugA:10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 3:40 AM, Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
-> On Thu, 2016-10-20 at 08:31 -0400, Jeff King wrote:
+On Fri, Oct 21, 2016 at 05:00:29AM -0400, Jeff King wrote:
+> On Fri, Oct 21, 2016 at 04:50:13PM +1100, Duncan Roe wrote:
 >
->> I'm also not entirely convinced that the test suite being a shell script
->> is the main culprit for its slowness. We run git a lot of times, and
->> that's inherent in testing it. I ran the whole test suite under
->> "strace -f -e execve". There are ~335K execs. Here's the breakdown of
->> the top ones:
+> > For example, if .git/config has this alias (the sleep is to leave time to
+> > examine output from ps, &c.):
+> >
+> > [alias]
+> > 	tryme = "!echo $PWD;sleep 600"
+> >
+> > [...]
+> > 16:42:06$ ps axf|grep -A2 trym[e]
+> >  2599 pts/4    S+     0:00      \_ git tryme
+> >  2601 pts/4    S+     0:00          \_ /bin/sh -c echo $PWD;sleep 600 echo $PWD;sleep 600
+> >  2602 pts/4    S+     0:00              \_ sleep 600
+> > 16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
+> > /bin/sh
+> > -c
+> > echo $PWD;sleep 600
+> > echo $PWD;sleep 600
 >
-> You're measuring execve's, but fork (well, fork emulation. There's no
-> actual fork) is also expensive on windows iirc, so subshells add a lot
-> to this cost.
+> This duplicated argument is expected and normal. The arguments after "-c
+> whatever" become positional parameters $0, $1, etc. The actual script
+> arguments start at "$1", and "$0" is typically the "script name".
+> So you have to stick some placeholder value in the "$0" slot, so that
+> the sub-script can find the actual arguments. E.g., try:
+>
+>   sh -c '
+>     for i in "$@"; do
+>       echo "got $i"
+>     done
+>   ' one two three
+>
+> it will print only:
+>
+>   got two
+>   got three
+>
+> But if you stick a placeholder there, it works:
+>
+>   sh -c '
+>     for i in "$@"; do
+>       echo "got $i"
+>     done
+>   ' placeholder one two three
+>
+> The value of the placeholder does not matter to the shell. But it is
+> accessible to the script inside via $0:
+>
+>   sh -c '
+>     echo "\$0 = $0"
+>     echo "\$1 = $1"
+>     echo "\$2 = $2"
+>     echo "\$3 = $3"
+>   ' placeholder one two three
+>
+> Since our script does not have a filename, we just stick the script
+> contents there (which is really just a convention, and one I doubt
+> anybody is really relying on, but there's no point in breaking it now).
+>
+> > --- a/run-command.c
+> > +++ b/run-command.c
+> > @@ -182,8 +182,8 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
+> >  		else
+> >  			argv_array_pushf(out, "%s \"$@\"", argv[0]);
+> >  	}
+> > -
+> > -	argv_array_pushv(out, argv);
+> > +	else
+> > +		argv_array_pushv(out, argv);
+> >  	return out->argv;
+> >  }
+>
+> Try running "make test" with this. Lots of things break, because we are
+> not sending the positional parameters to the shell script at all.
+>
+> If we just cared about the positional parmeters, we _could_ do something
+> like:
+>
+>   if (argv[0]) {
+> 	argv_array_push(out, "sh");
+> 	argv_array_pushv(out, argv + 1);
+>   }
+>
+> That would omit "$0" entirely when we have no positional parameters (and
+> the shell generally fills in "sh" there itself), and provide a dummy
+> "sh" value when we need to use it as a placeholder.
+>
+> But again, there's no real value in breaking the existing convention.
+>
+> -Peff
+Agreed - tests 110 and 111 in t1300-repo-config.sh fail. After that, "make test"
+gives up, losing about 14000 lines of output.
 
-shells fork on piping as well, and redirection and some other
-construct if I remember correctly (I attempted to port busybox ash to
-windows and had to find and "fix" all the forks)
+Sorry for the noise,
 
-> That said, strace -eclone says that a 'make test' forks
-> ~408k times, and while this is significantly more than the amount of
-> execs in your example, this does include cvs and svn tests and it's
-> still in the same ballpark.
--- 
-Duy
+Cheers ... Duncan.
