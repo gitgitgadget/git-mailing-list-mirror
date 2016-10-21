@@ -2,70 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86F4520229
-	for <e@80x24.org>; Fri, 21 Oct 2016 12:24:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF0DB20229
+	for <e@80x24.org>; Fri, 21 Oct 2016 12:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755337AbcJUMYT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 08:24:19 -0400
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:36631 "EHLO
-        mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755249AbcJUMYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 08:24:16 -0400
-Received: by mail-vk0-f46.google.com with SMTP id 2so114830077vkb.3
-        for <git@vger.kernel.org>; Fri, 21 Oct 2016 05:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=vv8PxuKzmpgqoeMYdbKnVH7qCqrJxuD/Hv4+yNyT8hA=;
-        b=mVforxXVB2/7vf3IKXUU7foUqERvNKRTumAgw0T2t0c5BF3OsFVt8ldw6A5jslLUHq
-         Z5P8zZvTOLnWPSJQraUoUC5AMQYiXVF+rah6tN3gkS/hXgXqJAFTFT4nCO/KdZGlHYUs
-         t2X4B9OUPP/L2VonMdIQCMBfDtvxTx/7acifRUDM3qQ7yYfs5ecrNRdvSLRtfA81jbzC
-         KJs/GiQJ1QJYej2zJiG/gIqUmjDxz+GUTslM+IjniwhShMhD5uCUjjKeZBwG7FHIrUJ/
-         U1zVrl2AlFuU0/oYusrIfbC4vfxIiXknUIIMG6PlZd6n29xW2lWef0fhguLR2z/CbJMz
-         uZVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=vv8PxuKzmpgqoeMYdbKnVH7qCqrJxuD/Hv4+yNyT8hA=;
-        b=XzqF6+P5K5qtE2AISith5/sjXrgfq6WHhZpdXJM5UzPCBnPHSPc8RyvleMZg1h0Fy/
-         QI5rQ4X5fE3/fqBzdpdWWfKAFEnptWyN11VW9HeI/FExAqFqATRX2aAUUSZvi0bADpGi
-         NTOcGzM6pnDhq3AHwAzhKFUS7W6USvEnyRGCtV+f//SJohqWyJtEHVHXkDdolVjd2Z/u
-         Xq8IAuf6z2Almazjl4F1OEdDvTMrBwXUcCF1xzfAVHoGPOnau0UCKdfRIjD+zriv/yhJ
-         P3w9RLmKS4x5AVGDzLblCz/MPu/B8+qLHryXX11zbwQjFPHmmSfHW4jj0yV2bg4Ui9Z+
-         H4UQ==
-X-Gm-Message-State: ABUngvd+91PKV6pBPgwgj8MrahVgJSirkiV0WUW5HBrbwwEUeLMiGn+LzfSHAcKMgB45dV6ZDhzDTi84yUUeeA==
-X-Received: by 10.31.108.133 with SMTP id j5mr498508vki.161.1477052654872;
- Fri, 21 Oct 2016 05:24:14 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.103.47.133 with HTTP; Fri, 21 Oct 2016 05:23:54 -0700 (PDT)
-From:   Stefan Monov <logixoul@gmail.com>
-Date:   Fri, 21 Oct 2016 15:23:54 +0300
-Message-ID: <CAJtFkWur0NfvvV-QT2XmEW=MSJ7Ye=hX7HujEQhTFGiah2_yBQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Git_context_menu_in_Windows_Exporer_has_a_=E2=80=9Cgit_bas?=
-        =?UTF-8?Q?h=E2=80=9D_option_but_it_doesn=27t_work?=
+        id S1755362AbcJUMYW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 08:24:22 -0400
+Received: from mout.gmx.net ([212.227.17.21]:59637 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755305AbcJUMYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 08:24:18 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MPlMc-1c1Qko1PNa-0052k7; Fri, 21 Oct 2016 14:24:04
+ +0200
+Date:   Fri, 21 Oct 2016 14:24:03 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v5 03/27] sequencer: avoid unnecessary indirection
+In-Reply-To: <cover.1477052405.git.johannes.schindelin@gmx.de>
+Message-ID: <2c79d34e66b1f2b1a4b0f30445996c6c1a89d39a.1477052405.git.johannes.schindelin@gmx.de>
+References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Vartah8S9Ig+KvFNa0+RpRmuH6/rCblC9isSdBv9/lSR642jT9p
+ feFgx5MJAZFAF1ObgoN3MTNB9a9gZzBLXlodOvw9wLCU8v1OIgne4bxkw8OlQjvvPqGK6+l
+ vJ+NzXGQAVcX6yqeBDo2PYaihMtR+6vw5mFJrQzr3Ov1NjnI36f1BqnfbtrUcdzyh7IOsSu
+ N5A6iPpOVdJxVgiVmnJRA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fgrmgQOB03g=:0tH3wzX1tr1AaZKxYHtnjD
+ fLNOO+WgVZMkT5GPdC+FiuzkohmVG9fn2cW0W9zYcj/Fv7wWl3bmbMGoqvNgObwXvhcq7ReBD
+ 23EitfmtjcSEDFihHiFaWXbVplimKV9dV+ytgrLooq6/rgY7CyPvTbenS0jjHQl+X4dIAeElS
+ GOwtz1ISFC8bBrspTuc2aivEHeQfqzJy74d0T6pN1ZiALtvXSpktK24yRuzIaSlFk2LEJDCRM
+ hZyDgPuaSH7VfvIpVPHTrEAJZzx6A/pD7nNc3s1snCuBAjD8AiVNmlskN9AfNiEObz/hEDkzu
+ QTIJoaCuGOMksI/6MWjOjGutiw5yioR2IOcKiam26uekBjHmgO+mm58GVFCUJ2x1WTRmJxn3q
+ 4RsxlGqPOL1IYfMWVvP3/1s9rv9VYzncD+B+pf4BvXenuvgBACOEHNbULUd51TRhP8DYeP1/X
+ xXJXIpTmwRXs/8/6pc0EbCnYXy26PaH6MUJB5UeExaPdRLDXN13Apl1qtfDbFjzvOy3CzKi0m
+ MPml2tEcU2ZDTFM0s+orCUfWVR4xP1OytTKNVMFBFGZmRqLUhGgjkxjclCKos2BvsynIwlU+M
+ RLTFh3nlkoUqb32WfBvpfCjoHqsGoeu8JE53pOy4uwnDrdBVQ5eMCOadcQO5KMuhi+k8PIdGi
+ BOjGQAwt7M/MFDgl0F1C8GzuAru7Cyb8WqD0ssmMGUaHmuAgbk1LVhALv29Q23ugqIFuUPwKz
+ p7G291sKFkzJqpTRXPcH9ktjSSa7wsHS3Boxuo4NGoDAfBqA7MoxVZzlRKCvvu2Jy+1VK/P81
+ zkyxwhh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
+We really do not need the *pointer to a* pointer to the options in
+the read_populate_opts() function.
 
-The default git distribution for windows contains, besides the CLI
-tools, a shell integration, i.e. a context menu for Windows Explorer.
-This context menu has a "Git bash" option which I suppose should open
-a Git bash prompt cd'd to the current directory. But instead, the git
-bash window opens and immediately closes, giving me no chance to even
-see what it says inside it. Any fix?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Note: Opening Git Bash from the Windows Start Menu works fine, but if
-I open it that way, then I need to manually cd to the needed dir.
+diff --git a/sequencer.c b/sequencer.c
+index cb16cbd..c2fbf6f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -813,7 +813,7 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+ 	return 0;
+ }
+ 
+-static int read_populate_opts(struct replay_opts **opts)
++static int read_populate_opts(struct replay_opts *opts)
+ {
+ 	if (!file_exists(git_path_opts_file()))
+ 		return 0;
+@@ -823,7 +823,7 @@ static int read_populate_opts(struct replay_opts **opts)
+ 	 * about this case, though, because we wrote that file ourselves, so we
+ 	 * are pretty certain that it is syntactically correct.
+ 	 */
+-	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
++	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) < 0)
+ 		return error(_("Malformed options sheet: %s"),
+ 			git_path_opts_file());
+ 	return 0;
+@@ -1054,7 +1054,7 @@ static int sequencer_continue(struct replay_opts *opts)
+ 
+ 	if (!file_exists(git_path_todo_file()))
+ 		return continue_single_pick();
+-	if (read_populate_opts(&opts) ||
++	if (read_populate_opts(opts) ||
+ 			read_populate_todo(&todo_list, opts))
+ 		return -1;
+ 
+-- 
+2.10.1.583.g721a9e0
 
-TIA,
-Stefan Monov
+
