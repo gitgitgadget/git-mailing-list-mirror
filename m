@@ -2,96 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 608CB20229
-	for <e@80x24.org>; Fri, 21 Oct 2016 06:16:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C64A320986
+	for <e@80x24.org>; Fri, 21 Oct 2016 08:20:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753997AbcJUGQS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 02:16:18 -0400
-Received: from mail110.syd.optusnet.com.au ([211.29.132.97]:46457 "EHLO
-        mail110.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753849AbcJUGQR (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 21 Oct 2016 02:16:17 -0400
-X-Greylist: delayed 1470 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Oct 2016 02:16:17 EDT
-Received: from dimstar.local.net (c110-22-56-26.eburwd6.vic.optusnet.com.au [110.22.56.26])
-        by mail110.syd.optusnet.com.au (Postfix) with ESMTP id 1355A7840EC
-        for <git@vger.kernel.org>; Fri, 21 Oct 2016 16:51:32 +1100 (AEDT)
-Received: (qmail 2633 invoked by uid 501); 21 Oct 2016 05:50:13 -0000
-Date:   Fri, 21 Oct 2016 16:50:13 +1100
-From:   Duncan Roe <duncan_roe@acslink.net.au>
-To:     git <git@vger.kernel.org>
-Subject: [BUG] [PATCH]: run-command.c
-Message-ID: <20161021055013.GA31554@dimstar.local.net>
-Mail-Followup-To: git <git@vger.kernel.org>
+        id S1753395AbcJUIUl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 04:20:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60512 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751062AbcJUIUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 04:20:38 -0400
+Received: (qmail 9833 invoked by uid 109); 21 Oct 2016 08:20:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 08:20:37 +0000
+Received: (qmail 929 invoked by uid 111); 21 Oct 2016 08:21:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 04:21:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 04:20:35 -0400
+Date:   Fri, 21 Oct 2016 04:20:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: Prove "Tests out of sequence" Error
+Message-ID: <20161021082035.xad6wfny5i6wtshh@sigill.intra.peff.net>
+References: <D9C1E13F-88A2-483E-A549-1C2294EACFEB@gmail.com>
+ <CAGZ79kZo3LdcRmrjQTAvgx=H6U2tdjASK3qv5A2K5J2HQ2NvSw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.6.1 (2016-04-27)
-X-Optus-CM-Score: 0
-X-Optus-CM-Analysis: v=2.1 cv=VIkg5I7X c=1 sm=1 tr=0
-        a=/xIuaNGu1NPzt0yKkvdCVQ==:117 a=/xIuaNGu1NPzt0yKkvdCVQ==:17
-        a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
-        a=CH0kA5CcgfcA:10 a=xT7Xx2lwbq99A7q-vAEA:9 a=CjuIK1q_8ugA:10
+In-Reply-To: <CAGZ79kZo3LdcRmrjQTAvgx=H6U2tdjASK3qv5A2K5J2HQ2NvSw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-prepare_shell_cmd() executes /bin/sh with superfluous arguments on all but
-single-word shell commands.
+On Thu, Oct 20, 2016 at 11:10:39PM -0700, Stefan Beller wrote:
 
-For example, if .git/config has this alias (the sleep is to leave time to
-examine output from ps, &c.):
+> > on TravisCI I see these weird "Tests out of sequence" errors with prove
+> > and they seem to not go away. I assume the reason that they not go away
+> > is that the ".prove" file is carried over from on build to another (but I can't
+> > look into this file on TravisCI).
+> >
+> > Has anyone an idea where these errors might come from?
+> >
+> > ------------------------------------------------------------------------
+> > t5547-push-quarantine.sh                         (Wstat: 0 Tests: 5 Failed: 0)
+> 
+> push quarantine is a new thing made by Jeff 2 weeks ago, IIRC.
 
-[alias]
-	tryme = "!echo $PWD;sleep 600"
+Yes, but I do not see how it can trigger this:
 
-running "git tryme" in one console and checking what it does in another
+> >   Parse errors: Tests out of sequence.  Found (2) but expected (3)
+> >                 Tests out of sequence.  Found (3) but expected (4)
+> >                 Tests out of sequence.  Found (4) but expected (5)
+> >                 Bad plan.  You planned 4 tests but ran 5.
 
---- 1st xterm
+The TAP output from one of our tests should look something like:
 
-16:42:12$ git tryme
-/usr/src/git/.git
-echo $PWD;sleep 600: line 1:  2602 Terminated              sleep 600
-16:43:15$
+  ok 1 - subject one
+  ok 2 - subject two
+  ok 3 - subject three
+  ok 4 - subject four
+  # passed all 4 test(s)
+  1..4
 
+the "plan" is the bit at the end. That looks like $test_count
+accidentally got incremented by one and we generated something like:
 
---- 2nd xterm
+  ok 1 - subject one
+  ok 3 - subject two
+  ok 4 - subject three
+  ok 5 - subject four
+  1..4
 
-16:42:06$ ps axf|grep -A2 trym[e]
- 2599 pts/4    S+     0:00      \_ git tryme
- 2601 pts/4    S+     0:00          \_ /bin/sh -c echo $PWD;sleep 600 echo $PWD;sleep 600
- 2602 pts/4    S+     0:00              \_ sleep 600
-16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
-/bin/sh
--c
-echo $PWD;sleep 600
-echo $PWD;sleep 600
-16:43:04$ kill 2602
-16:43:15$
+which would explain the "out of sequence" errors as well as the "planned
+4 but ran 5".
 
----
+But I do not see how the test script could screw that up. The counting
+is handled entirely by the harness in test-lib.sh.
 
-There is an extra "-c" argument. This is caused by a missing "else", fixed by
-the appended patch,
+Nor do I see how a stale .prove file could matter. It does not store
+information about the test plan at all. E.g., here is the entry from
+mine for t5547:
 
-Cheers ... Duncan.
+  t5547-push-quarantine.sh:
+    elapsed: 0.0762169361114502
+    gen: 1
+    last_pass_time: 1477037708.741
+    last_result: 0
+    last_run_time: 1477037708.741
+    last_todo: 0
+    seq: 437
+    total_passes: 1
 
-----------8<-------------------
+Puzzling.
 
---- a/run-command.c
-+++ b/run-command.c
-@@ -182,8 +182,8 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
- 		else
- 			argv_array_pushf(out, "%s \"$@\"", argv[0]);
- 	}
--
--	argv_array_pushv(out, argv);
-+	else
-+		argv_array_pushv(out, argv);
- 	return out->argv;
- }
-
+-Peff
