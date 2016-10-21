@@ -2,71 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD1B520229
-	for <e@80x24.org>; Fri, 21 Oct 2016 22:54:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD55A20229
+	for <e@80x24.org>; Fri, 21 Oct 2016 22:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934735AbcJUWyS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 18:54:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58035 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933808AbcJUWyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 18:54:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E9FE7487E1;
-        Fri, 21 Oct 2016 18:54:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x9PmZJwvM55XszWepW3nCWtRB+g=; b=nAI/Js
-        BbpRP08VSNWcM9NtHyxLp5hOPdiE2N0ISIMP0ez+MP95z3x8c+9c2mOGuHf7akwB
-        g0H4qY6rVBhxi7PT+UBWyDlR/wJMYTWHXX98fd7qWsbqkGrSVJrn2HFIrfBcbskz
-        rYFPt7ZpQGhg1ClnLvGWAGcDNND92+Hwg5+js=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=buKoNpj5URyHPZ9OMInSNnin6/FkF9mJ
-        qduHq2O6T2e9Tc6W7hVwwpad7fHR1dXPB1EX1tIRD4NJYZuuyETF+6+ce1sWYKeS
-        wTl66E0+FlY32x2zKe+3ulL9SnPVPNA7vtkfZTlfs7+fXNnHgW4o2iCTYEZrBD8/
-        EH++VOoBQTs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E24AD487E0;
-        Fri, 21 Oct 2016 18:54:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 66019487DD;
-        Fri, 21 Oct 2016 18:54:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "GitList" <git@vger.kernel.org>, "Jeff King" <peff@peff.net>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] doc: fix merge-base ASCII art tab spacing
-References: <20161020234009.1768-1-philipoakley@iee.org>
-        <xmqqa8dyeebj.fsf@gitster.mtv.corp.google.com>
-        <D861234B3E78496DBA70EE63B2BCDB96@PhilipOakley>
-Date:   Fri, 21 Oct 2016 15:54:14 -0700
-In-Reply-To: <D861234B3E78496DBA70EE63B2BCDB96@PhilipOakley> (Philip Oakley's
-        message of "Fri, 21 Oct 2016 22:26:29 +0100")
-Message-ID: <xmqq1sz9b9ex.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S934873AbcJUWyv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 18:54:51 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:34321 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933808AbcJUWyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 18:54:50 -0400
+Received: by mail-yw0-f173.google.com with SMTP id w3so118004077ywg.1
+        for <git@vger.kernel.org>; Fri, 21 Oct 2016 15:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WKVBL6paY/UqfE1VhnQjoFlBAHdn0UWxPQvA4ogJWuM=;
+        b=OlwQ0tKDfth7NXafOU+JnhWHbGPTxOs4bsyTDBnJqgb60i89FnBYhNsFX4Blg69IOL
+         JVW5kJWraWC7eqMjwruMUsZUOw5fGticmUN4d98CknYQhwRkVTYk/fq88UH2uNiusT8l
+         qGnC4gEuTytMWbr/ycGWmOdloA5YlLyT1GShd1BCAZhNynUxqfMtWUfOgJpRSnfodvhF
+         4+lHQfcgcVLm1+BggOl9H6g7yXW7wPpq7o2Klq5uTshl2usb7oVcmmyQCIBsaOfrBTqM
+         8w1KYGs383ztd+jaF9hTUuQEwt2FXiXxy53zfhKac+dM29LjQJLFwaDSAfHDNI3JyHgH
+         tIvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WKVBL6paY/UqfE1VhnQjoFlBAHdn0UWxPQvA4ogJWuM=;
+        b=ebpzUJkaheAbK46PUJKQBpLDZFNir2JdKjtUTotSIX21lbxxCxHMW+4yEnvgIInQOD
+         dgRChCs9BWaAELdW4QCsU/JFBsqCa4BBR9c6R9wJ6j+nLOOPqFptcGSE/P1o3YZw7f4a
+         6recWplFVRApp+8s9q8Zi4+U1X08lQy9b0+bFlN5t+wdlbiW5Hy5j8bNQ827J2InC2Ci
+         0E76O2cvaTzd3riLIW+Uwlg1de6eiPA5OLbM89rGbXJ1J16mtT3MUy6hablbpDMOuwTX
+         KIArf1pfpuXABRUbkPerTvZDimZwhEkY6pZ54nU5OsHJdidh1KLeKV8QtPYQPYP+BadX
+         AjJA==
+X-Gm-Message-State: ABUngvdTrL5mmbe0kXeipYNJeBFqxgvKA+Ruo+0V4MvowIHi+LPplN3k8cvme4M8hswJt28ol4V7+dx0+qvIIw==
+X-Received: by 10.13.199.199 with SMTP id j190mr3994700ywd.204.1477090490062;
+ Fri, 21 Oct 2016 15:54:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4B130AEA-97E1-11E6-959A-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.37.10.2 with HTTP; Fri, 21 Oct 2016 15:54:29 -0700 (PDT)
+In-Reply-To: <xmqq60olb9zq.fsf@gitster.mtv.corp.google.com>
+References: <CA+P7+xrN-_zP40uAUGtqZW+OO4D4Z65SiPRykdKvauO1zgNNcQ@mail.gmail.com>
+ <CA+P7+xoTO6MqdBjekbSpSs=w_dJ-1h_ypMDAo50mm95iTOo9Pw@mail.gmail.com> <xmqq60olb9zq.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 21 Oct 2016 15:54:29 -0700
+Message-ID: <CA+P7+xq1i8AtQ7i=1m_n9HTSL10kFUFBn8jvNcB_t_6Rh29u4w@mail.gmail.com>
+Subject: Re: generating combined diff without an existing merge commit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On Fri, Oct 21, 2016 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> Turns out that somehow I must have messed up my command because "git
+>> diff <treeish> <treeish> <treeish>" does indeed do exactly what I
+>> want.
+>
+> Thanks.  I was wondering why it didn't work for you, as the feature
+> was done exactly to support that use case ;-)
 
-> It appears that acciidoctor sees the art as being a separated
-> mono-spaced block, with border/background as locally
-> appropriate. While the asciidoc looks to simply change to mono-spaced
-> text.
+I'm not really sure. It kept spitting out usage information to me, but
+then I tried again with a fresh example and it worked as expected.
 
-FWIW, I changed my mind and your patch is now queued on 'next'.
-
-Thanks.
-
+Thanks,
+Jake
