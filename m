@@ -2,92 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E10C1F4F8
-	for <e@80x24.org>; Fri, 21 Oct 2016 06:10:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 608CB20229
+	for <e@80x24.org>; Fri, 21 Oct 2016 06:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754034AbcJUGKm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 02:10:42 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:35053 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751723AbcJUGKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 02:10:41 -0400
-Received: by mail-qk0-f176.google.com with SMTP id z190so131606967qkc.2
-        for <git@vger.kernel.org>; Thu, 20 Oct 2016 23:10:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sZQCpWKOVEvrloi3f2L2LemH3ohA/ALi5szbYuJ08FM=;
-        b=MQaXBryqzNbqNqKRYwF0JZ4JTbQQSF7Sw5opfsIAoY9pPLPgdtndNDlyVx/kgspsb5
-         cA9i9HyIchy0aNl2Ez96m5/y1EAnORiVgml0yGQeg5/IIkq+8Dgf1ngqhmmwlIzbSZKN
-         NDo5b/IDeuKzxkkPOCOs0SKHpWLU24S66X6fApH03i28pll/RrOP7CVQHtz126quLQtx
-         xqxU99rW8xTZP8J2dbl+09lQedkFk+pLrJKmUPx5kp+WyrFOPP5OHf2Yl94nHGyQ8VgQ
-         ANrJtn+pHCsIs/eytG/gHhB10ZiDfH1RN3rtDtRtbRAcNdoUnBLuL9lWJRMXxkHMgEpO
-         1d8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sZQCpWKOVEvrloi3f2L2LemH3ohA/ALi5szbYuJ08FM=;
-        b=EgFJgH/BGv/+mIsKGMJpyHS9mSj0WRCZKwNKl9SCh5StukxlQyKL32IebcJvXqMDek
-         CId0YpxfGr1cTzFIQ58N29f+Gm//Isv/Fy6zC3zkLmzWnxE+OhZ6d3J1PGnq7pJ2ENT9
-         a5te8eaKuzW4h0HM+RseWikjEPoo/PFrLtFQne8D6Q/+h/RPyu8IwszJfvU0VSAX/soA
-         iRHxQ9xizeMomKYAISs6TZiLr2xmiWPzIZ8V4VABgAFZ9y57HnxkkRNpPVCTV6rZpfLe
-         bPavbbyqoY53rMEJy7JfUk0XB+CLMrX7Qsq7Okvxy+dCATKLhguMr6BPNxhSXiUILJiv
-         t9og==
-X-Gm-Message-State: ABUngvegx13EHdpI9rvB8nbe7e4Un02hX9LmOS4RK7GQ1We1dCAQp85DNRPT7PbRSsrLbXU0O5znSaMzkdibsA45
-X-Received: by 10.55.22.105 with SMTP id g102mr3775970qkh.86.1477030240072;
- Thu, 20 Oct 2016 23:10:40 -0700 (PDT)
+        id S1753997AbcJUGQS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 02:16:18 -0400
+Received: from mail110.syd.optusnet.com.au ([211.29.132.97]:46457 "EHLO
+        mail110.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753849AbcJUGQR (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 21 Oct 2016 02:16:17 -0400
+X-Greylist: delayed 1470 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Oct 2016 02:16:17 EDT
+Received: from dimstar.local.net (c110-22-56-26.eburwd6.vic.optusnet.com.au [110.22.56.26])
+        by mail110.syd.optusnet.com.au (Postfix) with ESMTP id 1355A7840EC
+        for <git@vger.kernel.org>; Fri, 21 Oct 2016 16:51:32 +1100 (AEDT)
+Received: (qmail 2633 invoked by uid 501); 21 Oct 2016 05:50:13 -0000
+Date:   Fri, 21 Oct 2016 16:50:13 +1100
+From:   Duncan Roe <duncan_roe@acslink.net.au>
+To:     git <git@vger.kernel.org>
+Subject: [BUG] [PATCH]: run-command.c
+Message-ID: <20161021055013.GA31554@dimstar.local.net>
+Mail-Followup-To: git <git@vger.kernel.org>
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Thu, 20 Oct 2016 23:10:39 -0700 (PDT)
-In-Reply-To: <D9C1E13F-88A2-483E-A549-1C2294EACFEB@gmail.com>
-References: <D9C1E13F-88A2-483E-A549-1C2294EACFEB@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 20 Oct 2016 23:10:39 -0700
-Message-ID: <CAGZ79kZo3LdcRmrjQTAvgx=H6U2tdjASK3qv5A2K5J2HQ2NvSw@mail.gmail.com>
-Subject: Re: Prove "Tests out of sequence" Error
-To:     Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.6.1 (2016-04-27)
+X-Optus-CM-Score: 0
+X-Optus-CM-Analysis: v=2.1 cv=VIkg5I7X c=1 sm=1 tr=0
+        a=/xIuaNGu1NPzt0yKkvdCVQ==:117 a=/xIuaNGu1NPzt0yKkvdCVQ==:17
+        a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+        a=CH0kA5CcgfcA:10 a=xT7Xx2lwbq99A7q-vAEA:9 a=CjuIK1q_8ugA:10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2016 at 9:14 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
-> Hi,
->
-> on TravisCI I see these weird "Tests out of sequence" errors with prove
-> and they seem to not go away. I assume the reason that they not go away
-> is that the ".prove" file is carried over from on build to another (but I can't
-> look into this file on TravisCI).
->
-> Has anyone an idea where these errors might come from?
->
-> ------------------------------------------------------------------------
-> t5547-push-quarantine.sh                         (Wstat: 0 Tests: 5 Failed: 0)
+prepare_shell_cmd() executes /bin/sh with superfluous arguments on all but
+single-word shell commands.
 
-push quarantine is a new thing made by Jeff 2 weeks ago, IIRC.
+For example, if .git/config has this alias (the sleep is to leave time to
+examine output from ps, &c.):
 
->   Parse errors: Tests out of sequence.  Found (2) but expected (3)
->                 Tests out of sequence.  Found (3) but expected (4)
->                 Tests out of sequence.  Found (4) but expected (5)
->                 Bad plan.  You planned 4 tests but ran 5.
-> Files=760, Tests=15109, 679 wallclock secs (21.91 usr  1.78 sys + 320.79 cusr 529.13 csys = 873.61 CPU)
-> Result: FAIL
-> make[1]: *** [prove] Error 1
-> make: *** [test] Error 2
-> ------------------------------------------------------------------------
->
-> Example:
-> https://s3.amazonaws.com/archive.travis-ci.org/jobs/169385219/log.txt
->
-> Thanks,
-> Lars
+[alias]
+	tryme = "!echo $PWD;sleep 600"
+
+running "git tryme" in one console and checking what it does in another
+
+--- 1st xterm
+
+16:42:12$ git tryme
+/usr/src/git/.git
+echo $PWD;sleep 600: line 1:  2602 Terminated              sleep 600
+16:43:15$
+
+
+--- 2nd xterm
+
+16:42:06$ ps axf|grep -A2 trym[e]
+ 2599 pts/4    S+     0:00      \_ git tryme
+ 2601 pts/4    S+     0:00          \_ /bin/sh -c echo $PWD;sleep 600 echo $PWD;sleep 600
+ 2602 pts/4    S+     0:00              \_ sleep 600
+16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
+/bin/sh
+-c
+echo $PWD;sleep 600
+echo $PWD;sleep 600
+16:43:04$ kill 2602
+16:43:15$
+
+---
+
+There is an extra "-c" argument. This is caused by a missing "else", fixed by
+the appended patch,
+
+Cheers ... Duncan.
+
+----------8<-------------------
+
+--- a/run-command.c
++++ b/run-command.c
+@@ -182,8 +182,8 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
+ 		else
+ 			argv_array_pushf(out, "%s \"$@\"", argv[0]);
+ 	}
+-
+-	argv_array_pushv(out, argv);
++	else
++		argv_array_pushv(out, argv);
+ 	return out->argv;
+ }
+
