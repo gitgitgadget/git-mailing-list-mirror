@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E31F20229
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACB420987
 	for <e@80x24.org>; Fri, 21 Oct 2016 12:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755448AbcJUMYw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 08:24:52 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59888 "EHLO mout.gmx.net"
+        id S1755456AbcJUMYz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 08:24:55 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59001 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755300AbcJUMYs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 08:24:48 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LlESk-1cXSBw1te2-00b0rg; Fri, 21 Oct 2016 14:24:42
+        id S1755451AbcJUMYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 08:24:53 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LikE1-1cW4DC0jzJ-00d0yY; Fri, 21 Oct 2016 14:24:47
  +0200
-Date:   Fri, 21 Oct 2016 14:24:41 +0200 (CEST)
+Date:   Fri, 21 Oct 2016 14:24:46 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,534 +27,70 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v5 08/27] sequencer: completely revamp the "todo" script
- parsing
+Subject: [PATCH v5 09/27] sequencer: strip CR from the todo script
 In-Reply-To: <cover.1477052405.git.johannes.schindelin@gmx.de>
-Message-ID: <c0d106125e1b6ba107b1ef06fb60dd710d184d29.1477052405.git.johannes.schindelin@gmx.de>
+Message-ID: <090369749f8bc0a45c94198cd20fa0da5d0afddf.1477052405.git.johannes.schindelin@gmx.de>
 References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:z6K0NCEMUotPVWO2hG3YLJQ+zzGCdvNMI6jtcJXQBEIIvtgz19D
- XdUrNt8HmIAfR8eQDrHMnMXCx01KSEBWmueMq6cisQ/r29f9ZGu/PgxtTxVqA7oo911YMGK
- 14y4ZoKB5liPBth/EI56F7sXe0okPPAzn7/nW+jSo3gULxQkjCcA8vPaL2AxqGUX6W8I+dE
- OUJX2DCYEjhldEvivPVsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V39/fCfQvcs=:SxjVp5B/0jkPc2ghqEyzrT
- g1HaPmXte4f6hfz/ggb1zWv/535rsmUoszrOtNgghFCUuKwL8UIRj+Jj6JpaiqMVucPbYhwRH
- 645oRqkobDusE15o3+ez+9+cT8t37GMyQFSU97/RKOXM00pZHHR0ywz+bYjcmJ+aNBO2Ct0em
- 0XTd2Emt9fiKxRNgDWCscKod9nhqHzk7Cli6hkEzsSdrcYN81Ikv0tYynnzvWvDrV1Xr3o57k
- ElHsAgiHlPbSXgg04vSaX+dYDejQgKwhw3CmUDy3JRHYoLJAjP1qD+E0VyCZ84FNesN2MIwxA
- KAb4tP8xZWmmWg+1lTmKUMur30niX7yTOjgGdK5LyBcMeeTbxJOTEuldAGE3S1XxzJsF5kCmN
- k5U6BiGo/w2ZsPizdJOdXt27Xb32z68gJhSU2RKSDR1LQ3R0xb/heNjAZz4MVgSy0Oa4F8ORF
- SpQTY6QGqvOYO+dL7ZgUlvsexyXVHkxWip+hu/Yvod2xTXclJG3biULAjcBc0DgyZpNfkOgFC
- Y5zzIwEbTUENCuuHlV7YafvwldYh4TA4hgMx5AERLLynmPD4aEDor7PgyaN2x0VqPTEhQ6FiD
- lUifJIYSgnqofBnwXYl6W/suBb0QRfjGFXJwWn14kwDem1tTWF7jJwohvu7QUo8a0sI9E6ttN
- QPoWUWUev5hAqyI77LqJMx+Xzicl+ptWitw1NwR1BXlvQLDuAs2yJagOddMa0XAF6gzbkJrCS
- qv6BszXAHYJNvVOFEkcf5lirI39+DpW9r4vXYGlIFBPRzO4cXblVhb9eJPKvc19oVAzATbV3s
- Z7DOCFP
+X-Provags-ID: V03:K0:KZThcQkKsYhO+JPrmdtMlUtBsvsxlaXcffxkObJ5TOlQO2S4yHj
+ um9ESCnt5B42rH6KmcUam0VquM8dvoBxScMVzU1BfxAasmipUPXD6zo3DGrZ+BDMMW5kqdN
+ jMDNkUaaOBfbs4/ruk/ZxvbKnoGCXo+/mEli5xWo7BwYU0BOzMH8Kh02nWOYi1QdMWVmm7p
+ 0CULznlBb8cGQB9olM4SA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pBA3wFwU6nk=:mK20egUQPioZG3M0+/LRvs
+ PESSveO2jCrC5EJXAIoJTETBAPGRWO//w/WjsiUtl3dD3WCngH9mhCHeUHGyxv7Ynzg+Rc3BD
+ fD3ppRfBrvjYqz5n+jfMoessEQScj1AEBilpGIINHtzx3HnbW01TO1mCGr3XGz1dPmczXiyoK
+ zdBkNfytR/nKh+tzDcdwhLdp5+zbcdMF9wv+39Oto0iWINBXnBmcDA0LcQjrKeF6H3AJdaPtA
+ eLc8W1AYgj3yw/Lx1NwHYLVdLWwP4J772fjnaJwSnk9k/pC6b4aLCootGHy2hwQtZU7nb1+Aa
+ 1nRo1n3yYeva8zZ+3b8HQK0Y3CoXh1o/xtSOIQxXfF9owiW4ObLNSwUb+7BCFRhSOWzNcZn84
+ xJjfvqCz5WZj6ktakWAJMf8Vxwlu9GyDL/y7Qsx36jt9iUpDk5weZd/tH+NmkYIRp3mxXMjZZ
+ 5bR8Ywa6IMgcr3IGqBAYp0FnsOIqJrf9w6y1YfCpsoVpVg3W6iHae6Tj7jDrVC60TDK2fIBrY
+ VhKhWRbFbf5huUP0ylIZuTRO573XmIPcJY03twAgERB08pCMK23G84ixPNwErMR3Ev2dd7RC9
+ d5Cod/pYTK535mX2xsMqk5akVg6iygwi0RwgLDZ3PSX8iNh9AGpmAweHdGn3Av1YxL5ErGhSN
+ LrRLP3ZHGYguREpOO9MHPf+EtUZtHU0ePWYSdCOlOr8QyufYmMlkzOKXC5xmuD5BLcUYEUz+x
+ ei0YLlKzheAvEDAa8ANNmHG+jyoFMaPU5ElV18UNHaIicH0xdVyR4XzZzvezivkCn9JPBnKrL
+ pi2/9lD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we came up with the "sequencer" idea, we really wanted to have
-kind of a plumbing equivalent of the interactive rebase. Hence the
-choice of words: the "todo" script, a "pick", etc.
+It is not unheard of that editors on Windows write CR/LF even if the
+file originally had only LF. This is particularly awkward for exec lines
+of a rebase -i todo sheet. Take for example the insn "exec echo": The
+shell script parser splits at the LF and leaves the CR attached to
+"echo", which leads to the unknown command "echo\r".
 
-However, when it came time to implement the entire shebang, somehow this
-idea got lost and the sequencer was used as working horse for
-cherry-pick and revert instead. So as not to interfere with the
-interactive rebase, it even uses a separate directory to store its
-state.
+Work around that by stripping CR when reading the todo commands, as we
+already do for LF.
 
-Furthermore, it also is stupidly strict about the "todo" script it
-accepts: while it parses commands in a way that was *designed* to be
-similar to the interactive rebase, it then goes on to *error out* if the
-commands disagree with the overall action (cherry-pick or revert).
+This happens to fix t9903.14 and .15 in MSYS1 environments (with the
+rebase--helper patches based on this patch series): the todo script
+constructed in such a setup contains CR/LF thanks to MSYS1 runtime's
+cleverness.
 
-Finally, the sequencer code chose to deviate from the interactive rebase
-code insofar that when it comes to writing the file with the remaining
-commands, it *reformats* the "todo" script instead of just writing the
-part of the parsed script that were not yet processed. This is not only
-unnecessary churn, but might well lose information that is valuable to
-the user (i.e. comments after the commands).
-
-Let's just bite the bullet and rewrite the entire parser; the code now
-becomes not only more elegant: it allows us to go on and teach the
-sequencer how to parse *true* "todo" scripts as used by the interactive
-rebase itself. In a way, the sequencer is about to grow up to do its
-older brother's job. Better.
-
-In particular, we choose to maintain the list of commands in an array
-instead of a linked list: this is flexible enough to allow us later on to
-even implement rebase -i's reordering of fixup!/squash! commits very
-easily (and with a very nice speed bonus, at least on Windows).
-
-While at it, do not stop at the first problem, but list *all* of the
-problems. This will help the user when the sequencer will do `rebase
--i`'s work by allowing to address all issues in one go rather than going
-back and forth until the todo list is valid.
+Based on a report and a patch by Johannes Sixt.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 284 ++++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 163 insertions(+), 121 deletions(-)
+ sequencer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 499f5ee..145de78 100644
+index 145de78..04fcfd8 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -470,7 +470,26 @@ static int allow_empty(struct replay_opts *opts, struct commit *commit)
- 		return 1;
- }
+@@ -776,6 +776,9 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
  
--static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
-+enum todo_command {
-+	TODO_PICK = 0,
-+	TODO_REVERT
-+};
+ 		next_p = *eol ? eol + 1 /* skip LF */ : eol;
+ 
++		if (p != eol && eol[-1] == '\r')
++			eol--; /* strip Carriage Return */
 +
-+static const char *todo_command_strings[] = {
-+	"pick",
-+	"revert"
-+};
-+
-+static const char *command_to_string(const enum todo_command command)
-+{
-+	if (command < ARRAY_SIZE(todo_command_strings))
-+		return todo_command_strings[command];
-+	die("Unknown command: %d", command);
-+}
-+
-+
-+static int do_pick_commit(enum todo_command command, struct commit *commit,
-+		struct replay_opts *opts)
- {
- 	unsigned char head[20];
- 	struct commit *base, *next, *parent;
-@@ -529,10 +548,11 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		return fast_forward_to(commit->object.oid.hash, head, unborn, opts);
- 
- 	if (parent && parse_commit(parent) < 0)
--		/* TRANSLATORS: The first %s will be "revert" or
--		   "cherry-pick", the second %s a SHA1 */
-+		/* TRANSLATORS: The first %s will be a "todo" command like
-+		   "revert" or "pick", the second %s a SHA1. */
- 		return error(_("%s: cannot parse parent commit %s"),
--			action_name(opts), oid_to_hex(&parent->object.oid));
-+			command_to_string(command),
-+			oid_to_hex(&parent->object.oid));
- 
- 	if (get_message(commit, &msg) != 0)
- 		return error(_("Cannot get commit message for %s"),
-@@ -545,7 +565,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	 * reverse of it if we are revert.
- 	 */
- 
--	if (opts->action == REPLAY_REVERT) {
-+	if (command == TODO_REVERT) {
- 		base = commit;
- 		base_label = msg.label;
- 		next = parent;
-@@ -586,7 +606,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		}
- 	}
- 
--	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REPLAY_REVERT) {
-+	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
- 		res = do_recursive_merge(base, next, base_label, next_label,
- 					 head, &msgbuf, opts);
- 		if (res < 0)
-@@ -613,17 +633,17 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	 * However, if the merge did not even start, then we don't want to
- 	 * write it at all.
- 	 */
--	if (opts->action == REPLAY_PICK && !opts->no_commit && (res == 0 || res == 1) &&
-+	if (command == TODO_PICK && !opts->no_commit && (res == 0 || res == 1) &&
- 	    update_ref(NULL, "CHERRY_PICK_HEAD", commit->object.oid.hash, NULL,
- 		       REF_NODEREF, UPDATE_REFS_MSG_ON_ERR))
- 		res = -1;
--	if (opts->action == REPLAY_REVERT && ((opts->no_commit && res == 0) || res == 1) &&
-+	if (command == TODO_REVERT && ((opts->no_commit && res == 0) || res == 1) &&
- 	    update_ref(NULL, "REVERT_HEAD", commit->object.oid.hash, NULL,
- 		       REF_NODEREF, UPDATE_REFS_MSG_ON_ERR))
- 		res = -1;
- 
- 	if (res) {
--		error(opts->action == REPLAY_REVERT
-+		error(command == TODO_REVERT
- 		      ? _("could not revert %s... %s")
- 		      : _("could not apply %s... %s"),
- 		      short_commit_name(commit), msg.subject);
-@@ -684,116 +704,122 @@ static int read_and_refresh_cache(struct replay_opts *opts)
- 	return 0;
- }
- 
--static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
--		struct replay_opts *opts)
-+struct todo_item {
-+	enum todo_command command;
-+	struct commit *commit;
-+	size_t offset_in_buf;
-+};
-+
-+struct todo_list {
-+	struct strbuf buf;
-+	struct todo_item *items;
-+	int nr, alloc, current;
-+};
-+
-+#define TODO_LIST_INIT { STRBUF_INIT }
-+
-+static void todo_list_release(struct todo_list *todo_list)
- {
--	struct commit_list *cur = NULL;
--	const char *sha1_abbrev = NULL;
--	const char *action_str = opts->action == REPLAY_REVERT ? "revert" : "pick";
--	const char *subject;
--	int subject_len;
-+	strbuf_release(&todo_list->buf);
-+	free(todo_list->items);
-+	todo_list->items = NULL;
-+	todo_list->nr = todo_list->alloc = 0;
-+}
- 
--	for (cur = todo_list; cur; cur = cur->next) {
--		const char *commit_buffer = get_commit_buffer(cur->item, NULL);
--		sha1_abbrev = find_unique_abbrev(cur->item->object.oid.hash, DEFAULT_ABBREV);
--		subject_len = find_commit_subject(commit_buffer, &subject);
--		strbuf_addf(buf, "%s %s %.*s\n", action_str, sha1_abbrev,
--			subject_len, subject);
--		unuse_commit_buffer(cur->item, commit_buffer);
--	}
--	return 0;
-+static struct todo_item *append_new_todo(struct todo_list *todo_list)
-+{
-+	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
-+	return todo_list->items + todo_list->nr++;
- }
- 
--static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *opts)
-+static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- {
- 	unsigned char commit_sha1[20];
--	enum replay_action action;
- 	char *end_of_object_name;
--	int saved, status, padding;
--
--	if (starts_with(bol, "pick")) {
--		action = REPLAY_PICK;
--		bol += strlen("pick");
--	} else if (starts_with(bol, "revert")) {
--		action = REPLAY_REVERT;
--		bol += strlen("revert");
--	} else
--		return NULL;
-+	int i, saved, status, padding;
-+
-+	for (i = 0; i < ARRAY_SIZE(todo_command_strings); i++)
-+		if (skip_prefix(bol, todo_command_strings[i], &bol)) {
-+			item->command = i;
-+			break;
-+		}
-+	if (i >= ARRAY_SIZE(todo_command_strings))
-+		return -1;
- 
- 	/* Eat up extra spaces/ tabs before object name */
- 	padding = strspn(bol, " \t");
- 	if (!padding)
--		return NULL;
-+		return -1;
- 	bol += padding;
- 
--	end_of_object_name = bol + strcspn(bol, " \t\n");
-+	end_of_object_name = (char *) bol + strcspn(bol, " \t\n");
- 	saved = *end_of_object_name;
- 	*end_of_object_name = '\0';
- 	status = get_sha1(bol, commit_sha1);
- 	*end_of_object_name = saved;
- 
--	/*
--	 * Verify that the action matches up with the one in
--	 * opts; we don't support arbitrary instructions
--	 */
--	if (action != opts->action) {
--		if (action == REPLAY_REVERT)
--		      error((opts->action == REPLAY_REVERT)
--			    ? _("Cannot revert during another revert.")
--			    : _("Cannot revert during a cherry-pick."));
--		else
--		      error((opts->action == REPLAY_REVERT)
--			    ? _("Cannot cherry-pick during a revert.")
--			    : _("Cannot cherry-pick during another cherry-pick."));
--		return NULL;
--	}
--
- 	if (status < 0)
--		return NULL;
-+		return -1;
- 
--	return lookup_commit_reference(commit_sha1);
-+	item->commit = lookup_commit_reference(commit_sha1);
-+	return !item->commit;
- }
- 
--static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
--			struct replay_opts *opts)
-+static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
- {
--	struct commit_list **next = todo_list;
--	struct commit *commit;
--	char *p = buf;
--	int i;
-+	struct todo_item *item;
-+	char *p = buf, *next_p;
-+	int i, res = 0;
- 
--	for (i = 1; *p; i++) {
-+	for (i = 1; *p; i++, p = next_p) {
- 		char *eol = strchrnul(p, '\n');
--		commit = parse_insn_line(p, eol, opts);
--		if (!commit)
--			return error(_("Could not parse line %d."), i);
--		next = commit_list_append(commit, next);
--		p = *eol ? eol + 1 : eol;
-+
-+		next_p = *eol ? eol + 1 /* skip LF */ : eol;
-+
-+		item = append_new_todo(todo_list);
-+		item->offset_in_buf = p - todo_list->buf.buf;
-+		if (parse_insn_line(item, p, eol)) {
-+			res = error(_("Invalid line %d: %.*s"),
-+				i, (int)(eol - p), p);
-+			item->command = -1;
-+		}
- 	}
--	if (!*todo_list)
-+	if (!todo_list->nr)
- 		return error(_("No commits parsed."));
--	return 0;
-+	return res;
- }
- 
--static int read_populate_todo(struct commit_list **todo_list,
-+static int read_populate_todo(struct todo_list *todo_list,
- 			struct replay_opts *opts)
- {
- 	const char *todo_file = get_todo_path(opts);
--	struct strbuf buf = STRBUF_INIT;
- 	int fd, res;
- 
-+	strbuf_reset(&todo_list->buf);
- 	fd = open(todo_file, O_RDONLY);
- 	if (fd < 0)
- 		return error_errno(_("Could not open %s"), todo_file);
--	if (strbuf_read(&buf, fd, 0) < 0) {
-+	if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
- 		close(fd);
--		strbuf_release(&buf);
- 		return error(_("Could not read %s."), todo_file);
- 	}
- 	close(fd);
- 
--	res = parse_insn_buffer(buf.buf, todo_list, opts);
--	strbuf_release(&buf);
-+	res = parse_insn_buffer(todo_list->buf.buf, todo_list);
-+	if (!res) {
-+		enum todo_command valid =
-+			opts->action == REPLAY_PICK ? TODO_PICK : TODO_REVERT;
-+		int i;
-+
-+		for (i = 0; i < todo_list->nr; i++)
-+			if (valid == todo_list->items[i].command)
-+				continue;
-+			else if (valid == TODO_PICK)
-+				return error(_("Cannot cherry-pick during a revert."));
-+			else
-+				return error(_("Cannot revert during a cherry-pick."));
-+	}
-+
- 	if (res)
- 		return error(_("Unusable instruction sheet: %s"), todo_file);
- 	return 0;
-@@ -860,18 +886,31 @@ static int read_populate_opts(struct replay_opts *opts)
- 	return 0;
- }
- 
--static int walk_revs_populate_todo(struct commit_list **todo_list,
-+static int walk_revs_populate_todo(struct todo_list *todo_list,
- 				struct replay_opts *opts)
- {
-+	enum todo_command command = opts->action == REPLAY_PICK ?
-+		TODO_PICK : TODO_REVERT;
-+	const char *command_string = todo_command_strings[command];
- 	struct commit *commit;
--	struct commit_list **next;
- 
- 	if (prepare_revs(opts))
- 		return -1;
- 
--	next = todo_list;
--	while ((commit = get_revision(opts->revs)))
--		next = commit_list_append(commit, next);
-+	while ((commit = get_revision(opts->revs))) {
-+		struct todo_item *item = append_new_todo(todo_list);
-+		const char *commit_buffer = get_commit_buffer(commit, NULL);
-+		const char *subject;
-+		int subject_len;
-+
-+		item->command = command;
-+		item->commit = commit;
-+		item->offset_in_buf = todo_list->buf.len;
-+		subject_len = find_commit_subject(commit_buffer, &subject);
-+		strbuf_addf(&todo_list->buf, "%s %s %.*s\n", command_string,
-+			short_commit_name(commit), subject_len, subject);
-+		unuse_commit_buffer(commit, commit_buffer);
-+	}
- 	return 0;
- }
- 
-@@ -979,30 +1018,22 @@ static int sequencer_rollback(struct replay_opts *opts)
- 	return -1;
- }
- 
--static int save_todo(struct commit_list *todo_list, struct replay_opts *opts)
-+static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
- {
- 	static struct lock_file todo_lock;
--	struct strbuf buf = STRBUF_INIT;
--	int fd;
-+	const char *todo_path = get_todo_path(opts);
-+	int next = todo_list->current, offset, fd;
- 
--	fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), 0);
-+	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
- 	if (fd < 0)
--		return error_errno(_("Could not lock '%s'"),
--				   git_path_todo_file());
--	if (format_todo(&buf, todo_list, opts) < 0) {
--		strbuf_release(&buf);
--		return error(_("Could not format %s."), git_path_todo_file());
--	}
--	if (write_in_full(fd, buf.buf, buf.len) < 0) {
--		strbuf_release(&buf);
--		return error_errno(_("Could not write to %s"),
--				   git_path_todo_file());
--	}
--	if (commit_lock_file(&todo_lock) < 0) {
--		strbuf_release(&buf);
--		return error(_("Error wrapping up %s."), git_path_todo_file());
--	}
--	strbuf_release(&buf);
-+		return error_errno(_("Could not lock '%s'"), todo_path);
-+	offset = next < todo_list->nr ?
-+		todo_list->items[next].offset_in_buf : todo_list->buf.len;
-+	if (write_in_full(fd, todo_list->buf.buf + offset,
-+			todo_list->buf.len - offset) < 0)
-+		return error_errno(_("Could not write to '%s'"), todo_path);
-+	if (commit_lock_file(&todo_lock) < 0)
-+		return error(_("Error wrapping up %s."), todo_path);
- 	return 0;
- }
- 
-@@ -1041,9 +1072,8 @@ static int save_opts(struct replay_opts *opts)
- 	return res;
- }
- 
--static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
-+static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- {
--	struct commit_list *cur;
- 	int res;
- 
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-@@ -1053,10 +1083,12 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- 	if (read_and_refresh_cache(opts))
- 		return -1;
- 
--	for (cur = todo_list; cur; cur = cur->next) {
--		if (save_todo(cur, opts))
-+	while (todo_list->current < todo_list->nr) {
-+		struct todo_item *item = todo_list->items + todo_list->current;
-+		if (save_todo(todo_list, opts))
- 			return -1;
--		res = do_pick_commit(cur->item, opts);
-+		res = do_pick_commit(item->command, item->commit, opts);
-+		todo_list->current++;
- 		if (res)
- 			return res;
- 	}
-@@ -1081,38 +1113,46 @@ static int continue_single_pick(void)
- 
- static int sequencer_continue(struct replay_opts *opts)
- {
--	struct commit_list *todo_list = NULL;
-+	struct todo_list todo_list = TODO_LIST_INIT;
-+	int res;
- 
- 	if (!file_exists(get_todo_path(opts)))
- 		return continue_single_pick();
--	if (read_populate_opts(opts) ||
--			read_populate_todo(&todo_list, opts))
-+	if (read_populate_opts(opts))
- 		return -1;
-+	if ((res = read_populate_todo(&todo_list, opts)))
-+		goto release_todo_list;
- 
- 	/* Verify that the conflict has been resolved */
- 	if (file_exists(git_path_cherry_pick_head()) ||
- 	    file_exists(git_path_revert_head())) {
--		int ret = continue_single_pick();
--		if (ret)
--			return ret;
-+		res = continue_single_pick();
-+		if (res)
-+			goto release_todo_list;
- 	}
--	if (index_differs_from("HEAD", 0))
--		return error_dirty_index(opts);
--	todo_list = todo_list->next;
--	return pick_commits(todo_list, opts);
-+	if (index_differs_from("HEAD", 0)) {
-+		res = error_dirty_index(opts);
-+		goto release_todo_list;
-+	}
-+	todo_list.current++;
-+	res = pick_commits(&todo_list, opts);
-+release_todo_list:
-+	todo_list_release(&todo_list);
-+	return res;
- }
- 
- static int single_pick(struct commit *cmit, struct replay_opts *opts)
- {
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
--	return do_pick_commit(cmit, opts);
-+	return do_pick_commit(opts->action == REPLAY_PICK ?
-+		TODO_PICK : TODO_REVERT, cmit, opts);
- }
- 
- int sequencer_pick_revisions(struct replay_opts *opts)
- {
--	struct commit_list *todo_list = NULL;
-+	struct todo_list todo_list = TODO_LIST_INIT;
- 	unsigned char sha1[20];
--	int i;
-+	int i, res;
- 
- 	if (opts->subcommand == REPLAY_NONE)
- 		assert(opts->revs);
-@@ -1187,7 +1227,9 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 		return -1;
- 	if (save_opts(opts))
- 		return -1;
--	return pick_commits(todo_list, opts);
-+	res = pick_commits(&todo_list, opts);
-+	todo_list_release(&todo_list);
-+	return res;
- }
- 
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+ 		item = append_new_todo(todo_list);
+ 		item->offset_in_buf = p - todo_list->buf.buf;
+ 		if (parse_insn_line(item, p, eol)) {
 -- 
 2.10.1.583.g721a9e0
 
