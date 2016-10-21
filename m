@@ -6,118 +6,123 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74D5E20986
-	for <e@80x24.org>; Fri, 21 Oct 2016 08:43:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6962B20986
+	for <e@80x24.org>; Fri, 21 Oct 2016 09:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753497AbcJUInw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 04:43:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60526 "EHLO cloud.peff.net"
+        id S932386AbcJUJAd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 05:00:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60535 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753283AbcJUInv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 04:43:51 -0400
-Received: (qmail 11082 invoked by uid 109); 21 Oct 2016 08:43:50 -0000
+        id S932178AbcJUJAc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 05:00:32 -0400
+Received: (qmail 12015 invoked by uid 109); 21 Oct 2016 09:00:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 08:43:50 +0000
-Received: (qmail 1088 invoked by uid 111); 21 Oct 2016 08:44:13 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 09:00:31 +0000
+Received: (qmail 1207 invoked by uid 111); 21 Oct 2016 09:00:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 04:44:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 04:43:48 -0400
-Date:   Fri, 21 Oct 2016 04:43:48 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 05:00:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 05:00:29 -0400
+Date:   Fri, 21 Oct 2016 05:00:29 -0400
 From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Prove "Tests out of sequence" Error
-Message-ID: <20161021084348.dp4jfpfownodl7nz@sigill.intra.peff.net>
-References: <D9C1E13F-88A2-483E-A549-1C2294EACFEB@gmail.com>
- <CAGZ79kZo3LdcRmrjQTAvgx=H6U2tdjASK3qv5A2K5J2HQ2NvSw@mail.gmail.com>
- <20161021082035.xad6wfny5i6wtshh@sigill.intra.peff.net>
+To:     git <git@vger.kernel.org>
+Subject: Re: [BUG] [PATCH]: run-command.c
+Message-ID: <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
+References: <20161021055013.GA31554@dimstar.local.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161021082035.xad6wfny5i6wtshh@sigill.intra.peff.net>
+In-Reply-To: <20161021055013.GA31554@dimstar.local.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 04:20:35AM -0400, Jeff King wrote:
+On Fri, Oct 21, 2016 at 04:50:13PM +1100, Duncan Roe wrote:
 
-> Yes, but I do not see how it can trigger this:
+> For example, if .git/config has this alias (the sleep is to leave time to
+> examine output from ps, &c.):
 > 
-> > >   Parse errors: Tests out of sequence.  Found (2) but expected (3)
-> > >                 Tests out of sequence.  Found (3) but expected (4)
-> > >                 Tests out of sequence.  Found (4) but expected (5)
-> > >                 Bad plan.  You planned 4 tests but ran 5.
-> 
-> The TAP output from one of our tests should look something like:
-> 
->   ok 1 - subject one
->   ok 2 - subject two
->   ok 3 - subject three
->   ok 4 - subject four
->   # passed all 4 test(s)
->   1..4
-> 
-> the "plan" is the bit at the end. That looks like $test_count
-> accidentally got incremented by one and we generated something like:
-> 
->   ok 1 - subject one
->   ok 3 - subject two
->   ok 4 - subject three
->   ok 5 - subject four
->   1..4
-> 
-> which would explain the "out of sequence" errors as well as the "planned
-> 4 but ran 5".
+> [alias]
+> 	tryme = "!echo $PWD;sleep 600"
+>
+> [...]
+> 16:42:06$ ps axf|grep -A2 trym[e]
+>  2599 pts/4    S+     0:00      \_ git tryme
+>  2601 pts/4    S+     0:00          \_ /bin/sh -c echo $PWD;sleep 600 echo $PWD;sleep 600
+>  2602 pts/4    S+     0:00              \_ sleep 600
+> 16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
+> /bin/sh
+> -c
+> echo $PWD;sleep 600
+> echo $PWD;sleep 600
 
-Hmm, actually the numbering problem is the other way around. It finds 2
-but expects 3, so it is more like:
+This duplicated argument is expected and normal. The arguments after "-c
+whatever" become positional parameters $0, $1, etc. The actual script
+arguments start at "$1", and "$0" is typically the "script name".
+So you have to stick some placeholder value in the "$0" slot, so that
+the sub-script can find the actual arguments. E.g., try:
 
-  ok 1 - subject one
-  ok 2 - something else stuck in here!
-  ok 2 - subject two
-  ...
+  sh -c '
+    for i in "$@"; do
+      echo "got $i"
+    done
+  ' one two three
 
-which gives us a clue. And thanks to TAP auto-numbering, you can also
-trigger this like:
+it will print only:
 
-  ok 1 - subject one
-  ok
-  ok 2 - subject two
+  got two
+  got three
 
-The "ok" by itself is taken to mean "ok 2". And now I have enough to
-generate this locally. t5547 does:
+But if you stick a placeholder there, it works:
 
-  test_commit ok &&
-  ...
-  git cat-file commit $commit
+  sh -c '
+    for i in "$@"; do
+      echo "got $i"
+    done
+  ' placeholder one two three
 
-which will print a line with just "ok" on it. Normally this is not sent
-to stdout at all; test output goes to /dev/null unless "--verbose" is
-given. When "--verbose" is used, we get all manner of random program
-output intermingled with our TAP output, which is an accident waiting to
-happen. Usually nobody cares, because they only use "--verbose" when
-debugging a test individually (and nothing is parsing the TAP output).
-But I can trigger the problem with:
+The value of the placeholder does not matter to the shell. But it is
+accessible to the script inside via $0:
 
-  prove t5547-push-quarantine.sh :: -v
+  sh -c '
+    echo "\$0 = $0"
+    echo "\$1 = $1"
+    echo "\$2 = $2"
+    echo "\$3 = $3"
+  ' placeholder one two three
 
-The Travis tests do exactly this (along with --tee to actually save the
-output). It seems like a minor miracle that this is the first test
-output that has actually triggered as TAP input. I'd suggest that the
-problem is not in the test, though, but that our "--verbose" option is
-unsuitable for using with a TAP harness.
+Since our script does not have a filename, we just stick the script
+contents there (which is really just a convention, and one I doubt
+anybody is really relying on, but there's no point in breaking it now).
 
-The obvious fix would be to send "--verbose" output to stderr, but I
-suspect that would end up annoying for people who do:
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -182,8 +182,8 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
+>  		else
+>  			argv_array_pushf(out, "%s \"$@\"", argv[0]);
+>  	}
+> -
+> -	argv_array_pushv(out, argv);
+> +	else
+> +		argv_array_pushv(out, argv);
+>  	return out->argv;
+>  }
 
-  ./t5547-push-quarantine.sh -v | less
+Try running "make test" with this. Lots of things break, because we are
+not sending the positional parameters to the shell script at all.
 
-to read long output. Probably we need some option like "--log" which
-logs in the same way that "--tee" does, but _without_ sending the data
-to stdout. Naively, that just means replacing the "tee" invocation with
-"cat", but I suspect it will be a lot more complicated than that,
-because we still need to let the TAP output go to stdout.
+If we just cared about the positional parmeters, we _could_ do something
+like:
+
+  if (argv[0]) {
+	argv_array_push(out, "sh");
+	argv_array_pushv(out, argv + 1);
+  }
+
+That would omit "$0" entirely when we have no positional parameters (and
+the shell generally fills in "sh" there itself), and provide a dummy
+"sh" value when we need to use it as a placeholder.
+
+But again, there's no real value in breaking the existing convention.
 
 -Peff
