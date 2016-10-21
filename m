@@ -2,139 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9283220986
-	for <e@80x24.org>; Fri, 21 Oct 2016 11:07:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9272520986
+	for <e@80x24.org>; Fri, 21 Oct 2016 11:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932280AbcJULHz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 07:07:55 -0400
-Received: from mail106.syd.optusnet.com.au ([211.29.132.42]:35539 "EHLO
-        mail106.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932247AbcJULHy (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 21 Oct 2016 07:07:54 -0400
-Received: from dimstar.local.net (c110-22-56-26.eburwd6.vic.optusnet.com.au [110.22.56.26])
-        by mail106.syd.optusnet.com.au (Postfix) with ESMTP id 8C7F33C593B
-        for <git@vger.kernel.org>; Fri, 21 Oct 2016 22:07:38 +1100 (AEDT)
-Received: (qmail 3564 invoked by uid 501); 21 Oct 2016 11:07:28 -0000
-Date:   Fri, 21 Oct 2016 22:07:28 +1100
-From:   Duncan Roe <duncan_roe@acslink.net.au>
-To:     git <git@vger.kernel.org>
-Subject: Re: [BUG] [PATCH]: run-command.c
-Message-ID: <20161021110728.GB31554@dimstar.local.net>
-Mail-Followup-To: git <git@vger.kernel.org>
-References: <20161021055013.GA31554@dimstar.local.net>
- <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
+        id S1753745AbcJULLF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 07:11:05 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63924 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751839AbcJULLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 07:11:04 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lx5hl-1cyoTM06iv-016gUy; Fri, 21 Oct 2016 13:10:53
+ +0200
+Date:   Fri, 21 Oct 2016 13:10:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 18/25] sequencer: do not try to commit when there were
+ merge conflicts
+In-Reply-To: <xmqqmvhyg4ru.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610211304240.3264@virtualbox>
+References: <cover.1476120229.git.johannes.schindelin@gmx.de> <cover.1476450940.git.johannes.schindelin@gmx.de> <38d5f853444f80c90713f7a6e4ef1f2382549b29.1476450940.git.johannes.schindelin@gmx.de> <xmqqmvhyg4ru.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
-User-Agent: Mutt/1.6.1 (2016-04-27)
-X-Optus-CM-Score: 0
-X-Optus-CM-Analysis: v=2.1 cv=RIxOZNW+ c=1 sm=1 tr=0
-        a=/xIuaNGu1NPzt0yKkvdCVQ==:117 a=/xIuaNGu1NPzt0yKkvdCVQ==:17
-        a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
-        a=CH0kA5CcgfcA:10 a=XPUPcRBtb2EO3jOn9e4A:9 a=CjuIK1q_8ugA:10
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7xJYgIwRaWAuhN43Eq8hxSS7gT1XHz3BTaU+ArHNjZDBrbli6mE
+ AQznNQLms8fwwBFnZQ0NcJ6Vjf7l6HpFhougNsLZ2DgDpkMXyNurXMSCaJeHKbcKjQQNGJr
+ sk2TmenEVlNOOwiuP8CvWhKv6oK9NnlCcp6fr0MEHR8eLnj3cwQeGtgS3UMAVIt0a4n9OGA
+ I8qnm+kJkgjmn1EOyjFrA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dvoDV0pfDSI=:VaWiobaa5kOJvRMMXlgPqh
+ KNVnNqGI8hMoyL7ZhwgaIWHJkNGDOsDB+WQc/7+hlbs29wdg7K3e8TkwGd27ei0FE1CAG4fzk
+ 5rwrM86YYU8570iQ5cedpOSDkNRBqrsAoa2xEirZW2/lt+VY8W73+ufAT/mmTLg3vUnI0iAx7
+ LvHR4guVtogIlOQLKtK6YQnzTk5+ljyvA7nuLgQ1fu9c1xY0KvxypG408gBSeK7XtMJuahhOj
+ 2bxDubzI4WG958ZPGIIeSvdhulxDrWAU+dAaEtzT3PR7SNfGOAegg82qR7oiUFPwLRUkImWFb
+ 6GVWOyXNUJty2ob07//O/FGZomRzVgs3QAKlE5gD7fHo9T9q6tLvyI17KeBO0en3fUUjwI4dG
+ 61dA5brARnvFAcEKrMioMSC4dn3O13OnOvLZRhK1ZYFII4j2v7RTwpNUXorl3rNRZujeZrwNh
+ 0fJ0iIzTXsMRwHGK6pw4TecSmqEyDeJ4UUO7A8inc/Es9sEI3O8t5nKWolaTKibMMpsCVBvOZ
+ 5tokX6qqWkfb4f3x+oX0z7mZ4VKyiSDVbOk3yZWUji9zTsZttOqoX4dvXFoznCCa9OTJBh9Cr
+ lNHO5sP5ZHE2odqr8kXi0Y+/m8kNsjkp+g3hszx4rUOzXu+45DVUGOc4UFXdmb9ojJyc5DED5
+ R45ilsjv9IaFdp/JH42pwacLg8ywrzrNnAB4h3HTimueEFzK81jXWjno77DQ5hN3mwThiPnz4
+ P2C11u/WWyCJDS3xDht6JFlIv8knT2cifegcp2Jx2kBdYYUUkZ2JHiRdXZ13bWvmD5OA2mjBW
+ 6CmqWWp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 05:00:29AM -0400, Jeff King wrote:
-> On Fri, Oct 21, 2016 at 04:50:13PM +1100, Duncan Roe wrote:
->
-> > For example, if .git/config has this alias (the sleep is to leave time to
-> > examine output from ps, &c.):
+Hi Junio,
+
+On Thu, 20 Oct 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > The return value of do_recursive_merge() may be positive (indicating merge
+> > conflicts), or 0 (indicating success). It also may be negative, indicating
+> > a fatal error that requires us to abort.
 > >
-> > [alias]
-> > 	tryme = "!echo $PWD;sleep 600"
+> > Now, if the return value indicates that there are merge conflicts, we
+> > should not try to commit those changes, of course.
 > >
-> > [...]
-> > 16:42:06$ ps axf|grep -A2 trym[e]
-> >  2599 pts/4    S+     0:00      \_ git tryme
-> >  2601 pts/4    S+     0:00          \_ /bin/sh -c echo $PWD;sleep 600 echo $PWD;sleep 600
-> >  2602 pts/4    S+     0:00              \_ sleep 600
-> > 16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
-> > /bin/sh
-> > -c
-> > echo $PWD;sleep 600
-> > echo $PWD;sleep 600
->
-> This duplicated argument is expected and normal. The arguments after "-c
-> whatever" become positional parameters $0, $1, etc. The actual script
-> arguments start at "$1", and "$0" is typically the "script name".
-> So you have to stick some placeholder value in the "$0" slot, so that
-> the sub-script can find the actual arguments. E.g., try:
->
->   sh -c '
->     for i in "$@"; do
->       echo "got $i"
->     done
->   ' one two three
->
-> it will print only:
->
->   got two
->   got three
->
-> But if you stick a placeholder there, it works:
->
->   sh -c '
->     for i in "$@"; do
->       echo "got $i"
->     done
->   ' placeholder one two three
->
-> The value of the placeholder does not matter to the shell. But it is
-> accessible to the script inside via $0:
->
->   sh -c '
->     echo "\$0 = $0"
->     echo "\$1 = $1"
->     echo "\$2 = $2"
->     echo "\$3 = $3"
->   ' placeholder one two three
->
-> Since our script does not have a filename, we just stick the script
-> contents there (which is really just a convention, and one I doubt
-> anybody is really relying on, but there's no point in breaking it now).
->
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -182,8 +182,8 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
-> >  		else
-> >  			argv_array_pushf(out, "%s \"$@\"", argv[0]);
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  sequencer.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index cbc3742..9ffc090 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -787,7 +787,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+> >  		res = allow;
+> >  		goto leave;
 > >  	}
-> > -
-> > -	argv_array_pushv(out, argv);
-> > +	else
-> > +		argv_array_pushv(out, argv);
-> >  	return out->argv;
-> >  }
->
-> Try running "make test" with this. Lots of things break, because we are
-> not sending the positional parameters to the shell script at all.
->
-> If we just cared about the positional parmeters, we _could_ do something
-> like:
->
->   if (argv[0]) {
-> 	argv_array_push(out, "sh");
-> 	argv_array_pushv(out, argv + 1);
->   }
->
-> That would omit "$0" entirely when we have no positional parameters (and
-> the shell generally fills in "sh" there itself), and provide a dummy
-> "sh" value when we need to use it as a placeholder.
->
-> But again, there's no real value in breaking the existing convention.
->
-> -Peff
-Agreed - tests 110 and 111 in t1300-repo-config.sh fail. After that, "make test"
-gives up, losing about 14000 lines of output.
+> > -	if (!opts->no_commit)
+> > +	if (!res && !opts->no_commit)
+> >  		res = run_git_commit(opts->edit ? NULL : git_path_merge_msg(),
+> >  				     opts, allow, opts->edit, 0, 0);
+> 
+> This by itself looks more like a bugfix than preparation for later
+> steps.  The only reason why it is not a bugfix is because there is
+> nothing in this function that makes res a non-zero value and reach
+> this if statement at this step.  We would have been caught by an 
+> "if (res) { ... rerere(); goto leave; }" or 
+> "if (allow < 0) { res = allow; goto leave; }" 
+> that appear before this part of the code.
+> 
+> So while it is not wrong per-se, I think this should be part of an
+> actual change that makes it possible for the control flow to reach
+> here with non-zero res.
 
-Sorry for the noise,
+It looks like it is no longer needed (I *think* that it was made obsolete
+by the change where I now "goto fast_forward_edit" only in case there were
+no errors).
 
-Cheers ... Duncan.
+In any case, the patch's gone now,
+Dscho
