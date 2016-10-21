@@ -2,69 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5C9A20229
-	for <e@80x24.org>; Fri, 21 Oct 2016 17:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 995AE20229
+	for <e@80x24.org>; Fri, 21 Oct 2016 17:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932684AbcJURTL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 13:19:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57041 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932626AbcJURTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 13:19:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EAAEF450FC;
-        Fri, 21 Oct 2016 13:19:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DOaJeWaFlLWaPmB7W3vSSXKF5FY=; b=o2ddDS
-        yKWk99vO8vqsPQxnatpvOw5l5xdbbe/D3cpWtxd0Xth+IO7r4hErOKZocIQAzh5J
-        JArnC/dI830XM8KZO+yHIELVJGxV6B6u0tMXhyq6gVJHckaH5RcedDLHvuolZ2yA
-        og0x70lKVtDMR0IIigCYyr0/UkInvQX1Xpv1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RJah8tMe1wqnPwsKqXrBCGi4XUR36eg2
-        w0BmlybgcwNGifQ4YuOKNq9H0hnMyGyhSPtnyhzp/bR1MlT58d3kKJFikxr11w8V
-        KHCKtMdt3K2aWPGBAeKiDtBOROhFZzdlckAxfVQFErq/W1bU5mAsEk2vGro/sFq2
-        zP2hC7FsugA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E313B450FA;
-        Fri, 21 Oct 2016 13:19:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 651AA450F6;
-        Fri, 21 Oct 2016 13:19:09 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [BUG] [PATCH]: run-command.c
-References: <20161021055013.GA31554@dimstar.local.net>
-        <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net>
-Date:   Fri, 21 Oct 2016 10:19:07 -0700
-In-Reply-To: <20161021090029.glr5u6gwrxluavir@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 21 Oct 2016 05:00:29 -0400")
-Message-ID: <xmqq37jpd3hw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7A5DF83E-97B2-11E6-84D4-987C12518317-77302942!pb-smtp1.pobox.com
+        id S1755960AbcJURzK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 13:55:10 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:36550 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755499AbcJURzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 13:55:09 -0400
+Received: by mail-pf0-f174.google.com with SMTP id e6so60469217pfk.3
+        for <git@vger.kernel.org>; Fri, 21 Oct 2016 10:55:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=LzbvBaP7g17BrDgGf6QDbsFr7d3d8n8qStAgU8bns2A=;
+        b=LPu1gofZqiUTWVcPKm7uf2yFYCSXTJkc/mQckeP4QPo+v2eF4zaCrs4W8UDqATkxqj
+         cpTq9J+qYcmmh/J0EelNRS7TCDElA6pQOY3JXGWbl5k95L7mYydDZ8UVBAP1yeacZWBk
+         oZzMjpTlvnt7KTVYTLoTzOtXuJ2Sh5SpdfY6HNsNgQS91Rd8zA5JTStSYBiXtIpKI0z5
+         xgXqOY/xNvsyw3jBA0MMIFkW2O74xnAe8zNaU1eRwpLRSEQma2ItWZ9M6IhmtBN4avm3
+         UZ0GQekHVtm4+Rh37XyMm7JvdKizbbMdidAL6pvYZ3YllVSCZ0x0rJXrNpGDRJSx0dII
+         BvvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=LzbvBaP7g17BrDgGf6QDbsFr7d3d8n8qStAgU8bns2A=;
+        b=kMH0tSNI+/H5aHcIEaCocgYRZos9uQC5BjRvH327NrtGV2NkQ213mKyOgGa3/PXeSr
+         trPxA+DuK9o3Qpq5s4Zvkx161GAA3JIkT/HR0ScBCzLs30Vbs7iZmiObIdydwhaMdyQ6
+         nelZEFN2cptkTKY1jwnOROMEB+4gHo72NF+ptO4NQykxXx36KydI2tEOL3RHbKaD6vd8
+         h1fJJOK7JCwBFeRrrpxSu6jrkhGujvOqAd0F+DRkCyjxjSHSF83LbhcuuJe8PaN5S1cr
+         oGxYnmtz5VmL1Eup6I4OYHJzBwzToBkFkHlmTJ+90Lg+v9u4yPLsJ496kD8j/YDwB6/o
+         ov9A==
+X-Gm-Message-State: ABUngvc4xPRrw6ynLQhlAI8cvfFQGcAp2amO+b/zfNp3pFQrVohC9yc5370UGOQIsQwlahHG
+X-Received: by 10.99.100.132 with SMTP id y126mr3032558pgb.67.1477072508633;
+        Fri, 21 Oct 2016 10:55:08 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id c75sm6714020pfb.23.2016.10.21.10.55.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 21 Oct 2016 10:55:07 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, sbeller@google.com,
+        gitster@pobox.com
+Subject: [PATCH v5 0/8] allow non-trailers and multiple-line trailers
+Date:   Fri, 21 Oct 2016 10:54:55 -0700
+Message-Id: <cover.1477072247.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <cover.1476232683.git.jonathantanmy@google.com>
+References: <cover.1476232683.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+I've updated patch 5/8 to use strcspn and to pass in the list of
+separators, meaning that we no longer accept '=' in file input (and also
+updated its commit message accordingly).
 
->> 16:42:45$ cat /proc/2601/cmdline | xargs -0 -n1 echo
->> /bin/sh
->> -c
->> echo $PWD;sleep 600
->> echo $PWD;sleep 600
->
-> This duplicated argument is expected and normal.
+We also discussed inlining find_separator, but after looking at the
+code, I think that it is more convenient if find_separator returns -1
+when there is no separator, because of the 3 times it is used (as
+of 8/8), it is checked twice with '>= 1' (since both "no separator" and
+"string begins with separator" are handled in the same way - treating
+them as a non-trailer line). So I have left it as its own function.
 
-Well explained.  Thanks.
+No other updates.
+
+Jonathan Tan (8):
+  trailer: improve const correctness
+  trailer: use list.h for doubly-linked list
+  trailer: streamline trailer item create and add
+  trailer: make args have their own struct
+  trailer: clarify failure modes in parse_trailer
+  trailer: allow non-trailers in trailer block
+  trailer: forbid leading whitespace in trailers
+  trailer: support values folded to multiple lines
+
+ Documentation/git-interpret-trailers.txt |  14 +-
+ t/t7513-interpret-trailers.sh            | 299 +++++++++++++++
+ trailer.c                                | 620 +++++++++++++++++--------------
+ 3 files changed, 654 insertions(+), 279 deletions(-)
+
+-- 
+2.8.0.rc3.226.g39d4020
+
