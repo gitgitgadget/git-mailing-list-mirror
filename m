@@ -2,98 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D154120229
-	for <e@80x24.org>; Fri, 21 Oct 2016 21:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32E3C20229
+	for <e@80x24.org>; Fri, 21 Oct 2016 21:42:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934831AbcJUVki (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 17:40:38 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:34300 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934208AbcJUVkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 17:40:37 -0400
-Received: by mail-yw0-f181.google.com with SMTP id w3so116700412ywg.1
-        for <git@vger.kernel.org>; Fri, 21 Oct 2016 14:40:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=xg6UNTZp/vB+qp9Mo71oCYf7pmm+eQv4sUrpLJQXodU=;
-        b=jBkHtRmjCzBrCAlNC+iQcO10fGKtkSIUCIFEWf4k5uXcf4CIFfRxM1J0uMYJTHzqlW
-         9K4HJ+rHR9gPZddRPUQcvWTt69Wg3lkenhkbSOIW0RW4l7eAop1zJ4ZPyfvbharDu4bW
-         Hiv6S7sPYy/b3LFAGw96gZ3QsKzxx+2RcUWNrDI1s1RzyYD+7W5/DGPjLUX91VD/b2eY
-         2M+XzFBtvYmtTP/GD150fH1Kmfh3+agXugJRiMaQcAWoDzP8bdVOpZ9atKRMY2uAZqZs
-         4hnmEAnXQ2Th72UCuPp7bTYCq7RAC/9mgnpazFmFaQNjULgaEo0otoTQuoolpPtrl+99
-         dWkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=xg6UNTZp/vB+qp9Mo71oCYf7pmm+eQv4sUrpLJQXodU=;
-        b=A0W2Tw22sTEZ7bFVp/e89RyegnabgbmNV1xT4jaM4Npnrb4Y1Wx0pnK53B/57KLhfB
-         9hHMZES4BZO9dlZhdcQpQZiCkEX7jw0f7gH+6MaQwHm2jPVQYrLCyykXd5J/LIUyztyA
-         If9B9EQHc9VAVGX7TCPwBbu3fUfyr7WumlpO9ZkakeOeg6D8lRAcKpRp+bGRu96ZATp6
-         APk9QdhX6CePQflrWk5GsMJE3rjmdX0lDaKdKIO0OZekAUJolrMChMmr9BKLwYQT4GZl
-         Dg0ZEcvxZg0lf7Dbrnne2PGbh7FO/JdLtzPJFFOMCN6rjggwnUz+HxRMGPpi8x8rOg1e
-         +sVQ==
-X-Gm-Message-State: ABUngvd1GnEq8bGf9vzl1BLB7JSMw2QMh5m8vW0LH1aM6vmuA3YNccSpg3L/MN6LU0vNpsrbhoZZGPD0RIJt/Q==
-X-Received: by 10.13.244.69 with SMTP id d66mr3867682ywf.318.1477086036711;
- Fri, 21 Oct 2016 14:40:36 -0700 (PDT)
+        id S934775AbcJUVmW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 17:42:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60889 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934208AbcJUVmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 17:42:21 -0400
+Received: (qmail 21130 invoked by uid 109); 21 Oct 2016 21:42:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 21:42:21 +0000
+Received: (qmail 6941 invoked by uid 111); 21 Oct 2016 21:42:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 17:42:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 17:42:18 -0400
+Date:   Fri, 21 Oct 2016 17:42:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG] fetch output is ugly in 'next'
+Message-ID: <20161021214218.u46qf3lch3wwiutp@sigill.intra.peff.net>
+References: <20161021002654.qo6kcya4gocp73rs@sigill.intra.peff.net>
+ <CACsJy8Bxn1qV+xXNnCpuOQ7qWNsz3oLt5-VG=VXZvV9dvJVvTQ@mail.gmail.com>
+ <CACsJy8CkK8K0ty3fv9qyD7wwB+81VPB-P1UUCbDJTJ4iM0Y+Cw@mail.gmail.com>
+ <xmqqd1itd4t2.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.37.10.2 with HTTP; Fri, 21 Oct 2016 14:40:16 -0700 (PDT)
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 21 Oct 2016 14:40:16 -0700
-Message-ID: <CA+P7+xrN-_zP40uAUGtqZW+OO4D4Z65SiPRykdKvauO1zgNNcQ@mail.gmail.com>
-Subject: generating combined diff without an existing merge commit
-To:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqd1itd4t2.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Oct 21, 2016 at 09:50:49AM -0700, Junio C Hamano wrote:
 
-I recently determined that I can produce an interdiff for a series
-that handles rebasing nicely and shows the conflicts resolved when
-rebasing plus any other changes.
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > On Fri, Oct 21, 2016 at 7:11 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> >> Yeah.. replacing the 4 DEFAULT_ABBREV in fetch.c with something
+> >> sensible should do it.
+> >
+> > Correction (if somebody will pick this up), it's
+> > TRANSPORT_SUMMARY_WIDTH that needs to be adjusted, not those four.
+> 
+> Yes, it used to be and it still is (2 * DEFAULT_ABBREV + 3) but in
+> the new world order where default-abbrev is often -1 the expression
+> does not make much sense.
+> 
+> Perhaps something along this line?
+> 
+>  transport.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/transport.h b/transport.h
+> index 18d2cf8275..5339fabbad 100644
+> --- a/transport.h
+> +++ b/transport.h
+> @@ -127,7 +127,7 @@ struct transport {
+>  #define TRANSPORT_PUSH_CERT 2048
+>  #define TRANSPORT_PUSH_ATOMIC 4096
+>  
+> -#define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
+> +#define TRANSPORT_SUMMARY_WIDTH (2 * (DEFAULT_ABBREV < 0 ? 7 : DEFAULT_ABBREV) + 3)
+>  #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
 
-The basic idea is something like the following, assuming that v1 is a
-tag that points to the first version, v2 is a tag that points to the
-rebased new version, and base is a tag that points to the new base of
-the series (ie: the upstream if the v2 is on a branch and has been
-fully rebased)
+That doesn't apply on 'next', because we have already done the
+equivalent there. :)
 
-git checkout v1
-git merge base
-#perform any further edits to get everything looking like v2
-git commit
-git show -cc HEAD
+The right way to spell "7" is FALLBACK_DEFAULT_ABBREV, which is handled
+by your 65acfeacaa.
 
-This is also equivalent to the following without having to actually do
-the merge manually:
+The remaining issue is that the static abbreviation is not nearly long
+enough for git.git anymore; the auto-abbrev feature bumps my repo to a
+minimum of 10 characters (it may only be 9 on a fresh clone; I have a
+couple remotes and active work in progress). So this isn't exactly a
+regression; it has always been the case that we may mis-align when the
+abbreviations ended up longer than the minimum. It's just that it didn't
+happen all that often in most repos (but it probably did constantly in
+linux.git).
 
-git commit-tree v2^{head} -p v1 -p master -m "some merge message"
-git show <output from the commit tree above)
+The simplest band-aid fix would be to compute TRANSPORT_SUMMARY_WIDTH on
+the fly, taking into account the minimum found by actually counting the
+objects. That at least gets us back to where we were, with it mostly
+working and occasionally ugly when there's an oddball collision (for
+git.git anyway; it probably makes the kernel output much nicer).
 
-this nicely shows us the combined diff format which correctly shows
-any conflicts required to fix up during the rebase (which we already
-did because we have v2) and it also shows any *other* changes caused
-by v2 but without showing changes which we didn't actually make. (I
-think?)
+The "right" fix is to queue up the list of ref updates to print, find
+the abbreviations for each, and then print them all in one shot, knowing
+ahead of time the size necessary to align them. This could also let us
+improve the name-alignment.
 
-The result is that we can nicely see what was required to produce v2
-from v1 but without being cluttered by what changed in base.
-
-However, I have to actually generate the commit to do this. I am
-wondering if it is possible today to actually just do something like:
-
-git diff <treeish> <treeish> <treeish> and get the result that I want?
-
-I've already started digging to see if I can do that but haven't found
-anything yet.
-
-Thanks,
-Jake
+-Peff
