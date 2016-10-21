@@ -2,91 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7700E20229
-	for <e@80x24.org>; Fri, 21 Oct 2016 15:58:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5037220229
+	for <e@80x24.org>; Fri, 21 Oct 2016 16:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935671AbcJUP6v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 11:58:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53130 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935659AbcJUP6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 11:58:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33EC444088;
-        Fri, 21 Oct 2016 11:58:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GeRJHbfPd4kcOoQpjWlTlx2RuOo=; b=L6ZCK7
-        qFFxtEfV1iXQQJvBfcx+dK2xfT1JkcMork0Z28QQ7CaUhUky1ZHDnEiF0aYgB/Q6
-        /n9yc7PabfuNScP4jq2MVrm5wuUF50/vkqYQFtOOpY4b1XanbTgPeJs26scmmuKk
-        aZfY7rqe7qLqVSL2qTdS7anVm3wa9SXVIJCho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LkyDrbX2IHww5GunodpgpD3SIXGflW6z
-        9HEy02OmcEdfrwtiVAWlrQiQXygZZZloThaghg2yFbl5K30zvnf6G13Fhqt0QPf/
-        HIOVvpXCnUuQv36yG6nlvcD2gqvYYle6Dqx2yGU25TLzcqblaKAYRMbWKzJB9mD4
-        o3w2Z5N11yo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29E6244087;
-        Fri, 21 Oct 2016 11:58:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 880CF44086;
-        Fri, 21 Oct 2016 11:58:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Luke Shumaker <lukeshu@sbcglobal.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] daemon, path.c: fix a bug with ~ in repo paths
-References: <20161018150629.23205-1-lukeshu@sbcglobal.net>
-        <xmqqvawppote.fsf@gitster.mtv.corp.google.com>
-        <87pomxildc.wl-lukeshu@sbcglobal.net>
-        <CACsJy8AzWqJ_9JQ_BGnAB3E3GrGSTS40z8umbtO6mQJukWOooQ@mail.gmail.com>
-Date:   Fri, 21 Oct 2016 08:58:45 -0700
-In-Reply-To: <CACsJy8AzWqJ_9JQ_BGnAB3E3GrGSTS40z8umbtO6mQJukWOooQ@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 19 Oct 2016 21:12:37 +0700")
-Message-ID: <xmqqlgxhd77u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40510998-97A7-11E6-B6E5-987C12518317-77302942!pb-smtp1.pobox.com
+        id S934903AbcJUQMO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 12:12:14 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:32823 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934384AbcJUQMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 12:12:13 -0400
+Received: by mail-pf0-f176.google.com with SMTP id 128so59341506pfz.0
+        for <git@vger.kernel.org>; Fri, 21 Oct 2016 09:12:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=0H8ZaJAix+hyCATgjZcwO44udClyHEbGiPPW6VtW4+Q=;
+        b=QVKVMGEi9+AiqdQUkHrcURSYKDoljnwjnJHkwrpi86BrUFaU8Ga0qmcFvRUKiR0sZh
+         CCR17XEZMk0RyHjvdo+x3GpnbCOinX103ucVWQhB3voov9Bxxd8YUhMiJdQXIgBh4Uel
+         AFYR67zZOOuS0UAjetxLaU2D0QtFf373n6f8ErIrJIwRkmCDo+yfjmcgij1Y4fskv91G
+         SA0z1s5Bsa8W0hVFXzPGNzRKpA5I9Ckhez+mTnpLDrVjLw8aGiZVZqDIQhM+1MYChJuB
+         VkYS/sxQtsx0+fXFbc1UDjyhJtC428fR//9BRhkeokAkgF2mGiIXbkWA6KaKxASOVJ/j
+         GE3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=0H8ZaJAix+hyCATgjZcwO44udClyHEbGiPPW6VtW4+Q=;
+        b=iowRrxeLdxMSsPnXH59s9tc7k8ZCQ5vBFJfGLwEIblNsPhl2llpMOKHDzuChv24/Hd
+         RD5hlJiRYLWwDq3SB3E1Uy499NOjL+sX74yV62OQjuUbQUw7AWXyQaZJ1GxFjaeVB9KG
+         MxavLEIaoZygpo8YDcKIgMe2nTZvTK/m1HXeLARRsNMFhvwiYhkufyFHzCpUOvgbcUfw
+         e+5amAukrhFYdYyg9Ak4zMlZc4RA++ySVZx2aorB6QKi3LidKrTwZMzaigRaH/qL3faB
+         qb8NU1o/T3LrbU18ijrOGys1j3BBIxCaBTlDxZhbjXd2zzcOEqUggT7BzaMog0PymG3b
+         1S5Q==
+X-Gm-Message-State: ABUngvcui+SaqIO9pAibdy8fjRcavm+j8hJL2LjO9iRoseeLVveNPTdrF/BQRO7lFBsXBA==
+X-Received: by 10.99.109.196 with SMTP id i187mr2507400pgc.164.1477066332645;
+        Fri, 21 Oct 2016 09:12:12 -0700 (PDT)
+Received: from [10.71.30.182] ([12.237.194.226])
+        by smtp.gmail.com with ESMTPSA id f129sm6309464pfc.3.2016.10.21.09.11.58
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 21 Oct 2016 09:12:12 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: What's cooking in git.git (Oct 2016, #05; Thu, 20)
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1610211457030.3264@virtualbox>
+Date:   Fri, 21 Oct 2016 09:11:56 -0700
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CBB70D30-49CA-4A86-AB0B-BA5A95B038AB@gmail.com>
+References: <xmqqk2d2ein7.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610211457030.3264@virtualbox>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
 
-> The amount of changes is unbelievable for fixing such a rare case
-> though. I wonder if we can just detect this in daemon.c and pass
-> "./~foo/bar" instead of "~foo/bar" to enter_repo() in non-strict mode
-> to "disable" expand_user_path(). If it works, it's much simpler
-> changes (even though a bit hacky)
+> On 21 Oct 2016, at 06:08, Johannes Schindelin =
+<Johannes.Schindelin@gmx.de> wrote:
+>=20
+> Hi Junio & Lars,
+>=20
+> On Thu, 20 Oct 2016, Junio C Hamano wrote:
+>=20
+>> * ls/filter-process (2016-10-17) 14 commits
+>>  (merged to 'next' on 2016-10-19 at ffd0de042c)
+>> + contrib/long-running-filter: add long running filter example
+>> + convert: add filter.<driver>.process option
+>> + convert: prepare filter.<driver>.process option
+>> + convert: make apply_filter() adhere to standard Git error handling
+>> + pkt-line: add functions to read/write flush terminated packet =
+streams
+>> + pkt-line: add packet_write_gently()
+>> + pkt-line: add packet_flush_gently()
+>> + pkt-line: add packet_write_fmt_gently()
+>> + pkt-line: extract set_packet_header()
+>> + pkt-line: rename packet_write() to packet_write_fmt()
+>> + run-command: add clean_on_exit_handler
+>> + run-command: move check_pipe() from write_or_die to run_command
+>> + convert: modernize tests
+>> + convert: quote filter names in error messages
+>>=20
+>> The smudge/clean filter API expect an external process is spawned
+>> to filter the contents for each path that has a filter defined.  A
+>> new type of "process" filter API has been added to allow the first
+>> request to run the filter for a path to spawn a single process, and
+>> all filtering need is served by this single process for multiple
+>> paths, reducing the process creation overhead.
+>>=20
+>> Will merge to 'master'.
+>=20
+> This breaks in Git for Windows' SDK (I only now realized that t0060 =
+was
+> not the only thing breaking in `next` for a while now):
+> ...
+> -- snap --
+>=20
+> Unsurprisingly, bisect identifies "convert: add =
+filter.<driver>.process
+> option" as the first bad commit, although it only fails on the test =
+case
+> 15, but not on 17.
+>=20
+> I am unfortunately still busy with trying to figure out what exactly =
+makes
+> t6030 hang on `pu` (seems it thinks stdin is a tty and just waits for =
+an
+> answer), and then trying to reduce that insane amount of time wasted =
+on
+> running, and waiting for, the test suite, and for unrelated reasons =
+I'll
+> have to go offline for the rest of the day, so I will most likely be
+> unable to assist further with this.
 
-Conceptually, it ought to be updating the code that says "Does it
-begin with a tilde?  Then try to do user-path expansion and fail if
-that is not enabled and if it succeeds use the resulting directory"
-to "Is user-path enabled and does it begin with a tilde?  Then try
-to do user-path expansion and if it succeeds use the resulting
-directory".  Compared to that mental model we have with this
-codepath, I agree that the change does look quite invasive and
-large.
+Hi Johannes,
 
-It is OK for a change to be large, as long as the end result is
-easier to read and understand than the original.  I am undecided if
-that is the case with this patch, though.
+thanks for reporting this. Looks like I misunderstood your comment when
+you wrote the error is already fixed in GfW:
+https://github.com/git-for-windows/git/issues/770#issuecomment-251426487
 
-Also I am a bit worried about the change in the semantics.  While it
-is not the best way to achieve this, the server operators could use
-it as a way to add directories whose contents need to be hidden to
-give them names that begin with a tilde without enabling user-path
-expansion.  This change may be a new and useful feature for Luke,
-but to these server operators this change can be a new bug---it is
-probably a minor new bug as they can work it around by using other
-means to hide these directories, though.
+I think this patch series (referenced by the link above, too) should fix=20=
+
+the problem:
+=
+http://public-inbox.org/git/20160905211111.72956-1-larsxschneider@gmail.co=
+m/
+
+Don't waste any time on this. I will look into it ASAP (traveling right =
+now).
+
+Cheers,
+Lars=
