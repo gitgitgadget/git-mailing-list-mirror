@@ -6,98 +6,80 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32E3C20229
-	for <e@80x24.org>; Fri, 21 Oct 2016 21:42:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2376620229
+	for <e@80x24.org>; Fri, 21 Oct 2016 21:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934775AbcJUVmW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 17:42:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60889 "EHLO cloud.peff.net"
+        id S935534AbcJUVq2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 17:46:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60894 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934208AbcJUVmV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 17:42:21 -0400
-Received: (qmail 21130 invoked by uid 109); 21 Oct 2016 21:42:21 -0000
+        id S933454AbcJUVqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 17:46:25 -0400
+Received: (qmail 21358 invoked by uid 109); 21 Oct 2016 21:46:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 21:42:21 +0000
-Received: (qmail 6941 invoked by uid 111); 21 Oct 2016 21:42:43 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 21:46:25 +0000
+Received: (qmail 6987 invoked by uid 111); 21 Oct 2016 21:46:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 17:42:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 17:42:18 -0400
-Date:   Fri, 21 Oct 2016 17:42:18 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 17:46:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 17:46:23 -0400
+Date:   Fri, 21 Oct 2016 17:46:23 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [BUG] fetch output is ugly in 'next'
-Message-ID: <20161021214218.u46qf3lch3wwiutp@sigill.intra.peff.net>
-References: <20161021002654.qo6kcya4gocp73rs@sigill.intra.peff.net>
- <CACsJy8Bxn1qV+xXNnCpuOQ7qWNsz3oLt5-VG=VXZvV9dvJVvTQ@mail.gmail.com>
- <CACsJy8CkK8K0ty3fv9qyD7wwB+81VPB-P1UUCbDJTJ4iM0Y+Cw@mail.gmail.com>
- <xmqqd1itd4t2.fsf@gitster.mtv.corp.google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] test-lib: add --verbose-log option
+Message-ID: <20161021214622.csroal7hws3cnszg@sigill.intra.peff.net>
+References: <20161021104107.vh3bjx6x6pd6izat@sigill.intra.peff.net>
+ <20161021104759.hx6q7u66r3ll7l44@sigill.intra.peff.net>
+ <xmqq7f91d3tb.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqd1itd4t2.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq7f91d3tb.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 09:50:49AM -0700, Junio C Hamano wrote:
+On Fri, Oct 21, 2016 at 10:12:16AM -0700, Junio C Hamano wrote:
 
-> Duy Nguyen <pclouds@gmail.com> writes:
+> > -if test "$verbose" = "t"
+> > +if test "$verbose_log" = "t"
+> > +then
+> > +	exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
+> > +elif test "$verbose" = "t"
+> >  then
+> >  	exec 4>&2 3>&1
+> >  else
 > 
-> > On Fri, Oct 21, 2016 at 7:11 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> >> Yeah.. replacing the 4 DEFAULT_ABBREV in fetch.c with something
-> >> sensible should do it.
-> >
-> > Correction (if somebody will pick this up), it's
-> > TRANSPORT_SUMMARY_WIDTH that needs to be adjusted, not those four.
-> 
-> Yes, it used to be and it still is (2 * DEFAULT_ABBREV + 3) but in
-> the new world order where default-abbrev is often -1 the expression
-> does not make much sense.
-> 
-> Perhaps something along this line?
-> 
->  transport.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/transport.h b/transport.h
-> index 18d2cf8275..5339fabbad 100644
-> --- a/transport.h
-> +++ b/transport.h
-> @@ -127,7 +127,7 @@ struct transport {
->  #define TRANSPORT_PUSH_CERT 2048
->  #define TRANSPORT_PUSH_ATOMIC 4096
->  
-> -#define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
-> +#define TRANSPORT_SUMMARY_WIDTH (2 * (DEFAULT_ABBREV < 0 ? 7 : DEFAULT_ABBREV) + 3)
->  #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
+> OK, unlike "verbose" case where we give 3 (saved stdout) to 1 and 4
+> (saved stderr) to 2, we send 3 to the output file and 4 to the same.
 
-That doesn't apply on 'next', because we have already done the
-equivalent there. :)
+Your comment made me double-check whether we ought to be separating the
+two in any way. Because my statement earlier in the thread that the
+--verbose output goes to stdout is not _entirely_ true. It goes to
+stdout and stderr, as written by the various programs in the tests.
 
-The right way to spell "7" is FALLBACK_DEFAULT_ABBREV, which is handled
-by your 65acfeacaa.
+So:
 
-The remaining issue is that the static abbreviation is not nearly long
-enough for git.git anymore; the auto-abbrev feature bumps my repo to a
-minimum of 10 characters (it may only be 9 on a fresh clone; I have a
-couple remotes and active work in progress). So this isn't exactly a
-regression; it has always been the case that we may mis-align when the
-abbreviations ended up longer than the minimum. It's just that it didn't
-happen all that often in most repos (but it probably did constantly in
-linux.git).
+  ./t0000-whatever.sh -v | less
 
-The simplest band-aid fix would be to compute TRANSPORT_SUMMARY_WIDTH on
-the fly, taking into account the minimum found by actually counting the
-objects. That at least gets us back to where we were, with it mostly
-working and occasionally ugly when there's an oddball collision (for
-git.git anyway; it probably makes the kernel output much nicer).
+isn't quite sufficient. You really do want "2>&1" in there to catch
+everything.
 
-The "right" fix is to queue up the list of ref updates to print, find
-the abbreviations for each, and then print them all in one shot, knowing
-ahead of time the size necessary to align them. This could also let us
-improve the name-alignment.
+But for the case of "--tee", we already do so, in order to make sure it
+all goes to the logfile. And since this option always implies "--tee",
+it is correct here to send "3" and "4" to the same place.
+
+So the patch is correct. But when I said earlier that people might be
+annoyed if we just sent --verbose output to stderr, that probably isn't
+true. We could perhaps make:
+
+  prove t0000-whatever.sh :: -v
+
+"just work" by sending all of the verbose output to stderr. I don't
+think it really matters, though. Nobody is doing that, because it's
+pointless without "--tee".
 
 -Peff
