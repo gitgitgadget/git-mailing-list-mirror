@@ -2,72 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 314F420229
-	for <e@80x24.org>; Fri, 21 Oct 2016 18:44:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E01E520229
+	for <e@80x24.org>; Fri, 21 Oct 2016 19:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755374AbcJUSot (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 14:44:49 -0400
-Received: from avasout02.plus.net ([212.159.14.17]:41184 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754986AbcJUSos (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 14:44:48 -0400
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout02 with smtp
-        id yJkk1t0030zhorE01JklKy; Fri, 21 Oct 2016 19:44:46 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=G/5eKJs5 c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=IkcTkHD0fZMA:10 a=BnJ8Hq7HfQmhQC7nwKsA:9 a=M08BUaCgnTTxj-xf:21
- a=N5Uhb6llsmbVe2NI:21 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 1/2] t9000-addresses: update expected results after fix
-To:     Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-References: <xmqq1szaeda9.fsf@gitster.mtv.corp.google.com>
- <20161021092024.15861-1-Matthieu.Moy@imag.fr>
- <xmqqh985d4x7.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <3aa70781-e930-c7a9-c106-0268f82f6a5d@ramsayjones.plus.com>
-Date:   Fri, 21 Oct 2016 19:44:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S935010AbcJUTDQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 15:03:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51581 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754986AbcJUTDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 15:03:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49A9148FA6;
+        Fri, 21 Oct 2016 15:03:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+NfqAdZx1H75JUc1pD+vqYA6GXg=; b=aqeOwX
+        zIkAC6vpaHAsPY7q/laaJl11m3Un9a+APyvJHN13LILtv9cuJRLGE2kgFispyS8x
+        CtCCaAwO2wk8YnJXaiWLGqtMb31O0GQI2h/T/yNnZePYErnJcmRcvtQnlP8jRgaO
+        Sp1sn12wDGT6GqKP2g9LKa+8NU+Zy7uaraQqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=aWze4Snmz4ztbMBDab/EPQhpoLq/n/m8
+        rYVe0wFNeqBq3P1gsMl8GY6f+vYOHboRqprIXeFB3nk6euolQLIY/9luEL2bi/bO
+        YP3nhTewFLqcPwxu5B+6H6eAro0t0jBPURBG2bjFrOCPwjWPF5gcopDET2qfRV0Q
+        q16/0rZkAZs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40D9148FA5;
+        Fri, 21 Oct 2016 15:03:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A737548FA3;
+        Fri, 21 Oct 2016 15:03:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: RFC Failover url for fetches?
+References: <CAGZ79kaPdSfY_DXL6BDQ9pAma8p61r4m1n81VTxPHYi8zQuZfA@mail.gmail.com>
+Date:   Fri, 21 Oct 2016 12:03:11 -0700
+In-Reply-To: <CAGZ79kaPdSfY_DXL6BDQ9pAma8p61r4m1n81VTxPHYi8zQuZfA@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 21 Oct 2016 11:19:42 -0700")
+Message-ID: <xmqqeg39bk40.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh985d4x7.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 043E4212-97C1-11E6-9FE1-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
+> So when pushing it is possible to have multiple urls
+> (remote.<name>.url) configured.
+>
+> When fetching only the first configured url is considered.
+> Would it make sense to allow multiple urls and
+> try them one by one until one works?
 
-On 21/10/16 17:48, Junio C Hamano wrote:
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-> 
->> e3fdbcc8e1 (parse_mailboxes: accept extra text after <...> address,
->> 2016-10-13) improved our in-house address parser and made it closer to
->> Mail::Address. As a consequence, some tests comparing it to
->> Mail::Address now pass, but e3fdbcc8e1 forgot to update the test.
->>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->> ---
-> 
-> Thanks.
+I do not think the two are related.  Pushing to multiple is not "I
+want to update at least one of them" in the first place.
 
-Yep, thanks for looking into this Matthieu.
+As to fetching from two or more places as "fallback", I am
+moderately negative to add it as a dumb feature that does nothing
+more than "My fetch from A failed, so let's blindly try it from B".
+I'd prefer to keep the "My fetch from A is failing" knowledge near
+the surface of end user's consciousness as a mechanism to pressure A
+to fix it--that way everybody who is fetching from A benefits.
+After all, doing "git remote add B" once (you'd need to tell the URL
+for B anyway to Git) and issuing "git fetch B" after seeing your
+regular "git fetch" fails once in a blue moon is not all that
+cumbersome, I would think.
 
-I applied these cleanly (to both next and pu) and tested
-on Linux and cygwin.
+Some people _may_ have objection based on A and B going out of sync,
+especially B may fall behind even yourself and cause non-ff errors,
+but I personally am not worried about that, because when somebody
+configures B as a fallback for A, there is an expectation that B is
+kept reasonably up to date.  It would be a problem if some refs are
+expected to be constantly rewound at A (e.g. 'pu' in my tree) and
+configured to always force-fetch, though.  A stale B would silently
+set such a branch in your repository back without failing.
 
-Thanks again.
-
-ATB,
-Ramsay Jones
 
 
