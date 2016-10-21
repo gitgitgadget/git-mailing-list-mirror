@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 433B120229
-	for <e@80x24.org>; Fri, 21 Oct 2016 12:25:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 241AB20229
+	for <e@80x24.org>; Fri, 21 Oct 2016 12:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932389AbcJUMZZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 08:25:25 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63714 "EHLO mout.gmx.net"
+        id S932685AbcJUMZk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 08:25:40 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49918 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755491AbcJUMZV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 08:25:21 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MBWo2-1c6x4E41Y6-00AVxb; Fri, 21 Oct 2016 14:25:09
+        id S1755503AbcJUMZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 08:25:38 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MEWxh-1c8sTl0gVF-00FnSr; Fri, 21 Oct 2016 14:25:24
  +0200
-Date:   Fri, 21 Oct 2016 14:25:08 +0200 (CEST)
+Date:   Fri, 21 Oct 2016 14:25:17 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,94 +27,75 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v5 14/27] sequencer: introduce a helper to read files written
- by scripts
+Subject: [PATCH v5 16/27] sequencer: support amending commits
 In-Reply-To: <cover.1477052405.git.johannes.schindelin@gmx.de>
-Message-ID: <33b991f51d58ca092b972259d80bf11bacfd843d.1477052405.git.johannes.schindelin@gmx.de>
+Message-ID: <6df19ad36240580e8717d4adafaf7b6e039fe2d6.1477052405.git.johannes.schindelin@gmx.de>
 References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3pPuT1LIvdYCppVyBH0wlyxzitIPxbBEMGATAtZSq9a8LhxL1di
- AS8jKN+7iVT9OMRDuKsRV9jsB7ngulpEQAenTOmZiQiejAvfyuuzSBVsHugLDyFRgeRz7lS
- n6J2GzgGbnox9b5nd3WAOVTmhc7w2idsUrCIPSwlulwPepRQQOUi0zjahlxN/KlkoBovI+P
- nXIWx4+fQy+8JFiGBjA9g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:L6faoM8IMGE=:HBBL7PNWEJbqrcZYdwg/hZ
- vSht+xjJ1cHaRXrGDKXKoR3NL/Zi4FXDxZMgTrCHajVvoLPhfyDfMDXm74aNDGXkk8mLANm/2
- DrjX5q/W6rIGtA9x7AiJj93tQl+1cRLWpQRW36CKR3WyRcaibC8/Sg/HYzSV7ajf2dvKZn1EF
- 4m+1OFcrQOAia+ZImmp25LdXKCOwZ1LikS8hOBtOf16HEiyZgw+xDzbN4p+Vq2wMmBTnHvPRF
- nYkVOtgw/05i/O2YvGJECMT/pNesvAFi6ZDhfgG0siNz1j5Wzv5mS0BSsm9CDrn8ek+r3wIky
- 3M4WT07dI0pYmjzwJx2tsJA3/P8omRuJU9UUmv1xP8NH7MDYRn/LvcRFIrN7H0erDQVyi5TOR
- m8INisjRECA/4RykTqNxSkbVBbyFLDCFi7acbDkr2vzYhngrD1wF8dcwAAaTaFoxnI41ahNdX
- q5ColSJckjgt9BWBcnD2WZyT8dt6195KHp1+s0kV+gzLg1xKhqnybwUaRm/zw8LgamBu2X6RD
- fi4HafwbOgJmikmuNcIUZeWTDSEfudSNCtyTCaP7LWmIbe4LpuIGqgkVkP+e2t9TBqvH5x/If
- yRguBEaKVUEcgOudnFTEnZzziTDcsoHk0MdTZZZpIuwQTlSjNm84uw9menqAzwe2hhWHzW2Pk
- G3DMcoEzbHRk1vWnyz/4SoBcpzHVCexCLmI64u5Ge3pJWgLBkzTZanei1HgU4gCKHsM5l7c3a
- duz5pfObDSCrNMXcqxQ2aacXgJrNMHIB1B3pUtF5K+5rXeYjXEgwzgWs/FRMVS7OmDo8CE38V
- a1RjjFF
+X-Provags-ID: V03:K0:ttigOTP0QPsSTP8GItP2o18K6w/Fm4O7ckzh2eQhpCTVCnEHtnH
+ GaoxvDGvIztz+YV+Rb16580dS0ejMZL+fLBdFiAVc+g1Xiu9qRnO/1lWRDamXBXe6B1e71o
+ UAIdrYhFYn7LaaU0vRKdCp5sNTIwRaTu+NLLXwblSuw/etGzlKcueG2kaqPBduAVKa7ZJJP
+ tmAZvpsE3bWTx3QxlnFdA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jVLKZLLS3Lo=:7GP/ztMJGcFJsiKXzuEgIO
+ gNoNtJ7IZptJUFbjlfkN1Z26hBtK/MyKo0yXW7fNKNO58mRS/5LwagHqMVvoaXTEXLVIEK6lQ
+ z9BGpr44AZc7nkCyNFIdtmlVHkFIkMIXweDVPp02n5nOIAUuJGFsowA2SyR5QKtQj91q1WVrW
+ DDuJCn6+YsPnSvPX0Z65rWcS0GqrDLVzCiPnb5nr91qKzfPxgGNUdabcBAvUU159OV5xwyIYi
+ EfM4hfLii4aONbHfvapxo9Tc5UBWROGp5w67RQGboNhwDdqezYAh2kyLuS98fRI55mb+oBL13
+ gVp1ozjiQo0pPpWJq5AjkLbbqDXBfYUm/fp1fLVah0RDO5tgDSOWoZJ8WSSn0kHiX2o/NHr29
+ +G/NCrQoshJOyW4CP4yfGfdcw8kwci0kMejL/e6BsTrmwbCXLW4eU+HnhQHSAU95A+WkyxPci
+ 12j7ua9tBKeDyMfumrUQpneR/uSUSw2a9qdm9ice/JyDSnAmSxND4upCzPdR1bLS7SaVD04+j
+ 3CVM5kfuWtBj8DJm+Zn9IzrRbCmvsxTPCHLnYPLi5Jl9pjcpKGI5k7E8w8/YZ0uhC7HFGThOE
+ hCMj87M7cg1P3qg2gWPExVu/NxnJ0W13iXAsQYETiR5/VcTvzgYC72zAlkvFcDmV14BVhgaAo
+ KIA68PnTym5wJqLncmV0sbzs3wa8acbiO/zkBKt29ZjsoC922a97r3ioi3dj+DrBb83hi3PUz
+ TvxvQSytDK+JSEKnrfvFWVh5ks+2ewvKVPj8G2UxIndzgUZcE9MNacDXt0SzYU2cqo4OZkLMz
+ vuDkoab
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we are slowly teaching the sequencer to perform the hard work for
-the interactive rebase, we need to read files that were written by
-shell scripts.
-
-These files typically contain a single line and are invariably ended
-by a line feed (and possibly a carriage return before that). Let's use
-a helper to read such files and to remove the line ending.
+This teaches the run_git_commit() function to take an argument that will
+allow us to implement "todo" commands that need to amend the commit
+messages ("fixup", "squash" and "reword").
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ sequencer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 6d5fe94..282c4d1 100644
+index c0a0aa0..1ef50a0 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -234,6 +234,40 @@ static int write_message(struct strbuf *msgbuf, const char *filename)
- 	return 0;
- }
- 
-+/*
-+ * Reads a file that was presumably written by a shell script, i.e. with an
-+ * end-of-line marker that needs to be stripped.
-+ *
-+ * Note that only the last end-of-line marker is stripped, consistent with the
-+ * behavior of "$(cat path)" in a shell script.
-+ *
-+ * Returns 1 if the file was read, 0 if it could not be read or does not exist.
-+ */
-+static int read_oneliner(struct strbuf *buf,
-+	const char *path, int skip_if_empty)
-+{
-+	int orig_len = buf->len;
-+
-+	if (!file_exists(path))
-+		return 0;
-+
-+	if (strbuf_read_file(buf, path, 0) < 0) {
-+		warning_errno(_("could not read '%s'"), path);
-+		return 0;
-+	}
-+
-+	if (buf->len > orig_len && buf->buf[buf->len - 1] == '\n') {
-+		if (--buf->len > orig_len && buf->buf[buf->len - 1] == '\r')
-+			--buf->len;
-+		buf->buf[buf->len] = '\0';
-+	}
-+
-+	if (skip_if_empty && buf->len == orig_len)
-+		return 0;
-+
-+	return 1;
-+}
-+
- static struct tree *empty_tree(void)
+@@ -484,7 +484,7 @@ static char **read_author_script(void)
+  * author metadata.
+  */
+ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+-			  int allow_empty, int edit)
++			  int allow_empty, int edit, int amend)
  {
- 	return lookup_tree(EMPTY_TREE_SHA1_BIN);
+ 	char **env = NULL;
+ 	struct argv_array array;
+@@ -513,6 +513,8 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	argv_array_push(&array, "commit");
+ 	argv_array_push(&array, "-n");
+ 
++	if (amend)
++		argv_array_push(&array, "--amend");
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&array, "-S%s", opts->gpg_sign);
+ 	if (opts->signoff)
+@@ -786,7 +788,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	}
+ 	if (!opts->no_commit)
+ 		res = run_git_commit(opts->edit ? NULL : git_path_merge_msg(),
+-				     opts, allow, opts->edit);
++				     opts, allow, opts->edit, 0);
+ 
+ leave:
+ 	free_message(commit, &msg);
 -- 
 2.10.1.583.g721a9e0
 
