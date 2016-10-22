@@ -2,68 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A76420229
-	for <e@80x24.org>; Sat, 22 Oct 2016 05:45:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6611F4F8
+	for <e@80x24.org>; Sat, 22 Oct 2016 07:09:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751872AbcJVFpl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Oct 2016 01:45:41 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28454 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751701AbcJVFpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 01:45:40 -0400
-Received: from PhilipOakley ([92.22.49.100])
-        by smtp.talktalk.net with SMTP
-        id xp7hbxmQaxR4bxp7hbOfks; Sat, 22 Oct 2016 06:45:38 +0100
-X-Originating-IP: [92.22.49.100]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=IeMlVUjV5MTIAXSPXElgMA==:117
- a=IeMlVUjV5MTIAXSPXElgMA==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=3Eyz6yWsl_VLsd-ZWU0A:9 a=wPNLvfGTeEIA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <715E1D41ACDD40D0B8046CA9220B77A9@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "GitList" <git@vger.kernel.org>, "Jeff King" <peff@peff.net>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-References: <20161020234009.1768-1-philipoakley@iee.org>        <xmqqa8dyeebj.fsf@gitster.mtv.corp.google.com>        <D861234B3E78496DBA70EE63B2BCDB96@PhilipOakley> <xmqq1sz9b9ex.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH] doc: fix merge-base ASCII art tab spacing
-Date:   Sat, 22 Oct 2016 06:45:38 +0100
-Organization: OPDS
+        id S1752297AbcJVHJa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 03:09:30 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:23922 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752111AbcJVHJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2016 03:09:29 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t1DF22CGqz5tlD;
+        Sat, 22 Oct 2016 09:09:26 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 6F813529C;
+        Sat, 22 Oct 2016 09:09:25 +0200 (CEST)
+Subject: Re: [PATCH 2/3] submodule tests: replace cloning from . by "$(pwd)"
+To:     Stefan Beller <sbeller@google.com>
+References: <20161021235939.20792-1-sbeller@google.com>
+ <20161021235939.20792-3-sbeller@google.com>
+Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        venv21@gmail.com, dennis@kaarsemaker.net, jrnieder@gmail.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <c6c5ce05-3511-a992-e079-316f0ce90ecd@kdbg.org>
+Date:   Sat, 22 Oct 2016 09:09:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
+In-Reply-To: <20161021235939.20792-3-sbeller@google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfIitjqsIRKDXh3jCJ6J+g6Vh933ZVkFEpi5RfAjPPisI5RQ6G94GCvWokUk/rhfsBci9TVbXDs/4qmofl48E1zlvNNAMzV+x++La7G6WUcv9Br9cE5/J
- 5bdBr5Xa1IvBHVHbEsMr4soys7Y4YIaNJQTjmwnZrvIvc1GZLeLFBPhFLBDnK30KYbZD6ssSdL2g2SGuxgahsMwCHM0QrsfXDlDsGkupLmUE5qKpvvsq8EvL
- 75Clj/SAdHQKcuetlVlabA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
-> 
->> It appears that acciidoctor sees the art as being a separated
->> mono-spaced block, with border/background as locally
->> appropriate. While the asciidoc looks to simply change to mono-spaced
->> text.
-> 
-> FWIW, I changed my mind and your patch is now queued on 'next'.
-> 
-> Thanks.
-> 
-Many thanks
+Am 22.10.2016 um 01:59 schrieb Stefan Beller:
+> When adding a submodule via "git submodule add <relative url>",
+> the relative url applies to the superprojects remote. When the
+> superproject was cloned via "git clone . super", the remote url
+> is ending with '/.'.
+>
+> The logic to construct the relative urls is not smart enough to
+> detect that the ending /. is referring to the directory itself
+> but rather treats it like any other relative path, i.e.
+>
+>     path/to/dir/. + ../relative/path/to/submodule
+>
+> would result in
+>
+>     path/to/dir/relative/path/to/submodule
+>
+> and not omit the "dir" as you may expect.
+>
+> As in a later patch we'll normalize the remote url before the
+> computation of relative urls takes place, we need to first get our
+> test suite in a shape with normalized urls only, which is why we should
+> refrain from cloning from '.'
 
-Philip
+But you are removing a valid use case from the tests. Aren't you 
+sweeping something under the rug with this patch?
+
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  t/t7064-wtstatus-pv2.sh      | 9 ++++++---
+>  t/t7403-submodule-sync.sh    | 3 ++-
+>  t/t7406-submodule-update.sh  | 6 ++++--
+>  t/t7407-submodule-foreach.sh | 3 ++-
+>  t/t7506-status-submodule.sh  | 3 ++-
+>  5 files changed, 16 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
+> index 3012a4d..95514bb 100755
+> --- a/t/t7064-wtstatus-pv2.sh
+> +++ b/t/t7064-wtstatus-pv2.sh
+> @@ -330,7 +330,8 @@ test_expect_success 'verify UU (edit-edit) conflict' '
+>  test_expect_success 'verify upstream fields in branch header' '
+>  	git checkout master &&
+>  	test_when_finished "rm -rf sub_repo" &&
+> -	git clone . sub_repo &&
+> +	git clone "$(pwd)" sub_repo &&
+> +	git -C sub_repo config --unset remote.origin.url &&
+
+Why is it necessary to remove this configuration? Is it because when it 
+is present, the submodule does not construct its own reference? And if 
+so, should it not be sufficient to only remove the configuration 
+(without changing 'git clone' command), but move this patch after the 
+patch that fixes the /. treatment?
+
+>  	(
+>  		## Confirm local master tracks remote master.
+>  		cd sub_repo &&
+...
+
