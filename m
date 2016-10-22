@@ -2,87 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C587120229
-	for <e@80x24.org>; Sat, 22 Oct 2016 05:04:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30C5120229
+	for <e@80x24.org>; Sat, 22 Oct 2016 05:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751389AbcJVFE3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Oct 2016 01:04:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32798 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750839AbcJVFE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 01:04:29 -0400
-Received: (qmail 12965 invoked by uid 109); 22 Oct 2016 05:04:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Oct 2016 05:04:29 +0000
-Received: (qmail 9460 invoked by uid 111); 22 Oct 2016 05:04:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Oct 2016 01:04:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Oct 2016 01:04:26 -0400
-Date:   Sat, 22 Oct 2016 01:04:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] transport: allow summary-width to be computed
- dynamically
-Message-ID: <20161022050426.t2fifjqrldc6mebc@sigill.intra.peff.net>
-References: <xmqqa8dxbb9r.fsf@gitster.mtv.corp.google.com>
- <20161021223927.26364-1-gitster@pobox.com>
- <20161021223927.26364-4-gitster@pobox.com>
- <xmqqoa2d9eum.fsf@gitster.mtv.corp.google.com>
+        id S1751657AbcJVF0E (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 01:26:04 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:35242 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751584AbcJVF0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2016 01:26:03 -0400
+Received: by mail-yw0-f196.google.com with SMTP id t193so3623246ywc.2
+        for <git@vger.kernel.org>; Fri, 21 Oct 2016 22:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=skHOL51W++0rJblA2kMDENespFe2C89erXELSN1vqmg=;
+        b=H0eRdIHdbcMe7dIulj5bADwlqz5yJvpNHc/Y1WK2hdaRdzw3m8CQ2TRFugl1BerJ9z
+         R8uIX21oFwDj26Gf7ATBUsrgb8TMsrBUqH1KHOHaRIiOX0Y8KxbGZwSvxJ3Bm9X0gq11
+         Lz9VWKbaeGVUDpfnX2nKAfob9dazN9dpXdL0ngU0Kmhg/EFiH7UpbN66Ysx6IsVugDfb
+         hIlOC4vtPQz5L/elsHQT3c640fjKSlnq9DavRf4Z3McKORWiLrUrdBkx/AZFri0Wtk3e
+         J+fSlqJ3zjp7tg0N2nxLAO47dHN2efz4gFOjjrEFL5clomsqlrxHB5bLa0/wmQ0OMgOE
+         61Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=skHOL51W++0rJblA2kMDENespFe2C89erXELSN1vqmg=;
+        b=l1FYpbLNi1xexXnxLwGaXCb4ZHq9dDNiZcb2zsfSH0gdDfbBY2oHoPe06+Mq3Nj41B
+         RI2eTfjZsFj+2yIlm3qyHcWepVMY1lSVSTgzVOEqTljmpTYrAmVQnEkC/vsFRN/EL4BC
+         vQtyee8nkLcyvn3vKpxxJBNzcS9OSmQL7PLDWIH9hMcDqXzYJvJMgREAMa0ydKUvKeZA
+         Umz69sVvB+piZF6F+qHX9YbEeaVN5wlUc04B0zrn1rhyQsGLIkwN6xU0mzyK4dWeEWm+
+         FYEBj22pHRC9RasgbicOaZYdBnWojrYkXTWVyqoCXDFguq0/DFPpWNoBDoMs0p9F9Yak
+         XUew==
+X-Gm-Message-State: ABUngvfTeAo6g6ALbbQzgdp7J8hNpQaC/vYviu7Fb3PpZeLV2y2niU75hQINM7XWt41IrQ0YMRyoaiwLKFm4Jw==
+X-Received: by 10.13.231.131 with SMTP id q125mr4729798ywe.122.1477113962459;
+ Fri, 21 Oct 2016 22:26:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqoa2d9eum.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.10.2 with HTTP; Fri, 21 Oct 2016 22:25:42 -0700 (PDT)
+In-Reply-To: <20161022044506.vba6g2q25yxa2air@sigill.intra.peff.net>
+References: <D9C1E13F-88A2-483E-A549-1C2294EACFEB@gmail.com>
+ <CAGZ79kZo3LdcRmrjQTAvgx=H6U2tdjASK3qv5A2K5J2HQ2NvSw@mail.gmail.com>
+ <20161021082035.xad6wfny5i6wtshh@sigill.intra.peff.net> <20161021084348.dp4jfpfownodl7nz@sigill.intra.peff.net>
+ <CA+P7+xozpk2-WZUYtaKmCazG3Owzpa3bsDejyUuGj0YEQnJWJg@mail.gmail.com>
+ <20161021153534.mjed3sqhxjelxzwx@sigill.intra.peff.net> <CA+P7+xrix3UZDEE1swG_=jBLwWHA04KoYikWBBMNx7aa=Hevmw@mail.gmail.com>
+ <20161021154840.pdmb5c3gjharsrxe@sigill.intra.peff.net> <CA+P7+xp8TDL59tQgCpmMDJ-BspA1CF6YsnuGMXas1bx_X0qJoA@mail.gmail.com>
+ <20161022044506.vba6g2q25yxa2air@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 21 Oct 2016 22:25:42 -0700
+Message-ID: <CA+P7+xqwLiwSWAwsreW=nCMU5QiNq4AUGPMawzLofB3vyAqYYw@mail.gmail.com>
+Subject: Re: [PATCH 4/3] test-lib: bail out when "-v" used under "prove"
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 09:39:45PM -0700, Junio C Hamano wrote:
+On Fri, Oct 21, 2016 at 9:45 PM, Jeff King <peff@peff.net> wrote:
+> I thought I'd just knock this out in 5 minutes before I forgot about it.
+> But as with so many things, getting it right proved slightly harder than
+> I thought.
 
-> And this is the final one.
-> 
+Always seems to be that way, doesn't it?
+
+> But I did learn about TAP's "Bail out!" directive. And
+> apparently you can pass it back arbitrary YAML (!). And the "--verbose"
+> output really is violating the spec, and they claim that Test::Harness
+> will eventually be tightened to complain (though that was in 2007, and
+> it still hasn't happened, so...).
+>
+> Anyway. Here is the patch I came up with (on top of the others).
+>
+
+Nice.
+
 > -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Fri, 21 Oct 2016 21:33:06 -0700
-> Subject: [PATCH] transport: compute summary-width dynamically
-> 
-> Now all that is left to do is to actually iterate over the refs
-> and measure the display width needed to show their abbreviation.
+> Subject: test-lib: bail out when "-v" used under "prove"
+>
+> When there is a TAP harness consuming the output of our test
+> scripts, the "--verbose" breaks the output by mingling
+> test command output with TAP. Because the TAP::Harness
+> module used by "prove" is fairly lenient, this _usually_
+> works, but it violates the spec, and things get very
+> confusing if the commands happen to output a line that looks
+> like TAP (e.g., the word "ok" on its own line).
+>
+> Let's detect this situation and complain. Just calling
+> error() isn't great, though; prove will tell us that the
+> script failed, but the message doesn't make it through to
+> the user. Instead, we can use the special TAP signal "Bail
+> out!". This not only shows the message to the user, but
+> instructs the harness to stop running the tests entirely.
+> This is exactly what we want here, as the problem is in the
+> command-line options, and every test script would produce
+> the same error.
+>
+> The result looks like this (the first "Bailout called" line
+> is in red if prove uses color on your terminal):
+>
+>  $ make GIT_TEST_OPTS='--verbose --tee'
+>  rm -f -r 'test-results'
+>  *** prove ***
+>  Bailout called.  Further testing stopped:  verbose mode forbidden under TAP harness; try --verbose-log
+>  FAILED--Further testing stopped: verbose mode forbidden under TAP harness; try --verbose-log
+>  Makefile:39: recipe for target 'prove' failed
+>  make: *** [prove] Error 255
+>
 
-I think we crossed emails. :) This is obviously correct, if we don't
-mind paying the find_unique_abbrev cost twice for each sha1.
+Nice that makes sense.
 
->  int transport_summary_width(const struct ref *refs)
->  {
-> -	return (2 * FALLBACK_DEFAULT_ABBREV + 3);
-> +	int maxw;
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/test-lib.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 85946ec40d..b859db61ac 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -321,6 +321,16 @@ say () {
+>         say_color info "$*"
+>  }
+>
+> +if test -n "$HARNESS_ACTIVE"
+> +then
+> +       if test "$verbose" = t || test -n "$verbose_only"
+> +       then
+> +               printf 'Bail out! %s\n' \
+> +                'verbose mode forbidden under TAP harness; try --verbose-log'
+> +               exit 1
+> +       fi
+> +fi
 > +
-> +	for (maxw = -1; refs; refs = refs->next) {
-> +		maxw = measure_abbrev(&refs->old_oid, maxw);
-> +		maxw = measure_abbrev(&refs->new_oid, maxw);
-> +	}
 
-This is a minor style nit, but I think it's better to avoid mixing
-unrelated bits between the initialization, condition, and iteration bits
-of a for loop. IOW:
+Not too much code, so that's good. I like it.
 
-  int maxw = -1;
+Thanks,
+Jake
 
-  for (; refs; refs = refs->next) {
-	...
-  }
-
-makes the for-loop _just_ about iteration, and it is more clear that the
-manipulation of "maxw" is a side effect of the loop that is valid after
-it finishes.
-
-Though in this particular case, the loop and the whole function are
-short enough that I don't care that much. Just raising a philosophical
-point. :)
-
--Peff
+>  test "${test_description}" != "" ||
+>  error "Test script did not set test_description."
+>
+> --
+> 2.10.1.776.ge0e381e
+>
