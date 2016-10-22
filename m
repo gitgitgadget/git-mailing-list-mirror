@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11BC020986
-	for <e@80x24.org>; Sat, 22 Oct 2016 23:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F006620986
+	for <e@80x24.org>; Sat, 22 Oct 2016 23:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935471AbcJVXcw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Oct 2016 19:32:52 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:35422 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935144AbcJVXcu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 19:32:50 -0400
-Received: by mail-it0-f43.google.com with SMTP id 198so53149581itw.0
-        for <git@vger.kernel.org>; Sat, 22 Oct 2016 16:32:49 -0700 (PDT)
+        id S935139AbcJVXct (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 19:32:49 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:38837 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756207AbcJVXcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2016 19:32:46 -0400
+Received: by mail-it0-f51.google.com with SMTP id 66so74079753itl.1
+        for <git@vger.kernel.org>; Sat, 22 Oct 2016 16:32:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UOh3r59Lq8Hnz4z0CSLGP+AW51c6Rza89WokyQaYLRw=;
-        b=KgQ1Xbmi/Wufv3t04r4uglTAscqFi1fRwyRru0uc3M6Kv5N3xzA+uj0hWPgQqkCP+y
-         7CaOieP95aTdn2JiJqmg02WFw4QTMTXVY8jXnrhANggZy31CbWgyUuI/8ricNZmb5saP
-         UpY5yL+ZkiyYDsbXgFTLbJiR8h1DTeh2AthdMiO0cidpo1cmuU/iKqt7VqaPA4W1xLrC
-         OIqYFkheON7HtTJibUy390lJvR27+Mwa2g+3LdJDmfInGMufu+9pQ4Gk9S8dIWOD3m7s
-         uuYwQw4h3kq3hKifqSA4erYJ2nYjjd9JiEii63m2AP0GLhOTrB1l22DDwpRq68Vu0AmG
-         jjmQ==
+        bh=qus2dvpBBzOce1fnYnJr5lmi2kaH0xSNWH8ED9yWvtE=;
+        b=HI306zAs56PxmpSFzK+Q7+gaspNTug37e7oi7Nd26AUIZDVBY5SoUQQyrxzuGdIduZ
+         hPFFcNaz74GsRqmPe7dgSSfukorx6ov5ni4sOjv9WVuAdTE9nG+OXdogkNXm5VTwlHe/
+         A3lD+k/nc2aN9CVEMX92QrMrNdJssW5xGpzdwUaoOUsx7LxRfoyP3FKGGlwHqGT0Yhi2
+         NInKNO7KvaPZm5a5CeJaeZc328u1N9i9bOTqnADWnTkRKRtxHSJXjz/wLFsq9eX6sEwn
+         VHeeMQtR/E0cbQOzwa7uQHED6ysNrOD8uYn5SawxASj1imHlZunuAjuT5dJGx2AuSRmD
+         SlEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UOh3r59Lq8Hnz4z0CSLGP+AW51c6Rza89WokyQaYLRw=;
-        b=lLnfpvj1IRpYTX75MYKAztUdBN7RY3sx0u0rZg62IczheEXdh8x2aL+OCaOwD02igc
-         q/m+ozxXQJQZsV5N9F9uqDpvNDfz0a5DYeHUtfud+3gNkQxFoJcaPzO2iO+chWp9R5tv
-         JvG2pLTUNfW8Nxnd6LSMMlLnhvzJr6LtdtaLg8UKl9UYjJ5rz+UuybXYSpVIq7sTKOba
-         bk9H9UGVTer/QUSYQFA/iHxrkReooRR0sa1BUCz2PJ+MLni2o1AUJaMOJimqQylMPr00
-         TGdH3TYENWWlwqpSV5wKyjJE9TPMqYcDS57DVv9Hb+bOg3tuW/ujdW2BE4m7eYX3RLzM
-         LHoQ==
-X-Gm-Message-State: ABUngvdirORjhE3jaAn+1JjS0SA9A6h45RgeeVgDhqJ4++7eFwNl/1SssWaCpldavOTgPmLA
-X-Received: by 10.107.141.197 with SMTP id p188mr8413059iod.37.1477179169077;
-        Sat, 22 Oct 2016 16:32:49 -0700 (PDT)
+        bh=qus2dvpBBzOce1fnYnJr5lmi2kaH0xSNWH8ED9yWvtE=;
+        b=fYKj4Phb7KA5qpXjN/zqDZXCdaidgL9YuH8KTzuQnMJ2YeL5sFTMwm7I45fsTzaXR3
+         HCEind3TLI8Dv5BEyILhRMBcudt9c0RILdYLjN2WIJKfSdlIPjx4g9/8uuXBfmJiC+lC
+         Z0xVhyQ9xLe5WySt/Jh2s4geDpfDP6JjUb4ru1VwkG7sozARVVeCWzB5hOPP7YHq/rAK
+         5v/pv5TaMJb8+X5S3UESGRqC9OcDhP5DyJWIeR9i6pRWXJ1GS60yTHs5eGrl1Y+s+cVM
+         W3OWrmkMsBkVLu/n0eIBfN19USyOgtnpRx+gYFLUe2snUPpqni0fTvaTChgLZeFwRUZr
+         uSIA==
+X-Gm-Message-State: ABUngvcjiUyjR4o0P4ktdmZVDJQaHpZ7aJrSGWKhV2gxFKTjfEfqd2mmKJFsCcO1LWAsPvTQ
+X-Received: by 10.107.31.78 with SMTP id f75mr7667687iof.141.1477179165161;
+        Sat, 22 Oct 2016 16:32:45 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:4ca0:b1d9:cc22:1c7b])
-        by smtp.gmail.com with ESMTPSA id v69sm1987193itc.1.2016.10.22.16.32.48
+        by smtp.gmail.com with ESMTPSA id 70sm4579544iou.3.2016.10.22.16.32.44
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 22 Oct 2016 16:32:48 -0700 (PDT)
+        Sat, 22 Oct 2016 16:32:44 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 09/36] attr.c: plug small leak in parse_attr_line()
-Date:   Sat, 22 Oct 2016 16:31:58 -0700
-Message-Id: <20161022233225.8883-10-sbeller@google.com>
+Subject: [PATCH 07/36] attr.c: simplify macroexpand_one()
+Date:   Sat, 22 Oct 2016 16:31:56 -0700
+Message-Id: <20161022233225.8883-8-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.508.g6572022
 In-Reply-To: <20161022233225.8883-1-sbeller@google.com>
 References: <20161022233225.8883-1-sbeller@google.com>
@@ -63,70 +63,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-If any error is noticed after the match_attr structure is allocated,
-we shouldn't just return NULL from this function.
-
-Add a fail_return label that frees the allocated structure and
-returns NULL, and consistently jump there when we want to return
-NULL after cleaning up.
+The double-loop wants to do an early return immediately when one
+matching macro is found.  Eliminate the extra variable 'a' used for
+that purpose and rewrite the "assign the found item to 'a' to make
+it non-NULL and force the loop(s) to terminate" with a direct return
+from there.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ attr.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 5c35d42..1877f7a 100644
+index 95416d3..7bfeef3 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -223,7 +223,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 		if (!macro_ok) {
- 			fprintf(stderr, "%s not allowed: %s:%d\n",
- 				name, src, lineno);
--			return NULL;
-+			goto fail_return;
- 		}
- 		is_macro = 1;
- 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
-@@ -233,7 +233,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 			fprintf(stderr,
- 				"%.*s is not a valid attribute name: %s:%d\n",
- 				namelen, name, src, lineno);
--			return NULL;
-+			goto fail_return;
- 		}
- 	}
- 	else
-@@ -246,7 +246,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 	for (cp = states, num_attr = 0; *cp; num_attr++) {
- 		cp = parse_attr(src, lineno, cp, NULL);
- 		if (!cp)
--			return NULL;
-+			goto fail_return;
- 	}
+@@ -701,24 +701,21 @@ static int fill(const char *path, int pathlen, int basename_offset,
+ static int macroexpand_one(int nr, int rem)
+ {
+ 	struct attr_stack *stk;
+-	struct match_attr *a = NULL;
+ 	int i;
  
- 	res = xcalloc(1,
-@@ -267,7 +267,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 		if (res->u.pat.flags & EXC_FLAG_NEGATIVE) {
- 			warning(_("Negative patterns are ignored in git attributes\n"
- 				  "Use '\\!' for literal leading exclamation."));
--			return NULL;
-+			goto fail_return;
- 		}
- 	}
- 	res->is_macro = is_macro;
-@@ -283,6 +283,10 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 	}
+ 	if (check_all_attr[nr].value != ATTR__TRUE ||
+ 	    !check_all_attr[nr].attr->maybe_macro)
+ 		return rem;
  
- 	return res;
-+
-+fail_return:
-+	free(res);
-+	return NULL;
+-	for (stk = attr_stack; !a && stk; stk = stk->prev)
+-		for (i = stk->num_matches - 1; !a && 0 <= i; i--) {
++	for (stk = attr_stack; stk; stk = stk->prev) {
++		for (i = stk->num_matches - 1; 0 <= i; i--) {
+ 			struct match_attr *ma = stk->attrs[i];
+ 			if (!ma->is_macro)
+ 				continue;
+ 			if (ma->u.attr->attr_nr == nr)
+-				a = ma;
++				return fill_one("expand", ma, rem);
+ 		}
+-
+-	if (a)
+-		rem = fill_one("expand", a, rem);
++	}
+ 
+ 	return rem;
  }
- 
- /*
 -- 
 2.10.1.508.g6572022
 
