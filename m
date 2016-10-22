@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0554120986
-	for <e@80x24.org>; Sat, 22 Oct 2016 23:33:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39D0920986
+	for <e@80x24.org>; Sat, 22 Oct 2016 23:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965089AbcJVXdb (ORCPT <rfc822;e@80x24.org>);
+        id S965099AbcJVXdf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 19:33:35 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:32947 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965071AbcJVXdb (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 22 Oct 2016 19:33:31 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38191 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964952AbcJVXdW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 19:33:22 -0400
-Received: by mail-it0-f53.google.com with SMTP id 66so74098074itl.1
-        for <git@vger.kernel.org>; Sat, 22 Oct 2016 16:33:22 -0700 (PDT)
+Received: by mail-it0-f51.google.com with SMTP id k64so11506149itb.0
+        for <git@vger.kernel.org>; Sat, 22 Oct 2016 16:33:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2qguvQNHoNKZL5tobJUwn3gWntp9sFGhKNsKC4V+fdA=;
-        b=ouAPOUVpDjcYpEQ2BX74O104tk5N0I/BZfbmsiPWSv1vGmYBfxAmvgOvUiyFnsLMPS
-         GO3otFMnh0WTvtpOUZu96Bmk8iHBNn5swyE5OjhjlCiLDJnR5MDddVoT/rqsgHwMZ6iK
-         vc4Q3mdKFwUt374EB3h70BuRXJ7hW4d4PTh31+msYEid0FPEVRUCKarpoJyhKifdv9DK
-         b4uz2KzE7nfjvnZWCZy6+/jlanOD5Txbs67WMv6RZ5IVC7zEsexG8i43bRA//eTfQjZH
-         qGDCym0IBYdw2cPfJt+L6sXqQhKzSxq1ZxPjRWqfUxDE3uP9ffhzztMhzLy4vZixi13J
-         Avdg==
+        bh=/k4Exoyax67rBZoRiRZqlC98zoJUozAqjzCqHBJRBGw=;
+        b=n5lJ2gGe/uEPtzwkc3Fr7fwrj9R3PDVeZMiuxWGto1SrPKHpmcjoSTvg1asmXfvh2h
+         nUK8VIOoxKc5hXpioOvHqdpFy+x26oPnyIyq24mah2FiP80h0jFXbXw/9CK2ve1EIDDQ
+         zvs7NDAzhcJQYc33cFQ6/qn1wxgSf9Qh1QDElAHjrGwRDsI7jSyaQFMPVsSLFfUrV1PI
+         ls9+keS0nZJVIpXDjeL5XhPbGFayVgrFehJ+uYmlIw4sIU5aV0iDe35ob44kJVSZU+Cc
+         EEgiXQpQjY6oZGM8ocTeKu9YajBl6DJfgmdtrQcytUa9EyJbBqkjo/euHlrrxXdd901K
+         lAGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2qguvQNHoNKZL5tobJUwn3gWntp9sFGhKNsKC4V+fdA=;
-        b=bDNsC4x/XR/RJ/elwJ5TclEOCn8xWQtElOT9onAYbVne80fUL1jsFMQpvwO1Z7L+Du
-         v4IyFKqBczeAzQ+An8BJOBKPCMTVCCbTsoUBKByvK0f0PA9pj+MkDXodwn3uJS+djrwc
-         6pLznrQYVRNpniBvPF8gwYeN3MmO+IiSp3JheEM5LYpGjX4qlQx3q760CjVROyvTXwJ9
-         ySNMRAnMXgVmX3QUMvj8QwbquZ4CL3jp+JFG4uDaJXjaCNfta0R4I+FqXS3BZfo/0x6P
-         6Alyy70CaQS+p6zjBQmKsTYQvFD+Px0wFkd8UMsXGA/L4phGo3QBQnqcvbGeAQ0XS4ar
-         Hhdw==
-X-Gm-Message-State: ABUngvf68VGHT3PehOpSddlVyqtXD6l+1/Ao1gOFeq9zfJ/U7Suv4jqx5kPVI8fjB2O6uPNB
-X-Received: by 10.36.228.1 with SMTP id o1mr4235702ith.97.1477179201941;
-        Sat, 22 Oct 2016 16:33:21 -0700 (PDT)
+        bh=/k4Exoyax67rBZoRiRZqlC98zoJUozAqjzCqHBJRBGw=;
+        b=bgO3VtIXTS1OCwJGvnbspsZWLsOg7CLRNt6u2F210vv+se3yuUWDc7aefulPqsqocl
+         7iBuKpuwLpnH9tsDtXTWy9mA1nK8PhzIS6bnZnvOdlwcQjmCeRcvLGwAxAGEM0ka1FX1
+         xmSExa+Llklb12BikQNGh2WRGeTySXjPhLHEEWVuyYFpwLeZnsCkkfTmYPTsa5q84Y+x
+         j2lMbvutBb0VkLLWJeUCwYNfUso7qX8m/vZRKWqYI4AXcdXWda38SHHi2PZtQ1cxH3Vy
+         rTmR8QxtGEpbTi0fjQjB142FhC5T8Qh1vW0FJQmZl+gRHvh5HUsSD2jtzzSx6MYQc31i
+         L9yQ==
+X-Gm-Message-State: ABUngvfgTFs89IH7ds6sMjnaOLSZMkBc/NEtrEtyxhA9Btl+UwaGwuik6RjyVr1UCNnm+Y9Y
+X-Received: by 10.107.159.5 with SMTP id i5mr7453710ioe.222.1477179209912;
+        Sat, 22 Oct 2016 16:33:29 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:4ca0:b1d9:cc22:1c7b])
-        by smtp.gmail.com with ESMTPSA id f96sm4570843ioj.15.2016.10.22.16.33.21
+        by smtp.gmail.com with ESMTPSA id m31sm4549258ioi.40.2016.10.22.16.33.29
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 22 Oct 2016 16:33:21 -0700 (PDT)
+        Sat, 22 Oct 2016 16:33:29 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 26/36] attr: make git_check_attr_counted static
-Date:   Sat, 22 Oct 2016 16:32:15 -0700
-Message-Id: <20161022233225.8883-27-sbeller@google.com>
+Subject: [PATCH 30/36] pathspec: move long magic parsing out of prefix_pathspec
+Date:   Sat, 22 Oct 2016 16:32:19 -0700
+Message-Id: <20161022233225.8883-31-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.508.g6572022
 In-Reply-To: <20161022233225.8883-1-sbeller@google.com>
 References: <20161022233225.8883-1-sbeller@google.com>
@@ -61,41 +61,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's not used outside the attr code, so let's keep it private.
+`prefix_pathspec` is quite a lengthy function and we plan on adding more.
+Split it up for better readability. As we want to add code into the
+inner loop of the long magic parsing, we also benefit from lower
+indentation.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- attr.c | 4 ++--
- attr.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ pathspec.c | 84 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 47 insertions(+), 37 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 0f08ee6..881bdfa 100644
---- a/attr.c
-+++ b/attr.c
-@@ -892,8 +892,8 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
- 	use_index = istate;
+diff --git a/pathspec.c b/pathspec.c
+index 86f2b44..67678fc 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -88,6 +88,52 @@ static void prefix_short_magic(struct strbuf *sb, int prefixlen,
+ 	strbuf_addf(sb, ",prefix:%d)", prefixlen);
  }
  
--int git_check_attr_counted(const char *path, int pathlen,
--			   struct git_attr_check *check)
-+static int git_check_attr_counted(const char *path, int pathlen,
-+				  struct git_attr_check *check)
- {
- 	check->finalized = 1;
- 	return git_check_attrs(path, pathlen, check);
-diff --git a/attr.h b/attr.h
-index 40abc16..06ac93b 100644
---- a/attr.h
-+++ b/attr.h
-@@ -44,7 +44,6 @@ struct git_attr_check {
- 
- extern struct git_attr_check *git_attr_check_initl(const char *, ...);
- extern int git_check_attr(const char *path, struct git_attr_check *);
--extern int git_check_attr_counted(const char *, int, struct git_attr_check *);
- 
- extern struct git_attr_check *git_attr_check_alloc(void);
- extern struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *, const struct git_attr *);
++static void eat_long_magic(struct pathspec_item *item, const char *elt,
++		unsigned *magic, int *pathspec_prefix,
++		const char **copyfrom_, const char **long_magic_end)
++{
++	int i;
++	const char *copyfrom = *copyfrom_;
++	/* longhand */
++	const char *nextat;
++	for (copyfrom = elt + 2;
++	     *copyfrom && *copyfrom != ')';
++	     copyfrom = nextat) {
++		size_t len = strcspn(copyfrom, ",)");
++		if (copyfrom[len] == ',')
++			nextat = copyfrom + len + 1;
++		else
++			/* handle ')' and '\0' */
++			nextat = copyfrom + len;
++		if (!len)
++			continue;
++		for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
++			if (strlen(pathspec_magic[i].name) == len &&
++			    !strncmp(pathspec_magic[i].name, copyfrom, len)) {
++				*magic |= pathspec_magic[i].bit;
++				break;
++			}
++			if (starts_with(copyfrom, "prefix:")) {
++				char *endptr;
++				*pathspec_prefix = strtol(copyfrom + 7,
++							  &endptr, 10);
++				if (endptr - copyfrom != len)
++					die(_("invalid parameter for pathspec magic 'prefix'"));
++				/* "i" would be wrong, but it does not matter */
++				break;
++			}
++		}
++		if (ARRAY_SIZE(pathspec_magic) <= i)
++			die(_("Invalid pathspec magic '%.*s' in '%s'"),
++			    (int) len, copyfrom, elt);
++	}
++	if (*copyfrom != ')')
++		die(_("Missing ')' at the end of pathspec magic in '%s'"), elt);
++	*long_magic_end = copyfrom;
++	copyfrom++;
++	*copyfrom_ = copyfrom;
++}
++
+ /*
+  * Take an element of a pathspec and check for magic signatures.
+  * Append the result to the prefix. Return the magic bitmap.
+@@ -150,43 +196,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+ 	    (flags & PATHSPEC_LITERAL_PATH)) {
+ 		; /* nothing to do */
+ 	} else if (elt[1] == '(') {
+-		/* longhand */
+-		const char *nextat;
+-		for (copyfrom = elt + 2;
+-		     *copyfrom && *copyfrom != ')';
+-		     copyfrom = nextat) {
+-			size_t len = strcspn(copyfrom, ",)");
+-			if (copyfrom[len] == ',')
+-				nextat = copyfrom + len + 1;
+-			else
+-				/* handle ')' and '\0' */
+-				nextat = copyfrom + len;
+-			if (!len)
+-				continue;
+-			for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+-				if (strlen(pathspec_magic[i].name) == len &&
+-				    !strncmp(pathspec_magic[i].name, copyfrom, len)) {
+-					magic |= pathspec_magic[i].bit;
+-					break;
+-				}
+-				if (starts_with(copyfrom, "prefix:")) {
+-					char *endptr;
+-					pathspec_prefix = strtol(copyfrom + 7,
+-								 &endptr, 10);
+-					if (endptr - copyfrom != len)
+-						die(_("invalid parameter for pathspec magic 'prefix'"));
+-					/* "i" would be wrong, but it does not matter */
+-					break;
+-				}
+-			}
+-			if (ARRAY_SIZE(pathspec_magic) <= i)
+-				die(_("Invalid pathspec magic '%.*s' in '%s'"),
+-				    (int) len, copyfrom, elt);
+-		}
+-		if (*copyfrom != ')')
+-			die(_("Missing ')' at the end of pathspec magic in '%s'"), elt);
+-		long_magic_end = copyfrom;
+-		copyfrom++;
++		eat_long_magic(item, elt, &magic, &pathspec_prefix, &copyfrom, &long_magic_end);
+ 	} else {
+ 		/* shorthand */
+ 		for (copyfrom = elt + 1;
 -- 
 2.10.1.508.g6572022
 
