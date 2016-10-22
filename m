@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9FE120986
-	for <e@80x24.org>; Sat, 22 Oct 2016 23:34:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D066320986
+	for <e@80x24.org>; Sat, 22 Oct 2016 23:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965131AbcJVXd6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Oct 2016 19:33:58 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36322 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965100AbcJVXdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 19:33:38 -0400
-Received: by mail-it0-f51.google.com with SMTP id e187so74387054itc.1
-        for <git@vger.kernel.org>; Sat, 22 Oct 2016 16:33:38 -0700 (PDT)
+        id S965136AbcJVXeA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 19:34:00 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:37536 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965071AbcJVXdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2016 19:33:36 -0400
+Received: by mail-it0-f44.google.com with SMTP id m138so74605407itm.0
+        for <git@vger.kernel.org>; Sat, 22 Oct 2016 16:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UPqm14z6Xzp0R5mU1OXmBx9UDv3H9P/ol1a2LVIXGk4=;
-        b=SXNfkzOI66eKUrdD3SUD/xEJjRIH/XiFiVQNbR7SM2RWXCTqJJQNrwFcoAEq30wVpp
-         wObI7rA7iCSsiVDfxJYYe6SA6zU/PKGbPqSECnJBPGNa3TEyCk6lTl16eE7oJxILeIJH
-         T0Gs9f+zk04YLxIksRTF+VeEdkdRUS8+H0ojUAL6Q9pragcLP0ICrfVrrOEr8VLxjroO
-         VkjwfDH5jc7j/KPJwEW8hp7s5aQUZY0O6BKr3pF1MyJZToj35acSiqTFJQgRobPsMmLL
-         la0/ZVb9GLPC4T2AHb36CRtRNqCoTPX5RS/Cyzvl+oOjTvvY1j2/fxrqlMxVLy0YVnxL
-         NGCw==
+        bh=tYewk5TW8kaUI69BjX6JuKWIjXSHc9wrc0FSyk4e8B4=;
+        b=YJCI04IMjH2wk0G/U7FR5dZRyeongzBi0263zUpQeUM9SEr7yKbRAhbht18EIJpuSK
+         RMe7Zn3KLxoXyHXnd7EXb1Iyi/2MP/YS/8P24q7NCk2krjnQ2jBNvjCUjFepO6XKCYM8
+         tlbyH0W7mwFXcT3WKesGJwbFEJJwPJuFRmbN+mgVsKBhYAoiL7nEaXHPQXW2Na/e9/n8
+         4cW7AK3ajMFlwH/GAlYrcuu7pGf3uD+ELirqxz55kArWU5cqOqUflS8zuPVTLDb1wAFR
+         3LhEPOZzBbnBaXfqor5t0GGt8pvvA3VpIkwAHLD2qr20TxmNXDcqQ5HngU94s6/HIFDt
+         l+XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UPqm14z6Xzp0R5mU1OXmBx9UDv3H9P/ol1a2LVIXGk4=;
-        b=m4s1uqfwennYxGhwVgHElZty4zrG1b+rL3ynj7iJKpp54EkvqmZYukS2cXGqhi8FRW
-         KL4EE6iOWl8fiJwEApRGAt/jJI38fxlqgUxtXw2xcwgAc07pQJWaWLjxUa4BfFb8BxpP
-         dhH0FSQlFjyCzvUAmeWLOzHlynKGLOV7MWt85w0WQxbCYcPplegRraDUXBPvOHIa0qdr
-         ZlDxR7AvR/dDhW57NTr2cCC6DpPSlNdjwxSpNU+jthSuZiIV59EMyG4K2IHdSUVGIQGn
-         kHMwgsUryt8edDQMDejWGK/lccXYoDcYO9+IL+5X7DkgMvbseA6Z7BPU1F4TGwaxE/Xs
-         cXyA==
-X-Gm-Message-State: ABUngver4dsmNM8O34agJpm1nlXREPeHZK9n7Kp+w8E2RdCEzQPgGY85J8N3RgaVGTNbMEnR
-X-Received: by 10.36.20.213 with SMTP id 204mr7128250itg.80.1477179217796;
-        Sat, 22 Oct 2016 16:33:37 -0700 (PDT)
+        bh=tYewk5TW8kaUI69BjX6JuKWIjXSHc9wrc0FSyk4e8B4=;
+        b=T7WpinOECj8Av90hSq7SPmH3Q9dc2oNFYYZMbT+5JLAaJQSULvAomh9yKoEsfT2TK1
+         cOtTwMH645fo+Y0IRXqA2KBuLofBhqjeJu2OmsomU2zEZuK1sDRHUxmDpNs0pVgIyVgn
+         /0G6NDZpyBAOkC3CrxiNeNOHupruYcDeXgMbxIlOMuGipilRLZxsu5Hu7NmPWWrgiuWi
+         WJt9W2YjyUQCx079kZItFVWbUcRcvXN/dulSMbWwV4L0VAInKibG1MvTrdV48XoeHzMm
+         iYYudcBUi+AecLXVVW44zHTb2VOm5WtK2Zf/uA+7I56+yEdrvd2+t3GJW1nXojkLScaG
+         nOew==
+X-Gm-Message-State: ABUngvf+rTgANq83c5MjnR05E1RPGOwQB8JXuOzeifNRWqotCpYpkj3Q7Mf+KNyYyxy7bsEv
+X-Received: by 10.107.158.85 with SMTP id h82mr8679847ioe.152.1477179215873;
+        Sat, 22 Oct 2016 16:33:35 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:4ca0:b1d9:cc22:1c7b])
-        by smtp.gmail.com with ESMTPSA id c79sm1963165itc.16.2016.10.22.16.33.37
+        by smtp.gmail.com with ESMTPSA id 80sm4550174iot.36.2016.10.22.16.33.35
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 22 Oct 2016 16:33:37 -0700 (PDT)
+        Sat, 22 Oct 2016 16:33:35 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 34/36] submodule update: add `--init-default-path` switch
-Date:   Sat, 22 Oct 2016 16:32:23 -0700
-Message-Id: <20161022233225.8883-35-sbeller@google.com>
+Subject: [PATCH 33/36] pathspec: allow escaped query values
+Date:   Sat, 22 Oct 2016 16:32:22 -0700
+Message-Id: <20161022233225.8883-34-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.508.g6572022
 In-Reply-To: <20161022233225.8883-1-sbeller@google.com>
 References: <20161022233225.8883-1-sbeller@google.com>
@@ -61,192 +61,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new switch `--init-default-path` initializes the submodules which are
-configured in `submodule.defaultUpdatePath` instead of those given as
-command line arguments before updating. In the first implementation this
-is made incompatible with further command line arguments as it is
-unclear what the user means by
+In our own .gitattributes file we have attributes such as:
 
-    git submodule update --init --init-default-path <paths>
+    *.[ch] whitespace=indent,trail,space
 
-This new switch allows to record more complex patterns as it saves
-retyping them whenever you invoke update.
+When querying for attributes we want to be able to ask for the exact
+value, i.e.
 
+    git ls-files :(attr:whitespace=indent,trail,space)
+
+should work, but the commas are used in the attr magic to introduce
+the next attr, such that this query currently fails with
+
+fatal: Invalid pathspec magic 'trail' in ':(attr:whitespace=indent,trail,space)'
+
+This change allows escaping characters by a backslash, such that the query
+
+    git ls-files :(attr:whitespace=indent\,trail\,space)
+
+will match all path that have the value "indent,trail,space" for the
+whitespace attribute. To accomplish this, we need to modify two places.
+First `eat_long_magic` needs to not stop early upon seeing a comma or
+closing paren that is escaped. As a second step we need to remove any
+escaping from the attr value.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config.txt        |  5 ++++
- Documentation/git-submodule.txt | 17 +++++++++----
- git-submodule.sh                | 21 +++++++++++++---
- t/t7400-submodule-basic.sh      | 53 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 89 insertions(+), 7 deletions(-)
+ pathspec.c                      | 53 +++++++++++++++++++++++++++++++++++++----
+ t/t6134-pathspec-with-labels.sh | 10 ++++++++
+ 2 files changed, 58 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 27069ac..72901ef 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2886,6 +2886,11 @@ submodule.alternateErrorStrategy
- 	as computed via `submodule.alternateLocation`. Possible values are
- 	`ignore`, `info`, `die`. Default is `die`.
+diff --git a/pathspec.c b/pathspec.c
+index 0eee177..3832e03 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -89,12 +89,56 @@ static void prefix_short_magic(struct strbuf *sb, int prefixlen,
+ 	strbuf_addf(sb, ",prefix:%d)", prefixlen);
+ }
  
-+submodule.defaultUpdatePath::
-+	Specifies a set of submodules to initialize when calling
-+	`git submodule --init-default-group` by using the pathspec
-+	syntax.
++static size_t strcspn_escaped(const char *s, const char *stop)
++{
++	const char *i;
 +
- tag.forceSignAnnotated::
- 	A boolean to specify whether annotated tags created should be GPG signed.
- 	If `--annotate` is specified on the command line, it takes
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index bf3bb37..503fec8 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -14,10 +14,10 @@ SYNOPSIS
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
--'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
--	      [--[no-]recommend-shallow] [-f|--force] [--rebase|--merge]
--	      [--reference <repository>] [--depth <depth>] [--recursive]
--	      [--jobs <n>] [--] [<path>...]
-+'git submodule' [--quiet] update [--init[-default-path]] [--remote] [-N|--no-fetch]
-+	      [--[no-]recommend-shallow]
-+	      [-f|--force] [--rebase|--merge] [--reference <repository>]
-+	      [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
- 	      [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
-@@ -194,6 +194,10 @@ If the submodule is not yet initialized, and you just want to use the
- setting as stored in .gitmodules, you can automatically initialize the
- submodule with the `--init` option.
- 
-+You can configure a set of submodules using pathspec syntax in
-+submodule.defaultUpdatePath you can use `--init-default-path` to initialize
-+those before updating.
++	for (i = s; *i; i++) {
++		/* skip the escaped character */
++		if (i[0] == '\\' && i[1]) {
++			i++;
++			continue;
++		}
 +
- If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
- --
-@@ -361,6 +365,11 @@ the submodule itself.
- 	Initialize all submodules for which "git submodule init" has not been
- 	called so far before updating.
- 
-+--init-default-path::
-+	This option is only valid for the update command.
-+	Initialize all submodules configured in "`submodule.defaultUpdatePath`"
-+	that have not been updated before.
++		if (strchr(stop, *i))
++			break;
++	}
++	return i - s;
++}
 +
- --name::
- 	This option is only valid for the add command. It sets the submodule's
- 	name to the given string instead of defaulting to its path. The name
-diff --git a/git-submodule.sh b/git-submodule.sh
-index a024a13..334cecc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -9,7 +9,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
--   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init[-default-path]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-@@ -503,7 +503,12 @@ cmd_update()
- 			progress="--progress"
- 			;;
- 		-i|--init)
--			init=1
-+			test -z $init || test $init = by_args || die "$(gettext "Only one of --init or --init-default-path may be used.")"
-+			init=by_args
-+			;;
-+		--init-default-path)
-+			test -z $init || test $init = by_config || die "$(gettext "Only one of --init or --init-default-path may be used.")"
-+			init=by_config
- 			;;
- 		--remote)
- 			remote=1
-@@ -572,7 +577,17 @@ cmd_update()
- 
- 	if test -n "$init"
- 	then
--		cmd_init "--" "$@" || return
-+		if test "$init" = "by_config"
-+		then
-+			if test $# -gt 0
-+			then
-+				die "$(gettext "path arguments are incompatible with --init-default-path")"
-+			fi
-+			cmd_init "--" $(git config --get-all submodule.defaultUpdatePath) || return
-+		else
-+			cmd_init "--" "$@" || return
-+		fi
++static inline int invalid_value_char(const char ch)
++{
++	if (isalnum(ch) || strchr(",-_", ch))
++		return 0;
++	return -1;
++}
 +
- 	fi
++static char *attr_value_unescape(const char *value)
++{
++	const char *src;
++	char *dst, *ret;
++
++	ret = xmallocz(strlen(value));
++	for (src = value, dst = ret; *src; src++, dst++) {
++		if (*src == '\\') {
++			if (!src[1])
++				die(_("Escape character '\\' not allowed as "
++				      "last character in attr value"));
++			src++;
++		}
++		if (invalid_value_char(*src))
++			die("cannot use '%c' for value matching", *src);
++		*dst = *src;
++	}
++	*dst = '\0';
++	return ret;
++}
++
+ static void parse_pathspec_attr_match(struct pathspec_item *item, const char *value)
+ {
+ 	struct string_list_item *si;
+ 	struct string_list list = STRING_LIST_INIT_DUP;
  
- 	{
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index b77cce8..4699b1c 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1116,5 +1116,58 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
- 	test_cmp expect actual
+-
+ 	if (!value || !strlen(value))
+ 		die(_("attr spec must not be empty"));
+ 
+@@ -131,10 +175,9 @@ static void parse_pathspec_attr_match(struct pathspec_item *item, const char *va
+ 			if (attr[attr_len] != '=')
+ 				am->match_mode = MATCH_SET;
+ 			else {
++				const char *v = &attr[attr_len + 1];
+ 				am->match_mode = MATCH_VALUE;
+-				am->value = xstrdup(&attr[attr_len + 1]);
+-				if (strchr(am->value, '\\'))
+-					die(_("attr spec values must not contain backslashes"));
++				am->value = attr_value_unescape(v);
+ 			}
+ 			break;
+ 		}
+@@ -166,7 +209,7 @@ static void eat_long_magic(struct pathspec_item *item, const char *elt,
+ 	for (copyfrom = elt + 2;
+ 	     *copyfrom && *copyfrom != ')';
+ 	     copyfrom = nextat) {
+-		size_t len = strcspn(copyfrom, ",)");
++		size_t len = strcspn_escaped(copyfrom, ",)");
+ 		if (copyfrom[len] == ',')
+ 			nextat = copyfrom + len + 1;
+ 		else
+diff --git a/t/t6134-pathspec-with-labels.sh b/t/t6134-pathspec-with-labels.sh
+index 1c9323c..f5f8413 100755
+--- a/t/t6134-pathspec-with-labels.sh
++++ b/t/t6134-pathspec-with-labels.sh
+@@ -167,4 +167,14 @@ test_expect_success 'abort on asking for wrong magic' '
+ 	test_must_fail git ls-files . ":(attr:!label=foo)"
  '
  
-+test_expect_success 'setup superproject with submodules' '
-+	mkdir sub1 &&
-+	(
-+		cd sub1 &&
-+		git init &&
-+		test_commit test &&
-+		test_commit test2
-+	) &&
-+	mkdir multisuper &&
-+	(
-+		cd multisuper &&
-+		git init &&
-+		git submodule add ../sub1 sub0 &&
-+		git submodule add ../sub1 sub1 &&
-+		git submodule add ../sub1 sub2 &&
-+		git submodule add ../sub1 sub3 &&
-+		git commit -m "add some submodules"
-+	)
-+'
-+
-+cat >expect <<-EOF
-+-sub0
-+ sub1 (test2)
-+ sub2 (test2)
-+ sub3 (test2)
-+EOF
-+
-+test_expect_success 'submodule update --init with a specification' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
-+	(
-+		cd multisuper_clone &&
-+		git submodule update --init . ":(exclude)sub0" &&
-+		git submodule status |cut -c 1,43- >../actual
-+	) &&
++test_expect_success 'check attribute list' '
++	cat <<-EOF >>.gitattributes &&
++	* whitespace=indent,trail,space
++	EOF
++	cat .gitattributes &&
++	git ls-files ":(attr:whitespace=indent\,trail\,space)" >actual &&
++	git ls-files >expect &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'submodule update --init-default-path' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
-+	(
-+		cd multisuper_clone &&
-+		git config submodule.defaultUpdatePath "." &&
-+		git config --add submodule.defaultUpdatePath ":(exclude)sub0" &&
-+		git submodule update --init-default-path &&
-+		git submodule status |cut -c 1,43- >../actual &&
-+		test_must_fail git submodule update --init-default-path sub0
-+	) &&
-+	test_cmp expect actual
-+'
- 
  test_done
 -- 
 2.10.1.508.g6572022
