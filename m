@@ -6,142 +6,102 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2A120986
-	for <e@80x24.org>; Sat, 22 Oct 2016 16:37:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9931C20986
+	for <e@80x24.org>; Sat, 22 Oct 2016 17:11:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935712AbcJVQhL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Oct 2016 12:37:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57098 "EHLO
+        id S936020AbcJVRLt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 13:11:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55208 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934425AbcJVQhL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 12:37:11 -0400
+        with ESMTP id S935413AbcJVRLs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2016 13:11:48 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BBAB243F25;
-        Sat, 22 Oct 2016 12:37:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67FF546BE0;
+        Sat, 22 Oct 2016 13:11:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/JndrbRwgQcNl5o0WNcr6BpEVVM=; b=hK7v6u
-        JChWkYVajTeGQ/1TBktrQdSGgIQ/IX6jVY2m2RVpXYQwdOQqGor8bjiL91eotnvc
-        +SQ2tSv8f9sY4IPxRBm9KTYcgtJ4XzrsnyVaNzjAL3Ww75Zakc8mEHs2cOFXyxK/
-        1xt3/QIyfzwWTTDax3epApR9+8D4dUNbiyMYQ=
+        :content-type; s=sasl; bh=Z4nJcWqclo2YunFI56YYMR26jug=; b=t69iJF
+        P8fSBaDnt8iEtlix100ND4V+pEAmJsmvsV1fLz0Vbv9BZjEgomt1sdw+BL+zgn25
+        zLAGKKHk4gIazUbO6ZXxvT8YTMA/uHDfUtMDEF2pMOvNztsFptcV2jvpaVxiy14H
+        oh9Ct/CQDNtZ4PvwzVjKngqxLFB742kvRHuIE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QruJoMS1g57TNl7EYLuxCJpY7h017j6K
-        GkYNdSRYXh0+GZzW9zRWYYqEI0AF1g3H6WFKw9YNVKig12Aah5KCKAGWfYp1NeRi
-        esemBJhNUjVpX1iaM4k7VGg0TLlbFIK1UEEfx63Wt7Td4+80za2/tjUZLOpmy/QB
-        y+SVNxjQaVA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4FF243F24;
-        Sat, 22 Oct 2016 12:37:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Ao4MrLoA3IazuaXXMlL5qKymjR5xYejb
+        2LhvvlOQqAw7VszcW2E2RjuFL+iPZzEIym06ZNVNvN/r2mjoUjsprnWv+du8f0xq
+        QE+qRKMYYiD9WKeLCdTUnIdpSRVmk1M+iCq7UdAIMldLG8qDajgylPh+rxga5ECX
+        vfgQss+XYkE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EB3046BDF;
+        Sat, 22 Oct 2016 13:11:47 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3717843F23;
-        Sat, 22 Oct 2016 12:37:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4CD246BDC;
+        Sat, 22 Oct 2016 13:11:46 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] daemon: detect and reject too-long paths
-References: <20161022045938.h3xa3yapzlg427vy@sigill.intra.peff.net>
-Date:   Sat, 22 Oct 2016 09:37:07 -0700
-In-Reply-To: <20161022045938.h3xa3yapzlg427vy@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 22 Oct 2016 00:59:38 -0400")
-Message-ID: <xmqqzilw8hn0.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v5 00/27] Prepare the sequencer for the upcoming rebase -i patches
+References: <cover.1476450940.git.johannes.schindelin@gmx.de>
+        <cover.1477052405.git.johannes.schindelin@gmx.de>
+Date:   Sat, 22 Oct 2016 10:11:44 -0700
+In-Reply-To: <cover.1477052405.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Fri, 21 Oct 2016 14:23:45 +0200 (CEST)")
+Message-ID: <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C6A0F944-9875-11E6-AAE2-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9CF735AE-987A-11E6-99D2-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> When we are checking the path via path_ok(), we use some
-> fixed PATH_MAX buffers. We write into them via snprintf(),
-> so there's no possibility of overflow, but it does mean we
-> may silently truncate the path, leading to potentially
-> confusing errors when the partial path does not exist.
->
-> We're better off to reject the path explicitly.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+> This patch series marks the '4' in the countdown to speed up rebase -i
+> by implementing large parts in C (read: there will be three more patch
+> series after that before the full benefit hits git.git: sequencer-i,
+> rebase--helper and rebase-i-extra).
+> ...
+> It would be *really* nice if we could get this patch series at least into
+> `next` soon, as it gets late and later for the rest of the patches to make
+> it into `master` in time for v2.11 (and it is not for lack of trying on my
+> end...).
 
-Sounds sensible.
+This "countdown 4" step can affect cherry-pick and revert, even
+though we were careful to review changes to the sequencer.c code.  I
+prefer to cook it in 'next' sufficiently long to ensure that we hear
+feedbacks from non-Windows users if there is any unexpected breakage.
 
-> Another option would be to switch to strbufs here. That potentially
-> introduces cases where a client can convince us to just keep allocating
-> memory, but I don't think so in practice; the paths and interpolated
-> data items all have to come in 64K pkt-lines, which places a hard
-> limit. This is a much more minimal change, though, and I don't hear
-> anybody complaining about the inability to use large paths.
+There isn't enough time to include this topic in the upcoming
+release within the current https://tinyurl.com/gitCal calendar,
+however, which places the final on Nov 11th.
 
-The alternative version did not look bad, either; in fact, the end
-result may even be conceptually simpler.
+I am wondering if it makes sense to delay 2.11 by moving the final
+by 4 weeks to Dec 9th.
 
-But I agree that this one with the same hard-limit we always had is
-a much more minimal change and is sufficient.
+Thoughts?
+
+Speaking of what to and not to include in the upcoming release, we
+do want to include Stefan's off-by-one fix to the submodule-helper,
+but that is blocked on Windows end due to the test.  I think
+everybody agreed that a longer time "right thing to do" fix is to
+address the "when base is /path/to/dir/., where is ../sub relative
+to it?" issue, but if we are to do so, it would need a longer
+gestation period once it hits 'next', as it can affect the current
+users and we may even need B/C notes in the release notes for the
+change.  Giving ourselves a few more weeks of breathing room would
+help us to make sure the fix to relative URL issue is sound, too.
+
+As to "countdown 3" and below steps, I am guessing that some of them
+can start cooking in 'next' before 2.11, but even with lengthened
+schedule, it is likely that they need to cook there beyond the end
+of this cycle, unless they are truly trivial changes that do not
+even need any reviews.
 
 Thanks.
-
->  daemon.c | 25 +++++++++++++++++++++----
->  1 file changed, 21 insertions(+), 4 deletions(-)
->
-> diff --git a/daemon.c b/daemon.c
-> index 425aad0507..ff0fa583b0 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -160,6 +160,7 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
->  {
->  	static char rpath[PATH_MAX];
->  	static char interp_path[PATH_MAX];
-> +	size_t rlen;
->  	const char *path;
->  	const char *dir;
->  
-> @@ -187,8 +188,12 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
->  			namlen = slash - dir;
->  			restlen -= namlen;
->  			loginfo("userpath <%s>, request <%s>, namlen %d, restlen %d, slash <%s>", user_path, dir, namlen, restlen, slash);
-> -			snprintf(rpath, PATH_MAX, "%.*s/%s%.*s",
-> -				 namlen, dir, user_path, restlen, slash);
-> +			rlen = snprintf(rpath, sizeof(rpath), "%.*s/%s%.*s",
-> +					namlen, dir, user_path, restlen, slash);
-> +			if (rlen >= sizeof(rpath)) {
-> +				logerror("user-path too large: %s", rpath);
-> +				return NULL;
-> +			}
->  			dir = rpath;
->  		}
->  	}
-> @@ -207,7 +212,15 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
->  
->  		strbuf_expand(&expanded_path, interpolated_path,
->  			      expand_path, &context);
-> -		strlcpy(interp_path, expanded_path.buf, PATH_MAX);
-> +
-> +		rlen = strlcpy(interp_path, expanded_path.buf,
-> +			       sizeof(interp_path));
-> +		if (rlen >= sizeof(interp_path)) {
-> +			logerror("interpolated path too large: %s",
-> +				 interp_path);
-> +			return NULL;
-> +		}
-> +
->  		strbuf_release(&expanded_path);
->  		loginfo("Interpolated dir '%s'", interp_path);
->  
-> @@ -219,7 +232,11 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
->  			logerror("'%s': Non-absolute path denied (base-path active)", dir);
->  			return NULL;
->  		}
-> -		snprintf(rpath, PATH_MAX, "%s%s", base_path, dir);
-> +		rlen = snprintf(rpath, sizeof(rpath), "%s%s", base_path, dir);
-> +		if (rlen >= sizeof(rpath)) {
-> +			logerror("base-path too large: %s", rpath);
-> +			return NULL;
-> +		}
->  		dir = rpath;
->  	}
