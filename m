@@ -2,73 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0AF820229
-	for <e@80x24.org>; Sat, 22 Oct 2016 00:06:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0591120229
+	for <e@80x24.org>; Sat, 22 Oct 2016 01:09:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935782AbcJVAGF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Oct 2016 20:06:05 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:33484 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935534AbcJVAGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2016 20:06:05 -0400
-Received: by mail-qk0-f176.google.com with SMTP id n189so174586230qke.0
-        for <git@vger.kernel.org>; Fri, 21 Oct 2016 17:06:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5jht9hBK9NwpkTQKqpwL1nmuxZ8Owu4PUlaozbf8LEU=;
-        b=ZpmhXjqHxZHH87mWC0ZBY+enKqijpM3ONbpYtpR8jD5lMMZ9NohqB63dcOeTgg3DVU
-         v66sUgnEYUoDOqzBJkUhlibWOS6hIkjExiaSMarYgDbbiTObDaG7TxN8fvLTTImlMYG9
-         aMb2sbbKTOFGWt+liV6PJZ7sYr2U7JlKTYnoyUO/vkLwJqK9IkpJQMVL0OgsyitZCa5A
-         k5q7yOmFThAF7pkJevl6Vhzn/hH9w91DfugJEGILGOonHTmPotzhcWEJmvLIKLF74arw
-         HDTKaR+0Z87Ez+72xinnJBQAT7uEz3TtkSNek+Van1Kt/wbsjXzBBL3u0kRCfdt8hnpN
-         Y+LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5jht9hBK9NwpkTQKqpwL1nmuxZ8Owu4PUlaozbf8LEU=;
-        b=N5tqUExhWN8+YKOTHLuWKbJNMPyqz96K4LexeCjBfjPSF3tHjDApp/rFljcQCkn8TC
-         vE7j4pEGYIxV55q2pN8tLY/ZMM+p+sKLEgc0ePRN4AyEaXRt7lYmjgp8Sq5wx+9ENZXc
-         cj/fBhRWUhWUZVLs68hNF0ActM6DhhwTvOV2R/QFzhcWgKMfvVdhPY+QZpbWwlOiiU3/
-         qaV0X+zVyYHfHUzOntFEJlIr+O29nCdKZ49iXwvD7UT9Ceq14B3zZwgwr0BuYkaXILs/
-         3Pr4umhTl7quUznHnr7H1J7OhXu4wYLusnd67VprNxzHJPAOiQS/6/Izcqazs7XbUkpW
-         lgnQ==
-X-Gm-Message-State: ABUngvdQxTwOazdWezfH6IaWvoPl8wrg7NPTtYRKRvcdfIv3JvvLG83KDGgxdaWr/RD5trzp3SSuoBwwuk/QEjs3
-X-Received: by 10.55.64.80 with SMTP id n77mr4331600qka.173.1477094763954;
- Fri, 21 Oct 2016 17:06:03 -0700 (PDT)
+        id S1755854AbcJVBJW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Oct 2016 21:09:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60969 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755846AbcJVBJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2016 21:09:22 -0400
+Received: (qmail 32399 invoked by uid 109); 22 Oct 2016 01:09:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Oct 2016 01:09:21 +0000
+Received: (qmail 8287 invoked by uid 111); 22 Oct 2016 01:09:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Oct 2016 21:09:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Oct 2016 21:09:19 -0400
+Date:   Fri, 21 Oct 2016 21:09:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, GitList <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] doc: fix merge-base ASCII art tab spacing
+Message-ID: <20161022010918.knvbxwlnjdqedwni@sigill.intra.peff.net>
+References: <20161020234009.1768-1-philipoakley@iee.org>
+ <xmqqa8dyeebj.fsf@gitster.mtv.corp.google.com>
+ <D861234B3E78496DBA70EE63B2BCDB96@PhilipOakley>
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Fri, 21 Oct 2016 17:06:03 -0700 (PDT)
-In-Reply-To: <CAPc5daX-bdSBAxy60zG2ZuGbrjGwRcsvHFktCqKw_o2QuuWTEg@mail.gmail.com>
-References: <cover.1476232683.git.jonathantanmy@google.com>
- <cover.1477072247.git.jonathantanmy@google.com> <CAPc5daX-bdSBAxy60zG2ZuGbrjGwRcsvHFktCqKw_o2QuuWTEg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 21 Oct 2016 17:06:03 -0700
-Message-ID: <CAGZ79kbjoNTJUX=UBh4JCgBgA5qOiTz-OdxP3QFZndVZiPHaMw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8] allow non-trailers and multiple-line trailers
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <D861234B3E78496DBA70EE63B2BCDB96@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2016 at 4:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Fri, Oct 21, 2016 at 10:54 AM, Jonathan Tan <jonathantanmy@google.com> wrote:
->> I've updated patch 5/8 to use strcspn and to pass in the list of
->> separators, meaning that we no longer accept '=' in file input (and also
->> updated its commit message accordingly).
->
-> Thanks for a pleasant read. Queued.
->
-> Hopefully this is ready for 'next' now.
+On Fri, Oct 21, 2016 at 10:26:29PM +0100, Philip Oakley wrote:
 
-I also just read through and was about to say the same.
+> > updating the source they work on.  Otherwise, the broken "doc-tool
+> > stack" will keep producing broken output next time a source that
+> > respects "tab is to skip to the next multiple of 8" rule is fed to
+> > it, no?
+> 
+> By avoiding tabs *within the art* we would also be tolerant of those who may
+> not have a set their tab spacing to 8 when viewing the raw text.
+> 
+> It's particularly the criss-cross diagram that needs fixed one way or
+> another (for the doc/doctor differences).
+
+I think the new asciidoctor correctly handles tabs within the art. The
+earlier diagrams begin each line with a tab (to mark the pre-formatted
+block), and then only some of the lines have additional tabs, and expect
+those tabs to expand to 8 characters to line up with the other bits
+(which is what caused a problem with earlier asciidoctor).
+
+What is funny about that criss-cross diagram is that it actually chooses
+different markers on each line to start the art: sometimes tabs and
+sometimes spaces. And that seems to confuse even recent versions of
+asciidoctor.
+
+It may be that asciidoctor is wrong here, but I have to admit we are
+venturing well into "what happens to work with asciidoc" territory, and
+the right solution is just fixing the diagram (i.e., your patch).
+
+-Peff
