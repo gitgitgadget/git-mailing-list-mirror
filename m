@@ -2,106 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9931C20986
-	for <e@80x24.org>; Sat, 22 Oct 2016 17:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 931D120986
+	for <e@80x24.org>; Sat, 22 Oct 2016 18:22:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936020AbcJVRLt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Oct 2016 13:11:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55208 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935413AbcJVRLs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2016 13:11:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67FF546BE0;
-        Sat, 22 Oct 2016 13:11:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z4nJcWqclo2YunFI56YYMR26jug=; b=t69iJF
-        P8fSBaDnt8iEtlix100ND4V+pEAmJsmvsV1fLz0Vbv9BZjEgomt1sdw+BL+zgn25
-        zLAGKKHk4gIazUbO6ZXxvT8YTMA/uHDfUtMDEF2pMOvNztsFptcV2jvpaVxiy14H
-        oh9Ct/CQDNtZ4PvwzVjKngqxLFB742kvRHuIE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ao4MrLoA3IazuaXXMlL5qKymjR5xYejb
-        2LhvvlOQqAw7VszcW2E2RjuFL+iPZzEIym06ZNVNvN/r2mjoUjsprnWv+du8f0xq
-        QE+qRKMYYiD9WKeLCdTUnIdpSRVmk1M+iCq7UdAIMldLG8qDajgylPh+rxga5ECX
-        vfgQss+XYkE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EB3046BDF;
-        Sat, 22 Oct 2016 13:11:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4CD246BDC;
-        Sat, 22 Oct 2016 13:11:46 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v5 00/27] Prepare the sequencer for the upcoming rebase -i patches
-References: <cover.1476450940.git.johannes.schindelin@gmx.de>
-        <cover.1477052405.git.johannes.schindelin@gmx.de>
-Date:   Sat, 22 Oct 2016 10:11:44 -0700
-In-Reply-To: <cover.1477052405.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Fri, 21 Oct 2016 14:23:45 +0200 (CEST)")
-Message-ID: <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S964935AbcJVSWZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Oct 2016 14:22:25 -0400
+Received: from 114-41-23-221.dynamic.hinet.net ([114.41.23.221]:57960 "HELO
+        hinet.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S964870AbcJVSWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2016 14:22:24 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Oct 2016 14:22:23 EDT
+Message-ID: <147716053824.18517.4400552091201494143@hinet.net>
+From:   <git@vger.kernel.org>
+To:     <git@vger.kernel.org>
+Subject: 
+Date:   Sat, 22 Oct 2016 18:22:18 -0000
+Importance: High
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9CF735AE-987A-11E6-99D2-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: application/zip; name="EMAIL_30524_git.zip"
+Content-Disposition: attachment
+Content-Transfer-Encoding: base64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> This patch series marks the '4' in the countdown to speed up rebase -i
-> by implementing large parts in C (read: there will be three more patch
-> series after that before the full benefit hits git.git: sequencer-i,
-> rebase--helper and rebase-i-extra).
-> ...
-> It would be *really* nice if we could get this patch series at least into
-> `next` soon, as it gets late and later for the rest of the patches to make
-> it into `master` in time for v2.11 (and it is not for lack of trying on my
-> end...).
-
-This "countdown 4" step can affect cherry-pick and revert, even
-though we were careful to review changes to the sequencer.c code.  I
-prefer to cook it in 'next' sufficiently long to ensure that we hear
-feedbacks from non-Windows users if there is any unexpected breakage.
-
-There isn't enough time to include this topic in the upcoming
-release within the current https://tinyurl.com/gitCal calendar,
-however, which places the final on Nov 11th.
-
-I am wondering if it makes sense to delay 2.11 by moving the final
-by 4 weeks to Dec 9th.
-
-Thoughts?
-
-Speaking of what to and not to include in the upcoming release, we
-do want to include Stefan's off-by-one fix to the submodule-helper,
-but that is blocked on Windows end due to the test.  I think
-everybody agreed that a longer time "right thing to do" fix is to
-address the "when base is /path/to/dir/., where is ../sub relative
-to it?" issue, but if we are to do so, it would need a longer
-gestation period once it hits 'next', as it can affect the current
-users and we may even need B/C notes in the release notes for the
-change.  Giving ourselves a few more weeks of breathing room would
-help us to make sure the fix to relative URL issue is sound, too.
-
-As to "countdown 3" and below steps, I am guessing that some of them
-can start cooking in 'next' before 2.11, but even with lengthened
-schedule, it is likely that they need to cook there beyond the end
-of this cycle, unless they are truly trivial changes that do not
-even need any reviews.
-
-Thanks.
+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
