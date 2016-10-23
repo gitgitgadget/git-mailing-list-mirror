@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ED3820229
-	for <e@80x24.org>; Sun, 23 Oct 2016 09:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74A8E20229
+	for <e@80x24.org>; Sun, 23 Oct 2016 09:55:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756300AbcJWJu5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Oct 2016 05:50:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55555 "EHLO mout.gmx.net"
+        id S933563AbcJWJzV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Oct 2016 05:55:21 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64608 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753241AbcJWJu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Oct 2016 05:50:56 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lj1Xa-1cUYm409IE-00dCuW; Sun, 23 Oct 2016 11:50:42
+        id S933504AbcJWJzU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Oct 2016 05:55:20 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MexaL-1cIOuM2IPJ-00OW6H; Sun, 23 Oct 2016 11:54:55
  +0200
-Date:   Sun, 23 Oct 2016 11:50:40 +0200 (CEST)
+Date:   Sun, 23 Oct 2016 11:54:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
+cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
 Subject: Re: [PATCH v5 00/27] Prepare the sequencer for the upcoming rebase
  -i patches
-In-Reply-To: <xmqqinslbl5t.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610231135270.3264@virtualbox>
-References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de> <xmqqinslbl5t.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610231151140.3264@virtualbox>
+References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de> <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gaLUHS4OznlQbnEVH1rnK7bkvcGE55nXqhRTn7fz6nXrb2BzwB4
- V5p2skmTJbyU+0IbB/NoMy6KJarnmRCMLPSh6wLJmKFEXHIdYGb+LmMHJhcBhFRWxo1Gj7K
- WkY4KKd61sBXglSdFXNqMnEJF8pi0y5Bu68uaZahH18Xdv63HVKeMqbqt7Cy6UT6pUq4550
- 2iaGwLT5n632G4zKH+wRQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Eg1vbLhow+8=:zRtJQcog4VzaSI7589gDjR
- CZoHzWuWlRklgRvfa3dNbub1tHvA9UbhBp37InOwQ9Q1cSQ+X+gzmVFsbljB/iKx30X81zVem
- Ps0UIOczrdKAovjfGvXrMhhuYqwHAulUwimROa7kgivyQZg7ZV0CVWJM58DYJfkZgfTBxTnry
- JWK0nW9AoxGvACqRN3f9Mb9+BVX3GYjssFrxFCVtmpWJCq8cp54vsfUd1GBWPc/K2FskSscao
- 5v6hCDaXE56HR/bMqmKwTavIFLJq7mpEhR3GR5b3bzQccC2D8WoqdrhkP0Z63zVRbCU6Fickb
- GvCoJDhE/9co9isslbHIPKU8FALML25zSDinB7LB1BNm2idO/2tS+LoICwGVO16GmFbe1xnID
- tnAh+WSIk2yLctvDTqifgc5avGlTXGv1JZytw6fjMpBHhv5FOu+nJ9p0CQLk6cFNujyZLMPBK
- NjEXtjED0WDg8IT3m+Cm5QTtmghdILNVj1MbAJMxf5JZeIqChqVzFMyAyDJTDL1SWyS+Zn/R3
- ZjbSPgbp8L0uEXxkDOjDzEHewu1NPZqWEQUp0Grkhophw4H4X9zSkndvZXnfumpcPJQU4IrAG
- 1FHS+N+Zc9ytmYm0iOxYsddJldwBrRNku9ZAa19Mq6Sm1P2F773TwqJ4y1c49FBbwVICtyd2h
- IvOP3uW4OPpyzGS/VY6/syeMcubWtlO2dXXVC+mqBAJC25xFbLJqLEhM7pt0Njp/ivJIFIFVQ
- 3MpMuIeMOEa2H+lmky8hgehEY9beEp+rHyIj+QbdyVPjwWI9cRxL5j+iKFsFLNhZ69VnrMp2Z
- OSFcY3r
+X-Provags-ID: V03:K0:UWL/askP+2+8BQjjdIXNmWTU5Wy15pu3rKDOJ6bvXPqBmVB1/gE
+ ZCOFh3ctfPxBglsU+usUSRJZH1C3TRYwAlsnBPVPCt2PKgct5hG2x6/gyh79wQe0uVg43C7
+ uDMwSMwQqQ5xHdQneWsNo9uoQYjpe7+SBUewFZ5FghsmIENHV2d8EnvpYidkT7k7uJ4408I
+ JARcZI1JAorD7e+kXxaQA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WAQ8ecba/AY=:783a65lblKQU5t6RSqgo3T
+ +cIPuZ1dAC1I45oPsSKiSqAx/rpgn9yllE5aedYeOOGDMa6gbmqY2Ke0jEtD9oxeO3X+YAPzr
+ rJEtF/uvYjXM4dNaRmESI5AkjFhMdih0YbqWWAElDqANr1E+br9q1+r9F/cD9nPcccb84U3rp
+ FMLefCmYAWjhwyKXofY1LmS3LNvq+8ClPDBlZPgFAQy/Hlx31aYnjex0rEIKpj6y4MEaMkhic
+ w2T8+uynJ+qp2BhjfDaSckz7VVYUdwrh0UztrObs8Cpx+TXsKndCGVua4SLRfDTYPCVu4z6fa
+ xRq62030sXcky8l+0SIry3wjH8j16OT8X3O4yyx5OrysC+/M4gZupmTuK/a/mGciFKY0LHTx1
+ QEF/Cm7ebUEHZ7gyw19sBD7znpWM51pT9IpBH2Y9RCafKHf1FHXRX0oHb/hRV2oMG7NKR5InM
+ mQlRL7G8OqyLl+wn+E6eR3fM2hV20qEKxHofWCx/ItHm2QuXyVboXUwcsg/iis2EYKdr8z5ub
+ cc19q9/H2FyzwvfEfbh+HvKjZ1iCHzZtvNjqM+MWlMMPmWAYZVp8WhOlLvweKm2zbTIzq2u5b
+ RaL/oD8TgvfIIDA2r68vNcgJMGpo7nCTFaYSRfqwEamFJ6e6QulHTf1yq4y9DWC7OqeEncokF
+ 9BKMNVMgg7HGLvQ9Fih3WNMR1sKMgbVI8CbMlsmhZ8U7j3ETRqTIkVZMhbj1DJLRJnUDfJxNo
+ kAyAym/YKUfJ7ua1bFAjyuenfJ0FG6sBuvrC1qIqVWU1zELwxQZ7KrAybEZzhe3I8mSJ+hXuw
+ BGglNKI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,45 +60,49 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Fri, 21 Oct 2016, Junio C Hamano wrote:
+On Sat, 22 Oct 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> I still do not understand (note that I am not saying "I do not
-> accept"--acceptance or rejection happens after an understandable
-> explanation is given, and "do not understand" means no such
-> explanation has been given yet) your justification behind adding a
-> technical debt to reimplement the author-script parser and not
-> sharing it with "git am" in 13/27.
+> > This patch series marks the '4' in the countdown to speed up rebase -i
+> > by implementing large parts in C (read: there will be three more patch
+> > series after that before the full benefit hits git.git: sequencer-i,
+> > rebase--helper and rebase-i-extra).
+> > ...
+> > It would be *really* nice if we could get this patch series at least
+> > into `next` soon, as it gets late and later for the rest of the
+> > patches to make it into `master` in time for v2.11 (and it is not for
+> > lack of trying on my end...).
+> 
+> This "countdown 4" step can affect cherry-pick and revert, even
+> though we were careful to review changes to the sequencer.c code.
 
-At this point, I am most of all reluctant to introduce such a huge change,
-which surely would introduce a regression.
+As I pointed out in another mail in this thread: we should not fall into
+the trap of overrating review.
 
-This is what happened a couple of times to me, most recently with the
-hide-dot-gitdir patch series that worked flawlessly for years, had to be
-dramatically changed during review to enter git.git, and introduced the
-major regression that `core.hideDotFiles = gitDirOnly` was broken.
+In the case of the rebase--helper patches, so far the review mainly
+resulted in more work for me (having to change spellings elsewhere, for
+example), not in improving the changes I intended to introduce into
+git.git's code.
 
-The lesson I learned: review should not be valued more than the test of
-time. This lesson has been reinforced by all the regressions that have not
-been caught by review nor the test suite running on Linux only.
+Sure, there has been the occasional improvement, but it certainly feels as
+if I spent about 80% of the work after each -v1 iteration on things that
+have positively nothing at all to do with accelerating rebase -i.
 
-It would be a different matter if I still had the cross-validator in place
-(which I did when I sent out v1 of this patch series) and tons of time to
-spend on accommodating your wishes, however I may disagree with them. And
-in this instance, I thought I made clear that I disagree, and why:
-Internally, git-am and git-rebase-i handle the author-script very
-differently. That may change at some stage in the future, and it would be
-a good time then and there to take care of unifying this code. Currently,
-not so much, as the only excuse to use the same parser would be that they
-both read the same file, while they have to do very different things with
-the parsed output (in fact, your suggestion would ask the parser in the
-sequencer to rip apart the information into key/value pairs, only to
-re-glue them back together when they are used as the environment variables
-as which rebase-i treats the contents of the author-script file).
+> I prefer to cook it in 'next' sufficiently long to ensure that we hear
+> feedbacks from non-Windows users if there is any unexpected breakage.
 
-So no, at this point I am not willing to risk introducing breakages in
-code that has been proven to work in practice.
+FWIW I am using the same patches not only on Windows but also in my Linux
+VM.
+
+> There isn't enough time to include this topic in the upcoming
+> release within the current https://tinyurl.com/gitCal calendar,
+> however, which places the final on Nov 11th.
+
+More is the pity.
+
+Thank you, though, for being upfront with me. I will shift my focus to
+tasks that require my attention more urgently, then.
 
 Ciao,
 Dscho
