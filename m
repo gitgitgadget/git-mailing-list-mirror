@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74A8E20229
-	for <e@80x24.org>; Sun, 23 Oct 2016 09:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E508120229
+	for <e@80x24.org>; Sun, 23 Oct 2016 09:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933563AbcJWJzV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Oct 2016 05:55:21 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64608 "EHLO mout.gmx.net"
+        id S1756564AbcJWJ6U (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Oct 2016 05:58:20 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64582 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933504AbcJWJzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Oct 2016 05:55:20 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MexaL-1cIOuM2IPJ-00OW6H; Sun, 23 Oct 2016 11:54:55
+        id S1756533AbcJWJ6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Oct 2016 05:58:20 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MBZ9u-1c6XWq3010-00ATQ0; Sun, 23 Oct 2016 11:58:06
  +0200
-Date:   Sun, 23 Oct 2016 11:54:53 +0200 (CEST)
+Date:   Sun, 23 Oct 2016 11:58:04 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
@@ -30,29 +30,29 @@ cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
 Subject: Re: [PATCH v5 00/27] Prepare the sequencer for the upcoming rebase
  -i patches
-In-Reply-To: <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1610231151140.3264@virtualbox>
-References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de> <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <alpine.DEB.2.20.1610231151140.3264@virtualbox>
+Message-ID: <alpine.DEB.2.20.1610231157110.3264@virtualbox>
+References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de> <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610231151140.3264@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UWL/askP+2+8BQjjdIXNmWTU5Wy15pu3rKDOJ6bvXPqBmVB1/gE
- ZCOFh3ctfPxBglsU+usUSRJZH1C3TRYwAlsnBPVPCt2PKgct5hG2x6/gyh79wQe0uVg43C7
- uDMwSMwQqQ5xHdQneWsNo9uoQYjpe7+SBUewFZ5FghsmIENHV2d8EnvpYidkT7k7uJ4408I
- JARcZI1JAorD7e+kXxaQA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WAQ8ecba/AY=:783a65lblKQU5t6RSqgo3T
- +cIPuZ1dAC1I45oPsSKiSqAx/rpgn9yllE5aedYeOOGDMa6gbmqY2Ke0jEtD9oxeO3X+YAPzr
- rJEtF/uvYjXM4dNaRmESI5AkjFhMdih0YbqWWAElDqANr1E+br9q1+r9F/cD9nPcccb84U3rp
- FMLefCmYAWjhwyKXofY1LmS3LNvq+8ClPDBlZPgFAQy/Hlx31aYnjex0rEIKpj6y4MEaMkhic
- w2T8+uynJ+qp2BhjfDaSckz7VVYUdwrh0UztrObs8Cpx+TXsKndCGVua4SLRfDTYPCVu4z6fa
- xRq62030sXcky8l+0SIry3wjH8j16OT8X3O4yyx5OrysC+/M4gZupmTuK/a/mGciFKY0LHTx1
- QEF/Cm7ebUEHZ7gyw19sBD7znpWM51pT9IpBH2Y9RCafKHf1FHXRX0oHb/hRV2oMG7NKR5InM
- mQlRL7G8OqyLl+wn+E6eR3fM2hV20qEKxHofWCx/ItHm2QuXyVboXUwcsg/iis2EYKdr8z5ub
- cc19q9/H2FyzwvfEfbh+HvKjZ1iCHzZtvNjqM+MWlMMPmWAYZVp8WhOlLvweKm2zbTIzq2u5b
- RaL/oD8TgvfIIDA2r68vNcgJMGpo7nCTFaYSRfqwEamFJ6e6QulHTf1yq4y9DWC7OqeEncokF
- 9BKMNVMgg7HGLvQ9Fih3WNMR1sKMgbVI8CbMlsmhZ8U7j3ETRqTIkVZMhbj1DJLRJnUDfJxNo
- kAyAym/YKUfJ7ua1bFAjyuenfJ0FG6sBuvrC1qIqVWU1zELwxQZ7KrAybEZzhe3I8mSJ+hXuw
- BGglNKI
+X-Provags-ID: V03:K0:f5Y2oAx/82yeApFXhaoywCzc1Sr61dlHNgDQbnmqjvbqXIE2P9n
+ Dzn50bLdNyKu3KGcEiGToKpO0RxZYKpZgYkiVUisZRWNYaupaVhJzoAvkgfrxxyPSIUOlyx
+ j9ZCOIr8GpPiEOFvDP6pMecJ/HxEY/BsgjWylbjPeq5o7QHnBE7MvOVOvrRMhJ4J/e+SJvA
+ mu0VG1raPb+zfDlaXOmzA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Vlbq7ePqovk=:IYmwfI1Aligb5jO+qwtbtp
+ 1ZcNmyuFHRsWJ2B/KPycF/GEj0D553UsyFl2o1O/WZhlYu1IHoL+cDIwb6UcusCKIr3CC6LgS
+ Yy6CHTrcw1UFmOOJzn1x13anjtFfhdtWAvYp49zH8YB5m7JtqcSzEmpXQ2Wy/AMc1UMxdQYsF
+ ByacUbiGmRgCeBQp4Zy7TAdA8kUo5U+a0uRok3/aUV2IjYffI9rMmZ1BGOTIxFzrvoqdrbfqm
+ y39vz0qKERO0QOgdIGz31yhfNfrMVJibEMalLlOfVTe3ZTeCTXiyqW7UrSvV0jQf4a75DcZwn
+ 0VH7/R8oD0F+qDNqd8ZKiKyaQ45nEvCVM8wthGWPioI+9thGcswjglXSr4aPboI+MskRYd8wG
+ W9U8nB8BMtbnbMLDGYn4VFzaevdU6kvRm9R1PqT5RLGvwVu506YwHVPd2XJG4ugATkqlfFVQX
+ Ipy+bbXcHFvr56o3CHABzUOTRmmsK0Ue+KK6S26iOIl4bDp8fbJ+i3JRWeuTAmkDTlcA4m3II
+ XrzsRmhovM8helwkVGa5d9PNK9/Da30B/9u8lEtMYxqSodInT4uaeQrgQWxU+eWzrSKeYeidR
+ 3SzhYueePNkcbPyfQkXHWaWh8MzBr8jjNj4l2anjfLkJS5CnDU3vD+SRqu3inuZcGuLprfz2i
+ Y2uwmC1Hwj3mw+5voM41WhK1GJgdxuLNI2etPGxm+fL4Dg6AIKtsHCofNs5KNY4myvaYrW3pq
+ jwfm6iDJawNPyL1JuZqbB2lLoc4eyeoEnwV+rNbyjyhIvIIenobn+zixQzB9uNc9oocKaZpuf
+ cTX82cI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,49 +60,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Sat, 22 Oct 2016, Junio C Hamano wrote:
+On Sun, 23 Oct 2016, Johannes Schindelin wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On Sat, 22 Oct 2016, Junio C Hamano wrote:
 > 
-> > This patch series marks the '4' in the countdown to speed up rebase -i
-> > by implementing large parts in C (read: there will be three more patch
-> > series after that before the full benefit hits git.git: sequencer-i,
-> > rebase--helper and rebase-i-extra).
-> > ...
-> > It would be *really* nice if we could get this patch series at least
-> > into `next` soon, as it gets late and later for the rest of the
-> > patches to make it into `master` in time for v2.11 (and it is not for
-> > lack of trying on my end...).
-> 
-> This "countdown 4" step can affect cherry-pick and revert, even
-> though we were careful to review changes to the sequencer.c code.
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> > 
+> > > This patch series marks the '4' in the countdown to speed up rebase -i
+> > > by implementing large parts in C (read: there will be three more patch
+> > > series after that before the full benefit hits git.git: sequencer-i,
+> > > rebase--helper and rebase-i-extra).
+> > > ...
+> > > It would be *really* nice if we could get this patch series at least
+> > > into `next` soon, as it gets late and later for the rest of the
+> > > patches to make it into `master` in time for v2.11 (and it is not for
+> > > lack of trying on my end...).
+> > 
+> > This "countdown 4" step can affect cherry-pick and revert, even
 
-As I pointed out in another mail in this thread: we should not fall into
-the trap of overrating review.
+Oh, I forgot to comment on this tidbit of your mail, sorry.
 
-In the case of the rebase--helper patches, so far the review mainly
-resulted in more work for me (having to change spellings elsewhere, for
-example), not in improving the changes I intended to introduce into
-git.git's code.
-
-Sure, there has been the occasional improvement, but it certainly feels as
-if I spent about 80% of the work after each -v1 iteration on things that
-have positively nothing at all to do with accelerating rebase -i.
-
-> I prefer to cook it in 'next' sufficiently long to ensure that we hear
-> feedbacks from non-Windows users if there is any unexpected breakage.
-
-FWIW I am using the same patches not only on Windows but also in my Linux
-VM.
-
-> There isn't enough time to include this topic in the upcoming
-> release within the current https://tinyurl.com/gitCal calendar,
-> however, which places the final on Nov 11th.
-
-More is the pity.
-
-Thank you, though, for being upfront with me. I will shift my focus to
-tasks that require my attention more urgently, then.
+This *is* the countdown 4, as the remaining 3 patch series depend on each
+other in the order I sent them out.
 
 Ciao,
 Dscho
