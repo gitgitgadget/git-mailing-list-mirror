@@ -2,110 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C19E71FBB0
-	for <e@80x24.org>; Mon, 24 Oct 2016 15:35:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA79A1FBB0
+	for <e@80x24.org>; Mon, 24 Oct 2016 16:54:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941168AbcJXPfo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 11:35:44 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35709 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932525AbcJXPfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 11:35:41 -0400
-Received: by mail-pf0-f193.google.com with SMTP id s8so16876168pfj.2
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 08:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=O/3jMEczjPRd2Eotz3oqIqyLvKmq77EXo/IId0DxM5c=;
-        b=K3rIc7gw4LjCHmFr0Dfa1k17q67bwCL5ITIHwSIvCpCRabLwhRNoMbwSR5a5DsI8mW
-         NLl4uqBVXZP/dmuzDcCxafTD93emDplMYdl3g4EDCxuOEU8/pxS6pS5qSyl/R4PTvPCz
-         uCUCcBp7aWDj7e4Dfp2HSsrM2Nh/h3keOJIADxR/OVnO4/kItzM48w5BxChmQLTSsSvS
-         3Ayz3JhYTGmr98YThu4zhaPfOpOnaqA4KTrFIdCQRMUbjrTWJxurACIxPZgz68oMwklw
-         4tpX1IfjEqIQXDrndZqk5c+SNob4OoZySn920atbCJySXYkkyldBVZzSz9/tNrD574+0
-         hnhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=O/3jMEczjPRd2Eotz3oqIqyLvKmq77EXo/IId0DxM5c=;
-        b=AuY8M+gvr89D0He0qk7CVw4osKiuabF/l5zWKKsBJ269n62NC2reCd7d5R2BCCneLU
-         61BoFYSDffiTl37/rQdoXgqPutgmh05wTKbV751GYW8Ti5TKgpv8Znn7fXgL5eusbxkO
-         1kBvXMMZiUXfyDNtWtDea+cWWJOZRXEpU86KUcwcXCdSkNEEEDcEL5zFNnEocjZIVmCY
-         KhrOAkNXep7Dm8D8v77/qdWk/XXrXQIepILQvUYyuoVQk+JildoRDCv5Steb8syf2Obm
-         sFcOj8m4YuJf6Dn664ZIFVg4O/LuGzLucKuyLoFqYckotpIh8UMey4VJjklup4I54aLW
-         vIqQ==
-X-Gm-Message-State: ABUngvcm3ACTIRBbMh1kXdM14Gtc3mkoHpKP0L2t5KblHZk0qvisdhWW0PaReI9zDtN79Q==
-X-Received: by 10.98.90.135 with SMTP id o129mr740018pfb.81.1477323340364;
-        Mon, 24 Oct 2016 08:35:40 -0700 (PDT)
-Received: from localhost.localdomain (i60-35-227-248.s41.a017.ap.plala.or.jp. [60.35.227.248])
-        by smtp.gmail.com with ESMTPSA id z6sm26423260pay.31.2016.10.24.08.35.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Oct 2016 08:35:39 -0700 (PDT)
-From:   Satoshi Yasushima <s.yasushima@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Paul Mackerras <paulus@samba.org>,
-        Satoshi Yasushima <s.yasushima@gmail.com>
-Subject: [PATCH] gitk: Fix Japanese translation for "marked commit"
-Date:   Tue, 25 Oct 2016 00:35:10 +0900
-Message-Id: <20161024153510.9212-1-s.yasushima@gmail.com>
-X-Mailer: git-send-email 2.10.1.windows.1
+        id S1757647AbcJXQyo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 12:54:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62025 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756693AbcJXQyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 12:54:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 718CB4851C;
+        Mon, 24 Oct 2016 12:54:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=q4/ufI4mrhyc
+        UpytF+AYViKVv5k=; b=bg+iflYj7wQmUEr6rvrm5nQtrFW7OGNGr+wopFMnfamg
+        5Fr/mY3qxK7zZaeXzfNJS6mSBDsvTAEGYtks/iXbQTaFdXR823SvZw1HmpxoCyN/
+        jnLu0oOg6Zas3Q/iRuAGaxN+RhVfihQFu2+zpRJyauUKLZbpurOPq08EiMT3JZI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=EwECKL
+        PQYSIpaAAgRH108JE/sQP7P17sGKUux2ALInjGfmEMi9r8A8CTvKACE1Uc2XAc5X
+        GazyamkQ+CF442y3uGvEbJR7+khle5MT07fhgGY85pjjmAYUu6D/OERmOSXxgbKU
+        9XBnp0z7fu92YSddZQlC465GDMVvIeL0E0WlU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 681D14851A;
+        Mon, 24 Oct 2016 12:54:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BCA8848518;
+        Mon, 24 Oct 2016 12:54:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: RFC Failover url for fetches?
+References: <CAGZ79kaPdSfY_DXL6BDQ9pAma8p61r4m1n81VTxPHYi8zQuZfA@mail.gmail.com>
+        <xmqqeg39bk40.fsf@gitster.mtv.corp.google.com>
+        <7fdaa160-9262-5d52-7035-8362ca94beea@gmail.com>
+Date:   Mon, 24 Oct 2016 09:54:39 -0700
+In-Reply-To: <7fdaa160-9262-5d52-7035-8362ca94beea@gmail.com> ("Jakub
+        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Sun, 23 Oct 2016 19:40:57
+ +0200")
+Message-ID: <xmqq1sz58z74.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8ED28BA4-9A0A-11E6-9F14-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Satoshi Yasushima <s.yasushima@gmail.com>
----
- po/ja.po | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-diff --git a/po/ja.po b/po/ja.po
-index f143753..510306b 100644
---- a/po/ja.po
-+++ b/po/ja.po
-@@ -2,16 +2,17 @@
- # Copyright (C) 2005-2015 Paul Mackerras
- # This file is distributed under the same license as the gitk package.
- #
--# YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>, 2015.
- # Mizar <mizar.jp@gmail.com>, 2009.
- # Junio C Hamano <gitster@pobox.com>, 2009.
-+# YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>, 2015.
-+# Satoshi Yasushima <s.yasushima@gmail.com>, 2016.
- msgid ""
- msgstr ""
- "Project-Id-Version: gitk\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2015-05-17 14:32+1000\n"
- "PO-Revision-Date: 2015-11-12 13:00+0900\n"
--"Last-Translator: YOKOTA Hiroshi <yokota@netlab.cs.tsukuba.ac.jp>\n"
-+"Last-Translator: Satoshi Yasushima <s.yasushima@gmail.com>\n"
- "Language-Team: Japanese\n"
- "Language: ja\n"
- "MIME-Version: 1.0\n"
-@@ -314,11 +315,11 @@ msgstr "マークを付けたコミットと比較する"
- 
- #: gitk:2630 gitk:2641
- msgid "Diff this -> marked commit"
--msgstr "これと選択したコミットのdiffを見る"
-+msgstr "これとマークを付けたコミットのdiffを見る"
- 
- #: gitk:2631 gitk:2642
- msgid "Diff marked commit -> this"
--msgstr "選択したコミットとこれのdiffを見る"
-+msgstr "マークを付けたコミットとこれのdiffを見る"
- 
- #: gitk:2632
- msgid "Revert this commit"
--- 
-2.10.1.windows.1
+>> As to fetching from two or more places as "fallback", I am
+>> moderately negative to add it as a dumb feature that does nothing
+>> more than "My fetch from A failed, so let's blindly try it from B".
+>> I'd prefer to keep the "My fetch from A is failing" knowledge near
+>> the surface of end user's consciousness as a mechanism to pressure A
+>> to fix it--that way everybody who is fetching from A benefits.
+>> After all, doing "git remote add B" once (you'd need to tell the URL
+>> for B anyway to Git) and issuing "git fetch B" after seeing your
+>> regular "git fetch" fails once in a blue moon is not all that
+>> cumbersome, I would think.
+>
+> One would need to configure fallback B remote to use the same
+> remote-branch namespace as remote A, if it is to be used as fallback,
+> I would think.
 
+Yeah, I left it out because I thought that was obvious, but spelling
+it out explicitly may have helped those who weren't reading carefully.
+
+Thanks
