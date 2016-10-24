@@ -2,96 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 171A52035F
-	for <e@80x24.org>; Mon, 24 Oct 2016 18:32:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DE2020193
+	for <e@80x24.org>; Mon, 24 Oct 2016 18:39:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938719AbcJXScS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 14:32:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60348 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933644AbcJXScQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 14:32:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC47A4654B;
-        Mon, 24 Oct 2016 14:32:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rClSwJNNjV71jOD5+gS28uga/z4=; b=Pd2oCo
-        WvYHLiqnUH0LN/5D/Pwgb5Y1pL4k0Dlr/cZIJ0z+DuH//qD629YMZ8tLUa7MzcSW
-        FGJGLgUeWJR6qQdX+iynabpMEKJPKaAE7EWxjbHSWoGitg5uOx0EHxmzHcuFhsxp
-        cG0Cn3MYKm049xXkUnn5PTahQFmFvmQgZkgeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bU8dv580AvTYeqi5/uXJWHG/6i/wjt61
-        PArlsVnTyNlmIkGkaS1OZzNqx7zDb46kEqrfyimYOBEdoU/Ax0xTEvumBT4UVThI
-        LwE+f2P3gyX6u91ixWxZFzpP/6vsxM4PouDBzDq5Qe69zgD26jpNcYIHJ1M48NCP
-        VRfOSR9gPdM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A42354654A;
-        Mon, 24 Oct 2016 14:32:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2163C46549;
-        Mon, 24 Oct 2016 14:32:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Yash Jain <yashjain.lnm@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Reporting Bug in Git Version Control System
-References: <CAN8fUZe4iWJCZYqBBDbNyPq1Dz7f4xvTNRVEZgg5AYN2NrKCbg@mail.gmail.com>
-        <CAGZ79ka+_CUxQjB2R-EEk2nKmc_rbj_m7884fLvU9+NgJ5gUug@mail.gmail.com>
-Date:   Mon, 24 Oct 2016 11:32:11 -0700
-In-Reply-To: <CAGZ79ka+_CUxQjB2R-EEk2nKmc_rbj_m7884fLvU9+NgJ5gUug@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 24 Oct 2016 11:23:35 -0700")
-Message-ID: <xmqqzilt61jo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933749AbcJXSjC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 14:39:02 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43708 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932470AbcJXSjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 14:39:01 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id A851620193;
+        Mon, 24 Oct 2016 18:39:00 +0000 (UTC)
+Date:   Mon, 24 Oct 2016 18:39:00 +0000
+From:   Eric Wong <e@80x24.org>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v2 2/2] read-cache: make sure file handles are not
+ inherited by child processes
+Message-ID: <20161024183900.GA12769@starla>
+References: <20161024180300.52359-1-larsxschneider@gmail.com>
+ <20161024180300.52359-3-larsxschneider@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2F1A6A8E-9A18-11E6-8BAC-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161024180300.52359-3-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+larsxschneider@gmail.com wrote:
+> +++ b/read-cache.c
+> @@ -156,7 +156,11 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
+>  static int ce_compare_data(const struct cache_entry *ce, struct stat *st)
+>  {
+>  	int match = -1;
+> -	int fd = open(ce->name, O_RDONLY);
+> +	int fd = open(ce->name, O_RDONLY | O_CLOEXEC);
+> +
+> +	if (O_CLOEXEC && fd < 0 && errno == EINVAL)
+> +		/* Try again w/o O_CLOEXEC: the kernel might not support it */
+> +		fd = open(ce->name, O_RDONLY);
 
-> On Mon, Oct 24, 2016 at 7:28 AM, Yash Jain <yashjain.lnm@gmail.com> wrote:
->> Hello,
->> I have two accounts on github("yj291197" and "yaki29").
->> Both the accounts have different gmail IDs("yj291197@gmail.com" and
->> "yashjain.lnm@gmail.com" respectively) but same passwords.
->> I used to use git for "yj291197" account and a few days earlier I made
->> this new account and used git commit to commit on "yaki29" but it
->> appeared as "yj291197" committed on "yaki29's" repo.
->> Then I pulled a request of that commit then it appeared "yaki29"
->> pulled a request with a commit of "yj291197".
->>
->> And during this whole session I was signed in as "yaki29" on github.com .
->>
->
-> This is a Github issue, so ask Github support.
->
-> Or read up on .mailmap files.
-
-I am (obviously) not a GitHub support, but I think the confusion is
-coming from not understanding who the committer and the author of a
-commit are and where they are coming from.  They are both recorded
-locally, taken from user.name and user.email configuration variables
-when the commits are made.  "git push" to propagate them to GitHub
-will NOT change these values of a commit, once a commit is created.
-
-The story described looks quite consistent if the user has
-yj291197@gmail.com configured as user.email and kept making commits
-in the local repository, and pushed them to either yj291197 or yaki29
-accounts at GitHub, without ever changing the local configuration to
-use the other e-mail address.  All commits would record the user and
-e-mail address yj291197, and the only one that may be attributed to
-the new one yaki29 would be the automerge created at GitHub when a
-pull request is responded on-site without first fetching and making
-a merge locally.
-
+In the case of O_CLOEXEC != 0 and repeated EINVALs,
+it'd be good to use something like sha1_file_open_flag as in 1/2
+so we don't repeatedly hit EINVAL.  Thanks.
