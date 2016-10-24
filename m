@@ -2,110 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01CF320193
-	for <e@80x24.org>; Mon, 24 Oct 2016 21:07:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB49A20193
+	for <e@80x24.org>; Mon, 24 Oct 2016 21:14:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941211AbcJXVHM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 17:07:12 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:39952 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S941144AbcJXVHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 17:07:11 -0400
-Received: by mail-qk0-f178.google.com with SMTP id i68so8330145qke.7
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 14:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IYrl+KuFvLT2BMbdiJghJK4HbiwngjD9f75j37Lela8=;
-        b=PLb96OWXUZcyi1jXG1MGOiALz95L4iYcBeHyFA8Qyw3xnFdgcAZOTQ8Xpa2gesUseg
-         dEm5kIJHeG4WtzCtEOec4zAEdJ6dT48chIXAgcnjk1VOmfAV/ieTEArlJZBBhHld+1kk
-         m/9u31a+11ST8M00W5lWh64L61Y5hGb0U5fs+5y8ixe2w+dhzd7CV0ebUMfmQWHvOXXL
-         cYRxRiUstLKhcbmcyPA0lYxmP/xdS2nCkVgDyBqckntYqhK7g1+MhudrnSzkEBFsSRyT
-         TJ6cRR/vOM3e+oUC8qj9sGu6/zU9bmbYNeDzYBrHoQr+KXrag+R8qsnU1fpWsIu6Fnzr
-         azCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IYrl+KuFvLT2BMbdiJghJK4HbiwngjD9f75j37Lela8=;
-        b=latrGoZsS3k+v1AI/y26gAe/7yT1CQSQWwts4i4fke87JTUvyg3o2hpQrKRQrp0Cdk
-         AClQSrv4hiblLnQJpswb+xDQyIkSHQmYq4/V7UIu61tLYggE5HSELBMm72X9vy+JIw12
-         FEY3mChr5FT9Exj3AQcCJK39z0U01ZHubHhuY9oidrjiNZUlmTtKnx78NQxAALJm8b6q
-         vz5hzJxb70I7/W+wiXLWZgTmNjwNP8D+qk8Dr0UL5DUPeL2jKGdJx+vlXIr2smlpLfsh
-         Org6z4iX72eg39XafJc70UZyCNuDmiL9OWzBvPHWA5lXTAw5APcOIu0fHAB9Rw2zzzwm
-         DmOQ==
-X-Gm-Message-State: ABUngvfXk4HV1QrVIwSEInLW0pXN0Ftc/RHDA/f3wB1UngWTXwnZcT2cEuNr/puGyJ9MHPs+PerVVJ/0gMe6EJpK
-X-Received: by 10.55.129.1 with SMTP id c1mr15482194qkd.53.1477343230652; Mon,
- 24 Oct 2016 14:07:10 -0700 (PDT)
+        id S936248AbcJXVOq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 17:14:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55801 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752186AbcJXVOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 17:14:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F36AF481E0;
+        Mon, 24 Oct 2016 17:14:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LHvMQwEtpJcA8OekaSDLY0Mn5aI=; b=RYYsph
+        UB4hhf1J7dKBEQXvidnkkpySl9WShYHoeLvGtYcKmqaLwjW57R9Zb0qi9KRL2idY
+        jq31nxsGN7KGDzLWa/9+INY4HAS+Ai/Mmuyng3NRDKDwK0CMeIl4E4Fgg5Cm3qIt
+        HE7AL3xLKibonaWBfvro8TWenhOpAHjbqtwZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NWRVc+VaYXAElLFc+HgmKvTbRUF6kCCq
+        LQR8jJ7lSssJLY601F106mzChlR7rT0hD2RdBWFYsklpXx+cCESNAWuTyC4KlcZC
+        xYC178PkyleFU7HaZuVWamdaWKEplSkNl9X1PbKVnL8sYpD4aVwHQLvKI2Q/0cfc
+        nA8yjkuwlZY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EACDA481DE;
+        Mon, 24 Oct 2016 17:14:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FB11481DB;
+        Mon, 24 Oct 2016 17:14:44 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Yash Jain <yashjain.lnm@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Reporting Bug in Git Version Control System
+References: <CAN8fUZe4iWJCZYqBBDbNyPq1Dz7f4xvTNRVEZgg5AYN2NrKCbg@mail.gmail.com>
+        <CAGZ79ka+_CUxQjB2R-EEk2nKmc_rbj_m7884fLvU9+NgJ5gUug@mail.gmail.com>
+        <xmqqzilt61jo.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 24 Oct 2016 14:14:41 -0700
+In-Reply-To: <xmqqzilt61jo.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 24 Oct 2016 11:32:11 -0700")
+Message-ID: <xmqqh98130vy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 14:07:09 -0700 (PDT)
-In-Reply-To: <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
-References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-18-sbeller@google.com>
- <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Oct 2016 14:07:09 -0700
-Message-ID: <CAGZ79ka_zr_NXKoxC45swFrj168fP6S7_nQ1jjcfPOtTN4Jd1A@mail.gmail.com>
-Subject: Re: [PATCH 17/36] attr: expose validity check for attribute names
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: E2B50EB2-9A2E-11E6-9CAE-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 23, 2016 at 8:07 AM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Stefan Beller <sbeller@google.com> writes:
 >
->
-> On 23/10/16 00:32, Stefan Beller wrote:
->> From: Junio C Hamano <gitster@pobox.com>
+>> On Mon, Oct 24, 2016 at 7:28 AM, Yash Jain <yashjain.lnm@gmail.com> wrote:
+>>> Hello,
+>>> I have two accounts on github("yj291197" and "yaki29").
+>>> Both the accounts have different gmail IDs("yj291197@gmail.com" and
+>>> "yashjain.lnm@gmail.com" respectively) but same passwords.
+>>> I used to use git for "yj291197" account and a few days earlier I made
+>>> this new account and used git commit to commit on "yaki29" but it
+>>> appeared as "yj291197" committed on "yaki29's" repo.
+>>> Then I pulled a request of that commit then it appeared "yaki29"
+>>> pulled a request with a commit of "yj291197".
+>>>
+>>> And during this whole session I was signed in as "yaki29" on github.com .
+>>>
 >>
->> Export attr_name_valid() function, and a helper function that
->> returns the message to be given when a given <name, len> pair
->> is not a good name for an attribute.
+>> This is a Github issue, so ask Github support.
 >>
->> We could later update the message to exactly spell out what the
->> rules for a good attribute name are, etc.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
+>> Or read up on .mailmap files.
 >
-> [snip]
+> I am (obviously) not a GitHub support, but I think the confusion is
+> coming from not understanding who the committer and the author of a
+> commit are and where they are coming from.  They are both recorded
+> locally, taken from user.name and user.email configuration variables
+> when the commits are made.  "git push" to propagate them to GitHub
+> will NOT change these values of a commit, once a commit is created.
 >
->> +extern int attr_name_valid(const char *name, size_t namelen);
->> +extern void invalid_attr_name_message(struct strbuf *, const char *, int);
->> +
->
-> The symbol 'attr_name_valid()' is not used outside of attr.c, even
-> by the end of this series. Do you expect this function to be used
-> in any future series? (The export is deliberate and it certainly
-> seems like it should be part of the public interface, but ...)
->
-> In contrast, the 'invalid_attr_name_message()' function is called
-> from code in pathspec.c, which relies on 'git_attr_counted()' to
-> call 'attr_name_valid()' internally to check for validity. :-D
+> The story described looks quite consistent if the user has
+> yj291197@gmail.com configured as user.email and kept making commits
+> in the local repository, and pushed them to either yj291197 or yaki29
+> accounts at GitHub, without ever changing the local configuration to
+> use the other e-mail address.  All commits would record the user and
+> e-mail address yj291197, and the only one that may be attributed to
+> the new one yaki29 would be the automerge created at GitHub when a
+> pull request is responded on-site without first fetching and making
+> a merge locally.
 
-Yeah, I am taking over Junios patches and do not quite implement
-what Junio thought I would. ;) So I guess it is a communication mismatch.
+IOW, this sounds like Pebkac to me.  There is no a thing that needs
+fixing in Git, and I do not immediately see there is anything GitHub
+needs to fix, either.  The user may need fixing, though ;-).
 
-git_attr_counted is a wrapper around attr_name_valid in the way that
-it either returns NULL when the attr name is invalid or it does extra work
-and returns a pointer to an attr.
 
-So I think for API completeness we'd want to keep attr_name_valid around,
-as otherwise the API looks strange. But that doesn't seem like a compelling
-reason, so I'll drop it from the header file and make it static.
-
-Thanks,
-Stefan
