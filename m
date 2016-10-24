@@ -2,97 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DA8F20193
-	for <e@80x24.org>; Mon, 24 Oct 2016 20:29:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01CF320193
+	for <e@80x24.org>; Mon, 24 Oct 2016 21:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S939006AbcJXU35 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 16:29:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52184 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935599AbcJXU34 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 16:29:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3995A479CA;
-        Mon, 24 Oct 2016 16:29:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9lDYp24NyHzkPQjRRMqPp1SRRLU=; b=KrLJp5
-        kV7j0uxJ3XkuI3ZzrkYk3TSYQdVdGdPo6I1xewyAvPiA9vm80RygDUjiFxeE+N4D
-        xDvBGGemAKDinHfVD5vYPqZYC7dWE/nGtAYsyHUcZ483SHNIxlfwNp5P3g2yBl0U
-        iVM84UNtJMVZUx4wcBg2wd7qwlqxTUzD+5TSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Rz/h3VBdU9JvrVUsjYHrHtIf1vQz1cD2
-        N65zUCTlkXHaWlHgy6P4jn8sRzDKu+PV4Qz6UcQym1AAY1j0UpQ5xUXJAjdxbWqH
-        C8Z1QquFlYK8TlkxPLP+DCJdI6c2dWjUocbunGB+prBfvcdwYYnZ+kQSvjEGMYBL
-        g/UhzSK0qYE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 31427479C9;
-        Mon, 24 Oct 2016 16:29:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB855479C8;
-        Mon, 24 Oct 2016 16:29:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        id S941211AbcJXVHM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 17:07:12 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:39952 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S941144AbcJXVHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 17:07:11 -0400
+Received: by mail-qk0-f178.google.com with SMTP id i68so8330145qke.7
+        for <git@vger.kernel.org>; Mon, 24 Oct 2016 14:07:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IYrl+KuFvLT2BMbdiJghJK4HbiwngjD9f75j37Lela8=;
+        b=PLb96OWXUZcyi1jXG1MGOiALz95L4iYcBeHyFA8Qyw3xnFdgcAZOTQ8Xpa2gesUseg
+         dEm5kIJHeG4WtzCtEOec4zAEdJ6dT48chIXAgcnjk1VOmfAV/ieTEArlJZBBhHld+1kk
+         m/9u31a+11ST8M00W5lWh64L61Y5hGb0U5fs+5y8ixe2w+dhzd7CV0ebUMfmQWHvOXXL
+         cYRxRiUstLKhcbmcyPA0lYxmP/xdS2nCkVgDyBqckntYqhK7g1+MhudrnSzkEBFsSRyT
+         TJ6cRR/vOM3e+oUC8qj9sGu6/zU9bmbYNeDzYBrHoQr+KXrag+R8qsnU1fpWsIu6Fnzr
+         azCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IYrl+KuFvLT2BMbdiJghJK4HbiwngjD9f75j37Lela8=;
+        b=latrGoZsS3k+v1AI/y26gAe/7yT1CQSQWwts4i4fke87JTUvyg3o2hpQrKRQrp0Cdk
+         AClQSrv4hiblLnQJpswb+xDQyIkSHQmYq4/V7UIu61tLYggE5HSELBMm72X9vy+JIw12
+         FEY3mChr5FT9Exj3AQcCJK39z0U01ZHubHhuY9oidrjiNZUlmTtKnx78NQxAALJm8b6q
+         vz5hzJxb70I7/W+wiXLWZgTmNjwNP8D+qk8Dr0UL5DUPeL2jKGdJx+vlXIr2smlpLfsh
+         Org6z4iX72eg39XafJc70UZyCNuDmiL9OWzBvPHWA5lXTAw5APcOIu0fHAB9Rw2zzzwm
+         DmOQ==
+X-Gm-Message-State: ABUngvfXk4HV1QrVIwSEInLW0pXN0Ftc/RHDA/f3wB1UngWTXwnZcT2cEuNr/puGyJ9MHPs+PerVVJ/0gMe6EJpK
+X-Received: by 10.55.129.1 with SMTP id c1mr15482194qkd.53.1477343230652; Mon,
+ 24 Oct 2016 14:07:10 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 14:07:09 -0700 (PDT)
+In-Reply-To: <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
+References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-18-sbeller@google.com>
+ <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 24 Oct 2016 14:07:09 -0700
+Message-ID: <CAGZ79ka_zr_NXKoxC45swFrj168fP6S7_nQ1jjcfPOtTN4Jd1A@mail.gmail.com>
+Subject: Re: [PATCH 17/36] attr: expose validity check for attribute names
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         Brandon Williams <bmwill@google.com>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 28/36] attr: keep attr stack for each check
-References: <20161022233225.8883-1-sbeller@google.com>
-        <20161022233225.8883-29-sbeller@google.com>
-        <xmqqmvht5zwx.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZ_7eG4uCXwyg0F=-hjmuT1dCAATSRnY293qkNC6siM5Q@mail.gmail.com>
-Date:   Mon, 24 Oct 2016 13:29:52 -0700
-In-Reply-To: <CAGZ79kZ_7eG4uCXwyg0F=-hjmuT1dCAATSRnY293qkNC6siM5Q@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 24 Oct 2016 12:32:32 -0700")
-Message-ID: <xmqqlgxd32yn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F87ACC2-9A28-11E6-BBD1-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> I looked for a platform independent way to get a thread id as a natural
-> number, i.e. I want to get 1,2,3,... such that I could have just added
-> list/array of attr stacks to each check, which would be the
-> <check, thread> tuple you envision.
+On Sun, Oct 23, 2016 at 8:07 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
 >
-> However I think we do not really need it to be per check.  If we had
-> an easy portable way of getting such a thread id, I would have implemented
-> a list of stacks per thread first. (Because each thread only looks at one
-> check at a time.)
-
-It seems that by "list of stacks per thread", you mean "there is a
-list of stacks, each thread uses one and only element of that list",
-but I do not think it would be desirable.
-
-"Each thread only looks at one check at a time" is false.  For
-example, "write_archive_entry()" would use one check that is
-specific to "git archive" to learn about "export-ignore" and
-"export-subst" attributes, while letting convert_to_write_tree()
-called via sha1_file_to_archive() called via write_entry() method
-(i.e. write_tar_entry() or write_zip_entry()) to use a separate
-check that is specific to the convert.c API.
-
->> With manipulation of attr stack protected with a single Big
->> Attributes Lock, this should be safe.  It may not perform very well
->> when used by multiple threads, though ;-)
 >
-> I agree. So maybe it is not really a good fit for general consumption yet.
+> On 23/10/16 00:32, Stefan Beller wrote:
+>> From: Junio C Hamano <gitster@pobox.com>
+>>
+>> Export attr_name_valid() function, and a helper function that
+>> returns the message to be given when a given <name, len> pair
+>> is not a good name for an attribute.
+>>
+>> We could later update the message to exactly spell out what the
+>> rules for a good attribute name are, etc.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>
+> [snip]
+>
+>> +extern int attr_name_valid(const char *name, size_t namelen);
+>> +extern void invalid_attr_name_message(struct strbuf *, const char *, int);
+>> +
+>
+> The symbol 'attr_name_valid()' is not used outside of attr.c, even
+> by the end of this series. Do you expect this function to be used
+> in any future series? (The export is deliberate and it certainly
+> seems like it should be part of the public interface, but ...)
+>
+> In contrast, the 'invalid_attr_name_message()' function is called
+> from code in pathspec.c, which relies on 'git_attr_counted()' to
+> call 'attr_name_valid()' internally to check for validity. :-D
 
-I would still think it is a good first step.  It may already be
-thread-safe, but may not be thread-ready from performance point of
-view.  IOW, this would not yet help an attempt to make the callers
-faster by making them multi-threaded.
+Yeah, I am taking over Junios patches and do not quite implement
+what Junio thought I would. ;) So I guess it is a communication mismatch.
 
+git_attr_counted is a wrapper around attr_name_valid in the way that
+it either returns NULL when the attr name is invalid or it does extra work
+and returns a pointer to an attr.
+
+So I think for API completeness we'd want to keep attr_name_valid around,
+as otherwise the API looks strange. But that doesn't seem like a compelling
+reason, so I'll drop it from the header file and make it static.
+
+Thanks,
+Stefan
