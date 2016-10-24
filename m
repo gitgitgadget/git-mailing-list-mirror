@@ -2,100 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6720A20193
-	for <e@80x24.org>; Mon, 24 Oct 2016 19:18:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 667A020193
+	for <e@80x24.org>; Mon, 24 Oct 2016 19:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941486AbcJXTSI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 15:18:08 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:34771 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938979AbcJXTSG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 15:18:06 -0400
-Received: by mail-qt0-f174.google.com with SMTP id q7so133799786qtq.1
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 12:18:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fstF33Gn+h6iUamETPQIfV9qpNHEQbRol0BHF8hQlm4=;
-        b=Ek3qVnUL0PmsghDH+1rIpXul5WZ3s1Ph7139zLzrobCQBBL8M1Wdkh7wv0zA/+4ow1
-         JwESivXW9i6N9u01xPaqC3FfrH5VFIHeem5mBK1j//BRz4Mf1rBuRlhrNvNzTbnVMxrJ
-         nbienwfbyBGFnksLw7sYGpQObGJytiEGl+nERgL6pW+DF/i3QEivotgNqnSBLaoLNV2t
-         cbblBVwjEapHXvJm+6AvRPjsXioCyeka9dvNM5z6Hf71af9TtD3kmTNFBjBRAtSl7+Ps
-         kK0pxn15/O8rjxcWITCBc2Eu8BuBQ0k5N65aDYiTJU6NT0C9On8BBPlNQwX/sbbAiQfI
-         eSjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fstF33Gn+h6iUamETPQIfV9qpNHEQbRol0BHF8hQlm4=;
-        b=hSHpBvwblOVl0RctgHDFR1YGQdCwoxQUoeHqlM7ig6amWy9FwA23BrjoN/GG2bstBM
-         tMUJkSGoFu5t9QDf98lHCzOugeKnohkEW1Y3ssgGybig6jSbvkYoAPm5GrG1yDPqR6fI
-         1r2r2K2DpnClykTyZ5PK7pM36B26guxjGIcjpCFi8b3VErOuYPyYQtpYWWHjUETZkA79
-         RBRf8IF6Sn3MQI14AGpLjqppN3Y+4Uj7WuG/LvS/cucPS1MHE4greD+grgfYhscD6c+r
-         DEIFh4VlWds9Q/omH217cwxzwa/FlNgO9FhTmX+vh747oRFlci/BmVNNhHEaQ2S0aQiz
-         0wcg==
-X-Gm-Message-State: ABUngveAmTndFoBT2umPKvmLDyhv0SBx9DT7huF5tgFomo/ja/A3sgMuI0QLIgji5EN4e1gZ457eDSkfuRD09uA1
-X-Received: by 10.237.47.194 with SMTP id m60mr16544281qtd.55.1477336685339;
- Mon, 24 Oct 2016 12:18:05 -0700 (PDT)
+        id S938853AbcJXTYN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 15:24:13 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:15294 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934309AbcJXTWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 15:22:37 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t2mQ24jZjz5tlP;
+        Mon, 24 Oct 2016 21:22:34 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 37812529C;
+        Mon, 24 Oct 2016 21:22:34 +0200 (CEST)
+Subject: Re: [PATCH v2 2/2] read-cache: make sure file handles are not
+ inherited by child processes
+To:     larsxschneider@gmail.com
+References: <20161024180300.52359-1-larsxschneider@gmail.com>
+ <20161024180300.52359-3-larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, e@80x24.org,
+        jnareb@gmail.com, gitster@pobox.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <10135d1c-d9a7-d4ec-438a-bb0a8f6762fe@kdbg.org>
+Date:   Mon, 24 Oct 2016 21:22:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 12:18:04 -0700 (PDT)
-In-Reply-To: <xmqqr37560gv.fsf@gitster.mtv.corp.google.com>
-References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-28-sbeller@google.com>
- <xmqqr37560gv.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Oct 2016 12:18:04 -0700
-Message-ID: <CAGZ79kb7PaqnyXZ7u0z8Q__ahTLKX8RQwV=dw7vbD4C9LnjOtw@mail.gmail.com>
-Subject: Re: [PATCH 27/36] attr: convert to new threadsafe API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20161024180300.52359-3-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 24, 2016 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-
+Am 24.10.2016 um 20:03 schrieb larsxschneider@gmail.com:
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
-> Make that a double-asterisk.  The same problem appears in an updated
-> example in technical/api-gitattributes.txt doc, but the example in
-> the commit log message (below) is correct.
+> This fixes "convert: add filter.<driver>.process option" (edcc8581) on
+> Windows.
 
-The implementation is actually using a double pointer, see below,
-I forgot commit message and documentation
+Today's next falls flat on its face on Windows in t0021.15 "required 
+process filter should filter data"; might it be the failure meant here? 
+(I haven't dug deeper, yet.)
 
->>     GIT_ATTR_RESULT_INIT_FOR(myresult, 1);
->
-> Are you sure about this?  We've called attr_check_initl() already so
-> if this is declaring myresult, it would be decl-after-stmt.
+++ test_config_global filter.protocol.process 
+'/d/Src/mingw-git/t/t0021/rot13-filter.pl clean smudge'
+++ test_when_finished 'test_unconfig --global 
+'\''filter.protocol.process'\'''
+++ test 0 = 0
+++ test_cleanup='{ test_unconfig --global '\''filter.protocol.process'\''
+                 } && (exit "$eval_ret"); eval_ret=$?; :'
+++ git config --global filter.protocol.process 
+'/d/Src/mingw-git/t/t0021/rot13-filter.pl clean smudge'
+++ test_config_global filter.protocol.required true
+++ test_when_finished 'test_unconfig --global 
+'\''filter.protocol.required'\'''
+++ test 0 = 0
+++ test_cleanup='{ test_unconfig --global '\''filter.protocol.required'\''
+                 } && (exit "$eval_ret"); eval_ret=$?; { test_unconfig 
+--global '\''filter.protocol.process'\''
+                 } && (exit "$eval_ret"); eval_ret=$?; :'
+++ git config --global filter.protocol.required true
+++ rm -rf repo
+++ mkdir repo
+++ cd repo
+++ git init
+Initialized empty Git repository in d:/Src/mingw-git/t/trash 
+directory.t0021-conversion/repo/.git/
+++ echo git-stderr.log
+++ echo '*.r filter=protocol'
+++ git add .
+++ git commit . -m 'test commit 1'
+[master (root-commit) aa5dd37] test commit 1
+  Author: A U Thor <author@example.com>
+  2 files changed, 2 insertions(+)
+  create mode 100644 .gitattributes
+  create mode 100644 .gitignore
+++ git branch empty-branch
+++ cp 'd:/Src/mingw-git/t/trash directory.t0021-conversion/test.o' test.r
+++ cp 'd:/Src/mingw-git/t/trash directory.t0021-conversion/test2.o' test2.r
+++ mkdir testsubdir
+++ cp 'd:/Src/mingw-git/t/trash directory.t0021-conversion/test3 
+'\''sq'\'',$x.o' 'testsubdir/test3 '\''sq'\'',$x.r'
++++ file_size test.r
++++ cat test.r
++++ wc -c
++++ sed 's/^[ ]*//'
+++ S=57
++++ file_size test2.r
++++ cat test2.r
++++ wc -c
++++ sed 's/^[ ]*//'
+++ S2=14
++++ file_size 'testsubdir/test3 '\''sq'\'',$x.r'
++++ cat 'testsubdir/test3 '\''sq'\'',$x.r'
++++ wc -c
++++ sed 's/^[ ]*//'
+++ S3=49
+++ filter_git add .
+++ rm -f rot13-filter.log
+++ git add .
+error: last command exited with $?=128
+not ok 15 - required process filter should filter data
 
-I forgot to update the commit message and Documentation.
-GIT_ATTR_RESULT_INIT_FOR is gone in the header
-and in the implementation.  I'll update that patch
-to be consistent throughout all of {Documentation,
-commit message, implementation}.
-
->
-> The latter half is questionable.  If it is "static" it wouldn't be
-> thread safe, no?  I think the diff in this patch for archive.c shows
-> that we only expect
->
->         struct git_attr_result result[2];
->
-> upfront without RESULT_INIT_FOR(), and the reason why there is no
-> need to free the result[] is because it is on the stack.  And each
-> element in result[] may point at a string, but the string belongs to
-> the attr subsystem and must not be freed.
->
-
-Same as above, it's bogus.
-
-Thanks,
-Stefan
