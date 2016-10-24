@@ -2,88 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3418420193
-	for <e@80x24.org>; Mon, 24 Oct 2016 19:10:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6720A20193
+	for <e@80x24.org>; Mon, 24 Oct 2016 19:18:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941342AbcJXTKR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 15:10:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51929 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S941009AbcJXTKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 15:10:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7017C48D19;
-        Mon, 24 Oct 2016 15:07:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CKaeUu5fYJ05CnOpExPdwFDH3Dg=; b=fWveIo
-        ZR9wfr1Me9Ne+7reJGAKL4Oqh1sZseDGySU779pD1755JXSQEkHsQRokCtNYl8Du
-        jxXZWT60RIZkIRRo5m3T9VDVcd/pE7C1Ukg1Y0zbDwD6PJ5vH0e5h6IQTs/ftwlw
-        8STFnfZQnmaDzDWp6KvhM4p2IsVSJsw3on4nY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gsUaqc/C0n489NgRHdLgOOMwdKMSO3w8
-        WoGmXa0jvbYUcvwyenGGdCnf6rw9t/JFreqLgQEA0CST02a3jvbdkv1VfsFIPZd/
-        X0uOmpVnZZOtacxPEhYTuYLKdexrWc1afZBiFYu1tenpWOpbNGBsdJ/Z3uIo9RNH
-        mFBxjwFn2tg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64A8F48D18;
-        Mon, 24 Oct 2016 15:07:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C7D5548D17;
-        Mon, 24 Oct 2016 15:07:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 28/36] attr: keep attr stack for each check
-References: <20161022233225.8883-1-sbeller@google.com>
-        <20161022233225.8883-29-sbeller@google.com>
-Date:   Mon, 24 Oct 2016 12:07:26 -0700
-In-Reply-To: <20161022233225.8883-29-sbeller@google.com> (Stefan Beller's
-        message of "Sat, 22 Oct 2016 16:32:17 -0700")
-Message-ID: <xmqqmvht5zwx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S941486AbcJXTSI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 15:18:08 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:34771 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S938979AbcJXTSG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 15:18:06 -0400
+Received: by mail-qt0-f174.google.com with SMTP id q7so133799786qtq.1
+        for <git@vger.kernel.org>; Mon, 24 Oct 2016 12:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fstF33Gn+h6iUamETPQIfV9qpNHEQbRol0BHF8hQlm4=;
+        b=Ek3qVnUL0PmsghDH+1rIpXul5WZ3s1Ph7139zLzrobCQBBL8M1Wdkh7wv0zA/+4ow1
+         JwESivXW9i6N9u01xPaqC3FfrH5VFIHeem5mBK1j//BRz4Mf1rBuRlhrNvNzTbnVMxrJ
+         nbienwfbyBGFnksLw7sYGpQObGJytiEGl+nERgL6pW+DF/i3QEivotgNqnSBLaoLNV2t
+         cbblBVwjEapHXvJm+6AvRPjsXioCyeka9dvNM5z6Hf71af9TtD3kmTNFBjBRAtSl7+Ps
+         kK0pxn15/O8rjxcWITCBc2Eu8BuBQ0k5N65aDYiTJU6NT0C9On8BBPlNQwX/sbbAiQfI
+         eSjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fstF33Gn+h6iUamETPQIfV9qpNHEQbRol0BHF8hQlm4=;
+        b=hSHpBvwblOVl0RctgHDFR1YGQdCwoxQUoeHqlM7ig6amWy9FwA23BrjoN/GG2bstBM
+         tMUJkSGoFu5t9QDf98lHCzOugeKnohkEW1Y3ssgGybig6jSbvkYoAPm5GrG1yDPqR6fI
+         1r2r2K2DpnClykTyZ5PK7pM36B26guxjGIcjpCFi8b3VErOuYPyYQtpYWWHjUETZkA79
+         RBRf8IF6Sn3MQI14AGpLjqppN3Y+4Uj7WuG/LvS/cucPS1MHE4greD+grgfYhscD6c+r
+         DEIFh4VlWds9Q/omH217cwxzwa/FlNgO9FhTmX+vh747oRFlci/BmVNNhHEaQ2S0aQiz
+         0wcg==
+X-Gm-Message-State: ABUngveAmTndFoBT2umPKvmLDyhv0SBx9DT7huF5tgFomo/ja/A3sgMuI0QLIgji5EN4e1gZ457eDSkfuRD09uA1
+X-Received: by 10.237.47.194 with SMTP id m60mr16544281qtd.55.1477336685339;
+ Mon, 24 Oct 2016 12:18:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1B8E311C-9A1D-11E6-8284-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 12:18:04 -0700 (PDT)
+In-Reply-To: <xmqqr37560gv.fsf@gitster.mtv.corp.google.com>
+References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-28-sbeller@google.com>
+ <xmqqr37560gv.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 24 Oct 2016 12:18:04 -0700
+Message-ID: <CAGZ79kb7PaqnyXZ7u0z8Q__ahTLKX8RQwV=dw7vbD4C9LnjOtw@mail.gmail.com>
+Subject: Re: [PATCH 27/36] attr: convert to new threadsafe API
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Oct 24, 2016 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Instead of having a global attr stack, attach the stack to each check.
+>
+> Make that a double-asterisk.  The same problem appears in an updated
+> example in technical/api-gitattributes.txt doc, but the example in
+> the commit log message (below) is correct.
 
-Two threads may be working on "git checkout", one "git_attr_check"
-in convert.c may be used by them to learn the EOL conversion for
-each path, and these threads are working in different parts of
-worktree in parallel.  The set of .gitattributes files each of these
-threads wants to be cached at one time is tied to where in the
-directory hierarchy the thread is working in.
+The implementation is actually using a double pointer, see below,
+I forgot commit message and documentation
 
-The view by API users would not have to change from the point on
-since 27/36 or so, but I think attr_stack needs to become per
-<check, thread> tuple when we are fully thread-ready for the above
-reason.
+>>     GIT_ATTR_RESULT_INIT_FOR(myresult, 1);
+>
+> Are you sure about this?  We've called attr_check_initl() already so
+> if this is declaring myresult, it would be decl-after-stmt.
 
-But we need to start somewhere to move away from the current "one
-single attr stack" to "there are multiple attr stacks", and this
-"two checks may and do use different attr stacks" is probably a
-reasonable first step.  It may give a single-threaded API users
-immediate benefit if the "read and keep only the entries relevant
-to the query" optimization is done with this step alone, without
-making the cache per <check, thread> pair.
+I forgot to update the commit message and Documentation.
+GIT_ATTR_RESULT_INIT_FOR is gone in the header
+and in the implementation.  I'll update that patch
+to be consistent throughout all of {Documentation,
+commit message, implementation}.
 
-> This allows to use the attr in a multithreaded way.
+>
+> The latter half is questionable.  If it is "static" it wouldn't be
+> thread safe, no?  I think the diff in this patch for archive.c shows
+> that we only expect
+>
+>         struct git_attr_result result[2];
+>
+> upfront without RESULT_INIT_FOR(), and the reason why there is no
+> need to free the result[] is because it is on the stack.  And each
+> element in result[] may point at a string, but the string belongs to
+> the attr subsystem and must not be freed.
+>
 
-With manipulation of attr stack protected with a single Big
-Attributes Lock, this should be safe.  It may not perform very well
-when used by multiple threads, though ;-)
+Same as above, it's bogus.
 
+Thanks,
+Stefan
