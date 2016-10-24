@@ -6,117 +6,75 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAA1E1FBB0
-	for <e@80x24.org>; Mon, 24 Oct 2016 17:46:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F4881FBB0
+	for <e@80x24.org>; Mon, 24 Oct 2016 17:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934983AbcJXRqi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 13:46:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63564 "EHLO
+        id S936498AbcJXR6O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 13:58:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57477 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932634AbcJXRqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 13:46:37 -0400
+        with ESMTP id S935242AbcJXR6N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 13:58:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B88648F2F;
-        Mon, 24 Oct 2016 13:46:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E737348F09;
+        Mon, 24 Oct 2016 13:58:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6mN8alGL9o6TJICr3zmnMaglaXM=; b=iVNfmm
-        /nh2bHmSYaJKHxU4DnlkquP1D6vfV5IWpebRYUALt7stQ6rMbo4AEaSFV7csN73p
-        lHRLOfSljStx16czWURLGMpZBLgqAOPb1DXek/m24tMlM/2PCir7au5za3qNJpHP
-        q6WFkR7yaugCERWDm9pH4Fyy4wAKyIti1/TXA=
+        :content-type:content-transfer-encoding; s=sasl; bh=QbC8gGLl0xWz
+        sZ3Km2FYjg6EWAc=; b=aebbnTynd1DJYfIU3ZbUXmXDeHai1cBPABz7mIoMx7qk
+        5kkrBBFPKJeJfKXyCGqVdHDoMiOeG4+Cw4H0b6OcGpg5msmDzx1X2CGUL5Z0RZhG
+        UrNaAtIfBPTmuSfF7r/cRwUargNdnDxmnucYFrAFJTohi1Fd3YS0i0UnQ7c98+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MGt6IzPWRpH/2nNdxtrbmoWqbvPO7GJK
-        fXQ/ag5/mxsd2sZ1fOwVcpG5ks7Z6JJqE/2NnEpL91oav8IJw9waBXDVyuFOqLL5
-        HVEPUoCT4RWm80MXfRpkt5svmEQBnkLWfMDRs35/om2Ebx7SMpVFT/HLnDUHHoc7
-        yQjjH/JxMUc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AB7748F2E;
-        Mon, 24 Oct 2016 13:46:36 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TW8lZ8
+        Sh8U1Q7f4nQUhOaFCXnBp8KcyuclsAoDtpJWeWOu15CqfiwVCHWrR7an8m1qf3Wx
+        iQI+bWvXpmHnGcMXg9uQSJZe/RLgEqWrKLU7vcyPbSv+5GR0cCSz3QVFgVldEWQF
+        o+SPuEMPtwmC3lxwdDz1iY9V+jUptyB+htSRc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DFA3848F08;
+        Mon, 24 Oct 2016 13:58:11 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D1D6948F2D;
-        Mon, 24 Oct 2016 13:46:35 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B54E48F07;
+        Mon, 24 Oct 2016 13:58:11 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "Karl A." <venv21@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] submodule tests: replace cloning from . by "$(pwd)"
-References: <20161021235939.20792-1-sbeller@google.com>
-        <20161021235939.20792-3-sbeller@google.com>
-        <c6c5ce05-3511-a992-e079-316f0ce90ecd@kdbg.org>
-        <xmqqh984aldl.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaukGh2ynkOQcF=skzxTMYr8CFRyGJw6FEmNsTAcaG_VQ@mail.gmail.com>
-        <61637cd9-8f83-c988-15c0-54f948153c07@kdbg.org>
-Date:   Mon, 24 Oct 2016 10:46:33 -0700
-In-Reply-To: <61637cd9-8f83-c988-15c0-54f948153c07@kdbg.org> (Johannes Sixt's
-        message of "Sun, 23 Oct 2016 12:14:26 +0200")
-Message-ID: <xmqqinsh7i86.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/4] nd/ita-empty-commit update
+References: <20160928114348.1470-1-pclouds@gmail.com>
+        <20161024104222.31128-1-pclouds@gmail.com>
+Date:   Mon, 24 Oct 2016 10:58:09 -0700
+In-Reply-To: <20161024104222.31128-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Mon, 24 Oct 2016 17:42:18 +0700")
+Message-ID: <xmqqeg357hou.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CEFC1298-9A11-11E6-AF1D-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6D85494C-9A13-11E6-939C-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Am 22.10.2016 um 22:46 schrieb Stefan Beller:
->> I have looked into it again, and by now I think the bug is a feature,
->> actually.
->>
->> Consider this:
->>
->>     git clone . super
->>     git -C super submodule add ../submodule
->>     # we thought the previous line is buggy
->>     git clone super super-clone
->
-> At this point, we *should* have this if there were no bugs (at least
-> that is my assumption):
->
->   /tmp
->   !
->   + submodule     <- submodule's remote repo
->   !
->   + foo           <- we are here (.), super's remote repo
->     !
->     + super       <- remote.origin.url=/tmp/foo/.
->       !
->       + submodule <- remote.origin.url=/tmp/foo/./../submodule
->                      submodule.submodule.url=../submodule
->
-> When I test this, 'git submodule add' fails:
->
-> foo@master> git -C super submodule add ../submodule
-> fatal: repository '/tmp/foo/submodule' does not exist
-> fatal: clone of '/tmp/foo/submodule' into submodule path
-> '/tmp/foo/super/submodule' failed
->
->> Now in the super-clone the ../submodule is the correct
->> relative url, because the url where we cloned from doesn't
->> end in /.
->
-> I do not understand why this would be relevant. The question is not
-> how the submodule's remote URL ends, but how the submodule's remote
-> URL is constructed from the super-project's URL and the relative path
-> specified for 'git submodule add'.
+> The index_differs_from() also takes a flag to set/clear this new
+> flag instead of relying on has_ita_entries like the old 2/3.
 
-FWIW, that matches my understanding.
+I think that probably is a good move.
 
-> Whether ../submodule or ./submodule is the correct relative URL
-> depends on where the origin of the submodule is located relative to
-> the origin of the super-project. In the above example, it is
-> ../submodule. However, the error message tells us that git looked in
-> /tmp/foo/submodule, which looks like the /. bug!
->
-> I do not understand where you see a feature here. What am I missing?
->
-> -- Hannes
+> The name ita-invisible-in-index is not perfect but I could not think
+> of any better. Another name could be diff-cached-ignores-ita, but
+> that's just half of what it does. The other half is diff-files-includes=
+-ita...
+
+I can't either, and it is one of the reasons why I am reluctant.
+Not being able to be named with a short-and-sweet name often is a
+sign that the thing to be named is conceptually not well thought
+out.
+
+But as we need to give it some name to the flat to ease
+experimenting, let's take that name as-is.
