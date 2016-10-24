@@ -2,89 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D5D21FBB0
-	for <e@80x24.org>; Mon, 24 Oct 2016 18:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDDA820193
+	for <e@80x24.org>; Mon, 24 Oct 2016 18:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965434AbcJXSL0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 14:11:26 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33826 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938833AbcJXSGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 14:06:13 -0400
-Received: by mail-wm0-f68.google.com with SMTP id d199so10994409wmd.1
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 11:06:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=piPTraQ7hFlL1IwxNaYOWoQRPgfjUvkN+O91TO8R6xQ=;
-        b=KRqV6gWgowZ8zdutpNnfkzyGFO84Cnl1n7dytqcBgE6MW3cEx0ESR27YAuRHEsQ4Uq
-         0vm+oNlBgB5hGFJtVMuOZixYiDRbPkD3V06d+gpzF4IAomVRYopGriRKYCM0LBeOr5wv
-         9qLWKNH6AowktOG6u8gsjQETcvalAD478PNw1JjFFNpM8qeQSmWlYvedPYQIEktf479d
-         vA6N6ungaY7I4gQ6/CduBh1uuU3mZb3NbFhyzAuK8uSYKzkHyM5n8oOWxrfkFsDF5XYF
-         THULr6Ic8DzwIj+KXTBBiPzePU8pA3/z2x3+efjLbFHoootEVXZz/2TbL//7bW4DG4qw
-         R9Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=piPTraQ7hFlL1IwxNaYOWoQRPgfjUvkN+O91TO8R6xQ=;
-        b=AxMskHooH0dHG3gK8ce2caeVGtX2GZgxI5v729G+fLqsf9cwcxhRvk+gbVdVVoyKZw
-         7bjcYGe+b42tJ2AAP6fx5B1BNtJlhDHTAJIw9bYo+Ug34RFjpqlu5rI/fwGk32EvYPDf
-         xRr3J282Kwhkg+qLySnfoH/4d3mjA1q399knyhbbPuxG+HgOMQRZlYMLDmAjR5cBfIGB
-         1UEGM4Fa4ie5gJbfkv2kXhyqyBL+2Pit10gcB3zHPMxne++m6XVXIayACS+i879sSiUU
-         r95kCs7lhynrZT5NJB/69AB0/+1vs4dXYgVI2DNHC7PEm0oDzj4Q191DGv7Os5SisdMJ
-         3+2g==
-X-Gm-Message-State: ABUngvfy59oGJwptsH3nBALjbOORvI2JLKC0TqXqGXeO0nYKvYhxThviqDV48zJ6CFSHLw==
-X-Received: by 10.194.171.225 with SMTP id ax1mr16120262wjc.48.1477332372257;
-        Mon, 24 Oct 2016 11:06:12 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id p9sm20626398wjs.11.2016.10.24.11.06.11
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Oct 2016 11:06:11 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 0/3] fix travis TAP/--verbose conflict
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20161021104107.vh3bjx6x6pd6izat@sigill.intra.peff.net>
-Date:   Mon, 24 Oct 2016 20:06:10 +0200
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <96985FB6-67D9-4146-BDBA-E22699061885@gmail.com>
-References: <D9C1E13F-88A2-483E-A549-1C2294EACFEB@gmail.com> <CAGZ79kZo3LdcRmrjQTAvgx=H6U2tdjASK3qv5A2K5J2HQ2NvSw@mail.gmail.com> <20161021082035.xad6wfny5i6wtshh@sigill.intra.peff.net> <20161021084348.dp4jfpfownodl7nz@sigill.intra.peff.net> <20161021104107.vh3bjx6x6pd6izat@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S936131AbcJXSXF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 14:23:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51036 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754461AbcJXSXE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 14:23:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E88C74850A;
+        Mon, 24 Oct 2016 14:23:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7dJoumsTCV4HvcBsbpdBz55aCHE=; b=DmOjkM
+        fvWHqOpZLGaA7qrmmDF1AD9HXtGJwlUpRh+W37w+R2aduDX0fuKG08PNrw6yyu9g
+        rspGBOYQmuAiPCkFDTOzPDig3Ur2Q+c0QTui45HDQwF2+r3g8ytl5LKKYAR8nZSv
+        NWB84hg8FGO4rTqzMyUEJJ8GtHEPZAtYS7znM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KiFV32yF75iccZDlsSITgb1/vNJCFSC3
+        0eRbgwVsS4b4YmhsJccop3II6i9/9G+uzc0aDfaJLaj/9IogkF91zValH1Rk4m5H
+        U4u5kTmCMdopUmPzoMPULvr211Np5r4tlOrPgooqY1nPiy9LcdF/IJZuLNIi4rvS
+        8t6qQyln+IQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E03CE48509;
+        Mon, 24 Oct 2016 14:23:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61E8648508;
+        Mon, 24 Oct 2016 14:23:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, e@80x24.org,
+        jnareb@gmail.com
+Subject: Re: [PATCH v2 0/2] Use CLOEXEC to avoid fd leaks
+References: <20161024180300.52359-1-larsxschneider@gmail.com>
+Date:   Mon, 24 Oct 2016 11:23:00 -0700
+In-Reply-To: <20161024180300.52359-1-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Mon, 24 Oct 2016 20:02:58
+        +0200")
+Message-ID: <xmqq4m417gjf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E63E55E2-9A16-11E6-B7A3-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+larsxschneider@gmail.com writes:
 
-> On 21 Oct 2016, at 12:41, Jeff King <peff@peff.net> wrote:
-> 
-> On Fri, Oct 21, 2016 at 04:43:48AM -0400, Jeff King wrote:
-> 
->> The obvious fix would be to send "--verbose" output to stderr, but I
->> suspect that would end up annoying for people who do:
->> 
->>  ./t5547-push-quarantine.sh -v | less
->> 
->> to read long output. Probably we need some option like "--log" which
->> logs in the same way that "--tee" does, but _without_ sending the data
->> to stdout. Naively, that just means replacing the "tee" invocation with
->> "cat", but I suspect it will be a lot more complicated than that,
->> because we still need to let the TAP output go to stdout.
-> 
-> Yeah, it was definitely a lot more complicated. This patch series fixes
-> it.
+> ## Changes since v1
+>  * add fallbacks in case O_CLOEXEC is not available
 
-Thanks a lot for this detailed and quick fix :-)
+That is a good idea.
 
-Cheers,
-Lars
+>  * rename 'git_open_noatime_cloexec' to 'git_open' (Eric, Dscho)
+
+OK.  This is the old git_open_noatime() that is meant to be used
+ONLY for the files Git uses for its internal implementation, and
+never for end-user files.  I think it is a good idea to open them
+with O_CLOEXEC.
+
+And the separate patch to use O_CLOEXEC in ce_compare_data() that
+opens a working tree file for reading does not use git_open(), which
+is also correct.  I like it.
+
+>  * rebased the topic on `next` to fix a merge conflict
+
+I think this applies cleanly to 'master', so that is where I'd fork
+my copy at.
+
+Thanks.
 
