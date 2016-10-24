@@ -2,109 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B85F620193
-	for <e@80x24.org>; Mon, 24 Oct 2016 19:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E97620193
+	for <e@80x24.org>; Mon, 24 Oct 2016 19:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941054AbcJXTxP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 15:53:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57650 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753826AbcJXTxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 15:53:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4974547359;
-        Mon, 24 Oct 2016 15:53:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cAzTHG4Pi9mG3dMIH7WkxKP29gM=; b=L60edF
-        vrwjlQygVBX+LmXaepYd75aU3ePBMpUM++bFEGTSxzvaPzjJKaytAJSnqdwva3RC
-        iIH8zk3XQe2/Bz3v77kxa00vKfdi8hAv/DvrEW4HfzXiOFZOrUx+We5Vj9WJC716
-        DeWWjhePhGC8giJHChrXztYhcRv8qkYBLVaHE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dnBroCW1qSC+Q811rDRbwLghQ3O4jCBm
-        6wB+1aFwLTORSYAs3m/cEKksz59EBZvRceeDcDvIaKl81H3KRYP6omLU4nq2Cny9
-        bktKEXsDOGcCcSuFEAB9OWf3XDn72DeyT23/tbv2/I+5uc9h4VE4lwH7/zOxyy8b
-        H3Nt3W30C1A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40E9547358;
-        Mon, 24 Oct 2016 15:53:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE3B447357;
-        Mon, 24 Oct 2016 15:53:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     larsxschneider@gmail.com, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com
+        id S941081AbcJXTx3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 15:53:29 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:34630 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754740AbcJXTx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 15:53:28 -0400
+Received: by mail-wm0-f50.google.com with SMTP id d199so835188wmd.1
+        for <git@vger.kernel.org>; Mon, 24 Oct 2016 12:53:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=kCi6CK3E6S0mZsab5daQD1hVijHnaxcBh6HDeBmsZdQ=;
+        b=tZAlqdUKkhqEqyIxNnWQVsjJAYPxDyvpSCwYLIwK/N6aziWZ9d5AtvQiIo+XhsWRxM
+         N2s8puFk32PrgRtNyaKmt4wCig/bX7xrl6D5n7RvlZGeestHx16azGTlOYjo65EUvHc+
+         GzJhY+69HvH2JHqeSGh3R9PCBI0H+ex0hpcpxDN6Z0CDZAz9Q27tuWBd/pDwrfwvTlXs
+         HX26tnfz1yPfdhfBdlR7aQXh/40hik2VQ9OxZGPDtsSSepmgeMd4JkU8Dvx6g6blLxYt
+         7WCWzSZfr1Zw/y6kJHMG6vb8UD4Tp0R7XROXAW3vDv2d3BpTeNyJsewEN89X+yEI3Ab5
+         mt4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=kCi6CK3E6S0mZsab5daQD1hVijHnaxcBh6HDeBmsZdQ=;
+        b=lsNaRQsErUjb5Xd2BxorYU9T/GmO/UKJERF7c5IeNl7ohBVhUQSiW+55wasfnwDsXw
+         d4Pd4iCwzopvp/Q9PDSGbRsjFGM2qwd1hU+zk/TlRvlGixDBtoB0UGq/AfJiIMXy8Dao
+         w2Kqm4+SDXXddA5hLZg4i+FqBkLCxed/8MoccZPIniiaZCAaIhby9/e1Wpt8e7jbFx4g
+         C59WEwUntNvplb54BUPiLaUI8E2cClLx6xVFDiFNqfP4VJbVlrIJBMPemkZjrEO9P630
+         v8bjpWTGycLyz55GEv/pagZNsyUKE4bCnvXMkb9xPxmYEg6ugR4/5UdAxmm7j5iLFV3A
+         SfgA==
+X-Gm-Message-State: AA6/9RmJLdnc9N/aibcwuxq0RPvOlsL9eUwmpHtxVX72/uDz4PWhoiOOXq7NhoFJxW76hw==
+X-Received: by 10.28.35.82 with SMTP id j79mr16126953wmj.32.1477338807046;
+        Mon, 24 Oct 2016 12:53:27 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB5B90.dip0.t-ipconnect.de. [93.219.91.144])
+        by smtp.gmail.com with ESMTPSA id c7sm21008464wjk.19.2016.10.24.12.53.25
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 24 Oct 2016 12:53:26 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [PATCH v2 2/2] read-cache: make sure file handles are not inherited by child processes
-References: <20161024180300.52359-1-larsxschneider@gmail.com>
-        <20161024180300.52359-3-larsxschneider@gmail.com>
-        <20161024183900.GA12769@starla>
-Date:   Mon, 24 Oct 2016 12:53:10 -0700
-In-Reply-To: <20161024183900.GA12769@starla> (Eric Wong's message of "Mon, 24
-        Oct 2016 18:39:00 +0000")
-Message-ID: <xmqqwpgx4j89.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7F0ABED0-9A23-11E6-A435-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <10135d1c-d9a7-d4ec-438a-bb0a8f6762fe@kdbg.org>
+Date:   Mon, 24 Oct 2016 21:53:24 +0200
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, e@80x24.org,
+        jnareb@gmail.com, gitster@pobox.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4C96209A-756F-45F1-B075-037FE32B3291@gmail.com>
+References: <20161024180300.52359-1-larsxschneider@gmail.com> <20161024180300.52359-3-larsxschneider@gmail.com> <10135d1c-d9a7-d4ec-438a-bb0a8f6762fe@kdbg.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
 
-> larsxschneider@gmail.com wrote:
->> +++ b/read-cache.c
->> @@ -156,7 +156,11 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
->>  static int ce_compare_data(const struct cache_entry *ce, struct stat *st)
->>  {
->>  	int match = -1;
->> -	int fd = open(ce->name, O_RDONLY);
->> +	int fd = open(ce->name, O_RDONLY | O_CLOEXEC);
->> +
->> +	if (O_CLOEXEC && fd < 0 && errno == EINVAL)
->> +		/* Try again w/o O_CLOEXEC: the kernel might not support it */
->> +		fd = open(ce->name, O_RDONLY);
->
-> In the case of O_CLOEXEC != 0 and repeated EINVALs,
-> it'd be good to use something like sha1_file_open_flag as in 1/2
-> so we don't repeatedly hit EINVAL.  Thanks.
+> On 24 Oct 2016, at 21:22, Johannes Sixt <j6t@kdbg.org> wrote:
+>=20
+> Am 24.10.2016 um 20:03 schrieb larsxschneider@gmail.com:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> This fixes "convert: add filter.<driver>.process option" (edcc8581) =
+on
+>> Windows.
+>=20
+> Today's next falls flat on its face on Windows in t0021.15 "required =
+process filter should filter data"; might it be the failure meant here? =
+(I haven't dug deeper, yet.)
 
-Sounds sane.  
+Yes, this is the failure meant here :-)
 
-It's just only once, so perhaps we do not mind a recursion like
-this?
+Cheers,
+Lars
 
- read-cache.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index b594865d89..a6978b9321 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -156,11 +156,14 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
- static int ce_compare_data(const struct cache_entry *ce, struct stat *st)
- {
- 	int match = -1;
--	int fd = open(ce->name, O_RDONLY | O_CLOEXEC);
-+	static int cloexec = O_CLOEXEC;
-+	int fd = open(ce->name, O_RDONLY | cloexec);
- 
--	if (O_CLOEXEC && fd < 0 && errno == EINVAL)
-+	if ((cloexec & O_CLOEXEC) && fd < 0 && errno == EINVAL) {
- 		/* Try again w/o O_CLOEXEC: the kernel might not support it */
--		fd = open(ce->name, O_RDONLY);
-+		cloexec &= ~O_CLOEXEC;
-+		return ce_compare_data(ce, st);
-+	}
- 
- 	if (fd >= 0) {
- 		unsigned char sha1[20];
