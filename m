@@ -2,94 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C3E220193
-	for <e@80x24.org>; Mon, 24 Oct 2016 21:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D358920193
+	for <e@80x24.org>; Mon, 24 Oct 2016 21:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934704AbcJXVqF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 17:46:05 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33857 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754239AbcJXVqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 17:46:04 -0400
-Received: by mail-wm0-f68.google.com with SMTP id d199so11728236wmd.1
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 14:46:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=GsREeMFWBQ7yrcLEtJ5amSTEJMjEFK9XNyn6/1DsS6c=;
-        b=VsqX9lkcmNwMW4LBwsn0KrWyE3uDQ1jpp2tsXH/6fze6/cDX4e+PfaPLg0rCV7C8jp
-         awIHL/Ey94yO9JfaEDBOlM3lfpEtHYGfdoe4vUAYUKoLKPVEWb8CNHm3GnE5/M4/rwVv
-         i5UBXnKKnvP4UDpBtQBH3z8kZ4whc68U6DMRYZdUAKkdZimZ0nVfUkp4bGd5f88ju+oH
-         Wf5C2RRHGFiaVDKGpnHurTNU8+/NipWst/VvGL9fSDZxR+/8K7D9T1aRmXkMctgZD+Gy
-         YhwUEcas32WX2xQwhsikaItcSVNzGunt5qYfjs6aE2sCe7TzGx+25FL2hoyUxIVoPiAP
-         +cFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=GsREeMFWBQ7yrcLEtJ5amSTEJMjEFK9XNyn6/1DsS6c=;
-        b=c5LhjsQTEYJvYvvD8Vmk/fcCwmVITxd8iJMLwH1vsS++N1KyV2kpK7WGLEfe3JToUr
-         KVYlcfG0L6O50avrxS8VI1M9Pe0GMMCkqmfkpY/irINmj6amm3ONgLxf8hUppbvmHIg8
-         sLOvjkHVIK6SsnZ3abMExMi4QGKZohfTvPEonTV07lqH9vw0cjRh2/4RljfN4C7ApCAj
-         rcANYlNbYqDbnOLx6VHVgFq/RmzZeIbC9W98DIYzYGfis2+pFvajwi5b4qTodSwPQ4GF
-         UpvoXM3jcQzrfUneAZDhf418ksHLokZAo7vmMPnOfcbEM9HfCxTclLfgbia24PwdIjWH
-         m2kQ==
-X-Gm-Message-State: ABUngveUGzb1QaVftCdpBrvaJ5u9SmXvoIh9c8I/5e354jkVIJp8IqPdJHtrlf+tXKqgIQ==
-X-Received: by 10.194.94.168 with SMTP id dd8mr13109312wjb.96.1477345562906;
-        Mon, 24 Oct 2016 14:46:02 -0700 (PDT)
-Received: from hostname_variable_in_muttrc (94-226-13-126.access.telenet.be. [94.226.13.126])
-        by smtp.gmail.com with ESMTPSA id 198sm16855213wmn.14.2016.10.24.14.46.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Oct 2016 14:46:02 -0700 (PDT)
-Date:   Mon, 24 Oct 2016 23:46:01 +0200
-From:   "m." <botmetkas@gmail.com>
-To:     git@vger.kernel.org
-Subject: An anomaly, not a bug
-Message-ID: <20161024214601.GA11699@hostname_variable_in_muttrc>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+        id S941331AbcJXV4l (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 17:56:41 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:53770 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S941278AbcJXV4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 17:56:41 -0400
+Received: from localhost.localdomain ([92.22.33.31])
+        by smtp.talktalk.net with SMTP
+        id ynCXb93qqxR4bynCXbQpHg; Mon, 24 Oct 2016 22:54:38 +0100
+X-Originating-IP: [92.22.33.31]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=ybqgNu2HPZDkq8okBTEsHw==:117
+ a=ybqgNu2HPZDkq8okBTEsHw==:17 a=xtxXYLxNAAAA:8 a=anyJmfQTAAAA:8
+ a=7FRZB9tROJxV3DyYikgA:9 a=xts0dhWdiJbonKbuqhAr:22 a=YJ_ntbLOlx1v6PCnmBeL:22
+From:   Philip Oakley <philipoakley@iee.org>
+To:     gitster@pobox.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, peff@peff.net,
+        philipoakley@iee.org
+Subject: [PATCH] doc: fix the 'revert a faulty merge' ASCII art tab spacing
+Date:   Mon, 24 Oct 2016 22:54:32 +0100
+Message-Id: <20161024215432.1384-1-philipoakley@iee.org>
+X-Mailer: git-send-email 2.9.0.windows.1.323.g0305acf
+In-Reply-To: <xmqq1sz9b9ex.fsf@gitster.mtv.corp.google.com>
+References: <xmqq1sz9b9ex.fsf@gitster.mtv.corp.google.com>
+X-CMAE-Envelope: MS4wfEZPzMVe/IMxvBc+Lz20lCmNmbI4oiTbohSsOBubKNOOIEgG5DcPq15uBdKVECvug3Y6MN8af894QNUFkTXoV4m+eAYoBbEqsgqnNCuAl5H6wqtDbWzi
+ 1X+bNP2Xi/4XkW4OrrbZK7CqMLp3Xn0ZOsdjkVHgUYO5o4pWdoNSI0NyTaSf0DGuXRsU56kKpjkvi+wnjEP9ZLw5SnOTQ37O8wha2lR0EU0W+FjR4nruipAG
+ /chihSOJZu1kjSV8OZozHY45ZiKRUDE9I4EazuFNQUePzoSokt+s1ivCyBNJ0tPK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Concerning ".gitignore", experienced using git 2.10.0
+The asciidoctor doc-tool stack does not always respect the 'tab = 8 spaces' rule
+expectation, particularly for the Git-for-Windows generated html pages. This
+follows on from the 'doc: fix merge-base ASCII art tab spacing' fix.
 
-Starting code using one or more spaces or tabs from the left
-margin will have git reading .gitignore and ignoring(or
-un-ignoring) the command-instruction.
+Use just spaces within the block of the ascii art.
 
-Example: Starting .gitignore
+All other *.txt ascii art containing three dashes has been checked.
+Asciidoctor correctly formats the other art blocks that do contain tabs.
 
-/*
-        # above line is duly read.  Then un-ignoring
-        # something but starting the command further to the
-        # right will have git not reading that line
+Signed-off-by: Philip Oakley <philipoakley@iee.org
+---
+The git-scm doc pages https://git-scm.com/docs/ does not convert this
+how-to document to html, rather it links to the Github text pages, which
+does respect the 8 space tab rule.
+---
+ Documentation/howto/revert-a-faulty-merge.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-  !/nottobeignored.file
-
-End .gitignore
-
-Note: the comments can be started away from the left margin,
-as normal in all unix-linux configuration files we know of.
-Git follows this behaviour fine.
-
-The lines containing commands, on the contrary of regular
-convention cannot be indented by spaces or tabs.  Quite
-unusual, confusing, not in the sense of conventional and
-easily adverted in coding git.
-
-Could be we are missing out on something,
-
-Git command line tool is a functional tool now in our setup
-for two years, first noticed this alien behaviour in this
-version of git, on osx, the fink(osx package mananger)
-binary.
-
+diff --git a/Documentation/howto/revert-a-faulty-merge.txt b/Documentation/howto/revert-a-faulty-merge.txt
+index 462255e..19f59cc 100644
+--- a/Documentation/howto/revert-a-faulty-merge.txt
++++ b/Documentation/howto/revert-a-faulty-merge.txt
+@@ -30,7 +30,7 @@ The history immediately after the "revert of the merge" would look like
+ this:
+ 
+  ---o---o---o---M---x---x---W
+-	       /
++               /
+        ---A---B
+ 
+ where A and B are on the side development that was not so good, M is the
+@@ -47,7 +47,7 @@ After the developers of the side branch fix their mistakes, the history
+ may look like this:
+ 
+  ---o---o---o---M---x---x---W---x
+-	       /
++               /
+        ---A---B-------------------C---D
+ 
+ where C and D are to fix what was broken in A and B, and you may already
+@@ -81,7 +81,7 @@ In such a situation, you would want to first revert the previous revert,
+ which would make the history look like this:
+ 
+  ---o---o---o---M---x---x---W---x---Y
+-	       /
++               /
+        ---A---B-------------------C---D
+ 
+ where Y is the revert of W.  Such a "revert of the revert" can be done
+@@ -93,14 +93,14 @@ This history would (ignoring possible conflicts between what W and W..Y
+ changed) be equivalent to not having W or Y at all in the history:
+ 
+  ---o---o---o---M---x---x-------x----
+-	       /
++               /
+        ---A---B-------------------C---D
+ 
+ and merging the side branch again will not have conflict arising from an
+ earlier revert and revert of the revert.
+ 
+  ---o---o---o---M---x---x-------x-------*
+-	       /                       /
++               /                       /
+        ---A---B-------------------C---D
+ 
+ Of course the changes made in C and D still can conflict with what was
+@@ -111,13 +111,13 @@ faulty A and B, and redone the changes on top of the updated mainline
+ after the revert, the history would have looked like this:
+ 
+  ---o---o---o---M---x---x---W---x---x
+-	       /                 \
++               /                 \
+        ---A---B                   A'--B'--C'
+ 
+ If you reverted the revert in such a case as in the previous example:
+ 
+  ---o---o---o---M---x---x---W---x---x---Y---*
+-	       /                 \         /
++               /                 \         /
+        ---A---B                   A'--B'--C'
+ 
+ where Y is the revert of W, A' and B' are rerolled A and B, and there may
+@@ -129,7 +129,7 @@ lot of overlapping changes that result in conflicts.  So do not do "revert
+ of revert" blindly without thinking..
+ 
+  ---o---o---o---M---x---x---W---x---x
+-	       /                 \
++               /                 \
+        ---A---B                   A'--B'--C'
+ 
+ In the history with rebased side branch, W (and M) are behind the merge
+-- 
+2.9.0.windows.1.323.g0305acf
 
