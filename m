@@ -7,104 +7,99 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B935320193
-	for <e@80x24.org>; Mon, 24 Oct 2016 19:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7C420193
+	for <e@80x24.org>; Mon, 24 Oct 2016 19:36:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933023AbcJXTcg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 15:32:36 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:35686 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752030AbcJXTce (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 15:32:34 -0400
-Received: by mail-qk0-f182.google.com with SMTP id z190so245885140qkc.2
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 12:32:34 -0700 (PDT)
+        id S1757434AbcJXTgx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Oct 2016 15:36:53 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:33488 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757423AbcJXTgw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2016 15:36:52 -0400
+Received: by mail-qk0-f178.google.com with SMTP id n189so246665402qke.0
+        for <git@vger.kernel.org>; Mon, 24 Oct 2016 12:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=JprpkpiCnDrwEg/3m+snx37Hxq6l3x9Q1j7eodE2bCM=;
-        b=ZqMgO3A45iHlud0/9rdxXNklbmEj9c+Bu3hOXJ5KOcOrDonIH6YtjU/8xa91fygx8z
-         msCDYsWYVxfhZzh0WHfyrKhCpv/+3S0KpfFxxflO/vBgdkiXT7Tr/xGG23/jjhhkQD9H
-         JOtLw5en1r6exricnBaDovhei7thUbbNlgm7kq1UG+YEFhAQ/lCSJkOUJbKV8NCPhzCV
-         tqVixwRRE6p2Scd8ipzueHA82ak5Tl68Syh0xC6A6TNq5dQxA2SgkpxbWhTnV4g8qqeX
-         xCWUhMt/crT3OAeIwXQXdjCgbR2oVejIIeJ8fsnAmVPzHfDJ0G02lA6iLzmjaRjANTc0
-         mOMg==
+        bh=eoB0fPBUvLUcI75jx/WBiecfGr5dUu1Nvd3NiwyGLKM=;
+        b=dIy0wGwhrNiO+4+Xv3B17lcc4JNqTZ6u8Z+tTUGvqH/vKlM4HthYEqdKZCEGoF9Fuw
+         BDc9EeQOBEu0RupFFzlaEJrziQgc1zqwKsd4xYz5OHKmKkXmm36lLLTdexL5gWJnfDIz
+         caQOKwefN/Rtut0fp1OBD6Pq3DpC6+h73dCxGPYMVGSGWCACZp104Fwfh1QFSzIT3h1b
+         3t7q1JQYmpCUGjRW1UoLs/E7ID9IrmRQIWuSxYJOnz7ectsYfhFqACIbjNoM821SHvGI
+         qZOTayq3O1h7f5LylNftlckeavD0ochpgx8AllHBGZCROpPq9d9kyj8PZnV1f/AsIgZH
+         UVGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=JprpkpiCnDrwEg/3m+snx37Hxq6l3x9Q1j7eodE2bCM=;
-        b=KckdTR6bkGiV1+178dNSlsfyETX5lnqUEqnX10WqoeGaCEVBQRIqp9/D66LKT0A5i/
-         AHIbjjBqWNXU1ocp5bK3wgNckYHpXvdXniZSV9w6Q1ND/ZpwH3tWYgGLyWdSzTP4rQUJ
-         VLlufXkpyfbVNLS2UM7kQ8LzFJSWLF/wOas/wGvzngBZrI2A+AjxRV85nBn+dfocp/8n
-         Sk5TR90lfUJZiSP7WqYfHQ2dWvMFwwh8NGW73b3CIo82ano7UMo8KgUX/RtywjqnbK65
-         982naivCt9TH99WVz+512ap1o28puSsGitypE6n3UtePaDJGwrllKjHHaYp2hVfpFjIh
-         tgeQ==
-X-Gm-Message-State: ABUngvcFjGC6MuULzRG2MxGO83Tz41OnX1MA9GdleE6FCiIb6BvTcbr0URO+3ERnXRT5jXNdBcGfeLIAnmB/+7go
-X-Received: by 10.55.142.130 with SMTP id q124mr15357383qkd.220.1477337553438;
- Mon, 24 Oct 2016 12:32:33 -0700 (PDT)
+        bh=eoB0fPBUvLUcI75jx/WBiecfGr5dUu1Nvd3NiwyGLKM=;
+        b=ZC9U4KpJFxPesVCk8KxhuVozxrFZ0gTOF2hXI9jsoFM6q7C2I4FicSZC5JH9W30kIb
+         tOBMZN77CPCsJ2N6e6hPeGnNPwqPUohr7IlG4LTbqldkIDiJAHIxSxgRHtpLUnVXJ2Lf
+         09TBuF7cXlF0l9voHeJZzSRPJfUk97TPgu0LP9Sof0xm9J2D53bcQYdXJuXQpqKVko4X
+         88dodOSbDeLiBnH3bHTtBsbWaHn7yA1igPXfpwjXFnFy9YqWDnVtPgWg5/3WC8j8Kzke
+         wqt8tukqdNG5yVFsuCB7ES8NM1M8vt2Icxv/F00CYEeD3PwH4IOBLJnHkdYorb7EF+xH
+         pM/w==
+X-Gm-Message-State: ABUngveuh9mrutND38fcG5aZioZ6ZejcZUv0f2r66s0bHl3KDmKlYb5zoMeHHF+q5MUoyB0d9Blhb7HwEoq+MWfn
+X-Received: by 10.55.20.164 with SMTP id 36mr14542920qku.86.1477337811159;
+ Mon, 24 Oct 2016 12:36:51 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 12:32:32 -0700 (PDT)
-In-Reply-To: <xmqqmvht5zwx.fsf@gitster.mtv.corp.google.com>
-References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-29-sbeller@google.com>
- <xmqqmvht5zwx.fsf@gitster.mtv.corp.google.com>
+Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 12:36:50 -0700 (PDT)
+In-Reply-To: <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
+References: <cover.1476450940.git.johannes.schindelin@gmx.de>
+ <cover.1477052405.git.johannes.schindelin@gmx.de> <xmqqinsk8g1b.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Oct 2016 12:32:32 -0700
-Message-ID: <CAGZ79kZ_7eG4uCXwyg0F=-hjmuT1dCAATSRnY293qkNC6siM5Q@mail.gmail.com>
-Subject: Re: [PATCH 28/36] attr: keep attr stack for each check
+Date:   Mon, 24 Oct 2016 12:36:50 -0700
+Message-ID: <CAGZ79kaq85c1Gk1aRSrdQGp1Nm9p6tN0jXbFvTN0v+9ehooxYg@mail.gmail.com>
+Subject: Re: [PATCH v5 00/27] Prepare the sequencer for the upcoming rebase -i patches
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 24, 2016 at 12:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Instead of having a global attr stack, attach the stack to each check.
->
-> Two threads may be working on "git checkout", one "git_attr_check"
-> in convert.c may be used by them to learn the EOL conversion for
-> each path, and these threads are working in different parts of
-> worktree in parallel.  The set of .gitattributes files each of these
-> threads wants to be cached at one time is tied to where in the
-> directory hierarchy the thread is working in.
->
-> The view by API users would not have to change from the point on
-> since 27/36 or so, but I think attr_stack needs to become per
-> <check, thread> tuple when we are fully thread-ready for the above
-> reason.
-
-I looked for a platform independent way to get a thread id as a natural
-number, i.e. I want to get 1,2,3,... such that I could have just added
-list/array of attr stacks to each check, which would be the
-<check, thread> tuple you envision.
-
-However I think we do not really need it to be per check.  If we had
-an easy portable way of getting such a thread id, I would have implemented
-a list of stacks per thread first. (Because each thread only looks at one
-check at a time.)
-
-So this is not a baby step because I did not want to do it all at once, but
-because I did not find a suitable API to use.
+On Sat, Oct 22, 2016 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
 >
-> But we need to start somewhere to move away from the current "one
-> single attr stack" to "there are multiple attr stacks", and this
-> "two checks may and do use different attr stacks" is probably a
-> reasonable first step.  It may give a single-threaded API users
-> immediate benefit if the "read and keep only the entries relevant
-> to the query" optimization is done with this step alone, without
-> making the cache per <check, thread> pair.
+> There isn't enough time to include this topic in the upcoming
+> release within the current https://tinyurl.com/gitCal calendar,
+> however, which places the final on Nov 11th.
 >
->> This allows to use the attr in a multithreaded way.
+> I am wondering if it makes sense to delay 2.11 by moving the final
+> by 4 weeks to Dec 9th.
 >
-> With manipulation of attr stack protected with a single Big
-> Attributes Lock, this should be safe.  It may not perform very well
-> when used by multiple threads, though ;-)
+> Thoughts?
+>
+> Speaking of what to and not to include in the upcoming release, we
+> do want to include Stefan's off-by-one fix to the submodule-helper,
+> but that is blocked on Windows end due to the test.
 
-I agree. So maybe it is not really a good fit for general consumption yet.
+I'd be happy either way, i.e. we could revert that fix and make a release?
+AFAICT, Windows only has broken tests, not broken functionality with that
+submodule bug fix.
+
+> I think
+> everybody agreed that a longer time "right thing to do" fix is to
+> address the "when base is /path/to/dir/., where is ../sub relative
+> to it?" issue, but if we are to do so, it would need a longer
+> gestation period once it hits 'next', as it can affect the current
+> users and we may even need B/C notes in the release notes for the
+> change.  Giving ourselves a few more weeks of breathing room would
+> help us to make sure the fix to relative URL issue is sound, too.
+
+If we want a longer gestation period, we'd ideally merge it to master
+just after a release, such that we "cook" it in master without having
+it in any release (we had a similar discussion for the diff heuristics IIRC).
+
+So please don't let the release schedule depend on my ability to deliver a
+proper patch for the submodule path issue.
+
+Thanks,
+Stefan
