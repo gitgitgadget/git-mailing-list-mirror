@@ -2,87 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F08CE2022A
-	for <e@80x24.org>; Tue, 25 Oct 2016 10:26:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F5462022A
+	for <e@80x24.org>; Tue, 25 Oct 2016 10:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933028AbcJYK0e (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 06:26:34 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:33085 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753454AbcJYK0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 06:26:34 -0400
-Received: by mail-oi0-f67.google.com with SMTP id i127so6269306oia.0
-        for <git@vger.kernel.org>; Tue, 25 Oct 2016 03:26:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=g67v3Cg4ppY7ImxN1uIlaW08jAmibgH+14NiW85B89E=;
-        b=vmG3jKyV7EQ+XEgSzYL0JWYRNHUkPKoHxCSR4tev4MZnZCvvx3RbEDXMEsDi7BtphU
-         4Mk8kfxKHcKTTHOerlVr8VV8aab/kNeUF2L9sZ8MYgN/P+gWVaoF3RMR3U/Qt0Hf3dFk
-         1DMNgfPREvPH/j9gMHLvNzRtSHNEGsz9NosmEyK/7wR67tmsZ0ByJZ5A8Ppyvh4BHMMB
-         wsjcvoqL4cqxSMgnVoISNJraqmjpifaSG1TCwL6w7s8+0To7JkqL8biPMfandwudAdOt
-         zSe7N1XD0jxmOT/elnYzAXsZXhy+Y1NZy0fwCMiNlv7YJpPHxk4lYHUhZFa5dA9sT+bb
-         ob1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g67v3Cg4ppY7ImxN1uIlaW08jAmibgH+14NiW85B89E=;
-        b=CxkisCHrfsosigptOYJmNJyu2wRdM2Jte1VXS76szukh2x3auFAsSyDE5YOXa2dmAy
-         uvL4Oys6g00oxtZxWf/f9zcTAzhiaPZ/ORIgf5T4vmcrWJkHmcq53ArelYV66xydzBVb
-         oLPMfz2zaWGWIg04H89dMEHCWRUNrReJ77kru4WhFHVEjVWeE9EWTu+pmiPnDgbZRud2
-         8+UOOenzEAYHJ6rcKhHRCCib597m6j81pBV/7qz/WTDyTktBuTImGkfJF2xUJxdQkFZZ
-         yjsvcG9b3C2SpDaAR59p8r7fMk3UeECVYd40azYnQksP6UXyLK+5/qXFXewR/JFiE+y2
-         X2ZQ==
-X-Gm-Message-State: ABUngve1mx+skKkWYpQBHhq27nnBiQxSk711OC4tUjM7w2E7hNJibz5f4CHcR1Pddb0Mg5EkhfYA/kcGD4U+2w==
-X-Received: by 10.107.15.222 with SMTP id 91mr15503419iop.19.1477391193249;
- Tue, 25 Oct 2016 03:26:33 -0700 (PDT)
+        id S965387AbcJYK2L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 06:28:11 -0400
+Received: from mout.gmx.net ([212.227.15.18]:65128 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753152AbcJYK2K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 06:28:10 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Lh7sF-1cjXa905m3-00oVKY; Tue, 25 Oct 2016 12:27:54
+ +0200
+Date:   Tue, 25 Oct 2016 12:27:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git@vger.kernel.org, e@80x24.org, jnareb@gmail.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v2 1/2] sha1_file: open window into packfiles with
+ CLOEXEC
+In-Reply-To: <20161024180300.52359-2-larsxschneider@gmail.com>
+Message-ID: <alpine.DEB.2.20.1610251220280.3264@virtualbox>
+References: <20161024180300.52359-1-larsxschneider@gmail.com> <20161024180300.52359-2-larsxschneider@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Tue, 25 Oct 2016 03:26:02 -0700 (PDT)
-In-Reply-To: <20161023092648.12086-15-chriscool@tuxfamily.org>
-References: <20161023092648.12086-1-chriscool@tuxfamily.org> <20161023092648.12086-15-chriscool@tuxfamily.org>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 25 Oct 2016 17:26:02 +0700
-Message-ID: <CACsJy8As2o-ZDXMRWeebpXiWUrDMLaXC2H1R+OMbhAMmM8V_wg@mail.gmail.com>
-Subject: Re: [PATCH v1 14/19] read-cache: touch shared index files when used
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:U29GSEePHz7YnafyCckkef/7pjACNAInA9cvpO2juokDPiTVWOF
+ OgVLSKDFN1EjYtGO5uy9SdT/IMZBjSUB3RIq6zxYW94dawS84XmZ79DiMnRWc++YfvqH2gS
+ mY3M0MGUPZlrM+ypuBmSYyamX9tQykVLOSHYWxQP0TGnAyAVs5rmsKrMJ7+jiCxTORZKG/3
+ PhL2/ZibKIZ9ZSZhgC4lw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:s5uGam8zi70=:cz2lOeaxo4JlHAPNt/pttP
+ l9iK/anuVn4WrFwEmU6wpt5lqEmy8tHL02VDOVoqCKpQ74FtEQfea4fWu+A+TM2eav9QXd8H0
+ 1zGiamyExTT974+PVT5tkAUPNIqGvuLGSdgnFk86Op0DFFFIj1WsPOajyuVw3ZloIXUX9SkHB
+ yVH3KXDlpTvUjErdsaSMf3X8aW3oCDjRSrJAe+hDhALOgauXfPKyxISMdmfTYlSLvjHqsnjtX
+ YMfhFIVsrLgcAVH0JIWLcD+9UfEv1y25czFkpAMrKY0lVobfYajPz7NZexMJxoGAHR3oz1/pH
+ ENecMO8bijMX0ovWH3D38MDMG6xIvKT7e51QFZonbfvBGQruA7mxm3qs8Nm3Q5EXjcZ76bksR
+ kIBW3gSCai1bbn6EW4UCWzz5WhCvY+F/IfaMjDcBZx2TkQADFoBsSLU8LdB3wl5ZJcxCHakwi
+ CUo/JfTB6fLj2l9ukUqul1TSPe1SZX2YufZM1kC78Y3VP2eJJYjeuwuUhRjWZm55YuqXsmnGo
+ s6D+i9NEScKj9ovb0vQVzysLRB8svlsBSt5kCigqvFk+iHoMs2u03HAHrbmEm9iXHwNWw0Cm0
+ IqVzvgpOqqo/fdpGy8uXL0Su/xhxcZ38TKRaogvrT5z8YTN/80+N/3kAnGIbdIwIQfp4idKhO
+ ZF6mjL2sY17hOhT5tUYXy4woQrCDwEfcb7D4453zUrtMtqik2VMilMeHW8f2+FLFy/H42gJn/
+ QccpZgdw96EumKNcQqqxg0GbfI5hfu5rP8n8HJsRhKow7Y4RlnnTf/adWhfYDZN6HTec9PB7e
+ VyLAeyQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> @@ -2268,6 +2268,12 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+Hi Lars,
 
-Doing this in read_index_from() would keep the shared file even more
-"fresher" since read happens a lot more often than write. But I think
-our main concern is not the temporary index files created by the user
-scripts, but $GIT_DIR/index.lock (make sure we don't accidentally
-delete its shared file before it gets renamed to $GIT_DIR/index). For
-this case, I think refreshing in write_locked_index is enough.
+On Mon, 24 Oct 2016, larsxschneider@gmail.com wrote:
 
->                 int ret = write_shared_index(istate, lock, flags);
->                 if (ret)
->                         return ret;
-> +       } else {
-> +               /* Signal that the shared index is used */
-> +               const char *shared_index = git_path("sharedindex.%s",
-> +                                                   sha1_to_hex(si->base_sha1));
-> +               if (!check_and_freshen_file(shared_index, 1))
-> +                       warning("could not freshen '%s'", shared_index);
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> All processes that the Git main process spawns inherit the open file
+> descriptors of the main process. These leaked file descriptors can
+> cause problems.
+> 
+> Use the CLOEXEC flag similar to 05d1ed61 to fix the leaked file
+> descriptors. Since `git_open_noatime` does not describe the function
+> properly anymore rename it to `git_open`.
 
-_()
--- 
-Duy
+The patch series may be a little bit more pleasant to read if you renamed
+git_open_noatime() to git_open() first, in a separate commit.
+
+> @@ -1598,12 +1598,18 @@ int git_open_noatime(const char *name)
+>  		if (fd >= 0)
+>  			return fd;
+>  
+> -		/* Might the failure be due to O_NOATIME? */
+> -		if (errno != ENOENT && sha1_file_open_flag) {
+> -			sha1_file_open_flag = 0;
+> +		/* Try again w/o O_CLOEXEC: the kernel might not support it */
+> +		if (O_CLOEXEC && errno == EINVAL &&
+> +			(sha1_file_open_flag & O_CLOEXEC)) {
+> +			sha1_file_open_flag &= ~O_CLOEXEC;
+
+How about
+
+		if ((O_CLOEXEC & sha1_file_open_flag) && errno == EINVAL) {
+			sha1_file_open_flag &= ~O_CLOEXEC;
+
+instead? It is shorter and should be just as easily optimized out by a
+C compiler if O_CLOEXEC was defined as 0.
+
+>  			continue;
+>  		}
+>  
+> +		/* Might the failure be due to O_NOATIME? */
+> +		if (errno != ENOENT && (sha1_file_open_flag & O_NOATIME)) {
+> +			sha1_file_open_flag &= ~O_NOATIME;
+> +			continue;
+> +		}
+
+I *think* the --patience diff option would have made that patch a little
+more obvious.
+
+Otherwise, the patch looks fine to me,
+Dscho
