@@ -2,125 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF9422035F
-	for <e@80x24.org>; Tue, 25 Oct 2016 18:13:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99C55203BD
+	for <e@80x24.org>; Tue, 25 Oct 2016 18:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754720AbcJYSNh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 14:13:37 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:35837 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753299AbcJYSNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 14:13:37 -0400
-Received: by mail-qk0-f174.google.com with SMTP id z190so265223233qkc.2
-        for <git@vger.kernel.org>; Tue, 25 Oct 2016 11:13:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Y7XE/NhUrwVjt+/WkaagD13BgGo7N5DxbIJN6KKUWuo=;
-        b=SwskVf1ehclT1ZmVqB3sqiFsWvhXIzyjiogddlxzAlH41GOkBUOkl9vN2eygPnMvAS
-         QaYIrfnv5ohNuc1MgNfEOMranamx02jW+X+eb77QCDRFd4/Rk2RpaElM9Wh9WZ1ilOPb
-         xLyZBCyGOvBQNp1zUHaS0E0oXVoh8Q+qaL4wDsL6tJa8lXH33wLbhRMP4yt1Hyam+nON
-         GohZFaZHWYJNvvbGwWaudSma1sii1i2zUQVzbv02PK0b6wUR9shKzsekzFPKEVhBgYU1
-         Sn0wtooDVQqOuHmrvgXsPwi0d8BZXDxWbAswwkkMVFIuKGFHIST2fCigIYWV7LiPBlcq
-         A78A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Y7XE/NhUrwVjt+/WkaagD13BgGo7N5DxbIJN6KKUWuo=;
-        b=Y44AkDDEJgiZPEjT0oispw3balpDR0FHcoscB4w2xpCHiRm73H1fZghgk7iT9Z24VZ
-         HqWPtGDfa5CUqMyZHRBEjcfy7ug0k/vPPSzpS9IdloutCXqHmJsqQ3Oh9E2MZdCC2+2a
-         NYwbQQ9Jeea8hlSUsSeaKsi/rVvSnPd+xaaP+MGodlAU6noTDw3bYvf7EciNW4tDVbyi
-         SlOZVDNYiJ/NzsX705qH05mSu1Q3jFx/jEeI6gAI8G0Aw7AN+Y04hgmgYS+AAcwPi8Rn
-         8GIy7Rk+YGniYUWKjxjAZjjqRNlR3tIte8cTW857eDUykj1T4VHM8SZPKWepAuwm7w8B
-         SQZQ==
-X-Gm-Message-State: ABUngvfRJlVy9kXTrn8sXcMC62/IeuWUQM/YxwMaUyu4ebYvUvc1YApcjjhCgf4I4ST9V7zz5Bz2pUiMDQjnp9Q2
-X-Received: by 10.55.64.80 with SMTP id n77mr22529392qka.173.1477419215921;
- Tue, 25 Oct 2016 11:13:35 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Tue, 25 Oct 2016 11:13:35 -0700 (PDT)
-In-Reply-To: <xmqqoa28s63l.fsf@gitster.mtv.corp.google.com>
-References: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com> <CAGZ79kbtyuSXDiyi2eY6HKCAwEiKgk2KmNakSn=f+RiXCAC1bA@mail.gmail.com>
- <xmqqoa28s63l.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 25 Oct 2016 11:13:35 -0700
-Message-ID: <CAGZ79kb2XD8+y-Y_oiwSj3DsXjmTS=bd6fj5dn9NADmvDO5xtQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2016, #06; Mon, 24)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1759135AbcJYSRS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 14:17:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57123 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755817AbcJYSRM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 14:17:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 620AF473F1;
+        Tue, 25 Oct 2016 14:16:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=SY06
+        tXla+ktY25bfZcMh9PtaERE=; b=cz5k39tlnGHsC/62TFdB8UUjOtgPNQTLGDyV
+        SjlhkxJ0RrBe1AlJO9fl3yPvEKxkCBjrHpFgNHvc92MrHc5kxFPu2PSnDajRn6O5
+        Q4Jvmf+1A/XMkbAOKRv7onURioAX50R1SmqQ79WvH4L7bnRG43CPKKDR5WLJ5dKb
+        94dGSeA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+        jTwX7YK1HVFxThuSlN88CFczCvF/P+hEvP4dqvSVWY/VIJk0ZYL2uCgPtUjvX4B9
+        +UJS6Kvaq/sDe5+58/7BvbPUf4l7In20y8iDvIxtwtXiTAlUlOQK6eqxM+Bkv8WW
+        0F12T2BRefu5S0tkoEwS5ND5oEKvqhoUZSaz7/ojHpg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58A46473F0;
+        Tue, 25 Oct 2016 14:16:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD856473EF;
+        Tue, 25 Oct 2016 14:16:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Lars Schneider <larsxschneider@gmail.com>, Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
+Date:   Tue, 25 Oct 2016 11:16:20 -0700
+Message-Id: <20161025181621.4201-3-gitster@pobox.com>
+X-Mailer: git-send-email 2.10.1-777-gd068e6bde7
+In-Reply-To: <20161025181621.4201-1-gitster@pobox.com>
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
+ <20161025181621.4201-1-gitster@pobox.com>
+X-Pobox-Relay-ID: 2B713CCE-9ADF-11E6-BB0B-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 25, 2016 at 10:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> One of the initial ways to work around the bugfix was to
->>
->>     git clone . root # <- add in this step and it works again.
->>     git clone root super
->>
->> but instead I will do the preparation for the 'super' project not
->> in '.' but in 'root', just called differently ("super_remote" ?)
->>
->> An additional new test for cloning from '.' will be introduced, too.
->>
->> I plan on working on that with highest priority for git after finishing
->> some attr stuff that I currently have open. So expect a patch (or two)
->> this week.
->
-> Hmph, I personally would prefer to defer the "correct behaviour for
-> /." part for the next cycle, which is why I wrote:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-Ok. The first 2 patches are in good shape for this cycle, though.
-And the /. thing will wait until next cycle then, i.e. I can drop priority
-as I wish
+All processes that the Git main process spawns inherit the open file
+descriptors of the main process. These leaked file descriptors can
+cause problems.
 
->
->  - the "off-by-one fix" part of sb/submodule-ignore-trailing-slash
->    needs to be in the upcoming release but the "trailing /. in base
->    should not affect the resolution of ../relative/path" part that
->    is still under discussion can wait.  Which means we'd need a few
->    more !MINGW prerequisites in the tests by -rc0.
->
-> at the beginning of the message you are responding to, and I also
-> thought that was consistent and in agreement with what you said
-> earlier in <CAGZ79kaq85c1Gk1aRSrdQGp1Nm9p6tN0jXbFvTN0v+9ehooxYg@mail.gmail.com>
->
->> On Sat, Oct 22, 2016 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> >
->> > There isn't enough time to include this topic in the upcoming
->> > release within the current https://tinyurl.com/gitCal calendar,
->> > however, which places the final on Nov 11th.
->> >
->> > I am wondering if it makes sense to delay 2.11 by moving the final
->> > by 4 weeks to Dec 9th.
->> >
->> > Thoughts?
->> >
->> > Speaking of what to and not to include in the upcoming release, we
->> > do want to include Stefan's off-by-one fix to the submodule-helper,
->> > but that is blocked on Windows end due to the test.
->>
->> I'd be happy either way, i.e. we could revert that fix and make a release?
->> AFAICT, Windows only has broken tests, not broken functionality with that
->> submodule bug fix.
->
-> to which I responded in <xmqqpomp33km.fsf@gitster.mtv.corp.google.com>
+Use the O_CLOEXEC flag similar to 05d1ed61 to fix the leaked file
+descriptors.
 
-and you said:
-> It of course needs help from
-> Windows folks to validate the results.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-So maybe instead of adding !MINGW we rather want to apply
-https://public-inbox.org/git/2908451e-4273-8826-8989-5572263cc283@kdbg.org/
-instead for now?
+ * And the remainder of original 1/2, again taking suggestion by DScho.
+
+ sha1_file.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 5d2bcd3ed1..09045df1dc 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1561,7 +1561,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 
+ int git_open(const char *name)
+ {
+-	static int sha1_file_open_flag = O_NOATIME;
++	static int sha1_file_open_flag = O_NOATIME | O_CLOEXEC;
+ 
+ 	for (;;) {
+ 		int fd;
+@@ -1571,12 +1571,17 @@ int git_open(const char *name)
+ 		if (fd >= 0)
+ 			return fd;
+ 
+-		/* Might the failure be due to O_NOATIME? */
+-		if (errno != ENOENT && sha1_file_open_flag) {
+-			sha1_file_open_flag = 0;
++		/* Try again w/o O_CLOEXEC: the kernel might not support it */
++		if ((sha1_file_open_flag & O_CLOEXEC) && errno == EINVAL) {
++			sha1_file_open_flag &= ~O_CLOEXEC;
+ 			continue;
+ 		}
+ 
++		/* Might the failure be due to O_NOATIME? */
++		if (errno != ENOENT && (sha1_file_open_flag & O_NOATIME)) {
++			sha1_file_open_flag &= ~O_NOATIME;
++			continue;
++		}
+ 		return -1;
+ 	}
+ }
+-- 
+2.10.1-777-gd068e6bde7
+
