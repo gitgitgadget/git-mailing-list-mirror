@@ -2,82 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8406A2035F
-	for <e@80x24.org>; Tue, 25 Oct 2016 17:32:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9422035F
+	for <e@80x24.org>; Tue, 25 Oct 2016 18:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941135AbcJYRcn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 13:32:43 -0400
-Received: from mail.javad.com ([54.86.164.124]:45532 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934156AbcJYRcm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 13:32:42 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 46CDB60BFE;
-        Tue, 25 Oct 2016 17:32:41 +0000 (UTC)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1bz5aZ-00028D-R0; Tue, 25 Oct 2016 20:32:39 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] reset: --unmerge
-References: <xmqqa8dttkbw.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 25 Oct 2016 20:32:39 +0300
-In-Reply-To: <xmqqa8dttkbw.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 24 Oct 2016 16:10:11 -0700")
-Message-ID: <87bmy81gi0.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1754720AbcJYSNh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 14:13:37 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:35837 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753299AbcJYSNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 14:13:37 -0400
+Received: by mail-qk0-f174.google.com with SMTP id z190so265223233qkc.2
+        for <git@vger.kernel.org>; Tue, 25 Oct 2016 11:13:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Y7XE/NhUrwVjt+/WkaagD13BgGo7N5DxbIJN6KKUWuo=;
+        b=SwskVf1ehclT1ZmVqB3sqiFsWvhXIzyjiogddlxzAlH41GOkBUOkl9vN2eygPnMvAS
+         QaYIrfnv5ohNuc1MgNfEOMranamx02jW+X+eb77QCDRFd4/Rk2RpaElM9Wh9WZ1ilOPb
+         xLyZBCyGOvBQNp1zUHaS0E0oXVoh8Q+qaL4wDsL6tJa8lXH33wLbhRMP4yt1Hyam+nON
+         GohZFaZHWYJNvvbGwWaudSma1sii1i2zUQVzbv02PK0b6wUR9shKzsekzFPKEVhBgYU1
+         Sn0wtooDVQqOuHmrvgXsPwi0d8BZXDxWbAswwkkMVFIuKGFHIST2fCigIYWV7LiPBlcq
+         A78A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Y7XE/NhUrwVjt+/WkaagD13BgGo7N5DxbIJN6KKUWuo=;
+        b=Y44AkDDEJgiZPEjT0oispw3balpDR0FHcoscB4w2xpCHiRm73H1fZghgk7iT9Z24VZ
+         HqWPtGDfa5CUqMyZHRBEjcfy7ug0k/vPPSzpS9IdloutCXqHmJsqQ3Oh9E2MZdCC2+2a
+         NYwbQQ9Jeea8hlSUsSeaKsi/rVvSnPd+xaaP+MGodlAU6noTDw3bYvf7EciNW4tDVbyi
+         SlOZVDNYiJ/NzsX705qH05mSu1Q3jFx/jEeI6gAI8G0Aw7AN+Y04hgmgYS+AAcwPi8Rn
+         8GIy7Rk+YGniYUWKjxjAZjjqRNlR3tIte8cTW857eDUykj1T4VHM8SZPKWepAuwm7w8B
+         SQZQ==
+X-Gm-Message-State: ABUngvfRJlVy9kXTrn8sXcMC62/IeuWUQM/YxwMaUyu4ebYvUvc1YApcjjhCgf4I4ST9V7zz5Bz2pUiMDQjnp9Q2
+X-Received: by 10.55.64.80 with SMTP id n77mr22529392qka.173.1477419215921;
+ Tue, 25 Oct 2016 11:13:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.135.40 with HTTP; Tue, 25 Oct 2016 11:13:35 -0700 (PDT)
+In-Reply-To: <xmqqoa28s63l.fsf@gitster.mtv.corp.google.com>
+References: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com> <CAGZ79kbtyuSXDiyi2eY6HKCAwEiKgk2KmNakSn=f+RiXCAC1bA@mail.gmail.com>
+ <xmqqoa28s63l.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 25 Oct 2016 11:13:35 -0700
+Message-ID: <CAGZ79kb2XD8+y-Y_oiwSj3DsXjmTS=bd6fj5dn9NADmvDO5xtQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2016, #06; Mon, 24)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> The procedure to resolve a merge conflict typically goes like this:
+On Tue, Oct 25, 2016 at 10:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->  - first open the file in the editor, and with the help of conflict
->    markers come up with a resolution.
+>> One of the initial ways to work around the bugfix was to
+>>
+>>     git clone . root # <- add in this step and it works again.
+>>     git clone root super
+>>
+>> but instead I will do the preparation for the 'super' project not
+>> in '.' but in 'root', just called differently ("super_remote" ?)
+>>
+>> An additional new test for cloning from '.' will be introduced, too.
+>>
+>> I plan on working on that with highest priority for git after finishing
+>> some attr stuff that I currently have open. So expect a patch (or two)
+>> this week.
 >
->  - save the file.
+> Hmph, I personally would prefer to defer the "correct behaviour for
+> /." part for the next cycle, which is why I wrote:
+
+Ok. The first 2 patches are in good shape for this cycle, though.
+And the /. thing will wait until next cycle then, i.e. I can drop priority
+as I wish
+
 >
->  - look at the output from "git diff" to see the combined diff to
->    double check if the resolution makes sense.
+>  - the "off-by-one fix" part of sb/submodule-ignore-trailing-slash
+>    needs to be in the upcoming release but the "trailing /. in base
+>    should not affect the resolution of ../relative/path" part that
+>    is still under discussion can wait.  Which means we'd need a few
+>    more !MINGW prerequisites in the tests by -rc0.
 >
->  - perform other tests, like trying to build the result with "make".
+> at the beginning of the message you are responding to, and I also
+> thought that was consistent and in agreement with what you said
+> earlier in <CAGZ79kaq85c1Gk1aRSrdQGp1Nm9p6tN0jXbFvTN0v+9ehooxYg@mail.gmail.com>
 >
->  - finally "git add file" to mark that you are done.
+>> On Sat, Oct 22, 2016 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> >
+>> > There isn't enough time to include this topic in the upcoming
+>> > release within the current https://tinyurl.com/gitCal calendar,
+>> > however, which places the final on Nov 11th.
+>> >
+>> > I am wondering if it makes sense to delay 2.11 by moving the final
+>> > by 4 weeks to Dec 9th.
+>> >
+>> > Thoughts?
+>> >
+>> > Speaking of what to and not to include in the upcoming release, we
+>> > do want to include Stefan's off-by-one fix to the submodule-helper,
+>> > but that is blocked on Windows end due to the test.
+>>
+>> I'd be happy either way, i.e. we could revert that fix and make a release?
+>> AFAICT, Windows only has broken tests, not broken functionality with that
+>> submodule bug fix.
 >
-> and repeating the above until you are done with all the conflicted
-> paths.  If you, for whatever reason, accidentally "git add file" by
-> mistake until you are convinced that you resolved it correctly (e.g.
-> doing "git add file" immediately after saving, without a chance to
-> peruse the output from "git diff"), there is no good way to recover.
+> to which I responded in <xmqqpomp33km.fsf@gitster.mtv.corp.google.com>
 
-"git reset --unmerge file"
+and you said:
+> It of course needs help from
+> Windows folks to validate the results.
 
-to undo accidental
-
-"git add file"
-
-during conflict resolution?
-
-I'm afraid "unmerge" sounds like revert of "merge", rather than revert
-of "resolve". I'd rather prefer to see something like:
-
-git add --undo file
-
-git merge --unresolve file
-
-git reset --unresolve file
-
-in that order, to deal with the issue.
-
--- Sergey
+So maybe instead of adding !MINGW we rather want to apply
+https://public-inbox.org/git/2908451e-4273-8826-8989-5572263cc283@kdbg.org/
+instead for now?
