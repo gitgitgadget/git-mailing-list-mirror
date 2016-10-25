@@ -2,150 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A41F42035F
-	for <e@80x24.org>; Tue, 25 Oct 2016 15:15:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A9802035F
+	for <e@80x24.org>; Tue, 25 Oct 2016 15:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754632AbcJYPP2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 11:15:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33944 "EHLO cloud.peff.net"
+        id S1754865AbcJYPa2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 11:30:28 -0400
+Received: from mout.gmx.net ([212.227.17.20]:65416 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751302AbcJYPP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 11:15:27 -0400
-Received: (qmail 630 invoked by uid 109); 25 Oct 2016 15:15:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Oct 2016 15:15:27 +0000
-Received: (qmail 2164 invoked by uid 111); 25 Oct 2016 15:15:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Oct 2016 11:15:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Oct 2016 11:15:25 -0400
-Date:   Tue, 25 Oct 2016 11:15:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 7/7] setup_git_env: avoid blind fall-back to ".git"
-Message-ID: <20161025151524.y7wwtetohhqgcvob@sigill.intra.peff.net>
-References: <20161020061536.6fqh23xb2nhxodpa@sigill.intra.peff.net>
- <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
- <CACsJy8DZWN0RRaDy9w2BVG5pn4FWCY=1YQDsP0V5obrr1wSzZQ@mail.gmail.com>
+        id S1753905AbcJYPa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 11:30:27 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MVNWU-1cPsdv3QTe-00YhpK; Tue, 25 Oct 2016 17:30:13
+ +0200
+Date:   Tue, 25 Oct 2016 17:30:11 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+cc:     Gavin Lambert <github@mirality.co.nz>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] git-svn: do not reuse caches memoized for a different
+ architecture
+Message-ID: <653aa0cd566a2486bbc38cfd82ddfcfdfe48271c.1477398004.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DZWN0RRaDy9w2BVG5pn4FWCY=1YQDsP0V5obrr1wSzZQ@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:xsyrIdYk+nMlGAmYLqzuXueLHB5zEk+NHuFKG6xvXynLUPNkvxb
+ 19PjTnzbYT72EEdRQcPP+uL5xwzI8XTbuxJiGheBMjNgmaX3uxKezxy6kyhB9hiIJFw4qlX
+ gNuaumUG+9JgmQfnbDDRzuOfvBWsYf9XbsCGTmFsLZ9wvGCYtLNXi6z2BvocYkuci++XD+F
+ sSAI9L+Ptb0tXIGt4+DcQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QO41+hGOxKI=:eKvBmm4eovSbMGz5hqcgTT
+ WqDzrRKxFC7g6sZDA19VhsfAEdvEByHDlQaaL762E9lFtVgJeAXFP9BkUn/8vZuEv/1Y57MWl
+ 21ILKhEU7c092IV35YMJVhB2kTIIpmI9sZkBg0rHkrAAOwd/ZKR+vZolyHaK901fP8LToywOp
+ 5YemwRYqMfC8Y4x1lVj9KrVzlqUwrYly9kad3ASEUumdhFAoWLoN1vgDv3k7EyOk4B7r1nrkC
+ Qi9Y675d15tcwntI1XX+Z/Eg/NUMtHGksKiZeY8shZXK1Mq8Meb/R8gFlkH2JwG0AnwQ+NWiq
+ YhFLWt6/1/ArM5RdKqiFCZX8Wby7TB9+ZrFJxNK8eT4wcJWVrDKw32MsnQrMUiPPaeO0ffdS1
+ w35g8Jr2RfSbpBkMll06XJSblV6DuS48Xlco3FZ8pishqURslP/lJffFZr/lOEQajGzO+8oDT
+ yIJ41JF2CZpunIrByQb/N5yyNlU15UqskK+0dELnqBy5/rHq+dBXIrhuM/F4tImNRLSwK4heF
+ oNsfl9H/W/8fXjlsMKEgYGQQWDHQzzBEiDJG+YG95auudXR5ofil1w2+LYteIfke1mZM+PlMN
+ G4ICjM7nMjJVZC57/EjpBarekOyDt5HcmFD3T2bMjzKSzgdC1ZNqWi9iK4n55qKGqKbrryYsJ
+ agQ2eGkChkLHl9VumzMz+KXIBs7nEKlaoqEZ1mRhF1lKeUui3ry05Pdf4uhhu7S761Q81l13N
+ ljE1AwbpiDZz8CbmNr4p302vKdNY+KffR9SzDluhc43D0Xr0s/74l9fDUFmSK6pYStkzcQIt9
+ rbs4FIa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 25, 2016 at 07:38:30PM +0700, Duy Nguyen wrote:
+From: Gavin Lambert <github@mirality.co.nz>
 
-> > diff --git a/environment.c b/environment.c
-> > index cd5aa57..b1743e6 100644
-> > --- a/environment.c
-> > +++ b/environment.c
-> > @@ -164,8 +164,11 @@ static void setup_git_env(void)
-> >         const char *replace_ref_base;
-> >
-> >         git_dir = getenv(GIT_DIR_ENVIRONMENT);
-> > -       if (!git_dir)
-> > +       if (!git_dir) {
-> > +               if (!startup_info->have_repository)
-> > +                       die("BUG: setup_git_env called without repository");
-> 
-> YES!!! Thank you for finally fixing this.
+Reusing cached data speeds up git-svn by quite a fair bit. However, if
+the YAML module is unavailable, the caches are written to disk in an
+architecture-dependent manner. That leads to problems when upgrading,
+say, from 32-bit to 64-bit Git for Windows.
 
-Good, I'm glad somebody besides me is excited about this. I've been
-wanting to write this patch for a long time, but it took years of
-chipping away at all the edge cases.
+Let's just try to read those caches back if we detect the absence of the
+YAML module and the presence of the file, and delete the file if it
+could not be read back correctly.
 
-> The "once we've identified" part could be tricky though. This message
-> alone will not give us any clue where it's called since it's buried
-> deep in git_path() usually, which is buried deep elsewhere. Without
-> falling back to core dumps (with debug info), glibc's backtrace
-> (platform specifc), the best we could do is turn git_path() into a
-> macro that takes __FILE__ and __LINE__ and somehow pass the info down
-> here, but "..." in macros is C99 specific, sigh..
-> 
-> Is it too bad to turn git_path() into a macro when we know the
-> compiler is C99 ? Older compilers will have no source location info in
-> git_path(), Hopefully they are rare, which means chances of this fault
-> popping up are also reduced.
+Note that the only way to catch the error when the memoized cache could
+not be read back is to put the call inside an `eval { ... }` block
+because it would die otherwise; the `eval` block should also return `1`
+in case of success explicitly since the function reading back the cached
+data does not return an appropriate value to test for success.
 
-I think you could conditionally make git_path() and all of its
-counterparts macros, similar to the way the trace code works. It seems
-like a pretty maintenance-heavy solution, though. I'd prefer
-conditionally compiling backtrace(); that also doesn't hit 100% of
-cases, but at least it isn't too invasive.
+This fixes https://github.com/git-for-windows/git/issues/233.
 
-But I think I still prefer just letting the corefile and the debugger do
-their job. This error shouldn't happen much, and when it does, it should
-be easily reproducible. Getting the bug reporter to give either a
-reproduction recipe, or to run "gdb git" doesn't seem like that big a
-hurdle.
-
-For fun, here's a patch that uses backtrace(), but it does not actually
-print the function names unless you compile with "-rdynamic" (and even
-then it misses static functions). There are better libraries, but of
-course that's one more thing for the user to deal with when building.
-
--Peff
-
+Signed-off-by: Gavin Lambert <github@mirality.co.nz>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-diff --git a/usage.c b/usage.c
-index 17f52c1b5c..4917c6bdfd 100644
---- a/usage.c
-+++ b/usage.c
-@@ -5,6 +5,9 @@
-  */
- #include "git-compat-util.h"
- #include "cache.h"
-+#ifdef HAVE_BACKTRACE
-+#include <execinfo.h>
-+#endif
- 
- static FILE *error_handle;
- static int tweaked_error_buffering;
-@@ -24,6 +27,32 @@ void vreportf(const char *prefix, const char *err, va_list params)
- 	fputc('\n', fh);
+Published-As: https://github.com/dscho/git/releases/tag/svn-multi-arch-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git svn-multi-arch-v1
+
+We carried this for some time in Git for Windows.
+
+ perl/Git/SVN.pm | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 018beb8..025c894 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1658,6 +1658,11 @@ sub tie_for_persistent_memoization {
+ 	if ($memo_backend > 0) {
+ 		tie %$hash => 'Git::SVN::Memoize::YAML', "$path.yaml";
+ 	} else {
++		# first verify that any existing file can actually be loaded
++		# (it may have been saved by an incompatible version)
++		if (-e "$path.db") {
++			unlink "$path.db" unless eval { retrieve("$path.db"); 1 };
++		}
+ 		tie %$hash => 'Memoize::Storable', "$path.db", 'nstore';
+ 	}
  }
- 
-+#ifdef HAVE_BACKTRACE
-+static void maybe_backtrace(void)
-+{
-+	void *bt[100];
-+	char **symbols;
-+	int nr;
-+
-+	if (!git_env_bool("GIT_BACKTRACE_ON_DIE", 0))
-+		return;
-+
-+	nr = backtrace(bt, ARRAY_SIZE(bt));
-+	symbols = backtrace_symbols(bt, nr);
-+	if (symbols) {
-+		FILE *fh = error_handle ? error_handle : stderr;
-+		int i;
-+
-+		fprintf(fh, "die() called from:\n");
-+		for (i = 0; i < nr; i++)
-+			fprintf(fh, "  %s\n", symbols[i]);
-+		free(symbols);
-+	}
-+}
-+#else
-+#define maybe_backtrace()
-+#endif
-+
- static NORETURN void usage_builtin(const char *err, va_list params)
- {
- 	vreportf("usage: ", err, params);
-@@ -33,6 +62,7 @@ static NORETURN void usage_builtin(const char *err, va_list params)
- static NORETURN void die_builtin(const char *err, va_list params)
- {
- 	vreportf("fatal: ", err, params);
-+	maybe_backtrace();
- 	exit(128);
- }
- 
+
+base-commit: 659889482ac63411daea38b2c3d127842ea04e4d
+-- 
+2.10.1.583.g721a9e0
