@@ -6,49 +6,49 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99C55203BD
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF88A20441
 	for <e@80x24.org>; Tue, 25 Oct 2016 18:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759135AbcJYSRS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 14:17:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57123 "EHLO
+        id S932526AbcJYSRV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 14:17:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55696 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755817AbcJYSRM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1753519AbcJYSRM (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 25 Oct 2016 14:17:12 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 620AF473F1;
-        Tue, 25 Oct 2016 14:16:38 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ECCC248126;
+        Tue, 25 Oct 2016 14:16:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=SY06
-        tXla+ktY25bfZcMh9PtaERE=; b=cz5k39tlnGHsC/62TFdB8UUjOtgPNQTLGDyV
-        SjlhkxJ0RrBe1AlJO9fl3yPvEKxkCBjrHpFgNHvc92MrHc5kxFPu2PSnDajRn6O5
-        Q4Jvmf+1A/XMkbAOKRv7onURioAX50R1SmqQ79WvH4L7bnRG43CPKKDR5WLJ5dKb
-        94dGSeA=
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=7SBl
+        60H4pFqxc/DbjNGY6X3fSPo=; b=CGoeWqxoosZGYSDxGwfpE4hyRFBHrAgJZQqD
+        0juvbe09BgsydAOgRwv3BxLhj5rOhkBMwzxmc81CL2LTtXadfPyruM4PdXgQmExR
+        etJlQz0eSuaRDx+wYWcU+b68S06R7xCVh+MWrQqeT7vP1RK7epJ7SAXmyX0IHwXW
+        9XE4SO4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        jTwX7YK1HVFxThuSlN88CFczCvF/P+hEvP4dqvSVWY/VIJk0ZYL2uCgPtUjvX4B9
-        +UJS6Kvaq/sDe5+58/7BvbPUf4l7In20y8iDvIxtwtXiTAlUlOQK6eqxM+Bkv8WW
-        0F12T2BRefu5S0tkoEwS5ND5oEKvqhoUZSaz7/ojHpg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58A46473F0;
-        Tue, 25 Oct 2016 14:16:38 -0400 (EDT)
+        NirnUsDLzuH8YI+y3vcix7R5FOMKhmCFguxGdIpvMSIjbkOtrZG/BmHBvHpU7oiY
+        6F/9kIUwCtUwpQch8aLu4cfap3Rh/HIQhxz9EWQgI9Pux6lLyvYbzMJsbZwHiFpA
+        aBiQvchq7xL0qE0RqavUGyT6q+0r3uV2iDs1VLKLEsQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E55FC48125;
+        Tue, 25 Oct 2016 14:16:31 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD856473EF;
-        Tue, 25 Oct 2016 14:16:37 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 457E64811F;
+        Tue, 25 Oct 2016 14:16:27 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Cc:     Lars Schneider <larsxschneider@gmail.com>, Eric Wong <e@80x24.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
-Date:   Tue, 25 Oct 2016 11:16:20 -0700
-Message-Id: <20161025181621.4201-3-gitster@pobox.com>
+Subject: [PATCH v3 1/3] sha1_file: rename git_open_noatime() to git_open()
+Date:   Tue, 25 Oct 2016 11:16:19 -0700
+Message-Id: <20161025181621.4201-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.10.1-777-gd068e6bde7
 In-Reply-To: <20161025181621.4201-1-gitster@pobox.com>
 References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
  <20161025181621.4201-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 2B713CCE-9ADF-11E6-BB0B-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 252F7B50-9ADF-11E6-8EDB-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,56 +56,122 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-All processes that the Git main process spawns inherit the open file
-descriptors of the main process. These leaked file descriptors can
-cause problems.
-
-Use the O_CLOEXEC flag similar to 05d1ed61 to fix the leaked file
-descriptors.
+This function is meant to be used when reading from files in the
+object store, and the original objective was to avoid smudging atime
+of loose object files too often, hence its name.  Because we'll be
+extending its role in the next commit to also arrange the file
+descriptors they return auto-closed in the child processes, rename
+it to lose "noatime" part that is too specific.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- * And the remainder of original 1/2, again taking suggestion by DScho.
+ * This is a pure-rename step suggested by Dscho.
 
- sha1_file.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ builtin/pack-objects.c |  2 +-
+ cache.h                |  2 +-
+ pack-bitmap.c          |  2 +-
+ sha1_file.c            | 12 ++++++------
+ 4 files changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1e7c2a98a5..0fd52bd6b4 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -720,7 +720,7 @@ static off_t write_reused_pack(struct sha1file *f)
+ 	if (!is_pack_valid(reuse_packfile))
+ 		die("packfile is invalid: %s", reuse_packfile->pack_name);
+ 
+-	fd = git_open_noatime(reuse_packfile->pack_name);
++	fd = git_open(reuse_packfile->pack_name);
+ 	if (fd < 0)
+ 		die_errno("unable to open packfile for reuse: %s",
+ 			  reuse_packfile->pack_name);
+diff --git a/cache.h b/cache.h
+index 0dc39a998c..a902ca1f8e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1122,7 +1122,7 @@ extern int write_sha1_file(const void *buf, unsigned long len, const char *type,
+ extern int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type, unsigned char *sha1, unsigned flags);
+ extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
+ extern int force_object_loose(const unsigned char *sha1, time_t mtime);
+-extern int git_open_noatime(const char *name);
++extern int git_open(const char *name);
+ extern void *map_sha1_file(const unsigned char *sha1, unsigned long *size);
+ extern int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz);
+ extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index b949e51716..39bcc16846 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -266,7 +266,7 @@ static int open_pack_bitmap_1(struct packed_git *packfile)
+ 		return -1;
+ 
+ 	idx_name = pack_bitmap_filename(packfile);
+-	fd = git_open_noatime(idx_name);
++	fd = git_open(idx_name);
+ 	free(idx_name);
+ 
+ 	if (fd < 0)
 diff --git a/sha1_file.c b/sha1_file.c
-index 5d2bcd3ed1..09045df1dc 100644
+index 266152de36..5d2bcd3ed1 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1561,7 +1561,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+@@ -370,7 +370,7 @@ void read_info_alternates(const char * relative_base, int depth)
+ 	int fd;
  
- int git_open(const char *name)
+ 	path = xstrfmt("%s/info/alternates", relative_base);
+-	fd = git_open_noatime(path);
++	fd = git_open(path);
+ 	free(path);
+ 	if (fd < 0)
+ 		return;
+@@ -663,7 +663,7 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
+ 	struct pack_idx_header *hdr;
+ 	size_t idx_size;
+ 	uint32_t version, nr, i, *index;
+-	int fd = git_open_noatime(path);
++	int fd = git_open(path);
+ 	struct stat st;
+ 
+ 	if (fd < 0)
+@@ -1069,7 +1069,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 	while (pack_max_fds <= pack_open_fds && close_one_pack())
+ 		; /* nothing */
+ 
+-	p->pack_fd = git_open_noatime(p->pack_name);
++	p->pack_fd = git_open(p->pack_name);
+ 	if (p->pack_fd < 0 || fstat(p->pack_fd, &st))
+ 		return -1;
+ 	pack_open_fds++;
+@@ -1559,7 +1559,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 	return hashcmp(sha1, real_sha1) ? -1 : 0;
+ }
+ 
+-int git_open_noatime(const char *name)
++int git_open(const char *name)
  {
--	static int sha1_file_open_flag = O_NOATIME;
-+	static int sha1_file_open_flag = O_NOATIME | O_CLOEXEC;
+ 	static int sha1_file_open_flag = O_NOATIME;
  
- 	for (;;) {
- 		int fd;
-@@ -1571,12 +1571,17 @@ int git_open(const char *name)
+@@ -1605,7 +1605,7 @@ static int open_sha1_file(const unsigned char *sha1)
+ 	struct alternate_object_database *alt;
+ 	int most_interesting_errno;
+ 
+-	fd = git_open_noatime(sha1_file_name(sha1));
++	fd = git_open(sha1_file_name(sha1));
+ 	if (fd >= 0)
+ 		return fd;
+ 	most_interesting_errno = errno;
+@@ -1613,7 +1613,7 @@ static int open_sha1_file(const unsigned char *sha1)
+ 	prepare_alt_odb();
+ 	for (alt = alt_odb_list; alt; alt = alt->next) {
+ 		const char *path = alt_sha1_path(alt, sha1);
+-		fd = git_open_noatime(path);
++		fd = git_open(path);
  		if (fd >= 0)
  			return fd;
- 
--		/* Might the failure be due to O_NOATIME? */
--		if (errno != ENOENT && sha1_file_open_flag) {
--			sha1_file_open_flag = 0;
-+		/* Try again w/o O_CLOEXEC: the kernel might not support it */
-+		if ((sha1_file_open_flag & O_CLOEXEC) && errno == EINVAL) {
-+			sha1_file_open_flag &= ~O_CLOEXEC;
- 			continue;
- 		}
- 
-+		/* Might the failure be due to O_NOATIME? */
-+		if (errno != ENOENT && (sha1_file_open_flag & O_NOATIME)) {
-+			sha1_file_open_flag &= ~O_NOATIME;
-+			continue;
-+		}
- 		return -1;
- 	}
- }
+ 		if (most_interesting_errno == ENOENT)
 -- 
 2.10.1-777-gd068e6bde7
 
