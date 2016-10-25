@@ -2,136 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F81E2035F
-	for <e@80x24.org>; Tue, 25 Oct 2016 18:28:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14FC2035F
+	for <e@80x24.org>; Tue, 25 Oct 2016 18:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941855AbcJYS2p (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 14:28:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59639 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932538AbcJYS2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 14:28:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57A7847580;
-        Tue, 25 Oct 2016 14:28:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hHEMDDbPGeTV
-        e0ajsFtf1h+N4qs=; b=vgPEPQTChN6g7BppxWjEomm+0/eed6rDRfqKbrVbKyiI
-        Pg5yrcD4ZzIOmQ03hmRKIkc7hRnufAIMxKVh0Zvs8tbNvSKwqfq6JQsJSj3MnGGX
-        VlAjtdyUOIdVnsZJkKSomdxzMOxe1x8LpxCDVyWfKP0tzf8QfpiJhBXnGoCAJRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Ig/TRB
-        gV8jYKB4SAgNWqeIJRFkNz2V5M8igxHdB7ECryd3mOjjgdobJ4vp5rxuDjvC3GII
-        v5lKOw2PNHgRnJgovY2wPtLqRSbknF7druCA0Du71NnGp4i0RQsjaxgAfotvXjER
-        IBJ2B9QoDc6rMl6GC7T++4o1+uxI/AgDPAf3Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E2EC4757F;
-        Tue, 25 Oct 2016 14:28:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C609D4757E;
-        Tue, 25 Oct 2016 14:28:42 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] hex: use unsigned index for ring buffer
-References: <ebf769d4-771f-499e-c7fc-f0377d8df18e@web.de>
-        <20161023091146.p2kmqvgwxdf77dnn@sigill.intra.peff.net>
-        <fb816dd5-8fb9-c6a6-2ec2-9ea4dddfdb26@web.de>
-        <20161024130015.awlmgpfzixiy6wkb@sigill.intra.peff.net>
-        <xmqqwpgx7jn6.fsf@gitster.mtv.corp.google.com>
-        <xmqqshrl7j42.fsf@gitster.mtv.corp.google.com>
-        <b1f9054e-fadb-c2d3-bf95-00e88e1fb85b@web.de>
-        <xmqq60ohtib5.fsf@gitster.mtv.corp.google.com>
-        <20161025003023.6vaqofsixana3zno@sigill.intra.peff.net>
-Date:   Tue, 25 Oct 2016 11:28:40 -0700
-In-Reply-To: <20161025003023.6vaqofsixana3zno@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 24 Oct 2016 20:30:23 -0400")
-Message-ID: <xmqqd1ios2p3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S933784AbcJYSbB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 14:31:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34051 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932785AbcJYSbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 14:31:00 -0400
+Received: (qmail 11261 invoked by uid 109); 25 Oct 2016 18:30:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Oct 2016 18:30:59 +0000
+Received: (qmail 3804 invoked by uid 111); 25 Oct 2016 18:31:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Oct 2016 14:31:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Oct 2016 14:30:57 -0400
+Date:   Tue, 25 Oct 2016 14:30:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2016, #06; Mon, 24)
+Message-ID: <20161025183057.x24gqm56tgshyuvu@sigill.intra.peff.net>
+References: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DB8E35FC-9AE0-11E6-BA7A-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Oct 24, 2016 at 06:09:00PM -0700, Junio C Hamano wrote:
 
-> On Mon, Oct 24, 2016 at 04:53:50PM -0700, Junio C Hamano wrote:
->
->> > So how about this?  It gets rid of magic number 3 and works for arra=
-y
->> > size that's not a power of two.  And as a nice side effect it can't
->> > trigger a signed overflow anymore.
->>=20
->> Looks good to me.  Peff?
->
-> Any of the variants discussed in this thread is fine by me.
+>  - lt/abbrev-auto and its follow-up jk/abbrev-auto are about auto
+>    scaling the default abbreviation length when Git produces a short
+>    object name to adjust to the modern times.  Peff noticed one
+>    fallout from it recently and its fix jc/abbrev-auto is not yet in
+>    'next'.  I would not be surprised if there are other uncovered
+>    fallouts remaining in the code, but at the same time, I expect
+>    they are all cosmetic kind that do not affect correctness, so I
+>    am inclined to include all of them in the upcoming release.
 
-OK, here is what I'll queue then.
-I assumed that Ren=C3=A9 wants to sign it off ;-).
+Yeah, I'd agree any fallouts are likely to be purely cosmetic (and if
+there _is_ some script broken by this, it was an accident waiting to
+happen as soon as it was used in a repo with a partial hash collision).
 
--- >8 --
-From: Ren=C3=A9 Scharfe <l.s.r@web.de>
-Date: Sun, 23 Oct 2016 19:57:30 +0200
-Subject: [PATCH] hex: make wraparound of the index into ring-buffer expli=
-cit
+I'm still not sure if people will balk just at the increased length in
+all of their output. I think I'm finally starting to get used to it. :)
 
-Overflow is defined for unsigned integers, but not for signed ones.
+> * jc/abbrev-auto (2016-10-22) 4 commits
+>  - transport: compute summary-width dynamically
+>  - transport: allow summary-width to be computed dynamically
+>  - fetch: pass summary_width down the callchain
+>  - transport: pass summary_width down the callchain
+>  (this branch uses jk/abbrev-auto and lt/abbrev-auto.)
+> 
+>  "git push" and "git fetch" reports from what old object to what new
+>  object each ref was updated, using abbreviated refnames, and they
+>  attempt to align the columns for this and other pieces of
+>  information.  The way these codepaths compute how many display
+>  columns to allocate for the object names portion of this output has
+>  been updated to match the recent "auto scale the default
+>  abbreviation length" change.
+> 
+>  Will merge to 'next'.
 
-We could make the ring-buffer index in sha1_to_hex() and
-get_pathname() unsigned to be on the safe side to resolve this, but
-let's make it explicit that we are wrapping around at whatever the
-number of elements the ring-buffer has.  The compiler is smart enough
-to turn modulus into bitmask for these codepaths that use
-ring-buffers of a size that is a power of 2.
+In case it was not obvious, I think this topic is good-to-go. And
+clearly any decision on lt/abbrev-auto should apply to this one, too. I
+notice you built it on jk/abbrev-auto, though, which is listed as
+"undecided". That's fine by me, but I think it would technically hold
+this topic hostage. You might want to adjust that before merging to
+next.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- hex.c  | 3 ++-
- path.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/hex.c b/hex.c
-index ab2610e498..845b01a874 100644
---- a/hex.c
-+++ b/hex.c
-@@ -78,7 +78,8 @@ char *sha1_to_hex(const unsigned char *sha1)
- {
- 	static int bufno;
- 	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
--	return sha1_to_hex_r(hexbuffer[3 & ++bufno], sha1);
-+	bufno =3D (bufno + 1) % ARRAY_SIZE(hexbuffer);
-+	return sha1_to_hex_r(hexbuffer[bufno], sha1);
- }
-=20
- char *oid_to_hex(const struct object_id *oid)
-diff --git a/path.c b/path.c
-index fe3c4d96c6..9bfaeda207 100644
---- a/path.c
-+++ b/path.c
-@@ -24,7 +24,8 @@ static struct strbuf *get_pathname(void)
- 		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
- 	};
- 	static int index;
--	struct strbuf *sb =3D &pathname_array[3 & ++index];
-+	struct strbuf *sb =3D &pathname_array[index];
-+	index =3D (index + 1) % ARRAY_SIZE(pathname_array);
- 	strbuf_reset(sb);
- 	return sb;
- }
---=20
-2.10.1-777-gd068e6bde7
-
+-Peff
