@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F4D32022A
-	for <e@80x24.org>; Tue, 25 Oct 2016 10:01:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B1732022A
+	for <e@80x24.org>; Tue, 25 Oct 2016 10:06:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933810AbcJYKBS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 06:01:18 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:34043 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751044AbcJYKBQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 06:01:16 -0400
-Received: by mail-oi0-f66.google.com with SMTP id p136so6153089oic.1
-        for <git@vger.kernel.org>; Tue, 25 Oct 2016 03:01:16 -0700 (PDT)
+        id S941563AbcJYKGh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 06:06:37 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:36743 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751690AbcJYKGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 06:06:36 -0400
+Received: by mail-oi0-f68.google.com with SMTP id e12so6182185oib.3
+        for <git@vger.kernel.org>; Tue, 25 Oct 2016 03:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=f6sY9c9LrYZrK27Ofg9gS+L8MlcvbP4U9aV4Ql2Onm8=;
-        b=hzPAV5/8J19EwtMPvXDOwcIT7t5uuoRmizofJYmdQEqtd0b0BhMN3XOZg9AtJ8e0iY
-         sBgvsMy9VbY71w2iUf2oXgzVDcMa1AsdLlqnT2feNHEtLFuVPNprKpbzCSPS9puqICjd
-         YqoMcAPCoOSFU3SEtiXcNoRORRme6M8Xl7LxXlz1wDE5GAokwvlblt0n2MtuR703TuKZ
-         SpyX+OeNPdoH4YYZw4MtZF6oH6wLmWUxt3laUhMct2hRxugKlCfTK4+405Tm+aKlRmGQ
-         036pjsdyvGGYtjwCSD7twBnsFT/uAraZxiXl5m1cx3/OJjSCUoAgMSqzu7kMzk7iAm1c
-         9QLw==
+        bh=jX9BhC4DETm0rC650Q9doGZsdOF34931O8TOCBVgD/Q=;
+        b=Ah6bmfeNj87nfLIofw5xrc8ULOKw8Z2UbY4xRs/6JAVZtrtjXaJ5M/VcpVrxHO8sqg
+         U1iM9vehZM6hnrWFvcYSoMvC3AKYyN26KZNdJUH7ck3n8hotifU1RJKviV0prgXWJk63
+         7avpDWERefejsh7XliahWwgqoCvYlWvGdbMzO+zMs811Hu7sbXXfM6vw3CNu9esp++jx
+         BCaY70jSswcTdiLtSwD6dzbGZ1x19EHA5v8TiCQ9BYiZjDxaSl+7I2YGgC58ss5zDia0
+         syESrFi3/sX2qkjGGvfAc4hd0CqLgj7TfQVTlAKKV7mio60ixW56IxlzARb1ik8cy0pI
+         xLZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=f6sY9c9LrYZrK27Ofg9gS+L8MlcvbP4U9aV4Ql2Onm8=;
-        b=FbAHZra7FHN37M8xOdicDRObGO/0tAKpCmhInzPxY4BK5E4XCUWFdBQN/q15n3Y/DP
-         35DAaoShtaUF1VM5B76cxl5+rcH65cWbvyT1un+u1uyF68Bv40hItnkLLu+GXdmgxMTU
-         rogU+Fu0eAycnfp3y5Bq0DqwT0cQTyfwXDW0KEtK/3aOOMNrRfvmGQzq7IYxoXYhDgRs
-         vcLPU9Pf+mBERPl9/YfJFnEIGMJiKHftACVXCUu2iz7oreQrXzORB7C13XRCEhX0gpLA
-         hpsrn8VzHHbL+9VJcv3tUftvmH2ddL8kHVJDmBL3YA9H6MXryVUsylV0IBf0gjf3dj+R
-         88tQ==
-X-Gm-Message-State: ABUngvcREZS6E7PJQCoVFh9xf3hSK/LkIulgQTazXElI2bmHdwt6DV8hhRmtjLDwZCnn8nucSb6h8I6X1VJ4EA==
-X-Received: by 10.36.54.69 with SMTP id l66mr990370itl.3.1477389676053; Tue,
- 25 Oct 2016 03:01:16 -0700 (PDT)
+        bh=jX9BhC4DETm0rC650Q9doGZsdOF34931O8TOCBVgD/Q=;
+        b=h6vWqeKVny2svKSpG1Zja+BK5YYp0cWTrPQsqwqhFiJ+u9SfPOl5FNLSikg3lZG94v
+         aeiZ5UHkvRpY/BesY5KVMXncJE/RtCu+zLlHDKZaDKZeC9nRQmhN8QcXSWO8k1nG5TRh
+         pXcZ/BJWunmpJ3egfkamnuXc5xLIcwfiRJkuCuW7XS707sS5ah3FckHj2PC0FHHyitGy
+         6G3SQyrR6LMUck0aH2NgcBp6gcWqeooKbC+iCzS49K/VF0oXqw5J8Kd8bK9BCu/2bYwq
+         Sdx9PEcunUrb77Eb1zo9zhTkHuNeF8x1RZIA5m8hXT169WVbNOq+zZYaUtSxVMgQH4zi
+         Y1wA==
+X-Gm-Message-State: ABUngvcvhfWZ6+QoUUFJkNzZ4m9CIMsuwbL+gCe6VaJm/2qA76hke5RnlQGJV+ljAwfwcqVDPKbq4MExzWxSlw==
+X-Received: by 10.36.103.201 with SMTP id u192mr1019471itc.3.1477389995674;
+ Tue, 25 Oct 2016 03:06:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Tue, 25 Oct 2016 03:00:45 -0700 (PDT)
-In-Reply-To: <20161023092648.12086-6-chriscool@tuxfamily.org>
-References: <20161023092648.12086-1-chriscool@tuxfamily.org> <20161023092648.12086-6-chriscool@tuxfamily.org>
+Received: by 10.64.164.102 with HTTP; Tue, 25 Oct 2016 03:06:05 -0700 (PDT)
+In-Reply-To: <20161023092648.12086-10-chriscool@tuxfamily.org>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org> <20161023092648.12086-10-chriscool@tuxfamily.org>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 25 Oct 2016 17:00:45 +0700
-Message-ID: <CACsJy8Br2q0aadTFjkNgb=oN8nSzbkWJEK7bCCgr7v-oOZtrSA@mail.gmail.com>
-Subject: Re: [PATCH v1 05/19] update-index: warn in case of split-index incoherency
+Date:   Tue, 25 Oct 2016 17:06:05 +0700
+Message-ID: <CACsJy8A0djR6=s0AY0tzVehYY5b1-o11uRsFdGtOUCeu4Z6Xjw@mail.gmail.com>
+Subject: Re: [PATCH v1 09/19] config: add git_config_get_max_percent_split_change()
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -64,48 +64,29 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
 <christian.couder@gmail.com> wrote:
-> When users are using `git update-index --(no-)split-index`, they
-> may expect the split-index feature to be used or not according to
-> the option they just used, but this might not be the case if the
-> new "core.splitIndex" config variable has been set. In this case
-> let's warn about what will happen and why.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/update-index.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index b75ea03..a14dbf2 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -1098,12 +1098,21 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->         }
->
->         if (split_index > 0) {
-> +               if (git_config_get_split_index() == 0)
-> +                       warning("core.splitIndex is set to false; "
-> +                               "remove or change it, if you really want to "
-> +                               "enable split index");
+> This new function will be used in a following commit to get the
+> +int git_config_get_max_percent_split_change(void)
+> +{
+> +       int val = -1;
+> +
+> +       if (!git_config_get_int("splitindex.maxpercentchange", &val)) {
+> +               if (0 <= val && val <= 100)
+> +                       return val;
+> +
+> +               error("splitindex.maxpercentchange value '%d' "
 
-Wrap this string and the one below with _() so they can be translated.
+We should keep camelCase form for easy reading. And wrap this string with _().
 
->                 if (the_index.split_index)
->                         the_index.cache_changed |= SPLIT_INDEX_ORDERED;
->                 else
->                         add_split_index(&the_index);
-> -       } else if (!split_index)
-> +       } else if (!split_index) {
-> +               if (git_config_get_split_index() == 1)
-> +                       warning("core.splitIndex is set to true; "
-> +                               "remove or change it, if you really want to "
-> +                               "disable split index");
->                 remove_split_index(&the_index);
+> +                     "should be between 0 and 100", val);
+
+I wonder if anybody would try to put 12.3 here and confused by the
+error message, because 0 <= 12.3 <= 100, but it's not an integer..
+Ah.. never mind, die_bad_number() would be called first in this case
+with a loud and clear complaint.
+
+> +               return -1;
 > +       }
->
->         switch (untracked_cache) {
->         case UC_UNSPECIFIED:
-> --
-> 2.10.1.462.g7e1e03a
+> +
+> +       return -1; /* default value */
 -- 
 Duy
