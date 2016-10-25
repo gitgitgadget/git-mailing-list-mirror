@@ -2,102 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EBA020193
-	for <e@80x24.org>; Tue, 25 Oct 2016 02:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB642022A
+	for <e@80x24.org>; Tue, 25 Oct 2016 08:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756859AbcJYC11 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Oct 2016 22:27:27 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:39712 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754734AbcJYC10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2016 22:27:26 -0400
-Received: by mail-qk0-f179.google.com with SMTP id i34so12009883qkh.6
-        for <git@vger.kernel.org>; Mon, 24 Oct 2016 19:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vWMhoUl6dSZd6PzotVTZm8DNeND4iCOcJgRKVpTY84k=;
-        b=mdu2xbrulqqwf0UAiLXyRWBxhAny6T+iPNTWaN209oJX+MGn2j1CmbQDeoAMSWl7kl
-         F16xfGpCjmE8bGnIE7uHI9hJidXu20ecZTn9tqdW9vV05jeGUrIROyTFF/9Bk0HB+MCS
-         XARqgWwfszMEqGW3jRUOgCHQajmx8CgdvnUVJSz2csFvanyUzNP+uPK+NtQo0BxME9Tb
-         Y5v1icgyLe24Z+xZOHvCQ8id0y0dfJDLKczvyJHhUYZQutDrMJSL/Eu4dPAMHMEMc/MK
-         /9NejLEddWz3ky/PmzA1PWkHu3c8PvuF/6WoVYZu58IO8HSn8MqkSlB0tTIbOlsRdCNY
-         qGHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vWMhoUl6dSZd6PzotVTZm8DNeND4iCOcJgRKVpTY84k=;
-        b=I+bj2N4r/GYMtqG7eL5ci+9jTgvCJCLQbsnIYwitrivDgOjTUCk/SHsTBKRQMV2JXV
-         DuPrQDad0qpDT8RbwUaVk5ghRLLChBrIGNaAvi0g72+eisbFQIVjRu7Z3JfK7EMQY28A
-         Gw2/aeW6pE8tPALQWnwsP2GDNhUwhux/CnVlezEXqJIR0AzAP55Vp25wfcNBU6gPIXGW
-         Qvv+vbC4Xo2beT0h0B7kqaWxW/Ii8nC7Z345JITC110gL7bvpiaF+MYWZMz7dpBm5rEW
-         VjlL3RjkFULECCmxwLVjWb8UU+A2KORV+JAxarCdCwiJmedZelzXbDT/s6Q/6gXWaIuB
-         0Utg==
-X-Gm-Message-State: ABUngvc8Ie952tUsyDZdsKG87QZJwydSvD8QRTMDljYvnekXxhqyOg5CaJfRtuY4S5ci+68iYm9y9RYAaa4DfbvU
-X-Received: by 10.55.56.11 with SMTP id f11mr16393741qka.255.1477362445340;
- Mon, 24 Oct 2016 19:27:25 -0700 (PDT)
+        id S1758610AbcJYIL4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 04:11:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33783 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758595AbcJYILx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 04:11:53 -0400
+Received: (qmail 8665 invoked by uid 109); 25 Oct 2016 08:11:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Oct 2016 08:11:50 +0000
+Received: (qmail 30778 invoked by uid 111); 25 Oct 2016 08:12:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Oct 2016 04:12:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Oct 2016 04:11:49 -0400
+Date:   Tue, 25 Oct 2016 04:11:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Aaron M Watson <watsona4@gmail.com>
+Cc:     git@vger.kernel.org, Jon Seymour <jon.seymour@gmail.com>,
+        David Caldwell <david@porkrind.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>
+Subject: Re: [PATCH] Allow stashes to be referenced by index only
+Message-ID: <20161025081149.x5l5zcupva546ssf@sigill.intra.peff.net>
+References: <1473378397-22453-1-git-send-email-watsona4@gmail.com>
+ <1477352413-4628-1-git-send-email-watsona4@gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Mon, 24 Oct 2016 19:27:24 -0700 (PDT)
-In-Reply-To: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com>
-References: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Oct 2016 19:27:24 -0700
-Message-ID: <CAGZ79kbtyuSXDiyi2eY6HKCAwEiKgk2KmNakSn=f+RiXCAC1bA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2016, #06; Mon, 24)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1477352413-4628-1-git-send-email-watsona4@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 24, 2016 at 6:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> * sb/submodule-ignore-trailing-slash (2016-10-18) 3 commits
->  . submodule--helper: normalize funny urls
->   (merged to 'next' on 2016-10-11 at e37425ed17)
->  + submodule: ignore trailing slash in relative url
->  + submodule: ignore trailing slash on superproject URL
->
->  A minor regression fix for "git submodule".
->
->  It seems that POSIX emulation layer of Windows is not cooperating;
->  this may have to wait (or tentatively reverted in Windows port) for
->  the resolution of the issue.
->
->  cf. <alpine.DEB.2.20.1610131255001.197091@virtualbox>
->  cf. <CAGZ79kYrKGLEOO72aWuX5OOM-AecdFZFXRqBkRzhdAM-VbPFxA@mail.gmail.com>
->
->  What's the current state of this topic?
+On Mon, Oct 24, 2016 at 07:40:13PM -0400, Aaron M Watson wrote:
 
-The first 2 patches actually fix a bug users run into, and I these are
-fine for general consumption IMHO.
+> Instead of referencing "stash@{n}" explicitly, it can simply be
+> referenced as "n".  Most users only reference stashes by their position
+> in the stash stask (what I refer to as the "index"). The syntax for the
+> typical stash (stash@{n}) is slightly annoying and easy to forget, and
+> sometimes difficult to escape properly in a script. Because of this the
+> capability to do things with the stash by simply referencing the index
+> is desirable.
+> 
+> This patch includes the superior implementation provided by Øsse Walle
+> (thanks for that), with a slight change to fix a broken test in the test
+> suite. I also merged the test scripts as suggested by Jeff King, and
+> un-wrapped the documentation as suggested by Junio Hamano.
+> 
+> Signed-off-by: Aaron M Watson <watsona4@gmail.com>
+> ---
 
-The third patch only breaks tests as our test suite is holding it wrong.
-I was bike shedding on the list and yak shaving here to come up with
-the correct fix for the test suite.
+Thanks, this version looks good to me.
 
-One of the initial ways to work around the bugfix was to
+Oddly, it does not seem to apply. I get:
 
-    git clone . root # <- add in this step and it works again.
-    git clone root super
+  $ git am -3 ~/patch
+  Applying: Allow stashes to be referenced by index only
+  Using index info to reconstruct a base tree...
+  M       git-stash.sh
+  error: patch failed: t/t3903-stash.sh:604
+  error: t/t3903-stash.sh: patch does not apply
+  error: Did you hand edit your patch?
+  It does not apply to blobs recorded in its index.
+  Patch failed at 0001 Allow stashes to be referenced by index only
 
-but instead I will do the preparation for the 'super' project not
-in '.' but in 'root', just called differently ("super_remote" ?)
+The culprit seems to be the final hunk header:
 
-An additional new test for cloning from '.' will be introduced, too.
+> @@ -604,7 +624,21 @@ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
 
-I plan on working on that with highest priority for git after finishing
-some attr stuff that I currently have open. So expect a patch (or two)
-this week.
+This should be "604,6", as there are 6 context lines, and your patch
+does not remove any lines.
 
-Thanks,
-Stefan
+I suspect the maintainer can fix it up while applying, but for my
+curiosity: did you hand-edit it, or is there a potential bug in git's
+diff code?
+
+-Peff
