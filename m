@@ -2,103 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE7912035F
-	for <e@80x24.org>; Tue, 25 Oct 2016 12:39:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E71132035F
+	for <e@80x24.org>; Tue, 25 Oct 2016 12:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932375AbcJYMjD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 08:39:03 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:36307 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753320AbcJYMjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 08:39:02 -0400
-Received: by mail-oi0-f65.google.com with SMTP id e12so6796025oib.3
-        for <git@vger.kernel.org>; Tue, 25 Oct 2016 05:39:01 -0700 (PDT)
+        id S934494AbcJYMwx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 08:52:53 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:35564 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934152AbcJYMwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 08:52:53 -0400
+Received: by mail-yw0-f169.google.com with SMTP id h14so603369ywa.2
+        for <git@vger.kernel.org>; Tue, 25 Oct 2016 05:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=RmF0Duv5vvFZRjtGeXfLUmJOBsjUoH0NOSrCO4CCpu4=;
-        b=UoFEj6SV0brZvIvggFeRqZh+3wWS07o1CZ3ZCQJB2AxhFl9GbIoNiY4CSIN2rvx2SR
-         I/pFTQbUkQ4bjhfEOXTraAKCYrRrtfgErtKnGb7rAQO3fbHTER6zyi/R31aYN5W+9zpP
-         ICKN2cbd+yC52wYE8M12a6QJ86FngWZeeDDinBJRUhZb6uvEgneJ4pHCMZfqGjkCOe8Y
-         9ck6A1Zq0c3Ubi1udmfwiiFhHZBdxpC6+DIHRdBT1XVEa/AnVmtPZ4PXUlNaToO+jS5n
-         uNpuzR6U0oPaZ1s7SFbc8z+xjNmzrcGX4/XwkZYUjMG8igWKMVUDgWm4hhR47fwLdczF
-         di7A==
+        bh=wrkP4ZiTD4V6gHg/WxKRWk/JgxBRVxNkCdi+U8b8pek=;
+        b=XB16ieSHti8I/mz+IiMdvKSvRlghddtbVkgHhveZcZbkj7PRiQjtqACFGGwVtdLmxJ
+         0fRfpY8zNypukADyRZh0+0o+DAYDg1Z4DXfPEjbqNdp5PCIMzzc69Lcbj5+iW7tue1t8
+         hdHh5Q/RsSvEOOfy+ghNgMI+mdbu2lt+FeOhOpNlFSsUE4SA6W2FG0bm/qhYtkHHx0do
+         vbjytDJPVuVoTZXOB3NIs4SSW00nLP9x48qSYyFS4cKTkENo4SVe0g9DDoGnpKMTvbzU
+         cjPpNT4m0ASC9kFDV2wCE70nEDZ9tQXpaS1q1MGvYSTXEaNtNDYPJ1vCuAiFjdORjXkJ
+         llXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=RmF0Duv5vvFZRjtGeXfLUmJOBsjUoH0NOSrCO4CCpu4=;
-        b=eA6hGz5vDWdfNUXp9p0yMMNXUqjgk31EYIqfcay02wAYU/F8FIYZTvqLAXx22GlhIy
-         H1qs1RKfMa+tQgWHL10hPzGVi1ut1x5FCK9guGHQy9s7lDDIxJa2qHjgph6TsKwn9wOM
-         LYSWqXsep7HVPA1Jc54xOgs65kNPWNdrWsHPNcoTls1QNcqpxPlTU1uQ4HZVxVLSiDTS
-         bQ4f5yv8QS2WKcZoMZPGecBPbmtEh9unjwL8K5cuPjcfmQIKsHCverzehzTGedP3AdF6
-         Tizxp1GsZeF7Dyde+5PEu3PdR7sFFqd73h+Gi0k8vUgXD/MUAprz3FQ/HMpy3gAc0Czm
-         C9Gw==
-X-Gm-Message-State: ABUngvc8/08zhz0gomYUbFzP3561SjXylXOGIMIYCkGe03OlCIrtRyJj9UGwMgXphmY0U7hbMkYDiiJpm/2S+g==
-X-Received: by 10.107.44.17 with SMTP id s17mr16012102ios.212.1477399141332;
- Tue, 25 Oct 2016 05:39:01 -0700 (PDT)
+        bh=wrkP4ZiTD4V6gHg/WxKRWk/JgxBRVxNkCdi+U8b8pek=;
+        b=A5FQtlQsEjQiNbmBZ+glHdEZ7e1DAp7y9hJMsF3ZecNpd0XbCJnhOqSSfzXNKFjSeY
+         iSpXHjmdxjz8N0y3LB3/zO1nGHyLsUzlYYFS7HjC1EaTmkfc0VWv+EdIRukRf6aB7m8K
+         jC8yRzaoyuvhmihG76PQyzXXvZf8tbIiEvpl3xqHRmssQSgDUJH4x3Oy/j05FIRyJZQZ
+         Kv0mWXBwlS+KQFrtlB/F9wpqmwEM+VVudnsbDQUVD4LQ6gDjG69cwc1znHA5udIuVHN4
+         ge/tMlzv64inIRnMA2nTNdW3iNgfA7Dev1pIE+orILSZ1bb/BGESJpPDBrGpRmY40o9f
+         d+Lw==
+X-Gm-Message-State: ABUngvdtYWEFyCHALBCgNo8vxQ0AqK3dnQZhT0DeWCb4iCyTlC54celKjnNCAZjuttvDPNe5vZD3xXm3Jfn+rw==
+X-Received: by 10.107.44.17 with SMTP id s17mr16049629ios.212.1477399972137;
+ Tue, 25 Oct 2016 05:52:52 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Tue, 25 Oct 2016 05:38:30 -0700 (PDT)
-In-Reply-To: <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
-References: <20161020061536.6fqh23xb2nhxodpa@sigill.intra.peff.net> <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
+Received: by 10.64.164.102 with HTTP; Tue, 25 Oct 2016 05:52:21 -0700 (PDT)
+In-Reply-To: <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
+References: <cb81631e-9623-9020-f955-ec215b493a50@hale.ee> <f35965e9-2901-b9b5-92e5-9bc7fe673637@web.de>
+ <65d8def3-df62-6c45-7d8f-79b6a8769bf5@hale.ee> <25c17e16-2456-7da3-ae22-2dc812a3aa0d@web.de>
+ <20161009234617.y6xfjyv6xjkf2afi@sigill.intra.peff.net> <CACsJy8CroyynVMctbPhuVr2VVQB7YyfcxDaMT25BikQ4R4We0Q@mail.gmail.com>
+ <20161010142818.lglwrxpks6l6aqrm@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 25 Oct 2016 19:38:30 +0700
-Message-ID: <CACsJy8DZWN0RRaDy9w2BVG5pn4FWCY=1YQDsP0V5obrr1wSzZQ@mail.gmail.com>
-Subject: Re: [PATCH 7/7] setup_git_env: avoid blind fall-back to ".git"
+Date:   Tue, 25 Oct 2016 19:52:21 +0700
+Message-ID: <CACsJy8B_AQxm1=vF8i4FPtinq0id1QZPrqp9vvAmAgUns_kgGg@mail.gmail.com>
+Subject: Re: %C(auto) not working as expected
 To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Tom Hale <tom@hale.ee>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2016 at 1:24 PM, Jeff King <peff@peff.net> wrote:
-> This passes the test suite (after the adjustments in the
-> previous patches), but there's a risk of regression for any
-> cases where the fallback usually works fine but the code
-> isn't exercised by the test suite.  So by itself, this
-> commit is a potential step backward, but lets us take two
-> steps forward once we've identified and fixed any such
-> instances.
+On Mon, Oct 10, 2016 at 9:28 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Oct 10, 2016 at 04:26:18PM +0700, Duy Nguyen wrote:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  environment.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>> > If we do a revamp of the pretty-formats to bring them more in line with
+>> > ref-filter (e.g., something like "%(color:red)") maybe that would be an
+>> > opportunity to make minor adjustments. Though, hmm, it looks like
+>> > for-each-ref already knows "%(color:red)", and it's unconditional.
+>> > <sigh> So perhaps we would need to go through some deprecation period or
+>> > other transition.
+>>
+>> We could add some new tag to change the behavior of all following %C
+>> tags. Something like %C(tty) maybe (probably a bad name), then
+>> discourage the use if "%C(auto" for terminal detection?
 >
-> diff --git a/environment.c b/environment.c
-> index cd5aa57..b1743e6 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -164,8 +164,11 @@ static void setup_git_env(void)
->         const char *replace_ref_base;
+> Yeah, adding a "%C(enable-auto-color)" or something would be backwards
+> compatible and less painful than using "%C(auto)" everywhere. I do
+> wonder if anybody actually _wants_ the "always show color, even if
+> --no-color" behavior. I'm having trouble thinking of a good use for it.
 >
->         git_dir = getenv(GIT_DIR_ENVIRONMENT);
-> -       if (!git_dir)
-> +       if (!git_dir) {
-> +               if (!startup_info->have_repository)
-> +                       die("BUG: setup_git_env called without repository");
+> IOW, I'm wondering if anyone would disagree that the current behavior is
+> simply buggy.
 
-YES!!! Thank you for finally fixing this.
+Silence in two weeks. I vote (*) making %(<color-name>) honor --color
+and turning the %(auto, no-op, for both log family and for-each-ref.
+We could keep old behavior behind some environment variable if it's
+not much work so it keeps working while people come here and tell us
+about their use cases.
 
-The "once we've identified" part could be tricky though. This message
-alone will not give us any clue where it's called since it's buried
-deep in git_path() usually, which is buried deep elsewhere. Without
-falling back to core dumps (with debug info), glibc's backtrace
-(platform specifc), the best we could do is turn git_path() into a
-macro that takes __FILE__ and __LINE__ and somehow pass the info down
-here, but "..." in macros is C99 specific, sigh..
+(*) I know.. voting is not how things work around here, unless you
+vote with patches, but I can't take on another topic.
 
-Is it too bad to turn git_path() into a macro when we know the
-compiler is C99 ? Older compilers will have no source location info in
-git_path(), Hopefully they are rare, which means chances of this fault
-popping up are also reduced.
+> Reading the thread at:
+>
+>   http://public-inbox.org/git/7v4njkmq07.fsf@alter.siamese.dyndns.org/
+>
+> I don't really see any compelling reason against it (there was some
+> question of which config to use, but we already answered that with
+> "%C(auto)", and use the value from the pretty_ctx).
+>
+> -Peff
 -- 
 Duy
