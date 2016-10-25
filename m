@@ -2,110 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07DDE2035F
-	for <e@80x24.org>; Tue, 25 Oct 2016 18:41:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8922D2035F
+	for <e@80x24.org>; Tue, 25 Oct 2016 19:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932972AbcJYSll (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Oct 2016 14:41:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52326 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932538AbcJYSlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2016 14:41:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D4074777F;
-        Tue, 25 Oct 2016 14:41:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nt0g8E8YPps0QcnYpbmLE9hrhBo=; b=wYk3cQ
-        c8nZ/mQg/O3sNF/8jJvv2LKGBTbGPPAsuV5rQixIKOwhIAk9k9tSgpCkMTnNctaN
-        xm6HJKThCSwIFgW6moe/1HMtcV14NRXx5EaSh6YP0lVEvi1PGsYxKUHZfOBAsH4m
-        3CNtZ4Uik8Qt1DLzbXS636ZYCmlfhLygIlNZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=M6En3UqoetT+rtN4dLBA0qLnkfPVYu4o
-        6hHWNeCZjXazzC6845d93+33RtBpkNeDuJx+J79T1DUm++7VJzQFOES9j4HolcBX
-        URc+Ie3G9Wk3vt2WYmdoPX01CrVHUyD3XOdUmJpMKCbanX9/QZlkwiDWD3q/2TO2
-        bk8HqPN5bE4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 449D54777E;
-        Tue, 25 Oct 2016 14:41:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE0BF4777B;
-        Tue, 25 Oct 2016 14:41:38 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+        id S932655AbcJYTKm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Oct 2016 15:10:42 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:37860 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754065AbcJYTKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2016 15:10:41 -0400
+Received: by mail-wm0-f43.google.com with SMTP id c78so41970761wme.0
+        for <git@vger.kernel.org>; Tue, 25 Oct 2016 12:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WNswqKzJy0AEFBtFmTuTdcCvLsdgSW7ky3XIMt6XXX4=;
+        b=E0BwSPNK7NzpFcKFuGUt2rljf5bv64SsreTtp3ta3anmLwzMWlepIADkKLFTWeYPYj
+         XHErqr9Gm/r8gK62K/58uz3iXc1t5rVelWG7VBbpFGwPcjNRHwLsPNyjFua3JaLKamu1
+         zoqKcKVxkTwvlAXKUdGabeaSDz8HoBecvice7ioPa2F4kuiU7QonIhwlyxcvwLXkzuH1
+         Koi/LTUHGgoTl7cVfP5+R7MQdiUWlGG/VpauJ9OBD8ODtm3n9fIqp2KVQFZEtdrORp0i
+         U00MtbpFIqVVRNwEAlVRITqwm7uZaS2WFH1wZSb+I0Fr1c8/qtTYrbyJUWy6JG460if6
+         We4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WNswqKzJy0AEFBtFmTuTdcCvLsdgSW7ky3XIMt6XXX4=;
+        b=ehZCr5kjV3ZNunYMFvRctMbE7vT/QGfPTBvgcGLyJKSvULCe8bAdLkaVacahFOAfHx
+         2PZx+DFtQEqi59VDWrvoNzTNuvuBkCUOy0KbUwBAH2Beo7x9X0LjhoTVOBv2CVGqkIot
+         D9Ub9mUOQjV9aHo7K8tfBBzyqguMIbOjN0JqJxRIY5ASznw9Ni0OIAkwyxS8Wyyc1RW6
+         d5XuOiT3iA6Pg9nLOsHUldKGr1hfzc6F3ekApHFy7nO1ARm4r2e/z5qahnKM9Vp+hYNV
+         ieE5CknYYrYULmkXgWhbP/EfkO9fJXXTXhCsfJT2rJonah5g/+DsmKGq7JfK9SS8ooxQ
+         5NEg==
+X-Gm-Message-State: ABUngvfdYgUkEwIEMevkRhUxqHhz609UOxB3Pv2y8kzDfJ1Wr5oTYlm0rL8X1Dk8FeYbWA==
+X-Received: by 10.28.207.129 with SMTP id f123mr1396889wmg.18.1477422640034;
+        Tue, 25 Oct 2016 12:10:40 -0700 (PDT)
+Received: from [10.42.1.91] ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id s204sm5244918wmd.1.2016.10.25.12.10.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 25 Oct 2016 12:10:39 -0700 (PDT)
+Message-ID: <1477422638.3550.3.camel@kaarsemaker.net>
+Subject: Re: password forgot
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Luciano Schillagi <luko.web@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2016, #06; Mon, 24)
-References: <xmqq1sz5tetv.fsf@gitster.mtv.corp.google.com>
-        <20161025183057.x24gqm56tgshyuvu@sigill.intra.peff.net>
-Date:   Tue, 25 Oct 2016 11:41:36 -0700
-In-Reply-To: <20161025183057.x24gqm56tgshyuvu@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 25 Oct 2016 14:30:57 -0400")
-Message-ID: <xmqqy41cqnj3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AA111CAE-9AE2-11E6-B72E-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Date:   Tue, 25 Oct 2016 21:10:38 +0200
+In-Reply-To: <CAK99BNBop7aCbwbYUAVoKc9JRrR2d+SAa1=WOFuEzmdmTtNdog@mail.gmail.com>
+References: <14FB7E4A-7134-4343-AFF7-9E17AC94ACE3@gmail.com>
+         <1477412208.3550.1.camel@kaarsemaker.net>
+         <CAK99BNBop7aCbwbYUAVoKc9JRrR2d+SAa1=WOFuEzmdmTtNdog@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.0-2ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+That is asking for your local computer password. This uninstaller also
+has nothing to do with git itself, but with the third-party git package
+you installed. The git project does not ship an 'uninstall.sh' 
 
-> On Mon, Oct 24, 2016 at 06:09:00PM -0700, Junio C Hamano wrote:
->
->>  - lt/abbrev-auto and its follow-up jk/abbrev-auto are about auto
->>    scaling the default abbreviation length when Git produces a short
->>    object name to adjust to the modern times.  Peff noticed one
->>    fallout from it recently and its fix jc/abbrev-auto is not yet in
->>    'next'.  I would not be surprised if there are other uncovered
->>    fallouts remaining in the code, but at the same time, I expect
->>    they are all cosmetic kind that do not affect correctness, so I
->>    am inclined to include all of them in the upcoming release.
->
-> Yeah, I'd agree any fallouts are likely to be purely cosmetic (and if
-> there _is_ some script broken by this, it was an accident waiting to
-> happen as soon as it was used in a repo with a partial hash collision).
->
-> I'm still not sure if people will balk just at the increased length in
-> all of their output. I think I'm finally starting to get used to it. :)
-
-I am finally getting used to it.  At this point, I think the
-transition plan would be to tell them to set core.abbrev to
-whatever default they like.
-
->> * jc/abbrev-auto (2016-10-22) 4 commits
->>  - transport: compute summary-width dynamically
->>  - transport: allow summary-width to be computed dynamically
->>  - fetch: pass summary_width down the callchain
->>  - transport: pass summary_width down the callchain
->>  (this branch uses jk/abbrev-auto and lt/abbrev-auto.)
->> 
->>  "git push" and "git fetch" reports from what old object to what new
->>  object each ref was updated, using abbreviated refnames, and they
->>  attempt to align the columns for this and other pieces of
->>  information.  The way these codepaths compute how many display
->>  columns to allocate for the object names portion of this output has
->>  been updated to match the recent "auto scale the default
->>  abbreviation length" change.
->> 
->>  Will merge to 'next'.
->
-> In case it was not obvious, I think this topic is good-to-go. And
-> clearly any decision on lt/abbrev-auto should apply to this one, too. I
-> notice you built it on jk/abbrev-auto, though, which is listed as
-> "undecided". That's fine by me, but I think it would technically hold
-> this topic hostage. You might want to adjust that before merging to
-> next.
-
-I am planning to merge both lt/* and jk/*; I should have said it
-more clearly.
-
-Thanks.
+On Tue, 2016-10-25 at 13:23 -0300, Luciano Schillagi wrote:
+> sorry, I'm a little confused
+> 
+> and this? 
+> 
+> 
+> 
+> 
+> 2016-10-25 13:16 GMT-03:00 Dennis Kaarsemaker <dennis@kaarsemaker.net>:
+> > On Tue, 2016-10-25 at 12:52 -0300, Luciano Schillagi wrote:
+> > > Hi,
+> > >
+> > > I forgot my password in git, such as resetting?
+> > 
+> > Hi Luciano,
+> > 
+> > Git itself doesn't do any authentication, so I assume you lost the
+> > password for an account on a hosted git solution such as gitlab or
+> > github.
+> > 
+> > You should contact the support team of whatever hoster you use, the git
+> > developers cannot help you here.
+> > 
+> > D.
+> > 
+> 
+> 
+> 
