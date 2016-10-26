@@ -6,65 +6,58 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 783052022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 16:09:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B71E2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 16:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934020AbcJZQIr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 12:08:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62758 "EHLO
+        id S1754937AbcJZQPH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 12:15:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58392 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932356AbcJZQIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 12:08:45 -0400
+        with ESMTP id S1752359AbcJZQPF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 12:15:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1839847CE5;
-        Wed, 26 Oct 2016 12:08:44 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 474D846B8E;
+        Wed, 26 Oct 2016 12:14:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+piNM4THnfPS9MHDxahO2d4vobc=; b=LnKU8v
-        pLStXXNCTbYWnl0vX8jBaMickfe7cpTiSn1ag3KxkFtBt1LQkGXm7PA3QdbH0w6w
-        yyoL7UQ7h0pLqEETodTP51SmkU2qvmlw8DaQd5gIbkn/VT5uiUYFlC8xLCkojcn7
-        oW0r9+0SEY4H6rhfQpw9bTXmE9swJKmPADqp8=
+        :content-type; s=sasl; bh=ddHil0S0ChJEARP+l9BcyK6Hbks=; b=oehY5o
+        YEj4iupcPTmB4ZQOtG2BVcC4GAeENTTRvGG+FRy6+p1J1AeC1pHk44TdW2u6XLdg
+        6UMjVBk35uBqFmf6zVSq/RWYp1TQe7afmCDWm9E1Y/tLyeEkRKLpW3ppS3b0oYso
+        2Slhy+wDLCOpnu0ZBJwIqOWOhrxxRh+jvJvLw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ujlPRAN/EnZAGo8xezW8ZltM88LbEKBT
-        L2JHcHczcqLHlFC3nI8oKm/pd9mGmhcZ24zbSlnPkPgBNtAINVB+TdRX/c3ggzL9
-        kBt15T1JI//Fr+BTR/cvZ5lA+0HmlHURI65bk/Ypt2UdKNWgsTx6uCOlh9+QgzbD
-        M3JRSHFhP1M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EF0147CE4;
-        Wed, 26 Oct 2016 12:08:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=BcF2pl64WPii3EO9uYvftS7PKC2KXW6j
+        kSJsJTdhH/LND7KrqnkaE3IGTC5rGtXtM3xOsVXxxRdRC9bpC/BfP1h1nkPVjPUg
+        v5aDQbdgnpnvB3ycyU08nbhvBilmM11PKX86+c/TEns3UM6mhnWIiIcFlY+6cKqy
+        8VSE9PW+CCI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3FB8746B8D;
+        Wed, 26 Oct 2016 12:14:59 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 823E747CE3;
-        Wed, 26 Oct 2016 12:08:43 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAEDF46B8C;
+        Wed, 26 Oct 2016 12:14:58 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
-References: <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610071319520.35196@virtualbox>
-        <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
-        <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org>
-        <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1610081034430.35196@virtualbox>
-        <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net>
-        <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
-        <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1610111142490.35196@virtualbox>
-        <20161011150118.7eb474yg5c3oe5mn@sigill.intra.peff.net>
-        <CACsJy8DUqrsaqmrCHzzuS3Q7DXRAPkisOJbSmYPX8-AhmNUz6w@mail.gmail.com>
-Date:   Wed, 26 Oct 2016 09:08:41 -0700
-In-Reply-To: <CACsJy8DUqrsaqmrCHzzuS3Q7DXRAPkisOJbSmYPX8-AhmNUz6w@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 26 Oct 2016 20:23:16 +0700")
-Message-ID: <xmqqinsfccty.fsf@gitster.mtv.corp.google.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v1 00/19] Add configuration options for split-index
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+        <xmqq8ttd7h8g.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8BBwWRGSyJDYQ7THj7quu4=T1xT_-KojQd45Vye4Kgcng@mail.gmail.com>
+        <xmqqk2cws5t6.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8Ba0BY=pZwrKf5rcD5AaZ3YyKh9=ENKkj7hHpTqh00OnA@mail.gmail.com>
+Date:   Wed, 26 Oct 2016 09:14:56 -0700
+In-Reply-To: <CACsJy8Ba0BY=pZwrKf5rcD5AaZ3YyKh9=ENKkj7hHpTqh00OnA@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 26 Oct 2016 16:25:44 +0700")
+Message-ID: <xmqqeg33ccjj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 77A5547E-9B96-11E6-9532-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 574441C6-9B97-11E6-A824-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,13 +65,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
-> I don't object the alias.<name>.<property> approach though. It's
-> definitely a cleaner one in my opinion. It just needs people who can
-> spend time to follow up until the end. But if someone decides to do
-> that now, I'll drop the "(properties)!command" and try to support
-> him/her.
+> On Wed, Oct 26, 2016 at 12:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Even if we ignore user index files (by forcing them all to be stored
+> in one piece), there is a problem with the special temporary file
+> index.lock, which must use split-index because it will become the new
+> index. Handling race conditions could be tricky with ref counting.
+> Timestamps help in this regard.
 
-I don't object to either approach, but what I would love to see
-people avoid is to end up with both.
+I actually think using the split-index only for the $GIT_DIR/index,
+the primary one, and using the full index for others is a bad idea,
+as we use temporary index ourselves when making partial commits,
+which happens quite often.
 
-Thanks.
+So time-based GC it is.
+
+I actually do not think index.lock is a problem, but is a solution,
+if we only limit the split-index to the primary one (we can have at
+most one, so we can GC the stale shared ones while holding the
+lock).
+
+But that is no longer important.
+
+
