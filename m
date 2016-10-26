@@ -2,58 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10AD62022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 13:18:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37B672022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 13:23:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S942859AbcJZNRt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 09:17:49 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35546 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S942785AbcJZNRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 09:17:45 -0400
-Received: by mail-wm0-f51.google.com with SMTP id e69so29828748wmg.0;
-        Wed, 26 Oct 2016 06:17:44 -0700 (PDT)
+        id S966337AbcJZNXv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 09:23:51 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:37298 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965925AbcJZNXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 09:23:48 -0400
+Received: by mail-it0-f53.google.com with SMTP id u205so32077112itc.0
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 06:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=LTy7dW0yo8yc785WWInVhiWKBF6I9DLf3TbNZG+teaQ=;
-        b=UEzOxft/bTuvzSX5h7JFd+JSIwmz+w5fXM+w/xDFfA2Ae5i+ik1BgCmkgTeyY3nXT3
-         S7ed8rjguxzTYVYaWZO3UdxdoCoMak7z/ilrUoKEvi2odgJOoOmOjOAPTL7iezZna8JX
-         4YyIXGgGfDsLnw5b2xeF98jxb11RbEurDJ8ZCu/a/o37BMYQswyLbuhvoXXYrngrKT57
-         e39XwrPTj8Ro6GGZe2u8PzgGBMK7o9olVWl7LD4uW0UidUvioxTL04CVVDAG9sUx4Rp7
-         iju31bRVO+R1D4hJSsYUndf3ji4kFfIFlRdh/oATFH+1K1KVPGaKFUi71eUkf8pe1PZv
-         jbjQ==
+        bh=if59+DXeVwJ4+A2jLe0WAbeinocWqq1u7mnh2HE8kGQ=;
+        b=uAJGuNbPgJoRxgp3NgzkK7rZ0urcXiGDCwj7e5m4djwYmeNw0894fFxlc9h413jxZ1
+         mku1S/isHoZqZUxpK4/8Wp5oIBIT5Yicstge2XmmPEp0OJCvLD5CJQSysybmVpPXflP1
+         ROy3F/xYx0br3Z9JBz5v4mYrhvcA8Y+r4kKKpkdn9n1L9ZTZLvJpFpNQkLbY+Bid710a
+         Ss9H2V69xM1+xo0zyz8WXeB9Y2frnLTejDNElosf/xBodMxFwFSlRfYlWodJYu1gUDzv
+         ER/DLiM8RCjHGlrfuhOqXMMBPbDO8BjEsTfRaZnDGdnDrqJ2i2/7Q6tcgU0NhX7JYXe0
+         QNUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=LTy7dW0yo8yc785WWInVhiWKBF6I9DLf3TbNZG+teaQ=;
-        b=GO+hbroS+wIImpNxo4CTJbBbg7rFBRxnr1m+NleVC6wAGvpkJUvbrPr/wL9gWqWjK3
-         laAHT+sg7XqOJy4N218yW2lVmCNbOwWvtMyf2Ejmta6Yh58EX0WE4d4asobrA/RfoaYX
-         fwYB1GQ4EGvpmEsZPTvV0mPWe1HnXvWLw+RDkmRtCQk1mBltM3udNEUMqnx8q0qiuUHS
-         QE1KaD3Yc5kzz2o0zuv00aYyuiJqnTQpyVzieqBjxidR678IllHL1QMc7dNf8ZOu/99y
-         qi+DVz+FXbsO/Kv5+kJ0C9/TedQ3YDcstYV8+QW8rHaxx1sGD5sYGpwxOs3jfhhey/dk
-         ibow==
-X-Gm-Message-State: ABUngvffTs98nwgVYJa76j2R7Fgr9iKl5qFbwZPO1rjs49jD/KbZbh3RpT3vvGqw49Iyx9w58bar3dAsAhBupw==
-X-Received: by 10.28.229.132 with SMTP id c126mr2904318wmh.110.1477487863632;
- Wed, 26 Oct 2016 06:17:43 -0700 (PDT)
+        bh=if59+DXeVwJ4+A2jLe0WAbeinocWqq1u7mnh2HE8kGQ=;
+        b=GOKnv1lnngc+pK41oRXnxuSx+tlOwfHEYByDdW0N7KOLJ+u+BhPW/xmx4dJ35IcZEK
+         Rzmz4kc/jlnWp0oAsvlxLNDwMVV5YqY9P8I5Fuiptimws1qJ+1ijhUBqK6Glb/3xbpS2
+         DrqMweFvm3QvDvfNaQ9nWwkExzSxmzADkUEDzj9Q5aq2iMXTLJPwg4p8B5rfZSc7pBU+
+         qYukfSGAcClFxsG6LHhxxJ6+gkV/JQ43GRwhE7jHCxKYtJQe5btdmXVsC7tjqb7/YPVs
+         +bJTf28+kYPnoJutXrJtyZs/swM9/s7wJhc4hOZS5Ei0Ohb6npk2qHS8b+5bkjavsgFe
+         840A==
+X-Gm-Message-State: ABUngveiMhP5AUQ487r9+6gMZexTDrKTTDHlsFFTeix2PrStTQi6ay/WFGCtpdbyivhaKtpwUQom0smK5GmGAA==
+X-Received: by 10.36.26.78 with SMTP id 75mr6303163iti.74.1477488227688; Wed,
+ 26 Oct 2016 06:23:47 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.140.148 with HTTP; Wed, 26 Oct 2016 06:17:23 -0700 (PDT)
-In-Reply-To: <CAJwJo6apgP-pTUccB1Hs81rQbaVCnxeh355fgCKvXc630WTJNg@mail.gmail.com>
-References: <CAJwJo6apgP-pTUccB1Hs81rQbaVCnxeh355fgCKvXc630WTJNg@mail.gmail.com>
-From:   Dmitry Safonov <0x7f454c46@gmail.com>
-Date:   Wed, 26 Oct 2016 16:17:23 +0300
-Message-ID: <CAJwJo6YvwXbxq5=pSU9wCNJ-H0mYMxTv4DcJzwPsUu7HuO8N5g@mail.gmail.com>
-Subject: Re: [Question] Git histrory after greybus merge
-To:     open list <linux-kernel@vger.kernel.org>
-Cc:     gregkh@linuxfoundation.org, Greg KH <greg@kroah.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
+Received: by 10.64.164.102 with HTTP; Wed, 26 Oct 2016 06:23:16 -0700 (PDT)
+In-Reply-To: <20161011150118.7eb474yg5c3oe5mn@sigill.intra.peff.net>
+References: <xmqq60p5l3om.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610071319520.35196@virtualbox>
+ <CACsJy8ASc7Fxm5XDHFiX9E+bQ8s1MtmEHfc7bZY4C-_GEQr0og@mail.gmail.com>
+ <0347de20-72a7-b384-389f-4b2ad5789973@kdbg.org> <20161007175052.sxyk7y2ytjh36phr@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1610081034430.35196@virtualbox> <20161009060149.voqjoiltqi6jub7g@sigill.intra.peff.net>
+ <CACsJy8BpYYJmBm32YsQyuP58uhLE+sn8WdhiHyY6xzcqPVjMVQ@mail.gmail.com>
+ <20161009205854.byq2wqgemtmwudfb@sigill.intra.peff.net> <alpine.DEB.2.20.1610111142490.35196@virtualbox>
+ <20161011150118.7eb474yg5c3oe5mn@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 26 Oct 2016 20:23:16 +0700
+Message-ID: <CACsJy8DUqrsaqmrCHzzuS3Q7DXRAPkisOJbSmYPX8-AhmNUz6w@mail.gmail.com>
+Subject: Re: [PATCH/RFC] git.c: support "!!" aliases that do not move cwd
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -62,30 +68,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adding Cc: git list, Junio.
+On Tue, Oct 11, 2016 at 10:01 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Oct 11, 2016 at 11:44:50AM +0200, Johannes Schindelin wrote:
+>
+>> > Yeah, that's reasonable, too. So:
+>> >
+>> >   [alias]
+>> >     d2u = "!dos2unix"
+>> >
+>> > acts exactly as if:
+>> >
+>> >   [alias "d2u"]
+>> >     command = dos2unix
+>> >     type = shell
+>> >
+>> > was specified at that point, which is easy to understand.
+>>
+>> It is easy to understand, and even easier to get wrong or out of sync. I
+>> really liked the ease of *one* `git config` call to add new aliases. Not
+>> sure that I like the need for more such calls just to add *one* alias (one
+>> config call for "shell", one for "don't cd up", etc).
+>
+> Could we simply support alias.d2u indefinitely, and you could use
+> whichever format you felt like (the shorter, more limited one if you
+> wanted, or the more verbose but flexible one)?
 
-2016-10-26 15:55 GMT+03:00 Dmitry Safonov <0x7f454c46@gmail.com>:
-> Hi,
->
-> Is there any way to specify git-log or git-rev-list which root tree to use?
-> I mean, I got the following situation:
-> I saw the commit a67dd266adf4 ("netfilter: xtables: prepare for
-> on-demand hook register")
-> by git-blame and want to see commits on top of that particular commit.
-> Earlier I've used for that:
-> $ git log --reverse a67dd266adf4^..HEAD
->
-> But now after merging greybus it follows the greybus's tree and shows me:
-> [linux]$ git log --reverse a67dd266adf4^..HEAD --oneline
-> cd26f1bd6bf3 greybus: Initial commit
-> c8a797a98cb6 greybus: Import most recent greybus code to new repo.
-> 06823c3eb9c4 greybus: README and .gitignore updates
->
-> Which quite sucks as this isn't a hash I'm referencing.
-> Anyway, back to the question, is there any option to tell git which tree to use?
-> I'm sure this was asked before (on btrfs merge?), but I didn't find
-> the answer so far.
-> I'm using git v2.10.1 if anything.
->
-> Thanks,
->              Dmitry
+Before this thread goes completely dead... Since there's a lot more
+work involved with the new alias.<name>.<property> approach (short
+term would be git completion support, longer term would be the ability
+to manipulate a config group more conveniently), I'm going with the
+"(properties)!command" approach. But even then a new series is not
+going to pop up, like, in the next two months.
+
+I don't object the alias.<name>.<property> approach though. It's
+definitely a cleaner one in my opinion. It just needs people who can
+spend time to follow up until the end. But if someone decides to do
+that now, I'll drop the "(properties)!command" and try to support
+him/her.
+-- 
+Duy
