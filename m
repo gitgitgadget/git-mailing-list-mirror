@@ -2,75 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 924522022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 12:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10AD62022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 13:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967013AbcJZMjq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 08:39:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34313 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966666AbcJZMjn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 08:39:43 -0400
-Received: (qmail 5508 invoked by uid 109); 26 Oct 2016 12:31:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Oct 2016 12:31:58 +0000
-Received: (qmail 10100 invoked by uid 111); 26 Oct 2016 12:32:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Oct 2016 08:32:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Oct 2016 08:31:56 -0400
-Date:   Wed, 26 Oct 2016 08:31:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 7/7] setup_git_env: avoid blind fall-back to ".git"
-Message-ID: <20161026123156.g76z66rxxlkwosht@sigill.intra.peff.net>
-References: <20161020061536.6fqh23xb2nhxodpa@sigill.intra.peff.net>
- <20161020062430.rxupwheaeydtcvf3@sigill.intra.peff.net>
- <CACsJy8DZWN0RRaDy9w2BVG5pn4FWCY=1YQDsP0V5obrr1wSzZQ@mail.gmail.com>
- <20161025151524.y7wwtetohhqgcvob@sigill.intra.peff.net>
- <20161026102921.GA31311@ash>
- <20161026121058.a2pmf57oc7p2mlsp@sigill.intra.peff.net>
- <CACsJy8AHMJ7OJFKyjYAsPuT0nG=e0RGn59PuX06PJ5pYjinsqA@mail.gmail.com>
+        id S942859AbcJZNRt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 09:17:49 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:35546 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S942785AbcJZNRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 09:17:45 -0400
+Received: by mail-wm0-f51.google.com with SMTP id e69so29828748wmg.0;
+        Wed, 26 Oct 2016 06:17:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LTy7dW0yo8yc785WWInVhiWKBF6I9DLf3TbNZG+teaQ=;
+        b=UEzOxft/bTuvzSX5h7JFd+JSIwmz+w5fXM+w/xDFfA2Ae5i+ik1BgCmkgTeyY3nXT3
+         S7ed8rjguxzTYVYaWZO3UdxdoCoMak7z/ilrUoKEvi2odgJOoOmOjOAPTL7iezZna8JX
+         4YyIXGgGfDsLnw5b2xeF98jxb11RbEurDJ8ZCu/a/o37BMYQswyLbuhvoXXYrngrKT57
+         e39XwrPTj8Ro6GGZe2u8PzgGBMK7o9olVWl7LD4uW0UidUvioxTL04CVVDAG9sUx4Rp7
+         iju31bRVO+R1D4hJSsYUndf3ji4kFfIFlRdh/oATFH+1K1KVPGaKFUi71eUkf8pe1PZv
+         jbjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LTy7dW0yo8yc785WWInVhiWKBF6I9DLf3TbNZG+teaQ=;
+        b=GO+hbroS+wIImpNxo4CTJbBbg7rFBRxnr1m+NleVC6wAGvpkJUvbrPr/wL9gWqWjK3
+         laAHT+sg7XqOJy4N218yW2lVmCNbOwWvtMyf2Ejmta6Yh58EX0WE4d4asobrA/RfoaYX
+         fwYB1GQ4EGvpmEsZPTvV0mPWe1HnXvWLw+RDkmRtCQk1mBltM3udNEUMqnx8q0qiuUHS
+         QE1KaD3Yc5kzz2o0zuv00aYyuiJqnTQpyVzieqBjxidR678IllHL1QMc7dNf8ZOu/99y
+         qi+DVz+FXbsO/Kv5+kJ0C9/TedQ3YDcstYV8+QW8rHaxx1sGD5sYGpwxOs3jfhhey/dk
+         ibow==
+X-Gm-Message-State: ABUngvffTs98nwgVYJa76j2R7Fgr9iKl5qFbwZPO1rjs49jD/KbZbh3RpT3vvGqw49Iyx9w58bar3dAsAhBupw==
+X-Received: by 10.28.229.132 with SMTP id c126mr2904318wmh.110.1477487863632;
+ Wed, 26 Oct 2016 06:17:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AHMJ7OJFKyjYAsPuT0nG=e0RGn59PuX06PJ5pYjinsqA@mail.gmail.com>
+Received: by 10.80.140.148 with HTTP; Wed, 26 Oct 2016 06:17:23 -0700 (PDT)
+In-Reply-To: <CAJwJo6apgP-pTUccB1Hs81rQbaVCnxeh355fgCKvXc630WTJNg@mail.gmail.com>
+References: <CAJwJo6apgP-pTUccB1Hs81rQbaVCnxeh355fgCKvXc630WTJNg@mail.gmail.com>
+From:   Dmitry Safonov <0x7f454c46@gmail.com>
+Date:   Wed, 26 Oct 2016 16:17:23 +0300
+Message-ID: <CAJwJo6YvwXbxq5=pSU9wCNJ-H0mYMxTv4DcJzwPsUu7HuO8N5g@mail.gmail.com>
+Subject: Re: [Question] Git histrory after greybus merge
+To:     open list <linux-kernel@vger.kernel.org>
+Cc:     gregkh@linuxfoundation.org, Greg KH <greg@kroah.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 26, 2016 at 07:26:20PM +0700, Duy Nguyen wrote:
+Adding Cc: git list, Junio.
 
-> > I'm not sure this is really any convenience over dumping a corefile
-> > and using gdb to pull out the
-> > symbols after the fact.
-> 
-> So are we back to forcing core files? I'm ok with that! The only
-> inconvenience I see is pointing out where the core file is, which
-> should be where `pwd` originally is. On linux we can even peek into
-> /proc/sys/kernel/core_pattern if we want to be precise. ulimit can get
-> in the way, but I don't if the default out there is enable or disable
-> core dumping. Once we got OS info and git version, our chances of
-> cracking the core files should be reasonably high.
-
-TBH, most of the time I expect the solution to be walking the person
-through:
-
-  git clone git://kernel.org/pub/scm/git/git.git
-  cd git
-  make
-
-  gdb --args ./git whatever
-  break die
-  run
-  bt
-
-which would cover most cases (reproducible breakage, and not in a
-sub-program). It's relatively rare that even I resort to corefiles.
-
--Peff
+2016-10-26 15:55 GMT+03:00 Dmitry Safonov <0x7f454c46@gmail.com>:
+> Hi,
+>
+> Is there any way to specify git-log or git-rev-list which root tree to use?
+> I mean, I got the following situation:
+> I saw the commit a67dd266adf4 ("netfilter: xtables: prepare for
+> on-demand hook register")
+> by git-blame and want to see commits on top of that particular commit.
+> Earlier I've used for that:
+> $ git log --reverse a67dd266adf4^..HEAD
+>
+> But now after merging greybus it follows the greybus's tree and shows me:
+> [linux]$ git log --reverse a67dd266adf4^..HEAD --oneline
+> cd26f1bd6bf3 greybus: Initial commit
+> c8a797a98cb6 greybus: Import most recent greybus code to new repo.
+> 06823c3eb9c4 greybus: README and .gitignore updates
+>
+> Which quite sucks as this isn't a hash I'm referencing.
+> Anyway, back to the question, is there any option to tell git which tree to use?
+> I'm sure this was asked before (on btrfs merge?), but I didn't find
+> the answer so far.
+> I'm using git v2.10.1 if anything.
+>
+> Thanks,
+>              Dmitry
