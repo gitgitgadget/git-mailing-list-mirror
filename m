@@ -2,115 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39AA02022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 17:07:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB6A2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 17:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754981AbcJZRHD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 13:07:03 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61690 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751271AbcJZRHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 13:07:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E4ABE4759A;
-        Wed, 26 Oct 2016 13:07:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+cbc2uO4mkqyrC/CqigWL3KM5hk=; b=WrFSet
-        fCta+D2zyiAEsp3LUo38PaQR15TEmE1QzEWBJg/FW1/ckAahgxKcAu0xe5ZgmVv2
-        ABot8vdTRp1HQE7jUsF3lI8USgRrkkV8VR+U2Yd4yEoI6T3wWH4VVXhVvIAMpTF8
-        E7DETweKoPA2qnyijp3mS22kVdejRIevKm/cc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cPIhtCRT0zU7ZccjOoyn5jrZYrfkhMNJ
-        Z8BRDPS4modXMWroHnUd9pOyyH8HiD7P74+1EdRF9au0S5+OwSFdcggGBVixtkP0
-        hu4sMfQTkoyy7WNvkchMrvmrfzitbDVGX6/oCe++TBVWe+sI87i+MuOVm6iRZFTc
-        8VqyJZtqujQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B69947599;
-        Wed, 26 Oct 2016 13:07:00 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E46A947596;
-        Wed, 26 Oct 2016 13:06:59 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] reset: --unmerge
-References: <xmqqa8dttkbw.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8B-GcMNv7pYYLpaUXc2kKnvyYEYm6w=fiaHy7rt4aug1Q@mail.gmail.com>
-        <CACsJy8D4cT2EV_t6=+XTHxLmjV+NtAE+KgiN3ZiP7JQzvu29oQ@mail.gmail.com>
-        <xmqqmvhsc8kn.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8Dn7m2axEFkkQtnZMs2yzFwivAJyZCWxODg-HQ=qLnVMA@mail.gmail.com>
-Date:   Wed, 26 Oct 2016 10:06:57 -0700
-In-Reply-To: <CACsJy8Dn7m2axEFkkQtnZMs2yzFwivAJyZCWxODg-HQ=qLnVMA@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 26 Oct 2016 16:32:14 +0700")
-Message-ID: <xmqq1sz3ca4u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932983AbcJZRI7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 13:08:59 -0400
+Received: from mout.web.de ([212.227.15.3]:54505 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755427AbcJZRI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 13:08:58 -0400
+Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0Lw1CH-1cy0Qq3HJt-017nrq; Wed, 26 Oct 2016 19:08:45
+ +0200
+Subject: Re: [PATCH] hex: use unsigned index for ring buffer
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <ebf769d4-771f-499e-c7fc-f0377d8df18e@web.de>
+ <20161023091146.p2kmqvgwxdf77dnn@sigill.intra.peff.net>
+ <fb816dd5-8fb9-c6a6-2ec2-9ea4dddfdb26@web.de>
+ <20161024130015.awlmgpfzixiy6wkb@sigill.intra.peff.net>
+ <xmqqwpgx7jn6.fsf@gitster.mtv.corp.google.com>
+ <xmqqshrl7j42.fsf@gitster.mtv.corp.google.com>
+ <b1f9054e-fadb-c2d3-bf95-00e88e1fb85b@web.de>
+ <xmqq60ohtib5.fsf@gitster.mtv.corp.google.com>
+ <20161025003023.6vaqofsixana3zno@sigill.intra.peff.net>
+ <xmqqd1ios2p3.fsf@gitster.mtv.corp.google.com>
+Cc:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <3c95a89a-2a9b-2856-42a1-6b994f2e31cd@web.de>
+Date:   Wed, 26 Oct 2016 19:08:41 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9BA09B92-9B9E-11E6-AD07-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqd1ios2p3.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:ide2fU525bTWC2OzYFyn2trtse95YDXYneJD9hGkLyi6YQW1GT7
+ gvqSdFA5pQrn24c7ORTKEF+fofkya6yAKGuqzvehLTuc1k9xNk9z+99E5tH5GLgS8AtuYYZ
+ bvfMpzLIeloLZn070lDqRgQO4yjPQWz+s+NDDgTuvBM2J/fLphYhGQ2xsTWhYbxUz740UOx
+ VNq7syFWeyJ6UXeJDRFzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9zShrYAwXL4=:A58EgTzvebnKSvGroDFS4G
+ qJVTEM8p3TilZiY2PDr5F4sX9+4aNb2tcVSiTRmEDIc+WIgoBVohR9qxADpOPOQAPitQrTqbb
+ pDb0+GGBk+Y3crRMin7L3AwV9p1HlXVyNksDnwXJ7k9GJDaVsUpvooBn+iyLXq9/HbqXcRPyW
+ MfWzADlJgEJO+5lLU2UI34fv9JSAKV/CR9rpblWixjkah0KEA6+XM5RGZOUdr6zr7pmmnOPf0
+ hOEVgQrr6otP3G8KDBlCzDR4C3MoAykNLN1iWFPAAM2gf0KD7mOp/L0LTA1cnb+c/839JJKud
+ lzLan+TOl7wqpOI5TkxeI32SQohL6D0jcf6EPn1cQU9h4Z3bKWvnDCSLxrjzrmu6b11QOY1BW
+ ViaudjTgwkbVgeMThbys4o5mGAg2UQ0RyA3ASBckWyakeiPD1eMtJm1L3N/mjvfZwDcLxOVuM
+ 4CPJ3tubrluVFAlzkIncVsPBI1z13JJZ5taNAc1lGYSIxMt1rpQw4aS39w/fqAbO5mw9xDn/3
+ 9dVCrFeIfdVjWGzwVi3PfYUm421625Gd4WfoPDOmrwd1BR60ir5Ip7Hiv8aODbK5Tm5Ns2VRi
+ KG8qm9CiRfvPWDL2ZFa+2QxAP25B9xf9tDY7DNTGpqBPWUG64cQMTc9HlqXiKh5L5P4gUKxeI
+ eUPkBlGRBvMFjGmVN+C83y2CP0kUEQMhqUGWDdODCmaDzA3T4JU3jm2l9zeKSoBtw9JNQHH9A
+ Vyx9P8v/AJh5iXlxwSTJ9iPVZbjA8mCFXMKrYIjzDeytIZYIszELmJyvLi8n8IGmWtoMkd8Px
+ R96/W9J
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> Interestingly the thread/bug that resulted in that commit started with
-> "report this bug to git" [2]. Something about git-stash. I quote the
-> original mail here in case anyone wants to look into it (not sure if
-> it's actually reported here before, I don't pay much attention to
-> git-stash mails)
+Am 25.10.2016 um 20:28 schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
 >
-> -- 8< --
-> Bad news, everyone!
+>> On Mon, Oct 24, 2016 at 04:53:50PM -0700, Junio C Hamano wrote:
+>>
+>>>> So how about this?  It gets rid of magic number 3 and works for array
+>>>> size that's not a power of two.  And as a nice side effect it can't
+>>>> trigger a signed overflow anymore.
+>>>
+>>> Looks good to me.  Peff?
+>>
+>> Any of the variants discussed in this thread is fine by me.
 >
-> When a stash contains changes for several files, and "stash pop"
-> encounters conflicts only in some of them, the rest of the files are
-> stages automatically.
+> OK, here is what I'll queue then.
+> I assumed that René wants to sign it off ;-).
 
-It indeed is curious.
+Actually I didn't sign-off on purpose originally.  But OK, let's keep
+the version below.  I just feel strangely sad seeing that concise magic
+go.  Nevermind.
 
-That is the designed behaviour for _ANY_ mergy operation, and not
-limited to "stash pop".
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 
-A clean application is added to the index so that you can find out
-about them from "diff --cached", while conflicted ones keep their
-unmerged stages so that the conflict can be resolved in the working
-tree files.  There is no bad news here.
-
-Once you resolve the conflict, you would add the final contents to
-the working tree, but as anybody who knows how "git diff" after
-resolving conflicts in the working tree files is useful would know,
-"saving the editor buffer after removing conflict markers" is not a
-valid signal that the user is confident that the contents is final.
-
-> At least, that happens with Git 2.1.0 on my machine, and some
-> commenters here: http://stackoverflow.com/a/1237337/615245
+> -- >8 --
+> From: René Scharfe <l.s.r@web.de>
+> Date: Sun, 23 Oct 2016 19:57:30 +0200
+> Subject: [PATCH] hex: make wraparound of the index into ring-buffer explicit
 >
-> So then when we unstage the files which had conflicts after resolving
-> those, the result is mixed. Which doesn't look right.
-
-Whoever wrote this does not understand how mergy operations in Git
-works, I guess.
-
-> What shall we do? Unstage the automatically-staged files? Revert the
-> changes from this bug? It seems Git really wants the changes staged
-> after the conflict resolution.
-
-The first order of business is to learn how mergy operations in Git
-is designed to work, and if they are in the business of building a
-tool around Git to make the life of users better, avoid going against
-the designed workflow.
-
-If this "Bad news, everyone!" is why vc-git-resolve-conflicts was
-added and defaults to true, I can feel safe in toggling it off
-forever in my ~/.emacs, knowing that it is a totally broken option
-that came from a desire to fix a problem that does not exist.
-
+> Overflow is defined for unsigned integers, but not for signed ones.
+>
+> We could make the ring-buffer index in sha1_to_hex() and
+> get_pathname() unsigned to be on the safe side to resolve this, but
+> let's make it explicit that we are wrapping around at whatever the
+> number of elements the ring-buffer has.  The compiler is smart enough
+> to turn modulus into bitmask for these codepaths that use
+> ring-buffers of a size that is a power of 2.
+>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  hex.c  | 3 ++-
+>  path.c | 3 ++-
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/hex.c b/hex.c
+> index ab2610e498..845b01a874 100644
+> --- a/hex.c
+> +++ b/hex.c
+> @@ -78,7 +78,8 @@ char *sha1_to_hex(const unsigned char *sha1)
+>  {
+>  	static int bufno;
+>  	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
+> -	return sha1_to_hex_r(hexbuffer[3 & ++bufno], sha1);
+> +	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
+> +	return sha1_to_hex_r(hexbuffer[bufno], sha1);
+>  }
+>
+>  char *oid_to_hex(const struct object_id *oid)
+> diff --git a/path.c b/path.c
+> index fe3c4d96c6..9bfaeda207 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -24,7 +24,8 @@ static struct strbuf *get_pathname(void)
+>  		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+>  	};
+>  	static int index;
+> -	struct strbuf *sb = &pathname_array[3 & ++index];
+> +	struct strbuf *sb = &pathname_array[index];
+> +	index = (index + 1) % ARRAY_SIZE(pathname_array);
+>  	strbuf_reset(sb);
+>  	return sb;
+>  }
+>
