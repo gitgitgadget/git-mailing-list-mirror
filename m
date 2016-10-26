@@ -2,48 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A33452022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 20:37:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F26C2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 20:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932948AbcJZUhl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 16:37:41 -0400
-Received: from [195.159.176.226] ([195.159.176.226]:42621 "EHLO
-        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S932609AbcJZUhk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 16:37:40 -0400
-Received: from list by blaine.gmane.org with local (Exim 4.84_2)
-        (envelope-from <gcvg-git-2@m.gmane.org>)
-        id 1bzUwv-0004cl-KL
-        for git@vger.kernel.org; Wed, 26 Oct 2016 22:37:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To:     git@vger.kernel.org
-From:   Anatoly Borodin <anatoly.borodin@gmail.com>
-Subject: git-archive and submodules
-Date:   Wed, 26 Oct 2016 20:37:10 +0000 (UTC)
-Message-ID: <nur45i$e9b$1@blaine.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: tin/2.3.2-20151224 ("Glenavullen") (UNIX) (Linux/4.8.0-26-generic (x86_64))
-Cancel-Lock: sha1:7a6Pb4fY0dzorNIEaTDBQEWRf+M=
+        id S933805AbcJZUl6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 16:41:58 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:14051 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754031AbcJZUlv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 16:41:51 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t423F0Mbgz5tlC;
+        Wed, 26 Oct 2016 22:40:40 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id F15C9100;
+        Wed, 26 Oct 2016 22:40:39 +0200 (CEST)
+Subject: Re: [PATCH 27/36] attr: convert to new threadsafe API
+To:     Jeff King <peff@peff.net>
+References: <20161022233225.8883-1-sbeller@google.com>
+ <20161022233225.8883-28-sbeller@google.com>
+ <alpine.DEB.2.20.1610261049470.3264@virtualbox>
+ <20161026093558.drsdwn2hm7bbcktt@ruderich.org>
+ <20161026121525.twgiavpgfbr2ahvn@sigill.intra.peff.net>
+ <CAGZ79kYgk9rQDju0MT2uniaxhAWpzJ9f1T9czgNnxfq+Wz6m+A@mail.gmail.com>
+ <e1f760f5-27a7-8266-5d6c-d61fab7e194d@kdbg.org>
+ <20161026202652.kz63mxqqjan7swvl@sigill.intra.peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Simon Ruderich <simon@ruderich.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <6f231a78-5d74-b93f-a644-a4700c9dfbe7@kdbg.org>
+Date:   Wed, 26 Oct 2016 22:40:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <20161026202652.kz63mxqqjan7swvl@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
+Am 26.10.2016 um 22:26 schrieb Jeff King:
+> On Wed, Oct 26, 2016 at 10:25:38PM +0200, Johannes Sixt wrote:
+>
+>> Am 26.10.2016 um 21:51 schrieb Stefan Beller:
+>>> it is
+>>> very convenient to not have to explicitly initialize mutexes?
+>>
+>> Not to initialize a mutex is still wrong for pthreads.
+>
+> I think Stefan was being loose with his wording. There would still be an
+> initializer, but it would be a constant (and in the case of pthread
+> emulation on Windows, would just be NULL).
 
+And I was loose, too: Not to initialize a mutex with at least 
+PTHREAD_MUTEX_INITILIZER (if not pthread_mutex_init) is still wrong.
 
-are there plans to add submodules support to git-archive?
-
-
--- 
-Mit freundlichen Grüßen,
-Anatoly Borodin
+-- Hannes
 
