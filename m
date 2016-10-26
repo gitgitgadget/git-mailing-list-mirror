@@ -6,85 +6,130 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2F20203BD
-	for <e@80x24.org>; Wed, 26 Oct 2016 17:52:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5112F2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 17:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755891AbcJZRwq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 13:52:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51418 "EHLO
+        id S1755077AbcJZRxw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 13:53:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51836 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754722AbcJZRwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 13:52:45 -0400
+        with ESMTP id S1752618AbcJZRxv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 13:53:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A0B847DDF;
-        Wed, 26 Oct 2016 13:52:44 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC26848DB0;
+        Wed, 26 Oct 2016 13:53:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oyhVDt9HBs83KK4q4ClepjBm/4E=; b=jlV5Xz
-        WhuBfsyc/zLau9oZbtOAVePMgHrEDEWu/h3s8bSQ3AmtaGJlSBN0UV1vH4DN9ZnA
-        8CXnOAXWR0K6qvDPvLVV05dF6sT2K706py8SLGCtrjICPmilSajcTBH58WPsYx5q
-        2mqJek93IfXUt86A63D1F5N8Sk7V0GYzYQaV8=
+        :content-type:content-transfer-encoding; s=sasl; bh=nZm4Z35p4kuf
+        W46wSrl204wyMD4=; b=mhtHVpfALg3tZEndnqer0xx0jP3HsY2jfX7rS0u65Tng
+        QiPcIoRC0ghYEcHYvYlxCkBuBzF0uOsNitkzI9zoRFDgIALGjAMAyHjoTEsk0Dk/
+        G8JUF/L/b3xPXtvO+AIYlfi2O2WGq4NKS29wlRMu65DtbNvNv4C2wnzqADp7Or4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fYNvnkqeJb2SjPfQ417LZWcnKnq4R/6X
-        g1vZI9/T6sbvwM05Y5yPWvHr0CJYFqU1JN4h58CPkZrqXtCVFX3eiGyv5732VkG1
-        1+pU12jgx87ZYDGC2H9Uvket3mCmTtsQPHSIXEhAXryM+AATmnFSTI9gurREU7d9
-        s2e9I/1lc5o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21D1347DDE;
-        Wed, 26 Oct 2016 13:52:44 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tb0LTZ
+        G4fBtFC8V2qofHal6l6AP3DNBVcXLRDYhsU3A8U1ZkwixpnvkovPDCHB8+G6KSan
+        JYqlIpml6+rr3ukHKf6zhe+Q0wYjmazDRnRoAEBIIM81S75obJYDf+wUPfUcKKid
+        TiJ3Fc1DVSNBesMvLyTdvk5Exni6NpM3po6Vk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B45FE48DAF;
+        Wed, 26 Oct 2016 13:53:49 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8668647DDD;
-        Wed, 26 Oct 2016 13:52:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3543148DAE;
+        Wed, 26 Oct 2016 13:53:49 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
-References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
-        <20161025181621.4201-1-gitster@pobox.com>
-        <20161025181621.4201-3-gitster@pobox.com>
-        <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net>
-        <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
-        <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net>
-Date:   Wed, 26 Oct 2016 10:52:41 -0700
-In-Reply-To: <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 26 Oct 2016 12:47:46 -0400")
-Message-ID: <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] hex: use unsigned index for ring buffer
+References: <ebf769d4-771f-499e-c7fc-f0377d8df18e@web.de>
+        <20161023091146.p2kmqvgwxdf77dnn@sigill.intra.peff.net>
+        <fb816dd5-8fb9-c6a6-2ec2-9ea4dddfdb26@web.de>
+        <20161024130015.awlmgpfzixiy6wkb@sigill.intra.peff.net>
+        <xmqqwpgx7jn6.fsf@gitster.mtv.corp.google.com>
+        <xmqqshrl7j42.fsf@gitster.mtv.corp.google.com>
+        <b1f9054e-fadb-c2d3-bf95-00e88e1fb85b@web.de>
+        <xmqq60ohtib5.fsf@gitster.mtv.corp.google.com>
+        <20161025003023.6vaqofsixana3zno@sigill.intra.peff.net>
+        <xmqqd1ios2p3.fsf@gitster.mtv.corp.google.com>
+        <3c95a89a-2a9b-2856-42a1-6b994f2e31cd@web.de>
+Date:   Wed, 26 Oct 2016 10:53:47 -0700
+In-Reply-To: <3c95a89a-2a9b-2856-42a1-6b994f2e31cd@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Wed, 26 Oct 2016 19:08:41 +0200")
+Message-ID: <xmqqlgxbatec.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FEFD342E-9BA4-11E6-8385-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2617008A-9BA5-11E6-BC4B-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> Of the two flags, I would say CLOEXEC is the more important one to
-> respect because it may actually impact correctness (e.g., leaking
-> descriptors to sub-processes). Whereas O_NOATIME is purely a performance
-> optimization.
+> Actually I didn't sign-off on purpose originally.  But OK, let's keep
+> the version below.  I just feel strangely sad seeing that concise magic
+> go.  Nevermind.
 
-I tend to agree.
+I actually share the sadness, too, but let's be stupid and obvious
+here.
 
-> I actually wonder if it is worth carrying around the O_NOATIME hack at
-> all.
+Thanks.
 
-Yes, I share the thought.  We no longer have too many loose objects
-to matter.
-
-I do not mind flipping the order, but I'd prefer to cook the result
-even longer.  I am tempted to suggest we take two step route:
-
- - ship 2.11 with the "atime has been there and we won't regress it"
-   shape, while cooking the "cloexec is semantically more
-   important" version in 'next' during the feature freeze
-
- - immediately after 2.11 merge it to 'master' for 2.12 to make sure
-   there is no fallout.
-
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>
+>> -- >8 --
+>> From: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> Date: Sun, 23 Oct 2016 19:57:30 +0200
+>> Subject: [PATCH] hex: make wraparound of the index into ring-buffer ex=
+plicit
+>>
+>> Overflow is defined for unsigned integers, but not for signed ones.
+>>
+>> We could make the ring-buffer index in sha1_to_hex() and
+>> get_pathname() unsigned to be on the safe side to resolve this, but
+>> let's make it explicit that we are wrapping around at whatever the
+>> number of elements the ring-buffer has.  The compiler is smart enough
+>> to turn modulus into bitmask for these codepaths that use
+>> ring-buffers of a size that is a power of 2.
+>>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  hex.c  | 3 ++-
+>>  path.c | 3 ++-
+>>  2 files changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hex.c b/hex.c
+>> index ab2610e498..845b01a874 100644
+>> --- a/hex.c
+>> +++ b/hex.c
+>> @@ -78,7 +78,8 @@ char *sha1_to_hex(const unsigned char *sha1)
+>>  {
+>>  	static int bufno;
+>>  	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
+>> -	return sha1_to_hex_r(hexbuffer[3 & ++bufno], sha1);
+>> +	bufno =3D (bufno + 1) % ARRAY_SIZE(hexbuffer);
+>> +	return sha1_to_hex_r(hexbuffer[bufno], sha1);
+>>  }
+>>
+>>  char *oid_to_hex(const struct object_id *oid)
+>> diff --git a/path.c b/path.c
+>> index fe3c4d96c6..9bfaeda207 100644
+>> --- a/path.c
+>> +++ b/path.c
+>> @@ -24,7 +24,8 @@ static struct strbuf *get_pathname(void)
+>>  		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+>>  	};
+>>  	static int index;
+>> -	struct strbuf *sb =3D &pathname_array[3 & ++index];
+>> +	struct strbuf *sb =3D &pathname_array[index];
+>> +	index =3D (index + 1) % ARRAY_SIZE(pathname_array);
+>>  	strbuf_reset(sb);
+>>  	return sb;
+>>  }
+>>
