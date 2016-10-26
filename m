@@ -6,194 +6,120 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC25C2022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 21:21:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE34A2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 21:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934561AbcJZVVF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 17:21:05 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:36113 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932977AbcJZVVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 17:21:04 -0400
-Received: by mail-pf0-f179.google.com with SMTP id e6so3238847pfk.3
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 14:21:03 -0700 (PDT)
+        id S1755146AbcJZV5l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 17:57:41 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34989 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754809AbcJZV5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 17:57:40 -0400
+Received: by mail-pf0-f169.google.com with SMTP id s8so3700781pfj.2
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 14:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bEvDxMHkpl2nYAG0tP4xy+jZxAokTVBM7QRAD297pQ0=;
-        b=ZQKUQyvt9BWHTw3Ks9QzbYwf4mpH4VYRn8shP15sPhF63eUfIo0teRoT7rAs3iFu9p
-         A25ffAjQr9dKbUdkKVMj+AMDpVUGEurB//VVdsUugxThBsTgnyTYHXgyTH8NkioRWY9u
-         Z8bkP2EQHF7FHjpQbo2iXJ5AUuA23uLMzNVJjjW2F17Ov0jNpe5onXCRm1o2I6bLP3A4
-         Taumlpe+PnQbs1BigX/I2Al02A7huDvSbrKE5mq76xpdlXhJmBzXTzi7ffwU/6nS2y40
-         zLnOkncdJsUjotxoDn0cY/u3erfl6p+Hh2UCsfiaPivC8EBWdHgHE+IBvcLMxnZ/AcSv
-         qUIg==
+        h=from:to:cc:subject:date:message-id;
+        bh=UhORlxcfo//uU8YbKObw1G+O5+F88zzTEbUAeNsypIE=;
+        b=hIzDkNAO95gjT/VYpx3fujiCpzpM+nEqEeoT16NXxW47Eqp8ZUyGB2i6eGcBeb7vXb
+         JDfHFO7cuA6gwzaVXHbXm9HNMPX0yLee3oj9rP9WdgyjfBxg8FfojCdnWplQGpGDS61Z
+         QcWDzDNQLOYTuSpWtJKGpfrZgnNgCFa277rwpb3nZfipt+Bb3jRV20dlWl5saSSL/tBg
+         CAOieDP6PKY79kJUs4OsCMlwjOjYY/YzoiB7cmaJI/z7M/OtOKIshM2o77pRZiK1j12m
+         uswq0djnHEdPp166pESpc7dS9axVjFr0BNhMPcyIIB9uPIF8IoVaVH3cO5x80+fOjz5f
+         KmYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bEvDxMHkpl2nYAG0tP4xy+jZxAokTVBM7QRAD297pQ0=;
-        b=L8g5CbMrWavTvjA/Uww02i/C5LeREh/+cKZo6Szizl1EYepJp+Drvq/6s0vS4eq8v6
-         JKoJNTxyM7hjSaTfhWpQV88rGKU066pg2a5zgNJue6T+ib5kA9J6A1o350tYanFIcsoK
-         eSYpLqgjKPU66RuSl9D/qpOnMdHiOTxIICzDHi/S38mmErQjqQNYFujceblLNraZAw4A
-         tPLKS/u/ZJwl27knVhiGPiFkGGx9j9H9S8LchiI8NGD9HyrOBDChP9+LyCrJY5SDrqRN
-         i+lVC1g0l35B1FuEmhyyj0dsi7ehH1VCjQ+nVMHTicfgTuhgCR9+Hmcpwx2i9KjAbmbb
-         gSrA==
-X-Gm-Message-State: ABUngvd5n+ifqG9HgEifDZXrDKR272dB9uss88zGjfXaGUuNFFW1w+53yRykJdmm84w+eZjH
-X-Received: by 10.98.18.220 with SMTP id 89mr7884920pfs.71.1477516863083;
-        Wed, 26 Oct 2016 14:21:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=UhORlxcfo//uU8YbKObw1G+O5+F88zzTEbUAeNsypIE=;
+        b=h+eOiWsY2cPRRDRYTgOcJI2ElVULrYZmezd3tpHEOUpbIqDNNs8IbtOs+SBi96MmI9
+         /99QjFiat/hUsi5fsT9O7y6sx/hGtJvHnLZN4E+F9celRjTUTyyDB4jKbu75Y8WLeyKm
+         QFUMFeOQaUBvoUeUo2EkWeytBD2qrgorNAo3ecaTc19Pkv99unrYWfRs+fihr30H9uT4
+         5jPCiCwwBENIDUGdBLSAuKvgv8yERZ3ta93mMxj9bPu8g8X7Xb3ZfqXjvuemG+uJtkcz
+         r6We5wHSpz8SIh3JpaVl4sH1Di/LElc9Vl/lMGx44vEhMCBuhOwDSkVADn+2DadEBLjd
+         qpng==
+X-Gm-Message-State: ABUngveQoNovG4gP/r1LTaeC/2UbeqX3O9/C6NU8G3ARjYyOGJ60r7+DvUGtB+J/kkUzs3LZ
+X-Received: by 10.98.21.197 with SMTP id 188mr7968138pfv.38.1477519059114;
+        Wed, 26 Oct 2016 14:57:39 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:14d0:6024:c11b:baba])
-        by smtp.gmail.com with ESMTPSA id e7sm6245755pfa.65.2016.10.26.14.21.02
+        by smtp.gmail.com with ESMTPSA id t5sm6330732pfb.58.2016.10.26.14.57.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Oct 2016 14:21:02 -0700 (PDT)
+        Wed, 26 Oct 2016 14:57:38 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-To:     ramsay@ramsayjones.plus.com
-Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
-        pclouds@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] attr: expose error reporting function for invalid attribute names
-Date:   Wed, 26 Oct 2016 14:20:59 -0700
-Message-Id: <20161026212059.11840-1-sbeller@google.com>
+To:     Johannes.Schindelin@gmx.de, j6t@kdbg.org
+Cc:     git@vger.kernel.org, simon@ruderich.org, peff@peff.net,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] compat: Allow static initializer for pthreads on Windows
+Date:   Wed, 26 Oct 2016 14:57:32 -0700
+Message-Id: <20161026215732.16411-1-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.508.g6572022
-In-Reply-To: <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
-References: <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+In Windows it is not possible to have a static initialized mutex as of
+now, but that seems to be painful for the upcoming refactoring of the
+attribute subsystem, as we have no good place to put the initialization
+of the attr global lock.
 
-Export invalid_attr_name_message() function that returns the
-message to be given when a given <name, len> pair
-is not a good name for an attribute.
+The trick is to get a named mutex as CreateMutex[1] will return the
+existing named mutex if it exists in a thread safe way, or return
+a newly created mutex with that name.
 
-We could later update the message to exactly spell out what the
-rules for a good attribute name are, etc.
+Inside the critical section of the single named mutex, we need to double
+check if the mutex was already initialized because the outer check is
+not sufficient.
+(e.g. 2 threads enter the first condition `(!a)` at the same time, but
+only one of them will acquire the named mutex first and proceeds to
+initialize the given mutex a. The second thread shall not re-initialize
+the given mutex `a`, which is why we have the inner condition on `(!a)`.
 
-We do not need to export the validity check 'attr_name_valid()' itself
-as we will learn about the validity indirectly in a later patch
-via calling 'git_attr_counted()'.
+Due to the use of memory barriers inside the critical section the mutex
+`a` gets updated to other threads, such that any further invocation
+will skip the initialization check code altogether on the first condition.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+[1] https://msdn.microsoft.com/en-us/library/windows/desktop/ms682411(v=vs.85).aspx
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
- Ramsay,
- I intend to replace the previous
- 
-     [PATCH 17/36] attr: expose validity check for attribute names
-     
- by this one in a reroll.
- 
- Thanks,
- Stefan
+ Flying blind here, i.e. not compiled, not tested. For a system I do not
+ have deep knowledge of. The only help was the online documentation.
 
- attr.c | 39 +++++++++++++++++++++++++--------------
- attr.h |  2 ++
- 2 files changed, 27 insertions(+), 14 deletions(-)
+ compat/win32/pthread.h | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/attr.c b/attr.c
-index 90dbacd..ec878c3 100644
---- a/attr.c
-+++ b/attr.c
-@@ -59,23 +59,38 @@ static unsigned hash_name(const char *name, int namelen)
- 	return val;
+diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+index 1c16408..a900513 100644
+--- a/compat/win32/pthread.h
++++ b/compat/win32/pthread.h
+@@ -21,9 +21,25 @@
+ static inline int return_0(int i) {
+ 	return 0;
  }
- 
--static int invalid_attr_name(const char *name, int namelen)
-+static int attr_name_valid(const char *name, size_t namelen)
- {
- 	/*
- 	 * Attribute name cannot begin with '-' and must consist of
- 	 * characters from [-A-Za-z0-9_.].
- 	 */
- 	if (namelen <= 0 || *name == '-')
--		return -1;
-+		return 0;
- 	while (namelen--) {
- 		char ch = *name++;
- 		if (! (ch == '-' || ch == '.' || ch == '_' ||
- 		       ('0' <= ch && ch <= '9') ||
- 		       ('a' <= ch && ch <= 'z') ||
- 		       ('A' <= ch && ch <= 'Z')) )
--			return -1;
-+			return 0;
- 	}
--	return 0;
-+	return 1;
++
++#define PTHREAD_MUTEX_INITIALIZER NULL
+ #define pthread_mutex_init(a,b) return_0((InitializeCriticalSection((a)), 0))
+ #define pthread_mutex_destroy(a) DeleteCriticalSection((a))
+-#define pthread_mutex_lock EnterCriticalSection
++#define pthread_mutex_lock(a) \
++{ \
++	if (!a) { \
++		HANDLE p = CreateMutex(NULL, FALSE, "Git-Global-Windows-Mutex"); \
++		EnterCriticalSection(p); \
++		MemoryBarrier(); \
++		if (!a)
++			pthread_mutex_init(a); \
++		MemoryBarrier(); \
++		ReleaseMutex(p); \
++	} \
++	EnterCriticalSection(a); \
 +}
 +
-+void invalid_attr_name_message(struct strbuf *err, const char *name, int len)
-+{
-+	strbuf_addf(err, _("%.*s is not a valid attribute name"),
-+		    len, name);
-+}
 +
-+static void report_invalid_attr(const char *name, size_t len,
-+				const char *src, int lineno)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	invalid_attr_name_message(&err, name, len);
-+	fprintf(stderr, "%s: %s:%d\n", err.buf, src, lineno);
-+	strbuf_release(&err);
- }
+ #define pthread_mutex_unlock LeaveCriticalSection
  
- struct git_attr *git_attr_counted(const char *name, size_t len)
-@@ -90,7 +105,7 @@ struct git_attr *git_attr_counted(const char *name, size_t len)
- 			return a;
- 	}
- 
--	if (invalid_attr_name(name, len))
-+	if (!attr_name_valid(name, len))
- 		return NULL;
- 
- 	FLEX_ALLOC_MEM(a, name, name, len);
-@@ -176,17 +191,15 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
- 			cp++;
- 			len--;
- 		}
--		if (invalid_attr_name(cp, len)) {
--			fprintf(stderr,
--				"%.*s is not a valid attribute name: %s:%d\n",
--				len, cp, src, lineno);
-+		if (!attr_name_valid(cp, len)) {
-+			report_invalid_attr(cp, len, src, lineno);
- 			return NULL;
- 		}
- 	} else {
- 		/*
- 		 * As this function is always called twice, once with
- 		 * e == NULL in the first pass and then e != NULL in
--		 * the second pass, no need for invalid_attr_name()
-+		 * the second pass, no need for attr_name_valid()
- 		 * check here.
- 		 */
- 		if (*cp == '-' || *cp == '!') {
-@@ -229,10 +242,8 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
- 		name += strspn(name, blank);
- 		namelen = strcspn(name, blank);
--		if (invalid_attr_name(name, namelen)) {
--			fprintf(stderr,
--				"%.*s is not a valid attribute name: %s:%d\n",
--				namelen, name, src, lineno);
-+		if (!attr_name_valid(name, namelen)) {
-+			report_invalid_attr(name, namelen, src, lineno);
- 			goto fail_return;
- 		}
- 	}
-diff --git a/attr.h b/attr.h
-index bcedf92..d39e327 100644
---- a/attr.h
-+++ b/attr.h
-@@ -13,6 +13,8 @@ extern struct git_attr *git_attr(const char *);
- /* The same, but with counted string */
- extern struct git_attr *git_attr_counted(const char *, size_t);
- 
-+extern void invalid_attr_name_message(struct strbuf *, const char *, int);
-+
- /* Internal use */
- extern const char git_attr__true[];
- extern const char git_attr__false[];
+ typedef int pthread_mutexattr_t;
 -- 
 2.10.1.508.g6572022
 
