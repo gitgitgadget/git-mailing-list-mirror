@@ -2,72 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01CCA203BD
-	for <e@80x24.org>; Wed, 26 Oct 2016 20:02:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85AF62022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 20:17:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934543AbcJZUCu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 16:02:50 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:40862 "EHLO dcvr.yhbt.net"
+        id S935106AbcJZURZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 16:17:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34505 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932244AbcJZUCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 16:02:49 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 86CDE2022A;
-        Wed, 26 Oct 2016 20:02:48 +0000 (UTC)
-Date:   Wed, 26 Oct 2016 20:02:48 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:     git@vger.kernel.org, Mathieu Arnold <mat@FreeBSD.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] git-svn: implement "git worktree" awareness
-Message-ID: <20161026200248.GA28105@starla>
-References: <20161013205555.GA599@dcvr>
- <20161014014623.15223-1-e@80x24.org>
+        id S932948AbcJZURY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 16:17:24 -0400
+Received: (qmail 30886 invoked by uid 109); 26 Oct 2016 20:17:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Oct 2016 20:17:23 +0000
+Received: (qmail 13778 invoked by uid 111); 26 Oct 2016 20:17:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Oct 2016 16:17:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Oct 2016 16:17:21 -0400
+Date:   Wed, 26 Oct 2016 16:17:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with
+ O_CLOEXEC
+Message-ID: <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
+ <20161025181621.4201-1-gitster@pobox.com>
+ <20161025181621.4201-3-gitster@pobox.com>
+ <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net>
+ <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
+ <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net>
+ <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161014014623.15223-1-e@80x24.org>
+In-Reply-To: <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> wrote:
-> +Cc Jakub since gitweb could probably take advantage of get_record
-> from the first patch, too.  I'm not completely sure about the API
-> for this, though.
+On Wed, Oct 26, 2016 at 10:52:41AM -0700, Junio C Hamano wrote:
 
-Jakub: ping?
+> > I actually wonder if it is worth carrying around the O_NOATIME hack at
+> > all.
+> 
+> Yes, I share the thought.  We no longer have too many loose objects
+> to matter.
+> 
+> I do not mind flipping the order, but I'd prefer to cook the result
+> even longer.  I am tempted to suggest we take two step route:
+> 
+>  - ship 2.11 with the "atime has been there and we won't regress it"
+>    shape, while cooking the "cloexec is semantically more
+>    important" version in 'next' during the feature freeze
+> 
+>  - immediately after 2.11 merge it to 'master' for 2.12 to make sure
+>    there is no fallout.
 
-+Cc: Junio, too.  I'm hoping to have this in 2.11.
+That sounds reasonable, though I'd consider jumping straight to "NOATIME
+is not worth it; drop it" as the patch for post-2.11.
 
-> The following changes since commit 3cdd5d19178a54d2e51b5098d43b57571241d0ab:
-> 
->   Sync with maint (2016-10-11 14:55:48 -0700)
-> 
-> are available in the git repository at:
-> 
->   git://bogomips.org/git-svn.git svn-wt
-> 
-> for you to fetch changes up to 112423eb905cf28c9445781a7647ba590d597ab3:
-> 
->   git-svn: "git worktree" awareness (2016-10-14 01:36:12 +0000)
-> 
-> ----------------------------------------------------------------
-> Eric Wong (2):
->       git-svn: reduce scope of input record separator change
->       git-svn: "git worktree" awareness
-> 
->  git-svn.perl              | 13 +++++++------
->  perl/Git.pm               | 16 +++++++++++++++-
->  perl/Git/SVN.pm           | 24 +++++++++++++++---------
->  perl/Git/SVN/Editor.pm    | 12 +++++-------
->  perl/Git/SVN/Fetcher.pm   | 15 +++++----------
->  perl/Git/SVN/Migration.pm | 37 ++++++++++++++++++++++---------------
->  6 files changed, 69 insertions(+), 48 deletions(-)
+-Peff
