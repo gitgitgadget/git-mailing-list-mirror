@@ -2,136 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB6A2022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 17:09:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2F20203BD
+	for <e@80x24.org>; Wed, 26 Oct 2016 17:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932983AbcJZRI7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 13:08:59 -0400
-Received: from mout.web.de ([212.227.15.3]:54505 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755427AbcJZRI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 13:08:58 -0400
-Received: from [192.168.178.36] ([79.197.211.11]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0Lw1CH-1cy0Qq3HJt-017nrq; Wed, 26 Oct 2016 19:08:45
- +0200
-Subject: Re: [PATCH] hex: use unsigned index for ring buffer
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <ebf769d4-771f-499e-c7fc-f0377d8df18e@web.de>
- <20161023091146.p2kmqvgwxdf77dnn@sigill.intra.peff.net>
- <fb816dd5-8fb9-c6a6-2ec2-9ea4dddfdb26@web.de>
- <20161024130015.awlmgpfzixiy6wkb@sigill.intra.peff.net>
- <xmqqwpgx7jn6.fsf@gitster.mtv.corp.google.com>
- <xmqqshrl7j42.fsf@gitster.mtv.corp.google.com>
- <b1f9054e-fadb-c2d3-bf95-00e88e1fb85b@web.de>
- <xmqq60ohtib5.fsf@gitster.mtv.corp.google.com>
- <20161025003023.6vaqofsixana3zno@sigill.intra.peff.net>
- <xmqqd1ios2p3.fsf@gitster.mtv.corp.google.com>
-Cc:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3c95a89a-2a9b-2856-42a1-6b994f2e31cd@web.de>
-Date:   Wed, 26 Oct 2016 19:08:41 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1755891AbcJZRwq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 13:52:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51418 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754722AbcJZRwp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 13:52:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A0B847DDF;
+        Wed, 26 Oct 2016 13:52:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oyhVDt9HBs83KK4q4ClepjBm/4E=; b=jlV5Xz
+        WhuBfsyc/zLau9oZbtOAVePMgHrEDEWu/h3s8bSQ3AmtaGJlSBN0UV1vH4DN9ZnA
+        8CXnOAXWR0K6qvDPvLVV05dF6sT2K706py8SLGCtrjICPmilSajcTBH58WPsYx5q
+        2mqJek93IfXUt86A63D1F5N8Sk7V0GYzYQaV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fYNvnkqeJb2SjPfQ417LZWcnKnq4R/6X
+        g1vZI9/T6sbvwM05Y5yPWvHr0CJYFqU1JN4h58CPkZrqXtCVFX3eiGyv5732VkG1
+        1+pU12jgx87ZYDGC2H9Uvket3mCmTtsQPHSIXEhAXryM+AATmnFSTI9gurREU7d9
+        s2e9I/1lc5o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21D1347DDE;
+        Wed, 26 Oct 2016 13:52:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8668647DDD;
+        Wed, 26 Oct 2016 13:52:43 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
+        <20161025181621.4201-1-gitster@pobox.com>
+        <20161025181621.4201-3-gitster@pobox.com>
+        <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net>
+        <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
+        <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net>
+Date:   Wed, 26 Oct 2016 10:52:41 -0700
+In-Reply-To: <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 26 Oct 2016 12:47:46 -0400")
+Message-ID: <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqd1ios2p3.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ide2fU525bTWC2OzYFyn2trtse95YDXYneJD9hGkLyi6YQW1GT7
- gvqSdFA5pQrn24c7ORTKEF+fofkya6yAKGuqzvehLTuc1k9xNk9z+99E5tH5GLgS8AtuYYZ
- bvfMpzLIeloLZn070lDqRgQO4yjPQWz+s+NDDgTuvBM2J/fLphYhGQ2xsTWhYbxUz740UOx
- VNq7syFWeyJ6UXeJDRFzg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9zShrYAwXL4=:A58EgTzvebnKSvGroDFS4G
- qJVTEM8p3TilZiY2PDr5F4sX9+4aNb2tcVSiTRmEDIc+WIgoBVohR9qxADpOPOQAPitQrTqbb
- pDb0+GGBk+Y3crRMin7L3AwV9p1HlXVyNksDnwXJ7k9GJDaVsUpvooBn+iyLXq9/HbqXcRPyW
- MfWzADlJgEJO+5lLU2UI34fv9JSAKV/CR9rpblWixjkah0KEA6+XM5RGZOUdr6zr7pmmnOPf0
- hOEVgQrr6otP3G8KDBlCzDR4C3MoAykNLN1iWFPAAM2gf0KD7mOp/L0LTA1cnb+c/839JJKud
- lzLan+TOl7wqpOI5TkxeI32SQohL6D0jcf6EPn1cQU9h4Z3bKWvnDCSLxrjzrmu6b11QOY1BW
- ViaudjTgwkbVgeMThbys4o5mGAg2UQ0RyA3ASBckWyakeiPD1eMtJm1L3N/mjvfZwDcLxOVuM
- 4CPJ3tubrluVFAlzkIncVsPBI1z13JJZ5taNAc1lGYSIxMt1rpQw4aS39w/fqAbO5mw9xDn/3
- 9dVCrFeIfdVjWGzwVi3PfYUm421625Gd4WfoPDOmrwd1BR60ir5Ip7Hiv8aODbK5Tm5Ns2VRi
- KG8qm9CiRfvPWDL2ZFa+2QxAP25B9xf9tDY7DNTGpqBPWUG64cQMTc9HlqXiKh5L5P4gUKxeI
- eUPkBlGRBvMFjGmVN+C83y2CP0kUEQMhqUGWDdODCmaDzA3T4JU3jm2l9zeKSoBtw9JNQHH9A
- Vyx9P8v/AJh5iXlxwSTJ9iPVZbjA8mCFXMKrYIjzDeytIZYIszELmJyvLi8n8IGmWtoMkd8Px
- R96/W9J
+Content-Type: text/plain
+X-Pobox-Relay-ID: FEFD342E-9BA4-11E6-8385-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.10.2016 um 20:28 schrieb Junio C Hamano:
-> Jeff King <peff@peff.net> writes:
->
->> On Mon, Oct 24, 2016 at 04:53:50PM -0700, Junio C Hamano wrote:
->>
->>>> So how about this?  It gets rid of magic number 3 and works for array
->>>> size that's not a power of two.  And as a nice side effect it can't
->>>> trigger a signed overflow anymore.
->>>
->>> Looks good to me.  Peff?
->>
->> Any of the variants discussed in this thread is fine by me.
->
-> OK, here is what I'll queue then.
-> I assumed that René wants to sign it off ;-).
+Jeff King <peff@peff.net> writes:
 
-Actually I didn't sign-off on purpose originally.  But OK, let's keep
-the version below.  I just feel strangely sad seeing that concise magic
-go.  Nevermind.
+> Of the two flags, I would say CLOEXEC is the more important one to
+> respect because it may actually impact correctness (e.g., leaking
+> descriptors to sub-processes). Whereas O_NOATIME is purely a performance
+> optimization.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+I tend to agree.
 
-> -- >8 --
-> From: René Scharfe <l.s.r@web.de>
-> Date: Sun, 23 Oct 2016 19:57:30 +0200
-> Subject: [PATCH] hex: make wraparound of the index into ring-buffer explicit
->
-> Overflow is defined for unsigned integers, but not for signed ones.
->
-> We could make the ring-buffer index in sha1_to_hex() and
-> get_pathname() unsigned to be on the safe side to resolve this, but
-> let's make it explicit that we are wrapping around at whatever the
-> number of elements the ring-buffer has.  The compiler is smart enough
-> to turn modulus into bitmask for these codepaths that use
-> ring-buffers of a size that is a power of 2.
->
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  hex.c  | 3 ++-
->  path.c | 3 ++-
->  2 files changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/hex.c b/hex.c
-> index ab2610e498..845b01a874 100644
-> --- a/hex.c
-> +++ b/hex.c
-> @@ -78,7 +78,8 @@ char *sha1_to_hex(const unsigned char *sha1)
->  {
->  	static int bufno;
->  	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
-> -	return sha1_to_hex_r(hexbuffer[3 & ++bufno], sha1);
-> +	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
-> +	return sha1_to_hex_r(hexbuffer[bufno], sha1);
->  }
->
->  char *oid_to_hex(const struct object_id *oid)
-> diff --git a/path.c b/path.c
-> index fe3c4d96c6..9bfaeda207 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -24,7 +24,8 @@ static struct strbuf *get_pathname(void)
->  		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
->  	};
->  	static int index;
-> -	struct strbuf *sb = &pathname_array[3 & ++index];
-> +	struct strbuf *sb = &pathname_array[index];
-> +	index = (index + 1) % ARRAY_SIZE(pathname_array);
->  	strbuf_reset(sb);
->  	return sb;
->  }
->
+> I actually wonder if it is worth carrying around the O_NOATIME hack at
+> all.
+
+Yes, I share the thought.  We no longer have too many loose objects
+to matter.
+
+I do not mind flipping the order, but I'd prefer to cook the result
+even longer.  I am tempted to suggest we take two step route:
+
+ - ship 2.11 with the "atime has been there and we won't regress it"
+   shape, while cooking the "cloexec is semantically more
+   important" version in 'next' during the feature freeze
+
+ - immediately after 2.11 merge it to 'master' for 2.12 to make sure
+   there is no fallout.
+
