@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 454FE2022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 13:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 882E62022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 13:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934848AbcJZNec (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 09:34:32 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:38955 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934646AbcJZNe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 09:34:29 -0400
-Received: by mail-it0-f68.google.com with SMTP id q75so877292itc.6
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 06:34:28 -0700 (PDT)
+        id S1755072AbcJZNxO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 09:53:14 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:34188 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932323AbcJZNxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 09:53:13 -0400
+Received: by mail-it0-f66.google.com with SMTP id u194so254863itu.1
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 06:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ZD/KUcigdsphrHVsZ6byFfmsbzI0WAGuZiY07qXE0Z8=;
-        b=o/CeSfyoYmSgxhiYBWgiDCwrtGQ56rSzl5sfTRbkOX6qFwQEGzCWy1AS5tOirdTE2s
-         d2t+XZoB5ZixddEsE4nuynGA6jMpDEyH3wSqzyHYMPKSx4hIsVX5iZ9EuzsBBfbxXr1g
-         5s76TkGekmubYou0527vPtrbBSuPXLJ+cpPcqW/aLqcxIbk9YC9jeDPYL/3buhvcp0Xg
-         qfWcDOSDaZXtOpwTDAcom+d89C+EbpCJ72gLt8ecxKhM3UTD01+k2XIg/hT+LTDCtN8W
-         Hr2dpcyQUcoiznp69+2Gkn06PkRo2b4AicFEb4/0AQkaFz/3/IVt3fr6yDeOS6DpV2yQ
-         u7iQ==
+        bh=lSqQcuuYojEcjmh74I5CX3dcfZuYWTjqXzqyrnaC07I=;
+        b=MPddxj9uq9mxpEPtrRbNu1CuVVbEK45XRp6ArVoh7gOsfapAG+3YlRnl7EjRGIS1k3
+         AyIGMXDsoREgdci5aj5nSctR0UqqZqCThO7TAyHAw/dzXPihBOnuce1ozx1Dbn1A9kmb
+         yyLb7QfoRhrycFY5Stoce3vxKR9hTkuEb/aLRqRNgCQy23/n++el5J+XcXwoTGi/I8HP
+         KmlsuxeMbuQ1Y/uNnXo152HMmpsgHT1aNYJjDYYFMzr3YBZseVFt7UJDWvwnzdqShEuv
+         EtQFntM/YDviYd/5Y8oiZX2NY2cQI30SaGoEkZ6knjdms/yNB8u3wQMWIHzumE7tjb4r
+         dWTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ZD/KUcigdsphrHVsZ6byFfmsbzI0WAGuZiY07qXE0Z8=;
-        b=bCQ/b57TZfJ8XRQukiZOkGKaATNRn2IvTSDpfslOZRTu6xLOVKxckQX+K+mPVt99d8
-         9+zegqpKdVoMMyKGTN8bBKyICn4DUrZwZOxv3RU+gbIevdvvfLrChqIM1Aar0jTXi7pj
-         oLDbyzMk5bnFHPVF8ct0Dm7P11A9nhN45Of0zjNxuIybNlhjHTbPryu05Rcm9C/1xFri
-         8fiPYg0qskogBAywUic/0NCLsVh6EGSfvE7k8PEYAnnBNWQELlcNV7ma3UBMmzK2pYwZ
-         8iQUZn4S6MeDbySJ4Fcq8zFJxN+UHVVxgHmH8DzXM7FlnrIlS1JvVkP7D7YbvU+XecMd
-         Q1AQ==
-X-Gm-Message-State: ABUngvefUaBg0ar084avldVdfgdfVVYkZeTLBtikOZTZIjLD/1GaOr6sp4nsDFLx/IfVqwMACzmF7+BuzzBc+g==
-X-Received: by 10.36.103.201 with SMTP id u192mr2207223itc.3.1477488867869;
- Wed, 26 Oct 2016 06:34:27 -0700 (PDT)
+        bh=lSqQcuuYojEcjmh74I5CX3dcfZuYWTjqXzqyrnaC07I=;
+        b=Rn3kpdc//4jSmWoUdZJOzlyn/vbwIBOZGFJ+ZlLcxmS5grlIkncHIlAJ9n08iWDe/6
+         12kE9Naid1sd7vOsRDwWdbJS7HxsUTUbZ6KNA1nUEZm/n5/n3YdUo3+f6Y4y7AENnjlA
+         GRxqCCioCcNFIGyWhmgMwSt8h7kjiSboc69pe9oQ1f44VYFp++eU5whawyZyPnyzPdi+
+         dPHcopgVIGV949hnUo/voyobqgl+yLLUa/7LD0h4HloFMSDucxVLeyu5LlbWatmFJgWX
+         MjigMk9uIw9sySRLOcAysW953ne5XHlowSDtCr6MiAs8RkO3rqHreKuj6G7eej5vcjix
+         15DA==
+X-Gm-Message-State: ABUngvfthOnC3KWgfzthg1UvZR7XxbDixrrKH2AYdYLnU439Lum8hBMNBn8zyAtBf8lQ89FxDEbht20bnkE0Qw==
+X-Received: by 10.107.59.6 with SMTP id i6mr2726124ioa.176.1477489992116; Wed,
+ 26 Oct 2016 06:53:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Wed, 26 Oct 2016 06:33:57 -0700 (PDT)
-In-Reply-To: <20161022233225.8883-33-sbeller@google.com>
-References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-33-sbeller@google.com>
+Received: by 10.64.164.102 with HTTP; Wed, 26 Oct 2016 06:52:41 -0700 (PDT)
+In-Reply-To: <20161022233225.8883-28-sbeller@google.com>
+References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-28-sbeller@google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 26 Oct 2016 20:33:57 +0700
-Message-ID: <CACsJy8DhsaTY1w_e-0O5d4KLxr4Gmo3g9rDagQq1ooSHywcRoQ@mail.gmail.com>
-Subject: Re: [PATCH 32/36] pathspec: allow querying for attributes
+Date:   Wed, 26 Oct 2016 20:52:41 +0700
+Message-ID: <CACsJy8AB-24dDEs6Pa_6pB16T2ZAgw2faOQDEtZ2vU2uuAepHg@mail.gmail.com>
+Subject: Re: [PATCH 27/36] attr: convert to new threadsafe API
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>, bmwill@google.com
@@ -60,19 +60,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(sorry if this should have been answered if I went through the series
-patch by patch, I wanted to do a proper review but finally have to
-admit to myself I won't, so I just skim through a single giant diff
-instead)
-
 On Sun, Oct 23, 2016 at 6:32 AM, Stefan Beller <sbeller@google.com> wrote:
-> +attr;;
-> +After `attr:` comes a space separated list of "attribute
-> +requirements", all of which must be met in order for the
-> +path to be considered a match;
+> This revamps the API of the attr subsystem to be thread safe.
+> Before we had the question and its results in one struct type.
+> The typical usage of the API was
+>
+>     static struct git_attr_check *check;
+>
+>     if (!check)
+>         check = git_attr_check_initl("text", NULL);
 
-What about (attr=abc def,attr=ghi lkj)? Does it mean (abc && def) ||
-(ghi && lkj), or abc && def && ghi && lkj? Or is it forbidden to have
-multiple 'attr' attribute in the same pathspec?
+
+Two cents. I read the .txt first and my first thought was "is _initl a
+typo, shouldn't it be jsut _init"? I know we have this 'l' variant at
+least in argv-array, but there we have many ways of adding arguments.
+And here it's just "initl", not "init" nor other "initX" variants,
+which looks odd. I wonder if the name git_attr_check_init() would do
+the job fine, since we don't have different init variants and the
+naming convention is not strong enough to tell me "it's multiple
+arguments ended with a NULL one" right away. If you're worried about
+people forgetting NULL at the end, how about passing an array of
+strings, terminated by NULL, instead?
+
+Just thinking out loud. Maybe _initl _is_ a better name.
 -- 
 Duy
