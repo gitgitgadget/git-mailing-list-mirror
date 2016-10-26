@@ -2,102 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC8432022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 23:07:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8FD2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 23:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753809AbcJZXHc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 19:07:32 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:40067 "EHLO
-        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752855AbcJZXHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 19:07:31 -0400
-Received: from homiemail-a14.g.dreamhost.com (homie.mail.dreamhost.com [208.97.132.208])
-        by hapkido.dreamhost.com (Postfix) with ESMTP id 10C01C6A84
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 16:07:31 -0700 (PDT)
-Received: from homiemail-a14.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTP id 342D539207F
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 16:07:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
-        message-id:subject:from:to:date:content-type:mime-version:
-        content-transfer-encoding; s=mattmccutchen.net; bh=sGjAMuTfFxRCx
-        SDtAf7SpfK5dxI=; b=BY3eTKJhchGzXUuPFYbUk1agsz7PfdFFthJZRon8Khfn5
-        wvo7iBoKx5o5xUWQUmPThTa+vPUpb6yKJHqL94YUlRsUA/P8FKlpBf6VDDGR2Bx+
-        T47KO607MCawGVf+Y66kmCOLCkK2UGz6k3Eaer13eAv8qvIoSLdv7bRXembYxI=
-Received: from main (30-9-219.wireless.csail.mit.edu [128.30.9.219])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: matt@mattmccutchen.net)
-        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTPSA id DC2BC392070
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 16:07:29 -0700 (PDT)
-Message-ID: <1477523244.2764.114.camel@mattmccutchen.net>
-Subject: "git subtree --squash" interacts poorly with revert, merge, and
- rebase
-From:   Matt McCutchen <matt@mattmccutchen.net>
-To:     git <git@vger.kernel.org>
-Date:   Wed, 26 Oct 2016 19:07:24 -0400
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        id S932702AbcJZXKG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 19:10:06 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:35135 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754265AbcJZXKF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 19:10:05 -0400
+Received: by mail-qk0-f178.google.com with SMTP id z190so23156208qkc.2
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 16:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=C+yoEpkemtvDewj6lgZg9Iu/4FQA59tlT5ELRb0mgdc=;
+        b=e5KsmSYrW31GKthzIrdMeruwZbIZZlPLr7cRSqi1YDtOTaH0YvSSA+zLl+e1QWzQ2c
+         HtBajzN96njxM0VDsERUeBtudLPHQvcoUBzEc8LyPxTSTkh7oO3aG/j24NtwaqwIRBSJ
+         MEUVJFyP90tw/Uin4nP9YNawvO71ChVS94+r1aAxn6psoKyAqioCVdEstqA7/gcsrnU6
+         GbvmPHpFFoVrXinoZATjSXkQ5LEtRIGdlNrGcIZe7/tI0gJlL/tMix+EZJJWy7gthYrt
+         y7SKfjvCwafnH3Km9uFKo4Vq3d+uPE46/SFA3sW7koD7/8ImqrhDtU0SX6kJ4IXpVZ59
+         thRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=C+yoEpkemtvDewj6lgZg9Iu/4FQA59tlT5ELRb0mgdc=;
+        b=c9OMH2NJg/7MrzVTo5mrR4AgG51Q4DD3MsxgdNXrC4J0hRqshlITAYqifzaslqnvsR
+         QkNHZNI976bk+K0W2RtsxSU7E5jhgO6FjLdieSKdF3gBAJiAHLHnTuUvK3Ls3xx4d2tu
+         Klf0OiasAf+HYxqgsgq1UXqr26beFfJJihDie5mv7ezWfdX81VcY2j/XN4BZvLPJJIS4
+         RcW06718g290ss9JXSKa7iZzcnFr+lZbhDheTrem9xoX0MbvbdzEN6YN9lLbeZ+ybrg7
+         +tTFTrI5H5rmUUU3og78Jv6Bfel04TtUTLbYMGu5jPcg38tw4Ph84xI13ZLLU/sHF2p5
+         NFcA==
+X-Gm-Message-State: ABUngvdw2JOdn9P8vSfpFrd0DekBdJ5Jebi8wAqh2KMtVAWGgyx3oX6urBGBO1Ai8p1gagMCY16yaFcz4u3eyIuH
+X-Received: by 10.55.184.2 with SMTP id i2mr4224986qkf.47.1477523404274; Wed,
+ 26 Oct 2016 16:10:04 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.135.40 with HTTP; Wed, 26 Oct 2016 16:10:03 -0700 (PDT)
+In-Reply-To: <8a91d287-5413-3f8f-9d0e-edd67fb36557@ramsayjones.plus.com>
+References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-29-sbeller@google.com>
+ <8a91d287-5413-3f8f-9d0e-edd67fb36557@ramsayjones.plus.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Oct 2016 16:10:03 -0700
+Message-ID: <CAGZ79kZ6ENdDPZ79+tyVoXiyyN+o7fwkd8MeHDuvvK7yJqf_Dg@mail.gmail.com>
+Subject: Re: [PATCH 28/36] attr: keep attr stack for each check
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm the lead developer of a research software application (https://bitb
-ucket.org/objsheets/objsheets) that uses modified versions of two
-third-party libraries, which we need to version and distribute along
-with our application. =C2=A0For better or for worse, we haven't made it a
-priority to upstream our changes, so for now we just want to optimize
-for ease of (1) making and reviewing changes and (2) upgrading to newer
-upstream versions.
+On Sun, Oct 23, 2016 at 8:10 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>> +
+>> +struct hashmap all_attr_stacks;
+>> +int all_attr_stacks_init;
+>
+> Mark symbols 'all_attr_stacks' and 'all_attr_stacks_init' with
+> the static keyword. (ie. these are file-local symbols).
+>
+> ATB,
+> Ramsay Jones
+>
 
-We've been using git submodules, but that's a pain for several reasons:
-- We have to run "git submodule update" manually.
-- We have to make separate commits and manage corresponding topic
-branches for the superproject and subprojects.
-- A diff of the superproject doesn't include the content of
-subprojects.
-
-Recently I looked into switching to the "git subtree" contrib tool in
-the --squash mode, but I identified a few drawbacks compared to
-submodules:
-
-1. The upstream commit on which the subtree is based is assumed to be
-given by the latest squash commit in "git log". =C2=A0This means that (i)=
- a
-change to a different upstream commit can't be reverted with "git
-revert" and (ii) a "git merge" of two superproject branches based on
-different upstream commits may successfully merge the content of the
-upstream commits but leave the tool thinking the subtree is based on an
-arbitrary one of the two commits.
-
-2. Rebasing messes up the merge commits generated by "git subtree --
-squash". =C2=A0--preserve-merges worked in a simple test but supposedly
-doesn't work if there are conflicts or I want to reorder commits with
---interactive.
-
-Maybe we would never hit any of these problems in practice, but they
-give me a bad enough feeling that I'm planning to write my own tool
-that tracks the upstream commit ID in a file (like a submodule) and
-doesn't generate any extra commits. =C2=A0Without generating extra commit=
-s,
-the only place to store the upstream content in the superproject would
-be in another subtree, which would take up disk space in every working
-tree unless developers manually set skip-worktree. =C2=A0I think I prefer=
- to
-not store the upstream content and just have the tool fetch it from a
-local subproject repository each time it's needed.
-
-I'll of course post the tool on the web and would be happy to see it
-integrated into "git subtree" if that makes sense, but I don't know how
-much time I'd be willing to put into making that happen.
-
-Any advice?
+This fix will appear in a resend of the series.
 
 Thanks,
-Matt
+Stefan
