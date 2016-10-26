@@ -6,92 +6,111 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2685C2022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 16:51:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39AA02022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 17:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755589AbcJZQvH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 12:51:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50007 "EHLO
+        id S1754981AbcJZRHD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 13:07:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61690 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754876AbcJZQvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 12:51:06 -0400
+        with ESMTP id S1751271AbcJZRHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 13:07:02 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 11F5847296;
-        Wed, 26 Oct 2016 12:51:05 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E4ABE4759A;
+        Wed, 26 Oct 2016 13:07:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YSJjHGYYEHTq
-        JLx266+SXLyV18E=; b=ViLQIX9oNQSN+BnVQgHP9xVf5BuFJBJetSnc6cpHETG+
-        QR6KM26fJriNncfsq5njZuJrqWWVFBtdEGWKTFiTXs9a4J5qFbD5yPeIrFL0AoxY
-        rEXimAwEuFcbcpm0KW7+h1tuhitFdAh4vFNgWYcgbGx3MX3xzyu4b527mUKcGVM=
+        :content-type; s=sasl; bh=+cbc2uO4mkqyrC/CqigWL3KM5hk=; b=WrFSet
+        fCta+D2zyiAEsp3LUo38PaQR15TEmE1QzEWBJg/FW1/ckAahgxKcAu0xe5ZgmVv2
+        ABot8vdTRp1HQE7jUsF3lI8USgRrkkV8VR+U2Yd4yEoI6T3wWH4VVXhVvIAMpTF8
+        E7DETweKoPA2qnyijp3mS22kVdejRIevKm/cc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kPmL9N
-        JgSNflmYGWKx+6SXYkIJFMocBaBOj4uqWbJJ0QZudA5MM2EMRMTlg8Y2Wa3d/XGP
-        JKrLmzEqQvMu61HyfnP00/ecUiotFN8qd5NHPTN/gLqqiUv8+4B0hcKaIf1cEuf3
-        SYdKuOADUE8VARMaqSsX+3nWd7nqou0doOzDM=
+        :content-type; q=dns; s=sasl; b=cPIhtCRT0zU7ZccjOoyn5jrZYrfkhMNJ
+        Z8BRDPS4modXMWroHnUd9pOyyH8HiD7P74+1EdRF9au0S5+OwSFdcggGBVixtkP0
+        hu4sMfQTkoyy7WNvkchMrvmrfzitbDVGX6/oCe++TBVWe+sI87i+MuOVm6iRZFTc
+        8VqyJZtqujQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A4C747295;
-        Wed, 26 Oct 2016 12:51:05 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B69947599;
+        Wed, 26 Oct 2016 13:07:00 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 819CC47294;
-        Wed, 26 Oct 2016 12:51:04 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E46A947596;
+        Wed, 26 Oct 2016 13:06:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] rebase: add --forget to cleanup rebase, leave HEAD untouched
-References: <20161026094658.20704-1-pclouds@gmail.com>
-Date:   Wed, 26 Oct 2016 09:51:02 -0700
-In-Reply-To: <20161026094658.20704-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 26 Oct 2016 16:46:58 +0700")
-Message-ID: <xmqq60ofcavd.fsf@gitster.mtv.corp.google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] reset: --unmerge
+References: <xmqqa8dttkbw.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8B-GcMNv7pYYLpaUXc2kKnvyYEYm6w=fiaHy7rt4aug1Q@mail.gmail.com>
+        <CACsJy8D4cT2EV_t6=+XTHxLmjV+NtAE+KgiN3ZiP7JQzvu29oQ@mail.gmail.com>
+        <xmqqmvhsc8kn.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8Dn7m2axEFkkQtnZMs2yzFwivAJyZCWxODg-HQ=qLnVMA@mail.gmail.com>
+Date:   Wed, 26 Oct 2016 10:06:57 -0700
+In-Reply-To: <CACsJy8Dn7m2axEFkkQtnZMs2yzFwivAJyZCWxODg-HQ=qLnVMA@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 26 Oct 2016 16:32:14 +0700")
+Message-ID: <xmqq1sz3ca4u.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6229BB8E-9B9C-11E6-9496-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9BA09B92-9B9E-11E6-AD07-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> There are occasions when you decide to abort an in-progress rebase and
-> move on to do something else but you forget to do "git rebase --abort"
-> first. Or the rebase has been in progress for so long you forgot about
-> it. By the time you realize that (e.g. by starting another rebase)
-> it's already too late to retrace your steps. The solution is normally
+> Interestingly the thread/bug that resulted in that commit started with
+> "report this bug to git" [2]. Something about git-stash. I quote the
+> original mail here in case anyone wants to look into it (not sure if
+> it's actually reported here before, I don't pay much attention to
+> git-stash mails)
 >
->     rm -r .git/<some rebase dir>
+> -- 8< --
+> Bad news, everyone!
 >
-> and continue with your life. But there could be two different
-> directories for <some rebase dir> (and it obviously requires some
-> knowledge of how rebase works), and the ".git" part could be much
-> longer if you are not at top-dir, or in a linked worktree. And
-> "rm -r" is very dangerous to do in .git, a mistake in there could
-> destroy object database or other important data.
+> When a stash contains changes for several files, and "stash pop"
+> encounters conflicts only in some of them, the rest of the files are
+> stages automatically.
+
+It indeed is curious.
+
+That is the designed behaviour for _ANY_ mergy operation, and not
+limited to "stash pop".
+
+A clean application is added to the index so that you can find out
+about them from "diff --cached", while conflicted ones keep their
+unmerged stages so that the conflict can be resolved in the working
+tree files.  There is no bad news here.
+
+Once you resolve the conflict, you would add the final contents to
+the working tree, but as anybody who knows how "git diff" after
+resolving conflicts in the working tree files is useful would know,
+"saving the editor buffer after removing conflict markers" is not a
+valid signal that the user is confident that the contents is final.
+
+> At least, that happens with Git 2.1.0 on my machine, and some
+> commenters here: http://stackoverflow.com/a/1237337/615245
 >
-> Provide "git rebase --forget" for this exact use case.
+> So then when we unstage the files which had conflicts after resolving
+> those, the result is mixed. Which doesn't look right.
 
-Two and a half comments.
+Whoever wrote this does not understand how mergy operations in Git
+works, I guess.
 
- - The title says "leave HEAD untouched".  Are my working tree files
-   and my index also safe from this operation, or is HEAD the only
-   thing that is protected?
+> What shall we do? Unstage the automatically-staged files? Revert the
+> changes from this bug? It seems Git really wants the changes staged
+> after the conflict resolution.
 
- - I think I saw a variant of this gotcha for an unconcluded
-   cherry-pick that was left behind, which the bash-prompt script
-   did not notice but the next "git cherry-pick" did by complaining
-   "you are in the middle" or something like that.  Perhaps we would
-   want to have a similarly sounding option to help that case, too,
-   not in this patch but as another patch on the same theme?
+The first order of business is to learn how mergy operations in Git
+is designed to work, and if they are in the business of building a
+tool around Git to make the life of users better, avoid going against
+the designed workflow.
 
- - Would it have helped if bash-prompt were in use?  I am not saying
-   that this patch becomes unnecessary if you use it; I am trying to
-   see if it helps its users by reminding them what state they are
-   in.
+If this "Bad news, everyone!" is why vc-git-resolve-conflicts was
+added and defaults to true, I can feel safe in toggling it off
+forever in my ~/.emacs, knowing that it is a totally broken option
+that came from a desire to fix a problem that does not exist.
 
