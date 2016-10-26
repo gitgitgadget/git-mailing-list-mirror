@@ -2,91 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7696203BD
-	for <e@80x24.org>; Wed, 26 Oct 2016 16:47:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2685C2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 16:51:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754286AbcJZQru (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 12:47:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34432 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752427AbcJZQrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 12:47:49 -0400
-Received: (qmail 19485 invoked by uid 109); 26 Oct 2016 16:47:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Oct 2016 16:47:48 +0000
-Received: (qmail 12497 invoked by uid 111); 26 Oct 2016 16:48:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Oct 2016 12:48:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Oct 2016 12:47:46 -0400
-Date:   Wed, 26 Oct 2016 12:47:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with
- O_CLOEXEC
-Message-ID: <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
- <20161025181621.4201-1-gitster@pobox.com>
- <20161025181621.4201-3-gitster@pobox.com>
- <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net>
- <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
+        id S1755589AbcJZQvH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 12:51:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50007 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754876AbcJZQvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 12:51:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 11F5847296;
+        Wed, 26 Oct 2016 12:51:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=YSJjHGYYEHTq
+        JLx266+SXLyV18E=; b=ViLQIX9oNQSN+BnVQgHP9xVf5BuFJBJetSnc6cpHETG+
+        QR6KM26fJriNncfsq5njZuJrqWWVFBtdEGWKTFiTXs9a4J5qFbD5yPeIrFL0AoxY
+        rEXimAwEuFcbcpm0KW7+h1tuhitFdAh4vFNgWYcgbGx3MX3xzyu4b527mUKcGVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kPmL9N
+        JgSNflmYGWKx+6SXYkIJFMocBaBOj4uqWbJJ0QZudA5MM2EMRMTlg8Y2Wa3d/XGP
+        JKrLmzEqQvMu61HyfnP00/ecUiotFN8qd5NHPTN/gLqqiUv8+4B0hcKaIf1cEuf3
+        SYdKuOADUE8VARMaqSsX+3nWd7nqou0doOzDM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A4C747295;
+        Wed, 26 Oct 2016 12:51:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 819CC47294;
+        Wed, 26 Oct 2016 12:51:04 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] rebase: add --forget to cleanup rebase, leave HEAD untouched
+References: <20161026094658.20704-1-pclouds@gmail.com>
+Date:   Wed, 26 Oct 2016 09:51:02 -0700
+In-Reply-To: <20161026094658.20704-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Wed, 26 Oct 2016 16:46:58 +0700")
+Message-ID: <xmqq60ofcavd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
+X-Pobox-Relay-ID: 6229BB8E-9B9C-11E6-9496-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 26, 2016 at 09:23:21AM -0700, Junio C Hamano wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> >> +		/* Might the failure be due to O_NOATIME? */
-> >> +		if (errno != ENOENT && (sha1_file_open_flag & O_NOATIME)) {
-> >> +			sha1_file_open_flag &= ~O_NOATIME;
-> >> +			continue;
-> >> +		}
-> >
-> > We drop O_NOATIME, and end up with an empty flag field.
-> >
-> > But we will never have tried just O_CLOEXEC, which might have worked.
-> 
-> Yes, doing so would smudge atime, so one question is which one
-> between noatime or cloexec is more important to be done at open(2)
-> time.
+> There are occasions when you decide to abort an in-progress rebase and
+> move on to do something else but you forget to do "git rebase --abort"
+> first. Or the rebase has been in progress for so long you forgot about
+> it. By the time you realize that (e.g. by starting another rebase)
+> it's already too late to retrace your steps. The solution is normally
+>
+>     rm -r .git/<some rebase dir>
+>
+> and continue with your life. But there could be two different
+> directories for <some rebase dir> (and it obviously requires some
+> knowledge of how rebase works), and the ".git" part could be much
+> longer if you are not at top-dir, or in a linked worktree. And
+> "rm -r" is very dangerous to do in .git, a mistake in there could
+> destroy object database or other important data.
+>
+> Provide "git rebase --forget" for this exact use case.
 
-Yes, but the missing case is one where we know that O_NOATIME does not
-work (but O_CLOEXEC does), so we know we have to smudge the atime.
+Two and a half comments.
 
-Of the two flags, I would say CLOEXEC is the more important one to
-respect because it may actually impact correctness (e.g., leaking
-descriptors to sub-processes). Whereas O_NOATIME is purely a performance
-optimization.
+ - The title says "leave HEAD untouched".  Are my working tree files
+   and my index also safe from this operation, or is HEAD the only
+   thing that is protected?
 
-I actually wonder if it is worth carrying around the O_NOATIME hack at
-all.  Linus added it on 2005-04-23 via 144bde78e9; the aim was to reduce
-the cost of opening loose object files. Some things have changed since
-then:
+ - I think I saw a variant of this gotcha for an unconcluded
+   cherry-pick that was left behind, which the bash-prompt script
+   did not notice but the next "git cherry-pick" did by complaining
+   "you are in the middle" or something like that.  Perhaps we would
+   want to have a similarly sounding option to help that case, too,
+   not in this patch but as another patch on the same theme?
 
-  1. In June 2005, git learned about packfiles, which means we would do
-     a lot fewer atime updates (rather than one per object access, we'd
-     generally get one per packfile).
+ - Would it have helped if bash-prompt were in use?  I am not saying
+   that this patch becomes unnecessary if you use it; I am trying to
+   see if it helps its users by reminding them what state they are
+   in.
 
-  2. In late 2006, Linux learned about "relatime", which is generally
-     the default on modern installs. So performance around atime updates
-     is a non-issue there these days.
-
-     All the world isn't Linux, of course, but I can't help that feel
-     that atime performance hackery is something that belongs at the
-     system level, not in individual applications.
-
-So I don't have hard numbers, but I'd be surprised if O_NOATIME is
-really buying us anything these days.
-
--Peff
