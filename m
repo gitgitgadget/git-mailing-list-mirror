@@ -7,96 +7,94 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C54202022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 20:46:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78FDE2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 21:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933088AbcJZUqR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 16:46:17 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:33998 "EHLO
-        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932333AbcJZUqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 16:46:17 -0400
-Received: by mail-qk0-f170.google.com with SMTP id x11so19251632qka.1
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 13:46:16 -0700 (PDT)
+        id S933497AbcJZVEX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 17:04:23 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:33870 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751334AbcJZVEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 17:04:23 -0400
+Received: by mail-qt0-f176.google.com with SMTP id q7so10222337qtq.1
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 14:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=dMB7ijnwR4SicXIc92CgmWrTf/JBGCB0FgXLXRBk54A=;
-        b=mFwSAJ8xkO8n3ALZNthPVnhsAYAvHlnDSTPIBLy0kNgq7PyjcN+l1kX4/fn2mSUACB
-         H0IHqBfIU8owDmrnnTsBPAR79thDeS2Auo7edhm+gDAhYlqKeAVcZ2g0P+qAqFSoreFz
-         M6aaKqzLMOoI1SbQM5QFH79Qp1dZFQgd7eUCI2ypSNIf71Q52zdzNY198FmddtDn1k/W
-         HmjOdOHYETJY7PfZhZHmWUpuFuPJpELMhF7wG1Y+cyE+gPl3H+2Lkz56iGn/M2R2/ApR
-         qruAih5bqMtGycqs7ixYxAV1fO1nMRnF8AWZosFW3UoE5XT67TB2+MgVhx/7vN/3NPnH
-         CqkQ==
+        bh=xnltOiqixOxDpLC4Y53W0lSnyOBmfTMPXaa+OUAzx/o=;
+        b=X7Sgbc1zXTiRhqeotZqGA4Tr3SXyOoqHJ5LGbyyXit7rw0Ee59IIJoVuZjfLujr6/w
+         EMoZ9r0VcqcxHszloMBcaZEicbBq4kW5KZruW0qPeNTtfhISDQD7dnaQyXNCfPg88t6G
+         wjJug+DwuVDGzK206KQkFNF2GVqngL4KgQ8Th40n/cYCaoJ+D8173y4bPQS3E8EO5+YF
+         OkT74s5lgAhvmwIqxsTp0eAvuyAc7NV6kOPyvEIU5jEt0ghN6DGBwTM+xbmi5VOZ0FfM
+         +6XFGyB2Xgpqz0AoP9TsOYusN/MKvw2Hu72G/stz909YtBcMMugIKyvAq5H1yr7WqxFc
+         uhLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=dMB7ijnwR4SicXIc92CgmWrTf/JBGCB0FgXLXRBk54A=;
-        b=C0vBQUeGpM5z2uTxRGOSZHDQxmoqPMtgawbzFXOgyWFPKLSmpSLzmFESMcZ/t9Hscz
-         NR7eszzejE0hcZ/QeFNqOfrovyZGYZFX9W1KI1KZU0+Mem/zuVdLn9JQc4WPwI1q+zqu
-         df7iT4cX5s1AU+Nh4dQBTYtRmebDRoNru7v2jhHbnnccsE/HiAYMh/kVS7jnDvudWhk2
-         IP312jATa18Cb8Qxt978mjNocnaa5T4XmeJB0oPW77IJXMK6SBHf0EO8BzYsetXVnVQx
-         zwzxzwOjgUB4swu4Xv9BwaPu+pxPeFQB93hBnaTprc+ny4CDeZLTMQK9hoMDgaRzLdsP
-         LK/w==
-X-Gm-Message-State: ABUngvdkq5AxXnHov1shJbT0jhyh6xFpvK2p7XrRt3g0rm96QeGMW5MY3VeW0JSOMm2CT7b8YHyUx+HmhZfLuNLq
-X-Received: by 10.55.184.2 with SMTP id i2mr3666027qkf.47.1477514776037; Wed,
- 26 Oct 2016 13:46:16 -0700 (PDT)
+        bh=xnltOiqixOxDpLC4Y53W0lSnyOBmfTMPXaa+OUAzx/o=;
+        b=Pujpux1JVUZbqDVdjdWKu18b+DYQTj9TZvldTE6sT3Gc7D9jrbDitqsioWSN5d5G7J
+         170t6xk8cRp1EfSaH9+hesiNbPUAiyH0bOYQckzaV+iXinxSASoSB6d5Qd5VTG1sD4rs
+         2CBaLJEcX3qcfbmqNhgyvtnylf7+YZNInVNgXM5meNG3c29dRLCDZIcQ6qOvXHTTgIS3
+         6Zl38S9zwCFopKZgD9b/B2yOCFlKs9nR+/BObd/e6Hc5Z3NziC7pvejI+Akz1uCk9Y0I
+         7kSyK5iwknqgRrAmp+L8stbRqTQYWcXyaa2GJOwuc8runH+jUE7oAEX9XYTcYgUL309c
+         1Qew==
+X-Gm-Message-State: ABUngvdM1eNmL0bltPiBzbL0nJeHUn93ToNfeXEU9Rye71Pae0SudIIJsE5HSy4CQYd/yetBZmEnC8YXFK7a0Frn
+X-Received: by 10.237.33.225 with SMTP id m30mr3469792qtc.61.1477515861974;
+ Wed, 26 Oct 2016 14:04:21 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Wed, 26 Oct 2016 13:46:15 -0700 (PDT)
-In-Reply-To: <6f231a78-5d74-b93f-a644-a4700c9dfbe7@kdbg.org>
-References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-28-sbeller@google.com>
- <alpine.DEB.2.20.1610261049470.3264@virtualbox> <20161026093558.drsdwn2hm7bbcktt@ruderich.org>
- <20161026121525.twgiavpgfbr2ahvn@sigill.intra.peff.net> <CAGZ79kYgk9rQDju0MT2uniaxhAWpzJ9f1T9czgNnxfq+Wz6m+A@mail.gmail.com>
- <e1f760f5-27a7-8266-5d6c-d61fab7e194d@kdbg.org> <20161026202652.kz63mxqqjan7swvl@sigill.intra.peff.net>
- <6f231a78-5d74-b93f-a644-a4700c9dfbe7@kdbg.org>
+Received: by 10.12.135.40 with HTTP; Wed, 26 Oct 2016 14:04:21 -0700 (PDT)
+In-Reply-To: <nur45i$e9b$1@blaine.gmane.org>
+References: <nur45i$e9b$1@blaine.gmane.org>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 26 Oct 2016 13:46:15 -0700
-Message-ID: <CAGZ79kYhMVrKHhNGYcf_D9kWEYp+sC+tMGbuE+gnD8AU27dh8g@mail.gmail.com>
-Subject: Re: [PATCH 27/36] attr: convert to new threadsafe API
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jeff King <peff@peff.net>, Simon Ruderich <simon@ruderich.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 26 Oct 2016 14:04:21 -0700
+Message-ID: <CAGZ79kYb8D+RRNqwJ4iHrdBFMvJCt4xhY_A0HFhhxZRCKSsZcg@mail.gmail.com>
+Subject: Re: git-archive and submodules
+To:     Anatoly Borodin <anatoly.borodin@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 26, 2016 at 1:40 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 26.10.2016 um 22:26 schrieb Jeff King:
->>
->> On Wed, Oct 26, 2016 at 10:25:38PM +0200, Johannes Sixt wrote:
->>
->>> Am 26.10.2016 um 21:51 schrieb Stefan Beller:
->>>>
->>>> it is
->>>> very convenient to not have to explicitly initialize mutexes?
->>>
->>>
->>> Not to initialize a mutex is still wrong for pthreads.
->>
->>
->> I think Stefan was being loose with his wording. There would still be an
->> initializer, but it would be a constant (and in the case of pthread
->> emulation on Windows, would just be NULL).
->
->
-> And I was loose, too: Not to initialize a mutex with at least
-> PTHREAD_MUTEX_INITILIZER (if not pthread_mutex_init) is still wrong.
->
+On Wed, Oct 26, 2016 at 1:37 PM, Anatoly Borodin
+<anatoly.borodin@gmail.com> wrote:
+> are there plans to add submodules support to git-archive?
 
-My words were wrong, I meant statically initialized instead of the need to
-call a function to initialize a mutex. (For the attribute subsystem, where would
-that function go? We use attrs all over the place. My current thinking would
-be in git.c to initialize the Big Single Attr Lock. I feel like that
-is not very well
-maintainable though).
+plans by whom?
 
-Sorry for the confusion,
+Git is a project with contributors from all over the place. (different
+time zones,
+people motivated by different means, i.e. we have the hobbiest that
+scratches their
+itch, we have paid people working on Git because their employer wants
+them to work on Git,
+there are other people (who like to) use Git in their work environment
+and hack on it
+in their spare time to make it awesome.)
+
+AFAICT there are currently not a lot of people actively working on
+submodule features,
+though there is some history, e.g. Jens Lehmann maintains a wiki
+specialised on submodules
+https://github.com/jlehmann/git-submod-enhancements/wiki
+and archive is mentioned there as one of the many "Issues still to be tackled".
+
+Maybe you want to give it a try as you need it? I'd be happy to review any
+submodule related code.
+
+How to get started:
+
+ * git clone https://github.com/git/git
+ * Read (at least skim) Documentation/SubmittingPatches)
+ * Look at builtin/archive.c as a starting point (cmd_archive is called
+    when you call "git archive ...")
+ * That leads to archive.c:write_archive, which calls parse_archive_args
+  There we'd want to add an option there for recursing into submodules.
+ * See write_archive_entry (still in archive.c) that mentions S_ISGITLINK
+   Somewhere there you need to add code. :)
+
+Thanks,
 Stefan
