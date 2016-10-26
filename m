@@ -2,216 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 495982022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 23:14:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CAAF2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 23:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933693AbcJZXOX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 19:14:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53554 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933418AbcJZXOV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 19:14:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 310154AC62;
-        Wed, 26 Oct 2016 19:14:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=spW70ggBX6X4qF0oAaenPZOAj4s=; b=wyCXhY
-        2cOtvb80AVskt5Y2S12rJq2pr1z/Xcv2HjTpbvOX9JQHyfECe5rP4m91o1aGs1vX
-        Uppy2RNHd2BzCAPCBGBATU3ICPEgI+jw0aI6C8GbmGR+tyRBc0jXPAFH1dDxq9/K
-        DYJGySxnVJyU1dI7MIyXUkCfcYMG0XC508/iY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KNC0xvAcNo86jO3D01jnFMchn7ZK0EkX
-        1MSoqYfMcWX8EVaTuSStmLiofRTGyOoX6aaM9DfRGcIy/6CRi6KhCL/W7kATMU08
-        8XX7FCEfxCqMy3V55N5cAILVGnQgGCfIeoKef63VDh4pcqjNFUgZuQEQnzgDyybe
-        l5ogU2/BLRA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 271344AC61;
-        Wed, 26 Oct 2016 19:14:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7986B4AC60;
-        Wed, 26 Oct 2016 19:14:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     pclouds@gmail.com, git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        j6t@kdbg.org, peff@peff.net, bmwill@google.com, simon@ruderich.org
-Subject: Re: [PATCHv2 1/2] attr: convert to new threadsafe API
-References: <CAGZ79kYhMVrKHhNGYcf_D9kWEYp+sC+tMGbuE+gnD8AU27dh8g@mail.gmail.com>
-        <20161026224104.31844-1-sbeller@google.com>
-Date:   Wed, 26 Oct 2016 16:14:17 -0700
-In-Reply-To: <20161026224104.31844-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 26 Oct 2016 15:41:04 -0700")
-Message-ID: <xmqqoa26aek6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S941800AbcJZXXr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 19:23:47 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:36024 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935954AbcJZXXq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 19:23:46 -0400
+Received: by mail-qk0-f169.google.com with SMTP id o68so23623240qkf.3
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 16:23:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sy/PWjtWeIlv7UxVAUvl3Koj+k6VjsVcjft0cfHKsCo=;
+        b=S64PuMgBLUISbLD0PJ6qQ1O6LIHlt7VZEdQ4QH/l3IQA1Ya9t2M0K4nW/dZvKRCfXc
+         YPEAeW5QFPeHIM2bhQd+/Ul/4a4Dzb5W0AUgTpwyXSX2plQF9Dl3VWGE/ID5X8jZ6dFf
+         7k6sdEjvc2ZoSwtOhJNT2dkvY62QFBGxKp28eOPN1J6TtX/1l06roDNEarGa3lzmJGIF
+         4en1y9UeVRJ6amBFeCyH5Q2W6gP7aoflLF0vUul77XIkaKd1Iba2cXzOgdvTVYTnRkfa
+         z+FvCdnWgbCA/N/fnBeyQhokonGjcQYTbiM2oR6qrT6RUoOBBY3o63sLVILTKljBlGpB
+         2J3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sy/PWjtWeIlv7UxVAUvl3Koj+k6VjsVcjft0cfHKsCo=;
+        b=U5cl0vEZdYmKEP7DhiKMh5BOmKdKqW1lDZQ7Y80HSBe6i34kT2eFalTFGcZXTgFtZ+
+         Gai5vCBuJGyzXxrgnj7aO+OCfi+CoBQdvaYG8KzAh7LUOijbujXJjTyWgn5OwU55qdej
+         JQSQZmiih+H4F5wD8fbs18PcAonrlq0nbWbW20dBW3Ty6MIl1ClQakSO7vQTOmrQAJSh
+         zSVQ3Ti2dsbm7H8aXEKmjbHBrWP0weEKSVr894GTU1UB/KCtFYbSv1JIAHfZ9PeE0OLi
+         hAy8jNHT37k2QgEZosvbi2hV8tQ40jjtc4KZ4lJIw+nO6h12TB//IvQfgaipckz16QFR
+         plfQ==
+X-Gm-Message-State: ABUngvdZqFtkN3uZSOVuFERdAgcQ2aXKX81OSJyjfWmV8DdtHPIzYEumk2uWGKiTYrn3L4yrqR2RrTxr1+3sd7+q
+X-Received: by 10.55.184.2 with SMTP id i2mr4277339qkf.47.1477524224948; Wed,
+ 26 Oct 2016 16:23:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EC452A58-9BD1-11E6-850B-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Wed, 26 Oct 2016 16:23:44 -0700 (PDT)
+In-Reply-To: <1477523244.2764.114.camel@mattmccutchen.net>
+References: <1477523244.2764.114.camel@mattmccutchen.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Oct 2016 16:23:44 -0700
+Message-ID: <CAGZ79kaw0s_PC2AstRVwFT8N1CJVC_7yQfC19zPzRjAqkSpMDg@mail.gmail.com>
+Subject: Re: "git subtree --squash" interacts poorly with revert, merge, and rebase
+To:     Matt McCutchen <matt@mattmccutchen.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Oct 26, 2016 at 4:07 PM, Matt McCutchen <matt@mattmccutchen.net> wrote:
+> I'm the lead developer of a research software application (https://bitb
+> ucket.org/objsheets/objsheets) that uses modified versions of two
+> third-party libraries, which we need to version and distribute along
+> with our application.  For better or for worse, we haven't made it a
+> priority to upstream our changes, so for now we just want to optimize
+> for ease of (1) making and reviewing changes and (2) upgrading to newer
+> upstream versions.
+>
+> We've been using git submodules, but that's a pain for several reasons:
+> - We have to run "git submodule update" manually.
 
-> @@ -53,19 +57,32 @@ value of the attribute for the path.
->  Querying Specific Attributes
->  ----------------------------
->  
-> -* Prepare `struct git_attr_check` using git_attr_check_initl()
-> +* Prepare a `struct git_attr_check` using `git_attr_check_initl()`
->    function, enumerating the names of attributes whose values you are
->    interested in, terminated with a NULL pointer.  Alternatively, an
-> -  empty `struct git_attr_check` can be prepared by calling
-> -  `git_attr_check_alloc()` function and then attributes you want to
-> -  ask about can be added to it with `git_attr_check_append()`
-> -  function.
-> -
-> -* Call `git_check_attr()` to check the attributes for the path.
-> -
-> -* Inspect `git_attr_check` structure to see how each of the
-> -  attribute in the array is defined for the path.
-> -
-> +  empty `struct git_attr_check` as allocated by git_attr_check_alloc()
-> +  can be prepared by calling `git_attr_check_alloc()` function and
-> +  then attributes you want to ask about can be added to it with
-> +  `git_attr_check_append()` function.
+That is true for now. :( But there are plans to revive a patch series
+to include updating the submodule into git-checkout.
 
-I think that my version that was discarded forbade appending once
-you started to use the check for querying, because the check was
-meant to be used as a key for an attr-stack and the check-specific
-attr-stack was planned to keep only the attrs the check is
-interested in (and appending is to change the set of attrs the check
-is interested in, invalidating the attr-stack at that point).  
+https://github.com/stefanbeller/git/commits/submodule-co
 
-If you lost that restriction, that is good (I didn't check the
-implementation, though).  Otherwise we'd need to say something here.
+> - We have to make separate commits and manage corresponding topic
+> branches for the superproject and subprojects.
 
-> +  Both ways with `git_attr_check_initl()` as well as the
-> +  alloc and append route are thread safe, i.e. you can call it
-> +  from different threads at the same time; when check determines
-> +  the initialzisation is still needed, the threads will use a
+Well yeah, that is how submodule work on a conceptual level.
+While having multiple commits may seem like overhead, note
+the subtle difference for these commits. One if deep down in the
+stack patching one of the submodules, the other is a high level
+commit advancing the submodule pointer.
 
-initialization?
+Note that the target audience of these two commit messages
+might be vastly different, hence can be worded differently.
+(The submodule describing how you fixed e.g. a memleak or race condition
+and the superproject describes on why you needed to include that submodule,
+e.g. because you switched your toplevel application to use threads.)
 
-> +  single global mutex to perform the initialization just once, the
-> +  others will wait on the the thread to actually perform the
-> +  initialization.
-> +
-> +* Allocate an array of `struct git_attr_result` either statically on the
-> +  as a variable on the stack or dynamically via `git_attr_result_alloc`
+> - A diff of the superproject doesn't include the content of
+> subprojects.
 
-Grammo?  "either on the stack, or dynamically in the heap"?
+A recent patch series by Jacob Keller (jk/diff-submodule-diff-inline)
+taught git diff to show the diff in the submodule as well, see
+commits that are merged in 305d7f133956a5f43c94d938beabbfbb0ac1753c
+or:
+https://kernel.googlesource.com/pub/scm/git/git/+/fd47ae6a5b9cc0cfc56c1f7c43db612d26ca4b75%5E%21/#F1
 
-> +  when the result size is not known at compile time. The call to initialize
-> +  the result is not thread safe, because different threads need their
-> +  own thread local result anyway.
+Although this is just Git, you probably also have a code review system that
+would need that change as well. Also it is not part of any release yet, but
+soon will be.
 
-Having result defined statically is not thread safe for that
-reason.  It is not clear what you mean by "The call to initialize
-the result"; having it on the stack or have one dynamically on the
-heap ought to be thread safe.
+Is there anything else besides these 3 points that encourages you to
+switch away from submodules?
 
-> +* Call `git_check_attr()` to check the attributes for the path,
-> +  the given `git_attr_result` will be filled with the result.
-> +
-> +* Inspect each `git_attr_result` structure to see how
-> +  each of the attribute in the array is defined for the path.
->  
->  Example
->  -------
-> @@ -76,28 +93,23 @@ To see how attributes "crlf" and "ident" are set for different paths.
->    we are checking two attributes):
->  
->  ------------
-> -static struct git_attr_check *check;
-> -static void setup_check(void)
-> -{
-> -	if (check)
-> -		return; /* already done */
-> -	check = git_attr_check_initl("crlf", "ident", NULL);
-> -}
-> +	static struct git_attr_check *check;
-> +	git_attr_check_initl(check, "crlf", "ident", NULL);
-
-I think you are still missing "&" here.
-
->  ------------
->  
->  . Call `git_check_attr()` with the prepared `struct git_attr_check`:
->  
->  ------------
->  	const char *path;
-> +	struct git_attr_result result[2];
->  
-> -	setup_check();
-> -	git_check_attr(path, check);
-> +	git_check_attr(path, check, result);
->  ------------
->  
-> -. Act on `.value` member of the result, left in `check->check[]`:
-> +. Act on `result.value[]`:
->  
->  ------------
-> -	const char *value = check->check[0].value;
-> +	const char *value = result.value[0];
->  
->  	if (ATTR_TRUE(value)) {
->  		The attribute is Set, by listing only the name of the
-> @@ -123,12 +135,15 @@ the first step in the above would be different.
->  static struct git_attr_check *check;
->  static void setup_check(const char **argv)
->  {
-> +	if (check)
-> +		return; /* already done */
->  	check = git_attr_check_alloc();
-
-You may want to say that this is thread-unsafe.
-
->  	while (*argv) {
->  		struct git_attr *attr = git_attr(*argv);
->  		git_attr_check_append(check, attr);
->  		argv++;
->  	}
-> +	struct git_attr_result *result = git_attr_result_alloc(check);
->  }
->  ------------
->  
-> @@ -138,17 +153,20 @@ Querying All Attributes
->  
->  To get the values of all attributes associated with a file:
->  
-> +* Setup a local variables for the question
-> +  `struct git_attr_check` as well as a pointer where the result
-> +  `struct git_attr_result` will be stored.
-> +* Call `git_all_attrs()`.
-
-Hmph, the caller does not know what attribute it is interested in,
-and it is unclear "how" the former needs to be set up from this
-description.  Should it prepare an empty one that can be appended?
-
-For the same reason, the size of the result is also unknown at the
-callsite.
-
-For these reasons, I thought git-all-attrs would need to use a
-different calling convention from the usual "query for these
-attributes -- get result for them" API.  Even if the same attr_check
-and attr_result structures are used, they need to be initialized in
-very different way from the normal calls, and this part of the doc
-needs to explain how.  Perhaps it is sufficient to say "just declare
-two pointer variables that point at these structures and a pair of
-newly allocated structures of these types will be stored there" or
-something.
-
-It does not even have to use the usual "struct attr_check" "struct
-attr_result" pair (I am not suggesting to use different convention
-only to be different; I am merely pointing out that you have that
-lattitude, as the usage pattern for all-attrs is so different from
-the usual query).
-
+Thanks,
+Stefan
