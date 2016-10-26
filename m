@@ -2,90 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F09F2022A
-	for <e@80x24.org>; Wed, 26 Oct 2016 21:17:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC25C2022A
+	for <e@80x24.org>; Wed, 26 Oct 2016 21:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935154AbcJZVRP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 17:17:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51344 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933304AbcJZVRO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 17:17:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 333FE49EA2;
-        Wed, 26 Oct 2016 17:17:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=356rTEC0scLRqoc+wvZpFc7NOpw=; b=qnWlRg
-        GIULuTkQLiBASEwEKJsI8kYmjo9VTjtMSYWmBpKvMbABeiKGGDqDgLyN5MRkhzGa
-        2jvC2c0N/o6tX0GgffHEL9LJph2cEdazMc9HtK2CGQhDRcmwluyP1DsOwx1lpQtu
-        9cBT8CNtZZFzxsbLBprBwW47uYIYbuSKdByks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kRSzodssB+2s47qLfY9lmVaOdOKiHcTM
-        KHWFRt8pF9MmwqHophy7EJOwLgdOKIwR7wnicoMx5tQ49RJSKDiSbFt14rksXiN4
-        6ea1WMkmLTzmkG9Q7asDGWmN4gDSSeifdexawfeNjsWPg9aA5uDCBtzgiNktq0wS
-        +NiITH/1kD8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A26A49EA1;
-        Wed, 26 Oct 2016 17:17:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A19AB49EA0;
-        Wed, 26 Oct 2016 17:17:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Mathieu Arnold <mat@FreeBSD.org>,
-        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/2] git-svn: implement "git worktree" awareness
-References: <20161013205555.GA599@dcvr> <20161014014623.15223-1-e@80x24.org>
-        <20161026200248.GA28105@starla>
-Date:   Wed, 26 Oct 2016 14:17:10 -0700
-In-Reply-To: <20161026200248.GA28105@starla> (Eric Wong's message of "Wed, 26
-        Oct 2016 20:02:48 +0000")
-Message-ID: <xmqq8ttabyjt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8FE8BF0A-9BC1-11E6-B168-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+        id S934561AbcJZVVF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 17:21:05 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36113 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932977AbcJZVVE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 17:21:04 -0400
+Received: by mail-pf0-f179.google.com with SMTP id e6so3238847pfk.3
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 14:21:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bEvDxMHkpl2nYAG0tP4xy+jZxAokTVBM7QRAD297pQ0=;
+        b=ZQKUQyvt9BWHTw3Ks9QzbYwf4mpH4VYRn8shP15sPhF63eUfIo0teRoT7rAs3iFu9p
+         A25ffAjQr9dKbUdkKVMj+AMDpVUGEurB//VVdsUugxThBsTgnyTYHXgyTH8NkioRWY9u
+         Z8bkP2EQHF7FHjpQbo2iXJ5AUuA23uLMzNVJjjW2F17Ov0jNpe5onXCRm1o2I6bLP3A4
+         Taumlpe+PnQbs1BigX/I2Al02A7huDvSbrKE5mq76xpdlXhJmBzXTzi7ffwU/6nS2y40
+         zLnOkncdJsUjotxoDn0cY/u3erfl6p+Hh2UCsfiaPivC8EBWdHgHE+IBvcLMxnZ/AcSv
+         qUIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=bEvDxMHkpl2nYAG0tP4xy+jZxAokTVBM7QRAD297pQ0=;
+        b=L8g5CbMrWavTvjA/Uww02i/C5LeREh/+cKZo6Szizl1EYepJp+Drvq/6s0vS4eq8v6
+         JKoJNTxyM7hjSaTfhWpQV88rGKU066pg2a5zgNJue6T+ib5kA9J6A1o350tYanFIcsoK
+         eSYpLqgjKPU66RuSl9D/qpOnMdHiOTxIICzDHi/S38mmErQjqQNYFujceblLNraZAw4A
+         tPLKS/u/ZJwl27knVhiGPiFkGGx9j9H9S8LchiI8NGD9HyrOBDChP9+LyCrJY5SDrqRN
+         i+lVC1g0l35B1FuEmhyyj0dsi7ehH1VCjQ+nVMHTicfgTuhgCR9+Hmcpwx2i9KjAbmbb
+         gSrA==
+X-Gm-Message-State: ABUngvd5n+ifqG9HgEifDZXrDKR272dB9uss88zGjfXaGUuNFFW1w+53yRykJdmm84w+eZjH
+X-Received: by 10.98.18.220 with SMTP id 89mr7884920pfs.71.1477516863083;
+        Wed, 26 Oct 2016 14:21:03 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:14d0:6024:c11b:baba])
+        by smtp.gmail.com with ESMTPSA id e7sm6245755pfa.65.2016.10.26.14.21.02
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Oct 2016 14:21:02 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     ramsay@ramsayjones.plus.com
+Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
+        pclouds@gmail.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] attr: expose error reporting function for invalid attribute names
+Date:   Wed, 26 Oct 2016 14:20:59 -0700
+Message-Id: <20161026212059.11840-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.1.508.g6572022
+In-Reply-To: <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
+References: <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+From: Junio C Hamano <gitster@pobox.com>
 
-> Eric Wong <e@80x24.org> wrote:
->> +Cc Jakub since gitweb could probably take advantage of get_record
->> from the first patch, too.  I'm not completely sure about the API
->> for this, though.
->
-> Jakub: ping?
->
-> +Cc: Junio, too.  I'm hoping to have this in 2.11.
+Export invalid_attr_name_message() function that returns the
+message to be given when a given <name, len> pair
+is not a good name for an attribute.
 
-I somehow was hoping that I can pull this as part of git-svn updates
-for the upcoming release without having to even think about it (I
-did read the patch when they were posted and did not find anything
-wrong with them, fwiw).
+We could later update the message to exactly spell out what the
+rules for a good attribute name are, etc.
 
->> The following changes since commit 3cdd5d19178a54d2e51b5098d43b57571241d0ab:
->> 
->>   Sync with maint (2016-10-11 14:55:48 -0700)
->> 
->> are available in the git repository at:
->> 
->>   git://bogomips.org/git-svn.git svn-wt
->> 
->> for you to fetch changes up to 112423eb905cf28c9445781a7647ba590d597ab3:
->> 
->>   git-svn: "git worktree" awareness (2016-10-14 01:36:12 +0000)
+We do not need to export the validity check 'attr_name_valid()' itself
+as we will learn about the validity indirectly in a later patch
+via calling 'git_attr_counted()'.
 
-Thanks.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+ Ramsay,
+ I intend to replace the previous
+ 
+     [PATCH 17/36] attr: expose validity check for attribute names
+     
+ by this one in a reroll.
+ 
+ Thanks,
+ Stefan
+
+ attr.c | 39 +++++++++++++++++++++++++--------------
+ attr.h |  2 ++
+ 2 files changed, 27 insertions(+), 14 deletions(-)
+
+diff --git a/attr.c b/attr.c
+index 90dbacd..ec878c3 100644
+--- a/attr.c
++++ b/attr.c
+@@ -59,23 +59,38 @@ static unsigned hash_name(const char *name, int namelen)
+ 	return val;
+ }
+ 
+-static int invalid_attr_name(const char *name, int namelen)
++static int attr_name_valid(const char *name, size_t namelen)
+ {
+ 	/*
+ 	 * Attribute name cannot begin with '-' and must consist of
+ 	 * characters from [-A-Za-z0-9_.].
+ 	 */
+ 	if (namelen <= 0 || *name == '-')
+-		return -1;
++		return 0;
+ 	while (namelen--) {
+ 		char ch = *name++;
+ 		if (! (ch == '-' || ch == '.' || ch == '_' ||
+ 		       ('0' <= ch && ch <= '9') ||
+ 		       ('a' <= ch && ch <= 'z') ||
+ 		       ('A' <= ch && ch <= 'Z')) )
+-			return -1;
++			return 0;
+ 	}
+-	return 0;
++	return 1;
++}
++
++void invalid_attr_name_message(struct strbuf *err, const char *name, int len)
++{
++	strbuf_addf(err, _("%.*s is not a valid attribute name"),
++		    len, name);
++}
++
++static void report_invalid_attr(const char *name, size_t len,
++				const char *src, int lineno)
++{
++	struct strbuf err = STRBUF_INIT;
++	invalid_attr_name_message(&err, name, len);
++	fprintf(stderr, "%s: %s:%d\n", err.buf, src, lineno);
++	strbuf_release(&err);
+ }
+ 
+ struct git_attr *git_attr_counted(const char *name, size_t len)
+@@ -90,7 +105,7 @@ struct git_attr *git_attr_counted(const char *name, size_t len)
+ 			return a;
+ 	}
+ 
+-	if (invalid_attr_name(name, len))
++	if (!attr_name_valid(name, len))
+ 		return NULL;
+ 
+ 	FLEX_ALLOC_MEM(a, name, name, len);
+@@ -176,17 +191,15 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
+ 			cp++;
+ 			len--;
+ 		}
+-		if (invalid_attr_name(cp, len)) {
+-			fprintf(stderr,
+-				"%.*s is not a valid attribute name: %s:%d\n",
+-				len, cp, src, lineno);
++		if (!attr_name_valid(cp, len)) {
++			report_invalid_attr(cp, len, src, lineno);
+ 			return NULL;
+ 		}
+ 	} else {
+ 		/*
+ 		 * As this function is always called twice, once with
+ 		 * e == NULL in the first pass and then e != NULL in
+-		 * the second pass, no need for invalid_attr_name()
++		 * the second pass, no need for attr_name_valid()
+ 		 * check here.
+ 		 */
+ 		if (*cp == '-' || *cp == '!') {
+@@ -229,10 +242,8 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
+ 		name += strspn(name, blank);
+ 		namelen = strcspn(name, blank);
+-		if (invalid_attr_name(name, namelen)) {
+-			fprintf(stderr,
+-				"%.*s is not a valid attribute name: %s:%d\n",
+-				namelen, name, src, lineno);
++		if (!attr_name_valid(name, namelen)) {
++			report_invalid_attr(name, namelen, src, lineno);
+ 			goto fail_return;
+ 		}
+ 	}
+diff --git a/attr.h b/attr.h
+index bcedf92..d39e327 100644
+--- a/attr.h
++++ b/attr.h
+@@ -13,6 +13,8 @@ extern struct git_attr *git_attr(const char *);
+ /* The same, but with counted string */
+ extern struct git_attr *git_attr_counted(const char *, size_t);
+ 
++extern void invalid_attr_name_message(struct strbuf *, const char *, int);
++
+ /* Internal use */
+ extern const char git_attr__true[];
+ extern const char git_attr__false[];
+-- 
+2.10.1.508.g6572022
+
