@@ -2,115 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,STOX_REPLY_TYPE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 493D420193
-	for <e@80x24.org>; Thu, 27 Oct 2016 18:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA6EA20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 18:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S942450AbcJ0S3P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 14:29:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51088 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S942386AbcJ0S3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 14:29:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E942948307;
-        Thu, 27 Oct 2016 14:29:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=s5MUUiIC+IZH4cLQ/r030+n7cDI=; b=gea+QT
-        eZvdLyX4KgB+sUudtjZuoXgxyUNfUO5U3CB3Ai564varM8jXkxOL95ibspyr1Vo7
-        6l4YwQEr0RCdgRO8mh5/f2onEAy/krwKIBY8+DCGOkV+egRhTOuT8Qe8OjRsDdMA
-        U6nRFnZzHV5j3DskIqWgqg43BhhUTp2qa3XAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=F+M1TsclV1Bxrvg2zyDr+z4JCTSUFMiG
-        pwP2RJ8pEhFtFzb/FkNkLCZHCHCDT61nypeXqv+GaXH6wpA9Af9BsCr34031yilM
-        VZFvw15SMr0ep2WoIzuD1vIJE0HX8tm47ZJn2eScrEHj8DXssph8mRXvY7aFwlRD
-        GIKsvM70hTU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DADDC48306;
-        Thu, 27 Oct 2016 14:29:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55FC048305;
-        Thu, 27 Oct 2016 14:29:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 32/36] pathspec: allow querying for attributes
-References: <20161022233225.8883-1-sbeller@google.com>
-        <20161022233225.8883-33-sbeller@google.com>
-Date:   Thu, 27 Oct 2016 11:29:10 -0700
-In-Reply-To: <20161022233225.8883-33-sbeller@google.com> (Stefan Beller's
-        message of "Sat, 22 Oct 2016 16:32:21 -0700")
-Message-ID: <xmqqzilp63yh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S942492AbcJ0SgV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 14:36:21 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:9670 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934208AbcJ0SgU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 14:36:20 -0400
+Received: from PhilipOakley ([92.22.33.212])
+        by smtp.talktalk.net with SMTP
+        id zpXFb4VTCgKstzpXFbqUzo; Thu, 27 Oct 2016 19:36:17 +0100
+X-Originating-IP: [92.22.33.212]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=oOvrHna8aJuNcgF4zcjVrw==:117
+ a=oOvrHna8aJuNcgF4zcjVrw==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=pGLkceISAAAA:8 a=wZiiOxDncIjJIqPblKEA:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <1EBA3205AB8B43A3BBC48C701191520E@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Cody Sehl" <cody.sehl@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <010201580457bdd2-99237b54-5e36-4430-bb8d-7e9088aed522-000000@eu-west-1.amazonses.com> <xmqq8tta8f0x.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] Update git rebase documentation to clarify HEAD behavior
+Date:   Thu, 27 Oct 2016 15:06:55 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 41FDD5B6-9C73-11E6-BF13-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfJuwTCChfPMbLRB366Qk/q4WWCDr7YrFPJpxJkphA/Fsqv/AvSs1bTj488w/AMh2jjPgvZJth4NQd5697wqNXZ/5/aWaNWug9xhPucuxhtwI3Gm0Fvvk
+ ZMr4kBZz7lZJihoyLH40+AsCZTBrUZi9/LrISwl7TZFonI2qOfRHwDpODsgAD4Xw6PSLEFpYe4nA8xUZVtYeC+tSPWh/2zdDndE0XKZG0mvpPiZ1sabgVrXR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
+> Cody Sehl <cody.sehl@gmail.com> writes:
+>
+>> The first few paragraphs in the git-rebase.txt documentation lay out the 
+>> steps git takes during a rebase:
+>> 1. everything from `<upstream>..HEAD` is saved to a temporary area
+>> 2. `HEAD` is set to `<upstream>`
+>> 3. the changes held in the temporary area are applied one by one in order 
+>> on top of the new `HEAD`
+>>
+>> The second step was described using the phrase `The current branch is 
+>> reset to <upstream>`, which is true (because `HEAD` == current branch), 
+>> but not clear.
+>> ---
+>
+> Please wrap your lines to reasonable lengths like 70 columns or so.
+> Please sign off your patch.
+>
+>>  Documentation/git-rebase.txt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index de222c8..c47ca11 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -33,7 +33,7 @@ of commits that would be shown by `git log 
+>> <upstream>..HEAD`; or by
+>>  description on `--fork-point` below); or by `git log HEAD`, if the
+>>  `--root` option is specified.
+>>
+>> -The current branch is reset to <upstream>, or <newbase> if the
+>> +HEAD is reset to <upstream>, or <newbase> if the
+>>  --onto option was supplied.  This has the exact same effect as
+>>  `git reset --hard <upstream>` (or <newbase>).  ORIG_HEAD is set
+>>  to point at the tip of the branch before the reset.
+>
+> This is describing an ancient behaviour before 6fd2f5e60d ("rebase:
+> operate on a detached HEAD", 2007-11-08) in v1.5.4 timeframe.  We
+> apparently failed to update the description.
+>
+> This depends on the desired technical detail of the description, but
+> a correct rewrite would be "HEAD is detached at <upstream>, or
+> <newbase>, and ORIG_HEAD is set to point at the tip of the branch
+> before this happens".  Detaching the HEAD at <upstream> no longer
+> has the same effect as "git reset --hard <upstream>" (or <newbase>),
+> so that sentence must go.  It was the primary point of the ancient
+> change at 6fd2f5e60d after all.
+>
+> And then there is a new step (to be numbered 4. in your description
+> in the proposed log message), which updates the tip of the branch to
+> the resulting HEAD (after replaying all these changes) and check the
+> branch out, which needs to be added.  Perhaps after "one by one, in
+> order."  Oh, the mention of "reapplied to the current branch" also
+> needs to be updated to "reapplied to the detached HEAD", too.
+>
+> On the other hand, if we do not aim for that deep level of technical
+> correctness, but want to tell a white lie to make it easier to
+> understand at the conceptual level to new readers who haven't
+> grasped the detached HEAD, then the current description is fine.  By
+> bringing up "HEAD", you seem to be aiming for techincal correctness
+> (which I tend to agree is a good direction to go in this part of the
+> documentation), so the existing text needs a bit more work than your
+> patch to be brought to the modern world.
+>
 
-> The pathspec mechanism is extended via the new
-> ":(attr:eol=input)pattern/to/match" syntax to filter paths so that it
-> requires paths to not just match the given pattern but also have the
-> specified attrs attached for them to be chosen.
+A third option is to start with a short "Conceptually, .." description which 
+gives that summary overview, and then have a few "In detail, .." paragraphs 
+that cover the ORIG_HEAD and Detatched HEAD, etc., that users should at 
+least be aware of (so they know they can come back and read the gory details 
+when they need it;-)
+--
+Philip 
 
-I was looking at preload-index.c and its history again, because I
-wanted to ensure that Lars's process filter stuff introduces no
-unexpected interactions with getting multi-threaded, similar to the
-problem we had in the earlier incarnations of this step, which we
-worked around with <xmqqshwvvaxq.fsf@gitster.mtv.corp.google.com>
-"pathspec: disable preload-index when attribute pathspec magic is in
-use".
-
-I think that Lars's series is safe, because the only thing among
-what preload-index.c::preload_thread() does that can go outside the
-simple stat data and pattern matching with the pathname is the
-racy-git check in ie_match_stat(), and the object store access in
-that call was explicitly disabled by 7c4ea599b0 ("Fix index
-preloading for racy dirty case", 2008-11-17) long time ago.
-
-By passing CE_MATCH_RACY_IS_DIRTY option to the call, this caller
-effectively says "A cache entry whose stat data matches may be
-actually dirty when the timestamp is racy, in which case we usually
-compare data to determine if it really is clean, but it is OK to err
-on the safe and lazy side by declaring it dirty and not marking it
-up-to-date while we are preloading.  Do not bother to go to the
-object store".
-
-The reason why I am bringing this up in this discussion thread on
-this patch is because I wonder if we would benefit by a similar
-"let's not do too involved things and be cheap by erring on the safe
-and lazy side" strategy in the call to ce_path_match() call made in
-this function to avoid making calls to the attr subsystem.
-
-In other words, would it help the system by either simplifying the
-processing done or reducing the cycle spent in preload_thread() if
-we could tell ce_path_match() "A pathspec we are checking may
-require not just the pattern to match but also attributes given to
-the path to satisfy the criteria, but for the purpose of preloading,
-pretend that the attribute satisfies the match criteria" (or
-"pretend that it does not match"), thereby not having to make any
-call into the attribute subsystem at all from this codepath?
-
-The strategy this round takes to make it unnecessary to punt
-preloading (i.e. dropping "pathspec: disable preload-index when
-attribute pathspec magic is in use" patch the old series had) is to
-make the attribute subsystem thread-safe.  But that thread-safety in
-the initial round is based on a single Big Attribute Lock, so it may
-turn out that the end result performs better for this codepath if we
-did not to make any call into the attribute subsystem.
-
-I am probably being two step ahead of ourselves by saying the above,
-which is just something to keep in mind as a possible solution if
-performance in this preload codepath becomes an issue when the
-pathspec has attributes match specified.
