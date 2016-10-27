@@ -2,96 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D31420193
-	for <e@80x24.org>; Thu, 27 Oct 2016 20:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D82620193
+	for <e@80x24.org>; Thu, 27 Oct 2016 20:59:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934542AbcJ0U5c (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 16:57:32 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:36022 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751152AbcJ0U5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 16:57:31 -0400
-Received: by mail-qk0-f175.google.com with SMTP id o68so63208846qkf.3
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 13:57:31 -0700 (PDT)
+        id S934812AbcJ0U74 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 16:59:56 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38086 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751152AbcJ0U7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 16:59:55 -0400
+Received: by mail-wm0-f41.google.com with SMTP id n67so73716902wme.1
+        for <git@vger.kernel.org>; Thu, 27 Oct 2016 13:59:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FEQd41xA8loVu3k79pS3EtfPEPYXlDakce3AID01Vzs=;
-        b=SNwacD4ZVyucTrr8zBk/pPtRT/bMIRpHzSxLTywSPWwBazIXccbDNKrcq0hGIOL1gk
-         Ul9q/2bDNJWZXCVD8LzYFwOhK3/sX0uHTrRwC1yxs5NVbK1ZMJPqGYqje4bQPZx2gaYV
-         N2XD3hXoWBFrypzPNbA262tESHcWqiqUGhcBtrK8vWQ3ow4PM65qnsWt4+wm+MufOPPJ
-         cRcp9xNqLY0gB8q6QKFD6fALOaU7rQKF8NdVZoUO+k0f4mC4XiT6G2SmgMP1CnLjE7ea
-         dbMv2ncEjSVRvnZpbTebXBCOYBcJzm0ZQQmXaWiXtyPrStCAATz+1xSSUc9YgQaabnY0
-         4ywg==
+        d=pelly-co.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=VjB+CKWjE1PAo4HlOljt/wW2TEK67gjekCYFhos5zpw=;
+        b=EO0SYOyGba0VKWKFphRwe3Na+f6bCMXVj9uuvHxhTgd/1Hr02IrsWo2JXPi/wUHRlq
+         8LOwsrz/LQ5jhyfYfDFhZbmCINTSgrE8DjC1H0bf7Bbebo0iPDNY7Lw+F3DUH+Fo+OpP
+         FvqoXjrQOXShenqanIgPZbiIr67HRFx0ukv6nO/Xsr0gqstbOY2oD6qsDKIzLlIcdBfG
+         l5hwg+qbT3gObvzX4BYOmY6ZZJFZHMtbX+Ypb+jKMCQVUPj3iGPIYuqpEt+Na3k7wC6j
+         m+cnyoq03oCybR+zsWLxBg/rEn+S6GYB/im7I1vZD6cg3kd5Q2g8StSf3VmjOSBD5Ejb
+         6TZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FEQd41xA8loVu3k79pS3EtfPEPYXlDakce3AID01Vzs=;
-        b=DE5pUcMYtY0B/BfisGdltAJW4R29Cee8koDIxz4Ojv8ouXIwze6czldxgY3jCAPrXB
-         4YdREIUUPWNxQoz1nZi+nFK3hT1QeRT5/KBcHkva46peiZ+mTu9FbgIC49CH0T9Y/eW0
-         95joPTZcYmr6MWf7thY9mH523JPX9yvdvZahuXipQ1f5M0S9O3bYCVooSHQDFXZSqkW2
-         gHlNnTqqe4AYuAzosM4jZDazMOCPvLhGBS8bRigP51DeJKhJn3H8PlFQnYvZqmmROZHP
-         AsRfyZUq/68oKcfrjFVT+Yp/EX8V00g1Z/bThibV9Mc34rwLbP5N/GJ3c0t7kRxzQDoW
-         +QYQ==
-X-Gm-Message-State: ABUngvf1vdKGlgV8dEUzEiz5j6lz2EI6pgxNaH2lsgwic+3UmgvUpRkiXQRPaBXZsANw0Td3e064mEw3nZYVM8K3
-X-Received: by 10.55.184.2 with SMTP id i2mr8360180qkf.47.1477601850424; Thu,
- 27 Oct 2016 13:57:30 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=VjB+CKWjE1PAo4HlOljt/wW2TEK67gjekCYFhos5zpw=;
+        b=PUQ7W5fNUU2M7xnWkCoxeg0QBKvVrXlsmWCDP4S5g8oBl5qfMxq+r+RjArkhDfoo9/
+         KiMs64hpPxW66SJZT49m+8VOF2whtCb9tSj3B0aq2keQzSq3uHcGTODZGCumK91iEuz9
+         Oj/ADnn57pU4gNT3PVw5lMz8G2n6jvnbsojpg20qCdl+OHEPbuOd/jgAnFA1YdpJWu+X
+         E3Z/i6Tc0D8RHsO0XZTtzMbmyn2wwh2Tdq8XFEHxFFvIH31RIiYuMVEOWBcz5iOQKjVq
+         6oSSsPbwlgu7mCRtrfBvLF5wwbDFdis966kyGyPd/2e7QQ3UsJa4FrkbCAO/pOBLKZF8
+         btvQ==
+X-Gm-Message-State: ABUngvdfsLjfoLiD/DoO7wTBwf6+9ZMqu4RupA0hPaxwFS+BcMNx4UFgRPoeZeDqHM++cQ==
+X-Received: by 10.28.146.143 with SMTP id u137mr594836wmd.57.1477601994052;
+        Thu, 27 Oct 2016 13:59:54 -0700 (PDT)
+Received: from [10.3.1.6] ([49.50.252.82])
+        by smtp.googlemail.com with ESMTPSA id l6sm3642584wjc.7.2016.10.27.13.59.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Oct 2016 13:59:53 -0700 (PDT)
+Subject: Re: Expanding Includes in .gitignore
+To:     Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>
+References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
+ <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net>
+ <CA+P7+xqmVM-bEc7sZcn+p3qhFUUJvC+rko7CYu+KgyTAeiOifw@mail.gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+From:   Aaron Pelly <aaron@pelly.co>
+Message-ID: <067f4a57-2382-07e3-6873-79af78b4a9a1@pelly.co>
+Date:   Fri, 28 Oct 2016 09:59:48 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Thu, 27 Oct 2016 13:57:30 -0700 (PDT)
-In-Reply-To: <CAGZ79ka_zr_NXKoxC45swFrj168fP6S7_nQ1jjcfPOtTN4Jd1A@mail.gmail.com>
-References: <20161022233225.8883-1-sbeller@google.com> <20161022233225.8883-18-sbeller@google.com>
- <0425fea3-3419-c265-b964-f5a309b867fa@ramsayjones.plus.com> <CAGZ79ka_zr_NXKoxC45swFrj168fP6S7_nQ1jjcfPOtTN4Jd1A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Oct 2016 13:57:30 -0700
-Message-ID: <CAGZ79kb+BRPPA8NGKXq_9cb_ob9CK0vkuX0gZV7-qJ-pcYVCzg@mail.gmail.com>
-Subject: Re: [PATCH 17/36] attr: expose validity check for attribute names
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CA+P7+xqmVM-bEc7sZcn+p3qhFUUJvC+rko7CYu+KgyTAeiOifw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 24, 2016 at 2:07 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Sun, Oct 23, 2016 at 8:07 AM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->>
->> On 23/10/16 00:32, Stefan Beller wrote:
->>> From: Junio C Hamano <gitster@pobox.com>
->>>
->>> Export attr_name_valid() function, and a helper function that
->>> returns the message to be given when a given <name, len> pair
->>> is not a good name for an attribute.
->>>
->>> We could later update the message to exactly spell out what the
->>> rules for a good attribute name are, etc.
->>>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>> ---
->>
->> [snip]
->>
->>> +extern int attr_name_valid(const char *name, size_t namelen);
->>> +extern void invalid_attr_name_message(struct strbuf *, const char *, int);
->>> +
->>
->> The symbol 'attr_name_valid()' is not used outside of attr.c, even
->> by the end of this series. Do you expect this function to be used
->> in any future series? (The export is deliberate and it certainly
->> seems like it should be part of the public interface, but ...)
->>
+On 28/10/16 08:48, Jacob Keller wrote:
+> I would strongly prefer rc.d style directories either with a "if the
+> .gitignore is a directory treat it like rc.d" or even "add support for
+> .gitignore.d as well as .gitignore"
 
-refactoring this series again, I will make use of attr_name_valid
-outside of attr.c, so I'll keep this patch.
+I think adding .gitignore.d shouldn't break existing systems, is
+intuitive, and solves my issue.
+
+Does git know when it is in a repo that is too new to comprehend?
+
+My current thinking is that anywhere a .gitignore can go, so can a
+.gitignore.d (named appropriately of course.) Any existing .gitignore
+should take precedence to the result of parsing the directory.
+
+I haven't looked at the implementation of precedence yet, but I'd be
+surprised if the existing mechanism can't be employed.
+
+> One thing to keep in mind would be that we should make sure we can
+> handle the .gitignore being a submodule or a git repository, so that
+> users could just do something like
+> 
+> "git submodule add <repo> .gitignore and then track git ignore
+> contents from a repository in a nice way.
+> 
+> By this I mean that the reading of files in .gitignore directory
+> should exclude reading .git or other hidden files in some documented
+> manor so as to avoid problems when linking to a git directory for its
+> contents.
+
+Nice! I like this a lot.
+
