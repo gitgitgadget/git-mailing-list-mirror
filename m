@@ -2,129 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 388EF203BD
-	for <e@80x24.org>; Thu, 27 Oct 2016 13:53:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7DD20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 13:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936556AbcJ0Nv3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 09:51:29 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35621 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S936504AbcJ0NvT (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Oct 2016 09:51:19 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 4907120616;
-        Thu, 27 Oct 2016 05:27:16 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Thu, 27 Oct 2016 05:27:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=D28f30VoDfl5ic9
-        RLFy+f08vXZo=; b=MOIti9TyiyXbt1UgCxT/e/RnKJ/PefBY4lYJNaXbrsEQsl6
-        sjgNyMZaEsKgFAa3FQjLyx3v6vA3/ycmBwrInSR0kd9K0ZEu4lPVFpPmCJG3ZrvK
-        3IbTQCbkCaIcRmhyDKA35lfTTe8OpFpnp3OHe9VH47kXMjDbAQha+bcn+lmk=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
-        smtpout; bh=D28f30VoDfl5ic9RLFy+f08vXZo=; b=Q6g2pRz1ujEVX9tWSem7
-        6TGTe+938M5JhFez5UuRcBClB3kWGtF+1mFhL287Roa2Y+vm1jfr9pBuXq4XU//M
-        eEqLPLS6003BUhAiVyRxfDzIvDg448D3LFK4rz+g4bM0iJ+S4Ni4hC8SIY9qs4DE
-        S1Qibt3ZspjyWF9RS2BStvE=
-X-ME-Sender: <xms:dMgRWL6JUn99E2g6SUyEOl8JJmPWOLSQNybM8pt8nZdPpFQJT-8_Yg>
-X-Sasl-enc: nC4dXnbFme+qeEReIZa+MZpZittoPqwVM7JQ3Rjutm75 1477560436
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id ACE72F29CB;
-        Thu, 27 Oct 2016 05:27:15 -0400 (EDT)
-Subject: Re: [PATCH] Documentation/git-diff: document git diff with 3+ commits
-To:     Junio C Hamano <gitster@pobox.com>
-References: <CA+P7+xq1i8AtQ7i=1m_n9HTSL10kFUFBn8jvNcB_t_6Rh29u4w@mail.gmail.com>
- <07712c2c94670ca4d91ef78cd7d3602a8d36b0c1.1477472970.git.git@drmicha.warpmail.net>
- <xmqqh97zask7.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <e74d4d84-d848-00be-8ca5-75204cf47262@drmicha.warpmail.net>
-Date:   Thu, 27 Oct 2016 11:27:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S936445AbcJ0Nzb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 09:55:31 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:33686 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934542AbcJ0Nz2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 09:55:28 -0400
+Received: by mail-qt0-f174.google.com with SMTP id p16so14933440qta.0
+        for <git@vger.kernel.org>; Thu, 27 Oct 2016 06:55:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TQ3zo/ZTSfhwYJAEs4jjaLShtWctBgYa4TBbHUDfQ2s=;
+        b=UmeOqIEcigC8xFLysclK0CE0aJusY0mEgK72jLwa9UBQ/LebB6wx9Bg9BPUD3+g5rx
+         yX8qzh4vc7dR48oztf9hZ303KZP8vwNxa9TUQQApWR4hc1Xy4CTpL+hl1tuqwz7msd9L
+         QWAuDadty7V+DBQaNjNOZPiPxGePDgsg09DSTSyf0QTBq0Ts2t3Xah7TTwDNDFqmUFYx
+         Ys6ahqkXb8e4FFFuOPh4r0+qSO0de4cwVOCmstEwSduQFbbSNarpEMcfTpyJ+/C5oJzq
+         R0Rh5cdqbgT1RtAPanIGtfZY+7e5fSwWGjnFjg5ZmIdLf1ztO4dT3ukwA6PHkNGO6wVs
+         0VRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TQ3zo/ZTSfhwYJAEs4jjaLShtWctBgYa4TBbHUDfQ2s=;
+        b=UA6r5933au+yaa8OQhoo1ePg1rwJXUe5r7EQeHc+4d3l7TLN5v7U/2H1cVf5KYyIj2
+         1TWRFC+qCDVu25TjgJ44M+cwFn9JcD8fsrzBtbCI+CvF2dEbEXriv+SpGmlu/CtzZcgX
+         blwOA/e3y/KTGrxSdYha+9zzOPAp/wxsVngfBgn3zHFNQj0290MmFU9kWorxgluVS16e
+         IEdwSfXU3CD6kqjczgmimisSPa+waVn3KgPfViMsPPdEt4mFb1IW+i1U4XbRGjTVQOGa
+         4YuL3Do/+pqXFnUTAjMQ461RlJl9fOhGcuM18sAGYYq1YqkAgmZlxhiFI6S97c6f7whY
+         3hIg==
+X-Gm-Message-State: ABUngvdpqcoMB2Vdh31TPNmz+wACn3ZMTKXIAs5NDrEjksps2XErFk1i88YXf4zRGxQ9DYBDx8VlYEg+L5uYtQ==
+X-Received: by 10.36.122.18 with SMTP id a18mr5070249itc.99.1477556367095;
+ Thu, 27 Oct 2016 01:19:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh97zask7.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
+Received: by 10.107.5.212 with HTTP; Thu, 27 Oct 2016 01:19:06 -0700 (PDT)
+In-Reply-To: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
+References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
+From:   Alexei Lozovsky <a.lozovsky@gmail.com>
+Date:   Thu, 27 Oct 2016 11:19:06 +0300
+Message-ID: <CALhvvbYqeWw+q=TPxTpve6JKoy0URYeWxj2vVOnzrA_g3Z3esA@mail.gmail.com>
+Subject: Re: Expanding Includes in .gitignore
+To:     Aaron Pelly <aaron@pelly.co>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 26.10.2016 20:11:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> That one is difficult to discover but super useful, so document it:
->> Specifying 3 or more commits makes git diff switch to combined diff.
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->>
->> Notes:
->>     Note that we have the following now:
->> ...
->>     'git diff A..B' equivalent to 'git diff A B'
->>     in contrast to 'git log A..B' listing commits between M and B only
->>     (without the commits between M and A unless they are "in" B).
-> 
-> The standard answer is: 
-> 
->     Do not use two-dot form with 'git diff', if you find it
->     confusing.  Diff is about two endpoints, not about a range
->     between two.
-> 
-> The reason why we do not reject can be easily guessed by any
-> intelligent person when some historical background is given, I
-> think.
+> I'm thinking something like ". path/to/include/file" in an ignore file,
+> and/or creating .gitignore.d and/or allowing $HOME/.config/git/ignore
+> and $GIT_DIR/info/exclude to be directories. Or some sane and consistent
+> mixture of these things.
 
-That is very well true. I'm more concerned with the presence, though,
-that is: How easy to use is git now? Users choose git because they care
-about the history of their project, not necessarily that of Git ;)
+I think the rc.d-like approach with directories is better as it
+does not add new magical filenames (what if I absolutely do need
+to name my directories ". path", with a space? :) keeping the
+syntax of gitignores themselves simple, and allowing us to think
+of files as still being separate entities. This can be useful
+for the following case:
 
->  - In the beginning A...B did not exist.  A..B was the only "range"
->    notation.
-> 
->  - "git log A..B" was in wide use.  Remember, "git log A...B" did
->    not exist.
-> 
->  - People started mistyping "git diff A..B", which looked as if the
->    user typed "git diff ^A B" to the internal.
-> 
->  - Git _could_ have rejected that as a bogus request to diff two
->    points, ^A (what is that???) and B, but "What else could the user
->    have meant with 'git diff A..B' other than 'git diff A B'?" was
->    an argument to favor doing _something_ useful rather than
->    erroring out.  Remember, "A...B" did not exist when this
->    happened.
+> In the case of a directory the plan would be to add links to files
+> stored/sourced elsewhere. This does pose a precedence question which I
+> haven't thought about yet, but probably makes it too hard for the
+> limited value it brings.
 
-It did not exist, but even at that point in time, "git log A..B" listed
-only commits between the merge base and B, not those which are only in A
-and not in B. Whereas "git diff A B" shows the differences between the
-endpoints A and B.
+As I understand, the precedence only matters for negative patterns
+(the ones that start with an exclamation mark, !). For example,
+suppose you have files 'foo1' and 'foo2'. This .gitignore
 
->> @@ -12,6 +12,7 @@ SYNOPSIS
->>  'git diff' [options] [<commit>] [--] [<path>...]
->>  'git diff' [options] --cached [<commit>] [--] [<path>...]
->>  'git diff' [options] <commit> <commit> [--] [<path>...]
->> +'git diff' [options] <commit> <commit> <commit> [<commit>...]
-> 
-> Made me wonder "is [<A>...] 0-or-more As or 1-or-more As?".
+    foo*
+    !foo1
 
-0-or-more, at least that's the way it is used in all lines here.
+will ignore foo2, but will show foo1. However, if the lines are
+swapped:
 
-> Don't we allow pathspecs in this case?
+    !foo1
+    foo*
 
-Yes, the combinded diff mode kicks in only with no blobs (not: no
-pathspec, which I had misread) and N>=3 commits. Maybe I should update
-the code comments in builtin/diff.c to describe this, too.
+then both foo1 and foo2 will be ignored.
 
-Michael
+Now, if we consider the case of multiple .gitignore files, it
+could be unexpected and possibly annoying for negative patterns
+in one file to affect the patterns added by some other files.
+I would find it more conceptually simple to apply individual
+.gitignores one by one, as opposed to parsing them all and
+creating one giant exclusion rule. (In technical terms, this
+means keeping one struct exclude_list for each .gitignore,
+not merging them all into one single list.)
+
+In this case there should be no precendence problems as applied
+gitignores only add new ignored files, without un-ignoring
+anything previously ignored by other files.
+
+However, if we allow textual inclusion, then it means that we
+can put a gitignore into our gitignore so that we can unignore
+while we ignore, which again brings us the question of whether
+it is actually needed and expected.
+
+> I would like to know the desirability/practicality/stupidity of such a
+> feature as I believe it is within my skillset to implement it.
+
+In my mind, this feature definitely has utility and it can be
+implemented in backwards-compatible way, so why not.
+
+However, I do not recall any precendent of git using rc.d-like
+configs. And some can argue that your goal can be achieved by
+generating the .gitignore by some external means and symlinking
+the result into .git/info/exclude, so this is not Git's problem
+and we should not be overcomplicating things with something as
+simple as a list exclude patterns. This line of argument also
+can be used to opposes any textual inclusion as well, because
+it can be expanded into 'why don't we add a Turing-complete
+programming language then to specify the patterns to ignore'.
