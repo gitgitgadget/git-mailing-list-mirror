@@ -6,72 +6,68 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1237520193
-	for <e@80x24.org>; Thu, 27 Oct 2016 17:11:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA19220193
+	for <e@80x24.org>; Thu, 27 Oct 2016 17:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938631AbcJ0RLZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 13:11:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34925 "EHLO cloud.peff.net"
+        id S1752633AbcJ0Rad (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 13:30:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34931 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932442AbcJ0RLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 13:11:24 -0400
-Received: (qmail 14364 invoked by uid 109); 27 Oct 2016 17:11:23 -0000
+        id S934200AbcJ0Rad (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 13:30:33 -0400
+Received: (qmail 15848 invoked by uid 109); 27 Oct 2016 17:30:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Oct 2016 17:11:23 +0000
-Received: (qmail 21559 invoked by uid 111); 27 Oct 2016 17:11:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Oct 2016 17:30:32 +0000
+Received: (qmail 21647 invoked by uid 111); 27 Oct 2016 17:30:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Oct 2016 13:11:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Oct 2016 13:11:21 -0400
-Date:   Thu, 27 Oct 2016 13:11:21 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Oct 2016 13:30:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Oct 2016 13:30:30 -0400
+Date:   Thu, 27 Oct 2016 13:30:30 -0400
 From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Simon Ruderich <simon@ruderich.org>
-Subject: Re: [PATCH] compat: Allow static initializer for pthreads on Windows
-Message-ID: <20161027171121.tsg2gy5gov5apihq@sigill.intra.peff.net>
-References: <20161026215732.16411-1-sbeller@google.com>
- <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org>
- <xmqqlgxa8h3a.fsf@gitster.mtv.corp.google.com>
- <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org>
- <xmqqh97y8g74.fsf@gitster.mtv.corp.google.com>
- <xmqqd1im8foi.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbP3pgPHgv-x1Q-Q1QwmXc=gOyxWhXh2SngO8WSZc3PFA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH] git-compat-util: move content inside ifdef/endif guards
+Message-ID: <20161027173029.bu233oiekpfoh6lw@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbP3pgPHgv-x1Q-Q1QwmXc=gOyxWhXh2SngO8WSZc3PFA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2016 at 10:01:02AM -0700, Stefan Beller wrote:
+Commit 3f2e2297b9 (add an extra level of indirection to
+main(), 2016-07-01) added a declaration to git-compat-util.h,
+but it was accidentally placed after the final #endif that
+guards against multiple inclusions.
 
-> >  That function can
-> > be called from main() of platforms that cannot statically initialize
-> > mutices,
-> 
-> By main you mean the main() in common-main.c or cmd_main in git.c ?
+This doesn't have any actual impact on the code, since it's
+not incorrect to repeat a function declaration in C. But
+it's a bad habit, and makes it more likely for somebody else
+to make the same mistake. It also defeats gcc's optimization
+to avoid opening header files whose contents are completely
+guarded.
 
-Any setup or initialization for library functions needs to go in main()
-of common-main.c.  Otherwise, only builtins get it, and external
-programs are left to segfault (or whatever).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I just happened to notice this today while doing something unrelated in
+the file.
 
-> Those both look like the wrong place. Of course it would work adding it
-> there, but it smells like a maintenance nightmare.
+ git-compat-util.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I agree it's ugly, but I suspect it would work OK in practice.
-We don't have that many mutexes and initializing them is cheap.
-
-Languages like C++ have non-constant initializers, and the compiler
-takes care of running the startup code before main() begins. There's no
-portable way to do that in C, but our cmd_main() is roughly the same
-thing.
-
-I still prefer the lazy initialization if it can work without incurring
-measurable overhead. That's the normal way to do things in C; the only
-complication here is the thread safety.
-
--Peff
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 91e366d1dd..771ea29f31 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1042,6 +1042,6 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
+ #define getc_unlocked(fh) getc(fh)
+ #endif
+ 
+-#endif
+-
+ extern int cmd_main(int, const char **);
++
++#endif
+-- 
+2.10.1.916.g0d2035c
