@@ -2,94 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E552022A
-	for <e@80x24.org>; Thu, 27 Oct 2016 00:22:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 468532022A
+	for <e@80x24.org>; Thu, 27 Oct 2016 00:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934928AbcJ0AWu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 20:22:50 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:37095 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932430AbcJ0AWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 20:22:49 -0400
-Received: by mail-wm0-f43.google.com with SMTP id 140so958531wmv.0
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 17:22:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pelly-co.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=2lmRFWfKjZyN5FsdSr0lNPWMeMPKK2LsqyxJ60CF6Hk=;
-        b=okHH4obAjeoPGlszNOEo8KkdblgHjGuOgMFZvuHY5uJcrsPmmwHyqAFzHFhJppIPrV
-         1TPnOJv/OrOKeODjm4dR5ss+u8SMwFDiUN/Ko3bWnW1eoCR5uM+HPoUrnlqBoWfwpmMV
-         S4O5+ygZjhHC0ujOZo/ghdmZ7Rb41f07I2AWYwlCg0txfe0SlZStYtsSR9b9jtW9CWDf
-         sLQqUJZBYDsQDRBJf/zm8ihsezeZ7zqcSfqQhvtD2BZY5icThDJOAdjFRF1eO4s+P+To
-         p5Qf7Xypp5Dhp3cPXO0BXsNkE3ib93y8vp00kCxRRRRT/0o48AaA7nKlDTF8nFu8HddM
-         ea6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=2lmRFWfKjZyN5FsdSr0lNPWMeMPKK2LsqyxJ60CF6Hk=;
-        b=MTDoIQfXJcH2HkIRPZDFnzmwDqkVoH+C8vdZ6GZZoOs4orY9UePMi+B8cAK32mQ/4S
-         sQiXzobJvIC7mr319RiRDXvyoFQxAlse08RetDanJkikHhRMeNc0SnI6EBmhHiz2SUWp
-         /Eo6f9RB5UvDBFfBfVjQsxkKQYIGdGGIfysty2hIlAnNDP+QCpbEyOMjUra/FbzaQbJ6
-         TF8cWlg/gmpuLGF7pAZ9bytgCLmrymXZrIjnqTh2NS1cWJtL30vpADd7pN6486cu/wqq
-         OvtPVmNQ3vJwNpUSrRr+BunqDWMemCuiLghfCtDI0mklz6NYeaMUjeNXlBP6KlwhKh64
-         d3IA==
-X-Gm-Message-State: ABUngvcgPRFvrQT2sZZGYyOJLzOs0PPrKr4vxgIec+8+Z8kpAc+WoY4pbar+WBJE7BO7Hw==
-X-Received: by 10.28.148.200 with SMTP id w191mr4742495wmd.43.1477527767459;
-        Wed, 26 Oct 2016 17:22:47 -0700 (PDT)
-Received: from [10.3.1.6] ([49.50.252.82])
-        by smtp.googlemail.com with ESMTPSA id 72sm94652wme.15.2016.10.26.17.22.45
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Oct 2016 17:22:47 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Aaron Pelly <aaron@pelly.co>
-Subject: Expanding Includes in .gitignore
-Message-ID: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
-Date:   Thu, 27 Oct 2016 13:22:43 +1300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S933693AbcJ0AtE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 20:49:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60515 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932702AbcJ0AtE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 20:49:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C6A514992E;
+        Wed, 26 Oct 2016 20:49:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J59HuQL4/cY0RXkMUvZN+PJKmRM=; b=HquPE5
+        aNYuo/M8QWqGAT9xY6I5D12kx5T2q8y2T7UaYIcFssAtsGm3GWBk/7XU3Ynh2h7k
+        lj7PrcYflzYrGu8n5RvTPnIEq/kpX7YvloH5BTSe16Vc5Wog44N6etKlggkwGbV/
+        vtMVa+KcccDycomKTZA96E6wSm4hEV9GJ2oVI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dgXoThF/yzhAWYwGNR3WV70oT2JeL6qK
+        YMy2HgfnSHpBXT4f93ke4AVb5tHHTZY6v9JTDOptsD97u1mp2aoMAGhAgc9ugDay
+        q80mb+CjyIhVvjb8JCycb6GTvvLerKCEprYk7/IvRhu1Z8UpMI9pdmOm8O3nXEKq
+        BevIW96FpXU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE6694992D;
+        Wed, 26 Oct 2016 20:49:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 38E164992B;
+        Wed, 26 Oct 2016 20:49:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     pclouds@gmail.com, git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        j6t@kdbg.org, peff@peff.net, bmwill@google.com, simon@ruderich.org
+Subject: Re: [PATCHv2 1/2] attr: convert to new threadsafe API
+References: <CAGZ79kYhMVrKHhNGYcf_D9kWEYp+sC+tMGbuE+gnD8AU27dh8g@mail.gmail.com>
+        <20161026224104.31844-1-sbeller@google.com>
+Date:   Wed, 26 Oct 2016 17:49:00 -0700
+In-Reply-To: <20161026224104.31844-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 26 Oct 2016 15:41:04 -0700")
+Message-ID: <xmqqbmy6aa6b.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2767E6F4-9BDF-11E6-9830-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I want a feature. It may be a bad-idea(tm). Advice appreciated.
+Stefan Beller <sbeller@google.com> writes:
 
-I want git to be able to include, in its gitignore files, sub-files of
-ignores or have it understand a directory of ignore files. Or both.
+>  extern struct git_attr *git_attr(const char *);
+> ...
+> +extern void git_attr_check_append(struct git_attr_check *,
+> +				  const struct git_attr *);
 
-The use case for this is where I did not write my own rules, but I want
-to keep them updated. https://github.com/github/gitignore is a damn good
-resource, but I want to pull it and include relevant bits project by
-project and/or system wide. I don't want to have to update many projects
-manually if that, or any other, repo changes.
+Another thing.  Do we still need to expose git_attr() to the outside
+callers?  If we change git_attr_check_append() to take "const char *"
+as its second parameter, can we retire it from the public interface?
 
-A very brief look at dir.c would indicate that a recursive call from
-add_excludes to itself when it parses some sort of include tag would do
-it within a file. I'm sure it'd be pretty straight forward to hook into
-something in dir.c to parse directories too.
+It being an "intern" function, by definition it is not thread-safe.
+Its use from prepare_attr_stack() inside git_check_attr() that takes
+the Big Attribute Subsystem Lock is safe, but the callers that do
 
-I'm thinking something like ". path/to/include/file" in an ignore file,
-and/or creating .gitignore.d and/or allowing $HOME/.config/git/ignore
-and $GIT_DIR/info/exclude to be directories. Or some sane and consistent
-mixture of these things.
+	struct git_attr_check *check = ...;
+	struct git_attr *text_attr = git_attr("text");
 
-In the case of a directory the plan would be to add links to files
-stored/sourced elsewhere. This does pose a precedence question which I
-haven't thought about yet, but probably makes it too hard for the
-limited value it brings.
+	git_attr_check_append(check, text_attr);
 
-There is also the issue of malicious/accidental recursion which I
-haven't thought about deeply either.
+would risk racing to register the same entry to the "all the
+attributes in the known universe" table.  
 
-I would like to know the desirability/practicality/stupidity of such a
-feature as I believe it is within my skillset to implement it.
+If the attribute API does not have to expose git_attr(const char *)
+to the external callers at all, that would be ideal.  Otherwise, we
+would need to rename the current git_attr() that is used internally
+under the Big Lock to 
+
+    static struct git_attr *git_attr_locked(const char*)
+
+that is defined inside attr.c, and then provide the external version
+as a thin wrapper that calls it under the Big Lock.
+
+
