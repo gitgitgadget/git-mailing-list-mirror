@@ -2,56 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAD1C20193
-	for <e@80x24.org>; Thu, 27 Oct 2016 22:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85ABC20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 22:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S943047AbcJ0WjR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 18:39:17 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33467 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S942817AbcJ0WjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 18:39:15 -0400
-Received: by mail-pf0-f180.google.com with SMTP id 197so25249582pfu.0
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 15:39:14 -0700 (PDT)
+        id S943049AbcJ0WjT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 18:39:19 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33473 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S943004AbcJ0WjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 18:39:16 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 197so25249835pfu.0
+        for <git@vger.kernel.org>; Thu, 27 Oct 2016 15:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jo2tEk6ofp1mnEe1JUYj4m2q7DGp0VEa2YJot/zl1uk=;
-        b=Z1eft6JV2VJRmAVUKrUY3eL9WCHiv6nRlRsMDuW3C+KahrzhCv9di4BveBsehri2N+
-         UyJ+oKSq6UCTlov6UqKyConQCqP78wRctDWMnVMlunA13u0IvAbQAqihwd9nUH01T338
-         lgBdm6gNGl2bZD1LsWf0SSedN0AIxh7NMOuqpvp57gtATHQFQUeOdoQ8l3OwcXDhUnld
-         dhjxMYyYdMe5NuvRDtYlzRNRnhIDvaJkgBTWhcdVFoB+ARWUdUI5k4ZOHGX7TEKOz1kq
-         PV17f/6CkofViak82WetyG4qOgDdxdnl9FCIskesNc0c2sSnV0yP6jpnHo2vOBpVyH2y
-         280w==
+        bh=mre3Yz0Qc8yJEfm5jyiPiLu6877yE2JDU2E6Ss5oQwI=;
+        b=TzCELL1Eo29nk2HqQUN0aTQbwx39pQKfxJuY+gjFkb4o0QeDlDhUqq70CcUK4AN+jH
+         9+LSmm9Wzpb2lvY0iUMfoR094hl7+Yo3aUZnmIIrMoasWtI1CtbwVOD1C4hZMo0DRmMX
+         j2xax93LuTUp2QZA/cIDLOnJtxfndTqo+mjK12lkx9TarBKiZHzZU/H9j+akqBvn6afd
+         mXhZ1zIOE6Lu1cBF810fDrJAb69Vmipg0Th7IEWBzWEeFNM23rrA4P1MazBAs+lH7nw3
+         ucCLISEa8TnvuXgLPqB/Gj1xayG5QM4iNDfHTJlSQrtYDjAR9mZF8tVjTWY/beu7VLAK
+         iYkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=jo2tEk6ofp1mnEe1JUYj4m2q7DGp0VEa2YJot/zl1uk=;
-        b=CbUvXPG61dYFis3LyNw2k5QPQC/p0H+vmYIPJ65WjA20ntUNNUAeTEPe3Pz/DSrmh+
-         P/DOTTyppt+KEJzvSHpDRURn78RRYA/pcY2lTcXiBESxzgNhS2Oo7Jsm9wIhf/3Phpum
-         iugf5INB1yo7aVM4IIx6+G02btyMhTfrB7vqhes36615xbrpQag5hQ+sR/9gjEqPt+LQ
-         XOCBy0353lS/bfgwE2iHQESIgrv2upK3oohc8aV2crOPtXxondDTF+yrUtopjJ4v8An4
-         q/6SOY8uFwZ+Gi82+OO941YmJvqzCzdHOYW0vy7UpANnMrTOaYCXxtxtF4oyAxnPHfM1
-         mWLA==
-X-Gm-Message-State: ABUngvdmswSbttYG5wB3Wx5wYu9hTxbDYXZQJ2xq4dinVhDNR4wR3Y0gnTCeHWibm1zdXbgO
-X-Received: by 10.98.207.195 with SMTP id b186mr18624024pfg.66.1477607948988;
-        Thu, 27 Oct 2016 15:39:08 -0700 (PDT)
+        bh=mre3Yz0Qc8yJEfm5jyiPiLu6877yE2JDU2E6Ss5oQwI=;
+        b=ch/j+xW8UT0l3C2ei8otYpO+Zjq5rdqMwVuRLA+M8gnYt/0KkVS5UT8WGMrDCRVedg
+         hs8wqLeCogKItUbzuKpso5jCOxRukjM9QNIm5/bop3T+hOKeXc32yRGKI5QmlIUabTlA
+         xacArFRIB4+S6lOqyGh+UNMasGgoUqDbNjHCMWN4Ewbvb89awdwO9OpDOrdYeCRg1HiK
+         ztyQbU8Yn4sjbMdrCS/NDsqIIK2ODGqXYvIuFDlLRaK410xBupPDTdA35vdYMYW88+IH
+         kOBfBIQaL2quml7A04C3tYOl/Uhm8w7K6oi2IwV+6jKJaHP7D5yikqik1XXCSF5gtDze
+         xAUg==
+X-Gm-Message-State: ABUngvdCPeef9gugPGL4b8b6987bbP9bQe0ldMstxsj2mEAhs87vAGKQwwAneaGmyi4aMIt9
+X-Received: by 10.98.67.75 with SMTP id q72mr18641421pfa.99.1477607950483;
+        Thu, 27 Oct 2016 15:39:10 -0700 (PDT)
 Received: from nalthis.roam.corp.google.com.com ([172.19.37.191])
-        by smtp.gmail.com with ESMTPSA id d2sm8129400pfd.38.2016.10.27.15.39.07
+        by smtp.gmail.com with ESMTPSA id d2sm8129400pfd.38.2016.10.27.15.39.09
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 27 Oct 2016 15:39:07 -0700 (PDT)
+        Thu, 27 Oct 2016 15:39:09 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 4/5] grep: optionally recurse into submodules
-Date:   Thu, 27 Oct 2016 15:38:33 -0700
-Message-Id: <20161027223834.35312-5-bmwill@google.com>
+Subject: [PATCH 5/5] grep: enable recurse-submodules to work on <tree> objects
+Date:   Thu, 27 Oct 2016 15:38:34 -0700
+Message-Id: <20161027223834.35312-6-bmwill@google.com>
 X-Mailer: git-send-email 2.10.1.613.g6021889
 In-Reply-To: <20161027223834.35312-1-bmwill@google.com>
 References: <20161027223834.35312-1-bmwill@google.com>
@@ -60,398 +59,173 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow grep to recognize submodules and recursively search for patterns in
-each submodule.  This is done by forking off a process to recursively
-call grep on each submodule.  The top level --super-prefix option is
-used to pass a path to the submodule which can in turn be used to
-prepend to output or in pathspec matching logic.
+Teach grep to recursively search in submodules when provided with a
+<tree> object. This allows grep to search a submodule based on the state
+of the submodule that is present in a commit of the super project.
 
-Recursion only occurs for submodules which have been initialized and
-checked out by the parent project.  If a submodule hasn't been
-initialized and checked out it is simply skipped.
+When grep is provided with a <tree> object, the name of the object is
+prefixed to all output.  In order to provide uniformity of output
+between the parent and child processes the option `--parent-basename`
+has been added so that the child can preface all of it's output with the
+name of the parent's object instead of the name of the commit SHA1 of
+the submodule. This changes output from the command
+`git grep -e. -l --recurse-submodules HEAD` from:
+HEAD:file
+<commit sha1 of submodule>:sub/file
 
-In order to support the existing multi-threading infrastructure in grep,
-output from each child process is captured in a strbuf so that it can be
-later printed to the console in an ordered fashion.
-
-To limit the number of theads that are created, each child process has
-half the number of threads as its parents (minimum of 1), otherwise we
-potentailly have a fork-bomb.
+to:
+HEAD:file
+HEAD:sub/file
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/git-grep.txt         |   5 +
- builtin/grep.c                     | 301 ++++++++++++++++++++++++++++++++++---
- git.c                              |   2 +-
- t/t7814-grep-recurse-submodules.sh |  99 ++++++++++++
- 4 files changed, 386 insertions(+), 21 deletions(-)
- create mode 100755 t/t7814-grep-recurse-submodules.sh
+ Documentation/git-grep.txt         | 13 ++++++--
+ builtin/grep.c                     | 67 +++++++++++++++++++++++++++++++++++---
+ t/t7814-grep-recurse-submodules.sh | 44 ++++++++++++++++++++++++-
+ tree-walk.c                        | 17 +++++-----
+ 4 files changed, 125 insertions(+), 16 deletions(-)
 
 diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 0ecea6e49..17aa1ba70 100644
+index 17aa1ba70..386a868c6 100644
 --- a/Documentation/git-grep.txt
 +++ b/Documentation/git-grep.txt
-@@ -26,6 +26,7 @@ SYNOPSIS
+@@ -26,7 +26,7 @@ SYNOPSIS
  	   [--threads <num>]
  	   [-f <file>] [-e] <pattern>
  	   [--and|--or|--not|(|)|-e <pattern>...]
-+	   [--recurse-submodules]
+-	   [--recurse-submodules]
++	   [--recurse-submodules] [--parent-basename]
  	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
  	   [--] [<pathspec>...]
  
-@@ -88,6 +89,10 @@ OPTIONS
- 	mechanism.  Only useful when searching files in the current directory
- 	with `--no-index`.
+@@ -91,7 +91,16 @@ OPTIONS
  
-+--recurse-submodules::
-+	Recursively search in each submodule that has been initialized and
-+	checked out in the repository.
+ --recurse-submodules::
+ 	Recursively search in each submodule that has been initialized and
+-	checked out in the repository.
++	checked out in the repository.  When used in combination with the
++	<tree> option the prefix of all submodule output will be the name of
++	the parent project's <tree> object.
 +
++--parent-basename::
++	For internal use only.  In order to produce uniform output with the
++	--recurse-submodules option, this option can be used to provide the
++	basename of a parent's <tree> object to a submodule so the submodule
++	can prefix its output with the parent's name rather than the SHA1 of
++	the submodule.
+ 
  -a::
  --text::
- 	Process binary files as if they were text.
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 8887b6add..f34f16df9 100644
+index f34f16df9..bdf1b9089 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -18,12 +18,20 @@
- #include "quote.h"
+@@ -19,6 +19,7 @@
  #include "dir.h"
  #include "pathspec.h"
-+#include "submodule.h"
+ #include "submodule.h"
++#include "submodule-config.h"
  
  static char const * const grep_usage[] = {
  	N_("git grep [<options>] [-e] <pattern> [<rev>...] [[--] <path>...]"),
- 	NULL
- };
+@@ -28,6 +29,7 @@ static char const * const grep_usage[] = {
+ static const char *super_prefix;
+ static int recurse_submodules;
+ static struct argv_array submodule_options = ARGV_ARRAY_INIT;
++static const char *parent_basename;
  
-+static const char *super_prefix;
-+static int recurse_submodules;
-+static struct argv_array submodule_options = ARGV_ARRAY_INIT;
-+
-+static int grep_submodule_launch(struct grep_opt *opt,
-+				 const struct grep_source *gs);
-+
- #define GREP_NUM_THREADS_DEFAULT 8
- static int num_threads;
- 
-@@ -174,7 +182,10 @@ static void *run(void *arg)
- 			break;
- 
- 		opt->output_priv = w;
--		hit |= grep_source(opt, &w->source);
-+		if (w->source.type == GREP_SOURCE_SUBMODULE)
-+			hit |= grep_submodule_launch(opt, &w->source);
-+		else
-+			hit |= grep_source(opt, &w->source);
- 		grep_source_clear_data(&w->source);
- 		work_done(w);
- 	}
-@@ -300,6 +311,10 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 	if (opt->relative && opt->prefix_length) {
- 		quote_path_relative(filename + tree_name_len, opt->prefix, &pathbuf);
- 		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
-+	} else if (super_prefix) {
-+		strbuf_add(&pathbuf, filename, tree_name_len);
-+		strbuf_addstr(&pathbuf, super_prefix);
-+		strbuf_addstr(&pathbuf, filename + tree_name_len);
- 	} else {
- 		strbuf_addstr(&pathbuf, filename);
- 	}
-@@ -328,10 +343,13 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ static int grep_submodule_launch(struct grep_opt *opt,
+ 				 const struct grep_source *gs);
+@@ -535,6 +537,7 @@ static int grep_submodule_launch(struct grep_opt *opt,
  {
- 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int status, i;
++	const char *end_of_base;
+ 	struct work_item *w = opt->output_priv;
  
--	if (opt->relative && opt->prefix_length)
-+	if (opt->relative && opt->prefix_length) {
- 		quote_path_relative(filename, opt->prefix, &buf);
--	else
-+	} else {
-+		if (super_prefix)
-+			strbuf_addstr(&buf, super_prefix);
- 		strbuf_addstr(&buf, filename);
-+	}
+ 	prepare_submodule_repo_env(&cp.env_array);
+@@ -545,9 +548,36 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ 			 gs->path);
+ 	argv_array_push(&cp.args, "grep");
  
- #ifndef NO_PTHREADS
- 	if (num_threads) {
-@@ -378,31 +396,259 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
- 		exit(status);
- }
- 
--static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int cached)
-+static void compile_submodule_options(const struct grep_opt *opt,
-+				      const struct pathspec *pathspec,
-+				      int cached, int untracked,
-+				      int opt_exclude, int use_index,
-+				      int pattern_type_arg)
-+{
-+	struct grep_pat *pattern;
-+	int i;
++	/*
++	 * Add basename of parent project
++	 * When performing grep on a <tree> object the filename is prefixed
++	 * with the object's name: '<tree-name>:filename'.  In order to
++	 * provide uniformity of output we want to pass the name of the
++	 * parent project's object name to the submodule so the submodule can
++	 * prefix its output with the parent's name and not its own SHA1.
++	 */
++	end_of_base = strchr(gs->name, ':');
++	if (end_of_base)
++		argv_array_pushf(&cp.args, "--parent-basename=%.*s",
++				 (int) (end_of_base - gs->name),
++				 gs->name);
 +
-+	if (recurse_submodules)
-+		argv_array_push(&submodule_options, "--recurse-submodules");
-+
-+	if (cached)
-+		argv_array_push(&submodule_options, "--cached");
-+	if (!use_index)
-+		argv_array_push(&submodule_options, "--no-index");
-+	if (untracked)
-+		argv_array_push(&submodule_options, "--untracked");
-+	if (opt_exclude > 0)
-+		argv_array_push(&submodule_options, "--exclude-standard");
-+
-+	if (opt->invert)
-+		argv_array_push(&submodule_options, "-v");
-+	if (opt->ignore_case)
-+		argv_array_push(&submodule_options, "-i");
-+	if (opt->word_regexp)
-+		argv_array_push(&submodule_options, "-w");
-+	switch (opt->binary) {
-+	case GREP_BINARY_NOMATCH:
-+		argv_array_push(&submodule_options, "-I");
-+		break;
-+	case GREP_BINARY_TEXT:
-+		argv_array_push(&submodule_options, "-a");
-+		break;
-+	default:
-+		break;
-+	}
-+	if (opt->allow_textconv)
-+		argv_array_push(&submodule_options, "--textconv");
-+	if (opt->max_depth != -1)
-+		argv_array_pushf(&submodule_options, "--max-depth=%d",
-+				 opt->max_depth);
-+	if (opt->linenum)
-+		argv_array_push(&submodule_options, "-n");
-+	if (!opt->pathname)
-+		argv_array_push(&submodule_options, "-h");
-+	if (!opt->relative)
-+		argv_array_push(&submodule_options, "--full-name");
-+	if (opt->name_only)
-+		argv_array_push(&submodule_options, "-l");
-+	if (opt->unmatch_name_only)
-+		argv_array_push(&submodule_options, "-L");
-+	if (opt->null_following_name)
-+		argv_array_push(&submodule_options, "-z");
-+	if (opt->count)
-+		argv_array_push(&submodule_options, "-c");
-+	if (opt->file_break)
-+		argv_array_push(&submodule_options, "--break");
-+	if (opt->heading)
-+		argv_array_push(&submodule_options, "--heading");
-+	if (opt->pre_context)
-+		argv_array_pushf(&submodule_options, "--before-context=%d",
-+				 opt->pre_context);
-+	if (opt->post_context)
-+		argv_array_pushf(&submodule_options, "--after-context=%d",
-+				 opt->post_context);
-+	if (opt->funcname)
-+		argv_array_push(&submodule_options, "-p");
-+	if (opt->funcbody)
-+		argv_array_push(&submodule_options, "-W");
-+	if (opt->all_match)
-+		argv_array_push(&submodule_options, "--all-match");
-+	if (opt->debug)
-+		argv_array_push(&submodule_options, "--debug");
-+	if (opt->status_only)
-+		argv_array_push(&submodule_options, "-q");
-+
-+	switch (pattern_type_arg) {
-+	case GREP_PATTERN_TYPE_BRE:
-+		argv_array_push(&submodule_options, "-G");
-+		break;
-+	case GREP_PATTERN_TYPE_ERE:
-+		argv_array_push(&submodule_options, "-E");
-+		break;
-+	case GREP_PATTERN_TYPE_FIXED:
-+		argv_array_push(&submodule_options, "-F");
-+		break;
-+	case GREP_PATTERN_TYPE_PCRE:
-+		argv_array_push(&submodule_options, "-P");
-+		break;
-+	case GREP_PATTERN_TYPE_UNSPECIFIED:
-+		break;
-+	}
-+
-+	for (pattern = opt->pattern_list; pattern != NULL;
-+	     pattern = pattern->next) {
-+		switch (pattern->token) {
-+		case GREP_PATTERN:
-+			argv_array_pushf(&submodule_options, "-e%s",
-+					 pattern->pattern);
-+			break;
-+		case GREP_AND:
-+		case GREP_OPEN_PAREN:
-+		case GREP_CLOSE_PAREN:
-+		case GREP_NOT:
-+		case GREP_OR:
-+			argv_array_push(&submodule_options, pattern->pattern);
-+			break;
-+		/* BODY and HEAD are not used by git-grep */
-+		case GREP_PATTERN_BODY:
-+		case GREP_PATTERN_HEAD:
-+			break;
+ 	/* Add options */
+-	for (i = 0; i < submodule_options.argc; i++)
++	for (i = 0; i < submodule_options.argc; i++) {
++		/*
++		 * If there is a <tree> identifier for the submodule, add the
++		 * rev after adding the submodule options but before the
++		 * pathspecs.  To do this we listen for the '--' and insert the
++		 * sha1 before pushing the '--' onto the child process argv
++		 * array.
++		 */
++		if (gs->identifier &&
++		    !strcmp("--", submodule_options.argv[i])) {
++			argv_array_push(&cp.args, sha1_to_hex(gs->identifier));
 +		}
++
+ 		argv_array_push(&cp.args, submodule_options.argv[i]);
 +	}
-+
-+	/*
-+	 * Limit number of threads for child process to use.
-+	 * This is to prevent potential fork-bomb behavior of git-grep as each
-+	 * submodule process has its own thread pool.
-+	 */
-+	if (num_threads)
-+		argv_array_pushf(&submodule_options, "--threads=%d",
-+				 (num_threads + 1) / 2);
-+
-+	/* Add Pathspecs */
-+	argv_array_push(&submodule_options, "--");
-+	for (i = 0; i < pathspec->nr; i++)
-+		argv_array_push(&submodule_options,
-+				pathspec->items[i].original);
-+}
-+
-+/*
-+ * Launch child process to grep contents of a submodule
-+ */
-+static int grep_submodule_launch(struct grep_opt *opt,
-+				 const struct grep_source *gs)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	int status, i;
-+	struct work_item *w = opt->output_priv;
-+
-+	prepare_submodule_repo_env(&cp.env_array);
-+
-+	/* Add super prefix */
-+	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
-+			 super_prefix ? super_prefix: "",
-+			 gs->path);
-+	argv_array_push(&cp.args, "grep");
-+
-+	/* Add options */
-+	for (i = 0; i < submodule_options.argc; i++)
-+		argv_array_push(&cp.args, submodule_options.argv[i]);
-+
-+	cp.git_cmd = 1;
-+	cp.dir = gs->path;
-+
-+	/*
-+	 * Capture output to output buffer and check the return code from the
-+	 * child process.  A '0' indicates a hit, a '1' indicates no hit and
-+	 * anything else is an error.
-+	 */
-+	status = capture_command(&cp, &w->out, 0);
-+	if (status && (status != 1))
-+		exit(status);
-+
-+	/* invert the return code to make a hit equal to 1 */
-+	return !status;
-+}
-+
-+/*
-+ * Prep grep structures for a submodule grep
-+ * sha1: the sha1 of the submodule or NULL if using the working tree
-+ * filename: name of the submodule including tree name of parent
-+ * path: location of the submodule
-+ */
-+static int grep_submodule(struct grep_opt *opt, const unsigned char *sha1,
-+			  const char *filename, const char *path)
-+{
-+	if (!(is_submodule_initialized(path) &&
-+	      is_submodule_checked_out(path))) {
-+		warning("skiping submodule '%s%s' since it is not initialized and checked out",
-+			super_prefix ? super_prefix: "",
-+			path);
-+		return 0;
-+	}
-+
-+#ifndef NO_PTHREADS
-+	if (num_threads) {
-+		add_work(opt, GREP_SOURCE_SUBMODULE, filename, path, sha1);
-+		return 0;
-+	} else
-+#endif
-+	{
-+		struct work_item w;
-+		int hit;
-+
-+		grep_source_init(&w.source, GREP_SOURCE_SUBMODULE,
-+				 filename, path, sha1);
-+		strbuf_init(&w.out, 0);
-+		opt->output_priv = &w;
-+		hit = grep_submodule_launch(opt, &w.source);
-+
-+		write_or_die(1, w.out.buf, w.out.len);
-+
-+		grep_source_clear(&w.source);
-+		strbuf_release(&w.out);
-+		return hit;
-+	}
-+}
-+
-+static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
-+		      int cached)
- {
- 	int hit = 0;
- 	int nr;
+ 
+ 	cp.git_cmd = 1;
+ 	cp.dir = gs->path;
+@@ -672,12 +702,21 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 	enum interesting match = entry_not_interesting;
+ 	struct name_entry entry;
+ 	int old_baselen = base->len;
 +	struct strbuf name = STRBUF_INIT;
 +	int name_base_len = 0;
 +	if (super_prefix) {
 +		name_base_len = strlen(super_prefix);
 +		strbuf_addstr(&name, super_prefix);
 +	}
-+
- 	read_cache();
  
- 	for (nr = 0; nr < active_nr; nr++) {
- 		const struct cache_entry *ce = active_cache[nr];
--		if (!S_ISREG(ce->ce_mode))
--			continue;
--		if (!ce_path_match(ce, pathspec, NULL))
--			continue;
--		/*
--		 * If CE_VALID is on, we assume worktree file and its cache entry
--		 * are identical, even if worktree file has been modified, so use
--		 * cache version instead
--		 */
--		if (cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) {
--			if (ce_stage(ce) || ce_intent_to_add(ce))
--				continue;
--			hit |= grep_sha1(opt, ce->oid.hash, ce->name, 0,
--					 ce->name);
-+		strbuf_setlen(&name, name_base_len);
-+		strbuf_addstr(&name, ce->name);
-+
-+		if (S_ISREG(ce->ce_mode) &&
-+		    match_pathspec(pathspec, name.buf, name.len, 0, NULL,
-+				   S_ISDIR(ce->ce_mode) ||
-+				   S_ISGITLINK(ce->ce_mode))) {
-+			/*
-+			 * If CE_VALID is on, we assume worktree file and its
-+			 * cache entry are identical, even if worktree file has
-+			 * been modified, so use cache version instead
-+			 */
-+			if (cached || (ce->ce_flags & CE_VALID) ||
-+			    ce_skip_worktree(ce)) {
-+				if (ce_stage(ce) || ce_intent_to_add(ce))
-+					continue;
-+				hit |= grep_sha1(opt, ce->oid.hash, ce->name,
-+						 0, ce->name);
-+			}
-+			else {
-+				hit |= grep_file(opt, ce->name);
-+			}
-+		} else if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
-+			   submodule_path_match(pathspec, name.buf, NULL)) {
-+			hit |= grep_submodule(opt, NULL, ce->name, ce->name);
+ 	while (tree_entry(tree, &entry)) {
+ 		int te_len = tree_entry_len(&entry);
+ 
+ 		if (match != all_entries_interesting) {
+-			match = tree_entry_interesting(&entry, base, tn_len, pathspec);
++			strbuf_setlen(&name, name_base_len);
++			strbuf_addstr(&name, base->buf + tn_len);
++			match = tree_entry_interesting(&entry, &name,
++						       0, pathspec);
+ 			if (match == all_entries_not_interesting)
+ 				break;
+ 			if (match == entry_not_interesting)
+@@ -689,8 +728,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		if (S_ISREG(entry.mode)) {
+ 			hit |= grep_sha1(opt, entry.oid->hash, base->buf, tn_len,
+ 					 check_attr ? base->buf + tn_len : NULL);
+-		}
+-		else if (S_ISDIR(entry.mode)) {
++		} else if (S_ISDIR(entry.mode)) {
+ 			enum object_type type;
+ 			struct tree_desc sub;
+ 			void *data;
+@@ -706,12 +744,18 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			hit |= grep_tree(opt, pathspec, &sub, base, tn_len,
+ 					 check_attr);
+ 			free(data);
++		} else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
++			hit |= grep_submodule(opt, entry.oid->hash, base->buf,
++					      base->buf + tn_len);
  		}
--		else
--			hit |= grep_file(opt, ce->name);
 +
- 		if (ce_stage(ce)) {
- 			do {
- 				nr++;
-@@ -413,6 +659,8 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int
+ 		strbuf_setlen(base, old_baselen);
+ 
  		if (hit && opt->status_only)
  			break;
  	}
@@ -460,165 +234,148 @@ index 8887b6add..f34f16df9 100644
  	return hit;
  }
  
-@@ -651,6 +899,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			N_("search in both tracked and untracked files")),
- 		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
+@@ -735,6 +779,10 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		if (!data)
+ 			die(_("unable to read tree (%s)"), oid_to_hex(&obj->oid));
+ 
++		/* Use parent's name as base when recursing submodules */
++		if (recurse_submodules && parent_basename)
++			name = parent_basename;
++
+ 		len = name ? strlen(name) : 0;
+ 		strbuf_init(&base, PATH_MAX + len + 1);
+ 		if (len) {
+@@ -761,6 +809,12 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 	for (i = 0; i < nr; i++) {
+ 		struct object *real_obj;
+ 		real_obj = deref_tag(list->objects[i].item, NULL, 0);
++
++		/* load the gitmodules file for this rev */
++		if (recurse_submodules) {
++			submodule_free();
++			gitmodules_config_sha1(real_obj->oid.hash);
++		}
+ 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name, list->objects[i].path)) {
+ 			hit = 1;
+ 			if (opt->status_only)
+@@ -901,6 +955,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
  			    N_("ignore files specified via '.gitignore'"), 1),
-+		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-+			 N_("recursivley search in each submodule")),
+ 		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
+ 			 N_("recursivley search in each submodule")),
++		OPT_STRING(0, "parent-basename", &parent_basename,
++			   N_("basename"),
++			   N_("prepend parent project's basename to output")),
  		OPT_GROUP(""),
  		OPT_BOOL('v', "invert-match", &opt.invert,
  			N_("show non-matching lines")),
-@@ -755,6 +1005,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	init_grep_defaults();
- 	git_config(grep_cmd_config, NULL);
- 	grep_init(&opt, prefix);
-+	super_prefix = get_super_prefix();
- 
- 	/*
- 	 * If there is no -- then the paths must exist in the working
-@@ -872,6 +1123,13 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	pathspec.max_depth = opt.max_depth;
- 	pathspec.recursive = 1;
- 
-+	if (recurse_submodules) {
-+		gitmodules_config();
-+		compile_submodule_options(&opt, &pathspec, cached, untracked,
-+					  opt_exclude, use_index,
-+					  pattern_type_arg);
-+	}
-+
- 	if (show_in_pager && (cached || list.nr))
- 		die(_("--open-files-in-pager only works on the worktree"));
- 
-@@ -895,6 +1153,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+@@ -1153,7 +1210,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
  		}
  	}
  
-+	if (recurse_submodules && (!use_index || untracked || list.nr))
-+		die(_("option not supported with --recurse-submodules."));
-+
- 	if (!show_in_pager && !opt.status_only)
- 		setup_pager();
+-	if (recurse_submodules && (!use_index || untracked || list.nr))
++	if (recurse_submodules && (!use_index || untracked))
+ 		die(_("option not supported with --recurse-submodules."));
  
-diff --git a/git.c b/git.c
-index efa1059fe..a156efd85 100644
---- a/git.c
-+++ b/git.c
-@@ -434,7 +434,7 @@ static struct cmd_struct commands[] = {
- 	{ "fsck-objects", cmd_fsck, RUN_SETUP },
- 	{ "gc", cmd_gc, RUN_SETUP },
- 	{ "get-tar-commit-id", cmd_get_tar_commit_id },
--	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
-+	{ "grep", cmd_grep, RUN_SETUP_GENTLY | SUPPORT_SUPER_PREFIX },
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
+ 	if (!show_in_pager && !opt.status_only)
 diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-new file mode 100755
-index 000000000..b670c70cb
---- /dev/null
+index b670c70cb..3d1892dd7 100755
+--- a/t/t7814-grep-recurse-submodules.sh
 +++ b/t/t7814-grep-recurse-submodules.sh
-@@ -0,0 +1,99 @@
-+#!/bin/sh
-+
-+test_description='Test grep recurse-submodules feature
-+
-+This test verifies the recurse-submodules feature correctly greps across
-+submodules.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup directory structure and submodule' '
-+	echo "foobar" >a &&
-+	mkdir b &&
-+	echo "bar" >b/b &&
-+	git add a b &&
-+	git commit -m "add a and b" &&
-+	git init submodule &&
-+	echo "foobar" >submodule/a &&
-+	git -C submodule add a &&
-+	git -C submodule commit -m "add a" &&
-+	git submodule add ./submodule &&
-+	git commit -m "added submodule"
-+'
-+
-+test_expect_success 'grep correctly finds patterns in a submodule' '
+@@ -84,6 +84,49 @@ test_expect_success 'grep and multiple patterns' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'basic grep tree' '
 +	cat >expect <<-\EOF &&
-+	a:foobar
-+	b/b:bar
-+	submodule/a:foobar
++	HEAD:a:foobar
++	HEAD:b/b:bar
++	HEAD:submodule/a:foobar
++	HEAD:submodule/sub/a:foobar
 +	EOF
 +
-+	git grep -e "bar" --recurse-submodules >actual &&
++	git grep -e "bar" --recurse-submodules HEAD > actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'grep and basic pathspecs' '
++test_expect_success 'grep tree HEAD^' '
 +	cat >expect <<-\EOF &&
-+	submodule/a:foobar
++	HEAD^:a:foobar
++	HEAD^:b/b:bar
++	HEAD^:submodule/a:foobar
 +	EOF
 +
-+	git grep -e. --recurse-submodules -- submodule >actual &&
++	git grep -e "bar" --recurse-submodules HEAD^ > actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'grep and nested submodules' '
-+	git init submodule/sub &&
-+	echo "foobar" >submodule/sub/a &&
-+	git -C submodule/sub add a &&
-+	git -C submodule/sub commit -m "add a" &&
-+	git -C submodule submodule add ./sub &&
-+	git -C submodule add sub &&
-+	git -C submodule commit -m "added sub" &&
-+	git add submodule &&
-+	git commit -m "updated submodule" &&
-+
++test_expect_success 'grep tree HEAD^^' '
 +	cat >expect <<-\EOF &&
-+	a:foobar
-+	b/b:bar
-+	submodule/a:foobar
-+	submodule/sub/a:foobar
++	HEAD^^:a:foobar
++	HEAD^^:b/b:bar
 +	EOF
 +
-+	git grep -e "bar" --recurse-submodules > actual &&
++	git grep -e "bar" --recurse-submodules HEAD^^ > actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'grep and multiple patterns' '
++test_expect_success 'grep tree and pathspecs' '
 +	cat >expect <<-\EOF &&
-+	a:foobar
-+	submodule/a:foobar
-+	submodule/sub/a:foobar
++	HEAD:submodule/a:foobar
++	HEAD:submodule/sub/a:foobar
 +	EOF
 +
-+	git grep -e "bar" --and -e "foo" --recurse-submodules > actual &&
++	git grep -e "bar" --recurse-submodules HEAD -- submodule > actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'grep and multiple patterns' '
-+	cat >expect <<-\EOF &&
-+	b/b:bar
-+	EOF
-+
-+	git grep -e "bar" --and --not -e "foo" --recurse-submodules > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_incompatible_with_recurse_submodules ()
-+{
-+	test_expect_success "--recurse-submodules and $1 are incompatible" "
-+		test_must_fail git grep -e. --recurse-submodules $1 2>actual &&
-+		test_i18ngrep 'not supported with --recurse-submodules' actual
-+	"
-+}
-+
-+test_incompatible_with_recurse_submodules --untracked
-+test_incompatible_with_recurse_submodules --no-index
-+test_incompatible_with_recurse_submodules HEAD
-+
-+test_done
+ test_incompatible_with_recurse_submodules ()
+ {
+ 	test_expect_success "--recurse-submodules and $1 are incompatible" "
+@@ -94,6 +137,5 @@ test_incompatible_with_recurse_submodules ()
+ 
+ test_incompatible_with_recurse_submodules --untracked
+ test_incompatible_with_recurse_submodules --no-index
+-test_incompatible_with_recurse_submodules HEAD
+ 
+ test_done
+diff --git a/tree-walk.c b/tree-walk.c
+index 828f4356b..b3f996174 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -999,10 +999,11 @@ static enum interesting do_match(const struct name_entry *entry,
+ 					return entry_interesting;
+ 
+ 				/*
+-				 * Match all directories. We'll try to
+-				 * match files later on.
++				 * Match all directories and gitlinks. We'll
++				 * try to match files later on.
+ 				 */
+-				if (ps->recursive && S_ISDIR(entry->mode))
++				if (ps->recursive && (S_ISDIR(entry->mode) ||
++						      S_ISGITLINK(entry->mode)))
+ 					return entry_interesting;
+ 			}
+ 
+@@ -1043,13 +1044,13 @@ static enum interesting do_match(const struct name_entry *entry,
+ 		strbuf_setlen(base, base_offset + baselen);
+ 
+ 		/*
+-		 * Match all directories. We'll try to match files
+-		 * later on.
+-		 * max_depth is ignored but we may consider support it
+-		 * in future, see
++		 * Match all directories and gitlinks. We'll try to match files
++		 * later on.  max_depth is ignored but we may consider support
++		 * it in future, see
+ 		 * http://thread.gmane.org/gmane.comp.version-control.git/163757/focus=163840
+ 		 */
+-		if (ps->recursive && S_ISDIR(entry->mode))
++		if (ps->recursive && (S_ISDIR(entry->mode) ||
++				      S_ISGITLINK(entry->mode)))
+ 			return entry_interesting;
+ 	}
+ 	return never_interesting; /* No matches */
 -- 
 2.10.1.613.g6021889
 
