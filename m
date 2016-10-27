@@ -2,153 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAC0720193
-	for <e@80x24.org>; Thu, 27 Oct 2016 19:49:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF8120193
+	for <e@80x24.org>; Thu, 27 Oct 2016 19:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936059AbcJ0Ts7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 15:48:59 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:33210 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932887AbcJ0Ts4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 15:48:56 -0400
-Received: by mail-yw0-f181.google.com with SMTP id p22so42491576ywe.0
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 12:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MwkVxp1EE2+ZCTNcjLEtc+mTuQi+3eOyxI6I5zOL0TQ=;
-        b=pVsyapZnf1MUhalRxGyOT7MHe1WVXhDJL0uTKKiVi7J6tu5fhzLMMuUxBEXpSlhXsm
-         Yy7RDQzbbWDHxCebolDeYUGfNwz4mieIwAayXZH0KwWvlK5HHFR1N/qrrVbqHzN3l/dg
-         mTF8lrKEj8fXrcPd3KJTtx8zxPPcGdggXTcademH4f7GMK8WD9KQc91S8wdW5MrF3+5Y
-         KH7div87RNn6fsWDldkKD5J2BZy2dgt1DUer7TbOkCAWnFOU8EbjaJ060CoazleuB8/j
-         BrelXV+WRir5Ll5nEcLkkRXRTI1SV1GvPeEcwpsjBCQ51luGVOWDTeq/Wue5C4oRtM/q
-         webg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MwkVxp1EE2+ZCTNcjLEtc+mTuQi+3eOyxI6I5zOL0TQ=;
-        b=h0zQPfZdMDn8ViQEkTH80dLEJCYYJZKJIUSXFtnaKyZC/BS+Qe0iJaErveoKGR8RgX
-         hTP8QI469B53BZg30h/+qxY1NXNbXLb6oECh2JcvAWvT7QnNSSg1itfSgPmy7GUxefR3
-         mUg/FHC3rxqHD6y8PPToiHOWqTnuA/GVwR2g5b6NMRrJtzoT3qyp5ENsNXD8KBaGXHId
-         eYEDsqxFoK73vbqIP/bB9MYK8Ff43aEeiaszHMIIR0YU1VZY5EMAVi50nLL/vIeQeLpb
-         cdM3XY0feE1vatjo9bw53Nb0c6ppKwD4GD3V7h1+Q7Zo8+Ses5XsRT17xzXxgTEjFTCw
-         dNqQ==
-X-Gm-Message-State: ABUngvePXStn6I3FDpMigNN7nX7y6rKFa1lxlA6FbRKbnnj3fla3Z4qbNk2P4xztHMLziBePS76n6TMqq6Va8w==
-X-Received: by 10.13.231.131 with SMTP id q125mr8389816ywe.122.1477597735244;
- Thu, 27 Oct 2016 12:48:55 -0700 (PDT)
+        id S934812AbcJ0T5o (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 15:57:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65285 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933171AbcJ0T5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 15:57:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A71AF4ACD8;
+        Thu, 27 Oct 2016 15:57:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=B5PBTAI1yyPz
+        VIrok4GHVVmX9cc=; b=XWQitwHOs+dgf3cn3x/ljcWcCnIbVc+Ps3US3kzdYsZX
+        ysOX2nmwmEWKCmQwbLIePxCswsoy0E4ZT0RdTeaDexK6ESTJTUX3sbvXR/qhuEd4
+        kIu7Ad4c2SujeT3DlC/xk6Z3XCSnSN1rmrfzo+EaLDxyS0qSME5kKf60z1JNOCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=UULrST
+        hTPTEzDusVGi6bLu7CvqQblOrg+sCApm+JSlN8ezf/OAV83DCncuxqk5Jeb8yMiq
+        TV5Kms2AtZftO0jvZi9E+4Fuxcl6ys2DjblRkjyh8SUp31Ns0N5Neu84n9tx+INS
+        s/vgg3/9+5yDOWxW1dAu++q6ahhCi6u5RAIRw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D8C54ACD7;
+        Thu, 27 Oct 2016 15:57:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1842B4ACD6;
+        Thu, 27 Oct 2016 15:57:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] read-cache: factor out get_sha1_from_index() helper
+References: <20161009095649.1886-1-tboegi@web.de>
+        <20161012134726.28326-1-tboegi@web.de>
+Date:   Thu, 27 Oct 2016 12:57:40 -0700
+In-Reply-To: <20161012134726.28326-1-tboegi@web.de> (tboegi@web.de's message
+        of "Wed, 12 Oct 2016 15:47:26 +0200")
+Message-ID: <xmqqinsd5zuz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Thu, 27 Oct 2016 12:48:34 -0700 (PDT)
-In-Reply-To: <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net>
-References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co> <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 27 Oct 2016 12:48:34 -0700
-Message-ID: <CA+P7+xqmVM-bEc7sZcn+p3qhFUUJvC+rko7CYu+KgyTAeiOifw@mail.gmail.com>
-Subject: Re: Expanding Includes in .gitignore
-To:     Jeff King <peff@peff.net>
-Cc:     Aaron Pelly <aaron@pelly.co>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9ED83F7C-9C7F-11E6-BAE8-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2016 at 3:50 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 27, 2016 at 01:22:43PM +1300, Aaron Pelly wrote:
+tboegi@web.de writes:
+
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
->> The use case for this is where I did not write my own rules, but I want
->> to keep them updated. https://github.com/github/gitignore is a damn good
->> resource, but I want to pull it and include relevant bits project by
->> project and/or system wide. I don't want to have to update many projects
->> manually if that, or any other, repo changes.
+> Factor out the retrieval of the sha1 for a given path in
+> read_blob_data_from_index() into the function get_sha1_from_index().
 >
-> That seems like a reasonable thing to want.
+> This will be used in the next commit, when convert.c can do the
+> analyze for "text=3Dauto" without slurping the whole blob into memory
+> at once.
 >
-
-Agreed, this seems useful to me.
-
->> A very brief look at dir.c would indicate that a recursive call from
->> add_excludes to itself when it parses some sort of include tag would do
->> it within a file. I'm sure it'd be pretty straight forward to hook into
->> something in dir.c to parse directories too.
->>
->> I'm thinking something like ". path/to/include/file" in an ignore file,
->> and/or creating .gitignore.d and/or allowing $HOME/.config/git/ignore
->> and $GIT_DIR/info/exclude to be directories. Or some sane and consistent
->> mixture of these things.
+> Add a wrapper definition get_sha1_from_cache().
 >
-> I'd shy away from an actual include directive, as it raises a lot of
-> complications:
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>  cache.h      |  3 +++
+>  read-cache.c | 29 ++++++++++++++++++-----------
+>  2 files changed, 21 insertions(+), 11 deletions(-)
 >
->   - as you noted, cycles in the include graph need to be detected and
->     broken
->
->   - we parse possibly-hostile .gitignore files from cloned repositories.
->     What happens when I include ask to include /etc/passwd? Probably
->     nothing, but there are setups where it might matter (e.g., something
->     like Travis that auto-builds untrusted repositories, and you could
->     potentially leak the contents of files via error messages). It's
->     nice to avoid the issue entirely.
->
->   - finding a backwards-compatible syntax
->
-> Whereas letting any of the user- or repo-level exclude files be a
-> directory, and simply reading all of the files inside, seems simple and
-> obvious. If you go that route, it probably makes sense to teach
-> gitattributes the same trick.
+> diff --git a/cache.h b/cache.h
+> index 1604e29..04de209 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -380,6 +380,7 @@ extern void free_name_hash(struct index_state *ista=
+te);
+>  #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, =
+at)
+>  #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+>  #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(=
+&the_index, (path), (sz))
+> +#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (p=
+ath))
 
-Yep that would be easier and simpler.
+Should have caught this earlier, but there is an extra SP after "from_ind=
+ex"
+which I'll remove (the topic is not in 'next' yet, lucky us).
 
->
->> In the case of a directory the plan would be to add links to files
->> stored/sourced elsewhere. This does pose a precedence question which I
->> haven't thought about yet, but probably makes it too hard for the
->> limited value it brings.
->
-> I think the normal behavior in such "foo.d" directory is to just sort
-> the contents lexically and read them in order, as if they were all
-> concatenated together, and with no recursion. I.e., behave "as if" the
-> user had run "cat $dir/*".
+I re-read this to ensure that it does not break read_blob_data_from_index=
+()
+the new function borrows the logic from.
 
-Yea, this is the normal behavior, and the user is expected to order
-their files lexically such as "00-name", "50-name" and so on. Pretty
-traditional for a lot of newer configurations.
-
->
-> That lets you handle precedence via the filenames (or symlink names). It
-> can't handle all cases (some items in "00foo" want precedence over "01bar"
-> and vice versa), but I don't think there's an easy solution. That's a
-> good sign that one or more of the files should be broken up.
->
-
-Yea if you have these inter-dependent relationships it can't be
-expressed, but then neither can it really be expressed in the simple
-"include" case above.
-
-I would strongly prefer rc.d style directories either with a "if the
-.gitignore is a directory treat it like rc.d" or even "add support for
-.gitignore.d as well as .gitignore"
-
-One thing to keep in mind would be that we should make sure we can
-handle the .gitignore being a submodule or a git repository, so that
-users could just do something like
-
-"git submodule add <repo> .gitignore and then track git ignore
-contents from a repository in a nice way.
-
-By this I mean that the reading of files in .gitignore directory
-should exclude reading .git or other hidden files in some documented
-manor so as to avoid problems when linking to a git directory for its
-contents.
-
-Thanks,
-Jake
-
-> -Peff
+Thanks.
