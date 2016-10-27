@@ -2,69 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ECCF20193
-	for <e@80x24.org>; Thu, 27 Oct 2016 16:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD7220193
+	for <e@80x24.org>; Thu, 27 Oct 2016 17:01:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936563AbcJ0Q75 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 12:59:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62277 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934007AbcJ0Q74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 12:59:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CDA0C495A5;
-        Thu, 27 Oct 2016 12:59:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fCjSIsT7rofbOuk4r2o82Hc13cU=; b=DPCNCp
-        aggM80yFNfvfGmB8M8WQmLBcCn+EjvWEd15tdC2eRsqwudUulsNH8RBQfEW1rad9
-        2BA8n1UORj06dr99pxkzrCxlS636AekAaPEoD1FXf0iwRTv1IDMi3f2xlpdR9mAM
-        ZAvq1YHn8ZF9/eia9Hpay3QvnYU1Sfay7CnAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AzejmlhfKorQ24U3KVl3WrDNfL9QQi+0
-        Az1fYXz6IF84BNW3lEVK0q8+4xsvBWCGVj+MHFTzONj56g/+7+weQ2TIM1pF/J42
-        6wm3bOMLFEb4hEC1afRVURVQlYDWMmOQv/vY6y3jAs3W9R0Hf9Yf77ebtTRtXB1X
-        qeBlQp4URZo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1C58495A2;
-        Thu, 27 Oct 2016 12:59:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32538495A1;
-        Thu, 27 Oct 2016 12:59:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH v15 01/27] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-        <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
-Date:   Thu, 27 Oct 2016 09:59:52 -0700
-In-Reply-To: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
-        (Pranit Bauva's message of "Fri, 14 Oct 2016 14:14:15 +0000")
-Message-ID: <xmqqvawd7mnr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S936338AbcJ0RBF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 13:01:05 -0400
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:36771 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933213AbcJ0RBD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 13:01:03 -0400
+Received: by mail-qk0-f182.google.com with SMTP id o68so54546910qkf.3
+        for <git@vger.kernel.org>; Thu, 27 Oct 2016 10:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VM3XcfxYrLnx+Hqo7IKRwyP9OAHUoTn2NHKGw40fhK8=;
+        b=EJJu4Z9MQ/IusuBminRNwYIMzOizt5yk6mC+s3YQI0XKmFwpbvuuWWYB9cWKhyV7nH
+         OzTPCBekMVciF8gLNE71S7wC5KGFV8cmBwpvsyoz+/kagF/DRc2LKbX9aUZtB7AAaZCi
+         jJEGtRK+i2hFw6+NVsjqeH4jKNGfMKdtgXXnjVLs9p45XBxk/Dy6hmxjotEU+k7pUTuk
+         R0FLJ25Ih9XWJwmfU+nl6Ehngn4N2ND1RS4JqQ6U8yg1RXvYUFJf6ioO4qysVIaQbqdX
+         tINNW512EyrX1ijYD8emSywzGy/Zbyd9BMHcDru9/qDbXp4uYzKaSF9fXO50P65j7eL7
+         5yBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VM3XcfxYrLnx+Hqo7IKRwyP9OAHUoTn2NHKGw40fhK8=;
+        b=K3dtYiH9IUrXIJo05CabtaLGDqSfoWwAC7vM79M9PgD3Cxi1FiDWPZXxyaCBUsMmKd
+         ugAfQrq+9MOjbdujd+hz4c8AdbepA2m9wvNx0moZFw4roaRaoDip4vn0UDqGgGWaKfuK
+         nGCqI45E+6f/wH2582FBRTty1WJmKMM/SXbuhbIQfTN97QlTwOJo4GGIGrE/sZPaz5HO
+         lhDRoGwFyi3QkLUpJ5nkbGTrKAmMyw4CPg4IrPICWM5uG8juBUUr+k0/iC3/Ycf6/sTt
+         5YADzmurpxasT/e4tz9OOu0hvLxvTioroBNpgb4AM3lsXktAAf1TLLvdr1DPH5L2wjr1
+         jL6w==
+X-Gm-Message-State: ABUngvd2dqigRstrYNkw9s/uR7uhcYsZ1PXlMszkHg+V6yTv88Rc3TvvtzGGgBk0gOzEnfs8F68qxmV4IGKjLfYs
+X-Received: by 10.55.142.130 with SMTP id q124mr6039892qkd.220.1477587662568;
+ Thu, 27 Oct 2016 10:01:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C85373D0-9C66-11E6-B4AF-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.135.40 with HTTP; Thu, 27 Oct 2016 10:01:02 -0700 (PDT)
+In-Reply-To: <xmqqd1im8foi.fsf@gitster.mtv.corp.google.com>
+References: <20161026215732.16411-1-sbeller@google.com> <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org>
+ <xmqqlgxa8h3a.fsf@gitster.mtv.corp.google.com> <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org>
+ <xmqqh97y8g74.fsf@gitster.mtv.corp.google.com> <xmqqd1im8foi.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 27 Oct 2016 10:01:02 -0700
+Message-ID: <CAGZ79kbP3pgPHgv-x1Q-Q1QwmXc=gOyxWhXh2SngO8WSZc3PFA@mail.gmail.com>
+Subject: Re: [PATCH] compat: Allow static initializer for pthreads on Windows
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Simon Ruderich <simon@ruderich.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cc'ed those who touched either "git-bisect.sh" or "builtin/bisect-helper.c"
-in our relatively recent past.
+> Johannes Sixt <j6t@kdbg.org> writes:
+> This is the pessimization that I am talking about. I would not mind at all if
+> it were only for the attribute subsystem, but the proposed patch would
+> pessimize *all* uses of pthread_mutex_lock.
 
-Does any of you (and others on the list) have time and inclination
-to review this series?
+It would only pessimize *uninitialized* mutexes? For initialized mutexes
+the added burden is super cheap (one additional condition).
 
-Thanks.
+The positive aspect of this way the patch proposes would be that any
+future contributor not knowing the details of how to do mutexes right
+on Windows, would not totally break the whole system, i.e. this seems
+to be more maintainable in the future as it reduces the friction between
+pthreads mutexes and the way we can do things in Git in a platform
+independent way
+
+On Wed, Oct 26, 2016 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Lazy on-demand initialization as needed, perhaps?  The on-demand
+>> initialization mechanism may become no-op on some platforms that can
+>> do static initialization.
+>
+> Ah, I think I misunderstood your "please rewrite".  Did you mean to
+> add "void attr_start(void)" helper function to attr.c that does
+> series of pthread_mutex_init() calls as needed?
+
+Well one init for now.
+
+>  That function can
+> be called from main() of platforms that cannot statically initialize
+> mutices,
+
+By main you mean the main() in common-main.c or cmd_main in git.c ?
+
+Those both look like the wrong place. Of course it would work adding it
+there, but it smells like a maintenance nightmare.
+
+And then we would modify the attr_start command depending on the
+platform, i.e.
+
+#ifdef WIN32
+void attr_start(void)
+{
+    pthread_mutex_init(..);
+}
+#else
+void attr_start(void)
+{
+    /* nothing as it is statically init'd */
+}
+#endif
+
+> while on other platforms it can be a no-op as long as the
+> variables are statically initialized?  If so, that would not pessimize
+> any platform, I would think.
+
+I would think this pessimizes ALL platforms from a maintenance perspective
+(but what do I know about maintaining stuff as an eager young contributor ;)
+
+So I am willing to go that route, though I do not quite understand where exactly
+you'd expect me to put the initializer as all places I can think of
+are not the right
+place.
+
+Thanks,
+Stefan
