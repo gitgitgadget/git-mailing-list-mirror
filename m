@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2062C20193
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35D55203BD
 	for <e@80x24.org>; Thu, 27 Oct 2016 22:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S943031AbcJ0WjH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 18:39:07 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:35813 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S942966AbcJ0WjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 18:39:05 -0400
-Received: by mail-pf0-f171.google.com with SMTP id s8so25078929pfj.2
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 15:39:04 -0700 (PDT)
+        id S943037AbcJ0WjK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 18:39:10 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35827 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S943033AbcJ0WjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 18:39:08 -0400
+Received: by mail-pf0-f170.google.com with SMTP id s8so25079602pfj.2
+        for <git@vger.kernel.org>; Thu, 27 Oct 2016 15:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=c/Tmg80hDvEKXzsqzU8Lv8VJtix0ae/KaRGXbSxpNCE=;
-        b=EP8HupwHKNKTXnHkdpFCL6ic3T+Rl32VuCM0oXpylRIzg6C26UtAO0brE8b5Wlvz0p
-         BYzupKrbXJN5+IiJy/aLcZdx1dR4ILqpASawexgFqjko3kC4u/qVKLu3BxMLmILdL2Vd
-         AzN3AwvmU+BiyKutHFWj8EUokK2we+JLaUUCheHDsBRqPIbh0TpYtFF1NL+BNCmxc8ro
-         5d+vVdRf3cQHpZl5B9AJ7K/DbkkPS9x1LqIekQnEuVA+bUKMf2Ns9L+uEeCQ3kTYuhSn
-         8CseBu/KTgwZKxpA9bWThEFqjnuu79Uhuos34TvsbExVLyUSFk6RuLtM9WsEs97YEFux
-         NUfQ==
+        bh=xZC8fd6JRFbVhcWfssZeGfmmBTlFjOPbYPEBPFv1wXA=;
+        b=JWQbDyVVyxFXEOcIESGrxbyi62wABDt1JMOA56xshue7v+8/PAbdGXivys8ECmNzUe
+         i8mSLo18eNmy/XMyho1C4YUt+LGL43AvOzDuK2jjWYR2PDbkaa4RrQS+EYbGL/9jo4a/
+         f4wZhK3ZZpElKkrHGE08Sx55P/shq8p33jAKkGZEFL/VfehQEBGqJXVw3s46ldiXw283
+         D7SZ8DlDOO3UcuEMF3XEM3cXy50BE26Ko5ChThEj7/O0FDcItWGcHKo0CPr0aZphBbF1
+         1/GwExNWvEZkO+vHUBN9A+WJMBcOYiFU2mTjEbDC9O+Ga3vI/XNMbcByqETfQUSbqJLG
+         VEGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=c/Tmg80hDvEKXzsqzU8Lv8VJtix0ae/KaRGXbSxpNCE=;
-        b=Q1EaAIEKAzneRvVvaGhLttTqEGfGHH1JWTTlxS34qXs9sBmehIt8MWGmXm+PBrk16O
-         XqWkDWjF38TamgEBUQVkXU5yscQsymGCDgsG3FDZ/KNHLGrd4fA7Gu1csQEovM/eoeeU
-         Ko58JcbaRjEfCE9S5+2k8yjUGJ85gq4pDi++zC+0DiNRGns3g5oFDEq/jJRkL2sJcQ6I
-         gi/+BA0hkilpLWl7HWCjYbicxuR239SxtKUDID2shVz/k4oX/7HV8VbFp8OXW7Xp+AUs
-         +b1ldvC4KwJ+6AXChmec2dFwMwa57KibgNfbw11f+Bbzs7GR3xlYsIAlmUBqvUOAxgWE
-         QiNw==
-X-Gm-Message-State: ABUngvfQhyeRV8HZNzfW16r0BKdyOhuBC/NS0m1eEEug07v4a/2mqdX+cnvqa4t9SKKfyoS2
-X-Received: by 10.98.102.221 with SMTP id s90mr18692492pfj.146.1477607944256;
-        Thu, 27 Oct 2016 15:39:04 -0700 (PDT)
+        bh=xZC8fd6JRFbVhcWfssZeGfmmBTlFjOPbYPEBPFv1wXA=;
+        b=UXzfJm1wX9oMX/R4G8UmCjsPEpIy1anTSxWWrCpiviBB+pf8l8Iy2xpQpaE2ne5BTr
+         Xu2hzic+o6nHK0vAvDJ3k1mfRjbfX3ytOvcEU4kjvRwoAGL47d0LmajT5Az8plzMlL9F
+         FGukvtiDm0O5jj6nsokB+WGn1IoNw0eyhJGbkij3N5KnAF0tacmtSiRz9ZPJ736y+Rgw
+         E9Ew/UYAdBKKRVAl4YiEYBfS5PZyMAhUDS+XM5gkRAhInvrjA8MuB+NsooRKir0+ZdXy
+         P4aBVjYGt0ArYEftbwpcbUMu9bA7cfSw+d/Agi085Tbr9nWe2cvg5I4feeXDjpIcfLSQ
+         y5VQ==
+X-Gm-Message-State: ABUngvf9Wt7CE13j8Atu1GyR21tIp0ihJxR+66/pMGxXbH9fNp+aQs6jYOYh4oz//R1/yjiJ
+X-Received: by 10.99.65.133 with SMTP id o127mr15356140pga.73.1477607947158;
+        Thu, 27 Oct 2016 15:39:07 -0700 (PDT)
 Received: from nalthis.roam.corp.google.com.com ([172.19.37.191])
-        by smtp.gmail.com with ESMTPSA id d2sm8129400pfd.38.2016.10.27.15.39.02
+        by smtp.gmail.com with ESMTPSA id d2sm8129400pfd.38.2016.10.27.15.39.05
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 27 Oct 2016 15:39:03 -0700 (PDT)
+        Thu, 27 Oct 2016 15:39:06 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 1/5] submodules: add helper functions to determine presence of submodules
-Date:   Thu, 27 Oct 2016 15:38:30 -0700
-Message-Id: <20161027223834.35312-2-bmwill@google.com>
+Subject: [PATCH 3/5] grep: add submodules as a grep source type
+Date:   Thu, 27 Oct 2016 15:38:32 -0700
+Message-Id: <20161027223834.35312-4-bmwill@google.com>
 X-Mailer: git-send-email 2.10.1.613.g6021889
 In-Reply-To: <20161027223834.35312-1-bmwill@google.com>
 References: <20161027223834.35312-1-bmwill@google.com>
@@ -60,80 +60,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add two helper functions to submodules.c.
-`is_submodule_initialized()` checks if a submodule has been initialized
-at a given path and `is_submodule_checked_out()` check if a submodule
-has been checked out at a given path.
+Add `GREP_SOURCE_SUBMODULE` as a grep_source type and cases for this new
+type in the various switch statements in grep.c.
+
+When initializing a grep_source with type `GREP_SOURCE_SUBMODULE` the
+identifier can either be NULL (to indicate that the working tree will be
+used) or a SHA1 (the REV of the submodule to be grep'd).  If the
+identifier is a SHA1 then we want to fall through to the
+`GREP_SOURCE_SHA1` case to handle the copying of the SHA1.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 39 +++++++++++++++++++++++++++++++++++++++
- submodule.h |  2 ++
- 2 files changed, 41 insertions(+)
+ grep.c | 16 +++++++++++++++-
+ grep.h |  1 +
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/submodule.c b/submodule.c
-index 6f7d883de..029b24440 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -198,6 +198,45 @@ void gitmodules_config(void)
+diff --git a/grep.c b/grep.c
+index 1194d35b5..0dbdc1d00 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1735,12 +1735,23 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+ 	case GREP_SOURCE_FILE:
+ 		gs->identifier = xstrdup(identifier);
+ 		break;
++	case GREP_SOURCE_SUBMODULE:
++		if (!identifier) {
++			gs->identifier = NULL;
++			break;
++		}
++		/*
++		 * FALL THROUGH
++		 * If the identifier is non-NULL (in the submodule case) it
++		 * will be a SHA1 that needs to be copied.
++		 */
+ 	case GREP_SOURCE_SHA1:
+ 		gs->identifier = xmalloc(20);
+ 		hashcpy(gs->identifier, identifier);
+ 		break;
+ 	case GREP_SOURCE_BUF:
+ 		gs->identifier = NULL;
++		break;
  	}
  }
  
-+/*
-+ * Determine if a submodule has been initialized at a given 'path'
-+ */
-+int is_submodule_initialized(const char *path)
-+{
-+	int ret = 0;
-+	const struct submodule *module = NULL;
-+
-+	module = submodule_from_path(null_sha1, path);
-+
-+	if (module) {
-+		struct strbuf buf = STRBUF_INIT;
-+		char *submodule_url = NULL;
-+
-+		strbuf_addf(&buf, "submodule.%s.url",module->name);
-+		ret = !git_config_get_string(buf.buf, &submodule_url);
-+
-+		free(submodule_url);
-+		strbuf_release(&buf);
-+	}
-+
-+	return ret;
-+}
-+
-+/*
-+ * Determine if a submodule has been checked out at a given 'path'
-+ */
-+int is_submodule_checked_out(const char *path)
-+{
-+	int ret = 0;
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	strbuf_addf(&buf, "%s/.git", path);
-+	ret = file_exists(buf.buf);
-+
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
- int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst)
- {
-diff --git a/submodule.h b/submodule.h
-index d9e197a94..bd039ca98 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -37,6 +37,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 		const char *path);
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
-+extern int is_submodule_initialized(const char *path);
-+extern int is_submodule_checked_out(const char *path);
- int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
+@@ -1760,6 +1771,7 @@ void grep_source_clear_data(struct grep_source *gs)
+ 	switch (gs->type) {
+ 	case GREP_SOURCE_FILE:
+ 	case GREP_SOURCE_SHA1:
++	case GREP_SOURCE_SUBMODULE:
+ 		free(gs->buf);
+ 		gs->buf = NULL;
+ 		gs->size = 0;
+@@ -1831,8 +1843,10 @@ static int grep_source_load(struct grep_source *gs)
+ 		return grep_source_load_sha1(gs);
+ 	case GREP_SOURCE_BUF:
+ 		return gs->buf ? 0 : -1;
++	case GREP_SOURCE_SUBMODULE:
++		break;
+ 	}
+-	die("BUG: invalid grep_source type");
++	die("BUG: invalid grep_source type to load");
+ }
+ 
+ void grep_source_load_driver(struct grep_source *gs)
+diff --git a/grep.h b/grep.h
+index 5856a23e4..267534ca2 100644
+--- a/grep.h
++++ b/grep.h
+@@ -161,6 +161,7 @@ struct grep_source {
+ 		GREP_SOURCE_SHA1,
+ 		GREP_SOURCE_FILE,
+ 		GREP_SOURCE_BUF,
++		GREP_SOURCE_SUBMODULE,
+ 	} type;
+ 	void *identifier;
+ 
 -- 
 2.10.1.613.g6021889
 
