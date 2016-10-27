@@ -2,71 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1D4203BD
-	for <e@80x24.org>; Thu, 27 Oct 2016 06:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 717302022A
+	for <e@80x24.org>; Thu, 27 Oct 2016 06:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753146AbcJ0GWB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 02:22:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50555 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752275AbcJ0GWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 02:22:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 441694273D;
-        Thu, 27 Oct 2016 02:21:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5lGNlxe6zR16Xujh244e3J8c0jE=; b=jeBzI1
-        Nvg6X97K3WkJGc9EI7ny7Cgj4Vg6dTclXQvU8vUACPEs0ckR3+1Jlj6ixCMJ6hc+
-        m7jEwzF+jQ55EwPqFHsItU2VrWs1OK7i21ZMMlNsYFL5BYRCHAFUSgNN6/EM5dyw
-        Ex0uPonBf7WWEELl16JgPvgblY/ys3dIl7RRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YyYBBE5VUX75x+vtmHWxYQDIe0xo3Ws0
-        hwF3Dt9DTMt2GjzoNUp7Ai7nMSeRfOtos1pWnCFD/fVw5lYWSbP4coq73o0gs6Rq
-        YKCXf3CNOO3Hghg8zqUXbfnv8l4eQUUXUe9mHdVmWHWG7H7cAXz9AiEvLPloCaLQ
-        h+jNNnKkwBg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 39E5D4273B;
-        Thu, 27 Oct 2016 02:21:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB80E42739;
-        Thu, 27 Oct 2016 02:21:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Stefan Beller <sbeller@google.com>, Johannes.Schindelin@gmx.de,
-        git@vger.kernel.org, simon@ruderich.org, peff@peff.net
-Subject: Re: [PATCH] compat: Allow static initializer for pthreads on Windows
-References: <20161026215732.16411-1-sbeller@google.com>
-        <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org>
-        <xmqqlgxa8h3a.fsf@gitster.mtv.corp.google.com>
-        <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org>
-Date:   Wed, 26 Oct 2016 23:21:51 -0700
-In-Reply-To: <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org> (Johannes Sixt's
-        message of "Thu, 27 Oct 2016 08:10:24 +0200")
-Message-ID: <xmqqh97y8g74.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933811AbcJ0GYq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 02:24:46 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:41870
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933502AbcJ0GYp (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Oct 2016 02:24:45 -0400
+X-Greylist: delayed 6612 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Oct 2016 02:24:45 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1477541608;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=xNt9TA7Anwgdx79T+67EadTC3lmVWSRYU9PhjLQbqjI=;
+        b=cY4tbIaiEgZ18SDO/eurG3SgiGG3P8rK5kQtU/YdijmJIIEQMR1gfDP/fSBIzVEM
+        sZ/h6NEnc70vdjmw4okgvfMHw24rke9YMh/WmRzBs9t/doDHE3r/OjZpklMi1BL+g0C
+        XU+VKgE5KlmjwBOaZNDZWKiRzcONGSXL2l4O4+yI=
+From:   Cody Sehl <cody.sehl@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <010201580457bdd2-99237b54-5e36-4430-bb8d-7e9088aed522-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] Update git rebase documentation to clarify HEAD behavior
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A75E1652-9C0D-11E6-B759-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 27 Oct 2016 04:13:28 +0000
+X-SES-Outgoing: 2016.10.27-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+The first few paragraphs in the git-rebase.txt documentation lay out the steps git takes during a rebase:
+1. everything from `<upstream>..HEAD` is saved to a temporary area
+2. `HEAD` is set to `<upstream>`
+3. the changes held in the temporary area are applied one by one in order on top of the new `HEAD`
 
->> As many codepaths may not even need access to the attributes, I
->> doubt that would be a very productive direction to go.
->
-> So, what is productive then? Pessimizing one (not exactly minor) platform?
+The second step was described using the phrase `The current branch is reset to <upstream>`, which is true (because `HEAD` == current branch), but not clear.
+---
+ Documentation/git-rebase.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Lazy on-demand initialization as needed, perhaps?  The on-demand
-initialization mechanism may become no-op on some platforms that can
-do static initialization.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index de222c8..c47ca11 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -33,7 +33,7 @@ of commits that would be shown by `git log <upstream>..HEAD`; or by
+ description on `--fork-point` below); or by `git log HEAD`, if the
+ `--root` option is specified.
+ 
+-The current branch is reset to <upstream>, or <newbase> if the
++HEAD is reset to <upstream>, or <newbase> if the
+ --onto option was supplied.  This has the exact same effect as
+ `git reset --hard <upstream>` (or <newbase>).  ORIG_HEAD is set
+ to point at the tip of the branch before the reset.
+
+--
+https://github.com/git/git/pull/301
