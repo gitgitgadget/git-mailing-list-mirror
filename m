@@ -2,69 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73B8B20193
-	for <e@80x24.org>; Thu, 27 Oct 2016 20:51:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4980C20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 20:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964845AbcJ0UvR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 16:51:17 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39152 "EHLO dcvr.yhbt.net"
+        id S935096AbcJ0UzM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 16:55:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35021 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752035AbcJ0UvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 16:51:16 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id DB26B20193;
-        Thu, 27 Oct 2016 20:51:15 +0000 (UTC)
-Date:   Thu, 27 Oct 2016 20:51:15 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Gavin Lambert <github@mirality.co.nz>
-Subject: Re: [PATCH] git-svn: do not reuse caches memoized for a different
- architecture
-Message-ID: <20161027205115.GA5706@starla>
-References: <653aa0cd566a2486bbc38cfd82ddfcfdfe48271c.1477398004.git.johannes.schindelin@gmx.de>
- <20161025212357.GA8683@starla>
- <xmqqmvhp60gp.fsf@gitster.mtv.corp.google.com>
+        id S933171AbcJ0UzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 16:55:11 -0400
+Received: (qmail 31769 invoked by uid 109); 27 Oct 2016 20:55:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Oct 2016 20:55:11 +0000
+Received: (qmail 23215 invoked by uid 111); 27 Oct 2016 20:55:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Oct 2016 16:55:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Oct 2016 16:55:08 -0400
+Date:   Thu, 27 Oct 2016 16:55:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Aaron Pelly <aaron@pelly.co>
+Cc:     git@vger.kernel.org
+Subject: Re: Expanding Includes in .gitignore
+Message-ID: <20161027205508.vqw44zlbnqpj2cvd@sigill.intra.peff.net>
+References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
+ <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net>
+ <b20b458c-440d-df09-d2c7-e510ac20492c@pelly.co>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqmvhp60gp.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <b20b458c-440d-df09-d2c7-e510ac20492c@pelly.co>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Just peeking from the sideline, but the your squash looks like an
-> improvement to me.
+On Fri, Oct 28, 2016 at 09:28:23AM +1300, Aaron Pelly wrote:
 
-Thanks.
+> >   - we parse possibly-hostile .gitignore files from cloned repositories.
+> >     What happens when I include ask to include /etc/passwd? Probably
+> >     nothing, but there are setups where it might matter (e.g., something
+> >     like Travis that auto-builds untrusted repositories, and you could
+> >     potentially leak the contents of files via error messages). It's
+> >     nice to avoid the issue entirely.
+> 
+> I understand the issue.
+> 
+> It's not obvious to me how using a .d solves this problem though.
 
-> Hopefully the final version after your interaction with Dscho can
-> come to me via another "pull this now"?
+It doesn't by itself. But we are worried only about tracked .gitignore
+files (recall that even repo-level files in $GIT_DIR/info are generated
+fresh by the clone process, and don't come from the remote). If we apply
+the feature only to core.excludeFile and $GIT_DIR/info/exclude, those
+are already under the user's control.
 
-Not sure if I'll be online the next few days,
-but I've preeptively pushed the patch + squash to my repo:
+It's true that we could make a similar exception for an "include"
+feature, and respect include directives only in those "safe" files.
+Somehow that seems more confusing to me, though, than doing adding the
+feature at the file level, as it introduces slightly varying syntax
+between the locations.
 
-The following changes since commit 2cc2e70264e0fcba04f9ef791d144bbc8b501206:
+> > Whereas letting any of the user- or repo-level exclude files be a
+> > directory, and simply reading all of the files inside, seems simple and
+> > obvious.
+> 
+> Apart from backwards compatibility, unless there's something I'm missing.
 
-  Eleventh batch for 2.11 (2016-10-26 13:28:47 -0700)
+I'm not sure what you mean. If we make:
 
-are available in the git repository at:
+  mkdir .git/info/exclude
+  echo whatever >.git/info/exclude/local
 
-  git://bogomips.org/git-svn.git svn-cache
+work, I don't think we have to care about backwards compatibility. That
+was nonsensical before, and never did anything useful (so somebody might
+have done it, but we can assume anybody relying on it not to read the
+contents is crazy).
 
-for you to fetch changes up to a2c761ce5b7a5fd8b505b036f3509a9e6617dee8:
+> > It
+> > can't handle all cases (some items in "00foo" want precedence over "01bar"
+> > and vice versa), but I don't think there's an easy solution. That's a
+> > good sign that one or more of the files should be broken up.
+> 
+> I've been burned by this myself by packages interfering with each other
+> in /etc/sysctl.d
+> 
+> Could we put this down to caveat emptor? I think this sorting should be
+> intuitive to most people these days, and simple to document and comprehend.
 
-  git-svn: do not reuse caches memoized for a different architecture (2016-10-27 20:17:36 +0000)
+Yeah, I think caveat emptor is fine there. Sorry if I implied otherwise.
 
-----------------------------------------------------------------
-Gavin Lambert (1):
-      git-svn: do not reuse caches memoized for a different architecture
-
- perl/Git/SVN.pm | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+-Peff
