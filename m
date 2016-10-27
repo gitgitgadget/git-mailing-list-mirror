@@ -2,128 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D45CF20193
-	for <e@80x24.org>; Thu, 27 Oct 2016 19:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E901C20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 19:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964804AbcJ0TIO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 15:08:14 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:33523 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965111AbcJ0TIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 15:08:14 -0400
-Received: by mail-qk0-f182.google.com with SMTP id v138so4416301qka.0
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 12:08:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iBoyXvt3Y0NMeg4AtE6W7o6a9YGSk1AJHy5mz5m7lN8=;
-        b=ljDVth8MDpgqauzwFIRfIrP5/OQKDxRT9aqTup12YU9mJDrnjObcyLur57/9IN81TE
-         3CMGpCLwU3fOR6+veRBkpP/ZsRnOXcdAWSXcorcOxh6iC4R4/XsAhrhpV75b72y9AltB
-         CXemKMdVIjdZ80HDbHi/4HH8XI/x/zhpV5tG/mOCar/ypYX7khz80TIJO02TITxPEs0L
-         pAW3jyINSx0R8F0DIsGicOcZPNHm8dkjr9eUuI/A+tR8kGrd/UDuyo4fGPOyOycwU0C2
-         XICMZXbtGqmlpSbhLpA8RHN1xJWuhPYRELucyNdq2KmERUBEfpMY9JviL1Z45TLmkTUw
-         6asg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iBoyXvt3Y0NMeg4AtE6W7o6a9YGSk1AJHy5mz5m7lN8=;
-        b=B0KohITGNsMvz1VKNXgKjFzek2Rk2AQNNGN0lwGt+MYX/fJ6bUjrqSjETnTgJaBsx7
-         uboSpiz/a+B161KtYZkKkq4MCCBWZhsdOf5KMCtyUr8y1UAcHgylDzFk2dzdObfblX4o
-         2BZrNnisR//eUdcek2UhIhwEFWghTYpXpHMkrmcjVfkUYzSKaVOcm5sf0yQIMz3Opg4K
-         eABtuWnTXb+nr69qAfg4/ttnhAEhB+KB7L50ZynuBeWfe4BTorYPkXdRMlWhmIMNmccQ
-         uE0kAK5wRbEKOa9ZANKA0TFtFInPbVxgg6rfjrfgqjZoGY6BE7KZTxN/WduScsnAixMK
-         81NA==
-X-Gm-Message-State: ABUngvf7ug8tUZjlS53fcwLwcmm2oIqkBbBHsCQZt5uox56kDHIKm77YrUT9tJO2dKatzbrxjbh5i3ZhPmg0PrFf
-X-Received: by 10.55.184.2 with SMTP id i2mr8099016qkf.47.1477595292753; Thu,
- 27 Oct 2016 12:08:12 -0700 (PDT)
+        id S1754371AbcJ0Tor (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 15:44:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58820 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755146AbcJ0Tom (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 15:44:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB43048EE9;
+        Thu, 27 Oct 2016 15:44:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uj4CdzgY2d+QKCR8CSnBjemukRM=; b=ob3U7g
+        KgrpX1kE1xjgg2NqYKyauhk6H5EcGF6qMrbVgLFm5d5QSIK/ZWXUT7NtT7+ed8vG
+        D2+nv98gcjypZlJA/MM8RQfFRYZVVWIwofUNNvgW0Sl0ymX2TEPEdfRLacGbhyD8
+        uHVcHfYA7USo42gQnIikNYltQohd+N+tjdyZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bHnJFI/Zesc+fZn54593umzBFtTNNXd4
+        UkNMIxVVwhRQlIUUdNC1HivaQ5gYHM5pzd4ESE+RERzg3U+qkc1ffz9dTAqwnY3h
+        RfkrdhjoNlDtZutzWyen7q8BW+h/Ry655rSZiNOCBLeCnewqRVU5LdcpcrKjNX59
+        j1LyFyPKfsw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2ADB48EE8;
+        Thu, 27 Oct 2016 15:44:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2211948EE7;
+        Thu, 27 Oct 2016 15:44:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Gavin Lambert <github@mirality.co.nz>
+Subject: Re: [PATCH] git-svn: do not reuse caches memoized for a different architecture
+References: <653aa0cd566a2486bbc38cfd82ddfcfdfe48271c.1477398004.git.johannes.schindelin@gmx.de>
+        <20161025212357.GA8683@starla>
+Date:   Thu, 27 Oct 2016 12:44:38 -0700
+In-Reply-To: <20161025212357.GA8683@starla> (Eric Wong's message of "Tue, 25
+        Oct 2016 21:23:57 +0000")
+Message-ID: <xmqqmvhp60gp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Thu, 27 Oct 2016 12:08:12 -0700 (PDT)
-In-Reply-To: <xmqqr3716301.fsf@gitster.mtv.corp.google.com>
-References: <20161026215732.16411-1-sbeller@google.com> <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org>
- <xmqqlgxa8h3a.fsf@gitster.mtv.corp.google.com> <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org>
- <xmqqh97y8g74.fsf@gitster.mtv.corp.google.com> <xmqqd1im8foi.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbP3pgPHgv-x1Q-Q1QwmXc=gOyxWhXh2SngO8WSZc3PFA@mail.gmail.com>
- <34c88c40-2088-fd74-5d26-56c0599b7eb9@kdbg.org> <xmqqr3716301.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Oct 2016 12:08:12 -0700
-Message-ID: <CAGZ79kY_fZ_pDtVnwJoDkR6PjTNoqDMN5OC70Z8SH_J0Wvkq-w@mail.gmail.com>
-Subject: Re: [PATCH] compat: Allow static initializer for pthreads on Windows
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Simon Ruderich <simon@ruderich.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: CCC30BA8-9C7D-11E6-ABCA-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2016 at 11:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
+Eric Wong <e@80x24.org> writes:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+>> +++ b/perl/Git/SVN.pm
+>> @@ -1658,6 +1658,11 @@ sub tie_for_persistent_memoization {
+>>  	if ($memo_backend > 0) {
+>>  		tie %$hash => 'Git::SVN::Memoize::YAML', "$path.yaml";
+>>  	} else {
+>> +		# first verify that any existing file can actually be loaded
+>> +		# (it may have been saved by an incompatible version)
+>> +		if (-e "$path.db") {
+>> +			unlink "$path.db" unless eval { retrieve("$path.db"); 1 };
+>> +		}
 >
->> Am 27.10.2016 um 19:01 schrieb Stefan Beller:
->> ...
->> It is not possible to mark a mutex uninitialized on Windows without an
->> extra piece of data. A solution would become quite complicated quite
->> quickly, and at the cost of additional operations that are in the same
->> ballpark as an uncontended mutex. I'm not enthused.
->>
->>> The positive aspect of this way the patch proposes would be that any
->>> future contributor not knowing the details of how to do mutexes right
->>> on Windows, would not totally break the whole system, i.e. this seems
->>> to be more maintainable in the future as it reduces the friction between
->>> pthreads mutexes and the way we can do things in Git in a platform
->>> independent way
->>
->> This is a non-argument. Coders have to know their tools.
-
-Windows is not my tool.
-
+> That retrieve() call is unlikely to work without "use Storable"
+> to import it into the current package.
 >
-> The codebase should strive to give coders a coherent abstraction
-> that can be implemented efficiently on platforms, so that coders do
-> not have to care too deeply about quirks that exist on individual
-> platforms.
-
-Currently working as a coder I care about "submodules, that work on
-linux." I do not care about Windows in the big picture. I am however
-willing to go an extra step to not break Windows. However that requires
-a little bit of effort from both me and you:
-* I need to be aware of what I cannot do with "not-my-tools". (So please
-  somebody tell me, also in the future when I break obscure platforms. Mind
-  that I don't equate obscure with not widely used or in any other way negative.
-  It's just that people working on linux find some quirks on Windows
-not "obvious")
-* the workaround should not be too time consuming in the bigger picture,
-  which is why I propose to make the API a bit clearer by emulating posix
-  mutexes harder. (From a Windows POV this might sound like making it
-  more obscure because posix mutexes itself are obscure.)
-
+> I also favor setting "$path.db" once to detect typos and avoid
+> going over 80 columns.  Additionally, having error-checking for
+> unlink might be useful.
 >
-> It is OK to argue that the particular solution Stefan lifted from
-> somewhere (perhaps msdn article he cited???)
+> So perhaps squashing this on top:
+>
+> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+> index 025c894..b3c1460 100644
+> --- a/perl/Git/SVN.pm
+> +++ b/perl/Git/SVN.pm
+> @@ -1660,10 +1660,15 @@ sub tie_for_persistent_memoization {
+>  	} else {
+>  		# first verify that any existing file can actually be loaded
+>  		# (it may have been saved by an incompatible version)
+> -		if (-e "$path.db") {
+> -			unlink "$path.db" unless eval { retrieve("$path.db"); 1 };
+> +		my $db = "$path.db";
+> +		if (-e $db) {
+> +			use Storable qw(retrieve);
+> +
+> +			if (!eval { retrieve($db); 1 }) {
+> +				unlink $db or die "unlink $db failed: $!";
+> +			}
+>  		}
+> -		tie %$hash => 'Memoize::Storable', "$path.db", 'nstore';
+> +		tie %$hash => 'Memoize::Storable', $db, 'nstore';
+>  	}
+>  }
+>  
+>
+> Thoughts?  Thanks.
 
-A stack overflow article that I found with my search engine of choice, because
-I could not believe that Windows cannot have statically initialized mutexes.
+Just peeking from the sideline, but the your squash looks like an
+improvement to me.
 
-> does not qualify as
-> such an abstraction.
+Hopefully the final version after your interaction with Dscho can
+come to me via another "pull this now"?
 
-The implementation under discussion (well we did not discuss the
-implementation a
-whole lot yet) may even contain an error as the first memory barrier
-needs to be in front
-of the first condition.
-
->  But I do not agree with your "Coders have to
-> know" as a blanket statement.
-
-Well I do to some extent, I just disagree what my tools are.
+Thanks.
