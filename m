@@ -2,86 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6ECF820193
-	for <e@80x24.org>; Thu, 27 Oct 2016 21:40:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E402F20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 21:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S942155AbcJ0VkF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 17:40:05 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:35989 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933724AbcJ0VkE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 17:40:04 -0400
-Received: by mail-yw0-f180.google.com with SMTP id u124so62720908ywg.3
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 14:40:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3Dw86T7JmKIdvyifpD8zE+mktZLWHgQxpFMHrHl3Rz4=;
-        b=L0X9aphbiTuR1x+anck9Qvvg1Dpb97zolS4EKNK+QvreE3wCq7ucDNGi+EAa7cJ5dI
-         GocNx5W2JWvylCv1UppaJymzHQ/JT1ffCJg3iLzi2sS4T/g5R6acTnZwmHKrQII5/8BT
-         CY/VYS9sVlVftRlT6KOXQPoJkr2JHMOPhtJPybsXysL5MeFtemKSmOug9NLtXALuanRU
-         NpgiwjC06j0CoN53onkyxvtKydP0skJV9qMVPYuNnYXv2cg/9feKFK5Pe+YRa4Af+IWM
-         +AcoArH8DGUgCoWol+qtvqOh9aDbmaj8AD9fTWycStoA8VDfBGpdlhVLuorMeRAJ/KOl
-         5veA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3Dw86T7JmKIdvyifpD8zE+mktZLWHgQxpFMHrHl3Rz4=;
-        b=ECVetQX5KPrq6FYyl1p0O2uPa2+2KqMni4MfWiVx5ncE7v6R371sS04WbTX6tD8LSG
-         tKFGkYtRlR0AKWu8L+/Q7yHhbaQFwBc9/y9DqdmJZTYLskzabe5mdzN63B+TAjwb20cj
-         8+RSD9BSvy6PZLgBrojTn2eOaABE+KNONEX4japuIqTwpF/JshcVax2cdiPFLvKYpmsV
-         qp4qokYIFCiM+m0pdHolVOepFKHti710qIVEmXsdsmDpuEWMIe5V5rz7uZJ5qVm8ll9H
-         Lairy5luNgIO6AG3+Oa7H44R+194vwtROysQcQzsj3mRNy+ZA1hGfhUZlYyUX+9HgFoV
-         wo3g==
-X-Gm-Message-State: ABUngvfeealkiplXFlAhU9erWsc2iIeWed5eWB0DJGlIDSJkN5A1Z3Af9kny/+VR/pE8zJEfKicfBCXvI7OGfQ==
-X-Received: by 10.129.102.85 with SMTP id a82mr9306646ywc.160.1477604404006;
- Thu, 27 Oct 2016 14:40:04 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Thu, 27 Oct 2016 14:39:43 -0700 (PDT)
-In-Reply-To: <20161027210458.ptzh4y75dkfaixeo@sigill.intra.peff.net>
-References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
- <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net> <CA+P7+xqmVM-bEc7sZcn+p3qhFUUJvC+rko7CYu+KgyTAeiOifw@mail.gmail.com>
- <20161027210458.ptzh4y75dkfaixeo@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 27 Oct 2016 14:39:43 -0700
-Message-ID: <CA+P7+xrEz7XhZ4fHYUA7gjJtbW8WUEWQhtpAQ+zMC9nVE135iw@mail.gmail.com>
-Subject: Re: Expanding Includes in .gitignore
+        id S938478AbcJ0VtR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 17:49:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53100 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S935306AbcJ0VtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 17:49:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D987F49CEB;
+        Thu, 27 Oct 2016 17:49:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/Du8DzYjmk7nBejTf0T6mhewBMk=; b=uQ8sal
+        bVg1hNkvj3KP+Avq3S+71iZRsHHbJEUNEE9ZTKHfI41P6pTG85Rpsjf59ztm4XHr
+        pyto/mh5LCdY4nw+r4Yxn4Bp3SvZjllcb24umGY7Y715i/bm48U1SzB9i+wfO6ic
+        8Pd6kbgFB6SJlh7hlwcQnVlgjSs/KhZJQdKE4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oMW47Xm2bUou4zqkII9a64v0taKTRe67
+        pS6UqeXZ3q8tl9wBVpRczqvT0BzHMmjdEbbyE0aRxhX24E0vAFefWUzYJWNf/sS9
+        pRf9d+WSh29cx5FaaizrMhty52g//KkcjXS7rnZVLURlWAxO7DEKVoXkE6xS+CLF
+        MatUlOZVjkk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF79049CEA;
+        Thu, 27 Oct 2016 17:49:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 490AF49CE9;
+        Thu, 27 Oct 2016 17:49:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Aaron Pelly <aaron@pelly.co>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
+        <20161025181621.4201-1-gitster@pobox.com>
+        <20161025181621.4201-3-gitster@pobox.com>
+        <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net>
+        <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
+        <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net>
+        <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
+        <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net>
+        <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
+        <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net>
+Date:   Thu, 27 Oct 2016 14:49:12 -0700
+In-Reply-To: <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 27 Oct 2016 06:24:19 -0400")
+Message-ID: <xmqq60od5up3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 33B539BA-9C8F-11E6-A8B0-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2016 at 2:04 PM, Jeff King <peff@peff.net> wrote:
-> I'm not convinced this is needed for in-repo .gitignore files. The point
-> is that you are pulling together separate files that may be administered
-> independently. But git repositories inherently have a whole-project
-> view. I'm not sure that separate files buy you a lot there. And the
-> compatibility issues are more complicated.
->
+Jeff King <peff@peff.net> writes:
 
-I had just assumed it would be used everywhere, so I hadn't really
-considered whether that was any reason not to. I personally like the
-idea of splitting my git ignores into separate files just so each file
-can be about one thing, but I guess it's not really a problem either
-way.
+> +cc Linus as the original author of 144bde78e9 in case there is
+> something subtle I'm missing, but this really just seems like it's
+> an outdated optimization.
+>
+> -- >8 --
+> Subject: [PATCH] sha1_file: stop opening files with O_NOATIME
+>
+> When we open object files, we try to do so with O_NOATIME.
+> This dates back to 144bde78e9 (Use O_NOATIME when opening
+> the sha1 files., 2005-04-23), which is an optimization to
+> avoid creating a bunch of dirty inodes when we're accessing
+> many objects.  But a few things have changed since then:
+>
+>   1. In June 2005, git learned about packfiles, which means
+>      we would do a lot fewer atime updates (rather than one
+>      per object access, we'd generally get one per packfile).
+>
+>   2. In late 2006, Linux learned about "relatime", which is
+>      generally the default on modern installs. So
+>      performance around atimes updates is a non-issue there
+>      these days.
+>
+>      All the world isn't Linux, but as it turns out, Linux
+>      is the only platform to implement O_NOATIME in the
+>      first place.
+>
+> So it's very unlikely that this code is helping anybody
+> these days.
+>
+> It's not a particularly large amount of code, but the
+> fallback-retry creates complexity. E.g., we do a similar
+> fallback for CLOEXEC; which one should take precedence, or
+> should we try all possible combinations? Dropping O_NOATIME
+> makes those questions go away.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
 
-> I do agree that:
->
->   cd .git/info
->   git clone /my/exclude/repo exclude ;# or exclude.d
->
-> should work; ignoring dotfiles when reading the directory solves that,
-> and is a pretty standard solution.
->
-> -Peff
+We may want to lose the surrounding for (;;) loop as there is only
+one flag to retry without, which was the original code structure
+back when 144bde78e9 ("Use O_NOATIME when opening the sha1 files.",
+2005-04-23) was written and refactored by 44d1c19ee8 ("Make loose
+object file reading more careful", 2008-06-14).
+
+IOW, this on top.  The update to ce_compare_data() Lars has in
+a0a6cb9662 ("read-cache: make sure file handles are not inherited by
+child processes", 2016-10-24) could then made into a call to
+git_open().
+
+ sha1_file.c | 23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 6f02a57d8b..e18ea053e6 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1553,24 +1553,17 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 
+ int git_open(const char *name)
+ {
+-	static int sha1_file_open_flag = O_CLOEXEC;
+-
+-	for (;;) {
+-		int fd;
+-
+-		errno = 0;
+-		fd = open(name, O_RDONLY | sha1_file_open_flag);
+-		if (fd >= 0)
+-			return fd;
++	static int cloexec = O_CLOEXEC;
++	int fd;
+ 
++	errno = 0;
++	fd = open(name, O_RDONLY | cloexec);
++	if ((cloexec & O_CLOEXEC) && fd < 0 && errno == EINVAL) {
+ 		/* Try again w/o O_CLOEXEC: the kernel might not support it */
+-		if ((sha1_file_open_flag & O_CLOEXEC) && errno == EINVAL) {
+-			sha1_file_open_flag &= ~O_CLOEXEC;
+-			continue;
+-		}
+-
+-		return -1;
++		cloexec &= ~O_CLOEXEC;
++		fd = open(name, O_RDONLY | cloexec);
+ 	}
++	return fd;
+ }
+ 
+ static int stat_sha1_file(const unsigned char *sha1, struct stat *st)
