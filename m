@@ -3,87 +3,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3441620193
-	for <e@80x24.org>; Thu, 27 Oct 2016 23:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59EF620193
+	for <e@80x24.org>; Thu, 27 Oct 2016 23:26:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034005AbcJ0XTk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 19:19:40 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:36033 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030400AbcJ0XTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 19:19:39 -0400
-Received: by mail-oi0-f65.google.com with SMTP id e12so7165502oib.3
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 16:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=XevOuq8zd1ezaRfZTeDETUfjMOAkbuDQxbAEGCnAqj4=;
-        b=gbRNqxkMjhbusTW5KhkwNjOs0AHSJU5H1ZOaiiedAPXPFAvY07IarYNvSbt5/CHZ38
-         Nq6gGmieno1eywx7LyteNhbVoEm/D6IWxh7jMIlN+uXOhhMmFEuw2aG4cy2kpKsN2pse
-         BfcVHD7y0h95jDl/g4QQMC6RAS2QIeu7kHZdbr1bkb27ALtxCdr8dME+yhEp+zTkXRef
-         oHg/+78+3U6YBP1RPvrDoGBGgtzW5IPFM3qWAoRgpzTMPXkFk1G1vOFJOo7+mH1IIioF
-         YU/U06ukRdQXxdl9qlgCunXubnkJrcJ/yzUJrLn9Xf0mttfUkAiHRdgw/LTeyZftoeU3
-         vs5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=XevOuq8zd1ezaRfZTeDETUfjMOAkbuDQxbAEGCnAqj4=;
-        b=YvpuUpFj8Zmn54OthMsqwOI0SkeQo8W+7DvIRKJsS4yXGkdZaE+O4UEbGuMwkucLbB
-         4GFYlBNuw73SRZitGq5lcTWgSva2K2Yvrb8yXQ5aq45cTrCdR4TRI4FFxCwAbwfnZ/Yl
-         kNucWnw0MyHEeGI5BSY26RfQAxJjtR6DVr1hA6Yqm04rd2RSywNOiZjvX5pgtCnbcFV5
-         UAFg64y407WkW+yhrWRh0rNf9YconaZqqpEI2zdHmmGS7TIcUBsRAjbHCpeFD4OUKaq+
-         YvqKASM9tDE1VhOE3enwZSxov8g+bmD3otGqB/0wXfy92WtF8ecA/bikeJHm7LQiASe/
-         Fc7A==
-X-Gm-Message-State: ABUngvd3B5+LAB9mnzD2ZnMG75QZtLjtthPRUIiW+bFf86auIAPuXSOWVMY0cOPDK69Y8FX2KSloRoNiA5Yg+w==
-X-Received: by 10.157.34.137 with SMTP id y9mr8832120ota.108.1477610378254;
- Thu, 27 Oct 2016 16:19:38 -0700 (PDT)
+        id S1034331AbcJ0X0Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 19:26:25 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59989 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1034145AbcJ0X0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 19:26:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD2E44BE03;
+        Thu, 27 Oct 2016 19:26:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4Tpf8BXOMX5kF1UXgin7+dwR+/c=; b=b9qZjg
+        J1WOlSs7CT0Jv5NMFcHQo5SYxThVAP4mu6+p/vacFuzUCeBVYne9zgB0RKD97G9g
+        X/EocKyYYTVHa9du9axCdnPXwv/6g0xd/kuiCf1FtGJO40OTTQZOUIQoR7nF7MzF
+        Zh+ftEyprMKkvE1uGAKQYkEw0+4ZRoHStCpRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NbLyU9RUCpPL56AXCau1NgRCNhv0vOvr
+        yneeg9r9y9KHOIYQ4zEQAA/1JIbhanEIqWQYDjTSBCSYSSt8B1A9enQGat9X84TU
+        Kd3/aOKjc/e8nqjv5WoNwQQLUBbL4azcpysMB9XkvgJ3tfIU/LzsAzo4KhtFZNc8
+        X7+sTicgQeY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4D334BE02;
+        Thu, 27 Oct 2016 19:26:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 519904BE01;
+        Thu, 27 Oct 2016 19:26:22 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/5] recursively grep across submodules
+References: <20161027223834.35312-1-bmwill@google.com>
+Date:   Thu, 27 Oct 2016 16:26:20 -0700
+In-Reply-To: <20161027223834.35312-1-bmwill@google.com> (Brandon Williams's
+        message of "Thu, 27 Oct 2016 15:38:29 -0700")
+Message-ID: <xmqqk2ct4bmr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.182.142.104 with HTTP; Thu, 27 Oct 2016 16:19:37 -0700 (PDT)
-In-Reply-To: <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
-References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
- <20161025181621.4201-1-gitster@pobox.com> <20161025181621.4201-3-gitster@pobox.com>
- <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net> <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
- <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net> <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
- <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net> <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
- <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
- <xmqqoa254czs.fsf@gitster.mtv.corp.google.com> <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 27 Oct 2016 16:19:37 -0700
-X-Google-Sender-Auth: 4ZEuCc-h9rj82hq9m8MYDog3ivk
-Message-ID: <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C57C804E-9C9C-11E6-BD14-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2016 at 4:09 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> That said, now that I think about it, I should double-check: maybe
-> open() doesn't actually set atime at all, and we *could* do NOATIME
-> with SETFL after all.
+Brandon Williams <bmwill@google.com> writes:
 
-Checked. Yup. O_NOATIME could easily be done with SETFL:, because as
-with O_CLOEXEC, it only affects operations _after_ the open. The open
-itself doesn't set the access time.
+> As for the rest of the series, it should be ready for review or comments.
 
-So I was full of it.
+Just a few brief comments, before reading the patches carefully.
 
-But the basic issue still remains - I'd really prefer to have NOATIME
-stay around for all those poor misguided souls that for some reason
-don't like "relatime" or run old kernels. But whether it is with
-O_NOATIME at open time or with F_SETFL, I don't care.
+ * It is somewhat surprising that [1/5] is even needed (in other
+   words, I would have expected something like this to be already
+   there, and my knee-jerk reaction was "Heh, how does 'git status'
+   know how to show submodules that are and are not initialized
+   differently without this?"  
 
-            Linus
+   The implementation that reads from the config of the current
+   repository may be OK, but I actually would have expected that a
+   check would be "given a $path, check to see if $path/.git is
+   there and is a valid repository".  In a repository where the
+   submodules originate, there may not even be submodule.$name.url
+   entries there yet.
+
+ * It is somewhat surprising that [4/5] does not even use the
+   previous ls-files to find out the paths.  Also it is a bit
+   disappointing to see that the way processes are spawned and
+   managed does not share much with Stefan's earlier work, i.e.
+   run_processes_parallel().  I was somehow hoping that it can be
+   extended to support this use case, but apparently there aren't
+   much to be shared.
+
+Thanks.
