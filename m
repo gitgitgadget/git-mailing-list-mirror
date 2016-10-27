@@ -2,126 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5F7C2022A
-	for <e@80x24.org>; Thu, 27 Oct 2016 04:39:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F0F92022A
+	for <e@80x24.org>; Thu, 27 Oct 2016 05:44:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750995AbcJ0Ejh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 00:39:37 -0400
-Received: from nsstlmta31p.bpe.bigpond.com ([203.38.21.31]:56305 "EHLO
-        nsstlmta31p.bpe.bigpond.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754852AbcJ0Ejd (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Oct 2016 00:39:33 -0400
-X-Greylist: delayed 969 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Oct 2016 00:39:32 EDT
-Received: from smtp.telstra.com ([10.10.24.4])
-          by nsstlfep30p-svc.bpe.nexus.telstra.com.au with ESMTP
-          id <20161027042321.HCWS335.nsstlfep30p-svc.bpe.nexus.telstra.com.au@smtp.telstra.com>;
-          Thu, 27 Oct 2016 15:23:21 +1100
-X-RG-Spam: Unknown
-X-Junkmail-Premium-Raw: score=8/50,refid=2.7.2:2016.10.27.35117:17:8.317,ip=,rules=__BOUNCE_CHALLENGE_SUBJ,
- __BOUNCE_NDR_SUBJ_EXEMPT, __SUBJ_ALPHA_END, __TO_MALFORMED_2, __TO_NAME,
- __TO_NAME_DIFF_FROM_ACC, __REFERENCES, __HAS_CC_HDR, __MULTIPLE_RCPTS_CC_X2,
- __CC_NAME, __CC_NAME_DIFF_FROM_ACC, __HAS_FROM, __FRAUD_WEBMAIL_FROM,
- __HAS_MSGID, __SANE_MSGID, __USER_AGENT, __MOZILLA_USER_AGENT,
- __MIME_VERSION, __IN_REP_TO, __CT, __CT_TEXT_PLAIN, __CTE, __UNUSABLE_MSGID,
- __ANY_URI, __URI_NO_WWW, ECARD_KNOWN_DOMAINS, __SUBJ_ALPHA_NEGATE,
- __FORWARDED_MSG, BODY_SIZE_3000_3999, __MIME_TEXT_P1, __MIME_TEXT_ONLY,
- __URI_NS, HTML_00_01, HTML_00_10, BODY_SIZE_5000_LESS, __FRAUD_WEBMAIL,
- MULTIPLE_RCPTS, __PHISH_SPEAR_STRUCTURE_1, IN_REP_TO, __MIME_TEXT_P,
- REFERENCES, BODY_SIZE_7000_LESS, NO_URI_HTTPS, MSG_THREAD, __TO_REAL_NAMES,
- __CC_REAL_NAMES, LEGITIMATE_SIGNS, LEGITIMATE_NEGATE
-X-RG-Spam: Unknown
-X-RG-Spam: Unknown
-X-RG-Spam: Unknown
-X-Authentication-Info: Submitted using ID pwil3058@bigpond.net.au
-Received: from mudlark.localdomain (101.177.165.166) by smtp.telstra.com (9.0.018.03.01) (authenticated as pwil3058@bigpond.net.au)
-        id 57966FEE038FDAD5; Thu, 27 Oct 2016 15:23:21 +1100
-Subject: Re: "git subtree --squash" interacts poorly with revert, merge, and
- rebase
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-References: <1477523244.2764.114.camel@mattmccutchen.net>
- <CAGZ79kaw0s_PC2AstRVwFT8N1CJVC_7yQfC19zPzRjAqkSpMDg@mail.gmail.com>
- <xmqqk2cuach3.fsf@gitster.mtv.corp.google.com>
-Cc:     Matt McCutchen <matt@mattmccutchen.net>, git <git@vger.kernel.org>
-From:   Peter Williams <pwil3058@bigpond.net.au>
-Message-ID: <f07745f8-d0ff-c41f-fd44-0812757fbd43@bigpond.net.au>
-Date:   Thu, 27 Oct 2016 14:23:20 +1000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1751327AbcJ0Fo3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 01:44:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51808 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751227AbcJ0Fo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 01:44:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97FB349DC3;
+        Thu, 27 Oct 2016 01:44:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uGVugONI2vXJ6zvgckuBMntECrg=; b=Awzw6x
+        kM5ReFnG8ZlIkGgxnO11X5CMHSRSf6pC9p0352P3GzXULbGNkeHL9kY6MUKgR5w4
+        UZr9uXSUID/tzzjGSOsZMakgbmTgqZ1Sotmgi0sxp4tNfZvnyJ2QXbbwzi3n/MFW
+        E7rO7eeyxbt0GheHD4jxwg3sKvrhTV5ugoWK4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IyKDouy33i+3serHuWcgKmGEv4jfa9bz
+        Bp6cmlwpRruAYcMVjSL4FYMF0nwXWsZYVr8POuKMXf9o/3GjRoqfwcKrVIfvgbOU
+        FjXL769wuOR9jlzZIsUrqFlgexj4hwJPQBmzUSQogunNSbK2iunAeSOUjuANLfAJ
+        s2fvbqi5onY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F89049DC2;
+        Thu, 27 Oct 2016 01:44:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0211149DC0;
+        Thu, 27 Oct 2016 01:44:26 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>,
+        Simon Ruderich <simon@ruderich.org>
+Subject: Re: [PATCHv2 1/2] attr: convert to new threadsafe API
+References: <CAGZ79kYhMVrKHhNGYcf_D9kWEYp+sC+tMGbuE+gnD8AU27dh8g@mail.gmail.com>
+        <20161026224104.31844-1-sbeller@google.com>
+        <xmqqbmy6aa6b.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYiVxJwtAYsgks8LVNWvawWxdy=8Xpdrki-C_u15C3Z9w@mail.gmail.com>
+        <xmqq37jia0p8.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 26 Oct 2016 22:44:24 -0700
+In-Reply-To: <xmqq37jia0p8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 26 Oct 2016 21:13:39 -0700")
+Message-ID: <xmqqy41a8hxj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk2cuach3.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6BA25AD8-9C08-11E6-BA72-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/10/16 09:59, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Stefan Beller <sbeller@google.com> writes:
 >
->>> - We have to make separate commits and manage corresponding topic
->>> branches for the superproject and subprojects.
->>
->> Well yeah, that is how submodule work on a conceptual level.
->> While having multiple commits may seem like overhead, note
->> the subtle difference for these commits. One if deep down in the
->> stack patching one of the submodules, the other is a high level
->> commit advancing the submodule pointer.
->>
->> Note that the target audience of these two commit messages
->> might be vastly different, hence can be worded differently.
->> (The submodule describing how you fixed e.g. a memleak or race condition
->> and the superproject describes on why you needed to include that submodule,
->> e.g. because you switched your toplevel application to use threads.)
+>> Yeah, I can make it work without exposing struct git_attr.
 >
-> Both good points.
+> You completely misunderstood me.  "struct git_attr" MUST be visible
+> to the users so that they can ask for the name in git_check.attr[0].
 >
-> Another thing to keep in mind is that in a well-organized project,
-> it is expected that you would have multiple commits in a submodule,
-> solving one single issue that is needed by the superproject in a
-> finer grained way, before the resulting submodule tip is recorded in
-> the tree of the superproject in one commit.  IOW, between the time
-> the superproject's history moves by one commit, the submodule may
-> have multiple commits in order for the submodule to become ready to
-> be consumed by the superproject.
->
->
+> What would be nice to hide if you can is the function to intern a
+> string into a pointer to struct git_attr, i.e. git_attr() function.
 
-I'm a relatively new user of submodules and I quite like them (having 
-tried a few other strategies for sharing common code between multiple 
-projects and found them quite painful) and find them fairly easy to use. 
-  I especially like the fact that the submodule command isn't very 
-complicated and that the best method for managing commits, etc in the 
-submodule is to cd into their root directory and then treat them like 
-any other git repository (greatly reducing the amount of new stuff that 
-you have to learn in order to use them).  Also, from my experience so 
-far, I see three different types of work going on within my workspaces 
-that include submodules:
+Even though that was not the primary point of my suggestion, I
+actually think it is OK to make "struct git_attr" a structure that
+is opaque to the users of the API if you wanted to.  The attr_check
+structure will have an array of pointers to "struct git_attr", and
+the structure definition may be visible to the public attr.h header,
+but the API users won't have to be able to dereference the pointer
+"struct git_attr *".  git_check.attr[0] would be a pointer to an
+opaque structure from API users' point of view, that can be passed
+to API function git_attr_name() to read its string.
 
-1. I'm working on changes to the submodule and using the superproject 
-that it's checked out in to test those changes in which case most of the 
-change is occurring in the submodule with changes in the superproject 
-usually being small one related to API changes in the submodule.
+What is nice to hide is the constructor of the structure.  What it,
+i.e. "struct git_attr *git_attr(const char *)", needs to do is to
+(1) see if the attribute object with the same name already exists in
+the table of "all known attributes in the universe", and if there
+is, return that instance, (2) otherwise create a new attribute
+object, register it to the table and return it.  And it needs to do
+it in a way that is thread-safe.
 
-2. I'm working on changes in the superproject and the only changes that 
-get made in the submodules are to fix bugs uncovered by the work in the 
-superproject.
+If we have to give access to it to the API users, then we'd need to
+acquire and release the Big Attr Lock per each call.  
 
-3. I'm modifying a superproject to accommodate changes to a submodule 
-that's changed as a result of having changes pulled from another repository.
+The calls to git_attr() you need to make in your implementation will
+be made from two codepaths:
 
-In none of these cases do I feel the desire/need to commit the changes 
-to the superproject and submodule(s) with a single commit command which 
-more or less agrees with your points.
+ * check_initl() acquires the Big Attr Lock, creates a check struct,
+   makes multiple calls to git_attr() to construct the necessary
+   git_attr instances to fill the array and then releases the lock,
+   so the git_attr() constructor does not have to be protected for
+   concurrent access.
 
-However, for git commands such as diff/status whose job is to display 
-information it would be nice if they had a --recursive option to 
-override the default submodule diff/status and show details of the 
-changes in the submodules.  Sometimes you want to see the big picture in 
-detail.
+ * check_attr() acquires the Big Attr Lock, calls down to
+   prepare_attr_stack() as necessary to parse .gitattributes files
+   found in the directory hierarchy, which makes calls to git_attr()
+   to record the attributes found in the file.  Then it does the
+   matching to fill results[] array and releases the lock.  Again,
+   git_attr() constructors are called under the lock, so there is no
+   need for a separate lock.
+
+If these are the only callpaths that reach git_attr() to construct
+new attribute objects, it would mean that you can make this private
+to attr subsystem and hide it from the users of the API.
+
+Otherwise, you would need to rename the git_attr() constructor that
+used internally under the Big Lock to
+
+    static struct git_attr *git_attr_locked(const char *);
+
+that is defined inside attr.c, and then provide the external version
+as a thin wrapper that calls it under the Big Lock, i.e.
+
+    struct git_attr *git_attr(const char *s)
+    {
+	struct git_attr *attr;
+	take_big_attr_lock();
+	attr = git_attr_locked(s);
+	release_big_attr_lock();
+	return attr;
+    }
+
+That will have to make the big attr lock busier, and it would be
+good if we can avoid it.  That is where my "can we hide git_attr()
+constructor?" comes from.
 
