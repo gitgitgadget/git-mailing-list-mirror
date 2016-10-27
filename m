@@ -2,107 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 918DE2022A
-	for <e@80x24.org>; Thu, 27 Oct 2016 00:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E552022A
+	for <e@80x24.org>; Thu, 27 Oct 2016 00:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933349AbcJ0AWI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Oct 2016 20:22:08 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:33662 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932430AbcJ0AWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2016 20:22:07 -0400
-Received: by mail-qk0-f182.google.com with SMTP id n189so24924340qke.0
-        for <git@vger.kernel.org>; Wed, 26 Oct 2016 17:22:06 -0700 (PDT)
+        id S934928AbcJ0AWu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Oct 2016 20:22:50 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:37095 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932430AbcJ0AWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2016 20:22:49 -0400
+Received: by mail-wm0-f43.google.com with SMTP id 140so958531wmv.0
+        for <git@vger.kernel.org>; Wed, 26 Oct 2016 17:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vUcqVPnVEujnU1+OSr6uZZ8UMx838pybQ9I1bECQuaU=;
-        b=AD1QbTYUJDuZst49CVu3GPpQcUY5Cyx49gEzeTYqKbojrmCHxvLRR+SP2G+4UAhRVG
-         Bp224DK3Rt1kX0Ae2yjTXB8Qh/PP8UKHNrwGdeZgLukR6knU6v9BsbJqy6GBabW9KGK2
-         e4oVV8ejBW+yac3Q6pSNcEYt+u3fMffXHdm8lkW8n1PaUmDZteg5ii0smDZZvs0HC6k8
-         psSpxEta63FKByFS7KGdFXLcikeOXTsSsUupwRF5nIzETKSE/fIXBs0ZSwpvD5rqwOxl
-         8NBB3YZFzJA/9Sv9hgylkwg0Re/JgzEte1rjD32dSGkbfxCwjAdM+uGlEwGB+9eSYn4M
-         WeDQ==
+        d=pelly-co.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=2lmRFWfKjZyN5FsdSr0lNPWMeMPKK2LsqyxJ60CF6Hk=;
+        b=okHH4obAjeoPGlszNOEo8KkdblgHjGuOgMFZvuHY5uJcrsPmmwHyqAFzHFhJppIPrV
+         1TPnOJv/OrOKeODjm4dR5ss+u8SMwFDiUN/Ko3bWnW1eoCR5uM+HPoUrnlqBoWfwpmMV
+         S4O5+ygZjhHC0ujOZo/ghdmZ7Rb41f07I2AWYwlCg0txfe0SlZStYtsSR9b9jtW9CWDf
+         sLQqUJZBYDsQDRBJf/zm8ihsezeZ7zqcSfqQhvtD2BZY5icThDJOAdjFRF1eO4s+P+To
+         p5Qf7Xypp5Dhp3cPXO0BXsNkE3ib93y8vp00kCxRRRRT/0o48AaA7nKlDTF8nFu8HddM
+         ea6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vUcqVPnVEujnU1+OSr6uZZ8UMx838pybQ9I1bECQuaU=;
-        b=aBdRHYnMIWyrzmWXm1bpUY1UevYX/zZBhnuEdRmhE243rmUy/x1L8lGHeBLp6ZNELS
-         FRHM/m6DbcMZhV5ccnPkCSXIEbXN+bIgugRxEn+4OZRUujOIxv4By9gmvY7DBs4j0pxc
-         IorhqR9qrUNEMQIDe0AAawojQqEyx56LATwy+4SMF7UlO7WxRJvlTrIfbZyhRSCKCbES
-         5Uds9uBfduV9y3cKrmdgHCoOAkBF+IUVe8qqOCX+NLf5HmfhCsnVqBEbuznNx7emdRZM
-         eZ5lENf9r45nAtH1c48jGk5impcWXwxdV7+FV1V9zWxwiVVX2VlfdzO8vwhKJTXSJtys
-         ybMw==
-X-Gm-Message-State: ABUngvcR1DUf6F8uynHVEpFi0CvV+FLbpl2PORbFnKULd4IVGG2cqwcnfvv8t9aoKfrw5PUu65oMbNQw+vMTaIoj
-X-Received: by 10.55.56.11 with SMTP id f11mr3857613qka.255.1477527726204;
- Wed, 26 Oct 2016 17:22:06 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=2lmRFWfKjZyN5FsdSr0lNPWMeMPKK2LsqyxJ60CF6Hk=;
+        b=MTDoIQfXJcH2HkIRPZDFnzmwDqkVoH+C8vdZ6GZZoOs4orY9UePMi+B8cAK32mQ/4S
+         sQiXzobJvIC7mr319RiRDXvyoFQxAlse08RetDanJkikHhRMeNc0SnI6EBmhHiz2SUWp
+         /Eo6f9RB5UvDBFfBfVjQsxkKQYIGdGGIfysty2hIlAnNDP+QCpbEyOMjUra/FbzaQbJ6
+         TF8cWlg/gmpuLGF7pAZ9bytgCLmrymXZrIjnqTh2NS1cWJtL30vpADd7pN6486cu/wqq
+         OvtPVmNQ3vJwNpUSrRr+BunqDWMemCuiLghfCtDI0mklz6NYeaMUjeNXlBP6KlwhKh64
+         d3IA==
+X-Gm-Message-State: ABUngvcgPRFvrQT2sZZGYyOJLzOs0PPrKr4vxgIec+8+Z8kpAc+WoY4pbar+WBJE7BO7Hw==
+X-Received: by 10.28.148.200 with SMTP id w191mr4742495wmd.43.1477527767459;
+        Wed, 26 Oct 2016 17:22:47 -0700 (PDT)
+Received: from [10.3.1.6] ([49.50.252.82])
+        by smtp.googlemail.com with ESMTPSA id 72sm94652wme.15.2016.10.26.17.22.45
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Oct 2016 17:22:47 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Aaron Pelly <aaron@pelly.co>
+Subject: Expanding Includes in .gitignore
+Message-ID: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
+Date:   Thu, 27 Oct 2016 13:22:43 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.12.135.40 with HTTP; Wed, 26 Oct 2016 17:22:05 -0700 (PDT)
-In-Reply-To: <xmqqfuniabo6.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kYhMVrKHhNGYcf_D9kWEYp+sC+tMGbuE+gnD8AU27dh8g@mail.gmail.com>
- <20161026224104.31844-1-sbeller@google.com> <xmqqoa26aek6.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kaR4DddoHQNUUvRAY=_PK5qqS=ws_Wkfa-EXT2seN5b=A@mail.gmail.com> <xmqqfuniabo6.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 26 Oct 2016 17:22:05 -0700
-Message-ID: <CAGZ79kY00mtzwL4kSz6oXSAb-39=axeTP-ax_FxWcL7Z-sAA4w@mail.gmail.com>
-Subject: Re: [PATCHv2 1/2] attr: convert to new threadsafe API
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>,
-        Simon Ruderich <simon@ruderich.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 26, 2016 at 5:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> +* Allocate an array of `struct git_attr_result` either on the stack
->> +  or via `git_attr_result_alloc` on the heap when the result size
->> +  is not known at compile time. The call to initialize
->>    the result is not thread safe, because different threads need their
->>    own thread local result anyway.
->
-> Do you want to keep the last sentence?  "The call to initialize the
-> result is not thread safe..."?  Is that true?
+I want a feature. It may be a bad-idea(tm). Advice appreciated.
 
-I'll drop that sentence, as it overstates the situation.
+I want git to be able to include, in its gitignore files, sub-files of
+ignores or have it understand a directory of ignore files. Or both.
 
-To explain, you can either have:
-    struct git_attr_result result[2];
-or
-    struct git_attr_result *result = git_attr_result_alloc(check);
-and both are running just fine in a thread. However you should not
-make that variable static. But maybe that is too much common sense
-and hence confusing.
+The use case for this is where I did not write my own rules, but I want
+to keep them updated. https://github.com/github/gitignore is a damn good
+resource, but I want to pull it and include relevant bits project by
+project and/or system wide. I don't want to have to update many projects
+manually if that, or any other, repo changes.
 
->
->> @@ -103,7 +105,7 @@ To see how attributes "crlf" and "ident" are set
->> for different paths.
->>          const char *path;
->>          struct git_attr_result result[2];
->>
->> -        git_check_attr(path, check, result);
->> +        git_check_attr(path, &check, result);
->
-> What's the point of this change?  Isn't check typically a pointer
-> already?
+A very brief look at dir.c would indicate that a recursive call from
+add_excludes to itself when it parses some sort of include tag would do
+it within a file. I'm sure it'd be pretty straight forward to hook into
+something in dir.c to parse directories too.
 
-This ought to go to
+I'm thinking something like ". path/to/include/file" in an ignore file,
+and/or creating .gitignore.d and/or allowing $HOME/.config/git/ignore
+and $GIT_DIR/info/exclude to be directories. Or some sane and consistent
+mixture of these things.
 
-    git_attr_check_initl(&check, "crlf", "ident", NULL);
+In the case of a directory the plan would be to add links to files
+stored/sourced elsewhere. This does pose a precedence question which I
+haven't thought about yet, but probably makes it too hard for the
+limited value it brings.
 
-instead.
+There is also the issue of malicious/accidental recursion which I
+haven't thought about deeply either.
 
->
+I would like to know the desirability/practicality/stupidity of such a
+feature as I believe it is within my skillset to implement it.
