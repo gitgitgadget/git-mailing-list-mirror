@@ -2,53 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 838FB2022A
-	for <e@80x24.org>; Thu, 27 Oct 2016 05:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B43272022A
+	for <e@80x24.org>; Thu, 27 Oct 2016 06:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752059AbcJ0Ftc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 01:49:32 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:24538 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751266AbcJ0Ftb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 01:49:31 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t4GDS6KtMz5tlN;
-        Thu, 27 Oct 2016 07:49:28 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 1B8CB140;
-        Thu, 27 Oct 2016 07:49:28 +0200 (CEST)
-Subject: Re: [PATCH] compat: Allow static initializer for pthreads on Windows
-To:     Stefan Beller <sbeller@google.com>
-References: <20161026215732.16411-1-sbeller@google.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        simon@ruderich.org, peff@peff.net
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org>
-Date:   Thu, 27 Oct 2016 07:49:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1752834AbcJ0GAe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 02:00:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52682 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752575AbcJ0GAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 02:00:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 19C89424B5;
+        Thu, 27 Oct 2016 02:00:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s/BSTO4urYTJPYh87QAFZ/umSLA=; b=kyn3Wc
+        gC6BV+S0j2QOcISvxVfeuwEzTzut930YYxn72TrjIR6KUlzddS27iR+6yyXhbGRt
+        /kMJugYUddWvT8H+bVy8gJC5LvULhaJs/gVhckaGwYRJEEJC168sd47viLTRG9XK
+        fjYQVZs4aHa2UrPZprcMaBg2J8LcYvJlG87As=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gaAKjwNrhqSEOizP30mHOrQPTtq2VgCG
+        Ov8IfbsvMlSPmqurh49T8BUl1G1sD9OSS+FxhC7CMyjVFjgVk+K1CPyQbT+13sMn
+        mOWoMBoM+qBTpN8CLx1M5C9E/gvPGrnUFKVbmeOba/QYiuwSBZ9CX5Hs5jsIRcsb
+        a+tnkKMAh7s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 101B9424B3;
+        Thu, 27 Oct 2016 02:00:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E8E1424B2;
+        Thu, 27 Oct 2016 02:00:26 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Peter Williams <pwil3058@bigpond.net.au>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        git <git@vger.kernel.org>
+Subject: Re: "git subtree --squash" interacts poorly with revert, merge, and rebase
+References: <1477523244.2764.114.camel@mattmccutchen.net>
+        <CAGZ79kaw0s_PC2AstRVwFT8N1CJVC_7yQfC19zPzRjAqkSpMDg@mail.gmail.com>
+        <xmqqk2cuach3.fsf@gitster.mtv.corp.google.com>
+        <f07745f8-d0ff-c41f-fd44-0812757fbd43@bigpond.net.au>
+        <xmqqtwby8hu8.fsf@gitster.mtv.corp.google.com>
+Importance: high
+Date:   Wed, 26 Oct 2016 23:00:24 -0700
+In-Reply-To: <xmqqtwby8hu8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 26 Oct 2016 22:46:23 -0700")
+Message-ID: <xmqqpomm8h6v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20161026215732.16411-1-sbeller@google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A81C70A0-9C0A-11E6-94D7-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.10.2016 um 23:57 schrieb Stefan Beller:
-> In Windows it is not possible to have a static initialized mutex as of
-> now, but that seems to be painful for the upcoming refactoring of the
-> attribute subsystem, as we have no good place to put the initialization
-> of the attr global lock.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Please rewrite the attribute system such that it can have a dynamic 
-initialization. If you find a global initialization in main() too gross 
-(I would agree) then setup_git_directory() might be the right place.
+> Peter Williams <pwil3058@bigpond.net.au> writes:
+>
+>> However, for git commands such as diff/status whose job is to display
+>> information it would be nice if they had a --recursive option to
+>> override the default submodule diff/status and show details of the
+>> changes in the submodules.  Sometimes you want to see the big picture
+>> in detail.
+>
+> I won't disagree. My comment was only on this part from the original:
+>
+>>> - We have to make separate commits and manage corresponding topic
+>>> branches for the superproject and subprojects.
+>
+> and on this point, we seem to be in agreement.
 
--- Hannes
+Oh, and as Stefan mentioned, a "git diff" that recurses into the
+submodules to give you detailed big picture has been in 'next'
+(perhaps aready in 'master' as of tonight, but I am not sure
+offhand) to be tested, together with many other fixes and
+enhancements that all are waiting to be included in future releases.
 
+The more people try and give feedback to these branches early, the
+more solid release with better support for more goodies you'd want
+we will be able to give you.  Early adopters are always appreciated
+but especially in time like this before the feature freeze for the
+upcoming release (see tinyurl.com/gitCal for the schedule), they are
+of great help.
+
+Start by cloning from any one of these places
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+
+and then
+
+  $ git checkout -b next origin/next
+  : read INSTALL to figure out if any custom options are needed
+  : in the following 'make' invocations for your environment
+  $ make && make install
+  $ PATH=$HOME/bin:$PATH
+
+to join the fun.
