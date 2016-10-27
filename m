@@ -6,49 +6,65 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13A3C20193
-	for <e@80x24.org>; Thu, 27 Oct 2016 20:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73B8B20193
+	for <e@80x24.org>; Thu, 27 Oct 2016 20:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964999AbcJ0UnX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 16:43:23 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:38860 "EHLO dcvr.yhbt.net"
+        id S964845AbcJ0UvR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 16:51:17 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39152 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1031177AbcJ0Ula (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 16:41:30 -0400
+        id S1752035AbcJ0UvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 16:51:16 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id A72F920193;
-        Thu, 27 Oct 2016 20:41:29 +0000 (UTC)
-Date:   Thu, 27 Oct 2016 20:41:29 +0000
+        by dcvr.yhbt.net (Postfix) with ESMTP id DB26B20193;
+        Thu, 27 Oct 2016 20:51:15 +0000 (UTC)
+Date:   Thu, 27 Oct 2016 20:51:15 +0000
 From:   Eric Wong <e@80x24.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: Drastic jump in the time required for the test suite
-Message-ID: <20161027204129.GA21619@starla>
-References: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Gavin Lambert <github@mirality.co.nz>
+Subject: Re: [PATCH] git-svn: do not reuse caches memoized for a different
+ architecture
+Message-ID: <20161027205115.GA5706@starla>
+References: <653aa0cd566a2486bbc38cfd82ddfcfdfe48271c.1477398004.git.johannes.schindelin@gmx.de>
+ <20161025212357.GA8683@starla>
+ <xmqqmvhp60gp.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1610191049040.3847@virtualbox>
+In-Reply-To: <xmqqmvhp60gp.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I know you are a fan of testing things thoroughly in the test suite, but I
-> have to say that it is getting out of hand, in particular due to our
-> over-use of shell script idioms (which really only run fast on Linux, not
-> a good idea for a portable software).
+Junio C Hamano <gitster@pobox.com> wrote:
+> Just peeking from the sideline, but the your squash looks like an
+> improvement to me.
 
-How much effort would it take to optimize a /bin/sh?
+Thanks.
 
-Would replacing uses of fork+execve posix_spawn be fast and
-portable enough?
+> Hopefully the final version after your interaction with Dscho can
+> come to me via another "pull this now"?
 
-Even on Linux, performance sucks for me.  I've been hoping dash
-can use posix_spawn (or using vfork directly) to see if that can
-help things.
+Not sure if I'll be online the next few days,
+but I've preeptively pushed the patch + squash to my repo:
 
-That won't help with subshells, though...
+The following changes since commit 2cc2e70264e0fcba04f9ef791d144bbc8b501206:
 
-(I'm back to using a Centrino laptop from 2005)
+  Eleventh batch for 2.11 (2016-10-26 13:28:47 -0700)
+
+are available in the git repository at:
+
+  git://bogomips.org/git-svn.git svn-cache
+
+for you to fetch changes up to a2c761ce5b7a5fd8b505b036f3509a9e6617dee8:
+
+  git-svn: do not reuse caches memoized for a different architecture (2016-10-27 20:17:36 +0000)
+
+----------------------------------------------------------------
+Gavin Lambert (1):
+      git-svn: do not reuse caches memoized for a different architecture
+
+ perl/Git/SVN.pm | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
