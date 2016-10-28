@@ -7,78 +7,60 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E22C02022A
-	for <e@80x24.org>; Fri, 28 Oct 2016 08:51:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F7D82022A
+	for <e@80x24.org>; Fri, 28 Oct 2016 08:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964911AbcJ1Ivp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 04:51:45 -0400
-Received: from mout.gmx.net ([212.227.17.22]:64442 "EHLO mout.gmx.net"
+        id S941833AbcJ1Izk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 04:55:40 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53852 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752045AbcJ1Ivn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 04:51:43 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LiDHj-1ccyPL1IUl-00nUmc; Fri, 28 Oct 2016 10:51:28
+        id S936627AbcJ1Izj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 04:55:39 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MUUWN-1cPinE1Tf9-00RHUY; Fri, 28 Oct 2016 10:55:19
  +0200
-Date:   Fri, 28 Oct 2016 10:51:27 +0200 (CEST)
+Date:   Fri, 28 Oct 2016 10:55:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] valgrind: support test helpers
-In-Reply-To: <71c3d13a-fa29-75d3-50ac-81978c08f552@web.de>
-Message-ID: <alpine.DEB.2.20.1610281050220.3264@virtualbox>
-References: <71c3d13a-fa29-75d3-50ac-81978c08f552@web.de>
+To:     Stefan Beller <sbeller@google.com>
+cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com,
+        pclouds@gmail.com, j6t@kdbg.org, peff@peff.net, simon@ruderich.org
+Subject: Re: [PATCH] attr: convert to new threadsafe API
+In-Reply-To: <20161027221550.14930-1-sbeller@google.com>
+Message-ID: <alpine.DEB.2.20.1610281053330.3264@virtualbox>
+References: <xmqqy41a8hxj.fsf@gitster.mtv.corp.google.com> <20161027221550.14930-1-sbeller@google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-661660102-1477644688=:3264"
-X-Provags-ID: V03:K0:SnABqjBAaEb6kuAnIPvjuv5PilU/8Ds7A2+VMlJ8jFIAkFGrCNd
- tXyBUoLquNi08U1ur73hzwPaaHp0DhkbsfnJP1zblGGdDhSos6gBFTgqsyDoh+q6ZCrD9Dp
- sfAb5pb+kPHsk/i201gCCNvRqFZPofi0uPCTJXvzcsD1H8ecue5MlVpuqaC1CmSlqWroH5R
- N7ZYkgoXociRpYYD91ISQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GMZjwVwer5o=:2zl1vbPXGAbK4RRUIzO3WL
- vcrwiH2ScekP6oMf27T6DRuElATu3z9CRX4+lsJSapJS1FCoWrcvO93ocAbdAkDkYT2/o69Q1
- 9o2GV4Zp7FmuQwD4YSAlxEdpBWT4bAb2Bwe7XaBojo/VW13A/snm8EV1RB6yOuz9Wlvp/LMmG
- htCWmWLeQiaTk0THutggNIjQDv9V/pSq7qhVCz/c4U6PGcH4wT1M0or2Lu5gM0caWEKbCDimK
- JoPPrtPBQD4nAsZRymWwju0H1UDmsR2mH94wnuktYJjKy1vBKpReBp2PDuiZWzTp+2SG4ZNwb
- dp/zZhIGNa4fNEC2edmRab3NqAmpsLPvGtdQjN3XGklvnGwQCa/rAJWAA1d2Hejz3s//cLvR3
- UZMKWe5qQkZ7RrshsoItPKqZ+Wst4mdCERYdaTkONaCBQiksQcXnRg8pgP1TmDX/5wtCWOtgN
- Ny7Tc+znNnhG6W1Q1dWrdUP20A8SjnKWUcHdMLRCEvqJCczppn7vx6K95fcM5Tgb3C2ZZehGc
- i6E4qZ4+EnQwWApT/DZ0zSAtbXgEClEG5ilLHhzdgvyU033pf00HpR6zOGD43Oqb1G7ItNvyX
- Q9CEKdAM43vfv4VSomN6WAc3Wxm1KNc3CIEKVvQnlsT0I5wl853yDd27atV3vVbBjJK4MR2yX
- n838Cj2LA5biyJwOZ2/5rPX3xrXYXCowyY7telnGoN18J4gr0tjsl9fSQFlt7Dk8isFFavuoX
- AezrbPfZ2pXxqOo1ib3TfvarxnYWRUBmJnbOJOWhhHZaxcT8GnpBVsCi7EAHsBCZqxo+/6HLz
- 0gjTJ9n
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hvRSNeBBedAbMfzaAcgCNKXyzYSVbuTLlhQrXBGqsjczEaF3pH8
+ HswF25F3M+litAPJfx0OA/natQZm6UOSqYt8oKQSbIUv5Xij0usX3JibLPHvVOqA8igu4dV
+ P5gkplNg1EE/f8kWkq+vJiC3PNyGeKQJ2bI7CR01UJGVr20TMmeb/2nSOG/f9eqS6p7CRuk
+ xZ/xHI8m42hFBcWld5MjA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ihvM7MaQadk=:zgoQXLXA4RyOvmqN+WYsig
+ YeqfGqI2ns38W6jyRGLDCPX+E8nnpcAIBcZHloR7JzlKwca8DwqHkX3lkK/8wphQn5Qljdv2Y
+ hrchUQumQo2s2KEM/5Q8VmiF0dksfFRdKX1x6u3beTXl3T5BrCj1NivdER3UEmqRnelnilEY4
+ iIzRf4lrQjqpP13wl0XkS86zwYfnm2UcRwjQy8tw+bAWefYCQ9IbzxNjT4iE2xbh/+qK1jGaF
+ EzGs8XtVXTLURmjCN6e4akkpcAgQaccK1sbJPnE9+q/LKkCf+G40NbPOEHtB8QPn71Diqc0ts
+ yGaQhzxkhQbV3iZdKklXmYdsjwOjmQNFNWtfeYdSr/Mu8vsL3ibqsWTILaITTAlyeVIw/+RIb
+ aiZ7XjW+Ics3HJKsqr0AmifnXODBuyP2DD/PaBm/2bONzLtj0dTCeU428z9saXo9BxPHx3kWy
+ 9iY5AaxzNHa7TI1eBLmnfXhm9t3xsTXv7a6xjKW+J5oS/e2Rkh8y+F0hkgGcaCQgXkifWsLC2
+ qX1IcjudEdVrmak0VJPMy0ZTHnXdi4hLCFqwS7vx2QNAKWfF7ylQrNPqrhL+0W+bsfic8SQgQ
+ xBcqEcnoLEee98N956dbWkuUsFGt71j9swc+z6Ycp955W0pAYtziLSQnw3eCoomku8r2hSq1m
+ bROPe79T4RaGH9gw6aSv8sA5QJ4xhOo+tkvcSX3m1vh9h4jRPtl6LXdwNsYwi6RTVkgOrYwr4
+ DfOEgCzYutTYOYSuXygNPtGsddl00AWQynASe+aYuwnOuYXVJn7ZVSZopz3BnrKFsGOASe186
+ A3f+PZ1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Stefan,
 
---8323329-661660102-1477644688=:3264
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Thu, 27 Oct 2016, Stefan Beller wrote:
 
-Hi,
+> * use attr_start on Windows to dynamically initialize the Single Big Attr Mutex
 
-On Fri, 28 Oct 2016, Ren=C3=A9 Scharfe wrote:
+I would have preferred that call in common-main.c, but whatevs...
 
-> Tests run with --valgrind call git commands through a wrapper script
-> that invokes valgrind on them.  This script (valgrind.sh) is in turn
-> invoked through symlinks created for each command in t/valgrind/bin/.
->=20
-> Since e6e7530d (test helpers: move test-* to t/helper/ subdirectory)
-> these symlinks have been broken for test helpers -- they point to the
-> old locations in the root of the build directory.  Fix that by teaching
-> the code for creating the links about the new location of the binaries,
-> and do the same in the wrapper script to allow it to find its payload.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-
-Apart from the missing accent ("=C3=A9") in your SOB: ACK.
-
-Ciao,
+Thanks you for fixing the bug,
 Dscho
---8323329-661660102-1477644688=:3264--
