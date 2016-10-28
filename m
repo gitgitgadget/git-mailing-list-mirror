@@ -2,65 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F7D82022A
-	for <e@80x24.org>; Fri, 28 Oct 2016 08:55:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED0712022A
+	for <e@80x24.org>; Fri, 28 Oct 2016 09:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941833AbcJ1Izk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 04:55:40 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53852 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S936627AbcJ1Izj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 04:55:39 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MUUWN-1cPinE1Tf9-00RHUY; Fri, 28 Oct 2016 10:55:19
- +0200
-Date:   Fri, 28 Oct 2016 10:55:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com,
-        pclouds@gmail.com, j6t@kdbg.org, peff@peff.net, simon@ruderich.org
-Subject: Re: [PATCH] attr: convert to new threadsafe API
-In-Reply-To: <20161027221550.14930-1-sbeller@google.com>
-Message-ID: <alpine.DEB.2.20.1610281053330.3264@virtualbox>
-References: <xmqqy41a8hxj.fsf@gitster.mtv.corp.google.com> <20161027221550.14930-1-sbeller@google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S935408AbcJ1JcX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 05:32:23 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:37253 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936477AbcJ1JcU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 05:32:20 -0400
+Received: by mail-wm0-f49.google.com with SMTP id 140so66958211wmv.0
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 02:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pelly-co.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Ds0C1OvEIG7O/thL8bDTXdbw50GhFGp4JrcQFZpN/0A=;
+        b=gLbOoStHu/Bnx2r5zHvHdACcAACkoYZlp2N0wwIP+heGw5ZFlxzLI3/yKS/XFkSTAN
+         Z7l1uGH9qZN1UXthQHQpK8ny1iyEpmVGdMPLKsbcGbvrsbAR3qXWZ4JDnymGbcrioU00
+         k6RM80wOMp3V5WIGvb8OVnVJoPMKEy8qLPxrJOvFq3vzsIBiEPupKRxzCxqhTV7fAKD0
+         oP3/ptv2ebFmKc/QHMq8dMiZ906mPUJ9nWPb5VHOdPNH4IqZextzS+wI9SqeJuC1qM33
+         jY5bD15Gm1zNZWf2k5itJDNFgvWHrHlPGnYAhRWiUiCOLU2tjG9uE8wc9TX6UjYbzF1C
+         eYGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Ds0C1OvEIG7O/thL8bDTXdbw50GhFGp4JrcQFZpN/0A=;
+        b=FheZ6tWvDGv1TxzLcCgyfd1eMCPeKsAgRdIUvi28/BoO6KY72BNU9eYmXiMqUuAkeq
+         iBoX/8/C5dQeGi6SpQ+94o0yrmo6gGMUJZZl9+8piGBcVDlMHCV7esNWFFST3dDF4Vyw
+         OyRulciw4XOiiUL9OUWAKeIcrvB6Okp0VDLDjOxzNLAuI0cwt7WWFT9ftDFtkvYTJDQy
+         ndZt9vi6r7APIbh+Tc2psLQhkrbV4YgSZPKSRVlv5oH8AKbGzM/oBwLpyTtX1ZuH0xyr
+         EWK5c8dt/24MOyxj/g2QeI50H4KjQR7UOjWnUE4RebprVfPhrGydxn3eoa9jnnWrWCy2
+         Yfmg==
+X-Gm-Message-State: ABUngvfSz/Hr6yZ6KpGfckgrZQbBXSHtVRG5pYJGV4X+37ZbYAfdXlAL8WolIGLMWQBGZQ==
+X-Received: by 10.28.130.199 with SMTP id e190mr1320538wmd.110.1477647133134;
+        Fri, 28 Oct 2016 02:32:13 -0700 (PDT)
+Received: from [10.3.1.6] ([49.50.252.82])
+        by smtp.googlemail.com with ESMTPSA id xq9sm13127265wjb.35.2016.10.28.02.32.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Oct 2016 02:32:12 -0700 (PDT)
+Subject: Re: Expanding Includes in .gitignore
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
+ <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net>
+ <b20b458c-440d-df09-d2c7-e510ac20492c@pelly.co>
+ <20161027205508.vqw44zlbnqpj2cvd@sigill.intra.peff.net>
+ <20161027210753.btc7zbndhdocsbwa@sigill.intra.peff.net>
+ <xmqqwpgt2ng2.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Aaron Pelly <aaron@pelly.co>
+Message-ID: <cc23eece-d693-9e40-78fe-3bafe6bcad3a@pelly.co>
+Date:   Fri, 28 Oct 2016 22:32:07 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hvRSNeBBedAbMfzaAcgCNKXyzYSVbuTLlhQrXBGqsjczEaF3pH8
- HswF25F3M+litAPJfx0OA/natQZm6UOSqYt8oKQSbIUv5Xij0usX3JibLPHvVOqA8igu4dV
- P5gkplNg1EE/f8kWkq+vJiC3PNyGeKQJ2bI7CR01UJGVr20TMmeb/2nSOG/f9eqS6p7CRuk
- xZ/xHI8m42hFBcWld5MjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ihvM7MaQadk=:zgoQXLXA4RyOvmqN+WYsig
- YeqfGqI2ns38W6jyRGLDCPX+E8nnpcAIBcZHloR7JzlKwca8DwqHkX3lkK/8wphQn5Qljdv2Y
- hrchUQumQo2s2KEM/5Q8VmiF0dksfFRdKX1x6u3beTXl3T5BrCj1NivdER3UEmqRnelnilEY4
- iIzRf4lrQjqpP13wl0XkS86zwYfnm2UcRwjQy8tw+bAWefYCQ9IbzxNjT4iE2xbh/+qK1jGaF
- EzGs8XtVXTLURmjCN6e4akkpcAgQaccK1sbJPnE9+q/LKkCf+G40NbPOEHtB8QPn71Diqc0ts
- yGaQhzxkhQbV3iZdKklXmYdsjwOjmQNFNWtfeYdSr/Mu8vsL3ibqsWTILaITTAlyeVIw/+RIb
- aiZ7XjW+Ics3HJKsqr0AmifnXODBuyP2DD/PaBm/2bONzLtj0dTCeU428z9saXo9BxPHx3kWy
- 9iY5AaxzNHa7TI1eBLmnfXhm9t3xsTXv7a6xjKW+J5oS/e2Rkh8y+F0hkgGcaCQgXkifWsLC2
- qX1IcjudEdVrmak0VJPMy0ZTHnXdi4hLCFqwS7vx2QNAKWfF7ylQrNPqrhL+0W+bsfic8SQgQ
- xBcqEcnoLEee98N956dbWkuUsFGt71j9swc+z6Ycp955W0pAYtziLSQnw3eCoomku8r2hSq1m
- bROPe79T4RaGH9gw6aSv8sA5QJ4xhOo+tkvcSX3m1vh9h4jRPtl6LXdwNsYwi6RTVkgOrYwr4
- DfOEgCzYutTYOYSuXygNPtGsddl00AWQynASe+aYuwnOuYXVJn7ZVSZopz3BnrKFsGOASe186
- A3f+PZ1
+In-Reply-To: <xmqqwpgt2ng2.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On 28/10/16 15:54, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> However, as I said elsewhere, I'm not convinced this feature is all that
+>> helpful for in-repository .gitignore files, and I think it does
+>> introduce compatibility complications. People with older git will not
+>> respect your .gitignore.d files. Whereas $GIT_DIR/info is purely a local
+>> matter.
+> 
+> As I do not see the point of making in-tree .gitignore to a forest
+> of .gitignore.d/ at all, compatibility complications is not worth
+> even thinking about, I would have to say.
 
-On Thu, 27 Oct 2016, Stefan Beller wrote:
+Well; that saves some work. :)
 
-> * use attr_start on Windows to dynamically initialize the Single Big Attr Mutex
+I do not suggesting making this mandatory. I think it adds value and it
+is a common and understood mechanism. But, if it is abhorrent, consider:
 
-I would have preferred that call in common-main.c, but whatevs...
+There is precedent for including files in git-config. This could be
+extended to ignore files. The code is not similar, but the concept is. I
+could live with it.
 
-Thanks you for fixing the bug,
-Dscho
+Or how about a new githook that can intelligently create or return the
+details? This would be my least favourite option unless it was
+configured in an obvious place.
+
+Finally, if this is a bad-idea, as I asked in the beginning, I will
+consider the equine expired, cease flagellation and apologise for the noise.
+
