@@ -2,93 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,STOX_REPLY_TYPE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06F252035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 16:13:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA02F2035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 16:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756378AbcJ1QNq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 12:13:46 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:36841 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754973AbcJ1QNp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 12:13:45 -0400
-Received: by mail-oi0-f65.google.com with SMTP id e12so1081671oib.3
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 09:13:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=dyjOGtQAaC+GwZBuzeTaDHvFrIAZB2+nvUZP8Fi46Mo=;
-        b=TEMj2oZX9UB3M5GajpB6hvxtE00z5uPgO96YKEsCqYqk6+OowUTPyZabs5sRzkpI0n
-         6xBoBVD/EDqJTw82UukJyTEkcgm4a8KrV/QismICa0j43wOpvEBBYyH1132AN7HRP3d1
-         zHac+4g45M1S/SAB1p1mBewPlmYU6kLvZf7TH8zaXwNLFjInBFlV/wz8byon137eW6Jx
-         OIIchDmH+RsgtGVzHWHc+r2LjYZgXLn3uc0zazv+mxSKHtcS5dPW2+vQuSQ/6r2kGNtH
-         AYt6Vjn7C/fftT7fA2YexgopYdowPzvurc39yA2gyvqeBZcgX1zY7qjVUS/FNgbTyx27
-         cnfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=dyjOGtQAaC+GwZBuzeTaDHvFrIAZB2+nvUZP8Fi46Mo=;
-        b=ljwsKuAPfltr1omucf1Eh+4X/kLLSVkVJpjduKuQ34SaWYgm6gqX/5MWHyyqLGPpKT
-         VUBs+FaNMcKAE4rd/52snhMoxOBT+qGExrgaADsEKT6g875nHZnj04YKxtv/Sg/D2GTW
-         WDVGtIirtpKRg50zaVb9bBK/RsLHkq617jLKOGaoYVMhvDAfHInsyrfO3LeBqImVL82h
-         0YMYLJ+OtuDt0vvs7hTy+Me6NrnF6SrM0y5rQK9CMbHCZQ3ZBXKTsU4QS4+A5prFGcUi
-         Yf285qHXjZtPs4keAlBxdfLK+AWj2y+7i/IFgv5qb1Pd4LYBwQIeT8dxlC+kzYB2Rml7
-         aG2g==
-X-Gm-Message-State: ABUngvdzNhOEeeZ5BNw8O4myuVjSOf1TQU0PvxwsL5G/x1Lcmks6ExYx0H1R0bMR8fskR9RCUmBk+NF8Wp5CwA==
-X-Received: by 10.157.43.124 with SMTP id f57mr11945038otd.83.1477671222928;
- Fri, 28 Oct 2016 09:13:42 -0700 (PDT)
+        id S965777AbcJ1QcC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 12:32:02 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:16403 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937846AbcJ1QcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 12:32:01 -0400
+Received: from PhilipOakley ([92.22.74.108])
+        by smtp.talktalk.net with SMTP
+        id 0A4Tc6zL0gKst0A4Ucr5Sg; Fri, 28 Oct 2016 17:31:58 +0100
+X-Originating-IP: [92.22.74.108]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=gemZZafLxLrjWEucDwrW+g==:117
+ a=gemZZafLxLrjWEucDwrW+g==:17 a=8nJEP1OIZ-IA:10 a=uX5db24ySTMTWYjb_kIA:9
+ a=wPNLvfGTeEIA:10
+Message-ID: <27B37F6A6F2946CEB274CC85CB43B1F2@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "David Lang" <david@lang.hm>, "John Rood" <mr.john.rood@gmail.com>
+Cc:     "Stefan Beller" <sbeller@google.com>,
+        "Git List" <git@vger.kernel.org>
+References: <CALj-rGeoT_mpmuw8Put=6eRhzf-r2WUohu_Kd-wnpc=BvO5joA@mail.gmail.com> <CAGZ79ka7BvaW2pkjeXe68yKHFq6JsH__x2cXoe6U4tRmZ0rY1A@mail.gmail.com> <CALj-rGfAyimf0nFFcDHVHUgj8PQaz6Cvoz_PQfqdhr=QJEpbRw@mail.gmail.com> <alpine.DEB.2.02.1610271623260.4123@nftneq.ynat.uz>
+Subject: Re: feature request
+Date:   Fri, 28 Oct 2016 13:54:59 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.182.142.104 with HTTP; Fri, 28 Oct 2016 09:13:41 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1610281306320.3264@virtualbox>
-References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
- <20161025181621.4201-1-gitster@pobox.com> <20161025181621.4201-3-gitster@pobox.com>
- <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net> <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
- <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net> <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
- <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net> <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
- <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
- <xmqqoa254czs.fsf@gitster.mtv.corp.google.com> <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
- <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
- <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com> <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
- <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com> <xmqq60od42s0.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610281306320.3264@virtualbox>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 28 Oct 2016 09:13:41 -0700
-X-Google-Sender-Auth: BgkujBz8Osdbj_vzLtqwxoCdN-w
-Message-ID: <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfOLRYaH5+uLQLwd1BxCoJdV2k5PwUImqeATGOOTyM4pCcAxk3ikGP2tF9r2YFhOhEzv9IE+3lfda1uOSZcCq5L719I5ArNkovRX9bX37Pzi4Vg2Ffh0Q
+ j/4P0dQLDillNQ66MG+FzMZHCK0+EmoF3CdE+oD/JuUomXkv8Fj4SvzEtt84hlCYW66wekuvk8gas/RbhjK9siVWghd2EdsDmuk+6zntz09ZZbtQDlDIh9RT
+ tmPhuw4Jd4AXlAzW0iCh/Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2016 at 4:11 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+From: "David Lang" <david@lang.hm>
+> On Thu, 27 Oct 2016, John Rood wrote:
 >
-> You guys. I mean: You guys! You sure make my life hard. A brief look at
-> mingw.h could have answered your implicit question:
+>> Thanks, I think changing the default for windows is a good idea.
+>
+> notepad doesn't work well with unix line endings, wordpad handles the 
+> files much more cleanly.
+>
+> David Lang
+>
 
-So here's what you guys should do:
+Notepad++ does work well, but isn't a standard part of Windows.
 
- - leave O_NOATIME damn well alone. It works. It has worked for 10+
-years. Stop arguing against it, people who do.
+[core]
+ editor = 'C:/Program 
+Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noplugin
 
- - get rid of all O_CLOEXEC games. They don't work. If you want to
-close file descriptors at execve(), you - gasp - close the file
-descriptor before doing an execve.
+.. is one of the standard StackOverflow recipes.
+--
+Philip 
 
-So O_CLOEXEC or FD_CLOEXEC is broken.
-
-DO NOT BREAK O_NOATIME JUST TO ADD COMPLETELY NEW BREAKAGE.
-
-                 Linus
