@@ -2,69 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B388E203BD
-	for <e@80x24.org>; Fri, 28 Oct 2016 15:33:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06F252035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 16:13:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760795AbcJ1PdI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 11:33:08 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:43166 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932740AbcJ1PdF (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 28 Oct 2016 11:33:05 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id C2C1E206F0;
-        Fri, 28 Oct 2016 11:33:04 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 28 Oct 2016 11:33:04 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=x-me-sender:x-sasl-enc:message-id:subject
-        :from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=smtpout; bh=n+LJ2chBF
-        q3Gyl4r2wOsXKhp6KA=; b=LgeTAswbL72WI96Yb7rJFBOWDJ6HODQQLULtRGkwf
-        TJxTsg1hhB9ESt0GJaiZolrl0dF2SIxZXLDBDq/3UnBo0QOXI/9p8Jjaix4JawQ9
-        n2zSJpKT93qMDEEB05l4c6k4NUBpOyudO0lHVnE7N2Hlk5nqfDS+3n2Le3klvD+A
-        rY=
-X-ME-Sender: <xms:sG8TWFcp22Dhjdwf6ldY8Bv_RSWAAkJ2_veNIr_ijvObP89OTxCjVw>
-X-Sasl-enc: JlyP3KrtApDcPy/VJUlkpsLefqst9VgrVFog0Z/JHRpt 1477668784
-Received: from xylitol (89-27-63-209.bb.dnainternet.fi [89.27.63.209])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1964BCC02C;
-        Fri, 28 Oct 2016 11:33:03 -0400 (EDT)
-Message-ID: <1477668782.1869.4.camel@seestieto.com>
-Subject: Re: [PATCH] Fix typo in 2.11.0 RelNotes
-From:   Henrik Ahlgren <pablo@seestieto.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Fri, 28 Oct 2016 18:33:02 +0300
-In-Reply-To: <xmqqoa2439sp.fsf@gitster.mtv.corp.google.com>
-References: <1477651639-11529-1-git-send-email-pablo@seestieto.com>
-         <xmqqoa2439sp.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.12.9-1+b1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1756378AbcJ1QNq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 12:13:46 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:36841 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754973AbcJ1QNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 12:13:45 -0400
+Received: by mail-oi0-f65.google.com with SMTP id e12so1081671oib.3
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 09:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=dyjOGtQAaC+GwZBuzeTaDHvFrIAZB2+nvUZP8Fi46Mo=;
+        b=TEMj2oZX9UB3M5GajpB6hvxtE00z5uPgO96YKEsCqYqk6+OowUTPyZabs5sRzkpI0n
+         6xBoBVD/EDqJTw82UukJyTEkcgm4a8KrV/QismICa0j43wOpvEBBYyH1132AN7HRP3d1
+         zHac+4g45M1S/SAB1p1mBewPlmYU6kLvZf7TH8zaXwNLFjInBFlV/wz8byon137eW6Jx
+         OIIchDmH+RsgtGVzHWHc+r2LjYZgXLn3uc0zazv+mxSKHtcS5dPW2+vQuSQ/6r2kGNtH
+         AYt6Vjn7C/fftT7fA2YexgopYdowPzvurc39yA2gyvqeBZcgX1zY7qjVUS/FNgbTyx27
+         cnfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=dyjOGtQAaC+GwZBuzeTaDHvFrIAZB2+nvUZP8Fi46Mo=;
+        b=ljwsKuAPfltr1omucf1Eh+4X/kLLSVkVJpjduKuQ34SaWYgm6gqX/5MWHyyqLGPpKT
+         VUBs+FaNMcKAE4rd/52snhMoxOBT+qGExrgaADsEKT6g875nHZnj04YKxtv/Sg/D2GTW
+         WDVGtIirtpKRg50zaVb9bBK/RsLHkq617jLKOGaoYVMhvDAfHInsyrfO3LeBqImVL82h
+         0YMYLJ+OtuDt0vvs7hTy+Me6NrnF6SrM0y5rQK9CMbHCZQ3ZBXKTsU4QS4+A5prFGcUi
+         Yf285qHXjZtPs4keAlBxdfLK+AWj2y+7i/IFgv5qb1Pd4LYBwQIeT8dxlC+kzYB2Rml7
+         aG2g==
+X-Gm-Message-State: ABUngvdzNhOEeeZ5BNw8O4myuVjSOf1TQU0PvxwsL5G/x1Lcmks6ExYx0H1R0bMR8fskR9RCUmBk+NF8Wp5CwA==
+X-Received: by 10.157.43.124 with SMTP id f57mr11945038otd.83.1477671222928;
+ Fri, 28 Oct 2016 09:13:42 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.182.142.104 with HTTP; Fri, 28 Oct 2016 09:13:41 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1610281306320.3264@virtualbox>
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
+ <20161025181621.4201-1-gitster@pobox.com> <20161025181621.4201-3-gitster@pobox.com>
+ <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net> <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
+ <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net> <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
+ <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net> <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
+ <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
+ <xmqqoa254czs.fsf@gitster.mtv.corp.google.com> <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
+ <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
+ <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com> <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
+ <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com> <xmqq60od42s0.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610281306320.3264@virtualbox>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 28 Oct 2016 09:13:41 -0700
+X-Google-Sender-Auth: BgkujBz8Osdbj_vzLtqwxoCdN-w
+Message-ID: <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2016-10-28 at 06:03 -0700, Junio C Hamano wrote:
+On Fri, Oct 28, 2016 at 4:11 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> You guys. I mean: You guys! You sure make my life hard. A brief look at
+> mingw.h could have answered your implicit question:
 
-> If the original text were like the following, would it have been
-> clear enough that prevented you from sending your patch?
-> 
->  * An empty string used as a pathspec element has always meant
->    'everything matches', but it is too easy to write a script that
->    finds a path to remove in $path and run 'git rm "$paht"' by 
->    mistake (when the user meant to give "$path"), which ends up
->    removing everything.  This release starts warning about the
->    use of an empty string that is used for 'everything matches' and
->    asks users to use a more explicit '.' for that instead.
+So here's what you guys should do:
 
-Oops. Yes, but not sure if it really needs to be clear enough even for
-idiots like me. :-) Sorry.
+ - leave O_NOATIME damn well alone. It works. It has worked for 10+
+years. Stop arguing against it, people who do.
 
+ - get rid of all O_CLOEXEC games. They don't work. If you want to
+close file descriptors at execve(), you - gasp - close the file
+descriptor before doing an execve.
 
+So O_CLOEXEC or FD_CLOEXEC is broken.
+
+DO NOT BREAK O_NOATIME JUST TO ADD COMPLETELY NEW BREAKAGE.
+
+                 Linus
