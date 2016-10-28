@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9456F2035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 18:56:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B22132035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 18:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034401AbcJ1S4w (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 14:56:52 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34499 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1034315AbcJ1S4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 14:56:22 -0400
-Received: by mail-pf0-f170.google.com with SMTP id n85so41596961pfi.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:56:21 -0700 (PDT)
+        id S1034408AbcJ1S4y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 14:56:54 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35973 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756398AbcJ1S4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 14:56:06 -0400
+Received: by mail-pf0-f182.google.com with SMTP id e6so41419758pfk.3
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tuRVixOSEMuSRQoFsLmDUd9jdK4IrJPGc9A3Y5e+vbY=;
-        b=Zfhv5eggmpjvsxDnOZiSxOU1BRldc0Td5SG9a0nf7ByDv7rWlOo/f8mqQbY7fVlexO
-         mCm1lgNQ6pVJCq3k/sy8aDq/qExJh73gc9krsfz934kn20inAl1UzorIRleW0Ah/fhQx
-         mQYxDoh00S3j2Pvhdp2l5QpSJOIDRbX/B6vEiDrFcyjgOuRj8L3ZHjQVauvXJamO3Mfq
-         J24dYo3h17W1/5O3IdHpzLksK4hN4NcJp9TtJQ5mCV4GlfgW9dibvyR2+54mrVoxG6PB
-         s6TKfo8Bvc8n0wGAOMNpuQNyrTBmIhn7WAC6EwtQuarMMfHqwErPtY9r6RKWSB9IZ3vm
-         aR6g==
+        bh=ojvxcXpFIS8DiZHLR9CelqZe5r500sCs/0BIcVBppp8=;
+        b=PGPE1dsycbF3IZtjtj5pm4oGwANjYYtsaMI3D842brMut3w5eBSW7J7bAGhBQAjBjD
+         FjBOD5qoRtR29NyWrtuHxHVR2otvGe8usBHNSjIJ2CE2pDA8BPHioPYYvmDG5rHx13XS
+         +j4CpneLOVWqFmImpqbmt+/tbVfVxP6v5Ogoyz8hiDCZPQwR85GYU1OJ+9udc3aW1IZ0
+         AZxTlGOimKPyVGgg7wAXYdHQbixmBuu4j++2cQUM8P50QCfYmn/q0+qdaDQdeY8fQc80
+         YWz4g6PIYatUgUkmFVOYJD/fxYP1lOBJBhrCUSdzvNgdGPaOgqqMQIYZ3hebWYkbKmXE
+         kPOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tuRVixOSEMuSRQoFsLmDUd9jdK4IrJPGc9A3Y5e+vbY=;
-        b=ELxNeLNarc9X9mlXC5JLwmGxg+ey5CZ+OD6Inn8VEeG2/ifE9EXfLDbeAa0s9a0ElN
-         DPnOyaHdbRWL9sgIHY9uuj8G6n+Ag0PsYSj6UD/aZ/Cr2O0xXr0VQTZP4CppfvZsAddz
-         iHxO4nM7EtTvxHV/TzySRPAVp78Gvi+FepFfb0Y1XB54h8ozNPhQMeAou/1JoL1CDTUl
-         epy8OYfcaSQdKl57fLyAkjfLSeCfy9G9QgMqx+fOj2wZcSCEg6hKy9CYOSHIAZOYM7jC
-         wlB65xJehp2jsQi2ttuWlKDQxDUpdrWI41UFyoXeVk0q/idx38XmkYnM0uvjbJESCHqZ
-         JKnw==
-X-Gm-Message-State: ABUngvc7LYX6NX8j0339P6WINBjvMIY99BTBPg+EJJkMLCfLoNYPuh4uf07Z6z1BVodkZoz2
-X-Received: by 10.98.149.149 with SMTP id c21mr27829967pfk.100.1477680980536;
-        Fri, 28 Oct 2016 11:56:20 -0700 (PDT)
+        bh=ojvxcXpFIS8DiZHLR9CelqZe5r500sCs/0BIcVBppp8=;
+        b=jUlD9pbdIstw8VNcoqyowCMN3dbjbzRwYAJMUEgsO+f96Piw7vhVYKWQNUV3zM1FVK
+         TShzZ7bvuDJDE7cDBexrLyDvrHiYq7kZDtg/4mdtev5lgXfrBo+Bmy8dnawlLUSsM4Cz
+         P+TN8ZZP6ZEVvPO36oehaqPirrvokDxjAey4Qqdwb6cndRZGk9DDQNFI6gBbJ8sJ+vjX
+         IHCCCP8sfngtmLqys+mbqbVF/EjToMtm19jjmWVfaqJLUeb5LwWfMzxjDHPYqdue0NWk
+         xP2dJJqKgDZKXHhzjhiOJkWHUGRocHVJuOiT//KKLDLor20GhhhUwiVfV61tb/MupZ+B
+         KijA==
+X-Gm-Message-State: ABUngvdHR0VUYGU5cQph7LKjs8FrBw38q4OS3vyQfhJNM7kjTdFj7F4OoWokBVt4bDRE3Bqf
+X-Received: by 10.99.116.15 with SMTP id p15mr22727193pgc.167.1477680965223;
+        Fri, 28 Oct 2016 11:56:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:91ed:bb99:5319:17e9])
-        by smtp.gmail.com with ESMTPSA id bu8sm20570819pab.46.2016.10.28.11.56.20
+        by smtp.gmail.com with ESMTPSA id m129sm20599391pfm.13.2016.10.28.11.56.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Oct 2016 11:56:20 -0700 (PDT)
+        Fri, 28 Oct 2016 11:56:04 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 30/36] pathspec: move long magic parsing out of prefix_pathspec
-Date:   Fri, 28 Oct 2016 11:54:56 -0700
-Message-Id: <20161028185502.8789-31-sbeller@google.com>
+Subject: [PATCHv2 24/36] attr.c: always pass check[] to collect_some_attrs()
+Date:   Fri, 28 Oct 2016 11:54:50 -0700
+Message-Id: <20161028185502.8789-25-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.714.ge3da0db
 In-Reply-To: <20161028185502.8789-1-sbeller@google.com>
 References: <20161028185502.8789-1-sbeller@google.com>
@@ -61,119 +61,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`prefix_pathspec` is quite a lengthy function and we plan on adding more.
-Split it up for better readability. As we want to add code into the
-inner loop of the long magic parsing, we also benefit from lower
-indentation.
+From: Junio C Hamano <gitster@pobox.com>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+This function used to be called with check=NULL to signal it to
+collect all attributes in the global check_all_attr[] array.
+
+Because the longer term plan is to allocate check_all_attr[] and
+attr_stack data structures per git_attr_check instance (i.e. "check"
+here) to make the attr subsystem thread-safe, it is unacceptable.
+
+Pass "Are we grabbing all attributes defined in the system?" bit as
+a separate argument and pass it from the callers.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- pathspec.c | 84 +++++++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 47 insertions(+), 37 deletions(-)
+ attr.c | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/pathspec.c b/pathspec.c
-index 22ca74a126..ad13556c82 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -88,6 +88,52 @@ static void prefix_short_magic(struct strbuf *sb, int prefixlen,
- 	strbuf_addf(sb, ",prefix:%d)", prefixlen);
+diff --git a/attr.c b/attr.c
+index 1098300e54..92b3130f1e 100644
+--- a/attr.c
++++ b/attr.c
+@@ -760,11 +760,12 @@ static void empty_attr_check_elems(struct git_attr_check *check)
+ 
+ /*
+  * Collect attributes for path into the array pointed to by
+- * check_all_attr.  If check is not NULL, only attributes in
+- * check[] are collected. Otherwise all attributes are collected.
++ * check_all_attr.  If collect_all is zero, only attributes in
++ * check[] are collected.  Otherwise, check[] is cleared and
++ * any and all attributes that are visible are collected in it.
+  */
+ static void collect_some_attrs(const char *path, int pathlen,
+-			       struct git_attr_check *check)
++			       struct git_attr_check *check, int collect_all)
+ 
+ {
+ 	struct attr_stack *stk;
+@@ -785,10 +786,11 @@ static void collect_some_attrs(const char *path, int pathlen,
+ 	}
+ 
+ 	prepare_attr_stack(path, dirlen);
++
+ 	for (i = 0; i < attr_nr; i++)
+ 		check_all_attr[i].value = ATTR__UNKNOWN;
+ 
+-	if (check && !cannot_trust_maybe_real) {
++	if (!collect_all && !cannot_trust_maybe_real) {
+ 		struct git_attr_check_elem *celem = check->check;
+ 
+ 		rem = 0;
+@@ -807,6 +809,17 @@ static void collect_some_attrs(const char *path, int pathlen,
+ 	rem = attr_nr;
+ 	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
+ 		rem = fill(path, pathlen, basename_offset, stk, rem);
++
++	if (collect_all) {
++		empty_attr_check_elems(check);
++		for (i = 0; i < attr_nr; i++) {
++			const struct git_attr *attr = check_all_attr[i].attr;
++			const char *value = check_all_attr[i].value;
++			if (value == ATTR__UNSET || value == ATTR__UNKNOWN)
++				continue;
++			git_attr_check_append(check, attr)->value = value;
++		}
++	}
  }
  
-+static void eat_long_magic(struct pathspec_item *item, const char *elt,
-+		unsigned *magic, int *pathspec_prefix,
-+		const char **copyfrom_, const char **long_magic_end)
-+{
-+	int i;
-+	const char *copyfrom = *copyfrom_;
-+	/* longhand */
-+	const char *nextat;
-+	for (copyfrom = elt + 2;
-+	     *copyfrom && *copyfrom != ')';
-+	     copyfrom = nextat) {
-+		size_t len = strcspn(copyfrom, ",)");
-+		if (copyfrom[len] == ',')
-+			nextat = copyfrom + len + 1;
-+		else
-+			/* handle ')' and '\0' */
-+			nextat = copyfrom + len;
-+		if (!len)
-+			continue;
-+		for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
-+			if (strlen(pathspec_magic[i].name) == len &&
-+			    !strncmp(pathspec_magic[i].name, copyfrom, len)) {
-+				*magic |= pathspec_magic[i].bit;
-+				break;
-+			}
-+			if (starts_with(copyfrom, "prefix:")) {
-+				char *endptr;
-+				*pathspec_prefix = strtol(copyfrom + 7,
-+							  &endptr, 10);
-+				if (endptr - copyfrom != len)
-+					die(_("invalid parameter for pathspec magic 'prefix'"));
-+				/* "i" would be wrong, but it does not matter */
-+				break;
-+			}
-+		}
-+		if (ARRAY_SIZE(pathspec_magic) <= i)
-+			die(_("Invalid pathspec magic '%.*s' in '%s'"),
-+			    (int) len, copyfrom, elt);
-+	}
-+	if (*copyfrom != ')')
-+		die(_("Missing ')' at the end of pathspec magic in '%s'"), elt);
-+	*long_magic_end = copyfrom;
-+	copyfrom++;
-+	*copyfrom_ = copyfrom;
-+}
-+
- /*
-  * Take an element of a pathspec and check for magic signatures.
-  * Append the result to the prefix. Return the magic bitmap.
-@@ -150,43 +196,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 	    (flags & PATHSPEC_LITERAL_PATH)) {
- 		; /* nothing to do */
- 	} else if (elt[1] == '(') {
--		/* longhand */
--		const char *nextat;
--		for (copyfrom = elt + 2;
--		     *copyfrom && *copyfrom != ')';
--		     copyfrom = nextat) {
--			size_t len = strcspn(copyfrom, ",)");
--			if (copyfrom[len] == ',')
--				nextat = copyfrom + len + 1;
--			else
--				/* handle ')' and '\0' */
--				nextat = copyfrom + len;
--			if (!len)
--				continue;
--			for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
--				if (strlen(pathspec_magic[i].name) == len &&
--				    !strncmp(pathspec_magic[i].name, copyfrom, len)) {
--					magic |= pathspec_magic[i].bit;
--					break;
--				}
--				if (starts_with(copyfrom, "prefix:")) {
--					char *endptr;
--					pathspec_prefix = strtol(copyfrom + 7,
--								 &endptr, 10);
--					if (endptr - copyfrom != len)
--						die(_("invalid parameter for pathspec magic 'prefix'"));
--					/* "i" would be wrong, but it does not matter */
--					break;
--				}
--			}
--			if (ARRAY_SIZE(pathspec_magic) <= i)
--				die(_("Invalid pathspec magic '%.*s' in '%s'"),
--				    (int) len, copyfrom, elt);
--		}
--		if (*copyfrom != ')')
--			die(_("Missing ')' at the end of pathspec magic in '%s'"), elt);
--		long_magic_end = copyfrom;
--		copyfrom++;
-+		eat_long_magic(item, elt, &magic, &pathspec_prefix, &copyfrom, &long_magic_end);
- 	} else {
- 		/* shorthand */
- 		for (copyfrom = elt + 1;
+ static int git_check_attrs(const char *path, int pathlen,
+@@ -815,7 +828,7 @@ static int git_check_attrs(const char *path, int pathlen,
+ 	int i;
+ 	struct git_attr_check_elem *celem = check->check;
+ 
+-	collect_some_attrs(path, pathlen, check);
++	collect_some_attrs(path, pathlen, check, 0);
+ 
+ 	for (i = 0; i < check->check_nr; i++) {
+ 		const char *value = check_all_attr[celem[i].attr->attr_nr].value;
+@@ -829,19 +842,7 @@ static int git_check_attrs(const char *path, int pathlen,
+ 
+ void git_all_attrs(const char *path, struct git_attr_check *check)
+ {
+-	int i;
+-
+-	git_attr_check_clear(check);
+-	collect_some_attrs(path, strlen(path), NULL);
+-
+-	for (i = 0; i < attr_nr; i++) {
+-		const char *name = check_all_attr[i].attr->name;
+-		const char *value = check_all_attr[i].value;
+-		if (value == ATTR__UNSET || value == ATTR__UNKNOWN)
+-			continue;
+-		git_attr_check_append(check, git_attr(name));
+-		check->check[check->check_nr - 1].value = value;
+-	}
++	collect_some_attrs(path, strlen(path), check, 1);
+ }
+ 
+ void git_attr_set_direction(enum git_attr_direction new, struct index_state *istate)
 -- 
 2.10.1.714.ge3da0db
 
