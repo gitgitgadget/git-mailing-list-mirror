@@ -2,60 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 404432022A
-	for <e@80x24.org>; Fri, 28 Oct 2016 10:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 326A82022A
+	for <e@80x24.org>; Fri, 28 Oct 2016 11:08:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752497AbcJ1KgX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 06:36:23 -0400
-Received: from smtp486.redcondor.net ([208.80.204.86]:35468 "EHLO
-        smtp486.redcondor.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750748AbcJ1KgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 06:36:23 -0400
-X-Greylist: delayed 669 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Oct 2016 06:36:23 EDT
-Received: from astoria.ccjclearline.com ([64.235.106.9])
-          by smtp486.redcondor.net ({6695537a-536a-45f9-a249-877c85428649})
-          via TCP (outbound) with ESMTPS id 20161028102508400_0486;
-          Fri, 28 Oct 2016 10:25:08 +0000
-X-RC-FROM: <rpjday@crashcourse.ca>
-Received: from [174.118.92.171] (port=49408 helo=crashcourse.ca)
-        by astoria.ccjclearline.com with esmtpsa (TLSv1:AES256-SHA:256)
-        (Exim 4.80)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1c04LO-0006nL-03; Fri, 28 Oct 2016 06:25:02 -0400
-Date:   Fri, 28 Oct 2016 06:24:03 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
+        id S1756215AbcJ1LIY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 07:08:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35345 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750878AbcJ1LIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 07:08:24 -0400
+Received: (qmail 27784 invoked by uid 109); 28 Oct 2016 11:08:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Oct 2016 11:08:22 +0000
+Received: (qmail 28451 invoked by uid 111); 28 Oct 2016 11:08:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Oct 2016 07:08:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Oct 2016 07:08:20 -0400
+Date:   Fri, 28 Oct 2016 07:08:20 -0400
+From:   Jeff King <peff@peff.net>
 To:     Stefan Christ <contact@stefanchrist.eu>
-cc:     git@vger.kernel.org
+Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] Documenation: fmt-merge-msg: fix markup in example
-In-Reply-To: <1477648886-12096-1-git-send-email-contact@stefanchrist.eu>
-Message-ID: <alpine.LFD.2.20.1610280623400.524@localhost.localdomain>
+Message-ID: <20161028110820.a46ttxjicq2k5xdk@sigill.intra.peff.net>
 References: <1477648886-12096-1-git-send-email-contact@stefanchrist.eu>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-MAG-OUTBOUND: ccj.redcondor.net@64.235.106.9/32
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1477648886-12096-1-git-send-email-contact@stefanchrist.eu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Oct 28, 2016 at 12:01:26PM +0200, Stefan Christ wrote:
 
-  "Documenation"?
+> diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
+> index 6526b17..44892c4 100644
+> --- a/Documentation/git-fmt-merge-msg.txt
+> +++ b/Documentation/git-fmt-merge-msg.txt
+> @@ -60,10 +60,10 @@ merge.summary::
+>  EXAMPLE
+>  -------
+>  
+> ---
+> +---------
+>  $ git fetch origin master
+>  $ git fmt-merge-msg --log <$GIT_DIR/FETCH_HEAD
+> ---
+> +---------
 
-rday
+Thanks. Asciidoc generally requires at least 4 delimiter characters to
+open a delimited block (including a ListingBlock, which is what we want
+here). There is one exception, "--", which is a generic OpenBlock, which
+is just used for grouping, and not any special syntactic meaning (so
+that's why this _didn't_ render the "--", but did render the contents
+without line breaks).
 
--- 
+So looks good, modulo the typo in the subject that somebody else pointed
+out.
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
-
+-Peff
