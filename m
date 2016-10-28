@@ -2,95 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFF092035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 21:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33BC32035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 21:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761424AbcJ1Vfx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 17:35:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61576 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754384AbcJ1Vfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 17:35:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A276C4A71A;
-        Fri, 28 Oct 2016 17:35:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nMl5xzV54bdNPtFmHEaxHK6UlIo=; b=p7Q7Pk
-        JhJ30A0sX4NU5w32emTma4A/zzLStvS8rXrvUVMmk04lercz/7troUnzn97J7btG
-        N/YW8ORHcyDgqoUp1HqgkIQG9F3S2G0OsbT/+n4EqEkqeD4ZS0ZFvFe0PQFGxSK3
-        lmhieMEPe4uJD94PNDIUjKiohUHyagiq2wBBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GYVLiGossKcVNF3ihJJjqZo81eTDJ11g
-        ihDmzuvN73os+/vuJfapgaCMsojnLxw1jWgD/iAJizya6tBznmaTQOK1NjI7ltML
-        zvtNvneWjIRT0Yx01OIEOiaxZ3JmkhHUOCPAFwbe6q3+CMlzWY2ZYs6Cy1P7am84
-        6lMG0sRMfQU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AC594A719;
-        Fri, 28 Oct 2016 17:35:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1761980AbcJ1VkI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 17:40:08 -0400
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:54510 "EHLO
+        homiemail-a61.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1761948AbcJ1VkH (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Oct 2016 17:40:07 -0400
+Received: from homiemail-a61.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a61.g.dreamhost.com (Postfix) with ESMTP id 8D4FD578190
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 14:40:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:content-type:date:mime-version:
+        content-transfer-encoding; s=mattmccutchen.net; bh=IJFhjHuA6Gy6n
+        G94Hk4H1b3KqPE=; b=Y+pDnVUzI8WDMXRj+0zDXXa7IMrOb9/w1v8XQo1v29x5X
+        FiqqBt3KlerXtOEqhSrYidsPoKOCgVwOfzW2v2f5TTVy8KJ4cxAVuXRsveZSGnuq
+        QwfPW5QzVIkZBk3QKZmqIKXETShS35xJIbPTsICyfqinF8Y8kT0qYKBa9tO/E0=
+Received: from main (30-9-219.wireless.csail.mit.edu [128.30.9.219])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1A6E34A717;
-        Fri, 28 Oct 2016 17:35:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCHv2 28/36] attr: keep attr stack for each check
-References: <20161028185502.8789-1-sbeller@google.com>
-        <20161028185502.8789-29-sbeller@google.com>
-Date:   Fri, 28 Oct 2016 14:35:49 -0700
-In-Reply-To: <20161028185502.8789-29-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 28 Oct 2016 11:54:54 -0700")
-Message-ID: <xmqqvawcxikq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7F62365C-9D56-11E6-A88E-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a61.g.dreamhost.com (Postfix) with ESMTPSA id 47CE357811D
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 14:40:05 -0700 (PDT)
+Message-ID: <1477690790.2904.22.camel@mattmccutchen.net>
+Subject: Fetch/push lets a malicious server steal the targets of "have"
+ lines
+From:   Matt McCutchen <matt@mattmccutchen.net>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Date:   Fri, 28 Oct 2016 17:39:50 -0400
+Mime-Version: 1.0
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+I was studying the fetch protocol and I realized that in a scenario in
+which a client regularly fetches a set of refs from a server and pushes
+them back without careful scrutiny, the server can steal the targets of
+unrelated refs from the client repository by fabricating its own refs
+to the "have" objects specified by the client during the fetch. =C2=A0Thi=
+s
+is the reverse of attack #1 described in the "SECURITY" section of the
+gitnamespaces(7) man page, with the addition that the server doesn't
+have to know the object IDs in advance. =C2=A0Is this supposed to be well=
+-
+known? =C2=A0I've been using git since 2006 and it was a surprise to me.
 
-> Instead of having a global attr stack, attach the stack to each check.
-> This allows to use the attr in a multithreaded way.
->
->
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+Hopefully it isn't very common for a user to fetch and push with a
+server they don't trust to have all the data in their repository. =C2=A0I
+don't think I have any such cases myself; I have unfinished work that
+isn't meant for scrutiny by others, but nothing really damaging if it
+were released to the server. =C2=A0This attack presents no new risks if a
+user already runs code fetched from the server in such a way that it
+can read the repository. =C2=A0But there might be some users who just rev=
+iew
+embargoed security fixes from multiple sources (or something like that)
+without running code themselves, and their security expectations might
+be violated.
 
->  attr.c    | 101 +++++++++++++++++++++++++++++++++++++++-----------------------
->  attr.h    |   4 ++-
->  hashmap.h |   2 ++
->  3 files changed, 69 insertions(+), 38 deletions(-)
+If my analysis is correct, I'd argue for documenting the issue in a
+"SECURITY" section in the git-fetch man page. =C2=A0Shall I submit a patc=
+h?
 
-This looks surprisingly simple ;-)  I like it.
+Thanks for your attention.
 
-I briefly wondered if the addition of lock/unlock surrounding
-git_check_attrs() function belongs to [27/36], but that step is not
-about making things thread-safe and is primarily to prepare existing
-users to use an updated API that can be made thread-safe in later
-steps.  This [28/36] is the step to have these---so the addition is
-not out-of-space at all.  
-
-Nicely done.
-
-As this starts to pass a fully populated check object down to the
-callchain that begins at bootstrap_attr_stack(), it makes it easier
-to add the per-check optimization to read and keep only the relevant
-entries from the attribute files later, by passing check also to the
-read_attr_from_file() function.
-
-The "set-direction" thing is not yet thread-safe, but I am not sure
-what the best way to go there offhand.  It somehow feels unnecessary
-to allow some thread to be going in the GIT_ATTR_CHECKIN direction
-while others to be going in the GIT_ATTR_CHECKOUT direction, so we
-probably can leave it at a lower priority for now.
+Matt
