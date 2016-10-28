@@ -7,150 +7,201 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5122035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 18:56:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D567E2035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 18:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034289AbcJ1S4N (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 14:56:13 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:35376 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755815AbcJ1S4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 14:56:08 -0400
-Received: by mail-pf0-f180.google.com with SMTP id s8so41513075pfj.2
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:56:07 -0700 (PDT)
+        id S1034285AbcJ1S4E (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 14:56:04 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:33404 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030840AbcJ1Szz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 14:55:55 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 197so41757870pfu.0
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LGVCoIlzr1meXCJpAzG85Yt7LageaEPwYwQdYpLWAPc=;
-        b=Wb4RA3C+DZv9Eskx3CcbgX/B02jtd4tatrZzE/YAIHOwAdG5Wl7fXbhpcS5kGMED+z
-         7zFKCWfLkgQ/wiZSxOUwVhOyV+tK3RwA0h7lyr8Dzjw4WHCYlj6B2Y34NNqCwIkKjcIS
-         6ESDFKs9VDmXWQOnke3KlvP2xmYiV3GjimTIn6/Q91JnOKE0EyJxNI5VtL2XUw8g0zRo
-         Ne7ohWrtttuM3sHOpRQCNY+73ke89sszpNsPY0+dYvm2+qCyqTznwMYEt/DSweCsiGxV
-         1WMrvTRb1u1AdBE2QlZGqa0Ojbz6K2sZrK0JgQrrGinXeRxnjmmT/QFzwGG25IUsJf4N
-         65Mg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9tRS7E01mFmqz7GwZ/U1WU1wStoaoMUMVXHSJeF4K8Q=;
+        b=pX5JqlIvEVQ6d7cXhzoPrw4GTARYA2LuK4sDeHLxHE3OsQqcRK14n8xMX9LAn8NeWM
+         JGHoskglLFiIabYWiHGuvx5szCL2iLjVgVnxaSXfNY+R6H9hssW+y9O7xacPhAg5aonl
+         EVNOu7cjAg/BSsh3+e05Y5VDjwFjmzIg3u6Sxzf3PVvHD+VsCY8cpYLpHCZm5neC8u1t
+         G6olvCIyKzdMjk5SRBiRjtrZhRkuQ0kF3+ISU13KfwwjLV3TJRf8kum7J+b7oWcNl9U5
+         KmP8RMAQ/5a5EC/cfZub2On3qRC/W1q5pD0HmN90+oqUqnwLXJJ6bi4NhUhs0tgVpi88
+         leIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=LGVCoIlzr1meXCJpAzG85Yt7LageaEPwYwQdYpLWAPc=;
-        b=HOGtAdO5VBojdAVDs8p9rZyoRuS81uuFw9WXfhxzdy8WdidMkUUXlJbW/jAgrRgqIf
-         U85Hh9z3BsrwPCgawgkST/zAcb7TexjA1nICMOdFAepmtOPayDIi5wf9XDZYo8jvJ+s5
-         c1VG+WMOFoWl/KaRwGY4SWZtgt4+4HmRziVUN5s4tVrMlw9Xg0PhO15wAZnygUbfVjaZ
-         g0tTK6nVJCUpkCNq/2Fi+R+/f36AgF2p8ka07JZOxm29WxHWboe2XJEDB5PdLMXJkM8Z
-         OvDJ3vcjuWLgmaCTveBdnCY3Y4ImCQqPD5ksLzWWwqhmQmFVXf5g3+/q+anGfIMCSqB7
-         7EPw==
-X-Gm-Message-State: ABUngvdg8v3inxqKEvtBT3Gfz73rMgVQ+I93c3HDwwjLv4t4nO66fMcRh/rut6HDB14Nxt0X
-X-Received: by 10.98.102.84 with SMTP id a81mr27075251pfc.176.1477680966956;
-        Fri, 28 Oct 2016 11:56:06 -0700 (PDT)
+         :references:mime-version:content-transfer-encoding;
+        bh=9tRS7E01mFmqz7GwZ/U1WU1wStoaoMUMVXHSJeF4K8Q=;
+        b=gtwYEnqWvqZHx6SczfaQsdPTblgCtn1AOFr1QqPc1KkiLGZ4cg9QYDUdFCPQm7HJfB
+         xcz5SCAfpATv+Gfoj5pvo0YsjSYcVENWgd/7d7ecTm4Vrj5XcNxd67BQ3XKT21tWyIaQ
+         UJt3iCuU62ZfWV9HXZgyGfNpLztXybVKN8v+Cutny7ovS98QkXojs3/EyhNd5glL7oCJ
+         lIR7exBOy3f21J0wQmBeDesjHkYvc2s8W19yCe/NZo4wBKYA+Z97beToJn++Y74HTSRc
+         r+9OjXf1sZoSDYG2XgZ7dlPoxqytCOXLBISzovnpkhqvplBXIQMH05k4E9LZqawJEb+E
+         1QeQ==
+X-Gm-Message-State: ABUngvcmKzWWqTFPjduI5PYad5hxjeA9LYRmZ9To53BydDLT8TYlQDV13lUCUpq7KxBG43U1
+X-Received: by 10.99.42.80 with SMTP id q77mr22781267pgq.3.1477680953603;
+        Fri, 28 Oct 2016 11:55:53 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:91ed:bb99:5319:17e9])
-        by smtp.gmail.com with ESMTPSA id h5sm20530544pfg.86.2016.10.28.11.56.06
+        by smtp.gmail.com with ESMTPSA id w15sm20590400paj.33.2016.10.28.11.55.53
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Oct 2016 11:56:06 -0700 (PDT)
+        Fri, 28 Oct 2016 11:55:53 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 25/36] attr.c: outline the future plans by heavily commenting
-Date:   Fri, 28 Oct 2016 11:54:51 -0700
-Message-Id: <20161028185502.8789-26-sbeller@google.com>
+Subject: [PATCHv2 18/36] attr: support quoting pathname patterns in C style
+Date:   Fri, 28 Oct 2016 11:54:44 -0700
+Message-Id: <20161028185502.8789-19-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.714.ge3da0db
 In-Reply-To: <20161028185502.8789-1-sbeller@google.com>
 References: <20161028185502.8789-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
+Full pattern must be quoted. So 'pat"t"ern attr' will give exactly
+'pat"t"ern', not 'pattern'. Also clarify that leading whitespaces are
+not part of the pattern and document comment syntax.
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ Documentation/gitattributes.txt |  8 +++++---
+ attr.c                          | 15 +++++++++++++--
+ t/t0003-attributes.sh           | 26 ++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 7aff940202..8a061af0cc 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -21,9 +21,11 @@ Each line in `gitattributes` file is of form:
+ 	pattern	attr1 attr2 ...
+ 
+ That is, a pattern followed by an attributes list,
+-separated by whitespaces.  When the pattern matches the
+-path in question, the attributes listed on the line are given to
+-the path.
++separated by whitespaces. Leading and trailing whitespaces are
++ignored. Lines that begin with '#' are ignored. Patterns
++that begin with a double quote are quoted in C style.
++When the pattern matches the path in question, the attributes
++listed on the line are given to the path.
+ 
+ Each attribute can be in one of these states for a given path:
+ 
 diff --git a/attr.c b/attr.c
-index 92b3130f1e..10f2042fbb 100644
+index 33021cc857..c8c4936f36 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -30,6 +30,11 @@ static const char git_attr__unknown[] = "(builtin)unknown";
- #define DEBUG_ATTR 0
- #endif
+@@ -13,6 +13,7 @@
+ #include "attr.h"
+ #include "dir.h"
+ #include "utf8.h"
++#include "quote.h"
  
-+/*
-+ * NEEDSWORK: the global dictionary of the interned attributes
-+ * must stay a singleton even after we become thread-ready.
-+ * Access to these must be surrounded with mutex when it happens.
-+ */
- struct git_attr {
- 	struct git_attr *next;
- 	unsigned h;
-@@ -39,10 +44,19 @@ struct git_attr {
- 	char name[FLEX_ARRAY];
- };
- static int attr_nr;
-+static struct git_attr *(git_attr_hash[HASHSIZE]);
+ const char git_attr__true[] = "(builtin)true";
+ const char git_attr__false[] = "\0(builtin)false";
+@@ -225,12 +226,21 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 	const char *cp, *name, *states;
+ 	struct match_attr *res = NULL;
+ 	int is_macro;
++	struct strbuf pattern = STRBUF_INIT;
+ 
+ 	cp = line + strspn(line, blank);
+ 	if (!*cp || *cp == '#')
+ 		return NULL;
+ 	name = cp;
+-	namelen = strcspn(name, blank);
 +
-+/*
-+ * NEEDSWORK: maybe-real, maybe-macro are not property of
-+ * an attribute, as it depends on what .gitattributes are
-+ * read.  Once we introduce per git_attr_check attr_stack
-+ * and check_all_attr, the optimization based on them will
-+ * become unnecessary and can go away.  So is this variable.
-+ */
- static int cannot_trust_maybe_real;
++	if (*cp == '"' && !unquote_c_style(&pattern, name, &states)) {
++		name = pattern.buf;
++		namelen = pattern.len;
++	} else {
++		namelen = strcspn(name, blank);
++		states = name + namelen;
++	}
++
+ 	if (strlen(ATTRIBUTE_MACRO_PREFIX) < namelen &&
+ 	    starts_with(name, ATTRIBUTE_MACRO_PREFIX)) {
+ 		if (!macro_ok) {
+@@ -250,7 +260,6 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 	else
+ 		is_macro = 0;
  
-+/* NEEDSWORK: This will become per git_attr_check */
- static struct git_attr_check_elem *check_all_attr;
--static struct git_attr *(git_attr_hash[HASHSIZE]);
+-	states = name + namelen;
+ 	states += strspn(states, blank);
  
- const char *git_attr_name(const struct git_attr *attr)
- {
-@@ -117,6 +131,11 @@ struct git_attr *git_attr_counted(const char *name, size_t len)
- 	a->maybe_real = 0;
- 	git_attr_hash[pos] = a;
+ 	/* First pass to count the attr_states */
+@@ -293,9 +302,11 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 			cannot_trust_maybe_real = 1;
+ 	}
  
-+	/*
-+	 * NEEDSWORK: per git_attr_check check_all_attr
-+	 * will be initialized a lot more lazily, not
-+	 * like this, and not here.
-+	 */
- 	REALLOC_ARRAY(check_all_attr, attr_nr);
- 	check_all_attr[a->attr_nr].attr = a;
- 	check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
-@@ -329,6 +348,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
-  * .gitignore file and info/excludes file as a fallback.
-  */
- 
-+/* NEEDSWORK: This will become per git_attr_check */
- static struct attr_stack {
- 	struct attr_stack *prev;
- 	char *origin;
-@@ -393,6 +413,24 @@ static struct attr_stack *read_attr_from_array(const char **list)
++	strbuf_release(&pattern);
  	return res;
+ 
+ fail_return:
++	strbuf_release(&pattern);
+ 	free(res);
+ 	return NULL;
+ }
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index f0fbb42554..f19ae4f8cc 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -13,10 +13,31 @@ attr_check () {
+ 	test_line_count = 0 err
  }
  
-+/*
-+ * NEEDSWORK: these two are tricky.  The callers assume there is a
-+ * single, system-wide global state "where we read attributes from?"
-+ * and when the state is flipped by calling git_attr_set_direction(),
-+ * attr_stack is discarded so that subsequent attr_check will lazily
-+ * read from the right place.  And they do not know or care who called
-+ * by them uses the attribute subsystem, hence have no knowledge of
-+ * existing git_attr_check instances or future ones that will be
-+ * created).
-+ *
-+ * Probably we need a thread_local that holds these two variables,
-+ * and a list of git_attr_check instances (which need to be maintained
-+ * by hooking into git_attr_check_alloc(), git_attr_check_initl(), and
-+ * git_attr_check_clear().  Then git_attr_set_direction() updates the
-+ * fields in that thread_local for these two variables, iterate over
-+ * all the active git_attr_check instances and discard the attr_stack
-+ * they hold.  Yuck, but it sounds doable.
-+ */
- static enum git_attr_direction direction;
- static struct index_state *use_index;
++attr_check_quote () {
++
++	path="$1"
++	quoted_path="$2"
++	expect="$3"
++
++	git check-attr test -- "$path" >actual &&
++	echo "\"$quoted_path\": test: $expect" >expect &&
++	test_cmp expect actual
++
++}
++
++test_expect_success 'open-quoted pathname' '
++	echo "\"a test=a" >.gitattributes &&
++	test_must_fail attr_check a a
++'
++
++
+ test_expect_success 'setup' '
+ 	mkdir -p a/b/d a/c b &&
+ 	(
+ 		echo "[attr]notest !test"
++		echo "\" d \"	test=d"
++		echo " e	test=e"
++		echo " e\"	test=e"
+ 		echo "f	test=f"
+ 		echo "a/i test=a/i"
+ 		echo "onoff test -test"
+@@ -69,6 +90,11 @@ test_expect_success 'command line checks' '
+ '
  
+ test_expect_success 'attribute test' '
++
++	attr_check " d " d &&
++	attr_check e e &&
++	attr_check_quote e\" e\\\" e &&
++
+ 	attr_check f f &&
+ 	attr_check a/f f &&
+ 	attr_check a/c/f f &&
 -- 
 2.10.1.714.ge3da0db
 
