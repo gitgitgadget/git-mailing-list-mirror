@@ -6,132 +6,101 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7EDD2035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 12:50:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49CF22035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 13:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760530AbcJ1MuN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 08:50:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53560 "EHLO
+        id S1759993AbcJ1NDk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 09:03:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52481 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1760027AbcJ1MuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 08:50:12 -0400
+        with ESMTP id S1758284AbcJ1NDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 09:03:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D0F6447DE;
-        Fri, 28 Oct 2016 08:50:10 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC1704495D;
+        Fri, 28 Oct 2016 09:03:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2G3E7scRxgah
-        ZxOnbJ5opAoov70=; b=gUmJki8HzMjj1hP2MtPkSqhCTuoGsjKrxIolu8Od0BFm
-        vbK8h97qScUPfqp4cjNl+0ZvtU2IhRrvgU0U9FGkzYW/wLWhYE9iZm3d8EuigTBv
-        7f/0sdLrhH3KUAujLE5CfpSEPBhyI4Qibu5oV2P2LrG25AhtYyMu1pQFiqVs628=
+        :content-type; s=sasl; bh=hj21Zq0FufnKFDClkxzzAxA31Hc=; b=dTmb2Z
+        wOiBoaK9jjZYtAw9GjhLnfC1rL0iWDmgwB1TqVS9tjBGMR5AvuzK6X4QQoTFNC7H
+        Xf1pbvgnMZJdIJPXPJVkQWvJXpwdGoMwmDzxvn+n0kD76blpLVqQJ+HRrYa8leHW
+        QIARGaYrAUYt01WcFvJjOLDNq2iv67WMwS404=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QqukUb
-        PdcyxP7vc/+nzeYF5+Y7l7qELyiDFGjxybXeyjBe80xRPwrAGuqX2qob+iPVQkme
-        Mqsm2+JTKNpgEloJbahlRWh/H0r5sbOa1QA2MuQqrT9DpyjJ9MvCaZBdvJ9airyM
-        AZP6Et6QT3mRUgEU647xRe7F0ncX9JR2iM8vs=
+        :content-type; q=dns; s=sasl; b=bDtpP736msW7bYWFTg6kD6s+IFe9vIm7
+        8wraDJJ41b7a/LA9WwCD3tG7HnSNYxHpnbwXccuRjpywvWAW3pBlS1ooYyF5PvrJ
+        0p5hpAMk9fJTrf64KehgnZ0GfPHZUpLVtj/Ei+0Tir/x1yIa8pik9IyRX1/iej6l
+        jQBXWZF4BBY=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05264447DC;
-        Fri, 28 Oct 2016 08:50:10 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E37984495C;
+        Fri, 28 Oct 2016 09:03:36 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72C98447DB;
-        Fri, 28 Oct 2016 08:50:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5DB744495B;
+        Fri, 28 Oct 2016 09:03:36 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] valgrind: support test helpers
-References: <71c3d13a-fa29-75d3-50ac-81978c08f552@web.de>
-Date:   Fri, 28 Oct 2016 05:50:07 -0700
-In-Reply-To: <71c3d13a-fa29-75d3-50ac-81978c08f552@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Fri, 28 Oct 2016 00:14:00 +0200")
-Message-ID: <xmqqshrg3af4.fsf@gitster.mtv.corp.google.com>
+To:     Henrik Ahlgren <pablo@seestieto.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Fix typo in 2.11.0 RelNotes
+References: <1477651639-11529-1-git-send-email-pablo@seestieto.com>
+Date:   Fri, 28 Oct 2016 06:03:34 -0700
+In-Reply-To: <1477651639-11529-1-git-send-email-pablo@seestieto.com> (Henrik
+        Ahlgren's message of "Fri, 28 Oct 2016 13:47:19 +0300")
+Message-ID: <xmqqoa2439sp.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0F195D92-9D0D-11E6-ABF4-987C12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F00EEF6E-9D0E-11E6-921C-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Henrik Ahlgren <pablo@seestieto.com> writes:
 
-> Tests run with --valgrind call git commands through a wrapper script
-> that invokes valgrind on them.  This script (valgrind.sh) is in turn
-> invoked through symlinks created for each command in t/valgrind/bin/.
->
-> Since e6e7530d (test helpers: move test-* to t/helper/ subdirectory)
-> these symlinks have been broken for test helpers -- they point to the
-> old locations in the root of the build directory.  Fix that by teaching
-> the code for creating the links about the new location of the binaries,
-> and do the same in the wrapper script to allow it to find its payload.
->
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> Signed-off-by: Henrik Ahlgren <pablo@seestieto.com>
 > ---
-
-Hmph.  I somehow thought this was supposed to have been fixed by
-503e224180 ("t/test-lib.sh: fix running tests with --valgrind",
-2016-07-11) already.
-
-
-
->  t/test-lib.sh          |  9 ++++++++-
->  t/valgrind/valgrind.sh | 12 ++++++++++--
->  2 files changed, 18 insertions(+), 3 deletions(-)
+>  Documentation/RelNotes/2.11.0.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index b859db6..a724181 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -809,7 +809,14 @@ then
->  		return;
-> =20
->  		base=3D$(basename "$1")
-> -		symlink_target=3D$GIT_BUILD_DIR/$base
-> +		case "$base" in
-> +		test-*)
-> +			symlink_target=3D"$GIT_BUILD_DIR/t/helper/$base"
-> +			;;
-> +		*)
-> +			symlink_target=3D"$GIT_BUILD_DIR/$base"
-> +			;;
-> +		esac
->  		# do not override scripts
->  		if test -x "$symlink_target" &&
->  		    test ! -d "$symlink_target" &&
-> diff --git a/t/valgrind/valgrind.sh b/t/valgrind/valgrind.sh
-> index 4215303..669ebaf 100755
-> --- a/t/valgrind/valgrind.sh
-> +++ b/t/valgrind/valgrind.sh
-> @@ -1,11 +1,19 @@
->  #!/bin/sh
-> =20
->  base=3D$(basename "$0")
-> +case "$base" in
-> +test-*)
-> +	program=3D"$GIT_VALGRIND/../../t/helper/$base"
-> +	;;
-> +*)
-> +	program=3D"$GIT_VALGRIND/../../$base"
-> +	;;
-> +esac
-> =20
->  TOOL_OPTIONS=3D'--leak-check=3Dno'
-> =20
->  test -z "$GIT_VALGRIND_ENABLED" &&
-> -exec "$GIT_VALGRIND"/../../"$base" "$@"
-> +exec "$program" "$@"
-> =20
->  case "$GIT_VALGRIND_MODE" in
->  memcheck-fast)
-> @@ -29,4 +37,4 @@ exec valgrind -q --error-exitcode=3D126 \
->  	--log-fd=3D4 \
->  	--input-fd=3D4 \
->  	$GIT_VALGRIND_OPTIONS \
-> -	"$GIT_VALGRIND"/../../"$base" "$@"
-> +	"$program" "$@"
+> diff --git a/Documentation/RelNotes/2.11.0.txt b/Documentation/RelNotes/2.11.0.txt
+> index 3590620..1d3a07d 100644
+> --- a/Documentation/RelNotes/2.11.0.txt
+> +++ b/Documentation/RelNotes/2.11.0.txt
+> @@ -5,7 +5,7 @@ Backward compatibility notes.
+>  
+>   * An empty string used as a pathspec element has always meant
+>     'everything matches', but it is too easy to write a script that
+> -   finds a path to remove in $path and run 'git rm "$paht"', which
+> +   finds a path to remove in $path and run 'git rm "$path"', which
+>     ends up removing everything.  This release starts warning about the
+>     use of an empty string that is used for 'everything matches' and
+>     asks users to use a more explicit '.' for that instead.
+
+What you spotted is certainly a typo, but it is a deliberate one
+that must not be fixed like this.  "..., but it is too easy to ..."
+is illustrating a scenario in which an empty string is accidentally
+given to "git rm" as a pathspec by mistake, and the example it uses
+is for the user to prepare a path to be removed in variable $path,
+and referring to it as its typoed $paht by mistake.  Fixing that typo
+in this paragraph defeats the whole point of the example.
+
+But the fact that you spotted the typo (which is good; we want the
+deliberate typo in the example to be clearly visible) and thought
+that the writer of the paragraph must have meant a non-typoed
+version there (which is bad) indicates that the paragraph needs
+improvement to save readers from making the same mis-reading as you
+did.
+
+If the original text were like the following, would it have been
+clear enough that prevented you from sending your patch?
+
+ * An empty string used as a pathspec element has always meant
+   'everything matches', but it is too easy to write a script that
+   finds a path to remove in $path and run 'git rm "$paht"' by 
+   mistake (when the user meant to give "$path"), which ends up
+   removing everything.  This release starts warning about the
+   use of an empty string that is used for 'everything matches' and
+   asks users to use a more explicit '.' for that instead.
+
+Thanks.
