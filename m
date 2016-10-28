@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 418022035F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63DB0203BD
 	for <e@80x24.org>; Fri, 28 Oct 2016 18:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966278AbcJ1Szq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 14:55:46 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35882 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966260AbcJ1Szl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 14:55:41 -0400
-Received: by mail-pf0-f181.google.com with SMTP id e6so41414920pfk.3
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:41 -0700 (PDT)
+        id S966284AbcJ1Szs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 14:55:48 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35269 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966136AbcJ1Szj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 14:55:39 -0400
+Received: by mail-pf0-f179.google.com with SMTP id s8so41507899pfj.2
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z80RqA8jnLNQP4svz2Z8qoRDXxVXuOxWVm//OsPrVCw=;
-        b=BlrbCWQ91K2cefPlEm5Bn9yWU5IrwMfKXHDXrpC87z1WdUIrwkKgSVVX7hpyc1SZWh
-         2gvsI/TEJSp2nccnCLBPkEAoeIdIJs6OPTpLHnwbwIxRpk0NAIVKN9IjcrG/2FRqpC94
-         AHeHlXDxxKM360SAU6WF02r+GFTgMzq37AHeiXrud67FFBIOSWGckyGV8q1WTcU8y752
-         67xYXTEtg7XP9VTrSjeBNp9/Z/8C54WjCV8GBZ9XTHNTv9Qwh3bOUnmd0u+xkh+UzFI5
-         gUDyH3MZwBPJZ5hv0y65pvZxbrvlw4+YPAIk7+bDZoYKIXVOYFDQw4P7Aa+vuKPQj348
-         5Lig==
+        bh=yVOHwTK8azbR5HKamId+A1WjCb9jm515Y53omhtymVs=;
+        b=ERRTXU37cyKqL4oDdLhMyK7W2hfu2Ubp6qKoBPZAd/4DE7lvvyMiRn4/DZnH9DKqYJ
+         9qMq0HgJI2q+ykwUKzEjuYT1wAzC3e4d0bTA4xEfgQAXsgginyez5PPYAFn0TsWFedOr
+         FpXUghYTxyCO1FqrkuJDliwdTaLEpYyP82WFkjD1m3jPJXI41C8WA5oQek9EAX6lJqEw
+         DoXia6vuDvWQjGHMHQVhOCZLEoeg2h/M78SW1nZN+XwvLToPAQ4Id9oLOQkSOmujPVFn
+         IkRnf5oz/QvFFZDGzuOUIJSTBG2IDbkwBN8SLyeEV/S50KlIG6DaxlZReEgPFHgIZ3F4
+         1nXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Z80RqA8jnLNQP4svz2Z8qoRDXxVXuOxWVm//OsPrVCw=;
-        b=gXmoq12UXYUGTKWg2DV7gaP2ZWQxiY7RzuJIzwQH9njJ4KK6hm+8nbySJnMvpM34CX
-         ikCZOrA3h35VRKFCDEZLpEfNXaZ02EL6vM7aucZSUq6OdjezunqkP8vK984uOeJixJWL
-         c2uxuuDEvnhQ9Hxae2e3zvmWogJgv7sdIcOVFgkxMstnumvSTTE9UH2YcLHyKJIyfQyQ
-         WaVigyI6+NP/i4djssza30T2bJy38BC79rnWcbB85y3Kw1t1HS5kxCQTNPrqoCLAzE7y
-         kPtblu1cJ7pFRJ00MnDQoz1tUXGA4klqcOUM1ewnsOZR7f9XPM8xpGv8qYdrV+VMXKFc
-         3++w==
-X-Gm-Message-State: ABUngvchgbEES4X/jzdqOo1swV0KgudDVxlM+kVfONSPoVXdTUQTkniAkEub1GrkvIWrBn8W
-X-Received: by 10.99.37.196 with SMTP id l187mr22467139pgl.91.1477680940441;
-        Fri, 28 Oct 2016 11:55:40 -0700 (PDT)
+        bh=yVOHwTK8azbR5HKamId+A1WjCb9jm515Y53omhtymVs=;
+        b=gVwr44l1aHLpciXrE09U8yP1EXMCXtn5Djvyp5UlNwpk1Dq775cUK2fdRbCV1IWqDq
+         ldaETHToyoZVDTw4HEm3OAcsAB/IklDGcwx+AaDq7FyZMpjelifaB5CU07uLPOhEZy3W
+         x+f3KxFUTwulbyACFImyzXk7ElmNJNEuStZu/I5YOMb9LtneeK50TGPLBgi9FX/2aA1z
+         m/ntI3BnOvJhruf9RsuLvjC8Dc9uMu8ia2pRDTo/YqUreCdWJ4aiqx47whdPmC91dsOf
+         7WMtHHZEljV8GJT0J8KkmMUOAPDxSsgRfyVG6kvgtC4tuwpMZ2nUcZ163rLp8Y9qcqwh
+         Qw2w==
+X-Gm-Message-State: ABUngvdHA1Kwih9CctAJa69qTkmSfxutt0+eA3vPhtYvecFfhV4Npe90ZnwJVRlAVfHLqbLW
+X-Received: by 10.98.103.152 with SMTP id t24mr27717032pfj.77.1477680938643;
+        Fri, 28 Oct 2016 11:55:38 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:91ed:bb99:5319:17e9])
-        by smtp.gmail.com with ESMTPSA id p62sm20558793pfb.42.2016.10.28.11.55.39
+        by smtp.gmail.com with ESMTPSA id r77sm20615390pfb.2.2016.10.28.11.55.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Oct 2016 11:55:40 -0700 (PDT)
+        Fri, 28 Oct 2016 11:55:38 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 12/36] attr: convert git_all_attrs() to use "struct git_attr_check"
-Date:   Fri, 28 Oct 2016 11:54:38 -0700
-Message-Id: <20161028185502.8789-13-sbeller@google.com>
+Subject: [PATCHv2 11/36] attr: (re)introduce git_check_attr() and struct git_attr_check
+Date:   Fri, 28 Oct 2016 11:54:37 -0700
+Message-Id: <20161028185502.8789-12-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.714.ge3da0db
 In-Reply-To: <20161028185502.8789-1-sbeller@google.com>
 References: <20161028185502.8789-1-sbeller@google.com>
@@ -63,323 +63,166 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-This updates the other two ways the attribute check is done via an
-array of "struct git_attr_check_elem" elements.  These two niches
-appear only in "git check-attr".
+A common pattern to check N attributes for many paths is to
 
- * The caller does not know offhand what attributes it wants to ask
-   about and cannot use git_attr_check_initl() to prepare the
-   git_attr_check structure.
+ (1) prepare an array A of N git_attr_check_elem items;
+ (2) call git_attr() to intern the N attribute names and fill A;
+ (3) repeatedly call git_check_attrs() for path with N and A;
 
- * The caller may not know what attributes it wants to ask at all,
-   and instead wants to learn everything that the given path has.
+A look-up for these N attributes for a single path P scans the
+entire attr_stack, starting from the .git/info/attributes file and
+then .gitattributes file in the directory the path P is in, going
+upwards to find .gitattributes file found in parent directories.
 
-Such a caller can call git_attr_check_alloc() to allocate an empty
-git_attr_check, and then call git_attr_check_append() to add
-attribute names one by one.  A new attribute can be appended until
-git_attr_check structure is "finalized", which happens when it is
-used to ask for attributes for any path by calling git_check_attr()
-or git_all_attrs().  A git_attr_check structure that is initialized
-by git_attr_check_initl() is already finalized when it is returned.
+An earlier commit 06a604e6 (attr: avoid heavy work when we know the
+specified attr is not defined, 2014-12-28) tried to optimize out
+this scanning for one trivial special case: when the attribute being
+sought is known not to exist, we do not have to scan for it.  While
+this may be a cheap and effective heuristic, it would not work well
+when N is (much) more than 1.
 
-I am not at all happy with the way git_all_attrs() API turned out to
-be, but it is only to support one niche caller ("check-attr --all"),
-so I'll stop here for now.
+What we would want is a more customized way to skip irrelevant
+entries in the attribute stack, and the definition of irrelevance
+is tied to the set of attributes passed to git_check_attrs() call,
+i.e. the set of attributes being sought.  The data necessary for
+this optimization needs to live alongside the set of attributes, but
+a simple array of git_attr_check_elem simply does not have any place
+for that.
+
+Introduce "struct git_attr_check" that contains N, the number of
+attributes being sought, and A, the array that holds N
+git_attr_check_elem items, and a function git_check_attr() that
+takes a path P and this structure as its parameters.  This structure
+can later be extended to hold extra data necessary for optimization.
+
+Also, to make it easier to write the first two steps in common
+cases, introduce git_attr_check_initl() helper function, which takes
+a NULL-terminated list of attribute names and initialize this
+structure.
+
+As an illustration of this new API, convert archive.c that asks for
+export-subst and export-ignore attributes for each paths.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c               | 75 ++++++++++++++++++++++++++++++++++++++--------------
- attr.h               | 16 ++++++-----
- builtin/check-attr.c | 51 ++++++++++++++++++-----------------
- 3 files changed, 90 insertions(+), 52 deletions(-)
+ archive.c | 24 ++++++------------------
+ attr.c    | 34 ++++++++++++++++++++++++++++++++++
+ attr.h    |  9 +++++++++
+ 3 files changed, 49 insertions(+), 18 deletions(-)
 
+diff --git a/archive.c b/archive.c
+index 2dc8d6ca57..11e3951371 100644
+--- a/archive.c
++++ b/archive.c
+@@ -87,19 +87,6 @@ void *sha1_file_to_archive(const struct archiver_args *args,
+ 	return buffer;
+ }
+ 
+-static void setup_archive_check(struct git_attr_check_elem *check)
+-{
+-	static struct git_attr *attr_export_ignore;
+-	static struct git_attr *attr_export_subst;
+-
+-	if (!attr_export_ignore) {
+-		attr_export_ignore = git_attr("export-ignore");
+-		attr_export_subst = git_attr("export-subst");
+-	}
+-	check[0].attr = attr_export_ignore;
+-	check[1].attr = attr_export_subst;
+-}
+-
+ struct directory {
+ 	struct directory *up;
+ 	struct object_id oid;
+@@ -123,7 +110,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+ 	struct archiver_context *c = context;
+ 	struct archiver_args *args = c->args;
+ 	write_archive_entry_fn_t write_entry = c->write_entry;
+-	struct git_attr_check_elem check[2];
++	static struct git_attr_check *check;
+ 	const char *path_without_prefix;
+ 	int err;
+ 
+@@ -137,11 +124,12 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+ 		strbuf_addch(&path, '/');
+ 	path_without_prefix = path.buf + args->baselen;
+ 
+-	setup_archive_check(check);
+-	if (!git_check_attrs(path_without_prefix, ARRAY_SIZE(check), check)) {
+-		if (ATTR_TRUE(check[0].value))
++	if (!check)
++		check = git_attr_check_initl("export-ignore", "export-subst", NULL);
++	if (!git_check_attr(path_without_prefix, check)) {
++		if (ATTR_TRUE(check->check[0].value))
+ 			return 0;
+-		args->convert = ATTR_TRUE(check[1].value);
++		args->convert = ATTR_TRUE(check->check[1].value);
+ 	}
+ 
+ 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
 diff --git a/attr.c b/attr.c
-index 20d64b34f4..7ffa19875b 100644
+index ff7f0a59eb..20d64b34f4 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -728,6 +728,11 @@ static int macroexpand_one(int nr, int rem)
- 	return rem;
+@@ -833,3 +833,37 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
+ 		drop_attr_stack();
+ 	use_index = istate;
  }
- 
-+static int attr_check_is_dynamic(const struct git_attr_check *check)
++
++int git_check_attr(const char *path, struct git_attr_check *check)
 +{
-+	return (void *)(check->check) != (void *)(check + 1);
++	return git_check_attrs(path, check->check_nr, check->check);
 +}
 +
- /*
-  * Collect attributes for path into the array pointed to by
-  * check_all_attr. If num is non-zero, only attributes in check[] are
-@@ -793,32 +798,21 @@ int git_check_attrs(const char *path, int num, struct git_attr_check_elem *check
- 	return 0;
- }
- 
--int git_all_attrs(const char *path, int *num, struct git_attr_check_elem **check)
-+void git_all_attrs(const char *path, struct git_attr_check *check)
- {
--	int i, count, j;
-+	int i;
- 
-+	git_attr_check_clear(check);
- 	collect_some_attrs(path, 0, NULL);
- 
--	/* Count the number of attributes that are set. */
--	count = 0;
--	for (i = 0; i < attr_nr; i++) {
--		const char *value = check_all_attr[i].value;
--		if (value != ATTR__UNSET && value != ATTR__UNKNOWN)
--			++count;
--	}
--	*num = count;
--	ALLOC_ARRAY(*check, count);
--	j = 0;
- 	for (i = 0; i < attr_nr; i++) {
-+		const char *name = check_all_attr[i].attr->name;
- 		const char *value = check_all_attr[i].value;
--		if (value != ATTR__UNSET && value != ATTR__UNKNOWN) {
--			(*check)[j].attr = check_all_attr[i].attr;
--			(*check)[j].value = value;
--			++j;
--		}
-+		if (value == ATTR__UNSET || value == ATTR__UNKNOWN)
-+			continue;
-+		git_attr_check_append(check, git_attr(name));
-+		check->check[check->check_nr - 1].value = value;
- 	}
--
--	return 0;
- }
- 
- void git_attr_set_direction(enum git_attr_direction new, struct index_state *istate)
-@@ -836,6 +830,7 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
- 
- int git_check_attr(const char *path, struct git_attr_check *check)
- {
-+	check->finalized = 1;
- 	return git_check_attrs(path, check->check_nr, check->check);
- }
- 
-@@ -853,17 +848,57 @@ struct git_attr_check *git_attr_check_initl(const char *one, ...)
- 	check = xcalloc(1,
- 			sizeof(*check) + cnt * sizeof(*(check->check)));
- 	check->check_nr = cnt;
-+	check->finalized = 1;
- 	check->check = (struct git_attr_check_elem *)(check + 1);
- 
- 	check->check[0].attr = git_attr(one);
- 	va_start(params, one);
- 	for (cnt = 1; cnt < check->check_nr; cnt++) {
-+		struct git_attr *attr;
- 		param = va_arg(params, const char *);
- 		if (!param)
- 			die("BUG: counted %d != ended at %d",
- 			    check->check_nr, cnt);
--		check->check[cnt].attr = git_attr(param);
-+		attr = git_attr(param);
-+		if (!attr)
-+			die("BUG: %s: not a valid attribute name", param);
-+		check->check[cnt].attr = attr;
- 	}
- 	va_end(params);
- 	return check;
- }
-+
-+struct git_attr_check *git_attr_check_alloc(void)
++struct git_attr_check *git_attr_check_initl(const char *one, ...)
 +{
-+	return xcalloc(1, sizeof(struct git_attr_check));
-+}
++	struct git_attr_check *check;
++	int cnt;
++	va_list params;
++	const char *param;
 +
-+struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *check,
-+						  const struct git_attr *attr)
-+{
-+	struct git_attr_check_elem *elem;
-+	if (check->finalized)
-+		die("BUG: append after git_attr_check structure is finalized");
-+	if (!attr_check_is_dynamic(check))
-+		die("BUG: appending to a statically initialized git_attr_check");
-+	ALLOC_GROW(check->check, check->check_nr + 1, check->check_alloc);
-+	elem = &check->check[check->check_nr++];
-+	elem->attr = attr;
-+	return elem;
-+}
++	va_start(params, one);
++	for (cnt = 1; (param = va_arg(params, const char *)) != NULL; cnt++)
++		;
++	va_end(params);
++	check = xcalloc(1,
++			sizeof(*check) + cnt * sizeof(*(check->check)));
++	check->check_nr = cnt;
++	check->check = (struct git_attr_check_elem *)(check + 1);
 +
-+void git_attr_check_clear(struct git_attr_check *check)
-+{
-+	if (!attr_check_is_dynamic(check))
-+		die("BUG: clearing a statically initialized git_attr_check");
-+	free(check->check);
-+	check->check_nr = 0;
-+	check->check_alloc = 0;
-+	check->finalized = 0;
-+}
-+
-+void git_attr_check_free(struct git_attr_check *check)
-+{
-+	git_attr_check_clear(check);
-+	free(check);
++	check->check[0].attr = git_attr(one);
++	va_start(params, one);
++	for (cnt = 1; cnt < check->check_nr; cnt++) {
++		param = va_arg(params, const char *);
++		if (!param)
++			die("BUG: counted %d != ended at %d",
++			    check->check_nr, cnt);
++		check->check[cnt].attr = git_attr(param);
++	}
++	va_end(params);
++	return check;
 +}
 diff --git a/attr.h b/attr.h
-index 3fd8690749..0d94077d78 100644
+index dd3c4a3aef..3fd8690749 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -30,6 +30,7 @@ struct git_attr_check_elem {
+@@ -29,6 +29,15 @@ struct git_attr_check_elem {
+ 	const char *value;
  };
  
- struct git_attr_check {
-+	int finalized;
- 	int check_nr;
- 	int check_alloc;
- 	struct git_attr_check_elem *check;
-@@ -38,6 +39,12 @@ struct git_attr_check {
- extern struct git_attr_check *git_attr_check_initl(const char *, ...);
- extern int git_check_attr(const char *path, struct git_attr_check *);
- 
-+extern struct git_attr_check *git_attr_check_alloc(void);
-+extern struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *, const struct git_attr *);
++struct git_attr_check {
++	int check_nr;
++	int check_alloc;
++	struct git_attr_check_elem *check;
++};
 +
-+extern void git_attr_check_clear(struct git_attr_check *);
-+extern void git_attr_check_free(struct git_attr_check *);
++extern struct git_attr_check *git_attr_check_initl(const char *, ...);
++extern int git_check_attr(const char *path, struct git_attr_check *);
 +
  /*
   * Return the name of the attribute represented by the argument.  The
   * return value is a pointer to a null-delimited string that is part
-@@ -48,13 +55,10 @@ extern const char *git_attr_name(const struct git_attr *);
- int git_check_attrs(const char *path, int, struct git_attr_check_elem *);
- 
- /*
-- * Retrieve all attributes that apply to the specified path.  *num
-- * will be set to the number of attributes on the path; **check will
-- * be set to point at a newly-allocated array of git_attr_check
-- * objects describing the attributes and their values.  *check must be
-- * free()ed by the caller.
-+ * Retrieve all attributes that apply to the specified path.
-+ * check holds the attributes and their values.
-  */
--int git_all_attrs(const char *path, int *num, struct git_attr_check_elem **check);
-+void git_all_attrs(const char *path, struct git_attr_check *check);
- 
- enum git_attr_direction {
- 	GIT_ATTR_CHECKIN,
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 97e3837ead..ec61476f68 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -24,12 +24,13 @@ static const struct option check_attr_options[] = {
- 	OPT_END()
- };
- 
--static void output_attr(int cnt, struct git_attr_check_elem *check,
--			const char *file)
-+static void output_attr(struct git_attr_check *check, const char *file)
- {
- 	int j;
-+	int cnt = check->check_nr;
-+
- 	for (j = 0; j < cnt; j++) {
--		const char *value = check[j].value;
-+		const char *value = check->check[j].value;
- 
- 		if (ATTR_TRUE(value))
- 			value = "set";
-@@ -42,36 +43,37 @@ static void output_attr(int cnt, struct git_attr_check_elem *check,
- 			printf("%s%c" /* path */
- 			       "%s%c" /* attrname */
- 			       "%s%c" /* attrvalue */,
--			       file, 0, git_attr_name(check[j].attr), 0, value, 0);
-+			       file, 0,
-+			       git_attr_name(check->check[j].attr), 0, value, 0);
- 		} else {
- 			quote_c_style(file, NULL, stdout, 0);
--			printf(": %s: %s\n", git_attr_name(check[j].attr), value);
-+			printf(": %s: %s\n",
-+			       git_attr_name(check->check[j].attr), value);
- 		}
--
- 	}
- }
- 
- static void check_attr(const char *prefix,
--		       int cnt, struct git_attr_check_elem *check,
-+		       struct git_attr_check *check,
- 		       const char *file)
- {
- 	char *full_path =
- 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
- 	if (check != NULL) {
--		if (git_check_attrs(full_path, cnt, check))
--			die("git_check_attrs died");
--		output_attr(cnt, check, file);
-+		if (git_check_attr(full_path, check))
-+			die("git_check_attr died");
-+		output_attr(check, file);
- 	} else {
--		if (git_all_attrs(full_path, &cnt, &check))
--			die("git_all_attrs died");
--		output_attr(cnt, check, file);
--		free(check);
-+		check = git_attr_check_alloc();
-+		git_all_attrs(full_path, check);
-+		output_attr(check, file);
-+		git_attr_check_free(check);
- 	}
- 	free(full_path);
- }
- 
- static void check_attr_stdin_paths(const char *prefix,
--				   int cnt, struct git_attr_check_elem *check)
-+				   struct git_attr_check *check)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -85,7 +87,7 @@ static void check_attr_stdin_paths(const char *prefix,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		check_attr(prefix, cnt, check, buf.buf);
-+		check_attr(prefix, check, buf.buf);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 	strbuf_release(&buf);
-@@ -100,7 +102,7 @@ static NORETURN void error_with_usage(const char *msg)
- 
- int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
--	struct git_attr_check_elem *check;
-+	struct git_attr_check *check;
- 	int cnt, i, doubledash, filei;
- 
- 	if (!is_bare_repository())
-@@ -163,24 +165,21 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	if (all_attrs) {
- 		check = NULL;
- 	} else {
--		check = xcalloc(cnt, sizeof(*check));
-+		check = git_attr_check_alloc();
- 		for (i = 0; i < cnt; i++) {
--			const char *name;
--			struct git_attr *a;
--			name = argv[i];
--			a = git_attr(name);
-+			struct git_attr *a = git_attr(argv[i]);
- 			if (!a)
- 				return error("%s: not a valid attribute name",
--					name);
--			check[i].attr = a;
-+					     argv[i]);
-+			git_attr_check_append(check, a);
- 		}
- 	}
- 
- 	if (stdin_paths)
--		check_attr_stdin_paths(prefix, cnt, check);
-+		check_attr_stdin_paths(prefix, check);
- 	else {
- 		for (i = filei; i < argc; i++)
--			check_attr(prefix, cnt, check, argv[i]);
-+			check_attr(prefix, check, argv[i]);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 	return 0;
 -- 
 2.10.1.714.ge3da0db
 
