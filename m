@@ -2,99 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A16332035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 18:49:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44C282035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 18:55:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759693AbcJ1Stt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 14:49:49 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:36706 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759466AbcJ1Sts (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 14:49:48 -0400
-Received: by mail-yw0-f172.google.com with SMTP id u124so99580953ywg.3
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:49:46 -0700 (PDT)
+        id S966077AbcJ1SzT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 14:55:19 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:34275 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965206AbcJ1SzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 14:55:18 -0400
+Received: by mail-pf0-f171.google.com with SMTP id n85so41585101pfi.1
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=OV7W1Ib3f1n24rUPsOd4x4imJhLLYy8l0iEHlquATF4=;
-        b=zI5YpWusLNuHc7qb7oL8rhY/IqMT38tQQb9U5g2fAHQxnDY0Dxdv/Ci+zVKfESe7hT
-         jEDun2IhoSOqQlGFsOYUBtmKwPjnHtJOrX2eRdh46DY5sHqrzKXpIakWkfD5PJ4ZjJW4
-         kCLBT6LnutMnpCm/j/6bPrPqr93+3ENPeMAbGhU5IEOsBAfuD79JOUPlCO4iR5INNUzR
-         OvvhFMkANoXM0SBGsajLZdaBAJ+ZAkhcmgdri4EkkAPgEiYW/ae9VG1PnrnY4S47HoWo
-         O+/BEtoE6p2dZPon4wr+6kIfbK/PcxQEVgIPzL+gayMuGYpTnPLEJXj8gkWyDzURcuY7
-         Ukvg==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cK1UfS90sz3ZdMxXtcjsZDCuURuILLCgFWxS+9+B1wY=;
+        b=fWkoc2FWOggeV84LyEF3uMvWJg2Wq0eL2+rCyYdLwLMAXlNo9v+67MOpzBYK7yhHkt
+         JWsUzqH0h2CGoXn/L7ssbSU2KRMZrYWPs0pt6lUUUb+uIL0oMAlDLeD2V+kiWZubsE9W
+         EJcCjM1AvHChZv0hxo1o6mfn5p1qn+jB9tZdg9lnlTbdnfxFi3zCMW6Ba0JW+s+ntnfu
+         3vNurYogiTuLrhyA+hE19LozfXU6FRFEZyVEHnSwiC/SlxgeJvHvzPjjaOa1JPN0h2Sd
+         RzWNNjr9XJ5Bdg5LY9WivShjR7H3+xXx82gshhyhFF+INZtLtP+8gIMwBD0Mqv05JepO
+         oqsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=OV7W1Ib3f1n24rUPsOd4x4imJhLLYy8l0iEHlquATF4=;
-        b=I0bH2PzmBkwjvoho1YCoBaDV3ERSERdGIpUy3GxEz9iKo+WEohdnxb5Z4qHL7wG0pI
-         yiGvkBqv9nVGHudpehLTXIrbKDsir3PsHJ72yTUvSE6EDft4OAy/OeVEbC/flFPalcyq
-         8nW2oSRE/7UV5P7GDawE12t9UQXUEK2O66Lfl1ulr7iAWzCd7T6Xjck5J3x2WveDmDfS
-         JxvdyyfR0RrXAiVHMrOwqTvGEqJLZi+v3WLUTQoT8A4cZun8BkslE077gr31fPFc4R2s
-         9e+AlVGonnYUrtn18W+F1kfVHDJCnqGlDCypbySWp4e2x6SdbQBxYtgYHZqLbHpG/rLK
-         7I5g==
-X-Gm-Message-State: ABUngvcJoz6HfAsXTFEg3mssdRrtguYqwUA8ZJqSJIYA4AXtqDXZx29tK6g9hlI3Q+dMVs5df+IYCqObil3wGA==
-X-Received: by 10.13.231.131 with SMTP id q125mr13261390ywe.122.1477680585962;
- Fri, 28 Oct 2016 11:49:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cK1UfS90sz3ZdMxXtcjsZDCuURuILLCgFWxS+9+B1wY=;
+        b=hlMMUutT6Rp8VVreVc9UK98/UyPEDCdIBh0ndBujigxZO3XOcwHqum4lAHloA6yHJ2
+         Zf3pRdSH7b9zo9w15VlNDlaS41eYLaX4h4vBzC1ekq8iF7qhqXKw84T0XZOf+BBjBV25
+         +JRAaFVQyCDFkfS69R8fpT6YZ7POuAzLRZXABCl4Gyxw9XIZiPSAkL9NDymimo91S2FO
+         wmbHdg4T/Z7j57Hnj26ZRjZjEhD4bR7cKj66p2uF4pChYcpmvxFW4YrbkeXNguXby0ZF
+         xeb436VdSGuzDaddjHAOT8J0nu4YlJb7mhqJW2dirrPywb2beft8GPv4ytyNQu74Xv87
+         butg==
+X-Gm-Message-State: ABUngvdB/I7FqJpvfGUaWM12Ji3GjLD9YUbKPZZxlrp44tf+TxlJOPXYBAWst4a46tgFi+LH
+X-Received: by 10.99.254.5 with SMTP id p5mr22649608pgh.124.1477680917234;
+        Fri, 28 Oct 2016 11:55:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:91ed:bb99:5319:17e9])
+        by smtp.gmail.com with ESMTPSA id yx8sm20603353pac.29.2016.10.28.11.55.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 28 Oct 2016 11:55:15 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 00/36] Revamp the attr subsystem!
+Date:   Fri, 28 Oct 2016 11:54:26 -0700
+Message-Id: <20161028185502.8789-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.1.714.ge3da0db
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Fri, 28 Oct 2016 11:49:25 -0700 (PDT)
-In-Reply-To: <B5FD05E58E36480894F1BDBBC9589EE1@PhilipOakley>
-References: <20161026215732.16411-1-sbeller@google.com> <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org>
- <xmqqlgxa8h3a.fsf@gitster.mtv.corp.google.com> <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org>
- <xmqqh97y8g74.fsf@gitster.mtv.corp.google.com> <xmqqd1im8foi.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbP3pgPHgv-x1Q-Q1QwmXc=gOyxWhXh2SngO8WSZc3PFA@mail.gmail.com>
- <34c88c40-2088-fd74-5d26-56c0599b7eb9@kdbg.org> <xmqqr3716301.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kY_fZ_pDtVnwJoDkR6PjTNoqDMN5OC70Z8SH_J0Wvkq-w@mail.gmail.com>
- <a2e5acd6-485d-0387-7a85-6042dee702f7@kdbg.org> <CA+P7+xpckfaeHmoEGQBdLD-=Kf7gQ-jOxGFKrKmiFH1SBN7GjA@mail.gmail.com>
- <2ddca5e3-3c4d-b555-4309-a180ceed581e@kdbg.org> <B5FD05E58E36480894F1BDBBC9589EE1@PhilipOakley>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 28 Oct 2016 11:49:25 -0700
-Message-ID: <CA+P7+xoNSrhaQ50GZ4RzLregznw+0yf2=ttNuYf1VUw+YabdFQ@mail.gmail.com>
-Subject: Re: [PATCH] compat: Allow static initializer for pthreads on Windows
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>,
-        Simon Ruderich <simon@ruderich.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2016 at 6:01 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Johannes Sixt" <j6t@kdbg.org>
->>
->>
->> One point is that the DCLP idiom must be implemented correctly. There are
->> solutions, of course, and when the initialization is over, we have a
->> miniscule overhead at each pthread_mutex_lock call.
->>
->
-> I had to look up DCLP ( = Double Checked Locking Patterns), and found a good
-> write up on the issues..
->
-> http://www.aristeia.com/Papers/DDJ_Jul_Aug_2004_revised.pdf "C++ and the
-> Perils of Double-Checked Locking", which include 'C' issues, and
-> multi-thread, multi-processor issues. Not an easy issue when fighting
-> optimisers..
->
-> --
->
-> Philip
+previous discussion at https://public-inbox.org/git/20161022233225.8883-1-sbeller@google.com
 
+This implements the discarded series':
+jc/attr
+jc/attr-more
+sb/pathspec-label
+sb/submodule-default-paths
 
-Yep, this is why we have memory barriers. Ofcourse languages like C
-don't really allow you to express them in the language and we restore
-to various platform specific methods.
+This includes
+* The fixes for windows
+* Junios latest suggestion to use git_attr_check_initv instead of
+  alloc/append.
+
+* I implemented the thread safe attr API in patch 27 (attr: convert to new threadsafe API)
+* patch 28 (attr: keep attr stack for each check) makes it actually possible
+  to run in a multithreaded environment.
+* I added a test for the multithreaded when it is introduced in patch 32
+  (pathspec: allow querying for attributes) as well as a test to disallow
+  multiple "attr"s in a pathspec.
 
 Thanks,
-Jake
+Stefan
+
+Junio C Hamano (24):
+  commit.c: use strchrnul() to scan for one line
+  attr.c: use strchrnul() to scan for one line
+  attr.c: update a stale comment on "struct match_attr"
+  attr.c: explain the lack of attr-name syntax check in parse_attr()
+  attr.c: complete a sentence in a comment
+  attr.c: mark where #if DEBUG ends more clearly
+  attr.c: simplify macroexpand_one()
+  attr.c: tighten constness around "git_attr" structure
+  attr.c: plug small leak in parse_attr_line()
+  attr: rename function and struct related to checking attributes
+  attr: (re)introduce git_check_attr() and struct git_attr_check
+  attr: convert git_all_attrs() to use "struct git_attr_check"
+  attr: convert git_check_attrs() callers to use the new API
+  attr: retire git_check_attrs() API
+  attr: add counted string version of git_check_attr()
+  attr: add counted string version of git_attr()
+  attr: expose validity check for attribute names
+  attr.c: add push_stack() helper
+  attr.c: pass struct git_attr_check down the callchain
+  attr.c: rename a local variable check
+  attr.c: correct ugly hack for git_all_attrs()
+  attr.c: introduce empty_attr_check_elems()
+  attr.c: always pass check[] to collect_some_attrs()
+  attr.c: outline the future plans by heavily commenting
+
+Nguyễn Thái Ngọc Duy (1):
+  attr: support quoting pathname patterns in C style
+
+Stefan Beller (11):
+  attr: make git_check_attr_counted static
+  attr: convert to new threadsafe API
+  attr: keep attr stack for each check
+  Documentation: fix a typo
+  pathspec: move long magic parsing out of prefix_pathspec
+  pathspec: move prefix check out of the inner loop
+  pathspec: allow querying for attributes
+  pathspec: allow escaped query values
+  submodule update: add `--init-default-path` switch
+  clone: add --init-submodule=<pathspec> switch
+  completion: clone can initialize specific submodules
+
+ Documentation/config.txt                      |   5 +
+ Documentation/git-clone.txt                   |  23 +-
+ Documentation/git-submodule.txt               |  17 +-
+ Documentation/gitattributes.txt               |  10 +-
+ Documentation/glossary-content.txt            |  20 +
+ Documentation/technical/api-gitattributes.txt | 140 ++++---
+ archive.c                                     |  25 +-
+ attr.c                                        | 525 ++++++++++++++++++--------
+ attr.h                                        |  71 ++--
+ builtin/check-attr.c                          |  74 ++--
+ builtin/clone.c                               |  36 +-
+ builtin/pack-objects.c                        |  27 +-
+ commit.c                                      |   3 +-
+ compat/mingw.c                                |   4 +
+ contrib/completion/git-completion.bash        |   1 +
+ convert.c                                     |  46 ++-
+ dir.c                                         |  35 ++
+ git-submodule.sh                              |  21 +-
+ hashmap.h                                     |   2 +
+ ll-merge.c                                    |  35 +-
+ pathspec.c                                    | 227 +++++++++--
+ pathspec.h                                    |  15 +
+ t/t0003-attributes.sh                         |  26 ++
+ t/t6134-pathspec-with-labels.sh               | 185 +++++++++
+ t/t7400-submodule-basic.sh                    | 134 +++++++
+ userdiff.c                                    |  21 +-
+ ws.c                                          |  19 +-
+ 27 files changed, 1336 insertions(+), 411 deletions(-)
+ create mode 100755 t/t6134-pathspec-with-labels.sh
+
+-- 
+2.10.1.714.ge3da0db
+
