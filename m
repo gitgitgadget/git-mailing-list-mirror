@@ -2,99 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F0020193
-	for <e@80x24.org>; Thu, 27 Oct 2016 23:44:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB7D20193
+	for <e@80x24.org>; Fri, 28 Oct 2016 00:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034012AbcJ0XoQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Oct 2016 19:44:16 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36159 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030644AbcJ0XoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2016 19:44:16 -0400
-Received: by mail-oi0-f66.google.com with SMTP id e12so7243659oib.3
-        for <git@vger.kernel.org>; Thu, 27 Oct 2016 16:44:15 -0700 (PDT)
+        id S943045AbcJ1A7j (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Oct 2016 20:59:39 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:36510 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935453AbcJ1A7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2016 20:59:38 -0400
+Received: by mail-qk0-f179.google.com with SMTP id o68so69161543qkf.3
+        for <git@vger.kernel.org>; Thu, 27 Oct 2016 17:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=sAiGQcmMUA4+1AnpuCfu790jLzmRn0MqPVDSfcFQXHs=;
-        b=kU5zhtwLRifrJFJgzheMr5cHGYUNCIalA9tTOvrLfVKGBWXROcQaKDvmjNI90+58xf
-         IKHv1HPvXUbVNy5booaznaxEBRiazI0g8qdSU8Bv7KXVFq1qy/2mFQPrMpaCDMz1DV0P
-         GMKslRnXbw8hF7fxfjgzlV0s+tu8LmUcPHyS7e5Oju4lktR6DtzvJWOJPdszyOtiQH6N
-         BTOlFvqpavKPN6CcEnTSGFHMcC3rBwcQw5akcKvMasBlTjbigMFQP0MyTfiYyeE5pJ6Z
-         Dd53SMeuYAbBkK+qVzZLMG0ttjtbsr8QOppTDAFdWHPSDUpsCYYWwxgrIjNVHE7iwyqg
-         lH7w==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5ZUr8DuuDHH88z5m20OoFfgquDlS9OERWCzcgPaiyPk=;
+        b=n5aGvc1iBDYSyX8udACGVs1O4DPJWz0ekMmouJd6V+tfhB1wz1ob3kJjRr7k3jzP8w
+         Id9YLgBuZFYT99zT/ToUAGCrv+pbRqysQ4bCOzG+rKZZSiGJitBDsGZqxRxyB26mek60
+         /ShyrhY0URy/4zajgx77zLJEQ2l1NCj+4bZneGJMePdBntWZvcDg10usW9TK3BdjkyRf
+         vQYRNkHETkaHMLCGSW8F0xWIl63dGcdiEPJWav2nVZIg7nr+lNJg305EfFnVlqrft6OY
+         3qodPb2jErf5z6yAzpDpiC6IuoN0CfnvfYSKCmUzTLBOzl9PMaXqfM8Uf2cTZPWUhWXv
+         f+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=sAiGQcmMUA4+1AnpuCfu790jLzmRn0MqPVDSfcFQXHs=;
-        b=hV6H2kL2gjh7a1dckfUcLsLEVd8RjnjmH304IA4KDB4CqYp26LYkj8sJ9E11jkQu9t
-         W0QZobGYMUQFc46C7fFUvvFK2Sjz5xFTL/Sosuo2s09AccJlN6d1dS3RUjbm+n/lGF1S
-         J5SjwKEpEt53M919Ug7LyQUiLHwHCn3uqdBiyAqQQbr+RUU+p5jc7DH4V+bxDoVXNCAS
-         rfOmn/NUZhyawSrU95vG3/t5/MhFjvbz4oixoYd5eJW+r9Lg/TpEaDr/LJUhr5zkobCp
-         tUoJPvzwNnsAZsieRUuvcihU5TamQq3e20eFnjH/z824+4Ls6lnsMvV+Q/85IePGDzZP
-         sNCQ==
-X-Gm-Message-State: ABUngvdmI5OPX55/GURd6F3C/rFR3L5+znT+itvViky9el09UawFL+QpZd1Wve/3dLP7MmNHsjP5mwjvooyBHg==
-X-Received: by 10.157.39.2 with SMTP id r2mr8619446ota.103.1477611855424; Thu,
- 27 Oct 2016 16:44:15 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5ZUr8DuuDHH88z5m20OoFfgquDlS9OERWCzcgPaiyPk=;
+        b=K7PeDfsPAsGdTxjgnti74/cIaLYnHHPYyGgZY/UlexPzXQBoZFlp8rnuqb5eJv4+Ru
+         stujMcFE+xt+HnT47SfKB+tg9dWnmb4jN50TzBon6XEK+n25J2GZ1MZ6rAgoDa5MfLGQ
+         uY3dKUpzY8flXdxNWEGT19Z0dsaf4t1QOz6BO5yNB+9WcGdH9u3ts6WV9wAd+ihZWlV7
+         LbcWYteHTNLztZufjl+wZxGJsMokhMPyrJvaY9E/BBr/y9DtRYGkMWNQVWpyRIVHXZQT
+         bleZVy8vFqYWYts1TmugvbZfrfYYudKgXNDEmoi108oPIFtQVEtXwSCSeTL6fNBNNWD2
+         CeRA==
+X-Gm-Message-State: ABUngveIzpK0qDlbcem5NdOkBTuUU34bFHpqP2aEWIHb6Wmxx+N1Hl79PxTI95nQCUI9PXkxiRb3KcDoWDkv8cee
+X-Received: by 10.55.56.11 with SMTP id f11mr7990891qka.255.1477616376932;
+ Thu, 27 Oct 2016 17:59:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.182.142.104 with HTTP; Thu, 27 Oct 2016 16:44:14 -0700 (PDT)
-In-Reply-To: <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com>
-References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
- <20161025181621.4201-1-gitster@pobox.com> <20161025181621.4201-3-gitster@pobox.com>
- <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net> <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
- <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net> <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
- <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net> <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
- <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
- <xmqqoa254czs.fsf@gitster.mtv.corp.google.com> <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
- <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com> <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 27 Oct 2016 16:44:14 -0700
-X-Google-Sender-Auth: OfKHbuZAC7F1BViK-3u8xwpVqDc
-Message-ID: <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
+Received: by 10.12.135.40 with HTTP; Thu, 27 Oct 2016 17:59:36 -0700 (PDT)
+In-Reply-To: <xmqqk2ct4bmr.fsf@gitster.mtv.corp.google.com>
+References: <20161027223834.35312-1-bmwill@google.com> <xmqqk2ct4bmr.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 27 Oct 2016 17:59:36 -0700
+Message-ID: <CAGZ79kYm1txscyBpmfJQceCLFrZAN09y-2nV1zCjE2a1+_jrLA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] recursively grep across submodules
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2016 at 4:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Oct 27, 2016 at 4:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
 >
-> Would the best endgame shape for this function be to open with
-> O_NOATIME (and retry without), and then add CLOEXEC with fcntl(2)
-> but ignoring an error from it, I guess?  That would be the closest
-> to what we historically had, I would think.
+>> As for the rest of the series, it should be ready for review or comments.
+>
+> Just a few brief comments, before reading the patches carefully.
+>
+>  * It is somewhat surprising that [1/5] is even needed (in other
+>    words, I would have expected something like this to be already
+>    there, and my knee-jerk reaction was "Heh, how does 'git status'
+>    know how to show submodules that are and are not initialized
+>    differently without this?"
 
-I think that's the best model.
+The issue with much of the existing code is that it is submodule centric,
+i.e. it is written to not care about the rest.
 
-Note that the O_NOATIME code is very much designed to try O_NOATIME
-only _once_. Because even when the kernel supports O_NOATIME, if you
-have a shared object tree where you may not be the owner of all the
-files, a O_NOATIME open can fail with NOPERM ("You are not allowed to
-hide your accesses to this file").
+git status for example just calls "git submodule summary" to
+parse and display the submodule information additionally.
+It doesn't integrate submodules and treats them "just like files".
 
-This is why it uses that
+git submodule summary then proceeds to use "submodule--helper list"
+that lists submodules *only* ignoring all files.
 
-    static unsigned int sha1_file_open_flag = O_NOATIME;
+>
+>    The implementation that reads from the config of the current
+>    repository may be OK, but I actually would have expected that a
+>    check would be "given a $path, check to see if $path/.git is
+>    there and is a valid repository".  In a repository where the
+>    submodules originate, there may not even be submodule.$name.url
+>    entries there yet.
 
-and if the O_NOATIME open ever fails (and the no-O_NOATIME open
-succeeds), it clears that flag. Exactly so that it will *not* end up
-in some kind of "let's open and fail and re-open" loop. It's designed
-to fail once.
+My reaction to 1/5 was that the implementation is sound,
+but the design may need rethinking.
 
-Or at least that's how it used to be originally. This code has
-obviously changed since that early design. Now it seems to clear it
-for any non-ENOENT error. Which looks fine too.
+Instead of asking all these question, "Is a submodule
+* initialized
+* checked out (== have a working dir)
+* have a .git dir (think of deleted submodules that keep the
+  historical git dir around)
+(* have commit X)
+we would want to either extend the submodule-config API
+to also carry these informations just like
+name/path/sha1/url/shallow clone recommendation.
 
-          Linus
+Obtaining the information above is however not as cheap,
+because we'd need to do extra work additionally to parsing
+the .gitmodules file. So the submodule-config would need to learn
+an input that will tell the submodule-config what informations should
+be evaluated and which can be omitted.
+
+>
+>  * It is somewhat surprising that [4/5] does not even use the
+>    previous ls-files to find out the paths.  Also it is a bit
+>    disappointing to see that the way processes are spawned and
+>    managed does not share much with Stefan's earlier work, i.e.
+>    run_processes_parallel().  I was somehow hoping that it can be
+>    extended to support this use case, but apparently there aren't
+>    much to be shared.
+
+I think there are 2 issues here:
+* The API I designed runs processes in parallel and the order or
+  output is non-deterministic. git-grep uses threads and output is
+  alphabetically sorted. The order is fixable though (by e.g. adding
+  a flag that indicates which parallel processing output the caller
+  wants).
+
+* git-grep already has its own thread pool; integrating/combining
+  2 worker pools doesn't sound trivial even to someone who wrote
+  one of them.
+  Maybe we could extend/rewrite the run_processes_parallel
+  API to not just run processes, but instead you could also provide
+  a function pointer that is used in a thread instead.
+  Then we'd have one machinery that e.g. keeps track of the
+  number of parallel processes/threads.
+
+Thanks,
+Stefan
