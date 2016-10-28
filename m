@@ -2,94 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A024D2035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 17:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 014DB2035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 17:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030325AbcJ1RCS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 13:02:18 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34548 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935654AbcJ1RCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 13:02:17 -0400
-Received: by mail-pf0-f174.google.com with SMTP id n85so40246878pfi.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 10:02:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5EGMzZX61Y4Qo6sx5Tm2yEigMP0vfWYduWusHQDMQkc=;
-        b=LUFIUfkvHHrL2GDrlal3D1OtJF1RQjetO+4lDpzSCI9uo4umsw5+JRBurzXswaErAj
-         Ah8962EcYYXfOIJeUN/JBiM2pzMqy0CiuTPPBQlHQBiF5Bx5D58qx8pEOax+vA9Jx99W
-         wF7gRtKjAgVyhFFx6HcniOirZsytjP9nIYKxvOYUNvYiFDf4SD2306G0/1WUFOrzfmCx
-         m5IAAaVQJLhD5Q68CY8UH08tQ7Fa42pOfIsUih/HnSnoQmtyGpsvoqMeucf6rl/ygH1Y
-         7UwS2ryM/mo8lI++dvqC+yvxtEpJk6OmVkEjB7kd9Nbl5/f/4mA/Mx9vJ2IlR0ni/ZbT
-         76sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5EGMzZX61Y4Qo6sx5Tm2yEigMP0vfWYduWusHQDMQkc=;
-        b=YJ1ngEcErefqD3QJId0cncwEIwMkmFvjespjwH4ZocsYJs3luGwn/dTnr/Q6XtncfQ
-         M7LPGNmfGqwXf7qJYlxkMyqhIEDKqH3MLzp0n/m95dGmOGCt3gqwtN4wDFA4+yBFRhvP
-         3Yt1EwGlDxcGMyZ86J9F+ofn756hqs4R+hFBPY/ZvbJHZnmDlXYHZJsu3X1JpN30v48A
-         bU4E5X7s0tz64Dqn1dVLynxy0Z6o74Cz0F+i94UkuZnRlSk58/+g6eHQGbfETaOv6j0u
-         Qvvn/wkPqgGoVJUhqEWCJYFqan2lSRYEpIg6cOY8cc4NTGRhumsDqIuPdeum67zr102G
-         SZIw==
-X-Gm-Message-State: ABUngvcGiwFrU+az1VqsKYd9ghittEiy0+4LIoJ270p6L20TMf1wnPRfBWg5sFH0qOb8KVtX
-X-Received: by 10.99.113.14 with SMTP id m14mr21680455pgc.57.1477674136139;
-        Fri, 28 Oct 2016 10:02:16 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5e00:9c44:585e:e62d:6b24])
-        by smtp.gmail.com with ESMTPSA id y77sm20146772pfi.69.2016.10.28.10.02.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Oct 2016 10:02:15 -0700 (PDT)
-Date:   Fri, 28 Oct 2016 10:02:13 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/5] recursively grep across submodules
-Message-ID: <20161028170213.GA72114@google.com>
-References: <20161027223834.35312-1-bmwill@google.com>
- <xmqqk2ct4bmr.fsf@gitster.mtv.corp.google.com>
+        id S1030424AbcJ1RUU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 13:20:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52275 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933416AbcJ1RUT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 13:20:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E7DD48DEF;
+        Fri, 28 Oct 2016 13:20:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XMVnCgg3yByDVKCHeb9b3fXaRxQ=; b=aW15rS
+        sjcFLRCyu1RABf5K4wID8morDupJpJmfOiXh9LvGZuAG22PPkpJ6TZbl40xsh7ME
+        Rr0WjRj7lpmB4z7HlN3ahMD5nLuzuBxaw2oeauvx+T193U65P7xdGEnhECSXuikn
+        IJ3JZM6I5Is2G1mDswVCD3hC1S6OSLzA+uIQg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bDH6BzBUh2wMCz09vtFojSAV9vFh4jzr
+        GyvLUEPnXzTQFdIblam02J28IVTdsOfobl2XkmcaONtRu6UmCOI3w2J56N6ZBi/E
+        t/lUC1JQIH4/40vZCRpn676Y+3GXkBmTlFI/60hiVmnHt/YXDtLOjE3O4GorzGmK
+        eRUi1D/Uj04=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1682A48DEE;
+        Fri, 28 Oct 2016 13:20:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89AFB48DED;
+        Fri, 28 Oct 2016 13:20:17 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
+        Johannes.Schindelin@gmx.de, j6t@kdbg.org, peff@peff.net,
+        simon@ruderich.org
+Subject: Re: [PATCH] attr: convert to new threadsafe API
+References: <xmqqy41a8hxj.fsf@gitster.mtv.corp.google.com>
+        <20161027221550.14930-1-sbeller@google.com>
+Date:   Fri, 28 Oct 2016 10:20:15 -0700
+In-Reply-To: <20161027221550.14930-1-sbeller@google.com> (Stefan Beller's
+        message of "Thu, 27 Oct 2016 15:15:50 -0700")
+Message-ID: <xmqqinsc1jcg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqk2ct4bmr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CBEA1CAC-9D32-11E6-96B5-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/27, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > As for the rest of the series, it should be ready for review or comments.
-> 
-> Just a few brief comments, before reading the patches carefully.
-> 
->  * It is somewhat surprising that [1/5] is even needed (in other
->    words, I would have expected something like this to be already
->    there, and my knee-jerk reaction was "Heh, how does 'git status'
->    know how to show submodules that are and are not initialized
->    differently without this?"  
+Stefan Beller <sbeller@google.com> writes:
 
-Yeah I was also surprised to find that this kind of functionality didn't
-already exist.  Though I guess there are still many builtin's that don't
-play nice with submodules so maybe this kind of functionality just
-wasn't needed until now.
+> +* Prepare a `struct git_attr_check` using `git_attr_check_initl()`
+>    function, enumerating the names of attributes whose values you are
+>    interested in, terminated with a NULL pointer.  Alternatively, an
+> -  empty `struct git_attr_check` can be prepared by calling
+> -  `git_attr_check_alloc()` function and then attributes you want to
+> -  ask about can be added to it with `git_attr_check_append()`
+> -  function.
+> -
+> -* Call `git_check_attr()` to check the attributes for the path.
+> -
+> -* Inspect `git_attr_check` structure to see how each of the
+> -  attribute in the array is defined for the path.
+> -
+> +  empty `struct git_attr_check` as allocated by git_attr_check_alloc()
 
->  * It is somewhat surprising that [4/5] does not even use the
->    previous ls-files to find out the paths.
+Need to drop "as allocated by git_attr_check_alloc()" here.
 
-The first attempt I made at this series used ls-files to produce a list
-of files which was then fed to the grep machinery.  The problem I found
-with this approach was when I started moving to work on grepping
-history, at that point it seemed to make more sense to have a process
-for each submodule.
+> +  can be prepared by calling `git_attr_check_alloc()` function and
+> +  then attributes you want to ask about can be added to it with
+> +  `git_attr_check_append()` function.
+> +  Both ways with `git_attr_check_initl()` as well as the
+> +  alloc and append route are thread safe, i.e. you can call it
+> +  from different threads at the same time; when check determines
+> +  the initialization is still needed, the threads will use a
+> +  single global mutex to perform the initialization just once, the
+> +  others will wait on the the thread to actually perform the
+> +  initialization.
 
--- 
-Brandon Williams
+I have some comments on the example in the doc on the "alloc-append"
+side.  _initl() side looks OK.
+
+> +	static struct git_attr_check *check;
+> +	git_attr_check_initl(&check, "crlf", "ident", NULL);
+
+OK.
+
+>  	const char *path;
+> +	struct git_attr_result result[2];
+>  
+> +	git_check_attr(path, check, result);
+
+OK.  The above two may be easier to understand if they were a single
+example, though.
+
+> +. Act on `result.value[]`:
+>  
+>  ------------
+> -	const char *value = check->check[0].value;
+> +	const char *value = result.value[0];
+
+OK.
+
+> @@ -123,12 +135,15 @@ the first step in the above would be different.
+>  static struct git_attr_check *check;
+>  static void setup_check(const char **argv)
+>  {
+> +	if (check)
+> +		return; /* already done */
+>  	check = git_attr_check_alloc();
+>  	while (*argv) {
+>  		struct git_attr *attr = git_attr(*argv);
+>  		git_attr_check_append(check, attr);
+>  		argv++;
+>  	}
+> +	struct git_attr_result *result = git_attr_result_alloc(check);
+
+This does not look like thread-safe.
+
+I could understand it if the calling convention were like this,
+though:
+
+	if (git_attr_check_alloc(&check)) {
+		while (*argv) {
+	        	... append ...
+		}
+		git_attr_check_finished_appending(&check);
+	}
+	result = result_alloc();
+
+In this variant, git_attr_check_alloc() is responsible for ensuring
+that the "check" is allocated only once just like _initl() is, and
+at the same time, it makes simultanous callers wait until the first
+caller who appends to the singleton check instance declares that it
+finished appending.  The return value signals if you are the first
+caller (who is responsible for populating the check and for
+declaring the check is ready to use at the end of appending).
+Everybody else waits while the first caller is doing the if (...) {
+} thing, and then receives false, at which time everybody (including
+the first caller) goes on and allocating its own result and start
+making queries.
+
+> +* Setup a local variables for the question
+> +  `struct git_attr_check` as well as a pointer where the result
+> +  `struct git_attr_result` will be stored. Both should be initialized
+> +  to NULL.
+> +
+> +------------
+> +  struct git_attr_check *check = NULL;
+> +  struct git_attr_result *result = NULL;
+> +------------
+> +
+> +* Call `git_all_attrs()`.
+>  
+> +------------
+> +  git_all_attrs(full_path, &check, &result);
+> +------------
+
+OK.
+
+Thanks.
