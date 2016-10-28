@@ -2,73 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA58C2035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 22:08:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F04102035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 22:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030559AbcJ1WIr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 18:08:47 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:35624 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S942390AbcJ1WIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 18:08:45 -0400
-Received: by mail-qk0-f173.google.com with SMTP id z190so102845180qkc.2
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 15:08:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=31/GtQEYROLkEL38kasM/aJu1Uer465EbGQ1MVSwX3I=;
-        b=L0rhR+J1iskYc7TzBeFQhfSnxqXKWQGl+4sFllUxik1k01qrtaaehMYRngKPq9DZy4
-         lrHeeAqdyL8/qDnuj6ymQEIo3NDngjXaVGt39xPWjBMGhr2Uj42l7DHjhko63JTIuxaw
-         Z/mm8KHsCy2ay5b7p6MyaEo/4zYrmqu+GniRAchBc82XiHPsaVW4gpDUo7vBsa82TkAu
-         p14dha0VoTnjFZtHRm+I0lW+Mjv3V/1tHEy5OvmX+ZjPyF8eLBabPEoUCb4xDu6YYGO4
-         yEY10s+SwtWLexg/uNFItAgUEP43rbFpoTn63mJoF1V401b9u3y+xfF6FEeTdzNFDU2w
-         w6Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=31/GtQEYROLkEL38kasM/aJu1Uer465EbGQ1MVSwX3I=;
-        b=QfnXmzT/RW9Z0pcGBR12uteKrvWQwzRiqwyexGu0IR0nC1V8vAjybBShJsfbF/IZmb
-         x+m59rOZmRxNhhzxjM6cQvNAUiAKgMlRfzKrEhwx7duuwiIw3GT8wOn3F/3eUEKrMtzr
-         E2pgJvyIw1bSoB51Oo3NDlAB34UTrRWCGPCw16jjVmmBv9r9cQNUny7CXtxeLMNop3+I
-         hDIxXsRdBMhDLh9Kuwi+VeLIXOED6qxNN3s2Gy8h8ClVU4HK9jfLqDHs4WJpO90KlRq7
-         pRkSJdWyBEC1PR/GSZTbuYLHTe4oilav/6C64Jx3CpCpiFRlAmd6Vf0Lt5j7jSY2xZm0
-         WP5w==
-X-Gm-Message-State: ABUngvd6JP54CvafbFHmdK1goqWh3rcU+cZvD/IiyFDoY5Xc42C4llUwr88SW1TctcyncP+tfSkYIo6Odk8fub0D
-X-Received: by 10.55.20.164 with SMTP id 36mr12256225qku.86.1477692524884;
- Fri, 28 Oct 2016 15:08:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.134.34 with HTTP; Fri, 28 Oct 2016 15:08:44 -0700 (PDT)
-In-Reply-To: <xmqqinscxh5g.fsf@gitster.mtv.corp.google.com>
-References: <20161028185502.8789-1-sbeller@google.com> <20161028185502.8789-28-sbeller@google.com>
- <xmqqinscxh5g.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 28 Oct 2016 15:08:44 -0700
-Message-ID: <CAGZ79kayzZOXpRgwREahKAAj+W6M-c2m6dYf5gL3RCxE5+5zJw@mail.gmail.com>
-Subject: Re: [PATCHv2 27/36] attr: convert to new threadsafe API
+        id S1761633AbcJ1WQG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 18:16:06 -0400
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:55632 "EHLO
+        homiemail-a61.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1761338AbcJ1WQF (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Oct 2016 18:16:05 -0400
+Received: from homiemail-a61.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a61.g.dreamhost.com (Postfix) with ESMTP id 2258A5781B3;
+        Fri, 28 Oct 2016 15:16:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=
+        mattmccutchen.net; bh=nukY3ZadwEXOCim+0gTFZ2/HGCw=; b=dby5VUlOi4
+        8r6C6+0WlvWsCz+khUsJGKveh8lVojR+wpl4g34sVMA6YkjZB5kUowqwCqTRvf7s
+        TsdEfEC1Gl19sL0o8vNRD+M4nDL40arFrcO2f4tiZr3PPY0sfVi+nNhhQIb+Amxk
+        Y4wpeTckLztynL6qjKgu/dbl+iO0yZfug=
+Received: from main (30-9-219.wireless.csail.mit.edu [128.30.9.219])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a61.g.dreamhost.com (Postfix) with ESMTPSA id C57DB5781B4;
+        Fri, 28 Oct 2016 15:16:04 -0700 (PDT)
+Message-ID: <1477692961.2904.36.camel@mattmccutchen.net>
+Subject: Re: Fetch/push lets a malicious server steal the targets of "have"
+ lines
+From:   Matt McCutchen <matt@mattmccutchen.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org
+Date:   Fri, 28 Oct 2016 18:16:01 -0400
+In-Reply-To: <xmqqmvhoxhfp.fsf@gitster.mtv.corp.google.com>
+References: <1477690790.2904.22.camel@mattmccutchen.net>
+         <xmqqmvhoxhfp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2016 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Probably this needs to be squashed in, now the MinGW discussion has
-> settled.
+On Fri, 2016-10-28 at 15:00 -0700, Junio C Hamano wrote:
+> Let me see if I understood your scenario correctly.
+>=20
+> Suppose we start from this history where 'O' are common, your victim
+> has a 'Y' branch with two commits that are private to it, as well as
+> a 'X' branch on which it has X1 that it previously obtained from the
+> server.=C2=A0=C2=A0On the other hand, the server does not know about Y1=
+ or Y2,
+> and it added one commit X2 to the branch 'x' the victim is
+> following:
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0victi=
+m=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0server
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0Y1---Y2=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+/=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0---O---O---X1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0---O---O---X1---X2
+>=20
+> Then when victim wants to fetch 'x' from the server, it would say
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0have X1, have Y2, have Y1, have O
+>=20
+> and gets told to shut up by the server who heard enough.=C2=A0=C2=A0The
+> histories on these two parties will then become like this:
+>=20
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0victi=
+m=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0server
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0Y1---Y2=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+/=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0---O---O---X1---X2=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0---O---O---X1---X2
 
-I was about to propose this (and resend it non-rebased).
+Then the server generates a commit X3 that lists Y2 as a parent, even
+though it doesn't have Y2, and advances 'x' to X3. =C2=A0The victim fetch=
+es
+'x':
 
-So I do not resend, but rather ask you to squash this patch?
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0victim =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0server
 
-Thanks,
-Stefan
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0Y1---Y2---- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0(Y2)
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \=C2=A0
+=C2=A0=C2=A0=C2=A0=C2=A0---O---O---X1---X2---X3 =C2=A0 ---O---O---X1---X2=
+---X3
+
+Then the server rolls back 'x' to X2:
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0victim =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0server
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Y1---Y2----
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0=C2=A0=C2=A0=C2=A0---O---O---X1---X2---X3 =C2=A0 ---O---O---X1---X2
+
+And the victim pushes:
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0victim =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0server
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Y1---Y2---- =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Y1---Y2----
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 / =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0=C2=A0=C2=A0=C2=A0---O---O---X1---X2---X3 =C2=A0 ---O---O---X1---X2=
+---X3
+
+Now the server has the content of Y2.
+
+If the victim is fetching and pulling a whole "directory" of refs, e.g:
+
+fetch: refs/heads/*:refs/remotes/server1/*
+push: refs/heads/for-server1/*:refs/heads/*
+
+then instead of generating a merge commit, the server can just generate
+another ref 'xx' pointing to Y2, assuming it can entice the victim to
+set up a corresponding local branch refs/heads/for-server1/xx and push
+it back. =C2=A0Or if the victim is for some reason just mirroring back an=
+d
+forth:
+
+fetch: refs/heads/*:refs/heads/for-server1/*
+push: refs/heads/for-
+server1/*:refs/heads/*
+
+then it doesn't have to set up a local branch as separate step.
+
+Matt
