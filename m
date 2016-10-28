@@ -7,157 +7,82 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44C282035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 18:55:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51D1C2035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 18:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966077AbcJ1SzT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 14:55:19 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34275 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965206AbcJ1SzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 14:55:18 -0400
-Received: by mail-pf0-f171.google.com with SMTP id n85so41585101pfi.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:17 -0700 (PDT)
+        id S966145AbcJ1SzX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 14:55:23 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36836 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965206AbcJ1SzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 14:55:22 -0400
+Received: by mail-pf0-f176.google.com with SMTP id e6so41411311pfk.3
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cK1UfS90sz3ZdMxXtcjsZDCuURuILLCgFWxS+9+B1wY=;
-        b=fWkoc2FWOggeV84LyEF3uMvWJg2Wq0eL2+rCyYdLwLMAXlNo9v+67MOpzBYK7yhHkt
-         JWsUzqH0h2CGoXn/L7ssbSU2KRMZrYWPs0pt6lUUUb+uIL0oMAlDLeD2V+kiWZubsE9W
-         EJcCjM1AvHChZv0hxo1o6mfn5p1qn+jB9tZdg9lnlTbdnfxFi3zCMW6Ba0JW+s+ntnfu
-         3vNurYogiTuLrhyA+hE19LozfXU6FRFEZyVEHnSwiC/SlxgeJvHvzPjjaOa1JPN0h2Sd
-         RzWNNjr9XJ5Bdg5LY9WivShjR7H3+xXx82gshhyhFF+INZtLtP+8gIMwBD0Mqv05JepO
-         oqsw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=DjHAB5KHAjEMnKjdzHff9fRdJNPBZUVKA1k3NdeMp20=;
+        b=LpxUa0F+iu8vSAOfXzPa2u6ND7jsaZa1TB9N3bzEu8CGrJyEhKZSTLGLXoAAFLrLKG
+         gI1kjtatjNalxSmC1mdpyrXKwAfKgDR1m2Xwg64b8x1+oJV7GItcspgobJRBIG5bmqVN
+         0ankHVgWx63SRZFUTzet3+8ymk0KEhkcEwp8mnY3AIzQXwCh2VD1+pOADHu8zz2c0HYA
+         HpbmLv/GTd2YY7uxj7Rw9yx/4FvbMeZDH3eNcKpW1Apao7BKJucAyNNrVXrmN6gj+mjf
+         OzPRWUAofK9D9HRQ9Ab0ZORZSsJw4s8+PA03EGzxMyJ9DTrlhE0HiqmzqX6ogC+oJzuS
+         4aDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cK1UfS90sz3ZdMxXtcjsZDCuURuILLCgFWxS+9+B1wY=;
-        b=hlMMUutT6Rp8VVreVc9UK98/UyPEDCdIBh0ndBujigxZO3XOcwHqum4lAHloA6yHJ2
-         Zf3pRdSH7b9zo9w15VlNDlaS41eYLaX4h4vBzC1ekq8iF7qhqXKw84T0XZOf+BBjBV25
-         +JRAaFVQyCDFkfS69R8fpT6YZ7POuAzLRZXABCl4Gyxw9XIZiPSAkL9NDymimo91S2FO
-         wmbHdg4T/Z7j57Hnj26ZRjZjEhD4bR7cKj66p2uF4pChYcpmvxFW4YrbkeXNguXby0ZF
-         xeb436VdSGuzDaddjHAOT8J0nu4YlJb7mhqJW2dirrPywb2beft8GPv4ytyNQu74Xv87
-         butg==
-X-Gm-Message-State: ABUngvdB/I7FqJpvfGUaWM12Ji3GjLD9YUbKPZZxlrp44tf+TxlJOPXYBAWst4a46tgFi+LH
-X-Received: by 10.99.254.5 with SMTP id p5mr22649608pgh.124.1477680917234;
-        Fri, 28 Oct 2016 11:55:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=DjHAB5KHAjEMnKjdzHff9fRdJNPBZUVKA1k3NdeMp20=;
+        b=WpUcBXUBl7NyKNlzc9nou9BSqALjrmX1BV0MoAA8Xw1mIf5xZnDYTmOOicyEN77MwP
+         mBaRoVpBp5dJ+wH0GGJTvN/zCLmL9MX8Z1b/KRg1FxnQSVcewf5hImBmqhjs1d+ODV6C
+         zfC2nR8rjuxjE3Bg2adpNhubRoH8sCvUwl3/zmHi+KJ27RdQWRG73jiLOvIrNroG66Y9
+         OkP9ad5QXqMBWELBx4uXm6YstlX/TwCI5zuH39IRlLtyZgFZYYV0yMRhTj+7o0iSsZc/
+         pB/FH99Dw/czNE1tbG/Im0/m/Q0Fx4GYh8B3DDjYAf3BwH8x9JM/mW8RLet+BnvO8ehe
+         qiFQ==
+X-Gm-Message-State: ABUngvftdoLFWYJSZl0p/GceVnM/JY8IQ9stacS40LSoSTUm9AXEaekn12MgNsSOGYW/x7ls
+X-Received: by 10.98.65.85 with SMTP id o82mr27548767pfa.168.1477680920771;
+        Fri, 28 Oct 2016 11:55:20 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:91ed:bb99:5319:17e9])
-        by smtp.gmail.com with ESMTPSA id yx8sm20603353pac.29.2016.10.28.11.55.15
+        by smtp.gmail.com with ESMTPSA id e6sm20679849pad.0.2016.10.28.11.55.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Oct 2016 11:55:15 -0700 (PDT)
+        Fri, 28 Oct 2016 11:55:18 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 00/36] Revamp the attr subsystem!
-Date:   Fri, 28 Oct 2016 11:54:26 -0700
-Message-Id: <20161028185502.8789-1-sbeller@google.com>
+Subject: [PATCHv2 01/36] commit.c: use strchrnul() to scan for one line
+Date:   Fri, 28 Oct 2016 11:54:27 -0700
+Message-Id: <20161028185502.8789-2-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.714.ge3da0db
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20161028185502.8789-1-sbeller@google.com>
+References: <20161028185502.8789-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-previous discussion at https://public-inbox.org/git/20161022233225.8883-1-sbeller@google.com
+From: Junio C Hamano <gitster@pobox.com>
 
-This implements the discarded series':
-jc/attr
-jc/attr-more
-sb/pathspec-label
-sb/submodule-default-paths
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ commit.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-This includes
-* The fixes for windows
-* Junios latest suggestion to use git_attr_check_initv instead of
-  alloc/append.
-
-* I implemented the thread safe attr API in patch 27 (attr: convert to new threadsafe API)
-* patch 28 (attr: keep attr stack for each check) makes it actually possible
-  to run in a multithreaded environment.
-* I added a test for the multithreaded when it is introduced in patch 32
-  (pathspec: allow querying for attributes) as well as a test to disallow
-  multiple "attr"s in a pathspec.
-
-Thanks,
-Stefan
-
-Junio C Hamano (24):
-  commit.c: use strchrnul() to scan for one line
-  attr.c: use strchrnul() to scan for one line
-  attr.c: update a stale comment on "struct match_attr"
-  attr.c: explain the lack of attr-name syntax check in parse_attr()
-  attr.c: complete a sentence in a comment
-  attr.c: mark where #if DEBUG ends more clearly
-  attr.c: simplify macroexpand_one()
-  attr.c: tighten constness around "git_attr" structure
-  attr.c: plug small leak in parse_attr_line()
-  attr: rename function and struct related to checking attributes
-  attr: (re)introduce git_check_attr() and struct git_attr_check
-  attr: convert git_all_attrs() to use "struct git_attr_check"
-  attr: convert git_check_attrs() callers to use the new API
-  attr: retire git_check_attrs() API
-  attr: add counted string version of git_check_attr()
-  attr: add counted string version of git_attr()
-  attr: expose validity check for attribute names
-  attr.c: add push_stack() helper
-  attr.c: pass struct git_attr_check down the callchain
-  attr.c: rename a local variable check
-  attr.c: correct ugly hack for git_all_attrs()
-  attr.c: introduce empty_attr_check_elems()
-  attr.c: always pass check[] to collect_some_attrs()
-  attr.c: outline the future plans by heavily commenting
-
-Nguyễn Thái Ngọc Duy (1):
-  attr: support quoting pathname patterns in C style
-
-Stefan Beller (11):
-  attr: make git_check_attr_counted static
-  attr: convert to new threadsafe API
-  attr: keep attr stack for each check
-  Documentation: fix a typo
-  pathspec: move long magic parsing out of prefix_pathspec
-  pathspec: move prefix check out of the inner loop
-  pathspec: allow querying for attributes
-  pathspec: allow escaped query values
-  submodule update: add `--init-default-path` switch
-  clone: add --init-submodule=<pathspec> switch
-  completion: clone can initialize specific submodules
-
- Documentation/config.txt                      |   5 +
- Documentation/git-clone.txt                   |  23 +-
- Documentation/git-submodule.txt               |  17 +-
- Documentation/gitattributes.txt               |  10 +-
- Documentation/glossary-content.txt            |  20 +
- Documentation/technical/api-gitattributes.txt | 140 ++++---
- archive.c                                     |  25 +-
- attr.c                                        | 525 ++++++++++++++++++--------
- attr.h                                        |  71 ++--
- builtin/check-attr.c                          |  74 ++--
- builtin/clone.c                               |  36 +-
- builtin/pack-objects.c                        |  27 +-
- commit.c                                      |   3 +-
- compat/mingw.c                                |   4 +
- contrib/completion/git-completion.bash        |   1 +
- convert.c                                     |  46 ++-
- dir.c                                         |  35 ++
- git-submodule.sh                              |  21 +-
- hashmap.h                                     |   2 +
- ll-merge.c                                    |  35 +-
- pathspec.c                                    | 227 +++++++++--
- pathspec.h                                    |  15 +
- t/t0003-attributes.sh                         |  26 ++
- t/t6134-pathspec-with-labels.sh               | 185 +++++++++
- t/t7400-submodule-basic.sh                    | 134 +++++++
- userdiff.c                                    |  21 +-
- ws.c                                          |  19 +-
- 27 files changed, 1336 insertions(+), 411 deletions(-)
- create mode 100755 t/t6134-pathspec-with-labels.sh
-
+diff --git a/commit.c b/commit.c
+index 856fd4aeef..41b2fdd335 100644
+--- a/commit.c
++++ b/commit.c
+@@ -415,8 +415,7 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
+ 		p++;
+ 	if (*p) {
+ 		p = skip_blank_lines(p + 2);
+-		for (eol = p; *eol && *eol != '\n'; eol++)
+-			; /* do nothing */
++		eol = strchrnul(p, '\n');
+ 	} else
+ 		eol = p;
+ 
 -- 
 2.10.1.714.ge3da0db
 
