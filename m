@@ -2,73 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8B4D2022A
-	for <e@80x24.org>; Fri, 28 Oct 2016 11:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7EDD2035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 12:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755031AbcJ1L7F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 07:59:05 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56258 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752497AbcJ1L7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 07:59:04 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LeiJ8-1cgW1R0yaM-00qUt1; Fri, 28 Oct 2016 13:58:47
- +0200
-Date:   Fri, 28 Oct 2016 13:58:44 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Johannes Sixt <j6t@kdbg.org>, Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Simon Ruderich <simon@ruderich.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] compat: Allow static initializer for pthreads on
- Windows
-In-Reply-To: <CA+P7+xpckfaeHmoEGQBdLD-=Kf7gQ-jOxGFKrKmiFH1SBN7GjA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1610281356310.3264@virtualbox>
-References: <20161026215732.16411-1-sbeller@google.com> <93be5d21-6cb6-ee2b-9f4f-c2fe7c690d6c@kdbg.org> <xmqqlgxa8h3a.fsf@gitster.mtv.corp.google.com> <67e38b43-0264-12f2-cca8-4b718ed7dc9d@kdbg.org> <xmqqh97y8g74.fsf@gitster.mtv.corp.google.com>
- <xmqqd1im8foi.fsf@gitster.mtv.corp.google.com> <CAGZ79kbP3pgPHgv-x1Q-Q1QwmXc=gOyxWhXh2SngO8WSZc3PFA@mail.gmail.com> <34c88c40-2088-fd74-5d26-56c0599b7eb9@kdbg.org> <xmqqr3716301.fsf@gitster.mtv.corp.google.com> <CAGZ79kY_fZ_pDtVnwJoDkR6PjTNoqDMN5OC70Z8SH_J0Wvkq-w@mail.gmail.com>
- <a2e5acd6-485d-0387-7a85-6042dee702f7@kdbg.org> <CA+P7+xpckfaeHmoEGQBdLD-=Kf7gQ-jOxGFKrKmiFH1SBN7GjA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1760530AbcJ1MuN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 08:50:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53560 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1760027AbcJ1MuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 08:50:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D0F6447DE;
+        Fri, 28 Oct 2016 08:50:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=2G3E7scRxgah
+        ZxOnbJ5opAoov70=; b=gUmJki8HzMjj1hP2MtPkSqhCTuoGsjKrxIolu8Od0BFm
+        vbK8h97qScUPfqp4cjNl+0ZvtU2IhRrvgU0U9FGkzYW/wLWhYE9iZm3d8EuigTBv
+        7f/0sdLrhH3KUAujLE5CfpSEPBhyI4Qibu5oV2P2LrG25AhtYyMu1pQFiqVs628=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QqukUb
+        PdcyxP7vc/+nzeYF5+Y7l7qELyiDFGjxybXeyjBe80xRPwrAGuqX2qob+iPVQkme
+        Mqsm2+JTKNpgEloJbahlRWh/H0r5sbOa1QA2MuQqrT9DpyjJ9MvCaZBdvJ9airyM
+        AZP6Et6QT3mRUgEU647xRe7F0ncX9JR2iM8vs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05264447DC;
+        Fri, 28 Oct 2016 08:50:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72C98447DB;
+        Fri, 28 Oct 2016 08:50:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] valgrind: support test helpers
+References: <71c3d13a-fa29-75d3-50ac-81978c08f552@web.de>
+Date:   Fri, 28 Oct 2016 05:50:07 -0700
+In-Reply-To: <71c3d13a-fa29-75d3-50ac-81978c08f552@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 28 Oct 2016 00:14:00 +0200")
+Message-ID: <xmqqshrg3af4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hvef8zcWFuKcWieO3a30HIpFZBLsfZsg/Z0TPb+b3raJaLfQQxM
- eL/zpLwkqOGGNqZp3QxY6nGlzCjgRG6MCtbXuc4EVjZi7YEyJSfKYp8/7djrWTvCx05cbCI
- 7r34Flb972vn1LsSXVMSIe9QTW/8g7837DM2vxViyrI4P6wq0lWOfk0Ee0mFV2cDOhk3Nij
- mqQoUb2LhEtGn8YQLXQXw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W/mdfCx5P08=:7bwLvIgBpBXU9pTZ/HzQgr
- F6n5ozQXRu22moqE3wtAFtTL7vVmiiNqeRr9CRSyci1AKMJgRpvS++m4pAzRDECck8y43G3lL
- BLBuIn2O4tsdSiOHq/nWTMZOADdyEbL+AGRITYfYyBB9BgHXX9BUoNjlTCOj1hKMCyiU9KUVg
- IdELUs4cAdmg05mFCNoeg6IhzqOBaCfgeqnlU0B6aE6eHaLpoe6MCFPaUUWHuFrVPysaU9pos
- U+FvN76CgNEszM1NDHz4DHS12kOO5Z6DlYL0hqBjAsy2Razn1FCJ6bc3/boVWKliG6bLTNWXI
- 8Rbp3Bzo6rD1mgFNE3HpKzbzcg22f9u577h6Zg3d22tlV3p/iasz/Xzxu5kosGoAPOO4ABT+l
- /MbLm2pq+q9R4csQoHdE6e5ufv+BL9GiVGrBgiRe1b9aF68N7GRlCZNBX9kkvdHb1XL3mGhJC
- 7r8hktleAGcvqUsCJzKMsHDvJXmpdrw8DbE1cKxKlu7UHfwpJtEOMOEWNiQIdgCpo2qNRli4M
- uv/PX0+Tgxs8AMwY/dx+YknOPXZhey2wwm44MbW7rsCe9W95ys8XHABzHutUMDUPGB7C9n0aY
- +oo2cUoEDxdVTXKZSaTzP9fsiw8f2wWTdlRY/TZadE2DXv3T6ev/DPfLFO6tDuMLfra7yu9Pa
- uW5P5COVIe04jF0LZh/HdsDCMtZfbhb2gcta7o9UFlGAqAFaAntpYycVSIPvgWcg6VUqw3tn7
- ODKcT53dr9hxinxB2UZ4Z/Zco1GjFUjCNVmQ8Kw61guA9tAWA43FSGI3ym+aAo6LQomFhyBd9
- yOqiiMm
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0F195D92-9D0D-11E6-ABF4-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-On Thu, 27 Oct 2016, Jacob Keller wrote:
+> Tests run with --valgrind call git commands through a wrapper script
+> that invokes valgrind on them.  This script (valgrind.sh) is in turn
+> invoked through symlinks created for each command in t/valgrind/bin/.
+>
+> Since e6e7530d (test helpers: move test-* to t/helper/ subdirectory)
+> these symlinks have been broken for test helpers -- they point to the
+> old locations in the root of the build directory.  Fix that by teaching
+> the code for creating the links about the new location of the binaries,
+> and do the same in the wrapper script to allow it to find its payload.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
 
-> I agree with Stefan that there isn't really a great place to put a
-> dynamic initialization.
+Hmph.  I somehow thought this was supposed to have been fixed by
+503e224180 ("t/test-lib.sh: fix running tests with --valgrind",
+2016-07-11) already.
 
-Ummm. Wait. What???
 
-https://github.com/git/git/blob/v2.10.1/common-main.c#L25-L41
 
-Ciao,
-Johannes
+>  t/test-lib.sh          |  9 ++++++++-
+>  t/valgrind/valgrind.sh | 12 ++++++++++--
+>  2 files changed, 18 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index b859db6..a724181 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -809,7 +809,14 @@ then
+>  		return;
+> =20
+>  		base=3D$(basename "$1")
+> -		symlink_target=3D$GIT_BUILD_DIR/$base
+> +		case "$base" in
+> +		test-*)
+> +			symlink_target=3D"$GIT_BUILD_DIR/t/helper/$base"
+> +			;;
+> +		*)
+> +			symlink_target=3D"$GIT_BUILD_DIR/$base"
+> +			;;
+> +		esac
+>  		# do not override scripts
+>  		if test -x "$symlink_target" &&
+>  		    test ! -d "$symlink_target" &&
+> diff --git a/t/valgrind/valgrind.sh b/t/valgrind/valgrind.sh
+> index 4215303..669ebaf 100755
+> --- a/t/valgrind/valgrind.sh
+> +++ b/t/valgrind/valgrind.sh
+> @@ -1,11 +1,19 @@
+>  #!/bin/sh
+> =20
+>  base=3D$(basename "$0")
+> +case "$base" in
+> +test-*)
+> +	program=3D"$GIT_VALGRIND/../../t/helper/$base"
+> +	;;
+> +*)
+> +	program=3D"$GIT_VALGRIND/../../$base"
+> +	;;
+> +esac
+> =20
+>  TOOL_OPTIONS=3D'--leak-check=3Dno'
+> =20
+>  test -z "$GIT_VALGRIND_ENABLED" &&
+> -exec "$GIT_VALGRIND"/../../"$base" "$@"
+> +exec "$program" "$@"
+> =20
+>  case "$GIT_VALGRIND_MODE" in
+>  memcheck-fast)
+> @@ -29,4 +37,4 @@ exec valgrind -q --error-exitcode=3D126 \
+>  	--log-fd=3D4 \
+>  	--input-fd=3D4 \
+>  	$GIT_VALGRIND_OPTIONS \
+> -	"$GIT_VALGRIND"/../../"$base" "$@"
+> +	"$program" "$@"
