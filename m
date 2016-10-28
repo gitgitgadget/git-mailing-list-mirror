@@ -2,100 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407E32035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 22:00:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 722CC2035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 22:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756635AbcJ1WAb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 18:00:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63895 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754138AbcJ1WAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 18:00:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93A994A765;
-        Fri, 28 Oct 2016 18:00:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bZuVRpABoLN3zwObz4D+aDWYVfQ=; b=E2WHXy
-        22Jozukwmhm7fklfq/Ye2kkx5rdQ7RTZQhgQjYWHcyRSjCd5ncr1CJKC9isR6gEw
-        oMQaXD4sU5L7IhnKbGeEGcGwjX/FuA2AKVD4a+lpRdUbp+x8QRlGMUOXHIbmeBCg
-        mO8/5KB21RPQozKwDQxBEgWLC8RjBM0gRFzfc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DC3dctoENNhwhzrZuY/BowX946BHUkac
-        VaFIVhAMV04KYWNP5glbo40CZyF82EITfXPD6Cj2DLAXbTUq11odLj8TMVXVCU90
-        brFofYHsoSmZg1k7gm9vgQJyXJ2GxrJiUQejJ6Tbpw21nvSojZR51dlqPl1hUWa4
-        /I2j+oqlomU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B46C4A764;
-        Fri, 28 Oct 2016 18:00:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0BD684A763;
-        Fri, 28 Oct 2016 18:00:27 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matt McCutchen <matt@mattmccutchen.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Fetch/push lets a malicious server steal the targets of "have" lines
-References: <1477690790.2904.22.camel@mattmccutchen.net>
-Date:   Fri, 28 Oct 2016 15:00:26 -0700
-In-Reply-To: <1477690790.2904.22.camel@mattmccutchen.net> (Matt McCutchen's
-        message of "Fri, 28 Oct 2016 17:39:50 -0400")
-Message-ID: <xmqqmvhoxhfp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1756770AbcJ1WCZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 18:02:25 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:33996 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752448AbcJ1WCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 18:02:24 -0400
+Received: by mail-qk0-f176.google.com with SMTP id x11so55110452qka.1
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 15:02:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=v8RUbRkDOvo6M3kBRelC58jmCE6DZJ2NdaaxIzhEEXw=;
+        b=bbppfCaSeg/Pcq9ZhqAE0spW7il3S3s65shKgBLfIWgslf1pq4dw2g/aDogGS7zU74
+         s5vnXIIIw05OKxoajIZeeGIaMzCn2M6R0V69v8eDdu86lmTMKTDvyIRHdodvAKMLB//S
+         XUkpQ1PbvObbbxNH3QzDT93kjGi8/IqrrtZY9Rot1nU7aE8FacKqwpSEBFosELlU3Lxe
+         Fga1X3pc/90NpeLHbk0Vv8eVQxblsFB0oRjs78L1l14YDGGQNUk5NYesgoPm4Av5L8HK
+         2CotxcYR4PL1eqfdtUvH/c3r/qjtmrlmFNQu7r3/cQ6nDPxFvBARwtnpGOmP+v0fADc2
+         p29g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=v8RUbRkDOvo6M3kBRelC58jmCE6DZJ2NdaaxIzhEEXw=;
+        b=HMkasagmI+vOQSRyfD4Ju3qR35MUIA+VMRTDRZs4mM+5IiHjFPnKc4+i0l9LbxMo+s
+         nLGJgF07gTL1bw5r51GaUbE0d7XiiWGR0NubG/FSOhwKLfpScZF6FqaYsh3DA5OeUyhK
+         N9jVG2Pw5qlL5MqfMxrFchyafdAYRb7ffVfJ2kjRpjsRhDUXtZxdrYjChJ9OHHMuUfHU
+         oH3BzajKG3QtVSrJnbLqnUO41oXRagbvC3q8Tll95x1eh829sVPLOA0i8quyEj8ugwCl
+         IWsQ2VFq7HdQmW2fMVZBCEpxnNJ6iGoE5AZxZRUibl7fjFb+x5g/3y8g8rYvstIt1DeT
+         os4Q==
+X-Gm-Message-State: ABUngvdjBrHFogMgPCKNYKqJ8Nvf4ygBaPScQ3wiRL/F7yXRMU03A+dyek+JhA8moGxTPH5h86DzQcN9AnH0pObx
+X-Received: by 10.55.129.1 with SMTP id c1mr12399490qkd.53.1477692143879; Fri,
+ 28 Oct 2016 15:02:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EFB4CFD4-9D59-11E6-B695-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.134.34 with HTTP; Fri, 28 Oct 2016 15:02:23 -0700 (PDT)
+In-Reply-To: <xmqqr370xi8g.fsf@gitster.mtv.corp.google.com>
+References: <20161028185502.8789-1-sbeller@google.com> <xmqqr370xi8g.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 28 Oct 2016 15:02:23 -0700
+Message-ID: <CAGZ79kabjjtdpUw=KFj0CELrO5dxvx01JXVXWczhNcFoMjd+NA@mail.gmail.com>
+Subject: Re: [PATCHv2 00/36] Revamp the attr subsystem!
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matt McCutchen <matt@mattmccutchen.net> writes:
+On Fri, Oct 28, 2016 at 2:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> previous discussion at https://public-inbox.org/git/20161022233225.8883-1-sbeller@google.com
+>>
+>> This implements the discarded series':
+>> jc/attr
+>> jc/attr-more
+>> sb/pathspec-label
+>> sb/submodule-default-paths
+>>
+>> This includes
+>> * The fixes for windows
+>> * Junios latest suggestion to use git_attr_check_initv instead of
+>>   alloc/append.
+>>
+>> * I implemented the thread safe attr API in patch 27 (attr: convert to new threadsafe API)
+>> * patch 28 (attr: keep attr stack for each check) makes it actually possible
+>>   to run in a multithreaded environment.
+>> * I added a test for the multithreaded when it is introduced in patch 32
+>>   (pathspec: allow querying for attributes) as well as a test to disallow
+>>   multiple "attr"s in a pathspec.
+>
+> I'd appreciate if you didn't unnecessarily rebase the series.  It
+> would make comparing the new round with the previous one a lot
+> easier.
+>
+> Thanks.
 
-> I was studying the fetch protocol and I realized that in a scenario in
-> which a client regularly fetches a set of refs from a server and pushes
-> them back without careful scrutiny, the server can steal the targets of
-> unrelated refs from the client repository by fabricating its own refs
-> to the "have" objects specified by the client during the fetch.
-
-Let me see if I understood your scenario correctly.
-
-Suppose we start from this history where 'O' are common, your victim
-has a 'Y' branch with two commits that are private to it, as well as
-a 'X' branch on which it has X1 that it previously obtained from the
-server.  On the other hand, the server does not know about Y1 or Y2,
-and it added one commit X2 to the branch 'x' the victim is
-following:
-
-           victim                server
-
-             Y1---Y2               
-            /                      
-    ---O---O---X1           ---O---O---X1---X2
-
-Then when victim wants to fetch 'x' from the server, it would say
-
-    have X1, have Y2, have Y1, have O
-
-and gets told to shut up by the server who heard enough.  The
-histories on these two parties will then become like this:
-
-
-           victim                server
-
-             Y1---Y2               
-            /                      
-    ---O---O---X1---X2      ---O---O---X1---X2
-
-Victim wishes to keep Y1 and Y2 private, but pushes some other
-branch (perhaps builds X3 on top of X2 and pushes 'x').  On push
-protocol, the server would lie to the victim that it has Y2 without
-knowing what they are.
-
-Is that how your attack scenario goes?
+I can resend on the original base if you want to; I'd need to reroll anyway
+now that the agreement is to put the attr_start call not in the Windows
+specific parts.
