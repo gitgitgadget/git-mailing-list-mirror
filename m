@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17D9C2035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 18:57:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670102035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 18:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034412AbcJ1S5F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 14:57:05 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:34396 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966271AbcJ1Szw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 14:55:52 -0400
-Received: by mail-pf0-f172.google.com with SMTP id n85so41591426pfi.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:52 -0700 (PDT)
+        id S1034417AbcJ1S5H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 14:57:07 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:35312 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966286AbcJ1Szu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 14:55:50 -0400
+Received: by mail-pf0-f174.google.com with SMTP id s8so41509995pfj.2
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 11:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AzH5usinP36M3w7EgJ745MqFNYi18BZnLRH8WCqM2HU=;
-        b=Wz27SQD9GRYnH70UlIOQoJHz+DraiwOaiI24s3vgLb8ak5k8jPqmo3kFk1+Iw+64EJ
-         60A3qGPqpUf+ch/Q2ejA8Hl42VuoCQ7BJqyMlAnTwEw0JnZmt5KkDtC4+k/UrHq8lS9x
-         B/iUVczUyyO3H2A2wMtv2d6K6v2BLEeLry3q0rqGCuwQmseKL+3MJbLCuIOMR1PGEUB6
-         DJhcM0Tr+xG3ARy/ASU4pQpMuQOUu0bQ8qoz+J9FXiSlmmPptAmcYx04gvk3H27wh65B
-         4PdVa7mnNHqlcDy2Lze/JBIB65OJl+17LuTZN+l9R618PMwAEPNF8EFABqtrfomDy9JZ
-         Hjrw==
+        bh=8LEfN828tHdiW1xrIWjsp6iJE+4yfqFoIhsX3n35uOo=;
+        b=LLslz3BfszCbF+HoGtQcqgAHIvSPv8btRkw0vss9QzPpTDa3bt87OCCvluOmiuMk6w
+         PNG+0/qXPHKOXHSAVuXBwCRP54QywSRzU0bf5WYypW/Fp5yKgy33fbbCLOXdBxenMNW2
+         shtQcu6MiIIrRCf3KEHpI+hEV8nV1H1r8MsgZjQs5woiGBQlj98gDqJ2qbb9NplldQO/
+         JY3MtEAEF3k9ySvbjcFJMf1JL8Y7xJySzd7N6AEVAzP0FnC5/PrWjpDCO4/qjA8c3Gzb
+         uMwq+vTc3+6AE5orZiIxtGaGiD8c9DZNTo2FtkoYARmO1fFXAUicXYw1cBzVBpIyGC0d
+         xlOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=AzH5usinP36M3w7EgJ745MqFNYi18BZnLRH8WCqM2HU=;
-        b=bBXnp7Hlu251uDAmGw1SF/4t7RofL/Na5Z+ALE+XmnTLJgOrYYknWeoLxBP09r1EVF
-         gj7NCfVdLrnNrMsBDHRyzS14fB+1WrcUvSU0q3UEV6V0zy3FILX6rI61VMhTwwttIjWn
-         yXdcQ01jqXIkSnLPUdliXdGEBoQOFB8gEdGEoXDdPk99qJsxaPcjhCy+WKf26OYKFM3w
-         397qbDwUiRE7FPAyZ7ZdHlqTOcWdnqnWwq+NbKRXSlWqm22dXpTtVttmfeBcjxAFUtb6
-         MG+TzIuwo9S4wsAlFfFi/QmcW2R6LSe8GWWLnW5CuNLDpwa2nPGEFYStURlRMAknjgxc
-         msGQ==
-X-Gm-Message-State: ABUngvcwZxRLFDLI6oGoICct6o1zy/4/81b8qFf7bS6hLLJtFXCRrf4Yk/TJ1q++IaowFynu
-X-Received: by 10.98.93.83 with SMTP id r80mr27151960pfb.17.1477680951818;
-        Fri, 28 Oct 2016 11:55:51 -0700 (PDT)
+        bh=8LEfN828tHdiW1xrIWjsp6iJE+4yfqFoIhsX3n35uOo=;
+        b=NXaTwxN+l4LzW2HpzhxmH1nUdRqIWVE0z+NXCEcpQoEIFkIRZFCTis+jj4tw0+MBfz
+         MfeAi1dD6nVDIWCs4urKSfJkfkM7t/T6Wy7DkCWQYYKzJZAAo8gQKiHkI7Qsr5XRaQhx
+         lR/9EgkssB0od1OKR/BolrxRIayKuvf5Gosk5Y9066NqM4ixV4mpTle3kmZpTiMI8dtl
+         s4ip2GCxVTFInQKU/cj2tKPHR3487mGuAVS4ufxOg6Cuce7L2RGHunFnhG7OYGD5SQem
+         0Vm5Cowe4Hsp6tFjzyMsr5q6V4FdLtGHOYGOpBNFrBSNHNadoPLuRe2A4/WnAfMP+Vr0
+         TfpA==
+X-Gm-Message-State: ABUngvfI/Us4fJ1m3zzGEs0EcM58vr1wNqSlRAzl/3vl2i2d7IhoW85DbHpHsHgA0zY8TugC
+X-Received: by 10.98.77.1 with SMTP id a1mr27527391pfb.160.1477680949982;
+        Fri, 28 Oct 2016 11:55:49 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:91ed:bb99:5319:17e9])
-        by smtp.gmail.com with ESMTPSA id xk6sm20595455pab.26.2016.10.28.11.55.51
+        by smtp.gmail.com with ESMTPSA id uh10sm20633419pab.5.2016.10.28.11.55.49
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 28 Oct 2016 11:55:51 -0700 (PDT)
+        Fri, 28 Oct 2016 11:55:49 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 17/36] attr: expose validity check for attribute names
-Date:   Fri, 28 Oct 2016 11:54:43 -0700
-Message-Id: <20161028185502.8789-18-sbeller@google.com>
+Subject: [PATCHv2 16/36] attr: add counted string version of git_attr()
+Date:   Fri, 28 Oct 2016 11:54:42 -0700
+Message-Id: <20161028185502.8789-17-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.714.ge3da0db
 In-Reply-To: <20161028185502.8789-1-sbeller@google.com>
 References: <20161028185502.8789-1-sbeller@google.com>
@@ -63,131 +62,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-Export attr_name_valid() function, and a helper function that
-returns the message to be given when a given <name, len> pair
-is not a good name for an attribute.
+Often a potential caller has <name, namelen> pair that
+represents the name it wants to create an attribute out of.
 
-We could later update the message to exactly spell out what the
-rules for a good attribute name are, etc.
+When name[namelen] is not NUL, the caller has to xmemdupz()
+only to call git_attr().
+
+Add git_attr_counted() that takes such a counted string instead of
+"const char *name".
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 39 +++++++++++++++++++++++++--------------
- attr.h | 10 ++++++++++
- 2 files changed, 35 insertions(+), 14 deletions(-)
+ attr.c | 8 ++++----
+ attr.h | 5 ++++-
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 7058e1c9fa..33021cc857 100644
+index dc9d61b411..7058e1c9fa 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -59,23 +59,38 @@ static unsigned hash_name(const char *name, int namelen)
- 	return val;
+@@ -78,7 +78,7 @@ static int invalid_attr_name(const char *name, int namelen)
+ 	return 0;
  }
  
--static int invalid_attr_name(const char *name, int namelen)
-+int attr_name_valid(const char *name, size_t namelen)
+-static struct git_attr *git_attr_internal(const char *name, int len)
++struct git_attr *git_attr_counted(const char *name, size_t len)
  {
- 	/*
- 	 * Attribute name cannot begin with '-' and must consist of
- 	 * characters from [-A-Za-z0-9_.].
- 	 */
- 	if (namelen <= 0 || *name == '-')
--		return -1;
-+		return 0;
- 	while (namelen--) {
- 		char ch = *name++;
- 		if (! (ch == '-' || ch == '.' || ch == '_' ||
- 		       ('0' <= ch && ch <= '9') ||
- 		       ('a' <= ch && ch <= 'z') ||
- 		       ('A' <= ch && ch <= 'Z')) )
--			return -1;
-+			return 0;
- 	}
--	return 0;
-+	return 1;
-+}
-+
-+void invalid_attr_name_message(struct strbuf *err, const char *name, int len)
-+{
-+	strbuf_addf(err, _("%.*s is not a valid attribute name"),
-+		    len, name);
-+}
-+
-+static void report_invalid_attr(const char *name, size_t len,
-+				const char *src, int lineno)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	invalid_attr_name_message(&err, name, len);
-+	fprintf(stderr, "%s: %s:%d\n", err.buf, src, lineno);
-+	strbuf_release(&err);
+ 	unsigned hval = hash_name(name, len);
+ 	unsigned pos = hval % HASHSIZE;
+@@ -109,7 +109,7 @@ static struct git_attr *git_attr_internal(const char *name, int len)
+ 
+ struct git_attr *git_attr(const char *name)
+ {
+-	return git_attr_internal(name, strlen(name));
++	return git_attr_counted(name, strlen(name));
  }
  
- struct git_attr *git_attr_counted(const char *name, size_t len)
-@@ -90,7 +105,7 @@ struct git_attr *git_attr_counted(const char *name, size_t len)
- 			return a;
+ /* What does a matched pattern decide? */
+@@ -199,7 +199,7 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
+ 		else {
+ 			e->setto = xmemdupz(equals + 1, ep - equals - 1);
+ 		}
+-		e->attr = git_attr_internal(cp, len);
++		e->attr = git_attr_counted(cp, len);
  	}
- 
--	if (invalid_attr_name(name, len))
-+	if (!attr_name_valid(name, len))
- 		return NULL;
- 
- 	FLEX_ALLOC_MEM(a, name, name, len);
-@@ -176,17 +191,15 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
- 			cp++;
- 			len--;
- 		}
--		if (invalid_attr_name(cp, len)) {
--			fprintf(stderr,
--				"%.*s is not a valid attribute name: %s:%d\n",
--				len, cp, src, lineno);
-+		if (!attr_name_valid(cp, len)) {
-+			report_invalid_attr(cp, len, src, lineno);
- 			return NULL;
- 		}
+ 	return ep + strspn(ep, blank);
+ }
+@@ -254,7 +254,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		      sizeof(struct attr_state) * num_attr +
+ 		      (is_macro ? 0 : namelen + 1));
+ 	if (is_macro) {
+-		res->u.attr = git_attr_internal(name, namelen);
++		res->u.attr = git_attr_counted(name, namelen);
+ 		res->u.attr->maybe_macro = 1;
  	} else {
- 		/*
- 		 * As this function is always called twice, once with
- 		 * e == NULL in the first pass and then e != NULL in
--		 * the second pass, no need for invalid_attr_name()
-+		 * the second pass, no need for attr_name_valid()
- 		 * check here.
- 		 */
- 		if (*cp == '-' || *cp == '!') {
-@@ -229,10 +242,8 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
- 		name += strlen(ATTRIBUTE_MACRO_PREFIX);
- 		name += strspn(name, blank);
- 		namelen = strcspn(name, blank);
--		if (invalid_attr_name(name, namelen)) {
--			fprintf(stderr,
--				"%.*s is not a valid attribute name: %s:%d\n",
--				namelen, name, src, lineno);
-+		if (!attr_name_valid(name, namelen)) {
-+			report_invalid_attr(name, namelen, src, lineno);
- 			goto fail_return;
- 		}
- 	}
+ 		char *p = (char *)&(res->state[num_attr]);
 diff --git a/attr.h b/attr.h
-index bcedf928b5..fe26f3a588 100644
+index c84f164b8e..bcedf928b5 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -13,6 +13,16 @@ extern struct git_attr *git_attr(const char *);
- /* The same, but with counted string */
- extern struct git_attr *git_attr_counted(const char *, size_t);
+@@ -8,7 +8,10 @@ struct git_attr;
+  * Given a string, return the gitattribute object that
+  * corresponds to it.
+  */
+-struct git_attr *git_attr(const char *);
++extern struct git_attr *git_attr(const char *);
++
++/* The same, but with counted string */
++extern struct git_attr *git_attr_counted(const char *, size_t);
  
-+/*
-+ * Return the name of the attribute represented by the argument.  The
-+ * return value is a pointer to a null-delimited string that is part
-+ * of the internal data structure; it should not be modified or freed.
-+ */
-+extern const char *git_attr_name(const struct git_attr *);
-+
-+extern int attr_name_valid(const char *name, size_t namelen);
-+extern void invalid_attr_name_message(struct strbuf *, const char *, int);
-+
  /* Internal use */
  extern const char git_attr__true[];
- extern const char git_attr__false[];
 -- 
 2.10.1.714.ge3da0db
 
