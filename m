@@ -2,93 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722CC2035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 22:02:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55CE82035F
+	for <e@80x24.org>; Fri, 28 Oct 2016 22:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756770AbcJ1WCZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 18:02:25 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:33996 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752448AbcJ1WCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 18:02:24 -0400
-Received: by mail-qk0-f176.google.com with SMTP id x11so55110452qka.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2016 15:02:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=v8RUbRkDOvo6M3kBRelC58jmCE6DZJ2NdaaxIzhEEXw=;
-        b=bbppfCaSeg/Pcq9ZhqAE0spW7il3S3s65shKgBLfIWgslf1pq4dw2g/aDogGS7zU74
-         s5vnXIIIw05OKxoajIZeeGIaMzCn2M6R0V69v8eDdu86lmTMKTDvyIRHdodvAKMLB//S
-         XUkpQ1PbvObbbxNH3QzDT93kjGi8/IqrrtZY9Rot1nU7aE8FacKqwpSEBFosELlU3Lxe
-         Fga1X3pc/90NpeLHbk0Vv8eVQxblsFB0oRjs78L1l14YDGGQNUk5NYesgoPm4Av5L8HK
-         2CotxcYR4PL1eqfdtUvH/c3r/qjtmrlmFNQu7r3/cQ6nDPxFvBARwtnpGOmP+v0fADc2
-         p29g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=v8RUbRkDOvo6M3kBRelC58jmCE6DZJ2NdaaxIzhEEXw=;
-        b=HMkasagmI+vOQSRyfD4Ju3qR35MUIA+VMRTDRZs4mM+5IiHjFPnKc4+i0l9LbxMo+s
-         nLGJgF07gTL1bw5r51GaUbE0d7XiiWGR0NubG/FSOhwKLfpScZF6FqaYsh3DA5OeUyhK
-         N9jVG2Pw5qlL5MqfMxrFchyafdAYRb7ffVfJ2kjRpjsRhDUXtZxdrYjChJ9OHHMuUfHU
-         oH3BzajKG3QtVSrJnbLqnUO41oXRagbvC3q8Tll95x1eh829sVPLOA0i8quyEj8ugwCl
-         IWsQ2VFq7HdQmW2fMVZBCEpxnNJ6iGoE5AZxZRUibl7fjFb+x5g/3y8g8rYvstIt1DeT
-         os4Q==
-X-Gm-Message-State: ABUngvdjBrHFogMgPCKNYKqJ8Nvf4ygBaPScQ3wiRL/F7yXRMU03A+dyek+JhA8moGxTPH5h86DzQcN9AnH0pObx
-X-Received: by 10.55.129.1 with SMTP id c1mr12399490qkd.53.1477692143879; Fri,
- 28 Oct 2016 15:02:23 -0700 (PDT)
+        id S942883AbcJ1WGp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 18:06:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65535 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1761948AbcJ1WGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 18:06:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 771814A884;
+        Fri, 28 Oct 2016 18:06:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4hLs4WfiIlmS069jDBBigYii/6E=; b=QADOU6
+        D6xQZavQsUyoRJkjO7cE+i8dclYSCcdUmAj5PhsgY+k0G4Kv7SV7aoakmuv2f5ID
+        9wf/80RKXJsKSFT32y0pHEOXkZp9U9xi91fifg/p8fJHfzz+gnLBMWT9sCC/KgzP
+        7/ZyE5rSrTHskK7+U/sIRpiiOVjIFpKfVzfMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oBXMDOc7wDJZGXDE4gpf3u9HBc2h5Rjh
+        8+jgAotCuMl95jXHy5AUJLBKVS77sjoEAYsDe+Vr+KwtyS366TBG/Dil1MhHZmfC
+        EGfBXVVJGibwlmImJCvhpFBk7tAGQaL7wHjaLXwkBGsxKfmQnLpsFH0YcEoVzzzu
+        AuIS/4aFYzI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E4CA4A883;
+        Fri, 28 Oct 2016 18:06:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D5AC04A882;
+        Fri, 28 Oct 2016 18:06:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCHv2 27/36] attr: convert to new threadsafe API
+References: <20161028185502.8789-1-sbeller@google.com>
+        <20161028185502.8789-28-sbeller@google.com>
+Date:   Fri, 28 Oct 2016 15:06:35 -0700
+In-Reply-To: <20161028185502.8789-28-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 28 Oct 2016 11:54:53 -0700")
+Message-ID: <xmqqinscxh5g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.134.34 with HTTP; Fri, 28 Oct 2016 15:02:23 -0700 (PDT)
-In-Reply-To: <xmqqr370xi8g.fsf@gitster.mtv.corp.google.com>
-References: <20161028185502.8789-1-sbeller@google.com> <xmqqr370xi8g.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 28 Oct 2016 15:02:23 -0700
-Message-ID: <CAGZ79kabjjtdpUw=KFj0CELrO5dxvx01JXVXWczhNcFoMjd+NA@mail.gmail.com>
-Subject: Re: [PATCHv2 00/36] Revamp the attr subsystem!
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC24279E-9D5A-11E6-AB50-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2016 at 2:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> previous discussion at https://public-inbox.org/git/20161022233225.8883-1-sbeller@google.com
->>
->> This implements the discarded series':
->> jc/attr
->> jc/attr-more
->> sb/pathspec-label
->> sb/submodule-default-paths
->>
->> This includes
->> * The fixes for windows
->> * Junios latest suggestion to use git_attr_check_initv instead of
->>   alloc/append.
->>
->> * I implemented the thread safe attr API in patch 27 (attr: convert to new threadsafe API)
->> * patch 28 (attr: keep attr stack for each check) makes it actually possible
->>   to run in a multithreaded environment.
->> * I added a test for the multithreaded when it is introduced in patch 32
->>   (pathspec: allow querying for attributes) as well as a test to disallow
->>   multiple "attr"s in a pathspec.
->
-> I'd appreciate if you didn't unnecessarily rebase the series.  It
-> would make comparing the new round with the previous one a lot
-> easier.
->
-> Thanks.
+Probably this needs to be squashed in, now the MinGW discussion has
+settled.
 
-I can resend on the original base if you want to; I'd need to reroll anyway
-now that the agreement is to put the attr_start call not in the Windows
-specific parts.
+ attr.c         | 2 +-
+ common-main.c  | 2 ++
+ compat/mingw.c | 4 ----
+ 3 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/attr.c b/attr.c
+index 082b5ed343..961218a0d5 100644
+--- a/attr.c
++++ b/attr.c
+@@ -50,7 +50,7 @@ static struct git_attr *(git_attr_hash[HASHSIZE]);
+ 
+ #ifndef NO_PTHREADS
+ 
+-static pthread_mutex_t attr_mutex = PTHREAD_MUTEX_INITIALIZER;
++static pthread_mutex_t attr_mutex;
+ #define attr_lock()		pthread_mutex_lock(&attr_mutex)
+ #define attr_unlock()		pthread_mutex_unlock(&attr_mutex)
+ void attr_start(void) { pthread_mutex_init(&attr_mutex, NULL); }
+diff --git a/common-main.c b/common-main.c
+index 44a29e8b13..d4699cd404 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "exec_cmd.h"
++#include "attr.h"
+ 
+ /*
+  * Many parts of Git have subprograms communicate via pipe, expect the
+@@ -32,6 +33,7 @@ int main(int argc, const char **argv)
+ 	sanitize_stdfds();
+ 
+ 	git_setup_gettext();
++	attr_start();
+ 
+ 	argv[0] = git_extract_argv0_path(argv[0]);
+ 
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 51ed76326b..3fbfda5978 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -5,7 +5,6 @@
+ #include "../strbuf.h"
+ #include "../run-command.h"
+ #include "../cache.h"
+-#include "../attr.h"
+ 
+ #define HCAST(type, handle) ((type)(intptr_t)handle)
+ 
+@@ -2233,9 +2232,6 @@ void mingw_startup(void)
+ 	/* initialize critical section for waitpid pinfo_t list */
+ 	InitializeCriticalSection(&pinfo_cs);
+ 
+-	/* initialize critical sections in the attr code */
+-	attr_start();
+-
+ 	/* set up default file mode and file modes for stdin/out/err */
+ 	_fmode = _O_BINARY;
+ 	_setmode(_fileno(stdin), _O_BINARY);
