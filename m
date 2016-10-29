@@ -2,115 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A48D320193
-	for <e@80x24.org>; Sat, 29 Oct 2016 07:10:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABD3320193
+	for <e@80x24.org>; Sat, 29 Oct 2016 08:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbcJ2HKp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Oct 2016 03:10:45 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:41310 "EHLO bsmtp.bon.at"
+        id S965728AbcJ2IZg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Oct 2016 04:25:36 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56819 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751412AbcJ2HKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2016 03:10:44 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t5WxG0qCkz5tlK;
-        Sat, 29 Oct 2016 09:10:42 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 82356143;
-        Sat, 29 Oct 2016 09:10:41 +0200 (CEST)
-Subject: Re: [PATCHv2 27/36] attr: convert to new threadsafe API
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-References: <20161028185502.8789-1-sbeller@google.com>
- <20161028185502.8789-28-sbeller@google.com>
- <xmqqinscxh5g.fsf@gitster.mtv.corp.google.com>
-Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <484115e7-67a0-a41e-0cca-b0daeb844b5c@kdbg.org>
-Date:   Sat, 29 Oct 2016 09:10:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S934337AbcJ2IZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2016 04:25:32 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LmJsk-1caHvn3o7W-00Zxl7; Sat, 29 Oct 2016 10:25:06
+ +0200
+Date:   Sat, 29 Oct 2016 10:25:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with
+ O_CLOEXEC
+In-Reply-To: <xmqqr370vtba.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1610291022120.3264@virtualbox>
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox> <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net> <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com> <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
+ <xmqqoa254czs.fsf@gitster.mtv.corp.google.com> <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com> <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com> <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com> <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com> <xmqq60od42s0.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610281306320.3264@virtualbox> <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
+ <xmqqshrg1ksv.fsf@gitster.mtv.corp.google.com> <CA+55aFwUEzfvWVSZfhBi85QaKWSo-gVMOk1BJFrR0ZsdCRHRsg@mail.gmail.com> <xmqqr370vtba.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <xmqqinscxh5g.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:qB6w60XjbPpdzk2HqLQLHw8GhIdPM+GAc7OhZZcO+LSo94fM79c
+ o9nq3vEnUMheF95SFZZLK0fExZkZ89xJ7df7UldbV6awHrK2rR9t5XRQMSLaRg7xZBDyuK3
+ QKywzUCGKsa+qWh5ZQcWn0qQ6diBESbL9sApgPjJDJ3+gn5PBbmyzW4H1fLY65/6jY6GKJX
+ 2qDc3B4ozo8xuyw5wOX8Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9JEntN6RjTA=:39koR9UHUl866SrnHqiLgw
+ SwSM2Np6B37ig5VP+OpTCuXMoQxRVN8MsXFZOj8gAYTp9J14RQybMNi7tzRR586b6+MFVDqsU
+ v3BCSebXDLprFYG1XMpUkGOm41g7SS1hq4FxAcCVQMPBWmLStnPzfqOVhi3JDdiSpZjPFFCEG
+ ke7VcOj9YfIo0+qFyU0pLzyNWs8/n4m8RFmz+uy6Rf+P7vOBnRb7pMORpMfqWZ77WFnkDw0ci
+ I/0gv89axJgWfH9f0aFkgha88wJ8J4wZ5SdUlEqEIRZ8o4fG3wcJUiX0DnRk7kO2VtbLfHIEI
+ 6xos5sQ7wfGQ+Dt8V41mWRzhm9kX5L9f3U42qKtPn+8jWUXwQi0pJ0p4Ns3jIVvSubY7WUyWr
+ OuuNKaFk5ZSNwRyiR9zHqsgj4bJxKGg/ybHsseal7c1HNIOm1U/g4quQ5xPb87vhd4NfP4RrB
+ U6g5kdFt1QiPqkdUenr1MslqkaAukd1q+LgFtmBOlfWgOO1YaokacA4XOX/WzxrhzGXDhiLDk
+ 50yd4nz7MeOiGhvGc77HDvWZ7q5Yadpwf+HTzlE41gn0JrL6wxhqOgwzZiU3evroAfC+fZBce
+ 8zzBUbnG4I/FNw6bAK+C55Tp20YxErk0ssUwzVrE0KefcThzPjc8E9C9rrga+mZLp4T7Az+f0
+ uR5bgPhNg1bQrG7q/eTgxkw5qSE5mdmOUw0UcT1X7mw+Sr2IiMCpROUW2Ndhgy69fGAAIoykB
+ Pj/h4mN/NSj7WFMfrn/9Ng9XTUZwa1n1t/X4xbIv61S5daaF5RSb/lSW8SJQFiOiZX4Jle0/A
+ NVViJ6d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.10.2016 um 00:06 schrieb Junio C Hamano:
-> Probably this needs to be squashed in, now the MinGW discussion has
-> settled.
+Hi,
 
-Yes, this looks good. Thank you very much, both of you.
+On Fri, 28 Oct 2016, Junio C Hamano wrote:
 
-As I said, I won't be able to test this until late next week.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > Apparently windows doesn't even support it, at least not mingw....
+> 
+> Assuming that the above was a misunderstanding, assuming that we can
+> do O_CLOEXEC (but not FD_CLOEXEC) on Windows just fine, where stray
+> file descriptors held open in the children matter more, and ...
 
--- Hannes
+Correct. We cannot change an open file handle's state ("FD_CLOEXEC") on
+Windows, but we can ask open() to open said file handle with the correct
+flag ("O_CLOEXEC", which is mapped to O_NOINHERIT on Windows.
 
->
->  attr.c         | 2 +-
->  common-main.c  | 2 ++
->  compat/mingw.c | 4 ----
->  3 files changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/attr.c b/attr.c
-> index 082b5ed343..961218a0d5 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -50,7 +50,7 @@ static struct git_attr *(git_attr_hash[HASHSIZE]);
->
->  #ifndef NO_PTHREADS
->
-> -static pthread_mutex_t attr_mutex = PTHREAD_MUTEX_INITIALIZER;
-> +static pthread_mutex_t attr_mutex;
->  #define attr_lock()		pthread_mutex_lock(&attr_mutex)
->  #define attr_unlock()		pthread_mutex_unlock(&attr_mutex)
->  void attr_start(void) { pthread_mutex_init(&attr_mutex, NULL); }
-> diff --git a/common-main.c b/common-main.c
-> index 44a29e8b13..d4699cd404 100644
-> --- a/common-main.c
-> +++ b/common-main.c
-> @@ -1,5 +1,6 @@
->  #include "cache.h"
->  #include "exec_cmd.h"
-> +#include "attr.h"
->
->  /*
->   * Many parts of Git have subprograms communicate via pipe, expect the
-> @@ -32,6 +33,7 @@ int main(int argc, const char **argv)
->  	sanitize_stdfds();
->
->  	git_setup_gettext();
-> +	attr_start();
->
->  	argv[0] = git_extract_argv0_path(argv[0]);
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 51ed76326b..3fbfda5978 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -5,7 +5,6 @@
->  #include "../strbuf.h"
->  #include "../run-command.h"
->  #include "../cache.h"
-> -#include "../attr.h"
->
->  #define HCAST(type, handle) ((type)(intptr_t)handle)
->
-> @@ -2233,9 +2232,6 @@ void mingw_startup(void)
->  	/* initialize critical section for waitpid pinfo_t list */
->  	InitializeCriticalSection(&pinfo_cs);
->
-> -	/* initialize critical sections in the attr code */
-> -	attr_start();
-> -
->  	/* set up default file mode and file modes for stdin/out/err */
->  	_fmode = _O_BINARY;
->  	_setmode(_fileno(stdin), _O_BINARY);
->
+And for the record: I agree with Junio that we cannot simply drop this
+O_CLOEXEC business.
 
+Because it was introduced to fix bugs.
+
+Thank you for your time,
+Johannes
