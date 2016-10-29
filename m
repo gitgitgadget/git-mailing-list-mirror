@@ -2,80 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84E652035F
-	for <e@80x24.org>; Fri, 28 Oct 2016 23:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88CA72035F
+	for <e@80x24.org>; Sat, 29 Oct 2016 00:05:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756104AbcJ1X7V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 19:59:21 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:32866 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754985AbcJ1X7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 19:59:20 -0400
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout03 with smtp
-        id 1BzF1u0030zhorE01BzGwT; Sat, 29 Oct 2016 00:59:18 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=YLLd8lOx c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8 a=57H4Vk3GRzZw8jfBPdYA:9
- a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=nJcEw6yWrPvoIXZ49MH8:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCHv2 00/36] Revamp the attr subsystem!
-To:     Stefan Beller <sbeller@google.com>, gitster@pobox.com
-References: <20161028185502.8789-1-sbeller@google.com>
-Cc:     bmwill@google.com, pclouds@gmail.com, git@vger.kernel.org
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <588e34f9-015f-82e1-019b-c83571801e7d@ramsayjones.plus.com>
-Date:   Sat, 29 Oct 2016 00:59:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161028185502.8789-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S1754955AbcJ2AFQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 20:05:16 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34785 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752777AbcJ2AFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 20:05:16 -0400
+Received: by mail-pf0-f177.google.com with SMTP id n85so44900464pfi.1
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 17:05:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=ZMh0AVBI7l9ynq46KTZeTwEwCobTYPlZ58WegV38mqE=;
+        b=EVBz4hXLVk7ymyuIznGob6OgTByXbD63OWiygJI0mTIlZ72+if/Otf/Jy8cG0Zy09c
+         0E6V+iSbry+ABmCWMA4LSJ3vQBA2Zf5nuWipuXKnzs01guGsO17V/2XRdV6JQyEUxEoj
+         VDpbgeIMbmurZ6j6YqJdQtMrluYnUdPIjdmuSD8272G6b32JbrU0cbVT3u68MOjHB3mn
+         tAY04nRvNjQpKpz0KZp9cDzjQFT0H+qf7miQhgIF5akRHWjmM7KkCxb1g4gJOpkUT4F1
+         cYy6HnWF0Ati/5J3RUoMESKSOHLzGzDmSrHURpH7ZK7UN/dyQgNNH7suOga4xJCtBcY2
+         ax6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ZMh0AVBI7l9ynq46KTZeTwEwCobTYPlZ58WegV38mqE=;
+        b=FyPNu9LIqS7KUXMRqgDnvMo8P3m/QuBRyHe4SpJuyAVKYaEwyHzkiO4TQkC8je1bY4
+         6o2J04WdQDu8fucvzNQtaTPAxGgGDHhBwLHl2j2vszx4Ef2KoS2qlcTZlUwoZV5taPJq
+         cp6zmMqAYZWYWpgR600OxC5iYcCBVaLfU/1di2oqzOAuSRrDaLuZqxBBxXY0uFLOBs3D
+         G+3ZFwAO3O2PkSFR16GLB9A+Ii9mp/m1X0NFBjjLQmD3niJGPMBfQyhXoPJrMp9QhDds
+         nNtpveJJY7o5x/Gm5TXgkV27B6J0wQntf+2jOdHlSoqW3K9OWSWo+4sNCCbawyCDk/Qv
+         XAhA==
+X-Gm-Message-State: ABUngvcBVuV4iy78YHx2hfRYxbgNAFFjeAgeCoTFdHPSSby2ThhykpjytOpgrYqKL4o0jgLF
+X-Received: by 10.98.44.212 with SMTP id s203mr29296689pfs.84.1477699515162;
+        Fri, 28 Oct 2016 17:05:15 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id b66sm21356750pfg.10.2016.10.28.17.05.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 28 Oct 2016 17:05:14 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH 0/4] Make other git commands use trailer layout
+Date:   Fri, 28 Oct 2016 17:05:07 -0700
+Message-Id: <cover.1477698917.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is built off jt/trailer-with-cruft (commit 60ef86a).
 
+This patch set makes "commit -s", "cherry-pick -x", and
+"format-patch --signoff" use the new trailer definition implemented in
+jt/trailer-with-cruft, with some refactoring along the way. With this
+patch set, the aforementioned commands would now handle trailers like
+those described in [1].
 
-On 28/10/16 19:54, Stefan Beller wrote:
-> previous discussion at https://public-inbox.org/git/20161022233225.8883-1-sbeller@google.com
-> 
-> This implements the discarded series':
-> jc/attr
-> jc/attr-more
-> sb/pathspec-label
-> sb/submodule-default-paths
-> 
-> This includes
-> * The fixes for windows
-> * Junios latest suggestion to use git_attr_check_initv instead of
->   alloc/append.
-> 
-> * I implemented the thread safe attr API in patch 27 (attr: convert to new threadsafe API)
-> * patch 28 (attr: keep attr stack for each check) makes it actually possible
->   to run in a multithreaded environment.
-> * I added a test for the multithreaded when it is introduced in patch 32
->   (pathspec: allow querying for attributes) as well as a test to disallow
->   multiple "attr"s in a pathspec.
+[1] <84f28caa-2e4b-1231-1a76-3b7e765c0b61@google.com>
 
-By the end of this series, 'git_attr_counted()' and 'git_attr()' are
-both file local symbols and can be marked with static. (I gave up the
-search for which actual patch should change the symbols to static).
+Jonathan Tan (4):
+  commit: make ignore_non_trailer take buf/len
+  trailer: avoid unnecessary splitting on lines
+  trailer: have function to describe trailer layout
+  sequencer: use trailer's trailer layout
 
-Also, 'git_attr()' ends up with a single caller, so maybe inline that
-call?
+ builtin/commit.c         |   2 +-
+ commit.c                 |  22 ++--
+ commit.h                 |   2 +-
+ sequencer.c              |  75 +++---------
+ t/t3511-cherry-pick-x.sh |  16 ++-
+ t/t4014-format-patch.sh  |  40 +++++--
+ t/t7501-commit.sh        |  36 ++++++
+ trailer.c                | 295 ++++++++++++++++++++++++++++-------------------
+ trailer.h                |  25 ++++
+ 9 files changed, 313 insertions(+), 200 deletions(-)
 
-I was about to have a moan about PTHREAD_MUTEX_INITIALIZER, since it
-causes sparse to issue some warnings, but I see that you have decided
-not to use it. So, phew! ;-)
-
-ATB,
-Ramsay Jones
+-- 
+2.8.0.rc3.226.g39d4020
 
