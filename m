@@ -2,101 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 486762021E
-	for <e@80x24.org>; Sat, 29 Oct 2016 01:26:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F09BC2021E
+	for <e@80x24.org>; Sat, 29 Oct 2016 03:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965024AbcJ2B0z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Oct 2016 21:26:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58524 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S937351AbcJ2B0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2016 21:26:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A488A4BED7;
-        Fri, 28 Oct 2016 21:26:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rsTzD++qYngJ/jGDfWVLB3U78lM=; b=pFshew
-        FSdwIZ1/gzZGitHf0z430vL2trMS+lWfWuwwgtiTah/Z3aLwDa1Gnb+sZ+32KVbv
-        d+ZWd17bDMZBgQ1uWQXBSAUuNRKEYXe8XJ3Latlgcr9HwQSomw8uYTeKPzJaPT+4
-        YVJlq4ppNKr4+WkH7nr1+1fFROkX28qtqEwrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=srcJo6bcXF/7F7ed85v7959C/wSLSFVl
-        us7mTdeqPWSu6hBtecMihR5eI6GOPUbpI76EbmAYiQSPaist+HW0NemaQZ5CPSV5
-        ZWrXv2mcNRN+FNFLDGTwX30KL4yGi12Q/bgvnPQeZ9eAtRo7CDfRaJR8EmtTMuQz
-        wLZa0ZOgsew=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CDFE4BED6;
-        Fri, 28 Oct 2016 21:26:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 196244BED5;
-        Fri, 28 Oct 2016 21:26:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
-References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
-        <20161025181621.4201-3-gitster@pobox.com>
-        <20161026042555.neaxvnmggtcku5cc@sigill.intra.peff.net>
-        <xmqqa8drcc5i.fsf@gitster.mtv.corp.google.com>
-        <20161026164746.2fu57f4pji5qdtnh@sigill.intra.peff.net>
-        <xmqqpomnatg6.fsf@gitster.mtv.corp.google.com>
-        <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net>
-        <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
-        <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net>
-        <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
-        <xmqqoa254czs.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
-        <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
-        <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
-        <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com>
-        <xmqq60od42s0.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1610281306320.3264@virtualbox>
-        <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
-        <xmqqshrg1ksv.fsf@gitster.mtv.corp.google.com>
-        <CA+55aFwUEzfvWVSZfhBi85QaKWSo-gVMOk1BJFrR0ZsdCRHRsg@mail.gmail.com>
-Date:   Fri, 28 Oct 2016 18:26:49 -0700
-In-Reply-To: <CA+55aFwUEzfvWVSZfhBi85QaKWSo-gVMOk1BJFrR0ZsdCRHRsg@mail.gmail.com>
-        (Linus Torvalds's message of "Fri, 28 Oct 2016 10:38:03 -0700")
-Message-ID: <xmqqr370vtba.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754971AbcJ2DbA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Oct 2016 23:31:00 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:35574 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751223AbcJ2Da7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2016 23:30:59 -0400
+Received: by mail-it0-f53.google.com with SMTP id e187so7934884itc.0
+        for <git@vger.kernel.org>; Fri, 28 Oct 2016 20:30:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NIkKCG7qP4NchO0PitL7TimxU+YXtq5THD5u1PfRG/o=;
+        b=DhdLOTMM49w93kXgqr7V5zBIbdJj+YNv+JNgY+sli1i/gSeEZ/yZImGg2x3FtdeGXR
+         e67bj72vm6pFr3oLgX+vsYu7oAd2TEgg7KOjtcnwvb/VIkhdMLecTB8c2SocsZLU3XA+
+         Fn/Sm8/nqRyoYAjXtU4T1LcdlgIlhgisjHOZFPPrU04CHQ38+egUHqzo1Ztiew4BAy2F
+         uQ4GXYG8MqBjrLX/pB1YMCvx/uLewowvrmX/9G8KbiNKuDkwAag3Aga6IEdYZMkUXEDW
+         vb1QIiZw7DCwTW5O93hk0J+e0+qlTx9MpoiGg87P3YWvfI5hgcGbzG0D/OotnVlGE+86
+         d4DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NIkKCG7qP4NchO0PitL7TimxU+YXtq5THD5u1PfRG/o=;
+        b=fKKl/wFDwXf3m7DUfGFk1mPcBhCVQ7Wj/kjLsEuyQ3MFtu8MJ4y/Gp/v71s2ltLrhs
+         Jl+wEjR1qdNK7hKn8tVSN/SrpbasiblosICMMRgLSx9QepWwWJXSNjO3R6kbph41A7WK
+         PHSYbT3VL7ZLC8ew3AzUN8WGlrTfsOCle5Kc5pbC/yJsSAa5WjN1yFeMrZCofRX60Viq
+         5wLXmMQFEHyPnFCOSxET5QyfMfuRF5Vj5A3addZvYTJxS4wDVA1Sb07jNTDg0vF5xLkP
+         yQORUXGeSoJlQlzwv2rUoV6Tq77tNXRLWxPzJLlMiFv3ZZzYCjAlnXq9CsFqCGbzPaGU
+         Kekg==
+X-Gm-Message-State: ABUngvdq9RxxADlNo89Ks8a011Hgj9E6FieiSviDA7QJNlVUsJWkVYsBPOzb11Ne7vg25WiyZh+r2EGhB4PE2g==
+X-Received: by 10.36.206.71 with SMTP id v68mr1314590itg.50.1477711858655;
+ Fri, 28 Oct 2016 20:30:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C49571F6-9D76-11E6-93FB-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.64.164.102 with HTTP; Fri, 28 Oct 2016 20:30:27 -0700 (PDT)
+In-Reply-To: <xmqq4m3x93e1.fsf@gitster.mtv.corp.google.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-17-chriscool@tuxfamily.org> <CACsJy8C4Qd76LSYxk9BJtN3n3Knv_RCDgBOO-ybkNHFZK61ahQ@mail.gmail.com>
+ <CACsJy8BPe085Qu4GpJ3MLTPeZM_7pbVrX31enQrGQn0oyjSrdg@mail.gmail.com> <xmqq4m3x93e1.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 29 Oct 2016 10:30:27 +0700
+Message-ID: <CACsJy8BU4EH=yzkEFzTPJSQ61HMJWVperjf67L9JK9bqeUEC4A@mail.gmail.com>
+Subject: Re: [PATCH v1 16/19] read-cache: unlink old sharedindex files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Thu, Oct 27, 2016 at 11:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> git-gc just can't match this because while it's running, somebody else
+>> may be updating $GIT_DIR/index. Handling races would be a lot harder.
+>
+> It could attempt to take a lock on the primary index while it runs,
+> and refrain to do anything if it can't take the lock ("gc --auto"
+> may want to silently retry), and then the race is no longer an
+> issue, no?
 
-> Apparently windows doesn't even support it, at least not mingw....
-
-Assuming that the above was a misunderstanding, assuming that we can
-do O_CLOEXEC (but not FD_CLOEXEC) on Windows just fine, where stray
-file descriptors held open in the children matter more, and ...
-
-> In contrast, O_NOATIME isn't a maintenance problem, since it's purely
-> an optimization and has no semantic difference, so it not existing on
-> some platform is immaterial.
-
-... assuming that I didn't screw up my use of fcntl() to set
-O_NOATIME on a fd opened with O_CLOEXEC, are you OK with the
-approach in patch *1*?  We can drop *2* to keep O_NOATIME, which has
-been working for those with old kernels with many loose objects, and
-it is not too much code to keep.
-
-*1* http://public-inbox.org/git/xmqqh97w38gj.fsf@gitster.mtv.corp.google.com
-*2* http://public-inbox.org/git/xmqqd1ik38f4.fsf@gitster.mtv.corp.google.com
+No, I thought of that. But if gc is holding the lock, another program
+that wants to update the index may fail. And git-gc is supposed to be
+non-intrusive
+-- 
+Duy
