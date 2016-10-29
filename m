@@ -2,78 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD0D42022A
-	for <e@80x24.org>; Sat, 29 Oct 2016 19:10:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 363C32022A
+	for <e@80x24.org>; Sat, 29 Oct 2016 22:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752226AbcJ2TK1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Oct 2016 15:10:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36044 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751479AbcJ2TK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2016 15:10:26 -0400
-Received: (qmail 9894 invoked by uid 109); 29 Oct 2016 19:10:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 29 Oct 2016 19:10:25 +0000
-Received: (qmail 6877 invoked by uid 111); 29 Oct 2016 19:10:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 29 Oct 2016 15:10:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Oct 2016 15:10:23 -0400
-Date:   Sat, 29 Oct 2016 15:10:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Matt McCutchen <matt@mattmccutchen.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Fetch/push lets a malicious server steal the targets of "have"
- lines
-Message-ID: <20161029191023.ztrfe76u4gi4l3ci@sigill.intra.peff.net>
-References: <1477690790.2904.22.camel@mattmccutchen.net>
- <xmqqmvhoxhfp.fsf@gitster.mtv.corp.google.com>
- <1477692961.2904.36.camel@mattmccutchen.net>
- <xmqq7f8sx8lg.fsf@gitster.mtv.corp.google.com>
- <1477712029.2904.64.camel@mattmccutchen.net>
- <20161029133959.kpkohjkku3jgwjql@sigill.intra.peff.net>
- <1477757311.1524.21.camel@mattmccutchen.net>
+        id S1755258AbcJ2WGe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Oct 2016 18:06:34 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:36235 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbcJ2WGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2016 18:06:33 -0400
+Received: by mail-lf0-f66.google.com with SMTP id b75so5521763lfg.3
+        for <git@vger.kernel.org>; Sat, 29 Oct 2016 15:06:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jFdGh6cxMp4jaoqTB44AbxOArN4cRSsiUAyIqBngW+o=;
+        b=n6NnWlC/VzJI24aAeH/nZAeLGJbtg6egkkFfywhTT6o+9DuVbBKa2xjp2wUd411NaC
+         DC8i5xDpevIn0TH9F/ZKJXjJNNjB407DGX1V/wOSwGqFlTtgoxpu3JkfwXZYLwubU1RX
+         pGO5Rhw/nuoOqARLlk9vMLP82s/vGujkD2gL9UAA9Idvy8N/bC1I2R/Qbm+/doTp5ELg
+         ApxPy/Je53X69M39DhClXQjn8wWsa6SJxdhhEYDScKblprb9sjfFvAbspM+V0pywPFQH
+         o+bEg4eSE0hMUq8mfYqC9FajAGf8CtFptbqlwlPWN9PDTrWTbTWGs+jm+0OGDd8SxYpf
+         nVnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jFdGh6cxMp4jaoqTB44AbxOArN4cRSsiUAyIqBngW+o=;
+        b=VSgph0ObfPiNHoQ/V9Vi0a/OQOQb5kB2heHSwuTv3IuI7+Dr9PCdQD8iXjDgB4gc6Y
+         5g1IdXvKhG4w3X0xza2FUixO2Xu47iIlJQnGYvfqllABaRzkAiNJPTjuO6zKl1UxKooM
+         KafYCT3AvnV9KhRHo7K/NK3ona/JC6V2dH69VQ396fjpwQbIXoabzAjxMaC7QAf1cNjw
+         9FbT5+7zNRZh02w2trMSbjkrUfRRTSdnFzZfsJPRTgGr4kvjZjW3MGJWSirOxyCD9rLp
+         MaP96EVTHDFfsNkxYijZdMPkIMdTuBY5p6afvCS9oSnWr+Z0a0YnVthqR19E3nM4CJv1
+         EBiQ==
+X-Gm-Message-State: ABUngvexEjMEaTCJwg2DYldeFGBYlcNWZYl938c+nQ/ArrOhuvpNfLR91ekb2h0r/puJshOeJ4kmgPG/tWxJxw==
+X-Received: by 10.25.169.146 with SMTP id s140mr11694873lfe.24.1477778791320;
+ Sat, 29 Oct 2016 15:06:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1477757311.1524.21.camel@mattmccutchen.net>
+Received: by 10.25.163.84 with HTTP; Sat, 29 Oct 2016 15:06:30 -0700 (PDT)
+In-Reply-To: <CACsJy8DPt3EJoSTVEZFbH6xXbh78MbLZ4h+50K4eoFxPYSaN=Q@mail.gmail.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-4-chriscool@tuxfamily.org> <CACsJy8DPt3EJoSTVEZFbH6xXbh78MbLZ4h+50K4eoFxPYSaN=Q@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 30 Oct 2016 00:06:30 +0200
+Message-ID: <CAP8UFD3hNEU_UeVizU6SVJTt4hqJPag9XWqZOM3FKCGJZXOthg@mail.gmail.com>
+Subject: Re: [PATCH v1 03/19] split-index: add {add,remove}_split_index() functions
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 29, 2016 at 12:08:31PM -0400, Matt McCutchen wrote:
+On Tue, Oct 25, 2016 at 11:58 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> +void remove_split_index(struct index_state *istate)
+>> +{
+>> +       if (istate->split_index) {
+>> +               /*
+>> +                * can't discard_split_index(&the_index); because that
+>> +                * will destroy split_index->base->cache[], which may
+>> +                * be shared with the_index.cache[]. So yeah we're
+>> +                * leaking a bit here.
+>
+> In the context of update-index, this is a one-time thing and leaking
+> is tolerable. But because it becomes a library function now, this leak
+> can become more serious, I think.
+>
+> The only other (indirect) caller is read_index_from() so probably not
+> bad most of the time (we read at the beginning of a command only).
+> sequencer.c may discard and re-read the index many times though,
+> leaking could be visible there.
 
-> Let's focus on the first scenario.  There the user is just pulling and
-> pushing a master branch.  Are you saying that each time the user pulls,
-> they need to look over all the commits they pulled before pushing them
-> back?  I think that's unrealistic, for example, on a busy project with
-> centralized code review or if the user is publishing a project-specific 
-> modified version of an upstream library.  The natural user expectation
-> is that anything pulled from a public repository is public.
+So is it enough to check if split_index->base->cache[] is shared with
+the_index.cache[] and then decide if discard_split_index(&the_index)
+should be called?
 
-No, I'm saying if you are running "git push foo master", then you should
-expect the contents of "master" to go to "foo". That _could_ have
-security implications if you come up with a sequence of events where
-secret things made it to "master". But it seems to me that "foo
-previously lied to you about what it has" is not the weak link in that
-chain. It is not thinking about what secret things are hitting the
-master that you are pushing, no matter how they got there.
-
-I agree there is a potential workflow (that you have laid out) where
-such lying can cause an innocent-looking sequence of events to disclose
-the secret commits. And again, I don't mind a note in the documentation
-mentioning that. I just have trouble believing it's a common one in
-practice.
-
-The reason I brought up the delta thing, even though it's a much harder
-attack to execute, is that it comes up in much more common workflows,
-like simply fetching from a private security-sensitive repo into your
-"main" public repo (which is an example you brought up, and something I
-know that I have personally done in the past for git.git).
-
--Peff
+Thanks,
+Christian.
