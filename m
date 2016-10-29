@@ -2,112 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBBCD2022A
-	for <e@80x24.org>; Sat, 29 Oct 2016 16:08:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B20262022A
+	for <e@80x24.org>; Sat, 29 Oct 2016 17:07:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755282AbcJ2QIg (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Oct 2016 12:08:36 -0400
-Received: from homie.mail.dreamhost.com ([208.97.132.208]:42683 "EHLO
-        homiemail-a62.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754138AbcJ2QIf (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 29 Oct 2016 12:08:35 -0400
-Received: from homiemail-a62.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTP id 34DD563406E;
-        Sat, 29 Oct 2016 09:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
-        message-id:subject:from:to:cc:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=
-        mattmccutchen.net; bh=gC83fCazdD7dxRrOwuGfhj7uZWE=; b=H8LQK2zDS0
-        U9fL21pEPAvM8wqlvm38WLiUkG/fTSVImp9n6iO0v69oKuMKDNHaULmd/ayOYXWY
-        gNjNtebZN2h3Z6CVFP5+3/9r9qhM8tdtqvWz3mZEYOiQEBPG0U/URCW7QdYBd55F
-        BLcRhsaY9i7GyyflQa/ZcgNEH6n5igZI0=
-Received: from main (c-50-177-20-184.hsd1.ma.comcast.net [50.177.20.184])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: matt@mattmccutchen.net)
-        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTPSA id B174363406C;
-        Sat, 29 Oct 2016 09:08:33 -0700 (PDT)
-Message-ID: <1477757311.1524.21.camel@mattmccutchen.net>
-Subject: Re: Fetch/push lets a malicious server steal the targets of "have"
- lines
-From:   Matt McCutchen <matt@mattmccutchen.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Date:   Sat, 29 Oct 2016 12:08:31 -0400
-In-Reply-To: <20161029133959.kpkohjkku3jgwjql@sigill.intra.peff.net>
-References: <1477690790.2904.22.camel@mattmccutchen.net>
-         <xmqqmvhoxhfp.fsf@gitster.mtv.corp.google.com>
-         <1477692961.2904.36.camel@mattmccutchen.net>
-         <xmqq7f8sx8lg.fsf@gitster.mtv.corp.google.com>
-         <1477712029.2904.64.camel@mattmccutchen.net>
-         <20161029133959.kpkohjkku3jgwjql@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        id S1756678AbcJ2RHD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Oct 2016 13:07:03 -0400
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:36382 "EHLO
+        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753538AbcJ2RHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2016 13:07:01 -0400
+Received: by mail-oi0-f43.google.com with SMTP id v84so3138367oie.3
+        for <git@vger.kernel.org>; Sat, 29 Oct 2016 10:07:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=XrJQg+5Bfi8RBIeY2MQGhkZrrqNlNJxSwfpPWoHmCMk=;
+        b=SRhwwnV9Nz7kgboguaTf6YhnqepkTMB9GxebQQt87M2S2cXAD4l9viyC0fC1LHK0Cj
+         qY8Agmq+C/VaogdX6wa09X3F4cK8+NonZ1vaJR+113kGpBGRaDPYOQ1RTAsQlcyk0EZu
+         4sdxi6w6fzoEH5PER7uRmVrS69rMiBqxQMqfJsrqr6k/HBt2E0ajSQ6UJGdADONGpVik
+         VsmJv377Az96DvHuB7WgFbgMDTto4lvjcCM21YWmEqiPxHTFeixZOqbIhcDM1Wjp90rM
+         7lMKXApqni6GYlfVh4MKrysFcVAzSb99qsH+4jJ3Jx1WoLF3OsM7g+YzfWT2XL1vprwl
+         hhXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=XrJQg+5Bfi8RBIeY2MQGhkZrrqNlNJxSwfpPWoHmCMk=;
+        b=lnJcHdN7U/aJxbGog9DBDGnoR/QLGcZIV/4UYz4XhAIAqf9fD0JhWIh4byWgORIyPT
+         vg0tF2GGPtPDyeFTZuCSqDNyo7SE5nW9xHMtdZniAskpfnp8An3mJnr25UhmKE8NKGji
+         nNpYvePW+lfQ3FK7ke/kR1e2cREfjA0ZAKRKzGJEEDmjVRKfibXGepME1BUGSvUFkPXJ
+         HLFAlcDOME5rGWBul5DHhedUamTtHM5KQ70p07Ph1mOl9rwWzCFt+9xizbW8Qsq8DUwl
+         QcaCV9TAoqZ0yDkem+jJb1UugPido5vCWAMO9HDvG24WvXZ2LFjukuWUZtDwRhUZ3yYY
+         aDxg==
+X-Gm-Message-State: ABUngveZ4L6vDPYki1t4hdB1HChgoxKrHg6Vm5VYYRvR1wlQgrFxe3otcA08uFeaYBfp8ueS7KF5pjH0tG7oLg==
+X-Received: by 10.157.39.2 with SMTP id r2mr15553725ota.103.1477760820891;
+ Sat, 29 Oct 2016 10:07:00 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.182.142.104 with HTTP; Sat, 29 Oct 2016 10:06:59 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1610291022120.3264@virtualbox>
+References: <alpine.DEB.2.20.1610251327050.3264@virtualbox>
+ <20161026201721.2pw4slsuyhxhcwxj@sigill.intra.peff.net> <xmqqd1imbymi.fsf@gitster.mtv.corp.google.com>
+ <20161027102419.dbzigj7wtr355ofh@sigill.intra.peff.net> <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
+ <xmqqoa254czs.fsf@gitster.mtv.corp.google.com> <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
+ <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
+ <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com> <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
+ <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com> <xmqq60od42s0.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610281306320.3264@virtualbox> <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
+ <xmqqshrg1ksv.fsf@gitster.mtv.corp.google.com> <CA+55aFwUEzfvWVSZfhBi85QaKWSo-gVMOk1BJFrR0ZsdCRHRsg@mail.gmail.com>
+ <xmqqr370vtba.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1610291022120.3264@virtualbox>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Sat, 29 Oct 2016 10:06:59 -0700
+X-Google-Sender-Auth: bMke4KgAhhZy_HNjEytC6WDc-MY
+Message-ID: <CA+55aFxsjiuR8cp9SiPS88OnzmCiNN3B-gybz1CS71avsU8OOw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with O_CLOEXEC
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2016-10-29 at 09:39 -0400, Jeff King wrote:
-> I'm not sure I understand how connecting to a remote server to fetch is
-> a big problem. The server may learn about the existence of particular
-> sha1s in your repository, but cannot get their content.
->=20
-> It's the subsequent push that is a problem.
->=20
-> In the scenarios you've described, I'm mostly inclined to say that the
-> problem is not git or the protocol itself, but rather lax refspecs.
-> You mentioned earlier:
->=20
-> =C2=A0 the server can just generate another ref 'xx' pointing to Y2, as=
-suming
-> =C2=A0 it can entice the victim to set up a corresponding local branch
-> =C2=A0 refs/heads/for-server1/xx and push it back.=C2=A0=C2=A0Or if the=
- victim is for
-> =C2=A0 some reason just mirroring back and forth:
->=20
-> This sounds a lot like "I told git to push a bunch of things without
-> checking if they were really secret, and it turned out to push some
-> secret things". IOW I think the problem is not that the server may lie
-> about what it has, but that the user was not careful about what they
-> pushed. I dunno. I do not mind making a note in the documentation
-> explaining the implications of a server lying, but the scenarios seem
-> pretty contrived to me.
+On Sat, Oct 29, 2016 at 1:25 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Correct. We cannot change an open file handle's state ("FD_CLOEXEC") on
+> Windows, but we can ask open() to open said file handle with the correct
+> flag ("O_CLOEXEC", which is mapped to O_NOINHERIT on Windows.
 
-Let's focus on the first scenario. =C2=A0There the user is just pulling a=
-nd
-pushing a master branch. =C2=A0Are you saying that each time the user pul=
-ls,
-they need to look over all the commits they pulled before pushing them
-back? =C2=A0I think that's unrealistic, for example, on a busy project wi=
-th
-centralized code review or if the user is publishing a project-specific=20
-modified version of an upstream library. =C2=A0The natural user expectati=
-on
-is that anything pulled from a public repository is public.
+Ok. So then I have no issues with it, and let's use O_CLOEXEC if it
+exists and fcntl(FD_CLOEXEC) if O_CLOEXEC doesn't exist.
 
-But let's see what Junio says in the other subthread.
-
-> A much more interesting one, IMHO, is a server whose receive-pack lies
-> about which objects it has (possibly ones it found out about earlier vi=
-a
-> fetch), which provokes the client to generate deltas against objects th=
-e
-> server doesn't have (and thereby leaking information about the base
-> objects).
->=20
-> That is a problem no matter how careful your refspecs are. I suspect it
-> would be a hard attack to pull off in practice, just because it's going
-> to depend heavily on the content of the specific objects, what kinds of
-> deltas you can convince the other side to generate, etc. That might
-> merit a mention in the git-push documentation.
-
-Sure, if I end up doing a patch, I'll include this.
-
-Matt
+              Linus
