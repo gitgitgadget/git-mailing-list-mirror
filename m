@@ -2,96 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BCEE2022A
-	for <e@80x24.org>; Sat, 29 Oct 2016 22:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F01802022A
+	for <e@80x24.org>; Sun, 30 Oct 2016 02:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752651AbcJ2W6s (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Oct 2016 18:58:48 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33955 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752375AbcJ2W6r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2016 18:58:47 -0400
-Received: by mail-lf0-f66.google.com with SMTP id i187so4894429lfe.1
-        for <git@vger.kernel.org>; Sat, 29 Oct 2016 15:58:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6B/i0lz9k9tVbH81I4qgqHiXaqJlXpfHOemNY6f/eQo=;
-        b=Oh1ZtvQ2KTI7sZpqYPatWSLk7sTrwrT6NRVmhVGlOIzw79K9Vj1JEhejgBnIM0ZuFZ
-         8ko20kJvWt6Se4NHlfq82Dx5Ub8ylCFJNw5kubh00RR20ItTvlcdW++n+1n7qYShmXge
-         0unjba5rdhm6TSycR4jbsZQD0QPCemWXSDXX3XDWjmV6by+rzqoGXgSPCX0fHszOVdRN
-         /K5KoI8IhckdlDVw49zcFFMnMstmQRYvoLGCPUMxeULrAYCcdRLAG23clsTc26YPQ0Iw
-         rfGjRY7aSQnGYN4y7A9/GpsnoqiQJ9c7lIV1g4vf3Y37dl6eq1I67Ktn6LM3wEIBs2QF
-         bnKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6B/i0lz9k9tVbH81I4qgqHiXaqJlXpfHOemNY6f/eQo=;
-        b=M42Me1Mvfu0Djr2Rqt9nPcl2QIhY4MdV3LnujDgRFw3+gpteZfLOJVvXqUA6yqgQQv
-         Ts0XfWrSjKLKsYickcGjQdULRLiC8fxIU3sNa1ahxRZlqoS47q8LhfA4BUWYCCUmpT02
-         SnwN3XJhb3zFNC7J+aFw0YwoPcOThDWBZ1RDxJwVv8O5o24exYHlbwmn9w6BEoLZss8Z
-         c/q7aL3v5wqsCcGZftEHQp8Li4ssW+vUDy/E02J9qxyNdQsbP/KkfgSSp9smwyDkBplB
-         dUfYizWvdvo30JhjvfcD0b7uSY0RFMOW55VOnZ5BUZ1bsHTepnUpytRob0Qkzw+Sgj5K
-         e2QA==
-X-Gm-Message-State: ABUngvd2Lh0F8JckO5B9gXIFlCtuOgZ3IPSrOLiwGmY5TiA0Vc8ISdqhOntVDEHLmt6vrLye41bDka2GzTmF0A==
-X-Received: by 10.25.74.5 with SMTP id x5mr4117410lfa.154.1477781925574; Sat,
- 29 Oct 2016 15:58:45 -0700 (PDT)
+        id S1754811AbcJ3CKK convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 29 Oct 2016 22:10:10 -0400
+Received: from dmz-mailsec-scanner-6.mit.edu ([18.7.68.35]:57445 "EHLO
+        dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754496AbcJ3CKJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 29 Oct 2016 22:10:09 -0400
+X-AuditID: 12074423-6afff700000061af-a3-5815567e9a18
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by  (Symantec Messaging Gateway) with SMTP id 8C.33.25007.E7655185; Sat, 29 Oct 2016 22:10:08 -0400 (EDT)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+        by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id u9U2A5ba001638;
+        Sat, 29 Oct 2016 22:10:05 -0400
+Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id u9U2A3mB004953
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 29 Oct 2016 22:10:04 -0400
+Date:   Sat, 29 Oct 2016 22:10:02 -0400 (EDT)
+From:   Anders Kaseorg <andersk@mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     842477@bugs.debian.org, git@vger.kernel.org,
+        Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [PATCH] git-sh-setup: Restore sourcability from outside scripts
+Message-ID: <alpine.DEB.2.10.1610292153300.60842@buzzword-bingo.mit.edu>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Received: by 10.25.163.84 with HTTP; Sat, 29 Oct 2016 15:58:45 -0700 (PDT)
-In-Reply-To: <CACsJy8CfQ6d3Q74W4rm=rJD69EAzuUe7PdrW-5NDo0vHuDSNpw@mail.gmail.com>
-References: <20161023092648.12086-1-chriscool@tuxfamily.org>
- <20161023092648.12086-11-chriscool@tuxfamily.org> <CACsJy8CfQ6d3Q74W4rm=rJD69EAzuUe7PdrW-5NDo0vHuDSNpw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 30 Oct 2016 00:58:45 +0200
-Message-ID: <CAP8UFD1qTeppaW2NRWhAxz0tJ7EtwmiOjKUnQt8q89FdC8kXWQ@mail.gmail.com>
-Subject: Re: [PATCH v1 10/19] read-cache: regenerate shared index if necessary
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixCmqrNsQJhphsLxJzGLh3EvMFl1Xupks
+        GnqvMFt0zlzC7sDicWHrJBaPi5eUPfruTmfz+LxJLoAlissmJTUnsyy1SN8ugSvj7tWDTAV3
+        eCpm7Z3C2MC4mauLkZNDQsBE4v2jf8xdjFwcQgJtTBIb98+AcjYySjT/uMkKUiUksJtJYv32
+        ChCbRUBb4ufCXWBxNgE1iQ9Hv4LZIkD2xLZDLCA2s0C8xLbPd5lAbGEBD4nPazqA4hwcvED2
+        sxX6IGFRAV2JQ//+sIHYvAKCEidnPoFqVZc48OkiI4StLXH/ZhvbBEa+WUjKZiEpm4WkbAEj
+        8ypG2ZTcKt3cxMyc4tRk3eLkxLy81CJdM73czBK91JTSTYyg0GR3Ud7B+LLP+xCjAAejEg8v
+        w1uRCCHWxLLiytxDjJIcTEqivPsdRSOE+JLyUyozEosz4otKc1KLDzFKcDArifB2eQPleFMS
+        K6tSi/JhUtIcLErivP/dvoYLCaQnlqRmp6YWpBbBZGU4OJQkeJNCgRoFi1LTUyvSMnNKENJM
+        HJwgw3mAhv8JARleXJCYW5yZDpE/xagoJc77DCQhAJLIKM2D64WkDgeJV4ziQK8I80aArOAB
+        ph247ldAg5mABqcVioAMLklESEk1MMo55oZ3b2I+PCUkhr3t9vbK9R29OxiX2vRd8eWIu6bl
+        enAO86GnrU5dRu89fr13CWf27mLe2F9SLsrK01GzIlIw2Ovn/dusS3I+f1/tYHjqNPOFuitc
+        DN+aTR/qyXP8rRH+uPks+/ym4qaSK2tOu0+S6MhwKOrTOXfqoZ2QU0HtqeILBiavlViKMxIN
+        tZiLihMB++1r7/gCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 25, 2016 at 12:16 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> @@ -2233,7 +2263,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
->>                 if ((v & 15) < 6)
->>                         istate->cache_changed |= SPLIT_INDEX_ORDERED;
->>         }
->> -       if (istate->cache_changed & SPLIT_INDEX_ORDERED) {
->> +       if (istate->cache_changed & SPLIT_INDEX_ORDERED ||
->> +           too_many_not_shared_entries(istate)) {
->
-> It's probably safer to keep this piece unchanged and add this
-> somewhere before it
->
-> if (too_many_not_shared_entries(istate))
->     istate->cache_changed |= SPLIT_INDEX_ORDERED;
->
-> We could keep cache_changed consistent until the end this way.
+v2.10.0-rc0~45^2~2 “i18n: git-sh-setup.sh: mark strings for
+translation” broke outside scripts such as guilt that source
+git-sh-setup as described in the documentation:
 
-Ok, it will be in the next version.
+$ . "$(git --exec-path)/git-sh-setup"
+sh: 6: .: git-sh-i18n: not found
 
->>  test_expect_success 'enable split index' '
->> +       git config splitIndex.maxPercentChange 100 &&
->
-> An alternative name might be splitThreshold. I don't know, maybe
-> maxPercentChange is better.
+This also affects contrib/convert-grafts-to-replace-refs.sh and
+contrib/rerere-train.sh in tree.  Fix this by using git --exec-path to
+find git-sh-i18n.
 
-I think it is important to say that it is a percent in the name, so I
-prefer maxPercentChange.
+While we’re here, move the sourcing of git-sh-i18n below the shell
+portability fixes.
 
-Thanks,
-Christian.
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+
+Is this a supported use of git-sh-setup?  Although the documentation is
+clear that the end user should not invoke it directly, it seems to imply
+that scripts may do this, and in practice it has worked until v2.10.0.
+
+ git-sh-setup.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index a8a4576..240c7eb 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -2,9 +2,6 @@
+ # to set up some variables pointing at the normal git directories and
+ # a few helper shell functions.
+ 
+-# Source git-sh-i18n for gettext support.
+-. git-sh-i18n
+-
+ # Having this variable in your environment would break scripts because
+ # you would cause "cd" to be taken to unexpected places.  If you
+ # like CDPATH, define it for your interactive shell sessions without
+@@ -46,6 +43,9 @@ git_broken_path_fix () {
+ 
+ # @@BROKEN_PATH_FIX@@
+ 
++# Source git-sh-i18n for gettext support.
++. "$(git --exec-path)/git-sh-i18n"
++
+ die () {
+ 	die_with_status 1 "$@"
+ }
+-- 
+2.10.1
+
