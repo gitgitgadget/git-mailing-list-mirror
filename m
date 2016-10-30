@@ -2,87 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE77D20193
-	for <e@80x24.org>; Sun, 30 Oct 2016 12:54:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD42920193
+	for <e@80x24.org>; Sun, 30 Oct 2016 17:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754072AbcJ3MyG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Oct 2016 08:54:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36172 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751670AbcJ3MyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2016 08:54:05 -0400
-Received: (qmail 2698 invoked by uid 109); 30 Oct 2016 12:54:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 30 Oct 2016 12:54:04 +0000
-Received: (qmail 10125 invoked by uid 111); 30 Oct 2016 12:54:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 30 Oct 2016 08:54:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Oct 2016 08:54:02 -0400
-Date:   Sun, 30 Oct 2016 08:54:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Aaron Pelly <aaron@pelly.co>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Expanding Includes in .gitignore
-Message-ID: <20161030125402.y2swumdomymigjxi@sigill.intra.peff.net>
-References: <80919456-7563-2c16-ba23-ce4fcc2777de@pelly.co>
- <20161027105026.e752znq5jv5a6xea@sigill.intra.peff.net>
- <b20b458c-440d-df09-d2c7-e510ac20492c@pelly.co>
- <20161027205508.vqw44zlbnqpj2cvd@sigill.intra.peff.net>
- <20161027210753.btc7zbndhdocsbwa@sigill.intra.peff.net>
- <xmqqwpgt2ng2.fsf@gitster.mtv.corp.google.com>
- <cc23eece-d693-9e40-78fe-3bafe6bcad3a@pelly.co>
+        id S1756957AbcJ3RDc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Oct 2016 13:03:32 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:36941 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752677AbcJ3RDb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2016 13:03:31 -0400
+Received: by mail-it0-f54.google.com with SMTP id u205so63965439itc.0
+        for <git@vger.kernel.org>; Sun, 30 Oct 2016 10:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+EMqwsmtgMRjmrlvEPF2vRgWLXzq1RkWPFkv/h9qXKU=;
+        b=sioWycrimmH4Ga+7MQlSom8QntJhij1UXsKU5ARey6KbBdzgJ3qBX4TmP+MPKHwbWw
+         1I+lqHD5WURKeXq7Ruu7JbQuTuq+PaIkYXuQRFoB+eFf5/Em/Z/v4Ke4s1ypFCT4TDdx
+         2GSTI65UIptAR6K1Lw0Davp2o9mRuZl5kw2eovRsQZ2+Zlbie/2NXIzvrDu26WkdBL3V
+         91l0V9lqsWrrAmE9To3+ZQsfRqv9RvoA76eyJold+dSZyL/Q21FKIzmljkSzYmw/nj8p
+         /R9yR0wlA44fPski1sNSQUaK0cP1RZIH6MpK9hTZMMs+GADFeBQQ8EL8oBu/okyb6ZgG
+         FQIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+EMqwsmtgMRjmrlvEPF2vRgWLXzq1RkWPFkv/h9qXKU=;
+        b=E3hNtupFSUjAWqB4a8W6Mtoz1ZSielto0EArQW1ScLXWFac+50P7096UJTt5kjFENc
+         jxGG1MbK91PpOQ2K1qM3D8S5Emhclhb1tMwVhdT/ZpErcRX2RKpXx0IvNLdARRJjcfuE
+         +AzU9+qxnUpufMXsprZ8u+efBWVqlpTiKVpi8PaH8KqKYJ5FID3NtCqSEWJG4hshUdxJ
+         DwKya1vIVnSG/diqBwliJDuwj4yIO3g+fOhSTPMjqfIdWSkHuxsAi/rXY3IfDCRsDjET
+         EWEgIjBEWb7M7XhcYdIaLf1i7vg6WCwbFzDbntkLeqH/FNY2wCbilfblEJUwJzEFtk1T
+         SP0A==
+X-Gm-Message-State: ABUngveHwoI4PAkZvLRwqGzzJSplEbEkmihh4u8wCFyG0IrEOn3Z1vznQaiiQMfr9S79r/WJpeSFj6KWPeFNQA==
+X-Received: by 10.107.131.16 with SMTP id f16mr4263834iod.91.1477847010664;
+ Sun, 30 Oct 2016 10:03:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cc23eece-d693-9e40-78fe-3bafe6bcad3a@pelly.co>
+Received: by 10.107.48.20 with HTTP; Sun, 30 Oct 2016 10:03:10 -0700 (PDT)
+From:   ryenus <ryenus@gmail.com>
+Date:   Mon, 31 Oct 2016 01:03:10 +0800
+Message-ID: <CAKkAvazX1gDzwhQLTbRvxc84sjz72ONy2-P7qWijQUnQqJ+K8g@mail.gmail.com>
+Subject: [git rebase -i] show time and author besides commit hash and message?
+To:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2016 at 10:32:07PM +1300, Aaron Pelly wrote:
+It would help especially when the commit message was written badly.
 
-> On 28/10/16 15:54, Junio C Hamano wrote:
-> > Jeff King <peff@peff.net> writes:
-> > 
-> >> However, as I said elsewhere, I'm not convinced this feature is all that
-> >> helpful for in-repository .gitignore files, and I think it does
-> >> introduce compatibility complications. People with older git will not
-> >> respect your .gitignore.d files. Whereas $GIT_DIR/info is purely a local
-> >> matter.
-> > 
-> > As I do not see the point of making in-tree .gitignore to a forest
-> > of .gitignore.d/ at all, compatibility complications is not worth
-> > even thinking about, I would have to say.
-> 
-> Well; that saves some work. :)
-> 
-> I do not suggesting making this mandatory. I think it adds value and it
-> is a common and understood mechanism. But, if it is abhorrent, consider:
-> 
-> There is precedent for including files in git-config. This could be
-> extended to ignore files. The code is not similar, but the concept is. I
-> could live with it.
+Or it might be possible to customize just like "git log --format"?
 
-Yes, but note that we don't have in-tree config files, either (to large
-degree because of the security implications).
-
-Perhaps Junio can clarify himself, but I took his statement to mean only
-that in-tree .gitignore.d is not worth worrying about, but that
-$GIT_DIR/info/exclude.d or similar would be OK (but perhaps I
-interpreted that way because that's my own position :) ).
-
-> Or how about a new githook that can intelligently create or return the
-> details? This would be my least favourite option unless it was
-> configured in an obvious place.
-
-That seems more complicated than is really merited, and probably doesn't
-perform great either (it's an extra forked process for almost every git
-operation). And obviously would not work for an in-tree solution anyway,
-as we do not want to run arbitrary code.
-
--Peff
+Thanks
