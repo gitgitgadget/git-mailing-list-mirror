@@ -2,120 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD2C20193
-	for <e@80x24.org>; Sun, 30 Oct 2016 22:11:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2B0720193
+	for <e@80x24.org>; Sun, 30 Oct 2016 22:25:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753122AbcJ3WLd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Oct 2016 18:11:33 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:34869 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751741AbcJ3WLc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2016 18:11:32 -0400
-Received: by mail-qt0-f193.google.com with SMTP id m48so256447qta.2
-        for <git@vger.kernel.org>; Sun, 30 Oct 2016 15:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AIJsvoBe8fRuUpGWUBr7fcPKQKG3xglEe1JBZh7C21w=;
-        b=woR0FN4nHKEjIPriKqYLGlFXoz0spT3DEgieYmcw7mjPtba5JGCApTTgvl2rH266rY
-         DiDjRcNjGFWjZuiRBp5wzWhSG7U8LQ8yTq2SBp3zSh5eNFLsCuWJfR47DdRfXJ4365sV
-         mYGaebUpK6/6JQ+4uJT8sL6vbWEEQZfSEBI/MIZqQiY7S3MNYKQcdD8WEHZaRh0SQMix
-         2ju+UoH3pbXh2k5tTX56YOQYSGA68YgjSx3ZLy2EgBS+qgFyktXozO+uWEVdkfUEOhTH
-         JgLHxtyI2n5/+mtQIkQtSRuHEDnvm9BgI5AiBL5A33nkqR1s+nDiN42r+PX5SgJYUcQZ
-         v3ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AIJsvoBe8fRuUpGWUBr7fcPKQKG3xglEe1JBZh7C21w=;
-        b=Znq/+gQ0hq6fwpKidzvFoCYzOFkhryBbhgJv25ETsfp6lj94LSfY2OoprHY8vwvtpn
-         0TLpwy4AvSQyID1TRuSnIqFChpLGhyNxWwM2SAc7oOksyQbm8u8deUZhcCXYFfLPPtki
-         xp4RSHs/iALj3YGZP8jkAIj0pHXhvrrQ6vxXghLKkYtp1MOt5bRK0ni/rS559pCFdH3g
-         L0WVdDXpSGvjixXQLQNjpDe4/433jhxWVff1lZNOMwCDA2nzXjPPwdR5+taJ42CiMfQo
-         EstGyLg8vK855fFDokF+3v+6Idr0Jp+QRmkMTZDS5LH8xSwQ4NWXsShsrv6SUzLuuYzq
-         NkcA==
-X-Gm-Message-State: ABUngvfX4xvEI8Ch6EBMED++UOMFdoKJVf61YlhPuTwqTIZq+vMh3ZqnD989wXc9wWLECYdDK3T6j/nEomVGYA==
-X-Received: by 10.237.34.83 with SMTP id o19mr22370962qtc.15.1477865491364;
- Sun, 30 Oct 2016 15:11:31 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.55.210.3 with HTTP; Sun, 30 Oct 2016 15:11:10 -0700 (PDT)
-In-Reply-To: <20161030211227.4gqovv7mt7mtnpy7@sigill.intra.peff.net>
-References: <alpine.DEB.2.10.1610292153300.60842@buzzword-bingo.mit.edu>
- <CACBZZX4SnJj6ZYK-Ha3EtiWUf_n=+LZ=UeS=7vxgsj8s=bi3Sg@mail.gmail.com>
- <alpine.DEB.2.10.1610301503280.60842@buzzword-bingo.mit.edu>
- <223121D101D844DEBF086AC40A5AF4CB@PhilipOakley> <20161030211227.4gqovv7mt7mtnpy7@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 30 Oct 2016 23:11:10 +0100
-Message-ID: <CACBZZX6ArQdG202n-SouwDhoTE1LF=69mKjWQv8HPKJ+K_0fJQ@mail.gmail.com>
-Subject: Re: [PATCH] git-sh-setup: Restore sourcability from outside scripts
-To:     Jeff King <peff@peff.net>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Anders Kaseorg <andersk@mit.edu>,
-        Junio C Hamano <gitster@pobox.com>, 842477@bugs.debian.org,
-        Git Mailing List <git@vger.kernel.org>,
+        id S1753466AbcJ3WZW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Oct 2016 18:25:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61149 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752580AbcJ3WZV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2016 18:25:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01AFA4C144;
+        Sun, 30 Oct 2016 18:25:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=F2N4p1KGmm83
+        BlJpwgeVf4kUVxk=; b=CF82ojVJS/p22ivxfgWDPCSG18AIOeJCz3aZJ8v2YXeh
+        ORoIO4ROBm+XYjnSreehKD5ftdDPrKdv9LHRSHo7yU2hJ6wQCPwxmNo8cExBsq8H
+        jMqQOqnaaJ0P0Hav8jS7Lo2arjJ1xhnC3TbzKfDc77rn/B+gaQRgfCdlaDUoRKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A2OZUB
+        TCe1pT8pQGYJ74d5iWUX3iqmp7uz+0mLjzOBj1EP8qSzcNKMvByQdKNtNWeOOUfY
+        tKo7MJKalYtLMszALf9tu9I+BhbXZDDqd0SVYFyGUsbZEFdSapNp8smfgqMyzdkv
+        iRANPqbvQC5TQJMH8qXidC05lPQGICFnIVjT0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED7F84C143;
+        Sun, 30 Oct 2016 18:25:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 769964C142;
+        Sun, 30 Oct 2016 18:25:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Anders Kaseorg <andersk@mit.edu>
+Cc:     842477@bugs.debian.org, git@vger.kernel.org,
         Vasco Almeida <vascomalmeida@sapo.pt>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH] git-sh-setup: Restore sourcability from outside scripts
+References: <alpine.DEB.2.10.1610292153300.60842@buzzword-bingo.mit.edu>
+Date:   Sun, 30 Oct 2016 15:25:17 -0700
+In-Reply-To: <alpine.DEB.2.10.1610292153300.60842@buzzword-bingo.mit.edu>
+        (Anders Kaseorg's message of "Sat, 29 Oct 2016 22:10:02 -0400 (EDT)")
+Message-ID: <xmqqlgx5v5iq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BD88F8EA-9EEF-11E6-908D-987C12518317-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-,On Sun, Oct 30, 2016 at 10:12 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, Oct 30, 2016 at 08:09:21PM -0000, Philip Oakley wrote:
->
->> > It is documented (Documentation/git-sh-setup.txt), and this is not the
->> > internal Documentation/technical section of the documentation, so my
->> > default assumption would be that everything shown there is intended as
->> > public.  I only bring this up as a question because it was apparently
->> > allowed to break.  If I=E2=80=99m wrong and it isn=E2=80=99t public, o=
-ther patches are
->> > needed (to the documentation and to its users in contrib).
->> >
->> But the Documenation does say ::
->>
->> - This is not a command the end user would want to run. Ever.
->>
->> - This documentation is meant for people who are studying the Porcelain-=
-ish
->> scripts and/or are writing new ones.
->> --
->
-> Historically speaking, porcelain-ish scripts were carried both in and
-> out of git.git. These days what we consider porcelain is usually carried
-> in-tree, but I don't think it's unreasonable for people building their
-> own scripts to want to make use of git-sh-setup. And we've generally
-> tried to retain backwards compatibility in the functions it provides,
-> even to out-of-tree scripts.
->
-> So I think it is worth applying the fix at the start of this thread to
-> keep that working.
->
-> As for a documentation change for "do not use this for out-of-tree
-> scripts", I am mildly negative, as I don't think that matches historical
-> practice.
+Anders Kaseorg <andersk@mit.edu> writes:
 
-I don't see why we shouldn't have some stable shellscript function API
-if that's needed either.
+> v2.10.0-rc0~45^2~2 =E2=80=9Ci18n: git-sh-setup.sh: mark strings for
+> translation=E2=80=9D broke outside scripts such as guilt that source
+> git-sh-setup as described in the documentation:
+>
+> $ . "$(git --exec-path)/git-sh-setup"
+> sh: 6: .: git-sh-i18n: not found
+>
+> This also affects contrib/convert-grafts-to-replace-refs.sh and
+> contrib/rerere-train.sh in tree.  Fix this by using git --exec-path to
+> find git-sh-i18n.
+>
+> While we=E2=80=99re here, move the sourcing of git-sh-i18n below the sh=
+ell
+> portability fixes.
+>
+> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+> ---
 
-I just wanted to point out that currently git-sh-setup isn't
-documented as such. So at least a follow-up patch to the documentation
-seems in order.
+Looks good.
 
-This did break in v2.10.0, and it's taken a couple of months to notice
-this, so clearly it's not very widely used, which says something about
-the cost-benefit of maintaining this for external users.
+Our in-tree scripts rely on the fact that $PATH is adjusted to have
+$GIT_EXEC_PATH early (either by getting invoked indirectly by "git"
+potty, or the requirement to do so for people and scripts that still
+run our in-tree scripts with dashed e.g. "git-rebase" form) by the
+time they run.  But when sh-setup dot-sources git-sh-i18n for its
+own use, it should be explicit to name which one of the many copies
+that may appear in directories on user's $PATH (one among which is
+the one in $GIT_EXEC_PATH) it wants to use.  And this patch does the
+right thing by not relying on the $PATH, but instead naming the
+exact path using $(git --exec-path)/ prefix, to the included file.
 
-It's probably worthwhile to split off git-sh-setup into git-sh-setup &
-git-sh-setup-internal along with a documentation fix. A lot of what
-it's doing (e.g. git_broken_path_fix(), and adding a die() function)
-is probably only needed internally by git itself. The
-git-sh-setup-internal should be the thing sourcing "git-sh-i18n", I
-don't see how anyone out-of-tree could make use of that. Surely nobody
-needs to re-emit the exact message we shipped with our *.po files.
+In other words, I think this patch is a pure bugfix, even if there
+is no third-party script that includes it.  We may want to have the
+above as the rationale to apply this patch in the proposed log
+message, though.
+
+> Is this a supported use of git-sh-setup?  Although the documentation is
+> clear that the end user should not invoke it directly, it seems to impl=
+y
+> that scripts may do this, and in practice it has worked until v2.10.0.
+
+It is correct for the documentation to say that this is not a
+"command" end users would want to run; they cannot invoke it as a
+standalone command as it is written as a dot-sourced shell library.
+
+Even though it is intended solely for internal use, so far we have
+not removed things from there, which would have signalled people
+that third-party scripts can also dot-source it.  We may want to
+reserve the right to break them in the future, but because this is a
+pure bugfix, "can third-party rely on the interface not changing?"
+is not a question we need to answer in this thread---there is no
+reason to leave this broken.
+
+Thanks.
+
+>  git-sh-setup.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index a8a4576..240c7eb 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -2,9 +2,6 @@
+>  # to set up some variables pointing at the normal git directories and
+>  # a few helper shell functions.
+> =20
+> -# Source git-sh-i18n for gettext support.
+> -. git-sh-i18n
+> -
+>  # Having this variable in your environment would break scripts because
+>  # you would cause "cd" to be taken to unexpected places.  If you
+>  # like CDPATH, define it for your interactive shell sessions without
+> @@ -46,6 +43,9 @@ git_broken_path_fix () {
+> =20
+>  # @@BROKEN_PATH_FIX@@
+> =20
+> +# Source git-sh-i18n for gettext support.
+> +. "$(git --exec-path)/git-sh-i18n"
+> +
+>  die () {
+>  	die_with_status 1 "$@"
+>  }
+
