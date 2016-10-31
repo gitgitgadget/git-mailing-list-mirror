@@ -2,126 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C35020229
-	for <e@80x24.org>; Mon, 31 Oct 2016 10:42:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAE412021E
+	for <e@80x24.org>; Mon, 31 Oct 2016 13:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932622AbcJaKl6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Oct 2016 06:41:58 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:33857 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1765798AbcJaKl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 06:41:57 -0400
-Received: by mail-vk0-f47.google.com with SMTP id x186so42363561vkd.1
-        for <git@vger.kernel.org>; Mon, 31 Oct 2016 03:41:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=52aoRyJKJuPBZRkpYLEeqA02urnc/6xJVkBxE46LgRY=;
-        b=yoXpNzrZqRThfUzJxs2lKuJMfNEqzYEc6FcnYLeZomexxJb9G4GhDvT1bUm/HJBA4O
-         kAIQpVp63WCDKKJUT+V08YZ2TX7cmzR/7ah00AL+ffZ4xuCd4XWdqlGTZi1/tZKL6GWm
-         6k8hdoIIkMLKX2cUhHbxdaa1xtnB8vEOwUTgMoMAkuIpCwnhVCrEYcV9iZeConbSRL6t
-         yqXYBdvXimDBH/2cBnwXpYtFXW0Af8n4I+rt7PDVfZ0urFUF0PwWVkaLljFc7I1i+1Ji
-         7J+OCvOBdC1V9FUfEmicEYrQbtmumAP1RQ/XKiZFX+/07KsjWPXwylYb3rAIO5hzpBRF
-         PBFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=52aoRyJKJuPBZRkpYLEeqA02urnc/6xJVkBxE46LgRY=;
-        b=cfyoduN4w9ovwMQgFK9MJBn47JPcrTIS/O0OQfiTeLyoRFuJabiCj6Rm8RSwBbpnPb
-         +rPW62owJNQPiOFqo3zSsIpQ8TImJcCd12xA2X4wjX1OC+MQwobllJK16uVsJ2ZYgV3q
-         dU8zdjb3pUvyTSvw0QtodpcQPjrUzGyXaw+I4QdoqCRvBJdOtaYy3XcVTyqfsBr3qefJ
-         s/Imed0dpKNFetqcjdNMHRSF5rU9NRyTHJpYqm4Hjp0sTLJW3pS0pJ/yltkRMTXM2Gd+
-         Lx5JWuELKH+R7UiP03Tsk5cROAAQkZadp959bfpRpRDITe0g4WAM01DGDdIBS/Wrr4yG
-         r4yg==
-X-Gm-Message-State: ABUngvfDegGLEnZd/vaU+vHRkIlOY44iNjTjrN5k/oHNm5v3+t1FCaw0CW09paYkmgEQzCrXE1raFPMqCgSiPQ==
-X-Received: by 10.31.85.4 with SMTP id j4mr22622351vkb.8.1477910516716; Mon,
- 31 Oct 2016 03:41:56 -0700 (PDT)
+        id S943239AbcJaN4H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 09:56:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36447 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S943175AbcJaN4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 09:56:05 -0400
+Received: (qmail 32218 invoked by uid 109); 31 Oct 2016 13:56:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Oct 2016 13:56:04 +0000
+Received: (qmail 18057 invoked by uid 111); 31 Oct 2016 13:56:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Oct 2016 09:56:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Oct 2016 09:56:01 -0400
+Date:   Mon, 31 Oct 2016 09:56:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with
+ O_CLOEXEC
+Message-ID: <20161031135601.7immbp44wn7uksvs@sigill.intra.peff.net>
+References: <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
+ <xmqqoa254czs.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
+ <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
+ <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
+ <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com>
+ <xmqq60od42s0.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1610281306320.3264@virtualbox>
+ <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.103.47.133 with HTTP; Mon, 31 Oct 2016 03:41:36 -0700 (PDT)
-In-Reply-To: <CALhvvbYE6Tt3eByDVMB3a4t=nm3dScVZSea0Z1SsKVgwFSiQ-w@mail.gmail.com>
-References: <CAJtFkWs4qYCqnbJD+zCRCAW3teczb4CdvncvYoMN_VvthJGr=w@mail.gmail.com>
- <CALhvvbYE6Tt3eByDVMB3a4t=nm3dScVZSea0Z1SsKVgwFSiQ-w@mail.gmail.com>
-From:   Stefan Monov <logixoul@gmail.com>
-Date:   Mon, 31 Oct 2016 12:41:36 +0200
-Message-ID: <CAJtFkWtsG9zRuL+BSTG-Wgjo+DZJpxobCXK94y-grgN7UTzULA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Is_the_entire_working_copy_=E2=80=9Cat_one_branch=E2=80=9D=3F?=
-To:     Alexei Lozovsky <a.lozovsky@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Alexei!
+On Fri, Oct 28, 2016 at 09:13:41AM -0700, Linus Torvalds wrote:
 
-On Sat, Oct 29, 2016 at 12:47 PM, Alexei Lozovsky <a.lozovsky@gmail.com> wr=
-ote:
-> Hi Stefan,
->
-> Generally with git, your entire working copy will have the same
-> revision (set to current branch, aka HEAD). The idea behind this
-> is that your working copy of a repository should always be in
-> consistent state.
->
-> You can check out specific files or directories from another
-> revision (mimicking "svn update -r1234 filename"):
->
->     $ git checkout branch-or-sha-hash -- filename
->
-> However, SVN tracks the 'revision' thing on per-file basis, while
-> in git this is a property of the working copy. So if you do like
-> above then git will be telling you that the 'filename' has been
-> changed (as it is certainly different from its pristine version
-> in HEAD):
->
->     $ git status
->     On branch master
->     Changes to be committed:
->       (use "git reset HEAD <file>..." to unstage)
->
->             modified:   filename
->
-> So it's generally not recommended to do such a thing.
->
-> Another thing that you _can do_ in git to mimick SVN is the
-> 'standard layout'. There is a feature called "git worktree" which
-> allows you to have SVN-like directory structure with multiple
-> directories linked to different working copies:
->
->     $ mkdir my-project
->     $ cd my-project
->     $ git clone my-project-repository master
->     $ mkdir branches
->     $ cd master
->     $ git worktree add -b branch-1 ../branches/branch-1
->     $ git worktree add -b branch-2 ../branches/branch-2
->
-> After that you will have directory structure like this:
->
->     $ tree my-project
->     my-project
->     =E2=94=9C=E2=94=80=E2=94=80 branches
->     =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 branch-1
->     =E2=94=82   =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 1
->     =E2=94=82   =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 2
->     =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 3
->     =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 branch-2
->     =E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 1
->     =E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 2
->     =E2=94=82       =E2=94=94=E2=94=80=E2=94=80 banana
->     =E2=94=94=E2=94=80=E2=94=80 master
->         =E2=94=9C=E2=94=80=E2=94=80 1
->         =E2=94=94=E2=94=80=E2=94=80 2
-> You can work with these working copies separately, like you
-> would be working with SVN. Commits in 'master' will go to the
-> 'master' branch, commits made in 'branches/branch-1' will go
-> to the 'branch-1' branch.
+> On Fri, Oct 28, 2016 at 4:11 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > You guys. I mean: You guys! You sure make my life hard. A brief look at
+> > mingw.h could have answered your implicit question:
+> 
+> So here's what you guys should do:
+> 
+>  - leave O_NOATIME damn well alone. It works. It has worked for 10+
+> years. Stop arguing against it, people who do.
+
+For some definition of worked, perhaps.
+
+If you set a probe on touch_atime() in the kernel (which is called for
+every attempt to smudge the atime, regardless of mount options, but is
+skipped when the descriptor was opened with O_NOATIME), you can see the
+impact. Here's a command I picked because it reads a lot of objects (run
+on my git.git clone):
+
+  $ perf stat -e probe:touch-atime git log -Sfoo >/dev/null
+
+And the probe:touch_atime counts before (stock git) and after (a patch
+to drop O_NOATIME):
+
+  before: 22,235
+   after: 22,362
+
+So that's only half a percent difference. And it's on a reasonably messy
+clone that is partway to triggering an auto-repack:
+
+  $ git count-objects -v
+  count: 6167
+  size: 61128
+  in-pack: 275773
+  packs: 18
+  size-pack: 86857
+  prune-packable: 25
+  garbage: 0
+  size-garbage: 0
+
+Running "git gc" drops the probe count to 21,733.
+
+It makes a bigger difference for some commands (it's more like 10% for
+git-status). And smaller for others ("git log -p" triggers it over
+100,000 times).
+
+One thing missing in that count is how many of those calls would have
+resulted in an actual disk write. Looking at strace, most of the
+filesystem activity is opening .gitattributes files, and we end up
+opening the same ones repeatedly (e.g., t/.gitattributes in git.git).
+Multiple hits for a given inode in the same second get coalesced into at
+most a single disk write.
+
+So I guess it's possible that it produces a noticeable effect in some
+cases, but I'm still somewhat doubtful. And actually repacking your
+repository had a greater effect in every case I measured (in addition to
+providing other speedups).
+
+Like I said, I'm OK keeping O_NOATIME. It's just not that much code. But
+if you really care about the issue of dirtying inodes via atime, you
+should look into vastly increasing our use of O_NOATIME. Or possibly
+looking at caching more in the attribute code.
+
+-Peff
