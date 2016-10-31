@@ -2,101 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAE802021E
-	for <e@80x24.org>; Mon, 31 Oct 2016 19:26:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BC492021E
+	for <e@80x24.org>; Mon, 31 Oct 2016 20:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S945896AbcJaTZz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Oct 2016 15:25:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61898 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S945890AbcJaTZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 15:25:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACDB94B3C3;
-        Mon, 31 Oct 2016 15:25:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NdlY5eNcKWlR
-        48DYCPrAyQ8zx8M=; b=LE9Lg2bnw7+gQmvAlBf90CKrXyk57XIYZ3oKgi44iB/U
-        r5ieMSDnJHo6GZSNQK1h6DXPYuBVKt1agGPmCs/eFlSqG8RlCvekB2cv/IU+gVK/
-        +LNSs/1wokceJBm4TEk0MP5w6ciN6dRahsGfE8X+pi8eYdRVqEA7vsuWvSdqTcc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ZhKqR1
-        D3hBnIrXR5qt3KNj1ifzfBmGExpTUVy9IkZfEJf86jTk7pB5WyvB+23bjOnj2AmT
-        UfaCIiZ7XeUcGJgIUgfTNDtxlmeLPo5QA+0q/egAuBzjiIgLTLNVBirEiX8RuqWW
-        Vc3ItHygTnrI7OtBeZclYAqfMIOws0ep2jZSA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A443C4B3C2;
-        Mon, 31 Oct 2016 15:25:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1695C4B3C1;
-        Mon, 31 Oct 2016 15:25:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase: add --forget to cleanup rebase, leave HEAD untouched
-References: <20161026094658.20704-1-pclouds@gmail.com>
-        <xmqq60ofcavd.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8CSz-2A56okV6kWBjGqUgiL7DrmmVJ=2jEQhKmqe41cRg@mail.gmail.com>
-Date:   Mon, 31 Oct 2016 12:25:48 -0700
-In-Reply-To: <CACsJy8CSz-2A56okV6kWBjGqUgiL7DrmmVJ=2jEQhKmqe41cRg@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 27 Oct 2016 17:40:43 +0700")
-Message-ID: <xmqqshrctj5v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S946728AbcJaUil (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 16:38:41 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36186 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S946596AbcJaUik (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 16:38:40 -0400
+Received: by mail-wm0-f65.google.com with SMTP id c17so20002362wmc.3
+        for <git@vger.kernel.org>; Mon, 31 Oct 2016 13:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=//sIW4Caqvu/8dK1BzYhbuEI+/4iBMya/of1snzcWx8=;
+        b=giJAX8TVBTwSljCDV27UIUMgQ9j1rRKRgXTfYnr7mv2gf4Idcgeugyr/bV1bRHiVRk
+         pK9fqQS9V+DJ5d5v+1k3MeEXW5SryB4Q71b/xKQ54/iX7we2vCEogth3woRJrOidjgXu
+         FqlvNwPCtyxwclm1nmxPD9lCoYwsb6XzsaWDFVwtzE0vdaRe+ka/VnMhz5e0EHX2ZK6B
+         uHcKbuQH+uIjYY7zuumz0mWyjLtPhXVFK4esh74KTI4gPMiJojPfMkvjRoeS2WcOhPDN
+         +PhGdLx9avrStG5dF5F7C1u4+P9d7Qo+UJRL5tL5ucv2qjaAXmG13KcN9t5rKBMdfUPO
+         oPlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=//sIW4Caqvu/8dK1BzYhbuEI+/4iBMya/of1snzcWx8=;
+        b=l23zqj09yvZoJvpljqkanL3goboF9Ucm35JUSeUEq9o9quJpaQv98LHVBFzwIJL64R
+         oLksEQz1fBGag2UMvessgrNWIySsTKqgMT5JhSaxulMIif3RCOuABi2rUEetHrGorSX3
+         NvAFfHXjsuA4EXxf+/4rfrxujxvujVx6qSJYXEW1dwyaKUs3f8KUVdV60YGne3ofdkQ/
+         iRnI5Hy7oZ23/sUinaXm8ZXLPMhIX0lo9SmEgZgK2oK/tZg/i6L5BL4We0zZLNy4jeMI
+         1sW65OU9O1WDQpCkms1O8pJBQwYKJB4qGyVr359CORoRwhU1mQknwVxJdOdZQ432VlnW
+         7Wgg==
+X-Gm-Message-State: ABUngve25QyKrMfD6LiGhEC9sySGcjh37JRHgXiRRk3OwIJHDY+A2FvBLi+9UsTT3TNDuQ==
+X-Received: by 10.194.157.169 with SMTP id wn9mr23327456wjb.195.1477946318311;
+        Mon, 31 Oct 2016 13:38:38 -0700 (PDT)
+Received: from hurricane ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id a1sm31807395wjl.28.2016.10.31.13.38.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 31 Oct 2016 13:38:37 -0700 (PDT)
+Date:   Mon, 31 Oct 2016 21:38:35 +0100
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Kannan Goundan <kannan@cakoose.com>
+Subject: Re: [PATCH] push: do not use potentially ambiguous default refspec
+Message-ID: <20161031203834.dfavyjzkob2goa5n@hurricane>
+References: <xmqqvawcz36d.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D4DA2FA4-9F9F-11E6-A99A-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqvawcz36d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.2-neo (2016-08-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, Oct 28, 2016 at 12:25:30PM -0700, Junio C Hamano wrote:
 
-> On Wed, Oct 26, 2016 at 11:51 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->>
->>> There are occasions when you decide to abort an in-progress rebase an=
-d
->>> move on to do something else but you forget to do "git rebase --abort=
-"
->>> first. Or the rebase has been in progress for so long you forgot abou=
-t
->>> it. By the time you realize that (e.g. by starting another rebase)
->>> it's already too late to retrace your steps. The solution is normally
->>>
->>>     rm -r .git/<some rebase dir>
->>>
->>> and continue with your life. But there could be two different
->>> directories for <some rebase dir> (and it obviously requires some
->>> knowledge of how rebase works), and the ".git" part could be much
->>> longer if you are not at top-dir, or in a linked worktree. And
->>> "rm -r" is very dangerous to do in .git, a mistake in there could
->>> destroy object database or other important data.
->>>
->>> Provide "git rebase --forget" for this exact use case.
->>
->> Two and a half comments.
->>
->>  - The title says "leave HEAD untouched".  Are my working tree files
->>    and my index also safe from this operation, or is HEAD the only
->>    thing that is protected?
->
-> Everything is protected. I will rephrase the title a bit. The option
-> is basically a safe form of "rm -r .git/rebase-{apply,merge}".
+>  * It is appreciated if somebody with spare cycles can add a test or
+>    two for this in t/t5523-push-upstream.sh or somewhere nearby.
 
-We are not in a hurry, as it is not likely that this will hit 2.11
-even if we saw a rerolled version yesterday, but it would be nice to
-cook it on 'next' so that it can be on 'master' early after the
-upcoming release.
+5523 is for push --set-upstream-to, 5528 seemed more appropriate. Here's
+something squashable that fails before your patch and succeeds after.
 
-Thanks.
+>8----
+Subject: [PATCH] push: test pushing ambiguously named branches
+
+Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+---
+ t/t5528-push-default.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+index 73f4bb6..ac103ce 100755
+--- a/t/t5528-push-default.sh
++++ b/t/t5528-push-default.sh
+@@ -98,6 +98,16 @@ test_expect_success 'push from/to new branch with upstream, matching and simple'
+ 	test_push_failure upstream
+ '
+ 
++test_expect_success 'push ambiguously named branch with upstream, matching and simple' '
++	git checkout -b ambiguous &&
++	test_config branch.ambiguous.remote parent1 &&
++	test_config branch.ambiguous.merge refs/heads/ambiguous &&
++	git tag ambiguous &&
++	test_push_success simple ambiguous &&
++	test_push_success matching ambiguous &&
++	test_push_success upstream ambiguous
++'
++
+ test_expect_success 'push from/to new branch with current creates remote branch' '
+ 	test_config branch.new-branch.remote repo1 &&
+ 	git checkout new-branch &&
+-- 
+2.10.1-449-gab0f84c
