@@ -2,119 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAE412021E
-	for <e@80x24.org>; Mon, 31 Oct 2016 13:56:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4A432021E
+	for <e@80x24.org>; Mon, 31 Oct 2016 15:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S943239AbcJaN4H (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Oct 2016 09:56:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36447 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S943175AbcJaN4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 09:56:05 -0400
-Received: (qmail 32218 invoked by uid 109); 31 Oct 2016 13:56:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Oct 2016 13:56:04 +0000
-Received: (qmail 18057 invoked by uid 111); 31 Oct 2016 13:56:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Oct 2016 09:56:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Oct 2016 09:56:01 -0400
-Date:   Mon, 31 Oct 2016 09:56:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v3 2/3] sha1_file: open window into packfiles with
- O_CLOEXEC
-Message-ID: <20161031135601.7immbp44wn7uksvs@sigill.intra.peff.net>
-References: <CA+55aFwfhFqV74s_O=GucycY9U19ysiACDqX=mK4Gf=eQ0coxQ@mail.gmail.com>
- <xmqqoa254czs.fsf@gitster.mtv.corp.google.com>
- <CA+55aFxTHF4BRfcrCiV1D26-be+_rPhwAV+Vq8Roz-NMpPBadg@mail.gmail.com>
- <CA+55aFxdy4maom8byH0FoBBMWx+sQB8J7uWvHOxswjiaAhSjVg@mail.gmail.com>
- <xmqqfunh4b63.fsf@gitster.mtv.corp.google.com>
- <CA+55aFw83E+zOd+z5h-CA-3NhrLjVr-anL6pubrSWttYx3zu8g@mail.gmail.com>
- <xmqqa8dp46wx.fsf@gitster.mtv.corp.google.com>
- <xmqq60od42s0.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1610281306320.3264@virtualbox>
- <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
+        id S944017AbcJaP14 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 11:27:56 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:36725 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S943837AbcJaP1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 11:27:55 -0400
+Received: by mail-yw0-f176.google.com with SMTP id l124so3580985ywb.3
+        for <git@vger.kernel.org>; Mon, 31 Oct 2016 08:27:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fDx52noUkTknNvJk/WHV66zyq//hkCntR+SBaxFN5XE=;
+        b=nAbGP8tD2BCQF5LtaLmOcCcg9HzKTaGkzRV1/kmyqzORlI/MJ0anTcJ/q0/c1eiuIR
+         fXvczU+Elf+q5Tp2X+pRRn+9/R0cM04zwviQlkeDIUDgTTccnqQ3u1OGbMm83yMQoSWp
+         PzFPU5wPy1HgoraBIixx9i9+zJ+9QXErnUfe6xegqTAvx9WhufYV4ZkcXIrj+Q+8MpTh
+         YYl/uu2mx8nsb44kCAlVogwHmqsdbe6aNg/CUsvg+Vk13cknmdOPAL5Te4ztdcuHM2+l
+         TyuZgWVjKE/CbIoUKXYr7tlSBjW2kmj4YmXgYn54T73aKO5b+33C1TVZrE87No5RoYZA
+         n3Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fDx52noUkTknNvJk/WHV66zyq//hkCntR+SBaxFN5XE=;
+        b=NpQPG6nheqzJs6Sr89vE4qxX5O0w07Jl5ITlZILoVeIgQo+p0gOlZGNbtTaEIoGQUn
+         sP81wrpt82qDsGaE4mV4zaaXHaxQilLolq0d5efbgYz8quiwi3QGA79I06HM4bJzQJvO
+         Id1rtoV482YH7bGg9pYZaeQmeGmsxhRWim059DdRq1vKAIlFAYf53KSnWj3L/RaEuxz+
+         9EjjRqkuSEtAIlYEuEKd1lYbswfYO7xrLLFEdL7WF20q74Ds4uePuwXL64ImYwNg2OH2
+         4JDNKmQ92HwzWosiac6/6k83xRsBvV5j7dJy2+UuNlOJSjMXOXyr2Zgg/a5c5UXCvs2J
+         boHg==
+X-Gm-Message-State: ABUngvcrr1m8tmnCLJo3M1YSC01SYpSFTv5tcKmsk4I5cdrTlC8M68tyyWhlY0NhdJ1Pgv7Xf7vyE3n5mYFEQA==
+X-Received: by 10.107.140.84 with SMTP id o81mr19993911iod.206.1477927674079;
+ Mon, 31 Oct 2016 08:27:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+55aFw93vkraxBvFCXFSYJqn836tXW+OCOFuToN+HaxTcJ7cg@mail.gmail.com>
+Received: by 10.107.48.20 with HTTP; Mon, 31 Oct 2016 08:27:33 -0700 (PDT)
+In-Reply-To: <CALhvvbYJ8G12Lbe2FgP8PWKZ-LABcw2M-M-zWPkT12UUqq1vaw@mail.gmail.com>
+References: <CAKkAvazX1gDzwhQLTbRvxc84sjz72ONy2-P7qWijQUnQqJ+K8g@mail.gmail.com>
+ <CALhvvbYJ8G12Lbe2FgP8PWKZ-LABcw2M-M-zWPkT12UUqq1vaw@mail.gmail.com>
+From:   ryenus <ryenus@gmail.com>
+Date:   Mon, 31 Oct 2016 23:27:33 +0800
+Message-ID: <CAKkAvay4YuRuGhub6W308+DmrZtrO3+NWu8NvfB--Mb9Z59Xzw@mail.gmail.com>
+Subject: Re: [git rebase -i] show time and author besides commit hash and message?
+To:     Alexei Lozovsky <a.lozovsky@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2016 at 09:13:41AM -0700, Linus Torvalds wrote:
+> It is possible to change the format globally via config option
+> rebase.instructionFormat:
+>
+>     $ git config rebase.instructionFormat "%an (%ad): %s"
+>
+> The format is the same as for 'git log'. This one outputs author
+> name, date, and the first line of commit message.
 
-> On Fri, Oct 28, 2016 at 4:11 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > You guys. I mean: You guys! You sure make my life hard. A brief look at
-> > mingw.h could have answered your implicit question:
-> 
-> So here's what you guys should do:
-> 
->  - leave O_NOATIME damn well alone. It works. It has worked for 10+
-> years. Stop arguing against it, people who do.
+Thanks for the prompt response!
+I tried immediately, it works just as you have pointed out.
 
-For some definition of worked, perhaps.
+Just it seems coloring is not supported? probably because
+we're inside an editor?
 
-If you set a probe on touch_atime() in the kernel (which is called for
-every attempt to smudge the atime, regardless of mount options, but is
-skipped when the descriptor was opened with O_NOATIME), you can see the
-impact. Here's a command I picked because it reads a lot of objects (run
-on my git.git clone):
+> This option is supported since Git 2.6.
 
-  $ perf stat -e probe:touch-atime git log -Sfoo >/dev/null
+I missed it, what about including a note about this option as
+part of the comment in git rebase -i? since that's the place where
+people would most likely think about it?
 
-And the probe:touch_atime counts before (stock git) and after (a patch
-to drop O_NOATIME):
+> Or are you interested in a command-line option that can change
+> the format on per-invocation basis? I think there isn't one.
+> It can be interesting to add it, but I don't think it has much
+> utility...
 
-  before: 22,235
-   after: 22,362
-
-So that's only half a percent difference. And it's on a reasonably messy
-clone that is partway to triggering an auto-repack:
-
-  $ git count-objects -v
-  count: 6167
-  size: 61128
-  in-pack: 275773
-  packs: 18
-  size-pack: 86857
-  prune-packable: 25
-  garbage: 0
-  size-garbage: 0
-
-Running "git gc" drops the probe count to 21,733.
-
-It makes a bigger difference for some commands (it's more like 10% for
-git-status). And smaller for others ("git log -p" triggers it over
-100,000 times).
-
-One thing missing in that count is how many of those calls would have
-resulted in an actual disk write. Looking at strace, most of the
-filesystem activity is opening .gitattributes files, and we end up
-opening the same ones repeatedly (e.g., t/.gitattributes in git.git).
-Multiple hits for a given inode in the same second get coalesced into at
-most a single disk write.
-
-So I guess it's possible that it produces a noticeable effect in some
-cases, but I'm still somewhat doubtful. And actually repacking your
-repository had a greater effect in every case I measured (in addition to
-providing other speedups).
-
-Like I said, I'm OK keeping O_NOATIME. It's just not that much code. But
-if you really care about the issue of dirtying inodes via atime, you
-should look into vastly increasing our use of O_NOATIME. Or possibly
-looking at caching more in the attribute code.
-
--Peff
+Not much, for git log I'd rather setup an alias "git la", than having to
+remember various fields, colors, padding options to have a nice output.
