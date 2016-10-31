@@ -2,222 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C77D82021E
-	for <e@80x24.org>; Mon, 31 Oct 2016 22:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8604E2021E
+	for <e@80x24.org>; Mon, 31 Oct 2016 23:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S947746AbcJaWxs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Oct 2016 18:53:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59827 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S947743AbcJaWxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 18:53:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DAF44B553;
-        Mon, 31 Oct 2016 18:53:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=t+yy8jZhJQWc+fjC/KmLJxCcyjA=; b=UgYTd4
-        KsxjuKGj0UvESIuBpV70sDncbbt81UzMQvy6s1cx+IgD/zQm49tjgcj/ffCgob48
-        tLjBqJyC0OcQkc9SZ3xA5D0+NIpcCx0rLQROog0o8LckIFkK+fCUeZOjrZt92tIK
-        eMq9B4tSgyE+cAiYTb8smJ17/2qUtj8q1BVcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=B/ZZRhIWElchTFEazssj6+MNLgH+Szk5
-        NaSi60lXDkgVGr7UwEwOrzJEL5ZOq/2S6dJQVYjO8l3oMHkV6c3TcBIldlnGrBMR
-        IMpH7XTqmh0qxwRh/XQDKZs7WPvTbiGm9R1EDGmnQd/u4mqEiMPtyfpWIxqtQ1ic
-        qSD+Go6Ypjk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 648784B552;
-        Mon, 31 Oct 2016 18:53:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A0D6A4B546;
-        Mon, 31 Oct 2016 18:53:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+        id S947936AbcJaXQY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 19:16:24 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:55595 "EHLO
+        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S947923AbcJaXQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 19:16:23 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Tue, 01 Nov 2016 00:16:21 +0100
+  id 000000000000007E.000000005817D0C5.00001C75
+Date:   Tue, 1 Nov 2016 00:16:21 +0100
+From:   Simon Ruderich <simon@ruderich.org>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] trailer: have function to describe trailer layout
-References: <cover.1477698917.git.jonathantanmy@google.com>
-        <cover.1477698917.git.jonathantanmy@google.com>
-        <d55ff281b88624cdbf5c21a56d817d8d17eff5c0.1477698917.git.jonathantanmy@google.com>
-Date:   Mon, 31 Oct 2016 15:53:34 -0700
-In-Reply-To: <d55ff281b88624cdbf5c21a56d817d8d17eff5c0.1477698917.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Fri, 28 Oct 2016 17:05:10 -0700")
-Message-ID: <xmqqr36wqgep.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DAE8A19C-9FBC-11E6-9981-987C12518317-77302942!pb-smtp1.pobox.com
+Subject: Re: [ANNOUNCE] Git v2.11.0-rc0
+Message-ID: <20161031231620.ewhdy2zwgzlczy5o@ruderich.org>
+References: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-7285-1477955781-0001-2"
+Content-Disposition: inline
+In-Reply-To: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20161014 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
->  static char *separators = ":";
->  
-> +static int configured = 0;
+--=_zucker.schokokeks.org-7285-1477955781-0001-2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Avoid initializing a static to 0 or NULL; instead let .bss take care
-of it.
+On Mon, Oct 31, 2016 at 02:49:42PM -0700, Junio C Hamano wrote:
+> [snip]
 
->  static const char *token_from_item(struct arg_item *item, char *tok)
->  {
->  	if (item->conf.key)
-> @@ -872,59 +885,43 @@ static int process_input_file(FILE *outfile,
->  			      const char *str,
->  			      struct list_head *head)
->  {
-> -	int patch_start, trailer_start, trailer_end;
-> +	struct trailer_info info;
->  	struct strbuf tok = STRBUF_INIT;
->  	struct strbuf val = STRBUF_INIT;
-> -	struct trailer_item *last = NULL;
-> -	struct strbuf *trailer, **trailer_lines, **ptr;
-> +	int i;
->  
-> -	patch_start = find_patch_start(str);
-> -	trailer_end = find_trailer_end(str, patch_start);
-> -	trailer_start = find_trailer_start(str, trailer_end);
-> +	trailer_info_get(&info, str);
+Hello,
 
-OK, it needs a reading of trailer_info_get() first to understand the
-remainder of this function.  The function would grab these fields
-into info, among doing other things.
+I noticed a few minor typos in the changelog.
 
->  	/* Print lines before the trailers as is */
-> -	fwrite(str, 1, trailer_start, outfile);
-> +	fwrite(str, 1, info.trailer_start - str, outfile);
->  
-> -	if (!ends_with_blank_line(str, trailer_start))
-> +	if (!info.blank_line_before_trailer)
->  		fprintf(outfile, "\n");
+>  * The default abbreviation length, which has historically been 7, now
+>    scales as the repository grows, using the approximate number of
+>    objects in the reopsitory and a bit of math around the birthday
+                    ^^^^^^^^^^
+                    repository
 
-... and one of the "other things" include setting the
-->blank_line_before_trailer field.  
+>    paradox.  The logic suggests to use 12 hexdigits for the Linux
+>    kernel, and 9 to 10 for Git itself.
+>
+>
+> Updates since v2.10
+> -------------------
+>
+> [snip]
+>
+>  * "git clone --resurse-submodules --reference $path $URL" is a way to
+                  ^^^^^^^
+                  recurse
 
-> -	/* Parse trailer lines */
-> -	trailer_lines = strbuf_split_buf(str + trailer_start, 
-> -					 trailer_end - trailer_start,
-> -					 '\n',
-> -					 0);
-> -	for (ptr = trailer_lines; *ptr; ptr++) {
-> +	for (i = 0; i < info.trailer_nr; i++) {
->  		int separator_pos;
-> -		trailer = *ptr;
-> -		if (trailer->buf[0] == comment_line_char)
-> +		char *trailer = info.trailers[i];
-> +		if (trailer[0] == comment_line_char)
->  			continue;
+>    reduce network transfer cost by borrowing objects in an existing
+>    $path repository when cloning the superproject from $URL; it
+>    learned to also peek into $path for presense of corresponding
+                                         ^^^^^^^^
+                                         presence
 
-And info.trailers[] is no longer an array of strbuf; it is an array
-of "char *", which I alluded to during my review of [2/4].  Looking
-good.
+> [snip]
+>
+>  * Output from "git diff" can be made easier to read by selecting
+>    which lines are common and which lines are added/deleted
+>    intelligently when the lines before and after the changed section
+>    are the same.  A command line option is added to help with the
+>    experiment to find a good heuristics.
 
-> -		if (last && isspace(trailer->buf[0])) {
-> -			struct strbuf sb = STRBUF_INIT;
-> -			strbuf_addf(&sb, "%s\n%s", last->value, trailer->buf);
-> -			strbuf_strip_suffix(&sb, "\n");
-> -			free(last->value);
-> -			last->value = strbuf_detach(&sb, NULL);
-> -			continue;
-> -		}
-> -		separator_pos = find_separator(trailer->buf, separators);
-> +		separator_pos = find_separator(trailer, separators);
+Maybe the name of the command line option should be added here.
 
-... presumably, the line-folding is already handled in
-trailer_info_get(), so we do not need the "last" handling.
+Regards
+Simon
+--=20
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
 
->  		if (separator_pos >= 1) {
+--=_zucker.schokokeks.org-7285-1477955781-0001-2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Transfer-Encoding: 7bit
 
-... and it it is a "mail-header: looking" one, then add it one way.
+-----BEGIN PGP SIGNATURE-----
 
-> -			parse_trailer(&tok, &val, NULL, trailer->buf,
-> -				      separator_pos);
-> -			last = add_trailer_item(head,
-> -						strbuf_detach(&tok, NULL),
-> -						strbuf_detach(&val, NULL));
-> +			parse_trailer(&tok, &val, NULL, trailer,
-> +			              separator_pos);
-> +			add_trailer_item(head,
-> +					 strbuf_detach(&tok, NULL),
-> +					 strbuf_detach(&val, NULL));
->  		} else {
-> -			strbuf_addbuf(&val, trailer);
-> +			strbuf_addstr(&val, trailer);
+iQIcBAEBCgAGBQJYF9DAAAoJEJL+/bfkTDL5lyoP/i5ECvBbikaxUUR8hfpY9AcH
+EjSoYv/Nml/gizgY8bmCLRCnZ7zfbGTLrrIVYdDQWwdmFddswKu8c7fvlc5e3Pf8
+esBg5Nj8NFouCrV+zE/b2bnd7udHUOCD6XKyg9zAuHwMcwxGbUX/PQhW4fwWqsC2
+C3/U83JudGDG4Dc3ra2zVry3Zf75kllvFrzcliaqxbXLJtX/HKiOo0kqGZrjNHWQ
+cBUvAK/xhehheR9D5kv8Z1J+HE5eFpqzGBZjzoxTioqZciYenOcl4pebfDva3PHC
+JspnS3kxKAOMYcUtIGfMAoigfiAB9URUp21dWNXiFhDJ0efFl22C/B7WXDB2gYm4
+fmxO3E4m97l/O/Ljmxsbu6ZubJjTeOWojU3oUh5LsOb1xNoWvpVH12zkKVkOoeZr
+c3TsqWAiOJkqZm/8VAHCZKAbEuESUWmJ6IY+WfIBMK4MV67ztCXWVVpN8AVS5D3h
+UkoZCDpU1xT8r80S0Ir8xZ1DVXJtvCLzVnjuNmZY4BhfckEc8RPpW6goV7PpZZyn
+dbWvEOmMKri/eOKEynBcTJrcPp8EX2owXdrmMFr1+ktYm7Vay5YVQFNfubrVHVET
+eGiWsl93sIIivkjct+br22k6UtFFYtSqSaHkw7pac8FRvFmbCjl+4007AOE3hHM1
+WCjudgkZJ4fmVx/ZMnTr
+=7Un6
+-----END PGP SIGNATURE-----
 
-... otherwise add it another way.
-
->  			strbuf_strip_suffix(&val, "\n");
->  			add_trailer_item(head,
->  					 NULL,
->  					 strbuf_detach(&val, NULL));
-> -			last = NULL;
->  		}
->  	}
-> -	strbuf_list_free(trailer_lines);
->  
-> -	return trailer_end;
-> +	trailer_info_release(&info);
-> +
-> +	return info.trailer_end - str;
->  }
-
-Nicely done.
-
-> @@ -1004,3 +999,54 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
->  
->  	strbuf_release(&sb);
->  }
-> +
-> +void trailer_info_get(struct trailer_info *info, const char *str)
-> +{
-> +	int patch_start, trailer_end, trailer_start;
-> +	struct strbuf **trailer_lines, **ptr;
-> +	char **trailer_strings = NULL;
-> +	size_t nr = 0, alloc = 0;
-> +	char **last = NULL;
-> +
-> +	ensure_configured();
-> +
-> +	patch_start = find_patch_start(str);
-> +	trailer_end = find_trailer_end(str, patch_start);
-> +	trailer_start = find_trailer_start(str, trailer_end);
-> +
-> +	trailer_lines = strbuf_split_buf(str + trailer_start,
-> +					 trailer_end - trailer_start,
-> +					 '\n',
-> +					 0);
-> +	for (ptr = trailer_lines; *ptr; ptr++) {
-> +		if (last && isspace((*ptr)->buf[0])) {
-> +			struct strbuf sb = STRBUF_INIT;
-> +			strbuf_attach(&sb, *last, strlen(*last), strlen(*last));
-> +			strbuf_addbuf(&sb, *ptr);
-> +			*last = strbuf_detach(&sb, NULL);
-> +			continue;
-> +		}
-> +		ALLOC_GROW(trailer_strings, nr + 1, alloc);
-> +		trailer_strings[nr] = strbuf_detach(*ptr, NULL);
-> +		last = find_separator(trailer_strings[nr], separators) >= 1
-> +			? &trailer_strings[nr]
-> +			: NULL;
-> +		nr++;
-> +	}
-> +	strbuf_list_free(trailer_lines);
-> +
-> +	info->blank_line_before_trailer = ends_with_blank_line(str,
-> +							       trailer_start);
-> +	info->trailer_start = str + trailer_start;
-> +	info->trailer_end = str + trailer_end;
-> +	info->trailers = trailer_strings;
-> +	info->trailer_nr = nr;
-> +}
-
-OK, looking good.
-
+--=_zucker.schokokeks.org-7285-1477955781-0001-2--
