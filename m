@@ -2,83 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92F452022C
-	for <e@80x24.org>; Mon, 31 Oct 2016 00:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C35020229
+	for <e@80x24.org>; Mon, 31 Oct 2016 10:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752800AbcJaAar convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 30 Oct 2016 20:30:47 -0400
-Received: from dmz-mailsec-scanner-6.mit.edu ([18.7.68.35]:56517 "EHLO
-        dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752165AbcJaAaq (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Oct 2016 20:30:46 -0400
-X-AuditID: 12074423-1a3ff7000000298a-9d-581690b4e54d
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by  (Symantec Messaging Gateway) with SMTP id BD.83.10634.4B096185; Sun, 30 Oct 2016 20:30:45 -0400 (EDT)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id u9V0UhCh026464;
-        Sun, 30 Oct 2016 20:30:43 -0400
-Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
-        (authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id u9V0Uew5009081
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sun, 30 Oct 2016 20:30:41 -0400
-Date:   Sun, 30 Oct 2016 20:30:39 -0400 (EDT)
-From:   Anders Kaseorg <andersk@mit.edu>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>, 842477@bugs.debian.org,
-        Git Mailing List <git@vger.kernel.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: Re: [PATCH] git-sh-setup: Restore sourcability from outside
- scripts
-In-Reply-To: <CACBZZX6ArQdG202n-SouwDhoTE1LF=69mKjWQv8HPKJ+K_0fJQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.10.1610302021060.20998@buzzword-bingo.mit.edu>
-References: <alpine.DEB.2.10.1610292153300.60842@buzzword-bingo.mit.edu> <CACBZZX4SnJj6ZYK-Ha3EtiWUf_n=+LZ=UeS=7vxgsj8s=bi3Sg@mail.gmail.com> <alpine.DEB.2.10.1610301503280.60842@buzzword-bingo.mit.edu> <223121D101D844DEBF086AC40A5AF4CB@PhilipOakley>
- <20161030211227.4gqovv7mt7mtnpy7@sigill.intra.peff.net> <CACBZZX6ArQdG202n-SouwDhoTE1LF=69mKjWQv8HPKJ+K_0fJQ@mail.gmail.com>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+        id S932622AbcJaKl6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 06:41:58 -0400
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:33857 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1765798AbcJaKl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 06:41:57 -0400
+Received: by mail-vk0-f47.google.com with SMTP id x186so42363561vkd.1
+        for <git@vger.kernel.org>; Mon, 31 Oct 2016 03:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=52aoRyJKJuPBZRkpYLEeqA02urnc/6xJVkBxE46LgRY=;
+        b=yoXpNzrZqRThfUzJxs2lKuJMfNEqzYEc6FcnYLeZomexxJb9G4GhDvT1bUm/HJBA4O
+         kAIQpVp63WCDKKJUT+V08YZ2TX7cmzR/7ah00AL+ffZ4xuCd4XWdqlGTZi1/tZKL6GWm
+         6k8hdoIIkMLKX2cUhHbxdaa1xtnB8vEOwUTgMoMAkuIpCwnhVCrEYcV9iZeConbSRL6t
+         yqXYBdvXimDBH/2cBnwXpYtFXW0Af8n4I+rt7PDVfZ0urFUF0PwWVkaLljFc7I1i+1Ji
+         7J+OCvOBdC1V9FUfEmicEYrQbtmumAP1RQ/XKiZFX+/07KsjWPXwylYb3rAIO5hzpBRF
+         PBFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=52aoRyJKJuPBZRkpYLEeqA02urnc/6xJVkBxE46LgRY=;
+        b=cfyoduN4w9ovwMQgFK9MJBn47JPcrTIS/O0OQfiTeLyoRFuJabiCj6Rm8RSwBbpnPb
+         +rPW62owJNQPiOFqo3zSsIpQ8TImJcCd12xA2X4wjX1OC+MQwobllJK16uVsJ2ZYgV3q
+         dU8zdjb3pUvyTSvw0QtodpcQPjrUzGyXaw+I4QdoqCRvBJdOtaYy3XcVTyqfsBr3qefJ
+         s/Imed0dpKNFetqcjdNMHRSF5rU9NRyTHJpYqm4Hjp0sTLJW3pS0pJ/yltkRMTXM2Gd+
+         Lx5JWuELKH+R7UiP03Tsk5cROAAQkZadp959bfpRpRDITe0g4WAM01DGDdIBS/Wrr4yG
+         r4yg==
+X-Gm-Message-State: ABUngvfDegGLEnZd/vaU+vHRkIlOY44iNjTjrN5k/oHNm5v3+t1FCaw0CW09paYkmgEQzCrXE1raFPMqCgSiPQ==
+X-Received: by 10.31.85.4 with SMTP id j4mr22622351vkb.8.1477910516716; Mon,
+ 31 Oct 2016 03:41:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixCmqrbt1gliEwdRnqhYL515itlj77A6T
-        RdeVbiaLht4rzBY/WnqYLTqnylp0zlzC7sDucWHrJBaPnbPusnssX7qO0eNZ7x5Gj4uXlD36
-        7k5n8/i8SS6APYrLJiU1J7MstUjfLoEr41DvLsaCtawV9zasYWtg3MDSxcjJISFgIjHhxGnW
-        LkYuDiGBNiaJPf82MEE4GxklLp77yw7h7GaS+NjfwNzFyMHBIqAt8fmjA0g3m4CaxIejX1lB
-        wiICnhJH1hqBlDMLvGSUWLltMiNIXFjAT2LVMheQck6BQIk/r86CLeYV8JB4/nUv1K6fTBIv
-        +6cygiREBXQlDv37wwZRJChxcuYTsAZmAXWJA58uMkLY2hL3b7axTWAUmIWkbBaSsllIyhYw
-        Mq9ilE3JrdLNTczMKU5N1i1OTszLSy3SNdPLzSzRS00p3cQIigN2F+UdjC/7vA8xCnAwKvHw
-        RkiLRQixJpYVV+YeYpTkYFIS5d3vKBohxJeUn1KZkVicEV9UmpNafIhRgoNZSYTXDxh9Qrwp
-        iZVVqUX5MClpDhYlcd7/bl/DhQTSE0tSs1NTC1KLYLIyHBxKErw3+oEaBYtS01Mr0jJzShDS
-        TBycIMN5gIaD1fAWFyTmFmemQ+RPMepyvNv87gGTEEtefl6qlDhvOEiRAEhRRmke3BxI+nKQ
-        eMUoDvSWMO9FkCoeYOqDm/QKaAkT0JK0QhGQJSWJCCmpBkb9q+rcC0VbTQNbZv398MzycVC3
-        HkfjDvbpM1cxCvx4eb24a7GmsmBb4VEO8cuR57Uk5bqlAw//VosQNE/Z8KW1gzdkrdGunfyJ
-        flce3omQPO6w2yKo+OHlj0/uPhab0zGrLPyueMfz3ekOV+v31M9puvKUua4pOzPtpqOc6zSh
-        1VWTXWNPfVBiKc5INNRiLipOBADf73HZOgMAAA==
+Received: by 10.103.47.133 with HTTP; Mon, 31 Oct 2016 03:41:36 -0700 (PDT)
+In-Reply-To: <CALhvvbYE6Tt3eByDVMB3a4t=nm3dScVZSea0Z1SsKVgwFSiQ-w@mail.gmail.com>
+References: <CAJtFkWs4qYCqnbJD+zCRCAW3teczb4CdvncvYoMN_VvthJGr=w@mail.gmail.com>
+ <CALhvvbYE6Tt3eByDVMB3a4t=nm3dScVZSea0Z1SsKVgwFSiQ-w@mail.gmail.com>
+From:   Stefan Monov <logixoul@gmail.com>
+Date:   Mon, 31 Oct 2016 12:41:36 +0200
+Message-ID: <CAJtFkWtsG9zRuL+BSTG-Wgjo+DZJpxobCXK94y-grgN7UTzULA@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Is_the_entire_working_copy_=E2=80=9Cat_one_branch=E2=80=9D=3F?=
+To:     Alexei Lozovsky <a.lozovsky@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 30 Oct 2016, Ævar Arnfjörð Bjarmason wrote:
-> This did break in v2.10.0, and it's taken a couple of months to notice
-> this, so clearly it's not very widely used, which says something about
-> the cost-benefit of maintaining this for external users.
+Thanks Alexei!
 
-For the record, in case this affects the calculation, it was noticed that 
-guilt was broken a just couple of days after the first git 2.10.x upload 
-to Debian, which was last weekend.
-
-https://bugs.debian.org/842477
-http://repo.or.cz/guilt.git/blob/v0.36:/guilt#l28
-
-(I have no further opinion; I trust that Junio has all the information 
-needed to decide one way or the other.)
-
-Anders
+On Sat, Oct 29, 2016 at 12:47 PM, Alexei Lozovsky <a.lozovsky@gmail.com> wr=
+ote:
+> Hi Stefan,
+>
+> Generally with git, your entire working copy will have the same
+> revision (set to current branch, aka HEAD). The idea behind this
+> is that your working copy of a repository should always be in
+> consistent state.
+>
+> You can check out specific files or directories from another
+> revision (mimicking "svn update -r1234 filename"):
+>
+>     $ git checkout branch-or-sha-hash -- filename
+>
+> However, SVN tracks the 'revision' thing on per-file basis, while
+> in git this is a property of the working copy. So if you do like
+> above then git will be telling you that the 'filename' has been
+> changed (as it is certainly different from its pristine version
+> in HEAD):
+>
+>     $ git status
+>     On branch master
+>     Changes to be committed:
+>       (use "git reset HEAD <file>..." to unstage)
+>
+>             modified:   filename
+>
+> So it's generally not recommended to do such a thing.
+>
+> Another thing that you _can do_ in git to mimick SVN is the
+> 'standard layout'. There is a feature called "git worktree" which
+> allows you to have SVN-like directory structure with multiple
+> directories linked to different working copies:
+>
+>     $ mkdir my-project
+>     $ cd my-project
+>     $ git clone my-project-repository master
+>     $ mkdir branches
+>     $ cd master
+>     $ git worktree add -b branch-1 ../branches/branch-1
+>     $ git worktree add -b branch-2 ../branches/branch-2
+>
+> After that you will have directory structure like this:
+>
+>     $ tree my-project
+>     my-project
+>     =E2=94=9C=E2=94=80=E2=94=80 branches
+>     =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 branch-1
+>     =E2=94=82   =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 1
+>     =E2=94=82   =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 2
+>     =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 3
+>     =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 branch-2
+>     =E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 1
+>     =E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 2
+>     =E2=94=82       =E2=94=94=E2=94=80=E2=94=80 banana
+>     =E2=94=94=E2=94=80=E2=94=80 master
+>         =E2=94=9C=E2=94=80=E2=94=80 1
+>         =E2=94=94=E2=94=80=E2=94=80 2
+> You can work with these working copies separately, like you
+> would be working with SVN. Commits in 'master' will go to the
+> 'master' branch, commits made in 'branches/branch-1' will go
+> to the 'branch-1' branch.
