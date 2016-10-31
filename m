@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BE4C2021E
-	for <e@80x24.org>; Mon, 31 Oct 2016 22:39:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C29E72021E
+	for <e@80x24.org>; Mon, 31 Oct 2016 22:39:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S945767AbcJaWiz (ORCPT <rfc822;e@80x24.org>);
+        id S965024AbcJaWi6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 18:38:58 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33506 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S945612AbcJaWiz (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 31 Oct 2016 18:38:55 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33503 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S945727AbcJaWiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 18:38:54 -0400
-Received: by mail-pf0-f173.google.com with SMTP id d2so8587768pfd.0
-        for <git@vger.kernel.org>; Mon, 31 Oct 2016 15:38:54 -0700 (PDT)
+Received: by mail-pf0-f180.google.com with SMTP id d2so8587980pfd.0
+        for <git@vger.kernel.org>; Mon, 31 Oct 2016 15:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GcNR2tgBRLu52lUCaaXv9MC5jV/rXB3ITQU5Ob2XIEQ=;
-        b=lR2tqiP9non1U2LIqoEEYqizv1dmCIAjvF+KBxMoUCZjKWQ9+zlaP1jcldNKqTrnT7
-         2p3AFhigJVwgAA6OgwX5eTKNkYQwAjBu4LSoHtboWWKbF5LeectYOpJeZMCF4v9ZC3NC
-         /TfX01RJWRN7VNym4bEKmJsu/JcgOf319YnC3Cm0oGR4p55qXn0RP4LArplmS0uVouCa
-         aFKtkbSl7MKsLuA+U78Sgk2wsUN/8+u8G7BIIvLhH0Yc2jcnbKKahpk1Ndrcu10fi5JM
-         GYoMST0mECNkDRrOQKoy6nLfWxmWtzaoqAjye29quxH3zHCNCvVoqgilhwdWSksfL4IT
-         slyw==
+        bh=NF4Q+uyuh/uNgdb7QcoI3bpLcjotXT8LLSCPVIPQ1S8=;
+        b=fpo8DrEusg9PwMAgmHqPN3dai8uNJaIDjqwgH14b4+5xREfGeVmFXaoQgL93rehjEe
+         QeI3tjlVfV9zR4N15gU3zOupMg4GGWNY7PRY9p+qffWx8gQk2xFz79okIjIkP06ZQE5Q
+         gb/Sml7zWDoX7DMwzts4sXtklIa2WVK6nGQ/4rcxZ3MsFFBkIyUFXd3qAe2aNDSPsTUP
+         AcX+ajR+89azDXa0lSYI4+hF/mQgAIchyM2Bx088BS+F2SLfBeoqZyQS0gDvPJluD5xK
+         e2pDVuate4QnVmNPX9ymQTW+gd7zGsKVfRw95brr4+y74Nbim0ngufgPpSYQ6J06tPsD
+         U7PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GcNR2tgBRLu52lUCaaXv9MC5jV/rXB3ITQU5Ob2XIEQ=;
-        b=RB6xiD5LKNCGh7XIH5eqjjxvE6qcMCShIFeO2ZTaCeTK3mxBnNSQdaWBLW9v9D2mJw
-         Sad9+qmLxSwVnIJlsz8MVXiVK/cedUGBBHjA7+GKSQoMxyvDvjZTavTU/e9RCDVxxzWu
-         mUcMf+ZdYkGFjR8ksKgbiJHlgoB7v+8jU2W20dslOAFQeOnAN9U62XSrt2MRY00rwxhz
-         UfMSFQFbNcsB0tS9yobVbmzMGC+JYeMO+e55VL2D3i1Rz0pYX4DTrS7NNuCv65Ig38p/
-         7YFC4bEk4g7IU9qWLYrHvnmSZCi89depY938DqYkOMMK1crndxotTkTYWF70bf9stask
-         NLog==
-X-Gm-Message-State: ABUngvf6ZTzEAs/NjFjZcwPThtzyRDvZrHIo2fYjqJgiNTYUSYrVXcsTUn+Q6mbUCL4UkV/5
-X-Received: by 10.99.184.25 with SMTP id p25mr44438748pge.120.1477953533543;
-        Mon, 31 Oct 2016 15:38:53 -0700 (PDT)
+        bh=NF4Q+uyuh/uNgdb7QcoI3bpLcjotXT8LLSCPVIPQ1S8=;
+        b=QFIg65WtBhhVnq3VAoF9h0YC2Qbozmwk9APvCpsX20WZd40bZfo6vX+h1REodNePvV
+         LO/0d0XorZxN2rdSkNB2+l+OTIcidv9gVdijHRHX6X3Wu4aypD7ERZRwGxaLiIcbnmW2
+         ZCz3E/5tq57JEh77Fok4DxHLsc6vkES+lC5AyfKQeiH9BJndreJM1UsMryWvQ/vxbg2i
+         g9xGI6fszkMAaD2IHHWn6Pz3uQWsfg3Of2Cg0rDCho4Z9M+arSIRekOZWudK4qdpubi1
+         7PGvaMnqPbgeTPznorpll80QqxH5OgkZkYe8k6q7KB7uO6nL05v7RznAuiqsBtWq3iMa
+         T0zA==
+X-Gm-Message-State: ABUngvdMMB/V/RHhNIOJ5aDrjm9ghQrJYj6oJJRWh9cb/FsoQNESl68I/YbjhCJtMe04Di+j
+X-Received: by 10.99.54.74 with SMTP id d71mr44756983pga.34.1477953534672;
+        Mon, 31 Oct 2016 15:38:54 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id uh10sm37847280pab.5.2016.10.31.15.38.52
+        by smtp.gmail.com with ESMTPSA id uh10sm37847280pab.5.2016.10.31.15.38.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 31 Oct 2016 15:38:52 -0700 (PDT)
+        Mon, 31 Oct 2016 15:38:53 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, sbeller@google.com
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 2/6] submodules: load gitmodules file from commit sha1
-Date:   Mon, 31 Oct 2016 15:38:12 -0700
-Message-Id: <1477953496-103596-3-git-send-email-bmwill@google.com>
+Subject: [PATCH v2 3/6] grep: add submodules as a grep source type
+Date:   Mon, 31 Oct 2016 15:38:13 -0700
+Message-Id: <1477953496-103596-4-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1477953496-103596-1-git-send-email-bmwill@google.com>
 References: <20161027223834.35312-1-bmwill@google.com>
@@ -60,118 +60,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach submodules to load a '.gitmodules' file from a commit sha1.  This
-enables the population of the submodule_cache to be based on the state
-of the '.gitmodules' file from a particular commit.
+Add `GREP_SOURCE_SUBMODULE` as a grep_source type and cases for this new
+type in the various switch statements in grep.c.
+
+When initializing a grep_source with type `GREP_SOURCE_SUBMODULE` the
+identifier can either be NULL (to indicate that the working tree will be
+used) or a SHA1 (the REV of the submodule to be grep'd).  If the
+identifier is a SHA1 then we want to fall through to the
+`GREP_SOURCE_SHA1` case to handle the copying of the SHA1.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- cache.h            |  2 ++
- config.c           |  8 ++++----
- submodule-config.c |  6 +++---
- submodule-config.h |  3 +++
- submodule.c        | 12 ++++++++++++
- submodule.h        |  1 +
- 6 files changed, 25 insertions(+), 7 deletions(-)
+ grep.c | 16 +++++++++++++++-
+ grep.h |  1 +
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 1be6526..559a461 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1690,6 +1690,8 @@ extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
- extern int git_config_from_mem(config_fn_t fn, const enum config_origin_type,
- 					const char *name, const char *buf, size_t len, void *data);
-+extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
-+				     const unsigned char *sha1, void *data);
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern void git_config(config_fn_t fn, void *);
-diff --git a/config.c b/config.c
-index 83fdecb..4d78e72 100644
---- a/config.c
-+++ b/config.c
-@@ -1214,10 +1214,10 @@ int git_config_from_mem(config_fn_t fn, const enum config_origin_type origin_typ
- 	return do_config_from(&top, fn, data);
- }
- 
--static int git_config_from_blob_sha1(config_fn_t fn,
--				     const char *name,
--				     const unsigned char *sha1,
--				     void *data)
-+int git_config_from_blob_sha1(config_fn_t fn,
-+			      const char *name,
-+			      const unsigned char *sha1,
-+			      void *data)
- {
- 	enum object_type type;
- 	char *buf;
-diff --git a/submodule-config.c b/submodule-config.c
-index 098085b..8b9a2ef 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -379,9 +379,9 @@ static int parse_config(const char *var, const char *value, void *data)
- 	return ret;
- }
- 
--static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
--				      unsigned char *gitmodules_sha1,
--				      struct strbuf *rev)
-+int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
-+			       unsigned char *gitmodules_sha1,
-+			       struct strbuf *rev)
- {
- 	int ret = 0;
- 
-diff --git a/submodule-config.h b/submodule-config.h
-index d05c542..78584ba 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -29,6 +29,9 @@ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name);
- const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
- 		const char *path);
-+extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
-+				      unsigned char *gitmodules_sha1,
-+				      struct strbuf *rev);
- void submodule_free(void);
- 
- #endif /* SUBMODULE_CONFIG_H */
-diff --git a/submodule.c b/submodule.c
-index ff4e7b2..19dfbd4 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -198,6 +198,18 @@ void gitmodules_config(void)
+diff --git a/grep.c b/grep.c
+index 1194d35..0dbdc1d 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1735,12 +1735,23 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+ 	case GREP_SOURCE_FILE:
+ 		gs->identifier = xstrdup(identifier);
+ 		break;
++	case GREP_SOURCE_SUBMODULE:
++		if (!identifier) {
++			gs->identifier = NULL;
++			break;
++		}
++		/*
++		 * FALL THROUGH
++		 * If the identifier is non-NULL (in the submodule case) it
++		 * will be a SHA1 that needs to be copied.
++		 */
+ 	case GREP_SOURCE_SHA1:
+ 		gs->identifier = xmalloc(20);
+ 		hashcpy(gs->identifier, identifier);
+ 		break;
+ 	case GREP_SOURCE_BUF:
+ 		gs->identifier = NULL;
++		break;
  	}
  }
  
-+void gitmodules_config_sha1(const unsigned char *commit_sha1)
-+{
-+	struct strbuf rev = STRBUF_INIT;
-+	unsigned char sha1[20];
-+
-+	if (gitmodule_sha1_from_commit(commit_sha1, sha1, &rev)) {
-+		git_config_from_blob_sha1(submodule_config, rev.buf,
-+					  sha1, NULL);
-+	}
-+	strbuf_release(&rev);
-+}
-+
- /*
-  * Determine if a submodule has been initialized at a given 'path'
-  */
-diff --git a/submodule.h b/submodule.h
-index bd039ca..9a24ac8 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -37,6 +37,7 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 		const char *path);
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
-+extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
- extern int is_submodule_initialized(const char *path);
- extern int is_submodule_checked_out(const char *path);
- int parse_submodule_update_strategy(const char *value,
+@@ -1760,6 +1771,7 @@ void grep_source_clear_data(struct grep_source *gs)
+ 	switch (gs->type) {
+ 	case GREP_SOURCE_FILE:
+ 	case GREP_SOURCE_SHA1:
++	case GREP_SOURCE_SUBMODULE:
+ 		free(gs->buf);
+ 		gs->buf = NULL;
+ 		gs->size = 0;
+@@ -1831,8 +1843,10 @@ static int grep_source_load(struct grep_source *gs)
+ 		return grep_source_load_sha1(gs);
+ 	case GREP_SOURCE_BUF:
+ 		return gs->buf ? 0 : -1;
++	case GREP_SOURCE_SUBMODULE:
++		break;
+ 	}
+-	die("BUG: invalid grep_source type");
++	die("BUG: invalid grep_source type to load");
+ }
+ 
+ void grep_source_load_driver(struct grep_source *gs)
+diff --git a/grep.h b/grep.h
+index 5856a23..267534c 100644
+--- a/grep.h
++++ b/grep.h
+@@ -161,6 +161,7 @@ struct grep_source {
+ 		GREP_SOURCE_SHA1,
+ 		GREP_SOURCE_FILE,
+ 		GREP_SOURCE_BUF,
++		GREP_SOURCE_SUBMODULE,
+ 	} type;
+ 	void *identifier;
+ 
 -- 
 2.8.0.rc3.226.g39d4020
 
