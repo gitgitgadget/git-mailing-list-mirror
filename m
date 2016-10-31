@@ -2,56 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 598222021E
-	for <e@80x24.org>; Mon, 31 Oct 2016 22:38:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BE4C2021E
+	for <e@80x24.org>; Mon, 31 Oct 2016 22:39:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S945699AbcJaWix (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Oct 2016 18:38:53 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34389 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S945612AbcJaWix (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 18:38:53 -0400
-Received: by mail-pf0-f169.google.com with SMTP id n85so83408082pfi.1
-        for <git@vger.kernel.org>; Mon, 31 Oct 2016 15:38:52 -0700 (PDT)
+        id S945767AbcJaWiz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 18:38:55 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33503 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S945727AbcJaWiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 18:38:54 -0400
+Received: by mail-pf0-f173.google.com with SMTP id d2so8587768pfd.0
+        for <git@vger.kernel.org>; Mon, 31 Oct 2016 15:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QwHd05CIlmVtl18Rr/USydzE9jJ4De/k64voNC16FWs=;
-        b=MohFeUTRgqdkB+fkGDUCPOxyKeXYHySx706svcznFlRgj7bMMd7powmTNFo0nNV39o
-         1cZ94H95bh/VJNoxVdWT09Bli9hfMlVFv/l5W8LywpwMXzdF+OsPQRc2ekzYSpSMyo2s
-         gkq9nKGLP410BvSr+bwxFPzDubVrODYbJrIjcLGo22N3QXbgN4qOhaKGd5Q45whe0GP3
-         zCWlql4fQqC0Ft6TpIsZwk37VYZ1G+oJwwSnnoZ3NG2aUesCOvAZ/XQbjnf4Tk1gnlE6
-         Li1eQWClCZ82KkE3Ojsyw6ITuiGt4R7MrK1NpxlEvYtcB5mLGqxl4J7CQhQEduKMhIbT
-         tXMg==
+        bh=GcNR2tgBRLu52lUCaaXv9MC5jV/rXB3ITQU5Ob2XIEQ=;
+        b=lR2tqiP9non1U2LIqoEEYqizv1dmCIAjvF+KBxMoUCZjKWQ9+zlaP1jcldNKqTrnT7
+         2p3AFhigJVwgAA6OgwX5eTKNkYQwAjBu4LSoHtboWWKbF5LeectYOpJeZMCF4v9ZC3NC
+         /TfX01RJWRN7VNym4bEKmJsu/JcgOf319YnC3Cm0oGR4p55qXn0RP4LArplmS0uVouCa
+         aFKtkbSl7MKsLuA+U78Sgk2wsUN/8+u8G7BIIvLhH0Yc2jcnbKKahpk1Ndrcu10fi5JM
+         GYoMST0mECNkDRrOQKoy6nLfWxmWtzaoqAjye29quxH3zHCNCvVoqgilhwdWSksfL4IT
+         slyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QwHd05CIlmVtl18Rr/USydzE9jJ4De/k64voNC16FWs=;
-        b=h6iNil7DwGVGqxRlGyaZVzyqP3/gEJ+KyDZiifIYGbESBSsoWdpJP229I3VXSs61lw
-         L2wk+Ar63v1p85WED/zyKO1oY5mYCzGi9lf7zuEifRHaqPS7Cs2R62QKUoYWWIsN/EHS
-         sWP90YaIiZLXuQlhU0izWxoZL8M6G5VXZ7jVv1+PVAixtCLWy7E4D53ofY3tnhJPeDAm
-         Psj5QG5lr5ttL4el/BvMSOB1ilbIYALbjrofFy/em3g07SD4aCnE2WDRNMt4rk4gFM8U
-         DCg9QIGraLpyCWAhgSbeVRS64/FW9rHBGzyiVX4pHcLoiyXuKOk67YSsIsMTb2TLn+aK
-         CNaQ==
-X-Gm-Message-State: ABUngvd88LTc7bVHG4GKNvwiUFCBQxG016pHyz+Z3xasD2HnxnAz7k/m93ETIzIM8veVukD/
-X-Received: by 10.99.221.85 with SMTP id g21mr44304359pgj.121.1477953532224;
-        Mon, 31 Oct 2016 15:38:52 -0700 (PDT)
+        bh=GcNR2tgBRLu52lUCaaXv9MC5jV/rXB3ITQU5Ob2XIEQ=;
+        b=RB6xiD5LKNCGh7XIH5eqjjxvE6qcMCShIFeO2ZTaCeTK3mxBnNSQdaWBLW9v9D2mJw
+         Sad9+qmLxSwVnIJlsz8MVXiVK/cedUGBBHjA7+GKSQoMxyvDvjZTavTU/e9RCDVxxzWu
+         mUcMf+ZdYkGFjR8ksKgbiJHlgoB7v+8jU2W20dslOAFQeOnAN9U62XSrt2MRY00rwxhz
+         UfMSFQFbNcsB0tS9yobVbmzMGC+JYeMO+e55VL2D3i1Rz0pYX4DTrS7NNuCv65Ig38p/
+         7YFC4bEk4g7IU9qWLYrHvnmSZCi89depY938DqYkOMMK1crndxotTkTYWF70bf9stask
+         NLog==
+X-Gm-Message-State: ABUngvf6ZTzEAs/NjFjZcwPThtzyRDvZrHIo2fYjqJgiNTYUSYrVXcsTUn+Q6mbUCL4UkV/5
+X-Received: by 10.99.184.25 with SMTP id p25mr44438748pge.120.1477953533543;
+        Mon, 31 Oct 2016 15:38:53 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id uh10sm37847280pab.5.2016.10.31.15.38.51
+        by smtp.gmail.com with ESMTPSA id uh10sm37847280pab.5.2016.10.31.15.38.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 31 Oct 2016 15:38:51 -0700 (PDT)
+        Mon, 31 Oct 2016 15:38:52 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org, sbeller@google.com
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 1/6] submodules: add helper functions to determine presence of submodules
-Date:   Mon, 31 Oct 2016 15:38:11 -0700
-Message-Id: <1477953496-103596-2-git-send-email-bmwill@google.com>
+Subject: [PATCH v2 2/6] submodules: load gitmodules file from commit sha1
+Date:   Mon, 31 Oct 2016 15:38:12 -0700
+Message-Id: <1477953496-103596-3-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1477953496-103596-1-git-send-email-bmwill@google.com>
 References: <20161027223834.35312-1-bmwill@google.com>
@@ -61,80 +60,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add two helper functions to submodules.c.
-`is_submodule_initialized()` checks if a submodule has been initialized
-at a given path and `is_submodule_checked_out()` check if a submodule
-has been checked out at a given path.
+Teach submodules to load a '.gitmodules' file from a commit sha1.  This
+enables the population of the submodule_cache to be based on the state
+of the '.gitmodules' file from a particular commit.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 39 +++++++++++++++++++++++++++++++++++++++
- submodule.h |  2 ++
- 2 files changed, 41 insertions(+)
+ cache.h            |  2 ++
+ config.c           |  8 ++++----
+ submodule-config.c |  6 +++---
+ submodule-config.h |  3 +++
+ submodule.c        | 12 ++++++++++++
+ submodule.h        |  1 +
+ 6 files changed, 25 insertions(+), 7 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 1be6526..559a461 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1690,6 +1690,8 @@ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
+ extern int git_config_from_mem(config_fn_t fn, const enum config_origin_type,
+ 					const char *name, const char *buf, size_t len, void *data);
++extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
++				     const unsigned char *sha1, void *data);
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
+ extern void git_config(config_fn_t fn, void *);
+diff --git a/config.c b/config.c
+index 83fdecb..4d78e72 100644
+--- a/config.c
++++ b/config.c
+@@ -1214,10 +1214,10 @@ int git_config_from_mem(config_fn_t fn, const enum config_origin_type origin_typ
+ 	return do_config_from(&top, fn, data);
+ }
+ 
+-static int git_config_from_blob_sha1(config_fn_t fn,
+-				     const char *name,
+-				     const unsigned char *sha1,
+-				     void *data)
++int git_config_from_blob_sha1(config_fn_t fn,
++			      const char *name,
++			      const unsigned char *sha1,
++			      void *data)
+ {
+ 	enum object_type type;
+ 	char *buf;
+diff --git a/submodule-config.c b/submodule-config.c
+index 098085b..8b9a2ef 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -379,9 +379,9 @@ static int parse_config(const char *var, const char *value, void *data)
+ 	return ret;
+ }
+ 
+-static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
+-				      unsigned char *gitmodules_sha1,
+-				      struct strbuf *rev)
++int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
++			       unsigned char *gitmodules_sha1,
++			       struct strbuf *rev)
+ {
+ 	int ret = 0;
+ 
+diff --git a/submodule-config.h b/submodule-config.h
+index d05c542..78584ba 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -29,6 +29,9 @@ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
+ 		const char *name);
+ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+ 		const char *path);
++extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
++				      unsigned char *gitmodules_sha1,
++				      struct strbuf *rev);
+ void submodule_free(void);
+ 
+ #endif /* SUBMODULE_CONFIG_H */
 diff --git a/submodule.c b/submodule.c
-index 6f7d883..ff4e7b2 100644
+index ff4e7b2..19dfbd4 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -198,6 +198,45 @@ void gitmodules_config(void)
+@@ -198,6 +198,18 @@ void gitmodules_config(void)
  	}
  }
  
-+/*
-+ * Determine if a submodule has been initialized at a given 'path'
-+ */
-+int is_submodule_initialized(const char *path)
++void gitmodules_config_sha1(const unsigned char *commit_sha1)
 +{
-+	int ret = 0;
-+	const struct submodule *module = NULL;
++	struct strbuf rev = STRBUF_INIT;
++	unsigned char sha1[20];
 +
-+	module = submodule_from_path(null_sha1, path);
-+
-+	if (module) {
-+		struct strbuf buf = STRBUF_INIT;
-+		char *submodule_url = NULL;
-+
-+		strbuf_addf(&buf, "submodule.%s.url", module->name);
-+		ret = !git_config_get_string(buf.buf, &submodule_url);
-+
-+		free(submodule_url);
-+		strbuf_release(&buf);
++	if (gitmodule_sha1_from_commit(commit_sha1, sha1, &rev)) {
++		git_config_from_blob_sha1(submodule_config, rev.buf,
++					  sha1, NULL);
 +	}
-+
-+	return ret;
++	strbuf_release(&rev);
 +}
 +
-+/*
-+ * Determine if a submodule has been checked out at a given 'path'
-+ */
-+int is_submodule_checked_out(const char *path)
-+{
-+	int ret = 0;
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	strbuf_addf(&buf, "%s/.git", path);
-+	ret = file_exists(buf.buf);
-+
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
- int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst)
- {
+ /*
+  * Determine if a submodule has been initialized at a given 'path'
+  */
 diff --git a/submodule.h b/submodule.h
-index d9e197a..bd039ca 100644
+index bd039ca..9a24ac8 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -37,6 +37,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
+@@ -37,6 +37,7 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
  		const char *path);
  int submodule_config(const char *var, const char *value, void *cb);
  void gitmodules_config(void);
-+extern int is_submodule_initialized(const char *path);
-+extern int is_submodule_checked_out(const char *path);
++extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
+ extern int is_submodule_initialized(const char *path);
+ extern int is_submodule_checked_out(const char *path);
  int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
 -- 
 2.8.0.rc3.226.g39d4020
 
