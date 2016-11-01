@@ -2,85 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B853B20229
-	for <e@80x24.org>; Tue,  1 Nov 2016 17:31:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C03520229
+	for <e@80x24.org>; Tue,  1 Nov 2016 17:38:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752532AbcKARbn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 13:31:43 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:33044 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751797AbcKARbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 13:31:42 -0400
-Received: by mail-qk0-f182.google.com with SMTP id v138so116708501qka.0
-        for <git@vger.kernel.org>; Tue, 01 Nov 2016 10:31:42 -0700 (PDT)
+        id S1753679AbcKARis (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 13:38:48 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36593 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753655AbcKARir (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 13:38:47 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 189so45084468pfz.3
+        for <git@vger.kernel.org>; Tue, 01 Nov 2016 10:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N4YN8InpRbGLmoDvtQVFNA3X/podSIW8O/T4vYJJQ+Y=;
-        b=Unquoqy3haj0gInM8Vg7q9nTja96pGz63Z52ipu8DqyrrNKydxYDpTPUQjek+uEopA
-         SJYAcJKtDMkU+vFszzsfDahE6KXYUqxievWmP/tVzA5sWadpet2ucVFeGl7r5Bz8T972
-         7bqHdaCftmhjAyuLGH6wt6Eq3/lcS1a2+lZdv4Y0hkaqx8VK52a4yXhX8Bb3sYE+fgAt
-         O0qT6TI9FyHHA/aGyTpYJ5L2a9lLRMyUfxCzRNHR1li6CulBk5JMDjIQhCnpvAhBwS0G
-         naSiZTTWuzTSzFbdX8SbsyCy2mKvucNKM8l9IH6B0ckl6TosVijOVyrH6P789mLz1MmX
-         wtVQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=IQIWzslC9oHThmWx462lHumzaKG1KQBU2QBF255Sye0=;
+        b=CIiMvNeIeDE0rcMn9tvRt2MegVGfwLeD3g7TmOIUSEPu+eubud/9LtuN0pWGlXu3Na
+         HPl8x1J/I4aboavc2Ld6cKEXuAweOfNqQukJZ0vlhASTiQI2KDGvJd7gPAo6vPLXhKMP
+         CYF1UDl2RQm4sdz3rqjyiyH9mht8rjtk3i/Cxhr4A1nRtwMOkr62GTYaeww8wez+q7+I
+         uMsBYjjh0yfuvciPM2ausrwRGXYz7jBuk26lF6yp8iqWrxs2z9r8QVipPUtWS2/V4u5x
+         Ykl5IkL+NMCDwcRWxZgMiPhtMqQrKW48IBsnBy96qnZzRS+Dp8ReXmKMcRt7m1f3RacE
+         Jqww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N4YN8InpRbGLmoDvtQVFNA3X/podSIW8O/T4vYJJQ+Y=;
-        b=hWXMNMeBTH+w065g9+qeCKL2BRm1+0HzCBVcLcCq1ZP9JX3T8rgSm/P2s+pURKFa26
-         iro4pZ4Dy1pBGI5HpuqtUn8ZcBYm+2t9M+65lpUlMsvX/eXTLG9iW2JzmAuBceuaHQyP
-         I9ZtW6EGQ4KX5TiJzPoAPc2OuBdam5g2DB+nrnrXKmlVgdBk8AOcNY6NK42znqfM9mw6
-         8WcgQx5DEEP6qwTt5k8R4Mw6dxSZXJLB26j7UZ/omdieGcBwZHrDKz5pURnGOXxsnHIr
-         8V3gpS0MYpcXpYmu7KxV2AwgZBjP4NWsOugMCTVnpaeCiRGQ2O/pKCog35xaTLQKRIrC
-         0mvQ==
-X-Gm-Message-State: ABUngve8WMcYYKJv16pk42f0taJNOgo/JzuFXz/MtutmmJQiUqoE7fZRZzb3kH45PnAuzltjfEIpR/DU+G/kBUZF
-X-Received: by 10.55.186.3 with SMTP id k3mr4711278qkf.47.1478021501851; Tue,
- 01 Nov 2016 10:31:41 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Tue, 1 Nov 2016 10:31:41 -0700 (PDT)
-In-Reply-To: <xmqq7f8nqfqc.fsf@gitster.mtv.corp.google.com>
-References: <20161027223834.35312-1-bmwill@google.com> <1477953496-103596-1-git-send-email-bmwill@google.com>
- <1477953496-103596-2-git-send-email-bmwill@google.com> <CAGZ79kamzSPyM65k9ugS0dAJCfGnGvk3m2p+XtCEozCvoZ5+OA@mail.gmail.com>
- <xmqq7f8nqfqc.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 1 Nov 2016 10:31:41 -0700
-Message-ID: <CAGZ79kYcs0FiXdP6UZGgSmUpn_3vpnKo2RwTRJCvksP7+1o_wQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] submodules: add helper functions to determine
- presence of submodules
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=IQIWzslC9oHThmWx462lHumzaKG1KQBU2QBF255Sye0=;
+        b=TZ+qa0SvPrXeAw0/QgOgQZs6CvCPBBPwTWgerOi8NrcwJJpcp76ea+bAi+nX8t8h5R
+         TGUnY4TQ7ivypRb29v66U5kfC70oK+Q7G03uNEIBpUws2Nj2WuBOKgI5Raq038TmfHtZ
+         KukW4fFATwA2hFyy+Cv6oZAUCk6pX81ySc1fCB0dbLY75wV1ouzwkPJZex/EjFMEXC4y
+         AN/PeIYG7r1yKiSvW+lYeKGUJ6sTVhleshuZfC8b6CZBy5fipAASs39DG83O13daifvJ
+         98VNqB7Xd618QX+v7LeduN9FMWYeF3WIsaJ8kjN+cgxBvU/+2TJTuKUA3hzVHbTp0/Cr
+         nZzQ==
+X-Gm-Message-State: ABUngvd8C+Tg7kGcLNeIVHmrkVwfUBJ9u26Ny5ur2t4DlhCmn0jhrm0XZnZP1ufKoYfBHsnm
+X-Received: by 10.99.106.200 with SMTP id f191mr10347267pgc.143.1478021926102;
+        Tue, 01 Nov 2016 10:38:46 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:294b:6247:1bca:2342])
+        by smtp.gmail.com with ESMTPSA id yk6sm43618932pab.43.2016.11.01.10.38.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 01 Nov 2016 10:38:44 -0700 (PDT)
+Subject: Re: [PATCH 4/4] sequencer: use trailer's trailer layout
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+References: <cover.1477698917.git.jonathantanmy@google.com>
+ <cover.1477698917.git.jonathantanmy@google.com>
+ <602ae84920300cdbb439eca8098c5e092ca322f7.1477698917.git.jonathantanmy@google.com>
+ <xmqqeg2wqa1e.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <a416ab9b-ff1f-9a71-3e58-60fd4f8a6b8e@google.com>
+Date:   Tue, 1 Nov 2016 10:38:43 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqeg2wqa1e.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 1, 2016 at 10:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
-
+On 10/31/2016 06:11 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+>> index ba4902d..635b394 100755
+>> --- a/t/t4014-format-patch.sh
+>> +++ b/t/t4014-format-patch.sh
+>> @@ -1277,8 +1277,7 @@ EOF
+>>  4:Subject: [PATCH] subject
+>>  8:
+>>  9:I want to mention about Signed-off-by: here.
+>> -10:
+>> -11:Signed-off-by: C O Mitter <committer@example.com>
+>> +10:Signed-off-by: C O Mitter <committer@example.com>
+>>  EOF
+>>  	test_cmp expected actual
+>>  '
 >
-> Maybe I am old fashioned, but I'd feel better to see these with
-> explicit "extern" in front (check the older header files like
-> cache.h when you are in doubt what the project convention has been).
+> The original log message is a single-liner subject line, blank, "I
+> want to mention..." and when asked to append S-o-b:, we would want
+> to see a blank before the added S-o-b, no?
+>
+> This seems a bit weird.
 
-I did check the other files and saw them, so I was very unsure what to
-suggest here. I only saw the extern keyword used in headers that were
-there when Git was really young, so I assumed it's a style nit by kernel
-developers. Thanks for clarifying!
+This is because the "I want to mention" block has 100% trailer lines 
+(since its only line contains a colon). We could forbid spaces in 
+trailer field names, but as you said [1], it might be better to allow 
+them since users might include them.
 
-I think we'll want to have some consistency though, so we
-maybe want to coordinate a cleanup of submodule.h as well as
-submodule-config.h to mark all the functions extern.
+The original sequencer.c interpreted this block as not a trailer block, 
+because it only accepted alphanumeric characters or '-' before the colon 
+(and no spaces) - hence the difference in behavior.
 
-This doesn't need to be a all-at-once thing, but we'd keep it in mind
-for future declarations in the header.
-
-Thanks,
-Stefan
+[1] <xmqqbmyhr4vt.fsf@gitster.mtv.corp.google.com>
