@@ -2,98 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4ECB20229
-	for <e@80x24.org>; Tue,  1 Nov 2016 20:53:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2698120229
+	for <e@80x24.org>; Tue,  1 Nov 2016 20:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751866AbcKAUxu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 16:53:50 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35512 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751157AbcKAUxu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 16:53:50 -0400
-Received: by mail-pf0-f174.google.com with SMTP id i88so7383810pfk.2
-        for <git@vger.kernel.org>; Tue, 01 Nov 2016 13:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=2n70wAWmURkmH4SO2O3CP10PZ/UziOTo4uawhYdorl4=;
-        b=aEXmzGj/sintxeZiDDT1NrW9sIr/aBlmXRUT+yaAmOhNiZrJ9xDG56QCn/RVNyXslz
-         nwxv/z0tCfHSzg/D59nKs1QN6OY9FqLGI/GDA1pAvhAYTOu14mQuZATAorf+/9U2qIBR
-         cEpeRoacxLY3wcOueq2SJxfcbi+g5HfN2oIHTvixGkf1PRr/p+v014lt8t0vabdmmM40
-         IzkfpJnutjhPPc2j+gSIXusBPcPphBpHcYETUtE6V5MKdm2JIflB7ToFvjsI6kLeFFOM
-         yi92sTefGSTJBNN44/+VTxkUcNFurl4CDQhUMr2v04mEemrEdHdUMPNtEFnuCx2j5TA1
-         5ExQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=2n70wAWmURkmH4SO2O3CP10PZ/UziOTo4uawhYdorl4=;
-        b=YDNH2xe81wVR+mULAQW/f96Zkeig+G6nozSE4PuyeYa56M5AwkItEjGgTLnYnRw1AC
-         agyVrRNdBUsv5Po/ZQ7rH9ftPljd6MVokujcCm5101VVuWLFs1a3v1RGzorTrLxgcn6z
-         ZR11HrlPvgp5QvXQK9agKdRtlAF8jfEZsn48CE3T0qWNDGCPJDZmv157OLfeEFFqqXXr
-         vX7fiZSiTJWlMKzpcEFYQvRmI+/BzgWKgomsy2DZsbkFRIJS6i8aW+3QAyTY3+leY73a
-         D2IBw6/g8XdNRHd/gTaB9VsWtf/lnDng0SbDAaLsuWRTHC19MRf0G9G5PQhSsEJx2fF9
-         9qPA==
-X-Gm-Message-State: ABUngvefn/sthe2vzh/z4Ju9DMyrK6SWfo5zKmM4tPhGsPEPPb6TMPGSzrgJ6+fcRaimnCf/
-X-Received: by 10.99.47.7 with SMTP id v7mr52555070pgv.15.1478033629208;
-        Tue, 01 Nov 2016 13:53:49 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:294b:6247:1bca:2342])
-        by smtp.gmail.com with ESMTPSA id d26sm44196868pfb.37.2016.11.01.13.53.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Nov 2016 13:53:48 -0700 (PDT)
-Subject: Re: [PATCH v2 1/5] trailer: be stricter in parsing separators
-To:     Junio C Hamano <gitster@pobox.com>
-References: <cover.1478028700.git.jonathantanmy@google.com>
- <cover.1477698917.git.jonathantanmy@google.com>
- <cover.1478028700.git.jonathantanmy@google.com>
- <c7db0aafb543845382e1835e3704273d3596e6bb.1478028700.git.jonathantanmy@google.com>
- <xmqqvaw7ndow.fsf@gitster.mtv.corp.google.com>
- <xmqqr36vndgn.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <0b3e70fe-5e1f-7aaa-4c3d-88f30cb15008@google.com>
-Date:   Tue, 1 Nov 2016 13:53:47 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1751950AbcKAU4i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 16:56:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62365 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750979AbcKAU4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 16:56:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2965A4B172;
+        Tue,  1 Nov 2016 16:56:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Qg1bkt9+GPLbc/rZDzf3SsvxTGk=; b=sZErmK
+        FaxOT3PB8sQmDq4Nq5P6efhMe02b21jNgIMLRU+V76LKXmm9rLc8mdN5ciUTr3t+
+        F5iCZi94i1Aqfwf4VTxEKuWKgM558+d8N3owVhAd7a8/e57TWZdqypxKti+QZrIK
+        OPbnCO5A3mtf/74Ac5lyCYcP9syHxQIOs6SgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=A3BRywZsQeYyjP6Ho8iFEACp5j7VlB3g
+        4Ha+fqlNV/hKT778SKL6vDURtam1MVKKwbWy7HF5luvXFyrVmEUqLQuTGGHX+Cda
+        VUpESuYBv7kTifarWIks8qUsRCLoA8GZ3OadOcP4ljuyxFSXiSAc2as67oXWyH2Z
+        gcxohxYTMZw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2136A4B171;
+        Tue,  1 Nov 2016 16:56:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 910BD4B170;
+        Tue,  1 Nov 2016 16:56:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.11.0-rc0
+References: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
+        <20161101203637.3jr73wwpfal4brho@sigill.intra.peff.net>
+Date:   Tue, 01 Nov 2016 13:56:34 -0700
+In-Reply-To: <20161101203637.3jr73wwpfal4brho@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 1 Nov 2016 16:36:37 -0400")
+Message-ID: <xmqqlgx2or5p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr36vndgn.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: AD0A49CE-A075-11E6-BB90-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/01/2016 01:37 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Jonathan Tan <jonathantanmy@google.com> writes:
->>
->>> Currently, a line is interpreted to be a trailer line if it contains a
->>> separator. Make parsing stricter by requiring the text on the left of
->>> the separator, if not the empty string, to be of the "<token><optional
->>> whitespace>" form.
->>
->> Hmph.  The optional whitespace is to allow for what kind of line?
->>
->> It is not for "Signed off by:" that is a misspelt "Signed-off-by:";
->> it may not hurt but I do not think of a case that would be useful
->> offhand.
+Jeff King <peff@peff.net> writes:
 
-This is to allow trailers of the form "Fix #42" (mentioned in the 
-git-interpret-trailers documentation and also in the test).
-
-> Other than this "Hmph" (which is not an objection---just something
-> that the reviewer did not understand), the rest looked good to me.
+> On Mon, Oct 31, 2016 at 02:49:42PM -0700, Junio C Hamano wrote:
 >
-> Will re-queue.
+>>  * Output from "git diff" can be made easier to read by selecting
+>>    which lines are common and which lines are added/deleted
+>>    intelligently when the lines before and after the changed section
+>>    are the same.  A command line option is added to help with the
+>>    experiment to find a good heuristics.
 >
-> Thanks.
+> I'm not sure we ever resolved all the discussion around options and
+> defaults here.
+>
+> As of -rc0, we have both --indent-heuristic and --compaction-heuristic
+> (along with matching config), and they are mutually exclusive.
+>
+> In [1], Stefan suggested just replacing the compaction heuristic
+> entirely with the new one (and you seemed to agree). If we're going to
+> do that, it makes sense to do so before the release, so that we don't
+> get stuck supporting --indent-heuristic forever.
 
-Thanks!
+You meant "compaction" in the last part?  I think it is probably a
+good idea.
+
+I'd vote for just removing compaction-heuristic while keeping the
+indent-heuristic with experimental label and knobs and keeping it
+off by default for a while.
+
+Thanks for bringing it up.
