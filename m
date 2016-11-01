@@ -2,75 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_ADSP_DISCARD,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07F8B20193
-	for <e@80x24.org>; Tue,  1 Nov 2016 09:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 215FB20193
+	for <e@80x24.org>; Tue,  1 Nov 2016 10:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1168258AbcKAJgv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 05:36:51 -0400
-Received: from mout.web.de ([212.227.15.14]:54301 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1168197AbcKAJgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 05:36:50 -0400
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MGUHw-1c5tD10D44-00DGnA; Tue, 01 Nov 2016 10:36:43
- +0100
-Date:   Tue, 1 Nov 2016 09:36:41 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] convert.c: stream and fast search for binary
-Message-ID: <20161101093641.GA1313@tb-raspi>
-References: <20161009095649.1886-1-tboegi@web.de>
- <20161012134727.28365-1-tboegi@web.de>
- <xmqqd1il5w4e.fsf@gitster.mtv.corp.google.com>
+        id S1168544AbcKAK3B (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 06:29:01 -0400
+Received: from lvs-ipout-02-data1.paypalcorp.com ([173.224.161.144]:20935 "EHLO
+        lvs-ipout-02-data1.paypalcorp.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1168512AbcKAK3B (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 Nov 2016 06:29:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=paypal.com; i=@paypal.com; q=dns/txt; s=pp-dkim1;
+  t=1477996140; x=1509532140;
+  h=from:to:subject:date:message-id:
+   content-transfer-encoding:mime-version;
+  bh=ajgioDvQPy+wrDmEiiG4O2yIZLSZDz2VQ5dQ50JTQUk=;
+  b=ibqCJk8cW1w0uW3c3UoccdugOKAIQn5dNtJvWeIyCP/f3YpL1ktbdQJD
+   SoTpVUSjQnACxyq2Md5mDjrQMTUg0E4M+/qMD9NZddhs2Y7jESNQ1uLhj
+   QuEW3aEKj4c6BK72DKrTxsk4l1r9h5HOOhIZVueV7XYyR4kijMTy4F7TO
+   HvYLGcgz5n+bXpDp8SdynO4yofnAnTdGaOrouyRxzG179D/PJ9Rr/gK7w
+   fJNQQG07gHAdXqL9U0eNjYApFb5sorWuXVjDOpTHMChv6LrbRcycAwdgz
+   IaCT2ns0mFg1xjw7+5EpeUq4iR0L1dQFsOuSLnpbUibwnBSrljkwYIcdu
+   g==;
+X-IronPort-AV: E=Sophos;i="5.31,579,1473145200"; 
+   d="scan'208";a="27061677"
+Received: from unknown (HELO lvs-ipcld-02-data1.paypalcorp.com) ([10.185.246.164])
+  by lvs-ipout-02-data1.paypalcorp.com with ESMTP; 01 Nov 2016 03:29:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.31,579,1473145200"; 
+   d="scan'208";a="14557150"
+X-CloudService: Office365
+Received: from mail-bl2nam02lp0083.outbound.protection.outlook.com (HELO NAM02-BL2-obe.outbound.protection.outlook.com) ([207.46.163.83])
+  by lvs-ipcld-02-data1.paypalcorp.com with ESMTP/TLS/AES256-SHA256; 01 Nov 2016 03:28:26 -0700
+Received: from BY2PR0601MB1640.namprd06.prod.outlook.com (10.163.107.18) by
+ BY2PR0601MB1638.namprd06.prod.outlook.com (10.163.107.16) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.693.12; Tue, 1 Nov 2016 10:28:57 +0000
+Received: from BY2PR0601MB1640.namprd06.prod.outlook.com ([10.163.107.18]) by
+ BY2PR0601MB1640.namprd06.prod.outlook.com ([10.163.107.18]) with mapi id
+ 15.01.0693.009; Tue, 1 Nov 2016 10:28:58 +0000
+From:   "Halde, Faiz" <fhalde@paypal.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git issue
+Thread-Topic: Git issue
+Thread-Index: AdI0J3CwZczyXmwJT22+mDl/pM7wXwAA0HUQ
+Date:   Tue, 1 Nov 2016 10:28:57 +0000
+Message-ID: <BY2PR0601MB16400EAC3E9683841907F4B2A2A10@BY2PR0601MB1640.namprd06.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=fhalde@paypal.com; 
+x-originating-ip: [43.230.180.5]
+x-ms-office365-filtering-correlation-id: 8ac5450d-9a91-4768-a799-08d40241e393
+x-microsoft-exchange-diagnostics: 1;BY2PR0601MB1638;7:5dpqr8H+VfyIajYzWtDjDFsZ20bSMLY9/ZKJyn66vrrEY/pzrpGypYSNhFEvHkwdMvmzSQFdTXq0PoGffyCJCTjkDojpzSPNhojvUGzrMCwRZnX+OKh1JFHFIbmAXtygFfWdiFj4OOVdDsKrkV7KIwoX99L6KlL8cOGVRoqJAXUrUvuwUeETUnSWjqILFkqbGZldfHLBf/mVbkFTsJX//N0aYUa2EzpBBro9ZhTPH1GYsgUa0mXT7jcbUb8jnHZe7dMJl0cdYJPoO2hBnyC2HZzhLeXiliVQmuAb4PnTjuKQIDXwt2xnHZ1c7GMk3XwmotGYmcFDNeXIj1x4/fEIJ7wW3QjM015vlvwlGR2/ilI=
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BY2PR0601MB1638;
+x-microsoft-antispam-prvs: <BY2PR0601MB163824937829CC3A6DAF84E9A2A10@BY2PR0601MB1638.namprd06.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040176)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(6055026);SRVR:BY2PR0601MB1638;BCL:0;PCL:0;RULEID:;SRVR:BY2PR0601MB1638;
+x-forefront-prvs: 01136D2D90
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(199003)(189002)(221733001)(33656002)(81156014)(97736004)(81166006)(77072002)(8676002)(1730700003)(10290500002)(82432001)(76576001)(68736007)(10300500001)(106356001)(10400500002)(50986999)(54356999)(101416001)(92566002)(2351001)(229853001)(5002640100001)(450100001)(10130500003)(586003)(99286002)(10770500004)(6116002)(102836003)(3846002)(105586002)(4500500003)(3480700004)(5660300001)(107886002)(77096005)(7116003)(3660700001)(122556002)(8936002)(73692002)(2501003)(3280700002)(7696004)(2900100001)(110136003)(86362001)(9686002)(6916009)(87936001)(2906002)(7846002)(74316002)(305945005)(7736002)(189998001)(66066001)(10630500005)(56826009);DIR:OUT;SFP:1102;SCL:1;SRVR:BY2PR0601MB1638;H:BY2PR0601MB1640.namprd06.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: paypal.com does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqd1il5w4e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:1YGTZ0wsyV2GWmfeyyqUMsAcNScTkACxUcYi3/vEoU7IdmfhzPl
- 5SWP3LJf/QZHOa8b4zrcaWd8RnQjnH/BTukGDcZfAEptJaV0yhoslS9dEvBPvZQe32STIET
- 6RNYn5io0+0sq4BL2uuXPeP6b2qciNUJazOSZ5TNFLSK8zaiTeSNO2r9TbPR9+AffySAmt2
- dInNnoSiTIhGuFZ8auD9w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IuySf2T9yrk=:HnAXjHuCTrFS8U2oxarD/v
- Jl2wh1BtXdu7bvR9bXuYhpogi9fnmxgiRKBmXQC63Ec0NAnnBYuZBkWj6QW9bhSMzGga3n/bx
- EpJtcXxuQDZO50/OrZwktn4dYJfCCyi7TEOana//KmYgFh/M5v2WZRr8C1ZRmH4p4VeaY7IGG
- EjaA6xEOSTYCn4A+/Dk33ycr4aOkYSmtSTOa1Oz1YbUlLY0jl+7sfSaGFgbwb2UfUOMqzZlkq
- g2fCKX+xNlgCPn3h+qUTkaw0GD1QLlm10XV7UeJKYSFqg9Qa4lkWEPpl3ys+ChyJ/l3oLc3EB
- RYpn8pGKFJ4WoXhfdj7XQEO6Ii/IMNLS6iEijEzIzVQ4AKyE6F+vDLEEK/xOO6rGj3QqH4IIP
- ysGKCivZP6EBNGq3g7hXb4krKiY0chWvU9HVpxy+Rfv1Yd2SS8H137uyTusj00U5+C88hXk1p
- xYdIhU53UuAxQisEV3fQ8Sa+ni1LkNPEufVZPoq0ZTx3xm/vp4FdgR2TU13xb/MBbWb7TbsGz
- oJfL3m8gzeuaGKVLfGBglVOWFARFgVbgYadCTFB92QmSCdEWhOjTHo1QW0ubK+fvN6oXRAeiy
- tCGzrxiYsAD7Seh6SX2qZBAJNmc2eBA+MORft+f7nGVKBYn6a4/dbH40LsCLA/9c1ZE6FJxwr
- eBp1EDjXQ60PccMuHDCPDnq8TQQvCZlei9/2GRGhp3rXnz7HTNmaDsARDGDfCqIjVKLlqoo39
- vDnJG0ZrEE8oF0zugdtXr11ffUzP+twO5KU/eF5EjRrr5eANhUo1NG9I4SY=
+X-OriginatorOrg: paypal.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Nov 2016 10:28:57.8925
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fb007914-6020-4374-977e-21bac5f3f4c8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2PR0601MB1638
+X-CFilter: Scanned lvs1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[]
-> This probably should be done as four more patches to become
-> reviewable.
-> 
->  - One to use the CONVERT_STAT_BITS a lot more for the conversion
->    decision than before, 
-> 
->  - another to allow the caller to tell gather_stats() to give up
->    early with the "search_only" bits, 
-> 
->  - another to update the get_*_convert_stats() functions to use
->    get_convert_stats_sha1(), and then finally 
-> 
->  - use the streaming interface when reading from blob and file.
-> 
-> or something line that.
+Hello Git
 
-Many thanks for the detailed review. Let's see if I can come up
-with a better series the next weeks or so.
+Not sure if this is a feature or a bug, but here it is.
 
+I frequently use the following command to ignore changes done in a file
+
+git update-index --assume-unchanged somefile
+
+Now when I do a pull from my remote branch and say the file 'somefile' was =
+changed locally and in remote, git will abort the merge saying I need to co=
+mmit my changes of 'somefile'.
+
+But isn't the whole point of the above command to ignore the changes within=
+ the file?
+
+Thanks
+Faiz Halde=20
