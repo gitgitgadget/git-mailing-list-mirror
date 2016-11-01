@@ -2,112 +2,380 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 703E72021E
-	for <e@80x24.org>; Mon, 31 Oct 2016 23:34:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35DC42021E
+	for <e@80x24.org>; Tue,  1 Nov 2016 01:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S947975AbcJaXec (ORCPT <rfc822;e@80x24.org>);
-        Mon, 31 Oct 2016 19:34:32 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:35449 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S947944AbcJaXeb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2016 19:34:31 -0400
-Received: by mail-qk0-f173.google.com with SMTP id z190so180545931qkc.2
-        for <git@vger.kernel.org>; Mon, 31 Oct 2016 16:34:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=y8zzFHXKcwMuGH123klWsgZG/lXkeOJlqPq4PDoTuWU=;
-        b=mWte54MmsWIRp7AQ5AJPjzALShIYThWh3c1Bt2ZT86DPvCKCR1gY/zK2ZMLtjGluu7
-         08u/ebuxprMZsOz2qeLEqAdHCRqiv5xYICBhybqY1I00fggyFvbaSuiTvh+uvhW6CDTL
-         JJ1IK2og9AfTsuw0XTTRUMLCwWbHu8l32/Ps/KGkKqL17w9EmnGyCyFgiozG9QcjAaml
-         n8z9m8+nO116nP4AdN9MzM4IAjylvH5stMJXKWpqVPMlvKLxUxyALxQNBmcVi4qav3Pj
-         Abd/tG+2VqC1eZG5oqKsH1UmtZWfKeh5pCVEQ4whLNPw2sXEh8D1KRK6qOTlwFq4SGiA
-         egsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=y8zzFHXKcwMuGH123klWsgZG/lXkeOJlqPq4PDoTuWU=;
-        b=ghN4qG8BQhvntm3bmex5t+j41p1P6oPE54GMMdqR9Q82s9GwKeeXj3tjbr0FnqB1VS
-         Ct7+H6v8WLCvkFef7unqXiA2nfIr4UFu31aVoNNpfHkJCihKc6/dmSEbeLGf8iFWC96F
-         lZhIHRqPIJBteAAaLjX1aBe9ghybNFFBOPBmRHDS2rjDxLHfefXvl/NnHYb8yJFTlBac
-         MqJu5g//B44i7H3D5SWHUAZm8yJh/FF7A3pd9dfZTctj2Q7j62Ahdha76KcXjYvcJL1j
-         sDPS0F/VDJTLW1mgI6Tr32C7SGftCzdT8bbqS1VOzWHFBVl4bcyhW532IawlgCQ0YkYf
-         r6Cg==
-X-Gm-Message-State: ABUngvfJPpnhaBv8teI59fAwjZ0TRxP5Smh6YdB5XMrMHqNcapxyl/mMQ7FFKj/gq3jjEEOvXkcnjcbDpgFCBjq6
-X-Received: by 10.55.20.164 with SMTP id 36mr25691373qku.86.1477956870678;
- Mon, 31 Oct 2016 16:34:30 -0700 (PDT)
+        id S965172AbcKABLN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Oct 2016 21:11:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53588 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S948411AbcKABLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2016 21:11:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 42A784BDBA;
+        Mon, 31 Oct 2016 21:11:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AiWRxTndPncmF3htpc4oE6BMjHo=; b=T+uDz+
+        CArw5iDaOyreGaw+1fBxhlkCaJhO2eXwPQg+BcNb/jlOJb/vKc39YqhNH6sSkJj+
+        CmT/MRk24FNCeVb5OBmgWM0dqPGBkzuBBXHmKqO1kLkbh+36oRssYGB3Ewi4+qjm
+        gHL1UjKH9B5B2RfN4DupZRqlk/sVcg1MwSpfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oeQeoIRBUzURgA5GZBq5K0mq22Nm3fg6
+        Cen5RDTSz9NRxEV3sbzGqd8Xj6hn7jQGWWuftNHZPUn018p3Ud/AhFDQ1FdBsGaN
+        Ikn7ttiNwM2LAvF5ScFJZQEAWjW2ojfdv2QUIP90jULX0bxYbXnJpJ3FWj2W6fWe
+        1oQvS0HMZzQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 381024BDB9;
+        Mon, 31 Oct 2016 21:11:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 95BFF4BDB8;
+        Mon, 31 Oct 2016 21:11:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4] sequencer: use trailer's trailer layout
+References: <cover.1477698917.git.jonathantanmy@google.com>
+        <cover.1477698917.git.jonathantanmy@google.com>
+        <602ae84920300cdbb439eca8098c5e092ca322f7.1477698917.git.jonathantanmy@google.com>
+Date:   Mon, 31 Oct 2016 18:11:09 -0700
+In-Reply-To: <602ae84920300cdbb439eca8098c5e092ca322f7.1477698917.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Fri, 28 Oct 2016 17:05:11 -0700")
+Message-ID: <xmqqeg2wqa1e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Mon, 31 Oct 2016 16:34:30 -0700 (PDT)
-In-Reply-To: <1477953496-103596-2-git-send-email-bmwill@google.com>
-References: <20161027223834.35312-1-bmwill@google.com> <1477953496-103596-1-git-send-email-bmwill@google.com>
- <1477953496-103596-2-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 31 Oct 2016 16:34:30 -0700
-Message-ID: <CAGZ79kamzSPyM65k9ugS0dAJCfGnGvk3m2p+XtCEozCvoZ5+OA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] submodules: add helper functions to determine
- presence of submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 133FB978-9FD0-11E6-9B02-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 31, 2016 at 3:38 PM, Brandon Williams <bmwill@google.com> wrote:
-> +int is_submodule_checked_out(const char *path)
-> +{
-> +       int ret = 0;
-> +       struct strbuf buf = STRBUF_INIT;
-> +
-> +       strbuf_addf(&buf, "%s/.git", path);
-> +       ret = file_exists(buf.buf);
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-I think we can be more tight here; instead of checking
-if the file or directory exists, we should be checking if
-it is a valid git directory, i.e. s/file_exists/resolve_gitdir/
-which returns a path to the actual git dir (in case of a .gitlink)
-or NULL when nothing is found that looks like a git directory or
-pointer to it.
+> @@ -26,30 +27,6 @@ static GIT_PATH_FUNC(git_path_opts_file, SEQ_OPTS_FILE)
+>  static GIT_PATH_FUNC(git_path_seq_dir, SEQ_DIR)
+>  static GIT_PATH_FUNC(git_path_head_file, SEQ_HEAD_FILE)
+>  
+> -static int is_rfc2822_line(const char *buf, int len)
+> -{
+> -	int i;
+> -
+> -	for (i = 0; i < len; i++) {
+> -		int ch = buf[i];
+> -		if (ch == ':')
+> -			return 1;
+> -		if (!isalnum(ch) && ch != '-')
+> -			break;
+> -	}
+> -
+> -	return 0;
+> -}
+> -
+> -static int is_cherry_picked_from_line(const char *buf, int len)
+> -{
+> -	/*
+> -	 * We only care that it looks roughly like (cherry picked from ...)
+> -	 */
+> -	return len > strlen(cherry_picked_prefix) + 1 &&
+> -		starts_with(buf, cherry_picked_prefix) && buf[len - 1] == ')';
+> -}
 
+We lost two helper functions here, one to detect "Mail-header: like"
+line, the other to detect "(cherry picked from") line.  Let's see
+how the updated caller can do without these.  We know that both of
+these can be caught if we grabbed the block of trailer block.
 
-> +
-> +       strbuf_release(&buf);
-> +       return ret;
-> +}
-> +
->  int parse_submodule_update_strategy(const char *value,
->                 struct submodule_update_strategy *dst)
+> @@ -59,49 +36,25 @@ static int is_cherry_picked_from_line(const char *buf, int len)
+>  static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+>  	int ignore_footer)
 >  {
-> diff --git a/submodule.h b/submodule.h
-> index d9e197a..bd039ca 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -37,6 +37,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
->                 const char *path);
->  int submodule_config(const char *var, const char *value, void *cb);
->  void gitmodules_config(void);
-> +extern int is_submodule_initialized(const char *path);
-> +extern int is_submodule_checked_out(const char *path);
+> -	char prev;
+> -	int i, k;
+> -	int len = sb->len - ignore_footer;
+> -	const char *buf = sb->buf;
+> -	int found_sob = 0;
+> -
+> -	/* footer must end with newline */
+> -	if (!len || buf[len - 1] != '\n')
+> -		return 0;
+> +	struct trailer_info info;
+> +	int i;
+> +	int found_sob = 0, found_sob_last = 0;
+>  
+> -	prev = '\0';
+> -	for (i = len - 1; i > 0; i--) {
+> -		char ch = buf[i];
+> -		if (prev == '\n' && ch == '\n') /* paragraph break */
+> -			break;
+> -		prev = ch;
+> -	}
+> +	trailer_info_get(&info, sb->buf);
+>  
+> -	/* require at least one blank line */
+> -	if (prev != '\n' || buf[i] != '\n')
+> +	if (info.trailer_start == info.trailer_end)
+>  		return 0;
 
-no need to put extern for function names. (no other functions in this
-header are extern. so local consistency maybe? I'd also claim that
-all other extern functions in headers ought to be declared without
-being extern)
+So we feed the thing to trailer_info_get() which will find the
+trailer block.  If there is no trailer block, start and end will
+point at the same place, which is trivial.
 
-Also naming: I'd go with
+>  
+> -	/* advance to start of last paragraph */
+> -	while (i < len - 1 && buf[i] == '\n')
+> -		i++;
+> -
+> -	for (; i < len; i = k) {
+> -		int found_rfc2822;
+> -
+> -		for (k = i; k < len && buf[k] != '\n'; k++)
+> -			; /* do nothing */
+> -		k++;
+> +	for (i = 0; i < info.trailer_nr; i++)
+> +		if (sob && !strncmp(info.trailers[i], sob->buf, sob->len)) {
+> +			found_sob = 1;
+> +			if (i == info.trailer_nr - 1)
+> +				found_sob_last = 1;
+> +		}
+>  
+> -		found_rfc2822 = is_rfc2822_line(buf + i, k - i - 1);
+> -		if (found_rfc2822 && sob &&
+> -		    !strncmp(buf + i, sob->buf, sob->len))
+> -			found_sob = k;
 
-    is_submodule_populated ;)
+Then we scan the trailer block and see if we are looking at the same
+s-o-b line as we are asked to look for, and if it is at the last
+logical line in the trailer block.
 
-as it will tell whether this function will tell you if there is a valid
-submodule (and not just an empty dir as a place holder).
+> +	trailer_info_release(&info);
+>  
+> -		if (!(found_rfc2822 ||
+> -		      is_cherry_picked_from_line(buf + i, k - i - 1)))
+> -			return 0;
 
-You don't have to run "git checkout" to arrive in that state,
-but a plumbing command such as read_tree may have been used.
+We used to reject a "last paragraph" that has "cruft" other than
+"Mail-header: like" line or "(cherry-picked from" line.  By reusing
+the trailer code, we are getting consistently looser with its logic.
+
+> -	}
+> -	if (found_sob == i)
+> +	if (found_sob_last)
+>  		return 3;
+>  	if (found_sob)
+>  		return 2;
+
+I found it surprising that you said "commit -s", "cherry-pick -x"
+and "format-patch -s" are covered by this patch and saw a change
+only to sequencer.c.
+
+It turns out append_signoff() is the central function that is shared
+among builtin/commit.c::prepare_to_commit() that does "commit -s",
+log-tree.c::show_log() that is called by "format-patch -s", and
+sequencer.c::do_recursive_merge() that do_pick_commit() hence "git
+cherry-pick -s" uses.  And that function decides where to put a new
+S-o-b by calling this has_conforming_footer() function.
+
+In addition, do_pick_commit() also calls has_conforming_footer() to
+decide where to add "(cherry picked from".
+
+Whoever did the sequencer.c should be proud to structure the code to
+make this change so easy to make (I know it is not me, and you
+Jonathan know it is not you).  
+
+Nicely done by both of you.
+
+> diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+> index 9cce5ae..bf0a5c9 100755
+> --- a/t/t3511-cherry-pick-x.sh
+> +++ b/t/t3511-cherry-pick-x.sh
+> @@ -25,9 +25,8 @@ Signed-off-by: B.U. Thor <buthor@example.com>"
+>  
+>  mesg_broken_footer="$mesg_no_footer
+>  
+> -The signed-off-by string should begin with the words Signed-off-by followed
+> -by a colon and space, and then the signers name and email address. e.g.
+> -Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+> +This is not recognized as a footer because Myfooter is not a recognized token.
+> +Myfooter: A.U. Thor <author@example.com>"
+>  
+>  mesg_with_footer_sob="$mesg_with_footer
+>  Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+> @@ -112,6 +111,17 @@ test_expect_success 'cherry-pick -s inserts blank line after non-conforming foot
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'cherry-pick -s recognizes trailer config' '
+> +	pristine_detach initial &&
+> +	git -c "trailer.Myfooter.ifexists=add" cherry-pick -s mesg-broken-footer &&
+> +	cat <<-EOF >expect &&
+> +		$mesg_broken_footer
+> +		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+> +	EOF
+> +	git log -1 --pretty=format:%B >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+
+That "myfooter" one is normally not recognized as a valid trailer,
+so the test before this one would add a blank line before adding a
+new S-o-b; this one adds "myfooter" thing to the vocabulary and no
+longer gets the blank before.  Good.
+
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index ba4902d..635b394 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1277,8 +1277,7 @@ EOF
+>  4:Subject: [PATCH] subject
+>  8:
+>  9:I want to mention about Signed-off-by: here.
+> -10:
+> -11:Signed-off-by: C O Mitter <committer@example.com>
+> +10:Signed-off-by: C O Mitter <committer@example.com>
+>  EOF
+>  	test_cmp expected actual
+>  '
+
+The original log message is a single-liner subject line, blank, "I
+want to mention..." and when asked to append S-o-b:, we would want
+to see a blank before the added S-o-b, no?
+
+This seems a bit weird.
+
+> @@ -1294,8 +1293,7 @@ EOF
+>  4:Subject: [PATCH] subject
+>  8:
+>  10:Signed-off-by: example happens to be wrapped here.
+> -11:
+> -12:Signed-off-by: C O Mitter <committer@example.com>
+> +11:Signed-off-by: C O Mitter <committer@example.com>
+>  EOF
+>  	test_cmp expected actual
+>  '
+
+This one's original is a single-liner "subject", blank, "My
+unfortunate", immediately followed by "S-o-b:".  The trailer's
+loosened rule (mis)takes the two line body as a trailer block
+because one of them is recognised as S-o-b, so it is understandable
+that we do not see a blank before the new S-o-b.
+
+This particular example may not look ideal, but it is exactly what
+we wanted to happen while we were loosening the rule in the previous
+series, so the outcome is understandable.
+
+> @@ -1368,7 +1366,7 @@ EOF
+>  	test_cmp expected actual
+>  '
+>  
+> -test_expect_success 'signoff: detect garbage in non-conforming footer' '
+> +test_expect_success 'signoff: tolerate garbage in conforming footer' '
+>  	append_signoff <<\EOF >actual &&
+>  subject
+>  
+> @@ -1383,8 +1381,36 @@ EOF
+>  8:
+>  10:
+>  13:Signed-off-by: C O Mitter <committer@example.com>
+> -14:
+> -15:Signed-off-by: C O Mitter <committer@example.com>
+> +EOF
+> +	test_cmp expected actual
+> +'
+
+This is understandable and desirable.  The input has "Tested-by: ",
+a cruft that says "Some Trash", and S-o-b and we used to reject that
+three line as not-a-trailer.  We now allow that.
+
+> +test_expect_success 'signoff: respect trailer config' '
+> +	append_signoff <<\EOF >actual &&
+> +subject
+> +
+> +Myfooter: x
+> +Some Trash
+> +EOF
+> +	cat >expected <<\EOF &&
+> +4:Subject: [PATCH] subject
+> +8:
+> +11:
+> +12:Signed-off-by: C O Mitter <committer@example.com>
+> +EOF
+> +	test_cmp expected actual &&
+> +
+> +	test_config trailer.Myfooter.ifexists add &&
+> +	append_signoff <<\EOF >actual &&
+> +subject
+> +
+> +Myfooter: x
+> +Some Trash
+> +EOF
+> +	cat >expected <<\EOF &&
+> +4:Subject: [PATCH] subject
+> +8:
+> +11:Signed-off-by: C O Mitter <committer@example.com>
+
+OK.  It is not easy to see in the test output, but the shift of the
+location from 12 to 11 where a new S-o-b appears is because the last
+two lines in the original is taken as a trailer block due to "Myfooter:"
+being configured as a valid trailer element.
+
+> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+> index d84897a..4003a27 100755
+> --- a/t/t7501-commit.sh
+> +++ b/t/t7501-commit.sh
+> @@ -460,6 +460,42 @@ $alt" &&
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'signoff respects trailer config' '
+> +
+> +	echo 5 >positive &&
+> +	git add positive &&
+> +	git commit -s -m "subject
+> +
+> +non-trailer line
+> +Myfooter: x" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
+> +	(
+> +		echo subject
+> +		echo
+> +		echo non-trailer line
+> +		echo Myfooter: x
+> +		echo
+> +		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+
+Any reason why this does not use "cat <<-EOF"?  Ahh, this mimicks
+the style of existing ones.  OK.
+
+> +	) >expected &&
+> +	test_cmp expected actual &&
+> +
+> +	echo 6 >positive &&
+> +	git add positive &&
+> +	git -c "trailer.Myfooter.ifexists=add" commit -s -m "subject
+> +
+> +non-trailer line
+> +Myfooter: x" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
+> +	(
+> +		echo subject
+> +		echo
+> +		echo non-trailer line
+> +		echo Myfooter: x
+> +		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+> +	) >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'multiple -m' '
+>  
+>  	>negative &&
+
+Looks good.
