@@ -2,96 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAC0520229
-	for <e@80x24.org>; Tue,  1 Nov 2016 21:11:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8F2720229
+	for <e@80x24.org>; Tue,  1 Nov 2016 21:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753833AbcKAVKo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 17:10:44 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:35527 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754629AbcKAVKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 17:10:08 -0400
-Received: by mail-qk0-f180.google.com with SMTP id z190so213957569qkc.2
-        for <git@vger.kernel.org>; Tue, 01 Nov 2016 14:10:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=I7ImTxVsSVRmknbmv/4XBSYkQKaCgjn21BrcaQ/WSGY=;
-        b=iE69PUkw1+VsjqDk68HC6uRaJ89B2sq9D239SufpAvDf0w9m/Dkpy6iDQELG9zRJs/
-         85wHIFNlrlIgdSSws+l7BbbR4VDMc/R71wYmmZFzMmFwA9bOObTrcTAE/SxWV3fL3RBj
-         G/pLX6FyIgKXzfKfWQxk94UmoB8FxtAQ7U5UiZcL6iaNyfDsjv6o5g2fmX1lGVF4hQDV
-         KgZvyXZwFRqdNPsx/adetjMyec001FD8Wx7YZQrJcyOaiTLZ6g7fRfIQC9OVvMs54vNR
-         ljUb9bZkbkZ7aGzJMgvnsdT/DkgKj0Y/TuAPoaT93uj2HH470pEqDneXLZPyQO5QOw/e
-         o5Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=I7ImTxVsSVRmknbmv/4XBSYkQKaCgjn21BrcaQ/WSGY=;
-        b=ErMIM2lgzyU56Vyl7ZBfrNUs9x0jh03Cgrwta0SOdEZhcyH/jh8DUCgYd+Cf05vRuk
-         fLsEgx9EJctxduXlM10IlB8hdzRuM9NrGSwD7BNRSkZwKfMlGS4txXlOmGPOh3RrS5/T
-         XXRySDOOWsJmlZWn4iL+oXd0Zjb9EPNt4blQAo4x1jhda6pnU/y+n3Rd1he98RSakzdO
-         YLEgElGCtrxm9+POy1k/NzQmXB5kpyMQ4EO5HRR3jRQZa/t7BR+vO+ToQCMPzlj0Z8gp
-         TRls/q+BjEURByW5HT+pB3QX2Sd/Yk7uI3c+SAUQyZs+eWfL/8cGgfnUQ5P1NnceXN6K
-         L1YA==
-X-Gm-Message-State: ABUngveA78PQe1BhTN59XEj0Z95Hfmon82IYbt+3E/ZTZSDtkAQsYL7wl+lMX3+yl2Jr/SgH7k1l09t82frbvS80
-X-Received: by 10.55.64.80 with SMTP id n77mr8045qka.173.1478034606886; Tue,
- 01 Nov 2016 14:10:06 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Tue, 1 Nov 2016 14:10:06 -0700 (PDT)
-In-Reply-To: <20161101205916.d74n6lhgp2hexpzr@sigill.intra.peff.net>
-References: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com> <20161101203637.3jr73wwpfal4brho@sigill.intra.peff.net>
- <xmqqlgx2or5p.fsf@gitster.mtv.corp.google.com> <20161101205916.d74n6lhgp2hexpzr@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 1 Nov 2016 14:10:06 -0700
-Message-ID: <CAGZ79ka6un7nHaNk3F8yp3vFSnB-iGapqLcZ-ZC3EvcKE4DMNQ@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.11.0-rc0
+        id S932196AbcKAVYc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 17:24:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51630 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932267AbcKAVYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 17:24:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AEAA24A209;
+        Tue,  1 Nov 2016 17:24:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LnLW+H4WxBsNurWh6SU4S5Np8qs=; b=g4wffE
+        IYZnQvgDQu00dLyIuz0M+qqwTeeeJDt4qo3d/Dmo3rAE80FRseQno/6jZVNSXOIq
+        /qxgki62yvc+axm9ESPbnSzt0ExgoUpWBZ4oMWjDiSztUb2LDHfpqeNG6sn79Xge
+        LYae44izoldRKOqGZ1dHWqU2NyoeRkgxvQAZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nWaYoyaQqHtXh49wepqxZRzSfmauuWsc
+        DAOi1ZTeDQJ7ncVRsTlpEtzlUqwCMu8nBdAyRx7eK/RL7DfhpaU0JNViJFB1Lc3/
+        hKY+zW4xu/k/YC9kwhjxVnGASnfIvJmDpAmss5cSo63Gvf8RWg47C/FLqjAq3ZyF
+        aJbPbEjUvPM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8709E4A206;
+        Tue,  1 Nov 2016 17:24:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A490B4A204;
+        Tue,  1 Nov 2016 17:24:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        "Halde\, Faiz" <fhalde@paypal.com>, git@vger.kernel.org
+Subject: Re: Git issue
+References: <BY2PR0601MB16400EAC3E9683841907F4B2A2A10@BY2PR0601MB1640.namprd06.prod.outlook.com>
+        <20161101174526.e2tilsriz2fqaru3@sigill.intra.peff.net>
+        <7CE3166CFD244DAABF554451E8B0800F@PhilipOakley>
+        <20161101210310.sqrhvviry7iyyjrm@sigill.intra.peff.net>
+Date:   Tue, 01 Nov 2016 14:23:59 -0700
+In-Reply-To: <20161101210310.sqrhvviry7iyyjrm@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 1 Nov 2016 17:03:10 -0400")
+Message-ID: <xmqq8tt2opw0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8195A91A-A079-11E6-B7BB-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 1, 2016 at 1:59 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 01, 2016 at 01:56:34PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Nov 01, 2016 at 08:50:23PM -0000, Philip Oakley wrote:
 >
->> > As of -rc0, we have both --indent-heuristic and --compaction-heuristic
->> > (along with matching config), and they are mutually exclusive.
->> >
->> > In [1], Stefan suggested just replacing the compaction heuristic
->> > entirely with the new one (and you seemed to agree). If we're going to
->> > do that, it makes sense to do so before the release, so that we don't
->> > get stuck supporting --indent-heuristic forever.
->>
->> You meant "compaction" in the last part?  I think it is probably a
->> good idea.
+>> > From "git help update-index":
+>> > 
+>> >      --[no-]assume-unchanged
+>> >    When this flag is specified, the object names recorded for
+>> >    the paths are not updated. Instead, this option sets/unsets
+>> >    the "assume unchanged" bit for the paths. ...
 >
-> I thought the plan mentioned in the mail I linked was to keep the indent
-> heuristic, but simply _call_ it the compaction heuristic. IOW, to swap
-> out the implementation under the hood for something we know is better.
+> I think the "Instead" is "we are not doing the usual update-index thing
+> of reading the new data from disk; instead, we are _just_ setting the
+> bit". Perhaps that can be spelled out more clearly, but I think just
+> dropping "Instead" is a step backwards.
 
-AFAICT Michaels design is better in every aspect than what I did initially,
-so it supersedes the work I did there.  I would support the swap in names.
+I tend to agree; the biggest problem with this part of the
+description I think is that it starts by saying what it does not do,
+which may help people who expect the command to do its usual thing
+but otherwise is a secondary information.  How about ripping it out
+and moving it after the primary description, i.e.
 
+	Set or unset the "assume unchanged" bit for the paths,
+	without changing the object names recorded for them, in the
+	index.
+
+>> Given the number of misrepresentations (on the web) of what the bit does,
+>> and the ongoing misunderstandings of users it does feel like the man page
+>> article could be refreshed to be more assertive about the users promise, and
+>> Git's cautions.
 >
-> We've already released a version with --compaction-heuristic, so we are
-> stuck keeping it forever either way.
+> I dunno. I know this has long been a source of confusion, but I
+> specifically dug in the docs to see what we had, and I thought what I
+> quoted above was pretty clear. That has "only" been around for about 2
+> years, and is fighting against other mis-advice on the Internet, though.
+> So I'm not sure if it is badly worded, or if people simply do not see
+> it.
 
-IIRC the release notes specifically noted this flag to be experimental and
-may be removed in future versions.
+I share the same reaction, and I find that the update in ccadb25f73
+("doc: make clear --assume-unchanged's user contract", 2014-12-06)
+that introduced the "the user promises not to change and allows Git
+to assume" is sufficiently clear.
 
-When not doing the swap of the implementation, but rather remove the
-experimental feature of compaction-heuristic and introducing a *new*
-experimental --indent-heuristic, this may drive the point across that
-these names are actually experimental.
