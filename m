@@ -2,77 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3AD20229
-	for <e@80x24.org>; Tue,  1 Nov 2016 19:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E30CE20229
+	for <e@80x24.org>; Tue,  1 Nov 2016 20:08:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751152AbcKAT2W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 15:28:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54009 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750910AbcKAT2V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 15:28:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D5C64AE91;
-        Tue,  1 Nov 2016 15:28:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k491NHen9w9p3BNuw/+vmDWPu2Y=; b=JIV5yc
-        DsSCyP/MDWuQsC0N2djHQSOgUKo1fsZnAzCPt0ArsC0NDAOwH/7oyuDV3UeHOOUb
-        p4AxAacZnjp64OnrkXger4MGgKv5WaMJnlZcvqllWQ60xdBqV3A9sYWOf6daTWM1
-        u9VUPX0EvwehsIqsjqSmkwOLOT5ev6kaMe7sI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=asClf7xkWTG3x/prvrRAFS005G4mL1UH
-        urI78XxNVABhsCMmQHwIdhwLeiLscTS7g4VuOMtDM15dG8Ys/RiRTjt+97A85Bla
-        C04MNQHMIBKLEpga29auQTJs+xiNEAoRC0PK7QSCXP93+4n+foF2iv/DOf3SfbqW
-        a6NkDnr4qbU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44AD04AE90;
-        Tue,  1 Nov 2016 15:28:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B6F954AE8F;
-        Tue,  1 Nov 2016 15:28:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v1 15/19] config: add git_config_get_date_string() from gc.c
-References: <20161023092648.12086-1-chriscool@tuxfamily.org>
-        <20161023092648.12086-16-chriscool@tuxfamily.org>
-Date:   Tue, 01 Nov 2016 12:28:18 -0700
-In-Reply-To: <20161023092648.12086-16-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Sun, 23 Oct 2016 11:26:44 +0200")
-Message-ID: <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5881956C-A069-11E6-87AE-987C12518317-77302942!pb-smtp1.pobox.com
+        id S1754397AbcKAUIc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 16:08:32 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33376 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754094AbcKAUIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 16:08:31 -0400
+Received: by mail-pf0-f173.google.com with SMTP id d2so25427337pfd.0
+        for <git@vger.kernel.org>; Tue, 01 Nov 2016 13:08:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Me7/6HizXJ01yYKmZ9hQnfCf0zez6I7QiUPOt+QN8Vs=;
+        b=owbJZ7YFL1u7FimjPnft/klJDQTFBt2CzgGRXcUfXT5IqYdHExo7jzbs98R6L3u6lN
+         1fXHsK++cxVlaDFdPrScM3d1BQ+Sys2kV9mMPXk+8/jCH+A8ExbW+qtQYZCvinC05Q0e
+         oeESd0vbSC93nlm53rNkR5CAt57ePM7916LvGC/+TGe9Qyla4IBIxsevN5g5I3m28aPp
+         oCKbzydXDJZWLBlWvMTmteddVtygj4BzVCe6HsksXUiFhIk3arNk1rQ1b4FdxiDKXP87
+         g1l7JJVQ5hrWUPKS7sAm9qriHUTl6qPErykdgcelNxvmTXl8BjD3q9f5t4PqlYeYGKe9
+         /BjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Me7/6HizXJ01yYKmZ9hQnfCf0zez6I7QiUPOt+QN8Vs=;
+        b=I3CK+FdZW+UUSMke14aiSKAakUUoI/OOZgKgcPTKDTYLLsVrWt9YXpYznSxcAgbgBn
+         P4Oww9L09P2udL6xiRMms4QLsCGI4BPhBIEBLkumPnB4WAOQq3B1L+xTP2IfkJHfxxEw
+         57AKFHtvpj6+aXLpr6izL5sMWTocVcDzEorhG/GbuZbiKtDoHLpBnDhEi9r5sB5tGAjt
+         SRFIx185fMuJrfCkZhZAEzXFLyirEepARp4FJPnUBtgcppwAnbsxXyN+AF59uNxjUoGq
+         RUUqdu/MrJN5GKRk6tkif1WCdT4o3rMIJxtYOWTDOPCMD9r4QczgHd0dbSHbHa81/28z
+         nM5A==
+X-Gm-Message-State: ABUngvdCCoRg+1VPcNvHEYH7KewI71GRHgv7kS0AGo8ia0rbGk5Cg3aAqEMF+kMtxyKduibz
+X-Received: by 10.98.74.142 with SMTP id c14mr25776738pfj.139.1478030910920;
+        Tue, 01 Nov 2016 13:08:30 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id v4sm44093272pfb.52.2016.11.01.13.08.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 01 Nov 2016 13:08:29 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        christian.couder@gmail.com
+Subject: [PATCH v2 0/5] Make other git commands use trailer layout
+Date:   Tue,  1 Nov 2016 13:08:20 -0700
+Message-Id: <cover.1478028700.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <cover.1477698917.git.jonathantanmy@google.com>
+References: <cover.1477698917.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Thanks for all your comments.
 
-> This function will be used in a following commit to get the expiration
-> time of the shared index files from the config, and it is generic
-> enough to be put in "config.c".
+This patch set is now built off master (since jt/trailer-with-cruft is
+merged).
 
-Is it generic enough that a helper that sounds as if it can get any
-date string dies if it is given a future date?  I somehow doubt it.
+I couldn't think of an easy way to clearly decide if a token with spaces
+should be considered a token, so I've tightened the restrictions. One
+benefit is that we no longer need to create temporary strings that
+include '\n' to be passed into the find_separator method.
 
-At the minimum, it must be made clear that there is an artificial
-limitation that the current set of callers find useful in cache.h as
-a one-liner comment next to the added declaration.  Then people with
-the same need (i.e. they want to reject future timestamps) can
-decide to use it, while others would stay away from it.  
+In 2/4 (now 3/5), I've also changed some variable names as requested
+(e.g. sb -> input, and un-did some others).
 
-If you can come up with a better word to use to encode that
-artificial limitation in its name, renaming it is even better.
+Jonathan Tan (5):
+  trailer: be stricter in parsing separators
+  commit: make ignore_non_trailer take buf/len
+  trailer: avoid unnecessary splitting on lines
+  trailer: have function to describe trailer layout
+  sequencer: use trailer's trailer layout
+
+ builtin/commit.c         |   2 +-
+ commit.c                 |  22 ++--
+ commit.h                 |   2 +-
+ sequencer.c              |  75 +++---------
+ t/t3511-cherry-pick-x.sh |  16 ++-
+ t/t4014-format-patch.sh  |  37 +++++-
+ t/t7501-commit.sh        |  36 ++++++
+ trailer.c                | 296 ++++++++++++++++++++++++++++-------------------
+ trailer.h                |  25 ++++
+ 9 files changed, 313 insertions(+), 198 deletions(-)
+
+-- 
+2.8.0.rc3.226.g39d4020
+
