@@ -2,63 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF6E620229
-	for <e@80x24.org>; Tue,  1 Nov 2016 20:43:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C184F20229
+	for <e@80x24.org>; Tue,  1 Nov 2016 20:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754204AbcKAUna (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 16:43:30 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:34675 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753870AbcKAUn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 16:43:29 -0400
-Received: by mail-qt0-f178.google.com with SMTP id n6so66740443qtd.1
-        for <git@vger.kernel.org>; Tue, 01 Nov 2016 13:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DSCiBeb6REMyUVWG46R/d8QGA7SjrTSF9oTl9kK/0ME=;
-        b=N4lV6lV8OmKUbdxtFqvgEMLJQOgK7QlsjMDyO0BdXZRJX7JYlwQXNw4JZ1Y2+AK0Ef
-         3dMI0wbFV9aD+qELQQ9m8BK4/FDOyJZievZHOzlR5anJySa+2umO14wxx4YA8HoR+COy
-         EK7XVvN0TY087GjB4BsepcrA5LjdLuXNo2RG/lKoEkVhHe0wgCA9EoAOH4zxwxhHfyE0
-         MBZvb2HJPMCWeG5FzIyC+nwxUJ1mikdyThwUCkD+zP6tWElrY+0HOOJJYoT+k0wu8Fnc
-         zSiEq4DImz558luENJEF6w0r3qtM+etcV0h1U2w9wMkNGYFMvOLI2z9XSYaqlAHTJ8m6
-         4rVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DSCiBeb6REMyUVWG46R/d8QGA7SjrTSF9oTl9kK/0ME=;
-        b=W4hfFSeywmHjgBozNYbG51yKfMwD2MnwuQ/nCDImaR0JRPuTg2FhakKZkhZ5bjK1DC
-         9ejhp7RVAs7avyjE4aWQnOh8Uzuga2QeMW+//uJlUnhxRrvwV3XDww7Eb3JyWLjGIgcv
-         H0Vk9Sy/Vs4jG9zFlAmz/nngH0bBlHxUD44qme4Gn3lv87kKpRF76/dHQFJxVoM3g3Ui
-         jtOiFltpcA9uIvu2eDH8CfwLyxR8Ru1ojbAKHEQ1o6Ii06nVMimhGGYXRGV7Jad3Fqf7
-         29oG0x03xgXUvsuTTsCDSGPYGMtSFBkwOCguVzAtcjFnhEI9MacNdm63ZUc3h6/Y0h5k
-         BeTg==
-X-Gm-Message-State: ABUngvddQ1MKMBBVKevYZHcPlj9DpUAPgX6WLzvfGL+XnDWNKxuw3I0B1stWu2jZWMgT7QKDI/8cCn2TFjrqOTzE
-X-Received: by 10.200.34.6 with SMTP id o6mr33091354qto.88.1478033008322; Tue,
- 01 Nov 2016 13:43:28 -0700 (PDT)
+        id S1752150AbcKAUuZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 16:50:25 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:56550 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751563AbcKAUuY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 16:50:24 -0400
+Received: from PhilipOakley ([92.22.77.238])
+        by smtp.talktalk.net with SMTP
+        id 1g0jczY73g5ct1g0jclC7n; Tue, 01 Nov 2016 20:50:22 +0000
+X-Originating-IP: [92.22.77.238]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=bdMpa6HB c=1 sm=1 tr=0 a=x3tYpWevBceDNTPbB0rC5A==:117
+ a=x3tYpWevBceDNTPbB0rC5A==:17 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8
+ a=GZVtDt-L_emhOkbQmScA:9 a=QEXdDO2ut3YA:10 a=q92HNjYiIAC_jH7JDaYf:22
+Message-ID: <7CE3166CFD244DAABF554451E8B0800F@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jeff King" <peff@peff.net>, "Halde, Faiz" <fhalde@paypal.com>
+Cc:     <git@vger.kernel.org>
+References: <BY2PR0601MB16400EAC3E9683841907F4B2A2A10@BY2PR0601MB1640.namprd06.prod.outlook.com> <20161101174526.e2tilsriz2fqaru3@sigill.intra.peff.net>
+Subject: Re: Git issue
+Date:   Tue, 1 Nov 2016 20:50:23 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Tue, 1 Nov 2016 13:43:27 -0700 (PDT)
-In-Reply-To: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
-References: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 1 Nov 2016 13:43:27 -0700
-Message-ID: <CAGZ79ka2ddH0WDUyWfKhg4mULY-VwYFvZ11E5pQX6tXUqBeUGA@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.11.0-rc0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Linux Kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfCJMlceNZUSMhITm5HNDjVyjxlhk6u9Rnazpwd6/s1/vO90QiZThJCgpU3XDOTBhCsyOo0cMgrCs13KFIcpz0PgGQpZcO8H3wEtbS8wWjlB/wCNIQGn9
+ GQRBrJQcA67Qz8kkum+Y6bwhBGtKWsLqwT/k1njDUZ6YxwzgN1ARZ0IVDC8Krq0kv27oVa5ozEkzSFyxNRkEU4YOwnzzQ/SjYsESnDr50jPnTg6qxgT/QNKD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  * "git clone --resurse-submodules --reference $path $URL" is a way to
+From: "Jeff King" <peff@peff.net>
+> On Tue, Nov 01, 2016 at 10:28:57AM +0000, Halde, Faiz wrote:
+>
+>> I frequently use the following command to ignore changes done in a file
+>>
+>> git update-index --assume-unchanged somefile
+>>
+>> Now when I do a pull from my remote branch and say the file 'somefile'
+>> was changed locally and in remote, git will abort the merge saying I
+>> need to commit my changes of 'somefile'.
+>>
+>> But isn't the whole point of the above command to ignore the changes
+>> within the file?
+>
+> No. The purpose of --assume-unchanged is to promise git that you will
+> not change the file, so that it may skip checking the file contents in
+> some cases as an optimization.
 
-"recurse"
+True. However...
+
+>
+> From "git help update-index":
+>
+>      --[no-]assume-unchanged
+>    When this flag is specified, the object names recorded for
+>    the paths are not updated. Instead, this option sets/unsets
+>    the "assume unchanged" bit for the paths. When the "assume
+>    unchanged" bit is on, the user promises not to change the
+>    file and allows Git to assume that the working tree file
+>    matches what is recorded in the index. If you want to change
+>    the working tree file, you need to unset the bit to tell Git.
+>    This is sometimes helpful when working with a big project on
+>    a filesystem that has very slow lstat(2) system call (e.g.
+>    cifs).
+>
+>    Git will fail (gracefully) in case it needs to modify this
+>    file in the index e.g. when merging in a commit; thus, in
+>    case the assumed-untracked file is changed upstream, you will
+>    need to handle the situation manually.
+>
+
+The whole section (including the ones above this quote) are often confused 
+between the promises of the user, and the alleged promises of Git. Even in 
+the quote above the "Instead" probably shouldn't be there.
+
+Given the number of misrepresentations (on the web) of what the bit does, 
+and the ongoing misunderstandings of users it does feel like the man page 
+article could be refreshed to be more assertive about the users promise, and 
+Git's cautions.
+
+My quick rough working on a more assertive update..
+-- >8 --
+----------------------  
+Documentation/git-update-index.txt ----------------------
+index 7386c93..4ec1711 100644
+@@ -84,12 +84,12 @@ OPTIONS
+         Set the execute permissions on the updated files.
+
+ --[no-]assume-unchanged::
+  When this flag is specified, the object names recorded
+- for the paths are not updated.  Instead, this option
++ for the paths are not updated.  This option
+  sets/unsets the "assume unchanged" bit for the
+  paths.  When the "assume unchanged" bit is on, the user
+- promises not to change the file and allows Git to assume
++ *promises* not to change the file and allows Git to assume
+  that the working tree file matches what is recorded in
+  the index.  If you want to change the working tree file,
+  you need to unset the bit to tell Git.  This is
+  sometimes helpful when working with a big project on a
+@@ -300,19 +300,25 @@ $ git ls-files -s
+
+ Using ``assume unchanged'' bit
+ ------------------------------
+
+-Many operations in Git depend on your filesystem to have an
++Many operations in Git depend on your filesystem having a fast and
+ efficient `lstat(2)` implementation, so that `st_mtime`
+ information for working tree files can be cheaply checked to see
+ if the file contents have changed from the version recorded in
+ the index file.  Unfortunately, some filesystems have
+ inefficient `lstat(2)`.  If your filesystem is one of them, you
+-can set "assume unchanged" bit to paths you have not changed to
+-cause Git not to do this check.  Note that setting this bit on a
+-path does not mean Git will check the contents of the file to
+-see if it has changed -- it makes Git to omit any checking and
+-assume it has *not* changed.  When you make changes to working
++can set "assume unchanged" bit to *paths you have not changed* to
++cause Git not to do this check.
++
++Note that setting this bit on a
++path does not mean Git will never check the contents of the file to
++see if it has changed. Though normally it makes Git to omit any checking to
++assume it has not changed.
++Commands which may overwrite local changes (pull/merge etc) are
++likely to check if the contents have changed
++
++If you make desired changes to working
+ tree files, you have to explicitly tell Git about it by dropping
+ "assume unchanged" bit, either before or after you modify them.
+
+ In order to set "assume unchanged" bit, use `--assume-unchanged`
+---
+Philip 
+
