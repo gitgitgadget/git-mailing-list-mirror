@@ -6,91 +6,114 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30CE20229
-	for <e@80x24.org>; Tue,  1 Nov 2016 20:08:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4983C20229
+	for <e@80x24.org>; Tue,  1 Nov 2016 20:08:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754397AbcKAUIc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 16:08:32 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33376 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754094AbcKAUIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 16:08:31 -0400
-Received: by mail-pf0-f173.google.com with SMTP id d2so25427337pfd.0
-        for <git@vger.kernel.org>; Tue, 01 Nov 2016 13:08:31 -0700 (PDT)
+        id S1754437AbcKAUIe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 16:08:34 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34517 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754094AbcKAUId (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 16:08:33 -0400
+Received: by mail-pf0-f169.google.com with SMTP id n85so100201765pfi.1
+        for <git@vger.kernel.org>; Tue, 01 Nov 2016 13:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Me7/6HizXJ01yYKmZ9hQnfCf0zez6I7QiUPOt+QN8Vs=;
-        b=owbJZ7YFL1u7FimjPnft/klJDQTFBt2CzgGRXcUfXT5IqYdHExo7jzbs98R6L3u6lN
-         1fXHsK++cxVlaDFdPrScM3d1BQ+Sys2kV9mMPXk+8/jCH+A8ExbW+qtQYZCvinC05Q0e
-         oeESd0vbSC93nlm53rNkR5CAt57ePM7916LvGC/+TGe9Qyla4IBIxsevN5g5I3m28aPp
-         oCKbzydXDJZWLBlWvMTmteddVtygj4BzVCe6HsksXUiFhIk3arNk1rQ1b4FdxiDKXP87
-         g1l7JJVQ5hrWUPKS7sAm9qriHUTl6qPErykdgcelNxvmTXl8BjD3q9f5t4PqlYeYGKe9
-         /BjQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=8kjoZ0mwcHXQdz9xOzn0ODA1HlP6MOqCl5PJToXLhzY=;
+        b=BrhPgRtodii+C/JUqGx9mGjzt5pEq54rvSX4u7HjJS/918RuoYYOLEiJZMQGPHwOmP
+         bULbhN+ZCUGb+0pNgEg9KAIzBxoQGKG6yKTcqWNNJ1ej5uC5cPPivwdDvg1F7C71hHzn
+         Jl9N+Y5p0PG9lXyH0XJnsGRP1EtpAk/LftOv6UopIdye9EZcYNe83fIPSzVzj19HKIPy
+         fc7+BdgR/4xzCaPW+h3Mw/3SHMaSJKJO+QetoA4sMeRqCc7LwLGxh6XhHPckqChLVr/x
+         LFeyKVwtf64OS7SmHHYb4u5eNA2+buN02YcvnY2DYBgmaxbA6/3+h3pkmlU4mYaYFAM1
+         3nPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Me7/6HizXJ01yYKmZ9hQnfCf0zez6I7QiUPOt+QN8Vs=;
-        b=I3CK+FdZW+UUSMke14aiSKAakUUoI/OOZgKgcPTKDTYLLsVrWt9YXpYznSxcAgbgBn
-         P4Oww9L09P2udL6xiRMms4QLsCGI4BPhBIEBLkumPnB4WAOQq3B1L+xTP2IfkJHfxxEw
-         57AKFHtvpj6+aXLpr6izL5sMWTocVcDzEorhG/GbuZbiKtDoHLpBnDhEi9r5sB5tGAjt
-         SRFIx185fMuJrfCkZhZAEzXFLyirEepARp4FJPnUBtgcppwAnbsxXyN+AF59uNxjUoGq
-         RUUqdu/MrJN5GKRk6tkif1WCdT4o3rMIJxtYOWTDOPCMD9r4QczgHd0dbSHbHa81/28z
-         nM5A==
-X-Gm-Message-State: ABUngvdCCoRg+1VPcNvHEYH7KewI71GRHgv7kS0AGo8ia0rbGk5Cg3aAqEMF+kMtxyKduibz
-X-Received: by 10.98.74.142 with SMTP id c14mr25776738pfj.139.1478030910920;
-        Tue, 01 Nov 2016 13:08:30 -0700 (PDT)
+         :references:in-reply-to:references;
+        bh=8kjoZ0mwcHXQdz9xOzn0ODA1HlP6MOqCl5PJToXLhzY=;
+        b=bjXTDB9Cin2TPA0Y8XLeD7p2Na9E1LfAuGaF/OBg8Eo8T6IOATSvnCCfRxgvXfnuqY
+         e96oigiW2hCi/rJUqiUlvoEuBTKYqRDzYU5NHxhDHfJ5cjfwKIWg/VodxFrUzzbLA0vR
+         Pi0YxWRZGa7GSuXIiYiCy/y5WmblSWk9u6XdDXfTK+kbnfrse7PEIe6ELiZf/jRCASQ9
+         t9jBNZitnFC/uzcx0nt/zQUBLEg6HVnf5ZSOZO7oevR4kvCdAWeEJZufqszONK4HTMHT
+         l8EiD6b7lRDznPSnP4KrVkE/l77WAeMMuIwG64Li6LRJMvTPUsEo4lagx22rPFHeMXHN
+         TX4w==
+X-Gm-Message-State: ABUngveZcItDNHGAjuiUugFG5ctyu1BsGZzXBR9oGf0B5yWkfVqkQlPSp0UDFB/PtdEEqsZZ
+X-Received: by 10.98.92.68 with SMTP id q65mr62418208pfb.53.1478030912341;
+        Tue, 01 Nov 2016 13:08:32 -0700 (PDT)
 Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
-        by smtp.gmail.com with ESMTPSA id v4sm44093272pfb.52.2016.11.01.13.08.29
+        by smtp.gmail.com with ESMTPSA id v4sm44093272pfb.52.2016.11.01.13.08.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 01 Nov 2016 13:08:29 -0700 (PDT)
+        Tue, 01 Nov 2016 13:08:31 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         christian.couder@gmail.com
-Subject: [PATCH v2 0/5] Make other git commands use trailer layout
-Date:   Tue,  1 Nov 2016 13:08:20 -0700
-Message-Id: <cover.1478028700.git.jonathantanmy@google.com>
+Subject: [PATCH v2 1/5] trailer: be stricter in parsing separators
+Date:   Tue,  1 Nov 2016 13:08:21 -0700
+Message-Id: <c7db0aafb543845382e1835e3704273d3596e6bb.1478028700.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <cover.1477698917.git.jonathantanmy@google.com>
-References: <cover.1477698917.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1478028700.git.jonathantanmy@google.com>
+References: <cover.1478028700.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1478028700.git.jonathantanmy@google.com>
+References: <cover.1477698917.git.jonathantanmy@google.com> <cover.1478028700.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for all your comments.
+Currently, a line is interpreted to be a trailer line if it contains a
+separator. Make parsing stricter by requiring the text on the left of
+the separator, if not the empty string, to be of the "<token><optional
+whitespace>" form.
 
-This patch set is now built off master (since jt/trailer-with-cruft is
-merged).
+(The find_separator function distinguishes the no-separator case from
+the separator-starts-line case because some callers of this function
+need such a distinction.)
 
-I couldn't think of an easy way to clearly decide if a token with spaces
-should be considered a token, so I've tightened the restrictions. One
-benefit is that we no longer need to create temporary strings that
-include '\n' to be passed into the find_separator method.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ trailer.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-In 2/4 (now 3/5), I've also changed some variable names as requested
-(e.g. sb -> input, and un-did some others).
-
-Jonathan Tan (5):
-  trailer: be stricter in parsing separators
-  commit: make ignore_non_trailer take buf/len
-  trailer: avoid unnecessary splitting on lines
-  trailer: have function to describe trailer layout
-  sequencer: use trailer's trailer layout
-
- builtin/commit.c         |   2 +-
- commit.c                 |  22 ++--
- commit.h                 |   2 +-
- sequencer.c              |  75 +++---------
- t/t3511-cherry-pick-x.sh |  16 ++-
- t/t4014-format-patch.sh  |  37 +++++-
- t/t7501-commit.sh        |  36 ++++++
- trailer.c                | 296 ++++++++++++++++++++++++++++-------------------
- trailer.h                |  25 ++++
- 9 files changed, 313 insertions(+), 198 deletions(-)
-
+diff --git a/trailer.c b/trailer.c
+index f0ecde2..0ee634f 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -563,15 +563,26 @@ static int token_matches_item(const char *tok, struct arg_item *item, int tok_le
+ }
+ 
+ /*
+- * Return the location of the first separator in line, or -1 if there is no
+- * separator.
++ * If the given line is of the form 
++ * "<token><optional whitespace><separator>..." or "<separator>...", return the
++ * location of the separator. Otherwise, return -1.
+  */
+ static int find_separator(const char *line, const char *separators)
+ {
+-	int loc = strcspn(line, separators);
+-	if (!line[loc])
+-		return -1;
+-	return loc;
++	int whitespace_found = 0;
++	const char *c;
++	for (c = line; *c; c++) {
++		if (strchr(separators, *c))
++			return c - line;
++		if (!whitespace_found && (isalnum(*c) || *c == '-'))
++			continue;
++		if (c != line && (*c == ' ' || *c == '\t')) {
++			whitespace_found = 1;
++			continue;
++		}
++		break;
++	}
++	return -1;
+ }
+ 
+ /*
 -- 
 2.8.0.rc3.226.g39d4020
 
