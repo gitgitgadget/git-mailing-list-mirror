@@ -6,69 +6,81 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 842C020229
-	for <e@80x24.org>; Tue,  1 Nov 2016 20:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60C3F20229
+	for <e@80x24.org>; Tue,  1 Nov 2016 21:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752217AbcKAU7U (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 16:59:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37202 "EHLO cloud.peff.net"
+        id S1753912AbcKAVDT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 17:03:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37209 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751022AbcKAU7T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 16:59:19 -0400
-Received: (qmail 24802 invoked by uid 109); 1 Nov 2016 20:59:19 -0000
+        id S1752855AbcKAVDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 17:03:18 -0400
+Received: (qmail 25050 invoked by uid 109); 1 Nov 2016 21:03:13 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Nov 2016 20:59:19 +0000
-Received: (qmail 29922 invoked by uid 111); 1 Nov 2016 20:59:45 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Nov 2016 21:03:13 +0000
+Received: (qmail 29979 invoked by uid 111); 1 Nov 2016 21:03:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Nov 2016 16:59:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Nov 2016 16:59:16 -0400
-Date:   Tue, 1 Nov 2016 16:59:16 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Nov 2016 17:03:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Nov 2016 17:03:10 -0400
+Date:   Tue, 1 Nov 2016 17:03:10 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.11.0-rc0
-Message-ID: <20161101205916.d74n6lhgp2hexpzr@sigill.intra.peff.net>
-References: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
- <20161101203637.3jr73wwpfal4brho@sigill.intra.peff.net>
- <xmqqlgx2or5p.fsf@gitster.mtv.corp.google.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     "Halde, Faiz" <fhalde@paypal.com>, git@vger.kernel.org
+Subject: Re: Git issue
+Message-ID: <20161101210310.sqrhvviry7iyyjrm@sigill.intra.peff.net>
+References: <BY2PR0601MB16400EAC3E9683841907F4B2A2A10@BY2PR0601MB1640.namprd06.prod.outlook.com>
+ <20161101174526.e2tilsriz2fqaru3@sigill.intra.peff.net>
+ <7CE3166CFD244DAABF554451E8B0800F@PhilipOakley>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqlgx2or5p.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <7CE3166CFD244DAABF554451E8B0800F@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 01, 2016 at 01:56:34PM -0700, Junio C Hamano wrote:
+On Tue, Nov 01, 2016 at 08:50:23PM -0000, Philip Oakley wrote:
 
-> > As of -rc0, we have both --indent-heuristic and --compaction-heuristic
-> > (along with matching config), and they are mutually exclusive.
-> >
-> > In [1], Stefan suggested just replacing the compaction heuristic
-> > entirely with the new one (and you seemed to agree). If we're going to
-> > do that, it makes sense to do so before the release, so that we don't
-> > get stuck supporting --indent-heuristic forever.
+> > From "git help update-index":
+> > 
+> >      --[no-]assume-unchanged
+> >    When this flag is specified, the object names recorded for
+> >    the paths are not updated. Instead, this option sets/unsets
+> >    the "assume unchanged" bit for the paths. When the "assume
+> >    unchanged" bit is on, the user promises not to change the
+> >    file and allows Git to assume that the working tree file
+> >    matches what is recorded in the index. If you want to change
+> >    the working tree file, you need to unset the bit to tell Git.
+> >    This is sometimes helpful when working with a big project on
+> >    a filesystem that has very slow lstat(2) system call (e.g.
+> >    cifs).
+> > 
+> >    Git will fail (gracefully) in case it needs to modify this
+> >    file in the index e.g. when merging in a commit; thus, in
+> >    case the assumed-untracked file is changed upstream, you will
+> >    need to handle the situation manually.
+> > 
 > 
-> You meant "compaction" in the last part?  I think it is probably a
-> good idea.
+> The whole section (including the ones above this quote) are often confused
+> between the promises of the user, and the alleged promises of Git. Even in
+> the quote above the "Instead" probably shouldn't be there.
 
-I thought the plan mentioned in the mail I linked was to keep the indent
-heuristic, but simply _call_ it the compaction heuristic. IOW, to swap
-out the implementation under the hood for something we know is better.
+I think the "Instead" is "we are not doing the usual update-index thing
+of reading the new data from disk; instead, we are _just_ setting the
+bit". Perhaps that can be spelled out more clearly, but I think just
+dropping "Instead" is a step backwards.
 
-We've already released a version with --compaction-heuristic, so we are
-stuck keeping it forever either way.
+> Given the number of misrepresentations (on the web) of what the bit does,
+> and the ongoing misunderstandings of users it does feel like the man page
+> article could be refreshed to be more assertive about the users promise, and
+> Git's cautions.
 
-> I'd vote for just removing compaction-heuristic while keeping the
-> indent-heuristic with experimental label and knobs and keeping it
-> off by default for a while.
-
-So the matching variant of that plan would be to drop the internals of
-compaction-heuristic, swap in the new heuristic instead, and then drop
-all of the --indent-heuristic. It remains off by default, but we may
-flip that in a later release.
+I dunno. I know this has long been a source of confusion, but I
+specifically dug in the docs to see what we had, and I thought what I
+quoted above was pretty clear. That has "only" been around for about 2
+years, and is fighting against other mis-advice on the Internet, though.
+So I'm not sure if it is badly worded, or if people simply do not see
+it.
 
 -Peff
