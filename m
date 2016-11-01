@@ -6,90 +6,90 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4AB620229
-	for <e@80x24.org>; Tue,  1 Nov 2016 19:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 831A820229
+	for <e@80x24.org>; Tue,  1 Nov 2016 19:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752039AbcKATT0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 15:19:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63092 "EHLO
+        id S1754047AbcKATXQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 15:23:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51610 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752154AbcKATTZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 15:19:25 -0400
+        with ESMTP id S1752964AbcKATXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 15:23:15 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D6780490BB;
-        Tue,  1 Nov 2016 15:19:24 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B7D14ADEA;
+        Tue,  1 Nov 2016 15:23:14 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F+pAJGWzw21xEzHUFtkxS2noC4E=; b=rPJcSk
-        sAImdgpyZFDaicLuyyncdKPTd6tQosJHQpOVB5OTq+/vPeOu5ioMjzGhiBEmcCXX
-        P4RfzJZlu1EYGj5Wl+7uTDcFnYL7XXU9iQa37MIbWZZ8IONkpRs01N8v0p/tPaEA
-        yBqUmaBvAnR2IjRvCsmoQBn8WEHybwSOD5xDA=
+        :content-type; s=sasl; bh=/sFR3U+Zhlv4BaMGSikZhJLWns8=; b=X9BiwT
+        iHrL1MiuZcZZMve9nq8t2CzPt0hAGGn6MPfu0cfKqxJvov3sygZtPJz8Ybk6yZkH
+        zUqzRw3MNAK17tBhkuj580oWyVR9yiySCaArb1om6oTIIOop+x6bjhwHk9P7ITKE
+        19dGDyaiAEXxHub5oJNnUuZMU4mKeHaoepRIc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pTfB7t0CP3uu9/Za7QEEAppDF2MICHee
-        VFBVHGfMig2j6OfKbho+JBtK2GLJeU0ehErEPsKWLfmD/vu3h5cLEVSwGwZq3fln
-        EmioCWm8vpXE1e2uvnqk6ZCWwMda/uRkQTBeb1loOV/UFkYmbBuCEvag9oSXvjpI
-        5niX9oSSiO8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CEBF2490BA;
-        Tue,  1 Nov 2016 15:19:24 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=EHv+T8sNvhgI/53cvUX5K+N+LzDK+nD1
+        MbzWKwB05q438DU+ptTqoXniyCpn8IUtej3ZhOZgywlJflMhQHm+L0GfbkjqGtVw
+        4l2hmvGF8SO1V9F1nwLXvpc3tJxG0wBq4Wm6ViVrWe+ukpN7VoMfPn3IFSsvdAfS
+        MHGf/pm34X0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92E1D4ADE9;
+        Tue,  1 Nov 2016 15:23:14 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 29ABB490B9;
-        Tue,  1 Nov 2016 15:19:24 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 131A84ADE7;
+        Tue,  1 Nov 2016 15:23:14 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v1 12/19] Documentation/config: add splitIndex.maxPercentChange
+Subject: Re: [PATCH v1 14/19] read-cache: touch shared index files when used
 References: <20161023092648.12086-1-chriscool@tuxfamily.org>
-        <20161023092648.12086-13-chriscool@tuxfamily.org>
-Date:   Tue, 01 Nov 2016 12:19:22 -0700
-In-Reply-To: <20161023092648.12086-13-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Sun, 23 Oct 2016 11:26:41 +0200")
-Message-ID: <xmqq8tt3ovnp.fsf@gitster.mtv.corp.google.com>
+        <20161023092648.12086-15-chriscool@tuxfamily.org>
+        <CACsJy8As2o-ZDXMRWeebpXiWUrDMLaXC2H1R+OMbhAMmM8V_wg@mail.gmail.com>
+Date:   Tue, 01 Nov 2016 12:23:12 -0700
+In-Reply-To: <CACsJy8As2o-ZDXMRWeebpXiWUrDMLaXC2H1R+OMbhAMmM8V_wg@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 25 Oct 2016 17:26:02 +0700")
+Message-ID: <xmqq4m3rovhb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 193DDD30-A068-11E6-88D7-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A2466A20-A068-11E6-A2D6-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  Documentation/config.txt | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+> On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> @@ -2268,6 +2268,12 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 96521a4..380eeb8 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2763,6 +2763,19 @@ showbranch.default::
->  	The default set of branches for linkgit:git-show-branch[1].
->  	See linkgit:git-show-branch[1].
->  
-> +splitIndex.maxPercentChange::
-> +	When the split index feature is used, this specifies the
-> +	percent of entries the split index can contain compared to the
-> +	whole number of entries in both the split index and the shared
-> +	index before a new shared index is written.
-> +	The value should be between 0 and 100. If the value is 0 then
-> +	a new shared index is always written, if it is 100 a new
-> +	shared index is never written.
+> Doing this in read_index_from() would keep the shared file even more
+> "fresher" since read happens a lot more often than write. But I think
+> our main concern is not the temporary index files created by the user
+> scripts, but $GIT_DIR/index.lock (make sure we don't accidentally
+> delete its shared file before it gets renamed to $GIT_DIR/index). For
+> this case, I think refreshing in write_locked_index is enough.
 
-Hmph.  The early part of the description implies this will kick in
-only when some other conditions (i.e. the bit in the index or the
-other configuration) are met, but if this disables the split index
-when it is set to 0, would we even need the other configuration
-variable?  IOW, perhaps we can do without core.splitIndex?
+Also warning() is unwarranted.
 
-> +	By default the value is 20, so a new shared index is written
-> +	if the number of entries in the split index would be greater
-> +	than 20 percent of the total number of entries.
-> +	See linkgit:git-update-index[1].
+You may be accessing somebody else's repository to help diagnose the
+issue without having any write access.  Treat the utime() like the
+opportunistic index refresh done by "git status"---if we can write,
+great, but it is not a problem if we can't.
+
+>
+>>                 int ret = write_shared_index(istate, lock, flags);
+>>                 if (ret)
+>>                         return ret;
+>> +       } else {
+>> +               /* Signal that the shared index is used */
+>> +               const char *shared_index = git_path("sharedindex.%s",
+>> +                                                   sha1_to_hex(si->base_sha1));
+>> +               if (!check_and_freshen_file(shared_index, 1))
+>> +                       warning("could not freshen '%s'", shared_index);
+>
+> _()
