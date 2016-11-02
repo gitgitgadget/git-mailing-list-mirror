@@ -2,83 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CB5620229
-	for <e@80x24.org>; Wed,  2 Nov 2016 01:37:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6E2920229
+	for <e@80x24.org>; Wed,  2 Nov 2016 02:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754155AbcKBBhl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 21:37:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56235 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751260AbcKBBhk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 21:37:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 77B1D4C45D;
-        Tue,  1 Nov 2016 21:37:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KYswXUYUKZxD8yv3PNU9EJNSBCM=; b=n2nNu1
-        TKTiMXpVGnkuc7OqwCXJM8S6J2/Ffzt8dGj8cZqw24gBbUpt8aiCXrImt2yio/R9
-        IJk27QnNXDzTZ3jRiARfr6VXrOP18HmsOmjPgszcrqdPkEEJlfqTNSfZ0OOYm/em
-        SXO42sb97bxn0sO6Og4IR3umgkpPAzaJyVj6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cR1rmaqc+YSPxphUf0yUsl6h9hnfZwPp
-        ywDT65wfD1PPu5X3QLKhsx0GDvLa4pYl31yEpQyqpJunsbuaPIcaveZYfYSlERTj
-        SRtag6GqUmRaa0ES524Uk2MLKoKm968OnEUIRc2kK1omQ526fQ91ulYdMeTxujT0
-        nEkJhhQuwis=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E7BA4C45C;
-        Tue,  1 Nov 2016 21:37:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C85654C45B;
-        Tue,  1 Nov 2016 21:37:38 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v1 05/19] update-index: warn in case of split-index incoherency
-References: <20161023092648.12086-1-chriscool@tuxfamily.org>
-        <20161023092648.12086-6-chriscool@tuxfamily.org>
-        <CACsJy8Br2q0aadTFjkNgb=oN8nSzbkWJEK7bCCgr7v-oOZtrSA@mail.gmail.com>
-        <xmqqlgx3owbg.fsf@gitster.mtv.corp.google.com>
-        <CAP8UFD18gcMJY7zjXw+ry6Kq2Foug9r0e=OVgZ_hcFkEVfnChA@mail.gmail.com>
-Date:   Tue, 01 Nov 2016 18:37:37 -0700
-In-Reply-To: <CAP8UFD18gcMJY7zjXw+ry6Kq2Foug9r0e=OVgZ_hcFkEVfnChA@mail.gmail.com>
-        (Christian Couder's message of "Wed, 2 Nov 2016 00:00:48 +0100")
-Message-ID: <xmqqins6mzku.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1755066AbcKBCMJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Nov 2016 22:12:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37360 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754615AbcKBCMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2016 22:12:08 -0400
+Received: (qmail 14454 invoked by uid 109); 2 Nov 2016 02:12:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 02:12:08 +0000
+Received: (qmail 32484 invoked by uid 111); 2 Nov 2016 02:12:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Nov 2016 22:12:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Nov 2016 22:12:05 -0400
+Date:   Tue, 1 Nov 2016 22:12:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 3/3] abbrev: auto size the default abbreviation
+Message-ID: <20161102021205.xyxnlxxx4nufvhor@sigill.intra.peff.net>
+References: <20161001001937.10884-1-gitster@pobox.com>
+ <20161001001937.10884-4-gitster@pobox.com>
+ <20161003222701.za5njew33rqc5b6g@sigill.intra.peff.net>
+ <xmqqmvhimzrh.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F057A290-A09C-11E6-9735-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmvhimzrh.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Tue, Nov 01, 2016 at 06:33:38PM -0700, Junio C Hamano wrote:
 
->>> Wrap this string and the one below with _() so they can be translated.
->>
->> True.
->>
->> I further wonder if a natural reaction from users after seeing this
->> message is "I do want to--what else would I use that option to run
->> you for?  Just do as you are told, instead of telling me what to
->> do!".  Is this warning really a good idea, or shouldn't these places
->> be setting the configuration?
->
-> In 435ec090ec (config: add core.untrackedCache, 2016-01-27) we decided
-> to just use warning() after discussing if we should instead set the
-> configuration.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Sep 30, 2016 at 05:19:37PM -0700, Junio C Hamano wrote:
+> >
+> >> Introduce a mechanism, where we estimate the number of objects in
+> >> the repository upon the first request to abbreviate an object name
+> >> with the default setting and come up with a sane default for the
+> >> repository.  Based on the expectation that we would see collision in
+> >> a repository with 2^(2N) objects when using object names shortened
+> >> to first N bits, use sufficient number of hexdigits to cover the
+> >> number of objects in the repository.  Each hexdigit (4-bits) we add
+> >> to the shortened name allows us to have four times (2-bits) as many
+> >> objects in the repository.
+> 
+> I was idly browsing the draft release notes and then documentation
+> and noticed that, even though the new default is to auto-scale,
+> there is no mention of that in the documentation and there is no way
+> to explicitly ask for auto-scaling.
+> 
+> I wonder if we want to have something like this.  I actually am
+> inclined to drop the change to config.c and remove the new mention
+> of "auto" in the documentation.
 
-Yeah that seems to be the version that was committed.  I then wonder
-if the users would naturally have a similar raction to that warning
-as well.
+I doubt anybody cares that much either way, but in theory
+core.abbrev=auto is a way to override core.abbrev=10 in /etc/gitconfig
+or something. Though I'm having trouble envisioning a case where anybody
+would set it in /etc/gitconfig, or why somebody would then want to
+override that back to auto.
+
+So I think it is fine either way (but I do agree that the core.abbrev
+needs _some_ update to mention the auto-scaling behavior).
+
+> diff --git a/config.c b/config.c
+> index 83fdecb1bc..c363cca4a9 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -834,10 +834,16 @@ static int git_default_core_config(const char *var, const char *value)
+>  	}
+>  
+>  	if (!strcmp(var, "core.abbrev")) {
+> -		int abbrev = git_config_int(var, value);
+> -		if (abbrev < minimum_abbrev || abbrev > 40)
+> -			return -1;
+> -		default_abbrev = abbrev;
+> +		if (!value)
+> +			return config_error_nonbool(var);
+> +		if (!strcasecmp(value, "auto"))
+> +			default_abbrev = -1;
+> +		else {
+> +			int abbrev = git_config_int(var, value);
+> +			if (abbrev < minimum_abbrev || abbrev > 40)
+> +				return -1;
+> +			default_abbrev = abbrev;
+> +		}
+
+This isn't a new problem you added, but that "return -1" would probably
+leave people confused:
+
+  $ git -c core.abbrev=2 log
+  fatal: unable to parse 'core.abbrev' from command-line config
+
+Probably something like:
+
+  return error("abbrev length out of range: %d", abbrev);
+
+would be more descriptive. I doubt it's a big deal in practice, though
+(why would you set core.abbrev to something silly in the first place?).
+
+-Peff
