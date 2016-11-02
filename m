@@ -3,112 +3,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6E2920229
-	for <e@80x24.org>; Wed,  2 Nov 2016 02:12:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A9EF2021E
+	for <e@80x24.org>; Wed,  2 Nov 2016 07:17:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755066AbcKBCMJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Nov 2016 22:12:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37360 "EHLO cloud.peff.net"
+        id S1750833AbcKBHQ7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 03:16:59 -0400
+Received: from mout.web.de ([212.227.17.11]:65246 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754615AbcKBCMI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2016 22:12:08 -0400
-Received: (qmail 14454 invoked by uid 109); 2 Nov 2016 02:12:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 02:12:08 +0000
-Received: (qmail 32484 invoked by uid 111); 2 Nov 2016 02:12:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Nov 2016 22:12:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Nov 2016 22:12:05 -0400
-Date:   Tue, 1 Nov 2016 22:12:05 -0400
-From:   Jeff King <peff@peff.net>
+        id S1750720AbcKBHQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 03:16:58 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MJTZX-1bzuuo17Wt-00351M; Wed, 02 Nov 2016 08:16:49
+ +0100
+Date:   Wed, 2 Nov 2016 07:16:46 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/3] abbrev: auto size the default abbreviation
-Message-ID: <20161102021205.xyxnlxxx4nufvhor@sigill.intra.peff.net>
-References: <20161001001937.10884-1-gitster@pobox.com>
- <20161001001937.10884-4-gitster@pobox.com>
- <20161003222701.za5njew33rqc5b6g@sigill.intra.peff.net>
- <xmqqmvhimzrh.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2016, #09; Mon, 31)
+Message-ID: <20161102071646.GA5094@tb-raspi>
+References: <xmqqwpgoqjct.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqmvhimzrh.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqwpgoqjct.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:MXA6frm0G01l3y30BTtDhcvxqJk5xL/RYK1UMwv08xKa9VJicoK
+ IL6U+OjdtXIXpqhaP74HelJtOmKEGeagW+0oCh7+l8v/NdlK18lTwrRCcTOE+ojNTLsLTb3
+ qZcSlzlxNuym+iyUVYxJO7t2PFcLKCTgcFToEf3jBQgzo7ATiJzVA8EEqzyNO1ZUz3WQuHM
+ anqco1uoGZg3blQHHe7DA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:j0iO8dB4pAY=:r4RIQu0FxesJ2SYgZ5pMlf
+ rNILiQ46ohs+NVfAZhxQ7fWBaq98SJ9/VkIu0QcSxWNtq285OVkWAAGwUz2jNNikWMjOecarq
+ +v+hqvzJy/i2Tqbso7Eihkxrt/GoqYIhvKAqwLzmfpakHJd3dj8g8o3Ff1pS/vMxHv2uAkmmz
+ heX2FJyDeGSRIUwZtcNPlNZNhVBsMobAdpEqWck49w/1/BpOdGrRZH5j+kceJot6JOyqhuc/p
+ RHaIeluyP5OsYV/+cn8/iotICszT3ut93ZLkjfQ0+A+tSu/KAl2qtqJGDhSpvnHZN1/Dsm+xa
+ 6oxdejFykV24PTmWFVBPkEMgMZFSlZlo9YZhFn1KItLYwhPk/vHPrpoSJibRWVMuADPenb/CI
+ 0Igg0XRm/lNaW1/V9ucOrHaEU+6IN8/LU/QmMwhBCU8Bf9agNYJ4kDguzpkZ1IjfcqMkk/Emh
+ /rcQ9QlmC2HEOlJpDnlZh/nzSg227BytljbXDEE1IHOXIgdZFdnqkk19HesfdbAMLeuzsq7wW
+ XB6S51Sp4fQ6HStZdS9O1SuuIMvLHeXHrkceiPvCG3Rk/NtWofmLu+CnbhmLrWu6WFSnlt3SH
+ As7y6byE3Nat4aOsf4pYvqu+8TtDgahtpJpePpXMIej7RC3ZzscX3BY+nXE4TXm8FbN0gQTHO
+ E+dm8bJDfHxOML44PmytqL/h/IlkobF2j5s/OhZ9b2bT48oZ4HMRz8Pm9+5QS0tOoFSEJEXxl
+ 2GrIFTc0io3EJ9DmG1gTcwkamkwWuiqV4hbXQzGSncJ0jydFU+TpuIBUOEE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 01, 2016 at 06:33:38PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
 > 
-> > On Fri, Sep 30, 2016 at 05:19:37PM -0700, Junio C Hamano wrote:
-> >
-> >> Introduce a mechanism, where we estimate the number of objects in
-> >> the repository upon the first request to abbreviate an object name
-> >> with the default setting and come up with a sane default for the
-> >> repository.  Based on the expectation that we would see collision in
-> >> a repository with 2^(2N) objects when using object names shortened
-> >> to first N bits, use sufficient number of hexdigits to cover the
-> >> number of objects in the repository.  Each hexdigit (4-bits) we add
-> >> to the shortened name allows us to have four times (2-bits) as many
-> >> objects in the repository.
+> * tb/convert-stream-check (2016-10-27) 2 commits
+>  - convert.c: stream and fast search for binary
+>  - read-cache: factor out get_sha1_from_index() helper
 > 
-> I was idly browsing the draft release notes and then documentation
-> and noticed that, even though the new default is to auto-scale,
-> there is no mention of that in the documentation and there is no way
-> to explicitly ask for auto-scaling.
+>  End-of-line conversion sometimes needs to see if the current blob
+>  in the index has NULs and CRs to base its decision.  We used to
+>  always get a full statistics over the blob, but in many cases we
+>  can return early when we have seen "enough" (e.g. if we see a
+>  single NUL, the blob will be handled as binary).  The codepaths
+>  have been optimized by using streaming interface.
 > 
-> I wonder if we want to have something like this.  I actually am
-> inclined to drop the change to config.c and remove the new mention
-> of "auto" in the documentation.
+>  The tip seems to do too much in a single commit and may be better split.
+>  cf. <20161012134724.28287-1-tboegi@web.de>
+>  cf. <xmqqd1il5w4e.fsf@gitster.mtv.corp.google.com>
 
-I doubt anybody cares that much either way, but in theory
-core.abbrev=auto is a way to override core.abbrev=10 in /etc/gitconfig
-or something. Though I'm having trouble envisioning a case where anybody
-would set it in /etc/gitconfig, or why somebody would then want to
-override that back to auto.
+Reviews have been done, thanks everybody.
 
-So I think it is fine either way (but I do agree that the core.abbrev
-needs _some_ update to mention the auto-scaling behavior).
+It looks to be a good "proof of concept".
 
-> diff --git a/config.c b/config.c
-> index 83fdecb1bc..c363cca4a9 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -834,10 +834,16 @@ static int git_default_core_config(const char *var, const char *value)
->  	}
->  
->  	if (!strcmp(var, "core.abbrev")) {
-> -		int abbrev = git_config_int(var, value);
-> -		if (abbrev < minimum_abbrev || abbrev > 40)
-> -			return -1;
-> -		default_abbrev = abbrev;
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		if (!strcasecmp(value, "auto"))
-> +			default_abbrev = -1;
-> +		else {
-> +			int abbrev = git_config_int(var, value);
-> +			if (abbrev < minimum_abbrev || abbrev > 40)
-> +				return -1;
-> +			default_abbrev = abbrev;
-> +		}
+The current series is far away from being ready, so please kick it
+out of pu and feel free to discard.
+ 
 
-This isn't a new problem you added, but that "return -1" would probably
-leave people confused:
-
-  $ git -c core.abbrev=2 log
-  fatal: unable to parse 'core.abbrev' from command-line config
-
-Probably something like:
-
-  return error("abbrev length out of range: %d", abbrev);
-
-would be more descriptive. I doubt it's a big deal in practice, though
-(why would you set core.abbrev to something silly in the first place?).
-
--Peff
+ 
