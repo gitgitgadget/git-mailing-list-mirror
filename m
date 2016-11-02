@@ -2,81 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9E082022A
-	for <e@80x24.org>; Wed,  2 Nov 2016 18:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14A3D20193
+	for <e@80x24.org>; Wed,  2 Nov 2016 19:46:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756807AbcKBSXE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Nov 2016 14:23:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37595 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756505AbcKBSXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2016 14:23:04 -0400
-Received: (qmail 8996 invoked by uid 109); 2 Nov 2016 18:23:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 18:23:03 +0000
-Received: (qmail 4847 invoked by uid 111); 2 Nov 2016 18:23:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 14:23:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2016 14:23:01 -0400
-Date:   Wed, 2 Nov 2016 14:23:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH 4/4] t0021: fix filehandle usage on older perl
-Message-ID: <20161102182301.hezruhtuhra6uoft@sigill.intra.peff.net>
-References: <20161102181625.e2uprqdlzl7z2xrz@sigill.intra.peff.net>
+        id S1755761AbcKBTqa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 15:46:30 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:34911 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754524AbcKBTqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 15:46:30 -0400
+Received: by mail-qk0-f174.google.com with SMTP id n204so21090534qke.2
+        for <git@vger.kernel.org>; Wed, 02 Nov 2016 12:46:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YYkT7Z9zQlmLJr/4r1Y97jm6/dD1m2ani8agDbyxln4=;
+        b=WFK6owmhDqhm1Fx9l3FDEYg1XLxBHP3Cxzhxj6inHQjH+te0PRVadLQorK7wufYeFz
+         /k9g5lOQC4qXlxpTMwDRnRIqNC3pRjpm3KkV2r7uExWmHUNG4Ypub1hM8zhnpq3R4pwI
+         INnyUmX4wz/Q45I0bN7Nlk1jEZjxKvj4hZfa3u3Cz7pPGQagXjtu6/EYzbygAKgdjiux
+         vxGxW+8vgu6vjCh3QJAQ3l0kh9pSbX6XT1WXLcnEYTxIbuTxSrW52d9kQR3iir98vMs9
+         6dT8A6Pv8IPYtDmUvWMsfZV+qWG9r+haG10fi/N3NDLepro05DyOEl2TRTAuETFLa0Zy
+         WlWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YYkT7Z9zQlmLJr/4r1Y97jm6/dD1m2ani8agDbyxln4=;
+        b=OqyYtu6u/L/9G8MZV++63ivXD1XAE7DEnUdQQaVANvMXCOMUFZrf/g/HnWEEzBjqsp
+         uAhnfacLQfW7VtlNtKLWfyuirw4Gh/GY5UcgQ6LVRrlFeISng1z9FUk3069GPb262YYQ
+         n8s2FsIZ2BXO25JvsIx+vjzXB5i4+UDagbxqlG1nXU31d9FPwXDVeWyDFXBPVGTvPDj7
+         zFjlNHB1feZ5JJEoXvAI3d02udO8JSqtV6rSNxHM2gHdkgz+ciBNvUhRoqq/mbyjfKUv
+         JHQIjiWwnX/bOhpWFqUDd0TZZ2iZ3b7EmmS1mc0Ib+8/MwrDNiDL6XhywJ2pRrUDzWI5
+         ToJQ==
+X-Gm-Message-State: ABUngvfiBHQ/JLjWkFKmsNJAGm6SWlYZCNUEligy/5lDZFaluBYl2GH7zVvTw9XzrCxcjJ2TdA/v7F9eWgaQUA+4
+X-Received: by 10.55.64.80 with SMTP id n77mr4887917qka.173.1478115988962;
+ Wed, 02 Nov 2016 12:46:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161102181625.e2uprqdlzl7z2xrz@sigill.intra.peff.net>
+Received: by 10.12.134.65 with HTTP; Wed, 2 Nov 2016 12:46:28 -0700 (PDT)
+In-Reply-To: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
+References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 2 Nov 2016 12:46:28 -0700
+Message-ID: <CAGZ79kY195Bff5bUVm44Bx7+XzDDehYbRxgdii4s040pQXRRSQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] disallow symlinks for .gitignore and .gitattributes
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The rot13-filter.pl script calls methods on implicitly
-defined filehandles (STDOUT, and the result of an open()
-call).  Prior to perl 5.13, these methods are not
-automatically loaded, and perl will complain with:
+On Wed, Nov 2, 2016 at 6:04 AM, Jeff King <peff@peff.net> wrote:
 
-  Can't locate object method "flush" via package "IO::Handle"
+>
+>  attr.c                | 58 ++++++++++++++++++++++++++++++++-------------------
 
-Let's explicitly load IO::File (which inherits from
-IO::Handle). That's more than we need for just "flush", but
-matches what perl has done since:
+$ git diff --stat origin/master..origin/sb/attr  |grep attr.c
+ attr.c                                             |  531 +-
 
-  http://perl5.git.perl.org/perl.git/commit/15e6cdd91beb4cefae4b65e855d68cf64766965d
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I see J6t solved this a week ago using "FileHandle". These days that is
-basically a compatibility synonym for IO::File. I think both should be
-available pretty much everywhere, so I went with IO::File for the
-reasons above. But if that doesn't work for some reason, switching to
-"use FileHandle" should be OK, too.
-
-I don't have an old enough perl easily available to test it either way.
-
- t/t0021/rot13-filter.pl | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index e3ea58e1e..4d5697ee5 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -21,6 +21,7 @@
- 
- use strict;
- use warnings;
-+use IO::File;
- 
- my $MAX_PACKET_CONTENT_SIZE = 65516;
- my @capabilities            = @ARGV;
--- 
-2.11.0.rc0.258.gf434c15
+From a cursory read of your series this may result in a merge
+conflict, but would be
+easily fixable (changed signature of functions that clash).
