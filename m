@@ -2,82 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB1320193
-	for <e@80x24.org>; Wed,  2 Nov 2016 22:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78F2B20193
+	for <e@80x24.org>; Wed,  2 Nov 2016 22:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756891AbcKBW3E (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Nov 2016 18:29:04 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:32293 "EHLO mx1.redhat.com"
+        id S1757251AbcKBWhI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 18:37:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37733 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755851AbcKBW3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2016 18:29:03 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 2B1F061B93;
-        Wed,  2 Nov 2016 22:29:03 +0000 (UTC)
-Received: from mail.random (ovpn-116-31.ams2.redhat.com [10.36.116.31])
-        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id uA2MT1M0017106
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 2 Nov 2016 18:29:02 -0400
-Date:   Wed, 2 Nov 2016 23:29:01 +0100
-From:   Andrea Arcangeli <aarcange@redhat.com>
-To:     Jeff King <peff@peff.net>
+        id S1754186AbcKBWhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 18:37:08 -0400
+Received: (qmail 24089 invoked by uid 109); 2 Nov 2016 22:37:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 22:37:07 +0000
+Received: (qmail 7343 invoked by uid 111); 2 Nov 2016 22:37:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 18:37:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2016 18:37:05 -0400
+Date:   Wed, 2 Nov 2016 18:37:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jan Engelhardt <jengelh@inai.de>
 Cc:     git@vger.kernel.org
-Subject: Re: send-email garbled header with trailing doublequote in email
-Message-ID: <20161102222901.GK4611@redhat.com>
-References: <20161102202709.GI4611@redhat.com>
- <20161102211118.sc4j3fezfqxg23i3@sigill.intra.peff.net>
- <20161102213805.GJ4611@redhat.com>
- <20161102220437.5ewzezxs2nasyouv@sigill.intra.peff.net>
+Subject: Re: RFE: Discard hunks during `git add -p`
+Message-ID: <20161102223705.qycdo3j2bvndi7ev@sigill.intra.peff.net>
+References: <alpine.LSU.2.20.1611021435280.21207@nerf40.vanv.qr>
+ <20161102221113.peur2zyfs66bdchm@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161102220437.5ewzezxs2nasyouv@sigill.intra.peff.net>
-User-Agent: Mutt/1.7.1 (2016-10-04)
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Wed, 02 Nov 2016 22:29:03 +0000 (UTC)
+In-Reply-To: <20161102221113.peur2zyfs66bdchm@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 02, 2016 at 06:04:37PM -0400, Jeff King wrote:
-> Nope, it looks exactly as --dry-run reports it.
+On Wed, Nov 02, 2016 at 06:11:14PM -0400, Jeff King wrote:
 
-My sendmail is postfix 3.1.0.
-
-> To see exactly what is being sent out, try:
+> > Being able to discard hunks (reset working copy to index contents) 
+> > during add-p would alleviate the (quite broad) hard reset.
 > 
-> -- >8 --
+> As Konstantin pointed out, you can already discard interactively with
+> "git checkout -p". It might be nice to be able to do both in the same
+> run, and turn the "yes/no" decision into "yes/no/discard".
 > 
-> cat >/tmp/foo <<\EOF
-> #!/bin/sh
-> echo "args: $*"
-> sed 's/^/stdin: /'
-> EOF
-> 
-> chmod +x /tmp/foo
-> 
-> git send-email --smtp-server=/tmp/foo --to=whatever
-> 
-> -- 8< --
+> In theory it should be easy, as the same code drives the hunk selector
+> for both commands. It's just a matter of which command we feed the
+> selected hunks to. I don't know if there would be corner cases around
+> hunk-editing and splitting, though. The "add" phase should never touch
+> the working tree file itself, so any hunks present from the initial list
+> should still apply cleanly during the "discard" phase.
 
-Right it's the same as --dry-run:
+The patch is something like the one below, which worked for me in a very
+trivial test. I won't be surprised if there are some corner cases it's
+missing. At the very least, coalesce_overlapping_hunks() needs to learn
+about the differences between "apply" and "discard" hunks (and not
+coalesce them!).
 
-stdin: To: "what ever" " <.....>
+I don't have immediate plans for this, so if somebody wants to pick it
+up and run with it, be my guest.
 
-There's not my hostname and not removed space. If I add more addresses
-they also go in the second line with a leading space and they're not cut.
+-Peff
 
-So this must be postfix then that out of the blue decided to garble it
-in a strange way while parsing the input... The removal of all
-whitespaces s/what ever/whatever/ especially I've no idea how it
-decided to do so.
-
-Can you reproduce with postfix as sendmail at least? If you can
-reproduce also see what happens if you add another --to.
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index ee3d81269..43651435a 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -109,6 +109,7 @@ my %patch_modes = (
+ 		PARTICIPLE => 'staging',
+ 		FILTER => 'file-only',
+ 		IS_REVERSE => 0,
++		DISCARD => sub { apply_patch 'apply -R', @_; },
+ 	},
+ 	'stash' => {
+ 		DIFF => 'diff-index -p HEAD',
+@@ -1325,6 +1326,11 @@ sub patch_update_file {
+ 		my ($prev, $next, $other, $undecided, $i);
+ 		$other = '';
+ 
++		my $discard = exists $patch_mode_flavour{DISCARD};
++		if ($discard) {
++			$other .= ',D';
++		}
++
+ 		if ($num <= $ix) {
+ 			$ix = 0;
+ 		}
+@@ -1384,6 +1390,9 @@ sub patch_update_file {
+ 			elsif ($line =~ /^n/i) {
+ 				$hunk[$ix]{USE} = 0;
+ 			}
++			elsif ($discard && $line =~ /^D/) {
++				$hunk[$ix]{USE} = -1;
++			}
+ 			elsif ($line =~ /^a/i) {
+ 				while ($ix < $num) {
+ 					if (!defined $hunk[$ix]{USE}) {
+@@ -1539,9 +1548,12 @@ sub patch_update_file {
+ 
+ 	my $n_lofs = 0;
+ 	my @result = ();
++	my @discard = ();
+ 	for (@hunk) {
+-		if ($_->{USE}) {
++		if ($_->{USE} > 0) {
+ 			push @result, @{$_->{TEXT}};
++		} elsif ($_->{USE} < 0) {
++			push @discard, @{$_->{TEXT}};
+ 		}
+ 	}
+ 
+@@ -1552,6 +1564,13 @@ sub patch_update_file {
+ 		refresh();
+ 	}
+ 
++	if (@discard) {
++		my @patch = reassemble_patch($head->{TEXT}, @discard);
++		my $apply_routine = $patch_mode_flavour{DISCARD};
++		&$apply_routine(@patch);
++		refresh();
++	}
++
+ 	print "\n";
+ 	return $quit;
+ }
