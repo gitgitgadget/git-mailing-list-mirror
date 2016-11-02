@@ -2,115 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5468120193
-	for <e@80x24.org>; Wed,  2 Nov 2016 21:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79E8E20193
+	for <e@80x24.org>; Wed,  2 Nov 2016 22:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932488AbcKBVpI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Nov 2016 17:45:08 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:58014 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754510AbcKBVpH (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 2 Nov 2016 17:45:07 -0400
-X-AuditID: 12074413-9a9ff70000000a14-15-581a5e5c3b71
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 4A.00.02580.C5E5A185; Wed,  2 Nov 2016 17:45:02 -0400 (EDT)
-Received: from [192.168.69.190] (p579066FE.dip0.t-ipconnect.de [87.144.102.254])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uA2LiwTi012821
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Wed, 2 Nov 2016 17:44:59 -0400
-Subject: Re: [ANNOUNCE] Git v2.11.0-rc0
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <xmqq1sywrxxl.fsf@gitster.mtv.corp.google.com>
- <20161101203637.3jr73wwpfal4brho@sigill.intra.peff.net>
- <xmqqlgx2or5p.fsf@gitster.mtv.corp.google.com>
- <20161101205916.d74n6lhgp2hexpzr@sigill.intra.peff.net>
- <xmqqh97qoqq2.fsf@gitster.mtv.corp.google.com>
- <xmqqzilinanp.fsf@gitster.mtv.corp.google.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <8dbbd28b-af60-5e66-ae27-d7cddca233dc@alum.mit.edu>
-Date:   Wed, 2 Nov 2016 22:44:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.4.0
+        id S1757170AbcKBWEk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 18:04:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37704 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756639AbcKBWEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 18:04:40 -0400
+Received: (qmail 22143 invoked by uid 109); 2 Nov 2016 22:04:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 22:04:39 +0000
+Received: (qmail 6967 invoked by uid 111); 2 Nov 2016 22:05:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Nov 2016 18:05:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Nov 2016 18:04:37 -0400
+Date:   Wed, 2 Nov 2016 18:04:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andrea Arcangeli <aarcange@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: send-email garbled header with trailing doublequote in email
+Message-ID: <20161102220437.5ewzezxs2nasyouv@sigill.intra.peff.net>
+References: <20161102202709.GI4611@redhat.com>
+ <20161102211118.sc4j3fezfqxg23i3@sigill.intra.peff.net>
+ <20161102213805.GJ4611@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqzilinanp.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsUixO6iqBsXJxVh8OakkEXXlW4mi4beK8wW
-        uxf3M1v8aOlhtti8uZ3FgdVj56y77B4LNpV6POvdw+hx8ZKyx+dNcgGsUVw2Kak5mWWpRfp2
-        CVwZ25oPsRYsF6l42dnP1sC4TqCLkZNDQsBE4tuixaxdjFwcQgKXGSXOPdjNCOGcZ5JYfGo6
-        I0iVsIC6xLHeTcwgtoiAo8SJB9ehOg4ySWzbdIAFJMEskCtxofkMO4jNJqArsainmQnE5hWw
-        lzh64jdYDYuAisSa93vABokKhEh8e9POBlEjKHFy5hOwGk4Ba4mpmy8zQszUk9hx/RcrhC0v
-        sf3tHOYJjPyzkLTMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW65nq5mSV6qSml
-        mxghoSy8g3HXSblDjAIcjEo8vBk/JCOEWBPLiitzDzFKcjApifJ+fgoU4kvKT6nMSCzOiC8q
-        zUktPsQowcGsJMJbHysVIcSbklhZlVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQ
-        kuBdC9IoWJSanlqRlplTgpBm4uAEGc4DNPwi2PDigsTc4sx0iPwpRkUpcd6aGKCEAEgiozQP
-        rheWal4xigO9Isz7EaSKB5im4LpfAQ1mAhpsniQBMrgkESEl1cA44e8naf//u1pSr76zbVfM
-        DpWJU/jQp/+0Ym/+7+vlZ846V/v7ndz/bIvfJD/+RV2+Hsy9CVdVDbMW/Jvz8GzCbt97vUzi
-        J3d6XspWzY6xCZll9XeN48qDEyY0Klz7U/L+GveD48HCoV8EO9eIOl47OOPSmQecTJHawVNa
-        s33UfAr9dkm1bFJQYinOSDTUYi4qTgQAwGVsjxADAAA=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161102213805.GJ4611@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/01/2016 10:38 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Nov 02, 2016 at 10:38:05PM +0100, Andrea Arcangeli wrote:
+
+> > But in either case, in my test, the actual email address is still
+> > extracted correctly and fed to the MTA, so the mail is delivered.
 > 
->> If it involves renaming and swapping, however, we may be talking
->> about a change that we cannot deliver with confidence in less than a
->> week before -rc1, which sounds, eh, suboptimal.
->>
->> FWIW, here is how the removal of compaction without renaming looks
->> like.
+> The email is delivered to the right email for me too, but to see the
+> problem you need to check the email itself, and look how the To: field
+> looks in the actual email in your mail client or web interface.
 > 
-> And here is _with_ renaming.  I think "compaction heuristics" is a
-> much better phrase to call "heuristics used during the diff hunk
-> compaction process" without specifying how that heuristics work
-> (like taking hints in the indentation levels).  If we are to retire
-> one while keeping the other, compaction-heuristics should be the
-> name we give and keep for the surviving one.
+> Don't you see whatever@yourhostname without spaces and @yourhostname
+> instead of the email domain?
 
-Personally, I'm not a fan of the name "compaction heuristics".
+Nope, it looks exactly as --dry-run reports it.
 
-The name *seems* to make sense because it affects the behavior of a
-function called `xdl_change_compact()`. But that means nothing to end
-users. The option doesn't affect how the diff is "compacted" in the
-usual sense of the word; the slider optimization usually doesn't change
-the number of lines in the diff at all [1].
+To see exactly what is being sent out, try:
 
-Moreover, if we ever want to add another heuristic (for example, imagine
-a language-aware algorithm that is based on parsing the file), we would
-want a different name for that option, at least temporarily. From that
-point of view, it makes a little bit of sense for the name of the option
-to hint at the particular heuristic being used.
+-- >8 --
 
-That being said, I don't think it is a big deal either way, and I can
-live with either name. I rather hope that this option will become the
-default soon, and hopefully after that hardly anybody will need to learn
-its name.
+cat >/tmp/foo <<\EOF
+#!/bin/sh
+echo "args: $*"
+sed 's/^/stdin: /'
+EOF
 
-Regarding making it the default: given that it is presumably too late in
-this release cycle to make this option the default behavior, I suggest
-that it be made the default early in the next release cycle so that it
-gets a lot of testing, and people have enough time to voice any objections.
+chmod +x /tmp/foo
 
-Regarding your patches themselves, once the old compaction heuristic is
-removed (with or without renaming), you can also get rid of the
-`blank_lines` local variable in `xdl_change_compact()`, and also the
-function `is_blank_line()` in the same source file.
+git send-email --smtp-server=/tmp/foo --to=whatever
 
-Michael
+-- 8< --
 
-[1] The only exceptions are when it causes context lines for adjacent
-diff hunks to join/split, or makes the context lines for a diff hunk
-extend past the beginning/end of the file. But these are uninteresting
-side-effects; it doesn't *try* to do or avoid either of these things.
+Mine shows the same header as --dry-run. Which makes sense, because the
+code is literally just dumping the $header variable, which is the same
+thing that gets sent to the sendmail binary (or the SMTP server if that
+is in use).
 
+So my guess would be that either an MTA in the routing path is garbling
+it (or possibly mailing list software). or maybe even the eventual MUA,
+though it sounds like you checked the raw bytes.
+
+> If you still can't reproduce, maybe it's a different perl
+> Mail::Address, I'm using dev-perl/MailTools-2.140.0
+
+Mine is 2.13, which I would imagine is comparable.
+
+> If --dry-run complained and failed instead of passing and then sending
+> an email with garbled To/Cc list, it'd be more than enough. Either
+> that or it should generate a mail header that matches the output of
+> --dry-run so the review of --dry-run becomes meaningful again.
+
+OK. I think we get that first part right. The problem is that the
+garbling is such that somebody in the middle is unhappy with it (which
+makes sense; it's syntactically bogus). So the tool is there to see the
+problem in --dry-run, but of course it's rather subtle.
+
+In theory we should be able to detect and complain about bogus syntax
+like this, but right now we don't re-parse the addresses at all. We rely
+on Mail::Address to produce valid output, and it doesn't seem to be
+doing so here.
+
+-Peff
