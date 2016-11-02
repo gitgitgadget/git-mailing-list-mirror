@@ -2,77 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8615A20193
-	for <e@80x24.org>; Wed,  2 Nov 2016 15:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E496C20193
+	for <e@80x24.org>; Wed,  2 Nov 2016 17:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755788AbcKBPgf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Nov 2016 11:36:35 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:37496 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755728AbcKBPge (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2016 11:36:34 -0400
-Received: by mail-it0-f46.google.com with SMTP id u205so44309143itc.0
-        for <git@vger.kernel.org>; Wed, 02 Nov 2016 08:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XNHP9gMjj6IThOnYoeCxPyNBh+A8oHLVQtNEL8NqJQE=;
-        b=vmClRi6bZ9ddaQrQOaSZ9ExypXOtK7jKYd4I2MSwbaXBJPtnMwJh8IRfidLIrFGQJz
-         4eGquNgRGCZdDnYa+Bd6rk7C+SQyiTjIdhgTrn9Hb4uhAHhSZt6j47+wrarR9HQNxWUA
-         ui7i3VFG/VfQC1wVUiLdqzY94dtso65hsp2ij2VNts0DPXa1pcfmyiwer3m/w7uWMagh
-         u8YwHfXQ4qXEeiCU5jyx2zWmxoEWj+n4CQgWOZiGQT7Z7a8hek4Lr9BcWS6lSzbMIMjx
-         9A6i31j6UbnyX+nTkF7DtBPJl3TDLw6in3Eo3PbjdtElzK39iht3ZaOPmzbr5MtSnVTu
-         M0GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XNHP9gMjj6IThOnYoeCxPyNBh+A8oHLVQtNEL8NqJQE=;
-        b=OdUhkgeTVP7rkpJJnvgtqkGpmFb/wXS5eo2jvpAIaAWb32JgNqI9BcgIxNEUv/zbiS
-         ggtNv8J7NdSE0lxYrCq4n4eFCMNaA6Z9src627cLTOGlfxI502fWM3GImQwVaUrOyFDU
-         9SBlAZnPGy1cAkoCIVbcjOcWwrowmeA5zDLAPDFoZiuR5AtSrguUt30/gUqJN38A3IsJ
-         vb+BxPqqvHfgphl4jFju9b5qKAVgJslav+6QxlVqvd8f0LuvYE4rDz4CzSgExwnT0raP
-         svs4mtH/sxdN+2C2zLeuM3dWDWPm5vaCvSLjZ6cH/xGvnUZGaWeKeU3gKqdE2e1pvjm+
-         rhcA==
-X-Gm-Message-State: ABUngvf+EKJVJ5/2uO4mrGOdY1lZ75WW9hB74+OSS1iGBZOq2BA73a7Xbuukh3nzacJsc5DPk5d0iI8a2tfxkw==
-X-Received: by 10.36.0.210 with SMTP id 201mr3468517ita.60.1478100993800; Wed,
- 02 Nov 2016 08:36:33 -0700 (PDT)
+        id S1756183AbcKBREZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 13:04:25 -0400
+Received: from mout.web.de ([217.72.192.78]:62551 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755593AbcKBREY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 13:04:24 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0M0yeJ-1crbHK1sb9-00v4yB; Wed, 02 Nov 2016 18:04:17
+ +0100
+Date:   Wed, 2 Nov 2016 17:04:15 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2016, #09; Mon, 31)
+Message-ID: <20161102170415.GA6420@tb-raspi>
+References: <xmqqwpgoqjct.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.79.27.209 with HTTP; Wed, 2 Nov 2016 08:36:33 -0700 (PDT)
-In-Reply-To: <CAGSZTjKg1=tMYgFiwys=ePVT+3p6KTa1mQ0fP9pPns-Nvd+6fA@mail.gmail.com>
-References: <CAGSZTjKg1=tMYgFiwys=ePVT+3p6KTa1mQ0fP9pPns-Nvd+6fA@mail.gmail.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 2 Nov 2016 21:06:33 +0530
-Message-ID: <CAFZEwPP1XyE+X6ipes4JNsUz3JVS+ErbLfQ-zYXZ3KA75bho5Q@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IEhvdyBjYW4gSSB0ZWxsLCBmcm9tIGEgc2NyaXB0LCBpZiDigJxnaXQgY2hlcnJ5LQ==?=
-        =?UTF-8?B?cGlja+KAnSBmYWlscz8=?=
-To:     Kevin Layer <layer@known.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwpgoqjct.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:w8nQSPzXSmw0V6VgSOk3KHvjpAUyvoL7I9Rmtq+q1082PjjTcuU
+ 2f+r2OxFGAtNRo2CEQIlmT1xj6gY1YMdN+AyuOukDofqlaAkDe4UJMD6fTnbD6MO7JzthWi
+ A7QpWlQZf6VA1/B7ed3PcOkLDg45bLbYkOGwhsf7IdjQ7uhBOd/te/03wa9MbKhjAO45kK+
+ mbPSeuuNNl5enA4Ak51Iw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iNe/FK03fWY=:VE/M2UwFENtxOEMSWoevP8
+ vs/J+SxHPlXMYxXi+PIodTeeWnp/8bbHM1NMC5DN0CvNBWLcVUqbaVSyUEKTq0QaBLJZEvcL3
+ uwfC5ZImYoblahbUuy/PQ8whmq6S+mOfF2H/04vVTO0TUnKo2lhSBLg4H6/qCVizLDkJW8i2k
+ yy0BVcPhryGiNlr8lJ+p7yu8s97xH8Tg3vr6MDamZYG6yTLFY7wD8tgFgDpN+7zeBKr70QP3H
+ X/nJxJsCmxhwcLwXWmwYZh3B6wr9hWuCJ8HaKcHFnMxrOUt9dun/+YnbYCgsD3ArL4ThHwYMO
+ cnRs/grgTBUiFqSszqKsI5b+Pxka2VfUjbcKRsNcDxx63mr6qi9KxRekz5ah5x9rinWzPWrlC
+ uATOAsil02Fknqtx8jaK0AoZqxqoYvgTMpZs1GnROhp+VAEmm3AGdsuhNaU1b9M+BvxHH04Zt
+ XBtFlCLk+NjtF9fxDwj96P+jBEVmuoFdChVI5mTzyiGUQsJw2fWi6Xb5zwzAjA/hgnV6Xx6xB
+ lbRGXLqTfIIvqYyY7nDWz2HkEALZU2mvVp7+szUYpVaSodJFitVVVMw4jETlvGhws8SiuLM1t
+ 9X7uhksL3b7EaKrKv1SmurNIiWse5+mdSc20cB8MpfusOz7wMvPiwHUheDftUZsD1M/xVrOTo
+ yzxo+Vvh7snoED+gFi8HA96Tg5qyWEy+KNzJ4YgKFHHLN7/JoUrPX0xmkHbHIXvqCBX9sG0ij
+ eKoZnORrAMxktRGDZF/B0ktWj2RHBVhliSKx0KCQMZ2Mjm+JGNmbQI6xUW0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Kevin,
+> * ls/filter-process (2016-10-17) 14 commits
+>   (merged to 'next' on 2016-10-19 at ffd0de042c)
 
-On Wed, Nov 2, 2016 at 8:44 PM, Kevin Layer <layer@known.net> wrote:
-> If the cherry-pick fails due to a merge conflict, it just returns an
-> exit status of 0.  I have a script that does a series of cherry-picks
-> and I need to know if they succeed.
+Some (late, as I recently got a new battery for the Mac OS 10.6 test system) 
+comments:
+t0021 failes here:
 
-Well, I haven't checked what it returns in git 2.10, but you can
-always redirect the stdout and stderr to the output and grep for the
-text which it shows in the actual output. Here[1] is an example of how
-to do it.
 
-[1]: https://github.com/git/git/blob/master/t/t3507-cherry-pick-conflict.sh#L42-L55
+Can't locate object method "flush" via package "IO::Handle" at /Users/tb/projects/git/git.next/t/t0021/rot13-filter.pl line 90.
+fatal: The remote end hung up unexpectedly
 
-Regards,
-Pranit Bauva
+
+perl itself is 5.10 and we use the one shipped with Mac OS.
+Why that ?
+t0021 uses the hard-coded path:
+t0021/rot13-filter.pl (around line 345) and the nice macro
+PERL_PATH from the Makefile is fully ignored.
+
+Commenting out the different "flush" makes the test hang, and I haven't digged further.
+
