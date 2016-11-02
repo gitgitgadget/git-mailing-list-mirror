@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBA692022A
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0F6E20193
 	for <e@80x24.org>; Wed,  2 Nov 2016 17:29:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756635AbcKBR3j (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Nov 2016 13:29:39 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33237 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756628AbcKBR3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2016 13:29:37 -0400
-Received: by mail-pf0-f172.google.com with SMTP id d2so15407947pfd.0
-        for <git@vger.kernel.org>; Wed, 02 Nov 2016 10:29:37 -0700 (PDT)
+        id S1756644AbcKBR3n (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 13:29:43 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:35066 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756610AbcKBR3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 13:29:35 -0400
+Received: by mail-pf0-f176.google.com with SMTP id i88so15272062pfk.2
+        for <git@vger.kernel.org>; Wed, 02 Nov 2016 10:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=GQsCjt2emN0+q6ekFq7jhb53s9BtRFWh3ipWnUpm0CM=;
-        b=oX18e8BdvBM/AUQr5iJZkob9esSS1xlOQj6vvkvO2aNXskRdTBWaUHTa3ImabTMziw
-         /RXxZ7tXpBx6Lhu8FvUXP9WmmL5pFXVgzaXIL8LdWM4C+Me9/XDEQjRifOr7AT/NxlUs
-         oSSWzKu6b3zUARVXAhStKMF5JP41tMQIocmOkgFE9UwjSiOLgkW2SPOOTOstyUHY/7d7
-         LRV4jEFkMsNJVfrau0t9S+eprSoNw9xh7qTzSAZRh2pCfQXxD4FCgCov/WNN/nRs65Ie
-         DuwG9gj7QuLU7GIdEK4j+/5edDB2NHn5kSxpsd2NlWk9EjdNElooFJ2VOKQvh1/v5f0b
-         lBJQ==
+        bh=a0pTLHW/z40lbiwcrUPV0M9U06SP1JsyTOo0tzTe4XE=;
+        b=R3LHffwutWcK6Q8d2M1CcoZFna7yQG9KS5Ca4InVWVNlm5WgouD03mA6Rd3r6UHPT5
+         iTdLpRJH0WShaQWyp8tJ8A4nFJzARDsYpBVfWhsUvBjozj5zCAHYASJRClLuXQt1OL2D
+         7eHbgeV1fcsH88Qoox3oBJ5LgMQeKS4ibOEkb+wKTY+0Ho6P3MX538S2dnFR2zZtMwbP
+         /ObuxANB4z9dtZ4U0xfSKXpz8JIciW4Z5oz0jJt8936w7weF3UMUluSa1BVr099FLX+I
+         y5YVwB4UmoWsDVt+JMlU8xR4Rdw02w1tGG1aPAdlhs/iZr74+Odi5EnDn1KqQtPcHlqO
+         aiHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=GQsCjt2emN0+q6ekFq7jhb53s9BtRFWh3ipWnUpm0CM=;
-        b=aqvHFfyDcIU/j3xjjXSt03TRYTb4zB0SkXaKkXjFJoPhztiZHpxOzn01We7psBn4m7
-         ErgJQyZbZnRqAa3nDDIgFXzPL64BfMksnScX2ySzeGmx4tKmxXmi8uOtpqIB/JJ0u/fY
-         HoT3NahC9/Aqxv6C+AzwxHm5mOMQS3ymtr/IUU0PWUi0uHnYLSEw3slSWS7Os1DA1xbi
-         e9cV4Bkh8XYRvFHHEvnHv3FL6LBAScKj3G1Vs4mox4SDA0Kj3LjbqCtY0I5YjCifZBTF
-         CMVsLjeX/iflDR8zCp9GNHBdyPF5kiULE3h5FeSkabFzjBkQ7YhPhrc8hChfF3Ce2ckq
-         dktQ==
-X-Gm-Message-State: ABUngvd7oRi5PesEH7AZiVhHUdDb4rPQEUH4zg4KFA0xiyrd1RasdQQpbkFvMPYquz89gQyn
-X-Received: by 10.99.209.5 with SMTP id k5mr7375078pgg.13.1478107776474;
-        Wed, 02 Nov 2016 10:29:36 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
-        by smtp.gmail.com with ESMTPSA id f23sm6185167pff.59.2016.11.02.10.29.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=a0pTLHW/z40lbiwcrUPV0M9U06SP1JsyTOo0tzTe4XE=;
+        b=fDf13LVNTmZtAXUUXS0+4iUf3tSSrDFWnmZLJO6JlR3/HiDj48Zqee219BnukRDe6u
+         pDItNhTCAq5GBl3xhP8lv+BaHqr1psy/tlYnqk2BNPvxUGdtrkKC+yd0uvpX500SijSE
+         tQuy4VGJQBBgWqaSGbBPkDOML2R2O9MW6sSCVRafXm25jTiaUvJ6oC+UxRbEQuW1UEmv
+         F/f8ZoA4EofOd1j9nQ38YK8P6SRb6CksM+ieVJEE/WJbB/vyi6t3p2cvu0dYpd0GBilv
+         eDSDt6Ubt3vxHNIDOyJr8usH7YxpaF0zopXrjTXIvqgt4mIDMtS/ee/P2kyiQEi05dPX
+         3FcA==
+X-Gm-Message-State: ABUngvdA1KcgbeAkGXYtLBONmi1u1PAJaZNcn/zmABEhyBWW3IaRt/AI3rQsFRLPREIntdMa
+X-Received: by 10.99.104.68 with SMTP id d65mr1270220pgc.52.1478107775014;
         Wed, 02 Nov 2016 10:29:35 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id f23sm6185167pff.59.2016.11.02.10.29.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 02 Nov 2016 10:29:33 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Subject: [PATCH v3 5/5] sequencer: use trailer's trailer layout
-Date:   Wed,  2 Nov 2016 10:29:20 -0700
-Message-Id: <092b31de2aef3f57aa36010d0d016b2d0937e243.1478107666.git.jonathantanmy@google.com>
+Subject: [PATCH v3 4/5] trailer: have function to describe trailer layout
+Date:   Wed,  2 Nov 2016 10:29:19 -0700
+Message-Id: <c64edee1f44562f38e4e92f1efb0c2267ef3222a.1478107666.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <cover.1478107666.git.jonathantanmy@google.com>
 References: <cover.1478107666.git.jonathantanmy@google.com>
@@ -63,273 +63,230 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make sequencer use trailer.c's trailer layout definition, as opposed to
-parsing the footer by itself. This makes "commit -s", "cherry-pick -x",
-and "format-patch --signoff" consistent with trailer, allowing
-non-trailer lines and multiple-line trailers in trailer blocks under
-certain conditions, and therefore suppressing the extra newline in those
-cases.
+Create a function that, taking a string, describes the position of its
+trailer block (if available) and the contents thereof, and make trailer
+use it. This makes it easier for other Git components, in the future, to
+interpret trailer blocks in the same way as trailer.
 
-Consistency with trailer extends to respecting trailer configs.  Tests
-have been included to show that.
+In a subsequent patch, another component will be made to use this.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- sequencer.c              | 75 +++++++++---------------------------------------
- t/t3511-cherry-pick-x.sh | 16 +++++++++--
- t/t4014-format-patch.sh  | 37 ++++++++++++++++++++----
- t/t7501-commit.sh        | 36 +++++++++++++++++++++++
- 4 files changed, 95 insertions(+), 69 deletions(-)
+ trailer.c | 118 +++++++++++++++++++++++++++++++++++++++++++-------------------
+ trailer.h |  25 +++++++++++++
+ 2 files changed, 107 insertions(+), 36 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 5fd75f3..d64c973 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -16,6 +16,7 @@
- #include "refs.h"
- #include "argv-array.h"
- #include "quote.h"
-+#include "trailer.h"
+diff --git a/trailer.c b/trailer.c
+index afbff4b..bc6893b 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -46,6 +46,8 @@ static LIST_HEAD(conf_head);
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ static char *separators = ":";
  
-@@ -56,30 +57,6 @@ static const char *get_todo_path(const struct replay_opts *opts)
- 	return git_path_todo_file();
++static int configured;
++
+ #define TRAILER_ARG_STRING "$ARG"
+ 
+ static const char *git_generated_prefixes[] = {
+@@ -546,6 +548,17 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 	return 0;
  }
  
--static int is_rfc2822_line(const char *buf, int len)
--{
--	int i;
--
--	for (i = 0; i < len; i++) {
--		int ch = buf[i];
--		if (ch == ':')
--			return 1;
--		if (!isalnum(ch) && ch != '-')
--			break;
--	}
--
--	return 0;
--}
--
--static int is_cherry_picked_from_line(const char *buf, int len)
--{
--	/*
--	 * We only care that it looks roughly like (cherry picked from ...)
--	 */
--	return len > strlen(cherry_picked_prefix) + 1 &&
--		starts_with(buf, cherry_picked_prefix) && buf[len - 1] == ')';
--}
--
- /*
-  * Returns 0 for non-conforming footer
-  * Returns 1 for conforming footer
-@@ -89,49 +66,25 @@ static int is_cherry_picked_from_line(const char *buf, int len)
- static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
- 	int ignore_footer)
++static void ensure_configured(void)
++{
++	if (configured)
++		return;
++
++	/* Default config must be setup first */
++	git_config(git_trailer_default_config, NULL);
++	git_config(git_trailer_config, NULL);
++	configured = 1;
++}
++
+ static const char *token_from_item(struct arg_item *item, char *tok)
  {
--	char prev;
--	int i, k;
--	int len = sb->len - ignore_footer;
--	const char *buf = sb->buf;
--	int found_sob = 0;
--
--	/* footer must end with newline */
--	if (!len || buf[len - 1] != '\n')
--		return 0;
+ 	if (item->conf.key)
+@@ -873,59 +886,43 @@ static int process_input_file(FILE *outfile,
+ 			      const char *str,
+ 			      struct list_head *head)
+ {
+-	int patch_start, trailer_start, trailer_end;
 +	struct trailer_info info;
+ 	struct strbuf tok = STRBUF_INIT;
+ 	struct strbuf val = STRBUF_INIT;
+-	struct trailer_item *last = NULL;
+-	struct strbuf *trailer, **trailer_lines, **ptr;
 +	int i;
-+	int found_sob = 0, found_sob_last = 0;
  
--	prev = '\0';
--	for (i = len - 1; i > 0; i--) {
--		char ch = buf[i];
--		if (prev == '\n' && ch == '\n') /* paragraph break */
--			break;
--		prev = ch;
--	}
-+	trailer_info_get(&info, sb->buf);
+-	patch_start = find_patch_start(str);
+-	trailer_end = find_trailer_end(str, patch_start);
+-	trailer_start = find_trailer_start(str, trailer_end);
++	trailer_info_get(&info, str);
  
--	/* require at least one blank line */
--	if (prev != '\n' || buf[i] != '\n')
-+	if (info.trailer_start == info.trailer_end)
- 		return 0;
+ 	/* Print lines before the trailers as is */
+-	fwrite(str, 1, trailer_start, outfile);
++	fwrite(str, 1, info.trailer_start - str, outfile);
  
--	/* advance to start of last paragraph */
--	while (i < len - 1 && buf[i] == '\n')
--		i++;
--
--	for (; i < len; i = k) {
--		int found_rfc2822;
--
--		for (k = i; k < len && buf[k] != '\n'; k++)
--			; /* do nothing */
--		k++;
-+	for (i = 0; i < info.trailer_nr; i++)
-+		if (sob && !strncmp(info.trailers[i], sob->buf, sob->len)) {
-+			found_sob = 1;
-+			if (i == info.trailer_nr - 1)
-+				found_sob_last = 1;
-+		}
+-	if (!ends_with_blank_line(str, trailer_start))
++	if (!info.blank_line_before_trailer)
+ 		fprintf(outfile, "\n");
  
--		found_rfc2822 = is_rfc2822_line(buf + i, k - i - 1);
--		if (found_rfc2822 && sob &&
--		    !strncmp(buf + i, sob->buf, sob->len))
--			found_sob = k;
+-	/* Parse trailer lines */
+-	trailer_lines = strbuf_split_buf(str + trailer_start,
+-					 trailer_end - trailer_start,
+-					 '\n',
+-					 0);
+-	for (ptr = trailer_lines; *ptr; ptr++) {
++	for (i = 0; i < info.trailer_nr; i++) {
+ 		int separator_pos;
+-		trailer = *ptr;
+-		if (trailer->buf[0] == comment_line_char)
+-			continue;
+-		if (last && isspace(trailer->buf[0])) {
+-			struct strbuf sb = STRBUF_INIT;
+-			strbuf_addf(&sb, "%s\n%s", last->value, trailer->buf);
+-			strbuf_strip_suffix(&sb, "\n");
+-			free(last->value);
+-			last->value = strbuf_detach(&sb, NULL);
++		char *trailer = info.trailers[i];
++		if (trailer[0] == comment_line_char)
+ 			continue;
+-		}
+-		separator_pos = find_separator(trailer->buf, separators);
++		separator_pos = find_separator(trailer, separators);
+ 		if (separator_pos >= 1) {
+-			parse_trailer(&tok, &val, NULL, trailer->buf,
++			parse_trailer(&tok, &val, NULL, trailer,
+ 				      separator_pos);
+-			last = add_trailer_item(head,
+-						strbuf_detach(&tok, NULL),
+-						strbuf_detach(&val, NULL));
++			add_trailer_item(head,
++					 strbuf_detach(&tok, NULL),
++					 strbuf_detach(&val, NULL));
+ 		} else {
+-			strbuf_addbuf(&val, trailer);
++			strbuf_addstr(&val, trailer);
+ 			strbuf_strip_suffix(&val, "\n");
+ 			add_trailer_item(head,
+ 					 NULL,
+ 					 strbuf_detach(&val, NULL));
+-			last = NULL;
+ 		}
+ 	}
+-	strbuf_list_free(trailer_lines);
+ 
+-	return trailer_end;
 +	trailer_info_release(&info);
++
++	return info.trailer_end - str;
+ }
  
--		if (!(found_rfc2822 ||
--		      is_cherry_picked_from_line(buf + i, k - i - 1)))
--			return 0;
--	}
--	if (found_sob == i)
-+	if (found_sob_last)
- 		return 3;
- 	if (found_sob)
- 		return 2;
-diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
-index 9cce5ae..bf0a5c9 100755
---- a/t/t3511-cherry-pick-x.sh
-+++ b/t/t3511-cherry-pick-x.sh
-@@ -25,9 +25,8 @@ Signed-off-by: B.U. Thor <buthor@example.com>"
+ static void free_all(struct list_head *head)
+@@ -976,9 +973,7 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
+ 	int trailer_end;
+ 	FILE *outfile = stdout;
  
- mesg_broken_footer="$mesg_no_footer
+-	/* Default config must be setup first */
+-	git_config(git_trailer_default_config, NULL);
+-	git_config(git_trailer_config, NULL);
++	ensure_configured();
  
--The signed-off-by string should begin with the words Signed-off-by followed
--by a colon and space, and then the signers name and email address. e.g.
--Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-+This is not recognized as a footer because Myfooter is not a recognized token.
-+Myfooter: A.U. Thor <author@example.com>"
+ 	read_input_file(&sb, file);
  
- mesg_with_footer_sob="$mesg_with_footer
- Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-@@ -112,6 +111,17 @@ test_expect_success 'cherry-pick -s inserts blank line after non-conforming foot
- 	test_cmp expect actual
- '
+@@ -1005,3 +1000,54 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
  
-+test_expect_success 'cherry-pick -s recognizes trailer config' '
-+	pristine_detach initial &&
-+	git -c "trailer.Myfooter.ifexists=add" cherry-pick -s mesg-broken-footer &&
-+	cat <<-EOF >expect &&
-+		$mesg_broken_footer
-+		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
-+	EOF
-+	git log -1 --pretty=format:%B >actual &&
-+	test_cmp expect actual
-+'
+ 	strbuf_release(&sb);
+ }
 +
- test_expect_success 'cherry-pick -x inserts blank line when conforming footer not found' '
- 	pristine_detach initial &&
- 	sha1=$(git rev-parse mesg-no-footer^0) &&
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index ba4902d..482112c 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1294,8 +1294,7 @@ EOF
- 4:Subject: [PATCH] subject
- 8:
- 10:Signed-off-by: example happens to be wrapped here.
--11:
--12:Signed-off-by: C O Mitter <committer@example.com>
-+11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
- 	test_cmp expected actual
- '
-@@ -1368,7 +1367,7 @@ EOF
- 	test_cmp expected actual
- '
++void trailer_info_get(struct trailer_info *info, const char *str)
++{
++	int patch_start, trailer_end, trailer_start;
++	struct strbuf **trailer_lines, **ptr;
++	char **trailer_strings = NULL;
++	size_t nr = 0, alloc = 0;
++	char **last = NULL;
++
++	ensure_configured();
++
++	patch_start = find_patch_start(str);
++	trailer_end = find_trailer_end(str, patch_start);
++	trailer_start = find_trailer_start(str, trailer_end);
++
++	trailer_lines = strbuf_split_buf(str + trailer_start,
++					 trailer_end - trailer_start,
++					 '\n',
++					 0);
++	for (ptr = trailer_lines; *ptr; ptr++) {
++		if (last && isspace((*ptr)->buf[0])) {
++			struct strbuf sb = STRBUF_INIT;
++			strbuf_attach(&sb, *last, strlen(*last), strlen(*last));
++			strbuf_addbuf(&sb, *ptr);
++			*last = strbuf_detach(&sb, NULL);
++			continue;
++		}
++		ALLOC_GROW(trailer_strings, nr + 1, alloc);
++		trailer_strings[nr] = strbuf_detach(*ptr, NULL);
++		last = find_separator(trailer_strings[nr], separators) >= 1
++			? &trailer_strings[nr]
++			: NULL;
++		nr++;
++	}
++	strbuf_list_free(trailer_lines);
++
++	info->blank_line_before_trailer = ends_with_blank_line(str,
++							       trailer_start);
++	info->trailer_start = str + trailer_start;
++	info->trailer_end = str + trailer_end;
++	info->trailers = trailer_strings;
++	info->trailer_nr = nr;
++}
++
++void trailer_info_release(struct trailer_info *info)
++{
++	int i;
++	for (i = 0; i < info->trailer_nr; i++)
++		free(info->trailers[i]);
++	free(info->trailers);
++}
+diff --git a/trailer.h b/trailer.h
+index 36b40b8..65cc5d7 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -1,7 +1,32 @@
+ #ifndef TRAILER_H
+ #define TRAILER_H
  
--test_expect_success 'signoff: detect garbage in non-conforming footer' '
-+test_expect_success 'signoff: tolerate garbage in conforming footer' '
- 	append_signoff <<\EOF >actual &&
- subject
++struct trailer_info {
++	/*
++	 * True if there is a blank line before the location pointed to by
++	 * trailer_start.
++	 */
++	int blank_line_before_trailer;
++
++	/*
++	 * Pointers to the start and end of the trailer block found. If there
++	 * is no trailer block found, these 2 pointers point to the end of the
++	 * input string.
++	 */
++	const char *trailer_start, *trailer_end;
++
++	/*
++	 * Array of trailers found.
++	 */
++	char **trailers;
++	size_t trailer_nr;
++};
++
+ void process_trailers(const char *file, int in_place, int trim_empty,
+ 		      struct string_list *trailers);
  
-@@ -1383,8 +1382,36 @@ EOF
- 8:
- 10:
- 13:Signed-off-by: C O Mitter <committer@example.com>
--14:
--15:Signed-off-by: C O Mitter <committer@example.com>
-+EOF
-+	test_cmp expected actual
-+'
++void trailer_info_get(struct trailer_info *info, const char *str);
 +
-+test_expect_success 'signoff: respect trailer config' '
-+	append_signoff <<\EOF >actual &&
-+subject
++void trailer_info_release(struct trailer_info *info);
 +
-+Myfooter: x
-+Some Trash
-+EOF
-+	cat >expected <<\EOF &&
-+4:Subject: [PATCH] subject
-+8:
-+11:
-+12:Signed-off-by: C O Mitter <committer@example.com>
-+EOF
-+	test_cmp expected actual &&
-+
-+	test_config trailer.Myfooter.ifexists add &&
-+	append_signoff <<\EOF >actual &&
-+subject
-+
-+Myfooter: x
-+Some Trash
-+EOF
-+	cat >expected <<\EOF &&
-+4:Subject: [PATCH] subject
-+8:
-+11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
- 	test_cmp expected actual
- '
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index d84897a..4003a27 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -460,6 +460,42 @@ $alt" &&
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'signoff respects trailer config' '
-+
-+	echo 5 >positive &&
-+	git add positive &&
-+	git commit -s -m "subject
-+
-+non-trailer line
-+Myfooter: x" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	(
-+		echo subject
-+		echo
-+		echo non-trailer line
-+		echo Myfooter: x
-+		echo
-+		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-+	) >expected &&
-+	test_cmp expected actual &&
-+
-+	echo 6 >positive &&
-+	git add positive &&
-+	git -c "trailer.Myfooter.ifexists=add" commit -s -m "subject
-+
-+non-trailer line
-+Myfooter: x" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	(
-+		echo subject
-+		echo
-+		echo non-trailer line
-+		echo Myfooter: x
-+		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-+	) >expected &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
+ #endif /* TRAILER_H */
 -- 
 2.8.0.rc3.226.g39d4020
 
