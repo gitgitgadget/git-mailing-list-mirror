@@ -2,124 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07A952021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 17:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C5A92021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 17:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759749AbcKCRvh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 13:51:37 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34510 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759734AbcKCRvf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 13:51:35 -0400
-Received: by mail-pf0-f171.google.com with SMTP id n85so35334559pfi.1
-        for <git@vger.kernel.org>; Thu, 03 Nov 2016 10:51:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zk8sOOZMb4AXlPwlYTUrMhrGDUUW45SZEuXxPpt8Z7M=;
-        b=kZUmvp1FaZi0y88HOf8/7inbFWG9LlSDFmF3yyv8w0ZxFBHJU9QCDkOMq9q2zLrzeJ
-         1qj7+6GxpXCDIDR4cuSaPMj6yPZLlPqgAtZv7MWhvqrttyr9wz4VOxbL5fqUdzJuHywy
-         LkQXL7RMy9U0ZO1pn+TNwBZR1rXSJm7t2K8clV89CgH6pICTn9E2g/of33NJjfCwmGZL
-         6Z9cTIpEKC9FK3zKhr7hnYkdDOy+1Lsh936oeohlOn6ltSXnrVGbflekXIw2msJzq7/V
-         zz4t54+h0KNu98EDMOtH44EW+aYaEwH/1rqExmTr+X/RMlw01GyTdGDQEIohXhcYGKHM
-         lnUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zk8sOOZMb4AXlPwlYTUrMhrGDUUW45SZEuXxPpt8Z7M=;
-        b=FSCel2BUXerex7MtSf7ha+YiwxbfG55BxMn3WG56tllq1eDCMzFQc+CsRypUY8xwbM
-         7nu24sr8uWX7ukCkvn+eVjqJ19bRMqQSkvqZmBzGnf7pUSAUf1VFZ7EutG0TrlJZWW/j
-         g4XXw5c11C30nDYczIXb2jG8EXn2WD1WqFL2Z4Fs/x3xvR5fMV0SvveVfWvSsLLvPwTq
-         784RY62jjDiv3rR/XPq3PebzCVbVbJk0gsnikkwQ82W8FN2HUIapFOCU2eHNWITKi1Eh
-         hJjclBx3YJgv0RS3n1N5pihvNkWOfefZqkQaqsEVbPgLu1+73qtqV/KEhK6P6tHgefjr
-         mObA==
-X-Gm-Message-State: ABUngvfeVimxVbcmCicHvPWW0FUKTKTaDEcmcjwlAWdl0Ap2a0qLStfmRfuIF242vTDUlorK
-X-Received: by 10.99.133.200 with SMTP id u191mr15769504pgd.28.1478195494136;
-        Thu, 03 Nov 2016 10:51:34 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b42d:d807:c3e3:2b82])
-        by smtp.gmail.com with ESMTPSA id v4sm14240140pfb.52.2016.11.03.10.51.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 03 Nov 2016 10:51:33 -0700 (PDT)
-Date:   Thu, 3 Nov 2016 10:51:31 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
+        id S1759584AbcKCRxb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 13:53:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38170 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1759368AbcKCRxa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 13:53:30 -0400
+Received: (qmail 4049 invoked by uid 109); 3 Nov 2016 17:53:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 17:53:29 +0000
+Received: (qmail 14987 invoked by uid 111); 3 Nov 2016 17:53:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 13:53:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 13:53:27 -0400
+Date:   Thu, 3 Nov 2016 13:53:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
         Blake Burkhart <bburky@bburky.com>
 Subject: Re: [PATCH] transport: add core.allowProtocol config option
-Message-ID: <20161103175131.GB182568@google.com>
+Message-ID: <20161103175327.nn2yasvlsxsy22be@sigill.intra.peff.net>
 References: <1478125247-62372-1-git-send-email-bmwill@google.com>
  <20161103002225.GA13369@google.com>
  <20161103143806.hce4msk3dhxtgpre@sigill.intra.peff.net>
  <20161103172515.GA182568@google.com>
- <CAGZ79kbvs+ryGRjCkHYO=3iNK4tPPhBhYjRMZaH7rP0QMrULhg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbvs+ryGRjCkHYO=3iNK4tPPhBhYjRMZaH7rP0QMrULhg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20161103172515.GA182568@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/03, Stefan Beller wrote:
-> >>   protocol.X.allow = always | user | never
-> >
-> > It sounds like there is interest for this sort of behavior, it would
-> > definitely require a larger change than what I initially proposed.  One
-> > problem I see though is that with this we have support for both a
-> > blacklist and a whitelist.  Which wins?
-> 
-> For the submodule operations we'll use a whitelist, because we want to
-> provide security and for the other case we can offer a blacklist as a bandaid.
-> 
-> My opinion on blacklists is roughly aligned with e.g. :
-> https://blog.codinghorror.com/blacklists-dont-work/
-> http://blog.deepinstinct.com/2016/02/04/when-blacklists-dont-really-work/
-> 
-> So IMHO we could drop the "never" and substitute it with a "warn" or
-> "ask-user", such that this configuration becomes a white list for both cases:
-> 
->      protocol.X.allow = always | user | warn
-> 
-> > Or do we simply generate a
-> > whitelist of allowed protocols which includes all protocols with allow
-> > set to 'always' and if it is set to 'never' then it just isn't included
-> > in the whitelist?
-> 
-> So you're suggesting that setting it to "never" doesn't have any effect
-> except for cluttering the config file?
-> I don't think we should do that; each setting should have an impact.
-> So maybe the "never" would be there to disallow protocols of the hardcoded
-> white list (e.g. http)
+On Thu, Nov 03, 2016 at 10:25:15AM -0700, Brandon Williams wrote:
 
-Thats what I meant, if a protocol is listed as 'never' then it just
-removes that protocol from the whitelist.  That way we still have the
-benefit of using a whitelist vs a blacklist.  Also, if we move in this
-direction should we setup a default whitelist of allowed protocols?
-
-> >
-> > I don't know if I'm sold on a 'user' state just yet, perhaps that's just
-> > because I view a whitelist or blacklist as well black and white and
-> > having this user state adds in a gray area.
+> > So I think this probably needs to be a separate parallel system where
+> > each protocol can be white- or black-listed in a context-specific way.
+> > Like:
+> > 
+> >   protocol.X.allow = always | user | never
 > 
-> Well the "user" state is to differentiate between the
-> * "I consciously typed `git clone ...` (and e.g. I know what happens as
->   I know the server admin and they are trustworthy.)
-> * a repository contains a possible hostile .gitmodules file such
->   that I am not aware of the network connection.
+> It sounds like there is interest for this sort of behavior, it would
+> definitely require a larger change than what I initially proposed.  One
+> problem I see though is that with this we have support for both a
+> blacklist and a whitelist.  Which wins?  Or do we simply generate a
+> whitelist of allowed protocols which includes all protocols with allow
+> set to 'always' and if it is set to 'never' then it just isn't included
+> in the whitelist?
 
-This is still a gray area to me.  I think that if we have a whitelist of
-protocols then it should be a true whitelist and not have some means of
-going around it.  It just seems like something that could be exploited.
+I think trying to combine the two or generate the whitelist from the
+more flexible format is a recipe for madness.
 
--- 
-Brandon Williams
+I'd design the new system from scratch, and have it kick in _only_ when
+GIT_ALLOW_PROTOCOL is not set. That lets existing callers continue to
+have the safe behavior until they are ready to move to the new format.
+
+Something like the patch below (which is just for illustration, and not
+tested beyond compilation).
+
+> I don't know if I'm sold on a 'user' state just yet, perhaps that's just
+> because I view a whitelist or blacklist as well black and white and
+> having this user state adds in a gray area.
+
+The lack of understanding the "user" context is what makes the current
+system so painful. The only way a caller can influence the system is to
+hand over the policy directly: this is allowed, this is not. But systems
+like "go get" should not be setting policy. They should be giving us a
+hint about the context, and letting git implement the policy.
+
+-- >8 --
+diff --git a/transport.c b/transport.c
+index d57e8dec2..0d5b382db 100644
+--- a/transport.c
++++ b/transport.c
+@@ -664,10 +664,69 @@ static const struct string_list *protocol_whitelist(void)
+ 	return enabled ? &allowed : NULL;
+ }
+ 
++enum protocol_allow_config {
++	PROTOCOL_ALLOW_NEVER,
++	PROTOCOL_ALLOW_USER_ONLY,
++	PROTOCOL_ALLOW_ALWAYS
++};
++
++static enum protocol_allow_config parse_protocol_config(const char *key,
++							const char *value)
++{
++	if (!strcasecmp(value, "always"))
++		return PROTOCOL_ALLOW_ALWAYS;
++	else if (!strcasecmp(value, "never"))
++		return PROTOCOL_ALLOW_NEVER;
++	else if (!strcasecmp(value, "user"))
++		return PROTOCOL_ALLOW_USER_ONLY;
++
++	/* XXX maybe also interpret git_config_bool() here? */
++	die("unknown value for config '%s': %s", key, value);
++}
++
++static enum protocol_allow_config get_protocol_config(const char *type)
++{
++	char *key = xstrfmt("protocol.%s.allow", type);
++	char *value;
++
++	if (!git_config_get_string(key, &value)) {
++		enum protocol_allow_config ret =
++			parse_protocol_config(key, value);
++		free(key);
++		free(value);
++		return ret;
++	}
++	free(key);
++
++	/* known safe */
++	if (!strcmp(type, "http") ||
++	    !strcmp(type, "https") ||
++	    !strcmp(type, "git") ||
++	    !strcmp(type, "ssh"))
++		return PROTOCOL_ALLOW_ALWAYS;
++
++	/* known scary; err on the side of caution */
++	if (!strcmp(type, "ext"))
++		return PROTOCOL_ALLOW_NEVER;
++
++	/* unknown; let them be used only directly by the user */
++	return PROTOCOL_ALLOW_USER_ONLY;
++}
++
+ int is_transport_allowed(const char *type)
+ {
+-	const struct string_list *allowed = protocol_whitelist();
+-	return !allowed || string_list_has_string(allowed, type);
++	const struct string_list *whitelist = protocol_whitelist();
++	if (whitelist)
++		return string_list_has_string(whitelist, type);
++
++	switch (get_protocol_config(type)) {
++	case PROTOCOL_ALLOW_ALWAYS:
++		return 1;
++	case PROTOCOL_ALLOW_NEVER:
++		return 0;
++	case PROTOCOL_ALLOW_USER_ONLY:
++		return git_env_bool("GIT_PROTOCOL_FROM_USER", 1);
++	}
+ }
+ 
+ void transport_check_allowed(const char *type)
