@@ -2,115 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 555C92021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 16:12:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 396562021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 16:49:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758529AbcKCQL5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 12:11:57 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:34722 "EHLO
-        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758599AbcKCQJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 12:09:58 -0400
-Received: by mail-lf0-f45.google.com with SMTP id b81so43099233lfe.1
-        for <git@vger.kernel.org>; Thu, 03 Nov 2016 09:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=OeNg7YCo4hA1pbd0wR3+KutXQrKAgb0D3qp0vwxybKw=;
-        b=YxZpIpNJLjxsjDHK0DRhRaoTyUU8FnYkWRkTiF08HOzZsFnlr/xqtl4Xqo0T3GCjtk
-         zQTkrFv/Gtov8LqsAzDeq04BdsfdbBKvKt0ulb5fxXmNF9k/RuQAVJC54ufPRu7SfUMx
-         Vh6K0r20eZBYGiXXPnnNZrwd9hkDtmqnOJ2s2CClTr2d5tt4/gLuCHSQcsIfSBdJK+Aj
-         JMk7uUlKqsDkD57M4aUW152gprobQPmH8QKvNqt1SrhUcLwAaEiOJrMhZjLgQjRNBcXu
-         b/Fn93R7UF6+514lNx2dKcWfTO6nzi4zTjhYM6L+nMvCduRZO2tl2Wiu0w8yLp45Ox8B
-         wiTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=OeNg7YCo4hA1pbd0wR3+KutXQrKAgb0D3qp0vwxybKw=;
-        b=PewDlvvhO7OtnlIZ3v5gfgGKQT81ERA+65pQkncH3SC67rvSelPWfuSI0wDbjK6uaY
-         cqGk2gi6YNpFzUxFZ5xhthLZr4E134nwkqX6iOT3vMtqEMDxH14YpNQ/AxKRZmFoummG
-         Pytn3mccwPdb+apE5VsGqw47Tt6G881VIVfYJXOoK7rdEcG13gt40quiD0NR6kmYGIda
-         kXkSVRSa/2gNrUfSRIDalS/MzUx2ZFAryRkGkNv16IpjqdLluGTq9UXfcbnI7wbVKa41
-         5ycSNAG0MoSleIRKdc54GvPX2PG/k7u8+j0oHhdI8+sSBzEZmDX5KBlwUyW/cTOUrd3l
-         PrPA==
-X-Gm-Message-State: ABUngveQY437E/40ttYDG65TkwSNItvSiXib4SE+06LoDmeyJbzIh2SrVmEV7d4ANW7Xbm6rfzVIAqiOKxgUXA==
-X-Received: by 10.25.38.131 with SMTP id m125mr6199527lfm.100.1478189396877;
- Thu, 03 Nov 2016 09:09:56 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.215.102 with HTTP; Thu, 3 Nov 2016 09:09:56 -0700 (PDT)
-In-Reply-To: <20161103160716.6ygtf5iosudo2w3g@sigill.intra.peff.net>
-References: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
- <20161103151422.nhrgzivapy5tisr4@sigill.intra.peff.net> <CAJUoZVbnWzpjzWe_qGZTnX_6N2+OJVG39WYaBgY7OfQBNCg+rg@mail.gmail.com>
- <20161103155400.jqzopj5i2rrlj6km@sigill.intra.peff.net> <CAJUoZVY0-OA7Tu=cHDPH+NwmQ8MUuWc37_5aqeGQbwKpNWVzqg@mail.gmail.com>
- <20161103160716.6ygtf5iosudo2w3g@sigill.intra.peff.net>
-From:   Chris Purcell <chris.purcell.39@gmail.com>
-Date:   Thu, 3 Nov 2016 16:09:56 +0000
-Message-ID: <CAJUoZVbejQ2JE8GOKoyVqEEcLcH=5Jn8vAK83MAQosgPP7NsBQ@mail.gmail.com>
-Subject: Re: Bug in git rev-parse @{push}?
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+        id S1756269AbcKCQty (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 12:49:54 -0400
+Received: from mout.gmx.net ([212.227.17.21]:63776 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756796AbcKCQtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 12:49:53 -0400
+Received: from localhost.localdomain ([37.24.142.40]) by mail.gmx.com
+ (mrgmx101) with ESMTPSA (Nemesis) id 0LfXmv-1cdZlU3Skz-00p7dl; Thu, 03 Nov
+ 2016 17:49:50 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Test mail
+Date:   Thu,  3 Nov 2016 17:49:41 +0100
+Message-Id: <20161103164941.6824-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.10.2.windows.1
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:bva3KIT+oPbKAO5cNE3vRFyn6caJHvSlrxhHxNOXPHb3o6J1ilY
+ yFWLUYxMwlhCT1zt75E8/acWICmKT1SZSr3weWI3dSxuRopTDu/Byi/RXM8dB3dKjf3dKcB
+ mA6skHpMINZNxCDXE8L+24eUAoAHa6JQ6T0OHYOjOF4AZQOnHCR1fY972dUZcc2fvJqTGdb
+ ZMlnw6TfR6/O3vrfh09pQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LoUuWVhftGs=:V0B1FXz/tXiWcLNaGrduGE
+ wrXFR5eqw5TUQ1sWfReafMnWT8onxZ7OtyUxfjrgn+7NYNzBQe5kBCzKOPVL8nJ91XUw92iog
+ hbbaAw6IPXfwFCgfpMmqz7aqOrx2DW4kHTEhI1fZdbOmdwMZzM32Wdk5K6ZyCYeMaSCHLTKGq
+ O1M7aLQNpjvA+9yYF5CFJUDrnIniAlP9pGaLs/ZoIzdFavt40n8LrV3hYPDzmvrnfH+ZhMyCi
+ VlNqNAAISclsFRQvEjdeZI4pb/WVrlifLHuqsPHCDgExmLnNQWRnfNS4ArzEV3Qxh04otUMQa
+ Yj1U6WfA49tFBwCOAWyim2q0wL0WjW2Duk2wW6QBiKLAlKuk8nvBXqKyXW8ir4DJO3Ek8g0RE
+ tDvfETqMLjpklPqvcU/HFWKYa212Srtbt75XOrqrj1S5eymVpfsbXj7wxJ9LEP3cnQN4Yz6/p
+ zL1pSCO0+sw5j7TqIrjw4jDMkc7y0NH+Pp3el1h6H5rcDjBPCVRo4DKm/OjIbPuy5gRrtf/QI
+ 0Lod3Dq+2W6XwtIjUcSePUw6NIWuJtxJKjp+0324PX9bhVnP6lG+cthAptXb5uHLgLjpZ+Rog
+ 5njZi9EFQm0tvmWoR/mIw2XPGz+IOgRZEZPKn2v4I2JhTcH1ELvsRF8lQtBs3JuaeQo2WB5sR
+ 7inzf8WqR//eZzQGGyyNK0SvCJLVbFIvrHa71RJ00AMAQfGdrKOv5hBhyTjByQl0Y+1TCO2R1
+ 5walPoQa9QcDf/6O5HwzAilyx4eHpYp8Z7JR8/dPE3dnMnSYqYidS0b90FPyVP1KBUAGjTBTo
+ e1OcazN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Will do, thanks! Meanwhile, I'll work around locally by changing off
-'simple' in my config=E2=80=94if I can figure out how not to break everythi=
-ng
-in the process...
+This is just a test mail to test whether the bullet offends vger, still,
+even with the headers indicated by Peff:
 
-On 3 November 2016 at 16:07, Jeff King <peff@peff.net> wrote:
-> On Thu, Nov 03, 2016 at 03:59:13PM +0000, Chris Purcell wrote:
->
->> >> Thanks, Jeff! If I remove the explicit configuration of remote.pushde=
-fault
->> >> =3D "origin", I get the same error message as you, so I suspect that'=
-s _not_
->> >> the default.
->> >
->> > That's really bizarre, because I get the same behavior with or without
->> > it set. Not only that, but it shouldn't even come into play, as
->> > branch.foo.remote should take precedence anyway.
->> >
->> > So now I'm really puzzled.
->>
->> That's because I lied. Sorry! Too many branches configured. I've actuall=
-y got
->>
->> [branch "foo"]
->>     remote =3D .
->>
->> If I change that to 'origin' like I claimed it was, it starts erroring.
->
-> OK, now I can reproduce. And changing remote.pushdefault _does_ matter
-> because builtin/push.c:is_workflow_triangular() uses it as a key to "we
-> are in a triangular workflow".
->
-> That was added by ed2b18292 (push: change `simple` to accommodate
-> triangular workflows, 2013-06-19).  TBH, I think the right solution is
-> "stop using 'simple' in a triangular setup". But since that workflow
-> exists for git-push, we probably need to support it via @{push}, too.
->
-> I think the solution would be something like:
->
->   - move is_workflow_triangular() into remote.c so it is accessible in
->     both places
->
->   - when branch_get_push_1 sees that is_workflow_triangular() is true,
->     treat "simple" as "current"
->
->   - new tests should go into t/t1514-rev-parse-push.sh to cover this
->     case
->
-> Want to take a stab at it?
->
-> -Peff
+
+  • This is a bullet point.
+
+Fingers crossed,
+Dscho
