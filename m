@@ -2,122 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 939542021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 15:14:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED7A02021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 15:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756414AbcKCPO0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 11:14:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38033 "EHLO cloud.peff.net"
+        id S1756416AbcKCPPK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 11:15:10 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55465 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751693AbcKCPOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 11:14:25 -0400
-Received: (qmail 27304 invoked by uid 109); 3 Nov 2016 15:14:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 15:14:24 +0000
-Received: (qmail 13084 invoked by uid 111); 3 Nov 2016 15:14:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 11:14:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 11:14:22 -0400
-Date:   Thu, 3 Nov 2016 11:14:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     Chris Purcell <chris.purcell.39@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug in git rev-parse @{push}?
-Message-ID: <20161103151422.nhrgzivapy5tisr4@sigill.intra.peff.net>
-References: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
+        id S1750970AbcKCPPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 11:15:09 -0400
+Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MfmZs-1cGWf02DTg-00N8C5 for <git@vger.kernel.org>; Thu,
+ 03 Nov 2016 16:15:06 +0100
+Date:   Thu, 3 Nov 2016 16:15:05 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+Subject: Help with vger's rules, was Re: [ANNOUNCE] Git for Windows 2.10.2
+In-Reply-To: <alpine.DEB.2.20.1611022158140.3108@virtualbox>
+Message-ID: <alpine.DEB.2.20.1611031554100.3108@virtualbox>
+References: <alpine.DEB.2.20.1611022158140.3108@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
+Content-Type: multipart/mixed; BOUNDARY="8323329-264901697-1478186106=:3108"
+X-Provags-ID: V03:K0:hvtE017sbY+Uv9KiLlULAnCZ+Q4uj3fNKCPm/UJHU9EhCm7uWMV
+ 35aEVuyK6z9rMrjKEiCm/cEchvocNbp0u+W71mQbL/La12OuZrVhA/to0qtwR1JPklTC3eD
+ BR+lVZODWDzaQxgDOXyAzDkUdrpg3P8Vj8T7M7g1os2ZBjpL3RT7N7U3yZTov8ccJKut7jn
+ chUcdIAaJdLBNJ5U/+3iA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:y/wch2XMnhY=:kVKvKi10g9k/XWabPDVTTi
+ bcRBer+XMvGaicPJAA26b0mwGCWl/W5wvvfHKNN3r+hcu1ZLUKl/fpgU+OSw/0psyGgUF21wb
+ iMk+1agBKE/EfdDDy0/P4RpcHzuwSVYerzZyNOLGWk71IRTaf8zkMmXSfH1o+FTNSDLQgnjKF
+ uGuglN010IXDsSyGL/RB5LQrc6hwpHOjwcrbhDUdPx45QSq8LKA2NT1kT6H24i52OWoM4lR1r
+ Nu7w1R8H02b/ywLXB5E43re2h5CZEGywgLKelmWROWfIagRS1mAGcHbsOt4K+h98lxakN2ptW
+ alkth7MsQLutxZ35gBUFZ7NzUaVXVbvNtIOTl7/3QHm0OwY7t4mbxeCtwEypXDnJfkU0LwA3K
+ aoDkL/t777vzN+GjiVWe4TWZWE6ULftxl3OOc7FNryoKevNaL9PnzVJTWlWUd13KImOZSvu+/
+ 8p0xA+RRjeYbtxDLVNT4Qpe6OpP87kRVJ0n0nSD97/WTa7DrjAVerud84xqI7vm9DKU6LN8a+
+ JsSSL1PsUKOIgK1wpFJsf5DKDm1kYkoQcUz8qWulhnRtkqxCFZ0uDq5i+6OspNW8h7FK3YChT
+ YNmNbzUXIRrtDCfccdUBGAKe5pLb6K71V5JdOaanI/di4M6y3Ras1v1Fyc3OQoa6Nxr4Bg7og
+ 0PMJS36U8y51HGZOOwHr16cbSFSegrguaGs0F5JOfaS1di7NWtaTiYKc42c9M/bskmaCpPdnW
+ unjWDh/sWzhkYCH5Tcffcyw+Tj5+/gqUabwkomJoozthfA/JtnDt/1ClrhqI4bSbEiknqot6v
+ dabTEJF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 03, 2016 at 02:53:44PM +0000, Chris Purcell wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> I think I have discovered a bug in rev-parse's handling of @{push}:
-> 
-> $ git push
-> Everything up-to-date
-> $ git rev-parse @{push}
-> fatal: cannot resolve 'simple' push to a single destination
-> 
-> The documentation for rev-parse says that "the suffix @{push} reports
-> the branch 'where we would push to' if git push were run while
-> branchname was checked out", so I would not expect this to error
-> unless git push does.
+--8323329-264901697-1478186106=:3108
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I'm not too surprised if there's a bug there. IIRC, the way the code is
-structured, some of the logic had to be reimplemented for @{push} rather
-than re-used, so there may be corner cases where they do not agree.
+Hi all,
 
-> The relevant parts of my configuration are:
-> 
-> [push]
->     default = simple
-> [remote]
->     pushdefault = origin
-> [branch "foo"]
->     remote = origin
->     merge = refs/heads/develop
-> 
-> The code in branch_get_push_1 (remote.c) in the PUSH_DEFAULT_SIMPLE
-> case is calling both branch_get_upstream and tracking_for_push_dest
-> and erroring if they don't return the same result, which I assume is
-> incorrect for a triangular workflow?
+On Wed, 2 Nov 2016, Johannes Schindelin wrote:
 
-I assume you have branch "foo" checked out?
+> Dear Git users,
+>=20
+> It is my pleasure to announce that Git for Windows 2.10.2 is available fr=
+om:
+>=20
+> =09https://git-for-windows.github.io/
+> [...]
 
-With this config I don't see how "git push" would work. Because you're
-using "simple", it should complain that "develop" and "foo" are not the
-same name.
+I originally intended this to be sent out at the same time as the
+announcement to the Git for Windows mailing list, finally in an automated
+manner so that I do not have to sit by the keyboard waiting for the
+uploads to finish (every new Git for Windows version is bundled into 9
+different distributables that all want to be uploaded).
 
-Can you give a more full reproduction recipe? If I try:
+But.
 
-  git init tmp && cd tmp
-  git config push.default simple
-  git commit -m foo --allow-empty ;# just to have some commit to push
+When it finally sent out the mail, and I thought everything was alright,
+thinking that I could turn out for the night with a well-deserved drink, I
+got this from vger.kernel.org:
 
-  git init --bare dst.git
-  git remote add origin dst.git
-  git push origin master:refs/heads/develop
+-- snip --
+SMTP error from remote server for TEXT command, host: vger.kernel.org (209.=
+132.180.67) reason: 550 5.7.1 Content-Policy reject msg: Wrong MIME labelin=
+g on 8-bit character texts.
+-- snap --
 
-  git checkout -b foo origin/develop
+Is there *anybody* who could give me a clue what this means?
 
-  # pushdefault of "origin" is already the default. checkout will have
-  # set up branch.foo.* as you specified. So let's try our push.
-  git push
+For the record, I tried to use `git send-email` to send out the
+announcement for the very first time, and the headers of the mbox file I
+fed to that command read thusly:
 
-Then I get:
+-- snip --
+From=202.10.2.windows.1 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Wed, 02 Nov 2016 21:43:54 +0100
+To: git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: [ANNOUNCE] Git for Windows 2.10.2
+Content-Type: text/plain; charset=3DUTF-8
+Fcc: Sent
+-- snap --
 
-  fatal: The upstream branch of your current branch does not match
-  the name of your current branch.  To push to the upstream branch
-  on the remote, use
+The only problem I could *possibly* imagine is this UTF-8 bullet character
+used in the enumerations in the mail body:
 
-      git push origin HEAD:develop
+=09 =E2=80=A2 [...]
 
-  To push to the branch of the same name on the remote, use
+FWIW I like that bullet very much, even if it was not my doing, but w3m's
+rendering of the release notes [*1*].
 
-      git push origin foo
+I would really, really, *really* like to keep automating things to make
+the release engineering of Git for Windows more painless and boring, but
+this thing, this unhelpful vger error message is blocking me from doing so
+right now.
 
-which makes sense.
+Help, anyone?
 
-If you _don't_ get that same message with "git push", then my next
-question is: might you have any aliases or other systems like "hub" that
-are munging the arguments to "git push"? Running with "GIT_TRACE=1" in
-the environment might be enlightening there.
+Thanks,
+Dscho
 
-> Please let me know if I've missed out important information by
-> mistake. I'm happy to work on a patch if given guidance, but this is
-> definitely outside my comfort zone for an unfamiliar codebase
-> otherwise! e.g. I can't find the test suite.
-
-The tests are in the "t" directory; see t/README for details. You can
-run them all with "make test" from the top-level directory.
-
--Peff
+Footnote *1*: The release notes are actually written using Markdown:
+https://github.com/git-for-windows/build-extra/blob/master/ReleaseNotes.md
+Those release notes are then rendered into HTML when releasing:
+https://github.com/git-for-windows/build-extra/blob/4d6097f/installer/relea=
+se.sh#L86
+They are also rendered into nice-looking ASCII via HTML by using both
+Markdown.perl and w3m, for use in the tag message:
+https://github.com/git-for-windows/build-extra/blob/4d6097f/please.sh#L1063=
+-L1066
+Same procedure is used again (to allow for very, very last-minute changes,
+such as the inclusion of Git Credential Manager v1.8.1 late yesterday,
+just because I still chased a bug introduced during the high-intensity
+installer patching bout last Tuesday) when announcing the new version:
+https://github.com/git-for-windows/build-extra/blob/4d6097f/please.sh#L1580=
+-L1582
+--8323329-264901697-1478186106=:3108--
