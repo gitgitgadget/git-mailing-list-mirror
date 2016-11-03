@@ -2,92 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCF372021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 14:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 939542021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 15:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754749AbcKCOxs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 10:53:48 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:36826 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756281AbcKCOxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 10:53:47 -0400
-Received: by mail-lf0-f50.google.com with SMTP id t196so40855153lff.3
-        for <git@vger.kernel.org>; Thu, 03 Nov 2016 07:53:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=uy51hh6N6LbnF645W/mqoNu3IekjUDfPLEVHzkpsiJU=;
-        b=RtTWQfnc0pYPWyhsw7dMgTzJMn5OeABeNHRcQ2mnQn9WPbjJAZN3jSonTX6pE0m00G
-         zF+nBzgNO2zU5LUALbr9G7/E4B4f9tVPRkOUJwfUReIgEWkeqwb9zg7ygdfogeJy7931
-         r2+yJJwVfMBkEUJwPW36yyjDQQ3VeNAawfv0RO0d/LVDw3wLpbDWc8gC5amg94SskllF
-         j6/Mp+HDZFHjiA7CqaN/TZK+mu/gdIEMifQvuvrV1hHDKBVwUNtOk6q4510g4GQ+pLhY
-         R2JN+VCmTzR4zdkYs8bIcqb7O7syeWlpzswAFponoc5Jnm5agRmYSJuipp47FuliNfmk
-         z9NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=uy51hh6N6LbnF645W/mqoNu3IekjUDfPLEVHzkpsiJU=;
-        b=l4d4OZUuWw9ABAOEr1oqdS1QLkxw5RhjOrCAo8fA1CxAHSzOEbv2lM1YdVCzfq85rE
-         pBh0Rk0Vm2XyLnbDXfrv68NaC8PBPIaJEjhjSKlf+GGrImQBX5/4miCVk2tpssuUyo0+
-         7j2DWYll4B5ArOIYpVcgZa3+9voL/0ZOjttyuF1X+6+WLLrCB4YyBjAJguKh+HfwJgFC
-         hvA9fZ0GTIuCViBwct3ExOEhgu+Gpu+7pRNZmlkQRzTB3kJD1vCLGfFDzkxdPfQ0v65q
-         OrF3b7KWYLEFYOGuSa63AEGYNY5FYMYjHB6k6FaPNVxr/r6/wFIpwlqlbs62A7NS0tRe
-         urbQ==
-X-Gm-Message-State: ABUngvdB1jqvTbGMa4Bi+dGUe9/JHuNSMsLtYUkGxQHPYtEhxXIzV6Nd2KzGuzX9pP4Zgz4fArULuTeemGx/Qw==
-X-Received: by 10.25.217.82 with SMTP id q79mr4600773lfg.13.1478184825326;
- Thu, 03 Nov 2016 07:53:45 -0700 (PDT)
+        id S1756414AbcKCPO0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 11:14:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38033 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751693AbcKCPOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 11:14:25 -0400
+Received: (qmail 27304 invoked by uid 109); 3 Nov 2016 15:14:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 15:14:24 +0000
+Received: (qmail 13084 invoked by uid 111); 3 Nov 2016 15:14:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 11:14:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 11:14:22 -0400
+Date:   Thu, 3 Nov 2016 11:14:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Chris Purcell <chris.purcell.39@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug in git rev-parse @{push}?
+Message-ID: <20161103151422.nhrgzivapy5tisr4@sigill.intra.peff.net>
+References: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.25.215.102 with HTTP; Thu, 3 Nov 2016 07:53:44 -0700 (PDT)
-From:   Chris Purcell <chris.purcell.39@gmail.com>
-Date:   Thu, 3 Nov 2016 14:53:44 +0000
-Message-ID: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
-Subject: Bug in git rev-parse @{push}?
-To:     git@vger.kernel.org
-Cc:     peff@peff.net
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+On Thu, Nov 03, 2016 at 02:53:44PM +0000, Chris Purcell wrote:
 
-I think I have discovered a bug in rev-parse's handling of @{push}:
+> I think I have discovered a bug in rev-parse's handling of @{push}:
+> 
+> $ git push
+> Everything up-to-date
+> $ git rev-parse @{push}
+> fatal: cannot resolve 'simple' push to a single destination
+> 
+> The documentation for rev-parse says that "the suffix @{push} reports
+> the branch 'where we would push to' if git push were run while
+> branchname was checked out", so I would not expect this to error
+> unless git push does.
 
-$ git push
-Everything up-to-date
-$ git rev-parse @{push}
-fatal: cannot resolve 'simple' push to a single destination
+I'm not too surprised if there's a bug there. IIRC, the way the code is
+structured, some of the logic had to be reimplemented for @{push} rather
+than re-used, so there may be corner cases where they do not agree.
 
-The documentation for rev-parse says that "the suffix @{push} reports
-the branch 'where we would push to' if git push were run while
-branchname was checked out", so I would not expect this to error
-unless git push does.
+> The relevant parts of my configuration are:
+> 
+> [push]
+>     default = simple
+> [remote]
+>     pushdefault = origin
+> [branch "foo"]
+>     remote = origin
+>     merge = refs/heads/develop
+> 
+> The code in branch_get_push_1 (remote.c) in the PUSH_DEFAULT_SIMPLE
+> case is calling both branch_get_upstream and tracking_for_push_dest
+> and erroring if they don't return the same result, which I assume is
+> incorrect for a triangular workflow?
 
-The relevant parts of my configuration are:
+I assume you have branch "foo" checked out?
 
-[push]
-    default = simple
-[remote]
-    pushdefault = origin
-[branch "foo"]
-    remote = origin
-    merge = refs/heads/develop
+With this config I don't see how "git push" would work. Because you're
+using "simple", it should complain that "develop" and "foo" are not the
+same name.
 
-The code in branch_get_push_1 (remote.c) in the PUSH_DEFAULT_SIMPLE
-case is calling both branch_get_upstream and tracking_for_push_dest
-and erroring if they don't return the same result, which I assume is
-incorrect for a triangular workflow?
+Can you give a more full reproduction recipe? If I try:
 
-Please let me know if I've missed out important information by
-mistake. I'm happy to work on a patch if given guidance, but this is
-definitely outside my comfort zone for an unfamiliar codebase
-otherwise! e.g. I can't find the test suite.
+  git init tmp && cd tmp
+  git config push.default simple
+  git commit -m foo --allow-empty ;# just to have some commit to push
 
-Cheers,
-Chris
+  git init --bare dst.git
+  git remote add origin dst.git
+  git push origin master:refs/heads/develop
+
+  git checkout -b foo origin/develop
+
+  # pushdefault of "origin" is already the default. checkout will have
+  # set up branch.foo.* as you specified. So let's try our push.
+  git push
+
+Then I get:
+
+  fatal: The upstream branch of your current branch does not match
+  the name of your current branch.  To push to the upstream branch
+  on the remote, use
+
+      git push origin HEAD:develop
+
+  To push to the branch of the same name on the remote, use
+
+      git push origin foo
+
+which makes sense.
+
+If you _don't_ get that same message with "git push", then my next
+question is: might you have any aliases or other systems like "hub" that
+are munging the arguments to "git push"? Running with "GIT_TRACE=1" in
+the environment might be enlightening there.
+
+> Please let me know if I've missed out important information by
+> mistake. I'm happy to work on a patch if given guidance, but this is
+> definitely outside my comfort zone for an unfamiliar codebase
+> otherwise! e.g. I can't find the test suite.
+
+The tests are in the "t" directory; see t/README for details. You can
+run them all with "make test" from the top-level directory.
+
+-Peff
