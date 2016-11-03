@@ -6,199 +6,96 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45AA02021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 20:22:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DECA72021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 20:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756184AbcKCUWb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 16:22:31 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:5900 "EHLO bsmtp.bon.at"
+        id S1757801AbcKCUkF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 16:40:05 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:6720 "EHLO bsmtp.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751352AbcKCUWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 16:22:30 -0400
+        id S1754558AbcKCUkE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 16:40:04 -0400
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t8xGW2s2Fz5tlH;
-        Thu,  3 Nov 2016 21:22:27 +0100 (CET)
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t8xfp0Twjz5tlR;
+        Thu,  3 Nov 2016 21:40:01 +0100 (CET)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8EC60149;
-        Thu,  3 Nov 2016 21:22:26 +0100 (CET)
-Subject: [PATCH (optional)] t0021: use arithmetic expansion to trim whitespace
- from wc -c output
-To:     Lars Schneider <larsxschneider@gmail.com>
-References: <20161016232038.84951-1-larsxschneider@gmail.com>
- <20161016232038.84951-14-larsxschneider@gmail.com>
- <3b09d218-33bd-dc7c-235c-8954a46afc41@kdbg.org>
- <3763DDDB-9D53-4877-8399-32DF1780CAB7@gmail.com>
- <fb4d62de-fbb5-a2b4-8eba-b135125dafa9@kdbg.org>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-        peff@peff.net, ramsay@ramsayjones.plus.com, tboegi@web.de
+        by dx.site (Postfix) with ESMTP id 958E1149;
+        Thu,  3 Nov 2016 21:40:01 +0100 (CET)
+Subject: Re: [PATCH 2/4] t0021: put $TEST_ROOT in $PATH
+To:     Jeff King <peff@peff.net>
+References: <20161102181625.e2uprqdlzl7z2xrz@sigill.intra.peff.net>
+ <20161102181824.mi6lmfnfckvrav7n@sigill.intra.peff.net>
+Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <3b58b90d-5435-1503-d052-413a947a5ab5@kdbg.org>
-Date:   Thu, 3 Nov 2016 21:22:26 +0100
+Message-ID: <d36d8b51-f2d7-a2f5-89ea-369f49556e10@kdbg.org>
+Date:   Thu, 3 Nov 2016 21:40:01 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <fb4d62de-fbb5-a2b4-8eba-b135125dafa9@kdbg.org>
-Content-Type: text/plain; charset=windows-1252
+In-Reply-To: <20161102181824.mi6lmfnfckvrav7n@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of a pipeline with sed and a useless use of cat, return the
-unmodified text of wc -c from function file_size, but substitute the
-result with arithmetic expansion to get rid of the leading whitespace
-that some version of wc -c print.
+Am 02.11.2016 um 19:18 schrieb Jeff King:
+> We create a rot13.sh script in the trash directory, but need
+> to call it by its full path when we have moved our cwd to
+> another directory. Let's just put $TEST_ROOT in our $PATH so
+> that the script is always found.
+> 
+> This is a minor convenience for rot13.sh, but will be a
+> major one when we switch rot13-filter.pl to a script in the
+> same directory, as it means we will not have to deal with
+> shell quoting inside the filter-process config.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t0021-conversion.sh | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index dfde22549..c1ad20c61 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -5,6 +5,7 @@ test_description='blob conversion via gitattributes'
+>  . ./test-lib.sh
+>  
+>  TEST_ROOT="$(pwd)"
+> +PATH=$TEST_ROOT:$PATH
+
+This causes problems on Windows. We need the following squashed in.
+
+---- 8< ----
+[PATCH] squash! t0021: put $TEST_ROOT in $PATH
+
+We have to use $PWD instead of $(pwd) because on Windows the
+latter would add a C: style path to bash's Unix-style $PATH
+variable, which becomes confused by the colon after the
+drive letter. ($PWD is a Unix-style path.)
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
-This is a pure optimization that reduces the number of forks, which
-helps a bit on Windows.
-
-There would be a solution with perl that does not require trimming
-of whitespace, but perl startup times are unbearable on Windows.
-wc -c is better.
-
- t/t0021-conversion.sh | 50 +++++++++++++++++++++++++-------------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ t/t0021-conversion.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index db71acacb3..42b529f615 100755
+index 4e4b9a6be3..cff2b7259d 100755
 --- a/t/t0021-conversion.sh
 +++ b/t/t0021-conversion.sh
-@@ -22,7 +22,7 @@ generate_random_characters () {
- }
+@@ -4,7 +4,7 @@ test_description='blob conversion via gitattributes'
  
- file_size () {
--	cat "$1" | wc -c | sed "s/^[ ]*//"
-+	wc -c <"$1"
- }
+ . ./test-lib.sh
  
- filter_git () {
-@@ -369,10 +369,10 @@ test_expect_success PERL 'required process filter should filter data' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: clean test.r $S [OK] -- OUT: $S . [OK]
--			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: clean test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
-+			IN: clean test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
- 			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
--			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $(($S3)) [OK] -- OUT: $(($S3)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_count expected.log rot13-filter.log &&
-@@ -381,14 +381,14 @@ test_expect_success PERL 'required process filter should filter data' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: clean test.r $S [OK] -- OUT: $S . [OK]
--			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: clean test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
-+			IN: clean test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
- 			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
--			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
--			IN: clean test.r $S [OK] -- OUT: $S . [OK]
--			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $(($S3)) [OK] -- OUT: $(($S3)) . [OK]
-+			IN: clean test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
-+			IN: clean test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
- 			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
--			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $(($S3)) [OK] -- OUT: $(($S3)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_count expected.log rot13-filter.log &&
-@@ -399,8 +399,8 @@ test_expect_success PERL 'required process filter should filter data' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
--			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			IN: smudge test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
-+			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $(($S3)) [OK] -- OUT: $(($S3)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log rot13-filter.log &&
-@@ -409,7 +409,7 @@ test_expect_success PERL 'required process filter should filter data' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			IN: clean test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log rot13-filter.log &&
-@@ -418,10 +418,10 @@ test_expect_success PERL 'required process filter should filter data' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
-+			IN: smudge test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
- 			IN: smudge test4-empty.r 0 [OK] -- OUT: 0  [OK]
--			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
-+			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $(($S3)) [OK] -- OUT: $(($S3)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log rot13-filter.log &&
-@@ -451,7 +451,7 @@ test_expect_success PERL 'required process filter takes precedence' '
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			IN: clean test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_count expected.log rot13-filter.log
-@@ -474,7 +474,7 @@ test_expect_success PERL 'required process filter should be used only for "clean
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: clean test.r $S [OK] -- OUT: $S . [OK]
-+			IN: clean test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_count expected.log rot13-filter.log &&
-@@ -603,11 +603,11 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge smudge-write-fail.r $SF [OK] -- OUT: $SF [WRITE FAIL]
-+			IN: smudge smudge-write-fail.r $(($SF)) [OK] -- OUT: $(($SF)) [WRITE FAIL]
- 			START
- 			init handshake complete
--			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
-+			IN: smudge test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log rot13-filter.log &&
-@@ -649,9 +649,9 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge error.r $SE [OK] -- OUT: 0 [ERROR]
--			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
--			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
-+			IN: smudge error.r $(($SE)) [OK] -- OUT: 0 [ERROR]
-+			IN: smudge test.r $(($S)) [OK] -- OUT: $(($S)) . [OK]
-+			IN: smudge test2.r $(($S2)) [OK] -- OUT: $(($S2)) . [OK]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log rot13-filter.log &&
-@@ -688,7 +688,7 @@ test_expect_success PERL 'process filter abort stops processing of all further f
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge abort.r $SA [OK] -- OUT: 0 [ABORT]
-+			IN: smudge abort.r $(($SA)) [OK] -- OUT: 0 [ABORT]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log rot13-filter.log &&
+-TEST_ROOT="$(pwd)"
++TEST_ROOT="$PWD"
+ PATH=$TEST_ROOT:$PATH
+ 
+ write_script <<\EOF "$TEST_ROOT/rot13.sh"
 -- 
 2.11.0.rc0.55.gd967357
 
