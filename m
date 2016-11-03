@@ -2,168 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBCB32076A
-	for <e@80x24.org>; Thu,  3 Nov 2016 00:23:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2678E206FB
+	for <e@80x24.org>; Thu,  3 Nov 2016 00:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751227AbcKCAW6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Nov 2016 20:22:58 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36310 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750723AbcKCAW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2016 20:22:57 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n85so3028960pfi.3
-        for <git@vger.kernel.org>; Wed, 02 Nov 2016 17:22:57 -0700 (PDT)
+        id S1751779AbcKCAlH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Nov 2016 20:41:07 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34773 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750871AbcKCAlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2016 20:41:06 -0400
+Received: by mail-wm0-f68.google.com with SMTP id p190so5479162wmp.1
+        for <git@vger.kernel.org>; Wed, 02 Nov 2016 17:41:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9hDEJuTQgCOKy68eiNceFeFBdiS74As8RmNXLQOHULU=;
-        b=lqz+EMEAfosLDGAkxdAIALxNdRGZDFzfkQY28rt3TSrULV9pJX7I4qppXSK6/E7fU2
-         h70NelQH8kAGj3SOHu/zXPPEx4fAQDBjbwDVjSiMtMJflFaMZtupUaE4l6JyNAhD68sh
-         Dht66mmed8Rk1ZMeHt+nL/gikEVzs30zZVIPTvVj4pjG722NC+XLq1d/qEPw9G2WBDta
-         3CFHMiTiJ5TeB/NuqGX5T27RptVozdYk0VKnVZvqZo0bqhVSbVPltrJIwjqgNxVY6sXG
-         g2OEEEl/DHnsf2NV1gMXDZBwB+xRq+eZe41iGngw7+9H4HiJqtPvAW/PrQWbyFgj/y1d
-         Hz5w==
+        h=references:in-reply-to:mime-version:content-transfer-encoding
+         :message-id:cc:from:subject:date:to;
+        bh=PK88V+a48/ukrlWe3OdTflDpOPEF7/lpydKSnOTqPhM=;
+        b=qbS1hO/r7QR2LDQmQ+mLY3mRbU6XwM6fhHSaYulNfSiyY3urqGdyJZ61lZz6/9+CU+
+         JgrkxQfbI9SgJ3af4Xz7GDyyYWnRqTCA7q4aQHbavwt7fmrBGWTmWfN3mFYv3zEbjgTf
+         8uJAgL97orAKd4SAYO7N0SSZTAkrTsS6Iw1gNmcU1toVwp7ZxWr8GrvRANQ8E7Oe50iT
+         57qsQ9Ehj1t+yvLAnRxZWiEEL4xyL569QKTkW8zL3dmRCGTk7xzLQCp5itbMMGu8cBmU
+         2WTeAYrQV4sE9QEciiA5kFC28+OIV+0YcoTsKJPLQ9uCaWHzU5Kptjj/99/ooCaGifnT
+         zlNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9hDEJuTQgCOKy68eiNceFeFBdiS74As8RmNXLQOHULU=;
-        b=dzsN0g4qosdssvQVhWscxADATh9Qe/VV4uOZxHsVuDi6Q/gp5Gl6kEavlb6168azeM
-         nnE31GXQqRhGH8O5SCELdBB3GZsF5J+k5GUEmy6WIM5GlUO2pAP595pTx98Z1L2BeDJI
-         EtZNZLYLTuk8ssGyPt0XSW1Kd3AbakODMmRVw+M9XvzW1JgALwonAgy7Sbdr6HUKV6tu
-         zp284qHd9VUifFmPFxVVzY4rx+82Ri0HerFz2YdGhUauPD7vEWIORZciMe74sj1qVcHy
-         hxZLkWgmFOKc87pnqomQYIicyBek2hzczw4ft4Znwu9ju5NyZibNyvs4m/QQL34sB8M7
-         AqPA==
-X-Gm-Message-State: ABUngvfyhBPeF1ILNTHJGQ8ylNysJyEkzNCbHj1VNYK96oHDRM6dYK9T8RlpOh6q9rB0oQ==
-X-Received: by 10.99.38.66 with SMTP id m63mr9665311pgm.83.1478132576974;
-        Wed, 02 Nov 2016 17:22:56 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:782b:e6dd:f883:e4c8])
-        by smtp.gmail.com with ESMTPSA id q28sm7362934pfj.73.2016.11.02.17.22.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 02 Nov 2016 17:22:56 -0700 (PDT)
-Date:   Wed, 2 Nov 2016 17:22:25 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Blake Burkhart <bburky@bburky.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] transport: add core.allowProtocol config option
-Message-ID: <20161103002225.GA13369@google.com>
-References: <1478125247-62372-1-git-send-email-bmwill@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1478125247-62372-1-git-send-email-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:references:in-reply-to:mime-version
+         :content-transfer-encoding:message-id:cc:from:subject:date:to;
+        bh=PK88V+a48/ukrlWe3OdTflDpOPEF7/lpydKSnOTqPhM=;
+        b=TkGH9UrNIDCsXbMoZ2WDuo7vsjaNNPGHd5H7MsEA94hAxgBp+9Dn+7n5zI2+HtWd+r
+         bDyDEgpSyo7KRnFQiDuq6UokFpLIOhZ4ojgIUdWWoxwhXLcfN8vxl8WwPpTbbuEAaue2
+         dM9mFByS1fpA5RCHYLyVZEKmdjMFIMAJIrHe5YSOF4x3u7TPWCLt8iLO4mbzljAkyqEG
+         LzC/SF0O4e81zN3zTRgiNWNqt9wy8VfAme8vOXbfpS0Nk7x4tWLAgM+XwKj8ZbJE2RJe
+         fftb7PSqOl96dLPeRfifz/Ji3jHaGFaGIuJIElqMcRO56e0wLnN1A4EjX3gbsn6bcPAu
+         BDfw==
+X-Gm-Message-State: ABUngvdyNwWi8ungMxeMEOAB9IuglcV4I3l3hP794C2bOKZKC0JSPPTMdpFQllRmj248Bw==
+X-Received: by 10.194.23.67 with SMTP id k3mr4996041wjf.103.1478133665174;
+        Wed, 02 Nov 2016 17:41:05 -0700 (PDT)
+Received: from [192.168.0.103] ([47.60.176.155])
+        by smtp.gmail.com with ESMTPSA id ym3sm5578787wjc.6.2016.11.02.17.41.04
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 02 Nov 2016 17:41:04 -0700 (PDT)
+References: <20161016232038.84951-1-larsxschneider@gmail.com> <20161016232038.84951-14-larsxschneider@gmail.com> <3b09d218-33bd-dc7c-235c-8954a46afc41@kdbg.org>
+In-Reply-To: <3b09d218-33bd-dc7c-235c-8954a46afc41@kdbg.org>
+Mime-Version: 1.0 (1.0)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset=us-ascii
+Message-Id: <3763DDDB-9D53-4877-8399-32DF1780CAB7@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+        peff@peff.net, ramsay@ramsayjones.plus.com, tboegi@web.de
+X-Mailer: iPhone Mail (14A456)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v11 13/14] convert: add filter.<driver>.process option
+Date:   Thu, 3 Nov 2016 00:41:02 +0000
+To:     Johannes Sixt <j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+peff and bburky, who introduced GIT_ALLOW_PROTOCOL)
-Brandon Williams wrote:
 
-> Add configuration option 'core.allowProtocol' to allow users to create a
-> whitelist of allowed protocols for fetch/push/clone in their gitconfig.
+> On 2 Nov 2016, at 18:03, Johannes Sixt <j6t@kdbg.org> wrote:
+>=20
+>> Am 17.10.2016 um 01:20 schrieb larsxschneider@gmail.com:
+>> +# Compare two files and ensure that `clean` and `smudge` respectively ar=
+e
+>> +# called at least once if specified in the `expect` file. The actual
+>> +# invocation count is not relevant because their number can vary.
+>> +# c.f. http://public-inbox.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.goo=
+gle.com/
+>> +test_cmp_count () {
+>> +    expect=3D$1
+>> +    actual=3D$2
+>> +    for FILE in "$expect" "$actual"
+>> +    do
+>> +        sort "$FILE" | uniq -c | sed "s/^[ ]*//" |
+>> +            sed "s/^\([0-9]\) IN: clean/x IN: clean/" |
+>> +            sed "s/^\([0-9]\) IN: smudge/x IN: smudge/" >"$FILE.tmp" &&
+>=20
+> This is not sufficiently portable. Some versions of uniq write the
+> count left-adjusted, not right-adjusted. How about this on top:
+>=20
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index a20b9f58e3..f60858c517 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -40,10 +40,9 @@ test_cmp_count () {
+>    actual=3D$2
+>    for FILE in "$expect" "$actual"
+>    do
+> -        sort "$FILE" | uniq -c | sed "s/^[ ]*//" |
+> -            sed "s/^\([0-9]\) IN: clean/x IN: clean/" |
+> -            sed "s/^\([0-9]\) IN: smudge/x IN: smudge/" >"$FILE.tmp" &&
+> -        mv "$FILE.tmp" "$FILE"
+> +        sort "$FILE" | uniq -c |
+> +        sed -e "s/^ *[0-9][0-9]* *IN: /x IN: /" >"$FILE.tmp" &&
 
-Ooh.
+This looks good (thanks for cleaning up the redundant clean/smudge stuff - t=
+hat was a refactoring artifact!). One minor nit: doesn't sed understand '[0-=
+9]+' ?
 
-This would be especially useful at $DAYJOB, where there is a custom
-sso:// protocol that is often used by submodules.  Using an envvar to
-whitelist it globally is painful because
+> +        mv "$FILE.tmp" "$FILE" || return
 
- - it disables other protocols even when explicitly requested on a
-   plain "git clone" command line by the user.  By comparison, the
-   built-in git-submodule.sh whitelist only applies to submodules.
+Why '|| return' here?
 
- - platform-specific instructions to set an environment variable can
-   be more difficult than "just set this git configuration"
+>    done &&
+>    test_cmp "$expect" "$actual"
+> }
 
-Another difficulty with setting GIT_ALLOW_PROTOCOL globally is that it
-requires copy/pasting the default value from upstream and then adding
-the values I want.  There's no straightforward way to get the current
-value and add to it, in case I want to benefit from future upstream
-fixes to the default list.
-
-That is, would it be possible to use something like
-
-	[protocol "sso"]
-		allow = always
-
-instead of
-
-	[core]
-		allowProtocol = file:git:http:https:....:sso
-
-?
-
-[...]
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -27,7 +27,8 @@ cd_to_toplevel
->  #
->  # If the user has already specified a set of allowed protocols,
->  # we assume they know what they're doing and use that instead.
-> -: ${GIT_ALLOW_PROTOCOL=file:git:http:https:ssh}
-> +config_whitelist=$(git config core.allowProtocol)
-> +: ${GIT_ALLOW_PROTOCOL=${config_whitelist:-file:git:http:https:ssh}}
-
-optional: To avoid config parsing when GIT_ALLOW_PROTOCOL is already
-set, could do something like
-
- if ! test "${GIT_ALLOW_PROTOCOL+set}"
- then
-	GIT_ALLOW_PROTOCOL=$(
-		git config --name-only --get-regexp 'protocol\..*\.allow' always |
-		sed -e 's/^protocol.//' -e 's/.allow$//' |
-		tr '\n' ':'
-	)
-	GIT_ALLOW_PROTOCOL=${GIT_ALLOW_PROTOCOL%:}
-	: ${GIT_ALLOW_PROTOCOL:=file:git:http:https:ssh}
- fi
-
-[...]
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -652,7 +652,7 @@ static const struct string_list *protocol_whitelist(void)
->  
->  	if (enabled < 0) {
->  		const char *v = getenv("GIT_ALLOW_PROTOCOL");
-> -		if (v) {
-> +		if (v || !git_config_get_value("core.allowProtocol", &v)) {
->  			string_list_split(&allowed, v, ':', -1);
-
-This has the effect of always disabling other protocols when
-core.allowProtocol is set.  Is that intended?
-
-Like the default list used by submodule, I'd be happiest if this only
-applied to repositories cloned implicitly instead of those passed
-directly to 'git clone'.
-
-That reminds me: external tools also set GIT_ALLOW_PROTOCOL when the
-user hasn't set it explicitly, like git-submodule.sh does.  E.g.
-repo <https://gerrit.googlesource.com/git-repo/+/466b8c4e/git_command.py#171>,
-mercurial <https://www.mercurial-scm.org/repo/hg/file/b032a7b676c6/mercurial/subrepo.py#l1404>.
-Other external tools consume GIT_ALLOW_PROTOCOL, like 'go get'
-<https://go.googlesource.com/go/+/55620a0e/src/cmd/go/vcs.go#64>.
-Can we make it more convenient for them to support this configuration
-too?
-
-An example approach would be a GIT_ALLOW_PROTOCOL var returned by
-"git var".
-
-That way git-submodule.sh could do
-
-	: ${GIT_ALLOW_PROTOCOL=$(git var GIT_ALLOW_PROTOCOL)}
-
-and it would just work.  Other tools could do the same, with a
-fallback to the current default until new enough git is in widespread
-use.
-
-Thanks and hope that helps,
-Jonathan
+Thank you,
+Lars=
