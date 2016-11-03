@@ -2,72 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40462206A4
-	for <e@80x24.org>; Thu,  3 Nov 2016 05:36:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B94442021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 14:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751529AbcKCFgy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 01:36:54 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:33925 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751442AbcKCFgx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 01:36:53 -0400
-Received: by mail-yw0-f193.google.com with SMTP id l124so1250398ywb.1
-        for <git@vger.kernel.org>; Wed, 02 Nov 2016 22:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+UKSm1fypgaEgne5inv7unsmwPRx7YwPk/gSJUrDDKQ=;
-        b=kGNB/VcSpqVWEAGLkBGJezgXUXOMl3LaBW/2c/fDDfPRbDNkuUBjN74+gv+TwWN0BA
-         BVan+WYqLKX5SA7MkbxFxYhS77lDoz3K5QIP043KXWRkrGV27X+6i3rjN5eBjZ9KSIcf
-         xvkmezSks9HS26XcuRbZYrGXP0ayO5WDu7IjDQQQbw3OSQ04I3tUzBWLKJ1aSI5X6j2R
-         Xj0y1OQZxAQ1eh9B0w2yMeQUKQAdMZ0UJJw3ltW6evyp+xywTpEqhR6hgoRq9bqH8Oz3
-         dL4cBggOntdduIWGdNu6z0ErtBBOQojA01DFu/VEkM1M/HOPlchn9z0oy4PJlZgDsQF4
-         JlFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+UKSm1fypgaEgne5inv7unsmwPRx7YwPk/gSJUrDDKQ=;
-        b=a3so89h1CrHqn1YHuq1u5llZ2c3wbsmoVKn9mBo4FzRo1hwHZZxre3efUQLRgvpwll
-         soh8YXHNR4CKFEYXl38wQLh3DhTwGngawS8e/vd6NqEwwZXmSNp/hdvqQIbfiExfK9Fc
-         asYq3EXH6OL2OSDBvBLAkCNaBca59wEj/BnsxyB+lfmXbU/2PGA/VtPPbXEZNioS2c9+
-         pQYAaWtMRHL2uEM4fvBm2eUGOIRGwFOWuBFPEy9K/tuar11HLzVkuAfrlAZV4nN1L9RA
-         8t1dvuToiMlsFg3NXgp/l3n3OCaQhMETITe7g3NjskkppzRd39MakjjK8NkoYmtXGvCQ
-         pgKg==
-X-Gm-Message-State: ABUngvctmwzbxrkdfXSf8tBh4KxPymuR4K81I4KJanXurmi5HCWCieK8gTp2rB/Ntt7bgKeczodC/K3KWcX22g==
-X-Received: by 10.13.221.12 with SMTP id g12mr6757649ywe.257.1478151412141;
- Wed, 02 Nov 2016 22:36:52 -0700 (PDT)
+        id S1757470AbcKCOSw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 10:18:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37996 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755028AbcKCOSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 10:18:51 -0400
+Received: (qmail 24326 invoked by uid 109); 3 Nov 2016 14:18:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 14:18:50 +0000
+Received: (qmail 12565 invoked by uid 111); 3 Nov 2016 14:19:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 10:19:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 10:18:48 -0400
+Date:   Thu, 3 Nov 2016 10:18:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andrea Arcangeli <aarcange@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: send-email garbled header with trailing doublequote in email
+Message-ID: <20161103141848.42pg6iow24prign5@sigill.intra.peff.net>
+References: <20161102202709.GI4611@redhat.com>
+ <20161102211118.sc4j3fezfqxg23i3@sigill.intra.peff.net>
+ <20161102213805.GJ4611@redhat.com>
+ <20161102220437.5ewzezxs2nasyouv@sigill.intra.peff.net>
+ <20161102222901.GK4611@redhat.com>
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Wed, 2 Nov 2016 22:36:31 -0700 (PDT)
-In-Reply-To: <20161102231722.15787-3-sbeller@google.com>
-References: <20161102231722.15787-1-sbeller@google.com> <20161102231722.15787-3-sbeller@google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 2 Nov 2016 22:36:31 -0700
-Message-ID: <CA+P7+xo_2AHx8c7iCkaGeMCH4WynM=6eTOG0arfcBdex-AahCw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] submodule-config: rename commit_sha1 to commit_or_tree
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, bmwill@google.com,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161102222901.GK4611@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 2, 2016 at 4:17 PM, Stefan Beller <sbeller@google.com> wrote:
-> -`const struct submodule *submodule_from_path(const unsigned char *commit_sha1, const char *path)`::
-> +`const struct submodule *submodule_from_path(const unsigned char *commit_or_tree, const char *path)`::
->
->         Lookup values for one submodule by its commit_sha1 and path.
->
+On Wed, Nov 02, 2016 at 11:29:01PM +0100, Andrea Arcangeli wrote:
 
-Update the doc text here as well?
+> So this must be postfix then that out of the blue decided to garble it
+> in a strange way while parsing the input... The removal of all
+> whitespaces s/what ever/whatever/ especially I've no idea how it
+> decided to do so.
+> 
+> Can you reproduce with postfix as sendmail at least? If you can
+> reproduce also see what happens if you add another --to.
 
-Thanks,
-Jake
+Yes, I can easily reproduce without using git at all by installing
+postfix in local-delivery mode and running:
+
+sendmail peff@sigill.intra.peff.net <<\EOF
+From: Jeff King <peff@peff.net>
+To: "what ever" " <peff@sigill.intra.peff.net>
+Subject: patch
+
+This is the body
+EOF
+
+Many MTAs do this kind of header-rewriting. I don't necessarily agree
+with it as a general concept, but the real problem is the syntactically
+bogus header. The munging that postfix does makes things worse, but I
+can see why it is confused and does what it does (the whole email is
+inside a double-quoted portion that is never closed, so it probably
+thinks there is no hostname portion at all).
+
+So git is possibly at fault for passing along a bogus address. OTOH, the
+user is perhaps at fault for providing the bogus address to git in the
+first place. GIGO. :)
+
+I think if any change were to be made, it would be to recognize this
+bogosity and either clean it up or abort. That ideally would happen via
+Mail::Address so git does not have to add a bunch of ad-hoc "is this
+valid rfc822" checks. Reading the manpage for that module, though, it
+says:
+
+  [we do not handle all of rfc2822]
+  Often requests are made to the maintainers of this code improve this
+  situation, but this is not a good idea, where it will break zillions
+  of existing applications.  If you wish for a fully RFC2822 compliant
+  implementation you may take a look at Mail::Message::Field::Full, part
+  of MailBox.
+
+So it's possible that switching to a more robust module would improve
+things.
+
+-Peff
