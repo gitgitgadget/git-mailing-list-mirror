@@ -2,83 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D77F0206A7
-	for <e@80x24.org>; Thu,  3 Nov 2016 16:51:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 006DD2021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 17:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758762AbcKCQvk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 12:51:40 -0400
-Received: from mout.gmx.net ([212.227.17.22]:57539 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756737AbcKCQvi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 12:51:38 -0400
-Received: from virtualbox ([37.24.142.40]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Mcyxq-1cJJt21ul8-00IAO1; Thu, 03 Nov 2016 17:51:22
- +0100
-Date:   Thu, 3 Nov 2016 17:51:20 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org
-Subject: Re: Help with vger's rules, was Re: [ANNOUNCE] Git for Windows
- 2.10.2
-In-Reply-To: <20161103153845.nhquuoko4utecit2@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1611031750590.3108@virtualbox>
-References: <alpine.DEB.2.20.1611022158140.3108@virtualbox> <alpine.DEB.2.20.1611031554100.3108@virtualbox> <20161103153453.4aipi5lxkmkt3kco@sigill.intra.peff.net> <20161103153845.nhquuoko4utecit2@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1758957AbcKCRBk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 13:01:40 -0400
+Received: from mail-ua0-f170.google.com ([209.85.217.170]:33354 "EHLO
+        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758559AbcKCRBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 13:01:39 -0400
+Received: by mail-ua0-f170.google.com with SMTP id 20so44756908uak.0
+        for <git@vger.kernel.org>; Thu, 03 Nov 2016 10:01:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=OZAtlUZME4uuxacCh8/Dpp+ZY7D/+XzC+qgX2NImhWw=;
+        b=d/UnBna8zj+d+FhbaIfY95ztU6F+Ih9pNeAvc3HUCO4LeLpyMzlg8GeTwA6WO81cjA
+         NYrYtPAnnUmNpNCTxRjAfDYZFCqW3+SoaIt/84pBy6WXPWxenOPRtmYMJv6JT28dxMZU
+         LvQObza27XII1EaM+jcapkyz44nRj5YU8knLbLqbw65NpY2UIyJ3WORlbh7Gowhcok6m
+         GAo8P2I4SPzk0AnFQ7VvvN1KZZflLj2LX5JCzx+GS+J45hAwrdlNvQKYc/1U1WOFwiUq
+         Pz8eW8UkDPrW6PFyGzSph2gb4UXw5gS6ygEZkLXzKlIaQZo/y3/94U4vAvk5jsU6T9iy
+         u/wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=OZAtlUZME4uuxacCh8/Dpp+ZY7D/+XzC+qgX2NImhWw=;
+        b=jA44CQKkzJy8rjEZIxhPj8IAdiquIqFAQK3pxMx478cMJH+q5FHakpHqCvGbwXvXIh
+         QQAuiVuIIV6BVMjrfMDs9kXD9by1oQcjIUv4nQ5Q7HVQYbHvRAGP0TIL4Qu/Ge9CRPHo
+         eFfcCV4UFrGvYYdYKx3fbM7MOyIzY6TuTkRx9FRdQkHEQxf3pIzWRvB9cvUVn2mwQyU2
+         5dYE+H0z/Yq9h140YkCI5BijHkax6WaEMYERRsq6hwI1gPZwxE1oRXAuslcKhXg27mJQ
+         di85GXWccDOylRl8OgFi5EaUL3ggGUB8E+KJcLbMXbDc284wyFCogb+aSRXDeGZaGTVe
+         SqSQ==
+X-Gm-Message-State: ABUngvfv9LZbgrxn8OCdWRK0OoBkptOmUsUUlJWhEyuDc0xIPqqq3nlA2o4uuSJAqzXrZ8R3PGfTLloxBwxwBA==
+X-Received: by 10.176.0.52 with SMTP id 49mr7960060uai.9.1478192498227; Thu,
+ 03 Nov 2016 10:01:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pRHuK+2JW3CckxOe9ouWYYethhGBuLWo4mgvGTEDTyxuYC1wgCr
- 5y/uCE7XFZGXp4ui0tUVrgHkDZGryz5aaC5l3X9EWzaH4xAfBF1jPOjMbhDt6RvHXh2qv8R
- RvGI3uXyJgdN9bm7Pt+7pOw5Ta6dhKxDZZZy88h+6Hiegm/6VG3MtCQdTPrDbTz80F/LJg9
- RtBbmrgDLt/b4FvikIThA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e0Vlc7fvdp8=:3dWdoAN0/BSV/VUc2/Wz+b
- Ex7W1ASc2ee1Y2f2BMxV0c7bHSzirTOmBkpTumowSaaQ8RFZ1ce58MP5D2QrQ1cxoMu3FJi/u
- ZuLNQpflwn5IIvrRSyrgAv0Dzx5JhT9rdc5TF8i6TfSk+n09wkPXCLEBr9J7VZQJ8ecBOLJjS
- I6qC1p4gMLMZ7zEq4HyngsGW7VQhpCUBCmbW+3+retIGRGkx7EWDZ6Rc2jI8yUmTLegUnaOQP
- 0SaJwidY6mqfeFfeODQECK9Y5x17maYqqvjdQhIuho2oIaRjqjBUr6isS36utjyL+F+r4hBLj
- fpCoATqbOkMyHe9Xm1/SfEGPxjey5r7nex6nl+IkofCa1y/fd2AEFBeofsr5JxN5UaQl1Q468
- aFZmsUsD3U056+pZxPWJnVpPknZ3KP7vYRwFyjfS61ZyKu7UFpGnLdfAorVj0+6iIFzgvolPR
- H6uZvT92/CVHT0eUe5Y+yZGAzAIh9eeE94qj0IDlUEvDtZCDbcR6y0LI8FDtmcEh2PseI2EFq
- 7mMVHLO9jIJ+FwVALFeG9fKJkdW8R4pXUnKgc8AWm8YMngZPld+u0VzWnmlRUpS21pPG9k4yc
- Pwu25XdYhjAOv+g4AqjQoBgrPFq56OCacfFHjFXEYWuV3eVAbt/1VJsreSWTWBbsrl7AvDEHE
- yxku0Sf30dMZV/LknGah46oRWZSFfcRsvXLce27XRLXM+ZPH4gwUY1nVLBvOLHc8216w6u4sW
- QYk9HZNFGZR6nFoBEtSK2gcQzw7/96BOY75xL0qAKw0MECDPdiP5UpEC0wzz63zM6JFOa44Dv
- yluCelm
+Received: by 10.103.47.133 with HTTP; Thu, 3 Nov 2016 10:01:17 -0700 (PDT)
+In-Reply-To: <CAJtFkWsUL=9K=VGTDejE+4RR3HJevk+2aRAhUyf8-mDrqi5MRg@mail.gmail.com>
+References: <CAJtFkWsUL=9K=VGTDejE+4RR3HJevk+2aRAhUyf8-mDrqi5MRg@mail.gmail.com>
+From:   Stefan Monov <logixoul@gmail.com>
+Date:   Thu, 3 Nov 2016 19:01:17 +0200
+Message-ID: <CAJtFkWu1qf3xFg1-B-xVONOmqQZfJhe4+qAb4E3H2A5-st_2dw@mail.gmail.com>
+Subject: Re: `git stash apply` deleted a random dir from my working copy
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Actually, I just tried restoring my dir with `git pull origin
+clipping`, but that didn't restore it. So, besides the question "why
+did it get deleted", I'd like to ask "how do I restore it?", as well.
 
-On Thu, 3 Nov 2016, Jeff King wrote:
-
-> On Thu, Nov 03, 2016 at 11:34:53AM -0400, Jeff King wrote:
-> 
-> > This is missing a Content-Transfer-Encoding. I think the default is the
-> > traditional 7-bit ascii encoding, but your body has characters with the
-> > high-bit set (your UTF-8 bullet).
-> > 
-> > Try adding:
-> > 
-> >   Content-Transfer-Encoding: 8bit
-> > 
-> > I haven't seen this before, but I do recall that vger's MTA is very
-> > picky about this and wants to rewrite transfer-encodings, so it seems
-> > plausible.
-> 
-> Technically, I think you'd also need a:
-> 
->   MIME-Version: 1.0
-> 
-> header.
-
-That seems to have done the trick, thank you so much!
-
-Ciao,
-Dscho
+On Thu, Nov 3, 2016 at 6:06 PM, Stefan Monov <logixoul@gmail.com> wrote:
+> Hi.
+>
+> I just tried `git stash save` for the first time. It worked fine. Then
+> I tried `git stash apply` and while my uncommitted changes were
+> restored, another effect was that a random dir from the root of my
+> working copy was deleted. I don't know why it chose that exact dir,
+> there's lots of other dirs like it in the root.
+>
+> `git stash save` output and shortened `git stash apply` output are attached.
+>
+> Note: The dir that got deleted was a committed and pushed dir. It had
+> no uncommitted local changes.
+>
+> It's not a huge problem, because there was no data loss - I can pull
+> the deleted data back from the repo. But I'd still like to know why
+> this problem happened.
+>
+> TIA, Stefan Monov
