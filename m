@@ -6,153 +6,107 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C5A92021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 17:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 665E22021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 18:00:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759584AbcKCRxb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 13:53:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38170 "EHLO cloud.peff.net"
+        id S1758589AbcKCSAV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 14:00:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38184 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759368AbcKCRxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 13:53:30 -0400
-Received: (qmail 4049 invoked by uid 109); 3 Nov 2016 17:53:29 -0000
+        id S1756863AbcKCSAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 14:00:20 -0400
+Received: (qmail 4508 invoked by uid 109); 3 Nov 2016 18:00:19 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 17:53:29 +0000
-Received: (qmail 14987 invoked by uid 111); 3 Nov 2016 17:53:56 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 18:00:19 +0000
+Received: (qmail 15076 invoked by uid 111); 3 Nov 2016 18:00:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 13:53:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 13:53:27 -0400
-Date:   Thu, 3 Nov 2016 13:53:27 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 14:00:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 14:00:17 -0400
+Date:   Thu, 3 Nov 2016 14:00:17 -0400
 From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         Blake Burkhart <bburky@bburky.com>
 Subject: Re: [PATCH] transport: add core.allowProtocol config option
-Message-ID: <20161103175327.nn2yasvlsxsy22be@sigill.intra.peff.net>
+Message-ID: <20161103180017.x2hjb5wm2u6isajm@sigill.intra.peff.net>
 References: <1478125247-62372-1-git-send-email-bmwill@google.com>
  <20161103002225.GA13369@google.com>
  <20161103143806.hce4msk3dhxtgpre@sigill.intra.peff.net>
  <20161103172515.GA182568@google.com>
+ <CAGZ79kbvs+ryGRjCkHYO=3iNK4tPPhBhYjRMZaH7rP0QMrULhg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161103172515.GA182568@google.com>
+In-Reply-To: <CAGZ79kbvs+ryGRjCkHYO=3iNK4tPPhBhYjRMZaH7rP0QMrULhg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 03, 2016 at 10:25:15AM -0700, Brandon Williams wrote:
+On Thu, Nov 03, 2016 at 10:39:35AM -0700, Stefan Beller wrote:
 
-> > So I think this probably needs to be a separate parallel system where
-> > each protocol can be white- or black-listed in a context-specific way.
-> > Like:
-> > 
-> >   protocol.X.allow = always | user | never
+> >>   protocol.X.allow = always | user | never
+> >
+> > It sounds like there is interest for this sort of behavior, it would
+> > definitely require a larger change than what I initially proposed.  One
+> > problem I see though is that with this we have support for both a
+> > blacklist and a whitelist.  Which wins?
 > 
-> It sounds like there is interest for this sort of behavior, it would
-> definitely require a larger change than what I initially proposed.  One
-> problem I see though is that with this we have support for both a
-> blacklist and a whitelist.  Which wins?  Or do we simply generate a
-> whitelist of allowed protocols which includes all protocols with allow
-> set to 'always' and if it is set to 'never' then it just isn't included
-> in the whitelist?
+> For the submodule operations we'll use a whitelist, because we want to
+> provide security and for the other case we can offer a blacklist as a bandaid.
+> 
+> My opinion on blacklists is roughly aligned with e.g. :
+> https://blog.codinghorror.com/blacklists-dont-work/
+> http://blog.deepinstinct.com/2016/02/04/when-blacklists-dont-really-work/
+> 
+> So IMHO we could drop the "never" and substitute it with a "warn" or
+> "ask-user", such that this configuration becomes a white list for both cases:
+> 
+>      protocol.X.allow = always | user | warn
 
-I think trying to combine the two or generate the whitelist from the
-more flexible format is a recipe for madness.
+I don't think blacklists work in the general case, because they grow out
+of date and fail-open. But you want to have _some_ blacklisting
+mechanism, in order override a decision of the whitelist.
 
-I'd design the new system from scratch, and have it kick in _only_ when
-GIT_ALLOW_PROTOCOL is not set. That lets existing callers continue to
-have the safe behavior until they are ready to move to the new format.
+For instance, the default submodule whitelist would probably include
+https and ssh. But if I'm cloning potentially malicious repos and I
+don't ever want them to trigger ssh (because I don't want them to use my
+ssh keys, whereas I have explicitly set up my credentials such that http
+is safe to use), I would want to be able to do:
 
-Something like the patch below (which is just for illustration, and not
-tested beyond compilation).
+  git config protocol.ssh.allow never
 
-> I don't know if I'm sold on a 'user' state just yet, perhaps that's just
-> because I view a whitelist or blacklist as well black and white and
-> having this user state adds in a gray area.
+(or "git -c", or whatever).
 
-The lack of understanding the "user" context is what makes the current
-system so painful. The only way a caller can influence the system is to
-hand over the policy directly: this is allowed, this is not. But systems
-like "go get" should not be setting policy. They should be giving us a
-hint about the context, and letting git implement the policy.
+True, a whitelist is safer. If we add a new "foo" protocol that also
+looks at your ssh keys, you're screwed. And that's why I designed it as
+a pure-whitelist in the first place. But it comes at the price of
+convenience, because you have to manually add each new innocent protocol
+to the whitelist.
 
--- >8 --
-diff --git a/transport.c b/transport.c
-index d57e8dec2..0d5b382db 100644
---- a/transport.c
-+++ b/transport.c
-@@ -664,10 +664,69 @@ static const struct string_list *protocol_whitelist(void)
- 	return enabled ? &allowed : NULL;
- }
- 
-+enum protocol_allow_config {
-+	PROTOCOL_ALLOW_NEVER,
-+	PROTOCOL_ALLOW_USER_ONLY,
-+	PROTOCOL_ALLOW_ALWAYS
-+};
-+
-+static enum protocol_allow_config parse_protocol_config(const char *key,
-+							const char *value)
-+{
-+	if (!strcasecmp(value, "always"))
-+		return PROTOCOL_ALLOW_ALWAYS;
-+	else if (!strcasecmp(value, "never"))
-+		return PROTOCOL_ALLOW_NEVER;
-+	else if (!strcasecmp(value, "user"))
-+		return PROTOCOL_ALLOW_USER_ONLY;
-+
-+	/* XXX maybe also interpret git_config_bool() here? */
-+	die("unknown value for config '%s': %s", key, value);
-+}
-+
-+static enum protocol_allow_config get_protocol_config(const char *type)
-+{
-+	char *key = xstrfmt("protocol.%s.allow", type);
-+	char *value;
-+
-+	if (!git_config_get_string(key, &value)) {
-+		enum protocol_allow_config ret =
-+			parse_protocol_config(key, value);
-+		free(key);
-+		free(value);
-+		return ret;
-+	}
-+	free(key);
-+
-+	/* known safe */
-+	if (!strcmp(type, "http") ||
-+	    !strcmp(type, "https") ||
-+	    !strcmp(type, "git") ||
-+	    !strcmp(type, "ssh"))
-+		return PROTOCOL_ALLOW_ALWAYS;
-+
-+	/* known scary; err on the side of caution */
-+	if (!strcmp(type, "ext"))
-+		return PROTOCOL_ALLOW_NEVER;
-+
-+	/* unknown; let them be used only directly by the user */
-+	return PROTOCOL_ALLOW_USER_ONLY;
-+}
-+
- int is_transport_allowed(const char *type)
- {
--	const struct string_list *allowed = protocol_whitelist();
--	return !allowed || string_list_has_string(allowed, type);
-+	const struct string_list *whitelist = protocol_whitelist();
-+	if (whitelist)
-+		return string_list_has_string(whitelist, type);
-+
-+	switch (get_protocol_config(type)) {
-+	case PROTOCOL_ALLOW_ALWAYS:
-+		return 1;
-+	case PROTOCOL_ALLOW_NEVER:
-+		return 0;
-+	case PROTOCOL_ALLOW_USER_ONLY:
-+		return git_env_bool("GIT_PROTOCOL_FROM_USER", 1);
-+	}
- }
- 
- void transport_check_allowed(const char *type)
+> So you're suggesting that setting it to "never" doesn't have any effect
+> except for cluttering the config file?
+> I don't think we should do that; each setting should have an impact.
+> So maybe the "never" would be there to disallow protocols of the hardcoded
+> white list (e.g. http)
+
+Exactly.
+
+> > I don't know if I'm sold on a 'user' state just yet, perhaps that's just
+> > because I view a whitelist or blacklist as well black and white and
+> > having this user state adds in a gray area.
+> 
+> Well the "user" state is to differentiate between the
+> * "I consciously typed `git clone ...` (and e.g. I know what happens as
+>   I know the server admin and they are trustworthy.)
+> * a repository contains a possible hostile .gitmodules file such
+>   that I am not aware of the network connection.
+
+Right. I had assumed that we would tell the difference between those
+automatically (by seeing if we got the URL on the command line), but
+things like "go get" show that the context is often before git is even
+called.
+
+-Peff
