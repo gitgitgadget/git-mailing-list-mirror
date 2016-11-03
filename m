@@ -2,89 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06DBA2021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 17:05:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB80D2021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 17:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758261AbcKCRFM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 13:05:12 -0400
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:34075 "EHLO
-        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752273AbcKCRFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 13:05:11 -0400
-Received: by mail-vk0-f50.google.com with SMTP id x186so45317560vkd.1
-        for <git@vger.kernel.org>; Thu, 03 Nov 2016 10:05:11 -0700 (PDT)
+        id S1758913AbcKCRZS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 13:25:18 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36606 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755776AbcKCRZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 13:25:18 -0400
+Received: by mail-pf0-f176.google.com with SMTP id 189so35029009pfz.3
+        for <git@vger.kernel.org>; Thu, 03 Nov 2016 10:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=CdYh/4t7WWcnuMcrIrjC4AAhH+qyUu3yUaIbOcsudXU=;
-        b=i7r2sd0YfnXcSygR7ykO/T5GNm5noQ58GUYHMRzsRCjWlIZmQgdBscIZp6jtwm/5+i
-         aTT8Lws4Lf3IZtS4MTPkAL2dDfEjllxa9/Al56mGecDo06WtOKMEZtxTHutoT6VdfhEM
-         PLpTvoEak59dLIY836bg+Fign7dfQdwT4m47RKDd3DJ0zH9DwgQTiz4oXJKLIzOkq3Ti
-         Sn364r+bf4UZQN8xRy1x13H9DZkljaWalpji//sqbSWSuyXogTFttSW6WgvwMJzosb8k
-         SykeDOk/1K/frdm2uNSWr92P7AtKNDNYKGhJ/K0LeRRLtnBJ5ROXyw2ntnloJLNob1Ae
-         DRQg==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Hpdp/p5vWgA428MjTLWCzfvNZg/l26Tk76zBjTsKtL8=;
+        b=HE9WuqSaBW4V1fMCDo0GrRcYR9/YKYUjdnDxLTW8UVjRMsHD6BTkwoBOYYpVziMZqR
+         jDW68NKsEnsSV6g7DsloR3MI1jwVBnN36LxDF8QCbsupvUxHRO0bmx9EsyY66Gvfiydb
+         RRoXFle7vseYa9qMgl/MPCXocP658BtqcZKmHVpivbnLqFon1h6ANIQk16HLd13CshJg
+         A6D4Smy2W7gnaWi8DiUgGwivlYa1sVv3MIpdjajqiZewJekJt+zIE6RSweS5S12PcK3A
+         DEj0G9ElQV8lp6LjyqXDhquvGRI0TV41/+3dVZolclahHOeb6hwclJpB72K7L1mdSwfG
+         YYUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=CdYh/4t7WWcnuMcrIrjC4AAhH+qyUu3yUaIbOcsudXU=;
-        b=Aor8qpPV29NfU5T6b8vf1j0yQ1jbQUfTI8MlQF1rfyScrMoKl+FQKM+91xEeMvvXqT
-         +ag0YRPQ79gkMW4pns6NnsbArNlkme0MsZ28l/CRS73dXD6ULkkleypaFDgd/ngBVV4h
-         n6iobiHDjJ994rpTlwn+10/KonlTARrEcNhoCsaUFGYz1y0Cog02opiyJtbm3yrH5jlZ
-         uGPOUsR59wiUWTsuE/wuNz48kkTQtTulukdW8t+orQOP9zeaOLWcZ0IuhKo1E3j3P5up
-         j2+LJtk1F3OWpp2/2vXANNIzMbU2PincZEXq0CF2w8kSeMVSe7z3uHZsscW6VmtQpQnf
-         CJJA==
-X-Gm-Message-State: ABUngvcPODk9DWfbIEhy4S2HOLxLBAZqTBQmesmoSu/IeqqpciwmgzhDvWFdJO8KKEgCEq5pnyjI3CRc+40Nng==
-X-Received: by 10.31.60.7 with SMTP id j7mr7389889vka.30.1478192710599; Thu,
- 03 Nov 2016 10:05:10 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Hpdp/p5vWgA428MjTLWCzfvNZg/l26Tk76zBjTsKtL8=;
+        b=C6+0QEfHaKgkhV4O+5CEh63GdAnRMrhmRZDBItFf4QdYwosLhIXnlwADHsXKiaXpxT
+         cxGEwW33SwFkoLHYuBiqHgBfBDuUKKwxUg50uPhvHwvxXBVMj3GmaPs1KdAV03onSRnl
+         wCTnssZxOCVh2ldYup1YUOKCLebJPL4oNVO81wDQEBSA7I21Jp9J4FFWVovhEVVu4dxt
+         pqlUORZmauq6GQVL9MbwPOrDvAFwxbWZoYebNh11ztEaUk5OXS6fdR01tQiOuQ1LUBUc
+         HXwIUNR/TXZK3woKUrCg6LMh5nR2hPRAIdtD7Jgr5aYkI+FzY2C+egQSrROXTTTgaMww
+         99zw==
+X-Gm-Message-State: ABUngvf6arABI8PKRokv+qmW4KrW8e/GHBZveUIMiWkKqvrGLxh7UkvwWp+FfTKIy0RYQ5lN
+X-Received: by 10.99.1.23 with SMTP id 23mr15445522pgb.37.1478193917028;
+        Thu, 03 Nov 2016 10:25:17 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b42d:d807:c3e3:2b82])
+        by smtp.gmail.com with ESMTPSA id fm6sm14156367pab.37.2016.11.03.10.25.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 03 Nov 2016 10:25:16 -0700 (PDT)
+Date:   Thu, 3 Nov 2016 10:25:15 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Blake Burkhart <bburky@bburky.com>
+Subject: Re: [PATCH] transport: add core.allowProtocol config option
+Message-ID: <20161103172515.GA182568@google.com>
+References: <1478125247-62372-1-git-send-email-bmwill@google.com>
+ <20161103002225.GA13369@google.com>
+ <20161103143806.hce4msk3dhxtgpre@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.103.47.133 with HTTP; Thu, 3 Nov 2016 10:04:50 -0700 (PDT)
-In-Reply-To: <CAJtFkWu1qf3xFg1-B-xVONOmqQZfJhe4+qAb4E3H2A5-st_2dw@mail.gmail.com>
-References: <CAJtFkWsUL=9K=VGTDejE+4RR3HJevk+2aRAhUyf8-mDrqi5MRg@mail.gmail.com>
- <CAJtFkWu1qf3xFg1-B-xVONOmqQZfJhe4+qAb4E3H2A5-st_2dw@mail.gmail.com>
-From:   Stefan Monov <logixoul@gmail.com>
-Date:   Thu, 3 Nov 2016 19:04:50 +0200
-Message-ID: <CAJtFkWt8VEGHAigx7Wd49mj6erdM=y_jFbhQ+xaMaAsk91EmWg@mail.gmail.com>
-Subject: Re: `git stash apply` deleted a random dir from my working copy
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161103143806.hce4msk3dhxtgpre@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Scratch my last message, I figured out how to restore it. In the
-TortoiseGit context menu I selected "Diff", and in the list the
-deleted files were listed as "missing". I selected them all, right
-clicked them, and selected "revert". Still don't know why the dir got
-deleted in the first place though.
+On 11/03, Jeff King wrote:
+> On Wed, Nov 02, 2016 at 05:22:25PM -0700, Jonathan Nieder wrote:
+> 
+> > Another difficulty with setting GIT_ALLOW_PROTOCOL globally is that it
+> > requires copy/pasting the default value from upstream and then adding
+> > the values I want.  There's no straightforward way to get the current
+> > value and add to it, in case I want to benefit from future upstream
+> > fixes to the default list.
+> 
+> I agree that this is a big drawback of the current scheme, and it would
+> be nice to be able to say "also allow".
+> 
+> > That is, would it be possible to use something like
+> > 
+> > 	[protocol "sso"]
+> > 		allow = always
+> > 
+> > instead of
+> > 
+> > 	[core]
+> > 		allowProtocol = file:git:http:https:....:sso
+> > 
+> > ?
+> 
+> One complication is that the whitelist has multiple states:
+> 
+>   1. if it's not used at all, anything goes
+> 
+>   2. if it exists and has zero or more entries, only those entries are
+>      allowed
+> 
+> And then submodules are an exception to (1), because it's not anything
+> goes. It's "this default safe whitelist".
+> 
+> So when does protocol.sso.allow kick in? We wouldn't want it to trigger
+> case (2) for things like fetch (disabling other non-allowed protocols).
+> Nor do I think we'd only want it for the submodule case, as I would
+> assume that "protocol.sso.allow = false" should disable it.
+> 
+> So I think this probably needs to be a separate parallel system where
+> each protocol can be white- or black-listed in a context-specific way.
+> Like:
+> 
+>   protocol.X.allow = always | user | never
 
-On Thu, Nov 3, 2016 at 7:01 PM, Stefan Monov <logixoul@gmail.com> wrote:
-> Actually, I just tried restoring my dir with `git pull origin
-> clipping`, but that didn't restore it. So, besides the question "why
-> did it get deleted", I'd like to ask "how do I restore it?", as well.
->
-> On Thu, Nov 3, 2016 at 6:06 PM, Stefan Monov <logixoul@gmail.com> wrote:
->> Hi.
->>
->> I just tried `git stash save` for the first time. It worked fine. Then
->> I tried `git stash apply` and while my uncommitted changes were
->> restored, another effect was that a random dir from the root of my
->> working copy was deleted. I don't know why it chose that exact dir,
->> there's lots of other dirs like it in the root.
->>
->> `git stash save` output and shortened `git stash apply` output are attached.
->>
->> Note: The dir that got deleted was a committed and pushed dir. It had
->> no uncommitted local changes.
->>
->> It's not a huge problem, because there was no data loss - I can pull
->> the deleted data back from the repo. But I'd still like to know why
->> this problem happened.
->>
->> TIA, Stefan Monov
+It sounds like there is interest for this sort of behavior, it would
+definitely require a larger change than what I initially proposed.  One
+problem I see though is that with this we have support for both a
+blacklist and a whitelist.  Which wins?  Or do we simply generate a
+whitelist of allowed protocols which includes all protocols with allow
+set to 'always' and if it is set to 'never' then it just isn't included
+in the whitelist?
+
+I don't know if I'm sold on a 'user' state just yet, perhaps that's just
+because I view a whitelist or blacklist as well black and white and
+having this user state adds in a gray area.
+
+> > An example approach would be a GIT_ALLOW_PROTOCOL var returned by
+> > "git var".
+> > 
+> > That way git-submodule.sh could do
+> > 
+> > 	: ${GIT_ALLOW_PROTOCOL=$(git var GIT_ALLOW_PROTOCOL)}
+> > 
+> > and it would just work.  Other tools could do the same, with a
+> > fallback to the current default until new enough git is in widespread
+> > use.
+> 
+> ...some automated way to say "is this protocol supported"? I think it is
+> not just "give me ALLOW_PROTOCOL" anymore, though, but "apply your rules
+> to this protocol, and tell me if it is supported".
+
+I agree, if we do add different states to a protocol then we couldn't
+simply ask for a whitelist/blacklist of protocols anymore since its more
+of a graylist :) (if such a thing exits). 
+
+-- 
+Brandon Williams
