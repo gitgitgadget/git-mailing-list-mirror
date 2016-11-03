@@ -2,113 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21FC02021E
-	for <e@80x24.org>; Thu,  3 Nov 2016 16:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05A132021E
+	for <e@80x24.org>; Thu,  3 Nov 2016 16:07:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756147AbcKCQG1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 12:06:27 -0400
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:36272 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752121AbcKCQG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 12:06:26 -0400
-Received: by mail-ua0-f172.google.com with SMTP id b35so43203728uaa.3
-        for <git@vger.kernel.org>; Thu, 03 Nov 2016 09:06:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=1YDMhWeOVoM1AijKXqw4ngumHQ1OYkHlsW6BEZwtK3s=;
-        b=OZBdN8HSEd0ySFfXsvBY9vP1RnH3noKGYw5E0rl4z+kL2L1pSGqp+6FY0x3yanOpI0
-         ZvAewBF56qgjulSJo5edTkucM+dyLB3GMMlMvt6mt6kbKHBizvJygjXQnwynCTLmymiQ
-         m9DJrvmAR0PhzJuu/5gOLNAme7fsmT/KO0uqfbG5NuJ9WM1aC+p7kJ0P0BiYqQzR92t/
-         90lDmeJhaWmYRJYNqpFZqn2dc/uye4Wqr+Fli/WL/D9OZWOUblLJwsLw+zfc7N0ShfZJ
-         7r+wjSPM9NzbsQbtndflB2QeTgKruTFzocI+tuYliioepWtlWbFAaJay4qf4XUtp3a76
-         ERdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=1YDMhWeOVoM1AijKXqw4ngumHQ1OYkHlsW6BEZwtK3s=;
-        b=XNnSoJKg1NtF3baeR8XD3iN9naw4a2kBXcmNL7N8GbUfzN/Q0HSGHE/kwM4NAJMVz6
-         ZSnKoypO+9i5TwjmOOR9+ald7+TtK/7NiWvhx5ajYIOix+ma37PH8aTlgNMaw3hlc8dx
-         iKb0gHF4vTWu/wk+PRayJzqIA+EVRn5d9AmBsV0W4Kr3U7MsPJisregk4izRDepQG3Td
-         +RuB03ZV5apJ6Gs9ReV9Y/0kvRSDcCGOVO34EC3AKG9/enwy8mJuG0mxMkSH8ZgoJzSU
-         7F53xxH9+sEylv4IY1+KF72X5sLbAgan6j7Wz3igcY9CTLnlq9C2x+45FbeO6beg+WYb
-         8ooQ==
-X-Gm-Message-State: ABUngvfvttTDASGKJ0JLfTRsWbdy/VrfVE+twzOwZFfZv6W5/n8xXGfS/Ery5O2h4NazQXoy2ciprxtKt1PcKA==
-X-Received: by 10.159.41.163 with SMTP id s32mr7882188uas.137.1478189184851;
- Thu, 03 Nov 2016 09:06:24 -0700 (PDT)
+        id S1758628AbcKCQHU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 12:07:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38079 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758407AbcKCQHT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 12:07:19 -0400
+Received: (qmail 30447 invoked by uid 109); 3 Nov 2016 16:07:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 16:07:18 +0000
+Received: (qmail 13678 invoked by uid 111); 3 Nov 2016 16:07:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Nov 2016 12:07:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Nov 2016 12:07:16 -0400
+Date:   Thu, 3 Nov 2016 12:07:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Chris Purcell <chris.purcell.39@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug in git rev-parse @{push}?
+Message-ID: <20161103160716.6ygtf5iosudo2w3g@sigill.intra.peff.net>
+References: <CAJUoZVYF=ZCBUX6jztwhJX3BZdq4JEfrSRbi4cFPwn+7yA=VjA@mail.gmail.com>
+ <20161103151422.nhrgzivapy5tisr4@sigill.intra.peff.net>
+ <CAJUoZVbnWzpjzWe_qGZTnX_6N2+OJVG39WYaBgY7OfQBNCg+rg@mail.gmail.com>
+ <20161103155400.jqzopj5i2rrlj6km@sigill.intra.peff.net>
+ <CAJUoZVY0-OA7Tu=cHDPH+NwmQ8MUuWc37_5aqeGQbwKpNWVzqg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.103.47.133 with HTTP; Thu, 3 Nov 2016 09:06:04 -0700 (PDT)
-From:   Stefan Monov <logixoul@gmail.com>
-Date:   Thu, 3 Nov 2016 18:06:04 +0200
-Message-ID: <CAJtFkWsUL=9K=VGTDejE+4RR3HJevk+2aRAhUyf8-mDrqi5MRg@mail.gmail.com>
-Subject: `git stash apply` deleted a random dir from my working copy
-To:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary=001a114bd63e463d9a054067bd6c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJUoZVY0-OA7Tu=cHDPH+NwmQ8MUuWc37_5aqeGQbwKpNWVzqg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114bd63e463d9a054067bd6c
-Content-Type: text/plain; charset=UTF-8
+On Thu, Nov 03, 2016 at 03:59:13PM +0000, Chris Purcell wrote:
 
-Hi.
+> >> Thanks, Jeff! If I remove the explicit configuration of remote.pushdefault
+> >> = "origin", I get the same error message as you, so I suspect that's _not_
+> >> the default.
+> >
+> > That's really bizarre, because I get the same behavior with or without
+> > it set. Not only that, but it shouldn't even come into play, as
+> > branch.foo.remote should take precedence anyway.
+> >
+> > So now I'm really puzzled.
+> 
+> That's because I lied. Sorry! Too many branches configured. I've actually got
+> 
+> [branch "foo"]
+>     remote = .
+> 
+> If I change that to 'origin' like I claimed it was, it starts erroring.
 
-I just tried `git stash save` for the first time. It worked fine. Then
-I tried `git stash apply` and while my uncommitted changes were
-restored, another effect was that a random dir from the root of my
-working copy was deleted. I don't know why it chose that exact dir,
-there's lots of other dirs like it in the root.
+OK, now I can reproduce. And changing remote.pushdefault _does_ matter
+because builtin/push.c:is_workflow_triangular() uses it as a key to "we
+are in a triangular workflow".
 
-`git stash save` output and shortened `git stash apply` output are attached.
+That was added by ed2b18292 (push: change `simple` to accommodate
+triangular workflows, 2013-06-19).  TBH, I think the right solution is
+"stop using 'simple' in a triangular setup". But since that workflow
+exists for git-push, we probably need to support it via @{push}, too.
 
-Note: The dir that got deleted was a committed and pushed dir. It had
-no uncommitted local changes.
+I think the solution would be something like:
 
-It's not a huge problem, because there was no data loss - I can pull
-the deleted data back from the repo. But I'd still like to know why
-this problem happened.
+  - move is_workflow_triangular() into remote.c so it is accessible in
+    both places
 
-TIA, Stefan Monov
+  - when branch_get_push_1 sees that is_workflow_triangular() is true,
+    treat "simple" as "current"
 
---001a114bd63e463d9a054067bd6c
-Content-Type: text/plain; charset=US-ASCII; name="git_stash_save_output.txt"
-Content-Disposition: attachment; filename="git_stash_save_output.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iv2jmvz00
+  - new tests should go into t/t1514-rev-parse-push.sh to cover this
+    case
 
-U2F2ZWQgd29ya2luZyBkaXJlY3RvcnkgYW5kIGluZGV4IHN0YXRlIFdJUCBvbiBjbGlwcGluZzog
-Y2ZlYWM0YiAtIGFwcGx5aW5nIHRoZSBzb2x1dGlvbiBmcm9tIGh0dHA6Ly9zdGFja292ZXJmbG93
-LmNvbS9xdWVzdGlvbnMvNDAzODU0ODIvd2h5LWNhbnQtaS11c2Utb3BlbmdsLWVzLTMtMC1pbi1x
-dA0KSEVBRCBpcyBub3cgYXQgY2ZlYWM0YiAtIGFwcGx5aW5nIHRoZSBzb2x1dGlvbiBmcm9tIGh0
-dHA6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDAzODU0ODIvd2h5LWNhbnQtaS11c2Ut
-b3BlbmdsLWVzLTMtMC1pbi1xdA==
---001a114bd63e463d9a054067bd6c
-Content-Type: text/plain; charset=US-ASCII; name="shortened_git_stash_apply_output.txt"
-Content-Disposition: attachment; 
-	filename="shortened_git_stash_apply_output.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iv2jmw3a1
+Want to take a stab at it?
 
-UmVtb3ZpbmcgZGVidWdfc3RlbmNpbF9ub3Rfd29ya2luZy90ZXh0dXJlYW5kbGlnaHQuanMNClJl
-bW92aW5nIGRlYnVnX3N0ZW5jaWxfbm90X3dvcmtpbmcvcXRsb2dvLnBuZw0KWy4uLiBtb3JlIHJl
-bW92ZXMgaGVyZSAuLi5dDQpPbiBicmFuY2ggY2xpcHBpbmcNCkNoYW5nZXMgdG8gYmUgY29tbWl0
-dGVkOg0KICAodXNlICJnaXQgcmVzZXQgSEVBRCA8ZmlsZT4uLi4iIHRvIHVuc3RhZ2UpDQoNCgkJ
-bmV3IGZpbGU6ICAgZG9jdW1lbnRhdGlvbi90ZXh0dXJlU2l6ZV9taXNzaW5nLnR4dA0KDQpDaGFu
-Z2VzIG5vdCBzdGFnZWQgZm9yIGNvbW1pdDoNCiAgKHVzZSAiZ2l0IGFkZC9ybSA8ZmlsZT4uLi4i
-IHRvIHVwZGF0ZSB3aGF0IHdpbGwgYmUgY29tbWl0dGVkKQ0KICAodXNlICJnaXQgY2hlY2tvdXQg
-LS0gPGZpbGU+Li4uIiB0byBkaXNjYXJkIGNoYW5nZXMgaW4gd29ya2luZyBkaXJlY3RvcnkpDQoN
-CgkJZGVsZXRlZDogICAgLi4vZGVidWdfc3RlbmNpbF9ub3Rfd29ya2luZy9xdGxvZ28ucG5nDQoJ
-CWRlbGV0ZWQ6ICAgIC4uL2RlYnVnX3N0ZW5jaWxfbm90X3dvcmtpbmcvdGV4dHVyZWFuZGxpZ2h0
-LmpzDQoJCVsuLi4gbW9yZSBkZWxldGVkIGZpbGVzIGhlcmUgLi4uXQ0KCQltb2RpZmllZDogICBt
-YWluLmNwcA0KCQltb2RpZmllZDogICBtYWluLnFtbA0KCQlbLi4uIG1vcmUgbW9kaWZpZWQgZmls
-ZXMgaGVyZSAuLi5dDQoNClVudHJhY2tlZCBmaWxlczoNCiAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4u
-Li4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJlIGNvbW1pdHRlZCkNCg0KCQkuLi9kYmdfcmVw
-ZWF0ZXIvZGJnX3JlcGVhdGVyLnByby51c2VyDQoJCWRlYnVnX3N0ZW5jaWxfbm90X3dvcmtpbmcv
-DQoJCVsuLi4gbW9yZSBmaWxlcyBhbmQgZGlycyBoZXJlIC4uLl0=
---001a114bd63e463d9a054067bd6c--
+-Peff
