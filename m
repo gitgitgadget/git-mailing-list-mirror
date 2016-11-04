@@ -2,98 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 463A02022D
-	for <e@80x24.org>; Fri,  4 Nov 2016 21:55:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A408D2022D
+	for <e@80x24.org>; Fri,  4 Nov 2016 22:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761912AbcKDVzq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Nov 2016 17:55:46 -0400
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:37269 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757171AbcKDVzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2016 17:55:45 -0400
-X-Greylist: delayed 2139 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Nov 2016 17:55:45 EDT
-Received: from mfilter41-d.gandi.net (mfilter41-d.gandi.net [217.70.178.173])
-        by relay2-d.mail.gandi.net (Postfix) with ESMTP id 7EA1FC5A4E;
-        Fri,  4 Nov 2016 22:55:43 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter41-d.gandi.net
-Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
-        by mfilter41-d.gandi.net (mfilter41-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id DfBrZeHOs5Wi; Fri,  4 Nov 2016 22:55:42 +0100 (CET)
-X-Originating-IP: 198.233.217.214
-Received: from x (unknown [198.233.217.214])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id C234AC5A50;
-        Fri,  4 Nov 2016 22:55:40 +0100 (CET)
-Date:   Fri, 4 Nov 2016 15:55:39 -0600
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Regarding "git log" on "git series" metadata
-Message-ID: <20161104215538.xmpth6qfuou6nde6@x>
-References: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xq0LLFBJRNNvCMQ4QR7XBg9H7NSsifiqOYqr+PUBqYRGQ@mail.gmail.com>
- <20161104194907.3yxu2rkayfyic4dr@sigill.intra.peff.net>
+        id S1762157AbcKDWg2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Nov 2016 18:36:28 -0400
+Received: from ud03.udmedia.de ([194.117.254.43]:52120 "EHLO
+        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1762151AbcKDWg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2016 18:36:27 -0400
+X-Greylist: delayed 3603 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Nov 2016 18:36:27 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=to:from
+        :subject:message-id:date:mime-version:content-type
+        :content-transfer-encoding; s=k1; bh=FvNMb9FLqRugDc9EzEcVPCf/q6a
+        IPtmONpSCq0sJC3A=; b=YNJSrvl6jZvo7sAbPH/TYaoJfZJtWB0zXJ01QUGav2O
+        JhTg8g8TGsBIwIahmMdD+JEf77G90Mb8S/jLx9KUjadyVNErrl9QXdfrIHwbVeUe
+        g9Y5hWIzu4a2WjBFGHJsu7PKa4RQfY5jtH24YcffXfYGz2UBP1SKYlZJPlA5UxxU
+        =
+Received: (qmail 27079 invoked from network); 4 Nov 2016 20:49:41 +0100
+Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
+  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 4 Nov 2016 20:49:41 +0100
+To:     git@vger.kernel.org
+From:   Markus Hitter <mah@jump-ing.de>
+Subject: gitk: avoid obscene memory consumption
+Message-ID: <47c374cf-e6b9-8cd3-ee0d-d877e9e96a62@jump-ing.de>
+Date:   Fri, 4 Nov 2016 20:49:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161104194907.3yxu2rkayfyic4dr@sigill.intra.peff.net>
-User-Agent: NeoMutt/20161014 (1.7.1)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2016 at 03:49:07PM -0400, Jeff King wrote:
-> On Fri, Nov 04, 2016 at 12:19:55PM -0700, Jacob Keller wrote:
-> 
-> > I agree with your assessment here. The main difficulty in implementing
-> > gitrefs is to ensure that they actually do get picked up by
-> > reachability checks to prevent dropping commits. I'm not sure how easy
-> > this is, but I would much rather we go this route rather than
-> > continuing along with the hack. This seems like the ideal solution,
-> > since it solves the entire problem and doesn't need more hacks bolted
-> > on.
-> 
-> I think the main complication is that the reachability rules are used
-> during object transfer. So you'd probably want to introduce some
-> protocol extension to say "I understand gitrefs", so that when one side
-> says "I have sha1 X and its reachable objects", we know whether they are
-> including gitrefs there. And likewise receivers with
-> transfer.fsckObjects may complain about the new gitref tree mode
-> (fortunately a new object type shouldn't be needed).
-> 
-> You might also want fallback rules for storing gitrefs on "old" servers
-> (e.g., backfilling gitrefs you need if the server didn't them in the
-> initial fetch). But I guess storing any gitrefs on such a server is
-> inherently dangerous, because the server might prune them at any time.
-> 
-> So perhaps a related question is: how can gitrefs be designed such that
-> existing servers reject them (rather than accepting the push and then
-> later throwing away half the data). It would be easy to notice in the
-> client during a push that we are sending gitrefs to a server which does
-> not claim that capability. But it seems more robust if it is the server
-> who decides "I will not accept these bogus objects".
 
-This seems like the critical problem, here.  The parent hack I used in
-git-series might be a hack, but it transparently works with old servers
-and clients.  So, for instance, I can push a git-series ref to github,
-with no changes required on github's part.  If git added gitrefs, and I
-started using them in git-series, then that'd eliminate parent hack and
-allow many standard git tools to work naturally on git-series commits
-and history, but it'd also mean that people couldn't push git-series
-commits to any server until that server updates git.
+Hello all,
 
-That said, I'd *love* to have gitrefs available, for a wide variety of
-applications, and I can see an argument for introducing them and waiting
-a few years for them to become universally available, similar to the
-process gitlinks went through.
+after Gitk brought my shabby development machine (Core2Duo, 4 GB RAM, Ubuntu 16.10, no swap to save the SSD) to its knees once more than I'm comfortable with, I decided to investigate this issue.
 
-But I'd also love to have a backward-compatible solution.
+Result of this investigation is, my Git repo has a commit with a diff of some 365'000 lines and Gitk tries to display all of them, consuming more than 1.5 GB of memory.
 
-- Josh Triplett
+The solution is to cut off diffs at 50'000 lines for the display. This consumes about 350 MB RAM, still a lot. These first 50'000 lines are shown, followed by a copyable message on how to view the full diff on the command line. Diffs shorter than this limit are displayed as before.
+
+To test the waters whether such a change is welcome, here's the patch as I currently use it. If this patch makes sense I'll happily apply change requests and bring it more in line with Git's patch submission expectations. The patch is made against git(k) version 2.9.3, the one coming with latest Ubuntu. Please also note that this is the first time I wrote some Tcl code, so the strategy used might not follow best Tcl practices.
+
+$ diff -uw /usr/bin/gitk.org /usr/bin/gitk
+--- /usr/bin/gitk.org	2016-08-16 22:32:47.000000000 +0200
++++ /usr/bin/gitk	2016-11-04 20:06:14.805920404 +0100
+@@ -7,6 +7,15 @@
+ # and distributed under the terms of the GNU General Public Licence,
+ # either version 2, or (at your option) any later version.
+ 
++# Markus: trying to limit memory consumption. It happened that
++#         complex commits led to more than 1.5 GB of memory usage.
++#
++# The problem was identified to be caused by extremely long diffs. The
++# commit leading to this research had some 365'000 lines of diff, consuming
++# these 1.5 GB when drawn into the canvas. The solution is to limit diffs to
++# 50'000 lines and skipping the rest. In case of a cutoff, a CLI command for
++# getting the full diff is shown.
++
+ package require Tk
+ 
+ proc hasworktree {} {
+@@ -7956,6 +7965,7 @@
+ 
+ proc getblobdiffs {ids} {
+     global blobdifffd diffids env
++    global parseddifflines
+     global treediffs
+     global diffcontext
+     global ignorespace
+@@ -7987,6 +7997,7 @@
+     }
+     fconfigure $bdf -blocking 0 -encoding binary -eofchar {}
+     set blobdifffd($ids) $bdf
++    set parseddifflines 0
+     initblobdiffvars
+     filerun $bdf [list getblobdiffline $bdf $diffids]
+ }
+@@ -8063,20 +8074,34 @@
+ 
+ proc getblobdiffline {bdf ids} {
+     global diffids blobdifffd
++    global parseddifflines
+     global ctext
+ 
+     set nr 0
++    set maxlines 50000
+     $ctext conf -state normal
+     while {[incr nr] <= 1000 && [gets $bdf line] >= 0} {
++        incr parseddifflines
++        if {$parseddifflines >= $maxlines} {
++            break
++        }
+ 	if {$ids != $diffids || $bdf != $blobdifffd($ids)} {
+ 	    catch {close $bdf}
+ 	    return 0
+ 	}
+ 	parseblobdiffline $ids $line
+     }
++    if {$parseddifflines >= $maxlines} {
++        $ctext insert end "\n------------------" hunksep
++        $ctext insert end " Lines exceeding $maxlines skipped " hunksep
++        $ctext insert end "------------------\n\n" hunksep
++        $ctext insert end "To get a full diff, run\n\n" hunksep
++        $ctext insert end "  git diff-tree -p -C --cc $ids\n\n" hunksep
++        $ctext insert end "on the command line.\n" hunksep
++    }
+     $ctext conf -state disabled
+     blobdiffmaybeseehere [eof $bdf]
+-    if {[eof $bdf]} {
++    if {[eof $bdf] || $parseddifflines >= $maxlines} {
+ 	catch {close $bdf}
+ 	return 0
+     }
+@@ -9093,6 +9118,7 @@
+ 
+ proc diffcommits {a b} {
+     global diffcontext diffids blobdifffd diffinhdr currdiffsubmod
++    global parseddifflines
+ 
+     set tmpdir [gitknewtmpdir]
+     set fna [file join $tmpdir "commit-[string range $a 0 7]"]
+@@ -9114,6 +9140,7 @@
+     set blobdifffd($diffids) $fd
+     set diffinhdr 0
+     set currdiffsubmod ""
++    set parseddifflines 0
+     filerun $fd [list getblobdiffline $fd $diffids]
+ }
+ 
+
+Cheers,
+Markus
+
+-- 
+- - - - - - - - - - - - - - - - - - -
+Dipl. Ing. (FH) Markus Hitter
+http://www.jump-ing.de/
