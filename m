@@ -2,89 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B15532022D
-	for <e@80x24.org>; Fri,  4 Nov 2016 21:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D11F72022D
+	for <e@80x24.org>; Fri,  4 Nov 2016 21:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759629AbcKDVbG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Nov 2016 17:31:06 -0400
-Received: from slow1-d.mail.gandi.net ([217.70.178.86]:60593 "EHLO
-        slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759427AbcKDVbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2016 17:31:05 -0400
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-        by slow1-d.mail.gandi.net (Postfix) with ESMTP id E8EAD47B51E
-        for <git@vger.kernel.org>; Fri,  4 Nov 2016 22:20:06 +0100 (CET)
-Received: from mfilter26-d.gandi.net (mfilter26-d.gandi.net [217.70.178.154])
-        by relay2-d.mail.gandi.net (Postfix) with ESMTP id 10252C5A5A;
-        Fri,  4 Nov 2016 22:20:05 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter26-d.gandi.net
-Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
-        by mfilter26-d.gandi.net (mfilter26-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id N-Iie_NqSGO7; Fri,  4 Nov 2016 22:20:03 +0100 (CET)
-X-Originating-IP: 198.233.217.214
-Received: from x (unknown [198.233.217.214])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id C8728C5A4E;
-        Fri,  4 Nov 2016 22:20:01 +0100 (CET)
-Date:   Fri, 4 Nov 2016 15:19:59 -0600
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        "Shawn O. Pierce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-Subject: Re: Regarding "git log" on "git series" metadata
-Message-ID: <20161104211959.3532uiud27nhumt7@x>
-References: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com>
- <CAP8UFD2+A0MUKazAfSwCvv61TJRPuoOzH5EkqcrBOUi4TcuoDw@mail.gmail.com>
+        id S1761476AbcKDVgC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Nov 2016 17:36:02 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:33156 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760630AbcKDVf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2016 17:35:58 -0400
+Received: by mail-qk0-f174.google.com with SMTP id x190so112394153qkb.0
+        for <git@vger.kernel.org>; Fri, 04 Nov 2016 14:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Aej56stMW4U/9QbcmF0nB5v9FDG/+8zvOb7Jm/7cLjA=;
+        b=Hj6eot1MxGHqsu8WONfA99iW7TYcBrxhsUScDTfwLTOdVSnyLjELLv+3sMweLjP1ZB
+         mDOIE313Qc/KPo3aFUXCejMv2tZ+RR6CHHcmjbxUVU1bZ4QkNDeGTqaJuyQQ4SOoXmqY
+         fr1SFPf7o3/GTDCvpViH/Ck7Dl/JQ/3kPMTtMrKruPGsjFYXelWTNvR/1W5cvZCUFY7z
+         2fvnycqF/qING0Md5ozzv+shUIOu0Vq0OoFZ2PzlB1XcTUdLggU08+lpbexxfGndIzeG
+         FZdQBWsR3nPErTPoPA9ggxEgmvigkFxXMZQ6gyyAwkIc8FbQvcMP7S6uwgsH6avf5xTi
+         xSzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Aej56stMW4U/9QbcmF0nB5v9FDG/+8zvOb7Jm/7cLjA=;
+        b=aFsWuUNJZdcrM2ROh9fnt1En3HIBBHCnC0dBDJhc6QlGSoXpX8dWPkodSMzYcx6YvY
+         U+3S3rDmicQYmTreTbNbHkaMwDzW4MdUdWC+pCKvfP1+DfH0Xk52Ln3ILhccNAD7OL+0
+         V0iBai4t7YNdgD/rtGapkC+e8h81GAAk7c4JMFb2Oei4dRKW0z7NczXNm3ChLxzTkthJ
+         LMiS4lPYdMZdavLpwnjMlR6Bieqh/BaMzaHxldD5Meuks6aeykiALfX5pJEBPrgplDZ2
+         kdXL/bk/3lhfTD95psPM/3zqH3UcHaaD318OnLBloeocZfYNSpS1drCxW9h1sAMbDo4N
+         RUog==
+X-Gm-Message-State: ABUngvfDCV8cBqrctuvw7Tobj365so2Fr804sQAVSgF0kDzNPHPTMCurVdws3ruEt9iOkuI15M5pR9WWan6ex+bv
+X-Received: by 10.55.16.147 with SMTP id 19mr14876130qkq.255.1478295357911;
+ Fri, 04 Nov 2016 14:35:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD2+A0MUKazAfSwCvv61TJRPuoOzH5EkqcrBOUi4TcuoDw@mail.gmail.com>
-User-Agent: NeoMutt/20161014 (1.7.1)
+Received: by 10.12.134.65 with HTTP; Fri, 4 Nov 2016 14:35:57 -0700 (PDT)
+In-Reply-To: <20161104205815.GA127933@google.com>
+References: <1478125247-62372-1-git-send-email-bmwill@google.com>
+ <1478292933-7873-1-git-send-email-bmwill@google.com> <20161104205815.GA127933@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 4 Nov 2016 14:35:57 -0700
+Message-ID: <CAGZ79kZB9wMgPDktMUpBfcvgJy16N8P74SvLP5740UNftZkbVg@mail.gmail.com>
+Subject: Re: [PATCH v3] transport: add protocol policy config option
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Blake Burkhart <bburky@bburky.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2016 at 09:47:41PM +0100, Christian Couder wrote:
-> On Fri, Nov 4, 2016 at 6:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Imagine we invent a new tree entry type, "gitref", that is similar
-> > to "gitlink" in that it can record a commit object name in a tree,
-> > but unlike "gitlink" it does imply reachability.  And you do not add
-> > phony parents to your commit object.  A tree that has "gitref"s in
-> > it is about annotating the commits in the same repository (e.g. the
-> > tree references two commits, "base" and "tip", to point into a slice
-> > of the main history).  And it is perfectly sensible for such a
-> > pointer to imply reachability---after all it serves different
-> > purposes from "gitlink".
-> 
-> The more I think about this (and also about how to limit ref
-> advertisements as recently discussed in
-> https://public-inbox.org/git/20161024132932.i42rqn2vlpocqmkq@sigill.intra.peff.net/),
-> the more I think about Shawn's RefTree:
-> 
-> https://public-inbox.org/git/CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com/
-> 
-> Couldn't a RefTree be used to store refs that point to the base
-> commit, the tip commit and the blob that contains the cover letter,
-> and maybe also a ref pointing to the RefTree of the previous version
-> of the series?
+On Fri, Nov 4, 2016 at 1:58 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 11/04, Brandon Williams wrote:
+>> Signed-off-by: Brandon Williams <bmwill@google.com>
+>
+> Is there an acceptable way to give credit to Jeff for helping with this patch?
 
-That's really interesting!  The Software Heritage project is working on
-something similar, because they want to store all the refs as part of
-their data model as well.  I'll point them to the reftree work.
+What about:
+Helped-by: Jeff King <peff@peff.net>
 
-If upstream git supported RefTree, I could potentially use that for
-git-series.  However, I do want a commit message and history for the
-series itself, and using refs in the reftree to refer to the parents
-seems like abusing reftree to recreate commits, in a reversal of the
-hack of using commit parents as a reftree. :)
 
-What if, rather than storing a hash reference to a reftree as a single
-reference and replacing it with no history, a reftree could be
-referenced from a commit and have history?  (That would also allow
-tagging a version of the reftree.)
+>
+> --
+> Brandon Williams
