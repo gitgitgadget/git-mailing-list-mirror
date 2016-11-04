@@ -2,123 +2,292 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBF962022D
-	for <e@80x24.org>; Fri,  4 Nov 2016 23:04:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 804D32022D
+	for <e@80x24.org>; Fri,  4 Nov 2016 23:06:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750898AbcKDXEL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Nov 2016 19:04:11 -0400
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:36522 "EHLO
-        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750839AbcKDXEK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2016 19:04:10 -0400
-Received: by mail-lf0-f47.google.com with SMTP id t196so75200182lff.3
-        for <git@vger.kernel.org>; Fri, 04 Nov 2016 16:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9ydsKSWaEaNjR/9qO3gMicWbwj/QezPZQfbc3aH/5+w=;
-        b=oKoQmNOj3VyJxmDPUZ/bKTohqx5Tr5cEr5gFHghbi0WhmWBarD/odK4YfqCFZlwdlD
-         sCh+465trZVrDc3QFLvv00SC4UhzGn4ophE2h0PQNqrwf2xIOZwYoucTzeUX13bDOXlu
-         Ju/F4//SlNzQokosRvQdtMhzHft/+mUHF+AJjQMGHAdQMMuibhKvnwsESSE2F3KRmPkh
-         5zLgW/hfkqsQXarBBApG/kmeKuMKVfxagPn6uYJl5XamSMPgp/liMVAr/x1dvt0PgdM7
-         56R+0jkmFiTxm5pJj/cPj0I8mO9N4vt408TICAUbr/lKp9MYf/unRRZ1JyjfVcvZ2Az7
-         w0lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9ydsKSWaEaNjR/9qO3gMicWbwj/QezPZQfbc3aH/5+w=;
-        b=NlTbK3cg1a5Nac4NyONSnfg8U3Gp0Vv5NKz8czFCr5Uh67ucBbZREJcrU9SW3D2Vdh
-         CfVKeSBPWfpYIHJTVOKjK3x9cs59AmFoy2tml9W8Y9zH/VBegM7p2Zk0kBMS1szCWzXa
-         i1/zpZbZU1my6NhQhCQeAWPIstDBFFut4QOvqLXKhHv+2blWd4R0Zf8Hg+hsrPAX9r7M
-         UzyKapzg6SOu+qG5AG1TkonL5naSwDDz+8fQ4BvfqVyqzGfW6QNf6D+ZG7qHyrZ5D5e2
-         PYoFDo6rdai7Ay3PM9rKytXPybR5Jd+7lbdIr1s5clAoOd1b+i+KE8k1GdNNicbGdi//
-         +jtg==
-X-Gm-Message-State: ABUngvdlF6ew0sU2TXdmxGNOY6AjoD1HmRmSSqQ9+pCIf0N8xr+nFp8XW7lc2414jlMwLHtd3wcaPz64NNMhWw==
-X-Received: by 10.25.93.84 with SMTP id p20mr2612692lfj.151.1478300648859;
- Fri, 04 Nov 2016 16:04:08 -0700 (PDT)
+        id S1752131AbcKDXGS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Nov 2016 19:06:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38917 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752089AbcKDXGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2016 19:06:16 -0400
+Received: (qmail 21173 invoked by uid 109); 4 Nov 2016 23:06:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Nov 2016 23:06:16 +0000
+Received: (qmail 27212 invoked by uid 111); 4 Nov 2016 23:06:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Nov 2016 19:06:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Nov 2016 19:06:13 -0400
+Date:   Fri, 4 Nov 2016 19:06:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v3] transport: add protocol policy config option
+Message-ID: <20161104230613.epbziphiqyl57bcn@sigill.intra.peff.net>
+References: <1478125247-62372-1-git-send-email-bmwill@google.com>
+ <1478292933-7873-1-git-send-email-bmwill@google.com>
 MIME-Version: 1.0
-Received: by 10.25.163.84 with HTTP; Fri, 4 Nov 2016 16:04:08 -0700 (PDT)
-In-Reply-To: <20161104211959.3532uiud27nhumt7@x>
-References: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com> <CAP8UFD2+A0MUKazAfSwCvv61TJRPuoOzH5EkqcrBOUi4TcuoDw@mail.gmail.com>
- <20161104211959.3532uiud27nhumt7@x>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 5 Nov 2016 00:04:08 +0100
-Message-ID: <CAP8UFD13sDOFuyZMWuoJeLFt_LAsfAHFBHpRwcdAGmA22xNEKQ@mail.gmail.com>
-Subject: Re: Regarding "git log" on "git series" metadata
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        "Shawn O. Pierce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-        Stefano Zacchiroli <zack@upsilon.cc>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1478292933-7873-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 4, 2016 at 10:19 PM, Josh Triplett <josh@joshtriplett.org> wrote:
-> On Fri, Nov 04, 2016 at 09:47:41PM +0100, Christian Couder wrote:
->> On Fri, Nov 4, 2016 at 6:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> >
->> > Imagine we invent a new tree entry type, "gitref", that is similar
->> > to "gitlink" in that it can record a commit object name in a tree,
->> > but unlike "gitlink" it does imply reachability.  And you do not add
->> > phony parents to your commit object.  A tree that has "gitref"s in
->> > it is about annotating the commits in the same repository (e.g. the
->> > tree references two commits, "base" and "tip", to point into a slice
->> > of the main history).  And it is perfectly sensible for such a
->> > pointer to imply reachability---after all it serves different
->> > purposes from "gitlink".
->>
->> The more I think about this (and also about how to limit ref
->> advertisements as recently discussed in
->> https://public-inbox.org/git/20161024132932.i42rqn2vlpocqmkq@sigill.intra.peff.net/),
->> the more I think about Shawn's RefTree:
->>
->> https://public-inbox.org/git/CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com/
->>
->> Couldn't a RefTree be used to store refs that point to the base
->> commit, the tip commit and the blob that contains the cover letter,
->> and maybe also a ref pointing to the RefTree of the previous version
->> of the series?
->
-> That's really interesting!  The Software Heritage project is working on
-> something similar, because they want to store all the refs as part of
-> their data model as well.  I'll point them to the reftree work.
+On Fri, Nov 04, 2016 at 01:55:33PM -0700, Brandon Williams wrote:
 
-Yeah, I know them :-) and I think I have already told Stefano
-Zacchiroli about this, but I am not sure anymore.
-Anyway I am CC'ing him.
+> Previously the `GIT_ALLOW_PROTOCOL` environment variable was used to
+> specify a whitelist of protocols to be used in clone/fetch/pull
+> commands.  This patch introduces new configuration options for more
+> fine-grained control for allowing/disallowing protocols.  This also has
+> the added benefit of allowing easier construction of a protocol
+> whitelist on systems where setting an environment variable is
+> non-trivial.
 
-> If upstream git supported RefTree, I could potentially use that for
-> git-series.  However, I do want a commit message and history for the
-> series itself, and using refs in the reftree to refer to the parents
-> seems like abusing reftree to recreate commits, in a reversal of the
-> hack of using commit parents as a reftree. :)
+Good rationale.
 
-Yeah, maybe :-) But the properties of the existing Git objects we
-already use wouldn't change at all.
+> Now users can specify a policy to be used for each type of protocol via
+> the 'protocol.<name>.allow' config option.  A default policy for all
+> unknown protocols can be set with the 'protocol.allow' config option.
 
-> What if, rather than storing a hash reference to a reftree as a single
-> reference and replacing it with no history,
+I think "unconfigured" is a better word here than "unknown", as it would
+apply to known protocols like "https", etc.
 
-In what I suggest the history is kept because the new reftree has a
-ref that points to the old one it is replacing.
+That made me wonder if "unknown" would be a better behavior, but I'm
+pretty sure it is not. It is harder to explain, and I think would be
+less convenient in practice. I.e., you really do want:
 
-Yeah, this reftree history maybe seen as "redundant" with the commit
-history, but in my opinion this can be seen as a "feature" that will
-prevent us from "mucking" too much with the commit object.
+  git config protocol.allow never
+  git config protocol.https.allow always
 
-> a reftree could be
-> referenced from a commit and have history?  (That would also allow
-> tagging a version of the reftree.)
+to allow nothing but https.
 
-I think that tags are already allowed to point to any kind of Git
-object, so tagging a reftree should be allowed anyway if we add a
-reftree object.
+> If no user configured default is made git, by default, will allow
+> known-safe protocols (http, https, git, ssh, file), disallow
+> known-dangerous protocols (ext), and have a default poliy of `user` for
+> all other protocols.
+
+I think this is a good way of thinking about it. The order of
+enforcement becomes:
+
+  - GIT_ALLOW_PROTOCOL; environment variables always take precedence
+    over config, so this makes sense. And it also is nice to put the
+    blunt hammer at the front for backwards-compatibility.
+
+  - protocol-specific config
+
+  - protocol-generic config
+
+  - built-in defaults (known-safe, known-scary, unknown)
+
+which seems right.
+
+Also, s/poliy/policy/.
+
+> The supported policies are `always`, `never`, and `user`.  The `user`
+> policy can be used to configure a protocol to be usable when explicitly
+> used by a user, while disallowing it for commands which run
+> clone/fetch/pull commands without direct user intervention (e.g.
+> recursive initialization of submodules).  Commands which can potentially
+> clone/fetch/pull from untrusted repositories without user intervention
+> can export `GIT_PROTOCOL_FROM_USER` with a value of '0' to prevent
+> protocols configured to the `user` policy from being used.
+
+Makes sense. I know "user" came from me. I don't know if there is a
+better word to describe it. I originally called it "cmdline", but that
+seemed too obscure (especially when a tool external to git sets it).
+Something like "trusted" might make sense (we allow it only in a
+more-trusted setting), but it's kind of vague. And it also doesn't leave
+room for there to be more types of trust in the future. So "user" is
+probably reasonable (or perhaps "user-only" or similar).
+
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 27069ac..5d845c4 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2308,6 +2308,31 @@ pretty.<name>::
+>  	Note that an alias with the same name as a built-in format
+>  	will be silently ignored.
+>  
+> +protocol.allow::
+> +	If set, provide a user defined default policy for all protocols which
+> +	don't explicitly have a policy (protocol.<name>.allow).  By default,
+> +	if unset, known-safe protocols (http, https, git, ssh, file) have a
+> +	default policy of `always`, known-dangerous protocols (ext) have a
+> +	default policy of `never`, and all other protocols have a default policy
+> +	of `user`.  Supported policies:
+> ++
+> +--
+> +
+> +* `always` - protocol is always able to be used.
+> +
+> +* `never` - protocol is never able to be used.
+> +
+> +* `user` - protocol is only able to be used when `GIT_PROTOCOL_FROM_USER` is
+> +  either unset or has a value of 1.  This policy should be used when you want a
+> +  protocol to be usable by the user but don't want it used by commands which
+> +  execute clone/fetch/pull commands without user input, e.g. recursive
+> +  submodule initialization.
+
+Makes sense. I wonder if it would be good to emphasize _directly_ usable
+here. I.e., "...when you want a protocol to be directly usable by the
+user but don't want...".
+
+Should clone/fetch/pull also include push?
+
+> +protocol.<name>.allow::
+> +	Set a policy to be used by protocol <name> with clone/fetch/pull commands.
+> +
+
+Nice that this matches protocol.allow, so we don't need to re-explain
+that.
+
+Should the list of protocols be here? I know they're covered under
+GIT_ALLOW_PROTOCOL already, but if this is the preferred system, we
+should probably explain them here, and then just have GIT_ALLOW_PROTOCOL
+refer the user.
+
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index ab7215e..ab25580 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -1150,13 +1150,13 @@ of clones and fetches.
+>  	cloning a repository to make a backup).
+>  
+>  `GIT_ALLOW_PROTOCOL`::
+> -	If set, provide a colon-separated list of protocols which are
+> -	allowed to be used with fetch/push/clone. This is useful to
+> -	restrict recursive submodule initialization from an untrusted
+> -	repository. Any protocol not mentioned will be disallowed (i.e.,
+> -	this is a whitelist, not a blacklist). If the variable is not
+> -	set at all, all protocols are enabled.  The protocol names
+> -	currently used by git are:
+> +	The new way to configure allowed protocols is done through the config
+> +	interface, though this setting takes precedences.  See
+> +	linkgit:git-config[1] for more details.  If set, provide a
+> +	colon-separated list of protocols which are allowed to be used with
+> +	fetch/push/clone.  Any protocol not mentioned will be disallowed (i.e.,
+> +	this is a whitelist, not a blacklist).  The protocol names currently
+> +	used by git are:
+
+I wonder if we can explain this in terms of the config system. Something
+like:
+
+  If set to a colon-separated list of zero or more protocols, behave as
+  if `protocol.allow` is set to `never`, and each of the listed
+  protocols has `protocol.$protocol.allow` set to `always`.
+
+> +`GIT_PROTOCOL_FROM_USER`::
+> +	Set to 0 to prevent protocols used by fetch/push/clone which are
+> +	configured to the `user` state.  This is useful to restrict recursive
+> +	submodule initialization from an untrusted repository.  See
+> +	linkgit:git-config[1] for more details.
+
+Under "this is useful", it may make sense to make it clear that external
+programs can use this, too. Something like:
+
+  It may also be useful for programs which feed potentially-untrusted
+  URLs to git commands.
+
+> diff --git a/t/lib-proto-disable.sh b/t/lib-proto-disable.sh
+> index b0917d9..5950fbf 100644
+> --- a/t/lib-proto-disable.sh
+> +++ b/t/lib-proto-disable.sh
+> @@ -1,15 +1,12 @@
+>  # Test routines for checking protocol disabling.
+>  
+> -# test cloning a particular protocol
+> -#   $1 - description of the protocol
+> -#   $2 - machine-readable name of the protocol
+> -#   $3 - the URL to try cloning
+> -test_proto () {
+> +# Test clone/fetch/push with GIT_ALLOW_PROTOCOL whitelist
+> +test_whitelist () {
+>  	desc=$1
+>  	proto=$2
+>  	url=$3
+>  
+> -	test_expect_success "clone $1 (enabled)" '
+> +	test_expect_success "clone $desc (enabled)" '
+
+Yeah, this should have been $desc all along. It makes the diff really
+noisy, though. Should it be split out into a preparatory change?
+
+> +# test cloning a particular protocol
+> +#   $1 - description of the protocol
+> +#   $2 - machine-readable name of the protocol
+> +#   $3 - the URL to try cloning
+> +test_proto () {
+> +	test_whitelist "$@"
+> +
+> +	test_config "$@"
+> +}
+
+This makes sense. It's probably more testing than we actually need. We
+could just check the config version per-protocol, and then confirm that
+GIT_ALLOW_PROTOCOL behaves as I described above for at least one
+protocol. The per-protocol code paths are really just making sure that
+the protocol is correctly named for each code path.
+
+That being said, simple and stupid test setup is nice as long as it does
+not take too long to run.
+
+> diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
+> index bc44ac3..75c570a 100755
+> --- a/t/t5509-fetch-push-namespaces.sh
+> +++ b/t/t5509-fetch-push-namespaces.sh
+> @@ -4,6 +4,7 @@ test_description='fetch/push involving ref namespaces'
+>  . ./test-lib.sh
+>  
+>  test_expect_success setup '
+> +	git config --global protocol.ext.allow user &&
+>  	test_tick &&
+>  	git init original &&
+
+These remote-ext fixups might be worth a note in the commit message, or
+a comment here explaining what is going on.
+
+> +static enum protocol_allow_config get_protocol_config(const char *type)
+> +{
+> +	char *key = xstrfmt("protocol.%s.allow", type);
+> +	char *value;
+> +
+> +	if (!git_config_get_string(key, &value)) {
+> +		enum protocol_allow_config ret =
+> +			parse_protocol_config(key, value);
+> +		free(key);
+> +		free(value);
+> +		return ret;
+> +	}
+> +	free(key);
+> +
+> +	/* if defined, use user default for unknown protocols */
+> +	if (!git_config_get_string("protocol.allow", &value)) {
+> +		enum protocol_allow_config ret =
+> +			parse_protocol_config("protocol.allow", value);
+> +		free(value);
+> +		return ret;
+> +	}
+> +
+> +	/* known safe */
+> [...]
+
+It's probably worth a comment at this point in the function to follow-up
+on your "if defined" comment above. So the end result reads something
+like:
+
+  /* first check the per-protocol config */
+  ...
+
+  /* now fallback to the generic config */
+  ...
+
+  /* and then fallback to our built-in defaults */
+
+-Peff
