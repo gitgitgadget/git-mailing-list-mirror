@@ -2,73 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D315A2022D
-	for <e@80x24.org>; Fri,  4 Nov 2016 20:58:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3BA02022D
+	for <e@80x24.org>; Fri,  4 Nov 2016 21:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758192AbcKDU6U (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Nov 2016 16:58:20 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35911 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757632AbcKDU6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2016 16:58:18 -0400
-Received: by mail-pf0-f181.google.com with SMTP id 189so57534707pfz.3
-        for <git@vger.kernel.org>; Fri, 04 Nov 2016 13:58:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1XvKkkwgpCRh+G4gYF8NTtMEkrcz06DqJtVWUHuzA5w=;
-        b=RxYic7Cl4gxqAsQmRj5vQ0aJKbR77UhPw3O6RQI3yWsXfrcW7WpjqTYwdqw0J98gTx
-         fmD0GjuvF4tlb+JArn9AOpMvaXV295GkUe75ji+aJSPC8BXx5owclcDYBRJyNOzeB60S
-         GqwNxy7FC5F4cYeGz0bQ5agC347qiQen8/LB8pabmFWd70Uo2jolDbghNGUnkirHrtC5
-         Vj7Kk23vui1b1eLPEwyr5YXZApqFWDm34pwbnTW+xcRQ33nFXIpEIbLI7GFr+bRL703P
-         KsVGEtXQBfGp6DcHspB6xeo30sB/2tfhedIHj0oVfH49ChMtIk5BC3ebru1n87jxb40H
-         jxTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1XvKkkwgpCRh+G4gYF8NTtMEkrcz06DqJtVWUHuzA5w=;
-        b=TeyIDV5F9aahlE2epbaLv0zDe/WFxaKIoEN+RxDswZIhBsY/P0vvN2qyTQ7COGB8wy
-         xx7KSG39NjRC8+GyzEchX4MtYigqoXkfdKrUXAIwVRfyIBth9s5La5PbfEVm7mvXW9hg
-         KIj+DZfwmZJiLRSjZpkLzKvPXdsPYm9ChMrHAIQiOKjTH4TE9B/cJ6IizVTDuHjlafpn
-         anKby9HcnDXdFpQIs66OY8nqm3VBZ0NAEL2AOlh3CKB7vm/J4GiBcEw5DjW/Rdq7VbFS
-         cbqz9XCHJMpkxWafR5qk3S/m7YrRemLBORsb52NK8UVgauiN+fc+8jIw6K5LqwU7AZwz
-         xJzQ==
-X-Gm-Message-State: ABUngvfM9vbPv6SeKnFMK3ACumYvMTV081YlujHP9sOvcz/An2BA1E+jBygBocdn3+x2sBI3
-X-Received: by 10.99.53.75 with SMTP id c72mr24839997pga.168.1478293097522;
-        Fri, 04 Nov 2016 13:58:17 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:28d2:ac2e:cc40:c119])
-        by smtp.gmail.com with ESMTPSA id 12sm22412299pft.83.2016.11.04.13.58.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 04 Nov 2016 13:58:16 -0700 (PDT)
-Date:   Fri, 4 Nov 2016 13:58:15 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, bburky@bburky.com, peff@peff.net,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v3] transport: add protocol policy config option
-Message-ID: <20161104205815.GA127933@google.com>
-References: <1478125247-62372-1-git-send-email-bmwill@google.com>
- <1478292933-7873-1-git-send-email-bmwill@google.com>
+        id S1757327AbcKDVGW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Nov 2016 17:06:22 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:57415 "EHLO
+        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755515AbcKDVGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2016 17:06:21 -0400
+Received: from mfilter41-d.gandi.net (mfilter41-d.gandi.net [217.70.178.173])
+        by relay4-d.mail.gandi.net (Postfix) with ESMTP id 55EA81720B2;
+        Fri,  4 Nov 2016 22:06:19 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter41-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
+        by mfilter41-d.gandi.net (mfilter41-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+        with ESMTP id RyfFnju5x3GC; Fri,  4 Nov 2016 22:06:17 +0100 (CET)
+X-Originating-IP: 198.233.217.214
+Received: from x (unknown [198.233.217.214])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 7E31F17209C;
+        Fri,  4 Nov 2016 22:06:16 +0100 (CET)
+Date:   Fri, 4 Nov 2016 15:06:13 -0600
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Regarding "git log" on "git series" metadata
+Message-ID: <20161104210613.5ax523wrc5robs7l@x>
+References: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1478292933-7873-1-git-send-email-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20161014 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/04, Brandon Williams wrote:
-> Signed-off-by: Brandon Williams <bmwill@google.com>
+On Fri, Nov 04, 2016 at 10:57:09AM -0700, Junio C Hamano wrote:
+> After your talk at LPC2016, I was thinking about your proposal to
+> give an option to hide certain parents from "git log" traversal.
+> 
+> While I do not think we would terribly mind a new feature in the
+> core to support third-party additions like "git series" better, I
+> think this particular one is a big mistake that we shouldn't take.
+[...]
+> I think this is backwards.  The root cause of the issue you have
+> with "gitk" is because you added something that is *NOT* a parent to
+> your commit.  We shouldn't have to add a mechanism to filter
+> something that shouldn't have been added there in the first place.
+> 
+> I am wondering if an alternative approach would work better.
+> 
+> Imagine we invent a new tree entry type, "gitref", that is similar
+> to "gitlink" in that it can record a commit object name in a tree,
+> but unlike "gitlink" it does imply reachability.  And you do not add
+> phony parents to your commit object.  A tree that has "gitref"s in
+> it is about annotating the commits in the same repository (e.g. the
+> tree references two commits, "base" and "tip", to point into a slice
+> of the main history).  And it is perfectly sensible for such a
+> pointer to imply reachability---after all it serves different
+> purposes from "gitlink".
 
-Is there an acceptable way to give credit to Jeff for helping with this patch?
+I absolutely agree with this, and I'd love to have gitref or similar in
+core git.  Given the availability of that mechanism, I'd love to use it
+in git-series.  (And in git submodule, as well, for other projects.)
 
--- 
-Brandon Williams
+The one critical issue there, though: that would break backward
+compatibility with old versions of git.  No old version of git could
+push, pull, gc, repack, or otherwise touch a repository that used this
+feature.
+
+The advantages of the approach (viewing and manipulating the series with
+pure git) seem sufficiently high to make that worth considering, but it
+is a significant downside.
+
+> Another alternative that I am negative about (but is probably a
+> better hack than how you abused the "parent" link) might be to add a
+> new commit object header field that behaves similarly to "parent"
+> only in that it implies reachability.  But recording the extra
+> parent in commit object was not something you wanted to do in the
+> first place (i.e. your series processing is done solely on the
+> contents of the tree, and you do not read this extra parent). If you
+> need to add an in-tree reference to another commit in your future
+> versions of "git series", with either this variant or your original
+> implementation, you would end up needing adding more "parent" (or
+> pseudo parent) only to preserve reachability.  At that point, I
+> think it makes more sense to have entries in the tree to directly
+> ensure reachability, if you want these entries to always point at an
+> in-tree object.
+
+This would similarly break compatibility with old git, as old git
+wouldn't follow those reachability-only links from commits, so it could
+throw away the data.
+
+One approach compatible with old git would be to continue adding the
+relevant commits as artificial parents, but have a separate commit
+metadata field that says which parents to ignore; old git would then do
+the right thing, as long as it doesn't rewrite the commit entirely.
+
+That does have the same disadvantages of having to duplicate the
+information in both the tree and the parent list, though; it's the same
+class of hack, just with improved usability.  I'd much rather use
+gitrefs.
+
+> I am afraid that I probably am two steps ahead of myself, because I
+> am reasonably sure that it is quite possible that I have overlooked
+> something trivially obvious that makes the "gitref" approach
+> unworkable.
+
+gitref seems like a good idea to me, as long as we can sort out the
+compatibility story.
