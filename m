@@ -2,63 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F28682022D
-	for <e@80x24.org>; Thu,  3 Nov 2016 21:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 878D22021E
+	for <e@80x24.org>; Fri,  4 Nov 2016 00:03:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932914AbcKCVJt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Nov 2016 17:09:49 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:17741 "EHLO bsmtp.bon.at"
+        id S1758893AbcKDADy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Nov 2016 20:03:54 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:60266 "EHLO mx1.redhat.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932905AbcKCVJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2016 17:09:48 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3t8yK56Gt2z5tlF;
-        Thu,  3 Nov 2016 22:09:45 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 6977E14A;
-        Thu,  3 Nov 2016 22:09:45 +0100 (CET)
-Subject: Re: [PATCH 2/4] t0021: put $TEST_ROOT in $PATH
+        id S1752268AbcKDADx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2016 20:03:53 -0400
+Received: from int-mx14.intmail.prod.int.phx2.redhat.com (int-mx14.intmail.prod.int.phx2.redhat.com [10.5.11.27])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 19DA731B327;
+        Fri,  4 Nov 2016 00:03:53 +0000 (UTC)
+Received: from mail.random (ovpn-116-31.ams2.redhat.com [10.36.116.31])
+        by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id uA403pI2032495
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 3 Nov 2016 20:03:52 -0400
+Date:   Fri, 4 Nov 2016 01:03:51 +0100
+From:   Andrea Arcangeli <aarcange@redhat.com>
 To:     Jeff King <peff@peff.net>
-References: <20161102181625.e2uprqdlzl7z2xrz@sigill.intra.peff.net>
- <20161102181824.mi6lmfnfckvrav7n@sigill.intra.peff.net>
- <d36d8b51-f2d7-a2f5-89ea-369f49556e10@kdbg.org>
- <20161103204438.zfe653c2bsv3zqkx@sigill.intra.peff.net>
-Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <c77455b1-6621-cff5-c07f-97a247fa2eb4@kdbg.org>
-Date:   Thu, 3 Nov 2016 22:09:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+Cc:     git@vger.kernel.org
+Subject: Re: send-email garbled header with trailing doublequote in email
+Message-ID: <20161104000351.GP4611@redhat.com>
+References: <20161102202709.GI4611@redhat.com>
+ <20161102211118.sc4j3fezfqxg23i3@sigill.intra.peff.net>
+ <20161102213805.GJ4611@redhat.com>
+ <20161102220437.5ewzezxs2nasyouv@sigill.intra.peff.net>
+ <20161102222901.GK4611@redhat.com>
+ <20161103141848.42pg6iow24prign5@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20161103204438.zfe653c2bsv3zqkx@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161103141848.42pg6iow24prign5@sigill.intra.peff.net>
+User-Agent: Mutt/1.7.1 (2016-10-04)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Fri, 04 Nov 2016 00:03:53 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.11.2016 um 21:44 schrieb Jeff King:
-> On Thu, Nov 03, 2016 at 09:40:01PM +0100, Johannes Sixt wrote:
->> We have to use $PWD instead of $(pwd) because on Windows...
->
-> Thanks. I have to admit I remain confused about which one to use at any
-> given invocation
+On Thu, Nov 03, 2016 at 10:18:48AM -0400, Jeff King wrote:
+> bogus header. The munging that postfix does makes things worse, but I
 
-No worries. It *is* complex, and I don't expect anyone who is not deep 
-in the business to get this thing right except by mere chance.
+I agree it makes things worse.
 
-> (I would have thought that switching to $PWD causes
-> problems elsewhere in the script, but I guess file redirection is
-> capable of handling either type).
+> can see why it is confused and does what it does (the whole email is
+> inside a double-quoted portion that is never closed, so it probably
+> thinks there is no hostname portion at all).
 
-Correct.
+I would see it too, if it actually sent the email to the garbled email
+address it generated, but it actually got the right email address
+(because it sent the email to the right address), but it decided to
+show a different email address in the mail header than the one it sent
+the email to. But I figure this is the wrong list for such questions :).
 
--- Hannes
+> I think if any change were to be made, it would be to recognize this
+> bogosity and either clean it up or abort. That ideally would happen via
 
+If postfix continues to do what it does, a strict checking would be my
+preference of course, assuming it won't break anything that currently
+works...
+
+If not it's fine too, as nothing particularly "unexpected" happened in
+git.
+
+At this point double checking that what postfix does is legit is
+perhaps more worthwhile than adding strictness to git.
+
+Thanks,
+Andrea
