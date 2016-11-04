@@ -2,124 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ECB02022D
-	for <e@80x24.org>; Fri,  4 Nov 2016 15:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B20732022D
+	for <e@80x24.org>; Fri,  4 Nov 2016 16:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935225AbcKDPT4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Nov 2016 11:19:56 -0400
-Received: from mail.zhinst.com ([212.126.164.98]:32806 "EHLO mail.zhinst.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754005AbcKDPTz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2016 11:19:55 -0400
-Received: from ziws08.zhinst.com ([10.42.0.7])
-        by mail.zhinst.com (Kerio Connect 9.1.1) with ESMTP;
-        Fri, 4 Nov 2016 16:19:49 +0100
-From:   Tobias Klauser <tklauser@distanz.ch>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH] branch: remove unused parameter to create_branch()
-Date:   Fri,  4 Nov 2016 16:19:49 +0100
-Message-Id: <20161104151949.13384-1-tklauser@distanz.ch>
-X-Mailer: git-send-email 2.9.0
+        id S935415AbcKDQKK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Nov 2016 12:10:10 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:33586 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934706AbcKDQKI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2016 12:10:08 -0400
+Received: by mail-qt0-f169.google.com with SMTP id p16so50931840qta.0
+        for <git@vger.kernel.org>; Fri, 04 Nov 2016 09:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=T6WG1ryWSTcfULgR60lSI9/ZIuHrFwnVnPlQmtgWR4o=;
+        b=PyzqqmKdhfsXC+GmWHhIdtvLH/q6dx3pY/aMcXbUo2r3YoTpwdGbliIUJEnPfvo5/X
+         8ztwDDRJK6+JKkwrCqiwgtRrzuyMeDtUB5VGcR4T/W1jguhDCBDpz8rdZM+rdjXW7djq
+         KCboohMb/aK/teOb/iqkV9UxX7RUqlWD017Br19kjavY98NVRydttQivaVJA7h7lbmqm
+         BqCvC849WXUfywKGviNpD7b6H1ItAKR8r5zMKhd/TveAldF6hQBR866Axa2YYirwgU9c
+         XrM6sTXq6rzkkTvloSnDQIm0w7gi+B54xY7hs5rMnhzK9PVO2hBWxNTjELg0thsNCgEM
+         PIMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=T6WG1ryWSTcfULgR60lSI9/ZIuHrFwnVnPlQmtgWR4o=;
+        b=eObfwDvRP+LneeEE6HofotipgiDV7QysQBivRXeRCGuw5czvVFG9kMf/AAMJmuIC6p
+         E+Og1K3anHVgaMx+Uj9Ax5Xm7ObHJTjl9TCMPXxfN5WWLqBvMnaFYaY2YuOqGWfoguFG
+         cYkeXwwIuI6WQBawrxLL4ceHIWkHue+z8c5kJrFcxWhEKco+gHKVwjRsLSz+7kYXrRNJ
+         UAFLNuTcWKM9eFaS0+VIHZ+PVHrD8AInLTc4RhR4q3muhTHeLpahPBl442OOlM0ubyDB
+         qnM1XV7rjVWRSL5MqG96dahUaNYZnKUZPqLZrCB+E+TSTWeKolGWHXZLZJmTKw9/M0VU
+         f9/A==
+X-Gm-Message-State: ABUngvcpeBWDZurEgxLqKN6dXY59ZRHkJ20fqQA2pQTlsxoJyQ+Oguda8wX0SoodjGIrWP5SQCSGgPBpUQFf+M4J
+X-Received: by 10.237.63.25 with SMTP id p25mr14359044qtf.18.1478275807453;
+ Fri, 04 Nov 2016 09:10:07 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.12.134.65 with HTTP; Fri, 4 Nov 2016 09:10:07 -0700 (PDT)
+In-Reply-To: <CADJspfL3zVCPv+mfRM_v4ukUggQkhGH7KB50a+HLPZXZqn1pXw@mail.gmail.com>
+References: <CADJspfL3zVCPv+mfRM_v4ukUggQkhGH7KB50a+HLPZXZqn1pXw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 4 Nov 2016 09:10:07 -0700
+Message-ID: <CAGZ79kafn3usjKPPif6yRg1r_zyspWGNqOPLpCeyQwqFKXydwQ@mail.gmail.com>
+Subject: Re: git -C has unexpected behaviour
+To:     Felix Nairz <felix.nairz@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The name parameter to create_branch() has been unused since commit
-55c4a673070f ("Prevent force-updating of the current branch"). Remove
-the parameter and adjust the callers accordingly. Also remove the
-parameter from the function's documentation comment.
+On Fri, Nov 4, 2016 at 7:28 AM, Felix Nairz <felix.nairz@gmail.com> wrote:
+> Hi guys,
+>
+> I ran into some really weird git behaviour today.
+>
+> My git --version is: git version 2.8.1.windows.1
+>
+> We have a git repository with a submodule called TestData. The data in
+> there is modified and reset as part of our unit tests.
+>
+> The submodule is a sub-folder of the git repository called TestData.
+> So the relative path from the git repository to the submodule is
+> .\TestData
+>
+> If I delete the entire TestData folder and run
+> git -C .\TestData reset --hard
+>
+> I will get the following error:
+> git : fatal: Cannot change to '.\TestData': No such file or directory
+> This is as expected.
+>
+>
+> Now, to the unexpected part, which I think is a bug:
+>
+> If the TestData folder is there, but empty (I deleted all the files),
 
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
- branch.c           |  3 +--
- branch.h           | 15 +++++++--------
- builtin/branch.c   |  4 ++--
- builtin/checkout.c |  2 +-
- 4 files changed, 11 insertions(+), 13 deletions(-)
+And "all the files" includes the ".git" file, which git uses to find out if
+it is in a git repository. So it keeps walking up until it finds a .git
+file/directory, which is the parent project.
 
-diff --git a/branch.c b/branch.c
-index a5a8dcbd0ed9..0d459b3cfe50 100644
---- a/branch.c
-+++ b/branch.c
-@@ -228,8 +228,7 @@ N_("\n"
- "will track its remote counterpart, you may want to use\n"
- "\"git push -u\" to set the upstream config as you push.");
- 
--void create_branch(const char *head,
--		   const char *name, const char *start_name,
-+void create_branch(const char *name, const char *start_name,
- 		   int force, int reflog, int clobber_head,
- 		   int quiet, enum branch_track track)
- {
-diff --git a/branch.h b/branch.h
-index b2f964933270..8e63d1b6f964 100644
---- a/branch.h
-+++ b/branch.h
-@@ -4,15 +4,14 @@
- /* Functions for acting on the information about branches. */
- 
- /*
-- * Creates a new branch, where head is the branch currently checked
-- * out, name is the new branch name, start_name is the name of the
-- * existing branch that the new branch should start from, force
-- * enables overwriting an existing (non-head) branch, reflog creates a
-- * reflog for the branch, and track causes the new branch to be
-- * configured to merge the remote branch that start_name is a tracking
-- * branch for (if any).
-+ * Creates a new branch, where name is the new branch name, start_name
-+ * is the name of the existing branch that the new branch should start
-+ * from, force enables overwriting an existing (non-head) branch, reflog
-+ * creates a reflog for the branch, and track causes the new branch to
-+ * be configured to merge the remote branch that start_name is a
-+ * tracking branch for (if any).
-  */
--void create_branch(const char *head, const char *name, const char *start_name,
-+void create_branch(const char *name, const char *start_name,
- 		   int force, int reflog,
- 		   int clobber_head, int quiet, enum branch_track track);
- 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index d5d93a8c03fe..60cc5c8e8da0 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -807,7 +807,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		 * create_branch takes care of setting up the tracking
- 		 * info and making sure new_upstream is correct
- 		 */
--		create_branch(head, branch->name, new_upstream, 0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
-+		create_branch(branch->name, new_upstream, 0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
- 	} else if (unset_upstream) {
- 		struct branch *branch = branch_get(argv[0]);
- 		struct strbuf buf = STRBUF_INIT;
-@@ -853,7 +853,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
- 
- 		branch_existed = ref_exists(branch->refname);
--		create_branch(head, argv[0], (argc == 2) ? argv[1] : head,
-+		create_branch(argv[0], (argc == 2) ? argv[1] : head,
- 			      force, reflog, 0, quiet, track);
- 
- 		/*
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9b2a5b31d423..512492aad909 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -630,7 +630,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 			}
- 		}
- 		else
--			create_branch(old->name, opts->new_branch, new->name,
-+			create_branch(opts->new_branch, new->name,
- 				      opts->new_branch_force ? 1 : 0,
- 				      opts->new_branch_log,
- 				      opts->new_branch_force ? 1 : 0,
--- 
-2.9.0
+Once a git directory is found, the main function of git initializes some
+data structures, e.g. the "path prefix" inside the repository which would be
+" .\TestData" in your case. then the actual command is found and run.
+
+So what it is doing is:
+"Suppose you are in the TestData directory of the parent project and then
+run the command ..."
+
+My gut reaction was to propose to check if any GITLINK (submodule)
+is a prefix of said "path prefix" and then rather initialize and operate on
+the submodule.
+
+However I do not think this is a good idea:
+* Git wants to be fast and checking if we are in any submodule
+slows down the common case.
+* Historically commands in un-initialized or deinitialized submodules
+behave as if in the parent project. I think if we'd fix this issue, other
+people would complain as their workflow is harmed.
+
+>
+> Because of this we have had losses of uncommitted changes a few times
+> now (loosing a few days of work, and getting a bit paranoid),
+
+* commit early, commit often such that the losses are less than a few days.
+* do not remove the submodule directory as a whole thing
+  (make sure the .git file is there and not wiped)
+* instead use "git -C TestData clean -dffx && git -C TestData reset --hard"
+   https://git-scm.com/docs/git-clean
 
 
+> could never find the root cause for this until today, where I found
+> out that it happens when the TestData directory is empty.
+
+I am undecided if it is a bug or a feature. Fixing this as a bug
+would be a performance penalty. Not fixing it may incur data losses.
+I dunno.
+
+>
+> Thank for looking into this, and I am looking forward to hear your
+> opinions about this.
+>
+> Best Regards, Felix Nairz
