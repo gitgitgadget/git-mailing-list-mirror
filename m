@@ -2,74 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 569CC2022D
-	for <e@80x24.org>; Fri,  4 Nov 2016 23:09:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DCE92022D
+	for <e@80x24.org>; Fri,  4 Nov 2016 23:34:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751944AbcKDXJG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Nov 2016 19:09:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38920 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751147AbcKDXJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2016 19:09:05 -0400
-Received: (qmail 21375 invoked by uid 109); 4 Nov 2016 23:09:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Nov 2016 23:09:04 +0000
-Received: (qmail 27246 invoked by uid 111); 4 Nov 2016 23:09:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Nov 2016 19:09:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Nov 2016 19:09:02 -0400
-Date:   Fri, 4 Nov 2016 19:09:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Blake Burkhart <bburky@bburky.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3] transport: add protocol policy config option
-Message-ID: <20161104230902.ulkyejwamm6q575a@sigill.intra.peff.net>
-References: <1478125247-62372-1-git-send-email-bmwill@google.com>
- <1478292933-7873-1-git-send-email-bmwill@google.com>
- <20161104205815.GA127933@google.com>
- <CAGZ79kZB9wMgPDktMUpBfcvgJy16N8P74SvLP5740UNftZkbVg@mail.gmail.com>
+        id S1751261AbcKDXe4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Nov 2016 19:34:56 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:35724 "EHLO
+        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750799AbcKDXez (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2016 19:34:55 -0400
+Received: by mail-yw0-f171.google.com with SMTP id i145so5998566ywg.2
+        for <git@vger.kernel.org>; Fri, 04 Nov 2016 16:34:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gEdRl7/rr0d3tEL5VQpOXsmr61UAIOI1rwEj4We0du4=;
+        b=a0hRg+7TiFgy9RZTrCHovN9HakU0qtWh3X9GQ5uvYFdwXeb+pKrkdtIjrwq80zt1dy
+         S6RM4Z14jIf6QDxClSD+7AneA4OCd9koUNAsbLN356Lw11ZuIMNv8vCa6SjrTEXngROZ
+         02j3yTFDkIv1AOVSqL3eZ4god85aOmkKCAHC6xIk5Rws5s/OcYYpWljQapPIupifEC4Z
+         oAcRHYlAuqGMssJTD+MhGH6xnY3QiMSUiUls0z1B6yyCUsqHwMSwUi8/aBFORMMGPKRx
+         phGpbE/eooWk6Kc4IoNOZSlTx8LVecm9+To7dYgDa+Ueq4ENIW8IDPJfQMdfO2tkU4gj
+         R1fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gEdRl7/rr0d3tEL5VQpOXsmr61UAIOI1rwEj4We0du4=;
+        b=S9qLYvKLHAbqKCWoPWTltYp2BRqxZ14hSE7a11FSvM96nkgJ1ZbVpu+6VLCFAb1glU
+         HixbAWJXdvdYAfXjGlIWD4QqkkNSlRmVorI5EOa7RVkZGXNAAm0M+tLAlAU4/4QCvTgj
+         WpB52X07BS7TvwHKI9zcbZqzkAO4IC5yvpX/vkUBZSv4bh55pJkl2NXUGklva9pGVucP
+         VBXEQ6LKTNNEEHUF7k+W9MFo2+sEflWg2OG32Fz2wrFGmltmB5OEPVVCiX4Kcy+W1R3h
+         aWloX5+FaQaoGMFAX3nef/atz6ajK9/vBfnXFb7HOEL/ZsCupiBlO1yLg8A6aP2Iu3yx
+         Vt4g==
+X-Gm-Message-State: ABUngvcyblZCF+D3Wny2PMkRZnecH3wG0kBo59AK8psq+z+CkHZivaTQm9rx5iI0lzjKyDG3dcAlpDy4rnyd8A==
+X-Received: by 10.129.130.193 with SMTP id s184mr5521488ywf.276.1478302494550;
+ Fri, 04 Nov 2016 16:34:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZB9wMgPDktMUpBfcvgJy16N8P74SvLP5740UNftZkbVg@mail.gmail.com>
+Received: by 10.37.33.132 with HTTP; Fri, 4 Nov 2016 16:34:34 -0700 (PDT)
+In-Reply-To: <20161104194907.3yxu2rkayfyic4dr@sigill.intra.peff.net>
+References: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com> <CA+P7+xq0LLFBJRNNvCMQ4QR7XBg9H7NSsifiqOYqr+PUBqYRGQ@mail.gmail.com>
+ <20161104194907.3yxu2rkayfyic4dr@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 4 Nov 2016 16:34:34 -0700
+Message-ID: <CA+P7+xpwUZscpgzLJYf5vkKKsT6SFkC3TrsyBJXJjGo9cF94nQ@mail.gmail.com>
+Subject: Re: Regarding "git log" on "git series" metadata
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Josh Triplett <josh@joshtriplett.org>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2016 at 02:35:57PM -0700, Stefan Beller wrote:
+On Fri, Nov 4, 2016 at 12:49 PM, Jeff King <peff@peff.net> wrote:
+> I think the main complication is that the reachability rules are used
+> during object transfer. So you'd probably want to introduce some
+> protocol extension to say "I understand gitrefs", so that when one side
+> says "I have sha1 X and its reachable objects", we know whether they are
+> including gitrefs there. And likewise receivers with
+> transfer.fsckObjects may complain about the new gitref tree mode
+> (fortunately a new object type shouldn't be needed).
+>
+> You might also want fallback rules for storing gitrefs on "old" servers
+> (e.g., backfilling gitrefs you need if the server didn't them in the
+> initial fetch). But I guess storing any gitrefs on such a server is
+> inherently dangerous, because the server might prune them at any time.
+>
 
-> On Fri, Nov 4, 2016 at 1:58 PM, Brandon Williams <bmwill@google.com> wrote:
-> > On 11/04, Brandon Williams wrote:
-> >> Signed-off-by: Brandon Williams <bmwill@google.com>
-> >
-> > Is there an acceptable way to give credit to Jeff for helping with this patch?
-> 
-> What about:
-> Helped-by: Jeff King <peff@peff.net>
+Is it possible currently for a protocol extension to result in "oh the
+server doesn't support this so I'm going to stop pushing"? This would
+be a rather hard transition, but it would at least ensure that pushing
+to a server which doesn't support gitrefs would fail rather than
+silently accept objects and then discard them later? I think this is
+the only real transition unless we can make a change that old servers
+object to already.
 
-That, or often I would write:
+> So perhaps a related question is: how can gitrefs be designed such that
+> existing servers reject them (rather than accepting the push and then
+> later throwing away half the data). It would be easy to notice in the
+> client during a push that we are sending gitrefs to a server which does
+> not claim that capability. But it seems more robust if it is the server
+> who decides "I will not accept these bogus objects".
+>
+> I haven't thought all that hard about this. That's just my initial
+> thoughts on what sound hard. Tweaking the reachability code doesn't seem
+> all that bad; we already know all of the spots that care about
+> S_ISGITLINK(). It may even be that some of those spots work out of the
+> box (because gitlinks are usually about telling the graph-walking code
+> that we _don't_ care about reachability; we do by default for trees and
+> blobs).
 
-  Based on a patch by Jeff King <peff@peff.net>
+Right. I'm assuming tree objects don't get checked for invalid mode
+already? If they do, we could just change the mode to something
+unsupported currently. But... that seems like it might not be the case
+because it requires checking every tree object coming in?
 
-in the commit message. Basically anything is OK _except_ forging
-signed-off-by, because it has a very specific meaning. So let me also
-say that I am happy to give my:
+I'm not familiar with what sort of checking already exists... Thoughts?
 
-  Signed-off-by: Jeff King <peff@peff.net>
+>
+> I'd be surprised if all such sites work out of the box, though. Even if
+> they see "ah, sha1 X is referenced by tree Y and isn't a gitlink, and
+> therefore should be reachable", they need to also note that "X" is a
+> commit and recursively walk its objects.
+>
 
-to the original (which you should add in, to make clear that the
-copyright issues are OK).
+They won't all work out of the box, but it shouldn't be much work to
+do this part.
 
-In some cases it makes sense to just roll somebody's patch into your
-series, and then build on top. I'm fine with it all going into a single
-patch here.
-
--Peff
+> -Peff
