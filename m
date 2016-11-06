@@ -2,96 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56BF32022A
-	for <e@80x24.org>; Sun,  6 Nov 2016 10:28:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B18E2021E
+	for <e@80x24.org>; Sun,  6 Nov 2016 14:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751654AbcKFK2n (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Nov 2016 05:28:43 -0500
-Received: from ud03.udmedia.de ([194.117.254.43]:40010 "EHLO
-        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751474AbcKFK2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Nov 2016 05:28:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
-        :references:cc:from:message-id:date:mime-version:in-reply-to
-        :content-type:content-transfer-encoding; s=k1; bh=ZgnEY4svQW/+5x
-        j/OQv/nlbUb6oR5hoTV5+wMQ2JwS8=; b=oXstsdemn95dVASD6hakvOhOkfdrWR
-        Qbsff5TlVKpQfkzdPu15G6FLRNH1fwO0Vesjeojqzz5TNJqs5Db0OmWAivzms98v
-        YpHaTx9NGmHOfzWmw1IDRhA31f4hZ856sWREbhCDUydohW3KptvloHC6JGnVEcil
-        pbzAq8tBZ1Cfw=
-Received: (qmail 31294 invoked from network); 6 Nov 2016 11:28:37 +0100
-Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
-  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 6 Nov 2016 11:28:37 +0100
-Subject: Re: gitk: avoid obscene memory consumption
-To:     Paul Mackerras <paulus@ozlabs.org>,
-        Stefan Beller <sbeller@google.com>
-References: <47c374cf-e6b9-8cd3-ee0d-d877e9e96a62@jump-ing.de>
- <CAGZ79kbavzGJ2sAcz5heg+BO+tZ=TgtrhxMH1-kqeJUpNNavyw@mail.gmail.com>
- <20161105110845.GA4039@fergus.ozlabs.ibm.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Markus Hitter <mah@jump-ing.de>
-Message-ID: <ff5bb36b-e30c-3998-100d-789b4b5e7249@jump-ing.de>
-Date:   Sun, 6 Nov 2016 11:28:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161105110845.GA4039@fergus.ozlabs.ibm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S1752082AbcKFOFR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Nov 2016 09:05:17 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34300 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751660AbcKFOFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Nov 2016 09:05:16 -0500
+Received: by mail-wm0-f68.google.com with SMTP id p190so11961926wmp.1
+        for <git@vger.kernel.org>; Sun, 06 Nov 2016 06:05:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=GULHPKqI1eyolKZZBWn2KuBd9jQ8B1IzkhKgjfKAGgw=;
+        b=HpukyLz6z/28m5zPYYyJVxFNCXVQihOrPs8y+GLge239x/coBGvkinjib6UpKrbj8k
+         qVpdE6DWqla0n1lS0odljGcqPqKxY4+kRr7S2PlO59oOA6bPenGj4fBFp6H6/Z/64xXD
+         taYpCZzSRTsoj3+brCn66i6HhEOGywooa8v4gqQgnhAUd8WaR1YpY3BeRdFf1f2U6nDz
+         CDT2XnC/GAntQ3fot9kiE+/PnHPdeCDQpmloIQ2Hyxs/VfFcEtEC27+BS9lJond1HdBi
+         uK79Or3nBXq/4pahvPTe1WnkV3VXlu/HytFGPN1GjUHUHbUmKeM7+AkXSSVJoBEVJXo3
+         eZ+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=GULHPKqI1eyolKZZBWn2KuBd9jQ8B1IzkhKgjfKAGgw=;
+        b=QrqkZKk4GZUJzoAtkPUXdMdtw7OYiGSbMcfuqvwF1gTyIhSIIqmSEWyu/S4OWemEA6
+         TVZurmzk1yBXmF7RBEAA0nxKv8w6Y53BEzSWYXByU+z7D3kw21UunmHjOWWT13RdezNx
+         bkPGCLud7pNrDxlDvYewyy26D/LNaIfF25GsLJ1WveAPMXYMOGnLyn6VG/69TA38BpKN
+         N+HREIOYMbCw4zNebjWkZ2Y39j0lrzmbbSu5Blisv1LbUdSrvf0Hn3PtZj8eWyDUNa4e
+         fUlqoD1WAIbmwgN56t3KbbUuDx6sgoV/kHP6p7UZB71eeTTmZetYyi0kPmc6NPethS/Z
+         QgZg==
+X-Gm-Message-State: ABUngvc6RpqGzWEzpm46lhxGbqPyvxHyvIhsyqodH7Stk74z/zEcvkD2QfbjPQ9Q/I3fkQ==
+X-Received: by 10.28.20.139 with SMTP id 133mr4949891wmu.9.1478441115551;
+        Sun, 06 Nov 2016 06:05:15 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB5D74.dip0.t-ipconnect.de. [93.219.93.116])
+        by smtp.gmail.com with ESMTPSA id i10sm25336903wjd.15.2016.11.06.06.05.14
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 06 Nov 2016 06:05:14 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v5 08/27] sequencer: completely revamp the "todo" script parsing
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <c0d106125e1b6ba107b1ef06fb60dd710d184d29.1477052405.git.johannes.schindelin@gmx.de>
+Date:   Sun, 6 Nov 2016 15:05:22 +0100
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D3B8B6CB-D238-42A9-9B94-D135C25B4A63@gmail.com>
+References: <cover.1476450940.git.johannes.schindelin@gmx.de> <cover.1477052405.git.johannes.schindelin@gmx.de> <c0d106125e1b6ba107b1ef06fb60dd710d184d29.1477052405.git.johannes.schindelin@gmx.de>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.11.2016 um 12:08 schrieb Paul Mackerras:
-> On Fri, Nov 04, 2016 at 03:45:09PM -0700, Stefan Beller wrote:
->> On Fri, Nov 4, 2016 at 12:49 PM, Markus Hitter <mah@jump-ing.de> wrote:
->>>
->>> Hello all,
->>
->> +cc Paul Mackeras, who maintains gitk.
-> 
-> Thanks.
-> 
->>>
->>> after Gitk brought my shabby development machine (Core2Duo, 4 GB RAM, Ubuntu 16.10, no swap to save the SSD) to its knees once more than I'm comfortable with, I decided to investigate this issue.
->>>
->>> Result of this investigation is, my Git repo has a commit with a diff of some 365'000 lines and Gitk tries to display all of them, consuming more than 1.5 GB of memory.
->>>
->>> The solution is to cut off diffs at 50'000 lines for the display. This consumes about 350 MB RAM, still a lot. These first 50'000 lines are shown, followed by a copyable message on how to view the full diff on the command line. Diffs shorter than this limit are displayed as before.
-> 
-> That sounds reasonable.
-> 
->>
->> Bikeshedding: I'd argue to even lower the number to 5-10k lines.
-> 
-> I could go with 10k.
 
-Thanks for the positive comments.
+> On 21 Oct 2016, at 14:24, Johannes Schindelin =
+<johannes.schindelin@gmx.de> wrote:
+>=20
+> When we came up with the "sequencer" idea, we really wanted to have
+> kind of a plumbing equivalent of the interactive rebase. Hence the
+> choice of words: the "todo" script, a "pick", etc.
+>=20
+> ...
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> sequencer.c | 284 =
+++++++++++++++++++++++++++++++++++--------------------------
+> 1 file changed, 163 insertions(+), 121 deletions(-)
+>=20
+> diff --git a/sequencer.c b/sequencer.c
+> index 499f5ee..145de78 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -470,7 +470,26 @@ static int allow_empty(struct replay_opts *opts, =
+struct commit *commit)
+> 		return 1;
+> }
+>=20
+> -static int do_pick_commit(struct commit *commit, struct replay_opts =
+*opts)
+> +enum todo_command {
+> +	TODO_PICK =3D 0,
+> +	TODO_REVERT
+> +};
+> +
+> +static const char *todo_command_strings[] =3D {
+> +	"pick",
+> +	"revert"
+> +};
+> +
+> +static const char *command_to_string(const enum todo_command command)
+> +{
+> +	if (command < ARRAY_SIZE(todo_command_strings))
 
-TBH, the more I think about the problem, the less I'm satisfied with the solution I provided. Including two reasons:
+With DEVELOPER=3D1 I get this error on macOS when I compile current =
+git/next (b27dc33) using clang:
 
-- The list of files affected to the right is still complete and clicking a file name further down results in nothing ... as if the file wasn't part of the diff.
+sequencer.c:632:14: error: comparison of constant 2 with expression of =
+type 'const enum todo_command' is always true =
+[-Werror,-Wtautological-constant-out-of-range-compare]
+        if (command < ARRAY_SIZE(todo_command_strings))
 
-- Local searches. Cutting off diffs makes them unreliable. Global searches still work, but actually viewing a search result in the skipped section is no longer possible.
-
-So I'm watching out for better solutions. So far I can think of these:
-
-- Storing only the actually viewed diff. It's an interactive tool, so there's no advantage in displaying the diff in 0.001 seconds over viewing it in 0.1 seconds. As far as I can see, Gitk currently stores every diff it gets a hold of forever.
-
-- View the diff sparsely. Like rendering only the actually visible portion.
-
-- Enhancing ctext. This reference diff has 28 million characters, so there should be a way to store this with color information in, let's say, 29 MB of memory.
-
-Any additional ideas?
+Torsten discovered this problem already in v3 and Peff suggested
+a working solution [1]. Is there any reason not to use Peff's =
+suggestion?
 
 
-Markus
+Cheers,
+Lars
 
--- 
-- - - - - - - - - - - - - - - - - - -
-Dipl. Ing. (FH) Markus Hitter
-http://www.jump-ing.de/
+[1] =
+http://public-inbox.org/git/d9f4f658-94fb-cb9e-7da8-3a2fac120a9e@web.de/=
