@@ -2,95 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 154C92021E
-	for <e@80x24.org>; Sun,  6 Nov 2016 17:34:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B34E2021E
+	for <e@80x24.org>; Sun,  6 Nov 2016 19:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750995AbcKFReE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Nov 2016 12:34:04 -0500
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:34519 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750859AbcKFReD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Nov 2016 12:34:03 -0500
-Received: from mfilter34-d.gandi.net (mfilter34-d.gandi.net [217.70.178.165])
-        by relay4-d.mail.gandi.net (Postfix) with ESMTP id 9109917209D;
-        Sun,  6 Nov 2016 18:33:18 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter34-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-        by mfilter34-d.gandi.net (mfilter34-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id S6pQlMDNAGWt; Sun,  6 Nov 2016 18:33:17 +0100 (CET)
-X-Originating-IP: 50.39.170.172
-Received: from x (50-39-170-172.bvtn.or.frontiernet.net [50.39.170.172])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 6BB82172097;
-        Sun,  6 Nov 2016 18:33:13 +0100 (CET)
-Date:   Sun, 6 Nov 2016 09:33:11 -0800
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Shawn O. Pierce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>
-Subject: Re: Regarding "git log" on "git series" metadata
-Message-ID: <20161106173311.lqoxxgcklx4jlrg7@x>
-References: <CAP8UFD2+A0MUKazAfSwCvv61TJRPuoOzH5EkqcrBOUi4TcuoDw@mail.gmail.com>
- <xmqq1syqedv4.fsf@gitster.mtv.corp.google.com>
- <CAP8UFD0bqNQZ3nuGUDX0qrSo44hf1NL9LeZB_FQcXg3j0mD38A@mail.gmail.com>
- <CAP8UFD1EZ8HBzLAeyFBFgU7n2uJpswqgEgA4XM1YJuRAG_ZAAQ@mail.gmail.com>
- <20161105151836.wztypzrdywyltvrc@x>
- <CAP8UFD3XFHr7POKmZr_6guapC6sme3GvWBV5vPw4XO7FE5HOPw@mail.gmail.com>
- <20161105202553.migx75gfuujakqyk@x>
- <CA+P7+xoG3ag8dj7s_NRoqz-EwjVENSJSzE_qj6gnW-SmWt0bgA@mail.gmail.com>
- <20161106163410.ilysej5r6qd3744e@x>
- <xmqqshr4cyy7.fsf@gitster.mtv.corp.google.com>
+        id S1751187AbcKFTbZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Nov 2016 14:31:25 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:51120 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750995AbcKFTbY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Nov 2016 14:31:24 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tBm094ySyz5tlF;
+        Sun,  6 Nov 2016 20:31:21 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id D9C8C14C;
+        Sun,  6 Nov 2016 20:31:19 +0100 (CET)
+Subject: Re: [PATCH (optional)] t0021: use arithmetic expansion to trim
+ whitespace from wc -c output
+To:     Lars Schneider <larsxschneider@gmail.com>
+References: <20161016232038.84951-1-larsxschneider@gmail.com>
+ <20161016232038.84951-14-larsxschneider@gmail.com>
+ <3b09d218-33bd-dc7c-235c-8954a46afc41@kdbg.org>
+ <3763DDDB-9D53-4877-8399-32DF1780CAB7@gmail.com>
+ <fb4d62de-fbb5-a2b4-8eba-b135125dafa9@kdbg.org>
+ <3b58b90d-5435-1503-d052-413a947a5ab5@kdbg.org>
+ <C61D1F80-7B7A-4111-9418-75D178AF4353@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+        peff@peff.net, ramsay@ramsayjones.plus.com, tboegi@web.de
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <b87ddffd-3de1-4481-b484-9f03a73b6ad1@kdbg.org>
+Date:   Sun, 6 Nov 2016 20:31:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqshr4cyy7.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/20161014 (1.7.1)
+In-Reply-To: <C61D1F80-7B7A-4111-9418-75D178AF4353@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 06, 2016 at 09:14:56AM -0800, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
-> > We could, but if we (or one of the many third-party git implementations)
-> > miss a case, gitlinks+reachability may appear to work in many cases with
-> > dataloss afterward, while gitrefs will fail early and not appear
-> > functional.
+Am 06.11.2016 um 16:45 schrieb Lars Schneider:
 > 
-> I wonder what happens if we do not introduce the "gitref" but
-> instead change the behaviour of "gitlink" to imply an optional
-> reachability.  That is, when enumerating what is reachable in your
-> repository, if you see a gitlink and if you notice that you locally
-> have the target of that gitlink, you follow, but if you know you
-> lack it, you do not error out.  This may be making things too
-> complex to feasibily implement by simplify them ;-) and I see a few
-> immediate fallout that needs to be thought through (i.e. downsides)
-> and a few upsides, too.  I am feeling feverish and not thinking
-> straight, so I won't try to weigh pros-and-cons.  
-> 
-> This would definitely need protocol extension when transferring
-> objects across repositories.
+>> On 03 Nov 2016, at 21:22, Johannes Sixt <j6t@kdbg.org> wrote:
+>> This is a pure optimization that reduces the number of forks, which
+>> helps a bit on Windows.
+>>
+>> There would be a solution with perl that does not require trimming
+>> of whitespace, but perl startup times are unbearable on Windows.
+>> wc -c is better.
 
-It'd also need a repository format extension locally.  Otherwise, if you
-ever touched that repository with an older git (or a tool built on an
-older libgit2 or JGit or other library), you could lose data.
+I was wrong here. I had looked at the perl invocations due to
+git-sendemail, and they are awfully slow. A do-almost-nothing perl
+invocation is in the same ballpark as wc. Therefore I changed my mind
+and suggest the patch below instead.
 
-It does seem conceptually appealing, though.  In an ideal world, the
-original version of gitlink would have had opt-out reachability (and
-.gitmodules with an external repository reference could count as opting
-out).
+> Since the file size function became very simple with your patch,
+> shouldn't we get rid of it? If you agree, then we could squash the 
+> patch below into your patch.
 
-But I can't think of any case where it's OK for a git implementation to
-not know about this reachability extension and still operate on the
-gitlink.  And given that, it might as well use a new object type that
-the old version definitely won't think it understands.
+In the new patch, the function is not that trivial (it uses perl), and
+the call sites can remain as they are (simple shell variables and
+substitutions).
 
-- Josh Triplett
+---- 8< ----
+[PATCH] t0021: compute file size with a single process instead of a pipeline
+
+Avoid unwanted coding patterns (prodigal use of pipelines), and in
+particular a useless use of cat.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t0021-conversion.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index db71acacb3..cb72fa49de 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -22,7 +22,7 @@ generate_random_characters () {
+ }
+ 
+ file_size () {
+-	cat "$1" | wc -c | sed "s/^[ ]*//"
++	perl -e 'print -s $ARGV[0]' "$1"
+ }
+ 
+ filter_git () {
+-- 
+2.11.0.rc0.55.gd967357
+
