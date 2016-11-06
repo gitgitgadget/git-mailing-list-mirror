@@ -2,94 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CCB62022A
-	for <e@80x24.org>; Sun,  6 Nov 2016 07:42:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56BF32022A
+	for <e@80x24.org>; Sun,  6 Nov 2016 10:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751427AbcKFHmt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Nov 2016 02:42:49 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:33358 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751350AbcKFHms (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Nov 2016 02:42:48 -0500
-Received: by mail-yw0-f194.google.com with SMTP id s68so4102300ywg.0
-        for <git@vger.kernel.org>; Sun, 06 Nov 2016 00:42:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=oy+iMduvrZ35NiciW9QhIFgKRZ9MvAvKCB4iBNfFVR4=;
-        b=bwCXIxsfGKa7XxFilx4JLFVsyQCJLKun+pN4E9LzTk4EGA7USw57rhVt01+XnOneOH
-         nfXHk6F6tgt0Dcm31VhbkthAZvCWU733g8EPC9qYa+gcycVK1IoO38Y4YfT51oiaakDe
-         Wimhh4ckggf/EaDCPP9U68vCwgDC97iVRZgTtZ8HSbRTU44bhLfEoV3QTHA2kFZcM0kV
-         6lOCGMSrgnOsAU40N7Rzjg4gpL4RYO8jMSP/4yznv88bEknVxlBacIVLNpAGB47ON9vB
-         MsgiCHEaAsiboFg1yEEzZEAcjrqlVlJ9irEwR/lXPfIyLe16H8iq/lxT864pJfBIJW1T
-         9Txw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=oy+iMduvrZ35NiciW9QhIFgKRZ9MvAvKCB4iBNfFVR4=;
-        b=J1OXh/7k/M2iHqJ7qQ0TRrL2ix//qadiPn+68vrp835M85VZ2vYDp0GPSmN257WorQ
-         FqNsnKZDcG6/zN+YQk2mjOjyS6EEN5RHlTpBFtOMakJe5tEjyN9Z/pCc5422Y6dCkVwe
-         WVlKXh5taj4fj0qZBR5xUOzCM+LL5vxKTVZKMJLPhFK33ORVPiBw/IudpDJ08kO+zitG
-         HOPfB3YCNo15kC2cS47EvTW4qSM0RA1d3LojHOYfADYhHFjF07v5KxPFdPDG4L2nqxRP
-         F6P3Yd34d0MeoXuNlXygITWqH4TXXu8XIxo5VCPl404IpF0UzaOqHpQWYV2r3DL3wlgT
-         nBPQ==
-X-Gm-Message-State: ABUngvdxj8cofbIqkXPlGXLnoJJqSV7Q9ODJDG+tidTvb+xbhUdzEQzf7dET0Q6Fu5xanRqiQ47XKIFXTqPAnQ==
-X-Received: by 10.13.231.131 with SMTP id q125mr891147ywe.122.1478418167518;
- Sun, 06 Nov 2016 00:42:47 -0700 (PDT)
+        id S1751654AbcKFK2n (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Nov 2016 05:28:43 -0500
+Received: from ud03.udmedia.de ([194.117.254.43]:40010 "EHLO
+        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751474AbcKFK2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Nov 2016 05:28:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
+        :references:cc:from:message-id:date:mime-version:in-reply-to
+        :content-type:content-transfer-encoding; s=k1; bh=ZgnEY4svQW/+5x
+        j/OQv/nlbUb6oR5hoTV5+wMQ2JwS8=; b=oXstsdemn95dVASD6hakvOhOkfdrWR
+        Qbsff5TlVKpQfkzdPu15G6FLRNH1fwO0Vesjeojqzz5TNJqs5Db0OmWAivzms98v
+        YpHaTx9NGmHOfzWmw1IDRhA31f4hZ856sWREbhCDUydohW3KptvloHC6JGnVEcil
+        pbzAq8tBZ1Cfw=
+Received: (qmail 31294 invoked from network); 6 Nov 2016 11:28:37 +0100
+Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
+  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 6 Nov 2016 11:28:37 +0100
+Subject: Re: gitk: avoid obscene memory consumption
+To:     Paul Mackerras <paulus@ozlabs.org>,
+        Stefan Beller <sbeller@google.com>
+References: <47c374cf-e6b9-8cd3-ee0d-d877e9e96a62@jump-ing.de>
+ <CAGZ79kbavzGJ2sAcz5heg+BO+tZ=TgtrhxMH1-kqeJUpNNavyw@mail.gmail.com>
+ <20161105110845.GA4039@fergus.ozlabs.ibm.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Markus Hitter <mah@jump-ing.de>
+Message-ID: <ff5bb36b-e30c-3998-100d-789b4b5e7249@jump-ing.de>
+Date:   Sun, 6 Nov 2016 11:28:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Sun, 6 Nov 2016 00:42:27 -0700 (PDT)
-In-Reply-To: <CAGZ79kYcs0FiXdP6UZGgSmUpn_3vpnKo2RwTRJCvksP7+1o_wQ@mail.gmail.com>
-References: <20161027223834.35312-1-bmwill@google.com> <1477953496-103596-1-git-send-email-bmwill@google.com>
- <1477953496-103596-2-git-send-email-bmwill@google.com> <CAGZ79kamzSPyM65k9ugS0dAJCfGnGvk3m2p+XtCEozCvoZ5+OA@mail.gmail.com>
- <xmqq7f8nqfqc.fsf@gitster.mtv.corp.google.com> <CAGZ79kYcs0FiXdP6UZGgSmUpn_3vpnKo2RwTRJCvksP7+1o_wQ@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 6 Nov 2016 00:42:27 -0700
-Message-ID: <CA+P7+xoLUCR1fJ0kZ9F4bKgbez35oah6tKU7L+A7r5iAGv29+g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] submodules: add helper functions to determine
- presence of submodules
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20161105110845.GA4039@fergus.ozlabs.ibm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 1, 2016 at 10:31 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Nov 1, 2016 at 10:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
+Am 05.11.2016 um 12:08 schrieb Paul Mackerras:
+> On Fri, Nov 04, 2016 at 03:45:09PM -0700, Stefan Beller wrote:
+>> On Fri, Nov 4, 2016 at 12:49 PM, Markus Hitter <mah@jump-ing.de> wrote:
+>>>
+>>> Hello all,
 >>
->> Maybe I am old fashioned, but I'd feel better to see these with
->> explicit "extern" in front (check the older header files like
->> cache.h when you are in doubt what the project convention has been).
->
-> I did check the other files and saw them, so I was very unsure what to
-> suggest here. I only saw the extern keyword used in headers that were
-> there when Git was really young, so I assumed it's a style nit by kernel
-> developers. Thanks for clarifying!
->
-> I think we'll want to have some consistency though, so we
-> maybe want to coordinate a cleanup of submodule.h as well as
-> submodule-config.h to mark all the functions extern.
->
-> This doesn't need to be a all-at-once thing, but we'd keep it in mind
-> for future declarations in the header.
->
-> Thanks,
-> Stefan
+>> +cc Paul Mackeras, who maintains gitk.
+> 
+> Thanks.
+> 
+>>>
+>>> after Gitk brought my shabby development machine (Core2Duo, 4 GB RAM, Ubuntu 16.10, no swap to save the SSD) to its knees once more than I'm comfortable with, I decided to investigate this issue.
+>>>
+>>> Result of this investigation is, my Git repo has a commit with a diff of some 365'000 lines and Gitk tries to display all of them, consuming more than 1.5 GB of memory.
+>>>
+>>> The solution is to cut off diffs at 50'000 lines for the display. This consumes about 350 MB RAM, still a lot. These first 50'000 lines are shown, followed by a copyable message on how to view the full diff on the command line. Diffs shorter than this limit are displayed as before.
+> 
+> That sounds reasonable.
+> 
+>>
+>> Bikeshedding: I'd argue to even lower the number to 5-10k lines.
+> 
+> I could go with 10k.
 
-Extern is generally used when you want to declare a header for a
-function that's in a different object file. I'm not sure if we
-actually need it or not though.
+Thanks for the positive comments.
 
-Thanks,
-Jake
+TBH, the more I think about the problem, the less I'm satisfied with the solution I provided. Including two reasons:
+
+- The list of files affected to the right is still complete and clicking a file name further down results in nothing ... as if the file wasn't part of the diff.
+
+- Local searches. Cutting off diffs makes them unreliable. Global searches still work, but actually viewing a search result in the skipped section is no longer possible.
+
+So I'm watching out for better solutions. So far I can think of these:
+
+- Storing only the actually viewed diff. It's an interactive tool, so there's no advantage in displaying the diff in 0.001 seconds over viewing it in 0.1 seconds. As far as I can see, Gitk currently stores every diff it gets a hold of forever.
+
+- View the diff sparsely. Like rendering only the actually visible portion.
+
+- Enhancing ctext. This reference diff has 28 million characters, so there should be a way to store this with color information in, let's say, 29 MB of memory.
+
+Any additional ideas?
+
+
+Markus
+
+-- 
+- - - - - - - - - - - - - - - - - - -
+Dipl. Ing. (FH) Markus Hitter
+http://www.jump-ing.de/
