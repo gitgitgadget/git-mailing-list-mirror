@@ -7,76 +7,95 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC8532022C
-	for <e@80x24.org>; Mon,  7 Nov 2016 10:04:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 034C22022C
+	for <e@80x24.org>; Mon,  7 Nov 2016 10:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752483AbcKGKEY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 05:04:24 -0500
-Received: from mail-it0-f65.google.com ([209.85.214.65]:35580 "EHLO
+        id S1752082AbcKGKJS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 05:09:18 -0500
+Received: from mail-it0-f65.google.com ([209.85.214.65]:36580 "EHLO
         mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752431AbcKGKEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2016 05:04:23 -0500
-Received: by mail-it0-f65.google.com with SMTP id b123so3113519itb.2
-        for <git@vger.kernel.org>; Mon, 07 Nov 2016 02:04:18 -0800 (PST)
+        with ESMTP id S1751134AbcKGKJQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 05:09:16 -0500
+Received: by mail-it0-f65.google.com with SMTP id n68so874458itn.3
+        for <git@vger.kernel.org>; Mon, 07 Nov 2016 02:09:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Dck0TU3qquxZ9dRKoYitdY47EFu60NVuReYSXqbirBc=;
-        b=kRlGUpfucgEt0K7Nm1k7xnW7GwyeKojOWYwlVGL3x/jDZ/GXJRO2SQ/R82wLSFu/xi
-         SuXxUQrcR4EYTlPj3R1NnYltXcTqbVxPfzOlJpRyxSrfh54thM1PwoQobZ/QW3FUJNpE
-         rjWnXcrSmI1s7Kwfjcoc+bQMvUuubvw2TscP37uIBWlMqpD2c+0ZkEjhS5AY8ti0k6VS
-         yOGXFbrbauzLlz9VGNprItkRoB5HdKt8z8IK+fU0b4kSH4D1h2ORKSsklm8w8YTR+FCD
-         aEYI/sCrK34rd+CphDB4L2F814+y5bNLr9jhAcWvqo3+KGvLPSlTTG9IH/WZ+kY0ajBc
-         0Pxg==
+        bh=F7gvlHDpvtlbuyItFSwi9FFIfJTGKIlJ5aVwQr2gtFY=;
+        b=jxC141YdQHtDQg/RKUWv65gOrV9h+1oW/RnhN+UCAvcl1Lc7a13r+vupSr1CQWiMzF
+         5UtHR4DoxoEg5WfZDalFHmRepH5AbYvptSe3AyxTo/GkXHZP58N3P0O8fTrzg6gmCI+0
+         16fJ7smrjylw+V+WfDCDR5z4XLxAzDpTQ9+Ppi0gQP/uUippU5jOIy3+KLJ4bojU61ov
+         R4R+aYXTQ9hbnHPcTCsQkt5x0taLfgBUB8LAnR6Gx4R9hxrsiCGo5IW2DMBADjrArPn9
+         AudANlslx4Iwdz9yC7vX/4icHHaVA8EZtm/N1BPEYmLHFKnCdA6C7HhzUUJv1OftCu0o
+         vVlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Dck0TU3qquxZ9dRKoYitdY47EFu60NVuReYSXqbirBc=;
-        b=D9siQ3vTKQFxonPWyGChp2tQjEz96XvMNZmJsHkhFwwDw8YVdmXhNlB+GsYCYavKoA
-         +fFqYxSM07IZFLEeoeJP5NgxmKGTYWojzEHSFh8eQ5GcNAaWyCeAnL95BxpLagy+tYKE
-         a9OIgiCDJx1PApwhG1tyDS0ENWzahGSq/gHOYr264ODQbl+fv0pxCP8pGUYXWCrPl03L
-         ETnAQywNGyMz0qIB4u0H0p5qzI1r8NZslP781d025Jzfr1eQwoxmOUsPw3kg1AG5/tM8
-         0ShC92sLZBu2soiDZjB89RzuhDqwyXGpg0yLWMJi+yHGRzZQ/nao2859oT9icy7j9z8T
-         WKsw==
-X-Gm-Message-State: ABUngvfk4jXbnZr+YB4+gfareKyakXz8Y0E7nKcBT7VSUn+7ZMnfrKTSRlZFFBxoLtrBw/LrGK1FHX56OPoruw==
-X-Received: by 10.107.44.137 with SMTP id s131mr6384469ios.212.1478513052984;
- Mon, 07 Nov 2016 02:04:12 -0800 (PST)
+        bh=F7gvlHDpvtlbuyItFSwi9FFIfJTGKIlJ5aVwQr2gtFY=;
+        b=dWzo7KBFxloYOF3iwo+4w5ZASyCO0vuRifITBs4E3VLib+VguMKC1Dz7/u3KW35ti4
+         fER4MLzzNUUdk64dxhLPno0hLBUyx/phOp81rJqxVmR3TZMO9w2Ar+Bm5g/wmsXWe5eU
+         VVa1kcyRRvBBpx/ao090Yo/IV3t63Zxcw1CNAUCG+0XtkXvKQGSRPucTZIXAXkZ9X3G4
+         JITWwRw7N1iLC0TQYzVR/vEBtJV960B3L4S/z/BKisAdEX2O7tHc3mjUO+1wkY2+dTQd
+         Wp8x6ZGsTTuwDdBtRxbb8X6dZ43kIWUwH2y0nF86DlI6hssruK1Y3uWEiBdk+3Gd8ERE
+         AZyA==
+X-Gm-Message-State: ABUngvdLtLC0cEE9Qgn3+yga1wgJMxMieu5E/L/ZS45ouTWPNbMd51/a3Nv2OuTmViCvrOPyraV2oVPig5N7sA==
+X-Received: by 10.36.26.78 with SMTP id 75mr6387566iti.74.1478513356201; Mon,
+ 07 Nov 2016 02:09:16 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Mon, 7 Nov 2016 02:03:42 -0800 (PST)
-In-Reply-To: <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net>
-References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net> <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net>
+Received: by 10.64.164.102 with HTTP; Mon, 7 Nov 2016 02:08:45 -0800 (PST)
+In-Reply-To: <CAP8UFD3hNEU_UeVizU6SVJTt4hqJPag9XWqZOM3FKCGJZXOthg@mail.gmail.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-4-chriscool@tuxfamily.org> <CACsJy8DPt3EJoSTVEZFbH6xXbh78MbLZ4h+50K4eoFxPYSaN=Q@mail.gmail.com>
+ <CAP8UFD3hNEU_UeVizU6SVJTt4hqJPag9XWqZOM3FKCGJZXOthg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 7 Nov 2016 17:03:42 +0700
-Message-ID: <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
-Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree .gitattributes
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Mon, 7 Nov 2016 17:08:45 +0700
+Message-ID: <CACsJy8DjXrOgB-_-t47uSdCQFg9s_o+Oj9NBmAhDFZ3aYvjBgg@mail.gmail.com>
+Subject: Re: [PATCH v1 03/19] split-index: add {add,remove}_split_index() functions
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 2, 2016 at 8:08 PM, Jeff King <peff@peff.net> wrote:
-> The attributes system may sometimes read in-tree files from
-> the filesystem, and sometimes from the index. In the latter
-> case, we do not resolve symbolic links (and are not likely
-> to ever start doing so). Let's open filesystem links with
-> O_NOFOLLOW so that the two cases behave consistently.
+On Sun, Oct 30, 2016 at 5:06 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Tue, Oct 25, 2016 at 11:58 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>>> +void remove_split_index(struct index_state *istate)
+>>> +{
+>>> +       if (istate->split_index) {
+>>> +               /*
+>>> +                * can't discard_split_index(&the_index); because that
+>>> +                * will destroy split_index->base->cache[], which may
+>>> +                * be shared with the_index.cache[]. So yeah we're
+>>> +                * leaking a bit here.
+>>
+>> In the context of update-index, this is a one-time thing and leaking
+>> is tolerable. But because it becomes a library function now, this leak
+>> can become more serious, I think.
+>>
+>> The only other (indirect) caller is read_index_from() so probably not
+>> bad most of the time (we read at the beginning of a command only).
+>> sequencer.c may discard and re-read the index many times though,
+>> leaking could be visible there.
+>
+> So is it enough to check if split_index->base->cache[] is shared with
+> the_index.cache[] and then decide if discard_split_index(&the_index)
+> should be called?
 
-This sounds backward to me. The major use case is reading
-.gitattributes on worktree, which follows symlinks so far. Only
-git-archive has a special need to read index-only versions. The
-worktree behavior should influence the in-index one, not the other way
-around. If we could die("BUG" when git-archive is used on symlinks
-(without --worktree-attributes). If people are annoyed by it, they can
-implement symlink folllowing (to another version in index, not on
-worktree).
-
-The story is similar for .gitignore where in-index version is merely
-an optimization. If it's symlinks and we can't follow, we should fall
-back to worktree version.
+It's likely shared though. We could un-share cache[] by duplicating
+index entries in the_index.cache[] if they point back to
+split_index->base (we know what entries are shared by examining the
+"index" field). Once we do that, we can discard_split_index()
+unconditionally. There's another place that has similar leak:
+move_cache_to_base_index(), which could receive the same treatment.
 -- 
 Duy
