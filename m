@@ -2,116 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A5632022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 21:01:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDCB92022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 21:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751644AbcKGVBK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 16:01:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39894 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751498AbcKGVBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2016 16:01:10 -0500
-Received: (qmail 9940 invoked by uid 109); 7 Nov 2016 21:01:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Nov 2016 21:01:09 +0000
-Received: (qmail 15961 invoked by uid 111); 7 Nov 2016 21:01:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Nov 2016 16:01:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2016 16:01:07 -0500
-Date:   Mon, 7 Nov 2016 16:01:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Diggory Hardy <lists@dhardy.name>
-Cc:     git@vger.kernel.org
-Subject: Re: git push remote syntax
-Message-ID: <20161107210107.d6c7ihmi5npwm76i@sigill.intra.peff.net>
-References: <1613741.x6i0st30av@localhost.localdomain>
+        id S1751861AbcKGVCU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 16:02:20 -0500
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35317 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751721AbcKGVCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 16:02:19 -0500
+Received: by mail-pf0-f178.google.com with SMTP id i88so95329415pfk.2
+        for <git@vger.kernel.org>; Mon, 07 Nov 2016 13:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fPbRWOlDp9vUDlGv0ZGWbtIe54ywc45jcmr19fex3vk=;
+        b=MGW1CZ1diY+oGagNSA3yXQKmdvUN4gA7PUzMTDzuCq387UGyE4isS/2z/5JWqjGrLn
+         cddUrS0+vZOTEhhryfmJSRzsK5Qn+Qtg+adlH0Sqt3dpTHmheT8K8B8T3o88eObkFKcT
+         ELmX6ZpVFtzAKPY49mTrSash9zCd5dEifdEV4iI/tavyDI+JoDK6/+P7GbqhEYjelXP3
+         SXuTvmqno48Clx6I2QupVTyaNy5e4Di7xrkPLHtCNuUPgPNG8UpGNxvnMM9AV08Zv9ay
+         ouQTqYytCbtfLFdCAuoB5jshdpKHcoMvNaZr2boxaTF12JCLKN4N/THjJGjuj1EZlqIA
+         bVew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fPbRWOlDp9vUDlGv0ZGWbtIe54ywc45jcmr19fex3vk=;
+        b=EdzfjCOvdyh5ejLt5vpId2KrQxqLYj0e+PLtUJ7cEyIH5DooS8x2Nz7mGSfe0rip2L
+         2WKEzeNUVcbyCjglv7YaYD72R7jvvzBPislJa9aTH2lIlUy4WpVhOvA8CJie5u8U4nF1
+         lYKP17ZfLVNgPe/P/9Ir/2K7UjDwEHfFiibaxqyvDykQVzHf9wuH1soLj/xUsHBmiluD
+         OKyV9kB0UrDA0KEmCm3Yl1Rc+4Xudb56NPVwFwVmtVufnkQ/ufI2Im0wsmhK4N/YoCcC
+         dfDeVBW0FeiJ9fl48cJxG+Wvon8/dAvz+SgOmiNkGX92hR1Kd97b+IhBI6AEERHpnpW7
+         6URA==
+X-Gm-Message-State: ABUngvduSEE+zQT8oGpqXvoMxK7vc989i2HQhg07e9HFZTAg+UcrW7HeVozn+nImJqkZS1RG
+X-Received: by 10.98.7.83 with SMTP id b80mr16806883pfd.79.1478552538333;
+        Mon, 07 Nov 2016 13:02:18 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:bd82:3124:1b9:77b4])
+        by smtp.gmail.com with ESMTPSA id n2sm42592820pfa.75.2016.11.07.13.02.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 07 Nov 2016 13:02:17 -0800 (PST)
+Date:   Mon, 7 Nov 2016 13:02:16 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v4 2/2] transport: add protocol policy config option
+Message-ID: <20161107210216.GD143723@google.com>
+References: <1478292933-7873-1-git-send-email-bmwill@google.com>
+ <1478547323-47332-1-git-send-email-bmwill@google.com>
+ <1478547323-47332-2-git-send-email-bmwill@google.com>
+ <20161107204430.z6wrazgad4e7yn66@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1613741.x6i0st30av@localhost.localdomain>
+In-Reply-To: <20161107204430.z6wrazgad4e7yn66@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 07, 2016 at 01:49:40PM +0000, Diggory Hardy wrote:
+On 11/07, Jeff King wrote:
+> > +	test_expect_success "clone $desc (env var has precedence)" '
+> > +		rm -rf tmp.git &&
+> > +		(
+> > +			GIT_ALLOW_PROTOCOL=none &&
+> > +			export GIT_ALLOW_PROTOCOL &&
+> > +			test_must_fail git -c protocol.$proto.allow=always clone --bare "$url" tmp.git
+> > +		)
+> > +	'
+> 
+> This test is a good addition in this round.
+> 
+> I suppose we could test also that GIT_ALLOW_PROTOCOL overrides
+> protocol.allow, but I'm not sure if there is a point. If git were a
+> black box, it's a thing I might check, but we know from the design that
+> this is an unlikely bug (and that the implementation is unlikely to
+> change in a way to cause it). So I could go either way.
 
-> One thing I find a little frustrating about git is that the syntax needed 
-> differs by command. I wish the 'remote/branch' syntax was more universal:
+I'll add in another test for that, no reason not to test it.
 
-The reason it's not is that "remote/branch" refers to a branch in your
-local repository. Whereas fetch/push want a single remote, and then one
-or more refspecs. They often _look_ the same in simple cases, but the
-latter covers a lot of cases not handled by the former.
+> 
+> Squashable documentation suggestions are below.
+> 
 
-For example:
+Sounds good
 
-  # no configured remote nor remote tracking branch at all
-  git pull git://host/repo.git master
-
-  # multiple branches for an octopus merge
-  git pull origin branchA branchB
-
-  # refspecs
-  git pull origin devel:tmp
-
-It's possible that we could have some kind of do-what-I-mean syntax for
-the command-line options, though. It wouldn't have to cover every
-esoteric case, but could cover the common ones and expand into the more
-complete syntax. E.g., if we made:
-
-  git pull origin/master
-
-behave as if you said:
-
-  git pull origin master
-
-that would cover many uses. There are still some corner cases, though:
-
-  - you could have a remote with a slash in it; presumably we would
-    check that first and fallback to the DWIM behavior
-
-  - These commands only handle a single remote at once, so something
-    like:
-
-      git pull origin/foo other-remote/bar
-
-    is nonsensical. We'd have to catch and disallow multiple remotes.
-    Probably we could only kick in the DWIM when there is a single
-    argument (otherwise you're just repeating the remote name over and
-    over, at which point you might as well use the "remote [refspec...]"
-    syntax.
-
-It seems like it's probably do-able.
-
-I'm still undecided on whether it is a good idea or not. In one sense,
-it does unify the syntax you use to refer to a remote branch. But it
-also blurs the meanings. Normally "origin/master" refers only to your
-local refs/remotes copy of what is on the remote, but this is blurring
-the line. It's not clear to me if that reduces confusion (because you
-don't have to care about that line anymore), or if it increases it
-(because sometimes it _does_ matter, and somebody who doesn't learn the
-difference between the two will get bitten later. Plus now there are
-multiple ways of spelling the same thing).
-
-> > git pull myremote/somebranch
-> complains about the syntax; IMO it should either pull from that branch (and 
-> merge if necessary) or complain instead that pulling from a different branch 
-> is not supported (and suggest using merge).
-
-Reading this, I wonder if I've misinterpreted your request. It sounds
-like you want this to be the same as:
-
-  git merge myremote/somebranch
-
-which is at least consistent in the use of "remote/branch" syntax. But
-weird, because you're asking "pull" not to pull. Or another way to think
-of it is that "git pull foo/bar" effectively becomes "git pull .
-foo/bar". Which seems like it may be potentially error-prone, especially
-if you use slashes in your remote names.
-
--Peff
+-- 
+Brandon Williams
