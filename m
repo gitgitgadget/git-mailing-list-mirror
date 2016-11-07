@@ -2,199 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B20CA2022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 19:18:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5297A2022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 19:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933181AbcKGTR6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 14:17:58 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33844 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933013AbcKGTR5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2016 14:17:57 -0500
-Received: by mail-pf0-f172.google.com with SMTP id n85so94776958pfi.1
-        for <git@vger.kernel.org>; Mon, 07 Nov 2016 11:17:56 -0800 (PST)
+        id S1751546AbcKGTUw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 14:20:52 -0500
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:33591 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751496AbcKGTUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 14:20:51 -0500
+Received: by mail-qk0-f173.google.com with SMTP id x190so187677637qkb.0
+        for <git@vger.kernel.org>; Mon, 07 Nov 2016 11:20:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bvlvFEhXsxVaHfdiaTfri++GNEHCvLPpJjUIiT2f6CE=;
-        b=A7my9FSCecT7v/jORMyb/KTTVoKQS9ah3DeAIcQ3raLZNxHPu6oCCgdt7bgYYp10BW
-         0o4BSB1wTF4svsoyFxRniLFEYWKXwqJRH1Sypm+KXsVXw4D9S2wndB3sUy/B3jsG3OrN
-         /ikvjHhLoiazar08BYnSNCJtDaE6OHo28q5Kh7WwRpCu3GHfmqgqZt4HQonyW6we1oDk
-         aBw5pwBvQjO5eLajAwJhLNbSvJClMaZ/Wv5KvOfYzoTuQyjkjgBCcnGMJ07d9vC1SRmP
-         e57+zLBoAwLcVfgWFzJQh5teNc5OGFp+u9WJJ3BShhP3wWSh2TSgZ8Eea9iQJRL0g2Vd
-         +GNA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=g5G/M59/Xh3PXzwrt0Y2GoE1s5ET1sF91l3s8qx+Gtk=;
+        b=UJBc8gqiF2qoW6fADGnwiyrhSG56dtsvOA6NeQWmBx576K791CzCqRX43I0SDjEyTD
+         +KpvbyTB0+A4EDZqGau3wR5MucZzHegwBrhr68rurWIHAg/FLIdiZXbi7UyOf5UX9unn
+         vtHWKUXVsv8dnp036oPGGMvV3RyR8jb0iCctoQ4q28eT50Vo2SRLTy3VRZBHu4xte5nY
+         DaaaTNzPSD100uOsKkyCUkKlQbf6G0Ic4yt1DO1IYtB7HfWpGRmayona1P2R397UbmAO
+         93d9AuD/F3TssouAjyGh9LJsZnkT+Gmt4NR+BBB+K0wpyMsAf0y1A35L7jYTy1LW0cHk
+         aPbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bvlvFEhXsxVaHfdiaTfri++GNEHCvLPpJjUIiT2f6CE=;
-        b=TQ2QRm1y28pzlg7gqqiLfIZNAMaF9/dUZ65V0679dulvrfUq071/ZwV0esQxxzMXMQ
-         FJ38jnIO1qUnSxhA8Tr0vuTrKNIDMBJs/6uHAw3wUAGvElzTXT3djc+C7mge8HoDGo/f
-         V1t9iqrihu6HF5T5JyBXaOMA6ThokSM8z62MIAhexMcWLXn4RUy0xVxmjxjnUYQFJ8yg
-         6sr/6lAuLGP8strsSco+7RnBExJpk95p4Gldg/ostICsRljwDupy/ho4rdvFbf5fmapT
-         Um6iL2cz6i39L8SA4fCOsmiKLHJhn/g1fvXtIt9NGEZ7HOPEDKEkEF7jqNCwvx1+evKc
-         fzWA==
-X-Gm-Message-State: ABUngvfw27igNHTZ0HV2nXbVLKS0PqQt1tyhu4SGA22AGNCSxeOdE7brsKe/X28jr6BCsdnH
-X-Received: by 10.98.211.67 with SMTP id q64mr15999631pfg.173.1478546276254;
-        Mon, 07 Nov 2016 11:17:56 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:bd82:3124:1b9:77b4])
-        by smtp.gmail.com with ESMTPSA id e1sm42480901pap.11.2016.11.07.11.17.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 07 Nov 2016 11:17:55 -0800 (PST)
-Date:   Mon, 7 Nov 2016 11:17:54 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v3] transport: add protocol policy config option
-Message-ID: <20161107191754.GB143723@google.com>
-References: <1478125247-62372-1-git-send-email-bmwill@google.com>
- <1478292933-7873-1-git-send-email-bmwill@google.com>
- <20161104230613.epbziphiqyl57bcn@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=g5G/M59/Xh3PXzwrt0Y2GoE1s5ET1sF91l3s8qx+Gtk=;
+        b=SZfrQaXeChUGkHgwEuiZbETibjilb/Ic6YXXT9wB+N6U5oRTDfbonMV9KYfjPaRr6G
+         Sw1vOpYEP5mQiOOR0aZXXOTnFhwZIqQOtVa+RAlgC8+y5dMfRA3WCD3Ay/Z6+8AVn+Xr
+         LZVsweZoR8GUGy+JISRsZ06kcN15xXMmFXexH6NBRprU5Fkkmwv7iIkU66H86ETtsLgF
+         cbQkGatVSl6oWLbhn0IaWWlwtqWpX4Mpu3fz8fpC40bzgLeNuFRsxI5r9dHjbE6EuCpI
+         zb6/c8nSs212qrGgg+T1g6Jf4Kfxt5jwhO3Lkw+O4UjJHlf6RgBcHZUXS3SSJJFAvPBV
+         2nfQ==
+X-Gm-Message-State: ABUngveepFETVfRH9u3h39fsNM0DHDokyQCVD6dy6p9q8ntv8fDq7IJkIBvU4JGxbjPXCBUy+spjm3PFuXy0fLK9
+X-Received: by 10.55.20.164 with SMTP id 36mr7726480qku.86.1478546024117; Mon,
+ 07 Nov 2016 11:13:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161104230613.epbziphiqyl57bcn@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.12.134.65 with HTTP; Mon, 7 Nov 2016 11:13:43 -0800 (PST)
+In-Reply-To: <1478543491-6286-1-git-send-email-dturner@twosigma.com>
+References: <1478543491-6286-1-git-send-email-dturner@twosigma.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 7 Nov 2016 11:13:43 -0800
+Message-ID: <CAGZ79kbp82VssqutEg5=TnciQrGkDRQ3iNm_vUo9eBBGMXQRNg@mail.gmail.com>
+Subject: Re: [PATCH] submodules: allow empty working-tree dirs in merge/cherry-pick
+To:     David Turner <dturner@twosigma.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/04, Jeff King wrote:
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index 27069ac..5d845c4 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -2308,6 +2308,31 @@ pretty.<name>::
-> >  	Note that an alias with the same name as a built-in format
-> >  	will be silently ignored.
-> >  
-> > +protocol.allow::
-> > +	If set, provide a user defined default policy for all protocols which
-> > +	don't explicitly have a policy (protocol.<name>.allow).  By default,
-> > +	if unset, known-safe protocols (http, https, git, ssh, file) have a
-> > +	default policy of `always`, known-dangerous protocols (ext) have a
-> > +	default policy of `never`, and all other protocols have a default policy
-> > +	of `user`.  Supported policies:
-> > ++
-> > +--
-> > +
-> > +* `always` - protocol is always able to be used.
-> > +
-> > +* `never` - protocol is never able to be used.
-> > +
-> > +* `user` - protocol is only able to be used when `GIT_PROTOCOL_FROM_USER` is
-> > +  either unset or has a value of 1.  This policy should be used when you want a
-> > +  protocol to be usable by the user but don't want it used by commands which
-> > +  execute clone/fetch/pull commands without user input, e.g. recursive
-> > +  submodule initialization.
-> 
-> Makes sense. I wonder if it would be good to emphasize _directly_ usable
-> here. I.e., "...when you want a protocol to be directly usable by the
-> user but don't want...".
-> 
-> Should clone/fetch/pull also include push?
+On Mon, Nov 7, 2016 at 10:31 AM, David Turner <dturner@twosigma.com> wrote:
+> When a submodule is being merged or cherry-picked into a working
+> tree that already contains a corresponding empty directory, do not
+> record a conflict.
+>
+> One situation where this bug appears is:
+>
+> - Commit 1 adds a submodule
 
-You're right, that should really have been clone/fetch/push.
+"... at sub1" as inferred by text below.
 
-> 
-> > +protocol.<name>.allow::
-> > +	Set a policy to be used by protocol <name> with clone/fetch/pull commands.
-> > +
-> 
-> Nice that this matches protocol.allow, so we don't need to re-explain
-> that.
-> 
-> Should the list of protocols be here? I know they're covered under
-> GIT_ALLOW_PROTOCOL already, but if this is the preferred system, we
-> should probably explain them here, and then just have GIT_ALLOW_PROTOCOL
-> refer the user.
+> - Commit 2 removes that submodule and re-adds it into a subdirectory
+>        (sub1 to sub1/sub1).
+> - Commit 3 adds an unrelated file.
+>
+> Now the user checks out commit 1 (first deinitializing the submodule),
+> and attempts to cherry-pick commit 3.  Previously, this would fail,
+> because the incoming submodule sub1/sub1 would falsely conflict with
+> the empty sub1 directory.
 
-Right now the list of protocols under GIT_ALLOW_PROTOCOL looks like it
-has a bit more documentation with how the colon list works.  The
-protocols are also mentioned above with their default behaviour.
+So you'd want to achieve:
+  $ # on commit 3:
+  git checkout <commit 1>
+  git cherry-pick <commit 3>
 
-> 
-> > diff --git a/Documentation/git.txt b/Documentation/git.txt
-> > index ab7215e..ab25580 100644
-> > --- a/Documentation/git.txt
-> > +++ b/Documentation/git.txt
-> > @@ -1150,13 +1150,13 @@ of clones and fetches.
-> >  	cloning a repository to make a backup).
-> >  
-> >  `GIT_ALLOW_PROTOCOL`::
-> > -	If set, provide a colon-separated list of protocols which are
-> > -	allowed to be used with fetch/push/clone. This is useful to
-> > -	restrict recursive submodule initialization from an untrusted
-> > -	repository. Any protocol not mentioned will be disallowed (i.e.,
-> > -	this is a whitelist, not a blacklist). If the variable is not
-> > -	set at all, all protocols are enabled.  The protocol names
-> > -	currently used by git are:
-> > +	The new way to configure allowed protocols is done through the config
-> > +	interface, though this setting takes precedences.  See
-> > +	linkgit:git-config[1] for more details.  If set, provide a
-> > +	colon-separated list of protocols which are allowed to be used with
-> > +	fetch/push/clone.  Any protocol not mentioned will be disallowed (i.e.,
-> > +	this is a whitelist, not a blacklist).  The protocol names currently
-> > +	used by git are:
-> 
-> I wonder if we can explain this in terms of the config system. Something
-> like:
-> 
->   If set to a colon-separated list of zero or more protocols, behave as
->   if `protocol.allow` is set to `never`, and each of the listed
->   protocols has `protocol.$protocol.allow` set to `always`.
+which essentially moves the gitlink back to its original place
+(from sub1/sub1 -> sub1).  This sounds reasonable.
+But what if the submodule contains a (file/directory)
+named sub1? We'd first remove the sub1/sub1 submodule
+(and even delete the inner directory?), such that "sub1/"
+becomes an empty dir, which is perfect for having a
+submodule right there at "sub1/"
 
-Yeah that makes sense.
+>
+> This patch ignores the empty sub1 directory, fixing the bug.  We only
+> ignore the empty directory if the object being emplaced is a
+> submodule, which expects an empty directory.
+>
+> Signed-off-by: David Turner <dturner@twosigma.com>
+> ---
+>  merge-recursive.c           | 21 +++++++++++++++------
+>  t/t3030-merge-recursive.sh  |  4 ++--
+>  t/t3426-rebase-submodule.sh |  3 ---
+>  3 files changed, 17 insertions(+), 11 deletions(-)
+>
+> Note that there are four calls to dir_in_way, and only two of them
+> have changed their semantics.  This is because the merge code is quite
+> complicated, and I don't fully understand it.
 
-> 
-> > +`GIT_PROTOCOL_FROM_USER`::
-> > +	Set to 0 to prevent protocols used by fetch/push/clone which are
-> > +	configured to the `user` state.  This is useful to restrict recursive
-> > +	submodule initialization from an untrusted repository.  See
-> > +	linkgit:git-config[1] for more details.
-> 
-> Under "this is useful", it may make sense to make it clear that external
-> programs can use this, too. Something like:
-> 
->   It may also be useful for programs which feed potentially-untrusted
->   URLs to git commands.
+A good approach. I was trying to haggle with unpack-trees.c and
+the merging code and put way more on my plate than I could eat
+in one sitting. Trying to get the mess sorted now to prepare a patch
+series this week.
 
-I'll put that in too.
+> So I did not have time
+> to analyze the remaining calls to see whether they, too, should be
+> changed.
 
-> 
-> > diff --git a/t/lib-proto-disable.sh b/t/lib-proto-disable.sh
-> > index b0917d9..5950fbf 100644
-> > --- a/t/lib-proto-disable.sh
-> > +++ b/t/lib-proto-disable.sh
-> > @@ -1,15 +1,12 @@
-> >  # Test routines for checking protocol disabling.
-> >  
-> > -# test cloning a particular protocol
-> > -#   $1 - description of the protocol
-> > -#   $2 - machine-readable name of the protocol
-> > -#   $3 - the URL to try cloning
-> > -test_proto () {
-> > +# Test clone/fetch/push with GIT_ALLOW_PROTOCOL whitelist
-> > +test_whitelist () {
-> >  	desc=$1
-> >  	proto=$2
-> >  	url=$3
-> >  
-> > -	test_expect_success "clone $1 (enabled)" '
-> > +	test_expect_success "clone $desc (enabled)" '
-> 
-> Yeah, this should have been $desc all along. It makes the diff really
-> noisy, though. Should it be split out into a preparatory change?
+The call in line 1205 (in handle_file, which is only called from
+conflict_rename_rename_1to2) may be relevant if we move around
+submodules on the same level and modifying it in different branches.
+However I think preserving current behavior is ok.
 
-I'll pull it out to make the patch a bit cleaner.
+The other one in handle_change_delete also doesn't look obvious
+one way or another, so I'd stick with current behavior.
 
--- 
-Brandon Williams
+>For me, there are no test failures either way, indicating
+> that probably these cases are rare.
+
+The tests have to be crafted for this specific code pattern,
+
+>
+> The reason behind the empty_ok parameter (as opposed to just always
+> allowing empy directories to be blown away) is found in t6022's 'pair
+> rename to parent of other (D/F conflicts) w/ untracked dir'.  This
+> test would fail with an unconditional rename, because it wouldn't
+> generate the conflict file.
+
+Or the submodule from your commit message contains a "sub1/..." itself.
+
+>  It's not clear how important that
+> behavior is (I do not recall ever noticing the file~branch thing
+> before), but it seemed better to preserve it in case it was important.
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 9041c2f..e64b48b 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -664,7 +664,13 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
+>         return strbuf_detach(&newpath, NULL);
+>  }
+>
+> -static int dir_in_way(const char *path, int check_working_copy)
+> +/**
+> + * Check whether a directory in the index is in the way of an incoming
+> + * file.  Return 1 if so.  If check_working_copy is non-zero, also
+> + * check the working directory.  If empty_ok is non-zero, also return
+> + * 0 in the case where the working-tree dir exists but is empty.
+> + */
+
+Thanks for the documenting comment! This is probably fine as is with just
+two boolean parameters. If we'd add more, we might have thought about
+adding a flags parameter with bits for each flag.
+
+Looks good to me,
+Thanks,
+Stefan
