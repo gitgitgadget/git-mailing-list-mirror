@@ -2,183 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 263142022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 18:31:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A0CE2022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 18:34:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932896AbcKGSbr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 13:31:47 -0500
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:57983 "EHLO
-        homiemail-a22.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932791AbcKGSbq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2016 13:31:46 -0500
-Received: from homiemail-a22.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a22.g.dreamhost.com (Postfix) with ESMTP id 378F711406E;
-        Mon,  7 Nov 2016 10:31:45 -0800 (PST)
-Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
-        (using TLSv1 with cipher AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a22.g.dreamhost.com (Postfix) with ESMTPSA id B823F11406C;
-        Mon,  7 Nov 2016 10:31:44 -0800 (PST)
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org, sbeller@google.com
-Cc:     David Turner <dturner@twosigma.com>
-Subject: [PATCH] submodules: allow empty working-tree dirs in merge/cherry-pick
-Date:   Mon,  7 Nov 2016 13:31:31 -0500
-Message-Id: <1478543491-6286-1-git-send-email-dturner@twosigma.com>
-X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
+        id S933278AbcKGSeq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 13:34:46 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:33064 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933274AbcKGSen (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 13:34:43 -0500
+Received: by mail-qt0-f174.google.com with SMTP id p16so92764039qta.0
+        for <git@vger.kernel.org>; Mon, 07 Nov 2016 10:34:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=l9zOeCqQUHDtgNbwWX2S/uV9iebzTlscdbELxCvENp0=;
+        b=PLerjSb6invaFPSF7QauFeAdInzceefLIL6YBQ5H7Qm0zz16/begHnJd7TWkbHntBm
+         ISkbv0TDFdDiZr0WcAUrszNTrZJ6uO2NGLJkEumqFeLlowROSaexb+jQXCeQYJRnbaz9
+         xuqDkOE9oZ9p7Ie2id3p6/pnf1rXlbrtPK+HXEF3ZnvqDf5rEUWBq6fFvLRpIoQo/KbF
+         H8eNvuFCblPt4Q4SJq/utSLHTWu7YkDv3nPZadQtxbppok+R6/498JJYJj+FfBUb5grn
+         52motLLjMuX+kfQTjm1J0RC6GoKSIWaAQGrbXT2jVWJj+cO0ebndIn97g6XFQ5uqYeM0
+         ZvZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=l9zOeCqQUHDtgNbwWX2S/uV9iebzTlscdbELxCvENp0=;
+        b=S/tsLO/rGqHbNj1fA2Le/N/e9tiyqwHELY2ZyVHdxi9bIWskZXTI4BihT2NA1KObRX
+         qNOeAJqbInaVb8V2WJIMYfgODXtabfltjQYoelweo9eIh3CkMFQW16uDyCpBJoYlrnFy
+         kJx34i9vFbC2xp1al9a/HxW+oqkVlkcMopHeZJI+AxuXBg5ZrD6SzmwaS/j/E09FUmb+
+         +zAha+zJzOrwrZ55dAHNmCsqaXneZ93a1/mceTGdFSbWLzTwilxt5zgcOn3M8psAvPuK
+         aNze8Bck9Ib/In++Woursb3KH3u0lKwr1jfK8NnaQCq4q35Gdzig2MyO1PIV5nPcJyoO
+         ORuA==
+X-Gm-Message-State: ABUngvfyMHjYiGsuy96mlREEuZKqvHQFv1hWpH8RzrHOy7hJZIsRBOSv7vQoTbURivRHiddvBwxM3wnFxTdWZ388
+X-Received: by 10.237.63.25 with SMTP id p25mr8301961qtf.18.1478543681123;
+ Mon, 07 Nov 2016 10:34:41 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.134.65 with HTTP; Mon, 7 Nov 2016 10:34:40 -0800 (PST)
+In-Reply-To: <CA+dzEBnDZGsYyZkSO5E+3EX+d1j7Kb4kiY6OkC0mtwaq5px5aQ@mail.gmail.com>
+References: <CA+dzEBmP2aUit00ukJyQeg=iqUJJLVaovafo2gngf9MvEqZDPA@mail.gmail.com>
+ <CAGZ79kYbrDu=9Hw+SBnubSHKOc8HmGPb721ZJQxGWW2egqmuDg@mail.gmail.com> <CA+dzEBnDZGsYyZkSO5E+3EX+d1j7Kb4kiY6OkC0mtwaq5px5aQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 7 Nov 2016 10:34:40 -0800
+Message-ID: <CAGZ79kbyM0ssz3JgeNHsUpvHnBsCbhm-tHvHRp3+6O1QvmkYpw@mail.gmail.com>
+Subject: Re: git submodule add broken (2.11.0-rc1): Cannot open git-sh-i18n
+To:     Anthony Sottile <asottile@umich.edu>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a submodule is being merged or cherry-picked into a working
-tree that already contains a corresponding empty directory, do not
-record a conflict.
+On Mon, Nov 7, 2016 at 10:30 AM, Anthony Sottile <asottile@umich.edu> wrote=
+:
+> This has worked great up until now (and is very convenient for trying thi=
+ngs
+> out without blowing away the system installation).  What changed?
+>
 
-One situation where this bug appears is:
+(Just guessing myself:)
 
-- Commit 1 adds a submodule
-- Commit 2 removes that submodule and re-adds it into a subdirectory
-       (sub1 to sub1/sub1).
-- Commit 3 adds an unrelated file.
+$ git log --grep git-sh-i18n v2.10.0..v2.11.0-rc0
+commit da14d73d5eacfb2fa9d054f94d9eecb2244c3ce5
+Merge: 2f445c17e5 1073094f30
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Mon Oct 31 13:15:25 2016 -0700
 
-Now the user checks out commit 1 (first deinitializing the submodule),
-and attempts to cherry-pick commit 3.  Previously, this would fail,
-because the incoming submodule sub1/sub1 would falsely conflict with
-the empty sub1 directory.
+    Merge branch 'ak/sh-setup-dot-source-i18n-fix'
 
-This patch ignores the empty sub1 directory, fixing the bug.  We only
-ignore the empty directory if the object being emplaced is a
-submodule, which expects an empty directory.
+    Recent update to git-sh-setup (a library of shell functions that
+    are used by our in-tree scripted Porcelain commands) included
+    another shell library git-sh-i18n without specifying where it is,
+    relying on the $PATH.  This has been fixed to be more explicit by
+    prefixing $(git --exec-path) output in front.
 
-Signed-off-by: David Turner <dturner@twosigma.com>
----
- merge-recursive.c           | 21 +++++++++++++++------
- t/t3030-merge-recursive.sh  |  4 ++--
- t/t3426-rebase-submodule.sh |  3 ---
- 3 files changed, 17 insertions(+), 11 deletions(-)
+    * ak/sh-setup-dot-source-i18n-fix:
+      git-sh-setup: be explicit where to dot-source git-sh-i18n from.
 
-Note that there are four calls to dir_in_way, and only two of them
-have changed their semantics.  This is because the merge code is quite
-complicated, and I don't fully understand it.  So I did not have time
-to analyze the remaining calls to see whether they, too, should be
-changed.  For me, there are no test failures either way, indicating
-that probably these cases are rare.
+commit 1073094f30a8dd5ae49f2146f587085c4fe86410
+Author: Anders Kaseorg <andersk@mit.edu>
+Date:   Sat Oct 29 22:10:02 2016 -0400
 
-The reason behind the empty_ok parameter (as opposed to just always
-allowing empy directories to be blown away) is found in t6022's 'pair
-rename to parent of other (D/F conflicts) w/ untracked dir'.  This
-test would fail with an unconditional rename, because it wouldn't
-generate the conflict file.  It's not clear how important that
-behavior is (I do not recall ever noticing the file~branch thing
-before), but it seemed better to preserve it in case it was important.
+    git-sh-setup: be explicit where to dot-source git-sh-i18n from.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9041c2f..e64b48b 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -664,7 +664,13 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
- 	return strbuf_detach(&newpath, NULL);
- }
- 
--static int dir_in_way(const char *path, int check_working_copy)
-+/**
-+ * Check whether a directory in the index is in the way of an incoming
-+ * file.  Return 1 if so.  If check_working_copy is non-zero, also
-+ * check the working directory.  If empty_ok is non-zero, also return
-+ * 0 in the case where the working-tree dir exists but is empty.
-+ */
-+static int dir_in_way(const char *path, int check_working_copy, int empty_ok)
- {
- 	int pos;
- 	struct strbuf dirpath = STRBUF_INIT;
-@@ -684,7 +690,8 @@ static int dir_in_way(const char *path, int check_working_copy)
- 	}
- 
- 	strbuf_release(&dirpath);
--	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode);
-+	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode) &&
-+		!(empty_ok && is_empty_dir(path));
- }
- 
- static int was_tracked(const char *path)
-@@ -1062,7 +1069,7 @@ static int handle_change_delete(struct merge_options *o,
- {
- 	char *renamed = NULL;
- 	int ret = 0;
--	if (dir_in_way(path, !o->call_depth)) {
-+	if (dir_in_way(path, !o->call_depth, 0)) {
- 		renamed = unique_path(o, path, a_oid ? o->branch1 : o->branch2);
- 	}
- 
-@@ -1195,7 +1202,7 @@ static int handle_file(struct merge_options *o,
- 		remove_file(o, 0, rename->path, 0);
- 		dst_name = unique_path(o, rename->path, cur_branch);
- 	} else {
--		if (dir_in_way(rename->path, !o->call_depth)) {
-+		if (dir_in_way(rename->path, !o->call_depth, 0)) {
- 			dst_name = unique_path(o, rename->path, cur_branch);
- 			output(o, 1, _("%s is a directory in %s adding as %s instead"),
- 			       rename->path, other_branch, dst_name);
-@@ -1704,7 +1711,8 @@ static int merge_content(struct merge_options *o,
- 			 o->branch2 == rename_conflict_info->branch1) ?
- 			pair1->two->path : pair1->one->path;
- 
--		if (dir_in_way(path, !o->call_depth))
-+		if (dir_in_way(path, !o->call_depth,
-+			       S_ISGITLINK(pair1->two->mode)))
- 			df_conflict_remains = 1;
- 	}
- 	if (merge_file_special_markers(o, &one, &a, &b,
-@@ -1862,7 +1870,8 @@ static int process_entry(struct merge_options *o,
- 			oid = b_oid;
- 			conf = _("directory/file");
- 		}
--		if (dir_in_way(path, !o->call_depth)) {
-+		if (dir_in_way(path, !o->call_depth,
-+			       S_ISGITLINK(a_mode))) {
- 			char *new_path = unique_path(o, path, add_branch);
- 			clean_merge = 0;
- 			output(o, 1, _("CONFLICT (%s): There is a directory with name %s in %s. "
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 470f334..be074a1 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -575,13 +575,13 @@ test_expect_success 'merge removes empty directories' '
- 	test_must_fail test -d d
- '
- 
--test_expect_failure 'merge-recursive simple w/submodule' '
-+test_expect_success 'merge-recursive simple w/submodule' '
- 
- 	git checkout submod &&
- 	git merge remove
- '
- 
--test_expect_failure 'merge-recursive simple w/submodule result' '
-+test_expect_sucess 'merge-recursive simple w/submodule result' '
- 
- 	git ls-files -s >actual &&
- 	(
-diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
-index d5b896d..ebf4f5e 100755
---- a/t/t3426-rebase-submodule.sh
-+++ b/t/t3426-rebase-submodule.sh
-@@ -38,9 +38,6 @@ git_rebase_interactive () {
- 	git rebase -i "$1"
- }
- 
--KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
--# The real reason "replace directory with submodule" fails is because a
--# directory "sub1" exists, but we reuse the suppression added for merge here
- test_submodule_switch "git_rebase_interactive"
- 
- test_done
--- 
-2.8.0.rc4.22.g8ae061a
+    d323c6b641 ("i18n: git-sh-setup.sh: mark strings for translation",
+    2016-06-17) started to dot-source git-sh-i18n shell script library,
+    assuming that $PATH is already adjusted for our scripts, namely,
+    $GIT_EXEC_PATH is at the beginning of $PATH.
 
+    Old contrib scripts like contrib/convert-grafts-to-replace-refs.sh
+    and contrib/rerere-train.sh and third-party scripts like guilt may
+    however be using this as ". $(git --exec-path)/git-sh-setup",
+    without satisfying that assumption.  Be more explicit by specifying
+    its path prefixed with "$(git --exec-path)/". to be safe.
+
+    While we=E2=80=99re here, move the sourcing of git-sh-i18n below the sh=
+ell
+    portability fixes.
+
+    Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
