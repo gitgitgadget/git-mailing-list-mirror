@@ -2,145 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A374E2022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 22:14:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAAC12022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 22:34:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752197AbcKGWOA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 17:14:00 -0500
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:34680 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751677AbcKGWN7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2016 17:13:59 -0500
-Received: by mail-yb0-f195.google.com with SMTP id h184so1473929ybb.1
-        for <git@vger.kernel.org>; Mon, 07 Nov 2016 14:13:59 -0800 (PST)
+        id S1751521AbcKGWej (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 17:34:39 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34560 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751469AbcKGWei (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 17:34:38 -0500
+Received: by mail-wm0-f67.google.com with SMTP id p190so19020867wmp.1
+        for <git@vger.kernel.org>; Mon, 07 Nov 2016 14:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SZHJapt7NlsZSUhYAbwJkyB2oVmuDdOnDt11GS9Atzw=;
-        b=AuwHWfOInSWXsc7Jp6dPkBPcHM2SHoGQ80SKWMNoshfF532x/RLqoZsr4ctVuP2a2V
-         x4oRztv/UXMTdL9wy3JEhA8d6Pz2vrnjpcUqngUfqs3o+fVN5pYVo8d148v8RhLVjKLn
-         IRxs8WLKIUSfzUO3g72Sqr3x7atdngnvLZww2d/1nMRHcs/xaP0OKWAjHtJ3dgwW9w03
-         NYkcYvujq08eL55wZITTsNxbYqY7Hlq///KiUXkRczV/bm+wdcYjXq50LBpQQNB3ayt4
-         Csy3jWduz9HM/qGGj/NAlc48GYQWUdEzn48nuTqOZvVldxvwvlNSLa7aQ4fEe68yu1hV
-         buhw==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Zqcw8HYWX2uQcNKWm23pjO53yI7T7Hro5fWduQwS7MQ=;
+        b=bpkaIddgbkz0R96ONUaeRBGb6d3XdhA8rD6XTdKAjwnGwv/h9S5lE6qR9Ra+U2Ch3h
+         5FKFRkXsyXcCXvxHqvQFKKJza17R+FzvfsxUtgdxZiWIAl5hQZFf30XgpVzClIqrwY1T
+         x5G88YJCqkLktsKbnKeyi7T8sK+74GorCMLyM5syqQ1oE3HSMre9XWWqgpattLAkYXTS
+         gFLnhjZazYzf3a++MV55vLjjxjq+kMosYVRfY5+SwZBNvsZCQAdtTnG4jwsUhQSjRWto
+         zBza3oWFHMvgDhbmrwr8lVUMl+KxcS0O5/ib0OAspov2a3YAlzJDxV4Ug2NF7iSfsUFO
+         ycGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SZHJapt7NlsZSUhYAbwJkyB2oVmuDdOnDt11GS9Atzw=;
-        b=AjRlX3OGObIUxpqxtb/Yzuek/5iEf4DUP5A75rjB9Nag3BWoYDRGss89k3y/79vjRA
-         V1dIClfgbeVDgrXNStvDxY2cctFZrvzc/iPMejbXAXVXZ+cFAr5rYfXs/ZsczD5QJddr
-         xkvsU5VzSkrLVcriC+LrDaNlBaApX21IbdGA7FgZ8bbC9h3fNDEK6+h//6RCHm/0rp2p
-         duYo4aNB/JEfhlHrt+AJcxBi3ZPmA4mrpB59qz9RnzWbxnZ0g8X/1Rv9s3+ABaqaqtPl
-         dPiusjW8m92gGnoQT0ockfEiITT2nrxxsDCX300LKcZBC8LAMK/jKVuBHAkYmBzkXOvf
-         KveA==
-X-Gm-Message-State: ABUngvehkRAySEqeFEmnubTpn+zyDs0Apmt6We+/hZ4XNaeXi0By5Mv7MlMvjGlbApjfh7kdN70kWfW5XsHtUQ==
-X-Received: by 10.37.53.213 with SMTP id c204mr8651588yba.57.1478556838495;
- Mon, 07 Nov 2016 14:13:58 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Zqcw8HYWX2uQcNKWm23pjO53yI7T7Hro5fWduQwS7MQ=;
+        b=F1+f0F84t/CgNJGYz2yp4NKhd+5cXCKjjLuc/wQwlxShce9joiHw4GIxO4Pmq0Jfj0
+         I1uI7/9+b9CCCFgu/IIXxdqCgwcSsx/nhGLC7+7Rp45/ErulJ07RspEmEIfOYdC2Vl/u
+         BmDYzgSuOcDem+5PQC++zMgnhrZ6V5I8Az+sOkwiY1Nm3iZkJ4jYrfStKwj5d2RNj8nZ
+         KooednLHdaxlJDE82vcvRMiq7KH849l+a/VqiByg44Ucvkg3+bjo7IkFydDV/9DblrGs
+         aYEm1zkBLicYzwKHQhtIAj6y8bmXnx6QAc4fY0+3R7E35M6UEXHO9w2DXmrx+J8eSgyy
+         ayDA==
+X-Gm-Message-State: ABUngve68Y2eIoRVi6Ef5EzHj/OyY5abLq3Ap6J9WLMhsaefrLoXIjuSjX/2MVP2h4pgdQ==
+X-Received: by 10.28.158.209 with SMTP id h200mr12125676wme.54.1478558076860;
+        Mon, 07 Nov 2016 14:34:36 -0800 (PST)
+Received: from [192.168.1.26] (afv251.neoplus.adsl.tpnet.pl. [83.25.151.251])
+        by smtp.googlemail.com with ESMTPSA id a1sm33559997wjl.28.2016.11.07.14.34.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Nov 2016 14:34:36 -0800 (PST)
+Subject: Re: Git issue - ignoring changes to tracked file with
+ assume-unchanged
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <BY2PR0601MB16400EAC3E9683841907F4B2A2A10@BY2PR0601MB1640.namprd06.prod.outlook.com>
+ <20161101174526.e2tilsriz2fqaru3@sigill.intra.peff.net>
+ <xmqqy413oysp.fsf@gitster.mtv.corp.google.com>
+Cc:     "Halde, Faiz" <fhalde@paypal.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <9784a23f-2f44-33c7-5055-c6d66e779471@gmail.com>
+Date:   Mon, 7 Nov 2016 23:34:34 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Mon, 7 Nov 2016 14:13:38 -0800 (PST)
-In-Reply-To: <e09a5309-351d-d246-d272-f527f50ad444@jump-ing.de>
-References: <de7cd593-0c10-4e93-1681-7e123504f5d5@jump-ing.de> <e09a5309-351d-d246-d272-f527f50ad444@jump-ing.de>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 7 Nov 2016 14:13:38 -0800
-Message-ID: <CA+P7+xrSb0bEC4dvEXKGLdhnunO9oyU685t6VCwd0Sj-pnOT0w@mail.gmail.com>
-Subject: Re: [PATCH 1/3] gitk: turn off undo manager in the text widget
-To:     Markus Hitter <mah@jump-ing.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Paul Mackerras <paulus@ozlabs.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqy413oysp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 7, 2016 at 10:57 AM, Markus Hitter <mah@jump-ing.de> wrote:
-> From e965e1deb9747bbc2b40dc2de95afb65aee9f7fd Mon Sep 17 00:00:00 2001
-> From: Markus Hitter <mah@jump-ing.de>
-> Date: Sun, 6 Nov 2016 20:38:03 +0100
-> Subject: [PATCH 1/3] gitk: turn off undo manager in the text widget
->
-> The diff text widget is read-only, so there's zero point in
-> building an undo stack. This change reduces memory consumption of
-> this widget by about 95%.
->
-> Memory usage of the whole program for viewing a reference commit
-> before; 579'692'744 bytes, after: 32'724'446 bytes.
->
+W dniu 01.11.2016 o 19:11, Junio C Hamano pisze:
+> Jeff King <peff@peff.net> writes:
+>> On Tue, Nov 01, 2016 at 10:28:57AM +0000, Halde, Faiz wrote:
+>>
+>>> I frequently use the following command to ignore changes done in a file
+>>>
+>>> git update-index --assume-unchanged somefile
+>>>
+>>> Now when I do a pull from my remote branch and say the file 'somefile'
+>>> was changed locally and in remote, git will abort the merge saying I
+>>> need to commit my changes of 'somefile'.
+>>>
+>>> But isn't the whole point of the above command to ignore the changes
+>>> within the file?
+>>
+>> No. The purpose of --assume-unchanged is to promise git that you will
+>> not change the file, so that it may skip checking the file contents in
+>> some cases as an optimization.
+> 
+> That's correct.  
+> 
+> The next anticipated question is "then how would I tell Git to
+> ignore changes done to a file locally by me?", whose short answer is
+> "You don't", of course.
 
-Wow. Nice find!
+Well, you can always use --skip-worktree.  It is a better fit than using
+--assume-unchanged, because at least you wouldn't loose your precious
+local changes (which happened to me).
 
-> Test procedure:
->
->  - Choose a largish commit and check it out. In this case one with
->    90'802 lines, 5'006'902 bytes.
->
->  - Have a Tcl version with memory debugging enabled. This is,
->    build one with --enable-symbols=mem passed to configure.
->
->  - Instrument Gitk to regularly show a memory dump. E.g. by adding
->    these code lines at the very bottom:
->
->      proc memDump {} {
->          catch {
->              set output [memory info]
->              puts $output
->          }
->
->          after 3000 memDump
->      }
->
->      memDump
->
->  - Start Gitk, it'll load this largish commit into the diff text
->    field automatically (because it's the current commit).
->
->  - Wait until memory consumption levels out and note the numbers.
->
-> Note that the numbers reported by [memory info] are much smaller
-> than the ones reported in 'top' (1.75 GB vs. 105 MB in this case),
-> likely due to all the instrumentation coming with the debug
-> version of Tcl.
->
+OTOH it doesn't solve your issue of --skip-worktree / --assume-unchanged
+blocking operation (pull in your case, stash is what I noticed problem
+with when using --skip-worktree).
 
-Still, this is definitely the lions share of the memory issue.
-Additionally, this fix seems much better overall and does not harm any
-other aspects of gitk, because we only read the widget so there is as
-you mentioned, zero reason to build an undo stack.
+But --skip-worktree is still workaround...
 
-Thanks for taking the extra time to find a proper solution to this! I
-think it makes perfect sense.
+-- 
+Jakub Narębski
 
-> Signed-off-by: Markus Hitter <mah@jump-ing.de>
-> ---
->  gitk | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitk b/gitk
-> index 805a1c7..8654e29 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -2403,7 +2403,7 @@ proc makewindow {} {
->
->      set ctext .bleft.bottom.ctext
->      text $ctext -background $bgcolor -foreground $fgcolor \
-> -       -state disabled -font textfont \
-> +       -state disabled -undo 0 -font textfont \
->         -yscrollcommand scrolltext -wrap none \
->         -xscrollcommand ".bleft.bottom.sbhorizontal set"
->      if {$have_tk85} {
-> --
-> 2.9.3
->
-
-Nice that such a simple change results in a huge gain. I think this
-makes perfect sense.
-
-Regards,
-Jake
