@@ -2,56 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F243B2022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 20:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F29BD2022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 20:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751592AbcKGU0k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 15:26:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39838 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751564AbcKGU0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2016 15:26:40 -0500
-Received: (qmail 8013 invoked by uid 109); 7 Nov 2016 20:26:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Nov 2016 20:26:39 +0000
-Received: (qmail 15398 invoked by uid 111); 7 Nov 2016 20:27:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Nov 2016 15:27:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Nov 2016 15:26:37 -0500
-Date:   Mon, 7 Nov 2016 15:26:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v4 1/2] lib-proto-disable: variable name fix
-Message-ID: <20161107202637.ooaddlkfntw37xg3@sigill.intra.peff.net>
-References: <1478292933-7873-1-git-send-email-bmwill@google.com>
- <1478547323-47332-1-git-send-email-bmwill@google.com>
+        id S1752654AbcKGUoW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 15:44:22 -0500
+Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:46329 "EHLO
+        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752580AbcKGUoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 15:44:21 -0500
+X-Greylist: delayed 330 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2016 15:44:21 EST
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 01D0010004E;
+        Mon,  7 Nov 2016 20:38:29 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id EV_aASF_Vxgs; Mon,  7 Nov 2016 20:38:19 +0000 (GMT)
+Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 021138002E;
+        Mon,  7 Nov 2016 20:38:19 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Mon, 7 Nov 2016 20:38:18 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef]) by
+ exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef%17]) with mapi id
+ 15.00.1156.000; Mon, 7 Nov 2016 20:38:18 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Stefan Beller' <sbeller@google.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCH] submodules: allow empty working-tree dirs in
+ merge/cherry-pick
+Thread-Topic: [PATCH] submodules: allow empty working-tree dirs in
+ merge/cherry-pick
+Thread-Index: AQHSOSsQWPiNdkFHx0O+icAy7nbdo6DN8YHA
+Date:   Mon, 7 Nov 2016 20:38:18 +0000
+Message-ID: <378e63aa70e54fe9b839acf90680917a@exmbdft7.ad.twosigma.com>
+References: <1478543491-6286-1-git-send-email-dturner@twosigma.com>
+ <CAGZ79kbp82VssqutEg5=TnciQrGkDRQ3iNm_vUo9eBBGMXQRNg@mail.gmail.com>
+In-Reply-To: <CAGZ79kbp82VssqutEg5=TnciQrGkDRQ3iNm_vUo9eBBGMXQRNg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.12]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1478547323-47332-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 07, 2016 at 11:35:22AM -0800, Brandon Williams wrote:
-
-> Small fix to use '$desc' instead of '$1' in lib-proto-disable.sh.
-
-Even for a trivial fixup like this, I think it's good to say why.
-Because what seems trivial and obvious to you while working on the patch
-may not be so to a reviewer, or somebody reading it 6 months later.
-
-Just something simple like:
-
-  The test_proto function assigns the positional parameters to named
-  variables, but then still refers to "$desc" as "$1". Using $desc is
-  more readable and less error-prone.
-
--Peff
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBTdGVmYW4gQmVsbGVyIFttYWls
+dG86c2JlbGxlckBnb29nbGUuY29tXQ0KPiBTZW50OiBNb25kYXksIE5vdmVtYmVyIDA3LCAyMDE2
+IDI6MTQgUE0NCj4gVG86IERhdmlkIFR1cm5lcg0KPiBDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0K
+PiBTdWJqZWN0OiBSZTogW1BBVENIXSBzdWJtb2R1bGVzOiBhbGxvdyBlbXB0eSB3b3JraW5nLXRy
+ZWUgZGlycyBpbg0KPiBtZXJnZS9jaGVycnktcGljaw0KPiANCj4gT24gTW9uLCBOb3YgNywgMjAx
+NiBhdCAxMDozMSBBTSwgRGF2aWQgVHVybmVyIDxkdHVybmVyQHR3b3NpZ21hLmNvbT4NCj4gd3Jv
+dGU6DQo+ID4gV2hlbiBhIHN1Ym1vZHVsZSBpcyBiZWluZyBtZXJnZWQgb3IgY2hlcnJ5LXBpY2tl
+ZCBpbnRvIGEgd29ya2luZyB0cmVlDQo+ID4gdGhhdCBhbHJlYWR5IGNvbnRhaW5zIGEgY29ycmVz
+cG9uZGluZyBlbXB0eSBkaXJlY3RvcnksIGRvIG5vdCByZWNvcmQgYQ0KPiA+IGNvbmZsaWN0Lg0K
+PiA+DQo+ID4gT25lIHNpdHVhdGlvbiB3aGVyZSB0aGlzIGJ1ZyBhcHBlYXJzIGlzOg0KPiA+DQo+
+ID4gLSBDb21taXQgMSBhZGRzIGEgc3VibW9kdWxlDQo+IA0KPiAiLi4uIGF0IHN1YjEiIGFzIGlu
+ZmVycmVkIGJ5IHRleHQgYmVsb3cuDQo+IA0KPiA+IC0gQ29tbWl0IDIgcmVtb3ZlcyB0aGF0IHN1
+Ym1vZHVsZSBhbmQgcmUtYWRkcyBpdCBpbnRvIGEgc3ViZGlyZWN0b3J5DQo+ID4gICAgICAgIChz
+dWIxIHRvIHN1YjEvc3ViMSkuDQo+ID4gLSBDb21taXQgMyBhZGRzIGFuIHVucmVsYXRlZCBmaWxl
+Lg0KPiA+DQo+ID4gTm93IHRoZSB1c2VyIGNoZWNrcyBvdXQgY29tbWl0IDEgKGZpcnN0IGRlaW5p
+dGlhbGl6aW5nIHRoZSBzdWJtb2R1bGUpLA0KPiA+IGFuZCBhdHRlbXB0cyB0byBjaGVycnktcGlj
+ayBjb21taXQgMy4gIFByZXZpb3VzbHksIHRoaXMgd291bGQgZmFpbCwNCj4gPiBiZWNhdXNlIHRo
+ZSBpbmNvbWluZyBzdWJtb2R1bGUgc3ViMS9zdWIxIHdvdWxkIGZhbHNlbHkgY29uZmxpY3Qgd2l0
+aA0KPiA+IHRoZSBlbXB0eSBzdWIxIGRpcmVjdG9yeS4NCj4gDQo+IFNvIHlvdSdkIHdhbnQgdG8g
+YWNoaWV2ZToNCj4gICAkICMgb24gY29tbWl0IDM6DQo+ICAgZ2l0IGNoZWNrb3V0IDxjb21taXQg
+MT4NCj4gICBnaXQgY2hlcnJ5LXBpY2sgPGNvbW1pdCAzPg0KPiANCj4gd2hpY2ggZXNzZW50aWFs
+bHkgbW92ZXMgdGhlIGdpdGxpbmsgYmFjayB0byBpdHMgb3JpZ2luYWwgcGxhY2UgKGZyb20NCj4g
+c3ViMS9zdWIxIC0+IHN1YjEpLiAgVGhpcyBzb3VuZHMgcmVhc29uYWJsZS4NCj4gQnV0IHdoYXQg
+aWYgdGhlIHN1Ym1vZHVsZSBjb250YWlucyBhIChmaWxlL2RpcmVjdG9yeSkgbmFtZWQgc3ViMT8g
+V2UnZA0KPiBmaXJzdCByZW1vdmUgdGhlIHN1YjEvc3ViMSBzdWJtb2R1bGUgKGFuZCBldmVuIGRl
+bGV0ZSB0aGUgaW5uZXINCj4gZGlyZWN0b3J5PyksIHN1Y2ggdGhhdCAic3ViMS8iDQo+IGJlY29t
+ZXMgYW4gZW1wdHkgZGlyLCB3aGljaCBpcyBwZXJmZWN0IGZvciBoYXZpbmcgYSBzdWJtb2R1bGUg
+cmlnaHQgdGhlcmUNCj4gYXQgInN1YjEvIg0KDQpJJ20gY29uZnVzZWQgYWJvdXQgdGhlICJ3aGF0
+IGlmIiBoZXJlLg0KDQpJbiBvdXIgcGFydGljdWxhciBzaXR1YXRpb24sIHRoZSBzdWJtb2R1bGUg
+aW4gcXVlc3Rpb24gd2FzIG5vdCBpbml0aWFsaXplZC4gIEJhc2ljYWxseSwgdGhlIHN1Ym1vZHVs
+ZSBtb3ZlIGJ5IGRldmVsb3BlciBBIG1lc3NlZCB1cCBkZXZlbG9wZXIgQidzIHJlYmFzZSwgd2hl
+cmUgZGV2ZWxvcGVycyBBIGFuZCBCIGhhZCBiZWVuIHdvcmtpbmcgb24gY29tcGxldGVseSBkaXNq
+b2ludCBzZXRzIG9mIHN1Ym1vZHVsZXMuICBJZiBpdCBoYWQgYmVlbiBpbml0aWFsaXplZCwgdGhh
+dCBtaWdodCBiZSBhIGRpZmZlcmVudCBzdG9yeS4gIEl0IHdvdWxkIGJlIHNvbWV3aGF0IGxlc3Mg
+c3VycHJpc2luZywgYW5kIHRodXMgcHJvYmFibHkgT0suICBUaGUgImZpcnN0IGRlaW5pdGlhbGl6
+aW5nIHRoZSBzdWJtb2R1bGUiIGJpdCBhYm92ZSwgSSB0aGluaywgZGVzY3JpYmVzIHRoZSBzaXR1
+YXRpb24uDQoNCklmIHRoZSAid2hhdCBpZiIgeW91IGFyZSB3b3JyaWVkIGFib3V0IGlzIGNvcnJ1
+cHRpb24gY2F1c2VkIHRoZSBtb3ZlIG9mIHN1YjEvc3ViMSBpbnRvIHN1YjEsIGRvbid0IHdvcnJ5
+IGFib3V0IGl0LiAgc3ViMS8gd291bGQgc3RpbGwgY29udGFpbiB0aGUgLmdpdCBmaWxlLCBhbmQg
+c28gd291bGQgbm90IGJlIGVtcHR5LiAgRXZlbiBpZiB0aGlzIHBhdGNoIHdlcmUgcmVhbGx5IHdh
+Y2t5LCB0aGUgd29yc3QgaXQgY291bGQgZG8gaXMgZGVsZXRlIGFscmVhZHktZW1wdHkgZGlyZWN0
+b3JpZXMuDQoNCj4gPiBUaGlzIHBhdGNoIGlnbm9yZXMgdGhlIGVtcHR5IHN1YjEgZGlyZWN0b3J5
+LCBmaXhpbmcgdGhlIGJ1Zy4gIFdlIG9ubHkNCj4gPiBpZ25vcmUgdGhlIGVtcHR5IGRpcmVjdG9y
+eSBpZiB0aGUgb2JqZWN0IGJlaW5nIGVtcGxhY2VkIGlzIGENCj4gPiBzdWJtb2R1bGUsIHdoaWNo
+IGV4cGVjdHMgYW4gZW1wdHkgZGlyZWN0b3J5Lg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogRGF2
+aWQgVHVybmVyIDxkdHVybmVyQHR3b3NpZ21hLmNvbT4NCj4gPiAtLS0NCj4gPiAgbWVyZ2UtcmVj
+dXJzaXZlLmMgICAgICAgICAgIHwgMjEgKysrKysrKysrKysrKysrLS0tLS0tDQo+ID4gIHQvdDMw
+MzAtbWVyZ2UtcmVjdXJzaXZlLnNoICB8ICA0ICsrLS0gIHQvdDM0MjYtcmViYXNlLXN1Ym1vZHVs
+ZS5zaCB8DQo+ID4gMyAtLS0NCj4gPiAgMyBmaWxlcyBjaGFuZ2VkLCAxNyBpbnNlcnRpb25zKCsp
+LCAxMSBkZWxldGlvbnMoLSkNCj4gPg0KPiA+IE5vdGUgdGhhdCB0aGVyZSBhcmUgZm91ciBjYWxs
+cyB0byBkaXJfaW5fd2F5LCBhbmQgb25seSB0d28gb2YgdGhlbQ0KPiA+IGhhdmUgY2hhbmdlZCB0
+aGVpciBzZW1hbnRpY3MuICBUaGlzIGlzIGJlY2F1c2UgdGhlIG1lcmdlIGNvZGUgaXMgcXVpdGUN
+Cj4gPiBjb21wbGljYXRlZCwgYW5kIEkgZG9uJ3QgZnVsbHkgdW5kZXJzdGFuZCBpdC4NCj4gDQo+
+IEEgZ29vZCBhcHByb2FjaC4gSSB3YXMgdHJ5aW5nIHRvIGhhZ2dsZSB3aXRoIHVucGFjay10cmVl
+cy5jIGFuZCB0aGUNCj4gbWVyZ2luZyBjb2RlIGFuZCBwdXQgd2F5IG1vcmUgb24gbXkgcGxhdGUg
+dGhhbiBJIGNvdWxkIGVhdCBpbiBvbmUgc2l0dGluZy4NCj4gVHJ5aW5nIHRvIGdldCB0aGUgbWVz
+cyBzb3J0ZWQgbm93IHRvIHByZXBhcmUgYSBwYXRjaCBzZXJpZXMgdGhpcyB3ZWVrLg0KDQpJZiB5
+b3VyIGFwcHJvYWNoIGFsc28gZml4ZXMgdGhlIHNhbWUgdGVzdHMgdGhhdCBtaW5lIGZpeGVzLCB0
+aGVuIEkgYW0gaGFwcHkgdG8gdXNlIHlvdXIgc2VyaWVzIG92ZXIgbWluZS4gIFBsZWFzZSBDQyBt
+ZSBzbyBJIGNhbiB0YWtlIGEgcGVlay4NCg0KPiA+IFNvIEkgZGlkIG5vdCBoYXZlIHRpbWUNCj4g
+PiB0byBhbmFseXplIHRoZSByZW1haW5pbmcgY2FsbHMgdG8gc2VlIHdoZXRoZXIgdGhleSwgdG9v
+LCBzaG91bGQgYmUNCj4gPiBjaGFuZ2VkLg0KPiANCj4gVGhlIGNhbGwgaW4gbGluZSAxMjA1IChp
+biBoYW5kbGVfZmlsZSwgd2hpY2ggaXMgb25seSBjYWxsZWQgZnJvbQ0KPiBjb25mbGljdF9yZW5h
+bWVfcmVuYW1lXzF0bzIpIG1heSBiZSByZWxldmFudCBpZiB3ZSBtb3ZlIGFyb3VuZCBzdWJtb2R1
+bGVzDQo+IG9uIHRoZSBzYW1lIGxldmVsIGFuZCBtb2RpZnlpbmcgaXQgaW4gZGlmZmVyZW50IGJy
+YW5jaGVzLg0KPiBIb3dldmVyIEkgdGhpbmsgcHJlc2VydmluZyBjdXJyZW50IGJlaGF2aW9yIGlz
+IG9rLg0KDQpTbywgdGhlIGNhc2UgdGhlcmUgd291bGQgYmUgbW92aW5nIHN1YjEgdG8gc3ViMiwg
+d2hlcmUgc3ViMiB3YXMgcHJldmlvdXNseSBhIGRpZmZlcmVudCBzdWJtb2R1bGU/ICBJdCBhcHBl
+YXJzIHRoYXQgdGhpcyB3b3JrcyBhdCBsZWFzdCBhZnRlciBteSBwYXRjaCwgaWYgbm90IGJlZm9y
+ZS4gIEJ1dCBJIGdhdGhlciBmcm9tIHRoZSBuYW1lIHJlbmFtZV8xdG8yIHRoYXQgSSBhY3R1YWxs
+eSBuZWVkIHRvIGNvcHkgdGhlIHN1Ym1vZHVsZSBub3QgbW92ZSBpdD8gIFRoaXMgc2VlbXMgbGlr
+ZSBzdWNoIGEgcmFyZSBjYXNlIHRoYXQgSSBkb24ndCBhY3R1YWxseSBuZWVkIHRvIGhhbmRsZSBp
+dDsgYmFzaWNhbGx5IG5vYm9keSBuZWVkcyB0d28gY29waWVzIG9mIG9uZSBzdWJtb2R1bGUgaW4g
+dGhlIHNhbWUgcmVwby4gIEkgdGhpbmsgdGhhdCBjYXNlIGZhaWxzIGZvciBvdGhlciByZWFzb25z
+IGFueXdheS4NCg0KPiBUaGUgb3RoZXIgb25lIGluIGhhbmRsZV9jaGFuZ2VfZGVsZXRlIGFsc28g
+ZG9lc24ndCBsb29rIG9idmlvdXMgb25lIHdheSBvcg0KPiBhbm90aGVyLCBzbyBJJ2Qgc3RpY2sg
+d2l0aCBjdXJyZW50IGJlaGF2aW9yLg0KDQpUaGlzIGFwcGVhcnMgdG8gYmUgaW1wbGljYXRlZCBp
+biB0aGUgdDYwMjIgdGVzdCB0aGF0IEkgbWVudGlvbmVkIC0tIGlmIEkgY2hhbmdlIGVtcHR5X29r
+IHVuY29uZGl0aW9uYWxseSB0byAxLCB0aGUgdGVzdCBmYWlscy4NCg0KPiA+Rm9yIG1lLCB0aGVy
+ZSBhcmUgbm8gdGVzdCBmYWlsdXJlcyBlaXRoZXIgd2F5LCBpbmRpY2F0aW5nICB0aGF0DQo+ID5w
+cm9iYWJseSB0aGVzZSBjYXNlcyBhcmUgcmFyZS4NCj4gDQo+IFRoZSB0ZXN0cyBoYXZlIHRvIGJl
+IGNyYWZ0ZWQgZm9yIHRoaXMgc3BlY2lmaWMgY29kZSBwYXR0ZXJuLA0KPiANCj4gPg0KPiA+IFRo
+ZSByZWFzb24gYmVoaW5kIHRoZSBlbXB0eV9vayBwYXJhbWV0ZXIgKGFzIG9wcG9zZWQgdG8ganVz
+dCBhbHdheXMNCj4gPiBhbGxvd2luZyBlbXB5IGRpcmVjdG9yaWVzIHRvIGJlIGJsb3duIGF3YXkp
+IGlzIGZvdW5kIGluIHQ2MDIyJ3MgJ3BhaXINCj4gPiByZW5hbWUgdG8gcGFyZW50IG9mIG90aGVy
+IChEL0YgY29uZmxpY3RzKSB3LyB1bnRyYWNrZWQgZGlyJy4gIFRoaXMNCj4gPiB0ZXN0IHdvdWxk
+IGZhaWwgd2l0aCBhbiB1bmNvbmRpdGlvbmFsIHJlbmFtZSwgYmVjYXVzZSBpdCB3b3VsZG4ndA0K
+PiA+IGdlbmVyYXRlIHRoZSBjb25mbGljdCBmaWxlLg0KPiANCj4gT3IgdGhlIHN1Ym1vZHVsZSBm
+cm9tIHlvdXIgY29tbWl0IG1lc3NhZ2UgY29udGFpbnMgYSAic3ViMS8uLi4iIGl0c2VsZi4NCg0K
+U2VlIGFib3ZlLg0KDQo=
