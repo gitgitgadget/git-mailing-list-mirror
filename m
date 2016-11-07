@@ -2,108 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA8F2022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 17:27:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 454B52022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 17:38:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932669AbcKGR1N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 12:27:13 -0500
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:35618 "EHLO
-        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932314AbcKGR1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2016 12:27:12 -0500
-Received: by mail-lf0-f49.google.com with SMTP id b14so119490090lfg.2
-        for <git@vger.kernel.org>; Mon, 07 Nov 2016 09:27:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BbUwQBmqCTF1hFbvRhdVEM0Mowd4x44M41yv43TTc3E=;
-        b=NE3vpoTgIE7AAXaCtzt/wORJ52cvKQ1DYD8cQWzaD7IlScsbChvZe7YvEceSCC7QLs
-         jvVR0/ZVt789GVml9hJ8FykIHpPWw0FDKIMbeWMIZqjaCV9EmhKcUfVXyo7DF1CkzSLX
-         lD/egfNp4tKjWuvfpab1NbogTrwf83t8aG0DFlw3HvhkD08g/hz2JcpP1u1OZgMEddmg
-         oiA8MZFo/xXsrJOZIWOrvfuhHeP5IAMcT5F76NVJxXs+MrCgQxGKvyOfKKBsJleIRZoK
-         V5oH8Vk8sAAsnwc5n65PfXbIjh1JcK1Ig/+wTi26Xrk2aw5jM7t1oMLDuSA7tlJSz/z4
-         TQww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BbUwQBmqCTF1hFbvRhdVEM0Mowd4x44M41yv43TTc3E=;
-        b=YkRONw/v6DgO26cfvnlwnbEYe1RHkm1qr8d5jv3UpuM9CbZ8dyLzhAxT9FmkI+UBN8
-         G1Zjm2pV+HVqNJ2qVVnuNC2gs4/hCsXjlbvc8WEIML66CxPmzZpCDt03eKOn31mYbLwz
-         Q2Cjf8wvLhC5R7GPqXmXT2O2autpb5YX8lROc9n9toqVgOidu+5tG1IigXUIYA/wwu/7
-         VqtM5hfH55lVPc4L6vemIkZhRToLsWvCGZHV3ssgQeOoQBfmPT2ciGLy+HsJiTwBMOUl
-         ZWsoV5ReVBYhrofCUv0pLaqIMMxs1gZcWzVegYxrXHtlXYICpphRQ7Htr8sbrCAG5r8Z
-         TQNg==
-X-Gm-Message-State: ABUngveId8uNTUbsGN9M5DLh542hGVqHmk5OWx+kuX54STLVJgGhlvhhq4htNKPwJeNF+PWjeQ2oseDLAkRMS3Tw
-X-Received: by 10.25.205.17 with SMTP id d17mr4778606lfg.29.1478539630488;
- Mon, 07 Nov 2016 09:27:10 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.198.143 with HTTP; Mon, 7 Nov 2016 09:27:10 -0800 (PST)
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Mon, 7 Nov 2016 09:27:10 -0800
-Message-ID: <CA+dzEBmP2aUit00ukJyQeg=iqUJJLVaovafo2gngf9MvEqZDPA@mail.gmail.com>
-Subject: git submodule add broken (2.11.0-rc1): Cannot open git-sh-i18n
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+        id S933067AbcKGRhj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 12:37:39 -0500
+Received: from gproxy10-pub.mail.unifiedlayer.com ([69.89.20.226]:58799 "HELO
+        gproxy10-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S933038AbcKGRhR (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2016 12:37:17 -0500
+Received: (qmail 6589 invoked by uid 0); 7 Nov 2016 17:36:43 -0000
+Received: from unknown (HELO cmgw2) (10.0.90.83)
+  by gproxy10.mail.unifiedlayer.com with SMTP; 7 Nov 2016 17:36:43 -0000
+Received: from box531.bluehost.com ([74.220.219.131])
+        by cmgw2 with 
+        id 55ca1u0142qhmhE015cdXn; Mon, 07 Nov 2016 10:36:38 -0700
+X-Authority-Analysis: v=2.1 cv=PIacp5aC c=1 sm=1 tr=0
+ a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=L24OOQBejmoA:10 a=hDE4tMfa8fsOSKfQCnEA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID; bh=rhka49JDeU7N16Z3BXjUA1z5FO6YcIV+JY6Z7CKYYmc=; b=M7Bbj0BLcHjC1f
+        iLiG5W/DxFlPWb2nZX7r6hvq1WOqhz3hYBPg1w+JKk4bwV0t97VtksXU18RZR01ppPKmt+eap6UmF
+        +queoCMjoq0PDd666TPkxfEnuNeA/0pwbto4V;
+Received: from [64.238.138.90] (port=58990 helo=pdsdesk)
+        by box531.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.86_1)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1c3nqW-00057A-5Q; Mon, 07 Nov 2016 10:36:36 -0700
+Message-ID: <1478540194.4171.19.camel@mad-scientist.net>
+Subject: Re: [PATCH v1 1/2] config.mak.in: set NO_OPENSSL and
+ APPLE_COMMON_CRYPTO for macOS >10.11
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, tboegi@web.de, gitster@pobox.com
+Date:   Mon, 07 Nov 2016 12:36:34 -0500
+In-Reply-To: <20161107172617.tlcrpwbjy2w7aoyc@sigill.intra.peff.net>
+References: <20161017002550.88782-1-larsxschneider@gmail.com>
+         <20161017002550.88782-2-larsxschneider@gmail.com>
+         <20161017095002.bbqyp2hkbuyau66t@sigill.intra.peff.net>
+         <8C67FF53-C26F-4993-908F-A5183C5E48D9@gmail.com>
+         <20161107172617.tlcrpwbjy2w7aoyc@sigill.intra.peff.net>
+Organization: GNU's Not UNIX!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5-0ubuntu1~ubuntu16.04.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box531.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 64.238.138.90
+X-Exim-ID: 1c3nqW-00057A-5Q
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [64.238.138.90]:58990
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 4
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTMxLmJsdWVob3N0LmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Noticed as part of my automated tests here:
-https://travis-ci.org/pre-commit/pre-commit/jobs/173957051
+On Mon, 2016-11-07 at 12:26 -0500, Jeff King wrote:
+> I have in the back of my mind a fear that it is harder to unset a
+> make variable than it is to override it with a new value (which is
+> what you'd want to do here to turn openssl back on),
 
-Minimal reproduction:
+It depends on what you mean by "unset".
 
-rm -rf /tmp/git /tmp/foo /tmp/bar
-git clone git://github.com/git/git --depth 1 /tmp/git
-pushd /tmp/git
-make -j 8
-popd
-export PATH="/tmp/git:$PATH"
-git init /tmp/foo
-git init /tmp/bar
-cd /tmp/foo
-git submodule add /tmp/bar baz
+If you mean it as per the shell "unset" command, where the variable is
+completely forgotten as if it never was set at all, that's tricky.  You
+have to use the "undefine" special command which was introduced in GNU
+make 3.82 (released in 2010).
 
-Output:
+But if you just want to set the variable to the empty string, using
+"FOO=" works fine for that in all versions of make (GNU and otherwise)
+and using all the normal rules (command line override, etc.)
 
-$ rm -rf /tmp/git /tmp/foo /tmp/bar
-$ git clone git://github.com/git/git --depth 1 /tmp/git
-Cloning into '/tmp/git'...
-remote: Counting objects: 3074, done.
-remote: Compressing objects: 100% (2735/2735), done.
-remote: Total 3074 (delta 249), reused 1871 (delta 215), pack-reused 0
-Receiving objects: 100% (3074/3074), 6.38 MiB | 905.00 KiB/s, done.
-Resolving deltas: 100% (249/249), done.
-Checking connectivity... done.
-$ pushd /tmp/git
-/tmp/git /tmp
-$ make -j 8
-GIT_VERSION = 2.11.0-rc0
-
-... lots of make output ...
-
-$ popd
-/tmp
-$ export PATH="/tmp/git:$PATH"
-$ git init /tmp/foo
-warning: templates not found /home/asottile/share/git-core/templates
-Initialized empty Git repository in /tmp/foo/.git/
-$ git init /tmp/bar
-warning: templates not found /home/asottile/share/git-core/templates
-Initialized empty Git repository in /tmp/bar/.git/
-$ cd /tmp/foo
-$ git submodule add /tmp/bar baz
-/tmp/git/git-submodule: 46: .: Can't open
-/home/asottile/libexec/git-core/git-sh-i18n
-$ echo $?
-2
-
-
-Thanks
-
-Anthony
+It's not easy to distinguish between a variable that is empty and one
+that is actually not defined, in make, so it's a difference without a
+distinction in almost all situations.
