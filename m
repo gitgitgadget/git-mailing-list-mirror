@@ -2,102 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8B452022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 17:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 565392022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 17:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932559AbcKGRtn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 12:49:43 -0500
-Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:37818 "HELO
-        gproxy6-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S932414AbcKGRtl (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2016 12:49:41 -0500
-Received: (qmail 31513 invoked by uid 0); 7 Nov 2016 17:49:38 -0000
-Received: from unknown (HELO cmgw2) (10.0.90.83)
-  by gproxy6.mail.unifiedlayer.com with SMTP; 7 Nov 2016 17:49:38 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-        by cmgw2 with 
-        id 55pZ1u01D2qhmhE015pcGZ; Mon, 07 Nov 2016 10:49:37 -0700
-X-Authority-Analysis: v=2.1 cv=PIacp5aC c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=L24OOQBejmoA:10 a=GhE016ZtFJQZrFCmKDYA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID; bh=TueQnWdEg13JECE/s9OQPyEqB4TXYC828W2uveH3aIk=; b=adl62p6vwxmcgP
-        frOPLQ/OZ8MYaJQOd25krQVqBsWrUT3B0N0vGQoiimQZSRf3WIjgSLAYN6Pz2iK8TMUScAL8HvAwZ
-        0UMXighcP1/cim2hMR/G+5EXOelupLkX1YQYj;
-Received: from [64.238.138.90] (port=59228 helo=pdsdesk)
-        by box531.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.86_1)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1c3o35-0003KS-C9; Mon, 07 Nov 2016 10:49:35 -0700
-Message-ID: <1478540973.4171.22.camel@mad-scientist.net>
-Subject: Re: [PATCH v1 1/2] config.mak.in: set NO_OPENSSL and
- APPLE_COMMON_CRYPTO for macOS >10.11
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
-        tboegi@web.de, gitster@pobox.com
-Date:   Mon, 07 Nov 2016 12:49:33 -0500
-In-Reply-To: <20161107174559.t72vxxkckqdbxmbg@sigill.intra.peff.net>
-References: <20161017002550.88782-1-larsxschneider@gmail.com>
-         <20161017002550.88782-2-larsxschneider@gmail.com>
-         <20161017095002.bbqyp2hkbuyau66t@sigill.intra.peff.net>
-         <8C67FF53-C26F-4993-908F-A5183C5E48D9@gmail.com>
-         <20161107172617.tlcrpwbjy2w7aoyc@sigill.intra.peff.net>
-         <1478540194.4171.19.camel@mad-scientist.net>
-         <20161107174559.t72vxxkckqdbxmbg@sigill.intra.peff.net>
-Organization: GNU's Not UNIX!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5-0ubuntu1~ubuntu16.04.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box531.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 64.238.138.90
-X-Exim-ID: 1c3o35-0003KS-C9
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [64.238.138.90]:59228
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 9
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTMxLmJsdWVob3N0LmNvbQ==
+        id S933208AbcKGR4I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 12:56:08 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:35452 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933197AbcKGR4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 12:56:04 -0500
+Received: by mail-qk0-f169.google.com with SMTP id n204so175860858qke.2
+        for <git@vger.kernel.org>; Mon, 07 Nov 2016 09:56:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=krH7QkPo6CLGUKdV0p7lC93n6HImrhTGGTwsbLMQYm8=;
+        b=SEHvqQebQi7+W5yUauCUVX7IAzZX74OC9RoQPmm0fWERFzrVbk8dhmzcZ+lxUQEEkR
+         7b61Qy+8mVVZbcEi0tGVQuVjEPZja+h5EuRShes4Pqdi/KxUmhH5X41Tc5FJ2tPrk2rI
+         X5gCnpSTuAwPtdjUZMOfSQsJX+LsdR+VPd7FyOcKrpgio3Swnnq5z1OQd7dS7RQp/BnO
+         3GsKJgGrO4n1iBE8ZErNji7AqTbSiv77/6opr/1p34e1loXFxoe8cHP4fxbUv5BOQDvg
+         VwJLRNfQfBsK5yArBokFo7eqSkTMNDUaKNlLhojEQAm7g24tzRQ9bhygkcf3Rk613BPk
+         bEgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=krH7QkPo6CLGUKdV0p7lC93n6HImrhTGGTwsbLMQYm8=;
+        b=AxaehJn18VnKYHme+b2XEGazeXxTP86Kihl0IotwkZysfegsi2hSji8Ovj8LW/6JWl
+         N3MY89uhc8Bq+Rq4lo2bZS3MmvJ+o9A0zB/hjTGTDZMtX7+g4MCzsHk8oGG79+Ri8AUf
+         +ndlZyhCwni6pz8NQxuqaiNad6atGVJO2jazChFO6MvEYjvBaM1cq9fBbeCE5Fl7df0+
+         JhqKYeJaZ+MABWwNxhiB6MlxaRTgdS0NJDSFe57DUg/GeSm2uFnCDNQsdz38Q8wyvFCR
+         NZlIRZpEjmca2FJqiqEQjYpgEsw2EwGn+BQelXojDYSKie4bUsFaqz0vW3IM3umfmj0A
+         6vrQ==
+X-Gm-Message-State: ABUngve0u7E5DZenaWUqnFRTZ68f7aQZ99RkzS/nVEXRNNZ6Bugvkn7oE+2RjDpFtoD+FoOuL1Bny4GBxIM7iDt3
+X-Received: by 10.233.216.196 with SMTP id u187mr7774280qkf.220.1478541363215;
+ Mon, 07 Nov 2016 09:56:03 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.134.65 with HTTP; Mon, 7 Nov 2016 09:56:02 -0800 (PST)
+In-Reply-To: <CA+dzEBmP2aUit00ukJyQeg=iqUJJLVaovafo2gngf9MvEqZDPA@mail.gmail.com>
+References: <CA+dzEBmP2aUit00ukJyQeg=iqUJJLVaovafo2gngf9MvEqZDPA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 7 Nov 2016 09:56:02 -0800
+Message-ID: <CAGZ79kYbrDu=9Hw+SBnubSHKOc8HmGPb721ZJQxGWW2egqmuDg@mail.gmail.com>
+Subject: Re: git submodule add broken (2.11.0-rc1): Cannot open git-sh-i18n
+To:     Anthony Sottile <asottile@umich.edu>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2016-11-07 at 12:46 -0500, Jeff King wrote:
-> Specifically I wanted to make sure that
-> 
->   FOO = bar
->   FOO =
->   ifdef FOO
->   ... something ...
->   endif
-> 
-> works as if FOO had never been set in the first place. Which it seems
-> to, at least in GNU make (and that is the only one we support, for
-> other reasons).
+    $ git --version
+    git version 1.8.5.6
+    $ if [ "$LATEST_GIT" = "1" ]; then
+    ...
+         export PATH="/tmp/git:$PATH"
+     fi
+    ....
+    make -j 8
+    ...
+    $ git --version
+    git version 2.11.0-rc0
 
-Yes, it will work.  Confusingly, "ifdef" actually tests whether the
-variable has a non-empty value, not whether it's defined:
+So you compile 2.11.0-rc0 yourself, but you do not install it, instead
+the $PATH is pointed to /tmp/git instead, however the later calls fail with:
 
-> The 'ifdef' form takes the _name_ of a variable as its argument, not
-> a reference to a variable.  The value of that variable has a non-
-> empty value, the TEXT-IF-TRUE is effective; otherwise, the TEXT-IF-
-> FALSE, if any, is effective
+    Can't open /home/travis/libexec/git-core/git-sh-i18n
 
-*sigh* History...
+which is where 1.8.5.6 is installed.
+
+So you're running into an internationalization problem
+between 2 very different versions of Git (1.8 seems to be ancient)
+
+Not sure if i can offer advice except from
+"Don't do that, instead install Git properly". ;)
+
+Thanks,
+Stefan
