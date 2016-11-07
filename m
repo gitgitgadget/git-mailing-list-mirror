@@ -2,116 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EC562021E
-	for <e@80x24.org>; Mon,  7 Nov 2016 01:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1F422021E
+	for <e@80x24.org>; Mon,  7 Nov 2016 02:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751505AbcKGBUN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Nov 2016 20:20:13 -0500
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:55050 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750869AbcKGBUM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Nov 2016 20:20:12 -0500
-Received: from mfilter49-d.gandi.net (mfilter49-d.gandi.net [217.70.178.180])
-        by relay3-d.mail.gandi.net (Postfix) with ESMTP id 2B4B2A80C8;
-        Mon,  7 Nov 2016 02:18:48 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter49-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([IPv6:::ffff:217.70.183.195])
-        by mfilter49-d.gandi.net (mfilter49-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id rJ-N9CDXUhS1; Mon,  7 Nov 2016 02:18:46 +0100 (CET)
-X-Originating-IP: 50.39.170.172
-Received: from x (50-39-170-172.bvtn.or.frontiernet.net [50.39.170.172])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id C5C6BA80C1;
-        Mon,  7 Nov 2016 02:18:43 +0100 (CET)
-Date:   Sun, 6 Nov 2016 17:18:41 -0800
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Shawn O. Pierce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>
-Subject: Re: Regarding "git log" on "git series" metadata
-Message-ID: <20161107011841.vy2qfnbefidd2sjf@x>
-References: <CAP8UFD0bqNQZ3nuGUDX0qrSo44hf1NL9LeZB_FQcXg3j0mD38A@mail.gmail.com>
- <CAP8UFD1EZ8HBzLAeyFBFgU7n2uJpswqgEgA4XM1YJuRAG_ZAAQ@mail.gmail.com>
- <20161105151836.wztypzrdywyltvrc@x>
- <CAP8UFD3XFHr7POKmZr_6guapC6sme3GvWBV5vPw4XO7FE5HOPw@mail.gmail.com>
- <20161105202553.migx75gfuujakqyk@x>
- <CA+P7+xoG3ag8dj7s_NRoqz-EwjVENSJSzE_qj6gnW-SmWt0bgA@mail.gmail.com>
- <20161106163410.ilysej5r6qd3744e@x>
- <xmqqshr4cyy7.fsf@gitster.mtv.corp.google.com>
- <20161106173311.lqoxxgcklx4jlrg7@x>
- <CA+P7+xoxjwvjXrW0Pwh7ZK-OYBiYamPAxvf_=zqJOsQ8xWDPWw@mail.gmail.com>
+        id S1751596AbcKGCcK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Nov 2016 21:32:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58843 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751492AbcKGCcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Nov 2016 21:32:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33EA54E80E;
+        Sun,  6 Nov 2016 21:32:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:cc:date:message-id:mime-version:content-type; s=sasl;
+         bh=XIWW9Pr3dAnJW2KP7Pg0m5bhvoU=; b=LsdKIMiWyHO/f27xRQF0BLzMI9Bm
+        +TrZHzzVoQalbVSjc6tXFGVHmOlhX3TaGa5EwJhjVyF8C52jt3f10fPuS8q5HuER
+        F4cok/v3TQ5EY/R/Gb93uwxf8s+4PY0zOKiLhYDUowbRNxtuU+S6RREaodY/OCow
+        tRgW2zFsoUY3cMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+        SwhPHcGfm0DnuSJlkx0TnHrhP/du2NkmAMIXYfct+hiO9C6JBbUZpMOq/D+6zP6P
+        uSu+gq/0lbD8cZu3Q1M2FMJM6jnqvJVfp0X2rUY72FTCaJwG3vz/xhZoWmM+Wcsa
+        DfEYe3cRHRxG7aThxeqY17IdOElwnyoF8YN6nZ3DGQE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C9494E80D;
+        Sun,  6 Nov 2016 21:32:07 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A04444E80C;
+        Sun,  6 Nov 2016 21:32:06 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: 2.11.0-rc1 will not be tagged for a few days
+cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>
+Date:   Sun, 06 Nov 2016 18:32:05 -0800
+Message-ID: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+P7+xoxjwvjXrW0Pwh7ZK-OYBiYamPAxvf_=zqJOsQ8xWDPWw@mail.gmail.com>
-User-Agent: NeoMutt/20161014 (1.7.1)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6026C17A-A492-11E6-9365-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 06, 2016 at 12:17:10PM -0800, Jacob Keller wrote:
-> On Sun, Nov 6, 2016 at 9:33 AM, Josh Triplett <josh@joshtriplett.org> wrote:
-> > On Sun, Nov 06, 2016 at 09:14:56AM -0800, Junio C Hamano wrote:
-> >> Josh Triplett <josh@joshtriplett.org> writes:
-> >> > We could, but if we (or one of the many third-party git implementations)
-> >> > miss a case, gitlinks+reachability may appear to work in many cases with
-> >> > dataloss afterward, while gitrefs will fail early and not appear
-> >> > functional.
-> >>
-> >> I wonder what happens if we do not introduce the "gitref" but
-> >> instead change the behaviour of "gitlink" to imply an optional
-> >> reachability.  That is, when enumerating what is reachable in your
-> >> repository, if you see a gitlink and if you notice that you locally
-> >> have the target of that gitlink, you follow, but if you know you
-> >> lack it, you do not error out.  This may be making things too
-> >> complex to feasibily implement by simplify them ;-) and I see a few
-> >> immediate fallout that needs to be thought through (i.e. downsides)
-> >> and a few upsides, too.  I am feeling feverish and not thinking
-> >> straight, so I won't try to weigh pros-and-cons.
-> >>
-> >> This would definitely need protocol extension when transferring
-> >> objects across repositories.
-> >
-> > It'd also need a repository format extension locally.  Otherwise, if you
-> > ever touched that repository with an older git (or a tool built on an
-> > older libgit2 or JGit or other library), you could lose data.
-> >
-> > It does seem conceptually appealing, though.  In an ideal world, the
-> > original version of gitlink would have had opt-out reachability (and
-> > .gitmodules with an external repository reference could count as opting
-> > out).
-> >
-> > But I can't think of any case where it's OK for a git implementation to
-> > not know about this reachability extension and still operate on the
-> > gitlink.  And given that, it might as well use a new object type that
-> > the old version definitely won't think it understands.
-> >
-> > - Josh Triplett
-> 
-> That's still only true if the receiving end runs fsck, isn't it? I
-> suppose that's a large number of receivers, and at least there are
-> ways post-push to determine that objects don't make sense to that
-> version of git.
-> 
-> I think using a new mode is the safest way, and it allows easily
-> implementing RefTrees as well as other projects. Additionally, if we
-> *wanted* additional "opt-in / opt-out" support we could add this by
-> default to gitrefs,and they could (possibly) replace gitlinks in the
-> future?
+I regret to report that I won't be able to tag 2.11-rc1 as scheduled
+in tinyurl.com/gitCal (I am feverish and my brain is not keeping
+track of things correctly) any time soon.  I'll report back an
+updated schedule when able.
 
-Once we have gitrefs, you have both alternatives: reachable (gitref) or
-not reachable (gitlink).
+I'd appreciate that people keep discussing and exchanging patches
+that will not be in 2.11 final to give a head-start to topics so
+that people can agree on the designs and implementations in the
+meantime, but one thing I'd like to see when I come back is somebody
+tell me (when asked) what fix-up pathes that are "must to apply, or
+there is no point tagging 2.11-rc1 while keeping it broken" are
+found on the list.  I am aware of only two right now ("cast enum to
+int to work around compiler warning", in Dscho's prepare sequencer
+series, and "wc -l may give leading whitespace" fix J6t pointed out
+in Lars's filter process series), but it is more than likely that I
+am missing a few more.
 
-However, if you want some way to mark reachable objects as not
-reachable, such as for a sparse checkout, external large-object storage,
-or similar, then you can use a single unified mechanism for that whether
-working with gitrefs, trees, or blobs.
+Thanks.  Going back to bed...
