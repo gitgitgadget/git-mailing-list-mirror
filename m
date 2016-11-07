@@ -2,74 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,LONGWORDS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A46B2022A
-	for <e@80x24.org>; Mon,  7 Nov 2016 13:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D3382022A
+	for <e@80x24.org>; Mon,  7 Nov 2016 13:43:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753243AbcKGNQW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Nov 2016 08:16:22 -0500
-Received: from sgc-chev-fe1.sgc.gmessaging.net ([194.51.18.91]:64803 "EHLO
-        sgc-rueil-fe1.sgc.gmessaging.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753244AbcKGNQG (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Nov 2016 08:16:06 -0500
-X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Nov 2016 08:16:05 EST
-Received: from sgc-rueil-fe1.sgc.gmessaging.net (localhost.localdomain [127.0.0.1])
-        by localhost.sgc.gmessaging.net (Postfix) with SMTP id 3tCCRL0hvVz3BmCR
-        for <git@vger.kernel.org>; Mon,  7 Nov 2016 14:07:58 +0100 (CET)
-Received: from EXDRUEARSGC002.eq1sgc.local (unknown [10.67.4.132])
-        by sgc-rueil-fe1.sgc.gmessaging.net (Postfix) with ESMTP id 3tCCRK6clPz3Bm9s
-        for <git@vger.kernel.org>; Mon,  7 Nov 2016 14:07:57 +0100 (CET)
-Received: from [10.66.239.4] (10.66.239.4) by webmail-int.sagemcom.com
- (10.67.4.132) with Microsoft SMTP Server (TLS) id 14.3.279.2; Mon, 7 Nov 2016
- 14:07:57 +0100
-Message-ID: <58207CAB.3060105@sagemcom.com>
-Date:   Mon, 7 Nov 2016 14:07:55 +0100
-From:   Alexandre Duplaix <alexandre.duplaix-ext@sagemcom.com>
-Organization: Sagemcom
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+        id S1752427AbcKGNnP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Nov 2016 08:43:15 -0500
+Received: from ud03.udmedia.de ([194.117.254.43]:48254 "EHLO
+        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752672AbcKGNnK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2016 08:43:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
+        :references:cc:from:message-id:date:mime-version:in-reply-to
+        :content-type:content-transfer-encoding; s=k1; bh=1o38G+C5edTxVM
+        +1GReSkDOz9+9kST6gEsx/fEyqrZM=; b=kbfbpQGrOocbJMPwoCEJ2YT5dkv1XV
+        Fi47knOqseuqY3Gs/IH4uNVDGPiEZ3n2xlP/YVMzlmn+5XPkT/wb2VK7Wu7h18CR
+        jcXkjM9LRNpajmd31tkPIRvQ7d1VFDcXE3EA233oudzFjl9IzHAN8Ix3r1/UhX1T
+        iJ7TkNzQvfo6Y=
+Received: (qmail 25998 invoked from network); 7 Nov 2016 14:43:05 +0100
+Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
+  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 7 Nov 2016 14:43:05 +0100
+Subject: Re: gitk: avoid obscene memory consumption
+To:     Paul Mackerras <paulus@ozlabs.org>
+References: <47c374cf-e6b9-8cd3-ee0d-d877e9e96a62@jump-ing.de>
+ <CAGZ79kbavzGJ2sAcz5heg+BO+tZ=TgtrhxMH1-kqeJUpNNavyw@mail.gmail.com>
+ <20161105110845.GA4039@fergus.ozlabs.ibm.com>
+ <ff5bb36b-e30c-3998-100d-789b4b5e7249@jump-ing.de>
+ <20161107041138.rnlzyuacoezsfwif@oak.ozlabs.ibm.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Markus Hitter <mah@jump-ing.de>
+Message-ID: <3b16a0f5-46e3-b41c-553a-473ad3e9cf26@jump-ing.de>
+Date:   Mon, 7 Nov 2016 14:43:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-To:     <git@vger.kernel.org>
-Subject: Forbid access to /gitweb but authorize the sub projets
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.66.239.4]
+In-Reply-To: <20161107041138.rnlzyuacoezsfwif@oak.ozlabs.ibm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Am 07.11.2016 um 05:11 schrieb Paul Mackerras:
+>> - Storing only the actually viewed diff. It's an interactive tool, so there's no advantage in displaying the diff in 0.001 seconds over viewing it in 0.1 seconds. As far as I can see, Gitk currently stores every diff it gets a hold of forever.
+> It does?  That would be a bug. :)
+> 
 
-I have several projects under https://myserver/gitweb and I would like 
-to forbid the access to the root, so that the users can't list the 
-differents projects.
+So far I've found three arrays being populated lazily (which is good) but never being released (which ignores changes to the underlying repo):
 
-However, I need to let the access to the sub projects (ex: 
-https://myserver/gitweb/?p=project1;a=summary
+$commitinfo: one entry of about 500 bytes per line viewed in the list of commits. Maximum size of the array is the number of commits. As far as I can see, this array should be removed on a reload (Shift-F5).
 
-How can I do please ?
+$blobdifffd: one entry of about 45 bytes for every commit ever read. The underlying file descriptor gets closed, but the entry in this array remains. So far I didn't find the reason why this array exists at all. It's also not removed on a reload.
 
-Thank you in advance :)
+$treediffs: always the same number of entries as $blobdiffd, but > 1000 bytes/entry. Removed/refreshed on a reload (good!), different number of entries from that point on.
 
-" Ce courriel et les documents qui lui sont joints peuvent contenir des
-informations confidentielles ou ayant un caractère privé. 
-S'ils ne vous sont pas destinés nous vous signalons qu'il est strictement interdit de les
-divulguer, de les reproduire ou d'en utiliser de quelque manière que ce
-soit le contenu. Si ce message vous a été transmis par erreur, merci d'en
-informer l'expéditeur et de supprimer immédiatement de votre système
-informatique ce courriel ainsi que tous les documents qui y sont attachés"
+In case you want to play as well, here's the code I wrote for the investigation, it can be appended right at the bottom of the gitk script:
 
-                               ******
+--------------8<---------------
+proc variableSizes {} {
+    # Add variable here to get them shown.
+    global diffcontext diffids blobdifffd currdiffsubmod commitinfo
+    global diffnexthead diffnextnote difffilestart
+    global diffinhdr treediffs
 
-" This e-mail and any attached documents may contain confidential or
-proprietary information. If you are not the intended recipient, you are
-notified that any dissemination, copying of this e-mail and any attachments
-thereto or use of their contents by any means whatsoever is strictly
-prohibited. If you have received this e-mail in error, please advise the
-sender immediately and delete this e-mail and all attached documents
-from your computer system."
-#
+    puts "---------------------------------------------------"
+    foreach V [info vars] {
+	if { ! [info exists $V] } {
+	    continue
+	}
 
+	set count 0
+	set bytes 0
+	if [array exists $V] {
+	    set count [array size $V]
+	    foreach I [array get $V] {
+		set bytes [expr $bytes + [string bytelength $I]]
+	    }
+	} elseif [catch {llength [set $V]}] {
+	    set count [llength [set $V]]
+#	    set bytes [string bytelength [list {*}[set $V]]]
+	} else {
+	    set bytes [string bytelength [set $V]]
+	}
+	puts [format "%20s: %5d items, %10d bytes" $V $count $bytes]
+    }
+
+#    catch {
+#	set output [memory info]
+#	puts $output
+#    }
+
+    after 3000 variableSizes
+}
+
+variableSizes
+-------------->8---------------
+
+[memory info] requires a Tcl with memory debug enabled.
+
+
+Markus
+-- 
+- - - - - - - - - - - - - - - - - - -
+Dipl. Ing. (FH) Markus Hitter
+http://www.jump-ing.de/
