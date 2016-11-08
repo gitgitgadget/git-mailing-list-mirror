@@ -2,121 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 337A32022A
-	for <e@80x24.org>; Tue,  8 Nov 2016 17:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFE262022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 19:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753802AbcKHRSo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 12:18:44 -0500
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:36773 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752945AbcKHRSn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 12:18:43 -0500
-Received: by mail-ua0-f179.google.com with SMTP id b35so152557212uaa.3
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 09:18:43 -0800 (PST)
+        id S1753200AbcKHT1o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 14:27:44 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:33342 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751662AbcKHT1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 14:27:43 -0500
+Received: by mail-qk0-f170.google.com with SMTP id x190so227932342qkb.0
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 11:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=argoday-com.20150623.gappssmtp.com; s=20150623;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=iqZnMDw/JotCAh+VAXGBODmk3j9N/q21NKwnNMe1zG4=;
-        b=dAiK4TMWdp9s+4nyfAfk0mKvbva+FUvf1qtli3dmKxX44s8rdnUW/xqr098ttC6KGc
-         4juGJZAW7MFDO7KKFcY7bXy9DWydu7hW1o64BihITFG3PPu+W7ZZCq1S5F1abfbJEqo8
-         GVjjOgFyIfHH90On+YToekL8HWmoRwOORwQLgsUcJEauqZKERDcgoEsCiNX+dMJzkw5r
-         /LiOI1wGaLtttlqpGpkyQrDaE1h3t12zuQPfLW9bEX+yJMo/jcMiZx/PtfIOACAdovNW
-         ErIPPkGFq6IUfG5JK+GK0JvDbZ/knnHfxwLhGVlJj5e1UnFXURVlxEMDwPcVK2Wq6Fkc
-         UkIA==
+         :cc;
+        bh=YLoHzIDNkHrx+53jJ5U40Pqqh4usX3qIN9206szzOrg=;
+        b=CZ4nNJ1HR6eRr3GIWE1cSINMlvXCR0yiwwUyw64d4UoaDOC3xtYtqbIZ4bR24TJ4u5
+         hJCtlhIfFwKvZGqVxNCD/El96z0dDT1Bxcy9mgkz4sOfIZa0+FxJKploB1hODfaxMutr
+         w/GiQDHqRIaVXwanZrJDnzGGx/n69f5wkWXvM1vGbSbWDvOTN1S8k4/EGkCPqKpY4WnM
+         GTNPjndDNBGEqfLUZycTGdu9l5eWgj/DG0zgTri9YYKGX7UgjQPMGoTCoYgXADdMQ+v4
+         6NQ9abjGUku3p9zU+7gz844/GZRJQy0tS+n6cbYU7mme2lC17JyExKi5xkyfx2TTcee5
+         G2Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=iqZnMDw/JotCAh+VAXGBODmk3j9N/q21NKwnNMe1zG4=;
-        b=Xw2Mud+eOZyX2tRBwTvS8eRbM3rYhdt3q4wZHJxkR0Fq0yr75Jim/dZ7Ep+fNBDxOn
-         O57rmPE7I605w7I9ap2f59sLUW9cCMYRoT/tyPNFENRVOEpw2tNIFZGXNiKo1Mta7yBf
-         6lLGwu8FNS3u3/NhnHW9qbDgOCGPyN/i7QB5tSUkdqnimDuMMIIrhGrNySQ/lCWNCe1d
-         C/xxDJkk2XP8kIjEL28giLWeWvrT9ICUg6Fkw7cygHGg6RGc9hlFMd1PK4SNHI0C5G5c
-         17uqMLf8vipvusuQF8INeMZEHegBebt6N9f6oVoAWm8dGIozGXdQwSMh4oE0ug8N2Peo
-         BOFw==
-X-Gm-Message-State: ABUngvc94fBoO83O1uu/29YnHOmQV8KKg7t//p1Z5iiHc8fmLCHs+sP7P5afF2ndzd7rOPLwGJzIt8oh4F5CXQ==
-X-Received: by 10.176.83.151 with SMTP id k23mr9035306uaa.90.1478625522714;
- Tue, 08 Nov 2016 09:18:42 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=YLoHzIDNkHrx+53jJ5U40Pqqh4usX3qIN9206szzOrg=;
+        b=bVUqyQ7q0Hs80ubOUE+Y2jazsf8D45xO6V+6CsZGg0W58dwSd5nwcFIElcrCCEI6Cs
+         BqevoGixAzG1XSY4dKtBoapvkbmr+Sz58hTeBFC3GM0bNM05OpMQv6aYhELSPSq3FmVu
+         JzSIvLBodtOBAP2dfukzABM/woy8QlE7rqPoGuwnX0SbnMU7Au+1paI4U2S/wPq7/KgZ
+         imf+qXaoPGq5CPc8wqehBMYZ00SkG9yBuhmp9Bm7czUiaiMfO3e1pajkn03YSs0TCI9Q
+         dENHjv+aqkuiSOOgjfxxDVOmYqdFolNx8Ma8k3lRwttMYJOZGRLI11DncxnZhBMqfmvQ
+         6lfQ==
+X-Gm-Message-State: ABUngvdSy2l0sv1QR/RdK+mlF+Y4/HX6be5+fZ3DViZ8RJNLLT1bQ+kxu25hm6AGEVeyCTx/wEKAoNIPVzaZGdsg
+X-Received: by 10.55.36.149 with SMTP id k21mr9962674qkk.252.1478633262499;
+ Tue, 08 Nov 2016 11:27:42 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.103.128.70 with HTTP; Tue, 8 Nov 2016 09:18:22 -0800 (PST)
-In-Reply-To: <40608c85-f870-87f7-daee-7fa98f5d19c1@jump-ing.de>
-References: <CAD9aWChH14eviop=0_Ma_2Pa-2OyWJp9KjimH8dyqy-XDn9Rhw@mail.gmail.com>
- <40608c85-f870-87f7-daee-7fa98f5d19c1@jump-ing.de>
-From:   Jonathan Word <argoday@argoday.com>
-Date:   Tue, 8 Nov 2016 12:18:22 -0500
-Message-ID: <CAD9aWCgZkuaZNMDparVZE_WNFpOp7ud6iyCueGVbnU8s_EYtrQ@mail.gmail.com>
-Subject: Re: Bug: git config does not respect read-only .gitconfig file
-To:     Markus Hitter <mah@jump-ing.de>
-Cc:     git@vger.kernel.org, jword@bloomberg.net
+Received: by 10.140.34.175 with HTTP; Tue, 8 Nov 2016 11:27:41 -0800 (PST)
+In-Reply-To: <20161108053333.jta7bmqsyvy2ijoh@sigill.intra.peff.net>
+References: <20161003203321.rj5jepviwo57uhqw@sigill.intra.peff.net>
+ <20161003203417.izcgwt4yz3yspdnm@sigill.intra.peff.net> <CAGyf7-HWAMF8S+Bw3wcwJCS1Subc28KHjpSCc1__0qn-GSMyvA@mail.gmail.com>
+ <20161108003034.apydvv3bav3s7ehq@sigill.intra.peff.net> <CAGyf7-FYvUgvOZm0xvFAJx=8hSc4ji=YQ5dUm3B1unU_WOcjeQ@mail.gmail.com>
+ <20161108053333.jta7bmqsyvy2ijoh@sigill.intra.peff.net>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 8 Nov 2016 11:27:41 -0800
+Message-ID: <CAGyf7-HVUN-kHhmccoYUVVDE_xJt1UsiE8bxZiADsW5GFGr+OA@mail.gmail.com>
+Subject: Re: [PATCH 07/18] link_alt_odb_entry: handle normalize_path errors
+To:     Jeff King <peff@peff.net>
+Cc:     Git Users <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I proposed a variant that would be fully backwards-compatible (don't
-know who might rely on the functionality http://xkcd.com/1172/ )
-however I'd be happy to see the change without additional config +1
-... that's a call for this list as maintainers.
-
-The root of the issue is that tempfile::rename_tempfile (
-https://github.com/git/git/blob/35f6318d44379452d8d33e880d8df0267b4a0cd0/te=
-mpfile.c#L288
-) relies on http://man7.org/linux/man-pages/man2/rename.2.html which,
-only requires directory write permissions - not file write
-permissions. As you point out 'rm' is another example of this paradigm
-and it works exactly the same way.
-
-The point of confusion to users ( / my team) is that `git config`
-gives the appearance of editing / modifying the .gitconfig file
-in-place (where file permissions would be respected) however the
-actual implementation performs the equivalent of a rm+mv which only
-respects directory permissions.
-
-The `git config` command is only one of many that leverage that
-rename_tempfile function, if opting to respect file-level permissions
-across the board then the desired change is probably at that level
-rather than in config::git_config_set_multivar_in_file_gently which
-would only add respect for file-level permissions to the one command.
-
-Cheeers,
-
-
-On Tue, Nov 8, 2016 at 11:49 AM, Markus Hitter <mah@jump-ing.de> wrote:
-> Am 08.11.2016 um 16:22 schrieb Jonathan Word:
->> Proposal:
->>
->> Part 1) Add a .gitconfig variable to respect a read-only gitconfig
->> file and optional "--force" override option for the `git config`
->> command
->>
->> Such a gitconfig variable could be defined as:
->> config.respectFileMode: [ "never", "allow-override", "always" ]
->> [...]
->> Thoughts?
 >
-> I'd consider disrespecting file permissions to be a bug. Only very few to=
-ols allow to do so ('rm' is the only other one coming to mind right now), f=
-or good reason. If they do, only with additional parameters or by additiona=
-l user interaction. Git should follow this strategy.
+>> Is there anything I can do to help? I'm happy to test out changes.
 >
-> Which means: respect file permissions, no additional config variable and =
-only if there's very substantial reason, add a --force. KISS.
+> The patch at the end of his mail obviously passes the newly-added tests
+> for me, but please confirm that it fixes your test suite.
 >
-> That said, disrespecting permissions requires additional code, so it'd be=
- interesting to know why this code was added. The relevant commit in the gi=
-t.git repo should tell.
+> I gather your suite is about noticing behavior changes between different
+> versions. For cases where we know there is an obvious right behavior, it
+> would be nice if you could contribute them as patches to git's test
+> suite. This case was overlooked because there was no test coverage at
+> all.
 >
->
-> Markus
->
-> --
-> - - - - - - - - - - - - - - - - - - -
-> Dipl. Ing. (FH) Markus Hitter
-> http://www.jump-ing.de/
+> Barring that, running your suite and giving easily-reproducible problem
+> reports is valuable. The earlier the better. So I am happy to see this
+> on -rc0, and not on the final release. Periodically running it on
+> "master" during the development cycle would have caught it even sooner.
+
+I've applied your patch to the tip of the 2.11.0-rc0 tag (just to make
+sure I don't accidentally pick up anything else on master; I'll test
+that separately) and my full test suite passes without issue.
+
+I'm going to investigate whether I can setup a version of this build
+that runs "periodically" (I'm not sure what that period will be)
+against git/git master. I've got a lot of the infrastructure in place,
+but I'm going to need to automate a few things to make it really
+viable.
+
+As for contributing extensions to the test suite, that's a good idea.
+I need to fast track getting a development environment setup.
