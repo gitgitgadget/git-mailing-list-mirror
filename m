@@ -2,75 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D22D2021E
-	for <e@80x24.org>; Tue,  8 Nov 2016 09:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A11B12021E
+	for <e@80x24.org>; Tue,  8 Nov 2016 10:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932694AbcKHJTW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 04:19:22 -0500
-Received: from ud03.udmedia.de ([194.117.254.43]:50542 "EHLO
-        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932280AbcKHJTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 04:19:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
-        :references:cc:from:message-id:date:mime-version:in-reply-to
-        :content-type:content-transfer-encoding; s=k1; bh=pL8nvYOOQrZSRS
-        RkrrFocpp0e3TEz3do6njHbkdRWGg=; b=oaeCV0dAZskOvwVytAWYcBhYhvngJA
-        yPXPjoTM72yUrOm0jpeFGB6MzLQCRW3nutglrGiw6Hy0jcM4WzBuALSsi+4b3lgA
-        Z4O8W778S46HDtqSYEHPMINgczcYAaweV0eCrW+En90L8tqnlhDnKjtAnO4oDoK/
-        qIJWxUl2Kqf0I=
-Received: (qmail 10686 invoked from network); 8 Nov 2016 10:19:13 +0100
-Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
-  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 8 Nov 2016 10:19:13 +0100
-Subject: Re: [PATCH 0/6] Provide for config to specify tags not to abbreviate
-To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
-References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
- <22561.8757.914542.10409@chiark.greenend.org.uk>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@samba.org>
-From:   Markus Hitter <mah@jump-ing.de>
-Message-ID: <0d7ff8e5-230a-c6e1-6663-eaecee5d5620@jump-ing.de>
-Date:   Tue, 8 Nov 2016 10:19:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1753179AbcKHKwF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 05:52:05 -0500
+Received: from chiark.greenend.org.uk ([212.13.197.229]:42546 "EHLO
+        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752894AbcKHKwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 05:52:02 -0500
+Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
+        (return-path ijackson@chiark.greenend.org.uk)
+        id 1c4405-0002Al-4S; Tue, 08 Nov 2016 10:51:33 +0000
+From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <22561.8757.914542.10409@chiark.greenend.org.uk>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
+Message-ID: <22561.44597.59852.574831@chiark.greenend.org.uk>
+Date:   Tue, 8 Nov 2016 10:51:33 +0000
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not
+ to abbreviate
+In-Reply-To: <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
+References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
+        <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
+        <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
+X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.11.2016 um 01:54 schrieb Ian Jackson:
-> Please find in the following mails patches which provide a way to make
-> gitk display certain tags in full, even if they would normally be
-> abbreviated.
+Jacob Keller writes ("Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate"):
+> On Mon, Nov 7, 2016 at 4:52 PM, Ian Jackson
+> <ijackson@chiark.greenend.org.uk> wrote:
+> > +log.noAbbrevTags::
+> > +       Each value is a glob pattern, specifying tag nammes which
+> > +       should always be displayed in full, even when other tags may
+> > +       be omitted or abbreviated (for example, by linkgit:gitk[1]).
+> > +       Values starting with `^` specify tags which should be
+> > +       abbreviated.  The order is important: the last match, in the
+> > +       most-local configuration, wins.
+> > +
+> 
+> It seems weird that this description implies some sort of behavior
+> change in core git itself, but in fact is only used as a reference for
+> other tools that may or may not honor it. I guess the reasoning here
+> is to try to get other external tools that abbreviate tags to also
+> honor this? But it still seems pretty weird to have a documented
+> config that has no code in core git to honor it...
 
-TBH, I see a violation of tool independence with the choice of preference storage. Abbreviation of tags isn't a property of the repository, but a pure visual thing (screen real estate, whatever), so it should be handled by the tool doing the visuals, only.
+Thanks for your attention.
 
-Your use case looks like a nice opportunity for
+Yes, I agree that it does seem weird.  But the alternatives seem
+worse.  I think it's probably best if options like this (currently
+only honoured by out-of-core tools but of general usefulness) are
+collected together here.
 
-- adding a Gitk user preference on how long displayed tags are allowed to be (instead of distinguishing between abbreviated and unabbreviated ones; set it to 999 for your use case) and/or
+There is a precedent: `git config gui.encoding' is, according to the
+documentation, honoured only by git-gui and gitk.
 
-- even better, abbreviate them depending on the size of the visible area, like a web browser would do, and/or
+Calling the config option `gitk.noAbbrevTags' would be possible but
+that would invite everyone else to invent their own, which would be
+quite annoying.  (Also, gitk does not have any gitk-specific git
+config options right now, AIUI.  It does honour `git config
+gui.encoding'.)
 
-- considering whether tags should be abbreviated on the left instead of on the right and/or
+Would it help to add a sentence to the documentation saying that this
+is currently only honoured by gitk ?  (The paragraph for gui.encoding
+says something similar.)  Of course I don't know who else abbreviates
+tags, but as they gain support they could be added to the docs.
 
-- finding a mechanism to show them in full length even on small visible areas.
-
-The latter could be done by a tooltip appearing when hovering with the mouse over an abbreviated tag or by allowing multiple lines for a single commit in the list of commits.
-
-Trying to enforce long names just means they're not cut off by the abbreviation algorithm, but by the right boundary of the visible area.
-
-
-My $0.02,
-Markus
+Thanks,
+Ian.
 
 -- 
-- - - - - - - - - - - - - - - - - - -
-Dipl. Ing. (FH) Markus Hitter
-http://www.jump-ing.de/
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+
+If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
+a private address which bypasses my fierce spamfilter.
