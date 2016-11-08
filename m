@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 176772022A
-	for <e@80x24.org>; Tue,  8 Nov 2016 12:12:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C9BF2022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 12:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933255AbcKHMMH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 07:12:07 -0500
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:43138 "EHLO sapo.pt"
+        id S933269AbcKHMMN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 07:12:13 -0500
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:55492 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932503AbcKHMLw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 07:11:52 -0500
-Received: (qmail 6958 invoked from network); 8 Nov 2016 12:11:50 -0000
-Received: (qmail 9910 invoked from network); 8 Nov 2016 12:11:50 -0000
+        id S933254AbcKHMLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 07:11:51 -0500
+Received: (qmail 16606 invoked from network); 8 Nov 2016 12:11:50 -0000
+Received: (qmail 9756 invoked from network); 8 Nov 2016 12:11:50 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 8 Nov 2016 12:11:50 -0000
+          for <git@vger.kernel.org>; 8 Nov 2016 12:11:49 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 13/16] i18n: send-email: mark warnings and errors for translation
-Date:   Tue,  8 Nov 2016 11:08:20 -0100
-Message-Id: <20161108120823.11204-14-vascomalmeida@sapo.pt>
+Subject: [PATCH v5 12/16] i18n: send-email: mark strings for translation
+Date:   Tue,  8 Nov 2016 11:08:19 -0100
+Message-Id: <20161108120823.11204-13-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.11.0.rc0.23.g8236252
 In-Reply-To: <20161108120823.11204-1-vascomalmeida@sapo.pt>
 References: <20161108120823.11204-1-vascomalmeida@sapo.pt>
@@ -48,160 +48,155 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark warnings, errors and other messages for translation.
+Mark strings often displayed to the user for translation.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-send-email.perl | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ git-send-email.perl | 52 ++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 30 insertions(+), 22 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 78eb59b21..982c6c076 100755
+index da81be40c..78eb59b21 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -118,20 +118,20 @@ sub format_2822_time {
- 	my $localmin = $localtm[1] + $localtm[2] * 60;
- 	my $gmtmin = $gmttm[1] + $gmttm[2] * 60;
- 	if ($localtm[0] != $gmttm[0]) {
--		die "local zone differs from GMT by a non-minute interval\n";
-+		die __("local zone differs from GMT by a non-minute interval\n");
- 	}
- 	if ((($gmttm[6] + 1) % 7) == $localtm[6]) {
- 		$localmin += 1440;
- 	} elsif ((($gmttm[6] - 1) % 7) == $localtm[6]) {
- 		$localmin -= 1440;
- 	} elsif ($gmttm[6] != $localtm[6]) {
--		die "local time offset greater than or equal to 24 hours\n";
-+		die __("local time offset greater than or equal to 24 hours\n");
- 	}
- 	my $offset = $localmin - $gmtmin;
- 	my $offhour = $offset / 60;
- 	my $offmin = abs($offset % 60);
- 	if (abs($offhour) >= 24) {
--		die ("local time offset greater than or equal to 24 hours\n");
-+		die __("local time offset greater than or equal to 24 hours\n");
- 	}
+@@ -28,6 +28,7 @@ use File::Temp qw/ tempdir tempfile /;
+ use File::Spec::Functions qw(catfile);
+ use Error qw(:try);
+ use Git;
++use Git::I18N;
  
- 	return sprintf("%s, %2d %s %d %02d:%02d:%02d %s%02d%02d",
-@@ -199,13 +199,13 @@ sub do_edit {
- 		map {
- 			system('sh', '-c', $editor.' "$@"', $editor, $_);
- 			if (($? & 127) || ($? >> 8)) {
--				die("the editor exited uncleanly, aborting everything");
-+				die(__("the editor exited uncleanly, aborting everything"));
- 			}
- 		} @_;
- 	} else {
- 		system('sh', '-c', $editor.' "$@"', $editor, @_);
- 		if (($? & 127) || ($? >> 8)) {
--			die("the editor exited uncleanly, aborting everything");
-+			die(__("the editor exited uncleanly, aborting everything"));
+ Getopt::Long::Configure qw/ pass_through /;
+ 
+@@ -797,12 +798,12 @@ foreach my $f (@files) {
+ }
+ 
+ if (!defined $auto_8bit_encoding && scalar %broken_encoding) {
+-	print "The following files are 8bit, but do not declare " .
+-		"a Content-Transfer-Encoding.\n";
++	print __("The following files are 8bit, but do not declare " .
++		 "a Content-Transfer-Encoding.\n");
+ 	foreach my $f (sort keys %broken_encoding) {
+ 		print "    $f\n";
+ 	}
+-	$auto_8bit_encoding = ask("Which 8bit encoding should I declare [UTF-8]? ",
++	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+ 				  valid_re => qr/.{4}/, confirm_only => 1,
+ 				  default => "UTF-8");
+ }
+@@ -829,7 +830,7 @@ if (defined $sender) {
+ # But it's a no-op to run sanitize_address on an already sanitized address.
+ $sender = sanitize_address($sender);
+ 
+-my $to_whom = "To whom should the emails be sent (if anyone)?";
++my $to_whom = __("To whom should the emails be sent (if anyone)?");
+ my $prompting = 0;
+ if (!@initial_to && !defined $to_cmd) {
+ 	my $to = ask("$to_whom ",
+@@ -859,7 +860,7 @@ sub expand_one_alias {
+ 
+ if ($thread && !defined $initial_reply_to && $prompting) {
+ 	$initial_reply_to = ask(
+-		"Message-ID to be used as In-Reply-To for the first email (if any)? ",
++		__("Message-ID to be used as In-Reply-To for the first email (if any)? "),
+ 		default => "",
+ 		valid_re => qr/\@.*\./, confirm_only => 1);
+ }
+@@ -918,7 +919,10 @@ sub validate_address {
+ 	my $address = shift;
+ 	while (!extract_valid_address($address)) {
+ 		print STDERR "error: unable to extract a valid address from: $address\n";
+-		$_ = ask("What to do with this address? ([q]uit|[d]rop|[e]dit): ",
++		# TRANSLATORS: Make sure to include [q] [d] [e] in your
++		# translation. The program will only accept English input
++		# at this point.
++		$_ = ask(__("What to do with this address? ([q]uit|[d]rop|[e]dit): "),
+ 			valid_re => qr/^(?:quit|q|drop|d|edit|e)/i,
+ 			default => 'q');
+ 		if (/^d/i) {
+@@ -1293,17 +1297,21 @@ Message-Id: $message_id
+ 		if ($needs_confirm eq "inform") {
+ 			$confirm_unconfigured = 0; # squelch this message for the rest of this run
+ 			$ask_default = "y"; # assume yes on EOF since user hasn't explicitly asked for confirmation
+-			print "    The Cc list above has been expanded by additional\n";
+-			print "    addresses found in the patch commit message. By default\n";
+-			print "    send-email prompts before sending whenever this occurs.\n";
+-			print "    This behavior is controlled by the sendemail.confirm\n";
+-			print "    configuration setting.\n";
+-			print "\n";
+-			print "    For additional information, run 'git send-email --help'.\n";
+-			print "    To retain the current behavior, but squelch this message,\n";
+-			print "    run 'git config --global sendemail.confirm auto'.\n\n";
++			print __(
++"    The Cc list above has been expanded by additional
++    addresses found in the patch commit message. By default
++    send-email prompts before sending whenever this occurs.
++    This behavior is controlled by the sendemail.confirm
++    configuration setting.
++
++    For additional information, run 'git send-email --help'.
++    To retain the current behavior, but squelch this message,
++    run 'git config --global sendemail.confirm auto'."), "\n\n";
  		}
- 	}
- }
-@@ -299,7 +299,7 @@ my $help;
- my $rc = GetOptions("h" => \$help,
-                     "dump-aliases" => \$dump_aliases);
- usage() unless $rc;
--die "--dump-aliases incompatible with other options\n"
-+die __("--dump-aliases incompatible with other options\n")
-     if !$help and $dump_aliases and @ARGV;
- $rc = GetOptions(
- 		    "sender|from=s" => \$sender,
-@@ -362,7 +362,7 @@ unless ($rc) {
-     usage();
- }
- 
--die "Cannot run git format-patch from outside a repository\n"
-+die __("Cannot run git format-patch from outside a repository\n")
- 	if $format_patch and not $repo;
- 
- # Now, let's fill any that aren't set in with defaults:
-@@ -617,7 +617,7 @@ while (defined(my $f = shift @ARGV)) {
- }
- 
- if (@rev_list_opts) {
--	die "Cannot run git format-patch from outside a repository\n"
-+	die __("Cannot run git format-patch from outside a repository\n")
- 		unless $repo;
- 	push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP => 1), @rev_list_opts);
- }
-@@ -638,7 +638,7 @@ if (@files) {
- 		print $_,"\n" for (@files);
- 	}
- } else {
--	print STDERR "\nNo patch files specified!\n\n";
-+	print STDERR __("\nNo patch files specified!\n\n");
- 	usage();
- }
- 
-@@ -730,7 +730,7 @@ EOT
- 			$sender = $1;
- 			next;
- 		} elsif (/^(?:To|Cc|Bcc):/i) {
--			print "To/Cc/Bcc fields are not interpreted yet, they have been ignored\n";
-+			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
- 			next;
- 		}
- 		print $c2 $_;
-@@ -739,7 +739,7 @@ EOT
- 	close $c2;
- 
- 	if ($summary_empty) {
--		print "Summary email is empty, skipping it\n";
-+		print __("Summary email is empty, skipping it\n");
- 		$compose = -1;
- 	}
- } elsif ($annotate) {
-@@ -1314,7 +1314,7 @@ Message-Id: $message_id
- 		$_ = ask(__("Send this email? ([y]es|[n]o|[q]uit|[a]ll): "),
+-		$_ = ask("Send this email? ([y]es|[n]o|[q]uit|[a]ll): ",
++		# TRANSLATORS: Make sure to include [y] [n] [q] [a] in your
++		# translation. The program will only accept English input
++		# at this point.
++		$_ = ask(__("Send this email? ([y]es|[n]o|[q]uit|[a]ll): "),
  		         valid_re => qr/^(?:yes|y|no|n|quit|q|all|a)/i,
  		         default => $ask_default);
--		die "Send this email reply required" unless defined $_;
-+		die __("Send this email reply required") unless defined $_;
- 		if (/^n/i) {
- 			return 0;
- 		} elsif (/^q/i) {
-@@ -1340,7 +1340,7 @@ Message-Id: $message_id
+ 		die "Send this email reply required" unless defined $_;
+@@ -1405,7 +1413,7 @@ Message-Id: $message_id
+ 	if ($quiet) {
+ 		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
  	} else {
- 
- 		if (!defined $smtp_server) {
--			die "The required SMTP server is not properly defined."
-+			die __("The required SMTP server is not properly defined.")
- 		}
- 
- 		if ($smtp_encryption eq 'ssl') {
-@@ -1425,10 +1425,10 @@ Message-Id: $message_id
- 		}
- 		print $header, "\n";
- 		if ($smtp) {
--			print "Result: ", $smtp->code, ' ',
-+			print __("Result: "), $smtp->code, ' ',
- 				($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
- 		} else {
--			print "Result: OK\n";
-+			print __("Result: OK\n");
+-		print (($dry_run ? "Dry-" : "")."OK. Log says:\n");
++		print($dry_run ? __("Dry-OK. Log says:\n") : __("OK. Log says:\n"));
+ 		if (!file_name_is_absolute($smtp_server)) {
+ 			print "Server: $smtp_server\n";
+ 			print "MAIL FROM:<$raw_from>\n";
+@@ -1480,13 +1488,13 @@ foreach my $t (@files) {
+ 				$sauthor = sanitize_address($author);
+ 				next if $suppress_cc{'author'};
+ 				next if $suppress_cc{'self'} and $sauthor eq $sender;
+-				printf("(mbox) Adding cc: %s from line '%s'\n",
++				printf(__("(mbox) Adding cc: %s from line '%s'\n"),
+ 					$1, $_) unless $quiet;
+ 				push @cc, $1;
+ 			}
+ 			elsif (/^To:\s+(.*)$/i) {
+ 				foreach my $addr (parse_address_line($1)) {
+-					printf("(mbox) Adding to: %s from line '%s'\n",
++					printf(__("(mbox) Adding to: %s from line '%s'\n"),
+ 						$addr, $_) unless $quiet;
+ 					push @to, $addr;
+ 				}
+@@ -1500,7 +1508,7 @@ foreach my $t (@files) {
+ 					} else {
+ 						next if ($suppress_cc{'cc'});
+ 					}
+-					printf("(mbox) Adding cc: %s from line '%s'\n",
++					printf(__("(mbox) Adding cc: %s from line '%s'\n"),
+ 						$addr, $_) unless $quiet;
+ 					push @cc, $addr;
+ 				}
+@@ -1534,7 +1542,7 @@ foreach my $t (@files) {
+ 			# So let's support that, too.
+ 			$input_format = 'lots';
+ 			if (@cc == 0 && !$suppress_cc{'cc'}) {
+-				printf("(non-mbox) Adding cc: %s from line '%s'\n",
++				printf(__("(non-mbox) Adding cc: %s from line '%s'\n"),
+ 					$_, $_) unless $quiet;
+ 				push @cc, $_;
+ 			} elsif (!defined $subject) {
+@@ -1557,7 +1565,7 @@ foreach my $t (@files) {
+ 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+ 			}
+ 			push @cc, $c;
+-			printf("(body) Adding cc: %s from line '%s'\n",
++			printf(__("(body) Adding cc: %s from line '%s'\n"),
+ 				$c, $_) unless $quiet;
  		}
  	}
- 
-@@ -1701,7 +1701,7 @@ sub apply_transfer_encoding {
- 	$message = MIME::Base64::decode($message)
- 		if ($from eq 'base64');
- 
--	die "cannot send message as 7bit"
-+	die __("cannot send message as 7bit")
- 		if ($to eq '7bit' and $message =~ /[^[:ascii:]]/);
- 	return $message
- 		if ($to eq '7bit' or $to eq '8bit');
-@@ -1709,7 +1709,7 @@ sub apply_transfer_encoding {
- 		if ($to eq 'quoted-printable');
- 	return MIME::Base64::encode($message, "\n")
- 		if ($to eq 'base64');
--	die "invalid transfer encoding";
-+	die __("invalid transfer encoding");
- }
- 
- sub unique_email_list {
 -- 
 2.11.0.rc0.23.g8236252
 
