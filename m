@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10D9D2035F
-	for <e@80x24.org>; Tue,  8 Nov 2016 23:38:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3B252035F
+	for <e@80x24.org>; Tue,  8 Nov 2016 23:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752690AbcKHXiK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 18:38:10 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:35147 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752472AbcKHXiJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 18:38:09 -0500
-Received: by mail-yw0-f196.google.com with SMTP id b66so4684938ywh.2
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:38:08 -0800 (PST)
+        id S1751537AbcKHXpx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 18:45:53 -0500
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:33698 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751015AbcKHXpx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 18:45:53 -0500
+Received: by mail-yw0-f169.google.com with SMTP id r204so199071308ywb.0
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:45:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=HhE0M0Nk0ob3lC+tVKJ0z2kpiu9RfQrxdbtbvO1lpTU=;
-        b=XJAhaspI4cpgoGv53ib4ohZeEIU/qEswqij4oDBiZc4x52HpIQKqr86S/xL7i2FB/U
-         Z60d/vshSMRl2PE2sw4peUr2O+gXOuBSxSzCwjHS4KKrO5A+ILnPhg+4CLY3mrNFV/sM
-         olmYiqgGXSN5y8W4/F96baCdLHmRi+HQ6gfnBcVwl5dQXvPYzPVKY8AjbWRcD8Tv2DEB
-         9pg2IjVdRCDe5Z1pBl/LrSdwXszG2KcMTCYaTA+EavxmwS5L/iaOGUwfh0USCi4xIha0
-         GHgl3pNaccjTVI6F7HiDU8nM+KBn0kE5AwU5H/4y81iRHtpYqrBnwcocmjMstyuQ8rDK
-         SAKw==
+        bh=7AEUz6ooazrdAcVl4yvuRHgpTUSMyPTiTBv75ZmsTpE=;
+        b=JPdMRqY38Ng9RtAR03rs+Rt8M1fek/qzAiwvn10IGPisQr7R11MQKATSXxr/tmLHwm
+         HeLpYl9NB2Y94XC1NahZgE9J0fUEK3F4B0zEIW2aQJWV3rg1iPe2DFqXeEbg5ts/T8LN
+         DNzv0rno26Be8lL1aXfyUy0pj58wgfBrrS6sCzUNUMZvzVzwF/AM6oaY3p0NRMGd0Ai2
+         uECzlw3kkMW7Gj0ww6T4sTjUhynThiBsFW55Y3aTdBEHUIoNDFngN9IxpsVRZ4bLxAuW
+         RMXI5XMxIlnQH9fuxYzwuQ0KFbigCEw0SliC1Eqpd8QKSpK2U5Fx08dGDOVPm3bVd4az
+         E08A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=HhE0M0Nk0ob3lC+tVKJ0z2kpiu9RfQrxdbtbvO1lpTU=;
-        b=SHw1Q+CRDKglK7JDf/Jli0nyyv9fbDa/Rp/vSDfNu2UVbB+BxJvo0n/IZjN9xuiaH+
-         B0Fbskw2OQEvXuXG2d9cjaQooEHa5Qae4RM89m0ZuiZqdYnva2LxKNjs7zx7vbpkEvIY
-         WgOCqp4DTzMuYZ1RqJE4q1DYknEh42wiHmIy4hBcKx8NFzhlufmSDACOtJkyL9yEATOH
-         vL3r+qwjgtNfZo/p1BPznt/sujm9j7Ej5BpiZ/I49BzuWsa0wPbdFAFxrOIjV+6BKUgX
-         KPSzSQQda0vZWcfmwgvhjHeEp6TSfl/2NoMs72Wu97qfHvD/NSVwGMJRDJKs4k9XOC5M
-         ouCQ==
-X-Gm-Message-State: ABUngvf78VKjNlZa0uQxehx/t29/lfIzOL0WT98LiMjNH6Q99iGbZee+NdTIUEiJiay9f32v7nNv0S3bQ5i+EA==
-X-Received: by 10.129.102.132 with SMTP id a126mr14059481ywc.160.1478648288223;
- Tue, 08 Nov 2016 15:38:08 -0800 (PST)
+        bh=7AEUz6ooazrdAcVl4yvuRHgpTUSMyPTiTBv75ZmsTpE=;
+        b=Km/ZntR+VUjxdEAZlJtJ7TJ7e3YP9DubiPyqPBlV1d7zMO/RPDv8eAmwiqnFCAb5AG
+         VVEqitxPePcOCInqTtSTZ2F30SI3UbyqOBz3/svmowTyxtKeRFkpDB1a23151gD75ELr
+         /EnoDOipUO8nvg5ZdMcw8Xi8eNWTEO7oyneLh+sofM7oiP3bBYrk8kxxmTFWrIap2s9z
+         vVbF/DaCnhO3PGKbM3CGqSlxN/OCWIAZc6FJDYBPatTLxjcQgnIFGrRPVna1VW2HdCJh
+         Bx8VAEHhJvBkrFTCPzxxVX1ACj7LxPn1x3K+2yC6t/nr31Le+0woUFB4IFsoaWlKzGKH
+         sZDg==
+X-Gm-Message-State: ABUngvdNyLtJLrHyek3ls2Q60yeBrqkga/OxA2UcoK/CfK79m2OYGO4VnBicQgewDKOIsewjOj/mYOPn4Xi8gA==
+X-Received: by 10.13.254.71 with SMTP id o68mr11378757ywf.318.1478648752102;
+ Tue, 08 Nov 2016 15:45:52 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:37:47 -0800 (PST)
-In-Reply-To: <20161108201211.25213-8-Karthik.188@gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-8-Karthik.188@gmail.com>
+Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:45:31 -0800 (PST)
+In-Reply-To: <20161108201211.25213-9-Karthik.188@gmail.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-9-Karthik.188@gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 8 Nov 2016 15:37:47 -0800
-Message-ID: <CA+P7+xoKxGiNJO4g=Nm+KY=5=u8g2edoLOoe5K0ZAPrvoGj-Ug@mail.gmail.com>
-Subject: Re: [PATCH v7 07/17] ref-filter: make %(upstream:track) prints
- "[gone]" for invalid upstreams
+Date:   Tue, 8 Nov 2016 15:45:31 -0800
+Message-ID: <CA+P7+xrm-MMRa9RuaHUGNWJmH8UcYPj3RZCsy1uvVRMuLeP0ZQ@mail.gmail.com>
+Subject: Re: [PATCH v7 08/17] ref-filter: add support for %(upstream:track,nobracket)
 To:     Karthik Nayak <karthik.188@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -63,86 +62,177 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Nov 8, 2016 at 12:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
 > From: Karthik Nayak <karthik.188@gmail.com>
 >
-> Borrowing from branch.c's implementation print "[gone]" whenever an
-> unknown upstream ref is encountered instead of just ignoring it.
+> Add support for %(upstream:track,nobracket) which will print the
+> tracking information without the brackets (i.e. "ahead N, behind M").
+> This is needed when we port branch.c to use ref-filter's printing APIs.
 >
 
-This makes sense.
+Makes sense. Seems a bit weird that we have the brackets normally
+rather than adding them as an option, but I think this is ok. We don't
+want to change all previous uses in this case.
 
-> This makes sure that when branch.c is ported over to using ref-filter
-> APIs for printing, this feature is not lost.
+My only suggestion here would be to add code so that the options die()
+when we use nobracket along with trackshort or without track. This
+ensures that the nobracket option only applies to track mode?
+
+> Add test and documentation for the same.
 >
-
-Right.
-
-> Make changes to t/t6300-for-each-ref.sh and
-> Documentation/git-for-each-ref.txt to reflect this change.
->
-
-This will change behavior if people were expecting it to remain
-silent, but I think this could be considered a bug.
-
 > Mentored-by: Christian Couder <christian.couder@gmail.com>
 > Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Helped-by : Jacob Keller <jacob.keller@gmail.com>
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
->  Documentation/git-for-each-ref.txt | 3 ++-
->  ref-filter.c                       | 4 +++-
->  t/t6300-for-each-ref.sh            | 2 +-
->  3 files changed, 6 insertions(+), 3 deletions(-)
+>  Documentation/git-for-each-ref.txt |  8 +++--
+>  ref-filter.c                       | 67 +++++++++++++++++++++++++-------------
+>  t/t6300-for-each-ref.sh            |  2 ++
+>  3 files changed, 51 insertions(+), 26 deletions(-)
 >
 > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index 92184c4..fd365eb 100644
+> index fd365eb..3953431 100644
 > --- a/Documentation/git-for-each-ref.txt
 > +++ b/Documentation/git-for-each-ref.txt
-> @@ -119,7 +119,8 @@ upstream::
+> @@ -118,9 +118,11 @@ upstream::
+>         `refname` above.  Additionally respects `:track` to show
 >         "[ahead N, behind M]" and `:trackshort` to show the terse
 >         version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
->         or "=" (in sync).  Has no effect if the ref does not have
-> -       tracking information associated with it.
-> +       tracking information associated with it. `:track` also prints
-> +       "[gone]" whenever unknown upstream ref is encountered.
+> -       or "=" (in sync).  Has no effect if the ref does not have
+> -       tracking information associated with it. `:track` also prints
+> -       "[gone]" whenever unknown upstream ref is encountered.
+> +       or "=" (in sync). `:track` also prints "[gone]" whenever
+> +       unknown upstream ref is encountered. Append `:track,nobracket`
+> +       to show tracking information without brackets (i.e "ahead N,
+> +       behind M").  Has no effect if the ref does not have tracking
+> +       information associated with it.
 >
 
-I think this is poorly worded. If I understand, "has no effect if the
-ref does not have tracking information" so in that case we still print
-nothing, right? but otherwise we print [gone] only when the upstream
-ref no longer actually exists locally? I wonder if there is a better
-wording for this? I don't have one. Any suggestions to avoid confusing
-these two cases?
+Ok so my comment on the previous patch is fixed here, the new wording
+makes it much more clear that [gone] is not the same thing as no
+information. So I don't think we should bother changing the previous
+patch in the series. This might want to document that nobracket works
+even without track, even if it doesn't actually do anything? Or make
+the code more strict in that we die() if the values are put together
+that make no sense?
 
 >  push::
 >         The name of a local ref which represents the `@{push}` location
 > diff --git a/ref-filter.c b/ref-filter.c
-> index b8b8a95..6d51b80 100644
+> index 6d51b80..4d7e414 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -1049,8 +1049,10 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->                 *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
->         else if (atom->u.remote_ref == RR_TRACK) {
->                 if (stat_tracking_info(branch, &num_ours,
-> -                                      &num_theirs, NULL))
-> +                                      &num_theirs, NULL)) {
-> +                       *s = "[gone]";
->                         return;
-> +               }
+> @@ -46,8 +46,10 @@ static struct used_atom {
+>         union {
+>                 char color[COLOR_MAXLEN];
+>                 struct align align;
+> -               enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
+> -                       remote_ref;
+> +               struct {
+> +                       enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
+> +                       unsigned int nobracket: 1;
+> +               } remote_ref;
+>                 struct {
+>                         enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+>                         unsigned int nlines;
+> @@ -75,16 +77,33 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
 >
->                 if (!num_ours && !num_theirs)
+>  static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+>  {
+> -       if (!arg)
+> -               atom->u.remote_ref = RR_NORMAL;
+> -       else if (!strcmp(arg, "short"))
+> -               atom->u.remote_ref = RR_SHORTEN;
+> -       else if (!strcmp(arg, "track"))
+> -               atom->u.remote_ref = RR_TRACK;
+> -       else if (!strcmp(arg, "trackshort"))
+> -               atom->u.remote_ref = RR_TRACKSHORT;
+> -       else
+> -               die(_("unrecognized format: %%(%s)"), atom->name);
+> +       struct string_list params = STRING_LIST_INIT_DUP;
+> +       int i;
+> +
+> +       if (!arg) {
+> +               atom->u.remote_ref.option = RR_NORMAL;
+> +               return;
+> +       }
+> +
+> +       atom->u.remote_ref.nobracket = 0;
+> +       string_list_split(&params, arg, ',', -1);
+> +
+> +       for (i = 0; i < params.nr; i++) {
+> +               const char *s = params.items[i].string;
+> +
+> +               if (!strcmp(s, "short"))
+> +                       atom->u.remote_ref.option = RR_SHORTEN;
+> +               else if (!strcmp(s, "track"))
+
+Should we add die()s here to disallow setting the remote_ref option
+multiple times? Otherwise, we should document that the last one wins?
+Not sure it's really a big deal here, but we could do it to ensure
+consistency for options which don't make sense together?
+
+> +                       atom->u.remote_ref.option = RR_TRACK;
+> +               else if (!strcmp(s, "trackshort"))
+> +                       atom->u.remote_ref.option = RR_TRACKSHORT;
+> +               else if (!strcmp(s, "nobracket"))
+> +                       atom->u.remote_ref.nobracket = 1;
+> +               else
+> +                       die(_("unrecognized format: %%(%s)"), atom->name);
+> +       }
+> +
+> +       string_list_clear(&params, 0);
+>  }
+>
+>  static void body_atom_parser(struct used_atom *atom, const char *arg)
+> @@ -1045,25 +1064,27 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>                                     struct branch *branch, const char **s)
+>  {
+>         int num_ours, num_theirs;
+> -       if (atom->u.remote_ref == RR_SHORTEN)
+> +       if (atom->u.remote_ref.option == RR_SHORTEN)
+>                 *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+> -       else if (atom->u.remote_ref == RR_TRACK) {
+> +       else if (atom->u.remote_ref.option == RR_TRACK) {
+>                 if (stat_tracking_info(branch, &num_ours,
+>                                        &num_theirs, NULL)) {
+> -                       *s = "[gone]";
+> -                       return;
+> -               }
+> -
+> -               if (!num_ours && !num_theirs)
+> +                       *s = xstrdup("gone");
+> +               } else if (!num_ours && !num_theirs)
 >                         *s = "";
+>                 else if (!num_ours)
+> -                       *s = xstrfmt("[behind %d]", num_theirs);
+> +                       *s = xstrfmt("behind %d", num_theirs);
+>                 else if (!num_theirs)
+> -                       *s = xstrfmt("[ahead %d]", num_ours);
+> +                       *s = xstrfmt("ahead %d", num_ours);
+>                 else
+> -                       *s = xstrfmt("[ahead %d, behind %d]",
+> +                       *s = xstrfmt("ahead %d, behind %d",
+>                                      num_ours, num_theirs);
+> -       } else if (atom->u.remote_ref == RR_TRACKSHORT) {
+> +               if (!atom->u.remote_ref.nobracket && *s[0]) {
+> +                       const char *to_free = *s;
+> +                       *s = xstrfmt("[%s]", *s);
+> +                       free((void *)to_free);
+> +               }
+> +       } else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
+>                 if (stat_tracking_info(branch, &num_ours,
+>                                        &num_theirs, NULL))
+>                         return;
 > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 2be0a3f..a92b36f 100755
+> index a92b36f..2c5f177 100755
 > --- a/t/t6300-for-each-ref.sh
 > +++ b/t/t6300-for-each-ref.sh
-> @@ -382,7 +382,7 @@ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
+> @@ -372,6 +372,8 @@ test_expect_success 'setup for upstream:track[short]' '
 >
->  test_expect_success 'Check that :track[short] works when upstream is invalid' '
->         cat >expected <<-\EOF &&
-> -
-> +       [gone]
+>  test_atom head upstream:track '[ahead 1]'
+>  test_atom head upstream:trackshort '>'
+> +test_atom head upstream:track,nobracket 'ahead 1'
+> +test_atom head upstream:nobracket,track 'ahead 1'
+>  test_atom head push:track '[ahead 1]'
+>  test_atom head push:trackshort '>'
 >
->         EOF
->         test_when_finished "git config branch.master.merge refs/heads/master" &&
 > --
 > 2.10.2
 >
