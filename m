@@ -7,17 +7,17 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A922C2022A
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD47E2022A
 	for <e@80x24.org>; Tue,  8 Nov 2016 12:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933321AbcKHMMU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 07:12:20 -0500
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:33317 "EHLO sapo.pt"
+        id S933331AbcKHMMW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 07:12:22 -0500
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:43077 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932900AbcKHMLs (ORCPT <rfc822;git@vger.kernel.org>);
+        id S932674AbcKHMLs (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 8 Nov 2016 07:11:48 -0500
-Received: (qmail 25497 invoked from network); 8 Nov 2016 12:11:47 -0000
-Received: (qmail 8645 invoked from network); 8 Nov 2016 12:11:47 -0000
+Received: (qmail 6797 invoked from network); 8 Nov 2016 12:11:46 -0000
+Received: (qmail 8486 invoked from network); 8 Nov 2016 12:11:46 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 05/16] i18n: clean.c: match string with git-add--interactive.perl
-Date:   Tue,  8 Nov 2016 11:08:12 -0100
-Message-Id: <20161108120823.11204-6-vascomalmeida@sapo.pt>
+Subject: [PATCH v5 04/16] i18n: add--interactive: mark strings with interpolation for translation
+Date:   Tue,  8 Nov 2016 11:08:11 -0100
+Message-Id: <20161108120823.11204-5-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.11.0.rc0.23.g8236252
 In-Reply-To: <20161108120823.11204-1-vascomalmeida@sapo.pt>
 References: <20161108120823.11204-1-vascomalmeida@sapo.pt>
@@ -48,58 +48,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change strings for help to match the ones in git-add--interactive.perl.
-The strings now represent one entry to translate each rather then two
-entries each different only by an ending newline character.
+Since at this point Git::I18N.perl lacks support for Perl i18n
+placeholder substitution, use of sprintf following die or error_msg is
+necessary for placeholder substitution take place.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/clean.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ git-add--interactive.perl | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 0371010af..d6bc3aaae 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -287,11 +287,11 @@ static void pretty_print_menus(struct string_list *menu_list)
- static void prompt_help_cmd(int singleton)
- {
- 	clean_print_color(CLEAN_COLOR_HELP);
--	printf_ln(singleton ?
-+	printf(singleton ?
- 		  _("Prompt help:\n"
- 		    "1          - select a numbered item\n"
- 		    "foo        - select item based on unique prefix\n"
--		    "           - (empty) select nothing") :
-+		    "           - (empty) select nothing\n") :
- 		  _("Prompt help:\n"
- 		    "1          - select a single item\n"
- 		    "3-5        - select a range of items\n"
-@@ -299,7 +299,7 @@ static void prompt_help_cmd(int singleton)
- 		    "foo        - select item based on unique prefix\n"
- 		    "-...       - unselect specified items\n"
- 		    "*          - choose all items\n"
--		    "           - (empty) finish selecting"));
-+		    "           - (empty) finish selecting\n"));
- 	clean_print_color(CLEAN_COLOR_RESET);
- }
- 
-@@ -508,7 +508,7 @@ static int parse_choice(struct menu_stuff *menu_stuff,
- 		if (top <= 0 || bottom <= 0 || top > menu_stuff->nr || bottom > top ||
- 		    (is_single && bottom != top)) {
- 			clean_print_color(CLEAN_COLOR_ERROR);
--			printf_ln(_("Huh (%s)?"), (*ptr)->buf);
-+			printf(_("Huh (%s)?\n"), (*ptr)->buf);
- 			clean_print_color(CLEAN_COLOR_RESET);
- 			continue;
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 5800010ed..d05ac608e 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -615,12 +615,12 @@ sub list_and_choose {
+ 			else {
+ 				$bottom = $top = find_unique($choice, @stuff);
+ 				if (!defined $bottom) {
+-					error_msg "Huh ($choice)?\n";
++					error_msg sprintf(__("Huh (%s)?\n"), $choice);
+ 					next TOPLOOP;
+ 				}
+ 			}
+ 			if ($opts->{SINGLETON} && $bottom != $top) {
+-				error_msg "Huh ($choice)?\n";
++				error_msg sprintf(__("Huh (%s)?\n"), $choice);
+ 				next TOPLOOP;
+ 			}
+ 			for ($i = $bottom-1; $i <= $top-1; $i++) {
+@@ -717,7 +717,7 @@ sub revert_cmd {
+ 				    $_->{INDEX_ADDDEL} eq 'create') {
+ 					system(qw(git update-index --force-remove --),
+ 					       $_->{VALUE});
+-					print "note: $_->{VALUE} is untracked now.\n";
++					printf(__("note: %s is untracked now.\n"), $_->{VALUE});
+ 				}
+ 			}
  		}
-@@ -774,7 +774,7 @@ static int ask_each_cmd(void)
- static int quit_cmd(void)
- {
- 	string_list_clear(&del_list, 0);
--	printf_ln(_("Bye."));
-+	printf(_("Bye.\n"));
- 	return MENU_RETURN_NO_LOOP;
+@@ -1056,7 +1056,7 @@ sub edit_hunk_manually {
+ 	my $hunkfile = $repo->repo_path . "/addp-hunk-edit.diff";
+ 	my $fh;
+ 	open $fh, '>', $hunkfile
+-		or die "failed to open hunk edit file for writing: " . $!;
++		or die sprintf(__("failed to open hunk edit file for writing: %s"), $!);
+ 	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
+ 	print $fh @$oldtext;
+ 	my $participle = $patch_mode_flavour{PARTICIPLE};
+@@ -1083,7 +1083,7 @@ EOF
+ 	}
+ 
+ 	open $fh, '<', $hunkfile
+-		or die "failed to open hunk edit file for reading: " . $!;
++		or die sprintf(__("failed to open hunk edit file for reading: %s"), $!);
+ 	my @newtext = grep { !/^#/ } <$fh>;
+ 	close $fh;
+ 	unlink $hunkfile;
+@@ -1236,7 +1236,7 @@ sub apply_patch_for_checkout_commit {
+ 
+ sub patch_update_cmd {
+ 	my @all_mods = list_modified($patch_mode_flavour{FILTER});
+-	error_msg "ignoring unmerged: $_->{VALUE}\n"
++	error_msg sprintf(__("ignoring unmerged: %s\n"), $_->{VALUE})
+ 		for grep { $_->{UNMERGED} } @all_mods;
+ 	@all_mods = grep { !$_->{UNMERGED} } @all_mods;
+ 
+@@ -1418,7 +1418,8 @@ sub patch_update_file {
+ 					chomp $response;
+ 				}
+ 				if ($response !~ /^\s*\d+\s*$/) {
+-					error_msg "Invalid number: '$response'\n";
++					error_msg sprintf(__("Invalid number: '%s'\n"),
++							     $response);
+ 				} elsif (0 < $response && $response <= $num) {
+ 					$ix = $response - 1;
+ 				} else {
+@@ -1460,7 +1461,7 @@ sub patch_update_file {
+ 				if ($@) {
+ 					my ($err,$exp) = ($@, $1);
+ 					$err =~ s/ at .*git-add--interactive line \d+, <STDIN> line \d+.*$//;
+-					error_msg "Malformed search regexp $exp: $err\n";
++					error_msg sprintf(__("Malformed search regexp %s: %s\n"), $exp, $err);
+ 					next;
+ 				}
+ 				my $iy = $ix;
+@@ -1625,18 +1626,18 @@ sub process_args {
+ 				$patch_mode = $1;
+ 				$arg = shift @ARGV or die __("missing --");
+ 			} else {
+-				die "unknown --patch mode: $1";
++				die sprintf(__("unknown --patch mode: %s"), $1);
+ 			}
+ 		} else {
+ 			$patch_mode = 'stage';
+ 			$arg = shift @ARGV or die __("missing --");
+ 		}
+-		die "invalid argument $arg, expecting --"
+-		    unless $arg eq "--";
++		die sprintf(__("invalid argument %s, expecting --"),
++			       $arg) unless $arg eq "--";
+ 		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
+ 	}
+ 	elsif ($arg ne "--") {
+-		die "invalid argument $arg, expecting --";
++		die sprintf(__("invalid argument %s, expecting --"), $arg);
+ 	}
  }
  
 -- 
