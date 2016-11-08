@@ -2,79 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4202022A
-	for <e@80x24.org>; Tue,  8 Nov 2016 13:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10AC52022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 14:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751827AbcKHNnQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 08:43:16 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:51751 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751314AbcKHNnO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 08:43:14 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1c46fs-0004tq-PJ; Tue, 08 Nov 2016 13:42:52 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S1751615AbcKHObq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 09:31:46 -0500
+Received: from vs19.mail.saunalahti.fi ([62.142.117.200]:51866 "EHLO
+        vs19.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751180AbcKHObp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 09:31:45 -0500
+X-Greylist: delayed 351 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Nov 2016 09:31:45 EST
+Received: from vams (localhost [127.0.0.1])
+        by vs19.mail.saunalahti.fi (Postfix) with SMTP id 6382A2017A
+        for <git@vger.kernel.org>; Tue,  8 Nov 2016 16:25:52 +0200 (EET)
+Received: from gw03.mail.saunalahti.fi (gw03.mail.saunalahti.fi [195.197.172.111])
+        by vs19.mail.saunalahti.fi (Postfix) with ESMTP id 4A2A52017A
+        for <git@vger.kernel.org>; Tue,  8 Nov 2016 16:25:52 +0200 (EET)
+Received: from macpro.local (62-78-248-13.bb.dnainternet.fi [62.78.248.13])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by gw03.mail.saunalahti.fi (Postfix) with ESMTPSA id 9421720062
+        for <git@vger.kernel.org>; Tue,  8 Nov 2016 16:25:48 +0200 (EET)
+To:     git@vger.kernel.org
+From:   Heikki Lindholm <holin@iki.fi>
+Subject: Git packages for obsolete OS X'en
+Message-ID: <5821E066.90206@iki.fi>
+Date:   Tue, 8 Nov 2016 16:25:42 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <22561.54876.646018.985175@chiark.greenend.org.uk>
-Date:   Tue, 8 Nov 2016 13:42:52 +0000
-To:     Markus Hitter <mah@jump-ing.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 0/6] Provide for config to specify tags not to abbreviate
-In-Reply-To: <0d7ff8e5-230a-c6e1-6663-eaecee5d5620@jump-ing.de>
-References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
-        <22561.8757.914542.10409@chiark.greenend.org.uk>
-        <0d7ff8e5-230a-c6e1-6663-eaecee5d5620@jump-ing.de>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Markus Hitter writes ("Re: [PATCH 0/6] Provide for config to specify tags not to abbreviate"):
-> TBH, I see a violation of tool independence with the choice of
-> preference storage. Abbreviation of tags isn't a property of the
-> repository, but a pure visual thing (screen real estate, whatever),
-> so it should be handled by the tool doing the visuals, only.
+Hello list,
 
-As I explained in my cover letter, the set of tags which are important
-enough not to abbreviate, even if they would normally be abbreviated,
-is indeed a property of the repository.
+I packaged git for some obsolete platforms for my own use. In hopes that 
+the work might prove useful to someone else, too, the packages can be 
+found on sourceforge.
 
-The alternative would be for a tool like gitk to grow an
-ever-increasing set of heuristics.  Or, worse, for a tool like dgit
-(which knows that archive/* are special) to edit the user's personal
-gitk settings.
+OS X 10.5 / PowerPC
+https://sourceforge.net/projects/osxpowerpcpackages/files/Git/
 
-> Your use case looks like a nice opportunity for
-> 
-> - adding a Gitk user preference on how long displayed tags are
->   allowed to be (instead of distinguishing between abbreviated and
->   unabbreviated ones; set it to 999 for your use case) and/or
+OS X 10.6
+https://sourceforge.net/projects/os-x-10-6-packages/files/Git/
 
-This would be wrong, because it's only certain tags that ought not to
-be abbreviated.  The right way to identify those tags is by 1. what
-repo they are in 2. what their name is.  (It might be possible to
-identify them by content or something - for example, the interesting
-archive/* tags all refer to commits whose trees contain debian/ - but
-that is getting quite out of hand.)
+My usage of git's feature set is rather limited, so there could be some 
+features that do not work or are not even available in the builds.
 
-What you propose are possible general improvements to the abbreviation
-system in gitk.  But they do not address the fundamental point that
-some tags are much more interesting than others.  It is this latter
-point that I am trying to deal with.
-
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
-
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+Regards,
+Heikki Lindholm
