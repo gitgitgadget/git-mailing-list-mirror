@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 341112022C
-	for <e@80x24.org>; Tue,  8 Nov 2016 20:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B559B2022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 20:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932700AbcKHUMN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 15:12:13 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35187 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932468AbcKHUMM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 15:12:12 -0500
-Received: by mail-pf0-f195.google.com with SMTP id i88so20684615pfk.2
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 12:12:11 -0800 (PST)
+        id S932798AbcKHUMR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 15:12:17 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36291 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932468AbcKHUMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 15:12:14 -0500
+Received: by mail-pf0-f193.google.com with SMTP id n85so20692080pfi.3
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 12:12:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Usgb2EN9kUj3gRZ88brRMAq0pJmIea+mHGrODPLy+pU=;
-        b=po4oNUt1IYCYP9BMhPv0sTvCtuffKHXmBP+eI40e6E0ZIk462tJ1lRcbTXPSNRstpM
-         /jAwH5akoeVuaOPvOz1Qq81ZDD9RahXresJJD71/r3S9z7jv86iVxryjP3Wrvo7X8Sh7
-         J5HGFUoHA0e3ndfO7f/HFPQnlMCOhaxlqplN7k6uuFEDN75eOUvhdMFsVrgyKcjIaMUr
-         E2hiuW327SqWnUz0jo3+2R2NQXnRSCvVNXAxYegvVV3Mi+eb3R4LsFwjoc1fT5CfoTov
-         5PJ5VLWgsxBr0UH3aC5IH7Mm4Q9lNAgWTxw4fGOrgr/ogQ+XWFuzPAySCNeNJk1JAGlV
-         lMXA==
+        bh=Xo/kkBzc1exMQydcePcddZ/tfzjbeb/shpn5QczwKZE=;
+        b=zEUvkDIizQUh6jenHVynVUdhPxsmF9BElP4Pj+xeLSp5B5X6Ui5wxnCPhQTsQxahcw
+         4AsvbCV+3HScJwvh931qiUyXT96rCRmiQk/h/lxhtjJZ/TI634Ctm/bD18nNQx/I3ve/
+         4F0YVOYNnPGjHZd+nObYmrJnPd9WSK54MOvvSvzyM18ra3D3iP5LAjdWxC5bRUz/tJne
+         zwRpwHgE+2FcAvbq0drpVa4nSjFyJF8BMgiFnZJiS+VQvNr68N8ckN1ewGcsjNSZraRa
+         AjWbZJdDr1grLkgU9WhI9nLbm9GUdaR19j9McVGga1uG2Aa3HaSOT0Gmpnh9CMLq2Qka
+         Lx1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Usgb2EN9kUj3gRZ88brRMAq0pJmIea+mHGrODPLy+pU=;
-        b=ZZRLxnlQM/4z/r8pRocDK38J6Qg+Ukv0MCvtmuo3McqJwloi+/ZLdI+e569xHmM2dK
-         yI2NdOqfYnrpdl7pN4N14Ytm/lP1Eu5r1gZyMMeoPMr4C8/RU71T0KrN/iu9q6c/q08K
-         v4eKZ3hSmQZ9DlfwKMHvthjVrjwDlJ1meDdDAoR54KKhcB7sfn9abv0SrRdrw5g1wlfZ
-         zgUNPejxLOKXkZ2SjRVKvEjHch81AAWktYcqwMm8TDFRlFr6nsrDT27Qo7gU2//9Ye8D
-         cCWUNcXo+vnYuPyaUIGKJ1SAmFheVUeldtheiVYxC1MjlPRlAfkEOkpCudxv8W3WqGub
-         FiCw==
-X-Gm-Message-State: ABUngvetqd1mGAEraGZxcWKiZnP3/xNsmk5Y498qJxnyulIt9kCu75TOiFTyfnSWXzlOqg==
-X-Received: by 10.98.131.67 with SMTP id h64mr26223176pfe.86.1478635931085;
-        Tue, 08 Nov 2016 12:12:11 -0800 (PST)
+        bh=Xo/kkBzc1exMQydcePcddZ/tfzjbeb/shpn5QczwKZE=;
+        b=c/dfzX2ZQx95AWA3ZyVLgIC38jZtJCd1SIieRQAAtwhfB6RnXZ43vRy4Z0VXAehaYy
+         mBC5Mx8decLJXXXva2hr22TUQa+awJe8AsYYELRctISwGDZXbYqSi16XFmngJMHGP9O0
+         re3ozFDTrsSUFEiEOQh9J7ld5dvlyhHvHNgfxLIervz4fSuykSL6Y8Eh7fJxMcmfpI7O
+         W2QzGXFoawdcIDbzbSKHdg3X9eNZ+rGK8qWDjB2zEd9sycBIRB02B1Dyyf/QPSMTh5V4
+         lIwcsNWPKz5yGeHZcFXzmCLAx8s7JNqnBoSw2Z3rW6soNqKFDbtk91sCZO50KQEwJLrM
+         NSxw==
+X-Gm-Message-State: ABUngve7OrcPcGexmLqfX6p3qhlpvF7kz0mpSrn6AR3XFlcll5YcpVnzsBj52jxP6bxLKQ==
+X-Received: by 10.98.202.72 with SMTP id n69mr26499866pfg.24.1478635933536;
+        Tue, 08 Nov 2016 12:12:13 -0800 (PST)
 Received: from localhost.localdomain ([27.5.65.216])
-        by smtp.gmail.com with ESMTPSA id hv3sm50239466pad.30.2016.11.08.12.12.08
+        by smtp.gmail.com with ESMTPSA id hv3sm50239466pad.30.2016.11.08.12.12.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Nov 2016 12:12:10 -0800 (PST)
+        Tue, 08 Nov 2016 12:12:13 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
-Cc:     jacob.keller@gmail.com, Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v7 01/17] ref-filter: implement %(if), %(then), and %(else) atoms
-Date:   Wed,  9 Nov 2016 01:41:55 +0530
-Message-Id: <20161108201211.25213-2-Karthik.188@gmail.com>
+Cc:     jacob.keller@gmail.com, Karthik Nayak <karthik.188@gmail.com>,
+        Karthik Nayak <Karthik.188@gmail.com>
+Subject: [PATCH v7 02/17] ref-filter: include reference to 'used_atom' within 'atom_value'
+Date:   Wed,  9 Nov 2016 01:41:56 +0530
+Message-Id: <20161108201211.25213-3-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161108201211.25213-1-Karthik.188@gmail.com>
 References: <20161108201211.25213-1-Karthik.188@gmail.com>
@@ -63,372 +64,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Implement %(if), %(then) and %(else) atoms. Used as
-%(if)...%(then)...%(end) or %(if)...%(then)...%(else)...%(end). If the
-format string between %(if) and %(then) expands to an empty string, or
-to only whitespaces, then the whole %(if)...%(end) expands to the string
-following %(then). Otherwise, it expands to the string following
-%(else), if any. Nesting of this construct is possible.
+Ensure that each 'atom_value' has a reference to its corresponding
+'used_atom'. This let's us use values within 'used_atom' in the
+'handler' function.
 
-This is in preparation for porting over `git branch -l` to use
-ref-filter APIs for printing.
+Hence we can get the %(align) atom's parameters directly from the
+'used_atom' therefore removing the necessity of passing %(align) atom's
+parameters to 'atom_value'.
 
-Add Documentation and tests regarding the same.
+This also acts as a preparatory patch for the upcoming patch where we
+introduce %(if:equals=) and %(if:notequals=).
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  40 +++++++++++
- ref-filter.c                       | 133 +++++++++++++++++++++++++++++++++++--
- t/t6302-for-each-ref-filter.sh     |  76 +++++++++++++++++++++
- 3 files changed, 242 insertions(+), 7 deletions(-)
+ ref-filter.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index f57e69b..fed8126 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -146,6 +146,16 @@ align::
- 	quoted, but if nested then only the topmost level performs
- 	quoting.
- 
-+if::
-+	Used as %(if)...%(then)...(%end) or
-+	%(if)...%(then)...%(else)...%(end).  If there is an atom with
-+	value or string literal after the %(if) then everything after
-+	the %(then) is printed, else if the %(else) atom is used, then
-+	everything after %(else) is printed. We ignore space when
-+	evaluating the string before %(then), this is useful when we
-+	use the %(HEAD) atom which prints either "*" or " " and we
-+	want to apply the 'if' condition only on the 'HEAD' ref.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-@@ -181,6 +191,20 @@ As a special case for the date-type fields, you may specify a format for
- the date by adding `:` followed by date format name (see the
- values the `--date` option to linkgit:git-rev-list[1] takes).
- 
-+Some atoms like %(align) and %(if) always require a matching %(end).
-+We call them "opening atoms" and sometimes denote them as %($open).
-+
-+When a scripting language specific quoting is in effect (i.e. one of
-+`--shell`, `--perl`, `--python`, `--tcl` is used), except for opening
-+atoms, replacement from every %(atom) is quoted when and only when it
-+appears at the top-level (that is, when it appears outside
-+%($open)...%(end)).
-+
-+When a scripting language specific quoting is in effect, everything
-+between a top-level opening atom and its matching %(end) is evaluated
-+according to the semantics of the opening atom and its result is
-+quoted.
-+
- 
- EXAMPLES
- --------
-@@ -268,6 +292,22 @@ eval=`git for-each-ref --shell --format="$fmt" \
- eval "$eval"
- ------------
- 
-+
-+An example to show the usage of %(if)...%(then)...%(else)...%(end).
-+This prefixes the current branch with a star.
-+
-+------------
-+git for-each-ref --format="%(if)%(HEAD)%(then)* %(else)  %(end)%(refname:short)" refs/heads/
-+------------
-+
-+
-+An example to show the usage of %(if)...%(then)...%(end).
-+This prints the authorname, if present.
-+
-+------------
-+git for-each-ref --format="%(refname)%(if)%(authorname)%(then) %(color:red)Authored by: %(authorname)%(end)"
-+------------
-+
- SEE ALSO
- --------
- linkgit:git-show-ref[1]
 diff --git a/ref-filter.c b/ref-filter.c
-index d4c2931..8c183a0 100644
+index 8c183a0..8392303 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -21,6 +21,12 @@ struct align {
- 	unsigned int width;
+@@ -230,11 +230,9 @@ struct ref_formatting_state {
+ 
+ struct atom_value {
+ 	const char *s;
+-	union {
+-		struct align align;
+-	} u;
+ 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+ 	unsigned long ul; /* used for sorting when not FIELD_STR */
++	struct used_atom *atom;
  };
  
-+struct if_then_else {
-+	unsigned int then_atom_seen : 1,
-+		else_atom_seen : 1,
-+		condition_satisfied : 1;
-+};
-+
  /*
-  * An atom is a valid field atom listed below, possibly prefixed with
-  * a "*" to denote deref_tag().
-@@ -203,6 +209,9 @@ static struct {
- 	{ "color", FIELD_STR, color_atom_parser },
- 	{ "align", FIELD_STR, align_atom_parser },
- 	{ "end" },
-+	{ "if" },
-+	{ "then" },
-+	{ "else" },
- };
- 
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
-@@ -210,7 +219,7 @@ static struct {
- struct ref_formatting_stack {
- 	struct ref_formatting_stack *prev;
- 	struct strbuf output;
--	void (*at_end)(struct ref_formatting_stack *stack);
-+	void (*at_end)(struct ref_formatting_stack **stack);
- 	void *at_end_data;
- };
- 
-@@ -343,13 +352,14 @@ static void pop_stack_element(struct ref_formatting_stack **stack)
- 	*stack = prev;
+@@ -370,7 +368,7 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
+ 	push_stack_element(&state->stack);
+ 	new = state->stack;
+ 	new->at_end = end_align_handler;
+-	new->at_end_data = &atomv->u.align;
++	new->at_end_data = &atomv->atom->u.align;
  }
  
--static void end_align_handler(struct ref_formatting_stack *stack)
-+static void end_align_handler(struct ref_formatting_stack **stack)
- {
--	struct align *align = (struct align *)stack->at_end_data;
-+	struct ref_formatting_stack *cur = *stack;
-+	struct align *align = (struct align *)cur->at_end_data;
- 	struct strbuf s = STRBUF_INIT;
+ static void if_then_else_handler(struct ref_formatting_stack **stack)
+@@ -1069,6 +1067,7 @@ static void populate_value(struct ref_array_item *ref)
+ 		struct branch *branch = NULL;
  
--	strbuf_utf8_align(&s, align->position, align->width, stack->output.buf);
--	strbuf_swap(&stack->output, &s);
-+	strbuf_utf8_align(&s, align->position, align->width, cur->output.buf);
-+	strbuf_swap(&cur->output, &s);
- 	strbuf_release(&s);
- }
+ 		v->handler = append_atom;
++		v->atom = atom;
  
-@@ -363,6 +373,103 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
- 	new->at_end_data = &atomv->u.align;
- }
- 
-+static void if_then_else_handler(struct ref_formatting_stack **stack)
-+{
-+	struct ref_formatting_stack *cur = *stack;
-+	struct ref_formatting_stack *prev = cur->prev;
-+	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
-+
-+	if (!if_then_else->then_atom_seen)
-+		die(_("format: %%(if) atom used without a %%(then) atom"));
-+
-+	if (if_then_else->else_atom_seen) {
-+		/*
-+		 * There is an %(else) atom: we need to drop one state from the
-+		 * stack, either the %(else) branch if the condition is satisfied, or
-+		 * the %(then) branch if it isn't.
-+		 */
-+		if (if_then_else->condition_satisfied) {
-+			strbuf_reset(&cur->output);
-+			pop_stack_element(&cur);
-+		} else {
-+			strbuf_swap(&cur->output, &prev->output);
-+			strbuf_reset(&cur->output);
-+			pop_stack_element(&cur);
-+		}
-+	} else if (!if_then_else->condition_satisfied)
-+		/*
-+		 * No %(else) atom: just drop the %(then) branch if the
-+		 * condition is not satisfied.
-+		 */
-+		strbuf_reset(&cur->output);
-+
-+	*stack = cur;
-+	free(if_then_else);
-+}
-+
-+static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+{
-+	struct ref_formatting_stack *new;
-+	struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
-+
-+	push_stack_element(&state->stack);
-+	new = state->stack;
-+	new->at_end = if_then_else_handler;
-+	new->at_end_data = if_then_else;
-+}
-+
-+static int is_empty(const char *s)
-+{
-+	while (*s != '\0') {
-+		if (!isspace(*s))
-+			return 0;
-+		s++;
-+	}
-+	return 1;
-+}
-+
-+static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+{
-+	struct ref_formatting_stack *cur = state->stack;
-+	struct if_then_else *if_then_else = NULL;
-+
-+	if (cur->at_end == if_then_else_handler)
-+		if_then_else = (struct if_then_else *)cur->at_end_data;
-+	if (!if_then_else)
-+		die(_("format: %%(then) atom used without an %%(if) atom"));
-+	if (if_then_else->then_atom_seen)
-+		die(_("format: %%(then) atom used more than once"));
-+	if (if_then_else->else_atom_seen)
-+		die(_("format: %%(then) atom used after %%(else)"));
-+	if_then_else->then_atom_seen = 1;
-+	/*
-+	 * If there exists non-empty string between the 'if' and
-+	 * 'then' atom then the 'if' condition is satisfied.
-+	 */
-+	if (cur->output.len && !is_empty(cur->output.buf))
-+		if_then_else->condition_satisfied = 1;
-+	strbuf_reset(&cur->output);
-+}
-+
-+static void else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+{
-+	struct ref_formatting_stack *prev = state->stack;
-+	struct if_then_else *if_then_else = NULL;
-+
-+	if (prev->at_end == if_then_else_handler)
-+		if_then_else = (struct if_then_else *)prev->at_end_data;
-+	if (!if_then_else)
-+		die(_("format: %%(else) atom used without an %%(if) atom"));
-+	if (!if_then_else->then_atom_seen)
-+		die(_("format: %%(else) atom used without a %%(then) atom"));
-+	if (if_then_else->else_atom_seen)
-+		die(_("format: %%(else) atom used more than once"));
-+	if_then_else->else_atom_seen = 1;
-+	push_stack_element(&state->stack);
-+	state->stack->at_end_data = prev->at_end_data;
-+	state->stack->at_end = prev->at_end;
-+}
-+
- static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
- {
- 	struct ref_formatting_stack *current = state->stack;
-@@ -370,14 +477,17 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 
- 	if (!current->at_end)
- 		die(_("format: %%(end) atom used without corresponding atom"));
--	current->at_end(current);
-+	current->at_end(&state->stack);
-+
-+	/*  Stack may have been popped within at_end(), hence reset the current pointer */
-+	current = state->stack;
- 
- 	/*
- 	 * Perform quote formatting when the stack element is that of
- 	 * a supporting atom. If nested then perform quote formatting
- 	 * only on the topmost supporting atom.
- 	 */
--	if (!state->stack->prev->prev) {
-+	if (!current->prev->prev) {
- 		quote_formatting(&s, current->output.buf, state->quote_style);
- 		strbuf_swap(&current->output, &s);
- 	}
-@@ -1029,6 +1139,15 @@ static void populate_value(struct ref_array_item *ref)
+ 		if (*name == '*') {
+ 			deref = 1;
+@@ -1133,7 +1132,6 @@ static void populate_value(struct ref_array_item *ref)
+ 				v->s = " ";
+ 			continue;
+ 		} else if (starts_with(name, "align")) {
+-			v->u.align = atom->u.align;
+ 			v->handler = align_atom_handler;
+ 			continue;
  		} else if (!strcmp(name, "end")) {
- 			v->handler = end_atom_handler;
- 			continue;
-+		} else if (!strcmp(name, "if")) {
-+			v->handler = if_atom_handler;
-+			continue;
-+		} else if (!strcmp(name, "then")) {
-+			v->handler = then_atom_handler;
-+			continue;
-+		} else if (!strcmp(name, "else")) {
-+			v->handler = else_atom_handler;
-+			continue;
- 		} else
- 			continue;
- 
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index d0ab09f..fed3013 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -327,4 +327,80 @@ test_expect_success 'reverse version sort' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'improper usage of %(if), %(then), %(else) and %(end) atoms' '
-+	test_must_fail git for-each-ref --format="%(if)" &&
-+	test_must_fail git for-each-ref --format="%(then) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(else) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(else) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(then) %(then) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(then) %(else) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(else) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(then) %(else)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(else) %(then) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(then) %(else) %(else) %(end)" &&
-+	test_must_fail git for-each-ref --format="%(if) %(end)"
-+'
-+
-+test_expect_success 'check %(if)...%(then)...%(end) atoms' '
-+	git for-each-ref --format="%(refname)%(if)%(authorname)%(then) Author: %(authorname)%(end)" >actual &&
-+	cat >expect <<-\EOF &&
-+	refs/heads/master Author: A U Thor
-+	refs/heads/side Author: A U Thor
-+	refs/odd/spot Author: A U Thor
-+	refs/tags/annotated-tag
-+	refs/tags/doubly-annotated-tag
-+	refs/tags/doubly-signed-tag
-+	refs/tags/foo1.10 Author: A U Thor
-+	refs/tags/foo1.3 Author: A U Thor
-+	refs/tags/foo1.6 Author: A U Thor
-+	refs/tags/four Author: A U Thor
-+	refs/tags/one Author: A U Thor
-+	refs/tags/signed-tag
-+	refs/tags/three Author: A U Thor
-+	refs/tags/two Author: A U Thor
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check %(if)...%(then)...%(else)...%(end) atoms' '
-+	git for-each-ref --format="%(if)%(authorname)%(then)%(authorname)%(else)No author%(end): %(refname)" >actual &&
-+	cat >expect <<-\EOF &&
-+	A U Thor: refs/heads/master
-+	A U Thor: refs/heads/side
-+	A U Thor: refs/odd/spot
-+	No author: refs/tags/annotated-tag
-+	No author: refs/tags/doubly-annotated-tag
-+	No author: refs/tags/doubly-signed-tag
-+	A U Thor: refs/tags/foo1.10
-+	A U Thor: refs/tags/foo1.3
-+	A U Thor: refs/tags/foo1.6
-+	A U Thor: refs/tags/four
-+	A U Thor: refs/tags/one
-+	No author: refs/tags/signed-tag
-+	A U Thor: refs/tags/three
-+	A U Thor: refs/tags/two
-+	EOF
-+	test_cmp expect actual
-+'
-+test_expect_success 'ignore spaces in %(if) atom usage' '
-+	git for-each-ref --format="%(refname:short): %(if)%(HEAD)%(then)Head ref%(else)Not Head ref%(end)" >actual &&
-+	cat >expect <<-\EOF &&
-+	master: Head ref
-+	side: Not Head ref
-+	odd/spot: Not Head ref
-+	annotated-tag: Not Head ref
-+	doubly-annotated-tag: Not Head ref
-+	doubly-signed-tag: Not Head ref
-+	foo1.10: Not Head ref
-+	foo1.3: Not Head ref
-+	foo1.6: Not Head ref
-+	four: Not Head ref
-+	one: Not Head ref
-+	signed-tag: Not Head ref
-+	three: Not Head ref
-+	two: Not Head ref
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
 -- 
 2.10.2
 
