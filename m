@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81BAE2022A
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D3BD2022A
 	for <e@80x24.org>; Tue,  8 Nov 2016 20:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933260AbcKHUMj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 15:12:39 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33524 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753827AbcKHUMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 15:12:35 -0500
-Received: by mail-pf0-f195.google.com with SMTP id 144so12331445pfv.0
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 12:12:35 -0800 (PST)
+        id S933271AbcKHUMn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 15:12:43 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35359 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933193AbcKHUMi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 15:12:38 -0500
+Received: by mail-pf0-f193.google.com with SMTP id i88so20685626pfk.2
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 12:12:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fDQhJlhm8X1fCEPBT3LVomfb6xsq024e8Sa0BVRSawg=;
-        b=xqlzlDSHKpPQFk9SftiraaLT4XAHi+qxKiTsrhiuDwBA6wdR3C622mlKstrmjDfZTA
-         ctB8860WKv56Z50yWOfBsIKjHxlenrIxA5o2qF/b83RxxFaGg1KwSncx9Tf2ia+seFK6
-         sMRzY8PKga332i7FIiZNxxQ9GCSP+I6mKZfnasjTWx0x0faMl4pQN9JuNjy0P1FS98N7
-         lQIQ7VzQyUN3TkvY6sgBdS12kjumap+gqNebeAV07x0q0yKYZvKtLqAh9xtW7K8YLGbp
-         1Cm31nzWjLbm9pUt+hOCH4Ie+/JeobAtMQZ3+6GJ15SBSUbselg+VbIlKad+8fQRMfgX
-         FjvQ==
+        bh=+fuOzL43o+jAKTvarK1DFIBOvFJOiKieuzNHR352jTU=;
+        b=LKnhDysMT7QLW9Unq9U8f50wmkWWqktf67JnY5t+fC21aPuzOOFaxIaysulSTshkMM
+         FfUuWTsrEvGY/1UXS+zR4e35pwO3MhZCVKKFTja5+tSg/ZpQAviQu3sUePHTPqyqeQLE
+         zz9wOz6GOKlutRurnS2LfV3S5PQr4Pq/5/IbOErAxy9Lh5Z2tBZMJaxoSYrC1GzjxbgS
+         bXsgScXSJWRGfOcz83WGpoYztj9ZUdN2OrnQUeRbsjRobYgBzISwYKhRWYlym1UiDS/B
+         j65iD9GTs7Rve4169PI7y30IWzkSUPKQae4dK5ks1yXhTGvuJHA7oCQ08deciLEHIVCn
+         7mCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fDQhJlhm8X1fCEPBT3LVomfb6xsq024e8Sa0BVRSawg=;
-        b=ZOkKigRpKfHIAAaE1Nup7HBldLH7zcBMIuTQeGkHV0t14SeskQM33FFxxQW+kVS0mK
-         2HnFbfKmiAHxKKC8fUyB00Yv1jn2WTTPlc7eKWtxjfbIm9GYs9OgZFq5z/p8rVhVsWH1
-         BQqfljrneaWKNWtCNmMAdbyY9pJRAumFPkTYI0eCKCG+wKX4EyWMK/6KlXZ9DB+devoe
-         nkjfjNJgcDj9ioRKnbMEADrjzpvNF5xnsHxE8LYpNwtCcQcZOQ7phSG7lrNAv0mtdYGJ
-         JgTu9PjmTL2PpxLceY3x2KUDlYPrUGA5n8Qh8AQ78joBMh/XyKUKeN01/QTtGjZSx+oI
-         wfZw==
-X-Gm-Message-State: ABUngvcCmFcxkZ5cb8MDkFLdWmei/6JsuvNEfowJ2o+c/SLSA/cLvmyxu2eRK5nVKumQOA==
-X-Received: by 10.99.177.69 with SMTP id g5mr9210486pgp.144.1478635955086;
-        Tue, 08 Nov 2016 12:12:35 -0800 (PST)
+        bh=+fuOzL43o+jAKTvarK1DFIBOvFJOiKieuzNHR352jTU=;
+        b=iHy7WI/6MzzcRHk5Km+Ld5AhjKiyVZUFOitPIN2umIiEZiBED71O/8W0R66XomVJfk
+         kfbjxcTOA13lKpST4FSI3k08yFfGp1ZH1xVIj+3FL0NvLbAeknj5O6E6q1eKCKijmc/x
+         4RFcomwTrPEwuoxQuvx6riqnCM0kkTJMZDaQzCO4Zkn65fzn1eewct+t96W+h9JUJ6yT
+         WEpxQXPt8mAgY6L6kB29Q/m5akb2yJyoKotmdI2hpdFbtpgi6+Guz7oqygWwYW3ZAMtG
+         pzzKfpUUUzcZujYKf+sgsYXflXcLSlzT0/o2qMtKfZgX0DVW0oWOt0y/EG5uvjy2i99G
+         hUjg==
+X-Gm-Message-State: ABUngvfjXaxEMcapyPTswImKBDyHMappFK/6LkfsL7Ku+ijq4cN151R0Pn59ZSMyfl51Pw==
+X-Received: by 10.98.210.10 with SMTP id c10mr26673815pfg.23.1478635957729;
+        Tue, 08 Nov 2016 12:12:37 -0800 (PST)
 Received: from localhost.localdomain ([27.5.65.216])
-        by smtp.gmail.com with ESMTPSA id hv3sm50239466pad.30.2016.11.08.12.12.32
+        by smtp.gmail.com with ESMTPSA id hv3sm50239466pad.30.2016.11.08.12.12.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Nov 2016 12:12:34 -0800 (PST)
+        Tue, 08 Nov 2016 12:12:37 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, Karthik Nayak <karthik.188@gmail.com>,
         Karthik Nayak <Karthik.188@gmail.com>
-Subject: [PATCH v7 11/17] ref-filter: introduce symref_atom_parser() and refname_atom_parser()
-Date:   Wed,  9 Nov 2016 01:42:05 +0530
-Message-Id: <20161108201211.25213-12-Karthik.188@gmail.com>
+Subject: [PATCH v7 12/17] ref-filter: make remote_ref_atom_parser() use refname_atom_parser_internal()
+Date:   Wed,  9 Nov 2016 01:42:06 +0530
+Message-Id: <20161108201211.25213-13-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161108201211.25213-1-Karthik.188@gmail.com>
 References: <20161108201211.25213-1-Karthik.188@gmail.com>
@@ -64,207 +64,149 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Using refname_atom_parser_internal(), introduce symref_atom_parser() and
-refname_atom_parser() which will parse the atoms %(symref) and
-%(refname) respectively. Store the parsed information into the
-'used_atom' structure based on the modifiers used along with the atoms.
+Use the recently introduced refname_atom_parser_internal() within
+remote_ref_atom_parser(), this provides a common base for all the ref
+printing atoms, allowing %(upstream) and %(push) to also use the
+':strip' option.
 
-Now the '%(symref)' atom supports the ':strip' atom modifier. Update the
-Documentation and tests to reflect this.
+The atoms '%(push)' and '%(upstream)' will retain the ':track' and
+':trackshort' atom modifiers to themselves as they have no meaning in
+context to the '%(refname)' and '%(symref)' atoms.
 
-Helped-by: Jeff King <peff@peff.net>
+Update the documentation and tests to reflect the same.
+
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  5 +++
- ref-filter.c                       | 78 ++++++++++++++++++++++----------------
- t/t6300-for-each-ref.sh            |  9 +++++
- 3 files changed, 59 insertions(+), 33 deletions(-)
+ Documentation/git-for-each-ref.txt | 27 ++++++++++++++-------------
+ ref-filter.c                       | 26 +++++++++++++++-----------
+ t/t6300-for-each-ref.sh            |  2 ++
+ 3 files changed, 31 insertions(+), 24 deletions(-)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 3953431..a669a32 100644
+index a669a32..600b703 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -166,6 +166,11 @@ if::
- 	the value between the %(if:...) and %(then) atoms with the
- 	given string.
+@@ -114,21 +114,22 @@ objectname::
  
-+symref::
-+	The ref which the given symbolic ref refers to. If not a
-+	symbolic ref, nothing is printed. Respects the `:short` and
-+	`:strip` options in the same way as `refname` above.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
+ upstream::
+ 	The name of a local ref which can be considered ``upstream''
+-	from the displayed ref. Respects `:short` in the same way as
+-	`refname` above.  Additionally respects `:track` to show
+-	"[ahead N, behind M]" and `:trackshort` to show the terse
+-	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
+-	or "=" (in sync). `:track` also prints "[gone]" whenever
+-	unknown upstream ref is encountered. Append `:track,nobracket`
+-	to show tracking information without brackets (i.e "ahead N,
+-	behind M").  Has no effect if the ref does not have tracking
+-	information associated with it.
++	from the displayed ref. Respects `:short` and `:strip` in the
++	same way as `refname` above.  Additionally respects `:track`
++	to show "[ahead N, behind M]" and `:trackshort` to show the
++	terse version: ">" (ahead), "<" (behind), "<>" (ahead and
++	behind), or "=" (in sync). `:track` also prints "[gone]"
++	whenever unknown upstream ref is encountered. Append
++	`:track,nobracket` to show tracking information without
++	brackets (i.e "ahead N, behind M").  Has no effect if the ref
++	does not have tracking information associated with it.
+ 
+ push::
+-	The name of a local ref which represents the `@{push}` location
+-	for the displayed ref. Respects `:short`, `:track`, and
+-	`:trackshort` options as `upstream` does. Produces an empty
+-	string if no `@{push}` ref is configured.
++	The name of a local ref which represents the `@{push}`
++	location for the displayed ref. Respects `:short`, `:strip`,
++	`:track`, and `:trackshort` options as `upstream`
++	does. Produces an empty string if no `@{push}` ref is
++	configured.
+ 
+ HEAD::
+ 	'*' if HEAD matches current ref (the checked out branch), ' '
 diff --git a/ref-filter.c b/ref-filter.c
-index aad537d..f1d27b5 100644
+index f1d27b5..7d3d3a6 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -176,6 +176,16 @@ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
- 		die(_("unrecognized %%(objectname) argument: %s"), arg);
- }
+@@ -52,7 +52,8 @@ static struct used_atom {
+ 		char color[COLOR_MAXLEN];
+ 		struct align align;
+ 		struct {
+-			enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
++			enum { RR_REF, RR_TRACK, RR_TRACKSHORT } option;
++			struct refname_atom refname;
+ 			unsigned int nobracket: 1;
+ 		} remote_ref;
+ 		struct {
+@@ -102,7 +103,9 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+ 	int i;
  
-+static void symref_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
-+}
-+
-+static void refname_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
-+}
-+
- static align_type parse_align_position(const char *s)
- {
- 	if (!strcmp(s, "right"))
-@@ -244,7 +254,7 @@ static struct {
- 	cmp_type cmp_type;
- 	void (*parser)(struct used_atom *atom, const char *arg);
- } valid_atom[] = {
--	{ "refname" },
-+	{ "refname" , FIELD_STR, refname_atom_parser },
- 	{ "objecttype" },
- 	{ "objectsize", FIELD_ULONG },
- 	{ "objectname", FIELD_STR, objectname_atom_parser },
-@@ -273,7 +283,7 @@ static struct {
- 	{ "contents", FIELD_STR, contents_atom_parser },
- 	{ "upstream", FIELD_STR, remote_ref_atom_parser },
- 	{ "push", FIELD_STR, remote_ref_atom_parser },
--	{ "symref" },
-+	{ "symref", FIELD_STR, symref_atom_parser },
- 	{ "flag" },
- 	{ "HEAD" },
- 	{ "color", FIELD_STR, color_atom_parser },
-@@ -1058,21 +1068,16 @@ static inline char *copy_advance(char *dst, const char *src)
- 	return dst;
- }
+ 	if (!arg) {
+-		atom->u.remote_ref.option = RR_NORMAL;
++		atom->u.remote_ref.option = RR_REF;
++		refname_atom_parser_internal(&atom->u.remote_ref.refname,
++					     arg, atom->name);
+ 		return;
+ 	}
  
--static const char *strip_ref_components(const char *refname, const char *nr_arg)
-+static const char *strip_ref_components(const char *refname, unsigned int len)
- {
--	char *end;
--	long nr = strtol(nr_arg, &end, 10);
--	long remaining = nr;
-+	long remaining = len;
- 	const char *start = refname;
+@@ -112,16 +115,17 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+ 	for (i = 0; i < params.nr; i++) {
+ 		const char *s = params.items[i].string;
  
--	if (nr < 1 || *end != '\0')
--		die(_(":strip= requires a positive integer argument"));
--
- 	while (remaining) {
- 		switch (*start++) {
- 		case '\0':
--			die(_("ref '%s' does not have %ld components to :strip"),
--			    refname, nr);
-+			die(_("ref '%s' does not have %ud components to :strip"),
-+			    refname, len);
- 		case '/':
- 			remaining--;
- 			break;
-@@ -1081,6 +1086,16 @@ static const char *strip_ref_components(const char *refname, const char *nr_arg)
- 	return start;
- }
+-		if (!strcmp(s, "short"))
+-			atom->u.remote_ref.option = RR_SHORTEN;
+-		else if (!strcmp(s, "track"))
++		if (!strcmp(s, "track"))
+ 			atom->u.remote_ref.option = RR_TRACK;
+ 		else if (!strcmp(s, "trackshort"))
+ 			atom->u.remote_ref.option = RR_TRACKSHORT;
+ 		else if (!strcmp(s, "nobracket"))
+ 			atom->u.remote_ref.nobracket = 1;
+-		else
+-			die(_("unrecognized format: %%(%s)"), atom->name);
++		else {
++			atom->u.remote_ref.option = RR_REF;
++			refname_atom_parser_internal(&atom->u.remote_ref.refname,
++						     arg, atom->name);
++		}
+ 	}
  
-+static const char *show_ref(struct refname_atom *atom, const char *refname)
-+{
-+	if (atom->option == R_SHORT)
-+		return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
-+	else if (atom->option == R_STRIP)
-+		return strip_ref_components(refname, atom->strip);
-+	else
-+		return refname;
-+}
-+
- static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 	string_list_clear(&params, 0);
+@@ -1100,8 +1104,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
  				    struct branch *branch, const char **s)
  {
-@@ -1153,6 +1168,21 @@ char *get_head_description(void)
- 	return strbuf_detach(&desc, NULL);
+ 	int num_ours, num_theirs;
+-	if (atom->u.remote_ref.option == RR_SHORTEN)
+-		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
++	if (atom->u.remote_ref.option == RR_REF)
++		*s = show_ref(&atom->u.remote_ref.refname, refname);
+ 	else if (atom->u.remote_ref.option == RR_TRACK) {
+ 		if (stat_tracking_info(branch, &num_ours,
+ 				       &num_theirs, NULL)) {
+@@ -1133,8 +1137,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 			*s = ">";
+ 		else
+ 			*s = "<>";
+-	} else /* RR_NORMAL */
+-		*s = refname;
++	} else
++		die("BUG: unhandled RR_* enum");
  }
  
-+static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
-+{
-+	if (!ref->symref)
-+		return "";
-+	else
-+		return show_ref(&atom->u.refname, ref->symref);
-+}
-+
-+static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
-+{
-+	if (ref->kind & FILTER_REFS_DETACHED_HEAD)
-+		return get_head_description();
-+	return show_ref(&atom->u.refname, ref->refname);
-+}
-+
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
-@@ -1181,7 +1211,6 @@ static void populate_value(struct ref_array_item *ref)
- 		struct atom_value *v = &ref->value[i];
- 		int deref = 0;
- 		const char *refname;
--		const char *formatp;
- 		struct branch *branch = NULL;
- 
- 		v->handler = append_atom;
-@@ -1192,12 +1221,10 @@ static void populate_value(struct ref_array_item *ref)
- 			name++;
- 		}
- 
--		if (starts_with(name, "refname")) {
--			refname = ref->refname;
--			if (ref->kind & FILTER_REFS_DETACHED_HEAD)
--				refname = get_head_description();
--		} else if (starts_with(name, "symref"))
--			refname = ref->symref ? ref->symref : "";
-+		if (starts_with(name, "refname"))
-+			refname = get_refname(atom, ref);
-+		else if (starts_with(name, "symref"))
-+			refname = get_symref(atom, ref);
- 		else if (starts_with(name, "upstream")) {
- 			const char *branch_name;
- 			/* only local branches may have an upstream */
-@@ -1273,21 +1300,6 @@ static void populate_value(struct ref_array_item *ref)
- 		} else
- 			continue;
- 
--		formatp = strchr(name, ':');
--		if (formatp) {
--			const char *arg;
--
--			formatp++;
--			if (!strcmp(formatp, "short"))
--				refname = shorten_unambiguous_ref(refname,
--						      warn_ambiguous_refs);
--			else if (skip_prefix(formatp, "strip=", &arg))
--				refname = strip_ref_components(refname, arg);
--			else
--				die(_("unknown %.*s format %s"),
--				    (int)(formatp - name), name, formatp);
--		}
--
- 		if (!deref)
- 			v->s = refname;
- 		else
+ char *get_head_description(void)
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index b06ea1c..3d28234 100755
+index 3d28234..7ca0a12 100755
 --- a/t/t6300-for-each-ref.sh
 +++ b/t/t6300-for-each-ref.sh
-@@ -589,4 +589,13 @@ test_expect_success 'Verify usage of %(symref:short) atom' '
- 	test_cmp expected actual
- '
- 
-+cat >expected <<EOF
-+master
-+EOF
-+
-+test_expect_success 'Verify usage of %(symref:strip) atom' '
-+	git for-each-ref --format="%(symref:strip=2)" refs/heads/sym > actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+@@ -55,8 +55,10 @@ test_atom head refname:strip=1 heads/master
+ test_atom head refname:strip=2 master
+ test_atom head upstream refs/remotes/origin/master
+ test_atom head upstream:short origin/master
++test_atom head upstream:strip=2 origin/master
+ test_atom head push refs/remotes/myfork/master
+ test_atom head push:short myfork/master
++test_atom head push:strip=1 remotes/myfork/master
+ test_atom head objecttype commit
+ test_atom head objectsize 171
+ test_atom head objectname $(git rev-parse refs/heads/master)
 -- 
 2.10.2
 
