@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3A592022A
-	for <e@80x24.org>; Tue,  8 Nov 2016 20:12:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81BAE2022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 20:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933145AbcKHUMh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 15:12:37 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:33506 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933193AbcKHUMd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 15:12:33 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 144so12331349pfv.0
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 12:12:33 -0800 (PST)
+        id S933260AbcKHUMj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 15:12:39 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33524 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753827AbcKHUMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 15:12:35 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 144so12331445pfv.0
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 12:12:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+EPfWJiSlR7Gov2GSbk1MLIgDNAC/iGYDvTmL32/qHU=;
-        b=TSjxVgvSOa08Kzof3kXZzY1J/BDsS+L8zxZp9P0BjmWc5oAeHJnNGplSG/Y0Ysdxns
-         BCLBJISpTGLFcgi/rECcbA47DICimkacT7zCA+ORtUWAbvT0c9rAsHKbI3LPYj0dlFZ0
-         x01/gFfUkIkkA0WuWOBv8PtpEQNtYdqMMfooFBfhIiJCR8hwRgbome2CVV0T0HMhjcS6
-         ef6SyictBp8TO9f8zj9hcrtqE4UY+fhEgoTyK0qV2KdEVZC1vAYGzL7+/5Noj4Xmkrga
-         qx7xb8cwrLH8yQdu/wzIqEJHEGYK8wSa04Aw4UzNAJUThJX0AFXrL5gg69OBqOqMN2cQ
-         /mFA==
+        bh=fDQhJlhm8X1fCEPBT3LVomfb6xsq024e8Sa0BVRSawg=;
+        b=xqlzlDSHKpPQFk9SftiraaLT4XAHi+qxKiTsrhiuDwBA6wdR3C622mlKstrmjDfZTA
+         ctB8860WKv56Z50yWOfBsIKjHxlenrIxA5o2qF/b83RxxFaGg1KwSncx9Tf2ia+seFK6
+         sMRzY8PKga332i7FIiZNxxQ9GCSP+I6mKZfnasjTWx0x0faMl4pQN9JuNjy0P1FS98N7
+         lQIQ7VzQyUN3TkvY6sgBdS12kjumap+gqNebeAV07x0q0yKYZvKtLqAh9xtW7K8YLGbp
+         1Cm31nzWjLbm9pUt+hOCH4Ie+/JeobAtMQZ3+6GJ15SBSUbselg+VbIlKad+8fQRMfgX
+         FjvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+EPfWJiSlR7Gov2GSbk1MLIgDNAC/iGYDvTmL32/qHU=;
-        b=aovnuHbbU7aiujFGY5D5x/bw89CFdLuE6xM9BWDgoNJnGpAlDpd8uq005/pq/gUD7o
-         pLBQWlp7eGRqd/wq9+ewbtuKT+gdcOwTMYQDyZLstLzORs2y75S8jEkwQAUzajFe5mMD
-         84jinnqHoeDWXZj02DFG7DFjQ6FphlAoPoab3zK5Uo/VbfvwAbSBi2fpb/3PMsOTbx9K
-         zVkdgPWBRT1+fluzN00NHKa5R7Bj6QJ4fhNDJvTSA6U7/fpLEKcg6an8I0e1f85WIE7W
-         mS0O0SQglSf62N8JXOorG2hDxPjn2A8YwzeFym21bm1qdBFcabQyQNAe4mQShOp0VzSS
-         9adA==
-X-Gm-Message-State: ABUngvfC5KWCLmDFaKwnX8ckXrZOFVtIukBgZ43Y8t0/oPwsB3zSOWOUP7X9P6Zx9kohzQ==
-X-Received: by 10.98.51.134 with SMTP id z128mr26659853pfz.163.1478635952584;
-        Tue, 08 Nov 2016 12:12:32 -0800 (PST)
+        bh=fDQhJlhm8X1fCEPBT3LVomfb6xsq024e8Sa0BVRSawg=;
+        b=ZOkKigRpKfHIAAaE1Nup7HBldLH7zcBMIuTQeGkHV0t14SeskQM33FFxxQW+kVS0mK
+         2HnFbfKmiAHxKKC8fUyB00Yv1jn2WTTPlc7eKWtxjfbIm9GYs9OgZFq5z/p8rVhVsWH1
+         BQqfljrneaWKNWtCNmMAdbyY9pJRAumFPkTYI0eCKCG+wKX4EyWMK/6KlXZ9DB+devoe
+         nkjfjNJgcDj9ioRKnbMEADrjzpvNF5xnsHxE8LYpNwtCcQcZOQ7phSG7lrNAv0mtdYGJ
+         JgTu9PjmTL2PpxLceY3x2KUDlYPrUGA5n8Qh8AQ78joBMh/XyKUKeN01/QTtGjZSx+oI
+         wfZw==
+X-Gm-Message-State: ABUngvcCmFcxkZ5cb8MDkFLdWmei/6JsuvNEfowJ2o+c/SLSA/cLvmyxu2eRK5nVKumQOA==
+X-Received: by 10.99.177.69 with SMTP id g5mr9210486pgp.144.1478635955086;
+        Tue, 08 Nov 2016 12:12:35 -0800 (PST)
 Received: from localhost.localdomain ([27.5.65.216])
-        by smtp.gmail.com with ESMTPSA id hv3sm50239466pad.30.2016.11.08.12.12.30
+        by smtp.gmail.com with ESMTPSA id hv3sm50239466pad.30.2016.11.08.12.12.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Nov 2016 12:12:32 -0800 (PST)
+        Tue, 08 Nov 2016 12:12:34 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, Karthik Nayak <karthik.188@gmail.com>,
         Karthik Nayak <Karthik.188@gmail.com>
-Subject: [PATCH v7 10/17] ref-filter: introduce refname_atom_parser_internal()
-Date:   Wed,  9 Nov 2016 01:42:04 +0530
-Message-Id: <20161108201211.25213-11-Karthik.188@gmail.com>
+Subject: [PATCH v7 11/17] ref-filter: introduce symref_atom_parser() and refname_atom_parser()
+Date:   Wed,  9 Nov 2016 01:42:05 +0530
+Message-Id: <20161108201211.25213-12-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161108201211.25213-1-Karthik.188@gmail.com>
 References: <20161108201211.25213-1-Karthik.188@gmail.com>
@@ -64,68 +64,207 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Since there are multiple atoms which print refs ('%(refname)',
-'%(symref)', '%(push)', '%upstream'), it makes sense to have a common
-ground for parsing them. This would allow us to share implementations of
-the atom modifiers between these atoms.
+Using refname_atom_parser_internal(), introduce symref_atom_parser() and
+refname_atom_parser() which will parse the atoms %(symref) and
+%(refname) respectively. Store the parsed information into the
+'used_atom' structure based on the modifiers used along with the atoms.
 
-Introduce refname_atom_parser_internal() to act as a common parsing
-function for ref printing atoms. This would eventually be used to
-introduce refname_atom_parser() and symref_atom_parser() and also be
-internally used in remote_ref_atom_parser().
+Now the '%(symref)' atom supports the ':strip' atom modifier. Update the
+Documentation and tests to reflect this.
 
 Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ Documentation/git-for-each-ref.txt |  5 +++
+ ref-filter.c                       | 78 ++++++++++++++++++++++----------------
+ t/t6300-for-each-ref.sh            |  9 +++++
+ 3 files changed, 59 insertions(+), 33 deletions(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 3953431..a669a32 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -166,6 +166,11 @@ if::
+ 	the value between the %(if:...) and %(then) atoms with the
+ 	given string.
+ 
++symref::
++	The ref which the given symbolic ref refers to. If not a
++	symbolic ref, nothing is printed. Respects the `:short` and
++	`:strip` options in the same way as `refname` above.
++
+ In addition to the above, for commit and tag objects, the header
+ field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+ be used to specify the value in the header field.
 diff --git a/ref-filter.c b/ref-filter.c
-index 5666814..aad537d 100644
+index aad537d..f1d27b5 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -30,6 +30,11 @@ struct if_then_else {
- 		condition_satisfied : 1;
- };
- 
-+struct refname_atom {
-+	enum { R_NORMAL, R_SHORT, R_STRIP } option;
-+	unsigned int strip;
-+};
-+
- /*
-  * An atom is a valid field atom listed below, possibly prefixed with
-  * a "*" to denote deref_tag().
-@@ -62,6 +67,7 @@ static struct used_atom {
- 			enum { O_FULL, O_LENGTH, O_SHORT } option;
- 			unsigned int length;
- 		} objectname;
-+		struct refname_atom refname;
- 	} u;
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
-@@ -75,6 +81,21 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
- 		die(_("unrecognized color: %%(color:%s)"), color_value);
+@@ -176,6 +176,16 @@ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
+ 		die(_("unrecognized %%(objectname) argument: %s"), arg);
  }
  
-+static void refname_atom_parser_internal(struct refname_atom *atom,
-+					 const char *arg, const char *name)
++static void symref_atom_parser(struct used_atom *atom, const char *arg)
 +{
-+	if (!arg)
-+		atom->option = R_NORMAL;
-+	else if (!strcmp(arg, "short"))
-+		atom->option = R_SHORT;
-+	else if (skip_prefix(arg, "strip=", &arg)) {
-+		atom->option = R_STRIP;
-+		if (strtoul_ui(arg, 10, &atom->strip) || atom->strip <= 0)
-+			die(_("positive value expected refname:strip=%s"), arg);
-+	} 	else
-+		die(_("unrecognized %%(%s) argument: %s"), name, arg);
++	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
 +}
 +
- static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
++static void refname_atom_parser(struct used_atom *atom, const char *arg)
++{
++	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
++}
++
+ static align_type parse_align_position(const char *s)
  {
- 	struct string_list params = STRING_LIST_INIT_DUP;
+ 	if (!strcmp(s, "right"))
+@@ -244,7 +254,7 @@ static struct {
+ 	cmp_type cmp_type;
+ 	void (*parser)(struct used_atom *atom, const char *arg);
+ } valid_atom[] = {
+-	{ "refname" },
++	{ "refname" , FIELD_STR, refname_atom_parser },
+ 	{ "objecttype" },
+ 	{ "objectsize", FIELD_ULONG },
+ 	{ "objectname", FIELD_STR, objectname_atom_parser },
+@@ -273,7 +283,7 @@ static struct {
+ 	{ "contents", FIELD_STR, contents_atom_parser },
+ 	{ "upstream", FIELD_STR, remote_ref_atom_parser },
+ 	{ "push", FIELD_STR, remote_ref_atom_parser },
+-	{ "symref" },
++	{ "symref", FIELD_STR, symref_atom_parser },
+ 	{ "flag" },
+ 	{ "HEAD" },
+ 	{ "color", FIELD_STR, color_atom_parser },
+@@ -1058,21 +1068,16 @@ static inline char *copy_advance(char *dst, const char *src)
+ 	return dst;
+ }
+ 
+-static const char *strip_ref_components(const char *refname, const char *nr_arg)
++static const char *strip_ref_components(const char *refname, unsigned int len)
+ {
+-	char *end;
+-	long nr = strtol(nr_arg, &end, 10);
+-	long remaining = nr;
++	long remaining = len;
+ 	const char *start = refname;
+ 
+-	if (nr < 1 || *end != '\0')
+-		die(_(":strip= requires a positive integer argument"));
+-
+ 	while (remaining) {
+ 		switch (*start++) {
+ 		case '\0':
+-			die(_("ref '%s' does not have %ld components to :strip"),
+-			    refname, nr);
++			die(_("ref '%s' does not have %ud components to :strip"),
++			    refname, len);
+ 		case '/':
+ 			remaining--;
+ 			break;
+@@ -1081,6 +1086,16 @@ static const char *strip_ref_components(const char *refname, const char *nr_arg)
+ 	return start;
+ }
+ 
++static const char *show_ref(struct refname_atom *atom, const char *refname)
++{
++	if (atom->option == R_SHORT)
++		return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
++	else if (atom->option == R_STRIP)
++		return strip_ref_components(refname, atom->strip);
++	else
++		return refname;
++}
++
+ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 				    struct branch *branch, const char **s)
+ {
+@@ -1153,6 +1168,21 @@ char *get_head_description(void)
+ 	return strbuf_detach(&desc, NULL);
+ }
+ 
++static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
++{
++	if (!ref->symref)
++		return "";
++	else
++		return show_ref(&atom->u.refname, ref->symref);
++}
++
++static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
++{
++	if (ref->kind & FILTER_REFS_DETACHED_HEAD)
++		return get_head_description();
++	return show_ref(&atom->u.refname, ref->refname);
++}
++
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  */
+@@ -1181,7 +1211,6 @@ static void populate_value(struct ref_array_item *ref)
+ 		struct atom_value *v = &ref->value[i];
+ 		int deref = 0;
+ 		const char *refname;
+-		const char *formatp;
+ 		struct branch *branch = NULL;
+ 
+ 		v->handler = append_atom;
+@@ -1192,12 +1221,10 @@ static void populate_value(struct ref_array_item *ref)
+ 			name++;
+ 		}
+ 
+-		if (starts_with(name, "refname")) {
+-			refname = ref->refname;
+-			if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+-				refname = get_head_description();
+-		} else if (starts_with(name, "symref"))
+-			refname = ref->symref ? ref->symref : "";
++		if (starts_with(name, "refname"))
++			refname = get_refname(atom, ref);
++		else if (starts_with(name, "symref"))
++			refname = get_symref(atom, ref);
+ 		else if (starts_with(name, "upstream")) {
+ 			const char *branch_name;
+ 			/* only local branches may have an upstream */
+@@ -1273,21 +1300,6 @@ static void populate_value(struct ref_array_item *ref)
+ 		} else
+ 			continue;
+ 
+-		formatp = strchr(name, ':');
+-		if (formatp) {
+-			const char *arg;
+-
+-			formatp++;
+-			if (!strcmp(formatp, "short"))
+-				refname = shorten_unambiguous_ref(refname,
+-						      warn_ambiguous_refs);
+-			else if (skip_prefix(formatp, "strip=", &arg))
+-				refname = strip_ref_components(refname, arg);
+-			else
+-				die(_("unknown %.*s format %s"),
+-				    (int)(formatp - name), name, formatp);
+-		}
+-
+ 		if (!deref)
+ 			v->s = refname;
+ 		else
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index b06ea1c..3d28234 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -589,4 +589,13 @@ test_expect_success 'Verify usage of %(symref:short) atom' '
+ 	test_cmp expected actual
+ '
+ 
++cat >expected <<EOF
++master
++EOF
++
++test_expect_success 'Verify usage of %(symref:strip) atom' '
++	git for-each-ref --format="%(symref:strip=2)" refs/heads/sym > actual &&
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.10.2
 
