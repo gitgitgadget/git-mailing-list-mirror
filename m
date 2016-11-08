@@ -7,50 +7,51 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3B252035F
-	for <e@80x24.org>; Tue,  8 Nov 2016 23:45:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13B0E2035F
+	for <e@80x24.org>; Tue,  8 Nov 2016 23:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751537AbcKHXpx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 18:45:53 -0500
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:33698 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751015AbcKHXpx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 18:45:53 -0500
-Received: by mail-yw0-f169.google.com with SMTP id r204so199071308ywb.0
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:45:52 -0800 (PST)
+        id S1751685AbcKHXra (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 18:47:30 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33581 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752199AbcKHXra (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 18:47:30 -0500
+Received: by mail-yw0-f196.google.com with SMTP id s68so7601314ywg.0
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:47:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=7AEUz6ooazrdAcVl4yvuRHgpTUSMyPTiTBv75ZmsTpE=;
-        b=JPdMRqY38Ng9RtAR03rs+Rt8M1fek/qzAiwvn10IGPisQr7R11MQKATSXxr/tmLHwm
-         HeLpYl9NB2Y94XC1NahZgE9J0fUEK3F4B0zEIW2aQJWV3rg1iPe2DFqXeEbg5ts/T8LN
-         DNzv0rno26Be8lL1aXfyUy0pj58wgfBrrS6sCzUNUMZvzVzwF/AM6oaY3p0NRMGd0Ai2
-         uECzlw3kkMW7Gj0ww6T4sTjUhynThiBsFW55Y3aTdBEHUIoNDFngN9IxpsVRZ4bLxAuW
-         RMXI5XMxIlnQH9fuxYzwuQ0KFbigCEw0SliC1Eqpd8QKSpK2U5Fx08dGDOVPm3bVd4az
-         E08A==
+        bh=naQueziCHqLm9YeT+xuI5stwpuvMppOxbCnKhxZAriM=;
+        b=rPTncJv6Gy5hcQFgVaQpKZfO8WMqoYvuNt+lReAn0TA0eJoQiDatXet6f1GuGF1rl1
+         VQUtdoDmxL+cd7+G+jfHWc+t/4j6nU+ffD/0XSNNf6pNbI7X+JzwznZZ3lqpA1ZiE8v5
+         C1RUpMKdOYYbVZPdJLIRp9sousnV0Y2YRCPS8kcRHHdJ2z219gsahwyjaIZqMurEC5J/
+         jDc+iT+SzTG/2GB6237ScY87UII5pB9GosuMIMW7kGVgVdFxVgZolWotrHssxTNo9keB
+         4mDFZTI5BUsaR6Q8HBIynmwyKaPlbXpRSSGOHESS2z4BZoyT2Mudoyxy00Mxo6pvL+dy
+         ou5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=7AEUz6ooazrdAcVl4yvuRHgpTUSMyPTiTBv75ZmsTpE=;
-        b=Km/ZntR+VUjxdEAZlJtJ7TJ7e3YP9DubiPyqPBlV1d7zMO/RPDv8eAmwiqnFCAb5AG
-         VVEqitxPePcOCInqTtSTZ2F30SI3UbyqOBz3/svmowTyxtKeRFkpDB1a23151gD75ELr
-         /EnoDOipUO8nvg5ZdMcw8Xi8eNWTEO7oyneLh+sofM7oiP3bBYrk8kxxmTFWrIap2s9z
-         vVbF/DaCnhO3PGKbM3CGqSlxN/OCWIAZc6FJDYBPatTLxjcQgnIFGrRPVna1VW2HdCJh
-         Bx8VAEHhJvBkrFTCPzxxVX1ACj7LxPn1x3K+2yC6t/nr31Le+0woUFB4IFsoaWlKzGKH
-         sZDg==
-X-Gm-Message-State: ABUngvdNyLtJLrHyek3ls2Q60yeBrqkga/OxA2UcoK/CfK79m2OYGO4VnBicQgewDKOIsewjOj/mYOPn4Xi8gA==
-X-Received: by 10.13.254.71 with SMTP id o68mr11378757ywf.318.1478648752102;
- Tue, 08 Nov 2016 15:45:52 -0800 (PST)
+        bh=naQueziCHqLm9YeT+xuI5stwpuvMppOxbCnKhxZAriM=;
+        b=J5pprr+9vX4LpXzbyXn1bSZIwhKA/mZ62/Po0EKBul0IAW47MFOUMUgrfiFtKT+6SE
+         k3zuAPIe1uLFQRo+xqh+OCHQ4aTQSG3S5+XxhYLbv82LhEUIIqqUrptydcFxfm5gOgtz
+         1YlnkGZ6MABywiw1hb3GyE3mCkwmxr0FxpTihvdxhW/OoHkrYdaFA+K1ItLGDHGgjpTi
+         68IprsiBdsAjJSPro/YmYY8ebbMM1AmUvziT4XhTnL6WjH/HsAXgwiH9gSl1xcVBUDMn
+         e+eohBGwuJQvendXycTYjc8p+WyjZfqDuWdU9fMPYbZ4Rkj+ndC8Fh/bZAQhldwKoSgC
+         bc0g==
+X-Gm-Message-State: ABUngvdZQKpycUYY1Uyka9xU0vieNkJGXdsE6FPaB4bag6yhJbvnQYlSOk26OLLSLRclIn5lq+qwEwB9w1XybQ==
+X-Received: by 10.129.102.132 with SMTP id a126mr14088091ywc.160.1478648824908;
+ Tue, 08 Nov 2016 15:47:04 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:45:31 -0800 (PST)
-In-Reply-To: <20161108201211.25213-9-Karthik.188@gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-9-Karthik.188@gmail.com>
+Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:46:44 -0800 (PST)
+In-Reply-To: <20161108201211.25213-10-Karthik.188@gmail.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-10-Karthik.188@gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 8 Nov 2016 15:45:31 -0800
-Message-ID: <CA+P7+xrm-MMRa9RuaHUGNWJmH8UcYPj3RZCsy1uvVRMuLeP0ZQ@mail.gmail.com>
-Subject: Re: [PATCH v7 08/17] ref-filter: add support for %(upstream:track,nobracket)
+Date:   Tue, 8 Nov 2016 15:46:44 -0800
+Message-ID: <CA+P7+xoRgHiCxMs1+AT8jHg-mRS8ap3KyKV_jCaoRa_ikaBH4Q@mail.gmail.com>
+Subject: Re: [PATCH v7 09/17] ref-filter: make "%(symref)" atom work with the
+ ':short' modifier
 To:     Karthik Nayak <karthik.188@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -62,177 +63,78 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Nov 8, 2016 at 12:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
 > From: Karthik Nayak <karthik.188@gmail.com>
 >
-> Add support for %(upstream:track,nobracket) which will print the
-> tracking information without the brackets (i.e. "ahead N, behind M").
-> This is needed when we port branch.c to use ref-filter's printing APIs.
+> The "%(symref)" atom doesn't work when used with the ':short' modifier
+> because we strictly match only 'symref' for setting the 'need_symref'
+> indicator. Fix this by using comparing with valid_atom rather than used_atom.
 >
 
-Makes sense. Seems a bit weird that we have the brackets normally
-rather than adding them as an option, but I think this is ok. We don't
-want to change all previous uses in this case.
+Makes sense.
 
-My only suggestion here would be to add code so that the options die()
-when we use nobracket along with trackshort or without track. This
-ensures that the nobracket option only applies to track mode?
-
-> Add test and documentation for the same.
+> Add tests for %(symref) and %(symref:short) while we're here.
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+
+Nice to see more tests around this.
+
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
->  Documentation/git-for-each-ref.txt |  8 +++--
->  ref-filter.c                       | 67 +++++++++++++++++++++++++-------------
->  t/t6300-for-each-ref.sh            |  2 ++
->  3 files changed, 51 insertions(+), 26 deletions(-)
+>  ref-filter.c            |  2 +-
+>  t/t6300-for-each-ref.sh | 24 ++++++++++++++++++++++++
+>  2 files changed, 25 insertions(+), 1 deletion(-)
 >
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index fd365eb..3953431 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -118,9 +118,11 @@ upstream::
->         `refname` above.  Additionally respects `:track` to show
->         "[ahead N, behind M]" and `:trackshort` to show the terse
->         version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
-> -       or "=" (in sync).  Has no effect if the ref does not have
-> -       tracking information associated with it. `:track` also prints
-> -       "[gone]" whenever unknown upstream ref is encountered.
-> +       or "=" (in sync). `:track` also prints "[gone]" whenever
-> +       unknown upstream ref is encountered. Append `:track,nobracket`
-> +       to show tracking information without brackets (i.e "ahead N,
-> +       behind M").  Has no effect if the ref does not have tracking
-> +       information associated with it.
->
-
-Ok so my comment on the previous patch is fixed here, the new wording
-makes it much more clear that [gone] is not the same thing as no
-information. So I don't think we should bother changing the previous
-patch in the series. This might want to document that nobracket works
-even without track, even if it doesn't actually do anything? Or make
-the code more strict in that we die() if the values are put together
-that make no sense?
-
->  push::
->         The name of a local ref which represents the `@{push}` location
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 6d51b80..4d7e414 100644
+> index 4d7e414..5666814 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -46,8 +46,10 @@ static struct used_atom {
->         union {
->                 char color[COLOR_MAXLEN];
->                 struct align align;
-> -               enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
-> -                       remote_ref;
-> +               struct {
-> +                       enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
-> +                       unsigned int nobracket: 1;
-> +               } remote_ref;
->                 struct {
->                         enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
->                         unsigned int nlines;
-> @@ -75,16 +77,33 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
->
->  static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
->  {
-> -       if (!arg)
-> -               atom->u.remote_ref = RR_NORMAL;
-> -       else if (!strcmp(arg, "short"))
-> -               atom->u.remote_ref = RR_SHORTEN;
-> -       else if (!strcmp(arg, "track"))
-> -               atom->u.remote_ref = RR_TRACK;
-> -       else if (!strcmp(arg, "trackshort"))
-> -               atom->u.remote_ref = RR_TRACKSHORT;
-> -       else
-> -               die(_("unrecognized format: %%(%s)"), atom->name);
-> +       struct string_list params = STRING_LIST_INIT_DUP;
-> +       int i;
-> +
-> +       if (!arg) {
-> +               atom->u.remote_ref.option = RR_NORMAL;
-> +               return;
-> +       }
-> +
-> +       atom->u.remote_ref.nobracket = 0;
-> +       string_list_split(&params, arg, ',', -1);
-> +
-> +       for (i = 0; i < params.nr; i++) {
-> +               const char *s = params.items[i].string;
-> +
-> +               if (!strcmp(s, "short"))
-> +                       atom->u.remote_ref.option = RR_SHORTEN;
-> +               else if (!strcmp(s, "track"))
-
-Should we add die()s here to disallow setting the remote_ref option
-multiple times? Otherwise, we should document that the last one wins?
-Not sure it's really a big deal here, but we could do it to ensure
-consistency for options which don't make sense together?
-
-> +                       atom->u.remote_ref.option = RR_TRACK;
-> +               else if (!strcmp(s, "trackshort"))
-> +                       atom->u.remote_ref.option = RR_TRACKSHORT;
-> +               else if (!strcmp(s, "nobracket"))
-> +                       atom->u.remote_ref.nobracket = 1;
-> +               else
-> +                       die(_("unrecognized format: %%(%s)"), atom->name);
-> +       }
-> +
-> +       string_list_clear(&params, 0);
+> @@ -338,7 +338,7 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+>                 valid_atom[i].parser(&used_atom[at], arg);
+>         if (*atom == '*')
+>                 need_tagged = 1;
+> -       if (!strcmp(used_atom[at].name, "symref"))
+> +       if (!strcmp(valid_atom[i].name, "symref"))
+>                 need_symref = 1;
+>         return at;
 >  }
->
->  static void body_atom_parser(struct used_atom *atom, const char *arg)
-> @@ -1045,25 +1064,27 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->                                     struct branch *branch, const char **s)
->  {
->         int num_ours, num_theirs;
-> -       if (atom->u.remote_ref == RR_SHORTEN)
-> +       if (atom->u.remote_ref.option == RR_SHORTEN)
->                 *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
-> -       else if (atom->u.remote_ref == RR_TRACK) {
-> +       else if (atom->u.remote_ref.option == RR_TRACK) {
->                 if (stat_tracking_info(branch, &num_ours,
->                                        &num_theirs, NULL)) {
-> -                       *s = "[gone]";
-> -                       return;
-> -               }
-> -
-> -               if (!num_ours && !num_theirs)
-> +                       *s = xstrdup("gone");
-> +               } else if (!num_ours && !num_theirs)
->                         *s = "";
->                 else if (!num_ours)
-> -                       *s = xstrfmt("[behind %d]", num_theirs);
-> +                       *s = xstrfmt("behind %d", num_theirs);
->                 else if (!num_theirs)
-> -                       *s = xstrfmt("[ahead %d]", num_ours);
-> +                       *s = xstrfmt("ahead %d", num_ours);
->                 else
-> -                       *s = xstrfmt("[ahead %d, behind %d]",
-> +                       *s = xstrfmt("ahead %d, behind %d",
->                                      num_ours, num_theirs);
-> -       } else if (atom->u.remote_ref == RR_TRACKSHORT) {
-> +               if (!atom->u.remote_ref.nobracket && *s[0]) {
-> +                       const char *to_free = *s;
-> +                       *s = xstrfmt("[%s]", *s);
-> +                       free((void *)to_free);
-> +               }
-> +       } else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
->                 if (stat_tracking_info(branch, &num_ours,
->                                        &num_theirs, NULL))
->                         return;
 > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index a92b36f..2c5f177 100755
+> index 2c5f177..b06ea1c 100755
 > --- a/t/t6300-for-each-ref.sh
 > +++ b/t/t6300-for-each-ref.sh
-> @@ -372,6 +372,8 @@ test_expect_success 'setup for upstream:track[short]' '
->
->  test_atom head upstream:track '[ahead 1]'
->  test_atom head upstream:trackshort '>'
-> +test_atom head upstream:track,nobracket 'ahead 1'
-> +test_atom head upstream:nobracket,track 'ahead 1'
->  test_atom head push:track '[ahead 1]'
->  test_atom head push:trackshort '>'
->
+> @@ -38,6 +38,7 @@ test_atom() {
+>         case "$1" in
+>                 head) ref=refs/heads/master ;;
+>                  tag) ref=refs/tags/testtag ;;
+> +                sym) ref=refs/heads/sym ;;
+>                    *) ref=$1 ;;
+>         esac
+>         printf '%s\n' "$3" >expected
+> @@ -565,4 +566,27 @@ test_expect_success 'Verify sort with multiple keys' '
+>                 refs/tags/bogo refs/tags/master > actual &&
+>         test_cmp expected actual
+>  '
+> +
+> +test_expect_success 'Add symbolic ref for the following tests' '
+> +       git symbolic-ref refs/heads/sym refs/heads/master
+> +'
+> +
+> +cat >expected <<EOF
+> +refs/heads/master
+> +EOF
+> +
+> +test_expect_success 'Verify usage of %(symref) atom' '
+> +       git for-each-ref --format="%(symref)" refs/heads/sym > actual &&
+> +       test_cmp expected actual
+> +'
+> +
+> +cat >expected <<EOF
+> +heads/master
+> +EOF
+> +
+> +test_expect_success 'Verify usage of %(symref:short) atom' '
+> +       git for-each-ref --format="%(symref:short)" refs/heads/sym > actual &&
+> +       test_cmp expected actual
+> +'
+> +
+>  test_done
 > --
 > 2.10.2
 >
