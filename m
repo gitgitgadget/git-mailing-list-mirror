@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13B0E2035F
-	for <e@80x24.org>; Tue,  8 Nov 2016 23:47:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA5852035F
+	for <e@80x24.org>; Tue,  8 Nov 2016 23:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751685AbcKHXra (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 18:47:30 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:33581 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752199AbcKHXra (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 18:47:30 -0500
-Received: by mail-yw0-f196.google.com with SMTP id s68so7601314ywg.0
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:47:05 -0800 (PST)
+        id S1753402AbcKHXwZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 18:52:25 -0500
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34838 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752060AbcKHXwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 18:52:24 -0500
+Received: by mail-yw0-f194.google.com with SMTP id b66so4695775ywh.2
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=naQueziCHqLm9YeT+xuI5stwpuvMppOxbCnKhxZAriM=;
-        b=rPTncJv6Gy5hcQFgVaQpKZfO8WMqoYvuNt+lReAn0TA0eJoQiDatXet6f1GuGF1rl1
-         VQUtdoDmxL+cd7+G+jfHWc+t/4j6nU+ffD/0XSNNf6pNbI7X+JzwznZZ3lqpA1ZiE8v5
-         C1RUpMKdOYYbVZPdJLIRp9sousnV0Y2YRCPS8kcRHHdJ2z219gsahwyjaIZqMurEC5J/
-         jDc+iT+SzTG/2GB6237ScY87UII5pB9GosuMIMW7kGVgVdFxVgZolWotrHssxTNo9keB
-         4mDFZTI5BUsaR6Q8HBIynmwyKaPlbXpRSSGOHESS2z4BZoyT2Mudoyxy00Mxo6pvL+dy
-         ou5w==
+        bh=k2mzLuPk8vhu4g5Dmb38j4XUph+LbPixMmIEzsFmJqk=;
+        b=yXsr9HYMrnc6SVNTqHjSs6ex2HjvEfYVlXW5O6JynPyc10OTbEUm17+dsm23QbXpmR
+         EZLipyXtkD2W2FQihRQhinP2FsM4FdKOci5UpxaMVoOU4zTRtl3COkvEWRLfjU5+i4w1
+         JahNcxmEPOrftqtkRYQZM3kaeDHhhCQq+zMNYSlsnbQGAXvdIWpc0RvraYO5vAGVuBEx
+         CTcdGNk7ZySGKeHNjAc6wqR3XgGFAf5kC5JKXNURGniE5BQCQfK1jF1Z2rC8hPfOboWu
+         +DYOdNhS4p0BHlNsaFk9W2hPoGe3V6Yxrm/ffalXatUgFw/k58lW/L+LDundcIHJpUVF
+         wQtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=naQueziCHqLm9YeT+xuI5stwpuvMppOxbCnKhxZAriM=;
-        b=J5pprr+9vX4LpXzbyXn1bSZIwhKA/mZ62/Po0EKBul0IAW47MFOUMUgrfiFtKT+6SE
-         k3zuAPIe1uLFQRo+xqh+OCHQ4aTQSG3S5+XxhYLbv82LhEUIIqqUrptydcFxfm5gOgtz
-         1YlnkGZ6MABywiw1hb3GyE3mCkwmxr0FxpTihvdxhW/OoHkrYdaFA+K1ItLGDHGgjpTi
-         68IprsiBdsAjJSPro/YmYY8ebbMM1AmUvziT4XhTnL6WjH/HsAXgwiH9gSl1xcVBUDMn
-         e+eohBGwuJQvendXycTYjc8p+WyjZfqDuWdU9fMPYbZ4Rkj+ndC8Fh/bZAQhldwKoSgC
-         bc0g==
-X-Gm-Message-State: ABUngvdZQKpycUYY1Uyka9xU0vieNkJGXdsE6FPaB4bag6yhJbvnQYlSOk26OLLSLRclIn5lq+qwEwB9w1XybQ==
-X-Received: by 10.129.102.132 with SMTP id a126mr14088091ywc.160.1478648824908;
- Tue, 08 Nov 2016 15:47:04 -0800 (PST)
+        bh=k2mzLuPk8vhu4g5Dmb38j4XUph+LbPixMmIEzsFmJqk=;
+        b=DMlz2f448FGj70he4P8bL9hDne3iC0eqsNisNufJn/bfFI7dvpBg1QINuONT4cN30b
+         lkygaPpiVllqkrYlOOSGuVT2NJ88WVntvsO9EMK43X3+lt10/BRr8t2dztAYuXZxh51r
+         jEv1buZt2ERQfXoTmL88kETI9K/QmturjcBpDCMnGwxJc7iAyCKhemDZBQ6fpeyRDq7t
+         tkKFfi7NA+KpmlxoxvdThgmmWwT/crV0YCP4kZeePGZIJb3RGvaKRVLvFTxdE3d0ixpl
+         Tn93Hra/FDL5zVwH5y7hib+mZr7hFiEHKUalPJchE9Ctxr5oKHNkLxP0FE76/g2vOAss
+         bJ5A==
+X-Gm-Message-State: ABUngvdCDCpj864ErzMc30v+fMXhxTJ9f0/TriR36R8WuIAx/xSTlVmX15b9uT3GBQ6g9Q36aGRxuWY4MNvWfQ==
+X-Received: by 10.13.254.71 with SMTP id o68mr11400679ywf.318.1478649143645;
+ Tue, 08 Nov 2016 15:52:23 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:46:44 -0800 (PST)
-In-Reply-To: <20161108201211.25213-10-Karthik.188@gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-10-Karthik.188@gmail.com>
+Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:52:03 -0800 (PST)
+In-Reply-To: <20161108201211.25213-12-Karthik.188@gmail.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-12-Karthik.188@gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 8 Nov 2016 15:46:44 -0800
-Message-ID: <CA+P7+xoRgHiCxMs1+AT8jHg-mRS8ap3KyKV_jCaoRa_ikaBH4Q@mail.gmail.com>
-Subject: Re: [PATCH v7 09/17] ref-filter: make "%(symref)" atom work with the
- ':short' modifier
+Date:   Tue, 8 Nov 2016 15:52:03 -0800
+Message-ID: <CA+P7+xrHRMZemNfo3gjJryBRR5b4T8VT3t9_CBE5hJJfv+D3PQ@mail.gmail.com>
+Subject: Re: [PATCH v7 11/17] ref-filter: introduce symref_atom_parser() and refname_atom_parser()
 To:     Karthik Nayak <karthik.188@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -63,74 +62,217 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Nov 8, 2016 at 12:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
 > From: Karthik Nayak <karthik.188@gmail.com>
 >
-> The "%(symref)" atom doesn't work when used with the ':short' modifier
-> because we strictly match only 'symref' for setting the 'need_symref'
-> indicator. Fix this by using comparing with valid_atom rather than used_atom.
+> Using refname_atom_parser_internal(), introduce symref_atom_parser() and
+> refname_atom_parser() which will parse the atoms %(symref) and
+> %(refname) respectively. Store the parsed information into the
+> 'used_atom' structure based on the modifiers used along with the atoms.
+>
+> Now the '%(symref)' atom supports the ':strip' atom modifier. Update the
+> Documentation and tests to reflect this.
 >
 
-Makes sense.
+One minor nit is that the first part is actually identical so I wonder
+if it's worth having two separate functions?
 
-> Add tests for %(symref) and %(symref:short) while we're here.
->
+Thanks,
+Jake
 
-Nice to see more tests around this.
-
-> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Jeff King <peff@peff.net>
 > Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
->  ref-filter.c            |  2 +-
->  t/t6300-for-each-ref.sh | 24 ++++++++++++++++++++++++
->  2 files changed, 25 insertions(+), 1 deletion(-)
+>  Documentation/git-for-each-ref.txt |  5 +++
+>  ref-filter.c                       | 78 ++++++++++++++++++++++----------------
+>  t/t6300-for-each-ref.sh            |  9 +++++
+>  3 files changed, 59 insertions(+), 33 deletions(-)
 >
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index 3953431..a669a32 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -166,6 +166,11 @@ if::
+>         the value between the %(if:...) and %(then) atoms with the
+>         given string.
+>
+> +symref::
+> +       The ref which the given symbolic ref refers to. If not a
+> +       symbolic ref, nothing is printed. Respects the `:short` and
+> +       `:strip` options in the same way as `refname` above.
+> +
+>  In addition to the above, for commit and tag objects, the header
+>  field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+>  be used to specify the value in the header field.
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 4d7e414..5666814 100644
+> index aad537d..f1d27b5 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -338,7 +338,7 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
->                 valid_atom[i].parser(&used_atom[at], arg);
->         if (*atom == '*')
->                 need_tagged = 1;
-> -       if (!strcmp(used_atom[at].name, "symref"))
-> +       if (!strcmp(valid_atom[i].name, "symref"))
->                 need_symref = 1;
->         return at;
+> @@ -176,6 +176,16 @@ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
+>                 die(_("unrecognized %%(objectname) argument: %s"), arg);
 >  }
+>
+> +static void symref_atom_parser(struct used_atom *atom, const char *arg)
+> +{
+> +       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
+> +}
+> +
+> +static void refname_atom_parser(struct used_atom *atom, const char *arg)
+> +{
+> +       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
+> +}
+> +
+
+What's the reasoning for using separate functions here if they are
+exactly identical except for name? Do we intend to add separate
+options for this? I don't really have a problem with separate
+functions here since it helps avoid confusion but they are identical
+otherwise...
+
+>  static align_type parse_align_position(const char *s)
+>  {
+>         if (!strcmp(s, "right"))
+> @@ -244,7 +254,7 @@ static struct {
+>         cmp_type cmp_type;
+>         void (*parser)(struct used_atom *atom, const char *arg);
+>  } valid_atom[] = {
+> -       { "refname" },
+> +       { "refname" , FIELD_STR, refname_atom_parser },
+>         { "objecttype" },
+>         { "objectsize", FIELD_ULONG },
+>         { "objectname", FIELD_STR, objectname_atom_parser },
+> @@ -273,7 +283,7 @@ static struct {
+>         { "contents", FIELD_STR, contents_atom_parser },
+>         { "upstream", FIELD_STR, remote_ref_atom_parser },
+>         { "push", FIELD_STR, remote_ref_atom_parser },
+> -       { "symref" },
+> +       { "symref", FIELD_STR, symref_atom_parser },
+>         { "flag" },
+>         { "HEAD" },
+>         { "color", FIELD_STR, color_atom_parser },
+> @@ -1058,21 +1068,16 @@ static inline char *copy_advance(char *dst, const char *src)
+>         return dst;
+>  }
+>
+> -static const char *strip_ref_components(const char *refname, const char *nr_arg)
+> +static const char *strip_ref_components(const char *refname, unsigned int len)
+>  {
+> -       char *end;
+> -       long nr = strtol(nr_arg, &end, 10);
+> -       long remaining = nr;
+> +       long remaining = len;
+>         const char *start = refname;
+>
+> -       if (nr < 1 || *end != '\0')
+> -               die(_(":strip= requires a positive integer argument"));
+> -
+>         while (remaining) {
+>                 switch (*start++) {
+>                 case '\0':
+> -                       die(_("ref '%s' does not have %ld components to :strip"),
+> -                           refname, nr);
+> +                       die(_("ref '%s' does not have %ud components to :strip"),
+> +                           refname, len);
+>                 case '/':
+>                         remaining--;
+>                         break;
+> @@ -1081,6 +1086,16 @@ static const char *strip_ref_components(const char *refname, const char *nr_arg)
+>         return start;
+>  }
+>
+> +static const char *show_ref(struct refname_atom *atom, const char *refname)
+> +{
+> +       if (atom->option == R_SHORT)
+> +               return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+> +       else if (atom->option == R_STRIP)
+> +               return strip_ref_components(refname, atom->strip);
+> +       else
+> +               return refname;
+> +}
+> +
+>  static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>                                     struct branch *branch, const char **s)
+>  {
+> @@ -1153,6 +1168,21 @@ char *get_head_description(void)
+>         return strbuf_detach(&desc, NULL);
+>  }
+>
+> +static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
+> +{
+> +       if (!ref->symref)
+> +               return "";
+> +       else
+> +               return show_ref(&atom->u.refname, ref->symref);
+> +}
+> +
+> +static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
+> +{
+> +       if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+> +               return get_head_description();
+> +       return show_ref(&atom->u.refname, ref->refname);
+> +}
+> +
+>  /*
+>   * Parse the object referred by ref, and grab needed value.
+>   */
+> @@ -1181,7 +1211,6 @@ static void populate_value(struct ref_array_item *ref)
+>                 struct atom_value *v = &ref->value[i];
+>                 int deref = 0;
+>                 const char *refname;
+> -               const char *formatp;
+>                 struct branch *branch = NULL;
+>
+>                 v->handler = append_atom;
+> @@ -1192,12 +1221,10 @@ static void populate_value(struct ref_array_item *ref)
+>                         name++;
+>                 }
+>
+> -               if (starts_with(name, "refname")) {
+> -                       refname = ref->refname;
+> -                       if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+> -                               refname = get_head_description();
+> -               } else if (starts_with(name, "symref"))
+> -                       refname = ref->symref ? ref->symref : "";
+> +               if (starts_with(name, "refname"))
+> +                       refname = get_refname(atom, ref);
+> +               else if (starts_with(name, "symref"))
+> +                       refname = get_symref(atom, ref);
+>                 else if (starts_with(name, "upstream")) {
+>                         const char *branch_name;
+>                         /* only local branches may have an upstream */
+> @@ -1273,21 +1300,6 @@ static void populate_value(struct ref_array_item *ref)
+>                 } else
+>                         continue;
+>
+> -               formatp = strchr(name, ':');
+> -               if (formatp) {
+> -                       const char *arg;
+> -
+> -                       formatp++;
+> -                       if (!strcmp(formatp, "short"))
+> -                               refname = shorten_unambiguous_ref(refname,
+> -                                                     warn_ambiguous_refs);
+> -                       else if (skip_prefix(formatp, "strip=", &arg))
+> -                               refname = strip_ref_components(refname, arg);
+> -                       else
+> -                               die(_("unknown %.*s format %s"),
+> -                                   (int)(formatp - name), name, formatp);
+> -               }
+> -
+>                 if (!deref)
+>                         v->s = refname;
+>                 else
 > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 2c5f177..b06ea1c 100755
+> index b06ea1c..3d28234 100755
 > --- a/t/t6300-for-each-ref.sh
 > +++ b/t/t6300-for-each-ref.sh
-> @@ -38,6 +38,7 @@ test_atom() {
->         case "$1" in
->                 head) ref=refs/heads/master ;;
->                  tag) ref=refs/tags/testtag ;;
-> +                sym) ref=refs/heads/sym ;;
->                    *) ref=$1 ;;
->         esac
->         printf '%s\n' "$3" >expected
-> @@ -565,4 +566,27 @@ test_expect_success 'Verify sort with multiple keys' '
->                 refs/tags/bogo refs/tags/master > actual &&
+> @@ -589,4 +589,13 @@ test_expect_success 'Verify usage of %(symref:short) atom' '
 >         test_cmp expected actual
 >  '
-> +
-> +test_expect_success 'Add symbolic ref for the following tests' '
-> +       git symbolic-ref refs/heads/sym refs/heads/master
-> +'
-> +
+>
 > +cat >expected <<EOF
-> +refs/heads/master
+> +master
 > +EOF
 > +
-> +test_expect_success 'Verify usage of %(symref) atom' '
-> +       git for-each-ref --format="%(symref)" refs/heads/sym > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +cat >expected <<EOF
-> +heads/master
-> +EOF
-> +
-> +test_expect_success 'Verify usage of %(symref:short) atom' '
-> +       git for-each-ref --format="%(symref:short)" refs/heads/sym > actual &&
+> +test_expect_success 'Verify usage of %(symref:strip) atom' '
+> +       git for-each-ref --format="%(symref:strip=2)" refs/heads/sym > actual &&
 > +       test_cmp expected actual
 > +'
 > +
