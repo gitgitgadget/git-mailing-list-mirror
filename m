@@ -6,70 +6,73 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0396A2022A
-	for <e@80x24.org>; Tue,  8 Nov 2016 21:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 548E12022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 21:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754016AbcKHVs3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 16:48:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40347 "EHLO cloud.peff.net"
+        id S1751800AbcKHV5N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 16:57:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40357 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753391AbcKHVs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 16:48:28 -0500
-Received: (qmail 31650 invoked by uid 109); 8 Nov 2016 21:48:27 -0000
+        id S1751332AbcKHV5M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 16:57:12 -0500
+Received: (qmail 32149 invoked by uid 109); 8 Nov 2016 21:57:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 21:48:27 +0000
-Received: (qmail 24476 invoked by uid 111); 8 Nov 2016 21:48:56 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 21:57:12 +0000
+Received: (qmail 24574 invoked by uid 111); 8 Nov 2016 21:57:40 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 16:48:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2016 16:48:25 -0500
-Date:   Tue, 8 Nov 2016 16:48:25 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 16:57:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2016 16:57:09 -0500
+Date:   Tue, 8 Nov 2016 16:57:09 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: 2.11.0-rc1 will not be tagged for a few days
-Message-ID: <20161108214825.yo37kvoqkeucuqgg@sigill.intra.peff.net>
-References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
- <20161108004038.a7gyoe6wpucxjmvz@sigill.intra.peff.net>
- <65a1bb6d-e924-21aa-70d3-303ebdc499f1@kdbg.org>
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not
+ to abbreviate
+Message-ID: <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
+References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
+ <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
+ <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
+ <22561.44597.59852.574831@chiark.greenend.org.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <65a1bb6d-e924-21aa-70d3-303ebdc499f1@kdbg.org>
+In-Reply-To: <22561.44597.59852.574831@chiark.greenend.org.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 08, 2016 at 07:25:26AM +0100, Johannes Sixt wrote:
+On Tue, Nov 08, 2016 at 10:51:33AM +0000, Ian Jackson wrote:
 
-> Am 08.11.2016 um 01:40 schrieb Jeff King:
-> > In addition to J6t's fix in t0021, ...
+> Yes, I agree that it does seem weird.  But the alternatives seem
+> worse.  I think it's probably best if options like this (currently
+> only honoured by out-of-core tools but of general usefulness) are
+> collected together here.
 > 
-> Just to get things straight: Of my two patches, this one ("uniq -c
-> variations")
-> 
-> https://public-inbox.org/git/c842e0a7-b032-e0c4-0995-f11d93c17c0a@kdbg.org/
-> 
-> is a bug fix in my environment, and I have a suspicion that it is also
-> required in other less frequently tested environments (Solaris? BSD
-> variants?)
-> 
-> The other one, which you most likely remember as dealing with "leading
-> whitespace in wc -c"
-> 
-> https://public-inbox.org/git/b87ddffd-3de1-4481-b484-9f03a73b6ad1@kdbg.org/
-> 
-> is "only" an optimization. The link points at the final version.
+> There is a precedent: `git config gui.encoding' is, according to the
+> documentation, honoured only by git-gui and gitk.
 
-Thanks for clarifying. I think it's probably worth applying both.
+Yeah, I think git's config system was always designed to carry options
+for porcelains outside of git-core itself. So your new option fits into
+that.
 
-I'm collecting v2.11-rc1 topics in the "refs/heads/for-junio/" section
-of git://github.com/peff/git.git.
+I think the two things I found weird were:
 
-I've also got proposed merges for "master" there, though note that none
-of the topics has actually cooked at all in next (the fixes are trivial
-enough that it may be OK, though).
+  - it's in the "log" section, which makes me think it's an option for
+    git-log. But it's not. I'm not sure what the _right_ section is, but
+    hopefully it would make it clear that this is command-agnostic.
+
+    Something like "gui.abbrevTags" might be OK (and as you note, has
+    precedence). But of course it's possible that a command like "tig"
+    could learn to support it.  I'm not sure if that counts as a GUI or
+    not. :)
+
+  - The description talks about tag abbreviation, but doesn't really
+    define it. Not being a gitk user, it was hard for me to figure out
+    whether this was even relevant. Does it mean turning
+    "refs/tags/v1.0" into "1.0"? From the rest of the series, it sounds
+    like no. That should be more clear from the documentation.
 
 -Peff
