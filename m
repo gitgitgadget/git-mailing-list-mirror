@@ -2,100 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE5D62022A
-	for <e@80x24.org>; Tue,  8 Nov 2016 12:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4202022A
+	for <e@80x24.org>; Tue,  8 Nov 2016 13:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933335AbcKHMMW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 07:12:22 -0500
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:55414 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932655AbcKHMLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 07:11:47 -0500
-Received: (qmail 16421 invoked from network); 8 Nov 2016 12:11:46 -0000
-Received: (qmail 8287 invoked from network); 8 Nov 2016 12:11:46 -0000
-Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 8 Nov 2016 12:11:45 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
-To:     git@vger.kernel.org
-Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
-        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 03/16] i18n: add--interactive: mark simple here-documents for translation
-Date:   Tue,  8 Nov 2016 11:08:10 -0100
-Message-Id: <20161108120823.11204-4-vascomalmeida@sapo.pt>
-X-Mailer: git-send-email 2.11.0.rc0.23.g8236252
-In-Reply-To: <20161108120823.11204-1-vascomalmeida@sapo.pt>
-References: <20161108120823.11204-1-vascomalmeida@sapo.pt>
-In-Reply-To: <20161005172110.30801-1-vascomalmeida@sapo.pt>
-References: <20161005172110.30801-1-vascomalmeida@sapo.pt>
+        id S1751827AbcKHNnQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 08:43:16 -0500
+Received: from chiark.greenend.org.uk ([212.13.197.229]:51751 "EHLO
+        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751314AbcKHNnO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 08:43:14 -0500
+Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
+        (return-path ijackson@chiark.greenend.org.uk)
+        id 1c46fs-0004tq-PJ; Tue, 08 Nov 2016 13:42:52 +0000
+From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-ID: <22561.54876.646018.985175@chiark.greenend.org.uk>
+Date:   Tue, 8 Nov 2016 13:42:52 +0000
+To:     Markus Hitter <mah@jump-ing.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 0/6] Provide for config to specify tags not to abbreviate
+In-Reply-To: <0d7ff8e5-230a-c6e1-6663-eaecee5d5620@jump-ing.de>
+References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
+        <22561.8757.914542.10409@chiark.greenend.org.uk>
+        <0d7ff8e5-230a-c6e1-6663-eaecee5d5620@jump-ing.de>
+X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark messages in here-documents without interpolation for translation.
+Markus Hitter writes ("Re: [PATCH 0/6] Provide for config to specify tags not to abbreviate"):
+> TBH, I see a violation of tool independence with the choice of
+> preference storage. Abbreviation of tags isn't a property of the
+> repository, but a pure visual thing (screen real estate, whatever),
+> so it should be handled by the tool doing the visuals, only.
 
-The here-document delimiter \EOF, which is the same as 'EOF', indicates
-that the text is to be treated literally without interpolation of its
-content.  Unfortunately xgettext is not able to extract here-documents
-delimited with \EOF but it is with delimiter enclosed in single quotes.
-So change \EOF to 'EOF', although in this case does not make
-difference what variation of here-document to use since there is nothing
-to interpolate.
+As I explained in my cover letter, the set of tags which are important
+enough not to abbreviate, even if they would normally be abbreviated,
+is indeed a property of the repository.
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- git-add--interactive.perl | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+The alternative would be for a tool like gitk to grow an
+ever-increasing set of heuristics.  Or, worse, for a tool like dgit
+(which knows that archive/* are special) to edit the user's personal
+gitk settings.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index cf216ecb6..5800010ed 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -639,7 +639,7 @@ sub list_and_choose {
- }
- 
- sub singleton_prompt_help_cmd {
--	print colored $help_color, <<\EOF ;
-+	print colored $help_color, __ <<'EOF' ;
- Prompt help:
- 1          - select a numbered item
- foo        - select item based on unique prefix
-@@ -648,7 +648,7 @@ EOF
- }
- 
- sub prompt_help_cmd {
--	print colored $help_color, <<\EOF ;
-+	print colored $help_color, __ <<'EOF' ;
- Prompt help:
- 1          - select a single item
- 3-5        - select a range of items
-@@ -1584,7 +1584,9 @@ sub quit_cmd {
- }
- 
- sub help_cmd {
--	print colored $help_color, <<\EOF ;
-+# TRANSLATORS: please do not translate the command names
-+# 'status', 'update', 'revert', etc.
-+	print colored $help_color, __ <<'EOF' ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
+> Your use case looks like a nice opportunity for
+> 
+> - adding a Gitk user preference on how long displayed tags are
+>   allowed to be (instead of distinguishing between abbreviated and
+>   unabbreviated ones; set it to 999 for your use case) and/or
+
+This would be wrong, because it's only certain tags that ought not to
+be abbreviated.  The right way to identify those tags is by 1. what
+repo they are in 2. what their name is.  (It might be possible to
+identify them by content or something - for example, the interesting
+archive/* tags all refer to commits whose trees contain debian/ - but
+that is getting quite out of hand.)
+
+What you propose are possible general improvements to the abbreviation
+system in gitk.  But they do not address the fundamental point that
+some tags are much more interesting than others.  It is this latter
+point that I am trying to deal with.
+
+Ian.
+
 -- 
-2.11.0.rc0.23.g8236252
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
 
+If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
+a private address which bypasses my fierce spamfilter.
