@@ -6,78 +6,71 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CE812021E
-	for <e@80x24.org>; Wed,  9 Nov 2016 22:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2641C2021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 22:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754419AbcKIW56 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 17:57:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58479 "EHLO
+        id S1754752AbcKIW6l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 17:58:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52222 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753423AbcKIW55 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 17:57:57 -0500
+        with ESMTP id S1751919AbcKIW6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 17:58:40 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 36FF24D69A;
-        Wed,  9 Nov 2016 17:57:56 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38E474E4E4;
+        Wed,  9 Nov 2016 17:58:39 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v9UiFkPIM8dh1UQLbZ+aWPOE4BA=; b=Gja6/a
-        tePi7ZKI1+uPtiSfRD26ooV020bw9I15CnsUjBMogbTlBxcoeInVcmAsid6ODOtP
-        s6G05VmIeAZsJcETkGsI7MclZFkY7DbwmXtxzgiSQjSR+FM8GzqhQLqCgeR72ZoI
-        R+xMVLJBZBiDeG4QnI5MH2Ro4YGfT8lwavoQc=
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=Bce44VKTRwTW4bMmpRISkxlYaqY=; b=mewEX7Ktj/GcxMONj9Ey
+        B07YplUj6go0qHlb2vQPfjJG8oof9WQjUjaWIfZv7u1FTxVCSW4EYqg/jM3BYlN7
+        hhqYLgHNY1yB7ev45WMHiZCTz9RZ/NvZ/fmJBLthz/PGrSSnM77HBTYt2YgVl3zm
+        qlFcPyExQb7wIeZNazXGFgo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IwY7mjG24egsfrNIm64L9E7LEqOaZIvK
-        G/M7VYshSSppElMoVmMkkTBvsg+bOZ0fmdbt9XkgSA4DO4eN5YORjPXw+rsw8Rau
-        tXVMVO1aoUSfSZOjeilWRL/Q3mX+IOyrsUQolEdAzbZov9Njn0EIZNJaAvnwkGyQ
-        A1r70BXr6YQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E4504D699;
-        Wed,  9 Nov 2016 17:57:56 -0500 (EST)
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=JfjPJFOC4ipmqTQhwjDX70gbrgFmPRvjEHZrZEP22WeYKg
+        gll6es+3OXO2Hfsb2zKCL9xYw7qWMum09yVKMDbcwL9b0eVI7poytFKJO1499tyR
+        CrcPpiiQbQTnvL7OCk8Yi24IT3DhBACF17b0wi8EaMBJeJhj1XLP15AKg/oC4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3059E4E4E3;
+        Wed,  9 Nov 2016 17:58:39 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A4FD94D698;
-        Wed,  9 Nov 2016 17:57:55 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9CB9C4E4E0;
+        Wed,  9 Nov 2016 17:58:38 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Shawn O. Pierce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>
-Subject: Re: Regarding "git log" on "git series" metadata
-References: <CAP8UFD2+A0MUKazAfSwCvv61TJRPuoOzH5EkqcrBOUi4TcuoDw@mail.gmail.com>
-        <xmqq1syqedv4.fsf@gitster.mtv.corp.google.com>
-        <CAP8UFD0bqNQZ3nuGUDX0qrSo44hf1NL9LeZB_FQcXg3j0mD38A@mail.gmail.com>
-        <CAP8UFD1EZ8HBzLAeyFBFgU7n2uJpswqgEgA4XM1YJuRAG_ZAAQ@mail.gmail.com>
-        <20161105151836.wztypzrdywyltvrc@x>
-        <CAP8UFD3XFHr7POKmZr_6guapC6sme3GvWBV5vPw4XO7FE5HOPw@mail.gmail.com>
-        <20161105202553.migx75gfuujakqyk@x>
-        <CA+P7+xoG3ag8dj7s_NRoqz-EwjVENSJSzE_qj6gnW-SmWt0bgA@mail.gmail.com>
-        <20161106163410.ilysej5r6qd3744e@x>
-        <xmqqshr4cyy7.fsf@gitster.mtv.corp.google.com>
-        <20161106173311.lqoxxgcklx4jlrg7@x>
-Date:   Wed, 09 Nov 2016 14:57:54 -0800
-In-Reply-To: <20161106173311.lqoxxgcklx4jlrg7@x> (Josh Triplett's message of
-        "Sun, 6 Nov 2016 09:33:11 -0800")
-Message-ID: <xmqqtwbg8dn1.fsf@gitster.mtv.corp.google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree .gitattributes
+References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
+        <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net>
+        <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
+        <20161107211010.xo3243egggdgscou@sigill.intra.peff.net>
+        <20161107211522.vzl4zpsu5cpembgc@sigill.intra.peff.net>
+        <CACsJy8BoEXDjwe=ZX5ZOC_mvaMjYrB3i7wcMmiOP3mm5-rwC5Q@mail.gmail.com>
+Date:   Wed, 09 Nov 2016 14:58:37 -0800
+Message-ID: <xmqqmvh88dlu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F3A5BEC6-A6CF-11E6-95CA-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 0D38BDB6-A6D0-11E6-97ED-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> This would definitely need protocol extension when transferring
->> objects across repositories.
+> Let's err on the safe side and disable symlinks to outside repo by
+> default (or even all symlinks on .gitattributes and .gitignore as the
+> first step)
 >
-> It'd also need a repository format extension locally.  Otherwise, if you
-> ever touched that repository with an older git (or a tool built on an
-> older libgit2 or JGit or other library), you could lose data.
+> What I learned from my changes in .gitignore is, if we have not
+> forbidden something, people likely find some creative use for it.
 
-True.  Thanks for sanity-checking me.
+Yup.  Supporting any symlink in-tree is like requiring Git to be
+used only on symlink-capable filesystems.  Not allowing it sounds
+like a very sensible option and unlike true contents, there is no
+downside to give that limitation to things like .git<anything>.
+
+Shouldn't we do the same for .gitmodules while we are at it?
+
