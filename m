@@ -7,121 +7,97 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A33FD20229
-	for <e@80x24.org>; Wed,  9 Nov 2016 09:22:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B838B20229
+	for <e@80x24.org>; Wed,  9 Nov 2016 09:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753298AbcKIJWq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 04:22:46 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36788 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752558AbcKIJWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 04:22:43 -0500
-Received: by mail-it0-f68.google.com with SMTP id n68so13844122itn.3
-        for <git@vger.kernel.org>; Wed, 09 Nov 2016 01:22:43 -0800 (PST)
+        id S1752410AbcKIJYv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 04:24:51 -0500
+Received: from mail-it0-f65.google.com ([209.85.214.65]:36646 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751542AbcKIJYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 04:24:48 -0500
+Received: by mail-it0-f65.google.com with SMTP id n68so13850006itn.3
+        for <git@vger.kernel.org>; Wed, 09 Nov 2016 01:24:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=NUkXxZSAqOUDKhfjZUGpotW4iotsMijq8c8IAsR7jRc=;
-        b=q7t151MNEPSO5pn6C1sV9ywuIL5/At0oLYOu7vgcLmbOc43dc18Zz2u+r9/t9W7yHP
-         IUbF3EM8pY+o4AFlv+yjaeRRMJv23TSaBWxwnMzIci7MUC+YmKheIg3eWw8Yhb9LvO8H
-         5lRHyufWdDcoAt2BWlfZL1Txq0XXV9n8+svtC+4vD4kwwnj44ikRZxPQwe/fnuW3Jm3t
-         Zm6xqcin76HM5l949fdeJrHI6kkboAc+kxlgV4LmOErrF56aOWhgUbDAYJ1IoH+6wy+T
-         Jc/gGjMzd/runeFF4Pmu7Zqmq67P3Pex04pMqredymXNRs61Us7BkEAiqS4xQ66r7tcz
-         0PVA==
+        bh=RAGauJ6ZEC+r3Esqd0QarKOfVAziGmluCtjJT+Ek4nI=;
+        b=ObnQbpmappd/k9MP3ft/ulw28bjoYInrm0J9/Mri24VDbLX9IT46PL6cLwYh5MlvB3
+         ikyUDdVTFvMYxO2ri5kd18ag6cYuTeQ4/53oC0A8yrEoRjAdmtiPMRSdVcLdI80RelmR
+         pPJbam4cMVdbKFuCzIzqRxW3Ef3+fFE4nvUvso1O6Nl5fOyuNwuBwmUnyRTWcEcnO94Z
+         /o1MrvstpU4x8gO+dzfYSPOrSNM4wdy+10AQH2zUu2pBpZIqdWBeVkSRSdVgx7VsI3Ky
+         ovf2WRuYjzGWazqo2jf1YVYxDlXF0eBuGCMgASUkMCQCjM78l5qrrZawkSuUuOLy4Tvz
+         F4Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=NUkXxZSAqOUDKhfjZUGpotW4iotsMijq8c8IAsR7jRc=;
-        b=e75+3kj2cwDR4onHTGAHoJ6TxuRb2UZDuDG3Dvm700waJRZecbN0yKhsFkUR9UeAaG
-         0z21etGxnZKWfKGQDi5LbLaDz7BKor9/rsxLJ0ZBNV8iNShMnYAak3oaYmBxA5paIfPQ
-         DJrE4dTeocbEgfboAwHty7EhdcpUQfu1G1gjOvoZuxpW3V4y17JHaqrzAR1mXQh8VLPP
-         IyMU+L2eGcFJjJMoLzlyV3NbS3SujmwnAvBfm/ylgoPCJQOGQ0bPvAABiqjmqvSJ4Rcm
-         DdQIkQM6TmXvyoegkPi0Kq3L0jP31PagdeiJAJC54bVhQ8fhgsSjRLuJyma5LVuJCT/h
-         ZN3A==
-X-Gm-Message-State: ABUngvcaf8Kcl4sREzW5+xE2SjS3D65awCZyxQ4TcbEcjO0W8hs/VgxdYurpUCTClZuHhaomBqWLPqwHktTsBA==
-X-Received: by 10.36.26.78 with SMTP id 75mr13855233iti.74.1478683362585; Wed,
- 09 Nov 2016 01:22:42 -0800 (PST)
+        bh=RAGauJ6ZEC+r3Esqd0QarKOfVAziGmluCtjJT+Ek4nI=;
+        b=X+SgIlaBXyDE5/aUrKar3zABDTgWvqrcyU4r6yUlERFecuTjhs7ouCkwUfg5dNEGKz
+         crgTZiPz1lW0sLIOUWTJf9rlVoLrLft8zSIyEhZkuZ2m3sNN6pORnPD7znYQCoF0I6qI
+         lvl26meBY6N8atjO8X5fbNDMBx/SXWPwcSobjXU0ki1Tu10N08m8PjBcCh/IVOwKMbD0
+         /6nnSlI9WlC/fC45x/Pmb2iTS3RAc7bQyujgk2ouw36MylvmNJNBnsnVE8OWgHAt3ukU
+         d75ei8OsUOZTDBPiJqOaXdz4qrIndje5RVhhw+k6WwI4+6WCT5S0PVCyROSc0hzO2RPw
+         ftNQ==
+X-Gm-Message-State: ABUngveVlDBWRpcsFrNiyN5JN/PGz+dl123H37U8sHyUi6Sx8DJKWQ7RZGhf+EqyR8az1EgtwalVT8XzeOuLzg==
+X-Received: by 10.107.59.9 with SMTP id i9mr13868811ioa.176.1478683487195;
+ Wed, 09 Nov 2016 01:24:47 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.164.102 with HTTP; Wed, 9 Nov 2016 01:22:12 -0800 (PST)
-In-Reply-To: <20161108222127.mejb74maewzhn3qg@sigill.intra.peff.net>
-References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
- <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net> <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
- <20161107211010.xo3243egggdgscou@sigill.intra.peff.net> <20161107211522.vzl4zpsu5cpembgc@sigill.intra.peff.net>
- <CACsJy8BoEXDjwe=ZX5ZOC_mvaMjYrB3i7wcMmiOP3mm5-rwC5Q@mail.gmail.com> <20161108222127.mejb74maewzhn3qg@sigill.intra.peff.net>
+Received: by 10.64.164.102 with HTTP; Wed, 9 Nov 2016 01:24:16 -0800 (PST)
+In-Reply-To: <CACsJy8DjXrOgB-_-t47uSdCQFg9s_o+Oj9NBmAhDFZ3aYvjBgg@mail.gmail.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-4-chriscool@tuxfamily.org> <CACsJy8DPt3EJoSTVEZFbH6xXbh78MbLZ4h+50K4eoFxPYSaN=Q@mail.gmail.com>
+ <CAP8UFD3hNEU_UeVizU6SVJTt4hqJPag9XWqZOM3FKCGJZXOthg@mail.gmail.com> <CACsJy8DjXrOgB-_-t47uSdCQFg9s_o+Oj9NBmAhDFZ3aYvjBgg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 9 Nov 2016 16:22:12 +0700
-Message-ID: <CACsJy8ASMBk+Yak7LyybANFYkoU_Poi1ZGY=ufKtq1vSkoYCXQ@mail.gmail.com>
-Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree .gitattributes
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 9 Nov 2016 16:24:16 +0700
+Message-ID: <CACsJy8AisF2ZVs7JdnVFp5wdskkbVQQQ=DBq5UzE1MOsCfBMtQ@mail.gmail.com>
+Subject: Re: [PATCH v1 03/19] split-index: add {add,remove}_split_index() functions
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 9, 2016 at 5:21 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Nov 08, 2016 at 08:38:55AM +0700, Duy Nguyen wrote:
->
->> > Another approach is to have a config option to disallow symlinks to
->> > destinations outside of the repository tree (I'm not sure if it should
->> > be on or off by default, though).
+On Mon, Nov 7, 2016 at 5:08 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Oct 30, 2016 at 5:06 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> On Tue, Oct 25, 2016 at 11:58 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>> On Sun, Oct 23, 2016 at 4:26 PM, Christian Couder
+>>> <christian.couder@gmail.com> wrote:
+>>>> +void remove_split_index(struct index_state *istate)
+>>>> +{
+>>>> +       if (istate->split_index) {
+>>>> +               /*
+>>>> +                * can't discard_split_index(&the_index); because that
+>>>> +                * will destroy split_index->base->cache[], which may
+>>>> +                * be shared with the_index.cache[]. So yeah we're
+>>>> +                * leaking a bit here.
+>>>
+>>> In the context of update-index, this is a one-time thing and leaking
+>>> is tolerable. But because it becomes a library function now, this leak
+>>> can become more serious, I think.
+>>>
+>>> The only other (indirect) caller is read_index_from() so probably not
+>>> bad most of the time (we read at the beginning of a command only).
+>>> sequencer.c may discard and re-read the index many times though,
+>>> leaking could be visible there.
 >>
->> Let's err on the safe side and disable symlinks to outside repo by
->> default (or even all symlinks on .gitattributes and .gitignore as the
->> first step)
+>> So is it enough to check if split_index->base->cache[] is shared with
+>> the_index.cache[] and then decide if discard_split_index(&the_index)
+>> should be called?
 >
-> Both of those are actually much harder than you might think.
->
-> For matching specific names, we have to deal with case-folding.  It's
-> easy to hit the common ones like ".GITIGNORE" with fspathcmp(). But if
-> this is actually protection against malicious repositories, we have to
-> match all of the horrible filesystem-specific junk that we did for
-> ".git".
+> It's likely shared though. We could un-share cache[] by duplicating
+> index entries in the_index.cache[] if they point back to
+> split_index->base
 
-We could realpath() it and check if the result path is inside
-realpath($GIT_WORK_TREE). The real work would be done by OS. We will
-need to check if it points to .git/something, but I think we have that
-covered. The approach is a bit heavy for such a sanity check though
-
-> Symlinks are likewise tricky.  If we see that a symlink points to
-> "foo/../bar", then we don't know if it leaves the repository unless we
-> also look at "foo" to see if it is also a symlink. So you really end up
-> having to resolve the symlink yourself (and when checking out multiple
-> files, there's an ordering dependency).
-
-We do have this dependency problem right now (e.g. files A and
-.gitattributes are checked out at the same time and .gitattributes has
-some attribute on A). It looks like we resolve it by reading the index
-version at checkout time. We probably can do the same for gitattribute
-symlinks.
-
-> I think it might be enough to check:
->
->   - leading "../" tokens in the symlink's destination can be checked
->     against the symlink's path. So "../foo" is OK for path "one/two",
->     but not for path "one".
->
->   - interior "../" can be disallowed entirely. Technically
->     "foo/../bar/../baz" _can_ be a fine symlink destination, but why?
->     It's identical to "baz" unless you are following a bunch of interior
->     symlinks. And if those are interior symlinks, it's still confusing
->     and unnecessarily obfuscated, and a good sign that somebody is
->     trying to do something tricky.
-
-Sounds good.
-
-> So one reasonable fix might be to have a config option like
-> "core.saneSymlinks" that enforces both of those rules for _all_ symlinks
-> that we checkout to the working tree. And it could either refuse to
-> check them out, or replace them with a file containing the symlink
-> content (as we do on systems that don't support symlinks, IIRC).
-
-I wonder if anyone want core.saneSymlinks on, but they have some links
-that do not meet the above checks and still want to follow them
-anyway. One way to add such an exception is mark the path with an
-attribute "follow". Yeah I have a dependency loop :(
+I have a patch for this. So don't have to do anything else in this
+area. I'll probably just pile my patch on top of your series, or post
+it once the series graduates to master.
 -- 
 Duy
