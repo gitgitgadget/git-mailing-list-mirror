@@ -2,91 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7228220229
-	for <e@80x24.org>; Wed,  9 Nov 2016 08:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE7920229
+	for <e@80x24.org>; Wed,  9 Nov 2016 09:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751980AbcKIIZz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 03:25:55 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37462 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751277AbcKIIZy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 03:25:54 -0500
-Received: by mail-wm0-f41.google.com with SMTP id t79so285326626wmt.0
-        for <git@vger.kernel.org>; Wed, 09 Nov 2016 00:25:53 -0800 (PST)
+        id S1752831AbcKIJLx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 04:11:53 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34510 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752715AbcKIJLu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 04:11:50 -0500
+Received: by mail-pf0-f194.google.com with SMTP id y68so22941250pfb.1
+        for <git@vger.kernel.org>; Wed, 09 Nov 2016 01:11:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=pS1FuPdfX9yN3hWU9IW2SDBSBjJgYlE6mSPwwBWcCJU=;
-        b=EkLGQSnGvZEc5IeSBkG7Ngmldm9hjh+SwvD6vdCnEPdAS538XE3kN2Yd0mRwdxulzk
-         BIzAZpzfMS9asDKf1kfgCZCfWJvdVpBUMkNWM+2QEMAu4eb8HcKWqX2z2VBv0OgFnxhZ
-         6ROf0R8h4XxD7Yg64OjVC3W/PEv6Ogw2hBIgDtrH+37kK/Rt8NFpIvplECMyATkeM1qH
-         +iuQ9ut20i8kr+yDwo5Ku52li7EvYlr0s0voPQSY7IsFQBsU6vRpMqnPCicAd1AnAa1P
-         Dd+wR3HsETHfbAglNgB2yaA1h74L6gohO2oT3++XJt8BDMQj5o8wr81ngrj9SBpO413F
-         FQyg==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=igsVVo2UIpvdy/zjGbsRreb6xIrKeVZ6/pd/x98ZNC8=;
+        b=ijZ2Wnml0EgBqQjvjYtRbY6vlen6PNm7CutKoKfajwWYU0OopxMYLzuQPV2fSHfH5I
+         rRICI8RdsvA6BTOaXbowP3O82DSqWQn8H1+uIOPBd1D2TZEZtMFu9Xp6YSyVNdz16LLM
+         okHjsnk1yNSvs/K7ruRvRLG0iRLar8BgsTTDhRDjMNwnae2yY5OtXConAW6MuXrFPWHF
+         CwtqlA4B3BVNGC6Th1dpXHlOjBch2xfyDzSpg/UzQW1xt9aW9OddSQnlHY3DAS/+LLeg
+         SjT4BmzNEx0O0PivzHoSHB0Q3QukfAu1gr5jWt6u07gK5hKjakl18IA8B9oiQN5/3kXV
+         e8Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pS1FuPdfX9yN3hWU9IW2SDBSBjJgYlE6mSPwwBWcCJU=;
-        b=Ixew1Xpf6UcZ985ML3Wt7V2QhRbmKc5mTArhXuq+ou33//zNb0jxn4HSavfgVTbR9P
-         nruc+QjWlexexgZRdXx3LEZDLe2vrS2+TeyQW3vI5RVvOyWMRQy7cTgF3XU/syrqOHlN
-         K5BhgeHDV9zOG7Pe6zV1nYLTVvr+dVEOQqfcdbi6xeZ4uiwiLWDdb+RXt2naykGjGXSQ
-         uupjaVk2j1QljmSpe1pU+7OVQKuwo1foA1EdP30f6sMn1PbDFD/7rqT38GdyhexHah0P
-         ObPCkIeI9i9KPb1OJXGHiVvtSBQ1DPYzo6jlNt2kcelC6TuM7DObL/Qf1Nt5MdM31wbo
-         0jOA==
-X-Gm-Message-State: ABUngvdtq0sLcq3tQb7vKBawJC5SdARPcj2hhgAImgR7Xl4DdjnfHsV8M8gHxzUAkSyC4Q==
-X-Received: by 10.194.86.34 with SMTP id m2mr13688189wjz.90.1478679952703;
-        Wed, 09 Nov 2016 00:25:52 -0800 (PST)
-Received: from seahawk (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id r7sm28186626wjp.43.2016.11.09.00.25.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 Nov 2016 00:25:51 -0800 (PST)
-Message-ID: <1478679951.12904.1.camel@kaarsemaker.net>
-Subject: Re: Forbid access to /gitweb but authorize the sub projets
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Alexandre Duplaix <alexandre.duplaix-ext@sagemcom.com>,
-        git@vger.kernel.org
-Date:   Wed, 09 Nov 2016 09:25:51 +0100
-In-Reply-To: <58207CAB.3060105@sagemcom.com>
-References: <58207CAB.3060105@sagemcom.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.1-0ubuntu2 
-Mime-Version: 1.0
+        bh=igsVVo2UIpvdy/zjGbsRreb6xIrKeVZ6/pd/x98ZNC8=;
+        b=hBmwGOWVG08l5/Hv2UlNZj55E2VJNRh4/2iDoEv8yiYQrLijkYukEYKrqfqKVfwHUK
+         aidX+CerD+j+wM+qukPwfATlVM1cmcxQYaKXHNpx3Ms8W98g+77P+7tbaab1f726qmWc
+         LhPrlJ/G6W4JX+yO3dZO+IePz4Am0wQikd0NxuI/5NEeTWuOqK246DPn9obl5oDQ0zix
+         FIZFYS05ipJVWqPTpWUjmvwGvJRzZ+ccyxMQci9bOCJHqv6Cnh9q7Ecp4skDKB98Tdre
+         XXvIjQwfgV/CBGH8xHMYIbykk/PpCk3Gv2cvJG6LI4iupiCSVbXpe2g88HsvTf7h3PQk
+         Vllw==
+X-Gm-Message-State: ABUngveJVn54GGCYYdAYPP++1DWU0NPb99RvUp559yJ4x7xfj0QBxwu2pmha/HryWTg46Q==
+X-Received: by 10.99.176.78 with SMTP id z14mr886718pgo.3.1478682709747;
+        Wed, 09 Nov 2016 01:11:49 -0800 (PST)
+Received: from ash ([115.73.175.91])
+        by smtp.gmail.com with ESMTPSA id hv3sm54043105pad.30.2016.11.09.01.11.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 Nov 2016 01:11:48 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 09 Nov 2016 16:11:43 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2] rebase: add --forget to cleanup rebase, leave everything else untouched
+Date:   Wed,  9 Nov 2016 16:11:31 +0700
+Message-Id: <20161109091131.17933-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <20161026094658.20704-1-pclouds@gmail.com>
+References: <20161026094658.20704-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2016-11-07 at 14:07 +0100, Alexandre Duplaix wrote:
-> Hello,
-> 
-> I have several projects under https://myserver/gitweb and I would like 
-> to forbid the access to the root, so that the users can't list the 
-> differents projects.
-> 
-> However, I need to let the access to the sub projects (ex: 
-> https://myserver/gitweb/?p=project1;a=summary
-> 
-> How can I do please ?
+There are occasions when you decide to abort an in-progress rebase and
+move on to do something else but you forget to do "git rebase --abort"
+first. Or the rebase has been in progress for so long you forgot about
+it. By the time you realize that (e.g. by starting another rebase)
+it's already too late to retrace your steps. The solution is normally
 
-My favourite way of doing this is abusing the fact that gitweb.conf is
-perl code that's loaded with do $filename.
+    rm -r .git/<some rebase dir>
 
-This makes it easy to override such things. Try this in gitweb.conf for example:
+and continue with your life. But there could be two different
+directories for <some rebase dir> (and it obviously requires some
+knowledge of how rebase works), and the ".git" part could be much
+longer if you are not at top-dir, or in a linked worktree. And
+"rm -r" is very dangerous to do in .git, a mistake in there could
+destroy object database or other important data.
 
-sub no_index {
-    die_error(403, "No access to the repository list");
-}
-$actions{project_list} = \&no_index;
-$actions{project_index} = \&no_index;
-$actions{opml} = \&no_index;
+Provide "git rebase --forget" for this exact use case.
 
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ v2 changes just the subject line
+
+ Documentation/git-rebase.txt           |  5 ++++-
+ contrib/completion/git-completion.bash |  4 ++--
+ git-rebase.sh                          |  6 +++++-
+ t/t3407-rebase-abort.sh                | 24 ++++++++++++++++++++++++
+ 4 files changed, 35 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index de222c8..5a58fb3 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[<upstream> [<branch>]]
+ 'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+ 	--root [<branch>]
+-'git rebase' --continue | --skip | --abort | --edit-todo
++'git rebase' --continue | --skip | --abort | --forget | --edit-todo
+ 
+ DESCRIPTION
+ -----------
+@@ -252,6 +252,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ 	will be reset to where it was when the rebase operation was
+ 	started.
+ 
++--forget::
++	Abort the rebase operation but leave HEAD where it is.
++
+ --keep-empty::
+ 	Keep the commits that do not change anything from its
+ 	parents in the result.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 21016bf..3143cb0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1734,10 +1734,10 @@ _git_rebase ()
+ {
+ 	local dir="$(__gitdir)"
+ 	if [ -f "$dir"/rebase-merge/interactive ]; then
+-		__gitcomp "--continue --skip --abort --edit-todo"
++		__gitcomp "--continue --skip --abort --forget --edit-todo"
+ 		return
+ 	elif [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
+-		__gitcomp "--continue --skip --abort"
++		__gitcomp "--continue --skip --abort --forget"
+ 		return
+ 	fi
+ 	__git_complete_strategy && return
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 04f6e44..de712b7 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -43,6 +43,7 @@ continue!          continue
+ abort!             abort and check out the original branch
+ skip!              skip current patch and continue
+ edit-todo!         edit the todo list during an interactive rebase
++forget!            abort but keep HEAD where it is
+ "
+ . git-sh-setup
+ set_reflog_action rebase
+@@ -241,7 +242,7 @@ do
+ 	--verify)
+ 		ok_to_skip_pre_rebase=
+ 		;;
+-	--continue|--skip|--abort|--edit-todo)
++	--continue|--skip|--abort|--forget|--edit-todo)
+ 		test $total_argc -eq 2 || usage
+ 		action=${1##--}
+ 		;;
+@@ -399,6 +400,9 @@ abort)
+ 	finish_rebase
+ 	exit
+ 	;;
++forget)
++	exec rm -rf "$state_dir"
++	;;
+ edit-todo)
+ 	run_specific_rebase
+ 	;;
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index a6a6c40..6bc5e71 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -99,4 +99,28 @@ testrebase() {
+ testrebase "" .git/rebase-apply
+ testrebase " --merge" .git/rebase-merge
+ 
++test_expect_success 'rebase --forget' '
++	cd "$work_dir" &&
++	# Clean up the state from the previous one
++	git reset --hard pre-rebase &&
++	test_must_fail git rebase master &&
++	test_path_is_dir .git/rebase-apply &&
++	head_before=$(git rev-parse HEAD) &&
++	git rebase --forget &&
++	test $(git rev-parse HEAD) = $head_before &&
++	test ! -d .git/rebase-apply
++'
++
++test_expect_success 'rebase --merge --forget' '
++	cd "$work_dir" &&
++	# Clean up the state from the previous one
++	git reset --hard pre-rebase &&
++	test_must_fail git rebase --merge master &&
++	test_path_is_dir .git/rebase-merge &&
++	head_before=$(git rev-parse HEAD) &&
++	git rebase --forget &&
++	test $(git rev-parse HEAD) = $head_before &&
++	test ! -d .git/rebase-merge
++'
++
+ test_done
 -- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+2.8.2.524.g6ff3d78
+
