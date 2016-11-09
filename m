@@ -2,109 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A26B420229
-	for <e@80x24.org>; Wed,  9 Nov 2016 10:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8015020229
+	for <e@80x24.org>; Wed,  9 Nov 2016 11:12:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752376AbcKIK6W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 05:58:22 -0500
-Received: from mout.web.de ([212.227.15.14]:62860 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751652AbcKIK6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 05:58:21 -0500
-Received: from birne12.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0Lw0vl-1cu7qi0AO5-017pwV; Wed, 09 Nov 2016 11:51:09
- +0100
-Subject: Re: [PATCH v1 1/2] config.mak.in: set NO_OPENSSL and
- APPLE_COMMON_CRYPTO for macOS >10.11
-To:     Lars Schneider <larsxschneider@gmail.com>
-References: <20161017002550.88782-1-larsxschneider@gmail.com>
- <20161017002550.88782-2-larsxschneider@gmail.com>
- <20161017095002.bbqyp2hkbuyau66t@sigill.intra.peff.net>
- <8C67FF53-C26F-4993-908F-A5183C5E48D9@gmail.com>
- <20161107172617.tlcrpwbjy2w7aoyc@sigill.intra.peff.net>
- <11cc8bbd-2e67-f53a-c8f4-2244409fd6af@web.de>
- <0966CBE3-2F08-4B89-9716-4EEE3CE2526E@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        gitster@pobox.com
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <1fdc5333-79a8-7c1d-f7e5-e8150d0ad9cc@web.de>
-Date:   Wed, 9 Nov 2016 11:51:07 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
- Gecko/20100101 Thunderbird/45.4.0
+        id S933789AbcKILMR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 06:12:17 -0500
+Received: from chiark.greenend.org.uk ([212.13.197.229]:51709 "EHLO
+        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932295AbcKILMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 06:12:13 -0500
+Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
+        (return-path ijackson@chiark.greenend.org.uk)
+        id 1c4QTd-0007FX-US; Wed, 09 Nov 2016 10:51:34 +0000
+From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <0966CBE3-2F08-4B89-9716-4EEE3CE2526E@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:nAZItEicZl6yOiTVygESkXZ2R+dex+665gtaRBtj6/5ydJY6JB2
- YrHg13HlqV8o5lBUBjSw064lu21zDmvo31U7Sw9uEjhht58dsvE9pGe+B0ThcB6szV/3LF2
- 0J18CNXbabQtm07HfxYhhPw9YwUx4VAhtezVlxW1HS6Al+gultWg7QDxjK0OONQS2oi2TqI
- 3RelyP1asXxm4NkviY7mg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XBQzjKBjV7U=:MKuAe+TeOmIu/MBe7Plf/X
- 40lw3/ocI/Y7pvkRgDPrakzalmQJmbq3bpAuI2osrwTi/bJV5OqKT9fChr+/gJQ0srbcWoPN2
- SSPt6/Gxd9JQ7UVCxux82cq4JdV+DpVPUPybw7XxEPPI55XBQFMX2eDXlfkbeEz6SxUZBTTAC
- UxaQA/sKrHynnr7SBXPbvW1oY2jl9SIBKmSLnyGs3SAQ1JEhvDka7A15a0DEakOeC93zMguaq
- XOGOR9l4KgkReKDlvecN+p36cIUWrv5KoVFlruAe2B5Xz1Qn9lherddkcAOTwYcE+A6s3zqQl
- 3hqlWRg9dJw1fqtEu8B4PS0lXjVs/Ncy/tXbZgE3KNHrgpwD5/BYLnuLuBsAmMIY75KA8QtzY
- Q9B6TpYuQXm8Yp6w7t5P/yeT5KmWiLkLENSnOCh/wVPwJASOGQ1OeN8BiXjBTVF/3JMtoa9/a
- j3OyUfQJ81spnTAvDftIBEwABRhnEnDYezcmLRC9+DO6Ciw//exkiTfNGZRQT9r9MYvoZNxml
- Jb2enVAfed03T8XN1cUtHqfFCPhGVN+J47gOxx5mFGl+0si7vvod9p0hpOkghjqGcExTsCrh7
- 65mW5W/7M/uVq6Uz+xchD+ANtRdvIjZOnVkHedZ0956PhgjNwd0EZhMBWxx/dCJP9Rz13fkc9
- A2jsb1HRD4V3f9sP3eTxNU68DnFHgHMmKQAvoNHs7UCkMn3WuELfRoV6wSQuzAvuC8wWtPUC9
- /qSOIwlHwOHY0bEDE6FzT+WKVoVDVVd/2oQ629LIM05WR6HqFouKedZQLcfP3KVChW3GNckzd
- klB0m8yy/kTNwbEZC7+HB/ynf2BEp0WXfGGVmMesOfnAjYXWmpxbMoGxTACEdid/81CazVsCq
- y7xr2zEdCZUjT65OWHmvdWEaOzYesK85okIulbrRg=
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-ID: <22562.65461.845411.29907@chiark.greenend.org.uk>
+Date:   Wed, 9 Nov 2016 10:51:33 +0000
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate
+In-Reply-To: <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
+References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
+        <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
+        <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
+        <22561.44597.59852.574831@chiark.greenend.org.uk>
+        <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
+        <22562.32428.287354.214659@chiark.greenend.org.uk>
+        <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
+X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09.11.16 10:29, Lars Schneider wrote:
+Junio C Hamano writes ("Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate"):
+> And I do not think we would want "log" or any core side Porcelain
+> command to have too many "information losing" options like this
+> "truncate refnames down to a point where it is no longer unique and
+> meaningful".  GUI tools can get away with doing sos because they can
+> arrange these truncated labels to react to end-user input (e.g. the
+> truncated Tag in the history display of gitk could be made to react
+> to mouse-over and pop-up to show a full name, for example), but the
+> output from the core side is pretty much fixed once it is emitted.
 > 
->> On 09 Nov 2016, at 09:18, Torsten Bögershausen <tboegi@web.de> wrote:
->>
->> On 07.11.16 18:26, Jeff King wrote:
->>> On Sun, Nov 06, 2016 at 08:35:04PM +0100, Lars Schneider wrote:
->>>
->>>> Good point. I think I found an even easier way to achieve the same.
->>>> What do you think about the patch below?
->>>>
->>>> [...]
->>>>
->>>> diff --git a/Makefile b/Makefile
->>>> index 9d6c245..f53fcc9 100644
->>>> --- a/Makefile
->>>> +++ b/Makefile
->>>> @@ -1047,6 +1047,7 @@ ifeq ($(uname_S),Darwin)
->>>> 		endif
->>>> 	endif
->>>> 	ifndef NO_APPLE_COMMON_CRYPTO
->>>> +		NO_OPENSSL = YesPlease
->>>> 		APPLE_COMMON_CRYPTO = YesPlease
->>>> 		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
->>>> 	endif
->>>
->>> That is much simpler.
->> []
->> I don't know if that is a correct solution.
->>
->> If I have Mac OS 10.12 and Mac Ports installed, I may want to use
->> OPENSSL from Mac Ports.
-> 
-> Can't you define `NO_APPLE_COMMON_CRYPTO` in that case? 
-> I think if you use OpenSSL then you don't need the Apple crypto lib, right?
+> So my first preference would be to teach gitk such a "please
+> clarify" UI-reaction, if it does not know how to do so yet.  There
+> is no need for a configuration variable anywhere with this approach.
 
-After re-reading the Makefile: that makes sense :-)
+gitk already has a way for the user to find out what the elided tag
+names are.  The underlying difficulty is that the situation that the
+gitk behaviour is designed for (long tag names, perhaps several to a
+commit, not particularly interesting), is not applicable to these
+particular tags.
 
-Do you want to send a new patch ?
+Whether the tag is `particularly interesting' depends, as I say, on
+both what tree it is in, and on its name.  It might be appropriate for
+terminal-based tools to highlight these tags too, or show them when
+tags are not normally displayed.
 
-Feel free to omit
-"Original-patch-by: Torsten Bögershausen <tboegi@web.de>"
+`core.interestingTags' ?
 
+> If you do want to add a configuration to show fuller name in the
+> tag, which would make it unnecessary for the user to do "please
+> clarify, as I am hovering over what I want to get details of"
+> action, that may also be a good way to go.
 
+I think in my use case, which I hope to become common within Debian,
+this is going to be essential.
 
+>  But I think the right
+> place to do so would be Edit -> Preferences menu in Gitk, and the
+> settings will be stored in ~/.gitk or ~/.config/git/gitk or whatever
+> gitk-specific place.
 
+This is not correct, because as I have explained, this should be a
+per-tree configuration:
+
+If it can't be a `git config' option, even `git config gui.something',
+then I guess I will have to teach gitk to read a config file in
+GIT_DIR too.  But I think that is silly given that git already has a
+config file reading system which handles per-tree configs.
+
+If we can't get agreement from the git-core developers on a config to
+be used, and documented, for any tool which has similar behaviour, I
+think the right answer is `git config gitk.<something>', which would
+be documented in gitk.
+
+Thanks,
+Ian.
+
+-- 
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+
+If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
+a private address which bypasses my fierce spamfilter.
