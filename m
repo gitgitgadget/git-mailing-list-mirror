@@ -6,96 +6,83 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA27C2021E
-	for <e@80x24.org>; Wed,  9 Nov 2016 23:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D67DF2021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 23:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754599AbcKIXjt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 18:39:49 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60220 "EHLO
+        id S1754338AbcKIXkV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 18:40:21 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55251 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754206AbcKIXjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 18:39:49 -0500
+        with ESMTP id S1754104AbcKIXkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 18:40:20 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D0F454EA42;
-        Wed,  9 Nov 2016 18:39:47 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CFD84DBF7;
+        Wed,  9 Nov 2016 18:40:19 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LxsXwhXZPYLTjgN8Ol+RIiBsSrE=; b=ROFZG4
-        9GL2/wso4RYcM9k9LXeFURTQFvgON8SxFhC/EEJXZPYj3Ur080sr+BMVtCamgb9J
-        O0Ox1B401IHBn4lVvRsTGLlwVBkMknOmiwb0jG81KoXM5pTzE2Ru0TYNud1DFToz
-        IiB7xRUwhx02d55p3RuGxs7ZhstuS4pjYQoSU=
+        :content-type; s=sasl; bh=XIy8Z+i6CYHkl1MrHIVejmhW3R8=; b=HvD4qa
+        xKjIr9HEf6QWzCZSCVzXKxl/4BUd6FqaGwlHx8DCmHgu7Fl+3726mpNtX374jzRV
+        v/Z8KaRO7JdlhxQtF7OzkE409ORLGBwtDSBxal/fYbrvUjxdqvXwiY9PfufkGnWU
+        0ZL6No9X+3LY0tqMF3zftTIveRhgpZMfAsaK4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NDiPNI7hOVcf7DFeWgikvmSpBuYo10mK
-        CYJoJQ7qXh+Rsx6dOO3lKLWhRhUbpbDWnLOiKLgw58wQ/PUoDjyctV/T4a04MLFB
-        RvMH6baA/hX5FXWolaj7bbbxOhQWw5B2t1zD69nCBypgzEz1fg/029ApcZcjAb7j
-        qovigKqvNXs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C8EEE4EA3E;
-        Wed,  9 Nov 2016 18:39:47 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=v1DwPT+s9sB56xestiAoXKC1l7pGRxxw
+        1As/u9mssXQOkdwA8JFdp3iqdEH+MK+KIDgm9JE2MqK7slZ6g6XpYkOpclroDbz4
+        j0PGcswXC7fZyQ9vLjmRXonL2hMVwQneoJdHVUZc81U5Wndk3HMtTcCm2LJTlIIy
+        3MtUXsuu03g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6457E4DBF5;
+        Wed,  9 Nov 2016 18:40:19 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4BFDD4EA3D;
-        Wed,  9 Nov 2016 18:39:47 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D74164DBF4;
+        Wed,  9 Nov 2016 18:40:18 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     larsxschneider@gmail.com
-Cc:     git@vger.kernel.org, tboegi@web.de
-Subject: Re: [PATCH v1 0/2] Fix default macOS build locally and on Travis CI
-References: <20161017002550.88782-1-larsxschneider@gmail.com>
-Date:   Wed, 09 Nov 2016 15:39:46 -0800
-In-Reply-To: <20161017002550.88782-1-larsxschneider@gmail.com>
-        (larsxschneider@gmail.com's message of "Sun, 16 Oct 2016 17:25:48
-        -0700")
-Message-ID: <xmqqwpgc6x4t.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: 2.11.0-rc1 will not be tagged for a few days
+References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
+        <20161108004038.a7gyoe6wpucxjmvz@sigill.intra.peff.net>
+Date:   Wed, 09 Nov 2016 15:40:17 -0800
+In-Reply-To: <20161108004038.a7gyoe6wpucxjmvz@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 7 Nov 2016 19:40:38 -0500")
+Message-ID: <xmqqshr06x3y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CCA98F5E-A6D5-11E6-BDDE-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DF7A321E-A6D5-11E6-A47D-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+> I think we also need to make a final decision on the indent/compaction
+> heuristic naming. After reading Michael's [0], and the claim by you and
+> Stefan that the "compaction" name was declared sufficiently experimental
+> that we could later take it away, I'm inclined to follow this plan:
 >
-> Apple removed the OpenSSL header files in macOS and therefore Git does
-> not build out of the box on macOS anymore. See previous discussion with
-> Torsten here: http://public-inbox.org/git/565B3036.8000604@web.de/
+>   1. Ship v2.11 with what is in master; i.e., both compaction and indent
+>      heuristics, triggerable by config or command line.
 >
-> This mini series makes Git build out of the box on macOS, again, and
-> disables the HTTPD tests on macOS TravisCI as they don't work anymore
-> with the new macOS TravisCI default image:
-> https://blog.travis-ci.com/2016-10-04-osx-73-default-image-live/
+>   2. Post-v2.11, retire the compaction heuristic as a failed experiment.
+>      Keeping it in v2.11 doesn't hurt anything (it was already
+>      released), and lets us take our time coming up with and cooking the
+>      patch.
 >
-> Thanks,
-> Lars
+>   3. Post-v2.11, flip the default for diff.indentHeuristic to "true".
+>      Keep at least the command line option around indefinitely for
+>      experimenting (i.e., "this diff looks funny; I wonder if
+>      --no-indent-heuristic makes it look better").
 >
+>      Config option can either stay or go at that point. I have no
+>      preference.
 >
-> Lars Schneider (2):
->   config.mak.in: set NO_OPENSSL and APPLE_COMMON_CRYPTO for macOS >10.11
->   travis-ci: disable GIT_TEST_HTTPD for macOS
->
->  .travis.yml      | 3 ++-
->  config.mak.uname | 6 ++++++
->  2 files changed, 8 insertions(+), 1 deletion(-)
+> The nice thing about that plan is it punts on merging any new code to
+> post-v2.11. :)
 
-I've followed what was available at the public-inbox archive, but it
-is unclear what the conclusion was.  
-
-For the first one your "how about" non-patch, to which Peff said
-"that's simple and good", looked good to me as well, but is it
-available as a final patch that I can just take and apply (otherwise
-I think I can do the munging myself, but I'd rather be spoon-fed
-when able ;-).
-
-I do not have a strong opinion on the second one.  For an interim
-solution, disabling webserver tests certainly is expedite and safe,
-so I am fine taking it as-is, but I may have missed strong
-objections.
-
-Thanks.
-
-
+OK, I can go with that plan.  Thanks for an outline.
