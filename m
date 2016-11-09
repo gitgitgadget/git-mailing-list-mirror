@@ -2,96 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2999A2021E
-	for <e@80x24.org>; Wed,  9 Nov 2016 23:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 810412021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 23:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751529AbcKIXbO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 18:31:14 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:57928 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751157AbcKIXbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 18:31:13 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1c4cKj-0006Oj-F8; Wed, 09 Nov 2016 23:31:09 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S1754259AbcKIXfj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 18:35:39 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55277 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752427AbcKIXfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 18:35:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 094A24DB76;
+        Wed,  9 Nov 2016 18:35:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=fvSVkp6gNWJ4IDcYBaVgfhESTjc=; b=XFNLszssNkE7AG7AHrH2
+        b5olwl9Zuu16Z/S/f/d7sON3iqEZBZqd/yYIXcOLSeWGWKjxnV6dXzqFYPoDXqRc
+        BXpHbOvSh3WF2gvnDe+CQwJ5lqsx4ZWDyE2p+Wp/dRKbw42ohoNPJf7CT9Xpy7cS
+        bEaeaYJjWRWo6TMKSGeo3tc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=StfoPYAT9dzGa56vFDFpIzxFohXKhagLe2UMDX2HvfHYbk
+        59L9K7Z8fxiRe8EAQ0kQa7I6t5ZzwwWv742+w15VC3WmPBWTh8a9S5DRZn8Iq+kk
+        ol03iW1tEuEc+f1LAuAUI7PQpanGDzHQpTemzIX9AKfhLYSd5VJeMqUzEeSsk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0095F4DB75;
+        Wed,  9 Nov 2016 18:35:37 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 551174DB73;
+        Wed,  9 Nov 2016 18:35:36 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: 2.11.0-rc1 will not be tagged for a few days
+References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
+        <20161108004038.a7gyoe6wpucxjmvz@sigill.intra.peff.net>
+        <65a1bb6d-e924-21aa-70d3-303ebdc499f1@kdbg.org>
+        <20161108214825.yo37kvoqkeucuqgg@sigill.intra.peff.net>
+        <xmqqoa1p9nf0.fsf@gitster.mtv.corp.google.com>
+        <20161109165125.t4x2w7u5uxe57xm2@sigill.intra.peff.net>
+Date:   Wed, 09 Nov 2016 15:35:35 -0800
+Message-ID: <xmqq1syk8bw8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22563.45501.383303.374430@chiark.greenend.org.uk>
-Date:   Wed, 9 Nov 2016 23:31:09 +0000
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate
-In-Reply-To: <xmqqeg2k8cwz.fsf@gitster.mtv.corp.google.com>
-References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
-        <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
-        <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
-        <22561.44597.59852.574831@chiark.greenend.org.uk>
-        <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
-        <22562.32428.287354.214659@chiark.greenend.org.uk>
-        <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
-        <22562.65461.845411.29907@chiark.greenend.org.uk>
-        <xmqqeg2k8cwz.fsf@gitster.mtv.corp.google.com>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 371396A6-A6D5-11E6-968E-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano writes ("Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate"):
-> Ian Jackson <ijackson@chiark.greenend.org.uk> writes:
-> > This is not correct, because as I have explained, this should be a
-> > per-tree configuration:
-> 
-> I do not have fundamental opposition to make it part of .git/config,
-> but the name "gitk.something" or if you are enhancing git-gui at the
-> time perhaps "gui.something" would be appropriate.  
-> 
-> But it is still silly to have this kind of information that is very
-> specific to Gitk in two places, one that is pretty Gitk specific
-> that core-git does not know anything about, the other that are part
-> of the configuration storage of the core-git.  In the longer term,
-> it is necessary for them to be accessible from gitk's "Edit ->
-> Preferences" mechanism somehow, I would think, rather than forcing
-> users to sometimes go to GUI to tweak and sometimes run "git config".
+Jeff King <peff@peff.net> writes:
 
-I am proposing to set this configuration setting automatically in
-dgit.  Other tools that work with particular git tags would do the
-same.  There would be no need for users to do anything.
+> It's just that I found myself writing up notes like "this should be
+> merged", and it occurred to me that I could communicate the same things
+> by sending you a proposed history. So I'm curious if you find dissecting
+> it via "git log" more or less convenient than a list of notes. :)
 
-Having this as an option in a menu would be quite wrong, because it
-would end up with the user and the tooling fighting.  This is why I
-don't want to put this in gitk's existing config file mechanism.
+Yes, I think this is a very readable form of communication.
 
-It would be wrong for dgit to edit the user's gitk config file, for
-many reasons.
+What's especially nice in what you did is that comparing outputs of
+these two commands
 
-To put it another way, this setting is a way for a tool like dgit to
-communicate with gitk (or other programs which have to make guesses
-about how prominently to present certain information to the user).
-It's not intended to be a way for users, certainly not non-expert
-users, to communicate with gitk.
+    $ git log --no-merges --oneline master..peff/for-junio/master
+    $ git log --no-merges --oneline ^pu master..peff/for-junio/master
 
-The way I have structured my proposed patches in gitk would make it
-easy to provide a gui option to adjust these settings.  Such a gui
-option ought to save its value in the gitk config file, and those
-values ought to override what comes from `git config'.
+clearly shows that you reused what I already had in 'pu' and the
+ones missing from 'pu' are the ones I need to check and possibly
+may want to sign-off myself.
 
-But such a system would not obviate the need for a legitimate way for
-programs like dgit to communicate with gitk.
+I also need to note that while this is very handy format for the
+recipient, hence a very good way to do "pass the pumpkin" between
+maintainers, it is a less "open" way of communication than laying
+out everything on the list (cf. http://youtu.be/L8OOzaqS37s), but
+it is the most appropriate method in this case, I would think.
 
-Thanks,
-Ian.
+> It looks like Johannes prefers replacements for some of the fixes from
+> yesterday.
 
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+As to that change, I agree with you that I do not care too deeply
+about the shape of an interim step as long as the finished product
+uses the better one between the alternatives, but at the same time,
+because we are including it as a hot-fix in a released product, even
+though it is an interim step in the bigger picture, I want it to be
+using the better one, too.  So I am leaning towards taking what you
+queued for me for the reasons you stated in the other thread [*1*].
 
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+That would probably mean Dscho needs a bit of rebase in the
+remaining parts of his series that adds new elements to the enum,
+but I am hoping that he can afford that time now in the feature
+freeze period.  If we take the _INVALID thing instead now, the
+remaining series from Dscho that we would review and queue for the
+next cycle would need to begin with a "fixup" patch that stops doing
+the _INVALID thing and instead using the "compare after casting to
+size_t", so it is just the matter of doing the adjustment before or
+after the remainder of the series are posted on the list for the
+next release, and the smaller number of "oops that was not nice,
+let's fix it" patches in the published history, the better the long
+term health of the project, I would think.
+
+The other fixes in your collection looked all sensible.  Thanks.
+
+
+[Footnote]
+
+*1* The convention of keeping _INVALID at the end can be arguably
+    made safe from future programmer screw-ups, as long as it is
+    guarded by a good comment nearby.  But the solution to cast
+    would avoid having to have that potential brittleness in the
+    first place.  I find the other merit of taking care of negative
+    enum automatically quite attractive, too.
