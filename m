@@ -6,65 +6,87 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD9AD206A3
-	for <e@80x24.org>; Wed,  9 Nov 2016 15:37:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 281FE2021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 16:45:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753416AbcKIPhg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 10:37:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40723 "EHLO cloud.peff.net"
+        id S1754355AbcKIQpm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 11:45:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40749 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752922AbcKIPhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 10:37:36 -0500
-Received: (qmail 31627 invoked by uid 109); 9 Nov 2016 15:37:35 -0000
+        id S1754347AbcKIQpm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 11:45:42 -0500
+Received: (qmail 3409 invoked by uid 109); 9 Nov 2016 16:45:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 15:37:35 +0000
-Received: (qmail 29761 invoked by uid 111); 9 Nov 2016 15:38:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 16:45:41 +0000
+Received: (qmail 30188 invoked by uid 111); 9 Nov 2016 16:46:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 10:38:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Nov 2016 10:37:33 -0500
-Date:   Wed, 9 Nov 2016 10:37:33 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 11:46:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Nov 2016 11:45:39 -0500
+Date:   Wed, 9 Nov 2016 11:45:39 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] sequencer: shut up clang warning
-Message-ID: <20161109153733.iauja57zikyb2awv@sigill.intra.peff.net>
-References: <efbba4b32515fed7096c1c81dbe97eedd44083b0.1478699713.git.johannes.schindelin@gmx.de>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree
+ .gitattributes
+Message-ID: <20161109164539.fn4c6fj3dyvceb7m@sigill.intra.peff.net>
+References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
+ <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net>
+ <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
+ <20161107211010.xo3243egggdgscou@sigill.intra.peff.net>
+ <20161107211522.vzl4zpsu5cpembgc@sigill.intra.peff.net>
+ <CACsJy8BoEXDjwe=ZX5ZOC_mvaMjYrB3i7wcMmiOP3mm5-rwC5Q@mail.gmail.com>
+ <20161108222127.mejb74maewzhn3qg@sigill.intra.peff.net>
+ <CACsJy8ASMBk+Yak7LyybANFYkoU_Poi1ZGY=ufKtq1vSkoYCXQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <efbba4b32515fed7096c1c81dbe97eedd44083b0.1478699713.git.johannes.schindelin@gmx.de>
+In-Reply-To: <CACsJy8ASMBk+Yak7LyybANFYkoU_Poi1ZGY=ufKtq1vSkoYCXQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 09, 2016 at 02:56:25PM +0100, Johannes Schindelin wrote:
+On Wed, Nov 09, 2016 at 04:22:12PM +0700, Duy Nguyen wrote:
 
-> When comparing a value of type `enum todo_command` with a value that is
-> outside the defined enum constants, clang greets the developer with this
-> warning:
+> > Symlinks are likewise tricky.  If we see that a symlink points to
+> > "foo/../bar", then we don't know if it leaves the repository unless we
+> > also look at "foo" to see if it is also a symlink. So you really end up
+> > having to resolve the symlink yourself (and when checking out multiple
+> > files, there's an ordering dependency).
 > 
-> 	comparison of constant 2 with expression of type
-> 	'const enum todo_command' is always true
+> We do have this dependency problem right now (e.g. files A and
+> .gitattributes are checked out at the same time and .gitattributes has
+> some attribute on A). It looks like we resolve it by reading the index
+> version at checkout time. We probably can do the same for gitattribute
+> symlinks.
+
+Right, but then we can't use filesystem functions like realpath() to do
+the lookup. I guess we could do a pass after the checkout is done to
+"fix" any out-of-tree symlinks we just created.
+
+This is exactly the sort of complexity I was trying to avoid with my
+original series. :)
+
+If that isn't an option, I think I prefer something like the
+core.saneSymlinks approach I mentioned. It has the additional bonus of
+protecting not just git commands, but other commands that might inspect
+the filesystem.
+
+> > So one reasonable fix might be to have a config option like
+> > "core.saneSymlinks" that enforces both of those rules for _all_ symlinks
+> > that we checkout to the working tree. And it could either refuse to
+> > check them out, or replace them with a file containing the symlink
+> > content (as we do on systems that don't support symlinks, IIRC).
 > 
-> While this is arguably true *iff* the value was never cast from a
-> free-form int, we should keep the cautious code in place.
-> 
-> To shut up clang, we simply introduce an otherwise pointless enum constant
-> and compare against that.
+> I wonder if anyone want core.saneSymlinks on, but they have some links
+> that do not meet the above checks and still want to follow them
+> anyway. One way to add such an exception is mark the path with an
+> attribute "follow". Yeah I have a dependency loop :(
 
-This does silence the warning.
-
-I slightly prefer mine because:
-
-  1. It does not carry an implicit requirement that TODO_INVALID remain
-     the final enum value.
-
-  2. It also protects the range check against a negative enum value.
-
-But this is code that is getting changed later by you anyway, and I do
-not care that strongly.
+That could come later if somebody wants it, I think (especially if the
+config option is not on by default). I have a feeling that callers will
+either care about out-of-tree symlinks or not. Trusting the repository
+to say "but these ones are OK" doesn't work for the paranoid ones, and
+everybody else just assumes the repository is sane.
 
 -Peff
