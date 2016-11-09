@@ -2,87 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E3872035F
-	for <e@80x24.org>; Wed,  9 Nov 2016 03:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2F8E2035F
+	for <e@80x24.org>; Wed,  9 Nov 2016 05:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751647AbcKID5b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 22:57:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40501 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750967AbcKID5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 22:57:31 -0500
-Received: (qmail 21626 invoked by uid 109); 9 Nov 2016 03:57:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 03:57:30 +0000
-Received: (qmail 26578 invoked by uid 111); 9 Nov 2016 03:57:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 22:57:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2016 22:57:28 -0500
-Date:   Tue, 8 Nov 2016 22:57:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH] sequencer: silence
- -Wtautological-constant-out-of-range-compare
-Message-ID: <20161109035728.v2mqvtj4ep4dj74j@sigill.intra.peff.net>
+        id S1751036AbcKIFze (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 00:55:34 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64007 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750803AbcKIFzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 00:55:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 379684D8F0;
+        Wed,  9 Nov 2016 00:55:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZnTBhs8VDN0huCMSOjF5trsUoqU=; b=W0XpCJ
+        uhUx9bQrovSBAp4//Jdzon27M5idvhtazrQ/l2AFVCVV/TD7JQcn3kMN+J3UnaU9
+        L5egISYFzvS6Ebt2U1TApeCbAz5jHFpOmR64ERAdAM0HwkBXQqdnIj2gCjlzaYBA
+        oL8Tsp8VO8yxHbgVNzsUE1kbfwDjV7MAmtjYo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ANefVWv1e5XwTP7tlpxEFbVQ5jXo9i5y
+        WvvT4nemblOfb+G5d3dtxCT6/nSq1H8yHV7vBYlq+WS48FNtvXuEloadMuW/H9Wq
+        fmJAIQss0wcx+vEo467D20oLmPVdr21Ezei1EWS1IzTlNXTn7Bf+MW0I+ppFh+Cg
+        GtDDZaTh2Cc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 276A84D8EF;
+        Wed,  9 Nov 2016 00:55:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A74E94D8ED;
+        Wed,  9 Nov 2016 00:55:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate
+References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
+        <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
+        <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
+        <22561.44597.59852.574831@chiark.greenend.org.uk>
+        <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
+        <22562.32428.287354.214659@chiark.greenend.org.uk>
+Date:   Tue, 08 Nov 2016 21:55:30 -0800
+In-Reply-To: <22562.32428.287354.214659@chiark.greenend.org.uk> (Ian Jackson's
+        message of "Wed, 9 Nov 2016 01:41:00 +0000")
+Message-ID: <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1FBDD69A-A641-11E6-889A-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When clang compiles sequencer.c, it complains:
+Ian Jackson <ijackson@chiark.greenend.org.uk> writes:
 
-  sequencer.c:632:14: warning: comparison of constant 2 with
-    expression of type 'const enum todo_command' is always
-    true [-Wtautological-constant-out-of-range-compare]
-          if (command < ARRAY_SIZE(todo_command_strings))
+>> I think the two things I found weird were:
+>> 
+>>   - it's in the "log" section, which makes me think it's an option for
+>>     git-log. But it's not. I'm not sure what the _right_ section is, but
+>>     hopefully it would make it clear that this is command-agnostic.
+>> 
+>>     Something like "gui.abbrevTags" might be OK (and as you note, has
+>>     precedence). But of course it's possible that a command like "tig"
+>>     could learn to support it.  I'm not sure if that counts as a GUI or
+>>     not. :)
+>
+> I don't really have an opinion about the name.  gui.abbrevTags would
+> be a possibility.  (It's a bit odd that implicitly, the default would
+> be `*'.)
 
-This is because "command" is an enum that may only have two
-values (0 and 1) and the array in question has two elements.
+I have trouble with both "log" and "abbrev" in the name.  Perhaps I
+am biased by our recent discussion on a feature in the core that we
+use the word "abbrev" to describe, but I fear that most Git users,
+when told the word, would imagine the act of shortening 40-hex full
+object name down to shorter but still unique prefix, not the "this
+refname is too long, so let's show only the first few letters in GUI
+label".
 
-As it turns out, clang is actually wrong here, at least
-according to its own bug tracker:
+And I do not think we would want "log" or any core side Porcelain
+command to have too many "information losing" options like this
+"truncate refnames down to a point where it is no longer unique and
+meaningful".  GUI tools can get away with doing sos because they can
+arrange these truncated labels to react to end-user input (e.g. the
+truncated Tag in the history display of gitk could be made to react
+to mouse-over and pop-up to show a full name, for example), but the
+output from the core side is pretty much fixed once it is emitted.
 
-  https://llvm.org/bugs/show_bug.cgi?id=16154
+So my first preference would be to teach gitk such a "please
+clarify" UI-reaction, if it does not know how to do so yet.  There
+is no need for a configuration variable anywhere with this approach.
 
-But it's still worth working around this, as the warning is
-present with -Wall, meaning we fail compilation with "make
-DEVELOPER=1".
+If you do want to add a configuration to show fuller name in the
+tag, which would make it unnecessary for the user to do "please
+clarify, as I am hovering over what I want to get details of"
+action, that may also be a good way to go.  But I think the right
+place to do so would be Edit -> Preferences menu in Gitk, and the
+settings will be stored in ~/.gitk or ~/.config/git/gitk or whatever
+gitk-specific place.
 
-Casting the enum to size_t sufficiently unconfuses clang. As
-a bonus, it also catches any possible out-of-bounds access
-if the enum takes on a negative value (which shouldn't
-happen either, but again, this is a defensive check).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I know that a different fix is coming in a follow-on series, but I think
-it's worth doing this to un-break clang on master (and v2.11) in the
-meantime.
-
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 5fd75f30d..6f0ff9e41 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -629,7 +629,7 @@ static const char *todo_command_strings[] = {
- 
- static const char *command_to_string(const enum todo_command command)
- {
--	if (command < ARRAY_SIZE(todo_command_strings))
-+	if ((size_t)command < ARRAY_SIZE(todo_command_strings))
- 		return todo_command_strings[command];
- 	die("Unknown command: %d", command);
- }
--- 
-2.11.0.rc0.263.g6f44bc3
