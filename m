@@ -2,95 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68BD52035F
-	for <e@80x24.org>; Wed,  9 Nov 2016 01:41:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D03F2035F
+	for <e@80x24.org>; Wed,  9 Nov 2016 03:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752976AbcKIBlF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 20:41:05 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:57015 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752945AbcKIBlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 20:41:03 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1c4Hsq-0001mC-C9; Wed, 09 Nov 2016 01:41:00 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S1751647AbcKIDep (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 22:34:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40489 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751282AbcKIDeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 22:34:44 -0500
+Received: (qmail 20306 invoked by uid 109); 9 Nov 2016 03:34:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 03:34:44 +0000
+Received: (qmail 26257 invoked by uid 111); 9 Nov 2016 03:35:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 22:35:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2016 22:34:41 -0500
+Date:   Tue, 8 Nov 2016 22:34:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Word <argoday@argoday.com>,
+        Markus Hitter <mah@jump-ing.de>, git@vger.kernel.org,
+        jword@bloomberg.net
+Subject: Re: Bug: git config does not respect read-only .gitconfig file
+Message-ID: <20161109033441.hp4eyf5qahimrtr3@sigill.intra.peff.net>
+References: <CAD9aWChH14eviop=0_Ma_2Pa-2OyWJp9KjimH8dyqy-XDn9Rhw@mail.gmail.com>
+ <40608c85-f870-87f7-daee-7fa98f5d19c1@jump-ing.de>
+ <CAD9aWCgZkuaZNMDparVZE_WNFpOp7ud6iyCueGVbnU8s_EYtrQ@mail.gmail.com>
+ <20161108200110.zvqdm2nlu5zxfyv5@sigill.intra.peff.net>
+ <xmqqk2cdbg5v.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22562.32428.287354.214659@chiark.greenend.org.uk>
-Date:   Wed, 9 Nov 2016 01:41:00 +0000
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not
- to abbreviate
-Newsgroups: chiark.mail.linux-rutgers.git
-In-Reply-To: <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
-References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
-        <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
-        <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
-        <22561.44597.59852.574831@chiark.greenend.org.uk>
-        <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk2cdbg5v.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King writes ("Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate"):
-> Yeah, I think git's config system was always designed to carry options
-> for porcelains outside of git-core itself. So your new option fits into
-> that.
+On Tue, Nov 08, 2016 at 05:22:52PM -0800, Junio C Hamano wrote:
 
-Good, thanks.
-
-> I think the two things I found weird were:
+> Jeff King <peff@peff.net> writes:
 > 
->   - it's in the "log" section, which makes me think it's an option for
->     git-log. But it's not. I'm not sure what the _right_ section is, but
->     hopefully it would make it clear that this is command-agnostic.
+> > Probably converting "rename(from, to)" to first check "access(to,
+> > W_OK)". That's racy, but it's the best we could do.
 > 
->     Something like "gui.abbrevTags" might be OK (and as you note, has
->     precedence). But of course it's possible that a command like "tig"
->     could learn to support it.  I'm not sure if that counts as a GUI or
->     not. :)
+> Hmph, if these (possibly problematic) callers are all following the
+> usual "lock, write to temp, rename" pattern, perhaps the lock_file()
+> function can have access(path, W_OK) check before it returns a
+> tempfile that has been successfully opened?
 
-I don't really have an opinion about the name.  gui.abbrevTags would
-be a possibility.  (It's a bit odd that implicitly, the default would
-be `*'.)
+Yeah, that is a lot friendlier, as it prevents the caller from doing
+work (which may even involve the user typing things!) when it is clear
+that we would fail the final step anyway.
 
->   - The description talks about tag abbreviation, but doesn't really
->     define it. Not being a gitk user, it was hard for me to figure out
->     whether this was even relevant. Does it mean turning
->     "refs/tags/v1.0" into "1.0"? From the rest of the series, it sounds
->     like no. That should be more clear from the documentation.
-
-I can do that, sure.
-
-By default, gitk doesn't like to use much screen real estate for tags.
-If there are long tag names, or many tags, it shows them all as a
-single small indication saying just `<tag...|' or whatever with the
-literal `tag...', not with the tag value.
-
-Maybe a better name would be
-   gui.alwaysShowTags
-?
-
-I'm happy to be just told what the name ought to be, if the gitk and
-git maintainers can agree.  It seems largely a matter of taste.
-
-Thanks,
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
-
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+-Peff
