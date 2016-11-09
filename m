@@ -2,156 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 648C62021E
-	for <e@80x24.org>; Wed,  9 Nov 2016 22:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F432021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 22:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754238AbcKIWSk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 17:18:40 -0500
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:45736 "EHLO
-        homiemail-a22.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752167AbcKIWSj (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 9 Nov 2016 17:18:39 -0500
-Received: from homiemail-a22.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a22.g.dreamhost.com (Postfix) with ESMTP id 7336611406D;
-        Wed,  9 Nov 2016 14:18:38 -0800 (PST)
-Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
-        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        id S1754657AbcKIWZR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 17:25:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55196 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752576AbcKIWZQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 17:25:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D7724D22C;
+        Wed,  9 Nov 2016 17:25:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yQ7MePBblWixgO22pOgMPyv/b1o=; b=UUM4ee
+        BSo7jQ2crj6Oxddee5fTt4MhhJta/jqIP8s/n1uM3+PAGC04vxTBVmoC/hyj4xUO
+        w7vyWdq6vjrvLfz31mZrpeR1tYnpKG2X3QyAc3omBQhtfocrVYjON2whO2QTjjeC
+        hhzOPb6Mwe3w/FusNul3c/pEnQHaA9eRWHcZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pstKAEn52MBETuB7pz1J3l51t5YJNoIy
+        iTZFmRBiOHfx7giKcWNSJabGGT3i8+OkMuTZukLD3qsgRIZbl/7mSTixSsAe8KAX
+        /Ul7F9NKbGHRlkvmN/NQSe1YIuc5T/URVCozYXgfpiQj9UgiVygNg/VWj7UBQu9A
+        QixZVc4pSRs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C1EE4D225;
+        Wed,  9 Nov 2016 17:25:15 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a22.g.dreamhost.com (Postfix) with ESMTPSA id E5FFE11406B;
-        Wed,  9 Nov 2016 14:18:37 -0800 (PST)
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org, spearce@spearce.org
-Cc:     David Turner <dturner@twosigma.com>
-Subject: [PATCH] remote-curl: don't hang when a server dies before any output
-Date:   Wed,  9 Nov 2016 17:18:30 -0500
-Message-Id: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
-X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7DD404D21E;
+        Wed,  9 Nov 2016 17:25:14 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH 32/36] pathspec: allow querying for attributes
+References: <20161022233225.8883-1-sbeller@google.com>
+        <20161022233225.8883-33-sbeller@google.com>
+        <xmqqzilp63yh.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8C2MLg4ncLBXXJGf+=mPF_rRoKs2vN6=+chZeNeXWZsbg@mail.gmail.com>
+        <CAGZ79kZ=9QeZLKKrH27U2iE9x3WxgVe4RvCZpbdzZriMArV6Sg@mail.gmail.com>
+Date:   Wed, 09 Nov 2016 14:25:13 -0800
+In-Reply-To: <CAGZ79kZ=9QeZLKKrH27U2iE9x3WxgVe4RvCZpbdzZriMArV6Sg@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 9 Nov 2016 10:08:45 -0800")
+Message-ID: <xmqqy40s8f5i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 62AADB58-A6CB-11E6-9F9F-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the event that a HTTP server closes the connection after giving a
-200 but before giving any packets, we don't want to hang forever
-waiting for a response that will never come.  Instead, we should die
-immediately.
+Stefan Beller <sbeller@google.com> writes:
 
-One case where this happens is when attempting to fetch a dangling
-object by SHA.
+> On Wed, Nov 9, 2016 at 1:45 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Fri, Oct 28, 2016 at 1:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> ...
+>>> The strategy this round takes to make it unnecessary to punt
+>>> preloading (i.e. dropping "pathspec: disable preload-index when
+>>> attribute pathspec magic is in use" patch the old series had) is to
+>>> make the attribute subsystem thread-safe.  But that thread-safety in
+>>> the initial round is based on a single Big Attribute Lock, so it may
+>>> turn out that the end result performs better for this codepath if we
+>>> did not to make any call into the attribute subsystem.
+>>
+>> It does sound good and I want to say "yes please do this", but is it
+>> making pathspec api a bit more complex (to express "assume all
+>> attr-related criteria match")? I guess we can have an api to simply
+>> filter out attr-related magic (basically set attr_match_nr back to
+>> zero) then pass a safe (but more relaxing) pathspec to the threaded
+>> code. That would not add big maintenance burden.
+>
+> So with the current implementation, we already have the shortcut as:
+>
+>      if (item->attr_match_nr && !match_attrs(name, namelen, item))
+>
+> i.e. if attr_match_nr is zero, we do not even look at the mutexes and such,
+> so I am not sure what you intend to say in this email?
 
-Still to do: it would be good to give a better error message
-than "fatal: The remote end hung up unexpectedly".
+I am not sure what relevance the "we call into attribute subsystem
+only when there is any need to check attributes" obvious short-cut
+has to what is being discussed.
 
-Signed-off-by: David Turner <dturner@twosigma.com>
----
+The issue is specific to what preloading is about.  It is merely an
+attempt to run cheap checks that could be easily multi-threaded with
+multiple threads early in the program that we _know_ we would need
+to eventually refresh the index before doing some interesting work.
+A full refresh_index() will be done eventually, and because it needs
+to trigger thread-unsafe part of the API, it needs to be done in the
+main thread.  Doing the preload allows us to mark index entries that
+do not have to be scanned again in the upcoming refresh_index()
+call.  It is OK for preload-index.c::preload_thread() to skip and
+not mark some index entries (iow, its sole purpose is to leave a
+note in each index entry "this is fresh, you do not need to look at
+it again", and it can choose to skip an entry, which essentially
+means "this I didn't check, so you, refresh_index(), need to check
+yourself").
 
-Note: if you run t5551 before applying the code patch, the second new
-test will hang forever.
+preload_thread() for example skips index entries that needs to
+trigger "racy Git avoidance" logic that is heavyweight (it has to go
+to the filesystem and the object store), and it is a sensible thing
+to skip because they are rather rare.
 
-FWIW, I also saw this kind of hang at Twitter from time to time, but I
-was never able to reliably reproduce it there, and thus never able to
-fix it.  I suspect that a bad load balancer might have been killing
-connections just after the headers, but this is pure speculation.
+The message by Duy you are responding to was his response to me who
+wondered if the attribute based pathspec match also falls into the
+same category.  Just like racy Git code was deemed too heavyweight
+to be called from preloading codepath and CE_MATCH_RACY_IS_DIRTY bit
+was added as a way to ask ie_match_stat() API to avoid it (and hence
+we are skipping, the caller is also telling "if you suspect a racy,
+without checking for real, just answer 'I cannot say it is
+clean/fresh'"), if we invent a new flag and pass it through
+match_pathspec() down to match_pathspec_item() and have that if()
+statement you quoted also skip match_attrs() for a pathspec element
+with attribute based narrowing (as we are skipping, the flag may
+also have say "instead of checking the attributes, just pretend that
+the path did not satisfy the attribute narrowing"), would it benefit
+the overall performance?
 
-I am sorry that this patch does not provide a more useful error
-message.  For us, it is important to fix the hangs (so that we can
-retry on another server, for instance), but less important to be
-user-friendly (since we were only seeing these with automated
-processes).  I hope that someone who actually understands the http
-code, and has some time, could help improve this aspect of the code.
-
-If not, then at least we won't have inexplicable hangs.
-
- remote-curl.c               |  8 ++++++++
- t/t5551-http-fetch-smart.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index f14c41f..ee44236 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -400,6 +400,7 @@ struct rpc_state {
- 	size_t pos;
- 	int in;
- 	int out;
-+	int any_written;
- 	struct strbuf result;
- 	unsigned gzip_request : 1;
- 	unsigned initial_buffer : 1;
-@@ -456,6 +457,8 @@ static size_t rpc_in(char *ptr, size_t eltsize,
- {
- 	size_t size = eltsize * nmemb;
- 	struct rpc_state *rpc = buffer_;
-+	if (size)
-+		rpc->any_written = 1;
- 	write_or_die(rpc->in, ptr, size);
- 	return size;
- }
-@@ -659,6 +662,8 @@ static int post_rpc(struct rpc_state *rpc)
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, rpc);
- 
-+
-+	rpc->any_written = 0;
- 	err = run_slot(slot, NULL);
- 	if (err == HTTP_REAUTH && !large_request) {
- 		credential_fill(&http_auth);
-@@ -667,6 +672,9 @@ static int post_rpc(struct rpc_state *rpc)
- 	if (err != HTTP_OK)
- 		err = -1;
- 
-+	if (!rpc->any_written)
-+		err = -1;
-+
- 	curl_slist_free_all(headers);
- 	free(gzip_body);
- 	return err;
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 1ec5b27..43665ab 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -276,6 +276,36 @@ test_expect_success 'large fetch-pack requests can be split across POSTs' '
- 	test_line_count = 2 posts
- '
- 
-+test_expect_success 'test allowreachablesha1inwant' '
-+	test_when_finished "rm -rf test_reachable.git" &&
-+	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
-+	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
-+
-+	git init --bare test_reachable.git &&
-+	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
-+	git -C test_reachable.git fetch origin "$master_sha"
-+'
-+
-+test_expect_success 'test allowreachablesha1inwant with unreachable' '
-+	test_when_finished "rm -rf test_reachable.git; git reset --hard $(git rev-parse HEAD)" &&
-+
-+	#create unreachable sha
-+	echo content >file2 &&
-+	git add file2 &&
-+	git commit -m two &&
-+	git push public HEAD:refs/heads/doomed &&
-+	git push public :refs/heads/doomed &&
-+
-+	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
-+	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
-+
-+	git init --bare test_reachable.git &&
-+	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
-+	test_must_fail git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
-+'
-+
- test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
- 	(
- 		cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--- 
-2.8.0.rc4.22.g8ae061a
+To answer Duy's "would it make sense to force the caller to create a
+new pathspec from an existing one by filtering out pathspec elements
+with attr-based narrowing?" question, I do not think it does.
 
