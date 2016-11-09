@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40B7E2035F
-	for <e@80x24.org>; Tue,  8 Nov 2016 23:58:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 736EB2035F
+	for <e@80x24.org>; Wed,  9 Nov 2016 00:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750953AbcKHX6l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 18:58:41 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35645 "EHLO
+        id S1752902AbcKIAAx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 19:00:53 -0500
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34908 "EHLO
         mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750724AbcKHX6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 18:58:40 -0500
-Received: by mail-yw0-f194.google.com with SMTP id b66so4700999ywh.2
-        for <git@vger.kernel.org>; Tue, 08 Nov 2016 15:58:40 -0800 (PST)
+        with ESMTP id S1751554AbcKIAAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 19:00:52 -0500
+Received: by mail-yw0-f194.google.com with SMTP id b66so4702801ywh.2
+        for <git@vger.kernel.org>; Tue, 08 Nov 2016 16:00:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=cDgn15X2PW6WyvBdl/aQR4B6ge0onF50yMdOuokT9iE=;
-        b=CPsbK7NfhOk34ENqhry97Eg+3XlpvQQacqVOrue8hInOtBRRakps/UFeNvQ/rD162Y
-         MHyeFEwnZHgN9GYNnhB9Vh4zZfwY5JupwAfFJDnrpC99fvU2PNw7GIaKKmFiBzu9tvFa
-         gFJACCtQTu5rsOczTAfbby6SABqFBIvlLjHeLScimrVOXQ26F8fLDKO1fwf28sXAy0rB
-         72xQroDdAxqRQsdMM97cFw6tCNpROObJ4gpwMTc5JBEbihHQOvAlE4DNT341Yh35d8gr
-         7n2Vu6rAvpAuePNrzZYbmq9DlLW2DDbXMnJj9tbbMx2qg+7WMG7jqOSgRuUHXbSgQ7aD
-         +SoQ==
+        bh=9byiTPKVxyE1iuFNoKfO7JzvCB0ZboloagykWAoNKhI=;
+        b=uNZIDb1mJLDiKo0RKu9ghSqVkEtseLGOryeDsHDGL2Mhjcif0Cgma+FljiwWIhZUPu
+         8/PLKolpdt/U7uwJq1go5tfVRlHVmEuIxDNxyu4qWY5O8AJlsSbrUtmqibRh0YJQsibB
+         LgMl9Fxqu3decQzub96pqMYoiQOCav1rJB5NUuYArNuj8KWCNUmK+TsA+b6UQSIignBm
+         CPqtmd8v4DEDmltGkUgqZQMOaUD6caCWtU2n9uCuLy4rf+dkNdCR4FiWRro6vvLvFuw6
+         5ZVGvLp3ojwLv/gobuzbV6P1NkwWtLO//xz5CNhdVfxOgIEh36N06EozwMFhiq+iMCMd
+         Nvpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=cDgn15X2PW6WyvBdl/aQR4B6ge0onF50yMdOuokT9iE=;
-        b=HQl2tYgqA3guix5aFX1cEJTVQ4fwl5LW8sgGohHykl2B/3cPDOthROpJgz6OEWBFKr
-         JOoRT0rYHWBvsUGOXXTfxp9fJtpHqbuPchsm67gvYOEP1zxMVFw7sa1MBhR6PLQCCIBP
-         uDg+73hBd0y1x047LJboBWRZ9/MST9Z/y7XqyPVT3ev+gNaVnA97U7V+kiEmfaod0DQa
-         jAi1+QQhIUzknkQ7z4FiVDwtyvm29D9lQwsGFH5gQv9c5C9ujiyUaFIWWhT8dIH/wOAG
-         JIzzHIfM6YUzU2MEqVdMQdQOiDHJI5BME6lurKhqpzDMut8+1S3HfE5hpzW4DkfssCKO
-         anbA==
-X-Gm-Message-State: ABUngveD/3ndW5sN9zRPOaozuMmXBBCTqUfSUCaKfEDcdOaOv/LpKKSRMT9EQdGkSUPjYQUxUV+dDPe6s0nv2A==
-X-Received: by 10.129.74.65 with SMTP id x62mr14282479ywa.59.1478649519630;
- Tue, 08 Nov 2016 15:58:39 -0800 (PST)
+        bh=9byiTPKVxyE1iuFNoKfO7JzvCB0ZboloagykWAoNKhI=;
+        b=SaNpd6cR33/2576NZF87Ml4dcizCKi0y+M4s8KJV6qwRO44g4g5ZIzpxhX8jwb0Ira
+         y5EO8Fsa/I6v4i8ZzMBEyGGG/MLfbYxLKEysSUsyslT7LzlrBqd9FjnXd0fzkZbNAhHy
+         hMvCBWwa86dBIHep9x4teAMb3Vrmvs/5rXrqBLov4jnQprsGdufPQrGnrC6aGZlWq2YD
+         AIxcpca9scOx9OQqgUCHlb+l7Bb69Yh1Lo0qSodc8T32M4poTKkx/rCFlaHTIqOB3YZG
+         fhKyJfHEk188pWbjyR93Qw/BhFkj7TPKzYxVK+O7usxhS5iJjWdaseqzH2AIvt/tfOy4
+         e0RA==
+X-Gm-Message-State: ABUngvehfc2NPwKemeGUN6nkmL1wCzt8bHMgq9zhUFQKcWtOHgYc65RV/0qY9rINIXpem8Y2nJozVEI2i2gvkw==
+X-Received: by 10.13.254.71 with SMTP id o68mr11429267ywf.318.1478649651929;
+ Tue, 08 Nov 2016 16:00:51 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 15:58:19 -0800 (PST)
-In-Reply-To: <20161108201211.25213-14-Karthik.188@gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-14-Karthik.188@gmail.com>
+Received: by 10.37.33.132 with HTTP; Tue, 8 Nov 2016 16:00:31 -0800 (PST)
+In-Reply-To: <20161108201211.25213-15-Karthik.188@gmail.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-15-Karthik.188@gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 8 Nov 2016 15:58:19 -0800
-Message-ID: <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com>
-Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for
- ref printing atoms
+Date:   Tue, 8 Nov 2016 16:00:31 -0800
+Message-ID: <CA+P7+xo0yrafS0NxtCiDJqrU+Qbdjv7WEcdq9GK44bKt4pYagQ@mail.gmail.com>
+Subject: Re: [PATCH v7 14/17] ref-filter: allow porcelain to translate
+ messages in the output
 To:     Karthik Nayak <karthik.188@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -63,202 +63,88 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Nov 8, 2016 at 12:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
 > From: Karthik Nayak <karthik.188@gmail.com>
 >
-> Add the options `:dir` and `:base` to all ref printing ('%(refname)',
-> '%(symref)', '%(push)' and '%(upstream)') atoms. The `:dir` option gives
-> the directory (the part after $GIT_DIR/) of the ref without the
-> refname. The `:base` option gives the base directory of the given
-> ref (i.e. the directory following $GIT_DIR/refs/).
+> Introduce setup_ref_filter_porcelain_msg() so that the messages used in
+> the atom %(upstream:track) can be translated if needed. This is needed
+> as we port branch.c to use ref-filter's printing API's.
 >
 
-Nice, this seems useful.
+So any user that wants these translated calls
+setup_ref_filter_porcelain_msg but this will impact all callers from
+that point on. Ok, I think that's ok? Otherwise they get default
+without translation.
 
-> Add tests and documentation for the same.
->
-> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> Written-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
->  Documentation/git-for-each-ref.txt | 34 +++++++++++++++++++---------------
->  ref-filter.c                       | 29 +++++++++++++++++++++++++----
->  t/t6300-for-each-ref.sh            | 24 ++++++++++++++++++++++++
->  3 files changed, 68 insertions(+), 19 deletions(-)
+>  ref-filter.c | 28 ++++++++++++++++++++++++----
+>  ref-filter.h |  2 ++
+>  2 files changed, 26 insertions(+), 4 deletions(-)
 >
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index 600b703..f4ad297 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -96,7 +96,9 @@ refname::
->         slash-separated path components from the front of the refname
->         (e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
->         `<N>` must be a positive integer.  If a displayed ref has fewer
-> -       components than `<N>`, the command aborts with an error.
-> +       components than `<N>`, the command aborts with an error. For the base
-> +       directory of the ref (i.e. foo in refs/foo/bar/boz) append
-> +       `:base`. For the entire directory path append `:dir`.
->
->  objecttype::
->         The type of the object (`blob`, `tree`, `commit`, `tag`).
-> @@ -114,22 +116,23 @@ objectname::
->
->  upstream::
->         The name of a local ref which can be considered ``upstream''
-> -       from the displayed ref. Respects `:short` and `:strip` in the
-> -       same way as `refname` above.  Additionally respects `:track`
-> -       to show "[ahead N, behind M]" and `:trackshort` to show the
-> -       terse version: ">" (ahead), "<" (behind), "<>" (ahead and
-> -       behind), or "=" (in sync). `:track` also prints "[gone]"
-> -       whenever unknown upstream ref is encountered. Append
-> -       `:track,nobracket` to show tracking information without
-> -       brackets (i.e "ahead N, behind M").  Has no effect if the ref
-> -       does not have tracking information associated with it.
-> +       from the displayed ref. Respects `:short`, `:strip`, `:base`
-> +       and `:dir` in the same way as `refname` above.  Additionally
-> +       respects `:track` to show "[ahead N, behind M]" and
-> +       `:trackshort` to show the terse version: ">" (ahead), "<"
-> +       (behind), "<>" (ahead and behind), or "=" (in sync). `:track`
-> +       also prints "[gone]" whenever unknown upstream ref is
-> +       encountered. Append `:track,nobracket` to show tracking
-> +       information without brackets (i.e "ahead N, behind M").  Has
-> +       no effect if the ref does not have tracking information
-> +       associated with it.
->
->  push::
->         The name of a local ref which represents the `@{push}`
->         location for the displayed ref. Respects `:short`, `:strip`,
-> -       `:track`, and `:trackshort` options as `upstream`
-> -       does. Produces an empty string if no `@{push}` ref is
-> -       configured.
-> +       `:track`, `:trackshort`, `:base` and `:dir` options as
-> +       `upstream` does. Produces an empty string if no `@{push}` ref
-> +       is configured.
->
-
-At this point would it make more sense to document the extra values
-here in one block separately? For example, the upstream atom is
-getting pretty complex with all those options. Additionally, some of
-the options can be combined, like nobracket, but others cannot be
-comined so It may be worth documenting how and when those combinations
-work?
-
->  HEAD::
->         '*' if HEAD matches current ref (the checked out branch), ' '
-> @@ -169,8 +172,9 @@ if::
->
->  symref::
->         The ref which the given symbolic ref refers to. If not a
-> -       symbolic ref, nothing is printed. Respects the `:short` and
-> -       `:strip` options in the same way as `refname` above.
-> +       symbolic ref, nothing is printed. Respects the `:short`,
-> +       `:strip`, `:base` and `:dir` options in the same way as
-> +       `refname` above.
->
->  In addition to the above, for commit and tag objects, the header
->  field names (`tree`, `parent`, `object`, `type`, and `tag`) can
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 7d3d3a6..b47b900 100644
+> index b47b900..944671a 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -31,7 +31,7 @@ struct if_then_else {
->  };
+> @@ -15,6 +15,26 @@
+>  #include "version.h"
+>  #include "wt-status.h"
 >
->  struct refname_atom {
-> -       enum { R_NORMAL, R_SHORT, R_STRIP } option;
-> +       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
->         unsigned int strip;
->  };
+> +static struct ref_msg {
+> +       const char *gone;
+> +       const char *ahead;
+> +       const char *behind;
+> +       const char *ahead_behind;
+> +} msgs = {
+> +       "gone",
+> +       "ahead %d",
+> +       "behind %d",
+> +       "ahead %d, behind %d"
+> +};
+> +
+> +void setup_ref_filter_porcelain_msg(void)
+> +{
+> +       msgs.gone = _("gone");
+> +       msgs.ahead = _("ahead %d");
+> +       msgs.behind = _("behind %d");
+> +       msgs.ahead_behind = _("ahead %d, behind %d");
+> +}
+> +
+>  typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
 >
-> @@ -93,7 +93,11 @@ static void refname_atom_parser_internal(struct refname_atom *atom,
->                 atom->option = R_STRIP;
->                 if (strtoul_ui(arg, 10, &atom->strip) || atom->strip <= 0)
->                         die(_("positive value expected refname:strip=%s"), arg);
-> -       }       else
-> +       } else if (!strcmp(arg, "dir"))
-> +               atom->option = R_DIR;
-> +       else if (!strcmp(arg, "base"))
-> +               atom->option = R_BASE;
-> +       else
->                 die(_("unrecognized %%(%s) argument: %s"), name, arg);
->  }
+>  struct align {
+> @@ -1130,15 +1150,15 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>         else if (atom->u.remote_ref.option == RR_TRACK) {
+>                 if (stat_tracking_info(branch, &num_ours,
+>                                        &num_theirs, NULL)) {
+> -                       *s = xstrdup("gone");
+> +                       *s = xstrdup(msgs.gone);
+>                 } else if (!num_ours && !num_theirs)
+>                         *s = "";
+>                 else if (!num_ours)
+> -                       *s = xstrfmt("behind %d", num_theirs);
+> +                       *s = xstrfmt(msgs.behind, num_theirs);
+>                 else if (!num_theirs)
+> -                       *s = xstrfmt("ahead %d", num_ours);
+> +                       *s = xstrfmt(msgs.ahead, num_ours);
+>                 else
+> -                       *s = xstrfmt("ahead %d, behind %d",
+> +                       *s = xstrfmt(msgs.ahead_behind,
+>                                      num_ours, num_theirs);
+>                 if (!atom->u.remote_ref.nobracket && *s[0]) {
+>                         const char *to_free = *s;
+> diff --git a/ref-filter.h b/ref-filter.h
+> index 0014b92..da17145 100644
+> --- a/ref-filter.h
+> +++ b/ref-filter.h
+> @@ -111,5 +111,7 @@ struct ref_sorting *ref_default_sorting(void);
+>  int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
+>  /*  Get the current HEAD's description */
+>  char *get_head_description(void);
+> +/*  Set up translated strings in the output. */
+> +void setup_ref_filter_porcelain_msg(void);
 >
-> @@ -252,7 +256,6 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
->                 die(_("unrecognized %%(if) argument: %s"), arg);
->  }
->
-> -
->  static struct {
->         const char *name;
->         cmp_type cmp_type;
-> @@ -1096,7 +1099,25 @@ static const char *show_ref(struct refname_atom *atom, const char *refname)
->                 return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
->         else if (atom->option == R_STRIP)
->                 return strip_ref_components(refname, atom->strip);
-> -       else
-> +       else if (atom->option == R_BASE) {
-> +               const char *sp, *ep;
-> +
-> +               if (skip_prefix(refname, "refs/", &sp)) {
-> +                       ep = strchr(sp, '/');
-> +                       if (!ep)
-> +                               return "";
-> +                       return xstrndup(sp, ep - sp);
-> +               }
-> +               return "";
-> +       } else if (atom->option == R_DIR) {
-> +               const char *sp, *ep;
-> +
-> +               sp = refname;
-> +               ep = strrchr(sp, '/');
-> +               if (!ep)
-> +                       return "";
-> +               return xstrndup(sp, ep - sp);
-> +       } else
->                 return refname;
->  }
->
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 7ca0a12..8ff6568 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -53,12 +53,18 @@ test_atom head refname refs/heads/master
->  test_atom head refname:short master
->  test_atom head refname:strip=1 heads/master
->  test_atom head refname:strip=2 master
-> +test_atom head refname:dir refs/heads
-> +test_atom head refname:base heads
->  test_atom head upstream refs/remotes/origin/master
->  test_atom head upstream:short origin/master
->  test_atom head upstream:strip=2 origin/master
-> +test_atom head upstream:dir refs/remotes/origin
-> +test_atom head upstream:base remotes
->  test_atom head push refs/remotes/myfork/master
->  test_atom head push:short myfork/master
->  test_atom head push:strip=1 remotes/myfork/master
-> +test_atom head push:dir refs/remotes/myfork
-> +test_atom head push:base remotes
->  test_atom head objecttype commit
->  test_atom head objectsize 171
->  test_atom head objectname $(git rev-parse refs/heads/master)
-> @@ -600,4 +606,22 @@ test_expect_success 'Verify usage of %(symref:strip) atom' '
->         test_cmp expected actual
->  '
->
-> +cat >expected <<EOF
-> +refs/heads
-> +EOF
-> +
-> +test_expect_success 'Verify usage of %(symref:dir) atom' '
-> +       git for-each-ref --format="%(symref:dir)" refs/heads/sym > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +cat >expected <<EOF
-> +heads
-> +EOF
-> +
-> +test_expect_success 'Verify usage of %(symref:base) atom' '
-> +       git for-each-ref --format="%(symref:base)" refs/heads/sym > actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  test_done
+>  #endif /*  REF_FILTER_H  */
 > --
 > 2.10.2
 >
