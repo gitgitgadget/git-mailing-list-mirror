@@ -2,99 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E946B2021E
-	for <e@80x24.org>; Wed,  9 Nov 2016 23:16:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB392021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 23:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754579AbcKIXQv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 18:16:51 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56770 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753402AbcKIXQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 18:16:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D8534E7CB;
-        Wed,  9 Nov 2016 18:16:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3IBdwxgnWcXS
-        Kg7Oz3sSu4V3IjY=; b=ZhpIADCtJSN0OH9CmW5RV8co4mlaXOSJwi8w7ZW6ZSlp
-        7N+yva0g6evTXUCWttljJ6YEa3J0m7jncri1zV5UdqWqdqs5kfB1P9YtfTWCTEcN
-        1kBEs1KE3+bpwRPtdEG6Xsqjf9nqMMdwDpIMkXrZAl3emUl4neRMxNIR1qjS9gg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=U0VOLE
-        TkB7afdYcQCDSgN1ksx2BGUQyIJNgX4Q9DMCAvpLeMT+4ggFYH60HTHn6L+v/sLG
-        qt7he6QBUxE9QCKbnNWISAVTPzJ4N5S/WIw23KZlQqQ88a3+yka38TkPNcqQ1NkK
-        p1xTaSOoVFPy7BsrGHhP3a3n9WyzIr8tZd1ms=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04EA04E7CA;
-        Wed,  9 Nov 2016 18:16:50 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 738794E7C7;
-        Wed,  9 Nov 2016 18:16:49 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-        David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v5 01/16] Git.pm: add subroutines for commenting lines
-References: <20161108120823.11204-1-vascomalmeida@sapo.pt>
-        <20161005172110.30801-1-vascomalmeida@sapo.pt>
-        <20161108120823.11204-2-vascomalmeida@sapo.pt>
-        <xmqqshr19oxp.fsf@gitster.mtv.corp.google.com>
-        <1478710943.28771.4.camel@sapo.pt>
-        <b01d0d90-f87c-f708-5d2a-79f6268b4f44@gmail.com>
-Date:   Wed, 09 Nov 2016 15:16:48 -0800
-In-Reply-To: <b01d0d90-f87c-f708-5d2a-79f6268b4f44@gmail.com> ("Jakub
-        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Wed, 9 Nov 2016 23:25:23 +0100")
-Message-ID: <xmqqa8d88crj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754646AbcKIXRY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 18:17:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40935 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752576AbcKIXRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 18:17:23 -0500
+Received: (qmail 27447 invoked by uid 109); 9 Nov 2016 23:17:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 23:17:23 +0000
+Received: (qmail 447 invoked by uid 111); 9 Nov 2016 23:17:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 18:17:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Nov 2016 18:17:21 -0500
+Date:   Wed, 9 Nov 2016 18:17:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree
+ .gitattributes
+Message-ID: <20161109231720.luuhezzziuhx4r75@sigill.intra.peff.net>
+References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
+ <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net>
+ <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
+ <20161107211010.xo3243egggdgscou@sigill.intra.peff.net>
+ <20161107211522.vzl4zpsu5cpembgc@sigill.intra.peff.net>
+ <CACsJy8BoEXDjwe=ZX5ZOC_mvaMjYrB3i7wcMmiOP3mm5-rwC5Q@mail.gmail.com>
+ <xmqqmvh88dlu.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 97685602-A6D2-11E6-81D2-987C12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqmvh88dlu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+On Wed, Nov 09, 2016 at 02:58:37PM -0800, Junio C Hamano wrote:
 
->> I prefer to have like this instead
->>=20
->> sub prefix_lines {
->>         my $prefix =3D shift;
->>         my $string =3D join("\n", @_);
->>         $string =3D~ s/^/$prefix/mg;
->>         return $string;
->> }
->>=20
->> So both subroutines can take several strings as arguments.
->
-> I like the interface, but the implementation looks a bit inefficient.
-> Why not simply:
-> ...
-> If those strings can contain embedded newlines (so that they can be
-> called as in Junio example), then your solution is a must-be
->
->   sub prefix_lines {
->           my $prefix =3D shift;
->           my $string =3D join("\n", @_);
->           $string =3D~ s/^/$prefix/mg;
->           return $string;
->   }
->
-> Well, nevermind then
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > Let's err on the safe side and disable symlinks to outside repo by
+> > default (or even all symlinks on .gitattributes and .gitignore as the
+> > first step)
+> >
+> > What I learned from my changes in .gitignore is, if we have not
+> > forbidden something, people likely find some creative use for it.
+> 
+> Yup.  Supporting any symlink in-tree is like requiring Git to be
+> used only on symlink-capable filesystems.  Not allowing it sounds
+> like a very sensible option and unlike true contents, there is no
+> downside to give that limitation to things like .git<anything>.
 
-OK, so in short, is that a "Reviewed-by:" from you ;-)?
+I'm slightly confused. Did you mean "supporting any in-tree symlink to
+an out-of-tree destination" in your first sentence?
 
-I agree with the conclusion.  Thanks for a review.
+> Shouldn't we do the same for .gitmodules while we are at it?
 
+Good catch. Though I am inclined to have a flag that just covers all
+out-of-tree symlinks, regardless of names.
+
+-Peff
