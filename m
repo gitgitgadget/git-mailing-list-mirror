@@ -2,105 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8015020229
-	for <e@80x24.org>; Wed,  9 Nov 2016 11:12:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7CC72021E
+	for <e@80x24.org>; Wed,  9 Nov 2016 12:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933789AbcKILMR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 06:12:17 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:51709 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932295AbcKILMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 06:12:13 -0500
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1c4QTd-0007FX-US; Wed, 09 Nov 2016 10:51:34 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22562.65461.845411.29907@chiark.greenend.org.uk>
-Date:   Wed, 9 Nov 2016 10:51:33 +0000
+        id S1752186AbcKIMjj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 07:39:39 -0500
+Received: from ud03.udmedia.de ([194.117.254.43]:44978 "EHLO
+        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751969AbcKIMjh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 07:39:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
+        :references:cc:from:message-id:date:mime-version:in-reply-to
+        :content-type:content-transfer-encoding; s=k1; bh=y7A4YojPtyqdNq
+        zcL61Ejg4QDoRyOJQtYFU5K5HJu4E=; b=VEaM8IQhTmL0v7zTVYsmb65KdH3mQ6
+        BDbthglwCq5b0Y9LdPSnEcR04L4jkCOZTJzjpDumsoVWRdUO+seIPzSHCnsNeoKG
+        8RhoKX0mVLtat07iDgCkYwUlioUyQxjxCd7HlZROpzMdXxObCyiYefd6fmmpmZoP
+        RdPOAdHxsQ2UM=
+Received: (qmail 30924 invoked from network); 9 Nov 2016 13:39:34 +0100
+Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
+  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 9 Nov 2016 13:39:34 +0100
+Subject: Re: [PATCH 0/3] gitk: memory consumption improvements
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate
-In-Reply-To: <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
-References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
-        <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
-        <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
-        <22561.44597.59852.574831@chiark.greenend.org.uk>
-        <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
-        <22562.32428.287354.214659@chiark.greenend.org.uk>
-        <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+References: <de7cd593-0c10-4e93-1681-7e123504f5d5@jump-ing.de>
+ <xmqqtwbhbql9.fsf@gitster.mtv.corp.google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Paul Mackerras <paulus@ozlabs.org>
+From:   Markus Hitter <mah@jump-ing.de>
+Message-ID: <8eac2a5b-071f-6d17-4d81-0744db16910d@jump-ing.de>
+Date:   Wed, 9 Nov 2016 13:39:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqtwbhbql9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano writes ("Re: [PATCH 5/6] config docs: Provide for config to specify tags not to abbreviate"):
-> And I do not think we would want "log" or any core side Porcelain
-> command to have too many "information losing" options like this
-> "truncate refnames down to a point where it is no longer unique and
-> meaningful".  GUI tools can get away with doing sos because they can
-> arrange these truncated labels to react to end-user input (e.g. the
-> truncated Tag in the history display of gitk could be made to react
-> to mouse-over and pop-up to show a full name, for example), but the
-> output from the core side is pretty much fixed once it is emitted.
-> 
-> So my first preference would be to teach gitk such a "please
-> clarify" UI-reaction, if it does not know how to do so yet.  There
-> is no need for a configuration variable anywhere with this approach.
+Am 08.11.2016 um 22:37 schrieb Junio C Hamano:
+> Are all semi-modern Tcl/Tk in service have this -undo thing so that
+> we can pass unconditionally to the text widget like the patch does?
 
-gitk already has a way for the user to find out what the elided tag
-names are.  The underlying difficulty is that the situation that the
-gitk behaviour is designed for (long tag names, perhaps several to a
-commit, not particularly interesting), is not applicable to these
-particular tags.
+Good point. As far as my research goes, this flag was introduced in Nov. 2001:
 
-Whether the tag is `particularly interesting' depends, as I say, on
-both what tree it is in, and on its name.  It might be appropriate for
-terminal-based tools to highlight these tags too, or show them when
-tags are not normally displayed.
+http://core.tcl.tk/tk/info/5265df93d207cec0
 
-`core.interestingTags' ?
 
-> If you do want to add a configuration to show fuller name in the
-> tag, which would make it unnecessary for the user to do "please
-> clarify, as I am hovering over what I want to get details of"
-> action, that may also be a good way to go.
+To defend Gitk developers, the Tk guys apparently change their mind on the default value from time to time. Official documentation says nothing about a default, the proposal from 2001 talks about -undo 0 as default and there are recent commits changing this default:
 
-I think in my use case, which I hope to become common within Debian,
-this is going to be essential.
+http://core.tcl.tk/tk/info/549d2f56757408f3
 
->  But I think the right
-> place to do so would be Edit -> Preferences menu in Gitk, and the
-> settings will be stored in ~/.gitk or ~/.config/git/gitk or whatever
-> gitk-specific place.
 
-This is not correct, because as I have explained, this should be a
-per-tree configuration:
-
-If it can't be a `git config' option, even `git config gui.something',
-then I guess I will have to teach gitk to read a config file in
-GIT_DIR too.  But I think that is silly given that git already has a
-config file reading system which handles per-tree configs.
-
-If we can't get agreement from the git-core developers on a config to
-be used, and documented, for any tool which has similar behaviour, I
-think the right answer is `git config gitk.<something>', which would
-be documented in gitk.
-
-Thanks,
-Ian.
+Markus
 
 -- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
-
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+- - - - - - - - - - - - - - - - - - -
+Dipl. Ing. (FH) Markus Hitter
+http://www.jump-ing.de/
