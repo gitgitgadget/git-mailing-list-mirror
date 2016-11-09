@@ -2,104 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E762C2021E
-	for <e@80x24.org>; Wed,  9 Nov 2016 13:51:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AB03206A3
+	for <e@80x24.org>; Wed,  9 Nov 2016 13:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932859AbcKINvl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 08:51:41 -0500
-Received: from mout.gmx.net ([212.227.15.15]:56667 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932719AbcKINvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 08:51:40 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Ma1pn-1cObtj3ldv-00LoT7; Wed, 09 Nov 2016 14:51:25
- +0100
-Date:   Wed, 9 Nov 2016 14:51:22 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>, Andreas Schwab <schwab@suse.de>
-Subject: [PATCH] t6026: ensure that long-running script really is
-Message-ID: <16dc9f159b214997f7501006a8d1d8be2ef858e8.1478699463.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932905AbcKINwU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 08:52:20 -0500
+Received: from mail-vk0-f54.google.com ([209.85.213.54]:34267 "EHLO
+        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932719AbcKINwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 08:52:19 -0500
+Received: by mail-vk0-f54.google.com with SMTP id x186so176086978vkd.1
+        for <git@vger.kernel.org>; Wed, 09 Nov 2016 05:52:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=argoday-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cskv/e035z645TOpRnkRu418yBsIbByj1L4ODmJUaGg=;
+        b=xIRInkuZa1ufUxg10AzdC4inoHD1di2DH+NrjWtfgoQaDGIUcGTFUljqBpVkdhCS5C
+         cjElaE05ZTC8tFks8+eWFoKUYhIgT4AkCrZ6gMQXzThc1TYlgCv6zpZvz8YHiIRmPvcK
+         +CW59jRQ56tbe8r4Oda+vtgz3AS1KLwdHRzxrFVH2VwZKFjFD6WjtUBb9qIH13BoKwYk
+         2ErSz9P+KnEtOoFwemqi4sIXqyin85O09ArpgpLvdzPeUM5PWjjK9znYUjDiTDcM4bdO
+         zHviSuUJ88yGb8oW9tHGT6ePDDuLuexcy8IvrPQivpQnJNnSuJnC2bBnlTsgqh6VmTvd
+         hMzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cskv/e035z645TOpRnkRu418yBsIbByj1L4ODmJUaGg=;
+        b=MSdP6xlX45b19IWJpB+n0KwNBRv6pWfAMtMqXN2LrvzzmY1nYeo8tF637HREWZGQi1
+         TaYsOAdn8vN0P3w+tBX/QB1OTyQDqtqot023xi9McV47qtcOIfq0IrscQRmIgRQFMO9C
+         5cncMNUqoRbuPMEFP/8O7NI+n7VEgPKTQQwyDba6DNN4ajbG8rsleCL4oyaSSMJOwpWL
+         g4kIFDrc5mp+/nfiIHrTFAJYEOJMjRbp+nvHlAy4V7jcxvDxEX+Zfh1soQ3ZpduQ/5tA
+         WbqHnRealhDbSKyNLtfOeZym04NfyNFfZvDD/CyKlkh0TZ42TzUPaB4vn5dvrY88JlbZ
+         rlIw==
+X-Gm-Message-State: ABUngvfQTODobcZxtBDMHDi74cCc5AYLWC6dQe8B+RLoeTCcqJYT3EDanCFFkv3A+cE565mfpEzvcp4c7u+Opg==
+X-Received: by 10.31.58.84 with SMTP id h81mr12226440vka.15.1478699537998;
+ Wed, 09 Nov 2016 05:52:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:qWmFafJwFU7FKa07QIHK13eLq5coOzFoOn5cmCu2AE9hOGNRVJw
- 8YNDjcRxk9KW+N68DDZL14VEpPnZ6sKqzTpVuab0BVxa0mIrsuCXUbUSRArqKVc8v32+/ly
- P60icY3qR+z31X5wQjukS9+ANAohfsPpYc6RqhgcB+PB8qIY1GLA+zoIMyxvrLSKF2tuPIE
- ax6X2P1pJEfB/UGnNW8Bg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:j497WxUvKBY=:R2+DsYhOZGWVSw1wEOJgmQ
- 4CFgO5oHpKgSpKdHD5VzmU4hPHRpj/Ci/kc9/jSY2ZHJC5ty/Kox694hqeGHf3DMbuLduqjqE
- yneZpE12ZH4JZdd0xWhY3pjDWhFzDNsSb4i8V2GNMmEk6A4FqLhs3SW6UyWglIU1ovEqoRSg5
- Mg/dBTJ9y3DElEqtYHHnIr3VoJylf3FSu27i1wK3LOv961peSsvKQlJLhkivBZezA36M3CTyp
- UJSoig6jp6L6BnDTqzm2sjvQYYfG9JYLpFBnKk5bRoZWZlQ6lHAxpwzip+IvXe+z1IGKx3XDD
- XlXx/dZwTBbn9cMIoeMngCahUqMpZYUV4VEZHPzkvHUaLTeUzWZj4IJlgAmkh9sEYhgGbllZJ
- 3AX/MN7JSZMuhwkjc05e9jDy09yuQAgb4nNr2ErXg1izqqO4ucQWViRu3tdj5DeUg4GHxYgf5
- JsdoQq+HBtUFmbGAQV1EcYOKPj83mADJbv/c4pfQpRqo25XWDCS3YLgrI9tIDqrXbFbsfPjO6
- HCbVgm1ECpBw12JWXgoEUSzNKYcTNV5+3j5JdZALQhP11YlRWe900yDizyr+q9jheUo3/wBF0
- juyDSKoCj9XkI6YojetGo8Q+oUnZVWGm+sMFIKddgIGZ8WObRG3gn7F8s5FjfzVblxRKEq9yc
- mHHAUW1d8W3smB7gqdsRDD4AMQ9uWmGSTvXG+XtJZHi8id/drWcirXXBZC46vqmIhya3icvVf
- A+ecv+j+mNzUc0P0TNdLshMxRvJRx9lu8nFOv36rI7Kgv560bExeNo3pD9CWcHBTNhCp92p4Y
- UJQW4F1
+Received: by 10.103.128.70 with HTTP; Wed, 9 Nov 2016 05:51:57 -0800 (PST)
+In-Reply-To: <xmqqk2cdbg5v.fsf@gitster.mtv.corp.google.com>
+References: <CAD9aWChH14eviop=0_Ma_2Pa-2OyWJp9KjimH8dyqy-XDn9Rhw@mail.gmail.com>
+ <40608c85-f870-87f7-daee-7fa98f5d19c1@jump-ing.de> <CAD9aWCgZkuaZNMDparVZE_WNFpOp7ud6iyCueGVbnU8s_EYtrQ@mail.gmail.com>
+ <20161108200110.zvqdm2nlu5zxfyv5@sigill.intra.peff.net> <xmqqk2cdbg5v.fsf@gitster.mtv.corp.google.com>
+From:   Jonathan Word <argoday@argoday.com>
+Date:   Wed, 9 Nov 2016 08:51:57 -0500
+Message-ID: <CAD9aWCi5m_eJ==yC6_X-O_Xc+nyFczKkiEmqFSEAHKyNt2g-ZQ@mail.gmail.com>
+Subject: Re: Bug: git config does not respect read-only .gitconfig file
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Markus Hitter <mah@jump-ing.de>,
+        git@vger.kernel.org, jword@bloomberg.net
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When making sure that background tasks are cleaned up in 5babb5b
-(t6026-merge-attr: clean up background process at end of test case,
-2016-09-07), we considered to let the background task sleep longer, just
-to be certain that it will still be running when we want to kill it
-after the test.
+> It is unreasonable to drop the write-enable bit of
+> a file in a writable directory and expect it to stay unmodified. The
+> W-bit on the file is not usable as a security measure, and we do not
+> use it as such.
 
-Sadly, the assumption appears not to hold true that the test case passes
-quickly enough to kill the background task within a second.
+The point here is not a matter of security - it is of expectations.
 
-Simply increase it to an hour. No system can be possibly slow enough to
-make above-mentioned assumption incorrect.
+When a user drops write access on the global ~/.gitconfig I think
+a reasonable user would expect future `git config --global` calls to
+fail by default. The possibility of an override is a different matter,
+and my initial proposal included the details of enabling direct
+override. I don't think there is any presumption that this is a
+security related discussion.
 
-Reported by Andreas Schwab.
+> I do not offhand know how much a new feature "this repository can be
+> modified by pushing into and fetching from, but its configuration
+> cannot be modified" is a sensible thing to have.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/t6026-sleep-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git t6026-sleep-v1
+I agree that per-repository files almost never run into an issue with
+this. Our problem is strictly with the global ~/.gitconfig which in our
+use case is owned by a shared system account and used implicitly
+by many developers. Thus any one of those devs can call
+`git config` without any signal that they are changing something
+that ought not to be changed and should think carefully.
 
- t/t6026-merge-attr.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This would be equivalent to dropping write access to a file that
+your account owns so that vi / emacs / etc.. will warn that the
+file is read-only before modifying it (useful for any number of
+sensitive files). Obviously from a security perspective you have
+a number of means of potential override, however all require additional
+steps that surface the initial intention that the file should not
+change - or should only change rarely after additional confirmation.
 
-diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
-index 7a6e33e..348d78b 100755
---- a/t/t6026-merge-attr.sh
-+++ b/t/t6026-merge-attr.sh
-@@ -183,16 +183,16 @@ test_expect_success 'up-to-date merge without common ancestor' '
- 
- test_expect_success 'custom merge does not lock index' '
- 	git reset --hard anchor &&
--	write_script sleep-one-second.sh <<-\EOF &&
--		sleep 1 &
-+	write_script sleep-an-hour.sh <<-\EOF &&
-+		sleep 3600 &
- 		echo $! >sleep.pid
- 	EOF
- 	test_when_finished "kill \$(cat sleep.pid)" &&
- 
- 	test_write_lines >.gitattributes \
--		"* merge=ours" "text merge=sleep-one-second" &&
-+		"* merge=ours" "text merge=sleep-an-hour" &&
- 	test_config merge.ours.driver true &&
--	test_config merge.sleep-one-second.driver ./sleep-one-second.sh &&
-+	test_config merge.sleep-an-hour.driver ./sleep-an-hour.sh &&
- 	git merge master
- '
- 
+> perhaps the lock_file()
+> function can have access(path, W_OK) check before it returns a
+> tempfile that has been successfully opened?
 
-base-commit: be5a750939c212bc0781ffa04fabcfd2b2bd744e
--- 
-2.10.1.583.g721a9e0
+That sounds ideal
+
+On Tue, Nov 8, 2016 at 8:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> Probably converting "rename(from, to)" to first check "access(to,
+>> W_OK)". That's racy, but it's the best we could do.
+>
+> Hmph, if these (possibly problematic) callers are all following the
+> usual "lock, write to temp, rename" pattern, perhaps the lock_file()
+> function can have access(path, W_OK) check before it returns a
+> tempfile that has been successfully opened?
+>
+> Having said that, I share your assessment that this is not a code or
+> design problem.  It is unreasonable to drop the write-enable bit of
+> a file in a writable directory and expect it to stay unmodified. The
+> W-bit on the file is not usable as a security measure, and we do not
+> use it as such.
+>
+> I do not offhand know how much a new feature "this repository can be
+> modified by pushing into and fetching from, but its configuration
+> cannot be modified" is a sensible thing to have.  But it is quite
+> clear that even if we were to implement such feature, we wouldn't be
+> using W-bit on .git/config to signal that.
+>
