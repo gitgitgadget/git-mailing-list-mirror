@@ -6,58 +6,83 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D03F2035F
-	for <e@80x24.org>; Wed,  9 Nov 2016 03:34:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E3872035F
+	for <e@80x24.org>; Wed,  9 Nov 2016 03:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751647AbcKIDep (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Nov 2016 22:34:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40489 "EHLO cloud.peff.net"
+        id S1751647AbcKID5b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Nov 2016 22:57:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40501 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751282AbcKIDeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2016 22:34:44 -0500
-Received: (qmail 20306 invoked by uid 109); 9 Nov 2016 03:34:44 -0000
+        id S1750967AbcKID5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2016 22:57:31 -0500
+Received: (qmail 21626 invoked by uid 109); 9 Nov 2016 03:57:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 03:34:44 +0000
-Received: (qmail 26257 invoked by uid 111); 9 Nov 2016 03:35:12 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Nov 2016 03:57:30 +0000
+Received: (qmail 26578 invoked by uid 111); 9 Nov 2016 03:57:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 22:35:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2016 22:34:41 -0500
-Date:   Tue, 8 Nov 2016 22:34:41 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Nov 2016 22:57:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Nov 2016 22:57:28 -0500
+Date:   Tue, 8 Nov 2016 22:57:28 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Word <argoday@argoday.com>,
-        Markus Hitter <mah@jump-ing.de>, git@vger.kernel.org,
-        jword@bloomberg.net
-Subject: Re: Bug: git config does not respect read-only .gitconfig file
-Message-ID: <20161109033441.hp4eyf5qahimrtr3@sigill.intra.peff.net>
-References: <CAD9aWChH14eviop=0_Ma_2Pa-2OyWJp9KjimH8dyqy-XDn9Rhw@mail.gmail.com>
- <40608c85-f870-87f7-daee-7fa98f5d19c1@jump-ing.de>
- <CAD9aWCgZkuaZNMDparVZE_WNFpOp7ud6iyCueGVbnU8s_EYtrQ@mail.gmail.com>
- <20161108200110.zvqdm2nlu5zxfyv5@sigill.intra.peff.net>
- <xmqqk2cdbg5v.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH] sequencer: silence
+ -Wtautological-constant-out-of-range-compare
+Message-ID: <20161109035728.v2mqvtj4ep4dj74j@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqk2cdbg5v.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 08, 2016 at 05:22:52PM -0800, Junio C Hamano wrote:
+When clang compiles sequencer.c, it complains:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Probably converting "rename(from, to)" to first check "access(to,
-> > W_OK)". That's racy, but it's the best we could do.
-> 
-> Hmph, if these (possibly problematic) callers are all following the
-> usual "lock, write to temp, rename" pattern, perhaps the lock_file()
-> function can have access(path, W_OK) check before it returns a
-> tempfile that has been successfully opened?
+  sequencer.c:632:14: warning: comparison of constant 2 with
+    expression of type 'const enum todo_command' is always
+    true [-Wtautological-constant-out-of-range-compare]
+          if (command < ARRAY_SIZE(todo_command_strings))
 
-Yeah, that is a lot friendlier, as it prevents the caller from doing
-work (which may even involve the user typing things!) when it is clear
-that we would fail the final step anyway.
+This is because "command" is an enum that may only have two
+values (0 and 1) and the array in question has two elements.
 
--Peff
+As it turns out, clang is actually wrong here, at least
+according to its own bug tracker:
+
+  https://llvm.org/bugs/show_bug.cgi?id=16154
+
+But it's still worth working around this, as the warning is
+present with -Wall, meaning we fail compilation with "make
+DEVELOPER=1".
+
+Casting the enum to size_t sufficiently unconfuses clang. As
+a bonus, it also catches any possible out-of-bounds access
+if the enum takes on a negative value (which shouldn't
+happen either, but again, this is a defensive check).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I know that a different fix is coming in a follow-on series, but I think
+it's worth doing this to un-break clang on master (and v2.11) in the
+meantime.
+
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 5fd75f30d..6f0ff9e41 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -629,7 +629,7 @@ static const char *todo_command_strings[] = {
+ 
+ static const char *command_to_string(const enum todo_command command)
+ {
+-	if (command < ARRAY_SIZE(todo_command_strings))
++	if ((size_t)command < ARRAY_SIZE(todo_command_strings))
+ 		return todo_command_strings[command];
+ 	die("Unknown command: %d", command);
+ }
+-- 
+2.11.0.rc0.263.g6f44bc3
