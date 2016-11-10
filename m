@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A815C203E2
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDE8520229
 	for <e@80x24.org>; Thu, 10 Nov 2016 20:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965129AbcKJUe6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 15:34:58 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33086 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965083AbcKJUe5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 15:34:57 -0500
-Received: by mail-pf0-f172.google.com with SMTP id d2so152090462pfd.0
-        for <git@vger.kernel.org>; Thu, 10 Nov 2016 12:34:57 -0800 (PST)
+        id S965705AbcKJUgC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 15:36:02 -0500
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:33050 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964960AbcKJUeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 15:34:46 -0500
+Received: by mail-pf0-f178.google.com with SMTP id d2so152088580pfd.0
+        for <git@vger.kernel.org>; Thu, 10 Nov 2016 12:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z3yAAPFTgOuG3d7hvJ5o9Coai75k4b7bW4CiJwsbCFs=;
-        b=R0++IMLIVka1ic2YaHdH7JbGdv2WmoQfjc+F+FRjL2QA5tMSxakv6ChlmV2o0r/8qE
-         WNILrXQfor0zz3/y7PPwr4fJfs93YlD/IXQTSQPtidKbg9pLR9JIqsKNVNiseotaNUbT
-         G6JIKY3WZNMy5Lyy5ZNn73D512XKq4bPIJtSyT0zxWE6BU5Ki9du/Rw2JlJLw+UqVgtQ
-         9k9z4VI4/bf8ZD5zDlRJsxDZmL28PbveUmbKyHOsAPcNXBkvHJNZyDg5veBnm5oxtr+W
-         nwoFEhBjYoN4OX0EInidq1cioYH+1h2aHbNSmGi3zSPPX0MoSx/9CtPXfQYABc9bzEju
-         vC2A==
+        bh=ek7CWytQW1decQuPdZzbnX4kcKs4YMviilOoUaNimyI=;
+        b=gLmgnmnRMfWYRmnJikzGAvCM7WQUGFWi0kPADgwXt4sYXTWfmOzhtO1hMBJnY3J/Rl
+         wjlWNzRPPSr01onQY+qRE5DTYbV3FDzaH8DE2hBpWRsJ0tmzIKPjUiqgIVXZznyPsbrF
+         ACV/07Rf3S/W1/gEQB4oh/S9/p0fmkv26AfsJ/FSs+OWHV3WuwGHVok/SybEx/SuVW3m
+         RT+6K4HUlxETIEBhauvSaus40x16NE6pvYpl6VFNnorTFoDl53NdunI7qB0YSB+KXlDn
+         bxa2ekpt97bGS5LCZiiSk3vWj2eOk2jCz9m1XpRPpcBCLw3q1tYUTJcyQHgnthcEJ0m+
+         gjpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Z3yAAPFTgOuG3d7hvJ5o9Coai75k4b7bW4CiJwsbCFs=;
-        b=RoOwRUtZmCAuatmwl6qvs6qvfP74LV/3JPxTBtqJujhiGDw697lvy/BcfKPQyg0z6U
-         OOfJ/EQQsvRSl1NpV+trOvcUCns3+Nt4ijjjGhYwOHrgnjDhndEGQgKSbrtPXrfsvfDg
-         //wLnxgiZO3dhWWflyQjVbEdfCVaYpM4BfxmuYPaTHF86beQVaf2ic5S2UFdWgxDvuYF
-         sLy+GPQf+GTG9ytteZl0+/2bw1jEfHzFSCutT+Zn/aHYEhJM5q0MkKJBVaWQOJOTG6yv
-         DPLpj3akxzTktWkpCR7NawQeQ/mLns4/SGtC1m/DH+HcgiKk+/y3EFb23k1+upp58p6K
-         2xDw==
-X-Gm-Message-State: ABUngvfkpXiBdtOUl8Jd4CW2lScD83B6f63/nnchOvDEMiBmJSTE8p90OrLqVz6TkDBRjJHQ
-X-Received: by 10.99.227.81 with SMTP id o17mr38583658pgj.69.1478810096531;
-        Thu, 10 Nov 2016 12:34:56 -0800 (PST)
+        bh=ek7CWytQW1decQuPdZzbnX4kcKs4YMviilOoUaNimyI=;
+        b=GpxOKCak37I7mWZE1HsZ/6x2kv9j+E7xgmYiVQiiDnbDFXfw9owrG+8I+tgQewnyoA
+         Di9NrHPZ1NSEOWy/xtNjiaecvc4wGCuny2EqjK7KOTlDYOuQ4ZYbLb8mLkKR1MDtw8OT
+         R+q8XBqvl2CCs9K0IpvlrPlkr5iRORMwzJ5h3ET5jhmm+Cq4SA0TyuxGh2LuDXRS2rDR
+         4NVYxj9LzpgiTmnfMklnv7FN0ffS6B0hnPGNq0zVrAV/S+lN+em9AFMxXAqi5IruRUEc
+         t8l1IosF6VEohuR3ufAZERxjzZX1mvZbRAvv1miBSTrb/L5d29re+1EI4jqxb/aAkQuD
+         TiiA==
+X-Gm-Message-State: ABUngveayyKC3X+O/XFgIrILLki1xERpHplkl3vGrrZH3AtfTtIV7D5Y00DqA7I25zCnxoxE
+X-Received: by 10.99.65.65 with SMTP id o62mr14803363pga.73.1478810085420;
+        Thu, 10 Nov 2016 12:34:45 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:b504:dcf8:965a:7ab8])
-        by smtp.gmail.com with ESMTPSA id g10sm9352486pac.14.2016.11.10.12.34.55
+        by smtp.gmail.com with ESMTPSA id d1sm9271013pfb.76.2016.11.10.12.34.44
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 10 Nov 2016 12:34:56 -0800 (PST)
+        Thu, 10 Nov 2016 12:34:44 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, bmwill@google.com, pclouds@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 15/35] attr: add counted string version of git_check_attr()
-Date:   Thu, 10 Nov 2016 12:34:08 -0800
-Message-Id: <20161110203428.30512-16-sbeller@google.com>
+Subject: [PATCH 08/35] attr.c: tighten constness around "git_attr" structure
+Date:   Thu, 10 Nov 2016 12:34:01 -0800
+Message-Id: <20161110203428.30512-9-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.469.g00a8914
 In-Reply-To: <20161110203428.30512-1-sbeller@google.com>
 References: <20161110203428.30512-1-sbeller@google.com>
@@ -61,105 +61,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Junio C Hamano <gitster@pobox.com>
 
-Often a potential caller has <path, pathlen> pair that
-represents the path it wants to ask attributes for; when
-path[pathlen] is not NUL, the caller has to xmemdupz()
-only to call git_check_attr().
-
-Add git_check_attr_counted() that takes such a counted
-string instead of "const char *path".
+It holds an interned string, and git_attr_name() is a way to peek
+into it.  Make sure the involved pointer types are pointer-to-const.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- attr.c | 23 ++++++++++++++---------
- attr.h |  1 +
- 2 files changed, 15 insertions(+), 9 deletions(-)
+ attr.c | 2 +-
+ attr.h | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index d427798..9bec243 100644
+index 7bfeef3..5c35d42 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -734,20 +734,19 @@ static int attr_check_is_dynamic(const struct git_attr_check *check)
-  * check_all_attr. If num is non-zero, only attributes in check[] are
-  * collected. Otherwise all attributes are collected.
-  */
--static void collect_some_attrs(const char *path, int num,
-+static void collect_some_attrs(const char *path, int pathlen, int num,
- 			       struct git_attr_check_elem *check)
+@@ -43,7 +43,7 @@ static int cannot_trust_maybe_real;
+ static struct git_attr_check *check_all_attr;
+ static struct git_attr *(git_attr_hash[HASHSIZE]);
  
+-char *git_attr_name(struct git_attr *attr)
++const char *git_attr_name(const struct git_attr *attr)
  {
- 	struct attr_stack *stk;
--	int i, pathlen, rem, dirlen;
-+	int i, rem, dirlen;
- 	const char *cp, *last_slash = NULL;
- 	int basename_offset;
- 
--	for (cp = path; *cp; cp++) {
-+	for (cp = path; cp < path + pathlen; cp++) {
- 		if (*cp == '/' && cp[1])
- 			last_slash = cp;
- 	}
--	pathlen = cp - path;
- 	if (last_slash) {
- 		basename_offset = last_slash + 1 - path;
- 		dirlen = last_slash - path;
-@@ -778,12 +777,12 @@ static void collect_some_attrs(const char *path, int num,
- 		rem = fill(path, pathlen, basename_offset, stk, rem);
+ 	return attr->name;
  }
- 
--static int git_check_attrs(const char *path, int num,
-+static int git_check_attrs(const char *path, int pathlen, int num,
- 			   struct git_attr_check_elem *check)
- {
- 	int i;
- 
--	collect_some_attrs(path, num, check);
-+	collect_some_attrs(path, pathlen, num, check);
- 
- 	for (i = 0; i < num; i++) {
- 		const char *value = check_all_attr[check[i].attr->attr_nr].value;
-@@ -800,7 +799,7 @@ void git_all_attrs(const char *path, struct git_attr_check *check)
- 	int i;
- 
- 	git_attr_check_clear(check);
--	collect_some_attrs(path, 0, NULL);
-+	collect_some_attrs(path, strlen(path), 0, NULL);
- 
- 	for (i = 0; i < attr_nr; i++) {
- 		const char *name = check_all_attr[i].attr->name;
-@@ -825,10 +824,16 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
- 	use_index = istate;
- }
- 
--int git_check_attr(const char *path, struct git_attr_check *check)
-+int git_check_attr_counted(const char *path, int pathlen,
-+			   struct git_attr_check *check)
- {
- 	check->finalized = 1;
--	return git_check_attrs(path, check->check_nr, check->check);
-+	return git_check_attrs(path, pathlen, check->check_nr, check->check);
-+}
-+
-+int git_check_attr(const char *path, struct git_attr_check *check)
-+{
-+	return git_check_attr_counted(path, strlen(path), check);
- }
- 
- struct git_attr_check *git_attr_check_initl(const char *one, ...)
 diff --git a/attr.h b/attr.h
-index 506db0c..c84f164 100644
+index 8b08d33..00d7a66 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -38,6 +38,7 @@ struct git_attr_check {
+@@ -25,7 +25,7 @@ extern const char git_attr__false[];
+  * Unset one is returned as NULL.
+  */
+ struct git_attr_check {
+-	struct git_attr *attr;
++	const struct git_attr *attr;
+ 	const char *value;
+ };
  
- extern struct git_attr_check *git_attr_check_initl(const char *, ...);
- extern int git_check_attr(const char *path, struct git_attr_check *);
-+extern int git_check_attr_counted(const char *, int, struct git_attr_check *);
+@@ -34,7 +34,7 @@ struct git_attr_check {
+  * return value is a pointer to a null-delimited string that is part
+  * of the internal data structure; it should not be modified or freed.
+  */
+-char *git_attr_name(struct git_attr *);
++extern const char *git_attr_name(const struct git_attr *);
  
- extern struct git_attr_check *git_attr_check_alloc(void);
- extern struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *, const struct git_attr *);
+ int git_check_attr(const char *path, int, struct git_attr_check *);
+ 
 -- 
 2.10.1.469.g00a8914
 
