@@ -2,121 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADD8B2035F
-	for <e@80x24.org>; Thu, 10 Nov 2016 09:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 317F62035F
+	for <e@80x24.org>; Thu, 10 Nov 2016 11:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754693AbcKJJUA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 04:20:00 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36588 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754671AbcKJJT6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 04:19:58 -0500
-Received: by mail-yw0-f194.google.com with SMTP id r204so9517303ywb.3
-        for <git@vger.kernel.org>; Thu, 10 Nov 2016 01:19:58 -0800 (PST)
+        id S1754927AbcKJLBY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 06:01:24 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:34944 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754542AbcKJLBX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 06:01:23 -0500
+Received: by mail-it0-f67.google.com with SMTP id b123so2649433itb.2
+        for <git@vger.kernel.org>; Thu, 10 Nov 2016 03:01:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=WWumy+p93g4nLS/qiJ/zCpt9iCjw4JsYdSnfawHpNNg=;
-        b=Sh0+H/mGrC5sjw6tIjF4XsOrokaV0rH+Z4z3exCoNkdH70vd9Cz3vha9MIQuJlTLo4
-         ZoLVppEL4G7l4ANOJW5AUePBrjreCMq2ytZfWHNiPSLtzdhnfJ+CNeN1xNMV0Ul/84/o
-         BVV99Bm9aRR2yehINbmZFOyv4qqneSKR204V53PLJp3esOnMM4DrT/KdijRf6R1O4pDG
-         RQiAwojATaeLaHJZ2j7xIprqd4dJaB9hHC/pJBFGBxWFbt9leV0mZ7r7dDy5NWxfdT3i
-         clDPmBRIi01zO5vjsjwYhokc3HWqY6/UgIPevanqh92GzNRlWdgUKeLqLtJ4f2rEucis
-         17RQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7u7x/faOtp/dMa3LjGbaSId+9jWTooldtvjX8pYZI/g=;
+        b=TCnVXqfvNWH/MC2rLm8bhbaykAbEh57G+yD25hVpexDXdhLtvh+uoIR+KVYqt+lYCS
+         Em1iaYjG4CulXZrLMEf615Kn0XSSGJdlmCN99WgYXpDy2DSZuJHJs7UTQZZm8+9wN3hs
+         k+Rd1eEG3hcSFVZVOjieVOn5HFqfrnrcP/2N2wmBtMw+f/WTmgrN3msIMr8IRqZWNg//
+         1XCc8wXc3sUKC2pqZcRAArz/NzOgOEN6tlAzUiVFmOcMR8MynX9Lp5ngf2mxJnkZ7VQD
+         x3HPPhY0qR04xV5nTIHSa/MkJR7O8A60FC7lO9kX1d9l90eQ5v5j/5+QN6qvKxV3e7kh
+         SaJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=WWumy+p93g4nLS/qiJ/zCpt9iCjw4JsYdSnfawHpNNg=;
-        b=DPTYLFmxo4F1qDbe8UmVMYP792/OzPRIvgADyM62piWLt5qXl7OyRzSEVnvdk9BePf
-         Wr7Ma25mxclh/BFr7TwLnEXMl9rKrY1PiHqAd3efu9tbOh04sOGQUE8WteEf1RNv4HNU
-         P4krjhSYIb7Lr7z3FfOmbnDdYxLJZH6Z35sHtuFgneLEju7UXMEAV3kVbpXPXqh18hCG
-         raI9On34uyvhLBx03qD5L/aBEqICXIkTuwVmXmBMAmV/5oIQYcIIDdpYtRXbeaOJqB0n
-         a1Rd3W2DqrCaZe3G9tLqP2HLpB+DAY8phj6XQBRlQuszP/RqPq0wLWQfzFNtzEdEbLYG
-         HyKA==
-X-Gm-Message-State: ABUngvdqQwdexJ0uuPc/5RbRcu8+dKuOzysjRkWnyNxK57VmFBzeFhnDkdp8gDAzJX8FxOjGg5dDcqd6pn9f0g==
-X-Received: by 10.13.246.134 with SMTP id g128mr4405939ywf.319.1478769597923;
- Thu, 10 Nov 2016 01:19:57 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7u7x/faOtp/dMa3LjGbaSId+9jWTooldtvjX8pYZI/g=;
+        b=FN4wjCd/s2P+JpcTTn4yXfS7Am8ZQAXMB203H/HkiBCbOuB48WjtVQcbUo2Eg7IinE
+         2pyim0Iln9v2Nlm+bmUrmSOMDMWui/MDrJQHBcrH910d4Gt+4Craxsfn2/frRRVl7eMj
+         TxlRMl3lhHH3iJej3m4cXLkyTcw9CKjIeuTykhokaWBQ+DJd3AjRoKGJlPaNhER8ml8P
+         VBOHlG/xTaz+mr8tOU/IAiUepCr/Ux/rczPrAreu5WiEBn3NdXxDQ5ladPKibHZmMptF
+         ftdLaDDFlBMwIFXhYLuPwsxKVf/AsvNb49udBZI/WRXKW6Znk4o6j6oKJLM+1pB670qx
+         i0GQ==
+X-Gm-Message-State: ABUngvf+zOrcoxiGenErqz652xGBA0ogOk0jj73g3VjXwTr+7Tdp1L5zMGn5mCP27R/pJ6gqNVL5LkhBNdDOdg==
+X-Received: by 10.36.206.71 with SMTP id v68mr3404109itg.50.1478775681967;
+ Thu, 10 Nov 2016 03:01:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.13.193.71 with HTTP; Thu, 10 Nov 2016 01:19:57 -0800 (PST)
-In-Reply-To: <CALbGNxUahc0b151niqS3Qd6N8wapY5RWJs1w0ZSf6ZW1=id6vA@mail.gmail.com>
-References: <CALbGNxUahc0b151niqS3Qd6N8wapY5RWJs1w0ZSf6ZW1=id6vA@mail.gmail.com>
-From:   John Szakmeister <john@szakmeister.net>
-Date:   Thu, 10 Nov 2016 04:19:57 -0500
-X-Google-Sender-Auth: nt23v_iNRnGHGRq-_CYURufhDbg
-Message-ID: <CAEBDL5VWpnoQdD6TJgdLBgFbb9HZzwYyLDbVz1O3s5As5otLQg@mail.gmail.com>
-Subject: Re: Cleaning ignored files
-To:     Roman Terekhov <roman.terekhov@gmail.com>
-Cc:     git@vger.kernel.org
+Received: by 10.64.164.102 with HTTP; Thu, 10 Nov 2016 03:00:51 -0800 (PST)
+In-Reply-To: <20161110002335.z2z2stjtzgspikxe@sigill.intra.peff.net>
+References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
+ <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net> <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
+ <20161107211010.xo3243egggdgscou@sigill.intra.peff.net> <20161107211522.vzl4zpsu5cpembgc@sigill.intra.peff.net>
+ <CACsJy8BoEXDjwe=ZX5ZOC_mvaMjYrB3i7wcMmiOP3mm5-rwC5Q@mail.gmail.com>
+ <xmqqmvh88dlu.fsf@gitster.mtv.corp.google.com> <20161109231720.luuhezzziuhx4r75@sigill.intra.peff.net>
+ <xmqqoa1o6vca.fsf@gitster.mtv.corp.google.com> <20161110002335.z2z2stjtzgspikxe@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 10 Nov 2016 18:00:51 +0700
+Message-ID: <CACsJy8BJkV+0wbrYuVrwixfbnOKw0DrwLHEtH-fzOHtEHyiXBw@mail.gmail.com>
+Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree .gitattributes
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 9, 2016 at 1:23 PM, Roman Terekhov <roman.terekhov@gmail.com> w=
-rote:
-> Hi,
+On Thu, Nov 10, 2016 at 7:23 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 09, 2016 at 04:18:29PM -0800, Junio C Hamano wrote:
 >
-> I want to ask about git clean -dXf command behaviour.
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > On Wed, Nov 09, 2016 at 02:58:37PM -0800, Junio C Hamano wrote:
+>> >
+>> > I'm slightly confused. Did you mean "supporting any in-tree symlink to
+>> > an out-of-tree destination" in your first sentence?
+>>
+>> I was trying to say that these "control files used solely by git"
+>> have no business being a symbolic link pointing at anywhere, even
+>> inside the same tree; actually, especially if it is inside the same
+>> tree.
 >
-> I do the following:
->
-> $ mkdir gitignore_test
-> $ cd gitignore_test/
-> $ git init
-> Initialized empty Git repository in ~/gitignore_test/.git/
->
-> $ echo *.sln > .gitignore
-> $ git add .gitignore
-> $ git commit -m "add gitignore"
-> [master (root-commit) ef78a3c] add gitignore
->  1 file changed, 1 insertion(+)
->  create mode 100644 .gitignore
->
-> $ mkdir src
-> $ touch test.sln
-> $ touch src/test.sln
-> $ tree
-> .
-> =E2=94=9C=E2=94=80=E2=94=80 src
-> =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test.sln
-> =E2=94=94=E2=94=80=E2=94=80 test.sln
->
-> 1 directory, 2 files
->
-> $ git clean -dXf
-> Removing test.sln
->
-> $ tree
-> .
-> =E2=94=94=E2=94=80=E2=94=80 src
->     =E2=94=94=E2=94=80=E2=94=80 test.sln
->
-> 1 directory, 1 file
->
->
-> Why git clean -dXf does not remove all my test.sln files, but just one of=
- them?
+> OK. That is what my patch does (modulo .gitmodules, which I did not
+> think of). But I think that is the opposite of Duy's opinion, as his
+> review seemed to object to that.
 
-src/ is not under version control, and currently git does not descend
-into unknown folders to remove ignored files.  If you had a tracked or
-staged file in src/, then git would descend into src/ and remove
-test.sln as expected.  In your example, try doing:
+I only objected the rationale (to be consistent with reading index).
+If you sold it as malicious symlinks, or even put it like Junio "no,
+the design makes more sense to be this way", I would be ok.
 
-$ touch src/foo.c
-$ git add src/foo.c
-$ git clean -dXf
-Removing src/test.sln
-Removing test.sln
+On the implementation side, we should print something friendlier than
+strerror(ELOOP) if we decide that "symlinks on .git* files are wrong".
+The standard ELOOP message does not communicate our design decision
+well to the users. But this is a minor thing and can be ignored.
 
-Hope that helps!
+> As you know my ulterior motive is dealing with malicious out-of-tree
+> symlinks, and I would be happy to deal with that directly. That still
+> leaves symlinked ".gitmodules" etc in a funny state (they work in the
+> filesystem but not in the index), but since nobody is _complaining_,
+> it's a bug we could leave for another day.
 
--John
+The discussion trailed off a bit to symlinks in general in worktree
+too, I think. But it's not my itch, we can leave it for another day.
+-- 
+Duy
