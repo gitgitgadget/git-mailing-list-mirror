@@ -2,84 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 445DE203E2
-	for <e@80x24.org>; Thu, 10 Nov 2016 21:34:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7705120229
+	for <e@80x24.org>; Thu, 10 Nov 2016 21:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755693AbcKJVeI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 16:34:08 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60722 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935542AbcKJVeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 16:34:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FD574F480;
-        Thu, 10 Nov 2016 16:34:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wDxxwkjhPAKFJXonAG1x22B5L18=; b=jYqTPp
-        XsW8TrQCkdznN8X8ONT0JGyHcZmuc+PG3sq9TJBOoHhSBw4BeWjFcbNMhM39mjtJ
-        lPa4XNZL8r7oyf2bpP4G/kIbUZanvjyMIzhrjCnCy0SkBnjAB/3THpR514a5jB53
-        GupukQvIwckLa1hXJqm305j5iUe7XXCgyoxy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X5d22GIIJjlJQxj5wF99QLFjOitazz7Q
-        figd3sNZAepr9XHXYaeb67O4Jqw3Z53C2btSfFCY7Eq0ypIuZsWRtLOziyi9KRR6
-        khGcFh8ANzpi4jRHrFu9jIYaUEYPqPGYflZFdroONUB3vMU4jLeaooZSwkU8ktOE
-        IK1ho2Zm0Bg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87A944F47F;
-        Thu, 10 Nov 2016 16:34:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E78944F47E;
-        Thu, 10 Nov 2016 16:34:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, tboegi@web.de
-Subject: Re: [PATCH v1 0/2] Fix default macOS build locally and on Travis CI
+        id S965343AbcKJVnt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 16:43:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41339 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965279AbcKJVnr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 16:43:47 -0500
+Received: (qmail 12457 invoked by uid 109); 10 Nov 2016 21:43:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Nov 2016 21:43:47 +0000
+Received: (qmail 8095 invoked by uid 111); 10 Nov 2016 21:44:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Nov 2016 16:44:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Nov 2016 16:43:45 -0500
+Date:   Thu, 10 Nov 2016 16:43:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH v1 2/2] travis-ci: disable GIT_TEST_HTTPD for macOS
+Message-ID: <20161110214345.cau5i4eybqdv74k3@sigill.intra.peff.net>
 References: <20161017002550.88782-1-larsxschneider@gmail.com>
-        <xmqqwpgc6x4t.fsf@gitster.mtv.corp.google.com>
-        <584C7DBA-71FE-4E66-85DC-EA22A6D2BB80@gmail.com>
-Date:   Thu, 10 Nov 2016 13:34:04 -0800
-In-Reply-To: <584C7DBA-71FE-4E66-85DC-EA22A6D2BB80@gmail.com> (Lars
-        Schneider's message of "Thu, 10 Nov 2016 12:19:26 +0100")
-Message-ID: <xmqqwpgb58ab.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+ <20161017002550.88782-3-larsxschneider@gmail.com>
+ <203BDCB2-1975-4590-B4B8-3C5E9D210430@gmail.com>
+ <20161107212004.x4y7bcl2p4chfkm6@sigill.intra.peff.net>
+ <CBAF806C-7E1E-4490-A07C-F98DB7488F5F@gmail.com>
+ <20161110161012.jube4bwbww2wa2ew@sigill.intra.peff.net>
+ <xmqq1syj6mvq.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 681207A2-A78D-11E6-9499-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1syj6mvq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+On Thu, Nov 10, 2016 at 01:33:29PM -0800, Junio C Hamano wrote:
 
->> I've followed what was available at the public-inbox archive, but it
->> is unclear what the conclusion was.  
->> 
->> For the first one your "how about" non-patch, to which Peff said
->> "that's simple and good", looked good to me as well, but is it
->> available as a final patch that I can just take and apply (otherwise
->> I think I can do the munging myself, but I'd rather be spoon-fed
->> when able ;-).
->
-> Sure! Here you go:
-> http://public-inbox.org/git/20161110111348.61580-1-larsxschneider@gmail.com/
->
->
->> I do not have a strong opinion on the second one.  For an interim
->> solution, disabling webserver tests certainly is expedite and safe,
->> so I am fine taking it as-is, but I may have missed strong
->> objections.
->
-> I haven't seen strong objections either. Just for reference, here is the patch:
-> http://public-inbox.org/git/20161017002550.88782-3-larsxschneider@gmail.com/
+> Jeff King <peff@peff.net> writes:
+> 
+> > IMHO, the value in the http tests is not testing the server side, but
+> > the client side. Without being able to set up a dummy HTTP server, we do
+> > not have any way to exercise the client side of git-over-http at all.
+> > And people on macOS _do_ use that. :)
+> 
+> Amen to that.
+> 
+> I however do not know what the universally available simplest dummy
+> HTTP server would be.  There probably are better alternative than
+> Apache with distro-customized ways of configuration that we have to
+> adjust.  
+> 
+> A solution around HTTP::Server::Simple sounds attractive but is it
+> a realistic alternative or too much effort required?  I dunno.
 
-Thanks.  Picked up both of them.
+I'm less concerned about the amount of effort (though I agree it may be
+a blocker) than about the fact that it may not behave similarly to real
+servers. We have had real bugs and surprises with the way that various
+web servers implement things. A few that come to mind are:
 
+  1. Buffering/deadlock issues between the webserver and the CGI (this
+     was an issue with Apache, but I don't know about other servers).
+
+  2. The handling of CONTENT_LENGTH with chunked-encoding (this is still
+     an issue with IIS).
+
+  3. What happens when you ask for "foo.git/info/refs" and "foo.git" is
+     a bundle file (Apache gives you a 404, lighttpd serves the bundle).
+
+Ideally we'd test against a lot of different webservers, but that's
+expensive (in CPU, but also in developer time). But I'd guess that
+Apache is at least more representative than HTTP::Server::Simple of real
+servers in the wild.
+
+So if we had a simple fallback in addition to Apache, I'd be OK with
+that. But we still have a problem that (say) people on MacOS would never
+actually test against Apache, because it's not supported there.
+
+-Peff
