@@ -6,76 +6,80 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF3D720229
-	for <e@80x24.org>; Thu, 10 Nov 2016 21:33:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 445DE203E2
+	for <e@80x24.org>; Thu, 10 Nov 2016 21:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935188AbcKJVdd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 16:33:33 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61014 "EHLO
+        id S1755693AbcKJVeI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 16:34:08 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60722 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752611AbcKJVdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 16:33:32 -0500
+        with ESMTP id S935542AbcKJVeH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 16:34:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9E7D4C005;
-        Thu, 10 Nov 2016 16:33:31 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FD574F480;
+        Thu, 10 Nov 2016 16:34:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1jskbkO7MW5Qr3jcUi0BGhGUBWQ=; b=uBNxsf
-        x5z14/USXvmAUafGn/PDR/k0Z8Ql/wIZKKfYvoF4KYEvaO+/UbifK+5WI5+JrSh4
-        Z14NPSBzLz9bbKgoOm/Havo6+hYoda/noFaPUu462kQ0GfRE5OjQbY0cci77Q7cY
-        M9AHrJTjtD7qo4X4hNUferklw/T8bo8TOSqa0=
+        :content-type; s=sasl; bh=wDxxwkjhPAKFJXonAG1x22B5L18=; b=jYqTPp
+        XsW8TrQCkdznN8X8ONT0JGyHcZmuc+PG3sq9TJBOoHhSBw4BeWjFcbNMhM39mjtJ
+        lPa4XNZL8r7oyf2bpP4G/kIbUZanvjyMIzhrjCnCy0SkBnjAB/3THpR514a5jB53
+        GupukQvIwckLa1hXJqm305j5iUe7XXCgyoxy8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mzKEkPAycAYN88v3IUATESsCM0EW1YPR
-        c9qgVDmpDc+uIpo66+6zCMOdvBnu7uQPO3C5dSplST7yMpYSHTq6Z39spEyH8uYX
-        0ua6qcfMBjtnL4llOtUttWSDIyEn72EbC2P5RIFR/tidkrkoNYqI3JZGIAhKrgCA
-        z4Fduyw4IkQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0C0F4C003;
-        Thu, 10 Nov 2016 16:33:31 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=X5d22GIIJjlJQxj5wF99QLFjOitazz7Q
+        figd3sNZAepr9XHXYaeb67O4Jqw3Z53C2btSfFCY7Eq0ypIuZsWRtLOziyi9KRR6
+        khGcFh8ANzpi4jRHrFu9jIYaUEYPqPGYflZFdroONUB3vMU4jLeaooZSwkU8ktOE
+        IK1ho2Zm0Bg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87A944F47F;
+        Thu, 10 Nov 2016 16:34:06 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 561E54C002;
-        Thu, 10 Nov 2016 16:33:31 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E78944F47E;
+        Thu, 10 Nov 2016 16:34:05 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6g?= =?utf-8?Q?ershausen?= 
-        <tboegi@web.de>, git <git@vger.kernel.org>
-Subject: Re: [PATCH v1 2/2] travis-ci: disable GIT_TEST_HTTPD for macOS
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, tboegi@web.de
+Subject: Re: [PATCH v1 0/2] Fix default macOS build locally and on Travis CI
 References: <20161017002550.88782-1-larsxschneider@gmail.com>
-        <20161017002550.88782-3-larsxschneider@gmail.com>
-        <203BDCB2-1975-4590-B4B8-3C5E9D210430@gmail.com>
-        <20161107212004.x4y7bcl2p4chfkm6@sigill.intra.peff.net>
-        <CBAF806C-7E1E-4490-A07C-F98DB7488F5F@gmail.com>
-        <20161110161012.jube4bwbww2wa2ew@sigill.intra.peff.net>
-Date:   Thu, 10 Nov 2016 13:33:29 -0800
-In-Reply-To: <20161110161012.jube4bwbww2wa2ew@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 10 Nov 2016 11:10:12 -0500")
-Message-ID: <xmqq1syj6mvq.fsf@gitster.mtv.corp.google.com>
+        <xmqqwpgc6x4t.fsf@gitster.mtv.corp.google.com>
+        <584C7DBA-71FE-4E66-85DC-EA22A6D2BB80@gmail.com>
+Date:   Thu, 10 Nov 2016 13:34:04 -0800
+In-Reply-To: <584C7DBA-71FE-4E66-85DC-EA22A6D2BB80@gmail.com> (Lars
+        Schneider's message of "Thu, 10 Nov 2016 12:19:26 +0100")
+Message-ID: <xmqqwpgb58ab.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5374453A-A78D-11E6-B38A-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 681207A2-A78D-11E6-9499-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> IMHO, the value in the http tests is not testing the server side, but
-> the client side. Without being able to set up a dummy HTTP server, we do
-> not have any way to exercise the client side of git-over-http at all.
-> And people on macOS _do_ use that. :)
+>> I've followed what was available at the public-inbox archive, but it
+>> is unclear what the conclusion was.  
+>> 
+>> For the first one your "how about" non-patch, to which Peff said
+>> "that's simple and good", looked good to me as well, but is it
+>> available as a final patch that I can just take and apply (otherwise
+>> I think I can do the munging myself, but I'd rather be spoon-fed
+>> when able ;-).
+>
+> Sure! Here you go:
+> http://public-inbox.org/git/20161110111348.61580-1-larsxschneider@gmail.com/
+>
+>
+>> I do not have a strong opinion on the second one.  For an interim
+>> solution, disabling webserver tests certainly is expedite and safe,
+>> so I am fine taking it as-is, but I may have missed strong
+>> objections.
+>
+> I haven't seen strong objections either. Just for reference, here is the patch:
+> http://public-inbox.org/git/20161017002550.88782-3-larsxschneider@gmail.com/
 
-Amen to that.
+Thanks.  Picked up both of them.
 
-I however do not know what the universally available simplest dummy
-HTTP server would be.  There probably are better alternative than
-Apache with distro-customized ways of configuration that we have to
-adjust.  
-
-A solution around HTTP::Server::Simple sounds attractive but is it
-a realistic alternative or too much effort required?  I dunno.
