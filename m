@@ -2,126 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B238C2035F
-	for <e@80x24.org>; Thu, 10 Nov 2016 11:19:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D4ED2035F
+	for <e@80x24.org>; Thu, 10 Nov 2016 11:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755247AbcKJLTa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 06:19:30 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34240 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755235AbcKJLT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 06:19:29 -0500
-Received: by mail-wm0-f68.google.com with SMTP id g23so2456002wme.1
-        for <git@vger.kernel.org>; Thu, 10 Nov 2016 03:19:29 -0800 (PST)
+        id S1754854AbcKJLXE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 06:23:04 -0500
+Received: from mail-it0-f48.google.com ([209.85.214.48]:36846 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754747AbcKJLXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 06:23:03 -0500
+Received: by mail-it0-f48.google.com with SMTP id q124so227694668itd.1
+        for <git@vger.kernel.org>; Thu, 10 Nov 2016 03:23:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=M9v+ml4/O2t4z4kezIfyBiM35wQTGt+VQ1ZpfdnqG/8=;
-        b=LgYXZu25U9YTvOebRywTlIyXka6W6HnluP5WepHc6A+6XkOXo50EUz0Qpvvkw5Tyj6
-         cZdqdAfBx3yuObc+3GctkDFgcupQoBntDzcUApnPWtLeiyblVczzQADLW6h40Pmg0/Y1
-         q+NLf0ETO7XDdhs62jv7BgD5YDCKLhgRL3qdIy9MdaRGV4RjDyYsR07mv2Ns/UUn84GV
-         qJo+4F2cQi3ZFU0DbkW+pnfRwlXqalxt4K82Zk1odWF5L8GEZVHc0OHVxLXwULoYg3qW
-         5A3umGVGEZ1eAntZmuWw7G6ILd3WHjYMHuI1ZPiwMKVD7V8npxF8dO88K1AYekEPpfmy
-         SvsQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QV0JgFiogL7bBU3qCLltb3QlKUB42L6VrLYG2jdxNWs=;
+        b=vGFkesBuhfaQPZcE8g26mbsSZHmjj7jpG7KF3eYBYhGX5geQLLdDnFfFmF8N5rFZGV
+         sJygNJVYEE3a36QnFax4WR9K2JMztWbRw46q3U4U9zGYoGaPGP8z19QmrrtY/3qcQJup
+         LXvINmcJqM67xlrNiGfG+wwe33umdVFUu9+Jhfh+Di/1A1eAG22cCjaMQhgY3g9n+PZm
+         5l973mb10Jk5BSBQnoWcVu0ZzyAMls6E1yFL5RjgTJeeyE614R9Dbf0cFBWN3ri7fBL/
+         1LwYEgUfVGnuEaZa59wVaLjfsT6NqZ7ry1FA2Hhk0wVz4pXRrzxDAon+Vub0rhbLwD54
+         D1RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=M9v+ml4/O2t4z4kezIfyBiM35wQTGt+VQ1ZpfdnqG/8=;
-        b=Z5pO3J+0AYGoAk0+RTnemTmu6tK+Cp+DTd4APiqKLQIjKrxdl5lI4GqABs3yvOiXvQ
-         cPuGQbENFjNuheW0/hErnpTEDPcJ34xrW7MRfEsL8unR4eOlb/xxxFUAbtjkTfyBYbXE
-         8KD9RDRKhgSgRRnXeKvc+Nxl/Teb7NRD6Zf9cRY50QiEUG7I0CRVYX5AK2bJxkh0WVC/
-         PvDwTiOqdhrZIkSslytWCptL9DCb6Ixwuw/XTeFIWbZIYb7+tJZqoAoxNd7iDGUPlTf1
-         7DzR0DHr50vU5HK2Sg72j5rTzJM9Drbyx+IrNBLQZ2lf95wOzlVHEJKeq86rpXQrTfQq
-         qDrA==
-X-Gm-Message-State: ABUngvcebwxvzsvN8taBgK+VwlzG7W6a1pmjWMHE6sAMG9w4tMH7cQ0HWshg0/CjdbjywA==
-X-Received: by 10.28.163.5 with SMTP id m5mr5100005wme.98.1478776767824;
-        Thu, 10 Nov 2016 03:19:27 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w7sm12319982wmd.24.2016.11.10.03.19.27
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 10 Nov 2016 03:19:27 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1 0/2] Fix default macOS build locally and on Travis CI
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqwpgc6x4t.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 10 Nov 2016 12:19:26 +0100
-Cc:     git@vger.kernel.org, tboegi@web.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <584C7DBA-71FE-4E66-85DC-EA22A6D2BB80@gmail.com>
-References: <20161017002550.88782-1-larsxschneider@gmail.com> <xmqqwpgc6x4t.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QV0JgFiogL7bBU3qCLltb3QlKUB42L6VrLYG2jdxNWs=;
+        b=c+Kee+oWq7I8Ft4zwnA979cRl/QCUuPKfIv+Y4pBeMzPqZRysLTPbRDO9Q9jnNk8QM
+         gvIXiVG0mkIRD5ZQiMJ55B3US3MUOn6Oj3UPEey6BKspcJdhrQEHO10LtyItXrsKHW3V
+         Wp7yiR8AwyB7i7LyOHaOqd4/7fV6OqU1L/I/wm8nL21ftd6iRF7Dj5bDaoEVVIjUhPnk
+         l8HmbxYfVDEFB8FgiYY0nWVoZ2vPzB016tMt06Io5fm4+nrO2bXES4cxyHf7vhzSJNlS
+         I7zaMoS9yqRUiDZeFXViUY3ceJUNg8A9hNcWwJALM5Kn1prlttnlxNuPNDZh55Yi+Yd/
+         FL0g==
+X-Gm-Message-State: ABUngvd152BmaI9yVtbBHKGrhR6OxWlUR0uUyLGaUmypKXA8x98wR3hg6EvSoevZQz5rrRjd0DCA/EYkqWlFSQ==
+X-Received: by 10.36.67.8 with SMTP id s8mr17447600itb.50.1478776982331; Thu,
+ 10 Nov 2016 03:23:02 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.64.164.102 with HTTP; Thu, 10 Nov 2016 03:22:31 -0800 (PST)
+In-Reply-To: <CACsJy8D9SHjwb2Ug_DYKmSO+dDxkkqwBFViQrW4eDqbJFjHESw@mail.gmail.com>
+References: <20161026094658.20704-1-pclouds@gmail.com> <20161109091131.17933-1-pclouds@gmail.com>
+ <xmqqh97g9zut.fsf@gitster.mtv.corp.google.com> <CACsJy8D9SHjwb2Ug_DYKmSO+dDxkkqwBFViQrW4eDqbJFjHESw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 10 Nov 2016 18:22:31 +0700
+Message-ID: <CACsJy8CHWZyFgZu1=VKCQc+hbHUmZiAQ9ToL=NDF=YBEkLfbog@mail.gmail.com>
+Subject: Re: [PATCH v2] rebase: add --forget to cleanup rebase, leave
+ everything else untouched
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 10, 2016 at 6:09 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, Nov 10, 2016 at 3:12 AM, Junio C Hamano <gitster@pobox.com> wrote=
+:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>>
+>>> ---
+>>>  v2 changes just the subject line
+>>
+>> That's not sufficient, is it?  What you did in the documentation
+>> would raise the same "Hmph, is this only about HEAD?" and unlike the
+>> commit subject, it will carve it in stone for end-users.
+>
+> Oops. I forgot about git-rebase.txt. How about this?
+>
+> --forget::
+>         Abort the rebase operation but leave HEAD, the index and
+> working tree untouched.
 
-> On 10 Nov 2016, at 00:39, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> larsxschneider@gmail.com writes:
->=20
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->> Apple removed the OpenSSL header files in macOS and therefore Git =
-does
->> not build out of the box on macOS anymore. See previous discussion =
-with
->> Torsten here: http://public-inbox.org/git/565B3036.8000604@web.de/
->>=20
->> This mini series makes Git build out of the box on macOS, again, and
->> disables the HTTPD tests on macOS TravisCI as they don't work anymore
->> with the new macOS TravisCI default image:
->> https://blog.travis-ci.com/2016-10-04-osx-73-default-image-live/
->>=20
->> Thanks,
->> Lars
->>=20
->>=20
->> Lars Schneider (2):
->>  config.mak.in: set NO_OPENSSL and APPLE_COMMON_CRYPTO for macOS =
->10.11
->>  travis-ci: disable GIT_TEST_HTTPD for macOS
->>=20
->> .travis.yml      | 3 ++-
->> config.mak.uname | 6 ++++++
->> 2 files changed, 8 insertions(+), 1 deletion(-)
->=20
-> I've followed what was available at the public-inbox archive, but it
-> is unclear what the conclusion was. =20
->=20
-> For the first one your "how about" non-patch, to which Peff said
-> "that's simple and good", looked good to me as well, but is it
-> available as a final patch that I can just take and apply (otherwise
-> I think I can do the munging myself, but I'd rather be spoon-fed
-> when able ;-).
-
-Sure! Here you go:
-=
-http://public-inbox.org/git/20161110111348.61580-1-larsxschneider@gmail.co=
-m/
-
-
-> I do not have a strong opinion on the second one.  For an interim
-> solution, disabling webserver tests certainly is expedite and safe,
-> so I am fine taking it as-is, but I may have missed strong
-> objections.
-
-I haven't seen strong objections either. Just for reference, here is the =
-patch:
-=
-http://public-inbox.org/git/20161017002550.88782-3-larsxschneider@gmail.co=
-m/
-
-
-I hope you're well, again!!
-
-- Lars=
+Or, since --abort describes it as "reset HEAD to the original branch",
+we could write "Abort the rebase operation. Unlike --abort, HEAD is
+not restored back to the original branch". Index and worktree are
+implied by "not restored". Not sure if it's too subtle.
+--=20
+Duy
