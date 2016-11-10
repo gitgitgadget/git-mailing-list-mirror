@@ -2,73 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C48920229
-	for <e@80x24.org>; Thu, 10 Nov 2016 21:44:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E63F420229
+	for <e@80x24.org>; Thu, 10 Nov 2016 21:45:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965345AbcKJVnx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 16:43:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62813 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934649AbcKJVnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 16:43:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C3104C16A;
-        Thu, 10 Nov 2016 16:43:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tAwEcQPUxHWR5K8VV1psdDDO+0U=; b=PEHHS0
-        D/4AIPp+fkZlllDPasfEkTS9Y1cV7X9nJOsaVfczWnk+I0EVDeSfjfmDD6L55A0x
-        Z4omI0duBcgpBfwaOOAOreSo80ubxBOVXI2SPMLonDlY35h/71P99AffrWV6miU0
-        Gh/zSN/Io8ZqhLEjmMESN18pyPivwX/BtV1jk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=em3T4z465LLEBagMzZP4L9MSEGXBVe0Q
-        RwVdXVdNb2weWGSyL3iR3jUS2CGCZZ6bM+nLeuBoHMOXc5KWaQtxxwdqIU01TYfO
-        h1IURWBoqLwaIv7x7F1CIuRblFtm2y1jWOoMLktX0hatEncMcXMGs9HSetyBe5WK
-        BjkoJ1lAMVE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73DFC4C169;
-        Thu, 10 Nov 2016 16:43:49 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DF6484C168;
-        Thu, 10 Nov 2016 16:43:48 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: Re: 2.11.0-rc1 will not be tagged for a few days
-References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 10 Nov 2016 13:43:47 -0800
-In-Reply-To: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sun, 06 Nov 2016 18:32:05 -0800")
-Message-ID: <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S935127AbcKJVpm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 16:45:42 -0500
+Received: from mout.gmx.net ([212.227.17.20]:54303 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935681AbcKJVpm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 16:45:42 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFctN-1bziNu2Yuj-00Ea1U; Thu, 10
+ Nov 2016 22:39:03 +0100
+Date:   Thu, 10 Nov 2016 22:39:02 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git-for-windows <git-for-windows@googlegroups.com>,
+        Git Mailing List <git@vger.kernel.org>, me@ttaylorr.com
+Subject: Re: [git-for-windows] [ANNOUNCE] Prerelease: Git for Windows
+ v2.11.0-rc0
+In-Reply-To: <B2BEB5B4-5CF0-4CD7-A8E2-50D51E00D2FF@gmail.com>
+Message-ID: <alpine.DEB.2.20.1611102237230.24684@virtualbox>
+References: <alpine.DEB.2.20.1611051025030.3108@virtualbox> <B2BEB5B4-5CF0-4CD7-A8E2-50D51E00D2FF@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C38BCA22-A78E-11E6-84EA-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:r9fIWeVMAx7Ztk2HguEpA6nioE+nvmYA34XzgXhzg9S4VPyNuBh
+ 6mhWxgxFBTy++z9XzZwNDK2j+HlSx8m58nFJRS4fWiyXRnTOsu2WaEXhAFgYMZMVJoDmfin
+ NXfItYAkTVmOHFy2X7ZhJW684cC06/ElYN1n56oxCKTKZhpilow4sYTJRULCbj+t6N9Oy3U
+ ORDmWwjVoHubaf994JA7w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7QCgA9Yf6bA=:Udvo1/qKUmCBFjY4xamBtS
+ kD3BJ2q8T9nqK8dixYLElvK5zWcq2CPObm69/267PxV00ifLJZMOf0v685+sPUdicAaiSutzq
+ H2ZpqcOX3X0QAtOKOs3XZJ3t8xSuxEnZ8175SXaIIHNXk6GucYtt0eYfaCpXrmPJdHIUHX20f
+ Oyyxa114MS5MrvvQTqmumm8MWVJwIX3DrNy6qRZsOD3qkxSH/U7jjXtW8wtNR0G8e3PuO5C8l
+ n6q3LiRtJBJHtI56PHrUw3lG4K80cE1kLfK8EhCTzJgVgSJxaksg/X5qFB7zufxFHw2I51BIH
+ uU6GqWleMKS0Ff9LOdh9wAmD9puOTxbgyyOvGbwdkwTXdSvXK5zGzTe9/Ew1A9qQBkSA+ii0j
+ sBtnrOjC8w+z/K8b2Ijdd+ld/Hj9XjUsSAWdl4Hde5KcGnjcxMBRkdHT4hCXgon5a/kWmE56L
+ pNsUyVR9mEtcietZwgnlhg9Lyr2HdDqJV8mERWAwQe2RmMzhntkggHCAb3K4+4OQkViUqd4S5
+ DID/QRpdygdUn/T1h1TzDV2fucR7Fn2WLx+rEaUps9E5e+uBfeBa5EIP2EexsHm2c1wSiB9dU
+ du/IXoIQgRCAlfzg6GYx+6yZJMXhAyKAKUpiqoqvSyhGgb8IowvkrqeyCIFx7nInqiVeKbZGQ
+ pKpjOykqFNb2r9uKNnpjdTj+wKRiHcYPbDKvF6YhbjNkSrdRRURdALKX/PLzu79JFYzIglo2v
+ e6zuAVMtDc92ZTR5doOLWwmkObYokjS+zPfabyVt7TfTWKwI/BT/Mupxgj4v0PgCpQpkvsSNk
+ Zd8GOht
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Lars,
 
-> I'll report back an updated schedule when able.
+On Wed, 9 Nov 2016, Lars Schneider wrote:
 
-I pushed some updates out on 'master' today.  Between 'master' and
-'pu' on the first-parent history there is a merge 52975d2b1f ("Merge
-branch 'ls/macos-update' into jch", 2016-11-10) and that matches
-what I expect to be in -rc1 tomorrow (modulo RelNotes and the actual
-version tag), unless there is a showstopper regresion reported, in
-which case we may want to first look into reverting the whole series
-that introduced the regression before considering to pile on fix-up
-patches.
+> On 05 Nov 2016, at 10:50, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> 
+> > I finally got around to rebase the Windows-specific patches (which seem to
+> > not make it upstream as fast as we get new ones) on top of upstream Git
+> > v2.11.0-rc0, and to bundle installers, portable Git and MinGit [*1*]:
+> > 
+> > https://github.com/git-for-windows/git/releases/tag/v2.11.0-rc0.windows.1
+> 
+> 
+> I tested a new feature in 2.11 on Windows today and it failed. After some 
+> confusion I realized that the feature is not on your 2.11 branch.
 
-http://tinyurl.com/gitCal has been redrawn, with -rc1 scheduled for
-tomorrow on 11th, -rc2 on the 17th, and final on the 23rd.
+Oops. That must have been a major snafu on my side, very sorry for that.
 
-Thanks.
+I just tagged v2.11.0-rc0.windows.2 in https://github.com/dscho/git and
+will make a new prerelease tomorrow.
+
+My apologies!
+Dscho
