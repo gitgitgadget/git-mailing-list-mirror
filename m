@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91F1720229
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B58203E2
 	for <e@80x24.org>; Thu, 10 Nov 2016 20:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965776AbcKJUfU (ORCPT <rfc822;e@80x24.org>);
+        id S965895AbcKJUfa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 15:35:30 -0500
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:35916 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965758AbcKJUfU (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Nov 2016 15:35:20 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33142 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965620AbcKJUfM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 15:35:12 -0500
-Received: by mail-pf0-f171.google.com with SMTP id d2so152093477pfd.0
-        for <git@vger.kernel.org>; Thu, 10 Nov 2016 12:35:12 -0800 (PST)
+Received: by mail-pf0-f175.google.com with SMTP id 189so152175474pfz.3
+        for <git@vger.kernel.org>; Thu, 10 Nov 2016 12:35:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5ICbeeAXChfUbJgAHTeTGvxMEaaSb+q9hSkNc3S9DQI=;
-        b=al/qOHH0mLZ3H/L+jpsffwwIPYc1wWPF+yQsg8i9LHNd4j/N/rBJeQb5ytjRd27XxZ
-         vfKmPqi6LYg1EbNcLGx7AOnt+qNPiIJ8Pv1L9rdDEJJS+J1+dtYnWzL9h2V5SfDo0vRO
-         Y6NpTujXonO+csUoS+YUlsyvEAn3TSrK0KTiO3G/yy2/r+/HrgI9OhejL3R662g38aJh
-         llOTrRm71NpJ2OoLUngcXrbf0jz/YjOuoJgLZc+On6pZ+ouT1QXq0/TFzNQNQhbhb8J/
-         0kgknWKT0Dk4adxnUSyBN7H0zkoW0ZkluDjZeDdHdnRpIYnD/n0lkDGY+VqOonqkx3RX
-         C4vw==
+        bh=qpmDqm/fAO1tShimUBKfEKIIfWoRpyKCOO1QYoJ6SJI=;
+        b=X8XoGKhvtZQLr/+ibGkjIqrqusnE3yax+pVL+mZ/WMj4ffGGt6CCCiDJWbhDhY+Qzg
+         ZvgxYDNXDgq9Y2ZRqO/RMH1V7SLAAV8xTZG6hKd0JWUutONRC8FZ3L478zH+WbK/BLTm
+         PnF7GGaHZlPAfuV3nengv9nI3Sa3yTeFFOFEJBJimYeCEASAMgGDKNdjdfWFPWiCtkxO
+         KUdhm63F/41RPKhA0Vm2Uoo7EVYrNckmpFTxL7cm5jmaSuM9A85fGJ4CZBjJXkkzsP0/
+         V61BRlsB9938rUKHcm6kCRddxi50hmtBLiPLEj/yL/VB4CQsKiBfUDbSECHucmNRoJX3
+         dRRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5ICbeeAXChfUbJgAHTeTGvxMEaaSb+q9hSkNc3S9DQI=;
-        b=Jdocx04XXdVv8LrJBax9Q5mdG/20QNCerrOkYuQ89g13ciDb/c8gJQ/7DGRHUlSc25
-         BUEgrtPOT9PQEryXAYzpHzyRLEXyKHuR7c3TeXrrKYGNaN3u/RZ+IptYuXuv9uzLoZDJ
-         YO+e3cVYnGWWpaUhS4RRPtXJb5LRyjmNwbcDey5esE9W2nN53+QvtaK/IZcmd66/2Erq
-         tiONnN0LhYOEP691pyKwJJSpuOSgbTrTHSolR6y4uZYY2GwbFcjOWC1lsiVmzWbyPlKt
-         Q6NYrstJx5trqN4wAR8/qFuyRHfaZsf27TeFoZrWNR1WKHwm+yxzs9Dcp/wm0L7386CK
-         YCig==
-X-Gm-Message-State: ABUngvckAGqnngl5daQ222bo6hFGIF6AgWnehWKOEuzyJXhJShoEyaFlX0PSkEZAdwe5YIKJ
-X-Received: by 10.99.64.132 with SMTP id n126mr38528888pga.87.1478810111885;
-        Thu, 10 Nov 2016 12:35:11 -0800 (PST)
+        bh=qpmDqm/fAO1tShimUBKfEKIIfWoRpyKCOO1QYoJ6SJI=;
+        b=P884vvoR+4lB8zWqY36Qt4uBIo1ZJ3XR0E1jIqHbVXeHvI0GtIEBQIVRqEo0pbTtsm
+         z7d6UxI5odTn0XupL7j7vRAXYzOgaMqAAGEURaH8bP/OtSjqgUrt4b7MnZrrEAC7I1QY
+         APLrIVTWxw542nzcpiy54EC3WBtiLK9vKjqSQQfbOcDuabyiBxgPQyuMaansMIfvZ9qv
+         64JhcmLSVJ9E9MfCOQAnlHRJM37xRQjVwwd0OtVlLli7nnmh5k2KOr+HIqmD26i0hcYX
+         ogdeyFsW1mK4xU9Rmx65H+Qh4Pe1ShQQrXiZyH9MEBs+73BOaAErKuEkRO7+UHBjhWoQ
+         mgoA==
+X-Gm-Message-State: ABUngvcdlwnQjT7iakxzR3tDxEVnY4qx5WWPgm8LOkANKqZJQsqKmRnZwUiWig9WyYXWwqyR
+X-Received: by 10.98.111.138 with SMTP id k132mr13543818pfc.108.1478810119160;
+        Thu, 10 Nov 2016 12:35:19 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:b504:dcf8:965a:7ab8])
-        by smtp.gmail.com with ESMTPSA id t20sm9306246pfk.48.2016.11.10.12.35.11
+        by smtp.gmail.com with ESMTPSA id af14sm9355732pac.13.2016.11.10.12.35.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 10 Nov 2016 12:35:11 -0800 (PST)
+        Thu, 10 Nov 2016 12:35:18 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, bmwill@google.com, pclouds@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 27/35] attr: keep attr stack for each check
-Date:   Thu, 10 Nov 2016 12:34:20 -0800
-Message-Id: <20161110203428.30512-28-sbeller@google.com>
+Subject: [PATCH 33/35] submodule update: add `--init-default-path` switch
+Date:   Thu, 10 Nov 2016 12:34:26 -0800
+Message-Id: <20161110203428.30512-34-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.469.g00a8914
 In-Reply-To: <20161110203428.30512-1-sbeller@google.com>
 References: <20161110203428.30512-1-sbeller@google.com>
@@ -59,328 +59,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of having a global attr stack, attach the stack to each check.
-This allows to use the attr in a multithreaded way.
+The new switch `--init-default-path` initializes the submodules which are
+configured in `submodule.defaultUpdatePath` instead of those given as
+command line arguments before updating. In the first implementation this
+is made incompatible with further command line arguments as it is
+unclear what the user means by
+
+    git submodule update --init --init-default-path <paths>
+
+This new switch allows to record more complex patterns as it saves
+retyping them whenever you invoke update.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- attr.c    | 101 +++++++++++++++++++++++++++++++++++++++-----------------------
- attr.h    |   4 ++-
- hashmap.h |   2 ++
- 3 files changed, 69 insertions(+), 38 deletions(-)
+ Documentation/config.txt        |  5 ++++
+ Documentation/git-submodule.txt | 17 +++++++++----
+ git-submodule.sh                | 21 +++++++++++++---
+ t/t7400-submodule-basic.sh      | 53 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 89 insertions(+), 7 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 32ec453..979bd3c 100644
---- a/attr.c
-+++ b/attr.c
-@@ -375,15 +375,17 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
-  * .gitignore file and info/excludes file as a fallback.
-  */
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a179474..290de3b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2885,6 +2885,11 @@ submodule.alternateErrorStrategy
+ 	as computed via `submodule.alternateLocation`. Possible values are
+ 	`ignore`, `info`, `die`. Default is `die`.
  
--/* NEEDSWORK: This will become per git_attr_check */
--static struct attr_stack {
-+struct attr_stack {
- 	struct attr_stack *prev;
- 	char *origin;
- 	size_t originlen;
- 	unsigned num_matches;
- 	unsigned alloc;
- 	struct match_attr **attrs;
--} *attr_stack;
-+};
++submodule.defaultUpdatePath::
++	Specifies a set of submodules to initialize when calling
++	`git submodule --init-default-group` by using the pathspec
++	syntax.
 +
-+static struct hashmap all_attr_stacks;
-+static int all_attr_stacks_init;
+ tag.forceSignAnnotated::
+ 	A boolean to specify whether annotated tags created should be GPG signed.
+ 	If `--annotate` is specified on the command line, it takes
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index bf3bb37..503fec8 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -14,10 +14,10 @@ SYNOPSIS
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
+-'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+-	      [--[no-]recommend-shallow] [-f|--force] [--rebase|--merge]
+-	      [--reference <repository>] [--depth <depth>] [--recursive]
+-	      [--jobs <n>] [--] [<path>...]
++'git submodule' [--quiet] update [--init[-default-path]] [--remote] [-N|--no-fetch]
++	      [--[no-]recommend-shallow]
++	      [-f|--force] [--rebase|--merge] [--reference <repository>]
++	      [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+@@ -194,6 +194,10 @@ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+ submodule with the `--init` option.
  
- static void free_attr_elem(struct attr_stack *e)
- {
-@@ -564,11 +566,23 @@ static void debug_set(const char *what, const char *match, struct git_attr *attr
- 
- static void drop_attr_stack(void)
- {
--	while (attr_stack) {
--		struct attr_stack *elem = attr_stack;
--		attr_stack = elem->prev;
--		free_attr_elem(elem);
-+	struct hashmap_iter iter;
-+	struct git_attr_check *check;
++You can configure a set of submodules using pathspec syntax in
++submodule.defaultUpdatePath you can use `--init-default-path` to initialize
++those before updating.
 +
-+	attr_lock();
-+	if (!all_attr_stacks_init) {
-+		attr_unlock();
-+		return;
- 	}
-+	hashmap_iter_init(&all_attr_stacks, &iter);
-+	while ((check = hashmap_iter_next(&iter))) {
-+		while (check->attr_stack) {
-+			struct attr_stack *elem = check->attr_stack;
-+			check->attr_stack = elem->prev;
-+			free_attr_elem(elem);
-+		}
-+	}
-+	attr_unlock();
- }
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
+ --
+@@ -361,6 +365,11 @@ the submodule itself.
+ 	Initialize all submodules for which "git submodule init" has not been
+ 	called so far before updating.
  
- static const char *git_etc_gitattributes(void)
-@@ -598,40 +612,42 @@ static void push_stack(struct attr_stack **attr_stack_p,
- 	}
- }
- 
--static void bootstrap_attr_stack(void)
-+static void bootstrap_attr_stack(struct git_attr_check *check)
- {
- 	struct attr_stack *elem;
- 
--	if (attr_stack)
-+	if (check->attr_stack)
- 		return;
- 
--	push_stack(&attr_stack, read_attr_from_array(builtin_attr), NULL, 0);
-+	push_stack(&check->attr_stack,
-+		   read_attr_from_array(builtin_attr), NULL, 0);
- 
- 	if (git_attr_system())
--		push_stack(&attr_stack,
-+		push_stack(&check->attr_stack,
- 			   read_attr_from_file(git_etc_gitattributes(), 1),
- 			   NULL, 0);
- 
- 	if (!git_attributes_file)
- 		git_attributes_file = xdg_config_home("attributes");
- 	if (git_attributes_file)
--		push_stack(&attr_stack,
-+		push_stack(&check->attr_stack,
- 			   read_attr_from_file(git_attributes_file, 1),
- 			   NULL, 0);
- 
- 	if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
- 		elem = read_attr(GITATTRIBUTES_FILE, 1);
--		push_stack(&attr_stack, elem, xstrdup(""), 0);
-+		push_stack(&check->attr_stack, elem, xstrdup(""), 0);
- 		debug_push(elem);
- 	}
- 
- 	elem = read_attr_from_file(git_path_info_attributes(), 1);
- 	if (!elem)
- 		elem = xcalloc(1, sizeof(*elem));
--	push_stack(&attr_stack, elem, NULL, 0);
-+	push_stack(&check->attr_stack, elem, NULL, 0);
- }
- 
--static void prepare_attr_stack(const char *path, int dirlen)
-+static void prepare_attr_stack(const char *path, int dirlen,
-+			       struct git_attr_check *check)
- {
- 	struct attr_stack *elem, *info;
- 	const char *cp;
-@@ -651,13 +667,13 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 	 * .gitattributes in deeper directories to shallower ones,
- 	 * and finally use the built-in set as the default.
- 	 */
--	bootstrap_attr_stack();
-+	bootstrap_attr_stack(check);
- 
- 	/*
- 	 * Pop the "info" one that is always at the top of the stack.
- 	 */
--	info = attr_stack;
--	attr_stack = info->prev;
-+	info = check->attr_stack;
-+	check->attr_stack = info->prev;
- 
- 	/*
- 	 * Pop the ones from directories that are not the prefix of
-@@ -665,17 +681,17 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 	 * the root one (whose origin is an empty string "") or the builtin
- 	 * one (whose origin is NULL) without popping it.
- 	 */
--	while (attr_stack->origin) {
--		int namelen = strlen(attr_stack->origin);
-+	while (check->attr_stack->origin) {
-+		int namelen = strlen(check->attr_stack->origin);
- 
--		elem = attr_stack;
-+		elem = check->attr_stack;
- 		if (namelen <= dirlen &&
- 		    !strncmp(elem->origin, path, namelen) &&
- 		    (!namelen || path[namelen] == '/'))
- 			break;
- 
- 		debug_pop(elem);
--		attr_stack = elem->prev;
-+		check->attr_stack = elem->prev;
- 		free_attr_elem(elem);
- 	}
- 
-@@ -691,9 +707,9 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 		 */
- 		struct strbuf pathbuf = STRBUF_INIT;
- 
--		assert(attr_stack->origin);
-+		assert(check->attr_stack->origin);
- 		while (1) {
--			size_t len = strlen(attr_stack->origin);
-+			size_t len = strlen(check->attr_stack->origin);
- 			char *origin;
- 
- 			if (dirlen <= len)
-@@ -707,7 +723,7 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 			elem = read_attr(pathbuf.buf, 0);
- 			strbuf_setlen(&pathbuf, cp - path);
- 			origin = strbuf_detach(&pathbuf, &len);
--			push_stack(&attr_stack, elem, origin, len);
-+			push_stack(&check->attr_stack, elem, origin, len);
- 			debug_push(elem);
- 		}
- 
-@@ -717,7 +733,13 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 	/*
- 	 * Finally push the "info" one at the top of the stack.
- 	 */
--	push_stack(&attr_stack, info, NULL, 0);
-+	push_stack(&check->attr_stack, info, NULL, 0);
-+	if (!all_attr_stacks_init) {
-+		hashmap_init(&all_attr_stacks, NULL, 0);
-+		all_attr_stacks_init = 1;
-+	}
-+	if (!hashmap_get(&all_attr_stacks, check, NULL))
-+		hashmap_put(&all_attr_stacks, check);
- }
- 
- static int path_matches(const char *pathname, int pathlen,
-@@ -743,9 +765,10 @@ static int path_matches(const char *pathname, int pathlen,
- 			      pattern, prefix, pat->patternlen, pat->flags);
- }
- 
--static int macroexpand_one(int attr_nr, int rem);
-+static int macroexpand_one(int attr_nr, int rem, struct git_attr_check *check);
- 
--static int fill_one(const char *what, struct match_attr *a, int rem)
-+static int fill_one(const char *what, struct match_attr *a, int rem,
-+		    struct git_attr_check *check)
- {
- 	struct git_attr_check_elem *celem = check_all_attr;
- 	int i;
-@@ -761,14 +784,14 @@ static int fill_one(const char *what, struct match_attr *a, int rem)
- 				  attr, v);
- 			*n = v;
- 			rem--;
--			rem = macroexpand_one(attr->attr_nr, rem);
-+			rem = macroexpand_one(attr->attr_nr, rem, check);
- 		}
- 	}
- 	return rem;
- }
- 
- static int fill(const char *path, int pathlen, int basename_offset,
--		struct attr_stack *stk, int rem)
-+		struct attr_stack *stk, int rem, struct git_attr_check *check)
- {
- 	int i;
- 	const char *base = stk->origin ? stk->origin : "";
-@@ -779,12 +802,12 @@ static int fill(const char *path, int pathlen, int basename_offset,
- 			continue;
- 		if (path_matches(path, pathlen, basename_offset,
- 				 &a->u.pat, base, stk->originlen))
--			rem = fill_one("fill", a, rem);
-+			rem = fill_one("fill", a, rem, check);
- 	}
- 	return rem;
- }
- 
--static int macroexpand_one(int nr, int rem)
-+static int macroexpand_one(int nr, int rem, struct git_attr_check *check)
- {
- 	struct attr_stack *stk;
- 	int i;
-@@ -793,13 +816,13 @@ static int macroexpand_one(int nr, int rem)
- 	    !check_all_attr[nr].attr->maybe_macro)
- 		return rem;
- 
--	for (stk = attr_stack; stk; stk = stk->prev) {
-+	for (stk = check->attr_stack; stk; stk = stk->prev) {
- 		for (i = stk->num_matches - 1; 0 <= i; i--) {
- 			struct match_attr *ma = stk->attrs[i];
- 			if (!ma->is_macro)
- 				continue;
- 			if (ma->u.attr->attr_nr == nr)
--				return fill_one("expand", ma, rem);
-+				return fill_one("expand", ma, rem, check);
- 		}
- 	}
- 
-@@ -848,7 +871,7 @@ static void collect_some_attrs(const char *path, int pathlen,
- 		dirlen = 0;
- 	}
- 
--	prepare_attr_stack(path, dirlen);
-+	prepare_attr_stack(path, dirlen, check);
- 
- 	for (i = 0; i < attr_nr; i++)
- 		check_all_attr[i].value = ATTR__UNKNOWN;
-@@ -868,8 +891,8 @@ static void collect_some_attrs(const char *path, int pathlen,
- 	}
- 
- 	rem = attr_nr;
--	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
--		rem = fill(path, pathlen, basename_offset, stk, rem);
-+	for (stk = check->attr_stack; 0 < rem && stk; stk = stk->prev)
-+		rem = fill(path, pathlen, basename_offset, stk, rem, check);
- 
- 	if (collect_all) {
- 		int check_nr = 0, check_alloc = 0;
-@@ -902,6 +925,8 @@ static int git_check_attrs(const char *path, int pathlen,
- {
- 	int i;
- 
-+	attr_lock();
++--init-default-path::
++	This option is only valid for the update command.
++	Initialize all submodules configured in "`submodule.defaultUpdatePath`"
++	that have not been updated before.
 +
- 	collect_some_attrs(path, pathlen, check, &result, 0);
+ --name::
+ 	This option is only valid for the add command. It sets the submodule's
+ 	name to the given string instead of defaulting to its path. The name
+diff --git a/git-submodule.sh b/git-submodule.sh
+index a024a13..334cecc 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -9,7 +9,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+-   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init[-default-path]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+@@ -503,7 +503,12 @@ cmd_update()
+ 			progress="--progress"
+ 			;;
+ 		-i|--init)
+-			init=1
++			test -z $init || test $init = by_args || die "$(gettext "Only one of --init or --init-default-path may be used.")"
++			init=by_args
++			;;
++		--init-default-path)
++			test -z $init || test $init = by_config || die "$(gettext "Only one of --init or --init-default-path may be used.")"
++			init=by_config
+ 			;;
+ 		--remote)
+ 			remote=1
+@@ -572,7 +577,17 @@ cmd_update()
  
- 	for (i = 0; i < check->check_nr; i++) {
-@@ -911,6 +936,8 @@ static int git_check_attrs(const char *path, int pathlen,
- 		result[i].value = value;
- 	}
- 
-+	attr_unlock();
+ 	if test -n "$init"
+ 	then
+-		cmd_init "--" "$@" || return
++		if test "$init" = "by_config"
++		then
++			if test $# -gt 0
++			then
++				die "$(gettext "path arguments are incompatible with --init-default-path")"
++			fi
++			cmd_init "--" $(git config --get-all submodule.defaultUpdatePath) || return
++		else
++			cmd_init "--" "$@" || return
++		fi
 +
- 	return 0;
- }
+ 	fi
  
-diff --git a/attr.h b/attr.h
-index 1a50288..ab381ae 100644
---- a/attr.h
-+++ b/attr.h
-@@ -30,12 +30,14 @@ extern const char git_attr__false[];
- #define ATTR_UNSET(v) ((v) == NULL)
+ 	{
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index b77cce8..4699b1c 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1116,5 +1116,58 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
+ 	test_cmp expect actual
+ '
  
- struct git_attr_check {
-+	struct hashmap_entry entry;
- 	int finalized;
- 	int check_nr;
- 	int check_alloc;
- 	const struct git_attr **attr;
-+	struct attr_stack *attr_stack;
- };
--#define GIT_ATTR_CHECK_INIT {0, 0, 0, NULL}
-+#define GIT_ATTR_CHECK_INIT {HASHMAP_ENTRY_INIT, 0, 0, 0, NULL, NULL}
- 
- struct git_attr_result {
- 	const char *value;
-diff --git a/hashmap.h b/hashmap.h
-index ab7958a..d247c62 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -31,6 +31,8 @@ struct hashmap_entry {
- 	unsigned int hash;
- };
- 
-+#define HASHMAP_ENTRY_INIT {NULL, 0}
++test_expect_success 'setup superproject with submodules' '
++	mkdir sub1 &&
++	(
++		cd sub1 &&
++		git init &&
++		test_commit test &&
++		test_commit test2
++	) &&
++	mkdir multisuper &&
++	(
++		cd multisuper &&
++		git init &&
++		git submodule add ../sub1 sub0 &&
++		git submodule add ../sub1 sub1 &&
++		git submodule add ../sub1 sub2 &&
++		git submodule add ../sub1 sub3 &&
++		git commit -m "add some submodules"
++	)
++'
 +
- typedef int (*hashmap_cmp_fn)(const void *entry, const void *entry_or_key,
- 		const void *keydata);
++cat >expect <<-EOF
++-sub0
++ sub1 (test2)
++ sub2 (test2)
++ sub3 (test2)
++EOF
++
++test_expect_success 'submodule update --init with a specification' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	pwd=$(pwd) &&
++	git clone file://"$pwd"/multisuper multisuper_clone &&
++	(
++		cd multisuper_clone &&
++		git submodule update --init . ":(exclude)sub0" &&
++		git submodule status |cut -c 1,43- >../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success 'submodule update --init-default-path' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	pwd=$(pwd) &&
++	git clone file://"$pwd"/multisuper multisuper_clone &&
++	(
++		cd multisuper_clone &&
++		git config submodule.defaultUpdatePath "." &&
++		git config --add submodule.defaultUpdatePath ":(exclude)sub0" &&
++		git submodule update --init-default-path &&
++		git submodule status |cut -c 1,43- >../actual &&
++		test_must_fail git submodule update --init-default-path sub0
++	) &&
++	test_cmp expect actual
++'
  
+ test_done
 -- 
 2.10.1.469.g00a8914
 
