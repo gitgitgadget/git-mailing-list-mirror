@@ -2,77 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35C452021E
-	for <e@80x24.org>; Thu, 10 Nov 2016 00:25:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D52D22021E
+	for <e@80x24.org>; Thu, 10 Nov 2016 00:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754131AbcKJAZO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Nov 2016 19:25:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56143 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754760AbcKJAZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2016 19:25:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 463474EF63;
-        Wed,  9 Nov 2016 19:18:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rdWjRvtCczKmLqIU1C0NLtSDU6s=; b=gnfZPE
-        1pruZIMtmb2GV4JAWxENl104MI/HqtaK3xPm7hzg+gS4/2yY5QlmzKReUnfR6mwJ
-        fuw/yLDpCquo33HD7fEsDObSTWG0/d75dm1EKuo54n3KWOAht/vZzKUBBLrVd9QY
-        x4erai+SmeGpA6xCCHUArNbFsgr58ke73Md7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hxt4CzlssDo6J/4FspKX5j9NLM0aHJzd
-        83jSSe7uargv46uXLvt4RhXO5Oa9vEfp7Vpf1/jbrrVft25y1SqXIcF96RvfplMk
-        4E9mVTsRZjOR8bPDYU7hlsg5ACv3ElTL4AeQWXyqRcwlqQ/KDJG/S00ShGS8Bmdw
-        KQwMfajoGUk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D69A4EF62;
-        Wed,  9 Nov 2016 19:18:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B56354EF5F;
-        Wed,  9 Nov 2016 19:18:30 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] attr: do not respect symlinks for in-tree .gitattributes
-References: <20161102130432.d3zprdul4sqgcfwu@sigill.intra.peff.net>
-        <20161102130848.qpigt4hxpoyfjf7x@sigill.intra.peff.net>
-        <CACsJy8AO2KtpxFu=wRjW1DoCA9bfpF1VoJUn__2ib-ML0XT66w@mail.gmail.com>
-        <20161107211010.xo3243egggdgscou@sigill.intra.peff.net>
-        <20161107211522.vzl4zpsu5cpembgc@sigill.intra.peff.net>
-        <CACsJy8BoEXDjwe=ZX5ZOC_mvaMjYrB3i7wcMmiOP3mm5-rwC5Q@mail.gmail.com>
-        <xmqqmvh88dlu.fsf@gitster.mtv.corp.google.com>
-        <20161109231720.luuhezzziuhx4r75@sigill.intra.peff.net>
-Date:   Wed, 09 Nov 2016 16:18:29 -0800
-In-Reply-To: <20161109231720.luuhezzziuhx4r75@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 9 Nov 2016 18:17:21 -0500")
-Message-ID: <xmqqoa1o6vca.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753485AbcKJAgY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Nov 2016 19:36:24 -0500
+Received: from ud03.udmedia.de ([194.117.254.43]:48236 "EHLO
+        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750927AbcKJAgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2016 19:36:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
+        :references:cc:from:message-id:date:mime-version:in-reply-to
+        :content-type:content-transfer-encoding; s=k1; bh=0e3525mTONFgGO
+        bZFAnoL4kDXS7KI73pbaWa27OtsXs=; b=IpESZY/9nh6eLOByJahQCR1ROns99p
+        107gfXkjW+oxJCM0EhU1EX/6e4JrJlcN0zPv5dlOqKiqoKTMRf8KkfaAWLnpIQN1
+        kUNHW1aBYI6itWVUaDJZ28MY6rimQdEHAmv4wWAQopW+Wh66UjOikxvCynxGmgWm
+        lpIgeaTGxtg3Q=
+Received: (qmail 17017 invoked from network); 10 Nov 2016 01:36:20 +0100
+Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
+  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 10 Nov 2016 01:36:20 +0100
+Subject: Re: [PATCH 5/6] config docs: Provide for config to specify tags not
+ to abbreviate
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20161108005241.19888-1-ijackson@chiark.greenend.org.uk>
+ <20161108005241.19888-6-ijackson@chiark.greenend.org.uk>
+ <CA+P7+xoQFsN1tPvKCA6+aRMChFwpMs73D=2kwvVRcxALWK0mZQ@mail.gmail.com>
+ <22561.44597.59852.574831@chiark.greenend.org.uk>
+ <20161108215709.rvmsnz4fvhizbocl@sigill.intra.peff.net>
+ <22562.32428.287354.214659@chiark.greenend.org.uk>
+ <xmqqa8d9b3jh.fsf@gitster.mtv.corp.google.com>
+ <22562.65461.845411.29907@chiark.greenend.org.uk>
+ <xmqqeg2k8cwz.fsf@gitster.mtv.corp.google.com>
+ <22563.45501.383303.374430@chiark.greenend.org.uk>
+Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Paul Mackerras <paulus@samba.org>
+From:   Markus Hitter <mah@jump-ing.de>
+Message-ID: <ac17a9a7-d951-67f6-8428-d2e142a1f648@jump-ing.de>
+Date:   Thu, 10 Nov 2016 01:36:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3588E81C-A6DB-11E6-BA6D-987C12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <22563.45501.383303.374430@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Am 10.11.2016 um 00:31 schrieb Ian Jackson:
+> I am proposing to set this configuration setting automatically in
+> dgit.  Other tools that work with particular git tags would do the
+> same.  There would be no need for users to do anything.
+> 
+> Having this as an option in a menu would be quite wrong, because it
+> would end up with the user and the tooling fighting.  This is why I
+> don't want to put this in gitk's existing config file mechanism.
 
-> On Wed, Nov 09, 2016 at 02:58:37PM -0800, Junio C Hamano wrote:
->
-> I'm slightly confused. Did you mean "supporting any in-tree symlink to
-> an out-of-tree destination" in your first sentence?
+Having this conversation watched for a while I get the impression that your point is essentially about introducing another type of references, next to branches and (ordinary) tags. Let's call them "interesting tags", "itags".
 
-I was trying to say that these "control files used solely by git"
-have no business being a symbolic link pointing at anywhere, even
-inside the same tree; actually, especially if it is inside the same
-tree.
+The logical path to get this, IMHO, isn't to add some configuration variable, but to store such interesting tags in .git/refs/itags/, just like the other reference types. Then one would create such interesting tags with
 
+  git tag -i <name>
+or
+  git tag --interesting <name>
+
+To reduce the backwards compatibility problem these itags could be stored in .git/refs/tags as well, itag-aware tools would sort the duplicates out.
+
+
+Markus
+
+-- 
+- - - - - - - - - - - - - - - - - - -
+Dipl. Ing. (FH) Markus Hitter
+http://www.jump-ing.de/
