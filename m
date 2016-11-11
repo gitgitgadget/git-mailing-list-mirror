@@ -2,102 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7469B2035F
-	for <e@80x24.org>; Fri, 11 Nov 2016 17:05:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 904202035F
+	for <e@80x24.org>; Fri, 11 Nov 2016 17:06:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934003AbcKKRFF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 12:05:05 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:35695 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933709AbcKKRFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 12:05:04 -0500
-Received: by mail-wm0-f53.google.com with SMTP id a197so436156369wmd.0
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 09:05:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=36rz5Q5hLarnUQBa/Eh3ihRMxPtv7p9Hr6UiXUmZAKo=;
-        b=Xl+ugglkIIAnb9Ws6X8vxSrQbR/FOHdJX7Vb5wBNy/TxOWLYCOx1OGGG9curyE+fYE
-         uIheWe9dw4v/X4ePCB3EC+m49IwsUt1ob6A1bsRSuh5RUraRPPfBVhxqnLU2s4YIBX7M
-         H8g7m4b+7fXRCeRbo+m6saqyteh8wSGskceNB6LQbasOf5I7EzIqsDT2PbMx0RR1I7Y3
-         M0KQT3iERhB1H/JMrCoZ6fe+4ClvkeQp84o1rpihRad85XfAyQS84Ixi2F4A3t8BOloe
-         BpEreFEpk59YD3HLUKEJsRn8MHrq743HdEMScJ9FAc3DqkLyl8DT0Cn6koHsCWh3pnyx
-         EILQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=36rz5Q5hLarnUQBa/Eh3ihRMxPtv7p9Hr6UiXUmZAKo=;
-        b=NeuGyWKTyIj3i29MJ0QOlA1ANC/Nt2BendkdWXQV+tpMfUvRnT7Cu+c1xRM2Mq2KRg
-         oG1Bw0rPsszRLZYodr6JIqxDWOuu8i3c646rHe8Ycs7NgS9PlCV/6PQflWT5m/wxuF8l
-         nBgnoLP5PtvGL1vFFm18X4jAOlmCGVLCmhi6uEk2tb7xqRQS1eOTE9nU+XVX976dXAw5
-         AeEWq99OHSPw2d5jasM1fJB+7Nm1CQLeJtjo8o0GNYIdFunTnSsB57LlFbZhRC6FptST
-         T8yrTopjwPDDmK3yWaVIvxIeil4BsrEbk18zDOrZc8m2g1iqBTrjO4DbtXfw+qAo0Th9
-         jJcQ==
-X-Gm-Message-State: ABUngvcaM39y2iBdH4KEOwoekZ8oTsydeYIbS54706i7gzC80v1s0uk9lI/+m5lrOZmohw==
-X-Received: by 10.194.96.110 with SMTP id dr14mr9893815wjb.209.1478883902849;
-        Fri, 11 Nov 2016 09:05:02 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id g6sm12406319wjp.45.2016.11.11.09.05.01
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Nov 2016 09:05:02 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: 2.11.0-rc1 will not be tagged for a few days
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.20.1611111711210.3746@virtualbox>
-Date:   Fri, 11 Nov 2016 18:05:00 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4FF1825D-F699-4532-9B53-A673DFF00D8B@gmail.com>
-References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com> <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1611111711210.3746@virtualbox>
+        id S934616AbcKKRG1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 12:06:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52919 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934465AbcKKRGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 12:06:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE6664CE0F;
+        Fri, 11 Nov 2016 12:06:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=chON1+x4OTB8zSZ6CRpqTOkllqY=; b=wrBwfn
+        ulkwxxMdTS86MTaIL3yrrD9NupYxuXWz1GbW8o3ot8KX7GXcx4MIM5zNGMjwpwB2
+        VjcB/LkPylGUX6E53GgoBrXBk57//ebBHIsg0H0+AvGS27gf7YwKt0ax3mCb0PX5
+        AbkLzXzZMJJNWiyT50qplnG49J74nj48c3kII=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FgFAqJBc5Ud+/KH4A2G/ffR50KcYSKLZ
+        OlzQ9W4V5hSi8NXLgsdTvWWUsrIr4alXo53aTtj3TOH4ik9d6oxqyoIbHdOojllW
+        EEmuLyQ9eY85u4LIAPD9t+5XkzWjlo4Si5iai1bzy+5G59yBSHw+WiFhCyTC3dXM
+        FiVplBF0gDs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B6A324CE0E;
+        Fri, 11 Nov 2016 12:06:13 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33F954CE0B;
+        Fri, 11 Nov 2016 12:06:13 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mingw: hot-fix t5615
+References: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de>
+Date:   Fri, 11 Nov 2016 09:06:11 -0800
+In-Reply-To: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 11 Nov 2016 17:29:33 +0100
+        (CET)")
+Message-ID: <xmqq37iy3q0s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 26640CC0-A831-11E6-A99E-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> On 11 Nov 2016, at 17:13, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> Hi Junio,
->=20
-> On Thu, 10 Nov 2016, Junio C Hamano wrote:
->=20
->> Junio C Hamano <gitster@pobox.com> writes:
->>=20
->>> I'll report back an updated schedule when able.
->>=20
->> I pushed some updates out on 'master' today.
->=20
-> Which means that t0021 is now broken also on `master` when running in =
-Git
-> for Windows' SDK.
+> That test made the incorrect assumption that the path separator character
+> is always a colon. On Windows, it is a semicolon instead.
 
-Part of the reason is that Hannes' squash got lost:
-=
-http://public-inbox.org/git/d36d8b51-f2d7-a2f5-89ea-369f49556e10@kdbg.org/=
+Documentation/git.txt says that GIT_ALTERNATE_OBJECT_DIRECTORIES is
+separated with ";" on Windows fairly clearly, and we should have
+caught that.  
 
+For the upcoming release there is no need for any further tweak on
+your fix I am responding to, but in the longer term we would want to
+turn this to path_sep=";" (or ":") and define it in the global
+t/test-lib.sh, as it is plausible that we may want to prepend or
+append to $PATH in the tests and that also needs ";" on Windows, no?
 
-@Junio: Can you apply this (see discussion with Peff linked to email =
-above).
+Are there other variables that is a list of paths that we care in
+our tests?  I notice GIT_CEILING_DIRECTORIES does not have the
+corresponding ": separated (on windows ; separated) list" in its
+description in Documentation/git.txt but the documentation may need
+to be fixed there as well?
 
-@Dscho:
-There is still one remaining new issue with t0021 ... investigating!
+Thanks for a quick fix.  Will apply on jk/alt-odb-cleanup and merge
+down.
 
-
-> To add insult to injury, t5615 is now broken, too. I do not recall it
-> being broken in any of my CI builds in any of the integration branches
-> before.
-
-Confirmed on my machine.
-
-- Lars=
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> Published-As: https://github.com/dscho/git/releases/tag/t5615-path-separator-v1
+> Fetch-It-Via: git fetch https://github.com/dscho/git t5615-path-separator-v1
+>
+> 	This is required, but not sufficient, to fix `master` on Windows.
+>
+>  t/t5615-alternate-env.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t5615-alternate-env.sh b/t/t5615-alternate-env.sh
+> index 22d9d81..3aeffb6 100755
+> --- a/t/t5615-alternate-env.sh
+> +++ b/t/t5615-alternate-env.sh
+> @@ -37,8 +37,10 @@ test_expect_success 'access alternate via absolute path' '
+>  	EOF
+>  '
+>  
+> +sep=:
+> +test_have_prereq !MINGW || sep=\;
+>  test_expect_success 'access multiple alternates' '
+> -	check_obj "$(pwd)/one.git/objects:$(pwd)/two.git/objects" <<-EOF
+> +	check_obj "$(pwd)/one.git/objects$sep$(pwd)/two.git/objects" <<-EOF
+>  	$one blob
+>  	$two blob
+>  	EOF
+>
+> base-commit: 0538b84027a8aba7e8b805e3ec8fceb3990023e5
