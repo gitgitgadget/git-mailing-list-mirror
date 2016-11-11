@@ -2,92 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8550F20229
-	for <e@80x24.org>; Fri, 11 Nov 2016 04:22:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BC0F20229
+	for <e@80x24.org>; Fri, 11 Nov 2016 05:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966494AbcKKEWy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 23:22:54 -0500
-Received: from [42.114.81.254] ([42.114.81.254]:41418 "HELO www.nekoplaza.com"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S965547AbcKKEWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 23:22:53 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Nov 2016 23:22:52 EST
-From:   <wantjay@163.com>
-Content-Disposition: attachment
-To:     <git@vger.kernel.org>
-Subject: 47279 git
+        id S1753813AbcKKF0A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 00:26:00 -0500
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:35531 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752227AbcKKFZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 00:25:59 -0500
+Received: by mail-yw0-f194.google.com with SMTP id b66so387743ywh.2
+        for <git@vger.kernel.org>; Thu, 10 Nov 2016 21:25:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PzAysl1kVh5ewkroZKc5q/jo/njYi28N2LauPGN6bTo=;
+        b=ZlrV95gU9w3hwjmZTrxtu66rsDq7uCdUCSmveUUsorXRdp7gF8YQuH9GLFuu+KTEWX
+         t6u0UzSPCQdiatSv17B/4xBlxU03AQKllAz3KcNv8bCnzY2tBl5xMZCpW0dkQuevuOPd
+         CKt9GAurgPdabHFU+NJRxJmxFKR6WHTtDqQPQlef6h03D9C2MkAuWwfP8kPlzhRSqRuB
+         eYTDXGzD5fy4TigYLSc7rQ3JO6QBqLWNss5VgnFfskkrRKZDA3K2L9jXsnU5vaF2ghrL
+         IduKhFpfuo05qgV9rCTru9QfZJtDbXQ4z5MaiK7wvQPNxJATzouyeWx23UzhbKyVU9jG
+         49Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PzAysl1kVh5ewkroZKc5q/jo/njYi28N2LauPGN6bTo=;
+        b=fHukAzeu0vZ0OKCc+o4ViiEtj3XdFkJt2Kv6KHAKKtdTdOlgrRlO9cL0rSun8DyV73
+         0xJ9Omc7iO7NTszOk9yYleh9Dh+ladCwbQQH4Yrn9jUTM0SxDMTxi7206o9IICSfUU87
+         bJXZZvj0jm96p2byhPx0JS9bWZfqDsnROSRVRW/SAIgwNz6OSt1FzPecuhLDh9sEAf36
+         +bX+VW/sLJu0Bl/C2OvFIbKjq/NCxPuYGAs6wQOsgO42MZ9fmvB+7QdHuvz8U+mONPvT
+         be4LLXvHHbU31Lm3yz56EdKlhUen46wGx5oMetz4sc36zO79TbAU8pDv/bpqvDw9150C
+         i2pA==
+X-Gm-Message-State: ABUngvcIdBViDnFE/4bxusyQzq/mhFZY5fcNJovvrohtvfIR5SozTGiGfFXh8jQ0gE5WcioKyTZ2FcpeQtQgvA==
+X-Received: by 10.13.221.12 with SMTP id g12mr1367694ywe.257.1478841958230;
+ Thu, 10 Nov 2016 21:25:58 -0800 (PST)
 MIME-Version: 1.0
-Date:   Fri, 11 Nov 2016 04:21:57 -0000
-Content-Transfer-Encoding: base64
-Message-ID: <147883811724.6047.17175825761013608992@www.nekoplaza.com>
-Content-Type: application/zip; name="MESSAGE_014156633139857_git.zip"
+Received: by 10.37.33.132 with HTTP; Thu, 10 Nov 2016 21:25:37 -0800 (PST)
+In-Reply-To: <xmqqoa1m5335.fsf@gitster.mtv.corp.google.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-4-Karthik.188@gmail.com>
+ <CA+P7+xoavgQ=NK8GGGXf90ESuPs+mFwHzEWbsnjWjZ4V7TWpjw@mail.gmail.com> <xmqqoa1m5335.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 10 Nov 2016 21:25:37 -0800
+Message-ID: <CA+P7+xr8bhUga3eByh2nrt+pUtPUaaXq8wScRjwZ33bY=xFEDQ@mail.gmail.com>
+Subject: Re: [PATCH v7 03/17] ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Karthik Nayak <karthik.188@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-AAABAAEAWQAAAMQMAAAAAA==
+On Thu, Nov 10, 2016 at 3:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>>> @@ -49,6 +51,10 @@ static struct used_atom {
+>>>                         enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+>>>                         unsigned int nlines;
+>>>                 } contents;
+>>> +               struct {
+>>> +                       const char *if_equals,
+>>> +                               *not_equals;
+>>
+>>
+>> Same here, why do we need both strings here stored separately? Could
+>> we instead store which state to check and store the string once? I'm
+>> not sure that really buys us any storage.
+>
+> I am not sure if storage is an issue, but I tend to agree that it
+> would be semantically cleaner if this was done as a pair of <what
+> operation uses this string constant?, the string constant>, and the
+> former would be enum { COMPARE_EQUAL, COMPARE_UNEQUAL}.
+>
+> You could later enhance the comparison operator more easily with
+> such an arrangement (e.g. if-equals-case-insensitively).
+
+The main advantage I see is that it ensures in the API that there is
+no way for it to be both "equal" and "not equal" at the same time,
+where as two separate pointers while not actually done in practice
+could both be set somehow, leading to potential questions.
+
+Thanks,
+Jake
