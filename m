@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B95F2035F
-	for <e@80x24.org>; Fri, 11 Nov 2016 12:46:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 992E52035F
+	for <e@80x24.org>; Fri, 11 Nov 2016 12:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756604AbcKKMqV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 07:46:21 -0500
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:48564 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1756324AbcKKMqB (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1756584AbcKKMqB (ORCPT <rfc822;e@80x24.org>);
         Fri, 11 Nov 2016 07:46:01 -0500
-Received: (qmail 756 invoked from network); 11 Nov 2016 12:45:59 -0000
-Received: (qmail 3584 invoked from network); 11 Nov 2016 12:45:59 -0000
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:48559 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1756575AbcKKMqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 07:46:00 -0500
+Received: (qmail 736 invoked from network); 11 Nov 2016 12:45:58 -0000
+Received: (qmail 3336 invoked from network); 11 Nov 2016 12:45:58 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 11 Nov 2016 12:45:59 -0000
+          for <git@vger.kernel.org>; 11 Nov 2016 12:45:58 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 10/16] i18n: add--interactive: remove %patch_modes entries
-Date:   Fri, 11 Nov 2016 11:45:35 -0100
-Message-Id: <20161111124541.8216-11-vascomalmeida@sapo.pt>
+Subject: [PATCH v6 09/16] i18n: add--interactive: mark edit_hunk_manually message for translation
+Date:   Fri, 11 Nov 2016 11:45:34 -0100
+Message-Id: <20161111124541.8216-10-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.11.0.rc0.33.gec17dab
 In-Reply-To: <20161111124541.8216-1-vascomalmeida@sapo.pt>
 References: <20161111124541.8216-1-vascomalmeida@sapo.pt>
@@ -48,88 +48,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove unnecessary entries from %patch_modes. After the i18n conversion,
-these entries are not used anymore.
+Mark message of edit_hunk_manually displayed in the editing file when
+user chooses 'e' option.  The message had to be unfolded to allow
+translation of the $participle verb.
+
+Some messages end up being exactly the same for some use cases, but
+left it for easier change in the future, e.g., wanting to change wording
+of one particular use case.
+
+The comment character is now used according to the git configuration
+core.commentchar.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 21 ---------------------
- 1 file changed, 21 deletions(-)
+ git-add--interactive.perl | 52 +++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 39 insertions(+), 13 deletions(-)
 
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 7d1cc5652..5f6637bde 100755
+index 045b847cf..7d1cc5652 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -106,9 +106,6 @@ my %patch_modes = (
- 		DIFF => 'diff-files -p',
- 		APPLY => sub { apply_patch 'apply --cached', @_; },
- 		APPLY_CHECK => 'apply --cached',
--		VERB => 'Stage',
--		TARGET => '',
--		PARTICIPLE => 'staging',
- 		FILTER => 'file-only',
- 		IS_REVERSE => 0,
- 	},
-@@ -116,9 +113,6 @@ my %patch_modes = (
- 		DIFF => 'diff-index -p HEAD',
- 		APPLY => sub { apply_patch 'apply --cached', @_; },
- 		APPLY_CHECK => 'apply --cached',
--		VERB => 'Stash',
--		TARGET => '',
--		PARTICIPLE => 'stashing',
- 		FILTER => undef,
- 		IS_REVERSE => 0,
- 	},
-@@ -126,9 +120,6 @@ my %patch_modes = (
- 		DIFF => 'diff-index -p --cached',
- 		APPLY => sub { apply_patch 'apply -R --cached', @_; },
- 		APPLY_CHECK => 'apply -R --cached',
--		VERB => 'Unstage',
--		TARGET => '',
--		PARTICIPLE => 'unstaging',
- 		FILTER => 'index-only',
- 		IS_REVERSE => 1,
- 	},
-@@ -136,9 +127,6 @@ my %patch_modes = (
- 		DIFF => 'diff-index -R -p --cached',
- 		APPLY => sub { apply_patch 'apply --cached', @_; },
- 		APPLY_CHECK => 'apply --cached',
--		VERB => 'Apply',
--		TARGET => ' to index',
--		PARTICIPLE => 'applying',
- 		FILTER => 'index-only',
- 		IS_REVERSE => 0,
- 	},
-@@ -146,9 +134,6 @@ my %patch_modes = (
- 		DIFF => 'diff-files -p',
- 		APPLY => sub { apply_patch 'apply -R', @_; },
- 		APPLY_CHECK => 'apply -R',
--		VERB => 'Discard',
--		TARGET => ' from worktree',
--		PARTICIPLE => 'discarding',
- 		FILTER => 'file-only',
- 		IS_REVERSE => 1,
- 	},
-@@ -156,9 +141,6 @@ my %patch_modes = (
- 		DIFF => 'diff-index -p',
- 		APPLY => sub { apply_patch_for_checkout_commit '-R', @_ },
- 		APPLY_CHECK => 'apply -R',
--		VERB => 'Discard',
--		TARGET => ' from index and worktree',
--		PARTICIPLE => 'discarding',
- 		FILTER => undef,
- 		IS_REVERSE => 1,
- 	},
-@@ -166,9 +148,6 @@ my %patch_modes = (
- 		DIFF => 'diff-index -R -p',
- 		APPLY => sub { apply_patch_for_checkout_commit '', @_ },
- 		APPLY_CHECK => 'apply',
--		VERB => 'Apply',
--		TARGET => ' to index and worktree',
--		PARTICIPLE => 'applying',
- 		FILTER => undef,
- 		IS_REVERSE => 0,
- 	},
+@@ -1058,6 +1058,30 @@ sub color_diff {
+ 	} @_;
+ }
+ 
++my %edit_hunk_manually_modes = (
++	stage => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for staging."),
++	stash => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for stashing."),
++	reset_head => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for unstaging."),
++	reset_nothead => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for applying."),
++	checkout_index => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for discarding"),
++	checkout_head => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for discarding."),
++	checkout_nothead => N__(
++"If the patch applies cleanly, the edited hunk will immediately be
++marked for applying."),
++);
++
+ sub edit_hunk_manually {
+ 	my ($oldtext) = @_;
+ 
+@@ -1065,22 +1089,24 @@ sub edit_hunk_manually {
+ 	my $fh;
+ 	open $fh, '>', $hunkfile
+ 		or die sprintf(__("failed to open hunk edit file for writing: %s"), $!);
+-	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
++	print $fh Git::comment_lines __("Manual hunk edit mode -- see bottom for a quick guide.\n");
+ 	print $fh @$oldtext;
+-	my $participle = $patch_mode_flavour{PARTICIPLE};
+ 	my $is_reverse = $patch_mode_flavour{IS_REVERSE};
+ 	my ($remove_plus, $remove_minus) = $is_reverse ? ('-', '+') : ('+', '-');
+-	print $fh <<EOF;
+-# ---
+-# To remove '$remove_minus' lines, make them ' ' lines (context).
+-# To remove '$remove_plus' lines, delete them.
+-# Lines starting with # will be removed.
+-#
+-# If the patch applies cleanly, the edited hunk will immediately be
+-# marked for $participle. If it does not apply cleanly, you will be given
+-# an opportunity to edit again. If all lines of the hunk are removed,
+-# then the edit is aborted and the hunk is left unchanged.
++	my $comment_line_char = Git::config("core.commentchar") || '#';
++	print $fh Git::comment_lines sprintf(__ <<EOF, $remove_minus, $remove_plus, $comment_line_char),
++---
++To remove '%s' lines, make them ' ' lines (context).
++To remove '%s' lines, delete them.
++Lines starting with %s will be removed.
+ EOF
++__($edit_hunk_manually_modes{$patch_mode}),
++# TRANSLATORS: 'it' refers to the patch mentioned in the previous messages.
++__ <<EOF2 ;
++If it does not apply cleanly, you will be given an opportunity to
++edit again.  If all lines of the hunk are removed, then the edit is
++aborted and the hunk is left unchanged.
++EOF2
+ 	close $fh;
+ 
+ 	chomp(my $editor = run_cmd_pipe(qw(git var GIT_EDITOR)));
+@@ -1092,7 +1118,7 @@ EOF
+ 
+ 	open $fh, '<', $hunkfile
+ 		or die sprintf(__("failed to open hunk edit file for reading: %s"), $!);
+-	my @newtext = grep { !/^#/ } <$fh>;
++	my @newtext = grep { !/^$comment_line_char/ } <$fh>;
+ 	close $fh;
+ 	unlink $hunkfile;
+ 
 -- 
 2.11.0.rc0.33.gec17dab
 
