@@ -2,85 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A26C2035F
-	for <e@80x24.org>; Fri, 11 Nov 2016 16:29:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A71382035F
+	for <e@80x24.org>; Fri, 11 Nov 2016 16:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934226AbcKKQ3v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 11:29:51 -0500
-Received: from mout.gmx.net ([212.227.17.22]:52168 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933380AbcKKQ3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 11:29:50 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOOJl-1c8FNM45bh-005oan; Fri, 11
- Nov 2016 17:29:38 +0100
-Date:   Fri, 11 Nov 2016 17:29:33 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH] mingw: hot-fix t5615
-Message-ID: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:uBtpzlSyMrvN0czgIGuYTWz7Wtv8AwGM1MuP2zumRLvxx0UH3hy
- FzlPqC79bkJ/t8Cuke0YJqJV56Pv4G5sAe7UOXMnHEoof/+NZEaKEo8VOlAaekJE3jcFvA4
- 8W9dPm9VUDP7YIIRfr9f+0n1JVtrIUjmbmjhBhd8KO3ljOgdhJ0kdqARed+rPGpefzDjTjB
- RsF6Wi6MOpaK8InaR5QdA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xTvYHMo/mUs=:6t9tCc1khSfUlRHhEhXPpQ
- +XUtKQopaeG2ukjj9QaCNEc6QzmPD6hR3OBXd6bzPIZkT4w9nsoaBa1r10mRNHB2UBRD5yVSZ
- EjHblM+/qNiuf1BlQ+v73TRjPGWndazSdGoUX8PcdsfJ+MQXy+WcqZSIXkbOJOxvjQguTqNCk
- r39kSfhp0QRuVIUFW/zlmkLqwSqyuhU6pf91rb9qdoBGGXR4a8JsoTutJ22AelXN3WmBSKKXE
- BwPbSMDBKAr4h80bUj6xPTcXy6jTuqBUEu4RdaiHPe4GzdbcODjAXLE8RWaBX6+mqneEDm5Vg
- WBs+EX8olpnCpQE9NjiqpsyGzH1dhTWmPCZfz7u1hXBgr5A5aWgpYaScyU64ykYWMlEv0puHa
- MlhP3FUOLTJmxQzhKA5DlkMPu6nrTao2kUugiB6pjXJzUUjkxKs7pbFZxwx0GwdBr4/Ey2Cu2
- c/zDDyffe1FRwp0A+F33aGnpmHBLiNmD4sv939DkhqrWpmLIs5F3QKNVqNS8VwzwsUxaRy1Qg
- zO2ZfAEiVTNQsr43ztcVOibWDhy5rYq+MzGf614iegMmfw++ShatwVViPNIO44PigtT7KkGZR
- FPGClMXu3nRV5g4bDPYA9l+9aGk5WPTedAVWpH+4eDJAqom5pcwe5JNAYTfyhjsOsr6avJVTc
- 87oYANbzlQoUu9shcGui8yX+z4WpDBrDJ+kipE4rAPGQetqSstejrnPAXabdZA2jbV0HTUg5F
- O2iUXAmAD4ebNBOA6Pxl/tTizHuQcHZTv4uysxGqnVzM7+jQ+0IDZ8Y25haug/28TEfPyL+3d
- GVWMLQt
+        id S1756670AbcKKQcK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 11:32:10 -0500
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:51850 "EHLO
+        homiemail-a23.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755762AbcKKQcJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 11 Nov 2016 11:32:09 -0500
+Received: from homiemail-a23.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a23.g.dreamhost.com (Postfix) with ESMTP id B897D4B006F;
+        Fri, 11 Nov 2016 08:32:03 -0800 (PST)
+Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a23.g.dreamhost.com (Postfix) with ESMTPSA id 1CF6B4B0062;
+        Fri, 11 Nov 2016 08:32:03 -0800 (PST)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org, spearce@spearce.org
+Cc:     David Turner <dturner@twosigma.com>
+Subject: [PATCH] upload-pack: Optionally allow fetching any sha1
+Date:   Fri, 11 Nov 2016 11:31:58 -0500
+Message-Id: <1478881918-11482-1-git-send-email-dturner@twosigma.com>
+X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-That test made the incorrect assumption that the path separator character
-is always a colon. On Windows, it is a semicolon instead.
+It seems a little silly to do a reachabilty check in the case where we
+trust the user to access absolutely everything in the repository.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Also, it's racy in a distributed system -- perhaps one server
+advertises a ref, but another has since had a force-push to that ref,
+and perhaps the two HTTP requests end up directed to these different
+servers.
+
+Signed-off-by: David Turner <dturner@twosigma.com>
 ---
-Published-As: https://github.com/dscho/git/releases/tag/t5615-path-separator-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git t5615-path-separator-v1
 
-	This is required, but not sufficient, to fix `master` on Windows.
+This one is on top of yesterday's patch, "remote-curl: don't hang when
+a server dies before any output".
 
- t/t5615-alternate-env.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+That's because I want my test to show that allowanysha1inhead allows a
+fetch to succeed where allowreachablesha1inhead would fail.  Prior to
+the previous patch, the first fetch's failure would instead be a hang.
 
-diff --git a/t/t5615-alternate-env.sh b/t/t5615-alternate-env.sh
-index 22d9d81..3aeffb6 100755
---- a/t/t5615-alternate-env.sh
-+++ b/t/t5615-alternate-env.sh
-@@ -37,8 +37,10 @@ test_expect_success 'access alternate via absolute path' '
- 	EOF
+ t/t5551-http-fetch-smart.sh | 22 ++++++++++++++++++++++
+ upload-pack.c               | 10 +++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 43665ab..8d3db40 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -306,6 +306,28 @@ test_expect_success 'test allowreachablesha1inwant with unreachable' '
+ 	test_must_fail git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
  '
  
-+sep=:
-+test_have_prereq !MINGW || sep=\;
- test_expect_success 'access multiple alternates' '
--	check_obj "$(pwd)/one.git/objects:$(pwd)/two.git/objects" <<-EOF
-+	check_obj "$(pwd)/one.git/objects$sep$(pwd)/two.git/objects" <<-EOF
- 	$one blob
- 	$two blob
- 	EOF
-
-base-commit: 0538b84027a8aba7e8b805e3ec8fceb3990023e5
++test_expect_success 'test allowanysha1inwant with unreachable' '
++	test_when_finished "rm -rf test_reachable.git; git reset --hard $(git rev-parse HEAD)" &&
++
++	#create unreachable sha
++	echo content >file2 &&
++	git add file2 &&
++	git commit -m two &&
++	git push public HEAD:refs/heads/doomed &&
++	git push public :refs/heads/doomed &&
++
++	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
++	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
++
++	git init --bare test_reachable.git &&
++	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
++	test_must_fail git -C test_reachable.git fetch origin "$(git rev-parse HEAD)" &&
++
++	git -C "$server" config uploadpack.allowanysha1inwant 1 &&
++	git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
++'
++
+ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
+ 	(
+ 		cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+diff --git a/upload-pack.c b/upload-pack.c
+index e0db8b4..7597ba3 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -46,6 +46,8 @@ static int no_progress, daemon_mode;
+ #define ALLOW_TIP_SHA1	01
+ /* Allow request of a sha1 if it is reachable from a ref (possibly hidden ref). */
+ #define ALLOW_REACHABLE_SHA1	02
++/* Allow request of any sha1. Implies ALLOW_TIP_SHA1 and ALLOW_REACHABLE_SHA1. */
++#define ALLOW_ANY_SHA1	07
+ static unsigned int allow_unadvertised_object_request;
+ static int shallow_nr;
+ static struct object_array have_obj;
+@@ -825,7 +827,8 @@ static void receive_needs(void)
+ 			    sha1_to_hex(sha1_buf));
+ 		if (!(o->flags & WANTED)) {
+ 			o->flags |= WANTED;
+-			if (!is_our_ref(o))
++			if (!((allow_unadvertised_object_request & ALLOW_ANY_SHA1) == ALLOW_ANY_SHA1
++			      || is_our_ref(o)))
+ 				has_non_tip = 1;
+ 			add_object_array(o, NULL, &want_obj);
+ 		}
+@@ -1008,6 +1011,11 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
+ 		else
+ 			allow_unadvertised_object_request &= ~ALLOW_REACHABLE_SHA1;
++	} else if (!strcmp("uploadpack.allowanysha1inwant", var)) {
++		if (git_config_bool(var, value))
++			allow_unadvertised_object_request |= ALLOW_ANY_SHA1;
++		else
++			allow_unadvertised_object_request &= ~ALLOW_ANY_SHA1;
+ 	} else if (!strcmp("uploadpack.keepalive", var)) {
+ 		keepalive = git_config_int(var, value);
+ 		if (!keepalive)
 -- 
-2.10.1.583.g721a9e0
+2.8.0.rc4.22.g8ae061a
+
