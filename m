@@ -2,101 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4D582021E
-	for <e@80x24.org>; Fri, 11 Nov 2016 09:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F81B2021E
+	for <e@80x24.org>; Fri, 11 Nov 2016 09:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965985AbcKKJMY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 04:12:24 -0500
-Received: from mail-yb0-f177.google.com ([209.85.213.177]:34198 "EHLO
-        mail-yb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965735AbcKKJMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 04:12:19 -0500
-Received: by mail-yb0-f177.google.com with SMTP id d59so3330327ybi.1
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:12:19 -0800 (PST)
+        id S965998AbcKKJNs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 04:13:48 -0500
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:34024 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965090AbcKKJNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 04:13:46 -0500
+Received: by mail-yw0-f180.google.com with SMTP id t125so6269437ywc.1
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:13:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=RZVXSF+jDc4xGnIeyvVi6G50AshLv3skzdPqZvSVIvc=;
-        b=Yhd3Jz0d6YquwdGopIC5WPRoeqSvvqG0BvBmosV75a8T7VBjAfgZzKZqN84wds1TWL
-         O0alGQjsnY9qp6L7GjKOVpAteKaVrBgoJTdTqGMZn2DzDJ5sRdy/cY9VU5OJn8upvu8J
-         92FuuYI3zJ4xBCwge2udkJdSOSq1rZavE5LVFE1ptphPom8eEJAofo6n32XDWZSBCY/X
-         IOjqsHqzCplz3H2K5L188d5p/9esPBykR7u2bRtWhpb/k6J4HhaR/JvpXarNDq9bFP5B
-         AiGEZgmXx0cntlXPziz//hfheg/5FFNw5hajXrBWmPbB2DbQwHqsS1P07HUiUPGkE6M4
-         Cltg==
+        bh=Ysz2s0ihi/BhbHfSs6sVVASkVl8qu04UfXXeNXXOr9U=;
+        b=jCXErumLzHjMKxYOZmY6rApk4zxoCp4e2nXde+zhu8LV7g1x2P/r8wkk9bvoXlfFmd
+         ZeAXVggb8irW8ygOBscCfWJZRVX+1HgtDOYNC5fIZZ9Jcotiu6v8Kd/sjyYkllD4cKdN
+         saIzfrdEdlfSLxSMVbLwaXeaQGm5oWqCYuQ/+geSjm/9d2zpfpqGb6p3exAHRPOb4KjP
+         SmwNpC2CzoMJaph5EOUv5s48qvmrG+8hRUGdxA5YjHcIYsMlrpKwrbTQSdszFjJ5VWdC
+         mkL4VIU18st12CuFR0p4gvVB8sgiv5vS3H7dW7VZ/whmuVnY6M7svBAGEUEiK4CBMCtT
+         GUZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=RZVXSF+jDc4xGnIeyvVi6G50AshLv3skzdPqZvSVIvc=;
-        b=ejiduhGwJCMsc239W2y0BOP0VRgI8yHVYD+cMKFJyqROshAAx0v5WaJSz4JR632/7R
-         oB/Cd1PP/SN2bPySaeetUYD+Jzoj8jz16zTHj5KIbbsuVY7spn885zbIs2S+peWSLD6z
-         WKkXlRSzp1WGTTfmHLLv4zel6tAqAdmGLaaht+e076/+Yh0TpxuEOHJhV4NaTPkcr4aq
-         OBdsatpEMysBvfRDZJNval/gpLoBRwpkIzCYQ7wNTPM4H07eBdPOZ9IrT2et3VMKRHQ+
-         73kRrAPpmTQTOJaId/to77zgDubDsDysrbf9Ei2CqSEOUkXI8XiCxxxkVbH5CZRyUuCf
-         Jlxg==
-X-Gm-Message-State: ABUngvegiW0IaWnAHY+cvof5vDdVM/skxxMZqBmnMrwHC6I0xUp/jv5QyaZwbm/RorIZcihj0Sll47m54IuGcA==
-X-Received: by 10.37.221.194 with SMTP id u185mr1612086ybg.61.1478855538463;
- Fri, 11 Nov 2016 01:12:18 -0800 (PST)
+        bh=Ysz2s0ihi/BhbHfSs6sVVASkVl8qu04UfXXeNXXOr9U=;
+        b=QAdTJyJ5eU1/8ls0qfcl9YoWViv7UFMUbtbAMQ/U1EmnRkY392gM2DkR1AnhvVWUNe
+         n57R+jDKs8ca96qJoGy1O0W0mVpYK/zPTq7BWImu0Tmv+rk/5Ts3UMZViSz57+bt4LmT
+         TdLKxhXVXl9LyUYjYQacBNuWdKgUNc7nxVJMH2FMIcLNarQRqJ2EM+6MpYTGdx+zniGf
+         /ihpgQDZBW730V+ld+rwNb4xj5cpupbtE79tCB1AzYXJs0PwVH3H4fXP9d12Qh/oQqJY
+         hxPy0KD/XeW6t6zekgfsPPAU0DGCIXsriVSasosto3jbXm+j10XJGCXe9oMN/OB9jWfm
+         q+xw==
+X-Gm-Message-State: ABUngvfSBaNbQS4ScOsenrxe8dVEWZSugS7PmfXiG7gtsCZnf9L9/X9fop4FkGkWt6QYVSoHg+aaNmugS5ZWZw==
+X-Received: by 10.129.78.84 with SMTP id c81mr1638340ywb.346.1478855625208;
+ Fri, 11 Nov 2016 01:13:45 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.113.66 with HTTP; Fri, 11 Nov 2016 01:12:17 -0800 (PST)
-In-Reply-To: <20161111083649.d5newszupwyq5j6w@sigill.intra.peff.net>
-References: <CACNr1V_fRfqvHUN=AQC8-Dj7ZAE7KXRAt+5skL3ZrcKu7SCLgA@mail.gmail.com>
- <20161111083649.d5newszupwyq5j6w@sigill.intra.peff.net>
-From:   Qi Nark <narcotics726@gmail.com>
-Date:   Fri, 11 Nov 2016 17:12:17 +0800
-Message-ID: <CACNr1V_BE_m32sw1D4WnRjRfPHEdKa0mb1jcv6BG0VPATtyPFQ@mail.gmail.com>
-Subject: Re: [credential.helper] unexpectedly save credential to multiple
- credential files
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Received: by 10.13.207.69 with HTTP; Fri, 11 Nov 2016 01:13:14 -0800 (PST)
+In-Reply-To: <xmqqshqy53cj.fsf@gitster.mtv.corp.google.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-2-Karthik.188@gmail.com>
+ <CA+P7+xoAmYqi0OazZux+rooXW+D_N9L5s+2BzUyJJJXtmLZX-Q@mail.gmail.com>
+ <CAOLa=ZS_V5SNSbiC_sT6E9rJMbxCMm=BRaoPL44xBNXAG2pgbA@mail.gmail.com> <xmqqshqy53cj.fsf@gitster.mtv.corp.google.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Fri, 11 Nov 2016 14:43:14 +0530
+Message-ID: <CAOLa=ZQ_Z+AJBf-=i3hW9M2ng5+HfR5AbdWGJp+_z5xthoqdXA@mail.gmail.com>
+Subject: Re: [PATCH v7 01/17] ref-filter: implement %(if), %(then), and
+ %(else) atoms
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 11, 2016 at 4:36 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Nov 11, 2016 at 04:10:55PM +0800, Qi Nark wrote:
+On Fri, Nov 11, 2016 at 4:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> 1. git config --global credential.helper store
->> 2. cd to a local repository directory, git config credential.helper
->> store --file ./my_cred
->> 3. execute some git command which need credential like git ls-remote
->> 4. input my username & password, command done.
->>
->> As the result, **BOTH** the ./my_cred and ~/.git-credentials will save
->> the credentials I just input. But, shouldn't the local config override
->> the global ones, and only the ./my_cred should save it?
+>>> Minor nit. I'm not sure what standard we use here at Git, but
+>>> traditionally, I prefer to see { } blocks on all sections even if only
+>>> one of them needs it. (That is, only drop the braces when every
+>>> section is one line.) It also looks weird with a comment since it
+>>> appears as multiple lines to the reader. I think the braces improve
+>>> readability.
+>>>
+>>> I don't know whether that's Git's code base standard or not, however.
+>>> It's not really worth a re-roll unless something else would need to
+>>> change.
+>>>
+>> I believe this is the syntax followed in Git, xdiff/xmerge.c:173 and so on.
 >
-> No, that's the expected result. The set of credential helpers form a
-> list, and each is run in turn. From "git help credentials":
+> That is a bad example for two reasons, if you mean this part:
 >
->   If there are multiple instances of the credential.helper configuration
->   variable, each helper will be tried in turn, and may provide a
->   username, password, or nothing. Once Git has acquired both a username
->   and a password, no more helpers will be tried.
+>         if ((size = file->recs[i]->size) &&
+>                         file->recs[i]->ptr[size - 1] == '\n')
+>                 /* Last line; ends in LF; Is it CR/LF? */
+>                 return size > 1 &&
+>                         file->recs[i]->ptr[size - 2] == '\r';
+> *       if (!i)
+>                 /* The only line has no eol */
+>                 return -1;
+>         /* Determine eol from second-to-last line */
 >
-> That's talking about lookup, but the same principle applies to storage.
-> But you may also find the paragraph below helpful:
 >
->   If credential.helper is configured to the empty string, this resets
->   the helper list to empty (so you may override a helper set by a
->   lower-priority config file by configuring the empty-string helper,
->   followed by whatever set of helpers you would like).
+> What Jacob prefers is this:
 >
-> Note that the "reset" behavior was introduced in git v2.9.0, so you'll
-> need at least that version.
+> ---------------------------------------------
+>         if (cond)
+>                 simple;
+>         else if (cond)
+>                 simple;
+>         else
+>                 simple;
+> ---------------------------------------------
+>         if (cond) {
+>                 simple;
+>         } else if (cond) {
+>                 no;
+>                 longer;
+>                 simple;
+>         } else {
+>                 simple;
+>         }
+> ---------------------------------------------
 >
-> -Peff
+> That is, as long as all arms of if/else if/.../else cascade is
+> simple, {} is used nowhere in the cascade, but once even one of them
+> requires {} then all others gain {}.
 
+I see, I mistook Jacob then.
 
-Ok, that's fair enough. Thanks for your detailed explanation. The
-version info is very important to me.
+I was talking about if we need to use {} whenever there's only a
+single line of code
+but followed by a comment which extends the if/else if/.../else block.
 
-Thank you again.
+-- 
+Regards,
+Karthik Nayak
