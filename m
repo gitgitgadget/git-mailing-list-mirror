@@ -2,94 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98B6420229
-	for <e@80x24.org>; Fri, 11 Nov 2016 00:13:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8A1C20229
+	for <e@80x24.org>; Fri, 11 Nov 2016 00:26:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966070AbcKKANl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Nov 2016 19:13:41 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35632 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934906AbcKKANk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2016 19:13:40 -0500
-Received: by mail-pf0-f169.google.com with SMTP id i88so943989pfk.2
-        for <git@vger.kernel.org>; Thu, 10 Nov 2016 16:13:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=pt1mDbcvO7gojaDCuuPp1f3RN/+1CUA5WwS5xGYJ63U=;
-        b=drP5YAXb1GgpLGF5nIPIgAaIR0slG7xi+OLhKpUgOmagPcoLPhya8waMS3Celuge13
-         NYaVNGLCBRx/4KXtfaZ1qLwFEq9e411/zf8eKtB2yUunXnSBnAqELPZD0fFjiQi9kMwT
-         vw1pp1a0gtMDN1WtbRt7jrP3+lOSlxbZpWzVnSll5H0VYETVsftZ93GHHjgmvoemEDhQ
-         WnByE0KEoV8OqZbgnBE2n/aWESdIh9sli8boWXE1t2lodXjXTj4klcIv/dVbAv+JgxTR
-         xZ8UKXlgZQao2slEGrRDNLl9Mljff/md7i+66b0RCMShzjg35pAxEVw8sALhrp+G0BqT
-         LEAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=pt1mDbcvO7gojaDCuuPp1f3RN/+1CUA5WwS5xGYJ63U=;
-        b=bV89RFB/pgZrzZiYpd2M7/8WCxEAwBeMpArkAP0yMdvUZwctaB+8KODVF35fSxPzx9
-         c/SnCpX0R0ymg5BMKzwF1Tb9iorPKQ536AJt9b/s9T4FXJ44KYiOiIW1cObLzxHzTzl6
-         Du71BBqsvOITW5sWgO5InRXCT06QcYOmUNzg8l/050t0NDv6ZaweOqnz7ezYN1TWHhxc
-         U81EjYq27Om0+R2nayqen8MEtGwUAP5Mxbe71ie/iwUVrK+BMEoy1K5SnrOwMnXuXKLZ
-         PeG2GEISjVdV0FjyREat8Oq+m0XNt4tXtOF7vVTmfeAWybKRI+qm+q/g5WmFAHpE4wO1
-         zAjw==
-X-Gm-Message-State: ABUngvcymf2QU6wNb4oo00kTW6ugcMWKoJywLumR9xdvd9oYrMVIk7rtipA/mR+6AVmqiur9
-X-Received: by 10.99.169.25 with SMTP id u25mr27918097pge.6.1478823219339;
-        Thu, 10 Nov 2016 16:13:39 -0800 (PST)
-Received: from twelve2.mtv.corp.google.com ([100.96.238.12])
-        by smtp.gmail.com with ESMTPSA id s2sm9896425pfi.10.2016.11.10.16.13.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 10 Nov 2016 16:13:38 -0800 (PST)
-From:   Jonathan Tan <jonathantanmy@google.com>
+        id S966119AbcKKA0K (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Nov 2016 19:26:10 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54955 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S965311AbcKKA0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2016 19:26:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8EFD4DC1C;
+        Thu, 10 Nov 2016 19:26:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LY5iUVfGdKsQKg1ZPoQC11FgsxU=; b=nV7+Qw
+        W4u7Q3QQyHrDElLNh+pVmJPZ66KOCcLCdwS8Owd83unit6CFUu3bovQlwJBj8nL9
+        muK029mFEFPASj2Fz5lEca4Y4JnkWagdLERa5Wh0u0686RgzDfopYvGIaGQVmF8K
+        vOMGKDvEtEd35G+jZZUqkbYuI3rlMMaB48T60=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O94h6NWiibhR4IR1/jWDT7IYRX1LGHeZ
+        DT3asLy8FfORc3kR8CmJJg8Ou4G2cGN4lgwTNXrsc6q9wgCTJLxjFHCMX8YvZVeR
+        aUGNt7r0xMnK5/jWqNBmVLRKcHN3+I3TYTm3yNvkXSu6170St417GYkapMSDdo8p
+        vPHg049McHk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0CEF4DC1B;
+        Thu, 10 Nov 2016 19:26:08 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3CE064DC19;
+        Thu, 10 Nov 2016 19:26:08 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] fetch: do not redundantly calculate tag refmap
-Date:   Thu, 10 Nov 2016 16:13:28 -0800
-Message-Id: <1478823208-10647-1-git-send-email-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+Subject: Re: 2.11.0-rc1 will not be tagged for a few days
+References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
+        <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 10 Nov 2016 16:26:06 -0800
+In-Reply-To: <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 10 Nov 2016 13:43:47 -0800")
+Message-ID: <xmqqbmxm50bl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 70A4A01A-A7A5-11E6-819B-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-builtin/fetch.c redundantly calculates refmaps for tags twice. Remove
-the first calculation.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is only a code simplification and slight performance improvement -
-the result is unchanged, as the redundant refmaps are subsequently
-removed by the invocation to "ref_remove_duplicates" anyway.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> I'll report back an updated schedule when able.
+>
+> I pushed some updates out on 'master' today.  Between 'master' and
+> 'pu' on the first-parent history there is a merge 52975d2b1f ("Merge
+> branch 'ls/macos-update' into jch", 2016-11-10) and that matches
+> what I expect to be in -rc1 tomorrow (modulo RelNotes and the actual
+> version tag), unless there is a showstopper regresion reported, in
+> which case we may want to first look into reverting the whole series
+> that introduced the regression before considering to pile on fix-up
+> patches.
 
-This was introduced in commit c5a84e9 ("fetch --tags: fetch tags *in
-addition to* other stuff", 2013-10-29) when modifying the effect of the
---tags parameter to "git fetch". The refmap-for-tag calculation was
-copied instead of moved.
+Please make that 71d1bcb661 ("Merge branch 'ls/macos-update' into
+jch", 2016-11-10); among the three extra topics that is not yet in
+'master', as/merge-attr-sleep topic has been updated with a better
+fix from Dscho.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-
-(I noticed this when working on something in this file.)
-
- builtin/fetch.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b6a5597..1d77e58 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -359,9 +359,6 @@ static struct ref *get_ref_map(struct transport *transport,
- 
- 		for (i = 0; i < fetch_refspec_nr; i++)
- 			get_fetch_map(ref_map, &fetch_refspec[i], &oref_tail, 1);
--
--		if (tags == TAGS_SET)
--			get_fetch_map(remote_refs, tag_refspec, &tail, 0);
- 	} else if (refmap_array) {
- 		die("--refmap option is only meaningful with command-line refspec(s).");
- 	} else {
--- 
-2.8.0.rc3.226.g39d4020
-
+Thanks.
