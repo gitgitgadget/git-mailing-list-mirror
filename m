@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 601D320229
-	for <e@80x24.org>; Fri, 11 Nov 2016 05:27:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B5ED20229
+	for <e@80x24.org>; Fri, 11 Nov 2016 05:29:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752367AbcKKF1e (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 00:27:34 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:34745 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751433AbcKKF1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 00:27:33 -0500
-Received: by mail-yw0-f196.google.com with SMTP id a10so390713ywa.1
-        for <git@vger.kernel.org>; Thu, 10 Nov 2016 21:27:33 -0800 (PST)
+        id S1755222AbcKKF3f (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 00:29:35 -0500
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:34724 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754823AbcKKF3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 00:29:34 -0500
+Received: by mail-yb0-f180.google.com with SMTP id d59so2155676ybi.1
+        for <git@vger.kernel.org>; Thu, 10 Nov 2016 21:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=sC7PrYYw52XGAMmqdfyVGjoscP88WgT7ly508FpSaUg=;
-        b=aAWK3SKyYAkIL+l+4gu9/t1Kba0XFE+jvYagC3/EM6xv3kiGlaBZerVjhzMpPYKo0y
-         ntvE9rpLMhuEzsEf3n9rqrdB/x7BcEPROVji0pWtzizxT9O80MpaLeb6QwlHf6rQpUUq
-         2gjtGN4Yp/UMvbVgOOImZ2uSHE9fKxFhlBi1fyG5yW9kVg8jJLNKHUimPPYQzGExahEJ
-         wF/d1pgabAtzgESt0T1T16oqGBpJPv1BbXOT8W/Uz7CsNnGAXfAJMzFQtmconk8/Mp0Q
-         G0m4qQ7JPCN1kUhNntky5ipasdY9NgDIEFOrAvSn8k3k3HmJ7xyQqGzYyfm48TUjrmpv
-         VAOw==
+        bh=y/y902TbBBPxs9qUNiGDsNKoxrJHGmg3APRfXREuy9o=;
+        b=Hlr0gryiPf5U3g4yTxEegXEiEcM0hPugXoQPd79WjS41mg+i1iX7aGPRVfZjND0723
+         5KhFCWorAxz1ac/u09eqAsBzfN5ZR7arxeA2z/lFokuY329MDUVXS/6q8wFkYN9GA80o
+         cf+ysSU8RSgBOQXgNkdHL4l2jtaS+Efh1Fna/7roIaVwH608bAxlSjMgMeFZN/rx5e1W
+         NOjxQiMvvHWtnBbKu2tMkaWLRAnYAJLl3qPUEc3AKcQYss8fO1CLefPjx2Lm33Xh5/Vw
+         nrV3AFUiOfmJ4PAjXxPweR4fLmNdDcDUQJnlQVuJmbQGLx4XjgBh+uSugwZaTz9rretd
+         crSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=sC7PrYYw52XGAMmqdfyVGjoscP88WgT7ly508FpSaUg=;
-        b=P7BUbJwSICWEhLltfWJtW7kJYwXMbQm1Nj3PjaPL687OTbBJVhjIePMJkXjQXwCGuF
-         h8Zx3sZPdNLb1a9CSj96MtttZpbF8RN/OfmzfnQahoBJ6a+lAw7ckaa0m92YIi1YtEtq
-         5W4tTnKbe/VGLynck+mVnvajWHRzxug+CuWWOVuDBaVI6SWJjLPWvGMhO5KWI9hy0ual
-         TrHgiJES+8WINx1+XNrASfKdv5YdzX/prWLcXMDFLn4vvt1/JccMwNu2a3MdLdQ6XNBH
-         4V2IuWDVQbWh7HRJwBXiwag7LynpbVPsdPm9+kgiuLz5C2GNMQMg7rrG6wocx3s0ro7e
-         NCBw==
-X-Gm-Message-State: ABUngvehKzQc4R2GurxX0VgTp6N0rJmD60pUFIR4rCqn3wh6muRbApElB5nq2luIyl0MSEugB2pJGW5aRkYr6Q==
-X-Received: by 10.129.74.65 with SMTP id x62mr1117556ywa.59.1478842052966;
- Thu, 10 Nov 2016 21:27:32 -0800 (PST)
+        bh=y/y902TbBBPxs9qUNiGDsNKoxrJHGmg3APRfXREuy9o=;
+        b=TSqr4UE5SLbJ1Ii8W5yTH2wB8+XHTkaMmOIhA0a2hz48vmVZv6hVlZkXC2criqI9dL
+         EA1mHeB8NTJ08+WKTKhnlYvBpkkwwj3NfRAd8R7n2NtPIMJS1uKU06OKWuuSxPbf8hUy
+         8dZDW0pZr6cGxjB6Obr+44r8HVivFgmqjOdaMu51J8mtA55R96UEuOncFDCIpiRQvD5O
+         jRC3TG5ZZAx8v7iiH3EVyp8uYSAr+jc3ZyRGbyqAeD5R4ky6QA1ZVpkkhLKd1nGpsW2C
+         4AhKsK7DQVWz7Gx0TAYp9TFcp3UwjABsaAP93BhAVOyjmz2LdxbYKln5zoNiOEvMqohd
+         QJGw==
+X-Gm-Message-State: ABUngvflzOFNxmplT8KQufe2u4ZAMEm5/IgRBfRFZqErLXsX4oxMpG1222XL4vQVQ1naii+kEHyFMwZXSMrNHw==
+X-Received: by 10.37.18.11 with SMTP id 11mr1071251ybs.153.1478842173787; Thu,
+ 10 Nov 2016 21:29:33 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Thu, 10 Nov 2016 21:27:11 -0800 (PST)
-In-Reply-To: <CAOLa=ZQCP2KtgLQie5p+PBiFjiNVFduUh=AmuLWcOKX5QA_BXA@mail.gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-4-Karthik.188@gmail.com>
- <CA+P7+xoavgQ=NK8GGGXf90ESuPs+mFwHzEWbsnjWjZ4V7TWpjw@mail.gmail.com> <CAOLa=ZQCP2KtgLQie5p+PBiFjiNVFduUh=AmuLWcOKX5QA_BXA@mail.gmail.com>
+Received: by 10.37.33.132 with HTTP; Thu, 10 Nov 2016 21:29:13 -0800 (PST)
+In-Reply-To: <CAOLa=ZRDNGGc-OA+d+T1=9JvoVe2eBZt0DYQEHmeNKhDpxQbdg@mail.gmail.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-5-Karthik.188@gmail.com>
+ <CA+P7+xqG5ACT2ZB=M8gLmDaYgSgX202+afJmZJKat6NzbFzL=g@mail.gmail.com> <CAOLa=ZRDNGGc-OA+d+T1=9JvoVe2eBZt0DYQEHmeNKhDpxQbdg@mail.gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 10 Nov 2016 21:27:11 -0800
-Message-ID: <CA+P7+xomLnpgM65W0TCUgO_n6XUu05jKkmQKgbUS9XxJu_46RQ@mail.gmail.com>
-Subject: Re: [PATCH v7 03/17] ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
+Date:   Thu, 10 Nov 2016 21:29:13 -0800
+Message-ID: <CA+P7+xqXY6XvUm8Kna_GwY4XOSSGPM=-ezZECgkGcbnX_Penmg@mail.gmail.com>
+Subject: Re: [PATCH v7 04/17] ref-filter: modify "%(objectname:short)" to take length
 To:     Karthik Nayak <karthik.188@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -60,29 +60,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 10, 2016 at 9:31 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Wed, Nov 9, 2016 at 4:52 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+On Thu, Nov 10, 2016 at 9:36 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Wed, Nov 9, 2016 at 4:57 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
 >> On Tue, Nov 8, 2016 at 12:11 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>> From: Karthik Nayak <karthik.188@gmail.com>
+>>>
+>>> Add support for %(objectname:short=<length>) which would print the
+>>> abbreviated unique objectname of given length. When no length is
+>>> specified, the length is 'DEFAULT_ABBREV'. The minimum length is
+>>> 'MINIMUM_ABBREV'. The length may be exceeded to ensure that the provided
+>>> object name is unique.
+>>>
 >>
->> Ok. How does this handle whitespace? The previous if implementation
->> treated whitespace as trimming to ignore. Does this require an exact
->> whitespace match? It appears by the code that strings must match
->> exactly. Would it make more sense to always trim the value of
->> whitespace first before comparison? Hmm.. I think we should avoid
->> doing that actually.
+>> Ok this makes sense. It may be annoying that the length might go
+>> beyond the size that we wanted, but I think it's better than printing
+>> a non-unique short abbreviation.
+>>
+>> I have one suggested change, which is to drop O_LENGTH and have
+>> O_SHORT store the length always, setting it to DEFAULT_ABBREV when no
+>> length provided. This allows you to drop some code. I don't think it's
+>> actually worth a re-roll by itself since the current code is correct.
+>>
+>> Thanks,
+>> Jake
 >>
 >
-> This does not trim whitespace what so ever and requires an exact match.
-> I don't see the reason behind trimming whitespace though.
+> That does make sense, It would also not error out when we use
+> %(objectname:short=) and
+> not specify the length. Idk, if that's desirable or not. But it does
+> make the code a little more
+> confusing to read at the same time.
 >
 
-The comment was made in reference to the fact that %(if)<atom>%(then)
-essentially trims whitespace, since if the <atom> prints only
-whitespace it does not match.
+I am not sure that would be the case. If you see "objectname:short"
+you trreat this as if they had passed "objectname:short=<default
+abbrev>" but if you see "objectname:short=" you die, no?
 
-Thus, it might make sense to keep it all the same and have this trim
-as well. However, I think there is no benefit or reasoning to do so in
-this case.
-
-Thanks,
-Jake
+> So since its a small change, I'd be okay going either ways with this.
+>
+> --
+> Regards,
+> Karthik Nayak
