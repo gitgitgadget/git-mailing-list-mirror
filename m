@@ -2,130 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEDD6203E2
-	for <e@80x24.org>; Fri, 11 Nov 2016 20:27:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 789B4203E2
+	for <e@80x24.org>; Fri, 11 Nov 2016 20:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935602AbcKKU1K (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 15:27:10 -0500
-Received: from koekblik.kaarsemaker.net ([141.138.139.206]:38874 "EHLO
-        koekblik.kaarsemaker.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755669AbcKKU1F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 15:27:05 -0500
-X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Nov 2016 15:27:05 EST
-Received: from hurricane.home.kaarsemaker.net (unknown [145.132.209.114])
-        by koekblik.kaarsemaker.net (Postfix) with ESMTP id E515D807B1;
-        Fri, 11 Nov 2016 21:19:58 +0100 (CET)
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     git@vger.kernel.org
-Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH 1/2] diff --no-index: add option to follow symlinks
-Date:   Fri, 11 Nov 2016 21:19:57 +0100
-Message-Id: <20161111201958.2175-2-dennis@kaarsemaker.net>
-X-Mailer: git-send-email 2.11.0-rc0-22-gcc0501c
-In-Reply-To: <20161111201958.2175-1-dennis@kaarsemaker.net>
-References: <20161111201958.2175-1-dennis@kaarsemaker.net>
+        id S935330AbcKKUdt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 15:33:49 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:54036 "EHLO bsmtp5.bon.at"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S934523AbcKKUds (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 15:33:48 -0500
+Received: from bsmtp.bon.at (unknown [192.168.181.105])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 3tFrxV3KZlz5twh
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 21:24:46 +0100 (CET)
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tFrxT2CY7z5tlB;
+        Fri, 11 Nov 2016 21:24:45 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 51DCB145;
+        Fri, 11 Nov 2016 21:24:44 +0100 (CET)
+Subject: [PATCH v2] t6026: ensure that long-running script really is
+To:     Jeff King <peff@peff.net>
+References: <16dc9f159b214997f7501006a8d1d8be2ef858e8.1478699463.git.johannes.schindelin@gmx.de>
+ <xmqqfumy51tk.fsf@gitster.mtv.corp.google.com>
+ <fbf517ad-7341-eb6d-ab38-4fe91410e57c@kdbg.org>
+ <20161111084148.tgtsijn74z2pdylq@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Andreas Schwab <schwab@suse.de>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <6a421222-a138-5647-4965-8ede24d904b2@kdbg.org>
+Date:   Fri, 11 Nov 2016 21:24:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <20161111084148.tgtsijn74z2pdylq@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git's diff machinery does not follow symlinks, which makes sense as git
-itself also does not, but stores the symlink destination.
+When making sure that background tasks are cleaned up in 5babb5b
+(t6026-merge-attr: clean up background process at end of test case,
+2016-09-07), we considered to let the background task sleep longer, just
+to be certain that it will still be running when we want to kill it
+after the test.
 
-In --no-index mode however, it is useful for diff to be able to follow
-symlinks, matching the behaviour of ordinary diff.
+Sadly, the assumption appears not to hold true that the test case passes
+quickly enough to kill the background task within a second.
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Simply increase it to an hour. No system can be possibly slow enough to
+make above-mentioned assumption incorrect.
+
+Reported by Andreas Schwab.  In-code comments by J6t.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- diff-no-index.c |  7 ++++---
- diff.c          | 10 ++++++++--
- diff.h          |  2 +-
- 3 files changed, 13 insertions(+), 6 deletions(-)
+Am 11.11.2016 um 09:41 schrieb Jeff King:
+> But the other thing the "kill" is doing is make sure we clean up after
+> ourselves, even if another part of the test fails.
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index f420786..15811c2 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -40,7 +40,7 @@ static int read_directory_contents(const char *path, struct string_list *list)
-  */
- static const char file_from_standard_input[] = "-";
+Good point. Here is an updated version.
+
+If the pid file is not created, the kill command receives no
+arguments. Here on Linux, it reports failure in this case.
+This is good. I could have said
+
+   test_when_finished "kill \"\$(cat sleep.pid)\""
+
+but that is a bit too much quoting for my taste when it is
+not strictly necessary.
+
+ t/t6026-merge-attr.sh | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
+index 7a6e33e673..8f9b48a493 100755
+--- a/t/t6026-merge-attr.sh
++++ b/t/t6026-merge-attr.sh
+@@ -183,16 +183,24 @@ test_expect_success 'up-to-date merge without common ancestor' '
  
--static int get_mode(const char *path, int *mode)
-+static int get_mode(const char *path, int *mode, int follow_symlinks)
- {
- 	struct stat st;
+ test_expect_success 'custom merge does not lock index' '
+ 	git reset --hard anchor &&
+-	write_script sleep-one-second.sh <<-\EOF &&
+-		sleep 1 &
++	write_script sleep-an-hour.sh <<-\EOF &&
++		sleep 3600 &
+ 		echo $! >sleep.pid
+ 	EOF
+-	test_when_finished "kill \$(cat sleep.pid)" &&
  
-@@ -52,7 +52,7 @@ static int get_mode(const char *path, int *mode)
- #endif
- 	else if (path == file_from_standard_input)
- 		*mode = create_ce_mode(0666);
--	else if (lstat(path, &st))
-+	else if (follow_symlinks ? stat(path, &st) : lstat(path, &st))
- 		return error("Could not access '%s'", path);
- 	else
- 		*mode = st.st_mode;
-@@ -93,7 +93,8 @@ static int queue_diff(struct diff_options *o,
- {
- 	int mode1 = 0, mode2 = 0;
+ 	test_write_lines >.gitattributes \
+-		"* merge=ours" "text merge=sleep-one-second" &&
++		"* merge=ours" "text merge=sleep-an-hour" &&
+ 	test_config merge.ours.driver true &&
+-	test_config merge.sleep-one-second.driver ./sleep-one-second.sh &&
++	test_config merge.sleep-an-hour.driver ./sleep-an-hour.sh &&
++
++	# We are testing that the custom merge driver does not block
++	# index.lock on Windows due to an inherited file handle.
++	# To ensure that the backgrounded process ran sufficiently
++	# long (and has been started in the first place), we do not
++	# ignore the result of the kill command.
++	# By packaging the command in test_when_finished, we get both
++	# the correctness check and the clean-up.
++	test_when_finished "kill \$(cat sleep.pid)" &&
+ 	git merge master
+ '
  
--	if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
-+	if (get_mode(name1, &mode1, DIFF_OPT_TST(o, FOLLOW_SYMLINKS)) ||
-+		get_mode(name2, &mode2, DIFF_OPT_TST(o, FOLLOW_SYMLINKS)))
- 		return -1;
- 
- 	if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
-diff --git a/diff.c b/diff.c
-index be11e4e..1eaf604 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2815,7 +2815,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		s->size = xsize_t(st.st_size);
- 		if (!s->size)
- 			goto empty;
--		if (S_ISLNK(st.st_mode)) {
-+		if (S_ISLNK(s->mode)) {
- 			struct strbuf sb = STRBUF_INIT;
- 
- 			if (strbuf_readlink(&sb, s->path, s->size))
-@@ -2825,6 +2825,10 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 			s->should_free = 1;
- 			return 0;
- 		}
-+		if (S_ISLNK(st.st_mode)) {
-+			stat(s->path, &st);
-+			s->size = xsize_t(st.st_size);
-+		}
- 		if (size_only)
- 			return 0;
- 		if ((flags & CHECK_BINARY) &&
-@@ -3884,7 +3888,9 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (!strcmp(arg, "--no-follow")) {
- 		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
- 		DIFF_OPT_CLR(options, DEFAULT_FOLLOW_RENAMES);
--	} else if (!strcmp(arg, "--color"))
-+	} else if (!strcmp(arg, "--follow-symlinks"))
-+		DIFF_OPT_SET(options, FOLLOW_SYMLINKS);
-+	else if (!strcmp(arg, "--color"))
- 		options->use_color = 1;
- 	else if (skip_prefix(arg, "--color=", &arg)) {
- 		int value = git_config_colorbool(NULL, arg);
-diff --git a/diff.h b/diff.h
-index 25ae60d..22b0c5a 100644
---- a/diff.h
-+++ b/diff.h
-@@ -69,7 +69,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
- #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
- #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
--/* (1 <<  9) unused */
-+#define DIFF_OPT_FOLLOW_SYMLINKS     (1 <<  9)
- #define DIFF_OPT_HAS_CHANGES         (1 << 10)
- #define DIFF_OPT_QUICK               (1 << 11)
- #define DIFF_OPT_NO_INDEX            (1 << 12)
 -- 
-2.10.1-449-gab0f84c
+2.11.0.rc0.55.gd967357
 
