@@ -7,68 +7,80 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41E3F2035F
-	for <e@80x24.org>; Fri, 11 Nov 2016 16:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A26C2035F
+	for <e@80x24.org>; Fri, 11 Nov 2016 16:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934007AbcKKQNZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 11:13:25 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52819 "EHLO mout.gmx.net"
+        id S934226AbcKKQ3v (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 11:29:51 -0500
+Received: from mout.gmx.net ([212.227.17.22]:52168 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933867AbcKKQNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 11:13:23 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSq5p-1cCYCQ2zlV-00RsP5; Fri, 11
- Nov 2016 17:13:03 +0100
-Date:   Fri, 11 Nov 2016 17:13:02 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S933380AbcKKQ3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 11:29:50 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOOJl-1c8FNM45bh-005oan; Fri, 11
+ Nov 2016 17:29:38 +0100
+Date:   Fri, 11 Nov 2016 17:29:33 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: 2.11.0-rc1 will not be tagged for a few days
-In-Reply-To: <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1611111711210.3746@virtualbox>
-References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com> <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] mingw: hot-fix t5615
+Message-ID: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gvYQjMfRXwGOUV4OUO1nsucJKbcZYVBWKkcKPYyLCn7yIiEIPs2
- h4Fo0LswSZLCcS+bRlSz1bG/NuT0C2mB5ueyh1fX9fgwrYHf+N7GSzu5Lq2bz5ZrlDxnonL
- grjsq9OkTxZ7rosMUAOi9r4FmK70kXzAIXYQxU4y4UldXALGmhR1bcmsBN0Qt4MiKH0E0vQ
- M+Bv3p6NZoQAD0XR9Na1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KZBmTpWhhSQ=:blEkVhFYMtm018I1ATruBl
- 6ue778AgDlal2ZMWxNUNLZ3NzvxZ+9aYQ824POkmznvd0LBE1l9tRuQv5SsZkVVGL3LKlaM4q
- cFfamDaPexqiygi5Y3GJzPRM+jsRonrfAxON2SbvP9B95WmErI4S2wKST5UgihUP2A7/iz1KX
- 22bo+TY2/gLx1oSMXcoT49LxmEeCYT3WO2SR/Pj1HKREPSyJd1nt5kzBGjZNac8CZ0e91+7Hy
- EtTQtwJ/wFq/nusAU6KpOXsn8d1SGhgA5YpvBQHQ+5dZtAHOp8XOnGYGEMaloMbzRMkDcpczf
- 8OVXKGSuoZf2b+VAhBxr8qWPA4MXMIY0+xX+aYkIlJ2mq6HPrDMGUDo11heeUrcxQHPdDr1gm
- OQadMb1ND6KCEQ6HaXNc2l7C/i1VP2IYk6UG8QDfre4JY+LfQuMlrGYFGqK7OVuyOLA8fxSqr
- SkdA8ouLbN9Zj69QJOyx/gxzXjCb7mNFfP/m3pN1MYpfZt+vY9M+akeNC78Nh3hLtqlD2WSIA
- tuA3cwwTKo2gz2GDG1rS3q0a9QAfnCpa25Pmb6zI9ZLZQZATJghUIRXnRaHFDlKkVi9ZRB4yA
- cxlKJapNav/4JNh7Ju8f7AC7sYUcSkwySOWuYrHaeG646oDYeXinr/PHQvPLAAGB/DySB3kd+
- GrUkcuuD5YszTn5BAMym6L4au8k2ud4TwquSDV1KN6yrNVwPOK43vUdx3zO676ddHGj+uTVLg
- RXDZ08j4isIoH80lBaOYZgoao4CBij5OLRvellPBtCfTdrvIYfwsqcr0OCWBxxmMyFz5SZgV1
- LEv7s9K
+X-Provags-ID: V03:K0:uBtpzlSyMrvN0czgIGuYTWz7Wtv8AwGM1MuP2zumRLvxx0UH3hy
+ FzlPqC79bkJ/t8Cuke0YJqJV56Pv4G5sAe7UOXMnHEoof/+NZEaKEo8VOlAaekJE3jcFvA4
+ 8W9dPm9VUDP7YIIRfr9f+0n1JVtrIUjmbmjhBhd8KO3ljOgdhJ0kdqARed+rPGpefzDjTjB
+ RsF6Wi6MOpaK8InaR5QdA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xTvYHMo/mUs=:6t9tCc1khSfUlRHhEhXPpQ
+ +XUtKQopaeG2ukjj9QaCNEc6QzmPD6hR3OBXd6bzPIZkT4w9nsoaBa1r10mRNHB2UBRD5yVSZ
+ EjHblM+/qNiuf1BlQ+v73TRjPGWndazSdGoUX8PcdsfJ+MQXy+WcqZSIXkbOJOxvjQguTqNCk
+ r39kSfhp0QRuVIUFW/zlmkLqwSqyuhU6pf91rb9qdoBGGXR4a8JsoTutJ22AelXN3WmBSKKXE
+ BwPbSMDBKAr4h80bUj6xPTcXy6jTuqBUEu4RdaiHPe4GzdbcODjAXLE8RWaBX6+mqneEDm5Vg
+ WBs+EX8olpnCpQE9NjiqpsyGzH1dhTWmPCZfz7u1hXBgr5A5aWgpYaScyU64ykYWMlEv0puHa
+ MlhP3FUOLTJmxQzhKA5DlkMPu6nrTao2kUugiB6pjXJzUUjkxKs7pbFZxwx0GwdBr4/Ey2Cu2
+ c/zDDyffe1FRwp0A+F33aGnpmHBLiNmD4sv939DkhqrWpmLIs5F3QKNVqNS8VwzwsUxaRy1Qg
+ zO2ZfAEiVTNQsr43ztcVOibWDhy5rYq+MzGf614iegMmfw++ShatwVViPNIO44PigtT7KkGZR
+ FPGClMXu3nRV5g4bDPYA9l+9aGk5WPTedAVWpH+4eDJAqom5pcwe5JNAYTfyhjsOsr6avJVTc
+ 87oYANbzlQoUu9shcGui8yX+z4WpDBrDJ+kipE4rAPGQetqSstejrnPAXabdZA2jbV0HTUg5F
+ O2iUXAmAD4ebNBOA6Pxl/tTizHuQcHZTv4uysxGqnVzM7+jQ+0IDZ8Y25haug/28TEfPyL+3d
+ GVWMLQt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+That test made the incorrect assumption that the path separator character
+is always a colon. On Windows, it is a semicolon instead.
 
-On Thu, 10 Nov 2016, Junio C Hamano wrote:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/t5615-path-separator-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git t5615-path-separator-v1
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I'll report back an updated schedule when able.
-> 
-> I pushed some updates out on 'master' today.
+	This is required, but not sufficient, to fix `master` on Windows.
 
-Which means that t0021 is now broken also on `master` when running in Git
-for Windows' SDK.
+ t/t5615-alternate-env.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-To add insult to injury, t5615 is now broken, too. I do not recall it
-being broken in any of my CI builds in any of the integration branches
-before.
+diff --git a/t/t5615-alternate-env.sh b/t/t5615-alternate-env.sh
+index 22d9d81..3aeffb6 100755
+--- a/t/t5615-alternate-env.sh
++++ b/t/t5615-alternate-env.sh
+@@ -37,8 +37,10 @@ test_expect_success 'access alternate via absolute path' '
+ 	EOF
+ '
+ 
++sep=:
++test_have_prereq !MINGW || sep=\;
+ test_expect_success 'access multiple alternates' '
+-	check_obj "$(pwd)/one.git/objects:$(pwd)/two.git/objects" <<-EOF
++	check_obj "$(pwd)/one.git/objects$sep$(pwd)/two.git/objects" <<-EOF
+ 	$one blob
+ 	$two blob
+ 	EOF
 
-Ciao,
-Dscho
+base-commit: 0538b84027a8aba7e8b805e3ec8fceb3990023e5
+-- 
+2.10.1.583.g721a9e0
