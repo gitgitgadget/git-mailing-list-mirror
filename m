@@ -2,127 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F81B2021E
-	for <e@80x24.org>; Fri, 11 Nov 2016 09:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AA422021E
+	for <e@80x24.org>; Fri, 11 Nov 2016 09:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965998AbcKKJNs (ORCPT <rfc822;e@80x24.org>);
+        id S966024AbcKKJNw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 04:13:52 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34071 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965988AbcKKJNs (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Nov 2016 04:13:48 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:34024 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965090AbcKKJNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 04:13:46 -0500
-Received: by mail-yw0-f180.google.com with SMTP id t125so6269437ywc.1
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:13:45 -0800 (PST)
+Received: by mail-wm0-f67.google.com with SMTP id g23so8053493wme.1
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:13:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Ysz2s0ihi/BhbHfSs6sVVASkVl8qu04UfXXeNXXOr9U=;
-        b=jCXErumLzHjMKxYOZmY6rApk4zxoCp4e2nXde+zhu8LV7g1x2P/r8wkk9bvoXlfFmd
-         ZeAXVggb8irW8ygOBscCfWJZRVX+1HgtDOYNC5fIZZ9Jcotiu6v8Kd/sjyYkllD4cKdN
-         saIzfrdEdlfSLxSMVbLwaXeaQGm5oWqCYuQ/+geSjm/9d2zpfpqGb6p3exAHRPOb4KjP
-         SmwNpC2CzoMJaph5EOUv5s48qvmrG+8hRUGdxA5YjHcIYsMlrpKwrbTQSdszFjJ5VWdC
-         mkL4VIU18st12CuFR0p4gvVB8sgiv5vS3H7dW7VZ/whmuVnY6M7svBAGEUEiK4CBMCtT
-         GUZg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=x/7Pn0pZFaFItzMmvl3uC3yGIqmN0qhugBpLRZGRw30=;
+        b=zsb3oS0l2yuOIBRQiknBjMsYRJPuBFbVS+T74FaaupgN/GHtxynt2BwT2L6Yij0mYX
+         yfZhrDMMYg8658JMcWTFfY+fhwQsw3ofsHlxzqH+XjwFK5Ar3NYgU5x9SjpQh+y6r7fi
+         HiKTLSZt0E2h+5okNpd0abx6SM5gPObEBlZ+S0sVE/TX9OOsTdHBGhDQvmOJhHMFca1N
+         MS7qdO8/+beikPUMjeNV/4DIBNfMhTTUhpYV8SoaVQ01ViOsB0+M3ma2j0UnlPM1zzp8
+         7eDr+iwB3INQcw8tX91do+f0XKrv72U7o+2mWqCXDfFN/Mw1t0vCjrdZCWsCEpkskR8v
+         Wq1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Ysz2s0ihi/BhbHfSs6sVVASkVl8qu04UfXXeNXXOr9U=;
-        b=QAdTJyJ5eU1/8ls0qfcl9YoWViv7UFMUbtbAMQ/U1EmnRkY392gM2DkR1AnhvVWUNe
-         n57R+jDKs8ca96qJoGy1O0W0mVpYK/zPTq7BWImu0Tmv+rk/5Ts3UMZViSz57+bt4LmT
-         TdLKxhXVXl9LyUYjYQacBNuWdKgUNc7nxVJMH2FMIcLNarQRqJ2EM+6MpYTGdx+zniGf
-         /ihpgQDZBW730V+ld+rwNb4xj5cpupbtE79tCB1AzYXJs0PwVH3H4fXP9d12Qh/oQqJY
-         hxPy0KD/XeW6t6zekgfsPPAU0DGCIXsriVSasosto3jbXm+j10XJGCXe9oMN/OB9jWfm
-         q+xw==
-X-Gm-Message-State: ABUngvfSBaNbQS4ScOsenrxe8dVEWZSugS7PmfXiG7gtsCZnf9L9/X9fop4FkGkWt6QYVSoHg+aaNmugS5ZWZw==
-X-Received: by 10.129.78.84 with SMTP id c81mr1638340ywb.346.1478855625208;
- Fri, 11 Nov 2016 01:13:45 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.13.207.69 with HTTP; Fri, 11 Nov 2016 01:13:14 -0800 (PST)
-In-Reply-To: <xmqqshqy53cj.fsf@gitster.mtv.corp.google.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-2-Karthik.188@gmail.com>
- <CA+P7+xoAmYqi0OazZux+rooXW+D_N9L5s+2BzUyJJJXtmLZX-Q@mail.gmail.com>
- <CAOLa=ZS_V5SNSbiC_sT6E9rJMbxCMm=BRaoPL44xBNXAG2pgbA@mail.gmail.com> <xmqqshqy53cj.fsf@gitster.mtv.corp.google.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Fri, 11 Nov 2016 14:43:14 +0530
-Message-ID: <CAOLa=ZQ_Z+AJBf-=i3hW9M2ng5+HfR5AbdWGJp+_z5xthoqdXA@mail.gmail.com>
-Subject: Re: [PATCH v7 01/17] ref-filter: implement %(if), %(then), and
- %(else) atoms
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=x/7Pn0pZFaFItzMmvl3uC3yGIqmN0qhugBpLRZGRw30=;
+        b=dL8BNrRuoKAKjfZ+qxbFY93AW/mXT1ZbqkQCSoXudeVcuSEDsqXR9WDSobfUMPB8IV
+         d778YjzhbccUtn9n7kYotJzuVnlHeDap4uy416BhzdgzH9V3fkZLDV7lf4CA47bHWX5f
+         UHGGeeKorT7UC1Sk9pOEtV/p6hBi2AANq8Wb9l/WsY746D/64kVogMbqqrKZNXZN0CVj
+         0RRl//q7XLjBjLDICSFSvNfN2rSj7u7/NPo50vnoL1svlBP8D7Mv5I5/K0C3QLb+a6mz
+         kf/xoLFY4VaSD6YZ0qGnPsYe+U16Bt68/J7Gk6716SL8zfIlBNK4nBw876Jgpnp+xapr
+         NuWg==
+X-Gm-Message-State: ABUngvcDwDiQVLf1thE3mJpiQPZ0ZNJP3WI3lv9kouniFJmbf9ErTzzulo+0YD0NdyrHMQ==
+X-Received: by 10.194.31.167 with SMTP id b7mr9355001wji.168.1478855626961;
+        Fri, 11 Nov 2016 01:13:46 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB4736.dip0.t-ipconnect.de. [93.219.71.54])
+        by smtp.gmail.com with ESMTPSA id d85sm17738288wmd.17.2016.11.11.01.13.45
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 11 Nov 2016 01:13:46 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Subject: Re: [PATCH v1 2/2] travis-ci: disable GIT_TEST_HTTPD for macOS
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20161111084725.jkdsdt4yslzsuh6d@sigill.intra.peff.net>
+Date:   Fri, 11 Nov 2016 10:13:44 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+        git <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>, hvoigt@hvoigt.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <BAB2E4AE-7241-4991-A993-A60DBA75092B@gmail.com>
+References: <20161017002550.88782-1-larsxschneider@gmail.com> <20161017002550.88782-3-larsxschneider@gmail.com> <203BDCB2-1975-4590-B4B8-3C5E9D210430@gmail.com> <20161107212004.x4y7bcl2p4chfkm6@sigill.intra.peff.net> <CBAF806C-7E1E-4490-A07C-F98DB7488F5F@gmail.com> <20161110161012.jube4bwbww2wa2ew@sigill.intra.peff.net> <2088B631-4FE8-4232-9F3C-699122E6A7B0@gmail.com> <20161111084725.jkdsdt4yslzsuh6d@sigill.intra.peff.net>
+To:     Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 11, 2016 at 4:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>> Minor nit. I'm not sure what standard we use here at Git, but
->>> traditionally, I prefer to see { } blocks on all sections even if only
->>> one of them needs it. (That is, only drop the braces when every
->>> section is one line.) It also looks weird with a comment since it
->>> appears as multiple lines to the reader. I think the braces improve
->>> readability.
->>>
->>> I don't know whether that's Git's code base standard or not, however.
->>> It's not really worth a re-roll unless something else would need to
->>> change.
->>>
->> I believe this is the syntax followed in Git, xdiff/xmerge.c:173 and so on.
->
-> That is a bad example for two reasons, if you mean this part:
->
->         if ((size = file->recs[i]->size) &&
->                         file->recs[i]->ptr[size - 1] == '\n')
->                 /* Last line; ends in LF; Is it CR/LF? */
->                 return size > 1 &&
->                         file->recs[i]->ptr[size - 2] == '\r';
-> *       if (!i)
->                 /* The only line has no eol */
->                 return -1;
->         /* Determine eol from second-to-last line */
->
->
-> What Jacob prefers is this:
->
-> ---------------------------------------------
->         if (cond)
->                 simple;
->         else if (cond)
->                 simple;
->         else
->                 simple;
-> ---------------------------------------------
->         if (cond) {
->                 simple;
->         } else if (cond) {
->                 no;
->                 longer;
->                 simple;
->         } else {
->                 simple;
->         }
-> ---------------------------------------------
->
-> That is, as long as all arms of if/else if/.../else cascade is
-> simple, {} is used nowhere in the cascade, but once even one of them
-> requires {} then all others gain {}.
 
-I see, I mistook Jacob then.
+On 11 Nov 2016, at 09:47, Jeff King <peff@peff.net> wrote:
 
-I was talking about if we need to use {} whenever there's only a
-single line of code
-but followed by a comment which extends the if/else if/.../else block.
+> On Fri, Nov 11, 2016 at 09:22:51AM +0100, Lars Schneider wrote:
+>=20
+>> There would be an alternative way to approach the problem:
+>> Someone (GitHub?, BitBucket?, GitLab?, ...) could setup a bunch of =
+webservers
+>> with popular configurations and a way to reset a clean test =
+environment. Then=20
+>> the TravisCI client tests could go against these servers.
+>>=20
+>> I realize that this idea is probably unrealistic because too much =
+setup and
+>> maintenance work would be required.
+>=20
+> Yeah, it seems like it adds a lot of complexity for little gain. Plus =
+it
+> creates a network dependency on running the tests. I know you care
+> mostly about Travis, but I am much more interested in all of the =
+people
+> (developers and not) who run "make test" on their own platforms.
+>=20
+> If you did want to have a more real-world network-based test, I think
+> the right solution is not for GitHub to set up a bunch of mock =
+servers,
+> but to design client-side tests that hit the _real_ GitHub (or GitLab,
+> or whatever) and perform some basic operations. OTOH, people running
+> "master" (or "next", etc) are doing that implicitly every day.
 
--- 
-Regards,
-Karthik Nayak
+That is actually a neat idea. We could setup a test repo on each of the =
+major=20
+Git hosting sites and then the TravisCI run could clone a repo and push
+changes to it. That shouldn't take long and would probably be a good =
+real
+world test.
+
+The credentials of these repos could be stored encrypted in Travis CI =
+[1].
+
+Where would such a test repo live on github.com? On github.com/git or =
+would
+you prefer a separate organization? (no worries, I am not going to =
+tackle this
+anytime soon -- too many things in my backlog already).
+
+BTW: I just noticed https://github.com/git/hello-world ... is this =
+legitimate
+or did someone hack github.com/git? :)
+
+Cheers,
+Lars
+
+
+[1] =
+https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-=
+variables-in-.travis.yml
+
