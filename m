@@ -7,86 +7,336 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67EE72035F
-	for <e@80x24.org>; Fri, 11 Nov 2016 16:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6C0E2035F
+	for <e@80x24.org>; Fri, 11 Nov 2016 17:02:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756574AbcKKQyY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 11:54:24 -0500
-Received: from mout.gmx.net ([212.227.17.22]:63604 "EHLO mout.gmx.net"
+        id S934054AbcKKRCK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 12:02:10 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58409 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756184AbcKKQyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 11:54:22 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuJDv-1cmAMX1pTT-011jUF; Fri, 11
- Nov 2016 17:54:18 +0100
-Date:   Fri, 11 Nov 2016 17:54:16 +0100 (CET)
+        id S1756200AbcKKRCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 12:02:09 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHnzh-1c641f20wH-003eZ1; Fri, 11
+ Nov 2016 18:02:02 +0100
+Date:   Fri, 11 Nov 2016 18:02:01 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     stefan.naewe@atlas-elektronik.com
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Prerelease: Git for Windows v2.11.0-rc0
-In-Reply-To: <1784ec06-2557-aa99-ead8-b8997b68d8d9@atlas-elektronik.com>
-Message-ID: <alpine.DEB.2.20.1611111750580.3746@virtualbox>
-References: <alpine.DEB.2.20.1611051025030.3108@virtualbox> <1784ec06-2557-aa99-ead8-b8997b68d8d9@atlas-elektronik.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: 2.11.0-rc1 will not be tagged for a few days
+In-Reply-To: <alpine.DEB.2.20.1611111711210.3746@virtualbox>
+Message-ID: <alpine.DEB.2.20.1611111758150.3746@virtualbox>
+References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com> <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1611111711210.3746@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:vjSrJ9lEjZAiiagGfQP/opoqegCITKrG428ATdHDaBMDUz6w24J
- PyZNdQsY1aZFoS9go+m+4HzA+2PObzksvLzp9JeEKQECLFeMgH86YIO9a2L7fLZGsm2Th9V
- R266vE6FDVgFb8Ocqs/rx7alJB+pBMjyvkhbcUal2tNlMVUYJFpY5B3nbXJmO+g6crTLzo+
- DfaYgfl86xpnxPag0bc/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AFqD5KN0lAQ=:dipwJnnaQb7Lc189A1dNaZ
- 2mWyVtaOMl+sLNK3n9Db5+Wl2rNBQssa9qml0oDJf+79+Rbx77HWXWKwjM9ygmLjMCr/bU9iZ
- 7oq4kyLGQXOn+QotIYN2iE5ZKvexzWMObYilLoNnFJf1oh7fxoJa7J/yPT4B/ueylLIWhw0Y2
- tX/6nOq03hz+4MDAFMiXCpCrEwCFEvEiSh/ZcVVICh0CjoBK0kL60klz71K0oFaGAAvyEWULB
- NPIIKLsNXuaDDm+SvErZ8CVHccZvAdT5JHXjKbcfRKO/pt/GQDwHYUH31RkPv27H7mGzMZl0K
- lridD3CZtFTE2z2/+ttDEAqxsDLNTEfc7BR6GuNFQ86kOBIFxLqZjchmS0CiUrHYGLTOnV33/
- jGtnxVmjrzNYYTzsvj1wRV/oBRA+nrE1ZAkBo236YmyV2+NzTRbawTtIaCaJxGVkOMDWGGCK3
- ZZVscaXJgUNbO6ExRI6egT/F7Ex71PvaxwtZ9XkXVI7eQJnL4Y8Q5FwgFIhKBQnr3U8Lbe1CZ
- VEr39oY7mN8gN+4w6ydzUP27j8cJ2bCbzpevhda4vYx2PZi/1O1mYFbt5+fYbW9Tz6P3grVwv
- uhduiYrGerzbss+XlMtKCkGrIYh1gE6I+vVipbZVCzLeXxnPog8r+0fLepe1IETlYyYPyZCr7
- uGPWIv6aADC4iw3U5bQdyg3q1JDjSyjjhxV9wXnrqU36WGZwAoA8UvW2v6Xeb83Te7ye+l0By
- 8rFs0lZ0JqWfaST2L6s3oXxUBi7dpRLEe1aU7Nl2A8NtmOT3HWYztmBxH5gl0prO33Sa0y5CA
- wKxU1qk
+X-Provags-ID: V03:K0:bVpsyF8kLnKv9PeTpt5pd3B5Jz+nwr3VrU6n+BHOApMPG625HKr
+ 7Vjce+GbPFQGl09LKCDmrY1jazZtCZ9+tRpCkKGKsXRrv5ffXMw6zBKZ6Zvfv5FLXSIZllB
+ rivNJ/kYzGCqYXazjyEQ7+viimstrfLbo10PUKPiBL/lgm42kvoaUUIDr6xOIdDtiGkpcrw
+ Qxdm78kLHy6hWOr2hYUIA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1290Yt83qWk=:mvNon+hJaOlY/+kCu+EOv0
+ WzHzZq1zGplJ6vPUK3QQTvw2S5uYBYpeg1EiU+fDlCi5RTX8Tbzp1KtddyDpUCxe3qjpY0boX
+ fx/V+wsQfCcEj5G+LBiW52BTDU2uXLPUkkK2THofmmHXlNjJza9DDFd6uCCKw0+u1+k7EeRfa
+ fUSRCGZTyUcTtV0EY+dYYL0mlCRizjH6XEb2ItYStQoBpH7KOsVrBzp51I7iAN5JTdTawQJGA
+ nJpCwnacSk75HYOg+4ZaMa9TQ3GaDmYrfNISA6r8lYLV6UoP1cLsZkrjwQFPvlC6N04XJfbfE
+ PTzQLjG+VieNWeyzd3oOXDMW2u0unH2eCEoCZAITuiJug+JT4qoQoLHUy0vgySNSvs4T5eAhh
+ HXXXDFFyz7hLv1f0jHDDRmsaVH5xbockhBKl7mWF0rLuDkUYtzzH2dSAZ89B+1bB2sI6/ghbG
+ 1CIxbfJ/W5JmLKXgYkPTTFwLHgzIX/0Q9kBhRX0FoPmO5BlBFzQtZEXfaaSCid+q4d6VGVCKU
+ QZ8/aKqkg74mrn548eiZg7ivrAMc7OCVwDlf8a7FVTT8ijVXUAHSS9HlU6Xo2Op94wQT2X/Ey
+ OJOGL5YcFytzt8d455ClgpX/WFw1UQiY7gZZslzh8EkodqKnrKa0YLy+qKQ8BESnXGGVXOIUe
+ 0PPXOnN2lHNAsz6HFUoGveKRn8QQhuDVifTN8PidDsMm1JZscdexmHECh8CbLaWuTDJDIRv2c
+ vOIkwvXGMGJ6rZnQtncWSGuqHDDxXJgsnVEOAGHbJiLtEp3vSXjY4yf2aEq9f63CnVECfgqp/
+ g8RS3CC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi,
 
-On Thu, 10 Nov 2016, stefan.naewe@atlas-elektronik.com wrote:
+On Fri, 11 Nov 2016, Johannes Schindelin wrote:
 
-> Am 05.11.2016 um 10:50 schrieb Johannes Schindelin:
-> > Dear Git users,
-> > 
-> > I finally got around to rebase the Windows-specific patches (which seem to
-> > not make it upstream as fast as we get new ones) on top of upstream Git
-> > v2.11.0-rc0, and to bundle installers, portable Git and MinGit [*1*]:
-> > 
-> > https://github.com/git-for-windows/git/releases/tag/v2.11.0-rc0.windows.1
-> > 
-> > It would be really nice if those of you who have access to Windows [*2*]
-> > could try it out and report bugs before v2.11.0 final.
+> On Thu, 10 Nov 2016, Junio C Hamano wrote:
 > 
-> I tried that version on 64bit Win7.
-> Somehow the PATH env. variable does no longer get set correctly.
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > 
+> > > I'll report back an updated schedule when able.
+> > 
+> > I pushed some updates out on 'master' today.
+> 
+> Which means that t0021 is now broken also on `master` when running in Git
+> for Windows' SDK.
 
-You are absolutely correct. There was a change in MSYS2 that I missed: by
-default, it re-sets the PATH to be minimal now. This is obviously not what
-we want.
+To be precise, it says:
 
-I worked around this in the usual way [*1*].
+	# failed 7 among 23 test(s)
 
-Thank you so much for testing. It would have been really awful if Git for
-Windows v2.11.0 would have shipped with this bug.
+Running with -i -v -x shows that the first broken test is this one:
 
-Unfortunately I have to re-build and re-package the installers I promised
-to upload today; Hopefully I will get around to upload the fixed ones
-soon.
+-- snipsnap --
+expecting success:
+        test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
+        test_config_global filter.protocol.required true &&
+        rm -rf repo &&
+        mkdir repo &&
+        (
+                cd repo &&
+                git init &&
 
-Will keep you posted,
-Dscho
+                echo "git-stderr.log" >.gitignore &&
+                echo "*.r filter=protocol" >.gitattributes &&
+                git add . &&
+                git commit . -m "test commit 1" &&
+                git branch empty-branch &&
 
-Footnote *1*:
-https://github.com/git-for-windows/build-extra/commit/db24c0378adf33c07d6c053f39f04a6a025150cc
+                cp "$TEST_ROOT/test.o" test.r &&
+                cp "$TEST_ROOT/test2.o" test2.r &&
+                mkdir testsubdir &&
+                cp "$TEST_ROOT/test3 'sq',\$x.o" "testsubdir/test3 'sq',\$x.r" &&
+                >test4-empty.r &&
+
+                S=$(file_size test.r) &&
+                S2=$(file_size test2.r) &&
+                S3=$(file_size "testsubdir/test3 'sq',\$x.r") &&
+
+                filter_git add . &&
+                cat >expected.log <<-EOF &&
+                        START
+                        init handshake complete
+                        IN: clean test.r $S [OK] -- OUT: $S . [OK]
+                        IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+                        IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+                        IN: clean testsubdir/test3 'sq',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
+                        STOP
+                EOF
+                test_cmp_count expected.log rot13-filter.log &&
+
+                filter_git commit . -m "test commit 2" &&
+                cat >expected.log <<-EOF &&
+                        START
+                        init handshake complete
+                        IN: clean test.r $S [OK] -- OUT: $S . [OK]
+                        IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+                        IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+                        IN: clean testsubdir/test3 'sq',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
+                        IN: clean test.r $S [OK] -- OUT: $S . [OK]
+                        IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+                        IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+                        IN: clean testsubdir/test3 'sq',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
+                        STOP
+                EOF
+                test_cmp_count expected.log rot13-filter.log &&
+
+                rm -f test2.r "testsubdir/test3 'sq',\$x.r" &&
+
+                filter_git checkout --quiet --no-progress . &&
+                cat >expected.log <<-EOF &&
+                        START
+                        init handshake complete
+                        IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
+                        IN: smudge testsubdir/test3 'sq',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
+                        STOP
+                EOF
+                test_cmp_exclude_clean expected.log rot13-filter.log &&
+
+                filter_git checkout --quiet --no-progress empty-branch &&
+                cat >expected.log <<-EOF &&
+                        START
+                        init handshake complete
+                        IN: clean test.r $S [OK] -- OUT: $S . [OK]
+                        STOP
+                EOF
+                test_cmp_exclude_clean expected.log rot13-filter.log &&
+
+                filter_git checkout --quiet --no-progress master &&
+                cat >expected.log <<-EOF &&
+                        START
+                        init handshake complete
+                        IN: smudge test.r $S [OK] -- OUT: $S . [OK]
+                        IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
+                        IN: smudge test4-empty.r 0 [OK] -- OUT: 0  [OK]
+                        IN: smudge testsubdir/test3 'sq',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
+                        STOP
+                EOF
+                test_cmp_exclude_clean expected.log rot13-filter.log &&
+
+                test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
+                test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
+                test_cmp_committed_rot13 "$TEST_ROOT/test3 'sq',\$x.o" "testsubdir/test3 'sq',\$x.r"
+        )
+
+++ test_config_global filter.protocol.process 'rot13-filter.pl clean smudge'
+++ test_when_finished 'test_unconfig --global '\''filter.protocol.process'\'''
+++ test 0 = 0
+++ test_cleanup='{ test_unconfig --global '\''filter.protocol.process'\''
+                } && (exit "$eval_ret"); eval_ret=$?; :'
+++ git config --global filter.protocol.process 'rot13-filter.pl clean smudge'
+++ test_config_global filter.protocol.required true
+++ test_when_finished 'test_unconfig --global '\''filter.protocol.required'\'''
+++ test 0 = 0
+++ test_cleanup='{ test_unconfig --global '\''filter.protocol.required'\''
+                } && (exit "$eval_ret"); eval_ret=$?; { test_unconfig --global '\''filter.protocol.process'\''
+                } && (exit "$eval_ret"); eval_ret=$?; :'
+++ git config --global filter.protocol.required true
+++ rm -rf repo
+++ mkdir repo
+++ cd repo
+++ git init
+Initialized empty Git repository in C:/git-sdk-64/usr/src/git/wip2/t/trash directory.t0021-conversion/repo/.git/
+++ echo git-stderr.log
+++ echo '*.r filter=protocol'
+++ git add .
+++ git commit . -m 'test commit 1'
+[master (root-commit) aa5dd37] test commit 1
+ Author: A U Thor <author@example.com>
+ 2 files changed, 2 insertions(+)
+ create mode 100644 .gitattributes
+ create mode 100644 .gitignore
+++ git branch empty-branch
+++ cp 'C:/git-sdk-64/usr/src/git/wip2/t/trash directory.t0021-conversion/test.o' test.r
+++ cp 'C:/git-sdk-64/usr/src/git/wip2/t/trash directory.t0021-conversion/test2.o' test2.r
+++ mkdir testsubdir
+++ cp 'C:/git-sdk-64/usr/src/git/wip2/t/trash directory.t0021-conversion/test3 '\''sq'\'',$x.o' 'testsubdir/test3 '\''sq'\'',$x.r'
++++ file_size test.r
++++ perl -e 'print -s $ARGV[0]' test.r
++++ command /usr/bin/perl -e 'print -s $ARGV[0]' test.r
++++ /usr/bin/perl -e 'print -s $ARGV[0]' test.r
+++ S=57
++++ file_size test2.r
++++ perl -e 'print -s $ARGV[0]' test2.r
++++ command /usr/bin/perl -e 'print -s $ARGV[0]' test2.r
++++ /usr/bin/perl -e 'print -s $ARGV[0]' test2.r
+++ S2=14
++++ file_size 'testsubdir/test3 '\''sq'\'',$x.r'
++++ perl -e 'print -s $ARGV[0]' 'testsubdir/test3 '\''sq'\'',$x.r'
++++ command /usr/bin/perl -e 'print -s $ARGV[0]' 'testsubdir/test3 '\''sq'\'',$x.r'
++++ /usr/bin/perl -e 'print -s $ARGV[0]' 'testsubdir/test3 '\''sq'\'',$x.r'
+++ S3=49
+++ filter_git add .
+++ rm -f rot13-filter.log
+++ git add .
++ test_eval_ret_=128
++ want_trace
++ test t = t
++ test t = t
++ set +x
+error: last command exited with $?=128
+not ok 15 - required process filter should filter data
+#
+#               test_config_global filter.protocol.process
+#               "rot13-filter.pl clean smudge" &&
+#               test_config_global filter.protocol.required true &&
+#               rm -rf repo &&
+#               mkdir repo &&
+#               (
+#                       cd repo &&
+#                       git init &&
+#
+#                       echo "git-stderr.log" >.gitignore &&
+#                       echo "*.r filter=protocol" >.gitattributes &&
+#                       git add . &&
+#                       git commit . -m "test commit 1" &&
+#                       git branch empty-branch &&
+#
+#                       cp "$TEST_ROOT/test.o" test.r &&
+#                       cp "$TEST_ROOT/test2.o" test2.r &&
+#                       mkdir testsubdir &&
+#                       cp "$TEST_ROOT/test3 'sq',\$x.o" "testsubdir/test3
+#                       'sq',\$x.r" &&
+#                       >test4-empty.r &&
+#
+#                       S=$(file_size test.r) &&
+#                       S2=$(file_size test2.r) &&
+#                       S3=$(file_size "testsubdir/test3 'sq',\$x.r") &&
+#
+#                       filter_git add . &&
+#                       cat >expected.log <<-EOF &&
+#                               START
+#                               init handshake complete
+#                               IN: clean test.r $S [OK] -- OUT: $S . [OK]
+#                               IN: clean test2.r $S2 [OK] -- OUT: $S2 .
+#                               [OK]
+#                               IN: clean test4-empty.r 0 [OK] -- OUT: 0
+#                               [OK]
+#                               IN: clean testsubdir/test3 'sq',\$x.r $S3
+#                               [OK] -- OUT: $S3 . [OK]
+#                               STOP
+#                       EOF
+#                       test_cmp_count expected.log rot13-filter.log &&
+#
+#                       filter_git commit . -m "test commit 2" &&
+#                       cat >expected.log <<-EOF &&
+#                               START
+#                               init handshake complete
+#                               IN: clean test.r $S [OK] -- OUT: $S . [OK]
+#                               IN: clean test2.r $S2 [OK] -- OUT: $S2 .
+#                               [OK]
+#                               IN: clean test4-empty.r 0 [OK] -- OUT: 0
+#                               [OK]
+#                               IN: clean testsubdir/test3 'sq',\$x.r $S3
+#                               [OK] -- OUT: $S3 . [OK]
+#                               IN: clean test.r $S [OK] -- OUT: $S . [OK]
+#                               IN: clean test2.r $S2 [OK] -- OUT: $S2 .
+#                               [OK]
+#                               IN: clean test4-empty.r 0 [OK] -- OUT: 0
+#                               [OK]
+#                               IN: clean testsubdir/test3 'sq',\$x.r $S3
+#                               [OK] -- OUT: $S3 . [OK]
+#                               STOP
+#                       EOF
+#                       test_cmp_count expected.log rot13-filter.log &&
+#
+#                       rm -f test2.r "testsubdir/test3 'sq',\$x.r" &&
+#
+#                       filter_git checkout --quiet --no-progress . &&
+#                       cat >expected.log <<-EOF &&
+#                               START
+#                               init handshake complete
+#                               IN: smudge test2.r $S2 [OK] -- OUT: $S2 .
+#                               [OK]
+#                               IN: smudge testsubdir/test3 'sq',\$x.r $S3
+#                               [OK] -- OUT: $S3 . [OK]
+#                               STOP
+#                       EOF
+#                       test_cmp_exclude_clean expected.log
+#                       rot13-filter.log &&
+#
+#                       filter_git checkout --quiet --no-progress
+#                       empty-branch &&
+#                       cat >expected.log <<-EOF &&
+#                               START
+#                               init handshake complete
+#                               IN: clean test.r $S [OK] -- OUT: $S . [OK]
+#                               STOP
+#                       EOF
+#                       test_cmp_exclude_clean expected.log
+#                       rot13-filter.log &&
+#
+#                       filter_git checkout --quiet --no-progress master
+#                       &&
+#                       cat >expected.log <<-EOF &&
+#                               START
+#                               init handshake complete
+#                               IN: smudge test.r $S [OK] -- OUT: $S .
+#                               [OK]
+#                               IN: smudge test2.r $S2 [OK] -- OUT: $S2 .
+#                               [OK]
+#                               IN: smudge test4-empty.r 0 [OK] -- OUT: 0
+#                               [OK]
+#                               IN: smudge testsubdir/test3 'sq',\$x.r $S3
+#                               [OK] -- OUT: $S3 . [OK]
+#                               STOP
+#                       EOF
+#                       test_cmp_exclude_clean expected.log
+#                       rot13-filter.log &&
+#
+#                       test_cmp_committed_rot13 "$TEST_ROOT/test.o"
+#                       test.r &&
+#                       test_cmp_committed_rot13 "$TEST_ROOT/test2.o"
+#                       test2.r &&
+#                       test_cmp_committed_rot13 "$TEST_ROOT/test3
+#                       'sq',\$x.o" "testsubdir/test3 'sq',\$x.r"
+#               )
+#
+
