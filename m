@@ -2,108 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B78952021E
-	for <e@80x24.org>; Fri, 11 Nov 2016 08:28:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23FCC2021E
+	for <e@80x24.org>; Fri, 11 Nov 2016 08:36:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756054AbcKKI2a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 03:28:30 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35369 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754473AbcKKI22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 03:28:28 -0500
-Received: by mail-wm0-f65.google.com with SMTP id a20so7809279wme.2
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 00:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rd5dCmOHQF7+d5c9KqXGj529VczrbGONfZRllgILJYM=;
-        b=Ai8OVMkAk2vimz9QOBadelMpXTbRO8zt3L171TssyTduPIhqHmS+apUjiVrgQEuDID
-         VH63JjdPPJLCbkihgeJAfwwnaWfH6pdDnaICtYhAr/CORykHGCzewDrg8XZhRBow9yYe
-         JqhxvJB2yniIfejyJ8hIMxBWFArflLp02ObBeutZnM7qqyEMNQ614znfZy0ICpp74f7O
-         VXTG94WlrUvJMt4iYwh7b904JXBDIm2zAaUB6NJ7f/+p8Gu9GTJ2LavxgjHXBLSS46lq
-         TduUF+mq6mZPCXrhRWsjtITmVivhWQzrRLbArrb79fLDSiILFz58hJc1fWltTGeI1eVA
-         sqcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rd5dCmOHQF7+d5c9KqXGj529VczrbGONfZRllgILJYM=;
-        b=EMWFQk/V8/o7X/w+sz+oBtli+bSqQqHgPWCM6c2aVup5W/RfePcl8TAqM4TMZHXr1z
-         xkHQiug2D1CP9LQWtcq33C4YHePP2SurYLiyipWVroA6mk2l8Jjh5Ii71E3xHDkMNB7Q
-         Rj/ZiQy6G9k7kE36nawn7UrQyO4sXF3kYCCnMFvFmgT96vNIVmzP1cWbD1XgUJASREFY
-         aC1y+pZFmESiITVJcBEgYLwOFAZCSb7KqojEEe3W8UTvuzIr0SS060+S0N5Znv2iTSzm
-         KjTYSSoTmoEsjy9fLM+M43se9jp/C/X1ZJfaMla8yLrVlbONLhC8eZKM/M3o1hL6k42k
-         d27Q==
-X-Gm-Message-State: ABUngvdk1JLIszpOKjOsbl3NnTM3GaNZspvuX2mW1hr3WgWGeoeiF3zQG10kr8Q3iSjMFQ==
-X-Received: by 10.28.5.207 with SMTP id 198mr24522923wmf.4.1478852907605;
-        Fri, 11 Nov 2016 00:28:27 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB4736.dip0.t-ipconnect.de. [93.219.71.54])
-        by smtp.gmail.com with ESMTPSA id l2sm10031448wjy.39.2016.11.11.00.28.26
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Nov 2016 00:28:27 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [git-for-windows] [ANNOUNCE] Prerelease: Git for Windows v2.11.0-rc0
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.20.1611102237230.24684@virtualbox>
-Date:   Fri, 11 Nov 2016 09:28:25 +0100
-Cc:     git-for-windows <git-for-windows@googlegroups.com>,
-        Git Mailing List <git@vger.kernel.org>, me@ttaylorr.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F2B1E33E-3C31-45A3-8A5B-098A59CD399D@gmail.com>
-References: <alpine.DEB.2.20.1611051025030.3108@virtualbox> <B2BEB5B4-5CF0-4CD7-A8E2-50D51E00D2FF@gmail.com> <alpine.DEB.2.20.1611102237230.24684@virtualbox>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.1878.6)
+        id S1755968AbcKKIgx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 03:36:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41627 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751821AbcKKIgw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 03:36:52 -0500
+Received: (qmail 20076 invoked by uid 109); 11 Nov 2016 08:36:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 11 Nov 2016 08:36:51 +0000
+Received: (qmail 12057 invoked by uid 111); 11 Nov 2016 08:37:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 11 Nov 2016 03:37:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Nov 2016 03:36:50 -0500
+Date:   Fri, 11 Nov 2016 03:36:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     Qi Nark <narcotics726@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [credential.helper] unexpectedly save credential to multiple
+ credential files
+Message-ID: <20161111083649.d5newszupwyq5j6w@sigill.intra.peff.net>
+References: <CACNr1V_fRfqvHUN=AQC8-Dj7ZAE7KXRAt+5skL3ZrcKu7SCLgA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACNr1V_fRfqvHUN=AQC8-Dj7ZAE7KXRAt+5skL3ZrcKu7SCLgA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Nov 11, 2016 at 04:10:55PM +0800, Qi Nark wrote:
 
-On 10 Nov 2016, at 22:39, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
+> 1. git config --global credential.helper store
+> 2. cd to a local repository directory, git config credential.helper
+> store --file ./my_cred
+> 3. execute some git command which need credential like git ls-remote
+> 4. input my username & password, command done.
+> 
+> As the result, **BOTH** the ./my_cred and ~/.git-credentials will save
+> the credentials I just input. But, shouldn't the local config override
+> the global ones, and only the ./my_cred should save it?
 
-> Hi Lars,
->=20
-> On Wed, 9 Nov 2016, Lars Schneider wrote:
->=20
->> On 05 Nov 2016, at 10:50, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->>=20
->>> I finally got around to rebase the Windows-specific patches (which =
-seem to
->>> not make it upstream as fast as we get new ones) on top of upstream =
-Git
->>> v2.11.0-rc0, and to bundle installers, portable Git and MinGit =
-[*1*]:
->>>=20
->>> =
-https://github.com/git-for-windows/git/releases/tag/v2.11.0-rc0.windows.1
->>=20
->>=20
->> I tested a new feature in 2.11 on Windows today and it failed. After =
-some=20
->> confusion I realized that the feature is not on your 2.11 branch.
->=20
-> Oops. That must have been a major snafu on my side, very sorry for =
-that.
->=20
-> I just tagged v2.11.0-rc0.windows.2 in https://github.com/dscho/git =
-and
-> will make a new prerelease tomorrow.
+No, that's the expected result. The set of credential helpers form a
+list, and each is run in turn. From "git help credentials":
 
-No worries! I am looking forward to the new release!
+  If there are multiple instances of the credential.helper configuration
+  variable, each helper will be tried in turn, and may provide a
+  username, password, or nothing. Once Git has acquired both a username
+  and a password, no more helpers will be tried.
 
-For some reason my own build of Git for Windows cannot use HTTPS =
-properly.
-I need to debug this further at some point.
+That's talking about lookup, but the same principle applies to storage.
+But you may also find the paragraph below helpful:
 
-Thanks,
-Lars
+  If credential.helper is configured to the empty string, this resets
+  the helper list to empty (so you may override a helper set by a
+  lower-priority config file by configuring the empty-string helper,
+  followed by whatever set of helpers you would like).
 
+Note that the "reset" behavior was introduced in git v2.9.0, so you'll
+need at least that version.
+
+-Peff
