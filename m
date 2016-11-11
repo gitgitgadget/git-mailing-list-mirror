@@ -2,111 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8ED2021E
-	for <e@80x24.org>; Fri, 11 Nov 2016 09:01:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEC5C2021E
+	for <e@80x24.org>; Fri, 11 Nov 2016 09:10:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936567AbcKKJBo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 04:01:44 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35449 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936249AbcKKJBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 04:01:43 -0500
-Received: by mail-wm0-f68.google.com with SMTP id a20so7973756wme.2
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:01:42 -0800 (PST)
+        id S965982AbcKKJKp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 04:10:45 -0500
+Received: from mail-yb0-f170.google.com ([209.85.213.170]:35515 "EHLO
+        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965818AbcKKJKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 04:10:41 -0500
+Received: by mail-yb0-f170.google.com with SMTP id d128so3286779ybh.2
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:10:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qe9iz05N7J+09JYo0SvJpb1CxZfIY/vthRqarcq7WgA=;
-        b=EejoE5fBaqRdjA4LxpXomuF1h/PLNsGAp6oKAdcWCzv0zYXH9mlf8zTEzu843yaiLh
-         M45tNIb6bjSkpHvWbjT02gA3PmAdRh9UK3yRzYjWQeSozN9G/Nlee+J4NkWh6xpcRT+F
-         ec6jH7JQPpzEkCBNmt/b9JoALWTet/R57LpC5llX8MylgJDFAJx8Y7YKycC61uKdz+oI
-         LsnIsCJqZ87ycahg6fomh6v3/sWj0AaMG2KPSBbrpANbYVGHzEshEEmJc/0mErCA/GE7
-         a00BMToaq7cf1iHLdyTR8pftOQDvpWY7pko35vopJ5d7jsih6bB8l1DZs3oQaFXiLhOg
-         gqxA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AVqw9kLABOxlAFckQpTkxC31qX+vfF1IR/DXKUPgmdw=;
+        b=FBaOaMM+UEiqJdHbq7sMe7/vKoXfJQfK4nGcIEqYPqLnYAUjRCJ2zcvNCwGmVwEEHU
+         jNgCLDQJ8MOy3s4yDAHlPrzDcbLqvZ2/yf6JMZrQdFqKW9VPSY7AGtcnzz6F4o3MXZDm
+         2BEUJg/TSb3J1yN89j6T0JlFN9F0qRWWs/Ppf9cOz+BPTR7tb6Xa65og0mfY13eEVZiE
+         gG96Nzxjfl9q7n+Kubzaq7JEzWgmF+BTXpZ9KgvKxjeOCfj2Ld8xDiZtblsFBvt5CyHk
+         x45lRpOrvPwRI8/SY8paiUvlo04wAUGEAjO9hdb6EFn1PuuVG0DcqWnlVQy0VIlORjIo
+         oLHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qe9iz05N7J+09JYo0SvJpb1CxZfIY/vthRqarcq7WgA=;
-        b=Z7LDO8CQS+wNpJWqaE2pboV+iy1ObWMN3KKZvJmDkkuKSFSII+UfTdNOACp+8or3o2
-         DNs0ka5yUBhRFk9639IdGh3hkC6cbPqocqtphTGIOwT+gzbjyNVzu3dOdx42+Vo+FWQU
-         vzJMy01tRhK9xKwB5VmUuyUJBJV+zseTBMiZYUd+lkk/PU49QklvkPE80y6rk/25yhrR
-         1nrZuvVkVe2/x2nFdpXQs9g5ZRveI9b79X4hyV8dLL7elK6c6FQNU1tzkKlT/RPTweNH
-         nZPfBrnCYpVWGNFud6NteP5gNobQf7qinJ3+jhmz4oy1h5BNI5/zz12duV1OK3TkZILX
-         tQJg==
-X-Gm-Message-State: ABUngvfSldMo1JHNZYE9Zb3tRx+jz6iSoMclZL8Z1k2sO2Wo+65TlaYE+MEseHJr0GP6Ew==
-X-Received: by 10.28.9.131 with SMTP id 125mr25787308wmj.22.1478854901760;
-        Fri, 11 Nov 2016 01:01:41 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB4736.dip0.t-ipconnect.de. [93.219.71.54])
-        by smtp.gmail.com with ESMTPSA id y2sm10233052wjx.20.2016.11.11.01.01.40
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Nov 2016 01:01:41 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [PATCH v1 0/2] Fix default macOS build locally and on Travis CI
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqwpgb58ab.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 11 Nov 2016 10:01:39 +0100
-Cc:     git@vger.kernel.org, tboegi@web.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C596D508-8F95-451A-ADF0-8A41BEE9842C@gmail.com>
-References: <20161017002550.88782-1-larsxschneider@gmail.com> <xmqqwpgc6x4t.fsf@gitster.mtv.corp.google.com> <584C7DBA-71FE-4E66-85DC-EA22A6D2BB80@gmail.com> <xmqqwpgb58ab.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AVqw9kLABOxlAFckQpTkxC31qX+vfF1IR/DXKUPgmdw=;
+        b=SS3iNdSf6AC9cJnt5peohwHsdsNWia6bBRFvM/kt8CgxUdtWJw03kkwhY1/AiHG9pp
+         HxuXNZ+w+AT262h2hdhhwkToLYftk9zA3w30/uc8J+z1SPItbNOKCLVwXi79BGEmQWJo
+         HkOXbKAHMP7iBsrteCuj6h56uK+kbaYIdz9EptrrPpaQCbySxsEUc2ImB8hQn3zMD+Xl
+         /sLOUIfDCtNfEzJwBl5MA7wc0eTJB5QGs8aTFfZPoW32zOkzLaRjSFMOWN4ve5UnSEhX
+         mTIKu5voWxlMg+b41zQ4MtjYfo/nRbG3JmvRoU1mnA2Y5gpJj9vCIr2CWaxT3d0Y3+/I
+         +mjw==
+X-Gm-Message-State: ABUngvcCZ3b6q7hdTsEVg3GX9WfHb8GwugcigtwJnvtkF4P5mA99tMM6NC08Pn0vOoqxaMcnpO3CXv4wQ1B8Xg==
+X-Received: by 10.37.172.65 with SMTP id r1mr1257079ybd.132.1478855440592;
+ Fri, 11 Nov 2016 01:10:40 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.13.207.69 with HTTP; Fri, 11 Nov 2016 01:10:10 -0800 (PST)
+In-Reply-To: <xmqqwpgb3p3g.fsf@gitster.mtv.corp.google.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-2-Karthik.188@gmail.com>
+ <CA+P7+xoAmYqi0OazZux+rooXW+D_N9L5s+2BzUyJJJXtmLZX-Q@mail.gmail.com> <xmqqwpgb3p3g.fsf@gitster.mtv.corp.google.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Fri, 11 Nov 2016 14:40:10 +0530
+Message-ID: <CAOLa=ZSrhN0DAKN2aex5EThPQJ4C8GULLvckhct3n6NgXJge9w@mail.gmail.com>
+Subject: Re: [PATCH v7 01/17] ref-filter: implement %(if), %(then), and
+ %(else) atoms
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.1878.6)
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Nov 11, 2016 at 4:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> Ok, so I have only one minor nit, but otherwise this looks quite good
+>> to me. A few comments explaining my understanding, but only one
+>> suggested
+>> change which is really a minor nit and not worth re-rolling just for it.
+>
+> As you didn't snip parts you didn't comment, I'll use this to add my
+> own for convenience ;-)
+>
+>>> +if::
+>>> +       Used as %(if)...%(then)...(%end) or
+>>> +       %(if)...%(then)...%(else)...%(end).  If there is an atom with
+>>> +       value or string literal after the %(if) then everything after
+>>> +       the %(then) is printed, else if the %(else) atom is used, then
+>>> +       everything after %(else) is printed. We ignore space when
+>>> +       evaluating the string before %(then), this is useful when we
+>>> +       use the %(HEAD) atom which prints either "*" or " " and we
+>>> +       want to apply the 'if' condition only on the 'HEAD' ref.
+>>> +
+>>>  In addition to the above, for commit and tag objects, the header
+>>>  field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+>>>  be used to specify the value in the header field.
+>
+> I see a few instances of (%end) that were meant to be %(end).
+>
 
-On 10 Nov 2016, at 22:34, Junio C Hamano <gitster@pobox.com> wrote:
+Will change that.
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->>> I've followed what was available at the public-inbox archive, but it
->>> is unclear what the conclusion was. =20
->>>=20
->>> For the first one your "how about" non-patch, to which Peff said
->>> "that's simple and good", looked good to me as well, but is it
->>> available as a final patch that I can just take and apply (otherwise
->>> I think I can do the munging myself, but I'd rather be spoon-fed
->>> when able ;-).
->>=20
->> Sure! Here you go:
->> =
-http://public-inbox.org/git/20161110111348.61580-1-larsxschneider@gmail.co=
-m/
->>=20
->>=20
->>> I do not have a strong opinion on the second one.  For an interim
->>> solution, disabling webserver tests certainly is expedite and safe,
->>> so I am fine taking it as-is, but I may have missed strong
->>> objections.
->>=20
->> I haven't seen strong objections either. Just for reference, here is =
-the patch:
->> =
-http://public-inbox.org/git/20161017002550.88782-3-larsxschneider@gmail.co=
-m/
->=20
-> Thanks.  Picked up both of them.
+> Aren't the following two paragraphs ...
+>
+>>> +When a scripting language specific quoting is in effect (i.e. one of
+>>> +`--shell`, `--perl`, `--python`, `--tcl` is used), except for opening
+>>> +atoms, replacement from every %(atom) is quoted when and only when it
+>>> +appears at the top-level (that is, when it appears outside
+>>> +%($open)...%(end)).
+>
+>>> +When a scripting language specific quoting is in effect, everything
+>>> +between a top-level opening atom and its matching %(end) is evaluated
+>>> +according to the semantics of the opening atom and its result is
+>>> +quoted.
+>
+> ... saying the same thing?
+>
 
-Thanks! This makes "next" pass, again:
-https://travis-ci.org/git/git/builds/174946111
+Yes. I'm not sure of what the context even was, but I shall remove the
+first paragraph,
+the second one seems to notify the same thing in simpler terms.
 
-BTW: If you want to learn about the build status of "git/git" branches =
-on the
-command line then you can use this snippet:
+>
+>>> +               }
+>>> +       } else if (!if_then_else->condition_satisfied)
+>>
+>> Minor nit. I'm not sure what standard we use here at Git, but
+>> traditionally, I prefer to see { } blocks on all sections even if only
+>> one of them needs it. (That is, only drop the braces when every
+>> section is one line.) It also looks weird with a comment since it
+>> appears as multiple lines to the reader. I think the braces improve
+>> readability.
+>>
+>> I don't know whether that's Git's code base standard or not, however.
+>> It's not really worth a re-roll unless something else would need to
+>> change.
+>>
+>
+> In principle, we mimick the kernel style of using {} block even on a
+> single-liner body in if/else if/else cascade when any one of them is
+> not a single-liner and requires {}.  But we often ignore that when a
+> truly trivial single liner follows if() even if its else clause is a
+> big block, e.g.
+>
+>         if (cond)
+>                 single;
+>         else {
+>                 big;
+>                 block;
+>         }
+>
+> I agree with you that this case should just use {} for the following
+> paragraph, because it is technically a single-liner, but comes with
+> a big comment block and is very much easier to read with {} around
+> it.
+>
 
-$ branch=3Dnext; echo "$branch: $(curl -s =
-https://api.travis-ci.org/repos/git/git/branches/$branch | perl -lape =
-'s/.*"state":"(\w+)".*"sha":"(\w{7}).*/$1 $2/g')"
+Ah! I see, sure I'll change it :)
 
-Cheers,
-Lars=
+-- 
+Regards,
+Karthik Nayak
