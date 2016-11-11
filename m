@@ -6,41 +6,45 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB812203E2
-	for <e@80x24.org>; Fri, 11 Nov 2016 21:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84AEB203E2
+	for <e@80x24.org>; Fri, 11 Nov 2016 21:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965299AbcKKVPj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 16:15:39 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:57920 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965293AbcKKVPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 16:15:37 -0500
+        id S964856AbcKKVYD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 16:24:03 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:10956 "EHLO bsmtp5.bon.at"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S938558AbcKKVX5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 16:23:57 -0500
+Received: from bsmtp.bon.at (unknown [192.168.181.107])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 3tFtFc1Dtwz5tmS
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 22:23:48 +0100 (CET)
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tFt466Cbkz5tlD;
-        Fri, 11 Nov 2016 22:15:34 +0100 (CET)
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tFtDQ1fLDz5tlG;
+        Fri, 11 Nov 2016 22:22:46 +0100 (CET)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 03A01146;
-        Fri, 11 Nov 2016 22:15:33 +0100 (CET)
-Subject: Re: [PATCH v2] t6026: ensure that long-running script really is
+        by dx.site (Postfix) with ESMTP id 8AC1A146;
+        Fri, 11 Nov 2016 22:22:45 +0100 (CET)
+Subject: Re: 2.11.0-rc1 will not be tagged for a few days
 To:     Junio C Hamano <gitster@pobox.com>
-References: <16dc9f159b214997f7501006a8d1d8be2ef858e8.1478699463.git.johannes.schindelin@gmx.de>
- <xmqqfumy51tk.fsf@gitster.mtv.corp.google.com>
- <fbf517ad-7341-eb6d-ab38-4fe91410e57c@kdbg.org>
- <20161111084148.tgtsijn74z2pdylq@sigill.intra.peff.net>
- <6a421222-a138-5647-4965-8ede24d904b2@kdbg.org>
- <xmqq60nt3fqc.fsf@gitster.mtv.corp.google.com>
- <ba2b3f08-87b1-c954-2020-e5a4bece7f83@kdbg.org>
- <xmqqmvh5207k.fsf@gitster.mtv.corp.google.com>
-Cc:     Jeff King <peff@peff.net>,
+References: <xmqqk2cgc95m.fsf@gitster.mtv.corp.google.com>
+ <xmqqoa1n57u4.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1611111711210.3746@virtualbox>
+ <4FF1825D-F699-4532-9B53-A673DFF00D8B@gmail.com>
+ <89DB812E-EC29-4D12-97EA-6E8FF6F86FE5@gmail.com>
+ <C3840B91-58E2-4563-9597-5EE514D97CC1@gmail.com>
+ <e0785e35-b43d-37ed-598d-b458daf3c355@kdbg.org>
+ <xmqq1syh3fjx.fsf@gitster.mtv.corp.google.com>
+ <xmqqr36h209y.fsf@gitster.mtv.corp.google.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Andreas Schwab <schwab@suse.de>
+        git@vger.kernel.org
 From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <c4cdd21e-0cef-8255-75f2-90c84f271e02@kdbg.org>
-Date:   Fri, 11 Nov 2016 22:15:32 +0100
+Message-ID: <a90fe336-5b62-4278-64e6-e73cb65a02a8@kdbg.org>
+Date:   Fri, 11 Nov 2016 22:22:45 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqmvh5207k.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqr36h209y.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -48,72 +52,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.11.2016 um 22:09 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
+Am 11.11.2016 um 22:07 schrieb Junio C Hamano:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> Am 11.11.2016 um 21:48 schrieb Junio C Hamano:
->>> Johannes Sixt <j6t@kdbg.org> writes:
->>>
->>>> Good point. Here is an updated version.
->>>
->>> Unfortunately, I already took the version before this one and
->>> started my integration cycle today.  I'll wiggle this in; it
->>> essentially is about adding a big comment to explain what is going
->>> on and then moving the when-finished down below it, right?
+>> OK, then let's have
 >>
->> Correct.
+>> 	filter_git () {
+>> 		rm -f rot13-filter.log &&
+>> 		git "$@"
+>>                 ...
+>>
+>> and call that -rc1.
 >
-> Thanks.  It has become like so:
+> That is, to queue this on top of ls/filter-process and merge it
+> down.
 >
 > -- >8 --
-> From: Johannes Sixt <j6t@kdbg.org>
-> Date: Fri, 11 Nov 2016 21:24:44 +0100
-> Subject: [PATCH] t6026: clarify the point of "kill $(cat sleep.pid)"
+> Subject: t0021: remove debugging cruft
 >
-> We lengthened the time the leftover process sleeps in the previous
-> commit to make sure it will be there while 'git merge' runs and
-> finishes.  It therefore needs to be killed before leaving the test.
-> And it needs to be killed even when 'git merge' fails, so it has to
-> be triggered via test_when_finished mechanism.
+> The redirection of the standard error stream to a temporary file is
+> a leftover cruft during debugging.  Remove it.
 >
-> Explain all that in a large comment, and move the use site of
-> test_when_finished to immediately before 'git merge' invocation,
-> where the process is spawned.
+> Besides, it is reported by folks on the Windows that the test is
+> flaky with this redirection; somebody gets confused and this
+> merely-redirected-to file gets marked as delete-pending by git.exe
+> and makes it finish with a non-zero exit status when "git checkout"
+> finishes.  Windows folks may want to figure that one out, but for
+> the purpose of this test, it shouldn't become a show-stopper.
 >
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Perfect, thank you very much.
+Nicely summarized! Thank you very much!
+
+I've double-checked again that the redirection is really not used by the 
+tests. The name does occur in a .gitignore, but I guess that is not 
+important for the background filter process. It would be good if Lars 
+could confirm this.
 
 > ---
->  t/t6026-merge-attr.sh | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
+>  t/t0021-conversion.sh | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
-> diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
-> index 348d78b205..8f9b48a493 100755
-> --- a/t/t6026-merge-attr.sh
-> +++ b/t/t6026-merge-attr.sh
-> @@ -187,12 +187,20 @@ test_expect_success 'custom merge does not lock index' '
->  		sleep 3600 &
->  		echo $! >sleep.pid
->  	EOF
-> -	test_when_finished "kill \$(cat sleep.pid)" &&
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index cb72fa49de..5ce2535017 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -27,8 +27,7 @@ file_size () {
 >
->  	test_write_lines >.gitattributes \
->  		"* merge=ours" "text merge=sleep-an-hour" &&
->  	test_config merge.ours.driver true &&
->  	test_config merge.sleep-an-hour.driver ./sleep-an-hour.sh &&
-> +
-> +	# We are testing that the custom merge driver does not block
-> +	# index.lock on Windows due to an inherited file handle.
-> +	# To ensure that the backgrounded process ran sufficiently
-> +	# long (and has been started in the first place), we do not
-> +	# ignore the result of the kill command.
-> +	# By packaging the command in test_when_finished, we get both
-> +	# the correctness check and the clean-up.
-> +	test_when_finished "kill \$(cat sleep.pid)" &&
->  	git merge master
->  '
+>  filter_git () {
+>  	rm -f rot13-filter.log &&
+> -	git "$@" 2>git-stderr.log &&
+> -	rm -f git-stderr.log
+> +	git "$@"
+>  }
 >
+>  # Compare two files and ensure that `clean` and `smudge` respectively are
 >
 
