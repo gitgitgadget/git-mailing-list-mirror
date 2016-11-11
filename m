@@ -2,612 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B70920798
-	for <e@80x24.org>; Fri, 11 Nov 2016 23:28:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C80BD20798
+	for <e@80x24.org>; Fri, 11 Nov 2016 23:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965672AbcKKX2t (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 18:28:49 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51589 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934727AbcKKX2r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 18:28:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 230474EC8F;
-        Fri, 11 Nov 2016 18:28:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=L
-        JqSRSQTnHnFsiAGYuYuU9Dz5CE=; b=FfEe5qUyNPrWuI6pp1gIijh5PTANFZ3ws
-        cF0G1j2uKBNaTTaZw9K5svWuyaYPrd5En26mMjoL1Vs3OZZK7GvPHuDul5QLOUYG
-        1VhLOnMObmbODRUNtgWEkGH/Xe3T0/UDpi6qOyoITmZMCVSthYECn4EDHKKWRHyL
-        ksq9jQkcYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=Ivy
-        S57kntUJoL0Ocf17V3dmOYGjfulp3UKvWjz+rzLh4VqZxWcU2nl6QsU8Tt7w4CLG
-        kSSPutgHD9BdlhgHRZTEessBr0dUwnjYF1ADgQtP86U4CNR/MFfB0YS4PNHfFyXR
-        3/2xtM/Vh0Ch9mW/BCT76KcDCI1fiEWhCFWY8beQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19F384EC8E;
-        Fri, 11 Nov 2016 18:28:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 577AC4EC8D;
-        Fri, 11 Nov 2016 18:28:45 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S937863AbcKKXvf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 18:51:35 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:32916 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933709AbcKKXve (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2016 18:51:34 -0500
+Received: by mail-pf0-f172.google.com with SMTP id d2so14215148pfd.0
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 15:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=+/IT5Ac+yvGgSA/i8P7uoRqoVK1Y957kVHQYraF7wq4=;
+        b=W9SS1sIIOWgYj5RmGG8G+reGp115UI0QKb328ewnEOWIs5VtfTk4oVhqtad7wCsS7B
+         UBS8rTW+BS2y2NY0fubJtNrI1+tgvo/UN0HDPod4GcB+OYOmUtGNcAVw4i1RLStr5D/4
+         pXMR65alhj8hlhnKOz4/FbDfZeZRzBlb9tYSFZ4rGEsAmnYGA7a35THjlr71gtxvwuGD
+         X63K4ZFSlogsnJ/5I/y3bIiGDEgzkwu4k1aD+P8aKDzffu4HmSFnXjpotisgfziZM3JT
+         yDHXEFR/rgrew8lOl7yX2d6SANIp3O4A1goYmWfGwFKYIajXfH8TKSGt/vdnDKaUNx0Q
+         SZog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=+/IT5Ac+yvGgSA/i8P7uoRqoVK1Y957kVHQYraF7wq4=;
+        b=QQC+sNf1SNngRluHeUBN7KF9PD6JyyQSoLK6BuHW0aN616xn+aHkEc9/l2lBZPljA+
+         Fa13Z3ZWuzVib5mfSLG3R1A+cYLdzObH/EufBdh1T9TdnVESq0akLyI1dwSX7M0tS1rK
+         IbJ56sXWHXmXTLAAYsM8ljIeXlkaY7EbdfvzGONKe8n46rrDtLUgOJy4Mr4TAa6JayHx
+         utaSBJ2NKRy4rp2sAinU8g5wSslMhC4t+or27OINvNipkpA8glY+FNcJFu7XOhT1YKzt
+         KXip1N9yz+vMZSM62DbmtLUOZ3ZuHGNKgnRJrn/elWSgwBRfPOsAjWt4lr10gi9XhoJm
+         pr1A==
+X-Gm-Message-State: ABUngvcvhZkKXlSPioiq9+lof2rt/cc1y4STEsbxJ8dBr87WaCFARZiEi8qDersmcIQnGffe
+X-Received: by 10.99.113.13 with SMTP id m13mr21153333pgc.121.1478908293433;
+        Fri, 11 Nov 2016 15:51:33 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([172.27.69.28])
+        by smtp.gmail.com with ESMTPSA id r74sm17568314pfl.79.2016.11.11.15.51.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 11 Nov 2016 15:51:32 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Nov 2016, #02; Fri, 11)
-X-master-at: 3ab228137f980ff72dbdf5064a877d07bec76df9
-X-next-at: 34139e250de0af9c58221e12bf5da2af593901ac
-Date:   Fri, 11 Nov 2016 15:28:44 -0800
-Message-ID: <xmqq60nt1tqr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 96EECD74-A866-11E6-A50D-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        jonathantanmy@google.com, gitster@pobox.com
+Subject: [PATCH v3 2/6] submodules: load gitmodules file from commit sha1
+Date:   Fri, 11 Nov 2016 15:51:09 -0800
+Message-Id: <1478908273-190166-3-git-send-email-bmwill@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1478908273-190166-1-git-send-email-bmwill@google.com>
+References: <1477953496-103596-1-git-send-email-bmwill@google.com>
+ <1478908273-190166-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.  The ones marked with '.' do not appear in any of
-the integration branches, but I am still holding onto them.
+teach submodules to load a '.gitmodules' file from a commit sha1.  This
+enables the population of the submodule_cache to be based on the state
+of the '.gitmodules' file from a particular commit.
+
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ cache.h            |  2 ++
+ config.c           |  8 ++++----
+ submodule-config.c |  6 +++---
+ submodule-config.h |  3 +++
+ submodule.c        | 12 ++++++++++++
+ submodule.h        |  1 +
+ 6 files changed, 25 insertions(+), 7 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 1be6526..559a461 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1690,6 +1690,8 @@ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
+ extern int git_config_from_mem(config_fn_t fn, const enum config_origin_type,
+ 					const char *name, const char *buf, size_t len, void *data);
++extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
++				     const unsigned char *sha1, void *data);
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
+ extern void git_config(config_fn_t fn, void *);
+diff --git a/config.c b/config.c
+index 83fdecb..4d78e72 100644
+--- a/config.c
++++ b/config.c
+@@ -1214,10 +1214,10 @@ int git_config_from_mem(config_fn_t fn, const enum config_origin_type origin_typ
+ 	return do_config_from(&top, fn, data);
+ }
+ 
+-static int git_config_from_blob_sha1(config_fn_t fn,
+-				     const char *name,
+-				     const unsigned char *sha1,
+-				     void *data)
++int git_config_from_blob_sha1(config_fn_t fn,
++			      const char *name,
++			      const unsigned char *sha1,
++			      void *data)
+ {
+ 	enum object_type type;
+ 	char *buf;
+diff --git a/submodule-config.c b/submodule-config.c
+index 098085b..8b9a2ef 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -379,9 +379,9 @@ static int parse_config(const char *var, const char *value, void *data)
+ 	return ret;
+ }
+ 
+-static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
+-				      unsigned char *gitmodules_sha1,
+-				      struct strbuf *rev)
++int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
++			       unsigned char *gitmodules_sha1,
++			       struct strbuf *rev)
+ {
+ 	int ret = 0;
+ 
+diff --git a/submodule-config.h b/submodule-config.h
+index d05c542..78584ba 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -29,6 +29,9 @@ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
+ 		const char *name);
+ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+ 		const char *path);
++extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
++				      unsigned char *gitmodules_sha1,
++				      struct strbuf *rev);
+ void submodule_free(void);
+ 
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/submodule.c b/submodule.c
+index f5107f0..062e58b 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -198,6 +198,18 @@ void gitmodules_config(void)
+ 	}
+ }
+ 
++void gitmodules_config_sha1(const unsigned char *commit_sha1)
++{
++	struct strbuf rev = STRBUF_INIT;
++	unsigned char sha1[20];
++
++	if (gitmodule_sha1_from_commit(commit_sha1, sha1, &rev)) {
++		git_config_from_blob_sha1(submodule_config, rev.buf,
++					  sha1, NULL);
++	}
++	strbuf_release(&rev);
++}
++
+ /*
+  * Determine if a submodule has been initialized at a given 'path'
+  */
+diff --git a/submodule.h b/submodule.h
+index 6ec5f2f..9203d89 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -37,6 +37,7 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
+ 		const char *path);
+ int submodule_config(const char *var, const char *value, void *cb);
+ void gitmodules_config(void);
++extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
+ extern int is_submodule_initialized(const char *path);
+ extern int is_submodule_populated(const char *path);
+ int parse_submodule_update_strategy(const char *value,
+-- 
+2.8.0.rc3.226.g39d4020
 
-v2.11-rc1 has been tagged.  There might be a few updates necessary
-that remains due to timezone differences, but hopefully this is a
-good enough representation of what the final 2.11 should look like.
-Thanks y'all for finding and fixing these platform specific bits.
-
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[Graduated to "master"]
-
-* as/merge-attr-sleep (2016-11-11) 6 commits
-  (merged to 'next' on 2016-11-11 at abb2ee960d)
- + t6026: clarify the point of "kill $(cat sleep.pid)"
-  (merged to 'next' on 2016-11-10 at 93666a6dc2)
- + t6026: ensure that long-running script really is
- + Revert "t6026-merge-attr: don't fail if sleep exits early"
- + Revert "t6026-merge-attr: ensure that the merge driver was called"
-  (merged to 'next' on 2016-11-10 at ed4623bafd)
- + t6026-merge-attr: ensure that the merge driver was called
-  (merged to 'next' on 2016-11-09 at 17fbe796e6)
- + t6026-merge-attr: don't fail if sleep exits early
-
- Fix for a racy false-positive test failure.
-
-
-* jk/alt-odb-cleanup (2016-11-08) 1 commit
-  (merged to 'next' on 2016-11-09 at f7463a1abc)
- + alternates: re-allow relative paths from environment
-
- Fix a corner-case regression in a topic that graduated during the
- v2.11 cycle.
-
-
-* jk/filter-process-fix (2016-11-02) 4 commits
-  (merged to 'next' on 2016-11-09 at 535b4f4de9)
- + t0021: fix filehandle usage on older perl
- + t0021: use $PERL_PATH for rot13-filter.pl
- + t0021: put $TEST_ROOT in $PATH
- + t0021: use write_script to create rot13 shell script
-
- Test portability improvements and cleanups for t0021.
-
-
-* js/prepare-sequencer (2016-11-08) 1 commit
-  (merged to 'next' on 2016-11-10 at 91f76470d1)
- + sequencer: silence -Wtautological-constant-out-of-range-compare
-
- Silence a clang warning introduced by a recently graduated topic.
-
-
-* js/pwd-var-vs-pwd-cmd-fix (2016-11-11) 1 commit
-  (merged to 'next' on 2016-11-11 at 1bf8501637)
- + t0021, t5615: use $PWD instead of $(pwd) in PATH-like shell variables
-
- Last minute fixes to two fixups merged to 'master' recently.
-
-
-* ls/filter-process (2016-11-11) 1 commit
-  (merged to 'next' on 2016-11-11 at 2140b6d4ce)
- + t0021: remove debugging cruft
-
- Test portability improvements and optimization for an
- already-graduated topic.
-
-
-* ls/macos-update (2016-11-10) 2 commits
-  (merged to 'next' on 2016-11-10 at b7fdaf4b98)
- + travis-ci: disable GIT_TEST_HTTPD for macOS
- + Makefile: set NO_OPENSSL on macOS by default
-
- Portability update and workaround for builds on recent Mac OS X.
-
-
-* ps/common-info-doc (2016-11-11) 1 commit
-  (merged to 'next' on 2016-11-11 at 9300ea9190)
- + doc: fix location of 'info/' with $GIT_COMMON_DIR
-
- Doc fix.
-
-
-* rt/fetch-pack-error-message-fix (2016-11-11) 1 commit
-  (merged to 'next' on 2016-11-11 at 6fd41c83fe)
- + fetch-pack.c: correct command at the beginning of an error message
-
- An error message in fetch-pack executable that was newly marked for
- translation was misspelt, which has been fixed.
-
---------------------------------------------------
-[New Topics]
-
-* bw/transport-protocol-policy (2016-11-09) 2 commits
- - transport: add protocol policy config option
- - lib-proto-disable: variable name fix
-
- Finer-grained control of what protocols are allowed for transports
- during clone/fetch/push have been enabled via a new configuration
- mechanism.
-
- Will merge to 'next'.
-
-
-* jk/create-branch-remove-unused-param (2016-11-09) 1 commit
- - create_branch: drop unused "head" parameter
-
- Code clean-up.
-
- Will merge to 'next'.
-
-
-* jt/fetch-no-redundant-tag-fetch-map (2016-11-11) 1 commit
- - fetch: do not redundantly calculate tag refmap
-
- Code cleanup to avoid using redundant refspecs while fetching with
- the --tags option.
-
- Will merge to 'next'.
-
---------------------------------------------------
-[Stalled]
-
-* hv/submodule-not-yet-pushed-fix (2016-10-10) 3 commits
- - batch check whether submodule needs pushing into one call
- - serialize collection of refs that contain submodule changes
- - serialize collection of changed submodules
-
- The code in "git push" to compute if any commit being pushed in the
- superproject binds a commit in a submodule that hasn't been pushed
- out was overly inefficient, making it unusable even for a small
- project that does not have any submodule but have a reasonable
- number of refs.
-
- Waiting for review.
- cf. <cover.1475851621.git.hvoigt@hvoigt.net>
-
-
-* sb/push-make-submodule-check-the-default (2016-10-10) 2 commits
- - push: change submodule default to check when submodules exist
- - submodule add: extend force flag to add existing repos
-
- Turn the default of "push.recurseSubmodules" to "check" when
- submodules seem to be in use.
-
- Will hold to wait for hv/submodule-not-yet-pushed-fix
-
-
-* jc/bundle (2016-03-03) 6 commits
- - index-pack: --clone-bundle option
- - Merge branch 'jc/index-pack' into jc/bundle
- - bundle v3: the beginning
- - bundle: keep a copy of bundle file name in the in-core bundle header
- - bundle: plug resource leak
- - bundle doc: 'verify' is not about verifying the bundle
-
- The beginning of "split bundle", which could be one of the
- ingredients to allow "git clone" traffic off of the core server
- network to CDN.
-
- While I think it would make it easier for people to experiment and
- build on if the topic is merged to 'next', I am at the same time a
- bit reluctant to merge an unproven new topic that introduces a new
- file format, which we may end up having to support til the end of
- time.  It is likely that to support a "prime clone from CDN", it
- would need a lot more than just "these are the heads and the pack
- data is over there", so this may not be sufficient.
-
- Will discard.
-
-
-* mh/connect (2016-06-06) 10 commits
- - connect: [host:port] is legacy for ssh
- - connect: move ssh command line preparation to a separate function
- - connect: actively reject git:// urls with a user part
- - connect: change the --diag-url output to separate user and host
- - connect: make parse_connect_url() return the user part of the url as a separate value
- - connect: group CONNECT_DIAG_URL handling code
- - connect: make parse_connect_url() return separated host and port
- - connect: re-derive a host:port string from the separate host and port variables
- - connect: call get_host_and_port() earlier
- - connect: document why we sometimes call get_port after get_host_and_port
-
- Rewrite Git-URL parsing routine (hopefully) without changing any
- behaviour.
-
- It has been two months without any support.  We may want to discard
- this.
-
-
-* kn/ref-filter-branch-list (2016-05-17) 17 commits
- - branch: implement '--format' option
- - branch: use ref-filter printing APIs
- - branch, tag: use porcelain output
- - ref-filter: allow porcelain to translate messages in the output
- - ref-filter: add `:dir` and `:base` options for ref printing atoms
- - ref-filter: make remote_ref_atom_parser() use refname_atom_parser_internal()
- - ref-filter: introduce symref_atom_parser() and refname_atom_parser()
- - ref-filter: introduce refname_atom_parser_internal()
- - ref-filter: make "%(symref)" atom work with the ':short' modifier
- - ref-filter: add support for %(upstream:track,nobracket)
- - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
- - ref-filter: introduce format_ref_array_item()
- - ref-filter: move get_head_description() from branch.c
- - ref-filter: modify "%(objectname:short)" to take length
- - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
- - ref-filter: include reference to 'used_atom' within 'atom_value'
- - ref-filter: implement %(if), %(then), and %(else) atoms
-
- The code to list branches in "git branch" has been consolidated
- with the more generic ref-filter API.
-
- Rerolled.
- Needs review.
-
-
-* ec/annotate-deleted (2015-11-20) 1 commit
- - annotate: skip checking working tree if a revision is provided
-
- Usability fix for annotate-specific "<file> <rev>" syntax with deleted
- files.
-
- Has been waiting for a review for too long without seeing anything.
-
- Will discard.
-
-
-* dk/gc-more-wo-pack (2016-01-13) 4 commits
- - gc: clean garbage .bitmap files from pack dir
- - t5304: ensure non-garbage files are not deleted
- - t5304: test .bitmap garbage files
- - prepare_packed_git(): find more garbage
-
- Follow-on to dk/gc-idx-wo-pack topic, to clean up stale
- .bitmap and .keep files.
-
- Has been waiting for a reroll for too long.
- cf. <xmqq60ypbeng.fsf@gitster.mtv.corp.google.com>
-
- Will discard.
-
-
-* jc/diff-b-m (2015-02-23) 5 commits
- . WIPWIP
- . WIP: diff-b-m
- - diffcore-rename: allow easier debugging
- - diffcore-rename.c: add locate_rename_src()
- - diffcore-break: allow debugging
-
- "git diff -B -M" produced incorrect patch when the postimage of a
- completely rewritten file is similar to the preimage of a removed
- file; such a resulting file must not be expressed as a rename from
- other place.
-
- The fix in this patch is broken, unfortunately.
-
- Will discard.
-
---------------------------------------------------
-[Cooking]
-
-* jc/retire-compaction-heuristics (2016-11-02) 3 commits
- - SQUASH???
- - SQUASH???
- - diff: retire the original experimental "compaction" heuristics
-
-
-* jc/abbrev-autoscale-config (2016-11-01) 1 commit
- - config.abbrev: document the new default that auto-scales
-
-
-* jk/nofollow-attr-ignore (2016-11-02) 5 commits
- - exclude: do not respect symlinks for in-tree .gitignore
- - attr: do not respect symlinks for in-tree .gitattributes
- - exclude: convert "check_index" into a flags field
- - attr: convert "macro_ok" into a flags field
- - add open_nofollow() helper
-
-
-* sb/submodule-config-cleanup (2016-11-02) 3 commits
- - submodule-config: clarify parsing of null_sha1 element
- - submodule-config: rename commit_sha1 to commit_or_tree
- - submodule config: inline config_from_{name, path}
-
-
-* jc/push-default-explicit (2016-10-31) 2 commits
-  (merged to 'next' on 2016-11-01 at 8dc3a6cf25)
- + push: test pushing ambiguously named branches
- + push: do not use potentially ambiguous default refspec
-
- A lazy "git push" without refspec did not internally use a fully
- specified refspec to perform 'current', 'simple', or 'upstream'
- push, causing unnecessary "ambiguous ref" errors.
-
- Will cook in 'next'.
-
-
-* jt/use-trailer-api-in-commands (2016-11-02) 6 commits
- - sequencer: use trailer's trailer layout
- - trailer: have function to describe trailer layout
- - trailer: avoid unnecessary splitting on lines
- - commit: make ignore_non_trailer take buf/len
- - SQUASH???
- - trailer: be stricter in parsing separators
-
- Commands that operate on a log message and add lines to the trailer
- blocks, such as "format-patch -s", "cherry-pick (-x|-s)", and
- "commit -s", have been taught to use the logic of and share the
- code with "git interpret-trailer".
-
-
-* nd/rebase-forget (2016-10-28) 1 commit
- - rebase: add --forget to cleanup rebase, leave HEAD untouched
-
- "git rebase" learned "--forget" option, which allows a user to
- remove the metadata left by an earlier "git rebase" that was
- manually aborted without using "git rebase --abort".
-
- Waiting for a reroll.
-
-
-* jc/git-open-cloexec (2016-11-02) 3 commits
- - sha1_file: stop opening files with O_NOATIME
- - git_open_cloexec(): use fcntl(2) w/ FD_CLOEXEC fallback
- - git_open(): untangle possible NOATIME and CLOEXEC interactions
-
- The codeflow of setting NOATIME and CLOEXEC on file descriptors Git
- opens has been simplified.
-
- We may want to drop the tip one.
-
-
-* jk/no-looking-at-dotgit-outside-repo-final (2016-10-26) 1 commit
-  (merged to 'next' on 2016-10-26 at 220e160451)
- + setup_git_env: avoid blind fall-back to ".git"
-
- This is the endgame of the topic to avoid blindly falling back to
- ".git" when the setup sequence said we are _not_ in Git repository.
- A corner case that happens to work right now may be broken by a
- call to die("BUG").
-
- Will cook in 'next'.
-
-
-* jc/reset-unmerge (2016-10-24) 1 commit
- - reset: --unmerge
-
- After "git add" is run prematurely during a conflict resolution,
- "git diff" can no longer be used as a way to sanity check by
- looking at the combined diff.  "git reset" learned a new
- "--unmerge" option to recover from this situation.
-
-
-* jc/merge-base-fp-only (2016-10-19) 8 commits
- . merge-base: fp experiment
- - merge: allow to use only the fp-only merge bases
- - merge-base: limit the output to bases that are on first-parent chain
- - merge-base: mark bases that are on first-parent chain
- - merge-base: expose get_merge_bases_many_0() a bit more
- - merge-base: stop moving commits around in remove_redundant()
- - sha1_name: remove ONELINE_SEEN bit
- - commit: simplify fastpath of merge-base
-
- An experiment of merge-base that ignores common ancestors that are
- not on the first parent chain.
-
-
-* tb/convert-stream-check (2016-10-27) 2 commits
- - convert.c: stream and fast search for binary
- - read-cache: factor out get_sha1_from_index() helper
-
- End-of-line conversion sometimes needs to see if the current blob
- in the index has NULs and CRs to base its decision.  We used to
- always get a full statistics over the blob, but in many cases we
- can return early when we have seen "enough" (e.g. if we see a
- single NUL, the blob will be handled as binary).  The codepaths
- have been optimized by using streaming interface.
-
- Waiting for review.
- The tip seems to do too much in a single commit and may be better split.
- cf. <20161012134724.28287-1-tboegi@web.de>
- cf. <xmqqd1il5w4e.fsf@gitster.mtv.corp.google.com>
-
-
-* pb/bisect (2016-10-18) 27 commits
- - bisect--helper: remove the dequote in bisect_start()
- - bisect--helper: retire `--bisect-auto-next` subcommand
- - bisect--helper: retire `--bisect-autostart` subcommand
- - bisect--helper: retire `--bisect-write` subcommand
- - bisect--helper: `bisect_replay` shell function in C
- - bisect--helper: `bisect_log` shell function in C
- - bisect--helper: retire `--write-terms` subcommand
- - bisect--helper: retire `--check-expected-revs` subcommand
- - bisect--helper: `bisect_state` & `bisect_head` shell function in C
- - bisect--helper: `bisect_autostart` shell function in C
- - bisect--helper: retire `--next-all` subcommand
- - bisect--helper: retire `--bisect-clean-state` subcommand
- - bisect--helper: `bisect_next` and `bisect_auto_next` shell function in C
- - t6030: no cleanup with bad merge base
- - bisect--helper: `bisect_start` shell function partially in C
- - bisect--helper: `get_terms` & `bisect_terms` shell function in C
- - bisect--helper: `bisect_next_check` & bisect_voc shell function in C
- - bisect--helper: `check_and_set_terms` shell function in C
- - bisect--helper: `bisect_write` shell function in C
- - bisect--helper: `is_expected_rev` & `check_expected_revs` shell function in C
- - bisect--helper: `bisect_reset` shell function in C
- - wrapper: move is_empty_file() and rename it as is_empty_or_missing_file()
- - t6030: explicitly test for bisection cleanup
- - bisect--helper: `bisect_clean_state` shell function in C
- - bisect--helper: `write_terms` shell function in C
- - bisect: rewrite `check_term_format` shell function in C
- - bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
-
- Move more parts of "git bisect" to C.
-
- Waiting for review.
-
-
-* st/verify-tag (2016-10-10) 7 commits
- - t/t7004-tag: Add --format specifier tests
- - t/t7030-verify-tag: Add --format specifier tests
- - builtin/tag: add --format argument for tag -v
- - builtin/verify-tag: add --format to verify-tag
- - tag: add format specifier to gpg_verify_tag
- - ref-filter: add function to print single ref_array_item
- - gpg-interface, tag: add GPG_VERIFY_QUIET flag
-
- "git tag" and "git verify-tag" learned to put GPG verification
- status in their "--format=<placeholders>" output format.
-
- Waiting for a reroll.
- cf. <20161007210721.20437-1-santiago@nyu.edu>
-
-
-* sb/attr (2016-11-11) 35 commits
- - completion: clone can initialize specific submodules
- - clone: add --init-submodule=<pathspec> switch
- - submodule update: add `--init-default-path` switch
- - pathspec: allow escaped query values
- - pathspec: allow querying for attributes
- - pathspec: move prefix check out of the inner loop
- - pathspec: move long magic parsing out of prefix_pathspec
- - Documentation: fix a typo
- - attr: keep attr stack for each check
- - attr: convert to new threadsafe API
- - attr: make git_check_attr_counted static
- - attr.c: outline the future plans by heavily commenting
- - attr.c: always pass check[] to collect_some_attrs()
- - attr.c: introduce empty_attr_check_elems()
- - attr.c: correct ugly hack for git_all_attrs()
- - attr.c: rename a local variable check
- - attr.c: pass struct git_attr_check down the callchain
- - attr.c: add push_stack() helper
- - attr: support quoting pathname patterns in C style
- - attr: expose validity check for attribute names
- - attr: add counted string version of git_check_attr()
- - attr: retire git_check_attrs() API
- - attr: convert git_check_attrs() callers to use the new API
- - attr: convert git_all_attrs() to use "struct git_attr_check"
- - attr: (re)introduce git_check_attr() and struct git_attr_check
- - attr: rename function and struct related to checking attributes
- - attr.c: plug small leak in parse_attr_line()
- - attr.c: tighten constness around "git_attr" structure
- - attr.c: simplify macroexpand_one()
- - attr.c: mark where #if DEBUG ends more clearly
- - attr.c: complete a sentence in a comment
- - attr.c: explain the lack of attr-name syntax check in parse_attr()
- - attr.c: update a stale comment on "struct match_attr"
- - attr.c: use strchrnul() to scan for one line
- - commit.c: use strchrnul() to scan for one line
-
- The attributes API has been updated so that it can later be
- optimized using the knowledge of which attributes are queried.
- Building on top of the updated API, the pathspec machinery learned
- to select only paths with given attributes set.
-
- Waiting for review.
-
-
-* va/i18n-perl-scripts (2016-11-11) 16 commits
- - i18n: difftool: mark warnings for translation
- - i18n: send-email: mark composing message for translation
- - i18n: send-email: mark string with interpolation for translation
- - i18n: send-email: mark warnings and errors for translation
- - i18n: send-email: mark strings for translation
- - i18n: add--interactive: mark status words for translation
- - i18n: add--interactive: remove %patch_modes entries
- - i18n: add--interactive: mark edit_hunk_manually message for translation
- - i18n: add--interactive: i18n of help_patch_cmd
- - i18n: add--interactive: mark patch prompt for translation
- - i18n: add--interactive: mark plural strings
- - i18n: clean.c: match string with git-add--interactive.perl
- - i18n: add--interactive: mark strings with interpolation for translation
- - i18n: add--interactive: mark simple here-documents for translation
- - i18n: add--interactive: mark strings for translation
- - Git.pm: add subroutines for commenting lines
-
- Porcelain scripts written in Perl are getting internationalized.
-
- Waiting for review.
-
-
-* jc/latin-1 (2016-09-26) 2 commits
-  (merged to 'next' on 2016-09-28 at c8673e03c2)
- + utf8: accept "latin-1" as ISO-8859-1
- + utf8: refactor code to decide fallback encoding
-
- Some platforms no longer understand "latin-1" that is still seen in
- the wild in e-mail headers; replace them with "iso-8859-1" that is
- more widely known when conversion fails from/to it.
-
- Will hold to see if people scream.
-
-
-* sg/fix-versioncmp-with-common-suffix (2016-09-08) 5 commits
- - versioncmp: cope with common leading parts in versionsort.prereleaseSuffix
- - versioncmp: pass full tagnames to swap_prereleases()
- - t7004-tag: add version sort tests to show prerelease reordering issues
- - t7004-tag: use test_config helper
- - t7004-tag: delete unnecessary tags with test_when_finished
-
- The prereleaseSuffix feature of version comparison that is used in
- "git tag -l" did not correctly when two or more prereleases for the
- same release were present (e.g. when 2.0, 2.0-beta1, and 2.0-beta2
- are there and the code needs to compare 2.0-beta1 and 2.0-beta2).
-
- Waiting for a reroll.
- cf. <20160908223727.Horde.jVOOJ278ssZ3qkyjkmyqZD-@webmail.informatik.kit.edu>
-
-
-* jc/pull-rebase-ff (2016-07-28) 1 commit
- - pull: fast-forward "pull --rebase=true"
-
- "git pull --rebase", when there is no new commits on our side since
- we forked from the upstream, should be able to fast-forward without
- invoking "git rebase", but it didn't.
-
- Needs a real log message and a few tests.
-
-
-* jc/merge-drop-old-syntax (2015-04-29) 1 commit
-  (merged to 'next' on 2016-10-11 at 8928c8b9b3)
- + merge: drop 'git merge <message> HEAD <commit>' syntax
-
- Stop supporting "git merge <message> HEAD <commit>" syntax that has
- been deprecated since October 2007, and issues a deprecation
- warning message since v2.5.0.
-
- It has been reported that git-gui still uses the deprecated syntax,
- which needs to be fixed before this final step can proceed.
- cf. <5671DB28.8020901@kdbg.org>
-
- Will cook in 'next'.
