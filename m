@@ -2,108 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21FF92021E
-	for <e@80x24.org>; Fri, 11 Nov 2016 09:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 018EB2021E
+	for <e@80x24.org>; Fri, 11 Nov 2016 11:24:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935890AbcKKJkV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 04:40:21 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38637 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934434AbcKKJkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2016 04:40:17 -0500
-Received: by mail-wm0-f51.google.com with SMTP id f82so81467941wmf.1
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 01:40:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WZWYOjdOm0yCqxN1g8/20lkt31YQi9COMWIKK1NZX1I=;
-        b=kTyY5QcSn5YYgTnV+1dY2GsA7YnR+swCiH5+oRmDl+2z9Ef65x3fH9Hmccf2TQMCFy
-         qONMGfWhfaZ/m9UCoC3SZ6JN0W9s/tV/TyLzP1bU6D398QoQoUukfxkB17P17sEfywO9
-         UU8Si6sUP4oG5oBHJEvIuMuXJMH1AYp4w69lU+fC12kxLDenDiClOqBPWdk6HuiXHvIR
-         soYXu+q7hn+rnomb1KMbnmHO4OLXqnj8CGLG30oD00e8F/I1fish+YBGR0qxTFrvHDq4
-         1oATtURjDtYJatvfekuOEjFRmNjic9MVA7hutUHfGDwlRUNbFH02eY6yWky0GSPJ6suU
-         NrgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WZWYOjdOm0yCqxN1g8/20lkt31YQi9COMWIKK1NZX1I=;
-        b=XfP0aXLoR/qgIei03HtPMCQzXEJOYrdNcjjAuu1qevZwzPRFyc+IUTcX1HFiHQX722
-         z6zPBNUGn2Kboeuy/xbpLB1gQs8nQTVox9j5KFLsKO7r+ZZMpe46RpYgyw+neb6pEtiA
-         7xFrpFA5JPMygWFYJuUAibufALiT92aXZQOhcT38bnfer6rdEXggxhi+tvwJIagWdEtP
-         t6DTkM4Ht6Yc12OobcABTCd6OMruS3TgdxjblcgshtipDXbcM8rfetgvz4kQUYKMKoZL
-         Ub91uBkevQcPJDpLjfcknNEzZ/LKmx9CVjme6FwC2ggHNBJ9nnMGkjC9TBqie2KHQ4JC
-         NVkg==
-X-Gm-Message-State: ABUngvfhr5WWgyfKi2LxDcf/kgnKjL3CDR2fSDStn5Q2oxXPVkU6qijJSVOItPG3Ai3jEg==
-X-Received: by 10.28.156.10 with SMTP id f10mr29201908wme.63.1478857215900;
-        Fri, 11 Nov 2016 01:40:15 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB4736.dip0.t-ipconnect.de. [93.219.71.54])
-        by smtp.gmail.com with ESMTPSA id yj10sm10250421wjb.3.2016.11.11.01.40.14
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Nov 2016 01:40:15 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [RFC] Add way to make Git credentials accessible from clean/smudge filter
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20161111093122.osbdwmze5x5t742v@sigill.intra.peff.net>
-Date:   Fri, 11 Nov 2016 10:40:14 +0100
-Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        git <git@vger.kernel.org>, me@ttaylorr.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4060C484-B42E-42AB-BB42-4753373F0E7F@gmail.com>
-References: <4C8C5650-7221-4F62-A9CC-81AE01EF6DC7@gmail.com> <vpqoa1n1qom.fsf@anie.imag.fr> <20161110160809.2gvf67rlnvounulf@sigill.intra.peff.net> <77603924-3552-4146-9C9E-A106CFA96D7A@gmail.com> <20161111093122.osbdwmze5x5t742v@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.1878.6)
+        id S1755424AbcKKLX6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 06:23:58 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:43011 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751308AbcKKLX5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 11 Nov 2016 06:23:57 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id A4C5220980;
+        Fri, 11 Nov 2016 06:23:56 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 11 Nov 2016 06:23:56 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=h/
+        flHsFRx6DcimHeVERN7vyn2mQ=; b=mLwBitm4AxJGkvsO0lTVpITPWeXmsrm3s2
+        7jDPDl8sqUsBXQGe1DPj+ZS0s/uOQ4ULutfpSbaZqdlHSot+Dp5oU3fJ/iNoYyTN
+        zk8aN7wH02PMc9OzoIGFs0w3pNZVWKttm8wE3LkWFVSzqgxgalkI9jM5airBjvWE
+        xdSarXou4=
+X-ME-Sender: <xms:TKolWBKuorxDFh8FNp1BgfAaDevLsJuEPC-f97eudazkjASUEJxz2w>
+X-Sasl-enc: SLtpICMHV6qo9wqYXlzmQtd+ualNqQKvuawSIZ9vQmzR 1478863436
+Received: from localhost (x4e349635.dyn.telefonica.de [78.52.150.53])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 3DC0E7E43A;
+        Fri, 11 Nov 2016 06:23:56 -0500 (EST)
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] doc: fix location of 'info/' with $GIT_COMMON_DIR
+Date:   Fri, 11 Nov 2016 12:23:32 +0100
+Message-Id: <20161111112332.27727-1-ps@pks.im>
+X-Mailer: git-send-email 2.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+With the introduction of the $GIT_COMMON_DIR variable, the
+repository layout manual was changed to reflect the location for
+many files in case the variable is set. While adding the new
+locations, one typo snuck in regarding the location of the
+'info/' folder, which is falsely claimed to reside at
+"$GIT_COMMON_DIR/index".
 
-On 11 Nov 2016, at 10:31, Jeff King <peff@peff.net> wrote:
+Fix the typo to point to "$GIT_COMMON_DIR/info/" instead.
 
-> On Fri, Nov 11, 2016 at 10:28:56AM +0100, Lars Schneider wrote:
->=20
->>> Yeah, that is the solution I was going to suggest. The credentials =
-are
->>> totally orthogonal to the filters, and I would rather not shove them
->>> into the protocol. It's an extra process, but with the new multi-use
->>> smudge filter, it's one per git invocation, not one per file.
->>=20
->> The trouble with "git credential" is that it works only if the =
-credential=20
->> helper is setup correctly. Although I assume that most people have =
-setup this,=20
->> I have also worked with a number of people who prefer to enter their =
-passwords=20
->> every time Git makes a network connection.
->=20
-> Are you sure about that? If I do:
->=20
->  echo url=3Dhttps://example.com/repo.git |
->  git credential fill
->=20
-> I get prompted for a username and password.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ Documentation/gitrepository-layout.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hm.. either I don't understand you or I expressed myself unclear.=20
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+index 577ee84..a5f99cb 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -177,7 +177,7 @@ sharedindex.<SHA-1>::
+ info::
+ 	Additional information about the repository is recorded
+ 	in this directory. This directory is ignored if $GIT_COMMON_DIR
+-	is set and "$GIT_COMMON_DIR/index" will be used instead.
++	is set and "$GIT_COMMON_DIR/info" will be used instead.
+ 
+ info/refs::
+ 	This file helps dumb transports discover what refs are
+-- 
+2.10.2
 
-Let's say a user runs:
-
-$ git clone https://myrepo.git
-
-If no credential helper is setup, then Git asks the user for =
-credentials.
-Afterwards Git starts downloading stuff. At some point Git will run my
-smudge filter on some files and in my case the smudge filter needs the
-Git credentials. AFAIK, the smudge filter has no way to get the =
-credentials=20
-from Git at this point - not even by invoking "git credential".=20
-Is this correct?
-
-- Lars=
