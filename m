@@ -2,81 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC4721F40E
-	for <e@80x24.org>; Sat, 12 Nov 2016 10:09:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD0882021E
+	for <e@80x24.org>; Sat, 12 Nov 2016 12:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937878AbcKLKJK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Nov 2016 05:09:10 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52415 "EHLO mout.gmx.net"
+        id S938756AbcKLMuJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Nov 2016 07:50:09 -0500
+Received: from mout.gmx.net ([212.227.15.19]:61566 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934848AbcKLKJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Nov 2016 05:09:09 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nt7-1d1smX1Buf-00z1uI; Sat, 12
- Nov 2016 11:09:00 +0100
-Date:   Sat, 12 Nov 2016 11:08:58 +0100 (CET)
+        id S932182AbcKLMuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Nov 2016 07:50:08 -0500
+Received: from virtualbox ([89.204.153.5]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIuzJ-1c7SUy2mxF-002Vlc; Sat, 12
+ Nov 2016 13:49:54 +0100
+Date:   Sat, 12 Nov 2016 12:40:14 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
-In-Reply-To: <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1611121106110.3746@virtualbox>
-References: <20161111201958.2175-1-dennis@kaarsemaker.net> <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com> <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t0021, t5615: use $PWD instead of $(pwd) in PATH-like
+ shell variables
+In-Reply-To: <xmqqa8d53ky9.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1611121237230.3746@virtualbox>
+References: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de> <xmqq37iy3q0s.fsf@gitster.mtv.corp.google.com> <fa11def5-a878-a5c8-6e7b-627ea8cda7e2@kdbg.org> <2b69d098-92ef-77b0-367a-516e9edbe257@kdbg.org>
+ <xmqqa8d53ky9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:69s7xVPh+iS/CRJ4Yw2H+W5W7zwXCzFbxYMazajnqAPpHJ6N2bd
- KoezKeSLidZSuH+5czi6YMDJR8yjyjZXXm5laALE3FyghV2zZQepnMemJg5aekuzZL7K21u
- ka/D3ise6J4VELZtELSb89AEsOwqNxmoD+hzvPVl5gO7ldpFZEuc3O9RUsxINpiicfu7Utv
- +epmaGswTADb33ZONQa7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+jmKNIfDZiU=:wrRqfGxw6rexCCzAWiGxLs
- U4M6o9kHASC+rmJXzgo0DjKrHuZ7c7e9MYrbEjoHubN0VapaKIN8n7nAmy+4MNHvU4vP11oDF
- ri6IN7bG0bZMjNbpeaZUvpJqxFs/PW/86Ld7F9JxCO0wVQFssbSxmaShSGwI53iE+ggznnLew
- lXNI5TOMT+rOSvVziZP87hKuhuMbmcq/UsHPOwsRxb6SiuIhnmxrjdLMMgerSVJS2Annf567j
- eq9L+SgjStW6zR1I1B7AAbnspIcojlcwcQSswYyHI+bawswEaW74bhJiFA4aCMd4SVXTM8wfh
- Jzkx+0oEkbGyWFC7lw72BBeRvO9c2+ajIDxFZ91dlbXeVXzo08YxP6cOV+xk5mdF9ZMPnDLlh
- yczeIsCadRTBQPRqwOc4XMZA9ggknne/6w3V56I4rIW1ccDKqi44F8EUt6GhKMLYR4vUTPRe5
- HPg6zpLUgbn3C7aYTh9Kby+UMSCSPtnlL3HW+IpST0HXs6gk9g1G7OZeor/8Xw6vcgX8f2g6/
- K9PooMw8Rryl4bb+mkdTngHV3MsZIp9vNPPjT3dmyqLKrT47xx786GqFgIHh9ux44WWbF7dQ5
- Ig+tAAEh0qjenn7+l8wWMHch4PTi11GOHXuA848ES6OpsSwn2FMpN5FAQ/2H6XBZNKfCk+uX5
- tUwbZ9AoDTwV/8+t72LTcdekEL0BIo9703f8yM1nXneXS++AZVfovKoYHvX+ewJj04QDA26wr
- WycA/OtwKOO6S4pzdmN/eg8VPtfjLFZMadDYwBRZkwszPKI09i5QO9YfkoBntOEMA0YfEVFJo
- bp0ygLD
+X-Provags-ID: V03:K0:t/Na7RJyiCRY5Jnt88e9prwgWAWwUfrp7UbzDRDevYK3EuIHSG3
+ LZ4izYevTj1SM9x30HHjIhjJshEWbQ1TI/R+SyafEsSlXiv9x0nTDKioczfO6u8LGjYGxxi
+ 6WANDA/fhJp6vlWDvqyMQ9rFosd1ivlqAEC8ZJI11yqD2ZhO4up/JWDeZgdxZ0P9LktsfEI
+ +obpTiy0SmJAOETuyApfQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eArjJ/WTjHE=:xoJCzK6SudVxEuRGQgWqk4
+ R26OcpMno/nLgSkRL1TFkAzHTS0TJpu1BdgMi2POtgZWPef+Zxj1yBaFJ+W8r8GKqFd9MQgtx
+ JQY6yJtNyDnkNgo8yDcex1CPh1gIyn7TGd8hz+zV+EEjg7vwi98Mvfa5P3VjyKBH+PDd4k4QX
+ oLbsp3Kva6U/ne28stVTvBdUQz2qk4hVCpvA0PGjuS2FAM8C4cwbCcZEx3iXyED6hGPQlCCq2
+ PmEN+auWa7dzSLzXnGC1Yg7DGtAsE1pUKdCCiHjoSxzeMYaVFtLcZUnvf4hiCH76gs9aBbzvn
+ K0xX5wCHMIZyWc3WW8eI3zdlm6itLg8ccI72nC6ZbOON8HPSR31GasaOArahRRod17qL5UoHC
+ tn+EB9hXxaBmdm9eC4+cxz/TQeu/VY5TktH+Za1JQWRGWIULih6YV1fTx3XItSzDbqQFvXzng
+ BTo2POPzimrmBZ57hA3yX6MczA9s45wzNeEUZSJmenYQYmMuumW3eO4qIkKatjLWcKB0qY2wt
+ x6QqUwe+PZ9d/ekrJlP2jlo+kwXrOzQTnNIsZIXhJPXyfZoEooPz/rY2kBqCxH598xyUjnVom
+ nclRv5ojt2oMtY6KKxpM+8biHRI7OVsctJBJQP7ogN4yS8q+ZXFxeAplNt2an4Xl4pBY0hfBW
+ wyxGvHiI+aqT0fDAIRfKk07c0qUXkJaXlKo8txmbBHTXi/CB4UmoLsXuFrrR0FLtoJ2q5D305
+ /RHq5VMTnScrUcfElY2ObNTaSckK68dl/zRK+TzCjCemGCggNkb36ielMssZJuppnYBDxxWHo
+ H+HQogeP14pB0CNHGVlQN0fUtOGWg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-On Fri, 11 Nov 2016, Jacob Keller wrote:
+On Fri, 11 Nov 2016, Junio C Hamano wrote:
 
-> On Fri, Nov 11, 2016 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
-> >
-> >> No tests or documentation updates yet, and I'm not sure whether
-> >> --follow-symlinks in other modes than --no-index should be supported, ignored
-> >> (as it is now) or cause an error, but I'm leaning towards the third option.
-> >
-> > My knee-jerk reaction is:
-> >
-> >  * The --no-index mode should default to your --follow-symlinks
-> >    behaviour, without any option to turn it on or off.
-> >
+> Johannes Sixt <j6t@kdbg.org> writes:
 > 
-> I agree. We shouldn't have to specify this for no-index.
+> > We have to use $PWD instead of $(pwd) because on Windows the latter
+> > would add a C: style path to bash's Unix-style $PATH variable, which
+> > becomes confused by the colon after the drive letter. ($PWD is a
+> > Unix-style path.)
+> >
+> > In the case of GIT_ALTERNATE_OBJECT_DIRECTORIES, bash on Windows
+> > assembles a Unix-style path list with the colon as separators. It
+> > converts the value to a Windows-style path list with the semicolon as
+> > path separator when it forwards the variable to git.exe. The same
+> > confusion happens when bash's original value is contaminated with
+> > Windows style paths.
+> >
+> > Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> > ---
+> > Am 11.11.2016 um 18:11 schrieb Johannes Sixt:
+> >> Am 11.11.2016 um 18:06 schrieb Junio C Hamano:
+> >>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >>> ...
+> >
+> > When the MSYS program such as bash invokes a non-MSYS program, it
+> > translates the Unix-style paths in arguments and environment variables
+> > to Windows stlye. We only have to ensure that we inject only Unix-style
+> > paths in these places so as not to confuse the conversion algorithm.
+> > Most of the time, we do not have to worry.
+> >
+> > On the other hand, when we write a path to a file that git.exe consumes
+> > or receive a path from git.exe, i.e., when the path travels through
+> > stdout and stdin, no automatic translation happens (which is quite
+> > understandable), and we have do the translation explicitly. An example
+> > for such a case is when we write a .git/info/alternates file via the
+> > shell.
+> >
+> >> A simpler fix is to use $PWD instead of $(pwd). I'll submit a patch in a
+> >> moment.
+> >
+> > Here it is. I had proposed the t0021 part earlier, but it fell through
+> > the cracks during the temporary maintainer change.
+> 
+> Thanks.  Dscho, does this fix both of these issues to you?
 
-Ummm. *My* idea of --no-index was for it to behave as similar to the
---index version as possible. For example when comparing directories
-containing symlinks. You seem intent on breaking this scenario.
+Apparently it does because the CI jobs for `master` and for `next` pass.
+The one for `pu` still times out, of course.
 
 Ciao,
-Johannes
+Dscho
