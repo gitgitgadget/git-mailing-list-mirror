@@ -2,61 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F291E2079C
-	for <e@80x24.org>; Sat, 12 Nov 2016 02:24:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F7052079C
+	for <e@80x24.org>; Sat, 12 Nov 2016 02:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966326AbcKLCYh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Nov 2016 21:24:37 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35211 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936420AbcKLCYg (ORCPT <rfc822;git@vger.kernel.org>);
+        id S966330AbcKLCYj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Nov 2016 21:24:39 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33507 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S938556AbcKLCYg (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Nov 2016 21:24:36 -0500
-Received: by mail-pg0-f68.google.com with SMTP id p66so3167276pga.2
-        for <git@vger.kernel.org>; Fri, 11 Nov 2016 18:23:45 -0800 (PST)
+Received: by mail-pf0-f193.google.com with SMTP id 144so3145524pfv.0
+        for <git@vger.kernel.org>; Fri, 11 Nov 2016 18:24:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=07S+McHXdnWol94i+9hE+IXJL5QAE3oHtKkdgP/ebxM=;
-        b=wTyjxCDV9JNJAtSl8wQ1KrfiyF3VBkdo025mXd/rA37aH94REvDsXgWWbfOJY54ztm
-         fdbh92JV44idCt2VnB5mJM7Sei+H15EXT2qpHn730p8MaFASEpyHGkmHKrdM0DkDNBaR
-         Lr0ClT+9AR7RxhCOAduGQHTkrlTauRlobRWpequw1hollAsdNcZY4oApOWsqHmPJNlQs
-         LtIV0UZn/fhbVKgyYdW/kqMEn0B9m0wA0jeN7uZIWJsMerG37aLsvziM+ehdxoIZUI4U
-         EOyCKjK8S7ceJXbwK4rBt39c6iD4wlG+DEguJrx1uevsZEHRwkmOYAXnlCh6lw/u4NzP
-         rCQw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6TxRf9Id03jVmMKlT4Mtfm5l/p2DOucfFMyyHIXN2a4=;
+        b=MkrYGbIwvR17bjQz+7Owlkj4P2i4Jy5OsL/oxk/EsiLX4cOaTRy8eZMvRNEaziQgYw
+         /ZznYsWJ9jTfzGGVm8I3xv4XEIMQ2h0eGH67KyP5oLduEvN/ngzIRPauQdUvZcO4Y+Uf
+         dz0WUaVy2hdlwr3PEJlWcmzHCRECEsdlAAADrT3MzNVI0BXO+1arsJYR8ci2hjvz5Ie7
+         EVJ86M27tSJdh1D96aqQbQjJ2jFrrrSoLathXdVbmQxYK1QZE/pwFFL7HmlVy2Bx/WXL
+         CLd4806T2fhYL53DrCYwBPcicx4HA/vMihafZ246+m+DrmLO/gR6y11E+vubTtpgv4AV
+         e81A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=07S+McHXdnWol94i+9hE+IXJL5QAE3oHtKkdgP/ebxM=;
-        b=BTv8R4tkJND7h+4S6rDupqQXOzRcpayBGC9elJE9jXJ0vebljPfntyOY8pxvp4BCLV
-         I87NyUUoOu6W9Ab0XLT8QII+pgmObdEfbQVsJ3dERi8EwpXf4FaGtEPNmEyhqdWb6qPN
-         jgfPUqroHGr7FVV+04/7wUDjbP2KKwEjOyn6MdIkMlIgAQXsYnfsiQM/wdWkYPZ7KWgN
-         KFSDhv0CzzpoysIQA0vCs193ikQlWcqgR5950ndZ/mHvSp06tId/9iRCVRFx2Q2r0B+A
-         yxCpn/tOPH3oi1uz0Ni0Z2m+8Ga5q1taimy6qifZofUd118fUrDjYx8Il28ZCX3jUyZr
-         Qt2w==
-X-Gm-Message-State: ABUngvduWRdXiaUCflsYlINEkam7xtesOULrjalI+eVybE+chUVtH3SOQCrEBdnHfLyfRg==
-X-Received: by 10.98.159.136 with SMTP id v8mr12820212pfk.82.1478917424464;
-        Fri, 11 Nov 2016 18:23:44 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6TxRf9Id03jVmMKlT4Mtfm5l/p2DOucfFMyyHIXN2a4=;
+        b=kq9QsDAmoadYwnwcx+ktbXHlYraEjAovd5Y39Dmtj+1CErUs7ym/mZOKdmAcelPKdJ
+         X8wb9j9iuezznbbySkg8tSAANMVVnmawTMdfwL6ebyPz1gmuWAMvtbVBw3rwUmPZcbdq
+         5rR3V634M4ZUtSs26i0XEodk1HitCmCvGvg6thiqpqPsKNbr2FpoMD3OSscfdhd86Ga5
+         Z550nRn90YDZNdQVzqNTpdA9p2AAFpJMRARgC47DnAbirk5g7tAgzyqpigVJr6JYZ/U6
+         jeJEz1r48ehUmhjG3EKrKWuoBhpvGWj1ZDkGT7A20MCSLPZpNhKDNZXpVGg7/YlkEcBT
+         8bkw==
+X-Gm-Message-State: ABUngvdgaCoeJpbY4WLw6cbYgasF0MvPVwqtw7vAU9H2KrDFrAFpzqu/z6cwHTeO3KTpDg==
+X-Received: by 10.99.62.13 with SMTP id l13mr9701613pga.112.1478917452354;
+        Fri, 11 Nov 2016 18:24:12 -0800 (PST)
 Received: from ash ([115.73.175.91])
-        by smtp.gmail.com with ESMTPSA id dj2sm18073027pad.19.2016.11.11.18.23.41
+        by smtp.gmail.com with ESMTPSA id l11sm18052404pfb.28.2016.11.11.18.24.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Nov 2016 18:23:43 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 12 Nov 2016 09:23:39 +0700
+        Fri, 11 Nov 2016 18:24:11 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 12 Nov 2016 09:24:07 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 00/11] git worktree (re)move
-Date:   Sat, 12 Nov 2016 09:23:26 +0700
-Message-Id: <20161112022337.13317-1-pclouds@gmail.com>
+Subject: [PATCH 06/11] worktree.c: add validate_worktree()
+Date:   Sat, 12 Nov 2016 09:23:32 +0700
+Message-Id: <20161112022337.13317-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <20161112022337.13317-1-pclouds@gmail.com>
+References: <20161112022337.13317-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,37 +67,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is mostly a resend from last time [1]. The main difference is
-patch 10/11 to prevent moving a worktree that contains submodules
-because these .git files may need rewritten to point to the right
-place. I'm leaving the rewriting .git files for future (preferably
-done by "submodules guys").
+This function is later used by "worktree move" and "worktree remove"
+to ensure that we have a good connection between the repository and
+the worktree. For example, if a worktree is moved manually, the
+worktree location recorded in $GIT_DIR/worktrees/.../gitdir is
+incorrect and we should not move that one.
 
-[1] https://public-inbox.org/git/20160625075433.4608-1-pclouds@gmail.com/
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ worktree.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ worktree.h |  5 +++++
+ 2 files changed, 68 insertions(+)
 
-Nguyễn Thái Ngọc Duy (11):
-  copy.c: import copy_file() from busybox
-  copy.c: delete unused code in copy_file()
-  copy.c: convert bb_(p)error_msg to error(_errno)
-  copy.c: style fix
-  copy.c: convert copy_file() to copy_dir_recursively()
-  worktree.c: add validate_worktree()
-  worktree.c: add update_worktree_location()
-  worktree move: new command
-  worktree move: accept destination as directory
-  worktree move: refuse to move worktrees with submodules
-  worktree remove: new command
-
- Documentation/git-worktree.txt         |  28 ++-
- builtin/worktree.c                     | 179 ++++++++++++++++
- cache.h                                |   1 +
- contrib/completion/git-completion.bash |   5 +-
- copy.c                                 | 369 +++++++++++++++++++++++++++++++++
- t/t2028-worktree-move.sh               |  56 +++++
- worktree.c                             |  84 ++++++++
- worktree.h                             |  11 +
- 8 files changed, 722 insertions(+), 11 deletions(-)
-
+diff --git a/worktree.c b/worktree.c
+index f7869f8..7e15ec7 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -291,6 +291,69 @@ const char *is_worktree_locked(struct worktree *wt)
+ 	return wt->lock_reason;
+ }
+ 
++static int report(int quiet, const char *fmt, ...)
++{
++	va_list params;
++
++	if (quiet)
++		return -1;
++
++	va_start(params, fmt);
++	vfprintf(stderr, fmt, params);
++	fputc('\n', stderr);
++	va_end(params);
++	return -1;
++}
++
++int validate_worktree(const struct worktree *wt, int quiet)
++{
++	struct strbuf sb = STRBUF_INIT;
++	const char *path;
++	int err;
++
++	if (is_main_worktree(wt)) {
++		/*
++		 * Main worktree using .git file to point to the
++		 * repository would make it impossible to know where
++		 * the actual worktree is if this function is executed
++		 * from another worktree. No .git file support for now.
++		 */
++		strbuf_addf(&sb, "%s/.git", wt->path);
++		if (!is_directory(sb.buf)) {
++			strbuf_release(&sb);
++			return report(quiet, _("'%s/.git' at main worktree is not the repository directory"),
++				      wt->path);
++		}
++		return 0;
++	}
++
++	/*
++	 * Make sure "gitdir" file points to a real .git file and that
++	 * file points back here.
++	 */
++	if (!is_absolute_path(wt->path))
++		return report(quiet, _("'%s' file does not contain absolute path to the worktree location"),
++			      git_common_path("worktrees/%s/gitdir", wt->id));
++
++	strbuf_addf(&sb, "%s/.git", wt->path);
++	if (!file_exists(sb.buf)) {
++		strbuf_release(&sb);
++		return report(quiet, _("'%s/.git' does not exist"), wt->path);
++	}
++
++	path = read_gitfile_gently(sb.buf, &err);
++	strbuf_release(&sb);
++	if (!path)
++		return report(quiet, _("'%s/.git' is not a .git file, error code %d"),
++			      wt->path, err);
++
++	if (fspathcmp(path, real_path(git_common_path("worktrees/%s", wt->id))))
++		return report(quiet, _("'%s' does not point back to"),
++			      wt->path, git_common_path("worktrees/%s", wt->id));
++
++	return 0;
++}
++
+ int is_worktree_being_rebased(const struct worktree *wt,
+ 			      const char *target)
+ {
+diff --git a/worktree.h b/worktree.h
+index 90e1311..e782ae5 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -50,6 +50,11 @@ extern int is_main_worktree(const struct worktree *wt);
+  */
+ extern const char *is_worktree_locked(struct worktree *wt);
+ 
++/*
++ * Return zero if the worktree is in good condition.
++ */
++extern int validate_worktree(const struct worktree *wt, int quiet);
++
+ /*
+  * Free up the memory for worktree(s)
+  */
 -- 
 2.8.2.524.g6ff3d78
 
