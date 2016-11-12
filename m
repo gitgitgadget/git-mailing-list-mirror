@@ -2,50 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,PI_HELLO,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83E6B2021E
-	for <e@80x24.org>; Sat, 12 Nov 2016 16:17:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD22B2021E
+	for <e@80x24.org>; Sat, 12 Nov 2016 17:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966454AbcKLQRm convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 12 Nov 2016 11:17:42 -0500
-Received: from blackdogproductions.net ([198.104.112.247]:43519 "EHLO
-        cpnosey99.servername.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966397AbcKLQRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Nov 2016 11:17:41 -0500
-X-Greylist: delayed 6456 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Nov 2016 11:17:41 EST
-Received: from [175.141.147.246] (port=51376 helo=smtp.midamenv.com)
-        by cpnosey99.servername.com with esmtpa (Exim 4.87)
-        (envelope-from <duncan_j_ferguson@midamenv.com>)
-        id 1c5Wly-0006uX-LJ
-        for git@vger.kernel.org; Sat, 12 Nov 2016 05:47:04 -0600
-From:   "Duncan Ferguson" <duncan_j_ferguson@midamenv.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Mime-Version: 1.0 (1.0)
-Subject: Hello git
-Message-Id: <5B196FE4-17F3-4D85-F778-7D224D9B07A4@midamenv.com>
-Date:   Sat, 12 Nov 2016 11:47:02 +0000
-To:     "git" <git@vger.kernel.org>
-X-Mailer: iPhone Mail (11B651)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpnosey99.servername.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - midamenv.com
-X-Get-Message-Sender-Via: cpnosey99.servername.com: authenticated_id: brad@midamenv.com
-X-Authenticated-Sender: cpnosey99.servername.com: brad@midamenv.com
+        id S966670AbcKLR4O (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Nov 2016 12:56:14 -0500
+Received: from wilbur.contactoffice.com ([212.3.242.68]:59391 "EHLO
+        wilbur.contactoffice.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751643AbcKLR4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Nov 2016 12:56:12 -0500
+X-Greylist: delayed 373 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Nov 2016 12:56:12 EST
+Received: from ichabod.co-bxl (ichabod.co-bxl [10.2.0.36])
+        by wilbur.contactoffice.com (Postfix) with ESMTP id 03E09C085
+        for <git@vger.kernel.org>; Sat, 12 Nov 2016 18:49:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mailfence.com;
+        s=20160819-nLV10XS2; t=1478972997;
+        bh=VjOS5rsfQeAhrgGn6AxjGRmrVRGjkxpWuvLBv4gIWz4=;
+        h=Subject:Reply-To:From:To:Date:From;
+        b=CveS9UPAAaPCTmppc0U3Vo5EDFUKEA1L7QyHodSXOg1RLWV9PiclGzNVi8ZmB4c8q
+         mRJVQHjirRcm3iigX4acCaffBI1mk1KGZwMxDxFwhYu12Z3dMZ50TKO0F0TBQ+YXdA
+         u/uSmy0dzm9NcXnxtHPBRToopf2Ahe8VNeeE1roX37+Boqf5+mORBu70YDWWYNt/vA
+         1PPnBsKnxNPlVxqSjTvwmatFp7HPpIr5RKUf0gViY0GevBzT9VvrxMcp53pHwjJbXG
+         j8bkuTvKk4CY55nnOZ2enuLetbt5p4GvVvmGA/VoQqlfG1qnIkv5zB7w9HJVnqCefF
+         LZc9lUbeHSevg==
+Message-ID: <284668531.626.1478972994238.JavaMail.root@ichabod>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: Feature request - show result of URL rewrites
+X-Priority: 3
+Reply-To: Git User <git.user@mailfence.com>
+From:   Git User <git.user@mailfence.com>
+To:     git@vger.kernel.org
+X-Mailer: ContactOffice Mail
+X-ContactOffice-Account: com:95587084
+Date:   Sat, 12 Nov 2016 18:49:54 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good morning git
+Hello
 
-http://edgell.me/arent.php?fresh=2ht0rm972keenex
+Hopefully this is the right place to submit feature requests - let me know if there's somewhere else I should use!
 
+Git lets you rewrite URLs using "url.<base>.insteadOf"
 
-Duncan Ferguson
+https://stackoverflow.com/a/11383587
+https://git-scm.com/docs/git-config
+
+Can you add a git-config option to show the result of this rewriting whenever this occurs, as debugging more complicated rules can be difficult/wasn't obvious without Wireshark.
+
+E.g. you could have the option 'url.printRewrites [True/False]' which would print the line "Rewrote url 'git://github.com/git/git' to 'https://github.com/git/git'" to terminal/stdout  when set to True.
+
+Thanks
