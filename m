@@ -2,81 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 957AE2021E
-	for <e@80x24.org>; Sun, 13 Nov 2016 01:33:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1238F2021E
+	for <e@80x24.org>; Sun, 13 Nov 2016 01:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932187AbcKMBXb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Nov 2016 20:23:31 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56725 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932127AbcKMBXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Nov 2016 20:23:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E1DC34E60D;
-        Sat, 12 Nov 2016 20:23:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yMYHjqAZftTinTPSsl+SxJvfvJw=; b=Dyvi/c
-        4MAitqSoi+QxP/6CVmKVEYbEtSuQTFz6F7AwCiSPx37MKDtD291A4/1GupN7tqdF
-        ix9ryJoz1zI+3yewLaYH4UNAMCFsH8irKaKoTvMAeAsp7KSyog1dtmewjUpUyWGB
-        jVIKe1lXd966bvgQom+5lmUfTvtP0wXUHYO6k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FVcaJUnFdkNHLGuiNLfNtWN66z2tKiL9
-        3C5JnoJsYsBTSNgQfvC3PR0Slhpir2viVXphCGOqqnt/IH9SuQ1/qXMYUTEm4ivG
-        ubG7fIIy9hT0D7svTR7LBpmm6rS6rPkxg8mRE5Ohf05UTKeJNkTFmH1GevlKsYuN
-        JwecuX1BNDI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DA4D44E60C;
-        Sat, 12 Nov 2016 20:23:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1752845AbcKMBkJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Nov 2016 20:40:09 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:46595 "EHLO
+        homiemail-a14.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752647AbcKMBkJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Nov 2016 20:40:09 -0500
+Received: from homiemail-a14.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTP id 3D16E392075;
+        Sat, 12 Nov 2016 17:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        in-reply-to:references:from:date:subject:to:cc
+        :content-transfer-encoding:message-id:mime-version; s=
+        mattmccutchen.net; bh=MKZm2lNBWqFAM7yldfsMd1dD1f0=; b=W2dUQV3poV
+        znoxmktvhMEORskYrfeT+pAn6h8+RgP1Md0DrWFld/skJBxCsXKPZzI9Et9d2bME
+        Vqtc76+6Y6lQvREarKkkvbWVJC15i990aR+QODHV2mnv+00uhFfZYJjO7n2wDPuj
+        2JBsmARXrz6Y1cUVk25IVv5BvyyJ3LkZA=
+Received: from main (c-50-177-20-184.hsd1.ma.comcast.net [50.177.20.184])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5759C4E60B;
-        Sat, 12 Nov 2016 20:23:28 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, spearce@spearce.org
-Subject: Re: [PATCH v2] upload-pack: Optionally allow fetching any sha1
-References: <1478885028-30357-1-git-send-email-dturner@twosigma.com>
-Date:   Sat, 12 Nov 2016 17:23:27 -0800
-In-Reply-To: <1478885028-30357-1-git-send-email-dturner@twosigma.com> (David
-        Turner's message of "Fri, 11 Nov 2016 12:23:48 -0500")
-Message-ID: <xmqqpom0yxyo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C7EEFECE-A93F-11E6-90B4-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTPSA id B90E8392076;
+        Sat, 12 Nov 2016 17:40:07 -0800 (PST)
+In-Reply-To: <xmqqy416uvan.fsf@gitster.mtv.corp.google.com>
+References: <xmqqy416uvan.fsf@gitster.mtv.corp.google.com>
+From:   Matt McCutchen <matt@mattmccutchen.net>
+Date:   Sat, 12 Nov 2016 20:25:55 -0500
+Subject: [PATCH] fetch/push: document that private data can be leaked
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Content-Transfer-Encoding: 7bit
+Message-ID: <1479001205.3471.1.camel@mattmccutchen.net>
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Turner <dturner@twosigma.com> writes:
+A malicious server may be able to use the fetch and push protocols to
+steal data from a user's repository that the user did not intend to
+share, via attacks similar to those described in the gitnamespaces(7)
+man page. Mention this in the git-fetch(1), git-pull(1), and git-push(1)
+man pages and recommend using separate repositories for private data and
+interaction with untrusted servers.
 
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 43665ab..8d3db40 100755
+Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+---
 
-It seems that I haven't heard of 43665ab.
+And here's a proposed patch.  Based on the maint branch, ac84098.
 
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -306,6 +306,28 @@ test_expect_success 'test allowreachablesha1inwant with unreachable' '
->  	test_must_fail git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
->  '
+ Documentation/fetch-push-security.txt | 9 +++++++++
+ Documentation/git-fetch.txt           | 2 ++
+ Documentation/git-pull.txt            | 2 ++
+ Documentation/git-push.txt            | 2 ++
+ 4 files changed, 15 insertions(+)
+ create mode 100644 Documentation/fetch-push-security.txt
 
-Specifically, the above seems to be missing in my tree.
+diff --git a/Documentation/fetch-push-security.txt b/Documentation/fetch-push-security.txt
+new file mode 100644
+index 0000000..00944ed
+--- /dev/null
++++ b/Documentation/fetch-push-security.txt
+@@ -0,0 +1,9 @@
++SECURITY
++--------
++The fetch and push protocols are not designed to prevent a malicious
++server from stealing data from your repository that you did not intend to
++share. The possible attacks are similar to the ones described in the
++"SECURITY" section of linkgit:gitnamespaces[7]. If you have private data
++that you need to protect from the server, keep it in a separate
++repository.
++
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index 9e42169..a461b4b 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -192,6 +192,8 @@ The first command fetches the `maint` branch from the repository at
+ objects will eventually be removed by git's built-in housekeeping (see
+ linkgit:git-gc[1]).
+ 
++include::fetch-push-security.txt[]
++
+ BUGS
+ ----
+ Using --recurse-submodules can only fetch new commits in already checked
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index d033b25..0af2de9 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -237,6 +237,8 @@ If you tried a pull which resulted in complex conflicts and
+ would want to start over, you can recover with 'git reset'.
+ 
+ 
++include::fetch-push-security.txt[]
++
+ BUGS
+ ----
+ Using --recurse-submodules can only fetch new commits in already checked
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 47b77e6..5ebef9e 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -559,6 +559,8 @@ Commits A and B would no longer belong to a branch with a symbolic name,
+ and so would be unreachable.  As such, these commits would be removed by
+ a `git gc` command on the origin repository.
+ 
++include::fetch-push-security.txt[]
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+-- 
+2.7.4
 
-Perhaps you noticed the lack of test for allowReachableSHA1InWant
-and added one, but forgot to send it out, while building this patch
-on top?
-
-> +uploadpack.allowAnySHA1InWant::
-> +	Allow `upload-pack` to accept a fetch request that asks for any
-> +	object at all.
-> +	Defaults to `false`.
 
