@@ -6,140 +6,153 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12F0920229
-	for <e@80x24.org>; Sun, 13 Nov 2016 01:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73ED52021E
+	for <e@80x24.org>; Sun, 13 Nov 2016 02:10:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932206AbcKMBrD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 12 Nov 2016 20:47:03 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59403 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932167AbcKMBrC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Nov 2016 20:47:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CA7F950372;
-        Sat, 12 Nov 2016 20:47:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wjmeEfXJr83FurSpyjpv1vd2UQw=; b=lQ3gGI
-        Fo6D1k5BESzpgy2qRVPXOX8icsdF7RXNel3KaxhtLUdETcu2hL2IY34t5HVAkzSu
-        JTfJRnF4amXm4VgQTrs9W34+GpKP9v7G93L/EtqiHQ3PMx8fn9TWLc2XuHlgm3uI
-        EI44HUzAXWa1sBVnfMIe7kCIDBHSQA1xrjy3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DDUIv6KPOjnGF07AeyjQPTA8n3cGRB2z
-        ihoKy7iOaW82XVz8/LuR0QlLR6WG/MYvusLCws7I/fNdpM/Z+2PFJ8uY0Ndr29b/
-        97FKu+MlhdXmZAmbYcs0lMhafYAhZ3PW7zV6irLoFmNxwxnBXPcJo0re7PiEEsOr
-        apapkOrXGCM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A99BD50371;
-        Sat, 12 Nov 2016 20:47:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S932280AbcKMCKY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 12 Nov 2016 21:10:24 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:59865 "EHLO
+        homiemail-a14.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932217AbcKMCKX (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Nov 2016 21:10:23 -0500
+Received: from homiemail-a14.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTP id 9EFBD392076;
+        Sat, 12 Nov 2016 18:10:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=
+        mattmccutchen.net; bh=G42dCkMH3KtbQZL7TOAlrdm2pkw=; b=W25g5EOaOj
+        jiS3/rB7C1Uc+ffSnYmRhEbDssWQozHqLHI8WLL+q6hMz43H7oj+V9bJUpRzJG7Q
+        21X05r13sQFBTvxAyJIkEHMZoaRFUec+GY7fjKmpbpNhIRbtC45vYzd+FgbIqGSh
+        KNkIB7Kl2YI1lYsQVbrFvrK+3yGXN2IhY=
+Received: from main (c-50-177-20-184.hsd1.ma.comcast.net [50.177.20.184])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 071A750370;
-        Sat, 12 Nov 2016 20:46:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     Git User <git.user@mailfence.com>, git@vger.kernel.org
-Subject: Re: Feature request - show result of URL rewrites
-References: <284668531.626.1478972994238.JavaMail.root@ichabod>
-        <1478974642.3227.4.camel@kaarsemaker.net>
-Date:   Sat, 12 Nov 2016 17:46:58 -0800
-In-Reply-To: <1478974642.3227.4.camel@kaarsemaker.net> (Dennis Kaarsemaker's
-        message of "Sat, 12 Nov 2016 19:17:22 +0100")
-Message-ID: <xmqqinrsywvh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 115B0640-A943-11E6-81BC-987C12518317-77302942!pb-smtp1.pobox.com
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTPSA id 364EB392075;
+        Sat, 12 Nov 2016 18:10:21 -0800 (PST)
+Message-ID: <1479003016.3471.18.camel@mattmccutchen.net>
+Subject: Re: Fetch/push lets a malicious server steal the targets of "have"
+ lines
+From:   Matt McCutchen <matt@mattmccutchen.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Sat, 12 Nov 2016 21:10:16 -0500
+In-Reply-To: <xmqqtwbuuuuy.fsf@gitster.mtv.corp.google.com>
+References: <1477690790.2904.22.camel@mattmccutchen.net>
+         <xmqqmvhoxhfp.fsf@gitster.mtv.corp.google.com>
+         <1477692961.2904.36.camel@mattmccutchen.net>
+         <xmqq7f8sx8lg.fsf@gitster.mtv.corp.google.com>
+         <1477712029.2904.64.camel@mattmccutchen.net>
+         <CAPc5daVOxmowdiTU3ScFv6c_BRVEJ+G92gx_AmmKnR-WxUKv-Q@mail.gmail.com>
+         <1477757268.1524.20.camel@mattmccutchen.net>
+         <xmqqtwbuuuuy.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+On Sun, 2016-10-30 at 01:03 -0700, Junio C Hamano wrote:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
+>=20
+> >=20
+> > On Fri, 2016-10-28 at 22:31 -0700, Junio C Hamano wrote:
+> > >=20
+> > > Not sending to the list, where mails from Gmail/phone is known to
+> > > get
+> > > rejected.
+> >=20
+> > [I guess I can go ahead and quote this to the list.]
+> >=20
+> > >=20
+> > > No. I'm saying that the scenario you gave is bad and people
+> > > should be
+> > > taught not to connect to untrustworthy sites.
+> >=20
+> > To clarify, are you saying:
+> >=20
+> > (1) don't connect to an untrusted server ever (e.g., we don't
+> > promise
+> > that the server can't execute arbitrary code on the client), or
+> >=20
+> > (2) don't connect to an untrusted server if the client repository
+> > has
+> > data that needs to be kept secret from the server?
+>=20
+> You sneaked "arbitrary code execution" into the discussion but I do
+> not know where it came from.=C2=A0=C2=A0In any case, "don't pull from o=
+r push
+> to untrustworthy place" would be a common sense advice that would
+> make sense in any scenario ;-)
 
->> Git lets you rewrite URLs using "url.<base>.insteadOf"
->>  ...
->> Can you add a git-config option to show the result of this rewriting
->> whenever this occurs, as debugging more complicated rules can be
->> difficult/wasn't obvious without Wireshark.
->> 
->> E.g. you could have the option 'url.printRewrites [True/False]' which
->> would print the line "Rewrote url 'git://github.com/git/git' to 'http
->> s://github.com/git/git'" to terminal/stdout  when set to True.
->
-> Such a configuration would be superfluous, the GIT_TRACE and
-> GIT_CURL_VERBOSE environment variables already provide all the
-> debugging information you need here.
+A blanket statement like that without explanation is not very helpful
+to users who do find themselves needing to pull from or push to a
+server they don't absolutely trust. =C2=A0The only "definitely safe" opti=
+on
+it leaves them is to run the entire thing in a sandbox. =C2=A0A statement=
+ of
+the nature of the risk=C2=A0is much more helpful: users can determine tha=
+t
+they don't care about the risk, or if it does, what the easiest
+workaround is.
 
-While i tend to agree with you that this kind of thing should not be
-a new "configuration" that you need to unset after you are done
-debugging, and should instead be done with a single-shot request
-mechanism like environment variables, I do not think your response
-is a fair and useful one.  Perhaps it is fair for the original
-request that wants to have a knob to learn what the original was
-rewritten to, but then the original request did not aim high enough
-to get a useful feature, I would suspect.
+The new risk we discovered in this thread is of leakage of private data
+from the local repository. =C2=A0To avoid that risk, it's sufficient for
+users to move private data to a separate repository, so that's the
+advice I propose to give. =C2=A0Are you aware of issues with fetch/push w=
+ith
+potential impact beyond leakage of private data, which would make my
+proposed text insufficient? =C2=A0I was giving "arbitrary code execution"=
+ as
+an example of what the impact of such an issue could be.
 
-GIT_TRACE or CURL_VERBOSE may show you the rewritten URL, and the
-end user (presumably) knows what the original URL s/he handed Git to
-go to, but I do not think these two are sufficient to find out what
-triggered one URL to be rewritten to the other URL, which probably
-is what the user wants to know the most.
+> Just for future reference, when you have ideas/issues that might
+> have possible security ramifications, I'd prefer to see it first
+> discussed on a private list we created for that exact purpose, until
+> we can assess the impact (if any).=C2=A0=C2=A0Right now MaintNotes says=
+ this:
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0If you think you found a security-sensitive iss=
+ue and want to
+> disclose
+> =C2=A0=C2=A0=C2=A0=C2=A0it to us without announcing it to wider public,=
+ please contact us
+> at
+> =C2=A0=C2=A0=C2=A0=C2=A0our security mailing list <git-security@googleg=
+roups.com>.=C2=A0=C2=A0This
+> is
+> =C2=A0=C2=A0=C2=A0=C2=A0a closed list that is limited to people who nee=
+d to know early
+> about
+> =C2=A0=C2=A0=C2=A0=C2=A0vulnerabilities, including:
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- people triaging and fixing report=
+ed vulnerabilities
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- people operating major git hostin=
+g sites with many users
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- people packaging and distributing=
+ git to large numbers of
+> people
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0where these issues are discussed without risk o=
+f the information
+> =C2=A0=C2=A0=C2=A0=C2=A0leaking out before we're ready to make public a=
+nnouncements.
+>=20
+> We may want to tweak the description from "disclose it to us" to
+> "have a discussion on it with us" (the former makes it sound as if
+> the topic has to be a definite problem, the latter can include an
+> idle speculation that may not be realistic attack vector).
 
-Your response may become useful if remove.c::alias_url() is taught
-to react to GIT_TRACE (or some other debugging mechanism we already
-have), so that it reports what rule caused what URL to be rewritten
-to what other URL.
+OK. =C2=A0I'll admit that I didn't even look for a policy on reporting of
+security issues because I believed the issue had low enough impact that
+a report to a dedicated security contact point would be unwelcome.
+=C2=A0Maybe that was reckless. =C2=A0The new text sounds good, if you put=
+ it in a
+place where people like me would see it. :/
 
-This is just to illustrate where to patch and not meant to even
-compile (e.g. "debug" is not even a variable defined anywhere), but
-starting from something like this, perhaps?
-
- remote.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index ad6c5424ed..09dca9468f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -63,11 +63,9 @@ static int valid_remote(const struct remote *remote)
- static const char *alias_url(const char *url, struct rewrites *r)
- {
- 	int i, j;
--	struct counted_string *longest;
--	int longest_i;
-+	struct counted_string *longest = NULL;
-+	int longest_i = -1, instead_of_j = -1;
- 
--	longest = NULL;
--	longest_i = -1;
- 	for (i = 0; i < r->rewrite_nr; i++) {
- 		if (!r->rewrite[i])
- 			continue;
-@@ -77,12 +75,24 @@ static const char *alias_url(const char *url, struct rewrites *r)
- 			     longest->len < r->rewrite[i]->instead_of[j].len)) {
- 				longest = &(r->rewrite[i]->instead_of[j]);
- 				longest_i = i;
-+				instead_of_j = j;
- 			}
- 		}
- 	}
- 	if (!longest)
- 		return url;
- 
-+	if (debug) {
-+		fprintf(stderr, "rewriting %s to %s%s\n",
-+			url,
-+			r->rewrite[longest_i]->base, url + longest->len);
-+		fprintf(stderr, "due to '%.*s.insteadof' = '%.*s'\n",
-+			r->rewrite[longest_i]->baselen,
-+			r->rewrite[longest_i]->base,
-+			r->rewrite[longest_i]->instead_of[j].len,
-+			r->rewrite[longest_i]->instead_of[j].s);
-+	}
-+
- 	return xstrfmt("%s%s", r->rewrite[longest_i]->base, url + longest->len);
- }
- 
+Matt
