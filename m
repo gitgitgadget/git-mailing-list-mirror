@@ -2,90 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,PI_HELLO,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	URI_WP_HACKED_2 shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99EED20229
-	for <e@80x24.org>; Sun, 13 Nov 2016 07:28:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9B3A1F858
+	for <e@80x24.org>; Sun, 13 Nov 2016 11:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932320AbcKMH2Y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Nov 2016 02:28:24 -0500
-Received: from 186-38-99-138.mrse.com.ar ([186.38.99.138]:43630 "HELO
-        mrse.com.ar" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S1751259AbcKMH2X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Nov 2016 02:28:23 -0500
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Nov 2016 02:28:21 EST
-Date:   Sun, 13 Nov 2016 07:28:15 -0000
-MIME-Version: 1.0
-Subject: 35733 git
-To:     <git@vger.kernel.org>
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment
-Message-ID: <147902209594.24431.4175441634619789845@mrse.com.ar>
-Content-Type: application/zip; name="EMAIL_48310306972_git.zip"
-From:   <luckylane@sbcglobal.net>
+        id S934849AbcKML1Q convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 13 Nov 2016 06:27:16 -0500
+Received: from gateway24.websitewelcome.com ([192.185.50.45]:58406 "EHLO
+        gateway24.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933905AbcKML1O (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 13 Nov 2016 06:27:14 -0500
+X-Greylist: delayed 1223 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Nov 2016 06:27:14 EST
+Received: from cm2.websitewelcome.com (cm2.websitewelcome.com [192.185.178.13])
+        by gateway24.websitewelcome.com (Postfix) with ESMTP id D5C72C7D97CC0
+        for <git@vger.kernel.org>; Sun, 13 Nov 2016 05:06:48 -0600 (CST)
+Received: from getz.websitewelcome.com ([192.185.81.178])
+        by cm2.websitewelcome.com with 
+        id 7P6n1u01W3qqTtc01P6obe; Sun, 13 Nov 2016 05:06:48 -0600
+Received: from 82-210-140-59.home.aster.pl ([82.210.140.59]:54901 helo=mail.jayandtrisa.com)
+        by getz.websitewelcome.com with esmtpa (Exim 4.87)
+        (envelope-from <trisa@jayandtrisa.com>)
+        id 1c5scZ-000Njy-0H
+        for git@vger.kernel.org; Sun, 13 Nov 2016 05:06:47 -0600
+From:   "K. Kwan" <kkwansj_888@jayandtrisa.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (1.0)
+Subject: hello git
+Message-Id: <20425664-7E49-4582-DDE6-620E27C380C5@jayandtrisa.com>
+Date:   Sun, 13 Nov 2016 11:06:46 +0000
+To:     "git" <git@vger.kernel.org>
+X-Mailer: iPhone Mail (10A551)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - getz.websitewelcome.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - jayandtrisa.com
+X-BWhitelist: no
+X-Source-IP: 82.210.140.59
+X-Exim-ID: 1c5scZ-000Njy-0H
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 82-210-140-59.home.aster.pl (mail.jayandtrisa.com) [82.210.140.59]:54901
+X-Source-Auth: trisa@jayandtrisa.com
+X-Email-Count: 274
+X-Source-Cap: amF5dHJpc2E7YmF0Y29tcDtnZXR6LndlYnNpdGV3ZWxjb21lLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-AABQSwUGAAAAAAEAAQBaAAAAWQwAAAAA
+Greetings git
+
+
+http://fumebilgisayar.com/blog//wp-content/themes/jmagz-themes/art.php?clothes=2p1ad1u91xfe
