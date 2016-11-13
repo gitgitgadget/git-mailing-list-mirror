@@ -2,123 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B925D1F40E
-	for <e@80x24.org>; Sun, 13 Nov 2016 17:58:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFFAA1F40E
+	for <e@80x24.org>; Sun, 13 Nov 2016 20:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753616AbcKMR6U (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Nov 2016 12:58:20 -0500
-Received: from upsilon.cc ([178.32.142.91]:34516 "EHLO upsilon.cc"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753413AbcKMR6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Nov 2016 12:58:19 -0500
-X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Nov 2016 12:58:19 EST
-Received: from timira.takhisis.invalid (bau75-1-78-194-69-54.fbxo.proxad.net [78.194.69.54])
-        by upsilon.cc (Postfix) with ESMTPSA id E9F4510216;
-        Sun, 13 Nov 2016 18:50:58 +0100 (CET)
-Received: by timira.takhisis.invalid (Postfix, from userid 1000)
-        id C3A986050F; Sun, 13 Nov 2016 18:50:58 +0100 (CET)
-Date:   Sun, 13 Nov 2016 18:50:58 +0100
-From:   Stefano Zacchiroli <zack@softwareheritage.org>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Josh Triplett <josh@joshtriplett.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>,
-        "Shawn O. Pierce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-Subject: Re: Regarding "git log" on "git series" metadata
-Message-ID: <20161113175058.t7s4o7h5chqzazb6@upsilon.cc>
-References: <xmqqa8dfdt6y.fsf@gitster.mtv.corp.google.com>
- <CAP8UFD2+A0MUKazAfSwCvv61TJRPuoOzH5EkqcrBOUi4TcuoDw@mail.gmail.com>
- <20161104211959.3532uiud27nhumt7@x>
- <CAP8UFD13sDOFuyZMWuoJeLFt_LAsfAHFBHpRwcdAGmA22xNEKQ@mail.gmail.com>
+        id S934987AbcKMUzh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Nov 2016 15:55:37 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:35759 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934805AbcKMUzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Nov 2016 15:55:36 -0500
+Received: by mail-lf0-f67.google.com with SMTP id p100so5370996lfg.2
+        for <git@vger.kernel.org>; Sun, 13 Nov 2016 12:55:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=nfjJXU/I6ubu2YT97MuC8z3mCP4KvLQ+jmIGv3lsQik=;
+        b=DhqqCj9E7FmwhsZZG/YOvgAIOHH5iqT016ozfWIzocCAes3SqkMb7ml2fmJVqlpo04
+         HMALUmiJ9hGnFgfF5LGcmfI1KW5L8Purrq6ZDtV1lvzDCthlw1NlT1Ef5G05e90/okxq
+         3ypDwXa30NQ2/fZctrjt21jj/Sh3o1OlPcHm5+pwvZAD39XoZYCgkke1hxNvE3NbwqmK
+         8CLW1Sd17Mrjk99JYzOy4QatFzwm1e6nZz1tEVAakltz7T/ocJBuF7+cFaUHkrVKw3wC
+         KrjeEr7TT8ZzwOvU+kJblTg/uKpBb6eg5c9WUrTKMmPnQqYcvBbdtX8Fz5+0XrwNmXki
+         MkrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=nfjJXU/I6ubu2YT97MuC8z3mCP4KvLQ+jmIGv3lsQik=;
+        b=SQOSGQKtdqcfELnce06D7xprWkO8s/I51Z16r35w88c9QwqmVQ8eri0wjT+QEqwNMn
+         by1dMgV2crDSU3Dx9ZqJ83i4keEHmsXbXD3xJwMNE8kHMUCCoV92FbvJ1NWBXfnWsd8M
+         aPq+z4r3w0Il5sG4IqAYnI7nAt6ZKhLCgVAe/rgaeBPY5Syfc39tG86/hOyiukHSbhh1
+         KbvEeE0wyAYTxdDFu/BNkEGgJNMwB9Xu7viSE5ZOoAOzUm2aRMRtiOuEjoEi0XVrtWY/
+         FaHI84HL9/OBsWorFbM8O69zCoJjH7+cECJZbsP2+9dq5zuQWgKCZodgIYn5nW0T5fBA
+         0Nmg==
+X-Gm-Message-State: ABUngvc77lHkg8CgJhljxNT/iEYCelRtU7DYE2fyXINHnz0WuEsNC/Gw8I8gcKhAyBu9j+GWuA2IcbyU0v6xMQ==
+X-Received: by 10.25.170.198 with SMTP id t189mr5476427lfe.129.1479070534402;
+ Sun, 13 Nov 2016 12:55:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD13sDOFuyZMWuoJeLFt_LAsfAHFBHpRwcdAGmA22xNEKQ@mail.gmail.com>
-User-Agent: NeoMutt/20161014 (1.7.1)
+Received: by 10.25.25.142 with HTTP; Sun, 13 Nov 2016 12:55:33 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 13 Nov 2016 21:55:33 +0100
+Message-ID: <CAP8UFD3Tf_C_ASfOiC9RsMCCfhMyyCAWONP1Y4o9J2e5GcbTyg@mail.gmail.com>
+Subject: Draft of Git Rev News edition 21
+To:     git <git@vger.kernel.org>
+Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Aaron Pelly <aaron@pelly.co>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alexei Lozovsky <a.lozovsky@gmail.com>,
+        Martin Braun <martin@gnuradio.org>,
+        Brendan Forster <brendan@github.com>,
+        Parker Moore <email@byparker.com>,
+        Shawn Pearce <shawn.pearce@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Hi,
 
-On Sat, Nov 05, 2016 at 12:04:08AM +0100, Christian Couder wrote:
-> On Fri, Nov 4, 2016 at 10:19 PM, Josh Triplett <josh@joshtriplett.org> wrote:
-> > On Fri, Nov 04, 2016 at 09:47:41PM +0100, Christian Couder wrote:
-> >>
-> >> Couldn't a RefTree be used to store refs that point to the base
-> >> commit, the tip commit and the blob that contains the cover letter,
-> >> and maybe also a ref pointing to the RefTree of the previous version
-> >> of the series?
-> >
-> > That's really interesting!  The Software Heritage project is working on
-> > something similar, because they want to store all the refs as part of
-> > their data model as well.  I'll point them to the reftree work.
-> 
-> Yeah, I know them :-) and I think I have already told Stefano
-> Zacchiroli about this, but I am not sure anymore.
-> Anyway I am CC'ing him.
+A draft of a new Git Rev News edition is available here:
 
-Thanks Christian (and Josh, on swh-devel) for pointing me to this.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-=
+21.md
 
-As a bit of background, the conceptual data model we have adopted for
-Software Heritage [1] is indeed that of a global Merkle DAG, very much
-inspired by Git, but where we deduplicate past the boundaries of
-individual VCS repositories. This way we can store only once the same
-software artifacts (blobs, trees, commits, etc.) even when they can be
-found at different software origins [2] (be it due to GitHub-like forks,
-projects moving around, or simply rogue copies of the same code
-scattered around the Internet).
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-[1]: https://www.softwareheritage.org/
+  https://github.com/git/git.github.io/issues/199
 
-[2]: "software origin" is Software Heritage terminology, which just
-     stands for places on the Internet where we can find source code
+You can also reply to this email.
 
-In our original design the topmost entries in our Merkle hierarchy used
-to be commits and tags, similar to what Git does. But then we realized
-that doing so inhibited us from sharing entire repository states across
-multiple software origins or multiple visits of the same software
-origin.  So we decided to add "repository snapshot objects" as our
-topmost entries, which are essentially git-like objects that map refs to
-the ID of the corresponding (typed-)objects. Rationale and a more
-lengthy description of this is available on our wiki [3]. It is not
-implemented yet, but we're pretty sold on the design at this point.
+I tried to cc everyone who appears in this edition but maybe I missed
+some people, sorry about that.
 
-[3]: https://wiki.softwareheritage.org/index.php?title=Repository_snapshot_objects
+Thomas, Jakub Nar=C4=99bski (who is now part of the team, welcome Jakub!)
+and myself plan to publish this edition on Wednesday November 16.
 
-Now, even if my only awareness of what's going on in Git upstream is
-limited to sporadic chats with Josh and Christian :-), it seems to me
-that various ideas in the Git ecosystem go in the same direction of our
-snapshot objects (git-series, RefTree). Which is understandable, given a
-number of use cases might be served by this.
-
-I don't think we have much to contribute to discussion or implementation
-here, and for our needs it doesn't really matter which one gets
-implemented. That's because we need an implementation of the concept
-which is *external* to Git anyhow. But even if it happens to exist
-within actual VCS, it's not a big deal for us, as we do have ways to
-distinguish "synthetic" objects in the DAG that we create for our own
-needs from "real" objects coming from actual software origins.
-(Another example of this concept we already have is when we inject
-distribution source packages or tarballs in our archive. In that case we
-create synthetic commits that points to the tree extracted from the
-tarball/package, preserving the ability to distinguish them from real
-commits coming from VCS out there.)
-
-If you think we can help in any other way, other than sharing our
-experiences and design considerations that is, please let me know! (I'm
-not subscribed to the Git upstream mailing list, but feel free to Cc:-me
-in conversations related to this topic.)
-
-Cheers.
--- 
-Stefano Zacchiroli . zack@upsilon.cc . upsilon.cc/zack . . o . . . o . o
-Computer Science Professor . CTO Software Heritage . . . . . o . . . o o
-Former Debian Project Leader . OSI Board Director  . . . o o o . . . o .
-« the first rule of tautology club is the first rule of tautology club »
+Thanks,
+Christian.
