@@ -2,196 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DACF203C1
-	for <e@80x24.org>; Mon, 14 Nov 2016 21:19:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E0AA203C1
+	for <e@80x24.org>; Mon, 14 Nov 2016 21:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938730AbcKNVTx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 16:19:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50961 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S938697AbcKNVTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 16:19:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BEED4E46E;
-        Mon, 14 Nov 2016 16:19:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CZ2qMcQ2jkUYdxr8NVciDiCdKNk=; b=FWzGJn
-        Cm5vLpsmabYoDusAI7Gq6dDsU//0dVCgVTdLlLIdvvW7pjAtpbn33+JxqShC0INQ
-        JShMxssz1LOAaqnqx6iBDmRazQn18OlNulJyXsdXEFlmGvY2+Z1Z7VaeI/DCH61n
-        KDkQ3fNEwo8MAwH2a1eP1P1tboTugqHC//CUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mYxRCeITgLJQgsklfNEtKnVjhu1julQL
-        O55SIoJ7zs/UGxtRGNrj96Ul5H8n9ei6wqphoLSls3M9krODb1GiDefxRptlFZtF
-        ygdJ0Yb5xa3UdVtNFKM9pkcA5vs9HT+V3bUgifCcdnVOq2Epw66KG14jKIiRm860
-        ScIwOSdjs34=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6430E4E46D;
-        Mon, 14 Nov 2016 16:19:51 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D02334E46C;
-        Mon, 14 Nov 2016 16:19:50 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org,
-        spearce@spearce.org
-Subject: Re: [PATCH] remote-curl: don't hang when a server dies before any output
-References: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
-        <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
-        <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net>
-Date:   Mon, 14 Nov 2016 13:19:49 -0800
-In-Reply-To: <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 14 Nov 2016 14:40:49 -0500")
-Message-ID: <xmqqpolxwyh6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S938722AbcKNVV0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 16:21:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43044 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S938503AbcKNVVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 16:21:25 -0500
+Received: (qmail 23033 invoked by uid 109); 14 Nov 2016 21:21:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Nov 2016 21:21:25 +0000
+Received: (qmail 4835 invoked by uid 111); 14 Nov 2016 21:21:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Nov 2016 16:21:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Nov 2016 16:21:23 -0500
+Date:   Mon, 14 Nov 2016 16:21:23 -0500
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFH] limiting ref advertisements
+Message-ID: <20161114212122.rkgeoh4rj5cxdadf@sigill.intra.peff.net>
+References: <20161024132932.i42rqn2vlpocqmkq@sigill.intra.peff.net>
+ <CACsJy8DwKxz14Dow9dEKeXnBriMzN_OptnGM7nPigPcS_pHX9w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 140C06BE-AAB0-11E6-B4F7-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DwKxz14Dow9dEKeXnBriMzN_OptnGM7nPigPcS_pHX9w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, Oct 25, 2016 at 06:46:21PM +0700, Duy Nguyen wrote:
 
-> So something like this. It turned out to be a lot uglier than I had
-> hoped because we get fed the data from curl in odd-sized chunks, so we
-> need a state machine.
+> > So it seems like left-anchoring the refspecs can never be fully correct.
+> > We can communicate "master" to the server, who can then look at every
+> > ref it would advertise and ask "could this be called master"? But it
+> > will be setting in stone the set of "could this be" patterns. Granted,
+> > those haven't changed much over the history of git, but it seems awfully
+> > fragile.
+> 
+> The first thought that comes to mind is, if left anchoring does not
+> work, let's support both left and right anchoring. I guess you
+> considered and discarded this.
+> 
+> If prefix matching does not work, and assuming "some-prefix" sent by
+> client to be in fact "**/some-prefix" pattern at server side will set
+> the "could this be" in stone, how about use wildmatch? It's flexible
+> enough and we have full control over the pattern matching engine so C
+> Git <-> C Git should be good regardless of platforms. I understand
+> that wildmatch is still complicated enough that a re-implementation
+> can easily divert in behavior. But a pattern with only '*', '/**',
+> '/**/' and '**/' wildcards (in other words, no [] or ?) could make the
+> engine a lot simpler and still fit our needs (and give some room for
+> client-optimization).
 
-It is unfortunate that we have to snoop the protocol like this to
-infer an error, but I do not think we can do better than that
-approach.  FWIW, I did not find the logic in update_pktline_state()
-you wrote ugly at all.
+Thanks for responding to this. I've been meaning to get back to it with
+some code experiments, but they keep getting bumped down in priority. So
+let me at least outline some of my thoughts, without code. :)
 
-Having to assume that the end of each round from the other end must
-be a FLUSH does feel somewhat ugly and brittle, though.
+I was hoping to avoid right-anchoring because it's expensive to find all
+of the right-anchored cases (assuming that ref storage is generally
+hierarchical, which it is now and probably will be for future backends).
 
-> diff --git a/remote-curl.c b/remote-curl.c
-> index f14c41f4c..605357d77 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -403,6 +403,18 @@ struct rpc_state {
->  	struct strbuf result;
->  	unsigned gzip_request : 1;
->  	unsigned initial_buffer : 1;
-> +
-> +	enum {
-> +		RPC_PKTLINE_ERROR, /* bogus hex chars in length */
-> +		RPC_PKTLINE_INITIAL, /* no packets received yet */
-> +		RPC_PKTLINE_1, /* got one hex char */
-> +		RPC_PKTLINE_2, /* got two hex chars */
-> +		RPC_PKTLINE_3, /* got three hex chars */
-> +		RPC_PKTLINE_DATA, /* reading data; pktline_len holds remaining */
-> +		RPC_PKTLINE_END_OF_PACKET, /* last packet completed */
-> +		RPC_PKTLINE_FLUSH, /* last packet was flush */
-> +	} pktline_state;
-> +	size_t pktline_len;
->  };
->  
->  static size_t rpc_out(void *ptr, size_t eltsize,
-> @@ -451,11 +463,77 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
->  }
->  #endif
->  
-> +static void update_pktline_state(struct rpc_state *rpc,
-> +				 const char *buf, size_t len)
-> +{
-> +#define READ_ONE_HEX(shift) do { \
-> +	int val = hexval(buf[0]); \
-> +	if (val < 0) { \
-> +		warning("error on %d", *buf); \
-> +		rpc->pktline_state = RPC_PKTLINE_ERROR; \
-> +		return; \
-> +	} \
-> +	rpc->pktline_len |= val << shift; \
-> +	buf++; \
-> +	len--; \
-> +} while(0)
-> +
-> +	while (len > 0) {
-> +		switch (rpc->pktline_state) {
-> +		case RPC_PKTLINE_ERROR:
-> +			/* previous error; there is no recovery */
-> +			return;
-> +
-> +		/* We can start a new pktline at any of these states */
-> +		case RPC_PKTLINE_INITIAL:
-> +		case RPC_PKTLINE_FLUSH:
-> +		case RPC_PKTLINE_END_OF_PACKET:
-> +			rpc->pktline_len = 0;
-> +			READ_ONE_HEX(12);
-> +			rpc->pktline_state = RPC_PKTLINE_1;
-> +			break;
-> +
-> +		case RPC_PKTLINE_1:
-> +			READ_ONE_HEX(8);
-> +			rpc->pktline_state = RPC_PKTLINE_2;
-> +			break;
-> +
-> +		case RPC_PKTLINE_2:
-> +			READ_ONE_HEX(4);
-> +			rpc->pktline_state = RPC_PKTLINE_3;
-> +			break;
-> +
-> +		case RPC_PKTLINE_3:
-> +			READ_ONE_HEX(0);
-> +			if (rpc->pktline_len) {
-> +				rpc->pktline_state = RPC_PKTLINE_DATA;
-> +				rpc->pktline_len -= 4;
-> +			} else
-> +				rpc->pktline_state = RPC_PKTLINE_FLUSH;
-> +			break;
-> +
-> +		case RPC_PKTLINE_DATA:
-> +			if (len < rpc->pktline_len) {
-> +				rpc->pktline_len -= len;
-> +				len = 0;
-> +			} else {
-> +				buf += rpc->pktline_len;
-> +				len -= rpc->pktline_len;
-> +				rpc->pktline_len = 0;
-> +				rpc->pktline_state = RPC_PKTLINE_END_OF_PACKET;
-> +			}
-> +			break;
-> +		}
-> +	}
-> +#undef READ_ONE_HEX
-> +}
-> +
->  static size_t rpc_in(char *ptr, size_t eltsize,
->  		size_t nmemb, void *buffer_)
->  {
->  	size_t size = eltsize * nmemb;
->  	struct rpc_state *rpc = buffer_;
-> +	update_pktline_state(rpc, ptr, size);
->  	write_or_die(rpc->in, ptr, size);
->  	return size;
->  }
-> @@ -659,6 +737,8 @@ static int post_rpc(struct rpc_state *rpc)
->  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
->  	curl_easy_setopt(slot->curl, CURLOPT_FILE, rpc);
->  
-> +	rpc->pktline_state = RPC_PKTLINE_INITIAL;
-> +
->  	err = run_slot(slot, NULL);
->  	if (err == HTTP_REAUTH && !large_request) {
->  		credential_fill(&http_auth);
-> @@ -667,6 +747,11 @@ static int post_rpc(struct rpc_state *rpc)
->  	if (err != HTTP_OK)
->  		err = -1;
->  
-> +	if (rpc->pktline_state != RPC_PKTLINE_FLUSH) {
-> +		error("invalid or truncated response from http server");
-> +		err = -1;
-> +	}
-> +
->  	curl_slist_free_all(headers);
->  	free(gzip_body);
->  	return err;
+I also don't think it covers all cases. As bizarre as it is, I believe
+you can currently do:
+
+  git fetch $remote origin
+
+and find refs/remotes/origin/HEAD.
+
+So I think the best we can ever do is have the server look at a specific
+set of patterns. Those patterns could be expressed by wildmatch. I was
+just a little nervous to turn to wildmatch, because it's complicated and
+we may want to update it in the future in a slightly-incompatible way.
+
+We also want to give some preference-order to the patterns. If I give
+you "refs/heads/master", and that ref exists, you do not need to tell me
+whether you also have "refs/heads/refs/heads/master". So you have to
+provide multiple patterns for each possible ref. And you need to group
+them as "show the first one that matches from this group".
+
+The pattern the client is using really is the ref_rev_parse_rules. So I
+think the solution is more like one of:
+
+  1. Specify the pattern set ahead of time, and then the server applies
+     it to each refname. We need some pattern language that can express
+     "fill in the thing in the middle". IOW, something like:
+
+       advertise-pattern=%s
+       advertise-pattern=refs/tags/%s
+       advertise-pattern=refs/heads/%s
+       advertise-lookup=master
+       advertise-lookup=v1.0
+
+     except that the thought of using snprintf() to handle formats
+     provided by the user is vaguely terrifying. We could make sure they
+     contain only a single "%s", but given the history there, it still
+     makes me nervous. I guess we could write our own pseudo-%s parser
+     that is much more careful and complains on bugs instead of
+     executing arbitrary code. ;)
+
+     I don't think wildmatch quite works for that, because it wants to
+     have the full pattern.
+
+  2. Declare the current set of ref_rev_parse_rules as "version 1", and
+     send:
+
+       advertise-lookup-v1=master
+       advertise-lookup-v1=v1.0
+
+     and the server would do the right thing. We could do a v2, but it
+     gets hairy. Let's imagine we add "refs/notes/%s" to the lookup
+     rules, and we'll call that v2.
+
+     But remember that these are "early capabilities", before the server
+     has spoken at all. So the client doesn't know if we can handle v2.
+     So we have to send _both_ (and v2-aware servers can ignore the v1).
+
+       advertise-lookup-v1=master
+       advertise-lookup-v2=master
+
+     But that's not quite enough. A v1 server won't look in refs/notes
+     at all. So we have to say that, too:
+
+       advertise-lookup-v1=refs/notes/master
+
+     And of course the v1 server has no idea that this isn't necessary
+     if we already found refs/heads/master.
+
+     So I think you really do need the client to be able to say "also
+     look at this pattern".
+
+Of course we do still want left-anchoring, too. Wildcards like
+"refs/heads/*" are always left-anchored. So I think we'd have two types,
+and a full request for
+
+  git fetch origin +refs/heads/*:refs/remotes/origin/* master:foo
+
+would look like:
+
+  (1) advertise-pattern-v1
+  (2) advertise-pattern=refs/notes/%s
+  (3) advertise-prefix=refs/heads
+  (4) advertise-lookup=master
+
+where the lines mean:
+
+  1. Use the standard v1 patterns (we could spell them out, but this
+     just saves bandwidth. In fact, it could just be implicit that v1
+     patterns are included, and we could skip this line).
+
+  2. This is for our fictional future version where the client knows
+     added refs/notes/* to its DWIM but the server hasn't yet.
+
+  3. Give me all of refs/heads/*
+
+  4. Look up "master" using the advertise patterns and give me the first
+     one you find.
+
+So given that we can omit (1), and that (2) is just an example for the
+future, it could look like:
+
+  advertise-prefix=refs/heads
+  advertise-lookup=master
+
+which is pretty reasonable. It's not _completely_ bulletproof in terms
+of backwards compatibility. The "v1" thing means the client can't insert
+a new pattern in the middle (remember they're ordered by priority). So
+maybe it is better to spell them all out (one thing that makes me
+hesitate is that these will probably end up as URL parameters for the
+HTTP version, which means our URL can start to get a little long).
+
+Anyway. That's the direction I'm thinking. I haven't written the code
+yet. The trickiest thing will probably be that the server would want to
+avoid advertising the same ref twice via two mechanisms (or perhaps the
+client just be tolerant of duplicates; that relieves the server of any
+duplicate-storage requirements).
+
+-Peff
