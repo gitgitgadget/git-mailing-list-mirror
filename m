@@ -2,107 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0137A1F858
-	for <e@80x24.org>; Mon, 14 Nov 2016 20:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0F71F858
+	for <e@80x24.org>; Mon, 14 Nov 2016 20:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936411AbcKNUA0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 15:00:26 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:32934 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933969AbcKNUAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 15:00:25 -0500
-Received: by mail-qk0-f169.google.com with SMTP id x190so109705870qkb.0
-        for <git@vger.kernel.org>; Mon, 14 Nov 2016 12:00:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vgFp76eqGJ9ASSx+m5FDn3TJ3htUgDMYRr7+4X/iuAA=;
-        b=oh3PuHcBr1pwTPv0I9LfKddv6enWJFPv7+lL+bzi+NPOHvlkLaxmUKKOZrH7ooW72M
-         fQlP+yEPeplbs4QBqVwRHjpwpF1C4BV2m09I8pg+najF9JG6VOU9bbJdOIq0Oh4mBgXS
-         0T/fqo8AWNyg1HZmbsPWFG0CKzi1OOtIGk5VNm3g0sq92pP3xan8INWXhtyDaakkBdfd
-         86LPagdwS+MMCJXSQcNyh62aIa8BRlPBE0l9xUGNojFyTR4kLKQUJsbOeVhXcXT+W5Bb
-         carVZNtqT7Ykj5p40L72ILyN+fLWJBVDGzwYhSmM/DuTj+bU5X3TwSGyqyF5LvPrq4+K
-         hcJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vgFp76eqGJ9ASSx+m5FDn3TJ3htUgDMYRr7+4X/iuAA=;
-        b=PNMNurCeIhTtTDyff6TGpLxhHLrqYNLPZexAemjKbx5HQ7hhYgZaym8gwUhOoPZ2om
-         10kYnZzkY2CJnllkmuyq8E9OZyQMi/pf8fXq7FbWTsAhQvJWUZ3gOmtgdk35oTJWXfh2
-         a6oKzXoUPWogjbwWCFQ+nC0F2Pumzy2X4JtbwHnF9YMMNN2tHohwJAIatGWeR+KL4iRo
-         X1HLNoBJoG0H3SkG7mTlz7as1xa6lgku/X2SO1pmYJ43dSbjo1CGgnUO1zEw79V6sk77
-         1B9YnFsQiPcRtESDhH7aKBx6Q/Wcdb2W/4MjFngOJhCEvRF0TH58/p5Dx/YeOmheDdnL
-         TN2w==
-X-Gm-Message-State: ABUngvd7KYBdNl0f6QacOvyDv9j44YqpFfRslhFiVqGqx4RPMvxo9k48grEkHk0g3O2OdezU6KCgFej439svIVTT
-X-Received: by 10.55.191.134 with SMTP id p128mr7525418qkf.58.1479153624230;
- Mon, 14 Nov 2016 12:00:24 -0800 (PST)
+        id S938620AbcKNUXM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 15:23:12 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55535 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932462AbcKNUXL (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 14 Nov 2016 15:23:11 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 79F3720861;
+        Mon, 14 Nov 2016 15:23:10 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Mon, 14 Nov 2016 15:23:10 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=QMoR5GVWdmalQv7
+        Sr0eptgRs/+c=; b=N0V+sIQqPRZPbAKYG9ubmu1k+4S5CA+J1PD7L88JwjaXYDe
+        Qvh23TR8pyTsOR/+T3WDqneJouPOiFBHDRvCygUzDJP+m2r+rz2sJOEKDgw+ttrD
+        iOjE/ESyzKMb0c/S/YvDdLKNCZGgoZCaWZzZtmnjsO5Oa6uv2MvOeNFsqUW4=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
+        smtpout; bh=QMoR5GVWdmalQv7Sr0eptgRs/+c=; b=rClKtv4fgz5kEvbETEyg
+        dOXyiy4CpFkwvz5D9P9cor29Pbi5RetmUKg/gMBoKGErVBMIuD4Nt62sVIknJ63J
+        3OMAbulhUukW3D9fxBnvkWlh8kYF14Q9V6/t4lapw+Q4+Ol2Fq49XH4CnHlS7s1k
+        Zwt4DA4z+Gb++9PsfMJuRQg=
+X-ME-Sender: <xms:Lh0qWMbII84JpOBBOx_WfYzqDBBzbKrB28dyFYk9DfGQeg_r5cWvIA>
+X-Sasl-enc: jBmkx05rSh2gkHQSRxYcb8IhoRMjWCG7sn8kqBNmvdDa 1479154990
+Received: from linux.fritz.box (dslb-178-011-219-217.178.011.pools.vodafone-ip.de [178.11.219.217])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 503FF24434;
+        Mon, 14 Nov 2016 15:23:09 -0500 (EST)
+Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20161111201958.2175-1-dennis@kaarsemaker.net>
+ <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
+ <alpine.DEB.2.20.1611121106110.3746@virtualbox>
+ <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
+ <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git mailing list <git@vger.kernel.org>
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <a3db4c55-550c-f2e8-83b8-46c2be86f7da@drmicha.warpmail.net>
+Date:   Mon, 14 Nov 2016 21:23:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Mon, 14 Nov 2016 12:00:23 -0800 (PST)
-In-Reply-To: <83508d1f-e809-f6be-5afc-4c23195dbd08@ramsayjones.plus.com>
-References: <83508d1f-e809-f6be-5afc-4c23195dbd08@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 14 Nov 2016 12:00:23 -0800
-Message-ID: <CAGZ79kaDK3syiNKvAKQf8q6AtcoXZuFz8fvxGZTj2Ced+Hu3Pg@mail.gmail.com>
-Subject: Re: [PATCH] attr: mark a file-local symbol as static
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 13, 2016 at 8:42 AM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->
-> Hi Stefan,
->
-> If you need to re-roll your 'sb/attr' branch, could you please
-> squash this into the relevant patch.
+Junio C Hamano venit, vidit, dixit 14.11.2016 19:01:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> *My* idea of --no-index was for it to behave as similar to the
+>> --index-version as possible, regarding formatting etc., and to be a good
+>> substitute for ordinary diff. The proposed patch achieves exactly that -
+> 
+> Does it?  It looks to me that it does a lot more.
 
-will do. I have it applied locally
+Yes, I didn't mean to say that it achieves only that - it achieves that
+one goal exactly, and more.
 
->
-> Alternatively, since there is only a single call site for git_attr()
-> (on line #1005), you could perhaps remove git_attr() and inline that
-> call. (However, that does make that line exceed 80 columns).
+>> why should a *file* argument (which is not a pathspec in --no-index
+>> mode) not be treated in the same way in which every other command treats
+>> a file argument? The patch un-breaks the most natural expectation.
+> 
+> I think a filename given as a command line argument, e.g. <(cmd), is
+> now treated more sensibly with [2/2].  Something that is not a
+> directory to be descended into and is not a regular file needs to be
+> made into a form that we can use as a blob, and reading it into an
+> in-core buffer is a workable way to do so.  
 
-I'll look into that.
+Yes.
 
-Thanks,
-Stefan
+> However, when taken together with [1/2], doesn't the proposed patch
+> "achieves" a lot more than "exactly that", namely, by not treating
+> symbolic links discovered during traversals of directories given
+> from the command line as such and dereferencing?
 
->
-> Thanks!
->
-> ATB,
-> Ramsay Jones
->
->  attr.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/attr.c b/attr.c
-> index 667ba85..84c4b08 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -169,7 +169,7 @@ static struct git_attr *git_attr_internal(const char *name, int len)
->         return a;
->  }
->
-> -struct git_attr *git_attr(const char *name)
-> +static struct git_attr *git_attr(const char *name)
->  {
->         return git_attr_internal(name, strlen(name));
->  }
-> --
-> 2.10.0
+It's not clear to me what you are saying here - 1/2 makes git diff
+follow symbolic links, yes, just like ordinary diff. If I 'diff' two
+dirs that contain symbolic links with the same name pointing to
+different files I get a diff between the contents, not between the
+filenames.
+
+I like the proposed change a lot, maybe that didn't come across clearly.
+I think it makes things more "predictable" in the sense that it meets
+typical expectations.
+
+Michael
+
