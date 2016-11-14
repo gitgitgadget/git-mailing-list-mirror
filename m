@@ -2,91 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2498E203C1
-	for <e@80x24.org>; Mon, 14 Nov 2016 21:33:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C6BA203C1
+	for <e@80x24.org>; Mon, 14 Nov 2016 22:21:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964798AbcKNVdm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 16:33:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43050 "EHLO cloud.peff.net"
+        id S938965AbcKNWU7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 17:20:59 -0500
+Received: from mout.gmx.net ([212.227.17.22]:64749 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S938882AbcKNVdk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 16:33:40 -0500
-Received: (qmail 23770 invoked by uid 109); 14 Nov 2016 21:33:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Nov 2016 21:33:39 +0000
-Received: (qmail 4867 invoked by uid 111); 14 Nov 2016 21:34:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Nov 2016 16:34:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Nov 2016 16:33:37 -0500
-Date:   Mon, 14 Nov 2016 16:33:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org,
-        spearce@spearce.org
-Subject: Re: [PATCH] remote-curl: don't hang when a server dies before any
- output
-Message-ID: <20161114213337.wipubwz5k22foyva@sigill.intra.peff.net>
-References: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
- <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
- <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net>
- <xmqqpolxwyh6.fsf@gitster.mtv.corp.google.com>
+        id S938761AbcKNWU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 17:20:58 -0500
+Received: from [192.168.178.43] ([92.76.224.96]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ln8gj-1cjIkN3HQb-00hLs0; Mon, 14
+ Nov 2016 23:20:54 +0100
+Subject: Re: [PATCH v15 02/27] bisect: rewrite `check_term_format` shell
+ function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1a74-ad2bcaff-0c92-4af4-9aa0-72d98f4945fc-000000@eu-west-1.amazonses.com>
+Cc:     git@vger.kernel.org
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <61aacd44-cb6a-2bbb-7fb4-933e2505040d@gmx.net>
+Date:   Mon, 14 Nov 2016 23:20:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpolxwyh6.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <01020157c38b1a74-ad2bcaff-0c92-4af4-9aa0-72d98f4945fc-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:yy6fiqpsiBryuFnTL3bauuY+qOi5JK9jp++/VcjW4DSv9w6qC70
+ bXIH8HyU/TE5nZsedwKhVKxsUTwCt+rhqG/Jwfo74vsHz3bhQV6L/M79aAqnGtt56Xc2qPG
+ S8A8VsHJN8ru71UjVHmZD4A7NGei89GWEheoHyuZvZL9j1bETJI9u+LHZMK+lOD1aSyho6g
+ fANvq0JgjrWfxtSgvtWFg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:27T2bOkgoOw=:E0LUhSSVg7NXKxGYcJC36d
+ JNjsu2uy5Cdd+upoTScOFMAwrq3kpXbjlVI1xA0M7FHKYlMYW7RRAWzNYvqaDcCe/aAoMaDRI
+ sxE4Q6f6+E89JjBI5WTUseDQ+s34GUO5bQ9pDabtR2rzbcC+y/zlvxqc5QkRl7HQfoTwOlueo
+ misIFaNYyhlgYs38R7fJt9um2I2rueRiZalCua1KbwOwCX2Yal5ATXme/MR2YjCVi1VCsa4lJ
+ nq4bV7P/LlaKghy2cfKSsb/cbg571gseFC8TDz0gsCwtH0k5nb3iDFOaaKvZEY+tR+05FyJU6
+ yzuKWlrEy7QLDltvl/aVaBR9U+kF4KkCrF6sG9gx7N54kOnQ0aOHR5qYQ7wEgb0FkXMi0vYf1
+ Rxh3kuw1/Moz8FAKOV35WDbU7eZfIHY5VCR6l3re0V04J5qRVxRCggBVqcfFdpjRShFqKOpo/
+ WF6OhhD5ygkzdBFt1TuMDUC7albLMJ0RBxwYTBJJTtmYOqYhb4shohS24apLvEodnCK2q5M3P
+ gNL35DCqPyPsw6HyExEMNLUWfnSJkjyifqCHLXaiw8MUyOtti0MxyPqF5f7RmdnY89YkNPawT
+ IBxRPdQjOROXoiE/KbZXBkytgtaiAKlJ6o++KyQCJAmZFisGEciabO09mbgditjuvXvvE3lVz
+ FDs7wSjZ7tV7bXs3cjp3sPXxm0yy77fKI3L5csiQjvUYgIj/kAyw3PUQp/lvwWJE73m0QfSEC
+ vhi5l4+VwyeUWm75JBTlWiKu9q2GX635JdKbfNrxVBhQx1zg/I+nZlSewxbjwmZ+oxv97lza1
+ UhSc17A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 14, 2016 at 01:19:49PM -0800, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So something like this. It turned out to be a lot uglier than I had
-> > hoped because we get fed the data from curl in odd-sized chunks, so we
-> > need a state machine.
-> 
-> It is unfortunate that we have to snoop the protocol like this to
-> infer an error, but I do not think we can do better than that
-> approach.  FWIW, I did not find the logic in update_pktline_state()
-> you wrote ugly at all.
-> 
-> Having to assume that the end of each round from the other end must
-> be a FLUSH does feel somewhat ugly and brittle, though.
+I saw in the recent "What's cooking" mail that this is still waiting
+for review, so I thought I could interfere and help reviewing it from a
+non-git-developer point of view.
+But only two commits for today. The first one seems fine. The second
+one makes me write this mail ;-)
 
-Yeah, I agree. The other option is to signal to fetch-pack that we saw
-EOF on the server request, and then we do not have to snoop; it knows
-where in the protocol state it is at.
+On 10/14/2016 04:14 PM, Pranit Bauva wrote:
+> +static int check_term_format(const char *term, const char *orig_term)
+> +{
+[...]
+> +	if (one_of(term, "help", "start", "skip", "next", "reset",
+> +			"visualize", "replay", "log", "run", NULL))
+[... vs ...]
+> -check_term_format () {
+> -	term=$1
+> -	git check-ref-format refs/bisect/"$term" ||
+> -	die "$(eval_gettext "'\$term' is not a valid term")"
+> -	case "$term" in
+> -	help|start|terms|skip|next|reset|visualize|replay|log|run)
 
-But doing that is a little tricky. We could send our own flush packet,
-but that doesn't quite work. When fetch-pack sees a flush it does not
-know if it is the server's flush and it should wait for our flush, or if
-the server hung up prematurely and the flush is from us. :)
+Is there a reasons why "terms" has been dropped from the list?
 
-The "elegant" solution is to just wrap the server's data in another set
-of pktlines. So the server flush becomes "00080000" (8 bytes including
-our pktline, and then 4 bytes for the flush packet). But wrapping each
-pktline gets a little hairy. What happens when the server sends us a
-pktline of LARGE_PACKET_MAX? We can't wrap that without sending our own
-pktline that's LARGE_PACKET_MAX+4.
-
-One solution is that pktlines 0001-0003 are unused and impossible for
-data. So we could send the server pktlines as-is, and use pktline 0001
-as our special signal for "end of http request". A server shouldn't ever
-send that, and if they did (perhaps to try something malicious), it
-would just cause fetch-pack to think they prematurely ended the
-conversation.
-
-Hmm. I suppose that doesn't quite work, though. One of the problems is
-that the server sends a partial pktline, in which case our special flush
-packet would get gobbled up as data for that broken pktline.
-
-So you really do need framing or some other out-of-band communication,
-or resolve yourself to snooping in remote-curl.
-
--Peff
+Best
+Stephan
