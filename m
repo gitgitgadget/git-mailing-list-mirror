@@ -2,82 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E916A1F858
-	for <e@80x24.org>; Mon, 14 Nov 2016 17:43:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E604C1F858
+	for <e@80x24.org>; Mon, 14 Nov 2016 18:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753303AbcKNRny (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 12:43:54 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34206 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752781AbcKNRnx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 12:43:53 -0500
-Received: by mail-pg0-f45.google.com with SMTP id x23so53576447pgx.1
-        for <git@vger.kernel.org>; Mon, 14 Nov 2016 09:43:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4PLwGQ/MxBb40J/psV6rylg77fkigX9JYHkYg44bIfk=;
-        b=BjH9R3/cA6zLobh/rs+53W0eVMGeSzfBMKSZD9lHhSZw3J2ePdpr3A2/k7l1YjBZlZ
-         P2TGHRirt4y1PDD4mSJKu9H+XQR1gIV8xNjkzFT49h7+sLlIhNTQvvqWvvCo/conYvbQ
-         PMxOfgQL4fXofKP8LGfb1J4bnLwVIW+FAvRAoK6fyfrS41oOj8Pp/yipiGnfg7mbvgEF
-         dGUTu7CpEQXOWvDrNpH/9g/6WkB8WrrILJbgKkDi0WksJ6edHLuZQ12G3pdP6DgYzIYU
-         fQbHr65CRqEw6bAHB/aklrOQmU+QYcHm9sLTka+5/GUBfIbCW0+JCuucqvIwOy59Wkx1
-         G1Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4PLwGQ/MxBb40J/psV6rylg77fkigX9JYHkYg44bIfk=;
-        b=UYflt1yYhp7YFeUE9AJQRbd3EXXFWTt0hFKowF9iN70eScIQRYrbelLzzjfbVYex8N
-         iukMXmQQfWPkHtdZ5v067t5hjwGMICxRClMeNr1MNi0NcmNEnXdqPouIesIpeDHj9Q1K
-         hIgGFmZIg6jqobn2+bpbZnf+qBgH9RaI/Wbrgc167RmlErPucDGL6ctIBq7BR+0et8ut
-         GJJsl6kckqcPN/odjnGC/QJRg+9x4pCTOs2sHNvUFGNMm3WUp39Eb7VcS8xzhJp79LE/
-         m+4gXW92hdPcpPMi2OKRXpYPOPdh9eiKAnHKN0vYQ9j4qT+8LP8fSOzWuu1E290+k/jJ
-         yHTw==
-X-Gm-Message-State: ABUngvcOtNu3r4uw5xzNQPR5K+WfFdWoQD8e5b71wdVK9vIw4DvEOUWCU17rZ/vxBfHQ86Mm
-X-Received: by 10.99.238.17 with SMTP id e17mr30504072pgi.154.1479145432953;
-        Mon, 14 Nov 2016 09:43:52 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:5dfb:30a4:a03d:dd8c])
-        by smtp.gmail.com with ESMTPSA id p25sm36731473pfk.20.2016.11.14.09.43.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 14 Nov 2016 09:43:52 -0800 (PST)
-Date:   Mon, 14 Nov 2016 09:43:50 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/6] grep: search history of moved submodules
-Message-ID: <20161114174350.GA181044@google.com>
-References: <1477953496-103596-1-git-send-email-bmwill@google.com>
- <1478908273-190166-1-git-send-email-bmwill@google.com>
- <1478908273-190166-7-git-send-email-bmwill@google.com>
- <CAGZ79kbf2i5s8Y84i2Wehbffsw1dUDUY6LYPEMME3vC6zo8-aw@mail.gmail.com>
+        id S933225AbcKNSBe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 13:01:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54114 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932899AbcKNSBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 13:01:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FD094F4F4;
+        Mon, 14 Nov 2016 13:01:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=VberNBvpRd/4le9APXdaF31cr38=; b=QxjEcd
+        DY/H5avlw4zIYqST7WeGd0h9JOKKOfvLwf9ucoRAqCtsi5XHb4GVO5gg5XWXQUX4
+        Vejqq+xJFW9zodZltScyI8NDAtYhrAN8UrJ5NPPV4ALRAe3Wc54oomFX/ONrIhKa
+        VnSivL4McHHCVZO0s5AeSa4ckx6bn6vpVZrDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=w7jW/2vuOlAhpz6ypDuOwui5OW0q6k8f
+        qkByxOJ/ttumahTSEPIEZJ50Y6hCzk2ByPyBMqOnOZ78SVYR0IoVALqENDW+P56e
+        c98ysNAmOGrh6T5KC3jW5GK181cAwBIj6P8ChSvouVlfYxQm10auSw8q+d8wFEgZ
+        hWkmd6ojEMk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 988B04F4F3;
+        Mon, 14 Nov 2016 13:01:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0763B4F4F2;
+        Mon, 14 Nov 2016 13:01:30 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
+References: <20161111201958.2175-1-dennis@kaarsemaker.net>
+        <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
+        <alpine.DEB.2.20.1611121106110.3746@virtualbox>
+        <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
+Date:   Mon, 14 Nov 2016 10:01:29 -0800
+In-Reply-To: <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
+        (Michael J. Gruber's message of "Mon, 14 Nov 2016 16:31:06 +0100")
+Message-ID: <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbf2i5s8Y84i2Wehbffsw1dUDUY6LYPEMME3vC6zo8-aw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5F338D9A-AA94-11E6-83CA-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11, Stefan Beller wrote:
-> On Fri, Nov 11, 2016 at 3:51 PM, Brandon Williams <bmwill@google.com> wrote:
-> 
-> > +
-> > +       rm -rf parent sub
-> 
-> This line sounds like a perfect candidate for "test_when_finished"
-> at the beginning of the test
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-K will do.
+> *My* idea of --no-index was for it to behave as similar to the
+> --index-version as possible, regarding formatting etc., and to be a good
+> substitute for ordinary diff. The proposed patch achieves exactly that -
 
--- 
-Brandon Williams
+Does it?  It looks to me that it does a lot more.
+
+> why should a *file* argument (which is not a pathspec in --no-index
+> mode) not be treated in the same way in which every other command treats
+> a file argument? The patch un-breaks the most natural expectation.
+
+I think a filename given as a command line argument, e.g. <(cmd), is
+now treated more sensibly with [2/2].  Something that is not a
+directory to be descended into and is not a regular file needs to be
+made into a form that we can use as a blob, and reading it into an
+in-core buffer is a workable way to do so.  
+
+However, when taken together with [1/2], doesn't the proposed patch
+"achieves" a lot more than "exactly that", namely, by not treating
+symbolic links discovered during traversals of directories given
+from the command line as such and dereferencing?
