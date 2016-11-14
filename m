@@ -2,94 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFFAA1F40E
-	for <e@80x24.org>; Sun, 13 Nov 2016 20:55:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12AAC1F40E
+	for <e@80x24.org>; Mon, 14 Nov 2016 01:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934987AbcKMUzh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Nov 2016 15:55:37 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35759 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934805AbcKMUzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Nov 2016 15:55:36 -0500
-Received: by mail-lf0-f67.google.com with SMTP id p100so5370996lfg.2
-        for <git@vger.kernel.org>; Sun, 13 Nov 2016 12:55:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=nfjJXU/I6ubu2YT97MuC8z3mCP4KvLQ+jmIGv3lsQik=;
-        b=DhqqCj9E7FmwhsZZG/YOvgAIOHH5iqT016ozfWIzocCAes3SqkMb7ml2fmJVqlpo04
-         HMALUmiJ9hGnFgfF5LGcmfI1KW5L8Purrq6ZDtV1lvzDCthlw1NlT1Ef5G05e90/okxq
-         3ypDwXa30NQ2/fZctrjt21jj/Sh3o1OlPcHm5+pwvZAD39XoZYCgkke1hxNvE3NbwqmK
-         8CLW1Sd17Mrjk99JYzOy4QatFzwm1e6nZz1tEVAakltz7T/ocJBuF7+cFaUHkrVKw3wC
-         KrjeEr7TT8ZzwOvU+kJblTg/uKpBb6eg5c9WUrTKMmPnQqYcvBbdtX8Fz5+0XrwNmXki
-         MkrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=nfjJXU/I6ubu2YT97MuC8z3mCP4KvLQ+jmIGv3lsQik=;
-        b=SQOSGQKtdqcfELnce06D7xprWkO8s/I51Z16r35w88c9QwqmVQ8eri0wjT+QEqwNMn
-         by1dMgV2crDSU3Dx9ZqJ83i4keEHmsXbXD3xJwMNE8kHMUCCoV92FbvJ1NWBXfnWsd8M
-         aPq+z4r3w0Il5sG4IqAYnI7nAt6ZKhLCgVAe/rgaeBPY5Syfc39tG86/hOyiukHSbhh1
-         KbvEeE0wyAYTxdDFu/BNkEGgJNMwB9Xu7viSE5ZOoAOzUm2aRMRtiOuEjoEi0XVrtWY/
-         FaHI84HL9/OBsWorFbM8O69zCoJjH7+cECJZbsP2+9dq5zuQWgKCZodgIYn5nW0T5fBA
-         0Nmg==
-X-Gm-Message-State: ABUngvc77lHkg8CgJhljxNT/iEYCelRtU7DYE2fyXINHnz0WuEsNC/Gw8I8gcKhAyBu9j+GWuA2IcbyU0v6xMQ==
-X-Received: by 10.25.170.198 with SMTP id t189mr5476427lfe.129.1479070534402;
- Sun, 13 Nov 2016 12:55:34 -0800 (PST)
+        id S1751556AbcKNBzZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Nov 2016 20:55:25 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56346 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751167AbcKNBzY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Nov 2016 20:55:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 376C550973;
+        Sun, 13 Nov 2016 20:55:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xQZg5nyyTEHK9E4oYaK+kfNGB2M=; b=Nwn+Qc
+        zUdENNgUg690KRBLwIZ7hrTRn2AmmVH6QR2aF1vOILX14ieu28tLjbzBHyQi2h4h
+        RyDYTXgtl+Pm+PH10KzdyyPlkTaIdl9+ED6a8qwGCkhqf0qOgWvCifzcpj1gGflA
+        SXWT+FQMvhKQibl8irm8vKhMUi9S9AYwHO6zs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=m/k5mw6YA/XUOg6A4aiLir0UiVQtKVBG
+        ZnpUq9V9FLjGpJxJKLRGks/XwQAXiML41deKL9bsboW2P+whjO6Hl7pM5LexZKlT
+        iZJ9JHkANJ0Ma1FzzmE8t6TRHcX1iTJfxdom+TyuSVV0Ulvz3cJbroyKRmosRM+E
+        ScK2lexj+Ac=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F73350972;
+        Sun, 13 Nov 2016 20:55:23 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9638250971;
+        Sun, 13 Nov 2016 20:55:22 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for ref printing atoms
+References: <20161108201211.25213-1-Karthik.188@gmail.com>
+        <20161108201211.25213-14-Karthik.188@gmail.com>
+        <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com>
+        <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com>
+Date:   Sun, 13 Nov 2016 17:55:21 -0800
+In-Reply-To: <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com>
+        (Karthik Nayak's message of "Sun, 13 Nov 2016 19:37:41 +0530")
+Message-ID: <xmqq60nqzuye.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.25.142 with HTTP; Sun, 13 Nov 2016 12:55:33 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 13 Nov 2016 21:55:33 +0100
-Message-ID: <CAP8UFD3Tf_C_ASfOiC9RsMCCfhMyyCAWONP1Y4o9J2e5GcbTyg@mail.gmail.com>
-Subject: Draft of Git Rev News edition 21
-To:     git <git@vger.kernel.org>
-Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Aaron Pelly <aaron@pelly.co>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Alexei Lozovsky <a.lozovsky@gmail.com>,
-        Martin Braun <martin@gnuradio.org>,
-        Brendan Forster <brendan@github.com>,
-        Parker Moore <email@byparker.com>,
-        Shawn Pearce <shawn.pearce@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 67550A26-AA0D-11E6-A34D-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-A draft of a new Git Rev News edition is available here:
+>>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+>>> index 600b703..f4ad297 100644
+>>> --- a/Documentation/git-for-each-ref.txt
+>>> +++ b/Documentation/git-for-each-ref.txt
+>>> @@ -96,7 +96,9 @@ refname::
+>>>         slash-separated path components from the front of the refname
+>>>         (e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
+>>>         `<N>` must be a positive integer.  If a displayed ref has fewer
+>>> -       components than `<N>`, the command aborts with an error.
+>>> +       components than `<N>`, the command aborts with an error. For the base
+>>> +       directory of the ref (i.e. foo in refs/foo/bar/boz) append
+>>> +       `:base`. For the entire directory path append `:dir`.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-=
-21.md
+Sorry that I missed this so far and I do not know how many recent
+rerolls had them like this, but I am not sure about these :base and
+:dir suffixes.  From their names I think readers would expect that
+they do rough equivalents to basename() and dirname() applied to the
+refname, but the example contradicts with that intuition.  The
+result of applying basename() to 'refs/boo/bar/boz' would be 'boz'
+and not 'foo' as the example says.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+So assuming that :base and :dir are unrelated to basename() and
+dirname():
 
-  https://github.com/git/git.github.io/issues/199
+ - I think calling these :base and :dir may be misleading
 
-You can also reply to this email.
+ - More importantly, what do these do?  I do not think of a good
+   description that generalizes "base of refs/foo/bar/boz is foo" to
+   explain your :base.
 
-I tried to cc everyone who appears in this edition but maybe I missed
-some people, sorry about that.
+ - A :dir that corresponds to the :base that picks 'foo' from
+   'refs/foo/bar/boz' needs an example, too.
 
-Thomas, Jakub Nar=C4=99bski (who is now part of the team, welcome Jakub!)
-and myself plan to publish this edition on Wednesday November 16.
+Or is the above example simply a typo?  Is refs/foo/bar/boz:base
+'boz', not 'foo'?
 
-Thanks,
-Christian.
+
+
