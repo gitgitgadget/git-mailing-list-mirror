@@ -6,82 +6,87 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E604C1F858
-	for <e@80x24.org>; Mon, 14 Nov 2016 18:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84A141F858
+	for <e@80x24.org>; Mon, 14 Nov 2016 18:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933225AbcKNSBe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 13:01:34 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54114 "EHLO
+        id S1754379AbcKNSKL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 13:10:11 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62882 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932899AbcKNSBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 13:01:33 -0500
+        with ESMTP id S1753758AbcKNSKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 13:10:10 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FD094F4F4;
-        Mon, 14 Nov 2016 13:01:31 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D2664E430;
+        Mon, 14 Nov 2016 13:10:09 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VberNBvpRd/4le9APXdaF31cr38=; b=QxjEcd
-        DY/H5avlw4zIYqST7WeGd0h9JOKKOfvLwf9ucoRAqCtsi5XHb4GVO5gg5XWXQUX4
-        Vejqq+xJFW9zodZltScyI8NDAtYhrAN8UrJ5NPPV4ALRAe3Wc54oomFX/ONrIhKa
-        VnSivL4McHHCVZO0s5AeSa4ckx6bn6vpVZrDU=
+        :content-type; s=sasl; bh=AQFUO/qhtIoTZPT2wTLf70OWgfc=; b=J2TkMU
+        eQQ/MNexMsLVvkpMUF6IM+31YzhJQiBcsJdje3Y1OBrXdCDs0AGzrsm2r4ccG0QW
+        T3idoLcpn9UAu3DM5GG1gpqWfR3uBajbnHQwrh1zYp+/N4zhxFaepRH1BWDNnkQR
+        IlErQ8HJoGebr6OceMbIAGeCxjmZ2g5HHX2B8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w7jW/2vuOlAhpz6ypDuOwui5OW0q6k8f
-        qkByxOJ/ttumahTSEPIEZJ50Y6hCzk2ByPyBMqOnOZ78SVYR0IoVALqENDW+P56e
-        c98ysNAmOGrh6T5KC3jW5GK181cAwBIj6P8ChSvouVlfYxQm10auSw8q+d8wFEgZ
-        hWkmd6ojEMk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 988B04F4F3;
-        Mon, 14 Nov 2016 13:01:31 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=B0AQKpS81cdQtruy/CYdBKY6ZSaZ5i6s
+        ki1FA/IiPwwVr8YuN30eDZd8uasMUuprK+n2PVOPIgwMB8n1k23KL8oTbGugvUIC
+        KuyIV6AkmX45bCYTG9/oz3zZ17EFXUggUxOfgK6IcMD4Vr3FoGQV+1hZ9ZSzezPT
+        erAFiX5n0ng=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 047674E42E;
+        Mon, 14 Nov 2016 13:10:09 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0763B4F4F2;
-        Mon, 14 Nov 2016 13:01:30 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 623F64E42D;
+        Mon, 14 Nov 2016 13:10:08 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
-References: <20161111201958.2175-1-dennis@kaarsemaker.net>
-        <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
-        <alpine.DEB.2.20.1611121106110.3746@virtualbox>
-        <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
-Date:   Mon, 14 Nov 2016 10:01:29 -0800
-In-Reply-To: <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
-        (Michael J. Gruber's message of "Mon, 14 Nov 2016 16:31:06 +0100")
-Message-ID: <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
+To:     jonathantanmy@google.com
+Cc:     git@vger.kernel.org, sbeller@google.com,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v3 5/6] grep: enable recurse-submodules to work on <tree> objects
+References: <1477953496-103596-1-git-send-email-bmwill@google.com>
+        <1478908273-190166-1-git-send-email-bmwill@google.com>
+        <1478908273-190166-6-git-send-email-bmwill@google.com>
+Date:   Mon, 14 Nov 2016 10:10:07 -0800
+In-Reply-To: <1478908273-190166-6-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Fri, 11 Nov 2016 15:51:12 -0800")
+Message-ID: <xmqqk2c6x79c.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5F338D9A-AA94-11E6-83CA-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 93947FB2-AA95-11E6-B044-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> *My* idea of --no-index was for it to behave as similar to the
-> --index-version as possible, regarding formatting etc., and to be a good
-> substitute for ordinary diff. The proposed patch achieves exactly that -
+> Teach grep to recursively search in submodules when provided with a
+> <tree> object. This allows grep to search a submodule based on the state
+> of the submodule that is present in a commit of the super project.
+>
+> When grep is provided with a <tree> object, the name of the object is
+> prefixed to all output.  In order to provide uniformity of output
+> between the parent and child processes the option `--parent-basename`
+> has been added so that the child can preface all of it's output with the
+> name of the parent's object instead of the name of the commit SHA1 of
+> the submodule. This changes output from the command
+> `git grep -e. -l --recurse-submodules HEAD` from:
+> HEAD:file
+> <commit sha1 of submodule>:sub/file
+>
+> to:
+> HEAD:file
+> HEAD:sub/file
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
 
-Does it?  It looks to me that it does a lot more.
+Unrelated tangent, but this makes readers wonder what the updated
+trailer code would do to the last paragraph ;-).  Does it behave
+sensibly (with some sane definition of sensibleness)?
 
-> why should a *file* argument (which is not a pathspec in --no-index
-> mode) not be treated in the same way in which every other command treats
-> a file argument? The patch un-breaks the most natural expectation.
+I am guessing that it would, because neither To: or HEAD: is what we
+normally recognize as a known trailer block element.
 
-I think a filename given as a command line argument, e.g. <(cmd), is
-now treated more sensibly with [2/2].  Something that is not a
-directory to be descended into and is not a regular file needs to be
-made into a form that we can use as a blob, and reading it into an
-in-core buffer is a workable way to do so.  
 
-However, when taken together with [1/2], doesn't the proposed patch
-"achieves" a lot more than "exactly that", namely, by not treating
-symbolic links discovered during traversals of directories given
-from the command line as such and dereferencing?
