@@ -2,112 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A38992021E
-	for <e@80x24.org>; Mon, 14 Nov 2016 09:12:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F8C21F858
+	for <e@80x24.org>; Mon, 14 Nov 2016 13:41:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933083AbcKNJLm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 04:11:42 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33449 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932893AbcKNJLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 04:11:15 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u144so13394895wmu.0
-        for <git@vger.kernel.org>; Mon, 14 Nov 2016 01:11:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qQ1nyRR+U3vicG6NRX3sZPZgaykVUxf3ts9sTH46hm8=;
-        b=R/8a4JubeiYuQnpxzWN/SOjstrO7tll4ab8xXaB7oCDafNx9lXTBtQdymlFY8302Mf
-         ECTP48DHAI1boQFHas58kDt10GECB9SFVEId1Yrl/BUawOyDEl0PwlsAzmC31iJQDjyN
-         c0RXsvIKMrjTnZQZv3xgu7Sh1hbmwyU7LD3hHrjn5qh9ns0sRA3C0loL1dCdi7W4XJ3V
-         VSKvQhdO5va5UeGVbw0ZltevE/Rly3jcCSTsMmDwBvQsJlyKfe3zqf1vrjqdcq18clL/
-         tFd8BYaOkAymq106l8TVxY/Q2ijherx2gdB6Egze9YS0E0zURwEV9gQkP8ghTYz3Qpzx
-         gwXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qQ1nyRR+U3vicG6NRX3sZPZgaykVUxf3ts9sTH46hm8=;
-        b=KwR+6HHZNlyofyyNc5Rt6nc4+VGmQd+y/3Zh8ftcbQxjcWjZ+2zGvS9QPifDF9JuRt
-         9M4xtTSJO5nwhQR+8yOa6/J8LdMlJKY2/8CEviZ/vNFUBwt5pZCiVtEJp/iI++43Db7B
-         3KKB7VcVbV+iqMSq0LKFmfbcSiFMRtg2XO6jJH9s+c+890zU7vPTMY2OPoYNMf9j78Lj
-         CuO5c7vNYKeLTUB+jPN6zaS6ksfz8lNslF2Be8Dr1+pAoAaGGtJUxdrbwfnqxHj7igb4
-         WOsKEbH/YT7OoHyloZRK62zYUv448y9R0SCJvGoK32fcMCy6VqshNMlNnHilg9GW0uCO
-         Kpig==
-X-Gm-Message-State: ABUngvcVTsJ+iVJQ2ixSJxpw7orGJz5qI2G2M/5u+mui+TSnczWc5a9upIoC12qcTeSFbA==
-X-Received: by 10.194.248.233 with SMTP id yp9mr18343545wjc.228.1479114674148;
-        Mon, 14 Nov 2016 01:11:14 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB4C1A.dip0.t-ipconnect.de. [93.219.76.26])
-        by smtp.gmail.com with ESMTPSA id k74sm28153486wmd.18.2016.11.14.01.11.12
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 14 Nov 2016 01:11:13 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] t0021, t5615: use $PWD instead of $(pwd) in PATH-like shell variables
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqtwbcyyfe.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 14 Nov 2016 10:11:12 +0100
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0BEC2674-20B5-4AD1-851A-97CA34C0CE7F@gmail.com>
-References: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de> <xmqq37iy3q0s.fsf@gitster.mtv.corp.google.com> <fa11def5-a878-a5c8-6e7b-627ea8cda7e2@kdbg.org> <2b69d098-92ef-77b0-367a-516e9edbe257@kdbg.org> <xmqqa8d53ky9.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1611121237230.3746@virtualbox> <xmqqtwbcyyfe.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1752188AbcKNNku (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 08:40:50 -0500
+Received: from mail.zhinst.com ([212.126.164.98]:46800 "EHLO mail.zhinst.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752105AbcKNNjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 08:39:15 -0500
+Received: from ziws08.zhinst.com ([10.42.0.7])
+        by mail.zhinst.com (Kerio Connect 9.2.0) with ESMTP;
+        Mon, 14 Nov 2016 14:39:10 +0100
+From:   Tobias Klauser <tklauser@distanz.ch>
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     Jeff King <peff@peff.net>
+Subject: [PATCH v2] diffcore-delta: remove unused parameter to diffcore_count_changes()
+Date:   Mon, 14 Nov 2016 14:39:05 +0100
+Message-Id: <20161114133905.6632-1-tklauser@distanz.ch>
+X-Mailer: git-send-email 2.11.0.rc0.7.gbe5a750
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The delta_limit parameter to diffcore_count_changes() has been unused
+since commit ba23bbc8e ("diffcore-delta: make change counter to byte
+oriented again.", 2006-03-04).
 
-> On 13 Nov 2016, at 02:13, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
->>> Thanks.  Dscho, does this fix both of these issues to you?
->>=20
->> Apparently it does because the CI jobs for `master` and for `next` =
-pass.
->=20
-> OK, thanks for a quick confirmation.
->=20
->> The one for `pu` still times out, of course.
->=20
-> Earlier you said 'pu' did even not build, but do we know where this
-> "still times out" comes from?  As long as I don't merge anything
-> prematurely, which I need to be careful about, it shouldn't impact
-> the upcoming release, but we'd need to figure it out before moving
-> things forward post release.
+Remove the parameter and adjust all callers.
 
-What is the goal for 'pu'?
+Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
+---
+v2: In the commit message, reference the correct commit where the parameter
+    usage was removed. Spotted by Jeff King.
 
-(1) Builds clean on all platforms + passes all tests
-(2) Builds clean on all platforms
-(3) Builds clean on Linux
-(4) Just makes new topics easily available to a broader audience
+ diff.c            | 2 +-
+ diffcore-break.c  | 1 -
+ diffcore-delta.c  | 1 -
+ diffcore-rename.c | 4 ----
+ diffcore.h        | 1 -
+ 5 files changed, 1 insertion(+), 8 deletions(-)
 
-My understanding was always (4) but the discussion above sounds=20
-more like (1) or (2)?
+diff --git a/diff.c b/diff.c
+index 8981477c436d..ec8728362dae 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2023,7 +2023,7 @@ static void show_dirstat(struct diff_options *options)
+ 		if (DIFF_FILE_VALID(p->one) && DIFF_FILE_VALID(p->two)) {
+ 			diff_populate_filespec(p->one, 0);
+ 			diff_populate_filespec(p->two, 0);
+-			diffcore_count_changes(p->one, p->two, NULL, NULL, 0,
++			diffcore_count_changes(p->one, p->two, NULL, NULL,
+ 					       &copied, &added);
+ 			diff_free_filespec_data(p->one);
+ 			diff_free_filespec_data(p->two);
+diff --git a/diffcore-break.c b/diffcore-break.c
+index 881a74f29e4f..c64359f489c8 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -73,7 +73,6 @@ static int should_break(struct diff_filespec *src,
+ 
+ 	if (diffcore_count_changes(src, dst,
+ 				   &src->cnt_data, &dst->cnt_data,
+-				   0,
+ 				   &src_copied, &literal_added))
+ 		return 0;
+ 
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index 2ebedb32d18a..ebe70fb06851 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -166,7 +166,6 @@ int diffcore_count_changes(struct diff_filespec *src,
+ 			   struct diff_filespec *dst,
+ 			   void **src_count_p,
+ 			   void **dst_count_p,
+-			   unsigned long delta_limit,
+ 			   unsigned long *src_copied,
+ 			   unsigned long *literal_added)
+ {
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 54a2396653df..f7444c86bde3 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -145,7 +145,6 @@ static int estimate_similarity(struct diff_filespec *src,
+ 	 * call into this function in that case.
+ 	 */
+ 	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
+-	unsigned long delta_limit;
+ 	int score;
+ 
+ 	/* We deal only with regular files.  Symlink renames are handled
+@@ -191,11 +190,8 @@ static int estimate_similarity(struct diff_filespec *src,
+ 	if (!dst->cnt_data && diff_populate_filespec(dst, 0))
+ 		return 0;
+ 
+-	delta_limit = (unsigned long)
+-		(base_size * (MAX_SCORE-minimum_score) / MAX_SCORE);
+ 	if (diffcore_count_changes(src, dst,
+ 				   &src->cnt_data, &dst->cnt_data,
+-				   delta_limit,
+ 				   &src_copied, &literal_added))
+ 		return 0;
+ 
+diff --git a/diffcore.h b/diffcore.h
+index c11b8465fc8e..623024135478 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -142,7 +142,6 @@ extern int diffcore_count_changes(struct diff_filespec *src,
+ 				  struct diff_filespec *dst,
+ 				  void **src_count_p,
+ 				  void **dst_count_p,
+-				  unsigned long delta_limit,
+ 				  unsigned long *src_copied,
+ 				  unsigned long *literal_added);
+ 
+-- 
+2.9.0
 
---
 
-Git 'pu' does not compile on macOS right now:
-builtin/bisect--helper.c:299:6: error: variable 'good_syn' is used =
-uninitialized=20
-whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-...
-
-More info here:
-https://api.travis-ci.org/jobs/175417712/log.txt?deansi=3Dtrue
-
---
-
-Cheers,
-Lars=
