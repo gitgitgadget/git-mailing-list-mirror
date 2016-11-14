@@ -2,186 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6981B1F858
-	for <e@80x24.org>; Mon, 14 Nov 2016 19:40:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAE1420229
+	for <e@80x24.org>; Mon, 14 Nov 2016 19:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932462AbcKNTkw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 14:40:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42986 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751532AbcKNTkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 14:40:51 -0500
-Received: (qmail 17405 invoked by uid 109); 14 Nov 2016 19:40:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Nov 2016 19:40:51 +0000
-Received: (qmail 4098 invoked by uid 111); 14 Nov 2016 19:41:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Nov 2016 14:41:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Nov 2016 14:40:49 -0500
-Date:   Mon, 14 Nov 2016 14:40:49 -0500
-From:   Jeff King <peff@peff.net>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, spearce@spearce.org
-Subject: Re: [PATCH] remote-curl: don't hang when a server dies before any
- output
-Message-ID: <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net>
-References: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
- <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
+        id S934486AbcKNTpV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 14:45:21 -0500
+Received: from avasout03.plus.net ([84.93.230.244]:33661 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933664AbcKNTpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 14:45:20 -0500
+Received: from [10.0.2.15] ([194.75.29.46])
+        by avasout03 with smtp
+        id 7vlG1u0050zhorE01vlHSK; Mon, 14 Nov 2016 19:45:19 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=YLLd8lOx c=1 sm=1 tr=0
+ a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
+ a=IkcTkHD0fZMA:10 a=zg2bXJHVhrVIbSjLoAgA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] t0021, t5615: use $PWD instead of $(pwd) in PATH-like
+ shell variables
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de>
+ <xmqq37iy3q0s.fsf@gitster.mtv.corp.google.com>
+ <fa11def5-a878-a5c8-6e7b-627ea8cda7e2@kdbg.org>
+ <2b69d098-92ef-77b0-367a-516e9edbe257@kdbg.org>
+ <xmqqa8d53ky9.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1611121237230.3746@virtualbox>
+ <xmqqtwbcyyfe.fsf@gitster.mtv.corp.google.com>
+ <0BEC2674-20B5-4AD1-851A-97CA34C0CE7F@gmail.com>
+ <35d3a07d-5d2f-aedd-94bc-4d92e5aa4661@web.de>
+ <20161114170105.btnohk2777ddaiul@sigill.intra.peff.net>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
+        pranit.bauva@gmail.com
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <27949dcc-e25b-3a4a-15e5-71245670c0f4@ramsayjones.plus.com>
+Date:   Mon, 14 Nov 2016 19:45:14 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
+In-Reply-To: <20161114170105.btnohk2777ddaiul@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 14, 2016 at 01:24:31PM -0500, Jeff King wrote:
 
->   2. Have remote-curl understand enough of the protocol that it can
->      abort rather than hang.
+
+On 14/11/16 17:01, Jeff King wrote:
+> On Mon, Nov 14, 2016 at 05:35:56PM +0100, Torsten Bögershausen wrote:
 > 
->      I think that's effectively the approach of your patch, but for one
->      specific case. But could we, for example, make sure that everything
->      we proxy is a complete set of pktlines and ends with a flush? And
->      if not, then we hang up on fetch-pack.
+>>> Git 'pu' does not compile on macOS right now:
+>>> builtin/bisect--helper.c:299:6: error: variable 'good_syn' is used uninitialized 
+>>> whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
 > 
->      I _think_ that would work, because even the pack is always encased
->      in pktlines for smart-http.
+> The next step is to make sure that the topic author is aware (in this
+> case, one assumes it's pb/bisect).
 
-So something like this. It turned out to be a lot uglier than I had
-hoped because we get fed the data from curl in odd-sized chunks, so we
-need a state machine.
+[+cc Pranit]
 
-But it does seem to work. At least it doesn't seem to break anything in
-the test suite, and it fixes the new tests you added. I'd worry that
-there's some obscure case where the response isn't packetized in the
-same way.
+Yep, I had a quick squint, and it looks like the compiler is correct.
+It should be complaining about the 'bad_syn' variable for exactly the
+same reason: namely, whenever the if condition is true, the only exit
+from that block is via 'goto finish' which bypasses the initialisation
+of 'good_syn' and 'bad_syn'.
 
----
-diff --git a/remote-curl.c b/remote-curl.c
-index f14c41f4c..605357d77 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -403,6 +403,18 @@ struct rpc_state {
- 	struct strbuf result;
- 	unsigned gzip_request : 1;
- 	unsigned initial_buffer : 1;
-+
-+	enum {
-+		RPC_PKTLINE_ERROR, /* bogus hex chars in length */
-+		RPC_PKTLINE_INITIAL, /* no packets received yet */
-+		RPC_PKTLINE_1, /* got one hex char */
-+		RPC_PKTLINE_2, /* got two hex chars */
-+		RPC_PKTLINE_3, /* got three hex chars */
-+		RPC_PKTLINE_DATA, /* reading data; pktline_len holds remaining */
-+		RPC_PKTLINE_END_OF_PACKET, /* last packet completed */
-+		RPC_PKTLINE_FLUSH, /* last packet was flush */
-+	} pktline_state;
-+	size_t pktline_len;
- };
- 
- static size_t rpc_out(void *ptr, size_t eltsize,
-@@ -451,11 +463,77 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
- }
- #endif
- 
-+static void update_pktline_state(struct rpc_state *rpc,
-+				 const char *buf, size_t len)
-+{
-+#define READ_ONE_HEX(shift) do { \
-+	int val = hexval(buf[0]); \
-+	if (val < 0) { \
-+		warning("error on %d", *buf); \
-+		rpc->pktline_state = RPC_PKTLINE_ERROR; \
-+		return; \
-+	} \
-+	rpc->pktline_len |= val << shift; \
-+	buf++; \
-+	len--; \
-+} while(0)
-+
-+	while (len > 0) {
-+		switch (rpc->pktline_state) {
-+		case RPC_PKTLINE_ERROR:
-+			/* previous error; there is no recovery */
-+			return;
-+
-+		/* We can start a new pktline at any of these states */
-+		case RPC_PKTLINE_INITIAL:
-+		case RPC_PKTLINE_FLUSH:
-+		case RPC_PKTLINE_END_OF_PACKET:
-+			rpc->pktline_len = 0;
-+			READ_ONE_HEX(12);
-+			rpc->pktline_state = RPC_PKTLINE_1;
-+			break;
-+
-+		case RPC_PKTLINE_1:
-+			READ_ONE_HEX(8);
-+			rpc->pktline_state = RPC_PKTLINE_2;
-+			break;
-+
-+		case RPC_PKTLINE_2:
-+			READ_ONE_HEX(4);
-+			rpc->pktline_state = RPC_PKTLINE_3;
-+			break;
-+
-+		case RPC_PKTLINE_3:
-+			READ_ONE_HEX(0);
-+			if (rpc->pktline_len) {
-+				rpc->pktline_state = RPC_PKTLINE_DATA;
-+				rpc->pktline_len -= 4;
-+			} else
-+				rpc->pktline_state = RPC_PKTLINE_FLUSH;
-+			break;
-+
-+		case RPC_PKTLINE_DATA:
-+			if (len < rpc->pktline_len) {
-+				rpc->pktline_len -= len;
-+				len = 0;
-+			} else {
-+				buf += rpc->pktline_len;
-+				len -= rpc->pktline_len;
-+				rpc->pktline_len = 0;
-+				rpc->pktline_state = RPC_PKTLINE_END_OF_PACKET;
-+			}
-+			break;
-+		}
-+	}
-+#undef READ_ONE_HEX
-+}
-+
- static size_t rpc_in(char *ptr, size_t eltsize,
- 		size_t nmemb, void *buffer_)
- {
- 	size_t size = eltsize * nmemb;
- 	struct rpc_state *rpc = buffer_;
-+	update_pktline_state(rpc, ptr, size);
- 	write_or_die(rpc->in, ptr, size);
- 	return size;
- }
-@@ -659,6 +737,8 @@ static int post_rpc(struct rpc_state *rpc)
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, rpc);
- 
-+	rpc->pktline_state = RPC_PKTLINE_INITIAL;
-+
- 	err = run_slot(slot, NULL);
- 	if (err == HTTP_REAUTH && !large_request) {
- 		credential_fill(&http_auth);
-@@ -667,6 +747,11 @@ static int post_rpc(struct rpc_state *rpc)
- 	if (err != HTTP_OK)
- 		err = -1;
- 
-+	if (rpc->pktline_state != RPC_PKTLINE_FLUSH) {
-+		error("invalid or truncated response from http server");
-+		err = -1;
-+	}
-+
- 	curl_slist_free_all(headers);
- 	free(gzip_body);
- 	return err;
+> Better still is to make a patch that can either be applied on top, or
+> squashed as appropriate. 
+
+No patch this time, but it simply requires those variables to be
+initialised to NULL in their declarations. :-D
+
+>                            I know that Ramsay Jones does this, for
+> example, with some of his sparse-related checks, and I'm pretty sure
+> from the turnaround-time that he runs it against "pu".
+
+Yep, the idea being to catch these simple problems before the topic
+reaches 'next'.
+
+ATB,
+Ramsay Jones
+
+
