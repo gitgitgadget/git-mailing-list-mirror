@@ -6,89 +6,192 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18CFA20898
-	for <e@80x24.org>; Mon, 14 Nov 2016 21:10:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DACF203C1
+	for <e@80x24.org>; Mon, 14 Nov 2016 21:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933166AbcKNVKe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Nov 2016 16:10:34 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57870 "EHLO
+        id S938730AbcKNVTx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Nov 2016 16:19:53 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50961 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932462AbcKNVKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2016 16:10:33 -0500
+        with ESMTP id S938697AbcKNVTw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2016 16:19:52 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 338FB4E2A5;
-        Mon, 14 Nov 2016 16:10:32 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BEED4E46E;
+        Mon, 14 Nov 2016 16:19:51 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=duC7E3P0lXA4S88QEoRogPTEIPc=; b=ZbxcFB
-        3VFJHYbLTPgxqodoh3kd/Zz+nWYVprHXgcGoBb2O2oOG7uFLXxAmT5mNrdQb2MMz
-        xpM0YPimcJ3ard7BdVucRpjl89NvFbPh5Z9GAm+znk6RemQevjs1U0jTFMYSBk6J
-        UaoBSqd/lIW78TAKO7nFXck4HHfURp4hBNaGw=
+        :content-type; s=sasl; bh=CZ2qMcQ2jkUYdxr8NVciDiCdKNk=; b=FWzGJn
+        Cm5vLpsmabYoDusAI7Gq6dDsU//0dVCgVTdLlLIdvvW7pjAtpbn33+JxqShC0INQ
+        JShMxssz1LOAaqnqx6iBDmRazQn18OlNulJyXsdXEFlmGvY2+Z1Z7VaeI/DCH61n
+        KDkQ3fNEwo8MAwH2a1eP1P1tboTugqHC//CUU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IAYfPnjNehzjKhrGJ7Yf+r8gCnv68lyN
-        LqdKUep6FeUHH+O3YMm1y+jNuJA3HkRMBa0HW1b0JgkuDn+hjee1tIbj7ZQQQ0kh
-        ampxW+w3+xjBZwq9P7nV0fXcgcbv3wiGxTgdT3GZo5wMXVskGWW34n7ICNiX4Mlk
-        +CdvXOCsRtA=
+        :content-type; q=dns; s=sasl; b=mYxRCeITgLJQgsklfNEtKnVjhu1julQL
+        O55SIoJ7zs/UGxtRGNrj96Ul5H8n9ei6wqphoLSls3M9krODb1GiDefxRptlFZtF
+        ygdJ0Yb5xa3UdVtNFKM9pkcA5vs9HT+V3bUgifCcdnVOq2Epw66KG14jKIiRm860
+        ScIwOSdjs34=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28C504E2A3;
-        Mon, 14 Nov 2016 16:10:32 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6430E4E46D;
+        Mon, 14 Nov 2016 16:19:51 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9EC744E2A2;
-        Mon, 14 Nov 2016 16:10:31 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D02334E46C;
+        Mon, 14 Nov 2016 16:19:50 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
-References: <20161111201958.2175-1-dennis@kaarsemaker.net>
-        <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
-        <alpine.DEB.2.20.1611121106110.3746@virtualbox>
-        <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
-        <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
-        <a3db4c55-550c-f2e8-83b8-46c2be86f7da@drmicha.warpmail.net>
-Date:   Mon, 14 Nov 2016 13:10:30 -0800
-In-Reply-To: <a3db4c55-550c-f2e8-83b8-46c2be86f7da@drmicha.warpmail.net>
-        (Michael J. Gruber's message of "Mon, 14 Nov 2016 21:23:07 +0100")
-Message-ID: <xmqqtwb9wywp.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org,
+        spearce@spearce.org
+Subject: Re: [PATCH] remote-curl: don't hang when a server dies before any output
+References: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
+        <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
+        <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net>
+Date:   Mon, 14 Nov 2016 13:19:49 -0800
+In-Reply-To: <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 14 Nov 2016 14:40:49 -0500")
+Message-ID: <xmqqpolxwyh6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C6C5AE1A-AAAE-11E6-8C23-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 140C06BE-AAB0-11E6-B4F7-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano venit, vidit, dixit 14.11.2016 19:01:
->> Michael J Gruber <git@drmicha.warpmail.net> writes:
->> 
->>> *My* idea of --no-index was for it to behave as similar to the
->>> --index-version as possible, regarding formatting etc., and to be a good
->>> substitute for ordinary diff. The proposed patch achieves exactly that -
->>  ...
-> It's not clear to me what you are saying here - 1/2 makes git diff
-> follow symbolic links, yes, just like ordinary diff.
+> So something like this. It turned out to be a lot uglier than I had
+> hoped because we get fed the data from curl in odd-sized chunks, so we
+> need a state machine.
 
-Yes, which can be seen as deviating from your earlier "as similar to
-the --index version as possible" goal, which I think was where Dscho's
-complaint comes from.
+It is unfortunate that we have to snoop the protocol like this to
+infer an error, but I do not think we can do better than that
+approach.  FWIW, I did not find the logic in update_pktline_state()
+you wrote ugly at all.
 
-I _think_ the no-index mode was primarily for those who want to use
-our diff as a replacement for GNU and other diffs, and from that
-point of view, I'd favour not doing the "comparing symbolic link?
-We'll show the difference between the link contents, not target"
-under no-index mode myself.  That is a lot closer to the diff other
-people implemented, not ours.  Hence the knee-jerk reaction I gave
-in
+Having to assume that the end of each round from the other end must
+be a FLUSH does feel somewhat ugly and brittle, though.
 
-http://public-inbox.org/git/xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com
-
-
+> diff --git a/remote-curl.c b/remote-curl.c
+> index f14c41f4c..605357d77 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -403,6 +403,18 @@ struct rpc_state {
+>  	struct strbuf result;
+>  	unsigned gzip_request : 1;
+>  	unsigned initial_buffer : 1;
+> +
+> +	enum {
+> +		RPC_PKTLINE_ERROR, /* bogus hex chars in length */
+> +		RPC_PKTLINE_INITIAL, /* no packets received yet */
+> +		RPC_PKTLINE_1, /* got one hex char */
+> +		RPC_PKTLINE_2, /* got two hex chars */
+> +		RPC_PKTLINE_3, /* got three hex chars */
+> +		RPC_PKTLINE_DATA, /* reading data; pktline_len holds remaining */
+> +		RPC_PKTLINE_END_OF_PACKET, /* last packet completed */
+> +		RPC_PKTLINE_FLUSH, /* last packet was flush */
+> +	} pktline_state;
+> +	size_t pktline_len;
+>  };
+>  
+>  static size_t rpc_out(void *ptr, size_t eltsize,
+> @@ -451,11 +463,77 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
+>  }
+>  #endif
+>  
+> +static void update_pktline_state(struct rpc_state *rpc,
+> +				 const char *buf, size_t len)
+> +{
+> +#define READ_ONE_HEX(shift) do { \
+> +	int val = hexval(buf[0]); \
+> +	if (val < 0) { \
+> +		warning("error on %d", *buf); \
+> +		rpc->pktline_state = RPC_PKTLINE_ERROR; \
+> +		return; \
+> +	} \
+> +	rpc->pktline_len |= val << shift; \
+> +	buf++; \
+> +	len--; \
+> +} while(0)
+> +
+> +	while (len > 0) {
+> +		switch (rpc->pktline_state) {
+> +		case RPC_PKTLINE_ERROR:
+> +			/* previous error; there is no recovery */
+> +			return;
+> +
+> +		/* We can start a new pktline at any of these states */
+> +		case RPC_PKTLINE_INITIAL:
+> +		case RPC_PKTLINE_FLUSH:
+> +		case RPC_PKTLINE_END_OF_PACKET:
+> +			rpc->pktline_len = 0;
+> +			READ_ONE_HEX(12);
+> +			rpc->pktline_state = RPC_PKTLINE_1;
+> +			break;
+> +
+> +		case RPC_PKTLINE_1:
+> +			READ_ONE_HEX(8);
+> +			rpc->pktline_state = RPC_PKTLINE_2;
+> +			break;
+> +
+> +		case RPC_PKTLINE_2:
+> +			READ_ONE_HEX(4);
+> +			rpc->pktline_state = RPC_PKTLINE_3;
+> +			break;
+> +
+> +		case RPC_PKTLINE_3:
+> +			READ_ONE_HEX(0);
+> +			if (rpc->pktline_len) {
+> +				rpc->pktline_state = RPC_PKTLINE_DATA;
+> +				rpc->pktline_len -= 4;
+> +			} else
+> +				rpc->pktline_state = RPC_PKTLINE_FLUSH;
+> +			break;
+> +
+> +		case RPC_PKTLINE_DATA:
+> +			if (len < rpc->pktline_len) {
+> +				rpc->pktline_len -= len;
+> +				len = 0;
+> +			} else {
+> +				buf += rpc->pktline_len;
+> +				len -= rpc->pktline_len;
+> +				rpc->pktline_len = 0;
+> +				rpc->pktline_state = RPC_PKTLINE_END_OF_PACKET;
+> +			}
+> +			break;
+> +		}
+> +	}
+> +#undef READ_ONE_HEX
+> +}
+> +
+>  static size_t rpc_in(char *ptr, size_t eltsize,
+>  		size_t nmemb, void *buffer_)
+>  {
+>  	size_t size = eltsize * nmemb;
+>  	struct rpc_state *rpc = buffer_;
+> +	update_pktline_state(rpc, ptr, size);
+>  	write_or_die(rpc->in, ptr, size);
+>  	return size;
+>  }
+> @@ -659,6 +737,8 @@ static int post_rpc(struct rpc_state *rpc)
+>  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
+>  	curl_easy_setopt(slot->curl, CURLOPT_FILE, rpc);
+>  
+> +	rpc->pktline_state = RPC_PKTLINE_INITIAL;
+> +
+>  	err = run_slot(slot, NULL);
+>  	if (err == HTTP_REAUTH && !large_request) {
+>  		credential_fill(&http_auth);
+> @@ -667,6 +747,11 @@ static int post_rpc(struct rpc_state *rpc)
+>  	if (err != HTTP_OK)
+>  		err = -1;
+>  
+> +	if (rpc->pktline_state != RPC_PKTLINE_FLUSH) {
+> +		error("invalid or truncated response from http server");
+> +		err = -1;
+> +	}
+> +
+>  	curl_slist_free_all(headers);
+>  	free(gzip_body);
+>  	return err;
