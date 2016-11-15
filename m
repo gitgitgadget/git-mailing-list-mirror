@@ -2,82 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C764B2021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 17:42:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C100B2021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 17:43:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752979AbcKORmR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 12:42:17 -0500
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:36073 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751950AbcKORmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 12:42:15 -0500
-Received: by mail-qk0-f176.google.com with SMTP id n21so144307906qka.3
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 09:42:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HMwUOKfDJueY8Ks9NzH4VP0gGpIzSpM8dXRfg0ke0lw=;
-        b=AoL9krVVVCgzHKRAs99yC05MT/rRT7ip0IPGR/lbL00SiJv5BfdbAQehfu3rkD+3QL
-         h2ollHMJpWr2A75ZpGNuO/Iv2igAXMjSOhLi9hpf64GfCuE/rvzNNKsjW4Bt4EAN60Nj
-         QMwL3zyNya5yCUMl5QYPMW20RhG48m4BpnN6CsJJaxqCwLZefRlgz30YjuCpzXT8VOmj
-         yEa2k0kca64+n1gS9ktiK06Ocd6Ffkbr/P3/wXiZuQ7SDbbzXxPl8/uZc1gfgOF1DEjB
-         N8BmFRQso6KOhr0SdXcNyLv5TbMtYWr4HhEx0ywz7gmhyPY8tKEZ11ru6uP9lXFpAcqx
-         oimg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HMwUOKfDJueY8Ks9NzH4VP0gGpIzSpM8dXRfg0ke0lw=;
-        b=HljT8WvcKMpxGRhKix+Kv/vGvKWKaCDzUxVKUOL135GQiJzRRqek7QuNP+28K1Z5Cy
-         y4iHNO/g1oJJxUdUuWlUcuxH2yuIzW2b1mjnar6EWoVp0R8ZzombIRgNloqGE4tGJ+d+
-         RHDqtM6FafVFJyYPboTcZHCKs2AbpL48Ki68LGbMs5iN18E5zCPtE7VsiIiP7reHKWPM
-         PtpGtfYzyI6Mc3Jt+nbBBrV4u9N1PbYDcHEp3IZCMh4/0ZNns61inkHTMO1+gSmkAav+
-         woU98zO6eyMWT+Pmsa/R7wgFA3Lli7Fy/2o7D7w8NWEWu5TWKslSp6taw+YBXf2n3obZ
-         /rsw==
-X-Gm-Message-State: ABUngvdnEVI9xp5iCjpZb/7v3d/OwC9aaa1fmm6CbrTOodDdKQEWj/gXXdQIykPaWuqHUObUCniUa2w4Unc7kFhz
-X-Received: by 10.55.67.81 with SMTP id q78mr21172982qka.53.1479231734804;
- Tue, 15 Nov 2016 09:42:14 -0800 (PST)
+        id S933957AbcKORnE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 12:43:04 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59104 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933893AbcKORnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 12:43:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D265D4EA48;
+        Tue, 15 Nov 2016 12:42:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=j5cE6Ppb8cNLubGV/dFBguntJgA=; b=FRw59+
+        1iSugVGVXlYyBP+vR29m2jiQSzVFmHp4J4HC4ncRJv1V04hDkuFt6kobmwrJf9uN
+        dQIomwgY1vML99p4Z5rMxbYTlszMSXds75qQJlR4fhGVX8G1I2R7n8M1MXM8d8uI
+        gL71bxf5D6tSvI56cAOXhBsAA/o8lMnIeIJGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rHeGNRYYI5v5gb6ZWlpFaU6xN0z9G3pQ
+        DZ56DHIw8CwIfvrSbsv87d7+trIZkJ7YREK6fSnb7F2WJsLiBE5dqbp7bFxB3R7v
+        vquFxwN2KgOkeqJx8yPGwmaCFSIW8bm7mF3/frqsSb0O6dyQxx6cBdm+Hb330l/h
+        2/fiJAFIXwY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA8444EA46;
+        Tue, 15 Nov 2016 12:42:58 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 47D264EA45;
+        Tue, 15 Nov 2016 12:42:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org,
+        spearce@spearce.org
+Subject: Re: [PATCH] remote-curl: don't hang when a server dies before any output
+References: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
+        <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
+        <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net>
+        <20161115004426.unheihlmftlw6ex7@sigill.intra.peff.net>
+        <xmqqa8d1v9lo.fsf@gitster.mtv.corp.google.com>
+        <20161115035844.e6ehuy7uigqinbnv@sigill.intra.peff.net>
+Date:   Tue, 15 Nov 2016 09:42:57 -0800
+In-Reply-To: <20161115035844.e6ehuy7uigqinbnv@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 14 Nov 2016 22:58:44 -0500")
+Message-ID: <xmqqzil0tza6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Tue, 15 Nov 2016 09:42:14 -0800 (PST)
-In-Reply-To: <1478908273-190166-1-git-send-email-bmwill@google.com>
-References: <1477953496-103596-1-git-send-email-bmwill@google.com> <1478908273-190166-1-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 15 Nov 2016 09:42:14 -0800
-Message-ID: <CAGZ79kbiXYKBjJL75bkgAOC+STTKk0F=9TVafpcT-50+ZAcStw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] recursively grep across submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: F25F11FE-AB5A-11E6-962B-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-coverity seems to dislike this part:
+Jeff King <peff@peff.net> writes:
 
-*** CID 1394367:  Null pointer dereferences  (NULL_RETURNS)
-/builtin/grep.c: 625 in grep_submodule()
-619                   is_submodule_populated(path))) {
-620                     /*
-621                      * If searching history, check for the presense of the
-622                      * submodule's gitdir before skipping the submodule.
-623                      */
-624                     if (sha1) {
->>>     CID 1394367:  Null pointer dereferences  (NULL_RETURNS)
->>>     Dereferencing a null pointer "submodule_from_path(null_sha1, path)".
-625                             path = git_path("modules/%s",
-626
-submodule_from_path(null_sha1, path)->name);
-627
-628                             if (!(is_directory(path) &&
-is_git_directory(path)))
-629                                     return 0;
-630                     } else {
+> On Mon, Nov 14, 2016 at 05:02:27PM -0800, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > Actually, I take it back. I think it works for a single round of ref
+>> > negotiation, but not for multiple. Enabling GIT_TEST_LONG=1 causes it to
+>> > fail t5551.
+>> >
+>> > I think I've probably made a mis-assumption on exactly when in the HTTP
+>> > protocol we will see a flush packet (and perhaps that is a sign that
+>> > this protocol-snooping approach is not a good one).
+>> 
+>> Hmph.  I think I tried David's original under GIT_TEST_LONG and saw
+>> it got stuck; could be the same issue, I guess.
+>
+> It works OK here. I think it is just that the test is really slow (by
+> design).
+
+Yeah, I think what I recalled was my old attempt to run the
+follow-up "any SHA-1" patch without this one.
