@@ -2,132 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAF412021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 17:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B62142021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 17:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753619AbcKOR3N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 12:29:13 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35314 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752270AbcKOR3M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 12:29:12 -0500
-Received: by mail-pg0-f50.google.com with SMTP id p66so68770606pga.2
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 09:29:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QhMYyJSSzpIDCDzcSHxe2QKigmFobt93h4DWmG4zhaU=;
-        b=MD63KFkOO4rpKglw5TCTXTsu90lPErhypMbHyl8HUqT820xzOgGmiVu50/8Lx7Ak9v
-         WwzaDTUoSyuC+y0dG9Go0ZgZ+HEio2x4lThw5DPWVxr9IvFF8DmPTOY/TuhkZ4HKV83F
-         O6t9DnNi2xLGHeaYZGgNl9Bt7EzoxRE7NQLjohSvQBh0PApki2cNpxRClDU+BlRz5ZXS
-         NhxkrsnQFLw3Buobykw6VzupyUxardqW6Tpl1PUH7IG/uVbpIrewLAM2o8tUhdBkYRCE
-         7wsxIqYKU81w489z8KYhgEkLUXHnNg0rt5gpiyHu2poLRZn43a86nxw5eaT0B6Lo7c24
-         NN9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QhMYyJSSzpIDCDzcSHxe2QKigmFobt93h4DWmG4zhaU=;
-        b=UUl17Zjjyq+p3MhZPQRj0CXPZ68vSyASh1o3NDwci0ME7NvSrk9UhZAzsWOnFa0+se
-         rnxzTlw3+/zmk4hctbcNXCYi5JNYAGKZssDD9Yex07ATiqzpasFJy/olfeZZS3HtNArz
-         MPrNt2MK4RCNlLoExbcZOve9UykOxRtjb1oU+L/9ZepOB+fpsCDYznC69PQCpqn6f3/R
-         aBkH/QHdmD879niwDGksD4Z+rzNJMgW08gxUHBdl2LAZA4NW45aNfmfxwGowqvHlz2qv
-         AKQluloKQB7OOBS3KeArz4FhHX7o1bcZpuLSLeqckUuFXcH7AwIPnJ+pMJToAyb43h3w
-         wabA==
-X-Gm-Message-State: ABUngvddHgifwjVSKWNWm6srTAmYi+0khVP56fY6rfRZj2f97iiC3z2xxG3cRbmIN/uVAQwP
-X-Received: by 10.99.174.75 with SMTP id e11mr45823518pgp.89.1479230951214;
-        Tue, 15 Nov 2016 09:29:11 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:f0a8:aad3:5a98:9829])
-        by smtp.gmail.com with ESMTPSA id p125sm25291569pfg.33.2016.11.15.09.29.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Nov 2016 09:29:10 -0800 (PST)
-Date:   Tue, 15 Nov 2016 09:29:09 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] push: --dry-run updates submodules when
- --recurse-submodules=on-demand
-Message-ID: <20161115172909.GA66382@google.com>
-References: <1479172735-698-1-git-send-email-bmwill@google.com>
- <1479172735-698-2-git-send-email-bmwill@google.com>
- <4a72ad14-0a8f-ede9-9f54-601fcd37740b@kdbg.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4a72ad14-0a8f-ede9-9f54-601fcd37740b@kdbg.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S933399AbcKORdK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 12:33:10 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:41145 "EHLO
+        homiemail-a14.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753175AbcKORdI (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Nov 2016 12:33:08 -0500
+Received: from homiemail-a14.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTP id 07D0C392078;
+        Tue, 15 Nov 2016 09:33:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version; s=mattmccutchen.net; bh=w2g+rdUTY4zT
+        jypv/Vx0dZg0jqw=; b=lgD46pdCPLjzBpJkEhtOomMV2XOHm0QGUzdOu9KrXnzf
+        ZnLmNN8OT5/Usqt8Wb0Yoml9BnXSr4vg3HQR2/ZKHTEXgo2Utmto10NZwGbAwxWb
+        rWzWJQYNW3M5QqcvelFI0ELdgCWF9YMRDeSa54uEiayfK4g1ARlwySdrq2n2JYk=
+Received: from main (30-10-119.wireless.csail.mit.edu [128.30.10.119])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a14.g.dreamhost.com (Postfix) with ESMTPSA id AE407392077;
+        Tue, 15 Nov 2016 09:33:07 -0800 (PST)
+Message-ID: <1479231184.2406.88.camel@mattmccutchen.net>
+Subject: Re: Protecting old temporary objects being reused from concurrent
+ "git gc"?
+From:   Matt McCutchen <matt@mattmccutchen.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Date:   Tue, 15 Nov 2016 12:33:04 -0500
+In-Reply-To: <20161115170634.ichqrqbhmpv2dsiw@sigill.intra.peff.net>
+References: <1479219194.2406.73.camel@mattmccutchen.net>
+         <20161115170634.ichqrqbhmpv2dsiw@sigill.intra.peff.net>
+Content-Type: multipart/mixed; boundary="=-A62Pv5gZSTYjVqzwBUrZ"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/15, Johannes Sixt wrote:
-> Am 15.11.2016 um 02:18 schrieb Brandon Williams:
-> >diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-> >index 198ce84..e6ccc30 100755
-> >--- a/t/t5531-deep-submodule-push.sh
-> >+++ b/t/t5531-deep-submodule-push.sh
-> >@@ -427,7 +427,31 @@ test_expect_success 'push unpushable submodule recursively fails' '
-> > 		cd submodule.git &&
-> > 		git rev-parse master >../actual
-> > 	) &&
-> >-	test_cmp expected actual
-> >+	test_cmp expected actual &&
-> >+	git -C work reset --hard master^
-> 
-> This line looks like a clean-up to be done after the test case. You
-> should wrap it in test_when_finished, but outside of a sub-shell,
-> which looks like it's just one line earlier, before the test_cmp.
 
-K will do.
+--=-A62Pv5gZSTYjVqzwBUrZ
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> >+'
-> >+
-> >+test_expect_failure 'push --dry-run does not recursively update submodules' '
-> >+	(
-> >+		cd work &&
-> >+		(
-> >+			cd gar/bage &&
-> >+			git checkout master &&
-> >+			git rev-parse master >../../../expected_submodule &&
-> >+			> junk9 &&
-> >+			git add junk9 &&
-> >+			git commit -m "Ninth junk"
-> >+		) &&
-> 
-> Could you please avoid this nested sub-shell? It is fine to cd
-> around when you are in a sub-shell.
+On Tue, 2016-11-15 at 12:06 -0500, Jeff King wrote:
+> =C2=A0- when an object write is optimized out because we already have t=
+he
+> =C2=A0=C2=A0=C2=A0object, git will update the mtime on the file (loose =
+object or
+> =C2=A0=C2=A0=C2=A0packfile) to freshen it
 
-Yes I can reorganize it to avoid the nested sub-shells.  I was just
-trying to follow the organization of the other tests in the same file.
+FWIW, I am not seeing this happen when I do "git read-tree --prefix"
+followed by "git write-tree" using the current master (3ab2281). =C2=A0Se=
+e
+the attached test script.
 
-> 
-> >+		git checkout master &&
-> >+		git rev-parse master >../expected_pub
-> 
-> Broken && chain.
-> 
-> >+		git add gar/bage &&
-> >+		git commit -m "Ninth commit for gar/bage" &&
-> >+		git push --dry-run --recurse-submodules=on-demand ../pub.git master
-> >+	) &&
-> >+	git -C submodule.git rev-parse master >actual_submodule &&
-> >+	git -C pub.git rev-parse master >actual_pub &&
-> 
-> All of the commands above are 'git something' that could become 'git
-> -C work something' and then the sub-shell would be unnecessary. I'm
-> not sure I would appreciate the verbosity of the result, though.
-> (Perhaps aligning the git subcommands after -C foo would help.)
+> If you have long-running data (like, a temporary index file that might
+> literally sit around for days or weeks) I think that is a potential
+> problem. And the solution is probably to use refs in some way to point
+> to your objects.
 
-I'll play around with it and try to make it look pretty while trying to
-avoid sub-shells.  I'm assuming the reason we want to avoid sub-shells is
-for performance reasons right?
+Agreed. =C2=A0This is not my current scenario.
 
--- 
-Brandon Williams
+> If you're worried about a short-term operation where
+> somebody happens to run git-gc concurrently, I agree it's a possible
+> problem, but I suspect something you can ignore in practice.
+>=20
+> For the most part, a lot of the client-side git tools assume that one
+> operation is happening at a time in the repository. And I think that
+> largely holds for a developer working on a single clone, and things jus=
+t
+> work in practice.
+>=20
+> Auto-gc makes that a little sketchier, but historically does not seem t=
+o
+> have really caused problems in practice.
+
+OK. =C2=A0I'll write a patch to add a summary of this information to the
+git-gc man page.
+
+Matt
+--=-A62Pv5gZSTYjVqzwBUrZ
+Content-Type: application/x-shellscript;
+	name="test-git-read-tree-write-tree-touch-object.sh"
+Content-Disposition: attachment; filename="test-git-read-tree-write-tree-touch-object.sh"
+Content-Transfer-Encoding: base64
+
+IyEvYmluL2Jhc2gKc2V0IC1lIC14CgpybSAtcmYgdGVzdC1yZXBvCmdpdCBpbml0IHRlc3QtcmVw
+bwpjZCB0ZXN0LXJlcG8KZWNobyBmb28gPmZvbwpnaXQgYWRkIGZvbwpnaXQgY29tbWl0IC1tICdz
+dWJwcm9qZWN0JwpnaXQgYnJhbmNoIC1tIHN1YgoKZ2l0IGNoZWNrb3V0IC0tb3JwaGFuIG1hc3Rl
+cgpnaXQgcm0gLXJmIC4KZ2l0IHJlYWQtdHJlZSAtLXByZWZpeD1zdWIvIHN1Ygp0cmVlX2lkPSIk
+KGdpdCB3cml0ZS10cmVlKSIKb2JqX3BhdGg9LmdpdC9vYmplY3RzLyR7dHJlZV9pZDowOjJ9LyR7
+dHJlZV9pZDoyOjM4fQpzdGF0IC0tZm9ybWF0PSclbiAleScgIiRvYmpfcGF0aCIKCnNsZWVwIDIK
+Z2l0IHJtIC1yZiAuCmdpdCByZWFkLXRyZWUgLS1wcmVmaXg9c3ViLyBzdWIKdHJlZV9pZD0iJChn
+aXQgd3JpdGUtdHJlZSkiCm9ial9wYXRoPS5naXQvb2JqZWN0cy8ke3RyZWVfaWQ6MDoyfS8ke3Ry
+ZWVfaWQ6MjozOH0Kc3RhdCAtLWZvcm1hdD0nJW4gJXknICIkb2JqX3BhdGgiCg==
+
+
+--=-A62Pv5gZSTYjVqzwBUrZ--
+
