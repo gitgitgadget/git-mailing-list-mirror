@@ -2,90 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFEE32021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 17:42:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C764B2021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 17:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbcKORmH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 12:42:07 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60313 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751199AbcKORmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 12:42:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AB734CE9A;
-        Tue, 15 Nov 2016 12:42:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ux73hv9CctdRL7eLSvxEJk+7tXw=; b=AFWp2Y
-        tTQSbOvJ8WT7E3wzVNHr3VG28hyZQkmrzyskLtfqb4Xv1nP8AFctP8ue5aarWWqs
-        fjo5aY5IsdrOc/jJkoh3+OzOZVCSQtHGr6GQWmb23c3o4IcWWCHXG2H36mwimzF/
-        luCVENQvDb7Gvk2/7oy8eAdW3i6cnEa2458EQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=upB25rYRVBJAb5xpJ28G+b816jwpgvG6
-        WnHtlqRylvnn0KraG5WEWjhWIV2mioHHHdRqAsnmNZWsmOdhpDGzDNWfJHyQadxY
-        FfMaCz2FJOc00NvXg6TcBSbzKtX5W7jx8hdhn28sIgplKblnQyDlbNYtiLReS3xJ
-        je7H6XBGLyM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BD1F4CE98;
-        Tue, 15 Nov 2016 12:42:05 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B91AD4CE94;
-        Tue, 15 Nov 2016 12:42:04 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for ref printing atoms
-References: <20161108201211.25213-1-Karthik.188@gmail.com>
-        <20161108201211.25213-14-Karthik.188@gmail.com>
-        <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com>
-        <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com>
-        <xmqq60nqzuye.fsf@gitster.mtv.corp.google.com>
-        <CAOLa=ZSFuq2+6xsrJ=CcXuOVbTnbDirbRtu7Fonfk+9EdRpbxg@mail.gmail.com>
-        <xmqqy40lx2k8.fsf@gitster.mtv.corp.google.com>
-        <CAOLa=ZQepW9GiUrKEWXojpy10B86K-jb84G_dJeL=mqtjZ4AWg@mail.gmail.com>
-        <CA+P7+xo6OqcpLZ7v_m1EPm85eK2xCPD_LCw1Ly2RSPeSC0Ei7g@mail.gmail.com>
-Date:   Tue, 15 Nov 2016 09:42:03 -0800
-In-Reply-To: <CA+P7+xo6OqcpLZ7v_m1EPm85eK2xCPD_LCw1Ly2RSPeSC0Ei7g@mail.gmail.com>
-        (Jacob Keller's message of "Mon, 14 Nov 2016 23:55:31 -0800")
-Message-ID: <xmqq4m38vdw4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752979AbcKORmR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 12:42:17 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:36073 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751950AbcKORmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 12:42:15 -0500
+Received: by mail-qk0-f176.google.com with SMTP id n21so144307906qka.3
+        for <git@vger.kernel.org>; Tue, 15 Nov 2016 09:42:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=HMwUOKfDJueY8Ks9NzH4VP0gGpIzSpM8dXRfg0ke0lw=;
+        b=AoL9krVVVCgzHKRAs99yC05MT/rRT7ip0IPGR/lbL00SiJv5BfdbAQehfu3rkD+3QL
+         h2ollHMJpWr2A75ZpGNuO/Iv2igAXMjSOhLi9hpf64GfCuE/rvzNNKsjW4Bt4EAN60Nj
+         QMwL3zyNya5yCUMl5QYPMW20RhG48m4BpnN6CsJJaxqCwLZefRlgz30YjuCpzXT8VOmj
+         yEa2k0kca64+n1gS9ktiK06Ocd6Ffkbr/P3/wXiZuQ7SDbbzXxPl8/uZc1gfgOF1DEjB
+         N8BmFRQso6KOhr0SdXcNyLv5TbMtYWr4HhEx0ywz7gmhyPY8tKEZ11ru6uP9lXFpAcqx
+         oimg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=HMwUOKfDJueY8Ks9NzH4VP0gGpIzSpM8dXRfg0ke0lw=;
+        b=HljT8WvcKMpxGRhKix+Kv/vGvKWKaCDzUxVKUOL135GQiJzRRqek7QuNP+28K1Z5Cy
+         y4iHNO/g1oJJxUdUuWlUcuxH2yuIzW2b1mjnar6EWoVp0R8ZzombIRgNloqGE4tGJ+d+
+         RHDqtM6FafVFJyYPboTcZHCKs2AbpL48Ki68LGbMs5iN18E5zCPtE7VsiIiP7reHKWPM
+         PtpGtfYzyI6Mc3Jt+nbBBrV4u9N1PbYDcHEp3IZCMh4/0ZNns61inkHTMO1+gSmkAav+
+         woU98zO6eyMWT+Pmsa/R7wgFA3Lli7Fy/2o7D7w8NWEWu5TWKslSp6taw+YBXf2n3obZ
+         /rsw==
+X-Gm-Message-State: ABUngvdnEVI9xp5iCjpZb/7v3d/OwC9aaa1fmm6CbrTOodDdKQEWj/gXXdQIykPaWuqHUObUCniUa2w4Unc7kFhz
+X-Received: by 10.55.67.81 with SMTP id q78mr21172982qka.53.1479231734804;
+ Tue, 15 Nov 2016 09:42:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D275FBDC-AB5A-11E6-9A7C-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.134.65 with HTTP; Tue, 15 Nov 2016 09:42:14 -0800 (PST)
+In-Reply-To: <1478908273-190166-1-git-send-email-bmwill@google.com>
+References: <1477953496-103596-1-git-send-email-bmwill@google.com> <1478908273-190166-1-git-send-email-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 15 Nov 2016 09:42:14 -0800
+Message-ID: <CAGZ79kbiXYKBjJL75bkgAOC+STTKk0F=9TVafpcT-50+ZAcStw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] recursively grep across submodules
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+coverity seems to dislike this part:
 
-> dirname makes sense. What about implementing a reverse variant of
-> strip, which you could perform stripping of right-most components and
-> instead of stripping by a number, strip "to" a number, ie: keep the
-> left N most components, and then you could use something like
-> ...
-> I think that would be more general purpose than basename, and less confusing?
-
-I think you are going in the right direction.  I had a similar
-thought but built around a different axis.  I.e. if strip=1 strips
-one from the left, perhaps we want to have rstrip=1 that strips one
-from the right, and also strip=-1 to mean strip everything except
-one from the left and so on?.  I think this and your keep (and
-perhaps you'll have rkeep for completeness) have the same expressive
-power.  I do not offhand have a preference one over the other.
-
-Somehow it sounds a bit strange to me to treat 'remotes' as the same
-class of token as 'heads' and 'tags' (I'd expect 'heads' and
-'remotes/origin' would be at the same level in end-user's mind), but
-that is probably an unrelated tangent.  The reason this series wants
-to introduce :base must be to emulate an existing feature, so that
-existing feature is a concrete counter-example that argues against
-my "it sounds a bit strange" reaction.
+*** CID 1394367:  Null pointer dereferences  (NULL_RETURNS)
+/builtin/grep.c: 625 in grep_submodule()
+619                   is_submodule_populated(path))) {
+620                     /*
+621                      * If searching history, check for the presense of the
+622                      * submodule's gitdir before skipping the submodule.
+623                      */
+624                     if (sha1) {
+>>>     CID 1394367:  Null pointer dereferences  (NULL_RETURNS)
+>>>     Dereferencing a null pointer "submodule_from_path(null_sha1, path)".
+625                             path = git_path("modules/%s",
+626
+submodule_from_path(null_sha1, path)->name);
+627
+628                             if (!(is_directory(path) &&
+is_git_directory(path)))
+629                                     return 0;
+630                     } else {
