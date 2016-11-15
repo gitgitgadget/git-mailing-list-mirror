@@ -2,97 +2,294 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AD1F2021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 23:14:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FDD72021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 23:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030230AbcKOXOj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 18:14:39 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:36058 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030207AbcKOXOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 18:14:37 -0500
-Received: by mail-pg0-f54.google.com with SMTP id f188so71432704pgc.3
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:14:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tIcQWg/IS3o8odanq8z8CIFdcmwlKLb7GkkUZg8uzCw=;
-        b=ij2BmVPgaUAP7O7C7y8znDiN45Lpbeuy+Geww8HHQDzTtt+FgGonU4AHgq1dLqF2n+
-         YCFlKzwSfEzPS9T6lFAQf/w35P7cybFClGoqcYEBtsBMwAJrHBzmEnnhkwcuOIlQAhWU
-         NU9jxnRyGQXgMMsmn21yFAFJwo92PUbKk65urJr6/n8m6Mm9lzEA/5duMEyN9mdc2myc
-         0lptwK/GB09fF8PNMniGWjpRsj8LSOpyki5RkyhsF4CGpRyGo8wlALMpGDz4BPhzF2u3
-         8KmF/hzLE4zNd9k5cDz2UABmWHl4D86mcIcuT8DMa0BJt3KrcJzEvZQD+ZqpyG0vDqYA
-         Livg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=tIcQWg/IS3o8odanq8z8CIFdcmwlKLb7GkkUZg8uzCw=;
-        b=VNtEw1o1RBwpLYWr3dXrcdgJZ2LBMK64YqmMtUfcgbZztkv6HWI/H8HZ1hAldJV7OW
-         DSy9IWDFhhnLnpFSQtljLzg57rU3FLlD4H8MrTMGkw/5q8XaRY6R1BciEREZLkTTD4ut
-         Cv80ycCy1CByc54hiyrwmDBjU8CqexUSYi4QoPmyVfJ5kG//T/fZy1/a9ExmTNkKwaop
-         ct2JsRyQcZ3UK/g8Wf3jtdXT9gndgblJbC3eyhaPvtmH9SEvHfyWr6IMSCNXlKUnG+nf
-         oxSHYFPpvEONgZ1ZlmUMf2FsSxhwMOtJCdUip6xNFlDPLT/9Vc9xWQ03zivCz/1dcJUL
-         +jVQ==
-X-Gm-Message-State: ABUngvcFsCwmiw5mNcKmkvkfABjVX9XDqZVd7TkYh0edKSyEGaZo0Gotg/odhOhEK3MtZG7D
-X-Received: by 10.99.204.81 with SMTP id q17mr1152770pgi.168.1479251231884;
-        Tue, 15 Nov 2016 15:07:11 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:1161:a721:e128:bf5f])
-        by smtp.gmail.com with ESMTPSA id g63sm21949596pfd.60.2016.11.15.15.07.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Nov 2016 15:07:11 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
-        jrnieder@gmail.com, mogulguy10@gmail.com,
-        David.Turner@twosigma.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 15/16] completion: add '--recurse-submodules' to checkout
-Date:   Tue, 15 Nov 2016 15:06:50 -0800
-Message-Id: <20161115230651.23953-16-sbeller@google.com>
-X-Mailer: git-send-email 2.10.1.469.g00a8914
-In-Reply-To: <20161115230651.23953-1-sbeller@google.com>
-References: <20161115230651.23953-1-sbeller@google.com>
-To:     unlisted-recipients:; (no To-header on input)
+        id S964793AbcKOXTj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 18:19:39 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58948 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753173AbcKOXTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 18:19:38 -0500
+Received: from [192.168.178.43] ([88.70.147.72]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lb5nF-1cUbS21T9F-00kfQf; Wed, 16
+ Nov 2016 00:19:35 +0100
+Subject: Re: [PATCH v15 13/27] bisect--helper: `bisect_start` shell function
+ partially in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1ad3-ea75ed97-2514-427e-8e57-9f10efd4e6e9-000000@eu-west-1.amazonses.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <098cb39e-3c92-df56-1dc9-c529df817262@gmx.net>
+Date:   Wed, 16 Nov 2016 00:19:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
+MIME-Version: 1.0
+In-Reply-To: <01020157c38b1ad3-ea75ed97-2514-427e-8e57-9f10efd4e6e9-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:VPyHgzzoqihcihA6Aw7NToD9w9+6aec4rVzXnoCVSSBuLITj/Cn
+ OsMT2whRA076H+vqc8FpDuNmhXelKadhGnEBWoPT1BPhFkPznzXjqVP8ysTtQFvg5kPeh/o
+ JpBztNC3EXtuZGdBvYtFe1T1SE0kF5ykmbUmMMi0ebsSlNNXSRrAzs7FzHRGClWHNvZe+7t
+ Ty2DCzOILWTQX+2otaJ2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t+RGYDKNeHc=:uSTfAFxhnPKpPfxLoHv174
+ 8SVUMgYa3jobygTfErXxeY1YYghBprWUw6Y0o5CbRVDZ3lSTK7p5EP7A+vkfNzLVz8rQ0mRrx
+ TsStAJAnFkIC/AV/1PExwVaclfeNtUneBXUiwrYFVc1QUoYcdAOcjXvV0uZ6RLBkntTj1mjE9
+ rbK4aewgwS5NQu2FfEe/v3I/momxwzq5+qdYEExbtdH5UbEc/3DavD2FfOHpLQPseBtF00KoI
+ YesmnpioL/3DnO4Io4pm9HVIXN2vQ9vuDYKvK7G7IViVHM/d8zgScg+MV+LiBuUbkjaU1KD8S
+ AbaL+L6jh8315AQ6IBP3IPMPnrboJQwHksAi1tqjKGPneKAIB+KyaOiGd/8KsjoZlx+IRmn0N
+ 6lbiQNcEBVLljoY4dAoyPiA4v1IRRDscetp17M/f84sLwxDTzBTidbrChXJrPqIrb/CSvhD3n
+ Inc5089qQEVsQmQrj18yRQe/Rct4xpR5qCaCkkvZzIcKlZOEWUDKB33HUHKmindU/4Ve55ssL
+ WqkdQ7OAykcPfeVKJk6/2A8PsafdaJ146hIFsMquubdYMHsYP9Y6clYb8bpgLJKPBsq+roim2
+ rD4SUuu3RDwHgVSE30N3veN1npLzuVHNZztaUJUoXWSd4kJ8yijC+MUQgkqCTP6aJet9HcXH6
+ YXigJRNwYVcmVkQc3tDiky0+ng5JAvz5lh/BQugh8rlgp4F0iMg4u6es+8YusWYqZP2A/Y0Xl
+ jbB6gZSwoIsXXm7SqW8ZWzz50uTjnP7iYKHMer2ey8ydcUWLE4hIJZdLTd9ydpck97OFA9mut
+ CS2wNHu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- contrib/completion/git-completion.bash | 2 +-
- t/t9902-completion.sh                  | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+Hi,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 21016bf..28acfdb 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1068,7 +1068,7 @@ _git_checkout ()
- 	--*)
- 		__gitcomp "
- 			--quiet --ours --theirs --track --no-track --merge
--			--conflict= --orphan --patch
-+			--conflict= --orphan --patch --recurse-submodules
- 			"
- 		;;
- 	*)
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 2ba62fb..d2d1102 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -447,6 +447,7 @@ test_expect_success 'double dash "git checkout"' '
- 	--conflict=
- 	--orphan Z
- 	--patch Z
-+	--recurse-submodules Z
- 	EOF
- '
- 
--- 
-2.10.1.469.g00a8914
+On 10/14/2016 04:14 PM, Pranit Bauva wrote:
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 6a5878c..1d3e17f 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -24,6 +27,8 @@ static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
+>  	N_("git bisect--helper --bisect-next-check [<term>] <TERM_GOOD> <TERM_BAD"),
+>  	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
+> +	N_("git bisect--helper --bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
+> +					      "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
 
+Typo: "--bisect start" with space instead of "-"
+
+> @@ -403,6 +408,205 @@ static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
+>  	return 0;
+>  }
+>  
+> +static int bisect_start(struct bisect_terms *terms, int no_checkout,
+> +			const char **argv, int argc)
+> +{
+> +	int i, has_double_dash = 0, must_write_terms = 0, bad_seen = 0;
+> +	int flags, pathspec_pos, retval = 0;
+> +	struct string_list revs = STRING_LIST_INIT_DUP;
+> +	struct string_list states = STRING_LIST_INIT_DUP;
+> +	struct strbuf start_head = STRBUF_INIT;
+> +	struct strbuf bisect_names = STRBUF_INIT;
+> +	struct strbuf orig_args = STRBUF_INIT;
+> +	const char *head;
+> +	unsigned char sha1[20];
+> +	FILE *fp = NULL;
+> +	struct object_id oid;
+> +
+> +	if (is_bare_repository())
+> +		no_checkout = 1;
+> +
+> +	for (i = 0; i < argc; i++) {
+> +		if (!strcmp(argv[i], "--")) {
+> +			has_double_dash = 1;
+> +			break;
+> +		}
+> +	}
+> +
+> +	for (i = 0; i < argc; i++) {
+> +		const char *commit_id = xstrfmt("%s^{commit}", argv[i]);
+> +		const char *arg = argv[i];
+> +		if (!strcmp(argv[i], "--")) {
+> +			has_double_dash = 1;
+
+This is without effect since has_double_dash is already set to 1 by the
+loop above. I think you can remove this line.
+
+> +			break;
+> +		} else if (!strcmp(arg, "--no-checkout")) {
+> +			no_checkout = 1;
+> +		} else if (!strcmp(arg, "--term-good") ||
+> +			 !strcmp(arg, "--term-old")) {
+> +			must_write_terms = 1;
+> +			terms->term_good = xstrdup(argv[++i]);
+> +		} else if (skip_prefix(arg, "--term-good=", &arg)) {
+> +			must_write_terms = 1;
+> +			terms->term_good = xstrdup(arg);
+> +		} else if (skip_prefix(arg, "--term-old=", &arg)) {
+> +			must_write_terms = 1;
+> +			terms->term_good = xstrdup(arg);
+
+I think you can join the last two branches:
+
++		} else if (skip_prefix(arg, "--term-good=", &arg) ||
++		           skip_prefix(arg, "--term-old=", &arg)) {
++			must_write_terms = 1;
++			terms->term_good = xstrdup(arg);
+
+> +		} else if (!strcmp(arg, "--term-bad") ||
+> +			 !strcmp(arg, "--term-new")) {
+> +			must_write_terms = 1;
+> +			terms->term_bad = xstrdup(argv[++i]);
+> +		} else if (skip_prefix(arg, "--term-bad=", &arg)) {
+> +			must_write_terms = 1;
+> +			terms->term_bad = xstrdup(arg);
+> +		} else if (skip_prefix(arg, "--term-new=", &arg)) {
+> +			must_write_terms = 1;
+> +			terms->term_good = xstrdup(arg);
+
+This has to be terms->term_bad = ...
+
+Also, you can join the last two branches, again, ie,
+
++		} else if (skip_prefix(arg, "--term-bad=", &arg) ||
++		           skip_prefix(arg, "--term-new=", &arg)) {
++			must_write_terms = 1;
++			terms->term_bad = xstrdup(arg);
+
+> +		} else if (starts_with(arg, "--") &&
+> +			 !one_of(arg, "--term-good", "--term-bad", NULL)) {
+> +			die(_("unrecognised option: '%s'"), arg);
+[...]
+> +	/*
+> +	 * Verify HEAD
+> +	 */
+> +	head = resolve_ref_unsafe("HEAD", 0, sha1, &flags);
+> +	if (!head)
+> +		if (get_sha1("HEAD", sha1))
+> +			die(_("Bad HEAD - I need a HEAD"));
+> +
+> +	if (!is_empty_or_missing_file(git_path_bisect_start())) {
+
+You were so eager to re-use the comments from the shell script, but you
+forgot the "Check if we are bisecting." comment above this line ;-)
+
+> +		/* Reset to the rev from where we started */
+> +		strbuf_read_file(&start_head, git_path_bisect_start(), 0);
+> +		strbuf_trim(&start_head);
+> +		if (!no_checkout) {
+> +			struct argv_array argv = ARGV_ARRAY_INIT;
+[...]
+> +	if (must_write_terms)
+> +		if (write_terms(terms->term_bad, terms->term_good)) {
+> +			retval = -1;
+> +			goto finish;
+> +		}
+> +
+
+bisect_start() is a pretty big function.
+I think it can easily be decomposed in some smaller parts, for example,
+the following lines ...
+
+> +	fp = fopen(git_path_bisect_log(), "a");
+> +	if (!fp)
+> +		return -1;
+> +
+> +	if (fprintf(fp, "git bisect start") < 1) {
+> +		retval = -1;
+> +		goto finish;
+> +	}
+> +
+> +	sq_quote_argv(&orig_args, argv, 0);
+> +	if (fprintf(fp, "%s", orig_args.buf) < 0) {
+> +		retval = -1;
+> +		goto finish;
+> +	}
+> +	if (fprintf(fp, "\n") < 1) {
+> +		retval = -1;
+> +		goto finish;
+> +	}
+
+... could be in a function like
+
+static int bisect_append_log(const char **argv)
+{
+	FILE *fp = fopen(git_path_bisect_log(), "a");
+	struct strbuf orig_args = STRBUF_INIT;
+	if (!fp)
+		return -1;
+
+	if (fprintf(fp, "git bisect start") < 1) {
+		retval = -1;
+		goto finish;
+	}
+
+	sq_quote_argv(&orig_args, argv, 0);
+	if (fprintf(fp, "%s", orig_args.buf) < 0 ||
+	    fprintf(fp, "\n") < 1) {
+		retval = -1;
+		goto finish;
+	}
+
+finish:
+	if (fp)
+		fclose(fp);
+	strbuf_release(&orig_args);
+
+	return retval;
+}
+
+and then simply call
+
+	retval = bisect_append_log(argv);
+
+in bisect_start()... (This is totally untested.)
+
+If you do not want that for some reason, you should at least fix
+
+> +	if (!fp)
+> +		return -1;
+
+to retval = 1; goto finish; such that the other lists and strings are
+released.
+
+> +	goto finish;
+> +finish:
+
+The "goto finish" right above the "finish" label is unnecessary.
+
+> +	if (fp)
+> +		fclose(fp);
+> +	string_list_clear(&revs, 0);
+> +	string_list_clear(&states, 0);
+> +	strbuf_release(&start_head);
+> +	strbuf_release(&bisect_names);
+> +	strbuf_release(&orig_args);
+> +	return retval;
+> +}
+> +
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	enum {
+
+By the way, there are two spaghetti-ish ways to get rid of the
+
+	retval = -1;
+	goto finish;
+
+line pair:
+
+	goto fail;
+
+and below the "return retval;" add
+
+fail:
+	retval = -1;
+	goto finish;
+
+and you can feel the touch of His Noodly Appendage. *scnr*
+
+The other way is to keep the "goto finish" I deemed unnecessary (right
+above the label), and expand it to:
+
+	goto finish;
+fail:
+	retval = -1;
+finish:
+	...
+
+Cheers
+  Stephan
