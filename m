@@ -2,89 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A30AD2021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 21:40:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A87CF2021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 21:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933304AbcKOVkJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 16:40:09 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61772 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752604AbcKOVkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 16:40:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B240F4E94D;
-        Tue, 15 Nov 2016 16:40:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KWgJfNkL35Dfk2TIEmWZdUK00N4=; b=Lhed/T
-        qgTAwDk3Rk3vV4kNFXoSPiAie8XSXMnxfsIFmnjgJr2ghl1xwg4ttBhrG4iJkG/+
-        J+w3cx5fGZ9TpRHLkxRCynFzsNOa/ZHUjGtSWojr6KoIugxL8bkrBk7htox3Qv+7
-        781NR5/T76aEox3zpV/onZ4SNWcnY6X031pOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j9ISGpHcNBpPK0MKsCnDGqsQupowtAES
-        i+Or4OXNnSGsGU6V+vuseJm2cpGtjmUM7RYAGTyzVfa4KrnK6/D1qVzX/pMtZUI4
-        izAmlTSpZcRspokpObnFl6NtaEUPyp1oB2P28DFPniwOt3FpSBU1FIGRoSmcmj1u
-        6mU2rTfrzWc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9C2D4E94B;
-        Tue, 15 Nov 2016 16:40:07 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E49D4E94A;
-        Tue, 15 Nov 2016 16:40:07 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v15 04/27] bisect--helper: `bisect_clean_state` shell function in C
-References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
-        <01020157c38b1a82-dc1c5b57-3e93-4996-87e7-4a1d83cb5817-000000@eu-west-1.amazonses.com>
-        <13aa642a-2272-c5b8-4a30-382ab5e73b98@gmx.net>
-Date:   Tue, 15 Nov 2016 13:40:05 -0800
-In-Reply-To: <13aa642a-2272-c5b8-4a30-382ab5e73b98@gmx.net> (Stephan Beyer's
-        message of "Tue, 15 Nov 2016 22:09:11 +0100")
-Message-ID: <xmqq37istoay.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933803AbcKOVkm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 16:40:42 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60902 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752308AbcKOVkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 16:40:41 -0500
+Received: from [192.168.178.43] ([88.70.147.72]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0ML6XF-1c6UU42xwP-000J0j; Tue, 15
+ Nov 2016 22:40:33 +0100
+Subject: Re: [PATCH v15 01/27] bisect--helper: use OPT_CMDMODE instead of
+ OPT_BOOL
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+ <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <xmqqvawd7mnr.fsf@gitster.mtv.corp.google.com>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Antoine Delaite <antoine.delaite@ensimag.grenoble-inp.fr>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <20ffa616-765d-ef73-4133-977561105eff@gmx.net>
+Date:   Tue, 15 Nov 2016 22:40:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 136A737C-AB7C-11E6-9078-987C12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqvawd7mnr.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:lt/bGUf4l9rbmN74q/1AyDrSgYh4dz/Dv/Hx2TmaCy2D1O6Xy5M
+ suByru3ZtJSebHBbjSGqos+xYmrfArg4MhGelQR4JXF8H7KOjQGQJItvmMiUXBOUCug1vKO
+ M+fAfbUcg5bgxrlTishq+VL1NxEf+Q2CHpikPS7c7BrOb9wDLDBDzLE+JjB8RVPN96mLkKk
+ zHE9ViMS6mUrvWeUZp7dw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fEuxJxh5JyY=:QMk7lAXwBmT/c9NAsJj3JU
+ Pg78JS61GGu9gSD+XyHTeENwXoRhHAPhcKDPwftZbAUYKRJfPblSg3SfLYreq6G7rBScGa2Ne
+ lPSsN69hD0ojiOMKyLVUy8NKk5tzpWkUqkZ/BKPK029dF5fNNjghOFQNTppxUQdvW9WUwkNIR
+ oFSTIUGbeQ99qTx2vcvW/EgbZtRBTNEglAp3eEHX8h5PfZiMv1Rd4khQU/oaqnjngeR6OkSNR
+ ntFhVdsVst4DDlN3GjtBpp8vgAzRoIdLQcqPXMBMjUzAPBQ6PQtux8zPbpMogSs4jW6aJpbAy
+ XWMlB+cj+WSMT3QcMeb/n85QNXPtohMJaXzcPHidfPgOaffhnkM1N18N23Ytx7teH2Y1FTLoC
+ mw1WhnBhmaT4S301BFvVXjW98xSngVGrCKneRczL6qvRQeKiO7oI/4h3Lpo0m8HBNM66NW10g
+ 1Qd9o3TSHnfGiOTr4SnamjmjN9GU85dGUH0D1m32U6L2bKg8EjduI6fygQ5rsO0KSVuRgMKcz
+ c25uMpHSyC0Z+xDoQnv8mWqbghMNbOm7QCfBaSZT+zZB0rYB3Ysvm+xkk40dlOPsI+bn5Nz7v
+ 3BrvR1bg8TzJtJUeLqA/o61ON4AOJlWhw85R/Qq9cB0g5H8HIHTqfeZ4rSIB/rV17gt+4qxxF
+ cH9Vg9gFN3iH9JnTrA+7DCa8zGTaLTYFoZuCXowLoTUQtpBcWDOESepLslVwwLHayAnxyMAdY
+ ptPWZ8DdB0O9MVP5vdpPZ//9r72tpcs/g5hoEBjquEBxWUAuc7T9UQn4WSXcpQI37cv2M++fp
+ uQF8zee
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+Hi,
 
->> +int bisect_clean_state(void)
->> +{
->> +	int result = 0;
->> +
->> +	/* There may be some refs packed during bisection */
->> +	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
->> +	for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_removal);
->> +	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
->> +	result = delete_refs(&refs_for_removal, REF_NODEREF);
->> +	refs_for_removal.strdup_strings = 1;
->> +	string_list_clear(&refs_for_removal, 0);
->
-> Does it have advantages to populate a list (with duplicated strings),
-> hand it to delete_refs(), and clear the list (and strings), instead of
-> just doing a single delete_ref() (or whatever name the singular function
-> has) in the callback?
+On 10/27/2016 06:59 PM, Junio C Hamano wrote:
+> Does any of you (and others on the list) have time and inclination
+> to review this series?
 
-Depending on ref backends, removing multiple refs may be a lot more
-efficient than calling a single ref removal for the same set of
-refs, and the comment upfront I think hints that the code was
-written in the way exactly with that in mind.  Removing N refs from
-a packed refs file will involve a loop that runs N times, each
-iteration loading the file, locating an entry among possibly 100s of
-refs to remove, and then rewriting the file.
+Me, currently. ;)
+Besides the things I'm mentioning in respective patch e-mails, I wonder
+why several bisect--helper commands are prefixed by "bisect"; I'm
+talking about:
 
-Besides, it is bad taste to delete each individual item being
-iterated over in an interator in general, isn't it?
+	git bisect--helper --bisect-clean-state
+	git bisect--helper --bisect-reset
+	git bisect--helper --bisect-write
+	git bisect--helper --bisect-check-and-set-terms
+	git bisect--helper --bisect-next-check
+	git bisect--helper --bisect-terms
+	git bisect--helper --bisect-start
+	etc.
 
+instead of
+
+	git bisect--helper --clean-state
+	git bisect--helper --reset
+	git bisect--helper --write
+	git bisect--helper --check-and-set-terms
+	git bisect--helper --next-check
+	git bisect--helper --terms
+	git bisect--helper --start
+	etc.
+
+Well, I know *why* they have these names: because the shell function
+names are simply reused. But I don't know why these prefixes are kept in
+the bisect--helper command options. On the other hand, these command
+names are not exposed to the user and may hence not be that important.(?)
+
+~Stephan
