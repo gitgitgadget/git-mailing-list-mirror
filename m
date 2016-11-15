@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 721092021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 23:14:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AD1F2021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 23:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030223AbcKOXOe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 18:14:34 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:34118 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030207AbcKOXOd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 18:14:33 -0500
-Received: by mail-pg0-f47.google.com with SMTP id x23so68860995pgx.1
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:14:33 -0800 (PST)
+        id S1030230AbcKOXOj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 18:14:39 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36058 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030207AbcKOXOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 18:14:37 -0500
+Received: by mail-pg0-f54.google.com with SMTP id f188so71432704pgc.3
+        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:14:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xuJW9TjpvtIWnbL3PynLRdxamM2VxyyLyvMmtqAJfC8=;
-        b=lKLW6me3OEiuezQ5swjWsyyA4v6tCNzHfeJ+FaKLbwO2SNf2G/ZInZ0r9iqiWeCv8M
-         uxV+VXH1/agsPV8rxRRHhqWifMki0XQty3Vrjr/2+cJ8L08ZuOZXOgBJRuQsaKTE7tt2
-         hqaoid41aULKV7hOORursdao7+mFL5bC/sWMR7RuSlxC5jM3ZMQLAyThnbe2aVG3VQ6D
-         KcknLQkRMPxutppX3SneR7sSR0rs/cKhIDBKu/98JXL6vGZgkSMCl9ieb2F4EFtzJVTu
-         JYW4s7EljuDnYGrFnqwIdptcb+lAKB7He14e12S47yqIdQP4S0ewlRgocRCQsFiwjVib
-         XnjA==
+        bh=tIcQWg/IS3o8odanq8z8CIFdcmwlKLb7GkkUZg8uzCw=;
+        b=ij2BmVPgaUAP7O7C7y8znDiN45Lpbeuy+Geww8HHQDzTtt+FgGonU4AHgq1dLqF2n+
+         YCFlKzwSfEzPS9T6lFAQf/w35P7cybFClGoqcYEBtsBMwAJrHBzmEnnhkwcuOIlQAhWU
+         NU9jxnRyGQXgMMsmn21yFAFJwo92PUbKk65urJr6/n8m6Mm9lzEA/5duMEyN9mdc2myc
+         0lptwK/GB09fF8PNMniGWjpRsj8LSOpyki5RkyhsF4CGpRyGo8wlALMpGDz4BPhzF2u3
+         8KmF/hzLE4zNd9k5cDz2UABmWHl4D86mcIcuT8DMa0BJt3KrcJzEvZQD+ZqpyG0vDqYA
+         Livg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xuJW9TjpvtIWnbL3PynLRdxamM2VxyyLyvMmtqAJfC8=;
-        b=Lnqj/MHAdI1rIQ0bU+7gexPoDTP71OY/ApFjLN9RIWCVStoyhSvRIk4KqJBZ++X0qV
-         QA59QDuIESZCEMl4LvM6rpyfywr7ptUhy/3OaQQueNhNraefPOD51G+bJ91wa44CqZmM
-         MEw5zCq6m1N4/r1/gbPl2qiIVN6wuhnJT4q6hQ33O9FArthQvdKhoroAXXjxxo8qk90g
-         Bbj2rMohx0VuEBD4drPPNVqS10qBvwiM9+1B8dsaj3V75uxLXeY+TyerNosAcLABetIA
-         zAI4oiOr6pCGBArOyTF7frbF4qgrPjiigr/ixjbAHm6lDTezYp35N+ZTuzDXIJS+wtv8
-         zZ5Q==
-X-Gm-Message-State: ABUngvcNvLM3wm2FizTvLIwg73EpCr7m3/Iz/lPDjtURe2+SZGl3/WDtnBJNjPo9Ur77bbV/
-X-Received: by 10.99.119.9 with SMTP id s9mr1157433pgc.11.1479251220683;
-        Tue, 15 Nov 2016 15:07:00 -0800 (PST)
+        bh=tIcQWg/IS3o8odanq8z8CIFdcmwlKLb7GkkUZg8uzCw=;
+        b=VNtEw1o1RBwpLYWr3dXrcdgJZ2LBMK64YqmMtUfcgbZztkv6HWI/H8HZ1hAldJV7OW
+         DSy9IWDFhhnLnpFSQtljLzg57rU3FLlD4H8MrTMGkw/5q8XaRY6R1BciEREZLkTTD4ut
+         Cv80ycCy1CByc54hiyrwmDBjU8CqexUSYi4QoPmyVfJ5kG//T/fZy1/a9ExmTNkKwaop
+         ct2JsRyQcZ3UK/g8Wf3jtdXT9gndgblJbC3eyhaPvtmH9SEvHfyWr6IMSCNXlKUnG+nf
+         oxSHYFPpvEONgZ1ZlmUMf2FsSxhwMOtJCdUip6xNFlDPLT/9Vc9xWQ03zivCz/1dcJUL
+         +jVQ==
+X-Gm-Message-State: ABUngvcFsCwmiw5mNcKmkvkfABjVX9XDqZVd7TkYh0edKSyEGaZo0Gotg/odhOhEK3MtZG7D
+X-Received: by 10.99.204.81 with SMTP id q17mr1152770pgi.168.1479251231884;
+        Tue, 15 Nov 2016 15:07:11 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:1161:a721:e128:bf5f])
-        by smtp.gmail.com with ESMTPSA id n24sm23626428pfb.0.2016.11.15.15.07.00
+        by smtp.gmail.com with ESMTPSA id g63sm21949596pfd.60.2016.11.15.15.07.11
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Nov 2016 15:07:00 -0800 (PST)
+        Tue, 15 Nov 2016 15:07:11 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
         jrnieder@gmail.com, mogulguy10@gmail.com,
         David.Turner@twosigma.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 05/16] update submodules: add submodule config parsing
-Date:   Tue, 15 Nov 2016 15:06:40 -0800
-Message-Id: <20161115230651.23953-6-sbeller@google.com>
+Subject: [PATCH 15/16] completion: add '--recurse-submodules' to checkout
+Date:   Tue, 15 Nov 2016 15:06:50 -0800
+Message-Id: <20161115230651.23953-16-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.469.g00a8914
 In-Reply-To: <20161115230651.23953-1-sbeller@google.com>
 References: <20161115230651.23953-1-sbeller@google.com>
@@ -62,83 +62,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar as in b33a15b08 (push: add recurseSubmodules config option,
-2015-11-17) and 027771fcb1 (submodule: allow erroneous values for the
-fetchRecurseSubmodules option, 2015-08-17), we add submodule-config code
-that is later used to parse whether we are interested in updating
-submodules.
-
-We need the `die_on_error` parameter to be able to call this parsing
-function for the config file as well, which if incorrect let's Git die.
-
-As we're just touching the header file, also mark all functions extern.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule-config.c | 22 ++++++++++++++++++++++
- submodule-config.h | 17 +++++++++--------
- 2 files changed, 31 insertions(+), 8 deletions(-)
+ contrib/completion/git-completion.bash | 2 +-
+ t/t9902-completion.sh                  | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 098085b..4b5297e 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -234,6 +234,28 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- 	return parse_fetch_recurse(opt, arg, 1);
- }
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 21016bf..28acfdb 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1068,7 +1068,7 @@ _git_checkout ()
+ 	--*)
+ 		__gitcomp "
+ 			--quiet --ours --theirs --track --no-track --merge
+-			--conflict= --orphan --patch
++			--conflict= --orphan --patch --recurse-submodules
+ 			"
+ 		;;
+ 	*)
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 2ba62fb..d2d1102 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -447,6 +447,7 @@ test_expect_success 'double dash "git checkout"' '
+ 	--conflict=
+ 	--orphan Z
+ 	--patch Z
++	--recurse-submodules Z
+ 	EOF
+ '
  
-+static int parse_update_recurse(const char *opt, const char *arg,
-+				int die_on_error)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (!strcmp(arg, "checkout"))
-+			return RECURSE_SUBMODULES_ON;
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		return RECURSE_SUBMODULES_ERROR;
-+	}
-+}
-+
-+int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
-+{
-+	return parse_update_recurse(opt, arg, 1);
-+}
-+
- static int parse_push_recurse(const char *opt, const char *arg,
- 			       int die_on_error)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index d05c542..992bfbe 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -22,13 +22,14 @@ struct submodule {
- 	int recommend_shallow;
- };
- 
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
--int parse_submodule_config_option(const char *var, const char *value);
--const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
--		const char *name);
--const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
--		const char *path);
--void submodule_free(void);
-+extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
-+extern int parse_submodule_config_option(const char *var, const char *value);
-+extern const struct submodule *submodule_from_name(
-+		const unsigned char *commit_sha1, const char *name);
-+extern const struct submodule *submodule_from_path(
-+		const unsigned char *commit_sha1, const char *path);
-+extern void submodule_free(void);
- 
- #endif /* SUBMODULE_CONFIG_H */
 -- 
 2.10.1.469.g00a8914
 
