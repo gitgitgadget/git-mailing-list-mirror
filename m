@@ -2,108 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 329BF2021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 20:28:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 393C42021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 20:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752270AbcKOU2y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 15:28:54 -0500
-Received: from avasout03.plus.net ([84.93.230.244]:33568 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751937AbcKOU2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 15:28:53 -0500
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout03 with smtp
-        id 8LUp1u0040zhorE01LUq7y; Tue, 15 Nov 2016 20:28:51 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=YLLd8lOx c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=owyyWa96KqsFo542HpEA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] worktree: fix a sparse 'Using plain integer as NULL pointer'
- warning
-Message-ID: <5b7d7d0b-8a6c-d516-4eb9-4e4ea13dce73@ramsayjones.plus.com>
-Date:   Tue, 15 Nov 2016 20:28:47 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S932333AbcKOUnM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 15:43:12 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55195 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932196AbcKOUnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 15:43:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 654664DF05;
+        Tue, 15 Nov 2016 15:43:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zRKkF2FDsghv+WglpQhH01pbG/8=; b=liquXT
+        2uRW8beZpl9bbVcrPd7Q9ip93ZodRw282IKEgx/becIMaLMR0gPP7vume6mQxrZe
+        UFY/aMTr71LPx+3aMNHbWTN2rYpKrY2axFRzRXJowDEyjpEvIxaYM6FXcHGqwFCi
+        R8QJV++EcvCPAWVDnnDLvmuMRl5OpP6WFikfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jkq/OaI5yMM3A0H6l/GxbAkcfGZPdKlb
+        j8GSUpKEEk35Rq1YedAq0kzKDnK8EMmikk1izRu4Jc94OY9DS6BOXHEdIi60jArF
+        tMEBN2oNtpeksfhWC5GIsKlCw/EKKqM4oxaLCu1d+LXDqQFxfJ7O1RkAoANo3jES
+        uPB8RihDMLU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C2084DF04;
+        Tue, 15 Nov 2016 15:43:10 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A0C734DF01;
+        Tue, 15 Nov 2016 15:43:09 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     git@vger.kernel.org, jacob.keller@gmail.com
+Subject: Re: [PATCH v7 00/17] port branch.c to use ref-filter's printing options
+References: <20161108201211.25213-1-Karthik.188@gmail.com>
+Date:   Tue, 15 Nov 2016 12:43:08 -0800
+In-Reply-To: <20161108201211.25213-1-Karthik.188@gmail.com> (Karthik Nayak's
+        message of "Wed, 9 Nov 2016 01:41:54 +0530")
+Message-ID: <xmqqbmxgtqxv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E726E08-AB74-11E6-B917-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+> This is part of unification of the commands 'git tag -l, git branch -l
+> and git for-each-ref'. This ports over branch.c to use ref-filter's
+> printing options.
+>
+> Karthik Nayak (17):
+>   ref-filter: implement %(if), %(then), and %(else) atoms
+>   ref-filter: include reference to 'used_atom' within 'atom_value'
+>   ref-filter: implement %(if:equals=<string>) and
+>     %(if:notequals=<string>)
+>   ref-filter: modify "%(objectname:short)" to take length
+>   ref-filter: move get_head_description() from branch.c
+>   ref-filter: introduce format_ref_array_item()
+>   ref-filter: make %(upstream:track) prints "[gone]" for invalid
+>     upstreams
+>   ref-filter: add support for %(upstream:track,nobracket)
+>   ref-filter: make "%(symref)" atom work with the ':short' modifier
+>   ref-filter: introduce refname_atom_parser_internal()
+>   ref-filter: introduce symref_atom_parser() and refname_atom_parser()
+>   ref-filter: make remote_ref_atom_parser() use
+>     refname_atom_parser_internal()
+>   ref-filter: add `:dir` and `:base` options for ref printing atoms
+>   ref-filter: allow porcelain to translate messages in the output
+>   branch, tag: use porcelain output
+>   branch: use ref-filter printing APIs
+>   branch: implement '--format' option
 
-Hi Duy,
+This is not a new issue, but --format='%(HEAD)' you stole from
+for-each-ref is broken when you are on an unborn branch, and the
+second patch from the tip makes "git branch" (no other args) on
+an unborn branch to segfault, when there are real branches that
+have commits.
 
-If you need to re-roll your 'nd/worktree-move' branch, could you
-please squash this into the relevant patch [commit c49e92f5c
-("worktree move: refuse to move worktrees with submodules", 12-11-2016)].
+Something like this needs to go before that step.
 
-Also, one of the new tests introduced by commit 31a8f3066 ("worktree move:
-new command", 12-11-2016), fails for me, thus:
-
-  $ ./t2028-worktree-move.sh -i -v
-  ...
-  --- expected	2016-11-15 20:22:50.647241458 +0000
-  +++ actual	2016-11-15 20:22:50.647241458 +0000
-  @@ -1,3 +1,3 @@
-   worktree /home/ramsay/git/t/trash directory.t2028-worktree-move
-  -worktree /home/ramsay/git/t/trash directory.t2028-worktree-move/destination
-   worktree /home/ramsay/git/t/trash directory.t2028-worktree-move/elsewhere
-  +worktree /home/ramsay/git/t/trash directory.t2028-worktree-move/destination
-  not ok 12 - move worktree
-  #	
-  #		git worktree move source destination &&
-  #		test_path_is_missing source &&
-  #		git worktree list --porcelain | grep "^worktree" >actual &&
-  #		cat <<-EOF >expected &&
-  #		worktree $TRASH_DIRECTORY
-  #		worktree $TRASH_DIRECTORY/destination
-  #		worktree $TRASH_DIRECTORY/elsewhere
-  #		EOF
-  #		test_cmp expected actual &&
-  #		git -C destination log --format=%s >actual2 &&
-  #		echo init >expected2 &&
-  #		test_cmp expected2 actual2
-  #	
-  $ 
-
-Is there an expectation that the submodules will be listed in
-any particular order by 'git worktree list --porcelain' ?
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- builtin/worktree.c | 2 +-
+ ref-filter.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index e738142..abdf462 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -526,7 +526,7 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+diff --git a/ref-filter.c b/ref-filter.c
+index 944671af5a..c71d7360d2 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1318,7 +1318,7 @@ static void populate_value(struct ref_array_item *ref)
  
- static void validate_no_submodules(const struct worktree *wt)
- {
--	struct index_state istate = {0};
-+	struct index_state istate = { NULL };
- 	int i, found_submodules = 0;
- 
- 	if (read_index_from(&istate, worktree_git_path(wt, "index")) > 0) {
--- 
-2.10.0
+ 			head = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+ 						  sha1, NULL);
+-			if (!strcmp(ref->refname, head))
++			if (head && !strcmp(ref->refname, head))
+ 				v->s = "*";
+ 			else
+ 				v->s = " ";
+
+
