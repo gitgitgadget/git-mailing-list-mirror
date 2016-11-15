@@ -2,79 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A2722021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 17:57:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF852021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 18:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752823AbcKOR5B (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 12:57:01 -0500
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:33452 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750998AbcKOR5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 12:57:00 -0500
-Received: by mail-ua0-f169.google.com with SMTP id 20so94072151uak.0
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 09:56:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=QVJr6msNimx/ktcGxu6dyT5is3JhbIrN1dAm9qSFCBY=;
-        b=K1Q8N9cXolWP4Fc5DQkJRHL24WKEsTiTGzhM2zr3hib+IS/J5v5nAT2Nvp6dYxexn1
-         9dfhpB7vax1uZ/E585nj6bODDoNeG6bU4t+msxvAOfWoHQgemamF9T47asFAJbLA1arr
-         sT9RTFpnhyqO1XkTPKRpM9JJ5QhSsNbxDswOAfxb02S/P4/uKmyV4bmJpIsse3IWPuL5
-         0AFTW4DPS0G2qMwsIoLOTnS2vzBqXoUInVhNPkPFVbFf7oC6oqWiic/i7fUCFqbDDVqV
-         +HeZEU48Rd86LuIzuB0Ih888PEZzmmmwuqHM0gM30pZ2lQmQjHwMvobFny2FBRdSvH/X
-         fjIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=QVJr6msNimx/ktcGxu6dyT5is3JhbIrN1dAm9qSFCBY=;
-        b=E4F85nvluQKmNMlj3x44FB7RqIBBhqgeU9GZG5VkpelnlBBMXWgk09maZYv494ZwqE
-         BI3N6o+emjL8dBwiYLUh/tlcRkga+ZtVrZoMy8FkvQXfTPh8A7mV3E5qqX0mS+F2lEOc
-         q37Yh2mL9CZDR6lLsgX7U+2D/pgMSWvifhAmggqHXs7sFrHvYcNs5oUObJr10Z4oHzZV
-         fcwOmZUmyDRAemL/zedlyggiilOWRa3XXSGlOK/P1qwEDvc1P9zakk6h8Nmvc0SM5/SX
-         g9ZZeLzoGbAOGGEvcqO1Os72lzr7etxYwcWeokphRbcXkW7NVy6afz9RmoOIoxpLFL2Y
-         Dn/g==
-X-Gm-Message-State: ABUngvcA9do0scxsXuThe1bxiJsOQbFdeK+C8VWhm5IhpgHqCal4QlvSwRMgTIlTkhIC7U2gG8Bg7hTTaOCT3w==
-X-Received: by 10.159.40.101 with SMTP id c92mr14013447uac.111.1479232619059;
- Tue, 15 Nov 2016 09:56:59 -0800 (PST)
+        id S1752603AbcKOSDO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 13:03:14 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51972 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752300AbcKOSDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 13:03:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F8DE4B2DA;
+        Tue, 15 Nov 2016 13:03:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dOc5uBSNiFIfmxVmDfTe7h745P8=; b=ZZ6LAf
+        xjDvX6yRdCdXE7uWWD9jbsDY3TRT/FesB/4fJAXcaeb6i0bAo3DF3z25az0t3pep
+        iCnGxnesQ0evI7zDb+ELBMGC+7jtAzMpkOWbvI+yWSgNpNLD283gCpVjtSlkqwOH
+        QY8/Ov6DVV+UDDNGnmxmPeyKQrUnN6QqeyZN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fjjreyb4zS7EIpGhHbuFe4I/kmTDfsFq
+        w+gBl74JpXqx/xhsbm0N0fBGWwZWUL0Xft5WP+rUrPLHD38BK8XErMiNsgNog9sf
+        cF9Ow8l8fAP3trNkydq0LySYC6AF9XcYXS35UtzWuTPjdgPLtTEhLuS0Vx8nY/XS
+        22YV8ar5ffo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05A4F4B2D9;
+        Tue, 15 Nov 2016 13:03:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 715AC4B2D8;
+        Tue, 15 Nov 2016 13:03:11 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+Subject: Re: RFC: Enable delayed responses to Git clean/smudge filter requests
+References: <D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com>
+        <20161115010356.GA29602@starla>
+        <5BC69AC1-5499-4F73-816A-D8786106D796@gmail.com>
+Date:   Tue, 15 Nov 2016 10:03:10 -0800
+In-Reply-To: <5BC69AC1-5499-4F73-816A-D8786106D796@gmail.com> (Lars
+        Schneider's message of "Tue, 15 Nov 2016 15:29:09 +0100")
+Message-ID: <xmqqvavotych.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.24.69 with HTTP; Tue, 15 Nov 2016 09:56:58 -0800 (PST)
-In-Reply-To: <CALj-rGcSrbAiyxPOYD1KCacK_gqi3T5_R=e0H_UfBTqLb5VRmg@mail.gmail.com>
-References: <CALj-rGcSrbAiyxPOYD1KCacK_gqi3T5_R=e0H_UfBTqLb5VRmg@mail.gmail.com>
-From:   John Rood <mr.john.rood@gmail.com>
-Date:   Tue, 15 Nov 2016 11:56:58 -0600
-Message-ID: <CALj-rGdRDa0EU6AeMHWYketr5QBOnV7-3RKraiuPCk=Aepz=pQ@mail.gmail.com>
-Subject: Re: ignore blank line removals
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C579E3F0-AB5D-11E6-9582-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Is there any push-back on this, or is there a backlog that we can add
-this feature to?
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-On Thu, Nov 3, 2016 at 10:57 AM, John Rood <mr.john.rood@gmail.com> wrote:
-> If the contents of a file initially are:
->   one
+>> The filter itself would need to be aware of parallelism
+>> if it lives for multiple objects, right?
 >
->   three
-> and on branch A there is a commit, removing the blank line:
->   one
->   three
-> and on branch B there is a commit, adding 'two':
->   one
->   two
->   three
-> Normally, if you try to merge A into B (or B into A), git recognizes a
-> decision needs to be made between removing the second line or add
-> "two" to the second line. It would be convenient to have a merge
-> strategy that defaults to the latter in cases where the removed line
-> was a blank line (or a line containing only whitespace) ...something
-> like -Xignore-blank-line-removals.
+> Correct. This way Git doesn't need to deal with threading...
+
+I think you need to be careful about three things (at least; there
+may be more):
+
+ * Codepaths that check out multiple cache entries do rely on the
+   order of checkout.  We checkout removals first to make room so
+   that creation of a path X can succeed if an existing path X/Y
+   that used to want to see X as a directory can succeed (see the
+   use of checkout_entry() by "git checkout", which does have two
+   separate loops to explicitly guarantee this), for example.  I
+   think "remove all and then create" you do not specifically have
+   to worry about with the proposed change, but you may need to
+   inspect and verify there aren't other kind of order dependency.
+
+ * Done naively, it will lead to unmaintainable code, like this:
+
+   + struct list_of_cache_entries *list = ...;
+     for (i = 0; i < active_nr; i++)
+   -    checkout_entry(active_cache[i], state, NULL);
+   +    if (checkout_entry(active_cache[i], state, NULL) == DELAYED)
+   +       add_cache_to_queue(&list, active_cache[i]);
+   + while (list) {
+   +    wait_for_checkout_to_finish(*list);
+   +    list = list->next;
+   + }
+
+   I do not think we want to see such a rewrite all over the
+   codepaths.  It might be OK to add such a "these entries are known
+   to be delayed" list in struct checkout so that the above becomes
+   more like this:
+
+     for (i = 0; i < active_nr; i++)
+        checkout_entry(active_cache[i], state, NULL);
+   + checkout_entry_finish(state);
+
+   That is, addition of a single "some of the checkout_entry() calls
+   done so far might have been lazy, and I'll give them a chance to
+   clean up" might be palatable.  Anything more than that on the
+   caller side is not.
+
+ * You'd need to rein in the maximum parallelism somehow, as you do
+   not want to see hundreds of competing filter processes starting
+   only to tell the main loop over an index with hundreds of entries
+   that they are delayed checkouts.
+
