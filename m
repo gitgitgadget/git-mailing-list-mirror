@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407BE2021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 23:07:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91F092021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 23:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933544AbcKOXHH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 18:07:07 -0500
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:35906 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934857AbcKOXHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 18:07:05 -0500
-Received: by mail-pg0-f41.google.com with SMTP id f188so71371680pgc.3
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:07:05 -0800 (PST)
+        id S935017AbcKOXHK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 18:07:10 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33826 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934963AbcKOXHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 18:07:08 -0500
+Received: by mail-pf0-f176.google.com with SMTP id c4so26603071pfb.1
+        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:07:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LXY/NnR9FQ5P2H2XdKucX4rxIw9hUc8Kb2Ni8faCcpA=;
-        b=l61Rh+oxffuGlPJ7Ey25CMZh0xUMPib4YrgAoYfm2tuHdiW7X2PDSK3vn8ystZ1vkA
-         dwY8K/UqpgRTqrwJru/LhyjTmi+EcmevHi8Q3YwEfiJ3alZxm6F384MYhwSxC85NM+hx
-         FPx9cyfPKVK8Wpl1z2C7qLZFfqT5crRuAb0hg1vLpOikyxaEGHfDsuWAwSqAd7gfO8Ie
-         yr+iaSkdY1peRj06lHlxAPSABRtimnLt1xGqHAEU2X+QhqLo3utXKS+Vdapg9EEeInw3
-         E3Sb3arFu1nhfEyt7VJkmgFubK8Klv9Uq77cnTb/H0MFP5UFYj9ATtK8o784DOOsbB/+
-         KEdw==
+        bh=OqDnPezYuIoMWcYqpic+hZqu8CPmOAY0N2pIU06EDFc=;
+        b=mnfQme4w2bUopSkQh6A2MBur1AolwTG2rBwoO78Bo5irGGBo/dHuJoyeBsD7fyRu1X
+         qlDplHw62lWj9B3A5V9z2dw5RZ4YTyoTnAfTelfaL9X+S8GCTrVooAmnCWHTDEHw+rE4
+         cMCBO2yq/yk+6OK1qdOoJXmljlUHTuPKFyRv0L4Fm6fW9wgyVHz1UFok9yU+9wnB7l8X
+         TriI6wxevpGHtB+QZeiFtsr1tIy7y/XJ/RpNYwKufY852TNCyoHVnXnfkszWvcqvks3y
+         QGSOATg6xHlpsNC1WuR7faunrxH59SWqXAlrfmu5epOaP7bvHeUCHGJaJy0phP9aS//3
+         TQPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LXY/NnR9FQ5P2H2XdKucX4rxIw9hUc8Kb2Ni8faCcpA=;
-        b=gsASApliY+WbTiU41uqszBHuNqB7oPkxHzWcL3Jzn5CLl1VJfjuldDWtrkKsaIX6L3
-         5sesz1vw8KWIbdWJ78vCay1JspgjcUMEXlnyGYRdWT1pnh/PLWi4rSmE0NnlV6I1OlNj
-         keRXn5kamKxEmRNt67dU9EklOelEH6RvWj0p78RZpZBtCnOC3HzVgB9D9Dk6YmP08Ugy
-         B6ER+ip4YsHECEmQFppwUk1yW43/A9sxwC+mCrF33V6I9rSXbiUc2B0DoU3pokUNZ8WN
-         zkRW/TQky5Yja7BjKli8WJVBT1hfDMcgT1VRrkg2CXUAx3KImWVJdaZWd24bw/5enPgK
-         zlqg==
-X-Gm-Message-State: ABUngveLzbWOZn2h1hxl3W68X9zMnobEAGa+r1sZPOBQkpChMREYLvQmq7UOgjMeVbnj2VaW
-X-Received: by 10.98.204.138 with SMTP id j10mr61549pfk.83.1479251224512;
-        Tue, 15 Nov 2016 15:07:04 -0800 (PST)
+        bh=OqDnPezYuIoMWcYqpic+hZqu8CPmOAY0N2pIU06EDFc=;
+        b=gOULChVvv963IVzgrnFXgPnBb6XGSBb+DAvm9HJ/F085EeFW43/cUZ6uNMijkTvtgh
+         28eirn4xb+dYW2grRHBf0zX3m+2JEgEbEH++zh1p7PZGZzi1Ho8YkdtRs5m6PpmfICF0
+         FvnckoI24ytjTmw3LnxkkAsmjoCePK206POaFu0B4hlB7fuTr6gouKMegXJw1xO9+03B
+         acaXfBNGhGiUDCMv+VUs/2gw28P5kQwsrJ4Iqz+2vkJsUJq7b3DExlgaMqpy5grFSeys
+         kBiAC8Fo8ndCVPyI9B9WvAWF2T2NPEdngB9EJcJg2ykE/G3LpFFvXZnmPYt+9Zb6axfA
+         Q68g==
+X-Gm-Message-State: ABUngvedw3W2mvYRE5CI+7HosL4hQpds2NMc8AUwkW7zJ9erwG9+GqTNNnMw9sNW34BntriD
+X-Received: by 10.99.204.5 with SMTP id x5mr1150550pgf.71.1479251227695;
+        Tue, 15 Nov 2016 15:07:07 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:1161:a721:e128:bf5f])
-        by smtp.gmail.com with ESMTPSA id c2sm46312912pfl.66.2016.11.15.15.07.03
+        by smtp.gmail.com with ESMTPSA id q145sm23870902pfq.22.2016.11.15.15.07.07
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Nov 2016 15:07:03 -0800 (PST)
+        Tue, 15 Nov 2016 15:07:07 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
         jrnieder@gmail.com, mogulguy10@gmail.com,
         David.Turner@twosigma.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 08/16] update submodules: add depopulate_submodule
-Date:   Tue, 15 Nov 2016 15:06:43 -0800
-Message-Id: <20161115230651.23953-9-sbeller@google.com>
+Subject: [PATCH 11/16] teach unpack_trees() to remove submodule contents
+Date:   Tue, 15 Nov 2016 15:06:46 -0800
+Message-Id: <20161115230651.23953-12-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.469.g00a8914
 In-Reply-To: <20161115230651.23953-1-sbeller@google.com>
 References: <20161115230651.23953-1-sbeller@google.com>
@@ -62,105 +62,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Implement the functionality needed to enable work tree manipulating
-commands to that a deleted submodule should not only affect the index
-(leaving all the files of the submodule in the work tree) but also to
-remove the work tree of the superproject (including any untracked
-files).
-
-To do so, we need an equivalent of "rm -rf", which is already found in
-entry.c, so expose that and for clarity add a suffix "_or_dir" to it.
-
-That will only work properly when the submodule uses a gitfile instead of
-a .git directory and no untracked files are present. Otherwise the removal
-will fail with a warning (which is just what happened until now).
+Extend rmdir_or_warn() to remove the directories of those submodules which
+are scheduled for removal. Also teach verify_clean_submodule() to check
+that a submodule configured to be removed is not modified before scheduling
+it for removal.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h     |  2 ++
- entry.c     |  8 ++++++++
- submodule.c | 25 +++++++++++++++++++++++++
- submodule.h |  1 +
- 4 files changed, 36 insertions(+)
+ unpack-trees.c | 6 ++----
+ wrapper.c      | 4 ++++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index a50a61a..65c47e4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -2018,4 +2018,6 @@ void sleep_millisec(int millisec);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index ea6bdd2..576e1d5 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -9,6 +9,7 @@
+ #include "refs.h"
+ #include "attr.h"
+ #include "split-index.h"
++#include "submodule.h"
+ #include "dir.h"
+ 
+ /*
+@@ -1361,15 +1362,12 @@ static void invalidate_ce_path(const struct cache_entry *ce,
+ /*
+  * Check that checking out ce->sha1 in subdir ce->name is not
+  * going to overwrite any working files.
+- *
+- * Currently, git does not checkout subprojects during a superproject
+- * checkout, so it is not going to overwrite anything.
   */
- void safe_create_dir(const char *dir, int share);
- 
-+void remove_subtree_or_die(const char *path);
-+
- #endif /* CACHE_H */
-diff --git a/entry.c b/entry.c
-index c6eea24..019826b 100644
---- a/entry.c
-+++ b/entry.c
-@@ -73,6 +73,14 @@ static void remove_subtree(struct strbuf *path)
- 		die_errno("cannot rmdir '%s'", path->buf);
- }
- 
-+void remove_subtree_or_die(const char *path)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	strbuf_addstr(&sb, path);
-+	remove_subtree(&sb);
-+	strbuf_release(&sb);
-+}
-+
- static int create_file(const char *path, unsigned int mode)
+ static int verify_clean_submodule(const struct cache_entry *ce,
+ 				  enum unpack_trees_error_types error_type,
+ 				  struct unpack_trees_options *o)
  {
- 	mode = (mode & 0100) ? 0777 : 0666;
-diff --git a/submodule.c b/submodule.c
-index d34b721..0fa4613 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -308,6 +308,31 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
+-	return 0;
++	return submodule_is_interesting(ce->name, null_sha1) && is_submodule_modified(ce->name, 0);
  }
  
-+int depopulate_submodule(const char *path)
-+{
-+	int ret = 0;
-+	char *dot_git = xstrfmt("%s/.git", path);
-+
-+	/* Is it populated? */
-+	if (!resolve_gitdir(dot_git))
-+		goto out;
-+
-+	/* Does it have a .git directory? */
-+	if (!submodule_uses_gitfile(path)) {
-+		warning(_("cannot remove submodule '%s' because it (or one of "
-+			  "its nested submodules) uses a .git directory"),
-+			  path);
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	remove_subtree_or_die(path);
-+
-+out:
-+	free(dot_git);
-+	return ret;
-+}
-+
- /* Helper function to display the submodule header line prior to the full
-  * summary output. If it can locate the submodule objects directory it will
-  * attempt to lookup both the left and right commits and put them into the
-diff --git a/submodule.h b/submodule.h
-index 3df6881..8518cf3 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -65,6 +65,7 @@ extern void set_config_update_recurse_submodules(int value);
+ static int verify_clean_subdirectory(const struct cache_entry *ce,
+diff --git a/wrapper.c b/wrapper.c
+index e7f1979..17c08de 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -2,6 +2,7 @@
+  * Various trivial helper wrappers around standard functions
   */
- extern int submodule_is_interesting(const char *path, const unsigned char *sha1);
- extern int submodules_interesting_for_update(void);
-+extern int depopulate_submodule(const char *path);
- extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
+ #include "cache.h"
++#include "submodule.h"
+ 
+ static void do_nothing(size_t size)
+ {
+@@ -592,6 +593,9 @@ int unlink_or_warn(const char *file)
+ 
+ int rmdir_or_warn(const char *file)
+ {
++	if (submodule_is_interesting(file, null_sha1)
++	    && depopulate_submodule(file))
++		return -1;
+ 	return warn_if_unremovable("rmdir", file, rmdir(file));
+ }
+ 
 -- 
 2.10.1.469.g00a8914
 
