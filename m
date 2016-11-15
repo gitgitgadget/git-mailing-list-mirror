@@ -2,111 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A7C82021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 18:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 735842021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 19:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752754AbcKOSvY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 13:51:24 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60818 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751081AbcKOSvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 13:51:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 62CC34F5D7;
-        Tue, 15 Nov 2016 13:51:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dPQmP4gl4rdl+e41YiMTu3ZdCl8=; b=olr0gb
-        GcakbxtebDuTdwfYYBX9aZSpjedRaPAkFXzVi6uFM9BzJyn+PeiagUYXf51M/tYE
-        9V14vrQNhQsr1yDl18hNJgL69t0ANZGune0quMbs179rahWOX0q4vBFqJjKT50pC
-        l8yWnxEse+h/blYe0jXZDAmhKY2x2EimmQKt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sCkKd+MeWLPTwvADS0jUF4m1fiWmBqgc
-        KdB959gpGg5CkiPR0R73kWa2VrNsh3FtMhNtMqtHCd1+rWCkGez0PVpAEqSFk5X4
-        ajOXwEwV9vls4s7IqjMluOsRV5Xy4OSs2rCoqmGtWpFDYDfE/PIQDPvfIafIwzsL
-        g5MxrXcDgeE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B0584F5D6;
-        Tue, 15 Nov 2016 13:51:22 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S933845AbcKOTKq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 14:10:46 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:37861 "EHLO
+        homiemail-a62.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933649AbcKOTKq (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Nov 2016 14:10:46 -0500
+Received: from homiemail-a62.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTP id 4C898634082;
+        Tue, 15 Nov 2016 11:10:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        in-reply-to:references:from:date:subject:to:cc
+        :content-transfer-encoding:message-id:mime-version; s=
+        mattmccutchen.net; bh=MVZ94N29pN36aa2pKzlY9J/baeM=; b=J0bMXNXxri
+        JD/v8SV11SnFePhSK5+FbBXRM9ZlpFCg7lfjcFGLGHWBSINMU5QW2+5f5hCAKDDo
+        h8K+CG3RehuJtnLFwUJPr1NUX5rKpORyDaMp5T68NcDPT+Y8GgUAKa8UC121UV0S
+        PsjQMUo6ZdqdAUGw837UjHrB4RwRdWzng=
+Received: from main (30-10-119.wireless.csail.mit.edu [128.30.10.119])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD2004F5D5;
-        Tue, 15 Nov 2016 13:51:21 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     John Rood <mr.john.rood@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ignore blank line removals
-References: <CALj-rGcSrbAiyxPOYD1KCacK_gqi3T5_R=e0H_UfBTqLb5VRmg@mail.gmail.com>
-        <CALj-rGdRDa0EU6AeMHWYketr5QBOnV7-3RKraiuPCk=Aepz=pQ@mail.gmail.com>
-Date:   Tue, 15 Nov 2016 10:51:20 -0800
-In-Reply-To: <CALj-rGdRDa0EU6AeMHWYketr5QBOnV7-3RKraiuPCk=Aepz=pQ@mail.gmail.com>
-        (John Rood's message of "Tue, 15 Nov 2016 11:56:58 -0600")
-Message-ID: <xmqqr36ctw47.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 804673F0-AB64-11E6-A417-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+        (Authenticated sender: matt@mattmccutchen.net)
+        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTPSA id EC78B63407C;
+        Tue, 15 Nov 2016 11:10:44 -0800 (PST)
+In-Reply-To: <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
+References: <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
+From:   Matt McCutchen <matt@mattmccutchen.net>
+Date:   Tue, 15 Nov 2016 14:08:51 -0500
+Subject: [PATCH] git-gc.txt: expand discussion of races with other processes
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Content-Transfer-Encoding: 7bit
+Message-ID: <1479237042.2406.89.camel@mattmccutchen.net>
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Rood <mr.john.rood@gmail.com> writes:
+In general, "git gc" may delete objects that another concurrent process
+is using but hasn't created a reference to.  Git has some mitigations,
+but they fall short of a complete solution.  Document this in the
+git-gc(1) man page and add a reference from the documentation of the
+gc.pruneExpire config variable.
 
-> On Thu, Nov 3, 2016 at 10:57 AM, John Rood <mr.john.rood@gmail.com> wrote:
->> If the contents of a file initially are:
->>   one
->>
->>   three
->> and on branch A there is a commit, removing the blank line:
->>   one
->>   three
->> and on branch B there is a commit, adding 'two':
->>   one
->>   two
->>   three
->> Normally, if you try to merge A into B (or B into A), git recognizes a
->> decision needs to be made between removing the second line or add
->> "two" to the second line. It would be convenient to have a merge
->> strategy that defaults to the latter in cases where the removed line
->> was a blank line (or a line containing only whitespace) ...something
->> like -Xignore-blank-line-removals.
->
-> Is there any push-back on this, or is there a backlog that we can add
-> this feature to?
+Based on a write-up by Jeff King:
 
-If you mean by "push-back" objections that say "this feature is evil
-and should not be added to Git, ever", I do not think we saw any on
-the list.  The lack of response is most likely that everybody
-thought "Meh." aka "It is not useful/interesting/valuable enough
-feature to bother discussing."
+http://marc.info/?l=git&m=147922960131779&w=2
 
-One thing I wondered was what you would want if the contents were
-one/three without blank, A added blank between the two and B
-replaced blank with two.  As your example shows, in the filetype you
-are dealing with, a blank line has no significant meaning (otherwise
-you won't be ignoring the change A made to remove the blank in your
-original example).  The outcome desired by you may be one/two/three
-without any blank in that case because of that.  Which would lead to
-the suspicion that ignore-blank-line-removals is not a good general
-feature (i.e. in this other example, you want to ignore blank line
-addition).  Which further leads to the suspicion that the desire you
-expressed in the original post is not well thought through to be a
-useful specifification to build anything out of (yet), but is merely
-a potentially interesting discussion starter.  And nobody so far
-found it interesting enough to spend time discussing it further to
-make the wish detailed enough to be called a "design" of a new
-feature.
+Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+---
+ Documentation/config.txt |  4 +++-
+ Documentation/git-gc.txt | 34 ++++++++++++++++++++++++++--------
+ 2 files changed, 29 insertions(+), 9 deletions(-)
 
-Having said all that.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 21fdddf..3f1d931 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1409,7 +1409,9 @@ gc.pruneExpire::
+ 	Override the grace period with this config variable.  The value
+ 	"now" may be used to disable this grace period and always prune
+ 	unreachable objects immediately, or "never" may be used to
+-	suppress pruning.
++	suppress pruning.  This feature helps prevent corruption when
++	'git gc' runs concurrently with another process writing to the
++	repository; see the "NOTES" section of linkgit:git-gc[1].
+ 
+ gc.worktreePruneExpire::
+ 	When 'git gc' is run, it calls
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index bed60f4..852b72c 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -63,11 +63,10 @@ automatic consolidation of packs.
+ --prune=<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+ 	overridable by the config variable `gc.pruneExpire`).
+-	--prune=all prunes loose objects regardless of their age (do
+-	not use --prune=all unless you know exactly what you are doing.
+-	Unless the repository is quiescent, you will lose newly created
+-	objects that haven't been anchored with the refs and end up
+-	corrupting your repository).  --prune is on by default.
++	--prune=all prunes loose objects regardless of their age and
++	increases the risk of corruption if another process is writing to
++	the repository concurrently; see "NOTES" below. --prune is on by
++	default.
+ 
+ --no-prune::
+ 	Do not prune any loose objects.
+@@ -138,17 +137,36 @@ default is "2 weeks ago".
+ Notes
+ -----
+ 
+-'git gc' tries very hard to be safe about the garbage it collects. In
++'git gc' tries very hard not to delete objects that are referenced
++anywhere in your repository. In
+ particular, it will keep not only objects referenced by your current set
+ of branches and tags, but also objects referenced by the index,
+ remote-tracking branches, refs saved by 'git filter-branch' in
+ refs/original/, or reflogs (which may reference commits in branches
+ that were later amended or rewound).
+-
+-If you are expecting some objects to be collected and they aren't, check
++If you are expecting some objects to be deleted and they aren't, check
+ all of those locations and decide whether it makes sense in your case to
+ remove those references.
+ 
++On the other hand, when 'git gc' runs concurrently with another process,
++there is a risk of it deleting an object that the other process is using
++but hasn't created a reference to. This may just cause the other process
++to fail or may corrupt the repository if the other process later adds a
++reference to the deleted object. Git has two features that significantly
++mitigate this problem:
++
++. Any object with modification time newer than the `--prune` date is kept,
++  along with everything reachable from it.
++
++. Most operations that add an object to the database update the
++  modification time of the object if it is already present so that #1
++  applies.
++
++However, these features fall short of a complete solution, so users who
++run commands concurrently have to live with some risk of corruption (which
++seems to be low in practice) unless they turn off automatic garbage
++collection with 'git config gc.auto 0'.
++
+ HOOKS
+ -----
+ 
+-- 
+2.7.4
 
-I suspect that you may not have to make any change to Git to do what
-you want; can't you just use the 'merge' attribute with a custom
-3-way merge driver that removes an empty line?
 
