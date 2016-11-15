@@ -2,101 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A27641F40E
-	for <e@80x24.org>; Tue, 15 Nov 2016 06:48:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F42E1F40E
+	for <e@80x24.org>; Tue, 15 Nov 2016 07:03:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752022AbcKOGsr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 01:48:47 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:34158 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750766AbcKOGsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 01:48:46 -0500
-Received: by mail-yw0-f180.google.com with SMTP id t125so85422225ywc.1
-        for <git@vger.kernel.org>; Mon, 14 Nov 2016 22:48:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2G7Xv3tbNK1lwsl4TApreNx/HuOSRwWYKBy5DDD+ZdY=;
-        b=U9n9H9QPBK70MAxAxVDzcuf+scTVkLlKF1penSmLnEmZJMZL0TE0+9Gi4a+1QDY1n1
-         JGv+8sI7bsh1KyJbqzL7b1kpSgGaxEZdlGP/6ICpK4H/5lbJbP5heK0uwhmOpzlFlffF
-         ZyWveoBc51VT5BLsnkXJS02lSwfkTA4RVh6BAT6JfGovebHzfSLjeckgYb1vM+wCyzx1
-         u9SlozZT/lsmzOwsKwI+U2Zi44XGE1jlZxhTFcs8IbCdJ0Ti+elgQQ7vetUomXcx5S2y
-         TOxFqEf3QMrgCJSCHCMGzC4KiMSUFl50sUnQ5QHE4FYd6UHurE5ZrR1KWtTq6tbxFkC/
-         ns/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2G7Xv3tbNK1lwsl4TApreNx/HuOSRwWYKBy5DDD+ZdY=;
-        b=D111rKuaVrD7/qfLhsDoy9LYoN/ineqBbprMKFEQuMIRmI8UUjUrTY94QgxznGccLa
-         e8pcQpzj9gllfQ0j5lBv+APCCqwtYA89NkM/8W153V5DsCFv86MO2Cyp9ogaOluxWk1F
-         Pz3ZhjP6OIhNiuzmCGI03wuhCydLrLQqowzSFSH4XyS8cw89je5Xcripnow0hx8aBx4s
-         gUcYAcOEZvgEz3iLc7KdXHAMdqZ5iNvrocDf5wrz5anR8d0GaKIXYsNfN1IKLcijEEbj
-         eF1jeV2RVwlaS5N0tAv3murqy2CO4ZhFOz8pJSzJKfzjzzWrgHyk3688UQ2mwl9ovCjK
-         NJ9Q==
-X-Gm-Message-State: ABUngvfpN44Sh9UicMHfFKsFP270U7l9UcbPTH5wf0SfCyLUFBvE6Q8JdOO5yItEgrYqiaZ4RZB8xeSwVXxFwQ==
-X-Received: by 10.129.121.1 with SMTP id u1mr17835901ywc.146.1479192525498;
- Mon, 14 Nov 2016 22:48:45 -0800 (PST)
+        id S964956AbcKOHDc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 02:03:32 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:46736 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751225AbcKOHD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 02:03:28 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tHyz16t2xz5tlj;
+        Tue, 15 Nov 2016 08:03:25 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 15E4539C;
+        Tue, 15 Nov 2016 08:03:25 +0100 (CET)
+Subject: Re: [PATCH 1/2] push: --dry-run updates submodules when
+ --recurse-submodules=on-demand
+To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+References: <1479172735-698-1-git-send-email-bmwill@google.com>
+ <1479172735-698-2-git-send-email-bmwill@google.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <4a72ad14-0a8f-ede9-9f54-601fcd37740b@kdbg.org>
+Date:   Tue, 15 Nov 2016 08:03:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Received: by 10.13.207.69 with HTTP; Mon, 14 Nov 2016 22:48:15 -0800 (PST)
-In-Reply-To: <xmqqy40lx2k8.fsf@gitster.mtv.corp.google.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-14-Karthik.188@gmail.com>
- <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com>
- <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com>
- <xmqq60nqzuye.fsf@gitster.mtv.corp.google.com> <CAOLa=ZSFuq2+6xsrJ=CcXuOVbTnbDirbRtu7Fonfk+9EdRpbxg@mail.gmail.com>
- <xmqqy40lx2k8.fsf@gitster.mtv.corp.google.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Tue, 15 Nov 2016 12:18:15 +0530
-Message-ID: <CAOLa=ZQepW9GiUrKEWXojpy10B86K-jb84G_dJeL=mqtjZ4AWg@mail.gmail.com>
-Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for
- ref printing atoms
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <1479172735-698-2-git-send-email-bmwill@google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 15, 2016 at 1:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>>  - More importantly, what do these do?  I do not think of a good
->>>    description that generalizes "base of refs/foo/bar/boz is foo" to
->>>    explain your :base.
->>
->> $ ./git for-each-ref --format "%(refname)%(end) %(refname:dir)"
->> refs/heads/master                  refs/heads
->> refs/heads/ref-filter                refs/heads
->> refs/remotes/junio/va/i18n     refs/remotes/junio/va
->>
->> $ ./git for-each-ref  refs/heads --format
->> "%(align:left,30)%(refname)%(end) %(refname:base)"
->> refs/heads/master                 heads
->> refs/heads/ref-filter                heads
->> refs/remotes/junio/va/i18n     remotes
->>
->> I guess this should clear it up.
->
-> Hmph.
->
-> I would guess from these examples that :dir is an equivalent to
-> dirname().  But it is unclear how :base is defined.  Is it the path
-> component that comes immediately after "refs/" that appears at the
-> beginning?
+Am 15.11.2016 um 02:18 schrieb Brandon Williams:
+> diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+> index 198ce84..e6ccc30 100755
+> --- a/t/t5531-deep-submodule-push.sh
+> +++ b/t/t5531-deep-submodule-push.sh
+> @@ -427,7 +427,31 @@ test_expect_success 'push unpushable submodule recursively fails' '
+>  		cd submodule.git &&
+>  		git rev-parse master >../actual
+>  	) &&
+> -	test_cmp expected actual
+> +	test_cmp expected actual &&
+> +	git -C work reset --hard master^
 
-':dir' is equivalent to dirname(). Yup, base is the folder right after 'refs/'.
-For local branches it is 'heads' for remotes it is 'remotes'. This is useful
-when we want to make decisions based on the type of branch we're dealing
-with (using along with %(if)...%(end)).
+This line looks like a clean-up to be done after the test case. You 
+should wrap it in test_when_finished, but outside of a sub-shell, which 
+looks like it's just one line earlier, before the test_cmp.
 
--- 
-Regards,
-Karthik Nayak
+> +'
+> +
+> +test_expect_failure 'push --dry-run does not recursively update submodules' '
+> +	(
+> +		cd work &&
+> +		(
+> +			cd gar/bage &&
+> +			git checkout master &&
+> +			git rev-parse master >../../../expected_submodule &&
+> +			> junk9 &&
+> +			git add junk9 &&
+> +			git commit -m "Ninth junk"
+> +		) &&
+
+Could you please avoid this nested sub-shell? It is fine to cd around 
+when you are in a sub-shell.
+
+> +		git checkout master &&
+> +		git rev-parse master >../expected_pub
+
+Broken && chain.
+
+> +		git add gar/bage &&
+> +		git commit -m "Ninth commit for gar/bage" &&
+> +		git push --dry-run --recurse-submodules=on-demand ../pub.git master
+> +	) &&
+> +	git -C submodule.git rev-parse master >actual_submodule &&
+> +	git -C pub.git rev-parse master >actual_pub &&
+
+All of the commands above are 'git something' that could become 'git -C 
+work something' and then the sub-shell would be unnecessary. I'm not 
+sure I would appreciate the verbosity of the result, though. (Perhaps 
+aligning the git subcommands after -C foo would help.)
+
+> +	test_cmp expected_pub actual_pub &&
+> +	test_cmp expected_submodule actual_submodule
+>  '
+>
+>  test_done
+>
+
