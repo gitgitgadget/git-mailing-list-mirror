@@ -6,139 +6,86 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 735842021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 19:10:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD9E62021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 19:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933845AbcKOTKq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 14:10:46 -0500
-Received: from homie.mail.dreamhost.com ([208.97.132.208]:37861 "EHLO
+        id S935147AbcKOTM5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 14:12:57 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:36254 "EHLO
         homiemail-a62.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933649AbcKOTKq (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Nov 2016 14:10:46 -0500
+        by vger.kernel.org with ESMTP id S932280AbcKOTM5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Nov 2016 14:12:57 -0500
 Received: from homiemail-a62.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTP id 4C898634082;
-        Tue, 15 Nov 2016 11:10:45 -0800 (PST)
+        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTP id 59AF0634085;
+        Tue, 15 Nov 2016 11:12:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
-        in-reply-to:references:from:date:subject:to:cc
-        :content-transfer-encoding:message-id:mime-version; s=
-        mattmccutchen.net; bh=MVZ94N29pN36aa2pKzlY9J/baeM=; b=J0bMXNXxri
-        JD/v8SV11SnFePhSK5+FbBXRM9ZlpFCg7lfjcFGLGHWBSINMU5QW2+5f5hCAKDDo
-        h8K+CG3RehuJtnLFwUJPr1NUX5rKpORyDaMp5T68NcDPT+Y8GgUAKa8UC121UV0S
-        PsjQMUo6ZdqdAUGw837UjHrB4RwRdWzng=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=
+        mattmccutchen.net; bh=SKo847T0xzB0RiLXD3iQUWCFUTo=; b=Umi6qckYtU
+        D4w3cqngPNvu0g6BFgEOW5CXEDxtijkidyLYqCJ/DfOdwTfwAMK1i+9wOXFHUu3L
+        BZKfn3LOtMNDvLRzFSFRq8AsWf7BqE5/FO+x6zsW28pJH2rOrKfSW7Py0Tr46rqH
+        X57/BnGKVa3EYhsUF+TGd9SCiHMI3ddtc=
 Received: from main (30-10-119.wireless.csail.mit.edu [128.30.10.119])
         (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: matt@mattmccutchen.net)
-        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTPSA id EC78B63407C;
-        Tue, 15 Nov 2016 11:10:44 -0800 (PST)
-In-Reply-To: <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
-References: <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
+        by homiemail-a62.g.dreamhost.com (Postfix) with ESMTPSA id ED53963407C;
+        Tue, 15 Nov 2016 11:12:55 -0800 (PST)
+Message-ID: <1479237172.2406.91.camel@mattmccutchen.net>
+Subject: Re: Protecting old temporary objects being reused from concurrent
+ "git gc"?
 From:   Matt McCutchen <matt@mattmccutchen.net>
-Date:   Tue, 15 Nov 2016 14:08:51 -0500
-Subject: [PATCH] git-gc.txt: expand discussion of races with other processes
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Date:   Tue, 15 Nov 2016 14:12:52 -0500
+In-Reply-To: <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
+References: <1479219194.2406.73.camel@mattmccutchen.net>
+         <20161115170634.ichqrqbhmpv2dsiw@sigill.intra.peff.net>
+         <1479231184.2406.88.camel@mattmccutchen.net>
+         <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Content-Transfer-Encoding: 7bit
-Message-ID: <1479237042.2406.89.camel@mattmccutchen.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In general, "git gc" may delete objects that another concurrent process
-is using but hasn't created a reference to.  Git has some mitigations,
-but they fall short of a complete solution.  Document this in the
-git-gc(1) man page and add a reference from the documentation of the
-gc.pruneExpire config variable.
+On Tue, 2016-11-15 at 12:40 -0500, Jeff King wrote:
+> On Tue, Nov 15, 2016 at 12:33:04PM -0500, Matt McCutchen wrote:
+>=20
+> >=20
+> > On Tue, 2016-11-15 at 12:06 -0500, Jeff King wrote:
+> > >=20
+> > > =C2=A0- when an object write is optimized out because we already ha=
+ve the
+> > > =C2=A0=C2=A0=C2=A0object, git will update the mtime on the file (lo=
+ose object or
+> > > =C2=A0=C2=A0=C2=A0packfile) to freshen it
+> >=20
+> > FWIW, I am not seeing this happen when I do "git read-tree --prefix"
+> > followed by "git write-tree" using the current master (3ab2281). =C2=A0=
+See
+> > the attached test script.
+>=20
+> The optimization I'm thinking about is the one from write_sha1_file(),
+> which learned to freshen in 33d4221c7 (write_sha1_file: freshen existin=
+g
+> objects, 2014-10-15).
+>=20
+> I suspect the issue is that read-tree populates the cache-tree index
+> extension, and then write-tree omits the object write before it even
+> gets to write_sha1_file(). The solution is that it should probably be
+> calling one of the freshen() functions (possibly just replacing
+> has_sha1_file() with check_and_freshen(), but I haven't looked).
+>=20
+> I'd definitely welcome patches in this area.
 
-Based on a write-up by Jeff King:
+Cool, it's nice to have an idea of what's going on. =C2=A0I don't think I=
+'m
+going to try to fix it myself though.
 
-http://marc.info/?l=git&m=147922960131779&w=2
+By the way, thanks for the fast response to my original question!
 
-Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
----
- Documentation/config.txt |  4 +++-
- Documentation/git-gc.txt | 34 ++++++++++++++++++++++++++--------
- 2 files changed, 29 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 21fdddf..3f1d931 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1409,7 +1409,9 @@ gc.pruneExpire::
- 	Override the grace period with this config variable.  The value
- 	"now" may be used to disable this grace period and always prune
- 	unreachable objects immediately, or "never" may be used to
--	suppress pruning.
-+	suppress pruning.  This feature helps prevent corruption when
-+	'git gc' runs concurrently with another process writing to the
-+	repository; see the "NOTES" section of linkgit:git-gc[1].
- 
- gc.worktreePruneExpire::
- 	When 'git gc' is run, it calls
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index bed60f4..852b72c 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -63,11 +63,10 @@ automatic consolidation of packs.
- --prune=<date>::
- 	Prune loose objects older than date (default is 2 weeks ago,
- 	overridable by the config variable `gc.pruneExpire`).
--	--prune=all prunes loose objects regardless of their age (do
--	not use --prune=all unless you know exactly what you are doing.
--	Unless the repository is quiescent, you will lose newly created
--	objects that haven't been anchored with the refs and end up
--	corrupting your repository).  --prune is on by default.
-+	--prune=all prunes loose objects regardless of their age and
-+	increases the risk of corruption if another process is writing to
-+	the repository concurrently; see "NOTES" below. --prune is on by
-+	default.
- 
- --no-prune::
- 	Do not prune any loose objects.
-@@ -138,17 +137,36 @@ default is "2 weeks ago".
- Notes
- -----
- 
--'git gc' tries very hard to be safe about the garbage it collects. In
-+'git gc' tries very hard not to delete objects that are referenced
-+anywhere in your repository. In
- particular, it will keep not only objects referenced by your current set
- of branches and tags, but also objects referenced by the index,
- remote-tracking branches, refs saved by 'git filter-branch' in
- refs/original/, or reflogs (which may reference commits in branches
- that were later amended or rewound).
--
--If you are expecting some objects to be collected and they aren't, check
-+If you are expecting some objects to be deleted and they aren't, check
- all of those locations and decide whether it makes sense in your case to
- remove those references.
- 
-+On the other hand, when 'git gc' runs concurrently with another process,
-+there is a risk of it deleting an object that the other process is using
-+but hasn't created a reference to. This may just cause the other process
-+to fail or may corrupt the repository if the other process later adds a
-+reference to the deleted object. Git has two features that significantly
-+mitigate this problem:
-+
-+. Any object with modification time newer than the `--prune` date is kept,
-+  along with everything reachable from it.
-+
-+. Most operations that add an object to the database update the
-+  modification time of the object if it is already present so that #1
-+  applies.
-+
-+However, these features fall short of a complete solution, so users who
-+run commands concurrently have to live with some risk of corruption (which
-+seems to be low in practice) unless they turn off automatic garbage
-+collection with 'git config gc.auto 0'.
-+
- HOOKS
- -----
- 
--- 
-2.7.4
-
-
+Matt
