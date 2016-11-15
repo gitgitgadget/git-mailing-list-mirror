@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4C9A2021E
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22B82042F
 	for <e@80x24.org>; Tue, 15 Nov 2016 14:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753826AbcKOO5V (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 09:57:21 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.41]:49843 "EHLO
+        id S1754104AbcKOO5X (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 09:57:23 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.29.7]:55449 "EHLO
         smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752988AbcKOO5S (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1753253AbcKOO5S (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Nov 2016 09:57:18 -0500
 Received: from [84.46.92.130] (helo=localhost)
         by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.84)
         (envelope-from <hvoigt@hvoigt.net>)
-        id 1c6fAh-0007bU-Cf; Tue, 15 Nov 2016 15:57:15 +0100
+        id 1c6fAg-0007ZJ-RP; Tue, 15 Nov 2016 15:57:14 +0100
 From:   Heiko Voigt <hvoigt@hvoigt.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>, Jens.Lehmann@web.de,
         Fredrik Gustafsson <iveqy@iveqy.com>,
         Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: [PATCH v3 2/4] serialize collection of refs that contain submodule changes
-Date:   Tue, 15 Nov 2016 15:56:15 +0100
-Message-Id: <616038c9b59cfcccce180de480c2a168921b9a63.1479221071.git.hvoigt@hvoigt.net>
+Subject: [PATCH v3 1/4] serialize collection of changed submodules
+Date:   Tue, 15 Nov 2016 15:56:14 +0100
+Message-Id: <67e11474d4fd8ada2652809cf14f6c4d96be55ff.1479221071.git.hvoigt@hvoigt.net>
 X-Mailer: git-send-email 2.10.1.386.gc503e45
 In-Reply-To: <cover.1479221071.git.hvoigt@hvoigt.net>
 References: <cover.1479221071.git.hvoigt@hvoigt.net>
@@ -40,170 +40,127 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are iterating over each pushed ref and want to check whether it
-contains changes to submodules. Instead of immediately checking each ref
-lets first collect them and then do the check for all of them in one
-revision walk.
+To check whether a submodule needs to be pushed we need to collect all
+changed submodules. Lets collect them first and then execute the
+possibly expensive test whether certain revisions are already pushed
+only once per submodule.
+
+There is further potential for optimization since we can assemble one
+command and only issued that instead of one call for each remote ref in
+the submodule.
 
 Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
- submodule.c | 35 ++++++++++++++++++++---------------
- submodule.h |  5 +++--
- transport.c | 29 +++++++++++++++++++++--------
- 3 files changed, 44 insertions(+), 25 deletions(-)
+ submodule.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 56 insertions(+), 4 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index b91585e..769d666 100644
+index 6f7d883..b91585e 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -500,6 +500,13 @@ static int has_remote(const char *refname, const struct object_id *oid,
- 	return 1;
+@@ -532,19 +532,34 @@ static int submodule_needs_pushing(const char *path, const unsigned char sha1[20
+ 	return 0;
  }
  
-+static int append_sha1_to_argv(const unsigned char sha1[20], void *data)
++static struct sha1_array *submodule_commits(struct string_list *submodules,
++					    const char *path)
 +{
-+	struct argv_array *argv = (struct argv_array *) data;
-+	argv_array_push(argv, sha1_to_hex(sha1));
++	struct string_list_item *item;
++
++	item = string_list_insert(submodules, path);
++	if (item->util)
++		return (struct sha1_array *) item->util;
++
++	/* NEEDSWORK: should we have sha1_array_init()? */
++	item->util = xcalloc(1, sizeof(struct sha1_array));
++	return (struct sha1_array *) item->util;
++}
++
+ static void collect_submodules_from_diff(struct diff_queue_struct *q,
+ 					 struct diff_options *options,
+ 					 void *data)
+ {
+ 	int i;
+-	struct string_list *needs_pushing = data;
++	struct string_list *submodules = data;
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
++		struct sha1_array *commits;
+ 		if (!S_ISGITLINK(p->two->mode))
+ 			continue;
+-		if (submodule_needs_pushing(p->two->path, p->two->oid.hash))
+-			string_list_insert(needs_pushing, p->two->path);
++		commits = submodule_commits(submodules, p->two->path);
++		sha1_array_append(commits, p->two->oid.hash);
+ 	}
+ }
+ 
+@@ -560,6 +575,31 @@ static void find_unpushed_submodule_commits(struct commit *commit,
+ 	diff_tree_combined_merge(commit, 1, &rev);
+ }
+ 
++struct collect_submodule_from_sha1s_data {
++	char *submodule_path;
++	struct string_list *needs_pushing;
++};
++
++static int collect_submodules_from_sha1s(const unsigned char sha1[20],
++		void *data)
++{
++	struct collect_submodule_from_sha1s_data *me =
++		(struct collect_submodule_from_sha1s_data *) data;
++
++	if (submodule_needs_pushing(me->submodule_path, sha1))
++		string_list_insert(me->needs_pushing, me->submodule_path);
++
 +	return 0;
 +}
 +
- static int submodule_needs_pushing(const char *path, const unsigned char sha1[20])
- {
- 	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
-@@ -600,25 +607,24 @@ static void free_submodules_sha1s(struct string_list *submodules)
- 	string_list_clear(submodules, 1);
- }
- 
--int find_unpushed_submodules(unsigned char new_sha1[20],
-+int find_unpushed_submodules(struct sha1_array *commits,
++static void free_submodules_sha1s(struct string_list *submodules)
++{
++	struct string_list_item *item;
++	for_each_string_list_item(item, submodules)
++		sha1_array_clear((struct sha1_array *) item->util);
++	string_list_clear(submodules, 1);
++}
++
+ int find_unpushed_submodules(unsigned char new_sha1[20],
  		const char *remotes_name, struct string_list *needs_pushing)
  {
- 	struct rev_info rev;
- 	struct commit *commit;
--	const char *argv[] = {NULL, NULL, "--not", "NULL", NULL};
--	int argc = ARRAY_SIZE(argv) - 1;
--	char *sha1_copy;
- 	struct string_list submodules = STRING_LIST_INIT_DUP;
- 	struct string_list_item *submodule;
-+	struct argv_array argv = ARGV_ARRAY_INIT;
+@@ -568,6 +608,8 @@ int find_unpushed_submodules(unsigned char new_sha1[20],
+ 	const char *argv[] = {NULL, NULL, "--not", "NULL", NULL};
+ 	int argc = ARRAY_SIZE(argv) - 1;
+ 	char *sha1_copy;
++	struct string_list submodules = STRING_LIST_INIT_DUP;
++	struct string_list_item *submodule;
  
--	struct strbuf remotes_arg = STRBUF_INIT;
--
--	strbuf_addf(&remotes_arg, "--remotes=%s", remotes_name);
- 	init_revisions(&rev, NULL);
--	sha1_copy = xstrdup(sha1_to_hex(new_sha1));
--	argv[1] = sha1_copy;
--	argv[3] = remotes_arg.buf;
--	setup_revisions(argc, argv, &rev, NULL);
-+
-+	/* argv.argv[0] will be ignored by setup_revisions */
-+	argv_array_push(&argv, "find_unpushed_submodules");
-+	sha1_array_for_each_unique(commits, append_sha1_to_argv, &argv);
-+	argv_array_push(&argv, "--not");
-+	argv_array_pushf(&argv, "--remotes=%s", remotes_name);
-+
-+	setup_revisions(argv.argc, argv.argv, &rev, NULL);
- 	if (prepare_revision_walk(&rev))
+ 	struct strbuf remotes_arg = STRBUF_INIT;
+ 
+@@ -581,12 +623,22 @@ int find_unpushed_submodules(unsigned char new_sha1[20],
  		die("revision walk setup failed");
  
-@@ -626,8 +632,7 @@ int find_unpushed_submodules(unsigned char new_sha1[20],
- 		find_unpushed_submodule_commits(commit, &submodules);
+ 	while ((commit = get_revision(&rev)) != NULL)
+-		find_unpushed_submodule_commits(commit, needs_pushing);
++		find_unpushed_submodule_commits(commit, &submodules);
  
  	reset_revision_walk();
--	free(sha1_copy);
--	strbuf_release(&remotes_arg);
-+	argv_array_clear(&argv);
+ 	free(sha1_copy);
+ 	strbuf_release(&remotes_arg);
  
- 	for_each_string_list_item(submodule, &submodules) {
- 		struct collect_submodule_from_sha1s_data data;
-@@ -664,12 +669,12 @@ static int push_submodule(const char *path)
- 	return 1;
++	for_each_string_list_item(submodule, &submodules) {
++		struct collect_submodule_from_sha1s_data data;
++		data.submodule_path = submodule->string;
++		data.needs_pushing = needs_pushing;
++		sha1_array_for_each_unique((struct sha1_array *) submodule->util,
++				collect_submodules_from_sha1s,
++				&data);
++	}
++	free_submodules_sha1s(&submodules);
++
+ 	return needs_pushing->nr;
  }
  
--int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name)
-+int push_unpushed_submodules(struct sha1_array *commits, const char *remotes_name)
- {
- 	int i, ret = 1;
- 	struct string_list needs_pushing = STRING_LIST_INIT_DUP;
- 
--	if (!find_unpushed_submodules(new_sha1, remotes_name, &needs_pushing))
-+	if (!find_unpushed_submodules(commits, remotes_name, &needs_pushing))
- 		return 1;
- 
- 	for (i = 0; i < needs_pushing.nr; i++) {
-diff --git a/submodule.h b/submodule.h
-index d9e197a..9454806 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -3,6 +3,7 @@
- 
- struct diff_options;
- struct argv_array;
-+struct sha1_array;
- 
- enum {
- 	RECURSE_SUBMODULES_CHECK = -4,
-@@ -62,9 +63,9 @@ int submodule_uses_gitfile(const char *path);
- int ok_to_remove_submodule(const char *path);
- int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
- 		    const unsigned char a[20], const unsigned char b[20], int search);
--int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
-+int find_unpushed_submodules(struct sha1_array *commits, const char *remotes_name,
- 		struct string_list *needs_pushing);
--int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
-+int push_unpushed_submodules(struct sha1_array *commits, const char *remotes_name);
- void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
- int parallel_submodules(void);
- 
-diff --git a/transport.c b/transport.c
-index d57e8de..f482869 100644
---- a/transport.c
-+++ b/transport.c
-@@ -949,23 +949,36 @@ int transport_push(struct transport *transport,
- 
- 		if ((flags & TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND) && !is_bare_repository()) {
- 			struct ref *ref = remote_refs;
-+			struct sha1_array commits = SHA1_ARRAY_INIT;
-+
- 			for (; ref; ref = ref->next)
--				if (!is_null_oid(&ref->new_oid) &&
--				    !push_unpushed_submodules(ref->new_oid.hash,
--					    transport->remote->name))
--				    die ("Failed to push all needed submodules!");
-+				if (!is_null_oid(&ref->new_oid))
-+					sha1_array_append(&commits, ref->new_oid.hash);
-+
-+			if (!push_unpushed_submodules(&commits, transport->remote->name)) {
-+				sha1_array_clear(&commits);
-+				die("Failed to push all needed submodules!");
-+			}
-+			sha1_array_clear(&commits);
- 		}
- 
- 		if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
- 			      TRANSPORT_RECURSE_SUBMODULES_CHECK)) && !is_bare_repository()) {
- 			struct ref *ref = remote_refs;
- 			struct string_list needs_pushing = STRING_LIST_INIT_DUP;
-+			struct sha1_array commits = SHA1_ARRAY_INIT;
- 
- 			for (; ref; ref = ref->next)
--				if (!is_null_oid(&ref->new_oid) &&
--				    find_unpushed_submodules(ref->new_oid.hash,
--					    transport->remote->name, &needs_pushing))
--					die_with_unpushed_submodules(&needs_pushing);
-+				if (!is_null_oid(&ref->new_oid))
-+					sha1_array_append(&commits, ref->new_oid.hash);
-+
-+			if (find_unpushed_submodules(&commits, transport->remote->name,
-+						&needs_pushing)) {
-+				sha1_array_clear(&commits);
-+				die_with_unpushed_submodules(&needs_pushing);
-+			}
-+			string_list_clear(&needs_pushing, 0);
-+			sha1_array_clear(&commits);
- 		}
- 
- 		push_ret = transport->push_refs(transport, remote_refs, flags);
 -- 
 2.10.1.386.gc503e45
 
