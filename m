@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9ACB2021E
-	for <e@80x24.org>; Tue, 15 Nov 2016 23:12:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC6802021E
+	for <e@80x24.org>; Tue, 15 Nov 2016 23:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934342AbcKOXM5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 18:12:57 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34852 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932927AbcKOXM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 18:12:57 -0500
-Received: by mail-pf0-f179.google.com with SMTP id i88so38432926pfk.2
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:12:56 -0800 (PST)
+        id S964863AbcKOXNL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 18:13:11 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:33877 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964784AbcKOXNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 18:13:10 -0500
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Nov 2016 18:13:10 EST
+Received: by mail-pg0-f50.google.com with SMTP id x23so68848101pgx.1
+        for <git@vger.kernel.org>; Tue, 15 Nov 2016 15:13:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DbwOG4epdec3jA1ARxqBfKToSmk6/v0js9cEWiPgaEE=;
-        b=nuTCTcy35DLV3hC21rfQylgPtKgcLXTuoMRX9bQ+zkdf7hFrzBx8Cgmzy9oqj2IOGG
-         tRCP7QIAWbk1K69Mo2JhWN6IRn+H74dA58k6S+qgbxy3JgmpIBq1yPLObagFgyGChrcM
-         Lv56FJUVJOl6305BOOYGhrcIXH8z9hIbxOinWnBe50lpSWxqqE5m89SC8aqZvuVaHGqD
-         YQxuDXRC8rlt7KZ+v5zM4GOnIGczfQQ60d8EP9aEY9N22eijycQ4wUza1mK4IB7Qd3ro
-         JgnDvz+3g/2Dp8jya6unjVqT3/fsLE3FIfazRUYg+qqqfagFgrdCVY5A7G55aQg4/L0m
-         Sc4A==
+        bh=cfazcFcARVGbtM7HRAhQsDFZNbkDEfjBj16SQuBRKeY=;
+        b=VZEoo1+rMQUG8XwKxjxlyG5UeKd/6LU+/tIQIPSthFsprdRf/ZGEj4ulC1hy5QGxBK
+         oy2ZKlvvdF3RyGagKsup/Nd/T8TDVn9DTn/OBQmNBeX+FiFCVv2PVX5QYtE8SXmmydZz
+         gx6EyQsG+y/nljjW7qKC0fizDvF5CEdsikzpm+RqTdfCiuBx1pE0JZea0R5Cv1u/NxQU
+         t1Di+ab0mwzRnQs+WJU02po5+1do5MHSqZaHA7PkgSVTKZ7ruyvwkWhmbScn/L8YRKUN
+         XwyBYiGvE1W+saThdV7vQXu9TcaI6qH50XcBFtRmaw4zc8RwrCHk99bJzeVj/NkMSlSQ
+         Ux6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DbwOG4epdec3jA1ARxqBfKToSmk6/v0js9cEWiPgaEE=;
-        b=mYDzaGPyL9YaC8BiMAcTy7vP/t4vjrPVjGNBqD800O+cPIDDbuSLA7DjLgqcVbdsv7
-         Q6L50d6YnR8Wx6dnErS8DgFWBGgrU3GfBccw8Sxxt5hpJQauRpesN3pbODK6JAeyw/yX
-         3diZ46bFd1lMqdirapV1Le96GQ5DCJBEjikEJT3t5u9N9MDjyZrJEJEGMoY83+XCjfQy
-         AlyAANshKnNRSw8TRBuNWTwLzb7xod+t1nWqJZRte1flsY9ZiHq3O2Jd9UwcgAql8XKV
-         L+p91H2CgBU4SW3uCtrmsOA1QVVAp0KrCsliAekIz0arVf1yWvnZTreNvvyvTzEO6mzx
-         /lyw==
-X-Gm-Message-State: ABUngve+WxHzU1LpX68yWSgZRYGNXSkhUvFU6/UyrG8oNfg2U3Wm/Gq3Q/TVDYTbHKPo3uE/
-X-Received: by 10.98.201.66 with SMTP id k63mr61746pfg.108.1479251222830;
-        Tue, 15 Nov 2016 15:07:02 -0800 (PST)
+        bh=cfazcFcARVGbtM7HRAhQsDFZNbkDEfjBj16SQuBRKeY=;
+        b=Dy2J0dcUWpQCFV2iE8HJh9z0i2+yuvIZ7WafqvvLUjCtxee63N8yPSDHpwBo86FZ72
+         kx9cQeC6WCL+/XLNb8FXu1h+k9EktUO5J/1U2YsX1k6pPE7mf1PYhBrIx2mT+egyEzcP
+         K73GrAGCLPdVRWPcFfiyg6MmDEXobnXsLGBUeOoxs+A7kFPR9wn/r9XwM1iNs8bedwYh
+         socg2wa0Wpg9V+LoalVOVyaQsOqrjEWBfs9oTMGqUjzFbL8wPUYXPIxVWI99uOoIJW0O
+         lhx8RxvKxBXQcgYXbpJOkpY4eUrdCDrbaKAzgdwPNiT+LmINE+7OCkLjcBoQ4D+cauS8
+         KvJw==
+X-Gm-Message-State: ABUngve+eummosEuFUTAWJQEBC/Mgm0XpxOBRltpEmo51kdtqmLW0551q9M/mY4Sp26H/eSf
+X-Received: by 10.99.109.6 with SMTP id i6mr1138037pgc.139.1479251218571;
+        Tue, 15 Nov 2016 15:06:58 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:1161:a721:e128:bf5f])
-        by smtp.gmail.com with ESMTPSA id q9sm46327534pfg.47.2016.11.15.15.07.02
+        by smtp.gmail.com with ESMTPSA id m19sm13647426pfi.24.2016.11.15.15.06.58
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Nov 2016 15:07:02 -0800 (PST)
+        Tue, 15 Nov 2016 15:06:58 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
         jrnieder@gmail.com, mogulguy10@gmail.com,
         David.Turner@twosigma.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 07/16] update submodules: introduce submodule_is_interesting
-Date:   Tue, 15 Nov 2016 15:06:42 -0800
-Message-Id: <20161115230651.23953-8-sbeller@google.com>
+Subject: [PATCH 03/16] submodule: use absolute path for computing relative path connecting
+Date:   Tue, 15 Nov 2016 15:06:38 -0800
+Message-Id: <20161115230651.23953-4-sbeller@google.com>
 X-Mailer: git-send-email 2.10.1.469.g00a8914
 In-Reply-To: <20161115230651.23953-1-sbeller@google.com>
 References: <20161115230651.23953-1-sbeller@google.com>
@@ -62,101 +63,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later patches we introduce the --recurse-submodule flag for commands
-that modify the working directory, e.g. git-checkout.
+This addresses a similar concern as in f8eaa0ba98b (submodule--helper,
+module_clone: always operate on absolute paths, 2016-03-31)
 
-It is potentially expensive to check if a submodule needs an update,
-because a common theme to interact with submodules is to spawn a child
-process for each interaction.
+When computing the relative path from one to another location, we
+need to provide both locations as absolute paths to make sure the
+computation of the relative path is correct.
 
-So let's introduce a function that pre checks if a submodule needs
-to be checked for an update.
-
-I am not particular happy with the name `submodule_is_interesting`,
-in internal iterations I had `submodule_requires_check_for_update`
-and `submodule_needs_update`, but I was even less happy with those
-names. Maybe `submodule_interesting_for_update`?
-
-Generally this is to answer "Am I allowed to touch the submodule
-at all?" or: "Does the user expect me to touch it?"
-which includes all of creation/deletion/update.
-
-This patch is based off a prior attempt by Jens Lehmann to add
-submodules to checkout.
+While at it, change `real_work_tree` to be non const as we own
+the memory.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 37 +++++++++++++++++++++++++++++++++++++
- submodule.h |  8 ++++++++
- 2 files changed, 45 insertions(+)
+ submodule.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 38b0573..d34b721 100644
+index 53a6dbb..c9d22e5 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -500,6 +500,43 @@ void set_config_update_recurse_submodules(int value)
- 	config_update_recurse_submodules = value;
+@@ -1221,23 +1221,25 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+ {
+ 	struct strbuf file_name = STRBUF_INIT;
+ 	struct strbuf rel_path = STRBUF_INIT;
+-	const char *real_work_tree = xstrdup(real_path(work_tree));
++	char *real_git_dir = xstrdup(real_path(git_dir));
++	char *real_work_tree = xstrdup(real_path(work_tree));
+ 
+ 	/* Update gitfile */
+ 	strbuf_addf(&file_name, "%s/.git", work_tree);
+ 	write_file(file_name.buf, "gitdir: %s",
+-		   relative_path(git_dir, real_work_tree, &rel_path));
++		   relative_path(real_git_dir, real_work_tree, &rel_path));
+ 
+ 	/* Update core.worktree setting */
+ 	strbuf_reset(&file_name);
+-	strbuf_addf(&file_name, "%s/config", git_dir);
++	strbuf_addf(&file_name, "%s/config", real_git_dir);
+ 	git_config_set_in_file(file_name.buf, "core.worktree",
+-			       relative_path(real_work_tree, git_dir,
++			       relative_path(real_work_tree, real_git_dir,
+ 					     &rel_path));
+ 
+ 	strbuf_release(&file_name);
+ 	strbuf_release(&rel_path);
+-	free((void *)real_work_tree);
++	free(real_work_tree);
++	free(real_git_dir);
  }
  
-+int submodules_interesting_for_update(void)
-+{
-+	/*
-+	 * Update can't be "none", "merge" or "rebase",
-+	 * treat any value as OFF, except an explicit ON.
-+	 */
-+	return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
-+}
-+
-+int submodule_is_interesting(const char *path, const unsigned char *sha1)
-+{
-+	/*
-+	 * If we cannot load a submodule config, we cannot get the name
-+	 * of the submodule, so we'd need to follow the gitlink file
-+	 */
-+	const struct submodule *sub;
-+
-+	if (!submodules_interesting_for_update())
-+		return 0;
-+
-+	sub = submodule_from_path(sha1, path);
-+	if (!sub)
-+		return 0;
-+
-+	switch (sub->update_strategy.type) {
-+	case SM_UPDATE_UNSPECIFIED:
-+	case SM_UPDATE_CHECKOUT:
-+		return 1;
-+	case SM_UPDATE_REBASE:
-+	case SM_UPDATE_MERGE:
-+	case SM_UPDATE_NONE:
-+	case SM_UPDATE_COMMAND:
-+		return 0;
-+	}
-+	return 0;
-+}
-+
- static int has_remote(const char *refname, const struct object_id *oid,
- 		      int flags, void *cb_data)
- {
-diff --git a/submodule.h b/submodule.h
-index 185ad18..3df6881 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -57,6 +57,14 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const struct diff_options *opt);
- extern void set_config_fetch_recurse_submodules(int value);
- extern void set_config_update_recurse_submodules(int value);
-+/**
-+ * When updating the working tree, do we need to check if the submodule needs
-+ * updating. We do not require a check if we are already sure that the
-+ * submodule doesn't need updating, e.g. when we are not interested in submodules
-+ * or the submodule is marked uninteresting by being not initialized.
-+ */
-+extern int submodule_is_interesting(const char *path, const unsigned char *sha1);
-+extern int submodules_interesting_for_update(void);
- extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
+ int parallel_submodules(void)
 -- 
 2.10.1.469.g00a8914
 
