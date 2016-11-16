@@ -6,72 +6,133 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 935152042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 18:18:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2BA2042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 18:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753140AbcKPSSt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 13:18:49 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58410 "EHLO
+        id S1753140AbcKPS3z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Nov 2016 13:29:55 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53037 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752282AbcKPSSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 13:18:48 -0500
+        with ESMTP id S1752278AbcKPS3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 13:29:54 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 881264E65E;
-        Wed, 16 Nov 2016 13:18:47 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 74D1B4DB8A;
+        Wed, 16 Nov 2016 13:29:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6YiHqu9UOxUtaH0mwJ9VUdbbhfs=; b=d4ZzzX
-        8UuTiBwXJ0HBGUmielyvIhIvfSua4GzHTtqdIkS/1eGKCvM++eZTqzYiE2TWgs5s
-        K9ES6Cx6ilQfc6Um4RCZd0PxGxBpJFIie0/Y0JgbZ2fBQrf6kEkrkcD9PJdoECOs
-        haSzDF5SWKdUcf2jRAfz71ac/bn5RNEe36RuQ=
+        :content-type; s=sasl; bh=f99qvijrMVhcmdr1SBY4G3dKPPI=; b=S+nTnM
+        5lsbm8vEgJx3KSZuXpDpU8/PqchQ+C4RUZEF2+k6TqAXkRsYyd7gQCiCr0qOa/NG
+        wjGQHEZEz9lMy0BZ5IB2cVFZX7a3eNlzCsZGyeCIv60Qu3Js4CjZIttcM1Er8g2B
+        qjL7XTOBwRnzTwDXm3v31/sCNpsnaq8vyEKCY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rN+pATwGnz5EZSOeSNsxsxVwgOteGeBB
-        YX83PvkP+7JchrrlWxT3AAehAmVh3TEx53Il2GfnAmJBB17EsKLQr+Ot6aldMKfO
-        m7Jc4o2U7DbsXMhSv0/oWlAilOtzIaJIXvnoliHF9JwxoVFl5NyjRwY/FQxO8Obh
-        G2miSFZ9iWA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F2CF4E65D;
-        Wed, 16 Nov 2016 13:18:47 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=vZx2MeeBzG1z7/Gyodmr6x/m3NY1WiKa
+        SR79dCHittQRfNqEz+zVPCP4bi16wukLBO0PWpgpcAporkFplxSxZYC2aUEIr97P
+        ACbFVMOUcLcMCvJmpbTmwMXPmMOR38k8NpDJymuwl1AmUGpAWgDiC6QPaVwcImXu
+        hNmOVAp4Ge4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B52B4DB88;
+        Wed, 16 Nov 2016 13:29:53 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F3B024E65C;
-        Wed, 16 Nov 2016 13:18:46 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E49484DB87;
+        Wed, 16 Nov 2016 13:29:52 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Matt McCutchen <matt@mattmccutchen.net>, git <git@vger.kernel.org>
-Subject: Re: Protecting old temporary objects being reused from concurrent "git gc"?
-References: <1479219194.2406.73.camel@mattmccutchen.net>
-        <20161115170634.ichqrqbhmpv2dsiw@sigill.intra.peff.net>
-        <1479231184.2406.88.camel@mattmccutchen.net>
-        <20161115174028.zvohfcw4jse3jrmm@sigill.intra.peff.net>
-        <xmqqk2c4tsv4.fsf@gitster.mtv.corp.google.com>
-        <20161116080753.gkn6v7vhdbifpubn@sigill.intra.peff.net>
-Date:   Wed, 16 Nov 2016 10:18:45 -0800
-In-Reply-To: <20161116080753.gkn6v7vhdbifpubn@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 16 Nov 2016 03:07:54 -0500")
-Message-ID: <xmqqlgwjqoe2.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
+References: <20161111201958.2175-1-dennis@kaarsemaker.net>
+        <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
+        <alpine.DEB.2.20.1611121106110.3746@virtualbox>
+        <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
+        <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
+        <a3db4c55-550c-f2e8-83b8-46c2be86f7da@drmicha.warpmail.net>
+        <xmqqtwb9wywp.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1611161039590.3746@virtualbox>
+Date:   Wed, 16 Nov 2016 10:29:51 -0800
+In-Reply-To: <alpine.DEB.2.20.1611161039590.3746@virtualbox> (Johannes
+        Schindelin's message of "Wed, 16 Nov 2016 10:50:30 +0100 (CET)")
+Message-ID: <xmqqh977qnvk.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1D833756-AC29-11E6-94E7-987C12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AA7AAC06-AC2A-11E6-8726-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> ... I notice there is
-> a return very early on in update_one() when has_sha1_file() matches, and
-> it seems like that would trigger in some interesting cases, too.
+> On Mon, 14 Nov 2016, Junio C Hamano wrote:
+>
+>> I _think_ the no-index mode was primarily for those who want to use
+>> our diff as a replacement for GNU and other diffs, and from that
+>> point of view, I'd favour not doing the "comparing symbolic link?
+>> We'll show the difference between the link contents, not target"
+>> under no-index mode myself.
+>
+> If I read this correctly,...
 
-Yeah, I missed that.  It says "we were asked to update one
-cache_tree that corresponds to this subdirectory, found that
-hashes everything below has been rolled up and still valid, and we
-already have the right tree object in the object store".
+Now I re-read it and I can see it can be read either way.
 
-It can simply become freshen(), which is "do we have it in the
-object store?" with a side effect of touching iff the answer is
-"yes".
+By "link contents" in "comparing symbolic link? We'll show the
+difference between the link contents, not target", I meant the
+result you get from readlink(2), which will result in
+
+    diff --git a/RelNotes b/RelNotes
+    index c02235fe8c..b54330f7cd 120000
+    --- a/RelNotes
+    +++ b/RelNotes
+    @@ -1 +1 @@
+    -Documentation/RelNotes/2.10.2.txt
+    \ No newline at end of file
+    +Documentation/RelNotes/2.11.0.txt
+    \ No newline at end of file
+
+not the comparison between the files that are link targets,
+i.e. hypothetical
+
+    diff --git a/RelNotes b/RelNotes
+    index c4d4397023..7a1fce7720 100644
+    --- a/Documentation/RelNotes/2.10.2.txt
+    +++ b/Documentation/RelNotes/2.11.0.txt
+    @@ -1,41 +1,402 @@
+    -Git v2.10.2 Release Notes
+    -=========================
+    +Git 2.11 Release Notes
+    ...
+
+And I'd favour *NOT* doing that if we are using our diff as a
+replacement for GNU and other diffs in "no-index" mode.  Which leads
+to ...
+
+>> That is a lot closer to the diff other people implemented, not ours.
+>> Hence the knee-jerk reaction I gave in
+>> 
+>> http://public-inbox.org/git/xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com
+
+... this conclusion, which is consistent with ...
+
+>
+> Let me quote the knee-jerk reaction:
+>
+>> My knee-jerk reaction is:
+>>
+>>  * The --no-index mode should default to your --follow-symlinks
+>>    behaviour, without any option to turn it on or off.
+
+... this one.
+
+But notice "I _think_" in the first sentence you quoted.  That is a
+basic assumption that leads to the conclusion, and that assumption
+is not a fact.  Maybe users do *not* want the "no-index" mode as a
+replacement for GNU and other diffs, in which case comparing the
+result of readlink(2) even in no-index mode might have merit.  I
+just didn't think it was the case.
+
