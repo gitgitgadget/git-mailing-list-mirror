@@ -2,103 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E254E2021E
-	for <e@80x24.org>; Wed, 16 Nov 2016 00:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCF172021E
+	for <e@80x24.org>; Wed, 16 Nov 2016 00:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752742AbcKPAVR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 19:21:17 -0500
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:35473 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751741AbcKPAVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 19:21:16 -0500
-Received: by mail-ua0-f169.google.com with SMTP id 12so101561852uas.2
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 16:21:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=j7oAnSUSF8PF9ccLEOK/FIfJKY5lUf+fMiJKJStlTX8=;
-        b=FtdZuJWKc20UBj7XGTsWzbLAprT5dBVibCMwe6ljkwrQqdi/BfzWpQ9IMTcMWhOi81
-         /c/7ZhiS8VQTn4qwWKwDolXCpcOMkTUNCJUHfa7zLWj1ZZ0G0wI47UEnieY1ftlTQ+U1
-         p6YjzdLeZIEbvODL85bDnBSDgau869GRv58za+xc0i1hklTzqAxnX+ANen9MFlbNhfB6
-         SIx9yUJ/1OyNBbmqEBIffj6siP9OAi8qdGMhBaDlvvoYxiBQsp2R3imggikBEaSLkSV1
-         P+dMqsja6NYif7KHOLpTu/YYnqNuNyybUC/vrQaHDAW9M5GfAEEIzdPlPGNIKYWG47e3
-         jWag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=j7oAnSUSF8PF9ccLEOK/FIfJKY5lUf+fMiJKJStlTX8=;
-        b=eUmwTpDtfF2mmMUZjsYR6x2e40fuDCj6WeEeWACkkEiHKLz5np6l7xlONFI4hxc7JA
-         +5yF/UAknEp7+RqcCS31XfVOBYKbU5OCJm0hz9Ur57h4+ZG9NdyXOKp1JSzf4BJZgsLo
-         ESTg3bIbo3aGEE3rPv+Tr5+XapRQyO+wM5ssyp6QtunpcvFytk5NCEJgLvM0k/A2MKjA
-         ZSrn2L7DRNqJteP/k2kXYLbm7+9VP4fuU4rnHGTyW1nbE0XelX3Bn+eUudhJI5GywtIp
-         XGWt4RRIf6YBDfQHHC2bPutNY4WiR00cFHSIHEuLhokLw7FrQqF5CeNLPwUjcKEpkWb6
-         Pd3g==
-X-Gm-Message-State: ABUngvf5rooBZrNCEgmxO1LvIOm7uUQf9u8OJ5XS/0lHw8fxlQhD+B8rdrcqqWFRPTCrGm9gJI06ZYS8auDJ9w==
-X-Received: by 10.159.53.107 with SMTP id o98mr58608uao.149.1479255674782;
- Tue, 15 Nov 2016 16:21:14 -0800 (PST)
+        id S933957AbcKPAWf convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 15 Nov 2016 19:22:35 -0500
+Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:38448 "EHLO
+        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754033AbcKPAWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 19:22:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 8867A10007A;
+        Wed, 16 Nov 2016 00:22:21 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id ZtoC3ZhyOQ3w; Wed, 16 Nov 2016 00:22:21 +0000 (GMT)
+Received: from exmbdft5.ad.twosigma.com (exmbdft5.ad.twosigma.com [172.22.1.56])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id 7528E80035;
+        Wed, 16 Nov 2016 00:22:21 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft5.ad.twosigma.com (172.22.1.56) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Wed, 16 Nov 2016 00:22:21 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef]) by
+ exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef%17]) with mapi id
+ 15.00.1156.000; Wed, 16 Nov 2016 00:22:21 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Stefan Beller' <sbeller@google.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jrnieder@gmail.com" <jrnieder@gmail.com>,
+        "mogulguy10@gmail.com" <mogulguy10@gmail.com>
+Subject: RE: [PATCH 13/16] submodule: teach unpack_trees() to update
+ submodules
+Thread-Topic: [PATCH 13/16] submodule: teach unpack_trees() to update
+ submodules
+Thread-Index: AQHSP5T/yfE5zbVgwU2DRjwgjfcv5aDauJXg
+Date:   Wed, 16 Nov 2016 00:22:21 +0000
+Message-ID: <f54d446aa7734cb4aec4b51c7b81a2b6@exmbdft7.ad.twosigma.com>
+References: <20161115230651.23953-1-sbeller@google.com>
+ <20161115230651.23953-14-sbeller@google.com>
+In-Reply-To: <20161115230651.23953-14-sbeller@google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.14]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Received: by 10.103.69.89 with HTTP; Tue, 15 Nov 2016 16:21:14 -0800 (PST)
-From:   Douglas Cox <ziflin@gmail.com>
-Date:   Tue, 15 Nov 2016 19:21:14 -0500
-Message-ID: <CA+i4re65SsxcaLcpGyMDnJygQFmAq4X_x_uxrkqB0yqQkEYPUQ@mail.gmail.com>
-Subject: Bug with disabling compression and 'binary' files.
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was doing some experiments today with large-ish (100-200MB) binary
-files and was trying to determine the best configuration for Git. Here
-are the steps and timings I saw:
+[I've reviewed up-to and including 13; I'll look at 14-16 tomorrow-ish]
 
-git init Test
-cp .../largemovie.mp4 .
-time git add largemovie.mp4
+> -----Original Message-----
+> From: Stefan Beller [mailto:sbeller@google.com]
+> Sent: Tuesday, November 15, 2016 6:07 PM
+> Cc: git@vger.kernel.org; bmwill@google.com; gitster@pobox.com;
+> jrnieder@gmail.com; mogulguy10@gmail.com; David Turner; Stefan Beller
+> Subject: [PATCH 13/16] submodule: teach unpack_trees() to update
+> submodules
+...
+>  	msgs[ERROR_NOT_UPTODATE_DIR] =
+>  		_("Updating the following directories would lose untracked
+> files in it:\n%s");
+> +	msgs[ERROR_NOT_UPTODATE_SUBMODULE] =
+> +		_("Updating the following submodules would lose modifications
+> in
+> +it:\n%s");
 
-This took 6.5s for a 200MB file.
+s/it/them/
 
-This file compressed a little bit, but not enough to matter, so I
-wanted to see how much faster the add would be with compression
-disabled. So I ran:
+>  	if (!strcmp(cmd, "checkout"))
+>  		msg = advice_commit_before_merge
+> @@ -1315,19 +1320,18 @@ static int verify_uptodate_1(const struct
+> cache_entry *ce,
+>  		return 0;
+> 
+>  	if (!lstat(ce->name, &st)) {
+> -		int flags =
+> CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE;
+> -		unsigned changed = ie_match_stat(o->src_index, ce, &st,
+> flags);
+> -		if (!changed)
+> -			return 0;
+> -		/*
+> -		 * NEEDSWORK: the current default policy is to allow
+> -		 * submodule to be out of sync wrt the superproject
+> -		 * index.  This needs to be tightened later for
+> -		 * submodules that are marked to be automatically
+> -		 * checked out.
+> -		 */
+> -		if (S_ISGITLINK(ce->ce_mode))
+> -			return 0;
+> +		if (!S_ISGITLINK(ce->ce_mode)) {
 
-git config core.compression = 0
+I generally prefer to avoid if (!x) { A } else { B } -- I would rather just see if (x) { B } else { A }.
 
-I then completely reran the test above starting with a clean
-repository. This time the add took only 2.08s.  I repeated these two
-tests about 10 times using the same file each time to verify it wasn't
-related to disk caching, etc.
+> +		if (!changed) {
+> +			/* old is always a submodule */
+> +			if (S_ISGITLINK(new->ce_mode)) {
+> +				/*
+> +				 * new is also a submodule, so check if we care
+> +				 * and then if can checkout the new sha1 safely
+> +				 */
+> +				if (submodule_is_interesting(old->name, null_sha1)
+> +				    && is_submodule_checkout_safe(new->name, &new-
+> >oid))
+> +					return 0;
+> +			} else {
+> +				/*
+> +				 * new is not a submodule any more, so only
+> +				 * care if we care:
+> +				 */
+> +				if (submodule_is_interesting(old->name, null_sha1)
+> +				    && ok_to_remove_submodule(old->name))
+> +					return 0;
+> +			}
 
-At this point I decided that this was likely a good setting for this
-repository, so I also created a .gitattributes file and added a few
-entries often seen in suggestions for dealing with binary files:
+Do we need a return 1 in here somewhere?  Because otherwise, we fall through and return 0 later.
 
-*.mp4 binary -delta
-
-The goal here was to disable any delta compression done during a
-gc/pack and use the other settings 'binary' applies. Unfortunately
-when I ran the test again (still using compression = 0), the test was
-back to taking 6.5s and the file inside the .git/objects/ folder was
-compressed again.
-
-I narrowed this down to the '-text' attribute that is set when
-specifying 'binary'.  For some reason this flag is cancelling out the
-core.compression = 0 setting and I think this is a bug?
-
-Unfortunately core.compression = 0 is also global. Ideally it would be
-great if there was a separate 'compression' attribute that could be
-specified in .gitattributes per wildcard similar to how -delta can be
-used. This way we would still be able to get compression for
-text/source files, while still getting the speed of skipping
-compression for binary files that do not compress well.
-
-Has there been any discussion on having an attribute similar to this?
-
-Thanks,
--Doug
