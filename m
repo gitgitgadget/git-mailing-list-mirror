@@ -2,109 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C74162042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 16:49:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B66832042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 17:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752875AbcKPQtb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 11:49:31 -0500
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:34663 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751670AbcKPQta (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 11:49:30 -0500
-Received: by mail-yw0-f195.google.com with SMTP id a10so15182898ywa.1
-        for <git@vger.kernel.org>; Wed, 16 Nov 2016 08:49:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=i82dWaepDIYyhKBj3260fztRFtcPXeDR4y73Ta249nQ=;
-        b=QFBU0/Hc7pK5N0LP0jXsk2c62u/zL6XR8D4OibezFuXzjS18QBwE9yClyQayc+eBEG
-         sJlz3WX69BgNL3HOjm+2V5hWM+GnHQbs0gkUkeO2AJvIXbYEutMIfTvRe2cx0b2yZG7D
-         bXp+GcI/sKFsHDSOo4vh/X/6sgrt2IF7FCu5GZ4auwzCCBkNtEc09Ga5dABFUqAz9/SM
-         fajlkCubIjTbMcIInlVLhXSy2ftw4BZCSfu6ObrxSUDb9EQt4oJhANYYLzpjRNU8O2yZ
-         p+iMV8wemTUyzmUf3abXOdKf39PNj+yXEdl2Dpv7An3KzDvpDM4XgwteccIXqlHbAtm0
-         00IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=i82dWaepDIYyhKBj3260fztRFtcPXeDR4y73Ta249nQ=;
-        b=c7r82HHNahC18a36a77N6AxAAeRhlzI5liyz0bIgoeXPHli8D1mtwz56cX3mVh829+
-         DHUlfmi6M7AiFjCoBMSswNnB1gXh1wcKkBZfisd2jYbmO0WNnf6dJy7kVfR+fbQ8Qo3r
-         hjRDsOzSVP30Lw8hBbNG/U1ffH3oLE/Wa11r3/AxvccFZhBc9JK9Xwd0LgfC+VYhNllF
-         0QS5nhA/AwE7Ale0gvf7FIzmI4jpQekg1miTSMxZsezwLMBDnaiwIkP50bCGbQ7307gY
-         2pWMnbRPO+LS7s7+gvGtXMPj9pOlb0CYRoGaUOv4lUt1gFvHTcy7xlBVXmXG+mOK3lAZ
-         lXyA==
-X-Gm-Message-State: ABUngvfsf/LP2smouNGCySjNNhXdqhnPKcNUjRF+wjiz4gohwh98k/OBCry1YXFaWiveuxFIVnlPzwTetoQOcg==
-X-Received: by 10.107.182.70 with SMTP id g67mr3914135iof.120.1479314969036;
- Wed, 16 Nov 2016 08:49:29 -0800 (PST)
+        id S1753294AbcKPRDd convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 16 Nov 2016 12:03:33 -0500
+Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:39823 "EHLO
+        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752945AbcKPRDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 12:03:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id BFA9C100050;
+        Wed, 16 Nov 2016 17:03:30 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id k93k0t77e2BQ; Wed, 16 Nov 2016 17:03:30 +0000 (GMT)
+Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id ADA8A8002E;
+        Wed, 16 Nov 2016 17:03:30 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Wed, 16 Nov 2016 17:03:30 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef]) by
+ exmbdft7.ad.twosigma.com ([fe80::9966:e831:c693:7cef%17]) with mapi id
+ 15.00.1156.000; Wed, 16 Nov 2016 17:03:30 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Stefan Beller' <sbeller@google.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jrnieder@gmail.com" <jrnieder@gmail.com>,
+        "mogulguy10@gmail.com" <mogulguy10@gmail.com>
+Subject: RE: [PATCH 14/16] checkout: recurse into submodules if asked to
+Thread-Topic: [PATCH 14/16] checkout: recurse into submodules if asked to
+Thread-Index: AQHSP5UABD/l8VQ2lkOrL+nq828ECaDbyRGw
+Date:   Wed, 16 Nov 2016 17:03:30 +0000
+Message-ID: <a9c85966bf174509a246106d782c36a3@exmbdft7.ad.twosigma.com>
+References: <20161115230651.23953-1-sbeller@google.com>
+ <20161115230651.23953-15-sbeller@google.com>
+In-Reply-To: <20161115230651.23953-15-sbeller@google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.14]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Received: by 10.79.27.209 with HTTP; Wed, 16 Nov 2016 08:49:28 -0800 (PST)
-In-Reply-To: <xmqq37istoay.fsf@gitster.mtv.corp.google.com>
-References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1a82-dc1c5b57-3e93-4996-87e7-4a1d83cb5817-000000@eu-west-1.amazonses.com>
- <13aa642a-2272-c5b8-4a30-382ab5e73b98@gmx.net> <xmqq37istoay.fsf@gitster.mtv.corp.google.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 16 Nov 2016 22:19:28 +0530
-Message-ID: <CAFZEwPMrC=7wJtUO+G3dcESPOJisFsrZ0_F6oKE8eDVGfBEVpg@mail.gmail.com>
-Subject: Re: [PATCH v15 04/27] bisect--helper: `bisect_clean_state` shell
- function in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Junio,
 
-On Wed, Nov 16, 2016 at 3:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stephan Beyer <s-beyer@gmx.net> writes:
->
-> >> +int bisect_clean_state(void)
-> >> +{
-> >> +    int result = 0;
-> >> +
-> >> +    /* There may be some refs packed during bisection */
-> >> +    struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
-> >> +    for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_removal);
-> >> +    string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
-> >> +    result = delete_refs(&refs_for_removal, REF_NODEREF);
-> >> +    refs_for_removal.strdup_strings = 1;
-> >> +    string_list_clear(&refs_for_removal, 0);
-> >
-> > Does it have advantages to populate a list (with duplicated strings),
-> > hand it to delete_refs(), and clear the list (and strings), instead of
-> > just doing a single delete_ref() (or whatever name the singular function
-> > has) in the callback?
->
-> Depending on ref backends, removing multiple refs may be a lot more
-> efficient than calling a single ref removal for the same set of
-> refs, and the comment upfront I think hints that the code was
-> written in the way exactly with that in mind.  Removing N refs from
-> a packed refs file will involve a loop that runs N times, each
-> iteration loading the file, locating an entry among possibly 100s of
-> refs to remove, and then rewriting the file.
->
-> Besides, it is bad taste to delete each individual item being
-> iterated over in an interator in general, isn't it?
->
 
-Not just that, deleting a ref inside for_each*() is illegal because it
-builds some kind of index and that is spoiled if anything is deleted
-in between. Thus it gives a seg fault. See this[1]. I did the same
-mistake when making this patch and I was confused about that was
-happening but then Michael Haggerty pointed this out[2].
+> -----Original Message-----
+> From: Stefan Beller [mailto:sbeller@google.com]
+> 
+> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh index
+> 79cdd34..e0773c6 100755
+> --- a/t/lib-submodule-update.sh
+> +++ b/t/lib-submodule-update.sh
+> @@ -634,7 +634,13 @@ test_submodule_forced_switch () {
+> 
+>  	########################## Modified submodule
+> #########################
+>  	# Updating a submodule sha1 doesn't update the submodule's work tree
+> -	test_expect_success "$command: modified submodule does not update
+> submodule work tree" '
+> +	if test
+> "$KNOWN_FAILURE_RECURSE_SUBMODULE_SERIES_BREAKS_REPLACE_SUBMODULE_TEST" =
+> 1
+> +	then
+> +		RESULT="failure"
+> +	else
+> +		RESULT="success"
+> +	fi
+> +	test_expect_$RESULT "$command: modified submodule does not update
+> submodule work tree" '
 
-[1]: https://github.com/git/git/blob/v2.11.0-rc1/refs.h#L183-L191
-[2]: http://public-inbox.org/git/574D122F.7080608@alum.mit.edu/
+Why does this break?  I thought it was only if checkout is run with --recurse-submodules that anything should change?
 
-Regards,
-Pranit Bauva
+> +test_expect_success 'dirty file file is not deleted' '
+
+Duplicate 'file' in this test name.
+> +# This is ok in theory, we just need to make sure # the garbage
+> +collection doesn't eat the commit.
+> +test_expect_success 'different commit prevents from deleting' '
+
+This isn't a different commit -- it's a dirty index, right? 
+
+> +test_expect_failure '"checkout --recurse-submodules" does not care about
+> untracked submodule content' '
+> +	echo untracked >submodule/untracked &&
+> +	git checkout --recurse-submodules master &&
+> +	git diff-files --quiet --ignore-submodules=untracked &&
+> +	git diff-index --quiet --cached HEAD &&
+> +	rm submodule/untracked
+> +'
+
+Use test_when_finished for cleanup.
+
+> +test_expect_failure '"checkout --recurse-submodules" needs -f when
+> submodule commit is not present (but does fail anyway)' '
+> +	git checkout --recurse-submodules -b bogus_commit master &&
+> +	git update-index --cacheinfo 160000
+> 0123456789012345678901234567890123456789 submodule &&
+> +	BOGUS_TREE=$(git write-tree) &&
+> +	BOGUS_COMMIT=$(echo "bogus submodule commit" | git commit-tree
+> $BOGUS_TREE) &&
+> +	git commit -m "bogus submodule commit" &&
+> +	git checkout --recurse-submodules -f master &&
+> +	test_must_fail git checkout --recurse-submodules bogus_commit &&
+> +	git diff-files --quiet &&
+> +	test_must_fail git checkout --recurse-submodules -f bogus_commit &&
+> +	test_must_fail git diff-files --quiet submodule &&
+> +	git diff-files --quiet file &&
+> +	git diff-index --quiet --cached HEAD &&
+> +	git checkout --recurse-submodules -f master '
+> +KNOWN_FAILURE_RECURSE_SUBMODULE_SERIES_BREAKS_REPLACE_SUBMODULE_TEST=1
+>  test_submodule_switch "git checkout"
+> 
+> +KNOWN_FAILURE_RECURSE_SUBMODULE_SERIES_BREAKS_REPLACE_SUBMODULE_TEST=
+>  test_submodule_forced_switch "git checkout -f"
+> 
+>  test_done
+> --
+> 2.10.1.469.g00a8914
+
