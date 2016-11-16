@@ -2,108 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 499E92021E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F342021E
 	for <e@80x24.org>; Wed, 16 Nov 2016 00:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935318AbcKPAOE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 19:14:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55824 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932822AbcKPAN7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 19:13:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 42FD74E349;
-        Tue, 15 Nov 2016 19:13:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8W8uFfipfnKP0BU16rpWbS4UCD8=; b=uxmMdq
-        MvTHUI1CHawOeoS8nZHrzKe8HbKFusOoFbhNI4Qi6vJbGx25bhknKAdtILZwciVp
-        6ISRVTu3dCkJkjwBY5Y+m/3BT9Lxh8kXs+6HJqfaqNiJAvm8/IlUlv6KQO/epqK2
-        tl49XjBpOKT7cbuHwwHchZ8jfB9InU2UrMhG8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vPUD+xAXreE168cjFsa9ilsLjn9mubE+
-        1FVtAn9wI6Z7d0P7+5BL34YhUA2BRdvjRXdY1RcjE1nMeToefctc4B3L+6uDPjrg
-        2BclD+zAvU8EPPL4fInJCu7qH+ke15Lr5SzVBeDv3WxvKa4tsEErPsvgkwO1RiZp
-        RE9kQOkcd7w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 39C7B4E347;
-        Tue, 15 Nov 2016 19:13:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A9FD74E346;
-        Tue, 15 Nov 2016 19:13:52 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S935546AbcKPAOH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 19:14:07 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35235 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932822AbcKPAOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 19:14:05 -0500
+Received: by mail-pf0-f170.google.com with SMTP id i88so38715851pfk.2
+        for <git@vger.kernel.org>; Tue, 15 Nov 2016 16:14:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p4zUdWIK4L8Aysr68YCRzgP5Skk6Wzs59HL+x9UQB2E=;
+        b=OCJpSfN2mwrRFMtXVspLPEYLQzyhTMofdJgxyx5YySqF+ovEiZl4fCConSe8l0DWLw
+         wt3ViNwMTPB5gd5Hyawj4ckilckvUPjwXFQA/RP5HrPJlf/jY6P+v6P9oPqUA1ul79uc
+         NXo6lk1FvH0K0GYUetLcnoF1p299/w+Po0nRvMgrwiq/k+4VBoEwCukkY1xlpXafv8N7
+         BovkXwwnqO57KuneN8/CUtXZp8WC25ITdOEJQ5mzee9+4Ba+jDXaoYSUHAJROMnUZUz6
+         VCqbhX/f5ZtDtLaQ41EKZpDY8zXKroKFUYJ9tyUDiLkFp6JJi8ogsNQpMfdb3iGEO65/
+         ipqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p4zUdWIK4L8Aysr68YCRzgP5Skk6Wzs59HL+x9UQB2E=;
+        b=P/KKAxEWZSmvb6Zo0RPsFTLqOLSxK41putqJ2++zVclO/Hy1thLTdqPyNP3zIVB3vp
+         SJftxXBE3f/4+sYcmErelLVTY9LjILHPAGwUQSIWpy8Dovwj/PiWF1YVIFnZE4OFcUNn
+         KnKMN4uzX50EtAX8t8AvaM1PVX8WoF18DXjPQWMDLs4vH8B0hjUP6vuPpkGHEXqT1nu+
+         YMxYcpVFcwmczns6kN7ozu/5jhn7yHdPH01uU2TikSQWZeTr+cLdCra8pyFdqyQZwmbj
+         Ty2aDD9L6xMsDvDGQ/DOGy57ZewmDKu2XXkxLoCRl+VnWgHeXCe0dIwtrMJtUdW0X+MM
+         64FA==
+X-Gm-Message-State: ABUngvfACgJPQTDzPKV+aRQkmwmabRn26hZ3Q+e1uZPuUj7NKKPPwsqFB+/tevN12AczZGIR
+X-Received: by 10.99.158.18 with SMTP id s18mr1695594pgd.163.1479255244578;
+        Tue, 15 Nov 2016 16:14:04 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:f0a8:aad3:5a98:9829])
+        by smtp.gmail.com with ESMTPSA id j68sm46488108pfk.95.2016.11.15.16.14.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 15 Nov 2016 16:14:03 -0800 (PST)
+Date:   Tue, 15 Nov 2016 16:14:02 -0800
+From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: [PATCH v3 4/4] submodule_needs_pushing() NEEDSWORK when we can not answer this question
-References: <cover.1479221071.git.hvoigt@hvoigt.net>
-        <1d87628994df89751afdcc7e180ebcdc29dde722.1479221071.git.hvoigt@hvoigt.net>
-        <CAGZ79kYyyjP7W7gWq6WomVSkhRtMbZZMKYQPFszko4_f9oprgg@mail.gmail.com>
-Date:   Tue, 15 Nov 2016 16:13:51 -0800
-In-Reply-To: <CAGZ79kYyyjP7W7gWq6WomVSkhRtMbZZMKYQPFszko4_f9oprgg@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 15 Nov 2016 14:39:10 -0800")
-Message-ID: <xmqqtwb8s2m8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+        mogulguy10@gmail.com, David.Turner@twosigma.com
+Subject: Re: [PATCH 11/16] teach unpack_trees() to remove submodule contents
+Message-ID: <20161116001402.GH66382@google.com>
+References: <20161115230651.23953-1-sbeller@google.com>
+ <20161115230651.23953-12-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8E52FC34-AB91-11E6-A406-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161115230651.23953-12-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On 11/15, Stefan Beller wrote:
+> Extend rmdir_or_warn() to remove the directories of those submodules which
+> are scheduled for removal. Also teach verify_clean_submodule() to check
+> that a submodule configured to be removed is not modified before scheduling
+> it for removal.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  unpack-trees.c | 6 ++----
+>  wrapper.c      | 4 ++++
+>  2 files changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index ea6bdd2..576e1d5 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -9,6 +9,7 @@
+>  #include "refs.h"
+>  #include "attr.h"
+>  #include "split-index.h"
+> +#include "submodule.h"
+>  #include "dir.h"
+>  
+>  /*
+> @@ -1361,15 +1362,12 @@ static void invalidate_ce_path(const struct cache_entry *ce,
+>  /*
+>   * Check that checking out ce->sha1 in subdir ce->name is not
+>   * going to overwrite any working files.
+> - *
+> - * Currently, git does not checkout subprojects during a superproject
+> - * checkout, so it is not going to overwrite anything.
+>   */
+>  static int verify_clean_submodule(const struct cache_entry *ce,
+>  				  enum unpack_trees_error_types error_type,
+>  				  struct unpack_trees_options *o)
+>  {
+> -	return 0;
+> +	return submodule_is_interesting(ce->name, null_sha1) && is_submodule_modified(ce->name, 0);
+>  }
 
->> "We do not know" ...
->
-> ... because there is no way to check for us as we don't have the
-> submodule commits.
->
->     " We do consider it safe as no one in their sane mind would
->     have changed the submodule pointers without having the
->     submodule around. If a user did however change the submodules
->     without having the submodule commits around, this indicates an
->     expert who knows what they were doing."
+So what does the return value from this function meant to mean? Is '1'
+mean the submodule is clean while '0' indicates it is dirty or is it the
+reverse of that?  Reading this it seems to me a value of '1' means "yes
+the submodule is clean!" but the way the return value is calculated
+tells a different story.  Either I'm understanding it incorrectly or I
+think the return should be something like this:
 
-I didn't think it through myself to arrive at such a conclusion, but
-to me the above sounds like a sensible reasoning [*1*].
+  return submodule_is_interesting(ce->name, null_sha1) && !is_submodule_modified(ce->name, 0);
 
->>   We currently
->> +                * proceed pushing here as if the submodules commits are
->> +                * available on a remote. Since we can not check the
->> +                * remote availability for this submodule we should
->> +                * consider changing this behavior to: Stop here and
->> +                * tell the user how to skip this check if wanted.
->> +                */
->>                 return 0;
->
-> Thanks for adding the NEEDSWORK, I just wrote the above lines
-> to clarify my thought process, not as a suggestion for change.
+Where we return '1' if the submodule is interesting and it hasn't been
+modified.
 
-One thing I would suggest would be "Stop here, explain the situation
-and then tell the user how to skip".  I am not convinced that it
-would _help_ users and make it _safer_ if we stopped here, though.
+>  
+>  static int verify_clean_subdirectory(const struct cache_entry *ce,
+> diff --git a/wrapper.c b/wrapper.c
+> index e7f1979..17c08de 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -2,6 +2,7 @@
+>   * Various trivial helper wrappers around standard functions
+>   */
+>  #include "cache.h"
+> +#include "submodule.h"
+>  
+>  static void do_nothing(size_t size)
+>  {
+> @@ -592,6 +593,9 @@ int unlink_or_warn(const char *file)
+>  
+>  int rmdir_or_warn(const char *file)
+>  {
+> +	if (submodule_is_interesting(file, null_sha1)
+> +	    && depopulate_submodule(file))
+> +		return -1;
+>  	return warn_if_unremovable("rmdir", file, rmdir(file));
+>  }
 
-> Overall the series looks good to me; the nits are minor IMHO.
+It seems weird to me that rmdir is doing checks to see if the file being
+removed is a submodule.  Shouldn't those checks have occurred before
+calling rmdir?
 
-Ditto.
-
-
-[Footnote]
-
-*1* My version was more like "we do not know if they would get into
-    a situation where they do not have enough submodule commits if
-    we pushed our superproject, but more importantly, we DO KNOW
-    that it would not help an iota if we pushed our submodule to
-    them, so there is no point stopping the push of superproject
-    saying 'no, no, no, you must push the submodule first'".
+-- 
+Brandon Williams
