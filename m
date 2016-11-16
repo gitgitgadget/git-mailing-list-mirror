@@ -2,122 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 981352042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 15:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F013D2042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 15:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934911AbcKPPcL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 10:32:11 -0500
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:36473 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934248AbcKPPcH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 10:32:07 -0500
-Received: by mail-yb0-f196.google.com with SMTP id d128so5024671ybh.3
-        for <git@vger.kernel.org>; Wed, 16 Nov 2016 07:32:07 -0800 (PST)
+        id S1753157AbcKPPhI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Nov 2016 10:37:08 -0500
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:34426 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752015AbcKPPhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 10:37:07 -0500
+Received: by mail-qk0-f171.google.com with SMTP id q130so179949943qke.1
+        for <git@vger.kernel.org>; Wed, 16 Nov 2016 07:37:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=DNCm1xbDJ0xwTErz7WOo7MJntOlgC4mQw0LvChUdwGc=;
-        b=0Ioe4bmsS7nBbTxkm02TzYT/bZly11T5NH6zioA0m7gVABzEv+i0ElLqMgUkis4+Kh
-         PXOfOJNqPHllR1w8O8pOOg7iZDRHJo3JCskB8hYpxOWdNy3B0aGjHCuI7gtGxoYpKCuy
-         53fphxTtMI0OHEv8g0HbsJHenqjSPDPkDX6m1cTScgdfqXhzP4kxo2wNRXUU974BoU37
-         Jnirl9xsIZd5gZ6Rxgz/L/c/o1noEIWk5jQ2CD7UeujOAoP/WN/Kcjw+DpuqY5oGRnpg
-         iSsOhReJ2LiLkccwGOrpGZNlf7I5sPM+Kbz03Cagjhn6M8AxbJ4nWZ6A8sx9uTcQVZlF
-         JSmA==
+        bh=zHcO1VanHcHZeA660zjW34mG+/m3b00phtFlPY8ZEeo=;
+        b=n79J8kxXmNDWtniWuNcGEhjqAzH6KKQK1Ajaty0Kjwu3gkZh7IezF1HSObIRAxlH8R
+         AwW+pfRYYl/9J/4gaapjTcVF21S5v1Z855/aFg/t8UGkpnyzMPfb54nwNuyZ9LDDNPxd
+         V0q9Ni840z8gTy3pshUk9cBQJq2KMt8MXuJYELUAq7zseVRdhIm3YbagevreCNfKre+3
+         g4mGuceOIAy4eSM2lttnu1XFgOi4/YCCySB+uKM9Pp8cKlT1qJonld6WlvhT2TVGGdNu
+         AzJup4EIpvB+k8nJIhUbEOrJxhi3zLIMJjMUao8g2NwXyAYMD+aibuEa0NSOAHsop1zW
+         vMVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=DNCm1xbDJ0xwTErz7WOo7MJntOlgC4mQw0LvChUdwGc=;
-        b=ZL0N2l7wrmzxG4pRGSdVhRDWVO2Ycy/defU+/v2LesuPwnrAOfPCRB9EnfdQPxrPSi
-         yK3yVSxNH9Luiu1zbE3XbBnVQlHM+9AtbCNFna9vbFa14vgqMQ4XWJcWjnjkAOrbnR6O
-         nBmnc2/5PkNWgHHs+TYKbTVTKCkqf09qx7DX4oC4oK8/pXSnphIzJUlSRVXVoc4pP5ha
-         e1My4FrtjQfMEGaSwAFNf8OFrrV2iGuHd41zm1Ns2Wo1h2ltwqTb0vUlZJ7xg8kzrBQB
-         aCF+y5HzlA+gi7pgn1IN6DuHD3ohUnMkFFMA4UMAZLWRTU84oeu32iKld9G2daeptelH
-         IHpA==
-X-Gm-Message-State: ABUngveo/xEZ+jAr/jnyVeWP5ROKWasLjrL+tM8RALXKWVOJ1R6RKuNubM7419TjWbWpuG/QIn50VyNrg/ZS2Q==
-X-Received: by 10.37.172.65 with SMTP id r1mr1907671ybd.132.1479310326272;
- Wed, 16 Nov 2016 07:32:06 -0800 (PST)
+        bh=zHcO1VanHcHZeA660zjW34mG+/m3b00phtFlPY8ZEeo=;
+        b=gE1U3d+4QWKyfkIyKp6OjR77uI2uvEXM4O54fWKJXhXzBkdOgd7Cv1yKPwN8jnQ/73
+         WEadcZ96zkt4JR+SJ5SjoeFzPpiy3vBc2e3EQqCZWzddnVR6DZhJ0smwFcYBMjcoFCpk
+         VRkuxhqfGmGu2sRuw51jDUSjkxuCUuWGZMsOtIgCh/fqxBZOuJnXOHFqUW8W4qTw8eJz
+         6dQO69jFrQO2B0YYnVvvw8bhzDYUfX0IXRWWBQ8LZDWpXoOOSZ98uWe3mUlNYYZXR6L3
+         eyKZT12BYsKHFNQvUxrNjpEvnmnA/QdDYWPSTc8C6wo8yKzCsyoWalIdrsfaND+G0vPR
+         WlRg==
+X-Gm-Message-State: AKaTC02CpbVapBi0qxI7QErDja45KOkf7aETRBkI4J2zhVoOVYsaobX83bB12njo4IKPkIYvpeoMeEFtWctdNA==
+X-Received: by 10.55.220.69 with SMTP id v66mr3998688qki.264.1479310626965;
+ Wed, 16 Nov 2016 07:37:06 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.13.207.69 with HTTP; Wed, 16 Nov 2016 07:31:35 -0800 (PST)
-In-Reply-To: <xmqqbmxgtqxv.fsf@gitster.mtv.corp.google.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <xmqqbmxgtqxv.fsf@gitster.mtv.corp.google.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Wed, 16 Nov 2016 21:01:35 +0530
-Message-ID: <CAOLa=ZQtmQWpFMPa-SD29N7hASHAPp8SGGJsLu+AW_Kv-1LqwA@mail.gmail.com>
-Subject: Re: [PATCH v7 00/17] port branch.c to use ref-filter's printing options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
+Received: by 10.237.45.100 with HTTP; Wed, 16 Nov 2016 07:36:46 -0800 (PST)
+In-Reply-To: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
+References: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
+From:   Mike Rappazzo <rappazzo@gmail.com>
+Date:   Wed, 16 Nov 2016 10:36:46 -0500
+Message-ID: <CANoM8SX91JAvJ6EAE6=wavPutUG4ZU1BY-A=5EobW=8zrdEcjw@mail.gmail.com>
+Subject: Re: merge --no-ff is NOT mentioned in help
+To:     "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2016 at 2:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> This is part of unification of the commands 'git tag -l, git branch -l
->> and git for-each-ref'. This ports over branch.c to use ref-filter's
->> printing options.
->>
->> Karthik Nayak (17):
->>   ref-filter: implement %(if), %(then), and %(else) atoms
->>   ref-filter: include reference to 'used_atom' within 'atom_value'
->>   ref-filter: implement %(if:equals=<string>) and
->>     %(if:notequals=<string>)
->>   ref-filter: modify "%(objectname:short)" to take length
->>   ref-filter: move get_head_description() from branch.c
->>   ref-filter: introduce format_ref_array_item()
->>   ref-filter: make %(upstream:track) prints "[gone]" for invalid
->>     upstreams
->>   ref-filter: add support for %(upstream:track,nobracket)
->>   ref-filter: make "%(symref)" atom work with the ':short' modifier
->>   ref-filter: introduce refname_atom_parser_internal()
->>   ref-filter: introduce symref_atom_parser() and refname_atom_parser()
->>   ref-filter: make remote_ref_atom_parser() use
->>     refname_atom_parser_internal()
->>   ref-filter: add `:dir` and `:base` options for ref printing atoms
->>   ref-filter: allow porcelain to translate messages in the output
->>   branch, tag: use porcelain output
->>   branch: use ref-filter printing APIs
->>   branch: implement '--format' option
->
-> This is not a new issue, but --format='%(HEAD)' you stole from
-> for-each-ref is broken when you are on an unborn branch, and the
-> second patch from the tip makes "git branch" (no other args) on
-> an unborn branch to segfault, when there are real branches that
-> have commits.
->
-> Something like this needs to go before that step.
->
->  ref-filter.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 944671af5a..c71d7360d2 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1318,7 +1318,7 @@ static void populate_value(struct ref_array_item *ref)
->
->                         head = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
->                                                   sha1, NULL);
-> -                       if (!strcmp(ref->refname, head))
-> +                       if (head && !strcmp(ref->refname, head))
->                                 v->s = "*";
->                         else
->                                 v->s = " ";
->
->
+On Wed, Nov 16, 2016 at 10:16 AM, Vanderhoof, Tzadik
+<tzadik.vanderhoof@optum360.com> wrote:
+> When I do: "git merge -h"  to get help, the option "--no-ff" is left out of the list of options.
 
-Thanks, will add it in.
+I am running git version 2.10.0, and running git merge --help contains
+these lines:
 
--- 
-Regards,
-Karthik Nayak
+       --ff
+           When the merge resolves as a fast-forward, only update the
+branch pointer, without creating a merge commit. This is the default
+behavior.
+
+       --no-ff
+           Create a merge commit even when the merge resolves as a
+fast-forward. This is the default behaviour when merging an annotated
+(and possibly signed) tag.
+
+       --ff-only
+           Refuse to merge and exit with a non-zero status unless the
+current HEAD is already up-to-date or the merge can be resolved as a
+fast-forward.
+
+>
+> This e-mail, including attachments, may include confidential and/or
+> proprietary information, and may be used only by the person or entity
+> to which it is addressed. If the reader of this e-mail is not the intended
+> recipient or his or her authorized agent, the reader is hereby notified
+> that any dissemination, distribution or copying of this e-mail is
+> prohibited. If you have received this e-mail in error, please notify the
+> sender by replying to this message and delete this e-mail immediately.
+>
