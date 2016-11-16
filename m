@@ -2,71 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55F792042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 20:19:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A702220451
+	for <e@80x24.org>; Wed, 16 Nov 2016 21:31:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753896AbcKPUTM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 15:19:12 -0500
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:34245 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752546AbcKPUTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 15:19:10 -0500
-Received: by mail-qt0-f176.google.com with SMTP id n6so115845103qtd.1
-        for <git@vger.kernel.org>; Wed, 16 Nov 2016 12:19:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=yanofsky.org; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=3A4KtZ1ptA4AEWk95v5rUbAqLWFXeXMuC/wWZr0rTzA=;
-        b=XXal6rGlP6SgxueaeTSA6oWneV2Bdrb4WTGy0gf4VYPSmS8D1EaNsVrRWb9eiKNp6N
-         MdCBC7pg3iMxHEUk1ki/zupWW0IUjiXjslp8ZmAl89CJ/pwo4T6DKN8RMueI0V4AGk1t
-         1MbB1YG8eTc1LfmXeVXyhsfstd7dNqDzee6Jc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=3A4KtZ1ptA4AEWk95v5rUbAqLWFXeXMuC/wWZr0rTzA=;
-        b=jGSLjL5J9bFNXXXmwy7IaU9JhztGpgTwNX2Kdg+txSjhIXEzXVVzWYB7cHiCkBSDno
-         GR1nwLuzRS+NP3hByjJ9I5F4wojA5y8Xczh57EXogVvEwe8oJct9nf8CByZV2kHd5n4s
-         zlGGBEdt37JywFVowype+ukgd9rQ53CzwzzFu2YrPoTOmr1CDUwB9dPOtP+BL8WOH8sq
-         Q2j+1YE5+7QveCb9KFPtBAr3wWsCDDhkhc1kdjZcAoXELJagc8GKD2yRZfJ/5dVKhm/K
-         9co3kEoDIOXbWNPejzxcu5U/tNy1B+lBP5SzeEyqyYejI0hGmJhH4CHG0keYAnSbzlW2
-         qMkg==
-X-Gm-Message-State: ABUngveQMeeH6aEvBhYY1MwKSNmj2rWQQKOVCeab3v8zQgJbyFRqfIH2UuxWDivvmJxRJuOBmOLJsXQJBPvEQ42T
-X-Received: by 10.25.92.74 with SMTP id q71mr1697563lfb.140.1479327549576;
- Wed, 16 Nov 2016 12:19:09 -0800 (PST)
+        id S935773AbcKPVbJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Nov 2016 16:31:09 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:54128 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932224AbcKPVbG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 16:31:06 -0500
+Received: from [84.137.157.84] (helo=book.hvoigt.net)
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1c77nJ-0004Qs-WB; Wed, 16 Nov 2016 22:31:02 +0100
+Date:   Wed, 16 Nov 2016 22:31:00 +0100
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Jens.Lehmann@web.de, Fredrik Gustafsson <iveqy@iveqy.com>,
+        Leandro Lucarella <leandro.lucarella@sociomantic.com>
+Subject: Re: [PATCH v4 4/4] submodule_needs_pushing() NEEDSWORK when we can
+ not answer this question
+Message-ID: <20161116213100.GA38510@book.hvoigt.net>
+References: <cover.1479308877.git.hvoigt@hvoigt.net>
+ <cover.1479308877.git.hvoigt@hvoigt.net>
+ <9c95594f73625e06374f323fa5dc7d6487aa0356.1479308877.git.hvoigt@hvoigt.net>
+ <xmqqoa1fp72o.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.114.1.111 with HTTP; Wed, 16 Nov 2016 12:19:09 -0800 (PST)
-From:   Russell Yanofsky <russ@yanofsky.org>
-Date:   Wed, 16 Nov 2016 15:19:09 -0500
-Message-ID: <CA+ip-Bt96KRfv_UdYKDTEzDgR0QLtPshsZszXsnCw8wRTBG2WQ@mail.gmail.com>
-Subject: git stash can recursively delete a directory with no warning
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqoa1fp72o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using git 2.10.1, I recently lost the contents of an entire directory
-by running a "git stash" command. I don't know if this known behavior,
-but it seems pretty dangerous. To trigger the bug, all you have to do
-is check out a repository containing a symlink, delete the symlink,
-and then create a directory with files at the path where the deleted
-symlink was. After this, running "git stash" will recursively delete
-the directory, leaving no way to recover the data.
+On Wed, Nov 16, 2016 at 11:18:07AM -0800, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> > ---
+> 
+> Needs retitle ;-)  Here is what I tentatively queued.
 
-Here are minimal steps to reproduce:
+Thanks ;-) Missed that one.
 
-mkdir test-repo
-cd test-repo
-git init
-ln -s location symlink
-git add symlink
-git commit -m'add symlink'
-rm symlink
-mkdir symlink
-echo important-data > symlink/important-data
-git stash # recursively deletes entire contents of "symlink" directory
+>     submodule_needs_pushing(): explain the behaviour when we cannot answer
+>     
+>     When we do not have commits that are involved in the update of the
+>     superproject in our copy of submodule, we cannot tell if the remote
+>     end needs to acquire these commits to be able to check out the
+>     superproject tree.  Explain why we answer "no there is no need/point
+>     in pushing from our submodule repository" in this case.
+>     
+>     Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Sound fine to me.
+
+Cheers Heiko
