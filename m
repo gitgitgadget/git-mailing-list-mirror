@@ -2,91 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F013D2042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 15:37:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62BC92042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 15:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753157AbcKPPhI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 10:37:08 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:34426 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752015AbcKPPhH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 10:37:07 -0500
-Received: by mail-qk0-f171.google.com with SMTP id q130so179949943qke.1
-        for <git@vger.kernel.org>; Wed, 16 Nov 2016 07:37:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zHcO1VanHcHZeA660zjW34mG+/m3b00phtFlPY8ZEeo=;
-        b=n79J8kxXmNDWtniWuNcGEhjqAzH6KKQK1Ajaty0Kjwu3gkZh7IezF1HSObIRAxlH8R
-         AwW+pfRYYl/9J/4gaapjTcVF21S5v1Z855/aFg/t8UGkpnyzMPfb54nwNuyZ9LDDNPxd
-         V0q9Ni840z8gTy3pshUk9cBQJq2KMt8MXuJYELUAq7zseVRdhIm3YbagevreCNfKre+3
-         g4mGuceOIAy4eSM2lttnu1XFgOi4/YCCySB+uKM9Pp8cKlT1qJonld6WlvhT2TVGGdNu
-         AzJup4EIpvB+k8nJIhUbEOrJxhi3zLIMJjMUao8g2NwXyAYMD+aibuEa0NSOAHsop1zW
-         vMVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zHcO1VanHcHZeA660zjW34mG+/m3b00phtFlPY8ZEeo=;
-        b=gE1U3d+4QWKyfkIyKp6OjR77uI2uvEXM4O54fWKJXhXzBkdOgd7Cv1yKPwN8jnQ/73
-         WEadcZ96zkt4JR+SJ5SjoeFzPpiy3vBc2e3EQqCZWzddnVR6DZhJ0smwFcYBMjcoFCpk
-         VRkuxhqfGmGu2sRuw51jDUSjkxuCUuWGZMsOtIgCh/fqxBZOuJnXOHFqUW8W4qTw8eJz
-         6dQO69jFrQO2B0YYnVvvw8bhzDYUfX0IXRWWBQ8LZDWpXoOOSZ98uWe3mUlNYYZXR6L3
-         eyKZT12BYsKHFNQvUxrNjpEvnmnA/QdDYWPSTc8C6wo8yKzCsyoWalIdrsfaND+G0vPR
-         WlRg==
-X-Gm-Message-State: AKaTC02CpbVapBi0qxI7QErDja45KOkf7aETRBkI4J2zhVoOVYsaobX83bB12njo4IKPkIYvpeoMeEFtWctdNA==
-X-Received: by 10.55.220.69 with SMTP id v66mr3998688qki.264.1479310626965;
- Wed, 16 Nov 2016 07:37:06 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.237.45.100 with HTTP; Wed, 16 Nov 2016 07:36:46 -0800 (PST)
-In-Reply-To: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
+        id S1751670AbcKPPsU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Nov 2016 10:48:20 -0500
+Received: from sp-internet-ext-ply.uhc.com ([198.203.175.175]:41712 "EHLO
+        mail6.uhc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751741AbcKPPsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 10:48:19 -0500
+X-IronPort-AV: E=Sophos;i="5.31,500,1473138000"; 
+   d="scan'208";a="631678930"
+Received: from irmply48.uhc.com (HELO mail26.uhc.com) ([10.114.170.75])
+  by mail8.uhc.com with ESMTP; 16 Nov 2016 09:48:18 -0600
+X-IronPort-AV: E=Sophos;i="5.31,500,1473138000"; 
+   d="scan'208";a="598928033"
+X-CONF-FOOTER: True
+Received: from apsep0925.ms.ds.uhc.com ([10.114.192.113])
+  by mail26.uhc.com with ESMTP; 16 Nov 2016 09:48:18 -0600
+Received: from apswp0428.ms.ds.uhc.com ([fe80::7cb7:a560:d0b0:bc2d]) by
+ APSEP0925.ms.ds.uhc.com ([fe80::71f3:9715:e387:7dce%18]) with mapi id
+ 14.03.0279.002; Wed, 16 Nov 2016 09:48:18 -0600
+From:   "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>
+To:     Mike Rappazzo <rappazzo@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: merge --no-ff is NOT mentioned in help
+Thread-Topic: merge --no-ff is NOT mentioned in help
+Thread-Index: AdJAHG6Flm+eVlqaTkiiWd+ULmGgtwANRkoAAAxIIaA=
+Date:   Wed, 16 Nov 2016 15:48:18 +0000
+Message-ID: <2C8817BDA27E034F8E9A669458E375EF2BE689@APSWP0428.ms.ds.uhc.com>
 References: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
-From:   Mike Rappazzo <rappazzo@gmail.com>
-Date:   Wed, 16 Nov 2016 10:36:46 -0500
-Message-ID: <CANoM8SX91JAvJ6EAE6=wavPutUG4ZU1BY-A=5EobW=8zrdEcjw@mail.gmail.com>
-Subject: Re: merge --no-ff is NOT mentioned in help
-To:     "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+ <CANoM8SX91JAvJ6EAE6=wavPutUG4ZU1BY-A=5EobW=8zrdEcjw@mail.gmail.com>
+In-Reply-To: <CANoM8SX91JAvJ6EAE6=wavPutUG4ZU1BY-A=5EobW=8zrdEcjw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.204.2.151]
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+X-IP-VFilter-R: R
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2016 at 10:16 AM, Vanderhoof, Tzadik
-<tzadik.vanderhoof@optum360.com> wrote:
-> When I do: "git merge -h"  to get help, the option "--no-ff" is left out of the list of options.
+SSBhbSBydW5uaW5nOiAgICBnaXQgdmVyc2lvbiAyLjEwLjEud2luZG93cy4xDQoNCkkgdHlwZWQ6
+IGdpdCBtZXJnZSAtaA0KDQphbmQgZ290Og0KDQp1c2FnZTogZ2l0IG1lcmdlIFs8b3B0aW9ucz5d
+IFs8Y29tbWl0Pi4uLl0NCiAgIG9yOiBnaXQgbWVyZ2UgWzxvcHRpb25zPl0gPG1zZz4gSEVBRCA8
+Y29tbWl0Pg0KICAgb3I6IGdpdCBtZXJnZSAtLWFib3J0DQoNCiAgICAtbiAgICAgICAgICAgICAg
+ICAgICAgZG8gbm90IHNob3cgYSBkaWZmc3RhdCBhdCB0aGUgZW5kIG9mIHRoZSBtZXJnZQ0KICAg
+IC0tc3RhdCAgICAgICAgICAgICAgICBzaG93IGEgZGlmZnN0YXQgYXQgdGhlIGVuZCBvZiB0aGUg
+bWVyZ2UNCiAgICAtLXN1bW1hcnkgICAgICAgICAgICAgKHN5bm9ueW0gdG8gLS1zdGF0KQ0KICAg
+IC0tbG9nWz08bj5dICAgICAgICAgICBhZGQgKGF0IG1vc3QgPG4+KSBlbnRyaWVzIGZyb20gc2hv
+cnRsb2cgdG8gbWVyZ2UgY29tbWl0IG1lc3NhZ2UNCiAgICAtLXNxdWFzaCAgICAgICAgICAgICAg
+Y3JlYXRlIGEgc2luZ2xlIGNvbW1pdCBpbnN0ZWFkIG9mIGRvaW5nIGEgbWVyZ2UNCiAgICAtLWNv
+bW1pdCAgICAgICAgICAgICAgcGVyZm9ybSBhIGNvbW1pdCBpZiB0aGUgbWVyZ2Ugc3VjY2VlZHMg
+KGRlZmF1bHQpDQogICAgLWUsIC0tZWRpdCAgICAgICAgICAgIGVkaXQgbWVzc2FnZSBiZWZvcmUg
+Y29tbWl0dGluZw0KICAgIC0tZmYgICAgICAgICAgICAgICAgICBhbGxvdyBmYXN0LWZvcndhcmQg
+KGRlZmF1bHQpDQogICAgLS1mZi1vbmx5ICAgICAgICAgICAgIGFib3J0IGlmIGZhc3QtZm9yd2Fy
+ZCBpcyBub3QgcG9zc2libGUNCiAgICAtLXJlcmVyZS1hdXRvdXBkYXRlICAgdXBkYXRlIHRoZSBp
+bmRleCB3aXRoIHJldXNlZCBjb25mbGljdCByZXNvbHV0aW9uIGlmIHBvc3NpYmxlDQogICAgLS12
+ZXJpZnktc2lnbmF0dXJlcyAgIHZlcmlmeSB0aGF0IHRoZSBuYW1lZCBjb21taXQgaGFzIGEgdmFs
+aWQgR1BHIHNpZ25hdHVyZQ0KICAgIC1zLCAtLXN0cmF0ZWd5IDxzdHJhdGVneT4NCiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgbWVyZ2Ugc3RyYXRlZ3kgdG8gdXNlDQogICAgLVgsIC0tc3RyYXRl
+Z3ktb3B0aW9uIDxvcHRpb249dmFsdWU+DQogICAgICAgICAgICAgICAgICAgICAgICAgIG9wdGlv
+biBmb3Igc2VsZWN0ZWQgbWVyZ2Ugc3RyYXRlZ3kNCiAgICAtbSwgLS1tZXNzYWdlIDxtZXNzYWdl
+Pg0KICAgICAgICAgICAgICAgICAgICAgICAgICBtZXJnZSBjb21taXQgbWVzc2FnZSAoZm9yIGEg
+bm9uLWZhc3QtZm9yd2FyZCBtZXJnZSkNCiAgICAtdiwgLS12ZXJib3NlICAgICAgICAgYmUgbW9y
+ZSB2ZXJib3NlDQogICAgLXEsIC0tcXVpZXQgICAgICAgICAgIGJlIG1vcmUgcXVpZXQNCiAgICAt
+LWFib3J0ICAgICAgICAgICAgICAgYWJvcnQgdGhlIGN1cnJlbnQgaW4tcHJvZ3Jlc3MgbWVyZ2UN
+CiAgICAtLWFsbG93LXVucmVsYXRlZC1oaXN0b3JpZXMNCiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgYWxsb3cgbWVyZ2luZyB1bnJlbGF0ZWQgaGlzdG9yaWVzDQogICAgLS1wcm9ncmVzcyAgICAg
+ICAgICAgIGZvcmNlIHByb2dyZXNzIHJlcG9ydGluZw0KICAgIC1TLCAtLWdwZy1zaWduWz08a2V5
+LWlkPl0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgR1BHIHNpZ24gY29tbWl0DQogICAgLS1v
+dmVyd3JpdGUtaWdub3JlICAgIHVwZGF0ZSBpZ25vcmVkIGZpbGVzIChkZWZhdWx0KQ0KDQpOb3Rp
+Y2UgdGhlcmUgaXMgTk8gbWVudGlvbiBvZiB0aGUgIi0tbm8tZmYiIG9wdGlvbg0KDQotLS0tLU9y
+aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogTWlrZSBSYXBwYXp6byBbbWFpbHRvOnJhcHBhenpv
+QGdtYWlsLmNvbV0gDQpTZW50OiBXZWRuZXNkYXksIE5vdmVtYmVyIDE2LCAyMDE2IDc6MzcgQU0N
+ClRvOiBWYW5kZXJob29mLCBUemFkaWsNCkNjOiBnaXRAdmdlci5rZXJuZWwub3JnDQpTdWJqZWN0
+OiBSZTogbWVyZ2UgLS1uby1mZiBpcyBOT1QgbWVudGlvbmVkIGluIGhlbHANCg0KT24gV2VkLCBO
+b3YgMTYsIDIwMTYgYXQgMTA6MTYgQU0sIFZhbmRlcmhvb2YsIFR6YWRpayA8dHphZGlrLnZhbmRl
+cmhvb2ZAb3B0dW0zNjAuY29tPiB3cm90ZToNCj4gV2hlbiBJIGRvOiAiZ2l0IG1lcmdlIC1oIiAg
+dG8gZ2V0IGhlbHAsIHRoZSBvcHRpb24gIi0tbm8tZmYiIGlzIGxlZnQgb3V0IG9mIHRoZSBsaXN0
+IG9mIG9wdGlvbnMuDQoNCkkgYW0gcnVubmluZyBnaXQgdmVyc2lvbiAyLjEwLjAsIGFuZCBydW5u
+aW5nIGdpdCBtZXJnZSAtLWhlbHAgY29udGFpbnMgdGhlc2UgbGluZXM6DQoNCiAgICAgICAtLWZm
+DQogICAgICAgICAgIFdoZW4gdGhlIG1lcmdlIHJlc29sdmVzIGFzIGEgZmFzdC1mb3J3YXJkLCBv
+bmx5IHVwZGF0ZSB0aGUgYnJhbmNoIHBvaW50ZXIsIHdpdGhvdXQgY3JlYXRpbmcgYSBtZXJnZSBj
+b21taXQuIFRoaXMgaXMgdGhlIGRlZmF1bHQgYmVoYXZpb3IuDQoNCiAgICAgICAtLW5vLWZmDQog
+ICAgICAgICAgIENyZWF0ZSBhIG1lcmdlIGNvbW1pdCBldmVuIHdoZW4gdGhlIG1lcmdlIHJlc29s
+dmVzIGFzIGEgZmFzdC1mb3J3YXJkLiBUaGlzIGlzIHRoZSBkZWZhdWx0IGJlaGF2aW91ciB3aGVu
+IG1lcmdpbmcgYW4gYW5ub3RhdGVkIChhbmQgcG9zc2libHkgc2lnbmVkKSB0YWcuDQoNCiAgICAg
+ICAtLWZmLW9ubHkNCiAgICAgICAgICAgUmVmdXNlIHRvIG1lcmdlIGFuZCBleGl0IHdpdGggYSBu
+b24temVybyBzdGF0dXMgdW5sZXNzIHRoZSBjdXJyZW50IEhFQUQgaXMgYWxyZWFkeSB1cC10by1k
+YXRlIG9yIHRoZSBtZXJnZSBjYW4gYmUgcmVzb2x2ZWQgYXMgYSBmYXN0LWZvcndhcmQuDQoNCg0K
+ClRoaXMgZS1tYWlsLCBpbmNsdWRpbmcgYXR0YWNobWVudHMsIG1heSBpbmNsdWRlIGNvbmZpZGVu
+dGlhbCBhbmQvb3IKcHJvcHJpZXRhcnkgaW5mb3JtYXRpb24sIGFuZCBtYXkgYmUgdXNlZCBvbmx5
+IGJ5IHRoZSBwZXJzb24gb3IgZW50aXR5CnRvIHdoaWNoIGl0IGlzIGFkZHJlc3NlZC4gSWYgdGhl
+IHJlYWRlciBvZiB0aGlzIGUtbWFpbCBpcyBub3QgdGhlIGludGVuZGVkCnJlY2lwaWVudCBvciBo
+aXMgb3IgaGVyIGF1dGhvcml6ZWQgYWdlbnQsIHRoZSByZWFkZXIgaXMgaGVyZWJ5IG5vdGlmaWVk
+CnRoYXQgYW55IGRpc3NlbWluYXRpb24sIGRpc3RyaWJ1dGlvbiBvciBjb3B5aW5nIG9mIHRoaXMg
+ZS1tYWlsIGlzCnByb2hpYml0ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgZS1tYWlsIGlu
+IGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZQpzZW5kZXIgYnkgcmVwbHlpbmcgdG8gdGhpcyBtZXNz
+YWdlIGFuZCBkZWxldGUgdGhpcyBlLW1haWwgaW1tZWRpYXRlbHkuCg==
 
-I am running git version 2.10.0, and running git merge --help contains
-these lines:
-
-       --ff
-           When the merge resolves as a fast-forward, only update the
-branch pointer, without creating a merge commit. This is the default
-behavior.
-
-       --no-ff
-           Create a merge commit even when the merge resolves as a
-fast-forward. This is the default behaviour when merging an annotated
-(and possibly signed) tag.
-
-       --ff-only
-           Refuse to merge and exit with a non-zero status unless the
-current HEAD is already up-to-date or the merge can be resolved as a
-fast-forward.
-
->
-> This e-mail, including attachments, may include confidential and/or
-> proprietary information, and may be used only by the person or entity
-> to which it is addressed. If the reader of this e-mail is not the intended
-> recipient or his or her authorized agent, the reader is hereby notified
-> that any dissemination, distribution or copying of this e-mail is
-> prohibited. If you have received this e-mail in error, please notify the
-> sender by replying to this message and delete this e-mail immediately.
->
