@@ -2,155 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94C022042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 15:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C20ED2042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 15:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933819AbcKPPML (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 10:12:11 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.29.8]:33818 "EHLO
-        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932255AbcKPPMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 10:12:05 -0500
-Received: from [84.46.92.130] (helo=localhost)
-        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1c71sW-0003pQ-Nk; Wed, 16 Nov 2016 16:12:00 +0100
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Jens.Lehmann@web.de, Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: [PATCH v4 3/4] batch check whether submodule needs pushing into one call
-Date:   Wed, 16 Nov 2016 16:11:06 +0100
-Message-Id: <3998e7aa1e1071d068e8d3eb650bce18cc1a740d.1479308877.git.hvoigt@hvoigt.net>
-X-Mailer: git-send-email 2.10.1.386.gc503e45
-In-Reply-To: <cover.1479308877.git.hvoigt@hvoigt.net>
-References: <cover.1479308877.git.hvoigt@hvoigt.net>
-In-Reply-To: <cover.1479308877.git.hvoigt@hvoigt.net>
-References: <cover.1479308877.git.hvoigt@hvoigt.net>
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+        id S1752360AbcKPPQp convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 16 Nov 2016 10:16:45 -0500
+Received: from sp-internet-ext-ply.uhc.com ([198.203.175.175]:47357 "EHLO
+        mail16.uhc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753157AbcKPPQo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 10:16:44 -0500
+X-IronPort-AV: E=Sophos;i="5.31,500,1473138000"; 
+   d="scan'208";a="652527218"
+Received: from irmelr25.uhc.com (HELO mail15.uhc.com) ([10.177.105.52])
+  by mail18.uhc.com with ESMTP; 16 Nov 2016 09:16:42 -0600
+X-IronPort-AV: E=Sophos;i="5.31,500,1473138000"; 
+   d="scan'208";a="628599696"
+X-CONF-FOOTER: True
+Received: from apsep0935.ms.ds.uhc.com ([10.123.233.191])
+  by mail15.uhc.com with ESMTP; 16 Nov 2016 09:16:42 -0600
+Received: from apswp0428.ms.ds.uhc.com ([fe80::7cb7:a560:d0b0:bc2d]) by
+ apsep0935.ms.ds.uhc.com ([fe80::b1af:873c:6d8:8173%19]) with mapi id
+ 14.03.0279.002; Wed, 16 Nov 2016 09:16:42 -0600
+From:   "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: merge --no-ff is NOT mentioned in help
+Thread-Topic: merge --no-ff is NOT mentioned in help
+Thread-Index: AdJAHG6Flm+eVlqaTkiiWd+ULmGgtw==
+Date:   Wed, 16 Nov 2016 15:16:41 +0000
+Message-ID: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.204.2.151]
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+X-IP-VFilter-R: R
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We run a command for each sha1 change in a submodule. This is
-unnecessary since we can simply batch all sha1's we want to check into
-one command. Lets do it so we can speedup the check when many submodule
-changes are in need of checking.
+When I do: "git merge -h"  to get help, the option "--no-ff" is left out of the list of options.
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- submodule.c | 62 ++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 33 insertions(+), 29 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 12ac1ea..11391fa 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -507,27 +507,49 @@ static int append_sha1_to_argv(const unsigned char sha1[20], void *data)
- 	return 0;
- }
- 
--static int submodule_needs_pushing(const char *path, const unsigned char sha1[20])
-+static int check_has_commit(const unsigned char sha1[20], void *data)
- {
--	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
-+	int *has_commit = data;
-+
-+	if (!lookup_commit_reference(sha1))
-+		*has_commit = 0;
-+
-+	return 0;
-+}
-+
-+static int submodule_has_commits(const char *path, struct sha1_array *commits)
-+{
-+	int has_commit = 1;
-+
-+	if (add_submodule_odb(path))
-+		return 0;
-+
-+	sha1_array_for_each_unique(commits, check_has_commit, &has_commit);
-+	return has_commit;
-+}
-+
-+static int submodule_needs_pushing(const char *path, struct sha1_array *commits)
-+{
-+	if (!submodule_has_commits(path, commits))
- 		return 0;
- 
- 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
--		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
- 		struct strbuf buf = STRBUF_INIT;
- 		int needs_pushing = 0;
- 
--		argv[1] = sha1_to_hex(sha1);
--		cp.argv = argv;
-+		argv_array_push(&cp.args, "rev-list");
-+		sha1_array_for_each_unique(commits, append_sha1_to_argv, &cp.args);
-+		argv_array_pushl(&cp.args, "--not", "--remotes", "-n", "1" , NULL);
-+
- 		prepare_submodule_repo_env(&cp.env_array);
- 		cp.git_cmd = 1;
- 		cp.no_stdin = 1;
- 		cp.out = -1;
- 		cp.dir = path;
- 		if (start_command(&cp))
--			die("Could not run 'git rev-list %s --not --remotes -n 1' command in submodule %s",
--				sha1_to_hex(sha1), path);
-+			die("Could not run 'git rev-list <commits> --not --remotes -n 1' command in submodule %s",
-+					path);
- 		if (strbuf_read(&buf, cp.out, 41))
- 			needs_pushing = 1;
- 		finish_command(&cp);
-@@ -582,22 +604,6 @@ static void find_unpushed_submodule_commits(struct commit *commit,
- 	diff_tree_combined_merge(commit, 1, &rev);
- }
- 
--struct collect_submodule_from_sha1s_data {
--	char *submodule_path;
--	struct string_list *needs_pushing;
--};
--
--static int collect_submodules_from_sha1s(const unsigned char sha1[20],
--		void *data)
--{
--	struct collect_submodule_from_sha1s_data *me = data;
--
--	if (submodule_needs_pushing(me->submodule_path, sha1))
--		string_list_insert(me->needs_pushing, me->submodule_path);
--
--	return 0;
--}
--
- static void free_submodules_sha1s(struct string_list *submodules)
- {
- 	struct string_list_item *item;
-@@ -634,12 +640,10 @@ int find_unpushed_submodules(struct sha1_array *commits,
- 	argv_array_clear(&argv);
- 
- 	for_each_string_list_item(submodule, &submodules) {
--		struct collect_submodule_from_sha1s_data data;
--		data.submodule_path = submodule->string;
--		data.needs_pushing = needs_pushing;
--		sha1_array_for_each_unique((struct sha1_array *) submodule->util,
--				collect_submodules_from_sha1s,
--				&data);
-+		struct sha1_array *commits = (struct sha1_array *) submodule->util;
-+
-+		if (submodule_needs_pushing(submodule->string, commits))
-+			string_list_insert(needs_pushing, submodule->string);
- 	}
- 	free_submodules_sha1s(&submodules);
- 
--- 
-2.10.1.386.gc503e45
+This e-mail, including attachments, may include confidential and/or
+proprietary information, and may be used only by the person or entity
+to which it is addressed. If the reader of this e-mail is not the intended
+recipient or his or her authorized agent, the reader is hereby notified
+that any dissemination, distribution or copying of this e-mail is
+prohibited. If you have received this e-mail in error, please notify the
+sender by replying to this message and delete this e-mail immediately.
 
