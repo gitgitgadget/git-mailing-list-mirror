@@ -2,117 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 456A22042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 21:51:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8BA2042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 21:51:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941019AbcKPVvK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 16:51:10 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60131 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932263AbcKPVvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 16:51:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E707F50036;
-        Wed, 16 Nov 2016 16:51:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F2he2FQacEKD1I1kws6ZcyAAtt8=; b=M41o8H
-        MTpBHC/WuPSrxmP0pg9Dc29Fq4PUne5hVMKTDs9D2EzPtHFgGtQXX/Kf2QXGMmny
-        KxK/UzrxIittOnhboU4mB2DpgqFAFQTAOKeFuXWXKyW2u0ovzN9FcQNykFeNpfIC
-        JECvKanYguWcORTtKRNsrb2sKvejRp9iB6CMw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GVNYbKBtXg1/DctChCGRyjZbSAvhr9D0
-        eo69F1dsehdnAL34xNtpid0tnUmNs//XNZj85GCwaDBpA6F2K6nY4CpaSS0cE842
-        wjdUTrTeNoK7PsnrE6Ms202rpv/rGs6ooXRE5EqlsHgf8CXodq+WLz5WiZrMBVPu
-        aBDMKSRa4oQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBDF450035;
-        Wed, 16 Nov 2016 16:51:05 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3816150034;
-        Wed, 16 Nov 2016 16:51:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t0021, t5615: use $PWD instead of $(pwd) in PATH-like shell variables
-References: <f4336a7fa3df8c0b426c3d01ada8d7d8f38e588a.1478881741.git.johannes.schindelin@gmx.de>
-        <xmqq37iy3q0s.fsf@gitster.mtv.corp.google.com>
-        <fa11def5-a878-a5c8-6e7b-627ea8cda7e2@kdbg.org>
-        <2b69d098-92ef-77b0-367a-516e9edbe257@kdbg.org>
-        <xmqqa8d53ky9.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1611121237230.3746@virtualbox>
-        <xmqqtwbcyyfe.fsf@gitster.mtv.corp.google.com>
-        <0BEC2674-20B5-4AD1-851A-97CA34C0CE7F@gmail.com>
-        <xmqqshqux9il.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1611151753300.3746@virtualbox>
-        <alpine.DEB.2.20.1611161041040.3746@virtualbox>
-Date:   Wed, 16 Nov 2016 13:51:03 -0800
-In-Reply-To: <alpine.DEB.2.20.1611161041040.3746@virtualbox> (Johannes
-        Schindelin's message of "Wed, 16 Nov 2016 10:47:08 +0100 (CET)")
-Message-ID: <xmqqfumrozzs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S941096AbcKPVvQ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 16 Nov 2016 16:51:16 -0500
+Received: from dmz-mailsec-scanner-3.mit.edu ([18.9.25.14]:47238 "EHLO
+        dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932263AbcKPVvL (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Nov 2016 16:51:11 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Nov 2016 16:51:11 EST
+X-AuditID: 1209190e-36fff70000003a84-0d-582cd3a1f563
+Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by  (Symantec Messaging Gateway) with SMTP id A0.4C.14980.1A3DC285; Wed, 16 Nov 2016 16:46:09 -0500 (EST)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+        by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id uAGLk80c005633;
+        Wed, 16 Nov 2016 16:46:09 -0500
+Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id uAGLk6AS010607
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 16 Nov 2016 16:46:07 -0500
+Date:   Wed, 16 Nov 2016 16:46:06 -0500 (EST)
+From:   Anders Kaseorg <andersk@mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Olaf Hering <olaf@aepfle.de>, git@vger.kernel.org
+Subject: [PATCH] git-gui: Sort entries in optimized tclIndex
+Message-ID: <alpine.DEB.2.10.1611161643170.835@buzzword-bingo.mit.edu>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C6172D24-AC46-11E6-95ED-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsUixG6norvwsk6EwYo11hZdV7qZLBp6rzBb
+        XD28lNXiXedtFgcWj/9ztrB6XLyk7NF0qp3V4/MmuQCWKC6blNSczLLUIn27BK6MrimHWQpa
+        OComrJ/N1MB4m62LkZNDQsBE4sTPd+xdjFwcQgJtTBITdqxhg3A2Mkoc3t3GAuHsZpJ4uOA1
+        O0gLi4C2xOQL91hAbDYBNYkPR7+ygtgiQPbEtkNgcWaBHInvu9+DxYUFbCSm3N7BDGLzCrhJ
+        TLtwHiwuKqArcejfHzaIuKDEyZlPoHrVJQ58usgIYWtL3L/ZxjaBkW8WkrJZSMpmISlbwMi8
+        ilE2JbdKNzcxM6c4NVm3ODkxLy+1SNdYLzezRC81pXQTIyg8OSX5djBOavA+xCjAwajEwytR
+        pBMhxJpYVlyZe4hRkoNJSZR3wzGgEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeX2eBcrwpiZVV
+        qUX5MClpDhYlcd7/bl/DhQTSE0tSs1NTC1KLYLIyHBxKErzHLgE1ChalpqdWpGXmlCCkmTg4
+        QYbzAA3fCFLDW1yQmFucmQ6RP8Woy3Fi2ssHTEIsefl5qVLivJvOARUJgBRllObBzQGnFU4H
+        iVeM4kBvCfN+BBnFA0xJcJNeAS1hAlqyRwBsSUkiQkqqgTH2YXK7/v7g2df4VE5tq2o4kXvb
+        If/m9CuLFimqKs2onfzDJmHTtPXhApsnS0rtnHRK+eGy9G5X+aXva2IY6/0t0n10rjy/439k
+        rWvmV4nZP2cFTJ7RKug+6+UfhyO5nl8svB4z/qyP27mqNJ3T4h63VPGWfAFz8eRuSfYlt6N1
+        Fj35WqT8Nl6JpTgj0VCLuag4EQAWg3MgBgMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+auto_mkindex expands wildcards in directory order, which depends on
+the underlying filesystem.  To improve build reproducibility, sort the
+list of *.tcl files in the Makefile.
 
-> This is the offending part from last night's build:
->
-> -- snipsnap --
-> 2016-11-16T00:31:57.5321220Z copy.c: In function 'copy_dir_1':
-> 2016-11-16T00:31:57.5321220Z copy.c:369:8: error: implicit declaration of function 'lchown' [-Werror=implicit-function-declaration]
-> 2016-11-16T00:31:57.5321220Z     if (lchown(dest, source_stat.st_uid, source_stat.st_gid) < 0)
-> 2016-11-16T00:31:57.5321220Z         ^~~~~~
-> 2016-11-16T00:31:57.5321220Z copy.c:391:7: error: implicit declaration of function 'mknod' [-Werror=implicit-function-declaration]
-> 2016-11-16T00:31:57.5321220Z    if (mknod(dest, source_stat.st_mode, source_stat.st_rdev) < 0)
-> 2016-11-16T00:31:57.5321220Z        ^~~~~
-> 2016-11-16T00:31:57.5321220Z copy.c:405:7: error: implicit declaration of function 'utimes' [-Werror=implicit-function-declaration]
-> 2016-11-16T00:31:57.5321220Z    if (utimes(dest, times) < 0)
-> 2016-11-16T00:31:57.5321220Z        ^~~~~~
-> 2016-11-16T00:31:57.5321220Z copy.c:407:7: error: implicit declaration of function 'chown' [-Werror=implicit-function-declaration]
-> 2016-11-16T00:31:57.5321220Z    if (chown(dest, source_stat.st_uid, source_stat.st_gid) < 0) {
-> 2016-11-16T00:31:57.5321220Z        ^~~~~
-> 2016-11-16T00:31:57.7982432Z     CC ctype.o
-> 2016-11-16T00:31:58.1418929Z cc1.exe: all warnings being treated as errors
-> 2016-11-16T00:31:58.6368128Z make: *** [Makefile:1988: copy.o] Error 1
+The unoptimized loading case (7 lines below) was previously fixed in
+v2.11.0-rc0~31^2^2~14 “git-gui: sort entries in tclIndex”.
 
-That looks like a part of the new 'instead of run_command("cp -R"),
-let's borrow code from somewhere and do that ourselves' in the
-nd/worktree-move topic.
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ git-gui/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The offending part is this:
-
-+	if (S_ISBLK(source_stat.st_mode) ||
-+	    S_ISCHR(source_stat.st_mode) ||
-+	    S_ISSOCK(source_stat.st_mode) ||
-+	    S_ISFIFO(source_stat.st_mode)) {
-+		if (mknod(dest, source_stat.st_mode, source_stat.st_rdev) < 0)
-+			return error_errno(_("can't create '%s'"), dest);
-+	} else
-+		return error(_("unrecognized file '%s' with mode %x"),
-+			     source, source_stat.st_mode);
-
-I think all of this is meant to be used to copy what is in the
-working tree, and what is in the working tree is meant to be tracked
-by Git, none of the four types that triggers mknod() would be
-relevant for our purpose.  The simplest and cleanest would be to
-make the above to return error("unsupported filetype").
-
-I do not mind run_command("cp -R") and get rid of this code
-altogether; that might be a more portable and sensible approach.
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index fe30be38d..f94b3e13d 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -252,7 +252,7 @@ $(ALL_MSGFILES): %.msg : %.po
+ lib/tclIndex: $(ALL_LIBFILES) GIT-GUI-VARS
+ 	$(QUIET_INDEX)if echo \
+ 	  $(foreach p,$(PRELOAD_FILES),source $p\;) \
+-	  auto_mkindex lib '*.tcl' \
++	  auto_mkindex lib $(patsubst lib/%,%,$(sort $(ALL_LIBFILES))) \
+ 	| $(TCL_PATH) $(QUIET_2DEVNULL); then : ok; \
+ 	else \
+ 	 echo >&2 "    * $(TCL_PATH) failed; using unoptimized loading"; \
+-- 
+2.11.0.rc0
 
