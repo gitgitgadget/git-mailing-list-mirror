@@ -2,137 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2BA2042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 18:29:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85402042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 18:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753140AbcKPS3z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 13:29:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53037 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752278AbcKPS3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 13:29:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 74D1B4DB8A;
-        Wed, 16 Nov 2016 13:29:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f99qvijrMVhcmdr1SBY4G3dKPPI=; b=S+nTnM
-        5lsbm8vEgJx3KSZuXpDpU8/PqchQ+C4RUZEF2+k6TqAXkRsYyd7gQCiCr0qOa/NG
-        wjGQHEZEz9lMy0BZ5IB2cVFZX7a3eNlzCsZGyeCIv60Qu3Js4CjZIttcM1Er8g2B
-        qjL7XTOBwRnzTwDXm3v31/sCNpsnaq8vyEKCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vZx2MeeBzG1z7/Gyodmr6x/m3NY1WiKa
-        SR79dCHittQRfNqEz+zVPCP4bi16wukLBO0PWpgpcAporkFplxSxZYC2aUEIr97P
-        ACbFVMOUcLcMCvJmpbTmwMXPmMOR38k8NpDJymuwl1AmUGpAWgDiC6QPaVwcImXu
-        hNmOVAp4Ge4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B52B4DB88;
-        Wed, 16 Nov 2016 13:29:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E49484DB87;
-        Wed, 16 Nov 2016 13:29:52 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 0/2] git diff <(command1) <(command2)
-References: <20161111201958.2175-1-dennis@kaarsemaker.net>
-        <xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xrFYj7sepdz1xrEEaqmXQWfRkBz3CsWjYK6OZsZRMLbUA@mail.gmail.com>
-        <alpine.DEB.2.20.1611121106110.3746@virtualbox>
-        <0c39be16-76f8-0800-41a2-b7b1dccdd652@drmicha.warpmail.net>
-        <xmqqoa1ix7nq.fsf@gitster.mtv.corp.google.com>
-        <a3db4c55-550c-f2e8-83b8-46c2be86f7da@drmicha.warpmail.net>
-        <xmqqtwb9wywp.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1611161039590.3746@virtualbox>
-Date:   Wed, 16 Nov 2016 10:29:51 -0800
-In-Reply-To: <alpine.DEB.2.20.1611161039590.3746@virtualbox> (Johannes
-        Schindelin's message of "Wed, 16 Nov 2016 10:50:30 +0100 (CET)")
-Message-ID: <xmqqh977qnvk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753227AbcKPSf1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Nov 2016 13:35:27 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33317 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751584AbcKPSf0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 13:35:26 -0500
+Received: by mail-wm0-f66.google.com with SMTP id u144so13860496wmu.0
+        for <git@vger.kernel.org>; Wed, 16 Nov 2016 10:35:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=DsrIH37Wvh22phFGG4LQ2tinD/KojMlJBm0tHEdw9Io=;
+        b=Q/jODmRSxGS7jPgQdDwbCNY2/tsqwsWXuhAwwpCEh5tyFnbdBUArFdhbIPa4OegXQN
+         YDBZhUj5HkYuI4vrIq+poVwny2WyyOooTiK537YNze9n1p503Sp6OKARj3lnSHfboHY5
+         YPCQqOZy1V39uHX2uAX/kRRfL/Kqg2jTVQp24Wdi6wub0MyYpjKcMcdWfD5r7chbR4bK
+         dGXZmJf7kJ11KPtbzy+OAE8j9AD4bEWEluv3cS/R+ECSkESB1YX4qKCxZQSDDdXiwkXw
+         26YSL3PCmRRSpU7FWP0tkN8Ou9Eh3tb4DkoEoRsTX7U5OKVlK/U3Vmnm7m9oBZn4Nvc9
+         aaxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=DsrIH37Wvh22phFGG4LQ2tinD/KojMlJBm0tHEdw9Io=;
+        b=a5J9TczALeTVSQiOoPq6LBT3ZuGF1XTY/JaaypT93Q7Hw6grTph38U82uqbG+z4VzW
+         mRwiOwuL1ldJHFQlMbTK+3irMelaQTQqNVgQIM+ki6nEXUFktic8TxP1oW2aSbqrClXl
+         HzWK3+cejkcrQV+05/92ahzNDgktq1M+Dt6Gd0TrSSz/G9zvT9u0RUk0h38JE4/hPs9d
+         7DpHsti/B5ZUbT5PgLZ1+Cwpr/Qug/ZR/W6NZo0ZHHl28QhK7566wSE5OiQ8LiTDKzHY
+         kCCDntr6ZoJBhd867GnMVgTy8zzFgPBZ0GNIaNMSUZ4GsRlLAwUOjdxFMLyWLw1iInQm
+         sDZw==
+X-Gm-Message-State: ABUngvfTCthwrcZdXafl14jy4MNFRLGaYQu9Q99t8T5HhNdXQ4bCvm2MlD3HF6Ou/027lQv2pJQDUpZxmYoP6g==
+X-Received: by 10.25.170.198 with SMTP id t189mr1610474lfe.129.1479321324544;
+ Wed, 16 Nov 2016 10:35:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AA7AAC06-AC2A-11E6-8726-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.25.25.142 with HTTP; Wed, 16 Nov 2016 10:35:24 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 16 Nov 2016 19:35:24 +0100
+Message-ID: <CAP8UFD1j0tFOY5CvAV-Xbf0vR+ejogyVJoS+xfyT0+MnJd_nRw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 20
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Aaron Pelly <aaron@pelly.co>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Alexei Lozovsky <a.lozovsky@gmail.com>,
+        Martin Braun <martin@gnuradio.org>,
+        Brendan Forster <brendan@github.com>,
+        Parker Moore <email@byparker.com>,
+        Shawn Pearce <shawn.pearce@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi everyone,
 
-> On Mon, 14 Nov 2016, Junio C Hamano wrote:
->
->> I _think_ the no-index mode was primarily for those who want to use
->> our diff as a replacement for GNU and other diffs, and from that
->> point of view, I'd favour not doing the "comparing symbolic link?
->> We'll show the difference between the link contents, not target"
->> under no-index mode myself.
->
-> If I read this correctly,...
+I'm happy announce that the 21th edition of Git Rev News is now published:
 
-Now I re-read it and I can see it can be read either way.
+https://git.github.io/rev_news/2016/11/16/edition-21/
 
-By "link contents" in "comparing symbolic link? We'll show the
-difference between the link contents, not target", I meant the
-result you get from readlink(2), which will result in
+Thanks a lot to all the contributors and helpers, especially Jacob,
+Dscho, Markus, G=C3=A1bor and Peff!
 
-    diff --git a/RelNotes b/RelNotes
-    index c02235fe8c..b54330f7cd 120000
-    --- a/RelNotes
-    +++ b/RelNotes
-    @@ -1 +1 @@
-    -Documentation/RelNotes/2.10.2.txt
-    \ No newline at end of file
-    +Documentation/RelNotes/2.11.0.txt
-    \ No newline at end of file
-
-not the comparison between the files that are link targets,
-i.e. hypothetical
-
-    diff --git a/RelNotes b/RelNotes
-    index c4d4397023..7a1fce7720 100644
-    --- a/Documentation/RelNotes/2.10.2.txt
-    +++ b/Documentation/RelNotes/2.11.0.txt
-    @@ -1,41 +1,402 @@
-    -Git v2.10.2 Release Notes
-    -=========================
-    +Git 2.11 Release Notes
-    ...
-
-And I'd favour *NOT* doing that if we are using our diff as a
-replacement for GNU and other diffs in "no-index" mode.  Which leads
-to ...
-
->> That is a lot closer to the diff other people implemented, not ours.
->> Hence the knee-jerk reaction I gave in
->> 
->> http://public-inbox.org/git/xmqqinrt1zcx.fsf@gitster.mtv.corp.google.com
-
-... this conclusion, which is consistent with ...
-
->
-> Let me quote the knee-jerk reaction:
->
->> My knee-jerk reaction is:
->>
->>  * The --no-index mode should default to your --follow-symlinks
->>    behaviour, without any option to turn it on or off.
-
-... this one.
-
-But notice "I _think_" in the first sentence you quoted.  That is a
-basic assumption that leads to the conclusion, and that assumption
-is not a fact.  Maybe users do *not* want the "no-index" mode as a
-replacement for GNU and other diffs, in which case comparing the
-result of readlink(2) even in no-index mode might have merit.  I
-just didn't think it was the case.
-
+Enjoy,
+Christian, Thomas and Jakub.
