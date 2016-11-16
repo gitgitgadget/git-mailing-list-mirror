@@ -2,95 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E044B2021E
-	for <e@80x24.org>; Wed, 16 Nov 2016 01:33:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E15302021E
+	for <e@80x24.org>; Wed, 16 Nov 2016 01:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752648AbcKPBdr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Nov 2016 20:33:47 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34446 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752028AbcKPBdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2016 20:33:46 -0500
-Received: by mail-pg0-f66.google.com with SMTP id e9so12820781pgc.1
-        for <git@vger.kernel.org>; Tue, 15 Nov 2016 17:33:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=5NxheIOOkMyL0mVGjSjW1Qcd2Z2PAETYvUzmqk+PSUg=;
-        b=CXAWYYTcbpYQLt4EO61CYHZydM+d3E/X2bIRGkhZpdFvjatmNRNEfsz3SxINg7lWqq
-         7Xs+GHwPNELzhyIQH/6V01tJfyJFDN+pUOOlCqRvCzwxaR1yRJzQFrtVMNSkyPXrmXyJ
-         8VMrJw1rXzSLFjTHiZbeqbpjVHLYzbIhak79gapkUUEtiYDwBBSNSdbPs8ZMhjhtbJOe
-         KMONOeB3kmokjdcwelvqxl+rt1KqOfrE9q2rbseursvCGMiLOhk1j1+yTunp6HIGdq2j
-         n2D3CZLuutv8JXmqVb5yHWekep1AQiHfEzHxC6DJzeGIc/QKUhfNIVOYLO9/O593qZGG
-         swUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=5NxheIOOkMyL0mVGjSjW1Qcd2Z2PAETYvUzmqk+PSUg=;
-        b=kToDWT8GO6pZvVHFsqNinhUuNqNsBO24SEM73j2Pv1EAeZiwDoX/jdFfUBtUIZeGID
-         JsMPzYEVebI2O3DSvWp8JLVBZ1lw/EIVGFfk6x1U9TwTTfHzI3uoexWwbCzYdxUiPOVD
-         2x89HvPAEJbDQQaYQjxjalfhwd8vR1NJJtoeYon4QM5QQR9KZaRsW419LzG+yTWpKN8T
-         /n/UyV//36dg4scboyrcGsyotG6qENDSVfyGC2d2otLweCj4Lv9Z2lWEDKEPm/PrvlJl
-         LCUx2RUnpiRhUonbbIOIBzOKCSVdw9sXKbVmf7rR3m1VSCP5MW885ofjWpAa0ENw4OIj
-         cXNA==
-X-Gm-Message-State: ABUngvfscvZxU8bZIqkC4fLfwd0Vve0dW8tzAaZRdiaPVjns3ullWnec0yj0vVfoxMYntg==
-X-Received: by 10.99.157.129 with SMTP id i123mr2428659pgd.148.1479260025828;
-        Tue, 15 Nov 2016 17:33:45 -0800 (PST)
-Received: from [10.175.10.198] ([134.134.139.93])
-        by smtp.gmail.com with ESMTPSA id s8sm46879771pfj.45.2016.11.15.17.33.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Nov 2016 17:33:29 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <xmqq4m38vdw4.fsf@gitster.mtv.corp.google.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-14-Karthik.188@gmail.com> <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com> <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com> <xmqq60nqzuye.fsf@gitster.mtv.corp.google.com> <CAOLa=ZSFuq2+6xsrJ=CcXuOVbTnbDirbRtu7Fonfk+9EdRpbxg@mail.gmail.com> <xmqqy40lx2k8.fsf@gitster.mtv.corp.google.com> <CAOLa=ZQepW9GiUrKEWXojpy10B86K-jb84G_dJeL=mqtjZ4AWg@mail.gmail.com> <CA+P7+xo6OqcpLZ7v_m1EPm85eK2xCPD_LCw1Ly2RSPeSC0Ei7g@mail.gmail.com> <xmqq4m38vdw4.fsf@gitster.mtv.corp.google.com>
+        id S1754716AbcKPBmH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Nov 2016 20:42:07 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55321 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752206AbcKPBmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2016 20:42:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 225624F869;
+        Tue, 15 Nov 2016 20:42:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XsPRo940QCBBXU6xih66JWr9ORo=; b=Kf6+PU
+        hkQeOTY3rSQIBo2MXYY2CSi4m/6wgoBESa6o9K8dGDjUvt45SaMALkDoyWVEmYnL
+        QTfRAGTu5fEDQ50p0PiZsTcWxjuJNLpKriUbj/SDHBLD2vvjiK3PurO0v83iC+hl
+        XyAt3GzVt5q32wFWHHPSkkWrf7QNmFHs1p/t8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ChoHQr2nO5YjVTzttw7Iq3DoHMaDQGvQ
+        s0BwrUH6/ZdnxaD5W617WFMjWPJCUHmywN+xXoiA+MuWtT0JpR4qDE57P6lLcxun
+        rISNNtK1wFP/EDthOblkhGHbTPFdP4Kh8++Zil45ULbqOaKrdpLQtKocO8yqHz4h
+        7HKpAmumhtg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A5814F868;
+        Tue, 15 Nov 2016 20:42:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7788A4F867;
+        Tue, 15 Nov 2016 20:42:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Douglas Cox <ziflin@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug with disabling compression and 'binary' files.
+References: <CA+i4re65SsxcaLcpGyMDnJygQFmAq4X_x_uxrkqB0yqQkEYPUQ@mail.gmail.com>
+Date:   Tue, 15 Nov 2016 17:42:03 -0800
+In-Reply-To: <CA+i4re65SsxcaLcpGyMDnJygQFmAq4X_x_uxrkqB0yqQkEYPUQ@mail.gmail.com>
+        (Douglas Cox's message of "Tue, 15 Nov 2016 19:21:14 -0500")
+Message-ID: <xmqqk2c4ryj8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain;
- charset=UTF-8
-Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for ref printing atoms
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 15 Nov 2016 13:19:04 -0800
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     Karthik Nayak <karthik.188@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Message-ID: <FAA5CD51-8772-4AA9-A9BF-F32C9D0A47CA@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E10938CE-AB9D-11E6-A6C9-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 15, 2016 9:42:03 AM PST, Junio C Hamano <gitster@pobox.com> wrote:
->I think you are going in the right direction.  I had a similar
->thought but built around a different axis.  I.e. if strip=1 strips
->one from the left, perhaps we want to have rstrip=1 that strips one
->from the right, and also strip=-1 to mean strip everything except
->one from the left and so on?.  I think this and your keep (and
->perhaps you'll have rkeep for completeness) have the same expressive
->power.  I do not offhand have a preference one over the other.
+Douglas Cox <ziflin@gmail.com> writes:
 
-I prefer strip implemented with negative numbers. That is simple and expressive and if we need we can implement rstrip if necessary.
-
+> I narrowed this down to the '-text' attribute that is set when
+> specifying 'binary'.  For some reason this flag is cancelling out the
+> core.compression = 0 setting and I think this is a bug?
 >
->Somehow it sounds a bit strange to me to treat 'remotes' as the same
->class of token as 'heads' and 'tags' (I'd expect 'heads' and
->'remotes/origin' would be at the same level in end-user's mind), but
->that is probably an unrelated tangent.  The reason this series wants
->to introduce :base must be to emulate an existing feature, so that
->existing feature is a concrete counter-example that argues against
->my "it sounds a bit strange" reaction.
+> Unfortunately core.compression = 0 is also global. Ideally it would be
+> great if there was a separate 'compression' attribute that could be
+> specified in .gitattributes per wildcard similar to how -delta can be
+> used. This way we would still be able to get compression for
+> text/source files, while still getting the speed of skipping
+> compression for binary files that do not compress well.
+>
+> Has there been any discussion on having an attribute similar to this?
 
-It may be a bit strange indeed. What is the requirement for this?
+Nope.  
 
-I think implementing a strip and rstrip ( if necessary ) with negative numbers would be most ideal.
+I do not offhand think of a way for '-text' attribute (or any
+attribute for what matter) to interfere with compression level, but
+while reading the various parts of the system that futz with the
+compression level configuration, I noticed one thing.  When we do an
+initial "bulk-checkin" optimization that sends all objects to a
+single packfile upon "git add", the packfile creation uses its own
+compression level that is not affected by any configuration or
+command line option.  This may or may not be related to the symptom
+you are observing (if it is, then you would see a packfile created
+in objects/pack/, not in loose objects in object/??/ directories).
 
-Thanks
-Jake
 
 
