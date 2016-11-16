@@ -2,139 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 167E82042F
-	for <e@80x24.org>; Wed, 16 Nov 2016 13:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7982042F
+	for <e@80x24.org>; Wed, 16 Nov 2016 13:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752910AbcKPNQu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 08:16:50 -0500
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:32819 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752029AbcKPNQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 08:16:48 -0500
-Received: by mail-qt0-f177.google.com with SMTP id p16so99755739qta.0
-        for <git@vger.kernel.org>; Wed, 16 Nov 2016 05:16:48 -0800 (PST)
+        id S1753144AbcKPNSH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Nov 2016 08:18:07 -0500
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:35286 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751563AbcKPNSG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2016 08:18:06 -0500
+Received: by mail-yb0-f194.google.com with SMTP id d59so4951642ybi.2
+        for <git@vger.kernel.org>; Wed, 16 Nov 2016 05:18:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8JHlQap97rxfQNtkctgw29nrAYVI+muhaHQ13mM9g2Y=;
-        b=pRBBv/PJw0zpUa881M83KuGRq2h4C0m38oSDPsciW3Oz8/tBlTVFhKTNG5yzBXPFDH
-         BKlTkLHNI1eRzJCOX7yGJTCNbDHjeCJURWBcvGmmO67//FXTP5fnkA1HZkO75qVZL6Nf
-         o4OBZ61appofo8myFf1O1dwFuOColiq9QTFLyKQZzCICamxxGUV8x/6AabJebz3tzQ1F
-         x7zFF2/YBetYKa/ciKDZuQlRbMr7Ed1bOwLVamZNrNZAkBZRNDQISDBFBWfdaKZcuR3Z
-         1heA1KAh3p3NA2bXTi/GQlt6X9mSPQ6lvXTW/xgthgI5mkU3BogdsZVYfN3o8dr8zAnR
-         /D0w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7b5/DpaQHzBcMiHEDhsRl7/dPYRkwe9+avXwV0zZ29k=;
+        b=lzYmPEh9qGv3q4+waJrAyIMc4O3pA4/h625w/EgM9bieSz7ofwh//dxSWZT0IlDPUt
+         AUkFAYAfjBphV3X8VFYDw/tzF6YymkaHfcudFMXlQ/RSamTq5slhcM0KSqS41OFSpNix
+         lwh2+fOSdeCM2xTMOa2FVlCbqMoNJjMWddnDOcP3SKXXikmx6CSK1OW0Gi1qircbD6Or
+         Wj84x4nkmWEvjTz0Btt3J/7DRlnyMfhELDlRWSWAkksErSFyat1Hwf4ER8Jw3dknYV9L
+         BWXeP68j6v5kKBjnEdcrJYwclAXA7e+K89hdSq4fdM9dzI5SjwTNsDCvPfXQPKreaDIK
+         gntA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8JHlQap97rxfQNtkctgw29nrAYVI+muhaHQ13mM9g2Y=;
-        b=kSk21TsISc0GygyRyk1oZjw4Z+/0c5VoxW2wZe1dLDa1NFoVMFU/dhWmD/OvxnbCfv
-         6bMU4g8tQxIEXE1+qGtZemHtxDBgtPW4ouNZSIiS5xgzZdwflSEIqekfuK5tVDSuYTqE
-         cPjkIzPwBuTKqkITxw6kGMkFfe9/Lq6TmgJ4LW+AcX8Lp8RhrVUsmfChwWIKW5PsJ9aG
-         eoHaUacHihzgdJdkhGSZXv+pHwblByxspH7rr1nWN+I2rAJ3ERkOmw2m5mbTWDK85iR/
-         cGHZUjz/M8+o5zlSWAnkcy/7IINT/LBmsiK4GoHLNzP6zipaIp4TLty/w1vGwYdnBnDV
-         9E+A==
-X-Gm-Message-State: ABUngveqCLqlQJB1gxwm3MYmJstBqk1xupcScrE7pM0eJ/6x5ecqTc0YX0SHkBWen6ftsg==
-X-Received: by 10.25.209.136 with SMTP id i130mr1067179lfg.1.1479302207428;
-        Wed, 16 Nov 2016 05:16:47 -0800 (PST)
-Received: from debian (c83-253-195-111.bredband.comhem.se. [83.253.195.111])
-        by smtp.gmail.com with ESMTPSA id g12sm2877672lfg.28.2016.11.16.05.16.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Nov 2016 05:16:45 -0800 (PST)
-Received: from iveqy by debian with local (Exim 4.84)
-        (envelope-from <iveqy@paksenarrion.iveqy.com>)
-        id 1c709y-000163-51; Wed, 16 Nov 2016 14:21:54 +0100
-Date:   Wed, 16 Nov 2016 14:21:54 +0100
-From:   Fredrik Gustafsson <iveqy@iveqy.com>
-To:     Renuka Pampana <prenuka@gmail.com>
-Cc:     Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-Subject: Re: Git status takes too long- How to improve the performance of git
-Message-ID: <20161116132154.GA18362@paksenarrion.iveqy.com>
-References: <1479202392275-7657456.post@n2.nabble.com>
- <20161115102400.GC28860@paksenarrion.iveqy.com>
- <CAEAva_1JAu+kWmk3MZDFK=4CgQB5M+JN8FwzMVr6zKgXTAhdXw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7b5/DpaQHzBcMiHEDhsRl7/dPYRkwe9+avXwV0zZ29k=;
+        b=ddOi0GpitFzuLUZ39nbOI6mPONU5TwE638t2LV31gdGV1phIU4enL3WVLaECD/prtV
+         uiuy0x1op+ExisUgNLXrbPj+JmiI+i+06c+6aSTempXsVyhT2lqUVq45DCPPEKAEXpXP
+         qQQLPmLlLz0dQwtar0n70hGxJ58rzH5QI0mAFLii6bygXvyh+y/azz3rpZ/sbQOF/QIs
+         sSqUDeIYNyfrnziaUChpkxYiEE9Vf8fzdcW2wLQXLWBvFDMpu5GICuku2MtONlUZDOJk
+         zD4IEFTEm3Ayjf6/6C099Uk9lHVEbX7aSXk50FiwpdfakErbqKhNiMSydQlup4KXVG/q
+         V1lg==
+X-Gm-Message-State: ABUngveztL+RJE4KtIv55AT5ft0EDK/WpUgk8HBDXv2nIjTgnNhhEjh48lDwNOYrn6QE3mvB+VIhdKtJ/MKMBQ==
+X-Received: by 10.37.115.6 with SMTP id o6mr1444564ybc.139.1479302285626; Wed,
+ 16 Nov 2016 05:18:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEAva_1JAu+kWmk3MZDFK=4CgQB5M+JN8FwzMVr6zKgXTAhdXw@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Received: by 10.37.211.9 with HTTP; Wed, 16 Nov 2016 05:17:35 -0800 (PST)
+In-Reply-To: <5b7d7d0b-8a6c-d516-4eb9-4e4ea13dce73@ramsayjones.plus.com>
+References: <5b7d7d0b-8a6c-d516-4eb9-4e4ea13dce73@ramsayjones.plus.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 16 Nov 2016 20:17:35 +0700
+Message-ID: <CACsJy8BD4YVjrrxz2a0gduaK6QFroHaa7t3_hQWaJ8feM4ZXqA@mail.gmail.com>
+Subject: Re: [PATCH] worktree: fix a sparse 'Using plain integer as NULL
+ pointer' warning
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2016 at 05:13:57PM +0530, Renuka Pampana wrote:
-> > On Tue, Nov 15, 2016 at 02:33:12AM -0700, ravalika wrote:
-> > > It is an centralized server and git status takes too long
-> >
-> > A centralized server? How? git is designed to be runned locally. If
-> > you're running git on a network file system, the performance will
-> > suffer. Could you elaborate on how your environment is setup?
-> >
-> >
-> We have setup main git repository in remote location on Linux server
-> And created a git repository in local Linux server, as a reference for the
-> remote git repository,
-> And update the local git repository for every 15 min in local server
-> 
-> Users will be able to access the  local git repository through NFS
+On Wed, Nov 16, 2016 at 3:28 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Duy,
+>
+> If you need to re-roll your 'nd/worktree-move' branch, could you
+> please squash this into the relevant patch [commit c49e92f5c
+> ("worktree move: refuse to move worktrees with submodules", 12-11-2016)].
 
-And each user will have their own copy of the repository locally on
-their machine? That is having done a git clone?
-> 
-> All users will clone the git repository from remote project url  by using
-> local git repo as reference
-> 
->  For example : git clone --reference ~/gitcaches/reference user@drupal
-> :/home/project/drupal.git
-> 
-> All the users have ssh credentials for the remote server
+Will do, thanks (and it's also "thanks" for your other similar emails,
+I just don't want to send a mail with just 'thanks' that adds nothing
+else).
 
-Why are you using --reference for a 8.9MB big clone?
-> 
-> 
-> What is the best way to implement remote git repo and able to access the
-> git repo from other location, without any performance glitches?
-> Users should be able to access git repo from different servers and from
-> different locations.
+> Also, one of the new tests introduced by commit 31a8f3066 ("worktree move:
+> new command", 12-11-2016), fails for me, thus:
+>
+>   $ ./t2028-worktree-move.sh -i -v
+>   ...
+>   --- expected  2016-11-15 20:22:50.647241458 +0000
+>   +++ actual    2016-11-15 20:22:50.647241458 +0000
+>   @@ -1,3 +1,3 @@
+>    worktree /home/ramsay/git/t/trash directory.t2028-worktree-move
+>   -worktree /home/ramsay/git/t/trash directory.t2028-worktree-move/destination
+>    worktree /home/ramsay/git/t/trash directory.t2028-worktree-move/elsewhere
+>   +worktree /home/ramsay/git/t/trash directory.t2028-worktree-move/destination
+>   not ok 12 - move worktree
+>   #
+>   #             git worktree move source destination &&
+>   #             test_path_is_missing source &&
+>   #             git worktree list --porcelain | grep "^worktree" >actual &&
+>   #             cat <<-EOF >expected &&
+>   #             worktree $TRASH_DIRECTORY
+>   #             worktree $TRASH_DIRECTORY/destination
+>   #             worktree $TRASH_DIRECTORY/elsewhere
+>   #             EOF
+>   #             test_cmp expected actual &&
+>   #             git -C destination log --format=%s >actual2 &&
+>   #             echo init >expected2 &&
+>   #             test_cmp expected2 actual2
+>   #
+>   $
+>
+> Is there an expectation that the submodules will be listed in
+> any particular order by 'git worktree list --porcelain' ?
 
-The best way is to have it locally cloned. Yes the initial clone will be
-expensive but operations after that will be fairly smooth. You do not(!)
-want to execute git on one machine and having the repository beeing on
-an other machine (for example via a network file system, except git
-clone, git fetch, git push, etc.).
+I just sent a patch [1] to fix this before reading this mail. The
+order so far has been determined by readdir() which is not great.
 
-> >
-> > > How to improve the performance of git status
-> > >
-> > > Git repo details:
-> > >
-> > > Size of the .git folder is 8.9MB
-> > > Number of commits approx 53838  (git rev-list HEAD --count)
-> > > Number of branches -  330
-> > > Number of files - 63883
-> > > Working tree clone size is 4.3GB
-> >
-> > .git folder of 8.9 MEGABYTE and working tree of 4.3 GIGABYTE? Is this a
-> > typo?
-> >
-> > All git related information is stored in .git directory of the working
-> directory
->   It is 8.9M
-> And size of the local workspace is 4.3G
-
-Can you please elaborate on this? How can you store 8.9 MB of data that
-will result in a 4.3 G workspace?
-
+[1] https://public-inbox.org/git/CACsJy8DOT_4N_48UaoYK61G_8JUaXbEs7N=n24CH2q1GN=++5g@mail.gmail.com/T/#mfcf797219a1a143ed2ac45198015f19e82c70db2
 -- 
-Fredrik Gustafsson
-
-phone: +46 733-608274
-e-mail: iveqy@iveqy.com
-website: http://www.iveqy.com
+Duy
