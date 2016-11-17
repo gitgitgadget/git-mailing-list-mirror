@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F93C1FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 20:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9D41FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 20:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752529AbcKQUZK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 15:25:10 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63090 "EHLO mout.gmx.net"
+        id S1751360AbcKQU7v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 15:59:51 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63157 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752522AbcKQUZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 15:25:09 -0500
-Received: from [192.168.178.43] ([88.71.246.160]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrePN-1cmhMC3mcH-013RHr; Thu, 17
- Nov 2016 21:25:06 +0100
-Subject: Re: [PATCH v15 10/27] bisect--helper: `check_and_set_terms` shell
- function in C
+        id S1750866AbcKQU7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 15:59:51 -0500
+Received: from [192.168.178.43] ([88.71.246.160]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVayZ-1cHBUJ1kid-00Z1og; Thu, 17
+ Nov 2016 21:59:48 +0100
+Subject: Re: [PATCH v15 11/27] bisect--helper: `bisect_next_check` &
+ bisect_voc shell function in C
 To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
 References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1aca-0c26fb8c-404f-4f57-afe7-7ebb552a1002-000000@eu-west-1.amazonses.com>
+ <01020157c38b1adb-ab4c90ed-d084-40b5-a037-f62c76e52ec4-000000@eu-west-1.amazonses.com>
 From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <b7691fac-9642-f87d-f23f-5175b5ead05b@gmx.net>
-Date:   Thu, 17 Nov 2016 21:25:05 +0100
+Message-ID: <b78a4cbf-86ed-938e-1d41-6c48e0df981e@gmx.net>
+Date:   Thu, 17 Nov 2016 21:59:47 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <01020157c38b1aca-0c26fb8c-404f-4f57-afe7-7ebb552a1002-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020157c38b1adb-ab4c90ed-d084-40b5-a037-f62c76e52ec4-000000@eu-west-1.amazonses.com>
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:RNBirpgxJ8DfSOvQzIJPr+l2C/43lhG6h2QL0feEKMz4GfgbGpL
- iaBVjETUIV3xjSO5AqrkBCVSwLZpjZfeil5bwYg03mxuS1JBrcyAea4kfbqgUhhpU7S95Hj
- URPnnOoiYW9adjpJa6y3itZuSwhhObY+nf67mphzVuQNJ/XaK5nNtatPvhhDt8VCbaIHKZC
- G311LtUOawewOOms769dg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sg8U+R6YsS8=:JdoOPSRpZIuE4Ac9qaif/1
- yhQlRWnCNTlY9I2naYwHd/8Dz1f6LlDHogaFEtR2g4IDdfDFGDTgQjWNtCH4eak1cZh2O8PSC
- k/vbXjtcUoSerBpk/Q/ahIY3utul0IdBMpJZoxHNRUm7w95aRWJvCfaKG91jx7SGvrcfa3jGF
- PloUZLJOTL14MYQDezYtZvvLxtfud8+d3FYJf73W7tZa+GPpqfTzU3eLGrdQzMCZgDD8lupGv
- YraI31ZRb0YTMT4q07PZxAVieY9EsvPr/xRw8gYkUAtfMEOXj4KSIc7iFvHbvGp8gHDna3DhN
- AgNqa4/XfQk/osF9y3mzlDsN6uA4eNVL4y57Vnn4X1yN26Tdj8nKXUXf6IfTfBk5PpfNjnPHk
- 9dJLJfXoHD+Gcppzj/Kl/v/eFi+79a0TS4dQXlKIIEaJ2u+BQ5m65J5YWFgKd5Z1Kh6rXYsLF
- lnTY2c9DGLfP3sTfkK9Dk98O4dpBL3Eifc6TiAic9Uashpl9jznsNwnCB8ornVF0yFuCwP2no
- 8L7k16UjdshU12z50bfHyUtVKhp2QqJwOp43PB5cdIzNTOs3PLfZUBGGhJZu3hNcd6N8Ya2GN
- X0q+erPtkEtkm+VlCNw1iq2Femga0bznTTTPgm7y+G/ON7ar/Pb7MM8sN/vwlyjZRC1L4RQk8
- tr3TEzg22VDoNIZTSFOnK+r5oZRTFRtkt1VnIWIE1qbz8E86EpG+2MKPh+6Lzft0v6kn/Xmko
- THd7S+66voHU0uDE79O3pPW7qakQrdawmMx1ubUZ+muNgpgRKLVVDTkbfWb0aJP0vgX8gi79n
- XYppla3
+X-Provags-ID: V03:K0:GzykwUTO6y8rHl/Aa99CDTSSnqpCM5aWVcWs6hl7hovbrcqTx2U
+ bRylCYvZut8h0CVNTjvrMJOstNucP9V6PGbuKz448HRJkRkR/uxLYqGXOz9XiqEzAkuQfar
+ V/HGsXb41Z1u0IyxDtem110dklI1r3ErgAmtfdms+vAJFGDSk1uqDyXjLSU2qCDc5C58QYj
+ SxHCZ3GnM5KxMqB4OPa5w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xfNIIvzA268=:pbniZ2j0kZDodBDkHNR7Z2
+ tPM67Oax1ABUQ5cN8jF1dXCnuvHRcDrnmGUUwRK/RddJncKUwEXEnqvPQZ6F+579G6ZwNWET/
+ /WF0hYH2eyyRjcgE7LOgs0JHNvUMW8Smk6fqTJugG4OtWGY/lItZx90OmAfwxJhxJV4fuvJTc
+ KYX6SnO096ycTAoqtDj0FKQaWXY3hkpl8517G+/rawy7OS4eUvMKJs6XIm10m1mowL9/ceW3f
+ rc/Mc9zjiXggFhLkCgxpDjPEjJSDQfZM6UeennROSfsLmloTEnrlP0nwZaWGqwdAT/2V4pktN
+ GHdFlU9poo2ylzJWnF6cnxiXGJkP9ZFC+OuqTqlX0HXYNERaOqUo5n5HpbDeT/K+MTCwSb5gp
+ ZyrhBxCK+g+DToHHuQPFjZMejJvV/bIh6ky54Z9TXvmnv7d0Tl356qc9w6wyrWjVe+pe34GRK
+ wQKaFk0aF3h6/bYTX3pxWuI16aPkrN8n31+7iXYzYKNmDznK8EVcT27ZXCmsGHgHVPml3cnLJ
+ /34IUm636UZczCl+vGVrGfcoYOFGdZrUVRu3YMqLKqXLgKDRqAMBcnLV6Rd/f/t1W3+e0j2so
+ ARRQfR+PucmGqQD2ztm2KU65+e9xoWcxpJCn6UWthTrdGmPnqlUTTpqHryKjBTn8ouXP5nGNM
+ LyeT1Cd2HdsvuZaMbolkf5Ca3vHFlR3zG3wWwF+8CGuOTlVm6b67riDs2BykLakWyYbQW2ezU
+ KJAgdtGqFHpDBTmrTY2h2b5OiYVz/NGEctYAZvBOMuAtdAMQpvVMYUKUeo3g0sixsklGTilGW
+ N95zKLF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,66 +58,91 @@ X-Mailing-List: git@vger.kernel.org
 Hi Pranit,
 
 On 10/14/2016 04:14 PM, Pranit Bauva wrote:
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 3f19b68..c6c11e3 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -20,6 +20,7 @@ static const char * const git_bisect_helper_usage[] = {
->  	N_("git bisect--helper --bisect-clean-state"),
->  	N_("git bisect--helper --bisect-reset [<commit>]"),
->  	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
-> +	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
+> Also reimplement `bisect_voc` shell function in C and call it from
+> `bisect_next_check` implementation in C.
 
-Here's the same as in the previous patch... I'd not use
-TERM_GOOD/TERM_BAD in capitals.
+Please don't! ;D
 
->  	NULL
->  };
->  
-> @@ -212,6 +213,38 @@ static int bisect_write(const char *state, const char *rev,
->  	return retval;
->  }
->  
-> +static int set_terms(struct bisect_terms *terms, const char *bad,
-> +		     const char *good)
+> +static char *bisect_voc(char *revision_type)
 > +{
-> +	terms->term_good = xstrdup(good);
-> +	terms->term_bad = xstrdup(bad);
-> +	return write_terms(terms->term_bad, terms->term_good);
+> +	if (!strcmp(revision_type, "bad"))
+> +		return "bad|new";
+> +	if (!strcmp(revision_type, "good"))
+> +		return "good|old";
+> +
+> +	return NULL;
+> +}
 
-At this stage of the patch series I am wondering why you are setting
-"terms" here, but I guess you'll need it later.
+Why not simply use something like this:
 
-However, you are leaking memory here. Something like
+static const char *voc[] = {
+	"bad|new",
+	"good|old",
+};
 
-	free(terms->term_good);
-	free(terms->term_bad);
-	terms->term_good = xstrdup(good);
-	terms->term_bad = xstrdup(bad);
+Then...
 
-should be safe (because you've always used xstrdup() for the terms
-members before). Or am I overseeing something?
+> +static int bisect_next_check(const struct bisect_terms *terms,
+> +			     const char *current_term)
+> +{
+> +	int missing_good = 1, missing_bad = 1, retval = 0;
+> +	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
+> +	char *good_glob = xstrfmt("%s-*", terms->term_good);
+> +	char *bad_syn, *good_syn;
 
-> @@ -278,6 +314,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  		terms.term_bad = xstrdup(argv[3]);
->  		res = bisect_write(argv[0], argv[1], &terms, nolog);
->  		break;
-> +	case CHECK_AND_SET_TERMS:
-> +		if (argc != 3)
-> +			die(_("--check-and-set-terms requires 3 arguments"));
-> +		terms.term_good = xstrdup(argv[1]);
-> +		terms.term_bad = xstrdup(argv[2]);
-> +		res = check_and_set_terms(&terms, argv[0]);
-> +		break;
+...you don't need bad_syn and good_syn...
 
-Ha! When I reviewed the last patch, I asked you why you changed the code
-from returning directly from each subcommand to setting res; break; and
-then return res at the bottom of the function.
+> +	bad_syn = xstrdup(bisect_voc("bad"));
+> +	good_syn = xstrdup(bisect_voc("good"));
 
-Now I see why this was useful. The two members of "terms" are again
-leaking memory: you are allocating memory by using xstrdup() but you are
-not freeing it.
-(That also applies to the last patch.)
+...and hence not these two lines...
 
-Cheers,
+> +	if (!is_empty_or_missing_file(git_path_bisect_start())) {
+> +		error(_("You need to give me at least one %s and "
+> +			"%s revision. You can use \"git bisect %s\" "
+> +			"and \"git bisect %s\" for that. \n"),
+> +			bad_syn, good_syn, bad_syn, good_syn);
+
+...and write
+			voc[0], voc[1], voc[0], voc[1]);
+instead...
+
+> +		retval = -1;
+> +		goto finish;
+> +	}
+> +	else {
+> +		error(_("You need to start by \"git bisect start\". You "
+> +			"then need to give me at least one %s and %s "
+> +			"revision. You can use \"git bisect %s\" and "
+> +			"\"git bisect %s\" for that.\n"),
+> +			good_syn, bad_syn, bad_syn, good_syn);
+
+...and here
+			voc[1], voc[0], voc[0], voc[1]);
+...
+
+> +		retval = -1;
+> +		goto finish;
+> +	}
+> +	goto finish;
+> +finish:
+> +	if (!bad_ref)
+> +		free(bad_ref);
+> +	if (!good_glob)
+> +		free(good_glob);
+> +	if (!bad_syn)
+> +		free(bad_syn);
+> +	if (!good_syn)
+> +		free(good_syn);
+
+...and you can remove the 4 lines above.
+
+> +	return retval;
+> +}
+
+Besides that, there are again some things that I've already mentioned
+and that can be applied here, too, for example, not capitalizing
+TERM_GOOD and TERM_BAD, the goto fail simplification, the terms memory leak.
+
+Cheers
 Stephan
