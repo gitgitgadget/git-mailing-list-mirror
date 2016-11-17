@@ -2,77 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D3A71FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 20:08:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F93C1FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 20:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752194AbcKQUIP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 15:08:15 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:33943 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752106AbcKQUIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 15:08:15 -0500
-Received: by mail-qk0-f174.google.com with SMTP id q130so236910538qke.1
-        for <git@vger.kernel.org>; Thu, 17 Nov 2016 12:08:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=F46Gaa92ndO5DUnyivYUCqAfOqO+m2COuW2noIYmyhA=;
-        b=VW9wn5Rpe9TVbesiMGcOT1AO3wYwGIBpPoZG0ujUjuuBZKQLdTM/tZj3bPLQEv8BwT
-         LmB9v6AEwra7sZcpyP2mqSk1W2+s+A9/rpwk79/FqDLzRROL72+wK/d17uEUM6pgRSAQ
-         vgdzS7SmvZhI0zoNwsNaf8e4sv4lGC/+MtLoT7LpstY8dc3qe9YBohBDu96RksEtdaMs
-         JRBNAHoWffydTEyotTY5eWlZ+bZ2KXl7Iaghw2pMx6lYoTn5pi3Utq8sWyVyEVIAOEr+
-         mx4t/yY4xFtivrwFJ84xqHbcqZf/uzite+JwgX1hZD3FWQwUpfNVN8FGln31lyrNC6Pr
-         U7nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=F46Gaa92ndO5DUnyivYUCqAfOqO+m2COuW2noIYmyhA=;
-        b=FPror+qBXAhmqDXi8pDMKpYAC5yfmLjqfGtlZE8ON3VCnQpzJ9YhQa2uOf3Yja7V9w
-         MPECtLIailOUVQ+EaOTCpjno8/2bSVpBYnEFI4l8SPXMy+02RJEAztbuO6k2TQurBiM4
-         CGFRgdl79+I3ALS1fgGBJ9W10Teh7XweG+xcqbMBS0cYyc8o9NYJBUm0LBxXIeawUxoV
-         VDFkjNwFsGDFxNiaLq10sKXE1H0ldIbaj07Nwd0SmU2QXdJdMeQzjWiBCJ4kUKZiE0JT
-         EG1DfO2S+jn9Wow5rq4xp4fMAzfek7JOwrC5ccTz+hE7KjzJNiBCUTRkJmKh35NFOlbT
-         y58A==
-X-Gm-Message-State: AKaTC00W8diWG1hreH7KF4O13W7mZzJ14fI1WRgcfPphEPk/CniFdkApG9kfHw/5nRuw+mwG0Zu9c22Qfk0MRBxF
-X-Received: by 10.55.191.134 with SMTP id p128mr5475485qkf.58.1479413293915;
- Thu, 17 Nov 2016 12:08:13 -0800 (PST)
+        id S1752529AbcKQUZK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 15:25:10 -0500
+Received: from mout.gmx.net ([212.227.15.19]:63090 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752522AbcKQUZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 15:25:09 -0500
+Received: from [192.168.178.43] ([88.71.246.160]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrePN-1cmhMC3mcH-013RHr; Thu, 17
+ Nov 2016 21:25:06 +0100
+Subject: Re: [PATCH v15 10/27] bisect--helper: `check_and_set_terms` shell
+ function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1aca-0c26fb8c-404f-4f57-afe7-7ebb552a1002-000000@eu-west-1.amazonses.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <b7691fac-9642-f87d-f23f-5175b5ead05b@gmx.net>
+Date:   Thu, 17 Nov 2016 21:25:05 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 12:08:12 -0800 (PST)
-In-Reply-To: <20161117105715.GC39230@book.hvoigt.net>
-References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-8-sbeller@google.com>
- <20161117105715.GC39230@book.hvoigt.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Nov 2016 12:08:12 -0800
-Message-ID: <CAGZ79kYEdA6crWTf3ZW2EthenZA4=PeWd4HfKnCAKxgZoz54qg@mail.gmail.com>
-Subject: Re: [PATCH 07/16] update submodules: introduce submodule_is_interesting
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Martin Fick <mogulguy10@gmail.com>,
-        David Turner <David.Turner@twosigma.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <01020157c38b1aca-0c26fb8c-404f-4f57-afe7-7ebb552a1002-000000@eu-west-1.amazonses.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:RNBirpgxJ8DfSOvQzIJPr+l2C/43lhG6h2QL0feEKMz4GfgbGpL
+ iaBVjETUIV3xjSO5AqrkBCVSwLZpjZfeil5bwYg03mxuS1JBrcyAea4kfbqgUhhpU7S95Hj
+ URPnnOoiYW9adjpJa6y3itZuSwhhObY+nf67mphzVuQNJ/XaK5nNtatPvhhDt8VCbaIHKZC
+ G311LtUOawewOOms769dg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sg8U+R6YsS8=:JdoOPSRpZIuE4Ac9qaif/1
+ yhQlRWnCNTlY9I2naYwHd/8Dz1f6LlDHogaFEtR2g4IDdfDFGDTgQjWNtCH4eak1cZh2O8PSC
+ k/vbXjtcUoSerBpk/Q/ahIY3utul0IdBMpJZoxHNRUm7w95aRWJvCfaKG91jx7SGvrcfa3jGF
+ PloUZLJOTL14MYQDezYtZvvLxtfud8+d3FYJf73W7tZa+GPpqfTzU3eLGrdQzMCZgDD8lupGv
+ YraI31ZRb0YTMT4q07PZxAVieY9EsvPr/xRw8gYkUAtfMEOXj4KSIc7iFvHbvGp8gHDna3DhN
+ AgNqa4/XfQk/osF9y3mzlDsN6uA4eNVL4y57Vnn4X1yN26Tdj8nKXUXf6IfTfBk5PpfNjnPHk
+ 9dJLJfXoHD+Gcppzj/Kl/v/eFi+79a0TS4dQXlKIIEaJ2u+BQ5m65J5YWFgKd5Z1Kh6rXYsLF
+ lnTY2c9DGLfP3sTfkK9Dk98O4dpBL3Eifc6TiAic9Uashpl9jznsNwnCB8ornVF0yFuCwP2no
+ 8L7k16UjdshU12z50bfHyUtVKhp2QqJwOp43PB5cdIzNTOs3PLfZUBGGhJZu3hNcd6N8Ya2GN
+ X0q+erPtkEtkm+VlCNw1iq2Femga0bznTTTPgm7y+G/ON7ar/Pb7MM8sN/vwlyjZRC1L4RQk8
+ tr3TEzg22VDoNIZTSFOnK+r5oZRTFRtkt1VnIWIE1qbz8E86EpG+2MKPh+6Lzft0v6kn/Xmko
+ THd7S+66voHU0uDE79O3pPW7qakQrdawmMx1ubUZ+muNgpgRKLVVDTkbfWb0aJP0vgX8gi79n
+ XYppla3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 17, 2016 at 2:57 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+Hi Pranit,
 
-> It seems that you are only looking at the submodule config from a
-> commit. Should a user be able to override this with local configuration?
-> Haven't looked further in the patchseries so maybe that is somewhere
-> else?
+On 10/14/2016 04:14 PM, Pranit Bauva wrote:
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 3f19b68..c6c11e3 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -20,6 +20,7 @@ static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --bisect-clean-state"),
+>  	N_("git bisect--helper --bisect-reset [<commit>]"),
+>  	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
+> +	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
 
-It turns out that in later patches we pass in null_sha1 only, which is
-looking at the config and possible overrides.
+Here's the same as in the previous patch... I'd not use
+TERM_GOOD/TERM_BAD in capitals.
 
-I'll refactor to take no sha1 argument and use null_sha1 here directly.
+>  	NULL
+>  };
+>  
+> @@ -212,6 +213,38 @@ static int bisect_write(const char *state, const char *rev,
+>  	return retval;
+>  }
+>  
+> +static int set_terms(struct bisect_terms *terms, const char *bad,
+> +		     const char *good)
+> +{
+> +	terms->term_good = xstrdup(good);
+> +	terms->term_bad = xstrdup(bad);
+> +	return write_terms(terms->term_bad, terms->term_good);
+
+At this stage of the patch series I am wondering why you are setting
+"terms" here, but I guess you'll need it later.
+
+However, you are leaking memory here. Something like
+
+	free(terms->term_good);
+	free(terms->term_bad);
+	terms->term_good = xstrdup(good);
+	terms->term_bad = xstrdup(bad);
+
+should be safe (because you've always used xstrdup() for the terms
+members before). Or am I overseeing something?
+
+> @@ -278,6 +314,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  		terms.term_bad = xstrdup(argv[3]);
+>  		res = bisect_write(argv[0], argv[1], &terms, nolog);
+>  		break;
+> +	case CHECK_AND_SET_TERMS:
+> +		if (argc != 3)
+> +			die(_("--check-and-set-terms requires 3 arguments"));
+> +		terms.term_good = xstrdup(argv[1]);
+> +		terms.term_bad = xstrdup(argv[2]);
+> +		res = check_and_set_terms(&terms, argv[0]);
+> +		break;
+
+Ha! When I reviewed the last patch, I asked you why you changed the code
+from returning directly from each subcommand to setting res; break; and
+then return res at the bottom of the function.
+
+Now I see why this was useful. The two members of "terms" are again
+leaking memory: you are allocating memory by using xstrdup() but you are
+not freeing it.
+(That also applies to the last patch.)
+
+Cheers,
+Stephan
