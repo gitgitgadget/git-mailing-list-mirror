@@ -6,57 +6,126 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E06D1FE4E
-	for <e@80x24.org>; Thu, 17 Nov 2016 10:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98B0D1FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 14:33:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941853AbcKQKrS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 05:47:18 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:36766 "EHLO
-        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1945958AbcKQKrQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 17 Nov 2016 05:47:16 -0500
-X-Greylist: delayed 928 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Nov 2016 05:47:15 EST
-Received: from x4db0e6a4.dyn.telefonica.de ([77.176.230.164] helo=localhost.localdomain)
-        by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-        iface 141.3.10.81 id 1c7Jyp-0005Gn-QA; Thu, 17 Nov 2016 11:31:45 +0100
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To:     Norbert Kiesel <nkiesel@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-        git@vger.kernel.org
-Subject: Re: [Bug?] git notes are not copied during rebase
-Date:   Thu, 17 Nov 2016 11:30:43 +0100
-Message-Id: <20161117103043.4835-1-szeder@ira.uka.de>
-X-Mailer: git-send-email 2.11.0.rc0.85.ga45d488
-In-Reply-To: <CAM+g_NvFhyReNREpTYKbXKm=8QmSH1tnrTCyFm9HusOnfAbCCA@mail.gmail.com>
+        id S932641AbcKQOcu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 09:32:50 -0500
+Received: from sp-internet-ext-ply.uhc.com ([198.203.175.175]:30171 "EHLO
+        mail5.uhc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753881AbcKQOcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 09:32:46 -0500
+X-IronPort-AV: E=Sophos;i="5.31,506,1473138000"; 
+   d="scan'208";a="645111766"
+Received: from irmply49.uhc.com (HELO mail25.uhc.com) ([10.114.162.64])
+  by mail7.uhc.com with ESMTP; 17 Nov 2016 08:03:56 -0600
+X-IronPort-AV: E=Sophos;i="5.31,506,1473138000"; 
+   d="scan'208";a="672320030"
+X-CONF-FOOTER: True
+Received: from apsep0937.ms.ds.uhc.com ([10.123.233.193])
+  by mail25.uhc.com with ESMTP; 17 Nov 2016 08:03:56 -0600
+Received: from apswp0428.ms.ds.uhc.com ([fe80::7cb7:a560:d0b0:bc2d]) by
+ apsep0937.ms.ds.uhc.com ([fe80::4445:7386:5f5:ba94%20]) with mapi id
+ 14.03.0279.002; Thu, 17 Nov 2016 08:03:56 -0600
+From:   "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>
+To:     Mike Rappazzo <rappazzo@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: merge --no-ff is NOT mentioned in help
+Thread-Topic: merge --no-ff is NOT mentioned in help
+Thread-Index: AdJAHG6Flm+eVlqaTkiiWd+ULmGgtwANRkoAAAxIIaD//6OkAP/+9Cig
+Date:   Thu, 17 Nov 2016 14:03:56 +0000
+Message-ID: <2C8817BDA27E034F8E9A669458E375EF2BE95B@APSWP0428.ms.ds.uhc.com>
+References: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
+ <CANoM8SX91JAvJ6EAE6=wavPutUG4ZU1BY-A=5EobW=8zrdEcjw@mail.gmail.com>
+ <2C8817BDA27E034F8E9A669458E375EF2BE689@APSWP0428.ms.ds.uhc.com>
+ <CANoM8SVXeeZsc40xgVqZep_9oT=J2h4mOO0Ksn+kb0g8Ct=KrQ@mail.gmail.com>
+In-Reply-To: <CANoM8SVXeeZsc40xgVqZep_9oT=J2h4mOO0Ksn+kb0g8Ct=KrQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.112.10.26]
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1479378705.
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1479379633.
+Content-Transfer-Encoding: base64
+X-IP-VFilter-R: R
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I am currently a heavy user of rebasing and noticed that my notes
-> don't get correctly applied, even if notes.rewrite.rebase is set
-> explicitly to true (though manual says that is the default).
-
-Setting 'notes.rewrite.rebase' is, as you mentioned, not necessary,
-but not sufficient either.  See here, especially the second paragraph:
-
-   notes.rewriteRef
-       When copying notes during a rewrite, specifies the (fully
-       qualified) ref whose notes should be copied. May be a glob, in
-       which case notes in all matching refs will be copied. You may also
-       specify this configuration several times.
-
-       Does not have a default value; you must configure this variable to
-       enable note rewriting.
-
-       Can be overridden with the GIT_NOTES_REWRITE_REF environment
-       variable.
-
-Gábor
+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IE1pa2UgUmFwcGF6em8gW21haWx0bzpy
+YXBwYXp6b0BnbWFpbC5jb21dIA0KU2VudDogV2VkbmVzZGF5LCBOb3ZlbWJlciAxNiwgMjAxNiA3
+OjU4IEFNDQpUbzogVmFuZGVyaG9vZiwgVHphZGlrDQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0K
+U3ViamVjdDogUmU6IG1lcmdlIC0tbm8tZmYgaXMgTk9UIG1lbnRpb25lZCBpbiBoZWxwDQoNCj4o
+UGxlYXNlIHJlcGx5IGlubGluZSkNCj4NCj5PbiBXZWQsIE5vdiAxNiwgMjAxNiBhdCAxMDo0OCBB
+TSwgVmFuZGVyaG9vZiwgVHphZGlrIDx0emFkaWsudmFuZGVyaG9vZkBvcHR1bTM2MC5jb20+IHdy
+b3RlOg0KPj4gSSBhbSBydW5uaW5nOiAgICBnaXQgdmVyc2lvbiAyLjEwLjEud2luZG93cy4xDQo+
+Pg0KPj4gSSB0eXBlZDogZ2l0IG1lcmdlIC1oDQo+Pg0KPj4gYW5kIGdvdDoNCj4+DQo+PiB1c2Fn
+ZTogZ2l0IG1lcmdlIFs8b3B0aW9ucz5dIFs8Y29tbWl0Pi4uLl0NCj4+ICAgIG9yOiBnaXQgbWVy
+Z2UgWzxvcHRpb25zPl0gPG1zZz4gSEVBRCA8Y29tbWl0Pg0KPj4gICAgb3I6IGdpdCBtZXJnZSAt
+LWFib3J0DQo+Pg0KPj4gICAgIC1uICAgICAgICAgICAgICAgICAgICBkbyBub3Qgc2hvdyBhIGRp
+ZmZzdGF0IGF0IHRoZSBlbmQgb2YgdGhlIG1lcmdlDQo+PiAgICAgLS1zdGF0ICAgICAgICAgICAg
+ICAgIHNob3cgYSBkaWZmc3RhdCBhdCB0aGUgZW5kIG9mIHRoZSBtZXJnZQ0KPj4gICAgIC0tc3Vt
+bWFyeSAgICAgICAgICAgICAoc3lub255bSB0byAtLXN0YXQpDQo+PiAgICAgLS1sb2dbPTxuPl0g
+ICAgICAgICAgIGFkZCAoYXQgbW9zdCA8bj4pIGVudHJpZXMgZnJvbSBzaG9ydGxvZyB0byBtZXJn
+ZSBjb21taXQgbWVzc2FnZQ0KPj4gICAgIC0tc3F1YXNoICAgICAgICAgICAgICBjcmVhdGUgYSBz
+aW5nbGUgY29tbWl0IGluc3RlYWQgb2YgZG9pbmcgYSBtZXJnZQ0KPj4gICAgIC0tY29tbWl0ICAg
+ICAgICAgICAgICBwZXJmb3JtIGEgY29tbWl0IGlmIHRoZSBtZXJnZSBzdWNjZWVkcyAoZGVmYXVs
+dCkNCj4+ICAgICAtZSwgLS1lZGl0ICAgICAgICAgICAgZWRpdCBtZXNzYWdlIGJlZm9yZSBjb21t
+aXR0aW5nDQo+PiAgICAgLS1mZiAgICAgICAgICAgICAgICAgIGFsbG93IGZhc3QtZm9yd2FyZCAo
+ZGVmYXVsdCkNCj4+ICAgICAtLWZmLW9ubHkgICAgICAgICAgICAgYWJvcnQgaWYgZmFzdC1mb3J3
+YXJkIGlzIG5vdCBwb3NzaWJsZQ0KPj4gICAgIC0tcmVyZXJlLWF1dG91cGRhdGUgICB1cGRhdGUg
+dGhlIGluZGV4IHdpdGggcmV1c2VkIGNvbmZsaWN0IHJlc29sdXRpb24gaWYgcG9zc2libGUNCj4+
+ICAgICAtLXZlcmlmeS1zaWduYXR1cmVzICAgdmVyaWZ5IHRoYXQgdGhlIG5hbWVkIGNvbW1pdCBo
+YXMgYSB2YWxpZCBHUEcgc2lnbmF0dXJlDQo+PiAgICAgLXMsIC0tc3RyYXRlZ3kgPHN0cmF0ZWd5
+Pg0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICBtZXJnZSBzdHJhdGVneSB0byB1c2UNCj4+
+ICAgICAtWCwgLS1zdHJhdGVneS1vcHRpb24gPG9wdGlvbj12YWx1ZT4NCj4+ICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgb3B0aW9uIGZvciBzZWxlY3RlZCBtZXJnZSBzdHJhdGVneQ0KPj4gICAg
+IC1tLCAtLW1lc3NhZ2UgPG1lc3NhZ2U+DQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgIG1l
+cmdlIGNvbW1pdCBtZXNzYWdlIChmb3IgYSBub24tZmFzdC1mb3J3YXJkIG1lcmdlKQ0KPj4gICAg
+IC12LCAtLXZlcmJvc2UgICAgICAgICBiZSBtb3JlIHZlcmJvc2UNCj4+ICAgICAtcSwgLS1xdWll
+dCAgICAgICAgICAgYmUgbW9yZSBxdWlldA0KPj4gICAgIC0tYWJvcnQgICAgICAgICAgICAgICBh
+Ym9ydCB0aGUgY3VycmVudCBpbi1wcm9ncmVzcyBtZXJnZQ0KPj4gICAgIC0tYWxsb3ctdW5yZWxh
+dGVkLWhpc3Rvcmllcw0KPj4gICAgICAgICAgICAgICAgICAgICAgICAgICBhbGxvdyBtZXJnaW5n
+IHVucmVsYXRlZCBoaXN0b3JpZXMNCj4+ICAgICAtLXByb2dyZXNzICAgICAgICAgICAgZm9yY2Ug
+cHJvZ3Jlc3MgcmVwb3J0aW5nDQo+PiAgICAgLVMsIC0tZ3BnLXNpZ25bPTxrZXktaWQ+XQ0KPj4g
+ICAgICAgICAgICAgICAgICAgICAgICAgICBHUEcgc2lnbiBjb21taXQNCj4+ICAgICAtLW92ZXJ3
+cml0ZS1pZ25vcmUgICAgdXBkYXRlIGlnbm9yZWQgZmlsZXMgKGRlZmF1bHQpDQo+Pg0KPj4gTm90
+aWNlIHRoZXJlIGlzIE5PIG1lbnRpb24gb2YgdGhlICItLW5vLWZmIiBvcHRpb24NCj4NCj5JIHVu
+ZGVyc3RhbmQuICBPbiBteSBzeXN0ZW0gSSBjYW4gcmVwcm9kdWNlIHRoaXMgYnkgcHJvdmlkaW5n
+IGEgYmFkIGFyZ3VtZW50IHRvIGBnaXQgbWVyZ2VgLiAgVGhpcyBpcyB0aGUgb3V0cHV0IGZyb20g
+dGhlIGFyZyBzZXR1cC4gIEZvciAiYm9vbGVhbiIgYXJndW1lbnRzIChsaWtlICctLWZmJyksIHRo
+ZXJlIGlzIGFuIGF1dG9tYXRpYyBjb3VudGVyIGFyZ3VtZW50IHdpdGggIm5vLSIgaW4gdGhlcmUg
+KCctLW5vLWZmJykgdG8gZGlzYWJsZSB0aGUgb3B0aW9uLiAgTWF5YmUgaXQgd291bGQgbWFrZSBz
+ZW5zZSB0byB3b3JkIHRoZSBvdXRwdXQgdG8gaW5jbHVkZSBib3RoLg0KPg0KDQpXb3VsZCB5b3Ug
+YWNjZXB0IGEgcHVsbCByZXF1ZXN0IGZyb20gbWUgZm9yIHRoaXMgY2hhbmdlPw0KDQo+DQo+Pg0K
+Pj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4+IEZyb206IE1pa2UgUmFwcGF6em8gW21h
+aWx0bzpyYXBwYXp6b0BnbWFpbC5jb21dDQo+PiBTZW50OiBXZWRuZXNkYXksIE5vdmVtYmVyIDE2
+LCAyMDE2IDc6MzcgQU0NCj4+IFRvOiBWYW5kZXJob29mLCBUemFkaWsNCj4+IENjOiBnaXRAdmdl
+ci5rZXJuZWwub3JnDQo+PiBTdWJqZWN0OiBSZTogbWVyZ2UgLS1uby1mZiBpcyBOT1QgbWVudGlv
+bmVkIGluIGhlbHANCj4+DQo+PiBPbiBXZWQsIE5vdiAxNiwgMjAxNiBhdCAxMDoxNiBBTSwgVmFu
+ZGVyaG9vZiwgVHphZGlrIDx0emFkaWsudmFuZGVyaG9vZkBvcHR1bTM2MC5jb20+IHdyb3RlOg0K
+Pj4+IFdoZW4gSSBkbzogImdpdCBtZXJnZSAtaCIgIHRvIGdldCBoZWxwLCB0aGUgb3B0aW9uICIt
+LW5vLWZmIiBpcyBsZWZ0IG91dCBvZiB0aGUgbGlzdCBvZiBvcHRpb25zLg0KPj4NCj4+IEkgYW0g
+cnVubmluZyBnaXQgdmVyc2lvbiAyLjEwLjAsIGFuZCBydW5uaW5nIGdpdCBtZXJnZSAtLWhlbHAg
+Y29udGFpbnMgdGhlc2UgbGluZXM6DQo+Pg0KPj4gICAgICAgIC0tZmYNCj4+ICAgICAgICAgICAg
+V2hlbiB0aGUgbWVyZ2UgcmVzb2x2ZXMgYXMgYSBmYXN0LWZvcndhcmQsIG9ubHkgdXBkYXRlIHRo
+ZSBicmFuY2ggcG9pbnRlciwgd2l0aG91dCBjcmVhdGluZyBhIG1lcmdlIGNvbW1pdC4gVGhpcyBp
+cyB0aGUgZGVmYXVsdCBiZWhhdmlvci4NCj4+DQo+PiAgICAgICAgLS1uby1mZg0KPj4gICAgICAg
+ICAgICBDcmVhdGUgYSBtZXJnZSBjb21taXQgZXZlbiB3aGVuIHRoZSBtZXJnZSByZXNvbHZlcyBh
+cyBhIGZhc3QtZm9yd2FyZC4gVGhpcyBpcyB0aGUgZGVmYXVsdCBiZWhhdmlvdXIgd2hlbiBtZXJn
+aW5nIGFuIGFubm90YXRlZCAoYW5kIHBvc3NpYmx5IHNpZ25lZCkgdGFnLg0KPj4NCj4+ICAgICAg
+ICAtLWZmLW9ubHkNCj4+ICAgICAgICAgICAgUmVmdXNlIHRvIG1lcmdlIGFuZCBleGl0IHdpdGgg
+YSBub24temVybyBzdGF0dXMgdW5sZXNzIHRoZSBjdXJyZW50IEhFQUQgaXMgYWxyZWFkeSB1cC10
+by1kYXRlIG9yIHRoZSBtZXJnZSBjYW4gYmUgcmVzb2x2ZWQgYXMgYSBmYXN0LWZvcndhcmQuDQoK
+VGhpcyBlLW1haWwsIGluY2x1ZGluZyBhdHRhY2htZW50cywgbWF5IGluY2x1ZGUgY29uZmlkZW50
+aWFsIGFuZC9vcgpwcm9wcmlldGFyeSBpbmZvcm1hdGlvbiwgYW5kIG1heSBiZSB1c2VkIG9ubHkg
+YnkgdGhlIHBlcnNvbiBvciBlbnRpdHkKdG8gd2hpY2ggaXQgaXMgYWRkcmVzc2VkLiBJZiB0aGUg
+cmVhZGVyIG9mIHRoaXMgZS1tYWlsIGlzIG5vdCB0aGUgaW50ZW5kZWQKcmVjaXBpZW50IG9yIGhp
+cyBvciBoZXIgYXV0aG9yaXplZCBhZ2VudCwgdGhlIHJlYWRlciBpcyBoZXJlYnkgbm90aWZpZWQK
+dGhhdCBhbnkgZGlzc2VtaW5hdGlvbiwgZGlzdHJpYnV0aW9uIG9yIGNvcHlpbmcgb2YgdGhpcyBl
+LW1haWwgaXMKcHJvaGliaXRlZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhpcyBlLW1haWwgaW4g
+ZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlCnNlbmRlciBieSByZXBseWluZyB0byB0aGlzIG1lc3Nh
+Z2UgYW5kIGRlbGV0ZSB0aGlzIGUtbWFpbCBpbW1lZGlhdGVseS4K
 
