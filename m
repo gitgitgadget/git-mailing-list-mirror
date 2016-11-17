@@ -2,89 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 643581FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 19:06:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CA011FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 19:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933105AbcKQTG0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 14:06:26 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34280 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932641AbcKQTGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 14:06:25 -0500
-Received: by mail-pg0-f53.google.com with SMTP id x23so91358094pgx.1
-        for <git@vger.kernel.org>; Thu, 17 Nov 2016 11:06:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Nl4DKhFQSE1JfNRsY/O5Ob2xl/ay1aKU8qvT1EeW7iM=;
-        b=NS0fhd6boh+eBVLyV0X3M9vXrpXGH9Wol1kheG/LpeqeDz6v4m2YjeLNsalVbQhxFP
-         D1wnGanRZPD7FycQ4aZ86txzq98NufEc5zj3nLsCzEVMX03CpNZuA5PClttt5Za8nDYa
-         y4idhRtjx1yev5/UB+3fcAndLLJsvzV6/Iz4pIkSBfXo/qZUF39bfZ1r4jH2K+uBXHSC
-         tiZgH/7x+fMzl4s99YWIk283MOo3+MmJf2nKsAQXU/iJB0t25UsJr11l8zHDSxsVDusz
-         24bdiOmknyUtLl+36jyPVKq+5GeqH1vmJI+QfBX49ZsbiXgffpxS7022XguezQTAu/mC
-         a50g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Nl4DKhFQSE1JfNRsY/O5Ob2xl/ay1aKU8qvT1EeW7iM=;
-        b=CHvz9ufxz6ODiRO50FqqYWrJjvy34fZI3q8QWsRy/1SvbriIMU8OwAa+19+zy1ZAdQ
-         ppHUimYs1Znp6RtP3KZ4LSRl7fBrU6MxPAuDHsk9hIj0XXCx+/ZWLM7WZ9X4nvGsq7b8
-         y/PRexR7tYazrnrjJ98ZYT8F/D6W289iVnaEl+IHfQEEB2Jua1AcOwNx7J6yZ3uQQG+M
-         2Ozo0+Irg+Ezj3i5xjY39uRI26qOcDBBRF88lrEwlszsl3eSrGn+7zuaFrOmzrmfVHBq
-         GJHPcpiZB3gyWeUh0FxXaAkbXlWLCyV9/RSvG5qOD0vFA9hi//09aklt5JnhRJZGKtkx
-         tfRQ==
-X-Gm-Message-State: ABUngvc+jpP42S61vkklOtT5fZRWu88N2VX7jhTUyV7da0sHdiS0nrC74mEALrKKcN3JDpWc
-X-Received: by 10.98.97.7 with SMTP id v7mr3626472pfb.39.1479409584688;
-        Thu, 17 Nov 2016 11:06:24 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:718b:9d6c:8235:ef51])
-        by smtp.gmail.com with ESMTPSA id y89sm9960849pfk.83.2016.11.17.11.06.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 17 Nov 2016 11:06:23 -0800 (PST)
-Date:   Thu, 17 Nov 2016 11:06:22 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 0/2] bug fix with push --dry-run and submodules
-Message-ID: <20161117190622.GL66382@google.com>
-References: <1479172735-698-1-git-send-email-bmwill@google.com>
- <1479408364-150268-1-git-send-email-bmwill@google.com>
- <CAGZ79kYC51zC4nF3crtuJXK7uwK=Lh9X8LnRke5C87Vo46Gb+A@mail.gmail.com>
+        id S932954AbcKQTSo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 14:18:44 -0500
+Received: from mout.web.de ([212.227.15.3]:59575 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751161AbcKQTSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 14:18:43 -0500
+Received: from [192.168.209.58] ([195.252.60.88]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M22Sh-1cvzOI19Rb-00u3Mm; Thu, 17
+ Nov 2016 20:18:29 +0100
+Subject: Re: merge --no-ff is NOT mentioned in help
+To:     Junio C Hamano <gitster@pobox.com>,
+        Mike Rappazzo <rappazzo@gmail.com>
+References: <2C8817BDA27E034F8E9A669458E375EF2BE63B@APSWP0428.ms.ds.uhc.com>
+ <CANoM8SX91JAvJ6EAE6=wavPutUG4ZU1BY-A=5EobW=8zrdEcjw@mail.gmail.com>
+ <2C8817BDA27E034F8E9A669458E375EF2BE689@APSWP0428.ms.ds.uhc.com>
+ <CANoM8SVXeeZsc40xgVqZep_9oT=J2h4mOO0Ksn+kb0g8Ct=KrQ@mail.gmail.com>
+ <xmqqr36anibl.fsf@gitster.mtv.corp.google.com>
+Cc:     "Vanderhoof, Tzadik" <tzadik.vanderhoof@optum360.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <cff54a0c-65bb-047e-b77d-916e300b66d4@web.de>
+Date:   Thu, 17 Nov 2016 20:18:22 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYC51zC4nF3crtuJXK7uwK=Lh9X8LnRke5C87Vo46Gb+A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqr36anibl.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:zvGGoEbue7/vM6//fAUIcwcsShGXBz8TVKnkX5GHHmPXux/KkId
+ Ij/vJljkFqyjhxauD0GSK47Z6mp8ow2E6Fk4JtscGHaC4/+JGKv9YXjqMGvlAnzqn1kRKc5
+ 3Ng+zHdVbDO87Bp+84sS0bFQ30noVBlaVl79bFMv7k/QUNH2WKDJtUJySdSsmwjW4YJNJKV
+ bEstO7KEc1OIl/Yt/ChVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lf2/oOlfpU0=:l4ZdblSFBu2Lv8DeAeOXmp
+ VwvGoT9iqq22pGaDQp8aWniiPCNMuaqxrtbHKn0gZELaIF05xIuFDydKVVVIzPX7Oz2HKxpHh
+ lb4j7txmSY3odaVhB7BnCO5elmge/ehMuG5rqO8/fVqvAWjORmpb2FUxoXfPvJSx7WTJNzrWA
+ NAjAr7XUxKh0uQfQjUymvKXRiA+Xgqu5cV0HqvM3CQTCEQtDfIXwAlIIcc1fY9P3ifwjXAkkb
+ ZksobpQOEBg08wX4nVt2w4ClvBzCORh8S+1C7w2o93PimVsJZ5cefJHDKgPVmSDd8BYUGc9O6
+ zApAtJLcC7nKf2+Qe0y1W3uzwIWluyZdKAIsgUIizhGxtmtlGBvMjmWBxjeX4LJckhQxiPSNz
+ 0nzikqD/H4d2ptgHPE64OEVbNysnTyfJuCvoPc7Zdgzfr5ew9i6JKDdNZjyXfeliRf0m2OYV8
+ peY8cmDG97DxAbr28TMmm47/pQRRMpAmC8pQEdA7dTAxnuPOamJlaeKzmVOY/4uOYK98kbtTC
+ fSNFjqZkpldAuYbRSX2GtlWUteSqOI+HvJdkKwTEP2V6S9pFg1zuKNniesdggOMtpPIbF7olC
+ DIIOOMx1m0Zs6rUG8RxAsFksqSaP36h4FxRfT8ZLum1iyeFUlluqJbZCqoAQMCs6EINkM/Ebx
+ Cu6EKSdf4PfhsWOPVuZsGY3hbSQiAy+3b+l3WRYi4++mlPbDcNPrcTmrBShU79blwX47/OQ/X
+ fUwpax/Bd1Jt+39Q7yFtSsa61A5ZJU4HgIyNdRC8DBIcagAzVLdyK9Il2UryVGuZ0kPJ52LOt
+ 3N2viKZwqsKabUEI2mdS5gedXY6m4AORvWlHvFG4oLHajwX1qBZVTsYcHxjjDhxZQZuc9WhgO
+ IX2ga0mx2YIFdznnSnzA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/17, Stefan Beller wrote:
-> On Thu, Nov 17, 2016 at 10:46 AM, Brandon Williams <bmwill@google.com> wrote:
-> > v2 of this series is just a small cleanup of removing a nested sub-shell from a
-> > test and rebasing on the latest version of
-> > 'origin/hv/submodule-not-yet-pushed-fix'
-> >
-> > As stated above this series is based on 'origin/hv/submodule-not-yet-pushed-fix'
-> 
-> an interdiff to v1 would be nice :)
-> 
-> Now t5531 is inconsistent in style,
-> how much time would you estimate to add a commit to refactor
-> that test to follow the style with excessive use of -C for
-> all the other tests and avoiding subshells there, too?
 
-I didn't change to an excessive use of the -C option, but rather
-eliminated the nested-subshell and instead cd'ed to the required
-directories in the subshell.  Excessive use of -C seemed to greatly
-reduce the readability of the test (at least it did to me).
 
--- 
-Brandon Williams
+On 17/11/16 18:10, Junio C Hamano wrote:
+> Mike Rappazzo <rappazzo@gmail.com> writes:
+>
+>> (Please reply inline)
+> Indeed ;-)
+>
+>> On Wed, Nov 16, 2016 at 10:48 AM, Vanderhoof, Tzadik
+>> <tzadik.vanderhoof@optum360.com> wrote:
+>>> I am running:    git version 2.10.1.windows.1
+>>>
+>>> I typed: git merge -h
+>>>
+>>> and got:
+>>>
+>>> usage: git merge [<options>] [<commit>...]
+>>>     or: git merge [<options>] <msg> HEAD <commit>
+>>>     or: git merge --abort
+>>>
+>>>      -n                    do not show a diffstat at the end of the merge
+>>> ...
+>>>      --overwrite-ignore    update ignored files (default)
+>>>
+>>> Notice there is NO mention of the "--no-ff" option
+>> I understand.  On my system I can reproduce this by providing a bad
+>> argument to `git merge`.  This is the output from the arg setup.  For
+>> "boolean" arguments (like '--ff'), there is an automatic counter
+>> argument with "no-" in there ('--no-ff') to disable the option.  Maybe
+>> it would make sense to word the output to include both.
+> I think that was a deliberate design decision to avoid cluttering
+> the short help text with mention of both --option and --no-option.
+>
+> People interested may want to try the attached single-liner patch to
+> see how the output from _ALL_ commands that use parse-options API
+> looks when given "-h".  It could be that the result may not be too
+> bad.
+>
+> I suspect that we may discover that some options that should be
+> marked with NONEG are not marked along the way, which need to be
+> fixed.
+>
+>
+>   parse-options.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/parse-options.c b/parse-options.c
+> index 312a85dbde..348be6b240 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -626,7 +626,9 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
+>   		if (opts->long_name && opts->short_name)
+>   			pos += fprintf(outfile, ", ");
+>   		if (opts->long_name)
+> -			pos += fprintf(outfile, "--%s", opts->long_name);
+> +			pos += fprintf(outfile, "--%s%s",
+> +				       (opts->flags & PARSE_OPT_NONEG) ? "" : "[no-]",
+> +				       opts->long_name);
+>   		if (opts->type == OPTION_NUMBER)
+>   			pos += utf8_fprintf(outfile, _("-NUM"));
+>   
++1 from my side
+(As I once spend some time to find out that the "no--" is automatically available)
+
