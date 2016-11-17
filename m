@@ -7,76 +7,164 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FACE1FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 17:42:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 890331FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 18:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941614AbcKQRmB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 12:42:01 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:33741 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936557AbcKQRl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 12:41:58 -0500
-Received: by mail-qt0-f179.google.com with SMTP id p16so137293546qta.0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2016 09:41:58 -0800 (PST)
+        id S1754714AbcKQS3m (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 13:29:42 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:35075 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754446AbcKQS3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 13:29:41 -0500
+Received: by mail-qk0-f177.google.com with SMTP id n204so233300664qke.2
+        for <git@vger.kernel.org>; Thu, 17 Nov 2016 10:29:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=4YzvkPR03IhcGqwCRPL9saykK8TLRH9AcTj1vIfwlOE=;
-        b=YlQi8TMJ4p6UR3eSAdTN1ezXiBvqS1PUuUUWgL8E0miP5nnj9czE2wdcT25BCzLOsM
-         xhWCPd8WoSEJ46qkniiZS4mV0LjrhHJvJSCRLAFYm80dQ3Z21vyJ6Iiv3b7o853xu3AX
-         b75nvLtiVRPGEO+kNhchohUwXCHWNA++ACbVzFiuMW4rwajwwnpA5hgvRWyClMz26bVZ
-         lmqHuHB0y4PNAwQvAtF4rwenHN1ByVzcZCzEjq+Vm9YgFOAmFzkR8LrpetDM/spm55Tz
-         2JCjKNneETmJxxOaTWOHP5yEl3L1tvDlFE7LIuKb8AVOkNCDGAw0sC0ho6hmhoZ1VUSt
-         c2Vw==
+        bh=5OTj8tE1Qp0AZJQ0+hZrQRnQS+yYHrj/U69NWXIW9oU=;
+        b=dGIE60WnQSfWRu1lUU8Nb5q0SqrBVtPIPqSIXrSqkQTjpuoJdqJwipO8EPIfWPBRJt
+         CSrhzJeq9k8CQU2JVRW82khwQLgt7hvqn3BPQ7nNeEeU9yMHKWTkHUBNMhcl+Lwx4Dlx
+         y6reI54ugDXhnDApbylDopxA6czplLeRmHJZeRPQf0hbI7T9Pg/IjOYOSUecWHBU4vkn
+         2VLkJpOt9CSuNfaZsYX2eNS0uFKIXe1Z+6B41pBCo/Spv1cFt0C/nWMN+9Oon9LyOK6A
+         icuP62o0/9p07H48TeUJOwkL2NYtpkGxb+ilmyOo6QsXFheHHvBcVHjDuDj9jRacpJkP
+         VmUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=4YzvkPR03IhcGqwCRPL9saykK8TLRH9AcTj1vIfwlOE=;
-        b=QQssVbMg2kSqMybEJX2M5NFj45XpazvLMIIyBe1qtv7e5VhNGfFI8H6HDFquFYjmoK
-         /1rmKxO4lORd5yvAN+Hlr1ZFVka5/IBPRIq8zrwVWkzCTNWdvCZqboaRVTc86Vf33F9V
-         uG+FKrtAuuDCUguPqPZ5SjXL+whuElfUHCjmG3fKYnvPPycggTQQs6ohFjRGCyYftG8D
-         kkwcYa106UKMYCFQW2+EDCWuJWLLquddSD3ITWY5MkEg8Ay5wVYXAE/k4GjeoX4+ReuJ
-         oo8vohMVNzgSMXfZaQ34Jyg497EiiASpsAzogX+kuuX/8dfQ9itzTtv8Uv17Yt5gVLje
-         i5eQ==
-X-Gm-Message-State: AKaTC03w+bnuvbu0R4V1g5OnUc3yiQIKSKe/6ZhwaXFyHgdK+Z5Qhs+lKzSH+bbxBfRGgVy6E2UGL/XScG+fJ6Ls
-X-Received: by 10.200.53.9 with SMTP id y9mr2849086qtb.176.1479404517452; Thu,
- 17 Nov 2016 09:41:57 -0800 (PST)
+        bh=5OTj8tE1Qp0AZJQ0+hZrQRnQS+yYHrj/U69NWXIW9oU=;
+        b=R0AXu/MIaSUN/8Ew0PM3INpgtk9nFxg+OK4Vvry5b0qgTnIXkSPARiUJ2rgZb76XIn
+         sOyMiAjNw6o/4dBZhuJyOvM1BD9IG/2TraK6bo7tlDiL2bzG5dNGm3IW/s83NbpHMTZo
+         G1f4uQqdemQZann9P7z3CYMFO04N81Hrs81OAAic15dQlEK/lyGPaBH4Wc2ghVN0cQO8
+         Bxfe+wZ6idCYmTJ+Z8yQWNaAaxwiHXEka67WKEroutwVQ9Q81WLMWOl75l8sANq4lF1F
+         fYmi3XXCNBnybq0mFC6a3y44boIAjM6ROKh9xO22RbV/JfbHShnlfoheBF/kByLLNQLU
+         aCVQ==
+X-Gm-Message-State: AKaTC03DChj+oqHgVMQ4QBD/+8aQkfG7A5Wbc+C9wdtEQv8y89p0pMJHzTWi5oH9t/h5c6sg0h2NRlnRrrp1xztV
+X-Received: by 10.55.186.3 with SMTP id k3mr5576557qkf.47.1479407380119; Thu,
+ 17 Nov 2016 10:29:40 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 09:41:57 -0800 (PST)
-In-Reply-To: <cover.1479308877.git.hvoigt@hvoigt.net>
-References: <cover.1479308877.git.hvoigt@hvoigt.net>
+Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 10:29:39 -0800 (PST)
+In-Reply-To: <xmqqshqrp7i8.fsf@gitster.mtv.corp.google.com>
+References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-2-sbeller@google.com>
+ <xmqqshqrp7i8.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Nov 2016 09:41:57 -0800
-Message-ID: <CAGZ79kaSfPicBj9Re9+kLuF0Y+K4T8M-k+O8y1r9QNS-bX36vA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] Speedup finding of unpushed submodules
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Date:   Thu, 17 Nov 2016 10:29:39 -0800
+Message-ID: <CAGZ79kbVq0SrD8u+GrGAVYpvNeirDqnAU9jJCbSLoEvqSgB4yg@mail.gmail.com>
+Subject: Re: [PATCH 01/16] submodule.h: add extern keyword to functions, break
+ line before 80
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Martin Fick <mogulguy10@gmail.com>,
+        David Turner <David.Turner@twosigma.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2016 at 7:11 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> You can find the third iteration of this series here:
+On Wed, Nov 16, 2016 at 11:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> http://public-inbox.org/git/cover.1479221071.git.hvoigt@hvoigt.net/
+>> submodule.h: add extern keyword to functions, break line before 80
 >
-> All comments from the last iteration should be addressed.
+> The former is probably a good change for consistency.  As the latter
+> change breaks a workflow around quickly checking the output from
+> "git grep funcname \*.h", I am not sure if it is a good idea.
 >
-> Cheers Heiko
+> Especially things like this look like a usability regression:
+>
+> -void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+> +extern void handle_ignore_submodules_arg(struct diff_options *diffopt,
+> +                                        const char *);
+>
+> Perhaps the name "diffopt" can be dropped from there if we want it
+> to be shorter.
 
-Thanks for this series!
+Does the Git community have an opinion on dropping the name?
+Usually the meaning can be inferred from the type such as in this example.
+"diffopt" doesn't add information to my understanding when looking at
+the header file.
 
-I looked at the updated diff of hv/submodule-not-yet-pushed-fix
-(git diff a1a385d..250ab24) and the series looks good to me.
+One (cherry-picked) counter example is:
 
-Thanks,
-Stefan
+    /**
+    * Like `strbuf_getwholeline`, but operates on a file descriptor.
+    * It reads one character at a time, so it is very slow.  Do not
+    * use it unless you need the correct position in the file
+    * descriptor.
+    */
+    extern int strbuf_getwholeline_fd(struct strbuf *, int, int);
+
+where I'd need a bit of time to figure out which of the 2 ints is the
+fd and which is the line termination character.
+
+So I'd rather have a broken line than dropping names,
+as when grepping for names I'd look them up most of the time
+anyway (to e.g. read additional documentation or just reading the
+source)
+
+
+> Names in prototypes are valuable for parameters of
+> more generic types like "char *", especially when there are more
+> than one parameters of the same type, but in this case the typename
+> is specific enough for readers to tell what it is.
+
+Ok, that seems a reasonable to me.
+
+I'll squash the changes below, with an updated commit message:
+
+submodule.h: add extern keyword to functions
+
+As the upcoming series will add a lot of functions to the submodule
+header, let's first make the header consistent to the rest of the project
+by adding the extern keyword to functions.
+
+As per the CodingGuidelines we try to stay below 80 characters per line,
+so adapt all those functions to stay below 80 characters that are already
+using more than one line.  Those function using just one line are better
+kept in one line than breaking them up into multiple lines just for the
+goal of staying below the character limit as it makes grepping
+for functions easier if they are one liners.
+
+(diff on top of the patch under discussion)
+diff --git a/submodule.h b/submodule.h
+index afc58d0..2082847 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -33,17 +33,14 @@ extern int is_staging_gitmodules_ok(void);
+ extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+ extern int remove_path_from_gitmodules(const char *path);
+ extern void stage_updated_gitmodules(void);
+-extern void set_diffopt_flags_from_submodule_config(
+-               struct diff_options *diffopt,
++extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
+                const char *path);
+ extern int submodule_config(const char *var, const char *value, void *cb);
+ extern void gitmodules_config(void);
+ extern int parse_submodule_update_strategy(const char *value,
+                struct submodule_update_strategy *dst);
+-extern const char *submodule_strategy_to_string(
+-               const struct submodule_update_strategy *s);
+-extern void handle_ignore_submodules_arg(struct diff_options *diffopt,
+-                                        const char *);
++extern const char *submodule_strategy_to_string(const struct
+submodule_update_strategy *s);
++extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
+ extern void show_submodule_summary(FILE *f, const char *path,
+                const char *line_prefix,
+                struct object_id *one, struct object_id *two,
+@@ -72,8 +69,7 @@ extern int find_unpushed_submodules(unsigned char
+new_sha1[20],
+                                    struct string_list *needs_pushing);
+ extern int push_unpushed_submodules(unsigned char new_sha1[20],
+                                    const char *remotes_name);
+-extern void connect_work_tree_and_git_dir(const char *work_tree,
+-                                         const char *git_dir);
++extern void connect_work_tree_and_git_dir(const char *work_tree,
+const char *git_dir);
+ extern int parallel_submodules(void);
+
+ /*
