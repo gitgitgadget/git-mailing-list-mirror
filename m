@@ -2,108 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDBC72042F
-	for <e@80x24.org>; Thu, 17 Nov 2016 04:08:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFA452021E
+	for <e@80x24.org>; Thu, 17 Nov 2016 09:20:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753147AbcKQEFT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Nov 2016 23:05:19 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36320 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751688AbcKQEFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2016 23:05:18 -0500
-Received: by mail-it0-f68.google.com with SMTP id n68so12186356itn.3
-        for <git@vger.kernel.org>; Wed, 16 Nov 2016 20:05:17 -0800 (PST)
+        id S1752632AbcKQJUA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 04:20:00 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32936 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750790AbcKQJT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 04:19:57 -0500
+Received: by mail-wm0-f65.google.com with SMTP id u144so19206891wmu.0
+        for <git@vger.kernel.org>; Thu, 17 Nov 2016 01:19:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9jMfLGpMOUVylf6HetyD1WOkfgGn/vD3Wyossad96tI=;
-        b=CvhbQUXI3wgIi8Syoz5+l3KwEBDWLbSRZqb0ar/u+59XESH95It26y2Q53MaIpnqdG
-         KFdfMBvixsS3GEVtklg0e3kfB+8iS58aXlqWP0ZXR+h0tiLYIdC4LHQM93S9Yr1r9hZs
-         63pG47m6WRLPpLVCgmFCilodUjYdmYN24EuMfKulZ2Bb079i60cnI0Unqeuj2q4BOES4
-         8wwWHIu9rNdsgTE1UXZwbKuSyzmQxMRoFpfu8vEcqV49xy9ABm6uTmG+QCNkSbhK5bKF
-         pmsLOeRq5h3UH4RGRQUUSMOUgP2mxmostQGLWOXqLgetJTQlkcoIuu8nNTDjg5dbmSGr
-         UI8g==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=noEiRBJ3S7H40vSmc+OgLybm43oE4BNj7B0Ok7T3fvc=;
+        b=dtXIMzpydVCPub4fUKikN1Grq+qfOxPPoQHOHBbKktnBoC7sGJkWBFPY+FqMlOok+R
+         veCEZ5lZdLCW69enW+6vmhgFxjmTUxiXXWJn9nEfv6PzPHGm1e33aAqTDXmpnIBER9+P
+         2lbzEdFLbtDGQga2cCWAOf+nIeL+fFp9+DD2G2NQ/Q+TKtdTnWAcPtRjYhKbyvAk9fwo
+         McTzNdjVgz2Q4SXlLBssXxSD855Kn5ATg4Tm2Z1l/lEp7t4+dAd23CvJioE+EcP8DR7c
+         aFp1Olin1VpFsQBnPLB42i97NbdaT/JbVY7G5CY8vjsNN+lrg+6Zd1CtNO/Em+Ov90U0
+         3jAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9jMfLGpMOUVylf6HetyD1WOkfgGn/vD3Wyossad96tI=;
-        b=WlXGjHUeex6gut94+QJQwtY8Ya0uBdf6MD9uE50sOu1yBfd8joyP9xMfdmTFTJd2q6
-         cZXNrrbo3Tj2uCAbOCJKwS3Rn8pCJcOETfxP1AXoOWJdXz8VIObmkVfGNNVgwNglXcb2
-         qnuFZpcHKqc+p741uxEU/wA57aFuQHycwfVO14RiusJ40ps3pcOVgfEvfgG0S7WcH0Sm
-         2GflS0p+8AfaapvAvU4O9oLsewiHK8Y5Puv4dRl4wyxdHRr5b7nPtWC/nBz+JXeetAl1
-         OjAuNvENQhriMzJixp2kP32NTpE3M0yiXWbcg7v4gZZQadOeE4haseK6/+SUmgR5N/Y5
-         Gafg==
-X-Gm-Message-State: AKaTC01tfl5FW/2Sh++ARL+l1hnfRQqJnxPNN1r2wR+i6AMJNuUwRd58LDIIp3ms0I5nKedjtus+N9hp9C7mQg==
-X-Received: by 10.107.19.104 with SMTP id b101mr1210738ioj.150.1479355517228;
- Wed, 16 Nov 2016 20:05:17 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.36.130.65 with HTTP; Wed, 16 Nov 2016 20:04:56 -0800 (PST)
-From:   Jonas Fonseca <jonas.fonseca@gmail.com>
-Date:   Wed, 16 Nov 2016 23:04:56 -0500
-Message-ID: <CAFuPQ1+NsEomHsuHvU7PLPPNrpfpfGEPmQ0r=ufovz_ztZ+EnA@mail.gmail.com>
-Subject: [ANNOUNCE] tig-2.2.1
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=noEiRBJ3S7H40vSmc+OgLybm43oE4BNj7B0Ok7T3fvc=;
+        b=lhgnG3gSNcyXMhVo1ekxmDqCOvs+JloUCyl13gbqYzvjyKQG6haKZZQVKqKpD83oMF
+         qSNOmyaFkyEyhriZrSLhg3gUrCB8gTSX3iZJgZtfEFfG5ikoB+h6neOAJuFY0+mM5WJf
+         14JTVOedxsObx0JVcahifoksJ/QUIZ7qi9yIsxcjZHRe76o/F7OLqkiOhqO6eu/VdVeD
+         h/Pc+9S0jURtMJgB2kOgSAsggchfUcT14tTfmtlNyOxtk0zg+VJqiqT1RK6n5Fm9r5k+
+         EoORi37W2avxiWjCmhrARmK/jRujVsI5ST1+Aqq1SvCX9xQLkv4Hdxu2bn/EtVWDKUkN
+         NlPw==
+X-Gm-Message-State: AKaTC02EkdBeoZu6YJSAWN5Yj3yON9VOBbx9aiGX/291uOaE/dnFiI52BkccgPp5oE/xTQ==
+X-Received: by 10.28.144.70 with SMTP id s67mr2716856wmd.138.1479374396171;
+        Thu, 17 Nov 2016 01:19:56 -0800 (PST)
+Received: from [10.146.248.61] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w18sm2669156wme.9.2016.11.17.01.19.55
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 17 Nov 2016 01:19:55 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: RFC: Enable delayed responses to Git clean/smudge filter requests
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqq37irouni.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 17 Nov 2016 10:19:54 +0100
+Cc:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Eric Wong <e@80x24.org>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EBC181CD-611D-4FD6-9B84-F0AE9A970745@gmail.com>
+References: <D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com> <20161115010356.GA29602@starla> <5BC69AC1-5499-4F73-816A-D8786106D796@gmail.com> <xmqqvavotych.fsf@gitster.mtv.corp.google.com> <17709AFF-3C2D-4EC0-97DC-BD750F514D0B@gmail.com> <5eb682e8-13cb-67f2-a8a9-ec1fa1d139c6@gmail.com> <xmqq37irouni.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-A new minor version of tig is available which adds support for
-diff-highlight (see instructions below) and navigation between merge
-commits as well as several keybinding tweaks.
+> On 17 Nov 2016, at 00:46, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>=20
+>>> I intend to implement this feature only for the new long running =
+filter
+>>> process protocol. OK with you?
+>>=20
+>> If I remember and understand it correctly, current version of long
+>> running process protocol processes files sequentially, one by one:
+>> git sends file to filter wholly, and receives response wholly.
+>>=20
+>> In the single-file filter case, git calls filter process as async
+>> task, in a separate thread, so that one thread feeds the filter,
+>> and main thread (I think?) reads from it, to avoid deadlocks.
+>>=20
+>> Couldn't something like this be done for long running filter process,
+>> via protocol extension?
+>=20
+> My reading of the message you are responding to is that Lars means
+> doing so by "implement this feature".  Instead of returning the
+> filtered bytes, a new protocol lets his filter to say "No result yet
+> for you to process, ask me later".
 
-Tarballs should now be downloaded from GitHub. Either go to
-https://github.com/jonas/tig/releases or use the following pattern:
+Correct!
 
-    https://github.com/jonas/tig/releases/download/tig-VERSION/tig-VERSION.tar.gz
-
-MD5 checksums can be found at:
-
-    https://github.com/jonas/tig/releases/download/tig-VERSION/tig-VERSION.tar.gz.md5
-
-Similarly, the home page is now also on GitHub at
-https://jonas.github.io/tig/. A big thanks to Simon L. B. Nielsen for
-generously hosting Tig on nitro.dk!
-
-Release notes
--------------
-Improvements:
-
- - Support Git's 'diff-highlight' program when `diff-highlight` is set
-   to either true or the path of the script to use for post-processing.
- - Add navigation between merge commits. (GH #525)
- - Add 'A' as a binding to apply a stash without dropping it.
- - Bind 'Ctrl-D' and 'Ctrl-U' to half-page movements by default.
- - manual: Mention how to change default Up/Down behavior in diff view.
-
-Bug fixes
-
- - Reorganize checking of libraries for termcap functions.
- - Fix `:goto <id>` error message.
-
-Change summary
---------------
-The short diffstat and log summary for changes made in this release.
-
- 118 files changed, 3765 insertions(+), 3284 deletions(-)
-
-    22  Jonas Fonseca
-     1  Frank Fesevur
-     1  Jelte Fennema
-     1  Jeremy Lin
-     1  Parker Coates
-     1  Philipp Gesang
-     1  Ramsay Jones
-     1  David Lin
-     1  lightside
-
--- 
-Jonas Fonseca
