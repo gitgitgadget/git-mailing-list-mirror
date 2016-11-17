@@ -2,121 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1DFB1FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 22:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9D01FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 23:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752270AbcKQWmO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 17:42:14 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:33711 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752212AbcKQWmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 17:42:13 -0500
-Received: by mail-qk0-f178.google.com with SMTP id x190so241242789qkb.0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2016 14:42:13 -0800 (PST)
+        id S1752902AbcKQXe2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 18:34:28 -0500
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:35730 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751821AbcKQXe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 18:34:27 -0500
+Received: by mail-pf0-f175.google.com with SMTP id i88so51026584pfk.2
+        for <git@vger.kernel.org>; Thu, 17 Nov 2016 15:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lgY+bbm9h9EjSP+cVGVIVrC7xh2KgZnt7lmYayTWpsE=;
-        b=cYRQADzHPRuriPrnr43akwMRm6kxyrTomi7D7EOhTwgNWFTZwbInxpNgV+MUPJG6yB
-         n9+iREC9hgu3dSJUjnYhK3Y1I21+UtbcDpuObrNY0PDltXg02KYH11Wt+k/hCJaxjC2A
-         5q/Hc7dPQu0FzE0H6bL4+TQw4lr0osBEt4DVjr5UdCYb5uW8QhQn9mZV+89QO5wk/5vL
-         jBLziixsZOo5kD6VwMwmL+i8WCa+oY54EgxI3M0zNoPaW1W8sLMWr1eBC4OkDoTym/Ku
-         O6Ptl+tC/Ob9OVm/uf9FFeWE30yVdkUHI7tXpSTtXM3QmvwACijYnV/AaKC0xhR47a5F
-         R3Ew==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=96vPYcFkUy7g8M3Iz2VNl5Rz9qgJQUtOQjBQNFk5d4c=;
+        b=JNgKtTS6btbuomhIlcsYHNC6gMdyW75sNTo4lFIRz0aPJlauEoFNwZoniflLhyrUf6
+         QOBWVxXxbFvms2iSLvFV9ekBA64XTrqTcnTR4aCuc+DDJ08nHLEUsZbYK/Jq1F9JusEX
+         hh3UN8FFbDv5NyC9fFkpFUY77O6/51QdHKGj7jOJc1Qrmduy+wZ2fVXBa+r+E+ew0F6r
+         pDGqUUrPClK5OcplEaWihy6R2FpusU8Svothyf0F+Y0GbLY35Ssat7IlTs+Bpa1IUxOE
+         m68rD8Izxvoo5QhURV6PY3SNnGXbZn4X83Hf0UzuTcRTaf3jQMEOD/Sy3JOkNhVxhrmQ
+         A6Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lgY+bbm9h9EjSP+cVGVIVrC7xh2KgZnt7lmYayTWpsE=;
-        b=ANQD9qDk24AGtDDTceC6x2v3JFFcGpkQjwDO0JqAu5p2O9VMyH0n6w9XhcOjnrTG4d
-         T5BfKw9JeO+mhDFqCAup6P3+KxdbD97FH3XuFszDAycpuIJHzx07XJYabgQHA/FBx9Kp
-         aqA+p2pVXNrL7qJh7qoCP9pjqv1+JhSyvc3h2hiOK1L0kTQxA4l8G5YZz8+RYUtHi/1O
-         CsSTMp/5gZIPa/XK+WS6UTaI3DrveUL2q7JELhi96BisdUclVy81NkbJRiK2lZKjoepE
-         wrK1/UYS+6xjjnRWVeYgMQTNqJXP9EQc11aAW07sGi5w/LQq1J+4pJDHtOXkB+iLkseI
-         7wfA==
-X-Gm-Message-State: AKaTC01UDukYqT5LIGVSie/iYOh1BTwRxXv/P2RacikyJFdx8vOgR/3Tc73R7AIkPsPzdPAqni3R2kqfwtMgoOvb
-X-Received: by 10.55.186.3 with SMTP id k3mr7292499qkf.47.1479422532274; Thu,
- 17 Nov 2016 14:42:12 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 14:42:11 -0800 (PST)
-In-Reply-To: <20161117222926.GN66382@google.com>
-References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-9-sbeller@google.com>
- <20161115234403.GE66382@google.com> <CAGZ79kbCqLsRzrsX29uM7pobs_11UZtFOQWP9RO8ptS5PyDfmw@mail.gmail.com>
- <20161117222926.GN66382@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Nov 2016 14:42:11 -0800
-Message-ID: <CAGZ79ka0-JFvogHRoTA4ioMK86zD=zkgEfBb-gpU8tbOjwEoFA@mail.gmail.com>
-Subject: Re: [PATCH 08/16] update submodules: add depopulate_submodule
-To:     Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=96vPYcFkUy7g8M3Iz2VNl5Rz9qgJQUtOQjBQNFk5d4c=;
+        b=W0qBPBnP1IoyFdrwPXgp5YLxrEdR1orJ4vI+Yn+jZh9K8vDtspV27/heDHpxW9EkOj
+         g3uT6XLWcxx9pacs80x1fLexB9gU9EX+XSkdKjKWUdaUs9t5pmYdeWyqYBeI2IoaU4hF
+         T1pd5GLTL0jvNAhTn8FVW+k/bhNakFFJHmOCs8stDN3aaQxyI+pjYargagHTXPxRWRDH
+         flk9Sx1iRP4MedhzHF3Wm2LifF8I72IbDp4NjBR/MLLP1SGs8ILy9uSewNqySWfQbB/F
+         +1YnfGjLLFQoLhuGP8SJEZxnahk8AvqeqTEHUkS+cCIkH2liMRzxqk2ernr14e0dsQ19
+         BYlw==
+X-Gm-Message-State: ABUngvd4Yzw9zYm53giOFHeORlHQPMO4AtsuuErlGM/BkFIFj3+PsvvoqVGXyfogg7Bjd9W+
+X-Received: by 10.99.156.2 with SMTP id f2mr12643119pge.20.1479425666110;
+        Thu, 17 Nov 2016 15:34:26 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:718b:9d6c:8235:ef51])
+        by smtp.gmail.com with ESMTPSA id l7sm10928732pfg.35.2016.11.17.15.34.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 17 Nov 2016 15:34:25 -0800 (PST)
+Date:   Thu, 17 Nov 2016 15:34:23 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Martin Fick <mogulguy10@gmail.com>,
-        David Turner <David.Turner@twosigma.com>
-Content-Type: text/plain; charset=UTF-8
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/6] grep: enable recurse-submodules to work on <tree>
+ objects
+Message-ID: <20161117233423.GO66382@google.com>
+References: <1477953496-103596-1-git-send-email-bmwill@google.com>
+ <1478908273-190166-1-git-send-email-bmwill@google.com>
+ <1478908273-190166-6-git-send-email-bmwill@google.com>
+ <CAGZ79kbqZs+wQYUBnvdw1YhC4dtHeodJWdved+it2Zg076vyOA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbqZs+wQYUBnvdw1YhC4dtHeodJWdved+it2Zg076vyOA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 17, 2016 at 2:29 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 11/17, Stefan Beller wrote:
->> Well first you get the warning:
->>
->>     "cannot remove submodule '%s' because it (or one of "
->>     "its nested submodules) uses a .git directory"),
->>
->> and in case a d/f/ conflict arises in a later stage (e.g. when the submodule
->> is replaced by a file or symlink), you get another related error with
->> less helpful description how to debug it.
->
-> Maybe a warning isn't the right thing?  Shouldn't the checkout fail if
-> there are any issues?  This would force the user to stash/commit their
-> changes and then retry.
+On 11/15, Stefan Beller wrote:
+> On Fri, Nov 11, 2016 at 3:51 PM, Brandon Williams <bmwill@google.com> wrote:
+> > +       /*
+> > +        * Add basename of parent project
+> > +        * When performing grep on a <tree> object the filename is prefixed
+> > +        * with the object's name: '<tree-name>:filename'.
+> 
+> This comment is hard to read as it's unclear what the <angle brackets> mean.
+> (Are the supposed to indicate a variable? If so why is file name not marked up?)
 
-Well if the path is not reused, e.g. you just delete a submodule in a commit
-without anything else, you could proceed and have the submodule laying
-around dirty?
+Yeah you're right, the angle brackets don't really add anything to the
+comment.  I'll drop them.
 
->
->> >  All other submodules will actually be removed? Couldn't
->> > you end up in an undesirable state with a checkout effecting one
->> > submodule but not another?
->>
->> Yes you could. Maybe it's time to add
->> "git submodule intern-git-dir", which can be given as a helpful hint
->> or even run here first.
->
-> That would be a good idea, does that functionality already exist in one
-> form or another?  I'm assuming it must since git update does just that
-> when cloning a submodule.
+> >  In order to
+> > +        * provide uniformity of output we want to pass the name of the
+> > +        * parent project's object name to the submodule so the submodule can
+> > +        * prefix its output with the parent's name and not its own SHA1.
+> > +        */
+> > +       if (end_of_base)
+> > +               argv_array_pushf(&cp.args, "--parent-basename=%.*s",
+> > +                                (int) (end_of_base - gs->name),
+> > +                                gs->name);
+> 
+> Do we pass this only with the tree-ish?
+> What if we are grepping the working tree and the file name contains a colon?
 
-No it doesn't (it is roughly these three steps):
+Actually you're right, this would only happen if we are passing a
+tree-ish, which has a tree-name prefixed to the filename.  I'll add that
+as an additional check to ensure that this handles file names with a
+colon correctly....though why you have a colon in a filename is beyond
+me :P
 
-    mv ${SUBMODULE_PATH}/.git ${GIT_DIR}/modules/${SUBMODULE_NAME}
-    git config -f ${GIT_DIR}/modules/${SUBMODULE_NAME}/config
-core.worktree ${SUBMODULE_PATH}
-    echo "gitdir: ${GIT_DIR}/modules/${SUBMODULE_NAME}" >
-${SUBMODULE_PATH}/.git
+> > +test_expect_success 'grep tree HEAD^' '
+> > +       cat >expect <<-\EOF &&
+> > +       HEAD^:a:foobar
+> > +       HEAD^:b/b:bar
+> > +       HEAD^:submodule/a:foobar
+> > +       EOF
+> > +
+> > +       git grep -e "bar" --recurse-submodules HEAD^ > actual &&
+> > +       test_cmp expect actual
+> > +'
+> > +
+> > +test_expect_success 'grep tree HEAD^^' '
+> > +       cat >expect <<-\EOF &&
+> > +       HEAD^^:a:foobar
+> > +       HEAD^^:b/b:bar
+> > +       EOF
+> > +
+> > +       git grep -e "bar" --recurse-submodules HEAD^^ > actual &&
+> > +       test_cmp expect actual
+> > +'
+> > +
+> > +test_expect_success 'grep tree and pathspecs' '
+> > +       cat >expect <<-\EOF &&
+> > +       HEAD:submodule/a:foobar
+> > +       HEAD:submodule/sub/a:foobar
+> > +       EOF
+> > +
+> > +       git grep -e "bar" --recurse-submodules HEAD -- submodule > actual &&
+> > +       test_cmp expect actual
+> > +'
+> 
+> Mind to add tests for
+> * recursive submodules (say 2 levels), preferrably not having the
+>   gitlink at the root each, i.e. root has a sub1 at path subs/sub1 and
+> sub1 has a sub2
+>   at path subs/sub2, such that recursing would produce a path like
+>   HEAD:subs/sub1/subs/sub2/dir/file ?
+> * file names with a colon in it
+> * instead of just HEAD referencing trees, maybe a sha1 referenced test as well
+>   (though it is not immediately clear what the benefit would be)
+> * what if the submodule doesn't have the commit referenced in the given sha1
 
-The last 2 steps are done via
+I'll add more tests too!
 
-    void connect_work_tree_and_git_dir(const char *work_tree, const
-char *git_dir);
-
-in submodule.{c,h}
-
-However we'd need to make sure the first step is performed correctly. (and make
-damn sure we don't loose that git dir), so I think rename(2) does the
-correct thing
-for directories, except when these two locations are on a different mount point.
-
-I think I'll just write this functionality in C and optionally expose
-it via the submodule--helper,
-such that the user facing git-submodule.sh only has to call that helper.
+-- 
+Brandon Williams
