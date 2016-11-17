@@ -2,110 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDE6C1FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 22:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CFC51FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 22:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752376AbcKQWFz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 17:05:55 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64337 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752355AbcKQWFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 17:05:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BBBE51512;
-        Thu, 17 Nov 2016 17:05:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xf2D5UL2TlnFNg20BKQmlOL7U80=; b=eJdNmm
-        zontfcZVFMbLZpNvjFcq+AE2i1LQqxsppL3hAphgFbW+mA/U+UgXtBDiNXTeOWBD
-        TG4noh9dWDBQu+65we1pKAIHVPYztsyedJVxTrcpb5WIJjRdAt9zwBOL9ABr7N+5
-        U884m8cyMZfTJRpLp9Qm9MdKCIOOpRnPfPNcM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I5XqJEHgcjZYzwqTYDeqbXJFe966e5xq
-        0fXODYJ1vrDIG3qyRTOekBIgSfq6noAxtRfU2LROU7+KjIA7pCiDAOX6g//3DU2G
-        wkH7XU11EhNdbvTD5ghzg5Eh8slQtHnNRDciUH06tVjVqkg1EdjOwoqXpMfQWlyd
-        2er1yRAQz6M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21B6F51511;
-        Thu, 17 Nov 2016 17:05:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 846B351510;
-        Thu, 17 Nov 2016 17:05:52 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     git@vger.kernel.org, jacob.keller@gmail.com
-Subject: Re: [PATCH v7 16/17] branch: use ref-filter printing APIs
-References: <20161108201211.25213-1-Karthik.188@gmail.com>
-        <20161108201211.25213-17-Karthik.188@gmail.com>
-        <xmqqinrlopge.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 17 Nov 2016 14:05:51 -0800
-In-Reply-To: <xmqqinrlopge.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 17 Nov 2016 11:50:57 -0800")
-Message-ID: <xmqqa8cxoj7k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752541AbcKQWNG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 17:13:06 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35319 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751716AbcKQWNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 17:13:04 -0500
+Received: by mail-pf0-f177.google.com with SMTP id i88so50761397pfk.2
+        for <git@vger.kernel.org>; Thu, 17 Nov 2016 14:13:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=X+eBVbzMd+dt+fPYm5weuSETOv/yfO1t/xyAgURZGig=;
+        b=ECUwsQjbcTuS+JOjTuUetH9JqZNksLSsU7P8BtP0vg+g1zsYVhbsj8cyttupIdwZ7Y
+         FjkW9AKFPwTq5bkeBqK/cYA2UAN7fynUTac4Va96ntha9vC0rqwuFj7kMiYR9W8HydCt
+         lc/RH+avUyOCofFT5ETy8Au64ABtfUjfPN94oDbo70Kh54d5wly24u2AmbFuW+Eev575
+         kUiwwZyuCGiF1KV8irCcKVSvK6TL4rfRwghSlHumdtWGpityLEqZsUnP9kK29XG1Z54Z
+         rbJRHxLUAsfKn7cAhnReCieS+6adGmIBNHcjqyk8MwhGe44xXHG6/HMtWZ+5wwye2d75
+         5WAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=X+eBVbzMd+dt+fPYm5weuSETOv/yfO1t/xyAgURZGig=;
+        b=mIXjMp2so2dUgaKP+AwXqcGS6HQ+Eweh96MJfJeiAqdG1SMETpC8y2FQn5cUeb+049
+         X7Grg/nn7MVxeEBANquryMcLjB1Y7GRKXmSeT9JzhVoZFuYYB6BjGrCUx178O65tcnNG
+         kMOK360XcMyU2stvCqpyCzAhij/kCu8j+iehNoi85brrtW/sIXzbTrd5zxU4UKCD5tJ4
+         SE511daNgqJnt77YkJapAAfv/SmMTFzOq1rYjgPfuU9impS4KTy+6gNRorGHVqQYEWI3
+         ddLxXjBOVJv8dNH637K7Bc3subRaAig07MundFOkSeD6cH/GGRAxbL6fAQsECDf9DVwx
+         nTEA==
+X-Gm-Message-State: ABUngveewkMXHvKvMYIavr8GS58qstBoyQF8WSzaWSu9XWvV6o9JWPsdQMYIQzrvGsQhJNlH
+X-Received: by 10.98.133.207 with SMTP id m76mr7655794pfk.102.1479420782571;
+        Thu, 17 Nov 2016 14:13:02 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:718b:9d6c:8235:ef51])
+        by smtp.gmail.com with ESMTPSA id q26sm10633206pfk.94.2016.11.17.14.13.01
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 17 Nov 2016 14:13:01 -0800 (PST)
+Date:   Thu, 17 Nov 2016 14:13:00 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 4/6] grep: optionally recurse into submodules
+Message-ID: <20161117221300.GM66382@google.com>
+References: <1477953496-103596-1-git-send-email-bmwill@google.com>
+ <1478908273-190166-1-git-send-email-bmwill@google.com>
+ <1478908273-190166-5-git-send-email-bmwill@google.com>
+ <CAGZ79kZiAWTySJrSvav6Yuj8v9PF0JzaSJHFTOdUo6eYFTS1+A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0161B086-AD12-11E6-9BC3-987C12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZiAWTySJrSvav6Yuj8v9PF0JzaSJHFTOdUo6eYFTS1+A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 11/15, Stefan Beller wrote:
+> > +       /*
+> > +        * Limit number of threads for child process to use.
+> > +        * This is to prevent potential fork-bomb behavior of git-grep as each
+> > +        * submodule process has its own thread pool.
+> > +        */
+> > +       if (num_threads)
+> > +               argv_array_pushf(&submodule_options, "--threads=%d",
+> > +                                (num_threads + 1) / 2);
+> 
+> I think you would want to pass --threads=%d unconditionally,
+> as it also serves as a weak defusal for fork bombs. Is it possible to come here
+> with num_threads=0? (i.e. what happens if the user doesn't specify the number
+> of threads or such, do we fall back to some default or is it just 0?)
+> 
+> I have seen some other places that check for num_threads unequal to 0,
+> as e.g. no mutex needs to be locked then (assuming we don't have any
+> thread but grep within the main process), but as you intend to use this also
+> as a helper to not blow up the number of threads recursively, we'd need to
+> pass at a number != 0 here?
 
-> One worry that I have is if the strings embedded in this function to
-> the final format are safe.  As far as I can tell, the pieces of
-> strings that are literally inserted into the resulting format string
-> by this function are maxwidth, remote_prefix, and return values from
-> branch_get_color() calls.
->
-> The maxwidth is inserted via "%d" and made into decimal constant,
-> and there is no risk for it being in the resulting format.  Are
-> the return values of branch_get_color() calls safe?  I do not think
-> they can have '%' in them, but if they do, they need to be quoted.
-> The same worry exists for remote_prefix.  Currently it can either be
-> an empty string or "remotes/", and is safe to be embedded in a
-> format string.
+The option parsing logic in cmd_grep handles the cases where num_threads
+is some odd value (and fails if <0).  In the case where it is 0, it will
+default to 8 under certain circumstances.  I figured I would just let
+that logic handle the cases where num_theads ends up being 0 instead of
+explicitly passing threads=1.  You can't pass threads=0 in some cases
+due to the default "oh look threads==0, looks like we should use 8!"
+case.
 
-In case it was not clear, in short, I do not think there is anything
-broken in the code, but it is a longer-term improvement to introduce
-a helper that takes a string and returns a version of the string
-that is safely quoted to be used in the for-each-ref format string
-use it like so:
+> 
+> > +
+> > +       git grep -e "bar" --and -e "foo" --recurse-submodules > actual &&
+> 
+> nit here and in the tests below:
+> We prefer to have no white space between > and the file piped to.
 
-    strbuf_addf(&remote,
-		"%s"
-		"%%(align:%d,left)%s%%(refname:strip=2)%%(end)"
-		...
-                "%%(else) %%(objectname:short=7) %%(contents:subject)%%(end)",
-	        quote_literal_for_format(branch_get_color(BRANCH_COLOR_REMOTE)),
-		...);
+I'll fix that up everywhere.
 
-and the implementation of the helper may look like:
-
-    const char *quote_literal_for_format(const char *s)
-    {
-        static strbuf buf = STRBUF_INIT;
-
-        strbuf_reset(&buf);
-        while (*s) {
-            const char *ep = strchrnul(s, '%');
-            if (s < ep)
-                strbuf_add(&buf, s, ep - s);
-            if (*ep == '%') {
-                strbuf_addstr(&buf, "%%");
-                s = ep + 1;
-            } else {
-                s = ep;
-            }
-        }
-        return buf.buf;
-    }
-
+-- 
+Brandon Williams
