@@ -7,84 +7,72 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07C11FF40
-	for <e@80x24.org>; Thu, 17 Nov 2016 20:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D3A71FF40
+	for <e@80x24.org>; Thu, 17 Nov 2016 20:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751677AbcKQUDn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 15:03:43 -0500
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:35579 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751143AbcKQUDm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 15:03:42 -0500
-Received: by mail-qt0-f181.google.com with SMTP id c47so142438698qtc.2
-        for <git@vger.kernel.org>; Thu, 17 Nov 2016 12:03:42 -0800 (PST)
+        id S1752194AbcKQUIP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 15:08:15 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:33943 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752106AbcKQUIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 15:08:15 -0500
+Received: by mail-qk0-f174.google.com with SMTP id q130so236910538qke.1
+        for <git@vger.kernel.org>; Thu, 17 Nov 2016 12:08:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=6v6hEYE5Zu3JAYC2KtMMRru/S6NuS3yIY8qaWJwPkwI=;
-        b=Jbz+iwH7AxOjsAO7knX7xDtcfZ4yNZp0TUUHAFhTC9EjygsOA+J4snTGYDYeOuV9aR
-         scwhXDPXZhGkuzgKDD0tB2qZdlCsm6M7PXdPoKukE4+ihX8paGC1VuoxkgQywPmK71dV
-         2HzfJD+RXop8oFLleYz3wCqO2qPIFG6814ob2WsjqDCA7qso41eqP4Ic946h9Y82DucH
-         AjCrtLZKu29pbhPuYxTFhR6d6ljJTAzJnwbyBxzsKzVi6D1sLcPFnlKCnP8qTIzLyEZS
-         JeWZSfZHccObnFxihb0ElZQqdaEcdAT1zBK1wo01WvW5vndOFLzTFrvsS0vWLLsW/91R
-         ovOw==
+        bh=F46Gaa92ndO5DUnyivYUCqAfOqO+m2COuW2noIYmyhA=;
+        b=VW9wn5Rpe9TVbesiMGcOT1AO3wYwGIBpPoZG0ujUjuuBZKQLdTM/tZj3bPLQEv8BwT
+         LmB9v6AEwra7sZcpyP2mqSk1W2+s+A9/rpwk79/FqDLzRROL72+wK/d17uEUM6pgRSAQ
+         vgdzS7SmvZhI0zoNwsNaf8e4sv4lGC/+MtLoT7LpstY8dc3qe9YBohBDu96RksEtdaMs
+         JRBNAHoWffydTEyotTY5eWlZ+bZ2KXl7Iaghw2pMx6lYoTn5pi3Utq8sWyVyEVIAOEr+
+         mx4t/yY4xFtivrwFJ84xqHbcqZf/uzite+JwgX1hZD3FWQwUpfNVN8FGln31lyrNC6Pr
+         U7nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=6v6hEYE5Zu3JAYC2KtMMRru/S6NuS3yIY8qaWJwPkwI=;
-        b=Qs/DitCoR4MvD1up3lhPx5mR24HXg7kDMpQZuTrSpV6GNIwZ+/dtuLEI08KHl9n8FM
-         0UmRcr2ph+UEHCQvfgGxTxdpgv9VNvo5+HJ42kjIg5bLK3AtY1Qx02fyzDxYg4ZDJa6u
-         EVMImgjYI0iaImALnNP6CIFUAqz7J1UvqWoQ4Fp6KzCPnFB39cGYq/cExrg6YlxJ2+hP
-         b+WP41lBKrsRuzzR6iyOEt+aW90Cs24bsjX11i+W8/frNd3eTbgDVmHn+7O5keOljarA
-         eKaxsf0tPDH7OhDsHkdhYI1XvgZt2vdYjxLuU+ETnDFRzvRkmWjYMVSuUSfmePQewxM/
-         F+bA==
-X-Gm-Message-State: AKaTC02WWwfKyleXqpoieLQcJ/RWLpVheDAJNBdSJzI/XHF2kMCQIb0Hu0Scap16dBY+C5jrXy+2cNOYJ+VpWSVt
-X-Received: by 10.200.37.221 with SMTP id f29mr3872020qtf.123.1479413021514;
- Thu, 17 Nov 2016 12:03:41 -0800 (PST)
+        bh=F46Gaa92ndO5DUnyivYUCqAfOqO+m2COuW2noIYmyhA=;
+        b=FPror+qBXAhmqDXi8pDMKpYAC5yfmLjqfGtlZE8ON3VCnQpzJ9YhQa2uOf3Yja7V9w
+         MPECtLIailOUVQ+EaOTCpjno8/2bSVpBYnEFI4l8SPXMy+02RJEAztbuO6k2TQurBiM4
+         CGFRgdl79+I3ALS1fgGBJ9W10Teh7XweG+xcqbMBS0cYyc8o9NYJBUm0LBxXIeawUxoV
+         VDFkjNwFsGDFxNiaLq10sKXE1H0ldIbaj07Nwd0SmU2QXdJdMeQzjWiBCJ4kUKZiE0JT
+         EG1DfO2S+jn9Wow5rq4xp4fMAzfek7JOwrC5ccTz+hE7KjzJNiBCUTRkJmKh35NFOlbT
+         y58A==
+X-Gm-Message-State: AKaTC00W8diWG1hreH7KF4O13W7mZzJ14fI1WRgcfPphEPk/CniFdkApG9kfHw/5nRuw+mwG0Zu9c22Qfk0MRBxF
+X-Received: by 10.55.191.134 with SMTP id p128mr5475485qkf.58.1479413293915;
+ Thu, 17 Nov 2016 12:08:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 12:03:41 -0800 (PST)
-In-Reply-To: <e748abfad8b04a8eaaa10797d9324891@exmbdft7.ad.twosigma.com>
+Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 12:08:12 -0800 (PST)
+In-Reply-To: <20161117105715.GC39230@book.hvoigt.net>
 References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-8-sbeller@google.com>
- <e748abfad8b04a8eaaa10797d9324891@exmbdft7.ad.twosigma.com>
+ <20161117105715.GC39230@book.hvoigt.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Nov 2016 12:03:41 -0800
-Message-ID: <CAGZ79kbs1ymw7mE6ctGt2_wgHoFSYMbuhcFK_3vGR9tYZzJxOg@mail.gmail.com>
+Date:   Thu, 17 Nov 2016 12:08:12 -0800
+Message-ID: <CAGZ79kYEdA6crWTf3ZW2EthenZA4=PeWd4HfKnCAKxgZoz54qg@mail.gmail.com>
 Subject: Re: [PATCH 07/16] update submodules: introduce submodule_is_interesting
-To:     David Turner <David.Turner@twosigma.com>
+To:     Heiko Voigt <hvoigt@hvoigt.net>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "bmwill@google.com" <bmwill@google.com>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "jrnieder@gmail.com" <jrnieder@gmail.com>,
-        "mogulguy10@gmail.com" <mogulguy10@gmail.com>
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Martin Fick <mogulguy10@gmail.com>,
+        David Turner <David.Turner@twosigma.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 15, 2016 at 4:14 PM, David Turner <David.Turner@twosigma.com> wrote:
+On Thu, Nov 17, 2016 at 2:57 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
 
->> +int submodule_is_interesting(const char *path, const unsigned char
->> +*sha1) {
->
-> This is apparently only ever (in this series) called with null_sha1.  So either this arg is unnecessary, or there are bugs elsewhere in the code.
+> It seems that you are only looking at the submodule config from a
+> commit. Should a user be able to override this with local configuration?
+> Haven't looked further in the patchseries so maybe that is somewhere
+> else?
 
-I was torn when writing the series, as I initially had submodule_is_interesting
-with no sha1 argument and it turned out to be buggy in my first
-initial implementation,
-which lead me to thinking the sha1 actually matters.
+It turns out that in later patches we pass in null_sha1 only, which is
+looking at the config and possible overrides.
 
-The line of thinking was similar to loading the submodules from the
-submodule-config cache as that also has different values for different sha1s,
-e.g. a submodule is only interesting if submodule.<name>.update != none,
-which can have changed with different sha1s.
-
-I refactored the series since then to call the _is_initeresting method
-at different times
-(before and after the actual checkout), such that we implicitly have
-the correct sha1
-while calling it.
-
-So I would argue the sha1 argument is not needed. I'll remove it.
+I'll refactor to take no sha1 argument and use null_sha1 here directly.
