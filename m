@@ -2,75 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 189651FE4E
-	for <e@80x24.org>; Fri, 18 Nov 2016 18:25:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 170591FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 18:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752461AbcKRSZd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 13:25:33 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:35117 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752336AbcKRSZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 13:25:33 -0500
-Received: by mail-qt0-f179.google.com with SMTP id c47so162345699qtc.2
-        for <git@vger.kernel.org>; Fri, 18 Nov 2016 10:25:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=O3HriybSrCo6mJB50t486qzwfPTNm5L6TRhZqwlBR1g=;
-        b=hPBPFYvnF0gELJt5PeQCH5jgjxoiecf0OjtR/P5ybWlU8AAlQVu9H67fk+ZNwzC49Y
-         SdiM5zIbr3SVBRjJYAO6Z9y6FBBDyurqRWGcHG1Q1QnIcWRq6ypd34CVlBDrfQNf+xcD
-         azRcepiQOLKWuQAeaHPFspHMia4OjQwDEXo7PxM40ol+YTiDEWWTQhxWCBQNUeiNe7Sw
-         dYKtO4evwvfsQwtZAKLxPuFPAAjVMsPLH+/YfsodQHUUtzO5xitAJlUyPX2bxBoxIz2w
-         e7UnH2cvrwswT/ApuH4D/lUK5aG5Q+InS1NAR+An5sTomdgntPPShqUzEqjnpD8T+4VC
-         yUpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=O3HriybSrCo6mJB50t486qzwfPTNm5L6TRhZqwlBR1g=;
-        b=JtMB6LgFLYl83+++gDBUZkNArWcVJeVmmRV/YUC+cOBNg9SOANx6DIieyoj2fDpTp1
-         affug09vRDYhQJb5vF5y+Co+vF3V3lGV73UsHgZZpEvZ3PteOJ0fPrIdcqsbuDDic+hm
-         KQABOAz/v1TS1latyO28oFX0g81Tt/uczcJEC+FvDXu8vSarnRv0MuNawbmPhvVGfLO5
-         SIcnT2m3JA303c2lq6Zvtejwr0/jSyqy0XrbmhAkZNFErTIOANq4zSNqHgejI37Xtk4g
-         QrIEZ3LQo3GH7BUa/BKPQ/M17rnPsQYo+hcdxNPBfjaHtbtAIZap8ryOx0g/LXc66MV4
-         VwwQ==
-X-Gm-Message-State: AKaTC01yiiVBpTz6MW1ROdiAc61J3cWnMIufSpHE0RJmB/qdH4t6ORdJlUhzXLPlF/ksOGM969Ww5R3qZhHq4tgX
-X-Received: by 10.200.53.9 with SMTP id y9mr824022qtb.176.1479493532057; Fri,
- 18 Nov 2016 10:25:32 -0800 (PST)
+        id S1752995AbcKRS2n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 13:28:43 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58244 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752765AbcKRS2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 13:28:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBD234E1CD;
+        Fri, 18 Nov 2016 13:28:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tH5C7mlyju9nZ3tm8BQNGYAbj5I=; b=ISNpzH
+        O7ZSPMcVuBRWlPk97zmiJXaGhbw0VFaPUW7Al1NmBA7qXrKcjdnRZx2+E/U9hM/N
+        eVVaZy8BWMPl8oKd5DX6Z+zoUPatjd/2zOTAZY5qIXkxPiAQ38QRzWRVtiKndoez
+        /Up+fitEzTqMv/p9+xw+YTf4EtfwkMyQr3NDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GPFGd1/CDkJ1e6rZfzCeLaZCEavE4MKh
+        ynsgWJpal9hIOfk074O3m0jJ4qjs9DB3mXpGuFMPIpIstPFp3orzXWQPGJ3vbpBl
+        ie+xzuyeUjlIjiochY7mOd1krqlYSlRRJgVp0M9W25OshRdOzUvj1WxP4P6fmHBP
+        JbN4735DAAM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E25354E1CC;
+        Fri, 18 Nov 2016 13:28:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63B454E1CB;
+        Fri, 18 Nov 2016 13:28:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org,
+        spearce@spearce.org
+Subject: Re: [PATCH] remote-curl: don't hang when a server dies before any output
+References: <1478729910-26232-1-git-send-email-dturner@twosigma.com>
+        <20161114182431.e7jjnq422c4xobdb@sigill.intra.peff.net>
+        <20161114194049.mktpsvgdhex2f4zv@sigill.intra.peff.net>
+        <20161115004426.unheihlmftlw6ex7@sigill.intra.peff.net>
+        <xmqqa8d1v9lo.fsf@gitster.mtv.corp.google.com>
+        <20161115035844.e6ehuy7uigqinbnv@sigill.intra.peff.net>
+        <xmqqzil0tza6.fsf@gitster.mtv.corp.google.com>
+        <20161118170147.g7nbkxpyihwkk6fw@sigill.intra.peff.net>
+Date:   Fri, 18 Nov 2016 10:28:39 -0800
+In-Reply-To: <20161118170147.g7nbkxpyihwkk6fw@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 18 Nov 2016 09:01:47 -0800")
+Message-ID: <xmqqlgwgmylk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Fri, 18 Nov 2016 10:25:31 -0800 (PST)
-In-Reply-To: <20161118174607.GP66382@google.com>
-References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-9-sbeller@google.com>
- <20161115234403.GE66382@google.com> <CAGZ79kbCqLsRzrsX29uM7pobs_11UZtFOQWP9RO8ptS5PyDfmw@mail.gmail.com>
- <20161117222926.GN66382@google.com> <CAGZ79ka0-JFvogHRoTA4ioMK86zD=zkgEfBb-gpU8tbOjwEoFA@mail.gmail.com>
- <CAGZ79kYE1JooyKMDsEM5=6OWxbCOL3q2=Et3nL7mMcayxtLZxA@mail.gmail.com> <20161118174607.GP66382@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 18 Nov 2016 10:25:31 -0800
-Message-ID: <CAGZ79kYD0ER4k6+o=spnCS3ymOnTcZ5i7Lu5-G_GLXu6XDqS3Q@mail.gmail.com>
-Subject: Re: [PATCH 08/16] update submodules: add depopulate_submodule
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Martin Fick <mogulguy10@gmail.com>,
-        David Turner <David.Turner@twosigma.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4A219AE-ADBC-11E6-8E3D-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 18, 2016 at 9:46 AM, Brandon Williams <bmwill@google.com> wrote:
->> +
->> +       sub = submodule_from_path(null_sha1, path);
->
-> This should probably be checked to see if sub not NULL before
-> dereferencing it right?
+Jeff King <peff@peff.net> writes:
 
-yeah, will fix.
+> So I don't feel like we have a good patch for the general case yet, and
+> I'm probably not going to get around to implementing it anytime soon. So
+> I'd suggest taking David's original patch (to punt when the response is
+> empty) in the meantime.
+
+Yup, we are on the same page; the above matches what I wrote in the
+draft of the next issue of What's cooking report last night.
+
+> I do think the commit message could be improved based on the discussion
+> here, though (at the very least to describe the nature of the deadlock,
+> and that we are choosing only one of the possible solutions, and why).
+
+Thanks.  That sounds sensible.
+
+
