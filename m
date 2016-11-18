@@ -2,100 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB522209AE
-	for <e@80x24.org>; Fri, 18 Nov 2016 20:04:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A26C61FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 20:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753764AbcKRUE5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 15:04:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53577 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752923AbcKRUE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 15:04:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 42ECD4F161;
-        Fri, 18 Nov 2016 15:04:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GjtcHym+yJZdfw5d15ta2FnEjC0=; b=BRvJyN
-        g/FsdJUZtC6Fbsg//DvHR3untZ+wz7LetyifYbQ32ebrwPRN52hO53LVP1bRoig2
-        8TzoIx3VaDjGpLBYJM3Za57+Pth7gncyVJUxxmRFs6mR6IecgpsFJfxwb+sjeMG6
-        xXxXaWWSKsn2p5bxBnCgI9rajlCglVV8XRAb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uEVlFIooEdGwNiha+2SXL+0xzTC21n2F
-        i3uqaXQmTr5d9nGq3+qHDhtBGnhriwPkugVxqi48JDtKLJJjmG3gsX84oASUcfpX
-        7GpfpZ7cjfIYzWJ0x9SPxo2EYqfOwjeOZ3FOALBI+5gjzKIDxHoR4JgtZR41g74S
-        AMs+OkMIMZQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A8DE4F160;
-        Fri, 18 Nov 2016 15:04:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB5374F15F;
-        Fri, 18 Nov 2016 15:04:54 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, peff@peff.net, spearce@spearce.org
-Subject: Re: [PATCH v2] remote-curl: don't hang when a server dies before any output
-References: <1479491919-12592-1-git-send-email-dturner@twosigma.com>
-Date:   Fri, 18 Nov 2016 12:04:53 -0800
-In-Reply-To: <1479491919-12592-1-git-send-email-dturner@twosigma.com> (David
-        Turner's message of "Fri, 18 Nov 2016 12:58:39 -0500")
-Message-ID: <xmqqh974mu56.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752677AbcKRUGF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 15:06:05 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38749 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752043AbcKRUGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 15:06:04 -0500
+Received: by mail-wm0-f48.google.com with SMTP id f82so59081172wmf.1
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 12:06:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SsK5wHQE4vAkqNPbNcYDwK/B6GOM33NRNcu9dcswiEM=;
+        b=ISVtB7df82LCL9In25hmm2F7EHly/WDcjtbOcxGVtfxDwtFDmj2lcCZ6vVVDA2ifu8
+         ZUCLQQDvGRMlNzgyM357hyGB38tAJqAM4HHBAYJh9wMGB35RMM19ShC/Q0wE/ny9FMwp
+         eeEAEzD6f2W7fmmhAbRujpCAZEy9QLpsZg9zjlchVAnLlTEELO6XoPwkodxUZAofFUts
+         AqI2SGT16MsLiDsUWfi4he7EpRJIQC/Y0RcQ8pIrTzCuQOkrB4JediR4mgaNa75wuupm
+         yDHEXgu00jXqLAO2xnsuefSQP9Q2HLKWsXePxb6U9ubVblzhaR/hmTWjj5aPjq9TNci7
+         hkog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SsK5wHQE4vAkqNPbNcYDwK/B6GOM33NRNcu9dcswiEM=;
+        b=fXcGsbkVe3te7OID8krfE/dxEpTfb3LldSkFe3kFmxOmNDcf/8WqgUaDHa9Br1E8ZK
+         qGAYIbJK1ZzYWAGXMDY8HZTeZkDVX7s2l663RgFUvGCoRnC3uOkv5hMOBzSeqVd4FJi9
+         KSMinM+Cj16x3PhbjTGmayJQW9XFuMypGCxS4ODF9/ZBbFZD3cPtmAPHWJ5VjOqy5Fjz
+         aLKh3HF24BNvWCE4qY6pAXAmmC0yDlq+hRIEnWjfyBWBgRInbLrODKy0VSfxBoX7m4Tr
+         6N3Qj+TcCwcQ6FUUdTYm2rpdP5Ho5JrDM+RHIzlhC2cXbAbToGG8AuXILkj2Ii5yNUYz
+         3DwA==
+X-Gm-Message-State: AKaTC02nc+UT5QlTrBWbNI1Xgw5fp9UC0FPP3LdlU5zVizCLHciQvYNnx2e4L4zKaKsTxtcKQym1fFUcCdKKuA==
+X-Received: by 10.25.150.148 with SMTP id y142mr342296lfd.37.1479499562725;
+ Fri, 18 Nov 2016 12:06:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 45C99BFE-ADCA-11E6-A522-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.25.33.129 with HTTP; Fri, 18 Nov 2016 12:06:02 -0800 (PST)
+In-Reply-To: <20161115182632.GA17539@gmail.com>
+References: <13c9b4a74d82a1f0ed3f626406a43e92@rapsys.eu> <20161115182632.GA17539@gmail.com>
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+Date:   Fri, 18 Nov 2016 21:06:02 +0100
+Message-ID: <CAN0XMOLwZ9mpnCwO1JWMSYb42SU_T--fZ=aH+M0j8wfp15EGcw@mail.gmail.com>
+Subject: Re: gitweb html validation
+To:     =?UTF-8?Q?Rapha=C3=ABl_Gertz?= <mageia@rapsys.eu>,
+        Junio C Hamano <gitster@pobox.com>, jnareb@gmail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Turner <dturner@twosigma.com> writes:
+2016-11-15 19:26 GMT+01:00 Ralf Thielow <ralf.thielow@gmail.com>:
 
-> In the event that a HTTP server closes the connection after giving a
-> 200 but before giving any packets, we don't want to hang forever
-> waiting for a response that will never come.  Instead, we should die
-> immediately.
->
-> One case where this happens is when attempting to fetch a dangling
-> object by SHA.
->
-> Prior to this patch, fetch-pack would wait for more data from the
-> server, and remote-curl would wait for fetch-pack, causing a deadlock.
->
-> Despite this patch, there is other possible malformed input that could
-> cause the same deadlock (e.g. a half-finished pktline, or a pktline but
-> no trailing flush).  There are a few possible solutions to this:
->
-> 1. Allowing remote-curl to tell fetch-pack about the EOF (so that
-> fetch-pack could know that no more data is coming until it says
-> something else).  This is tricky because an out-of-band signal would
-> be required, or the http response would have to be re-framed inside
-> another layer of pkt-line or something.
->
-> 2. Make remote-curl understand some of the protocol.  It turns out
-> that in addition to understanding pkt-line, it would need to watch for
-> ack/nak.  This is somewhat fragile, as information about the protocol
-> would end up in two places.  Also, pkt-lines which are already at the
-> length limit would need special handling.
->
-> Both of these solutions would require a fair amount of work, whereas
-> this hack is easy and solves at least some of the problem.
->
-> Still to do: it would be good to give a better error message
-> than "fatal: The remote end hung up unexpectedly".
+Finally I've found the time to actually try this out and there
+are some problems with it.
 
-It seems to me that there is some gap/leap in the description
-between the second and third paragraph above (i.e. the client asks
-for an object, the server tries to see if the object is reachable
-from the refs, and then what?  who waits for more data without
-asking?), but other than that, including the future direction, the
-proposed log message is very nicely described.
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 7cf68f07b..33d7c154f 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -5531,8 +5531,8 @@ sub git_project_search_form {
+>                 $limit = " in '$project_filter/'";
+>         }
+>
+> -       print "<div class=\"projsearch\">\n";
+>         print $cgi->start_form(-method => 'get', -action => $my_uri) .
+> +             "<div class=\"projsearch\">\n" .
+>               $cgi->hidden(-name => 'a', -value => 'project_list')  . "\n";
+>         print $cgi->hidden(-name => 'pf', -value => $project_filter). "\n"
+>                 if (defined $project_filter);
+> @@ -5544,11 +5544,11 @@ sub git_project_search_form {
+>                              -checked => $search_use_regexp) .
+>               "</span>\n" .
+>               $cgi->submit(-name => 'btnS', -value => 'Search') .
+> -             $cgi->end_form() . "\n" .
+>               $cgi->a({-href => href(project => undef, searchtext => undef,
+>                                      project_filter => $project_filter)},
+>                       esc_html("List all projects$limit")) . "<br />\n";
+> -       print "</div>\n";
+> +       print "</div>\n" .
+> +             $cgi->end_form() . "\n";
+>  }
+>
 
-Thanks, will queue.
+The anchor is now inside the form-tag, which means there is no
+visual line-break anymore that comes automatically after </form>
+as the form-tag is a block level element.  Could be solved by adding a
+"<br />", which is not very nice, but OK.
+
+>  # entry for given @keys needs filling if at least one of keys in list
+> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+> index 321260103..507740b6a 100644
+> --- a/gitweb/static/gitweb.css
+> +++ b/gitweb/static/gitweb.css
+> @@ -539,7 +539,7 @@ div.projsearch {
+>         margin: 20px 0px;
+>  }
+>
+> -div.projsearch form {
+> +form div.projsearch {
+>         margin-bottom: 2px;
+>  }
+>
+
+This is wrong as it overwrites the setting above, 20px at the bottom
+went to 2px.
+
+The problem is how to apply the 2px now. Before this, we had the
+<form>, a block element, which we can give the 2px margin at the
+bottom.  Now this element is gone and we have a set of inline
+elements where we use "<br />" to emulate the line break.  There
+are two css rules which can solve this, but I'm not really happy with
+both of them.
+1) As we know we need the two pixel below an input element, we
+can say
+div.projsearch input {
+  margin-bottom: 2px;
+}
+2) Make the a-Tag inside div.projsearch being displayed as a block
+element to make a margin-top setting working.  This has the benefit
+that we don't care about the element above.
+div.projsearch a {
+        display: inline-block;
+        margin-top: 2px;
+}
+If I have to choose I'd prefer the second one.
+
+So I can't think of a way to solve this nicely with this change.
