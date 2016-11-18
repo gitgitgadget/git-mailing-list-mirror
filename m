@@ -2,238 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22A3C1FBB0
-	for <e@80x24.org>; Fri, 18 Nov 2016 11:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 496EE1FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 14:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752900AbcKRL3i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 06:29:38 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36090 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752483AbcKRL3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 06:29:36 -0500
-Received: by mail-wm0-f68.google.com with SMTP id m203so5171004wma.3
-        for <git@vger.kernel.org>; Fri, 18 Nov 2016 03:29:36 -0800 (PST)
+        id S1752126AbcKROeN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 09:34:13 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37414 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751797AbcKROeM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 09:34:12 -0500
+Received: by mail-wm0-f41.google.com with SMTP id t79so41339901wmt.0
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 06:34:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=daurnimator.com; s=daurnimator;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=umiBjEiK1RelqpvrGv4MvJ6kRx4W0UTXSJz9Yk3Lh7o=;
-        b=Wtl6bTluoC2tZfDdtbNvpG9oFEP2KjywHG/i0uJd6y1AYlTAkchl3iOKB51mL81FrI
-         SE7e94WccKkWn4vOIwaZUdExL92BEHZrRdpo2oiT7U77TlwLIaeSE3yLZ4/WDmeBPukE
-         3h22HT61M4hZuxbwMrRIlPexC2/ZJKEOCsOZ0=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=b4vRNTT9GzFs9SOilN8OdvEE9jfukg0lS8LfyO/E9L4=;
+        b=fNs7zDQIYaES/Gu9pMdWxipUue61i6ipn3v8UBsWay/37MeH+Q7dfJYFv3q8Ecq/RL
+         /Pw+N2pr9J11/XugYmsAv+LnKXIWjBHYZIZswaKuN6tLTYmlxcACp5sZ8rLDflbkzodT
+         S8Y8OsWldbwOEYieeK4gQQUCQcjqKKZOx1hdMiu/wtGfhsH+1NcX0rV3Bp4qroCpivj4
+         5RZjRR7Q+qH8bmpGJRoXNMs2wY/Xz9Y7GQuDFoUPUMpgcduV+uOthX9yXDapQfMPJJX+
+         wdm6DzOyh50u49alT700KUiAZV+BuMyJOGMq7X0vr7PRA9iRZhpG1SG9GQsWztPTuXoV
+         /V+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=umiBjEiK1RelqpvrGv4MvJ6kRx4W0UTXSJz9Yk3Lh7o=;
-        b=M3kmMCpks0hzmfMFtDJ+vi1NSO+MP4xZAlfW6V6dFiMO7DzGCsShhbDvTQ8pgRcCxf
-         EVJRP1rHzhGSMIfgetLV1a1p6BwwjcoOtb9rQCfhIpOsKu0i4CqIDIoiDMnr+llpzsNl
-         BLjVlhiW0ana5nGZDesS/PEsnwg4qEtvYSnwiroTCofT2/UNRlTkbepaOTV/G3g1mH8M
-         la6+8TW9Jb25p84k23S08w4Qzoamv/0oVH0/JakVVw+hjZM713gWigG4+GQ+Y+pdeVnT
-         NZzb9FydNhGcFtlHWoVjaFeK6PZuLDM6kMg4WGVgAJfTw7RR8Hy55t74mbp9R2Ba41hn
-         AhfQ==
-X-Gm-Message-State: ABUngvdqLVfuUY8YhLRVxyew9xp20wiil2tit3CJ2ThazItjLyhrL9+PKi1rQXBsN7N2Pg==
-X-Received: by 10.28.150.75 with SMTP id y72mr23365692wmd.47.1479468574701;
-        Fri, 18 Nov 2016 03:29:34 -0800 (PST)
-Received: from mail-wm0-f47.google.com (mail-wm0-f47.google.com. [74.125.82.47])
-        by smtp.gmail.com with ESMTPSA id w66sm2899885wme.4.2016.11.18.03.29.33
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Nov 2016 03:29:33 -0800 (PST)
-Received: by mail-wm0-f47.google.com with SMTP id f82so31375294wmf.1
-        for <git@vger.kernel.org>; Fri, 18 Nov 2016 03:29:33 -0800 (PST)
-X-Received: by 10.25.219.69 with SMTP id s66mr1620074lfg.116.1479468572750;
- Fri, 18 Nov 2016 03:29:32 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=b4vRNTT9GzFs9SOilN8OdvEE9jfukg0lS8LfyO/E9L4=;
+        b=AAQO9cSN89xWInMQSPDxKFOHMCpE1PAOobQlXOnCnT3hy4mlA28sd+M8Otot8kXQmT
+         avVxHr5FrOTloI9qPNfns6hcUvzsW+E0zitXOemQGMS5fqvUSTO7o8LrzNtVUHRDYH1J
+         fex1axqdBmVv52fy7s5ZhWYWBLxcZ7LgwdNKWxo3phxGJ0q2ef4e/C4zhUMMsaagD6Vb
+         XCJJZliDzSC/QvPoHTD6ZpZpM0oqYsNWe0XilcACm5G77zMFICd6y8mE/L+sZ6YXJyyK
+         2YSc+ZD3QV3bFT8P+dgqmCSwwlIGQZAwP1OIMZ0vg+Hgqex2fFDmYuFWwcizVOtSso7N
+         QfMw==
+X-Gm-Message-State: AKaTC034gQ2+F+IYPLnZDYGnTcPqAcD5wLEUeC2885TsWN+1wRm/yWgEigoM1J5KHhGOhwxyK8/Nv2NO61l2Xw==
+X-Received: by 10.46.69.11 with SMTP id s11mr6701lja.44.1479479650758; Fri, 18
+ Nov 2016 06:34:10 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.21.102 with HTTP; Fri, 18 Nov 2016 03:29:32 -0800 (PST)
-From:   Daurnimator <quae@daurnimator.com>
-Date:   Fri, 18 Nov 2016 22:29:32 +1100
-X-Gmail-Original-Message-ID: <CAEnbY+cEts2HrDLGd-5S9JC6PUrON_TpiyGy_=DAEbOT5z=MJw@mail.gmail.com>
-Message-ID: <CAEnbY+cEts2HrDLGd-5S9JC6PUrON_TpiyGy_=DAEbOT5z=MJw@mail.gmail.com>
-Subject: Staging chunks can get confused
-To:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.25.25.142 with HTTP; Fri, 18 Nov 2016 06:34:10 -0800 (PST)
+In-Reply-To: <CACsJy8BZNfESmFv=V89Cq-b+aMJWLH=qhXHNE8inZZRjvXB33Q@mail.gmail.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-13-chriscool@tuxfamily.org> <xmqq8tt3ovnp.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD2H6rZNQqg1VGNkes65KAk-4P160rjQSjFY3NjgZydZmA@mail.gmail.com>
+ <xmqqoa1scyuy.fsf@gitster.mtv.corp.google.com> <CAP8UFD1YL+RgdqbV0V1OnC=sJHJFc_an02Q9JeDNapW+u1CZcA@mail.gmail.com>
+ <CACsJy8BZNfESmFv=V89Cq-b+aMJWLH=qhXHNE8inZZRjvXB33Q@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 18 Nov 2016 15:34:10 +0100
+Message-ID: <CAP8UFD1mun7wz2WqV8GCj6MODVjP2mPEBRGbJTf_ypiGCgtb9Q@mail.gmail.com>
+Subject: Re: [PATCH v1 12/19] Documentation/config: add splitIndex.maxPercentChange
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tonight I was staging changes with `git add -p` and noticed they got
-applied at the *wrong* location.
-My guess is that when you stage a hunk it doesn't do a line number
-fix-up for earlier unstaged hunks in the file.
+On Mon, Nov 7, 2016 at 10:38 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> (sorry I got sick in the last few weeks and could not respond to this ear=
+lier)
 
-Screencast: https://asciinema.org/a/7y9qhr0837a7t96m8w14mupnk
-Alternatively, an example follows:
+(Yeah, I have also been sick during the last few weeks.)
 
-$ git add -p
-diff --git a/unistring/unistring.c b/unistring/unistring.c
-index 62bbc8a..45ced5d 100644
---- a/unistring/unistring.c
-+++ b/unistring/unistring.c
-@@ -17,6 +17,27 @@ static const char *const uninormnames[] = {"NFD",
-"NFC", "NFKD", "NFKC", NULL};
- #define lunistring_optuninorm(L, arg)
-(lua_isnoneornil(L,(arg))?NULL:lunistring_checkuninorm((L), (arg)))
+> On Mon, Nov 7, 2016 at 4:44 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Le 6 nov. 2016 09:16, "Junio C Hamano" <gitster@pobox.com> a =C3=A9crit =
+:
+>>>
+>>> Christian Couder <christian.couder@gmail.com> writes:
+>>>
+>>> > I think it is easier for user to be able to just set core.splitIndex
+>>> > to true to enable split-index.
+>>>
+>>> You can have that exact benefit by making core.splitIndex to
+>>> bool-or-more.  If your default is 20%, take 'true' as if the user
+>>> specified 20% and take 'false' as if the user specified 100% (or is
+>>> it 0%?  I do not care about the details but you get the point).
+>
+>> Then if we ever add 'auto' and the user wants for example 10% instead of=
+ the
+>> default 20%, we will have to make it accept things like "auto,10".
 
+(Sorry for writing the above on my phone which added HTML, so that it
+didn't reach the list.)
 
-+const uint8_t * u8_check (const uint8_t *s, size_t n);
-+int u8_mblen (const uint8_t *s, size_t n);
-+int u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n);
-+int u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
-+int u8_mbtoucr (ucs4_t *puc, const uint8_t *s, size_t n);
-+int u8_uctomb (uint8_t *s, ucs4_t uc, int n);
-+size_t u8_mbsnlen (const uint8_t *s, size_t n);
-+
-+int u8_strmblen (const uint8_t *s);
-+int u8_strmbtouc (ucs4_t *puc, const uint8_t *s);
-+const uint8_t * u8_next (ucs4_t *puc, const uint8_t *s);
-+const uint8_t * u8_prev (ucs4_t *puc, const uint8_t *s, const uint8_t *start);
-+
-+uint8_t * u8_conv_from_encoding (const char *fromcode, enum
-iconv_ilseq_handler handler, const char *src, size_t srclen, size_t
-*offsets, uint8_t *resultbuf, size_t *lengthp);
-+char * u8_conv_to_encoding (const char *tocode, enum
-iconv_ilseq_handler handler, const uint8_t *src, size_t srclen, size_t
-*offsets, char *resultbuf, size_t *lengthp);
-+uint8_t * u8_strconv_from_encoding (const char *string, const char
-*fromcode, enum iconv_ilseq_handler handler);
-+char * u8_strconv_to_encoding (const uint8_t *string, const char
-*tocode, enum iconv_ilseq_handler handler);
-+uint8_t * u8_strconv_from_locale (const char *string);
-+char * u8_strconv_to_locale (const uint8_t *string);
-+
-+
- static int lunistring_width(lua_State *L) {
-  size_t n;
-  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
-Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? n
-@@ -27,6 +48,17 @@ static int lunistring_width(lua_State *L) {
- }
+> In my opinion, "true" _is_ auto, which is a way to say "I trust you to
+> do the right thing, just re-split the index when it makes sense", "no"
+> is disabled of course. If the user wants to be specific, just write
+> "10" or some other percentage.(and either 0 or 100 would mean enable
+> split-index but do not re-split automatically, let _me_ do it when I
+> want it)
 
+The meaning of a future "auto" option for "core.splitIndex" could be
+"use the split-index feature only if the number of entries in whole
+index is greater than 10000 (by default)".
 
-+int u8_strwidth (const uint8_t *s, const char *encoding);
-+void u8_wordbreaks (const uint8_t *s, size_t n, char *p);
-+void u8_possible_linebreaks (const uint8_t *s, size_t n, const char
-*encoding, char *p);
-+int u8_width_linebreaks (const uint8_t *s, size_t n, int width, int
-start_column, int at_end_columns, const char *override, const char
-*encoding, char *p);
-+
-+
-+int uc_decomposition (ucs4_t uc, int *decomp_tag, ucs4_t *decomposition);
-+int uc_canonical_decomposition (ucs4_t uc, ucs4_t *decomposition);
-+ucs4_t uc_composition (ucs4_t uc1, ucs4_t uc2);
-+
-+
- static int lunistring_normalize(lua_State *L) {
-  uninorm_t nf = lunistring_optuninorm(L, 1);
-  size_t n;
-Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
-@@ -54,6 +86,9 @@ static int lunistring_normalize(lua_State *L) {
- }
-
-
-+int u8_normcmp (const uint8_t *s1, size_t n1, const uint8_t *s2,
-size_t n2, uninorm_t nf, int *resultp);
-+
-+
- static int lunistring_normxfrm(lua_State *L) {
-  size_t n;
-  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
-Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
-@@ -83,6 +118,9 @@ static int lunistring_normxfrm(lua_State *L) {
- }
-
-
-+int u8_normcoll (const uint8_t *s1, size_t n1, const uint8_t *s2,
-size_t n2, uninorm_t nf, int *resultp);
-+
-+
- static int lunistring_uc_locale_language(lua_State *L) {
-  lua_pushstring(L, uc_locale_language());
-  return 1;
-Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
-@@ -173,6 +211,15 @@ static int lunistring_totitle(lua_State *L) {
- }
-
-
-+casing_prefix_context_t u8_casing_prefix_context (const uint8_t *s, size_t n);
-+casing_prefix_context_t u8_casing_prefixes_context (const uint8_t *s,
-size_t n, casing_prefix_context_t a_context);
-+casing_suffix_context_t u8_casing_suffix_context (const uint8_t *s, size_t n);
-+casing_suffix_context_t u8_casing_suffixes_context (const uint8_t *s,
-size_t n, casing_suffix_context_t a_context);
-+uint8_t * u8_ct_toupper (const uint8_t *s, size_t n,
-casing_prefix_context_t prefix_context, casing_suffix_context_t
-suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
-*resultbuf, size_t *lengthp);
-+uint8_t * u8_ct_tolower (const uint8_t *s, size_t n,
-casing_prefix_context_t prefix_context, casing_suffix_context_t
-suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
-*resultbuf, size_t *lengthp);
-+uint8_t * u8_ct_totitle (const uint8_t *s, size_t n,
-casing_prefix_context_t prefix_context, casing_suffix_context_t
-suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
-*resultbuf, size_t *lengthp);
-+
-+
- static int lunistring_casefold(lua_State *L) {
-  size_t n;
-  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
-Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
-@@ -201,6 +248,10 @@ static int lunistring_casefold(lua_State *L) {
- }
-
-
-+uint8_t * u8_ct_casefold (const uint8_t *s, size_t n,
-casing_prefix_context_t prefix_context, casing_suffix_context_t
-suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
-*resultbuf, size_t *lengthp);
-+int u8_casecmp (const uint8_t *s1, size_t n1, const uint8_t *s2,
-size_t n2, const char *iso639_language, uninorm_t nf, int *resultp);
-+
-+
- static int lunistring_casexfrm(lua_State *L) {
-  size_t n;
-  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
-Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
-@@ -230,6 +281,9 @@ static int lunistring_casexfrm(lua_State *L) {
- }
-
-
-+int u8_casecoll (const uint8_t *s1, size_t n1, const uint8_t *s2,
-size_t n2, const char *iso639_language, uninorm_t nf, int *resultp);
-+
-+
- static int lunistring_casecoll(lua_State *L) {
-  size_t n1, n2;
-  const uint8_t *s1 = (const uint8_t*)luaL_checklstring(L, 1, &n1);
-Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
-@@ -288,7 +342,7 @@ static int lunistring_is_titlecase(lua_State *L) {
-  return luaL_fileresult(L, 0, NULL);
-  }
-
-- lua_pushboolean(L, resultp);
-+ lua_pushinteger(L, resultp);
-  return 1;
- }
-
-Stage this hunk [y,n,q,a,d,/,K,g,e,?]? y
-
-$ git diff --cached
-diff --git a/unistring/unistring.c b/unistring/unistring.c
-index 62bbc8a..ea85d65 100644
---- a/unistring/unistring.c
-+++ b/unistring/unistring.c
-@@ -318,7 +318,7 @@ static int lunistring_is_cased(lua_State *L) {
-                return luaL_fileresult(L, 0, NULL);
-        }
-
--       lua_pushboolean(L, resultp);
-+       lua_pushinteger(L, resultp);
-        return 1;
- }
+If there is no difference between "true" and "auto" then, when users
+who have "core.splitIndex=3Dtrue" will migrate to the git version that
+adds the "auto" feature, their repos with under 10000 entires will not
+use the split-index feature anymore. These users may then be annoyed
+that the behavior has been switched under them, and that the
+split-index feature is not always used despite having
+"core.splitIndex=3Dtrue" in their config.
