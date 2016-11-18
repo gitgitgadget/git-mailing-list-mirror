@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C05C32022D
-	for <e@80x24.org>; Fri, 18 Nov 2016 23:08:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 006EB2022D
+	for <e@80x24.org>; Fri, 18 Nov 2016 23:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753247AbcKRXI3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 18:08:29 -0500
+        id S1753255AbcKRXIf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 18:08:35 -0500
 Received: from mga11.intel.com ([192.55.52.93]:37381 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753161AbcKRXI2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 18:08:28 -0500
+        id S1753241AbcKRXI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 18:08:29 -0500
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
   by fmsmga102.fm.intel.com with ESMTP; 18 Nov 2016 15:08:27 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.31,660,1473145200"; 
-   d="scan'208";a="33066055"
+   d="scan'208";a="33066057"
 Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
   by fmsmga005.fm.intel.com with ESMTP; 18 Nov 2016 15:08:27 -0800
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH 1/2] pretty: add %bT format for displaying trailers of a commit message
-Date:   Fri, 18 Nov 2016 15:08:24 -0800
-Message-Id: <20161118230825.20952-2-jacob.e.keller@intel.com>
+Subject: [PATCH 2/2] ref-filter: add support to display trailers as part of contents
+Date:   Fri, 18 Nov 2016 15:08:25 -0800
+Message-Id: <20161118230825.20952-3-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.11.0.rc2.152.g4d04e67
 In-Reply-To: <20161118230825.20952-1-jacob.e.keller@intel.com>
 References: <20161118230825.20952-1-jacob.e.keller@intel.com>
@@ -38,109 +38,137 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-Recent patches have expanded on the trailers.c code and we have the
-builtin commant git-interpret-trailers which can be used to add or
-modify trailer lines. However, there is no easy way to simply display
-the trailers of a commit message. Add support for %bT format modifier
-which will use the trailer_info_get() calls to read trailers in an
-identical way as git interpret-trailers does.
-
-Add documentation and tests for the same.
+Add %(trailers) and %(contents:trailers) to display the trailers as
+interpreted by trailer_info_get. Update documentation and add a test for
+the new feature.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- Documentation/pretty-formats.txt |  1 +
- pretty.c                         | 18 ++++++++++++++++++
- t/t4205-log-pretty-formats.sh    | 26 ++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+)
+ Documentation/git-for-each-ref.txt |  2 ++
+ ref-filter.c                       | 22 +++++++++++++++++++++-
+ t/t6300-for-each-ref.sh            | 26 ++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 3bcee2ddb124..9ee68a4cb64a 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -138,6 +138,7 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
-+- '%bT': trailers of body as interpreted by linkgit:git-interpret-trailers[1]
- - '%B': raw body (unwrapped subject and body)
- ifndef::git-rev-list[]
- - '%N': commit notes
-diff --git a/pretty.c b/pretty.c
-index 37b2c3b1f995..ea8764334865 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -10,6 +10,7 @@
- #include "color.h"
- #include "reflog-walk.h"
- #include "gpg-interface.h"
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index f57e69bc83e3..e5807eede787 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -165,6 +165,8 @@ of all lines of the commit message up to the first blank line.  The next
+ line is 'contents:body', where body is all of the lines after the first
+ blank line.  The optional GPG signature is `contents:signature`.  The
+ first `N` lines of the message is obtained using `contents:lines=N`.
++Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
++are obtained as 'contents:trailers'.
+ 
+ For sorting purposes, fields with numeric values sort in numeric order
+ (`objectsize`, `authordate`, `committerdate`, `creatordate`, `taggerdate`).
+diff --git a/ref-filter.c b/ref-filter.c
+index d4c2931f3aab..b6f1bb73ed37 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -13,6 +13,7 @@
+ #include "utf8.h"
+ #include "git-compat-util.h"
+ #include "version.h"
 +#include "trailer.h"
  
- static char *user_format;
- static struct cmt_fmt_map {
-@@ -889,6 +890,16 @@ const char *format_subject(struct strbuf *sb, const char *msg,
- 	return msg;
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ 
+@@ -40,7 +41,7 @@ static struct used_atom {
+ 		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
+ 			remote_ref;
+ 		struct {
+-			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
++			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB, C_TRAILERS } option;
+ 			unsigned int nlines;
+ 		} contents;
+ 		enum { O_FULL, O_SHORT } objectname;
+@@ -85,6 +86,13 @@ static void subject_atom_parser(struct used_atom *atom, const char *arg)
+ 	atom->u.contents.option = C_SUB;
  }
  
-+static void format_trailers(struct strbuf *sb, const char *msg)
++static void trailers_atom_parser(struct used_atom *atom, const char *arg)
 +{
-+	struct trailer_info info;
-+
-+	trailer_info_get(&info, msg);
-+	strbuf_add(sb, info.trailer_start,
-+		   info.trailer_end - info.trailer_start);
-+	trailer_info_release(&info);
++	if (arg)
++		die(_("%%(trailers) does not take arguments"));
++	atom->u.contents.option = C_TRAILERS;
 +}
 +
- static void parse_commit_message(struct format_commit_context *c)
+ static void contents_atom_parser(struct used_atom *atom, const char *arg)
  {
- 	const char *msg = c->message + c->message_off;
-@@ -1289,6 +1300,13 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		format_sanitized_subject(sb, msg + c->subject_off);
- 		return 1;
- 	case 'b':	/* body */
-+		switch (placeholder[1]) {
-+		case 'T':
-+			format_trailers(sb, msg + c->subject_off);
-+			return 2;
-+		default:
-+			break;
-+		}
- 		strbuf_addstr(sb, msg + c->body_off);
- 		return 1;
+ 	if (!arg)
+@@ -95,6 +103,8 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
+ 		atom->u.contents.option = C_SIG;
+ 	else if (!strcmp(arg, "subject"))
+ 		atom->u.contents.option = C_SUB;
++	else if (!strcmp(arg, "trailers"))
++		atom->u.contents.option = C_TRAILERS;
+ 	else if (skip_prefix(arg, "lines=", &arg)) {
+ 		atom->u.contents.option = C_LINES;
+ 		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
+@@ -194,6 +204,7 @@ static struct {
+ 	{ "creatordate", FIELD_TIME },
+ 	{ "subject", FIELD_STR, subject_atom_parser },
+ 	{ "body", FIELD_STR, body_atom_parser },
++	{ "trailers", FIELD_STR, trailers_atom_parser },
+ 	{ "contents", FIELD_STR, contents_atom_parser },
+ 	{ "upstream", FIELD_STR, remote_ref_atom_parser },
+ 	{ "push", FIELD_STR, remote_ref_atom_parser },
+@@ -785,6 +796,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
+ 			name++;
+ 		if (strcmp(name, "subject") &&
+ 		    strcmp(name, "body") &&
++		    strcmp(name, "trailers") &&
+ 		    !starts_with(name, "contents"))
+ 			continue;
+ 		if (!subpos)
+@@ -808,6 +820,14 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
+ 			/*  Size is the length of the message after removing the signature */
+ 			append_lines(&s, subpos, contents_end - subpos, atom->u.contents.nlines);
+ 			v->s = strbuf_detach(&s, NULL);
++		} else if (atom->u.contents.option == C_TRAILERS) {
++			struct trailer_info info;
++
++			/* Search for trailer info */
++			trailer_info_get(&info, subpos);
++			v->s = xmemdupz(info.trailer_start,
++					info.trailer_end - info.trailer_start);
++			trailer_info_release(&info);
+ 		} else if (atom->u.contents.option == C_BARE)
+ 			v->s = xstrdup(subpos);
  	}
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index f5435fd250ba..7a35941ddcbd 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -535,4 +535,30 @@ test_expect_success 'clean log decoration' '
- 	test_cmp expected actual1
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 19a2823025e7..eb4bac0fe477 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -553,4 +553,30 @@ test_expect_success 'Verify sort with multiple keys' '
+ 		refs/tags/bogo refs/tags/master > actual &&
+ 	test_cmp expected actual
  '
- 
++
 +cat >trailers <<EOF
-+Signed-off-by: A U Thor <author@example.com>
-+Acked-by: A U Thor <author@example.com>
-+[ v2 updated patch description ]
++Reviewed-by: A U Thor <author@example.com>
 +Signed-off-by: A U Thor <author@example.com>
 +EOF
 +
-+test_expect_success 'pretty format %bT shows trailers' '
-+	echo "Some contents" >trailerfile &&
-+	git add trailerfile &&
++test_expect_success 'basic atom: head contents:trailers' '
++	echo "Some contents" > two &&
++	git add two &&
 +	git commit -F - <<-EOF &&
 +	trailers: this commit message has trailers
 +
-+	This commit is a test commit with trailers at the end. We parse this
-+	message and display the trailers using %bT
++	Some message contents
 +
 +	$(cat trailers)
 +	EOF
-+	git log --no-walk --pretty="%bT" >actual &&
++	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
++	sanitize_pgp <actual >actual.clean &&
++	# git for-each-ref ends with a blank line
 +	cat >expect <<-EOF &&
 +	$(cat trailers)
 +
 +	EOF
-+	test_cmp expect actual
++	test_cmp expect actual.clean
 +'
 +
  test_done
