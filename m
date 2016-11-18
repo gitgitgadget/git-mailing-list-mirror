@@ -2,77 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9DF1FE4E
-	for <e@80x24.org>; Fri, 18 Nov 2016 21:05:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CAC41FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 21:34:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752903AbcKRVFm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 16:05:42 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63538 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752364AbcKRVFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 16:05:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4A304FBB2;
-        Fri, 18 Nov 2016 16:05:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mCtD7DFMPYrsHPQmFKQiNu3+/6Y=; b=cPTLNC
-        gYswh18NppH4JCKW4DzC2NJOm8W7f+4KtEfwJH6umk5A9ojn3WXI6Z+Gmumfp3kw
-        urNukZQih8b5vdsaAY6chSaQ76iy7C+WW8WwXGBeQytkqG6pX+l4ePI226aUO8Zc
-        dDblPiFO6TTE/9uUYEWI8OZHKpmxk7AeHTBcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Wy6QXnclVDFaa048jN/HCv4PmBEDs7N0
-        i7c/d7n1XufDxycGHfu8qNGs/j42lZrEP8l73e8MfjvfzWkjSWQ0wR47gux7TvYL
-        5D5MphPOiJdot6cZAzn43HSsT5nkNENlsPQXe0VxQO8UJlaLgaKx1CTl3zCOfzHu
-        CTvI+yGjycY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CCE554FBB1;
-        Fri, 18 Nov 2016 16:05:40 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4FC164FBB0;
-        Fri, 18 Nov 2016 16:05:40 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, spearce@spearce.org, peff@peff.net
-Subject: Re: [PATCH v3] remote-curl: don't hang when a server dies before any output
-References: <1479501049-15458-1-git-send-email-dturner@twosigma.com>
-Date:   Fri, 18 Nov 2016 13:05:38 -0800
-In-Reply-To: <1479501049-15458-1-git-send-email-dturner@twosigma.com> (David
-        Turner's message of "Fri, 18 Nov 2016 15:30:49 -0500")
-Message-ID: <xmqqd1hsmrbw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752632AbcKRVeG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 16:34:06 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36372 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752363AbcKRVeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 16:34:06 -0500
+Received: by mail-wm0-f65.google.com with SMTP id m203so10241827wma.3
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 13:34:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=7C69ftbH+yyVHZ+kMmpXnngD75Kg9YqbEwHY0gCS7pE=;
+        b=iujXnVKqdq9k86KXdViXMA3fQZOfe+/fwHV+/h1dScwj514YJGGxLwEdN4aBbyyCUK
+         5heHa2xH20GrsLFR1dsTiwDd6xQW8gYaTZnqUFnxe9LRWccXq0s357xaaxLgtOUL5ZkA
+         RyN+uXqHu/DktV2AU+cpHkGiDCwoo7AiAZDT2TOxrl/kRSpvPrC4cgoW3jHKxrWBfMaW
+         mk+oEN1LUbxvfkYhLAYtZt96nB6F8W8MZuNtOhxjc3Zomd6Dkj5iH2dsjviDREOdG2mc
+         hQdfdIC6NAzOXq7bK7NwIUOifPr+DMDuSYS5+F0KlN0Gb3w310i9j123KfwThs2vUhil
+         W9YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=7C69ftbH+yyVHZ+kMmpXnngD75Kg9YqbEwHY0gCS7pE=;
+        b=Rc/c20IgSxJ2LLWoSsLR7dZJhvDt2+A8AJeVqg2OWnvNwIb7Kb0kXffGqgI1K+KHut
+         avu9GGHAdcXAQ/+BGQwzAOGlG3lJf/bm24AAclc0P3QJfhrRxvIbNKXeaLwYhJ/Smcip
+         xNT5fEEwESXXW9xol9W/QyxQCPY/tPrBpSZOpYziv/FaircJWAAXCF0h8l1sIddHogl3
+         dEDvTxbY6EKNE4SJ1Ow33SykgbOR9XAbJOje5xhdNxnF36h3erTNROqLYr00fpSEGtED
+         xsYDDA5fa8HFcyRD3n1vAGDPKhDh6Ipz6XJ6Sj5XbPJXQaz1fZzC1deIw6ZHXsuqOqrO
+         Dy/Q==
+X-Gm-Message-State: AKaTC018bOF9Y92jJm2x4fqmDOJg+sn21cx1MNRyK7K5xPS9e7RB8MfJ8u+v36VxuAshhQ==
+X-Received: by 10.194.172.42 with SMTP id az10mr1125393wjc.145.1479504844273;
+        Fri, 18 Nov 2016 13:34:04 -0800 (PST)
+Received: from [192.168.1.26] (acuy2.neoplus.adsl.tpnet.pl. [83.11.104.2])
+        by smtp.googlemail.com with ESMTPSA id m145sm5410126wma.3.2016.11.18.13.34.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Nov 2016 13:34:03 -0800 (PST)
+Subject: Re: [PATCH v7 09/17] ref-filter: make "%(symref)" atom work with the
+ ':short' modifier
+To:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+References: <20161108201211.25213-1-Karthik.188@gmail.com>
+ <20161108201211.25213-10-Karthik.188@gmail.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <ce2862d5-874b-f244-f9b3-f74e18f7ad42@gmail.com>
+Date:   Fri, 18 Nov 2016 22:34:01 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C2BF9A16-ADD2-11E6-9D24-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20161108201211.25213-10-Karthik.188@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Turner <dturner@twosigma.com> writes:
+W dniu 08.11.2016 o 21:12, Karthik Nayak pisze:
+[...]
+ 
+> Add tests for %(symref) and %(symref:short) while we're here.
 
-> In the event that a HTTP server closes the connection after giving a
-> 200 but before giving any packets, we don't want to hang forever
-> waiting for a response that will never come.  Instead, we should die
-> immediately.
->
-> One case where this happens is when attempting to fetch a dangling
-> object by SHA.  In this case, the server dies before sending any data.
-> Prior to this patch, fetch-pack would wait for data from the server,
-> and remote-curl would wait for fetch-pack, causing a deadlock.
-> ...
-> Still to do: it would be good to give a better error message
-> than "fatal: The remote end hung up unexpectedly".
->
-> Signed-off-by: David Turner <dturner@twosigma.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+That's nice.
+
+> 
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
+[...]
 
-Thanks.
+> +test_expect_success 'Add symbolic ref for the following tests' '
+> +	git symbolic-ref refs/heads/sym refs/heads/master
+> +'
+> +
+> +cat >expected <<EOF
+> +refs/heads/master
+> +EOF
+
+This should be inside the relevant test, not outside.  In other
+patches in this series you are putting setup together with the
+rest of test, by using "cat >expected <<-\EOF".
+
+> +
+> +test_expect_success 'Verify usage of %(symref) atom' '
+> +	git for-each-ref --format="%(symref)" refs/heads/sym > actual &&
+
+This should be spelled " >actual", rather than " > actual"; there
+should be no space between redirection and file name.
+
+> +	test_cmp expected actual
+> +'
+> +
+> +cat >expected <<EOF
+> +heads/master
+> +EOF
+> +
+> +test_expect_success 'Verify usage of %(symref:short) atom' '
+> +	git for-each-ref --format="%(symref:short)" refs/heads/sym > actual &&
+> +	test_cmp expected actual
+> +'
+
+Same here.
+
+> +
+>  test_done
+> 
+
+-- 
+Jakub Narębski
+
