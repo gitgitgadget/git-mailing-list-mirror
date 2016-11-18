@@ -2,188 +2,327 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF6961FE4E
-	for <e@80x24.org>; Fri, 18 Nov 2016 19:58:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5BBC1FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 19:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753179AbcKRT6f (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 14:58:35 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35050 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752441AbcKRT6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 14:58:34 -0500
-Received: by mail-wm0-f68.google.com with SMTP id a20so9588752wme.2
-        for <git@vger.kernel.org>; Fri, 18 Nov 2016 11:58:33 -0800 (PST)
+        id S1753149AbcKRT7G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 14:59:06 -0500
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35043 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752136AbcKRT7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 14:59:04 -0500
+Received: by mail-pg0-f41.google.com with SMTP id p66so106073875pga.2
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 11:59:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=ethdnOj+XHuPQQROAcRfeK4aTm8xR/NNa9XeS+kbZOw=;
-        b=FqGo4fplzkTUJWiOgQdE2Knmm/9esqq+ptQqvfjXkcGtMutKc1/CVGZ+Xx1VlCe/TW
-         F8vOz6kDYbyHzfsa8riqlF3r71rgTeY+JpT1DhbkmOnTgDFNOBXsj2n9ujY2yPeKm7e6
-         COtOCvQLJcHIRLprpEyJ6qHIFkcE23Kf8Iewg7CzV6R9kj2lS29omjDFO1Rb6/Olr/9p
-         N/HMvy+dzAiuUyXdSWaztO+a/t4M70yZAEv1ves0JeR27cQj0MsJit3qW1xWSIgQC8dX
-         0LstyrqLNBHgXkePWDvNSeqJ3WsRrJrWM9m8vgB5DtoDlry1Liy4NEaPMP/Hz8httxGK
-         Ye3A==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=RLLDBtGHgCnSgywGez/MiPg+1Y5wKGjqAxKEK5alSZE=;
+        b=LP2V265x81qQwtvTgw/7RnBVpF1A9R16dJ5qVpTR8UKWcCbaTXQ52rHbVnQgh6/1Nw
+         Uj9f+dS7OxrBDfhUOURfOE3nBGZB1/WyJb3YWBe9zcTtvr8EtVPbKWGR9P+UsJWP7WzT
+         l7W4zzvqVkMUHaPyPFW31FF8oQ8x9CktPfXHuXhSAm5b+c7rLkred09svPZwMad/x9xj
+         dkueNwGdYIZptXAwEcNTTfs+QwQcSNy2XaeudWuZfCoOM+aRxC4NNUsZU9kyGrhDtAv6
+         lcfmRiCk1RZ3TPt24on3d+8f8xCMWGLxg3CGMxC/kRVipShJxRZeb29MWwsoOL31GjMb
+         vY2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=ethdnOj+XHuPQQROAcRfeK4aTm8xR/NNa9XeS+kbZOw=;
-        b=gK4ZHihpI1U7H0AJC+H2awsPY/d2xuJ2Xlkgh90gsxv4CesxLv2VOcV2KHaG1ip7mt
-         zA+dA4JqlHjm9rqxQNTGFLki7WXNai3sCQsfFb6HsIWLJvM6eHqRw09+MabnUdviuFlp
-         qVi2ykQmV1Riftym9mdW2AW/JzSnH6cqDXPMA1vr3bY97hD+ujFyDGqLN3V4UBg3tS6e
-         /EnebcM20dGmE1OBS4QGy50UL1xSh8vYJfsSmr8XvwYqNHJ5TMeUXSbxbDdwN2d7HHl2
-         bXPXevDAbNqy98OR54WWV0xJWS1nQlTLnlbm6iEbEpbhWPydIovkAOqe5GGIOEE2Ji2A
-         Q1yg==
-X-Gm-Message-State: AKaTC010YBHF3Dp/1uktd0Esi5DKQaP1/lB2j+otJlS96ggpEPXiO6B1SmciNqnY8yCYnw==
-X-Received: by 10.28.25.135 with SMTP id 129mr156851wmz.122.1479499112458;
-        Fri, 18 Nov 2016 11:58:32 -0800 (PST)
-Received: from [192.168.1.26] (acuy2.neoplus.adsl.tpnet.pl. [83.11.104.2])
-        by smtp.googlemail.com with ESMTPSA id cl6sm3244377wjc.10.2016.11.18.11.58.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Nov 2016 11:58:31 -0800 (PST)
-Subject: Re: [PATCH v7 03/17] ref-filter: implement %(if:equals=<string>) and
- %(if:notequals=<string>)
-To:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-References: <20161108201211.25213-1-Karthik.188@gmail.com>
- <20161108201211.25213-4-Karthik.188@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <37c2cbf2-7160-49d7-f8f1-3b65d9ecf9ec@gmail.com>
-Date:   Fri, 18 Nov 2016 20:58:30 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161108201211.25213-4-Karthik.188@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=RLLDBtGHgCnSgywGez/MiPg+1Y5wKGjqAxKEK5alSZE=;
+        b=fB5xVTUcnaS8874n4rrZTX1WTWSvXBflZ3eFvYEPTqLpSJUs766773uAuCggZlAMk4
+         /wxJSeBSWvKsFUQTlmZXqCJijL4x4ExwvnJRl0RJujH2zSYKakS6cMW5itKfSHkXAeyq
+         6mCVX0X2l7OunPXQuw++mc6gbz9MBbLVeZz/yaYkxZxOlUSQR+meKeY/Z1WXo++FKcnt
+         RCbtQLTkBYQSTWew9yD7bvubtEi3LdPclOL8mmnwcofk6n81+B6cXFwgl9luJml4TEyg
+         u8OgWyDkd06eA51uMlIEFqHPoUbN1am5B4712DAMddivhWOzOqa71QA3X9GlaKvo4oyL
+         7fSA==
+X-Gm-Message-State: AKaTC03ottEHdjhy5MMaAPfX7yhXg/T8QmnaJ+J3DvumScxqnyPaZIXH69QEEUYKAeR0XZkr
+X-Received: by 10.98.29.205 with SMTP id d196mr1836704pfd.111.1479499143244;
+        Fri, 18 Nov 2016 11:59:03 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([172.27.69.28])
+        by smtp.gmail.com with ESMTPSA id o68sm19850441pfb.42.2016.11.18.11.59.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 Nov 2016 11:59:01 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        jonathantanmy@google.com, gitster@pobox.com
+Subject: [PATCH v4 0/6] recursively grep across submodules
+Date:   Fri, 18 Nov 2016 11:58:49 -0800
+Message-Id: <1479499135-64269-1-git-send-email-bmwill@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1478908273-190166-1-git-send-email-bmwill@google.com>
+References: <1478908273-190166-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 08.11.2016 o 21:11, Karthik Nayak pisze:
-> From: Karthik Nayak <karthik.188@gmail.com>
-> 
-> Implement %(if:equals=<string>) wherein the if condition is only
-> satisfied if the value obtained between the %(if:...) and %(then) atom
-> is the same as the given '<string>'.
-> 
-> Similarly, implement (if:notequals=<string>) wherein the if condition
-> is only satisfied if the value obtained between the %(if:...) and
-> %(then) atom is differnt from the given '<string>'.
-                  ^^^^^^^^
+This revision of this series should address all of the problems brought up with
+v3.
 
-s/differnt/different/   <-- typo
+* indent output example in patch 5/6.
+* fix ':' in submodule names and add a test to verify.
+* cleanup some comments.
+* fixed tests to test the case where a submodule isn't at the root of a
+  repository.
+* always pass --threads=%d in order to limit threads to child proccess.
 
-> 
-> This is done by introducing 'if_atom_parser()' which parses the given
-> %(if) atom and then stores the data in used_atom which is later passed
-> on to the used_atom of the %(then) atom, so that it can do the required
-> comparisons.
+Brandon Williams (6):
+  submodules: add helper functions to determine presence of submodules
+  submodules: load gitmodules file from commit sha1
+  grep: add submodules as a grep source type
+  grep: optionally recurse into submodules
+  grep: enable recurse-submodules to work on <tree> objects
+  grep: search history of moved submodules
 
-Nb. the syntax reminds me a bit of RPM SPEC language.
+ Documentation/git-grep.txt         |  14 ++
+ builtin/grep.c                     | 393 ++++++++++++++++++++++++++++++++++---
+ cache.h                            |   2 +
+ config.c                           |   8 +-
+ git.c                              |   2 +-
+ grep.c                             |  16 +-
+ grep.h                             |   1 +
+ submodule-config.c                 |   6 +-
+ submodule-config.h                 |   3 +
+ submodule.c                        |  50 +++++
+ submodule.h                        |   3 +
+ t/t7814-grep-recurse-submodules.sh | 213 ++++++++++++++++++++
+ 12 files changed, 679 insertions(+), 32 deletions(-)
+ create mode 100755 t/t7814-grep-recurse-submodules.sh
 
-> 
-> Add tests and Documentation for the same.
-> 
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Documentation/git-for-each-ref.txt |  3 +++
->  ref-filter.c                       | 43 +++++++++++++++++++++++++++++++++-----
->  t/t6302-for-each-ref-filter.sh     | 18 ++++++++++++++++
->  3 files changed, 59 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index fed8126..b7b8560 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -155,6 +155,9 @@ if::
->  	evaluating the string before %(then), this is useful when we
->  	use the %(HEAD) atom which prints either "*" or " " and we
->  	want to apply the 'if' condition only on the 'HEAD' ref.
+-- interdiff based on 'bw/grep-recurse-submodules'
 
-So %(if) is actually %(if:notempty) ?  Just kidding.
-
-> +	Append ":equals=<string>" or ":notequals=<string>" to compare
-> +	the value between the %(if:...) and %(then) atoms with the
-> +	given string.
->  
->  In addition to the above, for commit and tag objects, the header
->  field names (`tree`, `parent`, `object`, `type`, and `tag`) can
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 8392303..44481c3 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -22,6 +22,8 @@ struct align {
->  };
->  
->  struct if_then_else {
-> +	const char *if_equals,
-> +		*not_equals;
-
-I guess using anonymous structs from C11 here...
-
->  	unsigned int then_atom_seen : 1,
->  		else_atom_seen : 1,
->  		condition_satisfied : 1;
-> @@ -49,6 +51,10 @@ static struct used_atom {
->  			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
->  			unsigned int nlines;
->  		} contents;
-> +		struct {
-> +			const char *if_equals,
-> +				*not_equals;
-> +		} if_then_else;
-
-...to avoid code duplication there is rather out of question?
-
->  		enum { O_FULL, O_SHORT } objectname;
->  	} u;
->  } *used_atom;
-> @@ -169,6 +175,19 @@ static void align_atom_parser(struct used_atom *atom, const char *arg)
->  	string_list_clear(&params, 0);
->  }
->  
-> +static void if_atom_parser(struct used_atom *atom, const char *arg)
-> +{
-> +	if (!arg)
-> +		return;
-> +	else if (skip_prefix(arg, "equals=", &atom->u.if_then_else.if_equals))
-> +		 ;
-> +	else if (skip_prefix(arg, "notequals=", &atom->u.if_then_else.not_equals))
-> +		;
-
-Those ';' should be perfectly aligned, isn't it?
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 1cd2be9..747b0c3 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -518,9 +518,8 @@ static void compile_submodule_options(const struct grep_opt *opt,
+ 	 * This is to prevent potential fork-bomb behavior of git-grep as each
+ 	 * submodule process has its own thread pool.
+ 	 */
+-	if (num_threads)
+-		argv_array_pushf(&submodule_options, "--threads=%d",
+-				 (num_threads + 1) / 2);
++	argv_array_pushf(&submodule_options, "--threads=%d",
++			 (num_threads + 1) / 2);
  
-[...]
-> +test_expect_success 'check %(if:equals=<string>)' '
-> +	git for-each-ref --format="%(if:equals=master)%(refname:short)%(then)Found master%(else)Not master%(end)" refs/heads/ >actual &&
-> +	cat >expect <<-\EOF &&
-> +	Found master
-> +	Not master
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'check %(if:notequals=<string>)' '
-> +	git for-each-ref --format="%(if:notequals=master)%(refname:short)%(then)Not master%(else)Found master%(end)" refs/heads/ >actual &&
-> +	cat >expect <<-\EOF &&
-> +	Found master
-> +	Not master
-> +	EOF
-> +	test_cmp expect actual
-> +'
-
-Nice!
+ 	/* Add Pathspecs */
+ 	argv_array_push(&submodule_options, "--");
+@@ -542,7 +541,7 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ 	struct work_item *w = opt->output_priv;
+ 
+ 	end_of_base = strchr(gs->name, ':');
+-	if (end_of_base)
++	if (gs->identifier && end_of_base)
+ 		name = end_of_base + 1;
+ 	else
+ 		name = gs->name;
+@@ -558,13 +557,13 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ 
+ 	/*
+ 	 * Add basename of parent project
+-	 * When performing grep on a <tree> object the filename is prefixed
+-	 * with the object's name: '<tree-name>:filename'.  In order to
++	 * When performing grep on a tree object the filename is prefixed
++	 * with the object's name: 'tree-name:filename'.  In order to
+ 	 * provide uniformity of output we want to pass the name of the
+ 	 * parent project's object name to the submodule so the submodule can
+ 	 * prefix its output with the parent's name and not its own SHA1.
+ 	 */
+-	if (end_of_base)
++	if (gs->identifier && end_of_base)
+ 		argv_array_pushf(&cp.args, "--parent-basename=%.*s",
+ 				 (int) (end_of_base - gs->name),
+ 				 gs->name);
+@@ -572,7 +571,7 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ 	/* Add options */
+ 	for (i = 0; i < submodule_options.argc; i++) {
+ 		/*
+-		 * If there is a <tree> identifier for the submodule, add the
++		 * If there is a tree identifier for the submodule, add the
+ 		 * rev after adding the submodule options but before the
+ 		 * pathspecs.  To do this we listen for the '--' and insert the
+ 		 * sha1 before pushing the '--' onto the child process argv
+@@ -615,17 +614,20 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ static int grep_submodule(struct grep_opt *opt, const unsigned char *sha1,
+ 			  const char *filename, const char *path)
+ {
+-	if (!(is_submodule_initialized(path) &&
+-	      is_submodule_populated(path))) {
++	if (!is_submodule_initialized(path))
++		return 0;
++	if (!is_submodule_populated(path)) {
+ 		/*
+ 		 * If searching history, check for the presense of the
+ 		 * submodule's gitdir before skipping the submodule.
+ 		 */
+ 		if (sha1) {
+-			path = git_path("modules/%s",
+-					submodule_from_path(null_sha1, path)->name);
++			const struct submodule *sub =
++					submodule_from_path(null_sha1, path);
++			if (sub)
++				path = git_path("modules/%s", sub->name);
+ 
+-			if (!(is_directory(path) && is_git_directory(path)))
++			if(!(is_directory(path) && is_git_directory(path)))
+ 				return 0;
+ 		} else {
+ 			return 0;
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index ee173ad..7d66716 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -60,7 +60,7 @@ test_expect_success 'grep and nested submodules' '
+ 	submodule/sub/a:foobar
+ 	EOF
+ 
+-	git grep -e "bar" --recurse-submodules > actual &&
++	git grep -e "bar" --recurse-submodules >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -71,7 +71,7 @@ test_expect_success 'grep and multiple patterns' '
+ 	submodule/sub/a:foobar
+ 	EOF
+ 
+-	git grep -e "bar" --and -e "foo" --recurse-submodules > actual &&
++	git grep -e "bar" --and -e "foo" --recurse-submodules >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -80,7 +80,7 @@ test_expect_success 'grep and multiple patterns' '
+ 	b/b:bar
+ 	EOF
+ 
+-	git grep -e "bar" --and --not -e "foo" --recurse-submodules > actual &&
++	git grep -e "bar" --and --not -e "foo" --recurse-submodules >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -92,7 +92,7 @@ test_expect_success 'basic grep tree' '
+ 	HEAD:submodule/sub/a:foobar
+ 	EOF
+ 
+-	git grep -e "bar" --recurse-submodules HEAD > actual &&
++	git grep -e "bar" --recurse-submodules HEAD >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -103,7 +103,7 @@ test_expect_success 'grep tree HEAD^' '
+ 	HEAD^:submodule/a:foobar
+ 	EOF
+ 
+-	git grep -e "bar" --recurse-submodules HEAD^ > actual &&
++	git grep -e "bar" --recurse-submodules HEAD^ >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -113,7 +113,7 @@ test_expect_success 'grep tree HEAD^^' '
+ 	HEAD^^:b/b:bar
+ 	EOF
+ 
+-	git grep -e "bar" --recurse-submodules HEAD^^ > actual &&
++	git grep -e "bar" --recurse-submodules HEAD^^ >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -123,49 +123,80 @@ test_expect_success 'grep tree and pathspecs' '
+ 	HEAD:submodule/sub/a:foobar
+ 	EOF
+ 
+-	git grep -e "bar" --recurse-submodules HEAD -- submodule > actual &&
++	git grep -e "bar" --recurse-submodules HEAD -- submodule >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'grep recurse submodule colon in name' '
++	git init parent &&
++	test_when_finished "rm -rf parent" &&
++	echo "foobar" >"parent/fi:le" &&
++	git -C parent add "fi:le" &&
++	git -C parent commit -m "add fi:le" &&
++
++	git init "su:b" &&
++	test_when_finished "rm -rf su:b" &&
++	echo "foobar" >"su:b/fi:le" &&
++	git -C "su:b" add "fi:le" &&
++	git -C "su:b" commit -m "add fi:le" &&
++
++	git -C parent submodule add "../su:b" "su:b" &&
++	git -C parent commit -m "add submodule" &&
++
++	cat >expect <<-\EOF &&
++	fi:le:foobar
++	su:b/fi:le:foobar
++	EOF
++	git -C parent grep -e "foobar" --recurse-submodules >actual &&
++	test_cmp expect actual &&
++
++	cat >expect <<-\EOF &&
++	HEAD:fi:le:foobar
++	HEAD:su:b/fi:le:foobar
++	EOF
++	git -C parent grep -e "foobar" --recurse-submodules HEAD >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'grep history with moved submoules' '
+ 	git init parent &&
++	test_when_finished "rm -rf parent" &&
+ 	echo "foobar" >parent/file &&
+ 	git -C parent add file &&
+ 	git -C parent commit -m "add file" &&
+ 
+ 	git init sub &&
++	test_when_finished "rm -rf sub" &&
+ 	echo "foobar" >sub/file &&
+ 	git -C sub add file &&
+ 	git -C sub commit -m "add file" &&
+ 
+-	git -C parent submodule add ../sub &&
++	git -C parent submodule add ../sub dir/sub &&
+ 	git -C parent commit -m "add submodule" &&
+ 
+ 	cat >expect <<-\EOF &&
++	dir/sub/file:foobar
+ 	file:foobar
+-	sub/file:foobar
+ 	EOF
+-	git -C parent grep -e "foobar" --recurse-submodules > actual &&
++	git -C parent grep -e "foobar" --recurse-submodules >actual &&
+ 	test_cmp expect actual &&
+ 
+-	git -C parent mv sub sub-moved &&
++	git -C parent mv dir/sub sub-moved &&
+ 	git -C parent commit -m "moved submodule" &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	file:foobar
+ 	sub-moved/file:foobar
+ 	EOF
+-	git -C parent grep -e "foobar" --recurse-submodules > actual &&
++	git -C parent grep -e "foobar" --recurse-submodules >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	cat >expect <<-\EOF &&
++	HEAD^:dir/sub/file:foobar
+ 	HEAD^:file:foobar
+-	HEAD^:sub/file:foobar
+ 	EOF
+-	git -C parent grep -e "foobar" --recurse-submodules HEAD^ > actual &&
+-	test_cmp expect actual &&
+-
+-	rm -rf parent sub
++	git -C parent grep -e "foobar" --recurse-submodules HEAD^ >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_incompatible_with_recurse_submodules ()
 
 -- 
-Jakub Narębski
+2.8.0.rc3.226.g39d4020
 
