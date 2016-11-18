@@ -2,104 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 251DE1FE4E
-	for <e@80x24.org>; Fri, 18 Nov 2016 23:40:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30C981FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 23:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752864AbcKRXk0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 18:40:26 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:33695 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752752AbcKRXkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 18:40:25 -0500
-Received: by mail-wm0-f52.google.com with SMTP id c184so9499271wmd.0
-        for <git@vger.kernel.org>; Fri, 18 Nov 2016 15:40:24 -0800 (PST)
+        id S1752168AbcKRXnP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 18:43:15 -0500
+Received: from mail-yw0-f182.google.com ([209.85.161.182]:34598 "EHLO
+        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751085AbcKRXnN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 18:43:13 -0500
+Received: by mail-yw0-f182.google.com with SMTP id t125so173418655ywc.1
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 15:43:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=gmMDAqKj2YkyEu1gI6zQfxZ/rytV+eGgpHP/WA54oBE=;
-        b=e0Lh8keu21OgblqZnOKznpO5aj2ZfJo/hD/4xPf5E1cYg2imrj3aZ16IsKzZq04Y4f
-         V4FQu/56pFrUP7e5euwkaQrJQgygRZNseNandsMl3vthRffjsJKx45t2263qcj7NgTTt
-         Mi56e52T/CJNDRut6u0CRNwCGcHYerxO7nV2Vq2gFM3XN/ZPyWDm3GRufmyIJn6B70lh
-         Tg7kw5rbf4pV1NkxCt3J3xH3ZWaI5Im2f+4nF8I2tS5ExRG7w+vrQJbESAbRAvD/VEA5
-         Ru5xu4XzBSe3DodCOkRATq9BfpSP6jAezTBmBR0P71n6JQyh0rLJeniEZcwpQCLS7M5H
-         VUiA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=duegpVXWtKfZLgT8ricWtgVPjvG0WkErJZp6RIUtYDY=;
+        b=taSkLYiPOXmPB6OtQHxw5f/EZnDLzp9UYDfqe2A1YvsmD4FiLC45v0FVRdGYAAUIgB
+         WEa5pY4RyuQZm3bZz2hLfx9MqzJLNTgkhPCFWQRKkBNr0Kso914Nz2ctpy3iC/CZAh2G
+         49hh6RfNw3mBJKX2r+dc4uDjvPQEzkgZshz6esm7ZOYTUaMn3mLbZbCao7gUBTCk/kRD
+         RS7tj57ElvwD3MKuDySe+lnniiWUi8EFA499d/BZUd+ZdWveqj1am/azCtd9k3fhvrzD
+         ff0rjLI0ouhm0dfOqETejFEaNQyOH5YlWLeWlQLSf+ZEBhliptc6jvEQdl+EhC1Q+D1L
+         7RHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=gmMDAqKj2YkyEu1gI6zQfxZ/rytV+eGgpHP/WA54oBE=;
-        b=hjrRTqeoQu18Yohoulno7hb7QRPk/uLdIk/Jrx8eTZfVpv8yVxjYsZHTrms4xArNdb
-         sbTx2e2S+7g7y6nGGr70+Lbp4EJG+6uMm1+T9PERASdl266AtY3N3UgamBxhbewszCiv
-         PHGwuVW1z03/3g7V0GSaJB0XUPOQcVd04pRj7sotPNRjMxjqXsmdL8tV7CI5htsVq97B
-         i1Sl7JvEUYvpCsIQdbefIqsIi6dzqrpX5bspFxfGWcqVkZv7+df4L40AG1icSEk1kxOL
-         jZ7LeOLkyP0DRkbBc5Keo+UQORoyThvu+kz2mYWcL2y00+VdFr8Z1KJpdlm/tckrd12g
-         SDeQ==
-X-Gm-Message-State: AKaTC02CAHdAWBOD9vQEoavARNnZFCpMf3eKvWfyxixiC2dMjO/WEM+reqMn1+zFFavPKHeMFaKNYAoZHx4GVg==
-X-Received: by 10.25.29.8 with SMTP id d8mr548898lfd.18.1479512423570; Fri, 18
- Nov 2016 15:40:23 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=duegpVXWtKfZLgT8ricWtgVPjvG0WkErJZp6RIUtYDY=;
+        b=eXyfOvQSPByn1o6kD9EKBxQnQWkd5rFJ4VUYlnE75j6ONUIc4yiBIRpi1/MsV3FunA
+         2Hxd674ylgKmIqtfvX1B+XL+F62whATmqkAnIna8Q4fdgXd3B/Y7GgqJgDr6DY+uRiOB
+         Npi//d9I6yL5Meb/K0sX2li3QXRwBJ/mvWv+45QnMWcm88RdCT56TNsHCAficrB4CvKa
+         Sdt5sbJ/BeEgR1GqXRllwEc/mkatYtlXCGPL6Z++j3knmh1tfJnY1OcFXAob9DFRsSrL
+         /kRmyAX9UKEDpJrjTur/11NXklbQw51LIXp6utFOBy31yi62YKkdtA85jsZ2M13YpE/X
+         JNBQ==
+X-Gm-Message-State: AKaTC02MQE9xX/uI82Pf+eV3sO/8dnxtZoN3nAcdy5h4mQ5tQi4fLQ75dvFHm1iGYBs5qce9I/f850rWlXJ6cQ==
+X-Received: by 10.129.74.65 with SMTP id x62mr2346816ywa.59.1479512592601;
+ Fri, 18 Nov 2016 15:43:12 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.21.75 with HTTP; Fri, 18 Nov 2016 15:40:22 -0800 (PST)
-In-Reply-To: <CAEYvigJ14xYDmRG2N0yTgM4spaaB7s9923w0+e9+QQEeFz0NTQ@mail.gmail.com>
-References: <CAEYvigJ14xYDmRG2N0yTgM4spaaB7s9923w0+e9+QQEeFz0NTQ@mail.gmail.com>
-From:   Matthieu S <matthieu.stigler@gmail.com>
-Date:   Fri, 18 Nov 2016 15:40:22 -0800
-Message-ID: <CAEYvigLz3muWD-QFjMZUn=H3RQoxhTYX9EwB6=aiMjWOEN3CBA@mail.gmail.com>
-Subject: =?UTF-8?B?RndkOiBnaXQgZGlmZiB3aXRoIOKAnC0td29yZC1kaWZmLXJlZ2V44oCdIGV4dHJlbWVseQ==?=
-        =?UTF-8?B?IHNsb3cgY29tcGFyZWQgdG8g4oCcLS13b3JkLWRpZmbigJ0/?=
-To:     git@vger.kernel.org
+Received: by 10.37.33.132 with HTTP; Fri, 18 Nov 2016 15:42:52 -0800 (PST)
+In-Reply-To: <xmqq8tsgl5o4.fsf@gitster.mtv.corp.google.com>
+References: <20161118230825.20952-1-jacob.e.keller@intel.com> <xmqq8tsgl5o4.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 18 Nov 2016 15:42:52 -0800
+Message-ID: <CA+P7+xrQEBYQQhqJQQCpLrs+4WOJOvH1X27w5Ou=2VPT=FegGQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] add format specifiers to display trailers
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+On Fri, Nov 18, 2016 at 3:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+>> Git interpret-trailers will not recognize this as a trailer block
+>> because it doesn't have any standard git tags within it. Would it be ok
+>> to augment the trailer interpretation to say that if we have over 75%
+>> trailers in the block that we accept it even if it doesn't have any real
+>> recognized tags?
+>
+> I thought the documented way to do this is to configure one of your
+> custom trailer as such.  Jonathan?
+>
 
-When giving a custom regex to git diff --word-diff-regex= instead of
-using the default --word-diff (which splits words on whitespace), git
-slows down very considerably... I don't understand why such a speed
-difference?
+That would be fine then, if that works.
 
-(this question was asked on stack overflow, but after two month
-without answer, I'm asking it here instead. Post:
-http://stackoverflow.com/questions/39027864/git-diff-with-word-diff-regex-extremely-slow-compared-to-word-diff).
+>>   pretty: add %bT format for displaying trailers of a commit message
+>
+> Are %(...) taken already?  In longer term, it would be nice if we
+> can unify the --pretty formats and for-each-ref formats, so it is
+> probably better if we avoid adding any new short ones to the former.
+>
 
-Example (sorry, UNIX specific code): create two one-line files, and
-two 200000-lines files:
+Oh, I hadn't considered adding a longer one. I'll rework this to use
+longer ones.
 
-echo aaa,bbb ,12,12,15 >file1.txt
-echo aaa,bbb ,12,12,16 >file2.txt
+> We have %s and %b so that we can reconstruct the whole thing by
+> using both.  It is unclear how %bT fits in this picture.  I wonder
+> if we also need another placeholder that expands to the body of the
+> message without the trailer---otherwise the whole set would become
+> incoherent, no?
+>
 
-awk '{for(i=0;i<200000;i++)print}' file1.txt > file1BIG.txt
-awk '{for(i=0;i<200000;i++)print}' file2.txt > file2BIG.txt
+I'm not entirely sure what to do here. I just wanted a way to easily
+format "just the trailers" of a message. We could add something that
+formats just the non-trailers, that's not too difficult. Not really
+sure what I'd call it though.
 
-Default --word-diff has no issues with the BIG files (cannot see time
-difference):
-
-git diff --word-diff file1.txt file2.txt
-git diff --word-diff file1BIG.txt file2BIG.txt
-
-Now use instead --word-diff-regex= argument (with regex from post:
-http://stackoverflow.com/questions/10482773/also-use-comma-as-a-word-separator-in-diff
-)
-
-git diff --word-diff-regex=[^[:space:],] file1.txt file2.txt
-git diff --word-diff-regex=[^[:space:],] file1BIG.txt file2BIG.txt
-
-Why is the speed so different if one uses --word-diff instead of
---word-diff-regex= ? Is it just because my expression is (slightly)
-more complex than the default one (split on period instead of only
-whitespace) ? Or is it that the default word-diff is implemented
-differently/more efficiently? How can I overcome this speed slowdown?
-
-Thanks!!
-
-Matthieu
-
-
-PS: using git 2.7.4 on Ubuntu 16.04
+Thanks,
+Jake
