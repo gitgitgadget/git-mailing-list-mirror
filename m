@@ -2,117 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 718292021E
-	for <e@80x24.org>; Fri, 18 Nov 2016 08:20:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22A3C1FBB0
+	for <e@80x24.org>; Fri, 18 Nov 2016 11:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752220AbcKRIUF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 03:20:05 -0500
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:33869 "EHLO
-        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751914AbcKRIUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 03:20:04 -0500
-Received: by mail-yw0-f174.google.com with SMTP id t125so158460018ywc.1
-        for <git@vger.kernel.org>; Fri, 18 Nov 2016 00:20:03 -0800 (PST)
+        id S1752900AbcKRL3i (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 06:29:38 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36090 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752483AbcKRL3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 06:29:36 -0500
+Received: by mail-wm0-f68.google.com with SMTP id m203so5171004wma.3
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 03:29:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4sKQRQFnAHASJnBM1v2gq43wTKMChwKqK/DpeK2YVSk=;
-        b=eUhkqkJrFkB5o35WW2lfzCDF4vwzl41+x/z+AjDG4pFtwolTd+DJCuYfZIsXbDwt4a
-         P0g9yqF8jf3oUviIA5a6Bl+i79XIT+8PLuiS4bRf5vpSiH6OMnIar/gt8AXPaKt6EPjH
-         E1vuwHni4VZYdI+Fa6XBJ6ZEUD91cWv2a7v2EEl4RgzyLSKPZuhEzpLuH6Th/S8iNtWz
-         ggw9zgEjQtAB4mC95LT8S1jFauTWdVXO9prBnENxtOYqfDB4Irq7g6o+usIl97RdZYje
-         d5yLk2eO8gzqfqAqhJLqTR+hjKDN8UNlUToXt9k79EHuxLTcPi0qbWdD4CBKLLTrz+65
-         6EfQ==
+        d=daurnimator.com; s=daurnimator;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=umiBjEiK1RelqpvrGv4MvJ6kRx4W0UTXSJz9Yk3Lh7o=;
+        b=Wtl6bTluoC2tZfDdtbNvpG9oFEP2KjywHG/i0uJd6y1AYlTAkchl3iOKB51mL81FrI
+         SE7e94WccKkWn4vOIwaZUdExL92BEHZrRdpo2oiT7U77TlwLIaeSE3yLZ4/WDmeBPukE
+         3h22HT61M4hZuxbwMrRIlPexC2/ZJKEOCsOZ0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4sKQRQFnAHASJnBM1v2gq43wTKMChwKqK/DpeK2YVSk=;
-        b=NF0JqGamOUA2lR2sGrzoztpC+2RxDTOxGyX17mTM4n/EBEzvjUwbYz2V5TpVWt7zv9
-         q80/lvOG1Wr+x0E2ynJYdNBe5pkzxX0YA0EKoIBlPHE5j03ZlcaY63DnDYtif3UNIcrs
-         jk6VkaiTmHOqpS+rtE9SUyHCdlA1s301ZSwovKy2u8WdF1vo4teb161sXnMq7+sMemvo
-         RYgpxf0X7M7yUGfSJ/HGkPqVaNP6qCrRdtr9f5ZbaiNVAua0FClgwWV14MnOT8QNqGSp
-         SE7Q9shYUSyCqa01B0rwrE8UpP+48XivuKpBGq7B0y9V2lr2XfVtvL8vvj8cK1bQ8zc8
-         9aDg==
-X-Gm-Message-State: AKaTC031Zf9Ld+qbRaghJYRu+g8V38qFclJ5cbA+8afXqyvvltrANxXxDY65BbNWVjYO5jjPmFobx6VjqkNTiw==
-X-Received: by 10.13.254.71 with SMTP id o68mr7365553ywf.318.1479457203240;
- Fri, 18 Nov 2016 00:20:03 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=umiBjEiK1RelqpvrGv4MvJ6kRx4W0UTXSJz9Yk3Lh7o=;
+        b=M3kmMCpks0hzmfMFtDJ+vi1NSO+MP4xZAlfW6V6dFiMO7DzGCsShhbDvTQ8pgRcCxf
+         EVJRP1rHzhGSMIfgetLV1a1p6BwwjcoOtb9rQCfhIpOsKu0i4CqIDIoiDMnr+llpzsNl
+         BLjVlhiW0ana5nGZDesS/PEsnwg4qEtvYSnwiroTCofT2/UNRlTkbepaOTV/G3g1mH8M
+         la6+8TW9Jb25p84k23S08w4Qzoamv/0oVH0/JakVVw+hjZM713gWigG4+GQ+Y+pdeVnT
+         NZzb9FydNhGcFtlHWoVjaFeK6PZuLDM6kMg4WGVgAJfTw7RR8Hy55t74mbp9R2Ba41hn
+         AhfQ==
+X-Gm-Message-State: ABUngvdqLVfuUY8YhLRVxyew9xp20wiil2tit3CJ2ThazItjLyhrL9+PKi1rQXBsN7N2Pg==
+X-Received: by 10.28.150.75 with SMTP id y72mr23365692wmd.47.1479468574701;
+        Fri, 18 Nov 2016 03:29:34 -0800 (PST)
+Received: from mail-wm0-f47.google.com (mail-wm0-f47.google.com. [74.125.82.47])
+        by smtp.gmail.com with ESMTPSA id w66sm2899885wme.4.2016.11.18.03.29.33
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Nov 2016 03:29:33 -0800 (PST)
+Received: by mail-wm0-f47.google.com with SMTP id f82so31375294wmf.1
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 03:29:33 -0800 (PST)
+X-Received: by 10.25.219.69 with SMTP id s66mr1620074lfg.116.1479468572750;
+ Fri, 18 Nov 2016 03:29:32 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Fri, 18 Nov 2016 00:19:42 -0800 (PST)
-In-Reply-To: <CAOLa=ZTVTZ+1dXpcp=kdoGbT1Feq=vOfFpNpBiZepajMucraPQ@mail.gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-14-Karthik.188@gmail.com>
- <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com>
- <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com>
- <xmqq60nqzuye.fsf@gitster.mtv.corp.google.com> <CAOLa=ZSFuq2+6xsrJ=CcXuOVbTnbDirbRtu7Fonfk+9EdRpbxg@mail.gmail.com>
- <xmqqy40lx2k8.fsf@gitster.mtv.corp.google.com> <CAOLa=ZQepW9GiUrKEWXojpy10B86K-jb84G_dJeL=mqtjZ4AWg@mail.gmail.com>
- <CA+P7+xo6OqcpLZ7v_m1EPm85eK2xCPD_LCw1Ly2RSPeSC0Ei7g@mail.gmail.com>
- <xmqq4m38vdw4.fsf@gitster.mtv.corp.google.com> <CAOLa=ZSaTdACC60g6D6k5frjKkChbkBL8+kLJjNgoutLSe8mOQ@mail.gmail.com>
- <xmqqmvgynee4.fsf@gitster.mtv.corp.google.com> <CAOLa=ZTVTZ+1dXpcp=kdoGbT1Feq=vOfFpNpBiZepajMucraPQ@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 18 Nov 2016 00:19:42 -0800
-Message-ID: <CA+P7+xo847HRkm1Kur0mdB15OgwVMOckuK5fXNMkPxDGkK1XGA@mail.gmail.com>
-Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for
- ref printing atoms
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
+Received: by 10.25.21.102 with HTTP; Fri, 18 Nov 2016 03:29:32 -0800 (PST)
+From:   Daurnimator <quae@daurnimator.com>
+Date:   Fri, 18 Nov 2016 22:29:32 +1100
+X-Gmail-Original-Message-ID: <CAEnbY+cEts2HrDLGd-5S9JC6PUrON_TpiyGy_=DAEbOT5z=MJw@mail.gmail.com>
+Message-ID: <CAEnbY+cEts2HrDLGd-5S9JC6PUrON_TpiyGy_=DAEbOT5z=MJw@mail.gmail.com>
+Subject: Staging chunks can get confused
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 17, 2016 at 11:33 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Hey,
->
-> On Fri, Nov 18, 2016 at 12:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> On Tue, Nov 15, 2016 at 11:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> Jacob Keller <jacob.keller@gmail.com> writes:
->>>> ...
->>>> I think you are going in the right direction.  I had a similar
->>>> thought but built around a different axis.  I.e. if strip=1 strips
->>>> one from the left, perhaps we want to have rstrip=1 that strips one
->>>> from the right, and also strip=-1 to mean strip everything except
->>>> one from the left and so on?
->>> ...
->>
->>> If we do implement strip with negative numbers, it definitely
->>> would be neat, but to get the desired feature which I've mentioned
->>> below, we'd need to call strip twice, i.e
->>> to get remotes from /refs/foo/abc/xyz we'd need to do
->>> strip=1,strip=-1, which could be
->>> done but ...
->>
->> ... would be unnecessary if this is the only use case:
->>
->>> strbuf_addf(&fmt,
->>> "%%(if:notequals=remotes)%%(refname:base)%%(then)%s%%(else)%s%%(end)",
->>> local.buf, remote.buf);
->>
->> You can "strip to leave only 2 components" and compare the result
->> with refs/remotes instead, no?
->>
->
-> Of course, my only objective was that someone would find it useful to
-> have these two additional
-> atoms. So if you think it's unnecessary we could drop it entirely :D
->
-> --
-> Regards,
-> Karthik Nayak
+Tonight I was staging changes with `git add -p` and noticed they got
+applied at the *wrong* location.
+My guess is that when you stage a hunk it doesn't do a line number
+fix-up for earlier unstaged hunks in the file.
 
-I think having strip and rstrip make sense, (along with support for
-negative numbers) I don't think we need to make them work together
-unless someone is interested, since we can use strip=-2 to get the
-behavior we need today.
+Screencast: https://asciinema.org/a/7y9qhr0837a7t96m8w14mupnk
+Alternatively, an example follows:
 
-Thanks,
-Jake
+$ git add -p
+diff --git a/unistring/unistring.c b/unistring/unistring.c
+index 62bbc8a..45ced5d 100644
+--- a/unistring/unistring.c
++++ b/unistring/unistring.c
+@@ -17,6 +17,27 @@ static const char *const uninormnames[] = {"NFD",
+"NFC", "NFKD", "NFKC", NULL};
+ #define lunistring_optuninorm(L, arg)
+(lua_isnoneornil(L,(arg))?NULL:lunistring_checkuninorm((L), (arg)))
+
+
++const uint8_t * u8_check (const uint8_t *s, size_t n);
++int u8_mblen (const uint8_t *s, size_t n);
++int u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n);
++int u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
++int u8_mbtoucr (ucs4_t *puc, const uint8_t *s, size_t n);
++int u8_uctomb (uint8_t *s, ucs4_t uc, int n);
++size_t u8_mbsnlen (const uint8_t *s, size_t n);
++
++int u8_strmblen (const uint8_t *s);
++int u8_strmbtouc (ucs4_t *puc, const uint8_t *s);
++const uint8_t * u8_next (ucs4_t *puc, const uint8_t *s);
++const uint8_t * u8_prev (ucs4_t *puc, const uint8_t *s, const uint8_t *start);
++
++uint8_t * u8_conv_from_encoding (const char *fromcode, enum
+iconv_ilseq_handler handler, const char *src, size_t srclen, size_t
+*offsets, uint8_t *resultbuf, size_t *lengthp);
++char * u8_conv_to_encoding (const char *tocode, enum
+iconv_ilseq_handler handler, const uint8_t *src, size_t srclen, size_t
+*offsets, char *resultbuf, size_t *lengthp);
++uint8_t * u8_strconv_from_encoding (const char *string, const char
+*fromcode, enum iconv_ilseq_handler handler);
++char * u8_strconv_to_encoding (const uint8_t *string, const char
+*tocode, enum iconv_ilseq_handler handler);
++uint8_t * u8_strconv_from_locale (const char *string);
++char * u8_strconv_to_locale (const uint8_t *string);
++
++
+ static int lunistring_width(lua_State *L) {
+  size_t n;
+  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
+Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? n
+@@ -27,6 +48,17 @@ static int lunistring_width(lua_State *L) {
+ }
+
+
++int u8_strwidth (const uint8_t *s, const char *encoding);
++void u8_wordbreaks (const uint8_t *s, size_t n, char *p);
++void u8_possible_linebreaks (const uint8_t *s, size_t n, const char
+*encoding, char *p);
++int u8_width_linebreaks (const uint8_t *s, size_t n, int width, int
+start_column, int at_end_columns, const char *override, const char
+*encoding, char *p);
++
++
++int uc_decomposition (ucs4_t uc, int *decomp_tag, ucs4_t *decomposition);
++int uc_canonical_decomposition (ucs4_t uc, ucs4_t *decomposition);
++ucs4_t uc_composition (ucs4_t uc1, ucs4_t uc2);
++
++
+ static int lunistring_normalize(lua_State *L) {
+  uninorm_t nf = lunistring_optuninorm(L, 1);
+  size_t n;
+Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
+@@ -54,6 +86,9 @@ static int lunistring_normalize(lua_State *L) {
+ }
+
+
++int u8_normcmp (const uint8_t *s1, size_t n1, const uint8_t *s2,
+size_t n2, uninorm_t nf, int *resultp);
++
++
+ static int lunistring_normxfrm(lua_State *L) {
+  size_t n;
+  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
+Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
+@@ -83,6 +118,9 @@ static int lunistring_normxfrm(lua_State *L) {
+ }
+
+
++int u8_normcoll (const uint8_t *s1, size_t n1, const uint8_t *s2,
+size_t n2, uninorm_t nf, int *resultp);
++
++
+ static int lunistring_uc_locale_language(lua_State *L) {
+  lua_pushstring(L, uc_locale_language());
+  return 1;
+Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
+@@ -173,6 +211,15 @@ static int lunistring_totitle(lua_State *L) {
+ }
+
+
++casing_prefix_context_t u8_casing_prefix_context (const uint8_t *s, size_t n);
++casing_prefix_context_t u8_casing_prefixes_context (const uint8_t *s,
+size_t n, casing_prefix_context_t a_context);
++casing_suffix_context_t u8_casing_suffix_context (const uint8_t *s, size_t n);
++casing_suffix_context_t u8_casing_suffixes_context (const uint8_t *s,
+size_t n, casing_suffix_context_t a_context);
++uint8_t * u8_ct_toupper (const uint8_t *s, size_t n,
+casing_prefix_context_t prefix_context, casing_suffix_context_t
+suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
+*resultbuf, size_t *lengthp);
++uint8_t * u8_ct_tolower (const uint8_t *s, size_t n,
+casing_prefix_context_t prefix_context, casing_suffix_context_t
+suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
+*resultbuf, size_t *lengthp);
++uint8_t * u8_ct_totitle (const uint8_t *s, size_t n,
+casing_prefix_context_t prefix_context, casing_suffix_context_t
+suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
+*resultbuf, size_t *lengthp);
++
++
+ static int lunistring_casefold(lua_State *L) {
+  size_t n;
+  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
+Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
+@@ -201,6 +248,10 @@ static int lunistring_casefold(lua_State *L) {
+ }
+
+
++uint8_t * u8_ct_casefold (const uint8_t *s, size_t n,
+casing_prefix_context_t prefix_context, casing_suffix_context_t
+suffix_context, const char *iso639_language, uninorm_t nf, uint8_t
+*resultbuf, size_t *lengthp);
++int u8_casecmp (const uint8_t *s1, size_t n1, const uint8_t *s2,
+size_t n2, const char *iso639_language, uninorm_t nf, int *resultp);
++
++
+ static int lunistring_casexfrm(lua_State *L) {
+  size_t n;
+  const uint8_t *s = (const uint8_t*)luaL_checklstring(L, 1, &n);
+Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
+@@ -230,6 +281,9 @@ static int lunistring_casexfrm(lua_State *L) {
+ }
+
+
++int u8_casecoll (const uint8_t *s1, size_t n1, const uint8_t *s2,
+size_t n2, const char *iso639_language, uninorm_t nf, int *resultp);
++
++
+ static int lunistring_casecoll(lua_State *L) {
+  size_t n1, n2;
+  const uint8_t *s1 = (const uint8_t*)luaL_checklstring(L, 1, &n1);
+Stage this hunk [y,n,q,a,d,/,K,j,J,g,e,?]? n
+@@ -288,7 +342,7 @@ static int lunistring_is_titlecase(lua_State *L) {
+  return luaL_fileresult(L, 0, NULL);
+  }
+
+- lua_pushboolean(L, resultp);
++ lua_pushinteger(L, resultp);
+  return 1;
+ }
+
+Stage this hunk [y,n,q,a,d,/,K,g,e,?]? y
+
+$ git diff --cached
+diff --git a/unistring/unistring.c b/unistring/unistring.c
+index 62bbc8a..ea85d65 100644
+--- a/unistring/unistring.c
++++ b/unistring/unistring.c
+@@ -318,7 +318,7 @@ static int lunistring_is_cased(lua_State *L) {
+                return luaL_fileresult(L, 0, NULL);
+        }
+
+-       lua_pushboolean(L, resultp);
++       lua_pushinteger(L, resultp);
+        return 1;
+ }
