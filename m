@@ -2,128 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 156DE1FE4E
-	for <e@80x24.org>; Fri, 18 Nov 2016 23:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23A361FE4E
+	for <e@80x24.org>; Fri, 18 Nov 2016 23:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753098AbcKRXcB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 18:32:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55158 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752774AbcKRXcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2016 18:32:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5472B4F7D4;
-        Fri, 18 Nov 2016 18:31:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fS9wDuK8gBm2rII5xTjbu0UGIbM=; b=lp1VTL
-        Hg3g+lSU2YmePNwu85mNN2ZKAAlhagwF+abbP/Dx0KEgGNIHaM2oGveSPrnZa+i1
-        jmh+37HVecXZ/Rtt5k4rgKXHaph16LRrAMiJpDPCWOgzRhT01rDDBStQD7UmUspn
-        jjaD6m/7RGYFbL6N6IFK3ebg8NPXRnIKkJXZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aExM+miN0bVvpyMULeclWhFEJeSBCxaC
-        gJotYA1YzRYgIaLOWvlguSEaAUnztWA1upG6hpj//6uEKe9XBG/MutltTLURdC3I
-        rAzH+umE8NP7rCKXxYSJASgFrMBa2f2Zk24h86lxaL8CH0LJByUP3cOrt9zmMqzK
-        R0TaKR2g5J0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46A444F7D3;
-        Fri, 18 Nov 2016 18:31:59 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B9B84F7D2;
-        Fri, 18 Nov 2016 18:31:58 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v7 00/17] port branch.c to use ref-filter's printing options
-References: <20161108201211.25213-1-Karthik.188@gmail.com>
-        <xmqqbmxgtqxv.fsf@gitster.mtv.corp.google.com>
-        <CAOLa=ZQtmQWpFMPa-SD29N7hASHAPp8SGGJsLu+AW_Kv-1LqwA@mail.gmail.com>
-Date:   Fri, 18 Nov 2016 15:31:57 -0800
-In-Reply-To: <CAOLa=ZQtmQWpFMPa-SD29N7hASHAPp8SGGJsLu+AW_Kv-1LqwA@mail.gmail.com>
-        (Karthik Nayak's message of "Wed, 16 Nov 2016 21:01:35 +0530")
-Message-ID: <xmqqd1hsl5zm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752634AbcKRXdZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 18:33:25 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:33535 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752480AbcKRXdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2016 18:33:24 -0500
+Received: by mail-qk0-f169.google.com with SMTP id x190so283664422qkb.0
+        for <git@vger.kernel.org>; Fri, 18 Nov 2016 15:33:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=z3BogOvzCABZ0GLF8lvxYYo3bE5x/P+sgYXYr1h4DUA=;
+        b=oIqfCWOBVSJefOBop5fhm90PqccHp50nzHV+qfTiC6aRADRFr5dhpOY7aGipNl5t/N
+         KSc+NQUHoixFzJeFLbDClsW8vD8WF/1FAd6vnC+ByJBIFI1sjZXybeVSwpxfj6B1Z+cL
+         BdJ7qelETii94R3ZA/kzaBy83OnwYVSUBcwvhyYMPvA7yy629ugpDPUwQ5RF7Nj3ND6p
+         ZpALmcZDQ40f2UX2R+Mv9effcmBwH8o00MaGELRWDw1C4fTdDkeUGA47XK8zqbldvhQk
+         BSGP5k5E3IhB4+oSfyR2oWrDSKdDlp7hz2/3BWy3YX/y5z2jdeT2Y1do6kplKQ9ewhZK
+         s4Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=z3BogOvzCABZ0GLF8lvxYYo3bE5x/P+sgYXYr1h4DUA=;
+        b=mWd8ijf5oOjI6W0hw9vvZXoGE69vz8o8kjLXoezh6R2ig4mJ/nOUjODOjFKdelWENw
+         cXL0lOUndRP3jVv/bYIGhBTP6vdNr/4mIL6V69aQgKakvGaajR/bGasIs2vYxgh7I52o
+         vFfZtY2gKsjCnOvOp9kOIkUKni2Ae+Q277v1irhat+uLx9S3XExsUfnnohk4ncTJ23Gf
+         2e5P+S6TPcuxDNpVJNNDxnwWW8meDscuEsz09sh8+Yq+FrsqGkywnmGWjl8oMcFqM+zK
+         tfiPcLaMAqPYgrrAUwYC2690QiVvvIT4XqnC1muRA/aStVeNGPvSASSvUo9El7ewgmjD
+         4OBQ==
+X-Gm-Message-State: AKaTC02GHw8r2jNwBa4b6EUaoUucA9T73twCua4zHOoTppjNEPuwS8Dk0Q7M0ZRWO3YTwWAsnYom71/qVZiigcl5
+X-Received: by 10.55.186.3 with SMTP id k3mr3122115qkf.47.1479512003236; Fri,
+ 18 Nov 2016 15:33:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 33072DA2-ADE7-11E6-B697-987C12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.134.65 with HTTP; Fri, 18 Nov 2016 15:33:22 -0800 (PST)
+In-Reply-To: <f54d446aa7734cb4aec4b51c7b81a2b6@exmbdft7.ad.twosigma.com>
+References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-14-sbeller@google.com>
+ <f54d446aa7734cb4aec4b51c7b81a2b6@exmbdft7.ad.twosigma.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 18 Nov 2016 15:33:22 -0800
+Message-ID: <CAGZ79kb-TKgQm1_p3NyJS7mso2FFWMNHa7F8vwzocjSJfyjXJQ@mail.gmail.com>
+Subject: Re: [PATCH 13/16] submodule: teach unpack_trees() to update submodules
+To:     David Turner <David.Turner@twosigma.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jrnieder@gmail.com" <jrnieder@gmail.com>,
+        "mogulguy10@gmail.com" <mogulguy10@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Tue, Nov 15, 2016 at 4:22 PM, David Turner <David.Turner@twosigma.com> wrote:
+>>       msgs[ERROR_NOT_UPTODATE_DIR] =
+>>               _("Updating the following directories would lose untracked
+>> files in it:\n%s");
+>> +     msgs[ERROR_NOT_UPTODATE_SUBMODULE] =
+>> +             _("Updating the following submodules would lose modifications
+>> in
+>> +it:\n%s");
+>
+> s/it/them/
 
-> Thanks, will add it in.
+done, also fixed the existing ERROR_NOT_UPTODATE_DIR.
 
-OK, here is a reroll of what I sent earlier in
+>> +             if (!S_ISGITLINK(ce->ce_mode)) {
+>
+> I generally prefer to avoid if (!x) { A } else { B } -- I would rather just see if (x) { B } else { A }.
 
-    http://public-inbox.org/git/<xmqq7f84tqa7.fsf_-_@gitster.mtv.corp.google.com>
+done.
 
-but rebased so that it can happen as a preparatory bugfix before
-your series.  
+>> +                             if (submodule_is_interesting(old->name, null_sha1)
+>> +                                 && ok_to_remove_submodule(old->name))
+>> +                                     return 0;
+>> +                     }
+>
+> Do we need a return 1 in here somewhere?  Because otherwise, we fall through and return 0 later.
 
-The bug dates back to the very original implementation of %(HEAD) in
-7a48b83219 ("for-each-ref: introduce %(HEAD) asterisk marker",
-2013-11-18) and was moved to the current location in the v2.6 days
-at c95b758587 ("ref-filter: move code from 'for-each-ref'",
-2015-06-14).
+Otherwise we would fall through and run
 
--- >8 --
-Subject: [PATCH] for-each-ref: do not segv with %(HEAD) on an unborn branch
+    if (errno == ENOENT)
+        return 0;
+    return o->gently ? -1 :
+        add_rejected_path(o, error_type, ce->name);
 
-The code to flip between "*" and " " prefixes depending on what
-branch is checked out used in --format='%(HEAD)' did not consider
-that HEAD may resolve to an unborn branch and dereferenced a NULL.
-
-This will become a lot easier to trigger as the codepath will be
-used to reimplement "git branch [--list]" in the future.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ref-filter.c            |  2 +-
- t/t6300-for-each-ref.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index bc551a752c..d7e91a78da 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1017,7 +1017,7 @@ static void populate_value(struct ref_array_item *ref)
- 
- 			head = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
- 						  sha1, NULL);
--			if (!strcmp(ref->refname, head))
-+			if (head && !strcmp(ref->refname, head))
- 				v->s = "*";
- 			else
- 				v->s = " ";
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 19a2823025..039509a9cb 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -553,4 +553,14 @@ test_expect_success 'Verify sort with multiple keys' '
- 		refs/tags/bogo refs/tags/master > actual &&
- 	test_cmp expected actual
- '
-+
-+test_expect_success 'do not dereference NULL upon %(HEAD) on unborn branch' '
-+	test_when_finished "git checkout master" &&
-+	git for-each-ref --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
-+	sed -e "s/^\* /  /" actual >expect &&
-+	git checkout --orphan HEAD &&
-+	git for-each-ref --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.11.0-rc2-152-gc9ad1dc38a
-
+which produces different results than 0?
