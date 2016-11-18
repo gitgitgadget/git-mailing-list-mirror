@@ -2,114 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F43A1FF40
-	for <e@80x24.org>; Fri, 18 Nov 2016 00:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7355B1FF40
+	for <e@80x24.org>; Fri, 18 Nov 2016 04:48:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751288AbcKRA21 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Nov 2016 19:28:27 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:32841 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751134AbcKRA20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2016 19:28:26 -0500
-Received: by mail-qk0-f172.google.com with SMTP id x190so243842698qkb.0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2016 16:28:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NX+Jp1cM7QB8lGDU2DfkOshw1650eQkg0gcgOArYqSM=;
-        b=N60f26IuTsQvdYc3+NSrBNv4ouuCdOVBVP4ze5ec6TImi8jr8s1vw+hw16jyFySwfr
-         KnzWr1lGX9NqIGw1ysIAuc56mpaojLvVkmbLFrq/yBmZO67J8xX0KVf71heZf4j1dH4P
-         K8olen2wc5jvmcsRXXeoG3QL2x25AT+bUdNNCV6x3eA9DZnbQVKlFRqTelIedzzZDvH+
-         aAprp5dK0yOwzdjNepQr8UsC8MH3qtCuNyE4NisVGKjnFDhjY9glkY8bUTl3/75ocvpZ
-         qPFEPar0IYEI1XoHK1Un4U5daX4CmXK2RLVenxKkoRfYmr5jrGPgu3FYM3mpNmDJU3+D
-         vdow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NX+Jp1cM7QB8lGDU2DfkOshw1650eQkg0gcgOArYqSM=;
-        b=hAKGL7piBFezUl5qUZXyPDP/6XG2Y+bcmY7XLBoGji8Sz3Sopw0mBy1deVczgqzuhM
-         VTXtOWhbzj+fcKDjmYdZYm9N1BMukxwlS9OCNeZI0MzqjTj+OPqxNhPD9dPTU1iyAJb9
-         yf5JwOV6g1kmVkr1saCQVMiEQ2wkuh4kRML+on3YTerQA00gXhci/X3M/pR7nQqLEPBf
-         H6JnycrUhpFBdIJE5goZQRXFrKFHlCo5zp/KzwAfq0I6HxCO07H3F8nVl8T3i5I4zwnA
-         ZBR1hAxra2VwRsQ9jRclXAruGBgpblZM18Bn58q1g7mkdqbfvXXU6M3IKpN0AwJF9EU0
-         lTYA==
-X-Gm-Message-State: AKaTC01tLuzvBl7Skzo4f9yRiwyAdc/GMWSqCzQ1DLeDaxaWl/RB6xCTBJCTJQvzGSepApFX7jjr4OliV0E9yXl8
-X-Received: by 10.55.20.164 with SMTP id 36mr6929604qku.86.1479428905435; Thu,
- 17 Nov 2016 16:28:25 -0800 (PST)
+        id S1751520AbcKREr6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Nov 2016 23:47:58 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58778 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751021AbcKREr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2016 23:47:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C2CC050F99;
+        Thu, 17 Nov 2016 23:47:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=19A/WKAPjoDXfShX1esX49iHFYc=; b=kcx+VC
+        WkJ5woclAACNDTRwrBGGOr3XOsqnml6AUYS/b3h2TYJnOrPnrdR9oEtrCeueT7FW
+        oThIcuD2TKFODeqdDp32Z89zvI7c3P5PXW+OoxSGVxr0OCa3zQY7D/iTYHT4sufk
+        SsLpGLX9hkDnJh3MIbHirAFSkSH2VMx664AhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LdUFjsnGafihEXxPwSgBkBEc9XElkDZB
+        BU9cfAQtn8Au+/+0VblaIpwE9xu3KXthbynIy7VnyqxcI2AXrm4JHhngv9xb1Vpl
+        2EyKLK48KqnSoAFDAFIfUCRfHdrB41G0OPQZBbGKBqF69lEvaF+21jGA+oTFvLEO
+        CDDVGB6Q0Us=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9D2150F98;
+        Thu, 17 Nov 2016 23:47:55 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33C4F50F97;
+        Thu, 17 Nov 2016 23:47:55 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH] submodules: allow empty working-tree dirs in merge/cherry-pick
+References: <1478543491-6286-1-git-send-email-dturner@twosigma.com>
+Date:   Thu, 17 Nov 2016 20:47:54 -0800
+In-Reply-To: <1478543491-6286-1-git-send-email-dturner@twosigma.com> (David
+        Turner's message of "Mon, 7 Nov 2016 13:31:31 -0500")
+Message-ID: <xmqqwpg1mm11.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Thu, 17 Nov 2016 16:28:25 -0800 (PST)
-In-Reply-To: <20161116000236.GF66382@google.com>
-References: <20161115230651.23953-1-sbeller@google.com> <20161115230651.23953-10-sbeller@google.com>
- <20161116000236.GF66382@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Nov 2016 16:28:25 -0800
-Message-ID: <CAGZ79kY1umjAF2jsvTHoG=M21a3VqcvjM5NZYiMr+qAkv5_APw@mail.gmail.com>
-Subject: Re: [PATCH 09/16] update submodules: add scheduling to update submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Martin Fick <mogulguy10@gmail.com>,
-        David Turner <David.Turner@twosigma.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B9CEF5E-AD4A-11E6-94B5-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 15, 2016 at 4:02 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 11/15, Stefan Beller wrote:
->> +
->> +     child_process_clear(&cp);
->> +     return 0;
->> +}
->
-> If run command is successful then it handles the clearing of the child
-> process struct, correct?  Is there a negative to having all the explicit
-> clears when the child was successful?
+David Turner <dturner@twosigma.com> writes:
 
-void child_process_clear(struct child_process *child)
-{
-    argv_array_clear(&child->args);
-    argv_array_clear(&child->env_array);
-}
+> diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+> index 470f334..be074a1 100755
+> --- a/t/t3030-merge-recursive.sh
+> +++ b/t/t3030-merge-recursive.sh
+> @@ -575,13 +575,13 @@ test_expect_success 'merge removes empty directories' '
+>  	test_must_fail test -d d
+>  '
+>  
+> -test_expect_failure 'merge-recursive simple w/submodule' '
+> +test_expect_success 'merge-recursive simple w/submodule' '
+>  
+>  	git checkout submod &&
+>  	git merge remove
+>  '
+>  
+> -test_expect_failure 'merge-recursive simple w/submodule result' '
+> +test_expect_sucess 'merge-recursive simple w/submodule result' '
 
-I don't think so, as clearing empty arg arrays is a no op.
+Here is a typo.  I wonder if we want to do "set -e" at the end of
+test-lib.sh to catch a breakage like this.  I only caught it by
+being lucky (I was staring "make test" output as it flew by).
 
->> +#define SCHEDULED_SUBMODULES_INIT {NULL, NULL}
->
-> I may not know enough about these types of initializors but that Init
-> macro only has 2 entries while there are three entries in the struct
-> itself.
-
-Filled up to 3 to be explicit.
-
->
->> +
->> +int scheduled_submodules_nr, scheduled_submodules_alloc;
->
-> Should these globals be static since they should be scoped to only this
-> file?
-
-Of course, done.
-
->
-> nit: organization wise it makes more sense to me to have the
-> 'update_submodule' helper function be located more closely to the
-> 'update_submodules' function.
->
-
-done
-
-
-David wrote:
-> In fact, only the first NULL is necessary; unspecified initializer entries in C default to zero.
-
-as said above, I explicitly init all of them now.
+I've already amended the copy I have, but in case you are going to
+reroll in the future, please do not forget to update your copy.
