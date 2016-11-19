@@ -6,30 +6,32 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00A401FE4E
-	for <e@80x24.org>; Sat, 19 Nov 2016 00:58:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98C751FE4E
+	for <e@80x24.org>; Sat, 19 Nov 2016 00:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753324AbcKSA6S (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Nov 2016 19:58:18 -0500
+        id S1753416AbcKSA6U (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Nov 2016 19:58:20 -0500
 Received: from mga06.intel.com ([134.134.136.31]:51846 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753248AbcKSA6S (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753261AbcKSA6S (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 18 Nov 2016 19:58:18 -0500
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
   by orsmga104.jf.intel.com with ESMTP; 18 Nov 2016 16:58:16 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.31,660,1473145200"; 
-   d="scan'208";a="6355625"
+   d="scan'208";a="6355626"
 Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
   by orsmga002.jf.intel.com with ESMTP; 18 Nov 2016 16:58:16 -0800
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH 0/2] add format specifiers to display trailers
-Date:   Fri, 18 Nov 2016 16:58:13 -0800
-Message-Id: <20161119005815.3646-1-jacob.e.keller@intel.com>
+Subject: [PATCH v2 1/2] pretty: add %(trailers) format for displaying trailers of a commit message
+Date:   Fri, 18 Nov 2016 16:58:14 -0800
+Message-Id: <20161119005815.3646-2-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.11.0.rc2.152.g4d04e67
+In-Reply-To: <20161119005815.3646-1-jacob.e.keller@intel.com>
+References: <20161119005815.3646-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -37,51 +39,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-This is based off of jt/use-trailer-api-in-commands so that we can make
-use of the public trailer API that will parse a string for trailers.
+Recent patches have expanded on the trailers.c code and we have the
+builtin commant git-interpret-trailers which can be used to add or
+modify trailer lines. However, there is no easy way to simply display
+the trailers of a commit message.
 
-I use trailers as a way to store extra commit metadata, and would like a
-convenient way to obtain the trailers of a commit message easily. This
-adds format specifiers to both the ref-filter API and the pretty
-format specifiers, using %(trailers) for both (and also
-contents:trailers for ref-filter).
+Add support for %(trailers) format modifier which will use the
+trailer_info_get() calls to read trailers in an identical way as git
+interpret-trailers does. Use a long format option instead of a short
+name so that future work can more easily unify ref-filter and pretty
+formats.
 
-Additionally, I am somewhat not a fan of the way that if you have a
-series of trailers which are trailer format, but not recognized, such
-as the following:
+Add documentation and tests for the same.
 
-	<text>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/pretty-formats.txt |  2 ++
+ pretty.c                         | 17 +++++++++++++++++
+ t/t4205-log-pretty-formats.sh    | 26 ++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+)
 
-	My-tag: my value
-	My-other-tag: my other value
-	[non-trailer line]
-	My-tag: my third value
-
-Git interpret-trailers will not recognize this as a trailer block
-because it doesn't have any standard git tags within it.
-
-Junio suggested that we should treat all the configured trailer prefixes
-as recognized so that it would work as well, but it doesn't appear to
-do this at least for jt/use-trailer-api-in-commands
-
-I think that's the right solution, since it's extensible, though it
-would mean that interpret-trailers would behave differently on different
-systems... not really sure it's all bad though.
-
-interdiff v1:
-diff --git c/Documentation/pretty-formats.txt w/Documentation/pretty-formats.txt
-index 9ee68a4cb64a..47b286b33e4e 100644
---- c/Documentation/pretty-formats.txt
-+++ w/Documentation/pretty-formats.txt
-@@ -138,7 +138,6 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
--- '%bT': trailers of body as interpreted by linkgit:git-interpret-trailers[1]
- - '%B': raw body (unwrapped subject and body)
- ifndef::git-rev-list[]
- - '%N': commit notes
-@@ -200,6 +199,8 @@ endif::git-rev-list[]
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 3bcee2ddb124..47b286b33e4e 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -199,6 +199,8 @@ endif::git-rev-list[]
    than given and there are spaces on its left, use those spaces
  - '%><(<N>)', '%><|(<N>)': similar to '% <(<N>)', '%<|(<N>)'
    respectively, but padding both sides (i.e. the text is centered)
@@ -90,68 +72,83 @@ index 9ee68a4cb64a..47b286b33e4e 100644
  
  NOTE: Some placeholders may depend on other options given to the
  revision traversal engine. For example, the `%g*` reflog options will
-diff --git c/pretty.c w/pretty.c
-index ea8764334865..5e683830d9d6 100644
---- c/pretty.c
-+++ w/pretty.c
-@@ -1300,16 +1300,15 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
-		format_sanitized_subject(sb, msg + c->subject_off);
-		return 1;
-	case 'b':	/* body */
--		switch (placeholder[1]) {
--		case 'T':
--			format_trailers(sb, msg + c->subject_off);
--			return 2;
--		default:
--			break;
--		}
-		strbuf_addstr(sb, msg + c->body_off);
-		return 1;
-	}
+diff --git a/pretty.c b/pretty.c
+index 37b2c3b1f995..5e683830d9d6 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -10,6 +10,7 @@
+ #include "color.h"
+ #include "reflog-walk.h"
+ #include "gpg-interface.h"
++#include "trailer.h"
+ 
+ static char *user_format;
+ static struct cmt_fmt_map {
+@@ -889,6 +890,16 @@ const char *format_subject(struct strbuf *sb, const char *msg,
+ 	return msg;
+ }
+ 
++static void format_trailers(struct strbuf *sb, const char *msg)
++{
++	struct trailer_info info;
++
++	trailer_info_get(&info, msg);
++	strbuf_add(sb, info.trailer_start,
++		   info.trailer_end - info.trailer_start);
++	trailer_info_release(&info);
++}
++
+ static void parse_commit_message(struct format_commit_context *c)
+ {
+ 	const char *msg = c->message + c->message_off;
+@@ -1292,6 +1303,12 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		strbuf_addstr(sb, msg + c->body_off);
+ 		return 1;
+ 	}
 +
 +	if (starts_with(placeholder, "(trailers)")) {
 +		format_trailers(sb, msg + c->subject_off);
 +		return strlen("(trailers)");
 +	}
 +
-	return 0;	/* unknown placeholder */
+ 	return 0;	/* unknown placeholder */
  }
  
-diff --git c/t/t4205-log-pretty-formats.sh w/t/t4205-log-pretty-formats.sh
-index 7a35941ddcbd..21eb8c8587f2 100755
---- c/t/t4205-log-pretty-formats.sh
-+++ w/t/t4205-log-pretty-formats.sh
-@@ -542,7 +542,7 @@ Acked-by: A U Thor <author@example.com>
- Signed-off-by: A U Thor <author@example.com>
- EOF
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index f5435fd250ba..21eb8c8587f2 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -535,4 +535,30 @@ test_expect_success 'clean log decoration' '
+ 	test_cmp expected actual1
+ '
  
--test_expect_success 'pretty format %bT shows trailers' '
++cat >trailers <<EOF
++Signed-off-by: A U Thor <author@example.com>
++Acked-by: A U Thor <author@example.com>
++[ v2 updated patch description ]
++Signed-off-by: A U Thor <author@example.com>
++EOF
++
 +test_expect_success 'pretty format %(trailers) shows trailers' '
-	echo "Some contents" >trailerfile &&
-	git add trailerfile &&
-	git commit -F - <<-EOF &&
-@@ -553,7 +553,7 @@ test_expect_success 'pretty format %bT shows trailers' '
- 
-	$(cat trailers)
-	EOF
--	git log --no-walk --pretty="%bT" >actual &&
++	echo "Some contents" >trailerfile &&
++	git add trailerfile &&
++	git commit -F - <<-EOF &&
++	trailers: this commit message has trailers
++
++	This commit is a test commit with trailers at the end. We parse this
++	message and display the trailers using %bT
++
++	$(cat trailers)
++	EOF
 +	git log --no-walk --pretty="%(trailers)" >actual &&
-	cat >expect <<-EOF &&
-	$(cat trailers)
- 
-
-Jacob Keller (2):
-  pretty: add %bT format for displaying trailers of a commit message
-  ref-filter: add support to display trailers as part of contents
-
- Documentation/git-for-each-ref.txt |  2 ++
- Documentation/pretty-formats.txt   |  1 +
- pretty.c                           | 18 ++++++++++++++++++
- ref-filter.c                       | 22 +++++++++++++++++++++-
- t/t4205-log-pretty-formats.sh      | 26 ++++++++++++++++++++++++++
- t/t6300-for-each-ref.sh            | 26 ++++++++++++++++++++++++++
- 6 files changed, 94 insertions(+), 1 deletion(-)
-
++	cat >expect <<-EOF &&
++	$(cat trailers)
++
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.11.0.rc2.152.g4d04e67
 
