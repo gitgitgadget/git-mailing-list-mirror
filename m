@@ -2,128 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAE52021E
-	for <e@80x24.org>; Sun, 20 Nov 2016 20:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759722021E
+	for <e@80x24.org>; Sun, 20 Nov 2016 20:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751579AbcKTUPG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Nov 2016 15:15:06 -0500
-Received: from mout.gmx.net ([212.227.15.15]:51154 "EHLO mout.gmx.net"
+        id S1752101AbcKTURr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Nov 2016 15:17:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45299 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751392AbcKTUPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2016 15:15:05 -0500
-Received: from [192.168.178.43] ([88.71.227.20]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Llm5o-1chtKf3RLM-00ZMyT; Sun, 20
- Nov 2016 21:15:01 +0100
-Subject: Re: [PATCH v15 18/27] bisect--helper: `bisect_autostart` shell
- function in C
-To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
-References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1b1a-067117ef-cd0d-469b-ba80-ea1a1169f694-000000@eu-west-1.amazonses.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <723476f6-2c8c-38df-1771-9a525196d9de@gmx.net>
-Date:   Sun, 20 Nov 2016 21:15:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
+        id S1751512AbcKTURr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2016 15:17:47 -0500
+Received: (qmail 4592 invoked by uid 109); 20 Nov 2016 20:17:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 20 Nov 2016 20:17:46 +0000
+Received: (qmail 14782 invoked by uid 111); 20 Nov 2016 20:18:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 20 Nov 2016 15:18:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Nov 2016 15:17:44 -0500
+Date:   Sun, 20 Nov 2016 15:17:44 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matthieu S <matthieu.stigler@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Fwd: git diff with =?utf-8?B?4oCcLS13?=
+ =?utf-8?Q?ord-diff-regex=E2=80=9D_extremely_slow_compared_to_=E2=80=9C--w?=
+ =?utf-8?B?b3JkLWRpZmbigJ0/?=
+Message-ID: <20161120201744.7ym4gsmjoijw6oow@sigill.intra.peff.net>
+References: <CAEYvigJ14xYDmRG2N0yTgM4spaaB7s9923w0+e9+QQEeFz0NTQ@mail.gmail.com>
+ <CAEYvigLz3muWD-QFjMZUn=H3RQoxhTYX9EwB6=aiMjWOEN3CBA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <01020157c38b1b1a-067117ef-cd0d-469b-ba80-ea1a1169f694-000000@eu-west-1.amazonses.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:SClwto9yCdiusjZ/0GyAfmRvM9x3sblLBCH3zwciA1N9lZ4kB8B
- mQ60keRj2xh0juanQ7CWQFNMvrqyo5WwCKR+YWQ0D5VsxP/tiPbE+H1ep35OKmGomfDykyY
- il6xohFaJI97q3tpA6IUQgLn/jEDTmAGWMByU9sjJ7fmaVBvV7CowqMN4Q6tYiX/JqMGkEp
- LiBxcryxHbw7SKPhTO4gw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5X0Vu4krp4M=:Ux9U7xaL269oumUMk9BXvN
- A21UUEtFSWVzxqacHh6MwKa4KXnptKo5alHgIjO+gP3JYLT4AKdoWkwYfizWsSLXkwQ7uqh97
- KpU0FEfQGWeB8Vc0nthkYnlScaUBCbfRhe2MAIphtMSWP4HHGoajfdsxJJ7OtcNZ7weKz41JV
- UKYQjxoNhdEWB2dYX+U51sL31feLe4mbbReGW1KEXwfOCbOfBx0T5UpyGAsU0P78W9326mqk7
- js+8940WwbMKdp72zjFGclEkVwhDsoSpaynhJ0/MSrL8tqd7GB1te4Y7+4JrgRE3ZsYBQIUXf
- d4wWeX3DZS2eehRdQBMjE+CSp2ba+iheMUPvIb92a2+aH8wMoaXI70c7N96Qs8NZnnm9nNB1q
- knxlpvMEawd0PcvfP6fT/btFDBePC9EY9O4j93WJFGjfJdBIQjxj04i+eyyOebupVJdsGLuX9
- 96z/gdoE4dpQyq6Jt6ssvaJjkqL9nqpMoMK+f4LDJbjflRO94EqYAnjLxD498YdF36MaFCyJp
- Yl1SYEicGWG6fnZ7vO2RrKiUb8WXVG5X4ou/Sj1KwSzEXAetCTunF9ig1wY6sKIHZWRsQ7SrH
- Fm0iXKCc4/bfFWzRl2LwaAKmddA0tx1wGE8GgSlBp1Ng4fDSljf550q2C4KWHR14etop5XTfO
- qNgzTIia2G13fNZluoRhke+xULSZ8TrgsQIACzaJ9LrhcU9bdNcoK2NK/xlh90nY6vV7xPVpJ
- H9gaTpCrGCIGNHE1tdqMBWlsJooBDLigPeoxD9Kzw7YH8rNE/qBk2iB+2micFCNwyoCwyFyEd
- yarOgMN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAEYvigLz3muWD-QFjMZUn=H3RQoxhTYX9EwB6=aiMjWOEN3CBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Nov 18, 2016 at 03:40:22PM -0800, Matthieu S wrote:
 
-On 10/14/2016 04:14 PM, Pranit Bauva wrote:
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 502bf18..1767916 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -422,6 +425,7 @@ static int bisect_next(...)
->  {
->  	int res, no_checkout;
->
-> +	bisect_autostart(terms);
+> Why is the speed so different if one uses --word-diff instead of
+> --word-diff-regex= ? Is it just because my expression is (slightly)
+> more complex than the default one (split on period instead of only
+> whitespace) ? Or is it that the default word-diff is implemented
+> differently/more efficiently? How can I overcome this speed slowdown?
 
-You are not checking for return values here. (The shell code simply
-exited if there is no tty, but you don't.)
+I think it's probably both.
 
-> @@ -754,6 +758,32 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
->  	return retval || bisect_auto_next(terms, NULL);
->  }
->  
-> +static int bisect_autostart(struct bisect_terms *terms)
-> +{
-> +	if (is_empty_or_missing_file(git_path_bisect_start())) {
-> +		const char *yesno;
-> +		const char *argv[] = {NULL};
-> +		fprintf(stderr, _("You need to start by \"git bisect "
-> +				  "start\"\n"));
-> +
-> +		if (!isatty(0))
+See diff.c:find_word_boundaries(). If there's no regex, we use a simple
+loop over isspace() to find the boundaries. I don't recall anybody
+measuring the performance before, but I'm not surprised to hear that
+matching a regex is slower.
 
-isatty(STDIN_FILENO)?
+If I look at the output of "perf", though, it looks like we also spend a
+lot more time in xdl_clean_mmatch(). Which isn't surprising. Your regex
+treats commas as boundaries, which is going to generate a lot more
+matches for this particular data set (though the output is the same, I
+think, because of the nature of the change).
 
-> +			return 1;
-> +
-> +		/*
-> +		 * TRANSLATORS: Make sure to include [Y] and [n] in your
-> +		 * translation. THe program will only accept English input
+I would have expected "--word-diff-regex=[^[:space:]]" to be faster than
+your regex, though, and it does not seem to be.
 
-Typo "THe"
-
-> +		 * at this point.
-> +		 */
-
-Taking "at this point" into consideration, I think the Y and n can be
-easily translated now that it is in C. I guess, by using...
-
-> +		yesno = git_prompt(_("Do you want me to do it for you "
-> +				     "[Y/n]? "), PROMPT_ECHO);
-> +		if (starts_with(yesno, "n") || starts_with(yesno, "N"))
-
-... starts_with(yesno, _("n")) || starts_with(yesno, _("N"))
-here (but not sure). However, this would be an extra patch on top of
-this series.
-
-> +			exit(0);
-
-Shouldn't this also be "return 1;"? Saying "no" is the same outcome as
-not having a tty to ask for yes or no.
-
->  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  {
->  	enum {
-> @@ -790,6 +821,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  			 N_("find the next bisection commit"), BISECT_NEXT),
->  		OPT_CMDMODE(0, "bisect-auto-next", &cmdmode,
->  			 N_("verify the next bisection state then find the next bisection state"), BISECT_AUTO_NEXT),
-> +		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
-> +			 N_("start the bisection if BISECT_START empty or missing"), BISECT_AUTOSTART),
-
-The word "is" is missing.
-
-~Stephan
+-Peff
