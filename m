@@ -2,128 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL,RCVD_IN_SBL_CSS,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C75011FE4E
-	for <e@80x24.org>; Sun, 20 Nov 2016 10:34:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EA5A2021E
+	for <e@80x24.org>; Sun, 20 Nov 2016 12:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753368AbcKTKeV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Nov 2016 05:34:21 -0500
-Received: from 118-95-184-177.redewsp.com.br ([177.184.95.118]:40088 "HELO
-        redewsp.com.br" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with SMTP id S1753360AbcKTKeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2016 05:34:21 -0500
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Nov 2016 05:34:19 EST
-Subject: 18589 git
-From:   <kaufmant@bgu.ac.il>
-Content-Transfer-Encoding: base64
-To:     <git@vger.kernel.org>
-Content-Disposition: attachment
-Message-ID: <147963805426.13677.2647845913255657387@redewsp.com.br>
-MIME-Version: 1.0
-Date:   Sun, 20 Nov 2016 10:34:14 -0000
-Importance: High
-Content-Type: application/zip; name="EMAIL_4680957543_git.zip"
+        id S1752315AbcKTM0v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Nov 2016 07:26:51 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:32856 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751243AbcKTM0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2016 07:26:51 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 3so25646196pgd.0
+        for <git@vger.kernel.org>; Sun, 20 Nov 2016 04:26:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=C0+ukF941cEKtq/SbSDB7cY3iM34rj0hbsz7SC4IJSU=;
+        b=ATXL8jvab0vdDk0DqNyM3B059ykV6KqQJA1qu4rTP9QC2uaaNDYPtIdQvUVXzs6WIT
+         EstcfJGuGqoEx0bNmqAKtjBAYyyn3QjUYR0XNPOrcVF/hh2hipsMIuskmEO20/jgixUT
+         WAICUXK0qv+OykFS+HF4ujZpbdjcp8dMokpBPdWD+/dveKoS9ENqNFcok99GcvArxDuk
+         ya8VWdeOMwd6p/159KHUqC1FxaSr4TWbzuxoGpYxN2nRD/3mhQ90GL47VuJHphHVf/8z
+         1qlYDFmShR+4dsY9/hf5k47LcFcG8OtYS6i4dM5eIwahhI9KjDdlBIqXt+ASH55ebgF+
+         UhfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=C0+ukF941cEKtq/SbSDB7cY3iM34rj0hbsz7SC4IJSU=;
+        b=Rb7pk/XzIhJ02jZtF1pKMUYHwg+5gwEtzezCnm/iqVIATLDDkTuabRlSwQuI7VfyB6
+         EUz0PBR7SuTBnyi9ZjRjp5bEcl7yMdXbzGdJqwStXQ9q4bwAIeGxxpmdwS3gvmEl0J++
+         WWKLfetien7QwnWhPQTn7Iu7q18SWyYSiIpO+7xKJP8yb0+IwIMsFQV21UdygzkUOCtF
+         oISKyJUtaqMhe1rXrjqF5gSrZi6cDtWQlVgsVf1jwVafmBEEcFa1BhuMJ1ey12ijP1MV
+         oQsxZ74ulsVlo6KuIhfPD5R+KXK1w7zhfr1+XQQtqKTRWLfOuJXPGfKGY20b3gBH1ETY
+         x12Q==
+X-Gm-Message-State: AKaTC02pQwAE10kG/QHRgrHp8mB9ZeuaSYb9blCGwTdNBOFd1jhU2+zgiS15r2i2VJRLtw==
+X-Received: by 10.98.152.3 with SMTP id q3mr11131477pfd.144.1479644797546;
+        Sun, 20 Nov 2016 04:26:37 -0800 (PST)
+Received: from localhost.localdomain (ec2-52-196-48-101.ap-northeast-1.compute.amazonaws.com. [52.196.48.101])
+        by smtp.googlemail.com with ESMTPSA id n8sm3803055pgd.29.2016.11.20.04.26.33
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 20 Nov 2016 04:26:36 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] i18n: Fixed unmatched single quote in error message
+Date:   Sun, 20 Nov 2016 20:26:17 +0800
+Message-Id: <721cdca4d000627fa163da15c515a50fd9529a62.1479644251.git.worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.11.0.rc0.11.g127c283
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-AAEAAQBZAAAAjhQAAAAA
+Fixed unmatched single quote introduced by commit:
+
+ * f56fffef9a sequencer: teach write_message() to append an optional LF
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 6f0ff9e413..30b10ba143 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -248,7 +248,7 @@ static int write_message(const void *buf, size_t len, const char *filename,
+ 	}
+ 	if (append_eol && write(msg_fd, "\n", 1) < 0) {
+ 		rollback_lock_file(&msg_file);
+-		return error_errno(_("could not write eol to '%s"), filename);
++		return error_errno(_("could not write eol to '%s'"), filename);
+ 	}
+ 	if (commit_lock_file(&msg_file) < 0) {
+ 		rollback_lock_file(&msg_file);
+-- 
+2.11.0.rc0.11.g127c283
+
