@@ -7,122 +7,134 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E062021E
-	for <e@80x24.org>; Sun, 20 Nov 2016 15:34:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0BC2021E
+	for <e@80x24.org>; Sun, 20 Nov 2016 16:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753216AbcKTPeA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Nov 2016 10:34:00 -0500
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:32968 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753086AbcKTPd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2016 10:33:59 -0500
-Received: by mail-yw0-f195.google.com with SMTP id s68so24853584ywg.0
-        for <git@vger.kernel.org>; Sun, 20 Nov 2016 07:33:59 -0800 (PST)
+        id S1751018AbcKTQwm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Nov 2016 11:52:42 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:36841 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750838AbcKTQwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2016 11:52:41 -0500
+Received: by mail-yw0-f196.google.com with SMTP id r204so24973199ywb.3
+        for <git@vger.kernel.org>; Sun, 20 Nov 2016 08:52:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nW0YXlYViQGXEiSPqPLhFJz9i4/jlWhZKxZr4EUiJ4M=;
-        b=XJm7rhdnR7gEEXqzwwNbUkpXvlPcIiHeIQe35Bf0h2TmAFxzwJ/x6qSGjQRZ3wfjeS
-         SAmUBRr6tCuPYQLH/jbbsMH0qNmTTKzlh2pFyUf+tc1I2gpWVWRwv4RrFHFRvugpFZCa
-         EwX46v7BFbqhAwLQAvsP3bSp19yAYMSDvsvgJ/V/Igs2NRj0x8Z0jVUh0t1uIH9gyED5
-         yGAkapcbjnhuZhkHWj0AHMEbS5kxN6gPz6CpWWGOsd5DLKRVNKWOxIIRTpKBQSI4JOKu
-         TrbwJyXZffDCcLBT7hx6EHzd6DrrEKhc45WZRVn9V9IC1O1S9JlKcj0nliOlmh7ja4Bz
-         OErw==
+         :cc;
+        bh=kgkfGv6BRVZ9FMe7MmtYxlMBggNXzF6inTIaXBAeeDY=;
+        b=wUx21VFckQ7TOT5K4BHvPJkmgDbVdZKxSpO6/BIhNRxJf1Zvc5jo6mrTWY9zPO37ST
+         gQ5dDftMWPC/wLoIgDJMZiLQn7k8kldI+Ak049jV2Ydmdlp7LyZXLYgxuKwpyJox1Qor
+         tRJbKeExL8FOfai1LVkp54xM1SzlczRq72nia9soN7lzVcHrxNYD7s7iIt1JVPnHnhqH
+         hI9v9hetkdG3DKvKsGNvTYFPAha130V5Up5b590Hi/Zr/W2o39nrqGSbSdRYcXhagAbr
+         SH5IzHtutPa7rKj/KWG/m7/ifLr2O2+9e3NTjCtaMq/OMjj2iCuuIAh7ENA4VfqkX9WC
+         XSdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nW0YXlYViQGXEiSPqPLhFJz9i4/jlWhZKxZr4EUiJ4M=;
-        b=NgHuaevB9NZ3js0KGzMH35SODJNoXr0tSIoYvQWcMXX89ZxkZhuNPH/g64mwZ7qGHb
-         0SAbzOdPrvTmlqack19XiPmsTqpS6Dto7SHRQlVHow9b51odBBoJ95FiKFvfoBP6KrmD
-         dJsZixljHVNzGRk98CM8qlrjLBuLij+Uvb2zNRR6WiD5LLJgF8RC9llFxnzm83rR9Adg
-         VFDAqpbmPlhKuXjHnDqnvYf+AmEdOu9ZV+k7iQQz2ids1rLAqyEM8UK2i33ZSRveYhzx
-         hgkMgYswDiOff19oktwosa7URB7h3g/Jcp6oHL1Uy3CKugckTpgyVwB3RsqRsKaHm3fE
-         maxA==
-X-Gm-Message-State: AKaTC01LLeIsMGb8ka4vbfRZBFHmWe5UErQvGksBw2GSudDmydXFur/29sXv9O8zMCrUXOs/VielYXzjYxfpNQ==
-X-Received: by 10.129.46.133 with SMTP id u127mr9141520ywu.94.1479656038770;
- Sun, 20 Nov 2016 07:33:58 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=kgkfGv6BRVZ9FMe7MmtYxlMBggNXzF6inTIaXBAeeDY=;
+        b=lsV1YFSLAqw9LiAVwSmBt9WCtKXDo+wyZMp5lr9ZupYMG3v8G858XEi8bbi7M0gJwt
+         H5aGeQ3sFivp2W8DBzyE9Gyb8ZEXVnn2hrx4twFy5/clYZraXaD4Aif8btBAiYiSbQQK
+         rygnxLXZKdwgzghiHChgcEM8g2VnpAnmz/J9ab9NbormOfYodhpb2Vif1PlVQuNwsYTd
+         j6aOiXYIjVZxBCgGL1mZkd1XJ/nW/XJU5GfCAlV+RS58Yp6Ozoy8o/yAx71tWA8oOIlB
+         TDLzWr/7MGMR+eRRfJcB3lTqqssQ6mN47KwYxYhCg+3O/obAu3Pl6oGwdBGSxdE9T+Vf
+         z8Pw==
+X-Gm-Message-State: AKaTC01LXRnoSabhFODhZ66eedxZzkk0EWKxUqPLOKI4bCG1R2uvZPRsn5Z2Tl17nkP3VYKce54TvtjjuLmxyw==
+X-Received: by 10.13.229.70 with SMTP id o67mr9228810ywe.131.1479660760501;
+ Sun, 20 Nov 2016 08:52:40 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.13.207.69 with HTTP; Sun, 20 Nov 2016 07:33:28 -0800 (PST)
-In-Reply-To: <af0b7bdc-2b29-0d04-85f1-aa1d5a2ba549@gmail.com>
-References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-15-Karthik.188@gmail.com>
- <af0b7bdc-2b29-0d04-85f1-aa1d5a2ba549@gmail.com>
+Received: by 10.13.207.69 with HTTP; Sun, 20 Nov 2016 08:52:10 -0800 (PST)
+In-Reply-To: <CAOLa=ZRf+vPOPK=ovP7JmJ52qdgwuqkpGH4UfP=+caQeyu9Ucw@mail.gmail.com>
+References: <20161108201211.25213-1-Karthik.188@gmail.com> <20161108201211.25213-14-Karthik.188@gmail.com>
+ <CA+P7+xqHKVUfNm+jCsbMNazHpVhB46h60k75JzS35CrkR-d-UQ@mail.gmail.com>
+ <CAOLa=ZTWFuzWBjGUX_nV4rVVDRpaabmj0-M6S7aJkX3w+dK2Jw@mail.gmail.com>
+ <xmqq60nqzuye.fsf@gitster.mtv.corp.google.com> <CAOLa=ZSFuq2+6xsrJ=CcXuOVbTnbDirbRtu7Fonfk+9EdRpbxg@mail.gmail.com>
+ <xmqqy40lx2k8.fsf@gitster.mtv.corp.google.com> <CAOLa=ZQepW9GiUrKEWXojpy10B86K-jb84G_dJeL=mqtjZ4AWg@mail.gmail.com>
+ <CA+P7+xo6OqcpLZ7v_m1EPm85eK2xCPD_LCw1Ly2RSPeSC0Ei7g@mail.gmail.com>
+ <xmqq4m38vdw4.fsf@gitster.mtv.corp.google.com> <20d067ef-9e2c-0d1f-f81a-06c154e95e4f@gmail.com>
+ <CAOLa=ZRf+vPOPK=ovP7JmJ52qdgwuqkpGH4UfP=+caQeyu9Ucw@mail.gmail.com>
 From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sun, 20 Nov 2016 21:03:28 +0530
-Message-ID: <CAOLa=ZRU--FyFWNvv7RGH2mho36hvUu2ye=JOapXZ6QoEy=nRw@mail.gmail.com>
-Subject: Re: [PATCH v7 14/17] ref-filter: allow porcelain to translate
- messages in the output
+Date:   Sun, 20 Nov 2016 22:22:10 +0530
+Message-ID: <CAOLa=ZRL=UrfjZ0AypY5d_=-bi6JVfLsx5_3sVvf_rOapJ+m5g@mail.gmail.com>
+Subject: Re: [PATCH v7 13/17] ref-filter: add `:dir` and `:base` options for
+ ref printing atoms
 To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cc'in Matthieu since he wrote the patch.
-
-On Sat, Nov 19, 2016 at 4:16 AM, Jakub Nar=C4=99bski <jnareb@gmail.com> wro=
-te:
-> W dniu 08.11.2016 o 21:12, Karthik Nayak pisze:
->> From: Karthik Nayak <karthik.188@gmail.com>
+On Sun, Nov 20, 2016 at 8:46 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Fri, Nov 18, 2016 at 11:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Jacob Keller <jacob.keller@gmail.com> writes:
 >>
->> Introduce setup_ref_filter_porcelain_msg() so that the messages used in
->> the atom %(upstream:track) can be translated if needed. This is needed
->> as we port branch.c to use ref-filter's printing API's.
+>>>>>> to get remotes from /refs/foo/abc/xyz we'd need to do
+>>>>>> strip=1,strip=-1, which could be
+>>>>>> done but ...
+>>>>>
+>>>>> ... would be unnecessary if this is the only use case:
+>>>>>
+>>>>>> strbuf_addf(&fmt,
+>>>>>> "%%(if:notequals=remotes)%%(refname:base)%%(then)%s%%(else)%s%%(end)",
+>>>>>> local.buf, remote.buf);
+>>>>>
+>>>>> You can "strip to leave only 2 components" and compare the result
+>>>>> with refs/remotes instead, no?
+>>>>>
+>>>>
+>>>> Of course, my only objective was that someone would find it useful to
+>>>> have these two additional
+>>>> atoms. So if you think it's unnecessary we could drop it entirely :D
+>>>>
+>>>> --
+>>>> Regards,
+>>>> Karthik Nayak
+>>>
+>>> I think having strip and rstrip make sense, (along with support for
+>>> negative numbers) I don't think we need to make them work together
+>>> unless someone is interested, since we can use strip=-2 to get the
+>>> behavior we need today.
 >>
->> Written-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  ref-filter.c | 28 ++++++++++++++++++++++++----
->>  ref-filter.h |  2 ++
->>  2 files changed, 26 insertions(+), 4 deletions(-)
+>> I am OK with multiple strips Karthik suggests, e.g.
 >>
->> diff --git a/ref-filter.c b/ref-filter.c
->> index b47b900..944671a 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -15,6 +15,26 @@
->>  #include "version.h"
->>  #include "wt-status.h"
+>>     %(refname:strip=1,rstrip=-1)
 >>
->> +static struct ref_msg {
->> +     const char *gone;
->> +     const char *ahead;
->> +     const char *behind;
->> +     const char *ahead_behind;
->> +} msgs =3D {
->> +     "gone",
->> +     "ahead %d",
->> +     "behind %d",
->> +     "ahead %d, behind %d"
->> +};
->> +
->> +void setup_ref_filter_porcelain_msg(void)
->> +{
->> +     msgs.gone =3D _("gone");
->> +     msgs.ahead =3D _("ahead %d");
->> +     msgs.behind =3D _("behind %d");
->> +     msgs.ahead_behind =3D _("ahead %d, behind %d");
->> +}
+>> if it is cleanly implemented.
+>>
+>> I have a bit of trouble with these names, though.  If we call one
+>> strip and the other rstrip, to only those who know about rstrip it
+>> would be clear that strip is about stripping from the left.  Perhaps
+>> we should call it lstrip for symmetry and ease-of-remembering?
+>>
+>>     refs/heads/master:lstrip=-1 => master (strip all but one level
+>>     from the left)
+>>
+>>     refs/heads/master:rstrip=-2 => refs/heads (strip all but two
+>>     levels from the right)
+>>
+>>     refs/heads/master:lstrip=1,rstrip=-1 => heads (strip one level
+>>     from the left and then strip all but one level from the right)
+>>
+>> I dunno.
 >
-> Do I understand it correctly that this mechanism is here to avoid
-> repeated calls into gettext, as those messages would get repeated
-> over and over; otherwise one would use foo =3D N_("...") and _(foo),
-> isn't it?
->
-> I wonder if there is some way to avoid duplication here, but I don't
-> see anything easy and safe (e.g. against running setup_*() twice).
+> We could have lstrip and rstrip as you suggested and perhaps make it work
+> together too. But I see this going off the scope of this series. Maybe
+> I'll follow up
+> with another series introducing these features. Since we can currently
+> make do with
+> 'strip=2' I'll drop this patch from v8 of this series and pursue this
+> idea after this.
 >
 
-That is the intention.
+I meant 'strip=-2'. I mean I'll add in the negative striping in this
+series and follow
+up with something that'd introduce lstrip and rstrip.
 
---=20
+-- 
 Regards,
 Karthik Nayak
