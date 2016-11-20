@@ -2,67 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 759722021E
-	for <e@80x24.org>; Sun, 20 Nov 2016 20:17:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B581F2021E
+	for <e@80x24.org>; Sun, 20 Nov 2016 20:20:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752101AbcKTURr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Nov 2016 15:17:47 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45299 "EHLO cloud.peff.net"
+        id S1752277AbcKTUUA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Nov 2016 15:20:00 -0500
+Received: from mout.gmx.net ([212.227.17.22]:56324 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751512AbcKTURr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2016 15:17:47 -0500
-Received: (qmail 4592 invoked by uid 109); 20 Nov 2016 20:17:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 20 Nov 2016 20:17:46 +0000
-Received: (qmail 14782 invoked by uid 111); 20 Nov 2016 20:18:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 20 Nov 2016 15:18:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Nov 2016 15:17:44 -0500
-Date:   Sun, 20 Nov 2016 15:17:44 -0500
-From:   Jeff King <peff@peff.net>
-To:     Matthieu S <matthieu.stigler@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: git diff with =?utf-8?B?4oCcLS13?=
- =?utf-8?Q?ord-diff-regex=E2=80=9D_extremely_slow_compared_to_=E2=80=9C--w?=
- =?utf-8?B?b3JkLWRpZmbigJ0/?=
-Message-ID: <20161120201744.7ym4gsmjoijw6oow@sigill.intra.peff.net>
-References: <CAEYvigJ14xYDmRG2N0yTgM4spaaB7s9923w0+e9+QQEeFz0NTQ@mail.gmail.com>
- <CAEYvigLz3muWD-QFjMZUn=H3RQoxhTYX9EwB6=aiMjWOEN3CBA@mail.gmail.com>
+        id S1751512AbcKTUT7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2016 15:19:59 -0500
+Received: from [192.168.178.43] ([88.71.227.20]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M34eJ-1d0NjP1kL1-00swcR; Sun, 20
+ Nov 2016 21:19:56 +0100
+Subject: Re: [PATCH v15 13/27] bisect--helper: `bisect_start` shell function
+ partially in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1ad3-ea75ed97-2514-427e-8e57-9f10efd4e6e9-000000@eu-west-1.amazonses.com>
+ <52f6241f-e584-d830-ca66-084dc509c7fe@gmx.net>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <de42ba9d-af15-6d77-5c97-4136b7aad149@gmx.net>
+Date:   Sun, 20 Nov 2016 21:19:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAEYvigLz3muWD-QFjMZUn=H3RQoxhTYX9EwB6=aiMjWOEN3CBA@mail.gmail.com>
+In-Reply-To: <52f6241f-e584-d830-ca66-084dc509c7fe@gmx.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:/SE+Mybx7E3Wsbvsc7KI+o0bNQ93LRXereeog6mbG6D5tm87Lqj
+ zOqRF1fTElwG8PubUzud6s349cl+UIorKW0MyY8az2+bJ5ILACMuVmtgdxupGo2M7fkwhMX
+ DEOmOYEhDCRdNonDVtAVWlG+nf369iBqzOGIEruOJoi2oSNuXLbI8aVZDheNWHhj6PJln5n
+ 3ON+BaAEqMcleQLAaAEhQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BcPWRTrJz/g=:ExcWxIr3Bg1l7jwaQr6hIN
+ XWfUjqQuh+UHzzdsNf3vUdA1om4lAJQXfbjqA62G3sMdpAfUy1Ged0REvRNzC2c8MoS37F2S7
+ vaUb3H+cRX+V+CyXWa+DtQVhMU+mEwMkTTAh6tow1TyhEhRPkOnr5gkFMlYzz+BVrqdraeFyj
+ mUmLCT/Gqy6RQUmsshWtjbzxy43m3ehxuTfa7A8lVxhnsNqT/f2uDg6NMSFCb5jMTbS2z/U7s
+ 45u5G4IAoeuwnPujdjVKSk0W2tlSHNuFlyPRL+y23IGeIRXgKhuJGCuWieZwFqv+ccrTIuPxD
+ /LR0KeAX7NLNAOOUf/wkxjlZjdmA27+dGUO8CDj7i4tCxsTnxyY+W68ebZoM/iaXwdXAz8WMx
+ edCR4ctegYM2BMJm2GVqUGHGx9N/64PIrgbqHjthul/0vXjdi6v+NXYKF6I/7ymbVj/B/5Kib
+ o0RglpF+iHVgJOiwweKsEcII5d1WckwfjKkjKSnG+V3zZg4U3ZleVZ13ZuFkinTyjjM6N3x3J
+ +nz2SG/NG6qM67OTltk2z3WjyzA7sdMvZNVI3yb4FlSs7sjg5p4KCvGksSVLmkUrqoE7dtgC1
+ Xr1dtcjsrxcvNNsz8d4UPfZsLElhxpfTes0VyLN/RfaA0/6u/515HQBZ+Yb3bh6ayR0B1BINT
+ aQ4Y16tpMJN9163WrIVJG1PpkNacHfJGOr8+HXbSeGdtR7zkQhmDeXx6bixfVybyRv8wmZhGt
+ oj43o+GnKIFGVgCKuQAHyof4W+R8BY6V+3koZawVmF+5VMqR0prgJ063XPbdrbn5PBWwq4UoM
+ 97Az71Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 18, 2016 at 03:40:22PM -0800, Matthieu S wrote:
+On 11/20/2016 09:01 PM, Stephan Beyer wrote:
+> First, replace the current set_terms() by
+> 
+> static void set_terms(struct bisect_terms *terms, const char *bad,
+>                                                  const char *good)
+> {
+> 	terms->term_good = xstrdup(good);
+> 	terms->term_bad = xstrdup(bad);
+> }
+> 
+> ie, without calling write_terms(...).
 
-> Why is the speed so different if one uses --word-diff instead of
-> --word-diff-regex= ? Is it just because my expression is (slightly)
-> more complex than the default one (split on period instead of only
-> whitespace) ? Or is it that the default word-diff is implemented
-> differently/more efficiently? How can I overcome this speed slowdown?
-
-I think it's probably both.
-
-See diff.c:find_word_boundaries(). If there's no regex, we use a simple
-loop over isspace() to find the boundaries. I don't recall anybody
-measuring the performance before, but I'm not surprised to hear that
-matching a regex is slower.
-
-If I look at the output of "perf", though, it looks like we also spend a
-lot more time in xdl_clean_mmatch(). Which isn't surprising. Your regex
-treats commas as boundaries, which is going to generate a lot more
-matches for this particular data set (though the output is the same, I
-think, because of the nature of the change).
-
-I would have expected "--word-diff-regex=[^[:space:]]" to be faster than
-your regex, though, and it does not seem to be.
-
--Peff
+I did not want to confuse you here but I forgot to mention that there
+should also be freeing code, i.e. initialize your terms to NULL in the
+beginning of cmd_builtin__helper, and always free them if it is not
+null. This freeing code could also be in an extra function free_terms()
+and you call it in set_terms() and for cleanup in the end.
