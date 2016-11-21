@@ -2,112 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_05,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBAFC2021E
-	for <e@80x24.org>; Sun, 20 Nov 2016 21:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30E292021E
+	for <e@80x24.org>; Mon, 21 Nov 2016 00:57:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753245AbcKTVxy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Nov 2016 16:53:54 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:46456 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752072AbcKTVxx (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 Nov 2016 16:53:53 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B6D68282B7;
-        Sun, 20 Nov 2016 21:53:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1479678829;
-        bh=tiTLI4LZSisMGvb27FoBKhq3lgqjxEkE05PGC5juiYk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=llv1zD4vxIDk64wAsWN9K0AuiHUMr/lA5pRxF4AivBFQFjHXvO7Lt8paroeamL82n
-         P31sq2Yc5kkA846joFEsV86Cy/dOZX/w/oVtr+ecSBTZXG60Pc7w+hEe3j/xvF62wP
-         rMyHZrAG8n8izFz1wGilkw/vCutxUS8oIENVAnQbVYAtONWvzRN5UHSe7lTqosfQoP
-         8/DWaWtgl+PECMTh0iCzde8cOpB83SE4Ni+ot68l53QhACJNX06NHxIUj7UujSIWXv
-         8RVTM8t4KoXEV/Ar9firtt69b4YxvWaua6ApUjlJylAieVsB/3/5UpnTYPvZs8RWiK
-         E5BekVhW5085Lp0R0KZ3NN1ljbDxNrKsMX9zMjxa0IM3KW6VMqFO6CnuJ3VgUshDgE
-         vTJfveCoq53T61Vtm8LLiNUgttEg3SvkF19YcnZHCMmRCOR6nZ/TwVSe7hq9GexPc8
-         e9dNivNdOFIerUPR+afKbR8bFZNrb1c+pgEeje2KQWikyBOZ4Cb
-Date:   Sun, 20 Nov 2016 21:53:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Mike Fisher <mfisher@csh.rit.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Remove dependency on deprecated Net::SMTP::SSL
-Message-ID: <20161120215344.jaqt4owlhovig3hz@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Mike Fisher <mfisher@csh.rit.edu>, git@vger.kernel.org
-References: <451E4A46-BA43-41A5-9E68-DE0D89BE676A@csh.rit.edu>
+        id S1751986AbcKUA5Z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Nov 2016 19:57:25 -0500
+Received: from 217022039027.heln-dsl.gauldalikt.no ([217.22.39.27]:46973 "HELO
+        gauldalikt.no" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751320AbcKUA5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2016 19:57:25 -0500
+X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Nov 2016 19:57:20 EST
+To:     <git@vger.kernel.org>
+Date:   Mon, 21 Nov 2016 00:57:13 -0000
+Importance: High
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="neavn23ectxz6din"
-Content-Disposition: inline
-In-Reply-To: <451E4A46-BA43-41A5-9E68-DE0D89BE676A@csh.rit.edu>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20161104 (1.7.1)
+Subject: 59688 git
+Content-Type: application/zip; name="EMAIL_51967727213119_git.zip"
+Content-Transfer-Encoding: base64
+Message-ID: <147968983384.18949.9192892142792034539@gauldalikt.no>
+From:   <kamoe@pvlearners.net>
+Content-Disposition: attachment
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---neavn23ectxz6din
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Nov 20, 2016 at 04:18:16PM -0500, Mike Fisher wrote:
-> Refactor send_message() to remove dependency on deprecated
-> Net::SMTP::SSL:
->=20
-> <http://search.cpan.org/~rjbs/Net-SMTP-SSL-1.04/lib/Net/SMTP/SSL.pm#DEPRE=
-CATED>
-
-As much as I hate to say this, I think this is going to cause
-compatibility problems.  Net::SMTP is part of core Perl (as of v5.7.3),
-but the version you want to rely on (which you did not provide an
-explicit dependency on) is from October 2014.
-
-That basically means that no Perl on a Red Hat or CentOS system is going
-to provide that support, since RHEL 7 was released in June 2014.
-Providing an updated Git on those platforms would require replacing the
-system Perl or parts of it, which would be undesirable.  This would
-affect Debian 7 as well.
-
-We currently support Perl 5.8 [0], so if you want to remove support for
-Net::SMTP::SSL, I'd recommend a solution that works with that version.
-
-[0] I personally believe we should drop support for Perl older than
-5.10.1 (if not newer), but that's my opinion and it isn't shared by
-other list regulars.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---neavn23ectxz6din
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.15 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlgyG2gACgkQv1NdgR9S
-9ot7wA/+PSjQQvdc9v1Nkk/riSP6SvFEfXRGFqmhArizXSVHl/n3bvRCuRPXfh1v
-IrxTE24g4vXZaJcWW+i533LO5TAFzfg3nb43y1PqDFAdxYd6CSwyYjqvrsWv2mCM
-DjO3fkgi/MezSKam47EbhJCgc24UshZgRV7eTahe67jEupLUhY3+L8gJ1/4I3Tcd
-C57qirls+CLrTu2zA9Ip0kbu3E2ZTiNwVuFUxDp2ScXowtCwjPI/bwvNDmHhPJRI
-nEtFEbjPuZ64rwxrxmz0VhwbAT5Bni0JuOcZ2MoDxt23+IEm+NIOxIAPpS4EDaxO
-kNZbnYEq0lEKpK2fnDzuUT7kTSueFlaisnSANDmPk/NhiX/uabloQq2gJQLFLzhX
-6IspHDC8qNW5MKzgTK0XAlvbIanMHPV0KbmOQrMYHWJuI4QmLRAkIFSNiCIU1THz
-wa7toFd8PhkCtzbS+dT9Ml+Dqg8bUyzPzZSGYDxhp9MQND2IuD+ikGq6T1tG0prT
-9ce+K0pVjhC53hBp0sBT7JP5QbMvvX5cVVpNk8vrgWxI0pf6DLaJrB3L0iBExDuh
-SFHLdNIu9eTsLTsp/xDbHBPXWCBRc9jK/eSJJoC3p8SPYx8nrszMc+yHT/HMAfUM
-/1LVXFY7rzKYx02RW+gmRSAjvYVZ0UFsHaJ+50wu/Jfj2yTiCZw=
-=CdZ0
------END PGP SIGNATURE-----
-
---neavn23ectxz6din--
+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
