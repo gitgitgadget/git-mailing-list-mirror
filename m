@@ -7,105 +7,63 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A15801FE4E
-	for <e@80x24.org>; Mon, 21 Nov 2016 14:19:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 365CE1FE4E
+	for <e@80x24.org>; Mon, 21 Nov 2016 14:22:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932411AbcKUOTH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 09:19:07 -0500
-Received: from mout.gmx.net ([212.227.17.21]:63435 "EHLO mout.gmx.net"
+        id S1753748AbcKUOWs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 09:22:48 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60155 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753169AbcKUOTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 09:19:05 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJngW-1c9vt40Zxk-0017nB; Mon, 21
- Nov 2016 15:18:30 +0100
-Date:   Mon, 21 Nov 2016 15:18:29 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1753032AbcKUOWr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 09:22:47 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ldq55-1cYZWM3fCl-00j1D9; Mon, 21
+ Nov 2016 15:22:41 +0100
+Date:   Mon, 21 Nov 2016 15:22:40 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: [PATCH 3/3] rebase -i: handle core.commentChar=auto
-In-Reply-To: <cover.1479737858.git.johannes.schindelin@gmx.de>
-Message-ID: <9ef529a4fbb60990a91d7bbfdd49c6d20d49e442.1479737858.git.johannes.schindelin@gmx.de>
-References: <cover.1479737858.git.johannes.schindelin@gmx.de>
+To:     Jiang Xin <worldhello.net@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] i18n: Fixed unmatched single quote in error message
+In-Reply-To: <721cdca4d000627fa163da15c515a50fd9529a62.1479644251.git.worldhello.net@gmail.com>
+Message-ID: <alpine.DEB.2.20.1611211522280.3746@virtualbox>
+References: <721cdca4d000627fa163da15c515a50fd9529a62.1479644251.git.worldhello.net@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:i1Tvc+Vuxmt+bFAHLklFPaVlh+OQkLVN7xK7JKCKGTZC/9DqB2s
- SrUHV1H5hUuoqVA616G5dkPT8PdIo06iJCVI2L9acSPMrmd5VtXkCNLLWiGcSyEbcNBIdMF
- Ao53TI8wrDRmmmdja39pEcoiz9cdyG2WtuDkIPOeOFdSVy4WUXbOqm8XuEhBZQ4L0wlmEsx
- UKXqj7PE1czx5vjIPdYgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jJFIJPDMF/M=:EeuwshNFbWGKUeGTktrPD4
- KrYoK1+YbidDDYeiAFJw+7mCjprNhyO5E8z3Eb8QwwSQzCFqloV3e5MrFHh2iIsNn96QWZguD
- ur3/l+eFg+q35jMS+WCsotHa7RXpj5z3p3zoyvRVyPyJyZCD/dRm5FoBKxLO8VwGUuQpPqPnO
- FHElF8B/JTVFRT0OZGOMgJY6E8CS/LmtHqCBGTh7ET9Yopm9SmRRSBZXsQoEp3Ar7JCEWccr9
- Mws7MYkqyYKItrQW0yFg3vxU42RtX6JRJCp9juyeMZZFXRuEi/fv6HPaAviEPtwbYDMLNG7Wu
- XGanpsWweB0JjlDTqcKPcSk0lw4rLXgfjwhL1aZVVmOkWkHfHdAgjxg+MJculGZF6YMYLWsUU
- sXkVUcQ0rs8X53qJiRKfUvXUKQHHk3crNlVIgpL7X0HSVoASXocbvDQJdvzXJsvFC6pGPBkc3
- utDPjNj0POZMpLZJmEQ+2dbvTBGhdhxnNscF3TYlFV4qZSU7aBZBsHnMbC2GpTSckbUp2uKX6
- RX2u1f0PGQvrfk/kbhhT/kOhYsuNzZNaUpaEcUGvPYDKHQuqFKhL4D09tkigfp9sAzkgHJwjU
- RkKfcw9mIMFoqD07jo0VrP/RG4jEYAltFb2LITTufBrNNALfbwNY/3wyd/GyBvsAg0M4Mwc3S
- Pa6cbyOf5+IqDak5Dl/Ify5/tzH98iWuJ14EyQige5otNK1vfQLQmW9DJ93ZmQZxARjeYcxVc
- pxSgRKXxTRgrQ7SLcMnfsFxYRwj3mLjqDc2enMvDKZHQMc4cVHYcFEz3l4qNTg9iyhGoTY+VY
- a6GRF2a
+X-Provags-ID: V03:K0:Q5k97fFn0Bqe4swYDDw3Mo01oanOKGZBma5RUVMkcpwrQQPp4PO
+ X/P3GRM99htShlKPmq20cz27y8tLes1wblJbXthzRDqRT9xuRS1sFdXMyC2ZdAw6DzBvw3h
+ LtsV32a9rhuTyIOe1QZArkS+sewg0cKj4U8ZDH7UafYCtxXAolAW70C99Y7CbqtxqSh69Hz
+ oEihv+l45GSWnFXLGFarg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3HRe4xr5kb0=:F2JBwUNFYhAP78JJairEVG
+ YAHWqBpDO3sSwlRlY5ZuazzXbwbB1gmciZAc+IHlKz6x+bvUBPy+79+wr5rAdny2VY9hgOkYJ
+ qUDhU2WJjuc81p6yfFSkZFr0WUJ6wFyz2WwMkB9ahnRerJYKMJhfQlxcOKeh4hWmdZ6wIH6LT
+ kSAB1Sh/GjCV/rLinbBtaWqeYwEQYICC3Fr7vJbaEyuM6PFe1kbY5K3PB/b3BwcJsoKs4zMoO
+ LusqLFdFO3+1AceqjNabXAJXw+fSRMbZyYgRmQs2ZLgx0Lso37rbqxemz5M7AsLLdmIzxJW3D
+ kXG394AZRbmM9PQiYASqoryZ35OWj4ifGOPL5QmTA21R6BTUkdu/Pbwg+d0mmI/YW+M1pe9V9
+ PSNGIwpqy8fEqhOX0SZLidqPeGmH2bzR+h4ssf2RrdJARUiQc4mfQxq0A+oA5lliMGjpc90L5
+ ASqFSAU9amxj7jvCcxy/bK7XqtftAcCqBdkMGTzYSTEaRuMQTBc20Jpure/tzTjOmyQFOc6yc
+ r05/tPquW8kplmGLKHu0Rd3RAVGLbGxlOH+A7eDSMGqtg5fpQrVqMDDF6Gw2yfv2tvveOiaaS
+ 8WbBH6TjUgP3emFkR41+Eexr/j+ww8YJAseUeuk6olyqejGQbCQ2I9jTovQgHKfJg/RTJAE2m
+ pKK67/WmWhivQjaSTwa03aQpY7UM7TWFHj32tWF7cCuyVKn09qKoFD3rRYD0P3TJFGlZf0U9i
+ aYMz+enE1q/UDmyUFz8rj8NrqzaFj77LxiGq9PaS8aXZCifmlkMiUKcjDwYl7kUCbCoa7HRA3
+ E3oqMrF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When 84c9dc2 (commit: allow core.commentChar=auto for character auto
-selection, 2014-05-17) extended the core.commentChar functionality to
-allow for the value 'auto', it forgot that rebase -i was already taught to
-handle core.commentChar, and in turn forgot to let rebase -i handle that
-new value gracefully.
+Hi,
 
-Reported by Taufiq Hoven.
+On Sun, 20 Nov 2016, Jiang Xin wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-rebase--interactive.sh    | 13 +++++++++++--
- t/t3404-rebase-interactive.sh |  2 +-
- 2 files changed, 12 insertions(+), 3 deletions(-)
+> Fixed unmatched single quote introduced by commit:
+> 
+>  * f56fffef9a sequencer: teach write_message() to append an optional LF
+> 
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index ca994c5..6bb740c 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -93,8 +93,17 @@ eval '
- GIT_CHERRY_PICK_HELP="$resolvemsg"
- export GIT_CHERRY_PICK_HELP
- 
--comment_char=$(git config --get core.commentchar 2>/dev/null | cut -c1)
--: ${comment_char:=#}
-+comment_char=$(git config --get core.commentchar 2>/dev/null)
-+case "$comment_char" in
-+''|auto)
-+	comment_char=#
-+	;;
-+?)
-+	;;
-+*)
-+	comment_char=$(comment_char | cut -c1)
-+	;;
-+esac
- 
- warn () {
- 	printf '%s\n' "$*" >&2
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index e080399..0f3d177 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -976,7 +976,7 @@ test_expect_success 'rebase -i respects core.commentchar' '
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
- 
--test_expect_failure 'rebase -i respects core.commentchar=auto' '
-+test_expect_success 'rebase -i respects core.commentchar=auto' '
- 	test_config core.commentchar auto &&
- 	write_script copy-edit-script.sh <<-\EOF &&
- 	cp "$1" edit-script
--- 
-2.10.1.583.g721a9e0
+ACK!
+
+Thank you,
+Dscho
