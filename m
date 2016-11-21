@@ -2,77 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C6B41FE4E
-	for <e@80x24.org>; Mon, 21 Nov 2016 17:31:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 827FE2022D
+	for <e@80x24.org>; Mon, 21 Nov 2016 18:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754078AbcKURbQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 12:31:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53910 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753535AbcKURbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 12:31:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3C9F4F936;
-        Mon, 21 Nov 2016 12:31:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8MUn80EFBAlqhWs2vstCCtygJV4=; b=sx0EF0
-        Uj/TE90E2wqAVwIw+PN+YsNi3JXKr7npdk2Ivd2XMfkHfvDELDE1r7ukKhtqSgjy
-        Mk6e5kVZ/4VJEZhUpekkS3zBGxImx6Z+4JJ7rWdfhy4EGVqOdyaaJmw0mTYwh4zK
-        T9z5JqKQxobJdBUo66Bqzp57opQIagQgYuY9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v0fcqIz4MOhBqZvJb0lLe2rO9LJSIKMy
-        s/2LUFiu6MwOKQkQk1fUv0nUGnZVSUtdwgeuUGDDuAeRL++3ulNfu+JMfpNQBMSy
-        5KcHrF45eqZDhURTgt7x0ifVJ93piV7vIxPfWaUZccfN4paEujQNcV8ImdBJZphO
-        UmNpZlyAlC4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB68C4F934;
-        Mon, 21 Nov 2016 12:31:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1754316AbcKUSMf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 13:12:35 -0500
+Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:56142 "EHLO
+        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754277AbcKUSMe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 13:12:34 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id A980110005C;
+        Mon, 21 Nov 2016 18:12:32 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id KsjIXgbe1N-0; Mon, 21 Nov 2016 18:12:32 +0000 (GMT)
+Received: from EXMBNJE5.ad.twosigma.com (exmbnje5.ad.twosigma.com [172.20.45.205])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37A594F932;
-        Mon, 21 Nov 2016 12:31:14 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] i18n: Fixed unmatched single quote in error message
-References: <721cdca4d000627fa163da15c515a50fd9529a62.1479644251.git.worldhello.net@gmail.com>
-        <alpine.DEB.2.20.1611211522280.3746@virtualbox>
-Date:   Mon, 21 Nov 2016 09:31:12 -0800
-In-Reply-To: <alpine.DEB.2.20.1611211522280.3746@virtualbox> (Johannes
-        Schindelin's message of "Mon, 21 Nov 2016 15:22:40 +0100 (CET)")
-Message-ID: <xmqqshqkkae7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id 98B738002E;
+        Mon, 21 Nov 2016 18:12:32 +0000 (GMT)
+Received: from EXMBNJE7.ad.twosigma.com (172.20.45.147) by
+ EXMBNJE5.ad.twosigma.com (172.20.45.205) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Mon, 21 Nov 2016 18:12:32 +0000
+Received: from EXMBNJE7.ad.twosigma.com ([fe80::a093:116d:d3a6:d7a6]) by
+ EXMBNJE7.ad.twosigma.com ([fe80::a093:116d:d3a6:d7a6%17]) with mapi id
+ 15.00.1156.000; Mon, 21 Nov 2016 18:12:32 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Stefan Beller' <sbeller@google.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "bmwill@google.com" <bmwill@google.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jrnieder@gmail.com" <jrnieder@gmail.com>,
+        "mogulguy10@gmail.com" <mogulguy10@gmail.com>
+Subject: RE: [PATCH 13/16] submodule: teach unpack_trees() to update
+ submodules
+Thread-Topic: [PATCH 13/16] submodule: teach unpack_trees() to update
+ submodules
+Thread-Index: AQHSP5T/yfE5zbVgwU2DRjwgjfcv5aDauJXggASwjQCABF0PoA==
+Date:   Mon, 21 Nov 2016 18:12:32 +0000
+Message-ID: <9fa4c24dc02941ff8a43c4b97dad8dc0@EXMBNJE7.ad.twosigma.com>
+References: <20161115230651.23953-1-sbeller@google.com>
+ <20161115230651.23953-14-sbeller@google.com>
+ <f54d446aa7734cb4aec4b51c7b81a2b6@exmbdft7.ad.twosigma.com>
+ <CAGZ79kb-TKgQm1_p3NyJS7mso2FFWMNHa7F8vwzocjSJfyjXJQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kb-TKgQm1_p3NyJS7mso2FFWMNHa7F8vwzocjSJfyjXJQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.12]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4D318D50-B010-11E6-83AD-3AB77A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi,
->
-> On Sun, 20 Nov 2016, Jiang Xin wrote:
->
->> Fixed unmatched single quote introduced by commit:
->> 
->>  * f56fffef9a sequencer: teach write_message() to append an optional LF
->> 
->> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
->
-> ACK!
->
-> Thank you,
-> Dscho
-
-Thanks, both.
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogU3RlZmFuIEJlbGxlciBb
+bWFpbHRvOnNiZWxsZXJAZ29vZ2xlLmNvbV0NCg0KPiA+PiArICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBpZiAoc3VibW9kdWxlX2lzX2ludGVyZXN0aW5nKG9sZC0+bmFtZSwNCj4gbnVsbF9z
+aGExKQ0KPiA+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJiYgb2tfdG9fcmVt
+b3ZlX3N1Ym1vZHVsZShvbGQtPm5hbWUpKQ0KPiA+PiArICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIHJldHVybiAwOw0KPiA+PiArICAgICAgICAgICAgICAgICAgICAgfQ0KPiA+
+DQo+ID4gRG8gd2UgbmVlZCBhIHJldHVybiAxIGluIGhlcmUgc29tZXdoZXJlPyAgQmVjYXVzZSBv
+dGhlcndpc2UsIHdlIGZhbGwNCj4gdGhyb3VnaCBhbmQgcmV0dXJuIDAgbGF0ZXIuDQo+IA0KPiBP
+dGhlcndpc2Ugd2Ugd291bGQgZmFsbCB0aHJvdWdoIGFuZCBydW4NCj4gDQo+ICAgICBpZiAoZXJy
+bm8gPT0gRU5PRU5UKQ0KPiAgICAgICAgIHJldHVybiAwOw0KPiAgICAgcmV0dXJuIG8tPmdlbnRs
+eSA/IC0xIDoNCj4gICAgICAgICBhZGRfcmVqZWN0ZWRfcGF0aChvLCBlcnJvcl90eXBlLCBjZS0+
+bmFtZSk7DQo+IA0KPiB3aGljaCBwcm9kdWNlcyBkaWZmZXJlbnQgcmVzdWx0cyB0aGFuIDA/DQoN
+Ck9oLCBJIHNlZS4gIEkgd2FzIG1pc3JlYWRpbmcgdGhhdCBlcnJubyBjaGVjay4NCg==
