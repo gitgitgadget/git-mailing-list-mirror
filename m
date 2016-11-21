@@ -2,68 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 365CE1FE4E
-	for <e@80x24.org>; Mon, 21 Nov 2016 14:22:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99E8C1FE4E
+	for <e@80x24.org>; Mon, 21 Nov 2016 16:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753748AbcKUOWs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 09:22:48 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60155 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753032AbcKUOWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 09:22:47 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ldq55-1cYZWM3fCl-00j1D9; Mon, 21
- Nov 2016 15:22:41 +0100
-Date:   Mon, 21 Nov 2016 15:22:40 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jiang Xin <worldhello.net@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] i18n: Fixed unmatched single quote in error message
-In-Reply-To: <721cdca4d000627fa163da15c515a50fd9529a62.1479644251.git.worldhello.net@gmail.com>
-Message-ID: <alpine.DEB.2.20.1611211522280.3746@virtualbox>
-References: <721cdca4d000627fa163da15c515a50fd9529a62.1479644251.git.worldhello.net@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753560AbcKUQ5G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 11:57:06 -0500
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:32872 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752505AbcKUQ5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 11:57:05 -0500
+Received: by mail-yw0-f176.google.com with SMTP id r204so217060695ywb.0
+        for <git@vger.kernel.org>; Mon, 21 Nov 2016 08:57:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mVV4SQ6jNbvooDFOsWAiZvxvWtL0GBBQrxM+wovRotc=;
+        b=hAvKC8Q5bgJdD5U8wN7jKxXR6RTL6Ch3ZauzJ3us0PUtPR5z89VAq89iECI1cJcx5x
+         wzrKNyYJVo8fUrO7uk+AtcB8xdOAU/K4T1nkyd6pbUtDP5gjslZoZxKMdnZrOAwOpjpP
+         UWIp/qDBZWPbYNkqnpgmJDKJt45MOhz1A3LBv+o9Ds0KyRUtn58LaqZ8yYrFCK0lO81f
+         3RjH+VWJd1sg6+1mYicpWvbr7m0re6YA04p6b+3DJCRq+eIu6lGf2liiY6rxB/go7UTn
+         hxw/kchBx18Drlcar14WxJRrK1pizJzBHN2BPLoSGYrdyRVN7xFIHSJNC6gLu6HFzocS
+         p0dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mVV4SQ6jNbvooDFOsWAiZvxvWtL0GBBQrxM+wovRotc=;
+        b=dLDz8aqXWwA6Vub1Fz4mbOD/93ZMkSMYCjjDrIuZYXuM9UZwO0EkxMukIiulEJdAUi
+         3/yJI6clFTMO9/XBlt6BpAsgMEnbO44300tgwxgrDGO6wwUsnxaoutQKYBObydRaUENx
+         GvrT1DYSKcFD339AVC8s/vz7miWlF+5MeJvf5c2tMGCLaB6X+739KXdzL7k3Wg93zDUV
+         bTocK+R1pH5L14CaFInZ4obdqkfJF5ib/+HTtAhglBQA/BB9tBZCLg/82TK/PnILuEkk
+         sgSWZzjqdIOkdzYBAlShgzXS2xbE6orC+BrhWz2bWgeX3ImFry0mYkJTB6xtLMUUPq+a
+         Iknw==
+X-Gm-Message-State: AKaTC03EF7II3YVD0A38J9Rng2n3wrgKeh4PhSgubyYsuNGOtEpEJUzuvA41EojnkY5zVe7mpfv7Ip6bQwB9ew==
+X-Received: by 10.13.221.12 with SMTP id g12mr16379835ywe.257.1479747424831;
+ Mon, 21 Nov 2016 08:57:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Q5k97fFn0Bqe4swYDDw3Mo01oanOKGZBma5RUVMkcpwrQQPp4PO
- X/P3GRM99htShlKPmq20cz27y8tLes1wblJbXthzRDqRT9xuRS1sFdXMyC2ZdAw6DzBvw3h
- LtsV32a9rhuTyIOe1QZArkS+sewg0cKj4U8ZDH7UafYCtxXAolAW70C99Y7CbqtxqSh69Hz
- oEihv+l45GSWnFXLGFarg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3HRe4xr5kb0=:F2JBwUNFYhAP78JJairEVG
- YAHWqBpDO3sSwlRlY5ZuazzXbwbB1gmciZAc+IHlKz6x+bvUBPy+79+wr5rAdny2VY9hgOkYJ
- qUDhU2WJjuc81p6yfFSkZFr0WUJ6wFyz2WwMkB9ahnRerJYKMJhfQlxcOKeh4hWmdZ6wIH6LT
- kSAB1Sh/GjCV/rLinbBtaWqeYwEQYICC3Fr7vJbaEyuM6PFe1kbY5K3PB/b3BwcJsoKs4zMoO
- LusqLFdFO3+1AceqjNabXAJXw+fSRMbZyYgRmQs2ZLgx0Lso37rbqxemz5M7AsLLdmIzxJW3D
- kXG394AZRbmM9PQiYASqoryZ35OWj4ifGOPL5QmTA21R6BTUkdu/Pbwg+d0mmI/YW+M1pe9V9
- PSNGIwpqy8fEqhOX0SZLidqPeGmH2bzR+h4ssf2RrdJARUiQc4mfQxq0A+oA5lliMGjpc90L5
- ASqFSAU9amxj7jvCcxy/bK7XqtftAcCqBdkMGTzYSTEaRuMQTBc20Jpure/tzTjOmyQFOc6yc
- r05/tPquW8kplmGLKHu0Rd3RAVGLbGxlOH+A7eDSMGqtg5fpQrVqMDDF6Gw2yfv2tvveOiaaS
- 8WbBH6TjUgP3emFkR41+Eexr/j+ww8YJAseUeuk6olyqejGQbCQ2I9jTovQgHKfJg/RTJAE2m
- pKK67/WmWhivQjaSTwa03aQpY7UM7TWFHj32tWF7cCuyVKn09qKoFD3rRYD0P3TJFGlZf0U9i
- aYMz+enE1q/UDmyUFz8rj8NrqzaFj77LxiGq9PaS8aXZCifmlkMiUKcjDwYl7kUCbCoa7HRA3
- E3oqMrF
+Received: by 10.37.33.132 with HTTP; Mon, 21 Nov 2016 08:56:44 -0800 (PST)
+In-Reply-To: <14657461479715884@web21h.yandex.ru>
+References: <14657461479715884@web21h.yandex.ru>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 21 Nov 2016 08:56:44 -0800
+Message-ID: <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
+Subject: Re: Feature request: Improve diff algorithm
+To:     KES <kes-kes@yandex.ru>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 21, 2016 at 12:11 AM, KES <kes-kes@yandex.ru> wrote:
+> Hi.
+>
+
 Hi,
 
-On Sun, 20 Nov 2016, Jiang Xin wrote:
+> I have some question about how diff works then give proposal:
+>
+> it will be very useful for each "symbol" store additional meta info as source line length. So in this case when git counter two equal sequence of commands it will do further comparison: Adds 23 chars deletes none VS adds 75 chars deletes 46
+>
+> Actually I got this:
+>
+> @@ -129,8 +132,9 @@ sub _preprocess_message {
+>  sub _process_message {
+>      my ($self, $message) = @_;
+>
+> -    my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
+> +    my $time =  [ gettimeofday ];
+>
+> +    my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
+>      return $self->send_error(ERROR_REQUEST_INVALID)
+>          unless defined($method);
+>
+> Instead of expected:
+> @@ -129,6 +132,8 @@ sub _preprocess_message {
+>  sub _process_message {
+>      my ($self, $message) = @_;
+>
+> +    my $time =  [ gettimeofday ];
+> +
+>      my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
+> -
+>      return $self->send_error(ERROR_REQUEST_INVALID)
+>
 
-> Fixed unmatched single quote introduced by commit:
-> 
->  * f56fffef9a sequencer: teach write_message() to append an optional LF
-> 
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Have you tried the various options for git to search for smaller
+diffs? Or using the other diff algorithms such as histogram instead of
+patience?
 
-ACK!
-
-Thank you,
-Dscho
+Thanks,
+Jake
