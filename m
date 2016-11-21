@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 801032022D
-	for <e@80x24.org>; Mon, 21 Nov 2016 14:18:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06B391FE4E
+	for <e@80x24.org>; Mon, 21 Nov 2016 14:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932258AbcKUOSR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 09:18:17 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57537 "EHLO mout.gmx.net"
+        id S932325AbcKUOSe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 09:18:34 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57058 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753852AbcKUOSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 09:18:14 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlUZz-1ciRUD1CMB-00bHDp; Mon, 21
- Nov 2016 15:18:02 +0100
-Date:   Mon, 21 Nov 2016 15:18:01 +0100 (CET)
+        id S932307AbcKUOSc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 09:18:32 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSutp-1cIYs81D0v-00RtTJ; Mon, 21
+ Nov 2016 15:18:25 +0100
+Date:   Mon, 21 Nov 2016 15:18:24 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,58 +27,83 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Ralf Thielow <ralf.thielow@gmail.com>,
         =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
         <pclouds@gmail.com>, Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: [PATCH 0/3] Fix problems with rebase -i when core.commentchar is
- defined
-Message-ID: <cover.1479737858.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 2/3] stripspace: respect repository config
+In-Reply-To: <cover.1479737858.git.johannes.schindelin@gmx.de>
+Message-ID: <5567548295222401fab10d3f2901c1787afbfd07.1479737858.git.johannes.schindelin@gmx.de>
+References: <cover.1479737858.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:zZY3LBBQjHf88Qo3R6BGc3I3P2uSuJmz/wcXYsibwtwZuxps5+J
- s0K0VkIYt8fsPwqgXKf4y4PVN2++LXIPBCXn6wgqgOwJa8L28hrbfiYLrMn4d/bMgjn6Cnb
- ieKsV6M2xpoLhygKDn2ZFJ1cJnKlagFXSna87PfOFXp2xQXvEAelDZ3jwLK/nRntVcFhjr0
- mYIxMjmTd2Eej+BhGtpQg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ptRJH+3NwIg=:w1aft4rYkser/jh1+m7IaC
- EPSjynFPc6uU+Op4bvOoaLHg6G3SIxCr4AaY67wtjLgZLBHNAstE0xqW2rxep3icokFUNnF6i
- G6qHjqL7f/5vTcE2a8bpBzgvuu5RYCoi1UE96I1Y9Sh80NfrwGHWmbdC/9giy6Sxf4CFk5553
- uPKEefktgDtP4r18jKjOr6BVkFyVvfYb6wS21TpmMTxUUpKEoZBv3O6Ca8TzYEq8L3R9nf2OX
- R/mqwn2cNecgeDJgapBw9HyygyT0+Gzl1yQE9p5Tu0M6R7pouOojlcIfFQL7JUOG5P3K+i+HQ
- 2toUxac75VDWalwhHYwSdfyWFp6fMvLOQ8uXLoKIkd8w2y20uk/8b3pkAIkS72fJUIIYqIX3f
- /wwqcL8dHn7i3Yx0H3U44DyxdxhqVcfRt8OWRkIBZ9WQmX2HcU1tAx+W8bM80AdHQdd8x7qNy
- jqgA71Yl5GvkzSNT43paD1wigMNbKDfhJ3aSzGKzn+jp0kbEvBUH0aZjGPWDxiLhyusuoZ4Om
- HBXB1grLxeK9oZvZHuC7ZNpMsd48l3LEn8ih4gry8H+RiwUqv/NJAxgQQNLxrnJwim1TVdDk9
- jPPMIy+NW3Ex7lRsl0DHv1kH+8nEAhIbib4Xv69SKUpRquiULfJF9Z7HXLJOUhPc/18+9q6v1
- 8G+1To+q+QnqhIrAdw0Cwz8/GmtkbpLi2uomoX1s4KHYgl7VLULSLSev2awIO3fvw+zrkYU+c
- 0S2G0ZoveNT+63OnVieQXcfGLzCjV9JAgrfCGT3CiOqIWYG72RBAtifnev6UZQB0uiO9zXbXV
- vzsGgB+
+X-Provags-ID: V03:K0:jXlSbVYKBHGeXIbQl8GR+ICyZz7CEqRZj03ravASXAQ5Oqo1XXm
+ fDGYqBoK+sSnBr/ydLcO/Lq5KKFfPZOSrb7NRmWkmqCITUzyfoS2jlqdjhoY4XJSFEWdzF3
+ miPJASCkeVoiD6Q0jY1eqjhCT1FlQodNX1vG5cslLKJnGlFSetd3YRAsH8fIDagxYdpBoWI
+ PAKOL9+Qgc1fsmxOpDOyQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7QBNU4To7CQ=:Nf2Ay94X9bnz4c+SxvxtNw
+ 2uMzd6o244Yf6o+44fEv15TrKsGy618NntmZEvbMtwTv7hBXE4cl27VWzJwgVoqT+ox1dJEd5
+ JDUFv3dC5zHw5dPYbUbVhV1PPQDHcry1Jn7QdtHJhxiQkd3cPwG3Y5ZnLPX1ZxPc8qmn48Acr
+ +PKyRswKGySi+2e51R+0/pq+QnARiFT9FIkcl08ihCIV16k225yJtNB0ynfyJGmg7qpgl+rsX
+ gx3HMoUPTsQJn8ppCKn93zXyjJ2R+gDRg4q5e40Bf+58UQxUhcrIW13yWa/7WsATUrVHTGRLr
+ 357waYzQfWFSifGQ9z2LJ8UxAQ9bGbWgB5941d5H9AyosTRArevqyI5fXIttCbkcC+l2fkW59
+ dr0RwJNoZsXt1SsS3zPNdUcCN2xcX6TCGuJqNLMeEXZmEvaoFI6lcbzH7eL7ASLeQ6tM0Injn
+ 1esLQGydtXzfeGTRf48tn8OCbyX+RoAmebYYOUxVnChXOpnOFHXIKAK/nfn5KhK2XvZScHzIV
+ 6fP4krvYZ90PxbVQu/a3B1YNMF9zHemtyZQyv1Em2hHzxmjcdGN4U89AdFru15QUqBQhmWOLs
+ HelsKXQ6xiy+Brruu4D7sqA4Xh8/N4HQDuuazsR2JxSK4I3W3fwSTr08hwdgviaS6NBLVtOWD
+ yUu+vrcuM9HFiS8UkUNVfDdmA9JqwlEvVMj1Pu0YRAOmpCtdVCNiN+SB/fhc/7JvPCPCjmPxj
+ AoUbrQuV5ePDw4avoCZz6TrAjUFqNIcuCBnYwbE60PrBBPDHfChxfNrNrfL5hX/Q2+VgIsUxJ
+ EN5G4zZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Git for Windows project recently got a bug report that detailed how
-`git rebase -i` fails when core.commentchar=auto:
+When eff80a9 (Allow custom "comment char", 2013-01-16) taught the
+`stripspace` command to respect the config setting `core.commentChar`,
+it forgot that this variable may be defined in .git/config.
 
-	https://groups.google.com/forum/#!topic/git-for-windows/eOZKjkgyX1Q
+So when rebasing interactively with a commentChar defined in the current
+repository's config, the help text at the bottom of the edit script
+potentially used an incorrect comment character. This was not only
+funny-looking, but also resulted in tons of warnings like this one:
 
-This patch series fixes rebase -i's handling of core.commentchar.
+	Warning: the command isn't recognized in the following line
+	 - #
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/stripspace.c  | 4 +++-
+ t/t0030-stripspace.sh | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-Johannes Schindelin (3):
-  rebase -i: identify problems with core.commentchar
-  stripspace: respect repository config
-  rebase -i: handle core.commentChar=auto
-
- builtin/stripspace.c          |  4 +++-
- git-rebase--interactive.sh    | 13 +++++++++++--
- t/t0030-stripspace.sh         |  7 +++++++
- t/t3404-rebase-interactive.sh | 12 ++++++++++++
- 4 files changed, 33 insertions(+), 3 deletions(-)
-
-
-base-commit: 1310affe024fba407bff55dbe65cd6d670c8a32d
-Published-As: https://github.com/dscho/git/releases/tag/rebase-i-commentchar-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-commentchar-v1
-
+diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+index 15e716e..1e62a00 100644
+--- a/builtin/stripspace.c
++++ b/builtin/stripspace.c
+@@ -44,8 +44,10 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
+ 	if (argc)
+ 		usage_with_options(stripspace_usage, options);
+ 
+-	if (mode == STRIP_COMMENTS || mode == COMMENT_LINES)
++	if (mode == STRIP_COMMENTS || mode == COMMENT_LINES) {
++		setup_git_directory_gently(NULL);
+ 		git_config(git_default_config, NULL);
++	}
+ 
+ 	if (strbuf_read(&buf, 0, 1024) < 0)
+ 		die_errno("could not read the input");
+diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+index 202ac07..67f77df 100755
+--- a/t/t0030-stripspace.sh
++++ b/t/t0030-stripspace.sh
+@@ -432,7 +432,7 @@ test_expect_success '-c with changed comment char' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure '-c with comment char defined in .git/config' '
++test_expect_success '-c with comment char defined in .git/config' '
+ 	test_config core.commentchar = &&
+ 	printf "= foo\n" >expect &&
+ 	printf "foo" | git stripspace -c >actual &&
 -- 
 2.10.1.583.g721a9e0
+
 
