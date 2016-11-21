@@ -2,88 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7954F1FE4E
-	for <e@80x24.org>; Mon, 21 Nov 2016 18:14:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A00401FE4E
+	for <e@80x24.org>; Mon, 21 Nov 2016 18:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754225AbcKUSOl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 13:14:41 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:35250 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752299AbcKUSOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 13:14:40 -0500
-Received: by mail-pg0-f48.google.com with SMTP id p66so132759823pga.2
-        for <git@vger.kernel.org>; Mon, 21 Nov 2016 10:14:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=q4FW2TaXkNWW+cz3L2ZhDI471xOphnoTz6x6Bwv2Ljw=;
-        b=irC41G2cVR7O1oVWWGx5w/sCa9P84OL3ZE8N2jkgP7i+ZeF+uLqNZXErLbybmFjplE
-         KXA2zfwsSsfXfPfLKEzWaFyitNgGfsOirBiB4L2rl1A1YhKtCbUqSabQ+MVdyZpvKW8I
-         o6NR85bejZSyS4xCTYFCRMDEwj1mqytPKiIjO1Q80WlY8GtCuz2C3b1ZSbWM3XwtVjE6
-         iD8JTmLzfSgeXvuAWl6/jOFIY378wNXxVfkWwQ6hf3TLqi5uclC4TXAb/MEiTScmwufE
-         1/Jv1wGSnKFTNb4linB812tk44kZMSucoWrIaYTTpRHdTU/ZNWpWw6azbJZSBYf2P7iz
-         md4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=q4FW2TaXkNWW+cz3L2ZhDI471xOphnoTz6x6Bwv2Ljw=;
-        b=k6CM5fb5m1pYrTEnUf9QkruBIrPoUfZPpsICYS03v0i/On/uUZ2hA6lUD3JUOWjFcW
-         zV9ppc57lqKD90OMtfA6uAcvUsrsLK3dEla+vmJHcRPNleJSfrDBtZCg8kkeEeYFGgyM
-         q7usGaSukna8gdTqxdJtvnJJqqWmHe3i0kGT3shN0fDIUs9CD8uxO0b2uHkq+yg85OYd
-         KwIv9sRfBFJo4zaXASr+go0e7skIf+KU2X7rHXV8iE8rHfyOwL+v49fGA5cXpxDv0pZq
-         CLtGkIkSqMIYpdlwcb5iY41fIEm/eqYMMs1Vqjuio0d30vAPZU5hpFsi33kmiHuPnv8Q
-         aCxA==
-X-Gm-Message-State: AKaTC02pecB8EdNAT3Gj6Qksruj2F4dl+CgRhZf1rSYAw6J5L3ATdx1vF8N35B1xz1RBSvKG
-X-Received: by 10.99.54.140 with SMTP id d134mr34601413pga.132.1479752079534;
-        Mon, 21 Nov 2016 10:14:39 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:9837:5b20:fc2:14ed])
-        by smtp.gmail.com with ESMTPSA id t184sm21113494pgt.36.2016.11.21.10.14.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 21 Nov 2016 10:14:38 -0800 (PST)
-Date:   Mon, 21 Nov 2016 10:14:37 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jonathantanmy@google.com
-Subject: Re: [PATCH v4 5/6] grep: enable recurse-submodules to work on <tree>
- objects
-Message-ID: <20161121181437.GA149321@google.com>
-References: <1478908273-190166-1-git-send-email-bmwill@google.com>
- <1479499135-64269-1-git-send-email-bmwill@google.com>
- <1479499135-64269-6-git-send-email-bmwill@google.com>
- <xmqqh974l9bz.fsf@gitster.mtv.corp.google.com>
- <20161118225220.GA76630@google.com>
+        id S1753874AbcKUSPs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 13:15:48 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63922 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752818AbcKUSPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 13:15:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5296051D68;
+        Mon, 21 Nov 2016 13:15:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Hf9Jj0gMmmJNDPqG0PWxBZtOHOg=; b=vnzF3B
+        TDJnPiNywU4ZoF9ehRhNdmfRBI2Ez7qJt3r74PtWgUxaO60VWbfVSOFX7avTTM2z
+        UzQUo17Sb3NUKYAjUgxd+e6AHq92/EYu0VhnczVB0tBBm7Byi0oCiTEcicN+0Xc+
+        0P9O6+CuqufiwSQqAXhhMkAzYRa5CTdc8EpOw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JqVHu3ubqWS5Rq447gpSzfNYa3e0A4qW
+        VQBL1+0Uga0KPnfWwnM5AKZv2GusNjpX2qw0dtEbaw4f0SFt23ZfGF3fq/tECrs+
+        ialVBQeZIKZiLeN/uiqdqB2QV+bJUNwTuww+8pzKrjI8CAyndX5iJ1F1UOHCBAvC
+        qFPcLV6SD0k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 48F8851D67;
+        Mon, 21 Nov 2016 13:15:46 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BBEC651D66;
+        Mon, 21 Nov 2016 13:15:45 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Taufiq Hoven <taufiq.hoven@gmail.com>
+Subject: Re: [PATCH 1/3] rebase -i: identify problems with core.commentchar
+References: <cover.1479737858.git.johannes.schindelin@gmx.de>
+        <f47dce15719954d6d4d8a550856757366871143e.1479737858.git.johannes.schindelin@gmx.de>
+Date:   Mon, 21 Nov 2016 10:15:43 -0800
+In-Reply-To: <f47dce15719954d6d4d8a550856757366871143e.1479737858.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Mon, 21 Nov 2016 15:18:05 +0100
+        (CET)")
+Message-ID: <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161118225220.GA76630@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 85980F4C-B016-11E6-AD9B-987C12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/18, Brandon Williams wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Also, in order to use the tree_entry_interesting code it looks like I'll
-> either have to pipe through a flag saying 'yes i want to match against
-> submodules' like I did for the other pathspec codepath.  Either that or
-> add functionality to perform wildmatching against partial matches (ie
-> directories and submodules) since currently the tree_entry_interesting
-> code path just punts and says 'well say it matches for now and check
-> again later' whenever it runs into a directory (I can't really make it
-> do that for submodules without a flag of somesort as tests could break).
-> Or maybe both?
+> diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+> index 29e91d8..202ac07 100755
+> --- a/t/t0030-stripspace.sh
+> +++ b/t/t0030-stripspace.sh
+> @@ -432,6 +432,13 @@ test_expect_success '-c with changed comment char' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_failure '-c with comment char defined in .git/config' '
+> +	test_config core.commentchar = &&
+> +	printf "= foo\n" >expect &&
+> +	printf "foo" | git stripspace -c >actual &&
 
-Looks like my initial assumption was incorrect, I just needed to be
-smarter than punting when running into a submodule.  Should be able to
-just ensure that the entry matches up to at least the first wildcard
-character before punting and all should be good.
+We'd want "\n" on this printf to match the one before as well, as
+this test is not about "does stripspace complete an incomplete
+line?", I think.  
 
--- 
-Brandon Williams
+I could amend it while queuing, but I need to know if I am missing a
+reason why this must be an incomplete line before doing so.
+
+> +	test_cmp expect actual
+> +'
+> +
+
+Is this a recent regression?  When applied on top of 'maint' or
+older, it seems to pass just fine.
+
+    ... Goes and looks ...
+
+Interesting.  Peff's b9605bc4f2 ("config: only read .git/config from
+configured repos", 2016-09-12) is where this starts failing, which
+is understandable given the code change to builtin/stripspace.c in
+[2/3].  
+
+The analysis of the log message in [2/3] is wrong and needs
+updating, though.  In the old world order it worked by accident to
+call git_config() without calling setup_git_directory(); after
+b9605bc4f2, that no longer is valid and is exposed as a bug.  
+
+Your [2/3] is a good fix for that change.
+
+In any case, well spotted.
+
+>  test_expect_success 'avoid SP-HT sequence in commented line' '
+>  	printf "#\tone\n#\n# two\n" >expect &&
+>  	printf "\tone\n\ntwo\n" | git stripspace -c >actual &&
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index e38e296..e080399 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -976,6 +976,18 @@ test_expect_success 'rebase -i respects core.commentchar' '
+>  	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+>  '
+>  
+> +test_expect_failure 'rebase -i respects core.commentchar=auto' '
+> +	test_config core.commentchar auto &&
+> +	write_script copy-edit-script.sh <<-\EOF &&
+> +	cp "$1" edit-script
+> +	EOF
+> +	test_set_editor "$(pwd)/copy-edit-script.sh" &&
+> +	test_when_finished "git rebase --abort || :" &&
+> +	git rebase -i HEAD^ &&
+> +	grep "^#" edit-script &&
+
+This was added for debugging that was forgotten?
+
+> +	test -z "$(grep -ve "^#" -e "^\$" -e "^pick" edit-script)"
+
+This says "There shouldn't be any line left once we remove
+'#'-commented lines, empty lines and pick insns.".  OK.
+
+The correction in [3/3] seems good.
+
+> +'
+> +
+>  test_expect_success 'rebase -i, with <onto> and <upstream> specified as :/quuxery' '
+>  	test_when_finished "git branch -D torebase" &&
+>  	git checkout -b torebase branch1 &&
