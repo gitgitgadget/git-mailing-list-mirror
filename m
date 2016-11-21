@@ -2,86 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFFD41FE4E
-	for <e@80x24.org>; Mon, 21 Nov 2016 18:24:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273171FE4E
+	for <e@80x24.org>; Mon, 21 Nov 2016 18:26:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754000AbcKUSYh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 13:24:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52880 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753620AbcKUSYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 13:24:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D8B7751ECD;
-        Mon, 21 Nov 2016 13:24:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fNvgAY/lhj5YCDZ0U6CqY+++dFM=; b=CVdAJe
-        AyVRRrqy98AAD7VwSn9gOkEUP5PZAA5djP3u6KrI2E+7y44F2YyYOsqy28/M8+4V
-        itgy5YZ48tPfBtOzUzgComqlp8QNDTJdc8SpCDzyT29G7NL3zBtF4HMRckFv2263
-        v1AVqVVc/pPDjwWzH8qWthe+swjywOUh80FGs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=udRrGaG3nsBvNQr549vUIgDBhOCc63OP
-        ATkMZsuOtF82AVX0ealTZbBaPBUMqSBVm22Z8f7IEhwReYI4qBrMy6pp3wFleZF6
-        vhwRgAZih8FWqGwmJ3rfLQbX0250PhldBv1HAyvzamhS6Y6Rc6VXT6nUUxZDGXZA
-        c9pB6AtMWxY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D0F7A51ECC;
-        Mon, 21 Nov 2016 13:24:35 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F10451ECB;
-        Mon, 21 Nov 2016 13:24:35 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: Re: [PATCH 1/3] rebase -i: identify problems with core.commentchar
+        id S1753990AbcKUS04 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 13:26:56 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:26588 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753603AbcKUS0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 13:26:55 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tMxrs1fLhz5tlH;
+        Mon, 21 Nov 2016 19:26:53 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 7D9DB143;
+        Mon, 21 Nov 2016 19:26:51 +0100 (CET)
+Subject: Re: [PATCH 3/3] rebase -i: handle core.commentChar=auto
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
 References: <cover.1479737858.git.johannes.schindelin@gmx.de>
-        <f47dce15719954d6d4d8a550856757366871143e.1479737858.git.johannes.schindelin@gmx.de>
-        <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 21 Nov 2016 10:24:34 -0800
-In-Reply-To: <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 21 Nov 2016 10:15:43 -0800")
-Message-ID: <xmqq7f7wk7x9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+ <9ef529a4fbb60990a91d7bbfdd49c6d20d49e442.1479737858.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Taufiq Hoven <taufiq.hoven@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <975c0002-8afe-efa6-d967-72f2a0d21169@kdbg.org>
+Date:   Mon, 21 Nov 2016 19:26:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C13BBD7C-B017-11E6-B8F0-987C12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <9ef529a4fbb60990a91d7bbfdd49c6d20d49e442.1479737858.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 21.11.2016 um 15:18 schrieb Johannes Schindelin:
+> -comment_char=$(git config --get core.commentchar 2>/dev/null | cut -c1)
+> -: ${comment_char:=#}
+> +comment_char=$(git config --get core.commentchar 2>/dev/null)
+> +case "$comment_char" in
+> +''|auto)
+> +	comment_char=#
+> +	;;
+> +?)
+> +	;;
+> +*)
+> +	comment_char=$(comment_char | cut -c1)
 
->> +test_expect_failure '-c with comment char defined in .git/config' '
->> +	test_config core.commentchar = &&
->> +	printf "= foo\n" >expect &&
->> +	printf "foo" | git stripspace -c >actual &&
->
-> We'd want "\n" on this printf to match the one before as well, as
-> this test is not about "does stripspace complete an incomplete
-> line?", I think.  
->
-> I could amend it while queuing, but I need to know if I am missing a
-> reason why this must be an incomplete line before doing so.
->
->> +	test_cmp expect actual
->> +'
->> +
->
-> Is this a recent regression?  When applied on top of 'maint' or
-> older, it seems to pass just fine.
+comment_char is a command? Did you mean
 
-I think we can force failure by running this test somewhere other
-than the top level of the working tree.  A set of proposed amends
-incoming ...
+	comment_char=$(echo "$comment_char" | cut -c1)
+
+It could be written without forking a process:
+
+	comment_char=${comment_char%${comment_char#?}}
+
+(aka "remove from the end what remains after removing the first character")
+
+-- Hannes
+
