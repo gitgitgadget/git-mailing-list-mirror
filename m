@@ -2,101 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99E8C1FE4E
-	for <e@80x24.org>; Mon, 21 Nov 2016 16:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A32D1FE4E
+	for <e@80x24.org>; Mon, 21 Nov 2016 16:59:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753560AbcKUQ5G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Nov 2016 11:57:06 -0500
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:32872 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752505AbcKUQ5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2016 11:57:05 -0500
-Received: by mail-yw0-f176.google.com with SMTP id r204so217060695ywb.0
-        for <git@vger.kernel.org>; Mon, 21 Nov 2016 08:57:05 -0800 (PST)
+        id S1754329AbcKUQ7S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Nov 2016 11:59:18 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:34897 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753978AbcKUQ7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2016 11:59:15 -0500
+Received: by mail-yw0-f196.google.com with SMTP id b66so28184956ywh.2
+        for <git@vger.kernel.org>; Mon, 21 Nov 2016 08:59:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=mVV4SQ6jNbvooDFOsWAiZvxvWtL0GBBQrxM+wovRotc=;
-        b=hAvKC8Q5bgJdD5U8wN7jKxXR6RTL6Ch3ZauzJ3us0PUtPR5z89VAq89iECI1cJcx5x
-         wzrKNyYJVo8fUrO7uk+AtcB8xdOAU/K4T1nkyd6pbUtDP5gjslZoZxKMdnZrOAwOpjpP
-         UWIp/qDBZWPbYNkqnpgmJDKJt45MOhz1A3LBv+o9Ds0KyRUtn58LaqZ8yYrFCK0lO81f
-         3RjH+VWJd1sg6+1mYicpWvbr7m0re6YA04p6b+3DJCRq+eIu6lGf2liiY6rxB/go7UTn
-         hxw/kchBx18Drlcar14WxJRrK1pizJzBHN2BPLoSGYrdyRVN7xFIHSJNC6gLu6HFzocS
-         p0dQ==
+        bh=uJDlfHPbH7yEFjlywWfOBXtp/SYZv5Hsarz2tWe+Mdw=;
+        b=DWw/Iu7VZ1rZA8bMFP+Oc4eEY5TX7dWdZVtehdZnOPbwHXwFxQOfHEWKXivYGnbceX
+         rmRejGu0WmfvdOpzOtcQPB/mzTBLs10SXpL6Knyy5cZzYMgVaNzPK4wJDfleilI5nnAw
+         kkP+PEt2QNFa9z7lmUuqwCK+a5TDr2I6MRlAhd9hov7HyIdKRCWjG1blHBav8HmFQUgK
+         5rEQXiAaGEAdVU968ODBcHyPjgGpkaDQH5SWfj7bhj5Jri5xvld14mIVQqhy44/2FhER
+         Pn/ar6NKeGCqZ0qKj5ZM7iWPsWY29Zzl7fYaG8oy6k1HBGbDfbCfHydoIOf0zvzJJ+vU
+         Q0eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=mVV4SQ6jNbvooDFOsWAiZvxvWtL0GBBQrxM+wovRotc=;
-        b=dLDz8aqXWwA6Vub1Fz4mbOD/93ZMkSMYCjjDrIuZYXuM9UZwO0EkxMukIiulEJdAUi
-         3/yJI6clFTMO9/XBlt6BpAsgMEnbO44300tgwxgrDGO6wwUsnxaoutQKYBObydRaUENx
-         GvrT1DYSKcFD339AVC8s/vz7miWlF+5MeJvf5c2tMGCLaB6X+739KXdzL7k3Wg93zDUV
-         bTocK+R1pH5L14CaFInZ4obdqkfJF5ib/+HTtAhglBQA/BB9tBZCLg/82TK/PnILuEkk
-         sgSWZzjqdIOkdzYBAlShgzXS2xbE6orC+BrhWz2bWgeX3ImFry0mYkJTB6xtLMUUPq+a
-         Iknw==
-X-Gm-Message-State: AKaTC03EF7II3YVD0A38J9Rng2n3wrgKeh4PhSgubyYsuNGOtEpEJUzuvA41EojnkY5zVe7mpfv7Ip6bQwB9ew==
-X-Received: by 10.13.221.12 with SMTP id g12mr16379835ywe.257.1479747424831;
- Mon, 21 Nov 2016 08:57:04 -0800 (PST)
+        bh=uJDlfHPbH7yEFjlywWfOBXtp/SYZv5Hsarz2tWe+Mdw=;
+        b=BQ7BMQeO1bBcC5s9lRI6oTFsdasBJz/4xmG1P0nzqbS90MPnRH8c6Y8kNIimvXkZme
+         VwCGW7szhzlciEdFaBf+XMXIg9axyWYnEghK11flv9UWXYufH/Un1FpUMQAevPyxDR48
+         X63fMY6GZ4FW/3uCNGxnNyfjWXtAeZ5fevL7LRVzS/XnxUhzt5rmYQ7+xlJpUwdoqV2Z
+         NBz34ZadIJ6qgBMyFESDcV77i+pIT16utWV47bT4ICew+tFPqevUWunYpXNS9vz8c5TT
+         Sesbe2UmUYyyM/uujw7m6gSWRRNMvKMtKz11glcWWue/ziZHgXHezYuxzlsJfCUVNfAE
+         9YrA==
+X-Gm-Message-State: AKaTC01pd3qK6XoIrmixqi3U6MqtyoZZWnakJL5yt8qHGIExWgqxRZG10OLqxmAbGfzXJN4RA7oRSU6Hoqow8A==
+X-Received: by 10.129.102.132 with SMTP id a126mr14771099ywc.160.1479747555083;
+ Mon, 21 Nov 2016 08:59:15 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.33.132 with HTTP; Mon, 21 Nov 2016 08:56:44 -0800 (PST)
-In-Reply-To: <14657461479715884@web21h.yandex.ru>
-References: <14657461479715884@web21h.yandex.ru>
+Received: by 10.37.33.132 with HTTP; Mon, 21 Nov 2016 08:58:54 -0800 (PST)
+In-Reply-To: <cover.1479737858.git.johannes.schindelin@gmx.de>
+References: <cover.1479737858.git.johannes.schindelin@gmx.de>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 21 Nov 2016 08:56:44 -0800
-Message-ID: <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
-Subject: Re: Feature request: Improve diff algorithm
-To:     KES <kes-kes@yandex.ru>
-Cc:     git <git@vger.kernel.org>
+Date:   Mon, 21 Nov 2016 08:58:54 -0800
+Message-ID: <CA+P7+xqq7rNy82_RAoyiJjrC7TwboVJ8UYohARfE5fWNhELeAw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Fix problems with rebase -i when core.commentchar is defined
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Taufiq Hoven <taufiq.hoven@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2016 at 12:11 AM, KES <kes-kes@yandex.ru> wrote:
-> Hi.
+On Mon, Nov 21, 2016 at 6:18 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> The Git for Windows project recently got a bug report that detailed how
+> `git rebase -i` fails when core.commentchar=auto:
+>
+>         https://groups.google.com/forum/#!topic/git-for-windows/eOZKjkgyX1Q
+>
+> This patch series fixes rebase -i's handling of core.commentchar.
+>
+>
+> Johannes Schindelin (3):
+>   rebase -i: identify problems with core.commentchar
+>   stripspace: respect repository config
+>   rebase -i: handle core.commentChar=auto
+>
+>  builtin/stripspace.c          |  4 +++-
+>  git-rebase--interactive.sh    | 13 +++++++++++--
+>  t/t0030-stripspace.sh         |  7 +++++++
+>  t/t3404-rebase-interactive.sh | 12 ++++++++++++
+>  4 files changed, 33 insertions(+), 3 deletions(-)
+>
+>
+> base-commit: 1310affe024fba407bff55dbe65cd6d670c8a32d
+> Published-As: https://github.com/dscho/git/releases/tag/rebase-i-commentchar-v1
+> Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-commentchar-v1
+>
+> --
+> 2.10.1.583.g721a9e0
 >
 
-Hi,
-
-> I have some question about how diff works then give proposal:
->
-> it will be very useful for each "symbol" store additional meta info as source line length. So in this case when git counter two equal sequence of commands it will do further comparison: Adds 23 chars deletes none VS adds 75 chars deletes 46
->
-> Actually I got this:
->
-> @@ -129,8 +132,9 @@ sub _preprocess_message {
->  sub _process_message {
->      my ($self, $message) = @_;
->
-> -    my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
-> +    my $time =  [ gettimeofday ];
->
-> +    my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
->      return $self->send_error(ERROR_REQUEST_INVALID)
->          unless defined($method);
->
-> Instead of expected:
-> @@ -129,6 +132,8 @@ sub _preprocess_message {
->  sub _process_message {
->      my ($self, $message) = @_;
->
-> +    my $time =  [ gettimeofday ];
-> +
->      my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
-> -
->      return $self->send_error(ERROR_REQUEST_INVALID)
->
-
-Have you tried the various options for git to search for smaller
-diffs? Or using the other diff algorithms such as histogram instead of
-patience?
+The series makes sense to me.
 
 Thanks,
 Jake
