@@ -2,106 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6722E1FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 18:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0FB71FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 18:18:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933909AbcKVSJ0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 13:09:26 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:37575 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754975AbcKVSJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 13:09:25 -0500
-Received: by mail-wm0-f47.google.com with SMTP id t79so38698101wmt.0
-        for <git@vger.kernel.org>; Tue, 22 Nov 2016 10:08:36 -0800 (PST)
+        id S934347AbcKVSSs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 13:18:48 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:36542 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932355AbcKVSSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 13:18:47 -0500
+Received: by mail-pf0-f172.google.com with SMTP id 189so5253315pfz.3
+        for <git@vger.kernel.org>; Tue, 22 Nov 2016 10:18:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3JzLBM3Xo7qusCaSwCNW/j+07OeUoHBKedjJLG2ZTg8=;
-        b=YrbXxocLLPxNrTA9KJkp14/pT7zoLdqsYz2enVupDyCm3oD18bcofuNzD/UboxOUTx
-         Qjcg1z0imyhEiNNgrNErIgCo2OmKO11PLg6oZeYt4oYhLkH10mrHXDLnVNiIBgJet0b+
-         Q+y3B/mFsqFtNy6Lsah1QgshtYvBhOTKyznzzC0itjeewSgV8FKDiREmxKVs+SpB6DAb
-         jr8dljVJaD5b7HHqNf7EHQxG3Hw2Y4NivVhyk808W4ZNvQCjnBc3gtqB1DxYGKdP15ae
-         IcE/hsMBVY4UZQHwaFDM5iRWCw/m6lV+p2hgBgn3lSt48sgcf+bMw00nPSUC6zgzjtGR
-         Zvvw==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sCMT5gqBmlwLr7Z6YHTQ9RRf6SsgBte5WeIMy6TtagQ=;
+        b=OlT+JU6B2Wejgs5g7gZL85vCEwi3B6vW3MreGgKLUg6DV7irxwRKn0khITI/Ae6wl3
+         4cwkS+Fm9WlhyKXLeqpEYIcIsD1K4q4vZaUeEZ+PNWgwvhMATwzkQZmbUyL3Dwko9tDi
+         iRX4wcWv1Bt2zwZP1YkJRhNfV7d7HTc4FZvNX7NMyFs6Mv0JFNgkYHMKxnusLcJoJ8F1
+         nWyxwePb03NAhWILzkvlkF95Bc3mTZP9Q3sHjFJW/4eu+KQcKqYFOY7VIfZO7J6e5nKi
+         DTjA/mN0q9ajFFRPOlgcPqJZ/WHOmwTXzOR50P/Dt820hRBrVnzHZFRibzWK9DNqjJBR
+         bW4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3JzLBM3Xo7qusCaSwCNW/j+07OeUoHBKedjJLG2ZTg8=;
-        b=BYugbCEe2+dXox2/P5V6pK2N68+jsep8YNZgME3BgzLGVxtim+9JjpZg6sK2L+L2Uw
-         CJyfdB43TfOpV0c+uCpBzW/iLBqU4K0S878LkJcK0hiSjhSM3MIo+9nXVVnv8uQMSdJ5
-         /Ie76qVslion8xvjsrdR+i5AvMtjuuINYHdpaXRPFABJ/wX2GJgZjzC58edB6GdinNYw
-         tWmU/9qKpiZadczdQtUvGquVwSLs/NmODVMqCuuIyFX4Vq0qZ1g3tlt5/iNo9p2ZPTM+
-         5CT/d2GXxynKcWjAT4TZ88f4A7fEeCiiRfPM3nqjI2TjTc44WMDCKxcAKSB1wKLMr4ah
-         q+rg==
-X-Gm-Message-State: AKaTC0116Tagh8Tzh9VEqBLqToU/IMw/VddyWw+4L0lptr4jT8PtfiinGmyn9oCAnXmIEnHCyVvuq4kfuSsmXA==
-X-Received: by 10.25.5.7 with SMTP id 7mr4870533lff.125.1479838114527; Tue, 22
- Nov 2016 10:08:34 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sCMT5gqBmlwLr7Z6YHTQ9RRf6SsgBte5WeIMy6TtagQ=;
+        b=RJvcgoQFUjazMly50E2hCyJwwi75TR6OjEF3+n8hwCptMXjWer9K+gRRFmaeP7kh2/
+         J6Xf/u8seU2FeH/vW71P7NooNS3nvd69rEFnrbIQIlVhlJXU57J6tb4s9o1HzUnh8GNF
+         ud9xNQv/g4a6Vq+koSq/4iiXd8qaOeEksS3od7mV+RCelr+dHnOp1gfiWO0D56mmJp1h
+         Ul22SZVMI77xvFjnA64euadjCH3CtsRv+maavyW8OVIUZv+Rfw3ho44UBDJAy5C7YW9t
+         8Aa5Mx/e9SY5bSW1b65c9BjKhw/06F1G/4o7FyqrRP9K5LOnsCGTaBoE9Pju8w9801Nw
+         Inlw==
+X-Gm-Message-State: AKaTC032+eJd74CVUgn7xJvVV9AKI0iWSvgWGyyt1aZsVOF8QDst30zBIHDMUBPv2z8/om1R
+X-Received: by 10.98.68.84 with SMTP id r81mr26822188pfa.174.1479838721557;
+        Tue, 22 Nov 2016 10:18:41 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:a049:6e3d:16a5:8086])
+        by smtp.gmail.com with ESMTPSA id o126sm28830969pga.34.2016.11.22.10.18.40
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 22 Nov 2016 10:18:40 -0800 (PST)
+Date:   Tue, 22 Nov 2016 10:18:39 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 2/2] push: fix --dry-run to not push submodules
+Message-ID: <20161122181839.GF149321@google.com>
+References: <1479172735-698-1-git-send-email-bmwill@google.com>
+ <1479408364-150268-1-git-send-email-bmwill@google.com>
+ <1479408364-150268-3-git-send-email-bmwill@google.com>
+ <CAGZ79kY1x1HWJFjiyFdMFh8S_Y1F0ecLB5-JPb+nPE0gujfF-A@mail.gmail.com>
+ <20161117190255.GK66382@google.com>
+ <xmqqk2bvquk1.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.25.21.75 with HTTP; Tue, 22 Nov 2016 10:08:33 -0800 (PST)
-In-Reply-To: <20161120201744.7ym4gsmjoijw6oow@sigill.intra.peff.net>
-References: <CAEYvigJ14xYDmRG2N0yTgM4spaaB7s9923w0+e9+QQEeFz0NTQ@mail.gmail.com>
- <CAEYvigLz3muWD-QFjMZUn=H3RQoxhTYX9EwB6=aiMjWOEN3CBA@mail.gmail.com> <20161120201744.7ym4gsmjoijw6oow@sigill.intra.peff.net>
-From:   Matthieu S <matthieu.stigler@gmail.com>
-Date:   Tue, 22 Nov 2016 10:08:33 -0800
-Message-ID: <CAEYvigLLQq2SK60UsiTPCxpptpjz85_rGtDVugjfu-sCT1juGQ@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IEZ3ZDogZ2l0IGRpZmYgd2l0aCDigJwtLXdvcmQtZGlmZi1yZWdleOKAnSBleHRyZQ==?=
-        =?UTF-8?B?bWVseSBzbG93IGNvbXBhcmVkIHRvIOKAnC0td29yZC1kaWZm4oCdPw==?=
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqk2bvquk1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Jeff for the answer!
+On 11/22, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > On 11/17, Stefan Beller wrote:
+> >> On Thu, Nov 17, 2016 at 10:46 AM, Brandon Williams <bmwill@google.com> wrote:
+> >> 
+> >> >                                 sha1_array_clear(&commits);
+> >> > -                               die("Failed to push all needed submodules!");
+> >> > +                               die ("Failed to push all needed submodules!");
+> >> 
+> >> huh? Is this a whitespace change?
+> >
+> > That's odd...I didn't mean to add that lone space.
+> 
+> Is that the only glitch in this round?  IOW, is the series OK to be
+> picked up as long as I treak this out while queuing?
 
-You are right, I should have compared with the same regex, and indeed,
---word-diff-regex=[^[:space:]] is also much slower than just
---word-diff, although they do the same job. Maybe this is a hint that
-the --word-diff-regex code could be made faster?
+It looks that way.  And I did fix this in my local series.  Let me know
+if you would rather I resend the series. Otherwise I think it looks
+good.
 
-I have a small understanding of git, but is git diff computing the
-diff value for the whole file, and then showing in the terminal the 10
-first values? In some cases, it seems to be a lot of unnecessary
-computation! Is there any possibility to ask git-diff to only compare
-say the first 100 lines? Or compute only when necessary, i.e.
-when"enter" is prompted in the console?
+I do also have a follow on series I'm planning on sending out later to
+actually add in a feature which mimics what this bug does (as this
+functionality could be desirable in some circumstances) but thought it
+best to wait till heiko's and this series were more stable.
 
-Thanks!
-
-Matthieu
-
-2016-11-20 12:17 GMT-08:00 Jeff King <peff@peff.net>:
-> On Fri, Nov 18, 2016 at 03:40:22PM -0800, Matthieu S wrote:
->
->> Why is the speed so different if one uses --word-diff instead of
->> --word-diff-regex= ? Is it just because my expression is (slightly)
->> more complex than the default one (split on period instead of only
->> whitespace) ? Or is it that the default word-diff is implemented
->> differently/more efficiently? How can I overcome this speed slowdown?
->
-> I think it's probably both.
->
-> See diff.c:find_word_boundaries(). If there's no regex, we use a simple
-> loop over isspace() to find the boundaries. I don't recall anybody
-> measuring the performance before, but I'm not surprised to hear that
-> matching a regex is slower.
->
-> If I look at the output of "perf", though, it looks like we also spend a
-> lot more time in xdl_clean_mmatch(). Which isn't surprising. Your regex
-> treats commas as boundaries, which is going to generate a lot more
-> matches for this particular data set (though the output is the same, I
-> think, because of the nature of the change).
->
-> I would have expected "--word-diff-regex=[^[:space:]]" to be faster than
-> your regex, though, and it does not seem to be.
->
-> -Peff
+-- 
+Brandon Williams
