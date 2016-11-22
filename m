@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 491411FF30
-	for <e@80x24.org>; Tue, 22 Nov 2016 10:10:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E53D1FF30
+	for <e@80x24.org>; Tue, 22 Nov 2016 10:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932644AbcKVKKw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 05:10:52 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35582 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932234AbcKVKKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 05:10:50 -0500
-Received: by mail-yw0-f194.google.com with SMTP id b66so1388771ywh.2
-        for <git@vger.kernel.org>; Tue, 22 Nov 2016 02:10:50 -0800 (PST)
+        id S1754610AbcKVKcQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 05:32:16 -0500
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:33745 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752916AbcKVKcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 05:32:15 -0500
+Received: by mail-yw0-f193.google.com with SMTP id s68so1456165ywg.0
+        for <git@vger.kernel.org>; Tue, 22 Nov 2016 02:32:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=HITV2BDlYV8vnZOvza0c+gOfWulJuPVKsbua+tZ6oLM=;
-        b=wKaZ3dFuOeMS+N4KNQSQnf1VE6Q8cYe6HTlhwDtmtNtiPCJ4py4bnELEL0h745OcMF
-         gxD3vAPtxdIvuqfG9DGprBIWiBkYHtPMgWIMLmyJaDO0Qtm3y3ZeRPY2FwaVvKOnYnJF
-         TS/tPGFDRqwYBo66xHC6Sy4AxhXAWM5CLf3ebNhpUSK+YniSh9N9D55UERK7TieraeId
-         8g6Oz224cp7H7vk8ndvWhOHd0f3Vxx65KuSz2XCXZth0F2/a5rd8s3Xm0CmVjk/RzJ//
-         35HeJQh/sbnWl0p8gBUpuobvXxKpsvoB2DI1nDW/vxhY3VjuNdsrpGaj1sdb3wxLQkLC
-         ignw==
+        bh=DZ2hRt9xVSFimN8UsHFOCzF5u/mumbnrMrunUfheChY=;
+        b=bd562f0BI0J8RDIGDPHex5yS5XMITU6GovgvcTfHuDIh5NggsrRPY7nEGOSAHwag4U
+         XsRjFJoKu3frqByoJwpKrH/GmAEkVQjOzuJXXyK3guZfsfmayoPyNMn9+Cjc3P548p9W
+         b4SfUz2ebDXXgwo1rjT/aIe0Npn9EqtZbLuzkG4sXbLRyC2da8CiaqyF0LQuv7jur+e5
+         der00t2d/8c4uPm3Rd22TkXQhAtFGpXmjAtdYDX5xHgMTLm2sX+1J9PRobUpM6YBXobw
+         tKjbpsLWFllkTn8+tipiBVQOzDYlZPV+IQ3QJiOzN0BYv7ww9rnZS446FCOhgdrApXZN
+         RxsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=HITV2BDlYV8vnZOvza0c+gOfWulJuPVKsbua+tZ6oLM=;
-        b=jqMSGj4loxU3HQlEjgWL8s5PRjju3apcSw993YCLVeHA4WbufSb/i0ALX0zK2Dn+mb
-         cabgAjkFJROFSLSDqAmtuUYhk4SY18A331YDZD/4ecas+jzWrpzgY4v2ydeOvhItFC+w
-         HrKmTqf8jBtstZSiemmeGjjv1S5z6mz/nFFnSD8+LlzuxDpMFml0btQuNDOk6+GJFoPT
-         686EsMV2gQrvidUCeZvtVcRukGNvDiiffe20/7gmwde0SPJNE9ZvDB8Z2MShdfHowglE
-         zmtTqVa1E82066gHYJsp1vb4Ld4h8O9MdXXIz1kj7O/zMUOIDTTzFH2pivp9j9H5K2Gg
-         TfLw==
-X-Gm-Message-State: AKaTC018iW5vpQu6pRdJMmTRNdbPUfUB9vo6POGKoeLGBWkQNUBrUla0pz1WMbLauxe7Su8RE4XT2kCJDc9MFg==
-X-Received: by 10.129.153.14 with SMTP id q14mr18738927ywg.191.1479809449810;
- Tue, 22 Nov 2016 02:10:49 -0800 (PST)
+        bh=DZ2hRt9xVSFimN8UsHFOCzF5u/mumbnrMrunUfheChY=;
+        b=NuNBtcl0SqxjNUzJPvlWcfu6ugp6whaP9/RhPY+qAJ0JVWEfmz4T98Ksw3un96QvE9
+         WpQRzRyjVfkDTepR+Gi3e2ysIkg7iERE25VEY0lcV1JathCYc1VmQjttK8eMYzE1nZIV
+         gHYShqnskawc2U+94wukOg/+jHjDcEKeGY69TeYhnLXucuSC7O2k4aDhkCijqwQc3ewo
+         eLgQk0G9ZHrisjRTGMXDiSQ9pHGmMNTnymvrLoTVk3cPRmc0tF6qK/r0ccvxc60KTth2
+         3Hv8yJAbVcT5SlciIX2rRO7yr4XDZIPPomF/9VDlthtJILdTpGKZmD/epeYdXekmoLG9
+         lBsg==
+X-Gm-Message-State: AKaTC02kWc5JULLEA6tTjvIY/QGrgGaFTtCCDzOfPUdB2GPCJOiiIP5P+foLpN8DHqzHcw8T705vHlFa/dvMKQ==
+X-Received: by 10.13.224.3 with SMTP id j3mr20676290ywe.46.1479810734427; Tue,
+ 22 Nov 2016 02:32:14 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.211.7 with HTTP; Tue, 22 Nov 2016 02:10:19 -0800 (PST)
-In-Reply-To: <5567548295222401fab10d3f2901c1787afbfd07.1479737858.git.johannes.schindelin@gmx.de>
-References: <cover.1479737858.git.johannes.schindelin@gmx.de> <5567548295222401fab10d3f2901c1787afbfd07.1479737858.git.johannes.schindelin@gmx.de>
+Received: by 10.37.211.7 with HTTP; Tue, 22 Nov 2016 02:31:43 -0800 (PST)
+In-Reply-To: <9ef529a4fbb60990a91d7bbfdd49c6d20d49e442.1479737858.git.johannes.schindelin@gmx.de>
+References: <cover.1479737858.git.johannes.schindelin@gmx.de> <9ef529a4fbb60990a91d7bbfdd49c6d20d49e442.1479737858.git.johannes.schindelin@gmx.de>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 22 Nov 2016 17:10:19 +0700
-Message-ID: <CACsJy8D5oBR+vo2B+Ro2Q4SX0CG3jME4Gfs1_6AohccmpNvD0A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] stripspace: respect repository config
+Date:   Tue, 22 Nov 2016 17:31:43 +0700
+Message-ID: <CACsJy8D0uDs8vZgOZ0HkJS7wOuc7TPU9xcB8BTWNsa11At04Ug@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rebase -i: handle core.commentChar=auto
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -64,44 +64,52 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Nov 21, 2016 at 9:18 PM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> When eff80a9 (Allow custom "comment char", 2013-01-16) taught the
-> `stripspace` command to respect the config setting `core.commentChar`,
-> it forgot that this variable may be defined in .git/config.
+> When 84c9dc2 (commit: allow core.commentChar=auto for character auto
+> selection, 2014-05-17) extended the core.commentChar functionality to
+> allow for the value 'auto', it forgot that rebase -i was already taught to
+> handle core.commentChar,
+
+I think this is 180bad3 (rebase -i: respect core.commentchar -
+2013-02-11) and a couple followup fixes. My bad.
+
+> and in turn forgot to let rebase -i handle that
+> new value gracefully.
 >
-> So when rebasing interactively with a commentChar defined in the current
-> repository's config, the help text at the bottom of the edit script
-> potentially used an incorrect comment character. This was not only
-> funny-looking, but also resulted in tons of warnings like this one:
->
->         Warning: the command isn't recognized in the following line
->          - #
+> Reported by Taufiq Hoven.
+
+Another report in the same area: a merge conflict always writes the
+"Conflicts:" section in the commit message with '#' as comment char
+when core.commentChar is auto. I've known this for a while, but it has
+not bitten me hard enough to do something about it,
+
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  builtin/stripspace.c  | 4 +++-
->  t/t0030-stripspace.sh | 2 +-
->  2 files changed, 4 insertions(+), 2 deletions(-)
+>  git-rebase--interactive.sh    | 13 +++++++++++--
+>  t/t3404-rebase-interactive.sh |  2 +-
+>  2 files changed, 12 insertions(+), 3 deletions(-)
 >
-> diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-> index 15e716e..1e62a00 100644
-> --- a/builtin/stripspace.c
-> +++ b/builtin/stripspace.c
-> @@ -44,8 +44,10 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
->         if (argc)
->                 usage_with_options(stripspace_usage, options);
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index ca994c5..6bb740c 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -93,8 +93,17 @@ eval '
+>  GIT_CHERRY_PICK_HELP="$resolvemsg"
+>  export GIT_CHERRY_PICK_HELP
 >
-> -       if (mode == STRIP_COMMENTS || mode == COMMENT_LINES)
-> +       if (mode == STRIP_COMMENTS || mode == COMMENT_LINES) {
-> +               setup_git_directory_gently(NULL);
->                 git_config(git_default_config, NULL);
-> +       }
+> -comment_char=$(git config --get core.commentchar 2>/dev/null | cut -c1)
+> -: ${comment_char:=#}
+> +comment_char=$(git config --get core.commentchar 2>/dev/null)
+> +case "$comment_char" in
+> +''|auto)
+> +       comment_char=#
 
-This conditional config file reading is a trap for similar bugs to
-happen again. Is there any reason we should not just mark the command
-RUN_SETUP_GENTLY in git.c and call git_config() here unconditionally?
+My first thought was "this kinda defeats the purpose of auto, doesn't
+it". But 'auto' here is irrelevant because we control the leading
+character of all lines in the todo file. 'auto' makes little sense in
+this context, falling back to any comment char would do.
 
->
->         if (strbuf_read(&buf, 0, 1024) < 0)
->                 die_errno("could not read the input");
+So, ack (after you fix the $(comment_char other people have mentioned,
+of course).
 -- 
 Duy
