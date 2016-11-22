@@ -2,97 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B01F1FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 17:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 528DC1FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 17:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932707AbcKVRSQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 12:18:16 -0500
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:33616 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755617AbcKVRSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 12:18:15 -0500
-Received: by mail-pg0-f43.google.com with SMTP id 3so9547711pgd.0
-        for <git@vger.kernel.org>; Tue, 22 Nov 2016 09:18:09 -0800 (PST)
+        id S933068AbcKVR0L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 12:26:11 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:34084 "EHLO
+        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932642AbcKVR0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 12:26:10 -0500
+Received: by mail-qk0-f169.google.com with SMTP id q130so34970448qke.1
+        for <git@vger.kernel.org>; Tue, 22 Nov 2016 09:26:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:message-id;
-        bh=7pUP42O8OZ/1ly36WN7YKSnvb3FGDnEIyFnod0ADp9Y=;
-        b=yqcOyZ2jg3Fv6gjY+JUrxWCMZvQQlQGGgTR+KIUQ8+aVznD25f9aU5rxyLiqELL59/
-         gQ4aQ4VGJeZHVQ4dxnWNU4fF6kTjIOqaNGfxieazJRaApATTA394pQelyMR+tpjF3y1s
-         0YnKZlbx9f+EQpJ69Gn7xBaxQvRBxrBOVtk9MDuPMQwqo/YMxHzUzdnwbQjAn0CRaGGl
-         PZPw7/YiijYdMeKc9iWHIdbrsGLd8/p5yGdOTRAgsTv2XFq6BqgF46zEZkfeS5BSepKa
-         nLaTRPPb7U1RE7BvOJoLK8/kfh6PcSGge/YJtMeHNxWataXAo2fDWp+A7DG1m2JsnSry
-         Dlnw==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NadCXBWcb26oZ84iN/LE1h6lZneMDORoVz1iBqE+EMY=;
+        b=gfEyDmUcsnb3+dg3wRHP629w4OpFd7uzWQ+/+AGpiam90GCocU2sbD+UfAOM6MkNBd
+         sehtAzu8S32O78OmSM3euzhP+a3UB/V4kLSfQ6VJczQm9gsEDvl+LDeziUR4Oz+Pq9qn
+         NDTWaI8mr9uhjSpOPQP+b6i+p4mJfgQxgrZvRGxIGnne7K+lMBMkdlM1jrkJEojyaROJ
+         gKPLyFiS5Nm3cvf9sFBG1pRJq4yYXZregbn3pYDKIgiczgPlHJcXyeca5zyYYLp35q2x
+         6pD1uDA5NxpjqguiiPbdM7TCQEyWlitDQbDe6cNbQskHeH8cDwbBiB14cktf2cvsnIan
+         ztow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:message-id;
-        bh=7pUP42O8OZ/1ly36WN7YKSnvb3FGDnEIyFnod0ADp9Y=;
-        b=ARlCs6kHuaO8pjDe6xmBL/VE52+xXCa4P4EOqNyi//UtskgeivyxDP8Hx8+mC9MIXt
-         tlHoG9y8H6y3gbXnyXzvZwqeiGrsRiG88t2k4Ned3RuWljhKRtI9TTP6Gl/w/bCA9sqj
-         ZmIJAIGs3CNwAIzF+3WVaAPCG1hA0JF6ESyAyBPdlXUC1Pm8BLtOBVmC8eLhb3HWeLz1
-         PUmiOwGJmmmkpLem6xhvS432lwtPPNUbC6F/P/KmeTtTYsk4Wt6mJmmRdZLf6VKYdA2M
-         6rkI9ZpZAzQGkh8WPV1IS/v0Or/W3FYFXFDKCMkuxJSpws88ChYuVLwl4CBZpmKxXy0e
-         knzw==
-X-Gm-Message-State: AKaTC01n4F5kr/TCN1/UHFYMFjupF+0Ioobt5BFItPOpvhKwtDLmXfGWVcW6X9Hccb+rtw==
-X-Received: by 10.98.202.211 with SMTP id y80mr26758096pfk.154.1479835088786;
-        Tue, 22 Nov 2016 09:18:08 -0800 (PST)
-Received: from [192.168.42.82] (50-1-222-2.dsl.static.fusionbroadband.com. [50.1.222.2])
-        by smtp.gmail.com with ESMTPSA id 65sm46593503pfn.12.2016.11.22.09.18.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Nov 2016 09:18:08 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAHd499AjXh1YnVgBj_8j0fgvOgOn53y+sPBBy6y7mSM-+dCyVw@mail.gmail.com>
-References: <CAHd499AjXh1YnVgBj_8j0fgvOgOn53y+sPBBy6y7mSM-+dCyVw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NadCXBWcb26oZ84iN/LE1h6lZneMDORoVz1iBqE+EMY=;
+        b=JNtJxKbEBdvAS5HxYRnmyQYZ/drMa3eBhfPGEG5UfOwpP09yLhqacjLSt3yI3CEql5
+         ok+Q5gpP3+JViZlu+fxEHDzRte9Z76r3f1alBZhupKvfkZyx5sDDPFI8JVeObTBczQco
+         N5sC72pI20k6e30l3OA1B0jl7TyQRqLSKmDf7TrQPQ14HMI4usVfl6FbI1Vnqile886T
+         ZdkmM65CxLAaY5CO9E+0znj6oZzxJAUZI+r5C7ueud0WG39SS1CbnSVZW5eVdBen+NLk
+         fVabucXkXinKD5/gBl7OG53mj6qB0e/PreP+bcaT4r9r9Ak07qnu06n5vIF2yQ/MuyFM
+         pZeA==
+X-Gm-Message-State: AKaTC03hyFUlEERuOBjYJOBCi85zlkhh4g0CvBUQeNsZFW05pMB2eS8e47ao3IgVK+U5NPKXhWhitADZRegs9daT
+X-Received: by 10.55.186.3 with SMTP id k3mr26126225qkf.47.1479835567869; Tue,
+ 22 Nov 2016 09:26:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain;
- charset=UTF-8
-Subject: Re: v2.11 new diff heuristic?
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 22 Nov 2016 09:18:05 -0800
-To:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Message-ID: <502984B2-1ADF-4BEC-9C5D-057AADAA7C61@gmail.com>
+Received: by 10.12.134.65 with HTTP; Tue, 22 Nov 2016 09:26:07 -0800 (PST)
+In-Reply-To: <CACsJy8BXjYOza_1mPCJJw+Mk1zksLLJMBNKvbAk8+1-bdAGJMw@mail.gmail.com>
+References: <20161110203428.30512-1-sbeller@google.com> <20161110203428.30512-32-sbeller@google.com>
+ <CACsJy8BXjYOza_1mPCJJw+Mk1zksLLJMBNKvbAk8+1-bdAGJMw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 22 Nov 2016 09:26:07 -0800
+Message-ID: <CAGZ79kYm4LfXK=1j-ayLawt+BojnkyM4h2RLQ=kfpPgMQbdBag@mail.gmail.com>
+Subject: Re: [PATCH 31/35] pathspec: allow querying for attributes
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 22, 2016 6:42:36 AM PST, Robert Dailey <rcdailey.lists@gmail.com> wrote:
->The release notes mention a new heuristic for diff:
+On Tue, Nov 22, 2016 at 2:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Nov 11, 2016 at 3:34 AM, Stefan Beller <sbeller@google.com> wrote:
+>> @@ -139,7 +140,8 @@ static size_t common_prefix_len(const struct pathspec *pathspec)
+>>                        PATHSPEC_LITERAL |
+>>                        PATHSPEC_GLOB |
+>>                        PATHSPEC_ICASE |
+>> -                      PATHSPEC_EXCLUDE);
+>> +                      PATHSPEC_EXCLUDE |
+>> +                      PATHSPEC_ATTR);
 >
->* Output from "git diff" can be made easier to read by selecting
->which lines are common and which lines are added/deleted
->intelligently when the lines before and after the changed section
->are the same. A command line option is added to help with the
->experiment to find a good heuristics.
+> Hmm.. common_prefix_len() has always been a bit relaxing and can cover
+> more than needed. It's for early pruning. Exact pathspec matching
+> _will_ be done later anyway.
 >
->However, it lacks information on exactly how to use this new feature.
->I dug into the git diff documentation here:
->
->https://git-scm.com/docs/git-diff
->
->It mentions a "--compaction-heuristic" option. Is this the new
->heuristic outlined by the release notes? If not, which is it? Is the
->compaction heuristic compatible with the histogram diff algorithm? Is
->there a config option to turn this on all the time? For that matter,
->is this something I can keep on all the time or is it only useful in
->certain situations?
->
->There's still so much more about this feature I would like to know.
+> Is that obvious?
 
-Hi,
+Yes it is.
+Not sure what your concern is, though.
 
-Yes for now the compaction heuristic option has an undocumented config. (I forget the exact name off the top of my head). Currently it is being evaluated and likely we want to make it default in the near future once we are certain that it helps and doesn't make any difference worse.
+Given the pathspec ":(attr:plumbing)Documentation/", the common_prefix_len
+is still able to figure out that any match has a prefix of
+strlen("Documentation/"),
+no matter what attr stuff is involved, because the attr stuff is also
+just reducing the
+matching set.
 
-So long term you will not need any special knobs to benefit.
+Now if we have such a pathspec it is easier to claim common_prefix_len supports
+attr as it is a correct thing to ignore the attrs completely, than to
+rewrite the call to
+common_prefix_len to be without attrs involved.
+
+You *may* be able to improve it with knowledge of the attrs:
+":(attr:internal-technical-api)Documentation/" may restrict the results to match
+only "Documentation/technical/", but as you said, we don't have to be
+exact here.
+
+> I'm wondering if we need to add a line or two in the
+> big comment code before this statement. I'm thinking it is and we
+> probably don't need more comments...
+
+Do I misunderstand the code completely here?
 
 Thanks,
-Jake
+Stefan
 
+> --
+> Duy
