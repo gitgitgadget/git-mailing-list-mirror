@@ -2,69 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D50A21FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 22:31:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C519C1FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 22:59:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933819AbcKVWbt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 17:31:49 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:34584 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933460AbcKVWbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 17:31:48 -0500
-Received: by mail-pg0-f54.google.com with SMTP id x23so11933049pgx.1
-        for <git@vger.kernel.org>; Tue, 22 Nov 2016 14:31:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5WgqGR/+5/5XBmUR9gHNMtGZctaGRQlAF0pBdI76+lc=;
-        b=Oq+FdJmy7Q/JuOGc/ss6j4gdMiit0vKfcN4viAgSSvgAljSQCWAwzDfDJGkSocbzHi
-         dDatSYsw88PBQ90l8wqbJjccXg3A4LznziRgwMhRmIoQ8qSPxykAspxT7BtChl6khmnC
-         rUwnE0uuts1Rhnk4+AW3VbeYM8nakFJG390JTVjGPDXL6bgmk3eTSnwtcp655z8Ov2KU
-         QjKNVBZ934UP4Wk1x5TYc0gIYkV+9SaCmpn0MrZKfs+GeNcrBWsoUYeG6GEeBR1u6dIG
-         6TPL9/aNe1rE/J0nx2Fh5Wo6AzxlK12P0fpet6yu/wAg4db/8kPUF+iDvK8J1jPx4by5
-         rGcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5WgqGR/+5/5XBmUR9gHNMtGZctaGRQlAF0pBdI76+lc=;
-        b=I45Wm+4KXql35N4pstKkQp2DbWpJ1v/H+Gtnznne3Te/8w+OCvyVdTWmqHTd/JUaED
-         uqr+mrNZRozbmieA6yBAYX6YU8O1g2nu9bIRxzamEZpV/sHGqhK2LeRXg5Aau4r1Xlyb
-         rOU403xLQAYHJBGR0HvutEHHHgN1zwJsYT0Ifev27nLCFyrM1R+stx/p/XVvfll1H+C+
-         L6D/LrQToyCxPLT2WGHzWPKMp0vqHTC4e4ydhxs/vknXwr0J1RSm3SOTmY3tCH/tACWx
-         hkDvOQYNtlW0Dd+ytB6v6WVfdP21SPPPm3VUPQLOQvthX3K/45Z6Mk4rkqDMTv7+xWYr
-         W9Tg==
-X-Gm-Message-State: AKaTC01CsLMd9gk3fn0+bDyOZzC97+fOCcWRzLUL2VPKXxCkwjopAQM8FEM8Y+YQZBR32zaZ
-X-Received: by 10.99.185.4 with SMTP id z4mr47679292pge.133.1479853908089;
-        Tue, 22 Nov 2016 14:31:48 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:a049:6e3d:16a5:8086])
-        by smtp.gmail.com with ESMTPSA id v77sm47368916pfa.85.2016.11.22.14.31.47
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 22 Nov 2016 14:31:47 -0800 (PST)
-Date:   Tue, 22 Nov 2016 14:31:46 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, jacob.keller@gmail.com
-Subject: Re: [PATCHv4 0/3] submodule-config: clarify/cleanup docs and header
-Message-ID: <20161122223146.GB65825@google.com>
-References: <20161122201438.16069-1-sbeller@google.com>
+        id S1755690AbcKVW7P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 17:59:15 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55657 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755401AbcKVW7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 17:59:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BC8B52091;
+        Tue, 22 Nov 2016 17:59:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KxGytOfIY/hkObQIWv3XRD5snU4=; b=NFtPcO
+        b5YuHxlX875PkXNyfLZPuJDmm6iUk9FxHwrsdC6JzUE9LC96zq2wZChKEM9h/pvS
+        zczToUMrIbgfeeFtFMLiA5TRQyp7tCxrwh09ii/AOegNgIbVdl1Y54I6Bk7xO3Eb
+        EfVfYr8Qs6SiRU8ub2qS8OpPq0lz53tD9cyYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DLmAID0Hvc/EDH6wcUKyy2GSYrQBOaUm
+        JLWY4UIQtQVnqo361MoTsB3PJBwIeDmq+7HIJ2HN6jfTvOqLBFDuGhw0iVpfFz9n
+        uYqW2UkKYxRwAuS42IK1zgVGjBEAtJcuZkGpXQDrYuUkqPkkbyAgPVRJdnJV8RKk
+        50lyq/lQR/c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61D5852090;
+        Tue, 22 Nov 2016 17:59:13 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BC4605208E;
+        Tue, 22 Nov 2016 17:59:12 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jonathantanmy@google.com
+Subject: Re: [PATCH v5 5/6] grep: enable recurse-submodules to work on <tree> objects
+References: <1479499135-64269-1-git-send-email-bmwill@google.com>
+        <1479840397-68264-1-git-send-email-bmwill@google.com>
+        <1479840397-68264-6-git-send-email-bmwill@google.com>
+Date:   Tue, 22 Nov 2016 14:59:11 -0800
+In-Reply-To: <1479840397-68264-6-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Tue, 22 Nov 2016 10:46:36 -0800")
+Message-ID: <xmqqshqjnmtc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161122201438.16069-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48EEF780-B107-11E6-80CD-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Series looks good to me. At least the issues I raised are fixed.
+Brandon Williams <bmwill@google.com> writes:
 
--- 
-Brandon Williams
+> diff --git a/tree-walk.c b/tree-walk.c
+> index 828f435..ff77605 100644
+> --- a/tree-walk.c
+> +++ b/tree-walk.c
+> @@ -1004,6 +1004,19 @@ static enum interesting do_match(const struct name_entry *entry,
+>  				 */
+>  				if (ps->recursive && S_ISDIR(entry->mode))
+>  					return entry_interesting;
+> +
+> +				/*
+> +				 * When matching against submodules with
+> +				 * wildcard characters, ensure that the entry
+> +				 * at least matches up to the first wild
+> +				 * character.  More accurate matching can then
+> +				 * be performed in the submodule itself.
+> +				 */
+> +				if (ps->recursive && S_ISGITLINK(entry->mode) &&
+> +				    !ps_strncmp(item, match + baselen,
+> +						entry->path,
+> +						item->nowildcard_len - baselen))
+> +					return entry_interesting;
+>  			}
+
+This one (and the other hunk) feels more correct than the previous
+round.  One thing to keep in mind however is that ps->recursive is
+about "do we show a tree as a tree aka 040000, or do we descend into
+it to show its contents?", not about "do we recurse into submodules?",
+AFAICT.
+
+So this change may have an impact on "git ls-tree -r" with pathspec;
+I offhand do not know if that impact is undesirable or not.  A test
+or two may be in order to illustrate what happens?  With a submodule
+at "sub/module", running "git ls-tree -r HEAD -- sub/module/*" or
+something like that, perhaps?
