@@ -7,50 +7,48 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D17F61FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 16:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B245D1FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 16:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754592AbcKVQJW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 11:09:22 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49339 "EHLO mout.gmx.net"
+        id S1756062AbcKVQKM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 11:10:12 -0500
+Received: from mout.gmx.net ([212.227.17.20]:62350 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751487AbcKVQJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 11:09:21 -0500
+        id S1755846AbcKVQKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 11:10:10 -0500
 Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNuwp-1c7qzU13ff-007RDz; Tue, 22
- Nov 2016 17:09:11 +0100
-Date:   Tue, 22 Nov 2016 17:09:08 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtEtL-1cuGdB2JRb-012t49; Tue, 22
+ Nov 2016 17:09:58 +0100
+Date:   Tue, 22 Nov 2016 17:09:57 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: Re: [PATCH 1/3] rebase -i: identify problems with core.commentchar
-In-Reply-To: <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1611221706470.3746@virtualbox>
-References: <cover.1479737858.git.johannes.schindelin@gmx.de>        <f47dce15719954d6d4d8a550856757366871143e.1479737858.git.johannes.schindelin@gmx.de> <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] rebase -i: highlight problems with
+ core.commentchar
+In-Reply-To: <20161121190514.18574-1-gitster@pobox.com>
+Message-ID: <alpine.DEB.2.20.1611221709180.3746@virtualbox>
+References: <xmqq7f7wk7x9.fsf@gitster.mtv.corp.google.com> <20161121190514.18574-1-gitster@pobox.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:N9IUZLBZ/1f3LdKRihbgOu4TvYLJSDTc5DNWPQSCzc4cFhxxUIS
- FEmMgK30WhhlbpUdelC0zc4HTBNiahzWnu8Zsdk/GaWRFboaXrbFMPDEHvkTBA82uMcrbZO
- qB82yGQziOPSf2YIbmmV4ZRb3VwY8W0X3XCKompe98eZpdxZnDcx0epSSv0r0ibr+pdDWFM
- m0FzMp6IQ/if2n8s5wgTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KmXWgJbg6/E=:9f1EzPZk3KGjowZM9ydUbn
- R/Py+9CDQqMPsDhSKSpfeI0M7dzp/Z0PjRWBN5Nx4rGXQzP5R0IRHvXDvdJfGHWIzQ2/73XpP
- nA9JN/GB08xDl8DbPUI8O2cSDfdrT5rCQarBc+W/9kpYV0zjKOTfAUbRs0Mp6BJ6yR4ekV1qJ
- yz0Y0v8v6QpuVjJWwZfYDDA3uaSCLMnZk+Y0jrYjtXEw8mhBNvCdfqqufZ1AcZJ1G9sb+iYZk
- 827RMmznusYKJvWFuB3L2G+ddDuNxKeTClKfKOxNT2i180Eh4kENkXJCzsAQzRQqxjXPHTYvU
- VM8jcQ5a1G9JX9sdeB6RdzBx2/0Mi7p+wYZDf0g584Y0N/PWexj8WaJOe0joEfo7x3XhajjjX
- Jbrhh4jJ/PLyjo/qfvXCH76+X1yaq8w4eRxo8OJx3GXJSOXuEvchDIzSb1EWSNPewst9UsVJq
- 4g1gpLx0j9EC2O9RnDOTFtoQy33zDXum+3i8pn/XdaW5sz8/L73xyNQYWLMjLSTQ/L9OVA0kh
- 6LrmtbM8iTyJgIH4cen3PjmbBq1Wn7uWQ8ZwDbSXZOV/BoGvg70gqtjHv9k1eWP78yg0BaTmq
- tXBO3ra5lRfFu8rA7kN6GX2T/HHp4c8MVI1s4Lyrzdy0+UUBzLJ9A16GqvIercCF8Gwl1dw66
- cyKCUlq0aTf/OPjnmrP6w1grDNea4/EdpmrrDTqyjodCLmhxw8iStIJ+QQYf+/UxUzDVlBxDn
- FnuF19rLFPLiAL39nzR1uU7oFea1nu1KDWUAI6qkWG9vlw3bxVCGNYAV70KkQraok8pwNHh4J
- ynxUSiD
+X-Provags-ID: V03:K0:2VNUSRo5c2LndsrCM7zbVKKRM+nquZHteYqFCNzpdNf8tgEaCRZ
+ /uy0g1VzHH4+PYiuCElrdpvgF3DXMBIo/AfrwWnraJ6FDNx5YydE3D3E12rRqeLslrkfoxv
+ RKu3/qMW+Xz23/af+n1Y+3Hy5ietXAQrLc/d8qTemWRMNmr62MpAgf47NxdeO3R/WITI9kq
+ dHgXs7jms3moWmmIUTeyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:m1o+NKSUSS8=:C1Y59TkUVRqn83B7WG0g26
+ EzFT4HE9Yx1+mLDPvuOGmxvpRFpBC5Tuj+GgpCZ8ra7P9tg+GAvKnrt3wtitvST89XEJi1U+D
+ p+1Bj6sxxCyU7CR7xRKJwac5q8sfBa5NFtianzUWqxToDWEKiwbel0jAnVDS81bVeEZQmF0I8
+ D9A1YtA5ZJ6fjN85nljPNt7yYJRPGEfrEMqsXrtSWwNayPSroQFB/GqSsUCuBhxXTaOAiBJgU
+ 8VEbEIKg5cZvepRiPQ8sf/mY9T7F3wiYdjedatnwtSC55LaX8wuSpYqhnIw0V3re4ztP7E+yD
+ /s/WGlp17nSUc2lkD8hTlHiaXkmWu+lhDF+fUnChMxCcUIyt/Dgy3J+4aw1PdhKSBQIM/iOyG
+ xQQOw7q76fsgtfO48GDoAVn7/eI1yw/YSEpiK3mELK9y3FJi4H7l1xQ+esNZWZ6bbmuhsDygz
+ 3ohTKZR/I3z0ijnSAabVQBKnVyoqt7bK1njv+4yrwOBIfEcnvHRmMkD4qxTu9ugOyy8Cvt84h
+ lHjnAH893eD3sdtmhDROLJK8Gau35v/B3saDPCvBlWg7ohMFWMke8nZT87ptDdEXxPqVwbDz+
+ NAHRCqbqzCXnWEaxaVJ6XhplPl1p5jzpI0LEveOGV8AbCYEV8o1jTlSPEMVxDbPrHhRj6AwNI
+ Q7f8LfqtftGneup7XUw8XeFdX2zwqt2cgFw2EYn7AX5kx9+NXd+DPvm0vVUko61muIwAKRH3X
+ ywdq8pk/zttB4i8h54W0tMJd8PnUqLfK2MoJ3/jo9vb39jbBFAhDVyO7yDGItfH3aHcVghwQq
+ ALDoMu7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,47 +58,20 @@ Hi Junio,
 
 On Mon, 21 Nov 2016, Junio C Hamano wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-> > index 29e91d8..202ac07 100755
-> > --- a/t/t0030-stripspace.sh
-> > +++ b/t/t0030-stripspace.sh
-> > @@ -432,6 +432,13 @@ test_expect_success '-c with changed comment char' '
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +test_expect_failure '-c with comment char defined in .git/config' '
-> > +	test_config core.commentchar = &&
-> > +	printf "= foo\n" >expect &&
-> > +	printf "foo" | git stripspace -c >actual &&
-> 
-> We'd want "\n" on this printf to match the one before as well,
+> diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+> index 29e91d861c..c1f6411eb2 100755
+> --- a/t/t0030-stripspace.sh
+> +++ b/t/t0030-stripspace.sh
+> @@ -432,6 +432,15 @@ test_expect_success '-c with changed comment char' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_failure '-c with comment char defined in .git/config' '
+> +	test_config core.commentchar = &&
+> +	printf "= foo\n" >expect &&
+> +	printf "foo" | (
 
-True.
+Could I ask you to sneak in a \n here?
 
-> The analysis of the log message in [2/3] is wrong and needs
-> updating, though.
-
-Thanks for following up on that, and for fixing the commit message.
-
-> > +test_expect_failure 'rebase -i respects core.commentchar=auto' '
-> > +	test_config core.commentchar auto &&
-> > +	write_script copy-edit-script.sh <<-\EOF &&
-> > +	cp "$1" edit-script
-> > +	EOF
-> > +	test_set_editor "$(pwd)/copy-edit-script.sh" &&
-> > +	test_when_finished "git rebase --abort || :" &&
-> > +	git rebase -i HEAD^ &&
-> > +	grep "^#" edit-script &&
-> 
-> This was added for debugging that was forgotten?
-
-No, this was me trying to ensure that the comment character '#' *is* used.
-As opposed to somehow testing any edit script that contains no commented
-lines whatsoever.
-
-But if you don't care, I won't, either.
-
-Ciao,
+Thanks,
 Dscho
