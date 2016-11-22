@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B245D1FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 16:10:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14781FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 16:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756062AbcKVQKM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 11:10:12 -0500
-Received: from mout.gmx.net ([212.227.17.20]:62350 "EHLO mout.gmx.net"
+        id S1755212AbcKVQLH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 11:11:07 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59649 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755846AbcKVQKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 11:10:10 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtEtL-1cuGdB2JRb-012t49; Tue, 22
- Nov 2016 17:09:58 +0100
-Date:   Tue, 22 Nov 2016 17:09:57 +0100 (CET)
+        id S1752746AbcKVQLG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 11:11:06 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHHZT-1bwpKY1TeN-00E3eU; Tue, 22
+ Nov 2016 17:11:01 +0100
+Date:   Tue, 22 Nov 2016 17:11:00 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] rebase -i: highlight problems with
- core.commentchar
-In-Reply-To: <20161121190514.18574-1-gitster@pobox.com>
-Message-ID: <alpine.DEB.2.20.1611221709180.3746@virtualbox>
-References: <xmqq7f7wk7x9.fsf@gitster.mtv.corp.google.com> <20161121190514.18574-1-gitster@pobox.com>
+Subject: Re: [PATCH 2/3] stripspace: respect repository config
+In-Reply-To: <20161121190514.18574-2-gitster@pobox.com>
+Message-ID: <alpine.DEB.2.20.1611221710470.3746@virtualbox>
+References: <xmqq7f7wk7x9.fsf@gitster.mtv.corp.google.com> <20161121190514.18574-1-gitster@pobox.com> <20161121190514.18574-2-gitster@pobox.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:2VNUSRo5c2LndsrCM7zbVKKRM+nquZHteYqFCNzpdNf8tgEaCRZ
- /uy0g1VzHH4+PYiuCElrdpvgF3DXMBIo/AfrwWnraJ6FDNx5YydE3D3E12rRqeLslrkfoxv
- RKu3/qMW+Xz23/af+n1Y+3Hy5ietXAQrLc/d8qTemWRMNmr62MpAgf47NxdeO3R/WITI9kq
- dHgXs7jms3moWmmIUTeyA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:m1o+NKSUSS8=:C1Y59TkUVRqn83B7WG0g26
- EzFT4HE9Yx1+mLDPvuOGmxvpRFpBC5Tuj+GgpCZ8ra7P9tg+GAvKnrt3wtitvST89XEJi1U+D
- p+1Bj6sxxCyU7CR7xRKJwac5q8sfBa5NFtianzUWqxToDWEKiwbel0jAnVDS81bVeEZQmF0I8
- D9A1YtA5ZJ6fjN85nljPNt7yYJRPGEfrEMqsXrtSWwNayPSroQFB/GqSsUCuBhxXTaOAiBJgU
- 8VEbEIKg5cZvepRiPQ8sf/mY9T7F3wiYdjedatnwtSC55LaX8wuSpYqhnIw0V3re4ztP7E+yD
- /s/WGlp17nSUc2lkD8hTlHiaXkmWu+lhDF+fUnChMxCcUIyt/Dgy3J+4aw1PdhKSBQIM/iOyG
- xQQOw7q76fsgtfO48GDoAVn7/eI1yw/YSEpiK3mELK9y3FJi4H7l1xQ+esNZWZ6bbmuhsDygz
- 3ohTKZR/I3z0ijnSAabVQBKnVyoqt7bK1njv+4yrwOBIfEcnvHRmMkD4qxTu9ugOyy8Cvt84h
- lHjnAH893eD3sdtmhDROLJK8Gau35v/B3saDPCvBlWg7ohMFWMke8nZT87ptDdEXxPqVwbDz+
- NAHRCqbqzCXnWEaxaVJ6XhplPl1p5jzpI0LEveOGV8AbCYEV8o1jTlSPEMVxDbPrHhRj6AwNI
- Q7f8LfqtftGneup7XUw8XeFdX2zwqt2cgFw2EYn7AX5kx9+NXd+DPvm0vVUko61muIwAKRH3X
- ywdq8pk/zttB4i8h54W0tMJd8PnUqLfK2MoJ3/jo9vb39jbBFAhDVyO7yDGItfH3aHcVghwQq
- ALDoMu7
+X-Provags-ID: V03:K0:QeQIkFJnHx364YLHs5sGpme+fceumSY2yQqYkmQ11awsPgCdNoP
+ TTLszt3n6LShdyuPHY3Mjfa3IMQ47aW3Acoo3pE8hM4vVi4nuzc/6NBcDqoIdExzxFntL1r
+ EsBuUU/EaSzAxqXZXH7bKFl4hGBzx8mmcT9c8V3bBqSvV+dsTERoFd2D9rBJyzNwi5fO4Z6
+ GzGE3S0FUwGr+hHzDD3Gw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4AyIczxcazc=:VROzg4TpWGuqMAOwiu3WS+
+ FJ4gBrSoVyQngkW2JjxXYw7UGrjZZm4d7WTO9rTbRoQRnkh18B2/eZ7YT9cQBssONuv+Breq/
+ /BRQBP957RYD4cUvkX6FBJS4dgYumMi2yszOW++FmGDufoSsQvxnaPfBCNVgnj5IYZyEqHubh
+ CWqSEKMVMaKh6Z0VeuHMyvCzpwDws08qfbwuct1K2H6wUDQ8p0MiSZkTuWEs5UEYWEh8GQT/6
+ dfJH+neWVxsPe8Kx2wlOgKC2c0fJCg8TtvaBTtapliZ3CEyvj6Lys5MFJVC8MSPYLt2upxLlt
+ eiC7EWddK3it3hEIsiQGqUL7DkzqyvYpYovSHx62yxQhQbRiGB6gFv/C41KYUtmvginXaXDhk
+ sjBt+ZWzv5HyPsflVPuIKvnSkOMppxnsDiSP8bYO9pdUtJz+MMdCwBSUboUhLx6m2ERbNN8Ev
+ KKnqreTNy0VPxInP7Zzc4hmfg70ZUx9DDEFKsIkt2QznW7ugBKlKR10OYfgCWmvtU0JxfFV9Q
+ xWBzFx9XJpVwcVq89psG+94pxCoV+2OlGhbRRBygyMC41FoPomDrJnz69EqyCBewlka3UOgk1
+ oz4QPxO4U5UVUwAShFIMKEK/oUP3XKFZ/3bg3ZdxN8y0chaRTo2uj8FtvTy1SqYkgyDntZxZ7
+ da1kvEyquMf2xzURYkTXFegH6Jx7tpv7+b01cCeOj6aKbfnzgdAKWYh3G5rMhgrvHUe8SHQG/
+ lSkFU6MQRVfvJfcMLoOlkhTGXMZn9nNerB1vY1oS8OM1NqcruRG35GTlQJdGzHot5Rdbx9Qwl
+ ljhOBSFMmpBJ5XiOhpfkIH4dzpk+A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,20 +57,32 @@ Hi Junio,
 
 On Mon, 21 Nov 2016, Junio C Hamano wrote:
 
-> diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-> index 29e91d861c..c1f6411eb2 100755
-> --- a/t/t0030-stripspace.sh
-> +++ b/t/t0030-stripspace.sh
-> @@ -432,6 +432,15 @@ test_expect_success '-c with changed comment char' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_failure '-c with comment char defined in .git/config' '
-> +	test_config core.commentchar = &&
-> +	printf "= foo\n" >expect &&
-> +	printf "foo" | (
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The way "git stripspace" reads the configuration was not quite
+> correct, in that it forgot to probe for a possibly existing
+> repository (note: stripspace is designed to be usable outside the
+> repository as well) before doing so.  Due to this, .git/config was
+> read only when the command was run from the top-level of the working
+> tree.  
+> 
+> A recent change b9605bc4f2 ("config: only read .git/config from
+> configured repos", 2016-09-12) stopped reading the repository-local
+> configuration file ".git/config" unless the repository discovery
+> process is done, and ".git/config" is no longer read even when run
+> from the top-level, which exposed the bug even more.
+> 
+> When rebasing interactively with a commentChar defined in the
+> current repository's config, the help text at the bottom of the edit
+> script potentially used an incorrect comment character. This was not
+> only funny-looking, but also resulted in tons of warnings like this
+> one:
+> 
+> 	Warning: the command isn't recognized in the following line
+> 	 - #
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Could I ask you to sneak in a \n here?
-
-Thanks,
+Thanks for the corrected commit message!
 Dscho
