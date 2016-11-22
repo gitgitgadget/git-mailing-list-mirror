@@ -7,101 +7,91 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E49841FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 16:14:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 574EC1FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 17:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755867AbcKVQOP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 11:14:15 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55162 "EHLO mout.gmx.net"
+        id S1756472AbcKVRB1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 12:01:27 -0500
+Received: from mout.gmx.net ([212.227.17.21]:49470 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756044AbcKVQOL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 11:14:11 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXqV1-1cDFmA1C5P-00WpX3; Tue, 22
- Nov 2016 17:14:01 +0100
-Date:   Tue, 22 Nov 2016 17:13:59 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1755346AbcKVRBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 12:01:25 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbrR4-1cQDay2514-00JKyg; Tue, 22
+ Nov 2016 18:01:18 +0100
+Date:   Tue, 22 Nov 2016 18:01:03 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: Re: [PATCH 2/3] stripspace: respect repository config
-In-Reply-To: <CACsJy8D5oBR+vo2B+Ro2Q4SX0CG3jME4Gfs1_6AohccmpNvD0A@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1611221712480.3746@virtualbox>
-References: <cover.1479737858.git.johannes.schindelin@gmx.de> <5567548295222401fab10d3f2901c1787afbfd07.1479737858.git.johannes.schindelin@gmx.de> <CACsJy8D5oBR+vo2B+Ro2Q4SX0CG3jME4Gfs1_6AohccmpNvD0A@mail.gmail.com>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] Show Git Mailing List: a builtin difftool
+Message-ID: <cover.1479834051.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PAHab+geGpZs+bqx1uyo+U19NSs4LRz0sijfF6IqhQyinSqvVCD
- +9Lw42vx+xpUHN/e2e7ITkSFVIJ+1d+OIyAafiIDCRVt2b6q7gTiBAK0yEsah964iX5ZW/k
- ZZL43wXlz184gtKVoW0kTHbLeSraY5UW2msBUixQHp/mE3Mr+hP3myHaaJLYEnLhrcoa7mo
- wZ1TNGkPtm01q7ThejXYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ktiBvayI4jw=:/9j8m3kn/LWaI3UyG6ztgE
- y9mp3EEhqy5eSBLRu/wvcc3QfdUwTZ4qKdzO5lD2cibyBdhuQHdO/tLrbU2TI+ddn4rwBDXto
- FpnzY9tNEh7r2g+ODvj3vHPt5xblOGs1O4U+VXG/s7TrQUYNzcddMg2y/RzrQoifts9TJ/YHC
- f7KG5ctcAhPfuvUUW5bJocZXQaEDd3ksL1+cdID2eHug8J5rh1rGP2cOMfSfhnz3gANre5a+Y
- Sm99HxHdWdH8FKhG+5256JVW7YLoWuR/+rzwmarOHsIyAVIBM8Ax1Of1jCDz9ZI+ou8FI/vQc
- Zshf7jNp2JiShRPa/fC8FGTxSsFhMlcXY8+UnLk2CnrDRMwdA1ZAP3Nr7xAH2EYFzQNiG78g+
- lIE+0rycm5wYyLZvSOeMqHBbYjh+3n+UjNl5mnEGlw7cUNfx9+glmypj3hVRGRrhEQoiNNmnp
- 7Y3Qg/nOyZLlLbKelmLsRzohQIFhn4C0eMzRVGba8WWhvq9gF7O693GmD9Qs1SkgQ1NQq0J+I
- l5xj5ibpP+k5EobIy5tI2PsVsRJUR6P/bmI0qogSbuMuoQnjP4G5JFekM2+tqH7nY1KmjTPdz
- sHMEtRJ7NyufTnwRtKtNyrA71yaz8WOefpcpx2OIPQNPpMTHwbGBVWKtEdcbAgdfMSZygzFp5
- 61r1zdlplWv3/BLR+INCAuabSvR3gjvvpgn35e057lND7gVNBpuWoZloCxKKeBb91WvGg9d87
- WOck1kt3v98/KmTO0nMvmU2BLWAM8KmRI5ZKtC0/NTkjLgmV0OzlPVL9F+p4BFwBvq6HG2ybt
- GgJ3UmG
+X-Provags-ID: V03:K0:QYcdPNFOLMefjqjO7WvlfNAIlWZi4NgIaaso/fJqLCyST4S4Arl
+ /xOGx7qgNusL0z+jXxep0d4O5s4sEVd8IkTA7s+wBHeuvOGH71FJXb+Xv7tj5h79I2GQvdk
+ SX3QEzDc7s7intupkpvGEFDcUk9xtPbVUjpswgNL/y0it02AWaCvV0QNhLhqdKWBpYIO3yY
+ um+zKQJHwVG2G3rlLtbBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PzqaJ6RKvE0=:20D+HkcOX4aWw6xz+wCHvp
+ TBrKpbmA9PlHZ6bVc02HmwiS7/Fn+hu7nGdXCU+0sn1GxPOh7L/kOAjdyr4xZCjm1Yz/XkVjf
+ NT+UhCUKyPG6HsOP7kRB83Zmx421+u6wSOBaNTvVCBnw83Jz+LlQUHtdBfOzuH/xZr/SQe1od
+ Bm9c0mI/rRJinLk0AELexWFMIBuRSoIgq4wkpLM9holu9zPqULzRjm+/bVJIBdlTp3jN5yqK3
+ KMpvHElEOjuhIo8UghH288Oq3aySQwZGrtm3MU0o55BRwm1NfG2guFDNhzUIdkx0762Z8pXml
+ nMNgyzXWMYYvpygrLnB8w4AsSuyzJP31Ke9jnE8ToEUsdfyFqyYnZrFGIJ/I36ZUhuxYmRmgx
+ nAZI3Y+4pZ7AYuM8aVRcGY33EzKb6wAnq1OOwR8BPbWIeb4gKvUjByJTa6OCCE+PtpHb8T7Ap
+ sR9JV3d63eLjhASpkYKe0jrSlqHxPph/0EACi8tHUo3Txd9HyobfgY43ykOhzo7aNYFTupN5a
+ rxxQG1TqR+lVbh+IF1EOZqErk897maLpG+PSgWmtEHxMwxUIQWo5ffSZzMcieWKBPykgEeCVg
+ dCbuW9gpikxOuQRCnFkhQsHQcEeYCQBBHQYhMDF5guEgcftri7LClTVtjLwWjdaGL2z+KaOzi
+ jY98exmW5mYXiGAal6xFxBfjJmCP+zmTG1JI+rAhlcFwljuzqWVpe9AwUhKKU0mVx5r5JnXe9
+ sygUhpIpqwtRQgoMpNz6QOjRzML3a2M9+zuK/nZyvOxpBZ0XZblaF/2KSVlXG8Jm2Jr9dMTBg
+ ypjbDja
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+I have been working on the builtin difftool for a little over a week,
+for two reasons:
 
-On Tue, 22 Nov 2016, Duy Nguyen wrote:
+1. Perl is really not native on Windows. Not only is there a performance
+   penalty to be paid just for running Perl scripts, we also have to deal
+   with the fact that users may have different Perl installations, with
+   different options, and some other Perl installation may decide to set
+   PERL5LIB globally, wreaking havoc with Git for Windows' Perl (which we
+   have to use because almost all other Perl distributions lack the
+   Subversion bindings we need for `git svn`).
 
-> On Mon, Nov 21, 2016 at 9:18 PM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > When eff80a9 (Allow custom "comment char", 2013-01-16) taught the
-> > `stripspace` command to respect the config setting `core.commentChar`,
-> > it forgot that this variable may be defined in .git/config.
-> >
-> > So when rebasing interactively with a commentChar defined in the current
-> > repository's config, the help text at the bottom of the edit script
-> > potentially used an incorrect comment character. This was not only
-> > funny-looking, but also resulted in tons of warnings like this one:
-> >
-> >         Warning: the command isn't recognized in the following line
-> >          - #
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin/stripspace.c  | 4 +++-
-> >  t/t0030-stripspace.sh | 2 +-
-> >  2 files changed, 4 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-> > index 15e716e..1e62a00 100644
-> > --- a/builtin/stripspace.c
-> > +++ b/builtin/stripspace.c
-> > @@ -44,8 +44,10 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
-> >         if (argc)
-> >                 usage_with_options(stripspace_usage, options);
-> >
-> > -       if (mode == STRIP_COMMENTS || mode == COMMENT_LINES)
-> > +       if (mode == STRIP_COMMENTS || mode == COMMENT_LINES) {
-> > +               setup_git_directory_gently(NULL);
-> >                 git_config(git_default_config, NULL);
-> > +       }
-> 
-> This conditional config file reading is a trap for similar bugs to
-> happen again. Is there any reason we should not just mark the command
-> RUN_SETUP_GENTLY in git.c and call git_config() here unconditionally?
+2. Perl makes for a rather large reason that Git for Windows' installer
+   weighs in with >30MB. While one Perl script less does not relieve us
+   of that burden, it is one step in the right direction.
 
-As I plan to slip these patches into Git for Windows v2.11.0, i.e. making
-this a last-minute hot fix, I want to err on the side of caution. So I'd
-rather keep this conditional (it might regress on the performance front,
-or something).
+This pair of patches serves two purposes: to ask for reviews, and to
+show what I plan to release as part of Git for Windows v2.11.0 (which is
+due this Thursday, if Git v2.11.0 is released tomorrow, as planned).
 
-Ciao,
-Dscho
+The second patch really only explains how I will make sure that the
+builtin difftool will only affect users who want to opt in to testing.
+
+
+Johannes Schindelin (2):
+  difftool: add the builtin
+  difftool: add a feature flag for the builtin vs scripted version
+
+ .gitignore                 |   2 +
+ Makefile                   |   1 +
+ builtin.h                  |   1 +
+ builtin/builtin-difftool.c | 680 +++++++++++++++++++++++++++++++++++++++++++++
+ git-difftool.perl          |   7 +
+ git.c                      |  21 ++
+ 6 files changed, 712 insertions(+)
+ create mode 100644 builtin/builtin-difftool.c
+
+
+base-commit: 1310affe024fba407bff55dbe65cd6d670c8a32d
+Published-As: https://github.com/dscho/git/releases/tag/builtin-difftool-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git builtin-difftool-v1
+
+-- 
+2.10.1.583.g721a9e0
+
