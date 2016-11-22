@@ -2,106 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B30701FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 17:16:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B01F1FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 17:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932688AbcKVRQi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 12:16:38 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:33854 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932669AbcKVRQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 12:16:37 -0500
-Received: by mail-qk0-f173.google.com with SMTP id q130so34528134qke.1
-        for <git@vger.kernel.org>; Tue, 22 Nov 2016 09:16:37 -0800 (PST)
+        id S932707AbcKVRSQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 12:18:16 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:33616 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755617AbcKVRSP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 12:18:15 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 3so9547711pgd.0
+        for <git@vger.kernel.org>; Tue, 22 Nov 2016 09:18:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YanbC2vfTB/9dbBGhpSnxKIGTATlSSXRQdyGovmuh0c=;
-        b=lY3lM6tbfIeDiZvjmWw7mpKao/RaeJBeGalBY+FIJOwNyy4W9wdhTTSIb2rUbKRQz5
-         tgA0SJgvqaPut8lhQQw+5okxeLV5u3OruuF4Fxi3MpwU8CJcKXXA1MCmTKVjKJOAVk29
-         d92iBeni4iRgbiSvxvRCnSj7drgTmRhzz8NcV0JYCg/LKu2kIb1ZL3gergdxTTipWzSb
-         cAD/gUplOwLRaUG/kI1kIPVuIOY3GOYy7QEQfC4TRxoct6oOrK6vl9AbnCqH4QAkIRIo
-         RokTslXEJbB9KAc1/3GxOWCIlUBA0isxvQjYqZ2Qv5QKkTUHptB3MnZgzzqqzz+rrLuQ
-         jLFA==
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:from:date:to:message-id;
+        bh=7pUP42O8OZ/1ly36WN7YKSnvb3FGDnEIyFnod0ADp9Y=;
+        b=yqcOyZ2jg3Fv6gjY+JUrxWCMZvQQlQGGgTR+KIUQ8+aVznD25f9aU5rxyLiqELL59/
+         gQ4aQ4VGJeZHVQ4dxnWNU4fF6kTjIOqaNGfxieazJRaApATTA394pQelyMR+tpjF3y1s
+         0YnKZlbx9f+EQpJ69Gn7xBaxQvRBxrBOVtk9MDuPMQwqo/YMxHzUzdnwbQjAn0CRaGGl
+         PZPw7/YiijYdMeKc9iWHIdbrsGLd8/p5yGdOTRAgsTv2XFq6BqgF46zEZkfeS5BSepKa
+         nLaTRPPb7U1RE7BvOJoLK8/kfh6PcSGge/YJtMeHNxWataXAo2fDWp+A7DG1m2JsnSry
+         Dlnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YanbC2vfTB/9dbBGhpSnxKIGTATlSSXRQdyGovmuh0c=;
-        b=TqLQmt6AA0gtsrNcmgzZNmwZFuK1TJn9XE2QMMPOXglNP2eHBf2eBsyaLUZNbnZ9JQ
-         kXc/laYG5DuO+vnHLk6KVN2r8aaHupAgV1zyZEeIQkjSs7xxzRsdLwQLyISmpktCPdeX
-         ri/nb7D11PXZ3Jey4qsSRmJkP/XOsAa/lhRC0AOdu2fLoSroklZeRjWBAQPhCsAtBsWa
-         /E1dy1kL8fflY5XYieyaBGD0zjUeZHSUVVJ8eLMR7J/QW6O4ac3E9u8/WG+gS9HuR+mR
-         ij53NwqUqJiZCgA8SxurUG7H5hRq3qNK5hgoOy4R2+MGqVBxfKJ+L6UR/9xhQrsvJ7A2
-         ypOA==
-X-Gm-Message-State: AKaTC00gCZiWghc6/OXVocdlHGLeCQNx+s0NQmSDZIUrGkShAvalHZR+vJbTkYwP+qD0FJ63pzz/bNIM+Bp2mM84
-X-Received: by 10.55.186.3 with SMTP id k3mr26064291qkf.47.1479834996818; Tue,
- 22 Nov 2016 09:16:36 -0800 (PST)
+        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:from:date:to:message-id;
+        bh=7pUP42O8OZ/1ly36WN7YKSnvb3FGDnEIyFnod0ADp9Y=;
+        b=ARlCs6kHuaO8pjDe6xmBL/VE52+xXCa4P4EOqNyi//UtskgeivyxDP8Hx8+mC9MIXt
+         tlHoG9y8H6y3gbXnyXzvZwqeiGrsRiG88t2k4Ned3RuWljhKRtI9TTP6Gl/w/bCA9sqj
+         ZmIJAIGs3CNwAIzF+3WVaAPCG1hA0JF6ESyAyBPdlXUC1Pm8BLtOBVmC8eLhb3HWeLz1
+         PUmiOwGJmmmkpLem6xhvS432lwtPPNUbC6F/P/KmeTtTYsk4Wt6mJmmRdZLf6VKYdA2M
+         6rkI9ZpZAzQGkh8WPV1IS/v0Or/W3FYFXFDKCMkuxJSpws88ChYuVLwl4CBZpmKxXy0e
+         knzw==
+X-Gm-Message-State: AKaTC01n4F5kr/TCN1/UHFYMFjupF+0Ioobt5BFItPOpvhKwtDLmXfGWVcW6X9Hccb+rtw==
+X-Received: by 10.98.202.211 with SMTP id y80mr26758096pfk.154.1479835088786;
+        Tue, 22 Nov 2016 09:18:08 -0800 (PST)
+Received: from [192.168.42.82] (50-1-222-2.dsl.static.fusionbroadband.com. [50.1.222.2])
+        by smtp.gmail.com with ESMTPSA id 65sm46593503pfn.12.2016.11.22.09.18.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Nov 2016 09:18:08 -0800 (PST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAHd499AjXh1YnVgBj_8j0fgvOgOn53y+sPBBy6y7mSM-+dCyVw@mail.gmail.com>
+References: <CAHd499AjXh1YnVgBj_8j0fgvOgOn53y+sPBBy6y7mSM-+dCyVw@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.134.65 with HTTP; Tue, 22 Nov 2016 09:16:36 -0800 (PST)
-In-Reply-To: <xmqqmvgsf0wo.fsf@gitster.mtv.corp.google.com>
-References: <20161121204146.13665-1-sbeller@google.com> <20161121204146.13665-4-sbeller@google.com>
- <xmqqy40ch6wp.fsf@gitster.mtv.corp.google.com> <CAGZ79kb_4wWs_90AfsT932iPWbCXf6yRq875JUxoRZjUcsBW5A@mail.gmail.com>
- <xmqqmvgsf0wo.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 22 Nov 2016 09:16:36 -0800
-Message-ID: <CAGZ79kb7062abd6Cbf-ey3u0L6PXUcRf7m-og5EyCRZencOR6g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] submodule--helper: add intern-git-dir function
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=UTF-8
+Subject: Re: v2.11 new diff heuristic?
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 22 Nov 2016 09:18:05 -0800
+To:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+Message-ID: <502984B2-1ADF-4BEC-9C5D-057AADAA7C61@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2016 at 11:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On November 22, 2016 6:42:36 AM PST, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+>The release notes mention a new heuristic for diff:
 >
->> So I guess we should test a bit more extensively, maybe
->>
->>     git status >expect
->>     git submodule embedgitdirs
->>     git status >actual
->>     test_cmp expect actual
->>     # further testing via
->>     test -f ..
->>     test -d ..
+>* Output from "git diff" can be made easier to read by selecting
+>which lines are common and which lines are added/deleted
+>intelligently when the lines before and after the changed section
+>are the same. A command line option is added to help with the
+>experiment to find a good heuristics.
 >
-> Something along that line.  "status should succeed" does not tell
-> the readers what kind of breakage the test is expecting to protect
-> us from.  If we are expecting a breakage in embed-git-dirs would
-> somehow corrupt an existing submodule, which would lead to "status"
-> that is run in the superproject report the submodule differently,
-> then comparing output before and after the operation may be a
-> reasonable test.  Going there to the submodule working tree and
-> checking the health of the repository (of the submodule) may be
-> another sensible test.
+>However, it lacks information on exactly how to use this new feature.
+>I dug into the git diff documentation here:
+>
+>https://git-scm.com/docs/git-diff
+>
+>It mentions a "--compaction-heuristic" option. Is this the new
+>heuristic outlined by the release notes? If not, which is it? Is the
+>compaction heuristic compatible with the histogram diff algorithm? Is
+>there a config option to turn this on all the time? For that matter,
+>is this something I can keep on all the time or is it only useful in
+>certain situations?
+>
+>There's still so much more about this feature I would like to know.
 
-and by checking the health you mean just a status in there, or rather a
-more nuanced thing like `git rev-parse HEAD` ? I'll go with that for now.
+Hi,
 
->
->>>  In the
->>> extreme, if the failed "git submodule" command did
->>>
->>>         rm -fr .git ?* && git init
->>>
->>> wouldn't "git status" still succeed?
->>
->>     In that particular case you'd get
->>     $ git status
->>     fatal: Not a git repository (or any parent up to mount point ....)
->
-> Even with "&& git init"?  Or you forgot that part?
+Yes for now the compaction heuristic option has an undocumented config. (I forget the exact name off the top of my head). Currently it is being evaluated and likely we want to make it default in the near future once we are certain that it helps and doesn't make any difference worse.
 
-yes I did, because why would you run init after an accidental rm -rf ... ?
+So long term you will not need any special knobs to benefit.
+
+Thanks,
+Jake
+
