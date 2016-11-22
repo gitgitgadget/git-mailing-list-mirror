@@ -7,89 +7,100 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C015E1FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 16:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17F61FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 16:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755278AbcKVQEy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 11:04:54 -0500
-Received: from mout.gmx.net ([212.227.15.18]:65203 "EHLO mout.gmx.net"
+        id S1754592AbcKVQJW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 11:09:22 -0500
+Received: from mout.gmx.net ([212.227.17.22]:49339 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751487AbcKVQEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 11:04:53 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ld0fQ-1cZicO0D5s-00iC5n; Tue, 22
- Nov 2016 17:04:20 +0100
-Date:   Tue, 22 Nov 2016 17:04:18 +0100 (CET)
+        id S1751487AbcKVQJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 11:09:21 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNuwp-1c7qzU13ff-007RDz; Tue, 22
+ Nov 2016 17:09:11 +0100
+Date:   Tue, 22 Nov 2016 17:09:08 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Ralf Thielow <ralf.thielow@gmail.com>,
         =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
         <pclouds@gmail.com>, Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: Re: [PATCH 3/3] rebase -i: handle core.commentChar=auto
-In-Reply-To: <975c0002-8afe-efa6-d967-72f2a0d21169@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1611221703170.3746@virtualbox>
-References: <cover.1479737858.git.johannes.schindelin@gmx.de> <9ef529a4fbb60990a91d7bbfdd49c6d20d49e442.1479737858.git.johannes.schindelin@gmx.de> <975c0002-8afe-efa6-d967-72f2a0d21169@kdbg.org>
+Subject: Re: [PATCH 1/3] rebase -i: identify problems with core.commentchar
+In-Reply-To: <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1611221706470.3746@virtualbox>
+References: <cover.1479737858.git.johannes.schindelin@gmx.de>        <f47dce15719954d6d4d8a550856757366871143e.1479737858.git.johannes.schindelin@gmx.de> <xmqqbmx8k8c0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:qu0PKJ9HUe6uAE+Pi/ezrgYXzbLVDz8Q4WluSLxiFOxmuhLFAEO
- mv3sFdla13qJ2cy8SuNHBSgX7JA5Ag3ErACV5QKF80E6TS9X5CFMHyVHXtgNhFEk3ywj4h7
- AO5qA0o8cCvhL0zAw9tyzT7TYA3V0AXlYfq6q/FaRoG49Sow9lJo15GuDXG5euB2FLQcc7I
- p3+KmfTAfqx7tzVXOYCUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9+wwjN/3x0s=:aw0hcJLKNPHS0VDKNzP2R8
- Km+ggUS3oSSKwDi5Z7kxh2+04v1aynIO84K/ZxstoD8mXGoM2F5nHuE/ynPPHytOUJUJSspNk
- MKD3Qg7zimnPuXxm70CGkdD148p07yeKEVT/2x4qqs/BrN/bJSA280tFcAeUum+R8ruA0NS2D
- 5g1LUCPH0ObmetaR74gi/peg71DN0O+4oUPFl+hz9FNfvCG9DmlSI8Q9pp8xRJXAC4wY1jvHg
- Bp1qU+mRQwQCJHDsSwsuSshxQPsGb+qlQskvig+oqGj6stGYh8cAvKp9KU3ehO46CcnzYvXJj
- NQXih4bw3KQ/opI3yiMe+XWOx+Kmu4S8W4GFDqh4D/JgcYIi9AF3s1ddTudWrInQa3W01iVtr
- KCpOnm/xHtw9MrKDCEiqF0bg0rvL3D6bAqpZi4B2P10NFr75S2mQiKYP2ywey/XnMHTSz76Zz
- WjP5DPpwYZUWz1RXHAf0zLbpPob1U5tOYdnEVT1CtoTsPHFiTwPNYMJleA+VdaBuVvmq2et56
- xY1LaqT+hk7p9YfgF4KzTUflPfrq8Be9h3IX73kbMbEml643stUcfujyazUxgMiDrf0++nsAg
- q9Pi+ztzNXW0Sop9sOM4yVqK4uccCFwZixuI9KbD/LUazvsM6A2HZG3JDPBhkSu7F8pBBC8to
- HmOp8CtzsvrFX6ohjMjQlPlHQ4Ay8TOvlisz4Kz4QwYcnKkDxem6SJSrryV/cJKA8g6KTAfFD
- 4zVqRD4sBFm4g0D9+1qVwP6ctxpffIV4JBJRZt2tH1WRVnKcnYjkpticM8uSu5wav+jqjNPCB
- iYjBRSCCf1sygTLhhXfOBqtactz20v7umZI4tSVwinI0NrHVy6VhRr091FJjbxcAYpvTBAIdz
- YzO1145k9nNwUQHd98dKUQO2DcsgWRHV2oPaQnh1W4HA03aQMKRtmeuVtuLOQ8x/Uv9Molx9G
- Twc6C0mQx/0KBdeKpfGsXGRrhgOFIKwta1ZznmrX2T6rsy0O0ywWd9poo4TUeybEdNIph/iOD
- B37TlKV6794AskGyPKGZHPw=
+X-Provags-ID: V03:K0:N9IUZLBZ/1f3LdKRihbgOu4TvYLJSDTc5DNWPQSCzc4cFhxxUIS
+ FEmMgK30WhhlbpUdelC0zc4HTBNiahzWnu8Zsdk/GaWRFboaXrbFMPDEHvkTBA82uMcrbZO
+ qB82yGQziOPSf2YIbmmV4ZRb3VwY8W0X3XCKompe98eZpdxZnDcx0epSSv0r0ibr+pdDWFM
+ m0FzMp6IQ/if2n8s5wgTQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KmXWgJbg6/E=:9f1EzPZk3KGjowZM9ydUbn
+ R/Py+9CDQqMPsDhSKSpfeI0M7dzp/Z0PjRWBN5Nx4rGXQzP5R0IRHvXDvdJfGHWIzQ2/73XpP
+ nA9JN/GB08xDl8DbPUI8O2cSDfdrT5rCQarBc+W/9kpYV0zjKOTfAUbRs0Mp6BJ6yR4ekV1qJ
+ yz0Y0v8v6QpuVjJWwZfYDDA3uaSCLMnZk+Y0jrYjtXEw8mhBNvCdfqqufZ1AcZJ1G9sb+iYZk
+ 827RMmznusYKJvWFuB3L2G+ddDuNxKeTClKfKOxNT2i180Eh4kENkXJCzsAQzRQqxjXPHTYvU
+ VM8jcQ5a1G9JX9sdeB6RdzBx2/0Mi7p+wYZDf0g584Y0N/PWexj8WaJOe0joEfo7x3XhajjjX
+ Jbrhh4jJ/PLyjo/qfvXCH76+X1yaq8w4eRxo8OJx3GXJSOXuEvchDIzSb1EWSNPewst9UsVJq
+ 4g1gpLx0j9EC2O9RnDOTFtoQy33zDXum+3i8pn/XdaW5sz8/L73xyNQYWLMjLSTQ/L9OVA0kh
+ 6LrmtbM8iTyJgIH4cen3PjmbBq1Wn7uWQ8ZwDbSXZOV/BoGvg70gqtjHv9k1eWP78yg0BaTmq
+ tXBO3ra5lRfFu8rA7kN6GX2T/HHp4c8MVI1s4Lyrzdy0+UUBzLJ9A16GqvIercCF8Gwl1dw66
+ cyKCUlq0aTf/OPjnmrP6w1grDNea4/EdpmrrDTqyjodCLmhxw8iStIJ+QQYf+/UxUzDVlBxDn
+ FnuF19rLFPLiAL39nzR1uU7oFea1nu1KDWUAI6qkWG9vlw3bxVCGNYAV70KkQraok8pwNHh4J
+ ynxUSiD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+Hi Junio,
 
-On Mon, 21 Nov 2016, Johannes Sixt wrote:
+On Mon, 21 Nov 2016, Junio C Hamano wrote:
 
-> Am 21.11.2016 um 15:18 schrieb Johannes Schindelin:
-> > -comment_char=$(git config --get core.commentchar 2>/dev/null | cut -c1)
-> > -: ${comment_char:=#}
-> > +comment_char=$(git config --get core.commentchar 2>/dev/null)
-> > +case "$comment_char" in
-> > +''|auto)
-> > +	comment_char=#
-> > +	;;
-> > +?)
-> > +	;;
-> > +*)
-> > +	comment_char=$(comment_char | cut -c1)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> comment_char is a command? Did you mean
+> > diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+> > index 29e91d8..202ac07 100755
+> > --- a/t/t0030-stripspace.sh
+> > +++ b/t/t0030-stripspace.sh
+> > @@ -432,6 +432,13 @@ test_expect_success '-c with changed comment char' '
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > +test_expect_failure '-c with comment char defined in .git/config' '
+> > +	test_config core.commentchar = &&
+> > +	printf "= foo\n" >expect &&
+> > +	printf "foo" | git stripspace -c >actual &&
 > 
-> 	comment_char=$(echo "$comment_char" | cut -c1)
+> We'd want "\n" on this printf to match the one before as well,
 
-D'oh.
+True.
 
-> It could be written without forking a process:
+> The analysis of the log message in [2/3] is wrong and needs
+> updating, though.
+
+Thanks for following up on that, and for fixing the commit message.
+
+> > +test_expect_failure 'rebase -i respects core.commentchar=auto' '
+> > +	test_config core.commentchar auto &&
+> > +	write_script copy-edit-script.sh <<-\EOF &&
+> > +	cp "$1" edit-script
+> > +	EOF
+> > +	test_set_editor "$(pwd)/copy-edit-script.sh" &&
+> > +	test_when_finished "git rebase --abort || :" &&
+> > +	git rebase -i HEAD^ &&
+> > +	grep "^#" edit-script &&
 > 
-> 	comment_char=${comment_char%${comment_char#?}}
-> 
-> (aka "remove from the end what remains after removing the first character")
+> This was added for debugging that was forgotten?
 
-I was considering this, actually, but it is rather unreadable. Better
-rewrite it in C, to begin with.
+No, this was me trying to ensure that the comment character '#' *is* used.
+As opposed to somehow testing any edit script that contains no commented
+lines whatsoever.
 
-Thanks,
+But if you don't care, I won't, either.
+
+Ciao,
 Dscho
