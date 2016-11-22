@@ -2,103 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 620B61FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 12:31:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3EA71FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 13:13:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755434AbcKVMbT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 07:31:19 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34416 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755489AbcKVMbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 07:31:17 -0500
-Received: by mail-pg0-f66.google.com with SMTP id e9so2033297pgc.1
-        for <git@vger.kernel.org>; Tue, 22 Nov 2016 04:31:16 -0800 (PST)
+        id S933195AbcKVNNi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 08:13:38 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:34601 "EHLO
+        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932656AbcKVNNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 08:13:37 -0500
+Received: by mail-vk0-f67.google.com with SMTP id p9so1585845vkd.1
+        for <git@vger.kernel.org>; Tue, 22 Nov 2016 05:13:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HHxpql8Quvs8/Lvh2z0Bq8or0H3/XknAmShiNnhyhO4=;
-        b=b7kwEfUVIcS/ei8v04Bj2uA4h+SE2c13GiOA0LayvAATtYG0X1A23g7CHvVm7reYB7
-         SclxIeVXI6t9zt2GaG4JEPTMEEaNyOPAHntW0w6I4tqxXQcjYSaOMp2Yt+VMZhJxlS4e
-         jQQps9qybBjkBng/cW76tb/BQ6Uyk20tXWRY/FfizxBru/XMUi2+evwPaWOD0Ooe2nhu
-         OXiA3ZYk0eO8F2/WFNdmw8Yd69Mq3TyZPKpKM+BJPAPelkW0NOlSZ/RvK7X3FxRpqMio
-         xmTdvq6XShwAi6rTYQ2jnI+MejZZBDEtoSMd7+COP3pZBhy8ui3QU0huLhQXeqyV5SuZ
-         GiBw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=d/aqXVgQKSESwMM39gG7MmTCTuaqz4cBJTh4N9gnPd8=;
+        b=p3gD75bHfT07C+n7EiS2JoP53Y4/hm6wR5hU+RWpLb2W/ifnM70zeD53pI3thrUvHF
+         telo8XuomVOWU0ox2XlED8lzkx88AlK/w8EmXvY5kQ9yt5vzq099U2Pnq6HBP5fTeu35
+         MRRJvk/F8WvqRmXF9VTTvDUa2Zb5GJg2mdZWQDWt62iV0AESq4LGbyrrRcic2RYf814G
+         PKq/AYvnVmiIhKAN21DshbX6h3XlcVfcUzvDDAv8ca7G9b8xTtc0PSsILqt3GaETcoKV
+         d+Nf5erd4OabpPK7rEL/xctskaK5lFt24L/qN1+WD0DuBJ8WTMBbDv66p7ToiibvwHea
+         HstA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HHxpql8Quvs8/Lvh2z0Bq8or0H3/XknAmShiNnhyhO4=;
-        b=Cg+M/biF9APP2fVozPhcWAIqNY1OzTW+MFJEZfIprnCLkyggMeVMFwl3pfp0DDh4qV
-         VfS+x8mZxSUwPq/3+FsW9dFZLdIU4QKCiVnjnn722jdy+qLT51rPj4vTFbjwLodyNLx+
-         uaQiFxIdRcnAIGrO665rtbihe+mNN31InoYZUg/lGUL7Hof6IpfNieQIs0YkyEudI5CA
-         FIcalH1yVpUiGEcquwZvDgvLilFGpkG/2JSz6Ns5dP7cq519/7/FUUUzv5EUXGbcFuXB
-         qtmHF+ZECnhtDrhh4ysIP61rI9lkYDOjYfsKgxpgzi1dkeK8MWudXQE7vWR1V/GY4lxN
-         ATAQ==
-X-Gm-Message-State: AKaTC01LLGWcDdOVAyaWaV6JeWUMhFSkHM1jAg0vE/VeZQnmTkT0TAmDx7ZdRfPV6pTaqw==
-X-Received: by 10.98.17.80 with SMTP id z77mr25390862pfi.166.1479817876278;
-        Tue, 22 Nov 2016 04:31:16 -0800 (PST)
-Received: from ash ([115.73.175.91])
-        by smtp.gmail.com with ESMTPSA id n17sm45064019pfg.80.2016.11.22.04.31.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Nov 2016 04:31:14 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 22 Nov 2016 19:31:08 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] merge-recursive.c: use QSORT macro
-Date:   Tue, 22 Nov 2016 19:30:19 +0700
-Message-Id: <20161122123019.7169-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=d/aqXVgQKSESwMM39gG7MmTCTuaqz4cBJTh4N9gnPd8=;
+        b=E9TlvdVleF6dVtmTO2nsoz8lp6a3g/SjvDRa/caXEJBXvjMhECC+nNcfnGfk4s9GQl
+         7W2Brpk/x43dUoRLdlj2QdkqJRU70tBjgmruCn7DgdUogBKE0BzByn1DvWM9gwZVmZRC
+         od9vSY/7SIjpEinZ72apG9KopNvrFVJQC+YEuhdQYM2nuxaVNksdad/Frs6wXf8efd+8
+         Q8HbJrroFG5Ec0z5FldEuKtdARuHK0TIfz4+u0UGmrS9tgmeZphN7/G6ScMsRs79jxhO
+         5G7j4i3DHNfx89pzmcugptM1j8e5hy5X45/OwDmyszBCJnlsCV3hjpXl9y/KHiecntGy
+         EXLQ==
+X-Gm-Message-State: AKaTC01jCby9tSgkdhoG8K8MGfVhoshPQdfR0PGVmLz4xH/SqphRJEd7x96jnJ43taJ2SqW41z3tkn2j57iVaQ==
+X-Received: by 10.25.199.198 with SMTP id x189mr4524740lff.164.1479820383988;
+ Tue, 22 Nov 2016 05:13:03 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.25.25.142 with HTTP; Tue, 22 Nov 2016 05:13:03 -0800 (PST)
+In-Reply-To: <CACsJy8BazeR=4tz3q2f35x=fCfp-Ld9LJz0mQh_CZoR_iXKEEQ@mail.gmail.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-13-chriscool@tuxfamily.org> <xmqq8tt3ovnp.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD2H6rZNQqg1VGNkes65KAk-4P160rjQSjFY3NjgZydZmA@mail.gmail.com>
+ <xmqqoa1scyuy.fsf@gitster.mtv.corp.google.com> <CAP8UFD1YL+RgdqbV0V1OnC=sJHJFc_an02Q9JeDNapW+u1CZcA@mail.gmail.com>
+ <CACsJy8BZNfESmFv=V89Cq-b+aMJWLH=qhXHNE8inZZRjvXB33Q@mail.gmail.com>
+ <CAP8UFD1mun7wz2WqV8GCj6MODVjP2mPEBRGbJTf_ypiGCgtb9Q@mail.gmail.com> <CACsJy8BazeR=4tz3q2f35x=fCfp-Ld9LJz0mQh_CZoR_iXKEEQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 22 Nov 2016 14:13:03 +0100
+Message-ID: <CAP8UFD2VFQs2X14omWEy-iJzEeTEeEOa+fxMEq3HTQK3rFyuCg@mail.gmail.com>
+Subject: Re: [PATCH v1 12/19] Documentation/config: add splitIndex.maxPercentChange
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the follow up of rs/qsort series, merged in b8688ad (Merge
-branch 'rs/qsort' - 2016-10-10), where coccinelle was used to do
-automatic transformation.
+On Tue, Nov 22, 2016 at 11:35 AM, Duy Nguyen <pclouds@gmail.com> wrote:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
-  coccinelle missed this place, understandably, because it can't know
-  that
-  
-      sizeof(*entries->items)
-  
-  is the same as
-  
-      sizeof(*df_name_compare.items)
-  
-  without some semantic analysis.
+[...]
 
- merge-recursive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>>> In my opinion, "true" _is_ auto, which is a way to say "I trust you to
+>>> do the right thing, just re-split the index when it makes sense", "no"
+>>> is disabled of course. If the user wants to be specific, just write
+>>> "10" or some other percentage.(and either 0 or 100 would mean enable
+>>> split-index but do not re-split automatically, let _me_ do it when I
+>>> want it)
+>>
+>> The meaning of a future "auto" option for "core.splitIndex" could be
+>> "use the split-index feature only if the number of entries in whole
+>> index is greater than 10000 (by default)".
+>
+> Well.. with the "just re-split the index when it makes sense" part,
+> the user entrusts git to do something sensible in all cases,
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9041c2f..2d4dca9 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -451,7 +451,7 @@ static void record_df_conflict_files(struct merge_options *o,
- 		string_list_append(&df_sorted_entries, next->string)->util =
- 				   next->util;
- 	}
--	qsort(df_sorted_entries.items, entries->nr, sizeof(*entries->items),
-+	QSORT(df_sorted_entries.items, entries->nr,
- 	      string_list_df_name_compare);
- 
- 	string_list_clear(&o->df_conflict_file_set, 1);
--- 
-2.8.2.524.g6ff3d78
+That's an interpretation of what "core.splitIndex=true" could mean,
+but there could be users who trust Git to re-split when it makes
+sense, but who do want to use the split-index on all theirs repos even
+the small ones or who just don't trust Git to choose when it might be
+better to use it or not.
 
+Yeah, a typical git user would most of the time just trust Git for all
+those things, but on the other hand there are companies out there that
+are willing to tweak many configuration options to get the better
+possible behavior for them.
+
+In fact I am working on this for Booking.com, and if we find out later
+that we would gain something significant, like performance
+improvements or configuration simplification, by adding "auto" and/or
+other configuration variables to tweak more split-index related
+things, we might very well post patch series to do that.
+
+So if we now mix things up just to avoid one more configuration
+option, we could very well make things harder to develop, to
+configure, to parse and to understand later, so it is not a trade off
+worth making.
+
+> and going
+> with absolute numbers might not be the best way, I think. It's big
+> responsibility :)
+
+About going with absolute number, yeah I am not sure at all it is the
+best way, but this was just part of an example to try to explain what
+I am saying above.
