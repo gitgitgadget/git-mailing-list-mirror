@@ -7,82 +7,101 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C14781FBB0
-	for <e@80x24.org>; Tue, 22 Nov 2016 16:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E49841FBB0
+	for <e@80x24.org>; Tue, 22 Nov 2016 16:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755212AbcKVQLH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 11:11:07 -0500
-Received: from mout.gmx.net ([212.227.15.15]:59649 "EHLO mout.gmx.net"
+        id S1755867AbcKVQOP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 11:14:15 -0500
+Received: from mout.gmx.net ([212.227.17.21]:55162 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752746AbcKVQLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 11:11:06 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHHZT-1bwpKY1TeN-00E3eU; Tue, 22
- Nov 2016 17:11:01 +0100
-Date:   Tue, 22 Nov 2016 17:11:00 +0100 (CET)
+        id S1756044AbcKVQOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 11:14:11 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXqV1-1cDFmA1C5P-00WpX3; Tue, 22
+ Nov 2016 17:14:01 +0100
+Date:   Tue, 22 Nov 2016 17:13:59 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Taufiq Hoven <taufiq.hoven@gmail.com>
 Subject: Re: [PATCH 2/3] stripspace: respect repository config
-In-Reply-To: <20161121190514.18574-2-gitster@pobox.com>
-Message-ID: <alpine.DEB.2.20.1611221710470.3746@virtualbox>
-References: <xmqq7f7wk7x9.fsf@gitster.mtv.corp.google.com> <20161121190514.18574-1-gitster@pobox.com> <20161121190514.18574-2-gitster@pobox.com>
+In-Reply-To: <CACsJy8D5oBR+vo2B+Ro2Q4SX0CG3jME4Gfs1_6AohccmpNvD0A@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1611221712480.3746@virtualbox>
+References: <cover.1479737858.git.johannes.schindelin@gmx.de> <5567548295222401fab10d3f2901c1787afbfd07.1479737858.git.johannes.schindelin@gmx.de> <CACsJy8D5oBR+vo2B+Ro2Q4SX0CG3jME4Gfs1_6AohccmpNvD0A@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:QeQIkFJnHx364YLHs5sGpme+fceumSY2yQqYkmQ11awsPgCdNoP
- TTLszt3n6LShdyuPHY3Mjfa3IMQ47aW3Acoo3pE8hM4vVi4nuzc/6NBcDqoIdExzxFntL1r
- EsBuUU/EaSzAxqXZXH7bKFl4hGBzx8mmcT9c8V3bBqSvV+dsTERoFd2D9rBJyzNwi5fO4Z6
- GzGE3S0FUwGr+hHzDD3Gw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4AyIczxcazc=:VROzg4TpWGuqMAOwiu3WS+
- FJ4gBrSoVyQngkW2JjxXYw7UGrjZZm4d7WTO9rTbRoQRnkh18B2/eZ7YT9cQBssONuv+Breq/
- /BRQBP957RYD4cUvkX6FBJS4dgYumMi2yszOW++FmGDufoSsQvxnaPfBCNVgnj5IYZyEqHubh
- CWqSEKMVMaKh6Z0VeuHMyvCzpwDws08qfbwuct1K2H6wUDQ8p0MiSZkTuWEs5UEYWEh8GQT/6
- dfJH+neWVxsPe8Kx2wlOgKC2c0fJCg8TtvaBTtapliZ3CEyvj6Lys5MFJVC8MSPYLt2upxLlt
- eiC7EWddK3it3hEIsiQGqUL7DkzqyvYpYovSHx62yxQhQbRiGB6gFv/C41KYUtmvginXaXDhk
- sjBt+ZWzv5HyPsflVPuIKvnSkOMppxnsDiSP8bYO9pdUtJz+MMdCwBSUboUhLx6m2ERbNN8Ev
- KKnqreTNy0VPxInP7Zzc4hmfg70ZUx9DDEFKsIkt2QznW7ugBKlKR10OYfgCWmvtU0JxfFV9Q
- xWBzFx9XJpVwcVq89psG+94pxCoV+2OlGhbRRBygyMC41FoPomDrJnz69EqyCBewlka3UOgk1
- oz4QPxO4U5UVUwAShFIMKEK/oUP3XKFZ/3bg3ZdxN8y0chaRTo2uj8FtvTy1SqYkgyDntZxZ7
- da1kvEyquMf2xzURYkTXFegH6Jx7tpv7+b01cCeOj6aKbfnzgdAKWYh3G5rMhgrvHUe8SHQG/
- lSkFU6MQRVfvJfcMLoOlkhTGXMZn9nNerB1vY1oS8OM1NqcruRG35GTlQJdGzHot5Rdbx9Qwl
- ljhOBSFMmpBJ5XiOhpfkIH4dzpk+A==
+X-Provags-ID: V03:K0:PAHab+geGpZs+bqx1uyo+U19NSs4LRz0sijfF6IqhQyinSqvVCD
+ +9Lw42vx+xpUHN/e2e7ITkSFVIJ+1d+OIyAafiIDCRVt2b6q7gTiBAK0yEsah964iX5ZW/k
+ ZZL43wXlz184gtKVoW0kTHbLeSraY5UW2msBUixQHp/mE3Mr+hP3myHaaJLYEnLhrcoa7mo
+ wZ1TNGkPtm01q7ThejXYg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ktiBvayI4jw=:/9j8m3kn/LWaI3UyG6ztgE
+ y9mp3EEhqy5eSBLRu/wvcc3QfdUwTZ4qKdzO5lD2cibyBdhuQHdO/tLrbU2TI+ddn4rwBDXto
+ FpnzY9tNEh7r2g+ODvj3vHPt5xblOGs1O4U+VXG/s7TrQUYNzcddMg2y/RzrQoifts9TJ/YHC
+ f7KG5ctcAhPfuvUUW5bJocZXQaEDd3ksL1+cdID2eHug8J5rh1rGP2cOMfSfhnz3gANre5a+Y
+ Sm99HxHdWdH8FKhG+5256JVW7YLoWuR/+rzwmarOHsIyAVIBM8Ax1Of1jCDz9ZI+ou8FI/vQc
+ Zshf7jNp2JiShRPa/fC8FGTxSsFhMlcXY8+UnLk2CnrDRMwdA1ZAP3Nr7xAH2EYFzQNiG78g+
+ lIE+0rycm5wYyLZvSOeMqHBbYjh+3n+UjNl5mnEGlw7cUNfx9+glmypj3hVRGRrhEQoiNNmnp
+ 7Y3Qg/nOyZLlLbKelmLsRzohQIFhn4C0eMzRVGba8WWhvq9gF7O693GmD9Qs1SkgQ1NQq0J+I
+ l5xj5ibpP+k5EobIy5tI2PsVsRJUR6P/bmI0qogSbuMuoQnjP4G5JFekM2+tqH7nY1KmjTPdz
+ sHMEtRJ7NyufTnwRtKtNyrA71yaz8WOefpcpx2OIPQNPpMTHwbGBVWKtEdcbAgdfMSZygzFp5
+ 61r1zdlplWv3/BLR+INCAuabSvR3gjvvpgn35e057lND7gVNBpuWoZloCxKKeBb91WvGg9d87
+ WOck1kt3v98/KmTO0nMvmU2BLWAM8KmRI5ZKtC0/NTkjLgmV0OzlPVL9F+p4BFwBvq6HG2ybt
+ GgJ3UmG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Duy,
 
-On Mon, 21 Nov 2016, Junio C Hamano wrote:
+On Tue, 22 Nov 2016, Duy Nguyen wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On Mon, Nov 21, 2016 at 9:18 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > When eff80a9 (Allow custom "comment char", 2013-01-16) taught the
+> > `stripspace` command to respect the config setting `core.commentChar`,
+> > it forgot that this variable may be defined in .git/config.
+> >
+> > So when rebasing interactively with a commentChar defined in the current
+> > repository's config, the help text at the bottom of the edit script
+> > potentially used an incorrect comment character. This was not only
+> > funny-looking, but also resulted in tons of warnings like this one:
+> >
+> >         Warning: the command isn't recognized in the following line
+> >          - #
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/stripspace.c  | 4 +++-
+> >  t/t0030-stripspace.sh | 2 +-
+> >  2 files changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+> > index 15e716e..1e62a00 100644
+> > --- a/builtin/stripspace.c
+> > +++ b/builtin/stripspace.c
+> > @@ -44,8 +44,10 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
+> >         if (argc)
+> >                 usage_with_options(stripspace_usage, options);
+> >
+> > -       if (mode == STRIP_COMMENTS || mode == COMMENT_LINES)
+> > +       if (mode == STRIP_COMMENTS || mode == COMMENT_LINES) {
+> > +               setup_git_directory_gently(NULL);
+> >                 git_config(git_default_config, NULL);
+> > +       }
 > 
-> The way "git stripspace" reads the configuration was not quite
-> correct, in that it forgot to probe for a possibly existing
-> repository (note: stripspace is designed to be usable outside the
-> repository as well) before doing so.  Due to this, .git/config was
-> read only when the command was run from the top-level of the working
-> tree.  
-> 
-> A recent change b9605bc4f2 ("config: only read .git/config from
-> configured repos", 2016-09-12) stopped reading the repository-local
-> configuration file ".git/config" unless the repository discovery
-> process is done, and ".git/config" is no longer read even when run
-> from the top-level, which exposed the bug even more.
-> 
-> When rebasing interactively with a commentChar defined in the
-> current repository's config, the help text at the bottom of the edit
-> script potentially used an incorrect comment character. This was not
-> only funny-looking, but also resulted in tons of warnings like this
-> one:
-> 
-> 	Warning: the command isn't recognized in the following line
-> 	 - #
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> This conditional config file reading is a trap for similar bugs to
+> happen again. Is there any reason we should not just mark the command
+> RUN_SETUP_GENTLY in git.c and call git_config() here unconditionally?
 
-Thanks for the corrected commit message!
+As I plan to slip these patches into Git for Windows v2.11.0, i.e. making
+this a last-minute hot fix, I want to err on the side of caution. So I'd
+rather keep this conditional (it might regress on the performance front,
+or something).
+
+Ciao,
 Dscho
