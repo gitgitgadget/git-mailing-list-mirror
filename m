@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9827F2079E
-	for <e@80x24.org>; Wed, 23 Nov 2016 16:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9D01FF30
+	for <e@80x24.org>; Wed, 23 Nov 2016 17:06:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756034AbcKWQwn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 11:52:43 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59248 "EHLO
+        id S1752691AbcKWRGj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 12:06:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63063 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755865AbcKWQwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 11:52:42 -0500
+        with ESMTP id S1750710AbcKWRGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 12:06:39 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E36F3519E2;
-        Wed, 23 Nov 2016 11:52:41 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3AB14B927;
+        Wed, 23 Nov 2016 12:06:37 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=lKFUn919+vrL
-        ZZ45sQAiynST2zM=; b=wjvF7+fkA8xE0aOG0yPUf/2wKJxkbv3fAZ5gCv2Mgu9f
-        O9OVdpltTSWyH19MSAGJ3JBCb5BvkRa6c/gUq2pANnIfRTiCXotDyVNys8deiKNH
-        U4go96mcC86WMDsYQnOVutHBYblhzxbqPjnOXtIPr1qf+qJuRo6HKwIartZsn+8=
+        :content-type:content-transfer-encoding; s=sasl; bh=0FrrsC9fzPvT
+        GTmrkyWcl2K7IYk=; b=vFphinSBx2qIwl5PHgBiBWS8pmQtt+2Eiju+lA2bfANb
+        3KOkl+nfbSe12eIhUOGwUzbTOYgNEvX8kV7Dx1DbFv1B+pq8JSBKNw0TR4x2Y2Fg
+        2vTx5ucVklUQDxmdW0zFmmTxUkvWTCYT/mjmCU3noX7YId5xT0tjiVTvCczrQ/8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Jiaq8y
-        vOSEIb0JfOfZt5ArU71ip2eYYGzPnZgf4e3wxA4zVuugYr5+3wEa8+EsQ5zzuOON
-        BvsJDZ7zLoO1FwGmgTtn3S+DbfLJcLGsWCchulT1WC+1PdA9C8730tKA/OvwtnPW
-        but43sPGTOQRHWaFueL2jEK/z/X/l7K8rQneo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D57BB519E1;
-        Wed, 23 Nov 2016 11:52:41 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dbUlpe
+        vhYyPOchEIF+EpDAon0nCvA+Z7Jry5tdQMaiZlU54+ZXegRn82ED3sD1aXkSV8eT
+        /QWg8UKTEWwFIyh0b9JaYvq4hgYVzdzvOvj2OjVWiPzo00XMu8TR+3ZvrznZDlFt
+        H8irKZTs5X2UDhoqU1qwXC0uJqKtmoYc2Pt9E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A3734B926;
+        Wed, 23 Nov 2016 12:06:37 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4673D519E0;
-        Wed, 23 Nov 2016 11:52:41 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12EEE4B925;
+        Wed, 23 Nov 2016 12:06:37 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     git@vger.kernel.org, rappazzo@gmail.com
-Subject: Re: [PATCH 1/3] worktree.c: zero new 'struct worktree' on allocation
+Subject: Re: [PATCH 2/3] get_worktrees() must return main worktree as first item even on error
 References: <20161122100046.8341-1-pclouds@gmail.com>
-        <20161122100046.8341-2-pclouds@gmail.com>
-Date:   Wed, 23 Nov 2016 08:52:39 -0800
-In-Reply-To: <20161122100046.8341-2-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+        <20161122100046.8341-3-pclouds@gmail.com>
+Date:   Wed, 23 Nov 2016 09:06:35 -0800
+In-Reply-To: <20161122100046.8341-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
  =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Tue, 22 Nov 2016 17:00:44 +0700")
-Message-ID: <xmqq7f7unnoo.fsf@gitster.mtv.corp.google.com>
+        Duy"'s message of "Tue, 22 Nov 2016 17:00:45 +0700")
+Message-ID: <xmqq1sy2nn1g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3F668962-B19D-11E6-987F-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 31922AC4-B19F-11E6-942E-E98412518317-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -61,57 +61,87 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> This keeps things a bit simpler when we add more fields, knowing that
-> default values are always zero.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 5c4854d..b835b91 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -388,7 +388,7 @@ static void show_worktree_porcelain(struct worktree=
+ *wt)
+>  		printf("HEAD %s\n", sha1_to_hex(wt->head_sha1));
+>  		if (wt->is_detached)
+>  			printf("detached\n");
+> -		else
+> +		else if (wt->head_ref)
+>  			printf("branch %s\n", wt->head_ref);
 
-Looks sensible.  Thanks.
+This change looks somewhat unrelated to what the title and the log
+message claims to do, but the fix is to indicate an error condition
+by leaving wt->head_ref as NULL, so this is a necessary adjustment.
 
+Good.
 
->  worktree.c | 14 ++------------
->  1 file changed, 2 insertions(+), 12 deletions(-)
->
+> @@ -406,10 +406,12 @@ static void show_worktree(struct worktree *wt, in=
+t path_maxlen, int abbrev_len)
+>  	else {
+>  		strbuf_addf(&sb, "%-*s ", abbrev_len,
+>  				find_unique_abbrev(wt->head_sha1, DEFAULT_ABBREV));
+> -		if (!wt->is_detached)
+> +		if (wt->is_detached)
+> +			strbuf_addstr(&sb, "(detached HEAD)");
+> +		else if (wt->head_ref)
+>  			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
+>  		else
+> -			strbuf_addstr(&sb, "(detached HEAD)");
+> +			strbuf_addstr(&sb, "(error)");
+>  	}
+
+Likewise.
+
 > diff --git a/worktree.c b/worktree.c
-> index f7869f8..f7c1b5e 100644
+> index f7c1b5e..a674efa 100644
 > --- a/worktree.c
 > +++ b/worktree.c
-> @@ -91,16 +91,11 @@ static struct worktree *get_main_worktree(void)
+> @@ -89,7 +89,7 @@ static struct worktree *get_main_worktree(void)
+>  	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+> =20
 >  	if (parse_ref(path.buf, &head_ref, &is_detached) < 0)
->  		goto done;
+> -		goto done;
+> +		strbuf_reset(&head_ref);
 > =20
-> -	worktree =3D xmalloc(sizeof(struct worktree));
-> +	worktree =3D xcalloc(1, sizeof(*worktree));
+>  	worktree =3D xcalloc(1, sizeof(*worktree));
 >  	worktree->path =3D strbuf_detach(&worktree_path, NULL);
-> -	worktree->id =3D NULL;
->  	worktree->is_bare =3D is_bare;
-> -	worktree->head_ref =3D NULL;
+> @@ -97,7 +97,6 @@ static struct worktree *get_main_worktree(void)
 >  	worktree->is_detached =3D is_detached;
-> -	worktree->is_current =3D 0;
 >  	add_head_info(&head_ref, worktree);
-> -	worktree->lock_reason =3D NULL;
-> -	worktree->lock_reason_valid =3D 0;
-> =20
->  done:
+
+OK.  The earlier call to _reset() and add_head_info() function
+itself may want to be clarified that a zero-length strbuf signals an
+error condition with additional comment.  It is all too unclear in
+the code with this patch as it stands.
+
+> -done:
 >  	strbuf_release(&path);
-> @@ -138,16 +133,11 @@ static struct worktree *get_linked_worktree(const=
- char *id)
->  	if (parse_ref(path.buf, &head_ref, &is_detached) < 0)
->  		goto done;
+>  	strbuf_release(&worktree_path);
+>  	strbuf_release(&head_ref);
+
+After this there is "return worktree" which used to return NULL
+because of the "goto", but we never return NULL from the function
+after this change, which is the whole point of this change.  Good.
+
+> @@ -173,8 +172,7 @@ struct worktree **get_worktrees(void)
 > =20
-> -	worktree =3D xmalloc(sizeof(struct worktree));
-> +	worktree =3D xcalloc(1, sizeof(*worktree));
->  	worktree->path =3D strbuf_detach(&worktree_path, NULL);
->  	worktree->id =3D xstrdup(id);
-> -	worktree->is_bare =3D 0;
-> -	worktree->head_ref =3D NULL;
->  	worktree->is_detached =3D is_detached;
-> -	worktree->is_current =3D 0;
->  	add_head_info(&head_ref, worktree);
-> -	worktree->lock_reason =3D NULL;
-> -	worktree->lock_reason_valid =3D 0;
+>  	list =3D xmalloc(alloc * sizeof(struct worktree *));
 > =20
->  done:
->  	strbuf_release(&path);
+> -	if ((list[counter] =3D get_main_worktree()))
+> -		counter++;
+> +	list[counter++] =3D get_main_worktree();
+
+Hence the conditional, while it does not hurt, becomes unnecessary
+and we can unconditionally throw the primary one to the list.
+
+Good.
+
+Other than the "these need in-code commenting", and also that this
+should have a new test, the patch makes sense to me.
+
+Thanks.
