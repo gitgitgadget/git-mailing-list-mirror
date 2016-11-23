@@ -2,91 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E96321FF30
-	for <e@80x24.org>; Wed, 23 Nov 2016 15:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE02D20259
+	for <e@80x24.org>; Wed, 23 Nov 2016 16:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965225AbcKWPFD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 10:05:03 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:35932 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965157AbcKWPE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 10:04:59 -0500
-Received: by mail-lf0-f53.google.com with SMTP id t196so6077533lff.3
-        for <git@vger.kernel.org>; Wed, 23 Nov 2016 07:04:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hP6S5RFvSh2uAoQ01avG+mqXnTc3fbevxjnfy9iAcj0=;
-        b=NOqZ78CRUfZT3IS6mwBaBwwZDCUOdNEaCPoyTKa7MuFfZboY6++2nJWcD7ACe/sXTI
-         FKBZxdn8AfnzkxZfpGyuMTbqKYw2nJifd57ml8naLAPL8MdP1Sv89d9K1DCBw9nKYsed
-         U3vCgBixjeWl72EQiP2YtSkLk8D8mfPjI5t6KqP0dK5IYIrT9gNgDtN+xvTvQrBm+hby
-         N05FBjlzvH5sliTziLjxwhM9iwaR01Q7fVX7u3HHjFmX7tvbra137oCpOoG6HXW3sxLG
-         2DFJDYBa/m2yuZlcjpwTPpr/Y5nMOFen38yFFsuefXsu3GC82XDZJR5djgf3SrsVgwZ1
-         HCsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hP6S5RFvSh2uAoQ01avG+mqXnTc3fbevxjnfy9iAcj0=;
-        b=NImHWsde1wVZ0Pf6nAYp1zZdjeNHBOgX/Ku3SPRdyKbT0DO7XtJOpAIN41B7tF5ugY
-         qR+ycj3b79/oESMIx+B83JBl3bsm0Q5uClDqXPzpgXsrb/VUJQ4xTNVpam4XpguKOUit
-         bSUq6w4JV81LiBZvqNg5w7STsf+LDu2rbQ5aRf2zK8dECiBtvWC7TQt17WquKa/9tl22
-         gyL+/eBts8xM39bIU6HuyvK+gU33E0N8pU395Py0zMu18lJq+Gnh5sJ+Mv9LfUyl2KyX
-         iXpgAb26vup11eC2FY9hpHKWNiA4EkGXKUSWuxesQJhFfJcgIvU3DYqSngWXoym0XIEa
-         XOag==
-X-Gm-Message-State: AKaTC00Vup46KKixiEPcSBTZz7eajSqXXH7qKSGwH5bpvNgL+k0+dLRFbrWApjVDnhaGysS8nVnL6GloHLjNtw==
-X-Received: by 10.25.74.85 with SMTP id x82mr1055913lfa.154.1479913498055;
- Wed, 23 Nov 2016 07:04:58 -0800 (PST)
+        id S1755336AbcKWQv2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 11:51:28 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56285 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755316AbcKWQvY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 11:51:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9DD051937;
+        Wed, 23 Nov 2016 11:51:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NxGJMMwr6ErmfJcWb6M3DgFtHr8=; b=xIDh33
+        tS87QM8NbRCQPDhPS5UWvPyiq7Vvl244mUzWkY6v//wemrt4tfyaIACq0uzK+DZO
+        0johVGcgysVKZLYtEaNtwSQCgQhAbiuSPltz2Q8YVRy9zLxnATf9LcAUUTD/Qzsk
+        Wd0Jmc1SXUP13+33z0H0eAftMaZq81gdpFDJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=aX48FO1Q0BmmQp7UBqLwQ7CmMoz1QVWx
+        5GcoJC5tstso8OdgOa8vpcVcaTTiiLBWAghkS3uDppZ5exXOzyC4GlMTyIgk0aoC
+        zjR4bjkAgCpZPDvEdWAnVtj1QD4mCnqOKos7G8DUz7Qn2TGF9PQiSIBNwH2geQP5
+        RY29CikYmKs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A23A151935;
+        Wed, 23 Nov 2016 11:51:23 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 233B051934;
+        Wed, 23 Nov 2016 11:51:23 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 2/2] push: fix --dry-run to not push submodules
+References: <1479172735-698-1-git-send-email-bmwill@google.com>
+        <1479408364-150268-1-git-send-email-bmwill@google.com>
+        <1479408364-150268-3-git-send-email-bmwill@google.com>
+        <CAGZ79kY1x1HWJFjiyFdMFh8S_Y1F0ecLB5-JPb+nPE0gujfF-A@mail.gmail.com>
+        <20161117190255.GK66382@google.com>
+        <xmqqk2bvquk1.fsf@gitster.mtv.corp.google.com>
+        <20161122181839.GF149321@google.com>
+Date:   Wed, 23 Nov 2016 08:51:21 -0800
+In-Reply-To: <20161122181839.GF149321@google.com> (Brandon Williams's message
+        of "Tue, 22 Nov 2016 10:18:39 -0800")
+Message-ID: <xmqqfuminnqu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.25.142 with HTTP; Wed, 23 Nov 2016 07:04:57 -0800 (PST)
-In-Reply-To: <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
-References: <20161023092648.12086-1-chriscool@tuxfamily.org>
- <20161023092648.12086-16-chriscool@tuxfamily.org> <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 23 Nov 2016 16:04:57 +0100
-Message-ID: <CAP8UFD0iToVxU+maNL9BFXacp3sER+AfrqAnQXWf7EAwURKmdQ@mail.gmail.com>
-Subject: Re: [PATCH v1 15/19] config: add git_config_get_date_string() from gc.c
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 10DBCC1A-B19D-11E6-8ABE-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 1, 2016 at 8:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> This function will be used in a following commit to get the expiration
->> time of the shared index files from the config, and it is generic
->> enough to be put in "config.c".
->
-> Is it generic enough that a helper that sounds as if it can get any
-> date string dies if it is given a future date?  I somehow doubt it.
->
-> At the minimum, it must be made clear that there is an artificial
-> limitation that the current set of callers find useful in cache.h as
-> a one-liner comment next to the added declaration.  Then people with
-> the same need (i.e. they want to reject future timestamps) can
-> decide to use it, while others would stay away from it.
->
-> If you can come up with a better word to use to encode that
-> artificial limitation in its name, renaming it is even better.
+Brandon Williams <bmwill@google.com> writes:
 
-Ok it will appear like this in cache.h:
+> On 11/22, Junio C Hamano wrote:
+>> Brandon Williams <bmwill@google.com> writes:
+>> 
+>> > On 11/17, Stefan Beller wrote:
+>> >> On Thu, Nov 17, 2016 at 10:46 AM, Brandon Williams <bmwill@google.com> wrote:
+>> >> 
+>> >> >                                 sha1_array_clear(&commits);
+>> >> > -                               die("Failed to push all needed submodules!");
+>> >> > +                               die ("Failed to push all needed submodules!");
+>> >> 
+>> >> huh? Is this a whitespace change?
+>> >
+>> > That's odd...I didn't mean to add that lone space.
+>> 
+>> Is that the only glitch in this round?  IOW, is the series OK to be
+>> picked up as long as I treak this out while queuing?
+>
+> It looks that way.  And I did fix this in my local series.  Let me know
+> if you would rather I resend the series. Otherwise I think it looks
+> good.
 
-/* This dies if the configured or default date is in the future */
-extern int git_config_get_expire_date_string(const char *key, const
-char **output);
+OK, queued with trivial fix for now.
 
-Thanks,
-Christian.
+Thanks.
