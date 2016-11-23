@@ -7,83 +7,110 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9706120259
-	for <e@80x24.org>; Wed, 23 Nov 2016 09:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD1141FF76
+	for <e@80x24.org>; Wed, 23 Nov 2016 09:44:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756447AbcKWJki (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 04:40:38 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35427 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755941AbcKWJjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 04:39:05 -0500
-Received: by mail-yw0-f194.google.com with SMTP id b66so390797ywh.2
-        for <git@vger.kernel.org>; Wed, 23 Nov 2016 01:39:04 -0800 (PST)
+        id S1756558AbcKWJn5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 04:43:57 -0500
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:34083 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756508AbcKWJnk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 04:43:40 -0500
+Received: by mail-yw0-f169.google.com with SMTP id t125so6559299ywc.1
+        for <git@vger.kernel.org>; Wed, 23 Nov 2016 01:43:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eDzHJA72TV7AJO8rTwfT+SWRhO/BSHoFvcvcFp7GYOI=;
-        b=IyO8sJTjJFyhm9aopNYjIjgF8MCRUX67v5FVP7SNvFVzV52J25hueutbjRoAgLUh91
-         EphzYlhAMixjdG8MPQJ5bCHLrH4BhHupNYSc0Sl3t0ImUqBRjObbmu/MXRxPDf23/7Bk
-         oHcyGxSx9V1whOOIVMbY3IW6Ok7LLBhpVqPqrrPd0YkDCmId068XR6XkzGpgYGi5EGbV
-         q35DUN4Q4aZNClrpjFA5Qk1uPJX0Z7qyeqLETiK/I3MMOX+i92pU+tzcA70tS/wH06zW
-         FPl3ENln8oI1gqtQK9Q0wOpRrqW3NEd2n2NtbfZFODk318HeoxXb9lf8FLwL4NF9Hqms
-         kdhw==
+         :cc:content-transfer-encoding;
+        bh=eugXcSdFLkPfC6XS1YcPtUXUb2cZT5CUffpTTd57NzA=;
+        b=O8+2mmDdpQLbY9In76zcX5w1D4VfugIYLy1B+4Ll4tD1PJIFjVklZVln1yV4C4t7g0
+         l5aGs9bR7/HeQ5zJpSW/FU4YmO1SHd6zxJDWrnmVbLzsKkoOVJSVG93nnx6857rRKxLx
+         vegM9Joh9LFK8JTey1Yi3BybG+bGbOmnu2vhmk+wSNN3mlELsUjbnUQZM8uZ/1ZWBxPf
+         cCzOFyxiRv3uBp0Wepbv75kYrJJDv8cOZOjC5j4RtyLBk1UCbTFpfLIscZnfDEOHljt1
+         QIkbXfcHXRU1/9EKZ7bL11CRz9kF+1UePcHJ63G3njospRleNQIRkWTAlkTa+G80ZHmX
+         kKWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eDzHJA72TV7AJO8rTwfT+SWRhO/BSHoFvcvcFp7GYOI=;
-        b=Io87QAD74H1gLTRHL4Mk+TRpVeK9YfO+pMcn9d5cdKmAgTD+DyUx8CUu7rl+SsqDSn
-         a9X9JzPyyjEmTtXkDjYKo6DUNC30bluUJQ9ZgxlGdjf6iIF/5wsbV0Zx+oDEx0cd49gd
-         Rzcn409L0q7bHN76Z43/KsVTw3c6I8CZqVYAUmLt2dm6w9duEh8i4LYNc+Dvz1QFliwk
-         R6FyIEUoZJ7y+hgXU8rBL0Dz+nhO0UuHQVPrmyvXt+Q+m7Y5ocW6eUf8p70m35LGl4RK
-         gUMl/trUrb/rVh87jCd2uYQTjDJhMkyGjXZdwqh4tI4wd5YtZyCx8TKVuab7VQCMl9ir
-         /PbQ==
-X-Gm-Message-State: AKaTC01HH5uDylo3Q82hjynEZycHa8uQ9jS2MtH/Vg275WunIECwx3BWKKgPqMjqHZfbTrXbGfZiCGnV1w8EoA==
-X-Received: by 10.13.224.3 with SMTP id j3mr2510091ywe.46.1479893944302; Wed,
- 23 Nov 2016 01:39:04 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=eugXcSdFLkPfC6XS1YcPtUXUb2cZT5CUffpTTd57NzA=;
+        b=mqIxEk7GcYCUZ7vvyqROueKbEaxUiTBcvClQUiGBn14NBEjSdql7A8VD6tGomsReU2
+         H98FTLJj/eegzD2oRrSOZBVCyuUIH3gXgSu/ouIgi+7H3VJ6wS6d9hNu0C+0x8/vNiVO
+         CEpwupXUJACXCAt88DxGy29IoPzGhTImE3Re9z3tAtDz99dodFn/ttx8vF+OsRZ3gPzY
+         gw2ve5u6ddYQKtnaog+4hqKWWustxZbSQyMyjaRSheJ5a9WPjhsGajGUYWFVWp7e9Teb
+         bw6r1Jd8eAsRNAxBFFoCsnIUHVWqqluXcJuuvn5t1gJLboThrbsNEk9KQnAHScr9JLe7
+         RjVA==
+X-Gm-Message-State: AKaTC02zYjb2h7Mce4AZ0DpRks7FvLNc6tCwboCS6V96h48oCmw6AC75qzzDW/4tvdbb6UqwrldaZo4fV2B1NQ==
+X-Received: by 10.13.239.198 with SMTP id y189mr2098084ywe.202.1479894219156;
+ Wed, 23 Nov 2016 01:43:39 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.211.7 with HTTP; Wed, 23 Nov 2016 01:38:33 -0800 (PST)
-In-Reply-To: <CAGZ79kYm4LfXK=1j-ayLawt+BojnkyM4h2RLQ=kfpPgMQbdBag@mail.gmail.com>
-References: <20161110203428.30512-1-sbeller@google.com> <20161110203428.30512-32-sbeller@google.com>
- <CACsJy8BXjYOza_1mPCJJw+Mk1zksLLJMBNKvbAk8+1-bdAGJMw@mail.gmail.com> <CAGZ79kYm4LfXK=1j-ayLawt+BojnkyM4h2RLQ=kfpPgMQbdBag@mail.gmail.com>
+Received: by 10.37.211.7 with HTTP; Wed, 23 Nov 2016 01:43:08 -0800 (PST)
+In-Reply-To: <20161122174946.jy5at4g7rifu3und@sigill.intra.peff.net>
+References: <20161122123019.7169-1-pclouds@gmail.com> <20161122174946.jy5at4g7rifu3und@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 23 Nov 2016 16:38:33 +0700
-Message-ID: <CACsJy8C5K5UyOYeC0wU8_QVz67-+B6O7ydv7w=70se5X=1Ttsw@mail.gmail.com>
-Subject: Re: [PATCH 31/35] pathspec: allow querying for attributes
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 23 Nov 2016 16:43:08 +0700
+Message-ID: <CACsJy8BFRroifr0OL0O5OZjkPkndeZzVYCkg9vCNk+7Ee4zouA@mail.gmail.com>
+Subject: Re: [PATCH] merge-recursive.c: use QSORT macro
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 23, 2016 at 12:26 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Nov 22, 2016 at 2:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Fri, Nov 11, 2016 at 3:34 AM, Stefan Beller <sbeller@google.com> wrote:
->>> @@ -139,7 +140,8 @@ static size_t common_prefix_len(const struct pathspec *pathspec)
->>>                        PATHSPEC_LITERAL |
->>>                        PATHSPEC_GLOB |
->>>                        PATHSPEC_ICASE |
->>> -                      PATHSPEC_EXCLUDE);
->>> +                      PATHSPEC_EXCLUDE |
->>> +                      PATHSPEC_ATTR);
->>
->> Hmm.. common_prefix_len() has always been a bit relaxing and can cover
->> more than needed. It's for early pruning. Exact pathspec matching
->> _will_ be done later anyway.
->>
->> Is that obvious?
+On Wed, Nov 23, 2016 at 12:49 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 22, 2016 at 07:30:19PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 >
-> Yes it is.
-> Not sure what your concern is, though.
+>> This is the follow up of rs/qsort series, merged in b8688ad (Merge
+>> branch 'rs/qsort' - 2016-10-10), where coccinelle was used to do
+>> automatic transformation.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>   coccinelle missed this place, understandably, because it can't know
+>>   that
+>>
+>>       sizeof(*entries->items)
+>>
+>>   is the same as
+>>
+>>       sizeof(*df_name_compare.items)
+>>
+>>   without some semantic analysis.
+>
+> That made me wonder why "entries" is used at all. Does it point to the
+> same struct? But no, df_name_compare is a string list we create with the
+> same list of strings.
+>
+> Which is why...
+>
+>> -     qsort(df_sorted_entries.items, entries->nr, sizeof(*entries->items=
+),
+>> +     QSORT(df_sorted_entries.items, entries->nr,
+>>             string_list_df_name_compare);
+>
+> ...it's OK to use entries->nr here, and not df_sorted_entries.nr. It
+> still seems a bit odd, though.
 
-None really. I was just thinking out loud and trying not to make
-assumptions, because I know this code quite well and I don't know how
-people see this code anymore :D So all is good then.
--- 
+Argh.. I completely overlooked that entries->nr !
+
+> Maybe it's worth making this:
+>
+>   QSORT(df_sorted_entries.items, df_sorted_entries.nr,
+>         string_list_df_name_compare);
+>
+> while we're at it. Another possibility is:
+>
+>   df_sorted_entries.cmp =3D string_list_df_name_compare;
+>   string_list_sort(&df_sorted_entries);
+>
+> It's not any shorter, but maybe it's conceptually simpler.
+
+Agreed. Shall I re-roll with this?
+--=20
 Duy
