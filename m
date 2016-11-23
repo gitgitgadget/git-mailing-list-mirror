@@ -2,80 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8EAA1FF30
-	for <e@80x24.org>; Wed, 23 Nov 2016 20:05:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A635F1FF30
+	for <e@80x24.org>; Wed, 23 Nov 2016 22:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756331AbcKWUFi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 15:05:38 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53841 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755032AbcKWUFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 15:05:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A9A25098B;
-        Wed, 23 Nov 2016 15:05:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/1OlsLrCLOxMa9VwQdgGtXLmDj0=; b=H25zdi
-        vwvz0sO9eiNJnK7qR5ZnhrswoP4sBdTMvVVvz14y8blxMNDz2l7PgBYPqtypaXkH
-        X91m8gANufNRWBhunnG/xpC0B8by26pkXFF9Hc+R56nv8RgCvVCJVHVI7RPtLb5g
-        MhJ2CxK5YSS2WhAnfCnSwiTsbsF5/XWeg1JDQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AqJkPga18IFl8de0Nte8HiwkSCBKYOLk
-        QiLW9TO097+tPJLi+Oexg3ZSvHr0TIL38+DUxeRk1C9BFsKGSL35V/zwflp1pt18
-        bXWAovUBc6eMhQjWwGGh8Bxw9Zxno/s4YiyNqfUBcXxxbLk78lqptJGqb2VxJ9xL
-        sinQMv2eAsY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04B5350989;
-        Wed, 23 Nov 2016 15:05:36 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72F9650987;
-        Wed, 23 Nov 2016 15:05:35 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Pat Thoyts <patthoyts@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] git-gui: pass the branch name to git merge
-References: <6a6dd0b9-436d-327f-c33d-e5cce078b3a0@kdbg.org>
-        <xmqqvavfpbph.fsf@gitster.mtv.corp.google.com>
-        <1dc28731-9000-c3bf-fbed-0cb17c230d8b@kdbg.org>
-        <5baaf25b-6f15-8002-97ea-97c5c6a4b4e4@kdbg.org>
-Date:   Wed, 23 Nov 2016 12:05:34 -0800
-In-Reply-To: <5baaf25b-6f15-8002-97ea-97c5c6a4b4e4@kdbg.org> (Johannes Sixt's
-        message of "Wed, 23 Nov 2016 20:23:53 +0100")
-Message-ID: <xmqq4m2ym06p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933205AbcKWWBu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 17:01:50 -0500
+Received: from mout.gmx.net ([212.227.17.20]:61257 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932909AbcKWWBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 17:01:49 -0500
+Received: from virtualbox ([89.204.155.1]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0ML6XF-1c9waW2dxh-000ITu; Wed, 23
+ Nov 2016 23:01:29 +0100
+Date:   Wed, 23 Nov 2016 23:01:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] difftool: add a feature flag for the builtin vs
+ scripted version
+In-Reply-To: <alpine.DEB.2.20.1611231824530.3746@virtualbox>
+Message-ID: <alpine.DEB.2.20.1611232259090.68520@virtualbox>
+References: <cover.1479834051.git.johannes.schindelin@gmx.de>  <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de> <1479912693.5181.27.camel@kaarsemaker.net> <alpine.DEB.2.20.1611231824530.3746@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 32268C0A-B1B8-11E6-8740-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hqPWgNl+e0PPRk2g0n3i7R7VvHpOX2RxUsBgT6afRUkmKpPA6E4
+ bgHOybsruSDBqKzcthJLayIRL7GkE+bZuGPmj4sCSyWXD68ERASUAoa8MyntxOxCJvCzJbp
+ hvuKhq1KimMoKt57SscSwqjcakScA0Y3QivgDu76+xUWvNGVojKic6Bs8kc3NY4ZDuX0VFy
+ ySR6kvZi1ieAWDMak6ohg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+vQJoa+rZRE=:xBmMMzwa4KXzO1DTBNJhD3
+ SCR1hCX1PlULDWgjeA+Qx3C8P1fRFqajqzhalLTKH+VV7YMq6q3fG1zyzu8KStZ5hQlN1jixB
+ qYQRf41AvBtfcHDIfGMZjfCTn6XR5n+2lgF02rZkmmOT3s3RGhKMsTNaUZ7HtTM1GSxE71Kd7
+ u5Hi9MWwjEE2b5VLrv0HoCdHykrCRrx1SbmXm7W+T/TvUYONZ+hX/X0JMibWvQMxqPHf5q5g0
+ D2OG7s366G+3ut+Dy0ZqhnfV4teYBUek6BloEyx4ltRfQ1Gzfy6oVi9etrRlVRD9kSZYpHySE
+ K5+DESzSRkZwMyG7wCmCzWQhkM7c2VYZpHvZWCdWIJbCHk3VVojIkXoMdQKlcUmminUiQaOUi
+ hsEQ0NtkhOuLrybogcYzdxlKTznP9kKvj+CZWM5LicsOMi/Ft684+WFsZHjB8CmEHmmiQyofR
+ 3DvIIgjGsAIsce3/PEMoMPopBz8n2rG74vgTmCCildfZn2WfEqyo/5k0xupbTTHnXCyariJ1P
+ +ONMkXxIfBpVvlb9FZIcFz0U5lJUd2nSWrA9jZP+Iv4rbHF3o6SdtQHY/6wnRa7bLTMJieB4X
+ XS2zKZ9E7eMY04U/h+208pCOFrhNzYDkA6Pern2tt0XIBBp2lCkUby769cSO6cDOkOf9Bo+em
+ EAvshxJREre6HJtCxLVCOWklg5A9rjjgbDIl8gIUE1u8ayfZjklhHZwHMm0FVlo+5iniAh/XL
+ 1lTdJtDX9jLhy+ZNX5WAUciYqOUrXF0/e0iz1qEF+s48lZiaZfRkQ2UFPsabaGHcTmfvt91H8
+ 8JJLjuA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hi Dennis,
 
-> Am 22.11.2016 um 21:40 schrieb Johannes Sixt:
->> Am 22.11.2016 um 20:16 schrieb Junio C Hamano:
->>> Can't this be handled on the "git merge FETCH_HEAD" codepath
->>> instead?
->>
->> Absolutely. Any takers? ;)
->
-> I attempted to fix git merge FETCH_HEAD, but I do not see a trivial
-> solution.
->
-> But on second thought, we have an excuse to pick my proposed git-gui
-> change anyway: Without that change and a fix in git-merge only, there
-> is still a regression for all users who use the latest git-gui but
-> some git version between 2.5.0 and the fixed git-merge...
+On Wed, 23 Nov 2016, Johannes Schindelin wrote:
 
-I'll leave it up to Pat, as I do not read tcl very well ;-)
+> On Wed, 23 Nov 2016, Dennis Kaarsemaker wrote:
+> 
+> > On Tue, 2016-11-22 at 18:01 +0100, Johannes Schindelin wrote:
+> > > The original idea was to use an environment variable
+> > > GIT_USE_BUILTIN_DIFFTOOL, but the test suite resets those variables, and
+> > > we do want to use that feature flag to run the tests with, and without,
+> > > the feature flag.
+> > > 
+> > > Besides, the plan is to add an opt-in flag in Git for Windows'
+> > > installer. If we implemented the feature flag as an environment
+> > > variable, we would have to modify the user's environment, in order to
+> > > make the builtin difftool the default when called from Git Bash, Git CMD
+> > > or third-party tools.
+> > 
+> > Why is this not a normal configuration variable (as in git config
+> > difftool.builtin true or something)? It doesn't make much sense to me
+> > to introduce a way of configuring git by introducing magic files, when
+> > a normal configuration variable would do just fine, and the GfW
+> > installer can also set such variables, like it does for the crlf config
+> > I believe.
+> 
+> I considered that. Adding a config setting would mean we simply test for
+> it in git-difftool.perl and call the builtin if the setting is active,
+> right?
+> 
+> The downside is that we actually *do* go through Perl to do that. Only to
+> go back to a builtin. Which is exactly the thing I intended to avoid.
+
+Okay, I reconsidered. Junio's comment about how git-am did it made me
+rethink the issue: I need not keep the name "difftool" for the script. So
+what I do now is rename the Perl script to git-legacy-difftool and always
+read the config in the builtin difftool, handing off to the legacy
+difftool unless core.useBuiltinDifftool=true.
+
+This is an easy way to do it, and a portable and clean blueprint for
+similar feature-flags in the future.
+
+Ciao,
+Johannes
