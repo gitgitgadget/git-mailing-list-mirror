@@ -3,90 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2252720259
-	for <e@80x24.org>; Wed, 23 Nov 2016 14:52:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E96321FF30
+	for <e@80x24.org>; Wed, 23 Nov 2016 15:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964992AbcKWOvq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 09:51:46 -0500
-Received: from mail-wj0-f195.google.com ([209.85.210.195]:32925 "EHLO
-        mail-wj0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936229AbcKWOvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 09:51:36 -0500
-Received: by mail-wj0-f195.google.com with SMTP id kp2so1221081wjc.0
-        for <git@vger.kernel.org>; Wed, 23 Nov 2016 06:51:35 -0800 (PST)
+        id S965225AbcKWPFD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 10:05:03 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:35932 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965157AbcKWPE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 10:04:59 -0500
+Received: by mail-lf0-f53.google.com with SMTP id t196so6077533lff.3
+        for <git@vger.kernel.org>; Wed, 23 Nov 2016 07:04:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=m2H3vwVGVmk6b3oQJLrhAgv/qRDLSkIpIFlCftHwghw=;
-        b=Vk0qyUhU7vr4M5cYlQfl3vFdJ7Env3B+3kZnbyk5GxYdCA7taxkrIiooKMdeuG/fmY
-         FsvbrICrIEwISJPNUWwQhka6Lxsj954OWgiuwHeXiN7zPnfocFMNW73K653f976+CPCn
-         IDZwl8EeYl5Th/3SrETXfH4QpOVghumFBmEveGOKsT21OUVu22y02bK+0OXFYUmHkM3s
-         GiNI0YyCMaNuibPigav9h54RNvSC/fdUwkl35TQnaHJ5C8dpZAxYNEqCna5VJiPGwGRe
-         7c22FDYa1axPucRgnVFg3lX8m/7Z1ZDqdiXBe09mpuUeoMSoFrqOfHM97XT2fjAzZyM5
-         R8Ow==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hP6S5RFvSh2uAoQ01avG+mqXnTc3fbevxjnfy9iAcj0=;
+        b=NOqZ78CRUfZT3IS6mwBaBwwZDCUOdNEaCPoyTKa7MuFfZboY6++2nJWcD7ACe/sXTI
+         FKBZxdn8AfnzkxZfpGyuMTbqKYw2nJifd57ml8naLAPL8MdP1Sv89d9K1DCBw9nKYsed
+         U3vCgBixjeWl72EQiP2YtSkLk8D8mfPjI5t6KqP0dK5IYIrT9gNgDtN+xvTvQrBm+hby
+         N05FBjlzvH5sliTziLjxwhM9iwaR01Q7fVX7u3HHjFmX7tvbra137oCpOoG6HXW3sxLG
+         2DFJDYBa/m2yuZlcjpwTPpr/Y5nMOFen38yFFsuefXsu3GC82XDZJR5djgf3SrsVgwZ1
+         HCsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=m2H3vwVGVmk6b3oQJLrhAgv/qRDLSkIpIFlCftHwghw=;
-        b=Abwtsjp8yO0WKzD9POfxsyCZatshtbbv/8TNbk3RpO5SPZsN4Q03tBTCSd6fV82mQN
-         aUIZahHCkPTf7CXBlu9dY9Ol8d4gJ8xxq8D2U03GggbZS1/WUswKk5ypNBCNOwVKWzya
-         rCAhK/M/RinO6AhlWQ0RyYFyfgZ1255p27FlghLFmPbK8S5O/eG5GLNizpvVbftUlj2Z
-         OssMZgtEtMwsakzcrs/a0ob/1UM23UlZHA/inKdtlTl7xXAyZiPxj2/CIBlNGAyV5eAp
-         Fg2WIkE8d1GcJyh7Eb07BoKo5yk7G8HUDY21bPGo6slDAg5QkNS9Uq0CKewvTpBgVU6+
-         lz2w==
-X-Gm-Message-State: AKaTC00gdN8PB/wDG/kuY1h641D3pZd+j3KgDqEUOAmlmmE1nfFdTEEhhbO9uZSlfXfdwQ==
-X-Received: by 10.194.103.100 with SMTP id fv4mr3629886wjb.102.1479912694481;
-        Wed, 23 Nov 2016 06:51:34 -0800 (PST)
-Received: from seahawk (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id f10sm36736869wjl.28.2016.11.23.06.51.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Nov 2016 06:51:33 -0800 (PST)
-Message-ID: <1479912693.5181.27.camel@kaarsemaker.net>
-Subject: Re: [PATCH 2/2] difftool: add a feature flag for the builtin vs
- scripted version
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Date:   Wed, 23 Nov 2016 15:51:33 +0100
-In-Reply-To: <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de>
-References: <cover.1479834051.git.johannes.schindelin@gmx.de>
-         <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.1-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hP6S5RFvSh2uAoQ01avG+mqXnTc3fbevxjnfy9iAcj0=;
+        b=NImHWsde1wVZ0Pf6nAYp1zZdjeNHBOgX/Ku3SPRdyKbT0DO7XtJOpAIN41B7tF5ugY
+         qR+ycj3b79/oESMIx+B83JBl3bsm0Q5uClDqXPzpgXsrb/VUJQ4xTNVpam4XpguKOUit
+         bSUq6w4JV81LiBZvqNg5w7STsf+LDu2rbQ5aRf2zK8dECiBtvWC7TQt17WquKa/9tl22
+         gyL+/eBts8xM39bIU6HuyvK+gU33E0N8pU395Py0zMu18lJq+Gnh5sJ+Mv9LfUyl2KyX
+         iXpgAb26vup11eC2FY9hpHKWNiA4EkGXKUSWuxesQJhFfJcgIvU3DYqSngWXoym0XIEa
+         XOag==
+X-Gm-Message-State: AKaTC00Vup46KKixiEPcSBTZz7eajSqXXH7qKSGwH5bpvNgL+k0+dLRFbrWApjVDnhaGysS8nVnL6GloHLjNtw==
+X-Received: by 10.25.74.85 with SMTP id x82mr1055913lfa.154.1479913498055;
+ Wed, 23 Nov 2016 07:04:58 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.25.25.142 with HTTP; Wed, 23 Nov 2016 07:04:57 -0800 (PST)
+In-Reply-To: <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-16-chriscool@tuxfamily.org> <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 23 Nov 2016 16:04:57 +0100
+Message-ID: <CAP8UFD0iToVxU+maNL9BFXacp3sER+AfrqAnQXWf7EAwURKmdQ@mail.gmail.com>
+Subject: Re: [PATCH v1 15/19] config: add git_config_get_date_string() from gc.c
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2016-11-22 at 18:01 +0100, Johannes Schindelin wrote:
-> The original idea was to use an environment variable
-> GIT_USE_BUILTIN_DIFFTOOL, but the test suite resets those variables, and
-> we do want to use that feature flag to run the tests with, and without,
-> the feature flag.
-> 
-> Besides, the plan is to add an opt-in flag in Git for Windows'
-> installer. If we implemented the feature flag as an environment
-> variable, we would have to modify the user's environment, in order to
-> make the builtin difftool the default when called from Git Bash, Git CMD
-> or third-party tools.
+On Tue, Nov 1, 2016 at 8:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> This function will be used in a following commit to get the expiration
+>> time of the shared index files from the config, and it is generic
+>> enough to be put in "config.c".
+>
+> Is it generic enough that a helper that sounds as if it can get any
+> date string dies if it is given a future date?  I somehow doubt it.
+>
+> At the minimum, it must be made clear that there is an artificial
+> limitation that the current set of callers find useful in cache.h as
+> a one-liner comment next to the added declaration.  Then people with
+> the same need (i.e. they want to reject future timestamps) can
+> decide to use it, while others would stay away from it.
+>
+> If you can come up with a better word to use to encode that
+> artificial limitation in its name, renaming it is even better.
 
-Hi Johannes,
+Ok it will appear like this in cache.h:
 
-Why is this not a normal configuration variable (as in git config
-difftool.builtin true or something)? It doesn't make much sense to me
-to introduce a way of configuring git by introducing magic files, when
-a normal configuration variable would do just fine, and the GfW
-installer can also set such variables, like it does for the crlf config
-I believe.
+/* This dies if the configured or default date is in the future */
+extern int git_config_get_expire_date_string(const char *key, const
+char **output);
 
--- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+Thanks,
+Christian.
