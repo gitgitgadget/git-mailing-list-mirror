@@ -2,102 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EB891FF30
-	for <e@80x24.org>; Wed, 23 Nov 2016 17:30:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EDAE1FF30
+	for <e@80x24.org>; Wed, 23 Nov 2016 17:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936447AbcKWRaL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 12:30:11 -0500
-Received: from mout.gmx.net ([212.227.15.15]:64632 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S936445AbcKWRaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 12:30:09 -0500
-Received: from virtualbox ([89.204.155.1]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhRI2-1cNGMf0JfO-00McHb; Wed, 23
- Nov 2016 18:29:59 +0100
-Date:   Wed, 23 Nov 2016 18:29:43 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] difftool: add a feature flag for the builtin vs
- scripted version
-In-Reply-To: <1479912693.5181.27.camel@kaarsemaker.net>
-Message-ID: <alpine.DEB.2.20.1611231824530.3746@virtualbox>
-References: <cover.1479834051.git.johannes.schindelin@gmx.de>  <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de> <1479912693.5181.27.camel@kaarsemaker.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S935296AbcKWRek (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 12:34:40 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54037 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934936AbcKWRej (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 12:34:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FD184E0B2;
+        Wed, 23 Nov 2016 12:34:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0k7LrzUezUmU3P9veVvax87z5AE=; b=dlVvlH
+        Y9OBlLg2Bmvmv7CXIYj1s7tnGxvcyqRk2Pp39DnNVSL0Y0DOI9pNp5tEOR1bcMT+
+        jo779ky/0lBUQOUChENoZ+wJxK7IKBZuYBLzy1OkRggWdowu2CZTP2b7uT2GnV8m
+        LzBNnfQiMandUJUSJ9GmnUgJnvuCnXEUT5UbU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O7ihPSndrk67w8feQhIlTeKhXNwv2iH8
+        p3SZiXKHTJfCwsK/YCBsaZjRpsq1ivyLuk+AVIYaMbjsubwxF3BUX3CQJCcDJTfA
+        gtcrJAOlHV9FO8y3Ux1XdTbLbFmiABnb16aNdcGw+DDvctJSPLRzAEgLP34IstK6
+        uUQoFxKVsGY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 023A64E0B1;
+        Wed, 23 Nov 2016 12:34:38 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7A9144E0AF;
+        Wed, 23 Nov 2016 12:34:37 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v1 15/19] config: add git_config_get_date_string() from gc.c
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+        <20161023092648.12086-16-chriscool@tuxfamily.org>
+        <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
+        <CAP8UFD0iToVxU+maNL9BFXacp3sER+AfrqAnQXWf7EAwURKmdQ@mail.gmail.com>
+Date:   Wed, 23 Nov 2016 09:34:35 -0800
+In-Reply-To: <CAP8UFD0iToVxU+maNL9BFXacp3sER+AfrqAnQXWf7EAwURKmdQ@mail.gmail.com>
+        (Christian Couder's message of "Wed, 23 Nov 2016 16:04:57 +0100")
+Message-ID: <xmqqlgwam76c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wvgF/VVZc81ApYhjTsFMnLWwGMGP9O7C+KDO1LG79mAALrztHb5
- dmAVNshBM4dChQoSJptH/vlDBB4JboUzT4yYQHi1RMk3Y6eWe+aU74oYB6LXAA30XnCkzNv
- JGD9OtooTQaScQivAtXs2F9bU2frj6eAOTm7Kdxa2eilL5P74EAL1oHNyId7mlrKT4RZths
- Ke/L192HOIQioWh19rlhw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5DEJUNBEyqs=:wPRl5zuRiso9TkOOKkhpQK
- 1xTzG3WnDSMpj9yekDQsMDtW06A/FsdIW5Zpa/68vlAfXYkolVsQr4kuYmCt5Me94oZ+b475u
- lKtJXR2BOfhgoE36mHeC1/W4FfxeVLw4E+hIpp3MpaPCr2ZVqBjnw2Ha7Ryp3UqHHY3dIDB28
- H4P2ko8Qfrr1hHlrg8HoQsa00MTU/M/ihDWBvHc9p0IZ8DHqA4KCYur4aKnA1SnZQhoFqeFlk
- 4dW7QT0UiB27f0DmifEIRptDsXG+Pd3EqhrMo/iRQWH51IccF4dE0U1AJHLYhqYZEVrlaLfo4
- dHDcDIgnLvfqn5jve6NIOmCi72L4f+OKFemiMIE6dtQnAjTPUxkJNgw6XtJ4Zz3Rr781yNZ9y
- Lp6ExCtdz4Fny3DOoe0lvQnJID8gPMyk7EdPl3D77DrvYBEqOtFfAOG0ubcksZQeQcYYY6fTS
- j46kHZA/kwVJpdfFtespE5QIHSvLxY9m1WUVxLRVryfy97OFFDejXc0RExUKH0wMtQkq0ssCB
- BE1nNNKWtp7PmT0clWzaUaslq757jAyEK7+LbUhLIMnQxi2s5pCTij2X+Qlze96ZkEppMrKro
- 6xJObo4MXbQljuZm1ANswDYlCHy5ooRkpB9Z8UqTCKVtGZ4By6/2oz7FrlDLekV0G/oNdC48C
- bVLU5PZchVZ4oRD1MFl/BrXGH6dTwx0EbjMZRk51GU9Q70szmOCdSQv8Dqeo/CZ20BTuMQbOi
- j2i6NC9uZ02zXK/oHlcvZH7fP0rOjWQbo1UBYk6gdb+X835YlY2yhgYdhcF1UW+BBlx8laMID
- UiM0Bj06EXiibsCX1bqRU2v87e4pQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B2EC2E8-B1A3-11E6-8486-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dennis,
+Christian Couder <christian.couder@gmail.com> writes:
 
-On Wed, 23 Nov 2016, Dennis Kaarsemaker wrote:
+> Ok it will appear like this in cache.h:
+>
+> /* This dies if the configured or default date is in the future */
+> extern int git_config_get_expire_date_string(const char *key, const
+> char **output);
 
-> On Tue, 2016-11-22 at 18:01 +0100, Johannes Schindelin wrote:
-> > The original idea was to use an environment variable
-> > GIT_USE_BUILTIN_DIFFTOOL, but the test suite resets those variables, and
-> > we do want to use that feature flag to run the tests with, and without,
-> > the feature flag.
-> > 
-> > Besides, the plan is to add an opt-in flag in Git for Windows'
-> > installer. If we implemented the feature flag as an environment
-> > variable, we would have to modify the user's environment, in order to
-> > make the builtin difftool the default when called from Git Bash, Git CMD
-> > or third-party tools.
-> 
-> Why is this not a normal configuration variable (as in git config
-> difftool.builtin true or something)? It doesn't make much sense to me
-> to introduce a way of configuring git by introducing magic files, when
-> a normal configuration variable would do just fine, and the GfW
-> installer can also set such variables, like it does for the crlf config
-> I believe.
+Those who imitate existing callsites never read comments, and you
+need to spend effort to get the name right to protect the codebase
+from them.
 
-I considered that. Adding a config setting would mean we simply test for
-it in git-difftool.perl and call the builtin if the setting is active,
-right?
+"get-expiry" may be shorter.  Neither still does not say it will
+die, though.
 
-The downside is that we actually *do* go through Perl to do that. Only to
-go back to a builtin. Which is exactly the thing I intended to avoid.
-
-If we do not go through Perl, we have to set up the git directory and
-parse the config in git.c *just* to figure out whether we want to
-magically forward difftool to builtin-difftool. That is not only ugly, but
-has potential side effects I was not willing to risk.
-
-In any case, this feature flag will be there only for one or two Git for
-Windows releases, to give early adopters a chance to send me bug reports
-about any regressions.
-
-To be crystal-clear: I never expected this patch to enter git.git.
-
-In that light, I am okay with taking the heat for introducing a temporary,
-Git for Windows-only feature flag that is implemented as a "does the file
-<xyz> exist?" test.
-
-Ciao,
-Dscho
