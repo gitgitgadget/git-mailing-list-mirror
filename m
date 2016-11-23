@@ -7,93 +7,364 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A635F1FF30
-	for <e@80x24.org>; Wed, 23 Nov 2016 22:01:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0651FF30
+	for <e@80x24.org>; Wed, 23 Nov 2016 22:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933205AbcKWWBu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 17:01:50 -0500
-Received: from mout.gmx.net ([212.227.17.20]:61257 "EHLO mout.gmx.net"
+        id S932909AbcKWWDT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 17:03:19 -0500
+Received: from mout.gmx.net ([212.227.17.22]:50294 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932909AbcKWWBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 17:01:49 -0500
-Received: from virtualbox ([89.204.155.1]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0ML6XF-1c9waW2dxh-000ITu; Wed, 23
- Nov 2016 23:01:29 +0100
-Date:   Wed, 23 Nov 2016 23:01:28 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1753807AbcKWWDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 17:03:17 -0500
+Received: from virtualbox ([89.204.155.1]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHso5-1cB3ju3PBN-003bM9; Wed, 23
+ Nov 2016 23:03:11 +0100
+Date:   Wed, 23 Nov 2016 23:03:10 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] difftool: add a feature flag for the builtin vs
- scripted version
-In-Reply-To: <alpine.DEB.2.20.1611231824530.3746@virtualbox>
-Message-ID: <alpine.DEB.2.20.1611232259090.68520@virtualbox>
-References: <cover.1479834051.git.johannes.schindelin@gmx.de>  <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de> <1479912693.5181.27.camel@kaarsemaker.net> <alpine.DEB.2.20.1611231824530.3746@virtualbox>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: [PATCH v2 0/1] Show Git Mailing List: a builtin difftool
+In-Reply-To: <cover.1479834051.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1479938494.git.johannes.schindelin@gmx.de>
+References: <cover.1479834051.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hqPWgNl+e0PPRk2g0n3i7R7VvHpOX2RxUsBgT6afRUkmKpPA6E4
- bgHOybsruSDBqKzcthJLayIRL7GkE+bZuGPmj4sCSyWXD68ERASUAoa8MyntxOxCJvCzJbp
- hvuKhq1KimMoKt57SscSwqjcakScA0Y3QivgDu76+xUWvNGVojKic6Bs8kc3NY4ZDuX0VFy
- ySR6kvZi1ieAWDMak6ohg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+vQJoa+rZRE=:xBmMMzwa4KXzO1DTBNJhD3
- SCR1hCX1PlULDWgjeA+Qx3C8P1fRFqajqzhalLTKH+VV7YMq6q3fG1zyzu8KStZ5hQlN1jixB
- qYQRf41AvBtfcHDIfGMZjfCTn6XR5n+2lgF02rZkmmOT3s3RGhKMsTNaUZ7HtTM1GSxE71Kd7
- u5Hi9MWwjEE2b5VLrv0HoCdHykrCRrx1SbmXm7W+T/TvUYONZ+hX/X0JMibWvQMxqPHf5q5g0
- D2OG7s366G+3ut+Dy0ZqhnfV4teYBUek6BloEyx4ltRfQ1Gzfy6oVi9etrRlVRD9kSZYpHySE
- K5+DESzSRkZwMyG7wCmCzWQhkM7c2VYZpHvZWCdWIJbCHk3VVojIkXoMdQKlcUmminUiQaOUi
- hsEQ0NtkhOuLrybogcYzdxlKTznP9kKvj+CZWM5LicsOMi/Ft684+WFsZHjB8CmEHmmiQyofR
- 3DvIIgjGsAIsce3/PEMoMPopBz8n2rG74vgTmCCildfZn2WfEqyo/5k0xupbTTHnXCyariJ1P
- +ONMkXxIfBpVvlb9FZIcFz0U5lJUd2nSWrA9jZP+Iv4rbHF3o6SdtQHY/6wnRa7bLTMJieB4X
- XS2zKZ9E7eMY04U/h+208pCOFrhNzYDkA6Pern2tt0XIBBp2lCkUby769cSO6cDOkOf9Bo+em
- EAvshxJREre6HJtCxLVCOWklg5A9rjjgbDIl8gIUE1u8ayfZjklhHZwHMm0FVlo+5iniAh/XL
- 1lTdJtDX9jLhy+ZNX5WAUciYqOUrXF0/e0iz1qEF+s48lZiaZfRkQ2UFPsabaGHcTmfvt91H8
- 8JJLjuA
+X-Provags-ID: V03:K0:eCZ0XWuEi8nT3zSfRLgOMD3Z0ndM8RZe5w3ikGWWu1wQXTuxjIl
+ BVbSL3QKGsiWeaJalgV8GItB3+3eheX5S05yoprX/yXNuari7/CDKYFLDosRv05bQEVpalK
+ br5f1cq40mXDN9oabEE+l6HF80g/fpc8/Yup9W+JMClZ4wKYJpRFTv7ENp1m+BbXcTgGDyp
+ 9OYX/SOX3BJMe0nJV8vYg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LiIvl0h5D7c=:/jUqQ5MKx6AIogP7EY0nyU
+ Ge0eTWHbBTXumEPFC+spZEoubWKvfBZpRf4RVQ7bNPz4M6WTcjqaFLsknt+e5Uo8vK491pti0
+ wjU9ksXUsybB9aSX3IUCkP+vZQNFzYPzBB3KJRW8xX1hq5Y8SSLC38KDI7os47sjEJrRLkYPu
+ t2YxKwMKyWMx3Yx6x872qVUeO1sTTujGLKJaIQl6j/qVRdVZBB8terfm7hpEnC9rcccbHFKwB
+ XxdWuRP5rdaT3hRWvSpC9MbW+69WyOiuO48mNRXZzkDrpEbitJU2UUb3j7P5y4Rts3yDPhtAx
+ B5GydachEKyKTuC22Eg/XQx2F+yUSTfbZHDqEZtxI3DIin+weneD22wHnxOzuS5N91gXeRHuY
+ uAWZN8svadJxR199ccJGCoR8za9WG0UfKYYU3oy4DKTCF9kQrdzUGIc/rQ6XwdameT/ewMfqM
+ YBT6Netw3Gz8feH2s/ut5iuf0NHH5aDAXSL+WTKdsyEg7rkJjmhDZWjtzM85UkeLQsHwajClu
+ nAf1SK6WOg3TyN2vIKDC/LbU69Il9ZcJAvt82B9W2S3jxIpLGVZMpzZF4PbmGW3ty4FlwhjGh
+ AavKlXyupKO4nI6LC329HCR1G9hmpL9sNRgrPSE83feLZolZo7c/uQep+zdVfwBDhUZceMJmi
+ evsiR58HW9KCPvtyq7ZfrG9ce4RmRKqSWC/4AQEG1rDeamUQsjBWHzhBd58FMaTe8PR2U47/u
+ GcODEvdd4FxySeEbVRUMvh6584stKJwymODwLvlVHiQCa5OG9dOv/cnOLVU8OPDe7zgIWHDgb
+ tbx0FYz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dennis,
+I have been working on the builtin difftool for almost two weeks,
+for two reasons:
 
-On Wed, 23 Nov 2016, Johannes Schindelin wrote:
+1. Perl is really not native on Windows. Not only is there a performance
+   penalty to be paid just for running Perl scripts, we also have to deal
+   with the fact that users may have different Perl installations, with
+   different options, and some other Perl installation may decide to set
+   PERL5LIB globally, wreaking havoc with Git for Windows' Perl (which we
+   have to use because almost all other Perl distributions lack the
+   Subversion bindings we need for `git svn`).
 
-> On Wed, 23 Nov 2016, Dennis Kaarsemaker wrote:
-> 
-> > On Tue, 2016-11-22 at 18:01 +0100, Johannes Schindelin wrote:
-> > > The original idea was to use an environment variable
-> > > GIT_USE_BUILTIN_DIFFTOOL, but the test suite resets those variables, and
-> > > we do want to use that feature flag to run the tests with, and without,
-> > > the feature flag.
-> > > 
-> > > Besides, the plan is to add an opt-in flag in Git for Windows'
-> > > installer. If we implemented the feature flag as an environment
-> > > variable, we would have to modify the user's environment, in order to
-> > > make the builtin difftool the default when called from Git Bash, Git CMD
-> > > or third-party tools.
-> > 
-> > Why is this not a normal configuration variable (as in git config
-> > difftool.builtin true or something)? It doesn't make much sense to me
-> > to introduce a way of configuring git by introducing magic files, when
-> > a normal configuration variable would do just fine, and the GfW
-> > installer can also set such variables, like it does for the crlf config
-> > I believe.
-> 
-> I considered that. Adding a config setting would mean we simply test for
-> it in git-difftool.perl and call the builtin if the setting is active,
-> right?
-> 
-> The downside is that we actually *do* go through Perl to do that. Only to
-> go back to a builtin. Which is exactly the thing I intended to avoid.
+2. Perl makes for a rather large reason that Git for Windows' installer
+   weighs in with >30MB. While one Perl script less does not relieve us
+   of that burden, it is one step in the right direction.
 
-Okay, I reconsidered. Junio's comment about how git-am did it made me
-rethink the issue: I need not keep the name "difftool" for the script. So
-what I do now is rename the Perl script to git-legacy-difftool and always
-read the config in the builtin difftool, handing off to the legacy
-difftool unless core.useBuiltinDifftool=true.
+This patch serves two purposes: to ask for reviews, and to show what I
+plan to release as part of Git for Windows v2.11.0 (which is due this
+coming Wednesday, if Git v2.11.0 is released on Tuesday, as planned).
 
-This is an easy way to do it, and a portable and clean blueprint for
-similar feature-flags in the future.
+Changes since v1:
 
-Ciao,
-Johannes
+- fixed the usage (pointed out by David Aguilar)
+
+- moved the stray #include "dir.h" to cuddle with the other #include's
+  (also pointed out by David Aguilar)
+
+- changed the `sprintf()` call to a much safer `xsnprintf()` call
+  (again, pointed out by David Aguilar)
+
+- changed an error message to include the offending path (need I say,
+  pointed out by David Aguilar?)
+
+- used more restrictive permissions for the temporary directories (once
+  again, David Aguilar's suggestion)
+
+- fixed a comment that lacked a space after a period (another fix thanks
+  to David Aguilar).
+
+- switched the opt-in feature flag triggering the use of the builtin
+  difftool to a config variable (this suggestion came from Junio
+  Hamano).
+
+- made difftool respect core.symlinks by moving the usage of
+  has_symlinks after the config was parsed.
+
+
+Johannes Schindelin (1):
+  difftool: add the builtin
+
+ .gitignore                                    |   1 +
+ Makefile                                      |   3 +-
+ builtin.h                                     |   1 +
+ builtin/difftool.c                            | 692 ++++++++++++++++++++++++++
+ git-difftool.perl => git-legacy-difftool.perl |   0
+ git.c                                         |   1 +
+ 6 files changed, 697 insertions(+), 1 deletion(-)
+ create mode 100644 builtin/difftool.c
+ rename git-difftool.perl => git-legacy-difftool.perl (100%)
+
+
+base-commit: 1e37181391e305a7ab0c382ca3c3b2de998d4138
+Published-As: https://github.com/dscho/git/releases/tag/builtin-difftool-v2
+Fetch-It-Via: git fetch https://github.com/dscho/git builtin-difftool-v2
+
+Interdiff vs v1:
+
+ diff --git a/.gitignore b/.gitignore
+ index 91bfd09..f96e50e 100644
+ --- a/.gitignore
+ +++ b/.gitignore
+ @@ -1,4 +1,3 @@
+ -/use-builtin-difftool
+  /GIT-BUILD-OPTIONS
+  /GIT-CFLAGS
+  /GIT-LDFLAGS
+ @@ -52,7 +51,6 @@
+  /git-diff-tree
+  /git-difftool
+  /git-difftool--helper
+ -/git-builtin-difftool
+  /git-describe
+  /git-fast-export
+  /git-fast-import
+ @@ -78,6 +76,7 @@
+  /git-init-db
+  /git-interpret-trailers
+  /git-instaweb
+ +/git-legacy-difftool
+  /git-log
+  /git-ls-files
+  /git-ls-remote
+ diff --git a/Makefile b/Makefile
+ index f764174..7863bc2 100644
+ --- a/Makefile
+ +++ b/Makefile
+ @@ -527,7 +527,7 @@ SCRIPT_LIB += git-sh-setup
+  SCRIPT_LIB += git-sh-i18n
+  
+  SCRIPT_PERL += git-add--interactive.perl
+ -SCRIPT_PERL += git-difftool.perl
+ +SCRIPT_PERL += git-legacy-difftool.perl
+  SCRIPT_PERL += git-archimport.perl
+  SCRIPT_PERL += git-cvsexportcommit.perl
+  SCRIPT_PERL += git-cvsimport.perl
+ @@ -888,7 +888,7 @@ BUILTIN_OBJS += builtin/diff-files.o
+  BUILTIN_OBJS += builtin/diff-index.o
+  BUILTIN_OBJS += builtin/diff-tree.o
+  BUILTIN_OBJS += builtin/diff.o
+ -BUILTIN_OBJS += builtin/builtin-difftool.o
+ +BUILTIN_OBJS += builtin/difftool.o
+  BUILTIN_OBJS += builtin/fast-export.o
+  BUILTIN_OBJS += builtin/fetch-pack.o
+  BUILTIN_OBJS += builtin/fetch.o
+ diff --git a/builtin.h b/builtin.h
+ index 409a61e..67f8051 100644
+ --- a/builtin.h
+ +++ b/builtin.h
+ @@ -60,7 +60,7 @@ extern int cmd_diff_files(int argc, const char **argv, const char *prefix);
+  extern int cmd_diff_index(int argc, const char **argv, const char *prefix);
+  extern int cmd_diff(int argc, const char **argv, const char *prefix);
+  extern int cmd_diff_tree(int argc, const char **argv, const char *prefix);
+ -extern int cmd_builtin_difftool(int argc, const char **argv, const char *prefix);
+ +extern int cmd_difftool(int argc, const char **argv, const char *prefix);
+  extern int cmd_fast_export(int argc, const char **argv, const char *prefix);
+  extern int cmd_fetch(int argc, const char **argv, const char *prefix);
+  extern int cmd_fetch_pack(int argc, const char **argv, const char *prefix);
+ diff --git a/builtin/builtin-difftool.c b/builtin/difftool.c
+ similarity index 95%
+ rename from builtin/builtin-difftool.c
+ rename to builtin/difftool.c
+ index 9feefcd..f845879 100644
+ --- a/builtin/builtin-difftool.c
+ +++ b/builtin/difftool.c
+ @@ -18,12 +18,15 @@
+  #include "argv-array.h"
+  #include "strbuf.h"
+  #include "lockfile.h"
+ +#include "dir.h"
+ +#include "exec_cmd.h"
+  
+  static char *diff_gui_tool;
+  static int trust_exit_code;
+ +static int use_builtin_difftool;
+  
+ -static const char * const builtin_difftool_usage[] = {
+ -	N_("git add [<options>] [--] <pathspec>..."),
+ +static const char *const builtin_difftool_usage[] = {
+ +	N_("git difftool [<options>] [<commit> [<commit>]] [--] [<path>...]"),
+  	NULL
+  };
+  
+ @@ -39,6 +42,11 @@ static int difftool_config(const char *var, const char *value, void *cb)
+  		return 0;
+  	}
+  
+ +	if (!strcmp(var, "core.usebuiltindifftool")) {
+ +		use_builtin_difftool = git_config_bool(var, value);
+ +		return 0;
+ +	}
+ +
+  	return git_default_config(var, value, cb);
+  }
+  
+ @@ -227,8 +235,6 @@ static void changed_files(struct hashmap *result, const char *index_path,
+  	strbuf_release(&buf);
+  }
+  
+ -#include "dir.h"
+ -
+  static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
+  {
+  	struct strbuf buf = STRBUF_INIT;
+ @@ -282,16 +288,16 @@ static int run_dir_diff(const char *extcmd, int symlinks,
+  
+  	/* Setup temp directories */
+  	tmp = getenv("TMPDIR");
+ -	sprintf(tmpdir, "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
+ +	xsnprintf(tmpdir, sizeof(tmpdir), "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
+  	if (!mkdtemp(tmpdir))
+ -		return error("could not create temporary directory");
+ +		return error("could not create '%s'", tmpdir);
+  	strbuf_addf(&ldir, "%s/left/", tmpdir);
+  	strbuf_addf(&rdir, "%s/right/", tmpdir);
+  	strbuf_addstr(&wtdir, workdir);
+  	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
+  		strbuf_addch(&wtdir, '/');
+ -	mkdir(ldir.buf, 0777);
+ -	mkdir(rdir.buf, 0777);
+ +	mkdir(ldir.buf, 0700);
+ +	mkdir(rdir.buf, 0700);
+  
+  	memset(&wtindex, 0, sizeof(wtindex));
+  
+ @@ -606,12 +612,11 @@ static int run_file_diff(int prompt, int argc, const char **argv)
+  	exit(ret);
+  }
+  
+ -int cmd_builtin_difftool(int argc, const char ** argv, const char * prefix)
+ +int cmd_difftool(int argc, const char ** argv, const char * prefix)
+  {
+  	int use_gui_tool = 0, dir_diff = 0, prompt = -1, symlinks = 0,
+  	    tool_help = 0;
+  	static char *difftool_cmd = NULL, *extcmd = NULL;
+ -
+  	struct option builtin_difftool_options[] = {
+  		OPT_BOOL('g', "gui", &use_gui_tool,
+  			 N_("use `diff.guitool` instead of `diff.tool`")),
+ @@ -638,9 +643,16 @@ int cmd_builtin_difftool(int argc, const char ** argv, const char * prefix)
+  		OPT_END()
+  	};
+  
+ +	git_config(difftool_config, NULL);
+  	symlinks = has_symlinks;
+ +	if (!use_builtin_difftool) {
+ +		const char *path = mkpath("%s/git-legacy-difftool", git_exec_path());
+  
+ -	git_config(difftool_config, NULL);
+ +		if (sane_execvp(path, (char **)argv) < 0)
+ +			die_errno("could not exec %s", path);
+ +
+ +		return 0;
+ +	}
+  
+  	argc = parse_options(argc, argv, prefix, builtin_difftool_options,
+  			     builtin_difftool_usage, PARSE_OPT_KEEP_UNKNOWN |
+ @@ -670,7 +682,7 @@ int cmd_builtin_difftool(int argc, const char ** argv, const char * prefix)
+  
+  	/*
+  	 * In directory diff mode, 'git-difftool--helper' is called once
+ -	 * to compare the a / b directories.In file diff mode, 'git diff'
+ +	 * to compare the a / b directories. In file diff mode, 'git diff'
+  	 * will invoke a separate instance of 'git-difftool--helper' for
+  	 * each file that changed.
+  	 */
+ diff --git a/git-difftool.perl b/git-legacy-difftool.perl
+ similarity index 98%
+ rename from git-difftool.perl
+ rename to git-legacy-difftool.perl
+ index 28e47d8..a5790d0 100755
+ --- a/git-difftool.perl
+ +++ b/git-legacy-difftool.perl
+ @@ -23,13 +23,6 @@ use File::Temp qw(tempdir);
+  use Getopt::Long qw(:config pass_through);
+  use Git;
+  
+ -if (-e Git::exec_path() . '/use-builtin-difftool') {
+ -	unshift(@ARGV, "builtin-difftool");
+ -	unshift(@ARGV, "git");
+ -	exec(@ARGV);
+ -	die("Could not execute builtin difftool");
+ -}
+ -
+  sub usage
+  {
+  	my $exitcode = shift;
+ diff --git a/git.c b/git.c
+ index 7a0df7a..0e6bbee 100644
+ --- a/git.c
+ +++ b/git.c
+ @@ -2,7 +2,6 @@
+  #include "exec_cmd.h"
+  #include "help.h"
+  #include "run-command.h"
+ -#include "dir.h"
+  
+  const char git_usage_string[] =
+  	"git [--version] [--help] [-C <path>] [-c name=value]\n"
+ @@ -425,7 +424,7 @@ static struct cmd_struct commands[] = {
+  	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
+  	{ "diff-index", cmd_diff_index, RUN_SETUP },
+  	{ "diff-tree", cmd_diff_tree, RUN_SETUP },
+ -	{ "builtin-difftool", cmd_builtin_difftool, RUN_SETUP | NEED_WORK_TREE },
+ +	{ "difftool", cmd_difftool, RUN_SETUP | NEED_WORK_TREE },
+  	{ "fast-export", cmd_fast_export, RUN_SETUP },
+  	{ "fetch", cmd_fetch, RUN_SETUP },
+  	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP },
+ @@ -543,22 +542,6 @@ static void strip_extension(const char **argv)
+  #define strip_extension(cmd)
+  #endif
+  
+ -static int use_builtin_difftool(void)
+ -{
+ -	static int initialized, use;
+ -
+ -	if (!initialized) {
+ -		struct strbuf buf = STRBUF_INIT;
+ -		strbuf_addf(&buf, "%s/%s", git_exec_path(),
+ -			    "use-builtin-difftool");
+ -		use = file_exists(buf.buf);
+ -		strbuf_release(&buf);
+ -		initialized = 1;
+ -	}
+ -
+ -	return use;
+ -}
+ -
+  static void handle_builtin(int argc, const char **argv)
+  {
+  	struct argv_array args = ARGV_ARRAY_INIT;
+ @@ -568,9 +551,6 @@ static void handle_builtin(int argc, const char **argv)
+  	strip_extension(argv);
+  	cmd = argv[0];
+  
+ -	if (!strcmp("difftool", cmd) && use_builtin_difftool())
+ -		cmd = "builtin-difftool";
+ -
+  	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
+  	if (argc > 1 && !strcmp(argv[1], "--help")) {
+  		int i;
+
+-- 
+2.10.1.583.g721a9e0
+
