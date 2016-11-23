@@ -2,76 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD89D1FF30
-	for <e@80x24.org>; Wed, 23 Nov 2016 14:15:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2252720259
+	for <e@80x24.org>; Wed, 23 Nov 2016 14:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937926AbcKWOPJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 09:15:09 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34880 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936466AbcKWOPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 09:15:07 -0500
-Received: by mail-wm0-f49.google.com with SMTP id a197so79747272wmd.0
-        for <git@vger.kernel.org>; Wed, 23 Nov 2016 06:15:07 -0800 (PST)
+        id S964992AbcKWOvq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 09:51:46 -0500
+Received: from mail-wj0-f195.google.com ([209.85.210.195]:32925 "EHLO
+        mail-wj0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936229AbcKWOvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 09:51:36 -0500
+Received: by mail-wj0-f195.google.com with SMTP id kp2so1221081wjc.0
+        for <git@vger.kernel.org>; Wed, 23 Nov 2016 06:51:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YnjLf40OCZTeVTIOOznnrmApm7CWKvJLjWK4Sbzl+xo=;
-        b=GOmaT9yBn7VFS2XVWJIB4A+qe4xXMzDPDDZTL/GBAbUCAGp3Dsjp8NDn0C+WfI8YHY
-         yii2pXOfuCC/yqgkETqt+AA+9jBtWnLlp+yvOLxTGFCmSHxlJiMkUfrck3bFMFA9s9Eb
-         XiFtbC/JZ4/g927IweF0WHvG0D+wrSnUPPF5tb3Z1Q1L881uEHzD7vQOil6uZwmVT2ZK
-         34pr6uqLc6hVy7esEPDRw8ESRxWSdBD7xaUZMiY2nFGmc/VQkmHGhSX6mGQDPD5vDRNE
-         g85byt9US6epRUDMcWHCP4anN9d5bOB59IpckKhgbv57mw9U5AKKXv9lRlmuOZ93dZcq
-         v9jA==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=m2H3vwVGVmk6b3oQJLrhAgv/qRDLSkIpIFlCftHwghw=;
+        b=Vk0qyUhU7vr4M5cYlQfl3vFdJ7Env3B+3kZnbyk5GxYdCA7taxkrIiooKMdeuG/fmY
+         FsvbrICrIEwISJPNUWwQhka6Lxsj954OWgiuwHeXiN7zPnfocFMNW73K653f976+CPCn
+         IDZwl8EeYl5Th/3SrETXfH4QpOVghumFBmEveGOKsT21OUVu22y02bK+0OXFYUmHkM3s
+         GiNI0YyCMaNuibPigav9h54RNvSC/fdUwkl35TQnaHJ5C8dpZAxYNEqCna5VJiPGwGRe
+         7c22FDYa1axPucRgnVFg3lX8m/7Z1ZDqdiXBe09mpuUeoMSoFrqOfHM97XT2fjAzZyM5
+         R8Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YnjLf40OCZTeVTIOOznnrmApm7CWKvJLjWK4Sbzl+xo=;
-        b=ImEe7NfXBfxHMSjV3hzowlmQPqNLfLQv9gc89SOFRoscjj+9zHJp/xfAEQVh3ABF7s
-         bCxfc3mUwsHznXjuRP9wstAwkwrfG8oCWGk2gvyracC8eBzlACgQDXe+/mGrY/DS40b0
-         k8tV/T+p2L7DGnUFo2nGzNC0j3JX44zmzuqQchFusJaeOuwzAFJngiMp8p6v7pUk5fmW
-         H+XFirwWn3gQvFBdajvj1Ytj4NHmZ6YPo62pS0R8DLdUTevzpB02eznRQEzUDPO/jOWa
-         iTXqwvWbHC4h0AeCffHhU9HlkVwQiIWbhk4LRQqg+zgld2QzOezn78mtYK3BwXRDXXUx
-         FrRw==
-X-Gm-Message-State: AKaTC01TfZHHJXL6SGOflxNTpaCCiPPNR8v+IqzlrSHkbBlr3EoyqbsAvudQrSB2DEg+Lg==
-X-Received: by 10.28.91.141 with SMTP id p135mr3407972wmb.128.1479910506296;
-        Wed, 23 Nov 2016 06:15:06 -0800 (PST)
-Received: from macbook.local ([2a02:a03f:8dc:8600:91db:f5fb:66b4:11fb])
-        by smtp.gmail.com with ESMTPSA id n17sm36648540wjq.6.2016.11.23.06.15.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Nov 2016 06:15:05 -0800 (PST)
-Date:   Wed, 23 Nov 2016 15:15:03 +0100
-From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: dangling commits in worktree
-Message-ID: <20161123141502.GA10722@macbook.local>
-References: <CAExDi1SYOuq7GJC69+5yDmzaw--vKMmmqv0Jsm80hU1L5phDUg@mail.gmail.com>
- <CACsJy8CPX3PDfhcaftDHy_U37rEACr7Q1gj_un4ALen45J9GZQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CPX3PDfhcaftDHy_U37rEACr7Q1gj_un4ALen45J9GZQ@mail.gmail.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=m2H3vwVGVmk6b3oQJLrhAgv/qRDLSkIpIFlCftHwghw=;
+        b=Abwtsjp8yO0WKzD9POfxsyCZatshtbbv/8TNbk3RpO5SPZsN4Q03tBTCSd6fV82mQN
+         aUIZahHCkPTf7CXBlu9dY9Ol8d4gJ8xxq8D2U03GggbZS1/WUswKk5ypNBCNOwVKWzya
+         rCAhK/M/RinO6AhlWQ0RyYFyfgZ1255p27FlghLFmPbK8S5O/eG5GLNizpvVbftUlj2Z
+         OssMZgtEtMwsakzcrs/a0ob/1UM23UlZHA/inKdtlTl7xXAyZiPxj2/CIBlNGAyV5eAp
+         Fg2WIkE8d1GcJyh7Eb07BoKo5yk7G8HUDY21bPGo6slDAg5QkNS9Uq0CKewvTpBgVU6+
+         lz2w==
+X-Gm-Message-State: AKaTC00gdN8PB/wDG/kuY1h641D3pZd+j3KgDqEUOAmlmmE1nfFdTEEhhbO9uZSlfXfdwQ==
+X-Received: by 10.194.103.100 with SMTP id fv4mr3629886wjb.102.1479912694481;
+        Wed, 23 Nov 2016 06:51:34 -0800 (PST)
+Received: from seahawk (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id f10sm36736869wjl.28.2016.11.23.06.51.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Nov 2016 06:51:33 -0800 (PST)
+Message-ID: <1479912693.5181.27.camel@kaarsemaker.net>
+Subject: Re: [PATCH 2/2] difftool: add a feature flag for the builtin vs
+ scripted version
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 23 Nov 2016 15:51:33 +0100
+In-Reply-To: <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de>
+References: <cover.1479834051.git.johannes.schindelin@gmx.de>
+         <598dcfdbeef4e15d2d439053a0423589182e5f30.1479834051.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.1-0ubuntu2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 23, 2016 at 04:45:56PM +0700, Duy Nguyen wrote:
+On Tue, 2016-11-22 at 18:01 +0100, Johannes Schindelin wrote:
+> The original idea was to use an environment variable
+> GIT_USE_BUILTIN_DIFFTOOL, but the test suite resets those variables, and
+> we do want to use that feature flag to run the tests with, and without,
+> the feature flag.
 > 
-> It's a known issue that gc (and maybe some others that do rev-list
-> --all, like fsck) "forgets" about some worktree's refs and you will
-> see what you see.
+> Besides, the plan is to add an opt-in flag in Git for Windows'
+> installer. If we implemented the feature flag as an environment
+> variable, we would have to modify the user's environment, in order to
+> make the builtin difftool the default when called from Git Bash, Git CMD
+> or third-party tools.
 
-Good. I just wanted to be sure it was a known problem.
-Thanks for the info.
+Hi Johannes,
 
-Luc
+Why is this not a normal configuration variable (as in git config
+difftool.builtin true or something)? It doesn't make much sense to me
+to introduce a way of configuring git by introducing magic files, when
+a normal configuration variable would do just fine, and the GfW
+installer can also set such variables, like it does for the crlf config
+I believe.
+
+-- 
+Dennis Kaarsemaker
+http://www.kaarsemaker.net
