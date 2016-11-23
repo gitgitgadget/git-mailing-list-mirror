@@ -7,88 +7,202 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0730F1FF76
-	for <e@80x24.org>; Wed, 23 Nov 2016 11:05:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 026121FF76
+	for <e@80x24.org>; Wed, 23 Nov 2016 11:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756167AbcKWLFl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Nov 2016 06:05:41 -0500
-Received: from mout.gmx.net ([212.227.17.22]:52462 "EHLO mout.gmx.net"
+        id S935840AbcKWLlI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Nov 2016 06:41:08 -0500
+Received: from mout.gmx.net ([212.227.17.20]:57614 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751524AbcKWLFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2016 06:05:37 -0500
-Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MATlG-1c3QYF1EKY-00Bc54; Wed, 23
- Nov 2016 12:05:21 +0100
-Date:   Wed, 23 Nov 2016 12:05:19 +0100 (CET)
+        id S935296AbcKWLlH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2016 06:41:07 -0500
+Received: from virtualbox ([37.24.142.46]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHso5-1cAKEP3VNN-003beT; Wed, 23
+ Nov 2016 12:34:08 +0100
+Date:   Wed, 23 Nov 2016 12:34:07 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] rebase -i: highlight problems with
- core.commentchar
-In-Reply-To: <xmqqwpfvqwbq.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1611231204410.3746@virtualbox>
-References: <xmqq7f7wk7x9.fsf@gitster.mtv.corp.google.com> <20161121190514.18574-1-gitster@pobox.com> <alpine.DEB.2.20.1611221709180.3746@virtualbox> <xmqqwpfvqwbq.fsf@gitster.mtv.corp.google.com>
+To:     David Aguilar <davvid@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] difftool: add the builtin
+In-Reply-To: <20161123080850.GA23742@gmail.com>
+Message-ID: <alpine.DEB.2.20.1611231210380.3746@virtualbox>
+References: <cover.1479834051.git.johannes.schindelin@gmx.de> <7aec571e1b0773ca80ea25453d2650af6a18e095.1479834051.git.johannes.schindelin@gmx.de> <20161123080850.GA23742@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:HwhKjdy/J39Oh8RW1aG/0l/NUb54jGJSmH2Gj+UmnNwTjOOBK+p
- WvmEMEZhOt44wyGZqZ7vsvbvSip6KjZL7hEf4Pw2G8Kz8JWkGxxmMVWvY4cMMVTtmw29Mhp
- pohifYmCx2DKLyFocFts4jNhr5nim/0fKRkV+yo44TiIAeRi+nOPt14Zbii9pf2SNfTiL53
- 8zyN5mlKxwijJBmLrONlw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+VrXwmfhrYY=:fBMpvl+gVcMBbj8t2/spc1
- B908B8hfHc8nGsjcQK+5MupK2M5Dd5/T2bvN3+r190SBJbRqlVD8ejiCWufOcPszUwnBRZI59
- fNAdEfoEWkmYPIDtulQjknSfn4gh3HC1hYwYoo+A+3/bsFLoaNsRF5RTKDg7jJIIkYBSoxkYH
- zk2JXByvCvdddfZY6ntHktpf/+x9qXR2j4oXqqD+/fDJnng05S8enaWzwVejch3GlcW8+p3v2
- WwcjrkQrU05mt19m6pDvw7H8s8XdnUPFFFMSZNWmYg6aBl7onRd+Fk1lzs/cjqmbrzwO7uOuY
- JMK33W0ZEFCSh29E28vUEO6GTmxWzmFo63q0x4iYZJAIft8PfMZ0sOMVQsUse34OYiUfxHTFx
- XGbQyN/kFOUgFyyVjpa6BR+l4rjSguDofLSr3BLQMc0oqJS6H3npSN7AlYUJtYt9AsIl6Zkzc
- m0kNm+Anj5sd2jIDeqA+iAfXb32Hu3I/J15TIevilGi39+ilaTzGk6TvIIFIBFC4r1Kct5ZPI
- wjsfNkkkBvYwFqQY27KCNOUpF46h6o8Dqwkv1SAXgh99AxfoUDjI6UD73JAHT0nXmSSYpmbO/
- z/KRMZ1svy0hDq19ZnFvi4feZOI2cWZIx5g7Sa3jE9GXVWWiSFQqZTnYxGMY0trs/ZogPplyk
- NHkz42cfBWKLaFeql6dX22swA4pip3eSvCwNezYqiBd0EcrtATFX4LFfn6oHszSI0c9U/2TR+
- IbszzRxPCzi7jmYk48UTG4jmkhWknoq9/o+y2La67kXukyymfCajbTRGvrM0Tpfyp2vji1hWZ
- Guqx3DV
+X-Provags-ID: V03:K0:rC8u0sN55nLPb5M3KahNSuIuu4Q7ST2pVTAMu8ScE50rYEvEYTw
+ s51n6xE6kdtYcVRBFWsadZG90yN+BX+OW3V9tvxdqLw0h5JaX3cvc+6AqHdBvVFdGX8NRMH
+ ZG3dM2GWiGye3LWSevpv+LaOei1+sAGRsECd+9rqurC5JSOqR2jdy7E5Gaq7zZQKV+NoeLz
+ rda2yoXBj0NEOhUIesZMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RsiHsv+XWcA=:pT460Tyf6xG9J++VRkk9UC
+ 1BlVbaoIFyIvwhMAPABD94ICdtpeNoXankq3eeeSQfkLg/8Ipsnb6OhowLHL157QB6ophujQr
+ h0m86h4f9cdBrpUl2AJKXDdHZF0zX1H1tMjns2JyHwbHcAhxc9c3Oe+TSRYGoI4UPNemTjyr3
+ 7uV/4m/PLQzE41i4slPwmcPsSYji+IEnb8Zf6kgJ0W86py23oEEVe7svn011vMEPOCIzp9e6h
+ sH1teK3Fd6VCKmdhxoNwpNOuC9qKwpp5b8Oho2XmEa7z4GJphjOQrweI7hu4pmtIY+oXW/xd6
+ Z5Dz1+CCVOTJBxvHefLUCe56+AiAB4F4kbsYPDJLNxvbOH6CxB1VefEjWCsxTc8Qi+A+2vJxv
+ vwj5CJ1xp2RFRzvmAsb2YcppquYy6EsJ8DqOejdJsMN9tX1+8PECYGuAX2Q2B3bSBTTh+RyMp
+ IAAmzcJCAB/e7QTanoJEEx+qY3gnvtrDbnTeXGJpwTXXeoIuUSJJfTWHCT3CTbATU0MxNPykD
+ wTk6oQXia8s6xB9Tv3nXJ1yU/hKnwwLuASAdDPCIzTyRL9kx3+9C2XyW1FgB6fZJdxFFHpcbz
+ GqzUyuiByHYNY4Sdvfo/+W0iAuWKMiRJwmwC6x8h7DP343Cja2zDPyHDldRyN8oZl2+k7peKS
+ zQH3WyTtuOt3QI7d87GgXXGoIyeuJALoIrJwTi8T3fR+SV2fnXLn4Gtmu26OwQTzDSH8Oz2sX
+ wPrpSS2fCKeodVQwAv7xUx5r2FV+CgkvKSXYtnAjYFbujTm8CZ79J4sne7IycmnRIveRlurct
+ CbtPSDR
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi David,
 
-On Tue, 22 Nov 2016, Junio C Hamano wrote:
+On Wed, 23 Nov 2016, David Aguilar wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Tue, Nov 22, 2016 at 06:01:23PM +0100, Johannes Schindelin wrote:
+>
+> > +static const char * const builtin_difftool_usage[] = {
+> > +	N_("git add [<options>] [--] <pathspec>..."),
+> > +	NULL
+> > +};
 > 
-> > On Mon, 21 Nov 2016, Junio C Hamano wrote:
-> >
-> >> diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-> >> index 29e91d861c..c1f6411eb2 100755
-> >> --- a/t/t0030-stripspace.sh
-> >> +++ b/t/t0030-stripspace.sh
-> >> @@ -432,6 +432,15 @@ test_expect_success '-c with changed comment char' '
-> >>  	test_cmp expect actual
-> >>  '
-> >>  
-> >> +test_expect_failure '-c with comment char defined in .git/config' '
-> >> +	test_config core.commentchar = &&
-> >> +	printf "= foo\n" >expect &&
-> >> +	printf "foo" | (
-> >
-> > Could I ask you to sneak in a \n here?
+> The usage should probably say "difftool" (or "builtin-difftool").
+
+Ah, my dirty secret was spilled. I copy-edited this. *pours ashes over his
+head*
+
+> > [...]
+> > +static void changed_files(struct hashmap *result, const char *index_path,
+> > +			  const char *workdir)
+> > +{
+> > +[...]
+> > +}
+> > +
+> > +#include "dir.h"
 > 
-> The one before that _is_ about fixing incomplete line, but this and
-> the one before this one are not, so I think we should fix them at
-> the same time.
+> Can this mid-file #include go to the top of the file?
+
+Yep, thanks.
+
+In case you are interested: You probably guessed it, it was left for a
+later clean-up. I worked a bit over the last weeks on getting Git to build
+in Visual Studio, to be able to benefit from its quite nice features (I
+was always a fan of Visual Studio, long before I started working at
+Microsoft). I used the conversion of the difftool as an excuse to make use
+of this myself: I did the entire conversion in Visual Studio, reverting to
+the old, tedious command-line driven workflow to fix the bugs identified
+by t7800-difftool.sh.
+
+> > +static int run_dir_diff(const char *extcmd, int symlinks,
+> > +			int argc, const char **argv)
+> > +{
+> > +	char tmpdir[PATH_MAX];
+> > +	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
+> > +	struct strbuf rpath = STRBUF_INIT, buf = STRBUF_INIT;
+> > +	struct strbuf ldir = STRBUF_INIT, rdir = STRBUF_INIT;
+> > +	struct strbuf wtdir = STRBUF_INIT;
+> > +	size_t ldir_len, rdir_len, wtdir_len;
+> > +	struct cache_entry *ce = xcalloc(1, sizeof(ce) + PATH_MAX + 1);
+> > +	const char *workdir, *tmp;
+> > +	int ret = 0, i;
+> > +	FILE *fp;
+> > +	struct hashmap working_tree_dups, submodules, symlinks2;
+> > +	struct hashmap_iter iter;
+> > +	struct pair_entry *entry;
+> > +	enum object_type type;
+> > +	unsigned long size;
+> > +	struct index_state wtindex;
+> > +	struct checkout lstate, rstate;
+> > +	int rc, flags = RUN_GIT_CMD, err = 0;
+> > +	struct child_process child = CHILD_PROCESS_INIT;
+> > +	const char *helper_argv[] = { "difftool--helper", NULL, NULL, NULL };
+> > +	struct hashmap wt_modified, tmp_modified;
+> > +	int indices_loaded = 0;
+> > +
+> > +	setup_work_tree();
+> > +	workdir = get_git_work_tree();
+> > +
+> > +	/* Setup temp directories */
+> > +	tmp = getenv("TMPDIR");
+> > +	sprintf(tmpdir, "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
 > 
-> But does it break anything to leave it as-is?  If not, I'd prefer to
-> leave this (and one before this one) for a later clean-up patch post
-> release.
+> Maybe snprintf instead?
+> 
+> getenv() won't return anything longer than PATH_MAX for most
+> users, but users are weird.
 
-Fair enough.
+True.
 
-As a matter of fact, we do not even need to change it later. If it ain't
-broke, don't fix it.
+> > +	if (!mkdtemp(tmpdir))
+> > +		return error("could not create temporary directory");
+> 
+> Mention the tmpdir here?
 
-Ciao,
+Sure thing.
+
+> > +	strbuf_addf(&ldir, "%s/left/", tmpdir);
+> > +	strbuf_addf(&rdir, "%s/right/", tmpdir);
+> > +	strbuf_addstr(&wtdir, workdir);
+> > +	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
+> > +		strbuf_addch(&wtdir, '/');
+> > +	mkdir(ldir.buf, 0777);
+> > +	mkdir(rdir.buf, 0777);
+> 
+> Seeing the perl mkpath() default 0777 spelled out this way
+> makes me wonder whether 0700 would be safer.
+> 
+> The mkdtemp() above is already using 0700 so it's ok, but it
+> might be worth making it consistent (later, perhaps).
+
+Ah, of course! I stupidly imitated other `mkdir()` calls elsewhere, but
+they refer to directories within the Git worktree...
+
+> > +	/*
+> > +	 * In directory diff mode, 'git-difftool--helper' is called once
+> > +	 * to compare the a / b directories.In file diff mode, 'git diff'
+> > +	 * will invoke a separate instance of 'git-difftool--helper' for
+> > +	 * each file that changed.
+> > +	 */
+> 
+> Missing space after "." in the comment above.
+
+Yep. It was two spaces and I deleted one too many (we are so way past
+actual print, where the two spaces may have made sense...).
+
+> > +	if (dir_diff)
+> > +		return run_dir_diff(extcmd, symlinks, argc, argv);
+> > +	return run_file_diff(prompt, argc, argv);
+> > +}
+> > diff --git a/git.c b/git.c
+> > index efa1059..eaa0f67 100644
+> > --- a/git.c
+> > +++ b/git.c
+> > @@ -424,6 +424,7 @@ static struct cmd_struct commands[] = {
+> >  	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
+> >  	{ "diff-index", cmd_diff_index, RUN_SETUP },
+> >  	{ "diff-tree", cmd_diff_tree, RUN_SETUP },
+> > +	{ "builtin-difftool", cmd_builtin_difftool, RUN_SETUP | NEED_WORK_TREE },
+> >  	{ "fast-export", cmd_fast_export, RUN_SETUP },
+> >  	{ "fetch", cmd_fetch, RUN_SETUP },
+> >  	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP },
+> 
+> This isn't alphabetical anymore, but it actually is if you
+> consider that the final plan is to change "builtin-difftool" to
+> "difftool".
+
+Exactly, that was my thinking.
+
+> If we want to minimize that future diff we could name
+> cmd_builtin_difftool() as cmd_difftool() for consistency now so
+> that the future commit only needs to tweak the string here.
+
+Yes!
+
+For the record, this is a left-over from an impatient attempt at avoiding
+problems with `make` overwriting the Perl version of `git difftool` by the
+builtin version; I had originally assumed that a list of builtins was
+generated from parsing git.c or builtin.h, but it turns out that the
+BUILTIN_OBJS are actually responsible, i.e. the file name.
+
+Fixed.
+
+Thank you for your review!
 Dscho
