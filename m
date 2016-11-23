@@ -2,77 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A9D31FBB0
-	for <e@80x24.org>; Wed, 23 Nov 2016 00:13:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D6DD1FBB0
+	for <e@80x24.org>; Wed, 23 Nov 2016 00:52:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756394AbcKWAND (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Nov 2016 19:13:03 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46409 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751644AbcKWANC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2016 19:13:02 -0500
-Received: (qmail 28780 invoked by uid 109); 23 Nov 2016 00:13:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Nov 2016 00:13:02 +0000
-Received: (qmail 871 invoked by uid 111); 23 Nov 2016 00:13:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 22 Nov 2016 19:13:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Nov 2016 19:12:59 -0500
-Date:   Tue, 22 Nov 2016 19:12:59 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Taufiq Hoven <taufiq.hoven@gmail.com>
-Subject: Re: [PATCH 2/3] stripspace: respect repository config
-Message-ID: <20161123001259.y7wjo75bhdgxmeme@sigill.intra.peff.net>
-References: <CACsJy8D5oBR+vo2B+Ro2Q4SX0CG3jME4Gfs1_6AohccmpNvD0A@mail.gmail.com>
- <alpine.DEB.2.20.1611221712480.3746@virtualbox>
- <xmqqshqjqw3z.fsf@gitster.mtv.corp.google.com>
- <xmqqzikrpbz2.fsf@gitster.mtv.corp.google.com>
- <20161122195015.rztaixpz7zvdxb4u@sigill.intra.peff.net>
- <xmqqoa17p8k0.fsf@gitster.mtv.corp.google.com>
- <20161122211920.3qdohxdktykqhyga@sigill.intra.peff.net>
- <xmqqeg23p5v3.fsf@gitster.mtv.corp.google.com>
- <20161122214305.yrn4uqh4dzzafkd2@sigill.intra.peff.net>
- <xmqq7f7vp4ck.fsf@gitster.mtv.corp.google.com>
+        id S1755942AbcKWAw2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Nov 2016 19:52:28 -0500
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:33536 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753253AbcKWAw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2016 19:52:26 -0500
+Received: by mail-qk0-f172.google.com with SMTP id x190so48777054qkb.0
+        for <git@vger.kernel.org>; Tue, 22 Nov 2016 16:52:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=jOj7zmTrfHXB4zCKmYfxCs/ThZmN6eOXCHs9JQBjLuc=;
+        b=FfQKDRrGHzAOtfd4nb25XxdCNMNhKyfPjuz6a8wqr9PnY2AG2tslgI3xfVmo4ytnvI
+         dmGoxclgX5vRZhW/FZ5DcTR6pp9g5aOC2t2zhgUXaFrt3KNa+Se47VBZt+jzcBILpNmc
+         gbwsFLD5PFHR/4gs3vsCBwV3xvvId9ee8yu8z1+PjayqEmYkWJFlkGJW5/c1MNOiZHtL
+         YwqbJhS78SniRMoxuiNtN/O6oQBTFwqX6lhNf9sVxNe6jN2kHIkUznwVhYlHICaJJMhR
+         ejAQgIIaNguSy/0Vz7VM381mc3W8sBYsI7k1KidHBSp85/Aj+KWuhl+73A2P4g0+nNLJ
+         nRFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=jOj7zmTrfHXB4zCKmYfxCs/ThZmN6eOXCHs9JQBjLuc=;
+        b=WGctFfBTYu3DE7RxcOMIKhwDTNfnSxc/ulaJ4CGJUl4VrJshPlC6vbOer64uY0pzAz
+         agiC315+402mCwXKon5Dd0SekHCYBL8A1YVkYoNnvYeoKXzxdCckBz7ovEXqSjHPN+Gx
+         ODQ57YmvonM9yq4tU0mI8D41Fw2A3sM4rIvjNvecDdkJerpXNogGGv8UlCWmXyQxTUbE
+         UyjE7fR3aChmXfQc90vXLqT1KhxiSO9Ec6EN4cPnBEATF0uYNo7c+x5fFznv0E4haaH3
+         GotW5cTUPZXQpqLwdqxPu4ObHvrgzBM93PWzymQOKsLXImonVqJ7un2r6peagmOxdzTe
+         md0A==
+X-Gm-Message-State: AKaTC03ikIMeac3Mh+xjRAsTGqv070mOTvzbpLU/ll6lVr/MW4/tym7XmirguVYz+EO55P/iKHQrVdCbVnHBeQ==
+X-Received: by 10.55.183.3 with SMTP id h3mr486505qkf.33.1479862323384; Tue,
+ 22 Nov 2016 16:52:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7f7vp4ck.fsf@gitster.mtv.corp.google.com>
+Received: by 10.55.41.218 with HTTP; Tue, 22 Nov 2016 16:52:02 -0800 (PST)
+From:   Van Oostenryck Luc <luc.vanoostenryck@gmail.com>
+Date:   Wed, 23 Nov 2016 01:52:02 +0100
+X-Google-Sender-Auth: FuHDAqQU6K4FMZUFzyFp6BFnuog
+Message-ID: <CAExDi1SYOuq7GJC69+5yDmzaw--vKMmmqv0Jsm80hU1L5phDUg@mail.gmail.com>
+Subject: dangling commits in worktree
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 22, 2016 at 01:55:07PM -0800, Junio C Hamano wrote:
+Hi,
 
-> > And this test makes sense. Even without "sub", it would show the
-> > regression, but it's a good idea to test the sub-directory case to cover
-> > the path-munging.
-> 
-> Yup.  Obviously during my initial attempt I was scratching my head
-> wondering where these two files went--they were later found inside
-> t/ directory which was really bad ;-)
+More or less by error I used the fsck command in a worktree and I had
+the surprised to see that it reported a lot of dangling commits while it was
+not supposed to have one.
+I quickly realized that it was the case only in the worktree, in the main dir
+things were OK. While experimenting a bit I also saw that git gc had not the
+same effect in a worktree than in the main tree (the pack was smaller, more
+files were left in objects/xx/ dirs), which is even more odd and a bit
+scary when thinking to the pruning.
 
-Heh. Yeah, it's nice when the failure mode doesn't escape the trash
-directory, but it's probably not worth worrying about too much.
+This seems like a bug to me and googling about it didn't returned anything.
 
-> > In the "archive --remote" test I added, we may want to do the same to
-> > show that "--output" points at the correct path.
-> 
-> Perhaps something like this.  By going down one level, we make sure
-> that it is not sufficient to accidentally read from .git/config to
-> find out what 'foo' is, and also ../b5-nick.tar that is relative to
-> the prefix (aka 'a/') ends up at the top-level.
-
-Yeah, your modification looks good.
-
--Peff
+Luc Van Oostenryck
