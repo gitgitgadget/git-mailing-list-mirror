@@ -2,148 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3163D1FF76
-	for <e@80x24.org>; Thu, 24 Nov 2016 21:58:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64F561FF76
+	for <e@80x24.org>; Thu, 24 Nov 2016 22:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966233AbcKXV5F (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Nov 2016 16:57:05 -0500
-Received: from mout.gmx.net ([212.227.17.20]:53351 "EHLO mout.gmx.net"
+        id S966411AbcKXWhV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Nov 2016 17:37:21 -0500
+Received: from mga07.intel.com ([134.134.136.100]:58751 "EHLO mga07.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965905AbcKXV4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2016 16:56:46 -0500
-Received: from virtualbox ([95.208.59.199]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSY2q-1cHdGs0fyu-00Rcrs; Thu, 24
- Nov 2016 22:56:30 +0100
-Date:   Thu, 24 Nov 2016 22:56:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S966049AbcKXWhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2016 17:37:19 -0500
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga105.jf.intel.com with ESMTP; 24 Nov 2016 14:37:18 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.31,543,1473145200"; 
+   d="scan'208";a="1063850626"
+Received: from fmsmsx105.amr.corp.intel.com ([10.18.124.203])
+  by orsmga001.jf.intel.com with ESMTP; 24 Nov 2016 14:37:17 -0800
+Received: from fmsmsx120.amr.corp.intel.com (10.18.124.208) by
+ FMSMSX105.amr.corp.intel.com (10.18.124.203) with Microsoft SMTP Server (TLS)
+ id 14.3.248.2; Thu, 24 Nov 2016 14:37:17 -0800
+Received: from lcsmsx153.ger.corp.intel.com (10.186.165.228) by
+ fmsmsx120.amr.corp.intel.com (10.18.124.208) with Microsoft SMTP Server (TLS)
+ id 14.3.248.2; Thu, 24 Nov 2016 14:37:17 -0800
+Received: from hasmsx108.ger.corp.intel.com ([169.254.9.44]) by
+ LCSMSX153.ger.corp.intel.com ([169.254.8.87]) with mapi id 14.03.0248.002;
+ Fri, 25 Nov 2016 00:37:14 +0200
+From:   "Winkler, Tomas" <tomas.winkler@intel.com>
 To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming
- builtin
-In-Reply-To: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1611242211450.117539@virtualbox>
-References: <cover.1479938494.git.johannes.schindelin@gmx.de> <cover.1480019834.git.johannes.schindelin@gmx.de> <3a10fd72cf336743891d6bc9a003cfeb5c3f0063.1480019834.git.johannes.schindelin@gmx.de> <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+CC:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Greg KH (gregkh@linuxfoundation.org)" <gregkh@linuxfoundation.org>,
+        "Usyskin, Alexander" <alexander.usyskin@intel.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [char-misc-next] mei: request async autosuspend at the end of
+ enumeration
+Thread-Topic: [char-misc-next] mei: request async autosuspend at the end of
+ enumeration
+Thread-Index: AQHSRj7WsbWcWoZfOE2E/htadCzu2KDoR37ggAAxQACAADXbcA==
+Date:   Thu, 24 Nov 2016 22:37:14 +0000
+Message-ID: <5B8DA87D05A7694D9FA63FD143655C1B54331476@hasmsx108.ger.corp.intel.com>
+References: <1479987242-32050-1-git-send-email-tomas.winkler@intel.com>
+ <5B8DA87D05A7694D9FA63FD143655C1B5433132E@hasmsx108.ger.corp.intel.com>
+ <20161124204316.sqxjpc7uzbrzhvho@sigill.intra.peff.net>
+In-Reply-To: <20161124204316.sqxjpc7uzbrzhvho@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ctpclassification: CTP_IC
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMGEzYmI1NjEtYjEzMC00ODBjLWE0OGQtMDRmNDVhMTJjOTU5IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX0lDIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE1LjkuNi42IiwiVHJ1c3RlZExhYmVsSGFzaCI6IkJFcFdNMWRTQjZqNE5qTmcrQ1dGd1ZkYTVWNUZNYVRKbkdhSGdJQ3lueHc9In0=
+x-originating-ip: [10.184.70.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wZj+Vgd1fdd5TjcSWMobKPRjnSO4CSY4HXlYt0n/4oVgYT0y6d7
- xOl7Ue0o43dHgRqQVBdJTY3Jl0zES/1iBlDwr7L9khQy0aOrl3qPU6/iX3uD1Yypz9/xq9E
- yvUfECmCrPawU2k+Iy5xu3HT34BJ0wpST/l8IY7sFdHdciGyC0VqQZWz+CzWureoHwP9pTA
- v0csqBjxexbmcCSZvxVsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4oI/BT8NasM=:0u6elttyhKQ4lCt7JZeVc4
- munD7T5XU5KFcfbZF4SqAcmBK+QrpqyTaSpywUVDMwThGLWScFa+cPrQ7d+f0fhVoUkXoxfNF
- 4BILmPT9h3GIDDnM6UYGg6KEa2ClGeNApvZbBufbiL2CrjJkjsvsedmiAoKD7AzEPyolLshv7
- NMt0sKMmqKEkZx4WGnxVd+C0GssgiGv1JnqzUzbNCxNgeiT2ZFtO2cd6iOc+1ZVCituVDtgPz
- N0dNWM6Twyd2h4gU3SOqkuEDtSBzJ0RvW6DnuiQF0WhHGRmB+18pedOoiKdm6HsyA7VZmJwg/
- uzg5xvB+7RCkr01qAzE6UneJ9/AtEU+ux1vRMQBcs2kBH0SbZ2qpk4K+HKEhvkbjTEU4qVGYT
- MQhfRIRytnC+RYwzkXklNCQzdQvPYUs0e6Sb9cUohX8J33cT/vmVOP58s3onbmBr+I68jeSAv
- qFTwPH/EgRhRSBIom0LkcqZC599Tim632g7cjQwoOpflD5xb41AK8Wj9EBs8GtItIgOXBEn4L
- lG4K6KnT/gaOT/QF2IwGV6wPfw9HOcRNAGc+9k5+JWucvLyi1wn9Z7waFxr29QIIcChpD+6dM
- HUIBYxq9D6swr7JJ0DyNaCsTJgHxJgbzNdtaCAnoRYEuW2VVF/aDtF1eWs7iNhbbqGX7d89Rp
- CtIKVQ5tOd1FaqL4vhneyXQTxafTjuS33LJmK1oiCqzfdHXAN6ACBD9HVGKVKM4kjuTVhTewe
- V8iK3r1nfsxfSemeuxfSWemI0UuvnRv2tJbDQ+OiD7zxhRXVQ+Z2IGhovd0tmP9PVTiRTSGPq
- uxcH6WX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Thu, 24 Nov 2016, Jeff King wrote:
-
-> On Thu, Nov 24, 2016 at 09:55:07PM +0100, Johannes Schindelin wrote:
-> 
-> > +/*
-> > + * NEEDSWORK: this function can go once the legacy-difftool Perl script is
-> > + * retired.
-> > + *
-> > + * We intentionally avoid reading the config directly here, to avoid messing up
-> > + * the GIT_* environment variables when we need to fall back to exec()ing the
-> > + * Perl script.
-> > + */
-> > +static int use_builtin_difftool(void) {
-> > +	struct child_process cp = CHILD_PROCESS_INIT;
-> > +	struct strbuf out = STRBUF_INIT;
-> > +	int ret;
-> > +
-> > +	argv_array_pushl(&cp.args,
-> > +			 "config", "--bool", "difftool.usebuiltin", NULL);
-> > +	cp.git_cmd = 1;
-> > +	if (capture_command(&cp, &out, 6))
-> > +		return 0;
-> > +	strbuf_trim(&out);
-> > +	ret = !strcmp("true", out.buf);
-> > +	strbuf_release(&out);
-> > +	return ret;
-> > +}
-> 
-> FWIW, it should mostly Just Work to use the internal config functions
-> these days, with the caveat that they will not read repo-level config if
-> you haven't done repo setup yet.
-> 
-> I think it would probably be OK to ship with that caveat (people would
-> probably use --global config, or "git -c" for a quick override), but if
-> you really wanted to address it, you can do something like what
-> pager.c:read_early_config() does.
-
-The config setting is already overkill (and does even make something much
-harder than before: running tests with the builtin difftool used to be as
-simply as `touch use-builtin-difftool && make -C t t7800-difftool.sh, now
-I have to edit t7800-difftool.sh to configure difftool.useBuiltin, and
-without the repo-level config even that would not be working).
-
-Imitating read_early_config() would be overkill deluxe.
-
-> Of course, your method here is fine, too; I just know you are sensitive
-> to forking extra processes.
-> 
-> Also, a minor nit: capture_command() might return data in "out" with a
-> non-zero exit if the command both generates stdout and exits non-zero
-> itself. I'm not sure that's possible with git-config, though, so it
-> might not be worth worrying about.
-
-As it is, I spent way too much time on a feature flag *that will go away
-real soon*. And not only I spent too much time on it: everybody who even
-bothered to think about it spent too much time on it. It is a temporary
-feature flag. It will go away. If it is inefficient, or inelegant, it
-won't matter in a month from now.
-
-In other words, it was not really necessary to spend all of that time and
-all of that brain power to first discuss the shortcomings of having the
-presence of a file in exec path as a feature flag, then converting it into
-a config setting, only to find out that this *causes* problems that were
-not there before.
-
-Frankly, that was not what I was hoping for. I was hoping to get a decent
-review of the *difftool* functionality. David did a fine job to provide
-that review. All that discussion about the temporary feature flag was
-really a side track for me, and I hate to admit that I let myself get
-sucked into it, and it cost me quite some time that I would have rather
-spent on release engineering the preview based on v2.11.0-rc3 (including
-the difftool with *any* type of working opt-in feature flag).
-
-Maybe I will write more explicitly in the next cover letter what I intend
-to do, and what parts of the patch series is intended to be throw-away
-material (hence "good enough" is good enough, and discussions about it are
-really wasting all of our time). Of course, I cannot dictate what other
-people find interesting to comment on, but at least I will have a good
-excuse to ignore suggestions that only distract from the work that is
-really needed.
-
-My only solace is that I did some substantially more intensive testing in
-the wake of this discussion, thanks to the test suite breakages incurred
-by switching the feature flag to a soon-to-be-abandoned config setting.
-That makes me much more confident about the builtin difftool, which is all
-I wanted in the first place.
-
-Ciao,
-Dscho
+PiANCj4gT24gVGh1LCBOb3YgMjQsIDIwMTYgYXQgMDQ6MTA6NDlQTSArMDAwMCwgV2lua2xlciwg
+VG9tYXMgd3JvdGU6DQo+IA0KPiA+ID4gQ2M6IDxzdGFibGVAdmdlci5rZXJuZWwub3JnPiAjIDQu
+NCsNCj4gPg0KPiA+IExvb2tzIGxpa2UgZ2l0IHNlbmQtZW1haWwgaXMgbm90IGFibGUgdG8gcGFy
+c2UgdGhpcyBhZGRyZXNzIGNvcnJlY3RseQ0KPiA+IHRob3VnaCB0aGlzIGlzIHN1Z2dlc3RlZCBm
+b3JtYXQgYnkgRG9jdW1lbnRhdGlvbi9zdGFibGVfa2VybmVsX3J1bGVzLnR4dC4NCj4gPiBDcmVh
+dGUgd3JvbmcgYWRkcmVzcyBJZiBnaXQgcGFyc2VycyBpcyB1c2VkIDogJ3N0YWJsZUB2Z2VyLmtl
+cm5lbC5vcmcjNC40KycNCj4gPg0KPiA+IFNvbWV0aGluZyBsaWtlIHMvIy4qJC8vIGlzIG5lZWRl
+ZCBiZWZvcmUgcGFyc2luZyBDYzoNCj4gDQo+IFRoaXMgc2hvdWxkIGJlIGZpeGVkIGJ5IGUzZmRi
+Y2M4ZSAocGFyc2VfbWFpbGJveGVzOiBhY2NlcHQgZXh0cmEgdGV4dCBhZnRlcg0KPiA8Li4uPiBh
+ZGRyZXNzLCAyMDE2LTEwLTEzKSwgd2hpY2ggd2lsbCBiZSByZWxlYXNlZCBuZXh0IHdlZWsgYXMg
+cGFydCBvZiB2Mi4xMS4gQXMNCj4gYSB3b3JrYXJvdW5kLCB5b3UgY2FuIGFsc28gaW5zdGFsbCB0
+aGUgTWFpbDo6QWRkcmVzcyBwZXJsIG1vZHVsZS4gIFNlZSBbMV0gZm9yDQo+IHRoZSBnb3J5IGRl
+dGFpbHMuDQoNClRoYW5rcyBmb3IgdXBkYXRlLCBJIGZhaWxlZCB0byB1bmRlcnN0YW5kIGZyb20g
+dGhlIHRocmVhZCB0aG91Z2ggd2hhdCBkZWNpc2lvbiB3YXMgYWN0dWFsbHkgYXBwbGllZCwgSSB3
+aWxsIGxvb2sgYXQgdGhlIHBhdGNoIGl0c2VsZi4NCkkndmUgdHJpZWQgdG8gaW5zdGFsbCBNYWls
+OjpBZGRyZXNzIGFuZCBpdCBmaXhlcyB0aGUgYWN0dWFsIGFkZHJlc3MsIGJ1dCBpdCBhcHBlbmRz
+ICB0aGUgIyA0LjQrIHN1ZmZpeCBpbnRvIHRoZSBuYW1lICANCmFzIGFsc28gbWVudGlvbmVkIGlu
+IHRoZSB0aHJlYWQsIHdoaWNoIGRvZXNuJ3QgZml0IHRoZSBzdGFibGUgcnVsZXMgZG9jLg0KDQpT
+byBmYXIgSSd2ZSBmaXhlZCB0aGUgcGFydGljdWxhciBpc3N1ZSB3aXRoIHRoZSBzaW1wbGUgc3Vi
+c3RpdHV0ZSBhYm92ZSwgdGlsbCB0aGUgcmVhbCBmaXggaXMgcmVsZWFzZWQuDQoNCk1heWJlIHRo
+ZSBzdGFibGUga2VybmVsIG1haW50YWluZXJzIHNob3VsZCBhbHNvIGJlIHB1bGxlZCBpbnRvIHRo
+ZSBjb252ZXJzYXRpb24uICANCg0KVGhhbmtzDQpUb21hcyANCg0K
