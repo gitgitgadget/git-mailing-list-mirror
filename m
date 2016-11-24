@@ -2,82 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6131A1FF76
-	for <e@80x24.org>; Thu, 24 Nov 2016 16:11:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F2571FF76
+	for <e@80x24.org>; Thu, 24 Nov 2016 16:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757241AbcKXQK5 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 24 Nov 2016 11:10:57 -0500
-Received: from mga04.intel.com ([192.55.52.120]:3814 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757195AbcKXQKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2016 11:10:54 -0500
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga104.fm.intel.com with ESMTP; 24 Nov 2016 08:10:53 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.31,543,1473145200"; 
-   d="scan'208";a="8960717"
-Received: from fmsmsx106.amr.corp.intel.com ([10.18.124.204])
-  by orsmga002.jf.intel.com with ESMTP; 24 Nov 2016 08:10:53 -0800
-Received: from fmsmsx118.amr.corp.intel.com (10.18.116.18) by
- FMSMSX106.amr.corp.intel.com (10.18.124.204) with Microsoft SMTP Server (TLS)
- id 14.3.248.2; Thu, 24 Nov 2016 08:10:53 -0800
-Received: from HASMSX110.ger.corp.intel.com (10.184.198.28) by
- fmsmsx118.amr.corp.intel.com (10.18.116.18) with Microsoft SMTP Server (TLS)
- id 14.3.248.2; Thu, 24 Nov 2016 08:10:53 -0800
-Received: from hasmsx108.ger.corp.intel.com ([169.254.9.44]) by
- HASMSX110.ger.corp.intel.com ([169.254.11.239]) with mapi id 14.03.0248.002;
- Thu, 24 Nov 2016 18:10:50 +0200
-From:   "Winkler, Tomas" <tomas.winkler@intel.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Greg KH (gregkh@linuxfoundation.org)" <gregkh@linuxfoundation.org>
-CC:     "Usyskin, Alexander" <alexander.usyskin@intel.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: RE: [char-misc-next] mei: request async autosuspend at the end of
- enumeration
-Thread-Topic: [char-misc-next] mei: request async autosuspend at the end of
- enumeration
-Thread-Index: AQHSRj7WsbWcWoZfOE2E/htadCzu2KDoR37g
-Date:   Thu, 24 Nov 2016 16:10:49 +0000
-Message-ID: <5B8DA87D05A7694D9FA63FD143655C1B5433132E@hasmsx108.ger.corp.intel.com>
-References: <1479987242-32050-1-git-send-email-tomas.winkler@intel.com>
-In-Reply-To: <1479987242-32050-1-git-send-email-tomas.winkler@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_IC
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMThkYmM4OTItMWViZC00NDc3LTk4YjAtYzgzYzMyNDg3NzI2IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX0lDIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE1LjkuNi42IiwiVHJ1c3RlZExhYmVsSGFzaCI6ImpFWWhhZTJkZUpLTnZQNE55TXlmVG04S1wvWFMrNDhIc3k1UlBHbjY2UlVrPSJ9
-x-originating-ip: [10.184.70.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S933234AbcKXQbm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Nov 2016 11:31:42 -0500
+Received: from smtp106.iad3a.emailsrvr.com ([173.203.187.106]:57916 "EHLO
+        smtp106.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751095AbcKXQbl (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 24 Nov 2016 11:31:41 -0500
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Nov 2016 11:31:41 EST
+Received: from smtp14.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp14.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id E686E2541F;
+        Thu, 24 Nov 2016 11:25:02 -0500 (EST)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp14.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C9A06253F9;
+        Thu, 24 Nov 2016 11:25:02 -0500 (EST)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Thu, 24 Nov 2016 11:25:02 -0500
+Subject: Re: [ANNOUNCE] Git v2.11.0-rc3
+To:     Junio C Hamano <gitster@pobox.com>
+References: <xmqqinrdlr3o.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <836824f5-79e5-fbbf-dfe0-78cc19af1fb2@xiplink.com>
+Date:   Thu, 24 Nov 2016 11:25:02 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqinrdlr3o.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> 
-> From: Alexander Usyskin <alexander.usyskin@intel.com>
-> 
-> pm_runtime_autosuspend can take synchronous or asynchronous paths,
-> Because we are calling pm_runtime_mark_last_busy just before this most of
-> the cases it takes the asynchronous way. However, when the FW or driver
-> resets during already running runtime suspend, the call will result in calling to
-> the driver's rpm callback and results in a deadlock on device_lock.
-> The simplest fix is to replace pm_runtime_autosuspend with asynchronous
-> pm_request_autosuspend.
-> 
-> Cc: <stable@vger.kernel.org> # 4.4+
+On 2016-11-23 06:21 PM, Junio C Hamano wrote:
+>
+>  * The original command line syntax for "git merge", which was "git
+>    merge <msg> HEAD <parent>...", has been deprecated for quite some
+>    time, and "git gui" was the last in-tree user of the syntax.  This
+>    is finally fixed, so that we can move forward with the deprecation.
 
-Looks like git send-email is not able to parse this address correctly though this is suggested format by Documentation/stable_kernel_rules.txt.
-Create wrong address If git parsers is used : 'stable@vger.kernel.org#4.4+' 
+Is this still true, given j6t's recent patch at
 
-Something like s/#.*$// is needed before parsing Cc: 
+http://public-inbox.org/git/e61cc267-a59b-3be1-29db-c49d56f521f7@kdbg.org/T/
 
-Thanks
-Tomas 
+?
+
+		M.
 
