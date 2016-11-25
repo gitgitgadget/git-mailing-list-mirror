@@ -2,98 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A6DF1FC96
-	for <e@80x24.org>; Fri, 25 Nov 2016 11:05:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83BAF1FBB0
+	for <e@80x24.org>; Fri, 25 Nov 2016 12:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752550AbcKYLFf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Nov 2016 06:05:35 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49825 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751227AbcKYLFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2016 06:05:33 -0500
-Received: from virtualbox ([95.208.59.185]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4WuC-1cvi7f0TMK-00yiHn; Fri, 25
- Nov 2016 12:05:03 +0100
-Date:   Fri, 25 Nov 2016 12:05:00 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming
- builtin
-In-Reply-To: <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1611251201580.117539@virtualbox>
-References: <cover.1479938494.git.johannes.schindelin@gmx.de> <cover.1480019834.git.johannes.schindelin@gmx.de> <3a10fd72cf336743891d6bc9a003cfeb5c3f0063.1480019834.git.johannes.schindelin@gmx.de> <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611242211450.117539@virtualbox> <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753881AbcKYMPs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Nov 2016 07:15:48 -0500
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:33438 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753553AbcKYMPq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Nov 2016 07:15:46 -0500
+Received: by mail-yw0-f194.google.com with SMTP id s68so3305448ywg.0
+        for <git@vger.kernel.org>; Fri, 25 Nov 2016 04:15:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BE/W2Fo2xK85xK6s2mn6l9tTZhJiSTHDrzLCI5yCcd8=;
+        b=0Je99+84p1s5nWzzDazLuokG70K3N0hPJ059HJ5K4GZkYVrflQstNvJ4sibxpHp9nX
+         9R0xIdi53Nc758O/XQuMv11euYLgXMxlskcuVTqctMB3aHAFWCvv37e895tgtlv7emdp
+         GSmg9peEQLVjD1trnczefkGAhUigDZT5PU3HufhWvmgcUhkf9pRqr6OEi+LlSo3ITCBH
+         yyoLeNfhoJlwwpdHQpBjx+XvXVkwXDr9Lyi+sk4Zztg+cOcni/MHIPF8mqBpmhqnH5Q3
+         CmkYoF3dIKUrttjh2FigHWNWHtFIP5vHxSsMjhpc0RJXlI65HL93hfTbVlxGHvGcr/9w
+         OGjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BE/W2Fo2xK85xK6s2mn6l9tTZhJiSTHDrzLCI5yCcd8=;
+        b=MKLxDVHJbnhBAFd/VmtJmF3UcoW9SZzgELqBxVtgcz+zuMZZg31dR9hVDJCtudh9JW
+         9tGhqqjsd3zurb1ujJCUfTQpH2nAa+C5VySOLt2y0GELpHrm8q8c/Ewp0e0rjXc6Xuwc
+         JPm5Aoq+4FCRpkQVrBCvY+nW0gZJPV4kGdBRIFoao9pwIoWuzFXEfCJiHyURtnotjz2F
+         0y1Q36nY4FuhC11wbxsnbhvZbvndimHx5dvdNKIGO3BSRxPhp8m+7bj0xdlRrlzsgYKo
+         HlUc8dpRJTuGmeKlCztvmHyHck1jZ64nHh9uxuH63bCnN4bxXZE5Eb1cjyeRO9cJVfQy
+         Wojg==
+X-Gm-Message-State: AKaTC03wzcZIS/1soFevTTL0f1P6tXAsrOgc6dwYfliqXfoRlvybBRLCq7fP/S1j+IjQtpPTufOKegvfVGPdOA==
+X-Received: by 10.13.224.3 with SMTP id j3mr10373566ywe.46.1480076145963; Fri,
+ 25 Nov 2016 04:15:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:t3yK5iolY3ThQ+em4ExWCujnlc5UJgwSYUS+x7dxTvUQqEi3JMC
- pTUfEfzVdkdWqQaxvtKRQDplxXXUW3B4t6gyIaETxwPzzSvAww+Z7rRnFNkWvrYNIKbxO5W
- 48Y6JpDvjfSfeiKz8FwPNKt7+YilA2wKDV9w3lSmbuAFzPtVDldaLwy+EV8ktuW37IDmg59
- AmXvDD+72njbTzik8PEdw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:a4mB661UPjQ=:/Nc4j5SRvfNfxWNjoQfqb7
- hnM+x0bZ7Y7n+VvW8iWTCq77ItchtcFzJR5NxnOSfDPdqp09iWcoee23zEaohz/aIL0Q3slNa
- L1lPK9zUEu6YlyJOlkgVxXu4QCs7vCRvHHvDc71i9nqwkjm1RK+8oIhuUQ5/22Zzz9X0uCNUS
- 8vsiA6wJmvgD2b/y0a8WpOAPqVI9LeUtnc/piQfx6rB/oBNh8fqUisjsPQ8xmH8psGYhHZL0L
- 73+JwhaI4LkCwDHmMJgUjQm7COSmsQUfqdlxNWqtYfq3m933m7IP/BptrV8sCXYaFmLpoh7t2
- b9j3GvMSekHVx7MOI7iSczXHHCHUZPJcAuB9zT5YAK61Twgh2e+ZBtksTzcgQXH/q1vvt56LT
- ncOO8D8A0+rr//iT126ofTblAWvMRivLPYaSR6tSD9S88jaBEBFp2GPAduU9mURDv4m3FDK4z
- buinFgTXHdWs1T3I4O06fh+ZK/js4mAWxPYe8GLaCjut8OftAkpp2JqHpRg/ZfL3ap2g6EnTk
- y5sE8XecT+okuv7HRJFSsGMJwsy9VnB9CoXVJMPafixKi4/zeR/g0OQP9CUXbBOn2jHDd8Wc6
- XkS5i4M+ffZkmqolMP7YtYoT86Q1WdyFPmcerLSgY3nHRD06KU3fuUq8i99wxk7CBjFT2Z3hz
- gO6Swsd3xNxkQCOouOzxYPeoFopaARoPucZZVjVArdoFWt0CbccbRc8vcKmwwz4NsbZOr7zNn
- KYMd2KJciYRqPWFzpD00aL3KScog4RBE6evyEvRPdGNGPKgPU87WWLHrM984OTwfj6mA9UGFF
- vB5Qmdt
+Received: by 10.37.211.7 with HTTP; Fri, 25 Nov 2016 04:15:15 -0800 (PST)
+In-Reply-To: <20161124205242.ts4qhvfz2hvxez36@sigill.intra.peff.net>
+References: <20161122123019.7169-1-pclouds@gmail.com> <20161124114536.22249-1-pclouds@gmail.com>
+ <20161124205242.ts4qhvfz2hvxez36@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 25 Nov 2016 19:15:15 +0700
+Message-ID: <CACsJy8Atv9rkwmCcXgOqDb6pLP8RxQ7XnxMYt3=hN6KG4X79iA@mail.gmail.com>
+Subject: Re: [PATCH v2] merge-recursive.c: use string_list_sort instead of qsort
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Fri, Nov 25, 2016 at 3:52 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Nov 24, 2016 at 06:45:36PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> This started out to as a hunt for remaining qsort() calls after rs/qsort
+>> series because qsort() API is a bit easy to get wrong (*). However,
+>> since we have string_list_sort(), it's conceptually a better way to sort
+>> here.
+>>
+>> (*) In this particular case, it's even more confusing when you sort one
+>> variable but you use the number of items and item size from an unrelated
+>> variable (from a first glance)
+>
+> Makes sense, though I think I probably would have explained it in
+> reverse order:
+>
+>   Merge-recursive sorts a string list using a raw qsort(), where it
+>   feeds the "items" from one struct but the "nr" and size fields from
+>   another struct. This isn't a bug because one list is a copy of the
+>   other, but it's unnecessarily confusing (and also caused our recent
+>   QSORT() cleanups via coccinelle to miss this call site).
+>
+>   Let's use string_list_sort() instead, which is more concise and harder
+>   to get wrong. Note that we need to adjust our comparison function,
+>   which gets fed only the strings now, not the string_list_items. That's
+>   OK because we don't use the "util" field as part of our sort.
+>
+> Feel free to use or ignore my description as you see fit. :)
 
-On Thu, 24 Nov 2016, Jeff King wrote:
+I delegate the decision to Junio. He can amend the commit if he
+decides so. I suspect it's a good idea to do so.
 
-> On Thu, Nov 24, 2016 at 10:56:23PM +0100, Johannes Schindelin wrote:
-> 
-> > > I think it would probably be OK to ship with that caveat (people would
-> > > probably use --global config, or "git -c" for a quick override), but if
-> > > you really wanted to address it, you can do something like what
-> > > pager.c:read_early_config() does.
-> > 
-> > The config setting is already overkill (and does even make something much
-> > harder than before: running tests with the builtin difftool used to be as
-> > simply as `touch use-builtin-difftool && make -C t t7800-difftool.sh, now
-> > I have to edit t7800-difftool.sh to configure difftool.useBuiltin, and
-> > without the repo-level config even that would not be working).
-> > 
-> > Imitating read_early_config() would be overkill deluxe.
-> 
-> I would have expected it to just be a build-time flag, like:
-> 
->   make BUILTIN_DIFFTOOL=Yes test
+>> -static int string_list_df_name_compare(const void *a, const void *b)
+>> +static int string_list_df_name_compare(const char *one, const char *two=
+)
+>>  {
+>> -     const struct string_list_item *one =3D a;
+>> -     const struct string_list_item *two =3D b;
+>> -     int onelen =3D strlen(one->string);
+>> -     int twolen =3D strlen(two->string);
+>> +     int onelen =3D strlen(one);
+>> +     int twolen =3D strlen(two);
+>
+> I guess I haven't used string_list_sort() in a while, but I was
+> surprised to find that it just feeds the strings to the comparator. That
+> makes sense for using a raw strcmp() as the comparator, but I wonder if
+> any callers would ever want to take the util field into account (e.g.,
+> to break ties).
+>
+> We don't seem to care here, though (which can be verified by reading the
+> code, but also because any mention of one->util would be a compilation
+> error after your patch). So I guess we can punt on it until the day that
+> some caller does need it.
 
-That works for Git developers.
-
-I want to let as many users as possible test the builtin difftool.
-Hopefully a lot more users than there are Git developers.
-
-Which means that I need a feature flag in production code, not a build
-time flag.
-
-> I'm happy with pretty much anything under the reasoning of "this does not
-> matter much because it is going away soon".
-
-Yeah, well, I am more happy with anything along the lines of David's
-review, pointing out flaws in the current revision of the builtin difftool
-before it bites users ;-)
-
-Ciao,
-Dscho
+Some callers do need it, or at least fmt-merge-msg.c:add_people_info()
+does, maybe builtin/remote.c:show() and shortlog.c:shortlog_output()
+too. But I'll stop here and get back to my worktree stuff.
+--=20
+Duy
