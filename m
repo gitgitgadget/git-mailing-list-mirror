@@ -7,88 +7,93 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A02C51FBB0
-	for <e@80x24.org>; Fri, 25 Nov 2016 16:36:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F0A51FBB0
+	for <e@80x24.org>; Fri, 25 Nov 2016 16:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755231AbcKYQg2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Nov 2016 11:36:28 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58644 "EHLO mout.gmx.net"
+        id S932763AbcKYQgg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Nov 2016 11:36:36 -0500
+Received: from mout.gmx.net ([212.227.17.20]:56276 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755107AbcKYQg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2016 11:36:27 -0500
-Received: from virtualbox ([95.208.59.208]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LpwZn-1chCKY43NP-00ff5h; Fri, 25
- Nov 2016 17:36:22 +0100
-Date:   Fri, 25 Nov 2016 17:36:20 +0100 (CET)
+        id S932680AbcKYQgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Nov 2016 11:36:33 -0500
+Received: from virtualbox ([95.208.59.208]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPlMc-1c6U0M2ONm-004xMT; Fri, 25
+ Nov 2016 17:36:28 +0100
+Date:   Fri, 25 Nov 2016 17:36:26 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Markus Klein <markus.klein@reelworx.at>
-Subject: [PATCH 1/2] cherry-pick: demonstrate a segmentation fault
+Subject: [PATCH 2/2] Avoid a segmentation fault with renaming merges
 In-Reply-To: <cover.1480091758.git.johannes.schindelin@gmx.de>
-Message-ID: <89ffd6eaf4e1e121426c84f31dfc9c289f2a948b.1480091758.git.johannes.schindelin@gmx.de>
+Message-ID: <5b1c217bc490289f1f14bee490533c9e307a2e06.1480091758.git.johannes.schindelin@gmx.de>
 References: <cover.1480091758.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ByR5cxIcs1iG8tKsX7paE1WxlPPeKLzVzS8lASsF2g3ljHuIMuV
- bNc5Ijsc7W/qV2Lm1xV2tKf1jin8ZX5ZwunTAyYHFp38A7dkn4D6HFgm74uk+X1kcg0ui0y
- WthiH9huJjqyvYXL5AkjBVSuwP2tEzyY9v9pZYp3rA5mv+oNiEEj7GxmKb/EpuRUWUKY41y
- nEUjXSClKTwQyk6sohKuA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q5+/x4U1HwA=:oDfCljndbOy7xEzGXMDj4J
- uYEzQP4GoaeZ3xRH3U6A1mb4DUAHda0hKcaQ7OsQUqUU5vhWDscBmNAlGR8rZR9pCJ7pwSifd
- ERzIji9dwT+ysucRnlKFcWE6jSRX/jD09TR9R+esaHwjNpiLp1yIBrLQdw/xxAFRr5CoMsmJ5
- 67xEj9A7NRQyvZP0cjx2dgZewNmozsJyWTsKcAkwxzVB/LfQtXY1A1e1yGkcelarxyWQtdGkR
- jRs+tqosZBzCQ/+En/EWHaJNvdOkloabyDeLtQ+PrEKpszL+pFBYN+u+1b+eMnEmZ6alPW00U
- /R2mG0U95K9LpFS8KQFZ2W/s18pylPLNZobjZevAM04DFq/aA9UCEfkaf9vIKWoat5pBM+ccM
- D9nQ0GVuwVPLsBsE1n8tyR57y92zTOaeTMgyCv4CVq23rK2Q6zanLbUfCJZ62c6HnKnJpttlC
- HmQPPmhds3Qi5CHsVBxgnSLPzDf1NKwHqr7pgJPaLWci9yUPF4bDZgYsYoUj+3Gc/daxNwYoN
- j2YHJ8uAtiBGqZ81M6/CxBu0TZK+YVLHQGXOGlMFzFFmSccdkZbgRuXUtIyH2aMpKJUTfw3D2
- ZkZSBJjJB0EOfMLOUMXJ3OV3avzegvg+5gZ5pqn/FMumcU58f7SbjcxrHZSFvJTaBHUY6IVIh
- kLwWAhSg4zgh6sop8tMQ4qXzcNfJG3oGLswzg81USV3ZKLYcXKKO68jHsmEgBGHT06ulzUqYk
- 0W32UXBbe/QLeySsFHKulNA3IuM2eHmd2Q0fF7pF9rSsk92HnfxNt+bcbIjZNa+qnFgFsmQCQ
- gBlRnWO
+X-Provags-ID: V03:K0:a0b74cx1AQleWszhhBXtXS/ijPD1rWjF4e745+UgsXeRDbNedJP
+ qjsxkEArJ51fHqL6x+C/ey9lkA3tat+m2vn/CNw78gmqg2iTANdhYyKuU6Z/LuO5XxSk9mi
+ ALkkl8qnWA1f4qiFkIYi217949pll5A8KvAdqX1Kztj+uMjCwmPi/PdnYUmW8ot4hJ0Lpid
+ aAwLUt7EnvC6f1MC3ET8w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fxosYJw900I=:7W0hQZ0GJR7Zx0QwUDAVeL
+ tGgJKvSkxb2Hj/Fg4Us5AngX/exmzQOb/jcfV6vJIfhfsdjpm+szFuQLLV76XfXwZa9b2y24S
+ c8iPJ07KML+6mQ8qKDGHsr+yUpeWTt5rcriPvB4RtXFhgpAj9lF4G6wgDuLIjF+FSnSu6HGFr
+ 5a7nytOuH0QfGhtQxC0u3WCC1YramLzk+0NxbiuSx/MBec7zdXvskI7DzGDyYNtoJhI5Zq8jv
+ /nKkTp1GuhvLFM7a0a3W/HWBLBF/oANIROBX8NgTCQeXi6bqmJRSopcVOCn49HZiCGds6N+vw
+ gv3AeGd8TvVJkvMErNPn3B8FOr1RWRkLbedeq9dAgg18uqozmg7PBCAGNT1I8/izW4R/taYhd
+ 8C+ZkkZ0b/X13BQBAi3fKMiwRHgt9C+goNM24C9XM7p09Kj55PsUpZasvlHS0iAoZ++uFn16C
+ jqSHDq4qbfJ4zlnGg4WYwF30ojqTApEuTRlzRiflN9oVFwkGeK5+cxYczmAaLvXq99pcQbsFB
+ cc7C6xmEQAJvHdm8EcK257fHU7Ft4AffykKtBeT+8+tNi8jrwA0ew8XyTaBEHbLn47Ivwm/V7
+ Cjvz7S/00H06tZLVl58NBv914dcpyFekO3HXzGmjaAH9DeOtdmv5R8ex1jtCbXFvLTrBTk70P
+ /8rAjeTk5Wy+Gp2Y9zG0SxdZ9SGQAYZ7VvQNeVYdd6prMVVVzbxVxMPaqD6MipxjjkWDuj4bu
+ P5bd7pC85nPQZa8Wu+nispwD13FYoyeJOsweGc63Maeo0xmQH3DleX2zJDt7950F5JMKne8nx
+ P2+yPPa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In https://github.com/git-for-windows/git/issues/952, a complicated
-scenario was described that leads to a segmentation fault in
-cherry-pick.
+Under very particular circumstances, merge-recursive's `add_cacheinfo()`
+function gets a `NULL` returned from `refresh_cache_entry()` without
+expecting it, and subsequently passes it to `add_cache_entry()` which
+consequently crashes.
 
-It boils down to a certain code path involving a renamed file that is
-dirty, for which `refresh_cache_entry()` returns `NULL`, and that
-`NULL` not being handled properly.
+Let's not crash.
+
+This fixes https://github.com/git-for-windows/git/issues/952
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3501-revert-cherry-pick.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ merge-recursive.c             | 2 ++
+ t/t3501-revert-cherry-pick.sh | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 9041c2f149..609061f58a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -235,6 +235,8 @@ static int add_cacheinfo(struct merge_options *o,
+ 		struct cache_entry *nce;
+ 
+ 		nce = refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
++		if (!nce)
++			return err(o, _("addinfo: '%s' is not up-to-date"), path);
+ 		if (nce != ce)
+ 			ret = add_cache_entry(nce, options);
+ 	}
 diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 394f0005a1..d96d391af3 100755
+index d96d391af3..8e21840f11 100755
 --- a/t/t3501-revert-cherry-pick.sh
 +++ b/t/t3501-revert-cherry-pick.sh
-@@ -141,4 +141,16 @@ test_expect_success 'cherry-pick "-" works with arguments' '
+@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with arguments' '
  	test_cmp expect actual
  '
  
-+test_expect_failure 'cherry-pick fails gracefully with dirty renamed file' '
-+	test_commit to-rename &&
-+	git checkout -b unrelated &&
-+	test_commit unrelated &&
-+	git checkout @{-1} &&
-+	git mv to-rename.t renamed &&
-+	test_tick &&
-+	git commit -m renamed &&
-+	echo modified >renamed &&
-+	git cherry-pick unrelated
-+'
-+
- test_done
+-test_expect_failure 'cherry-pick fails gracefully with dirty renamed file' '
++test_expect_success 'cherry-pick fails gracefully with dirty renamed file' '
+ 	test_commit to-rename &&
+ 	git checkout -b unrelated &&
+ 	test_commit unrelated &&
 -- 
 2.11.0.rc3.windows.1
-
-
