@@ -2,116 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E590C1FBB0
-	for <e@80x24.org>; Fri, 25 Nov 2016 15:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DCB41FBB0
+	for <e@80x24.org>; Fri, 25 Nov 2016 16:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754878AbcKYPtd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Nov 2016 10:49:33 -0500
-Received: from mout.web.de ([212.227.15.3]:56115 "EHLO mout.web.de"
+        id S1754016AbcKYQgX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Nov 2016 11:36:23 -0500
+Received: from mout.gmx.net ([212.227.17.21]:61674 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753651AbcKYPta (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2016 10:49:30 -0500
-Received: from birne12.local ([195.252.60.88]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfYTr-1cM21g385T-00P6Gm; Fri, 25
- Nov 2016 16:48:43 +0100
-Subject: Re: [PATCH v8 07/10] convert: unify the "auto" handling of CRLF
-To:     tboegi@web.de, git@vger.kernel.org
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
- <1461942123-16179-1-git-send-email-tboegi@web.de>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <5502e894-bb22-e8b9-ab7a-49346d238283@web.de>
-Date:   Fri, 25 Nov 2016 16:48:38 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
- Gecko/20100101 Thunderbird/45.5.0
+        id S1754878AbcKYQgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Nov 2016 11:36:22 -0500
+Received: from virtualbox ([95.208.59.208]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHso5-1c9U8j1itJ-003bFW; Fri, 25
+ Nov 2016 17:36:16 +0100
+Date:   Fri, 25 Nov 2016 17:36:13 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Markus Klein <markus.klein@reelworx.at>
+Subject: [PATCH 0/2] Fix segmentation fault with cherry-pick
+Message-ID: <cover.1480091758.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <1461942123-16179-1-git-send-email-tboegi@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:jpYvqUO18XpvKHDOgoI0d3GRXJpvcUPT1NaAjOIZCN63tsAP/7L
- K2K80DIRjhRFk8k6yraTYqs/dmS+Og/UUzakf1hLGQYytbKXwL41cRzHr8Iis12Cl+SJBmF
- eMLpevb1KNGZHZbocYd1rJnpdYIb1Ld+NvPb7mBbUQkFu6bIhslCcPu0kHy41ETqeeNL8Gc
- JiFoKdHxJ59YuOJVI+9oA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lTqYS1yPY0Q=:5pnGgoGZpKsw7HQRhR5/tP
- fv7OJ96JokxcUg/13ViivNggvnNUdGCcZQyKsbMOeP+hqNQ+jBYRsgD8wfYoVzPjmJWg1E7Ei
- 2L/geBdNhNlOrU/53uzaVmNZB0rtyWHFk2ulVnI6kOi36E3XH26oKz2xLYhn2hAha2cILzyjS
- FxvW7UayOMuXdzhlEAyob6tcX9/qAZ9c0CAH5Xcek32M8G1WMRPUpyWDVmApMA9ZCVUmrg7Un
- fa/iF1n7cyStmKreXLWI+/mFVOCr06vu1qhZbCsZdwYDZZIWj03vcog19CuV8Y7Jmuwwj+I4K
- btAJvRNWbR5Ezt1Xc4RR4RxGRHAtiFrG2oj35umvM/6rYaPIdtXiEnAWqcRxq3lfEGg9GqxnZ
- P7iGB7SQzTo7bBJOPq/1U4lvXgU93DVE3HZaHZ66O2SoxzqY5Oz9nB5i/OYbEzddLznnLWWk6
- oB7WMJFYYc0yVsrsSq1ae8QPGpGT0dJvY5tISCb38o7JtKsy4YhkTrixBKRl5xTc712qcIT+g
- zxsST4khZK5e7fzvA5BmZEzQx1T2x1VEKm/nxq900zkwFl3CZwX/fdUpYDZ2Qtxk7kEtjzaGw
- rubGUZ5uPR0NstPCeLeaqRsddEhYleX1iofLPfM+ygHlkRaL1Hr3c3ZmORxJppNc5/R1i9UJN
- hCtLnZ2r6bLDr1TRyv/1Mg1oEhkvL1fnsUxhRdtc/UFUG0BS11g7S+5uZGgW4PxYx8jYdurxq
- 9sk5/3HrDVwfBmjrdfrokcMsfxGwxYKU7ZDgg+RleqwJzslAtoLAlkjPndZi0otf9SDXTiNQ9
- VhSWqAq
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:BzQ0QUO7CAtO1x+9wGDHqEDGeWeGXboTqjqwYTg1SQcR4ykGje2
+ WmpZo/cWNUyqni/tLpIX85OMIylclvfDPRp1EuA4fHZcyPZ5rmKOnpqy36w5ruYPtFBorVj
+ ZOquMNyKTYqr5qpUtPWnZixkn47qYhR7RD8gqHzTZfS8qqXSJGhhAD/W1tpqUVXiIKDr7u1
+ 3QEbI5GiBrrpQdptlCdLA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:liap3uveJoA=:+hbZ04UfrCVSibhw2szhOk
+ 3lHDuxSicVWzG5NnZWPqS6Gj2tLV62VDci3z01sZEkvssHZmDe6Kvm4KKC1+L5AzbupyT4maJ
+ dSU5RmB3pV9FMEaTz15mN1s8QRuu9K0SPmmGnlUCRR/JuICLxQo47ewS0zhEU1tUJG6GRe9P1
+ LBaVuLpDUqNtJjjlnSTMeVfG0aGKzITH8Uci77M7XSg4OvR6DXOtZdjz4rzekOmAyZD5CZ5/8
+ +KFm4rBUCFa8IweLbroaclt21vqE5qcP1iWpWLywRBTr58KnrH59kPWNlfkR3X/cXVFx8QrXq
+ e8Aj1v23adPn+SAwEqDfB8YtZOMrmtay/6UkvDV9Av5ihhLaKVsSb/G3IcOU3Yd9kwMfwuiWI
+ t6Umhru9nR2/Tak2v5j8a3NMzcDBCKlIcK21G/B1/QTiVa9VSRpNnU6f65MGID+qxoW4qjtuY
+ wR21kr8h/9Cr48K4pcQS+SWsIwTWJWWlHBxGTtsVx0mTaHDa/CxLIm1llMRMSGKdr8I69Q1U+
+ zsBIUYt/CHGaj/hVICB5MxkH7aw+Fd7qk5G+nGb7jNX1xFK9BYPFWd8tFnf0uxQ+1m2l+aN3r
+ 1BEYFvh9vQ6qnuD/d0qWmbbDos4l645xqsBgbjvCQuBLJkUmSXZ2GMq2Se1yZw4pMlNRmquK8
+ AZaBmR/wtg8ZyCalnP+G0qGpJpDmuv9ANdsagwKT5d22tgZmo0OxmPrf49sW0nkQWI+EKKgno
+ VFbrtHV9r9CUL8SDAGemQo2HUqt9sp38IjXxWHx4POyj6faoY0eOVPA0VUtMtE7JVkY/asNrS
+ HEJwlXM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-RFH, the normalization as descrived in Documentation/gitattributes.txt
-does not work anymore:
+The culprit is actually not cherry-pick, but a special code path that
+expects refresh_cache_entry() not to return NULL. And the fix is to
+teach it to handle NULL there.
+
+This bug was brought to my attention by Markus Klein via
+https://github.com/git-for-windows/git/issues/952.
 
 
-From a clean working directory:
+Johannes Schindelin (2):
+  cherry-pick: demonstrate a segmentation fault
+  Avoid a segmentation fault with renaming merges
 
--------------------------------------------------
-$ echo "* text=auto" >.gitattributes
-$ rm .git/index     # Remove the index to force Git to
-$ git reset         # re-scan the working directory
-$ git status        # Show files that will be normalized
-$ git add -u
-$ git add .gitattributes
-$ git commit -m "Introduce end-of-line normalization"
--------------------------------------------------
+ merge-recursive.c             |  2 ++
+ t/t3501-revert-cherry-pick.sh | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
 
 
-I have different ideas, how a a normalizatio  can be done:
+base-commit: e2b2d6a172b76d44cb7b1ddb12ea5bfac9613a44
+Published-As: https://github.com/dscho/git/releases/tag/cherry-pick-segfault-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git cherry-pick-segfault-v1
 
-A) 
--------------------------------------------------
-$ echo "* text=auto" >.gitattributes
-$ rm .git/index
-$ git add .
-$ git status        # Show files that will be normalized
-$ git commit -m "Introduce end-of-line normalization"
--------------------------------------------------
-
-B)
-$ echo "* text=auto" >.gitattributes &&
-$ git add .gitattributes &&
-$ git ls-files --eol | egrep '^i/(crlf|mixed).*attr/(text|auto)' | ( TAB=$(printf "\t") ; sed -e "s/.*$TAB/dos2unix /" ) >/tmp/$$ &&
-$ /bin/sh /tmp/$$ &&
-$ rm -f /tmp/$$ &&
-$ git add -u &&
-$ git commit -m "Introduce end-of-line normalization"
-
-C) 
-Teach "git add" to learn --renormalize and then
--------------------------------------------------
-$ echo "* text=auto" >.gitattributes
-$ git add -u --renormalize
-$ git add .gitattributes
-$ git commit -m "Introduce end-of-line normalization"
--------------------------------------------------
-
-(None of them is really tested)
-
-A) may loose the execute bit
-B) dos2unix is not installed everywhere (like Mac OS)
-C) seems to most attractive, but I couldn't find out how to forward
-   options from "git add" into convert.c
-
-
-Any help is appreciated.
-
-
-
-
-
+-- 
+2.11.0.rc3.windows.1
 
