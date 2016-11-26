@@ -2,85 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19F781FC96
-	for <e@80x24.org>; Sat, 26 Nov 2016 12:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BEAA1FC96
+	for <e@80x24.org>; Sat, 26 Nov 2016 13:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750947AbcKZMxX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Nov 2016 07:53:23 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49164 "EHLO mout.gmx.net"
+        id S1751169AbcKZNC5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Nov 2016 08:02:57 -0500
+Received: from mga04.intel.com ([192.55.52.120]:13227 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750745AbcKZMxW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2016 07:53:22 -0500
-Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6BKc-1cvKF2408A-00y9fJ; Sat, 26
- Nov 2016 13:53:11 +0100
-Date:   Sat, 26 Nov 2016 13:53:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Markus Klein <markus.klein@reelworx.at>
-Subject: Re: [PATCH v2 2/2] Avoid a segmentation fault with renaming merges
-In-Reply-To: <d1571a25e8f3860a2867b00994d4d6938aa602ec.1480164459.git.johannes.schindelin@gmx.de>
-Message-ID: <alpine.DEB.2.20.1611261348420.117539@virtualbox>
-References: <cover.1480091758.git.johannes.schindelin@gmx.de> <cover.1480164459.git.johannes.schindelin@gmx.de> <d1571a25e8f3860a2867b00994d4d6938aa602ec.1480164459.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1750745AbcKZNCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2016 08:02:55 -0500
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP; 26 Nov 2016 05:02:47 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.31,552,1473145200"; 
+   d="scan'208";a="195847309"
+Received: from fmsmsx105.amr.corp.intel.com ([10.18.124.203])
+  by fmsmga004.fm.intel.com with ESMTP; 26 Nov 2016 05:02:47 -0800
+Received: from fmsmsx155.amr.corp.intel.com (10.18.116.71) by
+ FMSMSX105.amr.corp.intel.com (10.18.124.203) with Microsoft SMTP Server (TLS)
+ id 14.3.248.2; Sat, 26 Nov 2016 05:02:47 -0800
+Received: from hasmsx107.ger.corp.intel.com (10.184.198.27) by
+ FMSMSX155.amr.corp.intel.com (10.18.116.71) with Microsoft SMTP Server (TLS)
+ id 14.3.248.2; Sat, 26 Nov 2016 05:02:46 -0800
+Received: from hasmsx108.ger.corp.intel.com ([169.254.9.44]) by
+ hasmsx107.ger.corp.intel.com ([169.254.6.69]) with mapi id 14.03.0248.002;
+ Sat, 26 Nov 2016 15:02:44 +0200
+From:   "Winkler, Tomas" <tomas.winkler@intel.com>
+To:     "jnareb@gmail.com" <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+        "Jiri Slaby" <jslaby@suse.cz>,
+        "Greg KH (gregkh@linuxfoundation.org)" <gregkh@linuxfoundation.org>,
+        Ben Hutchings <ben@decadent.org.uk>
+CC:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Usyskin, Alexander" <alexander.usyskin@intel.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [char-misc-next] mei: request async autosuspend at the end of
+ enumeration
+Thread-Topic: [char-misc-next] mei: request async autosuspend at the end of
+ enumeration
+Thread-Index: AQHSRj7WsbWcWoZfOE2E/htadCzu2KDoR37ggAAxQACAADXbcIAAN3AAgAEiXgCAAOi0gA==
+Date:   Sat, 26 Nov 2016 13:02:43 +0000
+Message-ID: <5B8DA87D05A7694D9FA63FD143655C1B54331DE4@hasmsx108.ger.corp.intel.com>
+References: <1479987242-32050-1-git-send-email-tomas.winkler@intel.com>
+ <5B8DA87D05A7694D9FA63FD143655C1B5433132E@hasmsx108.ger.corp.intel.com>
+ <20161124204316.sqxjpc7uzbrzhvho@sigill.intra.peff.net>
+ <5B8DA87D05A7694D9FA63FD143655C1B54331476@hasmsx108.ger.corp.intel.com>
+ <20161125031425.gefijvssvygp6pl4@sigill.intra.peff.net>
+ <e11d28d3-c1b5-2c04-643f-0b3bd96cb4d3@gmail.com>
+In-Reply-To: <e11d28d3-c1b5-2c04-643f-0b3bd96cb4d3@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ctpclassification: CTP_IC
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiN2Q3ODUzOWUtMzgwMi00NDg1LTg2YTctNWQ3ZTM1Y2MzMjc3IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX0lDIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE1LjkuNi42IiwiVHJ1c3RlZExhYmVsSGFzaCI6IlRrQUxvbkNTUzRaMTF6WG5xY0pWaVZSY1VZUENNRU4wcXdzc1pFMDhucjg9In0=
+x-originating-ip: [10.184.70.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:htIR6B3+irNxSevcloZdxtA3QxK68sv2Y2+qGstWIOs1Q/dX2p7
- B/uYyeTfPWUJPLXdUtmymIzI1IHOgcIKyt+5YeKN9BG6BBn7/8PafIbXoI2P9c/+z4b3Wm0
- UvGIIu2HFfYVH5suvJyxbBWzb+rrpxuLmHqfX7bfPvDMJl/MPPLokUMSdR+VHYtxJpEh3kw
- cAwgB+Kbx78RaVdNITuvA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XX1n5GkHB7o=:U2rL7/J5ztj15fKsC/fcxt
- WzHs1aFol64B4VQZsGkdbPPxihZx4lrPs9kV/8qJL0d0LoyHvBBAsSZxWgfi9/I/97dsQg+Di
- jI9FzRXXP+eInNNf9cnbEE12oynN1ARIJZXlxLrsOY8ysj5faHooU5vPnTPTc1USrmVa5a/xY
- yBDONb3jXJAJF0mxY7oX4hpaIl948nGTBEmJHRMCArr+PwCNssDAIkVydT4Q+lMmkQ7QxGlpc
- xEJxXH05W/FDX3n3IsHLauBatuTn/ELZ3ggbIuF3kEFlY05n7hUUEWljVMTQmbMYpZRXREf1d
- 3O5MUikWzSbEgLVIFQA6p6nK5v1FZ0jMuaht3Q2bQgGebth3/u3zpno+VaRZsPGKaPuHA6JIN
- kh2D1fg+GdD4Awc1Y8MGtUfn518BOHEtY3x4s7qIiT6FKydC/GyJfDWj7Vv0MT6ySTQUuiS6D
- 5Diu1kFZxlLmWIl9w5dn7Zk47XCC5eOXtPAEcI7uCKaueQOltDIj6DVvyt1SNWLQvzOOi05WC
- Cn2Q/vn0kmS4r9rutpUXg7v3X/stuoV3s99w/vIH9RTfyDUM4oDe1y9cbIuGR8LZ5lumyav6w
- aS2++WGqHSi6OZcAVdRU+4hAlsXxc4axScLwR7IaURWxG+hSfwNAYILLKwKBHGx2f0M/GPugt
- ieJnaMuwpYkvqgamlHliV/fZ3K61OyFpEm0uMVCcIhVlP01uLmrU1hLsb0ta6YmvY23bYtN+3
- ZZ19X0ccA1qmCy3pm1Rg9pIKSuxbzyfcY72TUw7if5ehHDKU9bOrfTYDr1jaPDtjdreLWIXgG
- nJRmTZw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Sat, 26 Nov 2016, Johannes Schindelin wrote:
-
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 9041c2f149..609061f58a 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -235,6 +235,8 @@ static int add_cacheinfo(struct merge_options *o,
->  		struct cache_entry *nce;
->  
->  		nce = refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
-> +		if (!nce)
-> +			return err(o, _("addinfo: '%s' is not up-to-date"), path);
->  		if (nce != ce)
->  			ret = add_cache_entry(nce, options);
->  	}
-
-BTW I was not quite sure why we need to refresh the cache entry here, and
-1335d76e45 (merge: avoid "safer crlf" during recording of merge results,
-2016-07-08) has a commit message for which I need some time to wrap my
-head around.
-
-Also, an error here may be overkill. Maybe we should simply change the "if
-(nce != ce)" to an "if (nce && nce != ce)" here, as a locally-modified
-file will give a nicer message later, anyway.
-
-Dunno,
-Dscho
-
+PiANCj4gVyBkbml1IDI1LjExLjIwMTYgbyAwNDoxNCwgSmVmZiBLaW5nIHBpc3plOg0KPiA+IE9u
+IFRodSwgTm92IDI0LCAyMDE2IGF0IDEwOjM3OjE0UE0gKzAwMDAsIFdpbmtsZXIsIFRvbWFzIHdy
+b3RlOg0KPiA+DQo+ID4+Pj4+IENjOiA8c3RhYmxlQHZnZXIua2VybmVsLm9yZz4gIyA0LjQrDQo+
+ID4+Pj4NCj4gPj4+PiBMb29rcyBsaWtlIGdpdCBzZW5kLWVtYWlsIGlzIG5vdCBhYmxlIHRvIHBh
+cnNlIHRoaXMgYWRkcmVzcw0KPiA+Pj4+IGNvcnJlY3RseSB0aG91Z2ggdGhpcyBpcyBzdWdnZXN0
+ZWQgZm9ybWF0IGJ5DQo+IERvY3VtZW50YXRpb24vc3RhYmxlX2tlcm5lbF9ydWxlcy50eHQuDQo+
+ID4+Pj4gQ3JlYXRlIHdyb25nIGFkZHJlc3MgSWYgZ2l0IHBhcnNlcnMgaXMgdXNlZCA6ICdzdGFi
+bGVAdmdlci5rZXJuZWwub3JnIzQuNCsnDQo+IFsuLi5dDQo+IA0KPiA+IFRoZSBwYXRjaCBqdXN0
+IGJyaW5ncyBwYXJpdHkgdG8gdGhlIE1haWw6OkFkZHJlc3MgYmVoYXZpb3IgYW5kIGdpdCdzDQo+
+ID4gZmFsbGJhY2sgcGFyc2VyLCBzbyB0aGF0IHlvdSBkb24ndCBlbmQgdXAgd2l0aCB0aGUgYnJv
+a2VuDQo+ID4gc3RhYmxlQHZnZXIua2VybmVsLm9yZyM0LjQrIGFkZHJlc3MuIEluc3RlYWQsIHRo
+YXQgY29udGVudCBnb2VzIGludG8NCj4gPiB0aGUgbmFtZSBwYXJ0IG9mIHRoZSBhZGRyZXNzLg0K
+PiA+DQo+ID4gSXQgc291bmRzIGxpa2UgeW91IHdhbnQgdGhlICIjIDQuNCsiIHRvIGJlIGRyb3Bw
+ZWQgZW50aXJlbHkgaW4gdGhlDQo+ID4gcmZjODIyIGhlYWRlci4gSXQgbG9va3MgbGlrZSBzZW5k
+LWVtYWlsIHVzZWQgdG8gZG8gdGhhdCwgYnV0IHN0b3BwZWQNCj4gPiBpbg0KPiA+IGIxYzhhMTFj
+OCAoc2VuZC1lbWFpbDogYWxsb3cgbXVsdGlwbGUgZW1haWxzIHVzaW5nIC0tY2MsIC0tdG8gYW5k
+DQo+ID4gLS1iY2MsIDIwMTUtMDYtMzApLg0KPiA+DQo+ID4gU28gcGVyaGFwcyB0aGVyZSBhcmUg
+ZnVydGhlciBmaXhlcyByZXF1aXJlZCwgYnV0IGl0J3MgaGFyZCB0byBrbm93Lg0KPiA+IFRoZSBp
+bnB1dCBpc24ndCBhIHZhbGlkIHJmYzgyMiBoZWFkZXIsIHNvIGl0J3Mgbm90IGVudGlyZWx5IGNs
+ZWFyIHdoYXQNCj4gPiB0aGUgb3V0cHV0IGlzIHN1cHBvc2VkIHRvIGJlLiBJIGNhbiBidXkgZWl0
+aGVyICJkcm9wIGl0IGNvbXBsZXRlbHkiIG9yDQo+ID4gInN0aWNrIGl0IGluIHRoZSBuYW1lIGZp
+ZWxkIG9mIHRoZSBjYyBoZWFkZXIiIGFzIHJlYXNvbmFibGUuDQo+IA0KPiBXZWxsLCB3ZSBjb3Vs
+ZCBhbHdheXMgY29udmVydCBpdCB0byBlbWFpbCBhZGRyZXNzIGNvbW1lbnQsIGNvbnZlcnRpbmcg
+Zm9yDQo+IGV4YW1wbGUgdGhlIGZvbGxvd2luZyB0cmFpbGVyOg0KPiANCj4gICBDYzogSm9obiBE
+b2UgPGpvaG5AZXhhbXBsZS5jb20+ICMgY29tbWVudA0KPiANCj4gdG8gdGhlIGZvbGxvd2luZyBh
+ZGRyZXNzOg0KPiANCj4gICBKb2huIERvZSA8am9obkBleGFtcGxlLmNvbT4gKGNvbW1lbnQpDQo+
+IA0KPiBKdXN0IEZZSS4gIFRob3VnaCBJJ20gbm90IHN1cmUgaG93IHdlbGwgdGhpcyB3b3VsZCB3
+b3JrLi4uDQo+IA0KWWVwLCBpdCBhY3R1YWxseSBsb29rcyBhcyByaWdodCBwbGFjZSB0byBwdXQg
+dGhpcyBraW5kICBvZiBpbmZvLCAgDQp0aG91Z2ggSSdtICBub3Qgb24gdGhlIHJlY2VpdmluZyBz
+aWRlLg0KSSdtIG5vdCBzdXJlIGlmIGFuZCBob3cgaXMgdGhpcyB1c2VkIGJ5IHN0YWJsZSBtYWlu
+dGFpbmVycy4gDQpUaGFua3MNClRvbWFzIA0KDQoNCg==
