@@ -7,93 +7,80 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79A2A1FC96
-	for <e@80x24.org>; Sat, 26 Nov 2016 12:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19F781FC96
+	for <e@80x24.org>; Sat, 26 Nov 2016 12:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751325AbcKZMsa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Nov 2016 07:48:30 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50549 "EHLO mout.gmx.net"
+        id S1750947AbcKZMxX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Nov 2016 07:53:23 -0500
+Received: from mout.gmx.net ([212.227.15.19]:49164 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751075AbcKZMs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2016 07:48:28 -0500
-Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LeNGL-1cVA310lKf-00q9dE; Sat, 26
- Nov 2016 13:48:22 +0100
-Date:   Sat, 26 Nov 2016 13:48:06 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1750745AbcKZMxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2016 07:53:22 -0500
+Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6BKc-1cvKF2408A-00y9fJ; Sat, 26
+ Nov 2016 13:53:11 +0100
+Date:   Sat, 26 Nov 2016 13:53:09 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Markus Klein <markus.klein@reelworx.at>
-Subject: [PATCH v2 2/2] Avoid a segmentation fault with renaming merges
-In-Reply-To: <cover.1480164459.git.johannes.schindelin@gmx.de>
-Message-ID: <d1571a25e8f3860a2867b00994d4d6938aa602ec.1480164459.git.johannes.schindelin@gmx.de>
-References: <cover.1480091758.git.johannes.schindelin@gmx.de> <cover.1480164459.git.johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] Avoid a segmentation fault with renaming merges
+In-Reply-To: <d1571a25e8f3860a2867b00994d4d6938aa602ec.1480164459.git.johannes.schindelin@gmx.de>
+Message-ID: <alpine.DEB.2.20.1611261348420.117539@virtualbox>
+References: <cover.1480091758.git.johannes.schindelin@gmx.de> <cover.1480164459.git.johannes.schindelin@gmx.de> <d1571a25e8f3860a2867b00994d4d6938aa602ec.1480164459.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ximeSBdkHBNA91PDfk8Ayl3P+Brpb3nJeIM27JE7e1HIefVXNCZ
- qKFYDb/z8DJ3Tzm2YZFEfZWmDY5Xxzbghjs/PflcLe182Hv/uuY2Py0S+K0AWWm1qpBJOyB
- N1+1xWNdiyf0XJCwlG+18VSkz5O+gjk+V4nb+/zP3xM1YhxM/zy84tRK6OfhcQ8bZWT1Je7
- GDG3zIysuzfq0yZsUz5YA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AcZs+CHYmpA=:qrdOu8XAJp5pRSZyGenMb5
- UCOV8Am9D3AbuZsf3Qj82hkmXEqt03cURZoEibqTtrnsqxN3qIaZqTT+D637odyR1+Wk7fDi1
- WY7KcQizmNmuLjxrCcCAV/do05I2mHnrZtLTIVk03jNkLO9eaEyZ+FWRfRJSHv6tlkDFz6JU6
- GJQc3SXQ2LDXo1fKh0cF937xY5zSCxgRkPN1cA5OsspZBqExsAVIjISlZxTV1hHu5QsmDDjl4
- o1i14E8L7To19q7miSVBENVzypch4dSZa92DHCQdcQLoKLQFqGdCyP1nDw4DWQf80lv0dg+4T
- yHDG7WY7NEV7lSioHrdTEBqavh1+6HYB7s7oZR6lhQJUR3YFjf6J3BRu9hso39pSSSAM+yVrj
- oztGAqrHnxVj4bukyQzsSPULjvcepDcGTPmgEGeA6CWfnu+Yejay1x1IWyC3RyucKeOd2rM+d
- lsWyKJnseFkSjgqCMLRjQLcrgp4pQWfFDRw+zcOfgq+wgKogwnW9hiyAOhARJvu3kPQ2MRKXd
- 8lbKz+YnrmRude2yniz+0GNZw2gux3MYxrh5epoEd4/TPmlknQizYzWusbS2uClgsMHIiy4Y4
- ksWlpXniplindNl/OR2nkXjL7Ps/1OMKl+cYjdU37gxpvo4kodT4HXvVwz6UU/uNzlTRVX/I7
- KITtAPsUQhgpyUovu87Wg9IL8RKVJjI3CMbFadv7IWcbSZ8tGFM3zF4vJLOiz3ptnqzp5x/iK
- cmztNlBvw4uCk0bE1TlvZg/IJmlar7jRRog2uDUxwqnPOATtT0LrCp9xXMBamuSJ8eiNx5KNf
- eOP6V1G
+X-Provags-ID: V03:K0:htIR6B3+irNxSevcloZdxtA3QxK68sv2Y2+qGstWIOs1Q/dX2p7
+ B/uYyeTfPWUJPLXdUtmymIzI1IHOgcIKyt+5YeKN9BG6BBn7/8PafIbXoI2P9c/+z4b3Wm0
+ UvGIIu2HFfYVH5suvJyxbBWzb+rrpxuLmHqfX7bfPvDMJl/MPPLokUMSdR+VHYtxJpEh3kw
+ cAwgB+Kbx78RaVdNITuvA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XX1n5GkHB7o=:U2rL7/J5ztj15fKsC/fcxt
+ WzHs1aFol64B4VQZsGkdbPPxihZx4lrPs9kV/8qJL0d0LoyHvBBAsSZxWgfi9/I/97dsQg+Di
+ jI9FzRXXP+eInNNf9cnbEE12oynN1ARIJZXlxLrsOY8ysj5faHooU5vPnTPTc1USrmVa5a/xY
+ yBDONb3jXJAJF0mxY7oX4hpaIl948nGTBEmJHRMCArr+PwCNssDAIkVydT4Q+lMmkQ7QxGlpc
+ xEJxXH05W/FDX3n3IsHLauBatuTn/ELZ3ggbIuF3kEFlY05n7hUUEWljVMTQmbMYpZRXREf1d
+ 3O5MUikWzSbEgLVIFQA6p6nK5v1FZ0jMuaht3Q2bQgGebth3/u3zpno+VaRZsPGKaPuHA6JIN
+ kh2D1fg+GdD4Awc1Y8MGtUfn518BOHEtY3x4s7qIiT6FKydC/GyJfDWj7Vv0MT6ySTQUuiS6D
+ 5Diu1kFZxlLmWIl9w5dn7Zk47XCC5eOXtPAEcI7uCKaueQOltDIj6DVvyt1SNWLQvzOOi05WC
+ Cn2Q/vn0kmS4r9rutpUXg7v3X/stuoV3s99w/vIH9RTfyDUM4oDe1y9cbIuGR8LZ5lumyav6w
+ aS2++WGqHSi6OZcAVdRU+4hAlsXxc4axScLwR7IaURWxG+hSfwNAYILLKwKBHGx2f0M/GPugt
+ ieJnaMuwpYkvqgamlHliV/fZ3K61OyFpEm0uMVCcIhVlP01uLmrU1hLsb0ta6YmvY23bYtN+3
+ ZZ19X0ccA1qmCy3pm1Rg9pIKSuxbzyfcY72TUw7if5ehHDKU9bOrfTYDr1jaPDtjdreLWIXgG
+ nJRmTZw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Under very particular circumstances, merge-recursive's `add_cacheinfo()`
-function gets a `NULL` returned from `refresh_cache_entry()` without
-expecting it, and subsequently passes it to `add_cache_entry()` which
-consequently crashes.
+Hi,
 
-Let's not crash.
+On Sat, 26 Nov 2016, Johannes Schindelin wrote:
 
-This fixes https://github.com/git-for-windows/git/issues/952
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 9041c2f149..609061f58a 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -235,6 +235,8 @@ static int add_cacheinfo(struct merge_options *o,
+>  		struct cache_entry *nce;
+>  
+>  		nce = refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
+> +		if (!nce)
+> +			return err(o, _("addinfo: '%s' is not up-to-date"), path);
+>  		if (nce != ce)
+>  			ret = add_cache_entry(nce, options);
+>  	}
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- merge-recursive.c             | 2 ++
- t/t3501-revert-cherry-pick.sh | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+BTW I was not quite sure why we need to refresh the cache entry here, and
+1335d76e45 (merge: avoid "safer crlf" during recording of merge results,
+2016-07-08) has a commit message for which I need some time to wrap my
+head around.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9041c2f149..609061f58a 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -235,6 +235,8 @@ static int add_cacheinfo(struct merge_options *o,
- 		struct cache_entry *nce;
- 
- 		nce = refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
-+		if (!nce)
-+			return err(o, _("addinfo: '%s' is not up-to-date"), path);
- 		if (nce != ce)
- 			ret = add_cache_entry(nce, options);
- 	}
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index d7b4251234..4f2a263b63 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with arguments' '
- 	test_cmp expect actual
- '
- 
--test_expect_failure 'cherry-pick works with dirty renamed file' '
-+test_expect_success 'cherry-pick works with dirty renamed file' '
- 	test_commit to-rename &&
- 	git checkout -b unrelated &&
- 	test_commit unrelated &&
--- 
-2.11.0.rc3.windows.1
+Also, an error here may be overkill. Maybe we should simply change the "if
+(nce != ce)" to an "if (nce && nce != ce)" here, as a locally-modified
+file will give a nicer message later, anyway.
+
+Dunno,
+Dscho
+
