@@ -7,105 +7,88 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FEB71FC96
-	for <e@80x24.org>; Sat, 26 Nov 2016 12:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 773F81FC96
+	for <e@80x24.org>; Sat, 26 Nov 2016 12:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751064AbcKZMsG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Nov 2016 07:48:06 -0500
-Received: from mout.gmx.net ([212.227.15.15]:61126 "EHLO mout.gmx.net"
+        id S1751244AbcKZMsW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Nov 2016 07:48:22 -0500
+Received: from mout.gmx.net ([212.227.15.18]:60572 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750912AbcKZMsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2016 07:48:04 -0500
-Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHnzh-1c9FTu1v0n-003bRE; Sat, 26
- Nov 2016 13:47:59 +0100
-Date:   Sat, 26 Nov 2016 13:47:58 +0100 (CET)
+        id S1751075AbcKZMsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2016 07:48:20 -0500
+Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lmb2Z-1cjxLc3Vfn-00aBmN; Sat, 26
+ Nov 2016 13:48:03 +0100
+Date:   Sat, 26 Nov 2016 13:48:02 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Markus Klein <markus.klein@reelworx.at>
-Subject: [PATCH v2 0/2] Fix segmentation fault with cherry-pick
-In-Reply-To: <cover.1480091758.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1480164459.git.johannes.schindelin@gmx.de>
-References: <cover.1480091758.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 1/2] cherry-pick: demonstrate a segmentation fault
+In-Reply-To: <cover.1480164459.git.johannes.schindelin@gmx.de>
+Message-ID: <f1a1fbf148e1f0106f47ea0153c4eb0dfa3bd21b.1480164459.git.johannes.schindelin@gmx.de>
+References: <cover.1480091758.git.johannes.schindelin@gmx.de> <cover.1480164459.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hvHRoy1cQgNs8mprFmF1KdMBUZg/d19qgtVITRS1/s6sFC+Q44n
- vM9tMjUsvFRdcdsuoBXT0Q4yOZbN13AIAZlmNiVuCbDkUeMD9zSHadsoqEGSxr+T7yxB3gN
- CZ1mrVLHSUl6OfPZ0Qza8qtoiuUEGv2TxoxypYVb3pmZlCTJJjwK011Zy53NdFCG4oYJaFq
- toOTIplhdn6XhuaXxF1Xw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nq+9oeSR6Oc=:aaz+4Y4BbLTU6pYAlqOlTr
- 8NUf8ThXgUWnjZmgpOaJGR6t7D5Lsn01DCjQk1Ru33y8/HnWz61KII7itxmn8SmjjEc8JxwYW
- 8NwUm3uD7xnhMUFJ9rzwQZT5zDA7uNLQGjU0uIPOvDj2Uw68SR724wZ3G9snU0fxOUGtPIrdf
- jEX8uponOpIMFLCNx6Bg6af+NY+KNRYsJEY8s5iAVnZZX9WcOfjlIyAZuVWkRR8yW9nyVNrOq
- 4YirAWxA3jwnaao8a7fcEvELu1124qHZkO2zxQDKMkhP+Opawo8eOsVpJmOFxP+0fsFs1LpzV
- HQvho0tJbgM6CtbXUl72JMsjF/Clb6TCQe83UE3OWofEZtKKWEos08fIcK+cljI0fUiHFORJJ
- 3TGgb0Ov6koCwgLwki6Caf4Lq/wm/KSKItCzR+tiryorH1JffSrY7KBLIMIZPXtFr8cYqZLkI
- 3b0RHjxAxx/Wkd2FmMifzUCxncn9hZJDd77dwCG4sNn9CIYYEOyf4GM0yTNldA1xJYlc7SEno
- PtyDHiYRkGXtkkOTKlAzBGJu+wb4cJxrEhMcq3RqGjzKd3XppFAHLUfrs2mMd8+e3UclU6eip
- D+lDa/x9eMfdnWwfOEjwnYAAk91zvbklZsxB6ZeWOoqUFSuvkQvXQk6v8iZbwdZgsq/flAA9k
- 96CoEySr+K+IAygyMrkWiIkk1Ltl7enJyjjKuu9ff7AsaVjymAS9SdxkwAjYm/o4yAnw2qcJK
- A5zJOHX3ekFLnaEuQP4xVLnXcJK5J4i4yZtT5xks3bU9SmffzUvydf9cJl3Zfb1DLUkxaLTK2
- lpbJC6U
+X-Provags-ID: V03:K0:H+nJOssTsMzejyoACh0PlUB0G7HM0VmjlZKk/D+EtaeeWYsAcRg
+ XKjme5Mq35Mmf2NVU8+zUNsCf192CGDn3Du2XlloeC6RYXpc/cuqduaIFzscPWH2rYvUFN8
+ ZoavURNzoBuCW3Pmk13tuxmu8IjY9ByPq7GVFcKQdfk4gQKuqbkZfvGa6Iq47xcJ1bhipPY
+ gCLz9y2Y8gkS9032iyvQQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+zy2sI+5R2k=:FfgL0Aba3luF7KE5xbf6h9
+ sz2JFUUm+GILAhwBO6XSTIyw48/zEX3K0jNRA9kR9POSf8p1Sx1QJFK1bmKgD5nMQAQI2O7qB
+ VHPCQviLVSg44/EbKc2BRelbwYwdL1wI+2R+Zu2locgyIIAPO1hk158gldgJD8st++V/ohRAJ
+ YBSkpso14WUhJLYWBPtZdp8sbbGyrNzmG/3516qY2cRPtK2vqQALgheKrdga7r2sfc8Hdc0f5
+ wdjc4f0bytRqoX1L8wn/mxvCrx6755wOevlvDAiwUPju9ie+gPx2pheQZvYPKbXWLfnXar9se
+ /2fHqSY3gizrx9adn9kcwyQ/9s6Ynb1R8JtDsJxQfUSA62TLmf38KLjOMEX5MG+YaH0qY1mSx
+ 2w6TzXJHvOnvLWtIRbPy05c9lg8DBlhvSYryxqTh0GMJpZLZKGk6gapUVbD/IjqLxDEjIDc4T
+ jZt3RJ/kOOAf9g+EHU1pFzXHyTzM+miOInoB6Db4wJzj7yGfY5J8B2K98Ws8U4pGG485LJfbW
+ mSyTLa3C2+ZkQ6IEo5l4eBaAL3tTfLM4q4CxUG9TuguuUrPdX0pcrt0HIyf8U4Ol7ZucJSt5Q
+ hnE15xD+UioaUPCgAKnzeOqSesVD5UOVTHxuV5777MvtTYRfwq/WuBnpEC8vBB7I9BRzwzTjS
+ 73A38Sk0aJXAC0TA0ItdjaMHArTSnFsd4l91ybj8/3OHnxyo8xA1imQ/XRRGli1JRFD8ucrix
+ eyTJokf1YPiYzRY5b3OXvnE6rgoTPlvUyeD0/D5/SzxB1FWh1NCwWgE14gvbHj0958LmUA+m+
+ z1UrQyU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The culprit is actually not cherry-pick, but a special code path that
-expects refresh_cache_entry() not to return NULL. And the fix is to
-teach it to handle NULL there.
+In https://github.com/git-for-windows/git/issues/952, a complicated
+scenario was described that leads to a segmentation fault in
+cherry-pick.
 
-This bug was brought to my attention by Markus Klein via
-https://github.com/git-for-windows/git/issues/952.
+It boils down to a certain code path involving a renamed file that is
+dirty, for which `refresh_cache_entry()` returns `NULL`, and that
+`NULL` not being handled properly.
 
-Changes since v1:
-
-- changed test title
-
-- avoided ambiguous refname in test
-
-
-Johannes Schindelin (2):
-  cherry-pick: demonstrate a segmentation fault
-  Avoid a segmentation fault with renaming merges
-
- merge-recursive.c             |  2 ++
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t3501-revert-cherry-pick.sh | 12 ++++++++++++
- 2 files changed, 14 insertions(+)
+ 1 file changed, 12 insertions(+)
 
-
-base-commit: e2b2d6a172b76d44cb7b1ddb12ea5bfac9613a44
-Published-As: https://github.com/dscho/git/releases/tag/cherry-pick-segfault-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git cherry-pick-segfault-v2
-
-Interdiff vs v1:
-
- diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
- index 8e21840f11..4f2a263b63 100755
- --- a/t/t3501-revert-cherry-pick.sh
- +++ b/t/t3501-revert-cherry-pick.sh
- @@ -141,7 +141,7 @@ test_expect_success 'cherry-pick "-" works with arguments' '
-  	test_cmp expect actual
-  '
-  
- -test_expect_success 'cherry-pick fails gracefully with dirty renamed file' '
- +test_expect_success 'cherry-pick works with dirty renamed file' '
-  	test_commit to-rename &&
-  	git checkout -b unrelated &&
-  	test_commit unrelated &&
- @@ -150,7 +150,7 @@ test_expect_success 'cherry-pick fails gracefully with dirty renamed file' '
-  	test_tick &&
-  	git commit -m renamed &&
-  	echo modified >renamed &&
- -	git cherry-pick unrelated
- +	git cherry-pick refs/heads/unrelated
-  '
-  
-  test_done
-
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 394f0005a1..d7b4251234 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -141,4 +141,16 @@ test_expect_success 'cherry-pick "-" works with arguments' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_failure 'cherry-pick works with dirty renamed file' '
++	test_commit to-rename &&
++	git checkout -b unrelated &&
++	test_commit unrelated &&
++	git checkout @{-1} &&
++	git mv to-rename.t renamed &&
++	test_tick &&
++	git commit -m renamed &&
++	echo modified >renamed &&
++	git cherry-pick refs/heads/unrelated
++'
++
+ test_done
 -- 
 2.11.0.rc3.windows.1
+
 
