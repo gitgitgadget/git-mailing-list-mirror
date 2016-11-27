@@ -6,74 +6,83 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9B8A1FC96
-	for <e@80x24.org>; Sun, 27 Nov 2016 05:08:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA4B31FBB0
+	for <e@80x24.org>; Sun, 27 Nov 2016 06:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750917AbcK0FIW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Nov 2016 00:08:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47491 "EHLO cloud.peff.net"
+        id S1751829AbcK0Ges (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Nov 2016 01:34:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47499 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750750AbcK0FIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Nov 2016 00:08:21 -0500
-Received: (qmail 25709 invoked by uid 109); 27 Nov 2016 05:08:20 -0000
+        id S1751516AbcK0Ger (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Nov 2016 01:34:47 -0500
+Received: (qmail 30626 invoked by uid 109); 27 Nov 2016 06:34:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 27 Nov 2016 05:08:20 +0000
-Received: (qmail 25569 invoked by uid 111); 27 Nov 2016 05:08:54 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 27 Nov 2016 06:34:46 +0000
+Received: (qmail 26887 invoked by uid 111); 27 Nov 2016 06:35:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 27 Nov 2016 00:08:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Nov 2016 00:08:18 -0500
-Date:   Sun, 27 Nov 2016 00:08:18 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 27 Nov 2016 01:35:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Nov 2016 01:34:45 -0500
+Date:   Sun, 27 Nov 2016 01:34:45 -0500
 From:   Jeff King <peff@peff.net>
-To:     Dun Peal <dunpealer@gmail.com>
-Cc:     Git ML <git@vger.kernel.org>
-Subject: Re: trustExitCode doesn't apply to vimdiff mergetool
-Message-ID: <20161127050818.rmjpvha64y4wosq2@sigill.intra.peff.net>
-References: <CAD03jn5PAZcFeesaq2osjo7cYd1frWZeN0odNqTh+AMxSEmLgQ@mail.gmail.com>
+To:     git@vger.kernel.org
+Cc:     Armin Kunaschik <megabreit@googlemail.com>
+Subject: [PATCH] t7610: clean up foo.* tmpdir
+Message-ID: <20161127063444.qzuzyab55gmofhfl@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAD03jn5PAZcFeesaq2osjo7cYd1frWZeN0odNqTh+AMxSEmLgQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 26, 2016 at 09:44:36PM -0500, Dun Peal wrote:
+[resend; the original subject with foo.XXXXXX was bounced by vger for
+being too sexy]
 
-> I'm using vimdiff as my mergetool, and have the following lines in
-> ~/.gitconfig:
-> 
-> [merge]
->     tool = vimdiff
-> [mergetool "vimdiff"]
->     trustExitCode = true
-> 
-> 
-> My understanding from the docs is that this sets
-> mergetool.vimdiff.trustExitCode to true, thereby concluding that a
-> merge hasn't been successful if vimdiff's exit code is non-zero.
-> 
-> Unfortunately, when I exit Vim using `:cq` - which returns code 1 -
-> the merge is still presumed to have succeeded.
-> 
-> Is there a way to accomplish the desired effect, such that exiting
-> vimdiff with a non-zero code would prevent git from resolving the
-> conflict in the merged file?
+-- >8 --
+Subject: [PATCH] t7610: clean up foo.XXXXXX tmpdir
 
-I don't use mergetool myself, but peeking at the code, it looks like
-trustExitCode is used only for a "user" tool, not for the builtin tool
-profiles. That sounds kind of confusing to me, but I'll leave discussion
-of that to people more interested in mergetool.
+The lazy prereq for MKTEMP uses "mktemp -t" to see if
+mergetool's internal mktemp call will be able to run. But
+unlike the call inside mergetool, we do not ever bother to
+clean up the result, and the /tmp of git developers will
+slowly fill up with "foo.XXXXXX" directories as they run the
+test suite over and over.  Let's clean up the directory
+after we've verified its creation.
 
-However, I think you can work around it by defining your own tool that
-runs vimdiff:
+Note that we don't use test_when_finished here, and instead
+just make rmdir part of the &&-chain. We should only remove
+something that we're confident we just created. A failure in
+the middle of the chain either means there's nothing to
+clean up, or we are very confused and should err on the side
+of caution.
 
-  git config merge.tool foo
-  git config mergetool.foo.cmd 'vimdiff "$LOCAL" "$BASE" "$REMOTE" "$MERGED"'
-  git config mergetool.foo.trustExitCode true
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This has been happening since c578a09bd (t7610: test for mktemp before
+test execution, 2016-07-02). I have noticed the foo.* directories
+building in /tmp, but I never bothered to track it down before.  I just
+assumed from the name it was one of my personal hacky scripts. :)
 
-Though note that the builtin vimdiff invocation is a little more
-complicated than that. You may want to adapt what is in git.git's
-mergetools/vimdiff to your liking.
+It does make me wonder if test-lib.sh ought to just set $TMPDIR inside
+the trash directory so that any cruft we fail to cleanup is contained.
 
--Peff
+ t/t7610-mergetool.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 6d9f21511..63d36fb28 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -591,7 +591,8 @@ test_expect_success 'filenames seen by tools start with ./' '
+ 
+ test_lazy_prereq MKTEMP '
+ 	tempdir=$(mktemp -d -t foo.XXXXXX) &&
+-	test -d "$tempdir"
++	test -d "$tempdir" &&
++	rmdir "$tempdir"
+ '
+ 
+ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToTemp' '
+-- 
+2.11.0.rc3.315.gde8259a
