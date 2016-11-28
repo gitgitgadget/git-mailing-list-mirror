@@ -2,109 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1B9B1FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 17:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83E3B1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 17:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751972AbcK1Rxz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 12:53:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51473 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751033AbcK1Rxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 12:53:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 992BA523A1;
-        Mon, 28 Nov 2016 12:53:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VZeHV4U9yVnZ43A96I8Bpll/vpk=; b=wTAvOI
-        t4C4aiTejK3DIqEwo7womnJmP58kVprDRGY2lG5ykKPuSj5YOqfgg4wbarD0Gr2Y
-        2HegieLTnbCau2SbORC9BAHYxTc2vhcIU1PnqghnJMRUrQdP1empc9MzHU62UNih
-        LmUl4sJkN5QH77fsTL3qn538Op3t8nf2i/EkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=k3YdiE7VR4eqn2UnbnaG3iaoRduyoVsT
-        AxBvNpubk3LjBRC8Edy+GHPBL7zFbeEIR/jOFQnFxxFGy36cHBGuwusTdPJNEivV
-        /hF5W8kS+vdOmKH+c6t+9gHJPW+eM1u3sauNxPN1opdQjtnJ9Nb38TdvDPAcRbpo
-        FKi5lG3eV4U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58DAF5239F;
-        Mon, 28 Nov 2016 12:53:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B07455239C;
-        Mon, 28 Nov 2016 12:52:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luis Ressel <aranea@aixah.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [feature request] Make "commit --only" work with new files
-References: <20161125175619.19e13e59@gentp.lnet>
-Date:   Mon, 28 Nov 2016 09:52:58 -0800
-In-Reply-To: <20161125175619.19e13e59@gentp.lnet> (Luis Ressel's message of
-        "Fri, 25 Nov 2016 17:56:19 +0100")
-Message-ID: <xmqqzikjjxtx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752299AbcK1Rzm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 12:55:42 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:34328 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751203AbcK1Rzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 12:55:40 -0500
+Received: by mail-lf0-f54.google.com with SMTP id o141so102468366lff.1
+        for <git@vger.kernel.org>; Mon, 28 Nov 2016 09:55:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cmfwj3asS9FKxBcdKn9VOHRYJK1lKeAv9DKVEJEzBRI=;
+        b=VVZvb0ezhPXarT5WgEAyLTZF9F485pR6y01+0Nw9QbMGPn/EiVu4TtMWiORu2htCw0
+         Xn1+yOJKTSB/TgJjYMn+fTeBQwH19PRUmSjpxT0gtsBbQyMT1bl23V4nTu7nAglj0oDh
+         xDeo8CliQiAYO2SQZNWK2j2OUcw30PVdwmggx0/G2K0ASpWpFsvb4aDb5pnDFA7vB9gG
+         WyUTFqYacxCQmNGClkPE9siKEvoGUO7TgD3rt3OYZBhsU9q9VMt4aAnNa43krHl/hakY
+         MixAss2ydf/5Sl+FMI/rYX4FsM1mB17p6m4IXRYquQ5TTa0qb1HTuxXIC4copoOh18A+
+         GWfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cmfwj3asS9FKxBcdKn9VOHRYJK1lKeAv9DKVEJEzBRI=;
+        b=Rt0qfxJ90/hV0umfuwjHUp/2iUgvARAAC5x5s70aQHq3EW5OrC1BkFp7F/eUHbd7vF
+         vAnnuJGkOpZT8oHolBuFErXXK6gq8k8lbnkEQPHUHnnuB/GSWCReUCwRwhgMVFCYDBlS
+         96/JWrPYnzms+U9KbqkTWrfCm4bHFIPt4dJFbsotDZuKi6bDK1TJuXa71rzZW2lFvlzS
+         O+wtxc3NfCScKyknHB3C1p48S5lTPaUkkb1SRe6Rff36oC1RdaEo63a7EOUObzHdYlt9
+         30Az+nPAO6DgB7JJwzQtffW8qGyZ0ysr4EV5DBGTq3SbeiErY2ZTip7N67h0wZkwEMsf
+         XCDA==
+X-Gm-Message-State: AKaTC00HlLHgNi3cTOo4Vx3DJFFv7bLI6EZ0rxSUN1MJ7+0MkTqAb2LsbcesGJOTJalZbpNvtNymmPPVDl/ZcQ==
+X-Received: by 10.25.193.8 with SMTP id r8mr7215581lff.148.1480355738750; Mon,
+ 28 Nov 2016 09:55:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8038CAAA-B593-11E6-BBFF-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.25.33.129 with HTTP; Mon, 28 Nov 2016 09:55:38 -0800 (PST)
+In-Reply-To: <CANYiYbEzoN8S0o7_1N4hpO6OHZqq5Y4cMPxPPLEMA4TJ2n-d1g@mail.gmail.com>
+References: <20161124182500.6875-1-ralf.thielow@gmail.com> <CANYiYbEzoN8S0o7_1N4hpO6OHZqq5Y4cMPxPPLEMA4TJ2n-d1g@mail.gmail.com>
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+Date:   Mon, 28 Nov 2016 18:55:38 +0100
+Message-ID: <CAN0XMOJ0mQ7KF_f2dh9YFA62a4RxoYJMkT7HXUpArK5CdHimew@mail.gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 210 new message
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Sz <phillip.szelat@gmail.com>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+        =?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luis Ressel <aranea@aixah.de> writes:
+2016-11-28 15:21 GMT+01:00 Jiang Xin <worldhello.net@gmail.com>:
+> 2016-11-25 2:25 GMT+08:00 Ralf Thielow <ralf.thielow@gmail.com>:
+>>  #: sequencer.c:251
+>> -#, fuzzy, c-format
+>> +#, c-format
+>>  msgid "could not write eol to '%s"
+>
+> Unmatched single quote has been fixed in l10n round 3.
+> You can rebase and update de.po file.
+>
+> BTW, Git 2.11.0 will be released tomorrow, please send PR in time.
 
-> currently "git commit --only <file>" only works if <file> is already
-> checked into the repo, but not with newly created and still untracked
-> files (builtin/commit.c:list_path() throws the error "error: pathspec
-> '<file>' did not match any file(s) known to git.")
+I've rebased, fixed the subject line and send a pull request to you.
 
-The fact that pathspec on the command line of "commit" does not let
-you add new files is true with or without "--only".  Yes, "--only"
-is the default so with or without it it means the same thing, but
-even with "--include" that says "I am happy with what is in the
-index, but please take further changes to these paths, too" does not
-affect files that are not so far tracked.
+Thanks
 
-> I don't think this limitation is intented. 
-
-This actually was intended.  Back when "commit [--opts] <pathspec>"
-was invented, out tools were designed to avoid adding unwanted files
-by mistake (e.g. "update-index" without an explicit "--add" work
-only on paths already known to Git), and the behaviour is in line
-with that design.  It partly was because back then we didn't even
-have ".gitignore" mechanism, I would say.  So it was not only
-intended, but was a sensible design decision back then.
-
-I suspect that an argument could be made that it is about time we
-shift the design philosophy and allow adding new paths with pathspec
-given to "git commit".  If I were designing Git without any existing
-users, with all the other goodies we already have, and "git commit"
-in my version of Git lacked pathspec support now, I might allow it
-to add untracked files with the pathspec [*1*].
-
-There however are backward compatibility worries.  People who are
-used to the designed behaviour for the past 10 years still expect
-and rely on that
-
-    $ git commit <path-to-dir>
-
-to take _only_ changes to the files that are already tracked in the
-<path-to-dir> since the last "git add" they did to them, and other
-files in the same <path-to-dir> that are not yet ready (and they
-deliberately left un-added) will not be in the commit.
-
-
-[Footnote]
-
-*1* I might decide not to, after thinking long enough, though. The
-    point is that times changed and the trade off between safetly of
-    not adding at the point of commit and convenience of adding has
-    shifted. I haven't thought enough to decide that the shift is
-    big enough to warrant the change in behaviour, but at least it
-    is now worth considering.
-
+>
+>> -msgstr "Konnte nicht nach '%s' schreiben."
+>> +msgstr "Konnte EOL nicht nach '%s' schreiben."
+>
+> --
+> Jiang Xin
