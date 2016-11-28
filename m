@@ -2,77 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 689681FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 19:02:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DEC41FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 19:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753123AbcK1TCk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 14:02:40 -0500
-Received: from mail.nottheoilrig.com ([52.27.13.164]:49668 "EHLO
-        mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbcK1TCi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 14:02:38 -0500
-Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
-        by mail.nottheoilrig.com (Postfix) with ESMTP id 16A5320290
-        for <git@vger.kernel.org>; Mon, 28 Nov 2016 18:26:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
-        s=3532ada; t=1480357577;
-        bh=gLCVXzfIBeIoQl/JPJK5I40DdNmj6hW8drepRq46gJg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=D0quJpeyq9yrn3Dy6KTEsJs9SDyHHDvr3QY+KP2WH6Rl10FrB48K3iSCXP/7h7sjw
-         wTG9N/WHxf2xXE6xILV4rqv4JSacNeJv5oOBVfq+ZEuWMnchAF71hQdoI24CBDx3Xb
-         l6j8/D6mbbea/+9f/Cv/Ec7Ph48e/TQYj2NhJZto=
-Received: from debian (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
-        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
-        Mon, 28 Nov 2016 18:26:16 +0000 (UTC)
-Received: from nottheoilrig by debian with local (Exim 4.88)
-        (envelope-from <nottheoilrig@debian>)
-        id 1cBQd5-0003ky-ML; Mon, 28 Nov 2016 11:26:15 -0700
-From:   Jack Bates <bk874k@nottheoilrig.com>
-To:     git@vger.kernel.org
-Cc:     Jack Bates <jack@nottheoilrig.com>
-Subject: [PATCH] diff: handle --no-abbrev outside of repository
-Date:   Mon, 28 Nov 2016 11:25:08 -0700
-Message-Id: <20161128182508.10570-1-jack@nottheoilrig.com>
-X-Mailer: git-send-email 2.10.2
+        id S1752723AbcK1TGK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 14:06:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50649 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751307AbcK1TGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 14:06:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 950B65420D;
+        Mon, 28 Nov 2016 14:06:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9PHjnZkex5R/9EDrHRDfPuF/HwE=; b=FYcgx7
+        wLqR2Lmsrmud3l+25LpksRy2QHmOPxBqkVe2/YlSMVCqkxFChS4yfSODefcAfvgG
+        srzEt4zT/IUuPwWOOzAO70mbVcLeWsg1d9md9HmdbdFAknXAYkXKjJ0aqIEDyRf1
+        Lk/uI2KZsafFI5+7jzrkPyektbl/AHutTxjso=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ew9GLZ4tLe92FSURbE0uWDhzunrkPVR5
+        nY+RygnTEUm++HPoBtfbAS9yw+W5HTXwm2Eunw6ie4ARBck3qbu7DpAWSq/GboLJ
+        hdCZCLrxTcUP6ra3RHvX/sljF7ufCC1LQyHBNH4OCj8QhBR1WHgut2+/+g5sGr+u
+        5vV+SZA3Xgg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E1B25420C;
+        Mon, 28 Nov 2016 14:06:07 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14EF55420A;
+        Mon, 28 Nov 2016 14:06:07 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vinicius Kursancew <viniciusalexandre@gmail.com>,
+        Luke Diamand <luke@diamand.org>,
+        Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] allow git-p4 to create shelved changelists
+References: <1480325598-12344-1-git-send-email-viniciusalexandre@gmail.com>
+Date:   Mon, 28 Nov 2016 11:06:05 -0800
+In-Reply-To: <1480325598-12344-1-git-send-email-viniciusalexandre@gmail.com>
+        (Vinicius Kursancew's message of "Mon, 28 Nov 2016 09:33:17 +0000")
+Message-ID: <xmqqeg1vjug2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B74AA900-B59D-11E6-8238-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git diff --no-index" codepath
-doesn't handle the --no-abbrev option.
+Vinicius Kursancew <viniciusalexandre@gmail.com> writes:
 
-Signed-off-by: Jack Bates <jack@nottheoilrig.com>
----
- diff.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> This patch adds a "--shelve" option to the submit subcommand, it will
+> save the changes to a perforce shelve instead of commiting them.
+>
+> Vinicius Kursancew (1):
+>   git-p4: allow submit to create shelved changelists.
+>
+>  Documentation/git-p4.txt |  5 +++++
+>  git-p4.py                | 36 ++++++++++++++++++++++--------------
+>  t/t9807-git-p4-submit.sh | 31 +++++++++++++++++++++++++++++++
+>  3 files changed, 58 insertions(+), 14 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index ec87283..0447eff 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3106,7 +3106,8 @@ static const char *diff_abbrev_oid(const struct object_id *oid, int abbrev)
- 			abbrev = FALLBACK_DEFAULT_ABBREV;
- 		if (abbrev > GIT_SHA1_HEXSZ)
- 			die("BUG: oid abbreviation out of range: %d", abbrev);
--		hex[abbrev] = '\0';
-+		if (abbrev)
-+			hex[abbrev] = '\0';
- 		return hex;
- 	}
- }
-@@ -4024,6 +4025,8 @@ int diff_opt_parse(struct diff_options *options,
- 			    offending, optarg);
- 		return argcount;
- 	}
-+	else if (!strcmp(arg, "--no-abbrev"))
-+		options->abbrev = 0;
- 	else if (!strcmp(arg, "--abbrev"))
- 		options->abbrev = DEFAULT_ABBREV;
- 	else if (skip_prefix(arg, "--abbrev=", &arg)) {
--- 
-2.10.2
+Thanks, but I am a wrong person to review this change, so I'll
+summon two people who appear in "git shortlog --since=18.months"
+output to help review it.
+
+
