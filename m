@@ -2,123 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B07C1FF76
-	for <e@80x24.org>; Mon, 28 Nov 2016 17:34:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1B9B1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 17:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753833AbcK1Res (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 12:34:48 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54780 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753647AbcK1Req (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 12:34:46 -0500
-Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MGBB1-1bxvYq2gEx-00FA7E; Mon, 28
- Nov 2016 18:34:19 +0100
-Date:   Mon, 28 Nov 2016 18:34:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming
- builtin
-In-Reply-To: <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1611281830040.117539@virtualbox>
-References: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net> <alpine.DEB.2.20.1611242211450.117539@virtualbox> <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net> <alpine.DEB.2.20.1611251201580.117539@virtualbox> <20161125171940.rizbqyhsygdsoujr@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611251841030.117539@virtualbox> <20161125174721.f35mzc276kdwakzm@sigill.intra.peff.net> <alpine.DEB.2.20.1611261320050.117539@virtualbox> <20161126161907.xol62zytn2jb45gh@sigill.intra.peff.net> <alpine.DEB.2.20.1611261400300.117539@virtualbox>
- <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net> <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751972AbcK1Rxz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 12:53:55 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51473 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751033AbcK1Rxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 12:53:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 992BA523A1;
+        Mon, 28 Nov 2016 12:53:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=VZeHV4U9yVnZ43A96I8Bpll/vpk=; b=wTAvOI
+        t4C4aiTejK3DIqEwo7womnJmP58kVprDRGY2lG5ykKPuSj5YOqfgg4wbarD0Gr2Y
+        2HegieLTnbCau2SbORC9BAHYxTc2vhcIU1PnqghnJMRUrQdP1empc9MzHU62UNih
+        LmUl4sJkN5QH77fsTL3qn538Op3t8nf2i/EkU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=k3YdiE7VR4eqn2UnbnaG3iaoRduyoVsT
+        AxBvNpubk3LjBRC8Edy+GHPBL7zFbeEIR/jOFQnFxxFGy36cHBGuwusTdPJNEivV
+        /hF5W8kS+vdOmKH+c6t+9gHJPW+eM1u3sauNxPN1opdQjtnJ9Nb38TdvDPAcRbpo
+        FKi5lG3eV4U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58DAF5239F;
+        Mon, 28 Nov 2016 12:53:00 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B07455239C;
+        Mon, 28 Nov 2016 12:52:59 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luis Ressel <aranea@aixah.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [feature request] Make "commit --only" work with new files
+References: <20161125175619.19e13e59@gentp.lnet>
+Date:   Mon, 28 Nov 2016 09:52:58 -0800
+In-Reply-To: <20161125175619.19e13e59@gentp.lnet> (Luis Ressel's message of
+        "Fri, 25 Nov 2016 17:56:19 +0100")
+Message-ID: <xmqqzikjjxtx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:smdwmXhc4AOr3UOOnLkbSlt46EHSewX/kcRG+XDibmKLAMmbejJ
- MCG7ackSDeR2vDK//Lg68EsLqVg3Ubd2ISF5kpmEfgTsW2L8R+N0NppSBNlQQ8ChIhXyjdl
- SONsE1QG2CZE2+LGSTQWbfPC9qV8UZVzlUOkethozcyirXLl9aY2Dvbu3fPxbp+BTWLo+39
- Fqs1e0Yx0VUApXuJdkfdQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GcBDETK75V0=:5vGBCSVZgmaPYguwaR3cOn
- nX35oOKRbrYLy/F/qFFXEQKIqAvDUjQvFY1uJyAzpqYOZIbdlNS3YpDLh5/i8PWG7nfC71ziG
- vTvjA2RRLGtcnyqGLxw140nvZhXBZGkh/6AwawSnwOipACcw7blb2W7Yq3XOdJ0HpqrOMph5G
- hk2H1gDn/ItaONkrFBrhczT5GhWUFUBQG4BlMP1eL7C2gJ2HwjhVkCihMGlZc9VtOj3Gk8h5Q
- qtONSdheAr2wlRAdcW8cOQxFfh2SNAmTHIJnXMFR5ikLvbTkl+VKMtA7GrgK2Y2jQvFyVYD5d
- 86HDONJhlriyore1GtubSH7MvI2du2CIOnca3cs04iqRWZMAQn7Hnz/MGbYwf58kVj6MR7+X7
- ufdTl9UITXclO3idaB8HHhzDLQ+zSC+oWKkf+4eQ4ACnpcj3uLN9xuCpVC+soTm2ncJO/MLwh
- nqtkrDj6VT++jH4NanOChZ7wkxG3dBlsb11toMXhcFSACCdeWmeY0QzUdhumSLXo4oP1/9U3B
- HEK02PaYPRDIfA9VJZ2R+g636RuxQU80EZvQX9jOA0UsvRThk1shrXEGj0uBTDXD0JQuFs1rA
- ylvTVA6jJD15y+TbmBJ9cloo4tknu8YSQ8IzHnq6+RoLKAxa1KrxN7HitGL2PO0Y8YCPDs/ls
- pUnvlLC50zm6hkutAH/oF0ZherWo1zgWT5x1Ppv/RRMqEwHuQanMcLPzWAZK4V2TThG+bZplp
- AXVAB/Q4aem3Syasl1VpKCFg/VP6y9io6BqpCnh+Usaln85va2/ln82CPcZPqK8skBtTSAULU
- aPbO/Cn
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8038CAAA-B593-11E6-BBFF-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Luis Ressel <aranea@aixah.de> writes:
 
-On Mon, 28 Nov 2016, Junio C Hamano wrote:
+> currently "git commit --only <file>" only works if <file> is already
+> checked into the repo, but not with newly created and still untracked
+> files (builtin/commit.c:list_path() throws the error "error: pathspec
+> '<file>' did not match any file(s) known to git.")
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Sat, Nov 26, 2016 at 02:01:36PM +0100, Johannes Schindelin wrote:
-> >
-> >> > If you want to control it from outside the test script, you'd need
-> >> > something like:
-> >> > 
-> >> >   if test "$GIT_TEST_DIFFTOOL" = "builtin"
-> >> 
-> >> That is a bit magic. I first used "GIT_USE_BUILTIN_DIFFTOOL" and it did
-> >> not work. My name is arguably more correct (see also Jakub's note about
-> >> "naming is hard"), but yours works because there is a "TEST" substring in
-> >> it.
-> >
-> > Yes. You are free to add an exception to the env list in test-lib.sh,
-> > but we usually use GIT_TEST_* to avoid having to do so.
-> 
-> Perhaps
-> 
->  - The switch between "do I use builtin, or scripted?" mechanism in
->    1/2 can look at an environment (just like the old "am" rewrite
->    series did), instead of configuration.  This would make the code
->    a lot more simppler (you do not have to worry about the
->    interaction between "setup" and .git/config).
-> 
->  - That environment variable can be named GIT_TEST_BUILTIN_DIFFTOOL;
->    after all, people are opting into helping to test the new shiny
->    to make/prove it ready sooner.
-> 
->  - The bulk of the existing test for difftool can be moved to a
->    dot-included file (in a way similar to t/annotate-tests are
->    usable to test both annotate and blame-imitating-annotate).
->    Existing PERL prerequisites can all be lost.
-> 
->  - Two tests can include that dot-included file; one would
->    explicitly unset that environment (and gives up without PERL
->    prerequisite), while the other explicitly sets it.
+The fact that pathspec on the command line of "commit" does not let
+you add new files is true with or without "--only".  Yes, "--only"
+is the default so with or without it it means the same thing, but
+even with "--include" that says "I am happy with what is in the
+index, but please take further changes to these paths, too" does not
+affect files that are not so far tracked.
 
-If my main worry was the test suite, I would agree with this plan.
+> I don't think this limitation is intented. 
 
-However, I have been bitten time and again by problems that occurred only
-in production, our test suite (despite taking already waaaaaay too long to
-be truly useful in my daily development) was simply not good enough.
+This actually was intended.  Back when "commit [--opts] <pathspec>"
+was invented, out tools were designed to avoid adding unwanted files
+by mistake (e.g. "update-index" without an explicit "--add" work
+only on paths already known to Git), and the behaviour is in line
+with that design.  It partly was because back then we didn't even
+have ".gitignore" mechanism, I would say.  So it was not only
+intended, but was a sensible design decision back then.
 
-So my plan was different: to let end users opt-in to test this new beast
-thoroughly, more thoroughly than any review would.
+I suspect that an argument could be made that it is about time we
+shift the design philosophy and allow adding new paths with pathspec
+given to "git commit".  If I were designing Git without any existing
+users, with all the other goodies we already have, and "git commit"
+in my version of Git lacked pathspec support now, I might allow it
+to add untracked files with the pathspec [*1*].
 
-And for that, environment variables are just not an option. I need
-something that can be configured in a portable application, so that the
-main Git for Windows installation is unaffected.
+There however are backward compatibility worries.  People who are
+used to the designed behaviour for the past 10 years still expect
+and rely on that
 
-My original "create a file in libexec/git-core/" was simple, did the job
-reliably, and worked also for testing.
+    $ git commit <path-to-dir>
 
-It is a pity that you two gentlemen shot it down for being inelegant. And
-ever since, we try to find a solution that is as simple, works as
-reliably, also for testing, *and* appeases your tastes.
+to take _only_ changes to the files that are already tracked in the
+<path-to-dir> since the last "git add" they did to them, and other
+files in the same <path-to-dir> that are not yet ready (and they
+deliberately left un-added) will not be in the commit.
 
-Ciao,
-Dscho
+
+[Footnote]
+
+*1* I might decide not to, after thinking long enough, though. The
+    point is that times changed and the trade off between safetly of
+    not adding at the point of commit and convenience of adding has
+    shifted. I haven't thought enough to decide that the shift is
+    big enough to warrant the change in behaviour, but at least it
+    is now worth considering.
+
