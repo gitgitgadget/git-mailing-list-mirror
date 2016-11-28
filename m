@@ -6,103 +6,97 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D3C81FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 17:06:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA65B1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 17:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933357AbcK1RGN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 12:06:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50293 "EHLO
+        id S1754687AbcK1RRp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 12:17:45 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52443 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932495AbcK1RGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 12:06:11 -0500
+        with ESMTP id S1754300AbcK1RRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 12:17:44 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1472353735;
-        Mon, 28 Nov 2016 12:06:05 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3FC94519DD;
+        Mon, 28 Nov 2016 12:17:43 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mUQwmmXXN5Sr5na0UvBLfXBYb+M=; b=smFjWP
-        AwZFs2zrnSP321maM/8SHAN7cDpP/JKOsEt4N9QURzhD3GK7OMacCxZeimqBZ4rM
-        9m1U0yIrdPHdIKcq53//P2H3iu5+/2/18Hibbomoa4KUF2egoMWvmdj9iupx2/sV
-        ehvAHB7vYpXUKPcvN+rvP6ioq0vZeJWvYQ+IE=
+        :content-type; s=sasl; bh=w2uqfEBe/eOyAkJHndqu/3085C4=; b=p2cpnT
+        4voOujv9CKUbTL8z5lxSzIiVnbMmRanIQSJmDIvENQfqnqUHsnP5vtnD1e0MTSrs
+        eu34ID++Y78/GuuAyoig5Wk+pFQGLocnSkHxY0Vi0YL+hiuAYmJvvkShTvqHc5R5
+        Wy4T2e4MlyQzRTdb6VD6s8OktqsJt7fH8MnJU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GnTB2AJvLcINncH5LWSbobtKwl7As63h
-        R+gCT46S3/dwm/a9lVX3jIxb+h7T9fY4MoLv0/Zs4Zqk9IoHjs/A3uQGvqlc7yoC
-        i233xlJzmDmUZpuvJbNG0lb0Zt5RPo4NAyUee+9Fqp55vqKCIsdAckpx67l8Qh/j
-        7gQqlBeIpuk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01C3A53734;
-        Mon, 28 Nov 2016 12:06:05 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=H0RFKuWPdl5ECDO1R2KtFT72TQ1FDAdf
+        8/C9m+aiGAvrcgavP8lE98mp+EjqtVCb6aXdsZBgK6fg1A9Df3U0NVRceQL3yHNq
+        5ocYLwS3ZhIX6ZJ2Rec5g60TjWD0v8TigSORrxQNFS/5jUvYluGjjtvewdeXDx9n
+        3kwQ/17/gBo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37224519DB;
+        Mon, 28 Nov 2016 12:17:43 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 247F953731;
-        Mon, 28 Nov 2016 12:06:04 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A82F8519D9;
+        Mon, 28 Nov 2016 12:17:42 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming builtin
-References: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1611242211450.117539@virtualbox>
-        <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1611251201580.117539@virtualbox>
-        <20161125171940.rizbqyhsygdsoujr@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1611251841030.117539@virtualbox>
-        <20161125174721.f35mzc276kdwakzm@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1611261320050.117539@virtualbox>
-        <20161126161907.xol62zytn2jb45gh@sigill.intra.peff.net>
-        <alpine.DEB.2.20.1611261400300.117539@virtualbox>
-        <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net>
-Date:   Mon, 28 Nov 2016 09:06:02 -0800
-In-Reply-To: <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net> (Jeff
-        King's message of "Sun, 27 Nov 2016 11:50:59 -0500")
-Message-ID: <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Dun Peal <dunpealer@gmail.com>,
+        Git ML <git@vger.kernel.org>
+Subject: Re: trustExitCode doesn't apply to vimdiff mergetool
+References: <CAD03jn5PAZcFeesaq2osjo7cYd1frWZeN0odNqTh+AMxSEmLgQ@mail.gmail.com>
+        <20161127050818.rmjpvha64y4wosq2@sigill.intra.peff.net>
+        <CAD03jn7gU9g7NyDk_3wYTKsYQUtRGg6msvumZqUDs44hMOVX7w@mail.gmail.com>
+        <20161127165559.j5okxyztwescheug@sigill.intra.peff.net>
+        <20161128014538.GA18691@gmail.com> <20161128021554.GA30863@gmail.com>
+Date:   Mon, 28 Nov 2016 09:17:41 -0800
+In-Reply-To: <20161128021554.GA30863@gmail.com> (David Aguilar's message of
+        "Sun, 27 Nov 2016 18:15:54 -0800")
+Message-ID: <xmqq4m2rle16.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F20BB928-B58C-11E6-AE57-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 925E932C-B58E-11E6-91B6-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> On Sat, Nov 26, 2016 at 02:01:36PM +0100, Johannes Schindelin wrote:
+> deltawalker, diffmerge, emerge, kdiff3, kompare, and tkdiff originally
+> provided behavior that matched trustExitCode=true.
 >
->> > If you want to control it from outside the test script, you'd need
->> > something like:
->> > 
->> >   if test "$GIT_TEST_DIFFTOOL" = "builtin"
->> 
->> That is a bit magic. I first used "GIT_USE_BUILTIN_DIFFTOOL" and it did
->> not work. My name is arguably more correct (see also Jakub's note about
->> "naming is hard"), but yours works because there is a "TEST" substring in
->> it.
+> The default for all tools is trustExitCode=false, which conflicts with
+> these tools' defaults.  Allow tools to advertise their own default value
+> for trustExitCode so that users do not need to opt-in to the original
+> behavior.
 >
-> Yes. You are free to add an exception to the env list in test-lib.sh,
-> but we usually use GIT_TEST_* to avoid having to do so.
+> While this makes the default inconsistent between tools, it can still be
+> overridden, and it makes it consistent with the current Git behavior.
 
-Perhaps
+I think this is sensible, because the way I look at this issue is
+that in an ideal world, we would want all tool backends consistently
+give us usable exit codes, but some tools are known to give unusable
+exit codes, so we ignore their exit codes by default.
 
- - The switch between "do I use builtin, or scripted?" mechanism in
-   1/2 can look at an environment (just like the old "am" rewrite
-   series did), instead of configuration.  This would make the code
-   a lot more simppler (you do not have to worry about the
-   interaction between "setup" and .git/config).
+As to the implementation, I think you can reduce the duplication by
+having each tool backend 
 
- - That environment variable can be named GIT_TEST_BUILTIN_DIFFTOOL;
-   after all, people are opting into helping to test the new shiny
-   to make/prove it ready sooner.
+ - export a new function that echos "true" or "false"; or
+ - export a new function that returns true or false; or
+ - set a variable whose value is either "true" or "false"
 
- - The bulk of the existing test for difftool can be moved to a
-   dot-included file (in a way similar to t/annotate-tests are
-   usable to test both annotate and blame-imitating-annotate).
-   Existing PERL prerequisites can all be lost.
+and use that from the trust_exit_code() in git-mergetool--lib.sh.
+Something like this (for the second alternative).
 
- - Two tests can include that dot-included file; one would
-   explicitly unset that environment (and gives up without PERL
-   prerequisite), while the other explicitly sets it.
-
+    trust_exit_code () {
+        if git config --bool "mergtool.$.trustExitCode"
+	then
+		:; # OK
+	elif mergetool_exitcode_trustable
+	then
+		echo true
+	else
+		echo false
+        fi
+    }
