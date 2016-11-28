@@ -2,89 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F1CF1FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 20:20:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D905B1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 20:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752366AbcK1UUK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 15:20:10 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55823 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751654AbcK1UUI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 15:20:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B39453543;
-        Mon, 28 Nov 2016 15:20:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+G9LqnIjoIBAM6VwFZHFkqBNiMw=; b=P+WfAV
-        cNyLAJcZ+mRvQH5lcfNuAjqSYtEcTr49zljTdVSgRtMoqQpyjvzXC3ihWj4VinWO
-        1PGO2X4V+I5t9rRrYPxgHnGZw+lSG1Jgjr/RdxmBYn7JfP7j4RTBH9O88HrwA/2Q
-        hVhfHd/WsULhsSlzyINyhYo92lV/gp5zST67s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=i+tfgYO5RkNK6juYVehg15aqO1j+Trbm
-        g3lzItbhSlQ5ckMmUtGXs7JrHja+CaZ9dRDfBvWOL5jYu/Q/FOgbQ0hxOkhADHq0
-        XynuEN9RuQQ7xHI3SRbEbG9LWcYmfHVyAPddxU3T6E/5UBHaMHjfygRrBfFGHNT4
-        Gj4zjaf9GxQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 458EE53542;
-        Mon, 28 Nov 2016 15:20:07 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9FFB953541;
-        Mon, 28 Nov 2016 15:20:06 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 00/11] git worktree (re)move
-References: <20161112022337.13317-1-pclouds@gmail.com>
-        <20161128094319.16176-1-pclouds@gmail.com>
-        <xmqqwpfnidxm.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 28 Nov 2016 12:20:05 -0800
-In-Reply-To: <xmqqwpfnidxm.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 28 Nov 2016 11:48:05 -0800")
-Message-ID: <xmqqshqbicga.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754807AbcK1Uey (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 15:34:54 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:35346 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751635AbcK1Uex (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 15:34:53 -0500
+Received: by mail-io0-f172.google.com with SMTP id a124so251793608ioe.2
+        for <git@vger.kernel.org>; Mon, 28 Nov 2016 12:34:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Pg9ZezzdQR8fkgj5ffkg48TlPFlVjO5d25F3rI6uwtQ=;
+        b=az/WgrDahfonnZ4TtEBlGvX+rwaN5M7fWcUZBc2Pa21zRf7xpxFvm24H/6tG+8jMNI
+         KbjIrfjChncnoJQuXiX0rqy3p0gpLb45Gxhcbb9vowv8AwjIFXu9s77BPTgNSp4L1aDZ
+         Ve8UyMokM0+6YaAXKJf5tAoJieisjNiuMNKsaugU6cGU7gee6+vn9xtqgTfvUEnrcqPa
+         nMb8tTjW3oQNqi5dv9ujIRI68tPSKpqrV+HB6kZL4bFFDOxLgJOHGFtbcqH3Fq0c8vgM
+         V+vB0Qe4s4pgQANOtJvAY0k9a+b1/pRAIJK4XPCzS9JVLqC0Bhcy/HuPXoN4oKxwjyQ/
+         MB+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Pg9ZezzdQR8fkgj5ffkg48TlPFlVjO5d25F3rI6uwtQ=;
+        b=Yhgw1Y0FF0uQu2HN5yeq7jS8KM6d0lc7NzclP8g6+6+UPS3uHNi6A2vB2woO+q8uKh
+         Cy4p3s7tzatuczHcFx7MpsY0G3pfy6A5o8uLX34zuSYz9KU4FrDJe/T9mT4TIVjorHAP
+         3I7U7/2QyNlsKD/zZICz4v9eNKQAIfgJbWDW4Y8E/cMeTaYAyDFzqxOKWb9fo7vYUMLN
+         zl4D1myHz1T+xDGuCoNK/sTGAySE+Zutq3H6PscOCcrfnnFiFLa3trA5GjI7oqIc7A4+
+         3yuiMFjlVHjwg67jup+NlUGwZfBNFOARyklqakd3COIanmCQJM+xM63xoQ67Tco4RiuT
+         JDsQ==
+X-Gm-Message-State: AKaTC009Oo1+0fdo+WhAoTLwRf00WOKyB+23OM23OXPn5GWtZSjiZg0Ai/B2Wk27/XQ6dxSnz5Wy3IsAc/s69g==
+X-Received: by 10.36.156.132 with SMTP id b126mr19551879ite.91.1480365291885;
+ Mon, 28 Nov 2016 12:34:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D7BFF04-B5A8-11E6-94BE-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.10.147 with HTTP; Mon, 28 Nov 2016 12:34:51 -0800 (PST)
+From:   =?UTF-8?B?RMSBdmlzIE1vc8SBbnM=?= <davispuh@gmail.com>
+Date:   Mon, 28 Nov 2016 22:34:51 +0200
+Message-ID: <CAOE4rSzTq6DVR2ch+as9Pbo35NjKP5b1+Ub1XZWEnwJTahqEfg@mail.gmail.com>
+Subject: Partial fetch?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+I'm trying to fetch a remote repository over https but sadly it
+timeouts too soon.
 
-> Does this round address the issue raised in 
->
->   http://public-inbox.org/git/alpine.DEB.2.20.1611161041040.3746@virtualbox
->
-> by Dscho?
->
-> Even if you are not tracking a fifo, for example, your working tree
-> may have one created in t/trash* directory during testing, and
-> letting platform "cp -r" taking care of it (if that is possible---I
-> didn't look at the code that calls busybox copy to see if you are
-> doing something exotic or just blindly copying everything in the
-> directory) may turn out to be a more portable way to do this, and I
-> suspect that the cost of copying one whole-tree would dominate the
-> run_command() overhead.
+$ git fetch -v upstream
+POST git-upload-pack (gzip 1148 to 641 bytes)
+POST git-upload-pack (gzip 1148 to 644 bytes)
+POST git-upload-pack (gzip 1948 to 1038 bytes)
+POST git-upload-pack (gzip 3548 to 1845 bytes)
+POST git-upload-pack (gzip 6748 to 3431 bytes)
+POST git-upload-pack (gzip 13148 to 6659 bytes)
+POST git-upload-pack (gzip 25948 to 13084 bytes)
+POST git-upload-pack (gzip 51548 to 25997 bytes)
+POST git-upload-pack (gzip 102748 to 51375 bytes)
+POST git-upload-pack (gzip 205148 to 101973 bytes)
+POST git-upload-pack (gzip 409948 to 203200 bytes)
+POST git-upload-pack (gzip 82248 to 41185 bytes)
+POST git-upload-pack (gzip 90448 to 45257 bytes)
+POST git-upload-pack (gzip 99448 to 49719 bytes)
+POST git-upload-pack (gzip 109348 to 54623 bytes)
+POST git-upload-pack (gzip 120248 to 59937 bytes)
+POST git-upload-pack (gzip 132248 to 65839 bytes)
+POST git-upload-pack (gzip 145448 to 72450 bytes)
+POST git-upload-pack (gzip 159948 to 79682 bytes)
+POST git-upload-pack (gzip 175898 to 87436 bytes)
+POST git-upload-pack (gzip 193448 to 96171 bytes)
+POST git-upload-pack (gzip 212748 to 105783 bytes)
+POST git-upload-pack (gzip 233998 to 116207 bytes)
+POST git-upload-pack (gzip 257398 to 127793 bytes)
+POST git-upload-pack (gzip 283098 to 140511 bytes)
+POST git-upload-pack (gzip 311348 to 154447 bytes)
+POST git-upload-pack (gzip 342448 to 169815 bytes)
+POST git-upload-pack (gzip 376648 to 186850 bytes)
+POST git-upload-pack (gzip 414298 to 205408 bytes)
+POST git-upload-pack (gzip 455698 to 225879 bytes)
+POST git-upload-pack (gzip 501248 to 248389 bytes)
+POST git-upload-pack (gzip 551298 to 273131 bytes)
+POST git-upload-pack (gzip 606398 to 300334 bytes)
+POST git-upload-pack (gzip 666998 to 330414 bytes)
+POST git-upload-pack (gzip 733698 to 363387 bytes)
+POST git-upload-pack (gzip 807048 to 399647 bytes)
+POST git-upload-pack (gzip 689453 to 341449 bytes)
+error: RPC failed; HTTP 504 curl 22 The requested URL returned error:
+504 Gateway Time-out
+fatal: The remote end hung up unexpectedly
 
-Please do not take the above as me saying "you must spawn the
-platform cp -r".  
+Is there some way to fetch partially by smaller chunks and then repeat
+that again till everything is fetched?
 
-A more traditional alternative solution seen on this list is to work
-together, leveraging expertise of each participant.  From the build
-log Dscho gave us, it seems that his Windows port lack at least
-POSIX emulation for lchown, mknod, utimes and chown.  It is hard to
-decide without involving Windows expert what the best way to deal
-with it in the code (e.g. To stub or #ifdef out these calls?
-Provide suitable emulation in compat/?  Something else?), and what
-things other than these four are still missing.
-
+Thanks!
