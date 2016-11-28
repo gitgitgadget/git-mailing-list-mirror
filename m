@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CBBC1FC96
-	for <e@80x24.org>; Mon, 28 Nov 2016 09:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B80FC1FC96
+	for <e@80x24.org>; Mon, 28 Nov 2016 09:44:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932386AbcK1JoM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 04:44:12 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34705 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754447AbcK1JoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 04:44:10 -0500
-Received: by mail-pg0-f65.google.com with SMTP id e9so12669713pgc.1
-        for <git@vger.kernel.org>; Mon, 28 Nov 2016 01:44:09 -0800 (PST)
+        id S932489AbcK1JoQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 04:44:16 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36234 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932469AbcK1JoO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 04:44:14 -0500
+Received: by mail-pg0-f68.google.com with SMTP id x23so12689608pgx.3
+        for <git@vger.kernel.org>; Mon, 28 Nov 2016 01:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t9wgF9iNwDcxWw8qGdcVBNlfEIiyTjXaiirj+0dklZs=;
-        b=wfk1XfSpAfIeIuMXEq4BFGQ6DxEfSy0dQ1H8Kc488/hOaAuRvbXScgsKHc6QMSdsb8
-         TY55qDn2jDG7llrUq4AUQqsvxTRJkP8tkpUGMZaahXfSqMNFELwez1jCndjvvQzY7921
-         x3aJrrdhY5F8clP5W/g06rZhTCXnC3+U1bestqeLZlqGOUtrKxHxyGnRMDRqv4lMdoog
-         iMm6DWf9PpPxeCW5QDG+jrrGJPzDapuusG1ewVL0V+aeUN/4dKR5HCfMtxbQnDGa2kED
-         AvqcmP6O0J2ClL1mYUbKHFvPZ3lySGV4v/XPMdNm0eeTV73vRcjo6fl3zYlw0Oi+NOxH
-         +Log==
+        bh=UQ+eFyCaV1Md1dAhajF0EQaPOQKIgQc8B3Be8fLnIlA=;
+        b=D62rIauoZfdqgOmtOH1wyeVHkIVfVYuH6Y3XdsXl81fHlI5OjH7HDaKRKevUSAWUfT
+         TnQUUEokkWJGXwtWHyMO5yUxqH9dLC4S8uHS5k6bO18lDnJrQ1L53dX59b95AFW9kLY7
+         1o6oE25ftQcThben2wThnBEEGONGZEhVJl2QzV7Gks52k673RPPzLLOCQLZnqJYdnNqo
+         x3HpqZeI6MDhVoTmcswarlh3yQ0PdwuTXc/ODRpKwsT7/33FceKaEF4clZaVsfIbFO+f
+         WLwNUG+GNvi/YZqnOEqmG7zCjEGNrNL0CClEV3PPSb6ozabJQP/CjHhaDF3VMvm3wuPd
+         OTeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t9wgF9iNwDcxWw8qGdcVBNlfEIiyTjXaiirj+0dklZs=;
-        b=S08EwpqeKdYx+a8AAQsTVeBs2P0eDthAPhEbhUQkFOvEJQrlkuY/eawRUBwSmKxBdV
-         TbMKkcoOKR8IWoWW5tb09EPfgu6RjdKTJJbKrkVK2PTCw4Opz3Yxf+bMsnfKxH1N8irH
-         T5vHHe5EqscCedxHB6RUP/xUv9s1/JBo8ClgN+T9Y0dk1IHDsiUIkkhu7rpHJDTaQyzv
-         t2dulOUiGYBz0vP2RR2v7qkBCzGO4R7BCWq2eq0p8rbcM1jS/GeI7eSpEDi/QpJrz1rh
-         A/oOmJhIP5tUe0CAJeRlFiX4VPpBCB8EQmiCezV5dh+Al1XAbcbgik54l8efA3EzgHnv
-         wJmQ==
-X-Gm-Message-State: AKaTC03vE45O6m+/x/semdnD5gfpEGzEitOc1l/7TQEL9ZjqXcoUQvYNYwQo/0gs4+RVyg==
-X-Received: by 10.84.167.168 with SMTP id d37mr47418277plb.71.1480326249216;
-        Mon, 28 Nov 2016 01:44:09 -0800 (PST)
+        bh=UQ+eFyCaV1Md1dAhajF0EQaPOQKIgQc8B3Be8fLnIlA=;
+        b=W78sWrsRVrLQlnNgBce/xCz3T7PfDXnjIUSGabUgVIGXahZK2BrWXtjZ3l3CYIG7YQ
+         a7zKfhP2WA7hOh/48ExH2JhZFtdlEvDtY2nwNAAjHXyVJe9uopZJX2nOd0w2+LEmgHv8
+         s8BO1xwign+A2ap3+8ZpBqpyRNIqxi8ehabbwJbxEOHO7pnXum+kw0tKEmFyK/UrbR/j
+         gUJUQf/v+qkv5cF3u8G2axx412/urdfqOWxBT16AyIS+5Dl8cicPGFP9tLK4OBhF5UIT
+         MZZUEzdsMDpcjFwrjXODsY41bTbv/vVAppJOpxmJesSjZ/iNR6liNPt2zd/x5YQBkG6N
+         rp6g==
+X-Gm-Message-State: AKaTC015nmwX1DEFEJFGyCCTTZ5E9XkgI2Fn5RJdINVtFK8yK+XQwvXbDJxwOUxAEDVL2w==
+X-Received: by 10.84.172.131 with SMTP id n3mr46565812plb.5.1480326253641;
+        Mon, 28 Nov 2016 01:44:13 -0800 (PST)
 Received: from ash ([115.73.175.91])
-        by smtp.gmail.com with ESMTPSA id l69sm85785424pfk.34.2016.11.28.01.44.06
+        by smtp.gmail.com with ESMTPSA id 16sm85775430pfy.4.2016.11.28.01.44.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Nov 2016 01:44:08 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 28 Nov 2016 16:44:04 +0700
+        Mon, 28 Nov 2016 01:44:13 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 28 Nov 2016 16:44:08 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 05/11] copy.c: convert copy_file() to copy_dir_recursively()
-Date:   Mon, 28 Nov 2016 16:43:13 +0700
-Message-Id: <20161128094319.16176-6-pclouds@gmail.com>
+Subject: [PATCH v2 06/11] worktree.c: add validate_worktree()
+Date:   Mon, 28 Nov 2016 16:43:14 +0700
+Message-Id: <20161128094319.16176-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20161128094319.16176-1-pclouds@gmail.com>
 References: <20161112022337.13317-1-pclouds@gmail.com>
@@ -69,345 +69,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This finally enables busybox's copy_file() code under a new name
-(because "copy_file" is already taken in Git code base). Because this
-comes from busybox, POSIXy (or even Linuxy) behavior is expected. More
-changes may be needed for Windows support.
+This function is later used by "worktree move" and "worktree remove"
+to ensure that we have a good connection between the repository and
+the worktree. For example, if a worktree is moved manually, the
+worktree location recorded in $GIT_DIR/worktrees/.../gitdir is
+incorrect and we should not move that one.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h |   1 +
- copy.c  | 216 ++++++++++++++++++++++++++++++++++++++++++++++++++++------------
- 2 files changed, 179 insertions(+), 38 deletions(-)
+ worktree.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ worktree.h |  5 +++++
+ 2 files changed, 68 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index a50a61a..a9a72f8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1857,6 +1857,7 @@ extern void fprintf_or_die(FILE *, const char *fmt, ...);
- extern int copy_fd(int ifd, int ofd);
- extern int copy_file(const char *dst, const char *src, int mode);
- extern int copy_file_with_time(const char *dst, const char *src, int mode);
-+extern int copy_dir_recursively(const char *source, const char *dest);
- 
- extern void write_or_die(int fd, const void *buf, size_t count);
- extern void fsync_or_die(int fd, const char *);
-diff --git a/copy.c b/copy.c
-index 60c7d8a..8ef4b23 100644
---- a/copy.c
-+++ b/copy.c
-@@ -1,4 +1,6 @@
- #include "cache.h"
-+#include "dir.h"
-+#include "hashmap.h"
- 
- int copy_fd(int ifd, int ofd)
- {
-@@ -66,21 +68,126 @@ int copy_file_with_time(const char *dst, const char *src, int mode)
- 	return status;
+diff --git a/worktree.c b/worktree.c
+index eb61212..929072a 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -291,6 +291,69 @@ const char *is_worktree_locked(struct worktree *wt)
+ 	return wt->lock_reason;
  }
  
--#if 0
--/* Return:
-- * -1 error, copy not made
-- *  0 copy is made or user answered "no" in interactive mode
-- *    (failures to preserve mode/owner/times are not reported in exit code)
-+struct inode_key {
-+	struct hashmap_entry entry;
-+	ino_t ino;
-+	dev_t dev;
-+	/*
-+	 * Reportedly, on cramfs a file and a dir can have same ino.
-+	 * Need to also remember "file/dir" bit:
-+	 */
-+	char isdir; /* bool */
-+};
-+
-+struct inode_value {
-+	struct inode_key key;
-+	char name[FLEX_ARRAY];
-+};
-+
-+#define HASH_SIZE      311u   /* Should be prime */
-+static inline unsigned hash_inode(ino_t i)
++static int report(int quiet, const char *fmt, ...)
 +{
-+	return i % HASH_SIZE;
++	va_list params;
++
++	if (quiet)
++		return -1;
++
++	va_start(params, fmt);
++	vfprintf(stderr, fmt, params);
++	fputc('\n', stderr);
++	va_end(params);
++	return -1;
 +}
 +
-+static int inode_cmp(const void *entry, const void *entry_or_key,
-+		     const void *keydata)
-+{
-+	const struct inode_value *inode = entry;
-+	const struct inode_key   *key   = entry_or_key;
-+
-+	return !(inode->key.ino   == key->ino &&
-+		 inode->key.dev   == key->dev &&
-+		 inode->key.isdir == key->isdir);
-+}
-+
-+static const char *is_in_ino_dev_hashtable(const struct hashmap *map,
-+					   const struct stat *st)
-+{
-+	struct inode_key key;
-+	struct inode_value *value;
-+
-+	key.entry.hash = hash_inode(st->st_ino);
-+	key.ino	       = st->st_ino;
-+	key.dev	       = st->st_dev;
-+	key.isdir      = !!S_ISDIR(st->st_mode);
-+	value	       = hashmap_get(map, &key, NULL);
-+	return value ? value->name : NULL;
-+}
-+
-+static void add_to_ino_dev_hashtable(struct hashmap *map,
-+				     const struct stat *st,
-+				     const char *path)
-+{
-+	struct inode_value *v;
-+	int len = strlen(path);
-+
-+	v = xmalloc(offsetof(struct inode_value, name) + len + 1);
-+	v->key.entry.hash = hash_inode(st->st_ino);
-+	v->key.ino	  = st->st_ino;
-+	v->key.dev	  = st->st_dev;
-+	v->key.isdir      = !!S_ISDIR(st->st_mode);
-+	memcpy(v->name, path, len + 1);
-+	hashmap_add(map, v);
-+}
-+
-+/*
-+ * Find out if the last character of a string matches the one given.
-+ * Don't underrun the buffer if the string length is 0.
-  */
--int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
-+static inline char *last_char_is(const char *s, int c)
-+{
-+	if (s && *s) {
-+		size_t sz = strlen(s) - 1;
-+		s += sz;
-+		if ((unsigned char)*s == c)
-+			return (char *)s;
-+	}
-+	return NULL;
-+}
-+
-+static inline char *concat_path_file(const char *path, const char *filename)
++int validate_worktree(const struct worktree *wt, int quiet)
 +{
 +	struct strbuf sb = STRBUF_INIT;
-+	char *lc;
++	const char *path;
++	int err;
 +
-+	if (!path)
-+		path = "";
-+	lc = last_char_is(path, '/');
-+	while (*filename == '/')
-+		filename++;
-+	strbuf_addf(&sb, "%s%s%s", path, !lc ? "/" : "", filename);
-+	return strbuf_detach(&sb, NULL);
-+}
-+
-+static char *concat_subpath_file(const char *path, const char *f)
-+{
-+	if (f && is_dot_or_dotdot(f))
-+		return NULL;
-+	return concat_path_file(path, f);
-+}
-+
-+static int do_unlink(const char *dest)
-+{
-+	int e = errno;
-+
-+	if (unlink(dest) < 0) {
-+		errno = e; /* do not use errno from unlink */
-+		return error_errno(_("can't create '%s'"), dest);
++	if (is_main_worktree(wt)) {
++		/*
++		 * Main worktree using .git file to point to the
++		 * repository would make it impossible to know where
++		 * the actual worktree is if this function is executed
++		 * from another worktree. No .git file support for now.
++		 */
++		strbuf_addf(&sb, "%s/.git", wt->path);
++		if (!is_directory(sb.buf)) {
++			strbuf_release(&sb);
++			return report(quiet, _("'%s/.git' at main worktree is not the repository directory"),
++				      wt->path);
++		}
++		return 0;
 +	}
++
++	/*
++	 * Make sure "gitdir" file points to a real .git file and that
++	 * file points back here.
++	 */
++	if (!is_absolute_path(wt->path))
++		return report(quiet, _("'%s' file does not contain absolute path to the worktree location"),
++			      git_common_path("worktrees/%s/gitdir", wt->id));
++
++	strbuf_addf(&sb, "%s/.git", wt->path);
++	if (!file_exists(sb.buf)) {
++		strbuf_release(&sb);
++		return report(quiet, _("'%s/.git' does not exist"), wt->path);
++	}
++
++	path = read_gitfile_gently(sb.buf, &err);
++	strbuf_release(&sb);
++	if (!path)
++		return report(quiet, _("'%s/.git' is not a .git file, error code %d"),
++			      wt->path, err);
++
++	if (fspathcmp(path, real_path(git_common_path("worktrees/%s", wt->id))))
++		return report(quiet, _("'%s' does not point back to"),
++			      wt->path, git_common_path("worktrees/%s", wt->id));
++
 +	return 0;
 +}
 +
-+static int copy_dir_1(struct hashmap *inode_map,
-+		      const char *source,
-+		      const char *dest)
+ int is_worktree_being_rebased(const struct worktree *wt,
+ 			      const char *target)
  {
- 	/* This is a recursive function, try to minimize stack usage */
--	/* NB: each struct stat is ~100 bytes */
- 	struct stat source_stat;
- 	struct stat dest_stat;
--	smallint retval = 0;
--	smallint dest_exists = 0;
--	smallint ovr;
-+	int retval = 0;
-+	int dest_exists = 0;
-+	int ovr;
+diff --git a/worktree.h b/worktree.h
+index d59ce1f..4433db2 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -52,6 +52,11 @@ extern int is_main_worktree(const struct worktree *wt);
+  */
+ extern const char *is_worktree_locked(struct worktree *wt);
  
- 	if (lstat(source, &source_stat) < 0)
- 		return error_errno(_("can't stat '%s'"), source);
-@@ -102,7 +209,7 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
- 		mode_t saved_umask = 0;
- 
- 		/* Did we ever create source ourself before? */
--		tp = is_in_ino_dev_hashtable(&source_stat);
-+		tp = is_in_ino_dev_hashtable(inode_map, &source_stat);
- 		if (tp)
- 			/* We did! it's a recursion! man the lifeboats... */
- 			return error(_("recursion detected, omitting directory '%s'"),
-@@ -132,11 +239,12 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
- 			if (lstat(dest, &dest_stat) < 0)
- 				return error_errno(_("can't stat '%s'"), dest);
- 		}
-+
- 		/*
- 		 * remember (dev,inode) of each created dir. name is
- 		 * not remembered
- 		 */
--		add_to_ino_dev_hashtable(&dest_stat, NULL);
-+		add_to_ino_dev_hashtable(inode_map, &dest_stat, "");
- 
- 		/* Recursively copy files in SOURCE */
- 		dp = opendir(source);
-@@ -152,7 +260,7 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
- 			if (!new_source)
- 				continue;
- 			new_dest = concat_path_file(dest, d->d_name);
--			if (copy_file(new_source, new_dest, flags & ~FILEUTILS_DEREFERENCE_L0) < 0)
-+			if (copy_dir_1(inode_map, new_source, new_dest) < 0)
- 				retval = -1;
- 			free(new_source);
- 			free(new_dest);
-@@ -177,53 +285,57 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
- 			goto dont_cat;
- 		}
- 
--		if (ENABLE_FEATURE_PRESERVE_HARDLINKS) {
-+		if (1 /*ENABLE_FEATURE_PRESERVE_HARDLINKS*/) {
- 			const char *link_target;
--			link_target = is_in_ino_dev_hashtable(&source_stat);
-+			link_target = is_in_ino_dev_hashtable(inode_map, &source_stat);
- 			if (link_target) {
- 				if (link(link_target, dest) < 0) {
--					ovr = ask_and_unlink(dest, flags);
--					if (ovr <= 0)
-+					ovr = do_unlink(dest);
-+					if (ovr < 0)
- 						return ovr;
- 					if (link(link_target, dest) < 0)
- 						return error_errno(_("can't create link '%s'"), dest);
- 				}
- 				return 0;
- 			}
--			add_to_ino_dev_hashtable(&source_stat, dest);
-+			add_to_ino_dev_hashtable(inode_map, &source_stat, dest);
- 		}
- 
--		src_fd = open_or_warn(source, O_RDONLY);
-+		src_fd = open(source, O_RDONLY);
- 		if (src_fd < 0)
--			return -1;
-+			return error_errno(_("can't open '%s'"), source);
- 
- 		/* Do not try to open with weird mode fields */
- 		new_mode = source_stat.st_mode;
- 		if (!S_ISREG(source_stat.st_mode))
- 			new_mode = 0666;
- 
--		/* POSIX way is a security problem versus (sym)link attacks */
--		if (!ENABLE_FEATURE_NON_POSIX_CP) {
--			dst_fd = open(dest, O_WRONLY|O_CREAT|O_TRUNC, new_mode);
--		} else { /* safe way: */
--			dst_fd = open(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
--		}
-+		dst_fd = open(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
- 		if (dst_fd == -1) {
--			ovr = ask_and_unlink(dest, flags);
--			if (ovr <= 0) {
-+			ovr = do_unlink(dest);
-+			if (ovr < 0) {
- 				close(src_fd);
- 				return ovr;
- 			}
- 			/* It shouldn't exist. If it exists, do not open (symlink attack?) */
--			dst_fd = open3_or_warn(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
-+			dst_fd = open(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
- 			if (dst_fd < 0) {
- 				close(src_fd);
--				return -1;
-+				return error_errno(_("can't open '%s'"), dest);
- 			}
- 		}
- 
--		if (bb_copyfd_eof(src_fd, dst_fd) == -1)
-+		switch (copy_fd(src_fd, dst_fd)) {
-+		case COPY_READ_ERROR:
-+			error(_("copy-fd: read returned %s"), strerror(errno));
- 			retval = -1;
-+			break;
-+		case COPY_WRITE_ERROR:
-+			error(_("copy-fd: write returned %s"), strerror(errno));
-+			retval = -1;
-+			break;
-+		}
-+
- 		/* Careful with writing... */
- 		if (close(dst_fd) < 0)
- 			retval = error_errno(_("error writing to '%s'"), dest);
-@@ -243,19 +355,28 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
- 	/* We are lazy here, a bit lax with races... */
- 	if (dest_exists) {
- 		errno = EEXIST;
--		ovr = ask_and_unlink(dest, flags);
--		if (ovr <= 0)
-+		ovr = do_unlink(dest);
-+		if (ovr < 0)
- 			return ovr;
- 	}
- 	if (S_ISLNK(source_stat.st_mode)) {
--		char *lpath = xmalloc_readlink_or_warn(source);
--		if (lpath) {
--			int r = symlink(lpath, dest);
--			free(lpath);
-+		struct strbuf lpath = STRBUF_INIT;
-+		if (!strbuf_readlink(&lpath, source, 0)) {
-+			int r = symlink(lpath.buf, dest);
-+			strbuf_release(&lpath);
- 			if (r < 0)
- 				return error_errno(_("can't create symlink '%s'"), dest);
- 			if (lchown(dest, source_stat.st_uid, source_stat.st_gid) < 0)
- 				error_errno(_("can't preserve %s of '%s'"), "ownership", dest);
-+		} else {
-+			/* EINVAL => "file: Invalid argument" => puzzled user */
-+			const char *errmsg = _("not a symlink");
-+			int err = errno;
-+
-+			if (err != EINVAL)
-+				errmsg = strerror(err);
-+			error(_("%s: cannot read link: %s"), source, errmsg);
-+			strbuf_release(&lpath);
- 		}
- 		/*
- 		 * _Not_ jumping to preserve_mode_ugid_time: symlinks
-@@ -293,4 +414,23 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
- 
- 	return retval;
- }
--#endif
-+
 +/*
-+ * Return:
-+ * -1 error, copy not made
-+ *  0 copy is made
-+ *
-+ * Failures to preserve mode/owner/times are not reported in exit
-+ * code. No support for preserving SELinux security context. Symlinks
-+ * and hardlinks are preserved.
++ * Return zero if the worktree is in good condition.
 + */
-+int copy_dir_recursively(const char *source, const char *dest)
-+{
-+	int ret;
-+	struct hashmap inode_map;
++extern int validate_worktree(const struct worktree *wt, int quiet);
 +
-+	hashmap_init(&inode_map, inode_cmp, 1024);
-+	ret = copy_dir_1(&inode_map, source, dest);
-+	hashmap_free(&inode_map, 1);
-+	return ret;
-+}
+ /*
+  * Free up the memory for worktree(s)
+  */
 -- 
 2.8.2.524.g6ff3d78
 
