@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03EBA1FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 21:56:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAC7B1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 22:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755864AbcK1V4d (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 16:56:33 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34492 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755553AbcK1V4c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 16:56:32 -0500
-Received: by mail-qt0-f195.google.com with SMTP id l20so13297005qta.1
-        for <git@vger.kernel.org>; Mon, 28 Nov 2016 13:56:31 -0800 (PST)
+        id S1754808AbcK1WL1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 17:11:27 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:33558 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751515AbcK1WL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 17:11:26 -0500
+Received: by mail-pg0-f45.google.com with SMTP id 3so61345711pgd.0
+        for <git@vger.kernel.org>; Mon, 28 Nov 2016 14:11:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=Fst3YEleJc7L9mosgL1L5xqVXyo/DDAsYOOeXhmRJ3g=;
-        b=cI09ta0591RDky3W+lv9XqyPRnTMLN6TX5E9j4vr0fyGzdBoT0m8bUfS77ZLMxHnHv
-         WQHkwUfyn9WcLl4jYxclliZ3oMvd/bhR55rrOztIRN6mhGvBPikdfar0PimJNLfMtFDI
-         9GK6TMQELT0oEKHR8q+pjhzCvmHAYoNLLNGpyHX+I0NSISx+df+ybhnc+QjtesXOwyng
-         Ftx+zl508Zi6Iij8scXo9rMw7BQPdBIOik9iocYgVzIvgW3kmN2P5VcGS88e1VoiYfcE
-         4+HXmx0+oOBfi+7gPTdDqhQ1L3ZG9ooVY5CDEMTgA2hX6FLVJFuPkASp3GjV9eV7zSI6
-         s59g==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7fXy0wkuL9f9iu29pt79u5IxJDzakbm+GtiXoRffCr0=;
+        b=iyq1uMw9OQpAgSdhVtejTO6PMYhjcOVVcu7Lx321c/lR7wVKaTuIHc5Cekou6pwHt3
+         0KWxBgzvpJyPJJGi1QyF4aF9+qczOQjEgD3WK1LT1OkvkVQjlT7JcolF1W+DRrPoBmhh
+         fwq+yVsSu+ftAVyY2EZbbFDS08NAVOzGlSbvM+X07Gnw0+SKhmCuboWReydnf6T+HG3U
+         k+G7tBbftQvwAe477kxwNnYPWYyXkACrd/WqdRXPaNcDzE9Q5LMVGLVCmNFve0WtzIZ1
+         itkwJ3E0hQyeWs63zKx9Zb/JBsYgp8NGuB4g5Au9TIPeMVjCWYz5wAu0YPF+gPoyiR7h
+         2Cmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=Fst3YEleJc7L9mosgL1L5xqVXyo/DDAsYOOeXhmRJ3g=;
-        b=FGmI0vlMixZWVDoD6jpgfrtXeXolHAT003Y9rS8TS9ZF+4wYXP1EsN4eiI20j47UNs
-         M2L+mT9s76XiJms+LvcJPNj3SZO2+NYNXTC0ctwKMB1jzN+PoMv/tYqVOIVFVwi41Mb2
-         mouKOC0jSETbnMHM5UocOz90fqzes8EqAPDCsXfzV6OPR335RJ8H1WVjFKnNqA0eum3A
-         9uHO62i6nnL0o33Y9dIRS3onVrOEVgDQOZS3A2/VoS+ukcbtHq+U5R8Vmdtwljsvva0v
-         33wg8PrYTpSuEbRUf+OhZZvUJ0YX5rb2nDeeHZdtN04gZkMJ5gXBWu3R1Q11dSJNNOMl
-         UyEA==
-X-Gm-Message-State: AKaTC001/eEh6Q9WyAXmqAJAFZY4BR4QByqylYxh3MnltqB7a0ocDI1JhcOg3FakKt5X7mXxrDDATzCrQ87H1w==
-X-Received: by 10.237.35.140 with SMTP id j12mr21120888qtc.5.1480370191017;
- Mon, 28 Nov 2016 13:56:31 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7fXy0wkuL9f9iu29pt79u5IxJDzakbm+GtiXoRffCr0=;
+        b=VjP69yKikE11vO0qi6FPc0svCqsz6/uyIEvWX7k6ab0R1Fbxc7KrkbK7inpFvLCxlo
+         ksLzOnH9lcUekalU4p1HmaeeTE4aQ+OX9/5/hqowubxQxcgai61cwrpusNQ6mgFPUyXK
+         xhxhjmDoEG9Y/QVOjGps/7T/Jl+My0A0JWTXWtGUrgp63mGllfOoJtBM6RTZXo3Z2FZn
+         7zTRtmphDO/ZUVQAGW0p/uJ85M9TVSLZ7XOCgMkiUFkEfZEr19biyXtIy+hbjVZlKbpC
+         lJtmMMCPWKaVrxaXEahbLxqgtGjJ1iQlqfMaOzwyPNtz6ij6QdzJgIg7TK27TwVPhM0S
+         oZgQ==
+X-Gm-Message-State: AKaTC03nnbjw80szM+1EWusXVRMXYUheTdoppZau8gqam0oYv3KSVLLoswXDG+dsIzmgBFWc
+X-Received: by 10.84.208.227 with SMTP id c32mr54340857plj.144.1480371085122;
+        Mon, 28 Nov 2016 14:11:25 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:6409:b611:8934:17a0])
+        by smtp.gmail.com with ESMTPSA id o68sm89481026pfb.42.2016.11.28.14.11.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 28 Nov 2016 14:11:24 -0800 (PST)
+Date:   Mon, 28 Nov 2016 14:11:23 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH 31/35] pathspec: allow querying for attributes
+Message-ID: <20161128221123.GC150448@google.com>
+References: <20161110203428.30512-1-sbeller@google.com>
+ <20161110203428.30512-32-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.12.129.65 with HTTP; Mon, 28 Nov 2016 13:56:30 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 29 Nov 2016 05:56:30 +0800
-Message-ID: <CANYiYbHetS-3zY1kO=EkgCG0R_hR-QyHdetTiJMaqyoyiZCBJg@mail.gmail.com>
-Subject: [GIT PULL] l10n updates for 2.11.0 round 3
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>, Changwoo Ryu <cwryu@debian.org>,
-        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
-        Jean-Noel Avila <jn.avila@free.fr>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Tran Ngoc Quan <vnwildman@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>, jfbu <jfbu@free.fr>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161110203428.30512-32-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 11/10, Stefan Beller wrote:
+> @@ -500,6 +586,18 @@ void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
+>  
+>  void clear_pathspec(struct pathspec *pathspec)
+>  {
+> +	int i, j;
+> +	for (i = 0; i < pathspec->nr; i++) {
+> +		if (!pathspec->items[i].attr_match_nr)
+> +			continue;
+> +		for (j = 0; j < pathspec->items[j].attr_match_nr; j++)
+> +			free(pathspec->items[i].attr_match[j].value);
+> +		free(pathspec->items[i].attr_match);
+> +		if (pathspec->items[i].attr_check)
+> +			git_attr_check_clear(pathspec->items[i].attr_check);
+> +		free(pathspec->items[i].attr_check);
+> +	}
+> +
+>  	free(pathspec->items);
+>  	pathspec->items = NULL;
 
-The following changes since commit e2b2d6a172b76d44cb7b1ddb12ea5bfac9613a44:
+You may also want to add logic like this to the 'copy_pathspec' function
+so that when a pathspec struct is copied, the destination also has
+ownership of its own attribute items.
 
-  Git 2.11-rc3 (2016-11-23 11:24:59 -0800)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po tags/l10n-2.11.0-rnd3
-
-for you to fetch changes up to 6366c34b895613482fa32f1abe1c3ca043905ad2:
-
-  l10n: de.po: translate 210 new messages (2016-11-28 18:49:25 +0100)
-
-----------------------------------------------------------------
-l10n-2.11.0-rnd3
-
-----------------------------------------------------------------
-Jiang Xin (1):
-      l10n: fix unmatched single quote in error message
-
-Ralf Thielow (1):
-      l10n: de.po: translate 210 new messages
-
- po/de.po    | 9112 +++++++++++++++++++++++++++++++++--------------------------
- po/fr.po    |    6 +-
- po/git.pot  |  128 +-
- po/ko.po    |    6 +-
- po/pt_PT.po |    6 +-
- po/sv.po    |    6 +-
- po/vi.po    |    6 +-
- po/zh_CN.po |    6 +-
- 8 files changed, 5125 insertions(+), 4151 deletions(-)
-
---
-Jiang Xin
+-- 
+Brandon Williams
