@@ -2,72 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 103961FC96
-	for <e@80x24.org>; Mon, 28 Nov 2016 09:34:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE5F51FC96
+	for <e@80x24.org>; Mon, 28 Nov 2016 09:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932487AbcK1Jd7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 04:33:59 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36284 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932474AbcK1Jd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 04:33:57 -0500
-Received: by mail-wm0-f66.google.com with SMTP id m203so17843209wma.3
-        for <git@vger.kernel.org>; Mon, 28 Nov 2016 01:33:56 -0800 (PST)
+        id S932241AbcK1Jhe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 04:37:34 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33061 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932284AbcK1Jhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 04:37:32 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 144so6202372pfv.0
+        for <git@vger.kernel.org>; Mon, 28 Nov 2016 01:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=1OZVaqCGUmeG8RsYJZMDPHU/OplGz+XpilgOL0ps2XE=;
-        b=J6XHZOSsn4ZnwI3FNeKdXOPF1s28RSBtT/SKcXz8VWY282EHbb9IiXRulJ+lcdF+/L
-         kneJ238qxcwo/K1A6E3JJLuxQzP5xPYrs0etz3wmncX59avMgBGyehg81lpKMIwW/fm1
-         thBldKbByybAvJTw/o0+B4yvZvAsQl5DigtJMVXFufYCHVYbycj1F9pw02GDmEOUuI95
-         lAYAc/2ZnsytTA2/ZcTA0p6zRiQiOx4esxLTVwSiQoi/iXHUG4UAMnC6DvkPyjceuRj6
-         eDmqi8GPMlUte3hoZLwI+3JZji+8noORUt1/fLYZP/dWMVkRrKgYdZyf6eytG+nex/9K
-         BcMw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YzRlL9ycEEDqtsoXEfjTzO+6dvp0AOD5KYB2T3J+/+M=;
+        b=I0NCgoXl4Wi/X62UoD+U1G/bA8kxtWyoZlB6uFqCRwoi2Bbcz8jfNavGI1GaKDWMtL
+         GC8e8jeBp6UTkFpmomKLvZw/kShKoQfLklE1b4DafL19SdWkl2EvGO7T/JfQX4qvMNgZ
+         +Y27TvJOe10V/j4Ux2Rprg2ZIB3MptVsc3q+eYpEM+y4gYw7SG77wt9jELRmvOPKBCa4
+         7u+VV307miccfDi7qSc5nFaDmrhaJHb5vSKch93Fae3OoWbM0hXCJQlzGWkrDwVoSnW+
+         IURUpNStqo6x6nfkdGgHU9ekd29HEhqkD0qB0irxAcVar6VDOyLigWX8fdD0/a9O+YOs
+         wFIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=1OZVaqCGUmeG8RsYJZMDPHU/OplGz+XpilgOL0ps2XE=;
-        b=WvUnwVXrD0mYqMbXsyOLbRbX81Ocbu49r9QR3RpKdrV7219dmTEpQNy1dFCYL0KxM7
-         QBgGjU/J28WTioKLQBSfqnDquNRLHEMsTF6OXsAzOS00g6tqBl9nnXDTGA04S1xfY3cu
-         eAauI6TAJ4Vogn+9l6qN0OveKxZxBKxq20V1rZJX3YFwYllV/eiLtMh5vWepffsqZYtq
-         EBrXJPgpIgcATrdJJOSadSSN6QVqnfYfmlLBsinVDUWSkGIXB4tbN1RpuT2aI2p9B/1q
-         QhEjbu8sTmCf/DWHaNULmCNF2+JtDDLIFnGd6BtQsys9RXN2BDyi/JiAdAebtP8ZMtC1
-         L0SA==
-X-Gm-Message-State: AKaTC023bN14RCDEhUBbwU9U8JSPpw0mv+zZt3pGAVAHwTiNHNGBXJB1GGYqSnAzg8Skfw==
-X-Received: by 10.28.41.70 with SMTP id p67mr17967337wmp.4.1480325630952;
-        Mon, 28 Nov 2016 01:33:50 -0800 (PST)
-Received: from kursancew-t5810.corp.roku ([81.145.207.254])
-        by smtp.gmail.com with ESMTPSA id d64sm27875797wmh.3.2016.11.28.01.33.49
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YzRlL9ycEEDqtsoXEfjTzO+6dvp0AOD5KYB2T3J+/+M=;
+        b=VOkiEAs/uLA+uCWmTtPFb/4P0cs5xiYqICQg9U+uKohYYtS2YUWiQbDGHUPEcF8ET4
+         +0xxDlcRIoK8B1oA7a+aEN7P0PRB86SJLHVyGnMFleRZFxpKxEO28MGQ5FgWLpnJrpLt
+         uIM3He03frNu5C/aJMS7Rp/e8N6syznA32RygwDJ+I9dJLDy4V/23judsxwCSG57YaE0
+         P/xxgdC9TLb/51mEh7eSsJPXour36vj/3aiS2TbPrgPtHCZQCByq5TXFPsoq1WKZzQEa
+         wtgBxFMGvG3/LC45gtpNNNGtUcfmuMOyo5qs8pYhXGPG04fn7dGsUpKZRlY3jEaTbTj0
+         LHXg==
+X-Gm-Message-State: AKaTC006PUEV4UqTjimgFajbFWQoQ9oZHZ/yYidCS2oYmUURuLJrxTKrgsntHOIjHLSbSw==
+X-Received: by 10.84.130.5 with SMTP id 5mr31465946plc.69.1480325840048;
+        Mon, 28 Nov 2016 01:37:20 -0800 (PST)
+Received: from ash ([115.73.175.91])
+        by smtp.gmail.com with ESMTPSA id v1sm67877219pgv.33.2016.11.28.01.37.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Nov 2016 01:33:49 -0800 (PST)
-From:   Vinicius Kursancew <viniciusalexandre@gmail.com>
-To:     gitster@pobox.com, git@vger.kernel.org
-Cc:     Vinicius Kursancew <viniciusalexandre@gmail.com>
-Subject: [PATCH] allow git-p4 to create shelved changelists
-Date:   Mon, 28 Nov 2016 09:33:17 +0000
-Message-Id: <1480325598-12344-1-git-send-email-viniciusalexandre@gmail.com>
-X-Mailer: git-send-email 2.6.0-rc1
+        Mon, 28 Nov 2016 01:37:19 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 28 Nov 2016 16:37:12 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, rappazzo@gmail.com,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2 0/5] nd/worktree-list-fixup
+Date:   Mon, 28 Nov 2016 16:36:51 +0700
+Message-Id: <20161128093656.15744-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <20161122100046.8341-1-pclouds@gmail.com>
+References: <20161122100046.8341-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch adds a "--shelve" option to the submit subcommand, it will
-save the changes to a perforce shelve instead of commiting them.
+This version
 
-Vinicius Kursancew (1):
-  git-p4: allow submit to create shelved changelists.
+* changes get_worktrees() to take a flag, and adds one flag for
+  sorting.
 
- Documentation/git-p4.txt |  5 +++++
- git-p4.py                | 36 ++++++++++++++++++++++--------------
- t/t9807-git-p4-submit.sh | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 58 insertions(+), 14 deletions(-)
+* adds tests for both the 'main worktree always present' and the
+  sorting problems.
+
+* reworks 3/5 a bit, keep changes closer, easier to see the cause and
+  consequence.
+
+Nguyễn Thái Ngọc Duy (5):
+  worktree.c: zero new 'struct worktree' on allocation
+  worktree: reorder an if statement
+  get_worktrees() must return main worktree as first item even on error
+  worktree.c: get_worktrees() takes a new flag argument
+  worktree list: keep the list sorted
+
+ branch.c                 |  2 +-
+ builtin/branch.c         |  2 +-
+ builtin/worktree.c       | 14 ++++++++------
+ t/t2027-worktree-list.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+ worktree.c               | 42 +++++++++++++++++++++---------------------
+ worktree.h               |  4 +++-
+ 6 files changed, 74 insertions(+), 30 deletions(-)
 
 -- 
-2.6.0-rc1
+2.8.2.524.g6ff3d78
 
