@@ -2,85 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38C181FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 18:04:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E696C1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 18:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752292AbcK1SEC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 13:04:02 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:35851 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751033AbcK1SEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 13:04:01 -0500
-Received: by mail-pg0-f49.google.com with SMTP id f188so59074724pgc.3
-        for <git@vger.kernel.org>; Mon, 28 Nov 2016 10:04:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EoQQf/SKLaSjWqjHd60Tsbem8jwHspbzhxCf6HMd/d8=;
-        b=Wk922dn0hkzda0Z0Ithfdq9SVlTYmRZw738Cqcf9Ghl5OZ9wCxelwTnp2XPNV1zx8+
-         t/E+3xcZi9jTRyFKF/Nuwy6YfO7JP5IJIshk8t5sFRqykB5fLGcFihOniRZ8tgSpWdxa
-         E5BeCBIqZh/LyeL2ev/E11186HaILfyHlKQH0Sl2d1cEXNy8175+CuIgVlzmN2uctknZ
-         yiFax+YTkeFmpNE18NpsJeqWL2xtiCYaDcrg4lwinbiyVnL0iwn4lBorX45dmsVL5vx4
-         ozidQyrMz3m2t7YSrys2A6eTwqFhEZ7BKEpU7giiD8dcSh8rm++XZ4AGrX2YZF3wV6iO
-         TI4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EoQQf/SKLaSjWqjHd60Tsbem8jwHspbzhxCf6HMd/d8=;
-        b=VcFiG3bGRz0aoDbS/xT9l/vCizsVyQO+UWGswvuoPO+qTZGkFBBIrPopUDX5zs7RY6
-         VnhKdlRKUxxpG7mkNL/e/SYr6BKkyD4Ce8HEJujTSwzsSTAKTKhDeEnCrqtJUUDgTJSy
-         gEfiVxHGOWEqBHm3s3SDZkivI6rk59nl6Vyo6JmByXaFrL/bZ4oklDCF3lV5XM0DK5CZ
-         XWEtSM8GxM3Yf4KfR/Wu89Cia/4Bxvtf0q3lBreqi0koN4TqTBJqzhIHKsTJz1/bSDt4
-         WUDIsviHuaXRFqt63lZDzxjIkfPN8Hro43oZ5T9O8LlGApfV70G5RWqnh0PGZc1wQomd
-         ZMfw==
-X-Gm-Message-State: AKaTC021veQGpZNrpLD0uGN2/ws/RwO9aIrvTWgw3tGeGs9Jue3wVd6xVJVXqcdgYY8HnLdk
-X-Received: by 10.98.93.201 with SMTP id n70mr23056457pfj.161.1480356240351;
-        Mon, 28 Nov 2016 10:04:00 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:6409:b611:8934:17a0])
-        by smtp.gmail.com with ESMTPSA id o126sm70974132pga.34.2016.11.28.10.03.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 28 Nov 2016 10:03:59 -0800 (PST)
-Date:   Mon, 28 Nov 2016 10:03:58 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH 31/35] pathspec: allow querying for attributes
-Message-ID: <20161128180358.GB150448@google.com>
-References: <20161110203428.30512-1-sbeller@google.com>
- <20161110203428.30512-32-sbeller@google.com>
+        id S1751990AbcK1SGy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 13:06:54 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63131 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751432AbcK1SGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 13:06:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99578527FC;
+        Mon, 28 Nov 2016 13:06:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=l09wN0LBiIvpCcOhFFez6PfzMTc=; b=dkd07k
+        UflYuC27FnYmE0LiUrM6htyumF3IqWqSilcdT/BwqhviPKzVHbGaPIQ2QS4+hpTr
+        4Rm5u9bRrX8S/BLRQG+H2GrQgPSb4zRBG8h+uOaBROYro0Q6RYnLfLqHpovKu7k6
+        idBt9UVN6Fcb1onR8thywORJD+dZsxL2SeNzM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UscUw+fIcRtsIqtkF9uzEW0x1S5UJQU+
+        Jnf36iWqgP/CoKvcaugQAZ6Pb7nlCClI9xl5Kt5oh5UTuf7wizfU6I4ePQqdEweK
+        o6cmAsE8uTYvehjmGZZNK4/+Af3NE6/CIRo30+9HK2IcP2ffKP405ozS70WlUUpD
+        HCGpyocH9w8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F96D527FB;
+        Mon, 28 Nov 2016 13:06:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06730527FA;
+        Mon, 28 Nov 2016 13:06:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luis Ressel <aranea@aixah.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] date-formats.txt: Typo fix
+References: <20161125173657.9656-1-aranea@aixah.de>
+Date:   Mon, 28 Nov 2016 10:06:50 -0800
+In-Reply-To: <20161125173657.9656-1-aranea@aixah.de> (Luis Ressel's message of
+        "Fri, 25 Nov 2016 18:36:57 +0100")
+Message-ID: <xmqqvav7jx6t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161110203428.30512-32-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 705084E6-B595-11E6-9803-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10, Stefan Beller wrote:
-> +static void parse_pathspec_attr_match(struct pathspec_item *item, const char *value)
-> +{
->
-> [...]
->
-> +	if (!item->attr_check)
-> +		git_attr_check_initv(&item->attr_check, attrs.argv);
-> +	else
-> +		die(_("Only one 'attr:' specification is allowed."));
-> +
-> +	argv_array_clear(&attrs);
-> +	string_list_clear(&list, 0);
-> +	return;
-> +}
+Luis Ressel <aranea@aixah.de> writes:
 
-Unnecessary return statement, maybe you want to remove it?
+> Last time I checked, I was living in the UTC+01:00 time zone. UTC+02:00
+> would be Central European _Summer_ Time.
+> ---
 
--- 
-Brandon Williams
+Thanks; please sign-off your patches, even a trivial ones like this.
+
+>  Documentation/date-formats.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+> index 35e8da2..6926e0a 100644
+> --- a/Documentation/date-formats.txt
+> +++ b/Documentation/date-formats.txt
+> @@ -11,7 +11,7 @@ Git internal format::
+>  	It is `<unix timestamp> <time zone offset>`, where `<unix
+>  	timestamp>` is the number of seconds since the UNIX epoch.
+>  	`<time zone offset>` is a positive or negative offset from UTC.
+> -	For example CET (which is 2 hours ahead UTC) is `+0200`.
+> +	For example CET (which is 1 hour ahead of UTC) is `+0100`.
+>  
+>  RFC 2822::
+>  	The standard email format as described by RFC 2822, for example
