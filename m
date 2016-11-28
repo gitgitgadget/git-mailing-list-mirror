@@ -2,162 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A38EE1FBB0
-	for <e@80x24.org>; Mon, 28 Nov 2016 15:54:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0F7C1FBB0
+	for <e@80x24.org>; Mon, 28 Nov 2016 16:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932483AbcK1Pyb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 10:54:31 -0500
-Received: from mout.web.de ([212.227.15.3]:55759 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932334AbcK1Py3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 10:54:29 -0500
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M7scS-1cxq7F3yb2-00vP7W; Mon, 28
- Nov 2016 16:54:18 +0100
-Date:   Mon, 28 Nov 2016 15:54:15 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     eevee.reply@veekun.com
-Cc:     git@vger.kernel.org
-Subject: Re: cherry-pick -Xrenormalize fails with formerly CRLF files
-Message-ID: <20161128155415.GA9966@tb-raspi>
-References: <777ee899-4cfb-e3b4-da0d-793fde35e412@veekun.com>
+        id S932813AbcK1QTV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 11:19:21 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:33336 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932406AbcK1QTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 11:19:19 -0500
+Received: by mail-lf0-f66.google.com with SMTP id 98so9941584lfs.0
+        for <git@vger.kernel.org>; Mon, 28 Nov 2016 08:19:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZlNuwQt1E5dVd+Rug1Es6QCMwYZHk0GFsBnfWDdffyQ=;
+        b=iNbngpqpX9unR0iarLJec9fQsO/zxCOndBmZv6gGFlLu8KDNVTkGIBzO2QLtIzZkRm
+         IOTxzW+DMKGZhbcId1PJgLkrTl8YZxZ+svqw7iAJWCFMpQXqKhMnqS1BtJjj8BPnkLbG
+         xYy8Mm/dkltjQiXD8SZ/QLbQFKoUCab8qj87AFxQQE+1/KbKcNP/t7BtzwdQAE1e8Y6Y
+         w2n7vLJkyEsQ8ptBY61dqCq15ppSS8MeZ0fI5bppSzyFqvQOt+MH96wCZ1fv7nyuirGK
+         mvZK824n6rXXZg3n7FmARWybGe7TR5SfJPIV1y9qapud0XwLYBt34GwNFd9J0IC++YEJ
+         CTyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZlNuwQt1E5dVd+Rug1Es6QCMwYZHk0GFsBnfWDdffyQ=;
+        b=VpQoTPtfbLJMX8XZ7M/Wn8/0kJ0ORO76l27fjQb6xAQHAsDJZhlxyDRFs1OHSJ7yN8
+         0MbbDlMoGbz9+Vuc+ebg56Tfy+YmrjUDg4xL5gUFnefl0hXJpyQVlQfjurccHJLsJpd0
+         uNKdRN2lmQHnFe7my+6PKUfF4o3CIdNsAQ9z97ZYak2MCssG9iRekTnNpZv3JC6f9eKs
+         GAxGLQW3NgLthLGF3BoeLM8L0AjStOAqnFOdvfNAfHItBzrI3t5rA52M3q957CsTR4A2
+         2s77d2zLHFzRdcX0HKUwwm7wVuitl8HSvrflUcX+aRsK676x87ka7rXnXsNxopzdRPhj
+         Z3Lg==
+X-Gm-Message-State: AKaTC024snRAzbqXG2dkr8O4eO7ToIP6Ur/A0wZknF2rsCrKf2rQb4FMeD391GamFSNqto82OlVj1yN8x4IFbQ==
+X-Received: by 10.25.18.167 with SMTP id 39mr8352420lfs.81.1480349957907; Mon,
+ 28 Nov 2016 08:19:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <777ee899-4cfb-e3b4-da0d-793fde35e412@veekun.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:2yyGmHViuFXbrsNrgkqQQORpLDcvGuUcJNxAVd9i0/Ddc/C9iuy
- 0GWwXZo2AnEGMJcwabrewQ9Co38Eb9o/G57gPoSDKHPraHknTqnHYYW7/j/XvEx59VaPpRa
- 3ukiJw/hFGPk9MHL5lHYy2kUHT0iA9VXMhYqyoFffhH2sKOIsn3TudGXB2sAQ/JHvaw3Jjf
- dgC1lIaZ8+0sahLSBs1lg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UwQj1Sl0954=:KEzpxiib21VkBLYqaIs52u
- C3a4r++q/FC1cErl6I//2b6g4ew9kWavNMeE+IxZufYjkyFsHiEQjsOo5F2tnfekuXt041DcI
- gzzZnyZ/Kj31lLzDs3gbpqY3ZeA0kLEQA3ocqcdQq/oeXN7SnE2ITlUB19MwHLqX6/2PF4ASO
- SGRvpz0M2igZDpFiXotSsFVI5R2+rwFH1s9r01pGakyBm6I34Uz7awGt8GRuieCaEy92Y1Ncu
- Gs9s5QBEiJJ46sRpX1AUdnHnN+sVE8ZbAz9fRmm5Jycf5Fh1NwjwLco7lTFjv5/BnqU7XUKzd
- 1YsmK105wdRqu1jUAK0gedyWPKRoIRdzrhj+nf37XRTn0i7BE7EPv/x7WvFWh5uTTaEdUu7y0
- tUB2T12HyoURQCSJ81J6nVMg6AxcfSpQVDOUOPrZlWqA1DQyP9t+Hk43hnXAjD2DjVaGaaLJF
- R5sjvQGQDbX+qMry7NhCaIftUxgFpiGgXSkhW5cHhTfv9/+LKVPJuZPKZzBejfZkoEqV4D1lu
- KsRwchxstsAuinMihh/ZXUgaewnxapJvGOpQB8J1Sy/EjURiw+IcE4Ksrak9GHi2PUGMfXt9u
- 0TJ9QTjhW0gXXG9gRiAe074vBsji4n+QMrQv4DTQuO4BgN4T4zxv5h3UKyIzbjw45VWP8yidG
- HxWMorTqRrKW4LqvpC12nJvmSZJOR8eV69ZN1UfKt6tmICFd6YQ6Neo0N+FD6Q2OdMW/JvLmO
- BKE2Gu+00/+ZG/i6X0eIRs0AhRWVbwuzSXMdB+2olu31ySHgxg0RJQ5XyLA=
+Received: by 10.25.25.142 with HTTP; Mon, 28 Nov 2016 08:19:17 -0800 (PST)
+In-Reply-To: <xmqqlgwam76c.fsf@gitster.mtv.corp.google.com>
+References: <20161023092648.12086-1-chriscool@tuxfamily.org>
+ <20161023092648.12086-16-chriscool@tuxfamily.org> <xmqqziljngod.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD0iToVxU+maNL9BFXacp3sER+AfrqAnQXWf7EAwURKmdQ@mail.gmail.com> <xmqqlgwam76c.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 28 Nov 2016 17:19:17 +0100
+Message-ID: <CAP8UFD0Q4yTfnhLW6XbfqbxBvMc_QmZTEn4XJb-9fj6Uvq6hkw@mail.gmail.com>
+Subject: Re: [PATCH v1 15/19] config: add git_config_get_date_string() from gc.c
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 27, 2016 at 10:19:35PM -0800, Eevee (Lexy Munroe) wrote:
-> I'm working with a repo that used to be all CRLF.  At some point it
-> was changed to all LF, with `text=auto` in .gitattributes for the
-> sake of Windows devs.  I'm on Linux and have never touched any
-> twiddles relating to line endings.  I'm trying to cherry-pick some
-> commits from before the switchover.
-> 
-> Straightforward cherry-picking causes entire files at a time to
-> conflict, which I've seen before when switching from tabs to spaces.
-> So I tried -Xrenormalize and got:
-> 
->     fatal: CRLF would be replaced by LF in [path]
-> 
-
-Which version of Git are you using, what does
-git --version
-say?
-
-
-> The error comes from check_safe_crlf, which warns if checksafe is
-> CRLF_SAFE_WARN and dies if it's (presumably) CRLF_SAFE_FAIL.  The
-> funny thing is that it's CRLF_SAFE_RENORMALIZE.
-> 
-> I don't know what the semantics of this value are, but the caller
-> (crlf_to_git) explicitly checks for CRLF_SAFE_RENORMALIZE and
-> changes it to CRLF_SAFE_FALSE instead.  But that check only happens
-> if crlf_action is CRLF_AUTO*, and for me it's CRLF_TEXT_INPUT.
-> 
-> I moved the check to happen regardless of the value of crlf_action,
-> and at least in this case, git appears to happily do the right
-> thing.  So I think this is a bug, but line endings are such a tangle
-> that I'm really not sure.  :)
+On Wed, Nov 23, 2016 at 6:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-I am not sure either.
-Could you send me the diff you made ?
-git diff
+>> Ok it will appear like this in cache.h:
+>>
+>> /* This dies if the configured or default date is in the future */
+>> extern int git_config_get_expire_date_string(const char *key, const
+>> char **output);
+>
+> Those who imitate existing callsites never read comments, and you
+> need to spend effort to get the name right to protect the codebase
+> from them.
+>
+> "get-expiry" may be shorter.  Neither still does not say it will
+> die, though.
 
-I am happy to look into it, (in the amount of time I have).
+What about something like this then:
 
-> The repository in question is ZDoom: https://github.com/rheit/zdoom
-> I'm trying to cherry-pick commits from the 3dfloors3 branch (e.g.,
-> 9fb2daf58e9d512170859302a1ac0ea9c2ec5993) onto a slightly outdated
-> master, 6384e81d0f135a2c292ac3e874f6fe26093f45b1.
+/* This dies if the configured or default date is in the future */
+extern int git_config_get_expiry_or_die(const char *key, const char **output);
 
-This is what I tried:
-
-user@pc:~/NoBackup> cd zdoom/          9fb2daf58e9d512170859302a1ac0ea9c2ec5993                                      t9fb2daf5Note: checking out '9fb2daf58e9d512170859302a1ac0ea9c2ec5993'.02a1ac0ea9c2ec5993 
-
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by performing another checkout.
-
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -b with the checkout command again. Example:
-
-  git checkout -b <new-branch-name>
-
-HEAD is now at 9fb2daf... - Force use of GL nodes when 3D floors are present. - Move MAPINFO line modification flags into P_AdjustLine().
-user@pc:~/NoBackup/zdoom> git format-patch HEAD^..HEAD --stdout >9fb2daf.patch
-user@pc:~/NoBackup/zdoom> git format-patch HEAD^..HEAD --stdout | tr -d "\r" >9fb2daf-noCRLF.patch
-user@pc:~/NoBackup/zdoom> git checkout 6384e81d0f135a2c292ac3e874f6fe26093f45b1
-Previous HEAD position was 9fb2daf... - Force use of GL nodes when 3D floors are present. - Move MAPINFO line modification flags into P_AdjustLine().
-HEAD is now at 6384e81... - Add support for Skulltag ACS IsNetworkGame.
-user@pc:~/NoBackup/zdoom> git cherry-pick 9fb2daf58e9d512170859302a1ac0ea9c2ec5993'.02a1ac0ea9c2ec5993
-> 
-user@pc:~/NoBackup/zdoom> git cherry-pick 9fb2daf58e9d512170859302a1ac0ea9c2ec5993
-error: could not apply 9fb2daf... - Force use of GL nodes when 3D floors are present.
-hint: after resolving the conflicts, mark the corrected paths
-hint: with 'git add <paths>' or 'git rm <paths>'
-hint: and commit the result with 'git commit'
-user@pc:~/NoBackup/zdoom> git status
-HEAD detached at 6384e81
-You are currently cherry-picking commit 9fb2daf.
-  (fix conflicts and run "git cherry-pick --continue")
-  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
-
-Unmerged paths:
-  (use "git add <file>..." to mark resolution)
-
-        both modified:   src/p_setup.cpp
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        9fb2daf-noCRLF.patch
-        9fb2daf.patch
-
-no changes added to commit (use "git add" and/or "git commit -a")
-user@pc:~/NoBackup/zdoom> git cherry-pick --abort
-user@pc:~/NoBackup/zdoom> git am < 9fb2daf-noCRLF.patch 
-Applying: - Force use of GL nodes when 3D floors are present. - Move MAPINFO line modification flags into P_AdjustLine().
-error: patch failed: src/p_setup.cpp:1798
-error: src/p_setup.cpp: patch does not apply
-Patch failed at 0001 - Force use of GL nodes when 3D floors are present. - Move MAPINFO line modification flags into P_AdjustLine().
-The copy of the patch that failed is found in: .git/rebase-apply/patch
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
-
-
-
-The patch did not apply, but for different reasons.
-
-Could you send us, what exactly you did, to help me out ?
-
- 
-
-
-
+Also git_config_get_int(), git_config_get_bool() and probably other
+such functions are indirectly calling git_config_int() which die()s is
+the value is not a number, so it feels a bit strange to have only one
+function with a name that ends with "_or_die" when many other
+functions could die(). In fact it could give a false sense of security
+to those who just read cache.h.
