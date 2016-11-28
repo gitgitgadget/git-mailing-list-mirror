@@ -2,295 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,
+	RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12D2D1FC96
-	for <e@80x24.org>; Mon, 28 Nov 2016 09:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06BD01FC96
+	for <e@80x24.org>; Mon, 28 Nov 2016 11:46:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932533AbcK1Jon (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Nov 2016 04:44:43 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:32927 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932532AbcK1Jom (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2016 04:44:42 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 144so6214300pfv.0
-        for <git@vger.kernel.org>; Mon, 28 Nov 2016 01:44:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Gvmo1ihxgOMieyfUsny7hLui/IFm0MMDS3x0Y4KEEC8=;
-        b=QhI9kG/ycwRCvF8eYVtACB3oJy5BT7XvObD2aatOShHauVyJpAreAYo1HDPdLyCVO1
-         t4GgGzkOGD1cS56/w9MXTHy+1+jHXYTIcpAzDNocgBKTNAo9k4wtB+SY1hrnPKss6ZfT
-         A49t8PTotlqET3czhDCX9swOgqepo2KlZ9SZb286ZOCCvjJoaf2gjtbNSh+CIYm4Mb6N
-         jUB1+nP/PWBwbEifr1f4WZdj3WFw7QNuLmh2WCiMnpgKoZmryLEkAlJwJGYjn95xhmpC
-         9f8mywWgtO9IKIhKf62VRiyw2zqq2xNqDFGBYlHj6yntfc6qReW4+9tMLq0PKgXiwNYj
-         gp+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Gvmo1ihxgOMieyfUsny7hLui/IFm0MMDS3x0Y4KEEC8=;
-        b=LZh6q8oHMKTHjXElX0gC8cKN3Ho76OJfk0Vzrq3yi9885WwhRqLzq8itjeMf1+4zCf
-         s/IroU1QAM23fkBWi+t1xIvZ0zyBmpvsF3zzjOFlsqbypvrE5o4uMi6mspX6UgDQ/otx
-         WxVvQTgNeSCw/yzpTCxMxs6Yxs4utp0J2ZBJYKXrsyXB/yoo1RCX11k3+IPRB5jxlGQT
-         OzfXO4Q4oog0hE4A1r9PFRsLkjHv+1Xf9bZsLBaIW16XO8btiT5lMnCoF/a0z8TsOx5J
-         OLXJdnaTz728tuH/kIl5BQ7TV60oaH52JtlFR6bfALFKgTSbKUJqsiWUcqHm1Wbo4VGM
-         hcew==
-X-Gm-Message-State: AKaTC02btKRM6GEaHdlEzHUoKd8YI2oSrzK341AEzRj0d8SLXs0Ra3OIdW370EkAGsjJ9A==
-X-Received: by 10.99.124.20 with SMTP id x20mr4354449pgc.142.1480326276241;
-        Mon, 28 Nov 2016 01:44:36 -0800 (PST)
-Received: from ash ([115.73.175.91])
-        by smtp.gmail.com with ESMTPSA id d15sm85749366pfl.46.2016.11.28.01.44.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Nov 2016 01:44:35 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 28 Nov 2016 16:44:31 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 11/11] worktree remove: new command
-Date:   Mon, 28 Nov 2016 16:43:19 +0700
-Message-Id: <20161128094319.16176-12-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20161128094319.16176-1-pclouds@gmail.com>
-References: <20161112022337.13317-1-pclouds@gmail.com>
- <20161128094319.16176-1-pclouds@gmail.com>
+        id S932111AbcK1Lqm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Nov 2016 06:46:42 -0500
+Received: from 118-92-7-109.dsl.dyn.ihug.co.nz ([118.92.7.109]:38984 "HELO
+        ihug.co.nz" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1753751AbcK1Lql (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2016 06:46:41 -0500
+X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Nov 2016 06:46:39 EST
+Content-Transfer-Encoding: base64
+Subject: 
+Message-ID: <148033359526.940.4974825384070904647@ihug.co.nz>
+From:   <ken@bmmisrq.com>
+Content-Disposition: attachment
+Content-Type: application/zip; name="MESSAGE_371380187_git.zip"
+To:     <git@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date:   Mon, 28 Nov 2016 11:46:35 -0000
+Importance: High
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/git-worktree.txt         | 21 +++++----
- builtin/worktree.c                     | 79 ++++++++++++++++++++++++++++++++++
- contrib/completion/git-completion.bash |  5 ++-
- t/t2028-worktree-move.sh               | 26 +++++++++++
- 4 files changed, 121 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 1310513..bbde6b8 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 'git worktree lock' [--reason <string>] <worktree>
- 'git worktree move' <worktree> <new-path>
- 'git worktree prune' [-n] [-v] [--expire <expire>]
-+'git worktree remove' [--force] <worktree>
- 'git worktree unlock' <worktree>
- 
- DESCRIPTION
-@@ -81,6 +82,13 @@ prune::
- 
- Prune working tree information in $GIT_DIR/worktrees.
- 
-+remove::
-+
-+Remove a working tree. Only clean working trees (no untracked files
-+and no modification in tracked files) can be removed. Unclean working
-+trees can be removed with `--force`. The main working tree cannot be
-+removed.
-+
- unlock::
- 
- Unlock a working tree, allowing it to be pruned, moved or deleted.
-@@ -90,9 +98,10 @@ OPTIONS
- 
- -f::
- --force::
--	By default, `add` refuses to create a new working tree when `<branch>`
--	is already checked out by another working tree. This option overrides
--	that safeguard.
-+	By default, `add` refuses to create a new working tree when
-+	`<branch>` is already checked out by another working tree and
-+	`remove` refuses to remove an unclean working tree. This option
-+	overrides that safeguard.
- 
- -b <new-branch>::
- -B <new-branch>::
-@@ -253,12 +262,6 @@ Multiple checkout in general is still experimental, and the support
- for submodules is incomplete. It is NOT recommended to make multiple
- checkouts of a superproject.
- 
--git-worktree could provide more automation for tasks currently
--performed manually, such as:
--
--- `remove` to remove a linked working tree and its administrative files (and
--  warn if the working tree is dirty)
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index e36e4dc..3167409 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -17,6 +17,7 @@ static const char * const worktree_usage[] = {
- 	N_("git worktree lock [<options>] <path>"),
- 	N_("git worktree move <worktree> <new-path>"),
- 	N_("git worktree prune [<options>]"),
-+	N_("git worktree remove [<options>] <worktree>"),
- 	N_("git worktree unlock <path>"),
- 	NULL
- };
-@@ -624,6 +625,82 @@ static int move_worktree(int ac, const char **av, const char *prefix)
- 	return update_worktree_location(wt, dst.buf);
- }
- 
-+static int remove_worktree(int ac, const char **av, const char *prefix)
-+{
-+	int force = 0;
-+	struct option options[] = {
-+		OPT_BOOL(0, "force", &force,
-+			 N_("force removing even if the worktree is dirty")),
-+		OPT_END()
-+	};
-+	struct worktree **worktrees, *wt;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *reason;
-+	int ret = 0;
-+
-+	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
-+	if (ac != 1)
-+		usage_with_options(worktree_usage, options);
-+
-+	worktrees = get_worktrees(0);
-+	wt = find_worktree(worktrees, prefix, av[0]);
-+	if (!wt)
-+		die(_("'%s' is not a working directory"), av[0]);
-+	if (is_main_worktree(wt))
-+		die(_("'%s' is a main working directory"), av[0]);
-+	reason = is_worktree_locked(wt);
-+	if (reason) {
-+		if (*reason)
-+			die(_("already locked, reason: %s"), reason);
-+		die(_("already locked, no reason"));
-+	}
-+	if (validate_worktree(wt, 0))
-+		return -1;
-+
-+	if (!force) {
-+		struct argv_array child_env = ARGV_ARRAY_INIT;
-+		struct child_process cp;
-+		char buf[1];
-+
-+		argv_array_pushf(&child_env, "%s=%s/.git",
-+				 GIT_DIR_ENVIRONMENT, wt->path);
-+		argv_array_pushf(&child_env, "%s=%s",
-+				 GIT_WORK_TREE_ENVIRONMENT, wt->path);
-+		memset(&cp, 0, sizeof(cp));
-+		argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
-+		cp.env = child_env.argv;
-+		cp.git_cmd = 1;
-+		cp.dir = wt->path;
-+		cp.out = -1;
-+		ret = start_command(&cp);
-+		if (ret)
-+			die_errno(_("failed to run git-status on '%s', code %d"),
-+				  av[0], ret);
-+		ret = xread(cp.out, buf, sizeof(buf));
-+		if (ret)
-+			die(_("'%s' is dirty, use --force to delete it"), av[0]);
-+		close(cp.out);
-+		ret = finish_command(&cp);
-+		if (ret)
-+			die_errno(_("failed to run git-status on '%s', code %d"),
-+				  av[0], ret);
-+	}
-+	strbuf_addstr(&sb, wt->path);
-+	if (remove_dir_recursively(&sb, 0)) {
-+		error_errno(_("failed to delete '%s'"), sb.buf);
-+		ret = -1;
-+	}
-+	strbuf_reset(&sb);
-+	strbuf_addstr(&sb, git_common_path("worktrees/%s", wt->id));
-+	if (remove_dir_recursively(&sb, 0)) {
-+		error_errno(_("failed to delete '%s'"), sb.buf);
-+		ret = -1;
-+	}
-+	strbuf_release(&sb);
-+	free_worktrees(worktrees);
-+	return ret;
-+}
-+
- int cmd_worktree(int ac, const char **av, const char *prefix)
- {
- 	struct option options[] = {
-@@ -648,5 +725,7 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
- 		return unlock_worktree(ac - 1, av + 1, prefix);
- 	if (!strcmp(av[1], "move"))
- 		return move_worktree(ac - 1, av + 1, prefix);
-+	if (!strcmp(av[1], "remove"))
-+		return remove_worktree(ac - 1, av + 1, prefix);
- 	usage_with_options(worktree_usage, options);
- }
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 613e03b..f6855af 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2715,7 +2715,7 @@ _git_whatchanged ()
- 
- _git_worktree ()
- {
--	local subcommands="add list lock move prune unlock"
-+	local subcommands="add list lock move prune remove unlock"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -2733,6 +2733,9 @@ _git_worktree ()
- 		prune,--*)
- 			__gitcomp "--dry-run --expire --verbose"
- 			;;
-+		remove,--*)
-+			__gitcomp "--force"
-+			;;
- 		*)
- 			;;
- 		esac
-diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
-index 74070bd..084acc6 100755
---- a/t/t2028-worktree-move.sh
-+++ b/t/t2028-worktree-move.sh
-@@ -89,4 +89,30 @@ test_expect_success 'move main worktree' '
- 	test_must_fail git worktree move . def
- '
- 
-+test_expect_success 'remove main worktree' '
-+	test_must_fail git worktree remove .
-+'
-+
-+test_expect_success 'remove locked worktree' '
-+	git worktree lock destination &&
-+	test_must_fail git worktree remove destination &&
-+	git worktree unlock destination
-+'
-+
-+test_expect_success 'remove worktree with dirty tracked file' '
-+	echo dirty >>destination/init.t &&
-+	test_must_fail git worktree remove destination
-+'
-+
-+test_expect_success 'remove worktree with untracked file' '
-+	git -C destination checkout init.t &&
-+	: >destination/untracked &&
-+	test_must_fail git worktree remove destination
-+'
-+
-+test_expect_success 'force remove worktree with untracked file' '
-+	git worktree remove --force destination &&
-+	test_path_is_missing destination
-+'
-+
- test_done
--- 
-2.8.2.524.g6ff3d78
-
+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
+AAAAAA==
