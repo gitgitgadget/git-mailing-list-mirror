@@ -2,78 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7F01FF6D
-	for <e@80x24.org>; Tue, 29 Nov 2016 07:06:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B27A1FF6D
+	for <e@80x24.org>; Tue, 29 Nov 2016 09:39:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755286AbcK2HGl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 02:06:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48266 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755119AbcK2HGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 02:06:40 -0500
-Received: (qmail 31055 invoked by uid 109); 29 Nov 2016 07:06:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 07:06:39 +0000
-Received: (qmail 8170 invoked by uid 111); 29 Nov 2016 07:07:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 02:07:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2016 02:06:37 -0500
-Date:   Tue, 29 Nov 2016 02:06:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jack Bates <bk874k@nottheoilrig.com>
-Cc:     git@vger.kernel.org, Jack Bates <jack@nottheoilrig.com>
-Subject: Re: [PATCH] diff: handle --no-abbrev outside of repository
-Message-ID: <20161129070637.eult6o3m34r2mima@sigill.intra.peff.net>
-References: <20161128182508.10570-1-jack@nottheoilrig.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161128182508.10570-1-jack@nottheoilrig.com>
+        id S1756813AbcK2Jio (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 04:38:44 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34607 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756780AbcK2JiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 04:38:25 -0500
+Received: by mail-pg0-f65.google.com with SMTP id e9so15842841pgc.1
+        for <git@vger.kernel.org>; Tue, 29 Nov 2016 01:38:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=D12nVyf5/2miTbFOvhKqElTeuPAyUc9BB0UBpyzEoh8=;
+        b=wfzMCw6Ol0laW0y1wb7NHTuJD77s6cTqGjV1ahgKXqQ56yumfrdjMQCYenP3WqpmD1
+         uN+g/kcTgnssNE7e1t/sFaYHLonJfJBtNjheEnqKPNniWoPjstvV2onYWnVQSikV68S9
+         8/MleC3wt6BYWHEp9C6GKiCaggVgkzCoTWzvKUQQHZ3d7q+y98P0/nCc+ctRGsaDmr0y
+         JBKkQ9h4BeSHSs1x0G7/CvsJZJsnuWCwze94M2thYOUmNAfNgd4JOcZ6hTEDxRPNCEZG
+         698D2Fo3zc5iUN+pCuebz/wm5cpTJgYOaeR+W5Q3hx3riTWxT4X7avEq/a81GNkDxJz5
+         xfiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=D12nVyf5/2miTbFOvhKqElTeuPAyUc9BB0UBpyzEoh8=;
+        b=kI0jSuz93qS2fKU+0pMh5r7naXMA3AQ5B/2qsw8SoAw9aRqV3iLdBKkmdReimWZfK0
+         zT4wLgJ0w3UTiRoZOLeEhrDWDANAjJfrGEltFkogeQ27OQIJHe+jNmU8Ak66rEFGQoIj
+         ILzWw65oswRvj9fKhuF/wRjLjC8z9daYr5FJB/vL9crKolmnDAX/cA7uxrkypSjHSfTn
+         kbMB8SFJLda+4upjK8BcxtWKS1qQdsuE6LOPeL+b1UUn+/R7Ey0Jtujd7EPpLnPWxgt9
+         0bUU7mggGzMJgJ9AB5ufNnGOAs3164rvOD+8A0B206iY8pcHArNrxuKaNrpErl+eK+Gr
+         rYqw==
+X-Gm-Message-State: AKaTC00dmaoLvgjfRjZrhEj7FVvxH4KMyhJI4C3wn7ccrvzR22Hy8orlSUs4Du3mawVTyg==
+X-Received: by 10.84.209.161 with SMTP id y30mr60448873plh.163.1480412303481;
+        Tue, 29 Nov 2016 01:38:23 -0800 (PST)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id f81sm93465296pfd.71.2016.11.29.01.38.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Nov 2016 01:38:22 -0800 (PST)
+From:   David Aguilar <davvid@gmail.com>
+To:     Git ML <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Dun Peal <dunpealer@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Dickson Wong <dicksonwong@gmail.com>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Dan McGee <dpmcgee@gmail.com>,
+        Markus Heidelberg <markus.heidelberg@web.de>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+        James Bowes <jbowes@dangerouslyinc.com>
+Subject: [PATCH 2/2] mergetools/vimdiff: trust Vim's exit code
+Date:   Tue, 29 Nov 2016 01:38:20 -0800
+Message-Id: <20161129093820.24722-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.11.0.rc3.6.g2e567fd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2016 at 11:25:08AM -0700, Jack Bates wrote:
+Allow vimdiff users to signal that they do not want to use the
+result of a merge by exiting with ":cquit", which tells Vim to
+exit with an error code.
 
-> diff --git a/diff.c b/diff.c
-> index ec87283..0447eff 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3106,7 +3106,8 @@ static const char *diff_abbrev_oid(const struct object_id *oid, int abbrev)
->  			abbrev = FALLBACK_DEFAULT_ABBREV;
->  		if (abbrev > GIT_SHA1_HEXSZ)
->  			die("BUG: oid abbreviation out of range: %d", abbrev);
-> -		hex[abbrev] = '\0';
-> +		if (abbrev)
-> +			hex[abbrev] = '\0';
->  		return hex;
->  	}
+This is better than the current behavior because it allows users
+to directly flag that the merge is bad, using a standard Vim
+feature, rather than relying on a timestamp heuristic that is
+unforgiving to users that save in-progress merge files.
 
-This hunk made me wonder if there is a regression in v2.11, as this
-fallback code is new in that version. But I don't think so.
+The original behavior can be restored by configuring
+mergetool.vimdiff.trustExitCode to false.
 
-This new code doesn't handle abbrev==0 the same as find_unique_abbrev()
-does, and that's clearly a bug. But I couldn't find any way to trigger
-it with the existing code.
+Reported-by: Dun Peal <dunpealer@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+I've included anyone that has ever touched the vimdiff feature on the Cc:
+list since I'm assuming that you use vimdiff.
 
-The obvious way is with --no-abbrev, but that doesn't work without yet
-without your patch.
+This change is a slight change in default behavior when using
+mergetool with vimdiff, but I think it's a better default overall.
 
-A less obvious way is --abbrev=0, but that gets munged internally to
-MINIMUM_ABBREV.
+ mergetools/vimdiff | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-The most obscure is "git -c core.abbrev=0", but that barfs completely on
-a too-small abbreviation (without even giving a good error message,
-which is something we might want to fix).
+diff --git a/mergetools/vimdiff b/mergetools/vimdiff
+index a841ffdb4..10d86f3e1 100644
+--- a/mergetools/vimdiff
++++ b/mergetools/vimdiff
+@@ -42,3 +42,7 @@ translate_merge_tool_path() {
+ 		;;
+ 	esac
+ }
++
++exit_code_trustable () {
++	true
++}
+-- 
+2.11.0.rc3.6.g2e567fd
 
-So I think there is no regression, and we only have to worry about it as
-part of the feature you are adding here (it might be worth calling out
-the bug fix specifically in the commit message, though, or even putting
-it in its own patch).
-
--Peff
