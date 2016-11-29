@@ -6,72 +6,63 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F2931FF6D
-	for <e@80x24.org>; Tue, 29 Nov 2016 06:51:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43E0F1FF6D
+	for <e@80x24.org>; Tue, 29 Nov 2016 06:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756163AbcK2Gvb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 01:51:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48258 "EHLO cloud.peff.net"
+        id S1754300AbcK2G7S (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 01:59:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48262 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756010AbcK2Gv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 01:51:28 -0500
-Received: (qmail 30208 invoked by uid 109); 29 Nov 2016 06:51:27 -0000
+        id S933241AbcK2G7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 01:59:15 -0500
+Received: (qmail 30656 invoked by uid 109); 29 Nov 2016 06:59:13 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 06:51:27 +0000
-Received: (qmail 8102 invoked by uid 111); 29 Nov 2016 06:52:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 06:59:13 +0000
+Received: (qmail 8136 invoked by uid 111); 29 Nov 2016 06:59:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 01:52:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2016 01:51:25 -0500
-Date:   Tue, 29 Nov 2016 01:51:25 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 01:59:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2016 01:59:12 -0500
+Date:   Tue, 29 Nov 2016 01:59:12 -0500
 From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Nov 2016, #06; Mon, 28)
-Message-ID: <20161129065125.cwlbkctniy7oshj2@sigill.intra.peff.net>
+Message-ID: <20161129065912.xa7itc3os425mr3r@sigill.intra.peff.net>
 References: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
- <20161129010538.GA121643@google.com>
- <20161129063759.6mgmpqx3kbyuqjwi@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161129063759.6mgmpqx3kbyuqjwi@sigill.intra.peff.net>
+In-Reply-To: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 29, 2016 at 01:37:59AM -0500, Jeff King wrote:
+On Mon, Nov 28, 2016 at 04:15:08PM -0800, Junio C Hamano wrote:
 
->   2. Grep threads doing more complicated stuff that needs to take a
->      lock. You might try building with -fsanitize=thread to see if it
->      turns up anything.
+> * jk/nofollow-attr-ignore (2016-11-02) 5 commits
+>  - exclude: do not respect symlinks for in-tree .gitignore
+>  - attr: do not respect symlinks for in-tree .gitattributes
+>  - exclude: convert "check_index" into a flags field
+>  - attr: convert "macro_ok" into a flags field
+>  - add open_nofollow() helper
+> 
+>  As we do not follow symbolic links when reading control files like
+>  .gitignore and .gitattributes from the index, match the behaviour
+>  and not follow symbolic links when reading them from the working
+>  tree.  This also tightens security a bit by not leaking contents of
+>  an unrelated file in the error messages when it is pointed at by
+>  one of these files that is a symbolic link.
+> 
+>  Perhaps we want to cover .gitmodules too with the same mechanism?
 
-I tried this and it didn't find anything useful. It complains about
-multiple threads calling want_color() at the same time, which you can
-silence with something like:
+Yes, sorry I haven't pushed that forward. I started on covering
+.gitmodules, too, but it's much more complicated than the other two,
+because we sometimes read them via "git config -f". So we have to
+somehow teach git-config to start using O_NOFOLLOW in those cases.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 2c727ef49..d48846f40 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -207,6 +207,12 @@ static void start_threads(struct grep_opt *opt)
- {
- 	int i;
- 
-+	/*
-+	 * trigger want_color() for its side effect of caching the result;
-+	 * otherwise the threads will fight over setting the cache
-+	 */
-+	want_color(GIT_COLOR_AUTO);
-+
- 	pthread_mutex_init(&grep_mutex, NULL);
- 	pthread_mutex_init(&grep_read_mutex, NULL);
- 	pthread_mutex_init(&grep_attr_mutex, NULL);
-
-But the problem persists even with that patch, so it is something else.
-It may still be a threading problem; -fsanitize=thread isn't perfect. I
-also couldn't get the stress-test to fail when compiled with it. But
-that may simply mean that the timing of the resulting binary is changed
-enough not to trigger the issue.
+I'm actually considering scrapping the approach you've queued above, and
+just teaching verify_path() to reject any index entry starting with
+".git" that is a symlink.
 
 -Peff
