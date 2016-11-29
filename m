@@ -2,75 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA9281FC96
-	for <e@80x24.org>; Tue, 29 Nov 2016 21:56:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD39E1FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 21:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756173AbcK2V4o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 16:56:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48782 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754993AbcK2Vzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 16:55:41 -0500
-Received: (qmail 18521 invoked by uid 109); 29 Nov 2016 21:55:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 21:55:41 +0000
-Received: (qmail 15795 invoked by uid 111); 29 Nov 2016 21:56:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 16:56:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2016 16:55:38 -0500
-Date:   Tue, 29 Nov 2016 16:55:38 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?RMSBdmlzIE1vc8SBbnM=?= <davispuh@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Partial fetch?
-Message-ID: <20161129215538.vhgmxpq4rasri4vm@sigill.intra.peff.net>
-References: <CAOE4rSzTq6DVR2ch+as9Pbo35NjKP5b1+Ub1XZWEnwJTahqEfg@mail.gmail.com>
+        id S1756179AbcK2V4t (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 16:56:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63337 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753834AbcK2VzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 16:55:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C20653F39;
+        Tue, 29 Nov 2016 16:55:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fi/vkkSDekMDEY5euLOsq03epLA=; b=gR//n5
+        tlKQdC7W7O/3tq6vCPdDqYvRn+IUKT++9Q1b611gwFElZH/lLoVr4QjpKCbGXFIP
+        8SUBuUnK+JxgWXVmXZddWBgbZBgiF7JDpFy60O8yGNFX3Di8IsqgXpcZTZbwPQeK
+        DfvLlypkVOGhK5jKQrZ4KoVi0VuAIYNLXjL0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O6EwmYjukikI/VhGjwXmd8hkJ7s8Xotl
+        b3KXy5RDnayqPxutBGjx0HQwcIv4frnqvtHFUczu6OZxYP/DU7+HeVPWKJFRD/as
+        G/z5nSF8DW9XozRyjgvu1n7T+3oeObgZ8505mmVFylstpkgKk8el1Uc42IexJgZC
+        0m7t8DqMEPU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ED5253F38;
+        Tue, 29 Nov 2016 16:55:05 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2F8753F37;
+        Tue, 29 Nov 2016 16:55:03 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.11.0
+References: <xmqqmvgidlsg.fsf@gitster.mtv.corp.google.com>
+        <20161129214243.uunmdc5omlogipso@sigill.intra.peff.net>
+Date:   Tue, 29 Nov 2016 13:55:02 -0800
+In-Reply-To: <20161129214243.uunmdc5omlogipso@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 29 Nov 2016 16:42:43 -0500")
+Message-ID: <xmqqa8cidk95.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOE4rSzTq6DVR2ch+as9Pbo35NjKP5b1+Ub1XZWEnwJTahqEfg@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7B94564A-B67E-11E6-B898-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2016 at 10:34:51PM +0200, Dāvis Mosāns wrote:
+Jeff King <peff@peff.net> writes:
 
-> I'm trying to fetch a remote repository over https but sadly it
-> timeouts too soon.
-> 
-> $ git fetch -v upstream
-> POST git-upload-pack (gzip 1148 to 641 bytes)
-> POST git-upload-pack (gzip 1148 to 644 bytes)
-> [...]
-> Is there some way to fetch partially by smaller chunks and then repeat
-> that again till everything is fetched?
+> On Tue, Nov 29, 2016 at 01:21:51PM -0800, Junio C Hamano wrote:
+>
+>> The latest feature release Git v2.11.0 is now available at the
+>> usual places.  It is comprised of 673 non-merge commits since
+>> v2.10.0, contributed by 74 people, 15 of which are new faces.
+>> [...]
+>> Jeff King (117):
+>> [...]
+>>       common-main: stop munging argv[0] path
+>
+> Oh, I didn't expect this to go in at the last minute. The regression was
+> actually in 2.10.0, so I figured it would just end up as part of 2.11.1.
 
-Not an easy one. The series of POSTs is an indication that the fetch
-negotiation is going on for a long time, which probably means you have a
-lot of commits in your local repository that aren't in the remote, or
-vice versa.
-
-Here are the things I might try:
-
-  - git v2.10.2 has commit 06b3d386e (fetch-pack: do not reset in_vain
-    on non-novel acks, 2016-09-23), which may help with this.
-
-  - HTTP, because the server is stateless, performs less well than other
-    protocols. If you can fetch over ssh or git://, it will probably
-    just work.
-
-  - If this is a one-time thing to fetch unrelated history from another
-    repository, you can "clone --mirror" instead of fetching,
-    then fetch from the mirror locally. Subsequent fetches should be
-    fast.
-
-If you do try v2.10.2 and it improves things, I'd be interested to hear
-about it as a data point.
-
--Peff
+To be honest, inclusion of this was a screw-up ;-)  I couldn't count
+between 2.10 and 2.11-rc.
