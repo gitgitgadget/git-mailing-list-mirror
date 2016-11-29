@@ -2,96 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30521FC96
-	for <e@80x24.org>; Tue, 29 Nov 2016 16:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7C91FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 17:36:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753188AbcK2Qam (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 11:30:42 -0500
-Received: from mout.web.de ([212.227.17.12]:52660 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750820AbcK2Qak (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 11:30:40 -0500
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXpZD-1cFNwc32dL-00WoBp; Tue, 29
- Nov 2016 17:30:25 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, eevee.reply@veekun.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/1] convert:  git cherry-pick -Xrenormalize did not work
-Date:   Tue, 29 Nov 2016 17:30:23 +0100
-Message-Id: <20161129163023.23403-1-tboegi@web.de>
-X-Mailer: git-send-email 2.10.0
-In-Reply-To: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
-References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
+        id S1753820AbcK2Rg3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 12:36:29 -0500
+Received: from avasout05.plus.net ([84.93.230.250]:34072 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751347AbcK2Rg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 12:36:28 -0500
+Received: from [10.0.2.15] ([143.159.212.40])
+        by avasout05 with smtp
+        id DtcQ1u00B0srQBz01tcRaM; Tue, 29 Nov 2016 17:36:26 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Qskc5h6d c=1 sm=1 tr=0
+ a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=oxKW_R1wS-74YrZttMQA:9
+ a=mKh1MN6ifWSoMbZi:21 a=Qj-nY_lv9Uw5qYCR:21 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] difftool.c: mark a file-local symbol with static
+Message-ID: <4ddad7ea-5ac8-20b2-da9e-5843c486878a@ramsayjones.plus.com>
+Date:   Tue, 29 Nov 2016 17:36:24 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:a6N7Drc2oNO8yXsXHCtyd9+UNsyP1mQARGfugK1YQice5JOFtWK
- x/kXUyPjek9sCZsUdGgIHVgbcukWvvTT+YXueDQbuZDDpcS78zwzWZqM3+UC4SrvQyTl5ud
- hLW/iAEnKI0GwlVjAjjlNwm8RBbS/scb7nMuo7dtVPU4VAHbAWL8fcp7LrKLy+mUS+ubHIK
- YRCZv2we1Y4CCt3Gfsl6g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CZUokrtUJ2s=:rJOWD8wSKK+NoQ/4cmPLqX
- MEzTW1y68LgyFVn8KFSqs2CnYD+u5s6TVP9EFt2LZ0kt8wSJNq1bnCAXa1O7Mf6ejB13sF4OA
- yEsmwUDFAfix8ZlNfYNlh/+uDNEl+chCZWOAmBD9MIEcmv+pXtlhGVDCXsgbfU0j/MwygIgUh
- R1ZcrMy0cbxr4ed/rBvJJvG+EKatiYAZ44Nf0MTKPMf8eS08E5PlUVDZqZIwFR+WdIvtF2EbT
- KK8wpkpqQB8r5iwEqq4tZbYjrzyNy2n+cEd82ywFUVxUXjiMZ9gCtiuQRtOh2ExfH8UHhpXTF
- oZm3J1q48jzBYjN6qPUCGQiQrfu0E22M7GeBhmhk3Fgf9o5XUs8v7vrHzY9l92EGZpL6l9MYg
- UNQAntNU5QFB5hXhUOWR5wSLt2QliOwADge0pOWY8Gi2M9Icutry80m+MEfpOEfCZYsMJhEyc
- x+iggGHKcvWXXdec//jFVZgEwXRR81SgcaRiRhL1USDs3vIgOSfcp/SzsyZVK4cvtCJYoHd9H
- 1QkWgbZNnJ+o1VfxoH5xnk+J+FVP5y9khJBrSEp0uAVhb6sPjszPaUwOk/tLiCfAh21X/6xoy
- a2ZtCqxoUkNDEikoB6s6qczSbdegqc/wZ0sgHruQDd9dmRsae1bYAEoTKdCghs0wYLOYZAICM
- o0hdx3uz+GhwbpgNZzfM+lXJq2pqKPt1/y3GKwYqvNtyDJ/4ojj9yJINEX9KzR04xa2QwGssS
- VvNg6RoequqA6dOrKeDzlz0WlKz43fDuSy9LlIYT838ZhaKBpeJVclcT9YK8Ne0vouptTHC5J
- YBdSPpw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
 
-Working with a repo that used to be all CRLF. At some point it
-was changed to all LF, with `text=auto` in .gitattributes.
-Trying to cherry-pick a commit from before the switchover fails:
-
-$ git cherry-pick -Xrenormalize <commit>
-    fatal: CRLF would be replaced by LF in [path]
-
-Whenever crlf_action is CRLF_TEXT_XXX and not CRLF_AUTO_XXX,
-SAFE_CRLF_RENORMALIZE must be turned into CRLF_SAFE_FALSE.
-
-Reported-by: Eevee (Lexy Munroe) <eevee@veekun.com>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
 
-Thanks for reporting.
-Here is a less invasive patch.
-Please let me know, if the patch is OK for you
-(email address, does it work..)
+Hi Johannes,
 
- convert.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+If you need to re-roll your 'js/difftool-builtin' branch, could
+you please squash this into the relevant patch.
 
-diff --git a/convert.c b/convert.c
-index be91358..526ec1d 100644
---- a/convert.c
-+++ b/convert.c
-@@ -286,7 +286,9 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 			checksafe = SAFE_CRLF_FALSE;
- 		else if (has_cr_in_index(path))
- 			convert_crlf_into_lf = 0;
--	}
-+	} else if (checksafe == SAFE_CRLF_RENORMALIZE)
-+		checksafe = SAFE_CRLF_FALSE;
-+
- 	if (checksafe && len) {
- 		struct text_stat new_stats;
- 		memcpy(&new_stats, &stats, sizeof(new_stats));
+Thanks!
+
+Also, due to a problem in my config.mak file on Linux (a commented
+out line that had a line continuation '\', grrrrr!), gcc issued a
+warning, thus:
+
+  builtin/difftool.c: In function ‘run_dir_diff’:
+  builtin/difftool.c:568:13: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+       warning("");
+               ^
+I am not sure why -Wno-format-zero-length is set in DEVELOPER_CFLAGS,
+but do you really need to space the output with an an 'empty'
+"warning:" line? (Just curious).
+
+ATB,
+Ramsay Jones
+
+ builtin/difftool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 3480920..830369c 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -170,7 +170,7 @@ struct path_entry {
+ 	char path[FLEX_ARRAY];
+ };
+ 
+-int path_entry_cmp(struct path_entry *a, struct path_entry *b, void *key)
++static int path_entry_cmp(struct path_entry *a, struct path_entry *b, void *key)
+ {
+ 	return strcmp(a->path, key ? key : b->path);
+ }
 -- 
-2.10.0
-
+2.9.0
