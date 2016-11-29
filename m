@@ -2,69 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 895EB1FF6D
-	for <e@80x24.org>; Tue, 29 Nov 2016 09:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF23A1FF6D
+	for <e@80x24.org>; Tue, 29 Nov 2016 09:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756703AbcK2JwF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 04:52:05 -0500
-Received: from mail-wj0-f169.google.com ([209.85.210.169]:35323 "EHLO
-        mail-wj0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751522AbcK2Jv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 04:51:57 -0500
-Received: by mail-wj0-f169.google.com with SMTP id v7so139951437wjy.2
-        for <git@vger.kernel.org>; Tue, 29 Nov 2016 01:51:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GmG0PuNnP4siJvdMb0MXoIPVv9a72rKQx/evu5rkn8o=;
-        b=emyEqD/Th8EkZ7xY5CGYNOFwxt5SQEqYu5MTawJ2qqK+jTp15ZDaD8ObScCxEYUfHd
-         xnKKHvYpX4AeP1pt5/JHrMye6MfZW/09a2silBRnNlD2UR+DAWupe3eWtslzp3CaBpmn
-         D8VcEJUEDd/BfHTJfyNUACIWDp3NygHfxKeTsLou3rtlb7GA5FfUv5zu7tiNewWaKEIi
-         WhQdcfwpJR/tvoZJ+bYaDZOzHtK293d5G3dT7bsdbvnniOz+UVmLM4ELzTThiOStXZjx
-         2jMAw0gt4b6JAYsyTVHAD9c9w0MXLfPC7xvFVbwSQvhLIKR+Fqd2qKSuS356T3B/h4JG
-         cURQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GmG0PuNnP4siJvdMb0MXoIPVv9a72rKQx/evu5rkn8o=;
-        b=YhVzEnKj9cJ5Yad4VF18FhotYMKxdz7Kcv7dDOVgi+vBGS2TF3CyvJsbyHVMVwyDvo
-         39u2CXgaOa/EOsCYgE2PKyt3wJSvYydt76a1ekp1EiiGgFDM0Tl8yP+XhOUO0VyM5mcf
-         3M+iMIw+XmnQxMQzV2bwpnaYvRGZ9j95qenDvZBmehjD7GLZxOtbWdHMeC8mUXUqqcso
-         ZoQ2qjOsoVCJN5XZxEaad08bG3mDmQ9gRn7OgqYQ3xtluLIXBf10W2ur0QDO97AqrIvP
-         STempz0Btw1DwgEmJY8tKoGoLx8zCtpbYRTlq82ajhyX4fOtR/4dTPbLQ365s1va7o9M
-         Gl1Q==
-X-Gm-Message-State: AKaTC02lgINAgwYJHr2EY3N37f0FwqVNJEkCMPqpCKoNWeQwvtlSEbOFQx11VFn0X2c7Ecr6omCASz6ek/GH0Q==
-X-Received: by 10.194.246.170 with SMTP id xx10mr3231558wjc.174.1480413116065;
- Tue, 29 Nov 2016 01:51:56 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.80.183.136 with HTTP; Tue, 29 Nov 2016 01:51:55 -0800 (PST)
-From:   Alessandro Renieri <a.renieri@gmail.com>
-Date:   Tue, 29 Nov 2016 10:51:55 +0100
-Message-ID: <CAKXGFGMGqnGJSEBx8=FXfG3pGEcpFGjLNUH23VTo4LEo75kTKg@mail.gmail.com>
-Subject: gitk crashes on RHEL
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+        id S1754241AbcK2J5d (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 04:57:33 -0500
+Received: from mail.zhinst.com ([212.126.164.98]:46972 "EHLO mail.zhinst.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752167AbcK2J5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 04:57:31 -0500
+Received: from ziws08.zhinst.com ([10.42.0.7])
+        by mail.zhinst.com (Kerio Connect 9.2.0) with ESMTP;
+        Tue, 29 Nov 2016 10:57:25 +0100
+From:   Tobias Klauser <tklauser@distanz.ch>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH] RelNotes: typo fix in 2.11.0 notes
+Date:   Tue, 29 Nov 2016 10:57:25 +0100
+Message-Id: <20161129095725.13280-1-tklauser@distanz.ch>
+X-Mailer: git-send-email 2.11.0.rc3.5.g7cdf2ab.dirty
+In-Reply-To: <xmqqinrdlr3o.fsf@gitster.mtv.corp.google.com>
+References: <xmqqinrdlr3o.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Redhat Enterprise gitk returns the following error when launched:
+s/paht/path/ in the "Backwards compatibility notes" section of the
+2.11.0 release notes.
 
-Error in startup script: unknown color name "lime"
-    (processing "-fill" option)
-    invoked from within
-"$progresscanv create rect -1 0 0 $h -fill lime"
-    (procedure "makewindow" line 201)
-    invoked from within
-"makewindow"
-    (file "/..../bin/git-exe/bin/gitk" line 12434)
+Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
+---
+ Documentation/RelNotes/2.11.0.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The fix is to change lime with {lime green}
+diff --git a/Documentation/RelNotes/2.11.0.txt b/Documentation/RelNotes/2.11.0.txt
+index b7b7dd361ef0..4c8a9be60f52 100644
+--- a/Documentation/RelNotes/2.11.0.txt
++++ b/Documentation/RelNotes/2.11.0.txt
+@@ -5,7 +5,7 @@ Backward compatibility notes.
+ 
+  * An empty string used as a pathspec element has always meant
+    'everything matches', but it is too easy to write a script that
+-   finds a path to remove in $path and run 'git rm "$paht"' by
++   finds a path to remove in $path and run 'git rm "$path"' by
+    mistake (when the user meant to give "$path"), which ends up
+    removing everything.  This release starts warning about the
+    use of an empty string that is used for 'everything matches' and
+-- 
+2.11.0.rc3.5.g7cdf2ab.dirty
 
-Regards
+
