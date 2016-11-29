@@ -2,166 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C65231FC96
-	for <e@80x24.org>; Tue, 29 Nov 2016 19:15:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8670B1FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 19:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753367AbcK2TPo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 14:15:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60312 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754265AbcK2TPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 14:15:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 154454E249;
-        Tue, 29 Nov 2016 14:15:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1iH4aRS50Juj
-        nZOAP6qSVlYZRPE=; b=i3NgoC2NylTMdh1KYhQ3Ll3h+/bLjlMoVYf+qwuZRpUb
-        9Uur4DBcQf0bAi43wHCrkeb08TjkPCT2mCC9pu2wunpMowp/yme+0mBvUF8+PbBQ
-        DRKg6yVFxWqjfm9jwco6gaSgAX3lsLh7IGe8Ascx/lgT222+rkM8Xfrz95wTkuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kNyoYU
-        6Ew/jtpdQDRES35XBCHhLEIvJyRmicXwfWhG23gkIz4Oe8ZmkrNjp16ILxsHE9cw
-        qR6iftCQqVwW3B0Nz1mMg4nSwFgipJDuyiLowxlkEcHcABmnB0JMFnR15n2RBOEL
-        04R0nkwZUnnCPgadvOhWrmmTVFUaz/J+xFsFM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EF26D4E248;
-        Tue, 29 Nov 2016 14:15:36 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64A094E247;
-        Tue, 29 Nov 2016 14:15:36 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC v1 1/1] New way to normalize the line endings
-References: <5502e894-bb22-e8b9-ab7a-49346d238283@web.de>
-        <20161127162245.11757-1-tboegi@web.de>
-Date:   Tue, 29 Nov 2016 11:15:35 -0800
-In-Reply-To: <20161127162245.11757-1-tboegi@web.de> (tboegi@web.de's message
-        of "Sun, 27 Nov 2016 17:22:45 +0100")
-Message-ID: <xmqqshqaf67c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1755391AbcK2TVn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 14:21:43 -0500
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:35307 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752169AbcK2TVl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 14:21:41 -0500
+Received: by mail-qk0-f171.google.com with SMTP id n204so185537020qke.2
+        for <git@vger.kernel.org>; Tue, 29 Nov 2016 11:21:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3ELE6ldY7J7uSfB4+1zZCRy0ho0xwE2jrSM3Ps9gzFo=;
+        b=EG7RlermHYB/hs14CbFpHMOZbFLTruACUft8JTV7Y9vU00SlDq3zowQuaaBIqRSV/m
+         e4ENKQtGFd+hD3bF2sNZ8uWblRQAER4sFTX2yKEVzPMdSDnvZqi4OvefMhSdF3YnQB5+
+         9s2FL80hgOI/dv2mO/df1a1q5Wj6kZVNbCd5efrdmn0F4R3NkgjW3qhQNKFw0U+1Z8RL
+         29zZhaI0z+gfEL9fH0MwKQdUmydISE7juosru4O4j+w9gVyW17gL1XzVUmmybGqXa7hu
+         gYw6zBg9JtgODnsAX8LI+AURE+zltDkE3kIriBUBIhEp0jwodevBOJCL61MxEnfXcGjr
+         wW7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3ELE6ldY7J7uSfB4+1zZCRy0ho0xwE2jrSM3Ps9gzFo=;
+        b=KEUCmWcSjHVz8nvC64eO1aS+U/guaugB5VGd/xWmJlTBVNDtXcQtyDbg4eDjkn1pff
+         nxREIiJubiyEWGIlqSsTGlYYIb213lywINiky34yIaxRwpH9qJ+tJ08HqBIZvgJw1gZy
+         8w6upHeZ3ylTZhGMfLMPXXkNBdy3jpQMSo2b2FrfWblU5Qi4UzdGeuXPsNDOeytirw71
+         Vy9WlrKKjrfX6VKcdzj8KN6DtvkYbTZi9Za2W4lSCqWbuyljUQ9DlsWeh9IaiByFCjsX
+         kEOGGRvn1wGVfCVqOnb95GtNmbMACZZBgbYlKLi9Jl5cV2A5epviOKO4ov7XjqJhmzRb
+         tM0A==
+X-Gm-Message-State: AKaTC036/S2Cx41UkJvPLFp+3bC1pD9by/ixV05WHaUwg5LpalbTw5NOlSwVhD99OiTkaM+B1x5fdFMAaYLsN6uW
+X-Received: by 10.55.186.3 with SMTP id k3mr28106957qkf.47.1480447299678; Tue,
+ 29 Nov 2016 11:21:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 350D1B78-B668-11E6-9C57-E98412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.12.147.188 with HTTP; Tue, 29 Nov 2016 11:21:39 -0800 (PST)
+In-Reply-To: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
+References: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 29 Nov 2016 11:21:39 -0800
+Message-ID: <CAGZ79kZbBufaKoJyTQa_DseE5GofMAwb=ujtEYn35r9VEwdJ2g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2016, #06; Mon, 28)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
-
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Mon, Nov 28, 2016 at 4:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Sincec commit 6523728499e7 'convert: unify the "auto" handling of CRLF'
-> the normalization instruction in Documentation/gitattributes.txt
-> doesn't work any more.
-
-Aside from s/Sincec/Since/, the above made it sound as if the named
-commit was a regression that wants to be reverted, at least to my
-first reading.  I think you want to be a bit more clear that we
-updated the world order and made it a better place with that commit,
-and examples in the doc need to be updated.  To convince readers
-that, I think you would need to explain things like why the old way
-illustrated in the example was bad, and why the new way is better.
-
-> Update the documentation and add a test case.
+> * sb/push-make-submodule-check-the-default (2016-10-10) 2 commits
+>  - push: change submodule default to check when submodules exist
+>  - submodule add: extend force flag to add existing repos
 >
-> Reported by Kristian Adrup
-> https://github.com/git-for-windows/git/issues/954
+>  Turn the default of "push.recurseSubmodules" to "check" when
+>  submodules seem to be in use.
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  Documentation/gitattributes.txt |  7 +++----
->  t/t0025-crlf-auto.sh            | 29 +++++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+), 4 deletions(-)
+>  Need to rebase on hv/submodule-not-yet-pushed-fix and then consider
+>  merging to 'next'.
+
+The rebase is without merge conflicts, so I assume there is no
+work needed by me here.
+
+> * sb/submodule-intern-gitdir (2016-11-22) 5 commits
+>  - SQUASH
+>  - submodule: add embed-git-dir function
+>  - test-lib-functions.sh: teach test_commit -C <dir>
+>  - submodule helper: support super prefix
+>  - submodule: use absolute path for computing relative path connecting
 >
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-> index 976243a..1f7529a 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -227,11 +227,10 @@ From a clean working directory:
-> =20
->  -------------------------------------------------
->  $ echo "* text=3Dauto" >.gitattributes
-> -$ rm .git/index     # Remove the index to force Git to
-> -$ git reset         # re-scan the working directory
-> +$ git ls-files --eol | egrep "i/(crlf|mixed)" # find not normalized fi=
-les
+>  A new submodule helper "git submodule embedgitdirs" to make it
+>  easier to move embedded .git/ directory for submodules in a
+>  superproject to .git/modules/ (and point the latter with the former
+>  that is turned into a "gitdir:" file) has been added.
+>
+>  Need to read it over again, deal with SQUASH, and may ask for a
+>  reroll.
 
-Does this step help anything?  I do not see anything in the later
-steps that the user uses the finding from the output of this step to
-affect the end result.
+Ok, I looked over it again and I may see some issues:
+* it is applicable to all submodules recursive by default, i.e. really
+  "all submodules reachable from this superproject". I anticipate
+  this to be the most relevant use case (i.e. as a preparatory step
+  for having e.g. git-checkout work), but there are no other commands
+  yet that are recursing into submodules recursively by default. So
+  a discussion/disagreement on the default may come up.
+  (We also may want to see a --[no-]recursive flag)
 
-> +$ rm .git/index     # Remove the index to re-scan the working director=
-y
-> +$ git add .
+* The output is okay-ish, but could be better as it is a mix of
+  relative and absolute path:
 
-"A clean working directory" usually means all paths in the index
-match what's in the working tree but this requires a bit more than
-that, as this step ends up adding untracked and unignored paths.
+    Migrating git directory of plugins/cookbook from
+    '/absolute/path/here/gerrit/plugins/cookbook/.git' to
+    '/absolute/path/here/gerrit/.git/modules/plugins/cookbook/'
 
->  $ git status        # Show files that will be normalized
-> -$ git add -u
-> -$ git add .gitattributes
->  $ git commit -m "Introduce end-of-line normalization"
->  -------------------------------------------------
-> =20
-> diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
-> index d0bee08..4ad4d02 100755
-> --- a/t/t0025-crlf-auto.sh
-> +++ b/t/t0025-crlf-auto.sh
-> @@ -152,4 +152,33 @@ test_expect_success 'eol=3Dcrlf _does_ normalize b=
-inary files' '
->  	test -z "$LFwithNULdiff"
->  '
-> =20
-> +test_expect_success 'prepare unnormalized' '
-> +
-> +	> .gitattributes &&
+  On the other hand this seems like what the user may need,
+  as it is the maximum for trouble shooting
 
-Lose SP before ".gitattributes".
+* As this is a subcommand we do not need to add it to command-list.txt
+  However we may want to discuss if some submodule commands are
+  porcelain (all except for the new embedgitdirs?) and if this new command
+  is plumbing. We could also argue the submodule--helper (which needs
+  listing in command-list.txt as a plumbing command?) is the plumbing
+  equivalent and the "submodule embedgitdirs" is the porcelain.
 
-> +	git config core.autocrlf false &&
-> +	printf "LINEONE\nLINETWO\r\n"     >mixed &&
-> +	git add mixed .gitattributes &&
-> +	git commit -m "Add mixed" &&
-> +	git ls-files --eol | egrep "i/crlf" &&
-> +	git ls-files --eol | egrep "i/mixed"
-> +
-> +'
+* any other part where we need to add documentation for a new command?
 
-Any particular reason why we must use egrep not grep here?
+FYI: I have a series cooking internally that adds a new page in
+Documentation/submodules that introduces the concept of submodules,
+which then allows Documentation/git-submodule.txt to be focused on the
+actual command and its options.
 
-> +
-> +test_expect_success 'normalize unnormalized' '
-> +	echo "* text=3Dauto" >.gitattributes &&
-> +	rm .git/index &&
-> +	git add . &&
-> +	git commit -m "Introduce end-of-line normalization" &&
-> +	git ls-files --eol | tr "\\t" " " | sort >act &&
-> +cat >exp <<EOF &&
-> +i/-text w/-text attr/text=3Dauto         LFwithNUL
-> +i/lf    w/crlf  attr/text=3Dauto         CRLFonly
-> +i/lf    w/crlf  attr/text=3Dauto         LFonly
-> +i/lf    w/lf    attr/text=3Dauto         .gitattributes
-> +i/lf    w/mixed attr/text=3Dauto         mixed
-> +EOF
+>
+> * dt/empty-submodule-in-merge (2016-11-17) 1 commit
+>  - submodules: allow empty working-tree dirs in merge/cherry-pick
+>
+>  Waiting for review
 
-Use <<-EOF to indent the above 7 lines?
+That slipped by me. Will review.
 
-> +	test_cmp exp act
-> +
-> +'
-> +
->  test_done
+> * sb/attr (2016-11-11) 35 commits
+>  - completion: clone can initialize specific submodules
+>  - clone: add --init-submodule=<pathspec> switch
+>  - submodule update: add `--init-default-path` switch
+
+I may end up rerolling these top three patches as its own series
+again without the underlying pathspec support.
+
+I will investigate if we need the mutex at all for the attribute
+code or if we can initialize all attrs (in the pathspecs) before the
+threaded preload_index takes place. That sounds cleaner to me,
+but I do not prioritize it as high.
+
+>  Waiting for review.
+
+There was some review by Duy and Brandon, I may reroll with just their
+issues addressed.
+
+Thanks,
+Stefan
