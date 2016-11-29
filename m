@@ -2,106 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D14AC1FC96
-	for <e@80x24.org>; Tue, 29 Nov 2016 20:16:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40A781FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 20:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933782AbcK2UQd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 15:16:33 -0500
-Received: from mout.web.de ([212.227.15.3]:49821 "EHLO mout.web.de"
+        id S1756530AbcK2UhX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 15:37:23 -0500
+Received: from mout.gmx.net ([212.227.17.20]:60060 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933758AbcK2UQa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 15:16:30 -0500
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LdalO-1ccarg1RLe-00ik63; Tue, 29
- Nov 2016 21:16:02 +0100
-Date:   Tue, 29 Nov 2016 20:16:00 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+        id S1755690AbcK2UhW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 15:37:22 -0500
+Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiDHj-1cXwPT0NcZ-00nOqJ; Tue, 29
+ Nov 2016 21:37:12 +0100
+Date:   Tue, 29 Nov 2016 21:36:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, eevee.reply@veekun.com
-Subject: Re: [PATCH v1 1/1] convert:  git cherry-pick -Xrenormalize did not
- work
-Message-ID: <20161129201600.GA14333@tb-raspi>
-References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
- <20161129163023.23403-1-tboegi@web.de>
- <xmqq7f7mgmb9.fsf@gitster.mtv.corp.google.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming
+ builtin
+In-Reply-To: <xmqqa8cjjtfn.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1611292128340.117539@virtualbox>
+References: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net> <alpine.DEB.2.20.1611242211450.117539@virtualbox> <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net> <alpine.DEB.2.20.1611251201580.117539@virtualbox> <20161125171940.rizbqyhsygdsoujr@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1611251841030.117539@virtualbox> <20161125174721.f35mzc276kdwakzm@sigill.intra.peff.net> <alpine.DEB.2.20.1611261320050.117539@virtualbox> <20161126161907.xol62zytn2jb45gh@sigill.intra.peff.net> <alpine.DEB.2.20.1611261400300.117539@virtualbox>
+ <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net> <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1611281830040.117539@virtualbox> <xmqqa8cjjtfn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq7f7mgmb9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:vacNAMXOMb8HhVsBk2jv3wgyyRrhxnTdV/klrX2A72BvfIzFSCd
- Zi3Ud93yWt/df2cLtfUrIpRNvleLh+Rs5Qu4tDPGBlnp0gWoz8tzCA4s9XpzO6PLftxj8WQ
- tgRsK/PmsY2gt7hMtW2X5p1L9lJJuDIMLStLPn3xPI/+vaR4kiDGAWjxbyFwzzygQd8NcyU
- IPqPqylm8Tgagu83uqm9Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4zgO1MZZXwU=:A02epDCIgpcNaaLjOcuO/7
- j/6pYhu/OBME56ACiT9HrpDqc/E+FiMyIuh5ZW+d57wSB3J7lpZ90D8FGYcaQ7p8l1nes7+J7
- thUZSqzh55Y1JUR5P4vEVTWgLQRXqrCQTTYDPnSgC7s4rDPQ+1FikK4SriNairf8julHZK3yF
- v85nq4Uq+2lUp/ijlgjHeUpxRJN5+2NFX7Tz7W5SKOlr1QOySb1HYw+sq6Mfnqp5VS/abs9Yd
- V2pS3AEIWpmL0hl0PfiB0/q+4NkOonBXoHcgAOzgNK+xlu+HdOcAcoegXP7YLzrPsD9ohHYEN
- 1McSIS6PynP3SW0DmzOxZjAz8Pm+KR2vINaMgGX981Ii46cqGrKwF6536KueK7ngo9qsWnBPg
- W+liDq1T8wQdMkUvaisgnyKb4un+r3TQLXsaqAs3YxvjLOpseq5fXgcCcprjBkWSOdryNi78l
- GQPcP9kVKSo+mWeJCX1jbeYISsxYwIPALZq7Inl3GTaS4i19uPyxagE9tcALggCf2oRnjan55
- a2iT9A3+/v8BgvUYeqkmDK1asnibY36uJ12crQEaDh9ZM8wtqnBeThjJM9LGeZa3fHoL6WsHC
- dCyJAlhQC6t5n5WUvqgcI4NZTivdrE6Tp9ftKwaU2dJZD6BKVZf2rdG9VXGvuWC+EQiFRgiqP
- Z+u5CSVL4eXt56o4yhaJOm7lbZoKQk9KrfmKKR7ORv4WwV/IWjHY8MOMMBo9UKaQ8LtwmR2aZ
- 3+w3AhFzsNmRLZH7SBKWc+ynFgpueyju0EO4updu3zNWVvbnxViLYiDUwMU=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:9gyBqffq1PDgFgRbYl20tPmgK4QjdPmSJK8QIxwSX98gtxkSklf
+ Zxrg8Nz8suJppSy5sDayVk0QMO03D2XmN++QGAbSRpqe0L0FUI5BtDGmio4/54YiyF+u3Tq
+ r3gy/gORAcEiQqTtPiyvv6wacCv2whpi+e+CB35HtcPBCgbEWKKSZj2QmUPmsml6QlOvGle
+ 3JNnvhy5TYkJlN3s8yg3A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:up1AHnI3iXY=:nxVBrcWYQMZmqmKfeH02iF
+ KjySPTNQTNi6x+b5NV7nEG0Y9IFClfJsD2gXg3S8RJZFTikAKXAOJR/o1dTgBzzaXH3m/PjWP
+ zNuTg+6oaCe+o45ZGfkCBe09NRm7aXA2y5TLg2oc7pI5w96r/75x3vJh8s248qMkS4PBqeHxX
+ hTYxxHYvO/3fPDHlUkwS7xMWeHpPPEvi7TtyRAVV79GKvFdtwqZL+fTiE+b6tGBCXJDxkwGjA
+ sBxroaf5kn0lf6SfApjFr3pvHxc47tX/NIWQ2yHQnh8voeMe6A4OL9jbWStSE797f9k+F3IAP
+ /yboAq3B96LRVJQN2UQzpBsPUOemgJ/2na4qeFIjpPd4t8o+IT9kkIvZA7WNw2kga/rih+Wk/
+ /gxVVZOcCKH7SnhHEsO+0kzd4IpQon8bH/SR5Wd50wewGagsyGC8Z/nPUx2I7/OaG8OYgKmWZ
+ tLj//Y00vYq+gy3tK4QIMsuCjxw9jVOxguhIMEc6o7wwU9VNHD5AiUFpmS0mAwPBKstOMlTBT
+ ZStCodcxSRmupVgWr6dolQPGIJSirKH8HcRyriDQDA31PFK4kK3y1dvH9+EXC13PLm3z3RE+I
+ drcxgq5qNy9asZIlQIJO+SJUcHq4LqJO6hVMROBQtJapv94W55uNx+71YD3yk3J4d5rmPdpds
+ 9i3DCNWtQ11h3VqTvo+w+7E3uNeBGc1dhrc1Y5bZZLCLdVD9HMdFHVri8rgyIMUX4TOa6f4DP
+ JjTGXxH+gyODeNqZRZG1uJapJbvgAipl4/fFP+CGc4VNjX/aPUay39apWikOgwXAZDajHPk/x
+ 2J4W6ko
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 29, 2016 at 10:42:18AM -0800, Junio C Hamano wrote:
-> tboegi@web.de writes:
+Hi Junio,
+
+On Mon, 28 Nov 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > From: Torsten Bögershausen <tboegi@web.de>
+> > However, I have been bitten time and again by problems that occurred only
+> > in production, our test suite (despite taking already waaaaaay too long to
+> > be truly useful in my daily development) was simply not good enough.
 > >
-> > Working with a repo that used to be all CRLF. At some point it
-> > was changed to all LF, with `text=auto` in .gitattributes.
-> > Trying to cherry-pick a commit from before the switchover fails:
-> >
-> > $ git cherry-pick -Xrenormalize <commit>
-> >     fatal: CRLF would be replaced by LF in [path]
+> > So my plan was different: to let end users opt-in to test this new beast
+> > thoroughly, more thoroughly than any review would.
 > 
-> OK.  That's a very clear description of the symptom that can be
-> observed from the surface.
+> I agree with that 100%.  
 > 
-> > Whenever crlf_action is CRLF_TEXT_XXX and not CRLF_AUTO_XXX,
-> > SAFE_CRLF_RENORMALIZE must be turned into CRLF_SAFE_FALSE.
+> [...]
 > 
-> Aside from needing s/CRLF_SAFE/SAFE_CRLF/, this however lacks
-> "Otherwise, because of X and Y, Z ends up doing W" to explain
-> the "must be" part.  Care to explain it a bit more?
+> > And for that, environment variables are just not an option. I need
+> > something that can be configured in a portable application, so that the
+> > main Git for Windows installation is unaffected.
+> 
+> I am not sure I follow here.  
+> 
+> Are you saying that the users who are opting into the experiment
+> will keep two installations, one for daily use that avoids getting
+> hit by the experimental code and the other that is used for testing?
 
-Thanks for the review - how about this:
+I have obviously done a real bad job at explaining the Windows situation
+well enough.
 
+Many, many users have multiple installations of Git for Windows. If you
+have GitHub for Windows and installed the command-line tools: you got one.
+If you installed Git for Windows, you got another one. If you installed
+Visual Studio, chances are you have another one. If you got any number of
+third-party tools requiring Git functionality, you have another one.
 
+They all live in separate directories that are their own little pseudo
+Unix root directory structures, complete with etc/, usr/, var/.
 
+Users do not necessarily keep track, or for that matter, are aware of, the
+multiple different installations.
 
-convert: git cherry-pick -Xrenormalize did not work
+Obviously, I do not want any installation other than the one the user just
+installed to pick up on the configuration.
 
-Working with a repo that used to be all CRLF. At some point it
-was changed to all LF, with `text=auto` in .gitattributes.
-Trying to cherry-pick a commit from before the switchover fails:
+So the suggestion by both you and Peff, to use an environment variable,
+which is either global, or requires the user to set it manually per
+session, is simply not a good idea at all.
 
-$ git cherry-pick -Xrenormalize <commit>
-    fatal: CRLF would be replaced by LF in [path]
+> > My original "create a file in libexec/git-core/" was simple, did the job
+> > reliably, and worked also for testing.
+> 
+> It may have been OK for quick-and-dirty hack during development, but
+> I do not think it was good in anything released.
 
-Commit 65237284 "unify the "auto" handling of CRLF" introduced
-a regression:
+Well, you say that it is quick and dirty.
 
-Whenever crlf_action is CRLF_TEXT_XXX and not CRLF_AUTO_XXX,
-SAFE_CRLF_RENORMALIZE was feed into check_safe_crlf().
-This is wrong because here everything else than SAFE_CRLF_WARN is
-treated as SAFE_CRLF_FAIL.
+I say it is the only viable solution I saw so far. All proposed
+alternative solutions fall flat on their bellies, simply by not working in
+all the cases I need them to work.
 
-Solution: Turn SAFE_CRLF_RENORMALIZE into SAFE_CRLF_FALSE before
-calling check_safe_crlf().
+As I said elsewhere: I look for a correct solution first, and then I
+thrive to make it pretty. You start the other way round, and I do not have
+time for that right now.
 
-Reported-by: Eevee (Lexy Munroe) <eevee@veekun.com>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+Ciao,
+Dscho
