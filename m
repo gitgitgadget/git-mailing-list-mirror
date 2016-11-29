@@ -2,94 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53BDB1FC96
-	for <e@80x24.org>; Tue, 29 Nov 2016 13:30:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 354E71FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 13:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756610AbcK2Nag (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 08:30:36 -0500
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:34276 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754909AbcK2Naf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 08:30:35 -0500
-Received: by mail-qk0-f194.google.com with SMTP id y205so17505070qkb.1
-        for <git@vger.kernel.org>; Tue, 29 Nov 2016 05:30:34 -0800 (PST)
+        id S1754976AbcK2N4z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 08:56:55 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33641 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754053AbcK2N4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 08:56:53 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 3so16520823pgd.0
+        for <git@vger.kernel.org>; Tue, 29 Nov 2016 05:56:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=MrTioOrA+fi5Dy7X5TyqGuayiF0VPR58BPGBSoza7Dk=;
-        b=Lt8ro+FRVM2xEamJB0ztYnRpvPFLe/VPfhVC1xs3CGOZK6YAsk+TFexJpE/VjyR2Do
-         NEacnDSzwZB+cumIkD2aEb6slxDBhUATaF4E72ytkRpWI6H1vnibs/bi5sXZ1cYhm7hM
-         iWw1LvkKtzwVhDbBZNKu0zyfh+qT6Ap1Z1GSOn7A112uNf7BgQdYvqeamaSCEE6ET8hK
-         FE48yiCFPT1UHZayLcdZDfsUi1QpgKbJGfYvh9Y453hIUNEweeslV85wGAjJK/i2bPWk
-         X2643IpAZmQl1erKPjADx4eQDRQ6C7nYSQzIn1ihxmkrzD2lazt7qaA4jBbMPKKQS0as
-         h5xA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EWUUxWbCagVhe/hCj4y7mBpKB1fkH2OG+BPqppZCHlg=;
+        b=S0jiO3+Rw5K0KMcr4n+2RlluJbqCKRIOHvpFl9tmdBn1AqTvDzH1Ri3EJuBAyOjixy
+         mU9qtrrUAZqt65KUCzTwri9Ph1PT+GPVKs5DEuutKFkreHXML+nmpB7koSeq/6rkqu12
+         yFYAaY1DpnExjgwBxJM8gL+URhRQOxZZfY+cjNnEvz+e/v6l/trNzV4xokVsego/ukrO
+         Y/kjnfLoZAayl2kMTblZiWsd2Pyhriw0el+v25jMI9FmL8Edulh0ui+zar6ukZ3VQzK2
+         3+Rxy0zov0CbTP5N1QZuabAOvMCTS1oewo5MNZHdvm/BAH5l32I+xrUDawApYBwSsJch
+         xfAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=MrTioOrA+fi5Dy7X5TyqGuayiF0VPR58BPGBSoza7Dk=;
-        b=Txry1XFY7ehWBb9OZ1vgCMeWxiZQTMsLXABVo+n5FBAo09sy7AuZY9zyN0o33BBtsl
-         63JqZLEun0EM4ssNvQjeKvy0z8SujrAMn8i2cUTQZE7Lc3E3dA/JyNa0m/6+DT8ey1TY
-         4P1KK2yj4QWNGkeAB5QQoR83GSjyi9o1rto1bqesNY/2ObX8HbRScuGA/RtVGge6Z+dy
-         4c/5lR4yk9W8Ksr+cjSFGzw4diBfS4SPnUQKpMcX6SGgxixPdMV1TqcfyN96plddZ2a9
-         boR8T5pW7cg9aDa2q4gx6YeMuvt67jUuXZ3rD3hMYFn8kAXHmmB9EhBggJK4e0GF07w2
-         rplg==
-X-Gm-Message-State: AKaTC0286ZCslwGpKuRE9ag5e9vUWJ2iIRtecp30czEk9KbBMOawzgvKSXI93T/dK16+itNL4H8VosOVHyuceg==
-X-Received: by 10.55.68.80 with SMTP id r77mr26266223qka.318.1480426234196;
- Tue, 29 Nov 2016 05:30:34 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.150.2 with HTTP; Tue, 29 Nov 2016 05:30:33 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 29 Nov 2016 21:30:33 +0800
-Message-ID: <CANYiYbHYaOUwJo_8Vc4vAYatC+Xu09fWLw5q+T7W_7_xwuD7Nw@mail.gmail.com>
-Subject: [GIT PULL] l10n updates for 2.11.0 round 3 with ru and ca translations
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EWUUxWbCagVhe/hCj4y7mBpKB1fkH2OG+BPqppZCHlg=;
+        b=FApFHbfiqfvZfEew+FknkpnBt/dAB0n5M6OzhQ57ZsV4XN8K8ssckMCOAYjNYDf3Mo
+         BzOcGSqvCCog+pXmw8HjvnRXl2jI5xZje35U7fW48rCsRxy3XHJPczbC0So6bZYS3a9/
+         blp4DSFritpHVeLotH4WTXly9bQROfu5m9qr2yY9qHPbtL6MYCpS7N7J5OhLKY02jZSQ
+         wI37V31n2xhLia5LqG4ufMMcxmTHuDOFBpSNCJuNp61zXvED2YCvtBaFLAFNI5vUReiv
+         EInK8hZ9CRZ117z46ZAZn+KWQ96Qg/4kJJg79eApChuDKYWw43W/7AqVZzyPVKW99UH+
+         q/oQ==
+X-Gm-Message-State: AKaTC0139kVKHxINhuPv2a1n6O9w6XryUnFpei2DW+DnEjqsRZjgKaAztAH7I5o68K0J8A==
+X-Received: by 10.84.171.1 with SMTP id k1mr62510420plb.169.1480427812935;
+        Tue, 29 Nov 2016 05:56:52 -0800 (PST)
+Received: from ash ([115.73.175.91])
+        by smtp.gmail.com with ESMTPSA id i76sm95499376pfk.89.2016.11.29.05.56.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Nov 2016 05:56:52 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 29 Nov 2016 20:56:46 +0700
+Date:   Tue, 29 Nov 2016 20:56:46 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 00/11] git worktree (re)move
+Message-ID: <20161129135646.GA19797@ash>
+References: <20161112022337.13317-1-pclouds@gmail.com>
+ <20161128094319.16176-1-pclouds@gmail.com>
+ <xmqqwpfnidxm.fsf@gitster.mtv.corp.google.com>
+ <xmqqshqbicga.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8DQDPzZGJXLpTVHVFUeupPpp5e=b9z4m7xceJWrxPfF3Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DQDPzZGJXLpTVHVFUeupPpp5e=b9z4m7xceJWrxPfF3Q@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Nov 29, 2016 at 07:08:16PM +0700, Duy Nguyen wrote:
+> On Tue, Nov 29, 2016 at 3:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >> Does this round address the issue raised in
+> >>
+> >>   http://public-inbox.org/git/alpine.DEB.2.20.1611161041040.3746@virtualbox
+> >>
+> >> by Dscho?
+> 
+> It does not (and is sort of expected), quoting from the commit message
+> 
+>     copy.c: convert copy_file() to copy_dir_recursively()
+> 
+>     This finally enables busybox's copy_file() code under a new name
+>     (because "copy_file" is already taken in Git code base). Because this
+>     comes from busybox, POSIXy (or even Linuxy) behavior is expected. More
+>     changes may be needed for Windows support.
+> 
+> I could "#ifdef WINDOWS return -ENOSYS" for now, which would make it
+> build. "git worktree move" won't work on Windows of course...
 
-Final l10n updates for this release cycle, please pull.
+Another way, as pointed out by j6t, is go with "move within filesystem
+only", at least at the first step. Which is probably a good idea
+anyway so we can concentrate on git-specific stuff before going to
+minor and complicated copy/move details.
 
-The following changes since commit 6366c34b895613482fa32f1abe1c3ca043905ad2:
+If you drop all the "copy.c: " patches and squash this to "worktree
+move: new command", and if Windows rename() can move directories, then
+git should build and new tests pass.
 
-  l10n: de.po: translate 210 new messages (2016-11-28 18:49:25 +0100)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po tags/l10n-2.11.0-rnd3.1
-
-for you to fetch changes up to 082ed8f8706bdb0645ceb13f8ba3cb8ccfb58d5d:
-
-  Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-ru
-(2016-11-29 21:19:43 +0800)
-
-----------------------------------------------------------------
-l10n-2.11.0-rnd3.1: update ru and ca translations
-
-----------------------------------------------------------------
-Alex Henrie (1):
-      l10n: ca.po: update translation
-
-Dimitriy Ryazantcev (1):
-      l10n: ru.po: update Russian translation
-
-Jiang Xin (1):
-      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-ru
-
- po/ca.po | 8907 ++++++++++++++++++++++++++++++++++----------------------------
- po/ru.po | 8340 ++++++++++++++++++++++++++++++++--------------------------
- 2 files changed, 9473 insertions(+), 7774 deletions(-)
-
---
-Jiang Xin
+-- 8< --
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index f114965..d8d0127 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -569,9 +569,9 @@ static int move_worktree(int ac, const char **av, const char *prefix)
+ 				  wt->path, dst.buf);
+ 
+ 		/* second try.. */
+-		if (copy_dir_recursively(wt->path, dst.buf))
+-			die(_("failed to copy '%s' to '%s'"),
+-			    wt->path, dst.buf);
++		if (copy_dir_recursively(dst.buf, wt->path))
++			die_errno(_("failed to copy '%s' to '%s'"),
++				  wt->path, dst.buf);
+ 		else {
+ 			struct strbuf sb = STRBUF_INIT;
+ 
+diff --git a/cache.h b/cache.h
+index a50a61a..2d4edf6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1857,6 +1857,7 @@ extern void fprintf_or_die(FILE *, const char *fmt, ...);
+ extern int copy_fd(int ifd, int ofd);
+ extern int copy_file(const char *dst, const char *src, int mode);
+ extern int copy_file_with_time(const char *dst, const char *src, int mode);
++extern int copy_dir_recursively(const char *dst, const char *src);
+ 
+ extern void write_or_die(int fd, const void *buf, size_t count);
+ extern void fsync_or_die(int fd, const char *);
+diff --git a/copy.c b/copy.c
+index 4de6a11..b232aec 100644
+--- a/copy.c
++++ b/copy.c
+@@ -65,3 +65,9 @@ int copy_file_with_time(const char *dst, const char *src, int mode)
+ 		return copy_times(dst, src);
+ 	return status;
+ }
++
++int copy_dir_recursively(const char *dst, const char *src)
++{
++	errno = ENOSYS;
++	return -1;
++}
+-- 8< --
