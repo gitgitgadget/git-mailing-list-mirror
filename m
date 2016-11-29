@@ -6,95 +6,78 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B05DA1FC96
-	for <e@80x24.org>; Tue, 29 Nov 2016 17:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 118001FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 17:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754194AbcK2Rhr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 12:37:47 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35252 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753668AbcK2Rhq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 12:37:46 -0500
-Received: by mail-qk0-f175.google.com with SMTP id n204so182203349qke.2
-        for <git@vger.kernel.org>; Tue, 29 Nov 2016 09:37:44 -0800 (PST)
+        id S1753668AbcK2Rlg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 12:41:36 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:33873 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750922AbcK2Rlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 12:41:35 -0500
+Received: by mail-qt0-f180.google.com with SMTP id n6so162864625qtd.1
+        for <git@vger.kernel.org>; Tue, 29 Nov 2016 09:41:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=zTk5mBXoZGVRhL7hbrJoepJHXZ4NyAGadLQHRfortxY=;
-        b=QTpAAKHRmE45kkcUZ2hoDjBvw2rD6LxyoAkn09HGflUxWFsnyIu6U3jiTV9GkebL6e
-         vNctjeBErtAKZN4MCUjAKduK9/STyqjEahWgEJ7AXpfESHF1jHb99jmNJjAicvhj0GVi
-         q39MVH5eT4nEn6/Y2V8brDcnhMeZ6GdXmU0rNDNlcm/oJCYZ5WJNAtYopknHWSp4zy8V
-         0bXfxIGxzQ0vwIFVsmSVgcia1z7DId6TrUkuDGLF2De7PsLPwJUgrjkIEvBnUdpO182M
-         KC5rV3sqVuztTFieNySE6BV6uSvhpzRj5whxUq1FQR635Z5w+JeTOkjHhYy+9VJ/+ocy
-         zkQg==
+        bh=yQIzQNI9Xud3zDJJ8NhtAfazEtnpNE1imGf5kuRrVgA=;
+        b=bv14YrCs/HeesoDPl5WKWKgo/XBAr8U05snSd8OlcXVlCv9VuxpbKlyyZloQsbyahY
+         fC3Q5HjIacOZtDlG7tyo6ZijXRKEx81vT0hzgJAF7OPhV+6hFFv79V84W46+TrDCLYtD
+         YNC9dsddsELIIV2FIowSKvwMOunn5q3nbCrpYgk6oGylzUB3aNk2vXKLvgeQs4CQckPT
+         XpxtfE9l5+5HWqFn5tsPKXKsVzY3Gvp1m1BhkM0TJTDU+BuxOUgC4jON1AKvkbWJRb/m
+         SQHyJbMhn7TVkJCzfL3W1aYRIxy4for3NlzVDibPQRHKxH+mAX92LUPZlHfGi3OpdEze
+         Lp2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=zTk5mBXoZGVRhL7hbrJoepJHXZ4NyAGadLQHRfortxY=;
-        b=AS5lJ7gH6Fg5V1iEf7lDo5Out1MDSYNrJKLZSXvN4v05FX95fc6nAMkLDSBwgUcU3g
-         4+Tv8SFti/QKGYT6Q1Nz2qYjF10I+21U+a+c40MlNFb1eS9LiFX/D0mWYXy5CpekKnsW
-         htAM5Y9Xg4sCFi1eRSh75W6pmGFw3nsO44i/CcugrfkQaJGztp3tgjXCMRgbL7GjXKcl
-         a6RCxpcXoa5rkbubxotDVT2o6n8/vGOpkGYnoJAfW1eGq3CnPOnR8I2ACiDcCY2ywaJx
-         3qGMtTXCgpEyxVQFAq/sqjk7NvN7lezYQF9Ff261PacFptOwl9NNcgQsPySwiKNEzQX3
-         ZQDw==
-X-Gm-Message-State: AKaTC03SlEIydqOXqt50dgeyMiAINFtQ0Oke2EdjaLSG1V994Em04043pSzBtcaN8RcisjQfDIdF3TA5ptolh93A
-X-Received: by 10.55.186.3 with SMTP id k3mr27608823qkf.47.1480441063614; Tue,
- 29 Nov 2016 09:37:43 -0800 (PST)
+        bh=yQIzQNI9Xud3zDJJ8NhtAfazEtnpNE1imGf5kuRrVgA=;
+        b=DDujrTKCql/BGzzO5YD4E2JyP7AGl1A4PuFM7G1elBqHNA6SQ1GMDmfqKdcrZdorUY
+         8poZS0BOa45DUGlzQhqaqYhUjBrflHZXx1F00IM7xxT9ufxd21cY2H4/VW+SvLdKjqCd
+         vDipqLXe29nmyHOGn0/kaDUIc0LXBsA+/BN/SAgEaDMwP8xL2k2Dt8PXmq6P80A1ZKki
+         AZ4/x4iGOKib6sIRRQaLUli9wmUA4qGpaMbC1Sl2VQIgurE3TxlgrVTrf6dFugFFr5lj
+         0ePgvHTNPTI12ehwh4cm4sG2zN0Fj+LGBxFPuRF75741LNg2IW4AGA2p00NKBHbX0YEf
+         glmA==
+X-Gm-Message-State: AKaTC00Ag4YaGqjg+K5+tKrQZ+5IoDkyb9fqipXmCadzmVGA3Av5VXniR0Pi/vjHqi4F+q+D9DgB0gsRMgpHr11K
+X-Received: by 10.200.58.65 with SMTP id w59mr24452032qte.54.1480441294149;
+ Tue, 29 Nov 2016 09:41:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Tue, 29 Nov 2016 09:37:43 -0800 (PST)
-In-Reply-To: <20161128221123.GC150448@google.com>
-References: <20161110203428.30512-1-sbeller@google.com> <20161110203428.30512-32-sbeller@google.com>
- <20161128221123.GC150448@google.com>
+Received: by 10.12.147.188 with HTTP; Tue, 29 Nov 2016 09:41:33 -0800 (PST)
+In-Reply-To: <CAKXGFGMGqnGJSEBx8=FXfG3pGEcpFGjLNUH23VTo4LEo75kTKg@mail.gmail.com>
+References: <CAKXGFGMGqnGJSEBx8=FXfG3pGEcpFGjLNUH23VTo4LEo75kTKg@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 29 Nov 2016 09:37:43 -0800
-Message-ID: <CAGZ79ka9K=VM7afW5E4=e52JOwpKe=o3TTYqWFVrf6TnptSHcA@mail.gmail.com>
-Subject: Re: [PATCH 31/35] pathspec: allow querying for attributes
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 29 Nov 2016 09:41:33 -0800
+Message-ID: <CAGZ79kZHJgnNbvehQqOKRunpFcuZ-ua2KFOjX10xHY5NPR-jsQ@mail.gmail.com>
+Subject: Re: gitk crashes on RHEL
+To:     Alessandro Renieri <a.renieri@gmail.com>,
+        Paul Mackerras <paulus@samba.org>, eric.frederich@gmail.com,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+        rappazzo@gmail.com
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2016 at 2:11 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 11/10, Stefan Beller wrote:
->> @@ -500,6 +586,18 @@ void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
->>
->>  void clear_pathspec(struct pathspec *pathspec)
->>  {
->> +     int i, j;
->> +     for (i = 0; i < pathspec->nr; i++) {
->> +             if (!pathspec->items[i].attr_match_nr)
->> +                     continue;
->> +             for (j = 0; j < pathspec->items[j].attr_match_nr; j++)
->> +                     free(pathspec->items[i].attr_match[j].value);
->> +             free(pathspec->items[i].attr_match);
->> +             if (pathspec->items[i].attr_check)
->> +                     git_attr_check_clear(pathspec->items[i].attr_check);
->> +             free(pathspec->items[i].attr_check);
->> +     }
->> +
->>       free(pathspec->items);
->>       pathspec->items = NULL;
+On Tue, Nov 29, 2016 at 1:51 AM, Alessandro Renieri <a.renieri@gmail.com> wrote:
+> On Redhat Enterprise gitk returns the following error when launched:
 >
-> You may also want to add logic like this to the 'copy_pathspec' function
-> so that when a pathspec struct is copied, the destination also has
-> ownership of its own attribute items.
+> Error in startup script: unknown color name "lime"
+>     (processing "-fill" option)
+>     invoked from within
+> "$progresscanv create rect -1 0 0 $h -fill lime"
+>     (procedure "makewindow" line 201)
+>     invoked from within
+> "makewindow"
+>     (file "/..../bin/git-exe/bin/gitk" line 12434)
 >
+> The fix is to change lime with {lime green}
+>
+> Regards
 
-Thanks for the review comments, I'll plan on resending this series after the
-submodule checkout series (which is nowhere near done, but the foundation
-is set with sb/submodule-intern-gitdir as a preparation.)
++cc Paul Mackeras, and people involved in the last bug report
 
-After discussion with Jonathan Nieder, I think it may be possible to make
-this new pathspec magic work without the need for thread safety. This is
-archived by constructing all relevant attr_check stacks before the preload_index
-functionality (which is threaded) and then use the preconstructed attr_checks
-to get attr_results just like in this series.
-
-That approach would come with the benefit of not needing mutexes
-at all inside the attr code.
+See discussion at
+https://public-inbox.org/git/CAAoZyYNnWk-yE9TG_Fpxxs-oRN-yEsm_YFs+Ej7muQ+5YCW43w@mail.gmail.com/#t
