@@ -2,60 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5BF1FF6D
-	for <e@80x24.org>; Tue, 29 Nov 2016 18:38:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79DCB1FC96
+	for <e@80x24.org>; Tue, 29 Nov 2016 18:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932443AbcK2SiB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Nov 2016 13:38:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48603 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932403AbcK2SiB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2016 13:38:01 -0500
-Received: (qmail 5318 invoked by uid 109); 29 Nov 2016 18:38:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 18:38:00 +0000
-Received: (qmail 13405 invoked by uid 111); 29 Nov 2016 18:38:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Nov 2016 13:38:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Nov 2016 13:37:58 -0500
-Date:   Tue, 29 Nov 2016 13:37:58 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2016, #06; Mon, 28)
-Message-ID: <20161129183758.wicmteo5vdvygu2q@sigill.intra.peff.net>
-References: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
- <20161129065912.xa7itc3os425mr3r@sigill.intra.peff.net>
- <xmqqfumagmso.fsf@gitster.mtv.corp.google.com>
+        id S1756319AbcK2SmY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Nov 2016 13:42:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55744 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754936AbcK2SmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2016 13:42:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4016252BA0;
+        Tue, 29 Nov 2016 13:42:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=YUauNg1lZhWv
+        XJ5yKsHoZsFENrM=; b=fOumJ7LPopYb9wOhKvmwkKi71Wji7bC/k4qygXanYAmE
+        Zfwj88reWLeSfKzkd7ECqHbNNx/JI/7VfZau4j2bilhW8lfBkR0W/X7ph8cZTmAU
+        kChwT4MQcX6KZ9qh7KuOsPx6smT4zg9Ru3cw/NZAhTBvVfhh19nR2SpaBTDasO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GUsIOo
+        Kktne32scnAn5w8vireUrgjzpmoOePhDbr3R8uTTymqKYlCqgviby9LzUuFPo6tJ
+        0uJvpFs1cU1y1W/87HbtCzRPWcWQpgQmHEKilv3qBGVhWlXF/zodVDFi4EccExzW
+        UBZKuVRarOWkAqnLhhDv8Vqq++ScrQIF+Zazc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 372B952B9F;
+        Tue, 29 Nov 2016 13:42:20 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A1A7952B9E;
+        Tue, 29 Nov 2016 13:42:19 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, eevee.reply@veekun.com
+Subject: Re: [PATCH v1 1/1] convert:  git cherry-pick -Xrenormalize did not work
+References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
+        <20161129163023.23403-1-tboegi@web.de>
+Date:   Tue, 29 Nov 2016 10:42:18 -0800
+In-Reply-To: <20161129163023.23403-1-tboegi@web.de> (tboegi@web.de's message
+        of "Tue, 29 Nov 2016 17:30:23 +0100")
+Message-ID: <xmqq7f7mgmb9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfumagmso.fsf@gitster.mtv.corp.google.com>
+X-Pobox-Relay-ID: 8EE4DA46-B663-11E6-908A-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 29, 2016 at 10:31:51AM -0800, Junio C Hamano wrote:
+tboegi@web.de writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I'm actually considering scrapping the approach you've queued above, and
-> > just teaching verify_path() to reject any index entry starting with
-> > ".git" that is a symlink.
-> 
-> Hmph, that's a thought.
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>
+> Working with a repo that used to be all CRLF. At some point it
+> was changed to all LF, with `text=3Dauto` in .gitattributes.
+> Trying to cherry-pick a commit from before the switchover fails:
+>
+> $ git cherry-pick -Xrenormalize <commit>
+>     fatal: CRLF would be replaced by LF in [path]
 
-I was resistant to it at first because we'll have to deal with all of
-the headaches of matching case-folding, but if we just match ".git*" and
-not ".gitmodules", ".gitattributes", etc, it actually gets easier. I
-think we can basically build off of the existing is_hfs_dotgit() and
-is_ntfs_dotgit() functions.
+OK.  That's a very clear description of the symptom that can be
+observed from the surface.
 
-I haven't written the code yet, though, so there may be complications.
+> Whenever crlf_action is CRLF_TEXT_XXX and not CRLF_AUTO_XXX,
+> SAFE_CRLF_RENORMALIZE must be turned into CRLF_SAFE_FALSE.
 
--Peff
+Aside from needing s/CRLF_SAFE/SAFE_CRLF/, this however lacks
+"Otherwise, because of X and Y, Z ends up doing W" to explain
+the "must be" part.  Care to explain it a bit more?
+
+Thanks.
+
+> Reported-by: Eevee (Lexy Munroe) <eevee@veekun.com>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>
+> Thanks for reporting.
+> Here is a less invasive patch.
+> Please let me know, if the patch is OK for you
+> (email address, does it work..)
+>
+>  convert.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/convert.c b/convert.c
+> index be91358..526ec1d 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -286,7 +286,9 @@ static int crlf_to_git(const char *path, const char=
+ *src, size_t len,
+>  			checksafe =3D SAFE_CRLF_FALSE;
+>  		else if (has_cr_in_index(path))
+>  			convert_crlf_into_lf =3D 0;
+> -	}
+> +	} else if (checksafe =3D=3D SAFE_CRLF_RENORMALIZE)
+> +		checksafe =3D SAFE_CRLF_FALSE;
+> +
+>  	if (checksafe && len) {
+>  		struct text_stat new_stats;
+>  		memcpy(&new_stats, &stats, sizeof(new_stats));
