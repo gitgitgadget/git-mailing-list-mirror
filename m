@@ -2,168 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 541491FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 18:04:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AA191FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 18:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754171AbcK3SEz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 13:04:55 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:33510 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753106AbcK3SEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 13:04:54 -0500
-Received: by mail-qt0-f171.google.com with SMTP id p16so195414836qta.0
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 10:04:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=OOjLbZQPHgoq7teCNBFkRrS1aaYJne+QdwdweEz9Aj0=;
-        b=SRcC24kSA/FxivklpYLqP2RAzrX2yuFXPHs4XUDE1fYdIg/6v/GRY++RzMfOI1MvXc
-         MYwtAbLFhR+E0HlR+KvoO1A96O82qd0QN66sQt6OFroOBYm2kCK0PM2+UNDbxG712VVa
-         JkigV0vNGDkNYaQNlGAzlZr45dK3QPqgcHY+DnuCl53xCmyqXR0zsJOKp91VHX+U5TE1
-         P2hrN4pU6gFi6on2PUEsTxtZxhXd6Th/29AKGRoUHDO5L7E6iJYMZfzVHr5il2dduhmH
-         mmCI0jqHFIz2BF1dgSPtbWVz3KrwF4Wx80WszB84/JHuNAAhK1QrkKrzVCUaJCo5YFrq
-         Js0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=OOjLbZQPHgoq7teCNBFkRrS1aaYJne+QdwdweEz9Aj0=;
-        b=Lgrr9m0P4VwamJL2XiObb+dU7r58AZBu506OZTdXAYMHqt4XrycU6FJbQ4S70tsQTe
-         KdUz7KfRRuYEd7RjQA9Ofx2DP5LMm93NUXVCXK+qUHDxAYWWW0UIcq4u4Eis3ndEWlWh
-         Gu+i0vn2geyY2OSCVLH3+UzETRJNM16HGJR6QltGBzDLQ0aCq/k4rPASpe0F+NCkePv1
-         Nx0s69+sI3g1I0m/abc5N6gpxsVzHDIsZe5wBpmCk+ee1xBeCfyPriBgskie6pBBDJbi
-         t+O87nymjF4+mB+OIX3O3+GCL2Y92/Hl0VocC064kSUYfUnBgpYMmaOt/9EJhnY6UP8m
-         Ui4g==
-X-Gm-Message-State: AKaTC02EN0HtQj0sWloaJ0HFUDu//h1uiLZDep6ESS/GImTp16nMT4k/fi9opK9KyVIyhLBrq3QOybbiAJH8aX9n
-X-Received: by 10.200.53.9 with SMTP id y9mr29109601qtb.176.1480529092877;
- Wed, 30 Nov 2016 10:04:52 -0800 (PST)
+        id S1757824AbcK3SkC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 13:40:02 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53238 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1757667AbcK3Sjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 13:39:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 118D7511CB;
+        Wed, 30 Nov 2016 13:39:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=vIplCROkOlae
+        GT3QLi8P6hYXFbk=; b=stg+tY5ZLCI7TvPHZu0V5vzSeJ0UJ9xSc92egyrNnZEq
+        82EEWfZiVuAx/6XSHUPYEbhcH8H9lvXuhSMS7FeUKhpLNC25wFZfwbUcnUBzMUZf
+        2MmEppOXrsCoVFKfWuCknCVfF2ofP02TfPYgBllz4hmgNij1BjajwemN/RirGPA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aPB6rf
+        tRmbD6hezo5TBDS13K3uj4E4xTzdnKDk0m9fYiqqe1z1LUqmHDyEFDUNR38HiAR4
+        yjaCXIoZA1i8fV898G82GL10EsorxhZvz9Msy0RALE2ga5HE0HNGq0nS2XTw9M1O
+        4hpKQwTr6Z8iriRWvnDW8/t9n3qTdxm9Yz/gc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 06FB9511CA;
+        Wed, 30 Nov 2016 13:39:53 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68DD1511C7;
+        Wed, 30 Nov 2016 13:39:52 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming builtin
+References: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611242211450.117539@virtualbox>
+        <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611251201580.117539@virtualbox>
+        <20161125171940.rizbqyhsygdsoujr@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611251841030.117539@virtualbox>
+        <20161125174721.f35mzc276kdwakzm@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611261320050.117539@virtualbox>
+        <20161126161907.xol62zytn2jb45gh@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611261400300.117539@virtualbox>
+        <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net>
+        <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1611281830040.117539@virtualbox>
+        <855b9172-7225-e09e-e46d-87940f9fda75@gmail.com>
+Date:   Wed, 30 Nov 2016 10:39:51 -0800
+In-Reply-To: <855b9172-7225-e09e-e46d-87940f9fda75@gmail.com> ("Jakub
+        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Wed, 30 Nov 2016 17:02:08
+ +0100")
+Message-ID: <xmqqy400dd6w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Wed, 30 Nov 2016 10:04:52 -0800 (PST)
-In-Reply-To: <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
-References: <20161122192235.6055-1-sbeller@google.com> <20161122192235.6055-5-sbeller@google.com>
- <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 30 Nov 2016 10:04:52 -0800
-Message-ID: <CAGZ79kbvey_f8+R16yYT_qsF0RErOh8own8n-RRApTM0dS-+ag@mail.gmail.com>
-Subject: Re: [PATCHv2 4/4] submodule: add embed-git-dir function
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 618D73CC-B72C-11E6-9718-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 30, 2016 at 3:14 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Nov 23, 2016 at 2:22 AM, Stefan Beller <sbeller@google.com> wrote:
->> +/*
->> + * Migrate the given submodule (and all its submodules recursively) from
->> + * having its git directory within the working tree to the git dir nested
->> + * in its superprojects git dir under modules/.
->> + */
->> +void migrate_submodule_gitdir(const char *prefix, const char *path,
->> +                             int recursive)
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+
+>> My original "create a file in libexec/git-core/" was simple, did the j=
+ob
+>> reliably, and worked also for testing.
+>>=20
+>> It is a pity that you two gentlemen shot it down for being inelegant. =
+And
+>> ever since, we try to find a solution that is as simple, works as
+>> reliably, also for testing, *and* appeases your tastes.
 >
-> Submodules and worktrees seem to have many things in common.
-
-Yes. :)
-
-> The first
-> one is this. "git worktree move" on a worktree that contains
-> submodules .git also benefits from something like this [1].
-
-That patch is a sensible approach. :)
-(By checking all files to not be submodules a worktree would not run
-into problems like
-a127331cd81, mv: allow moving nested submodules)
-
-> I suggest
-> you move this function to some neutral place and maybe rename it to
-> relocate_gitdir() or something.
-
-ok tell me where this neutral place is found?
-(I'd prefer to not clobber it into cache.h *the* most neutral place in git)
-Maybe dir.{c,h} ?
-
+> I just would like to note that existence of file is used for both
+> git-daemon and gitweb (the latter following the git-daemon example).
 >
-> It probably should take a bit flag instead of "recursive" here. One
-> thing I would need is the ability to tell this function "I have moved
-> all these .git dirs already (because I move whole worktree in one
-> operation), here are the old and new locations of them, fix them up!".
-> In other words, no rename() could be optionally skipped.
+> So there is a precedent for the use of this mechanism.
 
-In the non-main working trees you'd also have a .git file linking
-to the actual git dir and you'd only have to fix them up instead of moving.
+I think you are thinking about git-daemon-export-ok (for 'git
+daemon') and $GITWEB_EXPORT_OK file (for 'gitweb').
+
+You do realize that it is apples-and-oranges [*1*] to take these as
+analogous to what Dscho is trying to do, don't you?
+
+First of all, these are to control access to each repository on the
+server side; the presence of the file is checked in each repository.
+What Dscho wants is to control the behaviour of an installation of
+Git as a whole, no matter which repository is being accessed [*2*,
+*3*].
+
+More importantly, did you notice that git-daemon-export-ok predates
+the configuration mechanism by a large margin?  The "does the file
+exist?" check done in a87e8be2ae ("Add a "git-daemon" that listens
+on a TCP port", 2005-07-13) is a relic from the past [*4*], and
+32f4aaccaa ("gitweb: export options", 2006-09-17) added
+GITWEB_EXPORT_OK to mimic it, also long time ago [*5*].  They are
+not something you would want to mimic in new programs these days.
+
+Besides, $GIT_EXEC_PATH is where you place git subcommands.  Who in
+the right mind considers it even remotely sane to design a system
+where you have to throw in a file that is not a command to /usr/bin
+to control the behaviour of your system? [*6*]
+
+So the "precedent" is irrelevant in the first place, and even if it
+were relevant, it is a bad piece of advice to mimic it.
 
 
->
-> [1] https://public-inbox.org/git/20161128094319.16176-11-pclouds@gmail.com/T/#u
->
->> +{
->> +       char *old_git_dir;
->> +       const char *new_git_dir;
->> +       const struct submodule *sub;
->> +
->> +       old_git_dir = xstrfmt("%s/.git", path);
->> +       if (read_gitfile(old_git_dir))
->> +               /* If it is an actual gitfile, it doesn't need migration. */
->> +               goto out;
->> +
->> +       sub = submodule_from_path(null_sha1, path);
->> +       if (!sub)
->> +               die(_("Could not lookup name for submodule '%s'"),
->> +                     path);
->> +
->> +       new_git_dir = git_common_path("modules/%s", sub->name);
->
-> Why doesn't git_path() work here? This would make "modules" shared
-> between worktrees, even though it's not normally. That inconsistency
-> could cause trouble.
+[Footnote]
 
-I thought that was a long term goal?
-(I actually think about reviving the series you sent out a few weeks ago
-to make worktree and submodules work well together)
+*1* Or is it apples-and-pineapples these days?
 
-So for that we'd want to have at least the object store shared across all
-worktrees.
+*2* Not that I agree with that desire, if I understand him correctly
+    from his description against the approach based on an
+    environment variable.  If a user has multiple installations and
+    not even aware of which one of them s/he is currently using, a
+    mechanism that affects only one of them (instead of consistently
+    affecting all of them) would lead to more confusion, I would
+    think. =20
 
->
->> +       if (safe_create_leading_directories_const(new_git_dir) < 0)
->> +               die(_("could not create directory '%s'"), new_git_dir);
->> +
->> +       if (!prefix)
->> +               prefix = get_super_prefix();
->> +       printf("Migrating git directory of %s%s from\n'%s' to\n'%s'\n",
->> +               prefix ? prefix : "", path,
->> +               real_path(old_git_dir), new_git_dir);
->> +
->> +       if (rename(old_git_dir, new_git_dir) < 0)
->> +               die_errno(_("Could not migrate git directory from '%s' to '%s'"),
->> +                       old_git_dir, new_git_dir);
->> +
->> +       connect_work_tree_and_git_dir(path, new_git_dir);
->
-> Another thing in common is, both submodules and worktrees use some
-> form of textual symlinks. You need to fix up some here. But if this
-> submodule has multiple worktreee, there may be some "symlinks" in
-> .git/worktrees which would need fixing up as well.
+*3* If such hermetically configured independent installations are
+    desirable, etc/gitconfig aka "git config --system" is a more
+    appropriate thing to use, and you do not need to do repository
+    discovery before you can read it.
 
-We could signal that via one of the flag bits?
-(e.g. FIXUP_WORKTREE_SYMLINKS )
+*4* If we had config mechanism, we would have used it just like we
+    use daemon.* variables to control what services are enabled for
+    each repository.
 
->
-> You don't have to do the fix up thing right away, but I think we
-> should at least make sure we leave no dangling links behind (by
-> die()ing early if we find a .git dir we can't handle yet)
-> --
-> Duy
+*5* By that time, the config mechanism did already exist, so the
+    GITWEB_EXPORT_OK could have been a per-repository configuration,
+    but "gitweb" had another excuse to deviate from the norm.  "Is
+    this repository visible?" was done during repository listing and
+    the script did not want to run "git config" in each and every
+    repository-like directory it encountered in File::Find::find().
+
+*6* And I do not think $GIT_EXEC_PATH vs /usr/bin is
+    apples-and-oranges analogy.
