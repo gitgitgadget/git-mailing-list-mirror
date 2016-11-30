@@ -2,107 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12ECE1FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 21:56:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10E811FF6D
+	for <e@80x24.org>; Wed, 30 Nov 2016 21:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751040AbcK3V4M (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 16:56:12 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:35332 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750831AbcK3V4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 16:56:10 -0500
-Received: by mail-qt0-f175.google.com with SMTP id c47so202347379qtc.2
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 13:56:10 -0800 (PST)
+        id S1752121AbcK3V5I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 16:57:08 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33090 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751673AbcK3V5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 16:57:06 -0500
+Received: by mail-wm0-f66.google.com with SMTP id u144so31343928wmu.0
+        for <git@vger.kernel.org>; Wed, 30 Nov 2016 13:57:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2Jl0CIsLraoQqJ/BQnatLQqdqCVR163JH6mVm/KV+fk=;
-        b=dIhBTU/GXAJeSH/xu1zfhdp1NUYfEIHQ84J6DeSHcA9cfH3iF/ZsFQsLo4mmEJLxcr
-         OUjVR5YOvGwSZKCJcQXWuFiGcqOAnqcRklMdOsY0kxiHLQBKGFg9Bi+PYgQGL80l533U
-         voiKRBzmJAONLmyzulKrjDejiI6OerpmiQL1LkTMv5fRrVoRkHye/PpbI1KPdsW15F6S
-         Op91lNPFsFhxVzxG48lR33hloDIkszsIDWwWzLHR7Ir6MZnJImm+M2AFsgVhZ50A6SJf
-         CtYRyELv6WCABwblwVZrUfgZb2a5rWrhrWyBLNlTYfGnMQNEmDNOSb0HPxLgw/kqkGeZ
-         8bBA==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=VITKiLC1sJG89vntNIlEngWBW7+cTQ/vDvg7Qeg98Fg=;
+        b=nirtvr+Hbyc3mqWMRpiwprrSHatbr+9IxkX9cKdU+vpnbx3txqGgLjbOY8eV9+cxtM
+         3e9dTirVV6+GQRLrYuNl5XH2LmhNt3NTwgJe0gbB17iV8wKMWvzqVXaje382M83WwZaT
+         dhgqHa/J9ac8jY/pi0WQqD1AVSWpJogQ2AkoMNmc0gSc1r/CHumpYR9xOOzCh1rUi1qf
+         7j+hVag/2Qg/yH3NThLHJMQfmhUEmnz0H9oMacwZ0E/c5lkDQVioB6hWQmUyzWrF71tj
+         N0/8wczbkmmQEV7QWTrk/ProQJs3+G+zlXm1x97yeaC15I9f4gpV5ix6hADXYhFuWudL
+         WE9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2Jl0CIsLraoQqJ/BQnatLQqdqCVR163JH6mVm/KV+fk=;
-        b=dmSxLp3NlygqhC7t/eheRqxifV6WuAHBTHxXG5h0uM2xjbya5ZGQ2tztCOTcSWOj6z
-         +hv5blh1jE987ckD8HhwMEgze9IM8AhN0zCkdk2Wnlh2XS9Xeu8aA7HTJzcliwPXTBL3
-         Yjj/3qfQZZpRUEyfl6Z9+8KR6sIuITJbo7IWynAqrrVSj3ATmwFKOJJB0W6Uh4BBAfJ1
-         vcxEzyr0tZqkT0cTMqqxw9SzHRYseVP4hlcNJ8+pt4DgG8BN3VcUXvtKDQIH8NrtOjlo
-         uY9rho63228sNTE7Sstt7SDDiVhP8c6VfIkUejLQZILEtfhmwhTmF4u5XJbRZWggNXnk
-         Qsug==
-X-Gm-Message-State: AKaTC01MlBJv6UxYsltuCVArBHLkWIl9lTbxGm2PILeSNGlsTEJqwPKa3dFofMgWSPZRAjVwR46yOiMNBUZdeTC4
-X-Received: by 10.200.50.53 with SMTP id x50mr30908164qta.207.1480542969899;
- Wed, 30 Nov 2016 13:56:09 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Wed, 30 Nov 2016 13:56:09 -0800 (PST)
-In-Reply-To: <xmqqfum8d4w3.fsf@gitster.mtv.corp.google.com>
-References: <20161122192235.6055-1-sbeller@google.com> <20161122192235.6055-5-sbeller@google.com>
- <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
- <xmqqpolcd73b.fsf@gitster.mtv.corp.google.com> <CAGZ79kar0F7x5U2yZ30ZnWZ9b=EJA=1nT8rxTMRVJPggyFS_XA@mail.gmail.com>
- <xmqqfum8d4w3.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 30 Nov 2016 13:56:09 -0800
-Message-ID: <CAGZ79kZSAJauwBwrxf+QAhQgyu4ACn+8LrwjpFGVaUQfSzHEAg@mail.gmail.com>
-Subject: Re: [PATCHv2 4/4] submodule: add embed-git-dir function
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=VITKiLC1sJG89vntNIlEngWBW7+cTQ/vDvg7Qeg98Fg=;
+        b=RY+0po2CSt2IXmsKd6HY9jPhrYG+SPdaZU4lBqAHQkffnwft/5mdbi3ureo0Z+nOiz
+         Fh43b0gdOQ4UxFJ+KtyXKC/ePi393C+rBEIaID4gGLWqJZDtjvi4fpUyQ9KtL1a42MAN
+         8+NU1m2hrkApaNEWkOpJ5aOLuoTd8rxttEwjdx78BHfxA/aWIbcvI/5gFzjDQd/WQ/HG
+         XxE4VJWZbVRLYlLDvGtkqMTiHHkU4p+XJ6IoEgKE9ws576n1rD/z6M/7Z2o8yh1V8qvU
+         krBfoCv1HOIIZQuWp0F0ayI5D6Z7ijCAEDEZ7E3zVk/jGRWDTXhvTdJ5BobppCBNBLi0
+         DGDA==
+X-Gm-Message-State: AKaTC01mFkux7LYFWOCEVxx9TRpCu7fwFGnORV4rLlNQ3GFgaV2QgqwsrOwHPMMDiTo6Ng==
+X-Received: by 10.28.137.81 with SMTP id l78mr29118672wmd.36.1480539902255;
+        Wed, 30 Nov 2016 13:05:02 -0800 (PST)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id d64sm9802427wmh.3.2016.11.30.13.05.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 30 Nov 2016 13:05:01 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v3 09/16] Add GIT_NO_EXTERNAL_ODB env variable
+Date:   Wed, 30 Nov 2016 22:04:13 +0100
+Message-Id: <20161130210420.15982-10-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.11.0.rc2.37.geb49ca6
+In-Reply-To: <20161130210420.15982-1-chriscool@tuxfamily.org>
+References: <20161130210420.15982-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 30, 2016 at 1:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>     git relocate-git-dir (--into-workingtree|--into-gitdir) \
->
-> I am not sure if you meant this as a submodule-specific subcommand
-> or more general helper.  "into-workingtree" suggests to me that it
-> is submodule specific, so I'll base my response on that assumption.
->
-> Would there ever be a situation where you already have submodule
-> repositories in the right place (according to the more modern
-> practice, to keep them in .git/modules/ of superproject) and want to
-> move them to embed them in worktrees of submodules?  I do not think
-> of any.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ cache.h        | 9 +++++++++
+ environment.c  | 4 ++++
+ external-odb.c | 6 ++++++
+ sha1_file.c    | 3 +++
+ 4 files changed, 22 insertions(+)
 
- "Hi, I made a mistake by using submodules. I don't want to use
-  them any more, I rather want to:
-  A) make it a separate git repo again and I'll keep them in sync myself
-  B) ... "
+diff --git a/cache.h b/cache.h
+index b419b9b7ce..503b618a1f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -422,6 +422,7 @@ static inline enum object_type object_type(unsigned int mode)
+ #define CEILING_DIRECTORIES_ENVIRONMENT "GIT_CEILING_DIRECTORIES"
+ #define NO_REPLACE_OBJECTS_ENVIRONMENT "GIT_NO_REPLACE_OBJECTS"
+ #define GIT_REPLACE_REF_BASE_ENVIRONMENT "GIT_REPLACE_REF_BASE"
++#define NO_EXTERNAL_ODB_ENVIRONMENT "GIT_NO_EXTERNAL_ODB"
+ #define GITATTRIBUTES_FILE ".gitattributes"
+ #define INFOATTRIBUTES_FILE "info/attributes"
+ #define ATTRIBUTE_MACRO_PREFIX "[attr]"
+@@ -698,6 +699,14 @@ void reset_shared_repository(void);
+ extern int check_replace_refs;
+ extern char *git_replace_ref_base;
+ 
++/*
++ * Do external odbs need to be used this run?  This variable is
++ * initialized to true unless $GIT_NO_EXTERNAL_ODB is set, but it
++ * maybe set to false by some commands that do not want external
++ * odbs to be active.
++ */
++extern int use_external_odb;
++
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
+diff --git a/environment.c b/environment.c
+index 0935ec696e..8aecdd0544 100644
+--- a/environment.c
++++ b/environment.c
+@@ -47,6 +47,7 @@ const char *excludes_file;
+ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+ int check_replace_refs = 1;
+ char *git_replace_ref_base;
++int use_external_odb = 1;
+ enum eol core_eol = EOL_UNSET;
+ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+@@ -120,6 +121,7 @@ const char * const local_repo_env[] = {
+ 	INDEX_ENVIRONMENT,
+ 	NO_REPLACE_OBJECTS_ENVIRONMENT,
+ 	GIT_REPLACE_REF_BASE_ENVIRONMENT,
++	NO_EXTERNAL_ODB_ENVIRONMENT,
+ 	GIT_PREFIX_ENVIRONMENT,
+ 	GIT_SUPER_PREFIX_ENVIRONMENT,
+ 	GIT_SHALLOW_FILE_ENVIRONMENT,
+@@ -185,6 +187,8 @@ static void setup_git_env(void)
+ 	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
+ 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
+ 							  : "refs/replace/");
++	if (getenv(NO_EXTERNAL_ODB_ENVIRONMENT))
++		use_external_odb = 0;
+ 	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
+ 	namespace_len = strlen(namespace);
+ 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+diff --git a/external-odb.c b/external-odb.c
+index 6dd7b2548b..a980fbfbf2 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -63,6 +63,9 @@ int external_odb_has_object(const unsigned char *sha1)
+ {
+ 	struct odb_helper *o;
+ 
++	if (!use_external_odb)
++		return 0;
++
+ 	external_odb_init();
+ 
+ 	for (o = helpers; o; o = o->next)
+@@ -133,6 +136,9 @@ int external_odb_write_object(const void *buf, unsigned long len,
+ {
+ 	struct odb_helper *o;
+ 
++	if (!use_external_odb)
++		return 1;
++
+ 	/* For now accept only blobs */
+ 	if (strcmp(type, "blob"))
+ 		return 1;
+diff --git a/sha1_file.c b/sha1_file.c
+index 3532c1c598..92f1244205 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -556,6 +556,9 @@ void prepare_external_alt_odb(void)
+ 	static int linked_external;
+ 	const char *path;
+ 
++	if (!use_external_odb)
++		return;
++
+ 	if (linked_external)
+ 		return;
+ 
+-- 
+2.11.0.rc2.37.geb49ca6
 
- "I abuse submodules for what git-LFS was designed for, and the
-  submodule is on a different mount point, please keep the git directory
-  also at that mount point".
-
-Not sure I agree these problems and the proposed solutions are beautiful,
-but that is what people may think of as a fast hack?
-
->
-> If there is no such situation, I do not think we want a verb that is
-> direction-neutral (e.g. "move" or "relocate") with two options.
-> Rather we would want "git submodule unembed-git-dir" or something
-> like that.
-
-So when we want to have a generic function in C ("relocate_gitdir")
-for both worktree and submodules, the recursive flag is not supposed
-to invoke a submodule specific helper, but a generic helper.
-
-Alternatively we make the function not as generic and claim the
-recursive part is submodule specific and we can happily call
-"git submodule [un]embed-git-dir" recursively.
