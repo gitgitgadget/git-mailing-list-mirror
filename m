@@ -2,60 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A3861FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 21:29:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83AD01FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 21:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757571AbcK3V3H (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 16:29:07 -0500
-Received: from ikke.info ([178.21.113.177]:55148 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756715AbcK3V3G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 16:29:06 -0500
-X-Greylist: delayed 1082 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Nov 2016 16:29:05 EST
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id C2177440659; Wed, 30 Nov 2016 22:11:00 +0100 (CET)
-Date:   Wed, 30 Nov 2016 22:11:00 +0100
-From:   Kevin Daudt <me@ikke.info>
-To:     Peter Urda <peter.urda@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: "git add -p ." raises an unexpected "warning: empty strings as
- pathspecs will be made invalid in upcoming releases. please use . instead if
- you meant to match all paths"
-Message-ID: <20161130211100.GA18680@ikke.info>
-References: <CAEnOLdvG=SoKFxeJ_pLmamGj_8osC+28TSg+pbFLLTr+ZLcpQA@mail.gmail.com>
+        id S1758646AbcK3Vjd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 16:39:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53981 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754916AbcK3Vjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 16:39:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0131454462;
+        Wed, 30 Nov 2016 16:39:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cBcxwAcbgpp2il0wTGi4FEsDynU=; b=VCszLE
+        h4L8ovFh7RSyDRu1OCIfuvSMTJsMQs3Y7cd8/c5o4rhCKNEgs8kcwGSwYnT7fMyV
+        YlYYkUiFBXPuIykq2jSXDIkENo9qkkaesk8pq81iUA2F3QCUmuFhc3RkE651Aor6
+        YMerJ4FCe/bcTrFGFzApumvWqHBtiIjbp3pe8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DPiM9lfwT+/D6o6f0q0+9mw9zAmU95f4
+        6DOuznBcn6TFwkU2R1H4dgP4loesdzmt3jAmnYAkhCEZwVdOwQbPrWWfYG//VFru
+        th3gnkE0qz5+sFeF1upwIv5+2TNPf9ONLgHwErgWGM2OOTj3sFZHRe0njr1esTKh
+        tAxkMiS7XFA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC4D454461;
+        Wed, 30 Nov 2016 16:39:09 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 654D35445E;
+        Wed, 30 Nov 2016 16:39:09 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCHv2 4/4] submodule: add embed-git-dir function
+References: <20161122192235.6055-1-sbeller@google.com>
+        <20161122192235.6055-5-sbeller@google.com>
+        <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
+        <xmqqpolcd73b.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kar0F7x5U2yZ30ZnWZ9b=EJA=1nT8rxTMRVJPggyFS_XA@mail.gmail.com>
+Date:   Wed, 30 Nov 2016 13:39:08 -0800
+In-Reply-To: <CAGZ79kar0F7x5U2yZ30ZnWZ9b=EJA=1nT8rxTMRVJPggyFS_XA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 30 Nov 2016 13:00:26 -0800")
+Message-ID: <xmqqfum8d4w3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEnOLdvG=SoKFxeJ_pLmamGj_8osC+28TSg+pbFLLTr+ZLcpQA@mail.gmail.com>
-User-Agent: Mutt/1.7.1 (2016-10-04)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6D3A8A98-B745-11E6-9337-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 30, 2016 at 12:31:49PM -0800, Peter Urda wrote:
-> After upgrading to version 2.11.0 I am getting a warning about empty
-> strings as pathspecs while using 'patch'
-> 
-> - Ran 'git add -p .' from the root of my git repository.
-> 
-> - I was able to normally stage my changes, but was presented with a
-> "warning: empty strings as pathspecs will be made invalid in upcoming
-> releases. please use . instead if you meant to match all paths"
-> message.
-> 
-> - I expected no warning message since I included a "." with my original command.
-> 
-> I believe that I should not be seeing this warning message as I
-> included the requested "." pathspec.
-> 
-> ~ Peter Urda
-> 
-> http://urda.cc
+Stefan Beller <sbeller@google.com> writes:
 
-I can reproduce this. Note that it only happens when you specify '-p'.
-Without the --patch option, the warning does not appear.
+>     git relocate-git-dir (--into-workingtree|--into-gitdir) \
+
+I am not sure if you meant this as a submodule-specific subcommand
+or more general helper.  "into-workingtree" suggests to me that it
+is submodule specific, so I'll base my response on that assumption.
+
+Would there ever be a situation where you already have submodule
+repositories in the right place (according to the more modern
+practice, to keep them in .git/modules/ of superproject) and want to
+move them to embed them in worktrees of submodules?  I do not think
+of any.
+
+If there is no such situation, I do not think we want a verb that is
+direction-neutral (e.g. "move" or "relocate") with two options.
+Rather we would want "git submodule unembed-git-dir" or something
+like that.
