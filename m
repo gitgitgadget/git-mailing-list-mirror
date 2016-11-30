@@ -2,93 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F08D31FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 19:45:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 396911FF6D
+	for <e@80x24.org>; Wed, 30 Nov 2016 19:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932336AbcK3ToU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 14:44:20 -0500
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:34850 "EHLO
-        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754476AbcK3Tm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 14:42:59 -0500
-Received: by mail-yw0-f175.google.com with SMTP id i145so164150957ywg.2
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 11:42:59 -0800 (PST)
+        id S1755215AbcK3Tyf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 14:54:35 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:36803 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755288AbcK3Tyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 14:54:31 -0500
+Received: by mail-pg0-f46.google.com with SMTP id f188so85082718pgc.3
+        for <git@vger.kernel.org>; Wed, 30 Nov 2016 11:54:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=barzilay-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=f9wLKTnKxBoz0277Y3fKYd7fOIB3jjbTm4/SqjaRESI=;
-        b=lV+h5Ot33b6ghEFyocFAZsmJ7iopQ8IBAnK+TQ1bCxn3qXSAGQLz+Chs9xYPfCylKN
-         JnyL0cs4cWBc3cHrcjKL84qpVTEO8eNONXV+ETR9AdmywphaGKGiO7I9zLaRNAQByYKA
-         2nt9+IMYXvijqiqvOqg7rbOwzwGb20QKoGoC2Ua3c3qTC4qhCALlSVkeo1hakt0PtMem
-         55fx76TIm+oZWE+DpycYY0Fi+uNLvPGX4ToYIg0S1enlz3NZvEi8S8syC+hd/JbJuyB3
-         bH5CazB6joR2Pl09Wprk2Ipp+wnN5LdRQngnof/xMcEJsv44a8Kwk/MrBvCZHmNjxyve
-         Qeqw==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lQI1rSKeARm+KtE7xNcFHIf3mbBZi1UzckXc/KiPLlo=;
+        b=o80uXDHDBSEsJlho4E3FhbwfqIx9Hj5USqmvQJJEzk5xFRok3K/UGmknAGMwAXvqHh
+         ZH9tFUIZdjl/gc2gIwl9lh/kZbDuv/9G5dE6uphXcv7QvLoa4pRT1D+wxWD+X4sJLROS
+         KwZdZqYEStPDfmgy2dgzNfnK0a0+42Mf0tU6XU1bqYt4m8JxXsgX/CwW0DPebnR9r5Lz
+         OX9StzIhYN/gBGHgQtGH7aFFaZmQPAm5Z9rrCmTaoNCXyGwVWCTqb03fhQbbAhDpZngQ
+         xVg+TY1WH1LKL7Y3ygCNAeWdVEcwD/6qT/r5wORz5rPv5LQMUXlYL9vI2+ZZqKld4rNv
+         HHlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=f9wLKTnKxBoz0277Y3fKYd7fOIB3jjbTm4/SqjaRESI=;
-        b=kxYLwUp2jBIzI8vZ2aBqWHRq9esMKBSiQR0b4AC7Q4O9JHyoC+qQJGcognxlhYrALJ
-         EAvMRy+TaOQtGb3C5+/NmKneXcO0VTvNyG9WuBZVUuT1OIrEvaiQcGUN047vpUNpOubn
-         qJF3oo99o0YgDeIGFJYDHRFRgJqlnBdQDmr+dq3OEEzo2dMCSvqP+e0sqiGo3faWrDt+
-         6gV43qvub5O6dpIe3UcwOs22yHebG70ywrok1AF+TCzBwt3CaDkLU1UPiR+e2w/bdFMd
-         9x7Bt75xM7WZLnZIAZA8xjJ26EpkHiW4ZqDSZKLJ/CCAlxRUlSigvjNexO6aP/yS77tH
-         ztxA==
-X-Gm-Message-State: AKaTC00WW0qS760yBw7Cv/tYGZsc6mNFVAFE2591m+DCygdKcIFshSy2P0tpRZr2ajNqcSdzrroZagpp98WLeQ==
-X-Received: by 10.129.113.84 with SMTP id m81mr41477912ywc.223.1480534978690;
- Wed, 30 Nov 2016 11:42:58 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.98.77 with HTTP; Wed, 30 Nov 2016 11:42:58 -0800 (PST)
-In-Reply-To: <20161130190653.kk5pboas54yen2it@sigill.intra.peff.net>
-References: <CALO-gutW80d6RLdXAtYA2m2GWOchAjNNPy3YCsr31_fCss512g@mail.gmail.com>
- <xmqq7f7mf4rs.fsf@gitster.mtv.corp.google.com> <CALO-gutJbM=LA3q8vdmbQJLoeCFAJWfPHFo8f1vz-5KJHVxJ6g@mail.gmail.com>
- <20161129214604.c5xcw3d2a5ydpx42@sigill.intra.peff.net> <xmqqeg1udkg4.fsf@gitster.mtv.corp.google.com>
- <CALO-gusHzTaLg=7X=KqYB==Yz_6yH6qkh8GDK54Lacu5ofD2pw@mail.gmail.com> <20161130190653.kk5pboas54yen2it@sigill.intra.peff.net>
-From:   Eli Barzilay <eli@barzilay.org>
-Date:   Wed, 30 Nov 2016 14:42:58 -0500
-Message-ID: <CALO-guvsVgHp41ubvuKzmH3c4rE+3io3GaYie3=Q-4jdG91CDQ@mail.gmail.com>
-Subject: Re: gitconfig includes
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lQI1rSKeARm+KtE7xNcFHIf3mbBZi1UzckXc/KiPLlo=;
+        b=Jg2oeoFa+4D/NObUcc2tkGQJ5GMzB1V1QO3sP/y54aKm3YodEoDGGvxMjlXOvQCXp9
+         rEMOFWd109/nJ8izA5npra0P2VzNRuX2BgYHEYGORuoPaPNnMEVr2akZK5goIi4IftOi
+         zG6yq4Ka0bnDxz98yiDdOxfV2WIusbkDP7hsjFmI+4wdeCHqz6snAywUZMYnKPrYKZJw
+         /e5gnmvTpz5R6wWp9bL+3g+fRsnD5y1295C+DLWHDHreisQXJU0glinWpe02DybVLbwy
+         RXg6Ro63BdhW8AkNMZIfTf+5pxc84T6p1WyltVrwNBtx+aWWSke599xp6S14yioYVJ7p
+         L3cg==
+X-Gm-Message-State: AKaTC03vO+1KTej2Nu1yE/MJw7hIK0Kcp0dKOFfFyWIJ6MVvPUakpvyZnhviVCV9d6kHhYME
+X-Received: by 10.99.3.202 with SMTP id 193mr62422463pgd.157.1480535669536;
+        Wed, 30 Nov 2016 11:54:29 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:ddc5:5173:1b11:9434])
+        by smtp.gmail.com with ESMTPSA id c71sm87004730pga.22.2016.11.30.11.54.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 30 Nov 2016 11:54:28 -0800 (PST)
+Date:   Wed, 30 Nov 2016 11:54:27 -0800
+From:   Brandon Williams <bmwill@google.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: What's cooking in git.git (Nov 2016, #06; Mon, 28)
+Message-ID: <20161130195427.GA166433@google.com>
+References: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
+ <20161129010538.GA121643@google.com>
+ <20161129063759.6mgmpqx3kbyuqjwi@sigill.intra.peff.net>
+ <20161129065125.cwlbkctniy7oshj2@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161129065125.cwlbkctniy7oshj2@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 30, 2016 at 2:06 PM, Jeff King <peff@peff.net> wrote:
->
-> I'm not sure what your script does exactly, but in general I think the
-> right thing for most scripts is _not_ to use a specific-file option
-> like --global.
->
-> If the script is looking up a config value on behalf of a user, it
-> probably makes sense for it to use the normal config lookup procedure
-> (system, global, repo, command-line), which also enables includes by
-> default. That would make it consistent with internal git config
-> lookups (e.g., user.name probably only ever appears in global config,
-> but you _can_ override it at the repo level if you want to).
+On 11/29, Jeff King wrote:
+> On Tue, Nov 29, 2016 at 01:37:59AM -0500, Jeff King wrote:
+> 
+> >   2. Grep threads doing more complicated stuff that needs to take a
+> >      lock. You might try building with -fsanitize=thread to see if it
+> >      turns up anything.
+> 
+> I tried this and it didn't find anything useful. It complains about
+> multiple threads calling want_color() at the same time, which you can
+> silence with something like:
+> 
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 2c727ef49..d48846f40 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -207,6 +207,12 @@ static void start_threads(struct grep_opt *opt)
+>  {
+>  	int i;
+>  
+> +	/*
+> +	 * trigger want_color() for its side effect of caching the result;
+> +	 * otherwise the threads will fight over setting the cache
+> +	 */
+> +	want_color(GIT_COLOR_AUTO);
+> +
+>  	pthread_mutex_init(&grep_mutex, NULL);
+>  	pthread_mutex_init(&grep_read_mutex, NULL);
+>  	pthread_mutex_init(&grep_attr_mutex, NULL);
+> 
+> But the problem persists even with that patch, so it is something else.
+> It may still be a threading problem; -fsanitize=thread isn't perfect. I
+> also couldn't get the stress-test to fail when compiled with it. But
+> that may simply mean that the timing of the resulting binary is changed
+> enough not to trigger the issue.
+> 
+> -Peff
 
-This is intended for git newbies (and big company => infinite supply of
-them), and also allows them to conveniently nuke the repo and start from
-a fresh copy, so it makes sense to make the script inspect/tweak the
-global settings.  If knowing git "well enough" was an assumed
-requirement, I'd definitely do the normal thing.
-
-
-> I know that's mostly orthogonal to what we're discussing, but I'd feel
-> more convinced that enabling "--includes" with "--global" is useful if
-> I thought that "--global" was useful in the first place outside of a
-> few narrow debugging cases.
-
-Ok.  Perhaps I overestimated the utility of --global anyway, given the
-above...
+With you're stress script I'm able to see the failures.  The interesting
+thing is that the entry missing is always from the non-submodule file.
 
 -- 
-                   ((x=>x(x))(x=>x(x)))                  Eli Barzilay:
-                   http://barzilay.org/                  Maze is Life!
+Brandon Williams
