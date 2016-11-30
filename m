@@ -2,99 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6EFA1FBB0
-	for <e@80x24.org>; Wed, 30 Nov 2016 11:08:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C2051FBB0
+	for <e@80x24.org>; Wed, 30 Nov 2016 11:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755201AbcK3LIE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 06:08:04 -0500
-Received: from mout.gmx.net ([212.227.15.15]:51336 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754813AbcK3LIC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 06:08:02 -0500
-Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9ra4-1c11Bw34LQ-00B3pe; Wed, 30
- Nov 2016 12:07:52 +0100
-Date:   Wed, 30 Nov 2016 12:07:51 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] difftool.c: mark a file-local symbol with static
-In-Reply-To: <4ddad7ea-5ac8-20b2-da9e-5843c486878a@ramsayjones.plus.com>
-Message-ID: <alpine.DEB.2.20.1611301204020.117539@virtualbox>
-References: <4ddad7ea-5ac8-20b2-da9e-5843c486878a@ramsayjones.plus.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S933422AbcK3LOp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 06:14:45 -0500
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:34993 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754813AbcK3LOn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 06:14:43 -0500
+Received: by mail-yb0-f196.google.com with SMTP id d59so2039350ybi.2
+        for <git@vger.kernel.org>; Wed, 30 Nov 2016 03:14:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Q1Dqub6rvJQIC5kQvCMnjRrYAUEsMSepCFzr+kYD0aU=;
+        b=AhKR/10gx0ONO8HYKLQZpA8hsuQehFWottmzLLzaDpGr9y7DAD4DIpXxO99Ygo+czI
+         KJSPpuHxGPAUpzXZrELlCDKookmmE7Wq3iHkx+Tx4mEJ8tsv4I6wZBKCulHKr8lQdPZ0
+         49hq6W5+jbTyRHZeHf0H+9Ixdno7omgUaFrTyRdXEzbtqGJx1tpSXA/XPcFRYoqodTwV
+         HpxIlZJQtdaXllchX9ZnMxYfyUg+6Ad7jXe70fv1yAa5eNwSASdB1cRQZUiB86+2gIcd
+         D4VAlBymNsjRwfejdTS/gCbpZ+KFZwsL+M+OOkVjJPoxLbAXOrimV7s8g/nFgW+D9n9O
+         odWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Q1Dqub6rvJQIC5kQvCMnjRrYAUEsMSepCFzr+kYD0aU=;
+        b=RA3NOFlZ4uLK/fZgmbX4rR3sY2TiQ1EuWrIE6Jtq7Fjc80EOyg+gTRoCqN9ILSzrqZ
+         z2/NLbrRUDkrE95Y6P7KCSzR8iXdBjLHZj30ODlOj04MYjGqIb+6LqjCuTft5xacWs5s
+         ++lAke/kF3KhYVhNNWa/TQDHzCpaYxhOSg9m11R9xzxHZ+IjaE6FT6MvHFAckfHAOPUP
+         SxxSkS5vCPYZ1rpngK4LtryjtbegBTb9h6JXbcelHVAZhMCXhmKOsRkwp6j7+d4lxiNo
+         ijPyr6rhVVMR4acCojp20kjjcdBaNOaX3OrwcQC3kX/auhspmJp4AcqYlFyACxMtPOZQ
+         pswA==
+X-Gm-Message-State: AKaTC01Kx0asqkU36i51AaPimefFeCq+zAQDm3eX3e3ZhlTF4iy+m6niEkHUrRubz2ySRPjGXiOm47Rd0EIM6g==
+X-Received: by 10.37.32.194 with SMTP id g185mr2101421ybg.0.1480504482050;
+ Wed, 30 Nov 2016 03:14:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1672880910-1480504072=:117539"
-X-Provags-ID: V03:K0:legwzjduebPJVz9Xkr4HGsy4NAQslRW+b3xKdwp/OzlvC0aeIRu
- 1cjtHH7kEcpMJRf032b6CcT91/zMxFERsWRCX22jK9X4yM2PQSzJSQl1NYy9tMK70qq1Egz
- lqIKzjwWZ3VQ4AosY3Y0vh8/slmPdbrFiu8/ffW+t1OSn6ArUcwN5nzHDqZhjeM/Hf0WsNj
- ta6WIKRpwgoOiaurWxckA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pBxyur0yOBo=:/arDrqyO7sHHjRwzinXWna
- t8e2GXlWRdZPoNZn/1CXrLdfg63KVb1jIcxVkVlr2t5daGHK8fhTjdul/jQdmwPL/AlY+0Sgr
- bBmY17nPNBt3XYryrllxBTSnPaMJQK+ewxYv+1BsQ20q1SPRfwfFHT9Z9FiNq4sdBT8lrKIuE
- qDSvcuPdzlIAoGnczHbDnaMq4YhnV+WfO/7vS/1AgxkpHvnV/r9gBhaqxX/O4wh7bDYnPJzzw
- ifPjGv+RLtqUMarY2jQiXOHtM//tOBcHR9DCMDUaJgfXmLv+djJuJznn3MpwmW53o3WRVJm/7
- 5E+2FZg73r912D0D6/JC7VsA2zxh2N9r6hbljeXpnuDIbzBq30ovdoOslS3cRHZ1fIsZKTkhb
- fRiu1+7mUzM30IgLhV7NheFYmQlvKrds6ijAKs3NV1hTM7ZVBJiF0eUdg3mUYVbXhFIEG8fMR
- wsK9Mk8M9gFNKlAG40f0r5+54ZkkLH1Dl5xBBJewvd4TrFuMS4W6ILB4L1hg0WCJqFHzYvJ9R
- 7MsfGo3ET2MV1EhqLKoJBXm0Xct9b2z76/mXi0xzQzVLT1RIFG9jpIPrYYnoYp0I+zOl36NF7
- ho/8wxWhkj49qgAEG32bY/tQzVi87fJWf2vbGpkhwz7MMxQkzFmW0MdlNFYGtlF4UzzRHVDsA
- 792vI6IXrjD5kEoc391i9/9nIXzj+BBRXrXcapn/yvd7X0Jp8rjHWXei5gXNm2z19JvDrIJre
- CPXN+BAmdYrb61+nlL468fXu7qfBoFY5HJfAstXecJcwZTGIKMXCo1i8JW+SWg6TbpqkxmamP
- krfqYFl
+Received: by 10.37.162.39 with HTTP; Wed, 30 Nov 2016 03:14:11 -0800 (PST)
+In-Reply-To: <20161122192235.6055-5-sbeller@google.com>
+References: <20161122192235.6055-1-sbeller@google.com> <20161122192235.6055-5-sbeller@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 30 Nov 2016 18:14:11 +0700
+Message-ID: <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
+Subject: Re: [PATCHv2 4/4] submodule: add embed-git-dir function
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Nov 23, 2016 at 2:22 AM, Stefan Beller <sbeller@google.com> wrote:
+> +/*
+> + * Migrate the given submodule (and all its submodules recursively) from
+> + * having its git directory within the working tree to the git dir nested
+> + * in its superprojects git dir under modules/.
+> + */
+> +void migrate_submodule_gitdir(const char *prefix, const char *path,
+> +                             int recursive)
 
---8323329-1672880910-1480504072=:117539
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Submodules and worktrees seem to have many things in common. The first
+one is this. "git worktree move" on a worktree that contains
+submodules .git also benefits from something like this [1]. I suggest
+you move this function to some neutral place and maybe rename it to
+relocate_gitdir() or something.
 
-Hi Ramsay,
+It probably should take a bit flag instead of "recursive" here. One
+thing I would need is the ability to tell this function "I have moved
+all these .git dirs already (because I move whole worktree in one
+operation), here are the old and new locations of them, fix them up!".
+In other words, no rename() could be optionally skipped.
 
-On Tue, 29 Nov 2016, Ramsay Jones wrote:
+[1] https://public-inbox.org/git/20161128094319.16176-11-pclouds@gmail.com/T/#u
 
-> If you need to re-roll your 'js/difftool-builtin' branch, could
-> you please squash this into the relevant patch.
+> +{
+> +       char *old_git_dir;
+> +       const char *new_git_dir;
+> +       const struct submodule *sub;
+> +
+> +       old_git_dir = xstrfmt("%s/.git", path);
+> +       if (read_gitfile(old_git_dir))
+> +               /* If it is an actual gitfile, it doesn't need migration. */
+> +               goto out;
+> +
+> +       sub = submodule_from_path(null_sha1, path);
+> +       if (!sub)
+> +               die(_("Could not lookup name for submodule '%s'"),
+> +                     path);
+> +
+> +       new_git_dir = git_common_path("modules/%s", sub->name);
 
-Fixed. Thanks!
+Why doesn't git_path() work here? This would make "modules" shared
+between worktrees, even though it's not normally. That inconsistency
+could cause trouble.
 
-> Also, due to a problem in my config.mak file on Linux (a commented
-> out line that had a line continuation '\', grrrrr!), gcc issued a
-> warning, thus:
->=20
->   builtin/difftool.c: In function =E2=80=98run_dir_diff=E2=80=99:
->   builtin/difftool.c:568:13: warning: zero-length gnu_printf format strin=
-g [-Wformat-zero-length]
->        warning("");
->                ^
-> I am not sure why -Wno-format-zero-length is set in DEVELOPER_CFLAGS,
-> but do you really need to space the output with an an 'empty'
-> "warning:" line? (Just curious).
+> +       if (safe_create_leading_directories_const(new_git_dir) < 0)
+> +               die(_("could not create directory '%s'"), new_git_dir);
+> +
+> +       if (!prefix)
+> +               prefix = get_super_prefix();
+> +       printf("Migrating git directory of %s%s from\n'%s' to\n'%s'\n",
+> +               prefix ? prefix : "", path,
+> +               real_path(old_git_dir), new_git_dir);
+> +
+> +       if (rename(old_git_dir, new_git_dir) < 0)
+> +               die_errno(_("Could not migrate git directory from '%s' to '%s'"),
+> +                       old_git_dir, new_git_dir);
+> +
+> +       connect_work_tree_and_git_dir(path, new_git_dir);
 
-That `warning("");` comes from a straight-forward port of this line (see
-https://github.com/git/git/blob/v2.11.0/git-difftool.perl#L425):
+Another thing in common is, both submodules and worktrees use some
+form of textual symlinks. You need to fix up some here. But if this
+submodule has multiple worktreee, there may be some "symlinks" in
+.git/worktrees which would need fixing up as well.
 
-=09$errmsg .=3D "warning:\n";
-
-I could see two possible ways out:
-
-- warning("%s", ""); (ugly!)
-
-- do away with the "prefix every line with warning:" convention and simply
-  have a multi-line `warning(_("...\n...\n"), ...)`
-
-What do you think?
-Dscho
---8323329-1672880910-1480504072=:117539--
+You don't have to do the fix up thing right away, but I think we
+should at least make sure we leave no dangling links behind (by
+die()ing early if we find a .git dir we can't handle yet)
+-- 
+Duy
