@@ -2,84 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URI_HEX
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83AD01FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 21:39:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E32F61FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 21:44:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758646AbcK3Vjd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 16:39:33 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53981 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754916AbcK3Vjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 16:39:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0131454462;
-        Wed, 30 Nov 2016 16:39:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cBcxwAcbgpp2il0wTGi4FEsDynU=; b=VCszLE
-        h4L8ovFh7RSyDRu1OCIfuvSMTJsMQs3Y7cd8/c5o4rhCKNEgs8kcwGSwYnT7fMyV
-        YlYYkUiFBXPuIykq2jSXDIkENo9qkkaesk8pq81iUA2F3QCUmuFhc3RkE651Aor6
-        YMerJ4FCe/bcTrFGFzApumvWqHBtiIjbp3pe8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DPiM9lfwT+/D6o6f0q0+9mw9zAmU95f4
-        6DOuznBcn6TFwkU2R1H4dgP4loesdzmt3jAmnYAkhCEZwVdOwQbPrWWfYG//VFru
-        th3gnkE0qz5+sFeF1upwIv5+2TNPf9ONLgHwErgWGM2OOTj3sFZHRe0njr1esTKh
-        tAxkMiS7XFA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC4D454461;
-        Wed, 30 Nov 2016 16:39:09 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 654D35445E;
-        Wed, 30 Nov 2016 16:39:09 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCHv2 4/4] submodule: add embed-git-dir function
-References: <20161122192235.6055-1-sbeller@google.com>
-        <20161122192235.6055-5-sbeller@google.com>
-        <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
-        <xmqqpolcd73b.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kar0F7x5U2yZ30ZnWZ9b=EJA=1nT8rxTMRVJPggyFS_XA@mail.gmail.com>
-Date:   Wed, 30 Nov 2016 13:39:08 -0800
-In-Reply-To: <CAGZ79kar0F7x5U2yZ30ZnWZ9b=EJA=1nT8rxTMRVJPggyFS_XA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 30 Nov 2016 13:00:26 -0800")
-Message-ID: <xmqqfum8d4w3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1756330AbcK3Vo3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 16:44:29 -0500
+Received: from mwork.nabble.com ([162.253.133.43]:52820 "EHLO mwork.nabble.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756676AbcK3Vo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 16:44:28 -0500
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+        by mwork.nabble.com (Postfix) with ESMTP id 93754730D506B
+        for <git@vger.kernel.org>; Wed, 30 Nov 2016 13:56:35 -0700 (MST)
+Date:   Wed, 30 Nov 2016 13:56:35 -0700 (MST)
+From:   Yojoa <dmoore@vailsys.com>
+To:     git@vger.kernel.org
+Message-ID: <1480539395581-7657459.post@n2.nabble.com>
+Subject: CVSImport - spaces in CVS path
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6D3A8A98-B745-11E6-9337-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+I'm in the process of moving an entire collection of cvs modules into git.
+I'm working in Mac Yosemite. Everything is working fine except for one
+thing. A couple of the CVS modules have spaces in the paths. Below is what
+my command line looks like. When the path has spaces I've tried putting it
+in single and double quotes and using escape characters.  None of that
+matters. I always get a message that it can't read dir/dir/path and then
+messages that it can't find the modules "with" or "spaces".  
 
->     git relocate-git-dir (--into-workingtree|--into-gitdir) \
+git cvsimport -v -d :pserver:MYLOGIN:/usr/local/cvsroot/
+dir/dir/PathWithNoSpaces/dir    
 
-I am not sure if you meant this as a submodule-specific subcommand
-or more general helper.  "into-workingtree" suggests to me that it
-is submodule specific, so I'll base my response on that assumption.
+git cvsimport -v -d :pserver:MYLOGIN:/usr/local/cvsroot/ dir/dir/path with
+spaces/dir
 
-Would there ever be a situation where you already have submodule
-repositories in the right place (according to the more modern
-practice, to keep them in .git/modules/ of superproject) and want to
-move them to embed them in worktrees of submodules?  I do not think
-of any.
 
-If there is no such situation, I do not think we want a verb that is
-direction-neutral (e.g. "move" or "relocate") with two options.
-Rather we would want "git submodule unembed-git-dir" or something
-like that.
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/CVSImport-spaces-in-CVS-path-tp7657459.html
+Sent from the git mailing list archive at Nabble.com.
