@@ -2,75 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79C5E1FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 20:32:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE18E1FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 20:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755280AbcK3Ucv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 15:32:51 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:34991 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753898AbcK3Ucu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 15:32:50 -0500
-Received: by mail-qk0-f180.google.com with SMTP id n204so222796759qke.2
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 12:32:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=FWnSjjk/CcipOX65FOEByJYz5pnFQadTRupzuETJAms=;
-        b=umjWdF5UFUcisiF9kn0ta1nYzHbflvBIFITvWgwriU/CU4jtR7t3ZcIpBb2uG0//+9
-         SAt8Szvgz8NLzXeUCekGwHxNZTo7KGlXqAOaZEoVQ43voWyk6HkFJLaU/FtQHpA9iLks
-         QZbneT695Lug6qY6aCWoMhdUgeAaTfYv3Z+Xz2lwdDUgZ6IyQ4QeHpXia0az0kjNJMFZ
-         eV/ww6nTTB0L4JGl9fN1Fp7PKqa8UE7W5h+aN76lFBMdvrZvfmrLdEH64WsdQumK/y/M
-         Gown9O2AbsjKvuGntttvWxMlXUquFKJU9YfrEboc1wC8za6zaxFCOmqxv+nKBaUlNg3h
-         rG8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=FWnSjjk/CcipOX65FOEByJYz5pnFQadTRupzuETJAms=;
-        b=arlHZE8gctUPIQqXR+zh4y7pvYyKM4RGycdJU2d2+zmmcFd+XuyhlBRFRkFEdW0Rtd
-         z6Poum2PsMpzzduS4w1JQYGqCZRXAEANvDTZiRU9Nr1g1bSJH3LAhg5AxlJfoz+RtmFc
-         SBepSJBI9JKtJHlZY9HogiCkthUO0HQyZoL3wGKr6/OJJ0Eqe+NNjc1OGbr46ko5Kvcq
-         YDiOHuKGwf1cI+1pxAqcyVBA6rsZAfLqEGWz7b7KeD1b/fPepF+ocA3zaTFwvGRWGk27
-         uX2olVJFPdwYU1vD1gb2Ezc7oW+4R1GCCK8xLI+6sgYPBgvefzRDI5ZQp4825vA/7Q/z
-         PabQ==
-X-Gm-Message-State: AKaTC001t+zVucArsZEzhb+HOq1TvD1KwPwZIBqIueq5J/ez4G1Ssbkr3Zxnqiy2ogK1n04K/VXoGWo+BQ4dEg==
-X-Received: by 10.55.106.134 with SMTP id f128mr33490300qkc.121.1480537950356;
- Wed, 30 Nov 2016 12:32:30 -0800 (PST)
+        id S1755371AbcK3Uka (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 15:40:30 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57523 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752789AbcK3Uk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 15:40:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B98152E2A;
+        Wed, 30 Nov 2016 15:40:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/fI6A0RCU171M8US3gOg360AJrs=; b=xCboq3
+        CEs0syMwjJ7eWiw4NZtRQLBr7b2wZbQsU2S/eEHNQnESoSTTssWzGW935xBaXpKW
+        +FtprNr6p/t/2H0/ouoxzBSwvuHJlrLU0EKa2xWpTRQcCb6yuJjJM5S+RMYlyZkY
+        K8e4PxLnmKhzwgYi//+FnFuU5hgbKuEckYpvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PWBMcOk8+LyTcEtMMmRbb2qhHn5JYlei
+        xyooa1dwYr9Z2AMtGODBmOwGJ7+QKm/uqQYjT/honJ8NyA47JG1WlwExmKAgp4hY
+        TlGzv5sg/UFzpowysrKHg+ZupUix/vsfP4PDUbXGlXOcbHYr2ndwfB8PdVPY+LgQ
+        7zBGpxuUubs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6230752E29;
+        Wed, 30 Nov 2016 15:40:27 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE51F52E28;
+        Wed, 30 Nov 2016 15:40:26 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool.c: mark a file-local symbol with static
+References: <4ddad7ea-5ac8-20b2-da9e-5843c486878a@ramsayjones.plus.com>
+        <alpine.DEB.2.20.1611301204020.117539@virtualbox>
+        <29abc89b-9ca5-930f-8e90-ca446ac2b96a@ramsayjones.plus.com>
+Date:   Wed, 30 Nov 2016 12:40:25 -0800
+In-Reply-To: <29abc89b-9ca5-930f-8e90-ca446ac2b96a@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Wed, 30 Nov 2016 19:57:18 +0000")
+Message-ID: <xmqqtwaod7ly.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.176.147 with HTTP; Wed, 30 Nov 2016 12:31:49 -0800 (PST)
-From:   Peter Urda <peter.urda@gmail.com>
-Date:   Wed, 30 Nov 2016 12:31:49 -0800
-Message-ID: <CAEnOLdvG=SoKFxeJ_pLmamGj_8osC+28TSg+pbFLLTr+ZLcpQA@mail.gmail.com>
-Subject: "git add -p ." raises an unexpected "warning: empty strings as
- pathspecs will be made invalid in upcoming releases. please use . instead if
- you meant to match all paths"
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 39856F72-B73D-11E6-941F-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After upgrading to version 2.11.0 I am getting a warning about empty
-strings as pathspecs while using 'patch'
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-- Ran 'git add -p .' from the root of my git repository.
+> [I have fixed my config.mak file now, so I don't see the warning
+> anymore! Having -Wno-format-zero-length in DEVELOPER_CFLAGS, or
+> not, is a separate matter.]
 
-- I was able to normally stage my changes, but was presented with a
-"warning: empty strings as pathspecs will be made invalid in upcoming
-releases. please use . instead if you meant to match all paths"
-message.
+I suspect that 658df95a4a ("add DEVELOPER makefile knob to check for
+acknowledged warnings", 2016-02-25) took it from me (namely, Make
+script in my 'todo' branch).  In turn, I added it to my set of flags
+in order to squelch this exact warning, so...
 
-- I expected no warning message since I included a "." with my original command.
 
-I believe that I should not be seeing this warning message as I
-included the requested "." pathspec.
-
-~ Peter Urda
-
-http://urda.cc
