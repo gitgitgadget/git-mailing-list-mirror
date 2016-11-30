@@ -2,101 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB9901FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 16:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FBB21FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 17:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757143AbcK3QCS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 11:02:18 -0500
-Received: from mail-wj0-f196.google.com ([209.85.210.196]:35506 "EHLO
-        mail-wj0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757115AbcK3QCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 11:02:16 -0500
-Received: by mail-wj0-f196.google.com with SMTP id he10so8619034wjc.2
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 08:02:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Lk1rfVHpbyMhXHIrazFmtqVHGCrVdjHl6BCs509FpqI=;
-        b=O5K8sVFt6WH2MjDbhKTMmXgTiNVqhrYtvn+UHjcuZhblO8N62npWBrPPqg5CUoa72H
-         l0AuBRvdWQy4iXSvGKEB11E293j0P3lgj4EnKIZQ2LJm5lazFmU+3x9b1xmGmSXpnelF
-         u0iVnLJec94scFW/AjhUGqIZM1yDTvzQxknBV1p00C1fMsnxEAZuQCTqF35/VA9Vfv8R
-         G833nthUKIc8pphxfB1oMzcRTMSHoh1cIuetJh2hoKV/XiQ0GwpzOZy/EYYM2xEe+daJ
-         qEXcwCgwylb/4oBoRWIZX07HDQaoeqGvKE7gCuTr6bhRD+9J4P2/g5HD4IJJA8sOfnVj
-         tc6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Lk1rfVHpbyMhXHIrazFmtqVHGCrVdjHl6BCs509FpqI=;
-        b=f2jCIrNlanxoHa0y5fP96tzakay+2CB0YrGv9y8CloyaeeXmwMTFUDOeQipgtbyXWn
-         rE1qGu52WQPXVInAi75hAaMNeI2KGTlRLXnPdJgHvG5LQYHxbtVLQgtlxsFH+lLT11NE
-         caxp9jswzu1lPe5Jy4ScFISQSNeAV/v1QS9qtKP/d09mT6hL/0QpckZ4ouSFd93jLWel
-         A2Z1d6FuZ56oMlJASutuP9GdKN8MrWhEAqQOVoc8WsvCkNg/v07Nye+/0DjsjQi3Ox4y
-         Wua4+nirEL5Fsr4pxQP6BX9rHziHTT176pC3S0tt8illJ5cFEqCcpdMfvgGzpPLehlq/
-         UG2g==
-X-Gm-Message-State: AKaTC01dANT+vp63g8ptPJsXGur2R3p6e1NFpQsM3BBFmIXleSRB6be83TJ0T8nzsFZbEw==
-X-Received: by 10.194.145.70 with SMTP id ss6mr11809023wjb.158.1480521735228;
-        Wed, 30 Nov 2016 08:02:15 -0800 (PST)
-Received: from [192.168.1.26] (epg20.neoplus.adsl.tpnet.pl. [83.20.48.20])
-        by smtp.googlemail.com with ESMTPSA id u18sm8670305wmd.1.2016.11.30.08.02.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Nov 2016 08:02:14 -0800 (PST)
-Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming builtin
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611242211450.117539@virtualbox>
- <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611251201580.117539@virtualbox>
- <20161125171940.rizbqyhsygdsoujr@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611251841030.117539@virtualbox>
- <20161125174721.f35mzc276kdwakzm@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611261320050.117539@virtualbox>
- <20161126161907.xol62zytn2jb45gh@sigill.intra.peff.net>
- <alpine.DEB.2.20.1611261400300.117539@virtualbox>
- <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net>
- <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1611281830040.117539@virtualbox>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <855b9172-7225-e09e-e46d-87940f9fda75@gmail.com>
-Date:   Wed, 30 Nov 2016 17:02:08 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.0
+        id S1758163AbcK3RCv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 12:02:51 -0500
+Received: from mout.web.de ([212.227.15.14]:64485 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751892AbcK3RCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 12:02:49 -0500
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LhQWG-1cYJwK3JEO-00mZXg; Wed, 30
+ Nov 2016 18:02:36 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org, eevee.reply@veekun.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2 1/1] convert: git cherry-pick -Xrenormalize did not work
+Date:   Wed, 30 Nov 2016 18:02:32 +0100
+Message-Id: <20161130170232.19685-1-tboegi@web.de>
+X-Mailer: git-send-email 2.10.0
+In-Reply-To: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
+References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1611281830040.117539@virtualbox>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Vg1q+2RFkskUNU+p2HE8Dw4TEMyScXoMM0eBQcOzJj5vUWj/FM/
+ E7k2/HEZuU5Cduyrd4MYAxnEBkk66spplEl8BnGf+lKQw/df5jSxdr0FnZYirCt1nC+9EW4
+ e4uMkDo4CBC8G0c6ZmWsGvYb0xdc++flHRwfMCFnc7nbjdyo5evdpiizLm95dS9JS52LLQC
+ nL1x0f+2hktm6CO2oSrxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ol3e5XYQ7sY=:zNDJexIBm9+LYJUhf4lSms
+ W6b1EFgv5qtFyiu+qt6X2zNXDLM7jo/24isG0ZYJro2SlP7HpCtPUNtdU79txvwVBQTPdYv4K
+ jl9/ZEyyumKI1XeCWrGA3Hdz6mo5BM8XAXkwly8Air7TDDBa71zzJ/p3UxxpQ0LgKZNwcs8Jn
+ uyMUkScpDw53HbPvouv51Q3F4lTpILyU+B2Mpob4ULdzzm4ljC2yp3vTTWiQi841WgUOCzHCw
+ Tqze9/OP4jcxPuTxhAgdVDdXtbY7Jy/d2lqFPH9t0Bo82RfGExWmXDtw7nyqTEiMyF7BNm9Y9
+ J3XDnFWdyHfaxjfGl5++HJl6/hWg7hPKEedlK+3ez91WsMoA/crEDClO48Xv1Nz0zToLdRj8s
+ ySJO77L3RBqJQ36wuWAHQd/Q0uaimZhc7EmI/jNyIlNVgsbcHGi50JT1hZyEXmvZ72h/2GDLx
+ nBcAi4W34noB75upr4an+kgwPkfeDfdqVxCbvc691FBbw24NVUjULgj3sqOc3wUYpGIEWd3y7
+ WxvAUB5wMBoGQj+t1DYx4bTmAofrCZBGN9wLsWmOHnSdNkSfnNJyyExvb4JdSAxT1d0hixHKA
+ S0X0OlfXM+sIvlVudFIS/v6q/6TscR92nESm3PAEAUsinvNMkKRH9VrlomLejxsWJkgJ0j2ya
+ 2tOIraRGM1SQ1qGohmCrW6UYMrbudFi0Bp/5Hrtm32JUxBLsEE1heAdmooHEDLflWWryjYMtf
+ cC0LYGbxzZGG/lDN11fwmaiHfdDUKQzpbK3xjnLYS8HA02PZnaexNOlFuzDXsaGVwyO3UUivX
+ O8PZ8ad
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+From: Torsten Bögershausen <tboegi@web.de>
 
-W dniu 28.11.2016 o 18:34, Johannes Schindelin pisze:
+Working with a repo that used to be all CRLF. At some point it
+was changed to all LF, with `text=auto` in .gitattributes.
+Trying to cherry-pick a commit from before the switchover fails:
 
-> My original "create a file in libexec/git-core/" was simple, did the job
-> reliably, and worked also for testing.
-> 
-> It is a pity that you two gentlemen shot it down for being inelegant. And
-> ever since, we try to find a solution that is as simple, works as
-> reliably, also for testing, *and* appeases your tastes.
+$ git cherry-pick -Xrenormalize <commit>
+    fatal: CRLF would be replaced by LF in [path]
 
-I just would like to note that existence of file is used for both
-git-daemon and gitweb (the latter following the git-daemon example).
+Commit 65237284 "unify the "auto" handling of CRLF" introduced
+a regression:
 
-So there is a precedent for the use of this mechanism.
+Whenever crlf_action is CRLF_TEXT_XXX and not CRLF_AUTO_XXX,
+SAFE_CRLF_RENORMALIZE was feed into check_safe_crlf().
+This is wrong because here everything else than SAFE_CRLF_WARN is
+treated as SAFE_CRLF_FAIL.
 
-Best,
+Call check_safe_crlf() only if checksafe is SAFE_CRLF_WARN or SAFE_CRLF_FAIL.
+
+Reported-by: Eevee (Lexy Munroe) <eevee@veekun.com>
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ convert.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index be91358..f8e4dfe 100644
+--- a/convert.c
++++ b/convert.c
+@@ -281,13 +281,13 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 		/*
+ 		 * If the file in the index has any CR in it, do not convert.
+ 		 * This is the new safer autocrlf handling.
++		   - unless we want to renormalize in a merge or cherry-pick
+ 		 */
+-		if (checksafe == SAFE_CRLF_RENORMALIZE)
+-			checksafe = SAFE_CRLF_FALSE;
+-		else if (has_cr_in_index(path))
++		if ((checksafe != SAFE_CRLF_RENORMALIZE) && has_cr_in_index(path))
+ 			convert_crlf_into_lf = 0;
+ 	}
+-	if (checksafe && len) {
++	if ((checksafe == SAFE_CRLF_WARN ||
++	    (checksafe == SAFE_CRLF_FAIL)) && len) {
+ 		struct text_stat new_stats;
+ 		memcpy(&new_stats, &stats, sizeof(new_stats));
+ 		/* simulate "git add" */
 -- 
-Jakub Narębski
+2.10.0
 
