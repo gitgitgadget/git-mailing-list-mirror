@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B952F1FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 21:24:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A29C81FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 21:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753283AbcK3VYg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 16:24:36 -0500
-Received: from mail-wj0-f193.google.com ([209.85.210.193]:33329 "EHLO
-        mail-wj0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751255AbcK3VY3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 16:24:29 -0500
-Received: by mail-wj0-f193.google.com with SMTP id kp2so24028623wjc.0
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 13:24:29 -0800 (PST)
+        id S1753869AbcK3VYm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 16:24:42 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34313 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751255AbcK3VYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 16:24:40 -0500
+Received: by mail-wm0-f68.google.com with SMTP id g23so31368032wme.1
+        for <git@vger.kernel.org>; Wed, 30 Nov 2016 13:24:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w/9Lg3ikC1ZfAs/+K7qgViopRcbkqGeEm9Ate3/zvgY=;
-        b=uWe6FrMHYuHo/kpmRc+jWaRi770MH+I2P0/u5SI1EOBOU6E4St3ViD8Ko+QsyCsANj
-         0mLksZsyzLRLP8pAktSbtwiFp30DPfGmFqyoZUZXLz7agqTwGy9BItv22uUgE/sP4oa2
-         WFe9/dr6RQ4cAtK6vHO3RBpNIgkhiUirakahiGTme80r474MmPHx+iko8Zh86EUjX2dt
-         OUIwhR086rXaTQ0leun5pyJriGxpoikNX9GH1hVwxTpJrOYqX4hGYFQC66KvmokPnqAx
-         GAm8NcglEaiAipbnhj9U5y0c/3RpTsVV9x62XL7FZG8/6fmUU8YjlXuHWLzCrcg99Jjz
-         9pWQ==
+        bh=ads6E8+isMbxJ492Qfu/FOpm2r38Kq4tTKmTIQg244A=;
+        b=j+huv7uKQ/jMZw0HZIyFkhHrXhA7ZuByidSNGS3T6X1S04JlpJIKqwTT81T0O07H42
+         0uT7M60EAfVZHGMIFV7GQC4BUKi2VksdcNygClOa1ekiFPcJWABvzIOVrPSDML+Pf5Nw
+         LlvLPuaXEYS8ovb+nm/qWA2MLwkW+SdI1W+XvThLOmg711gLMAQ+jEisMbsnQ5vMiHun
+         b9iYTPziGk7BKblyQcau2TXv8lrzJf83dWWqDEONSy2Rmy2yZmKtBPL7HZtCieu1zq2F
+         J1EiZWMO6WhB9Y5FustnF5LRgh6BdZm2wwGv42LAWpdO2yE9xVVahJIhA/h/DlbPtFnX
+         kh5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=w/9Lg3ikC1ZfAs/+K7qgViopRcbkqGeEm9Ate3/zvgY=;
-        b=STPIwp10Cgn+z9XEzUsrJYSpgdsBT+Zub4QPkNR1WIqu6pet21qJaIEAmLDUsyaCDM
-         nT0m+mUEUSjEkesyJpPVdQkC8o+r0Rt6VOAANASLDOea+jd+7jX0IoAgpqhSfoAU+twa
-         MDbd/qX4knxE6IUMSVKydODASiGvNGAk38DIsrEj4eBcofafbnknIWt9Se9xEf0LAj5m
-         B0QuHBEBJ3chnEHV78HNwozM8l/Tgj9f7QY2oQ+pmOQzYdoxIy5G1u78d3qrnudhLpUO
-         lj+Ut/14eyyDfrwXVNx65GlmrMdPlRUjxyhEVryVGi8eLViCCAynSx967CzU6oz8B7xL
-         QgzQ==
-X-Gm-Message-State: AKaTC01gl+nq/gL5WX1va04FvwhxUTTKjrNBVrqjGylHzcJwMipiJPcR/DBF+nGEHw4tcg==
-X-Received: by 10.194.99.38 with SMTP id en6mr30413374wjb.184.1480539916360;
-        Wed, 30 Nov 2016 13:05:16 -0800 (PST)
+        bh=ads6E8+isMbxJ492Qfu/FOpm2r38Kq4tTKmTIQg244A=;
+        b=ZwKIl4ZM6PLd2tN16pGWjytlEoKB9CkMq0JCsH4Y4Hzs+Tb6gqDNK3bv0pXwRqnVxV
+         KDE6YpqRhP1JND/mytirdF1S4cm9QcH6Q8PQInhB+zQjp+nW34gBUl4pLl3cYp60lIm+
+         cxEe0B0eZvAd0Wmc2OY6Nj7DFq6zfLvIZXTeJ0/UhYVU5Dkr7wc6moovfl+BviSKC/2n
+         yvW8m1lof+FbUoZ1WRGF4sEYe5bACey1l652Pz2efa04wekODTHhb0aqj6ZjPZaDiA1A
+         tfug0BA3eMzzde7fFpIqrDv/qD/acezgTmjSqWhUZD19lfuuBjf87bYVYbeCTI2ej1yq
+         2utg==
+X-Gm-Message-State: AKaTC03hWjzDjLqchJF1hJi0yluc0P35RDDUm1iropP4tmJUv7E+jb6Hw2prU6iPSNJH3g==
+X-Received: by 10.28.157.137 with SMTP id g131mr28180639wme.29.1480539913677;
+        Wed, 30 Nov 2016 13:05:13 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id d64sm9802427wmh.3.2016.11.30.13.05.13
+        by smtp.gmail.com with ESMTPSA id d64sm9802427wmh.3.2016.11.30.13.05.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 30 Nov 2016 13:05:15 -0800 (PST)
+        Wed, 30 Nov 2016 13:05:12 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v3 15/16] odb-helper: add 'store_plain_objects' to 'struct odb_helper'
-Date:   Wed, 30 Nov 2016 22:04:19 +0100
-Message-Id: <20161130210420.15982-16-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v3 14/16] lib-httpd: add apache-e-odb.conf
+Date:   Wed, 30 Nov 2016 22:04:18 +0100
+Message-Id: <20161130210420.15982-15-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.11.0.rc2.37.geb49ca6
 In-Reply-To: <20161130210420.15982-1-chriscool@tuxfamily.org>
 References: <20161130210420.15982-1-chriscool@tuxfamily.org>
@@ -66,178 +66,236 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds a configuration option odb.<helper>.plainObjects and the
-corresponding boolean variable called 'store_plain_objects' in
-'struct odb_helper' to make it possible for external object
-databases to store object as plain objects instead of Git objects.
-
-The existing odb_helper_fetch_object() is renamed
-odb_helper_fetch_git_object() and a new odb_helper_fetch_plain_object()
-is introduce to deal with external objects that are not in Git format.
+This is an apache config file to test external object databases.
+It uses the upload.sh and list.sh cgi that have been added
+previously to make apache store external objects.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- external-odb.c |   2 +
- odb-helper.c   | 113 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- odb-helper.h   |   1 +
- 3 files changed, 114 insertions(+), 2 deletions(-)
+ t/lib-httpd/apache-e-odb.conf | 214 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 214 insertions(+)
+ create mode 100644 t/lib-httpd/apache-e-odb.conf
 
-diff --git a/external-odb.c b/external-odb.c
-index a980fbfbf2..af55377281 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -36,6 +36,8 @@ static int external_odb_config(const char *var, const char *value, void *data)
- 
- 	if (!strcmp(key, "command"))
- 		return git_config_string(&o->cmd, var, value);
-+	if (!strcmp(key, "plainobjects"))
-+		o->store_plain_objects = git_config_bool(var, value);
- 
- 	return 0;
- }
-diff --git a/odb-helper.c b/odb-helper.c
-index 7b7de7380f..6b9fb7927a 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -153,8 +153,107 @@ int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1)
- 	return !!odb_helper_lookup(o, sha1);
- }
- 
--int odb_helper_fetch_object(struct odb_helper *o, const unsigned char *sha1,
--			    int fd)
-+static int odb_helper_fetch_plain_object(struct odb_helper *o,
-+					 const unsigned char *sha1,
-+					 int fd)
-+{
-+	struct odb_helper_object *obj;
-+	struct odb_helper_cmd cmd;
-+	unsigned long total_got = 0;
+diff --git a/t/lib-httpd/apache-e-odb.conf b/t/lib-httpd/apache-e-odb.conf
+new file mode 100644
+index 0000000000..19a1540c82
+--- /dev/null
++++ b/t/lib-httpd/apache-e-odb.conf
+@@ -0,0 +1,214 @@
++ServerName dummy
++PidFile httpd.pid
++DocumentRoot www
++LogFormat "%h %l %u %t \"%r\" %>s %b" common
++CustomLog access.log common
++ErrorLog error.log
++<IfModule !mod_log_config.c>
++	LoadModule log_config_module modules/mod_log_config.so
++</IfModule>
++<IfModule !mod_alias.c>
++	LoadModule alias_module modules/mod_alias.so
++</IfModule>
++<IfModule !mod_cgi.c>
++	LoadModule cgi_module modules/mod_cgi.so
++</IfModule>
++<IfModule !mod_env.c>
++	LoadModule env_module modules/mod_env.so
++</IfModule>
++<IfModule !mod_rewrite.c>
++	LoadModule rewrite_module modules/mod_rewrite.so
++</IFModule>
++<IfModule !mod_version.c>
++	LoadModule version_module modules/mod_version.so
++</IfModule>
++<IfModule !mod_headers.c>
++	LoadModule headers_module modules/mod_headers.so
++</IfModule>
 +
-+	char hdr[32];
-+	int hdrlen;
++<IfVersion < 2.4>
++LockFile accept.lock
++</IfVersion>
 +
-+	int ret = Z_STREAM_END;
-+	unsigned char compressed[4096];
-+	git_zstream stream;
-+	git_SHA_CTX hash;
-+	unsigned char real_sha1[20];
++<IfVersion < 2.1>
++<IfModule !mod_auth.c>
++	LoadModule auth_module modules/mod_auth.so
++</IfModule>
++</IfVersion>
 +
-+	obj = odb_helper_lookup(o, sha1);
-+	if (!obj)
-+		return -1;
++<IfVersion >= 2.1>
++<IfModule !mod_auth_basic.c>
++	LoadModule auth_basic_module modules/mod_auth_basic.so
++</IfModule>
++<IfModule !mod_authn_file.c>
++	LoadModule authn_file_module modules/mod_authn_file.so
++</IfModule>
++<IfModule !mod_authz_user.c>
++	LoadModule authz_user_module modules/mod_authz_user.so
++</IfModule>
++<IfModule !mod_authz_host.c>
++	LoadModule authz_host_module modules/mod_authz_host.so
++</IfModule>
++</IfVersion>
 +
-+	if (odb_helper_start(o, &cmd, 0, "get %s", sha1_to_hex(sha1)) < 0)
-+		return -1;
++<IfVersion >= 2.4>
++<IfModule !mod_authn_core.c>
++	LoadModule authn_core_module modules/mod_authn_core.so
++</IfModule>
++<IfModule !mod_authz_core.c>
++	LoadModule authz_core_module modules/mod_authz_core.so
++</IfModule>
++<IfModule !mod_access_compat.c>
++	LoadModule access_compat_module modules/mod_access_compat.so
++</IfModule>
++<IfModule !mod_mpm_prefork.c>
++	LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
++</IfModule>
++<IfModule !mod_unixd.c>
++	LoadModule unixd_module modules/mod_unixd.so
++</IfModule>
++</IfVersion>
 +
-+	/* Set it up */
-+	git_deflate_init(&stream, zlib_compression_level);
-+	stream.next_out = compressed;
-+	stream.avail_out = sizeof(compressed);
-+	git_SHA1_Init(&hash);
++PassEnv GIT_VALGRIND
++PassEnv GIT_VALGRIND_OPTIONS
++PassEnv GNUPGHOME
++PassEnv ASAN_OPTIONS
++PassEnv GIT_TRACE
++PassEnv GIT_CONFIG_NOSYSTEM
 +
-+	/* First header.. */
-+	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(obj->type), obj->size) + 1;
-+	stream.next_in = (unsigned char *)hdr;
-+	stream.avail_in = hdrlen;
-+	while (git_deflate(&stream, 0) == Z_OK)
-+		; /* nothing */
-+	git_SHA1_Update(&hash, hdr, hdrlen);
++Alias /dumb/ www/
++Alias /auth/dumb/ www/auth/dumb/
 +
-+	for (;;) {
-+		unsigned char buf[4096];
-+		int r;
++<LocationMatch /smart/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++</LocationMatch>
++<LocationMatch /smart_noexport/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++</LocationMatch>
++<LocationMatch /smart_custom_env/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	SetEnv GIT_COMMITTER_NAME "Custom User"
++	SetEnv GIT_COMMITTER_EMAIL custom@example.com
++</LocationMatch>
++<LocationMatch /smart_namespace/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	SetEnv GIT_NAMESPACE ns
++</LocationMatch>
++<LocationMatch /smart_cookies/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	Header set Set-Cookie name=value
++</LocationMatch>
++<LocationMatch /smart_headers/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++</LocationMatch>
++ScriptAlias /upload/ upload.sh/
++ScriptAlias /list/ list.sh/
++<Directory ${GIT_EXEC_PATH}>
++	Options FollowSymlinks
++</Directory>
++<Files upload.sh>
++  Options ExecCGI
++</Files>
++<Files list.sh>
++  Options ExecCGI
++</Files>
++<Files ${GIT_EXEC_PATH}/git-http-backend>
++	Options ExecCGI
++</Files>
 +
-+		r = xread(cmd.child.out, buf, sizeof(buf));
-+		if (r < 0) {
-+			error("unable to read from odb helper '%s': %s",
-+			      o->name, strerror(errno));
-+			close(cmd.child.out);
-+			odb_helper_finish(o, &cmd);
-+			git_deflate_end(&stream);
-+			return -1;
-+		}
-+		if (r == 0)
-+			break;
++RewriteEngine on
++RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
++RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
++RewriteRule ^/smart-redir-auth/(.*)$ /auth/smart/$1 [R=301]
++RewriteRule ^/smart-redir-limited/(.*)/info/refs$ /smart/$1/info/refs [R=301]
++RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
 +
-+		total_got += r;
++RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302]
++RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
 +
-+		/* Then the data itself.. */
-+		stream.next_in = (void *)buf;
-+		stream.avail_in = r;
-+		do {
-+			unsigned char *in0 = stream.next_in;
-+			ret = git_deflate(&stream, Z_FINISH);
-+			git_SHA1_Update(&hash, in0, stream.next_in - in0);
-+			write_or_die(fd, compressed, stream.next_out - compressed);
-+			stream.next_out = compressed;
-+			stream.avail_out = sizeof(compressed);
-+		} while (ret == Z_OK);
-+	}
++# Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
++# And as RewriteCond does not allow testing for non-matches, we match
++# the desired case first (one has abra, two has cadabra), and let it
++# pass by marking the RewriteRule as [L], "last rule, do not process
++# any other matching RewriteRules after this"), and then have another
++# RewriteRule that matches all other cases and lets them fail via '[F]',
++# "fail the request".
++RewriteCond %{HTTP:x-magic-one} =abra
++RewriteCond %{HTTP:x-magic-two} =cadabra
++RewriteRule ^/smart_headers/.* - [L]
++RewriteRule ^/smart_headers/.* - [F]
 +
-+	close(cmd.child.out);
-+	if (ret != Z_STREAM_END) {
-+		warning("bad zlib data from odb helper '%s' for %s",
-+			o->name, sha1_to_hex(sha1));
-+		return -1;
-+	}
-+	ret = git_deflate_end_gently(&stream);
-+	if (ret != Z_OK) {
-+		warning("deflateEnd on object %s from odb helper '%s' failed (%d)",
-+			sha1_to_hex(sha1), o->name, ret);
-+		return -1;
-+	}
-+	git_SHA1_Final(real_sha1, &hash);
-+	if (hashcmp(sha1, real_sha1)) {
-+		warning("sha1 mismatch from odb helper '%s' for %s (got %s)",
-+			o->name, sha1_to_hex(sha1), sha1_to_hex(real_sha1));
-+		return -1;
-+	}
-+	if (odb_helper_finish(o, &cmd))
-+		return -1;
-+	if (total_got != obj->size) {
-+		warning("size mismatch from odb helper '%s' for %s (%lu != %lu)",
-+			o->name, sha1_to_hex(sha1), total_got, obj->size);
-+		return -1;
-+	}
++<IfDefine SSL>
++LoadModule ssl_module modules/mod_ssl.so
 +
-+	return 0;
-+}
++SSLCertificateFile httpd.pem
++SSLCertificateKeyFile httpd.pem
++SSLRandomSeed startup file:/dev/urandom 512
++SSLRandomSeed connect file:/dev/urandom 512
++SSLSessionCache none
++SSLMutex file:ssl_mutex
++SSLEngine On
++</IfDefine>
 +
-+static int odb_helper_fetch_git_object(struct odb_helper *o,
-+				       const unsigned char *sha1,
-+				       int fd)
- {
- 	struct odb_helper_object *obj;
- 	struct odb_helper_cmd cmd;
-@@ -242,6 +341,16 @@ int odb_helper_fetch_object(struct odb_helper *o, const unsigned char *sha1,
- 	return 0;
- }
- 
-+int odb_helper_fetch_object(struct odb_helper *o,
-+			    const unsigned char *sha1,
-+			    int fd)
-+{
-+	if (o->store_plain_objects)
-+		return odb_helper_fetch_plain_object(o, sha1, fd);
-+	else
-+		return odb_helper_fetch_git_object(o, sha1, fd);
-+}
++<Location /auth/>
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</Location>
 +
- int odb_helper_for_each_object(struct odb_helper *o,
- 			       each_external_object_fn fn,
- 			       void *data)
-diff --git a/odb-helper.h b/odb-helper.h
-index af31cc27d5..80d332139d 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -6,6 +6,7 @@
- struct odb_helper {
- 	const char *name;
- 	const char *cmd;
-+	int store_plain_objects;
- 
- 	struct odb_helper_object {
- 		unsigned char sha1[20];
++<LocationMatch "^/auth-push/.*/git-receive-pack$">
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</LocationMatch>
++
++<LocationMatch "^/auth-fetch/.*/git-upload-pack$">
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</LocationMatch>
++
++RewriteCond %{QUERY_STRING} service=git-receive-pack [OR]
++RewriteCond %{REQUEST_URI} /git-receive-pack$
++RewriteRule ^/half-auth-complete/ - [E=AUTHREQUIRED:yes]
++
++<Location /half-auth-complete/>
++  Order Deny,Allow
++  Deny from env=AUTHREQUIRED
++
++  AuthType Basic
++  AuthName "Git Access"
++  AuthUserFile passwd
++  Require valid-user
++  Satisfy Any
++</Location>
++
++<IfDefine DAV>
++	LoadModule dav_module modules/mod_dav.so
++	LoadModule dav_fs_module modules/mod_dav_fs.so
++
++	DAVLockDB DAVLock
++	<Location /dumb/>
++		Dav on
++	</Location>
++	<Location /auth/dumb>
++		Dav on
++	</Location>
++</IfDefine>
++
++<IfDefine SVN>
++	LoadModule dav_svn_module modules/mod_dav_svn.so
++
++	<Location /${LIB_HTTPD_SVN}>
++		DAV svn
++		SVNPath "${LIB_HTTPD_SVNPATH}"
++	</Location>
++</IfDefine>
 -- 
 2.11.0.rc2.37.geb49ca6
 
