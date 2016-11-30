@@ -6,87 +6,76 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB1BE1FF40
-	for <e@80x24.org>; Wed, 30 Nov 2016 22:18:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA6491FF40
+	for <e@80x24.org>; Wed, 30 Nov 2016 22:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757835AbcK3WSm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 17:18:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57162 "EHLO
+        id S1757845AbcK3Wgc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 17:36:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55451 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1757251AbcK3WSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 17:18:41 -0500
+        with ESMTP id S1755322AbcK3Wgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 17:36:31 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A35135502E;
-        Wed, 30 Nov 2016 17:18:40 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A70555338;
+        Wed, 30 Nov 2016 17:36:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hHzz58eAhVmphffsxDxzVSps9NI=; b=SlTg4P
-        sJchFTqwB+CCQLHdZ3zJJSRu1eT1VjJlOmVRUmR3nFUkOOUSIH2RM9dmtmxOd07/
-        glqBvLFZuqyDg80s4mkkvBtnt94cpTSIreaB5RMIy3pfNlnTj9vXwTXQjygtSuJs
-        3gnuGrZNOx5cCvSmxRBSkBVDf77HLsillGZ/A=
+        :content-type; s=sasl; bh=ABcXtA+3kE4TcvfZ29CzICrZNCI=; b=EMd0D5
+        mlbZElrAPHAvM9no1G/KoRNcE+xEdlpyUajMPyZHYQ7FNX2teplHE7pGBwFDxx+y
+        DEX3Tbjk9WSMBSGlfO3J6OumyeqvFvDDj4Zi9/MqftAs+WmIqaKvn5yK2RIu7hzp
+        1ALNL3sgbTEORYh0bze6ZhU0gcUvJU8b4xXC8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Yw2+pCHykg5H18UMQ44ENHyfXVf8wX9w
-        31DdVX1IlkU1jDawLEcvKxzaGqlMCeSl3aTNfBvWtoGdFckowU+Yxyi7dVaVgzlE
-        nT7ivXaJUIRKoMuSKFJze7/mlLRptCyNxTUDP2yQXmRZ3Z22W0BpDoOQR8N8v6iE
-        SswkbMHFrqc=
+        :content-type; q=dns; s=sasl; b=gT5xHjGgMqiVeQKess7V36Bfr13r453H
+        EAnUrQlBAD3bSkFkW1/Bn2eB9GBHOvJrlo7tpjyvpOLIsk8DBRPwrARz19pgNm7e
+        eYN/FBgFOp3eUbwGknUGMT2yOK6yAZrtAsOQtLLrIoSBZXRrq0AyeYNdim1Jk/ts
+        4nGpkcJveJ0=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9AD415502D;
-        Wed, 30 Nov 2016 17:18:40 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9225C55337;
+        Wed, 30 Nov 2016 17:36:30 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 174855502C;
-        Wed, 30 Nov 2016 17:18:40 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0EC5055336;
+        Wed, 30 Nov 2016 17:36:30 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCHv2 4/4] submodule: add embed-git-dir function
-References: <20161122192235.6055-1-sbeller@google.com>
-        <20161122192235.6055-5-sbeller@google.com>
-        <CACsJy8Ce3Oa-xJ4BwgRRy6neM=Jxkfqq7yboHZDXLDG2tu9GzQ@mail.gmail.com>
-        <xmqqpolcd73b.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kar0F7x5U2yZ30ZnWZ9b=EJA=1nT8rxTMRVJPggyFS_XA@mail.gmail.com>
-        <xmqqfum8d4w3.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZSAJauwBwrxf+QAhQgyu4ACn+8LrwjpFGVaUQfSzHEAg@mail.gmail.com>
-Date:   Wed, 30 Nov 2016 14:18:38 -0800
-In-Reply-To: <CAGZ79kZSAJauwBwrxf+QAhQgyu4ACn+8LrwjpFGVaUQfSzHEAg@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 30 Nov 2016 13:56:09 -0800")
-Message-ID: <xmqq37i8d329.fsf@gitster.mtv.corp.google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH v3 00/16] Add initial experimental external ODB support
+References: <20161130210420.15982-1-chriscool@tuxfamily.org>
+Date:   Wed, 30 Nov 2016 14:36:28 -0800
+In-Reply-To: <20161130210420.15982-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Wed, 30 Nov 2016 22:04:04 +0100")
+Message-ID: <xmqqy400bno3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F2495FC0-B74A-11E6-BED3-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 70092F6A-B74D-11E6-A605-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> On Wed, Nov 30, 2016 at 1:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>>     git relocate-git-dir (--into-workingtree|--into-gitdir) \
->>
->> I am not sure if you meant this as a submodule-specific subcommand
->> or more general helper.  "into-workingtree" suggests to me that it
->> is submodule specific, so I'll base my response on that assumption.
->>
->> Would there ever be a situation where you already have submodule
->> repositories in the right place (according to the more modern
->> practice, to keep them in .git/modules/ of superproject) and want to
->> move them to embed them in worktrees of submodules?  I do not think
->> of any.
+> For now there should be one odb ref per blob. Each ref name should be
+> refs/odbs/<odbname>/<sha1> where <sha1> is the sha1 of the blob stored
+> in the external odb named <odbname>.
 >
->  "Hi, I made a mistake by using submodules. I don't want to use
->   them any more, I rather want to:
->   A) make it a separate git repo again and I'll keep them in sync myself
->   B) ... "
+> These odb refs should all point to a blob that should be stored in the
+> Git repository and contain information about the blob stored in the
+> external odb. This information can be specific to the external odb.
+> The repos can then share this information using commands like:
+>
+> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
 
-OK, I can buy that.  Thanks.
+Unless this is designed to serve only a handful of blobs, I cannot
+see how this design would scale successfully.  I notice you wrote
+"For now" at the beginning, but what is the envisioned way this will
+evolve in the future?
+
