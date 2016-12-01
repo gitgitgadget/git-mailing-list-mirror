@@ -2,146 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9BA1FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 22:38:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B99ED1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 22:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760029AbcLAWh7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 17:37:59 -0500
-Received: from mout.web.de ([217.72.192.78]:59607 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757940AbcLAWh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 17:37:57 -0500
-Received: from [192.168.178.36] ([79.197.214.90]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LyDlZ-1cif3n2JqX-015cVn; Thu, 01
- Dec 2016 23:30:50 +0100
-Subject: Re: [PATCH 1/3] compat: add qsort_s()
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-References: <3083fbf7-d67e-77e4-e05f-94a7e7e15eba@web.de>
- <fc602a66-a06c-203e-b50b-55fd7b258b54@web.de>
- <20161201193556.j2odwy3sepaxxq5a@sigill.intra.peff.net>
- <xmqq7f7j9zkd.fsf@gitster.mtv.corp.google.com>
- <20161201201917.nqx3v5fl2ptl3bhr@sigill.intra.peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <955e9bf4-d1cd-f01a-13f1-7a335dea011a@web.de>
-Date:   Thu, 1 Dec 2016 23:30:49 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1754661AbcLAWxf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 17:53:35 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:34167 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752715AbcLAWxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 17:53:34 -0500
+Received: by mail-pg0-f46.google.com with SMTP id x23so99813323pgx.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2016 14:53:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=52JjF212JktgkbKq8KBUX4DEp2GodVxsnEMyeF9smR0=;
+        b=kN6uitLxZsMeIC8OQsK/IIiaLdGVWcJb9txK6jUBd5IXM4nuVunGCxFBOFBBdAQ/b7
+         0g0bpFbY5XETDn8Fj85OskmJUFp1vLxLkARcdOLpr/Z3h2JA5nhhnS0Ampm6ixhbtLWD
+         r8C1iDdqJpT8ag6ML9Pg7joRhVTm47/HvglhllnTmcJB6srifN67Hq0kYLRBqAjm3AMk
+         WUEry86uBxJaO7L/j3J+O7H1oGO/E0zSUIzSaCov23NENUdtJJFCoq3BfceIi3XQ154/
+         LiJBU+ltTBkyW1fXzQE0QnL+JOkf6y7cQmK6so8px4vAnIG/9mboGefxAO4+WcYmU2eL
+         tRzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=52JjF212JktgkbKq8KBUX4DEp2GodVxsnEMyeF9smR0=;
+        b=cdXYGKQq7X1hrqmJbgSuGjO17A8sjG4xCN+YhI1q3EGOLhe4FDDRETlvGNfcyXinNz
+         dcCOHetd31E0T8kLRgxiPAs2UhOwMenYgfXh45uyCr7lceTu/YGziuQy1FoL31tszH6U
+         DM5VrpPMmdmr/FBrgywnZPx9g1xf622v3BeLka1MBy+fdqTvIYZrF/F6LuOXOSnsGXLT
+         dxzIthHlfj4mGJXjwT4t+D8UmTmtWwOULVGXqeSNm8PBuz3QFeUFw7rkEUzRLhkmBID7
+         Qc0zOxu3hejGAL/G9yCBn/6FjH+9n2hUG1MdQD0mQWkz260IMVIm8oAAXkmIgE10osdQ
+         DZfA==
+X-Gm-Message-State: AKaTC03tlSc067RA8vAqU9FrfPECZxEzavxL/mJi3Fi2SgRPuXsRRSLUleIyXChfdqmdBSwl
+X-Received: by 10.84.216.24 with SMTP id m24mr17768636pli.26.1480632813864;
+        Thu, 01 Dec 2016 14:53:33 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:2ce9:cac6:1258:bbf3])
+        by smtp.gmail.com with ESMTPSA id 13sm2506386pfz.30.2016.12.01.14.53.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 01 Dec 2016 14:53:32 -0800 (PST)
+Date:   Thu, 1 Dec 2016 14:53:31 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 2/6] http: always update the base URL for redirects
+Message-ID: <20161201225331.GH54082@google.com>
+References: <20161201090336.xjbb47bublfcpglo@sigill.intra.peff.net>
+ <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net>
+ <331124b5-aa2b-773c-23ac-975ad3f50dbf@ramsayjones.plus.com>
 MIME-Version: 1.0
-In-Reply-To: <20161201201917.nqx3v5fl2ptl3bhr@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:P/Jqog5eA77p/Ows8RQZOSSRrAUdyh5ZBcRcFxyYywUwcZvVXGD
- vQHnLo+4t944hhfytJ6M6guoywd2rzl3h7013J0uyU9/owakyl7Xt085PngcteF/ULFBXxS
- A7AwUptUwNnMm+nk+L36z03MR+IA1NCO9Lvj/rHBPgdcUTJ/H5Jn3/Y3p9917zyPnLHk2pf
- LOblkfe0ovB+sKRR/JLHw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:athA4jd2lTM=:E+G7FQfg/7jxsAPCw7dIY1
- nsmSsj+JEiLpUufjj2WXzQY81yLhYfhQ/PyXmLg/CztQJNaD0gkivTAmolDkuQt1rzfVUrUHQ
- Nx60+Io2tlqf87YdlF95FAJMYeM+feWawUld6JpBnWVLgngrllFGbisMVyoHQtukfqQC/j4SH
- CUoeWgBO9Y4MI830nc3GM5ZNWO3nD7NWUjoZXflUkToL1tyZsCoV5EI66RrKs4g0s55DWfAdW
- qPRHyLBxJXSPSO4jeO3e3/Hqmx7eC104TxDM3QZDOAVjlNzDmlFAwHh+eBuIe8Y4sGFhfjgnH
- LCgcb+PJW6Du6m0ukIt6Nz5jxMBriLcUCwcSv5iWJp3mPO2b0xTqXlfS1Cjnss+gGDA3otPsZ
- KuJa3a9zp/+gxSblQRPrlLr5KxnCAMKIOU0mv2RHKSm/9EyKNUJJesHZrTs1dIBZyPXT4WrsW
- EbXjUfMgHoNfiyKcD3S5nfuBWBWD4Y3swLwdmtTjkiOYZ5YqNfTrn+A7dpmeBSLq2pODsqAEO
- YCp72NpfdgCaPI+FpNakUBvk75RLYisb64sT8ihEyrAbjy+g00896iV7CzmKDk1KjCMHZQJA6
- rH+TMHOZJHLDbuvFBJZ1d2bSXASml5ACKZ3ovl+oXMOo2oTJ1LRSQJ38B0SaAECcvoXcyNaDR
- yw0VQ8UUcET8CO9Eq48MwrOywWz7BxYKVgeQkc8JszOwcMSO3CSeXO7MnRBsGg3xeVedhCPvD
- d2a4qH+khZ0PCaG36TZ96M1XP7bIt82CEBWYo063VWrMcMCjVB4m0b0Dxjo9LfjyE6tQsUYUs
- V81Lk4x
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <331124b5-aa2b-773c-23ac-975ad3f50dbf@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.12.2016 um 21:19 schrieb Jeff King:
-> On Thu, Dec 01, 2016 at 12:14:42PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> To make matters more fun, apparently[1] there are multiple variants of
->>> qsort_r with different argument orders. _And_ apparently Microsoft
->>> defines qsort_s, but it's not quite the same thing. But all of that can
->>> be dealt with by having more specific flags (HAVE_GNU_QSORT_R, etc).
+On 12/01, Ramsay Jones wrote:
+> 
+> 
+> On 01/12/16 09:04, Jeff King wrote:
+> > If a malicious server redirects the initial ref
+> > advertisement, it may be able to leak sha1s from other,
+> > unrelated servers that the client has access to. For
+> > example, imagine that Alice is a git user, she has access to
+> > a private repository on a server hosted by Bob, and Mallory
+> > runs a malicious server and wants to find out about Bob's
+> > private repository.
+> > 
+> > Mallory asks Alice to clone an unrelated repository from her
+> -----------------------------------------------------------^^^
+> ... from _him_ ? (ie Mallory)
+> 
+> > over HTTP. When Alice's client contacts Mallory's server for
+> > the initial ref advertisement, the server issues an HTTP
+> > redirect for Bob's server. Alice contacts Bob's server and
+> > gets the ref advertisement for the private repository. If
+> > there is anything to fetch, she then follows up by asking
+> > the server for one or more sha1 objects. But who is the
+> > server?
+> > 
+> > If it is still Mallory's server, then Alice will leak the
+> > existence of those sha1s to her.
+> ------------------------------^^^
+> ... to _him_ ? (again Mallory)
+> 
+> ATB,
+> Ramsay Jones
 
-AFAIU it went like this:
+Depends, I only know Mallorys who are women so her seems appropriate.
 
-// FreeBSD 5.0 (2003)
-void qsort_r(void *base, size_t nmemb, size_t size,
-	void *context,
-	int (*compar)(void *context, const void *x, const void *y));
-
-// Microsoft Visual Studio 2005
-void qsort_s(void *base, size_t nmemb, size_t size,
-	int (*compar)(void *context, const void *x, const void *y),
-	void *context);
-
-// glibc 2.8 (2008)
-void qsort_r(void *base, size_t nmemb, size_t size,
-	int (*compar)(const void *x, const void *y, void *context),
-	void *context);
-
-// C11 Annex K (2011)
-errno_t qsort_s(void *base, rsize_t nmemb, rsize_t size,
-	int (*compar)(const void *x, const void *y, void *context),
-	void *context);
-
->>> It just seems like we should be able to do a better job of using the
->>> system qsort in many cases.
-
-Sure, platform-specific implementations can be shorter.
-
->> If we were to go that route, perhaps we shouldn't have HAVE_QSORT_S
->> so that Microsoft folks won't define it by mistake (instead perhaps
->> call it HAVE_ISO_QSORT_S or something).
-
-OK.
-
->> I like your suggestion in general.  The body of git_qsort_s() on
->> systems without ISO_QSORT_S can do
->>
->>  - GNU qsort_r() without any change in the parameters,
->>
->>  - Microsoft qsort_s() with parameter reordered, or
->>
->>  - Apple/BSD qsort_r() with parameter reordered.
->>
->> and that would cover the major platforms.
-
-Yes.
-
-However, for MSys INTERNAL_QSORT is defined for some reason, so the 
-platform's qsort(3) is not used there; I guess the same reason applies 
-to qsort_s().  If it doesn't then an implementation may want to convert 
-a call to the invalid parameter handler (which may show a dialog 
-offering to Retry, Continue or Abort) into a non-zero return value.
-
->> Eh, wait.  BSD and Microsoft have paramters reordered in the
->> callback comparison function.  I suspect that would not fly very
->> well.
->
-> You can hack around it by passing a wrapper callback that flips the
-> arguments. Since we have a "void *" data pointer, that would point to a
-> struct holding the "real" callback and chaining to the original data
-> pointer.
->
-> It does incur the cost of an extra level of indirection for each
-> comparison, though (not just for each qsort call).
-
-Indeed.  We'd need a perf test to measure that overhead before we could 
-determine if that's a problem, though.
-
-> You could do it as zero-cost if you were willing to turn the comparison
-> function definition into a macro.
-
-Ugh.  That either requires changing the signature of qsort_s() based on 
-the underlying native function as well, or using a void pointer to pass 
-the comparison function, no?  Let's not do that, at least not without a 
-good reason.
-
-René
+-- 
+Brandon Williams
