@@ -2,513 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E57501FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 20:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 361071FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 20:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932548AbcLAUkq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 15:40:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50184 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759222AbcLAUkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 15:40:45 -0500
-Received: (qmail 15551 invoked by uid 109); 1 Dec 2016 20:40:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 20:40:45 +0000
-Received: (qmail 3848 invoked by uid 111); 1 Dec 2016 20:41:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 15:41:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Dec 2016 15:40:43 -0500
-Date:   Thu, 1 Dec 2016 15:40:43 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [RFC/PATCH] add diff-pairs tool
-Message-ID: <20161201204042.6yslbyrg7l6ghhww@sigill.intra.peff.net>
+        id S933745AbcLAUmT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 15:42:19 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60905 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753531AbcLAUmS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 15:42:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 559735483C;
+        Thu,  1 Dec 2016 15:42:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y9g430sWEBmrg8jyrETw7OjqE9Q=; b=YtlLrF
+        Nk3iH94z8wPB9q5fByAZ/d6znkgiNJLRo7sUtbnSBYTDp7RPar1+S27WmbV/cnYa
+        XXWdLYU+ewqNfAEfHHYded1yrCmHexh82DiCqoUJegbyJWYFn3vlC2G4LWdtCYXA
+        DfmLJ1RJIeNeJlJLsvAf73LkBVESAhUC6i4cI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cUiJzWs3/O12pGciy2aeVWdfVPslfKMu
+        SCWNSM0pn5oncNmYp6RkHQMcZwJZhmo0Um3v1rOQtY6eerc0yhQdfLyFkTupKrWc
+        mmcNAhpoNNMOg7ulh3DcprWsZKaMKbLfH3Zsz61AmFpebO1LH4wd+WHQm7tQOrWi
+        nEPulyrfJIw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B9AD5483B;
+        Thu,  1 Dec 2016 15:42:17 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C27295483A;
+        Thu,  1 Dec 2016 15:42:16 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Austin English <austinenglish@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] Documentation/install-webdoc.sh: quote a potentially unsafe shell expansion
+References: <CACC5Q1eFM_G4wKopkbxabLEu8+nbt66wF1jKSoTuL1vnS5Tb4Q@mail.gmail.com>
+Date:   Thu, 01 Dec 2016 12:42:15 -0800
+In-Reply-To: <CACC5Q1eFM_G4wKopkbxabLEu8+nbt66wF1jKSoTuL1vnS5Tb4Q@mail.gmail.com>
+        (Austin English's message of "Wed, 30 Nov 2016 19:22:56 -0600")
+Message-ID: <xmqqfum78jq0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: A58C773C-B806-11E6-9495-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a small tool I cooked up for splitting the tree-diff out from
-the generation of the patch text, and doing them in separate processes.
-It's a little more expensive than doing it all in one process (besides
-the process/pipe overhead, we may load blob content in the tree diff for
-rename detection, and then again to do the actual patch). But it gives a
-lot of flexibility when handling large diffs. You can save the tree-diff
-and then feed it back in chunks to generate the actual patches, and do
-so across many invocations (if you had, say, a website that showed diffs
-and wanted to show small bits of them and let the user progressively
-click through to see more).
+Austin English <austinenglish@gmail.com> writes:
 
-Other things I tried but didn't work:
+> diff --git a/Documentation/install-webdoc.sh b/Documentation/install-webdoc.sh
+> index ed8b4ff..5fb2dc5 100755
+> --- a/Documentation/install-webdoc.sh
+> +++ b/Documentation/install-webdoc.sh
+> @@ -18,7 +18,7 @@ do
+>  	else
+>  		echo >&2 "# install $h $T/$h"
+>  		rm -f "$T/$h"
+> -		mkdir -p $(dirname "$T/$h")
+> +		mkdir -p "$(dirname "$T/$h")"
+>  		cp "$h" "$T/$h"
+>  	fi
+>  done
 
-  - feeding two blobs to git-diff doesn't use plumbing, and loses
-    information about filenames, etc. It also requires one process per
-    pair.
+We know $h is safe without quoting (see what the for loop iterates
+over a list and binding each element of it to this variable), but T
+is the parameter given to this script, which comes from these
 
-  - feeding pathspecs back to git-diff-tree, like:
+install-html: html
+	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
 
-       git diff-tree --name-only $a $b |
-       while read filename; do
-         git diff-tree $a $b -- $filename
-       done
+install-webdoc : html
+	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(WEBDOC_DEST)
 
-    mostly works, but loses rename information (and is also slightly
-    less efficient, as it has to walk the trees again).
+in the Makefile.  So quoting the result of $(dirname "$T/$h") is
+just as necessary as quoting the argument given to this dirname.
 
-So instead, I made a tool that takes the pairs generated by "diff-tree
---raw" and formats them as diff-tree would have if it had been done
-in-process.
+But I do not think it is sufficient, if we are truly worried about
+people who specify a path that contains IFS whitespace in DESTDIR,
+WEBDOC_DEST, htmldir and other *dir variables used in the Makefile.
+The references to these variables, when they are mentioned on the
+command lines of Makefile actions, all need to be quoted.  The
+remainder of the Makefile tells me that we decided that we are not
+worried about those people at all.
 
-It's rather elegant, I think. But the main reason this is RFC is that
-I'm not sure it's actually _useful_ to other people. It's a pretty
-narrow use case.
+So while I could take your patch as-is, I am not sure how much value
+it adds to the overall callchain that would reach the location that
+is updated by the patch.  If you run
 
-The other reason it's an RFC is that it has a few rough edges. It works
-well for my narrow use case, but there are cases where it probably
-doesn't:
+	make DESTDIR="/tmp/My Temporary Place" install
 
-  - it expects "diff-tree -z" input, which keeps parsing simple. It
-    probably wouldn't be too hard to have it handle the normal output,
-    too.
+it would still not do the right thing even with your patch, I would
+suspect.
 
-  - it should handle submodules OK, but I don't know what it would do if
-    you fed it things like dirty submodules from diff-files output.
-
-  - some option combinations between the initial tree-diff and the
-    followup diff do not make sense. For instance, if you do a
-    non-recursive tree-diff (or one with "-t"), you'll have tree entries
-    in your --raw output. Feeding that to "diff-pairs -p" will silently
-    ignore the tree entries, because there's no way to represent them as
-    a patch.
-
-    Mostly these fall under "well, don't do that", but possibly the tool
-    could be more aggressive about complaining, or coming up with some
-    sensible behavior.
-
-So anyway. Consider this a rough cut. What I'm really looking for at
-this stage is whether anybody is interested enough in this for me to
-bother polishing it.
-
--- >8 --
-This takes the output of `diff-tree -z --raw` and feeds it
-back to the later stages of the diff machinery to produce
-diffs in other formats. Because the interim format contains
-any whole-tree copy/rename information, you can safely feed
-segments of the tree diff to get progressive patch-format
-diffs. So something like:
-
-  git diff-tree -r -z $a $b |
-  git diff-pairs -p
-
-should give you the same output that `git diff-tree -p`
-would have.  Likewise, feeding each pair individually works,
-too:
-
-  git diff-tree -r -z -M $a $b |
-  perl -0ne '
-	my $meta = $_;
-	my $path = <>;
-	# only renames have an extra path
-	my $path2 = <> if $meta =~ /[RC]\d+/;
-
-	print STDERR "feeding one diff\n";
-	open(my $fh, "|git diff-pairs -p");
-	print $fh $meta, $path, $path2;
-  '
-
-The renames will still be shown just as if the diff had been
-done in one process.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- .gitignore                       |   1 +
- Documentation/git-diff-pairs.txt |  60 +++++++++++++++
- Makefile                         |   1 +
- builtin.h                        |   1 +
- builtin/diff-pairs.c             | 162 +++++++++++++++++++++++++++++++++++++++
- git.c                            |   1 +
- t/t4063-diff-pairs.sh            |  82 ++++++++++++++++++++
- 7 files changed, 308 insertions(+)
- create mode 100644 Documentation/git-diff-pairs.txt
- create mode 100644 builtin/diff-pairs.c
- create mode 100755 t/t4063-diff-pairs.sh
-
-diff --git a/.gitignore b/.gitignore
-index 05cb58a3d..805751f2e 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -48,6 +48,7 @@
- /git-diff
- /git-diff-files
- /git-diff-index
-+/git-diff-pairs
- /git-diff-tree
- /git-difftool
- /git-difftool--helper
-diff --git a/Documentation/git-diff-pairs.txt b/Documentation/git-diff-pairs.txt
-new file mode 100644
-index 000000000..4e3b6c909
---- /dev/null
-+++ b/Documentation/git-diff-pairs.txt
-@@ -0,0 +1,60 @@
-+git-diff-pairs(1)
-+=================
-+
-+NAME
-+----
-+git-diff-pairs - Compare blob pairs generated by `diff-tree --raw`
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git diff-pairs' [diff_format_options]
-+
-+DESCRIPTION
-+-----------
-+
-+Given the output of `diff-tree -z` on its stdin, `diff-pairs` will
-+reformat that output into whatever format is requested on its command
-+line.  For example:
-+
-+-----------------------------
-+git diff-tree -z -M $a $b |
-+git diff-pairs -p
-+-----------------------------
-+
-+will compute the tree diff in one step (including renames), and then
-+`diff-pairs` will compute and format the blob-level diffs for each pair.
-+This can be used to modify the raw diff in the middle (without having to
-+parse or re-create more complicated formats like `--patch`), or to
-+compute diffs progressively over the course of multiple invocations of
-+`diff-pairs`.
-+
-+Each blob pair is fed to the diff machinery individually and the output
-+flushed immediately, meaning it is safe to interactively read and write
-+from `diff-pairs`.
-+
-+OPTIONS
-+-------
-+
-+All diff options below are accepted, but note that tree-wide options
-+like `-M` are effectively noops, as we consider only one pair at a time.
-+
-+include::diff-options.txt[]
-+
-+BUGS
-+----
-+
-+`diff-pairs` should handle any input generated by `diff-tree --raw -z`.
-+It may choke or otherwise misbehave on output from `diff-files`, etc.
-+
-+Here's an incomplete list of things that `diff-pairs` could do, but
-+doesn't (mostly in the name of simplicity):
-+
-+ - Only `-z` input is accepted, not normal `--raw` input.
-+
-+ - Abbreviated sha1s are rejected in the input from `diff-tree`; if you
-+   want to abbreviate the output, you can pass `--abbrev` to
-+   `diff-pairs`.
-+
-+ - Pathspecs are not handled by `diff-pairs`; you can limit the diff via
-+   the initial `diff-tree` invocation.
-diff --git a/Makefile b/Makefile
-index f53fcc90d..c7ee3cd61 100644
---- a/Makefile
-+++ b/Makefile
-@@ -886,6 +886,7 @@ BUILTIN_OBJS += builtin/credential.o
- BUILTIN_OBJS += builtin/describe.o
- BUILTIN_OBJS += builtin/diff-files.o
- BUILTIN_OBJS += builtin/diff-index.o
-+BUILTIN_OBJS += builtin/diff-pairs.o
- BUILTIN_OBJS += builtin/diff-tree.o
- BUILTIN_OBJS += builtin/diff.o
- BUILTIN_OBJS += builtin/fast-export.o
-diff --git a/builtin.h b/builtin.h
-index b9122bc5f..f62134ec1 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -59,6 +59,7 @@ extern int cmd_describe(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_files(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_index(int argc, const char **argv, const char *prefix);
- extern int cmd_diff(int argc, const char **argv, const char *prefix);
-+extern int cmd_diff_pairs(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_fast_export(int argc, const char **argv, const char *prefix);
- extern int cmd_fetch(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-new file mode 100644
-index 000000000..f80c49fef
---- /dev/null
-+++ b/builtin/diff-pairs.c
-@@ -0,0 +1,162 @@
-+#include "cache.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "revision.h"
-+
-+static const char diff_pairs_usage[] =
-+"git diff-pairs [diff-options]\n"
-+"\n"
-+"Reads pairs of blobs from stdin in 'diff-tree -z' syntax:\n"
-+"\n"
-+"  :<mode_a> <mode_b> <sha1_a> <sha1_b> <type>\\0<path>\0[path2\0]\n"
-+"\n"
-+"and outputs the diff for each a/b pair to stdout.";
-+
-+static unsigned parse_mode(const char *mode, char **endp)
-+{
-+	unsigned long ret;
-+
-+	errno = 0;
-+	ret = strtoul(mode, endp, 8);
-+	if (errno || *endp == mode || *(*endp)++ != ' ' || (unsigned)ret != ret)
-+		die("unable to parse mode: %s", mode);
-+	return ret;
-+}
-+
-+static void parse_oid(char *p, char **endp, struct object_id *oid)
-+{
-+	*endp = p + GIT_SHA1_HEXSZ;
-+	if (get_oid_hex(p, oid) || *(*endp)++ != ' ')
-+		die("unable to parse object id: %s", p);
-+}
-+
-+static unsigned short parse_score(char *score)
-+{
-+	unsigned long ret;
-+	char *endp;
-+
-+	errno = 0;
-+	ret = strtoul(score, &endp, 10);
-+	ret *= MAX_SCORE / 100;
-+	if (errno || endp == score || *endp || (unsigned short)ret != ret)
-+		die("unable to parse rename/copy score: %s", score);
-+	return ret;
-+}
-+
-+/*
-+ * The pair-creation is mostly done by diff_change and diff_addremove,
-+ * which queue the filepair without returning it. So we have to resort
-+ * to pulling it out of the global diff queue.
-+ */
-+static void set_pair_status(char status)
-+{
-+	/*
-+	 * If we have no items in the queue, for some reason the pair wasn't
-+	 * worth queueing. This generally shouldn't happen (since it means
-+	 * dropping some parts of the diff), but the user can trigger it with
-+	 * things like --ignore-submodules. If they do, the only sensible thing
-+	 * is for us to play along and skip it.
-+	 */
-+	if (!diff_queued_diff.nr)
-+		return;
-+
-+	diff_queued_diff.queue[0]->status = status;
-+}
-+
-+int cmd_diff_pairs(int argc, const char **argv, const char *prefix)
-+{
-+	struct rev_info revs;
-+	struct strbuf meta = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf path_dst = STRBUF_INIT;
-+
-+	init_revisions(&revs, prefix);
-+	git_config(git_diff_basic_config, NULL);
-+	revs.disable_stdin = 1;
-+	argc = setup_revisions(argc, argv, &revs, NULL);
-+
-+	/* Don't allow pathspecs at all. */
-+	if (argc > 1)
-+		usage(diff_pairs_usage);
-+
-+	if (!revs.diffopt.output_format)
-+		revs.diffopt.output_format = DIFF_FORMAT_RAW;
-+
-+	while (1) {
-+		unsigned mode_a, mode_b;
-+		struct object_id oid_a, oid_b;
-+		char status;
-+		char *p;
-+
-+		if (strbuf_getline_nul(&meta, stdin) == EOF)
-+			break;
-+
-+		p = meta.buf;
-+		if (*p == ':')
-+			p++;
-+
-+		mode_a = parse_mode(p, &p);
-+		mode_b = parse_mode(p, &p);
-+
-+		parse_oid(p, &p, &oid_a);
-+		parse_oid(p, &p, &oid_b);
-+
-+		status = *p++;
-+
-+		if (strbuf_getline_nul(&path, stdin) == EOF)
-+			die("got EOF while reading path");
-+
-+		switch (status) {
-+		case DIFF_STATUS_ADDED:
-+			diff_addremove(&revs.diffopt, '+',
-+				       mode_b, oid_b.hash,
-+				       1, path.buf, 0);
-+			set_pair_status(status);
-+			break;
-+
-+		case DIFF_STATUS_DELETED:
-+			diff_addremove(&revs.diffopt, '-',
-+				       mode_a, oid_a.hash,
-+				       1, path.buf, 0);
-+			set_pair_status(status);
-+			break;
-+
-+		case DIFF_STATUS_TYPE_CHANGED:
-+		case DIFF_STATUS_MODIFIED:
-+			diff_change(&revs.diffopt,
-+				    mode_a, mode_b,
-+				    oid_a.hash, oid_b.hash,
-+				    1, 1, path.buf, 0, 0);
-+			set_pair_status(status);
-+			break;
-+
-+		case DIFF_STATUS_RENAMED:
-+		case DIFF_STATUS_COPIED:
-+			{
-+				struct diff_filespec *a, *b;
-+				struct diff_filepair *pair;
-+
-+				if (strbuf_getline_nul(&path_dst, stdin) == EOF)
-+					die("got EOF while reading secondary path");
-+
-+				a = alloc_filespec(path.buf);
-+				b = alloc_filespec(path_dst.buf);
-+				fill_filespec(a, oid_a.hash, 1, mode_a);
-+				fill_filespec(b, oid_b.hash, 1, mode_b);
-+
-+				pair = diff_queue(&diff_queued_diff, a, b);
-+				pair->status = status;
-+				pair->score = parse_score(p);
-+				pair->renamed_pair = 1;
-+			}
-+			break;
-+
-+		default:
-+			die("unknown diff status: %c", status);
-+		}
-+
-+		diff_flush(&revs.diffopt);
-+	}
-+
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index dce529fcb..4063c5366 100644
---- a/git.c
-+++ b/git.c
-@@ -423,6 +423,7 @@ static struct cmd_struct commands[] = {
- 	{ "diff", cmd_diff },
- 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
- 	{ "diff-index", cmd_diff_index, RUN_SETUP },
-+	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP },
- 	{ "diff-tree", cmd_diff_tree, RUN_SETUP },
- 	{ "fast-export", cmd_fast_export, RUN_SETUP },
- 	{ "fetch", cmd_fetch, RUN_SETUP },
-diff --git a/t/t4063-diff-pairs.sh b/t/t4063-diff-pairs.sh
-new file mode 100755
-index 000000000..a99ec6655
---- /dev/null
-+++ b/t/t4063-diff-pairs.sh
-@@ -0,0 +1,82 @@
-+#!/bin/sh
-+
-+test_description='basic diff-pairs tests'
-+. ./test-lib.sh
-+
-+# This creates a diff with added, modified, deleted, renamed, copied, and
-+# typechange entries. That includes one in a subdirectory for non-recursive
-+# tests, and both exact and inexact similarity scores.
-+test_expect_success 'create commit with various diffs' '
-+	echo to-be-gone >deleted &&
-+	echo original >modified &&
-+	echo now-a-file >symlink &&
-+	test_seq 200 >two-hundred &&
-+	test_seq 201 500 >five-hundred &&
-+	git add . &&
-+	test_tick &&
-+	git commit -m base &&
-+	git tag base &&
-+
-+	echo now-here >added &&
-+	echo new >modified &&
-+	rm deleted &&
-+	mkdir subdir &&
-+	echo content >subdir/file &&
-+	mv two-hundred renamed &&
-+	test_seq 201 500 | sed s/300/modified/ >copied &&
-+	rm symlink &&
-+	git add -A . &&
-+	test_ln_s_add dest symlink &&
-+	test_tick &&
-+	git commit -m new &&
-+	git tag new
-+'
-+
-+test_expect_success 'diff-pairs recreates --raw' '
-+	git diff-tree -r -M -C -C base new >expect &&
-+	# note that diff-pairs uses the default abbrev,
-+	# so we must tweak that for identical output
-+	git diff-tree -r -M -C -C -z base new |
-+	git diff-pairs --no-abbrev >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'diff-pairs can create -p output' '
-+	git diff-tree -p -M -C -C base new >expect &&
-+	git diff-tree -r -M -C -C -z base new |
-+	git diff-pairs -p >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'non-recursive --raw retains tree entry' '
-+	git diff-tree base new >expect &&
-+	git diff-tree -z base new |
-+	git diff-pairs --no-abbrev >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'split input across multiple diff-pairs' '
-+	write_script split-raw-diff "$PERL_PATH" <<-\EOF &&
-+	$/ = "\0";
-+	while (<>) {
-+	  my $meta = $_;
-+	  my $path = <>;
-+	  # renames have an extra path
-+	  my $path2 = <> if $meta =~ /[RC]\d+/;
-+
-+	  open(my $fh, ">", sprintf "diff%03d", $.);
-+	  print $fh $meta, $path, $path2;
-+	}
-+	EOF
-+
-+	git diff-tree -p -M -C -C base new >expect &&
-+
-+	git diff-tree -r -z -M -C -C base new |
-+	./split-raw-diff &&
-+	for i in diff*; do
-+		git diff-pairs -p <$i
-+	done >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.11.0.319.g1f4e1e0
+Thanks.
