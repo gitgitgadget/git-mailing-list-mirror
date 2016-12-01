@@ -2,158 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D021E1FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 17:59:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BF4E1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 18:14:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754609AbcLAR7N (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 12:59:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51153 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751993AbcLAR7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 12:59:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11C8853895;
-        Thu,  1 Dec 2016 12:59:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gov9pcpiEdmCjgZo1RY9NFmtlYw=; b=N8YbfF
-        Jac10ZR6akUv5BgqYdnczqKIzWTuvXjAi+ZdP+EmCEEwzjLnys7oezxskSqqnKvk
-        pX/yg15vPOGu/em+7pC3Ejr6rvrvAwanbn0FSa0OKTvvhhbFrhvF2UBA5gh1cKHN
-        teIHJAYBqCEnEkt2S/7VueIMGXEJZSuPJJ6Sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=U9TuE6bhrJKzTNK0Ud9XJVzHxrtk/XZl
-        j01XTbznUdEd67j7psoTa8cVwTCaXpmFgrEWv5l6rdt0N/WpQkW/pXvtwLoSU2ta
-        U3E0m8YYLkGcl1Cl7GBerPHDtiVIIwdJlvVvm4J09InvUpqlGYCEU+aK4Jn2dO5D
-        895TeHmR8sA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09A4653894;
-        Thu,  1 Dec 2016 12:59:11 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7203253893;
-        Thu,  1 Dec 2016 12:59:10 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Cc:     neuling@dakosy.de, Stefan Beller <sbeller@google.com>
-Subject: Re* git pull --rebase should use fast forward merge if possible
-References: <OF95D98CB6.47969C1C-ONC1257FE1.0058D980-C1257FE1.0059986D@dakosy.de>
-        <xmqqd1n0552i.fsf@gitster.mtv.corp.google.com>
-        <xmqqtwgb52py.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYS=XWBpEBJsj95FV+j+HLxg=5xqwD73618t7ERYrKUfA@mail.gmail.com>
-        <CAPc5daURyXO6-yaOWPhvvdS8Dr5psEEc8MVP4wQJ_AuxyZraRg@mail.gmail.com>
-Date:   Thu, 01 Dec 2016 09:59:09 -0800
-In-Reply-To: <CAPc5daURyXO6-yaOWPhvvdS8Dr5psEEc8MVP4wQJ_AuxyZraRg@mail.gmail.com>
-        (Junio C. Hamano's message of "Wed, 29 Jun 2016 13:43:21 -0700")
-Message-ID: <xmqqa8cfbkeq.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1758817AbcLASOU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 13:14:20 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:34318 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758532AbcLASOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 13:14:18 -0500
+Received: by mail-pg0-f45.google.com with SMTP id x23so97537874pgx.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2016 10:14:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CrkMv+oT3KNhvDQyO3VQeb2t31mmld7ZTUunMkH6KCI=;
+        b=fhLUPePtq3vG2CuKd/r1u4GBIFG4mRrc8L8+DEJx8QGsWaINdUUdxLq+m0cA57eJTL
+         kyYyIpeEvSQEjHw/dXk/8/plUd6+QF/ptq1zvmj6X0u2Dg1/RVpiK9qmw8/fO+zUg3iD
+         U6eRCvlAFNPSP22+8nCQr5DpU4+msEoqj0VG66gwYVRV28iIuStvQd/klTy0Iw5LEsMp
+         NhqRCD5uhzm6Cd8PHZ4ydCv2vB5QS5jx6FJnUf1fe7tcpbZ2kvLbx629x5Mmsu3RrzfX
+         EGhX0vaJoSYNC0EBdSveQvK0OR1EBL/Q9TsfH4jszS8sCntG2CqS5NduSCxuDPbupmSm
+         lmvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CrkMv+oT3KNhvDQyO3VQeb2t31mmld7ZTUunMkH6KCI=;
+        b=gDkNrrVxVvddfqH6tMntfh7ae6zdh+70oRxvLsgPpOZCOmj/Sm67FK6de9Xv3tEyVR
+         P9HSai550lBh5M3HV/iqe994phYbUV3PBpmvsgsPzpxYGbXUaE543R4YOQZYq7fGT0S2
+         NGwwhYtfeDJp6QrDYEHSGyLUnTbKjAEXLq+NQe8ASPCAa7YXVlB5XRpNACJzX3+yjwV+
+         +kHgmcO9uzE2vKYI3Secd5e+XfeGrzAu2aT2eqhmQSy9TDZb/Bu+TFw2InCmy7EVhfRZ
+         yTn+WDoqyXpq8FPtKf/u3OvQnh3TixWnoqEl2unLZcu4pfm8I8ZAW6NH8RxNbHiB3i6C
+         Cu7Q==
+X-Gm-Message-State: AKaTC00rLsxHCtA23iNsn4MJDjkVwMnA7dXBzHiKolY3SCDSQ+cRkFpMt4vEeuhZDmt087ov
+X-Received: by 10.99.139.199 with SMTP id j190mr71284896pge.115.1480616057408;
+        Thu, 01 Dec 2016 10:14:17 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:2ce9:cac6:1258:bbf3])
+        by smtp.gmail.com with ESMTPSA id n17sm1692207pfg.80.2016.12.01.10.14.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 01 Dec 2016 10:14:16 -0800 (PST)
+Date:   Thu, 1 Dec 2016 10:14:15 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: bw/transport-protocol-policy
+Message-ID: <20161201181415.GA54082@google.com>
+References: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
+ <20161201083005.dui572o4jxsqacas@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DC70DC32-B7EF-11E6-9867-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161201083005.dui572o4jxsqacas@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12/01, Jeff King wrote:
+> On Mon, Nov 28, 2016 at 04:15:08PM -0800, Junio C Hamano wrote:
+> 
+> > * bw/transport-protocol-policy (2016-11-09) 2 commits
+> >   (merged to 'next' on 2016-11-16 at 1391d3eeed)
+> >  + transport: add protocol policy config option
+> >  + lib-proto-disable: variable name fix
+> > 
+> >  Finer-grained control of what protocols are allowed for transports
+> >  during clone/fetch/push have been enabled via a new configuration
+> >  mechanism.
+> > 
+> >  Will cook in 'next'.
+> 
+> I was looking at the way the http code feeds protocol restrictions to
+> CURLOPT_REDIR_PROTOCOLS, and I think this topic is missing two elements:
+> 
+>   1. The new policy config lets you say "only allow this protocol when
+>      the user specifies it". But when http.c calls is_transport_allowed(),
+>      the latter has no idea that we are asking it about potential
+>      redirects (which obviously do _not_ come from the user), and would
+>      erroneously allow them.
+> 
+>      I think this needs fixed before the topic is merged. It's not a
+>      regression, as it only comes into play if you use the new policy
+>      config. But it is a minor security hole in the new feature.
 
-> die_no_merge_candidates() would have triggered, I would imagine.
->
-> Note that I won't be applying this without test updates and proper log message,
-> so no need to worry about the style yet ;-)
+I agree and it should be an easy fix.  We can just add a parameter like
+so:
 
-This time with a bit of explanation in the log and a trivial test.
-
-I am no longer sure if this is a good idea myself, though.  The
-trivial case the new test covers is not interesting, even though it
-may be worth protecting the behaviour with the test.  What's more
-interesting to think about is what should happen in various corner
-cases.  E.g. what should happen when there are local changes that
-would conflict with the fast-forwarding?  what should happen if the
-user has rebase.autostash set in such a case?  etc.
-
--- >8 --
-Subject: [PATCH] pull: fast-forward "pull --rebase=true"
-
-"git pull --rebase" always runs "git rebase" after fetching the
-commit to serve as the new base, even when the new base is a
-descendant of the current HEAD, i.e. we haven't done any work.
-
-In such a case, we can instead fast-forward to the new base without
-invoking the rebase process.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pull.c  | 22 ++++++++++++++++++----
- t/t5520-pull.sh | 17 +++++++++++++++++
- 2 files changed, 35 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/pull.c b/builtin/pull.c
-index bf3fd3f9c8..2a41d415b2 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -878,10 +878,24 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		if (merge_heads.nr > 1)
- 			die(_("Cannot merge multiple branches into empty head."));
- 		return pull_into_void(*merge_heads.sha1, curr_head);
--	} else if (opt_rebase) {
--		if (merge_heads.nr > 1)
--			die(_("Cannot rebase onto multiple branches."));
-+	}
-+	if (opt_rebase && merge_heads.nr > 1)
-+		die(_("Cannot rebase onto multiple branches."));
-+
-+	if (opt_rebase) {
-+		struct commit_list *list = NULL;
-+		struct commit *merge_head, *head;
-+
-+		head = lookup_commit_reference(orig_head);
-+		commit_list_insert(head, &list);
-+		merge_head = lookup_commit_reference(merge_heads.sha1[0]);
-+		if (is_descendant_of(merge_head, list)) {
-+			/* we can fast-forward this without invoking rebase */
-+			opt_ff = "--ff-only";
-+			return run_merge();
-+		}
- 		return run_rebase(curr_head, *merge_heads.sha1, rebase_fork_point);
--	} else
-+	} else {
- 		return run_merge();
-+	}
+diff --git a/transport.c b/transport.c
+index 2c0ec76..d38d50f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -723,7 +723,7 @@ static enum protocol_allow_config get_protocol_config(const char *type)
+ 	return PROTOCOL_ALLOW_USER_ONLY;
  }
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index a0013ee32f..7887b6d97b 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -237,6 +237,23 @@ test_expect_success '--rebase' '
- 	test new = "$(git show HEAD:file2)"
- '
  
-+test_expect_success '--rebase fast forward' '
-+	git reset --hard before-rebase &&
-+	git checkout -b ff &&
-+	echo another modification >file &&
-+	git commit -m third file &&
-+
-+	git checkout to-rebase &&
-+	git pull --rebase . ff &&
-+	test "$(git rev-parse HEAD)" = "$(git rev-parse ff)" &&
-+
-+	# The above only validates the result.  Did we actually bypass rebase?
-+	git reflog -1 >reflog.actual &&
-+	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
-+	echo "OBJID HEAD@{0}: pull --rebase . ff: Fast-forward" >reflog.expected &&
-+	test_cmp reflog.expected reflog.fuzzy
-+'
-+
- test_expect_success '--rebase fails with multiple branches' '
- 	git reset --hard before-rebase &&
- 	test_must_fail git pull --rebase . copy master 2>err &&
--- 
-2.11.0-192-gbadfaabe38
+-int is_transport_allowed(const char *type)
++int is_transport_allowed(const char *type, int redirect)
+ {
+ 	const struct string_list *whitelist = protocol_whitelist();
+ 	if (whitelist)
+@@ -735,7 +735,7 @@ int is_transport_allowed(const char *type)
+ 	case PROTOCOL_ALLOW_NEVER:
+ 		return 0;
+ 	case PROTOCOL_ALLOW_USER_ONLY:
+-		return git_env_bool("GIT_PROTOCOL_FROM_USER", 1);
++		return git_env_bool("GIT_PROTOCOL_FROM_USER", !redirect);
+ 	}
+ 
+ 	die("BUG: invalid protocol_allow_config type");
 
+That way the libcurl code can say it is asking if it is ok to redirect
+to that protocol.
+
+> 
+>   2. If your curl is too old to support CURLOPT_REDIR_PROTOCOLS, we will
+>      warn if there is a protocol whitelist in effect. But that check
+>      only covers the environment whitelist, and we do not warn if you
+>      restrict other protocols.
+> 
+>      I actually think this should probably just warn indiscriminately.
+>      Even without a Git protocol whitelist specified, the code serves to
+>      prevent curl from redirecting to bizarre protocols like smtp. The
+>      affected curl versions are from 2009 and prior, so I kind of doubt
+>      it matters much either way (I'm actually tempted to suggest we bump
+>      the minimum curl version there; there's a ton of #ifdef cruft going
+>      back to 2002-era versions of libcurl).
+
+We should switch to warning all the time since this series adds in
+default whitelisted/blacklisted protocols anyways.
+
+-- 
+Brandon Williams
