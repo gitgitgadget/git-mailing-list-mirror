@@ -2,80 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEC061FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 20:58:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 609871FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 20:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756691AbcLAU6Z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 15:58:25 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56794 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753335AbcLAU6Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 15:58:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 022D254AC5;
-        Thu,  1 Dec 2016 15:58:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tfIxr/PTVJDHI33Hn6JgOnrgP+w=; b=oawK6D
-        ZUlaBl/PX7c8CPxs4l8NlrOa+dG4566YifI1yjXIZqEe9WdTqOhuYo8vVkHxVa+C
-        yTkbC7kQ1IpyQL8+uAu62QXRZGwj/3YH5dKZcQFwhOHdk6xabxr0tkUhzcFMqB78
-        U6eEqb73OkbklfF4j4hXJWKAxAa+wsOaOV4eU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=POnjfKETTrOFrKthR9a0nvuYTkLA/mSP
-        a2t1a9Up2HD5w51+WIJcineAYDeVPvnaM/c7YWv+rPGuOj/Qk7SgIs9+bcH1h1lO
-        dJrjL3oO8s+jF93xq5Ywl1y9mgUcN1IDSUpdE6xlgfkOusH89D7Vmpl7V4GRmd+A
-        KzjTOzCumCU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EDB8554AC3;
-        Thu,  1 Dec 2016 15:58:22 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 679A254AC1;
-        Thu,  1 Dec 2016 15:58:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] add diff-pairs tool
-References: <20161201204042.6yslbyrg7l6ghhww@sigill.intra.peff.net>
-        <xmqqbmwv8j9m.fsf@gitster.mtv.corp.google.com>
-        <20161201205504.flgaf7dwv3b3dkkd@sigill.intra.peff.net>
-Date:   Thu, 01 Dec 2016 12:58:21 -0800
-In-Reply-To: <20161201205504.flgaf7dwv3b3dkkd@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 1 Dec 2016 15:55:04 -0500")
-Message-ID: <xmqq7f7j8iz6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1760389AbcLAU7s (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 15:59:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50218 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1760360AbcLAU7r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 15:59:47 -0500
+Received: (qmail 16739 invoked by uid 109); 1 Dec 2016 20:59:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 20:59:47 +0000
+Received: (qmail 4246 invoked by uid 111); 1 Dec 2016 21:00:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 16:00:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Dec 2016 15:59:45 -0500
+Date:   Thu, 1 Dec 2016 15:59:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        sbeller@google.com, jonathantanmy@google.com
+Subject: Re: [PATCH v6 1/6] submodules: add helper functions to determine
+ presence of submodules
+Message-ID: <20161201205944.2py2ijranq4g2wap@sigill.intra.peff.net>
+References: <1479840397-68264-1-git-send-email-bmwill@google.com>
+ <1480555714-186183-1-git-send-email-bmwill@google.com>
+ <1480555714-186183-2-git-send-email-bmwill@google.com>
+ <20161201042926.mr2qdta7hviizcya@sigill.intra.peff.net>
+ <xmqqwpfja3nk.fsf@gitster.mtv.corp.google.com>
+ <20161201190925.xi2z7vauxyf3yxyc@sigill.intra.peff.net>
+ <20161201191603.GB54082@google.com>
+ <20161201205444.GG54082@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E51B8A1C-B808-11E6-A471-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161201205444.GG54082@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Dec 01, 2016 at 12:54:44PM -0800, Brandon Williams wrote:
 
-> On Thu, Dec 01, 2016 at 12:52:05PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > This takes the output of `diff-tree -z --raw` and feeds it
->> > back to the later stages of the diff machinery to produce
->> > diffs in other formats.
->> 
->> A full circle.  This reminds me of the experiment done more than 10
->> years ago at the beginning of the "diffcore transformations" design.
->
-> Heh, I didn't even think to dig for prior art on the list.
+> > I think this more robust check is probably a good idea, that way we
+> > don't step into a submodule with a .git directory that isn't really a
+> > .git dir.
+> 
+> Looks like this is a no-go as well...the call to is_git_directory() ends
+> up calling real_path...which ends up performing the chdir call, which
+> puts us right back to where we started!  (as a side note I was using
+> is_git_directory else where...which I now know I can't use)
 
-It took me a while to dig it up because the topic is so old, but
+Bleh. Looks like it happens as part of the recently-added
+get_common_dir(). I'm not sure if that is ever relevant for submodules,
+but I guess in theory you could have a submodule clone that is part of a
+worktree?
 
-https://public-inbox.org/git/Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org/
-
-is the thread I had in mind.  The idea of rename detection followed
-soon afterwards.
+-Peff
