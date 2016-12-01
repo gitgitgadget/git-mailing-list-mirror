@@ -2,73 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DBFA1FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 21:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C3F91FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 21:21:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760552AbcLAVEa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 16:04:30 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58129 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756532AbcLAVE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 16:04:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 18C0754BDC;
-        Thu,  1 Dec 2016 16:04:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Lz5xGHQRHsT/mr1wURdfBVqXWD4=; b=mIS2H6
-        9721zdM8rFM23dyLPfk/t4txACwE/GFlilGf8bu+Y1WZ799banII9XETckbVhs5f
-        sZNjOzt0UqIcwZMrcnkOS4lDplLQ/24LU8UZNk8+S4lhUz+4WcL9wfJv4f0aJnae
-        sCT3CGD54tWIKxc182cB2VD+yxH3WaUfe1Ve8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cdJ7+BTtuI4k58R51tI25hfIqI0z0XX3
-        WNIeoN/TOluLwEMARfiZp9FGv6eG9LaN+56R46aajfJhU4AuZouF31e2DDZMnXbr
-        /1uYRWUhDM4PTPbz5752RzKWnqLE+6hObahpJLrwUC+ZhWgxrTCnHaBfTvgfbM8b
-        x+i9VFcI2ho=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1153E54BDB;
-        Thu,  1 Dec 2016 16:04:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CBAB54BDA;
-        Thu,  1 Dec 2016 16:04:27 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] add diff-pairs tool
-References: <20161201204042.6yslbyrg7l6ghhww@sigill.intra.peff.net>
-        <xmqqbmwv8j9m.fsf@gitster.mtv.corp.google.com>
-        <20161201205504.flgaf7dwv3b3dkkd@sigill.intra.peff.net>
-        <xmqq7f7j8iz6.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 01 Dec 2016 13:04:26 -0800
-In-Reply-To: <xmqq7f7j8iz6.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 01 Dec 2016 12:58:21 -0800")
-Message-ID: <xmqq37i78ip1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1756842AbcLAVVX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 1 Dec 2016 16:21:23 -0500
+Received: from mx0b-00176a03.pphosted.com ([67.231.157.48]:32816 "EHLO
+        mx0a-00176a03.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1753350AbcLAVVW (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 1 Dec 2016 16:21:22 -0500
+X-Greylist: delayed 5486 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Dec 2016 16:21:22 EST
+Received: from pps.filterd (m0048205.ppops.net [127.0.0.1])
+        by m0048205.ppops.net-00176a03. (8.16.0.17/8.16.0.17) with SMTP id uB1Jn32G049083
+        for <git@vger.kernel.org>; Thu, 1 Dec 2016 14:49:55 -0500
+From:   "Alfonsogonzalez, Ernesto (GE Digital)" 
+        <ernesto.alfonsogonzalez@ge.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: "Your branch is ahead of 'origin' by X commits"
+Thread-Topic: "Your branch is ahead of 'origin' by X commits"
+Thread-Index: AQHSTAwNX33tfXf19Ua4xQQueqSmoA==
+Date:   Thu, 1 Dec 2016 19:49:40 +0000
+Message-ID: <D465BDE6.B7DE%ernesto.alfonsogonzalez@ge.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [3.159.19.181]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <037B62619E9E894AB79B1E53D2768673@mail.ad.ge.com>
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BEB6BD00-B809-11E6-95FB-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2016-12-01_17:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
+ malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.0.1-1609300000
+ definitions=main-1612010324
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> It took me a while to dig it up because the topic is so old, but
->
-> https://public-inbox.org/git/Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org/
->
-> is the thread I had in mind.  The idea of rename detection followed
-> soon afterwards.
+Git status tells me "Your branch is ahead of 'origin' by 108 commits.²,
+but my local and origin/master are pointing to the same commit.
 
-... which was this one:
+What am I doing wrong?
 
-https://public-inbox.org/git/7vr7g4m0lz.fsf_-_@assigned-by-dhcp.cox.net/#t
+$ git diff origin/master
+$ git status
+On branch master
+Your branch is ahead of 'origin' by 108 commits.
+  (use "git push" to publish your local commits)
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+...
+nothing added to commit but untracked files present (use "git add" to
+track)
+$ 
+
+
+
+$ git show origin/master --oneline
+92d392c Merge pull request #21 from org/branch
+
+$ git show master --oneline
+92d392c Merge pull request #21 from org/branch
+
+
+$ git --version 
+git version 2.10.2
+
+
+
+
+Thanks,
+
+Ernesto
 
