@@ -2,74 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FDDC1FF6D
-	for <e@80x24.org>; Thu,  1 Dec 2016 16:10:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 658F61FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 16:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933641AbcLAQK2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 11:10:28 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:54857 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932873AbcLAQK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 11:10:26 -0500
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Dec 2016 11:10:06 EST
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout06 with smtp
-        id Eg2d1u00H0srQBz01g2fEq; Thu, 01 Dec 2016 16:02:39 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=ti3Vri4vOqBFeaNiaQsA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/6] http: always update the base URL for redirects
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20161201090336.xjbb47bublfcpglo@sigill.intra.peff.net>
- <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net>
-Cc:     Jann Horn <jannh@google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <331124b5-aa2b-773c-23ac-975ad3f50dbf@ramsayjones.plus.com>
-Date:   Thu, 1 Dec 2016 16:02:37 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1754354AbcLAQYg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 11:24:36 -0500
+Received: from mout.web.de ([212.227.17.12]:64397 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750812AbcLAQYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 11:24:35 -0500
+Received: from [192.168.178.36] ([79.213.126.9]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lpf3q-1crseD01dW-00fOdX; Thu, 01
+ Dec 2016 17:24:27 +0100
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 0/3] string-list: make string_list_sort() reentrant
+Message-ID: <3083fbf7-d67e-77e4-e05f-94a7e7e15eba@web.de>
+Date:   Thu, 1 Dec 2016 17:24:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.0
 MIME-Version: 1.0
-In-Reply-To: <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:tWglIAcNIYvp2wLtWwijQndffrgSWLhKCbolX3XZbmY7Cq/v5x6
+ Jrqn2ozKmsfFDg+C7Ks69cN1QUtwYdnI4c/3F5QBWy/grDZm9Hxc+y5NpaSVc5tOw/r7baZ
+ +fe8uxs+TFSncrUsMB/B5d3e2Rq3xop2zsgyTQ0NQL5y+hzIbtCWwvMh3kL48GL9jswvvSS
+ EzEQ5WmlcV3R8lliDlxkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O0ACZxBDuPw=:JE0o6z15NKDv8fpKb+zA/A
+ 5A+AC6KSs3EJqMP8HKOL5wRVC84eruTqG2o9tkpfGR7NKsnriQetyFulF7Yk5OiJjgaeVclmF
+ swRber1FnskTpXf1fWliodye1PM6SatTsAxHlybntHh8IoUVHaIkooKxzGM3E+qlzJeTfwZzI
+ wiyBfsCZsC4Uqm6nIoNVUEkr6SBHUuAWhNS9Bk3EFlUQD307rKJPJ9noT4q7MQGOs0jT6Chbu
+ 8grujT5OrpGq0OO7RnmgVzL+hWZ+7NTsB5e6XY2sIXsQO4qBwxotMiwrz5oCVAmr2UFYbm6X8
+ UhHs1n8ImzLvGKj4NqfLVPwH2SvIdNILFM0kfABi2Dq6Fy1yv/sPCLU/al7+TryZ1s/6BC7rD
+ 4IUF6KJdZ7clH1+93lQuiUIOgKQ6W9tubypMcGMAQdxlDYuQfohx3azElyuenXPM7KaPf+03D
+ GxYKARTTd/Xpc0B1n/6ZIlQxVdsJfbYa7PszIsLJlKQH2/FXUAHZ4ZTtmEfbeBp0Pez1Wuj3c
+ Q0RcwKDUCDu7IG8CFPB9O4kx4+CL1UWxL2nTiDRPMjcZFiPhQixeGzUvxlr8/dXoF6Byo3aGc
+ /iQLhrjNxo2uW/Ij0eh/GssRO3xT5CqbBBjTw81U9YdAqWcu51LpaTh/AEZt3SR8FZcYDcdPs
+ Zlvzb5eVxYUlMj3rLeddZ4q/Q2J8DTy0ereLAUv6TKI7M3VDBqB5KTrFq1RaTYmH6hhcnYE1X
+ k+mJQ2EYFKgJo+hEe6lcrI1721Uv9FY9tfT51hzu/ZzIQevzmWKk3tcYHfZ5jbC3RC7cQ/XzV
+ 5/Fwqqw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Use qsort_s() from C11 Annex K to make string_list_sort() safer, in
+particular when called from parallel threads.
 
+  compat: add qsort_s()
+  add QSORT_S
+  string-list: use QSORT_S in string_list_sort()
 
-On 01/12/16 09:04, Jeff King wrote:
-> If a malicious server redirects the initial ref
-> advertisement, it may be able to leak sha1s from other,
-> unrelated servers that the client has access to. For
-> example, imagine that Alice is a git user, she has access to
-> a private repository on a server hosted by Bob, and Mallory
-> runs a malicious server and wants to find out about Bob's
-> private repository.
-> 
-> Mallory asks Alice to clone an unrelated repository from her
------------------------------------------------------------^^^
-... from _him_ ? (ie Mallory)
+ Makefile          | 10 ++++++++
+ compat/qsort_s.c  | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git-compat-util.h | 11 +++++++++
+ string-list.c     | 13 ++++-------
+ 4 files changed, 95 insertions(+), 8 deletions(-)
+ create mode 100644 compat/qsort_s.c
 
-> over HTTP. When Alice's client contacts Mallory's server for
-> the initial ref advertisement, the server issues an HTTP
-> redirect for Bob's server. Alice contacts Bob's server and
-> gets the ref advertisement for the private repository. If
-> there is anything to fetch, she then follows up by asking
-> the server for one or more sha1 objects. But who is the
-> server?
-> 
-> If it is still Mallory's server, then Alice will leak the
-> existence of those sha1s to her.
-------------------------------^^^
-... to _him_ ? (again Mallory)
+-- 
+2.11.0
 
-ATB,
-Ramsay Jones
