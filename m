@@ -6,58 +6,62 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 388141FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 23:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7B9D1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 23:07:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752572AbcLAXC1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 18:02:27 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34542 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbcLAXC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 18:02:26 -0500
-Received: by mail-pg0-f51.google.com with SMTP id x23so99889331pgx.1
-        for <git@vger.kernel.org>; Thu, 01 Dec 2016 15:02:25 -0800 (PST)
+        id S1759315AbcLAXHr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 18:07:47 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:34352 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757947AbcLAXHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 18:07:41 -0500
+Received: by mail-pg0-f50.google.com with SMTP id x23so99934526pgx.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2016 15:07:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=U+J4cwU85ruialU8RzxHwACdg6c2MhGFbnz0z/VCwaI=;
-        b=SiwrsIBj3RQxd1uwIHUSWYICfhPSDItMcp4pVtYInaEC0ZiTgM3lUXmres8RN0krAp
-         UH6jIqjgE+kQsDIHhIbwSl4CDe4u+Nv8SR0v0ykHMyC86kPcxSRvI6aSf+ZYWC6MrerJ
-         rDWWF8oz4NyjU8qfSPgwGn5Q/Rc2TMNFFbOam4fIEELJWWKMabYqx+gxj/hUWRKg9BNU
-         6wvXa+f/kof4isJw1UI5ssnTv6jXt7yvFoEOxsnVDYWEhdZf1Yf5sh0z13nqFqtbcJ+b
-         MqqhJ/wtzGVCvaAzYL6U9KgWR4R2zllBrjo+IVhuYuP52B/ozgUM2bNA34A9KG7EJscp
-         RULg==
+        bh=z6m6Oo+UvK03661foNUSqL0PZmtki32PsiBNC4XB85o=;
+        b=JMxof+Pk9ZQs9XaBL2DUwY1BSbQiK8M2AL0U9QrEX+hiaBGesPu9fDWu/7vSbZ6c2a
+         a4peQ6pBZJ2CYv00ehyDE3qYmS8xBDin/juDGQ402eiH1PXDd2+m6wMf6221eskeDBcO
+         3mNu3cSIwMnQ4Q2OSnUetJfLfnJl2tehJmLjlLEbbjqwgX3uFczRqv0AhGCD6mf65d0S
+         oMh0hKX4EIYN93CqTiLvczDpVQh3P6w1fUB/5FJXD65316Kov2dpr2RcbuA9sbMqZKST
+         Z5zGrcCNA/fxzC2RmL7Lv/BZZ8YM2kbMTrNhS9hcw7AsQVT8PuYAdSGQvce8cdy6EeUJ
+         m/Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=U+J4cwU85ruialU8RzxHwACdg6c2MhGFbnz0z/VCwaI=;
-        b=NrE2+n9Gm8dAO86e0c8gtaWkx8snv1EvH5VqRyCb7N8H+iarBb1S7h7RDWS8iPjXA2
-         aNNyw2i4JGPtaj9f3Ww7H+XK18iovsLB02FTo50icN4vkBcqJa9yQkwd6JVelm/nNAXV
-         zADkVfZXUeCyweBtYCMegYixOUW/OVU+lfdbMjXfMHYFKKVbwY5P8iGRHaWD6DoobM12
-         548YY5csBi9Dd+w2Tc3P0sB8QS1vtyO98xkd1gS9LtwlOXTvT/XwwqqLMBVWVNotUAIP
-         EhrrA4IBqZBNhFLITKvux1bMPe1Bh3syqBKDHtNkLzv7oFy+oQjlLp1jnW4a+GWlV1G2
-         jMFQ==
-X-Gm-Message-State: AKaTC00T9oAYtwgEmNBMVHku5zXFeNvqFU/rmVjFgsXIUJYL4ZyGrF2ATN81ARmcxWjKSTFw
-X-Received: by 10.84.170.195 with SMTP id j61mr90117673plb.13.1480633345421;
-        Thu, 01 Dec 2016 15:02:25 -0800 (PST)
+        bh=z6m6Oo+UvK03661foNUSqL0PZmtki32PsiBNC4XB85o=;
+        b=NxVcHVm6S67YT5ZZtL5vAV6ltE1pG612aRIDE9RYpJhn66LvKrRxLQehijp9PjDq/D
+         7jx5FPsYMMmrSetLoFfudDKMP+ZI8IkJulSM1Rt4FiP4wSdycWncF+mMwSsJWLH8mhA7
+         I/mv1nCHgy0/XUBXuATj8Kq1N51VF5jNR8SpBbZK3wI9q55FCI/ZR5LNhRUQICzYo1Dw
+         VOFKS1uQmhSRtHA4dP/kk/lMoIQZK77J5AFeNPsucxfRSCr4z04iAD7T3mbrghrWyI40
+         KFoKCGq+DDDDrFSEhhugrlZGtSTD9oWI02Zx8xQYiDOXR1D30jL357OsqykAI+zyU4jH
+         x57g==
+X-Gm-Message-State: AKaTC0359tPgoFqVTui+FbVv+YvYDcTmdhHJ5odVxVjsxneY4p36yAdarTh/s4KBcYr4EMqR
+X-Received: by 10.98.138.72 with SMTP id y69mr41883682pfd.52.1480633660561;
+        Thu, 01 Dec 2016 15:07:40 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:2ce9:cac6:1258:bbf3])
-        by smtp.gmail.com with ESMTPSA id l69sm2510436pfk.34.2016.12.01.15.02.24
+        by smtp.gmail.com with ESMTPSA id y200sm2566987pfb.16.2016.12.01.15.07.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Dec 2016 15:02:24 -0800 (PST)
-Date:   Thu, 1 Dec 2016 15:02:23 -0800
+        Thu, 01 Dec 2016 15:07:39 -0800 (PST)
+Date:   Thu, 1 Dec 2016 15:07:38 -0800
 From:   Brandon Williams <bmwill@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 5/6] http: treat http-alternates like redirects
-Message-ID: <20161201230223.GI54082@google.com>
-References: <20161201090336.xjbb47bublfcpglo@sigill.intra.peff.net>
- <20161201090432.wtcu2jpacwcf6a4a@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v7 4/4] transport: add from_user parameter to
+ is_transport_allowed
+Message-ID: <20161201230738.GJ54082@google.com>
+References: <1480621447-52399-1-git-send-email-bmwill@google.com>
+ <1480623959-126129-1-git-send-email-bmwill@google.com>
+ <1480623959-126129-5-git-send-email-bmwill@google.com>
+ <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20161201090432.wtcu2jpacwcf6a4a@sigill.intra.peff.net>
+In-Reply-To: <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -65,28 +69,81 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 12/01, Jeff King wrote:
->   - set CURLOPT_PROTOCOLS alongside CURLOPT_REDIR_PROTOCOLS
->     restrict ourselves to a known-safe set and respect any
->     user-provided whitelist.
+> On Thu, Dec 01, 2016 at 12:25:59PM -0800, Brandon Williams wrote:
+> 
+> > Add the from_user parameter to the 'is_transport_allowed' function.
+> > This allows callers to query if a transport protocol is allowed, given
+> > that the caller knows that the protocol is coming from the user (1) or
+> > not from the user (0), such as redirects in libcurl.  If unknown, a -1
+> > should be provided which falls back to reading `GIT_PROTOCOL_FROM_USER`
+> > to determine if the protocol came from the user.
+> 
+> Patches 3 and 4 look good to me (1 and 2 are unchanged, right? They are
+> already in 'next' anyway, though I guess we are due for a post-release
+> reset of 'next').
+> 
+> > diff --git a/http.c b/http.c
+> > index fee128b..e74c0f0 100644
+> > --- a/http.c
+> > +++ b/http.c
+> > @@ -725,13 +725,13 @@ static CURL *get_curl_handle(void)
+> >  	curl_easy_setopt(result, CURLOPT_POST301, 1);
+> >  #endif
+> >  #if LIBCURL_VERSION_NUM >= 0x071304
+> > -	if (is_transport_allowed("http"))
+> > +	if (is_transport_allowed("http", 0))
+> >  		allowed_protocols |= CURLPROTO_HTTP;
+> > -	if (is_transport_allowed("https"))
+> > +	if (is_transport_allowed("https", 0))
+> >  		allowed_protocols |= CURLPROTO_HTTPS;
+> > -	if (is_transport_allowed("ftp"))
+> > +	if (is_transport_allowed("ftp", 0))
+> >  		allowed_protocols |= CURLPROTO_FTP;
+> > -	if (is_transport_allowed("ftps"))
+> > +	if (is_transport_allowed("ftps", 0))
+> >  		allowed_protocols |= CURLPROTO_FTPS;
+> >  	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
+> >  #else
+> 
+> This is better, but I think we still need to deal with http-alternates
+> on top.
+> 
+> I think we'd need to move this allowed_protocols setup into a function
+> like:
+> 
+>   int generate_allowed_protocols(int from_user)
+>   {
+> 	int ret;
+> 	if (is_transport_allowed("http", from_user))
+> 		ret |= CURLPROTO_HTTP;
+> 	... etc ...
+> 	return ret;
+>   }
+> 
+> and then create a protocol list for each situation:
+> 
+>   allowed_protocols = generate_allowed_protocols(-1);
+>   allowed_redir_protocols = generate_allowed_protocols(0);
+> 
+> and then we know we can always set up the redir protocols:
+> 
+>   curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_redir_protocols);
+> 
+> and which we feed for CURLOPT_PROTOCOLS depends on whether we are
+> following an http-alternates redirect or not. But I suspect it will be a
+> nasty change to plumb through the idea of "this request is on behalf of
+> an http-alternates redirect".
+> 
+> Given how few people probably care, I'm tempted to document it as a
+> quirk and direct people to the upcoming http.followRedirects. The newly
+> proposed default value of that disables http-alternates entirely anyway.
+> 
+> -Peff
 
-
-
-> diff --git a/http.c b/http.c
-> index 825118481..051fe6e5a 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -745,6 +745,7 @@ static CURL *get_curl_handle(void)
->  	if (is_transport_allowed("ftps"))
->  		allowed_protocols |= CURLPROTO_FTPS;
->  	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
-> +	curl_easy_setopt(result, CURLOPT_PROTOCOLS, allowed_protocols);
->  #else
->  	if (transport_restrict_protocols())
->  		warning("protocol restrictions not applied to curl redirects because\n"
-
-Because I don't know much about how curl works....Only
-http/https/ftp/ftps protocols are allowed to be passed to curl?  Is that
-because curl only understands those particular protocols?
+I started taking a look at your http redirect series (I really should
+have taking a look at it sooner) and I see exactly what you're talking
+about.  We can easily move this logic into a function to make it easier
+to generate the two whitelists.
 
 -- 
 Brandon Williams
