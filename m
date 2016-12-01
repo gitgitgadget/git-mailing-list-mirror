@@ -2,148 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7B9D1FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 23:07:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 065AE1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 23:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759315AbcLAXHr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 18:07:47 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34352 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757947AbcLAXHl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 18:07:41 -0500
-Received: by mail-pg0-f50.google.com with SMTP id x23so99934526pgx.1
-        for <git@vger.kernel.org>; Thu, 01 Dec 2016 15:07:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=z6m6Oo+UvK03661foNUSqL0PZmtki32PsiBNC4XB85o=;
-        b=JMxof+Pk9ZQs9XaBL2DUwY1BSbQiK8M2AL0U9QrEX+hiaBGesPu9fDWu/7vSbZ6c2a
-         a4peQ6pBZJ2CYv00ehyDE3qYmS8xBDin/juDGQ402eiH1PXDd2+m6wMf6221eskeDBcO
-         3mNu3cSIwMnQ4Q2OSnUetJfLfnJl2tehJmLjlLEbbjqwgX3uFczRqv0AhGCD6mf65d0S
-         oMh0hKX4EIYN93CqTiLvczDpVQh3P6w1fUB/5FJXD65316Kov2dpr2RcbuA9sbMqZKST
-         Z5zGrcCNA/fxzC2RmL7Lv/BZZ8YM2kbMTrNhS9hcw7AsQVT8PuYAdSGQvce8cdy6EeUJ
-         m/Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=z6m6Oo+UvK03661foNUSqL0PZmtki32PsiBNC4XB85o=;
-        b=NxVcHVm6S67YT5ZZtL5vAV6ltE1pG612aRIDE9RYpJhn66LvKrRxLQehijp9PjDq/D
-         7jx5FPsYMMmrSetLoFfudDKMP+ZI8IkJulSM1Rt4FiP4wSdycWncF+mMwSsJWLH8mhA7
-         I/mv1nCHgy0/XUBXuATj8Kq1N51VF5jNR8SpBbZK3wI9q55FCI/ZR5LNhRUQICzYo1Dw
-         VOFKS1uQmhSRtHA4dP/kk/lMoIQZK77J5AFeNPsucxfRSCr4z04iAD7T3mbrghrWyI40
-         KFoKCGq+DDDDrFSEhhugrlZGtSTD9oWI02Zx8xQYiDOXR1D30jL357OsqykAI+zyU4jH
-         x57g==
-X-Gm-Message-State: AKaTC0359tPgoFqVTui+FbVv+YvYDcTmdhHJ5odVxVjsxneY4p36yAdarTh/s4KBcYr4EMqR
-X-Received: by 10.98.138.72 with SMTP id y69mr41883682pfd.52.1480633660561;
-        Thu, 01 Dec 2016 15:07:40 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:2ce9:cac6:1258:bbf3])
-        by smtp.gmail.com with ESMTPSA id y200sm2566987pfb.16.2016.12.01.15.07.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Dec 2016 15:07:39 -0800 (PST)
-Date:   Thu, 1 Dec 2016 15:07:38 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v7 4/4] transport: add from_user parameter to
- is_transport_allowed
-Message-ID: <20161201230738.GJ54082@google.com>
-References: <1480621447-52399-1-git-send-email-bmwill@google.com>
- <1480623959-126129-1-git-send-email-bmwill@google.com>
- <1480623959-126129-5-git-send-email-bmwill@google.com>
- <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
+        id S1757940AbcLAXMz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 18:12:55 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:24945 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757476AbcLAXMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 18:12:54 -0500
+Received: from PhilipOakley ([92.22.76.48])
+        by smtp.talktalk.net with SMTP
+        id CaX4cMhPTg5ctCaX4c6UjT; Thu, 01 Dec 2016 23:12:52 +0000
+X-Originating-IP: [92.22.76.48]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=bdMpa6HB c=1 sm=1 tr=0 a=vRWDVfjl5WB+WvFCAxwqDQ==:117
+ a=vRWDVfjl5WB+WvFCAxwqDQ==:17 a=8nJEP1OIZ-IA:10 a=1XWaLZrsAAAA:8
+ a=2oZe82ojvCiqqbUOpIgA:9 a=wPNLvfGTeEIA:10 a=nJcEw6yWrPvoIXZ49MH8:22
+Message-ID: <2297C36B9A1441748D7E68363A05F8C5@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Brandon Williams" <bmwill@google.com>,
+        "Ramsay Jones" <ramsay@ramsayjones.plus.com>
+Cc:     "Jeff King" <peff@peff.net>, <git@vger.kernel.org>,
+        "Jann Horn" <jannh@google.com>
+References: <20161201090336.xjbb47bublfcpglo@sigill.intra.peff.net> <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net> <331124b5-aa2b-773c-23ac-975ad3f50dbf@ramsayjones.plus.com> <20161201225331.GH54082@google.com>
+Subject: Re: [PATCH 2/6] http: always update the base URL for redirects
+Date:   Thu, 1 Dec 2016 23:12:49 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfPzKH3oaEYFsxElcjuUewqbh4izAKxzV0Hx/dtuLXav44X3xuz4nk+TmLp47Nr8MSjACS29v+RFy47TNTJ5XrJW4ELsRNUGSIE/1PYK5pAIEm84By/pS
+ funp0wZOa4nZQb1dJjDsPJ/2LzvtzwJLXvBdd7E6brHwizDljzlSYcVMSNoyEmCEEOzetTLW655u2j5RvhFdU+JvhOj7ou1miv8UYDW5vQiZMhg16kqoE5h+
+ 9TQZ2l7DabDDwvut7WqNGH1SNLK34OELiOqjaC5yH9NL2Qg0xQ8q2R1Stvnd+zPK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/01, Jeff King wrote:
-> On Thu, Dec 01, 2016 at 12:25:59PM -0800, Brandon Williams wrote:
-> 
-> > Add the from_user parameter to the 'is_transport_allowed' function.
-> > This allows callers to query if a transport protocol is allowed, given
-> > that the caller knows that the protocol is coming from the user (1) or
-> > not from the user (0), such as redirects in libcurl.  If unknown, a -1
-> > should be provided which falls back to reading `GIT_PROTOCOL_FROM_USER`
-> > to determine if the protocol came from the user.
-> 
-> Patches 3 and 4 look good to me (1 and 2 are unchanged, right? They are
-> already in 'next' anyway, though I guess we are due for a post-release
-> reset of 'next').
-> 
-> > diff --git a/http.c b/http.c
-> > index fee128b..e74c0f0 100644
-> > --- a/http.c
-> > +++ b/http.c
-> > @@ -725,13 +725,13 @@ static CURL *get_curl_handle(void)
-> >  	curl_easy_setopt(result, CURLOPT_POST301, 1);
-> >  #endif
-> >  #if LIBCURL_VERSION_NUM >= 0x071304
-> > -	if (is_transport_allowed("http"))
-> > +	if (is_transport_allowed("http", 0))
-> >  		allowed_protocols |= CURLPROTO_HTTP;
-> > -	if (is_transport_allowed("https"))
-> > +	if (is_transport_allowed("https", 0))
-> >  		allowed_protocols |= CURLPROTO_HTTPS;
-> > -	if (is_transport_allowed("ftp"))
-> > +	if (is_transport_allowed("ftp", 0))
-> >  		allowed_protocols |= CURLPROTO_FTP;
-> > -	if (is_transport_allowed("ftps"))
-> > +	if (is_transport_allowed("ftps", 0))
-> >  		allowed_protocols |= CURLPROTO_FTPS;
-> >  	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
-> >  #else
-> 
-> This is better, but I think we still need to deal with http-alternates
-> on top.
-> 
-> I think we'd need to move this allowed_protocols setup into a function
-> like:
-> 
->   int generate_allowed_protocols(int from_user)
->   {
-> 	int ret;
-> 	if (is_transport_allowed("http", from_user))
-> 		ret |= CURLPROTO_HTTP;
-> 	... etc ...
-> 	return ret;
->   }
-> 
-> and then create a protocol list for each situation:
-> 
->   allowed_protocols = generate_allowed_protocols(-1);
->   allowed_redir_protocols = generate_allowed_protocols(0);
-> 
-> and then we know we can always set up the redir protocols:
-> 
->   curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_redir_protocols);
-> 
-> and which we feed for CURLOPT_PROTOCOLS depends on whether we are
-> following an http-alternates redirect or not. But I suspect it will be a
-> nasty change to plumb through the idea of "this request is on behalf of
-> an http-alternates redirect".
-> 
-> Given how few people probably care, I'm tempted to document it as a
-> quirk and direct people to the upcoming http.followRedirects. The newly
-> proposed default value of that disables http-alternates entirely anyway.
-> 
-> -Peff
+From: "Brandon Williams" <bmwill@google.com>
+> On 12/01, Ramsay Jones wrote:
+>>
+>>
+>> On 01/12/16 09:04, Jeff King wrote:
+>> > If a malicious server redirects the initial ref
+>> > advertisement, it may be able to leak sha1s from other,
+>> > unrelated servers that the client has access to. For
+>> > example, imagine that Alice is a git user, she has access to
+>> > a private repository on a server hosted by Bob, and Mallory
+>> > runs a malicious server and wants to find out about Bob's
+>> > private repository.
+>> >
+>> > Mallory asks Alice to clone an unrelated repository from her
+>> -----------------------------------------------------------^^^
+>> ... from _him_ ? (ie Mallory)
+>>
+>> > over HTTP. When Alice's client contacts Mallory's server for
+>> > the initial ref advertisement, the server issues an HTTP
+>> > redirect for Bob's server. Alice contacts Bob's server and
+>> > gets the ref advertisement for the private repository. If
+>> > there is anything to fetch, she then follows up by asking
+>> > the server for one or more sha1 objects. But who is the
+>> > server?
+>> >
+>> > If it is still Mallory's server, then Alice will leak the
+>> > existence of those sha1s to her.
+>> ------------------------------^^^
+>> ... to _him_ ? (again Mallory)
+>>
+>> ATB,
+>> Ramsay Jones
+>
+> Depends, I only know Mallorys who are women so her seems appropriate.
+>
+> -- 
+> Brandon Williams
+>
+In a British context "Mallory and Irvine" were two (male) climbers who died 
+on Everest in 1924 (tales of daring...), so it's easy to expect (from this 
+side of the pond) that 'Mallory' would be male. However he was really George 
+Mallory.
 
-I started taking a look at your http redirect series (I really should
-have taking a look at it sooner) and I see exactly what you're talking
-about.  We can easily move this logic into a function to make it easier
-to generate the two whitelists.
+Meanwhile that search engine's images shows far more female Mallorys, so 
+I've learnt something.
+--
+Philip
 
--- 
-Brandon Williams
