@@ -6,36 +6,36 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A4181FBB0
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FDDC1FF6D
 	for <e@80x24.org>; Thu,  1 Dec 2016 16:10:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933365AbcLAQKI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 11:10:08 -0500
+        id S933641AbcLAQK2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 11:10:28 -0500
 Received: from avasout06.plus.net ([212.159.14.18]:54857 "EHLO
         avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933235AbcLAQKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 11:10:06 -0500
+        with ESMTP id S932873AbcLAQK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 11:10:26 -0500
 X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Dec 2016 11:10:06 EST
 Received: from [10.0.2.15] ([143.159.212.40])
         by avasout06 with smtp
-        id Eg6r1u0010srQBz01g6scp; Thu, 01 Dec 2016 16:06:52 +0000
+        id Eg2d1u00H0srQBz01g2fEq; Thu, 01 Dec 2016 16:02:39 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
  a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=6jp5xOHDhjXj1-ze_J0A:9 a=QEXdDO2ut3YA:10 a=9V0Q_xL71dEA:10
+ a=IkcTkHD0fZMA:10 a=ti3Vri4vOqBFeaNiaQsA:9 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 4/6] http: make redirects more obvious
+Subject: Re: [PATCH 2/6] http: always update the base URL for redirects
 To:     Jeff King <peff@peff.net>, git@vger.kernel.org
 References: <20161201090336.xjbb47bublfcpglo@sigill.intra.peff.net>
- <20161201090428.pweq7slwujbne5hg@sigill.intra.peff.net>
+ <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net>
 Cc:     Jann Horn <jannh@google.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <5a47c032-755d-ad11-390f-22ae19ca584a@ramsayjones.plus.com>
-Date:   Thu, 1 Dec 2016 16:06:51 +0000
+Message-ID: <331124b5-aa2b-773c-23ac-975ad3f50dbf@ramsayjones.plus.com>
+Date:   Thu, 1 Dec 2016 16:02:37 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.4.0
 MIME-Version: 1.0
-In-Reply-To: <20161201090428.pweq7slwujbne5hg@sigill.intra.peff.net>
+In-Reply-To: <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -46,14 +46,30 @@ X-Mailing-List: git@vger.kernel.org
 
 
 On 01/12/16 09:04, Jeff King wrote:
-> We instruct curl to always follow HTTP redirects. This is
-> convenient, but it creates opportunities for malicious
-> servers to create confusing situations. For instance,
-> imagine Alice is a git user with access to a private
-> repository on Bob's server. Mallory runs her own server and
+> If a malicious server redirects the initial ref
+> advertisement, it may be able to leak sha1s from other,
+> unrelated servers that the client has access to. For
+> example, imagine that Alice is a git user, she has access to
+> a private repository on a server hosted by Bob, and Mallory
+> runs a malicious server and wants to find out about Bob's
+> private repository.
+> 
+> Mallory asks Alice to clone an unrelated repository from her
+-----------------------------------------------------------^^^
+... from _him_ ? (ie Mallory)
 
-Ahem, so Mallory is female? (-blush-) :(
+> over HTTP. When Alice's client contacts Mallory's server for
+> the initial ref advertisement, the server issues an HTTP
+> redirect for Bob's server. Alice contacts Bob's server and
+> gets the ref advertisement for the private repository. If
+> there is anything to fetch, she then follows up by asking
+> the server for one or more sha1 objects. But who is the
+> server?
+> 
+> If it is still Mallory's server, then Alice will leak the
+> existence of those sha1s to her.
+------------------------------^^^
+... to _him_ ? (again Mallory)
 
 ATB,
 Ramsay Jones
-
