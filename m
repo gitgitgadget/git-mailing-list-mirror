@@ -6,141 +6,71 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF5411FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 20:24:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CE4C1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 20:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934420AbcLAUYY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 15:24:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59231 "EHLO
+        id S1751111AbcLAUZr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 15:25:47 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56729 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934001AbcLAUYX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 15:24:23 -0500
+        with ESMTP id S1750955AbcLAUZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 15:25:46 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4891753A71;
-        Thu,  1 Dec 2016 15:24:22 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACCEC544EF;
+        Thu,  1 Dec 2016 15:25:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZFWqHH0bExGl
-        I3Xdvy8c2ZCQunc=; b=RC4E716p3IFEm6XqwMRjMwUJamdCCX5qXyHHhFrnCS/w
-        6Rqz2wnSyI6L/asQWQpveHT10utcUxeyNC8f+5i7eb+vZ5WY9hIcYTJWZYG98DOU
-        EzOa8c/abII/jTy6JfwUQ7DBBDW0mZgIOqntoro+6EUsr8dSoSsXMg/0+l20mJI=
+        :content-type; s=sasl; bh=4zOHQmLtJQMiM3j9d1CGNZlJrkU=; b=iG2m2E
+        2gPc1RuHfXSIYpg3zU80ChNaC/L6SjOEuae/gdjiG1QqSXPdVDI3Je4my1nYKs8x
+        +ck1RV67Pte5UHyJ0eX73HnwrJmXSBOVlPSRurU6BiAcaYLwC87dfIwMxEPocnak
+        Dbdk8fSk1+9fG261/KK12aXVY1pyoaNrBUxOI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=V2lwFs
-        vpsfWmqwr3aSg38HWKkz078a2tvdROuyAy2JxCfdQdypkQTxI5aMMj6SFE6E/J8z
-        Et4yN9BcwncCLsEfCy9gdSTxrwTsNI16xL07dKnLgcbskV6+aBG2DJgrIzIVreKl
-        1C/4cHSctkO6VHobbs6fgdQsg3ewZjSQYnPjI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F60053A70;
-        Thu,  1 Dec 2016 15:24:22 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=eAP4jhm7cKvSAe+6sTE8vJBaX9bMeeeG
+        KMlxyOjvAY3U8GORWpgFF2Dz59mbkoSpLlV1sWFLhsBofG3CB/01GFSj5ydjkpK5
+        CGf68I7Kr1nPfv8pxADH1rtHmT7CYK9pGLw3oWB6b1yAVa5JrBjKGJZpnPMqMHUx
+        3eTWG7/zLeE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D85C544EE;
+        Thu,  1 Dec 2016 15:25:45 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C635E53A6D;
-        Thu,  1 Dec 2016 15:24:21 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 281B1544ED;
+        Thu,  1 Dec 2016 15:25:45 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Git mailing list <git@vger.kernel.org>,
-        eevee.reply@veekun.com
-Subject: Re: [PATCH v2 1/1] convert: git cherry-pick -Xrenormalize did not work
-References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
-        <20161130170232.19685-1-tboegi@web.de>
-        <CA+P7+xoJb=SukbnJVJrXR6WV9+UtGnsn776KGkrHC7X-T_wZWg@mail.gmail.com>
-Date:   Thu, 01 Dec 2016 12:24:20 -0800
-In-Reply-To: <CA+P7+xoJb=SukbnJVJrXR6WV9+UtGnsn776KGkrHC7X-T_wZWg@mail.gmail.com>
-        (Jacob Keller's message of "Thu, 1 Dec 2016 12:07:13 -0800")
-Message-ID: <xmqqtwan8kjv.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] compat: add qsort_s()
+References: <3083fbf7-d67e-77e4-e05f-94a7e7e15eba@web.de>
+        <fc602a66-a06c-203e-b50b-55fd7b258b54@web.de>
+        <20161201193556.j2odwy3sepaxxq5a@sigill.intra.peff.net>
+        <xmqq7f7j9zkd.fsf@gitster.mtv.corp.google.com>
+        <20161201201917.nqx3v5fl2ptl3bhr@sigill.intra.peff.net>
+Date:   Thu, 01 Dec 2016 12:25:44 -0800
+In-Reply-To: <20161201201917.nqx3v5fl2ptl3bhr@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 1 Dec 2016 15:19:17 -0500")
+Message-ID: <xmqqpolb8khj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 24CE1F3A-B804-11E6-8A43-E98412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 567CF24A-B804-11E6-897F-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Wed, Nov 30, 2016 at 9:02 AM,  <tboegi@web.de> wrote:
->> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->> diff --git a/convert.c b/convert.c
->> index be91358..f8e4dfe 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -281,13 +281,13 @@ static int crlf_to_git(const char *path, const c=
-har *src, size_t len,
->>                 /*
->>                  * If the file in the index has any CR in it, do not c=
-onvert.
->>                  * This is the new safer autocrlf handling.
->> +                  - unless we want to renormalize in a merge or cherr=
-y-pick
+> On Thu, Dec 01, 2016 at 12:14:42PM -0800, Junio C Hamano wrote:
 >
-> Style nit, usually this line should begin with an aligned *? I think
-> it's not really that big a deal, though.
+>> Eh, wait.  BSD and Microsoft have paramters reordered in the
+>> callback comparison function.  I suspect that would not fly very
+>> well.
+>
+> You can hack around it by passing a wrapper callback that flips the
+> arguments.
 
-Yup, this is what I queued.
-
--- >8 --
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
-Date: Wed, 30 Nov 2016 18:02:32 +0100
-Subject: [PATCH] convert: git cherry-pick -Xrenormalize did not work
-
-Working with a repo that used to be all CRLF. At some point it
-was changed to all LF, with `text=3Dauto` in .gitattributes.
-Trying to cherry-pick a commit from before the switchover fails:
-
-    $ git cherry-pick -Xrenormalize <commit>
-    fatal: CRLF would be replaced by LF in [path]
-
-Commit 65237284 "unify the "auto" handling of CRLF" introduced
-a regression:
-
-Whenever crlf_action is CRLF_TEXT_XXX and not CRLF_AUTO_XXX,
-SAFE_CRLF_RENORMALIZE was feed into check_safe_crlf().  This is
-wrong because here everything else than SAFE_CRLF_WARN is treated as
-SAFE_CRLF_FAIL.
-
-Call check_safe_crlf() only if checksafe is SAFE_CRLF_WARN or
-SAFE_CRLF_FAIL.
-
-Reported-by: Eevee (Lexy Munroe) <eevee@veekun.com>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- convert.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 077f5e601e..2f90f363c6 100644
---- a/convert.c
-+++ b/convert.c
-@@ -274,15 +274,16 @@ static int crlf_to_git(const char *path, const char=
- *src, size_t len,
- 		if (convert_is_binary(len, &stats))
- 			return 0;
- 		/*
--		 * If the file in the index has any CR in it, do not convert.
--		 * This is the new safer autocrlf handling.
-+		 * If the file in the index has any CR in it, do not
-+		 * convert.  This is the new safer autocrlf handling,
-+		 * unless we want to renormalize in a merge or
-+		 * cherry-pick.
- 		 */
--		if (checksafe =3D=3D SAFE_CRLF_RENORMALIZE)
--			checksafe =3D SAFE_CRLF_FALSE;
--		else if (has_cr_in_index(path))
-+		if ((checksafe !=3D SAFE_CRLF_RENORMALIZE) && has_cr_in_index(path))
- 			convert_crlf_into_lf =3D 0;
- 	}
--	if (checksafe && len) {
-+	if ((checksafe =3D=3D SAFE_CRLF_WARN ||
-+	    (checksafe =3D=3D SAFE_CRLF_FAIL)) && len) {
- 		struct text_stat new_stats;
- 		memcpy(&new_stats, &stats, sizeof(new_stats));
- 		/* simulate "git add" */
---=20
-2.11.0-192-gbadfaabe38
-
+Apparently our mails crossed.
