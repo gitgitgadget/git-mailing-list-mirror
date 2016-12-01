@@ -2,79 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98F711FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 17:05:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91BAE1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 17:46:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760897AbcLARFj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 12:05:39 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52860 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1760807AbcLARFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 12:05:37 -0500
-Received: from virtualbox ([37.24.142.44]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN604-1cJ4N12vgO-006bwG; Thu, 01
- Dec 2016 18:05:23 +0100
-Date:   Thu, 1 Dec 2016 18:05:22 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     stefan.naewe@atlas-elektronik.com
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git for Windows 2.11.0
-In-Reply-To: <77d1fa5d-869c-546e-357b-cd1e6ffee48d@atlas-elektronik.com>
-Message-ID: <alpine.DEB.2.20.1612011803070.117539@virtualbox>
-References: <20161201123130.7608-1-johannes.schindelin@gmx.de> <77d1fa5d-869c-546e-357b-cd1e6ffee48d@atlas-elektronik.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S934234AbcLARpw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 12:45:52 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:34643 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934229AbcLARpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 12:45:50 -0500
+Received: by mail-pf0-f176.google.com with SMTP id c4so47251332pfb.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2016 09:45:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=I+OjCJGEhNZUV6x0bIFxrk6OLli2lvOTTuAkv/XtxXw=;
+        b=RweaTIDxWUkJFS+wpDKTThQw87d/6fMbJn2jRWkCUTpQR4oZlln43ZzOR8BIVRQLUP
+         WsAdT9pUeMhxUhRT9/qYdKEkQ+y9YSs3HVjZb5tQTBgKCo5Dp0llox5YajB5gCmDSyyc
+         uaXVtvsXHnmCSjIF4dLoRcMqtt1zWFoOydEOXrcqjRn6MfHXAuMdthB99HFo1QZm/2Q5
+         5nbZmWgTUu7nUMTrNC8NTMD1egkq4uvSnU8eCRni31RDsNBuzi/aBSqft7A1G4oxSWYV
+         zPf2MDg+9cNqQMTU/5xMPH1mXy6jcVD/vSUeEwMC479XnbRgYKzPawAGtNLYvfy8ustF
+         hPQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=I+OjCJGEhNZUV6x0bIFxrk6OLli2lvOTTuAkv/XtxXw=;
+        b=He67/M18NDorcc+uGDGS3/jgEdx1B1XoqarNaOaP1wDtQVsAB6Tq8N3ZJdTrRMRPo2
+         7daZrpEuaDNlryEqrFMg/hGvPZt9B7SM8PV6KQAbUeu9A6KzU0Y6dg1sB9obu4BQgnsu
+         upRYaMxZko4MbyO35H+qX+lDaBVLW3iofOeVRUfsiXHQMEBUt1WjNiXhekhP+NiD/0+D
+         pIiP+HDZ5TQphIId/JiGIQYS3tN/TY6KxLQEKLaebyJJgvaOIqQjfIAovaE3jvVCPiu6
+         SE3Xy2H3wa3TV6WGvQ6QgGQGx8M93JuBvpvpSHdjJRAG5RKvkXQPUPLC3WyKk5ooaJ+M
+         NAHw==
+X-Gm-Message-State: AKaTC03ftBvfAjYpuo7DhWb1geNf88yMflefsQPpPBqSLBgYXDKdlJ7YbW/sXsWfUXyudz/r
+X-Received: by 10.99.188.2 with SMTP id q2mr71170415pge.34.1480614350120;
+        Thu, 01 Dec 2016 09:45:50 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:2ce9:cac6:1258:bbf3])
+        by smtp.gmail.com with ESMTPSA id y2sm1599671pff.82.2016.12.01.09.45.48
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 01 Dec 2016 09:45:49 -0800 (PST)
+Date:   Thu, 1 Dec 2016 09:45:47 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, sbeller@google.com, jonathantanmy@google.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v6 0/6] recursively grep across submodules
+Message-ID: <20161201174547.GA51406@google.com>
+References: <1479840397-68264-1-git-send-email-bmwill@google.com>
+ <1480555714-186183-1-git-send-email-bmwill@google.com>
+ <20161201042228.ynug33mcsqkdbuoe@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rzD2oHSDUu4MT/zLuTkCQVed6L+Fyby6cmMALjf/rIqHk/9YXzv
- +fBEtGLk9DgNh2JHjkauPbV4Xzya3KMFxICJ28UCKsiRHRe2S1/+WDwzBpvKKMFxYEwAK9t
- EI5QbInUSR3HIw6hMvX7ShyWyiSBzbA277lBL8MOhjY4S3LcT4/h/XJU94JZu8knj0Qrpda
- qzfP8ptJiW5qFngCT5XHA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KGi2b+8TOmM=:czncwTe8w1r88yFh1QL8cs
- j9n8katW9/HFMdlBoGNzuBM9c+b4aAfm8Q8UwUtBlG/Ei3meEdJg8qpSVgaPq7BnKFE9xUMcI
- MffJkAPXzEaQx2czJR9QsH8wN5d979+mR6w3taTqlPEyWQsmKs1tOieTTikNR8Gc1n1E9Wz44
- yw/FSOg0njRQYhzMo+jlWgnM3Ix956OPU7uJA0jwXYFTCrZ4L6N6ejJNqOsHW7cZyAB69aHxJ
- jO203Pjl7Z3aVd/UgFZzvGAgAjpyQvJjt7R4dYC4s6NSvn87NjCaXXNZeY5ZIuaVv0oEuuyt7
- bVq63qGYEBauksedCYGgd96BLfKXV/62HlEFfSeWYQ+sX9BkpVzMQahneEzqhn9AoSQq6L33t
- wUwiLSHWlh0HRFe72Yn42H1SDTGNOqQblCfk1OC/BnrzA7qVbcQhXUBkn6oD1z6dqhYh9L2Nf
- +tzFIGccF/10V7b7/ptYZPg1Pp+XGSsiqSdDf5MkEOi9UJo/cdfhBS6BivK+VNp2c6PsiovZQ
- /mDdeYomyza3kNca7EpHYJlPXJDKz5Alv6clT4S/pYCjMbP/Mx7gUCamifWbl8unu1ykFtaMo
- LGy/r/NZ8sb7pCCr9mO+Qc4qXfqx0I3PqOvuohFvdrD1lWloGTx6/w40L9LQ7st4ubEr8mjGb
- EN6g7Gs4qCGFzWpyLvxSwV2lkOVnTDH48WT5AHL5OD4n/PiA2NhtBParJ5mTzqxfnyprX7wNf
- jK90A6uVff17KF2SBEh41PjVmPi6H0py5zilPh7h7L2tuMqHG6cpbDV0MyptjhpLYXGtddAB1
- BHIvUOJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161201042228.ynug33mcsqkdbuoe@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
-
-On Thu, 1 Dec 2016, stefan.naewe@atlas-elektronik.com wrote:
-
-> Am 01.12.2016 um 13:31 schrieb Johannes Schindelin:
->
-> >   * Support has been added to generate project files for Visual Studio
-> >     2010 and later.
+On 11/30, Jeff King wrote:
+> On Wed, Nov 30, 2016 at 05:28:28PM -0800, Brandon Williams wrote:
 > 
-> That's not really a new feature of Git-for-Windows, is it ?
+> > v6 fixes a race condition which existed in the 'is_submodule_populated'
+> > function.  Instead of calling 'resolve_gitdir' to check for the existance of a
+> > .git file/directory, use 'stat'.  'resolve_gitdir' calls 'chdir' which can
+> > affect other running threads trying to load thier files into a buffer in
+> > memory.
+> 
+> This one passes my stress-test for t7814 (though I imagine you already
+> knew that).
+> 
+> I tried to think of things that could go wrong by using a simple stat()
+> instead of resolve_gitdir(). They should only differ when ".git" for
+> some reason does not point to a git repository. My initial thought is
+> that this might be more vocal about errors, because the child process
+> will complain. But actually, the original would already die if the
+> ".git" file is funny, so we were pretty vocal already.
+> 
+> I also wondered whether the sub-process might skip a bogus ".git" file
+> and keep looking upward in the filesystem tree (which would confusingly
+> end up back in the super-project!). But it looks like we bail hard when
+> we see a ".git" file but it's bogus. Which is probably a good thing in
+> general for submodules.
+> 
+> I'm not sure any of that is actually even worth worrying about, as such
+> a setup is broken by definition. I just wanted to think it through as a
+> devil's advocate, and even that seems pretty reasonable.
+> 
+> -Peff
 
-Yes it is. We had a script to generate project files for Visual Studio <
-2008, but they were broken.
+Yeah I was trying to think through these scenarios myself last night.
+And like you found it seemed alright to let the child process deal with
+the .git file/dir as long as once actually exists at that path.  If one
+didn't then there would be the possibility that we ended up back at the
+superproject, which would result in an infinite loop.  And yeah if the
+.git file doesn't resolve to anything sensible then the user probably
+mangled their repository somehow anyways.
 
-This script has been partially fixed, and support has been added to
-generate the .vcxproj used by Visual Studio 2010 and later.
+Thanks again for all the help!
 
-Further, compile errors have been addressed.
-
-After that, I worked on being able to run the tests in a regular Git Bash
-(i.e. *without* installing Git for Windows' SDK, just a regular Git for
-Windows will do).
-
-Took a lot of effort and time, too,
-Johannes
+-- 
+Brandon Williams
