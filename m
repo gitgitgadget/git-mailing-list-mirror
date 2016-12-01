@@ -6,78 +6,82 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A31301FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 18:49:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D7E61FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 18:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754593AbcLASth (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 13:49:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58649 "EHLO
+        id S1758584AbcLASvF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 13:51:05 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51246 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752602AbcLASth (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 13:49:37 -0500
+        with ESMTP id S1754217AbcLASvD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 13:51:03 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1EEB52562;
-        Thu,  1 Dec 2016 13:49:35 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4560153068;
+        Thu,  1 Dec 2016 13:51:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GwGSyNvi98YgAmRrV6O+LFV1LJw=; b=KJNNcd
-        cAgQCFreBZCtJaji8gjH5/j7kBdtt24d5etvqD04GJJy2iIUX7sHlvqnPdAiLNhU
-        yTnUfItFedbafcBt7EngdUHtFyiK8q64xntvywkYk07qMVugmpOUM9mOuEVVnxxq
-        LWubwDTcnV4j7hroULMTCzB8KVDJjOIS7nq68=
+        :content-type; s=sasl; bh=/5q2OusMThhL1x6YIjGyUBaC9Gk=; b=emujOX
+        veU/DznPH0upDOkCvR1sX5PmDdJpiOmAlcf+pel2dOHlTTb8wgUvEXGx3vHCdnGW
+        ISB/HgI0C+PLgQ1hyZvESRCUH4VIwce62oJI1pW/c4HxX5FEHtDqFz1z/hDCisiO
+        Mzs/1ztUi2UhhSWUbHqeDJGAyhR/+pVoKUnEs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IkttVbHU7jimmP5RRUAegZvSKbfLIqSO
-        BcIZazOQUoab/R72rbL7Xak/fUQEfua9mw4n1Aqh5Swj4waAWWh9Nc5mafLvc004
-        FdLV+5c25KJanxH4c/6OOGzP+Xc9uZfZD8Dnmgm7Lqjaqp0Ym6P9vbEHhEcYKp3R
-        O22KGUpDBZ8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9DD952561;
-        Thu,  1 Dec 2016 13:49:35 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=OoYJn+RxeQTUPrmhYgfGaPkcBDpPDR3T
+        8N55pcG99cosb5lPZSuU2hoHCiPKvv3VSty+UUHXq30hgZ/Z78jB4/usDYXYV9uJ
+        TGaYoOplAGEwxIFFjYESC4hmfG2Npn1fm5DROWvrEjU/9D4zvSW+8jAdpF4hLqLe
+        CwbwI7S/Ra4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B91D53066;
+        Thu,  1 Dec 2016 13:51:02 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 30B8D52560;
-        Thu,  1 Dec 2016 13:49:35 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9BBC53065;
+        Thu,  1 Dec 2016 13:51:01 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, peff@peff.net,
-        sbeller@google.com, jonathantanmy@google.com
-Subject: Re: [PATCH v6 5/6] grep: enable recurse-submodules to work on <tree> objects
-References: <1479840397-68264-1-git-send-email-bmwill@google.com>
-        <1480555714-186183-1-git-send-email-bmwill@google.com>
-        <1480555714-186183-6-git-send-email-bmwill@google.com>
-        <c6b2ddad-ac09-3457-8289-88a3f52b7e4b@kdbg.org>
-        <20161201175107.GB51406@google.com>
-Date:   Thu, 01 Dec 2016 10:49:34 -0800
-In-Reply-To: <20161201175107.GB51406@google.com> (Brandon Williams's message
-        of "Thu, 1 Dec 2016 09:51:07 -0800")
-Message-ID: <xmqqshq7a3i9.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>, neuling@dakosy.de
+Subject: Re: Re* git pull --rebase should use fast forward merge if possible
+References: <OF95D98CB6.47969C1C-ONC1257FE1.0058D980-C1257FE1.0059986D@dakosy.de>
+        <xmqqd1n0552i.fsf@gitster.mtv.corp.google.com>
+        <xmqqtwgb52py.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYS=XWBpEBJsj95FV+j+HLxg=5xqwD73618t7ERYrKUfA@mail.gmail.com>
+        <CAPc5daURyXO6-yaOWPhvvdS8Dr5psEEc8MVP4wQJ_AuxyZraRg@mail.gmail.com>
+        <xmqqa8cfbkeq.fsf_-_@gitster.mtv.corp.google.com>
+        <CAGZ79kZSEan5uXCUn4iVCWEc9zohMSr+UDyHDyQUHz84H=tR8w@mail.gmail.com>
+Date:   Thu, 01 Dec 2016 10:50:59 -0800
+In-Reply-To: <CAGZ79kZSEan5uXCUn4iVCWEc9zohMSr+UDyHDyQUHz84H=tR8w@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 1 Dec 2016 10:24:49 -0800")
+Message-ID: <xmqqoa0va3fw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E75CCC08-B7F6-11E6-8777-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1AE104D6-B7F7-11E6-853E-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On 12/01, Johannes Sixt wrote:
->> Am 01.12.2016 um 02:28 schrieb Brandon Williams:
->> >+	git init "su:b" &&
->> 
->> Don't do that. Colons in file names won't work on Windows.
->> 
->> -- Hannes
->> 
+> On Thu, Dec 1, 2016 at 9:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This test is needed to see if the code still works with filenames that
-> contain colons.  Is there a way to mark the test to not run on windows?
+>> +test_expect_success '--rebase fast forward' '
+>> +       git reset --hard before-rebase &&
+>> +       git checkout -b ff &&
+>> +       echo another modification >file &&
+>> +       git commit -m third file &&
+>> +
+>> +       git checkout to-rebase &&
+>> +       git pull --rebase . ff &&
+>> +       test "$(git rev-parse HEAD)" = "$(git rev-parse ff)" &&
+>> +
+>> +       # The above only validates the result.  Did we actually bypass rebase?
+>
+> Good catch for the test, but I think we can make the sed regexp simpler, as we
+> can leave out the second "[0-9a-f]"? (git reflog |sed
+> "s/^[0-9a-f]*/OBJID/" works here)
 
-Something like:
-
-test_expect_success !MINGW 'a test' '
-	git init s:u:b
-'
-
+This mimics the existing tests around there for consistency.
+Simplifying or cleaning of this test script as a whole is outside
+the scope.
