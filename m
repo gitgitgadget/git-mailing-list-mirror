@@ -2,92 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7FCE1FF40
-	for <e@80x24.org>; Thu,  1 Dec 2016 01:23:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC5C81FF40
+	for <e@80x24.org>; Thu,  1 Dec 2016 01:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933287AbcLABXi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 20:23:38 -0500
-Received: from mail-io0-f171.google.com ([209.85.223.171]:35791 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933259AbcLABXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 20:23:37 -0500
-Received: by mail-io0-f171.google.com with SMTP id a124so386254594ioe.2
-        for <git@vger.kernel.org>; Wed, 30 Nov 2016 17:23:37 -0800 (PST)
+        id S1754485AbcLAB2r (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 20:28:47 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:33004 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752720AbcLAB2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 20:28:46 -0500
+Received: by mail-pg0-f50.google.com with SMTP id 3so88306143pgd.0
+        for <git@vger.kernel.org>; Wed, 30 Nov 2016 17:28:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=yy3PMTaCADv5WvHCZ4CHtsW27Gs8Cg1Glg6/e4GNrwI=;
-        b=Bt3He5DzFaxhffL4nmYgt6FD9x5WDe9myKdoFrHkW4FVCLZQ2eHTLtzHdrfkYYeoDQ
-         IC9n4BU+i/sC//K0poEn7gDal5a4qgemYllnegi/OSKMicoD2cm4/+GN8j0c9w4ROhGV
-         d3f59WiXBRfBa3RZWZfXOplSZ0LtGjBiVPmLiTRk5tC+tA+SAZfEIXHhsX5hX/+/KrxK
-         zmiWSBeMz4YT3K4I113oOrLxv9bVDez6qZlSvKO8DGtx5CtXZpHlBkiks2kPPm2MMR3d
-         idC4EJ6Yn8NOBaHgCK7s3lrblNBxlXiT0DIjByaVPCB3BRAW7UtbFiTttH9zjJ4ubXbA
-         yhCw==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=v4Km5IgKGXh85ITMyuG6qOmtRFGOyghvRam6tKyKuoI=;
+        b=cEIUAEkiPjmF3LiQAB6I5sG03uq/u3LNscm/gtDi2jKTH+6whcpfNwqjoiZVUyP/Pd
+         vOEymuvTXdScCdXWo5O4oqRVcPXUAYiG7SGTdC/R+hZglGW/8aTggcIpBPvooqlkWL0e
+         KdqrBSaV+XG9tOd/a5nj82hDac0B9rhwzljbf8gFtrfa+8Sx29fZsGHH0IqJeL2tXNd9
+         i1/YySq6SKFdq9XnNbb9a1dXh8lzBiEsCY3I3sPgQCKNxvH/xZQ4+O9haWZWCIbLh6Ds
+         G/ytKLhFvlwpwdc0p+PtB5z1XpZRWcVBltKUWa8SHLsXOEX0OO71CuDr+Ai0b87T0/UW
+         jBWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=yy3PMTaCADv5WvHCZ4CHtsW27Gs8Cg1Glg6/e4GNrwI=;
-        b=VRm9BOr3I6X22NuBvLOZQDJOkVwxrFgG0gDXsuoXr5oPcPYI5gvqAP9p9pF6pG8nM5
-         RSbY+Oa8YvLujEmHoKAFBMqIsD/sLGKiVzach+zZ2yYEd48JKtfkHtUyi2UPn3qzZleZ
-         uoOX1NzgL0c8NzV3B0dRvZRHSZPb/e5G7jmFZ47UIJ1SMpFnCakzs+yAXoCD1rdzxDMV
-         J28Dq0p5+6X9R4pgfte1vaCPErZ/gBMyfAAkkPVtZl9DuJSrAuMxptoS6XuQmyNo++B1
-         TBuNrtkqP6z+0fnEXtLbva6iq3qZv4S9bIgEG9TI5Wy9Les8kVvQyPWshxvZdg9xsRGF
-         9pcQ==
-X-Gm-Message-State: AKaTC03ZR1RPv0JzKZzIetJHiI27mfUi2pEXhvWOal6WabkTE1Rg7OjCU/12FwNYLxeeTTgpKcGzXQELrBBm4A==
-X-Received: by 10.36.25.211 with SMTP id b202mr31096964itb.77.1480555416729;
- Wed, 30 Nov 2016 17:23:36 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.113.196 with HTTP; Wed, 30 Nov 2016 17:22:56 -0800 (PST)
-From:   Austin English <austinenglish@gmail.com>
-Date:   Wed, 30 Nov 2016 19:22:56 -0600
-Message-ID: <CACC5Q1eFM_G4wKopkbxabLEu8+nbt66wF1jKSoTuL1vnS5Tb4Q@mail.gmail.com>
-Subject: [PATCH] Documentation/install-webdoc.sh: quote a potentially unsafe
- shell expansion
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary=001a1144b958af6a1d05428eab31
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=v4Km5IgKGXh85ITMyuG6qOmtRFGOyghvRam6tKyKuoI=;
+        b=d30FxZEKzFMQ1ZBg+xdfFIbqGXttkaKt5BbAQyb//wE+g0Uu+mSdQRqekGFwWPwpYC
+         lFjMnFPpE4obpp/OnqQrtzgdt0CIbTsvsQLUmEsP1WIYZJU6wU100RePJW3QjegdxI2J
+         XUGe69QPUhCOTCvY7VOc0jLoRRsyUrvFcorZJFlMWU38D4f2hot2eEuoQcOgUaS+qWQR
+         P2WmGcK34+cZR3gCme9pve9Q51PorBbp5Yk/xyUP3cW3ZWBwXsyGckwGC5RuEFG1ViBk
+         85e3v0+b/Jw0oFOT1rKFDsE6uRmZkH8LvSgM4asMNR8AwWNIe6w018cLBUWW4dPo/ld4
+         670Q==
+X-Gm-Message-State: AKaTC02xJ0eZh4Og3GisMGiKeHIgFxHRVMILYnQWwx1+KzifbID3BLSeLu6MqaIgwvBRh2EX
+X-Received: by 10.84.210.130 with SMTP id a2mr79354759pli.106.1480555725233;
+        Wed, 30 Nov 2016 17:28:45 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([172.27.69.28])
+        by smtp.gmail.com with ESMTPSA id i194sm87872386pgc.46.2016.11.30.17.28.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 30 Nov 2016 17:28:43 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, peff@peff.net,
+        sbeller@google.com, jonathantanmy@google.com, gitster@pobox.com
+Subject: [PATCH v6 0/6] recursively grep across submodules
+Date:   Wed, 30 Nov 2016 17:28:28 -0800
+Message-Id: <1480555714-186183-1-git-send-email-bmwill@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1479840397-68264-1-git-send-email-bmwill@google.com>
+References: <1479840397-68264-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a1144b958af6a1d05428eab31
-Content-Type: text/plain; charset=UTF-8
+v6 fixes a race condition which existed in the 'is_submodule_populated'
+function.  Instead of calling 'resolve_gitdir' to check for the existance of a
+.git file/directory, use 'stat'.  'resolve_gitdir' calls 'chdir' which can
+affect other running threads trying to load thier files into a buffer in
+memory.
 
-Found via shellcheck
+Thanks to Stefan and Jeff for help debugging this problem.
 
-In Documentation/install-webdoc.sh line 21:
-mkdir -p $(dirname "$T/$h")
-                         ^-- SC2046: Quote this to prevent word splitting.
+Brandon Williams (6):
+  submodules: add helper functions to determine presence of submodules
+  submodules: load gitmodules file from commit sha1
+  grep: add submodules as a grep source type
+  grep: optionally recurse into submodules
+  grep: enable recurse-submodules to work on <tree> objects
+  grep: search history of moved submodules
+
+ Documentation/git-grep.txt         |  14 ++
+ builtin/grep.c                     | 386 ++++++++++++++++++++++++++++++++++---
+ cache.h                            |   2 +
+ config.c                           |   8 +-
+ git.c                              |   2 +-
+ grep.c                             |  16 +-
+ grep.h                             |   1 +
+ submodule-config.c                 |   6 +-
+ submodule-config.h                 |   3 +
+ submodule.c                        |  51 +++++
+ submodule.h                        |   3 +
+ t/t7814-grep-recurse-submodules.sh | 241 +++++++++++++++++++++++
+ tree-walk.c                        |  28 +++
+ 13 files changed, 730 insertions(+), 31 deletions(-)
+ create mode 100755 t/t7814-grep-recurse-submodules.sh
+
+--- interdiff based on 'bw/grep-recurse-submodules'
+
+diff --git a/submodule.c b/submodule.c
+index 062e58b..8516ab0 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -239,9 +239,10 @@ int is_submodule_initialized(const char *path)
+ int is_submodule_populated(const char *path)
+ {
+ 	int ret = 0;
++	struct stat st;
+ 	char *gitdir = xstrfmt("%s/.git", path);
+ 
+-	if (resolve_gitdir(gitdir))
++	if (!stat(gitdir, &st))
+ 		ret = 1;
+ 
+ 	free(gitdir);
 
 -- 
--Austin
-GPG: 14FB D7EA A041 937B
+2.8.0.rc3.226.g39d4020
 
---001a1144b958af6a1d05428eab31
-Content-Type: text/x-patch; charset=US-ASCII; 
-	name="0001-Documentation-install-webdoc.sh-quote-a-potentially-.patch"
-Content-Disposition: attachment; 
-	filename="0001-Documentation-install-webdoc.sh-quote-a-potentially-.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iw5ofmvo0
-
-RnJvbSAxMDUwNTM4ZjI1MmQyMjMxMTE4NTA2NWFiODgzN2M3MWIxNzAwM2ZiIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBdXN0aW4gRW5nbGlzaCA8YXVzdGluZW5nbGlzaEBnbWFpbC5j
-b20+CkRhdGU6IFdlZCwgMzAgTm92IDIwMTYgMTk6MjE6MjUgLTA2MDAKU3ViamVjdDogW1BBVENI
-XSBEb2N1bWVudGF0aW9uL2luc3RhbGwtd2ViZG9jLnNoOiBxdW90ZSBhIHBvdGVudGlhbGx5IHVu
-c2FmZQogc2hlbGwgZXhwYW5zaW9uCgpTaWduZWQtb2ZmLWJ5OiBBdXN0aW4gRW5nbGlzaCA8YXVz
-dGluZW5nbGlzaEBnbWFpbC5jb20+Ci0tLQogRG9jdW1lbnRhdGlvbi9pbnN0YWxsLXdlYmRvYy5z
-aCB8IDIgKy0KIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoK
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vaW5zdGFsbC13ZWJkb2Muc2ggYi9Eb2N1bWVudGF0
-aW9uL2luc3RhbGwtd2ViZG9jLnNoCmluZGV4IGVkOGI0ZmYuLjVmYjJkYzUgMTAwNzU1Ci0tLSBh
-L0RvY3VtZW50YXRpb24vaW5zdGFsbC13ZWJkb2Muc2gKKysrIGIvRG9jdW1lbnRhdGlvbi9pbnN0
-YWxsLXdlYmRvYy5zaApAQCAtMTgsNyArMTgsNyBAQCBkbwogCWVsc2UKIAkJZWNobyA+JjIgIiMg
-aW5zdGFsbCAkaCAkVC8kaCIKIAkJcm0gLWYgIiRULyRoIgotCQlta2RpciAtcCAkKGRpcm5hbWUg
-IiRULyRoIikKKwkJbWtkaXIgLXAgIiQoZGlybmFtZSAiJFQvJGgiKSIKIAkJY3AgIiRoIiAiJFQv
-JGgiCiAJZmkKIGRvbmUKLS0gCjIuNy4zCgo=
---001a1144b958af6a1d05428eab31--
