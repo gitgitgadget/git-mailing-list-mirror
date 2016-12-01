@@ -2,51 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD9641FC96
-	for <e@80x24.org>; Thu,  1 Dec 2016 07:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24E661FC96
+	for <e@80x24.org>; Thu,  1 Dec 2016 08:36:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753413AbcLAHZI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 02:25:08 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:20120 "EHLO bsmtp.bon.at"
+        id S1754987AbcLAIgu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 03:36:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49657 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750908AbcLAHZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 02:25:08 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tTphd70Krz5tlX;
-        Thu,  1 Dec 2016 08:25:05 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 7E6B4143;
-        Thu,  1 Dec 2016 08:25:05 +0100 (CET)
-Subject: Re: [PATCH v6 5/6] grep: enable recurse-submodules to work on <tree>
- objects
+        id S1750848AbcLAIgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 03:36:49 -0500
+Received: (qmail 2342 invoked by uid 109); 1 Dec 2016 08:30:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 08:30:07 +0000
+Received: (qmail 30588 invoked by uid 111); 1 Dec 2016 08:30:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 03:30:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Dec 2016 03:30:05 -0500
+Date:   Thu, 1 Dec 2016 03:30:05 -0500
+From:   Jeff King <peff@peff.net>
 To:     Brandon Williams <bmwill@google.com>
-References: <1479840397-68264-1-git-send-email-bmwill@google.com>
- <1480555714-186183-1-git-send-email-bmwill@google.com>
- <1480555714-186183-6-git-send-email-bmwill@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
-        jonathantanmy@google.com, gitster@pobox.com
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <c6b2ddad-ac09-3457-8289-88a3f52b7e4b@kdbg.org>
-Date:   Thu, 1 Dec 2016 08:25:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.0
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: bw/transport-protocol-policy
+Message-ID: <20161201083005.dui572o4jxsqacas@sigill.intra.peff.net>
+References: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <1480555714-186183-6-git-send-email-bmwill@google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk2bngn03.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.12.2016 um 02:28 schrieb Brandon Williams:
-> +	git init "su:b" &&
+On Mon, Nov 28, 2016 at 04:15:08PM -0800, Junio C Hamano wrote:
 
-Don't do that. Colons in file names won't work on Windows.
+> * bw/transport-protocol-policy (2016-11-09) 2 commits
+>   (merged to 'next' on 2016-11-16 at 1391d3eeed)
+>  + transport: add protocol policy config option
+>  + lib-proto-disable: variable name fix
+> 
+>  Finer-grained control of what protocols are allowed for transports
+>  during clone/fetch/push have been enabled via a new configuration
+>  mechanism.
+> 
+>  Will cook in 'next'.
 
--- Hannes
+I was looking at the way the http code feeds protocol restrictions to
+CURLOPT_REDIR_PROTOCOLS, and I think this topic is missing two elements:
 
+  1. The new policy config lets you say "only allow this protocol when
+     the user specifies it". But when http.c calls is_transport_allowed(),
+     the latter has no idea that we are asking it about potential
+     redirects (which obviously do _not_ come from the user), and would
+     erroneously allow them.
+
+     I think this needs fixed before the topic is merged. It's not a
+     regression, as it only comes into play if you use the new policy
+     config. But it is a minor security hole in the new feature.
+
+  2. If your curl is too old to support CURLOPT_REDIR_PROTOCOLS, we will
+     warn if there is a protocol whitelist in effect. But that check
+     only covers the environment whitelist, and we do not warn if you
+     restrict other protocols.
+
+     I actually think this should probably just warn indiscriminately.
+     Even without a Git protocol whitelist specified, the code serves to
+     prevent curl from redirecting to bizarre protocols like smtp. The
+     affected curl versions are from 2009 and prior, so I kind of doubt
+     it matters much either way (I'm actually tempted to suggest we bump
+     the minimum curl version there; there's a ton of #ifdef cruft going
+     back to 2002-era versions of libcurl).
+
+-Peff
