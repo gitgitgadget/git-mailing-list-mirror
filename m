@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 622841FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 20:07:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61EF01FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 20:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757903AbcLAUHf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 15:07:35 -0500
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:34964 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754747AbcLAUHe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 15:07:34 -0500
-Received: by mail-yw0-f195.google.com with SMTP id b66so20191848ywh.2
-        for <git@vger.kernel.org>; Thu, 01 Dec 2016 12:07:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=e0jP3SE+FFTyiqfIDWasiRrn2NtKHnTlcqSHvgIWQzs=;
-        b=cJRRdqF4XVRe9lk5WCSQeLNAXZuCK7bnedka2bgrG54zh4VIpPqdp+iTUAywOl1Jkq
-         vhpKT0uBYcIrhL8gJNUVORLjf76ADo2F/4qg49rCxCtEe2SaCwVOjN4kGtyacT+ulWEN
-         TgE8+kIrGOK8xtoqvDvs9XjiM9ij/DSM99bbdx3Qaj0BWApepqLPoldxfR3WA0wknq1o
-         Rq/TH1LECTOIRdJQ3xDTJRAQLzCQTK90xFhy2U6mJzYX+imwq1t9G0/60vZFKs/QMqD9
-         MfVaqdBen86EtwYlLDV7lOQa5iKvbOPmzETTwo2M1uiHp+xxPn3wCaYlI58kJm5+GXXQ
-         /Zmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=e0jP3SE+FFTyiqfIDWasiRrn2NtKHnTlcqSHvgIWQzs=;
-        b=DJf1xMAYwhShtd1EOHGgee35mleRAa9hjKZ54t4pGgiQ84GYizvTFuLCxL/j+bkc2e
-         KGXbqIGleFXjSxBBxmifef0MW5hhvvZzyyNgUTpLewNDSscniBqKqwkMY0ysFFwCFfvk
-         BD/V2uvb+rR8EkC3vRNwZn8J0X6RqAhrj7NgZHaNQeDOmyFONLrgiVB7o05quVsjsqIb
-         XMOGXfzqCsrQ+mnuhMASJvrTvv5sASmegjp69NcniYWXKDh84Wu53+ck79T1FYmGICTo
-         EJCdHwmXtg0lz7LBscCkJt1lBEN341t3yhn22yq+/4HSPgaWpqlEXtbSyiwgST1q2WdT
-         asfQ==
-X-Gm-Message-State: AKaTC01+PeV8D4bhWmbAbOQ/uluNE+wtArfRR4t0QN+2+fA7Jt7wBlsK+WlTi/aSEFZk163h2iq3d1Mzb7P7ww==
-X-Received: by 10.13.234.19 with SMTP id t19mr46396881ywe.204.1480622853698;
- Thu, 01 Dec 2016 12:07:33 -0800 (PST)
+        id S1760182AbcLAUOr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 15:14:47 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51652 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756676AbcLAUOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 15:14:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33FC253837;
+        Thu,  1 Dec 2016 15:14:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uwa3DJwtaVSl7v+FTOJiw1JETc0=; b=vHjXR9
+        GK/tOSzSXYr9kfP6hvgtkw50F3vMEAwEp5gtLubJFVxSkgb6hZD/ruVRGlqqZDoV
+        t9EEt4GdJIk67YpgxhBQ53CGM+4yxXrG6LQ8tjPr5yPlq8hqD0Z0VYA3NN1HxCZw
+        rQXvjALbYKwJGGKzqgmfzburd4cNTfrNsF80c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oO5HnCis6LCG2DH/NYnA62hO420RA2S7
+        CAzDAOYLhP6oit8ABurpzWfm9g7LTKVE8HbI4zgEUTZSLmWBEoTEfh/Smhz+wnde
+        lvrM2NHGK9q6cQkhKtwPu7qjv/Ozi2za/f9v13Jsc7h7598kqJFOTRqkiIonvbLJ
+        9220U4zLVyc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 282A053836;
+        Thu,  1 Dec 2016 15:14:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9060053835;
+        Thu,  1 Dec 2016 15:14:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] compat: add qsort_s()
+References: <3083fbf7-d67e-77e4-e05f-94a7e7e15eba@web.de>
+        <fc602a66-a06c-203e-b50b-55fd7b258b54@web.de>
+        <20161201193556.j2odwy3sepaxxq5a@sigill.intra.peff.net>
+Date:   Thu, 01 Dec 2016 12:14:42 -0800
+In-Reply-To: <20161201193556.j2odwy3sepaxxq5a@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 1 Dec 2016 14:35:56 -0500")
+Message-ID: <xmqq7f7j9zkd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.118.87 with HTTP; Thu, 1 Dec 2016 12:07:13 -0800 (PST)
-In-Reply-To: <20161130170232.19685-1-tboegi@web.de>
-References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com> <20161130170232.19685-1-tboegi@web.de>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 1 Dec 2016 12:07:13 -0800
-Message-ID: <CA+P7+xoJb=SukbnJVJrXR6WV9+UtGnsn776KGkrHC7X-T_wZWg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] convert: git cherry-pick -Xrenormalize did not work
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git mailing list <git@vger.kernel.org>, eevee.reply@veekun.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC295BF2-B802-11E6-A554-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 30, 2016 at 9:02 AM,  <tboegi@web.de> wrote:
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
-> diff --git a/convert.c b/convert.c
-> index be91358..f8e4dfe 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -281,13 +281,13 @@ static int crlf_to_git(const char *path, const char=
- *src, size_t len,
->                 /*
->                  * If the file in the index has any CR in it, do not conv=
-ert.
->                  * This is the new safer autocrlf handling.
-> +                  - unless we want to renormalize in a merge or cherry-p=
-ick
+Jeff King <peff@peff.net> writes:
 
-Style nit, usually this line should begin with an aligned *? I think
-it's not really that big a deal, though.
+> To make matters more fun, apparently[1] there are multiple variants of
+> qsort_r with different argument orders. _And_ apparently Microsoft
+> defines qsort_s, but it's not quite the same thing. But all of that can
+> be dealt with by having more specific flags (HAVE_GNU_QSORT_R, etc).
+>
+> It just seems like we should be able to do a better job of using the
+> system qsort in many cases.
 
-Thanks,
-Jake
+If we were to go that route, perhaps we shouldn't have HAVE_QSORT_S
+so that Microsoft folks won't define it by mistake (instead perhaps
+call it HAVE_ISO_QSORT_S or something).
+
+I like your suggestion in general.  The body of git_qsort_s() on
+systems without ISO_QSORT_S can do 
+
+ - GNU qsort_r() without any change in the parameters, 
+
+ - Microsoft qsort_s() with parameter reordered, or 
+
+ - Apple/BSD qsort_r() with parameter reordered.
+
+and that would cover the major platforms.
+
+Eh, wait.  BSD and Microsoft have paramters reordered in the
+callback comparison function.  I suspect that would not fly very
+well.
+
