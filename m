@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9BDC1FF40
-	for <e@80x24.org>; Thu,  1 Dec 2016 03:56:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BADCE1FF40
+	for <e@80x24.org>; Thu,  1 Dec 2016 03:59:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754416AbcLAD4t (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 22:56:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49511 "EHLO cloud.peff.net"
+        id S1755114AbcLAD7R (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 22:59:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49521 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751126AbcLAD4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 22:56:48 -0500
-Received: (qmail 13553 invoked by uid 109); 1 Dec 2016 03:56:48 -0000
+        id S1754830AbcLAD7R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 22:59:17 -0500
+Received: (qmail 13807 invoked by uid 109); 1 Dec 2016 03:59:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 03:56:48 +0000
-Received: (qmail 28815 invoked by uid 111); 1 Dec 2016 03:57:23 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 03:59:17 +0000
+Received: (qmail 28905 invoked by uid 111); 1 Dec 2016 03:59:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Nov 2016 22:57:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2016 22:56:45 -0500
-Date:   Wed, 30 Nov 2016 22:56:45 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Nov 2016 22:59:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2016 22:59:14 -0500
+Date:   Wed, 30 Nov 2016 22:59:14 -0500
 From:   Jeff King <peff@peff.net>
 To:     Anders Kaseorg <andersk@mit.edu>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Thomas Rast <trast@student.ethz.ch>
+        Thomas Rast <tr@thomasrast.ch>
 Subject: Re: [PATCH] Define XDL_FAST_HASH when building *for* (not *on*)
  x86_64
-Message-ID: <20161201035645.mv7c7lr6rnsxokll@sigill.intra.peff.net>
+Message-ID: <20161201035914.kftxb4vqmzcqed5r@sigill.intra.peff.net>
 References: <alpine.DEB.2.10.1611302202100.20145@buzzword-bingo.mit.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,6 +40,9 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+[resend; the original had an outdated address for Thomas, and I would
+ definitely like his blessing before removing XDL_FAST_HASH].
 
 On Wed, Nov 30, 2016 at 10:04:07PM -0500, Anders Kaseorg wrote:
 
