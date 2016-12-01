@@ -6,100 +6,78 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BADCE1FF40
-	for <e@80x24.org>; Thu,  1 Dec 2016 03:59:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D8D91FF40
+	for <e@80x24.org>; Thu,  1 Dec 2016 04:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755114AbcLAD7R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Nov 2016 22:59:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49521 "EHLO cloud.peff.net"
+        id S1754190AbcLAEDf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 23:03:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49526 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754830AbcLAD7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2016 22:59:17 -0500
-Received: (qmail 13807 invoked by uid 109); 1 Dec 2016 03:59:17 -0000
+        id S1752021AbcLAEDe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 23:03:34 -0500
+Received: (qmail 14045 invoked by uid 109); 1 Dec 2016 04:02:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 03:59:17 +0000
-Received: (qmail 28905 invoked by uid 111); 1 Dec 2016 03:59:52 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 04:02:37 +0000
+Received: (qmail 28933 invoked by uid 111); 1 Dec 2016 04:03:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Nov 2016 22:59:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2016 22:59:14 -0500
-Date:   Wed, 30 Nov 2016 22:59:14 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Nov 2016 23:03:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2016 23:02:34 -0500
+Date:   Wed, 30 Nov 2016 23:02:34 -0500
 From:   Jeff King <peff@peff.net>
-To:     Anders Kaseorg <andersk@mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] Define XDL_FAST_HASH when building *for* (not *on*)
- x86_64
-Message-ID: <20161201035914.kftxb4vqmzcqed5r@sigill.intra.peff.net>
-References: <alpine.DEB.2.10.1611302202100.20145@buzzword-bingo.mit.edu>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool.c: mark a file-local symbol with static
+Message-ID: <20161201040234.3rnuttitneweedn5@sigill.intra.peff.net>
+References: <4ddad7ea-5ac8-20b2-da9e-5843c486878a@ramsayjones.plus.com>
+ <alpine.DEB.2.20.1611301204020.117539@virtualbox>
+ <29abc89b-9ca5-930f-8e90-ca446ac2b96a@ramsayjones.plus.com>
+ <xmqqtwaod7ly.fsf@gitster.mtv.corp.google.com>
+ <20161130212510.ihcmvig7jq44p3nx@sigill.intra.peff.net>
+ <3e6a6685-19ec-4536-4a5f-3a56e30fb530@ramsayjones.plus.com>
+ <20161130231848.v5ge6otytim2t6d2@sigill.intra.peff.net>
+ <xmqqinr4bkf4.fsf@gitster.mtv.corp.google.com>
+ <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <alpine.DEB.2.10.1611302202100.20145@buzzword-bingo.mit.edu>
+In-Reply-To: <59da5383-16a0-b327-75a8-b4c4ad7bd479@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[resend; the original had an outdated address for Thomas, and I would
- definitely like his blessing before removing XDL_FAST_HASH].
+On Thu, Dec 01, 2016 at 01:18:35AM +0000, Ramsay Jones wrote:
 
-On Wed, Nov 30, 2016 at 10:04:07PM -0500, Anders Kaseorg wrote:
-
-> Previously, XDL_FAST_HASH was defined when ‘uname -m’ returns x86_64,
-> even if we are cross-compiling for a different architecture.  Check
-> the __x86_64__ compiler macro instead.
+> >> I forgot, we ended up reversing course later and silencing them:
+> >>
+> >>   http://public-inbox.org/git/20140505052117.GC6569@sigill.intra.peff.net/
+> >>
+> >> By the rationale of that conversation, we should be doing:
+> >>
+> >>   warning("%s", "");
+> >>
+> >> here.
+> > 
+> > I forgot too.  Thanks for digging up that thread.
 > 
-> In addition to fixing the cross compilation bug, this is needed to
-> pass the Debian build reproducibility test
-> (https://tests.reproducible-builds.org/debian/index_variations.html).
+> Yes, I blamed wt-status.c:227 and came up with commit 7d7d68022
+> as well.
+> 
+> So, by the same rationale, we should remove -Wno-format-zero-length
+> from DEVELOPER_CFLAGS. yes?
 
-I don't think this is a good approach to fix it. Right now XDL_FAST_HASH
-is a Makefile knob that can be turned by the user, and can be used
-either to explicitly enable or explicitly disable the feature.
+I don't have a preference on which direction we go, but yes, right now
+we are in an awkward middle ground. We should do one of:
 
-With your patch, building with "make XDL_FAST_HASH=Yes" will still
-explicitly enable it, but "make XDL_FAST_HASH=" would no longer disable
-it (because even if unset, the compiler would turn it on when it sees
-__x86_64__).
+  1. Drop -Wno-format-zero-length from DEVELOPER_CFLAGS and make sure
+     future patches to do not violate it.
 
-And being able to turn it off is important; more on that in a second.
+  2. Declare warning("") as OK.
 
-So I think if we wanted to auto-detect based on __x86_64__, we'd
-probably need to be able to set it to "auto" or something, and then
-
-  #if defined(XDL_FAST_HASH_AUTO) && __x86_64__
-  #define XDL_FAST_HASH
-  #endif
-
-or something.
-
-However, I think this might be the tip of the iceberg. There are lots of
-Makefile knobs whose defaults are tweaked based on uname output. This
-one caught you because you are cross-compiling across architectures, but
-in theory you could cross-compile for FreeBSD from Linux, or whatever.
-
-So I suspect a better strategy in general is to just override the
-uname_* variables when cross-compiling.
-
-
-All that being said, I actually think an easier fix for this particular
-case might be to drop XDL_FAST_HASH entirely. It computes the hashes
-slightly faster, but its collision characteristics are much worse. About
-2 years ago I ran across a pathological diff that ran over 100x slower
-with XDL_FAST_HASH:
-
-  http://public-inbox.org/git/20141222041944.GA441@peff.net/
-
-The discussion veered into whether we should have a randomized hash
-secured against DoS attacks. I played around with some alternatives, but
-never found anything quite as fast for the "normal" case. And having
-disabled XDL_FAST_HASH on GitHub's servers, it wasn't a big priority for
-me.
-
-I'd be happy if somebody wanted to investigate other hash functions
-further. But barring that, I think we should drop XDL_FAST_HASH (or at
-the very least stop turning it on by default) in the meantime. It's just
-not a good tradeoff.
+I still think the warning is silly, but (1) has value in that it
+produces the least surprise and annoyance to various people building
+Git.
 
 -Peff
