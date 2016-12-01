@@ -2,156 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21E4A1FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 23:27:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9391FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 23:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755856AbcLAX07 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 18:26:59 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:33178 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753463AbcLAX07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 18:26:59 -0500
-Received: by mail-pg0-f53.google.com with SMTP id 3so100081406pgd.0
-        for <git@vger.kernel.org>; Thu, 01 Dec 2016 15:26:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LvpZxrT9icCE3AUMLDgczYCGCr/VdvyXbGRD4YP4wL8=;
-        b=PyPn+/+KjNM4vdtOgSum/vc91zsImkCWoGcQfQCOjy/g1KUc5RbfHrfopDDBH1uA0g
-         ps2Om6PQWibRgodoLqYnlqpS6EKcqXX9E+lRDp7SRVzEzRM76Iw0IdR1xeyJ4P2jBsEk
-         owNG3D0mkJ66XxFCEwXziR3wZlpPvsrHTMNYjf8SVNBi6ZMbPcaHpEBPEZRv5vPSQiPt
-         gOfLgxpwDlTBOJUhZ+wv3cGkMeaDsz3FGZ56PGQQe1+axS6lWqsDfa1k5wHalYhZqrW9
-         xdMK5YVwPKkEjCE+7Ys4EOrxLrDoTfJYAEwyBLwjd2w4fwOgnq3HCiSMX94Tf6wc8FcB
-         2eHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LvpZxrT9icCE3AUMLDgczYCGCr/VdvyXbGRD4YP4wL8=;
-        b=FWecC8bDGmQ2TBmoQQBERjt5sa1NOhlTZ+4zDmgicegSECczwbhLYFMdv4XAbYessW
-         n/2pEIqoWJGohgar6bJKiqm2V8oN/QAg22AQ6+vKdhKeG+6IgwR0FiiftssE2wEGo6No
-         KuHMWAzQ6JR/nK3Rwjhg0OJPe8DHUgUX7jwQ9ero7To4fSjLsufGknXFqAvAiPZWXdPC
-         9o1r+UHQDjZSoCnOcvCvQPiwDOF2chnv/I86bXMEQIcFkKs0y3M5R8cpr3vNPIi7/sVE
-         25OisOjtUGXh7Oe7NDCJU83FcfW9g4Laj/konqmuVrei4rEf/6/01DWMxaFC6quxK8fd
-         2t2Q==
-X-Gm-Message-State: AKaTC01Bhm4wsOMosdLxuopKd98PtO1hlBAZ2ktIRfENnSiNB4CMYFW6FLXqASHI3KV2bXm3
-X-Received: by 10.99.145.74 with SMTP id l71mr73223632pge.128.1480634818060;
-        Thu, 01 Dec 2016 15:26:58 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:2ce9:cac6:1258:bbf3])
-        by smtp.gmail.com with ESMTPSA id z9sm2573043pfd.29.2016.12.01.15.26.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Dec 2016 15:26:57 -0800 (PST)
-Date:   Thu, 1 Dec 2016 15:26:56 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v7 4/4] transport: add from_user parameter to
- is_transport_allowed
-Message-ID: <20161201232656.GK54082@google.com>
-References: <1480621447-52399-1-git-send-email-bmwill@google.com>
- <1480623959-126129-1-git-send-email-bmwill@google.com>
- <1480623959-126129-5-git-send-email-bmwill@google.com>
- <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
- <20161201230738.GJ54082@google.com>
+        id S1759418AbcLAXdc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 18:33:32 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50317 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754357AbcLAXdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 18:33:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA167547D5;
+        Thu,  1 Dec 2016 18:33:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Bf7vuXbv18BhPoKokHsvckW5y5c=; b=X2CaHo
+        yoBJUgMEsxi+qP5o7MVlYO/PQYhQkmDIpNyaqWnTpVegwe8AajSPNXD9vtC7FpNt
+        xjr9niaR8rmR8GRK2jgCHPTJYuNCa2tvN2mLy1bWVao5S4DWntnZBPW+UMfsjaMg
+        yYbjH6mYlEU4nbUTnlFRBywZK9mkLqo3kwnE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MvbNHHUlGEkoTSYTAH52/+mV6h9pMciS
+        kTIbI3hkSZwYZJ/gpuklZKTctOwrI7g76nfwCQMGniy9KGxOZZi4gqtHesFdZ73z
+        wHuwEEVawYUBP+ahdlsxd7Jh/4nFWzlwphJZer9mXlaVgMfHXvyoOa81z75Iohxq
+        SFjuqW9t1lQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B2FB5547D4;
+        Thu,  1 Dec 2016 18:33:29 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 35233547D3;
+        Thu,  1 Dec 2016 18:33:29 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v3 1/2] difftool: add a skeleton for the upcoming builtin
+References: <20161124210841.c4yi2nv57tjfejgj@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611242211450.117539@virtualbox>
+        <20161125031809.mueurvjijlnzy2s5@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611251201580.117539@virtualbox>
+        <20161125171940.rizbqyhsygdsoujr@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611251841030.117539@virtualbox>
+        <20161125174721.f35mzc276kdwakzm@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611261320050.117539@virtualbox>
+        <20161126161907.xol62zytn2jb45gh@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1611261400300.117539@virtualbox>
+        <20161127165058.uxujjehyjq7httro@sigill.intra.peff.net>
+        <xmqqa8cjlekl.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1611281830040.117539@virtualbox>
+        <xmqqa8cjjtfn.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1611292128340.117539@virtualbox>
+        <xmqqshqadn0f.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1611301325210.117539@virtualbox>
+Date:   Thu, 01 Dec 2016 15:33:28 -0800
+In-Reply-To: <alpine.DEB.2.20.1611301325210.117539@virtualbox> (Johannes
+        Schindelin's message of "Wed, 30 Nov 2016 13:30:04 +0100 (CET)")
+Message-ID: <xmqqlgvz6x87.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161201230738.GJ54082@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 906C969E-B81E-11E6-9986-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/01, Brandon Williams wrote:
-> On 12/01, Jeff King wrote:
-> > On Thu, Dec 01, 2016 at 12:25:59PM -0800, Brandon Williams wrote:
-> > 
-> > > Add the from_user parameter to the 'is_transport_allowed' function.
-> > > This allows callers to query if a transport protocol is allowed, given
-> > > that the caller knows that the protocol is coming from the user (1) or
-> > > not from the user (0), such as redirects in libcurl.  If unknown, a -1
-> > > should be provided which falls back to reading `GIT_PROTOCOL_FROM_USER`
-> > > to determine if the protocol came from the user.
-> > 
-> > Patches 3 and 4 look good to me (1 and 2 are unchanged, right? They are
-> > already in 'next' anyway, though I guess we are due for a post-release
-> > reset of 'next').
-> > 
-> > > diff --git a/http.c b/http.c
-> > > index fee128b..e74c0f0 100644
-> > > --- a/http.c
-> > > +++ b/http.c
-> > > @@ -725,13 +725,13 @@ static CURL *get_curl_handle(void)
-> > >  	curl_easy_setopt(result, CURLOPT_POST301, 1);
-> > >  #endif
-> > >  #if LIBCURL_VERSION_NUM >= 0x071304
-> > > -	if (is_transport_allowed("http"))
-> > > +	if (is_transport_allowed("http", 0))
-> > >  		allowed_protocols |= CURLPROTO_HTTP;
-> > > -	if (is_transport_allowed("https"))
-> > > +	if (is_transport_allowed("https", 0))
-> > >  		allowed_protocols |= CURLPROTO_HTTPS;
-> > > -	if (is_transport_allowed("ftp"))
-> > > +	if (is_transport_allowed("ftp", 0))
-> > >  		allowed_protocols |= CURLPROTO_FTP;
-> > > -	if (is_transport_allowed("ftps"))
-> > > +	if (is_transport_allowed("ftps", 0))
-> > >  		allowed_protocols |= CURLPROTO_FTPS;
-> > >  	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
-> > >  #else
-> > 
-> > This is better, but I think we still need to deal with http-alternates
-> > on top.
-> > 
-> > I think we'd need to move this allowed_protocols setup into a function
-> > like:
-> > 
-> >   int generate_allowed_protocols(int from_user)
-> >   {
-> > 	int ret;
-> > 	if (is_transport_allowed("http", from_user))
-> > 		ret |= CURLPROTO_HTTP;
-> > 	... etc ...
-> > 	return ret;
-> >   }
-> > 
-> > and then create a protocol list for each situation:
-> > 
-> >   allowed_protocols = generate_allowed_protocols(-1);
-> >   allowed_redir_protocols = generate_allowed_protocols(0);
-> > 
-> > and then we know we can always set up the redir protocols:
-> > 
-> >   curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_redir_protocols);
-> > 
-> > and which we feed for CURLOPT_PROTOCOLS depends on whether we are
-> > following an http-alternates redirect or not. But I suspect it will be a
-> > nasty change to plumb through the idea of "this request is on behalf of
-> > an http-alternates redirect".
-> > 
-> > Given how few people probably care, I'm tempted to document it as a
-> > quirk and direct people to the upcoming http.followRedirects. The newly
-> > proposed default value of that disables http-alternates entirely anyway.
-> > 
-> > -Peff
-> 
-> I started taking a look at your http redirect series (I really should
-> have taking a look at it sooner) and I see exactly what you're talking
-> about.  We can easily move this logic into a function to make it easier
-> to generate the two whitelists.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thinking about this some more...I was told that having http redirect to
-file:// could be scary.  The way the new protocol configuration is setup
-we have file:// as a default known-safe protocol.  Do we need to worry
-about this or can we leave this be since this can be overridden by the
-user?
+> The config kinda works now. But for what price. It stole 4 hours I did not
+> have. When the libexec/git-core/use-builtin-difftool solution took me a
+> grand total of half an hour to devise, implement and test.
+>
+> And you know what? I still do not really see what is so bad about it.
 
--- 
-Brandon Williams
+I was wondering if I should explain myself again, even though I do
+not see what good it would do, as clearly my point did not come
+across in the other emails.  And then you would just complain that I
+am making work for you.  Clearly you do not seem to see why placing
+random files in $GIT_EXEC_PATH, which is a place for git subcommand
+implementations, is wrong, so I won't repeat it to you again.
+
+But you need to remember that you are not working on a Windows-only
+project.  In non-Windows environment, many users would not have
+write access to /usr/libexec/git-core directory, but it is not just
+easy for them to write into ~/.gitconfig, but that is the way they
+are accustomed to, in order to affect the behaviour of Git for them.
+
+As to "I have to spawn config", I think it is sensible to start the
+cmd_difftool() wrapper without adding RUN_SETUP to the command
+table, then call git_config_get_bool() to check the configuration
+only from system and per-user files, and then finally either call
+into builtin_difftool() where setup_git_directory() is called, or
+spawn the scripted difftool, as Peff already said.  Your "users
+opt-in while installing" is not about setting per-repository option.
+
+Calling git_config*(), setup_git_directory() and then git_config*()
+in this order should be safe, as setup_git_directory() would clear
+potentially cached configuration values read by any previous
+git_config*() calls, so any configuration enquiry made by
+builtin_difftool() would read from all three sources, not just
+system and per-user.
+
+So there is no chicken-and-egg issue, either.
