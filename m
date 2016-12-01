@@ -2,73 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 331F41FBB0
-	for <e@80x24.org>; Thu,  1 Dec 2016 21:59:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8655B1FBB0
+	for <e@80x24.org>; Thu,  1 Dec 2016 22:04:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759218AbcLAV7n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 16:59:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50269 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757961AbcLAV7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 16:59:42 -0500
-Received: (qmail 20294 invoked by uid 109); 1 Dec 2016 21:59:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 21:59:36 +0000
-Received: (qmail 4894 invoked by uid 111); 1 Dec 2016 22:00:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 17:00:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Dec 2016 16:59:34 -0500
-Date:   Thu, 1 Dec 2016 16:59:34 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 1/6] submodules: add helper functions to determine
- presence of submodules
-Message-ID: <20161201215934.g7dt5ioekmx6ssii@sigill.intra.peff.net>
-References: <1479840397-68264-1-git-send-email-bmwill@google.com>
- <1480555714-186183-1-git-send-email-bmwill@google.com>
- <1480555714-186183-2-git-send-email-bmwill@google.com>
- <20161201042926.mr2qdta7hviizcya@sigill.intra.peff.net>
- <xmqqwpfja3nk.fsf@gitster.mtv.corp.google.com>
- <20161201190925.xi2z7vauxyf3yxyc@sigill.intra.peff.net>
- <20161201191603.GB54082@google.com>
- <20161201205444.GG54082@google.com>
- <20161201205944.2py2ijranq4g2wap@sigill.intra.peff.net>
- <CAGZ79kaqzssfN_bRQYpqC9HsKmyQZNCQcs+T5ke95Sf-C5PaRQ@mail.gmail.com>
+        id S932662AbcLAWDo convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 1 Dec 2016 17:03:44 -0500
+Received: from mx0b-00176a03.pphosted.com ([67.231.157.48]:41840 "EHLO
+        mx0a-00176a03.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751895AbcLAWDn (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 1 Dec 2016 17:03:43 -0500
+Received: from pps.filterd (m0048299.ppops.net [127.0.0.1])
+        by m0048299.ppops.net-00176a03. (8.16.0.17/8.16.0.17) with SMTP id uB1Lw1vi016275
+        for <git@vger.kernel.org>; Thu, 1 Dec 2016 17:03:37 -0500
+From:   "Alfonsogonzalez, Ernesto (GE Digital)" 
+        <ernesto.alfonsogonzalez@ge.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: EXT: Re: "Your branch is ahead of 'origin' by X commits"
+Thread-Topic: EXT: Re: "Your branch is ahead of 'origin' by X commits"
+Thread-Index: AQHSTB7B11MtfUC1okK4vus5mnSkVA==
+Date:   Thu, 1 Dec 2016 22:03:33 +0000
+Message-ID: <D465DC74.B911%ernesto.alfonsogonzalez@ge.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [3.159.19.181]
+Content-Type: text/plain; charset="Windows-1252"
+Content-ID: <99C789C5C2970B4F818FE8CFE22FF5BE@mail.ad.ge.com>
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaqzssfN_bRQYpqC9HsKmyQZNCQcs+T5ke95Sf-C5PaRQ@mail.gmail.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2016-12-01_19:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
+ malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.0.1-1609300000
+ definitions=main-1612010356
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 01, 2016 at 01:56:32PM -0800, Stefan Beller wrote:
+Hi Jeff,
 
-> > Bleh. Looks like it happens as part of the recently-added
-> > get_common_dir(). I'm not sure if that is ever relevant for submodules,
-> > but I guess in theory you could have a submodule clone that is part of a
-> > worktree?
-> 
-> Sure we can, for a test that we don't have that, see the embedgitdirs series. ;)
-> 
-> For now each submodule has its own complete git dir, but the vision
-> would be to have a common git dir for submodules in the common
-> superprojects git dir as well, such that objects are shared actually. :)
+I followed all your steps, but didn¹t find anything.
 
-Fair enough. Given that it seems to behave OK even in error cases, the
-simple stat() test may be the best option, then. I do think we should
-consider adding a few test cases to make sure it continues to behave in
-the error cases (just because we are relying partially on what git's
-setup code happens to do currently, and we'd want to protect ourselves
-against regressions).
+$ ls -d .git
+.git
+$ ls .git/master
+ls: .git/master: No such file or directory
+$ git show HEAD
+commit 92d392c37e376db69d61dafdc427b379d860fb5a
+Merge: 6be322c 5544904
+...
+$ git show refs/heads/master
+commit 92d392c37e376db69d61dafdc427b379d860fb5a
+Merge: 6be322c 5544904
+...
+$ git rev-parse --symbolic-full-name master
+refs/heads/master
+$
 
--Peff
+Then I realized that the message should say,
+
+"Your branch is ahead of Œorigin/master' by X commits"
+And not
+
+"Your branch is ahead of 'origin' by X commits²
+
+
+So I used branch ‹set-upstream and see the expected behavior.
+
+$ git branch --set-upstream-to=origin/master
+Branch master set up to track remote branch master from origin.
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+ ...
+nothing added to commit but untracked files present (use "git add" to
+track)
+$ 
+
+
+
+
+I¹m still not sure what it means for the branch upstream to be ³origin²
+only.
+
+I do have 2 remotes. A 2nd remote, called ³teamname-origin², is indeed
+behind my local master by 108 commits.
+
+So it seems there is a bug. When master¹s upstream is ³origin², it was
+actually pointing to ³teamname-origin/master², which is behind by 108
+commits.
+
+However, pushing, pulling, rebasing, etc, all work against the correct
+remote (³origin²). 
+
+So this could be a bug in git status?
+
+Thanks,
+
+Ernesto
+
+
+On 12/1/16, 1:47 PM, "Jeff King" <peff@peff.net> wrote:
+
+>On Thu, Dec 01, 2016 at 07:49:40PM +0000, Alfonsogonzalez, Ernesto (GE
+>Digital) wrote:
+>
+>> $ git diff origin/master
+>> $ git status
+>> On branch master
+>> Your branch is ahead of 'origin' by 108 commits.
+>>   (use "git push" to publish your local commits)
+>> Untracked files:
+>>   (use "git add <file>..." to include in what will be committed)
+>
+>The "master" we are talking about here must always be
+>"refs/heads/master", since it will have come from resolving the HEAD
+>symbolic ref.
+>
+>But here:
+>
+>> $ git show origin/master --oneline
+>> 92d392c Merge pull request #21 from org/branch
+>> 
+>> $ git show master --oneline
+>> 92d392c Merge pull request #21 from org/branch
+>
+>The "master" in the second case could possibly find "master" as another
+>name. Is it possible you have a .git/master file (this may have been
+>created by accidentally running "git update-ref master" instead of "git
+>update-ref refs/heads/master")?
+>
+>Or other things you could check:
+>
+>  # see what's on HEAD, which we know points to refs/heads/master
+>  git show HEAD
+>
+>  # or just check refs/heads/master itself
+>  git show refs/heads/master
+>
+>  # or just ask what "master" resolves to
+>  git rev-parse --symbolic-full-name master
+>
+>That last one actually seems to complain that "refname 'master' is
+>ambiguous' if you do have .git/master. I think that's a minor bug, as it
+>should presumably follow the normal disambiguation rules used for lookup
+>(in which .git/master always takes precedence over refs/heads/master).
+>
+>-Peff
+
