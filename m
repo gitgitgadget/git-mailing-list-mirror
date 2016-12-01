@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 214EE1FF6D
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF6120754
 	for <e@80x24.org>; Thu,  1 Dec 2016 19:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932446AbcLATpr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 14:45:47 -0500
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:33222 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758181AbcLATpe (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1760095AbcLATpq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 14:45:46 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33228 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760036AbcLATpe (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 1 Dec 2016 14:45:34 -0500
-Received: by mail-pg0-f41.google.com with SMTP id 3so98258739pgd.0
-        for <git@vger.kernel.org>; Thu, 01 Dec 2016 11:44:51 -0800 (PST)
+Received: by mail-pg0-f54.google.com with SMTP id 3so98259112pgd.0
+        for <git@vger.kernel.org>; Thu, 01 Dec 2016 11:44:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n/RBcGb5OHvuIvrdbxQjfFZ1vz6FsLtbdbbcLHTNi6E=;
-        b=D3Tfg5T8yOQb3No4XRoHm3tFLjwj83VC/sWK5hmhugbNJS7sSorw2ceKVgFiS3ZNQ4
-         6yC7g3tF3IiEmk31WenifY/PLg5Y9xgGgtkx8VVpVdDCMQp/ZX6J/VkHa6zg6Qkf9yH4
-         MffySFxvawRvnlpCCt7bV81hCxsfTP2VESBQZDGzHN8mv+Xz4SsGAnzEp6wX9u6eHoPu
-         +97cUo0q8N7D+84uLKD6isPJz3AISHLG/PZax68geVi2EIcDUzK8ihCXSAvoVHFz3DR/
-         jE8HtpIGqo0ipql5AYz5qPclMDHK3/P4gca6V4n+/eiQfg0xZVgIX9Vf411KZP5FNLH5
-         2mRQ==
+        bh=ZbyDA7bAxdhh7h2FYpg0CW89ZilRxG0LnNJPk1YcYXs=;
+        b=D7zZkwxbP+lOsR9FagNNW4+eN+FXWOssLmLya/gDoqiABThbnKk0WeiRy5kGnItX0l
+         7x3ApzZFmH4EhgR/JrSN6HkVwkhIrCOZF8KEwb68m55kQ56SKrYhqd7/eyAFSRpShkQw
+         qz2tv+/qZAfcm1vQAmUooZw18nBIf2iqXWUDz010pjNeUGUichhZ1rxMQ1kxHDTRe5Lo
+         PhiX8KXtF8jv0Q+F9qmkFSOR1WSlxZsu4zXuS+H+PhJryHK2Or0ZCw0Es66NaonX80p6
+         hxa9qu+xtzdqiug0BSnA52gtyKTq6lHx/CqmD6CxwRE+X9vtJwcRhlm2BBWxT6a+67Kt
+         2H4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=n/RBcGb5OHvuIvrdbxQjfFZ1vz6FsLtbdbbcLHTNi6E=;
-        b=ijngE/zVbYMHrs+bylD8afUY9ZC6Z4ksJpAx/Vt6nHQic5/1gb/v3eh+09/8wZCL9W
-         mp2NmBOR1S9DOSH7VEu74XMYQoRCUUpejPZpoNVmF3tm7KMr4LtoHshkA5L3l49pnrYb
-         ASor61EuSyFEIaXmnDp2Op7McT0a0pBP2JXgfDePSNQmJ0Sa1SqgUWiYztFXkvXqtp87
-         H6rpdoc4U/Wr347LLXKSojp0ka1vyEi6IWk/y/wH1CyH8qrEJlKHguu0srfVenNzJ9xb
-         /ITLAhO2swNDdwwHXVxnD7ZRNocoO8kcvtdvN3dHvbSKb9376axOInWCmqV2PQnCqZ8C
-         L8pA==
-X-Gm-Message-State: AKaTC02xsqSSmH2pf0hR0u/XIV15eNOLS+g/mVqLWYjWlSONE7e63o/cQbSSDvuJ6SoSsbuy
-X-Received: by 10.84.216.8 with SMTP id m8mr87779370pli.116.1480621490717;
-        Thu, 01 Dec 2016 11:44:50 -0800 (PST)
+        bh=ZbyDA7bAxdhh7h2FYpg0CW89ZilRxG0LnNJPk1YcYXs=;
+        b=eBEqziLUwjcVjBH7nQJkqqZk/rSjw0CAFVb5uSu9RjJX/QPgNaJJpL2/WhWdunOgDr
+         ZAxClo7jur9TdzcqB/EHakxJzqB9oERAXZKSQSHk5dayHdXOhe1TuhqZ8Gh1ZwSqb9Kw
+         IGKP4Oa1FnB6gYF5MUX64e7B6qv1Bwlm03e46V/hgdOvX8H8DX8unU49ASNw8hT8ihzN
+         7iAQ/8bQRLMGuv7Nybc4hmCEnJx1U1irNYhBvUBLdJGiZ5X5rZ0OKVwt1z82FP+v7ESq
+         UQACWzdJgD0hlbQmTJDxHksvAyvoNtJ0448AwXUkn75I4U/+MgWeJKDL5HR0tiX1Ehnx
+         6sLQ==
+X-Gm-Message-State: AKaTC018Jy8lbz9UJ35GdxQY/beOXoVyagryHpOmE1OXwjYCbvICbki7LIX9cKdbrd+VR5o1
+X-Received: by 10.84.216.26 with SMTP id m26mr88395573pli.22.1480621493508;
+        Thu, 01 Dec 2016 11:44:53 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id q145sm2090998pfq.22.2016.12.01.11.44.49
+        by smtp.gmail.com with ESMTPSA id q145sm2090998pfq.22.2016.12.01.11.44.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Dec 2016 11:44:49 -0800 (PST)
+        Thu, 01 Dec 2016 11:44:52 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, peff@peff.net,
         sbeller@google.com, bburky@bburky.com, jrnieder@gmail.com
-Subject: [PATCH v6 1/4] lib-proto-disable: variable name fix
-Date:   Thu,  1 Dec 2016 11:44:04 -0800
-Message-Id: <1480621447-52399-2-git-send-email-bmwill@google.com>
+Subject: [PATCH v6 3/4] http: always warn if libcurl version is too old
+Date:   Thu,  1 Dec 2016 11:44:06 -0800
+Message-Id: <1480621447-52399-4-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1480621447-52399-1-git-send-email-bmwill@google.com>
 References: <1478555462-132573-1-git-send-email-bmwill@google.com>
@@ -61,73 +61,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_proto function assigns the positional parameters to named
-variables, but then still refers to "$desc" as "$1". Using $desc is
-more readable and less error-prone.
+Now that there are default "known-good" and "known-bad" protocols which
+are allowed/disallowed by 'is_transport_allowed' we should always warn
+the user that older versions of libcurl can't respect the allowed
+protocols for redirects.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- t/lib-proto-disable.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ http.c      | 5 ++---
+ transport.c | 5 -----
+ transport.h | 6 ------
+ 3 files changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/t/lib-proto-disable.sh b/t/lib-proto-disable.sh
-index b0917d9..be88e9a 100644
---- a/t/lib-proto-disable.sh
-+++ b/t/lib-proto-disable.sh
-@@ -9,7 +9,7 @@ test_proto () {
- 	proto=$2
- 	url=$3
+diff --git a/http.c b/http.c
+index 4c4a812..fee128b 100644
+--- a/http.c
++++ b/http.c
+@@ -735,9 +735,8 @@ static CURL *get_curl_handle(void)
+ 		allowed_protocols |= CURLPROTO_FTPS;
+ 	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
+ #else
+-	if (transport_restrict_protocols())
+-		warning("protocol restrictions not applied to curl redirects because\n"
+-			"your curl version is too old (>= 7.19.4)");
++	warning("protocol restrictions not applied to curl redirects because\n"
++		"your curl version is too old (>= 7.19.4)");
+ #endif
+ 	if (getenv("GIT_CURL_VERBOSE"))
+ 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1L);
+diff --git a/transport.c b/transport.c
+index 2c0ec76..186de9a 100644
+--- a/transport.c
++++ b/transport.c
+@@ -747,11 +747,6 @@ void transport_check_allowed(const char *type)
+ 		die("transport '%s' not allowed", type);
+ }
  
--	test_expect_success "clone $1 (enabled)" '
-+	test_expect_success "clone $desc (enabled)" '
- 		rm -rf tmp.git &&
- 		(
- 			GIT_ALLOW_PROTOCOL=$proto &&
-@@ -18,7 +18,7 @@ test_proto () {
- 		)
- 	'
+-int transport_restrict_protocols(void)
+-{
+-	return !!protocol_whitelist();
+-}
+-
+ struct transport *transport_get(struct remote *remote, const char *url)
+ {
+ 	const char *helper;
+diff --git a/transport.h b/transport.h
+index b8e4ee8..f4998bc 100644
+--- a/transport.h
++++ b/transport.h
+@@ -164,12 +164,6 @@ int is_transport_allowed(const char *type);
+  */
+ void transport_check_allowed(const char *type);
  
--	test_expect_success "fetch $1 (enabled)" '
-+	test_expect_success "fetch $desc (enabled)" '
- 		(
- 			cd tmp.git &&
- 			GIT_ALLOW_PROTOCOL=$proto &&
-@@ -27,7 +27,7 @@ test_proto () {
- 		)
- 	'
+-/*
+- * Returns true if the user has attempted to turn on protocol
+- * restrictions at all.
+- */
+-int transport_restrict_protocols(void);
+-
+ /* Transport options which apply to git:// and scp-style URLs */
  
--	test_expect_success "push $1 (enabled)" '
-+	test_expect_success "push $desc (enabled)" '
- 		(
- 			cd tmp.git &&
- 			GIT_ALLOW_PROTOCOL=$proto &&
-@@ -36,7 +36,7 @@ test_proto () {
- 		)
- 	'
- 
--	test_expect_success "push $1 (disabled)" '
-+	test_expect_success "push $desc (disabled)" '
- 		(
- 			cd tmp.git &&
- 			GIT_ALLOW_PROTOCOL=none &&
-@@ -45,7 +45,7 @@ test_proto () {
- 		)
- 	'
- 
--	test_expect_success "fetch $1 (disabled)" '
-+	test_expect_success "fetch $desc (disabled)" '
- 		(
- 			cd tmp.git &&
- 			GIT_ALLOW_PROTOCOL=none &&
-@@ -54,7 +54,7 @@ test_proto () {
- 		)
- 	'
- 
--	test_expect_success "clone $1 (disabled)" '
-+	test_expect_success "clone $desc (disabled)" '
- 		rm -rf tmp.git &&
- 		(
- 			GIT_ALLOW_PROTOCOL=none &&
+ /* The program to use on the remote side to send a pack */
 -- 
 2.8.0.rc3.226.g39d4020
 
