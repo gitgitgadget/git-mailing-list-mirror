@@ -2,115 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 424EF1FF40
-	for <e@80x24.org>; Thu,  1 Dec 2016 03:04:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9BDC1FF40
+	for <e@80x24.org>; Thu,  1 Dec 2016 03:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756235AbcLADER convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 30 Nov 2016 22:04:17 -0500
-Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:61479 "EHLO
-        dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755899AbcLADEQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 30 Nov 2016 22:04:16 -0500
-X-AuditID: 12074425-8c7ff70000000221-50-583f932acee0
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by  (Symantec Messaging Gateway) with SMTP id 5E.51.00545.A239F385; Wed, 30 Nov 2016 22:04:11 -0500 (EST)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id uB1349kW006879;
-        Wed, 30 Nov 2016 22:04:09 -0500
-Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
-        (authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id uB1347ZN029349
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Wed, 30 Nov 2016 22:04:08 -0500
-Date:   Wed, 30 Nov 2016 22:04:07 -0500 (EST)
-From:   Anders Kaseorg <andersk@mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Define XDL_FAST_HASH when building *for* (not *on*) x86_64
-Message-ID: <alpine.DEB.2.10.1611302202100.20145@buzzword-bingo.mit.edu>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+        id S1754416AbcLAD4t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Nov 2016 22:56:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49511 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751126AbcLAD4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2016 22:56:48 -0500
+Received: (qmail 13553 invoked by uid 109); 1 Dec 2016 03:56:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Dec 2016 03:56:48 +0000
+Received: (qmail 28815 invoked by uid 111); 1 Dec 2016 03:57:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Nov 2016 22:57:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Nov 2016 22:56:45 -0500
+Date:   Wed, 30 Nov 2016 22:56:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Anders Kaseorg <andersk@mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Define XDL_FAST_HASH when building *for* (not *on*)
+ x86_64
+Message-ID: <20161201035645.mv7c7lr6rnsxokll@sigill.intra.peff.net>
+References: <alpine.DEB.2.10.1611302202100.20145@buzzword-bingo.mit.edu>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsUixCmqrKs92T7C4O13DouuK91MFg29V5gt
-        Vu5ayOTA7HHxkrLH3E+LWD0+b5ILYI7isklJzcksSy3St0vgyvj+bzZTwXO+igun5rI3MM7k
-        6WLk5JAQMJG4/2UnUxcjF4eQQBuTxJbFm1ggnI2MEr37/rNDOLuZJDbM7GYEaWER0JaYtXQC
-        M4jNJqAm8eHoV1YQWwTInth2iAXEZhawkXj/fjNYvbCAt8TmPS/ZQGxeAQ+J6R3HwGxRAV2J
-        Q//+QMUFJU7OfALVqy5x4NNFRghbW+L+zTa2CYx8s5CUzUJSNgtJ2QJG5lWMsim5Vbq5iZk5
-        xanJusXJiXl5qUW6Fnq5mSV6qSmlmxhBocjuorqDcc5fr0OMAhyMSjy8CbftIoRYE8uKK3MP
-        MUpyMCmJ8paV2EcI8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuENngiU401JrKxKLcqHSUlzsCiJ
-        8/53+xouJJCeWJKanZpakFoEk5Xh4FCS4C2dBNQoWJSanlqRlplTgpBm4uAEGc4DNDwXpIa3
-        uCAxtzgzHSJ/ilGX482ulw+YhFjy8vNSpcR5n4BcIABSlFGaBzcHkkIcJF4xigO9JcyrAzKK
-        B5h+4Ca9AlrCBLTk7WtrkCUliQgpqQbGIKbN7z5vW6vmuFvv9fa9azI2vJS/MtHHd6Wd0K03
-        d8yiuPSZt/2ex7io0v9V+6xnBwX0AuY7vPvVdaPs5r8b1ayXr7Dpn4zPCuwxvsDvnyr1sDJH
-        7WqL6P7LFjPa3Vo3/Q4NP+6xPHvaOgfmJednuslJWhxTuFRs81HCr6TvUfDdY9M9Mw2SlFiK
-        MxINtZiLihMBZX2ChPwCAAA=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <alpine.DEB.2.10.1611302202100.20145@buzzword-bingo.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, XDL_FAST_HASH was defined when ‘uname -m’ returns x86_64,
-even if we are cross-compiling for a different architecture.  Check
-the __x86_64__ compiler macro instead.
+On Wed, Nov 30, 2016 at 10:04:07PM -0500, Anders Kaseorg wrote:
 
-In addition to fixing the cross compilation bug, this is needed to
-pass the Debian build reproducibility test
-(https://tests.reproducible-builds.org/debian/index_variations.html).
+> Previously, XDL_FAST_HASH was defined when ‘uname -m’ returns x86_64,
+> even if we are cross-compiling for a different architecture.  Check
+> the __x86_64__ compiler macro instead.
+> 
+> In addition to fixing the cross compilation bug, this is needed to
+> pass the Debian build reproducibility test
+> (https://tests.reproducible-builds.org/debian/index_variations.html).
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- config.mak.uname | 5 -----
- xdiff/xutils.c   | 4 ++++
- 2 files changed, 4 insertions(+), 5 deletions(-)
+I don't think this is a good approach to fix it. Right now XDL_FAST_HASH
+is a Makefile knob that can be turned by the user, and can be used
+either to explicitly enable or explicitly disable the feature.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index b232908f8..2831a68c3 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -1,10 +1,8 @@
- # Platform specific Makefile tweaks based on uname detection
- 
- uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
--uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
- uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
- uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
--uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
- uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
- 
- ifdef MSVC
-@@ -17,9 +15,6 @@ endif
- # because maintaining the nesting to match is a pain.  If
- # we had "elif" things would have been much nicer...
- 
--ifeq ($(uname_M),x86_64)
--	XDL_FAST_HASH = YesPlease
--endif
- ifeq ($(uname_S),OSF1)
- 	# Need this for u_short definitions et al
- 	BASIC_CFLAGS += -D_OSF_SOURCE
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 027192a1c..f46351fe4 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -264,6 +264,10 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
- 	return ha;
- }
- 
-+#ifdef __x86_64__
-+#define XDL_FAST_HASH
-+#endif
-+
- #ifdef XDL_FAST_HASH
- 
- #define REPEAT_BYTE(x)  ((~0ul / 0xff) * (x))
--- 
-2.11.0
+With your patch, building with "make XDL_FAST_HASH=Yes" will still
+explicitly enable it, but "make XDL_FAST_HASH=" would no longer disable
+it (because even if unset, the compiler would turn it on when it sees
+__x86_64__).
 
+And being able to turn it off is important; more on that in a second.
+
+So I think if we wanted to auto-detect based on __x86_64__, we'd
+probably need to be able to set it to "auto" or something, and then
+
+  #if defined(XDL_FAST_HASH_AUTO) && __x86_64__
+  #define XDL_FAST_HASH
+  #endif
+
+or something.
+
+However, I think this might be the tip of the iceberg. There are lots of
+Makefile knobs whose defaults are tweaked based on uname output. This
+one caught you because you are cross-compiling across architectures, but
+in theory you could cross-compile for FreeBSD from Linux, or whatever.
+
+So I suspect a better strategy in general is to just override the
+uname_* variables when cross-compiling.
+
+
+All that being said, I actually think an easier fix for this particular
+case might be to drop XDL_FAST_HASH entirely. It computes the hashes
+slightly faster, but its collision characteristics are much worse. About
+2 years ago I ran across a pathological diff that ran over 100x slower
+with XDL_FAST_HASH:
+
+  http://public-inbox.org/git/20141222041944.GA441@peff.net/
+
+The discussion veered into whether we should have a randomized hash
+secured against DoS attacks. I played around with some alternatives, but
+never found anything quite as fast for the "normal" case. And having
+disabled XDL_FAST_HASH on GitHub's servers, it wasn't a big priority for
+me.
+
+I'd be happy if somebody wanted to investigate other hash functions
+further. But barring that, I think we should drop XDL_FAST_HASH (or at
+the very least stop turning it on by default) in the meantime. It's just
+not a good tradeoff.
+
+-Peff
