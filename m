@@ -2,85 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA7951FC96
-	for <e@80x24.org>; Fri,  2 Dec 2016 21:59:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C03C51FC96
+	for <e@80x24.org>; Fri,  2 Dec 2016 22:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751635AbcLBV70 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 16:59:26 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:36567 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750848AbcLBV7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2016 16:59:25 -0500
-Received: by mail-qk0-f177.google.com with SMTP id n21so293115964qka.3
-        for <git@vger.kernel.org>; Fri, 02 Dec 2016 13:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t20y6UOBVoKzNtoVkl7HbitbKDMZemfsempR8oTmPYI=;
-        b=FXiB4xwVOlOUuzUkpBtiLvvo9/UCG9B6MdwRdbaI7uh3kKohYSfSE7FWkSiL+9vC6P
-         DR9O+VcLiXILfjbmZdtpClq8vfJ5wV8YmCNhTtilA1ioCuACle0Qilye1QheFDXJCpWs
-         vJJOX7wv/KSYfBRpcGldTSJEwlrsQF9L0iDEZFbaXaTQXz4ApywFd70JKqYIakMb9cx/
-         Q5m6F6qrxTf+AiO/OsZyxshvmHS9U3mjpMPJLNDAv9+9Aw4SjIrJ8QV6I1SYqWGLXUX0
-         TkKJVzEhjghaZm+TaT+mQpAPQkPcgtvc4NEiDNUJo2O1whE0CqMYUEwPFwlYkyJqksu+
-         xCYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t20y6UOBVoKzNtoVkl7HbitbKDMZemfsempR8oTmPYI=;
-        b=mPQVF8C+x/eiP+bJaE9TBsPViRtI3zbJ5o+oesQS+S8UnavUeNdJktgTUaSHLZXqCf
-         CbIbvqieZF9ABXxTbhQKy9d6XrNDLcF/e+qGEMd4oDT2DAddW2b28SMx7DeLUWw7RQqo
-         V6PFyLjdqSQYs6idl5yL50WIpUFnksBj2pXxkG6y1niyWirqUHK2pS25baTusw4fxV6w
-         FVfNPDepR0oNERi4DUfa7EcjoOVfqV1l4hUc/2QeQUEKAiw5O57h93l8Mwy56uPj3pbX
-         BPaHBRNuAmOyuEZZnTnkUv3WUvh45/htlHV3SCBI2vGFybPTGfszLL6i14JQwPaADVa9
-         znIg==
-X-Gm-Message-State: AKaTC01T4u4YVWnVRyksxaG1M8yUM85x4+E5AhUCzjSypPb1ihDFrLyyQdpLbmwrYEnIVmVBJiywa73NMUcrrwwe
-X-Received: by 10.55.105.129 with SMTP id e123mr43300875qkc.173.1480715920328;
- Fri, 02 Dec 2016 13:58:40 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Fri, 2 Dec 2016 13:58:39 -0800 (PST)
-In-Reply-To: <0be15cd5-4ecb-3d87-93ee-d34d2be2d4c6@ramsayjones.plus.com>
-References: <0be15cd5-4ecb-3d87-93ee-d34d2be2d4c6@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 2 Dec 2016 13:58:39 -0800
-Message-ID: <CAGZ79kaXeFOL0k1tqPxk76XLrkRH_ApZPC7V=kKK3xN=mPbxJQ@mail.gmail.com>
-Subject: Re: [PATCH] worktree: mark a file-local symbol with static
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1752718AbcLBWPR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 17:15:17 -0500
+Received: from continuum.iocl.org ([217.140.74.2]:50654 "EHLO
+        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752249AbcLBWPR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2016 17:15:17 -0500
+Received: (from krey@localhost)
+        by continuum.iocl.org (8.11.3/8.9.3) id uB2MFDF05921;
+        Fri, 2 Dec 2016 23:15:13 +0100
+Date:   Fri, 2 Dec 2016 23:15:13 +0100
+From:   Andreas Krey <a.krey@gmx.de>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] commit: make --only --allow-empty work without paths
+Message-ID: <20161202221513.GA5370@inner.h.apk.li>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 2, 2016 at 12:55 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->
-> Hi Stefan,
->
-> If you need to re-roll your 'sb/submodule-intern-gitdir'
-> branch,
+--only is implied when paths are present, and required
+them unless --amend. But with --allow-empty it should
+be allowed as well - it is the only way to create an
+empty commit in the presence of staged changes.
 
-I will need to reroll it.
+Signed-off-by: Andreas Krey <a.krey@gmx.de>
+---
 
-> could you please squash something similar to this
-> into the relevant patch (commit 2529715dc, "worktree: get
-> worktrees from submodules", 01-12-2016).
->
-> [This is based on pu; ie. on top of merge 86c7f863a, where
-> Junio as added the 'flags' parameter.]
+I stumbled over this omission trying
+to create an empty commit while changes
+are staged. (We use such empty commits as
+workaround when devs forgot to put issues
+into the actual commits. And one had
+staged changes at that point.)
 
-Oh, ok. I may just reroll the series on top of nd/worktree-list-fixup
+Arguably, requiring paths with --only is
+pointless anyway because it is implicit
+in that case, but I'm happy when it works
+like in this patch.
 
-Thanks for the annotation!
-Stefan
+(The interdepence of the tests is a strange thing;
+making --run=N somewhat pointless.)
+
+(And I hope that the patch in commit.c is
+actually sufficient for this, but have
+not found indications to the contrary.)
+
+ Documentation/git-commit.txt | 3 ++-
+ builtin/commit.c             | 2 +-
+ t/t7501-commit.sh            | 9 +++++++++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f2ab0ee2e..4f8f20a36 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -265,7 +265,8 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
+ 	If this option is specified together with `--amend`, then
+ 	no paths need to be specified, which can be used to amend
+ 	the last commit without committing changes that have
+-	already been staged.
++	already been staged. If used together with `--allow-empty`
++	paths are also not required, and an empty commit will be created.
+ 
+ -u[<mode>]::
+ --untracked-files[=<mode>]::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 8976c3d29..89b66816f 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1206,7 +1206,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 
+ 	if (also + only + all + interactive > 1)
+ 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+-	if (argc == 0 && (also || (only && !amend)))
++	if (argc == 0 && (also || (only && !amend && !allow_empty)))
+ 		die(_("No paths with --include/--only does not make sense."));
+ 	if (argc == 0 && only && amend)
+ 		only_include_assumed = _("Clever... amending the last one with dirty index.");
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index d84897a67..0d8d89309 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -155,6 +155,15 @@ test_expect_success 'amend --only ignores staged contents' '
+ 	git diff --exit-code
+ '
+ 
++test_expect_success 'allow-empty --only ignores staged contents' '
++	echo changed-again >file &&
++	git add file &&
++	git commit --allow-empty --only -m "empty" &&
++	git cat-file blob HEAD:file >file.actual &&
++	test_cmp file.expect file.actual &&
++	git diff --exit-code
++'
++
+ test_expect_success 'set up editor' '
+ 	cat >editor <<-\EOF &&
+ 	#!/bin/sh
+-- 
+2.11.0.10.g1e1b186
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
