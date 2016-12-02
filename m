@@ -2,93 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C2F1FF6D
-	for <e@80x24.org>; Fri,  2 Dec 2016 01:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01A8F1FBB0
+	for <e@80x24.org>; Fri,  2 Dec 2016 01:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759975AbcLBBWI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Dec 2016 20:22:08 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:49470 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759959AbcLBBWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2016 20:22:07 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout06 with smtp
-        id EpMd1u0040srQBz01pMfm8; Fri, 02 Dec 2016 01:21:39 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=Exur_P-SfUclBfndDSUA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 2/6] http: always update the base URL for redirects
-To:     Jeff King <peff@peff.net>
-References: <20161201090336.xjbb47bublfcpglo@sigill.intra.peff.net>
- <20161201090414.zgz7pimgpctghbwu@sigill.intra.peff.net>
- <331124b5-aa2b-773c-23ac-975ad3f50dbf@ramsayjones.plus.com>
- <20161201225331.GH54082@google.com>
- <2297C36B9A1441748D7E68363A05F8C5@PhilipOakley>
- <xmqq8trz6wrq.fsf@gitster.mtv.corp.google.com>
- <7cd35131-2e0c-0dff-8864-c099e313251d@ramsayjones.plus.com>
- <20161202001852.arasy44d6iczeeez@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        Jann Horn <jannh@google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <777dfad5-02e2-73a9-fc38-1e6575c100aa@ramsayjones.plus.com>
-Date:   Fri, 2 Dec 2016 01:21:37 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1751301AbcLBBl1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Dec 2016 20:41:27 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:34313 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750738AbcLBBl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2016 20:41:26 -0500
+Received: by mail-io0-f196.google.com with SMTP id r94so4748581ioe.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2016 17:41:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+m9FFnfU0EK+iJy6OHD/olmFuxfIXmRHz1Q0omoqyOU=;
+        b=uteKL5McLNuilVX/0qgZ5d308dqc2bLmSba9SK/wPIhQ7vJrEwQslEJLZ2tDKiy7uL
+         BzdLukGaxEjrqTzaU4yRPt8RzyVER+RVPOB/LNsAMh/vqJ3W+Ywvm9f803NLePlQsqhl
+         pVDEfCAzulgBuSxMiigoP1emSh4vriaFiG1EWTlg7p5r0TkFMxV4QTSAY7YV29WNIL2T
+         Z3BH7/Kfp0KwPPVcesqGVdkTTZ4wUbBFkG9tzJnrTvr42UDfOvjIIqPihF1Lgs778ufd
+         TXeS/3kXA6Sz/7ymm8XhpDlQk/R666/Ptws2WPcqvpDeQqby9ypFIz/dj9QyW3D/YoD2
+         SktA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+m9FFnfU0EK+iJy6OHD/olmFuxfIXmRHz1Q0omoqyOU=;
+        b=eJL26Gvo0BUuucfLeQJB/1ncuZEoFQigsXbfhuTbPZRzQ9+DSKJX7vEsw4lXgbb7Du
+         DWt77JupUWLoBlmeVYB5nEoWv2e8C0vSGV+WNA/QK0AajM0Hw4horWzA2d5ZAw5xJcBx
+         FpiEhHagZNTt1PXa8GUsQHHzW+iBlA++GMRDNEcai+W1QopDO3qo9EFPM/Xo+EerLOVv
+         twK7sLAUNyWpYA6Cj+p0TQ1g3O89+ftG+Xxq5kyckUk6w3StxlH+jTUN66piiZ2VmVtB
+         jhElcwvV6itb6mIDiHJHEn5zJMTazovfXov4LFrfIWTLZLi+yGol2SKIW4gg5Q69f7Yx
+         RX6A==
+X-Gm-Message-State: AKaTC021Z4aVue8x1oq1u+fFWvIljovHiTQP8EftUrTJONDuz8miYxnN4Kh4kq3Q6Og7/Tjq6YNWNR6eqeWRPw==
+X-Received: by 10.107.28.129 with SMTP id c123mr36896083ioc.11.1480642885163;
+ Thu, 01 Dec 2016 17:41:25 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161202001852.arasy44d6iczeeez@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Received: by 10.79.113.196 with HTTP; Thu, 1 Dec 2016 17:40:44 -0800 (PST)
+In-Reply-To: <xmqqfum78jq0.fsf@gitster.mtv.corp.google.com>
+References: <CACC5Q1eFM_G4wKopkbxabLEu8+nbt66wF1jKSoTuL1vnS5Tb4Q@mail.gmail.com>
+ <xmqqfum78jq0.fsf@gitster.mtv.corp.google.com>
+From:   Austin English <austinenglish@gmail.com>
+Date:   Thu, 1 Dec 2016 19:40:44 -0600
+Message-ID: <CACC5Q1dfbDcDdFNmbsM63nkLWzbE6WXxLrTLZm5YTRTbVtgoOQ@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/install-webdoc.sh: quote a potentially
+ unsafe shell expansion
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Dec 1, 2016 at 2:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Austin English <austinenglish@gmail.com> writes:
+>
+>> diff --git a/Documentation/install-webdoc.sh b/Documentation/install-webdoc.sh
+>> index ed8b4ff..5fb2dc5 100755
+>> --- a/Documentation/install-webdoc.sh
+>> +++ b/Documentation/install-webdoc.sh
+>> @@ -18,7 +18,7 @@ do
+>>       else
+>>               echo >&2 "# install $h $T/$h"
+>>               rm -f "$T/$h"
+>> -             mkdir -p $(dirname "$T/$h")
+>> +             mkdir -p "$(dirname "$T/$h")"
+>>               cp "$h" "$T/$h"
+>>       fi
+>>  done
+>
+> We know $h is safe without quoting (see what the for loop iterates
+> over a list and binding each element of it to this variable), but T
+> is the parameter given to this script, which comes from these
+>
+> install-html: html
+>         '$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
+>
+> install-webdoc : html
+>         '$(SHELL_PATH_SQ)' ./install-webdoc.sh $(WEBDOC_DEST)
+>
+> in the Makefile.  So quoting the result of $(dirname "$T/$h") is
+> just as necessary as quoting the argument given to this dirname.
+>
+> But I do not think it is sufficient, if we are truly worried about
+> people who specify a path that contains IFS whitespace in DESTDIR,
+> WEBDOC_DEST, htmldir and other *dir variables used in the Makefile.
+> The references to these variables, when they are mentioned on the
+> command lines of Makefile actions, all need to be quoted.  The
+> remainder of the Makefile tells me that we decided that we are not
+> worried about those people at all.
+>
+> So while I could take your patch as-is, I am not sure how much value
+> it adds to the overall callchain that would reach the location that
+> is updated by the patch.  If you run
+>
+>         make DESTDIR="/tmp/My Temporary Place" install
+>
+> it would still not do the right thing even with your patch, I would
+> suspect.
+>
+> Thanks.
 
+Hi Junio,
 
-On 02/12/16 00:18, Jeff King wrote:
-> On Fri, Dec 02, 2016 at 12:07:50AM +0000, Ramsay Jones wrote:
-> 
->>>> In a British context "Mallory and Irvine" were two (male) climbers who
->>>> died on Everest in 1924 (tales of daring...), so it's easy to expect
->>>> (from this side of the pond) that 'Mallory' would be male. However he
->>>> was really George Mallory.
->>>>
->>>> Meanwhile that search engine's images shows far more female Mallorys,
->>>> so I've learnt something.
->>>
->>> "baby name Mallory" in search engine gave me several sites, most of
->>> them telling me that is a girl's name except for one.
->>>
->>> Didn't think of doing image search, but that's a good way ;-)
->>
->> Heh, I didn't think about any of this. I was remembering the
->> description of 'Man-in-the-middle Attack' from Applied Cryptography
->> (Bruce Schneier) which implies that Mallory is male.
-> 
-> I admit that I always assumed Applied Cryptography (and other papers)
-> were always talking about a female. But that's probably because I
-> started with an assumption about the name in the first place. That
-> probably came from watching the Family Ties sitcom as a kid; the older
-> daughter is named Mallory (and if you google it, you can see some
-> amazing 80's haircuts and clothes).
-> 
-> We can call her Marsha if you want, instead evoking Brady Bunch memories
-> of 60's clothing and haircuts.
+Thanks for reply and reviewing. Your concerns are totally valid.
 
-I'm not sure it matters too much, but if you are going to
-change the name then Eve is also used in the description
-of Man-in-the-middle (see "Practical Cryptography", Ferguson
-and Schneier).
+Some context for the change. I wrote a wrapper script for
+checkbashisms/shellcheck that I use in my project. I decided to run it
+on other projects I have checked out, out of curiosity, and looked at
+some of the results. This was the only one in git, so I thought it was
+worth fixing. I did not test the full pipeline.
 
-ATB,
-Ramsay Jones
+I'll look again and send a follow up patch soon.
 
-
+-- 
+-Austin
+GPG: 14FB D7EA A041 937B
