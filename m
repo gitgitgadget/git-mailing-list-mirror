@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62D1D1FC96
-	for <e@80x24.org>; Fri,  2 Dec 2016 19:23:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54DBC1FC96
+	for <e@80x24.org>; Fri,  2 Dec 2016 19:29:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753113AbcLBTX1 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 2 Dec 2016 14:23:27 -0500
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:50917 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750842AbcLBTX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2016 14:23:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id D1C4B100059;
-        Fri,  2 Dec 2016 19:23:24 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id COVZVaJ7Z04w; Fri,  2 Dec 2016 19:23:24 +0000 (GMT)
-Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id C1DE680035;
-        Fri,  2 Dec 2016 19:23:24 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Fri, 2 Dec 2016 19:23:24 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%25]) with mapi id
- 15.00.1156.000; Fri, 2 Dec 2016 19:23:24 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Stefan Beller' <sbeller@google.com>,
-        "gitster@pobox.com" <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH] unpack-trees: fix grammar for untracked files in
- directories
-Thread-Topic: [PATCH] unpack-trees: fix grammar for untracked files in
- directories
-Thread-Index: AQHSTNDIAT/8O47vZ0GDPW+i9/1YKaD1CRUg
-Date:   Fri, 2 Dec 2016 19:23:24 +0000
-Message-ID: <b2fedf5bad754cd0b6f23e83a415b731@exmbdft7.ad.twosigma.com>
-References: <20161202191741.12693-1-sbeller@google.com>
-In-Reply-To: <20161202191741.12693-1-sbeller@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1755505AbcLBT2x (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 14:28:53 -0500
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:36457 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751056AbcLBT2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2016 14:28:51 -0500
+Received: by mail-qk0-f172.google.com with SMTP id n21so289313014qka.3
+        for <git@vger.kernel.org>; Fri, 02 Dec 2016 11:28:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hCvFoT2vK10t4O5x+WdB+ok7zA043NiLUq9XzlPsw1E=;
+        b=je9+aDP+8oK7rsTbpJRQ5DfxZOR76g6NigWai5lKmDXV6yEnfF0Xp4XuhBd/Pc3iXy
+         TgiM413J0VirzluMClyyZaARylQNrpbhZkJ1Ks3HhKKvCkKO+eQGVdFcnuz4RoiJvaHK
+         XnDJAtpGO3MYZtF4qkfkOypKeNcr0Yq5lHAQwbBxweMRfwi2usjyOBwngf4+BN4OBXgd
+         L6FzW94aXgpmS0Mp/fABj8HWedP7aPjCHLwnIRbgtnitpPZZtY7BlJxI7jwK3WnpGfQD
+         5s6uNh4rUmKNiMKxX67i5Rv/B64lHw9QDoMoPZG9cSAukgv5wDKWMAyXQZ4RGZa3HdN5
+         IsCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hCvFoT2vK10t4O5x+WdB+ok7zA043NiLUq9XzlPsw1E=;
+        b=GApoXphERdv+zW98EjVV6+zTv4pm1Cb9a2k6tln1sDOoScw8xEQzr1ErF+aI/iZ7oO
+         qGZmBB1nTTgOZaSObjJrs8QNYxfhbNuR6tTC3Kep43i2sThd6cVaVtxsl8jnd+EDKjGW
+         DE5LeJCgWQQJWwqiOj66Rx+XONboojxYNqJI8+zQytXoUBUOgMjjNq1KbHoWwBGIiYMV
+         wcwwsKYyuRSuyLlJokHLOd6kwbhT88yIhlF2JXDWX1uGJxO+Fl/vXV3ZbKZRt/hyS9cx
+         nU1fijV1ldESf334Cx0sKJVhJXGyN7RTOA0S3DD8kUx8kcb1sa7vFAsXV+aagiC3xBJN
+         7VmA==
+X-Gm-Message-State: AKaTC010M9MtlV6PTAFP+pGx1AJ20F3aph53WZnr3CNPL16wSVqglq355vapre29h1UkWLaOb6PmicIm+oZtEEDm
+X-Received: by 10.55.67.81 with SMTP id q78mr39591683qka.53.1480706930229;
+ Fri, 02 Dec 2016 11:28:50 -0800 (PST)
 MIME-Version: 1.0
+Received: by 10.12.147.188 with HTTP; Fri, 2 Dec 2016 11:28:49 -0800 (PST)
+In-Reply-To: <CA+P7+xoi_UNSv-dKVFWf7T4o3uBtGa0wR6=nnYX+kjzLAmw6ug@mail.gmail.com>
+References: <20161201042926.mr2qdta7hviizcya@sigill.intra.peff.net>
+ <xmqqwpfja3nk.fsf@gitster.mtv.corp.google.com> <20161201190925.xi2z7vauxyf3yxyc@sigill.intra.peff.net>
+ <20161201191603.GB54082@google.com> <20161201205444.GG54082@google.com>
+ <20161201205944.2py2ijranq4g2wap@sigill.intra.peff.net> <CAGZ79kaqzssfN_bRQYpqC9HsKmyQZNCQcs+T5ke95Sf-C5PaRQ@mail.gmail.com>
+ <20161201215934.g7dt5ioekmx6ssii@sigill.intra.peff.net> <20161202183622.GB117792@google.com>
+ <CA+P7+xpoO=ieRyQb8r8Xz12nN10f53LKeVMgAO8XPdSwvG7fuA@mail.gmail.com>
+ <20161202184944.GC117792@google.com> <CA+P7+xoi_UNSv-dKVFWf7T4o3uBtGa0wR6=nnYX+kjzLAmw6ug@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 2 Dec 2016 11:28:49 -0800
+Message-ID: <CAGZ79kYPpc0=NAJaNPW+8faszOPAkq=b3m-EopY5A8oFwh+9=g@mail.gmail.com>
+Subject: Re: [PATCH v6 1/6] submodules: add helper functions to determine
+ presence of submodules
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-LGTM.
-
-> -----Original Message-----
-> From: Stefan Beller [mailto:sbeller@google.com]
-> Sent: Friday, December 02, 2016 2:18 PM
-> To: gitster@pobox.com
-> Cc: git@vger.kernel.org; David Turner; Stefan Beller
-> Subject: [PATCH] unpack-trees: fix grammar for untracked files in
-> directories
-> 
-> Noticed-by: David Turner <dturner@twosigma.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
-> This was noticed by David when reviewing the submodule checkout series,
-> though rolling this as an independent fix is better :)
-> 
+On Fri, Dec 2, 2016 at 11:20 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>>
+>> So is there a reason why the library function realpath() can't be used?
+>> From a cursory look at its man page it seems to do the symlink
+>> resolution.
+>>
+>> --
+>> Brandon Williams
+>
+> I believe it uses the same method and thus wouldn't actually resolve
+> the issue. But I'm not really 100% sure on this.
+>
 > Thanks,
-> Stefan
-> 
->  t/t7609-merge-co-error-msgs.sh | 2 +-
->  unpack-trees.c                 | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t7609-merge-co-error-msgs.sh b/t/t7609-merge-co-error-
-> msgs.sh index f80bdb81e1..e90413204e 100755
-> --- a/t/t7609-merge-co-error-msgs.sh
-> +++ b/t/t7609-merge-co-error-msgs.sh
-> @@ -105,7 +105,7 @@ test_expect_success 'not uptodate file porcelain
-> checkout error' '
->  '
-> 
->  cat >expect <<\EOF
-> -error: Updating the following directories would lose untracked files in
-> it:
-> +error: Updating the following directories would lose untracked files in
-> them:
->  	rep
->  	rep2
-> 
-> diff --git a/unpack-trees.c b/unpack-trees.c index ea6bdd20e0..7a6df99d10
-> 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -78,7 +78,7 @@ void setup_unpack_trees_porcelain(struct
-> unpack_trees_options *opts,
->  		xstrfmt(msg, cmd, cmd);
-> 
->  	msgs[ERROR_NOT_UPTODATE_DIR] =
-> -		_("Updating the following directories would lose untracked
-> files in it:\n%s");
-> +		_("Updating the following directories would lose untracked
-> files in
-> +them:\n%s");
-> 
->  	if (!strcmp(cmd, "checkout"))
->  		msg = advice_commit_before_merge
-> --
-> 2.10.2.613.g22f2156
+> Jake
 
+I just reviewed 2 libc implementations (glibc and an Android libc) and
+both of them
+do not use chdir internally, but use readlink and compose the path 'manually'
+c.f. http://osxr.org:8080/glibc/source/stdlib/canonicalize.c?v=glibc-2.13
