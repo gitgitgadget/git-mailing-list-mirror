@@ -6,50 +6,50 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54D6C1FC96
-	for <e@80x24.org>; Fri,  2 Dec 2016 20:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CCFE1FC96
+	for <e@80x24.org>; Fri,  2 Dec 2016 20:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759410AbcLBUbe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 15:31:34 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:36587 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754015AbcLBUba (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1759402AbcLBUbd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 15:31:33 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37849 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759294AbcLBUba (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 2 Dec 2016 15:31:30 -0500
-Received: by mail-wm0-f52.google.com with SMTP id g23so27638313wme.1
+Received: by mail-wm0-f41.google.com with SMTP id t79so25839108wmt.0
         for <git@vger.kernel.org>; Fri, 02 Dec 2016 12:31:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=rasmusvillemoes.dk; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YP3u+qkwwbtNvnIR/BhdP1EIWVpOiWJ1mlV6i/F1d/c=;
-        b=hY43805v4mx9kHV8aC87vn/zWCXHt0GDb1whiSEKcXIZbjUS0Gc5qgvyLMvv5/QNpE
-         OnJ2fx70J6ZyUFdQJR2N03lPA6UFw6BcO90RduvoJ/wtjSzTr1E8gp2T8n5hmJ46U6Il
-         qcaaqQlgh6w6ckH7LMQ8ScuYtc7Xb7D24aiY8=
+        bh=Xr27eq0ZJBfgBNnqLUDZDEExS9Rntp5KnJlcYhXyse4=;
+        b=fS0fm6IFV754FRBVKfvpHbL5S6do3/1nBqbqzT4vMjx8Q4J/98oH76zuKo8iuSzMkl
+         cwvzxwpPFr2r/SaraCXBr+OKuAq19o8KymTz0d85xghk13YcPKAyYZyUDkpztFp4THBp
+         BccHK2R7c4d1mKX0A7qTwqL2ZFLd8QBh3eN2A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YP3u+qkwwbtNvnIR/BhdP1EIWVpOiWJ1mlV6i/F1d/c=;
-        b=hO56e+lksZEeLvcP09Hb2MsbkF8vwx/VJpJmWyA66QsCTpp+lQBnpK6WgePLBSbTPL
-         xOBAyGYCAi3IqaF2UJDqGhQe934l3fafIYpi5L9j41wBWqIL4BYkvr9zpWt14Zi7kTmf
-         n03iSkSGkKMelR054Wq77HSko6Lr9hJbuBJW/BB/jvvsrbKY+E1Lz6vCkThKAwhDrRos
-         sqRp3VAeDMTp+lHuF1bdR8eSl3X8AGGrShh/YHzqbnZLCRgi5g/vjE6nHw9BnRtRF0SF
-         uo5ziQa8aOJvZ47Cu3wITegBouAZOd0hh9m9OAke00Fr57DAgEZx67u26ih7KMLk+G86
-         R01w==
-X-Gm-Message-State: AKaTC00d5SKuE5bgC9QsOzRk1WWGHKJmeTpiL1F3wSjm6AjpH43FGFoMhrzfPUZwjkoqlA==
-X-Received: by 10.28.161.129 with SMTP id k123mr4866305wme.66.1480710688229;
+        bh=Xr27eq0ZJBfgBNnqLUDZDEExS9Rntp5KnJlcYhXyse4=;
+        b=A2XkXaYBv9w2l3QsLHa6Y1nEddHM3x1fiYTlMSJteS5axcku9TbCFLjtd6SR/abQvh
+         uCKu5AVvcT94oD7WztUPlNpwpBp9NV89SwCZKwNGc93Sw4inZ/xOSeODbli641iGkzae
+         ETKsGPuNOtPocd9Kufq4JACyzLBxXRDRUJG5W7n1msaVA9Tm2h7OzxKUQJ58nYW/j5y5
+         p5f1up2WK6s6Khac7O/KZTN7zDLXYFwGsvErtI/3gQZ0D0GPOz6o/hCjZEzBnrAsinde
+         385vaop1UZORCIPoQmyRJpl+NR+8pWzqxQf5uvbV4oYVUtDXGLI1awRrssw3uYxEd6XN
+         j/2A==
+X-Gm-Message-State: AKaTC02Rhf8w/dujaKU/w87glZj2R/mi+CwYDMzO0j/ho3yY20CecmuQF2YCHXH1yQBCdw==
+X-Received: by 10.28.1.135 with SMTP id 129mr4916616wmb.108.1480710688802;
         Fri, 02 Dec 2016 12:31:28 -0800 (PST)
 Received: from lvps87-230-87-209.dedicated.hosteurope.de (wildmoose.dk. [87.230.87.209])
-        by smtp.gmail.com with ESMTPSA id w79sm4938178wmw.0.2016.12.02.12.31.27
+        by smtp.gmail.com with ESMTPSA id w79sm4938178wmw.0.2016.12.02.12.31.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 02 Dec 2016 12:31:27 -0800 (PST)
+        Fri, 02 Dec 2016 12:31:28 -0800 (PST)
 From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [PATCH 2/4] shallow.c: avoid theoretical pointer wrap-around
-Date:   Fri,  2 Dec 2016 21:31:02 +0100
-Message-Id: <1480710664-26290-2-git-send-email-rv@rasmusvillemoes.dk>
+Subject: [PATCH 3/4] shallow.c: bit manipulation tweaks
+Date:   Fri,  2 Dec 2016 21:31:03 +0100
+Message-Id: <1480710664-26290-3-git-send-email-rv@rasmusvillemoes.dk>
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
 References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
@@ -58,36 +58,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The expression info->free+size is technically undefined behaviour in
-exactly the case we want to test for. Moreover, the compiler is likely
-to translate the expression to
+First of all, 1 << 31 is technically undefined behaviour, so let's just
+use an unsigned literal.
 
-  (unsigned long)info->free + size > (unsigned long)info->end
+If i is 'signed int' and gcc doesn't know that i is positive, gcc
+generates code to compute the C99-mandated values of "i / 32" and "i %
+32", which is a lot more complicated than simple a simple shifts/mask.
 
-where there's at least a theoretical chance that the LHS could wrap
-around 0, giving a false negative.
+The only caller of paint_down actually passes an "unsigned int" value,
+but the prototype of paint_down causes (completely well-defined)
+conversion to signed int, and gcc has no way of knowing that the
+converted value is non-negative. Just make the id parameter unsigned.
 
-This might as well be written using pointer subtraction avoiding these
-issues.
+In update_refstatus, the change in generated code is much smaller,
+presumably because gcc is smart enough to see that i starts as 0 and is
+only incremented, so it is allowed (per the UD of signed overflow) to
+assume that i is always non-negative. But let's just help less smart
+compilers generate good code anyway.
 
 Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 ---
- shallow.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ shallow.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/shallow.c b/shallow.c
-index e21534a..8b1c35d 100644
+index 8b1c35d..5aec5a5 100644
 --- a/shallow.c
 +++ b/shallow.c
-@@ -444,7 +444,7 @@ static uint32_t *paint_alloc(struct paint_info *info)
- 	unsigned nr = (info->nr_bits + 31) / 32;
- 	unsigned size = nr * sizeof(uint32_t);
- 	void *p;
--	if (!info->slab_count || info->free + size > info->end) {
-+	if (!info->slab_count || size > info->end - info->free) {
- 		unsigned alloc_size = size < COMMIT_SLAB_SIZE ?
- 			COMMIT_SLAB_SIZE : size;
- 		info->slab_count++;
+@@ -464,7 +464,7 @@ static uint32_t *paint_alloc(struct paint_info *info)
+  * all walked commits.
+  */
+ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+-		       int id)
++		       unsigned int id)
+ {
+ 	unsigned int i, nr;
+ 	struct commit_list *head = NULL;
+@@ -476,7 +476,7 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+ 	if (!c)
+ 		return;
+ 	memset(bitmap, 0, bitmap_size);
+-	bitmap[id / 32] |= (1 << (id % 32));
++	bitmap[id / 32] |= (1U << (id % 32));
+ 	commit_list_insert(c, &head);
+ 	while (head) {
+ 		struct commit_list *p;
+@@ -650,11 +650,11 @@ static int add_ref(const char *refname, const struct object_id *oid,
+ 
+ static void update_refstatus(int *ref_status, int nr, uint32_t *bitmap)
+ {
+-	int i;
++	unsigned int i;
+ 	if (!ref_status)
+ 		return;
+ 	for (i = 0; i < nr; i++)
+-		if (bitmap[i / 32] & (1 << (i % 32)))
++		if (bitmap[i / 32] & (1U << (i % 32)))
+ 			ref_status[i]++;
+ }
+ 
 -- 
 2.1.4
 
