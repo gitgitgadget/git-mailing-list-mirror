@@ -2,65 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D75C1FC96
-	for <e@80x24.org>; Fri,  2 Dec 2016 12:20:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFEF51FC96
+	for <e@80x24.org>; Fri,  2 Dec 2016 13:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754822AbcLBMUo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 07:20:44 -0500
-Received: from mout.web.de ([212.227.17.11]:63109 "EHLO mout.web.de"
+        id S1758316AbcLBNmS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 08:42:18 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:52896 "EHLO mx1.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753787AbcLBMUn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2016 07:20:43 -0500
-Received: from [192.168.209.58] ([195.252.60.88]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LwHxK-1clUFk3J7O-01863f; Fri, 02
- Dec 2016 13:19:59 +0100
-Subject: Re: [PATCH v2 1/1] convert: git cherry-pick -Xrenormalize did not
- work
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-References: <6a7e155-f399-c9f8-c69e-8164e0735dfb@veekun.com>
- <20161130170232.19685-1-tboegi@web.de>
- <CA+P7+xoJb=SukbnJVJrXR6WV9+UtGnsn776KGkrHC7X-T_wZWg@mail.gmail.com>
- <xmqqtwan8kjv.fsf@gitster.mtv.corp.google.com>
-Cc:     Git mailing list <git@vger.kernel.org>, eevee.reply@veekun.com
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <11a8a411-528c-0e7d-b503-19bab6b6e7f1@web.de>
-Date:   Fri, 2 Dec 2016 13:20:06 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.5.1
+        id S1757569AbcLBNmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2016 08:42:16 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id uB2Dg3PG028704
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Fri, 2 Dec 2016 14:42:03 +0100
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id uB2Dg4Q9001050;
+        Fri, 2 Dec 2016 14:42:04 +0100
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     "Alfonsogonzalez\, Ernesto \(GE Digital\)" 
+        <ernesto.alfonsogonzalez@ge.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "Your branch is ahead of 'origin' by X commits"
+References: <D465BDE6.B7DE%ernesto.alfonsogonzalez@ge.com>
+Date:   Fri, 02 Dec 2016 14:42:04 +0100
+In-Reply-To: <D465BDE6.B7DE%ernesto.alfonsogonzalez@ge.com> (Ernesto
+        Alfonsogonzalez's message of "Thu, 1 Dec 2016 19:49:40 +0000")
+Message-ID: <vpqk2bisb0z.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtwan8kjv.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:rjUmO3hUNlCK9AMX3C4HT3oHO8IfsDFnmtxXvk6IV1DiEe/z3px
- v5HoaAsPqRrYN7pOchkKNyiYhgRcI6rVepgO1bc/gVnxvFbrqqiQHooITqgt6sMtvXJu/mz
- 81UD1LCikvalsRhy55914sv1tVfOc8xHp5eMLFfWWlg4s1HEASRcVEiOYwxg3i0k/RBO8f+
- k/QW5t2T8nA6avXtGYg4g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5vOOwddgOEg=:VNYAVHZsjBQxPMICry9dep
- bi0oaZ+APIT7oIoywExz5vWM8289NKoFfLAn9QeA1wcqwayPotmKk+0GnB/zIyWzFkujA/1w1
- iTJ2Wm8eaY1CgRnoGzbBfivfrLNZwo/hCTJIEPg+QAZjiay0F1I1A9r2Vu7E+3fPtj+ykD/MO
- C8uxfkFwAANX7TP2AyvACTbNJj8JET1SNtDpq9aT4kn339zmEYaJt5kZqhpHVDeNuCw+4fARW
- YCw5WpKStkKQJLfKHZHZG0zzWm9CAw3gh4B4fpqiV4lIYyH+f/YphcnoU7jH+GXyIFwWPvnoa
- oWGHyu4a0EoC70XRwwJlpyGCT4mJoi2ojradSjrzlQTQnc4DhnAusfrqjz5FlA/scMONFyzLW
- DaxLfKYoZ2lj7tRbKy0CWcjYP9F+9CeoM0jhKqNdzdf4+mmN7PFWxn4MKUw+jUGR9mLUlQ4vn
- ed64g0pFOQeXFiiM1KHFeff+OwdzHjwA84fObMzks4bZxe6Y13MhTUbOQwcqGDHSF6FdoVevM
- Yl7dm3NQPoRjN3XUdSOTx5PH8o6QC8eO7yg5RsyvYyGcL3xQIzqsba9ce5VYE6DKUk8rd18rm
- pK2RJSLOg2C3nRns5eYsxGdAosaejA00HrLqaDuKs07f/pzUePvMLWKtXieP0X3Q26qQ5a2hL
- kgMa9BsfZRX62OZxsF4P1vsAGFXjHJEz0moBqw7vb6tk57kqyIQz6sXZ9YUVzUEEx+8ida1nR
- XDrkcvc6R9tZr5igeLUo4oWQa7+jcMedFyHaVulBpgvms1w/cWQTPO1dyJea4qc5F/wYe934K
- mcA/BE/
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 02 Dec 2016 14:42:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: uB2Dg3PG028704
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1481290927.64846@Ld9yQQR84nwCShksnTRBTQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Alfonsogonzalez, Ernesto (GE Digital)" <ernesto.alfonsogonzalez@ge.com>
+writes:
 
-> Yup, this is what I queued.
+> Hi,
 >
-Looks good, thanks you all.
+> Git status tells me "Your branch is ahead of 'origin' by 108 commits.²,
+> but my local and origin/master are pointing to the same commit.
+>
+> What am I doing wrong?
+>
+> $ git diff origin/master
+> $ git status
+> On branch master
+> Your branch is ahead of 'origin' by 108 commits.
 
+This line should say "ahead of 'origin/master'" in common setups, where
+'origin/master' is the remote-tracking branch configured as upstream for
+'master'.
+
+My guess is that you have a badly configured upstream.
+
+What does "git pull -v" say? What's the content of the [branch "master"]
+section of .git/config?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
