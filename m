@@ -2,185 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3EF51FC96
-	for <e@80x24.org>; Fri,  2 Dec 2016 18:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 696521FC96
+	for <e@80x24.org>; Fri,  2 Dec 2016 19:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753739AbcLBSty (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 13:49:54 -0500
-Received: from mail.nottheoilrig.com ([52.27.13.164]:33392 "EHLO
-        mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752790AbcLBStv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2016 13:49:51 -0500
-Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
-        by mail.nottheoilrig.com (Postfix) with ESMTP id 57B2820293
-        for <git@vger.kernel.org>; Fri,  2 Dec 2016 18:49:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
-        s=3532ada; t=1480704590;
-        bh=hW/Pynf4kmW6LpPqJdwYuVIaTjF/r3FuU/p1m3CBM0g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=sV5WlxNFQLnid7uuv3jrZ5SbhM0Wx+PlDqEborLqKmID9I66cb2IJKI24g8ooYAtu
-         9723sNpybVySQI7BslZlkAj5FGouocW9sXO/kPyFvVARt9Eu81KFR8N/ns1528nKxK
-         ut9Jnuhf9s4WeBqyjygewu59T6Fr1IPhJBuZPOqg=
-Received: from debian (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
-        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
-        Fri,  2 Dec 2016 18:49:50 +0000 (UTC)
-Received: from nottheoilrig by debian with local (Exim 4.88)
-        (envelope-from <nottheoilrig@debian>)
-        id 1cCsu5-0000oE-B0; Fri, 02 Dec 2016 11:49:49 -0700
-From:   Jack Bates <bk874k@nottheoilrig.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jack Bates <jack@nottheoilrig.com>
-Subject: [PATCH v2] diff: handle --no-abbrev outside of repository
-Date:   Fri,  2 Dec 2016 11:48:40 -0700
-Message-Id: <20161202184840.2158-1-jack@nottheoilrig.com>
-X-Mailer: git-send-email 2.10.2
-In-Reply-To: <20161129070637.eult6o3m34r2mima@sigill.intra.peff.net>
-References: <20161129070637.eult6o3m34r2mima@sigill.intra.peff.net>
+        id S1752550AbcLBTRx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 14:17:53 -0500
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34810 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752286AbcLBTRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2016 14:17:52 -0500
+Received: by mail-pg0-f42.google.com with SMTP id x23so110443427pgx.1
+        for <git@vger.kernel.org>; Fri, 02 Dec 2016 11:17:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=zw4kmBWpi3mlKMKB1HGq9O13oY6ECf44dlynQrDWBmE=;
+        b=VumUM31tESTuzw4U2T2no7MFQ13NUEquKY6zKYVW6XgMWfSP+0fFPxCW4dApdi2f/k
+         wrtjqzHHJgGz58sfnep4nQQpoW37OimKEyvP8zaVKYzdC9DVWiE30lNAph2uFiXc+n60
+         CUdDTUzGKuJ0nkBGoSs97e+sYc4UvESIN+aLGDc9uHuEp9qv3YxPG18LBl9OKA0+66pm
+         vwkn2377ByosBvLeV0AvWhwWBVME3UsjgvkyR8ahCGtw+rVcH1X4U58vlgJaWm1WfFhz
+         7DUvOl4a8Xso/mXQ7JkKhc6HPL4qOAJPxyLkXidQqJJcEhuKfk1Tr7dMyWMGrBnpOEKY
+         JaAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zw4kmBWpi3mlKMKB1HGq9O13oY6ECf44dlynQrDWBmE=;
+        b=ifBpCFofxnU0fG50VfzeqYWV/FVdgm4/xXvRmNwaB5DrCQsdJnxga0OFDewZziwmdU
+         iiaWtGCp/sGIvGAodfXvRyal0ILXqF7IiWOhejTm68uxXY1pkgP05/3A3uAaWvnhBWkv
+         p61UNm6L9Q9Kx2sSnIyJgc4vB9Ryotp5TxyL5v3f1x80L9llpH/jaDpdAFgq5jxSKDMz
+         78HppxGR2zHrPtG4S93ZLPdkPtdixPZxP1mnlf0f64pEF2DGxk5pK1yPuS8fGgkIVOuk
+         NBEoYl1W7mVO+Pa8jBxdE2sgJu0sTlv8GLsFhnoN4mEYh8H7EQaX7wdnR+AVbJHED8Bo
+         Egwg==
+X-Gm-Message-State: AKaTC00aHEpKMTzioet5YQNLZ2ksjdH4+TNCfK2U1EIUg0jldZ1RfdzZKa28p5Ag+xjbeVCs
+X-Received: by 10.84.197.1 with SMTP id m1mr100141683pld.159.1480706271515;
+        Fri, 02 Dec 2016 11:17:51 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:99ac:e2be:c532:3e35])
+        by smtp.gmail.com with ESMTPSA id b29sm9469717pgn.48.2016.12.02.11.17.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 02 Dec 2016 11:17:50 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, dturner@twosigma.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] unpack-trees: fix grammar for untracked files in directories
+Date:   Fri,  2 Dec 2016 11:17:41 -0800
+Message-Id: <20161202191741.12693-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.2.613.g22f2156
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git diff --no-index" codepath didn't handle the --no-abbrev option.
-Also it didn't behave the same as find_unique_abbrev()
-in the case where abbrev == 0.
-find_unique_abbrev() returns the full, unabbreviated string in that
-case, but the "git diff --no-index" codepath returned an empty string.
-
-Signed-off-by: Jack Bates <jack@nottheoilrig.com>
+Noticed-by: David Turner <dturner@twosigma.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c                                                  | 6 +++++-
- t/t4013-diff-various.sh                                 | 7 +++++++
- t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir  | 3 +++
- t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir | 3 +++
- t/t4013/diff.diff_--no-index_--raw_dir2_dir             | 3 +++
- t/t4013/diff.diff_--raw_--abbrev=4_initial              | 6 ++++++
- t/t4013/diff.diff_--raw_--no-abbrev_initial             | 6 ++++++
- t/t4013/diff.diff_--raw_initial                         | 6 ++++++
- 8 files changed, 39 insertions(+), 1 deletion(-)
- create mode 100644 t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir
- create mode 100644 t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir
- create mode 100644 t/t4013/diff.diff_--no-index_--raw_dir2_dir
- create mode 100644 t/t4013/diff.diff_--raw_--abbrev=4_initial
- create mode 100644 t/t4013/diff.diff_--raw_--no-abbrev_initial
- create mode 100644 t/t4013/diff.diff_--raw_initial
 
-diff --git a/diff.c b/diff.c
-index ec87283..84dba60 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3106,7 +3106,8 @@ static const char *diff_abbrev_oid(const struct object_id *oid, int abbrev)
- 			abbrev = FALLBACK_DEFAULT_ABBREV;
- 		if (abbrev > GIT_SHA1_HEXSZ)
- 			die("BUG: oid abbreviation out of range: %d", abbrev);
--		hex[abbrev] = '\0';
-+		if (abbrev)
-+			hex[abbrev] = '\0';
- 		return hex;
- 	}
- }
-@@ -3364,6 +3365,7 @@ void diff_setup(struct diff_options *options)
+This was noticed by David when reviewing the submodule checkout series,
+though rolling this as an independent fix is better :)
+
+Thanks,
+Stefan
+
+ t/t7609-merge-co-error-msgs.sh | 2 +-
+ unpack-trees.c                 | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7609-merge-co-error-msgs.sh b/t/t7609-merge-co-error-msgs.sh
+index f80bdb81e1..e90413204e 100755
+--- a/t/t7609-merge-co-error-msgs.sh
++++ b/t/t7609-merge-co-error-msgs.sh
+@@ -105,7 +105,7 @@ test_expect_success 'not uptodate file porcelain checkout error' '
+ '
  
- 	options->file = stdout;
+ cat >expect <<\EOF
+-error: Updating the following directories would lose untracked files in it:
++error: Updating the following directories would lose untracked files in them:
+ 	rep
+ 	rep2
  
-+	options->abbrev = DEFAULT_ABBREV;
- 	options->line_termination = '\n';
- 	options->break_opt = -1;
- 	options->rename_limit = -1;
-@@ -4024,6 +4026,8 @@ int diff_opt_parse(struct diff_options *options,
- 			    offending, optarg);
- 		return argcount;
- 	}
-+	else if (!strcmp(arg, "--no-abbrev"))
-+		options->abbrev = 0;
- 	else if (!strcmp(arg, "--abbrev"))
- 		options->abbrev = DEFAULT_ABBREV;
- 	else if (skip_prefix(arg, "--abbrev=", &arg)) {
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 566817e..d7b71a0 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -311,6 +311,13 @@ diff --line-prefix=abc master master^ side
- diff --dirstat master~1 master~2
- diff --dirstat initial rearrange
- diff --dirstat-by-file initial rearrange
-+# --abbrev and --no-abbrev outside of repository
-+diff --raw initial
-+diff --raw --abbrev=4 initial
-+diff --raw --no-abbrev initial
-+diff --no-index --raw dir2 dir
-+diff --no-index --raw --abbrev=4 dir2 dir
-+diff --no-index --raw --no-abbrev dir2 dir
- EOF
+diff --git a/unpack-trees.c b/unpack-trees.c
+index ea6bdd20e0..7a6df99d10 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -78,7 +78,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		xstrfmt(msg, cmd, cmd);
  
- test_expect_success 'log -S requires an argument' '
-diff --git a/t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir b/t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir
-new file mode 100644
-index 0000000..a71b38a
---- /dev/null
-+++ b/t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir
-@@ -0,0 +1,3 @@
-+$ git diff --no-index --raw --abbrev=4 dir2 dir
-+:000000 100644 0000... 0000... A	dir/sub
-+$
-diff --git a/t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir b/t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir
-new file mode 100644
-index 0000000..e0f0097
---- /dev/null
-+++ b/t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir
-@@ -0,0 +1,3 @@
-+$ git diff --no-index --raw --no-abbrev dir2 dir
-+:000000 100644 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 A	dir/sub
-+$
-diff --git a/t/t4013/diff.diff_--no-index_--raw_dir2_dir b/t/t4013/diff.diff_--no-index_--raw_dir2_dir
-new file mode 100644
-index 0000000..3cb4ee7
---- /dev/null
-+++ b/t/t4013/diff.diff_--no-index_--raw_dir2_dir
-@@ -0,0 +1,3 @@
-+$ git diff --no-index --raw dir2 dir
-+:000000 100644 0000000... 0000000... A	dir/sub
-+$
-diff --git a/t/t4013/diff.diff_--raw_--abbrev=4_initial b/t/t4013/diff.diff_--raw_--abbrev=4_initial
-new file mode 100644
-index 0000000..c3641db
---- /dev/null
-+++ b/t/t4013/diff.diff_--raw_--abbrev=4_initial
-@@ -0,0 +1,6 @@
-+$ git diff --raw --abbrev=4 initial
-+:100644 100644 35d2... 9929... M	dir/sub
-+:100644 100644 01e7... 10a8... M	file0
-+:000000 100644 0000... b1e6... A	file1
-+:100644 000000 01e7... 0000... D	file2
-+$
-diff --git a/t/t4013/diff.diff_--raw_--no-abbrev_initial b/t/t4013/diff.diff_--raw_--no-abbrev_initial
-new file mode 100644
-index 0000000..c87a125
---- /dev/null
-+++ b/t/t4013/diff.diff_--raw_--no-abbrev_initial
-@@ -0,0 +1,6 @@
-+$ git diff --raw --no-abbrev initial
-+:100644 100644 35d242ba79ae89ac695e26b3d4c27a8e6f028f9e 992913c5aa0a5476d10c49ed0f21fc0c6d1aedf3 M	dir/sub
-+:100644 100644 01e79c32a8c99c557f0757da7cb6d65b3414466d 10a8a9f3657f91a156b9f0184ed79a20adef9f7f M	file0
-+:000000 100644 0000000000000000000000000000000000000000 b1e67221afe8461efd244b487afca22d46b95eb8 A	file1
-+:100644 000000 01e79c32a8c99c557f0757da7cb6d65b3414466d 0000000000000000000000000000000000000000 D	file2
-+$
-diff --git a/t/t4013/diff.diff_--raw_initial b/t/t4013/diff.diff_--raw_initial
-new file mode 100644
-index 0000000..a3e9780
---- /dev/null
-+++ b/t/t4013/diff.diff_--raw_initial
-@@ -0,0 +1,6 @@
-+$ git diff --raw initial
-+:100644 100644 35d242b... 992913c... M	dir/sub
-+:100644 100644 01e79c3... 10a8a9f... M	file0
-+:000000 100644 0000000... b1e6722... A	file1
-+:100644 000000 01e79c3... 0000000... D	file2
-+$
+ 	msgs[ERROR_NOT_UPTODATE_DIR] =
+-		_("Updating the following directories would lose untracked files in it:\n%s");
++		_("Updating the following directories would lose untracked files in them:\n%s");
+ 
+ 	if (!strcmp(cmd, "checkout"))
+ 		msg = advice_commit_before_merge
 -- 
-2.10.2
+2.10.2.613.g22f2156
+
