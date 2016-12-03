@@ -2,195 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D3211FF40
-	for <e@80x24.org>; Sat,  3 Dec 2016 18:48:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BBDA1FF40
+	for <e@80x24.org>; Sat,  3 Dec 2016 19:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751494AbcLCSr5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Dec 2016 13:47:57 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36285 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751400AbcLCSr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Dec 2016 13:47:56 -0500
-Received: by mail-wm0-f68.google.com with SMTP id m203so7513081wma.3
-        for <git@vger.kernel.org>; Sat, 03 Dec 2016 10:47:55 -0800 (PST)
+        id S1750888AbcLCTp2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Dec 2016 14:45:28 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:34996 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750795AbcLCTp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Dec 2016 14:45:27 -0500
+Received: by mail-wm0-f43.google.com with SMTP id a197so46191038wmd.0
+        for <git@vger.kernel.org>; Sat, 03 Dec 2016 11:45:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=HXQsCs2/DDXZNeA6bJTuHDdl0fwuJBCUka8PLHDow5U=;
-        b=DPH/9f3A0Ik2kbax7EpCN424J/YK22fNqlcZr1bhvq/k5bA/Y1CjSNdySiixcvvVFP
-         Zafh7SEId4emxBJ2ybb7bqo2Lf5Li/sU1XrVZpnMKyj7PNk8/kSMvVJmWE+PWbLiqo5j
-         YgCoLKBK/9vg4qNwATnmnNiobaUIhjKyMxy/a2LPLrjTeles+L8VHg/oamXtDwYHUt9f
-         f1I4mtHczV6VZXbV2ZrURz/JqMAA281n6IAXjpAGKaaR+shASNTL/m/vPdR+382AuE2/
-         y9CefOHLlcYQyV/jeZx6BhGbvTN6gdUveoI2G2YH/TOxwtMk9YfbI4e14grt0Z209sFO
-         G6Yg==
+        h=from:to:cc:subject:date:message-id;
+        bh=ZNEWNKYGXcMrBoEYeQB3aID2ODLz1P0Z31IEjojMpF0=;
+        b=Xwztxq86/qSIOOay2jjJb5/mqrHGP9ziHrGXZLZRGZsYs0vIkJhKnm3RK6lFX/Kb84
+         QiUmdmifaLzXFfz/Q2OJhAz+28925BTVZHfGfkDFLhLUjNwu7Swti6ulO+CyjM2614fE
+         gZDMEDZaEgu62g9TuHZk/MjXUKV3bcsElLE6ItNkx9o1F/fG88oqGKIfGSvqxo2YnuVX
+         2O8BJ/1yotZpU758M2zzKRaorJrAx1jeTy5GIc9R67uXcMcCAJ+RhehFpo6nwBsAUskJ
+         CVwj5OxqXMPYvivHMELcMZkfaVlhsGP73ia9qprgtnGFNTdaNoKz3LfpZiHIj/tEkX7m
+         tzvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=HXQsCs2/DDXZNeA6bJTuHDdl0fwuJBCUka8PLHDow5U=;
-        b=FkdOUvEJWBuEAr/2cHSIKyCGslQjfC7qmdnSUG0oisTZa2xtdIFeql0g3ApBf1qkQt
-         nRhJIbz9DdhK1a7Ci/qz85qjT9T54gELUtTNMFnazMRFe2KttdmAIUbSk/p9i5cEFxOH
-         WTKExOo9vnVPaw1KBzix1BEYwiCANcn2pUJGW8nAwuioYnhHl5476vdzSq8t6SyTs1pq
-         fdFt7mYnwY2e3xy25RZpEEUo9z++iu7GWyb7xtA4tvTcpEls2iGhK/cCo+qz3nHTQXOh
-         wm79bZ6FB/TpChFQ22aYdy3gbYok1WkJ9e2S2ZgnNNMiUhXK6KDWb544DDYzY5g2NQdQ
-         dcJg==
-X-Gm-Message-State: AKaTC01Q6IYiDmo2KQ9W2leFpuWut4crQ+P7ZK5JAXL7hWUEozyuhJ5hkqVBI4xq+Jlohw==
-X-Received: by 10.28.49.193 with SMTP id x184mr2631311wmx.44.1480790869744;
-        Sat, 03 Dec 2016 10:47:49 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB4BB7.dip0.t-ipconnect.de. [93.219.75.183])
-        by smtp.gmail.com with ESMTPSA id f3sm9459191wmf.10.2016.12.03.10.47.48
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 03 Dec 2016 10:47:49 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [RFC/PATCH v3 00/16] Add initial experimental external ODB support
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20161130210420.15982-1-chriscool@tuxfamily.org>
-Date:   Sat, 3 Dec 2016 19:47:51 +0100
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>, Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A5ABBF3E-BED9-4FF3-9DE5-B529DEF0B8E8@gmail.com>
-References: <20161130210420.15982-1-chriscool@tuxfamily.org>
-To:     Christian Couder <christian.couder@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ZNEWNKYGXcMrBoEYeQB3aID2ODLz1P0Z31IEjojMpF0=;
+        b=CKHzFMeq2CbpifvaFAgrZwgz3W8oan3WgVdBtrzhvptajQKNJRrDBVjP+QB4gh6UuZ
+         wBze/VmQtjqI90csgDiSWrdgFGCfDqagZBfMXhtCYuD68ujZ+73GttUW/58eVGDrnaHT
+         QpYMVupuKdDk3OPA2NlneqnqvbQ9864LoGt/VXFVy7aPgTkEUPInvXTidSCDNEg0GnWe
+         mM/reXKg0GmTpOVZ9WuPQEqZKgFep+5MwxSvCChn+g/3SHpoAO0IqdV0OVJAZXzngPFx
+         M4/+bZuSIOHS/NWPV0nXFR8wVPw2w6uUdclqNTk99kZcX+jo3cYgU4tkmzj/kGFX1lzT
+         v1Hg==
+X-Gm-Message-State: AKaTC02de2NTQF3EbmNLZrEAfwSS4yxl8L2xvKLatsdN8g6dd/47gsPS/AIiVRD/UjdCZg==
+X-Received: by 10.28.23.137 with SMTP id 131mr2853256wmx.121.1480794325979;
+        Sat, 03 Dec 2016 11:45:25 -0800 (PST)
+Received: from localhost.localdomain (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id ab10sm11958479wjc.45.2016.12.03.11.45.24
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 03 Dec 2016 11:45:25 -0800 (PST)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH] docs: warn about possible '=' in clean/smudge filter process values
+Date:   Sat,  3 Dec 2016 20:45:16 +0100
+Message-Id: <20161203194516.12879-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> On 30 Nov 2016, at 22:04, Christian Couder =
-<christian.couder@gmail.com> wrote:
->=20
-> Goal
-> ~~~~
->=20
-> Git can store its objects only in the form of loose objects in
-> separate files or packed objects in a pack file.
->=20
-> To be able to better handle some kind of objects, for example big
-> blobs, it would be nice if Git could store its objects in other object
-> databases (ODB).
+A pathname value in a clean/smudge filter process "key=value" pair can
+contain the '=' character (introduced in edcc858). Make the user aware
+of this issue in the docs, add a corresponding test case, and fix the
+issue in filter process value parser of the example implementation in
+contrib.
 
-This is a great goal. I really hope we can use that to solve the
-pain points in the current Git <--> GitLFS integration!
-Thanks for working on this!
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ Documentation/gitattributes.txt        |  4 +++-
+ contrib/long-running-filter/example.pl |  8 ++++++--
+ t/t0021-conversion.sh                  | 20 ++++++++++----------
+ t/t0021/rot13-filter.pl                |  8 ++++++--
+ 4 files changed, 25 insertions(+), 15 deletions(-)
 
-Minor nit: I feel the term "other" could be more expressive. Plus
-"database" might confuse people. What do you think about
-"External Object Storage" or something?
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 976243a63e..e0b66c1220 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -435,7 +435,9 @@ to filter relative to the repository root. Right after the flush packet
+ Git sends the content split in zero or more pkt-line packets and a
+ flush packet to terminate content. Please note, that the filter
+ must not send any response before it received the content and the
+-final flush packet.
++final flush packet. Also note that the "value" of a "key=value" pair
++can contain the "=" character whereas the key would never contain
++that character.
+ ------------------------
+ packet:          git> command=smudge
+ packet:          git> pathname=path/testfile.dat
+diff --git a/contrib/long-running-filter/example.pl b/contrib/long-running-filter/example.pl
+index 39457055a5..a677569ddd 100755
+--- a/contrib/long-running-filter/example.pl
++++ b/contrib/long-running-filter/example.pl
+@@ -81,8 +81,12 @@ packet_txt_write("capability=smudge");
+ packet_flush();
 
+ while (1) {
+-	my ($command)  = packet_txt_read() =~ /^command=([^=]+)$/;
+-	my ($pathname) = packet_txt_read() =~ /^pathname=([^=]+)$/;
++	my ($command)  = packet_txt_read() =~ /^command=(.+)$/;
++	my ($pathname) = packet_txt_read() =~ /^pathname=(.+)$/;
++
++	if ( $pathname eq "" ) {
++		die "bad pathname '$pathname'";
++	}
 
-> Design
-> ~~~~~~
->=20
->  - "<command> have": the command should output the sha1, size and
-> type of all the objects the external ODB contains, one object per
-> line.
+ 	packet_bin_read();
 
-This looks impractical. If a repo has 10k external files with
-100 versions each then you need to read/transfer 1m hashes (this is
-not made up - I am working with Git repos than contain >>10k files
-in GitLFS).
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 4ea534e9fa..f3a0df2add 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -93,7 +93,7 @@ test_expect_success setup '
+ 	git checkout -- test test.t test.i &&
 
-Wouldn't it be better if Git collects all hashes that it currently=20
-needs and then asks the external ODBs if they have them?
+ 	echo "content-test2" >test2.o &&
+-	echo "content-test3 - filename with special characters" >"test3 '\''sq'\'',\$x.o"
++	echo "content-test3 - filename with special characters" >"test3 '\''sq'\'',\$x=.o"
+ '
 
+ script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
+@@ -359,12 +359,12 @@ test_expect_success PERL 'required process filter should filter data' '
+ 		cp "$TEST_ROOT/test.o" test.r &&
+ 		cp "$TEST_ROOT/test2.o" test2.r &&
+ 		mkdir testsubdir &&
+-		cp "$TEST_ROOT/test3 '\''sq'\'',\$x.o" "testsubdir/test3 '\''sq'\'',\$x.r" &&
++		cp "$TEST_ROOT/test3 '\''sq'\'',\$x=.o" "testsubdir/test3 '\''sq'\'',\$x=.r" &&
+ 		>test4-empty.r &&
 
->  - "<command> get <sha1>": the command should then read from the
-> external ODB the content of the object corresponding to <sha1> and
-> output it on stdout.
->=20
->  - "<command> put <sha1> <size> <type>": the command should then read
-> from stdin an object and store it in the external ODB.
+ 		S=$(file_size test.r) &&
+ 		S2=$(file_size test2.r) &&
+-		S3=$(file_size "testsubdir/test3 '\''sq'\'',\$x.r") &&
++		S3=$(file_size "testsubdir/test3 '\''sq'\'',\$x=.r") &&
 
-Based on my experience with Git clean/smudge filters I think this kind=20=
+ 		filter_git add . &&
+ 		cat >expected.log <<-EOF &&
+@@ -373,7 +373,7 @@ test_expect_success PERL 'required process filter should filter data' '
+ 			IN: clean test.r $S [OK] -- OUT: $S . [OK]
+ 			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+ 			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+-			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
++			IN: clean testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+ 			STOP
+ 		EOF
+ 		test_cmp_count expected.log rot13-filter.log &&
+@@ -385,23 +385,23 @@ test_expect_success PERL 'required process filter should filter data' '
+ 			IN: clean test.r $S [OK] -- OUT: $S . [OK]
+ 			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+ 			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+-			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
++			IN: clean testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+ 			IN: clean test.r $S [OK] -- OUT: $S . [OK]
+ 			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+ 			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+-			IN: clean testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
++			IN: clean testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+ 			STOP
+ 		EOF
+ 		test_cmp_count expected.log rot13-filter.log &&
 
-of single shot protocol will be a performance bottleneck as soon as=20
-people store more than >1000 files in the external ODB.
-Maybe you can reuse my "filter process protocol" (edcc858) here?
+-		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x.r" &&
++		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x=.r" &&
 
+ 		filter_git checkout --quiet --no-progress . &&
+ 		cat >expected.log <<-EOF &&
+ 			START
+ 			init handshake complete
+ 			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
+-			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
++			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+ 			STOP
+ 		EOF
+ 		test_cmp_exclude_clean expected.log rot13-filter.log &&
+@@ -422,14 +422,14 @@ test_expect_success PERL 'required process filter should filter data' '
+ 			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
+ 			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
+ 			IN: smudge test4-empty.r 0 [OK] -- OUT: 0  [OK]
+-			IN: smudge testsubdir/test3 '\''sq'\'',\$x.r $S3 [OK] -- OUT: $S3 . [OK]
++			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+ 			STOP
+ 		EOF
+ 		test_cmp_exclude_clean expected.log rot13-filter.log &&
 
-> * Transfer
->=20
-> To tranfer information about the blobs stored in external ODB, some
-> special refs, called "odb ref", similar as replace refs, are used.
->=20
-> For now there should be one odb ref per blob. Each ref name should be
-> refs/odbs/<odbname>/<sha1> where <sha1> is the sha1 of the blob stored
-> in the external odb named <odbname>.
->=20
-> These odb refs should all point to a blob that should be stored in the
-> Git repository and contain information about the blob stored in the
-> external odb. This information can be specific to the external odb.
-> The repos can then share this information using commands like:
->=20
-> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
+ 		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
+ 		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
+-		test_cmp_committed_rot13 "$TEST_ROOT/test3 '\''sq'\'',\$x.o" "testsubdir/test3 '\''sq'\'',\$x.r"
++		test_cmp_committed_rot13 "$TEST_ROOT/test3 '\''sq'\'',\$x=.o" "testsubdir/test3 '\''sq'\'',\$x=.r"
+ 	)
+ '
 
-The "odbref" would point to a blob and the blob could contain anything,
-right? E.g. it could contain an existing GitLFS pointer, right?
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index 4d5697ee51..617f581e56 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -109,14 +109,18 @@ print $debug "init handshake complete\n";
+ $debug->flush();
 
-version https://git-lfs.github.com/spec/v1
-oid =
-sha256:4d7a214614ab2935c943f9e0ff69d22eadbb8f32b1258daaa5e2ca24d17e2393
-size 12345
+ while (1) {
+-	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
++	my ($command) = packet_txt_read() =~ /^command=(.+)$/;
+ 	print $debug "IN: $command";
+ 	$debug->flush();
 
+-	my ($pathname) = packet_txt_read() =~ /^pathname=([^=]+)$/;
++	my ($pathname) = packet_txt_read() =~ /^pathname=(.+)$/;
+ 	print $debug " $pathname";
+ 	$debug->flush();
 
-> Design discussion about performance
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->=20
-> Yeah, it is not efficient to fork/exec a command to just read or write
-> one object to or from the external ODB. Batch calls and/or using a
-> daemon and/or RPC should be used instead to be able to store regular
-> objects in an external ODB. But for now the external ODB would be all
-> about really big files, where the cost of a fork+exec should not
-> matter much. If we later want to extend usage of external ODBs, yeah
-> we will probably need to design other mechanisms.
++	if ( $pathname eq "" ) {
++		die "bad pathname '$pathname'";
++	}
++
+ 	# Flush
+ 	packet_bin_read();
 
-I think we should leverage the learnings from GitLFS as much as =
-possible.
-My learnings are:
-
-(1) Fork/exec per object won't work. People have lots and lots of =
-content
-    that is not suited for Git (e.g. integration test data, images, =
-...).
-
-(2) We need a good UI. I think it would be great if the average user =
-would=20
-    not even need to know about ODB. Moving files explicitly with a =
-"put"
-    command seems unpractical to me. GitLFS tracks files via filename =
-and
-    that has a number of drawbacks, too. Do you see a way to define a=20
-    customizable metric such as "move all files to ODB X that are gzip=20=
-
-    compressed larger than Y"?
-
-
-> Future work
-> ~~~~~~~~~~~
->=20
-> I think that the odb refs don't prevent a regular fetch or push from
-> wanting to send the objects that are managed by an external odb. So I
-> am interested in suggestions about this problem. I will take a look at
-> previous discussions and how other mechanisms (shallow clone, bundle
-> v3, ...) handle this.
-
-If the ODB configuration is stored in the Git repo similar to
-.gitmodules then every client that clones ODB references would be able
-to resolve them, right?
-
-Cheers,
-Lars
+--
+2.11.0
 
