@@ -2,87 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B43151FBB0
-	for <e@80x24.org>; Sat,  3 Dec 2016 07:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED3821FBB0
+	for <e@80x24.org>; Sat,  3 Dec 2016 07:49:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751411AbcLCG76 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Dec 2016 01:59:58 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:50999 "EHLO
-        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750900AbcLCG76 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Dec 2016 01:59:58 -0500
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id uB36xnV23558;
-        Sat, 3 Dec 2016 07:59:49 +0100
-Date:   Sat, 3 Dec 2016 07:59:49 +0100
-From:   Andreas Krey <a.krey@gmx.de>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: make --only --allow-empty work without paths
-Message-ID: <20161203065949.GG19570@inner.h.apk.li>
-References: <20161202221513.GA5370@inner.h.apk.li> <20161203043254.7ozjyucfn6uivnsh@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161203043254.7ozjyucfn6uivnsh@sigill.intra.peff.net>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+        id S1751401AbcLCHtj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Dec 2016 02:49:39 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:12618 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751062AbcLCHti (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Dec 2016 02:49:38 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tW3805Jpcz5tlL;
+        Sat,  3 Dec 2016 08:49:36 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id DC249140;
+        Sat,  3 Dec 2016 08:49:35 +0100 (CET)
+Subject: Re: git reset --hard should not irretrievably destroy new files
+To:     Julian de Bhal <julian.debhal@gmail.com>
+References: <CAJZCeG1Eu+5DfaxavX_WGUCa+SY+yepDWZhPXxiFcV__h0xjrw@mail.gmail.com>
+Cc:     git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f2f8c7c9-cbe0-870d-3c13-fc928dd91dd1@kdbg.org>
+Date:   Sat, 3 Dec 2016 08:49:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.0
+MIME-Version: 1.0
+In-Reply-To: <CAJZCeG1Eu+5DfaxavX_WGUCa+SY+yepDWZhPXxiFcV__h0xjrw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 02 Dec 2016 23:32:55 +0000, Jeff King wrote:
-> On Fri, Dec 02, 2016 at 11:15:13PM +0100, Andreas Krey wrote:
-> 
-> > --only is implied when paths are present, and required
-> > them unless --amend. But with --allow-empty it should
-> > be allowed as well - it is the only way to create an
-> > empty commit in the presence of staged changes.
-> 
-> OK. I'm not sure why you would want to create an empty commit in such a
-> case.
+Am 03.12.2016 um 06:04 schrieb Julian de Bhal:
+> If you `git add new_file; git reset --hard`, new_file is gone forever.
 
-User: Ok tool, make me a pullreq.
+AFAIC, this is a feature ;-) I occasionally use it to remove a file when 
+I already have git-gui in front of me. Then it's often less convenient 
+to type the path in a shell, or to pointy-click around in a file browser.
 
-Tool: But you haven't mentioned any issue
-      in your commit messages. Which are they?
+> git add new_file
 
-User: Ok, that would be A-123.
+Because of this ...
 
-Tool: git commit --allow-empty -m 'FIX: A-123'
+> git add -p                       # also not necessary, but distracting
+> git reset --hard                 # decided copy from backed up diff
+> # boom. new_file is gone forever
 
-Originally we checked that the status output was
-empty, and later added an option for 'yes, I know
-that there are uncommitted changes; I don't want
-them included'.
+... it is not. The file is still among the dangling blobs in the 
+repository until you clean it up with 'git gc'. Use 'git fsck --lost-found':
 
-And then someone had staged changes, which lead me here,
-because there is no way now to create an empty commit
-(just for the commit message) in that situation.
-Amending the previous commit wouldn't fly with us
-because of a local ban on non-fast-forward pushes.
+--lost-found
 
-...
-> > (The interdepence of the tests is a strange thing;
-> > making --run=N somewhat pointless.)
-> 
-> Yes, I think --run is a misfeature (I actually had to look it up, as I
-...
-> implicit. If a single test script is annoyingly long to run, I'd argue
+     Write dangling objects into .git/lost-found/commit/ or 
+.git/lost-found/other/, depending on type. If the object is a blob, the 
+contents are written into the file, rather than its object name.
 
-It wasn't about runtime but about output. I would have
-liked to see only the output of my still-failing test;
-a 'stop after test X' would be helpful there.
+-- Hannes
 
-Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
