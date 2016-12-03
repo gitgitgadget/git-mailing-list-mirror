@@ -2,144 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51EE51FC96
-	for <e@80x24.org>; Fri,  2 Dec 2016 23:43:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0B2A1FC96
+	for <e@80x24.org>; Sat,  3 Dec 2016 00:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755585AbcLBXn1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 18:43:27 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34094 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752731AbcLBXnR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2016 18:43:17 -0500
-Received: by mail-pf0-f169.google.com with SMTP id c4so54958459pfb.1
-        for <git@vger.kernel.org>; Fri, 02 Dec 2016 15:42:26 -0800 (PST)
+        id S1753150AbcLCAXz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 19:23:55 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:33195 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752550AbcLCAXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2016 19:23:54 -0500
+Received: by mail-pg0-f48.google.com with SMTP id 3so112832479pgd.0
+        for <git@vger.kernel.org>; Fri, 02 Dec 2016 16:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NmJFitmKxLnxhnIL/MScg4zowf5Q7Q5JMTpxqlblDF0=;
-        b=jGoTUyLfSitBQDdS4a2wRQOZRQLV9oKKRUHasjEDuM/wHtkhLXf3+e1K1Ejwj3yUtI
-         g/GFnKWxzzwVb0/fvuvhl+dczqDnUeQ+nWMFtkqp1aqpkZPkZGFslwQsLs7/0M9XLYKT
-         7ovf3IeJotNHpNXHmtEfcu8IQmJ+mWttBDBqVzHlNwAPZrhw2c54/Ipi4sKVY1U7DCfd
-         eMe+KQbwejt3Ngqwv6atVjs8L4vEMsgZ1Hm7Q0/2HncP1OrCKqjrttfP8/remT5dRPJl
-         jyrkhW0X3Dto6dr6m2jxyUoSArnKKT9z7Am3H9BmIa/timKiAMg4T1mPlbYtYqcBdbLG
-         91Dw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tx9DPGU6qt/ML9gCuoHn26WRkEy6pujtvYEGRzzEzVs=;
+        b=po7cZ4QvmNeVcTRf/U6IRKuo+x1K1en4o1MzCvbLKmwTC+D5rZAuccJSiugNpWnf9I
+         5iVRIojt0uoe/YiJpDLYLdmQ+tNktVhefxHzJ7oYp8PUVoT6rbWBpV/D65CrL9Jk8rsr
+         +u3sht+qVK8tS8XMpZjze1GwzjN+KuJzgp3uPYvea64oEzxejJFfUVMJdpSIF/iZfhHk
+         C4MS0kPjVlkh3EjIyRixzmfSv3gpZ/ob+LLoEzALd7EYnpKQiTdEHn9qwJ/NE8LtFHdV
+         Mt5fDA9pthwaeDRrMEHLbtz8E9taFDn37qi7OfWfkTKzwhshprn+YABj4bhk1xr5kBrc
+         inNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=NmJFitmKxLnxhnIL/MScg4zowf5Q7Q5JMTpxqlblDF0=;
-        b=fqCApFiY1Ml2GK2GWbzO3H7+FiU3SCZRswAyWBUjK/19US+giyp48qQ4MekqZLDJ8I
-         6m8wtFhRfawMsD8XCXNmRFaZxH/xEYBxV71abEh5MYlrat87ThPJ7kVR0tcAQxK7oLbG
-         iN0OVPnhiYfsV+FrHSw2E+0/+2n7VcNZlSMzLyfiUUKLO+GiPck6hnvxucL2XjJ6UeTR
-         zs5BrFpVdh9ENJxWZJURBUY2Dkr1Zd5Bgo/vHMnDZgfc6qRqoOOyHyOKh2tXtq+430HR
-         G6BQTqyrI5JXN//kr75GtvQ35JhegrGACdXsAekyzb6FhxBf2z+V9/C5lid5eEczWYdk
-         b7aA==
-X-Gm-Message-State: AKaTC029BMBI8N2NqOfllHBlA7hCNiK+A4UZw6zgXaUKG1F2qy8IQuiC+Rodf4yUgxYBImHn
-X-Received: by 10.99.153.26 with SMTP id d26mr84299539pge.44.1480722146344;
-        Fri, 02 Dec 2016 15:42:26 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:99ac:e2be:c532:3e35])
-        by smtp.gmail.com with ESMTPSA id l69sm10156983pfk.34.2016.12.02.15.42.25
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tx9DPGU6qt/ML9gCuoHn26WRkEy6pujtvYEGRzzEzVs=;
+        b=jg2SL8HHx7nWEbQqRPWiisfVpe8MhS792gdeTr2OjgU94WHNtL/Qifp2MHHzk/sYJY
+         sEX9fHrNbG478xKnX1kcPFpSauQ1ZwIopWF1Q89suefCeTr5idPJNMJjU/XKaHg/FKOk
+         SBHZ6Doaj9kfPynwX2NauRFZj/q7yhB3L4p+f0WOsrUVE0R08IqgdS8R6w0LhzS0ZX0a
+         eSjKUuwtLDVhexjmYx01WvpL1e/ewJ6lXqPk8BtUphuQWQdmc63TthF1C9kbUH22Gnts
+         7lWTdoUl/HNtvUlQPueKCUjt8fiwhpdMnahn4DVSFtVdukNxNPCyrzJsbiq7sqQYObbM
+         rPdw==
+X-Gm-Message-State: AKaTC00El0pSm3ikoL+Vm4cAFWOJX+igUFobCRKdYqMIBv3ByDcysiDa3XIX4Kojcnji+YDX
+X-Received: by 10.84.209.136 with SMTP id y8mr103099299plh.114.1480724213754;
+        Fri, 02 Dec 2016 16:16:53 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:217c:34ba:fcf8:d822])
+        by smtp.gmail.com with ESMTPSA id o68sm10208672pfb.42.2016.12.02.16.16.52
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Dec 2016 15:42:25 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     pclouds@gmail.com, bmwill@google.com, gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 2/5] submodule helper: support super prefix
-Date:   Fri,  2 Dec 2016 15:42:17 -0800
-Message-Id: <20161202234220.24664-3-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.rc2.28.g2673dad
-In-Reply-To: <20161202234220.24664-1-sbeller@google.com>
-References: <20161202234220.24664-1-sbeller@google.com>
+        Fri, 02 Dec 2016 16:16:52 -0800 (PST)
+Date:   Fri, 2 Dec 2016 16:16:51 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v6 1/6] submodules: add helper functions to determine
+ presence of submodules
+Message-ID: <20161203001651.GE117792@google.com>
+References: <20161201205444.GG54082@google.com>
+ <20161201205944.2py2ijranq4g2wap@sigill.intra.peff.net>
+ <CAGZ79kaqzssfN_bRQYpqC9HsKmyQZNCQcs+T5ke95Sf-C5PaRQ@mail.gmail.com>
+ <20161201215934.g7dt5ioekmx6ssii@sigill.intra.peff.net>
+ <20161202183622.GB117792@google.com>
+ <CA+P7+xpoO=ieRyQb8r8Xz12nN10f53LKeVMgAO8XPdSwvG7fuA@mail.gmail.com>
+ <20161202184944.GC117792@google.com>
+ <CA+P7+xoi_UNSv-dKVFWf7T4o3uBtGa0wR6=nnYX+kjzLAmw6ug@mail.gmail.com>
+ <CAGZ79kYPpc0=NAJaNPW+8faszOPAkq=b3m-EopY5A8oFwh+9=g@mail.gmail.com>
+ <20161202214529.mjekdaixrdoyroxq@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161202214529.mjekdaixrdoyroxq@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like main commands in Git, the submodule helper needs
-access to the superproject prefix. Enable this in the git.c
-but have its own fuse in the helper code by having a flag to
-turn on the super prefix.
+On 12/02, Jeff King wrote:
+> On Fri, Dec 02, 2016 at 11:28:49AM -0800, Stefan Beller wrote:
+> 
+> > I just reviewed 2 libc implementations (glibc and an Android libc) and
+> > both of them
+> > do not use chdir internally, but use readlink and compose the path 'manually'
+> > c.f. http://osxr.org:8080/glibc/source/stdlib/canonicalize.c?v=glibc-2.13
+> 
+> Interesting. It might be worth updating our implementation. The original
+> comes all the way from 54f4b8745 (Library code for user-relative paths,
+> take three., 2005-11-17). That references a suggestion which I think
+> comes from:
+> 
+>   http://public-inbox.org/git/Pine.LNX.4.64.0510181728490.3369@g5.osdl.org/
+> 
+> where it's claimed to be simpler and more efficient (which sounds
+> plausible to me).  But back then it was _just_ git-daemon doing a
+> canonicalization, and nobody cared about things like thread safety.
+> 
+> Looking at the glibc implementation, it's really not that bad. We
+> _could_ even rely on the system realpath() and just provide our own
+> fallback for systems without it, but I think ours might be a little more
+> featureful (at the very least, it handles arbitrary-sized paths via
+> strbufs).
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/submodule--helper.c | 31 ++++++++++++++++++++-----------
- git.c                       |  2 +-
- 2 files changed, 21 insertions(+), 12 deletions(-)
+I've actually been working on updating our implementation of realpath
+today.  Its slow going but we'll see if it works when i'm done :)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4beeda5f9f..806e29ce4e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1076,21 +1076,24 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
- 	return 0;
- }
- 
-+#define SUPPORT_SUPER_PREFIX (1<<0)
-+
- struct cmd_struct {
- 	const char *cmd;
- 	int (*fn)(int, const char **, const char *);
-+	int option;
- };
- 
- static struct cmd_struct commands[] = {
--	{"list", module_list},
--	{"name", module_name},
--	{"clone", module_clone},
--	{"update-clone", update_clone},
--	{"relative-path", resolve_relative_path},
--	{"resolve-relative-url", resolve_relative_url},
--	{"resolve-relative-url-test", resolve_relative_url_test},
--	{"init", module_init},
--	{"remote-branch", resolve_remote_submodule_branch}
-+	{"list", module_list, 0},
-+	{"name", module_name, 0},
-+	{"clone", module_clone, 0},
-+	{"update-clone", update_clone, 0},
-+	{"relative-path", resolve_relative_path, 0},
-+	{"resolve-relative-url", resolve_relative_url, 0},
-+	{"resolve-relative-url-test", resolve_relative_url_test, 0},
-+	{"init", module_init, 0},
-+	{"remote-branch", resolve_remote_submodule_branch, 0}
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-@@ -1100,9 +1103,15 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 		die(_("submodule--helper subcommand must be "
- 		      "called with a subcommand"));
- 
--	for (i = 0; i < ARRAY_SIZE(commands); i++)
--		if (!strcmp(argv[1], commands[i].cmd))
-+	for (i = 0; i < ARRAY_SIZE(commands); i++) {
-+		if (!strcmp(argv[1], commands[i].cmd)) {
-+			if (get_super_prefix() &&
-+			    !(commands[i].option & SUPPORT_SUPER_PREFIX))
-+				die("%s doesn't support --super-prefix",
-+				    commands[i].cmd);
- 			return commands[i].fn(argc - 1, argv + 1, prefix);
-+		}
-+	}
- 
- 	die(_("'%s' is not a valid submodule--helper "
- 	      "subcommand"), argv[1]);
-diff --git a/git.c b/git.c
-index efa1059fe0..98dcf6c518 100644
---- a/git.c
-+++ b/git.c
-@@ -493,7 +493,7 @@ static struct cmd_struct commands[] = {
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 	{ "stripspace", cmd_stripspace },
--	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP },
-+	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
- 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
- 	{ "tag", cmd_tag, RUN_SETUP },
- 	{ "unpack-file", cmd_unpack_file, RUN_SETUP },
+Also we can just drop in realpath since it requires that all path
+components are valid, while ours allows for the final component to be
+invalid.
+
 -- 
-2.11.0.rc2.28.g2673dad
-
+Brandon Williams
