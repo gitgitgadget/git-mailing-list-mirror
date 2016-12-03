@@ -2,124 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F2AF1FC96
-	for <e@80x24.org>; Sat,  3 Dec 2016 01:56:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B1EA1FC96
+	for <e@80x24.org>; Sat,  3 Dec 2016 04:36:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758004AbcLCBxt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 20:53:49 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33067 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752156AbcLCBxt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2016 20:53:49 -0500
-Received: by mail-io0-f173.google.com with SMTP id j65so512686157iof.0
-        for <git@vger.kernel.org>; Fri, 02 Dec 2016 17:52:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=Oxi2MAa3Q5ZRBIP1Gv8pSob0Qu+pSZEKBBPcej+Qsz4=;
-        b=KRoKIpIoTR8X8TRPP++yslAoKm9CKa5ZkOf+9hjnptyvZ/QBn+DiLAeP8UuDEF8tU+
-         OY4T8+ktfdRtrmUaxcG6seCXKxTQyArGV2n3+BAJ3lJo6AJLJapIoIeTs06Xt2I+8ClM
-         EfKQDdIHJ6TE3aSbcfZdDUL5vBkkBcBeFO092PM8iUEMxYpiOJirmT6VV5fDY7Dx7Its
-         QhdYN7yr5yQBmgKuQ3lqk1d6OjxZ3Zl9R6XGwGtebeKNAAwtdQzWkBDTYHn14OXLJPZf
-         9FneudtFVk171Dhb1jjHjnFf3ZsPD8B2ydw1hN7ob7WN9gZlTB3gDVPPcvIlUtcTuv98
-         PB+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=Oxi2MAa3Q5ZRBIP1Gv8pSob0Qu+pSZEKBBPcej+Qsz4=;
-        b=D4DVm+fQY/T6i73iGjwTA2/kzneAhk7hx+eV/CApxjufhudaPupCsHR9Fd3V8E7SjH
-         ew87IroTyDjtkeSgcxZFjWZe1EJlWVVCK+JTDjPwxGZ0AIFQOb9QrOtY8svUYwPW/0Dl
-         ngR29vCm2RL7hMVI9q0MGUd3QIGPCM9UEdVRZp7W7ZOnkwPcXNP0zW9AHsYD+NuJC//P
-         /Kph7SJvEgaGMMgA3ti2pEPZxvVK7R/dos2IcUZQC869bVWSOEK8yQeEiMBPw2PBht5H
-         f0g2c0FAugVlovgMzt0CUTQLhwbBPbSpGyXLmc9eebUzXgc7nyUqyriB/oUM1s8yUb24
-         kXFQ==
-X-Gm-Message-State: AKaTC02ngLQ+HgOLkyhyqowW/XJ9U9+xvAgsiqWs6WUzS26Wh075py1HIZGch5ps/5DtgFJoFcSZ2IzQr0tmhFMv
-X-Received: by 10.36.250.196 with SMTP id v187mr82792ith.91.1480729935951;
- Fri, 02 Dec 2016 17:52:15 -0800 (PST)
+        id S1752110AbcLCEc6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 23:32:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51053 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751066AbcLCEc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2016 23:32:57 -0500
+Received: (qmail 1962 invoked by uid 109); 3 Dec 2016 04:32:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Dec 2016 04:32:57 +0000
+Received: (qmail 19508 invoked by uid 111); 3 Dec 2016 04:33:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Dec 2016 23:33:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Dec 2016 23:32:55 -0500
+Date:   Fri, 2 Dec 2016 23:32:55 -0500
+From:   Jeff King <peff@peff.net>
+To:     Andreas Krey <a.krey@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: make --only --allow-empty work without paths
+Message-ID: <20161203043254.7ozjyucfn6uivnsh@sigill.intra.peff.net>
+References: <20161202221513.GA5370@inner.h.apk.li>
 MIME-Version: 1.0
-Received: by 10.107.150.65 with HTTP; Fri, 2 Dec 2016 17:52:15 -0800 (PST)
-In-Reply-To: <CA+q_oBdHytoeSD-hmLx_N473M8XinjqckvE35Re3eNpQRWYjHQ@mail.gmail.com>
-References: <CA+q_oBdHytoeSD-hmLx_N473M8XinjqckvE35Re3eNpQRWYjHQ@mail.gmail.com>
-From:   Robbie Iannucci <iannucci@google.com>
-Date:   Fri, 2 Dec 2016 17:52:15 -0800
-Message-ID: <CA+q_oBc77Z7YW0yqPPB-R_HkAUtno1bDDTx3tR22ScRpC96ZcA@mail.gmail.com>
-Subject: Re: [BUG] Index.lock error message regression in git 2.11.0
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161202221513.GA5370@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apparently I'm not supposed to send attachments >_<. Here's the script
-in non-attachement form:
+On Fri, Dec 02, 2016 at 11:15:13PM +0100, Andreas Krey wrote:
 
---------
+> --only is implied when paths are present, and required
+> them unless --amend. But with --allow-empty it should
+> be allowed as well - it is the only way to create an
+> empty commit in the presence of staged changes.
 
-#!/bin/bash
+OK. I'm not sure why you would want to create an empty commit in such a
+case. But I do agree that this seems like a natural outcome for "--only
+--allow-empty". So whether it is particularly useful or not, it seems
+like the right thing to do. The patch itself looks good to me.
 
-make -j 8 2>&1 > /dev/null
-if [[ $? != 0 ]]; then
-  # skip this version
-  exit 125
-fi
-git=`realpath ./git`
+> Arguably, requiring paths with --only is
+> pointless anyway because it is implicit
+> in that case, but I'm happy when it works
+> like in this patch.
 
-rm -rf .test_repo || true
-mkdir .test_repo
+I think the point is just to warn the user that what they've asked for
+is by definition a noop (and that's why there's already an exception for
+--amend, which _does_ make it do something). The fact that --only is
+implicit with paths is mostly historical; at one point it was not the
+default. These days it's unnecessary, but retained for backwards
+compatibility.
 
-cd .test_repo
-$git init
+> (The interdepence of the tests is a strange thing;
+> making --run=N somewhat pointless.)
 
-echo HELLO > a
-$git add a
-$git commit -m 'initial_commit'
-$git branch --track new_branch
+Yes, I think --run is a misfeature (I actually had to look it up, as I
+had completely forgotten that it was added). It's too hard to know which
+tests are required setup for later ones, and often the dependency is
+implicit. If a single test script is annoyingly long to run, I'd argue
+it should be broken out into its own script (and that will let it run in
+parallel when the full suite is run, too). I don't know that t7501
+qualifies, though; it runs in about 800ms on my machine.
 
-$git checkout master
-echo HELLO >> a
-$git add a
-$git commit -m 'second_commit'
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 8976c3d29..89b66816f 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1206,7 +1206,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>  
+>  	if (also + only + all + interactive > 1)
+>  		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+> -	if (argc == 0 && (also || (only && !amend)))
+> +	if (argc == 0 && (also || (only && !amend && !allow_empty)))
+>  		die(_("No paths with --include/--only does not make sense."));
+>  	if (argc == 0 && only && amend)
+>  		only_include_assumed = _("Clever... amending the last one with dirty index.");
 
-$git checkout new_branch
+I think this should be sufficient. Obviously we'll end up with an empty
+commit, but allow_empty should cover that case later on.
 
-touch .git/index.lock
-if $git merge --ff-only master 2>&1 | grep -F "index.lock" ; then
-  echo OK
-  exit 0
-fi
-echo Message is missing
-exit 1
+> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+> index d84897a67..0d8d89309 100755
+> --- a/t/t7501-commit.sh
+> +++ b/t/t7501-commit.sh
+> @@ -155,6 +155,15 @@ test_expect_success 'amend --only ignores staged contents' '
+>  	git diff --exit-code
+>  '
+>  
+> +test_expect_success 'allow-empty --only ignores staged contents' '
+> +	echo changed-again >file &&
+> +	git add file &&
+> +	git commit --allow-empty --only -m "empty" &&
+> +	git cat-file blob HEAD:file >file.actual &&
+> +	test_cmp file.expect file.actual &&
+> +	git diff --exit-code
+> +'
+> +
 
-On Fri, Dec 2, 2016 at 5:44 PM, Robbie Iannucci <iannucci@google.com> wrote:
-> Hello,
->
-> I just upgraded to 2.11.0 from 2.10.2, and I noticed that some
-> commands no longer print an error message when the `index.lock` file
-> exists (such as `git merge --ff-only`).
->
-> It appears this bug was introduced in
-> 55f5704da69d3e6836620f01bee0093ad5e331e8 (sequencer: lib'ify
-> checkout_fast_forward()). I determined this by running the attached
-> bisect script (on OS X, but I don't think that matters; I've also seen
-> the error message missing on Linux):
->
-> $ cd /path/to/git/src
-> $ git bisect start v2.11.0-rc0 v2.10.2
-> $ git bisect run /path/to/bisect.test.sh
->
-> (my original version of the script also includes some other makefile
-> parameters to get a modern version of gettext and openssl too, but
-> they're not relevant to this ML).
->
-> I'm not certain that I have enough context to propose a meaningful
-> patch though :/.
->
-> Cheers,
-> Robbie
+Usually we'd put new tests at the end. I guess you wanted this here to
+match the "--amend --only" test before it. That kind of sticks this
+oddball in the middle of a bunch of --amend tests, but I'm not sure it
+would go better anywhere else. So I'm fine with it here.
+
+-Peff
