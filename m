@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C601FC96
-	for <e@80x24.org>; Sat,  3 Dec 2016 00:31:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2AF203EA
+	for <e@80x24.org>; Sat,  3 Dec 2016 00:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757117AbcLCAbA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Dec 2016 19:31:00 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:33671 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755299AbcLCAat (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1757302AbcLCAbD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Dec 2016 19:31:03 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:32970 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754720AbcLCAat (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 2 Dec 2016 19:30:49 -0500
-Received: by mail-pf0-f181.google.com with SMTP id d2so55121919pfd.0
-        for <git@vger.kernel.org>; Fri, 02 Dec 2016 16:30:44 -0800 (PST)
+Received: by mail-pg0-f44.google.com with SMTP id 3so112882867pgd.0
+        for <git@vger.kernel.org>; Fri, 02 Dec 2016 16:30:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=njlAm61+8nuTmeJqwmkUvUyTjPwHeGcya3cWTQjrzck=;
-        b=lBaKUowGrXvmKEbwAMtGz7otompLV9JgkrAXya7jSmMglq+U3fCcgjczQiwnE9je9s
-         EYBcvcgSreQVUsveBMeStdHDx9l4ilzd0H6jSonQ1Lu6TH2v0FSvvOZOYT3TK1Jr5KRv
-         YbCi8asEshXpOd+io2z2LVtylqv5q3kiHO8eJd3BC+ArtAurpwmpwpjqToxPOWQVmQpO
-         zvHIbdJdEDWiobMuSQ43XD02FantNWUsAku5Pas/LZ/O5Ge0FHVmQXS1sl6z55Saqp7d
-         KhE3KysIaFL2bDZSM6bVbEfjg/RH/9+JiJdsJZ9VRI7TB55c4GCfN78YkLko+YlJvx6U
-         UnxQ==
+        bh=Mx+deCGPQM3HE2sw91xL6W4DgQ4ZzJL96h2wnPD0uwg=;
+        b=pIAzGOWRyqGkz9AeaaMJnfXxQh27vat+kPR5PPx4FkG6NXkQPTkNf1CyK4aD1twMdZ
+         SkR7meBFgFAwWNI1l4p5opxUsotMAAQUdabqbpzoVxic0+0eErWtlKZoIw/mA5bVwF6e
+         YdgqdTeUJa376EnlvMcDIgmCNKVDWjqBTfartD+oWAqFcyX+4qA+iF+rZVK6FwwrtyFr
+         Fge08dslecM+pgWaXFnRZfK2A6Un6mj5cP0qEa6z6B10aBaq0WLHYGuMdymyD//oH5aF
+         +438uzbLwVoi08BTbQMjnkm9oprP+/gMd8U/Kg4HPbkX02ZF5/EIv/zD3IZZA3nUQU1S
+         UkLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=njlAm61+8nuTmeJqwmkUvUyTjPwHeGcya3cWTQjrzck=;
-        b=crIhH3lYLVnC4owGjDJUuQbF7QgBZk/OC3Oy+ysBQHFjzAtFyKEjz8L9YJTyznRS4i
-         0baQ1qZsT0o0CP5aDu5GHr3BDQGV9uxF2Ua9TgDVLNRiNMaBX1qZb9A4Gv+AYCWSTNDd
-         aELITO6goORsWDI/PBnvCBR3xgayVzZNFnWHC8XRlktMGO5R4GL/aK15QuVDcRdy+ooA
-         ZD7XW0tuTREqfCTs99UWhP3cclMKyOBDxNn44YEW6e+gUiu0balidysd624F1VvwrPZ5
-         lvGsX+UgoeFpHPMjKbfuzEEcPQdZM7AL75m0sZHwkByP+Rcf1U0TDbjCnZA5RC+mR3Db
-         NHGg==
-X-Gm-Message-State: AKaTC024PUwY1dIhYpH3WcnEolCYEqVZIoTvUyet7Xt2cRbDiD8+pFJh0YAPsSZqGO+zi68k
-X-Received: by 10.84.218.72 with SMTP id f8mr102445193plm.141.1480725043874;
-        Fri, 02 Dec 2016 16:30:43 -0800 (PST)
+        bh=Mx+deCGPQM3HE2sw91xL6W4DgQ4ZzJL96h2wnPD0uwg=;
+        b=AByWp2Spvyz8aq2PUyEM7IqHWDyQnxzYjMNcZF5QUBMG2YtB0hu3XGCBiAoeULWZnm
+         cbs47mEX/XnNT7sQwlm3bUd/4ABqeCOIuqEBRDMMH9/BNC9qM4dLMRglwgbAx5eF2iRD
+         SNr1zE8dXTmC2283iOofj4fCkj0JioWe/8lLTt/SWYL5d0FtTmnfYsy7sxMUX+d09eav
+         YlGik9uS9Xiw8H1JVbgaqge4e6AILDa6T1zPWkjDEA2tSo65lbytQW85mqfajm8YJ0NN
+         qSQNS5B9BO7TSlEbzMkON07qFUXdQ1/goTQkPzcT10SABftHyxu3Ve6dBaxWZ8t4qgN+
+         JtJg==
+X-Gm-Message-State: AKaTC03u/C65VIojdl4mvIYkc0lRV4l9z3y3GAU8qbit/gSomX4ClESXqKBTweON2xxhCSJ6
+X-Received: by 10.99.99.195 with SMTP id x186mr85004580pgb.100.1480725041449;
+        Fri, 02 Dec 2016 16:30:41 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:99ac:e2be:c532:3e35])
-        by smtp.gmail.com with ESMTPSA id i76sm10147776pfk.89.2016.12.02.16.30.43
+        by smtp.gmail.com with ESMTPSA id l11sm10263238pfb.28.2016.12.02.16.30.40
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Dec 2016 16:30:43 -0800 (PST)
+        Fri, 02 Dec 2016 16:30:41 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com, David.Turner@twosigma.com
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         hvoigt@hvoigt.net, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [RFC PATCHv2 09/17] update submodules: add scheduling to update submodules
-Date:   Fri,  2 Dec 2016 16:30:14 -0800
-Message-Id: <20161203003022.29797-10-sbeller@google.com>
+Subject: [RFC PATCHv2 07/17] update submodules: introduce submodule_is_interesting
+Date:   Fri,  2 Dec 2016 16:30:12 -0800
+Message-Id: <20161203003022.29797-8-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.28.g2673dad
 In-Reply-To: <20161203003022.29797-1-sbeller@google.com>
 References: <20161203003022.29797-1-sbeller@google.com>
@@ -61,170 +61,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The walker of a tree is only expected to call `schedule_submodule_for_update`
-and once done, to run `update_submodules`. This avoids directory/file
-conflicts and later we can parallelize all submodule actions if needed.
+In later patches we introduce the --recurse-submodule flag for commands
+that modify the working directory, e.g. git-checkout.
+
+It is potentially expensive to check if a submodule needs an update,
+because a common theme to interact with submodules is to spawn a child
+process for each interaction.
+
+So let's introduce a function that pre checks if a submodule needs
+to be checked for an update.
+
+I am not particular happy with the name `submodule_is_interesting`,
+in internal iterations I had `submodule_requires_check_for_update`
+and `submodule_needs_update`, but I was even less happy with those
+names. Maybe `submodule_interesting_for_update`?
+
+Generally this is to answer "Am I allowed to touch the submodule
+at all?" or: "Does the user expect me to touch it?"
+which includes all of creation/deletion/update.
+
+This patch is based off a prior attempt by Jens Lehmann to add
+submodules to checkout.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 132 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- submodule.h |   5 +++
- 2 files changed, 137 insertions(+)
+ submodule.c | 23 +++++++++++++++++++++++
+ submodule.h |  9 +++++++++
+ 2 files changed, 32 insertions(+)
 
 diff --git a/submodule.c b/submodule.c
-index 7bb64d6c69..02c28ef56b 100644
+index 1ba398ba3b..62e9ef3872 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1348,3 +1348,135 @@ int parallel_submodules(void)
- {
- 	return parallel_jobs;
+@@ -516,6 +516,29 @@ void set_config_update_recurse_submodules(int value)
+ 	config_update_recurse_submodules = value;
  }
-+
-+static struct scheduled_submodules_update_type {
-+	const char *path;
-+	const struct object_id *oid;
+ 
++int submodules_interesting_for_update(void)
++{
 +	/*
-+	 * Do we need to perform a complete checkout or just incremental
-+	 * update?
++	 * Update can't be "none", "merge" or "rebase",
++	 * treat any value as OFF, except an explicit ON.
 +	 */
-+	unsigned is_new:1;
-+} *scheduled_submodules;
-+#define SCHEDULED_SUBMODULES_INIT {NULL, NULL, 0}
-+
-+static int scheduled_submodules_nr, scheduled_submodules_alloc;
-+
-+void schedule_submodule_for_update(const struct cache_entry *ce, int is_new)
-+{
-+	struct scheduled_submodules_update_type *ssu;
-+	ALLOC_GROW(scheduled_submodules,
-+		   scheduled_submodules_nr + 1,
-+		   scheduled_submodules_alloc);
-+	ssu = &scheduled_submodules[scheduled_submodules_nr++];
-+	ssu->path = ce->name;
-+	ssu->oid = &ce->oid;
-+	ssu->is_new = !!is_new;
++	return config_update_recurse_submodules == RECURSE_SUBMODULES_ON;
 +}
 +
-+static int update_submodule(const char *path, const struct object_id *oid,
-+			    int force, int is_new)
++int submodule_is_interesting(const char *path)
 +{
-+	const char *git_dir;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	const struct submodule *sub = submodule_from_path(null_sha1, path);
++	const struct submodule *sub;
 +
-+	if (!sub || !sub->name)
-+		return -1;
++	if (!submodules_interesting_for_update())
++		return 0;
 +
-+	git_dir = resolve_gitdir(git_common_path("modules/%s", sub->name));
++	sub = submodule_from_path(null_sha1, path);
++	if (!sub)
++		return 0;
 +
-+	if (!git_dir)
-+		return -1;
-+
-+	if (is_new)
-+		connect_work_tree_and_git_dir(path, git_dir);
-+
-+	/* update index via `read-tree --reset sha1` */
-+	argv_array_pushl(&cp.args, "read-tree",
-+				   force ? "--reset" : "-m",
-+				   "-u", sha1_to_hex(oid->hash), NULL);
-+	prepare_submodule_repo_env(&cp.env_array);
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+	if (run_command(&cp)) {
-+		warning(_("reading the index in submodule '%s' failed"), path);
-+		child_process_clear(&cp);
-+		return -1;
-+	}
-+
-+	/* write index to working dir */
-+	child_process_clear(&cp);
-+	child_process_init(&cp);
-+	argv_array_pushl(&cp.args, "checkout-index", "-a", NULL);
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+	if (force)
-+		argv_array_push(&cp.args, "-f");
-+
-+	if (run_command(&cp)) {
-+		warning(_("populating the working directory in submodule '%s' failed"), path);
-+		child_process_clear(&cp);
-+		return -1;
-+	}
-+
-+	/* get the HEAD right */
-+	child_process_clear(&cp);
-+	child_process_init(&cp);
-+	argv_array_pushl(&cp.args, "checkout", "--recurse-submodules", NULL);
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+	if (force)
-+		argv_array_push(&cp.args, "-f");
-+	argv_array_push(&cp.args, sha1_to_hex(oid->hash));
-+
-+	if (run_command(&cp)) {
-+		warning(_("setting the HEAD in submodule '%s' failed"), path);
-+		child_process_clear(&cp);
-+		return -1;
-+	}
-+
-+	child_process_clear(&cp);
-+	return 0;
++	return sub->update_strategy.type != SM_UPDATE_NONE;
 +}
 +
-+int update_submodules(int force)
-+{
-+	int i;
-+	gitmodules_config();
-+
-+	/*
-+	 * NEEDSWORK: As submodule updates can potentially take some
-+	 * time each and they do not overlap (i.e. no d/f conflicts;
-+	 * this can be parallelized using the run_commands.h API.
-+	 */
-+	for (i = 0; i < scheduled_submodules_nr; i++) {
-+		struct submodule *sub;
-+		struct scheduled_submodules_update_type *ssu =
-+			&scheduled_submodules[i];
-+
-+		if (!submodule_is_interesting(ssu->path))
-+			continue;
-+
-+		sub = submodule_from_path(null_sha1, ssu->path);
-+
-+		switch (sub->update_strategy) {
-+		case SM_UPDATE_UNSPECIFIED: /* fall thru */
-+		case SM_UPDATE_CHECKOUT:
-+			update_submodule(ssu->path, ssu->oid,
-+					 force, ssu->is_new);
-+			break;
-+		case SM_UPDATE_REBASE:
-+		case SM_UPDATE_MERGE:
-+		case SM_UPDATE_NONE:
-+		case SM_UPDATE_COMMAND:
-+			warning("update strategy for submodule '%s' not supported", ssu->path);
-+		}
-+	}
-+
-+	scheduled_submodules_nr = 0;
-+	return 0;
-+}
+ static int has_remote(const char *refname, const struct object_id *oid,
+ 		      int flags, void *cb_data)
+ {
 diff --git a/submodule.h b/submodule.h
-index d8bb1d4baf..74df8b93d5 100644
+index 21236b095c..7d890e0464 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -90,4 +90,9 @@ extern int parallel_submodules(void);
-  * retaining any config in the environment.
-  */
- extern void prepare_submodule_repo_env(struct argv_array *out);
+@@ -54,6 +54,15 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const struct diff_options *opt);
+ extern void set_config_fetch_recurse_submodules(int value);
+ extern void set_config_update_recurse_submodules(int value);
 +
-+extern void schedule_submodule_for_update(const struct cache_entry *ce,
-+					  int new);
-+extern int update_submodules(int force);
-+
- #endif
++/**
++ * When updating the working tree, we need to check if the submodule needs
++ * updating. We do not require a check if we are already sure that the
++ * submodule doesn't need updating, e.g. when we are not interested in submodules
++ * or the submodule is marked uninteresting by being not initialized.
++ */
++extern int submodule_is_interesting(const char *path);
++extern int submodules_interesting_for_update(void);
+ extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+ extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
 -- 
 2.11.0.rc2.28.g2673dad
 
