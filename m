@@ -2,281 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB5F20472
-	for <e@80x24.org>; Sat,  3 Dec 2016 13:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3731FF40
+	for <e@80x24.org>; Sat,  3 Dec 2016 16:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752387AbcLCNTq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Dec 2016 08:19:46 -0500
-Received: from mx1.2b3w.ch ([92.42.186.250]:35519 "EHLO mx1.2b3w.ch"
+        id S1751549AbcLCQXd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Dec 2016 11:23:33 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51216 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751561AbcLCNTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Dec 2016 08:19:44 -0500
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-        by mx1.2b3w.ch (Postfix) with ESMTP id 051B6C347C;
-        Sat,  3 Dec 2016 14:19:39 +0100 (CET)
-Received: from drbeat.li (215-243-153-5.dyn.cable.fcom.ch [5.153.243.215])
-        by mx1.2b3w.ch (Postfix) with ESMTPSA id D7B82C3475;
-        Sat,  3 Dec 2016 14:19:38 +0100 (CET)
-Received: by drbeat.li (Postfix, from userid 1000)
-        id B12AC201A9; Sat,  3 Dec 2016 14:19:38 +0100 (CET)
-From:   Beat Bolli <dev+git@drbeat.li>
-To:     git@vger.kernel.org
-Cc:     Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v3 3/3] unicode_width.h: update the tables to Unicode 9.0
-Date:   Sat,  3 Dec 2016 14:19:33 +0100
-Message-Id: <1480771173-731-3-git-send-email-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.7.2
-In-Reply-To: <1480771173-731-1-git-send-email-dev+git@drbeat.li>
-References: <1480762392-28731-3-git-send-email-dev+git@drbeat.li>
- <1480771173-731-1-git-send-email-dev+git@drbeat.li>
-X-Virus-Scanned: ClamAV using ClamSMTP
+        id S1751241AbcLCQXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Dec 2016 11:23:33 -0500
+Received: (qmail 15617 invoked by uid 109); 3 Dec 2016 16:23:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Dec 2016 16:23:19 +0000
+Received: (qmail 21915 invoked by uid 111); 3 Dec 2016 16:23:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Dec 2016 11:23:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Dec 2016 11:23:18 -0500
+Date:   Sat, 3 Dec 2016 11:23:18 -0500
+From:   Jeff King <peff@peff.net>
+To:     Andreas Krey <a.krey@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: make --only --allow-empty work without paths
+Message-ID: <20161203162318.uv27n4uhylobegto@sigill.intra.peff.net>
+References: <20161202221513.GA5370@inner.h.apk.li>
+ <20161203043254.7ozjyucfn6uivnsh@sigill.intra.peff.net>
+ <20161203065949.GG19570@inner.h.apk.li>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161203065949.GG19570@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rerunning update-unicode.sh that we fixed in the two previous commits
-produces these new tables.
+On Sat, Dec 03, 2016 at 07:59:49AM +0100, Andreas Krey wrote:
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- unicode_width.h | 131 +++++++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 107 insertions(+), 24 deletions(-)
+> > OK. I'm not sure why you would want to create an empty commit in such a
+> > case.
+> 
+> User: Ok tool, make me a pullreq.
+> 
+> Tool: But you haven't mentioned any issue
+>       in your commit messages. Which are they?
+> 
+> User: Ok, that would be A-123.
+> 
+> Tool: git commit --allow-empty -m 'FIX: A-123'
 
-diff --git a/unicode_width.h b/unicode_width.h
-index 47cdd23..02207be 100644
---- a/unicode_width.h
-+++ b/unicode_width.h
-@@ -25,7 +25,7 @@ static const struct interval zero_width[] = {
- { 0x0825, 0x0827 },
- { 0x0829, 0x082D },
- { 0x0859, 0x085B },
--{ 0x08E4, 0x0902 },
-+{ 0x08D4, 0x0902 },
- { 0x093A, 0x093A },
- { 0x093C, 0x093C },
- { 0x0941, 0x0948 },
-@@ -120,6 +120,7 @@ static const struct interval zero_width[] = {
- { 0x17C9, 0x17D3 },
- { 0x17DD, 0x17DD },
- { 0x180B, 0x180E },
-+{ 0x1885, 0x1886 },
- { 0x18A9, 0x18A9 },
- { 0x1920, 0x1922 },
- { 0x1927, 0x1928 },
-@@ -158,7 +159,7 @@ static const struct interval zero_width[] = {
- { 0x1CF4, 0x1CF4 },
- { 0x1CF8, 0x1CF9 },
- { 0x1DC0, 0x1DF5 },
--{ 0x1DFC, 0x1DFF },
-+{ 0x1DFB, 0x1DFF },
- { 0x200B, 0x200F },
- { 0x202A, 0x202E },
- { 0x2060, 0x2064 },
-@@ -171,13 +172,13 @@ static const struct interval zero_width[] = {
- { 0x3099, 0x309A },
- { 0xA66F, 0xA672 },
- { 0xA674, 0xA67D },
--{ 0xA69F, 0xA69F },
-+{ 0xA69E, 0xA69F },
- { 0xA6F0, 0xA6F1 },
- { 0xA802, 0xA802 },
- { 0xA806, 0xA806 },
- { 0xA80B, 0xA80B },
- { 0xA825, 0xA826 },
--{ 0xA8C4, 0xA8C4 },
-+{ 0xA8C4, 0xA8C5 },
- { 0xA8E0, 0xA8F1 },
- { 0xA926, 0xA92D },
- { 0xA947, 0xA951 },
-@@ -204,7 +205,7 @@ static const struct interval zero_width[] = {
- { 0xABED, 0xABED },
- { 0xFB1E, 0xFB1E },
- { 0xFE00, 0xFE0F },
--{ 0xFE20, 0xFE2D },
-+{ 0xFE20, 0xFE2F },
- { 0xFEFF, 0xFEFF },
- { 0xFFF9, 0xFFFB },
- { 0x101FD, 0x101FD },
-@@ -228,16 +229,21 @@ static const struct interval zero_width[] = {
- { 0x11173, 0x11173 },
- { 0x11180, 0x11181 },
- { 0x111B6, 0x111BE },
-+{ 0x111CA, 0x111CC },
- { 0x1122F, 0x11231 },
- { 0x11234, 0x11234 },
- { 0x11236, 0x11237 },
-+{ 0x1123E, 0x1123E },
- { 0x112DF, 0x112DF },
- { 0x112E3, 0x112EA },
--{ 0x11301, 0x11301 },
-+{ 0x11300, 0x11301 },
- { 0x1133C, 0x1133C },
- { 0x11340, 0x11340 },
- { 0x11366, 0x1136C },
- { 0x11370, 0x11374 },
-+{ 0x11438, 0x1143F },
-+{ 0x11442, 0x11444 },
-+{ 0x11446, 0x11446 },
- { 0x114B3, 0x114B8 },
- { 0x114BA, 0x114BA },
- { 0x114BF, 0x114C0 },
-@@ -245,6 +251,7 @@ static const struct interval zero_width[] = {
- { 0x115B2, 0x115B5 },
- { 0x115BC, 0x115BD },
- { 0x115BF, 0x115C0 },
-+{ 0x115DC, 0x115DD },
- { 0x11633, 0x1163A },
- { 0x1163D, 0x1163D },
- { 0x1163F, 0x11640 },
-@@ -252,6 +259,16 @@ static const struct interval zero_width[] = {
- { 0x116AD, 0x116AD },
- { 0x116B0, 0x116B5 },
- { 0x116B7, 0x116B7 },
-+{ 0x1171D, 0x1171F },
-+{ 0x11722, 0x11725 },
-+{ 0x11727, 0x1172B },
-+{ 0x11C30, 0x11C36 },
-+{ 0x11C38, 0x11C3D },
-+{ 0x11C3F, 0x11C3F },
-+{ 0x11C92, 0x11CA7 },
-+{ 0x11CAA, 0x11CB0 },
-+{ 0x11CB2, 0x11CB3 },
-+{ 0x11CB5, 0x11CB6 },
- { 0x16AF0, 0x16AF4 },
- { 0x16B30, 0x16B36 },
- { 0x16F8F, 0x16F92 },
-@@ -262,31 +279,59 @@ static const struct interval zero_width[] = {
- { 0x1D185, 0x1D18B },
- { 0x1D1AA, 0x1D1AD },
- { 0x1D242, 0x1D244 },
-+{ 0x1DA00, 0x1DA36 },
-+{ 0x1DA3B, 0x1DA6C },
-+{ 0x1DA75, 0x1DA75 },
-+{ 0x1DA84, 0x1DA84 },
-+{ 0x1DA9B, 0x1DA9F },
-+{ 0x1DAA1, 0x1DAAF },
-+{ 0x1E000, 0x1E006 },
-+{ 0x1E008, 0x1E018 },
-+{ 0x1E01B, 0x1E021 },
-+{ 0x1E023, 0x1E024 },
-+{ 0x1E026, 0x1E02A },
- { 0x1E8D0, 0x1E8D6 },
-+{ 0x1E944, 0x1E94A },
- { 0xE0001, 0xE0001 },
- { 0xE0020, 0xE007F },
- { 0xE0100, 0xE01EF }
- };
- static const struct interval double_width[] = {
--{ /* plane */ 0x0, 0x1C },
--{ /* plane */ 0x1C, 0x21 },
--{ /* plane */ 0x21, 0x22 },
--{ /* plane */ 0x22, 0x23 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
--{ /* plane */ 0x0, 0x0 },
- { 0x1100, 0x115F },
-+{ 0x231A, 0x231B },
- { 0x2329, 0x232A },
-+{ 0x23E9, 0x23EC },
-+{ 0x23F0, 0x23F0 },
-+{ 0x23F3, 0x23F3 },
-+{ 0x25FD, 0x25FE },
-+{ 0x2614, 0x2615 },
-+{ 0x2648, 0x2653 },
-+{ 0x267F, 0x267F },
-+{ 0x2693, 0x2693 },
-+{ 0x26A1, 0x26A1 },
-+{ 0x26AA, 0x26AB },
-+{ 0x26BD, 0x26BE },
-+{ 0x26C4, 0x26C5 },
-+{ 0x26CE, 0x26CE },
-+{ 0x26D4, 0x26D4 },
-+{ 0x26EA, 0x26EA },
-+{ 0x26F2, 0x26F3 },
-+{ 0x26F5, 0x26F5 },
-+{ 0x26FA, 0x26FA },
-+{ 0x26FD, 0x26FD },
-+{ 0x2705, 0x2705 },
-+{ 0x270A, 0x270B },
-+{ 0x2728, 0x2728 },
-+{ 0x274C, 0x274C },
-+{ 0x274E, 0x274E },
-+{ 0x2753, 0x2755 },
-+{ 0x2757, 0x2757 },
-+{ 0x2795, 0x2797 },
-+{ 0x27B0, 0x27B0 },
-+{ 0x27BF, 0x27BF },
-+{ 0x2B1B, 0x2B1C },
-+{ 0x2B50, 0x2B50 },
-+{ 0x2B55, 0x2B55 },
- { 0x2E80, 0x2E99 },
- { 0x2E9B, 0x2EF3 },
- { 0x2F00, 0x2FD5 },
-@@ -313,11 +358,49 @@ static const struct interval double_width[] = {
- { 0xFE68, 0xFE6B },
- { 0xFF01, 0xFF60 },
- { 0xFFE0, 0xFFE6 },
-+{ 0x16FE0, 0x16FE0 },
-+{ 0x17000, 0x187EC },
-+{ 0x18800, 0x18AF2 },
- { 0x1B000, 0x1B001 },
-+{ 0x1F004, 0x1F004 },
-+{ 0x1F0CF, 0x1F0CF },
-+{ 0x1F18E, 0x1F18E },
-+{ 0x1F191, 0x1F19A },
- { 0x1F200, 0x1F202 },
--{ 0x1F210, 0x1F23A },
-+{ 0x1F210, 0x1F23B },
- { 0x1F240, 0x1F248 },
- { 0x1F250, 0x1F251 },
-+{ 0x1F300, 0x1F320 },
-+{ 0x1F32D, 0x1F335 },
-+{ 0x1F337, 0x1F37C },
-+{ 0x1F37E, 0x1F393 },
-+{ 0x1F3A0, 0x1F3CA },
-+{ 0x1F3CF, 0x1F3D3 },
-+{ 0x1F3E0, 0x1F3F0 },
-+{ 0x1F3F4, 0x1F3F4 },
-+{ 0x1F3F8, 0x1F43E },
-+{ 0x1F440, 0x1F440 },
-+{ 0x1F442, 0x1F4FC },
-+{ 0x1F4FF, 0x1F53D },
-+{ 0x1F54B, 0x1F54E },
-+{ 0x1F550, 0x1F567 },
-+{ 0x1F57A, 0x1F57A },
-+{ 0x1F595, 0x1F596 },
-+{ 0x1F5A4, 0x1F5A4 },
-+{ 0x1F5FB, 0x1F64F },
-+{ 0x1F680, 0x1F6C5 },
-+{ 0x1F6CC, 0x1F6CC },
-+{ 0x1F6D0, 0x1F6D2 },
-+{ 0x1F6EB, 0x1F6EC },
-+{ 0x1F6F4, 0x1F6F6 },
-+{ 0x1F910, 0x1F91E },
-+{ 0x1F920, 0x1F927 },
-+{ 0x1F930, 0x1F930 },
-+{ 0x1F933, 0x1F93E },
-+{ 0x1F940, 0x1F94B },
-+{ 0x1F950, 0x1F95E },
-+{ 0x1F980, 0x1F991 },
-+{ 0x1F9C0, 0x1F9C0 },
- { 0x20000, 0x2FFFD },
- { 0x30000, 0x3FFFD }
- };
--- 
-2.7.2
+OK. I think "tool" is slightly funny here, but I get that is part of the
+real world works. Thanks for illustrating.
+
+> > Yes, I think --run is a misfeature (I actually had to look it up, as I
+> ...
+> > implicit. If a single test script is annoyingly long to run, I'd argue
+> 
+> It wasn't about runtime but about output. I would have
+> liked to see only the output of my still-failing test;
+> a 'stop after test X' would be helpful there.
+
+You can do --verbose-only=<n>, but if the test is failing, I typically
+use "-v -i". That makes everything verbose, and then stops at the
+failing test, so you can see the output easily.
+
+-Peff
