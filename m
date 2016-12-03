@@ -2,71 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	CHARSET_FARAWAY_HEADER,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3731FF40
-	for <e@80x24.org>; Sat,  3 Dec 2016 16:23:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9591FF40
+	for <e@80x24.org>; Sat,  3 Dec 2016 16:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751549AbcLCQXd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Dec 2016 11:23:33 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51216 "EHLO cloud.peff.net"
+        id S1751311AbcLCQk5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Dec 2016 11:40:57 -0500
+Received: from mout.web.de ([212.227.17.12]:53473 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751241AbcLCQXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Dec 2016 11:23:33 -0500
-Received: (qmail 15617 invoked by uid 109); 3 Dec 2016 16:23:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Dec 2016 16:23:19 +0000
-Received: (qmail 21915 invoked by uid 111); 3 Dec 2016 16:23:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Dec 2016 11:23:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Dec 2016 11:23:18 -0500
-Date:   Sat, 3 Dec 2016 11:23:18 -0500
-From:   Jeff King <peff@peff.net>
-To:     Andreas Krey <a.krey@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: make --only --allow-empty work without paths
-Message-ID: <20161203162318.uv27n4uhylobegto@sigill.intra.peff.net>
-References: <20161202221513.GA5370@inner.h.apk.li>
- <20161203043254.7ozjyucfn6uivnsh@sigill.intra.peff.net>
- <20161203065949.GG19570@inner.h.apk.li>
+        id S1751241AbcLCQk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Dec 2016 11:40:56 -0500
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MYvxn-1c8QAC1IsV-00Vk0Y; Sat, 03
+ Dec 2016 17:40:51 +0100
+Date:   Sat, 3 Dec 2016 16:40:49 +0000
+From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] update-unicode.sh: automatically download newer
+ definition files
+Message-ID: <20161203164049.GA31244@tb-raspi>
+References: <1480762392-28731-3-git-send-email-dev+git@drbeat.li>
+ <1480771173-731-1-git-send-email-dev+git@drbeat.li>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20161203065949.GG19570@inner.h.apk.li>
+In-Reply-To: <1480771173-731-1-git-send-email-dev+git@drbeat.li>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:YQRMrAa2MXOcfttY3sLPSdmMCafVlCXI5b2R2Dd6j+7jyc0vD6l
+ 3UpErkAxBBGIu+iMuMg46LZZVjqeyAHNuGacYPGUInI/57VNfG5S6YFtkwnpYkveJtgQCYV
+ HZeoc3xLtAZ+lndOVyaankTDC8Gj8/L/bwAAWmEYybkn3EaDNzS9nRTPeOidEkPd9MdV/gq
+ ny9YS4sGUoXIsXkVOhmGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X+FNv9k8nSE=:+jnS7IzHP9wczO5QyW+zvM
+ 622ykiEm3eNgDjBPeA8vDDxZQTIpFNHoHWvHG3KewrssZqRAB42PBJRt28nYC0CoQ7v+tgjA3
+ qUYp8kd2mketXueYiI+WuH2J/PLxTy3nKydVlw35RHRTj8bdRElMVz/hdslH/Cz0HBWsMH75D
+ 2OXKPMtJCN7lzTIr3N3tDRuy54B/t+KLjwRzWyAkzl+KACoe39uxZrt6sIF1GnfatRb4yQ/Uu
+ L/XgGTv875zJ/t0BAuM2bOUAwyJOT8d27jeuJVlCgID6JG6q509z97oPKn+w+fJhUBi+WbphI
+ sMTugVrN23I63I6rfpdSDFjyV/eVJiGLNAUvBnpjqSVHCjpTBYrBR9cQPyVhI8LlTtZ+m9szt
+ yPTZT5qczJwTZXBvth+6E560M3pKBCVKvZQZyfIvEwbAguaUpbwBuaApCztTeIgtor+Ijf4oZ
+ ydKEplzXDGZYbnV+g+PmuXINaqlMrwY+rOjiJbLyNG5LRJ41RqUYhHXHZj8jicC5P2gB+4/5X
+ Hq9/48172Cf/0m9d4f5EuOYygc7465S0Rqu1E8/FRi6CnwXh8WosMTFhNLYvhhUpjqHVFmkd2
+ BvzaQj2oiuwMIam1T9Sa3m00LZOHNikhkaoaM3hKSS5RyZu22FGDSrQZj32yS5QOwVJlDynBH
+ dSyXqC/R8SrHChdyoUU+tFO9wJZXHGcpMzJSccvPcAWmXrTG6z+BxqMoxTc5RM8itWsBItmNz
+ goJE8dAtWttGz/vmO4vl/e9QyBaEKLFCOh0FextzHLbwsPC+rGSn2zSCIzo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 03, 2016 at 07:59:49AM +0100, Andreas Krey wrote:
-
-> > OK. I'm not sure why you would want to create an empty commit in such a
-> > case.
+On Sat, Dec 03, 2016 at 02:19:31PM +0100, Beat Bolli wrote:
+> Checking just for the unicode data files' existence is not sufficient;
+> we should also download them if a newer version exists on the Unicode
+> consortium's servers. Option -N of wget does this nicely for us.
 > 
-> User: Ok tool, make me a pullreq.
-> 
-> Tool: But you haven't mentioned any issue
->       in your commit messages. Which are they?
-> 
-> User: Ok, that would be A-123.
-> 
-> Tool: git commit --allow-empty -m 'FIX: A-123'
+> Cc: Torsten B??gershausen <tboegi@web.de>
 
-OK. I think "tool" is slightly funny here, but I get that is part of the
-real world works. Thanks for illustrating.
-
-> > Yes, I think --run is a misfeature (I actually had to look it up, as I
-> ...
-> > implicit. If a single test script is annoyingly long to run, I'd argue
-> 
-> It wasn't about runtime but about output. I would have
-> liked to see only the output of my still-failing test;
-> a 'stop after test X' would be helpful there.
-
-You can do --verbose-only=<n>, but if the test is failing, I typically
-use "-v -i". That makes everything verbose, and then stops at the
-failing test, so you can see the output easily.
-
--Peff
+The V3 series makes perfect sense, thanks for cleaning up my mess.
+(And can we remove the Cc: line, or replace with it Reviewed-by ?)
