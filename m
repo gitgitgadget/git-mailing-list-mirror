@@ -2,130 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16FA01FBB0
-	for <e@80x24.org>; Sun,  4 Dec 2016 19:48:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9318B1FBB0
+	for <e@80x24.org>; Sun,  4 Dec 2016 20:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751126AbcLDTss (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Dec 2016 14:48:48 -0500
-Received: from mail.nottheoilrig.com ([52.27.13.164]:36398 "EHLO
-        mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750995AbcLDTss (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2016 14:48:48 -0500
-Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
-        by mail.nottheoilrig.com (Postfix) with ESMTP id 236BA20290
-        for <git@vger.kernel.org>; Sun,  4 Dec 2016 19:48:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
-        s=3532ada; t=1480880927;
-        bh=qACfN6HZyg/2ySP0X6EwDpjwBzjZiBrjRevHpqAhxPA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=oSn7TFD104NEkf1XG8HYqyyCI4eTRGQh3AmxPhG8Kpa1NX/JXiQeEuOaU5pp22HMN
-         XFGRgQHdOHxWpCaTJEg+LBoherLwScffAsh1sYnl9SN5VXrT1ZvkAZ/qKRKRYOXAy/
-         cfdjHLuDx2KHcbu1HD/EOullj16lCHRZ36eLYMrI=
-Received: from debian (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
-        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
-        Sun,  4 Dec 2016 19:48:47 +0000 (UTC)
-Received: from nottheoilrig by debian with local (Exim 4.88)
-        (envelope-from <nottheoilrig@debian>)
-        id 1cDcmD-00023i-Tg; Sun, 04 Dec 2016 12:48:45 -0700
-From:   Jack Bates <bk874k@nottheoilrig.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Jack Bates <jack@nottheoilrig.com>
-Subject: [PATCH] diff: fix up SHA-1 abbreviations outside of repository
-Date:   Sun,  4 Dec 2016 12:47:47 -0700
-Message-Id: <20161204194747.7100-1-jack@nottheoilrig.com>
-X-Mailer: git-send-email 2.10.2
+        id S1751411AbcLDUlp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Dec 2016 15:41:45 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35848 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750979AbcLDUlo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2016 15:41:44 -0500
+Received: by mail-wm0-f68.google.com with SMTP id m203so11729697wma.3
+        for <git@vger.kernel.org>; Sun, 04 Dec 2016 12:41:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RPlbMeXdgDktAZG8UZg7A5dA3QmvJDm922wttWsO9sE=;
+        b=PjP/fD3dI+X4EYIZIyiAfqGDmfIXJjosZGMfx5WISLPmpW8tQe39egGB0MxmOR4YSK
+         zLGSkWZqJ8mSHAJpp+OITV6d8IqKmEOoGbmBGb4orQGr5OFgowJY6fsJCqun3UGXcQ/q
+         p5zJIvffMD91y0hqt4NqkYWHnfWjm6wiHGj60gzu5uSEfd/3rj/sPMlD2ycTF8uKYz/7
+         JJr6f3zrbBkoS/LMT0gwtQWGXt5wQ9kmHpkT08jV2QkyAWym6fBx/KNimOI5aTLBg7XX
+         tYuaaMCPnROilj8bW5uRTPu84roUdcvJ8RB6GgnAJV9dwy2Kv/CZQYndUQ5ZdtGh6YuG
+         WeZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RPlbMeXdgDktAZG8UZg7A5dA3QmvJDm922wttWsO9sE=;
+        b=K13Opgse8gpWa+WimNEGiT8qMpyLfmGWvHhYn4yQaTdayzUVHRJBmAhl52KcDGt6ZN
+         TKswDoXuP1dswhzBDy2gPx5IBIfR3LkMlS5LdDneSZ/BAcgwUP44KPF1FdI/vlh2pVO4
+         3V9WN2DnyICL76MxgMSaFHmNV0F5Bq45GA1i3UufvzArAbpy4WRMLVZPVaVZfGVz7MVa
+         13F5Kz9O4uX5SzYCopjG4hBURzG32l4mLgA0mII4lT69Pj+0GrcSVK9ri9cCt5nzx1xO
+         V8SswxZ2ckbKogQ2D5orbYQz4sQieaMAOTz57pNl5iyj1tziPVu3LWTl/jLFKTdbaYZv
+         Mweg==
+X-Gm-Message-State: AKaTC01Kg2r6PaDfhEXFI0bJ1XqoWq4kQK5bO6VrxOOugr156IQi7bw2luOOabd4G7Mnfg==
+X-Received: by 10.28.181.197 with SMTP id e188mr6119456wmf.32.1480884062923;
+        Sun, 04 Dec 2016 12:41:02 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id r7sm16922582wjp.43.2016.12.04.12.41.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 04 Dec 2016 12:41:01 -0800 (PST)
+Date:   Sun, 4 Dec 2016 12:40:57 -0800
+From:   David Aguilar <davvid@gmail.com>
+To:     Timon <timon37@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] git gui can't commit multiple files
+Message-ID: <20161204204057.32dnkjx6ixv3swez@gmail.com>
+References: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
+User-Agent: NeoMutt/20161104 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The three cases where "git diff" operates outside of a repository are 1)
-when we run it outside of a repository, 2) when one of the files we're
-comparing is outside of the repository we're in, and 3) the --no-index
-option. Commit 4f03666 ("diff: handle sha1 abbreviations outside of
-repository", 2016-10-20) only worked in the first case.
----
- builtin/diff.c                  |  4 +++-
- t/t4063-diff-no-index-abbrev.sh | 50 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 1 deletion(-)
- create mode 100755 t/t4063-diff-no-index-abbrev.sh
+On Sun, Dec 04, 2016 at 05:36:46PM +0100, Timon wrote:
+> This is a regression in git 2.11.0 (version 2.10.2 is fine).
+> 
+> In git-gui I select multiple files in the Unstaged Changes (using
+> shift+click) and press ctrl+t to stage them. Then only one files gets
+> staged instead of all of the selected files.
+> The same happens when unstaging files.
+> 
+> Git-cola also exhibits the same behavior. Although there I could stage
+> multiple files if I used a popup menu instead of the keyboard shortcut
+> (I'm guessing it goes through a different code path?).
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 7f91f6d..ec7c432 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -342,9 +342,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 		       "--no-index" : "[--no-index]");
- 
- 	}
--	if (no_index)
-+	if (no_index) {
- 		/* If this is a no-index diff, just run it and exit there. */
-+		startup_info->have_repository = 0;
- 		diff_no_index(&rev, argc, argv);
-+	}
- 
- 	/* Otherwise, we are doing the usual "git" diff */
- 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
-diff --git a/t/t4063-diff-no-index-abbrev.sh b/t/t4063-diff-no-index-abbrev.sh
-new file mode 100755
-index 0000000..d1d6302
---- /dev/null
-+++ b/t/t4063-diff-no-index-abbrev.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description='don'\'' peek into .git when operating outside of a repository
-+
-+When abbreviating SHA-1s, if another object in the repository has the
-+same abbreviation, we normally lengthen the abbreviation until it'\''s
-+unique. Commit 4f03666 ("diff: handle sha1 abbreviations outside of
-+repository", 2016-10-20) addressed the case of abbreviating SHA-1s
-+outside the context of a repository. In that case we shouldn'\''t peek
-+into a .git directory to make an abbreviation unique.
-+
-+To check that we don'\''t, create an blob with a SHA-1 that starts with
-+0000. (Outside of a repository, SHA-1s are all zeros.) Then make an
-+abbreviation and check that Git doesn'\''t lengthen it.
-+
-+The three cases where "git diff" operates outside of a repository are
-+1) when we run it outside of a repository, 2) when one of the files
-+we'\''re comparing is outside of the repository we'\''re in,
-+and 3) the --no-index option.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo 1 >a &&
-+	echo 2 >b &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		# Create a blob
-+		# 00002e907f44c3881822c473d8842405cfd96362
-+		echo 119132 >collision &&
-+		git add collision
-+	)
-+'
-+
-+cat >expect <<EOF
-+:100644 100644 0000... 0000... M	../a
-+EOF
-+
-+test_expect_success 'don'\''t peek into .git when operating outside of a repository' '
-+	(
-+		cd repo &&
-+		test_must_fail git diff --raw --abbrev=4 ../a ../b >actual &&
-+		test_cmp ../expect actual
-+	)
-+'
-+
-+test_done
+Can you elaborate a bit?
+
+I just tested git-cola with Git 2.11 and it worked fine for me.
+I selected several files and used the Ctrl+s hotkey to stage the
+selected files.  They all got staged.
+
+If you have a test repo, or reproduction recipe, I'd be curious
+to try it out.
 -- 
-2.10.2
+David
