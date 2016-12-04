@@ -2,85 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 372381FBB0
-	for <e@80x24.org>; Sun,  4 Dec 2016 14:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF6251FBB0
+	for <e@80x24.org>; Sun,  4 Dec 2016 16:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751148AbcLDOls (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Dec 2016 09:41:48 -0500
-Received: from mail-wj0-f194.google.com ([209.85.210.194]:33965 "EHLO
+        id S1751164AbcLDQDg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Dec 2016 11:03:36 -0500
+Received: from mail-wj0-f194.google.com ([209.85.210.194]:33855 "EHLO
         mail-wj0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750955AbcLDOls (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2016 09:41:48 -0500
-Received: by mail-wj0-f194.google.com with SMTP id xy5so35883265wjc.1
-        for <git@vger.kernel.org>; Sun, 04 Dec 2016 06:41:47 -0800 (PST)
+        with ESMTP id S1751120AbcLDQDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2016 11:03:35 -0500
+Received: by mail-wj0-f194.google.com with SMTP id xy5so36046307wjc.1
+        for <git@vger.kernel.org>; Sun, 04 Dec 2016 08:03:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=ARG3Gn/AtRtoPMxvy/oacR0niNet7pD+MfTFsUuHlyo=;
-        b=ce4QJmXReDD+GjYwQbrumfmfUFNQgVVt4urE2jIEEXGcDOSVr7kFbMiADuV3Z1mKXv
-         9wzynmXTj4d2Em9ALPRwHLvLpVQMJQyyJ5/7lDanjs7MnaukG/aZr38gZ2vVOT61hSqA
-         KAJ4jyJTkowtoM+PEzhHJGsvus2pDpqtGV98O4vCx2dr531lAKiUuBX8Z7ppo/L79laC
-         Ydz3k6X4NC8Zy+aHX/yLbCyXJBD0Li1XgQ783FtGXgaMWXri5GlTk/gZODmzi1+6f6I3
-         uR1PmwHwDo6OrgYjAaHfZqCcQKHyDCCZ4jc+zRr8RoSQdlhjulDKw+2iiTzRcjnjk7e1
-         WiDA==
+        bh=xzBNs4gQx5R8E2GCl424v+J8G7EKjNaY6YkaO73pVJU=;
+        b=LTCYGKiVYVJkXHLtjCUjXemROWnzE9NtL75nnZTVjwcx0MsWhRb0EiLBywVw8N2ANu
+         7ZLEQaH8KAH+vbu6zS+uOUVCYMEeIKhSlRADzBP2yQKliqfBc7h77EYjr5g1Ub9Rzy0h
+         2B5amyzbJ7LTHkIeQx7xaKXVnXqgbbeLTkOFM1RLJfngd2elIUOAMVwWdjHEKNvkhN55
+         7Icb3j+JRvZ1BDpieTf+67A6JlwDVcKfbMjwSSlUClR/PvfAtnylmTG3ir8WvjKBpS0q
+         VNMjyunPGie8xhM63CLJrvCofc7KkSkyTFJFeLmJl7SYGA5Na0rPAvu504i6xt4sTzdQ
+         OvTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ARG3Gn/AtRtoPMxvy/oacR0niNet7pD+MfTFsUuHlyo=;
-        b=JTM0jI4hv8KK51d96y8kFCjvubycRV9L8AmxRTC+insdrYLUqQqKbMh79bPX2c03Fd
-         Q8mMt7F0dgA1rCn6NRtvEGb58C5SPW5Ld0eYQX1EAFSmP5f5dXZjWMAUahgvX1T6+jxS
-         nxLcoAFRDpSn2kcdH5S65cBY7SJ5gb3x3CObd5fCKIqCVOEzeKsi7ffMNnFHCAXU6MG3
-         RQXWbf1Bixkl6eHc73KedpyTETdIJFsMfHpB6OkLj0ra2e2rTnPRME40aEQtyNi8tMEk
-         jplmcE2xWuJZ39WrFVZDyhmAzUfDGWPPj//m4nADjOIWCV6eWZ+baNorhHfRD2d0d4CL
-         rocA==
-X-Gm-Message-State: AKaTC02C1MQvxpqi0GxxwPQxhpc/7qMOEkJsAYTo9c1OYIJPcPsP1+/kXR/gFlYrGAof2w==
-X-Received: by 10.194.138.111 with SMTP id qp15mr28176278wjb.3.1480862506549;
-        Sun, 04 Dec 2016 06:41:46 -0800 (PST)
-Received: from localhost.localdomain ([2a02:c7d:da04:500:99bf:7eb6:5cb9:d484])
-        by smtp.gmail.com with ESMTPSA id g73sm13311529wme.16.2016.12.04.06.41.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 04 Dec 2016 06:41:45 -0800 (PST)
-From:   peterjclaw@gmail.com
+        bh=xzBNs4gQx5R8E2GCl424v+J8G7EKjNaY6YkaO73pVJU=;
+        b=YkZZN71c4p/Z3Md6NICa3rtM/qJhm+667e/NdpofUSCLbeEShWjOxxXqjp/fPSPImA
+         ajrIdF7jTpNkKacG19bbGoek7OIKNUFQg9ZEo6aTsgKuUoDBYydrnG1r07BDjbgFuwC5
+         07Lx/9ctTjIiiKPySTrdF/FdVLBrW+oT/XH4xbzxdnF5VsisfTy8g43YqmuUr3yny6Na
+         GKB/FtPYonfCqP5ZFXuHi1r6YuVS+Zv9CMSWeajlk4PmQavxJ9dqKc2Whp3oxNU/dJPT
+         3uEOf9lEoTqqdy+QVds7bXhEYXEy5g4exZb7197Rk1HIbLYZVFKsLLfsltNtHAWUfyLb
+         V2Sg==
+X-Gm-Message-State: AKaTC03GXGsUrPm+Kvlq4pvveSnWcWjzb3Uri+A1zQe7yWojgmkwnWPcxLbbepZjWmAOtg==
+X-Received: by 10.194.85.137 with SMTP id h9mr44577840wjz.23.1480867413666;
+        Sun, 04 Dec 2016 08:03:33 -0800 (PST)
+Received: from slxBook4.fritz.box.fritz.box (p508BA0CE.dip0.t-ipconnect.de. [80.139.160.206])
+        by smtp.gmail.com with ESMTPSA id x5sm15931046wje.36.2016.12.04.08.03.32
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 04 Dec 2016 08:03:33 -0800 (PST)
+From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
-Cc:     jacob.keller@gmail.com, gitster@pobox.com, szeder@ira.uka.de,
-        Peter Law <PeterJCLaw@gmail.com>
-Subject: [PATCH] Completion: Add support for --submodule=diff
-Date:   Sun,  4 Dec 2016 14:41:27 +0000
-Message-Id: <20161204144127.28452-1-peterjclaw@gmail.com>
+Cc:     luke@diamand.org, Lars Schneider <lars.schneider@autodesk.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1] git-p4: fix empty file processing for large file system backend GitLFS
+Date:   Sun,  4 Dec 2016 17:03:37 +0100
+Message-Id: <20161204160337.41493-1-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Peter Law <PeterJCLaw@gmail.com>
+From: Lars Schneider <lars.schneider@autodesk.com>
 
-Teach git-completion.bash about the 'diff' option to 'git diff
---submodule=', which was added in Git 2.11.
+If git-p4 tried to store an empty file in GitLFS then it crashed while
+parsing the pointer file:
 
-Signed-off-by: Peter Law <PeterJCLaw@gmail.com>
+  oid = re.search(r'^oid \w+:(\w+)', pointerFile, re.MULTILINE).group(1)
+  AttributeError: 'NoneType' object has no attribute 'group'
+
+This happens because GitLFS does not create a pointer file for an empty
+file. Teach git-p4 this behavior to fix the problem and add a test case.
+
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 21016bf8d..ab11e7371 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1206,7 +1206,7 @@ _git_describe ()
+Notes:
+    Base Commit: 454cb6b (v2.11.0)
+    Diff on Web: https://github.com/git/git/compare/454cb6b...larsxschneider:b717fde
+    Checkout:    git fetch https://github.com/larsxschneider/git git-p4/empty-files-v1 && git checkout b717fde
+
+ git-p4.py                 | 29 +++++++++++++++++------------
+ t/t9824-git-p4-git-lfs.sh |  2 ++
+ 2 files changed, 19 insertions(+), 12 deletions(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index fd5ca52462..ccfb68105f 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1005,18 +1005,20 @@ class LargeFileSystem(object):
+            steps."""
+         if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
+             contentTempFile = self.generateTempFile(contents)
+-            (git_mode, contents, localLargeFile) = self.generatePointer(contentTempFile)
+-
+-            # Move temp file to final location in large file system
+-            largeFileDir = os.path.dirname(localLargeFile)
+-            if not os.path.isdir(largeFileDir):
+-                os.makedirs(largeFileDir)
+-            shutil.move(contentTempFile, localLargeFile)
+-            self.addLargeFile(relPath)
+-            if gitConfigBool('git-p4.largeFilePush'):
+-                self.pushFile(localLargeFile)
+-            if verbose:
+-                sys.stderr.write("%s moved to large file system (%s)\n" % (relPath, localLargeFile))
++            (pointer_git_mode, contents, localLargeFile) = self.generatePointer(contentTempFile)
++            if pointer_git_mode:
++                git_mode = pointer_git_mode
++            if localLargeFile:
++                # Move temp file to final location in large file system
++                largeFileDir = os.path.dirname(localLargeFile)
++                if not os.path.isdir(largeFileDir):
++                    os.makedirs(largeFileDir)
++                shutil.move(contentTempFile, localLargeFile)
++                self.addLargeFile(relPath)
++                if gitConfigBool('git-p4.largeFilePush'):
++                    self.pushFile(localLargeFile)
++                if verbose:
++                    sys.stderr.write("%s moved to large file system (%s)\n" % (relPath, localLargeFile))
+         return (git_mode, contents)
  
- __git_diff_algorithms="myers minimal patience histogram"
+ class MockLFS(LargeFileSystem):
+@@ -1056,6 +1058,9 @@ class GitLFS(LargeFileSystem):
+            the actual content. Return also the new location of the actual
+            content.
+            """
++        if os.path.getsize(contentFile) == 0:
++            return (None, '', None)
++
+         pointerProcess = subprocess.Popen(
+             ['git', 'lfs', 'pointer', '--file=' + contentFile],
+             stdout=subprocess.PIPE
+diff --git a/t/t9824-git-p4-git-lfs.sh b/t/t9824-git-p4-git-lfs.sh
+index 110a7e7924..734b8db4cb 100755
+--- a/t/t9824-git-p4-git-lfs.sh
++++ b/t/t9824-git-p4-git-lfs.sh
+@@ -42,6 +42,8 @@ test_expect_success 'Create repo with binary files' '
+ 	(
+ 		cd "$cli" &&
  
--__git_diff_submodule_formats="log short"
-+__git_diff_submodule_formats="diff log short"
- 
- __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--patch-with-stat --name-only --name-status --color
++		>file0.dat &&
++		p4 add file0.dat &&
+ 		echo "content 1 txt 23 bytes" >file1.txt &&
+ 		p4 add file1.txt &&
+ 		echo "content 2-3 bin 25 bytes" >file2.dat &&
 -- 
 2.11.0
 
