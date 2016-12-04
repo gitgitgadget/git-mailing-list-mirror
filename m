@@ -2,145 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF6251FBB0
-	for <e@80x24.org>; Sun,  4 Dec 2016 16:03:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1194C1FBB0
+	for <e@80x24.org>; Sun,  4 Dec 2016 17:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751164AbcLDQDg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Dec 2016 11:03:36 -0500
-Received: from mail-wj0-f194.google.com ([209.85.210.194]:33855 "EHLO
-        mail-wj0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbcLDQDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2016 11:03:35 -0500
-Received: by mail-wj0-f194.google.com with SMTP id xy5so36046307wjc.1
-        for <git@vger.kernel.org>; Sun, 04 Dec 2016 08:03:34 -0800 (PST)
+        id S1750934AbcLDQgs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Dec 2016 11:36:48 -0500
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:36067 "EHLO
+        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750778AbcLDQgs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2016 11:36:48 -0500
+Received: by mail-oi0-f48.google.com with SMTP id v84so315805090oie.3
+        for <git@vger.kernel.org>; Sun, 04 Dec 2016 08:36:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=xzBNs4gQx5R8E2GCl424v+J8G7EKjNaY6YkaO73pVJU=;
-        b=LTCYGKiVYVJkXHLtjCUjXemROWnzE9NtL75nnZTVjwcx0MsWhRb0EiLBywVw8N2ANu
-         7ZLEQaH8KAH+vbu6zS+uOUVCYMEeIKhSlRADzBP2yQKliqfBc7h77EYjr5g1Ub9Rzy0h
-         2B5amyzbJ7LTHkIeQx7xaKXVnXqgbbeLTkOFM1RLJfngd2elIUOAMVwWdjHEKNvkhN55
-         7Icb3j+JRvZ1BDpieTf+67A6JlwDVcKfbMjwSSlUClR/PvfAtnylmTG3ir8WvjKBpS0q
-         VNMjyunPGie8xhM63CLJrvCofc7KkSkyTFJFeLmJl7SYGA5Na0rPAvu504i6xt4sTzdQ
-         OvTg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=UnD38trob07KPQntZDONDl1anrTpWLg8w2NdeG/Pubo=;
+        b=lXYRMQMdmwMxmseFGtlCupOnvnkMLwEifLFxAiUAOAYbe50SsyjL0MAMZZXCOpwoEC
+         OACNW9fqmiMYA8DyVPy97qVutskq6ASdocx5rDnAU1XlIZvo3TAowxdTCDLEgCzkftsE
+         xP5rS9vavU6+eNt9A3e/4/sszuuuBQ8s55fXPzho7cSn+FBUJ3fFAhfpQt34i7zkDw+R
+         oQNH5tHGdCPlISXxHnecUsw07oIjKTFfa1DEevTjE0uUmc2K3E88QlLwDRogTTRt6HW3
+         t3GViZVkLoGGXYUboCn3GWOsnLrGx3y4b07Jd/3AtIRRGi4Ol2PuHvgxDP+VP8G/9y7+
+         Ztag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=xzBNs4gQx5R8E2GCl424v+J8G7EKjNaY6YkaO73pVJU=;
-        b=YkZZN71c4p/Z3Md6NICa3rtM/qJhm+667e/NdpofUSCLbeEShWjOxxXqjp/fPSPImA
-         ajrIdF7jTpNkKacG19bbGoek7OIKNUFQg9ZEo6aTsgKuUoDBYydrnG1r07BDjbgFuwC5
-         07Lx/9ctTjIiiKPySTrdF/FdVLBrW+oT/XH4xbzxdnF5VsisfTy8g43YqmuUr3yny6Na
-         GKB/FtPYonfCqP5ZFXuHi1r6YuVS+Zv9CMSWeajlk4PmQavxJ9dqKc2Whp3oxNU/dJPT
-         3uEOf9lEoTqqdy+QVds7bXhEYXEy5g4exZb7197Rk1HIbLYZVFKsLLfsltNtHAWUfyLb
-         V2Sg==
-X-Gm-Message-State: AKaTC03GXGsUrPm+Kvlq4pvveSnWcWjzb3Uri+A1zQe7yWojgmkwnWPcxLbbepZjWmAOtg==
-X-Received: by 10.194.85.137 with SMTP id h9mr44577840wjz.23.1480867413666;
-        Sun, 04 Dec 2016 08:03:33 -0800 (PST)
-Received: from slxBook4.fritz.box.fritz.box (p508BA0CE.dip0.t-ipconnect.de. [80.139.160.206])
-        by smtp.gmail.com with ESMTPSA id x5sm15931046wje.36.2016.12.04.08.03.32
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 04 Dec 2016 08:03:33 -0800 (PST)
-From:   larsxschneider@gmail.com
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=UnD38trob07KPQntZDONDl1anrTpWLg8w2NdeG/Pubo=;
+        b=C4gcumg/yb374omAiCH6wTHV0XTUsFPzc7FElwx3JbTSoN3Yy6CNEu4PXTqY8Z5pti
+         JaiAUnjdPBokHGZooTI1FV33rnrR25BAlpTCquTqTYtDMdH7v7JNQnqYuFVzvu51/2Jk
+         SMiCmRtPQ1EBaY5tRVYfGQpGVTypk2L8aHAtF3Wfzn3yTvJ2RcWMziRfnWUQV+0odBVM
+         2NsrVBXuNAVhjT3ZzbzcsY9hNAXHZOnGhm6RmUIBu1JCzjjQQFfjAN7mKJhK07pnvwSC
+         GZet3BQcmC7AKnRrUYZqisyoDqFa5N2U8xynI/eoPzIa8NbCdkDnpYOQf024qi9erltv
+         G5MA==
+X-Gm-Message-State: AKaTC015IQXlJnrarYx8Smx4y+M/p9RuSKEdLMk7uCginhkoRgyj5UIRiBx9zp+fLnO5GtTQztsFJBBCP6AbRg==
+X-Received: by 10.202.51.8 with SMTP id z8mr26404159oiz.79.1480869407033; Sun,
+ 04 Dec 2016 08:36:47 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.202.52.135 with HTTP; Sun, 4 Dec 2016 08:36:46 -0800 (PST)
+From:   Timon <timon37@gmail.com>
+Date:   Sun, 4 Dec 2016 17:36:46 +0100
+Message-ID: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
+Subject: [BUG] git gui can't commit multiple files
 To:     git@vger.kernel.org
-Cc:     luke@diamand.org, Lars Schneider <lars.schneider@autodesk.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v1] git-p4: fix empty file processing for large file system backend GitLFS
-Date:   Sun,  4 Dec 2016 17:03:37 +0100
-Message-Id: <20161204160337.41493-1-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.11.0
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <lars.schneider@autodesk.com>
+This is a regression in git 2.11.0 (version 2.10.2 is fine).
 
-If git-p4 tried to store an empty file in GitLFS then it crashed while
-parsing the pointer file:
+In git-gui I select multiple files in the Unstaged Changes (using
+shift+click) and press ctrl+t to stage them. Then only one files gets
+staged instead of all of the selected files.
+The same happens when unstaging files.
 
-  oid = re.search(r'^oid \w+:(\w+)', pointerFile, re.MULTILINE).group(1)
-  AttributeError: 'NoneType' object has no attribute 'group'
+Git-cola also exhibits the same behavior. Although there I could stage
+multiple files if I used a popup menu instead of the keyboard shortcut
+(I'm guessing it goes through a different code path?).
 
-This happens because GitLFS does not create a pointer file for an empty
-file. Teach git-p4 this behavior to fix the problem and add a test case.
-
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
-
-Notes:
-    Base Commit: 454cb6b (v2.11.0)
-    Diff on Web: https://github.com/git/git/compare/454cb6b...larsxschneider:b717fde
-    Checkout:    git fetch https://github.com/larsxschneider/git git-p4/empty-files-v1 && git checkout b717fde
-
- git-p4.py                 | 29 +++++++++++++++++------------
- t/t9824-git-p4-git-lfs.sh |  2 ++
- 2 files changed, 19 insertions(+), 12 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index fd5ca52462..ccfb68105f 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1005,18 +1005,20 @@ class LargeFileSystem(object):
-            steps."""
-         if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
-             contentTempFile = self.generateTempFile(contents)
--            (git_mode, contents, localLargeFile) = self.generatePointer(contentTempFile)
--
--            # Move temp file to final location in large file system
--            largeFileDir = os.path.dirname(localLargeFile)
--            if not os.path.isdir(largeFileDir):
--                os.makedirs(largeFileDir)
--            shutil.move(contentTempFile, localLargeFile)
--            self.addLargeFile(relPath)
--            if gitConfigBool('git-p4.largeFilePush'):
--                self.pushFile(localLargeFile)
--            if verbose:
--                sys.stderr.write("%s moved to large file system (%s)\n" % (relPath, localLargeFile))
-+            (pointer_git_mode, contents, localLargeFile) = self.generatePointer(contentTempFile)
-+            if pointer_git_mode:
-+                git_mode = pointer_git_mode
-+            if localLargeFile:
-+                # Move temp file to final location in large file system
-+                largeFileDir = os.path.dirname(localLargeFile)
-+                if not os.path.isdir(largeFileDir):
-+                    os.makedirs(largeFileDir)
-+                shutil.move(contentTempFile, localLargeFile)
-+                self.addLargeFile(relPath)
-+                if gitConfigBool('git-p4.largeFilePush'):
-+                    self.pushFile(localLargeFile)
-+                if verbose:
-+                    sys.stderr.write("%s moved to large file system (%s)\n" % (relPath, localLargeFile))
-         return (git_mode, contents)
- 
- class MockLFS(LargeFileSystem):
-@@ -1056,6 +1058,9 @@ class GitLFS(LargeFileSystem):
-            the actual content. Return also the new location of the actual
-            content.
-            """
-+        if os.path.getsize(contentFile) == 0:
-+            return (None, '', None)
-+
-         pointerProcess = subprocess.Popen(
-             ['git', 'lfs', 'pointer', '--file=' + contentFile],
-             stdout=subprocess.PIPE
-diff --git a/t/t9824-git-p4-git-lfs.sh b/t/t9824-git-p4-git-lfs.sh
-index 110a7e7924..734b8db4cb 100755
---- a/t/t9824-git-p4-git-lfs.sh
-+++ b/t/t9824-git-p4-git-lfs.sh
-@@ -42,6 +42,8 @@ test_expect_success 'Create repo with binary files' '
- 	(
- 		cd "$cli" &&
- 
-+		>file0.dat &&
-+		p4 add file0.dat &&
- 		echo "content 1 txt 23 bytes" >file1.txt &&
- 		p4 add file1.txt &&
- 		echo "content 2-3 bin 25 bytes" >file2.dat &&
--- 
-2.11.0
-
+Note that I tested by reverting back to 2.10.2 and verified that
+everything works, so I'm quite certain that this is a regression in
+git.
