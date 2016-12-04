@@ -2,153 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB6061FC96
-	for <e@80x24.org>; Sun,  4 Dec 2016 09:37:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9552B1FC96
+	for <e@80x24.org>; Sun,  4 Dec 2016 10:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750882AbcLDJhE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Dec 2016 04:37:04 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36052 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750774AbcLDJhD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2016 04:37:03 -0500
-Received: by mail-pg0-f67.google.com with SMTP id x23so12983932pgx.3
-        for <git@vger.kernel.org>; Sun, 04 Dec 2016 01:37:03 -0800 (PST)
+        id S1751038AbcLDKr0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Dec 2016 05:47:26 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:34982 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750778AbcLDKrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2016 05:47:25 -0500
+Received: by mail-wm0-f47.google.com with SMTP id a197so56162273wmd.0
+        for <git@vger.kernel.org>; Sun, 04 Dec 2016 02:47:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=S74EYyWT9reuXILMnARQLoyxfp/QRmvXW2ze4iJCxW4=;
-        b=ht7r76NFtwB53zOj+rLmle9PXWq/IkufFzOb6rgXZTxX9kHSZoNZ36VZ+jGvvXAj0T
-         v1QbAp4Ciuic8qocp/SenG6QMNucLoXKN2DBSQ2m1cyg6ihwxJSZB3jyR6j8xsvnIAbD
-         B1GrDS3bWvLLdh/NNxwTZXDEyjq/xam2Sjr43+QkF9oOv7HNxDTeI/8aAAiF94nsi5LH
-         6UMpQb1C52zKcTyI7stCYMhjuU8rSTsqfs2FCdEnIgLaW1xy0UEji2fKepOtKsgyGBxZ
-         ZX7ZmXP952Rwbx2TAydB+WP6HDNOJgLsvSqhtg8H2IiIKBJbtQk+n2IOt9a99tlLwKCc
-         1ayQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RIGRYL1auhXfJLnQW9JgnSYIM1wZu+69jyeeAX9nbJM=;
+        b=mvHc5sH/F/GAswaval8lm6zT0FSosNQ5G3qzLOtJPz62xd4RYHoEYkvsRfSArff+KC
+         wJ+GehDuXOBSW+mqIHiOuch1asqNqmr+Rd7gZgigVE8Q8SsK69Bw8RXFNJJnYcpMJX1c
+         f0J0xa5RQgxKiutz6IbHucOedRj2LP0+8z6hgbUExinfo8yftuJIFtbYAhHiNVJogOX+
+         5kDUm+ug5oYDKZF2eJ4knFq5tOwDDnohiiC+U+yRNm9YNeqFBWS0Ba9YZDO4giWQv4E7
+         9r+wpxD+uQDCYw8WP1BCELUJjVbTW69yyQAHFHocO4u/vKmirDGDYfumao48c3Yahhr6
+         ycYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:in-reply-to:subject:references
-         :message-id:content-transfer-encoding:mime-version:date:cc;
-        bh=S74EYyWT9reuXILMnARQLoyxfp/QRmvXW2ze4iJCxW4=;
-        b=kBWOjPV7kiTAxd84UCu+mfhnUWZNDbE/7UpgueZywYBaA+qmhBPzeABQWxhLF6Obr3
-         wlo1WBaT4DHqNKsM7B5UFIfPmb3cWdtDm2oqVdwklJNzJgWUCEO7vZF3WZpPOpmN0EqV
-         Pwynq2HeeIl1ZIGBYYYlAA31PDtbFlawHL02QRbXrCajJA9ax4efE6lzgLMQ7a7Fw4hM
-         BYH6X1jPiWvWUC/0NQR6Fn6olPwiFuBDC0rlcEWvxcJtpm2fMetwGaOt58MTcsG1kzTr
-         ehqDBspnr3f68fny6vM+ZJGCpQAMKz2PEVAh97cWkyfbz7OJv6MnxBWozNSSFl5EbHFg
-         OnqA==
-X-Gm-Message-State: AKaTC018nPcjQEHZcxLobYZSdWVhep2JVsbntrrgTh3Qa27VMy7wnB51zBH5UPjDohLxyA==
-X-Received: by 10.84.210.46 with SMTP id z43mr114183192plh.175.1480844222885;
-        Sun, 04 Dec 2016 01:37:02 -0800 (PST)
-Received: from ?IPv6:2002:46b5:ad14::223:12ff:fe05:eebd? ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
-        by smtp.gmail.com with ESMTPSA id j190sm19396990pgd.23.2016.12.04.01.37.01
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 04 Dec 2016 01:37:02 -0800 (PST)
-From:   "Kyle J. McKay" <mackyle@gmail.com>
-To:     Jeff King <peff@peff.net>
-In-Reply-To: <20161204045554.advzvylytdmt2bh2@sigill.intra.peff.net>
-Subject: Re: Git v2.11.0 breaks max depth nested alternates
-References: <fe33de5b5f0b3da68b249cc4a49a6d7@3c843fe6ba8f3c586a21345a2783aa0> <20161204045554.advzvylytdmt2bh2@sigill.intra.peff.net>
-Message-Id: <E3C2AF2A-FE07-4C94-B549-3BDAF9B3DB5D@gmail.com>
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Apple Message framework v936)
-Date:   Sun, 4 Dec 2016 01:37:00 -0800
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-X-Mauler: Craptastic (2.936)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RIGRYL1auhXfJLnQW9JgnSYIM1wZu+69jyeeAX9nbJM=;
+        b=f+ZOk/V6DRACUTb72gmP25Ergv5q0q757jYpTixZ8wnZ6AyMKCnoTSPBrEqWUvTAJv
+         mYz7h32FPDyhBNdiAc0W5sCRiyuDSR8CspEiezdR01yoieMcr8vWyvPDxVIggzKXMrtY
+         Alo/MtHCt3mjRmCo8HZ4iCYAnJtih4df918s4ddL2mG/S0R69NDxoK6nsZbL2IczerRY
+         iVkVq9TixccztXsLPxLtq5wCpZhx5CkyQ75rZnVBGZTtsVHBwZCwCnbl5U1ZSkDOhwQs
+         64/fXwuDeNUsg4iNrnQ7CQdjNwr9BVZa9MpVOsLw9OHHM59gCaiO8A5ZlA/+M6DeM91+
+         APJQ==
+X-Gm-Message-State: AKaTC016Vu7iVsgH8uCtKyMGxdVOHodllOZgDGbYVyzeSKg1SDJKY5ZjOEew6ox254pQ6bFZYa8XGQcFi2ZuCA==
+X-Received: by 10.25.209.73 with SMTP id i70mr14277854lfg.24.1480848443713;
+ Sun, 04 Dec 2016 02:47:23 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.25.221.217 with HTTP; Sun, 4 Dec 2016 02:47:23 -0800 (PST)
+In-Reply-To: <CAJZCeG0p5UrqM4oSOJ1ALKqNG8SyYh8cexKaN9R6RYYzPsMfxQ@mail.gmail.com>
+References: <CAJZCeG1Eu+5DfaxavX_WGUCa+SY+yepDWZhPXxiFcV__h0xjrw@mail.gmail.com>
+ <CAP8UFD0ipS_4p+njfbbDGpYSDJhp43e9XDP69MOruZz9c136ew@mail.gmail.com> <CAJZCeG0p5UrqM4oSOJ1ALKqNG8SyYh8cexKaN9R6RYYzPsMfxQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 4 Dec 2016 11:47:23 +0100
+Message-ID: <CAP8UFD2rsxjmmVnPBmDFDx_-+Xr12wqGRqOMuMfrnu_ReSCm1A@mail.gmail.com>
+Subject: Re: git reset --hard should not irretrievably destroy new files
+To:     Julian de Bhal <julian.debhal@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Dec 3, 2016, at 20:55, Jeff King wrote:
-
-> So I do think this is worth dealing with, but I'm also curious why
-> you're hitting the depth-5 limit. I'm guessing it has to do with  
-> hosting
-> a hierarchy of related repos. But is your system then always in danger
-> of busting the 5-limit if people create too deep a repository  
-> hierarchy?
-
-No we check for the limit.  Anything at the limit gets broken by the  
-quarantine change though.
-
-> Specifically, I'm wondering if it would be sufficient to just bump  
-> it to
-> 6. Or 100.
-
-Well, if we left the current limit in place, but as you say:
-
-> Of course any static bump runs into the funny case where a repo
-> _usually_ works, but fails when pushed to. Which is kind of nasty and
-> unintuitive. And your patch fixes that,
-
-Yes.  That's not nice, hence the patch.  Without the fix, pushing  
-might work sometimes until you actually need to access cut-off objects  
-at pre-receive time.  So you might be able to push sometimes and  
-sometimes it breaks.
-
-> and we can leave the idea of
-> bumping the static depth number as an orthogonal issue (that  
-> personally,
-> I do not care about much about either way).
-
-The patch is a step on that road.  It doesn't go that far but all it  
-would take is connecting the introduced variable to a config item.   
-But you still need to bump it by 1 during quarantine operations.  Such  
-support would even allow alternates to be disallowed (except during  
-quarantine).  I wonder if there's an opportunity for further pack  
-operation optimizations in such a case (you know there are no  
-alternates because they're not allowed)?
-
->> diff --git a/common-main.c b/common-main.c
->> index c654f955..9f747491 100644
->> --- a/common-main.c
->> +++ b/common-main.c
->> @@ -37,5 +37,8 @@ int main(int argc, const char **argv)
+On Sun, Dec 4, 2016 at 1:57 AM, Julian de Bhal <julian.debhal@gmail.com> wrote:
+> On Sat, Dec 3, 2016 at 6:11 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> On Sat, Dec 3, 2016 at 6:04 AM, Julian de Bhal <julian.debhal@gmail.com> wrote:
+>>> but I'd be nearly as happy if a
+>>> commit was added to the reflog when the reset happens (I can probably make
+>>> that happen with some configuration now that I've been bitten).
 >>
->> 	restore_sigpipe_to_default();
->>
->> +	if (getenv(GIT_QUARANTINE_ENVIRONMENT))
->> +		alt_odb_max_depth++;
->> +
->> 	return cmd_main(argc, argv);
+>> Not sure if this has been proposed. Perhaps it would be simpler to
+>> just output the sha1, and maybe the filenames too, of the blobs, that
+>> are no more referenced from the trees, somewhere (in a bloblog?).
 >
-> After reading your problem description, my initial thought was to
-> increment the counter when we allocate the tmp-objdir, and decrement
-> when it is destroyed. Because the parent receive-pack process adds  
-> it to
-> its alternates, too. But:
->
->  1. Receive-pack doesn't care; it adds the tmp-objdir as an alternate,
->     rather than adding it as its main object dir and bumping down the
->     main one.
->
->  2. There would have to be some way of communicating to sub-processes
->     that they should bump their max-depth by one.
+> Yeah, after doing a bit more reading around the issue, this seems like
+> a smaller part of destroying local changes with a hard reset, and I'm
+> one of the lucky ones where it is recoverable.
 
-All true.  And I had similar thoughts.  Perhaps we should add your  
-comments to the patch description?  There seems to be a trend towards  
-having longer patch descriptions these days... ;)
+Yeah, but not everyone knows it is recoverable and using fsck to
+recover is not nice and easy for the user.
+So having a bloblog for example in .git/logs/blobs/, like the reflogs
+we already have, but for blobs, could help even if (first) it's just
+about writing the filenames and sha1s related to the blobs we stop
+referencing.
 
-> You've basically used the quarantine-path variable as the
-> inter-process flag for (2). Which feels a little funny, because its
-> value is unrelated to the alt-odb setup. But it is a reliable  
-> signal, so
-> there's a certain elegance. It's probably the best option, given that
-> the alternative is a specific variable to say "hey, bump your
-> max-alt-odb-depth by one". That's pretty ugly, too. :)
+> Has anyone discussed having `git reset --hard` create objects for the
+> current state of anything it's about to destroy, specifically so they
+> end up in the --lost-found?
 
-You took the words right out of my mouth...   I guess I need to work  
-on doing a better job of dumping my stream-of-thoughts that go into a  
-patch into the emails to the list.
+Well, when we start talking about creating new objects, then someone
+usually says that it is what "git stash" is about. So the discussion
+then often turns to how can we make people more aware of "git stash",
+or incite them to create an alias or a shell function that does a "git
+stash" before "git reset --hard ...", or teach them to use "git reset
+--keep ..." when it does what they want and is safer...
 
-Most all of your comments could be dumped into the patch description  
-as-is to pimp it out some.  I have no objection to that, even adding  
-an "Additional-analysis-by:" (or similar) credit line too.  :)
+> I think this is what you're suggesting, only without checking for
+> references, so that tree & blob objects exist that make any hard reset
+> reversible.
 
---Kyle
+I suggest we start with just logging blobs that we have already
+created (when they have been "git add"ed) but that we are
+dereferencing.
+If we can agree on that, it will already help and not be very costly
+performance wise. After that we could then start thinking about
+creating blobs for all the content we discard, which could be done
+only in a beginner mode (at least at first) to make sure it has no
+performance impact if people rely on "git reset --hard" being fast.
