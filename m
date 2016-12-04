@@ -2,118 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16D0C1FC96
-	for <e@80x24.org>; Sun,  4 Dec 2016 08:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB6061FC96
+	for <e@80x24.org>; Sun,  4 Dec 2016 09:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752195AbcLDIJr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Dec 2016 03:09:47 -0500
-Received: from mout.web.de ([212.227.15.3]:51548 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751888AbcLDIJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2016 03:09:46 -0500
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M7ssy-1cZG6X1pXE-00vPG3; Sun, 04
- Dec 2016 09:09:17 +0100
-Date:   Sun, 4 Dec 2016 08:09:14 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+        id S1750882AbcLDJhE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Dec 2016 04:37:04 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36052 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750774AbcLDJhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2016 04:37:03 -0500
+Received: by mail-pg0-f67.google.com with SMTP id x23so12983932pgx.3
+        for <git@vger.kernel.org>; Sun, 04 Dec 2016 01:37:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=S74EYyWT9reuXILMnARQLoyxfp/QRmvXW2ze4iJCxW4=;
+        b=ht7r76NFtwB53zOj+rLmle9PXWq/IkufFzOb6rgXZTxX9kHSZoNZ36VZ+jGvvXAj0T
+         v1QbAp4Ciuic8qocp/SenG6QMNucLoXKN2DBSQ2m1cyg6ihwxJSZB3jyR6j8xsvnIAbD
+         B1GrDS3bWvLLdh/NNxwTZXDEyjq/xam2Sjr43+QkF9oOv7HNxDTeI/8aAAiF94nsi5LH
+         6UMpQb1C52zKcTyI7stCYMhjuU8rSTsqfs2FCdEnIgLaW1xy0UEji2fKepOtKsgyGBxZ
+         ZX7ZmXP952Rwbx2TAydB+WP6HDNOJgLsvSqhtg8H2IiIKBJbtQk+n2IOt9a99tlLwKCc
+         1ayQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:in-reply-to:subject:references
+         :message-id:content-transfer-encoding:mime-version:date:cc;
+        bh=S74EYyWT9reuXILMnARQLoyxfp/QRmvXW2ze4iJCxW4=;
+        b=kBWOjPV7kiTAxd84UCu+mfhnUWZNDbE/7UpgueZywYBaA+qmhBPzeABQWxhLF6Obr3
+         wlo1WBaT4DHqNKsM7B5UFIfPmb3cWdtDm2oqVdwklJNzJgWUCEO7vZF3WZpPOpmN0EqV
+         Pwynq2HeeIl1ZIGBYYYlAA31PDtbFlawHL02QRbXrCajJA9ax4efE6lzgLMQ7a7Fw4hM
+         BYH6X1jPiWvWUC/0NQR6Fn6olPwiFuBDC0rlcEWvxcJtpm2fMetwGaOt58MTcsG1kzTr
+         ehqDBspnr3f68fny6vM+ZJGCpQAMKz2PEVAh97cWkyfbz7OJv6MnxBWozNSSFl5EbHFg
+         OnqA==
+X-Gm-Message-State: AKaTC018nPcjQEHZcxLobYZSdWVhep2JVsbntrrgTh3Qa27VMy7wnB51zBH5UPjDohLxyA==
+X-Received: by 10.84.210.46 with SMTP id z43mr114183192plh.175.1480844222885;
+        Sun, 04 Dec 2016 01:37:02 -0800 (PST)
+Received: from ?IPv6:2002:46b5:ad14::223:12ff:fe05:eebd? ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
+        by smtp.gmail.com with ESMTPSA id j190sm19396990pgd.23.2016.12.04.01.37.01
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 04 Dec 2016 01:37:02 -0800 (PST)
+From:   "Kyle J. McKay" <mackyle@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     thomas.attwood@stfc.ac.uk, git@vger.kernel.org
-Subject: Re: git 2.11.0 error when pushing to remote located on a windows
- share
-Message-ID: <20161204080914.GB2415@tb-raspi>
-References: <AABB04BF1441D24CB4E9FCF46394F17D666F34E1@exchmbx01>
- <20161202223749.2n7wa37e5w6446uv@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161202223749.2n7wa37e5w6446uv@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:2oPWc7IF3gJwvHxWmFZm/oW8qukbZ5KrpQRgG3ovihY32AHhgXH
- 22ce9siD7STo2xSfTRNdB/KyaS+96IG5YgAizdj5py65dhqZP7gsWpRRiphtCvZhnt396q8
- I2iINlNFKo63RiA7ob1b5HlqEKu7XyhirT5NhsOO/DOil5KAHhNEgk6b95nukBpMduSBnN8
- P9F1E2tdq6wtifLhTg+5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:t99/VDXTLts=:/guGgXf7OWBV0DaUEOStVm
- +rE/uZp/wpguA1fiAEHQD35q0VVI8GGr6gFD1eiOLX5kCb63T0nF+V0mSKX3PkqIaNhOTRNjw
- T7Imv0NM/96KFA5cInNwx5kwmZD3zSufGv7WHZ1rDSyZzJS4vKCtY3j0B6OPRP0WJP9Ipqlyd
- oYl6gRxef7s2d4XiXIQaPljUPzpH6x+/OVrOAAdWQw4dQtMclW5IJ3u+o8OCCEDRcAvbjni/8
- 4rvKdilYoyr4yHvR0JrS/pxNwZxKH87i4wMGOPb1p1/oiBcuXUj12q0J2uSa1+DS9JS2+oWwY
- dEx3JrkSgbhDd4tvSBUlQe8CZWU1CqkcaY2+ASIXCsaYuyOPOxyuw3PFs8/0Rp8VM7qFWpuuL
- z/EoeSIInemXzt/26Rb44VyiSbq4lOHioyY1n6gZ7LTz+K6hTmbJNgpB5CpQMtN6sV+i2/ZWa
- hYxNnWAt/q1hARGdklD7b2n8BWfMCdLlNUc4ESKF6nedCsq9klz2Lmids3l9jCkfcUfzNRK0h
- D4TI8HlDSapeuF8CPCWwEZ9rYhgixOziFg7dJTVJMf9hjDT0DOoKbG+KBRgBOA29uMMdtKgus
- me49S5FpkFWSB3w1Zek1rPzb9ICuEA62ODLaoheoL+8GzfyqRbxywrlHWnI8QYvqT1LOK3pU7
- MsM/ctn1XpyIVOQOJmHHnbHKtb4E7l+CyGj9MFp4LEfPUAHIOpBjJnnVbicqZHBeY+NcyR+8E
- U8DKhxdevLVXp6UwDRJ4yxRq6OQRnAMRLwnTfq03pxLGUK6RJaT2Q8IsWO0=
+In-Reply-To: <20161204045554.advzvylytdmt2bh2@sigill.intra.peff.net>
+Subject: Re: Git v2.11.0 breaks max depth nested alternates
+References: <fe33de5b5f0b3da68b249cc4a49a6d7@3c843fe6ba8f3c586a21345a2783aa0> <20161204045554.advzvylytdmt2bh2@sigill.intra.peff.net>
+Message-Id: <E3C2AF2A-FE07-4C94-B549-3BDAF9B3DB5D@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Apple Message framework v936)
+Date:   Sun, 4 Dec 2016 01:37:00 -0800
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 02, 2016 at 05:37:50PM -0500, Jeff King wrote:
-> On Fri, Dec 02, 2016 at 06:02:16PM +0000, thomas.attwood@stfc.ac.uk wrote:
-> 
-> > After updating git from 2.10.0 to 2.11.0 when trying to push any
-> > changes to a repo located in a windows share, the following error
-> > occurs:
-> > 
-> > $ git push origin test
-> > Counting objects: 2, done.
-> > Delta compression using up to 8 threads.
-> > Compressing objects: 100% (2/2), done.
-> > Writing objects: 100% (2/2), 284 bytes | 0 bytes/s, done.
-> > Total 2 (delta 1), reused 1 (delta 0)
-> > remote: error: object directory /path/to/dir/objects does not exist; check .git/objects/info/alternates.
-> > remote: fatal: unresolved deltas left after unpacking
-> > error: unpack failed: unpack-objects abnormal exit
-> > To //path/to/dir
-> >  ! [remote rejected] test -> test (unpacker error)
-> > error: failed to push some refs to '//path/to/dir'
-> 
-> Hmm. This is probably related to the quarantine-push change in v2.11;
-> the receiving end will write the objects into a temporary directory but
-> point to the original via GIT_ALTERNATE_OBJECT_DIRECTORIES. That pointer
-> isn't working for some reason, so the receiver can't resolve the deltas
-> it needs.
-> 
-> As you noted, the extra "/" is missing in the error message, and that
-> sounds like a plausible cause for what you're seeing. I'm not sure where
-> the slash is getting dropped, though. The value in the environment comes
-> from calling absolute_path(get_object_directory()), so I suspect the
-> real problem is not in the quarantine code, but it's just triggering a
-> latent bug elsewhere (either in absolute_path(), or in the code which
-> generates the objdir path).
-> 
-> > No error occurs if pushing to the same repo (a direct copy into a local directory) using 2.11.0.
-> > 
-> > $ git push local_test test
-> > Counting objects: 2, done.
-> > Delta compression using up to 8 threads.
-> > Compressing objects: 100% (2/2), done.
-> > Writing objects: 100% (2/2), 284 bytes | 0 bytes/s, done.
-> > Total 2 (delta 1), reused 1 (delta 0)
-> > To C:/path/to/dir
-> >  * [new branch]      test -> test
-> 
-> The fact that it works using the non-UNC path reinforces my feeling that
-> something is normalizing the absolute path incorrectly.
-> 
-> > Using `git fsck --full` in both 2.11.0 and 2.10.0, it doesn't reveal any additional problems.
-> 
-> Yeah, I don't think there is anything wrong with your repo. It's just a
-> path-building issue internal to the receiving process.
-> 
+On Dec 3, 2016, at 20:55, Jeff King wrote:
 
-There seems to be another issue, which may or may not being related:
-https://github.com/git-for-windows/git/issues/979
+> So I do think this is worth dealing with, but I'm also curious why
+> you're hitting the depth-5 limit. I'm guessing it has to do with  
+> hosting
+> a hierarchy of related repos. But is your system then always in danger
+> of busting the 5-limit if people create too deep a repository  
+> hierarchy?
 
-This is pure speculation:
-Could it be that a '/' is lost because of a change in the underlying
-Msys2 between 2.10 and 2.11 ?
+No we check for the limit.  Anything at the limit gets broken by the  
+quarantine change though.
 
-Dscho, (or anybody else) any ideas? 
+> Specifically, I'm wondering if it would be sufficient to just bump  
+> it to
+> 6. Or 100.
 
+Well, if we left the current limit in place, but as you say:
+
+> Of course any static bump runs into the funny case where a repo
+> _usually_ works, but fails when pushed to. Which is kind of nasty and
+> unintuitive. And your patch fixes that,
+
+Yes.  That's not nice, hence the patch.  Without the fix, pushing  
+might work sometimes until you actually need to access cut-off objects  
+at pre-receive time.  So you might be able to push sometimes and  
+sometimes it breaks.
+
+> and we can leave the idea of
+> bumping the static depth number as an orthogonal issue (that  
+> personally,
+> I do not care about much about either way).
+
+The patch is a step on that road.  It doesn't go that far but all it  
+would take is connecting the introduced variable to a config item.   
+But you still need to bump it by 1 during quarantine operations.  Such  
+support would even allow alternates to be disallowed (except during  
+quarantine).  I wonder if there's an opportunity for further pack  
+operation optimizations in such a case (you know there are no  
+alternates because they're not allowed)?
+
+>> diff --git a/common-main.c b/common-main.c
+>> index c654f955..9f747491 100644
+>> --- a/common-main.c
+>> +++ b/common-main.c
+>> @@ -37,5 +37,8 @@ int main(int argc, const char **argv)
+>>
+>> 	restore_sigpipe_to_default();
+>>
+>> +	if (getenv(GIT_QUARANTINE_ENVIRONMENT))
+>> +		alt_odb_max_depth++;
+>> +
+>> 	return cmd_main(argc, argv);
+>
+> After reading your problem description, my initial thought was to
+> increment the counter when we allocate the tmp-objdir, and decrement
+> when it is destroyed. Because the parent receive-pack process adds  
+> it to
+> its alternates, too. But:
+>
+>  1. Receive-pack doesn't care; it adds the tmp-objdir as an alternate,
+>     rather than adding it as its main object dir and bumping down the
+>     main one.
+>
+>  2. There would have to be some way of communicating to sub-processes
+>     that they should bump their max-depth by one.
+
+All true.  And I had similar thoughts.  Perhaps we should add your  
+comments to the patch description?  There seems to be a trend towards  
+having longer patch descriptions these days... ;)
+
+> You've basically used the quarantine-path variable as the
+> inter-process flag for (2). Which feels a little funny, because its
+> value is unrelated to the alt-odb setup. But it is a reliable  
+> signal, so
+> there's a certain elegance. It's probably the best option, given that
+> the alternative is a specific variable to say "hey, bump your
+> max-alt-odb-depth by one". That's pretty ugly, too. :)
+
+You took the words right out of my mouth...   I guess I need to work  
+on doing a better job of dumping my stream-of-thoughts that go into a  
+patch into the emails to the list.
+
+Most all of your comments could be dumped into the patch description  
+as-is to pimp it out some.  I have no objection to that, even adding  
+an "Additional-analysis-by:" (or similar) credit line too.  :)
+
+--Kyle
