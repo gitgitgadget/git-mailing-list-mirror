@@ -2,87 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9318B1FBB0
-	for <e@80x24.org>; Sun,  4 Dec 2016 20:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B046F203C1
+	for <e@80x24.org>; Sun,  4 Dec 2016 20:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751411AbcLDUlp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Dec 2016 15:41:45 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35848 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750979AbcLDUlo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2016 15:41:44 -0500
-Received: by mail-wm0-f68.google.com with SMTP id m203so11729697wma.3
-        for <git@vger.kernel.org>; Sun, 04 Dec 2016 12:41:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RPlbMeXdgDktAZG8UZg7A5dA3QmvJDm922wttWsO9sE=;
-        b=PjP/fD3dI+X4EYIZIyiAfqGDmfIXJjosZGMfx5WISLPmpW8tQe39egGB0MxmOR4YSK
-         zLGSkWZqJ8mSHAJpp+OITV6d8IqKmEOoGbmBGb4orQGr5OFgowJY6fsJCqun3UGXcQ/q
-         p5zJIvffMD91y0hqt4NqkYWHnfWjm6wiHGj60gzu5uSEfd/3rj/sPMlD2ycTF8uKYz/7
-         JJr6f3zrbBkoS/LMT0gwtQWGXt5wQ9kmHpkT08jV2QkyAWym6fBx/KNimOI5aTLBg7XX
-         tYuaaMCPnROilj8bW5uRTPu84roUdcvJ8RB6GgnAJV9dwy2Kv/CZQYndUQ5ZdtGh6YuG
-         WeZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RPlbMeXdgDktAZG8UZg7A5dA3QmvJDm922wttWsO9sE=;
-        b=K13Opgse8gpWa+WimNEGiT8qMpyLfmGWvHhYn4yQaTdayzUVHRJBmAhl52KcDGt6ZN
-         TKswDoXuP1dswhzBDy2gPx5IBIfR3LkMlS5LdDneSZ/BAcgwUP44KPF1FdI/vlh2pVO4
-         3V9WN2DnyICL76MxgMSaFHmNV0F5Bq45GA1i3UufvzArAbpy4WRMLVZPVaVZfGVz7MVa
-         13F5Kz9O4uX5SzYCopjG4hBURzG32l4mLgA0mII4lT69Pj+0GrcSVK9ri9cCt5nzx1xO
-         V8SswxZ2ckbKogQ2D5orbYQz4sQieaMAOTz57pNl5iyj1tziPVu3LWTl/jLFKTdbaYZv
-         Mweg==
-X-Gm-Message-State: AKaTC01Kg2r6PaDfhEXFI0bJ1XqoWq4kQK5bO6VrxOOugr156IQi7bw2luOOabd4G7Mnfg==
-X-Received: by 10.28.181.197 with SMTP id e188mr6119456wmf.32.1480884062923;
-        Sun, 04 Dec 2016 12:41:02 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by smtp.gmail.com with ESMTPSA id r7sm16922582wjp.43.2016.12.04.12.41.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 04 Dec 2016 12:41:01 -0800 (PST)
-Date:   Sun, 4 Dec 2016 12:40:57 -0800
-From:   David Aguilar <davvid@gmail.com>
-To:     Timon <timon37@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] git gui can't commit multiple files
-Message-ID: <20161204204057.32dnkjx6ixv3swez@gmail.com>
-References: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
+        id S1751169AbcLDUqD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Dec 2016 15:46:03 -0500
+Received: from avasout06.plus.net ([212.159.14.18]:38056 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751070AbcLDUqC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2016 15:46:02 -0500
+Received: from [10.0.2.15] ([143.159.212.40])
+        by avasout06 with smtp
+        id Fwlz1u0080srQBz01wm1DW; Sun, 04 Dec 2016 20:46:01 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
+ a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=gfiFGqvwUDkGb-jDjZsA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Message-ID: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
+Date:   Sun, 4 Dec 2016 20:45:59 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
-User-Agent: NeoMutt/20161104 (1.7.1)
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 04, 2016 at 05:36:46PM +0100, Timon wrote:
-> This is a regression in git 2.11.0 (version 2.10.2 is fine).
-> 
-> In git-gui I select multiple files in the Unstaged Changes (using
-> shift+click) and press ctrl+t to stage them. Then only one files gets
-> staged instead of all of the selected files.
-> The same happens when unstaging files.
-> 
-> Git-cola also exhibits the same behavior. Although there I could stage
-> multiple files if I used a popup menu instead of the keyboard shortcut
-> (I'm guessing it goes through a different code path?).
 
-Can you elaborate a bit?
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-I just tested git-cola with Git 2.11 and it worked fine for me.
-I selected several files and used the Ctrl+s hotkey to stage the
-selected files.  They all got staged.
+Hi Junio,
 
-If you have a test repo, or reproduction recipe, I'd be curious
-to try it out.
+I recently noticed that:
+
+    $ make >pout 2>&1
+    $ ./git version
+    git version 2.11.0.286.g109e8a9
+    $ git describe
+    v2.11.0-286-g109e8a99d
+    $
+
+... for non-release builds, the commit part of the version
+string was still using an --abbrev=7.
+
+I don't know that it actually matters too much (since it will
+show as many as necessary, thus the RFC), but it caused me to
+look twice. ;-)
+
+ATB,
+Ramsay Jones
+
+ GIT-VERSION-GEN | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 520d6e66e..05601f753 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -12,7 +12,7 @@ if test -f version
+ then
+ 	VN=$(cat version) || VN="$DEF_VER"
+ elif test -d ${GIT_DIR:-.git} -o -f .git &&
+-	VN=$(git describe --match "v[0-9]*" --abbrev=7 HEAD 2>/dev/null) &&
++	VN=$(git describe --match "v[0-9]*" --abbrev=9 HEAD 2>/dev/null) &&
+ 	case "$VN" in
+ 	*$LF*) (exit 1) ;;
+ 	v[0-9]*)
 -- 
-David
+2.11.0
