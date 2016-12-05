@@ -6,95 +6,91 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B66AF1FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 18:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC13B1FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 18:10:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751598AbcLESBa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 13:01:30 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53023 "EHLO
+        id S1751569AbcLESKJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 13:10:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61550 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752185AbcLESB3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 13:01:29 -0500
+        with ESMTP id S1751320AbcLESKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 13:10:09 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8591D54A9F;
-        Mon,  5 Dec 2016 13:01:21 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCC7154D73;
+        Mon,  5 Dec 2016 13:10:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f4YTITD53jVxXCq3mIzdPdL2gyA=; b=sQ+SJv
-        xos1S5J/FOH+GXgmZy3G9yZdu7fUtBvlZA1faMzfnEB2WLz+Cx+6Ts4CDMhqXojY
-        EA55r0R35/JLSHCBj5ryNUmyM1Q6ixzSWArjQumc9lj2atn3V8Q3jXotxU4TAp+7
-        FOsbAw64U7x4mPX6aokcMhvgtXnl8AXrW80C8=
+        :content-type; s=sasl; bh=Fsv/Juywcg5lJMDWfO/RQd38+5g=; b=tGatp6
+        f8ZU3saxzCljcgTfxeVqfQX8AMTpNDHW490lUE4139YBKfis+7KjTsHaCdraWN7m
+        3AZWicsnmADmWxqwVOrdh495g2iRl1LSRqHdgAf5dlsW9/oANLxTHMzMZEkXWA2e
+        4kpBMzn3LwmHQi46Tn7vwf5Yl819yhQguxqtw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DM29d2njaySzev/M40216yK0he9jw4Ur
-        pVf2XCMfillDyMb7Tg+eO4AmeI2ZQpKk2zFyNLETuNKrq7eKlThRG1YUwra4EoHk
-        yHe8I31GjiBrT5PuOiJfpnxSjg6KOTVTaM5APGKunmt7a5YD3Wv8/wV1jQdXjs6K
-        1BLAu/AFJnY=
+        :content-type; q=dns; s=sasl; b=sIYplkO0P4WWNOqocDsZEIvMUH27KYyV
+        ZDOlJkzWdWEd9u4BjI+L0jYmnQeBrVpj8E9givr4+9lrTk+tMX7Rkk2CS91M4AY6
+        yg72UCPkFW4fmNMVu5mxybLzQUBAw9dZGua4Js3+cMKenwQPpxnEpOD7lQ+1ZQrd
+        HBw2fvz2wFY=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 79A4A54A9E;
-        Mon,  5 Dec 2016 13:01:21 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B283554D70;
+        Mon,  5 Dec 2016 13:10:07 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C61554A9C;
-        Mon,  5 Dec 2016 13:01:20 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0EFB54D6F;
+        Mon,  5 Dec 2016 13:10:06 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        GIT Mailing-list <git@vger.kernel.org>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
 Subject: Re: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
 References: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
         <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
-Date:   Mon, 05 Dec 2016 10:01:19 -0800
-In-Reply-To: <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 5 Dec 2016 00:32:58 -0500")
-Message-ID: <xmqqbmwq5k7k.fsf@gitster.mtv.corp.google.com>
+        <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
+Date:   Mon, 05 Dec 2016 10:10:05 -0800
+In-Reply-To: <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Mon, 5 Dec 2016 11:21:14 +0000")
+Message-ID: <xmqq7f7e5jsy.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D3A4FE44-BB14-11E6-9C93-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0D553FC2-BB16-11E6-9B03-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> On Sun, Dec 04, 2016 at 08:45:59PM +0000, Ramsay Jones wrote:
+> Heh, that was the first version of the patch. However, I got to thinking
+> about why --abbrev=7 was there in the first place; the only reason I
+> could think of was to defeat local configuration to get a measure of
+> reproducibility.
 >
->> 
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->> 
->> Hi Junio,
->> 
->> I recently noticed that:
->> 
->>     $ make >pout 2>&1
->>     $ ./git version
->>     git version 2.11.0.286.g109e8a9
->>     $ git describe
->>     v2.11.0-286-g109e8a99d
->>     $
->> 
->> ... for non-release builds, the commit part of the version
->> string was still using an --abbrev=7.
+> Unfortunately, you can't get the 'auto' behaviour from --abbrev
+> (on the pu branch):
 >
-> It seems like this kind of discussion ought to go in the commit message.
-> :)
->
-> That said, I think the right patch may be to just drop --abbrev
-> entirely.
-> ...
-> I think at that point it was a noop, as 7 should have been the default.
-> And now we probably ought to drop it, so that we can use the
-> auto-scaling default.
+>     $ ./git describe --abbrev=-1
+>     v2.11.0-286-g109e8
+>     $ ./git describe --abbrev=0
+>     v2.11.0
+>     $ ./git describe
+>     v2.11.0-286-g109e8a99d
+>     $
 
-Yeah, I agree.
+What is the reason why the last one is undesirable?  Is it because
+the user may have core.abbrev set to some value in the configuration
+and you want to override it to force "auto"?
 
-It does mean that snapshot binaries built out of the same commit in
-the same repository before and after a repack have higher chances of
-getting named differently, which may surprise people, but that
-already is possible with a fixed length if the repacking involves
-pruning (albeit with lower probabilities), and I do not think it is
-a problem.
+I am not sure how rigid GIT-VERSION-GEN wants to be to countermand
+such an explicit user preference (i.e. existing configuration).
+
+> I did think about using '-c core.abbrev=auto', 
+
+Having said that, if countermanding end-user's configuration is
+desireble, I agree that "-c core.abbrev=auto" is the way to do so.
+
+> but that would depend on Junio's patch (nothing wrong with that,
+> of course):
+
+You caught me.  I'll need to polish that into a usable shape soon
+then.  And that is orthogonal to the "does it make sense to force
+'auto' in this context?" question.
