@@ -2,85 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26A051FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 22:43:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4356A1FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 22:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751605AbcLEWnQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 17:43:16 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:57017 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751618AbcLEWnO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 17:43:14 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout06 with smtp
-        id GNiy1u0030srQBz01NizMc; Mon, 05 Dec 2016 22:42:59 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=ZhwETxuJmUYw_JJCz-MA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
-To:     Junio C Hamano <gitster@pobox.com>
-References: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
- <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
- <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
- <xmqq7f7e5jsy.fsf@gitster.mtv.corp.google.com>
- <e74163ee-e7d4-bcbd-e65f-368bc2ee9a2d@ramsayjones.plus.com>
- <xmqqr35m2eva.fsf@gitster.mtv.corp.google.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <cbb39f75-dc3b-6bc7-9c60-9ce4e7d225f7@ramsayjones.plus.com>
-Date:   Mon, 5 Dec 2016 22:42:57 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1751955AbcLEWnu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 17:43:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56454 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751618AbcLEWnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 17:43:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6146855832;
+        Mon,  5 Dec 2016 17:43:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9LsDSqqM6MsCp5YceJm6QzcJnfU=; b=KtOMty
+        Iq1e9YFMcpSowUWckVQ2sm8bXlMujBw2egbSeecPfWU9GBX9DcsaUcIlYiNbhNgu
+        rK/ltoUvSiP2kiRZeCfqsRVf+rhUtReB8KQM2rHZuTVBeUZBKkYyo0oDD4K5C8W6
+        bJeCCTwINF1AyUEss2VKB+OMnvPy3ZpqwGVJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pvgNtH4KTod0BnhpgkFjCI0MzY4ePIVo
+        b9QWSYf+CW6sg5Nem5kt17ABzKGIdrGBU/MYUmNv13JiP8MYeUM/1y6uV9Rh7g+n
+        MBL+jYOH5fuhrEJHChAhOLM/xKKhR/EeOY68WDHUPQPKulKi8qLQ4u9ptPSVZMOp
+        hpJs+h9faNA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 50D6B55831;
+        Mon,  5 Dec 2016 17:43:48 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AD63D55830;
+        Mon,  5 Dec 2016 17:43:47 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jack Bates <bk874k@nottheoilrig.com>, git@vger.kernel.org,
+        Jack Bates <jack@nottheoilrig.com>
+Subject: Re: [PATCH] diff: fix up SHA-1 abbreviations outside of repository
+References: <20161204194747.7100-1-jack@nottheoilrig.com>
+        <xmqqr35m6dwt.fsf@gitster.mtv.corp.google.com>
+        <20161205072614.zg6yglqnznna65vf@sigill.intra.peff.net>
+Date:   Mon, 05 Dec 2016 14:43:46 -0800
+In-Reply-To: <20161205072614.zg6yglqnznna65vf@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 5 Dec 2016 02:26:14 -0500")
+Message-ID: <xmqqmvga2dzx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr35m2eva.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48ECCBBA-BB3C-11E6-9D80-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
+> I agree that it may be an accident waiting to happen, though, as soon as
+> some buried sub-function needs to care about the distinction.
 
-On 05/12/16 22:24, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> As I said, the original version of the patch just removed the
->> --abbrev=7, but then I started to think about why you might have
->> used --abbrev in the first place (first in commit 9b88fcef7 and
->> again in commit bf505158d). Making sure to override the configuration
->> was the only thing I could come up with. So, I was hoping you could
->> remember why! :-P
-> 
-> Nope.  As a maintainer support script, the only thing I cared about
-> it is that there is no -gXXXX at the end for anything I release ;-)
-> 
->> (I assumed it was to force a measure of uniformity/reproducibility).
-> 
-> You cannot force uniformity/reproducibility with fixed abbrev,
-> unless you set abbreviation length to 40, so you are correct to add
-> "a measure of" there ;-)
+Yes to that.
 
-Indeed. ;-)
+>> I wonder if we're better off if we made sure that diff_no_index()
+>> works the same way regardless of the value of "have_repository"
+>> field?
+>
+> If you mean adding a diffopt flag like "just abbreviate everything to
+> FALLBACK_DEFAULT_ABBREV even if we're in a repository", and then setting
+> that in diff_no_index(), I agree that is a lot cleaner.
 
->                            The first choice (i.e. 4) may have had a
-> justification to force absolute minimum, and the second one (i.e. 7)
-> may have had a justifiation to make it clear that we are using the
-> same setting as the default, so in post-1.7.10 era, I think it is
-> fine for us to just say "we have been using the same as default, so
-> let's not specify anything explicitly".
+I am not sure if that is what I meant (I no longer sure what exactly
+I meant to say there TBH), but this is probably not limited to the
+default abbrev length aka core.abbrev configuration.  Don't we have
+other configuration settings we may read from $HOME/.gitconfig (and
+possibly per-repository .git/config, if we did discovery but were
+explicitly given "--no-index") that want to affect the behaviour of
+the command?  
 
-So, you would be happy with just removing the '--abbrev' argument?
+I guess what I wanted, with "the same way", to see happen was that
+"have_repository" should be only controling how and from what files
+the configuration is read, and the behaviour of the command should
+be controlled by the values read from the configuration after that.
 
-(That's fine by me; I don't set core.abbrev!)
-
-ATB,
-Ramsay Jones
+Specifically, even if we were running with "--no-index", if we know
+we have access to the current repository discovered by setting it up
+gently, I do not think it is bad to ask find_unique_abbrev() to come
+up with an appropriate abbreviation.  So the fact that patch in
+question has to flip the have_repository bit off, if it is done in
+order to affect what diff_abbrev_oid() does, smells quite fishy from
+that point of view.
 
