@@ -6,87 +6,68 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E24A31FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 06:02:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 509191FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 06:15:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750939AbcLEGCP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 01:02:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51547 "EHLO cloud.peff.net"
+        id S1751263AbcLEGPD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 01:15:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51555 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750752AbcLEGCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 01:02:14 -0500
-Received: (qmail 27280 invoked by uid 109); 5 Dec 2016 06:01:19 -0000
+        id S1751241AbcLEGPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 01:15:02 -0500
+Received: (qmail 28142 invoked by uid 109); 5 Dec 2016 06:15:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 06:01:19 +0000
-Received: (qmail 1971 invoked by uid 111); 5 Dec 2016 06:01:55 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 06:15:02 +0000
+Received: (qmail 2056 invoked by uid 111); 5 Dec 2016 06:15:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 01:01:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Dec 2016 01:01:16 -0500
-Date:   Mon, 5 Dec 2016 01:01:16 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 01:15:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Dec 2016 01:15:00 -0500
+Date:   Mon, 5 Dec 2016 01:15:00 -0500
 From:   Jeff King <peff@peff.net>
 To:     Jack Bates <bk874k@nottheoilrig.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jack Bates <jack@nottheoilrig.com>
 Subject: Re: [PATCH v2] diff: handle --no-abbrev outside of repository
-Message-ID: <20161205060116.szy5ojetg3znu4w7@sigill.intra.peff.net>
+Message-ID: <20161205061500.dinyc3juedkpw6o3@sigill.intra.peff.net>
 References: <20161129070637.eult6o3m34r2mima@sigill.intra.peff.net>
  <20161202184840.2158-1-jack@nottheoilrig.com>
+ <20161205060116.szy5ojetg3znu4w7@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161202184840.2158-1-jack@nottheoilrig.com>
+In-Reply-To: <20161205060116.szy5ojetg3znu4w7@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 02, 2016 at 11:48:40AM -0700, Jack Bates wrote:
+On Mon, Dec 05, 2016 at 01:01:16AM -0500, Jeff King wrote:
 
-> The "git diff --no-index" codepath didn't handle the --no-abbrev option.
-> Also it didn't behave the same as find_unique_abbrev()
-> in the case where abbrev == 0.
-> find_unique_abbrev() returns the full, unabbreviated string in that
-> case, but the "git diff --no-index" codepath returned an empty string.
+>   Note that setting abbrev to "0" outside of a repository was broken
+>   recently by 4f03666ac (diff: handle sha1 abbreviations outside of
+>   repository, 2016-10-20). It adds a special out-of-repo code path for
+>   handling abbreviations which behaves differently than find_unique_abbrev()
+>   by truly giving a zero-length sha1, rather than taking "0" to mean "do
+>   not abbreviate".
+> 
+>   That bug was not triggerable until now, because there was no way to
+>   set the value to zero (using --abbrev=0 silently bumps it to the
+>   MINIMUM_ABBREV).
 
-If you've dug into what's wrong, I think it's often good to add some
-notes in the commit message in case somebody has to revisit this later.
+Actually, I take this last paragraph back. You _can_ trigger the bug
+with just:
 
-For example, I'd have written something like:
+  echo one >foo
+  echo two >bar
+  git diff --no-index --raw foo bar
 
-  The "git diff --no-index" codepath doesn't handle the --no-abbrev
-  option, because it relies on diff_opt_parse(). Normally that function
-  is called as part of handle_revision_opt(), which handles the abbrev
-  options itself. Adding the option directly to diff_opt_parse() fixes
-  this. We don't need to do the same for --abbrev, because it's already
-  handled there.
+which prints only "..." for each entry.
 
-  Note that setting abbrev to "0" outside of a repository was broken
-  recently by 4f03666ac (diff: handle sha1 abbreviations outside of
-  repository, 2016-10-20). It adds a special out-of-repo code path for
-  handling abbreviations which behaves differently than find_unique_abbrev()
-  by truly giving a zero-length sha1, rather than taking "0" to mean "do
-  not abbreviate".
+I didn't notice it before because without "--raw", we show the patch
+format. That uses the --full-index option, and does not respect --abbrev
+at all (which seems kind of bizarre, but has been that way forever).
 
-  That bug was not triggerable until now, because there was no way to
-  set the value to zero (using --abbrev=0 silently bumps it to the
-  MINIMUM_ABBREV).
-
->  t/t4013-diff-various.sh                                 | 7 +++++++
->  t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir  | 3 +++
->  t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir | 3 +++
->  t/t4013/diff.diff_--no-index_--raw_dir2_dir             | 3 +++
->  t/t4013/diff.diff_--raw_--abbrev=4_initial              | 6 ++++++
->  t/t4013/diff.diff_--raw_--no-abbrev_initial             | 6 ++++++
->  t/t4013/diff.diff_--raw_initial                         | 6 ++++++
-
-I wondered if the tests without --no-index were redundant with earlier
-ones, but I don't think so. --abbrev=4 is tested with diff-tree, but
---no-abbrev is not covered at all, AFAICT.
-
->  diff.c                                                  | 6 +++++-
-
-The actual code changes look good to me.
-
-Thanks.
+So I think there _is_ a regression in v2.11, and the second half of your
+change fixes it.
 
 -Peff
