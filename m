@@ -2,92 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A9A81FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 21:14:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 263851FC96
+	for <e@80x24.org>; Mon,  5 Dec 2016 21:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751373AbcLEVOM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 16:14:12 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:33649 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751176AbcLEVOM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 16:14:12 -0500
-Received: by mail-qt0-f174.google.com with SMTP id p16so326616695qta.0
-        for <git@vger.kernel.org>; Mon, 05 Dec 2016 13:13:24 -0800 (PST)
+        id S1751176AbcLEVUQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 16:20:16 -0500
+Received: from mail-ua0-f170.google.com ([209.85.217.170]:36741 "EHLO
+        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751328AbcLEVUN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 16:20:13 -0500
+Received: by mail-ua0-f170.google.com with SMTP id b35so361507467uaa.3
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 13:19:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Y+WNh63my90O7k5CNFyp5EI7uD5whQDFPepAgW+Crlg=;
-        b=FdCGYmwO6PSyYegkuVZYMkOvRPXRRGpVLIx/tDNYYtB2P8gLUP/9h36F7/WVROSN3B
-         1SKyxRXefZFRaI0Ed7V8PEn23ebk4oZsX2BDUU/Dcv8oRZeGL9NOXeEPbuUy2wwcJQbz
-         ML2xn2ritYJ4HOGJxqI+ykZF9epcf9Z5rRcd0=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=WkWV1k3AtHX3k8m7AWUwZLJdF76HdaLFfujblAg47N4=;
+        b=HZUubp4IcfV30CR2tvD1sWr/Pewf/+bKIsiLDLpBEFiZeu5wPmeL0voCvKM3GyzAJJ
+         Varf5sX3wLIAFlJvhQ6w1Piw4mXReQ0107EyFTP4Tykn0203lhJemitKL/JBCKPD8tor
+         ml8ajbpf9ebmsIMp899o6Nl6GWFJqeFJcYCDiPWFIjRI6apKYao1Ky0mjTpTREoi4J3r
+         XiEjwKbUr6WWtoY0nqP6a+k+/9zEwiPnN6NFsYyiFoNQImBlAVh/gyY8A1t8uqisRPpO
+         0iaKzKerZ1rU/7IGAiwNoZQn6C+zCW5TRC8x7+OR0zJDW+JKCp7Zq2W75tCMDA8u2S9C
+         PCow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Y+WNh63my90O7k5CNFyp5EI7uD5whQDFPepAgW+Crlg=;
-        b=f9wcABKbS8vzfks/cgpKVXq3Hu3YWQMdMk6QqQ4QgM06JMPBLUTHRKSchh236x8j+X
-         cyuwvuSYIzXxGgW+J7HPKVnU4cbFIaQvayFJXtET6I4jtNX96JRyJIqJKcd54NcbHaAP
-         lWT7C2V9W40PIVsZNzvyv52CVEO3A6kyX1wBuxx3DNxHqzLbqn5yOB9tLNY4KRsl0D6j
-         n078j5JJQFbxeJpPP6cu3ih9E9J7TnXHBoKDel2Wpt6l4GM/zmG3pYeg6k12bJwnm3Pl
-         cEWNiI1w1MswD3PK8EUnUDZD+M0Wti5maH/6mm5sAXzMfefbB1RtlEwd8+5Krr38drbZ
-         ocGw==
-X-Gm-Message-State: AKaTC02005+IxhIA0UVnfTgwxAsqleocjSKLGBck+Cfb425kGsSQAFdcPrMg9cylvxxiwVkPaS1bTk0SO5JR6g==
-X-Received: by 10.237.60.101 with SMTP id u34mr58652217qte.53.1480972403418;
- Mon, 05 Dec 2016 13:13:23 -0800 (PST)
+         :message-id:subject:to;
+        bh=WkWV1k3AtHX3k8m7AWUwZLJdF76HdaLFfujblAg47N4=;
+        b=UC2e0CTTo0BoOl871z5O52qAvAYmulatGcE0SqbICJCZ8CIr9PGeSbWTU+EDEkXbfa
+         5JNltrtMwPV/ol8DI/ytZlsRFFKSkdEdM52jSk0ICRHmMA0EJO5VPeXWP2Gm05J072fo
+         PjeR6OsPg/LvsRyRTrsHAlfALj+1J4G8qwyFSXRgnMbipgJZrAuuHcjMmnKTm6q5IKKB
+         1peJNIGJlDiEt1eUFci8TseD9IgRfoX/ZZySt3oav88FJJmd1++dTEOYqJChSd/n1tCy
+         2mDPc45NpDbqAzinux78KczmsKeMK1Y9ADNhLG21bZth33L1dWM0TMxd4q3EB96v4NpV
+         0A4Q==
+X-Gm-Message-State: AKaTC00S5iBVv7k7zPr7JM8Q2NT9AVdL50jXFuZZHXShEyPleXVQl0798Tyaqi7cIVic8wz0VesnbzBo8ZXomQ==
+X-Received: by 10.159.48.91 with SMTP id i27mr45356248uab.13.1480972760830;
+ Mon, 05 Dec 2016 13:19:20 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.200.47.111 with HTTP; Mon, 5 Dec 2016 13:13:22 -0800 (PST)
-In-Reply-To: <xmqq8tru3xom.fsf@gitster.mtv.corp.google.com>
-References: <20161202224319.5385-1-luke@diamand.org> <20161202224319.5385-2-luke@diamand.org>
- <xmqq8tru3xom.fsf@gitster.mtv.corp.google.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Mon, 5 Dec 2016 21:13:22 +0000
-Message-ID: <CAE5ih78Y_AbfgtW_6zMKLC8NzBxCKSagrgrjtfWZVOEwaAg6ZA@mail.gmail.com>
-Subject: Re: [PATCHv1 1/2] git-p4: support git-workspaces
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Vinicius Kursancew <viniciusalexandre@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
+Received: by 10.103.83.87 with HTTP; Mon, 5 Dec 2016 13:19:00 -0800 (PST)
+In-Reply-To: <20161204140311.26269-1-larsxschneider@gmail.com>
+References: <20161204140311.26269-1-larsxschneider@gmail.com>
+From:   Ori Rawlings <orirawlings@gmail.com>
+Date:   Mon, 5 Dec 2016 15:19:00 -0600
+Message-ID: <CAPv0x+Ps9YiMgHsJ0_VKzjbXRtqybDoJryt2NcVmE38JvUCeWA@mail.gmail.com>
+Subject: Re: [PATCH v1] git-p4: add config to retry p4 commands; retry 3 times
+ by default
+To:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 December 2016 at 20:53, Junio C Hamano <gitster@pobox.com> wrote:
-> Luke Diamand <luke@diamand.org> writes:
->
->> Teach git-p4 about git-workspaces.
->
-> Is this what we call "git worktree", or something else?
+Looks good to me, too.
 
-Ah, I think you're right!
+-r flag seems to be supported as far back as I can search in the Helix
+release notes.
 
->
->>
->> Signed-off-by: Luke Diamand <luke@diamand.org>
->> ---
->>  git-p4.py | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index 0c4f2afd2..5e2db1919 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -566,6 +566,12 @@ def isValidGitDir(path):
->>      if (os.path.exists(path + "/HEAD")
->>          and os.path.exists(path + "/refs") and os.path.exists(path + "/objects")):
->>          return True;
->> +
->> +    # git workspace directory?
->> +    if (os.path.exists(path + "/HEAD")
->> +        and os.path.exists(path + "/gitdir")):
->> +        return True
->> +
->>      return False
->>
->>  def parseRevision(ref):
+Ori Rawlings
