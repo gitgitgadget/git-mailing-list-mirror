@@ -2,148 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E24A1FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 20:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70A6D1FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 20:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751672AbcLEUVq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 15:21:46 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34067 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751639AbcLEUVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 15:21:46 -0500
-Received: by mail-pf0-f179.google.com with SMTP id c4so65354643pfb.1
-        for <git@vger.kernel.org>; Mon, 05 Dec 2016 12:21:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=71cJSREhIsiARitbDo6kc6DVJ2l7PeHpGENNkkZGt+0=;
-        b=CUdORlA161dXvDRvozK/yQDD5PK/BEAtThEa2B6ZJJUP1rFtJf8Tw4P4aRww39QgXN
-         +Hkqg3aKkSJ/JZnzPuZ9tlzPQGI0Z4667jKFZNZBnZ3NzjML0xJwddX1V7oSXxLvY+rP
-         j1XTOqIgMsvMUIizTkXM8IAwAC1ejIJW/ozBO6541vuv1kll5NFFIifI8ZqbMJahHq2A
-         xgm/rOetlZn8gJHnFXEOPkv1EySRIe2zkL+6tp23j61K8KOgSc9LH45e2VwRXWdytuUj
-         pSzvC8fDFxd4Zt2kUOBnSjapuyx0CZ+B/iTg157HhA8VUzsNK3pNTY6AYUfwCOsFUdbw
-         BNsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=71cJSREhIsiARitbDo6kc6DVJ2l7PeHpGENNkkZGt+0=;
-        b=U4LwfptPEKhjBPqqyjH3wBFOkkEi4B/KckSzVDSq5G7tlBPDER/J+pRCpSj5jEYZGd
-         k53dhGToG4tCXSliwDc5EteWKaGpT+bx484oijYCYh5X8EErULDnTnhDLe696HiBUmyL
-         Dn0hgT88zeeuZC22hd7uYBRvtV2RDswqidTWI1JWwaXi7tcykyjgU6EYIN/iOZHWFv0O
-         mbnuibqCN5LcF0ew6ycomAEZczpsZwh2WDogDCl1zmhiIgNjrUg8S97Wjta7HxAFsVwT
-         EUEGU5t1uuVM5apYyk1vXnxQCCKdfzWHUJG7PYReBetwTcdKYvoYCjCR2+vVsCqELOfZ
-         l0uA==
-X-Gm-Message-State: AKaTC01Bpr1kQPabp5ZDOk2nDmsfhJvc7R6vNXfp0wDRcACcvqmoKHXGDZ2KhOlTo+SoMQxl
-X-Received: by 10.99.232.21 with SMTP id s21mr106193273pgh.19.1480968759466;
-        Mon, 05 Dec 2016 12:12:39 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:20ca:c78:1a67:9579])
-        by smtp.gmail.com with ESMTPSA id t193sm29595760pgb.4.2016.12.05.12.12.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Dec 2016 12:12:38 -0800 (PST)
-Date:   Mon, 5 Dec 2016 12:12:37 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] real_path: make real_path thread-safe
-Message-ID: <20161205201237.GD68588@google.com>
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
- <1480964316-99305-2-git-send-email-bmwill@google.com>
- <CAGZ79kauPdE1uiFSvBALkNiwXbnV6d6xhwLdWNQwRir_8rTG6Q@mail.gmail.com>
+        id S1751895AbcLEUap (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 15:30:45 -0500
+Received: from avasout06.plus.net ([212.159.14.18]:33900 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751485AbcLEUam (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 15:30:42 -0500
+Received: from [10.0.2.15] ([143.159.212.40])
+        by avasout06 with smtp
+        id GLWH1u0080srQBz01LWJEa; Mon, 05 Dec 2016 20:30:19 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
+ a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=aROOY3qcNw5Mhn4uapMA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
+To:     Junio C Hamano <gitster@pobox.com>
+References: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
+ <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
+ <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
+ <xmqq7f7e5jsy.fsf@gitster.mtv.corp.google.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <e74163ee-e7d4-bcbd-e65f-368bc2ee9a2d@ramsayjones.plus.com>
+Date:   Mon, 5 Dec 2016 20:30:17 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kauPdE1uiFSvBALkNiwXbnV6d6xhwLdWNQwRir_8rTG6Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqq7f7e5jsy.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/05, Stefan Beller wrote:
-> > +/* removes the last path component from 'path' except if 'path' is root */
-> > +static void strip_last_component(struct strbuf *path)
-> > +{
-> > +       if (path->len > 1) {
-> > +               char *last_slash = find_last_dir_sep(path->buf);
-> 
-> What happens when there is no dir_sep?
 
-There should always be a dir_sep since that only gets run if the passed
-in path at least contains root '/'
 
+On 05/12/16 18:10, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 > 
-> > +/* gets the next component in 'remaining' and places it in 'next' */
-> > +static void get_next_component(struct strbuf *next, struct strbuf *remaining)
-> > +{
+>> Heh, that was the first version of the patch. However, I got to thinking
+>> about why --abbrev=7 was there in the first place; the only reason I
+>> could think of was to defeat local configuration to get a measure of
+>> reproducibility.
+>>
+>> Unfortunately, you can't get the 'auto' behaviour from --abbrev
+>> (on the pu branch):
+>>
+>>     $ ./git describe --abbrev=-1
+>>     v2.11.0-286-g109e8
+>>     $ ./git describe --abbrev=0
+>>     v2.11.0
+>>     $ ./git describe
+>>     v2.11.0-286-g109e8a99d
+>>     $
 > 
-> It's more than just getting it, it also chops it off of 'remaining' ?
+> What is the reason why the last one is undesirable?  Is it because
+> the user may have core.abbrev set to some value in the configuration
+> and you want to override it to force "auto"?
 
-True, I can update the comment to reflect that.
+As I said, the original version of the patch just removed the
+--abbrev=7, but then I started to think about why you might have
+used --abbrev in the first place (first in commit 9b88fcef7 and
+again in commit bf505158d). Making sure to override the configuration
+was the only thing I could come up with. So, I was hoping you could
+remember why! :-P
 
-> > +       } else {
-> > +               /* relative path; can use CWD as the initial resolved path */
-> > +               if (strbuf_getcwd(&resolved)) {
-> > +                       if (die_on_error)
-> > +                               die_errno("Could not get current working directory");
-> 
-> I am looking at xgetcwd, which words it slightly differently.
-> 
->     if (strbuf_getcwd(&sb))
->         die_errno(_("unable to get current working directory"));
-> 
-> Not sure if aligning them would be a good idea?
-> 
-> Going by "git grep die_errno" as well as our Coding guidelines,
-> we don't want to see capitalized error messages.
+(I assumed it was to force a measure of uniformity/reproducibility).
 
-K I can use the other msg.
+ATB,
+Ramsay Jones
 
-> >
-> > -               if (sb.len) {
-> > -                       if (!cwd.len && strbuf_getcwd(&cwd)) {
-> > +               /* append the next component and resolve resultant path */
-> 
-> "resultant" indicates you have a math background. :)
-> But I had to look it up, I guess it is fine that way,
-> though "resulting" may cause less mental friction
-> for non native speakers.
-> 
-> 
-> > +                       if (!(errno == ENOENT && !remaining.len)) {
-> >                                 if (die_on_error)
-> > -                                       die_errno("Could not get current working directory");
-> > +                                       die_errno("Invalid path '%s'",
-> > +                                                 resolved.buf);
-> >                                 else
-> >                                         goto error_out;
-> >                         }
-> > +               } else if (S_ISLNK(st.st_mode)) {
-> 
-> As far as I can tell, we could keep the symlink strbuf
-> at a smaller scope here? (I was surprised how many strbufs
-> are declared at the beginning of the function)
 
-Yeah I can push it down in scope.  There will be a bit more allocation
-churn with the smaller scope but multiple symlinks should be rare?
-Alternatively the 'next' buffer can be reused...I decided against that
-initially due to readability.  And yes, lots of string manipulation
-requires lots of strbufs :)
-
-> > +       //strbuf_release(&resolved);
-> 
-> This is why the cover letter toned down expectations ?
-> (no // as comment, maybe remove that line?)
-
-yep.  It will be added back in though once the callers to real_path take
-ownership of the memory.
-
--- 
-Brandon Williams
