@@ -6,72 +6,94 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B42E1FF40
-	for <e@80x24.org>; Mon,  5 Dec 2016 11:20:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 072B71FF40
+	for <e@80x24.org>; Mon,  5 Dec 2016 11:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751439AbcLELUF convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 5 Dec 2016 06:20:05 -0500
-Received: from smtp-out4.electric.net ([192.162.216.188]:60428 "EHLO
-        smtp-out4.electric.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbcLELUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 06:20:05 -0500
-X-Greylist: delayed 836 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Dec 2016 06:20:04 EST
-Received: from 1cDr5w-0004mY-V9 by out4c.electric.net with emc1-ok (Exim 4.87)
-        (envelope-from <thomas.attwood@stfc.ac.uk>)
-        id 1cDr5x-0006hi-Uz; Mon, 05 Dec 2016 03:06:05 -0800
-Received: by emcmailer; Mon, 05 Dec 2016 03:06:05 -0800
-Received: from [130.246.236.11] (helo=exchsmtp.stfc.ac.uk)
-        by out4c.electric.net with esmtps (TLSv1:ECDHE-RSA-AES256-SHA:256)
-        (Exim 4.87)
-        (envelope-from <thomas.attwood@stfc.ac.uk>)
-        id 1cDr5w-0004mY-V9; Mon, 05 Dec 2016 03:06:04 -0800
-Received: from EXCHMBX01.fed.cclrc.ac.uk ([130.246.236.13]) by
- EXCHHUB03.fed.cclrc.ac.uk ([130.246.236.11]) with mapi id 14.03.0266.001;
- Mon, 5 Dec 2016 11:05:41 +0000
-From:   <thomas.attwood@stfc.ac.uk>
-To:     <tboegi@web.de>, <peff@peff.net>
-CC:     <git@vger.kernel.org>
-Subject: RE: git 2.11.0 error when pushing to remote located on a windows
- share
-Thread-Topic: git 2.11.0 error when pushing to remote located on a windows
- share
-Thread-Index: AQHSTOy2DsC60xIvQbi3TRYfROIxx6D3cY0AgAG+XKA=
-Date:   Mon, 5 Dec 2016 11:05:40 +0000
-Message-ID: <AABB04BF1441D24CB4E9FCF46394F17D666F3805@exchmbx01>
-References: <AABB04BF1441D24CB4E9FCF46394F17D666F34E1@exchmbx01>
- <20161202223749.2n7wa37e5w6446uv@sigill.intra.peff.net>
- <20161204080914.GB2415@tb-raspi>
-In-Reply-To: <20161204080914.GB2415@tb-raspi>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [130.246.243.42]
-x-esetresult: clean, is OK
-x-esetid: 37303A29411E556763776B
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1751388AbcLELW0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 06:22:26 -0500
+Received: from avasout06.plus.net ([212.159.14.18]:58928 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751223AbcLELWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 06:22:24 -0500
+Received: from [10.0.2.15] ([143.159.212.40])
+        by avasout06 with smtp
+        id GBME1u0060srQBz01BMFky; Mon, 05 Dec 2016 11:21:16 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
+ a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
+ a=IkcTkHD0fZMA:10 a=LTjC4lJ740txakntddMA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
+To:     Jeff King <peff@peff.net>
+References: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
+ <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
+Date:   Mon, 5 Dec 2016 11:21:14 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-X-Outbound-IP: 130.246.236.11
-X-Env-From: thomas.attwood@stfc.ac.uk
-X-Proto: esmtps
-X-Revdns: exchhub03.rl.ac.uk
-X-HELO: exchsmtp.stfc.ac.uk
-X-TLS:  TLSv1:ECDHE-RSA-AES256-SHA:256
-X-Authenticated_ID: 
-X-PolicySMART: 3590380
-X-Virus-Status: Scanned by VirusSMART (c)
-X-Virus-Status: Scanned by VirusSMART (s)
+In-Reply-To: <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 4 Dec 2016 08:09:14 +0000, Torsten Bögershausen wrote:
-> There seems to be another issue, which may or may not being related:
-> https://github.com/git-for-windows/git/issues/979
 
-I think this is the same issue. I've posted my trace command output there as
-It might be more appropriate:
-https://github.com/git-for-windows/git/issues/979#issuecomment-264816175
+
+On 05/12/16 05:32, Jeff King wrote:
+> On Sun, Dec 04, 2016 at 08:45:59PM +0000, Ramsay Jones wrote:
+>> I recently noticed that:
+>>
+>>     $ make >pout 2>&1
+>>     $ ./git version
+>>     git version 2.11.0.286.g109e8a9
+>>     $ git describe
+>>     v2.11.0-286-g109e8a99d
+>>     $
+>>
+>> ... for non-release builds, the commit part of the version
+>> string was still using an --abbrev=7.
+> 
+> It seems like this kind of discussion ought to go in the commit message.
+> :)
+> 
+> That said, I think the right patch may be to just drop --abbrev
+> entirely.
+
+Heh, that was the first version of the patch. However, I got to thinking
+about why --abbrev=7 was there in the first place; the only reason I
+could think of was to defeat local configuration to get a measure of
+reproducibility.
+
+Unfortunately, you can't get the 'auto' behaviour from --abbrev
+(on the pu branch):
+
+    $ ./git describe --abbrev=-1
+    v2.11.0-286-g109e8
+    $ ./git describe --abbrev=0
+    v2.11.0
+    $ ./git describe
+    v2.11.0-286-g109e8a99d
+    $
+
+I did think about using '-c core.abbrev=auto', but that would
+depend on Junio's patch (nothing wrong with that, of course):
+
+    $ git version
+    git version 2.11.0
+    $ git -c core.abbrev=auto describe
+    fatal: bad numeric config value 'auto' for 'core.abbrev': invalid unit
+    $ ./git -c core.abbrev=auto describe
+    v2.11.0-286-g109e8a99d
+    $ 
+
+What do you think?
+
+ATB,
+Ramsay Jones
 
