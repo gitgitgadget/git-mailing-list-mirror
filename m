@@ -2,102 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 077191FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 19:31:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 711841FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 19:57:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751563AbcLETbz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 14:31:55 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35760 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbcLETby (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 14:31:54 -0500
-Received: by mail-pg0-f50.google.com with SMTP id p66so139823344pga.2
-        for <git@vger.kernel.org>; Mon, 05 Dec 2016 11:31:54 -0800 (PST)
+        id S1751804AbcLET5f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 14:57:35 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:35507 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751201AbcLET5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 14:57:34 -0500
+Received: by mail-qk0-f175.google.com with SMTP id n204so357953643qke.2
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 11:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=J+b6TDRyKTbRsUHYJvHWVUjRerI+eyURwAbgsYKf22Q=;
-        b=P6iq0EcmVplsBtWtNHvBGC/2au5jahtG1xXNsoPcjcXR0ZRrwFomr5C5Eds1l8FfRt
-         SzFT6Kk2mxJN2UxmsEQzu2nfeTef/yvmLAxB55aUF54fiqD5KkEMynocbCJkdFzuC3oX
-         b7LlWl7lxZLdjFtJS0Gj7sEq+IzptQy6JtnZt2pnX4eklwRBsBdz+7Z6uVRrO4kDa/bI
-         szWh+IG5iGy5+S+Rg1HaGJDnMkTBNi/h6BDOwDeNQxBL0nYoQhYJnjCMhP0weHZtsptV
-         g8RwZxCcKPaFiMO0SvHnEUdZbIW7vwqYu5vhnYHDCoXLaw34ien18wefSk+Pglp7B4Jo
-         MmHQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KqhbanOR2vSbhZLgvtdyZwgiC+DxlvYVyVSRz/WGy68=;
+        b=ec7aHCvf7hpYp5DIt/2StAY3LU0HT9JA52LLrVIcI37OdO2D/m7vvLza3rTLxO/fG/
+         tiU+GGQZX5XtUlU8t3vMGPgGJjE+Avy9ge4YOT6VGvzFuaFJzYeVF3sovljctoA1iTCC
+         JKYRU6QwIhCRvIOQ/b7PKrphqOdGsgY3ZvcYcqH53JDB/SEs1sx0sst1vMzrmH8hZWdH
+         0rm6Ax+kn3f0L5XMIMK/vxV6DFfeG+pm+JuOY4bgo7ozq6M28aDy3JY+qtI8D/0e1K5d
+         KRNO+N2NtGoXp8hroQ26sjxpeWW8Y6ZY9s8cfokVMevitrr5kUYqT+Zdsin63Zlo5g1t
+         jCZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=J+b6TDRyKTbRsUHYJvHWVUjRerI+eyURwAbgsYKf22Q=;
-        b=K7igZvLcSODHPWypaJ72YYLnRDgvRii2hGaJRxAMeKy7v0UgtvrySBn7JTdqrzqSQk
-         xurdxRY4P4XssDAIVseueV4an/P33OOFHcaw8cwiQslesjqrEDnomYV9KTpFpZYigH+x
-         RtxGbLCvrOAOphnIU1gneEInr3ZT8ExKHr5ReJc4Ceu66aNfmiJtP7EJSC6Ry0BrW+mU
-         NBj/l6RYyapTrbL3u1wuTU2JkP2N01oFl0WK6wk9KxQChjq/7YRSwn/3bMcrJUrMqsoT
-         zgANh84Bs7Bf3V/v1/W+LmV+RThwT573rQceAGho+DpZ6xNvc0zwKaA0Sr2/ky/igRhf
-         1/BQ==
-X-Gm-Message-State: AKaTC00odpA7UmRhGKfoGvT4rX7KElaJ6uNlZ0Mjpoe3eqJmAd6gcva1sUEKEIQl+t8FwkI+
-X-Received: by 10.84.204.133 with SMTP id b5mr128274805ple.49.1480966313607;
-        Mon, 05 Dec 2016 11:31:53 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:20ca:c78:1a67:9579])
-        by smtp.gmail.com with ESMTPSA id j68sm29188849pfk.95.2016.12.05.11.31.52
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Dec 2016 11:31:52 -0800 (PST)
-Date:   Mon, 5 Dec 2016 11:31:51 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     David Turner <David.Turner@twosigma.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCHv2 15/17] checkout: recurse into submodules if asked to
-Message-ID: <20161205193151.GC68588@google.com>
-References: <20161203003022.29797-1-sbeller@google.com>
- <20161203003022.29797-16-sbeller@google.com>
- <20161205192527.GA68588@google.com>
- <CAGZ79kbEtR7_6ZvBsjkc=8q+nnq9FoPv9HNWdRyuR2CQGqQ2oA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KqhbanOR2vSbhZLgvtdyZwgiC+DxlvYVyVSRz/WGy68=;
+        b=OxAKV+aFvg2DfN1/Hg+97F9GKNLGZI41W4IXYGRLjdqPlPJetff0ZTY+OUmiQ4n5C1
+         +ZUndCQN61LV1faLtf3wlOb6kBf8t9MPorXE+EAy1cXIn+bIFQbzbkrA0fTt2kUBdcdd
+         eYe9QAtvFoIP6oksK864UWY6T9HPHtHMbnUMm14dBx8Yzg66B2TJwYxHosvlTbSMAyEL
+         B8pGnk/RIRLO7foghWyAfUGpj130m5K6JyZuS4GGcIdmFyb/L4n1z9JvNQkor3a5Cj27
+         pN5Ne61DY+UrqHHaPVlbypl3KsWbTRSEOF1JhMLOJ6ApvbuTV8tUsl4AxZoL+eSWDfRX
+         vVFA==
+X-Gm-Message-State: AKaTC01yXni/jTTuiWu6skIj7EFXf8BF+33bm8rXDGf5rDnBIDc4olG6uXPB0ZHBvNkqGAsZpi5eMro3EvhX3laZ
+X-Received: by 10.55.112.134 with SMTP id l128mr31547468qkc.220.1480967853143;
+ Mon, 05 Dec 2016 11:57:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbEtR7_6ZvBsjkc=8q+nnq9FoPv9HNWdRyuR2CQGqQ2oA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.12.147.188 with HTTP; Mon, 5 Dec 2016 11:57:32 -0800 (PST)
+In-Reply-To: <1480964316-99305-2-git-send-email-bmwill@google.com>
+References: <1480964316-99305-1-git-send-email-bmwill@google.com> <1480964316-99305-2-git-send-email-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 5 Dec 2016 11:57:32 -0800
+Message-ID: <CAGZ79kauPdE1uiFSvBALkNiwXbnV6d6xhwLdWNQwRir_8rTG6Q@mail.gmail.com>
+Subject: Re: [PATCH] real_path: make real_path thread-safe
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/05, Stefan Beller wrote:
-> On Mon, Dec 5, 2016 at 11:25 AM, Brandon Williams <bmwill@google.com> wrote:
-> > On 12/02, Stefan Beller wrote:
-> >>
-> >>  test_expect_success '"checkout <submodule>" honors diff.ignoreSubmodules' '
-> >> @@ -63,6 +70,260 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
-> >>       ! test -s actual
-> >>  '
-> >
-> > Should you use test_must_fail and not '!'?
-> 
-> We use test_must_fail for git and '!' for non git thigns (test, grep etc),
-> as the test suite is about testing git.
-> 
-> The test_must_fail expects the command to be run to
-> * not reurn 0 (success)
-> * not segfault
-> * not return some other arbitrary return codes
->   indicating abnormal failure (125 IIRC)
-> 
-> So in a way test_must_fail translates to:
-> "I want to run this git command and it should fail
-> gracefully because at this state, it is the best git can do"
-> 
-> The '!' however is just inverting the boolean expression.
-> We assume test, grep, et al. to be flawless here. ;)
+On Mon, Dec 5, 2016 at 10:58 AM, Brandon Williams <bmwill@google.com> wrote:
+> The current implementation of real_path uses chdir() in order to resolve
+> symlinks.  Unfortunately this isn't thread-safe as chdir() affects a
+> process as a whole and not just an individual thread.  Instead perform
+> the symlink resolution by hand so that the calls to chdir() can be
+> removed, making real_path reentrant.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 
-Ah, alright.  Thanks for the info :)
+Thanks for working on this, some comments below:
 
--- 
-Brandon Williams
+>
+> +/* removes the last path component from 'path' except if 'path' is root */
+> +static void strip_last_component(struct strbuf *path)
+> +{
+> +       if (path->len > 1) {
+> +               char *last_slash = find_last_dir_sep(path->buf);
+
+What happens when there is no dir_sep?
+
+> +/* gets the next component in 'remaining' and places it in 'next' */
+> +static void get_next_component(struct strbuf *next, struct strbuf *remaining)
+> +{
+
+It's more than just getting it, it also chops it off of 'remaining' ?
+
+
+
+> +       strbuf_reset(&resolved);
+> +
+> +       if (is_absolute_path(path)) {
+> +               /* absolute path; start with only root as being resolved */
+> +               strbuf_addch(&resolved, '/');
+> +               strbuf_addstr(&remaining, path + 1);
+
+This is where we would wait for input of Windows savy people.
+
+> +       } else {
+> +               /* relative path; can use CWD as the initial resolved path */
+> +               if (strbuf_getcwd(&resolved)) {
+> +                       if (die_on_error)
+> +                               die_errno("Could not get current working directory");
+
+I am looking at xgetcwd, which words it slightly differently.
+
+    if (strbuf_getcwd(&sb))
+        die_errno(_("unable to get current working directory"));
+
+Not sure if aligning them would be a good idea?
+
+Going by "git grep die_errno" as well as our Coding guidelines,
+we don't want to see capitalized error messages.
+
+> +
+> +               if (next.len == 0) {
+> +                       continue; /* empty component */
+
+which means we resolve over path//with//double//slashes just fine,
+as well as /./ parts. :)
+
+>                 }
+>
+> -               if (sb.len) {
+> -                       if (!cwd.len && strbuf_getcwd(&cwd)) {
+> +               /* append the next component and resolve resultant path */
+
+"resultant" indicates you have a math background. :)
+But I had to look it up, I guess it is fine that way,
+though "resulting" may cause less mental friction
+for non native speakers.
+
+
+> +                       if (!(errno == ENOENT && !remaining.len)) {
+>                                 if (die_on_error)
+> -                                       die_errno("Could not get current working directory");
+> +                                       die_errno("Invalid path '%s'",
+> +                                                 resolved.buf);
+>                                 else
+>                                         goto error_out;
+>                         }
+> +               } else if (S_ISLNK(st.st_mode)) {
+
+As far as I can tell, we could keep the symlink strbuf
+at a smaller scope here? (I was surprised how many strbufs
+are declared at the beginning of the function)
+
+> +       //strbuf_release(&resolved);
+
+This is why the cover letter toned down expectations ?
+(no // as comment, maybe remove that line?)
+
+Thanks,
+Stefan
