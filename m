@@ -2,104 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADB3E1FF40
-	for <e@80x24.org>; Mon,  5 Dec 2016 07:37:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D44AC1FF40
+	for <e@80x24.org>; Mon,  5 Dec 2016 07:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750951AbcLEHhR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 02:37:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51602 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751086AbcLEHhQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 02:37:16 -0500
-Received: (qmail 1524 invoked by uid 109); 5 Dec 2016 07:36:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 07:36:20 +0000
-Received: (qmail 2422 invoked by uid 111); 5 Dec 2016 07:36:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 02:36:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Dec 2016 02:36:19 -0500
-Date:   Mon, 5 Dec 2016 02:36:19 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-Subject: Re: Should reset_revision_walk clear more flags?
-Message-ID: <20161205073619.6h6rm2z4av3mie2y@sigill.intra.peff.net>
-References: <20161204230958.h3ilhueqqptv253u@glandium.org>
- <20161205054013.taosbwjamxiwzocn@sigill.intra.peff.net>
- <xmqqmvga6dmb.fsf@gitster.mtv.corp.google.com>
+        id S1751086AbcLEH6E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 02:58:04 -0500
+Received: from mail-wj0-f194.google.com ([209.85.210.194]:33517 "EHLO
+        mail-wj0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750855AbcLEH6C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 02:58:02 -0500
+Received: by mail-wj0-f194.google.com with SMTP id kp2so37852043wjc.0
+        for <git@vger.kernel.org>; Sun, 04 Dec 2016 23:58:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=KLTzmQ5WPDswsVT46n5BgO7RuzB6wzriihunqMkyabU=;
+        b=kIYhlXLkTwNoGR4lhItELKQegnh247x0lx25HBhJEb+E9bMXzrDzD/W8Bfi+sxn3lD
+         q2tmQI6N/c/GIOcV/daYzS6SpA+UlF+cxYy5puHfpiSKPlIja90mm4QJLg8IN3tSJpQv
+         6OmHeOPShnDpt0118iqP961apZivB9G47TlyIYVr2dMyfXmLrq/ThIVLESetnfcWcmOK
+         NuC+w81+8JlTD2Zg2kZxcvNNEvPgva2+07w3mKW+e8srvx/nMeXZVyhloC9SUGMTsUPi
+         JzSvbc4JVB+vndksYtcZP8W+bENbjtvD9OQT58lsWIqxFltmlII0obWJw8HSpaEI4Aaq
+         0nvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=KLTzmQ5WPDswsVT46n5BgO7RuzB6wzriihunqMkyabU=;
+        b=iTAK/sB02P769jEnATUa30H9G8adDF0SoiXslc/tji8koXpHqPyNIQ4F/zT27tGCY4
+         q3PrdtLe7nOUg3Fv42Iai9JOZu0axf5KUk5il834YQLMu9ifpwjC4FQ1OF1eiyAHgh8p
+         uWuDRrHCSTKGqdam+f8a2R0Q1kWDqusPLII8r56dYldMVknS5YkMoeFXXzCBXD3WXWh/
+         QRZ104cfbwHo/pSLCfdpRiFRmumBNPh82yzbZ0MkjHNWxFWZ0cB0OqcDPiLmZyx9TVCv
+         Oe17J9TYsE3BTAwdFBg5r3qOnPp3QK1BweNttY2Q4+kjQDaLX2qOO8A75NgvSSFEDHx7
+         gI5Q==
+X-Gm-Message-State: AKaTC00aPpepcBtCOiWQmkxg+6a+LpANeT/7rlG1qpvo3XXmDKvovq7ioABXzHcU56pcKQ==
+X-Received: by 10.194.71.17 with SMTP id q17mr22712398wju.180.1480924679637;
+        Sun, 04 Dec 2016 23:57:59 -0800 (PST)
+Received: from [192.168.15.248] ([37.153.249.237])
+        by smtp.gmail.com with ESMTPSA id w7sm16596111wmd.24.2016.12.04.23.57.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 Dec 2016 23:57:59 -0800 (PST)
+Subject: Re: Error after calling git difftool -d with
+To:     David Aguilar <davvid@gmail.com>
+References: <5f630c90-cf54-3a23-c9a9-af035d4514e0@gmail.com>
+ <alpine.DEB.2.20.1612021704170.117539@virtualbox>
+ <20161205051510.itftw4hyzkv6nnxn@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+From:   "P. Duijst" <p.duijst@gmail.com>
+Message-ID: <c0c8c333-adfa-ad58-f1ec-7239a3a16528@gmail.com>
+Date:   Mon, 5 Dec 2016 08:58:00 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmvga6dmb.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20161205051510.itftw4hyzkv6nnxn@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 04, 2016 at 11:26:04PM -0800, Junio C Hamano wrote:
+On 12/5/2016 06:15, David Aguilar wrote:
+> On Fri, Dec 02, 2016 at 05:05:06PM +0100, Johannes Schindelin wrote:
+>> Hi Peter,
+>>
+>> On Fri, 2 Dec 2016, P. Duijst wrote:
+>>
+>>> Incase filenames are used with a quote ' or a bracket [  (and maybe some more
+>>> characters), git "diff" and "difftool -y" works fine, but git *difftool **-d*
+>>> gives the next error message:
+>>>
+>>>     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
+>>>     $ git diff
+>>>     diff --git a/Test ''inch.txt b/Test ''inch.txt
+>>>     index dbff793..41f3257 100644
+>>>     --- a/Test ''inch.txt
+>>>     +++ b/Test ''inch.txt
+>>>     @@ -1 +1,3 @@
+>>>     +
+>>>     +ddd
+>>>       Test error in simple repository
+>>>     warning: LF will be replaced by CRLF in Test ''inch.txt.
+>>>     The file will have its original line endings in your working directory.
+>>>
+>>>     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
+>>>     *$ git difftool -d*
+>>>     *fatal: Cannot open '/d/Dev/test//Test ''inch.txt': No such file or
+>>>     directory*
+>>>     *hash-object /d/Dev/test//Test ''inch.txt: command returned error: 128*
+>>>
+>>>     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
+>>>     $
+>>>
+>>>
+>>> This issue is inside V2.10.x and V2.11.0.
+>>> V2.9.0 is working correctly...
+>> You say v2.11.0, but did you also try the new, experimental builtin
+>> difftool? You can test without reinstalling:
+>>
+>> 	git -c difftool.useBuiltin=true difftool -d ...
+> FWIW, I verified that this problem does not manifest itself on
+> Linux, using the current scripted difftool.
+>
+> Peter, what actual diff tool are you using?
+>
+> Since these filenames work fine with "difftool -d" on Linux, it
+> suggests that this is either a tool-specific issue, or an issue
+> related to unix-to-windows path translation.
+Hi all,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Which I think would include both of the flags you mentioned, along with
-> > others like SYMMETRIC_LEFT, PATCHSAME, etc. Probably really everything
-> > mentioned in revision.h, which should be summed up as ALL_REV_FLAGS.
-> > Some callsites already seem to feed that to clear_commit_marks().
-> >
-> > I doubt you can go too wrong by clearing more flags. 
-> 
-> This and ...
-> 
-> > It's possible that
-> > some caller is relying on a flag _not_ being cleared between two
-> > traversals, but in that case it should probably be using
-> > clear_commit_marks() or clear_object_flags() explicitly to make it clear
-> > what it expects to be saved.
-> 
-> ... this are contradictory, no?
+@Johannes: "git -c difftool.useBuiltin=true difftool -d" works OK :-), 
+beyond compare is launching with the diff's displayed
+@David: I am using Beyond Compare V4.1.9
 
-I don't think so. If you are calling reset_revision_walk(), then I'm not
-sure you have any right to expect that particular flags are left intact.
-You _should_ be using an option that lets you specify the full set of
-flags, rather than making an implicit assumption about which flags are
-left.
+Best regards,
 
-In other words, I'd much rather see:
+Peter
 
-  clear_object_flags(ALL_REV_FLAGS & (~TMP_MARK));
-
-than:
-
-  /* This leaves TMP_MARK intact! */
-  reset_revision_walk();
-
-if you need to leave TMP_MARK intact.
-
-Which isn't to say every caller does it correctly already. My claim
-above is only "should", not "does". :)
-
-But given that many of them _do_ use the more specific flag-clearing
-functions, I think most of the calls to reset_revision_walk() are
-blanket "I'm done now, clean up after me" calls.
-
-> A caller may use two sets of its own flags in addition to letting
-> the traversal machinery use the basic ones, and it may want to keep
-> one of its own two sets while clearing the other set.  It would
-> clear_commit_marks() to clear the latter.  And then it would let
-> that the next traversal to reset_revision_walk() clear the basic
-> ones.
-> 
-> So if you make reset_revision_walk() clear "more flags", that would
-> break such a caller that is using clear_commit_marks() to make it
-> clear what its expectations are, no?
-
-I'd argue that it should not be calling reset_revision_walk() at all if
-it wants anything saved. It should mask out the flags it wants, as
-above. But I do realize that reasoning is circular: it's OK for
-reset_revision_walk() to reset everything because that's what it does,
-or at least should do from its name. :)
-
--Peff
