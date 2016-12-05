@@ -2,75 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B60A61FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 17:34:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 480031FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 17:45:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752096AbcLERed (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 12:34:33 -0500
-Received: from mout.gmx.net ([212.227.15.18]:64536 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751451AbcLERed (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 12:34:33 -0500
-Received: from [192.168.178.50] ([188.98.240.120]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOw4N-1cHXf72QBL-006NpP for
- <git@vger.kernel.org>; Mon, 05 Dec 2016 18:34:30 +0100
-To:     git@vger.kernel.org
-From:   Juergen Kosel <juergen.kosel@gmx.de>
-X-Enigmail-Draft-Status: N1110
-Subject: Feature request: Set git svn options in .git/config file
-Message-ID: <1936940c-c4c8-540c-eb99-b434e8d32d6c@gmx.de>
-Date:   Mon, 5 Dec 2016 18:34:30 +0100
+        id S1752187AbcLERpM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 12:45:12 -0500
+Received: from mail.nottheoilrig.com ([52.27.13.164]:38962 "EHLO
+        mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752173AbcLERpK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 12:45:10 -0500
+Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
+        by mail.nottheoilrig.com (Postfix) with ESMTP id E052A20290
+        for <git@vger.kernel.org>; Mon,  5 Dec 2016 17:45:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
+        s=3532ada; t=1480959909;
+        bh=YVistD5K7f9NORiDU4ddnGVePV38vAeD4UDPFO5XnUw=;
+        h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
+        b=QLz4II1I1UkM5gICruIkQwGChknZPbAv1AxVIgPRLVU8WyoDi12PKB5YM7b+777sg
+         lsKkmtayhoTKK/zW4eSKJOG8C6QspS5V60+pPVbV+LBBMlhVdqiSacoxhIPlML+5UM
+         i80RwEIP69BUB8DHnIGx+YECagK8tnP8i7NpTAKQ=
+Received: from [192.168.0.10] (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
+        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
+        Mon,  5 Dec 2016 17:45:09 +0000 (UTC)
+Subject: Re: [PATCH] diff: fix up SHA-1 abbreviations outside of repository
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <20161204194747.7100-1-jack@nottheoilrig.com>
+ <xmqqr35m6dwt.fsf@gitster.mtv.corp.google.com>
+ <20161205072614.zg6yglqnznna65vf@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org
+From:   Jack Bates <bk874k@nottheoilrig.com>
+Message-ID: <66e03fae-d78e-2577-3f27-40e36fdc6ee1@nottheoilrig.com>
+Date:   Mon, 5 Dec 2016 10:45:08 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:RUBG1aXAugqms1/AWIHnacaQXvVVc5OJ8ql9osTmhybPr5BIPZT
- Vu1hsoTTbalZ9XkZQ8CUJkwk34MYlOtpmKWtdL0E3QpdbhHk6tMwD/N9zgu6QTafEfV6ZQM
- AbtpndPb8jF1GMEmoLONRPWbe23xaUH6av8GS4WKYJaPeCNXd013392hiYkHsXvMOkrzRp1
- Ti+FNmK0nXf0IY7VXmLoA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VFSoTToUf5U=:8AYOG3FMuDXZCYHakEp/ex
- 4OSTBc9d0xlIgdcDuPQ9rroeLxbPoPETn67sZTyEJj+TQlRECJM8NouIiYWqtxWaIQPeh8eK2
- 3P5yPklaEGO89Isdz9dX33vgRg5XtvArW7S6+YZZUn8WG7wXDym2FK2D6Edxoab+kFrZpdmNr
- 06H6sOKwLgeuAuHshB45IUZdovJnx6x+66AGzWdYvoFdj2snHl8OQ5XVRIJkrYpmlR9SKd0DX
- qXDPawBlcyvTSjMjEHvQfMsl6TdcNcmAErwOLZVPiY83O2zePzW3Ao3wXzy2R1MC7BXOgJ0oq
- uCkpu6XnobLQ2qvZl9kIYphI7u5tKeJCCukDRWSMnTAR6F+wPi7Mkj9F7Z06dmDpOhw/q4yZ7
- 1+S9xDGLHlCjsTN4zBsl358yRgSa0etTr/+QDfvs6zvbdztJbMK23Dn+n2gc67dBpzWIBy+WV
- KCZA89OgkOxxvSp2nk+lQ2Hb2LXVY/vC06w8GyeXEgy8bR+ZzVg2HY8g0zU+QdYIAFfzhUcTL
- tkq85HsHCbeyNDtFL5ZZi5N7JVjjkQ9uWWTfRNVusEnNe+wagnr9AypMTUKiGPaN0MCPefPw7
- tVM3RTyIpqPYRvQv/sNGu61zgrdBOqxHCB93kuKCewCFoitRa66R/vWMUW1RuVtYLsgHlJJSh
- iY+M++4hNYX0Bz1vTPRR44KusiTPlZkUiasWTjXmM7ZaLNbgdd8pFOn6eWCpGw0orpyjMl8Ej
- bV7pyj0PLSxK1jTZOTGVU1/XpPeOsg3c9Wq3TihRxH4MXb5YJWwH6xM96tTrCA8i1x89NfcZ8
- tfo9iSI
+In-Reply-To: <20161205072614.zg6yglqnznna65vf@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 05/12/16 12:26 AM, Jeff King wrote:
+> On Sun, Dec 04, 2016 at 11:19:46PM -0800, Junio C Hamano wrote:
+>>> -	if (no_index)
+>>> +	if (no_index) {
+>>>  		/* If this is a no-index diff, just run it and exit there. */
+>>> +		startup_info->have_repository = 0;
+>>>  		diff_no_index(&rev, argc, argv);
+>>> +	}
+>>
+>> This kind of change makes me nervous (partly because I am not seeing
+>> the whole code but only this part of the patch).
+>>
+>> Some code may react to "have_repository" being zero and do the right
+>> thing (which I think is what you are using from your previous "we
+>> did one of the three cases" change here), but the codepath that led
+>> to "have_repository" being set to non-zero previously must have done
+>> a lot more than just flipping that field to non-zero, and setting
+>> zero to this field alone would not "undo" what it did.
+>
+> I _think_ it's OK because the only substantive change would be the
+> chdir() to the top of the working tree. But that information is carried
+> through by revs->prefix, which we act on regardless of the value of
+> startup_info->have_repository when we call prefix_filename().
+>
+> I agree that it may be an accident waiting to happen, though, as soon as
+> some buried sub-function needs to care about the distinction.
+>
+>> I wonder if we're better off if we made sure that diff_no_index()
+>> works the same way regardless of the value of "have_repository"
+>> field?
+>
+> If you mean adding a diffopt flag like "just abbreviate everything to
+> FALLBACK_DEFAULT_ABBREV even if we're in a repository", and then setting
+> that in diff_no_index(), I agree that is a lot cleaner.
+>
+> I'm still not 100% convinced that it's actually the correct behavior,
+> but at least doing a more contained version wouldn't take away other
+> functionality like reading config.
 
-while working with a git-svn repository, I like to use the command
-line options --use-log-author and --add-author-from for all calls of
-git svn fetch,
-git svn rebase,
-git svn dcommit, ...
+I don't have a strong reason for wanting these three cases to behave 
+identically, I was merely surprised that they don't. I think you 
+expected them to behave the same as well? I'll withdraw this patch.
 
-Doing so consequently, the commit-ids of each git repository, which
-has been cloned from the same svn-repository match.
+Conceptually I do think of "git diff" as having two separate modes, "in 
+repository" and "out of repository", with the --no-index option forcing 
+the "out of repository" mode. But maybe there are good reasons why this 
+isn't accurate, or maybe it doesn't matter that it's not 100% accurate.
 
-Unfortunately, it is possible to forget these options on the command
-line. (And 2nd, tortoise-git does not surport it, see
-https://gitlab.com/tortoisegit/tortoisegit/issues/2824 ).
+In summary, currently all of the three cases are "no index" but only the 
+first case doesn't "have repository".
 
-Therefore I believe, that it would be the best solution to store the
-settings of --add-author-from, --use-log-author and maybe
---authors-prog in the .git/config file.
-
-
-Greetings
-	Juergen
+Thank you for your thoughtful feedback!
