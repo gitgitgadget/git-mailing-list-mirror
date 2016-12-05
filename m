@@ -2,83 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 217C61FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 20:36:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B60391FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 20:38:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752203AbcLEUgZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 15:36:25 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57399 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752110AbcLEUgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 15:36:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3147454FD4;
-        Mon,  5 Dec 2016 15:36:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8MjPYcbK1KjL6LlaYPJz9djeKY4=; b=dDi2qt
-        /Rl8jja3R9W4EwfAy50k75TVJPkPBPKno9RH7lp5+ngtSxwhdBnHwzSV4QHsFwPn
-        AyTIsO5+pi7ekKLf/X+lalFS+bzl25tjKxHoH/j5SuI26IRsSHm6L5tXesR1dexU
-        72XAreXkIl2om1TOFqDxRPQMZvV70d0RSape8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QDPgJ3uAaXIzwpKT/84Ty3g8hPvSKD3d
-        q9B9baCODdTE2a+bTDVOXGDq8FVJBSYiLvxT/ppNXgp70IMzi+70zGU1Zxo/ybqd
-        sR59uRgOnwieEH9TEFpt4+dOWy2c9Mu6+CmOYH9mcsbVioDkNkWr5VhIdVpIZ0zX
-        0OQLIwnAy2s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 27BB454FD3;
-        Mon,  5 Dec 2016 15:36:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CDEB54FD2;
-        Mon,  5 Dec 2016 15:36:20 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Andreas Krey <a.krey@gmx.de>, git@vger.kernel.org
-Subject: Re: [PATCH] commit: make --only --allow-empty work without paths
-References: <20161202221513.GA5370@inner.h.apk.li>
-        <20161203043254.7ozjyucfn6uivnsh@sigill.intra.peff.net>
-        <20161203065949.GG19570@inner.h.apk.li>
-        <20161203162318.uv27n4uhylobegto@sigill.intra.peff.net>
-Date:   Mon, 05 Dec 2016 12:36:19 -0800
-In-Reply-To: <20161203162318.uv27n4uhylobegto@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 3 Dec 2016 11:23:18 -0500")
-Message-ID: <xmqqh96i3ygs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1751524AbcLEUi1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 15:38:27 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:33445 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751161AbcLEUi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 15:38:26 -0500
+Received: by mail-qt0-f170.google.com with SMTP id p16so325682127qta.0
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 12:38:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dFvglp8Re6fP5wIM7+eVz5CYkt0VkoYZucGc0T2wT3w=;
+        b=aPnY9HfUr1zQ+jfEhEF4ue6Y3xPiz7hi3551k4RbXnR2wor4LoiCisFsFwz3Rqg9uZ
+         OlKqISQApB4yV06gYxUF1W2h+IzRFLYoJ++JZtEl7yl2It9Qf7MW43o0QZ3Lb//+MD23
+         9ZCfmiqMwZ9H49YPODkSPvXA2ZxyO3YrmCPhH6V0cyym92VykFAVTBAeWERfVCRmHZfX
+         ucHhcdMKihCaQLyfAolHXJYLTEwzEkrbS7Y4R0MbdsXvNyI7oTXXaiKdGkTenXEQt3/9
+         We6nk1mJBb0+PIB/srPCdsl9M+HLKCSg9QmPT72rCmYm/y25O0qfS/OOFqEP3D15CANO
+         p8Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dFvglp8Re6fP5wIM7+eVz5CYkt0VkoYZucGc0T2wT3w=;
+        b=g9oSiD0HStYQ7XOp04xzJzqpCWhgX3jqAS6eZHooSxldVdnlVUymr3902FcRlz8zh8
+         s/IvzX7MTcGebvh51dJ21JYCI+s5afrrQxNmupwNwR1Tix9hXwMw10++AHH6jfAFjpwL
+         Pq6iXIlU5m7zDiZqsTs1vp7avK1N6WBpuD+RNZJ8G+ixYdDjSyVe7LRhcRwqYyda7OXa
+         ZQFRUE90zdYtIaa2S3xv36dlcF0oil3cme5G81jWxx+Dm6DmU01/7eUSW2ePW9+5TYnZ
+         T7KQiGJko2n9u9o02OumidkFXUMYIY/rmEITgRKXpy1gyOlXu9MezPBz0uJrY4PjpVoF
+         NRBA==
+X-Gm-Message-State: AKaTC00cwpNbqca5NVEQiahuc+CLwjwApr2hiul1yTeoupmbsG8kB6rkb1izHfo21MTTLKsmsgZmOo6MFsQ9pAmE
+X-Received: by 10.200.53.9 with SMTP id y9mr50461531qtb.176.1480970305761;
+ Mon, 05 Dec 2016 12:38:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7AEAAC7A-BB2A-11E6-BFE2-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.147.188 with HTTP; Mon, 5 Dec 2016 12:38:25 -0800 (PST)
+In-Reply-To: <20161205201237.GD68588@google.com>
+References: <1480964316-99305-1-git-send-email-bmwill@google.com>
+ <1480964316-99305-2-git-send-email-bmwill@google.com> <CAGZ79kauPdE1uiFSvBALkNiwXbnV6d6xhwLdWNQwRir_8rTG6Q@mail.gmail.com>
+ <20161205201237.GD68588@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 5 Dec 2016 12:38:25 -0800
+Message-ID: <CAGZ79kbNMS-Hy=6y6EupcnwL58bhM=pesA8Mk_G+tjkL4yNNVA@mail.gmail.com>
+Subject: Re: [PATCH] real_path: make real_path thread-safe
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Dec 5, 2016 at 12:12 PM, Brandon Williams <bmwill@google.com> wrote:
 
-> On Sat, Dec 03, 2016 at 07:59:49AM +0100, Andreas Krey wrote:
+>> > +       if (path->len > 1) {
+>> > +               char *last_slash = find_last_dir_sep(path->buf);
+>>
+>> What happens when there is no dir_sep?
 >
->> > OK. I'm not sure why you would want to create an empty commit in such a
->> > case.
->> 
->> User: Ok tool, make me a pullreq.
->> 
->> Tool: But you haven't mentioned any issue
->>       in your commit messages. Which are they?
->> 
->> User: Ok, that would be A-123.
->> 
->> Tool: git commit --allow-empty -m 'FIX: A-123'
+> There should always be a dir_sep since that only gets run if the passed
+> in path at least contains root '/'
+
+Oh, sure, that makes sense. When porting/running this on Windows, does
+the assumption still hold?
+
+>>     if (strbuf_getcwd(&sb))
+>>         die_errno(_("unable to get current working directory"));
+>>
+>> Not sure if aligning them would be a good idea?
+>>
+>> Going by "git grep die_errno" as well as our Coding guidelines,
+>> we don't want to see capitalized error messages.
 >
-> OK. I think "tool" is slightly funny here, but I get that is part of the
-> real world works. Thanks for illustrating.
+> K I can use the other msg.
 
-I am not sure if I understand.  Why isn't the FIX: thing added to
-the commit being pulled by amending it?  Would the convention be for
-the responder of a pull-request to fetch and drop the tip commit?
+Well this wasn't a rhetorical question, but I was genuine wondering
+if that was worth it.
 
+When having different error messages in different places,
+it makes debugging easier, because you have fewer starting points.
+
+But this function is deep down in the stack, such that you would expect
+other error messages to also show up , so I dunno.
+
+>> > +               } else if (S_ISLNK(st.st_mode)) {
+>>
+>> As far as I can tell, we could keep the symlink strbuf
+>> at a smaller scope here? (I was surprised how many strbufs
+>> are declared at the beginning of the function)
+>
+> Yeah I can push it down in scope.  There will be a bit more allocation
+> churn with the smaller scope but multiple symlinks should be rare?
+> Alternatively the 'next' buffer can be reused...I decided against that
+> initially due to readability.
+
+I'd second to not reuse 'next'. :)
+I guess we could keep the less churn-y version then.
+
+>  And yes, lots of string manipulation
+> requires lots of strbufs :)
