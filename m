@@ -6,85 +6,92 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98DFC1FF40
-	for <e@80x24.org>; Mon,  5 Dec 2016 06:59:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3DC1FF40
+	for <e@80x24.org>; Mon,  5 Dec 2016 07:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751644AbcLEG7G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 01:59:06 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51566 "EHLO cloud.peff.net"
+        id S1751378AbcLEHOe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 02:14:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51574 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750746AbcLEG60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 01:58:26 -0500
-Received: (qmail 31125 invoked by uid 109); 5 Dec 2016 06:58:25 -0000
+        id S1750928AbcLEHOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 02:14:33 -0500
+Received: (qmail 32464 invoked by uid 109); 5 Dec 2016 07:14:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 06:58:25 +0000
-Received: (qmail 2158 invoked by uid 111); 5 Dec 2016 06:59:03 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 07:14:32 +0000
+Received: (qmail 2204 invoked by uid 111); 5 Dec 2016 07:15:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 01:59:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Dec 2016 01:58:23 -0500
-Date:   Mon, 5 Dec 2016 01:58:23 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Dec 2016 02:15:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Dec 2016 02:14:31 -0500
+Date:   Mon, 5 Dec 2016 02:14:31 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jack Bates <bk874k@nottheoilrig.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jack Bates <jack@nottheoilrig.com>
-Subject: Re: [PATCH v2] diff: handle --no-abbrev outside of repository
-Message-ID: <20161205065823.c7qw6xtc2hqk3xgu@sigill.intra.peff.net>
-References: <20161129070637.eult6o3m34r2mima@sigill.intra.peff.net>
- <20161202184840.2158-1-jack@nottheoilrig.com>
- <20161205060116.szy5ojetg3znu4w7@sigill.intra.peff.net>
- <20161205061500.dinyc3juedkpw6o3@sigill.intra.peff.net>
+To:     "Kyle J. McKay" <mackyle@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: Git v2.11.0 breaks max depth nested alternates
+Message-ID: <20161205071431.cf3oy7nceyb7hggw@sigill.intra.peff.net>
+References: <fe33de5b5f0b3da68b249cc4a49a6d7@3c843fe6ba8f3c586a21345a2783aa0>
+ <20161204045554.advzvylytdmt2bh2@sigill.intra.peff.net>
+ <E3C2AF2A-FE07-4C94-B549-3BDAF9B3DB5D@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161205061500.dinyc3juedkpw6o3@sigill.intra.peff.net>
+In-Reply-To: <E3C2AF2A-FE07-4C94-B549-3BDAF9B3DB5D@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 05, 2016 at 01:15:00AM -0500, Jeff King wrote:
+On Sun, Dec 04, 2016 at 01:37:00AM -0800, Kyle J. McKay wrote:
 
-> On Mon, Dec 05, 2016 at 01:01:16AM -0500, Jeff King wrote:
+> On Dec 3, 2016, at 20:55, Jeff King wrote:
 > 
-> >   Note that setting abbrev to "0" outside of a repository was broken
-> >   recently by 4f03666ac (diff: handle sha1 abbreviations outside of
-> >   repository, 2016-10-20). It adds a special out-of-repo code path for
-> >   handling abbreviations which behaves differently than find_unique_abbrev()
-> >   by truly giving a zero-length sha1, rather than taking "0" to mean "do
-> >   not abbreviate".
-> > 
-> >   That bug was not triggerable until now, because there was no way to
-> >   set the value to zero (using --abbrev=0 silently bumps it to the
-> >   MINIMUM_ABBREV).
+> > So I do think this is worth dealing with, but I'm also curious why
+> > you're hitting the depth-5 limit. I'm guessing it has to do with hosting
+> > a hierarchy of related repos. But is your system then always in danger
+> > of busting the 5-limit if people create too deep a repository hierarchy?
 > 
-> Actually, I take this last paragraph back. You _can_ trigger the bug
-> with just:
-> 
->   echo one >foo
->   echo two >bar
->   git diff --no-index --raw foo bar
-> 
-> which prints only "..." for each entry.
-> 
-> I didn't notice it before because without "--raw", we show the patch
-> format. That uses the --full-index option, and does not respect --abbrev
-> at all (which seems kind of bizarre, but has been that way forever).
-> 
-> So I think there _is_ a regression in v2.11, and the second half of your
-> change fixes it.
+> No we check for the limit.  Anything at the limit gets broken by the
+> quarantine change though.
 
-Sorry for the sequence of emails, but as usual with "diff --no-index",
-the deeper I dig the more confusion I find. :)
+OK. So the limit is an issue for your system, but one that you're able
+to deal gracefully with (and the quarantine change makes that a lot
+harder). I buy that line of reasoning.
 
-After digging into your related thread in:
+> The patch is a step on that road.  It doesn't go that far but all it would
+> take is connecting the introduced variable to a config item.  But you still
+> need to bump it by 1 during quarantine operations.  Such support would even
+> allow alternates to be disallowed (except during quarantine).  I wonder if
+> there's an opportunity for further pack operation optimizations in such a
+> case (you know there are no alternates because they're not allowed)?
 
-  http://public-inbox.org/git/20161205065523.yspqt34p3dp5g5fk@sigill.intra.peff.net/
+I doubt it. We look at the list of alternates early on, and in most
+cases there aren't any. So any optimization there can be done already at
+that point.
 
-I'm not convinced that "--no-index --raw" output isn't generally
-nonsensical in the first place. So yes, there's a regression there (and
-it's not just "oops, we didn't abbreviate correctly", but rather that
-the output format is broken). But I'm not sure it's something people are
-using. So it should be fixed on the 'maint' track, but I don't think
-it's incredibly urgent.
+The only optimization I know if in that area is 56dfeb626 (pack-objects:
+compute local/ignore_pack_keep early, 2016-07-29), which works already.
+
+> All true.  And I had similar thoughts.  Perhaps we should add your comments
+> to the patch description?  There seems to be a trend towards having longer
+> patch descriptions these days... ;)
+
+Feel free to pick out anything that's useful and add it in verbatim or
+rephrased, whichever is more convenient.
+
+> You took the words right out of my mouth...   I guess I need to work on
+> doing a better job of dumping my stream-of-thoughts that go into a patch
+> into the emails to the list.
+
+It's a lot easier when you're the reviewer, because you don't start
+reading through the commit-message with a full understanding of the
+problem yet. :)
+
+> Most all of your comments could be dumped into the patch description as-is
+> to pimp it out some.  I have no objection to that, even adding an
+> "Additional-analysis-by:" (or similar) credit line too.  :)
+
+Sure. I don't really need credit, or even just "reviewed-by" is fine.
+Talking and generating a shared understanding of the problem is part of
+the review process.
 
 -Peff
