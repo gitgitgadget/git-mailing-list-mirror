@@ -2,126 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D44AC1FF40
-	for <e@80x24.org>; Mon,  5 Dec 2016 07:58:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 876F41FF40
+	for <e@80x24.org>; Mon,  5 Dec 2016 10:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751086AbcLEH6E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 02:58:04 -0500
-Received: from mail-wj0-f194.google.com ([209.85.210.194]:33517 "EHLO
-        mail-wj0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750855AbcLEH6C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 02:58:02 -0500
-Received: by mail-wj0-f194.google.com with SMTP id kp2so37852043wjc.0
-        for <git@vger.kernel.org>; Sun, 04 Dec 2016 23:58:00 -0800 (PST)
+        id S1751451AbcLEJKr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 04:10:47 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:33758 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751437AbcLEJKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 04:10:17 -0500
+Received: by mail-wm0-f50.google.com with SMTP id c184so18597486wmd.0
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 01:09:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=KLTzmQ5WPDswsVT46n5BgO7RuzB6wzriihunqMkyabU=;
-        b=kIYhlXLkTwNoGR4lhItELKQegnh247x0lx25HBhJEb+E9bMXzrDzD/W8Bfi+sxn3lD
-         q2tmQI6N/c/GIOcV/daYzS6SpA+UlF+cxYy5puHfpiSKPlIja90mm4QJLg8IN3tSJpQv
-         6OmHeOPShnDpt0118iqP961apZivB9G47TlyIYVr2dMyfXmLrq/ThIVLESetnfcWcmOK
-         NuC+w81+8JlTD2Zg2kZxcvNNEvPgva2+07w3mKW+e8srvx/nMeXZVyhloC9SUGMTsUPi
-         JzSvbc4JVB+vndksYtcZP8W+bENbjtvD9OQT58lsWIqxFltmlII0obWJw8HSpaEI4Aaq
-         0nvQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=51UOmWP+InlUQFcoL1KzQaJzit3+1kItrSF471oYMDo=;
+        b=iXNsJx5nHqJtzGfZaaCBnb1bCd2VCPcwCgO5YAn/qFDI41Jj9+U1NR2gzN2GbrXxR1
+         jvKGgo5JOwT+qFyD3oammFx1mGjptUKve4XrwB9KR0Ag6LRy0hTdpdxXVnwkxl/Im/vo
+         0nFXvgm5ON4NF00EDx9ZzVvSM4rvp2XXJCvZuJ6rBiEjfgpOmz97+0qiT/CAvP2OsJUh
+         bXVEmcUuh+xs4l4xog6+Cx658Cn/T45kfRWV+Ku1Q2QPr6S0YORaYtMblkC4zpixPeki
+         kMHIbsSn+CJJ3YgtPIFvNIoFQ6kDxx/PZWd6ML0RDkCCQ+d2B6SZ+ioFRgZRxESpX8B7
+         9U9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=KLTzmQ5WPDswsVT46n5BgO7RuzB6wzriihunqMkyabU=;
-        b=iTAK/sB02P769jEnATUa30H9G8adDF0SoiXslc/tji8koXpHqPyNIQ4F/zT27tGCY4
-         q3PrdtLe7nOUg3Fv42Iai9JOZu0axf5KUk5il834YQLMu9ifpwjC4FQ1OF1eiyAHgh8p
-         uWuDRrHCSTKGqdam+f8a2R0Q1kWDqusPLII8r56dYldMVknS5YkMoeFXXzCBXD3WXWh/
-         QRZ104cfbwHo/pSLCfdpRiFRmumBNPh82yzbZ0MkjHNWxFWZ0cB0OqcDPiLmZyx9TVCv
-         Oe17J9TYsE3BTAwdFBg5r3qOnPp3QK1BweNttY2Q4+kjQDaLX2qOO8A75NgvSSFEDHx7
-         gI5Q==
-X-Gm-Message-State: AKaTC00aPpepcBtCOiWQmkxg+6a+LpANeT/7rlG1qpvo3XXmDKvovq7ioABXzHcU56pcKQ==
-X-Received: by 10.194.71.17 with SMTP id q17mr22712398wju.180.1480924679637;
-        Sun, 04 Dec 2016 23:57:59 -0800 (PST)
-Received: from [192.168.15.248] ([37.153.249.237])
-        by smtp.gmail.com with ESMTPSA id w7sm16596111wmd.24.2016.12.04.23.57.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 04 Dec 2016 23:57:59 -0800 (PST)
-Subject: Re: Error after calling git difftool -d with
-To:     David Aguilar <davvid@gmail.com>
-References: <5f630c90-cf54-3a23-c9a9-af035d4514e0@gmail.com>
- <alpine.DEB.2.20.1612021704170.117539@virtualbox>
- <20161205051510.itftw4hyzkv6nnxn@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-From:   "P. Duijst" <p.duijst@gmail.com>
-Message-ID: <c0c8c333-adfa-ad58-f1ec-7239a3a16528@gmail.com>
-Date:   Mon, 5 Dec 2016 08:58:00 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <20161205051510.itftw4hyzkv6nnxn@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=51UOmWP+InlUQFcoL1KzQaJzit3+1kItrSF471oYMDo=;
+        b=BHEsYul4B7c8qHoBzQyqr7a3j232ffripV28ipsz4kBDQ+8FbmfW2Thc3Gwj6jKHpg
+         dDE7yQgXQGbhbAY9Fvvh5UGMu4ZqrlFU9WAvIIeIOrq4y8K3lQxh9LQnjt2+WeN+1m4e
+         52T/JSPWfWc2Qg+VKf5RLK0Nuec3utBPF/YGj/H9iTsKR2zYcw7SvxGhe8n73EyrnRQ5
+         gcnltIqFNrg+BmyTVQVwUdSNZHjm7hVuOV0TRI62Z0x6u+pjEAdZ1UzkXZco6u8l4tT1
+         uC9RE0Rzf2wyI9HgaoijZT+j5Xr0OF/6+q7eSJ+eoxluasLfpKE4Ox/J/dlJwjILomNT
+         0G1w==
+X-Gm-Message-State: AKaTC02gYsh22Tn4T/Fw5wSTtqa0bmZBGEg30NTmq2e9P+hh/AJ2rA010zmnDBW/cMPNcw==
+X-Received: by 10.28.131.72 with SMTP id f69mr7772762wmd.135.1480928982972;
+        Mon, 05 Dec 2016 01:09:42 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB56B5.dip0.t-ipconnect.de. [93.219.86.181])
+        by smtp.gmail.com with ESMTPSA id i15sm19304435wjs.16.2016.12.05.01.09.42
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Dec 2016 01:09:42 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v1] git-p4: add config to retry p4 commands; retry 3 times by default
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20161204140311.26269-1-larsxschneider@gmail.com>
+Date:   Mon, 5 Dec 2016 10:09:48 +0100
+Cc:     git <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EFB6754A-8205-4B5C-BD2E-13D2AA211369@gmail.com>
+References: <20161204140311.26269-1-larsxschneider@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/5/2016 06:15, David Aguilar wrote:
-> On Fri, Dec 02, 2016 at 05:05:06PM +0100, Johannes Schindelin wrote:
->> Hi Peter,
->>
->> On Fri, 2 Dec 2016, P. Duijst wrote:
->>
->>> Incase filenames are used with a quote ' or a bracket [  (and maybe some more
->>> characters), git "diff" and "difftool -y" works fine, but git *difftool **-d*
->>> gives the next error message:
->>>
->>>     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
->>>     $ git diff
->>>     diff --git a/Test ''inch.txt b/Test ''inch.txt
->>>     index dbff793..41f3257 100644
->>>     --- a/Test ''inch.txt
->>>     +++ b/Test ''inch.txt
->>>     @@ -1 +1,3 @@
->>>     +
->>>     +ddd
->>>       Test error in simple repository
->>>     warning: LF will be replaced by CRLF in Test ''inch.txt.
->>>     The file will have its original line endings in your working directory.
->>>
->>>     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
->>>     *$ git difftool -d*
->>>     *fatal: Cannot open '/d/Dev/test//Test ''inch.txt': No such file or
->>>     directory*
->>>     *hash-object /d/Dev/test//Test ''inch.txt: command returned error: 128*
->>>
->>>     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
->>>     $
->>>
->>>
->>> This issue is inside V2.10.x and V2.11.0.
->>> V2.9.0 is working correctly...
->> You say v2.11.0, but did you also try the new, experimental builtin
->> difftool? You can test without reinstalling:
->>
->> 	git -c difftool.useBuiltin=true difftool -d ...
-> FWIW, I verified that this problem does not manifest itself on
-> Linux, using the current scripted difftool.
->
-> Peter, what actual diff tool are you using?
->
-> Since these filenames work fine with "difftool -d" on Linux, it
-> suggests that this is either a tool-specific issue, or an issue
-> related to unix-to-windows path translation.
-Hi all,
 
-@Johannes: "git -c difftool.useBuiltin=true difftool -d" works OK :-), 
-beyond compare is launching with the diff's displayed
-@David: I am using Beyond Compare V4.1.9
+> On 04 Dec 2016, at 15:03, larsxschneider@gmail.com wrote:
+>=20
+> From: Lars Schneider <lars.schneider@autodesk.com>
 
-Best regards,
+Hi Junio,
 
-Peter
+if you decide to queue this patch and/or the "git-p4: fix empty file=20
+processing for large file system backend GitLFS", please use my=20
+signed-off address. I accidentally messed up the author field in
+both.
+
+Thanks,
+Lars
+
+
+>=20
+> P4 commands can fail due to random network issues. P4 users can =
+counter
+> these issues by using a retry flag supported by all p4 commands [1].
+>=20
+> Add an integer Git config value `git-p4.retries` to define the number =
+of
+> retries for all p4 invocations. If the config is not defined then set
+> the default retry count to 3.
+>=20
+> [1] =
+https://www.perforce.com/perforce/doc.current/manuals/cmdref/global.option=
+s.html
+>=20
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 
