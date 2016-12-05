@@ -2,206 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27A971FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 23:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91CD81FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 23:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752188AbcLEXhj convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 5 Dec 2016 18:37:39 -0500
-Received: from mxo2.nje.dmz.twosigma.com ([208.77.214.162]:51265 "EHLO
-        mxo2.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751981AbcLEXhi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 18:37:38 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mxo2.nje.dmz.twosigma.com (Postfix) with ESMTP id AB30010002E;
-        Mon,  5 Dec 2016 23:37:36 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo2.nje.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo2.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id lcawJR7SzzOw; Mon,  5 Dec 2016 23:37:36 +0000 (GMT)
-Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo2.nje.dmz.twosigma.com (Postfix) with ESMTPS id 98EF48002E;
-        Mon,  5 Dec 2016 23:37:36 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Mon, 5 Dec 2016 23:37:36 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%25]) with mapi id
- 15.00.1156.000; Mon, 5 Dec 2016 23:37:36 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Stefan Beller' <sbeller@google.com>,
-        "bmwill@google.com" <bmwill@google.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        id S1752327AbcLEXyt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 18:54:49 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:33352 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751501AbcLEXys (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 18:54:48 -0500
+Received: by mail-qt0-f174.google.com with SMTP id p16so330204121qta.0
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 15:54:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YbwI77Luf21xMEaLSOT1YZlEJdVDz9jOsvt3k0Hd3Ho=;
+        b=V/1BwD+5exoRwF69+7dtDqKZJAM5/BSXpiSArPoqEugTarpRhX6zjABj02NXXy5gUg
+         X0d/ZzNqXjqF5S90TaYhjN8Owi2wHECy5Ex+RTDJpL7Eky0bY5Rt2/4LmOC8qxY94WOo
+         DHw6aJWdZUwWMPi7T20srYTtEIN4acOqdaikOS2Q8fCi3n/zfcwhS8Vx4cOyR0TJlsrl
+         hkXjHvBw5X/5RYSnGVZyDDIc8YxtrVibdovIom9C+zJ/P/5EN4vPRtsESHdYSzcJeBlp
+         EM3smPOd1UFkOYJ56Cg1OCZAzFTRdHgGPf5aW6FLNe2U9uCmZOwyOiyQ22Uue4X2yE9q
+         JfVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YbwI77Luf21xMEaLSOT1YZlEJdVDz9jOsvt3k0Hd3Ho=;
+        b=SQ3/rnds2AdwpGDC7vetoEu9QrmHMZJ6+OJDtnfZYsrZlSZOoE0bzFF4FjyFrAZhLq
+         bFDIaURojh2cRiRdSJMkQj+umTfIQEbD7abF0cDDbmBrvU/w/R0gsyMQvaFmUQzMCA5q
+         2jmbuRiMRnpziuYFFM1uXEZ8D9sCjed5aUUeuFCKQ/v2lAQYAQGbUHtFvWQ/7r26L7VK
+         QfuFu25wvVeJ8IywFwRXGnQucEbBGcciFkb2gTzTXK5wC6sqH9HbM1xY+o5mBk4f66CR
+         WUlV6QlrI0N/NIDr/hZ0jUtKYmT/BvSuY33o/PZL372HhkfDlS8vrj+//f8uMJ5eu7mZ
+         0VeA==
+X-Gm-Message-State: AKaTC02tdE3aHD2hOI1NfOCObzs+YaENc9e440kE+CDcDasK0QybNSQ0YnHDtU/4TKnJAUPbrZvfSYyhgaZD2H0A
+X-Received: by 10.200.37.221 with SMTP id f29mr58087549qtf.123.1480982087638;
+ Mon, 05 Dec 2016 15:54:47 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.147.188 with HTTP; Mon, 5 Dec 2016 15:54:47 -0800 (PST)
+In-Reply-To: <f19844d15ab4424b8c056cd13837d233@exmbdft7.ad.twosigma.com>
+References: <20161203003022.29797-1-sbeller@google.com> <20161203003022.29797-10-sbeller@google.com>
+ <f19844d15ab4424b8c056cd13837d233@exmbdft7.ad.twosigma.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 5 Dec 2016 15:54:47 -0800
+Message-ID: <CAGZ79kbbNHL8VQEztcHOea0yoawaitEvoFm6BWt-xi9Uq+8Qqw@mail.gmail.com>
+Subject: Re: [RFC PATCHv2 09/17] update submodules: add scheduling to update submodules
+To:     David Turner <David.Turner@twosigma.com>
+Cc:     "bmwill@google.com" <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
         "hvoigt@hvoigt.net" <hvoigt@hvoigt.net>,
         "gitster@pobox.com" <gitster@pobox.com>
-Subject: RE: [RFC PATCHv2 08/17] update submodules: add depopulate_submodule
-Thread-Topic: [RFC PATCHv2 08/17] update submodules: add depopulate_submodule
-Thread-Index: AQHSTPx8VQFCntYzJk+yRQ3uyrIzxqD5+VEg
-Date:   Mon, 5 Dec 2016 23:37:36 +0000
-Message-ID: <832dcc3eec0d4237a1e2766e8df690ee@exmbdft7.ad.twosigma.com>
-References: <20161203003022.29797-1-sbeller@google.com>
- <20161203003022.29797-9-sbeller@google.com>
-In-Reply-To: <20161203003022.29797-9-sbeller@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.10]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Stefan Beller [mailto:sbeller@google.com]
-> Sent: Friday, December 02, 2016 7:30 PM
-> To: bmwill@google.com; David Turner
-> Cc: git@vger.kernel.org; sandals@crustytoothpaste.net; hvoigt@hvoigt.net;
-> gitster@pobox.com; Stefan Beller
-> Subject: [RFC PATCHv2 08/17] update submodules: add depopulate_submodule
-> 
-> Implement the functionality needed to enable work tree manipulating
-> commands so that a deleted submodule should not only affect the index
-> (leaving all the files of the submodule in the work tree) but also to
-> remove the work tree of the superproject (including any untracked files).
+On Mon, Dec 5, 2016 at 3:37 PM, David Turner <David.Turner@twosigma.com> wrote:
+> This patch confuses me -- see below.
+>
+>> -----Original Message-----
+>> From: Stefan Beller [mailto:sbeller@google.com]
+>> Sent: Friday, December 02, 2016 7:30 PM
+>> To: bmwill@google.com; David Turner
+>> Cc: git@vger.kernel.org; sandals@crustytoothpaste.net; hvoigt@hvoigt.net;
+>> gitster@pobox.com; Stefan Beller
+>> Subject: [RFC PATCHv2 09/17] update submodules: add scheduling to update
+>> submodules
+> [snip]
+>> +static int update_submodule(const char *path, const struct object_id
+>> *oid,
+>> +                         int force, int is_new)
+>> +{
+>> +     const char *git_dir;
+>> +     struct child_process cp = CHILD_PROCESS_INIT;
+>> +     const struct submodule *sub = submodule_from_path(null_sha1, path);
+>> +
+>> +     if (!sub || !sub->name)
+>> +             return -1;
+>> +
+>> +     git_dir = resolve_gitdir(git_common_path("modules/%s", sub->name));
+>> +
+>> +     if (!git_dir)
+>> +             return -1;
+>> +
+>> +     if (is_new)
+>> +             connect_work_tree_and_git_dir(path, git_dir);
+>> +
+>> +     /* update index via `read-tree --reset sha1` */
+>> +     argv_array_pushl(&cp.args, "read-tree",
+>> +                                force ? "--reset" : "-m",
+>> +                                "-u", sha1_to_hex(oid->hash), NULL);
+>> +     prepare_submodule_repo_env(&cp.env_array);
+>> +     cp.git_cmd = 1;
+>> +     cp.no_stdin = 1;
+>> +     cp.dir = path;
+>> +     if (run_command(&cp)) {
+>> +             warning(_("reading the index in submodule '%s' failed"),
+>> path);
+>
+> The error is not (usually) in "reading the index" -- it's "updating the index" (or the working tree)
+>
+>> +             child_process_clear(&cp);
+>> +             return -1;
+>> +     }
+>> +
+>> +     /* write index to working dir */
+>> +     child_process_clear(&cp);
+>> +     child_process_init(&cp);
+>> +     argv_array_pushl(&cp.args, "checkout-index", "-a", NULL);
+>
+> I'm confused -- doesn't read-tree -u already do this?  And if not, shouldn't we back out the result of the read-tree, to leave the submodule as it was?
+>
+>> +     cp.git_cmd = 1;
+>> +     cp.no_stdin = 1;
+>> +     cp.dir = path;
+>> +     if (force)
+>> +             argv_array_push(&cp.args, "-f");
+>> +
+>> +     if (run_command(&cp)) {
+>> +             warning(_("populating the working directory in submodule '%s'
+>> failed"), path);
+>> +             child_process_clear(&cp);
+>> +             return -1;
+>> +     }
+>> +
+>> +     /* get the HEAD right */
+>> +     child_process_clear(&cp);
+>> +     child_process_init(&cp);
+>> +     argv_array_pushl(&cp.args, "checkout", "--recurse-submodules",
+>> NULL);
+>
+>
+> Why are we running checkout on the submodule when we've already done most of the checkout? The only thing left is to set HEAD and recurse, right?  I must be missing something.
+>
 
-"including any untracked files" bothers me, I think.  Checkout is not usually willing to overwrite untracked files; it seems odd to me that it would be willing to do so in the submodule case.  I would be OK if they were both untracked and gitignored, I think.
-
-> To do so, we need an equivalent of "rm -rf", which is already found in
-> entry.c, so expose that and for clarity add a suffix "_or_dir" to it.
-> 
-> That will only work properly when the submodule uses a gitfile instead of
-> a .git directory and no untracked files are present. Otherwise the removal
-> will fail with a warning (which is just what happened until now).
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  cache.h     |  2 ++
->  entry.c     |  5 +++++
->  submodule.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
->  submodule.h |  1 +
->  4 files changed, 54 insertions(+)
-> 
-> diff --git a/cache.h b/cache.h
-> index a50a61a197..b645ca2f9a 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -2018,4 +2018,6 @@ void sleep_millisec(int millisec);
->   */
->  void safe_create_dir(const char *dir, int share);
-> 
-> +extern void remove_directory_or_die(struct strbuf *path);
-> +
->  #endif /* CACHE_H */
-> diff --git a/entry.c b/entry.c
-> index c6eea240b6..02c4ac9f22 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -73,6 +73,11 @@ static void remove_subtree(struct strbuf *path)
->  		die_errno("cannot rmdir '%s'", path->buf);  }
-> 
-> +void remove_directory_or_die(struct strbuf *path) {
-> +	remove_subtree(path);
-> +}
-> +
->  static int create_file(const char *path, unsigned int mode)  {
->  	mode = (mode & 0100) ? 0777 : 0666;
-> diff --git a/submodule.c b/submodule.c
-> index 62e9ef3872..7bb64d6c69 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -324,6 +324,52 @@ void prepare_submodule_repo_env(struct argv_array
-> *out)
->  	argv_array_push(out, "GIT_DIR=.git");
->  }
-> 
-> +int depopulate_submodule(const char *path) {
-> +	int ret = 0;
-> +	struct strbuf pathbuf = STRBUF_INIT;
-> +	char *dot_git = xstrfmt("%s/.git", path);
-> +
-> +	/* Is it populated? */
-> +	if (!resolve_gitdir(dot_git))
-> +		goto out;
-> +
-> +	/* Does it have a .git directory? */
-> +	if (!submodule_uses_gitfile(path)) {
-> +		struct child_process cp = CHILD_PROCESS_INIT;
-> +
-> +		prepare_submodule_repo_env(&cp.env_array);
-> +		argv_array_pushl(&cp.args, "submodule--helper",
-> +				 "embed-git-dirs", path, NULL);
-> +		cp.git_cmd = 1;
-> +		if (run_command(&cp)) {
-> +			warning(_("Cannot remove submodule '%s'\n"
-> +				  "because it (or one of its nested submodules)
-> has a git \n"
-> +				  "directory in the working tree, which could not
-> be embedded\n"
-> +				  "the superprojects git directory
-> automatically."), path);
-
-What if instead it couldn't run the command because you're out of file descriptors or pids or memory or something?
-
-I think this message should be in submodule--helper --embed-git-dirs instead, and we should just pass it through here.  Or, perhaps, instead of shelling out here, we should just call the functions directly?
-
-> +			ret = -1;
-> +			goto out;
-> +		}
-> +
-> +		if (!submodule_uses_gitfile(path)) {
-> +			/*
-> +			 * We should be using a gitfile by now, let's double
-
-Comma splice.  
-
-> +			 * check as loosing the git dir would be fatal.
-
-s/loosing/losing/
-
-> +			 */
-> +			die("BUG: \"git submodule--helper embed git-dirs '%s'\"
-> "
-> +			    "did not embed the git-dirs recursively for '%s'",
-> +			    path, path);
-> +		}
-> +	}
-> +
-> +	strbuf_addstr(&pathbuf, path);
-> +	remove_directory_or_die(&pathbuf);
-> +out:
-> +	strbuf_release(&pathbuf);
-> +	free(dot_git);
-> +	return ret;
-> +}
-> +
->  /* Helper function to display the submodule header line prior to the full
->   * summary output. If it can locate the submodule objects directory it
-> will
->   * attempt to lookup both the left and right commits and put them into
-> the diff --git a/submodule.h b/submodule.h index 7d890e0464..d8bb1d4baf
-> 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -63,6 +63,7 @@ extern void set_config_update_recurse_submodules(int
-> value);
->   */
->  extern int submodule_is_interesting(const char *path);  extern int
-> submodules_interesting_for_update(void);
-> +extern int depopulate_submodule(const char *path);
->  extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
-> extern int fetch_populated_submodules(const struct argv_array *options,
->  			       const char *prefix, int command_line_option,
-> --
-> 2.11.0.rc2.28.g2673dad
-
+Yes this is only used to set the HEAD correctly and then recurse down.
+I tried to remove the first 2 calls to ch8ild processes at one point in time,
+which did not work out.  I should have written in the commit message why
+that was a problem. So I'll redo that just to see the problem and improve
+the commit message.
