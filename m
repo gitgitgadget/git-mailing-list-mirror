@@ -2,116 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE821FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 18:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7211A1FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 18:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752142AbcLES2n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 13:28:43 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60737 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752104AbcLES2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 13:28:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CAC855530D;
-        Mon,  5 Dec 2016 13:28:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZlnQYKmbfrCdAKGdOWnI+pRwkDk=; b=kbCFcd
-        v+PfNf9mt2kgIvYkN4bCe7o9OMtFgTNY1P+L6N1SrMUa29i86yQbpaUGM6Z5zsSO
-        hqjgJW1bO61PnGBxrtxHAkI7L0zuEYnuGhz0qmWiH78NQKWjV2ouErGMhg2cnun3
-        ujHNibTeOh8wcvZMYsWMhbY/Ng0zHud9ZQo9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Tlbd0XG+UJe4hXu91OA846Ag91AnC4P4
-        j47eRSEFbh3n8M1PI4hkagzNN75yXKqmvzJ5iHiOpKEGt+KM6/b/n5Z9ImS+fu0+
-        a8yKaN/B81NIizKNucpY1vEicF8bomXNlaOUyA5nTB1Q7zVD8KoJYxvVZoVaT3O/
-        VeEwA1cjgDQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1BDA5530C;
-        Mon,  5 Dec 2016 13:28:35 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F07F5530A;
-        Mon,  5 Dec 2016 13:28:35 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     pclouds@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] clone,fetch: explain the shallow-clone option a little more clearly
-References: <20161204220359.30807-1-alexhenrie24@gmail.com>
-Date:   Mon, 05 Dec 2016 10:28:34 -0800
-In-Reply-To: <20161204220359.30807-1-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Sun, 4 Dec 2016 15:03:59 -0700")
-Message-ID: <xmqq37i25iy5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752452AbcLESgx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 13:36:53 -0500
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:34846 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752045AbcLESgw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 13:36:52 -0500
+Received: by mail-oi0-f68.google.com with SMTP id v84so37704852oie.2
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 10:36:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=83z7SY1f6dWLDj65OJxY+2An6PDN4TruYMoa/UL/I38=;
+        b=op7tmwlo17r3x3XMfSQZTn0PdT0+1i2ZcBZ52XpzJaIX+eCgI1zlcgwh+X+Ve0ElM9
+         LtHD4DTOjBujCZdma/tKt6cynuvgrIZpBmhlQXtbDLmxx/oMo0Uk/OC4SkhalZxnCN4r
+         Grdmws7sUyRDx5zs93em21RZQK97cEqvy0VZT+odWjr9y0rDxFexvuYmvzs/0hsZVUFr
+         Okx3yQzzbz/7c58wfHywtFWXpJPPJuzq7JCgkfX+uSLs51zGJVumUwNShPDDRbsVB6/w
+         uOpBlM4qkEye/efh4l9/lxFg30KfMtO7D5ougSAmO9S1MCj8nLpN3sSc6kxOzSwKOQ4t
+         /vUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=83z7SY1f6dWLDj65OJxY+2An6PDN4TruYMoa/UL/I38=;
+        b=Jx/18kWPvZQg1KyETQa0abZnfSehkBRqi7VMa75/JH62UhIsDSw7rihxOQX0XojBVY
+         ufdZIhmSLzathgSn4pp9jtEh713aQuxbVHzgb++ZBtlrFsno6bBGXOGbof/lVt8agf3z
+         74T0EO57rBh1h4TShhGGYGQG5+8WXABuOaMqDOekziYjCSG6DTAGDzcrzAQSDOyggmQY
+         CqYNNfujx7znj8DuVcKqizVkmeaXgr43riVlMux3AVYPuzROyZnHvBy6yHGdjbHvYr2b
+         MIPCqIut1SYhDDAbxqSP0O0MhIE0ps9q5jHog2yyL9nQqf+Wj9XCJ06k2MLI9rj6GArb
+         5dnw==
+X-Gm-Message-State: AKaTC02r3+lchLirWNKjsLmC8/RUszTpMFVnIYJSyfsjuzDy+0esJKnv9y2zzvuX/QYX5FOKqMOaVOTmVQwZdg==
+X-Received: by 10.202.84.209 with SMTP id i200mr28854363oib.50.1480963011339;
+ Mon, 05 Dec 2016 10:36:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A1FD83EE-BB18-11E6-A438-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.202.52.135 with HTTP; Mon, 5 Dec 2016 10:36:50 -0800 (PST)
+In-Reply-To: <20161204204057.32dnkjx6ixv3swez@gmail.com>
+References: <CANtxn9J9O+PADxpWa0JCcgwwk_tC5DuJGUruULN2fGP3knZ-Sw@mail.gmail.com>
+ <20161204204057.32dnkjx6ixv3swez@gmail.com>
+From:   Timon <timon37@gmail.com>
+Date:   Mon, 5 Dec 2016 19:36:50 +0100
+Message-ID: <CANtxn9K9tzmbea1Dx9Z37GNfA9QfCX0gm-XHjJxieJN6bc6D-A@mail.gmail.com>
+Subject: Re: [BUG] git gui can't commit multiple files
+To:     David Aguilar <davvid@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
-
-> "deepen by excluding" does not make sense because excluding a revision
-> does not deepen a repository; it makes the repository more shallow.
-
-I think that an intuitive way the feature should work may be:
-
- - You started with "git fetch --depth=20" and then later say "I
-   have only a very short segment of the recent history, but I want
-   a history that dates back to v1.0" with "--shallow-exclude=v1.0".
-   In this case, you would be deepening.
-
- - You instead started with "git fetch --depth=20000" that dated
-   back to v0.5.  "--shallow-exclude=v1.0" you say today would mean
-   "I have very old cruft I no longer look at.  I just want my
-   history lead back to v1.0 and no earlier".  In such a case, you
-   indeed would be making the repository shallower.
-
-I however offhand do not think the feature can be used to make the
-repository shallower, and I agree your changes to the usage string
-probably describe what the option does more correctly.
-
-I however suspect that the feature is simply buggy and it would
-eventually want to allow to shorten the history as well.  At that
-point we may want to work on the verb 'deepen' there, too.
-
+On 12/4/16, David Aguilar <davvid@gmail.com> wrote:
+> On Sun, Dec 04, 2016 at 05:36:46PM +0100, Timon wrote:
+>> This is a regression in git 2.11.0 (version 2.10.2 is fine).
+>>
+>> In git-gui I select multiple files in the Unstaged Changes (using
+>> shift+click) and press ctrl+t to stage them. Then only one files gets
+>> staged instead of all of the selected files.
+>> The same happens when unstaging files.
+>>
+>> Git-cola also exhibits the same behavior. Although there I could stage
+>> multiple files if I used a popup menu instead of the keyboard shortcut
+>> (I'm guessing it goes through a different code path?).
 >
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  builtin/clone.c | 2 +-
->  builtin/fetch.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+> Can you elaborate a bit?
 >
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 6c76a6e..e3cb808 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -99,7 +99,7 @@ static struct option builtin_clone_options[] = {
->  	OPT_STRING(0, "shallow-since", &option_since, N_("time"),
->  		    N_("create a shallow clone since a specific time")),
->  	OPT_STRING_LIST(0, "shallow-exclude", &option_not, N_("revision"),
-> -			N_("deepen history of shallow clone by excluding rev")),
-> +			N_("deepen history of shallow clone, excluding rev")),
->  	OPT_BOOL(0, "single-branch", &option_single_branch,
->  		    N_("clone only one branch, HEAD or --branch")),
->  	OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index b6a5597..fc74c84 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -122,7 +122,7 @@ static struct option builtin_fetch_options[] = {
->  	OPT_STRING(0, "shallow-since", &deepen_since, N_("time"),
->  		   N_("deepen history of shallow repository based on time")),
->  	OPT_STRING_LIST(0, "shallow-exclude", &deepen_not, N_("revision"),
-> -			N_("deepen history of shallow clone by excluding rev")),
-> +			N_("deepen history of shallow clone, excluding rev")),
->  	OPT_INTEGER(0, "deepen", &deepen_relative,
->  		    N_("deepen history of shallow clone")),
->  	{ OPTION_SET_INT, 0, "unshallow", &unshallow, NULL,
+> I just tested git-cola with Git 2.11 and it worked fine for me.
+> I selected several files and used the Ctrl+s hotkey to stage the
+> selected files.  They all got staged.
+>
+> If you have a test repo, or reproduction recipe, I'd be curious
+> to try it out.
+> --
+> David
+>
+
+Can you try with git gui?
+Though I guess it's probably specific to my distro or configuration.
+I'm running 64bit gentoo with:
+linux 4.8.12
+gcc 5.4.0
+glibc 2.23-r3
+tk 8.6.6
+gettext 0.19.8.1
+openssl 1.0.2j
+Not sure if that's helpful though.
