@@ -2,83 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A957B1FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 20:31:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3A5E1FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 20:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752113AbcLEUbu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 15:31:50 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65099 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752078AbcLEUbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 15:31:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 68CD554ED8;
-        Mon,  5 Dec 2016 15:31:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ay8VCHXyNueQ
-        TKayQ2b2ts/KIAI=; b=nLZhCoTkGL4Kb6wElA6a7LdrXvXZhVcUjXK0QLJCvXEc
-        w62P//4qcbv1vqsqjZg2BJ7P2vYBTJyb/D8jN5dVOwN5YstO9ygl+yqgopVyCMtJ
-        E2CON6gNb254cgLST7b+6BwNLDQY9ZWAT7JBiXg7GibNafzO0Ef+6TYO2Ls+VSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rE9pQx
-        VBb1fHwUdHnR5Zw6Vpg8QkmdmPwEbx29rms87vku4jUbu42fDQgA1JMRkeZksFh6
-        k2fBnZhDuEWhw8f1+Y/QGNh5gqPFWycRBDvrnwrNvKmYU3av2BiPf62ym1ZUZVVa
-        wiWu7wtQNl7CVRmOvrrED2EvjzFk2jZCNHXQ4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E97C54ED7;
-        Mon,  5 Dec 2016 15:31:48 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BDDFE54ED6;
-        Mon,  5 Dec 2016 15:31:47 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] update-unicode.sh: automatically download newer definition files
-References: <835c0328-e812-1cb7-c49e-714ff0e9ffb3@drbeat.li>
-        <1480798849-13907-1-git-send-email-dev+git@drbeat.li>
-        <20161204075800.GA2415@tb-raspi>
-Date:   Mon, 05 Dec 2016 12:31:46 -0800
-In-Reply-To: <20161204075800.GA2415@tb-raspi> ("Torsten =?utf-8?Q?B=C3=B6g?=
- =?utf-8?Q?ershausen=22's?=
-        message of "Sun, 4 Dec 2016 07:58:00 +0000")
-Message-ID: <xmqqmvga3yod.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752112AbcLEUeD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 15:34:03 -0500
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:34693 "EHLO
+        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751721AbcLEUeC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 15:34:02 -0500
+Received: by mail-yw0-f169.google.com with SMTP id t125so259786352ywc.1
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 12:33:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=W0kBG+aXrVk33ZvR80FgxqQzz2sAp2t7WawvQdN6xJ0=;
+        b=Y8QspklY7OtiK+dz4OTuJFEtxKM3ekqbRwRlYIUjx8DwTBqJSZG8r35tMZ7rhcxzaX
+         TMiiceY/AN8zWGu7bDRYzzSJhBnLzpMlcOohOUnIPNjx2Crs/hBG3LMFYK8J7PX0Z7pK
+         SNh/HyFBleKVUsdMmhsNuB4w7H5BRpZBgeOrnHScFbVTHhK1uhMs6pWhYTiZdbT/yT7k
+         DGl1QlnfUo/Fmo4vAZ8h73L3RmLRNBgnjb6+vEvDCdtq88UfExiSVu6nKUE5l6PoLPvs
+         FEfYNBPj2S7TR9E1k+Vtihl2mLK7FJg2CIKQez/qVv3nyK2W74d3Z7xVh+UlvPmcuGDi
+         9N8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=W0kBG+aXrVk33ZvR80FgxqQzz2sAp2t7WawvQdN6xJ0=;
+        b=i1CY2Z+LtdaYomifq2re5IVg90FOMShInSB50/78pYaB54Zv5T+qK002S2DB2znj+8
+         DCkjThmjDpbRjw5uOy/60oHW6RkTP/IFP7f1p5V6KKXyTeaLw87xL4hjx0W9hL1WGzb4
+         fmVNRdcQU6EEmDYiLkVqINjIzGXZIymOKuh0Y90e7vdj3e76s19SU83U2zNiR88wI3gO
+         1zwwZwHjHvQVebugqbMpsmLNvtME5TudBv9wf72PP3xwhJrPL3dCiTB/MUhENSqotc42
+         KrCGc/ETu7M5d1cyOZt6hjpB78S0cVstXxJkCN7SBIxpsBxX8/4CvBWYu7xKAQ7M6i0G
+         SajA==
+X-Gm-Message-State: AKaTC006rRCCh2UeJ3xfBqRUO+Gf3eMAIa5fCoRKjotATHEOtKqqjKzfbu2Wwub6Gdgzdz28Is1YQaVeAzzVrw==
+X-Received: by 10.129.91.132 with SMTP id p126mr32348927ywb.243.1480970031689;
+ Mon, 05 Dec 2016 12:33:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D846913C-BB29-11E6-89D9-B2917B1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.83.8.14 with HTTP; Mon, 5 Dec 2016 12:33:51 -0800 (PST)
+From:   ken edward <kedward777@gmail.com>
+Date:   Mon, 5 Dec 2016 15:33:51 -0500
+Message-ID: <CAAqgmoO+7cLZHpX61=Mh7PjqrCUc0qyFD=C+sjVat_+KPhisbw@mail.gmail.com>
+Subject: git repo vs project level authorization
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+I am currently using svn with apache+mod_dav_svn to have a single
+repository with multiple projects. Each of the projects is controlled
+by an access control file that lists the project path and the allowed
+usernames.
 
-> On Sat, Dec 03, 2016 at 10:00:47PM +0100, Beat Bolli wrote:
->> Checking just for the unicode data files' existence is not sufficient;
->> we should also download them if a newer version exists on the Unicode
->> consortium's servers. Option -N of wget does this nicely for us.
->>=20
->> Reviewed-by: Torsten Boegershausen <tboegi@web.de>
->
-> Minor remark (Not sure if this motivates v5, may be Junio can fix it lo=
-cally?)
-> s/oe/=C3=B6/
->
-> Beside this: Thanks again (and I learned about the -N option of wget)
+Does git have this also? where is the doc?
 
-Will fix up while queuing (only 1/3 needs it, 2/3 has it right).
-
-Also, I'll do s/update-unicode.sh/update_unicode.sh/ on the title
-and the message to match the reality.  At some point we might want
-to fix the reality to match people's expectations, though.
-
-Thanks.
+Ken
