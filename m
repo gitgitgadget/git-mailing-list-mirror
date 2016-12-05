@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A66871FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 20:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E24A1FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 20:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751524AbcLEUQW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 15:16:22 -0500
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:36155 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751201AbcLEUQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 15:16:22 -0500
-Received: by mail-pg0-f41.google.com with SMTP id f188so139650509pgc.3
-        for <git@vger.kernel.org>; Mon, 05 Dec 2016 12:16:21 -0800 (PST)
+        id S1751672AbcLEUVq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 15:21:46 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34067 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751639AbcLEUVq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 15:21:46 -0500
+Received: by mail-pf0-f179.google.com with SMTP id c4so65354643pfb.1
+        for <git@vger.kernel.org>; Mon, 05 Dec 2016 12:21:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=gCSwqX+Vy/0K/4q7EcP+CViW8jwd0dF745J/EcXH+8o=;
-        b=IUcBs4+jB7OVEKFYQMvmgRJuFiapJObSqLFd4DaRjfpm1toEvNG0hxTwnFaFrZ3SfV
-         lmbI9uJONrlmcb9Bm8TpVR68r/9MuNKq93Jb4dXpbuw6HNfBW0Lb7ECY0tpy68PP94hx
-         E5HIctpXp3hvYyuR36iM//SJQzeBWifk7qajumCgeXVTkd0y+lWjG8nRbjW9RI9QxYoQ
-         A8sKCsc8oGhjZuW7HxtJ6+aMpyF7BuDojndRw//GkgWZci5ap0uYUb5h4JcwoCOKl6lp
-         w7X3tvr+R4z9uB5iDMpp5zYKSC+JupPprFcg539uIyOXBMTJN8V/8+PM8NyQzf61dteF
-         /CGA==
+        bh=71cJSREhIsiARitbDo6kc6DVJ2l7PeHpGENNkkZGt+0=;
+        b=CUdORlA161dXvDRvozK/yQDD5PK/BEAtThEa2B6ZJJUP1rFtJf8Tw4P4aRww39QgXN
+         +Hkqg3aKkSJ/JZnzPuZ9tlzPQGI0Z4667jKFZNZBnZ3NzjML0xJwddX1V7oSXxLvY+rP
+         j1XTOqIgMsvMUIizTkXM8IAwAC1ejIJW/ozBO6541vuv1kll5NFFIifI8ZqbMJahHq2A
+         xgm/rOetlZn8gJHnFXEOPkv1EySRIe2zkL+6tp23j61K8KOgSc9LH45e2VwRXWdytuUj
+         pSzvC8fDFxd4Zt2kUOBnSjapuyx0CZ+B/iTg157HhA8VUzsNK3pNTY6AYUfwCOsFUdbw
+         BNsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gCSwqX+Vy/0K/4q7EcP+CViW8jwd0dF745J/EcXH+8o=;
-        b=jrYkqbS8UnaASBqbI7sF71GRryOr793WNQVm/LkoXMLjx2oXTL5cyV8+/GVMa1Apzb
-         4UZv+50xAufDORoZEDFQXZeaVO/aKi7fjztpJSkMQtk7d5oQ3FD56FT527aQUbLdcMiE
-         MWFKmP23L+BUqCbPujizzR+7Dfb4MWtDwLJep8vzlLrBsU5BCLCpxJtYOx6ZUtIondoI
-         xFAJb1/N2eAtDiZmTF9IoPdjchsAiIq9RHMq3vsj6h13lHaohZfZBuwkcDHniYwd2jCG
-         aTfzze+XaUQ/JJ5df9jgkT+tZ2jXGsC2YT2QkmeY+r4HMcdEalreTnaUCkMLamKecIBc
-         OZGw==
-X-Gm-Message-State: AKaTC00ObnXVHMZGF1eBB1Hll/CiWwO0ZrqhBpBmiA1W+/LPrhutm1jD+2rKgqBEc1LC7Rvq
-X-Received: by 10.84.175.234 with SMTP id t97mr128684380plb.145.1480968981206;
-        Mon, 05 Dec 2016 12:16:21 -0800 (PST)
+        bh=71cJSREhIsiARitbDo6kc6DVJ2l7PeHpGENNkkZGt+0=;
+        b=U4LwfptPEKhjBPqqyjH3wBFOkkEi4B/KckSzVDSq5G7tlBPDER/J+pRCpSj5jEYZGd
+         k53dhGToG4tCXSliwDc5EteWKaGpT+bx484oijYCYh5X8EErULDnTnhDLe696HiBUmyL
+         Dn0hgT88zeeuZC22hd7uYBRvtV2RDswqidTWI1JWwaXi7tcykyjgU6EYIN/iOZHWFv0O
+         mbnuibqCN5LcF0ew6ycomAEZczpsZwh2WDogDCl1zmhiIgNjrUg8S97Wjta7HxAFsVwT
+         EUEGU5t1uuVM5apYyk1vXnxQCCKdfzWHUJG7PYReBetwTcdKYvoYCjCR2+vVsCqELOfZ
+         l0uA==
+X-Gm-Message-State: AKaTC01Bpr1kQPabp5ZDOk2nDmsfhJvc7R6vNXfp0wDRcACcvqmoKHXGDZ2KhOlTo+SoMQxl
+X-Received: by 10.99.232.21 with SMTP id s21mr106193273pgh.19.1480968759466;
+        Mon, 05 Dec 2016 12:12:39 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:20ca:c78:1a67:9579])
-        by smtp.gmail.com with ESMTPSA id g82sm29409679pfb.43.2016.12.05.12.16.20
+        by smtp.gmail.com with ESMTPSA id t193sm29595760pgb.4.2016.12.05.12.12.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Dec 2016 12:16:20 -0800 (PST)
-Date:   Mon, 5 Dec 2016 12:16:19 -0800
+        Mon, 05 Dec 2016 12:12:38 -0800 (PST)
+Date:   Mon, 5 Dec 2016 12:12:37 -0800
 From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
         Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: [PATCH] real_path: make real_path thread-safe
-Message-ID: <20161205201619.GE68588@google.com>
+Message-ID: <20161205201237.GD68588@google.com>
 References: <1480964316-99305-1-git-send-email-bmwill@google.com>
  <1480964316-99305-2-git-send-email-bmwill@google.com>
- <CAGZ79katWewdwU3ZDYDj-QZEeersx9XDPZuTdMJG_u_62YwMsg@mail.gmail.com>
+ <CAGZ79kauPdE1uiFSvBALkNiwXbnV6d6xhwLdWNQwRir_8rTG6Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79katWewdwU3ZDYDj-QZEeersx9XDPZuTdMJG_u_62YwMsg@mail.gmail.com>
+In-Reply-To: <CAGZ79kauPdE1uiFSvBALkNiwXbnV6d6xhwLdWNQwRir_8rTG6Q@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,32 +68,82 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 12/05, Stefan Beller wrote:
-> >  static const char *real_path_internal(const char *path, int die_on_error)
-> >  {
-> > -       static struct strbuf sb = STRBUF_INIT;
-> > +       static struct strbuf resolved = STRBUF_INIT;
+> > +/* removes the last path component from 'path' except if 'path' is root */
+> > +static void strip_last_component(struct strbuf *path)
+> > +{
+> > +       if (path->len > 1) {
+> > +               char *last_slash = find_last_dir_sep(path->buf);
 > 
-> Also by having this static here, it is not quite thread safe, yet.
-> 
-> By removing the static here we cannot do the early cheap check as:
-> 
-> >         /* We've already done it */
-> > -       if (path == sb.buf)
-> > +       if (path == resolved.buf)
-> >                 return path;
-> 
-> I wonder how often we run into this case; are there some callers explicitly
-> relying on real_path_internal being cheap for repeated calls?
-> (Maybe run the test suite with this early return instrumented? Not sure how
-> to assess the impact of removing the cheap out return optimization)
-> 
-> The long tail (i.e. the actual functionality) should actually be
-> faster, I'd imagine
-> as we do less than with using chdir.
+> What happens when there is no dir_sep?
 
-Depends on how expensive the chdir calls were.  And I'm working to get
-rid of the static buffer.  Just need have the callers own the memory
-first.
+There should always be a dir_sep since that only gets run if the passed
+in path at least contains root '/'
+
+> 
+> > +/* gets the next component in 'remaining' and places it in 'next' */
+> > +static void get_next_component(struct strbuf *next, struct strbuf *remaining)
+> > +{
+> 
+> It's more than just getting it, it also chops it off of 'remaining' ?
+
+True, I can update the comment to reflect that.
+
+> > +       } else {
+> > +               /* relative path; can use CWD as the initial resolved path */
+> > +               if (strbuf_getcwd(&resolved)) {
+> > +                       if (die_on_error)
+> > +                               die_errno("Could not get current working directory");
+> 
+> I am looking at xgetcwd, which words it slightly differently.
+> 
+>     if (strbuf_getcwd(&sb))
+>         die_errno(_("unable to get current working directory"));
+> 
+> Not sure if aligning them would be a good idea?
+> 
+> Going by "git grep die_errno" as well as our Coding guidelines,
+> we don't want to see capitalized error messages.
+
+K I can use the other msg.
+
+> >
+> > -               if (sb.len) {
+> > -                       if (!cwd.len && strbuf_getcwd(&cwd)) {
+> > +               /* append the next component and resolve resultant path */
+> 
+> "resultant" indicates you have a math background. :)
+> But I had to look it up, I guess it is fine that way,
+> though "resulting" may cause less mental friction
+> for non native speakers.
+> 
+> 
+> > +                       if (!(errno == ENOENT && !remaining.len)) {
+> >                                 if (die_on_error)
+> > -                                       die_errno("Could not get current working directory");
+> > +                                       die_errno("Invalid path '%s'",
+> > +                                                 resolved.buf);
+> >                                 else
+> >                                         goto error_out;
+> >                         }
+> > +               } else if (S_ISLNK(st.st_mode)) {
+> 
+> As far as I can tell, we could keep the symlink strbuf
+> at a smaller scope here? (I was surprised how many strbufs
+> are declared at the beginning of the function)
+
+Yeah I can push it down in scope.  There will be a bit more allocation
+churn with the smaller scope but multiple symlinks should be rare?
+Alternatively the 'next' buffer can be reused...I decided against that
+initially due to readability.  And yes, lots of string manipulation
+requires lots of strbufs :)
+
+> > +       //strbuf_release(&resolved);
+> 
+> This is why the cover letter toned down expectations ?
+> (no // as comment, maybe remove that line?)
+
+yep.  It will be added back in though once the callers to real_path take
+ownership of the memory.
 
 -- 
 Brandon Williams
