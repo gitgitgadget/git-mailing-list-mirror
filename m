@@ -2,73 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1959F1FC96
-	for <e@80x24.org>; Mon,  5 Dec 2016 14:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B60A61FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 17:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751530AbcLEOhy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 09:37:54 -0500
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35805 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751443AbcLEOhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 09:37:53 -0500
-Received: by mail-yw0-f181.google.com with SMTP id i145so255113511ywg.2
-        for <git@vger.kernel.org>; Mon, 05 Dec 2016 06:37:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TTitohAlu/mKtygPoExXaHKGk4rAc+w2FdVkV7hFnQg=;
-        b=uk5u5wjGSe1kqFv2ErLU3TinNW8uS1efAtLVaO+LDma4czPeOMgpKkPd3wwUiubeg8
-         h3db84e0tBk37LRi6xVQUejipws0nUt4AogcnAU/AV06ExKPv5gKLlWJrdSCBKm7rqIH
-         OgeiuCg2bBwq3tGB/xE/yjGbOU3VapTCgxCfuq1S4WZ35bteN930wiRXQBkkJ9t6b0qB
-         3e5izB3pLH1+09Be/VsU08l8UXRBz7sN5hiczTCb64f2GItyRKyw+n0UKpZfbjdHGlWA
-         xA0FWeTDhQVQ6sqJoU33MPtV0jOO6jI45LNjeGIrDfgJVHjPpjDkqhJfy12B+bl5QREP
-         L6fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TTitohAlu/mKtygPoExXaHKGk4rAc+w2FdVkV7hFnQg=;
-        b=TtzRuYnZTxwbhTXEIPxuvdHY13QcIxpe/bQptsorsfrHceQsMijhF1vHYI/D9ZQjZG
-         JZ5KjjD5Z9awDw6NUYtp83nPkoXXo8WFuWv5eBFMZDcOvM/p0g9MbT1YYPkFSus/0T4v
-         2avuNo+F0fIQ/deOMWAnf0N/Q2KvnG6yrOZvc9cQWYRjbQUcM7/Y/ssDufFmhpR98ByG
-         Vmazum/X6fmtFMH5Ps+TBuoYiOHJ/kFKrdxbTLtlSigUYclNG5Ac8+myEe+c7fsX6j4E
-         vtkaZ65t2jiouoEM1pf/Aj4g3rg6AMJBctn1Lf6hL8XgqOqO3mfbdPFjYhC5q3yz0ePX
-         odBA==
-X-Gm-Message-State: AKaTC01iTxKsJtSvE2E7pdWdebQgVuQOvJgBHWhjvJa/TuxEsjN9ZLrLwj66kSyoC8LMs3tOdeDbFXihcx6UkQ==
-X-Received: by 10.129.106.215 with SMTP id f206mr53518664ywc.210.1480948672168;
- Mon, 05 Dec 2016 06:37:52 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.216.215 with HTTP; Mon, 5 Dec 2016 06:37:51 -0800 (PST)
-From:   Matthew Patey <matthew.patey2167@gmail.com>
-Date:   Mon, 5 Dec 2016 09:37:51 -0500
-Message-ID: <CAFQpxxKbn4vBMzVcLZgBVvuL2fsOGNMHR1WC+aTOG_RAWkZ_Gg@mail.gmail.com>
-Subject: Bug: stash staged file move loses original file deletion
+        id S1752096AbcLERed (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 12:34:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64536 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751451AbcLERed (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 12:34:33 -0500
+Received: from [192.168.178.50] ([188.98.240.120]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOw4N-1cHXf72QBL-006NpP for
+ <git@vger.kernel.org>; Mon, 05 Dec 2016 18:34:30 +0100
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+From:   Juergen Kosel <juergen.kosel@gmx.de>
+X-Enigmail-Draft-Status: N1110
+Subject: Feature request: Set git svn options in .git/config file
+Message-ID: <1936940c-c4c8-540c-eb99-b434e8d32d6c@gmx.de>
+Date:   Mon, 5 Dec 2016 18:34:30 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:RUBG1aXAugqms1/AWIHnacaQXvVVc5OJ8ql9osTmhybPr5BIPZT
+ Vu1hsoTTbalZ9XkZQ8CUJkwk34MYlOtpmKWtdL0E3QpdbhHk6tMwD/N9zgu6QTafEfV6ZQM
+ AbtpndPb8jF1GMEmoLONRPWbe23xaUH6av8GS4WKYJaPeCNXd013392hiYkHsXvMOkrzRp1
+ Ti+FNmK0nXf0IY7VXmLoA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VFSoTToUf5U=:8AYOG3FMuDXZCYHakEp/ex
+ 4OSTBc9d0xlIgdcDuPQ9rroeLxbPoPETn67sZTyEJj+TQlRECJM8NouIiYWqtxWaIQPeh8eK2
+ 3P5yPklaEGO89Isdz9dX33vgRg5XtvArW7S6+YZZUn8WG7wXDym2FK2D6Edxoab+kFrZpdmNr
+ 06H6sOKwLgeuAuHshB45IUZdovJnx6x+66AGzWdYvoFdj2snHl8OQ5XVRIJkrYpmlR9SKd0DX
+ qXDPawBlcyvTSjMjEHvQfMsl6TdcNcmAErwOLZVPiY83O2zePzW3Ao3wXzy2R1MC7BXOgJ0oq
+ uCkpu6XnobLQ2qvZl9kIYphI7u5tKeJCCukDRWSMnTAR6F+wPi7Mkj9F7Z06dmDpOhw/q4yZ7
+ 1+S9xDGLHlCjsTN4zBsl358yRgSa0etTr/+QDfvs6zvbdztJbMK23Dn+n2gc67dBpzWIBy+WV
+ KCZA89OgkOxxvSp2nk+lQ2Hb2LXVY/vC06w8GyeXEgy8bR+ZzVg2HY8g0zU+QdYIAFfzhUcTL
+ tkq85HsHCbeyNDtFL5ZZi5N7JVjjkQ9uWWTfRNVusEnNe+wagnr9AypMTUKiGPaN0MCPefPw7
+ tVM3RTyIpqPYRvQv/sNGu61zgrdBOqxHCB93kuKCewCFoitRa66R/vWMUW1RuVtYLsgHlJJSh
+ iY+M++4hNYX0Bz1vTPRR44KusiTPlZkUiasWTjXmM7ZaLNbgdd8pFOn6eWCpGw0orpyjMl8Ej
+ bV7pyj0PLSxK1jTZOTGVU1/XpPeOsg3c9Wq3TihRxH4MXb5YJWwH6xM96tTrCA8i1x89NfcZ8
+ tfo9iSI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git version 2.8.0 (sorry can't update to more recent on my machine) on Ubuntu.
+Hello,
 
-After moving a file, if the new file is in the index but the deletion
-of the old file is not staged, git stash loses the deletion operation.
-Repro:
+while working with a git-svn repository, I like to use the command
+line options --use-log-author and --add-author-from for all calls of
+git svn fetch,
+git svn rebase,
+git svn dcommit, ...
 
-1. git mv a b
-This will have both the "deletion" and the "file added" in the index
+Doing so consequently, the commit-ids of each git repository, which
+has been cloned from the same svn-repository match.
 
-2. git stash; git stash pop
-Now file a is still in the index, but file b deletion is not staged.
+Unfortunately, it is possible to forget these options on the command
+line. (And 2nd, tortoise-git does not surport it, see
+https://gitlab.com/tortoisegit/tortoisegit/issues/2824 ).
 
-3. git stash; git stash show -v
-This will show that the deletion operation is not in the stash
+Therefore I believe, that it would be the best solution to store the
+settings of --add-author-from, --use-log-author and maybe
+--authors-prog in the .git/config file.
 
-4. git stash pop
-Again confirms the issue, file a is in the index, but file b is
-present and unmodified in the working directory.
+
+Greetings
+	Juergen
