@@ -6,91 +6,112 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC13B1FBB0
-	for <e@80x24.org>; Mon,  5 Dec 2016 18:10:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE821FBB0
+	for <e@80x24.org>; Mon,  5 Dec 2016 18:28:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751569AbcLESKJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 13:10:09 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61550 "EHLO
+        id S1752142AbcLES2n (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 13:28:43 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60737 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751320AbcLESKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 13:10:09 -0500
+        with ESMTP id S1752104AbcLES2l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 13:28:41 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCC7154D73;
-        Mon,  5 Dec 2016 13:10:07 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CAC855530D;
+        Mon,  5 Dec 2016 13:28:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Fsv/Juywcg5lJMDWfO/RQd38+5g=; b=tGatp6
-        f8ZU3saxzCljcgTfxeVqfQX8AMTpNDHW490lUE4139YBKfis+7KjTsHaCdraWN7m
-        3AZWicsnmADmWxqwVOrdh495g2iRl1LSRqHdgAf5dlsW9/oANLxTHMzMZEkXWA2e
-        4kpBMzn3LwmHQi46Tn7vwf5Yl819yhQguxqtw=
+        :content-type; s=sasl; bh=ZlnQYKmbfrCdAKGdOWnI+pRwkDk=; b=kbCFcd
+        v+PfNf9mt2kgIvYkN4bCe7o9OMtFgTNY1P+L6N1SrMUa29i86yQbpaUGM6Z5zsSO
+        hqjgJW1bO61PnGBxrtxHAkI7L0zuEYnuGhz0qmWiH78NQKWjV2ouErGMhg2cnun3
+        ujHNibTeOh8wcvZMYsWMhbY/Ng0zHud9ZQo9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sIYplkO0P4WWNOqocDsZEIvMUH27KYyV
-        ZDOlJkzWdWEd9u4BjI+L0jYmnQeBrVpj8E9givr4+9lrTk+tMX7Rkk2CS91M4AY6
-        yg72UCPkFW4fmNMVu5mxybLzQUBAw9dZGua4Js3+cMKenwQPpxnEpOD7lQ+1ZQrd
-        HBw2fvz2wFY=
+        :content-type; q=dns; s=sasl; b=Tlbd0XG+UJe4hXu91OA846Ag91AnC4P4
+        j47eRSEFbh3n8M1PI4hkagzNN75yXKqmvzJ5iHiOpKEGt+KM6/b/n5Z9ImS+fu0+
+        a8yKaN/B81NIizKNucpY1vEicF8bomXNlaOUyA5nTB1Q7zVD8KoJYxvVZoVaT3O/
+        VeEwA1cjgDQ=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B283554D70;
-        Mon,  5 Dec 2016 13:10:07 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1BDA5530C;
+        Mon,  5 Dec 2016 13:28:35 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0EFB54D6F;
-        Mon,  5 Dec 2016 13:10:06 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F07F5530A;
+        Mon,  5 Dec 2016 13:28:35 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
-References: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
-        <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
-        <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
-Date:   Mon, 05 Dec 2016 10:10:05 -0800
-In-Reply-To: <ab1e7ce9-1022-0c72-2f72-63e3b9182bc9@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Mon, 5 Dec 2016 11:21:14 +0000")
-Message-ID: <xmqq7f7e5jsy.fsf@gitster.mtv.corp.google.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     pclouds@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH] clone,fetch: explain the shallow-clone option a little more clearly
+References: <20161204220359.30807-1-alexhenrie24@gmail.com>
+Date:   Mon, 05 Dec 2016 10:28:34 -0800
+In-Reply-To: <20161204220359.30807-1-alexhenrie24@gmail.com> (Alex Henrie's
+        message of "Sun, 4 Dec 2016 15:03:59 -0700")
+Message-ID: <xmqq37i25iy5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0D553FC2-BB16-11E6-9B03-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A1FD83EE-BB18-11E6-A438-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-> Heh, that was the first version of the patch. However, I got to thinking
-> about why --abbrev=7 was there in the first place; the only reason I
-> could think of was to defeat local configuration to get a measure of
-> reproducibility.
+> "deepen by excluding" does not make sense because excluding a revision
+> does not deepen a repository; it makes the repository more shallow.
+
+I think that an intuitive way the feature should work may be:
+
+ - You started with "git fetch --depth=20" and then later say "I
+   have only a very short segment of the recent history, but I want
+   a history that dates back to v1.0" with "--shallow-exclude=v1.0".
+   In this case, you would be deepening.
+
+ - You instead started with "git fetch --depth=20000" that dated
+   back to v0.5.  "--shallow-exclude=v1.0" you say today would mean
+   "I have very old cruft I no longer look at.  I just want my
+   history lead back to v1.0 and no earlier".  In such a case, you
+   indeed would be making the repository shallower.
+
+I however offhand do not think the feature can be used to make the
+repository shallower, and I agree your changes to the usage string
+probably describe what the option does more correctly.
+
+I however suspect that the feature is simply buggy and it would
+eventually want to allow to shorten the history as well.  At that
+point we may want to work on the verb 'deepen' there, too.
+
 >
-> Unfortunately, you can't get the 'auto' behaviour from --abbrev
-> (on the pu branch):
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>  builtin/clone.c | 2 +-
+>  builtin/fetch.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
->     $ ./git describe --abbrev=-1
->     v2.11.0-286-g109e8
->     $ ./git describe --abbrev=0
->     v2.11.0
->     $ ./git describe
->     v2.11.0-286-g109e8a99d
->     $
-
-What is the reason why the last one is undesirable?  Is it because
-the user may have core.abbrev set to some value in the configuration
-and you want to override it to force "auto"?
-
-I am not sure how rigid GIT-VERSION-GEN wants to be to countermand
-such an explicit user preference (i.e. existing configuration).
-
-> I did think about using '-c core.abbrev=auto', 
-
-Having said that, if countermanding end-user's configuration is
-desireble, I agree that "-c core.abbrev=auto" is the way to do so.
-
-> but that would depend on Junio's patch (nothing wrong with that,
-> of course):
-
-You caught me.  I'll need to polish that into a usable shape soon
-then.  And that is orthogonal to the "does it make sense to force
-'auto' in this context?" question.
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 6c76a6e..e3cb808 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -99,7 +99,7 @@ static struct option builtin_clone_options[] = {
+>  	OPT_STRING(0, "shallow-since", &option_since, N_("time"),
+>  		    N_("create a shallow clone since a specific time")),
+>  	OPT_STRING_LIST(0, "shallow-exclude", &option_not, N_("revision"),
+> -			N_("deepen history of shallow clone by excluding rev")),
+> +			N_("deepen history of shallow clone, excluding rev")),
+>  	OPT_BOOL(0, "single-branch", &option_single_branch,
+>  		    N_("clone only one branch, HEAD or --branch")),
+>  	OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b6a5597..fc74c84 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -122,7 +122,7 @@ static struct option builtin_fetch_options[] = {
+>  	OPT_STRING(0, "shallow-since", &deepen_since, N_("time"),
+>  		   N_("deepen history of shallow repository based on time")),
+>  	OPT_STRING_LIST(0, "shallow-exclude", &deepen_not, N_("revision"),
+> -			N_("deepen history of shallow clone by excluding rev")),
+> +			N_("deepen history of shallow clone, excluding rev")),
+>  	OPT_INTEGER(0, "deepen", &deepen_relative,
+>  		    N_("deepen history of shallow clone")),
+>  	{ OPTION_SET_INT, 0, "unshallow", &unshallow, NULL,
