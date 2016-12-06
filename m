@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 242471FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 22:43:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 002F11FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 23:02:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752492AbcLFWnc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 17:43:32 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34664 "EHLO
+        id S1751953AbcLFXCR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 18:02:17 -0500
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34347 "EHLO
         mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752156AbcLFWnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 17:43:31 -0500
-Received: by mail-io0-f193.google.com with SMTP id r94so9643542ioe.1
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 14:43:31 -0800 (PST)
+        with ESMTP id S932115AbcLFXCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 18:02:14 -0500
+Received: by mail-io0-f193.google.com with SMTP id r94so9729024ioe.1
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 15:02:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=cU6uFRaMteYEO9Sw5drMqN4sJI/C3oxU0ASulQKlOBY=;
-        b=XOLjhKBhEDDqey4mhHCSxYHQalfGNQ7K8Q51ZACLN53HsvYXXcQlVAcxw+xkzY8CXt
-         PKtXZemsNlHoyYAV7Vp5nd6x2EEbAdmW48+Dtwrk2rSuKfyEA+E6CROjFWyhms5WTLwM
-         fpHqRfbhbT1TKBqZK+0iB5p4qeWoeNNdEcBYmb+wII5ackkIfm9BX4v7JeFc6VcJRB5a
-         gZgqbQ98m8AnAxc/3o/ap3qZZho76eDZnpi0NfkUIwu6rmnuUYiJI+ZKaAJO7ilZqe3r
-         IKM41oJ6rZHXASljD5m7azklG2MSNV8fAv/f5QsqSuT+bdyXsTObQxIcNX7Is7wf1yZK
-         MajQ==
+        bh=PtzEN7DxczfMDrxcwm1IF998cPENrmuFGAZI5wTU0po=;
+        b=JyfJTtz9Saa+HVPnZP6ICWcyDaIglruAhRSvRONflZON9mBwGdvhznp508Q+sxa5JC
+         M6WF3xNmSu7E6/drPgGi3XLnS6m/Hocr69HouXyMiLAZQFrlGRAP/KHtdWJLvtyBNdOr
+         eBROqCVci41+6C1cFEZbAZ3G+9R95PxjF2kgxhZtTM4Ah2nOr94wMjDR2p7tMdC9T3Nk
+         w/VIDlsQ7PeAwfs0iP0ZEpQgmNfsUKyuBtxM3MW26sPsgxyYQgXsnRGHimiA/Uijzrbb
+         EDUzI7l1eEPGyUhNc62FAAowf9FgEFTHMRWBJlJdoRUJF+Id9nf9IKFfWT6c3in7/v3Z
+         Sovg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=cU6uFRaMteYEO9Sw5drMqN4sJI/C3oxU0ASulQKlOBY=;
-        b=dr9Qai/QEO9OR0ciS0j+7I2SaluSzBXEBB67M4JOOFFJSgV6zJMGqXWkrUcqqYem1p
-         qRgHrIgq7GNfP5i9iMWJBzg3oJ6jy9zYl8itwtnF8S1VmGvQwHKyfR6hnxxljLs/W7fa
-         zweiH2ODNmMdCanZn/DsTeGhLD6FaYQDgRFqbnzBm8Ezhi+eSIbOxv5Cf7THWP3dwJ6j
-         Fh1kpXzREfE5SfX3buJKPt6vWk+CuMwri+BnZ7e/eoKoaV3RWlNrJw6+zqkh2JXIaSIR
-         dAOzpGSl5uBpqzpxV5PsMqVNfWi5x4Ifu0El9SuSswqYaqdriKID+zboIZjwhAb9wZFT
-         Y/Dw==
-X-Gm-Message-State: AKaTC007TUOIcxJl1Gdj4FbTyhrHprZyiJp2FTS73YrHSbHeZ0VAXed+3VJ8L4sz1KvZVyHqcjI0ntK0FZqABw==
-X-Received: by 10.36.246.130 with SMTP id u124mr864548ith.45.1481064210646;
- Tue, 06 Dec 2016 14:43:30 -0800 (PST)
+        bh=PtzEN7DxczfMDrxcwm1IF998cPENrmuFGAZI5wTU0po=;
+        b=Re9NElqb3BpQyFHdgH5IN7/24taEeKO6pXvDaDRnPM4hjGZfch8WmDlGYLzRMnkccy
+         S7KuHf95ymsUkPYwHaFLj08SdYFT9/uKv5WnTAl6xke8BLfFUZ1Vs1mmpgJXZIH5j5+W
+         iVXttcCn0Cx/U65wmX/Rg4+Q6dVqQJDTtkLPHS0xQfephfmetkxys/gkCUgdrWrVmfKG
+         ZiTp0smvRULUcgZXNR3Q06x09JDneN4OAnl7iGi8JtoaWhpoGjGL+ZY4KB6V1RbHXyOB
+         Ox9FqSlsZz5rZJ7vFTAsTbFxAwGtZPZRfc972aVfLnulo4RKJNQcpEOvP2wAcqENXZ0I
+         uSwA==
+X-Gm-Message-State: AKaTC03GYSQww1fvIqXi8hSkKVR1YgA2hh1E09TOo5Dcvo8MueKoKUoYuFjqQ/qJNrd6FNkYAPusF7bufADE8w==
+X-Received: by 10.107.141.211 with SMTP id p202mr53315819iod.47.1481065333747;
+ Tue, 06 Dec 2016 15:02:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.142.137 with HTTP; Tue, 6 Dec 2016 14:43:30 -0800 (PST)
-In-Reply-To: <b7691fac-9642-f87d-f23f-5175b5ead05b@gmx.net>
+Received: by 10.79.142.137 with HTTP; Tue, 6 Dec 2016 15:02:13 -0800 (PST)
+In-Reply-To: <1816d5b4-a4c1-7c97-09ff-b11001501423@gmx.net>
 References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1aca-0c26fb8c-404f-4f57-afe7-7ebb552a1002-000000@eu-west-1.amazonses.com>
- <b7691fac-9642-f87d-f23f-5175b5ead05b@gmx.net>
+ <01020157c38b1b29-65f79716-42c6-4327-acda-8c8d0fe05471-000000@eu-west-1.amazonses.com>
+ <1816d5b4-a4c1-7c97-09ff-b11001501423@gmx.net>
 From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 7 Dec 2016 04:13:30 +0530
-Message-ID: <CAFZEwPNctpM3KAsYK587aJvokE2FzyTvMoCJ_ztO3ijpUiMcwg@mail.gmail.com>
-Subject: Re: [PATCH v15 10/27] bisect--helper: `check_and_set_terms` shell
- function in C
+Date:   Wed, 7 Dec 2016 04:32:13 +0530
+Message-ID: <CAFZEwPNmB7rYvUTPy6dvfqfbUsjDeEcteLBBH5Wk-G_suE+YTw@mail.gmail.com>
+Subject: Re: [PATCH v15 23/27] bisect--helper: `bisect_replay` shell function
+ in C
 To:     Stephan Beyer <s-beyer@gmx.net>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -64,75 +64,223 @@ X-Mailing-List: git@vger.kernel.org
 
 Hey Stephan,
 
-On Fri, Nov 18, 2016 at 1:55 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi Pranit,
+On Tue, Nov 22, 2016 at 6:19 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
+> Okay Pranit,
 >
+> this is the last patch for me to review in this series.
+>
+> Now that I have a coarse overview of what you did, I have the general
+> remark that imho the "terms" variable should simply be global instead of
+> being passed around all the time.
+
+In a personal conversation with my mentors, we thought it is the best
+fit to keep it in a struct and pass it around so that it is easier in
+libification.
+
+> I also had some other remarks but I forgot them... maybe they come to my
+> mind again when I see patch series v16.
+>
+> I also want to remark again that I am not a Git developer and only
+> reviewed this because of my interest in git-bisect. So some of my
+> suggestions might conflict with other beliefs here. For example, I
+> consider it very bad style to leak memory... but Git is rather written
+> as a scripting tool than a genuine library, so perhaps many people here
+> do not care about it as long as it works...
+
+Thanks for taking out your time to review my series extremely
+carefully. I will try to post a v16 next week probably.
+
 > On 10/14/2016 04:14 PM, Pranit Bauva wrote:
 >> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->> index 3f19b68..c6c11e3 100644
+>> index c18ca07..b367d8d 100644
 >> --- a/builtin/bisect--helper.c
 >> +++ b/builtin/bisect--helper.c
->> @@ -20,6 +20,7 @@ static const char * const git_bisect_helper_usage[] = {
->>       N_("git bisect--helper --bisect-clean-state"),
->>       N_("git bisect--helper --bisect-reset [<commit>]"),
->>       N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
->> +     N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
+>> @@ -601,7 +602,6 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+>>                       terms->term_good = arg;
+>>               } else if (!strcmp(arg, "--term-bad") ||
+>>                        !strcmp(arg, "--term-new")) {
+>> -                     const char *next_arg;
 >
-> Here's the same as in the previous patch... I'd not use
-> TERM_GOOD/TERM_BAD in capitals.
-
-Sure.
-
->>       NULL
->>  };
->>
->> @@ -212,6 +213,38 @@ static int bisect_write(const char *state, const char *rev,
->>       return retval;
+> This should already have been removed in patch 15/27, not here.
+>
+>> @@ -875,6 +875,117 @@ static int bisect_log(void)
+>>       return status;
 >>  }
 >>
->> +static int set_terms(struct bisect_terms *terms, const char *bad,
->> +                  const char *good)
+>> +static int get_next_word(const char *line, int pos, struct strbuf *word)
 >> +{
->> +     terms->term_good = xstrdup(good);
->> +     terms->term_bad = xstrdup(bad);
->> +     return write_terms(terms->term_bad, terms->term_good);
+>> +     int i, len = strlen(line), begin = 0;
+>> +     strbuf_reset(word);
+>> +     for (i = pos; i < len; i++) {
+>> +             if (line[i] == ' ' && begin)
+>> +                     return i + 1;
+>> +
+>> +             if (!begin)
+>> +                     begin = 1;
+>> +             strbuf_addch(word, line[i]);
+>> +     }
+>> +
+>> +     return i;
+>> +}
+>> +
+>> +static int bisect_replay(struct bisect_terms *terms, const char *filename)
+>> +{
+>> +     struct strbuf line = STRBUF_INIT;
+>> +     struct strbuf word = STRBUF_INIT;
+>> +     FILE *fp = NULL;
 >
-> At this stage of the patch series I am wondering why you are setting
-> "terms" here, but I guess you'll need it later.
->
-> However, you are leaking memory here. Something like
->
->         free(terms->term_good);
->         free(terms->term_bad);
->         terms->term_good = xstrdup(good);
->         terms->term_bad = xstrdup(bad);
->
-> should be safe (because you've always used xstrdup() for the terms
-> members before). Or am I overseeing something?
+> (The initialization is not necessary here.)
 
-Yeah it is safe.
+Um. I think it is. Otherwise if it goes to the finish block before you
+try to operate on fp, it will cause a seg fault.
 
->> @@ -278,6 +314,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->>               terms.term_bad = xstrdup(argv[3]);
->>               res = bisect_write(argv[0], argv[1], &terms, nolog);
+>> +     int res = 0;
+>> +
+>> +     if (is_empty_or_missing_file(filename)) {
+>> +             error(_("no such file with name '%s' exists"), filename);
+>
+> The error message is misleading if the file exists but is empty.
+> Maybe something like "cannot read file '%s' for replaying"?
+
+Okay will change.
+
+>> +             res = -1;
+>> +             goto finish;
+>
+>                 goto fail;
+> :D
+>
+>> +     }
+>> +
+>> +     if (bisect_reset(NULL)) {
+>> +             res = -1;
+>> +             goto finish;
+>
+>                 goto fail;
+>
+>> +     }
+>> +
+>> +     fp = fopen(filename, "r");
+>> +     if (!fp) {
+>> +             res = -1;
+>> +             goto finish;
+>
+>                 goto fail;
+>
+>> +     }
+>> +
+>> +     while (strbuf_getline(&line, fp) != EOF) {
+>> +             int pos = 0;
+>> +             while (pos < line.len) {
+>> +                     pos = get_next_word(line.buf, pos, &word);
+>> +
+>> +                     if (!strcmp(word.buf, "git")) {
+>> +                             continue;
+>> +                     } else if (!strcmp(word.buf, "git-bisect")) {
+>> +                             continue;
+>> +                     } else if (!strcmp(word.buf, "bisect")) {
+>> +                             continue;
+>> +                     } else if (!strcmp(word.buf, "#")) {
+>> +                             break;
+>
+> Maybe it is more robust to check whether word.buf begins with #
+
+Assuming that you meant "# ", yes.
+
+>> +                     }
+>> +
+>> +                     get_terms(terms);
+>> +                     if (check_and_set_terms(terms, word.buf)) {
+>> +                             res = -1;
+>> +                             goto finish;
+>
+>                                 goto fail;
+>
+>> +                     }
+>> +
+>> +                     if (!strcmp(word.buf, "start")) {
+>> +                             struct argv_array argv = ARGV_ARRAY_INIT;
+>> +                             sq_dequote_to_argv_array(line.buf+pos, &argv);
+>> +                             if (bisect_start(terms, 0, argv.argv, argv.argc)) {
+>> +                                     argv_array_clear(&argv);
+>> +                                     res = -1;
+>> +                                     goto finish;
+>
+>                                         goto fail;
+>
+>> +                             }
+>> +                             argv_array_clear(&argv);
+>> +                             break;
+>> +                     }
+>> +
+>> +                     if (one_of(word.buf, terms->term_good,
+>> +                         terms->term_bad, "skip", NULL)) {
+>> +                             if (bisect_write(word.buf, line.buf+pos, terms, 0)) {
+>> +                                     res = -1;
+>> +                                     goto finish;
+>
+>                                         goto fail;
+>
+>> +                             }
+>> +                             break;
+>> +                     }
+>> +
+>> +                     if (!strcmp(word.buf, "terms")) {
+>> +                             struct argv_array argv = ARGV_ARRAY_INIT;
+>> +                             sq_dequote_to_argv_array(line.buf+pos, &argv);
+>> +                             if (bisect_terms(terms, argv.argv, argv.argc)) {
+>> +                                     argv_array_clear(&argv);
+>> +                                     res = -1;
+>> +                                     goto finish;
+>
+>                                         goto fail;
+>
+>> +                             }
+>> +                             argv_array_clear(&argv);
+>> +                             break;
+>> +                     }
+>> +
+>> +                     error(_("?? what are you talking about?"));
+>
+> I know this string is taken from the original source. However, even
+> something like error(_("Replay file contains rubbish (\"%s\")"),
+> word.buf) is more informative.
+
+Okay will change.
+
+>> +                     res = -1;
+>> +                     goto finish;
+>
+>                         goto fail;
+>
+>> +             }
+>> +     }
+>> +     goto finish;
+>
+> +fail:
+> +       res = -1;
+>
+> I just wanted to make finally clear what I was referring to by the
+> "goto fail" trick. :D
+
+I got it. Will update accordingly.
+
+> Also I think the readability could be improved by extracting the body of
+> the outer while loop into an extra function replay_line(). Then most of
+> my suggested "goto fail;" lines simply become "return -1;" :)
+>
+>> @@ -998,6 +1112,13 @@ int cmd_bisect__helper(...)
+>>                       die(_("--bisect-log requires 0 arguments"));
+>>               res = bisect_log();
 >>               break;
->> +     case CHECK_AND_SET_TERMS:
->> +             if (argc != 3)
->> +                     die(_("--check-and-set-terms requires 3 arguments"));
->> +             terms.term_good = xstrdup(argv[1]);
->> +             terms.term_bad = xstrdup(argv[2]);
->> +             res = check_and_set_terms(&terms, argv[0]);
->> +             break;
+>> +     case BISECT_REPLAY:
+>> +             if (argc != 1)
+>> +                     die(_("--bisect-replay requires 1 argument"));
 >
-> Ha! When I reviewed the last patch, I asked you why you changed the code
-> from returning directly from each subcommand to setting res; break; and
-> then return res at the bottom of the function.
->
-> Now I see why this was useful. The two members of "terms" are again
-> leaking memory: you are allocating memory by using xstrdup() but you are
-> not freeing it.
+> I'd keep the (already translated) string from the original source:
+> "No logfile given"
 
-I will take care about freeing the memory.
+Sure
 
-Regards,
+Regards.
 Pranit Bauva
