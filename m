@@ -6,64 +6,69 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7464C1FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 13:56:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF27E1FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 14:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752529AbcLFN4w (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 08:56:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52407 "EHLO cloud.peff.net"
+        id S1752807AbcLFODJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 09:03:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52413 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751798AbcLFN4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 08:56:52 -0500
-Received: (qmail 18246 invoked by uid 109); 6 Dec 2016 13:56:51 -0000
+        id S1752328AbcLFODG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 09:03:06 -0500
+Received: (qmail 18627 invoked by uid 109); 6 Dec 2016 14:03:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 13:56:51 +0000
-Received: (qmail 13516 invoked by uid 111); 6 Dec 2016 13:57:29 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 14:03:01 +0000
+Received: (qmail 13550 invoked by uid 111); 6 Dec 2016 14:03:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 08:57:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 08:56:50 -0500
-Date:   Tue, 6 Dec 2016 08:56:50 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 09:03:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 09:03:00 -0500
+Date:   Tue, 6 Dec 2016 09:03:00 -0500
 From:   Jeff King <peff@peff.net>
-To:     paddor <paddor@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git add -p doesn't honor diff.noprefix config
-Message-ID: <20161206135650.wv5cw3at4tqgpp6o@sigill.intra.peff.net>
-References: <E1D7329A-A54B-4D09-A72A-62ECA8005752@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] GIT-VERSION-GEN: set --abbrev=9 to match auto-scaling
+Message-ID: <20161206140259.lly76xkvsj7su3om@sigill.intra.peff.net>
+References: <22e9dfa0-47fb-d6fd-caf4-c2d87f63f707@ramsayjones.plus.com>
+ <20161205053258.jtnqq64gp5n7vtni@sigill.intra.peff.net>
+ <xmqqbmwq5k7k.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <E1D7329A-A54B-4D09-A72A-62ECA8005752@gmail.com>
+In-Reply-To: <xmqqbmwq5k7k.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 03, 2016 at 07:45:18AM +0100, paddor wrote:
+On Mon, Dec 05, 2016 at 10:01:19AM -0800, Junio C Hamano wrote:
 
-> I set the config diff.noprefix = true because I don't like the a/ and
-> b/ prefixes, which nicely changed the output of `git diff`.
-> Unfortunately, the filenames in the output of `git add --patch` are
-> still prefixed.
+> > That said, I think the right patch may be to just drop --abbrev
+> > entirely.
+> > ...
+> > I think at that point it was a noop, as 7 should have been the default.
+> > And now we probably ought to drop it, so that we can use the
+> > auto-scaling default.
 > 
-> To me, this seems like a bug. Or there's a config option missing.
+> Yeah, I agree.
+> 
+> It does mean that snapshot binaries built out of the same commit in
+> the same repository before and after a repack have higher chances of
+> getting named differently, which may surprise people, but that
+> already is possible with a fixed length if the repacking involves
+> pruning (albeit with lower probabilities), and I do not think it is
+> a problem.
 
-The interactive-add process is a perl script built around plumbing
-commands like diff-tree, diff-files, etc.  Plumbing commands do not
-respect some config options, so that the output remains stable or
-scripts built around them. And diff.noprefix is one of these. So scripts
-have to get the value themselves and decide whether to pass it along to
-the plumbing.
+I think that the number is already unstable, even with --abbrev, as it
+just specifies a minimum. So any operation that creates objects has a
+possibility of increasing the length. Or more likely, two people
+describing the same version may end up with different strings because
+they have different objects in their repositories (e.g., I used to
+carry's trast's git-notes archive of the mailing list which added quite
+a few objects).
 
-In this case, I think there are two steps needed:
-
-  1. Confirm that git-add--interactive.perl can actually handle
-     no-prefix patches. It feeds the patches back to git-apply, which
-     may be a complication (so it may need, for example, to pass a
-     special flag to git-apply).
-
-  2. git-add--interactive.perl needs to parse the config value, and if
-     set, pass the appropriate option to the diff plumbing. This should
-     only be one or two lines; see how $diff_algorithm is handled in
-     that script.
+I agree that having it change over the course of a repack is slightly
+_more_ surprising than those cases, but ultimately the value just isn't
+stable.
 
 -Peff
