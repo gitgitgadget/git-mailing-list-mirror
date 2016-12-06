@@ -2,69 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42A761FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 22:30:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ED591FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 22:38:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752065AbcLFWaL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 17:30:11 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:36780 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751308AbcLFWaK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 17:30:10 -0500
-Received: by mail-qt0-f178.google.com with SMTP id w33so360824907qtc.3
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 14:30:10 -0800 (PST)
+        id S1751563AbcLFWiJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 17:38:09 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:33504 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752288AbcLFWiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 17:38:07 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 3so153958181pgd.0
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 14:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=U1wF3/kgNsQq3I/989wEd5eWtmB7PcAtIFl2i1E+9XQ=;
-        b=LVS2uR5Z0kYAIapln7270K+kDB9cM0OzrVz8+TGuj/U4z0D2YCjuYtESqOlhyFmLn9
-         oqEup7bp/cr/Ki6yYMmwKV2yUfqW7An2NAC/T0Ja3mNSVPuZCwJz9mBzdnDyW50+xZ43
-         0rpBbivYWWBX4BBrvDIVCFyxeULGdZlXA+GPcdiXGxVx+pBJ2MKKetxuPvEdCG0M1+6+
-         TT22TsQWWbHRPuu87wCkxjD0wAD2yCZVpxMRlExHH4DiFI5I5uiRe9dBrkHblAtaKfBk
-         kyKR93Ka9b60Kt2JxHM5/Z9x2rgGn0qmtpuarSOd92RaxyKg8FvJp/BJqsMRVlgb/T6W
-         XcGw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=S8kcXsioYCz42bnNFXQjRqH1/FBP1CSB4XQpKzhwPe4=;
+        b=CY1qo8wphajPTVmQqLWsfCkJDF3IDN9HTiHQTj1BVAIh5SA3cnJ+rI3DUkRCXXsneb
+         pcq/RmTpnjgnLbZKKEzO38n1MCTbcGHOlmdXHChUwW6izs/ci8pZwgs+72RFUIrkAJqt
+         d1Ge3wAcSLVhTL5Uo/PKGsdZ0jAkVPdv2JwG7EkLuHMZ8tamCQ6SmqliBY+1BBOGM7TP
+         pumfatdbvac2+hBn+0OIMVWPVGbCliBdvKG3JXg5yqOb9Zbp8Dca7tAH43a6/gW2z2kI
+         zK1rOvIDr6crl/7O/5ZxL4O35rQ1lryCs+m1oZ3n5auvbLP3eHwSpsxFknTuwFfHfdkR
+         rgkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=U1wF3/kgNsQq3I/989wEd5eWtmB7PcAtIFl2i1E+9XQ=;
-        b=i6hsvpq5q3iZ9Kyd2X0IiGhD8No1pxg1PWm8biSC0Fc4ijPV/urIdnBlClmNgFaSF+
-         2Kn4xGeO0Fh+F44CdXsTDWbbDmRtDQOVF93HK3cb1nFTEVy6+Dc3OzOGR3tzFRW3s1/U
-         BnfwurwjA913SvipvCdx+Ci892dNsLYxk40bFk9TtIbJtC+PU7a9EXIEkskY5J7JrN7K
-         +7fP5Z6XvCXxghwu1YTJPMN0GgH/0emwf0d6U0gLLtx/IXYj9I1qjyled34ar/WipziQ
-         b+/QCv4R9wYEXJj5XaNkUCyvoJqpDrR9LBGtmI8P9f8/AvHZoE1R4OaoxFTweF60xPZF
-         iTyg==
-X-Gm-Message-State: AKaTC02XzUPu+nChhUkYjXj9Y7FAaRE+wDnCUpTGHBQWN6EM0r4bExzt0vDpPd1VoTZlHGbun0z5CUO7TICwXecb
-X-Received: by 10.200.49.235 with SMTP id i40mr64172304qte.170.1481063409584;
- Tue, 06 Dec 2016 14:30:09 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Tue, 6 Dec 2016 14:30:09 -0800 (PST)
-In-Reply-To: <1481061106-117775-17-git-send-email-bmwill@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com> <1481061106-117775-17-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Dec 2016 14:30:09 -0800
-Message-ID: <CAGZ79kaQNQPYudRLEz8-7NoggsM+um2mmhX+9CZQohdUfmp2tQ@mail.gmail.com>
-Subject: Re: [PATCH 16/17] pathspec: small readability changes
-To:     Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=S8kcXsioYCz42bnNFXQjRqH1/FBP1CSB4XQpKzhwPe4=;
+        b=ZwBSG8bPCJhHDULLg86hnBbv8ueSxHeqZUzk5rBTvKrPHcz1K5/+uHe/fYS9TK8zmc
+         Di59Jdoyoms+0KpeVmNSqWz0AWb4spNXkrrFo4CN7Rny8+WZBwJQwuoAl7Ybds4dYw92
+         sJgw+L0vkkgbEFp6hr3zyjK+DK3R7x7J5H7MgC+FO5fWGLHgE8juJD5nkav0D2C9vA7t
+         jeXclDNvbdTpRjdxX+4uSsBMUpHP6Ys9fZx3a2xHeYsBz7EkBySLzbwjoNzmUl0AujR0
+         ZPT8aFiWaDHe+6PxFFGyZkhMh14QbEpDK2G2n2jWSm5+D8lcFk8wcBXG6EQPP64h+6qk
+         0vww==
+X-Gm-Message-State: AKaTC02TpaK1+tpz7dgH3Pl69x7c4Fy9UypL116xCLgPSISDh1m0l2/fZM86iG/c0npK2mg1
+X-Received: by 10.99.122.14 with SMTP id v14mr117109790pgc.31.1481063879234;
+        Tue, 06 Dec 2016 14:37:59 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:e0c5:1a05:7bf2:5496])
+        by smtp.gmail.com with ESMTPSA id 72sm37130347pfw.37.2016.12.06.14.37.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 06 Dec 2016 14:37:58 -0800 (PST)
+Date:   Tue, 6 Dec 2016 14:37:57 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Duy Nguyen <pclouds@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 10/17] pathspec: simpler logic to prefix original
+ pathspec elements
+Message-ID: <20161206223757.GC103573@google.com>
+References: <1481061106-117775-1-git-send-email-bmwill@google.com>
+ <1481061106-117775-11-git-send-email-bmwill@google.com>
+ <CAGZ79kausxZMinZymG8mE4jQ1pi4yJ80WRBUGFhUK7mmfOBCvg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kausxZMinZymG8mE4jQ1pi4yJ80WRBUGFhUK7mmfOBCvg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 6, 2016 at 1:51 PM, Brandon Williams <bmwill@google.com> wrote:
-> A few small changes to improve readability.  This is done by grouping related
-> assignments, adding blank lines, ensuring lines are <80 characters, etc.
+On 12/06, Stefan Beller wrote:
+> On Tue, Dec 6, 2016 at 1:51 PM, Brandon Williams <bmwill@google.com> wrote:
+> 
+> >                 struct strbuf sb = STRBUF_INIT;
+> > -               if (prefixlen && !literal_global) {
+> > -                       /* Preserve the actual prefix length of each pattern */
+> > -                       if (short_magic)
+> > -                               prefix_short_magic(&sb, prefixlen, short_magic);
+> > -                       else if (long_magic_end) {
+> > -                               strbuf_add(&sb, elt, long_magic_end - elt);
+> > -                               strbuf_addf(&sb, ",prefix:%d)", prefixlen);
+> > -                       } else
+> > -                               strbuf_addf(&sb, ":(prefix:%d)", prefixlen);
+> 
+> This fixes the issue with add -p . mentioned somewhere else on the mailing list.
+>
+> > -               }
+> > +
+> > +               /* Preserve the actual prefix length of each pattern */
+> > +               prefix_magic(&sb, prefixlen, element_magic);
+> > +
+> 
+> Did you find a reason why we passed magic literally, i.e. short magic
+> was passed as short magic and long magic as long magic before?
+> 
+> I cannot think of any reason why that would have been the case,
+> but I assume there had to be a reason for that.
 
-The 'etc' sounds a bit sloppy in the commit message.
-Maybe s/etc/and adding proper comments/ ?
+nope, perhaps it was because we technically already have the long magic
+string and the short magic needs to be converted to long magic (as you
+can't mix short and long magic).
 
-Code looks good.
+> Another note: This collides with the attr system refactoring, which I
+> postpone redoing until the submodule checkout is done, so maybe
+> you want to pickup this patch:
+> https://public-inbox.org/git/20161110203428.30512-31-sbeller@google.com/
+> which only relies on one patch prior
+> https://public-inbox.org/git/20161110203428.30512-30-sbeller@google.com/
+
+After looking at those patches I think I do something extremely similar
+in a future patch in this series, the parse_long_magic patch.
+
+-- 
+Brandon Williams
