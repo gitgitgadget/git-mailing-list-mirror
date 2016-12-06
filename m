@@ -2,115 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F2DB1FBB0
-	for <e@80x24.org>; Tue,  6 Dec 2016 00:18:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 347171FBB0
+	for <e@80x24.org>; Tue,  6 Dec 2016 01:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753122AbcLFASc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 19:18:32 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:35612 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753109AbcLFASb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2016 19:18:31 -0500
-Received: by mail-qt0-f179.google.com with SMTP id c47so331610859qtc.2
-        for <git@vger.kernel.org>; Mon, 05 Dec 2016 16:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uIxUrC6Ke/kzKGT4WUmb+M7MeyRLztN7r7Hfy05XGmM=;
-        b=n3y5fTJJdG77I1h5gkdyVhfYBIOxHZ8CxA2uMS/uAcU/aBzuS6GG+/uImft5adHpeG
-         BPam0h8EJk8UR9Q71GNookCkaW8WmbWgYWkvaTvsLwBcAFFVGc6ltBgNpvuSryxr1FVc
-         nkZFGj+rKOFas+Zo/qwJMpuBl5IeijfyMScRjsC4J35xCj8igLZSW1gnYkFditb0HNGj
-         6d5Fzng0BAEUNz/a9zpHADR7c2Sxk+b74arzj4NF3+RdjEE8BMel3+wDiqoBxHLWhB3G
-         lyJ6siMfJjsvonJqaJb2kFrBxgDFU8OqjPA4KIaT6yqO0Tattj4xGnuHfB1rJ+5+DZjL
-         89TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uIxUrC6Ke/kzKGT4WUmb+M7MeyRLztN7r7Hfy05XGmM=;
-        b=DP6Pyv705fdntnHhV/o3P3i8yXhYopCzr74BPu3zBgkp40q8YZqTJX++vXJymkMh7s
-         /w65i67ofy2f8TtxhONj0Wm0YPfEMOtZgcWOElTHKtwh84d7w+bP//b2y1GUi79ec38s
-         AYuR4EHAiOeogyqaMWO4801uYuMZthAxXknxfwYnQ59jE+fvOX1gYbySBTD8afgbhwUR
-         UPMS7NsWm8yh5pPBsmuooHW7Gx3AmIAdk3g8JHVal8OzcUqnxoIPy5Aufe2nrJbGk4vg
-         ywPHotJw8iw8jWnzhJB7gXwtXt6SWAbfPR/kbO+8ukwejq5DEFtp0RxsPylx9TbvQE/N
-         xEPQ==
-X-Gm-Message-State: AKaTC02UJofAqWbxNF0BDxLnjn1GPV3wilfdCk1C3C29kK8VzXF76pg0TkKBSIa4JCByZBa9ORYE8zhzVb5e1ODM
-X-Received: by 10.200.37.221 with SMTP id f29mr58185578qtf.123.1480983510231;
- Mon, 05 Dec 2016 16:18:30 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Mon, 5 Dec 2016 16:18:29 -0800 (PST)
-In-Reply-To: <832dcc3eec0d4237a1e2766e8df690ee@exmbdft7.ad.twosigma.com>
-References: <20161203003022.29797-1-sbeller@google.com> <20161203003022.29797-9-sbeller@google.com>
- <832dcc3eec0d4237a1e2766e8df690ee@exmbdft7.ad.twosigma.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 5 Dec 2016 16:18:29 -0800
-Message-ID: <CAGZ79kaXqOjT_Jd_Q=GkDegbFJjoEQoxHJ-wvvCTkjALndBwFg@mail.gmail.com>
-Subject: Re: [RFC PATCHv2 08/17] update submodules: add depopulate_submodule
-To:     David Turner <David.Turner@twosigma.com>
-Cc:     "bmwill@google.com" <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        "hvoigt@hvoigt.net" <hvoigt@hvoigt.net>,
-        "gitster@pobox.com" <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        id S1752900AbcLFBCU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 20:02:20 -0500
+Received: from mail.nottheoilrig.com ([52.27.13.164]:40664 "EHLO
+        mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752447AbcLFBCM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 20:02:12 -0500
+Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
+        by mail.nottheoilrig.com (Postfix) with ESMTP id 2AA26202AA
+        for <git@vger.kernel.org>; Tue,  6 Dec 2016 01:02:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
+        s=3532ada; t=1480986126;
+        bh=u9eXJ1wYRDfmi6LPfDLdb+wKaJS/1JZVj6643Gv7uvs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=m5wthqhkvlTfo/ei1MemZsN1ttjhJUhRie77Y1EdNYvkFDO3gom8TEDDvyqYzc5rP
+         MFrJA03tblJImlcfMltq3ADyUcF33s0/F4NtbfusuN00rvRuOAFS5beCEiSti+rX2X
+         Au+g+rxYbWxp2zs8MpQGFFagmiRXSRUwLQ+lLRVs=
+Received: from debian (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
+        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
+        Tue,  6 Dec 2016 01:02:05 +0000 (UTC)
+Received: from nottheoilrig by debian with local (Exim 4.88)
+        (envelope-from <nottheoilrig@debian>)
+        id 1cE48y-0005nU-NG; Mon, 05 Dec 2016 18:02:04 -0700
+From:   Jack Bates <bk874k@nottheoilrig.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jack Bates <jack@nottheoilrig.com>
+Subject: [PATCH v3] diff: handle --no-abbrev in no-index case
+Date:   Mon,  5 Dec 2016 18:01:34 -0700
+Message-Id: <20161206010134.21856-1-jack@nottheoilrig.com>
+X-Mailer: git-send-email 2.10.2
+In-Reply-To: <20161205065823.c7qw6xtc2hqk3xgu@sigill.intra.peff.net>
+References: <20161205065823.c7qw6xtc2hqk3xgu@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 5, 2016 at 3:37 PM, David Turner <David.Turner@twosigma.com> wr=
-ote:
->> -----Original Message-----
->> From: Stefan Beller [mailto:sbeller@google.com]
->> Sent: Friday, December 02, 2016 7:30 PM
->> To: bmwill@google.com; David Turner
->> Cc: git@vger.kernel.org; sandals@crustytoothpaste.net; hvoigt@hvoigt.net=
-;
->> gitster@pobox.com; Stefan Beller
->> Subject: [RFC PATCHv2 08/17] update submodules: add depopulate_submodule
->>
->> Implement the functionality needed to enable work tree manipulating
->> commands so that a deleted submodule should not only affect the index
->> (leaving all the files of the submodule in the work tree) but also to
->> remove the work tree of the superproject (including any untracked files)=
-.
->
-> "including any untracked files" bothers me, I think.  Checkout is not usu=
-ally willing to overwrite untracked files; it seems odd to me that it would=
- be willing to do so in the submodule case.  I would be OK if they were bot=
-h untracked and gitignored, I think.
+There are two different places where the --no-abbrev option is parsed,
+and two different places where SHA-1s are abbreviated. We normally parse
+--no-abbrev with setup_revisions(), but in the no-index case, "git diff"
+calls diff_opt_parse() directly, and diff_opt_parse() didn't handle
+--no-abbrev until now. (It did handle --abbrev, however.) We normally
+abbreviate SHA-1s with find_unique_abbrev(), but commit 4f03666 ("diff:
+handle sha1 abbreviations outside of repository, 2016-10-20) recently
+introduced a special case when you run "git diff" outside of a
+repository.
 
-I agree on being bothered, this is one of the things I thought how to solve=
-.
-See the test in "checkout: recurse into submodules if asked to", which
-tests for untracked files and is still marked as a failure.
+setup_revisions() does also call diff_opt_parse(), but not for --abbrev
+or --no-abbrev, which it handles itself. setup_revisions() sets
+rev_info->abbrev, and later copies that to diff_options->abbrev. It
+handles --no-abbrev by setting abbrev to zero. (This change doesn't
+touch that.)
 
-I think to address that issue, I'll add a flag to ok_to_remove_submodule
-which let's you specify which files you care about and which you don't.
+Setting abbrev to zero was broken in the outside-of-a-repository special
+case, which until now resulted in a truly zero-length SHA-1, rather than
+taking zero to mean do not abbreviate. The only way to trigger this bug,
+however, was by running "git diff --raw" without either the --abbrev or
+--no-abbrev options, because 1) without --raw it doesn't respect abbrev
+(which is bizarre, but has been that way forever), 2) we silently clamp
+--abbrev=0 to MINIMUM_ABBREV, and 3) --no-abbrev wasn't handled until
+now.
 
->> +                     warning(_("Cannot remove submodule '%s'\n"
->> +                               "because it (or one of its nested submod=
-ules)
->> has a git \n"
->> +                               "directory in the working tree, which co=
-uld not
->> be embedded\n"
->> +                               "the superprojects git directory
->> automatically."), path);
->
-> What if instead it couldn't run the command because you're out of file de=
-scriptors or pids or memory or something?
->
-> I think this message should be in submodule--helper --embed-git-dirs inst=
-ead, and we should just pass it through here.  Or, perhaps, instead of shel=
-ling out here, we should just call the functions directly?
+The outside-of-a-repository case is one of three no-index cases. The
+other two are when one of the files you're comparing is outside of the
+repository you're in, and the --no-index option.
 
-heh, good point. Will call the function directly.
+Signed-off-by: Jack Bates <jack@nottheoilrig.com>
+---
+ diff.c                                                  | 6 +++++-
+ t/t4013-diff-various.sh                                 | 7 +++++++
+ t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir  | 3 +++
+ t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir | 3 +++
+ t/t4013/diff.diff_--no-index_--raw_dir2_dir             | 3 +++
+ t/t4013/diff.diff_--raw_--abbrev=4_initial              | 6 ++++++
+ t/t4013/diff.diff_--raw_--no-abbrev_initial             | 6 ++++++
+ t/t4013/diff.diff_--raw_initial                         | 6 ++++++
+ 8 files changed, 39 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir
+ create mode 100644 t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir
+ create mode 100644 t/t4013/diff.diff_--no-index_--raw_dir2_dir
+ create mode 100644 t/t4013/diff.diff_--raw_--abbrev=4_initial
+ create mode 100644 t/t4013/diff.diff_--raw_--no-abbrev_initial
+ create mode 100644 t/t4013/diff.diff_--raw_initial
 
->
+diff --git a/diff.c b/diff.c
+index ec87283..84dba60 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3106,7 +3106,8 @@ static const char *diff_abbrev_oid(const struct object_id *oid, int abbrev)
+ 			abbrev = FALLBACK_DEFAULT_ABBREV;
+ 		if (abbrev > GIT_SHA1_HEXSZ)
+ 			die("BUG: oid abbreviation out of range: %d", abbrev);
+-		hex[abbrev] = '\0';
++		if (abbrev)
++			hex[abbrev] = '\0';
+ 		return hex;
+ 	}
+ }
+@@ -3364,6 +3365,7 @@ void diff_setup(struct diff_options *options)
+ 
+ 	options->file = stdout;
+ 
++	options->abbrev = DEFAULT_ABBREV;
+ 	options->line_termination = '\n';
+ 	options->break_opt = -1;
+ 	options->rename_limit = -1;
+@@ -4024,6 +4026,8 @@ int diff_opt_parse(struct diff_options *options,
+ 			    offending, optarg);
+ 		return argcount;
+ 	}
++	else if (!strcmp(arg, "--no-abbrev"))
++		options->abbrev = 0;
+ 	else if (!strcmp(arg, "--abbrev"))
+ 		options->abbrev = DEFAULT_ABBREV;
+ 	else if (skip_prefix(arg, "--abbrev=", &arg)) {
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 566817e..d7b71a0 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -311,6 +311,13 @@ diff --line-prefix=abc master master^ side
+ diff --dirstat master~1 master~2
+ diff --dirstat initial rearrange
+ diff --dirstat-by-file initial rearrange
++# --abbrev and --no-abbrev outside of repository
++diff --raw initial
++diff --raw --abbrev=4 initial
++diff --raw --no-abbrev initial
++diff --no-index --raw dir2 dir
++diff --no-index --raw --abbrev=4 dir2 dir
++diff --no-index --raw --no-abbrev dir2 dir
+ EOF
+ 
+ test_expect_success 'log -S requires an argument' '
+diff --git a/t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir b/t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir
+new file mode 100644
+index 0000000..a71b38a
+--- /dev/null
++++ b/t/t4013/diff.diff_--no-index_--raw_--abbrev=4_dir2_dir
+@@ -0,0 +1,3 @@
++$ git diff --no-index --raw --abbrev=4 dir2 dir
++:000000 100644 0000... 0000... A	dir/sub
++$
+diff --git a/t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir b/t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir
+new file mode 100644
+index 0000000..e0f0097
+--- /dev/null
++++ b/t/t4013/diff.diff_--no-index_--raw_--no-abbrev_dir2_dir
+@@ -0,0 +1,3 @@
++$ git diff --no-index --raw --no-abbrev dir2 dir
++:000000 100644 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 A	dir/sub
++$
+diff --git a/t/t4013/diff.diff_--no-index_--raw_dir2_dir b/t/t4013/diff.diff_--no-index_--raw_dir2_dir
+new file mode 100644
+index 0000000..3cb4ee7
+--- /dev/null
++++ b/t/t4013/diff.diff_--no-index_--raw_dir2_dir
+@@ -0,0 +1,3 @@
++$ git diff --no-index --raw dir2 dir
++:000000 100644 0000000... 0000000... A	dir/sub
++$
+diff --git a/t/t4013/diff.diff_--raw_--abbrev=4_initial b/t/t4013/diff.diff_--raw_--abbrev=4_initial
+new file mode 100644
+index 0000000..c3641db
+--- /dev/null
++++ b/t/t4013/diff.diff_--raw_--abbrev=4_initial
+@@ -0,0 +1,6 @@
++$ git diff --raw --abbrev=4 initial
++:100644 100644 35d2... 9929... M	dir/sub
++:100644 100644 01e7... 10a8... M	file0
++:000000 100644 0000... b1e6... A	file1
++:100644 000000 01e7... 0000... D	file2
++$
+diff --git a/t/t4013/diff.diff_--raw_--no-abbrev_initial b/t/t4013/diff.diff_--raw_--no-abbrev_initial
+new file mode 100644
+index 0000000..c87a125
+--- /dev/null
++++ b/t/t4013/diff.diff_--raw_--no-abbrev_initial
+@@ -0,0 +1,6 @@
++$ git diff --raw --no-abbrev initial
++:100644 100644 35d242ba79ae89ac695e26b3d4c27a8e6f028f9e 992913c5aa0a5476d10c49ed0f21fc0c6d1aedf3 M	dir/sub
++:100644 100644 01e79c32a8c99c557f0757da7cb6d65b3414466d 10a8a9f3657f91a156b9f0184ed79a20adef9f7f M	file0
++:000000 100644 0000000000000000000000000000000000000000 b1e67221afe8461efd244b487afca22d46b95eb8 A	file1
++:100644 000000 01e79c32a8c99c557f0757da7cb6d65b3414466d 0000000000000000000000000000000000000000 D	file2
++$
+diff --git a/t/t4013/diff.diff_--raw_initial b/t/t4013/diff.diff_--raw_initial
+new file mode 100644
+index 0000000..a3e9780
+--- /dev/null
++++ b/t/t4013/diff.diff_--raw_initial
+@@ -0,0 +1,6 @@
++$ git diff --raw initial
++:100644 100644 35d242b... 992913c... M	dir/sub
++:100644 100644 01e79c3... 10a8a9f... M	file0
++:000000 100644 0000000... b1e6722... A	file1
++:100644 000000 01e79c3... 0000000... D	file2
++$
+-- 
+2.10.2
