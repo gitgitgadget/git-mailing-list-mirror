@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8666B20259
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0BE420259
 	for <e@80x24.org>; Tue,  6 Dec 2016 12:55:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752798AbcLFMy3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 07:54:29 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36550 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752298AbcLFMy1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 07:54:27 -0500
-Received: by mail-pg0-f66.google.com with SMTP id x23so19826332pgx.3
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 04:54:27 -0800 (PST)
+        id S1752305AbcLFMye (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 07:54:34 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34371 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752298AbcLFMyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 07:54:31 -0500
+Received: by mail-pg0-f68.google.com with SMTP id e9so19787662pgc.1
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 04:54:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZAiFH6DyF/qbdxNpjSpLzyEFwkk4IYKPws5gdkLm1CI=;
-        b=dWcHgCm8Fkw5I7kQxeP7LZ1bGicxsr8YCCK33/6CWcj2RM8VCh9Yx2V2d5c+eKtYIY
-         t90SJNiTA8EXKymZlXfuWoDli2LRHQp3J4P+czRCVp8yR4jZZrEPD4kOpBwI9hX+Dmsn
-         2JSlTlDuCKENKwQHEdAgtHKfTrpXOjltpYxrbR/hCUNc9L2/ElQmLGT4zGY9UoL5Rz2R
-         svPT6E0TB//nKu747elFdA0u/tXWVtZ8FqdC9dkLlyeK18KUyu/yjhGWml6wi9k+D+oK
-         2nIw1LPSLKzwTi1BmgwVOH7VJTo/Af7oFsobziGFFHbgxOG24sj9IibTRna/l5U3D1yy
-         yLqQ==
+        bh=KjZS9rKDHXtnUGWr6BNGerrTTpQtKBPGY2pRGV9DDuo=;
+        b=vPr1UZeiEvmnmggC+iEJ8VcVkYIXHh2ODpGwxo8O8zqQr54oaCJ0NgMC+mjceE38M0
+         MICbjytAqtMfq4l5MmAqERrNYkLKtBNo+gG47hAWqN5nzu9gPLq9+lmHVDHhA465oMwz
+         7LhXWetBXWovs0ii76sItkUVZUjo0CDGDG4H/lVjDO5L9cw4iffWNdVLkftjtpREfcjH
+         PRf1Hflupyt9ccmRbMZUhbM9WYigchgEFw+Wo0ZVhhXtK82XODml+3JfwVsBIFFcSHM0
+         QzkMP86EBSXERl3i//lxi5qwUxk30DVAZPlQpzZQRWm2i4FxAsgJD4Q6/JPuNYrpy3Zv
+         ZokA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZAiFH6DyF/qbdxNpjSpLzyEFwkk4IYKPws5gdkLm1CI=;
-        b=YijHRKpG1fbsiAn1PVNEyNv7QnM94IDOXNz/tQoQOkqjIliX2XxYjWFLP0Kf4WJjBE
-         Q55MG+K3s+ZfUutxESE/jr4OFosNSxY9BLYEh0RXbAPdDDvkSCC8CTMuXS6TGiCAn3f4
-         geCFy4rJa4OC1qel7aJ5G1/aObxN6B4jJe/bLaifP0wL9kP6q78JmZsawY5t8nD3U2G3
-         shLoUBsW2JCx+QKYlXHdx/vDMqHi4pjG2CgAm8Lv23wXJjE2OMfqRHGb/WFzK8YiErxG
-         2JWRgYOPkfxCl1twrdmXjrUU3omlhE7PpeeMAq2tS72Vwpt06n8oinLXPcH4ndkXD0qW
-         wI3g==
-X-Gm-Message-State: AKaTC00ksGXSCEexT5dZZRt9ubd6fNbf0w8ulgBBshUJzM701Y4hS5ID6aHzwCFULBOcPg==
-X-Received: by 10.98.82.65 with SMTP id g62mr62725108pfb.119.1481028863090;
-        Tue, 06 Dec 2016 04:54:23 -0800 (PST)
+        bh=KjZS9rKDHXtnUGWr6BNGerrTTpQtKBPGY2pRGV9DDuo=;
+        b=hdAtw7OblmqJfoaD1lOq1HNXOuCEq7nvtIFh3wr9Ecq0vJxFF47qb5zzSxGLqQyBJZ
+         tE3zgGHx1Knd9Qmz+BLmsItafgkTOEXgQN+DNj1wYuAqNYISPqTAYvmDtGqHGlFjNJI/
+         Ia5SshnOsWA+P8YP2ke7kwkPJldR8Aa8dR9KFmb7AIDpFIw+Mw1gjd0OglWjTgLVI3XF
+         YGE7/fy3cNUTSLcCa1hSYkQLCYFvBXuzwgkwFSLlf6ABAs9h9HE1Js6hCwVc1PLIuxqk
+         zjGNklpO8C7z2msLuY9xuhUQxQCZISl+rF4KjVuT8eUKAIXaEqMTiJ3zeJHEC0UbzKIN
+         nd6w==
+X-Gm-Message-State: AKaTC03iyryygSxdoQSa2787CaYTHfrUj5p/3LXm9AJ3YEjD5QqadUrfDpRKUU7tvQfXDw==
+X-Received: by 10.99.138.75 with SMTP id y72mr111425252pgd.90.1481028848252;
+        Tue, 06 Dec 2016 04:54:08 -0800 (PST)
 Received: from ash ([115.73.166.29])
-        by smtp.gmail.com with ESMTPSA id x4sm35021044pgc.14.2016.12.06.04.54.20
+        by smtp.gmail.com with ESMTPSA id m19sm34864903pfi.24.2016.12.06.04.54.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Dec 2016 04:54:22 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 06 Dec 2016 19:54:18 +0700
+        Tue, 06 Dec 2016 04:54:07 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 06 Dec 2016 19:54:03 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     rv@rasmusvillemoes.dk, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 6/6] shallow.c: remove useless code
-Date:   Tue,  6 Dec 2016 19:53:39 +0700
-Message-Id: <20161206125339.16803-7-pclouds@gmail.com>
+Subject: [PATCH v2 3/6] shallow.c: make paint_alloc slightly more robust
+Date:   Tue,  6 Dec 2016 19:53:36 +0700
+Message-Id: <20161206125339.16803-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20161206125339.16803-1-pclouds@gmail.com>
 References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
@@ -69,72 +69,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some context before we talk about the removed code.
+paint_alloc() allocates a big block of memory and splits it into
+smaller, fixed size, chunks of memory whenever it's called. Each chunk
+contains enough bits to present all "new refs" [1] in a fetch from a
+shallow repository.
 
-This paint_down() is part of step 6 of 58babff (shallow.c: the 8 steps
-to select new commits for .git/shallow - 2013-12-05). When we fetch from
-a shallow repository, we need to know if one of the new/updated refs
-needs new "shallow commits" in .git/shallow (because we don't have
-enough history of those refs) and which one.
+We do not check if the new "big block" is smaller than the requested
+memory chunk though. If it happens, we'll happily pass back a memory
+region smaller than expected. Which will lead to problems eventually.
 
-The question at step 6 is, what (new) shallow commits are required in
-other to maintain reachability throughout the repository _without_
-cutting our history short? To answer, we mark all commits reachable from
-existing refs with UNINTERESTING ("rev-list --not --all"), mark shallow
-commits with BOTTOM, then for each new/updated refs, walk through the
-commit graph until we either hit UNINTERESTING or BOTTOM, marking the
-ref on the commit as we walk.
+A normal fetch may add/update a dozen new refs. Let's stay on the
+"reasonably extreme" side and say we need 16k refs (or bits from
+paint_alloc's perspective). Each chunk of memory would be 2k, much
+smaller than the memory pool (512k).
 
-After all the walking is done, we check the new shallow commits. If we
-have not seen any new ref marked on a new shallow commit, we know all
-new/updated refs are reachable using just our history and .git/shallow.
-The shallow commit in question is not needed and can be thrown away.
+So, normally, the under-allocation situation should never happen. A bad
+guy, however, could make a fetch that adds more than 4m new/updated refs
+to this code which results in a memory chunk larger than pool size.
+Check this case and abort.
 
-So, the code.
+Noticed-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 
-The loop here (to walk through commits) is basically
+[1] Details are in commit message of 58babff (shallow.c: the 8 steps to
+    select new commits for .git/shallow - 2013-12-05), step 6.
 
-1.  get one commit from the queue
-2.  ignore if it's SEEN or UNINTERESTING
-3.  mark it
-4.  go through all the parents and..
-5a. mark it if it's never marked before
-5b. put it back in the queue
-
-What we do in this patch is drop step 5a because it is not
-necessary. The commit being marked at 5a is put back on the queue, and
-will be marked at step 3 at the next iteration. The only case it will
-not be marked is when the commit is already marked UNINTERESTING (5a
-does not check this), which will be ignored at step 2.
-
-But we don't care about refs marking on UNINTERESTING. We care about the
-marking on _shallow commits_ that are not reachable from our current
-history (and having UNINTERESTING on it means it's reachable). So it's
-ok for an UNINTERESTING not to be ref-marked.
-
-Reported-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- shallow.c | 4 ----
- 1 file changed, 4 deletions(-)
+ shallow.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/shallow.c b/shallow.c
-index beb967e..11f7dde 100644
+index 2512ed3..75e1702 100644
 --- a/shallow.c
 +++ b/shallow.c
-@@ -512,12 +512,8 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
- 			    oid_to_hex(&c->object.oid));
- 
- 		for (p = c->parents; p; p = p->next) {
--			uint32_t **p_refs = ref_bitmap_at(&info->ref_bitmap,
--							  p->item);
- 			if (p->item->object.flags & SEEN)
- 				continue;
--			if (*p_refs == NULL || *p_refs == *refs)
--				*p_refs = *refs;
- 			commit_list_insert(p->item, &head);
- 		}
- 	}
+@@ -447,6 +447,9 @@ static uint32_t *paint_alloc(struct paint_info *info)
+ 	unsigned size = nr * sizeof(uint32_t);
+ 	void *p;
+ 	if (!info->pool_count || info->free + size > info->end) {
++		if (size > POOL_SIZE)
++			die("BUG: pool size too small for %d in paint_alloc()",
++			    size);
+ 		info->pool_count++;
+ 		REALLOC_ARRAY(info->pools, info->pool_count);
+ 		info->free = xmalloc(POOL_SIZE);
 -- 
 2.8.2.524.g6ff3d78
 
