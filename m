@@ -2,99 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABD891FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 18:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97B071FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 18:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751654AbcLFSb2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 13:31:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52637 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751710AbcLFSbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 13:31:25 -0500
-Received: (qmail 4569 invoked by uid 109); 6 Dec 2016 18:24:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 18:24:16 +0000
-Received: (qmail 15674 invoked by uid 111); 6 Dec 2016 18:24:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 13:24:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 13:24:14 -0500
-Date:   Tue, 6 Dec 2016 13:24:14 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com, bburky@bburky.com, jrnieder@gmail.com
-Subject: [PATCH v2] jk/http-walker-limit-redirect rebased to maint-2.9
-Message-ID: <20161206182414.466uotqfufcimpqb@sigill.intra.peff.net>
-References: <1480623959-126129-1-git-send-email-bmwill@google.com>
- <1480623959-126129-5-git-send-email-bmwill@google.com>
- <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
- <20161201230738.GJ54082@google.com>
- <xmqqh96n6x63.fsf@gitster.mtv.corp.google.com>
- <20161201235856.GL54082@google.com>
- <xmqqr35m3zx7.fsf@gitster.mtv.corp.google.com>
- <20161206135113.i7nlr45vg7uzgfcn@sigill.intra.peff.net>
- <xmqq60mx2bbi.fsf@gitster.mtv.corp.google.com>
- <20161206181008.yaz2md3343pukaov@sigill.intra.peff.net>
+        id S1752700AbcLFSb6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 13:31:58 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58418 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752340AbcLFSb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 13:31:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB4F2540F0;
+        Tue,  6 Dec 2016 13:29:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Yulkz1H7nOsw7p/mf11Gyem63RI=; b=hYeb8s
+        q5Ro5nwRAx0/eLgbrGcCDVsYyUBKJGskI8rFycrrgKzPIhO8DmnE0jjG588m9TIx
+        x+zz7xOpQFM2PhwHR61IZ40tPlfCAX1DopSnRWh0UL67Us5SBV28+iwbh8rRkYIn
+        hsQBIcyadGiUBAI/u2im3P7p6YQGrbHgHE8ew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZCFIBZV2AKj4FdhndP7MpG9/qqRH6HZb
+        1zn1mZYMNQEkLocLyz8VWVYp7SXQzJfp5f0P12sqRr/8Yw5BCXQ6BDhkcf+szeXM
+        M2BZMyT45U9TIliEAY0vkQgSfkyd6xhAA4oo//Y6qbB+srco2O7TZ7qVOCql+gdl
+        4VU0bG8wy6Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D1897540EF;
+        Tue,  6 Dec 2016 13:29:29 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 433DA540ED;
+        Tue,  6 Dec 2016 13:29:29 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] clone,fetch: explain the shallow-clone option a little more clearly
+References: <20161204220359.30807-1-alexhenrie24@gmail.com>
+        <xmqq37i25iy5.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8Cy+iWw4NhR7B_fZhBMMYt2QxdMeFsC=++LLnrTLNWfKw@mail.gmail.com>
+Date:   Tue, 06 Dec 2016 10:29:28 -0800
+In-Reply-To: <CACsJy8Cy+iWw4NhR7B_fZhBMMYt2QxdMeFsC=++LLnrTLNWfKw@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 6 Dec 2016 16:34:11 +0700")
+Message-ID: <xmqqshq029o7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20161206181008.yaz2md3343pukaov@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EC998618-BBE1-11E6-8CD3-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 06, 2016 at 01:10:08PM -0500, Jeff King wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> > I think I merged yours and then Brandon's on jch/pu branches in that
-> > order, and the conflict resolution should look OK.
-> > 
-> > I however forked yours on v2.11.0-rc1, which would need to be
-> > rebased to one of the earlier maintenance tracks, before we can
-> > merge it to 'next'.
-> 
-> Yeah, I built it on top of master.
-> 
-> It does depend on some of the http-walker changes Eric made a few months
-> ago. In particular, 17966c0a6 (http: avoid disconnecting on 404s for
-> loose objects, 2016-07-11) added some checks against the HTTP status
-> code, and my series modifies the checks (mostly so that ">= 400" becomes
-> ">= 300").
-> 
-> Rebasing on maint-2.9 means omitting those changes. That preserves the
-> security properties, but means that the error handling is worse when we
-> see an illegal redirect. That may be OK, though.
-> 
-> Since the resolution is to omit the changes entirely from my series,
-> merging up to v2.11 wouldn't produce any conflicts. We'd need to have a
-> separate set of patches adding those changes back in.
+> On Tue, Dec 6, 2016 at 1:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I however offhand do not think the feature can be used to make the
+>> repository shallower
+>
+> I'm pretty sure it can,...
 
-This actually turned out to be pretty easy. The final patch from my
-original series is the one that tweaks the error-handling from
-17966c0a6. The rest of them are _almost_ untouched, except that one of
-the error-handling tweaks gets bumped to the final patch.
+I wrote my message after a short local testing, but it is very
+possible I botched it and reached a wrong conclusion above.
 
-So here's a resend of the patches, rebased on your maint-2.9 branch.
-Patches 1-5 should be applied directly there.
+If we can use the command to make it shallower, then the phrase
+"deepen" would probably be what we need to be fixing in this patch:
 
-On maint-2.10, you can merge up maint-2.9, and then apply patch 6.
+>  	OPT_STRING_LIST(0, "shallow-exclude", &option_not, N_("revision"),
+> -			N_("deepen history of shallow clone by excluding rev")),
+> +			N_("deepen history of shallow clone, excluding rev")),
 
-Hopefully that makes sense, but I've pushed branches
-jk/maint-X-http-redirect to https://github.com/peff/git that show the
-final configuration (and a diff of jk/maint-2.10-http-redirect shows the
-outcome is identical to applying the original series on top of 2.10).
+Perhaps a shorter version of:
 
-Merging up to 2.11 should be trivial.
+    Adjust the depth of shallow clone so that commits that are
+    decendants of the named rev are made available, while commits
+    that are ancestors of the named rev are made beyond reach.
 
-  [1/6]: http: simplify update_url_from_redirect
-  [2/6]: http: always update the base URL for redirects
-  [3/6]: remote-curl: rename shadowed options variable
-  [4/6]: http: make redirects more obvious
-  [5/6]: http: treat http-alternates like redirects
-  [6/6]: http-walker: complain about non-404 loose object errors
+or something like that.  Here is my (somewhat botched) attempt:
 
--Peff
+    Adjust shallow clone's history to be cut at the rev
+
+
