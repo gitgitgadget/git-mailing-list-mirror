@@ -6,38 +6,38 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4746F1FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 16:54:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BCDE1FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 16:56:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932163AbcLFQyL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 11:54:11 -0500
-Received: from mail.nottheoilrig.com ([52.27.13.164]:43340 "EHLO
+        id S1752524AbcLFQ42 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 11:56:28 -0500
+Received: from mail.nottheoilrig.com ([52.27.13.164]:43358 "EHLO
         mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932141AbcLFQyK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 11:54:10 -0500
+        with ESMTP id S1751845AbcLFQ41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 11:56:27 -0500
 Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
-        by mail.nottheoilrig.com (Postfix) with ESMTP id CA93D20290
-        for <git@vger.kernel.org>; Tue,  6 Dec 2016 16:54:08 +0000 (UTC)
+        by mail.nottheoilrig.com (Postfix) with ESMTP id BDB4720290
+        for <git@vger.kernel.org>; Tue,  6 Dec 2016 16:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
-        s=3532ada; t=1481043248;
-        bh=u9eXJ1wYRDfmi6LPfDLdb+wKaJS/1JZVj6643Gv7uvs=;
+        s=3532ada; t=1481043386;
+        bh=6YjvgaojwcshqYYKC+hBK0j/wS8NF2xj65CekH1ru1s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=yzZ3DAuCFrnPIsy90vFIpfet3PwQ3Ku1bJNvMIglUYDpcuaBO8gZPPPq8/Cp9JJ9l
-         tj3S88eLJEbbiI03re7itQuiXyo+H+sRkBPhTMONg/SHSAkEo8lyCJQMZ1Z1yCyZd/
-         oAXvdNOVvD2qnYq6tA4pbWfmAvEOhsIS+1BsA5fw=
+        b=hF0dPevfGZcReg7CwZ68cKati1uLHMprBNPfcXksBKJT+SKe0uPM+AybtTT0Zuxiv
+         K+IXAx9xKjeSaOqDPvvQaqFp0sgBnZaDP4GAikBiDj8ISD0W68I0RQeOm6LlXBwVsx
+         ACxZFFC4Y96ha5klZ8k+8J5saKGv+rPpQFZO7GSA=
 Received: from debian (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
         by mail.nottheoilrig.com (Postfix) with ESMTPSA;
-        Tue,  6 Dec 2016 16:54:08 +0000 (UTC)
+        Tue,  6 Dec 2016 16:56:26 +0000 (UTC)
 Received: from nottheoilrig by debian with local (Exim 4.88)
         (envelope-from <nottheoilrig@debian>)
-        id 1cEJ0J-0005Vs-Ee; Tue, 06 Dec 2016 09:54:07 -0700
+        id 1cEJ2X-00060p-Kc; Tue, 06 Dec 2016 09:56:25 -0700
 From:   Jack Bates <bk874k@nottheoilrig.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jack Bates <jack@nottheoilrig.com>
 Subject: [PATCH v4] diff: handle --no-abbrev in no-index case
-Date:   Tue,  6 Dec 2016 09:53:46 -0700
-Message-Id: <20161206165346.20880-1-jack@nottheoilrig.com>
+Date:   Tue,  6 Dec 2016 09:56:14 -0700
+Message-Id: <20161206165614.22921-1-jack@nottheoilrig.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161206010134.21856-1-jack@nottheoilrig.com>
 References: <20161206010134.21856-1-jack@nottheoilrig.com>
@@ -125,14 +125,14 @@ index ec87283..84dba60 100644
  		options->abbrev = DEFAULT_ABBREV;
  	else if (skip_prefix(arg, "--abbrev=", &arg)) {
 diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 566817e..d7b71a0 100755
+index 566817e..d09acfe 100755
 --- a/t/t4013-diff-various.sh
 +++ b/t/t4013-diff-various.sh
 @@ -311,6 +311,13 @@ diff --line-prefix=abc master master^ side
  diff --dirstat master~1 master~2
  diff --dirstat initial rearrange
  diff --dirstat-by-file initial rearrange
-+# --abbrev and --no-abbrev outside of repository
++# No-index --abbrev and --no-abbrev
 +diff --raw initial
 +diff --raw --abbrev=4 initial
 +diff --raw --no-abbrev initial
