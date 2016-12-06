@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C7B820259
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71AC92079F
 	for <e@80x24.org>; Tue,  6 Dec 2016 12:55:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752747AbcLFMyA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 07:54:00 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35533 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751686AbcLFMx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 07:53:59 -0500
-Received: by mail-pg0-f67.google.com with SMTP id p66so19825871pga.2
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 04:53:59 -0800 (PST)
+        id S1752475AbcLFMyV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 07:54:21 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34122 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752657AbcLFMyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 07:54:18 -0500
+Received: by mail-pf0-f193.google.com with SMTP id y68so18720760pfb.1
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 04:54:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PFL7uxR03C4elFIHG7/F8w6EmU1p1THZm2PH2jAvsCo=;
-        b=RfdBHGn7l5hB1O4+6EXoQCBp2o4bEoPPTmdv3iRRoqZbs6l1ROL8wfjAc2A9LYT7kK
-         XuNAzkQtO61rWIB/Fowbf6i8CIfk5ZiYorljKwew2EdTbyPo3pw6FZFQuM6Vvvz7gWNa
-         XKZ0Q4IaOCuJxGbn6LqPxcf2zxJIp1w1/qcsPd114Wrtm/OVqaMODQhKC2LGDExBwTrX
-         8fRPUznBww81F9YDxMbvwmbbb3gje754pCQ5593CSkhtLzj/JHEfjV5Uy5AwMIaVv88n
-         uydB2C+gDXDB5aIoN/6w5/RGcYPJLYFoQG9geFv3jZp4LSMOK/aRnh+aE1mvxaASsaPD
-         6K5A==
+        bh=fkV95VMsQL3jeBBv3zaAuDiT+YinCNePNGRhwzmtmQw=;
+        b=ja/9OCJhIfgU5uxHl2ScmEixxlKyXKaxP1ubQC4GZMxZQiTzIHvz5Lrb1vbp5nzd58
+         rRFH0/7sSqGj/F+tQ5/EPKb283iNJDKJLwoXHWwSJk2cCqdy/sx81Gt+GNE2B6ZvhllR
+         t2xrh/YP0/rvPlNDpj7MjvqB4xK+BnCARcqIheGHqEc6QS5eBCnHDcQxbd3GV+ckRUO5
+         oY83SD0b6FwqKsOpjW5B7Ey1mGie4dB7UclkbC3BKL+fZ0EBPH5hjPR8B5/YZ7NexRkT
+         AdIr8NY0fpusV/03xpTVlZ+jG5BtWXCeCK7eAQQgDW/KAyCLYcU2zWx4DUm1lRezUfp0
+         kcmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PFL7uxR03C4elFIHG7/F8w6EmU1p1THZm2PH2jAvsCo=;
-        b=D9nylAnGP+OXPIKHG4d9+UzRh7oRglJCj7/kcbIk3lQQWo91ock9g1qtTy8T6uyf0i
-         v9sJNmVAsG5+ESkaX96en8o0sLxx16FjEx8n/oHQC6ySSsyWo6pGLGBx4jQL1sbKwILg
-         naRQQoVqbRE5cKeq20OXUf+diGQ/G0kN77fthl3RjIyZAZPRoeXktBGy3j7CbWia89on
-         OtmBTiqEytYqxqHPGKRlZYjAfy8ImZU25UIjNmhiJNKYU7U/RHWZtB1dTZP9uuz8WM4I
-         2zsm3RZ2ujq2rXfHkGsR7PSWRLGMXMIa1mlKv8kHepY/s+0OIyleG5whsx36g2bDMNIa
-         t4dA==
-X-Gm-Message-State: AKaTC00BIzFn9uvJhsveeM4aGAEwCGSnn2XgYlIn7L0ocZBR9/NMvBtS3kRignB3EGq1og==
-X-Received: by 10.84.218.72 with SMTP id f8mr136698531plm.141.1481028838714;
-        Tue, 06 Dec 2016 04:53:58 -0800 (PST)
+        bh=fkV95VMsQL3jeBBv3zaAuDiT+YinCNePNGRhwzmtmQw=;
+        b=Dib+r2WjnpLGk7Z9oGASnqdZn+ZtJ2dyGkXJCi3vspNJPmWgCXLrMYhiGasnXX1lME
+         wwZeHZikEZP2ztKJa9HDWeKC7fjxvs2poMLtZNs/GOsyw//Xhd5CF3rwPWdZx3m43JVn
+         BNaM63WCj+MHX4BQDsMk0Id5H25avIH10P01W4y3wDVVX1QElpvge8mzJC0jNUBPViML
+         Yr/tSK4jLkOthXFZgIrGEmKhmIBUFp9ZPWYctNRR6g4QsKi/vMyio94eYhWSPceZ2yjz
+         A6i/uHtdQ+PkHiGQn/dd1Rbbvx8nv3OGp1SvCDY+JQlsBKcIUU9y2tEKn/gDrJVT1vZI
+         G9Lw==
+X-Gm-Message-State: AKaTC03JurIcFDjIOg1hvWixtH8Z6A5C6P9UsI/pQ2W0FPKp/UMXSDshTdIz790qgitX8g==
+X-Received: by 10.84.164.162 with SMTP id w31mr136599553pla.9.1481028857879;
+        Tue, 06 Dec 2016 04:54:17 -0800 (PST)
 Received: from ash ([115.73.166.29])
-        by smtp.gmail.com with ESMTPSA id p25sm34900271pfk.20.2016.12.06.04.53.55
+        by smtp.gmail.com with ESMTPSA id y15sm34946752pgc.43.2016.12.06.04.54.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Dec 2016 04:53:57 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 06 Dec 2016 19:53:52 +0700
+        Tue, 06 Dec 2016 04:54:17 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 06 Dec 2016 19:54:13 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     rv@rasmusvillemoes.dk, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 1/6] shallow.c: rename fields in paint_info to better express their purposes
-Date:   Tue,  6 Dec 2016 19:53:34 +0700
-Message-Id: <20161206125339.16803-2-pclouds@gmail.com>
+Subject: [PATCH v2 5/6] shallow.c: bit manipulation tweaks
+Date:   Tue,  6 Dec 2016 19:53:38 +0700
+Message-Id: <20161206125339.16803-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20161206125339.16803-1-pclouds@gmail.com>
 References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
@@ -69,60 +69,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-paint_alloc() is basically malloc(), tuned for allocating a fixed number
-of bits on every call without worrying about freeing any individual
-allocation since all will be freed at the end. It does it by allocating
-a big block of memory every time it runs out of "free memory". "slab" is
-a poor choice of name, at least poorer than "pool".
+From: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 
+First of all, 1 << 31 is technically undefined behaviour, so let's just
+use an unsigned literal.
+
+If i is 'signed int' and gcc doesn't know that i is positive, gcc
+generates code to compute the C99-mandated values of "i / 32" and "i %
+32", which is a lot more complicated than simple a simple shifts/mask.
+
+The only caller of paint_down actually passes an "unsigned int" value,
+but the prototype of paint_down causes (completely well-defined)
+conversion to signed int, and gcc has no way of knowing that the
+converted value is non-negative. Just make the id parameter unsigned.
+
+In update_refstatus, the change in generated code is much smaller,
+presumably because gcc is smart enough to see that i starts as 0 and is
+only incremented, so it is allowed (per the UD of signed overflow) to
+assume that i is always non-negative. But let's just help less smart
+compilers generate good code anyway.
+
+Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- shallow.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ shallow.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/shallow.c b/shallow.c
-index 4d0b005..8100dfd 100644
+index 719f699..beb967e 100644
 --- a/shallow.c
 +++ b/shallow.c
-@@ -434,9 +434,9 @@ define_commit_slab(ref_bitmap, uint32_t *);
- struct paint_info {
- 	struct ref_bitmap ref_bitmap;
- 	unsigned nr_bits;
--	char **slab;
-+	char **pools;
- 	char *free, *end;
--	unsigned slab_count;
-+	unsigned pool_count;
- };
+@@ -467,7 +467,7 @@ static uint32_t *paint_alloc(struct paint_info *info)
+  * all walked commits.
+  */
+ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+-		       int id)
++		       unsigned int id)
+ {
+ 	unsigned int i, nr;
+ 	struct commit_list *head = NULL;
+@@ -479,7 +479,7 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+ 	if (!c)
+ 		return;
+ 	memset(bitmap, 0, bitmap_size);
+-	bitmap[id / 32] |= (1 << (id % 32));
++	bitmap[id / 32] |= (1U << (id % 32));
+ 	commit_list_insert(c, &head);
+ 	while (head) {
+ 		struct commit_list *p;
+@@ -653,11 +653,11 @@ static int add_ref(const char *refname, const struct object_id *oid,
  
- static uint32_t *paint_alloc(struct paint_info *info)
-@@ -444,11 +444,11 @@ static uint32_t *paint_alloc(struct paint_info *info)
- 	unsigned nr = (info->nr_bits + 31) / 32;
- 	unsigned size = nr * sizeof(uint32_t);
- 	void *p;
--	if (!info->slab_count || info->free + size > info->end) {
--		info->slab_count++;
--		REALLOC_ARRAY(info->slab, info->slab_count);
-+	if (!info->pool_count || info->free + size > info->end) {
-+		info->pool_count++;
-+		REALLOC_ARRAY(info->pools, info->pool_count);
- 		info->free = xmalloc(COMMIT_SLAB_SIZE);
--		info->slab[info->slab_count - 1] = info->free;
-+		info->pools[info->pool_count - 1] = info->free;
- 		info->end = info->free + COMMIT_SLAB_SIZE;
- 	}
- 	p = info->free;
-@@ -624,9 +624,9 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
- 		post_assign_shallow(info, &pi.ref_bitmap, ref_status);
- 
- 	clear_ref_bitmap(&pi.ref_bitmap);
--	for (i = 0; i < pi.slab_count; i++)
--		free(pi.slab[i]);
--	free(pi.slab);
-+	for (i = 0; i < pi.pool_count; i++)
-+		free(pi.pools[i]);
-+	free(pi.pools);
- 	free(shallow);
+ static void update_refstatus(int *ref_status, int nr, uint32_t *bitmap)
+ {
+-	int i;
++	unsigned int i;
+ 	if (!ref_status)
+ 		return;
+ 	for (i = 0; i < nr; i++)
+-		if (bitmap[i / 32] & (1 << (i % 32)))
++		if (bitmap[i / 32] & (1U << (i % 32)))
+ 			ref_status[i]++;
  }
  
 -- 
