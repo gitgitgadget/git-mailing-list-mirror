@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD8651FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 21:53:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 657E91FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 21:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752332AbcLFVxS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 16:53:18 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:36633 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751139AbcLFVxM (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752426AbcLFVxU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 16:53:20 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36633 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751254AbcLFVxM (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Dec 2016 16:53:12 -0500
-Received: by mail-pg0-f48.google.com with SMTP id f188so153039615pgc.3
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 13:52:20 -0800 (PST)
+Received: by mail-pf0-f169.google.com with SMTP id 189so72544504pfz.3
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 13:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=shEiNlrXEHlBzb2mZmj2tLpRHHgcEma8qB9EFHlO3JA=;
-        b=iS1kTGTPY6VghSWaV75i/VJ41SPsjqQumMdaTUJ4zQSZBcObR8ySqqaRU4CC8bPXTN
-         zgfqWWQdKK5pcVx3y/rArBOcTxqXB2ApEZ4UfgenC/ludTQsdwj1LWuYHOGnENduZXel
-         /8rv++9ZTHJ4cqyQ+xmeCbVW76RwQlrP7UZnm1Am07MD0l4K32kL0SMhm8oTeUTjzo4P
-         j1E/0BvO+lMjN7H73KHzNk7uDAq2cI8SduzqXZymjdZXkwJNi6CLQZB0GfFgqBwBTZlY
-         GnB0Q8wxawy/nlWoC60tCCRt9YAWYQZ06Zxk4DhBfQVXVeTpiysJEJimQKrgeHuLUHBy
-         fGLA==
+        bh=QRn7T0NYJ1gAS13Waao79J1P+HZXJ0c8PEiWTsz2nWg=;
+        b=ip5lv3u9jFF4O5yT6OLXbmW5cBccDFpv8jugOXzuhHWb773yd6Zos9zO67+6ERJtn2
+         bLcbx+yQBMAFiYa5ceJwoPFeB6QzPs/rwaU1UQ2sg6Hcpp+SZsZWX6z8hwNJpCZffgtk
+         W+4yflsk1Ztvykb5Un3p2175lKJJMk7Dtsx7xLBH+8I6Qp/Lf5cZhGMCwFwWqiLRKwY6
+         YCLPE1GDSrBIRmH1vHie1EAcpoWXlY+zUF5/9DKoGtrLqCAQ4nOPrCIHo7+uAxK+O9SU
+         Lur31ORY5AGaJmpnRDcuJMRRwt/Av+4a6xaOQ1AbNMCra98ArmWCabJkB4Q8P1WBBttn
+         Wijg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=shEiNlrXEHlBzb2mZmj2tLpRHHgcEma8qB9EFHlO3JA=;
-        b=WMH6HTsSBEeLM6z1eVk620ILbvPS87Ak7rSDZ/tPQ2fGLg4HphqZaQqIrUjWVk9BSn
-         68IwQd3cXC8f4oPrRrfMRjry8Z2AtqGm3cWMvEZgk0YJ+E+0JtKNjQVi4EkWrduXL9+K
-         2vUg+NlZnKnsWCZ4IWy+3AOFVID4FzaOchp+GnmT65tGvoFf0kAqi8KGdtBSWvoAdqMl
-         PBkyk/zsClgGr0Uq5ALjUUH0/2bhEzwztoRsNfDtbpYYvQDsI+RIKvFO5xFMJaXe/y1X
-         Q0tXdtko5Ts8Vh96D27FIt/dv/e2iZ38+XssT2o57KRTs7Eeh9brNyy8QzXT5vrtbxNJ
-         FS3Q==
-X-Gm-Message-State: AKaTC038tjyx2we5bM4DjPG9k5YmeKzXPfW+S5aZAtvVTA7yEMuyBWyS+E/WLIbd2YcbwMAL
-X-Received: by 10.99.45.134 with SMTP id t128mr116335854pgt.86.1481061140146;
-        Tue, 06 Dec 2016 13:52:20 -0800 (PST)
+        bh=QRn7T0NYJ1gAS13Waao79J1P+HZXJ0c8PEiWTsz2nWg=;
+        b=FoINeqxAD3sf7vLRNUwR6mL6SRAE+7Z3BG7qEsb5dn0HlFh6YWKGzoXNARPRYu2Ltl
+         UaexNlcvhTvIW8AHVkPzEHaM7T+UoMAhrhZWNa9W1PCwWGMejK1EXSc7fhiCCYLn5pA7
+         E4p0nxbsUohbCj/0FQOnGxw2LkzBt1PBMaDNJrlb+lam8Yn30c7q/n2v5B1a3HpYmtgl
+         4VMGA8U+OYZQCiqdZWzVzfhb+4UZjqpWoLlKPpMlPvpRutQQQD9wx+ZX97KZDB73mX66
+         Wkt587PpUPtpV7qnFZyI6u1zeLVYQRgth5iVzcx/oDEUuuJCRe37QiCUA2EEyD+BhsoD
+         LOVg==
+X-Gm-Message-State: AKaTC02XOwEKD2MHr+pwQahPnfh3+A7bczyZ9rBja/++EUYoi+FHfBuNhs15FuQ84DHpiIHC
+X-Received: by 10.84.213.130 with SMTP id g2mr139640663pli.43.1481061141357;
+        Tue, 06 Dec 2016 13:52:21 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id y89sm36940228pfk.83.2016.12.06.13.52.18
+        by smtp.gmail.com with ESMTPSA id y89sm36940228pfk.83.2016.12.06.13.52.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 Dec 2016 13:52:19 -0800 (PST)
+        Tue, 06 Dec 2016 13:52:20 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, pclouds@gmail.com, gitster@pobox.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 02/17] dir: convert create_simplify to use the pathspec struct interface
-Date:   Tue,  6 Dec 2016 13:51:31 -0800
-Message-Id: <1481061106-117775-3-git-send-email-bmwill@google.com>
+Subject: [PATCH 03/17] dir: convert fill_directory to use the pathspec struct interface
+Date:   Tue,  6 Dec 2016 13:51:32 -0800
+Message-Id: <1481061106-117775-4-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1481061106-117775-1-git-send-email-bmwill@google.com>
 References: <1481061106-117775-1-git-send-email-bmwill@google.com>
@@ -60,64 +60,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'create_simplify()' to use the pathspec struct interface from
-using the '_raw' entry in the pathspec.
+Convert 'fill_directory()' to use the pathspec struct interface from
+using the '_raw' entry in the pathspec struct.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- dir.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/dir.c b/dir.c
-index bfa8c8a..7df292b 100644
+index 7df292b..8730a4f 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1787,25 +1787,24 @@ static int cmp_name(const void *p1, const void *p2)
- 	return name_compare(e1->name, e1->len, e2->name, e2->len);
+@@ -188,7 +188,8 @@ int fill_directory(struct dir_struct *dir, const struct pathspec *pathspec)
+ 	len = common_prefix_len(pathspec);
+ 
+ 	/* Read the directory and prune it */
+-	read_directory(dir, pathspec->nr ? pathspec->_raw[0] : "", len, pathspec);
++	read_directory(dir, pathspec->nr ? pathspec->items[0].match : "",
++		       len, pathspec);
+ 	return len;
  }
  
--static struct path_simplify *create_simplify(const char **pathspec)
-+static struct path_simplify *create_simplify(const struct pathspec *pathspec)
- {
--	int nr, alloc = 0;
-+	int i;
- 	struct path_simplify *simplify = NULL;
- 
--	if (!pathspec)
-+	if (!pathspec || !pathspec->nr)
- 		return NULL;
- 
--	for (nr = 0 ; ; nr++) {
-+	ALLOC_ARRAY(simplify, pathspec->nr + 1);
-+	for (i = 0; i < pathspec->nr; i++) {
- 		const char *match;
--		ALLOC_GROW(simplify, nr + 1, alloc);
--		match = *pathspec++;
--		if (!match)
--			break;
--		simplify[nr].path = match;
--		simplify[nr].len = simple_length(match);
-+		match = pathspec->items[i].match;
-+		simplify[i].path = match;
-+		simplify[i].len = pathspec->items[i].nowildcard_len;
- 	}
--	simplify[nr].path = NULL;
--	simplify[nr].len = 0;
-+	simplify[i].path = NULL;
-+	simplify[i].len = 0;
-+
- 	return simplify;
- }
- 
-@@ -2036,7 +2035,7 @@ int read_directory(struct dir_struct *dir, const char *path, int len, const stru
- 	 * subset of positive ones, which has no impacts on
- 	 * create_simplify().
- 	 */
--	simplify = create_simplify(pathspec ? pathspec->_raw : NULL);
-+	simplify = create_simplify(pathspec);
- 	untracked = validate_untracked_cache(dir, len, pathspec);
- 	if (!untracked)
- 		/*
 -- 
 2.8.0.rc3.226.g39d4020
 
