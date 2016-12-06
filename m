@@ -2,144 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CAEE1FBB0
-	for <e@80x24.org>; Tue,  6 Dec 2016 02:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15FAD1FBB0
+	for <e@80x24.org>; Tue,  6 Dec 2016 03:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751451AbcLFCU4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Dec 2016 21:20:56 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:46240
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751223AbcLFCUu (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Dec 2016 21:20:50 -0500
-X-Greylist: delayed 1108 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Dec 2016 21:20:50 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1480989740;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=TNWBrTwUMO6VaVMmWH5IazDUIzY0E8GEbfOmrg2Pivo=;
-        b=Xv0Q2ipk+2tsfFm7kq36YzrkflkauiwUXHP4MMQstkKxOcmqiYIRqelMy+qgcr+I
-        eT7j9pttHEDOLkAd6fRTdx0j4DONVMr9L6pKr3mwPo/wObGpCqgxFES75foF9EDsTiV
-        OrgLW7v0+BuGo2yRO4cEW0XmI1T1QKyVRjusKuZg=
-From:   Nuno Subtil <subtil@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020158d1de0e71-ac079bb9-bc7d-4fb7-9ff7-60fd6955116b-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] git-p4: add p4 shelf support
+        id S1751443AbcLFDQx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Dec 2016 22:16:53 -0500
+Received: from mout.web.de ([212.227.15.4]:64897 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751161AbcLFDQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2016 22:16:52 -0500
+Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmLK6-1cmszf0Kwc-00ZtxZ; Tue, 06
+ Dec 2016 04:09:57 +0100
+Subject: Re: git 2.11.0 error when pushing to remote located on a windows
+ share
+To:     thomas.attwood@stfc.ac.uk, peff@peff.net
+References: <AABB04BF1441D24CB4E9FCF46394F17D666F34E1@exchmbx01>
+ <20161202223749.2n7wa37e5w6446uv@sigill.intra.peff.net>
+ <20161204080914.GB2415@tb-raspi>
+ <AABB04BF1441D24CB4E9FCF46394F17D666F3805@exchmbx01>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <91983cb6-eed8-987d-bdda-c0fe55a9d139@web.de>
+Date:   Tue, 6 Dec 2016 04:09:52 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
+ Gecko/20100101 Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 6 Dec 2016 02:02:20 +0000
-X-SES-Outgoing: 2016.12.06-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+In-Reply-To: <AABB04BF1441D24CB4E9FCF46394F17D666F3805@exchmbx01>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:rVeanKXcruc67MJ5pwIUTDx1WFOvBATErBOPPGVbnEEiVBFzk+L
+ 0umOJJddT090yusRqOIMb+Np5NmwqPuifziNgzXaxLspmzZMkbI57RoIiRyPvtIY/PGIGMJ
+ 6WHy1mkxAY2btBemR2HeODZLbr6fzE0fHkdq8NPwCi/suwFja/5mBTaeIOtqpUUGhXi+TQB
+ L+/WG/Vqirm7iFpJvI0Tw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jAH7eTg5Zp8=:5xcmEcTKw5Ktl4HpXSCS2K
+ MEGxGvSMrAeLhwT474+U4qQZ847fIEmYLw53TCVlrBws/1ki1YkQKngpzNeFAi4xB2W3nqGGe
+ 8HR5iv6qN/hFxRvz2XXi72R1n4G+d9yKiKXI5g3xH1mPSCcOG/Xo9kEuJtxE/u/Md/GTikf6P
+ XA2oSXBK8UddB4BXuUi8ItSPTdwJVHujqjFPDNWmF7tHLmzRwTMkfF0vt+QkkUMXra61wAFMP
+ n4l0IAQzR8fAxZdF+Tu0D1HONu6yJbhybN6UU1REi+SF7TXT1x0vRthak/UvI2toUypQoKzg9
+ FiOpQMYF+EjZJOLgMgd0NNZX0pyvZRToyXKxbnVkhGhpzAhIg0lmfQXhW23xeIkqkus4TL/hn
+ PMBS56ztr0L5dNiPAxfw4pTc9szNB/kRSN6UAz8fqsuJpJvLgFKVCFCJh/fgdylWLxykAVWxr
+ uSla73UkyHrdjxHTy8pkZottH+7BzpyMlfY16evBNezl/SOlReUL2X7zYOrZjIdzVG33C2KXh
+ 8NPu3KuxZkZzHO3MUlqQJcE21QA0l4zzuo/t6e68I9MC1RobAlXhWBQ4jAzUIOijc7Fa17ucb
+ nC0FG7H8hfv+tIa3tdlc/7HQ+2wCIn6vp75DZb3+U1cTywYk6lzhun7iO+V8TWGAvjPfMaRBY
+ EHkDZEnFMk0kRD7VztQoiXGIppvHX88H1JSYrdPlpyHJrXPIJyXC1AMbQgFUVSkPBP+lzTKGd
+ tkX6L1/9RyvKSLT/6DLFlp/9LbgjbBBVOFfGkwvCnlpSP051bNq4IzXiOu6s4h+c2PPp0egPI
+ 5JcM4sT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extends the submit command to support shelving a commit instead of
-submitting it to p4 (similar to --prepare-p4-only).
+On 2016-12-05 12:05, thomas.attwood@stfc.ac.uk wrote:
+> On Sun, 4 Dec 2016 08:09:14 +0000, Torsten Bögershausen wrote:
+>> There seems to be another issue, which may or may not being related:
+>> https://github.com/git-for-windows/git/issues/979
+> 
+> I think this is the same issue. I've posted my trace command output there as
+> It might be more appropriate:
+> https://github.com/git-for-windows/git/issues/979#issuecomment-264816175
+> 
+Thanks for the trace.
+I think that the problem comes from the "cwd", when a UNC name is used.
 
-Signed-off-by: Nuno Subtil <subtil@gmail.com>
----
- git-p4.py | 36 ++++++++++++++++++++++++++++++------
- 1 file changed, 30 insertions(+), 6 deletions(-)
+cd //SERVER/share/somedir
+does not work under Windows, the is no chance to change into that directory.
+Does anybody know out of his head why and since when we change the directory
+like this ?
+Or "git bisect" may help.
 
-diff --git a/git-p4.py b/git-p4.py
-index fd5ca52..3c4be22 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1286,6 +1286,8 @@ def __init__(self):
-                 optparse.make_option("--export-labels", dest="exportLabels", action="store_true"),
-                 optparse.make_option("--dry-run", "-n", dest="dry_run", action="store_true"),
-                 optparse.make_option("--prepare-p4-only", dest="prepare_p4_only", action="store_true"),
-+                optparse.make_option("--shelve-only", dest="shelve_only", action="store_true", help="Create P4 shelf for first change that would be submitted (using a new CL)"),
-+                optparse.make_option("--shelve-cl", dest="shelve_cl", help="Replace shelf under existing CL number (previously shelved files will be deleted)"),
-                 optparse.make_option("--conflict", dest="conflict_behavior",
-                                      choices=self.conflict_behavior_choices),
-                 optparse.make_option("--branch", dest="branch"),
-@@ -1297,6 +1299,8 @@ def __init__(self):
-         self.preserveUser = gitConfigBool("git-p4.preserveUser")
-         self.dry_run = False
-         self.prepare_p4_only = False
-+        self.shelve_only = False
-+        self.shelve_cl = None
-         self.conflict_behavior = None
-         self.isWindows = (platform.system() == "Windows")
-         self.exportLabels = False
-@@ -1496,6 +1500,12 @@ def prepareSubmitTemplate(self):
-                 else:
-                     inFilesSection = False
-             else:
-+                if self.shelve_only and self.shelve_cl:
-+                    if line.startswith("Change:"):
-+                        line = "Change: %s\n" % self.shelve_cl
-+                    if line.startswith("Status:"):
-+                        line = "Status: pending\n"
-+
-                 if line.startswith("Files:"):
-                     inFilesSection = True
- 
-@@ -1785,7 +1795,11 @@ def applyCommit(self, id):
-                 if self.isWindows:
-                     message = message.replace("\r\n", "\n")
-                 submitTemplate = message[:message.index(separatorLine)]
--                p4_write_pipe(['submit', '-i'], submitTemplate)
-+
-+                if self.shelve_only:
-+                    p4_write_pipe(['shelve', '-i', '-r'], submitTemplate)
-+                else:
-+                    p4_write_pipe(['submit', '-i'], submitTemplate)
- 
-                 if self.preserveUser:
-                     if p4User:
-@@ -1799,12 +1813,17 @@ def applyCommit(self, id):
-                 # new file.  This leaves it writable, which confuses p4.
-                 for f in pureRenameCopy:
-                     p4_sync(f, "-f")
--                submitted = True
-+
-+                if not self.shelve_only:
-+                    submitted = True
- 
-         finally:
-             # skip this patch
-             if not submitted:
--                print "Submission cancelled, undoing p4 changes."
-+                if not self.shelve_only:
-+                    print "Submission cancelled, undoing p4 changes."
-+                else:
-+                    print "Change shelved, undoing p4 changes."
-                 for f in editedFiles:
-                     p4_revert(f)
-                 for f in filesToAdd:
-@@ -2034,9 +2053,13 @@ def run(self, args):
-             if ok:
-                 applied.append(commit)
-             else:
--                if self.prepare_p4_only and i < last:
--                    print "Processing only the first commit due to option" \
--                          " --prepare-p4-only"
-+                if (self.prepare_p4_only or self.shelve_only) and i < last:
-+                    if self.prepare_p4_only:
-+                        print "Processing only the first commit due to option" \
-+                              " --prepare-p4-only"
-+                    else:
-+                        print "Processing only the first commit due to option" \
-+                              " --shelve-only"
-                     break
-                 if i < last:
-                     quit = False
-@@ -3638,6 +3661,7 @@ def printUsage(commands):
-     "debug" : P4Debug,
-     "submit" : P4Submit,
-     "commit" : P4Submit,
-+    "shelve" : P4Submit,
-     "sync" : P4Sync,
-     "rebase" : P4Rebase,
-     "clone" : P4Clone,
 
---
-https://github.com/git/git/pull/309
+
