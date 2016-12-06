@@ -2,151 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D9171FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 22:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EA711FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 22:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751563AbcLFWPx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 17:15:53 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54423 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751327AbcLFWPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 17:15:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E16754F4C;
-        Tue,  6 Dec 2016 17:15:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LXyzNb3XotY/SNmndaWUYU1v4mc=; b=iX7q+Q
-        g2Kdy4y0zEK+D1WIjeUxzDi4GCPk5JG0Ne4HQeVegoXGnC7biyvisqFn9qt8S8Ez
-        dq+k4zQXUOiNxgXYPysswc3p391ai44+v7+f74PUyYShJ2jKAkPFZSLzWh12swoQ
-        Kq6uHT57nHhI8fb9x/SCQA4lctZZGrrzsKoNE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O6quT/Z4CGXDavX4HHDMUAoWXp8F7pR5
-        QvwQutLJ2l4ZN63iKyMZCdqnzCyyrOlqlUW+EM+NWabD1Fh1waFYacAJKLvb0mDI
-        WvPR2GBkKu0xwRumN/Zczq5JG66Mbb9HBl6w8RotY+58NL3UK+ewvvyvB2vPoXQA
-        sJHmcS8YgoU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C57254F4B;
-        Tue,  6 Dec 2016 17:15:50 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6F6154F49;
-        Tue,  6 Dec 2016 17:15:49 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Robbie Iannucci <iannucci@google.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re* [BUG] Index.lock error message regression in git 2.11.0
-References: <CA+q_oBdHytoeSD-hmLx_N473M8XinjqckvE35Re3eNpQRWYjHQ@mail.gmail.com>
-        <xmqqbmwozppx.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 06 Dec 2016 14:15:48 -0800
-In-Reply-To: <xmqqbmwozppx.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 06 Dec 2016 13:56:26 -0800")
-Message-ID: <xmqq4m2gzotn.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1751696AbcLFWYU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 17:24:20 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:33234 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751212AbcLFWYT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 17:24:19 -0500
+Received: by mail-pg0-f43.google.com with SMTP id 3so153846994pgd.0
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 14:24:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OF2c55L7KsuDeMjSaMCtrhCJ0thXZ1Tk6IiuWEsTW3o=;
+        b=P556+hpA1YhoGeHf/LilRSqtQL/8j2cKU2dOHFFq+2tRt/os+esi6UZ2kc8xLKCjhC
+         LhvVgRfEuFVgX0ieqE9yLzLb20Xotuv+vtIb/bX/DkoLHXpomQ34FKKIbHYR/qDhSf/q
+         q4E0u+Q6xXamlPTWm3/XgbxvUQlm1TDZksj6xmCiZt4P2pWuW3JqNcQsiW6bVFzH7GcT
+         sSS9LztVcyoEfDOZtrJi31fu8s3azamrsbfEgRIHC8IBLmsTo7lD9eIwRG19Ii6Q35Om
+         i+ZnGCfI3K8v8rYHoRhjL1JPfm7R9iMSa/UISADT66ZjblSo0t6y5RqZWLExUv2JSvQa
+         Vn5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OF2c55L7KsuDeMjSaMCtrhCJ0thXZ1Tk6IiuWEsTW3o=;
+        b=gGAizl2LBnABnvqaaf3xSZQxmQvcd7ZlLibzMantyqLHrbMnYAVgGHUE0B70qAQTuy
+         pMpNc9QXZkoDU3D7MQH8QJK9mnLGYG64uhI6lgBzGA0yjsMAdV4p+6EBERZkCaYdoq5b
+         goqz7nEdxcFGeCKZ0QwNfu+zqsdVKNC3CssT4LklMB4JMEnYRyayow0c6KDjjkGbhZ4R
+         4Nzr35figljw6HM/XP/DJ7AfggBlb22DEfyVTztL5tZIdnSpkSh/kpi17zPg/JgnBuJk
+         juw5CWn6rc09Q9cLcd3tHY5erFcIVXCZHUWWpcxL3yseUsrbBrq7BsOoIrHVr5q8tNHS
+         Qd4Q==
+X-Gm-Message-State: AKaTC00rxLf2icolz0wArOab1d+euDIYkIpBjkHcXnh1sRg5CzVm2xYohLjftr7PnHxLyse0
+X-Received: by 10.98.130.1 with SMTP id w1mr64726761pfd.35.1481063058533;
+        Tue, 06 Dec 2016 14:24:18 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:e0c5:1a05:7bf2:5496])
+        by smtp.gmail.com with ESMTPSA id 186sm37065332pfv.61.2016.12.06.14.24.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 06 Dec 2016 14:24:17 -0800 (PST)
+Date:   Tue, 6 Dec 2016 14:24:16 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        sbeller@google.com, bburky@bburky.com, jrnieder@gmail.com
+Subject: Re: [PATCH v7 4/4] transport: add from_user parameter to
+ is_transport_allowed
+Message-ID: <20161206222416.GB103573@google.com>
+References: <1480621447-52399-1-git-send-email-bmwill@google.com>
+ <1480623959-126129-1-git-send-email-bmwill@google.com>
+ <1480623959-126129-5-git-send-email-bmwill@google.com>
+ <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
+ <20161201230738.GJ54082@google.com>
+ <xmqqh96n6x63.fsf@gitster.mtv.corp.google.com>
+ <20161201235856.GL54082@google.com>
+ <xmqqr35m3zx7.fsf@gitster.mtv.corp.google.com>
+ <20161206135113.i7nlr45vg7uzgfcn@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8B27DBA8-BC01-11E6-B7D0-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161206135113.i7nlr45vg7uzgfcn@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12/06, Jeff King wrote:
+> On Mon, Dec 05, 2016 at 12:04:52PM -0800, Junio C Hamano wrote:
+> 
+> > > I'm sending out another reroll of this series so that in Jeff's he can
+> > > just call 'get_curl_allowed_protocols(-1)' for the non-redirection curl
+> > > option, which should make this test stop barfing.
+> > 
+> > I was hoping to eventually merge Peff's series to older maintenance
+> > tracks.  How bad would it be if we rebased the v8 of this series
+> > together with Peff's series to say v2.9 (or even older if it does
+> > not look too bad)?
+> 
+> My series actually fixes existing security problems, so I'd consider it
+> a bug-fix. I _think_ Brandon's series is purely about allowing more
+> expressiveness in the whitelist policy, and so could be considered more
+> of a feature.
 
-> Perhaps the attached would fix it (not even compile tested, though)?
->
-> I would prefer to make 0 to mean "show error but return -1", 1 to
-> mean "die on error", and 2 to mean "be silent and return -1 on
-> error", though.  Asking to be silent should be the exception for
-> this error from usability and safety's point of view, and requiring
-> such exceptional callers to pass LOCK_SILENT_ON_ERROR would be
-> easier to "git grep" for them.
+Yes this was really the main intent on my series.
 
-So here is the "You have to ask explicitly, if you know that it is
-safe to be silent" version with a proper log message.
+> So one option is to apply my series for older 'maint', and then just
+> rebase Brandon's on top of that for 'master'.
+> 
+> I don't know if that makes things any easier. I feel funny saying "no,
+> no, mine preempts yours because it is more maint-worthy", but I think
+> that order does make sense.
+> 
+> I think it would be OK to put Brandon's on maint, too, though. It is a
+> refactor of an existing security feature to make it more featureful, but
+> the way it is implemented could not cause security regressions unless
+> you use the new feature (IOW, we still respect the whitelist environment
+> exactly as before).
 
--- >8 --
-Subject: [PATCH] lockfile: LOCK_SILENT_ON_ERROR
+Either way let me know if there is something I need to do.
 
-Recent "libify merge machinery" stopped from passing die_on_error
-bit to hold_locked_index(), and lost an error message when there are
-competing update in progress with "git merge --ff-only $commit", for
-example.  The command still exits with a non-zero status, but that
-is not of much help for an interactive user.  The last thing the
-command says is "Updating $from..$to".  We used to follow it with a
-big error message that makes it clear that "merge --ff-only" did not
-succeed.
-
-Introduce a new bit "LOCK_SILENT_ON_ERROR" that can be passed by
-callers that do want to silence the message (because they either
-make it a non-error by doing something else, or they show their own
-error message to explain the situation), and show the error message
-we used to give for everybody else, including the caller that was
-touched by the libification in question.
-
-I would not be surprised if some existing calls to hold_lock*()
-functions that pass die_on_error=0 need to be updated to pass
-LOCK_SILENT_ON_ERROR, and when this fix is taken alone, it may look
-like a regression, but we are better off starting louder and squelch
-the ones that we find safe to make silent than the other way around.
-
-Reported-by: Robbie Iannucci <iannucci@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- lockfile.c | 11 +++++++++--
- lockfile.h |  8 +++++++-
- 2 files changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/lockfile.c b/lockfile.c
-index 9268cdf325..f7e8104449 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -174,8 +174,15 @@ int hold_lock_file_for_update_timeout(struct lock_file *lk, const char *path,
- 				      int flags, long timeout_ms)
- {
- 	int fd = lock_file_timeout(lk, path, flags, timeout_ms);
--	if (fd < 0 && (flags & LOCK_DIE_ON_ERROR))
--		unable_to_lock_die(path, errno);
-+	if (fd < 0) {
-+		if (flags & LOCK_DIE_ON_ERROR)
-+			unable_to_lock_die(path, errno);
-+		else if (!(flags & LOCK_SILENT_ON_ERROR)) {
-+			struct strbuf buf = STRBUF_INIT;
-+			unable_to_lock_message(path, errno, &buf);
-+			error("%s", buf.buf);
-+		}
-+	}
- 	return fd;
- }
- 
-diff --git a/lockfile.h b/lockfile.h
-index d26ad27b2b..98b4862254 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -129,9 +129,15 @@ struct lock_file {
- /*
-  * If a lock is already taken for the file, `die()` with an error
-  * message. If this flag is not specified, trying to lock a file that
-- * is already locked returns -1 to the caller.
-+ * is already locked gives the same error message and returns -1 to
-+ * the caller.
-  */
- #define LOCK_DIE_ON_ERROR 1
-+/*
-+ * ... or the function can be told to be totally silent and return
-+ * -1 to the caller upon error with this flag
-+ */
-+#define LOCK_SILENT_ON_ERROR 2
- 
- /*
-  * Usually symbolic links in the destination path are resolved. This
 -- 
-2.11.0-270-g0b6beed61f
-
+Brandon Williams
