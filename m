@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBAAD1FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 18:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 100ED1FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 18:25:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752264AbcLFSZi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 13:25:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52588 "EHLO cloud.peff.net"
+        id S1752372AbcLFSZk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 13:25:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52599 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751576AbcLFSZa (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751696AbcLFSZa (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Dec 2016 13:25:30 -0500
-Received: (qmail 4606 invoked by uid 109); 6 Dec 2016 18:24:36 -0000
+Received: (qmail 4639 invoked by uid 109); 6 Dec 2016 18:24:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 18:24:36 +0000
-Received: (qmail 15697 invoked by uid 111); 6 Dec 2016 18:25:14 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 18:24:43 +0000
+Received: (qmail 15713 invoked by uid 111); 6 Dec 2016 18:25:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 13:25:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 13:24:35 -0500
-Date:   Tue, 6 Dec 2016 13:24:35 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 13:25:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 13:24:41 -0500
+Date:   Tue, 6 Dec 2016 13:24:41 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         sbeller@google.com, bburky@bburky.com, jrnieder@gmail.com
-Subject: [PATCH v2 2/6] http: always update the base URL for redirects
-Message-ID: <20161206182435.3o5viseqbisxmc6b@sigill.intra.peff.net>
+Subject: [PATCH v2 4/6] http: make redirects more obvious
+Message-ID: <20161206182441.ym3laupnv3demie2@sigill.intra.peff.net>
 References: <20161206182414.466uotqfufcimpqb@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,149 +39,291 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a malicious server redirects the initial ref
-advertisement, it may be able to leak sha1s from other,
-unrelated servers that the client has access to. For
-example, imagine that Alice is a git user, she has access to
-a private repository on a server hosted by Bob, and Mallory
-runs a malicious server and wants to find out about Bob's
-private repository.
+We instruct curl to always follow HTTP redirects. This is
+convenient, but it creates opportunities for malicious
+servers to create confusing situations. For instance,
+imagine Alice is a git user with access to a private
+repository on Bob's server. Mallory runs her own server and
+wants to access objects from Bob's repository.
 
-Mallory asks Alice to clone an unrelated repository from her
-over HTTP. When Alice's client contacts Mallory's server for
-the initial ref advertisement, the server issues an HTTP
-redirect for Bob's server. Alice contacts Bob's server and
-gets the ref advertisement for the private repository. If
-there is anything to fetch, she then follows up by asking
-the server for one or more sha1 objects. But who is the
-server?
+Mallory may try a few tricks that involve asking Alice to
+clone from her, build on top, and then push the result:
 
-If it is still Mallory's server, then Alice will leak the
-existence of those sha1s to her.
+  1. Mallory may simply redirect all fetch requests to Bob's
+     server. Git will transparently follow those redirects
+     and fetch Bob's history, which Alice may believe she
+     got from Mallory. The subsequent push seems like it is
+     just feeding Mallory back her own objects, but is
+     actually leaking Bob's objects. There is nothing in
+     git's output to indicate that Bob's repository was
+     involved at all.
 
-Since commit c93c92f30 (http: update base URLs when we see
-redirects, 2013-09-28), the client usually rewrites the base
-URL such that all further requests will go to Bob's server.
-But this is done by textually matching the URL. If we were
-originally looking for "http://mallory/repo.git/info/refs",
-and we got pointed at "http://bob/other.git/info/refs", then
-we know that the right root is "http://bob/other.git".
+     The downside (for Mallory) of this attack is that Alice
+     will have received Bob's entire repository, and is
+     likely to notice that when building on top of it.
 
-If the redirect appears to change more than just the root,
-we punt and continue to use the original server. E.g.,
-imagine the redirect adds a URL component that Bob's server
-will ignore, like "http://bob/other.git/info/refs?dummy=1".
+  2. If Mallory happens to know the sha1 of some object X in
+     Bob's repository, she can instead build her own history
+     that references that object. She then runs a dumb http
+     server, and Alice's client will fetch each object
+     individually. When it asks for X, Mallory redirects her
+     to Bob's server. The end result is that Alice obtains
+     objects from Bob, but they may be buried deep in
+     history. Alice is less likely to notice.
 
-We can solve this by aborting in this case rather than
-silently continuing to use Mallory's server. In addition to
-protecting from sha1 leakage, it's arguably safer and more
-sane to refuse a confusing redirect like that in general.
-For example, part of the motivation in c93c92f30 is
-avoiding accidentally sending credentials over clear http,
-just to get a response that says "try again over https". So
-even in a non-malicious case, we'd prefer to err on the side
-of caution.
+Both of these attacks are fairly hard to pull off. There's a
+social component in getting Mallory to convince Alice to
+work with her. Alice may be prompted for credentials in
+accessing Bob's repository (but not always, if she is using
+a credential helper that caches). Attack (1) requires a
+certain amount of obliviousness on Alice's part while making
+a new commit. Attack (2) requires that Mallory knows a sha1
+in Bob's repository, that Bob's server supports dumb http,
+and that the object in question is loose on Bob's server.
 
-The downside is that it's possible this will break a
-legitimate but complicated server-side redirection scheme.
-The setup given in the newly added test does work, but it's
-convoluted enough that we don't need to care about it. A
-more plausible case would be a server which redirects a
-request for "info/refs?service=git-upload-pack" to just
-"info/refs" (because it does not do smart HTTP, and for some
-reason really dislikes query parameters).  Right now we
-would transparently downgrade to dumb-http, but with this
-patch, we'd complain (and the user would have to set
-GIT_SMART_HTTP=0 to fetch).
+But we can probably make things a bit more obvious without
+any loss of functionality. This patch does two things to
+that end.
+
+First, when we encounter a whole-repo redirect during the
+initial ref discovery, we now inform the user on stderr,
+making attack (1) much more obvious.
+
+Second, the decision to follow redirects is now
+configurable. The truly paranoid can set the new
+http.followRedirects to false to avoid any redirection
+entirely. But for a more practical default, we will disallow
+redirects only after the initial ref discovery. This is
+enough to thwart attacks similar to (2), while still
+allowing the common use of redirects at the repository
+level. Since c93c92f30 (http: update base URLs when we see
+redirects, 2013-09-28) we re-root all further requests from
+the redirect destination, which should generally mean that
+no further redirection is necessary.
+
+As an escape hatch, in case there really is a server that
+needs to redirect individual requests, the user can set
+http.followRedirects to "true" (and this can be done on a
+per-server basis via http.*.followRedirects config).
 
 Reported-by: Jann Horn <jannh@google.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- http.c                        | 12 ++++++++----
- t/lib-httpd/apache.conf       |  8 ++++++++
- t/t5551-http-fetch-smart.sh   |  4 ++++
- t/t5812-proto-disable-http.sh |  1 +
- 4 files changed, 21 insertions(+), 4 deletions(-)
+ Documentation/config.txt   | 10 ++++++++++
+ http.c                     | 31 +++++++++++++++++++++++++++++--
+ http.h                     | 10 +++++++++-
+ remote-curl.c              |  4 ++++
+ t/lib-httpd/apache.conf    |  6 ++++++
+ t/t5550-http-fetch-dumb.sh | 23 +++++++++++++++++++++++
+ 6 files changed, 81 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f4721a048..815333643 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1833,6 +1833,16 @@ http.userAgent::
+ 	of common USER_AGENT strings (but not including those like git/1.7.1).
+ 	Can be overridden by the `GIT_HTTP_USER_AGENT` environment variable.
+ 
++http.followRedirects::
++	Whether git should follow HTTP redirects. If set to `true`, git
++	will transparently follow any redirect issued by a server it
++	encounters. If set to `false`, git will treat all redirects as
++	errors. If set to `initial`, git will follow redirects only for
++	the initial request to a remote, but not for subsequent
++	follow-up HTTP requests. Since git uses the redirected URL as
++	the base for the follow-up requests, this is generally
++	sufficient. The default is `initial`.
++
+ http.<url>.*::
+ 	Any of the http.* options above can be applied selectively to some URLs.
+ 	For a config key to match a URL, each element of the config key is
 diff --git a/http.c b/http.c
-index d4034a14b..718d2109b 100644
+index 718d2109b..b99ade5fa 100644
 --- a/http.c
 +++ b/http.c
-@@ -1491,9 +1491,9 @@ static int http_request(const char *url,
-  *
-  * Note that this assumes a sane redirect scheme. It's entirely possible
-  * in the example above to end up at a URL that does not even end in
-- * "info/refs".  In such a case we simply punt, as there is not much we can
-- * do (and such a scheme is unlikely to represent a real git repository,
-- * which means we are likely about to abort anyway).
-+ * "info/refs".  In such a case we die. There's not much we can do, such a
-+ * scheme is unlikely to represent a real git repository, and failing to
-+ * rewrite the base opens options for malicious redirects to do funny things.
-  */
- static int update_url_from_redirect(struct strbuf *base,
- 				    const char *asked,
-@@ -1511,10 +1511,14 @@ static int update_url_from_redirect(struct strbuf *base,
+@@ -98,6 +98,8 @@ static int http_proactive_auth;
+ static const char *user_agent;
+ static int curl_empty_auth;
  
- 	new_len = got->len;
- 	if (!strip_suffix_mem(got->buf, &new_len, tail))
--		return 0; /* insane redirect scheme */
-+		die(_("unable to update url base from redirection:\n"
-+		      "  asked for: %s\n"
-+		      "   redirect: %s"),
-+		    asked, got->buf);
- 
- 	strbuf_reset(base);
- 	strbuf_add(base, got->buf, new_len);
++enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
 +
- 	return 1;
- }
+ #if LIBCURL_VERSION_NUM >= 0x071700
+ /* Use CURLOPT_KEYPASSWD as is */
+ #elif LIBCURL_VERSION_NUM >= 0x070903
+@@ -337,6 +339,16 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
++	if (!strcmp("http.followredirects", var)) {
++		if (value && !strcmp(value, "initial"))
++			http_follow_config = HTTP_FOLLOW_INITIAL;
++		else if (git_config_bool(var, value))
++			http_follow_config = HTTP_FOLLOW_ALWAYS;
++		else
++			http_follow_config = HTTP_FOLLOW_NONE;
++		return 0;
++	}
++
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, cb);
+ }
+@@ -553,7 +565,6 @@ static CURL *get_curl_handle(void)
+ 				 curl_low_speed_time);
+ 	}
+ 
+-	curl_easy_setopt(result, CURLOPT_FOLLOWLOCATION, 1);
+ 	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
+ #if LIBCURL_VERSION_NUM >= 0x071301
+ 	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
+@@ -882,6 +893,16 @@ struct active_request_slot *get_active_slot(void)
+ 	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_RANGE, NULL);
+ 
++	/*
++	 * Default following to off unless "ALWAYS" is configured; this gives
++	 * callers a sane starting point, and they can tweak for individual
++	 * HTTP_FOLLOW_* cases themselves.
++	 */
++	if (http_follow_config == HTTP_FOLLOW_ALWAYS)
++		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1);
++	else
++		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 0);
++
+ #if LIBCURL_VERSION_NUM >= 0x070a08
+ 	curl_easy_setopt(slot->curl, CURLOPT_IPRESOLVE, git_curl_ipresolve);
+ #endif
+@@ -1122,9 +1143,12 @@ static int handle_curl_result(struct slot_results *results)
+ 	 * If we see a failing http code with CURLE_OK, we have turned off
+ 	 * FAILONERROR (to keep the server's custom error response), and should
+ 	 * translate the code into failure here.
++	 *
++	 * Likewise, if we see a redirect (30x code), that means we turned off
++	 * redirect-following, and we should treat the result as an error.
+ 	 */
+ 	if (results->curl_result == CURLE_OK &&
+-	    results->http_code >= 400) {
++	    results->http_code >= 300) {
+ 		results->curl_result = CURLE_HTTP_RETURNED_ERROR;
+ 		/*
+ 		 * Normally curl will already have put the "reason phrase"
+@@ -1443,6 +1467,9 @@ static int http_request(const char *url,
+ 		strbuf_addstr(&buf, " no-cache");
+ 	if (options && options->keep_error)
+ 		curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
++	if (options && options->initial_request &&
++	    http_follow_config == HTTP_FOLLOW_INITIAL)
++		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1);
+ 
+ 	headers = curl_slist_append(headers, buf.buf);
+ 
+diff --git a/http.h b/http.h
+index 36f558bfb..31b4cc94b 100644
+--- a/http.h
++++ b/http.h
+@@ -116,6 +116,13 @@ extern struct credential http_auth;
+ 
+ extern char curl_errorstr[CURL_ERROR_SIZE];
+ 
++enum http_follow_config {
++	HTTP_FOLLOW_NONE,
++	HTTP_FOLLOW_ALWAYS,
++	HTTP_FOLLOW_INITIAL
++};
++extern enum http_follow_config http_follow_config;
++
+ static inline int missing__target(int code, int result)
+ {
+ 	return	/* file:// URL -- do we ever use one??? */
+@@ -139,7 +146,8 @@ extern char *get_remote_object_url(const char *url, const char *hex,
+ /* Options for http_get_*() */
+ struct http_get_options {
+ 	unsigned no_cache:1,
+-		 keep_error:1;
++		 keep_error:1,
++		 initial_request:1;
+ 
+ 	/* If non-NULL, returns the content-type of the response. */
+ 	struct strbuf *content_type;
+diff --git a/remote-curl.c b/remote-curl.c
+index e3803daa3..05ae8dead 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -276,6 +276,7 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 	http_options.charset = &charset;
+ 	http_options.effective_url = &effective_url;
+ 	http_options.base_url = &url;
++	http_options.initial_request = 1;
+ 	http_options.no_cache = 1;
+ 	http_options.keep_error = 1;
+ 
+@@ -294,6 +295,9 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 		die("unable to access '%s': %s", url.buf, curl_errorstr);
+ 	}
+ 
++	if (options.verbosity && !starts_with(refs_url.buf, url.buf))
++		warning(_("redirecting to %s"), url.buf);
++
+ 	last= xcalloc(1, sizeof(*last_discovery));
+ 	last->service = service;
+ 	last->buf_alloc = strbuf_detach(&buffer, &last->len);
 diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 018a83a5a..9a355fb1c 100644
+index 9a355fb1c..5b408d649 100644
 --- a/t/lib-httpd/apache.conf
 +++ b/t/lib-httpd/apache.conf
-@@ -132,6 +132,14 @@ RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
- RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302]
- RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
+@@ -123,6 +123,7 @@ ScriptAlias /error/ error.sh/
+ </Files>
  
-+# The first rule issues a client-side redirect to something
-+# that _doesn't_ look like a git repo. The second rule is a
-+# server-side rewrite, so that it turns out the odd-looking
-+# thing _is_ a git repo. The "[PT]" tells Apache to match
-+# the usual ScriptAlias rules for /smart.
-+RewriteRule ^/insane-redir/(.*)$ /intern-redir/$1/foo [R=301]
-+RewriteRule ^/intern-redir/(.*)/foo$ /smart/$1 [PT]
+ RewriteEngine on
++RewriteRule ^/dumb-redir/(.*)$ /dumb/$1 [R=301]
+ RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
+ RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
+ RewriteRule ^/smart-redir-auth/(.*)$ /auth/smart/$1 [R=301]
+@@ -140,6 +141,11 @@ RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
+ RewriteRule ^/insane-redir/(.*)$ /intern-redir/$1/foo [R=301]
+ RewriteRule ^/intern-redir/(.*)/foo$ /smart/$1 [PT]
+ 
++# Serve info/refs internally without redirecting, but
++# issue a redirect for any object requests.
++RewriteRule ^/redir-objects/(.*/info/refs)$ /dumb/$1 [PT]
++RewriteRule ^/redir-objects/(.*/objects/.*)$ /dumb/$1 [R=301]
 +
  # Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
  # And as RewriteCond does not allow testing for non-matches, we match
  # the desired case first (one has abra, two has cadabra), and let it
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 2f375eb94..d8826acde 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -110,6 +110,10 @@ test_expect_success 'redirects re-root further requests' '
- 	git clone $HTTPD_URL/smart-redir-limited/repo.git repo-redir-limited
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 3484b6f0f..ad94ed7b1 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -299,5 +299,28 @@ test_expect_success 'git client does not send an empty Accept-Language' '
+ 	! grep "^Accept-Language:" stderr
  '
  
-+test_expect_success 're-rooting dies on insane schemes' '
-+	test_must_fail git clone $HTTPD_URL/insane-redir/repo.git insane
++test_expect_success 'redirects can be forbidden/allowed' '
++	test_must_fail git -c http.followRedirects=false \
++		clone $HTTPD_URL/dumb-redir/repo.git dumb-redir &&
++	git -c http.followRedirects=true \
++		clone $HTTPD_URL/dumb-redir/repo.git dumb-redir 2>stderr
 +'
 +
- test_expect_success 'clone from password-protected repository' '
- 	echo two >expect &&
- 	set_askpass user@host pass@host &&
-diff --git a/t/t5812-proto-disable-http.sh b/t/t5812-proto-disable-http.sh
-index 0d105d541..044cc152f 100755
---- a/t/t5812-proto-disable-http.sh
-+++ b/t/t5812-proto-disable-http.sh
-@@ -18,6 +18,7 @@ test_proto "smart http" http "$HTTPD_URL/smart/repo.git"
- 
- test_expect_success 'curl redirects respect whitelist' '
- 	test_must_fail env GIT_ALLOW_PROTOCOL=http:https \
-+			   GIT_SMART_HTTP=0 \
- 		git clone "$HTTPD_URL/ftp-redir/repo.git" 2>stderr &&
- 	{
- 		test_i18ngrep "ftp.*disabled" stderr ||
++test_expect_success 'redirects are reported to stderr' '
++	# just look for a snippet of the redirected-to URL
++	test_i18ngrep /dumb/ stderr
++'
++
++test_expect_success 'non-initial redirects can be forbidden' '
++	test_must_fail git -c http.followRedirects=initial \
++		clone $HTTPD_URL/redir-objects/repo.git redir-objects &&
++	git -c http.followRedirects=true \
++		clone $HTTPD_URL/redir-objects/repo.git redir-objects
++'
++
++test_expect_success 'http.followRedirects defaults to "initial"' '
++	test_must_fail git clone $HTTPD_URL/redir-objects/repo.git default
++'
++
+ stop_httpd
+ test_done
 -- 
 2.11.0.191.gdb26c57
 
