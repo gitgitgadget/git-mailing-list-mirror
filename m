@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70F901FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 21:53:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E09491FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 21:53:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752817AbcLFVxf (ORCPT <rfc822;e@80x24.org>);
+        id S1752820AbcLFVxf (ORCPT <rfc822;e@80x24.org>);
         Tue, 6 Dec 2016 16:53:35 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34040 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752005AbcLFVxN (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:34030 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751895AbcLFVxN (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Dec 2016 16:53:13 -0500
-Received: by mail-pg0-f53.google.com with SMTP id x23so153561238pgx.1
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 13:52:38 -0800 (PST)
+Received: by mail-pg0-f51.google.com with SMTP id x23so153560744pgx.1
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 13:52:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WpuWIpe4DxjycFg/RZlepuIBmMRUWBFqxeHrgnKy3C4=;
-        b=Wd2puujqwMp8dNqIukLlTbpHN3tiBFhIPmhBYT2xVjns0XOftQO7Rnf3RcpwI48oca
-         2uBu6OHf95Zj25FbSqx3q6z32KwPcRpPhe4qqBlRH8yEg2QII62mgg+n5oHnD1Z334Ta
-         sdcQ2k4jvCqqfgGacj7l2CnrlR8/gb9QJQeJuA7UGnWjObGEJLeGuYNm1k7AFQ4TCfOg
-         bqppFaZc1U9JoBpePNkoVsJEunJP8JBxtsagBkqF/8LaVzK3Ehm0QnNvBJO1764CKV9T
-         mh6K0xpqtlNkcWIJOir7CXrNLIpJkmrkS7IFhE2ah+djW9gbexMp6LUQsCf+rwXW+gKw
-         63tw==
+        bh=mSRe+b5RVGWu7M+XOLA5gFOSlPJJ5MQLrUwyWYiDmzY=;
+        b=BNrqHcddCCSQCadjXNk83mi6LHMu/oZMzcSot3zey1hOFEnhXdW/tQ8zhPvHkG665T
+         aWiVctCErIAB6gnkOc3Nq2YA+A/Lext6RPH7FPUI4VCPyFAp/iguA9i+/76a0VmsI2f6
+         qv17UvmT2jr0dnxLfsxh0gGcd7krZKl3IK5o1IHljWJdIB/VvFjTCSLHHUNPXm41LAsv
+         f4xj5wwUCsUf5p9MHihz5XcwSmK0Zi8M9tugu+vqRR3wBgMQTm9E009ZDLOxURACG5Se
+         hfvOsjzUITo8fnvat2Deah+20FYYjxPSkMSPab95SoFkqBsbjCfYbYURV3OjjDdf4nef
+         mEyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WpuWIpe4DxjycFg/RZlepuIBmMRUWBFqxeHrgnKy3C4=;
-        b=Uk1VwVH98Gf5oX2H7RBp0vCcVPreABpRdB3U3K3Pnq0G/gK+QPYcQSedBiHoVSr3CB
-         KQ0oywsu/+zq3hYL0elvfxT6GuZpd3lEV7mpS9yN5qEr/hys8hc5wssxt8IEFc0+fyx6
-         JuJLBP08edn+c+psOHfgfj1VvYdUXwwv4Ccu4V55EqqorIM4obnOeVgC+jWwcEyAgMlB
-         baJwFUgK+rBLYbApu4KrVRLx3IcaUkAWgTgJ6dXnTOGqgVYHsBlGj3tN+wcxAMFqF+CN
-         GNJNI+I4NyN1MbVizCg5U7ujzko+ehtD2PgO3X8R1M8BuUOPsudOhBfLb85pDucZMa8p
-         sZZg==
-X-Gm-Message-State: AKaTC02IGdutUC9SFOjGJ+7f0OkGl+aAQziqXkJAarWD/y0SVz5pNw09dS7mG/LPgFnGbCMx
-X-Received: by 10.98.72.129 with SMTP id q1mr65013627pfi.169.1481061158225;
-        Tue, 06 Dec 2016 13:52:38 -0800 (PST)
+        bh=mSRe+b5RVGWu7M+XOLA5gFOSlPJJ5MQLrUwyWYiDmzY=;
+        b=Sew1CBi3gi0NchZGajJ0fX3Q2NTfAMwHV4SpqZTJGWnN7GPTpwZ1K6mjpRKOFwxw2A
+         fgZnIYr+qvrqohZ1qSuROiZjL3IdBw9UXgH3OdEtYEap83f3QKjxNZoJZsSrg2eYbLm4
+         SPGHLCBI3iwooZ2Mg1aqZOjN+ZPIlNQvPnqN9vJHnVh/bywdBsDfl+4EX1DGzbMyoomB
+         KrATbOY15PwOn59xIQwFUBlq/zeIPcqADFtsXafgoZV5uyCSaY+930PTPsiV0fhPZgZ1
+         uggrSye1gB54atCmVJe+ILk/3b3jAvgLy/vDlfr8YWqKvDCRHDs2y7ueZM09ozN8uLf6
+         axNA==
+X-Gm-Message-State: AKaTC02jDx+euBzy/7WegjT5bG5Rh0lrfHG8VCIxQMjKVVPnh8nZiXX9NijK+E3pJZymiRCF
+X-Received: by 10.99.7.210 with SMTP id 201mr114399954pgh.51.1481061154453;
+        Tue, 06 Dec 2016 13:52:34 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id y89sm36940228pfk.83.2016.12.06.13.52.37
+        by smtp.gmail.com with ESMTPSA id y89sm36940228pfk.83.2016.12.06.13.52.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 Dec 2016 13:52:37 -0800 (PST)
+        Tue, 06 Dec 2016 13:52:33 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, pclouds@gmail.com, gitster@pobox.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 16/17] pathspec: small readability changes
-Date:   Tue,  6 Dec 2016 13:51:45 -0800
-Message-Id: <1481061106-117775-17-git-send-email-bmwill@google.com>
+Subject: [PATCH 13/17] pathspec: create parse_long_magic function
+Date:   Tue,  6 Dec 2016 13:51:42 -0800
+Message-Id: <1481061106-117775-14-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1481061106-117775-1-git-send-email-bmwill@google.com>
 References: <1481061106-117775-1-git-send-email-bmwill@google.com>
@@ -60,70 +60,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few small changes to improve readability.  This is done by grouping related
-assignments, adding blank lines, ensuring lines are <80 characters, etc.
+Factor out the logic responsible for parsing long magic into its own
+function.  As well as hoist the prefix check logic outside of the inner
+loop as there isn't anything that needs to be done after matching
+"prefix:".
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pathspec.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ pathspec.c | 92 ++++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 57 insertions(+), 35 deletions(-)
 
 diff --git a/pathspec.c b/pathspec.c
-index 41aa213..8a07b02 100644
+index d4d4839..1d28679 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -334,6 +334,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 	if ((magic & PATHSPEC_LITERAL) && (magic & PATHSPEC_GLOB))
- 		die(_("%s: 'literal' and 'glob' are incompatible"), elt);
+@@ -156,6 +156,60 @@ static int get_global_magic(int element_magic)
+ }
  
-+	/* Create match string which will be used for pathspec matching */
- 	if (pathspec_prefix >= 0) {
- 		match = xstrdup(copyfrom);
- 		prefixlen = pathspec_prefix;
-@@ -341,11 +342,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 		match = xstrdup(copyfrom);
- 		prefixlen = 0;
+ /*
++ * Parse the pathspec element looking for long magic
++ *
++ * saves all magic in 'magic'
++ * if prefix magic is used, save the prefix length in 'prefix_len'
++ * returns the position in 'elem' after all magic has been parsed
++ */
++static const char *parse_long_magic(unsigned *magic, int *prefix_len,
++				    const char *elem)
++{
++	const char *pos;
++	const char *nextat;
++
++	for (pos = elem + 2; *pos && *pos != ')'; pos = nextat) {
++		size_t len = strcspn(pos, ",)");
++		int i;
++
++		if (pos[len] == ',')
++			nextat = pos + len + 1; /* handle ',' */
++		else
++			nextat = pos + len; /* handle ')' and '\0' */
++
++		if (!len)
++			continue;
++
++		if (starts_with(pos, "prefix:")) {
++			char *endptr;
++			*prefix_len = strtol(pos + 7, &endptr, 10);
++			if (endptr - pos != len)
++				die(_("invalid parameter for pathspec magic 'prefix'"));
++			continue;
++		}
++
++		for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
++			if (strlen(pathspec_magic[i].name) == len &&
++			    !strncmp(pathspec_magic[i].name, pos, len)) {
++				*magic |= pathspec_magic[i].bit;
++				break;
++			}
++		}
++
++		if (ARRAY_SIZE(pathspec_magic) <= i)
++			die(_("Invalid pathspec magic '%.*s' in '%s'"),
++			    (int) len, pos, elem);
++	}
++
++	if (*pos != ')')
++		die(_("Missing ')' at the end of pathspec magic in '%s'"),
++		    elem);
++	pos++;
++
++	return pos;
++}
++
++/*
+  * Parse the pathspec element looking for short magic
+  *
+  * saves all magic in 'magic'
+@@ -218,41 +272,9 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+ 		; /* nothing to do */
+ 	} else if (elt[1] == '(') {
+ 		/* longhand */
+-		const char *nextat;
+-		for (copyfrom = elt + 2;
+-		     *copyfrom && *copyfrom != ')';
+-		     copyfrom = nextat) {
+-			size_t len = strcspn(copyfrom, ",)");
+-			if (copyfrom[len] == ',')
+-				nextat = copyfrom + len + 1;
+-			else
+-				/* handle ')' and '\0' */
+-				nextat = copyfrom + len;
+-			if (!len)
+-				continue;
+-			for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+-				if (strlen(pathspec_magic[i].name) == len &&
+-				    !strncmp(pathspec_magic[i].name, copyfrom, len)) {
+-					element_magic |= pathspec_magic[i].bit;
+-					break;
+-				}
+-				if (starts_with(copyfrom, "prefix:")) {
+-					char *endptr;
+-					pathspec_prefix = strtol(copyfrom + 7,
+-								 &endptr, 10);
+-					if (endptr - copyfrom != len)
+-						die(_("invalid parameter for pathspec magic 'prefix'"));
+-					/* "i" would be wrong, but it does not matter */
+-					break;
+-				}
+-			}
+-			if (ARRAY_SIZE(pathspec_magic) <= i)
+-				die(_("Invalid pathspec magic '%.*s' in '%s'"),
+-				    (int) len, copyfrom, elt);
+-		}
+-		if (*copyfrom != ')')
+-			die(_("Missing ')' at the end of pathspec magic in '%s'"), elt);
+-		copyfrom++;
++		copyfrom = parse_long_magic(&element_magic,
++					    &pathspec_prefix,
++					    elt);
  	} else {
--		match = prefix_path_gently(prefix, prefixlen, &prefixlen, copyfrom);
-+		match = prefix_path_gently(prefix, prefixlen,
-+					   &prefixlen, copyfrom);
- 		if (!match)
- 			die(_("%s: '%s' is outside repository"), elt, copyfrom);
- 	}
-+
- 	item->match = match;
-+	item->len = strlen(item->match);
-+	item->prefix = prefixlen;
-+
- 	/*
- 	 * Prefix the pathspec (keep all magic) and assign to
- 	 * original. Useful for passing to another command.
-@@ -362,8 +368,6 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 	} else {
- 		item->original = xstrdup(elt);
- 	}
--	item->len = strlen(item->match);
--	item->prefix = prefixlen;
- 
- 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
- 	    strip_submodule_slash_cheap(item);
-@@ -371,13 +375,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
- 	    strip_submodule_slash_expensive(item);
- 
--	if (magic & PATHSPEC_LITERAL)
-+	if (magic & PATHSPEC_LITERAL) {
- 		item->nowildcard_len = item->len;
--	else {
-+	} else {
- 		item->nowildcard_len = simple_length(item->match);
- 		if (item->nowildcard_len < prefixlen)
- 			item->nowildcard_len = prefixlen;
- 	}
-+
- 	item->flags = 0;
- 	if (magic & PATHSPEC_GLOB) {
- 		/*
+ 		/* shorthand */
+ 		copyfrom = parse_short_magic(&element_magic, elt);
 -- 
 2.8.0.rc3.226.g39d4020
 
