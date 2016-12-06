@@ -2,97 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F8861FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 13:46:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45AE61FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 13:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753058AbcLFNqc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 08:46:32 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34355 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752626AbcLFNqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 08:46:31 -0500
-Received: by mail-pf0-f194.google.com with SMTP id y68so18777611pfb.1
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 05:46:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=u92Ce3fEROA1LKyh0eaWoSaBMKcJkZWOdPn22Iziz0g=;
-        b=wkSIb6N+97qODC7R3KcQS1qWJwl6TtCb04dM+afob+FdmJ01Md90hf38g1mWw3I/hV
-         1eSKS61knHq052GvTwU5hyGtHnDwg78inOqYpvhYfU3oJXmOU046iVMbn6bkjUNPSG0r
-         mig9S6ipBoxVAxj0rhlYGXwK6n4DR9vRc472+7Oz9vxwY+7DNplfmTBWtTdTpX8YUiIm
-         SMGBuwxNcO5xUDmJWFu6ZVtHlNjB2FBxHMObBNz0OSTWfyuLVxOQ8zA1NK7+zPHQZhaa
-         jWSc4pq8BiXUhNZ9BceWTx2P/N975PfVOnXiQAWAA1E2FESGblVVTeJe0VhO5V9UxTek
-         Db4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=u92Ce3fEROA1LKyh0eaWoSaBMKcJkZWOdPn22Iziz0g=;
-        b=RjsxBBXNvygWrBjfWMXLy0GXtTsHkQMm03JSkimtzVIsMabGZzYZiiwcR8gt5GlO5q
-         g/ad/NTJO+7wqHheeLBPY6+IMV/XVKK+59kEt3rkeiCNc6gloi1HZ0PZSUOZlMetSdDi
-         K7yw/98KTClVJ0UmKPVsbMc9KV07hJrqaHmTeC+KlkXvRXfyvwjwb0jGPwC7hn2AyRmH
-         b5NPD1T8U7/KrIKqLrRWIfjHapgeifae44mau/AP24kZgpCCdNY78894MJdFO+I29q7l
-         DAEtJbK6/D2uQcGAzset+TAcgjrm+pUlirvl/ENAd8wCo4LXgLJs21MD3y8yJw+WFHyD
-         w0lw==
-X-Gm-Message-State: AKaTC01mFK+ECG6ia+ujYW26eN1umtoVcYhF2R+sY5LhIHNheHbx/zXLCuj3Bdp3mI1icw==
-X-Received: by 10.84.217.20 with SMTP id o20mr136767739pli.28.1481028831857;
-        Tue, 06 Dec 2016 04:53:51 -0800 (PST)
-Received: from ash ([115.73.166.29])
-        by smtp.gmail.com with ESMTPSA id w17sm35017745pgm.18.2016.12.06.04.53.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Dec 2016 04:53:49 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 06 Dec 2016 19:53:45 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     rv@rasmusvillemoes.dk, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 0/6] shallow.c improvements
-Date:   Tue,  6 Dec 2016 19:53:33 +0700
-Message-Id: <20161206125339.16803-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
-References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
+        id S1752544AbcLFNq6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 08:46:58 -0500
+Received: from mout.gmx.net ([212.227.15.18]:61524 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752142AbcLFNq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 08:46:57 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNYxW-1cKKtH0Thy-0079pg; Tue, 06
+ Dec 2016 14:46:49 +0100
+Date:   Tue, 6 Dec 2016 14:46:48 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     David Aguilar <davvid@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>,
+        Frank Becker <fb@mooflu.com>, John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] difftool: fix dir-diff index creation when in a
+ subdirectory
+In-Reply-To: <20161205222600.29914-1-davvid@gmail.com>
+Message-ID: <alpine.DEB.2.20.1612061446230.117539@virtualbox>
+References: <20161205222600.29914-1-davvid@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:bASAKYbeiCIQ+O31p5pjgBS+J2D8xw1eCtiXoaSgNBakpoxo/sz
+ 2aAl5NcskcFletfzzKDoXmvrQ5dHCijg4U297QzjeabF77GkC2iePHdWk2vaqpulczSUTir
+ NTg7ouaMZIrZlPbTHQvxQdvnT6XU+Y3Rgkucv35TGdZ6JCt71D94FXnemNLFS5jac1Le22h
+ KIsNqB0nGgbCGwVMMiB0w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:++lV7Ud9+ww=:Kj1Kv8YxLw/NGOD1GuOs1+
+ hJQN0HS4MUkJkncve8T7tpgpXx7WX11GDU9int8qhVsfcwxGAAmugWnkrT/hY8OeiODxzkD6g
+ 9aSzYnym164c8gOt6MTvFc3Ekw0VbqhMwx2z2bMgFRG0QuGlPAhc6zNiq0kxh1hXQu15Ckk3b
+ Io9L15S+DtGt0CWj91FB4kwm6lRnCdswudAHKMLeJD0r/ktZ5gQPgXcygsbZcxZL8DM/+phxw
+ jQE1X+nJjnXrSa8nByXUv3Rx77shS8RUenjzfxyaiYCM1Ce9nOlMKMQKfB06rV9xFPfRva9dP
+ Ff/vLjtKkZ/FPJdsVq5uqVeT5gOSVkkBmISOkmFnU6IvUQnvej02ATbDn6qshO8D9IhSimUVi
+ DXokMDiFXMXUiDzxW9DmLpgNsFfRJeaqMmt9r1n26H0jUF1/fMksBudzKCM3KM1viSjsr2FWU
+ +/rqrhP1rC4O+PdJrI5wC0/zYZCcSL42NrkdGu5Ve1deu2BKFdjFiRaDqagXzBHal6ruMDOqp
+ fD6iHxw4xxnxF1FrTKEJdmksewy7NWijxmdMXUb1n8NZi+I//zd/aW7ubWE7cphQ1PKUkuaHj
+ 86sNVezr7m4fVsfyOnbTdisAABiIreS0htJD1nqalcRA8u5Ouj2yi3b/fFNrYARQe0ac4vee0
+ 7N3LecoQKCHecdxLtOyQOwT/JdBV0M0bkWGDw91VIW7WBoWfQzLebuK5hQvQrRwmAst3Gvz9L
+ BD/Enbdi2tivtvfRpsdHrlauMlcxA2n9Z0cQ2ulr8R8nvKDXIwHJljWGrmZqHnSAdvYsUZDJY
+ Mxineeo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After staring not-so-hard and not-for-so-long at the code. This is
-what I come up with. Rasmus I replaced two of your commits with my
-own (and thank you for giving me an opportunity to refresh my memory
-with this stuff). The first two commits are new and the result of
-Jeff's observation on COMMIT_SLAB_SIZE.
+Hi David,
 
-You may find the description here a bit different from my explanation
-previously (about "exclude/shallow requests"). Well.. I was wrong.
-I had the recent --exclude-tag and friends in mind, but this is about
-clone/fetch/push from/to a shallow repository since 2013, no wonder I
-don't remember much about it :-D
+On Mon, 5 Dec 2016, David Aguilar wrote:
 
-Nguyễn Thái Ngọc Duy (4):
-  shallow.c: rename fields in paint_info to better express their purposes
-  shallow.c: stop abusing COMMIT_SLAB_SIZE for paint_info's memory pools
-  shallow.c: make paint_alloc slightly more robust
-  shallow.c: remove useless code
+> 9ec26e797781239b36ebccb87c590e5778358007 corrected how path arguments
 
-Rasmus Villemoes (2):
-  shallow.c: avoid theoretical pointer wrap-around
-  shallow.c: bit manipulation tweaks
+How about using the "whatis" instead, i.e. "9ec26e7977 (difftool: fix
+argument handling in subdirs, 2016-07-18)"?
 
- shallow.c | 39 ++++++++++++++++++++-------------------
- 1 file changed, 20 insertions(+), 19 deletions(-)
-
--- 
-2.8.2.524.g6ff3d78
-
+Ciao,
+Dscho
