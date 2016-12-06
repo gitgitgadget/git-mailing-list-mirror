@@ -2,151 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 885DB1FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 19:47:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A90F21FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 19:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752594AbcLFTrd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 14:47:33 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:36307 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751646AbcLFTrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 14:47:31 -0500
-Received: by mail-io0-f195.google.com with SMTP id s82so8940080ioi.3
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 11:47:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c5jBYuIu2/eZvbSGD0mUx4xFsyaY7outUvlebBTr9Y8=;
-        b=wbGZ01Kvw89+KDKJzkx0def0vf3js3cPAkF+gBtzhFstmEyMlctQEsijpMvvMa900O
-         5RdNK3gyBsbl9KP+/3ct06ZFiT6wTmGg/+C/SXFV8sw7W9egK9ZpP1VYUiMUU9IpOu+6
-         e7CQmnAnzKZq5VM7Yeq+zUfyTM0siuE7UxqW9YS3PZvXJRCxhPdXglMe/cZvt0BBkbXF
-         q4oq8D/Lch7e9+QKof2pU/hn1kQ6YmyT8gWvi4yQezjdPIz1/hcomQC90DcZRL7atD/H
-         kKIhLeN1NRqUbvO0ZNXzqenXsa3OMZqTapia7iT9rPfp2Kg4pOFOyo5B6BcDaagJ2jcs
-         CH/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c5jBYuIu2/eZvbSGD0mUx4xFsyaY7outUvlebBTr9Y8=;
-        b=XcscJZsE2NKkeEsbZ5sRVHwEjdcGfb9kTOUrMaBDyl6miE5pdwgbYYSqH6d79LhfRi
-         sGl3QnjDDBW9rArGA5j9mEbGM1QrxbtpoSEmGhYf9jQW7L8CWhXEAfrwrwZuwiDtC6Jc
-         NceLPM2acQNEyH+s7R2HV20QV89Kp0afCcV/AWgW56RnlgMNTNuX4yFSdwv1nirzbv/9
-         +NSx4XQyYfW2bRZHUBaHsoq7B6G2sTQoUeX9zdjOwIZ+hrQQHFkvFQ0Fur0wdBE5WFSi
-         Le+kIgS8NeqMXsezPimhySx0a1nxlDupNJJjPXF5znhPywRiYy6Cz3jhGsELV6R2SsNo
-         U7ng==
-X-Gm-Message-State: AKaTC01AxPgmDW3DFkoRalV5YcYmYkmPqShYiSEuA6vzWxnLf7HITIv8+A2YholZgpYsPYa8EG3VHLz2UEQwuw==
-X-Received: by 10.107.141.211 with SMTP id p202mr52638448iod.47.1481053650831;
- Tue, 06 Dec 2016 11:47:30 -0800 (PST)
+        id S1753882AbcLFT4t (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 14:56:49 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51833 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752590AbcLFT4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 14:56:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0ACEE55409;
+        Tue,  6 Dec 2016 14:51:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Pp5K3VK948ZMj+xvvNRT2QrZ5pk=; b=ZWl9rD
+        HnNKCS8E5KFb1yUSelbdn+H2EiIWsoSDy8yVGnIZVP8pyLfQ7C8ItBEK09+PGoOQ
+        DP4W+F8wiYyGu03KhDXgTULQsdtaEYHnaIKDyNGlRhfMAj2GRy+jynIltFrl9Kmu
+        pGlWQg20ddOlLO7zXIGRdGdWp0xQy/vUQLMZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=k/xKPJ6cEyYCGEdUPluQd18Jrw6T+9ja
+        fjD5XfH998w5sp+ICiNNBjXq+2U9p+qin37ghcPAJXN9/fdKyRqwBy5m2vUTaVqL
+        5FlKWpSDJC1UBlwFzQ69fsFSOnbNLsoCc+jphbmvOuOZu+Cr8H/pJ+rFVFoMAILE
+        XvdqKYx39Ss=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0112D55408;
+        Tue,  6 Dec 2016 14:51:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D8B855407;
+        Tue,  6 Dec 2016 14:51:17 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Matthew Patey <matthew.patey2167@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] stash: disable renames when calling git-diff
+References: <CAFQpxxKbn4vBMzVcLZgBVvuL2fsOGNMHR1WC+aTOG_RAWkZ_Gg@mail.gmail.com>
+        <20161206142446.5ba3wc625p5o6nct@sigill.intra.peff.net>
+        <CAFQpxx+PJ3FSoH9DFWyEw+ZLagji9Qou+aY9EB8A+=t+QX0o2A@mail.gmail.com>
+        <20161206152530.snccf7buiosst3e4@sigill.intra.peff.net>
+        <20161206154120.yyuca35ugyuifpq6@sigill.intra.peff.net>
+        <xmqqh96g27bh.fsf@gitster.mtv.corp.google.com>
+        <20161206193154.vf7cd7lk5gyxrra5@sigill.intra.peff.net>
+Date:   Tue, 06 Dec 2016 11:51:16 -0800
+In-Reply-To: <20161206193154.vf7cd7lk5gyxrra5@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 6 Dec 2016 14:31:54 -0500")
+Message-ID: <xmqqd1h425vv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.142.137 with HTTP; Tue, 6 Dec 2016 11:47:30 -0800 (PST)
-In-Reply-To: <723476f6-2c8c-38df-1771-9a525196d9de@gmx.net>
-References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1b1a-067117ef-cd0d-469b-ba80-ea1a1169f694-000000@eu-west-1.amazonses.com>
- <723476f6-2c8c-38df-1771-9a525196d9de@gmx.net>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 7 Dec 2016 01:17:30 +0530
-Message-ID: <CAFZEwPPMb+1SzadRyhyjnz1U=wKN+2eaMr2xd3Aq6TU1wwicgQ@mail.gmail.com>
-Subject: Re: [PATCH v15 18/27] bisect--helper: `bisect_autostart` shell
- function in C
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5A1979FE-BBED-11E6-A9A6-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Stephan,
+Jeff King <peff@peff.net> writes:
 
-On Mon, Nov 21, 2016 at 1:45 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi,
+> On Tue, Dec 06, 2016 at 11:20:18AM -0800, Junio C Hamano wrote:
 >
-> On 10/14/2016 04:14 PM, Pranit Bauva wrote:
->> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->> index 502bf18..1767916 100644
->> --- a/builtin/bisect--helper.c
->> +++ b/builtin/bisect--helper.c
->> @@ -422,6 +425,7 @@ static int bisect_next(...)
->>  {
->>       int res, no_checkout;
->>
->> +     bisect_autostart(terms);
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> >> If you run:
+>> >> 
+>> >>   git -c diff.renames=false stash
+>> >> 
+>> >> then it works.
+>> >
+>> > And here's a patch to fix it.
+>> 
+>> Yuck.  This obviously has easier to bite more people since we
+>> enabled the renames by default.  Thanks for a quick fix.
+>> 
+>> I wonder why we are using "git diff" here, not the plumbing,
+>> though.
 >
-> You are not checking for return values here. (The shell code simply
-> exited if there is no tty, but you don't.)
+> I don't think there's a plumbing command which works for diffing the
+> working tree directly to a git tree. In the long run, it might be a good
+> idea to remedy that.
 
-True. I didn't notice it carefully. Thanks for pointing it out.
+I do not think that one is doing anything different from "git
+diff-index --name-only -z HEAD".
 
->> @@ -754,6 +758,32 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
->>       return retval || bisect_auto_next(terms, NULL);
->>  }
->>
->> +static int bisect_autostart(struct bisect_terms *terms)
->> +{
->> +     if (is_empty_or_missing_file(git_path_bisect_start())) {
->> +             const char *yesno;
->> +             const char *argv[] = {NULL};
->> +             fprintf(stderr, _("You need to start by \"git bisect "
->> +                               "start\"\n"));
->> +
->> +             if (!isatty(0))
->
-> isatty(STDIN_FILENO)?
+> Though I'm not sure that "git add -u" would not accomplish the same
+> thing as these several commands.
 
-Seems better.
+Yeah, it looks like "add -u" to me, too.  Perhaps the script was old
+enough that it didn't exist back then?  I dunno.
 
->> +                     return 1;
->> +
->> +             /*
->> +              * TRANSLATORS: Make sure to include [Y] and [n] in your
->> +              * translation. THe program will only accept English input
->
-> Typo "THe"
-
-Sure.
-
->> +              * at this point.
->> +              */
->
-> Taking "at this point" into consideration, I think the Y and n can be
-> easily translated now that it is in C. I guess, by using...
->
->> +             yesno = git_prompt(_("Do you want me to do it for you "
->> +                                  "[Y/n]? "), PROMPT_ECHO);
->> +             if (starts_with(yesno, "n") || starts_with(yesno, "N"))
->
-> ... starts_with(yesno, _("n")) || starts_with(yesno, _("N"))
-> here (but not sure). However, this would be an extra patch on top of
-> this series.
-
-Can add it as an extra patch. Thanks for informing.
-
->> +                     exit(0);
->
-> Shouldn't this also be "return 1;"? Saying "no" is the same outcome as
-> not having a tty to ask for yes or no.
-
-Yes.
-
->>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->>  {
->>       enum {
->> @@ -790,6 +821,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->>                        N_("find the next bisection commit"), BISECT_NEXT),
->>               OPT_CMDMODE(0, "bisect-auto-next", &cmdmode,
->>                        N_("verify the next bisection state then find the next bisection state"), BISECT_AUTO_NEXT),
->> +             OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
->> +                      N_("start the bisection if BISECT_START empty or missing"), BISECT_AUTOSTART),
->
-> The word "is" is missing.
-
-Sure. Thanks for going through these patches very carefully.
-
-Regards,
-Pranit Bauva
