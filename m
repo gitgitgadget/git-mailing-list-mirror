@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95291FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 23:05:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD3D1FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 23:20:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753752AbcLFXFv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 18:05:51 -0500
-Received: from mout.gmx.net ([212.227.17.22]:56171 "EHLO mout.gmx.net"
+        id S1751590AbcLFXUl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 18:20:41 -0500
+Received: from mout.gmx.net ([212.227.15.19]:50053 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752203AbcLFXFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 18:05:50 -0500
-Received: from [192.168.178.43] ([188.108.240.182]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGB7j-1cPixB3xcl-00FAku; Wed, 07
- Dec 2016 00:05:47 +0100
-Subject: Re: [PATCH v15 12/27] bisect--helper: `get_terms` & `bisect_terms`
- shell function in C
+        id S1751710AbcLFXUj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 18:20:39 -0500
+Received: from [192.168.178.43] ([188.108.240.182]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWk3f-1cBMlT3F9f-00XvYY; Wed, 07
+ Dec 2016 00:20:36 +0100
+Subject: Re: [PATCH v15 23/27] bisect--helper: `bisect_replay` shell function
+ in C
 To:     Pranit Bauva <pranit.bauva@gmail.com>
 References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1ad5-0f90c88e-2077-4155-94e9-7d71dbbac38f-000000@eu-west-1.amazonses.com>
- <b54f7f46-a3c0-3334-24fa-e8d1e7d8f653@gmx.net>
- <CAFZEwPNZCSGzeabHMH6wihz-51OUMMtnBMsffwJJVm9G8Fn=tw@mail.gmail.com>
+ <01020157c38b1b29-65f79716-42c6-4327-acda-8c8d0fe05471-000000@eu-west-1.amazonses.com>
+ <1816d5b4-a4c1-7c97-09ff-b11001501423@gmx.net>
+ <CAFZEwPNmB7rYvUTPy6dvfqfbUsjDeEcteLBBH5Wk-G_suE+YTw@mail.gmail.com>
 Cc:     Git List <git@vger.kernel.org>
 From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <a492fb63-3642-1f97-4668-a927352169f9@gmx.net>
-Date:   Wed, 7 Dec 2016 00:05:46 +0100
+Message-ID: <9da43af2-bd34-5cb6-66d5-01db6f27cdde@gmx.net>
+Date:   Wed, 7 Dec 2016 00:20:35 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.5.0
 MIME-Version: 1.0
-In-Reply-To: <CAFZEwPNZCSGzeabHMH6wihz-51OUMMtnBMsffwJJVm9G8Fn=tw@mail.gmail.com>
+In-Reply-To: <CAFZEwPNmB7rYvUTPy6dvfqfbUsjDeEcteLBBH5Wk-G_suE+YTw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:UWcDvhknahd1gVgm1RpZTSowjN3ZzFhLClITZkx+Z0CeoesiY9R
- Xm/WF1YCyfLZ2Jw7fRmPHNXE0P6zSl7TeproCBRHxHOJFtLt4zx/sXLXY1SE162/A8krkgr
- mNQwh+JFHpmKvTBIXuuAoijvBLjBO8IJtDjJl/NKKg/5oIP/oaRIddJmqs30RT8I6zIDr7i
- gVlfPo/ADp7VHKGyjk32g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3q6U/o1OG5c=:GctwToT4VSR4JtcCd4/0Ny
- A6s29DCClXVvu/qfCCjgm8r8zmK8W31+2GH3+NYQ1uJ12mo9cKBw3BI2zchUCbC0GltFFSvBX
- H73QpMwp85JyneTsswasE4s1zn/q7xDR1lc5zKen9CKwYPGwepJ8gF6rJ2KYH2iYBwDgGqPiB
- IYesFd/eTkfFCXjFsVZOJwe+UwPXNmEDWgZ1H69Af0udsEkPTFkR90BAx2/rYnx29XUbgEhId
- 8ur8xhy4WLE1sCCee+LXLYtxhU62TM3gSp9+dLqRczpXXOj+MlExgoOlkZFkzmK/DELuVHN1S
- ZGKgtjsqwRrARGEm9UZeIpha4zF/JCypTB0HAjl2nbY7Y+STdnL17nD12c1ODYP09jFOK69q2
- L8Q/3QiNhjW7/nOSKVXEGkvRCMX65inAiP++fy9zKFK14P5clNDK3xU/EfZVP4+CtIRGrQIM6
- W/qbe3ZDaC+l39Pv/8EQdMDVoxq5COtpSn6/Yq9z+K7UTugEHp0FY5Ug7vmZvyAVp4jm1osQC
- n/kCzlAyXrMkzrSmLefdCg6nzaVnbUSkuxX/nEgtbc0zkn53QADaBp8d4HXj7PWL8EKh0kRT2
- 0a8TTjskC/rK6l/CFPK9+GMkEf59+kersJIZldnZ/+xBsJbpy+ny4MmrWlApygdB5naBlG2bR
- CC/GD/AtKjP9wQ8yJ4m3J872mNS7kIoxgquK/xXWVKN3+m7GpuymRBAIVms/YkQ9GsjMZFc4a
- wlZV6+lmtkolBooAPAlu9R90+j3Q8kpsuQMTsyFnAwBXxz2Sor4yjpjx4womUEF0VWxLirM4/
- o23ITzu
+X-Provags-ID: V03:K0:7dLEul49QZDulyz58w3IlfxrkkmPd8VH3fHvuYh09YmaEI/Llph
+ R6KZ4v2AXQoRHhOfFmnZL6Wdo3EWr8IC4s66YUmgxMLVvEA8xQvtIap+3mOBRIqdHuUIuBk
+ scyouoJjD+yqIVSblh0M15JBbURhzVmbf7kYh+t2/NKQ1woXXqumGdVItXUhVVpUd9vqnjq
+ t0dUI+YAsbSdT2WnnelRg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iv8uvG00FNQ=:u6ffuy56ZjEMcicn9GLShZ
+ l3qI8ZJqsEri9C0rqimmxepXUiMcy4vNJ87uf4o2kgAsDh577iTAl3vbbiTFr3xo45+wmP2tw
+ Nx5BFI/4ukufKKL5wmitr1i+Z7uelg3ULpcusLo4c1bbLDW6W/ujf423UGuI+lMgA5a1Uxloj
+ EJQ3QkMSuf+gLV6rD1D8NkVBBMOdlmTOO2y6ETH83qgdUJf83BzPXMbYLHU52lPA8KTWKVet5
+ KFt5+QpOqg1sFxALNNCShjUAIEn1m/pkMD1OYWHFlORsPt14ebZLUXHuo/9luhMk8KW0yCnU0
+ 7k83Xys8d7i/IBuhd5m5LytoawdThAXdtvpFQNn5Jh3tCygtrjuSbIG3+apuhL++TEYMOe/T4
+ HFwKYO7ZRt9wo/5/XEmmJPxgaXbjDgpQypM2E/2pQyRf5U+gwZy6bRCrXhAz4mIeJWE/e9trg
+ dCO5KUwyiaujqfXR2w1AXW1N3PkyqdLBgFpGJgj30R1QPHa3JtTFxeYgKAHFKhPqWVHxN94jE
+ UA1HfBgcBywb0zLzqboX/lenvibJ2hS5gq/7LN0EAg5529cLp12gcT8RAjOnENWWVfYKqbdCt
+ I1rqb7h/G0Jd8PLXy70JBFs7xecKIXK/vbWvXzzIRW6KqYueaiTpOAwQG39tPlbDA6cTWUnIJ
+ 3pyksHN/p+JUvbv+RjCeBZVLF0TKRiXcQHZym9mEecvY79WYdZGdAfh+YwhtD+pt/rbwQZUf5
+ BxdCB4Dl1m8wiBA0QbP1NSWHUW/ZEfxvKXLYKRCUClY662vehIrnrtpgsr3fO8jeEkQDbbvHW
+ x+AX7NF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,48 +60,58 @@ X-Mailing-List: git@vger.kernel.org
 
 Hey Pranit,
 
-On 12/06/2016 10:14 PM, Pranit Bauva wrote:
+On 12/07/2016 12:02 AM, Pranit Bauva wrote:
+>>> +static int bisect_replay(struct bisect_terms *terms, const char *filename)
+>>> +{
+>>> +     struct strbuf line = STRBUF_INIT;
+>>> +     struct strbuf word = STRBUF_INIT;
+>>> +     FILE *fp = NULL;
+>>
+>> (The initialization is not necessary here.)
+> 
+> Um. I think it is. Otherwise if it goes to the finish block before you
+> try to operate on fp, it will cause a seg fault.
+
+You are right, thanks!
+
+>>> +     while (strbuf_getline(&line, fp) != EOF) {
+>>> +             int pos = 0;
+>>> +             while (pos < line.len) {
+>>> +                     pos = get_next_word(line.buf, pos, &word);
 >>> +
->>> +     if (argc == 0) {
->>> +             printf(_("Your current terms are %s for the old state\nand "
->>> +                    "%s for the new state.\n"), terms->term_good,
->>> +                    terms->term_bad);
+>>> +                     if (!strcmp(word.buf, "git")) {
+>>> +                             continue;
+>>> +                     } else if (!strcmp(word.buf, "git-bisect")) {
+>>> +                             continue;
+>>> +                     } else if (!strcmp(word.buf, "bisect")) {
+>>> +                             continue;
+>>> +                     } else if (!strcmp(word.buf, "#")) {
+>>> +                             break;
 >>
->> Very minor: It improves the readability if you'd split the string after
->> the \n and put the "and "in the next line.
+>> Maybe it is more robust to check whether word.buf begins with #
 > 
-> Ah. This is because of the message. If I do the other way, then it
-> won't match the output in one of the tests in t/t6030 thus, I am
-> keeping it that way in order to avoid modifying the file t/t6030.
+> Assuming that you meant "# ", yes.
 
-I think I was unclear here. I was referring to the coding/layouting
-style, not to the string. I mean like writing:
+No, if I get it right "# " can never occur because the word.buf never
+contains a space.
+What I meant was that you are currently ignoring everything after a
+"# ", so comments like
 
-	printf(_("Your current terms are %s for the old state\n"
-	         "and "%s for the new state.\n"),
-	       terms->term_good, terms->term_bad);
+# foo
 
-The string fed to _() is the same, but it is split in a different (imho
-more readable) way: after the "\n", not after the "and ".
+are ignored.
+However, imagine a user changes the file by hand (he probably should not
+do it but, hey, it's git: unixy, hacky ... and he thinks he knows what
+he does) and then we have in the file something like
 
+#foo
 
->>> +                     die(_("invalid argument %s for 'git bisect "
->>> +                               "terms'.\nSupported options are: "
->>> +                               "--term-good|--term-old and "
->>> +                               "--term-bad|--term-new."), argv[i]);
->>
->> Hm, "return error(...)" and "die(...)" seems to be quasi-equivalent in
->> this case. Because I am always looking from a library perspective, I'd
->> prefer "return error(...)".
-> 
-> I should use return error()
+which makes perfectly sense when you are used to programming languages
+with # as comment-till-eol marker. The problem is that your current code
+does expect "#" as a single word and would hence not recognize #foo as a
+comment.
 
-When you reroll your patches, please also check if you always put _()
-around your error()s ;) (Hmmm... On the other hand, it might be arguable
-if translations are useful for errors that only occur when people hack
-git-bisect or use the bisect--helper directly... This makes me feel like
-all those errors should be prefixed by some "BUG: " marker since the
-ordinary user only sees them when there is a bug. But I don't feel in
-the position to decide or recommend such a thing, so it's just a thought.)
+I hope I made it clear why I suggested to test if the word *begins* with
+"#" (not "# ").
 
 ~Stephan
