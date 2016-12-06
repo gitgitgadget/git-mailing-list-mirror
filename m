@@ -2,78 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1441C1FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 13:51:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAF991FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 13:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753078AbcLFNvP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 08:51:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52395 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752957AbcLFNvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 08:51:15 -0500
-Received: (qmail 17917 invoked by uid 109); 6 Dec 2016 13:51:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 13:51:14 +0000
-Received: (qmail 13432 invoked by uid 111); 6 Dec 2016 13:51:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 08:51:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 08:51:13 -0500
-Date:   Tue, 6 Dec 2016 08:51:13 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com, bburky@bburky.com, jrnieder@gmail.com
-Subject: Re: [PATCH v7 4/4] transport: add from_user parameter to
- is_transport_allowed
-Message-ID: <20161206135113.i7nlr45vg7uzgfcn@sigill.intra.peff.net>
-References: <1480621447-52399-1-git-send-email-bmwill@google.com>
- <1480623959-126129-1-git-send-email-bmwill@google.com>
- <1480623959-126129-5-git-send-email-bmwill@google.com>
- <20161201214004.3qujo5sfdn3y6c5u@sigill.intra.peff.net>
- <20161201230738.GJ54082@google.com>
- <xmqqh96n6x63.fsf@gitster.mtv.corp.google.com>
- <20161201235856.GL54082@google.com>
- <xmqqr35m3zx7.fsf@gitster.mtv.corp.google.com>
+        id S1752348AbcLFNzs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 08:55:48 -0500
+Received: from mail-io0-f173.google.com ([209.85.223.173]:33331 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751803AbcLFNzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 08:55:48 -0500
+Received: by mail-io0-f173.google.com with SMTP id j65so653373611iof.0
+        for <git@vger.kernel.org>; Tue, 06 Dec 2016 05:55:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KR6bUg34J/RcdV2IsaDlw++K+/NO1nBFvPAZ8+xvWb4=;
+        b=Faok0PVw8S6ouV3AxDTTPS4X+8Ybq2ZAFnOxFwhiS2AqDtC50/neYmxEnKlVVvbDBW
+         g2Eyoe1GHJh+RydCRCZC5I/tc+/FmNK/AKiIv/+YkWREyBN0lGAfl8ADE4QLxMpQH8SV
+         reHJZEkYvobS8qvOkazmdUSGdwvAqZLkqQKEbXMlDCSatDTFCIWvCS4NFV/gUk5j/+Kt
+         IYDa+SBQmGXnZtp0yM28kV4XdocqVOyfjAmOqt88CKXDrTdhJ8XGo2Ug0i5AV44eCbfc
+         zu8BvA3kz1OCHQ18HMtNsQHusEwmTgIKlA2qjPF/D3PWJooKXpS7Mh8v7mpKnwMbjdFV
+         G5WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KR6bUg34J/RcdV2IsaDlw++K+/NO1nBFvPAZ8+xvWb4=;
+        b=FmJfgEBPGMIY2lBjyq5FQ3hWvvSTU+MgYvg6HfZHw/QTpZTJ1RQ//cOqSLlhy5aj6S
+         ml0KUI7/vBEQrg7vV6rj/DTfXczb5EHVi3y18TG5bThDRMi+O/VTFyFwtY9OId60hUpC
+         YFKRMqNj9bIxcntIf+CPQNqEkuqopcLdFL5rhOuhy1uDCchVhd842KExbZmevgxS2JZi
+         0r43Z0UEDOcb3kd4+qfEzSJVljy5f8FMQAVIvjby3/DDZGGNIfxJKgN2q5jaa6/YNY34
+         Ktm1Z5MYuPzkZvRmXFarpu1EydowuZqV6lPL+5ce8FCJfZys54Y3YcgYBC130exr2mW1
+         IQDg==
+X-Gm-Message-State: AKaTC01thQI22hrt8Vjsr1+5Li7ySuS1hhB8LF490skfVUpG6HnMPDdyZ6n2NQgjDWz5jiM1J23LSqPBbsVGcA==
+X-Received: by 10.107.59.9 with SMTP id i9mr55407026ioa.176.1481032087470;
+ Tue, 06 Dec 2016 05:48:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr35m3zx7.fsf@gitster.mtv.corp.google.com>
+Received: by 10.64.69.3 with HTTP; Tue, 6 Dec 2016 05:47:36 -0800 (PST)
+In-Reply-To: <20161206134212.mttcb75dov2jvqu5@sigill.intra.peff.net>
+References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
+ <20161206125339.16803-1-pclouds@gmail.com> <20161206134212.mttcb75dov2jvqu5@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 6 Dec 2016 20:47:36 +0700
+Message-ID: <CACsJy8A=KeGsXAt6ZR-eOkTurSsnYPkt3yTfkYT9aZ86rV1rYg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] shallow.c improvements
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 05, 2016 at 12:04:52PM -0800, Junio C Hamano wrote:
+On Tue, Dec 6, 2016 at 8:42 PM, Jeff King <peff@peff.net> wrote:
+> The final one _seems_ reasonable after reading your explanation, but I
+> lack enough context to know whether or not there might be a corner case
+> that you're missing. I'm inclined to trust your assessment on it.
 
-> > I'm sending out another reroll of this series so that in Jeff's he can
-> > just call 'get_curl_allowed_protocols(-1)' for the non-redirection curl
-> > option, which should make this test stop barfing.
-> 
-> I was hoping to eventually merge Peff's series to older maintenance
-> tracks.  How bad would it be if we rebased the v8 of this series
-> together with Peff's series to say v2.9 (or even older if it does
-> not look too bad)?
-
-My series actually fixes existing security problems, so I'd consider it
-a bug-fix. I _think_ Brandon's series is purely about allowing more
-expressiveness in the whitelist policy, and so could be considered more
-of a feature.
-
-So one option is to apply my series for older 'maint', and then just
-rebase Brandon's on top of that for 'master'.
-
-I don't know if that makes things any easier. I feel funny saying "no,
-no, mine preempts yours because it is more maint-worthy", but I think
-that order does make sense.
-
-I think it would be OK to put Brandon's on maint, too, though. It is a
-refactor of an existing security feature to make it more featureful, but
-the way it is implemented could not cause security regressions unless
-you use the new feature (IOW, we still respect the whitelist environment
-exactly as before).
-
--Peff
+Yeah I basically just wrote down my thoughts so somebody could maybe
+spot something wrong. I'm going to think about it some more in the
+next few days.
+-- 
+Duy
