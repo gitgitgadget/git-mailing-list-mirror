@@ -2,72 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAF991FC96
-	for <e@80x24.org>; Tue,  6 Dec 2016 13:55:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7464C1FC96
+	for <e@80x24.org>; Tue,  6 Dec 2016 13:56:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752348AbcLFNzs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 08:55:48 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33331 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751803AbcLFNzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 08:55:48 -0500
-Received: by mail-io0-f173.google.com with SMTP id j65so653373611iof.0
-        for <git@vger.kernel.org>; Tue, 06 Dec 2016 05:55:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KR6bUg34J/RcdV2IsaDlw++K+/NO1nBFvPAZ8+xvWb4=;
-        b=Faok0PVw8S6ouV3AxDTTPS4X+8Ybq2ZAFnOxFwhiS2AqDtC50/neYmxEnKlVVvbDBW
-         g2Eyoe1GHJh+RydCRCZC5I/tc+/FmNK/AKiIv/+YkWREyBN0lGAfl8ADE4QLxMpQH8SV
-         reHJZEkYvobS8qvOkazmdUSGdwvAqZLkqQKEbXMlDCSatDTFCIWvCS4NFV/gUk5j/+Kt
-         IYDa+SBQmGXnZtp0yM28kV4XdocqVOyfjAmOqt88CKXDrTdhJ8XGo2Ug0i5AV44eCbfc
-         zu8BvA3kz1OCHQ18HMtNsQHusEwmTgIKlA2qjPF/D3PWJooKXpS7Mh8v7mpKnwMbjdFV
-         G5WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KR6bUg34J/RcdV2IsaDlw++K+/NO1nBFvPAZ8+xvWb4=;
-        b=FmJfgEBPGMIY2lBjyq5FQ3hWvvSTU+MgYvg6HfZHw/QTpZTJ1RQ//cOqSLlhy5aj6S
-         ml0KUI7/vBEQrg7vV6rj/DTfXczb5EHVi3y18TG5bThDRMi+O/VTFyFwtY9OId60hUpC
-         YFKRMqNj9bIxcntIf+CPQNqEkuqopcLdFL5rhOuhy1uDCchVhd842KExbZmevgxS2JZi
-         0r43Z0UEDOcb3kd4+qfEzSJVljy5f8FMQAVIvjby3/DDZGGNIfxJKgN2q5jaa6/YNY34
-         Ktm1Z5MYuPzkZvRmXFarpu1EydowuZqV6lPL+5ce8FCJfZys54Y3YcgYBC130exr2mW1
-         IQDg==
-X-Gm-Message-State: AKaTC01thQI22hrt8Vjsr1+5Li7ySuS1hhB8LF490skfVUpG6HnMPDdyZ6n2NQgjDWz5jiM1J23LSqPBbsVGcA==
-X-Received: by 10.107.59.9 with SMTP id i9mr55407026ioa.176.1481032087470;
- Tue, 06 Dec 2016 05:48:07 -0800 (PST)
+        id S1752529AbcLFN4w (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 08:56:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52407 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751798AbcLFN4w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2016 08:56:52 -0500
+Received: (qmail 18246 invoked by uid 109); 6 Dec 2016 13:56:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 13:56:51 +0000
+Received: (qmail 13516 invoked by uid 111); 6 Dec 2016 13:57:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Dec 2016 08:57:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Dec 2016 08:56:50 -0500
+Date:   Tue, 6 Dec 2016 08:56:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     paddor <paddor@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git add -p doesn't honor diff.noprefix config
+Message-ID: <20161206135650.wv5cw3at4tqgpp6o@sigill.intra.peff.net>
+References: <E1D7329A-A54B-4D09-A72A-62ECA8005752@gmail.com>
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Tue, 6 Dec 2016 05:47:36 -0800 (PST)
-In-Reply-To: <20161206134212.mttcb75dov2jvqu5@sigill.intra.peff.net>
-References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
- <20161206125339.16803-1-pclouds@gmail.com> <20161206134212.mttcb75dov2jvqu5@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 6 Dec 2016 20:47:36 +0700
-Message-ID: <CACsJy8A=KeGsXAt6ZR-eOkTurSsnYPkt3yTfkYT9aZ86rV1rYg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] shallow.c improvements
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <E1D7329A-A54B-4D09-A72A-62ECA8005752@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 6, 2016 at 8:42 PM, Jeff King <peff@peff.net> wrote:
-> The final one _seems_ reasonable after reading your explanation, but I
-> lack enough context to know whether or not there might be a corner case
-> that you're missing. I'm inclined to trust your assessment on it.
+On Sat, Dec 03, 2016 at 07:45:18AM +0100, paddor wrote:
 
-Yeah I basically just wrote down my thoughts so somebody could maybe
-spot something wrong. I'm going to think about it some more in the
-next few days.
--- 
-Duy
+> I set the config diff.noprefix = true because I don't like the a/ and
+> b/ prefixes, which nicely changed the output of `git diff`.
+> Unfortunately, the filenames in the output of `git add --patch` are
+> still prefixed.
+> 
+> To me, this seems like a bug. Or there's a config option missing.
+
+The interactive-add process is a perl script built around plumbing
+commands like diff-tree, diff-files, etc.  Plumbing commands do not
+respect some config options, so that the output remains stable or
+scripts built around them. And diff.noprefix is one of these. So scripts
+have to get the value themselves and decide whether to pass it along to
+the plumbing.
+
+In this case, I think there are two steps needed:
+
+  1. Confirm that git-add--interactive.perl can actually handle
+     no-prefix patches. It feeds the patches back to git-apply, which
+     may be a complication (so it may need, for example, to pass a
+     special flag to git-apply).
+
+  2. git-add--interactive.perl needs to parse the config value, and if
+     set, pass the appropriate option to the diff plumbing. This should
+     only be one or two lines; see how $diff_algorithm is handled in
+     that script.
+
+-Peff
