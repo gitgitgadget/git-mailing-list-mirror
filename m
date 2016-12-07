@@ -6,79 +6,69 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B6CE1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 22:04:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71AEE1FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 22:05:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933345AbcLGWER (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 17:04:17 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61918 "EHLO
+        id S932642AbcLGWFA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 17:05:00 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61856 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932777AbcLGWEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 17:04:14 -0500
+        with ESMTP id S1752156AbcLGWE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 17:04:58 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 734D557AD2;
-        Wed,  7 Dec 2016 17:04:13 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF2A55556B;
+        Wed,  7 Dec 2016 17:04:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cnzAAQ+8FJUcmDcoZUMJGFNRYqE=; b=vlWR3x
-        106jKel6n7ax0KKRXz3oAqJLITjynft/6YB4F4gDJR8bdYDohKsBbzQFEeKCBxTw
-        urgS/m68MNMD28aNsr6VGXRK7XiPKi8xSlfUHgnqm5kmL2zoeJ2+qoZYsrR8vyDl
-        iIVtaGo4xPBuc7PM1zkxiGR+x5hWAzh2sa410=
+        :content-type; s=sasl; bh=1udMlNMsRvAM9jg9lYqi8XZsSqU=; b=n1s7Jw
+        bIQkKh0WDXqWvZhKvkquKH7TS/sB1JsY4Jr9BAEZhvPb+hUmW7M2v82NW7idO/Hf
+        /oqR7i0rfXQYAOrmPrdEc5HzC7S8Rgz2y4pDZymYi67yht2y19EI2C9kT5le2KxU
+        OC8xyfp4jblETIjt5cIUtulEXrUVYtVOPd4bk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jNSadibZkJxqvS8yiHhikDrVf4cpAwRJ
-        C3xHKUiJYcAEFfaSHzKhwKS6CCR2HPfDEao8PEzqapGvIXuImRTrNI+Lws5SUbee
-        ChX40RlvlgPK3GSrEeZb36sFN1S8w05M5y8hsaS4qs99PPomzsNbyt9fCSWh9If7
-        ixSrCMF67YM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6340757AD1;
-        Wed,  7 Dec 2016 17:04:13 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=oXHeGVshcEMhprn3lSryGcTKqt1XnhD6
+        Hq+w5HYem9Sa65MaHboQ/anf6kEpqImoRe+b3juZonmtklcDxLwzLTesSw6oC/OP
+        UEaq97eugKTiHIPyOEzeEwMqzRElaEvNoxZH/EcNyAsxdfS2xH8DjggGTP0323z+
+        aI3L4OJuQEg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C79A95556A;
+        Wed,  7 Dec 2016 17:04:57 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E387E57AD0;
-        Wed,  7 Dec 2016 17:04:12 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 472C455569;
+        Wed,  7 Dec 2016 17:04:57 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 16/17] pathspec: small readability changes
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 00/17] pathspec cleanup
 References: <1481061106-117775-1-git-send-email-bmwill@google.com>
-        <1481061106-117775-17-git-send-email-bmwill@google.com>
-        <CACsJy8B6Mj-L1t-CETY5DWRyABHZsYZszwXD3dgUqChfXRB6FA@mail.gmail.com>
-Date:   Wed, 07 Dec 2016 14:04:11 -0800
-In-Reply-To: <CACsJy8B6Mj-L1t-CETY5DWRyABHZsYZszwXD3dgUqChfXRB6FA@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 7 Dec 2016 20:04:52 +0700")
-Message-ID: <xmqqinqvwg4k.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 07 Dec 2016 14:04:56 -0800
+In-Reply-To: <1481061106-117775-1-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Tue, 6 Dec 2016 13:51:29 -0800")
+Message-ID: <xmqqeg1jwg3b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 16455A2C-BCC9-11E6-9E56-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 30B624AE-BCC9-11E6-A787-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
->> A few small changes to improve readability.  This is done by grouping related
->> assignments, adding blank lines, ensuring lines are <80 characters, etc.
->>
->> Signed-off-by: Brandon Williams <bmwill@google.com>
->> ---
->>  pathspec.c | 15 ++++++++++-----
->>  1 file changed, 10 insertions(+), 5 deletions(-)
->>
->> diff --git a/pathspec.c b/pathspec.c
->> index 41aa213..8a07b02 100644
->> --- a/pathspec.c
->> +++ b/pathspec.c
->> @@ -334,6 +334,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+> The intent of this series is to cleanup some of the pathspec initialization
+> code as well as finally migrating the remaining users of the _raw field or
+> get_pathspec() to the pathspec struct interface.  This way both the _raw field
+> and get_pathspec() can be removed from the codebase.  This also removes the
+> functionality where parse_pathspec() modified the const char * argv array that
+> was passed in (which felt kind of odd to me as I wouldn't have expected the
+> passed in array to be modified).
 >
-> btw, since this function has stopped being "just prefix pathspec" for
-> a long time, perhaps rename it to parse_pathspec_item, or something.
+> I also noticed that there are memory leaks associated with the 'original' and
+> 'match' strings.  To fix this the pathspec struct needed to take ownership of
+> the memory for these fields so that they can be cleaned up when clearing the
+> pathspec struct.
 
-Not specifically responding to this comment, but thanks for all the
-constructive feedback messages.
+Both good goals.  Thanks for working on this.
