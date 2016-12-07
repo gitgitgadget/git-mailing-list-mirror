@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E9DC20259
-	for <e@80x24.org>; Wed,  7 Dec 2016 13:00:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09DE020259
+	for <e@80x24.org>; Wed,  7 Dec 2016 13:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752464AbcLGNAj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 08:00:39 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36164 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752423AbcLGNAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 08:00:38 -0500
-Received: by mail-io0-f193.google.com with SMTP id s82so13465740ioi.3
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 05:00:37 -0800 (PST)
+        id S1752421AbcLGNMf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 08:12:35 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:32916 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751900AbcLGNMe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 08:12:34 -0500
+Received: by mail-io0-f196.google.com with SMTP id j92so13603757ioi.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 05:12:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=YE0vXq/m79RrIKTKYUgNJ/UAvEMgn2k7KSCbd2uOu64=;
-        b=c3erieUOqyKSk6lYgbo2oPzhza1yaA0chdYzyuQhEs4HmPIcD8mRPYKUIGijvOh6mG
-         WKcKQwUbw/4+U+gdChNB/Tb4ReFvQ6wbPSc3u9Fz1YJKZr9YYGSls+3o9wX+xb2IqV8A
-         6DMruvDVPhjX/i1awBwXh6Sgx07phY/kiiPMeiA8vpgUG3IfgJ7ZWOpzVkjxt3xIgOpx
-         fA26ps5vfPlm+w45FUuUKedINh1iwvEv/hIBXtYoj1JwlonGvUMLSws0UWuYkwfTH5zp
-         6DgKm8EiwQDhywVYEIIGcHGQsa65gygeWRINAkqaHukPqVbxYBVKLTiDjiE6n7B7RtCg
-         OzIg==
+        bh=hpIrn5w8/u4Ubd0y8N5iLYCMJWky6HTy9qogx9Bq6Gs=;
+        b=fmwwiQMThEHsJXerC/v2LDParwEVWVVpJL4cCKw9+Ksap67VQDu0nzV7MlH5DWgQJ6
+         XyOKcNilX5NHMb57xyUFFUAjSkVO7Ta289+Fr7zVBK2dvOgYnDos1GdXFHOmpPVy91PJ
+         R65Op3/Zmz5QkTZJDs7fOxwbYDGheKLRlSNiHkXH/tNWWThgWmleL+pLXDnJaLJsSWE3
+         57ajP+aqmEjRv2jZXKOhTluVvXuHZfNkO3zYW7vLgCQiIXdldZNRLEnZFyRqgmjdcgXH
+         zQcnfn3JeoBHl2lCaZpg2aMR3mhZI4EjPHqtn2f+2cb+MfvHsaA1wOr2JhLcJRO2pZwe
+         /+mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=YE0vXq/m79RrIKTKYUgNJ/UAvEMgn2k7KSCbd2uOu64=;
-        b=VcIFlhU2IG2PJ+boFy0oxeF4bLUctoI73tbFJq/upQfQtBaiZtHjWm0nhscMNI3oQu
-         yNHqmfQsbIFgLOQZQwxwu+ORyTAMy2UmlbtG04KnLB9NxLbAWupv4hExMcBJnUQ5yAhj
-         CDFIxAFNsht0awVmh2DwBBbClN64KuuAnsEx8yumr4OwWucU2jJj4zB2qY5TCEIbxWdf
-         WhtrsQxXuMP0aYvQ4o0k5UDWAB93PL5ju0WxKGBqDoJUCVV/zIxrL7GIa3qEyTL22871
-         1AMXZvMMsCvHwweFtwFcD6qkLQ/bms0GvZJJ9RNXhI3cWSzhEGGv8y0SU/L4qZijC3x0
-         jMEQ==
-X-Gm-Message-State: AKaTC03S2ZdgJ/1pY1rmW2PkOTaW7OkTZTvXjW1winGMG/nzDPqJj4Vhy1qOUUkXya6V22hHUHbT73HvdJH5BQ==
-X-Received: by 10.107.44.137 with SMTP id s131mr55451917ios.212.1481115637210;
- Wed, 07 Dec 2016 05:00:37 -0800 (PST)
+        bh=hpIrn5w8/u4Ubd0y8N5iLYCMJWky6HTy9qogx9Bq6Gs=;
+        b=M+TOB0ArwqvFEQMc/BOiL09zazouR1ft99zc0HTG4aD8+gBGluvqcKeVNAymyMMpXr
+         XcCtB8iNrySV5B8//eNN6X00BvjKcIRTSEzlOb4VAOGVg7lzQmgBmOvRMiphBiKRaLNN
+         dFVT53yWJSBRXnWHbkRIwkOnZerGSwtCCJy1EcTNoQ9s3FYwUqyL2BL6sZhAxGFqCMp4
+         E4DnWN8yuTzhgKfb6CdfGqqcDDNDBAB3WxvYcW1hKcYMvPjFG/jQGjJfK9sAmiwb5qwq
+         PlUUJwhK7vcYQn7QXujmHqRr1zWwM7N7FZTSDpW6p79Km2mbzBujoD+9SlirXBc+I2JW
+         sFvw==
+X-Gm-Message-State: AKaTC0307nsMN3FjJFnUf2GEJ3w5jhTvOA/azqBdi3OszboBj5akC4znOoI2R7GJq0Xu7WAAjov1tieseV/Gsw==
+X-Received: by 10.36.66.76 with SMTP id i73mr1908265itb.50.1481115236816; Wed,
+ 07 Dec 2016 04:53:56 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Wed, 7 Dec 2016 05:00:06 -0800 (PST)
-In-Reply-To: <1481061106-117775-17-git-send-email-bmwill@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com> <1481061106-117775-17-git-send-email-bmwill@google.com>
+Received: by 10.64.69.3 with HTTP; Wed, 7 Dec 2016 04:53:26 -0800 (PST)
+In-Reply-To: <1481061106-117775-12-git-send-email-bmwill@google.com>
+References: <1481061106-117775-1-git-send-email-bmwill@google.com> <1481061106-117775-12-git-send-email-bmwill@google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 7 Dec 2016 20:00:06 +0700
-Message-ID: <CACsJy8ChJ_H3gDOuKVYGAKYumG0u2WkBVpNr_3ePyAJ9NojvEg@mail.gmail.com>
-Subject: Re: [PATCH 16/17] pathspec: small readability changes
+Date:   Wed, 7 Dec 2016 19:53:26 +0700
+Message-ID: <CACsJy8D9SAOYtzPTuGnst3J7qCUjMuGMrZ=KNH0MLSxMrq4krw@mail.gmail.com>
+Subject: Re: [PATCH 11/17] pathspec: factor global magic into its own function
 To:     Brandon Williams <bmwill@google.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
@@ -62,75 +62,33 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
-> A few small changes to improve readability.  This is done by grouping related
-> assignments, adding blank lines, ensuring lines are <80 characters, etc.
+> Create helper functions to read the global magic environment variables
+> in additon to factoring out the global magic gathering logic into its
+> own function.
 >
 > Signed-off-by: Brandon Williams <bmwill@google.com>
 > ---
->  pathspec.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
+>  pathspec.c | 120 +++++++++++++++++++++++++++++++++++++------------------------
+>  1 file changed, 74 insertions(+), 46 deletions(-)
 >
 > diff --git a/pathspec.c b/pathspec.c
-> index 41aa213..8a07b02 100644
+> index 5afebd3..08e76f6 100644
 > --- a/pathspec.c
 > +++ b/pathspec.c
-> @@ -334,6 +334,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->         if ((magic & PATHSPEC_LITERAL) && (magic & PATHSPEC_GLOB))
->                 die(_("%s: 'literal' and 'glob' are incompatible"), elt);
+> @@ -87,6 +87,74 @@ static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
+>         strbuf_addf(sb, ",prefix:%d)", prefixlen);
+>  }
 >
-> +       /* Create match string which will be used for pathspec matching */
->         if (pathspec_prefix >= 0) {
->                 match = xstrdup(copyfrom);
->                 prefixlen = pathspec_prefix;
-> @@ -341,11 +342,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->                 match = xstrdup(copyfrom);
->                 prefixlen = 0;
->         } else {
-> -               match = prefix_path_gently(prefix, prefixlen, &prefixlen, copyfrom);
-> +               match = prefix_path_gently(prefix, prefixlen,
-> +                                          &prefixlen, copyfrom);
->                 if (!match)
->                         die(_("%s: '%s' is outside repository"), elt, copyfrom);
->         }
+> +static inline int get_literal_global(void)
+> +{
+> +       static int literal_global = -1;
 > +
->         item->match = match;
-> +       item->len = strlen(item->match);
-> +       item->prefix = prefixlen;
-> +
->         /*
->          * Prefix the pathspec (keep all magic) and assign to
->          * original. Useful for passing to another command.
-> @@ -362,8 +368,6 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->         } else {
->                 item->original = xstrdup(elt);
->         }
-> -       item->len = strlen(item->match);
-> -       item->prefix = prefixlen;
->
->         if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
->             strip_submodule_slash_cheap(item);
-> @@ -371,13 +375,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->         if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
->             strip_submodule_slash_expensive(item);
->
-> -       if (magic & PATHSPEC_LITERAL)
-> +       if (magic & PATHSPEC_LITERAL) {
->                 item->nowildcard_len = item->len;
-> -       else {
-> +       } else {
->                 item->nowildcard_len = simple_length(item->match);
->                 if (item->nowildcard_len < prefixlen)
->                         item->nowildcard_len = prefixlen;
->         }
-> +
->         item->flags = 0;
+> +       if (literal_global < 0)
+> +               literal_global = git_env_bool(GIT_LITERAL_PATHSPECS_ENVIRONMENT,
+> +                                             0);
 
-You probably can move this line up with the others too.
-
-And since you have broken this function down so nicely, it made me see
-that we could do
-
-item->magic = magic instead of returning "magic" at the end, which is
-assigned to item->magic anyway by the caller.
+These zeros look so lonely. I know it would exceed 80 columns if we
+put it on the previous line. But I think it's ok for occasional
+exceptions. Or you could rename noglob_global to noglob.
 -- 
 Duy
