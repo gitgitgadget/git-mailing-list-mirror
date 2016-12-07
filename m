@@ -2,71 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A54321FC96
-	for <e@80x24.org>; Wed,  7 Dec 2016 01:12:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8A691FC96
+	for <e@80x24.org>; Wed,  7 Dec 2016 01:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753442AbcLGBMc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Dec 2016 20:12:32 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:37047 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752190AbcLGBMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2016 20:12:31 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout06 with smtp
-        id GpCS1u0050srQBz01pCVEG; Wed, 07 Dec 2016 01:12:29 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=N659UExz7-8A:10 a=uZvujYp8AAAA:8 a=om7oUi9AbzVqUR__wecA:9 a=pILNOxqGKmIA:10
- a=_g4kg8Y8bwcA:10 a=SLzB8X_8jTLwj6mN0q5r:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] real_path: make real_path thread-safe
-To:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
- <1480964316-99305-2-git-send-email-bmwill@google.com>
- <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
- <20161207001018.GD103573@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jacob.keller@gmail.com
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <b73e61f8-0cff-b33e-118a-e530d367c94c@ramsayjones.plus.com>
-Date:   Wed, 7 Dec 2016 01:12:25 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1752009AbcLGBYJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Dec 2016 20:24:09 -0500
+Received: from resqmta-ch2-04v.sys.comcast.net ([69.252.207.36]:45982 "EHLO
+        resqmta-ch2-04v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751786AbcLGBYH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Dec 2016 20:24:07 -0500
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Dec 2016 20:24:07 EST
+Received: from resomta-ch2-17v.sys.comcast.net ([69.252.207.113])
+        by resqmta-ch2-04v.sys.comcast.net with SMTP
+        id EQsvcqN5UGIgtEQsvc2NC8; Wed, 07 Dec 2016 01:19:01 +0000
+Received: from cherryberry.dsgml.com ([IPv6:2601:547:501:184b:22cf:30ff:fe05:22e8])
+        by resomta-ch2-17v.sys.comcast.net with SMTP
+        id EQsucehbqTcMEEQsucVVn4; Wed, 07 Dec 2016 01:19:01 +0000
+Received: from as (helo=localhost)
+        by cherryberry.dsgml.com with local-esmtp (Exim 4.84_2)
+        (envelope-from <asgit@dsgml.com>)
+        id 1cEQst-0000ld-QK
+        for git@vger.kernel.org; Tue, 06 Dec 2016 20:18:59 -0500
+Date:   Tue, 6 Dec 2016 20:18:59 -0500 (EST)
+From:   Ariel <asgit@dsgml.com>
+X-X-Sender: as@cherryberry.dsgml.com
+To:     git@vger.kernel.org
+Subject: git add -p with new file
+Message-ID: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
 MIME-Version: 1.0
-In-Reply-To: <20161207001018.GD103573@google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+X-CMAE-Envelope: MS4wfCheXiYhgo+FbN/C1qMxfuece+5DlNZrPc5tW7EtSs9avBgGED241a+nsQSAi/lFZSp+h4BvYhVlMkKVAK02bD1wAGDYDaXqT1iHNm9iBBxCEvt108So
+ u7NVgBsIKiYLRBtiBAKmu2mDgnt+jhjgAZyFxijNbTjnwWSuFg/hgXMh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+If you do git add -p new_file it says:
 
-On 07/12/16 00:10, Brandon Williams wrote:
-> On 12/06, Junio C Hamano wrote:
->> POSIX cares about treating "//" at the very beginning of the path
->> specially.  Is that supposed to be handled here, or by a lot higher
->> level up in the callchain?
-> 
-> What exactly does "//" mean in this context? (I'm just naive in this
-> area)
+No changes.
 
-This refers to a UNC path (ie Universal Naming Convention) which
-is used to refer to servers, printers and other 'network resources'.
-Although this started (many moons ago) in unix, it isn't used too
-much outside of windows networks! (where it is usually denoted by
-\\servername\path).
+Which is a rather confusing message. I would expect it to show me the 
+content of the file in patch form, in the normal way that -p works, let me 
+edit it, etc.
 
-You can see the relics of unix UNC paths if you look at the wording
-for basename() in the POSIX standard. Note the special treatment of
-the path which 'is exactly "//"', see http://pubs.opengroup.org/onlinepubs/009695399/functions/basename.html
+(Note: I am aware I can do -N first, but when I specifically enter the 
+name of a new file I feel it should figure out what I mean.)
 
-ATB,
-Ramsay Jones
+ 	-Ariel
