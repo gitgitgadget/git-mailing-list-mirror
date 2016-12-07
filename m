@@ -2,123 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B8A31FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 18:37:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65EF1FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 18:43:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753542AbcLGSgk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 13:36:40 -0500
-Received: from mout.gmx.net ([212.227.17.22]:65230 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753391AbcLGSgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 13:36:38 -0500
-Received: from [192.168.178.43] ([92.76.239.239]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Meutp-1bzUgF0Iw5-00OYaN; Wed, 07
- Dec 2016 19:36:18 +0100
-Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
-Date:   Wed, 7 Dec 2016 19:36:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:UNeKGBjDrKm+BFT1xGJc1boaUrmJN3ad1yv15h7fPhzJqkPHuPm
- 2Wxo7OAtTfAIZ3XDPVumbChbu8J+vETeykDUV9op49f8wCovAbtxai5vEQvSzesPuFJvfXC
- fZJ73cMjyKsrqF2fiow2ycJtWy6zmUhfHp5s0eZyldIxJxpFji4+wMTQpGtUItnHA+vBcpN
- MLZoCkLCVecs+J4FjyhJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:es3z6B5iT2Q=:XXTcph+DvljU1ITMG21NMi
- 5MMz+WCX3F2eEAr3WOYAUlDdvvo+FUvwt2itUypOFzPC+pgGnJvT3Y1iupakk05Yo0q9upP2j
- spPF8URFIOXTmHnsMwAX37E+ORAZPTBlBnv9F8F2aCDOqpnz/ZJ4ppG2i7HIPIX0esK/31Egr
- l9hT1txf00theX7H55/lobUEqJRvLbpsGBew2a/4fUfikYvzXoR4ue+b7v4x2oDMVPNwXDvPC
- R4c3/lAz7D/orTJ1YfLj/zLer7F+YKQaoJUTfETAo2pigi83JctDj8F5c3Y3y9Ev+QwXqUs3+
- 5pvz06mVkNJ83cOP9nOe6g4AHORtwZEcDDDmGLHPalCGN6wwyT4sf0/+auvJnHIfxIX5DISrw
- u2zUhjHmmgElalvPMonpSKJF9MgFoV1m6V5Ka7ZItTyb1Bru9ULIaWGaMFRFYQ0eM6r+t05v4
- tpA9fhkP+Dtqj9HOmkAHVdDrf0rb4HUkvRZaJE+QIbGwUnPJ6YAOal6mG1xI8I8hJtkcPjyCw
- KhkaXS6Jam3mR9aHxdwtOI7dTDEQR9x1U+FfHH/MNcjrlEnslpTFyQlTNvjlUp2zc9tv2cmMa
- dtgzhV/BLYESZFgDj0fqYaKVLXSw18g1it31UnVDJIs57ehwXtjPM+7HVKooJ+wv2LOaf867J
- I+CG5C8+gEUVgahxvHFUbgeoFWPP9ZpdPcpr8r2md1QNSVIdw0ugSBY1d+djyGuntgHiZUwzx
- C//qjyoDw0l7GLEQDUIRNcCWeAGcNiYNOD/bTk3sGTaiPbeWLYNwejuuBwXLYtTu2dhJIkpjl
- XAflCui
+        id S932556AbcLGSnv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 13:43:51 -0500
+Received: from mail-wj0-f193.google.com ([209.85.210.193]:34345 "EHLO
+        mail-wj0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932444AbcLGSnu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 13:43:50 -0500
+Received: by mail-wj0-f193.google.com with SMTP id xy5so51303141wjc.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 10:43:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=N8I+NiUeIJ4imEXT7d7dj7TdiWb6GypTLdAdC3MKzCQ=;
+        b=zR5p3miGt8+77hRLy7LUzGq2IyYHvHeAnbd7q9XXjleQFCAo8Mp1bKGGWy72kKFtbu
+         hlF84V4T7O34YLQHXNuKb6dv2/HiVruve6Vt8fF+BIyHnv6s2LB2Q3GyxL+RuIeCqUwr
+         LIH3sZmp74VuoiqtcofCdh33W1f8q+GIvgh/xnfdzpOIUtHJiENop8Krt7qJkQFLBy/H
+         8GdJMwI+GjRNFskJSWu1PIMqj/Q9Zj7knvPEGXJOCGmh6d8HBP/hHI2u15bxcUVCs/Xk
+         //o/5wHVWhLI+kCYaWGKCkGiBuVNtKGe69etcy4FOeA5NdHMY4FdKQ/bfk6FK986tdpH
+         90SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=N8I+NiUeIJ4imEXT7d7dj7TdiWb6GypTLdAdC3MKzCQ=;
+        b=TjvrEHNodSmJ36+2PjK6lR3B45dnvN7bESc+AqukQp4naNfP3vSL94Fy2UFyDq/5dG
+         72B2SoUoSK0IjkiYdnXRg/OIs3q71Kc0Aq72gEtR+g2u3zyOrffdPIlUFL/AX9mfs1ez
+         KP71D6PkLLv+OoidCU33+xtlFEod5iMdN7OTySt4dJUmieG2SF74oxz8F4JvdPqkeMBC
+         MP2cVrRw2o63VOnJeh4FFKLt3Xzfh3KIHHdJdZhZ7ZMIA1WaHkSHwGahFGj/1DxLWx39
+         HHkg6UGXXgljp+mo61UlBqFSjD5vtIWMda0pgqg7kr9zER1HvVJFWnhsacqxmWIbVqqS
+         Ey5Q==
+X-Gm-Message-State: AKaTC007Q8QbhWn3g2Gc5SzLZvSbC41shPyiPmaGdZiFgUHS6zndEfPyJACesMwv3uD7aQ==
+X-Received: by 10.194.111.231 with SMTP id il7mr58881683wjb.52.1481136229033;
+        Wed, 07 Dec 2016 10:43:49 -0800 (PST)
+Received: from localhost.localdomain ([104.131.203.210])
+        by smtp.gmail.com with ESMTPSA id d64sm11070905wmh.3.2016.12.07.10.43.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 07 Dec 2016 10:43:48 -0800 (PST)
+From:   vi0oss@gmail.com
+To:     git@vger.kernel.org
+Cc:     stefanbeller@gmail.com, Vitaly _Vi Shukela <vi0oss@gmail.com>
+Subject: [PATCH] submodule--helper: set alternateLocation for cloned submodules
+Date:   Wed,  7 Dec 2016 21:42:48 +0300
+Message-Id: <20161207184248.6130-1-vi0oss@gmail.com>
+X-Mailer: git-send-email 2.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Vitaly _Vi Shukela <vi0oss@gmail.com>
 
-On 12/06/2016 07:58 PM, Junio C Hamano wrote:
-> I was burned a few times with this in the past few years, but it did
-> not irritate me often enough that I didn't write it down.  But I
-> think this is serious enough that deserves attention from those who
-> were involved.
-> 
-> A short reproduction recipe, using objects from git.git that are
-> publicly available and stable, shows how bad it is.
-> 
->     $ git checkout v2.9.3^0
-> 
->     $ git cherry-pick 0582a34f52..a94bb68397
->     ... see conflict, decide to give up backporting to
->     ... such an old fork point.
->     ... the git-prompt gives "|CHERRY-PICKING" correctly.
-> 
->     $ git reset --hard v2.10.2^0
->     ... the git-prompt no longer says "|CHERRY-PICKING"
-> 
->     $ edit && git commit -m "prelim work for backporting"
->     [detached HEAD cc5a6a9219] prelim work for backporting
-> 
->     $ git cherry-pick 0582a34f52..a94bb68397
->     error: a cherry-pick or revert is already in progress
->     hint: try "git cherry-pick (--continue | --quit | --abort)"
->     fatal: cherry-pick failed
-> 
->     $ git cherry-pick --abort
->     ... we come back to v2.9.3^0, losing the new commit!
+Git v2.11 introduced "git clone --recursive --referece ...",
+but it didn't put the alternates for _nested_ submodules.
 
-Apart from the git-prompt bug: isn't this a user error? I think "git
-cherry-pick --quit"[1] would be the right thing to do, not --abort.
+This patch makes all not just the root repository, but also
+all submodules (recursively) have submodule.alternateLocation
+and submodule.alternateErrorStrategy configured, making Git
+search for possible alternates for nested submodules as well.
 
-On the other hand, one (as a user) could also expect that "git reset
---hard" also resets sequencer-related states (and that is what the
-git-prompt suggests), but that would probably break a lot of scripts ;)
+As submodule's alternate target does not end in .git/objects
+(rather .git/modules/qqqqqq/objects), this alternate target
+path restriction for in add_possible_reference_from_superproject
+relates from "*.git/objects" to just */objects".
 
-[1] By the way: git cherry-pick --quit, git rebase --forget ...
-different wording for the same thing makes things unintuitive.
+New tests have been added to t7408-submodule-reference.
 
->  (1) The third invocation of "cherry-pick" with "--abort" to get rid
->      of the state from the unfinished cherry-pick we did previously
->      is necessary, but the command does not notice that we resetted
->      to a new branch AND we even did some other work there.  This
->      loses end-user's work.  
-> 
->      "git cherry-pick --abort" should learn from "git am --abort"
->      that has an extra safety to deal with the above workflow.  The
->      state from the unfinished "am" is removed, but the head is not
->      rewound to avoid losing end-user's work.
-> 
->      You can try by replacing two instances of
-> 
-> 	$ git cherry-pick 0582a34f52..a94bb68397
-> 
->      with
-> 
-> 	$ git format-patch --stdout 0582a34f52..a94bb68397 | git am
-> 
->      in the above sequence, and conclude with "git am--abort" to see
->      how much more pleasant and safe "git am --abort" is.
-Definitely. I'd volunteer to add that safety guard. (But (2) remains.)
+Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
+---
+ builtin/submodule--helper.c    | 24 ++++++++++++--
+ t/t7408-submodule-reference.sh | 73 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+), 2 deletions(-)
 
-~Stephan
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 4beeda5..93dae62 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -498,9 +498,9 @@ static int add_possible_reference_from_superproject(
+ 
+ 	/*
+ 	 * If the alternate object store is another repository, try the
+-	 * standard layout with .git/modules/<name>/objects
++	 * standard layout with .git/(modules/<name>)+/objects
+ 	 */
+-	if (ends_with(alt->path, ".git/objects")) {
++	if (ends_with(alt->path, "/objects")) {
+ 		char *sm_alternate;
+ 		struct strbuf sb = STRBUF_INIT;
+ 		struct strbuf err = STRBUF_INIT;
+@@ -672,6 +672,26 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		die(_("could not get submodule directory for '%s'"), path);
+ 	git_config_set_in_file(p, "core.worktree",
+ 			       relative_path(path, sm_gitdir, &rel_path));
++
++	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
++	{
++		char *sm_alternate = NULL, *error_strategy = NULL;
++
++		git_config_get_string("submodule.alternateLocation", &sm_alternate);
++		if (sm_alternate) {
++			git_config_set_in_file(p, "submodule.alternateLocation",
++						   sm_alternate);
++		}
++		git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
++		if (error_strategy) {
++			git_config_set_in_file(p, "submodule.alternateErrorStrategy",
++						   error_strategy);
++		}
++
++		free(sm_alternate);
++		free(error_strategy);
++	}
++
+ 	strbuf_release(&sb);
+ 	strbuf_release(&rel_path);
+ 	free(sm_gitdir);
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index 1c1e289..7b64725 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -125,4 +125,77 @@ test_expect_success 'ignoring missing submodule alternates passes clone and subm
+ 	)
+ '
+ 
++test_expect_success 'preparing second superproject with a nested submodule' '
++	test_create_repo supersuper &&
++	(
++		cd supersuper &&
++		echo I am super super. >file &&
++		git add file &&
++		git commit -m B-super-super-initial
++		git submodule add "file://$base_dir/super" subwithsub &&
++		git commit -m B-super-super-added &&
++		git submodule update --init --recursive &&
++		git repack -ad
++	) &&
++	echo not cleaning supersuper
++'
++
++# At this point there are three root-level positories: A, B, super and super2
++
++test_expect_success 'nested submodule alternate in works and is actually used' '
++	test_when_finished "rm -rf supersuper-clone" &&
++	git clone --recursive --reference supersuper supersuper supersuper-clone &&
++	(
++		cd supersuper-clone &&
++		# test superproject has alternates setup correctly
++		test_alternate_is_used .git/objects/info/alternates . &&
++		# immediate submodule has alternate:
++		test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub
++		# nested submodule also has alternate:
++		test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
++	)
++'
++
++test_expect_success 'missing nested submodule alternate fails clone and submodule update' '
++	test_when_finished "rm -rf supersuper-clone supersuper2" &&
++	git clone supersuper supersuper2 &&
++	(
++		cd supersuper2 &&
++		git submodule update --init
++	) &&
++	test_must_fail git clone --recursive --reference supersuper2 supersuper2 supersuper-clone &&
++	(
++		cd supersuper-clone &&
++		# test superproject has alternates setup correctly
++		test_alternate_is_used .git/objects/info/alternates . &&
++		# update of the submodule fails
++		test_must_fail git submodule update --init --recursive &&
++		# immediate submodule has alternate:
++		test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub
++		# but nested submodule has no alternate:
++		test_must_fail test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
++	)
++'
++
++test_expect_success 'missing nested submodule alternate in --reference-if-able mode' '
++	test_when_finished "rm -rf supersuper-clone supersuper2" &&
++	git clone supersuper supersuper2 &&
++	(
++		cd supersuper2 &&
++		git submodule update --init
++	) &&
++	git clone --recursive --reference-if-able supersuper2 supersuper2 supersuper-clone &&
++	(
++		cd supersuper-clone &&
++		# test superproject has alternates setup correctly
++		test_alternate_is_used .git/objects/info/alternates . &&
++		# update of the submodule fails
++		test_must_fail git submodule update --init --recursive &&
++		# immediate submodule has alternate:
++		test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub
++		# but nested submodule has no alternate:
++		test_must_fail test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
++	)
++'
++
+ test_done
+-- 
+2.10.2
 
