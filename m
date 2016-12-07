@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6B7B20259
-	for <e@80x24.org>; Wed,  7 Dec 2016 15:37:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AEB0203C1
+	for <e@80x24.org>; Wed,  7 Dec 2016 15:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753457AbcLGPhD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 10:37:03 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36504 "EHLO
+        id S932272AbcLGPhK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 10:37:10 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35797 "EHLO
         mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752635AbcLGPgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 10:36:55 -0500
-Received: by mail-pf0-f196.google.com with SMTP id c4so20788104pfb.3
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 07:36:55 -0800 (PST)
+        with ESMTP id S1752635AbcLGPhE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 10:37:04 -0500
+Received: by mail-pf0-f196.google.com with SMTP id i88so11381211pfk.2
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 07:37:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RyUYcEakC1cSW/LJLUc+mcog8SRwDuUtTD6w8XOAY10=;
-        b=YAjNYtNEjlJraWzEuyhtmbZSvs5L/UfO6C+g9rksjyVJiZoXOge+E5SGRC71uR2Ep+
-         uxnySLVMlJaZysWpmLocM3D9iY+98ofSNFiSSFxZArPfbWL8xq3TG9JJicwKQN85Qoz1
-         TKq6k9c9tS6Y4/Feuu/5qmWFDGYnE4cDQ2Qpd1G2+H5N0eXGrRx0WsS+Tmd4pTMRoe0x
-         c9Oc9kt29RtfHPkTAdwMXXmYdoTOXz9Wikzic5L02rRD1SCVhjcJ6U+inV4DFWaNUW+w
-         nRf/qp/9k+T6ntZESyuoqUT93M5chrrjFR1xhjoEs2s/YTJ40j424z+81328lOM3gbUD
-         5IXQ==
+        bh=Uez9hfJv4Zg29SbXp7+5XAe7ou1KfjwnXLKNL8svEoQ=;
+        b=UmAfNxkdXIZZCMbf3J2xrrArP+cLkqoX7zJQFlN/ktxfLjVqM0HVYb0nBdUgyz9LEt
+         Xtqci4NIWffsKSD4t3+CBtqgb3IlYP4C5q+zlFRvwbveDX+JP/UIETT1+VjyuelWNwZS
+         p5whcwGiiKv2RuTolZRxkM1mvFplhwAk/OezGQD2UyiluoOG7KIVae/X5tkt3h7CNwoF
+         JWBmPW9RnfzJmni7wk6Nl7SKmEgprz/hZu3BKuIzxgQB5Xwb2Pc/mUDR6Nx1nC8fr68T
+         3c3WKucbEfqUoBvUx/MdfEOQ+SY8lwAnFy7zsgFRoIy8RL2AgAco2a295Jv5Z5+MyIsY
+         TsHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RyUYcEakC1cSW/LJLUc+mcog8SRwDuUtTD6w8XOAY10=;
-        b=d7aKaLO7YIGyUDSyY8YSAuJeef9x1WX8VAk3cfzxMxZS4hkJn6Rhl/RDFojC510M2D
-         59KenTFSFadzs0seW4obGCHeq2et6pzJwVi87FEDXIDe/qZ95TJtj+Ag54v07ZyDtxhk
-         3EFhZ/81pkf6op2HVlykYFnTNwCcoSYSBQheqfJ4383iliZWVp/8nDp3AiPcLXH4BqVy
-         pE+38lObZoeL71p0CFDMaMOAGQnvTic1j8NwVQigJyLryE34IPgNrvjrqwiO8vbObBk2
-         ffs9O7gvuva8t8TKBjbsSAvqDxn0otJZWsaClyyvoueRl+xV0DwrMKPHg7Dyp6qFiCvV
-         Z4Sw==
-X-Gm-Message-State: AKaTC00gEksF27Sbbx3rUDPiGMGAcBSXRW+f8XjpafV+t1iEf8n9TvNquCqLV74kU49Frg==
-X-Received: by 10.98.54.68 with SMTP id d65mr68958260pfa.61.1481125014676;
-        Wed, 07 Dec 2016 07:36:54 -0800 (PST)
+        bh=Uez9hfJv4Zg29SbXp7+5XAe7ou1KfjwnXLKNL8svEoQ=;
+        b=f9g1U6UT7sBd8d0cse/uTP1mFd0GPy/8NTybQSN5W67+81QCfhWF0lOE4ImbgKKd4D
+         r1WQaq6YdgAXOh3tQbkSKFOLiKKdTRuI3L6h0Mh8IxNE9CdtQ6Cr1pk53sOrcqZXWqd5
+         sPhKP7QvNNva6Z2+GZ7Ejq0zUF7AXVeQj/HFvXMT+8LDLXY/vB17JXG9SAnZT8tChipG
+         EI3eD25ktmZcTf4cqsyDvThcq6BqdzMyyiB2hWkLcHyGnrcHOdSSX0gmgPe2/nXbFR/Z
+         ez/r964yrfEvLnLN8Nmk5TGhRA3cRFyroWqpc6CIq96oWd5APj5hjbIDY94ltX0daymi
+         WLdQ==
+X-Gm-Message-State: AKaTC01bcgU6AV5NvsQK4UDIng2hywOLCvXa4kRylBAlzEcVF/5Dk0rjxK+Kn8UjN61hZQ==
+X-Received: by 10.99.235.10 with SMTP id t10mr121320893pgh.95.1481125023947;
+        Wed, 07 Dec 2016 07:37:03 -0800 (PST)
 Received: from AamlaJuice.corp.endurance.com ([122.15.255.69])
-        by smtp.gmail.com with ESMTPSA id l7sm43584459pfg.35.2016.12.07.07.36.52
+        by smtp.gmail.com with ESMTPSA id l7sm43584459pfg.35.2016.12.07.07.37.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Dec 2016 07:36:54 -0800 (PST)
+        Wed, 07 Dec 2016 07:37:03 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, gitster@pobox.com, jnareb@gmail.com,
         Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 16/19] ref-filter: allow porcelain to translate messages in the output
-Date:   Wed,  7 Dec 2016 21:06:24 +0530
-Message-Id: <20161207153627.1468-17-Karthik.188@gmail.com>
+Subject: [PATCH v8 19/19] branch: implement '--format' option
+Date:   Wed,  7 Dec 2016 21:06:27 +0530
+Message-Id: <20161207153627.1468-20-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161207153627.1468-1-Karthik.188@gmail.com>
 References: <20161207153627.1468-1-Karthik.188@gmail.com>
@@ -64,85 +64,142 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Introduce setup_ref_filter_porcelain_msg() so that the messages used in
-the atom %(upstream:track) can be translated if needed. By default, keep
-the messages untranslated, which is the right behavior for plumbing
-commands. This is needed as we port branch.c to use ref-filter's
-printing API's.
+Implement the '--format' option provided by 'ref-filter'. This lets the
+user list branches as per desired format similar to the implementation
+in 'git for-each-ref'.
 
-Written-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Add tests and documentation for the same.
+
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- ref-filter.c | 29 +++++++++++++++++++++++++----
- ref-filter.h |  2 ++
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ Documentation/git-branch.txt |  7 ++++++-
+ builtin/branch.c             | 14 +++++++++-----
+ t/t3203-branch-output.sh     | 14 ++++++++++++++
+ 3 files changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 9fce5bb..a68ed7b 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -15,6 +15,27 @@
- #include "version.h"
- #include "wt-status.h"
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 1fe7344..e5b6f31 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[--column[=<options>] | --no-column]
+ 	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
+-	[--points-at <object>] [<pattern>...]
++	[--points-at <object>] [--format=<format>] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
+@@ -246,6 +246,11 @@ start-point is either a local or remote-tracking branch.
+ --points-at <object>::
+ 	Only list branches of the given object.
  
-+static struct ref_msg {
-+	const char *gone;
-+	const char *ahead;
-+	const char *behind;
-+	const char *ahead_behind;
-+} msgs = {
-+	 /* Untranslated plumbing messages: */
-+	"gone",
-+	"ahead %d",
-+	"behind %d",
-+	"ahead %d, behind %d"
-+};
++--format <format>::
++	A string that interpolates `%(fieldname)` from the object
++	pointed at by a ref being shown.  The format is the same as
++	that of linkgit:git-for-each-ref[1].
 +
-+void setup_ref_filter_porcelain_msg(void)
-+{
-+	msgs.gone = _("gone");
-+	msgs.ahead = _("ahead %d");
-+	msgs.behind = _("behind %d");
-+	msgs.ahead_behind = _("ahead %d, behind %d");
-+}
+ Examples
+ --------
+ 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 046d245..6393c3c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -28,6 +28,7 @@ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+ 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
+ 	N_("git branch [<options>] [-r | -a] [--points-at]"),
++	N_("git branch [<options>] [-r | -a] [--format]"),
+ 	NULL
+ };
+ 
+@@ -364,14 +365,14 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+ 	return strbuf_detach(&fmt, NULL);
+ }
+ 
+-static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
++static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
+ {
+ 	int i;
+ 	struct ref_array array;
+ 	int maxwidth = 0;
+ 	const char *remote_prefix = "";
+ 	struct strbuf out = STRBUF_INIT;
+-	char *format;
++	char *to_free = NULL;
+ 
+ 	/*
+ 	 * If we are listing more than just remote branches,
+@@ -388,7 +389,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	if (filter->verbose)
+ 		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
+ 
+-	format = build_format(filter, maxwidth, remote_prefix);
++	if (!format)
++		format = to_free = build_format(filter, maxwidth, remote_prefix);
+ 	verify_ref_format(format);
+ 
+ 	/*
+@@ -416,7 +418,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	}
+ 
+ 	ref_array_clear(&array);
+-	free(format);
++	free(to_free);
+ }
+ 
+ static void reject_rebase_or_bisect_branch(const char *target)
+@@ -536,6 +538,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	enum branch_track track;
+ 	struct ref_filter filter;
+ 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
++	const char *format = NULL;
+ 
+ 	struct option options[] = {
+ 		OPT_GROUP(N_("Generic options")),
+@@ -576,6 +579,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
+ 			N_("print only branches of the object"), 0, parse_opt_object_name
+ 		},
++		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -636,7 +640,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
+ 			filter.kind |= FILTER_REFS_DETACHED_HEAD;
+ 		filter.name_patterns = argv;
+-		print_ref_list(&filter, sorting);
++		print_ref_list(&filter, sorting, format);
+ 		print_columns(&output, colopts, NULL);
+ 		string_list_clear(&output, 0);
+ 		return 0;
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 980c732..d8edaf2 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -196,4 +196,18 @@ test_expect_success 'local-branch symrefs shortened properly' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git branch --format option' '
++	cat >expect <<-\EOF &&
++	Refname is (HEAD detached from fromtag)
++	Refname is refs/heads/ambiguous
++	Refname is refs/heads/branch-one
++	Refname is refs/heads/branch-two
++	Refname is refs/heads/master
++	Refname is refs/heads/ref-to-branch
++	Refname is refs/heads/ref-to-remote
++	EOF
++	git branch --format="Refname is %(refname)" >actual &&
++	test_cmp expect actual
++'
 +
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- typedef enum { COMPARE_EQUAL, COMPARE_UNEQUAL, COMPARE_NONE } cmp_status;
- 
-@@ -1161,15 +1182,15 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 	else if (atom->u.remote_ref.option == RR_TRACK) {
- 		if (stat_tracking_info(branch, &num_ours,
- 				       &num_theirs, NULL)) {
--			*s = xstrdup("gone");
-+			*s = xstrdup(msgs.gone);
- 		} else if (!num_ours && !num_theirs)
- 			*s = "";
- 		else if (!num_ours)
--			*s = xstrfmt("behind %d", num_theirs);
-+			*s = xstrfmt(msgs.behind, num_theirs);
- 		else if (!num_theirs)
--			*s = xstrfmt("ahead %d", num_ours);
-+			*s = xstrfmt(msgs.ahead, num_ours);
- 		else
--			*s = xstrfmt("ahead %d, behind %d",
-+			*s = xstrfmt(msgs.ahead_behind,
- 				     num_ours, num_theirs);
- 		if (!atom->u.remote_ref.nobracket && *s[0]) {
- 			const char *to_free = *s;
-diff --git a/ref-filter.h b/ref-filter.h
-index 0014b92..da17145 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -111,5 +111,7 @@ struct ref_sorting *ref_default_sorting(void);
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
- /*  Get the current HEAD's description */
- char *get_head_description(void);
-+/*  Set up translated strings in the output. */
-+void setup_ref_filter_porcelain_msg(void);
- 
- #endif /*  REF_FILTER_H  */
+ test_done
 -- 
 2.10.2
 
