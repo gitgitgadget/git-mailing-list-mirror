@@ -2,73 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71AEE1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 22:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 270961FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 22:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932642AbcLGWFA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 17:05:00 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61856 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752156AbcLGWE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 17:04:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF2A55556B;
-        Wed,  7 Dec 2016 17:04:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1udMlNMsRvAM9jg9lYqi8XZsSqU=; b=n1s7Jw
-        bIQkKh0WDXqWvZhKvkquKH7TS/sB1JsY4Jr9BAEZhvPb+hUmW7M2v82NW7idO/Hf
-        /oqR7i0rfXQYAOrmPrdEc5HzC7S8Rgz2y4pDZymYi67yht2y19EI2C9kT5le2KxU
-        OC8xyfp4jblETIjt5cIUtulEXrUVYtVOPd4bk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oXHeGVshcEMhprn3lSryGcTKqt1XnhD6
-        Hq+w5HYem9Sa65MaHboQ/anf6kEpqImoRe+b3juZonmtklcDxLwzLTesSw6oC/OP
-        UEaq97eugKTiHIPyOEzeEwMqzRElaEvNoxZH/EcNyAsxdfS2xH8DjggGTP0323z+
-        aI3L4OJuQEg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C79A95556A;
-        Wed,  7 Dec 2016 17:04:57 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 472C455569;
-        Wed,  7 Dec 2016 17:04:57 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 00/17] pathspec cleanup
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
-Date:   Wed, 07 Dec 2016 14:04:56 -0800
-In-Reply-To: <1481061106-117775-1-git-send-email-bmwill@google.com> (Brandon
-        Williams's message of "Tue, 6 Dec 2016 13:51:29 -0800")
-Message-ID: <xmqqeg1jwg3b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933124AbcLGWGL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 17:06:11 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:34301 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932400AbcLGWGK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 17:06:10 -0500
+Received: by mail-qt0-f170.google.com with SMTP id n6so394991711qtd.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 14:06:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=6jkgM4LJtpHQHXRamkEWYlPkV7roCEXMPczUhEsC4JA=;
+        b=Ox0doltWc9zTzOFZ0SdO6H8tz1ce7w8c6TjpI8ow6ARdDrSgXpW4QpmOrypjfJxPfA
+         fFjYuBicjgQFbDZJdc6jSSx/wpm8BUeF9FRbaMDGHYU870eb/wQR4UfR1OUt1xYfY3L5
+         /Cxmt88EWvQFyPU7CcFbEMq14I4CpuiQgQfbwi9CFTFb79AMRmWFeYxXg8mCIzSGBMQW
+         uqMn3of8hVGbFK1jeIXIh6CZDl1mgaMD2Rur98c/2LulUA2TMxgUla+F3RYdkgjw/2FD
+         yKvK7aLryCMWEOf+wJXOMcFLZ/EbE1LnqhTG4v8dGLx2iFZWDWaLgypzI5y74Nxc54QS
+         3efQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=6jkgM4LJtpHQHXRamkEWYlPkV7roCEXMPczUhEsC4JA=;
+        b=SArEFmxPeiK1eUjrYbSCB8MccIa5w0hkuMj+wxuKcBRaLkx3wDtLOBD3HLZDxY7m/D
+         UQAsaGB92EwPRzZzyBdcG2mAOHKZshEkkEjMsXbCDC/cg0imjr6ggM7QQYf9AWGmh5CR
+         yWp0wwYUDkX2Q5drgA61yuDog9tMSWLEg0YSufzGE4HBLL2gwFL5vG3lICVrwfXFU5eE
+         CiWdhq+0dcMuW3VJx8s02wB3HjCcODzpc7UtAIcutqtCpd8UNn3jlncHCmhgqyjgy2kL
+         1lafnzCqacFbxCAnhgb7r7yM05k/yCaeeH4Y4ddkygGPl+7GQkpcpZ2etFsj8KyPiBXb
+         oM6w==
+X-Gm-Message-State: AKaTC03+liNeeeBHTVb2QPXIkMfHwyZTeZWJb/QMZdLftRLUOPLWmkOwfqjkt9/2cWNClMhxKAQekJC6o1zElGWi
+X-Received: by 10.200.37.221 with SMTP id f29mr68592990qtf.123.1481148369098;
+ Wed, 07 Dec 2016 14:06:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 30B624AE-BCC9-11E6-A787-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.147.188 with HTTP; Wed, 7 Dec 2016 14:06:08 -0800 (PST)
+In-Reply-To: <xmqqmvg7wips.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd1h3y506.fsf@gitster.mtv.corp.google.com> <20161207194105.25780-1-gitster@pobox.com>
+ <20161207194105.25780-2-gitster@pobox.com> <CAGZ79kZHGqU2y19_uKhtVuE6vhspzPNpw-nVDnm8gLQ8u528kQ@mail.gmail.com>
+ <xmqqmvg7wips.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Dec 2016 14:06:08 -0800
+Message-ID: <CAGZ79ka_Sh7jppCVkAhFWkXNffEg_SxUGN9VULseJBpQkDSyww@mail.gmail.com>
+Subject: Re: [PATCH 1/3] wt-status: implement opportunisitc index update correctly
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Paul Tan <pyokagan@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
-
-> The intent of this series is to cleanup some of the pathspec initialization
-> code as well as finally migrating the remaining users of the _raw field or
-> get_pathspec() to the pathspec struct interface.  This way both the _raw field
-> and get_pathspec() can be removed from the codebase.  This also removes the
-> functionality where parse_pathspec() modified the const char * argv array that
-> was passed in (which felt kind of odd to me as I wouldn't have expected the
-> passed in array to be modified).
+On Wed, Dec 7, 2016 at 1:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> I also noticed that there are memory leaks associated with the 'original' and
-> 'match' strings.  To fix this the pathspec struct needed to take ownership of
-> the memory for these fields so that they can be cleaned up when clearing the
-> pathspec struct.
+>> So my first question I had to answer was if we do the right thing here,
+>> i.e. if we could just fail instead. But we want to continue and just
+>> not write back the index, which is fine.
+>>
+>> So we do not have to guard refresh_cache, but just call
+>> update_index_if_able conditionally.
+>
+> An explanation with stepping back a little bit may help.
+>
+> You may be asked to visit a repository of a friend, to which you do
+> not have write access to but you can still read.  You may want to do
+> "diff", "status" or "describe" there.
+>
+> In order to avoid getting fooled into thinking some paths are dirty
+> only because the cached stat information does not match, these need
+> to refresh the in-core index before doing their "comparison" to
+> report which paths are different (in "diff"), what are the modified
+> but not staged paths (in "status"), and if there is a need to add
+> the "-dirty" suffix (in "describe").
+>
+> Since we are doing the expensive "bunch of lstat()" anyway, if we
+> could write it back to the index, it would help future operations in
+> the same repository--that is the reasoning behind the opportunistic
+> updates.  It is perfectly OK if we do not have write access to the
+> repository and cannot write update the index.
+>
 
-Both good goals.  Thanks for working on this.
+Thanks for that explanation!
+So I agree that we should not call it _if_needed, but the _if_able
+part is still confusing, as we check for different parts here.
+
+The case of not being able to write (read only) sounds similar to
+the case of not being able to write (a concurrent lock),
+I'll think about it more.
+
+Thanks,
+Stefan
