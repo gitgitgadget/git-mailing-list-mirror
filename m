@@ -2,75 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E552A1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 23:43:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 776461FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 23:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932824AbcLGXnN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 18:43:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57201 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932522AbcLGXnL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 18:43:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 10023570C9;
-        Wed,  7 Dec 2016 18:42:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+MCAhHmIdhANIG0aKBQ0tMCu3jQ=; b=Q3Cczy
-        AO+NKfOmfI4WS6gmFueT+eyfbiK5cp54KStOkQ1u75PRDGceE3pLFesvq7iL5m2T
-        ZWc9UUkWDP44m68HQPra4vqFDDb3sIfuF/z99WbTtpf0A/er0wp0wjeUb02Oqee4
-        IVqQKoQ746/Hx4qLqxY5Ndj1Puf+mtDHScoyc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BdCltM9Wcr7+RvA1nGKMYeD2roh4Bn8L
-        AcHAk2NAAmTGU0NRCpkKV3BEgt8Tw1yrACx4+Ve3suJQet5JY+/3yyS4QO9XMy1q
-        JhwDd1ur81LJ57lvGwYRSPvHlTtT8mpooEYKXXU5EMAQtTF/DE8/Alih+WFVa6vp
-        0lTgUbMtssg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 08A03570C7;
-        Wed,  7 Dec 2016 18:42:37 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C8DE570C6;
-        Wed,  7 Dec 2016 18:42:36 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: Re: [PATCH v2 0/6] shallow.c improvements
-References: <1480710664-26290-1-git-send-email-rv@rasmusvillemoes.dk>
-        <20161206125339.16803-1-pclouds@gmail.com>
-        <20161206134212.mttcb75dov2jvqu5@sigill.intra.peff.net>
-        <CACsJy8A=KeGsXAt6ZR-eOkTurSsnYPkt3yTfkYT9aZ86rV1rYg@mail.gmail.com>
-Date:   Wed, 07 Dec 2016 15:42:35 -0800
-In-Reply-To: <CACsJy8A=KeGsXAt6ZR-eOkTurSsnYPkt3yTfkYT9aZ86rV1rYg@mail.gmail.com>
-        (Duy Nguyen's message of "Tue, 6 Dec 2016 20:47:36 +0700")
-Message-ID: <xmqqa8c7ux04.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932400AbcLGXqN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 18:46:13 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:32802 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752934AbcLGXqM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 18:46:12 -0500
+Received: by mail-qk0-f175.google.com with SMTP id x190so434432194qkb.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 15:46:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=g+mSts/88nGhD1RjtGJWWnk5X3NhaZISxoUMkWqGqzM=;
+        b=f34wZPOM32VnVRWUXwkLETqSF7TaMKKnbzCJbtldA5ttSIHNZtyXXuhrX74mUOr7PE
+         nZHDwLQVRawc4mnnUBMC38T1leppmo9/+SfwpVFeY9RCwOGAMiedU4n/4eN3t5RryeOL
+         kTqeTCFnsyPXaK+pQ59ivN02BRxPCsald8XrBaahnFsgVgT8+HQYE3e3QpWiwfi7LOMl
+         7x41krF7idExGIn/UCZ9+Yelig42OlkpZDHKVPyfCUPz0u/AY28ofWiBHPt3TnzeNI4U
+         GH/whf2JYwKkOdtTHAfu9ACj1XlR7QgCuZDgG2eExR4c+MbUNwiGRt3QgND4/MIW3cj6
+         2y8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=g+mSts/88nGhD1RjtGJWWnk5X3NhaZISxoUMkWqGqzM=;
+        b=SkUjPNStEsmvwu6E+Du56coECEDqfOGvZ7at7h+QwdMpLohZ9iQKrj1Gw56cTUjAko
+         z+Z3TUvMISmdPNHEBCZ9EZNMVENmJriKLJqB0ab+8k6RzrOCQE9mC3MNdhSvI3YoD/41
+         bTPp6njfjbfB7itay9rQX0czIbf957M01rOHz/SLEDRDCXMq8ykgiiTTx3yLn9OZigAw
+         a5f903MPuAYp4Qtlsxslpts5gQmlZcOz47qFnESt8qw6qPXoW5MsksCPNJmlfHq50oQz
+         3TYZIFH1WbuIqLYDTEyy96urs+YM1luYYcdI6BPQDYHg4URJ7lPUlUQXL2H+sPUn2TPT
+         F6fQ==
+X-Gm-Message-State: AKaTC03oUo6w4CforsnHQfE/xBnOhP0ZyMVZuelpLIxJYeV8/gFyJViXeHRwFWXCSMm2j8jx3a0ZQa1XDLNE9oys
+X-Received: by 10.55.16.147 with SMTP id 19mr61528349qkq.255.1481153998450;
+ Wed, 07 Dec 2016 15:39:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D5138F34-BCD6-11E6-8BA0-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.12.147.188 with HTTP; Wed, 7 Dec 2016 15:39:58 -0800 (PST)
+In-Reply-To: <xmqqeg1juxd7.fsf@gitster.mtv.corp.google.com>
+References: <20161207210157.18932-1-sbeller@google.com> <xmqqzik7v04b.fsf@gitster.mtv.corp.google.com>
+ <xmqqeg1juxd7.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Dec 2016 15:39:58 -0800
+Message-ID: <CAGZ79kYD61XaKMtnNOy11BYEzw5byWKHWchfVs+gwwHB_QdMSg@mail.gmail.com>
+Subject: Re: [PATCHv5 0/5] submodule embedgitdirs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Tue, Dec 6, 2016 at 8:42 PM, Jeff King <peff@peff.net> wrote:
->> The final one _seems_ reasonable after reading your explanation, but I
->> lack enough context to know whether or not there might be a corner case
->> that you're missing. I'm inclined to trust your assessment on it.
+On Wed, Dec 7, 2016 at 3:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Yeah I basically just wrote down my thoughts so somebody could maybe
-> spot something wrong. I'm going to think about it some more in the
-> next few days.
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> v5:
+>>> * Add another layer of abstraction, i.e. the relocate_git_dir is only about
+>>>   moving a git dir of one repository. The submodule specific stuff (e.g.
+>>>   recursion into nested submodules) is in submodule.{c,h}
+>>>
+>>>   This was motivated by reviews on the series of checkout aware of submodules
+>>>   building on top of this series, as we want to directly call the embed-git-dirs
+>>>   function without the overhead of spawning a child process.
+>>
+>> OK.  Comparing the last steps between this round and the previous
+>> one, I do think the separation of the responsibility among helpers
+>> is much more reasonable in this version, where:
+>>
+>>  - submodule_embed_git_dir() is given a single path and is
+>>    responsible for that submodule itself, which is done by calling
+>>    submodule_embed_git_dir_for_path() on itself, and its
+>>    sub-submodules, which is done by spawning the helper recursively
+>>    with appropriate super-prefix;
+>>
+>>  - submodule_embed_git_dir_for_path() computes where the given path
+>>    needs to be moved to using the knowledge specific to the
+>>    submodule subsystem, and asks relocate_gitdir() to perform the
+>>    actual relocation;
+>>
+>>  - relocate_gitdir() used to do quite a lot more, but now it is only
+>>    about moving an existing .git directory elsewhere and pointing to
+>>    the new location with .git file placed in the old location.
+>>
+>> I would have called the second helper submodule_embed_one_git_dir(),
+>> but that is a minor detail.
+>>
+>> Very nicely done.
+>
+> One thing that is not so nice from the code organization point of
+> view is that "dir.c" now needs to include "submodule.h" because it
+> wants to call connect_work_tree_and_git_dir().
+>
+> I wonder if that function belongs to dir.c or worktree.c not
+> submodule.c; I do not see anything that is submodule specific about
+> what the function does.
 
-In the meantime let me queue them as-is.
-
-Thanks.
+Right, it just happened historically for that function to live
+in submodule area. I'll move the connect_work_tree_and_git_dir
+to dir.c as well.
