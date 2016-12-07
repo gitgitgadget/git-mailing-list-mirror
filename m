@@ -2,131 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1746F20259
-	for <e@80x24.org>; Wed,  7 Dec 2016 14:31:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21A2420259
+	for <e@80x24.org>; Wed,  7 Dec 2016 15:36:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932179AbcLGObf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 09:31:35 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:36735 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752632AbcLGObe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 09:31:34 -0500
-Received: by mail-wm0-f52.google.com with SMTP id g23so170755427wme.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 06:31:33 -0800 (PST)
+        id S1753352AbcLGPgy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 10:36:54 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35664 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752635AbcLGPgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 10:36:51 -0500
+Received: by mail-pf0-f193.google.com with SMTP id i88so11380171pfk.2
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 07:36:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WK+XmRmDd1+wpdwVC6wQMCcyURHw6Vjpp1w3cGhYqCU=;
-        b=Qx1RsOIhmUhywi3EaGUgnhG6VObPS3SO4qOHDhmQEU1cB3QXmsqijHPDkawYvB5Oyr
-         FH9IZS5T6164XlAxg4EgxOzK+XOLaMzEF9prSL71n8rhzvjTMSY4xFGVUNgN705TCtlf
-         LGQDWy3l5HduuFA0FVCbledVgJEIUZ8rjaUHNEyqLWUa1y9Dy6MmyKwtOl4BhF9T8rQ1
-         W7XHt+WxndYgeso3MOjGw1CxP7lAsCiopbh9RN6+svF8rvx/B8eGTEZjmS65cjU9WMlu
-         h/vh3OQJHrnY2jG/M5LwjYF/7YD5FyL38Q/g+ZcRkh4S6+SF9HZyRgRIwgT+inGKi1Jl
-         X+lg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ktD89p+97GnC2lyJa4OXFfbzO+M4rYNII6cXGJxdBAI=;
+        b=hcyDm2tBZK8iAl/QYoeaatmW+OhDfd9dsZWVG04Al/xVPplO+Erv0BakLgvt1L5nwx
+         nRJAOJ+snn/Xa0jX0/NPNEK/UCRl618AGO23Y4V1NvqmUmjIYgZ5FkfrpsJ4DAUPuZMt
+         er11gqU7Tfc3RqgkaK+fZrJpeYUvr4ju7UYoHDsRnnv4KSA3swd1upRt6VTv6TODUca3
+         Yb3Wsv6YQUCboOJW8gjPJG+r7FQKMv8KccSwPH6VbD5CYBI7SompL96RN0gIV2qHkXQV
+         BJi9rprSRulQpE/zv2hvm//QqepWeUytYV6LFouhpULA2K2xekSD56IUBMg4MQHuQxif
+         GbtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WK+XmRmDd1+wpdwVC6wQMCcyURHw6Vjpp1w3cGhYqCU=;
-        b=HZeVL5l4X0UDQkxT05rdbMhek2wB2KeGJx8qit6Z6vmJw9+W/+CcY38NKq63/aMO4y
-         ryegDUy78H7L/ZZb6RRxevng68aLuENrNWXDDXMYsqoaHfxUUwQyJhxG1c3aX4AwDN1W
-         DT/BKlnLmJNcaiI9Bj3B7aoeWcVrHPAbyT5cRDvdpCnIqjigJduokQH5XibPU5V2+yZN
-         iRn76YkqqnICWIK7z886+tDCfevBiO6HqHy8KLCWMCdc21u3HE8klcFsgzlgFhE2RGTS
-         JnE2AjewikIe4NaPXFX6Sux9mUazdnW8b38koyFOi2GkWi+6uRUz4ssd9Wgl1pe794v7
-         ejrg==
-X-Gm-Message-State: AKaTC03fVWBZuG7JTlSJaprytb2F1OApN/lPgTt9a/aVOI4J7lSSlF+T/bdmml8O8rbw0JClZT4a4d88zcJbAA==
-X-Received: by 10.25.209.73 with SMTP id i70mr18116408lfg.24.1481121092895;
- Wed, 07 Dec 2016 06:31:32 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.221.217 with HTTP; Wed, 7 Dec 2016 06:31:32 -0800 (PST)
-In-Reply-To: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 7 Dec 2016 15:31:32 +0100
-Message-ID: <CAP8UFD32PcT4XgnRFaP-St3i1D-6XG1wY6qKn3bgWPKn1Y4Qwg@mail.gmail.com>
-Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=ktD89p+97GnC2lyJa4OXFfbzO+M4rYNII6cXGJxdBAI=;
+        b=mzvf0cT4dDk12Cy8ANFFJQP6iLtGT5aT84OqXJP10Omc26+qUdCF+t4cxxGtr4gwr0
+         STpthLZcuwXAzBIj1X04ltGFfy1ENeI29g924owbCU+hnX8YxQUjFDhodnWnCOjq1IJO
+         YfwN74L/t5ONvcm36UWlGbRqEyDF8sH/OKyyQz7QOGCpkssD5Wq4Z40mSZRowD9F1vgV
+         TMvGWnYIkIlqH2antanrOPG9ZQxC/KWMDsySCHr3/c3LedG7KV/imasnoxAdpCg9aQfT
+         AaTQ5wpqpDwQePxO7tB8ECWoFCvC/xarmCmFe7bkx4/Ct8FT3GvsHCndH2Z4sBTdGIUq
+         F5Lg==
+X-Gm-Message-State: AKaTC03Om+lQlmDks4PIu+3zKFkhiQa0ZHXjdI5Vk20aoyjx8OCRUqw/Ja6pe6aT8ak+ug==
+X-Received: by 10.99.137.66 with SMTP id v63mr122300886pgd.117.1481124967209;
+        Wed, 07 Dec 2016 07:36:07 -0800 (PST)
+Received: from AamlaJuice.corp.endurance.com ([122.15.255.69])
+        by smtp.gmail.com with ESMTPSA id l7sm43584459pfg.35.2016.12.07.07.36.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Dec 2016 07:36:06 -0800 (PST)
+From:   Karthik Nayak <karthik.188@gmail.com>
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+To:     git@vger.kernel.org
+Cc:     jacob.keller@gmail.com, gitster@pobox.com, jnareb@gmail.com,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Karthik Nayak <Karthik.188@gmail.com>
+Subject: [PATCH v8 02/19] ref-filter: include reference to 'used_atom' within 'atom_value'
+Date:   Wed,  7 Dec 2016 21:06:10 +0530
+Message-Id: <20161207153627.1468-3-Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.10.2
+In-Reply-To: <20161207153627.1468-1-Karthik.188@gmail.com>
+References: <20161207153627.1468-1-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 6, 2016 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I was burned a few times with this in the past few years, but it did
-> not irritate me often enough that I didn't write it down.  But I
-> think this is serious enough that deserves attention from those who
-> were involved.
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Yeah, I agree that we should do something about it.
+Ensure that each 'atom_value' has a reference to its corresponding
+'used_atom'. This let's us use values within 'used_atom' in the
+'handler' function.
 
-> A short reproduction recipe, using objects from git.git that are
-> publicly available and stable, shows how bad it is.
->
->     $ git checkout v2.9.3^0
->
->     $ git cherry-pick 0582a34f52..a94bb68397
->     ... see conflict, decide to give up backporting to
->     ... such an old fork point.
->     ... the git-prompt gives "|CHERRY-PICKING" correctly.
->
->     $ git reset --hard v2.10.2^0
->     ... the git-prompt no longer says "|CHERRY-PICKING"
->
->     $ edit && git commit -m "prelim work for backporting"
->     [detached HEAD cc5a6a9219] prelim work for backporting
->
->     $ git cherry-pick 0582a34f52..a94bb68397
->     error: a cherry-pick or revert is already in progress
->     hint: try "git cherry-pick (--continue | --quit | --abort)"
->     fatal: cherry-pick failed
->
->     $ git cherry-pick --abort
->     ... we come back to v2.9.3^0, losing the new commit!
->
-> The above shows two bugs.
->
->  (1) The third invocation of "cherry-pick" with "--abort" to get rid
->      of the state from the unfinished cherry-pick we did previously
->      is necessary, but the command does not notice that we resetted
->      to a new branch AND we even did some other work there.  This
->      loses end-user's work.
->
->      "git cherry-pick --abort" should learn from "git am --abort"
->      that has an extra safety to deal with the above workflow.  The
->      state from the unfinished "am" is removed, but the head is not
->      rewound to avoid losing end-user's work.
->
->      You can try by replacing two instances of
->
->         $ git cherry-pick 0582a34f52..a94bb68397
->
->      with
->
->         $ git format-patch --stdout 0582a34f52..a94bb68397 | git am
->
->      in the above sequence, and conclude with "git am--abort" to see
->      how much more pleasant and safe "git am --abort" is.
+Hence we can get the %(align) atom's parameters directly from the
+'used_atom' therefore removing the necessity of passing %(align) atom's
+parameters to 'atom_value'.
 
-Ok I will try to take a look at that next week.
+This also acts as a preparatory patch for the upcoming patch where we
+introduce %(if:equals=) and %(if:notequals=).
 
->  (2) The bug in "cherry-pick --abort" is made worse because the
->      git-completion script seems to be unaware of $GIT_DIR/sequencer
->      and stops saying "|CHERRY-PICKING" after the step to switch to
->      a different state with "git reset --hard v2.10.2^0".  If the
->      prompt showed it after "git reset", the end user would have
->      thought twice before starting the "prelim work".
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ ref-filter.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-I am not used to hacking the prompt or completion scripts, so I would
-appreciate if someone else could do it.
+diff --git a/ref-filter.c b/ref-filter.c
+index 2fed7fe..5166326 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -230,11 +230,9 @@ struct ref_formatting_state {
+ 
+ struct atom_value {
+ 	const char *s;
+-	union {
+-		struct align align;
+-	} u;
+ 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+ 	unsigned long ul; /* used for sorting when not FIELD_STR */
++	struct used_atom *atom;
+ };
+ 
+ /*
+@@ -370,7 +368,7 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
+ 	push_stack_element(&state->stack);
+ 	new = state->stack;
+ 	new->at_end = end_align_handler;
+-	new->at_end_data = &atomv->u.align;
++	new->at_end_data = &atomv->atom->u.align;
+ }
+ 
+ static void if_then_else_handler(struct ref_formatting_stack **stack)
+@@ -1070,6 +1068,7 @@ static void populate_value(struct ref_array_item *ref)
+ 		struct branch *branch = NULL;
+ 
+ 		v->handler = append_atom;
++		v->atom = atom;
+ 
+ 		if (*name == '*') {
+ 			deref = 1;
+@@ -1134,7 +1133,6 @@ static void populate_value(struct ref_array_item *ref)
+ 				v->s = " ";
+ 			continue;
+ 		} else if (starts_with(name, "align")) {
+-			v->u.align = atom->u.align;
+ 			v->handler = align_atom_handler;
+ 			continue;
+ 		} else if (!strcmp(name, "end")) {
+-- 
+2.10.2
 
-Thanks,
-Christian.
