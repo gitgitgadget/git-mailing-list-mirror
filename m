@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2FC320259
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D3A7203C1
 	for <e@80x24.org>; Wed,  7 Dec 2016 15:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753366AbcLGPhq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 10:37:46 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:32802 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752807AbcLGPgv (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752635AbcLGPho (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 10:37:44 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36433 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752822AbcLGPgv (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 7 Dec 2016 10:36:51 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 3so23837775pgd.0
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 07:36:13 -0800 (PST)
+Received: by mail-pg0-f68.google.com with SMTP id x23so23814066pgx.3
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 07:36:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Em1Wj6NJtdFoIJ2SqiJhg92VJEVotY10p4jvTHphM0U=;
-        b=qwAq/kgQdd+xFVU5Uh0WUCRQmmUZ3Z7QTEMOg8mUwGgnvD3N+E0PBA1CphfRMcNziA
-         ikNhQHzfiQXVAWjzLgJg+XJnKDtK/ydTVI4Ibj0wb7yqhw7jlg0syzSpWHrHlmQT2P7b
-         omblyqmEjZjeF1dPJAZV9pcWy3OhDysmR5lnIreoZLvS3BcHftOtS7NmAvGqj4ByNYme
-         zgX5ieUXTpX4t82dAdT9jEkDwxAMgpsaDBjECIE83UgBgPtgTkNIjJou+53tpYanNzVP
-         h9qDSmGbziijcgt0ntvxaq2D31EuNbWUoFnAeqLL16BZM34UHftlYACCIkNU6SuwtL1V
-         Sm/A==
+        bh=bjz/OYQed/VBneUZIsZZ8zRsY7Dk56AvqJf8wJLB2v4=;
+        b=GadrcUIExol2rl3wMOJFEBKoFIizEPp4AH9K9maafaTnkT5sxcD8P8yIpa2C4ac8gW
+         YNtBH7zwuBFDO2fM1eUvHMHX44VfSGkP8bof0D/MOpFahEXxpfkn4lYc7GOwuFA6UHX9
+         qkfOXMAL02gkBtQKpDa9donlp8T89TWyHsT9SaAL0w5SvPn3f2kJFVglgKLoGytlWVOO
+         UoVH4fLomuPCWiJASMsM1r7iBRMEi8zz2fQd+qNlW6cb2xnMjh3GdxZH34AxbDBGIraO
+         FVxj40MerhMgduKV7aKFhQftpC0Cu9XtqWbbUCT+GNH0A6pyEnNMeC7V8xhZM6s2/J1y
+         7l7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Em1Wj6NJtdFoIJ2SqiJhg92VJEVotY10p4jvTHphM0U=;
-        b=l+Q77DJvHsE93obb2LmFB6Zhua1YAsSdk3OQrxPp4dUk5a06de9be6jlpzL33Yuxuf
-         KoycmubB8nuJqKpxCfRcEzwP5BVQUSmf5oHCvFtGKMuDSOCfPu5qYjGG1CrbZjzhzHwB
-         zTmEi/BH3m4XGIiyrcLE21PPKXuDVPIDnfE5bfAJ2P6Giwihe2ltikRfAwMzhWm0FI+b
-         zqOIySsw6LP8JS8DoaN+6V6vkEKI5+HgmaE0lGf9RSY8yam2jTFQ6E0aRAyx1AOgOCLp
-         e9WV7zt/ztLVxVPT3pTgefqBB5B0ZfKh0vg/Cn1oLrMBGxxB9+LWv3/bIKI9/OkCse8T
-         YT/w==
-X-Gm-Message-State: AKaTC036vJtgvH/r48u7PUXwmFpVu/DsDK5+1ROQOH5yBW7cTbJNvOnccjWRtZ5i+/0xxQ==
-X-Received: by 10.99.115.82 with SMTP id d18mr120100545pgn.56.1481124973037;
-        Wed, 07 Dec 2016 07:36:13 -0800 (PST)
+        bh=bjz/OYQed/VBneUZIsZZ8zRsY7Dk56AvqJf8wJLB2v4=;
+        b=aYonoHSaKF293xWOGYPjoeKQH3urnsfznX5DtfgBDW5EgehkPQIsS2iFeXf7HMISfZ
+         WYqCwRoiTxXOV68v6/DwdI6cFqerg7zw/LJQmkNjT1sWlfxItSRqZ/AVVX6FXgS68YXv
+         Y3kMiRZ4fLrf9TYwKLK0KHTjjG85sNvjq5+LYkekwdjwRydr40XkPCt2sPeK+HN22efI
+         lR6bYWCUDBQFOGQA9o+c8uZfgh+CiU+KzKbHEvBQtlvAHIM8aiTCefqzytar/xC9IYuX
+         BuveOrkCC+Ps8pCTYfCEepH/KUW/R7CL/XFDwFFkV0kgyYQ9Hn6R7uXyenKa2YGf+Vt2
+         WSnQ==
+X-Gm-Message-State: AKaTC00RpuUWRt0zMGaoh/0NnRYu171QW44qg41TElRMWAAGwZHxbWfbH9DnlQXZSMDimQ==
+X-Received: by 10.84.212.2 with SMTP id d2mr151011880pli.24.1481124976128;
+        Wed, 07 Dec 2016 07:36:16 -0800 (PST)
 Received: from AamlaJuice.corp.endurance.com ([122.15.255.69])
-        by smtp.gmail.com with ESMTPSA id l7sm43584459pfg.35.2016.12.07.07.36.10
+        by smtp.gmail.com with ESMTPSA id l7sm43584459pfg.35.2016.12.07.07.36.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Dec 2016 07:36:12 -0800 (PST)
+        Wed, 07 Dec 2016 07:36:15 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, gitster@pobox.com, jnareb@gmail.com,
         Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v8 04/19] ref-filter: modify "%(objectname:short)" to take length
-Date:   Wed,  7 Dec 2016 21:06:12 +0530
-Message-Id: <20161207153627.1468-5-Karthik.188@gmail.com>
+Subject: [PATCH v8 05/19] ref-filter: move get_head_description() from branch.c
+Date:   Wed,  7 Dec 2016 21:06:13 +0530
+Message-Id: <20161207153627.1468-6-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161207153627.1468-1-Karthik.188@gmail.com>
 References: <20161207153627.1468-1-Karthik.188@gmail.com>
@@ -64,128 +64,143 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Add support for %(objectname:short=<length>) which would print the
-abbreviated unique objectname of given length. When no length is
-specified, the length is 'DEFAULT_ABBREV'. The minimum length is
-'MINIMUM_ABBREV'. The length may be exceeded to ensure that the
-provided object name is unique.
-
-Add tests and documentation for the same.
+Move the implementation of get_head_description() from branch.c to
+ref-filter.  This gives a description of the HEAD ref if called. This
+is used as the refname for the HEAD ref whenever the
+FILTER_REFS_DETACHED_HEAD option is used. Make it public because we
+need it to calculate the length of the HEAD refs description in
+branch.c:calc_maxwidth() when we port branch.c to use ref-filter
+APIs.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Helped-by: Jacob Keller <jacob.keller@gmail.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  3 +++
- ref-filter.c                       | 25 +++++++++++++++++++------
- t/t6300-for-each-ref.sh            | 10 ++++++++++
- 3 files changed, 32 insertions(+), 6 deletions(-)
+ builtin/branch.c | 33 ---------------------------------
+ ref-filter.c     | 38 ++++++++++++++++++++++++++++++++++++--
+ ref-filter.h     |  2 ++
+ 3 files changed, 38 insertions(+), 35 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 392df6b..b730735 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -107,6 +107,9 @@ objectsize::
- objectname::
- 	The object name (aka SHA-1).
- 	For a non-ambiguous abbreviation of the object name append `:short`.
-+	For an abbreviation of the object name with desired length append
-+	`:short=<length>`, where the minimum length is MINIMUM_ABBREV. The
-+	length may be exceeded to ensure unique object names.
- 
- upstream::
- 	The name of a local ref which can be considered ``upstream''
-diff --git a/ref-filter.c b/ref-filter.c
-index 7a21256..d1534d0 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -56,7 +56,10 @@ static struct used_atom {
- 			cmp_status cmp_status;
- 			const char *str;
- 		} if_then_else;
--		enum { O_FULL, O_SHORT } objectname;
-+		struct {
-+			enum { O_FULL, O_LENGTH, O_SHORT } option;
-+			unsigned int length;
-+		} objectname;
- 	} u;
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
-@@ -119,10 +122,17 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
- static void objectname_atom_parser(struct used_atom *atom, const char *arg)
- {
- 	if (!arg)
--		atom->u.objectname = O_FULL;
-+		atom->u.objectname.option = O_FULL;
- 	else if (!strcmp(arg, "short"))
--		atom->u.objectname = O_SHORT;
--	else
-+		atom->u.objectname.option = O_SHORT;
-+	else if (skip_prefix(arg, "short=", &arg)) {
-+		atom->u.objectname.option = O_LENGTH;
-+		if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
-+		    atom->u.objectname.length == 0)
-+			die(_("positive value expected objectname:short=%s"), arg);
-+		if (atom->u.objectname.length < MINIMUM_ABBREV)
-+			atom->u.objectname.length = MINIMUM_ABBREV;
-+	} else
- 		die(_("unrecognized %%(objectname) argument: %s"), arg);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 60cc5c8..0b80c13 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -364,39 +364,6 @@ static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
+ 	strbuf_release(&subject);
  }
  
-@@ -595,12 +605,15 @@ static int grab_objectname(const char *name, const unsigned char *sha1,
- 			   struct atom_value *v, struct used_atom *atom)
+-static char *get_head_description(void)
+-{
+-	struct strbuf desc = STRBUF_INIT;
+-	struct wt_status_state state;
+-	memset(&state, 0, sizeof(state));
+-	wt_status_get_state(&state, 1);
+-	if (state.rebase_in_progress ||
+-	    state.rebase_interactive_in_progress)
+-		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
+-			    state.branch);
+-	else if (state.bisect_in_progress)
+-		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
+-			    state.branch);
+-	else if (state.detached_from) {
+-		if (state.detached_at)
+-			/* TRANSLATORS: make sure this matches
+-			   "HEAD detached at " in wt-status.c */
+-			strbuf_addf(&desc, _("(HEAD detached at %s)"),
+-				state.detached_from);
+-		else
+-			/* TRANSLATORS: make sure this matches
+-			   "HEAD detached from " in wt-status.c */
+-			strbuf_addf(&desc, _("(HEAD detached from %s)"),
+-				state.detached_from);
+-	}
+-	else
+-		strbuf_addstr(&desc, _("(no branch)"));
+-	free(state.branch);
+-	free(state.onto);
+-	free(state.detached_from);
+-	return strbuf_detach(&desc, NULL);
+-}
+-
+ static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
+ 				      struct ref_filter *filter, const char *remote_prefix)
  {
- 	if (starts_with(name, "objectname")) {
--		if (atom->u.objectname == O_SHORT) {
-+		if (atom->u.objectname.option == O_SHORT) {
- 			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
- 			return 1;
--		} else if (atom->u.objectname == O_FULL) {
-+		} else if (atom->u.objectname.option == O_FULL) {
- 			v->s = xstrdup(sha1_to_hex(sha1));
- 			return 1;
-+		} else if (atom->u.objectname.option == O_LENGTH) {
-+			v->s = xstrdup(find_unique_abbrev(sha1, atom->u.objectname.length));
-+			return 1;
- 		} else
- 			die("BUG: unknown %%(objectname) option");
- 	}
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 039509a..644f169 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -60,6 +60,8 @@ test_atom head objecttype commit
- test_atom head objectsize 171
- test_atom head objectname $(git rev-parse refs/heads/master)
- test_atom head objectname:short $(git rev-parse --short refs/heads/master)
-+test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
-+test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/master)
- test_atom head tree $(git rev-parse refs/heads/master^{tree})
- test_atom head parent ''
- test_atom head numparent 0
-@@ -99,6 +101,8 @@ test_atom tag objecttype tag
- test_atom tag objectsize 154
- test_atom tag objectname $(git rev-parse refs/tags/testtag)
- test_atom tag objectname:short $(git rev-parse --short refs/tags/testtag)
-+test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
-+test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/master)
- test_atom tag tree ''
- test_atom tag parent ''
- test_atom tag numparent ''
-@@ -164,6 +168,12 @@ test_expect_success 'Check invalid format specifiers are errors' '
- 	test_must_fail git for-each-ref --format="%(authordate:INVALID)" refs/heads
- '
+diff --git a/ref-filter.c b/ref-filter.c
+index d1534d0..bb69573 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -13,6 +13,7 @@
+ #include "utf8.h"
+ #include "git-compat-util.h"
+ #include "version.h"
++#include "wt-status.h"
  
-+test_expect_success 'arguments to %(objectname:short=) must be positive integers' '
-+	test_must_fail git for-each-ref --format="%(objectname:short=0)" &&
-+	test_must_fail git for-each-ref --format="%(objectname:short=-1)" &&
-+	test_must_fail git for-each-ref --format="%(objectname:short=foo)"
-+'
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ typedef enum { COMPARE_EQUAL, COMPARE_UNEQUAL, COMPARE_NONE } cmp_status;
+@@ -1081,6 +1082,37 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 		*s = refname;
+ }
+ 
++char *get_head_description(void)
++{
++	struct strbuf desc = STRBUF_INIT;
++	struct wt_status_state state;
++	memset(&state, 0, sizeof(state));
++	wt_status_get_state(&state, 1);
++	if (state.rebase_in_progress ||
++	    state.rebase_interactive_in_progress)
++		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
++			    state.branch);
++	else if (state.bisect_in_progress)
++		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
++			    state.branch);
++	else if (state.detached_from) {
++		/* TRANSLATORS: make sure these match _("HEAD detached at ")
++		   and _("HEAD detached from ") in wt-status.c */
++		if (state.detached_at)
++			strbuf_addf(&desc, _("(HEAD detached at %s)"),
++				state.detached_from);
++		else
++			strbuf_addf(&desc, _("(HEAD detached from %s)"),
++				state.detached_from);
++	}
++	else
++		strbuf_addstr(&desc, _("(no branch)"));
++	free(state.branch);
++	free(state.onto);
++	free(state.detached_from);
++	return strbuf_detach(&desc, NULL);
++}
 +
- test_date () {
- 	f=$1 &&
- 	committer_date=$2 &&
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  */
+@@ -1120,9 +1152,11 @@ static void populate_value(struct ref_array_item *ref)
+ 			name++;
+ 		}
+ 
+-		if (starts_with(name, "refname"))
++		if (starts_with(name, "refname")) {
+ 			refname = ref->refname;
+-		else if (starts_with(name, "symref"))
++			if (ref->kind & FILTER_REFS_DETACHED_HEAD)
++				refname = get_head_description();
++		} else if (starts_with(name, "symref"))
+ 			refname = ref->symref ? ref->symref : "";
+ 		else if (starts_with(name, "upstream")) {
+ 			const char *branch_name;
+diff --git a/ref-filter.h b/ref-filter.h
+index 14d435e..4aea594 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -106,5 +106,7 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
+ struct ref_sorting *ref_default_sorting(void);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
++/*  Get the current HEAD's description */
++char *get_head_description(void);
+ 
+ #endif /*  REF_FILTER_H  */
 -- 
 2.10.2
 
