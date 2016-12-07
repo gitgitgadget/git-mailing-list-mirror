@@ -2,102 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0CBF1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 22:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 359441FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 22:36:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932671AbcLGW3y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 17:29:54 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:35443 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932362AbcLGW3x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 17:29:53 -0500
-Received: by mail-pg0-f49.google.com with SMTP id p66so166495228pga.2
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 14:29:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GfEfgGwf7hRD7TnCQCIT0+mF3AOvGdhCysIFolxG0B4=;
-        b=Y+NAt4ac0seAmpKyyFPEgyJ0d02AysHgkqAfB9m/JTruDNsLcjMURr+6uobbmG5TFL
-         XEs+z4ExtI2esy+pw1kIr3Oi4GJWykhCSmW42ZL29Q9pKGRcqTvSLpjfLFwiYYbg4lVz
-         wJE3xTlx9twDBmtea24iM40C8t6jC1t0Ki7tcBQcs6k1oadUc1IS9CSCiZbYlozKmgSs
-         VEVcgIhmAGY1Y5sYJF5w4Yh1f2GvuVs2tT4OgBc34ADet/JNmkswDL/ozniGX4PqbtPU
-         aqNOd0GSRH2Lhp0XqVRtYMDoANwuMLHGG9Edv1pgltSk9MAzSF2Z9JUqaeW5iiL8jZne
-         St2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GfEfgGwf7hRD7TnCQCIT0+mF3AOvGdhCysIFolxG0B4=;
-        b=UTusvjqZTgLAPhVrII4lWY8y/zn97359OYthWPBhnxBDBfWp4Wrgc8IOjzHeY/YUf2
-         ceDSKH+lXd9oEchCwtONvTKm5VfqIZvGtc16kuz00BdK2fK/itpUsTI1TYpmlZu1X7g0
-         4c3oYxB4eNQIcPsHN+slY9dmAKh/bWGVDSPkv577gdnSHLazoNN4pOLxfW3kFjZdP5Xf
-         k2jkKuo55JvCrFNNOsuAKh1IIX3FWU99otgDw9y7LncEBHz5MhnX8v5axRR3ICw2KbZ/
-         nPGoPoF7NuMmHlXx41/7Usaaeap4Xa+ZObNmQQtJ8WtnHzGYfLEHNMFwZKdItlBOX8A2
-         bT/w==
-X-Gm-Message-State: AKaTC03wnfCnGPgpw9lptC20saqs5VvT0gmBvQNunHWmbXp5W+FNVPCUSymphyUt8W+u+1nw
-X-Received: by 10.99.246.83 with SMTP id u19mr124851136pgj.165.1481149769340;
-        Wed, 07 Dec 2016 14:29:29 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:ccae:4719:31da:e07d])
-        by smtp.gmail.com with ESMTPSA id q145sm44883864pfq.22.2016.12.07.14.29.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 14:29:28 -0800 (PST)
-Date:   Wed, 7 Dec 2016 14:29:27 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        sbeller@google.com, peff@peff.net, jacob.keller@gmail.com
-Subject: Re: [PATCH] real_path: make real_path thread-safe
-Message-ID: <20161207222927.GB116201@google.com>
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
- <1480964316-99305-2-git-send-email-bmwill@google.com>
- <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
- <20161207001018.GD103573@google.com>
- <7d968fd8-a92d-efd3-ce67-7de6049b6d56@kdbg.org>
+        id S932943AbcLGWgU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 17:36:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58851 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932243AbcLGWgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 17:36:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A157561C6;
+        Wed,  7 Dec 2016 17:35:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=y60fqSdWoZFfu1fb5KTVu6PgENQ=; b=saq28y
+        AmNBfTv+23bntKdAnBoViYHFMhz/rO89dd09QLbHoUWvGrcafwzlKERp0bf8PHyQ
+        Yg5KipT8qm10ycQzyggTmH580rlH1AzVYW6h+xjqhjQXyQqCf3QaAacwDLZQi/IJ
+        14PVGF9Uep1PuFVcRwerOMz1wU4miYAcQ4as8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tQDXwL13E6X+wIH8aCc3TVya+QMbEFsN
+        jbQu6t/07sE9Xz8bPZMOkr+Cj/zbIQjuYYBm8EDTQXZMfO3mlJ6jIPA9Rcp6BeKe
+        +83StHaLP+oju4i1df9zwcQHBL9nlNMD8SPJnslQsw8mlyohHOS6O77Sehl7CPK9
+        17MTF03vJLA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 40F94561C5;
+        Wed,  7 Dec 2016 17:35:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C9FF561C3;
+        Wed,  7 Dec 2016 17:35:17 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     bmwill@google.com, git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCHv5 0/5] submodule embedgitdirs
+References: <20161207210157.18932-1-sbeller@google.com>
+Date:   Wed, 07 Dec 2016 14:35:16 -0800
+In-Reply-To: <20161207210157.18932-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 7 Dec 2016 13:01:52 -0800")
+Message-ID: <xmqqzik7v04b.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7d968fd8-a92d-efd3-ce67-7de6049b6d56@kdbg.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6DB96F10-BCCD-11E6-99CD-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Johannes Sixt wrote:
-> Am 07.12.2016 um 01:10 schrieb Brandon Williams:
-> >This function should accept both absolute and relative paths, which
-> >means it should probably accept "C:\My Files".  I wasn't thinking about
-> >windows 100% of the time while writing this so I'm hoping that a windows
-> >expert will point things like this out to me :).
-> 
-> ;)
-> 
-> With this patch, the test suite fails at the very first git init call:
-> 
-> D:\Src\mingw-git\t>sh t0000-basic.sh -v -i -x
-> fatal: Invalid path '/:': No such file or directory
-> error: cannot run git init -- have you built things yet?
-> FATAL: Unexpected exit with code 1
-> 
-> I haven't dug further, yet.
-> 
-> -- Hannes
-> 
+Stefan Beller <sbeller@google.com> writes:
 
-Thanks for providing me with the error.  Instead of assuming root is "/"
-I'll need to extract what root is from an absolute path.  Aside from
-what root looks like, do most other path constructs behave similarly in
-unix and windows? (like ".." and "." as examples)
+> v5:
+> * Add another layer of abstraction, i.e. the relocate_git_dir is only about 
+>   moving a git dir of one repository. The submodule specific stuff (e.g.
+>   recursion into nested submodules) is in submodule.{c,h}
+>   
+>   This was motivated by reviews on the series of checkout aware of submodules
+>   building on top of this series, as we want to directly call the embed-git-dirs
+>   function without the overhead of spawning a child process.
 
-Since I don't really have a windows machine to test things it might be
-slightly difficult to get everything correct quickly but hopefully we can
-get this working :)
+OK.  Comparing the last steps between this round and the previous
+one, I do think the separation of the responsibility among helpers
+is much more reasonable in this version, where:
 
--- 
-Brandon Williams
+ - submodule_embed_git_dir() is given a single path and is
+   responsible for that submodule itself, which is done by calling
+   submodule_embed_git_dir_for_path() on itself, and its
+   sub-submodules, which is done by spawning the helper recursively
+   with appropriate super-prefix;
+
+ - submodule_embed_git_dir_for_path() computes where the given path
+   needs to be moved to using the knowledge specific to the
+   submodule subsystem, and asks relocate_gitdir() to perform the
+   actual relocation;
+
+ - relocate_gitdir() used to do quite a lot more, but now it is only
+   about moving an existing .git directory elsewhere and pointing to
+   the new location with .git file placed in the old location.
+
+I would have called the second helper submodule_embed_one_git_dir(),
+but that is a minor detail.
+
+Very nicely done.
+
+
+
