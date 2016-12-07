@@ -2,83 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D898C1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 20:29:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D98201FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 20:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932684AbcLGU3C (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 15:29:02 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51137 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752658AbcLGU3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 15:29:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CAFA855AF8;
-        Wed,  7 Dec 2016 15:29:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yemapRYMG0EWFMU/PzphKrFdUxo=; b=yPshfK
-        D/JqLm8rN+lTxE6+oQVy3OIlpPiIE6HOxlRQ8tn/CrWb3Ic6RXef0x7GQEzA828r
-        ciGh3nIvy1NaoIGY5VktezCtbDU8heEBt6S1ToMuHPVWZphvqOVuQOh0CcxCcKd4
-        nSR3blO6oY9VOgjLuJHomoezWHLsrNDblKHhY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=h9zuKwLlalCInReCDZGYlcHYDYs+He5M
-        wJU7g9kIvy6sJyU0k9ei9N0uKvCI0a8CqTy/xrnO4yLokzvPj/VjJIykU3jphdsY
-        Wbo1dvJ+n7eWOsikUdNg0k/DCoilwaLBl0idN+K7GHq9qc1bF+gHjQthCeMnRT14
-        gkJZ8d5UaA8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8CCE55AF7;
-        Wed,  7 Dec 2016 15:29:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B5BC55AF6;
-        Wed,  7 Dec 2016 15:28:59 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     vi0oss@gmail.com, "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH] submodule--helper: set alternateLocation for cloned submodules
-References: <20161207184248.6130-1-vi0oss@gmail.com>
-        <CAGZ79kY3LR2KA69b4iDJb164EhJLb3JuVSRRcN0-4-kp-eryog@mail.gmail.com>
-        <xmqq4m2fxzl2.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79ka=XgO-VyS+Jqq2Fy28kPMy6HnXBAHb79Dt3NegZFd6kw@mail.gmail.com>
-Date:   Wed, 07 Dec 2016 12:28:58 -0800
-In-Reply-To: <CAGZ79ka=XgO-VyS+Jqq2Fy28kPMy6HnXBAHb79Dt3NegZFd6kw@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 7 Dec 2016 12:26:36 -0800")
-Message-ID: <xmqqzik7wkj9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932594AbcLGUfb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 15:35:31 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56279 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752885AbcLGUfa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 15:35:30 -0500
+Received: from [192.168.178.43] ([92.76.239.239]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRSeC-1c3d8m3MPQ-00Sjas; Wed, 07
+ Dec 2016 21:35:24 +0100
+Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
+To:     Junio C Hamano <gitster@pobox.com>
+References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
+ <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
+ <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <8d32c645-e850-5e7c-b01c-6e4d81e2d672@gmx.net>
+Date:   Wed, 7 Dec 2016 21:35:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C9210B2C-BCBB-11E6-92A3-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:ChLitNm7emgfU+AaZ3yIXtG7hXzjipBrmE98S5V3pI+gWY6NfB6
+ 5u3XoPQwpvYMRKGKy47LV1idlL3musxp6VlOH19VVcd5/uzVspoMuKb11yRmKrG1eevyWU6
+ qVpqfal/oPVPMCKdZuzWUjg98kV1C3nokD0FowvdHynDrcAPA3qY2RyR5KjosOj58Tldj6y
+ 6AiF34HaWTuP0p3kl+Zqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rqfu2Am61Jg=:6z6ZF8SPDgnAlqHufvxNOJ
+ Sn1EIEc7AtNe9svgtrsjoiwbklcffLF+YJehLhP6W6ofM6jpT7HmVV3jeUCvYeCe8jAzhbc0x
+ a+0B5tGdiGKpM7x58Mg74uO6c1C+gsVfnuNqir0ssvSnw04uyqpP/s2PxhX774HGyObxt3E5E
+ ht46MKqPg3hElsV/QHMvcDQSBlaMG4ignZM2RMQuwY+kYtkAYg+4SKTgKpZNx9jEuykIhGvAD
+ V88TXxrKoUMYTGGmGBRegG6qgM+rJpICQfEZfzbV38wCF9bjZOkGyIwHniFvb8x3mWFOKieWh
+ 7+ZiiLlr5zwSdLO9ue1NcCCtVVH0I208ixeQxCpdOlJ7QxJj38IbqJ6M53nva/fl5tcC3+M1j
+ TU3RgaTTMFgMexont/xBLXqGiWxDIcxuKiAVUARDmhv5H81vY4pTgcf/z7cCoClaUCqG3MfaO
+ d0V+3JqxKSmrDWJDil+lcvZjSJHC1k71GdB6pWOiMectwScDJQtjbUZXd2VX9TwwqSocYMB4e
+ I/ml2pIqFyciT9T9+hxwKHVN7v+07Yg2dmpo4HRJEl+S1KdrHhiz95uNNl3MSn12fL+LpV3Jk
+ FZXZ/fYVTc9VUXy9lUgbd97JCa5tzbJC7QO6OhlMApfOcEY904OmkbMqzU17XUzfLlRp3sPe6
+ 9A1otEeenYvUX7osxwD0fwQ7AwWrg6dFyCmLUUw/VWG1WkJ7P8UF4PCfren4VwtZkJZ/y6mi6
+ 0GPr9ebIc5yeC6786GWe+5dQPBBRiUC19HYQA15Sak0f3skGEVhwuaxUF/tvDY/o/S7k+fpeT
+ +z9/Gzg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
-> On Wed, Dec 7, 2016 at 12:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>>> This patch makes all not just the root repository, but also
->>>> all submodules (recursively) have submodule.alternateLocation
->>>> and submodule.alternateErrorStrategy configured, making Git
->>>> search for possible alternates for nested submodules as well.
->>>
->>> Sounds great!
->>
->> Is it safe to assume that all the submodules used recursively by
->> submodules share the same structure upstream?  Does the alternate
->> location mechanism degrades sensibly if this assumption turns out to
->> be false (i.e. "possible alternates" above turns out to be mere
->> possibility and not there)?
->
-> According to the last test in the patch, this seems to be doing the
-> sensible thing.
+On 12/07/2016 09:04 PM, Junio C Hamano wrote:
+> Stephan Beyer <s-beyer@gmx.net> writes:
+> 
+>> [1] By the way: git cherry-pick --quit, git rebase --forget ...
+>> different wording for the same thing makes things unintuitive.
+> 
+> It is not too late to STOP "--forget" from getting added to "rebase"
+> and give it a better name.
 
-OK, that sounds great.  Thanks.
+Oh. ;) I am not sure. I personally think that --forget is a better name
+than --quit because when I hear --quit I tend to look into the manual
+page first to check if there are weird side effects (and then the manual
+page says that it "forgets" ;D).
+So I'd rather favor adding --forget to cherry-pick/revert instead... or
+this:
+
+> Having said that, I have a feeling that these options do not have to
+> exist; isn't their presence just a symptom that the "--abort" for
+> the command misbehaves?  Isn't the reason why there is no need for
+> "am --quit" because its "--abort" behaves more sensibly?
+You're probably right. I have no other use-case in mind than "oh I
+forgot that I was rebasing... now just abort that and don't bother me
+further (i.e. please don't bring me back)"
+
+~Stephan
