@@ -2,90 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2421FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 22:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 757861FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 22:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933654AbcLGWnW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 17:43:22 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34191 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932362AbcLGWnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 17:43:20 -0500
-Received: by mail-pg0-f45.google.com with SMTP id x23so166597230pgx.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 14:43:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AQ0nuCvl3knvYEUduGQ+I5eUgKS7TmvENal+O9dhUVM=;
-        b=W80tY05jYuk9wCx2fFJ00PhpxQWNUMuoyBepZp3Ahd2SDwIRJew5Q/OMMBb0+9aTbq
-         ifjzXwBCVKQUmFL1+ktueC0aMq48UCM1OSO3LIFIBBqvEnhvVyYfJN5ce1O8w+4tV2E4
-         e+y9v5LMH5j76LwPHUg641Tba6P321TRiOjSktxjZ59HS2cfpsy0lSyuwhwnp4pbmNXo
-         Oe9YOnH99R8OcFMxhfM1EcfPn0wAhexSM0Msx3fN38dtja5Mz6oIue7Mf+XSwMj43+n9
-         BsUHjnwJ0m8oMNTtpoOG9VvN6GC9GUScQG2P5t7dld+2VpKUfEimAPdLim2VjLnmWniC
-         EYdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AQ0nuCvl3knvYEUduGQ+I5eUgKS7TmvENal+O9dhUVM=;
-        b=gJ7ylaHcf/0GHu9IfqNcdXvlul3/NFBKtQpx2PiCe02OMcOAp35rMJasgp0i8wsVdI
-         KVJhvPMyWuUT+gR2qPJBVA7/tq0cHQQ2SfRpJ5O1PJysLY79F2Fs9Kg8cViuYLSTTj05
-         oOdK6STdybet5mLPEDw0ZNofrZT18hjqrtc2cMApyFdn0a3jun068+u7VowoIWn3DALD
-         eMSaMza/H980+hfRVEhepS0TTPnwRxtIejugYIYN6aww7VOBcSncbEdnGsQmTeUdMhu3
-         9C9BbnNmVdJ8eExUeskGjjwCJPaFV7XgZbtoQEn15PGKy2tTp3lPwBU121PD1p4FfAPi
-         3ppw==
-X-Gm-Message-State: AKaTC00xPDNo996Qd2PyJMq4uAHMmztWCv8kAA0xwuq3EgP52Aq9zoJYfmXqlOJb+3Bz0A20
-X-Received: by 10.84.218.15 with SMTP id q15mr152227611pli.143.1481150599673;
-        Wed, 07 Dec 2016 14:43:19 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:ccae:4719:31da:e07d])
-        by smtp.gmail.com with ESMTPSA id o29sm45135117pgn.28.2016.12.07.14.43.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 14:43:18 -0800 (PST)
-Date:   Wed, 7 Dec 2016 14:43:17 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/17] ls-tree: convert show_recursive to use the
- pathspec struct interface
-Message-ID: <20161207224317.GG116201@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481061106-117775-5-git-send-email-bmwill@google.com>
- <CACsJy8DELy5JsJmcyDtwT-O9qGa9+hR1UfcKWRY1cmCnTALixA@mail.gmail.com>
+        id S933002AbcLGWqO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 17:46:14 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56499 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932755AbcLGWqM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 17:46:12 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D13125643A;
+        Wed,  7 Dec 2016 17:45:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MxARf+jKBWGDK1HOcGet9/7XPUc=; b=JCRgon
+        ae+rJgLBm9I4NHsez+2qKEFj/i9C8sPYt8kQz5LiCCayFSsO1P7Kv+E3tm1GPnX1
+        bIzdiHcSonqPdrgXh6up4uKW84yo78cxQ6Z3Xe9V6tC6vBaCY72jbgMzcmwfA+JR
+        zwHVqji2VYloPs9/Bak1OMt6/NogIYNSqzyB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=n/AKouJ5QJU7ErJqcmMBkfM7auMm5pCb
+        qSH4tpQMEHFGUlOUVG/RE9hsO/kueUmhyeJw9eXicSMXVIiV+POYO5TQ6jyGkuR5
+        XJ9Ft1vBE3cubaASm2EPgZk5ykVd6EHMpltOK7EvofUB8O83eamMWaftFZKTS7Yz
+        7GOoWde4ZEc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C91CC56439;
+        Wed,  7 Dec 2016 17:45:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4368856438;
+        Wed,  7 Dec 2016 17:45:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     bmwill@google.com, git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCHv5 4/5] worktree: get worktrees from submodules
+References: <20161207210157.18932-1-sbeller@google.com>
+        <20161207210157.18932-5-sbeller@google.com>
+Date:   Wed, 07 Dec 2016 14:45:29 -0800
+In-Reply-To: <20161207210157.18932-5-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 7 Dec 2016 13:01:56 -0800")
+Message-ID: <xmqqvauvuzna.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DELy5JsJmcyDtwT-O9qGa9+hR1UfcKWRY1cmCnTALixA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: DB7AA23E-BCCE-11E6-A213-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Duy Nguyen wrote:
-> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
-> > Convert 'show_recursive()' to use the pathspec struct interface from
-> > using the '_raw' entry in the pathspec struct.
-> 
-> Slightly off-topic (sorry, but you made me look at this code! :D),
-> could you update the magic_mask argument of parse_pathspec() in this
-> file to PATHSPEC_ALL_MAGIC & ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL)?
-> It makes sure all future magic will be caught as unsupported (and I
-> think Stefan is adding one, but understandably he did not find this
-> code).
-> 
-> I think it's in the spirit of renaming _raw to match too. By limiting
-> magic to fromtop and literal, we are sure match can only be path and
-> nothing else, which is good because this show_recursive can't handle
-> anything else either.
+Stefan Beller <sbeller@google.com> writes:
 
-Can do.
+> +	submodule_common_dir = strbuf_detach(&sb, NULL);
+> +	ret = get_worktrees_internal(submodule_common_dir, flags);
+> +
+> +	free(submodule_gitdir);
 
--- 
-Brandon Williams
+This sequence felt somewhat unusual.  I would have written this
+without an extra variable, i.e.
+
+	ret = get_worktrees_internal(sb.buf, flags);
+	strbuf_release(&sb);
