@@ -2,141 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 463701FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 23:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E259B1FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 23:35:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933440AbcLGX12 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 18:27:28 -0500
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:34309 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932983AbcLGX11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 18:27:27 -0500
-Received: by mail-pg0-f52.google.com with SMTP id x23so166948342pgx.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 15:27:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VePvmZnmp/bWBYpDbxnd+IXpLAvE2RibFBONBkxYCCU=;
-        b=pGW3AZl7DWk8GB706IbJ9BuX49x5m1UTk0JhqywZWwuKwZM9bVZWzzdW8aighB4CMX
-         mfYYgw8o/YppKEF8n7NFxpBFa/XIAkXKamI3r6tCwrz6tSnCQSICGkYEHH2NGsbajVbw
-         SKF1tUOAVeR/aSRGedsPpv36C4CR84oVS4vnoYomGu0Y0zzkB9aGZDvMdAwhWxcXHiNY
-         HfJNTRbWRi54qP3UezzjVy44NANKt9eEia0WOUoAzWp6DDW0MdNYPiw54aMtwUjbLY8Z
-         xJZuAXJVuPjacNAGnrpuamoIP2H2uHgTVg4d8+3LJLGoJlVK/sHUObmMp0ZVN7i3T5Vs
-         GX8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VePvmZnmp/bWBYpDbxnd+IXpLAvE2RibFBONBkxYCCU=;
-        b=cSbc2ko3r5N08BA1QvAR/nV+w3HNhJja6i+0EzQCvFMV4+wwUjTHB1ZWjLeQSZQiZK
-         CwSPZjQbm/jGA9mg5J6sQnNPphz6ts7lNBd9rSSZuZE5Vo/Gusvpl03PB6nDT8aTopdI
-         QCUtvSPReRITE4tI5eEHK/481snT5lePfwNr2UfpfzYQpyCI4bxh6fbQt0IITnbh30X9
-         6shnT97W51JLVLC51lWiiVpkXzwTQFCph5wkPJXgaMnoDijcYjMsU2fAmmFGER38uHA1
-         qwdX5sRrPemdQK8n4q0ZQa8TYoVsR8ihZYNyHVNbQ9Fr98yS/c4ZKbQqmw33Y3WynIo4
-         6neQ==
-X-Gm-Message-State: AKaTC01+FKKUh2FnBlEnzELdmtuhFnwhGwlTIeZRH58WXr7BANdQhYQAwwkzHiSHDa88yCU6
-X-Received: by 10.98.141.74 with SMTP id z71mr70372669pfd.53.1481153246784;
-        Wed, 07 Dec 2016 15:27:26 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:ccae:4719:31da:e07d])
-        by smtp.gmail.com with ESMTPSA id p13sm45116696pgf.47.2016.12.07.15.27.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 15:27:25 -0800 (PST)
-Date:   Wed, 7 Dec 2016 15:27:24 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/17] pathspec: small readability changes
-Message-ID: <20161207232724.GI116201@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481061106-117775-17-git-send-email-bmwill@google.com>
- <CACsJy8ChJ_H3gDOuKVYGAKYumG0u2WkBVpNr_3ePyAJ9NojvEg@mail.gmail.com>
+        id S933743AbcLGXfl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 18:35:41 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52068 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933757AbcLGXfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 18:35:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78C4C56968;
+        Wed,  7 Dec 2016 18:34:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CioduHoWzFmJgRqoWt0zPFEBLkY=; b=hqzK/f
+        3Heb6f+RXwtGIE4GzXKUsVTQgjS75jt1wNwll4CZjplGIbgx57oz7v+DHGBKhw46
+        QPQJmUKPsd3Z9GdXV4HUh0/+Xv8KsIHeCtm+YcJKGJZBc72JzkAz6r1INOvDPdUS
+        nctNPKlNO8qVdUp8NuKU/GrLbXVoXcJMj9m+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Dtd8utvJ9V7d8eNWCWIlPII8c6g4n8OD
+        U16wrPcKCQ+111QP/KsMsEhjow4DMjnFnldSso5197+DijyDktjWVmKjc6efyx7P
+        N5BgDgZouXMC8j5uXHf2+vwXL09SkeIE4CepMmbnm+XRD+QF1TjiJn9Byn86R9Gw
+        qwqdpNJKr70=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EFD556967;
+        Wed,  7 Dec 2016 18:34:46 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BDF2156966;
+        Wed,  7 Dec 2016 18:34:45 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     bmwill@google.com, git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCHv5 0/5] submodule embedgitdirs
+References: <20161207210157.18932-1-sbeller@google.com>
+        <xmqqzik7v04b.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 07 Dec 2016 15:34:44 -0800
+In-Reply-To: <xmqqzik7v04b.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 07 Dec 2016 14:35:16 -0800")
+Message-ID: <xmqqeg1juxd7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8ChJ_H3gDOuKVYGAKYumG0u2WkBVpNr_3ePyAJ9NojvEg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: BC808A40-BCD5-11E6-BDC0-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Duy Nguyen wrote:
-> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
-> > A few small changes to improve readability.  This is done by grouping related
-> > assignments, adding blank lines, ensuring lines are <80 characters, etc.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  pathspec.c | 15 ++++++++++-----
-> >  1 file changed, 10 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/pathspec.c b/pathspec.c
-> > index 41aa213..8a07b02 100644
-> > --- a/pathspec.c
-> > +++ b/pathspec.c
-> > @@ -334,6 +334,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
-> >         if ((magic & PATHSPEC_LITERAL) && (magic & PATHSPEC_GLOB))
-> >                 die(_("%s: 'literal' and 'glob' are incompatible"), elt);
-> >
-> > +       /* Create match string which will be used for pathspec matching */
-> >         if (pathspec_prefix >= 0) {
-> >                 match = xstrdup(copyfrom);
-> >                 prefixlen = pathspec_prefix;
-> > @@ -341,11 +342,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
-> >                 match = xstrdup(copyfrom);
-> >                 prefixlen = 0;
-> >         } else {
-> > -               match = prefix_path_gently(prefix, prefixlen, &prefixlen, copyfrom);
-> > +               match = prefix_path_gently(prefix, prefixlen,
-> > +                                          &prefixlen, copyfrom);
-> >                 if (!match)
-> >                         die(_("%s: '%s' is outside repository"), elt, copyfrom);
-> >         }
-> > +
-> >         item->match = match;
-> > +       item->len = strlen(item->match);
-> > +       item->prefix = prefixlen;
-> > +
-> >         /*
-> >          * Prefix the pathspec (keep all magic) and assign to
-> >          * original. Useful for passing to another command.
-> > @@ -362,8 +368,6 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
-> >         } else {
-> >                 item->original = xstrdup(elt);
-> >         }
-> > -       item->len = strlen(item->match);
-> > -       item->prefix = prefixlen;
-> >
-> >         if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
-> >             strip_submodule_slash_cheap(item);
-> > @@ -371,13 +375,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
-> >         if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
-> >             strip_submodule_slash_expensive(item);
-> >
-> > -       if (magic & PATHSPEC_LITERAL)
-> > +       if (magic & PATHSPEC_LITERAL) {
-> >                 item->nowildcard_len = item->len;
-> > -       else {
-> > +       } else {
-> >                 item->nowildcard_len = simple_length(item->match);
-> >                 if (item->nowildcard_len < prefixlen)
-> >                         item->nowildcard_len = prefixlen;
-> >         }
-> > +
-> >         item->flags = 0;
-> 
-> You probably can move this line up with the others too.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I didn't move the item->flags assignment up since the code immediately
-following this assignment deal with setting item->flags.  I made more
-sense to keep them grouped.
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> v5:
+>> * Add another layer of abstraction, i.e. the relocate_git_dir is only about 
+>>   moving a git dir of one repository. The submodule specific stuff (e.g.
+>>   recursion into nested submodules) is in submodule.{c,h}
+>>   
+>>   This was motivated by reviews on the series of checkout aware of submodules
+>>   building on top of this series, as we want to directly call the embed-git-dirs
+>>   function without the overhead of spawning a child process.
+>
+> OK.  Comparing the last steps between this round and the previous
+> one, I do think the separation of the responsibility among helpers
+> is much more reasonable in this version, where:
+>
+>  - submodule_embed_git_dir() is given a single path and is
+>    responsible for that submodule itself, which is done by calling
+>    submodule_embed_git_dir_for_path() on itself, and its
+>    sub-submodules, which is done by spawning the helper recursively
+>    with appropriate super-prefix;
+>
+>  - submodule_embed_git_dir_for_path() computes where the given path
+>    needs to be moved to using the knowledge specific to the
+>    submodule subsystem, and asks relocate_gitdir() to perform the
+>    actual relocation;
+>
+>  - relocate_gitdir() used to do quite a lot more, but now it is only
+>    about moving an existing .git directory elsewhere and pointing to
+>    the new location with .git file placed in the old location.
+>
+> I would have called the second helper submodule_embed_one_git_dir(),
+> but that is a minor detail.
+>
+> Very nicely done.
 
--- 
-Brandon Williams
+One thing that is not so nice from the code organization point of
+view is that "dir.c" now needs to include "submodule.h" because it
+wants to call connect_work_tree_and_git_dir().
+
+I wonder if that function belongs to dir.c or worktree.c not
+submodule.c; I do not see anything that is submodule specific about
+what the function does.
