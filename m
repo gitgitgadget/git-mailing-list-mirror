@@ -2,95 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4C3D1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 18:21:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B8A31FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 18:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753012AbcLGSVe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 13:21:34 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63775 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752142AbcLGSVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 13:21:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3108D546B9;
-        Wed,  7 Dec 2016 13:21:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=biBh0IV46nJQrnP0svEt5AUPz70=; b=c9aEYA
-        /9UzBamZx0a5stfLtpxtOspMuE0fQ1lHUGD1rM3N4uafoUyVTv64DBmIeR394FLF
-        ZhojtHHgNgcmzYS4MdZSN0c2ZFBN9Sg/fyAfG0UnY4SH7fT6bavOTV+xo1vb+qmh
-        rXHn+7YD81Wu52Ezmftkxsb6QOCOkpDkp+WqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TQulESQxAt5vewrhoAIcH1iD8uD4RNZ5
-        IEilZZrBh2YXFJ0nZgrL7DXCggOcuTeB1axSj7uqChtST2pRw/s65In0EhJMvWSJ
-        1xnegzHj8akzi0Le3WXYse+tJaIz250uVB5wnZbmoLqEjlufoRo7cxe7/Zjemr5p
-        dfvG902qLAs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 25F41546B8;
-        Wed,  7 Dec 2016 13:21:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CAF1546B7;
-        Wed,  7 Dec 2016 13:21:30 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Robbie Iannucci <iannucci@google.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Re* [BUG] Index.lock error message regression in git 2.11.0
-References: <CA+q_oBdHytoeSD-hmLx_N473M8XinjqckvE35Re3eNpQRWYjHQ@mail.gmail.com>
-        <xmqqbmwozppx.fsf@gitster.mtv.corp.google.com>
-        <xmqq4m2gzotn.fsf_-_@gitster.mtv.corp.google.com>
-Date:   Wed, 07 Dec 2016 10:21:29 -0800
-In-Reply-To: <xmqq4m2gzotn.fsf_-_@gitster.mtv.corp.google.com> (Junio
-        C. Hamano's message of "Tue, 06 Dec 2016 14:15:48 -0800")
-Message-ID: <xmqqd1h3y506.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753542AbcLGSgk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 13:36:40 -0500
+Received: from mout.gmx.net ([212.227.17.22]:65230 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753391AbcLGSgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 13:36:38 -0500
+Received: from [192.168.178.43] ([92.76.239.239]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Meutp-1bzUgF0Iw5-00OYaN; Wed, 07
+ Dec 2016 19:36:18 +0100
+Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
+Date:   Wed, 7 Dec 2016 19:36:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F9AF6034-BCA9-11E6-8058-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:UNeKGBjDrKm+BFT1xGJc1boaUrmJN3ad1yv15h7fPhzJqkPHuPm
+ 2Wxo7OAtTfAIZ3XDPVumbChbu8J+vETeykDUV9op49f8wCovAbtxai5vEQvSzesPuFJvfXC
+ fZJ73cMjyKsrqF2fiow2ycJtWy6zmUhfHp5s0eZyldIxJxpFji4+wMTQpGtUItnHA+vBcpN
+ MLZoCkLCVecs+J4FjyhJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:es3z6B5iT2Q=:XXTcph+DvljU1ITMG21NMi
+ 5MMz+WCX3F2eEAr3WOYAUlDdvvo+FUvwt2itUypOFzPC+pgGnJvT3Y1iupakk05Yo0q9upP2j
+ spPF8URFIOXTmHnsMwAX37E+ORAZPTBlBnv9F8F2aCDOqpnz/ZJ4ppG2i7HIPIX0esK/31Egr
+ l9hT1txf00theX7H55/lobUEqJRvLbpsGBew2a/4fUfikYvzXoR4ue+b7v4x2oDMVPNwXDvPC
+ R4c3/lAz7D/orTJ1YfLj/zLer7F+YKQaoJUTfETAo2pigi83JctDj8F5c3Y3y9Ev+QwXqUs3+
+ 5pvz06mVkNJ83cOP9nOe6g4AHORtwZEcDDDmGLHPalCGN6wwyT4sf0/+auvJnHIfxIX5DISrw
+ u2zUhjHmmgElalvPMonpSKJF9MgFoV1m6V5Ka7ZItTyb1Bru9ULIaWGaMFRFYQ0eM6r+t05v4
+ tpA9fhkP+Dtqj9HOmkAHVdDrf0rb4HUkvRZaJE+QIbGwUnPJ6YAOal6mG1xI8I8hJtkcPjyCw
+ KhkaXS6Jam3mR9aHxdwtOI7dTDEQR9x1U+FfHH/MNcjrlEnslpTFyQlTNvjlUp2zc9tv2cmMa
+ dtgzhV/BLYESZFgDj0fqYaKVLXSw18g1it31UnVDJIs57ehwXtjPM+7HVKooJ+wv2LOaf867J
+ I+CG5C8+gEUVgahxvHFUbgeoFWPP9ZpdPcpr8r2md1QNSVIdw0ugSBY1d+djyGuntgHiZUwzx
+ C//qjyoDw0l7GLEQDUIRNcCWeAGcNiYNOD/bTk3sGTaiPbeWLYNwejuuBwXLYtTu2dhJIkpjl
+ XAflCui
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> ...
-> I would not be surprised if some existing calls to hold_lock*()
-> functions that pass die_on_error=0 need to be updated to pass
-> LOCK_SILENT_ON_ERROR, and when this fix is taken alone, it may look
-> like a regression, but we are better off starting louder and squelch
-> the ones that we find safe to make silent than the other way around.
+On 12/06/2016 07:58 PM, Junio C Hamano wrote:
+> I was burned a few times with this in the past few years, but it did
+> not irritate me often enough that I didn't write it down.  But I
+> think this is serious enough that deserves attention from those who
+> were involved.
+> 
+> A short reproduction recipe, using objects from git.git that are
+> publicly available and stable, shows how bad it is.
+> 
+>     $ git checkout v2.9.3^0
+> 
+>     $ git cherry-pick 0582a34f52..a94bb68397
+>     ... see conflict, decide to give up backporting to
+>     ... such an old fork point.
+>     ... the git-prompt gives "|CHERRY-PICKING" correctly.
+> 
+>     $ git reset --hard v2.10.2^0
+>     ... the git-prompt no longer says "|CHERRY-PICKING"
+> 
+>     $ edit && git commit -m "prelim work for backporting"
+>     [detached HEAD cc5a6a9219] prelim work for backporting
+> 
+>     $ git cherry-pick 0582a34f52..a94bb68397
+>     error: a cherry-pick or revert is already in progress
+>     hint: try "git cherry-pick (--continue | --quit | --abort)"
+>     fatal: cherry-pick failed
+> 
+>     $ git cherry-pick --abort
+>     ... we come back to v2.9.3^0, losing the new commit!
 
-I actually take this part back, for two reasons.
+Apart from the git-prompt bug: isn't this a user error? I think "git
+cherry-pick --quit"[1] would be the right thing to do, not --abort.
 
- * Before the recent js/sequencer-wo-die topic that made this
-   failure mode of 'git merge' more dangerous by accident, there
-   were already callers that passed die_on_error=0 to hold_lock*
-   family of functions, and we can trust these callers.  They either
-   have been silent upon lock failure sensibly (e.g. a caller that
-   tries to acquire the lock to opportunistically update the index
-   can safely choose not to do anything and be silent) or they have
-   had their own way of reporting the errors to the users.  The "you
-   need to ask to be totally quiet" approach in my rerolled patch
-   (the one I am responding to) will introduce new regressions to
-   these codepaths.
+On the other hand, one (as a user) could also expect that "git reset
+--hard" also resets sequencer-related states (and that is what the
+git-prompt suggests), but that would probably break a lot of scripts ;)
 
- * Among the ones that stopped passing die_on_error=1 when the topic
-   was merged, there are
-   ones that give sensible error messages.  Again, they do not need
-   extra message with the "you need to ask to be totally quiet"
-   approach [*1*].
+[1] By the way: git cherry-pick --quit, git rebase --forget ...
+different wording for the same thing makes things unintuitive.
 
-We need to instead go through the latter, i.e. the ones that appear
-in "git show --first-parent 2a4062a4a8", with fine-toothed comb to
-see which 0 made an error totally silent (like the one Robbie
-spotted in merge.c) and fix them to ask hold_lock*() functions not
-to die but still report an error.
+>  (1) The third invocation of "cherry-pick" with "--abort" to get rid
+>      of the state from the unfinished cherry-pick we did previously
+>      is necessary, but the command does not notice that we resetted
+>      to a new branch AND we even did some other work there.  This
+>      loses end-user's work.  
+> 
+>      "git cherry-pick --abort" should learn from "git am --abort"
+>      that has an extra safety to deal with the above workflow.  The
+>      state from the unfinished "am" is removed, but the head is not
+>      rewound to avoid losing end-user's work.
+> 
+>      You can try by replacing two instances of
+> 
+> 	$ git cherry-pick 0582a34f52..a94bb68397
+> 
+>      with
+> 
+> 	$ git format-patch --stdout 0582a34f52..a94bb68397 | git am
+> 
+>      in the above sequence, and conclude with "git am--abort" to see
+>      how much more pleasant and safe "git am --abort" is.
+Definitely. I'd volunteer to add that safety guard. (But (2) remains.)
+
+~Stephan
 
