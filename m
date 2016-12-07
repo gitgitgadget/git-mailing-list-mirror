@@ -2,63 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 398AA1FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 20:43:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E8E1FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 20:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932339AbcLGUnM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 15:43:12 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:27308 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752364AbcLGUnL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 15:43:11 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tYr6h6ySyz5tlS;
-        Wed,  7 Dec 2016 21:43:08 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 356631CFD;
-        Wed,  7 Dec 2016 21:43:07 +0100 (CET)
-Subject: Re: [PATCH] real_path: make real_path thread-safe
-To:     Brandon Williams <bmwill@google.com>
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
- <1480964316-99305-2-git-send-email-bmwill@google.com>
- <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
- <20161207001018.GD103573@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        sbeller@google.com, peff@peff.net, jacob.keller@gmail.com
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7d968fd8-a92d-efd3-ce67-7de6049b6d56@kdbg.org>
-Date:   Wed, 7 Dec 2016 21:43:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S932594AbcLGUxg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 15:53:36 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33433 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932339AbcLGUxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 15:53:36 -0500
+Received: by mail-qk0-f194.google.com with SMTP id x190so50253790qkb.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 12:53:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=XS/I/+VnDo9ApyF1QBCtSg0JwOq2JKpWphwxDIjjcBg=;
+        b=nyO2KQ3dSWBMOhMp0mYh3C4+9wBCTrrjAXrapl5bFMO5rsGOjdqemiWyp6nmgM9G4t
+         ME7FiOmbiVbxGsiuC69uGZhv6OH5Y7UxtLT2/xqetwI3s57MxHmzUjbQnJ/ANdKoS7Tu
+         trrRPNaRwCbRiFcSjZJQ1Ez0Zbv5RCLE4uhLcUAtXJaM2P/5XpsrENhURAV6YA4Y7Fo5
+         lRo8qzr6NnGshsOtte9Jr+rWQRdT0FdZpHafQLqd/TqUu4BuQsiI1C95TmSLB2w6Hwe4
+         IbLJS1M/etOekeHKGIE8g1SLh56WQ8LyKw6sKZcTKN+d+7Fch6Xw44VvzgvY2c41JwFw
+         MTMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=XS/I/+VnDo9ApyF1QBCtSg0JwOq2JKpWphwxDIjjcBg=;
+        b=TKl/b0eUwYKPdeyEzBbrJ5nMG7/oMv9Cu6uRY63b2t2/+zNjec98NYXRMmqF0hOkSY
+         6en5oVe4QCmuyQpvUVoqYbjJbugd+ELYTQhOLHAP0knvFadnDuPLYkoyl0g2U9rD6ekR
+         Z+YiVeE8n5AyuexgftPUiVgsVtZUUkhJkW7Jffd9bsFuyKF5D6OryIm+gipwK9DyI5fS
+         r1XuKkAg3wkJPkLgkF/q3yQLySKQQuzLzUqXbdlT3+QA4uA6Qw/obbqa2ojX9rME9KiO
+         LGyAXFceelF4cMMm/Ei0HPFl1jzij2MF1dsoCCtY3awQhxPSWOUTs18vsgE0lz8UoWsS
+         1tJw==
+X-Gm-Message-State: AKaTC03bWyjgHHXS/kPH3N2/VdOJ4aZwQDu3lWexluCzAknRAsGKBWW8pzo8xB03Az2zoCu/0rYcgQgzJDfh6w==
+X-Received: by 10.233.221.130 with SMTP id r124mr60640703qkf.183.1481144015121;
+ Wed, 07 Dec 2016 12:53:35 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161207001018.GD103573@google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.134.36 with HTTP; Wed, 7 Dec 2016 12:53:14 -0800 (PST)
+In-Reply-To: <CAGZ79kZHGqU2y19_uKhtVuE6vhspzPNpw-nVDnm8gLQ8u528kQ@mail.gmail.com>
+References: <xmqqd1h3y506.fsf@gitster.mtv.corp.google.com> <20161207194105.25780-1-gitster@pobox.com>
+ <20161207194105.25780-2-gitster@pobox.com> <CAGZ79kZHGqU2y19_uKhtVuE6vhspzPNpw-nVDnm8gLQ8u528kQ@mail.gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 7 Dec 2016 12:53:14 -0800
+X-Google-Sender-Auth: MwTjtOBLvZrVNkdt-e2DRTk6ZCY
+Message-ID: <CAPc5daX2CZ0=UBMuz70KwFPBDTUgAdi8WoVUJ7gNTq+QEXKxbg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] wt-status: implement opportunisitc index update correctly
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Paul Tan <pyokagan@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.12.2016 um 01:10 schrieb Brandon Williams:
-> This function should accept both absolute and relative paths, which
-> means it should probably accept "C:\My Files".  I wasn't thinking about
-> windows 100% of the time while writing this so I'm hoping that a windows
-> expert will point things like this out to me :).
+On Wed, Dec 7, 2016 at 12:48 PM, Stefan Beller <sbeller@google.com> wrote:
+>
+> So I would expect that we'd rather fix the update_index_if_able instead by
+> checking for the lockfile to be in the correct state?
 
-;)
-
-With this patch, the test suite fails at the very first git init call:
-
-D:\Src\mingw-git\t>sh t0000-basic.sh -v -i -x
-fatal: Invalid path '/:': No such file or directory
-error: cannot run git init -- have you built things yet?
-FATAL: Unexpected exit with code 1
-
-I haven't dug further, yet.
-
--- Hannes
-
+I actually don't expect that, after looking at other call sites of
+that function.
