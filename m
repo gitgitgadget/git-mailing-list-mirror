@@ -2,184 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD4571FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 20:09:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9B020259
+	for <e@80x24.org>; Wed,  7 Dec 2016 20:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932513AbcLGUJm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 15:09:42 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:36840 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932297AbcLGUJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 15:09:41 -0500
-Received: by mail-qk0-f175.google.com with SMTP id n21so426977213qka.3
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 12:09:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/lytbML5y9txBYqSKdzHncHRH5xJQB6iyK2SG4LedEI=;
-        b=BN8x8inMmn0KLqSIkpf+NiwyJaECzzmG7u6J5qUgGIUODBSlhOmkiXg+C++rWIBmy4
-         XOMHsJ8WfmU2pAMn7CkWZ/5hU4YClG62ijlSDMqaAYNvI7KG5TfBaNLXEdq77siMOcvs
-         XMGYz5rzmKo+gWr9tyygDXg0sH8U3mZ49Ip5c0MfB/gfCpOPI/zh/2os3Tcs7bKh6AxY
-         vG5bJpqmpKcEg7lOTg5jlVKAYARE66DxjeqmcTIJ5VJl+Q8nYzJmKUCw8Ocdon1aofF3
-         oMO8re3yD3EeqpO/aJzRLiYSYUuI9nhUPuXsONUHJWT65WPJZ3P39wAKI+x+VrN/meV4
-         xggQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/lytbML5y9txBYqSKdzHncHRH5xJQB6iyK2SG4LedEI=;
-        b=LuYlndSj0QCbcoBjuOd1NVCHOAlduqPUKu27rpi0aRm/MDJS+wK+qzdOZVU/IUwKj7
-         1X/bKZxNr3d96Y8TsNk9k2+4ZCbxnraq/s5d34lvnpBADEmQ79P5e+Q+/ICi0FxFMt4g
-         6PDj/YTAJ48oDnGNNWBFnG5oeF1WDqdBSHN1AA4My9g+Pgdf35/O7sbBIYK2+9Bb1zZV
-         ldh3xZeiS9YJs2F3To4hJSfYV4ZMOljEkI8cd6QDdnNWTbIlwd2o+/LODuy1GkFwx8M7
-         VRIAv+Hdbjxggy10RxB8p9AH/SBlAK9DAyz/nrvm76jWH1CRiXF4m6iSzl/gAIbJ00CE
-         e1ng==
-X-Gm-Message-State: AKaTC03aH4M+ejyde/hrGsJTAtcVH3Hwe6bgzOZ6Q3UO7p9FuXVc0+knk3itFsSc51aFiSkjMRNOIE1XpQZYcJ3W
-X-Received: by 10.55.67.81 with SMTP id q78mr60950077qka.53.1481141380207;
- Wed, 07 Dec 2016 12:09:40 -0800 (PST)
+        id S932808AbcLGUP0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 15:15:26 -0500
+Received: from mout.web.de ([212.227.17.12]:59980 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932784AbcLGUPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 15:15:25 -0500
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lb29N-1cusrE2Zk9-00kcl1; Wed, 07
+ Dec 2016 21:14:13 +0100
+Date:   Wed, 7 Dec 2016 20:14:09 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        sbeller@google.com, peff@peff.net, jacob.keller@gmail.com
+Subject: Re: [PATCH] real_path: make real_path thread-safe
+Message-ID: <20161207201409.GA19743@tb-raspi>
+References: <1480964316-99305-1-git-send-email-bmwill@google.com>
+ <1480964316-99305-2-git-send-email-bmwill@google.com>
+ <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
+ <20161207001018.GD103573@google.com>
+ <b73e61f8-0cff-b33e-118a-e530d367c94c@ramsayjones.plus.com>
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Wed, 7 Dec 2016 12:09:39 -0800 (PST)
-In-Reply-To: <20161207184248.6130-1-vi0oss@gmail.com>
-References: <20161207184248.6130-1-vi0oss@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 7 Dec 2016 12:09:39 -0800
-Message-ID: <CAGZ79kY3LR2KA69b4iDJb164EhJLb3JuVSRRcN0-4-kp-eryog@mail.gmail.com>
-Subject: Re: [PATCH] submodule--helper: set alternateLocation for cloned submodules
-To:     vi0oss@gmail.com
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b73e61f8-0cff-b33e-118a-e530d367c94c@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:sFYc4PXpK25mnIbMNGVq5xogHiWgA8ZepWbILfryagi8zBTpXBP
+ BV+ZTSFTeJcJRZKnvtgj6apIwmPlcxqmhirKrDCtXlcOP9ePYcCA4obOorQVVzLwcBLJNoH
+ 9t/R7UiIrQ/xixDzkNIxVNfuuKoe2ZtLFt5Q5K6BqHAM0GA5baF/ugBVE9U97+9oARd6Ii4
+ WyL4u9XgGDU/7U8UMO0/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uQZnZX3pAvQ=:LoUImetSv3BTh76u14xtej
+ FQ/k7xVcsrSEswVfpkka3COpias43X4owqYqu3WAQ4GQu0EeBbAtpd4PfRCAvqDeEj5OyqRVd
+ sRByjXONHIv+fKEie/IGySgECoso7pUuZtfJQw9qGwQM/cs5meEtYjFzhwEpaKqMihSmIY4S8
+ QXfuwYskIw/kh4dElSiaFiDYOri6d6JeJ7ZqRvcKTYckYIlkmmBgGX+Altx+xsBd52ciGiCDF
+ 7DZnGXziBQxphcOTBqYJ3bofyNsajfRsBYdhoX043IdYolxPSiwbxKr9tE0HBHXNpFpl4t9Zk
+ YrYLXBmu/lnVO7a/OsLmPVfyrL8TMYTcz9BzZbPwhJVp4S2U0tO4ltYZFKRx2KZFrxBMAyvSI
+ OBVcXaAsFtf3i93Yh+f6cQYNR4yocb68nur9xRCXfJ+pBLDQgi460v0Z8a+D+FkIHeev6Q7+B
+ nK8cWqzSizUTptP+k57cSQwuOKM9c71wQg6pjFMZQF+SVUvNWbQKahmtsKZ99PhdqJSC9SRwt
+ Kdsd3gPFwfKZ3dTfypNOYLQvzvvoBv14++fSf4DuWsFYMctKF3Jkh7xAjzR9GjkbvULRKny/x
+ fTRsS/GBF/jhQfratC6MPMoNGn9qn2EnPfsRgdjmK5uRBj7Q+38xvIFyKJFA6TbP/8Rs2XrxJ
+ NDTifP4BxMQajnzQfShFRzUvGOqI1UlJqkH2YVsqVm6MD193MTq54PgO9yWHF9UwiRyhVJ7Jy
+ tcQp9gkzJtw8w0vXkzcswRFirnQGGUTFZjFusn4GbYEAhtLUgwcvnEUJ0XE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 7, 2016 at 10:42 AM,  <vi0oss@gmail.com> wrote:
-> From: Vitaly _Vi Shukela <vi0oss@gmail.com>
+On Wed, Dec 07, 2016 at 01:12:25AM +0000, Ramsay Jones wrote:
+> 
+> 
+> On 07/12/16 00:10, Brandon Williams wrote:
+> > On 12/06, Junio C Hamano wrote:
+> >> POSIX cares about treating "//" at the very beginning of the path
+> >> specially.  Is that supposed to be handled here, or by a lot higher
+> >> level up in the callchain?
+> > 
+> > What exactly does "//" mean in this context? (I'm just naive in this
+> > area)
+> 
+> This refers to a UNC path (ie Universal Naming Convention) which
+> is used to refer to servers, printers and other 'network resources'.
+> Although this started (many moons ago) in unix, it isn't used too
+> much outside of windows networks! (where it is usually denoted by
+> \\servername\path).
+> 
+> You can see the relics of unix UNC paths if you look at the wording
+> for basename() in the POSIX standard. Note the special treatment of
+> the path which 'is exactly "//"', see http://pubs.opengroup.org/onlinepubs/009695399/functions/basename.html
+> 
+> ATB,
+> Ramsay Jones
 
-Thanks for contributing to Git!
-(/me looks up if you have sent patches already as you
-seem to know how to do that. :) unrelated side note: Maybe you want
-to send a patch for the .mailmap file mapping your two email addresses
-together, c.f. "git log -- .mailmap")
+Please allow one more comment about UNC:
+They are used under Windows, and typically wotk together with Git.
+One breakage between 2.10 and 2.11 has been observed, saying that
+pushing to \\SERVER\SHARE\DIRECTORY does not work any more.
 
->
-> Git v2.11 introduced "git clone --recursive --referece ...",
-> but it didn't put the alternates for _nested_ submodules.
+It has been reported under
+ "git 2.11.0 error when pushing to remote located on a windows share"
+both here and 
+here:
+https://github.com/git-for-windows/git/issues/979#issuecomment-264816175
 
-This message is targeted at people familiar with gits code base,
-so we can be more specific. e.g.
+I don't have a Windows box at the moment, and I don't know if the
+breakage was introduced by changes in real_patyh().
 
-    In 31224cbdc7 (clone: recursive and reference option triggers
-    submodule alternates, 2016-08-17) a mechanism was added to
-    have submodules referenced.  It did not address _nested_
-    submodules, however.
+But in any case it seems that e.g.
+//SEFVER/SHARE/DIR1/DIR2/..
+must be converted into
+//SEFVER/SHARE/DIR1
 
->
-> This patch makes all not just the root repository, but also
-> all submodules (recursively) have submodule.alternateLocation
-> and submodule.alternateErrorStrategy configured, making Git
-> search for possible alternates for nested submodules as well.
+and 
+\\SEFVER\SHARE\DIR1\DIR2\..
+must be converted into
+\\SEFVER\SHARE\DIR1
 
-Sounds great!
 
->
-> As submodule's alternate target does not end in .git/objects
-> (rather .git/modules/qqqqqq/objects), this alternate target
-> path restriction for in add_possible_reference_from_superproject
-> relates from "*.git/objects" to just */objects".
 
-I wonder if this check is too weak and we actually have to check for
-either .git/objects or modules/<name/possibly/having/slashes>/objects.
-When writing the referenced commit I assumed we'd need a stronger check
-to be safer and not add some random location as a possible alternate.
 
->
-> New tests have been added to t7408-submodule-reference.
-
-Thanks!
-
->
-> Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
-> ---
->  builtin/submodule--helper.c    | 24 ++++++++++++--
->  t/t7408-submodule-reference.sh | 73 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 95 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 4beeda5..93dae62 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -498,9 +498,9 @@ static int add_possible_reference_from_superproject(
->
->         /*
->          * If the alternate object store is another repository, try the
-> -        * standard layout with .git/modules/<name>/objects
-> +        * standard layout with .git/(modules/<name>)+/objects
->          */
-> -       if (ends_with(alt->path, ".git/objects")) {
-> +       if (ends_with(alt->path, "/objects")) {
->                 char *sm_alternate;
->                 struct strbuf sb = STRBUF_INIT;
->                 struct strbuf err = STRBUF_INIT;
-> @@ -672,6 +672,26 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->                 die(_("could not get submodule directory for '%s'"), path);
->         git_config_set_in_file(p, "core.worktree",
->                                relative_path(path, sm_gitdir, &rel_path));
-> +
-> +       /* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
-> +       {
-
-Usually we do not use braces to further nest code, please remove this nesting.
-
-> +               char *sm_alternate = NULL, *error_strategy = NULL;
-> +
-> +               git_config_get_string("submodule.alternateLocation", &sm_alternate);
-> +               if (sm_alternate) {
-> +                       git_config_set_in_file(p, "submodule.alternateLocation",
-> +                                                  sm_alternate);
-> +               }
-> +               git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
-> +               if (error_strategy) {
-> +                       git_config_set_in_file(p, "submodule.alternateErrorStrategy",
-> +                                                  error_strategy);
-> +               }
-> +
-> +               free(sm_alternate);
-> +               free(error_strategy);
-> +       }
-> +
->         strbuf_release(&sb);
->         strbuf_release(&rel_path);
->         free(sm_gitdir);
-> diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-> index 1c1e289..7b64725 100755
-> --- a/t/t7408-submodule-reference.sh
-> +++ b/t/t7408-submodule-reference.sh
-> @@ -125,4 +125,77 @@ test_expect_success 'ignoring missing submodule alternates passes clone and subm
->         )
->  '
->
-> +test_expect_success 'preparing second superproject with a nested submodule' '
-> +       test_create_repo supersuper &&
-> +       (
-> +               cd supersuper &&
-> +               echo I am super super. >file &&
-
-Usually we quote strings containing white space, e.g. echo "I am ..." >actual
-
-> +               git add file &&
-> +               git commit -m B-super-super-initial
-> +               git submodule add "file://$base_dir/super" subwithsub &&
-> +               git commit -m B-super-super-added &&
-> +               git submodule update --init --recursive &&
-> +               git repack -ad
-> +       ) &&
-> +       echo not cleaning supersuper
-
-This echo is left in for debugging purposes?
