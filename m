@@ -2,115 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 831841FF7F
-	for <e@80x24.org>; Wed,  7 Dec 2016 21:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E36201FF7F
+	for <e@80x24.org>; Wed,  7 Dec 2016 21:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932928AbcLGVCE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 16:02:04 -0500
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:34808 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932339AbcLGVCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 16:02:02 -0500
-Received: by mail-pg0-f52.google.com with SMTP id x23so165785282pgx.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 13:02:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JLmB1bvyzDLJpv+srgKtsN9jiATcamJMV4pY+8RkpGM=;
-        b=iGRNp5AtB2kBV/jvGS3DdNrYJ4+jkI/gKjtKKfMRLkRGm4JPLDY5RS3TUw4qFpyTC1
-         0p5+gW4ceIp0EmmWGislaJWdDcDQ4fbddLQmUMD5/Ctie5AvWrydFafPM3HkQFqpyR3D
-         g7ysRn/1to1zqDznq+j4z/4eUEoTalWu1Isu9gVuRfv45tJ9PQsV65bPP7sw8PlplGl4
-         +QgLsym+e7VsWLO0lnw1cNyuPFIvP/1UHEq8r3uzpex3cAvUYqKj3waMgM/aO4+4B5G7
-         F2OLT52pptDKuGxZRmKc4FrCoizn709fEWbQ7fpdUwoFKqwUB9Y5VYx2E3x0HXHzE7FK
-         9A/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JLmB1bvyzDLJpv+srgKtsN9jiATcamJMV4pY+8RkpGM=;
-        b=dJjtraQTSMspOwqbqcadKVKimahaSBw09X5zdvk8KO+BZFgoE1yRyrbMU6pX9aqlSB
-         xNAoB6QCQokle/Eo7GhxmCrGUmbDyrskpb68Gl8bmS1WyFUktpcwsJpk3zI5g2hqGF/j
-         RQz4a8xoQ+sbvBJGQ2zzNkHiIBc+mOvzZpLNPyd855SJib/q0h1U75af9rjiQuosggvz
-         UYT4+0Non1SmeTFRaHvP9Gom9gl73BG16VGhts/h70EuXjdXiiTCWBbddvLBHDvWHPWP
-         5jstEL351z4PoMD9ZA8Uji+OHpA3uVr22y9aZYycAt109MAia1vEWlgMcbJTjocyGEo/
-         IRSw==
-X-Gm-Message-State: AKaTC026fbugbIOsDbYJ7Nh6TSvbkWdGe4JuRgSWs/yEo8TiQ06UYWM3mEp1qziO+bDayCKC
-X-Received: by 10.99.5.21 with SMTP id 21mr124508692pgf.32.1481144521851;
-        Wed, 07 Dec 2016 13:02:01 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:2441:4f9a:ad0f:a8d7])
-        by smtp.gmail.com with ESMTPSA id 64sm44734903pfu.17.2016.12.07.13.02.00
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 13:02:00 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     bmwill@google.com
-Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv5 1/5] submodule: use absolute path for computing relative path connecting
-Date:   Wed,  7 Dec 2016 13:01:53 -0800
-Message-Id: <20161207210157.18932-2-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.rc2.28.g2af45f1.dirty
-In-Reply-To: <20161207210157.18932-1-sbeller@google.com>
-References: <20161207210157.18932-1-sbeller@google.com>
+        id S932645AbcLGVIe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 16:08:34 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51238 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753450AbcLGVIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 16:08:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3244756646;
+        Wed,  7 Dec 2016 16:08:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=c86nnnfe3UrweoOdsMGSMacBtgY=; b=v6sPnM
+        AVHCw4YWPIDYAwllZZOqOai2v+knVHU2UjFYU2wkMkiLLUOhFPxPT+fzA3vwbut2
+        Bq34sGQZj9+S4X6S4nZEqkDgy6i3xT3geMII0TIFngAgjXJsch8ccP2RQEOGzw/D
+        2PktF0GntAfPJ9y3my36zU6D1qSlOZIC6h6/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=APtsQ7XDmiDTnbWVGkSQo6ZGbv80yXsS
+        PPcBOiZjAyrs8ahTI9OHq1cE/DYQQEBviR4hinPs2ocaritjtTuirgX6kFGUBKZz
+        5gymIoL4fJ+h2KexBBWxKrXq6Ys41ePQrEFeyYvBLF5BVlXAcmgBCTyfsHpyC8Tj
+        FOMqS1lICwc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 27FF556645;
+        Wed,  7 Dec 2016 16:08:17 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8F6F456643;
+        Wed,  7 Dec 2016 16:08:16 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 1/3] wt-status: implement opportunisitc index update correctly
+References: <xmqqd1h3y506.fsf@gitster.mtv.corp.google.com>
+        <20161207194105.25780-1-gitster@pobox.com>
+        <20161207194105.25780-2-gitster@pobox.com>
+        <CAGZ79kZHGqU2y19_uKhtVuE6vhspzPNpw-nVDnm8gLQ8u528kQ@mail.gmail.com>
+Date:   Wed, 07 Dec 2016 13:08:15 -0800
+In-Reply-To: <CAGZ79kZHGqU2y19_uKhtVuE6vhspzPNpw-nVDnm8gLQ8u528kQ@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 7 Dec 2016 12:48:34 -0800")
+Message-ID: <xmqqmvg7wips.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 45BC1C58-BCC1-11E6-B55E-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current caller of connect_work_tree_and_git_dir passes
-an absolute path for the `git_dir` parameter. In the future patch
-we will also pass in relative path for `git_dir`. Extend the functionality
-of connect_work_tree_and_git_dir to take relative paths for parameters.
+Stefan Beller <sbeller@google.com> writes:
 
-We could work around this in the future patch by computing the absolute
-path for the git_dir in the calling site, however accepting relative
-paths for either parameter makes the API for this function much harder
-to misuse.
+> So my first question I had to answer was if we do the right thing here,
+> i.e. if we could just fail instead. But we want to continue and just
+> not write back the index, which is fine.
+>
+> So we do not have to guard refresh_cache, but just call
+> update_index_if_able conditionally.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- submodule.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+An explanation with stepping back a little bit may help.
 
-diff --git a/submodule.c b/submodule.c
-index 6f7d883de9..66c5ce5a24 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1227,23 +1227,25 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
- {
- 	struct strbuf file_name = STRBUF_INIT;
- 	struct strbuf rel_path = STRBUF_INIT;
--	const char *real_work_tree = xstrdup(real_path(work_tree));
-+	char *real_git_dir = xstrdup(real_path(git_dir));
-+	char *real_work_tree = xstrdup(real_path(work_tree));
- 
- 	/* Update gitfile */
- 	strbuf_addf(&file_name, "%s/.git", work_tree);
- 	write_file(file_name.buf, "gitdir: %s",
--		   relative_path(git_dir, real_work_tree, &rel_path));
-+		   relative_path(real_git_dir, real_work_tree, &rel_path));
- 
- 	/* Update core.worktree setting */
- 	strbuf_reset(&file_name);
--	strbuf_addf(&file_name, "%s/config", git_dir);
-+	strbuf_addf(&file_name, "%s/config", real_git_dir);
- 	git_config_set_in_file(file_name.buf, "core.worktree",
--			       relative_path(real_work_tree, git_dir,
-+			       relative_path(real_work_tree, real_git_dir,
- 					     &rel_path));
- 
- 	strbuf_release(&file_name);
- 	strbuf_release(&rel_path);
--	free((void *)real_work_tree);
-+	free(real_work_tree);
-+	free(real_git_dir);
- }
- 
- int parallel_submodules(void)
--- 
-2.11.0.rc2.28.g2af45f1.dirty
+You may be asked to visit a repository of a friend, to which you do
+not have write access to but you can still read.  You may want to do
+"diff", "status" or "describe" there.
+
+In order to avoid getting fooled into thinking some paths are dirty
+only because the cached stat information does not match, these need
+to refresh the in-core index before doing their "comparison" to
+report which paths are different (in "diff"), what are the modified
+but not staged paths (in "status"), and if there is a need to add
+the "-dirty" suffix (in "describe").
+
+Since we are doing the expensive "bunch of lstat()" anyway, if we
+could write it back to the index, it would help future operations in
+the same repository--that is the reasoning behind the opportunistic
+updates.  It is perfectly OK if we do not have write access to the
+repository and cannot write update the index.
 
