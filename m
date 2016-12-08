@@ -2,75 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88A1A1FF7F
-	for <e@80x24.org>; Thu,  8 Dec 2016 01:10:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADCEC1FF7F
+	for <e@80x24.org>; Thu,  8 Dec 2016 01:12:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753390AbcLHBKC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 20:10:02 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35657 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752941AbcLHBKB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 20:10:01 -0500
-Received: by mail-pf0-f181.google.com with SMTP id i88so79797044pfk.2
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:10:01 -0800 (PST)
+        id S933178AbcLHBMz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 20:12:55 -0500
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:33330 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932216AbcLHBMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 20:12:54 -0500
+Received: by mail-yw0-f170.google.com with SMTP id r204so310426727ywb.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:12:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fimXH/Rf4KaIpe9v4fXaaLuilS+sgR/23LcE25Jr/+g=;
-        b=Xp9GEsAlyUji3u6/91s2MpEeDjTIe1OX4qZbfvren+auWNQiT/bP1gwfaP6IQ6GXBJ
-         s0byxwLH9XRiI2KidHtL/sooK1EiCBp0kSC5GGoVIwKt8GPCexgQ03rcm/S2IJP88Cu1
-         djSZs8jZy4EgUJ7uNAWGUBCAGDdhG4YZd5Fun7iXwBwbPHea9LZYfAgA/mq55xEsQRpG
-         vwePojpT42e7fmjIJSFq7nhcRJk8qQUVYMkcGatJMIKz/cnVLE/HNkPBqwQjH/oUkiZn
-         fW6acPWxwzpForyA5Pp2n8841KGCgK5y5v8z6XAZTSGjk82EOTEXA7T8/ryJYxwRNz4m
-         J2rg==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UaY9wdUxmCSzWChf4wS+zaFrupPBWzxy1o+XHzSYRkM=;
+        b=h13OCszD4BUugegOqkZ9+PvxjcAlqPPdzSmAbicXLZL5vF2uB0r9lyIuXr2dbTuoAb
+         tSLprzfpueqXmk6xEWHMFawQ+bhohkp0nGcm0XEhDthnXhSMlEpwIGyx0nw4vM3O+MJt
+         NbviqMBUxPGQqYjZBPP7f0BuAC1D2BydVjTpXjA2IfaKU4+NwP54qBnx+BCOOX8N68H3
+         xiGeYyIoT8NGIVl/g2EhsKWcl2EQb19FF6jEYrtmZjlUGfw/Tyh0WOuHbP8obbnceFYZ
+         SKMqcL5bXt6w0yfYSH9UZun31NnpaFr3ZNCsIF1i/qeMC0frGU3z9raZ2a19kW6t7MIs
+         jJVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fimXH/Rf4KaIpe9v4fXaaLuilS+sgR/23LcE25Jr/+g=;
-        b=eyFFGRVSk/oNZKF7R95OFqF7KqfvnzU4FZaI7VQ2b0MR+HdcjbKBP22zLb01Oa/3oJ
-         JM5Jh1sJVx7WTFyvauelcsyqMXNrmDmPHbxquXIw8xbzpo6vP1NdkTr/GD3xXUf6aemv
-         3kzQ1qsomybqkRpZNq5LeNfpGu3nB78AU5NNkEBimMfwyyP1KwjIDm8TE06Pa75Q6U5x
-         GCKWY2gB8a9LUpmmuegS78ezbJBwiCqYMJRfbRH/ZbGa1NsYU3haqnn5x+WJ3NyUOkfT
-         X1tdpggIWanXQsAenEXBLGRAz3fAkGzJr0JE1xQtSccEEKQEZfsyEEVMA5WP6cjWS1hP
-         Jp/A==
-X-Gm-Message-State: AKaTC00mMuNaAbNISMPSolGiYFoy8odVX1JFHCLRD4WEOIWhU0+dCwKxIw7DZDWXBtvOm58J
-X-Received: by 10.99.47.7 with SMTP id v7mr128208400pgv.39.1481159400490;
-        Wed, 07 Dec 2016 17:10:00 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:ccae:4719:31da:e07d])
-        by smtp.gmail.com with ESMTPSA id o126sm45400502pga.34.2016.12.07.17.09.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 17:09:59 -0800 (PST)
-Date:   Wed, 7 Dec 2016 17:09:58 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com
-Subject: Re: [PATCHv5 5/5] submodule: add embed-git-dir function
-Message-ID: <20161208010958.GL116201@google.com>
-References: <20161207210157.18932-1-sbeller@google.com>
- <20161207210157.18932-6-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UaY9wdUxmCSzWChf4wS+zaFrupPBWzxy1o+XHzSYRkM=;
+        b=Nsf8a+I4Amv4Rxc4ZPcl8E/QDz77xTEvo0XhU7cGwn3gQjVJYKVMogc8fyEBVvDE/e
+         uz56zQSNSTrYx/tX5AcY4UpT2mN5tkvjiRGvBMD4FkW9kQ0el40flcqT+tM7y9ViGHDS
+         uLhM9OhqvBfZKVCjIYmn8ohCokrYpu3kYELci2BBOh1Xbxlx1Os8rI7Qc6bC4q9pH884
+         HF9dVMkLA+V/CaOg+SOGHuOcF9Q8g8ESknAA/0+N8DVC9afwGTysE/YquuxfJ8untsrL
+         QnlB9iBHkMWkVXZ3q1RS3OHWql6a769MbjMW/CwVq8b30n8MsZ158JHZVHxGgOO5Qnj0
+         POVw==
+X-Gm-Message-State: AKaTC01y+i9FZlUhuRBQoxX0I7xWTn6e7SqgkhowknGi/a8UHdU99Plv6ZEB0ueoXda/t03OHKs9hLjxNyMyJQ==
+X-Received: by 10.13.250.3 with SMTP id k3mr64728305ywf.276.1481159104785;
+ Wed, 07 Dec 2016 17:05:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161207210157.18932-6-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.37.118.87 with HTTP; Wed, 7 Dec 2016 17:04:44 -0800 (PST)
+In-Reply-To: <xmqq60mvuv8v.fsf@gitster.mtv.corp.google.com>
+References: <20161207023259.29355-1-jacob.e.keller@intel.com>
+ <20161207023259.29355-2-jacob.e.keller@intel.com> <xmqqa8c7wfxu.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xrPivwMzGhzKxu30jns+YvSQGXBKUc4JDmfbenTy27tZg@mail.gmail.com> <xmqq60mvuv8v.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 7 Dec 2016 17:04:44 -0800
+Message-ID: <CA+P7+xrWUS9BuwoOjGv+VtC5gR9vWrf7ANnks87fqvoDst9dAg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] describe: add support for multiple match patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Stefan Beller wrote:
-> +		argv_array_pushl(&cp.args, "--super-prefix", sb.buf,
-> +					    "submodule--helper",
-> +					   "embed-git-dirs", NULL);
+On Wed, Dec 7, 2016 at 4:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> Basically, this started as a script to try each pattern in sequence,
+>> but this is slow, cumbersome and easy to mess up.
+>>
+>> You're suggesting just add a single second pattern that we will do
+>> matches and discard any tag that matches that first?
+>
+> I am not suggesting anything. I was just trying to see how well what
+> was designed and implemented supports the use case that motivated
+> the feature. Think of it as a sanity check and review of the design.
+>
 
-check the spacing on these lines, looks like there is an extra space
-before "submodule--helper"
+Makes sense.
 
--- 
-Brandon Williams
+>> I think I can implement that pretty easily, and it should have simpler
+>> semantics. We can discard first, and then match what remains easily.
+>
+> I actually think "multiple" and "negative" are orthogonal and both
+> are good things.  If we are enhancing the filtering by refname
+> patterns to allow multiple patterns (i.e. your patch), that is good,
+> and it would be ideal if we can also have support for negative ones.
+
+I can add support for negative matches pretty easily. I personally
+don't see the value of "logical and" filters, ie to match only tags
+that match all the given filters, though that does allow some other
+forms of expression.
+
+I do like the idea of negative filters, and I'll go ahead and work on
+adding that as another extension.
+
+Thanks,
+Jake
