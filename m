@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D81251FC96
-	for <e@80x24.org>; Thu,  8 Dec 2016 10:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E47921FC96
+	for <e@80x24.org>; Thu,  8 Dec 2016 10:57:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751130AbcLHKwH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 05:52:07 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33049 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750729AbcLHKwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 05:52:06 -0500
-Received: by mail-io0-f196.google.com with SMTP id k5so147418ioi.0
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 02:52:06 -0800 (PST)
+        id S1752575AbcLHK5p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 05:57:45 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33084 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751729AbcLHK5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 05:57:43 -0500
+Received: by mail-io0-f194.google.com with SMTP id k5so168700ioi.0
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 02:56:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=E5VhpdMBF2IOVmup59EtovvdWL6qmvQ8rG1UP1dbW8Y=;
-        b=0szjeJ8eur2a7tWYQru1gjYzLKNUQ67Ed/uwPbQKwDRfYjTjomfezVwXO3NxUJjmw2
-         wONJ+Mfis5Zbn2efTvz1nR3Cd9Kuwhdd+elqMTO+cjbTBXp9xYLHGDS3Q9f9IXgKGPPW
-         siIO2RMQr8cgXzDMZ2smWZSBqXH2HjY3OiEPZlUdtB7vSJZ4k6paV/evSXAeBBYcoLAA
-         eLWaMJfkxzuInwm9Em+FOmySzQUEtxtFfNmtePUzEYs9EhyU5WrFXmHVGYkD3IbgTEjY
-         xyLad6NO4QgCksLlADqJdNh1NSnuT9Ec56erwU1lNPsmIkYn3v/Q5fLCTN3tSwfxmFVH
-         3IlQ==
+        bh=mlpoSmvhhg8nJXx69alb5uHKQalt3sarbyvaSmG6qtE=;
+        b=it9rTNZLWM/eDvo4r80oGgEsSTlAHL+/8RM6Qt9GF4MlmOWf3eRjnQbMy61pvj2K3F
+         WiFcV/UmdJ4RPUpeS77tu/cGw6lm+iTW4cNK5IEil8jkRhkAsQrffl5qBeXPJyR4q52t
+         Ws1wBix6zExlEenXQkbSdRlhdQM0a/o9U4M2PnjBkfs0POTzdxuGXBJx5jAB4edDc2lK
+         RV0Cv67XNMJiI4cXYAnfYY9MK72VdGKj9X9qTbyV7Oij8eH07eOkOcSHSsRJnUijmQpT
+         fB1OABXv7jpj4yB1BcQh+wPgMWGJbbGUYoD8meBSnHBhs97ZvzeVa06mlxmXA+5jsdso
+         d6Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=E5VhpdMBF2IOVmup59EtovvdWL6qmvQ8rG1UP1dbW8Y=;
-        b=h21KEhVq52qExL3h4wVy2oT48OwWMCMP7F2SnMMvXakxH+sIvtSg32919KYTOMrRJE
-         2hJfiD1ywt0HuXJVblYQ5pOzxldmOZBX5+Il6dmUyA24eTMmnklrbLnZsUgmBqIPEdRu
-         rJHD90PLYO1FIxcIWGZXfy+RU5uMOBnyfVshK6VAsIbW05K8I00VuiQHIJkwn538Amte
-         esu+yCkLsmgjiMaxj0OtN/1VoJC1r0elwLlzePYYJzV4QmtnGGxNEt8z/009JsBneO8P
-         jlLwpr2KSrivf6z/XA5buW3b7NOlSVf7Ut3S6/5gISp6Xj1JqVPpKihprgYRUz5EMAPv
-         WNwQ==
-X-Gm-Message-State: AKaTC016GrYmuxwoAu00fSGNoyNo4qUlIy9OqrlaMsLYaPo/boV3rdA2m5t9c85IgpSFN0ydLL4Dx5rkOek2CA==
-X-Received: by 10.107.59.9 with SMTP id i9mr64483275ioa.176.1481194325536;
- Thu, 08 Dec 2016 02:52:05 -0800 (PST)
+        bh=mlpoSmvhhg8nJXx69alb5uHKQalt3sarbyvaSmG6qtE=;
+        b=gKowaQi96vuPuCNAteXBuj7N9rQn1dpjpFys/25YEVpF/vh/3kL/6XaChoATuccxuS
+         9cZ9SIyWGIzfk9HC0Ocl3bHyUphhlZ246/4R/hOKCQw7gZwYqqgmlc+vK3xdHhukdJm1
+         NIFJU1td3MjassuktO5SOaUBsKelZaECDUYdkiUoEr08Nf3qFCqMMzWLi/iqKECNojQf
+         SOaFpqs8xtZj3+PUq4JAmkkAON7Bsjub2B1ib/G27tTcePkX+ZCqcmKURJJpv0Eh8Qvc
+         N5tmARmhEKWueGGNM5jjI9KsYCAdMNIE7zPOHQCIVv6S4bKN11km1c+91BqHmD844APh
+         weWw==
+X-Gm-Message-State: AKaTC00jv8bSJhnimAoJGDOdwkuWBBwuWbEbigvnGuEatqBrIE96znfYm7qyVf+zcXcN7DaLGNuCiyT74gnuEg==
+X-Received: by 10.107.132.74 with SMTP id g71mr63980443iod.19.1481194605958;
+ Thu, 08 Dec 2016 02:56:45 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Thu, 8 Dec 2016 02:51:35 -0800 (PST)
-In-Reply-To: <CACsJy8ANNz6FsJ4_5MOhj2Qqd+wHHu5UpVOAobqEiHU2KM26eg@mail.gmail.com>
-References: <20161208014623.7588-1-sbeller@google.com> <20161208014623.7588-6-sbeller@google.com>
- <CACsJy8ANNz6FsJ4_5MOhj2Qqd+wHHu5UpVOAobqEiHU2KM26eg@mail.gmail.com>
+Received: by 10.64.69.3 with HTTP; Thu, 8 Dec 2016 02:56:15 -0800 (PST)
+In-Reply-To: <20161208014623.7588-8-sbeller@google.com>
+References: <20161208014623.7588-1-sbeller@google.com> <20161208014623.7588-8-sbeller@google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 8 Dec 2016 17:51:35 +0700
-Message-ID: <CACsJy8DMhC7Umnqf+-ViOBKn46Emtan4647=MDdLoYXVNB0=6A@mail.gmail.com>
-Subject: Re: [PATCHv6 5/7] worktree: add function to check if worktrees are in use
+Date:   Thu, 8 Dec 2016 17:56:15 +0700
+Message-ID: <CACsJy8DTeVVKjqT+eKGTDyoMQJ_ddh=Y-v46JCj6dqcQoSw7fg@mail.gmail.com>
+Subject: Re: [PATCHv6 7/7] submodule: add absorb-git-dir function
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Brandon Williams <bmwill@google.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -62,25 +61,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 8, 2016 at 5:40 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> Alternatively, we could add a new flag to get_worktrees() to tell it
-> to return all worktrees if there is a least one linked worktree, or
-> return NULL if there's only main worktree. I'm not sure if this is
-> clever or very stupid.
+On Thu, Dec 8, 2016 at 8:46 AM, Stefan Beller <sbeller@google.com> wrote:
+> diff --git a/dir.c b/dir.c
+> index 8b74997c66..cc5729f733 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2774,3 +2774,15 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+>         free(real_work_tree);
+>         free(real_git_dir);
+>  }
+> +
+> +/*
+> + * Migrate the git directory of the given path from old_git_dir to new_git_dir.
+> + */
+> +void relocate_gitdir(const char *path, const char *old_git_dir, const char *new_git_dir)
+> +{
+> +       if (rename(old_git_dir, new_git_dir) < 0)
+> +               die_errno(_("could not migrate git directory from '%s' to '%s'"),
+> +                       old_git_dir, new_git_dir);
+> +
+> +       connect_work_tree_and_git_dir(path, new_git_dir);
+> +}
 
-No, this may be better. Add a flag to say "returns linked worktrees
-_only_". Which means when you're in a "normal" repo, get_worktrees()
-with this flag returns NULL. When you're in a multiple-worktree repo,
-it returns all linked worktrees (no main worktree). I think I might
-have a use for this flag in addition to this uses_worktrees() here.
-uses_worktrees() look quite simple with that flag
-
-int uses_worktrees(void)
-{
-    struct worktree **worktrees = get_worktrees(WT_LINKED_ONLY);
-    int retval = worktrees != NULL;
-    free_worktrees(worktrees);
-    return retval;
-}
+Thank you!
 -- 
 Duy
