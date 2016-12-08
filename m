@@ -2,87 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA82D1FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 18:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3241B1FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 18:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbcLHSKQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 13:10:16 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:34277 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751327AbcLHSKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 13:10:16 -0500
-Received: by mail-io0-f174.google.com with SMTP id p42so17012881ioo.1
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 10:10:15 -0800 (PST)
+        id S1752365AbcLHSUC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 13:20:02 -0500
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:34365 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751388AbcLHSUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 13:20:01 -0500
+Received: by mail-pg0-f45.google.com with SMTP id x23so176456976pgx.1
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 10:20:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=g4UamnFkAq5QUCMW2e8pcGGRy9hIz+Ml+cm8cOh7wuQ=;
-        b=CZ0EIYBOrzMooZtmX2a2HXSjAUQ9d05EMrsX/aPgdYUc7CmXB3EYF63R1CfPQf8phJ
-         lNrNafCn+kvJHpPFvb9Kw3xKmhlKaO8ZFoZngKTpUFw/1e1TFOUJCq4Csk80jwZERG0F
-         +pEC0gf3sgq1Bd1geU4hmmoHZ20IvBPirxgHVnYsK5byg1o7EkBu07/qwHILdjq7W+80
-         Nrigh05Im1HslNpxI3M7ixaD5cxhhdsBpeZBNtNaNgibS2XueSRifovQ/n0xO0FgC59e
-         tt9Tg0zU9lfVbrBZEHewhchqSXjheQexnlRZY//RZIEz9jlTaUdXGhWwmB8+H3eDx7u/
-         7R3g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=68sfXIUd7RcyfuOuqPEFYqU5JgWZizKW9D+coF9E57w=;
+        b=ULtIH2uOQMz0Dee3OALCsLTzte7zyEBIZBT7CKCnW+hhvY+UI6TTJbWcdR6VfhDof8
+         cXVfdZXnV8O/MeuU/xrFT6qXE6ztopCQePkV4lir+QtTL7H1Wb4P/F39l4IsU51xsZaT
+         C92xCRqprucGu4twyw6b7BPZJqfOGOQhG7wm3w40Cbig6AFp+mdjkFVMCsXm60K9DY+6
+         X+zIRjxqiOEnal6x7la/2hPkewuWLs4OvvT71ssmd+2BIj+fSmQdfVOduHn4dfyhlt4r
+         ncKW48k85BZCo88/neBRcoHRbigV584CY4lcLuopbKRyzXj3bv9RZhsX91szHhKNF0Q7
+         j90g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g4UamnFkAq5QUCMW2e8pcGGRy9hIz+Ml+cm8cOh7wuQ=;
-        b=kJMykw9NhZ7/5hjuKOXmzD+Ne2TofY09SV5JeLo6FFQOcYCfM6YiEImqcDs0MiCZgZ
-         qiL/HjvY4mbIfrWefO5rxmyueMOPVnCMDUXrZcdAhj6vpeIcDLEnkU95h0YLe6OSG+FH
-         5K19qKwr2W/GNGoLz26RGO34i38+YINdqHoihQf/mVSXTMn3voLI9EWh15o2J1Kt67ML
-         OacQuNSRNVFcO7c3qxAE+38oluyJDBrb35iHHTw12vrKAGX5V6Y5yITFOVbvbuBf13iX
-         GgsVCOxIwQfmsOOmMW4Of5ihnYLspT3/ddw0lleH/cKixYrSlY+79wTTVoV4slrTRCBm
-         6rqg==
-X-Gm-Message-State: AKaTC03lN2kTOD516OxA9eygCUbQCekapnLcvQbllvsedJNdE+s8Hd1yuPHtHtBkISSwOAxQQfCc1HR4KTXY+uz+
-X-Received: by 10.36.3.1 with SMTP id e1mr2909561ite.97.1481220614745; Thu, 08
- Dec 2016 10:10:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=68sfXIUd7RcyfuOuqPEFYqU5JgWZizKW9D+coF9E57w=;
+        b=HJh9yMt77DynJX0pXC+4zCtF+rMC06cyaOiuT+cfWTtyT7UCwtUIA5wMfHjnauNqcO
+         L9FHGpweiFYcI5dJqhMqygyK8dAp1sPYF5cxJCB0s1QwAwoe9vcfHlK8lt+xv13A75Hv
+         lc1gHasFezeahiAr9hG9m/WT0pyiWPzpgVnuhegwQTDLIUOjD5POpZdDXnMFv7W3t2aO
+         qY1aZ3Xkm9WNYdfV+kq34o0FBADagfrLt7Wj2hsebsje7XcqozAfGc4qSbAo4ssT2bCh
+         zIJ4TbgrYEJvxN/odNNMfGZBwXWBhRArPOYyjZvC+E3A6sxWaboRWz9CryCHnlMjkoST
+         UaXQ==
+X-Gm-Message-State: AKaTC00+k0F22BBkvI5hagroP+uqmKjFk40vN1UVeHkuU+uHcl9bA1B09T0lI0nAIb+xdLbV
+X-Received: by 10.99.173.68 with SMTP id y4mr132565174pgo.54.1481221200477;
+        Thu, 08 Dec 2016 10:20:00 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:5c3f:7794:7672:2048])
+        by smtp.gmail.com with ESMTPSA id u23sm51708781pfg.86.2016.12.08.10.19.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 08 Dec 2016 10:19:59 -0800 (PST)
+Date:   Thu, 8 Dec 2016 10:19:57 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/17] dir: convert create_simplify to use the pathspec
+ struct interface
+Message-ID: <20161208181957.GP116201@google.com>
+References: <1481061106-117775-1-git-send-email-bmwill@google.com>
+ <1481061106-117775-3-git-send-email-bmwill@google.com>
+ <CACsJy8AX09pxkyUkLU905v1MpXocLzV5bK0APuNmMUNb50Lavg@mail.gmail.com>
+ <20161208000357.GJ116201@google.com>
+ <CACsJy8DtUwnOjBV49navkfgqPzEsNuX2LVaeVU=Ap2PWLpGFdA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.12.219 with HTTP; Thu, 8 Dec 2016 10:10:14 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1612081252490.23160@virtualbox>
-References: <xmqqd1h3y506.fsf@gitster.mtv.corp.google.com> <20161207194105.25780-1-gitster@pobox.com>
- <20161207194105.25780-4-gitster@pobox.com> <alpine.DEB.2.20.1612081252490.23160@virtualbox>
-From:   Robbie Iannucci <iannucci@google.com>
-Date:   Thu, 8 Dec 2016 10:10:14 -0800
-Message-ID: <CA+q_oBfTs7_-sNujG0wgUu7DDSyukx6DbYcNRTnKxZbc7LWNpQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] lockfile: LOCK_REPORT_ON_ERROR
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DtUwnOjBV49navkfgqPzEsNuX2LVaeVU=Ap2PWLpGFdA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks all for taking a look at this, I didn't expect such a quick response :).
+On 12/08, Duy Nguyen wrote:
+> On Thu, Dec 8, 2016 at 7:03 AM, Brandon Williams <bmwill@google.com> wrote:
+> > On 12/07, Duy Nguyen wrote:
+> >> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
+> >> > Convert 'create_simplify()' to use the pathspec struct interface from
+> >> > using the '_raw' entry in the pathspec.
+> >>
+> >> It would be even better to kill this create_simplify() and let
+> >> simplify_away() handle struct pathspec directly.
+> >>
+> >> There is a bug in this code, that might have been found if we
+> >> simpify_away() handled pathspec directly: the memcmp() in
+> >> simplify_away() will not play well with :(icase) magic. My bad. If
+> >> :(icase) is used, the easiest/safe way is simplify nothing. Later on
+> >> maybe we can teach simplify_away() to do strncasecmp instead. We could
+> >> ignore exclude patterns there too (although not excluding is not a
+> >> bug).
+> >
+> > So are you implying that the simplify struct needs to be killed?  That
+> > way the pathspec struct itself is being passed around instead?
+> 
+> Yes. simplify struct was a thing when pathspec was an array of char *.
+> At this point I think it can retire (when we have time to retire it)
 
-No hard feelings re: breakage; I know how gnarly these sorts of
-refactors can be (and more libification is always better :)).
+Alright, then for now I can leave this change as is and have a follow up
+series that kills the simplify struct.
 
-Robbie
-
-On Thu, Dec 8, 2016 at 3:53 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Junio,
->
-> On Wed, 7 Dec 2016, Junio C Hamano wrote:
->
->> The "libify sequencer" topic stopped passing the die_on_error option
->> to hold_locked_index(), and this lost an error message from "git
->> merge --ff-only $commit" when there are competing updates in
->> progress.
->
-> Sorry for the breakage.
->
-> When libifying the code, I tried to be careful to retain the error
-> messages when not dying, and mistakenly assumed that hold_locked_index()
-> would do the same.
->
-> Ciao,
-> Dscho
+-- 
+Brandon Williams
