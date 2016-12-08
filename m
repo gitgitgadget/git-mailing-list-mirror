@@ -2,97 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADCEC1FF7F
-	for <e@80x24.org>; Thu,  8 Dec 2016 01:12:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD7921FF7F
+	for <e@80x24.org>; Thu,  8 Dec 2016 01:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933178AbcLHBMz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 20:12:55 -0500
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:33330 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932216AbcLHBMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 20:12:54 -0500
-Received: by mail-yw0-f170.google.com with SMTP id r204so310426727ywb.0
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:12:53 -0800 (PST)
+        id S932955AbcLHBQN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 20:16:13 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34368 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932532AbcLHBQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 20:16:12 -0500
+Received: by mail-pf0-f172.google.com with SMTP id c4so80222777pfb.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:14:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UaY9wdUxmCSzWChf4wS+zaFrupPBWzxy1o+XHzSYRkM=;
-        b=h13OCszD4BUugegOqkZ9+PvxjcAlqPPdzSmAbicXLZL5vF2uB0r9lyIuXr2dbTuoAb
-         tSLprzfpueqXmk6xEWHMFawQ+bhohkp0nGcm0XEhDthnXhSMlEpwIGyx0nw4vM3O+MJt
-         NbviqMBUxPGQqYjZBPP7f0BuAC1D2BydVjTpXjA2IfaKU4+NwP54qBnx+BCOOX8N68H3
-         xiGeYyIoT8NGIVl/g2EhsKWcl2EQb19FF6jEYrtmZjlUGfw/Tyh0WOuHbP8obbnceFYZ
-         SKMqcL5bXt6w0yfYSH9UZun31NnpaFr3ZNCsIF1i/qeMC0frGU3z9raZ2a19kW6t7MIs
-         jJVQ==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/gPC2c+O0CxFe0Gl0XHZ0asuM5kEs4SCWHqh32gy8Yw=;
+        b=gxNCX2Sj3heRy+gIR5hFhRkhS0C3B277yR+kzeAu9CRZG8dUzseTGPvHYqbq6RCYTN
+         3ngQstZrZNjf6hSvUiYP4HVTU4ZwU5sxBdSGav4iUJVH5iTCPVoR7AuF29BNp/ZLg+Gi
+         arj1JN1W3o9I/9K5uFCblMZuMUTp4bcScim0+LlXJt3EKDwKCILznsiirZBFzU/kiI8w
+         vaeRLAsnZ1N3GzlKZ+2esO1PE4iAmUKWlnWly49Abtito37F3df4rYphSJsverVgV2A9
+         p+ZVoTAxemnTDPnRpsfzE18VmVKNHbLLN+4IJnggNv3AA9Ajsz/KMIA+bbeUfmdc8iHE
+         qBag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UaY9wdUxmCSzWChf4wS+zaFrupPBWzxy1o+XHzSYRkM=;
-        b=Nsf8a+I4Amv4Rxc4ZPcl8E/QDz77xTEvo0XhU7cGwn3gQjVJYKVMogc8fyEBVvDE/e
-         uz56zQSNSTrYx/tX5AcY4UpT2mN5tkvjiRGvBMD4FkW9kQ0el40flcqT+tM7y9ViGHDS
-         uLhM9OhqvBfZKVCjIYmn8ohCokrYpu3kYELci2BBOh1Xbxlx1Os8rI7Qc6bC4q9pH884
-         HF9dVMkLA+V/CaOg+SOGHuOcF9Q8g8ESknAA/0+N8DVC9afwGTysE/YquuxfJ8untsrL
-         QnlB9iBHkMWkVXZ3q1RS3OHWql6a769MbjMW/CwVq8b30n8MsZ158JHZVHxGgOO5Qnj0
-         POVw==
-X-Gm-Message-State: AKaTC01y+i9FZlUhuRBQoxX0I7xWTn6e7SqgkhowknGi/a8UHdU99Plv6ZEB0ueoXda/t03OHKs9hLjxNyMyJQ==
-X-Received: by 10.13.250.3 with SMTP id k3mr64728305ywf.276.1481159104785;
- Wed, 07 Dec 2016 17:05:04 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/gPC2c+O0CxFe0Gl0XHZ0asuM5kEs4SCWHqh32gy8Yw=;
+        b=V3vrw2p4vtEjmvJIKdAHDDPLSJ1a88MrHR7tzCer93bXgDldirEoiHbRiZl1e+BV7Z
+         IGj+hXIQfMNXa49NIWOb09mDH78wCNgwaR62U8ilwu19D4iZEAWlrCxXl1aJyLEA3PPv
+         r4cGiLeoI/jX8vfIxs4130y4ESSmk8Q1Pv0tcpqt86xF7KtWT74tVNx8eIwxrH/o1+B9
+         FL/E000VJUonXtHigL515CoPZg5l4e4tt2ktNtpdq34NX0zTR4OmWFZ16UWrYAlUSarI
+         ddLaoLGYX/E03NXHuFYndDZFWPFBks4j0dtZFCruScYsrRPEb5v8nt41fYnpH52KYfgW
+         rXhA==
+X-Gm-Message-State: AKaTC02I5s3d4/A0ieN6UwOyR9+z0w966FAWNMu03/aagi8gcamSjHAa0AaNXsCiy9wNTCpJ
+X-Received: by 10.99.184.18 with SMTP id p18mr9274993pge.33.1481159682410;
+        Wed, 07 Dec 2016 17:14:42 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:ccae:4719:31da:e07d])
+        by smtp.gmail.com with ESMTPSA id n24sm45356131pfb.0.2016.12.07.17.14.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 07 Dec 2016 17:14:41 -0800 (PST)
+Date:   Wed, 7 Dec 2016 17:14:40 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCHv5 4/5] worktree: get worktrees from submodules
+Message-ID: <20161208011440.GM116201@google.com>
+References: <20161207210157.18932-1-sbeller@google.com>
+ <20161207210157.18932-5-sbeller@google.com>
+ <xmqqvauvuzna.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZiS9dx6QUOcFYh8sSNoVsrv2eNLXJd6X54UekzUiC8VQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.37.118.87 with HTTP; Wed, 7 Dec 2016 17:04:44 -0800 (PST)
-In-Reply-To: <xmqq60mvuv8v.fsf@gitster.mtv.corp.google.com>
-References: <20161207023259.29355-1-jacob.e.keller@intel.com>
- <20161207023259.29355-2-jacob.e.keller@intel.com> <xmqqa8c7wfxu.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xrPivwMzGhzKxu30jns+YvSQGXBKUc4JDmfbenTy27tZg@mail.gmail.com> <xmqq60mvuv8v.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 7 Dec 2016 17:04:44 -0800
-Message-ID: <CA+P7+xrWUS9BuwoOjGv+VtC5gR9vWrf7ANnks87fqvoDst9dAg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] describe: add support for multiple match patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZiS9dx6QUOcFYh8sSNoVsrv2eNLXJd6X54UekzUiC8VQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 7, 2016 at 4:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->> Basically, this started as a script to try each pattern in sequence,
->> but this is slow, cumbersome and easy to mess up.
->>
->> You're suggesting just add a single second pattern that we will do
->> matches and discard any tag that matches that first?
->
-> I am not suggesting anything. I was just trying to see how well what
-> was designed and implemented supports the use case that motivated
-> the feature. Think of it as a sanity check and review of the design.
->
+On 12/07, Stefan Beller wrote:
+> On Wed, Dec 7, 2016 at 2:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Stefan Beller <sbeller@google.com> writes:
+> >
+> >> +     submodule_common_dir = strbuf_detach(&sb, NULL);
+> >> +     ret = get_worktrees_internal(submodule_common_dir, flags);
+> >> +
+> >> +     free(submodule_gitdir);
+> >
+> > This sequence felt somewhat unusual.  I would have written this
+> > without an extra variable, i.e.
+> >
+> >         ret = get_worktrees_internal(sb.buf, flags);
+> >         strbuf_release(&sb);
+> 
+> Yours is cleaner; I don't remember what I was thinking.
+> 
+> Feel free to squash it in; in case a resend is needed I will do that.
 
-Makes sense.
+Just make sure to leave that free in as it refers to another variable
+(submodule_gitdir).  It actually turns out there is a memory leak in the
+original code because submodule_common_dir is never freed after being
+detached from the strbuf.
 
->> I think I can implement that pretty easily, and it should have simpler
->> semantics. We can discard first, and then match what remains easily.
->
-> I actually think "multiple" and "negative" are orthogonal and both
-> are good things.  If we are enhancing the filtering by refname
-> patterns to allow multiple patterns (i.e. your patch), that is good,
-> and it would be ideal if we can also have support for negative ones.
-
-I can add support for negative matches pretty easily. I personally
-don't see the value of "logical and" filters, ie to match only tags
-that match all the given filters, though that does allow some other
-forms of expression.
-
-I do like the idea of negative filters, and I'll go ahead and work on
-adding that as another extension.
-
-Thanks,
-Jake
+-- 
+Brandon Williams
