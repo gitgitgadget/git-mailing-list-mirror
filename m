@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B14931FF7F
+	by dcvr.yhbt.net (Postfix) with ESMTP id C700E1FF7F
 	for <e@80x24.org>; Thu,  8 Dec 2016 01:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933965AbcLHBq4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 20:46:56 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35362 "EHLO
+        id S933979AbcLHBq5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 20:46:57 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34635 "EHLO
         mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752704AbcLHBqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 20:46:47 -0500
-Received: by mail-pf0-f181.google.com with SMTP id i88so79990472pfk.2
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:46:47 -0800 (PST)
+        with ESMTP id S933901AbcLHBqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 20:46:44 -0500
+Received: by mail-pf0-f181.google.com with SMTP id c4so80393993pfb.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:46:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GVKDjSPQfQJbQ5Gnel3Kguk7MGIy+D1I0i5G2q2TpZo=;
-        b=aJpu4A54gXskD1wKmalevKEjfDZjj/auKM3Lo+u94Gw75vU/2kXyXjrZ6eC7MxFiMV
-         RJTJgGuuwfBB9wtBM6FiSv1Qcadqc6elAPi7Q7FtWrY04rwT8NAcU2gNBWYVEL4lvm55
-         U0mw+up3uqgcZUsJ4jeG4YAFQIH5mnVbA30PlvQN5uqx2D63y8XpriFG1CcaHl7M60tN
-         KSyTjSR99HyGyHdNuURXYkBZ+pBEINjiIaiDY3+jG+bCnLyJiTh7lZoGDjCZZM+KCFK1
-         iEW4UncacS+ptKOaPeyL5aWQAJ7uybWh/IkPsTLLGp4HYtf5a3B2z0HHC38B6NURnurF
-         N5iw==
+        bh=us/MUGo5+mJ59HhsF4kge51woa99s/NdVxcbzPkRKFA=;
+        b=XUII6zxm6t6Jd5qB8lNPNizGPsPQQptU44IB+m5kaLyc6p+2shYUMZ+WfSlb1A7Vmb
+         kEgn8UD7VptSngdK8O6wOwYFumVSCEyN+LUOTWIkoKqbvTzI+XY6qnK2t72CNrxrVoTY
+         rOwETl4jA+Ln9rgKoMnp10tyPgHEUB3JqvdPiZGJO6LEwdxrwRjEOpSv7tNEhSuDuSw/
+         wY9UlISzXVOfJTSfGFdYYE4yCw4dXiTFChA90Ncd4Jg2Ax5AQLRk3hLbW42vMG+MeaLv
+         rwNzGStzqd2TF+xfFKXCDNfhjsW2pOjTQ2dOoamtUDeDp+Y5q8h2TBhluTBHkAUNQdv5
+         eIkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GVKDjSPQfQJbQ5Gnel3Kguk7MGIy+D1I0i5G2q2TpZo=;
-        b=cFdl5R3uqqJPKOaiKOGg+SpPlQvP3NpO2NLbFmghk1Koe7jH1B4NcsTzSyG8WE5/HF
-         +XhRf/0M+VB5ikyxfpGe3Km6GkoUzvKy03URKLlXSeAJ7b4UA2yzXsUgHvj3osvvwNVn
-         siZUmCHZKOQ7J9WN2h4FDxirCzyEyrnkcL0ktc2dCDfX7Z7hpIuvKFmj7E8iTO5t0Osi
-         Yszej39ERzCDvdYCoq48rSlquxe67BwJC05yuiFHOdHAqi6//qibSqTSxkK9rRKdwra2
-         Js07y6LStkWJg2XLU2KFqwlHQVZKwYa7r5nboD7WSJK4wt2k3e/ohotqoVrXWWFWt7Zx
-         frRQ==
-X-Gm-Message-State: AKaTC03oFyv5BBAkyKFz1VtTJ9GwJbqjuHnDknhxwXO7m7HDTDJ9V2rfFzrvi/k/72JFST7F
-X-Received: by 10.84.167.168 with SMTP id d37mr151584387plb.71.1481161606597;
-        Wed, 07 Dec 2016 17:46:46 -0800 (PST)
+        bh=us/MUGo5+mJ59HhsF4kge51woa99s/NdVxcbzPkRKFA=;
+        b=Nh8TeFPKVDY+NUB8/OQ1LCKf+gfumX1LIuEEKBKPeI7/K2q4vEJUeo2J2FZkKPvAPF
+         rPwJ+qKjIwJScIall2FgEoKX75Ts9l3wvOFk5ogOau2wWAh64SmYrnzgs9Op96ihXMWc
+         Lsmr3XHo1cBCBdkUw1m4CO14CVJKAWoNYHrdvJb50g7MF1JNdgiuXAnF6hX6MLCUk//0
+         /VTLOPelEB6Zii9h/XZB7CzT1NbqXc0rheiygIb6IgTbLAOfM7jo1ahZpoHqiPLSObNv
+         EGMOkPPjZEyuEohd0/Rfl5pgNcC/fbmfpacvjIYE27vKPCWlzf2+EWpgv4KanXPms6KL
+         M1QQ==
+X-Gm-Message-State: AKaTC00Ty9P8IKXYRi7b0MS1IwlcrG2rvOGrgbu0YgQlasMWI5cajYW1ALPHAasJC0YC3DYf
+X-Received: by 10.99.138.75 with SMTP id y72mr126184448pgd.90.1481161603977;
+        Wed, 07 Dec 2016 17:46:43 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:2441:4f9a:ad0f:a8d7])
-        by smtp.gmail.com with ESMTPSA id p64sm45255061pfi.88.2016.12.07.17.46.45
+        by smtp.gmail.com with ESMTPSA id n24sm45439993pfb.0.2016.12.07.17.46.43
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 17:46:46 -0800 (PST)
+        Wed, 07 Dec 2016 17:46:43 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv6 5/7] worktree: add function to check if worktrees are in use
-Date:   Wed,  7 Dec 2016 17:46:21 -0800
-Message-Id: <20161208014623.7588-6-sbeller@google.com>
+Subject: [PATCHv6 3/7] test-lib-functions.sh: teach test_commit -C <dir>
+Date:   Wed,  7 Dec 2016 17:46:19 -0800
+Message-Id: <20161208014623.7588-4-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.30.gc512cbd.dirty
 In-Reply-To: <20161208014623.7588-1-sbeller@google.com>
 References: <20161208014623.7588-1-sbeller@google.com>
@@ -60,62 +60,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- worktree.c | 24 ++++++++++++++++++++++++
- worktree.h |  7 +++++++
- 2 files changed, 31 insertions(+)
+Specifically when setting up submodule tests, it comes in handy if
+we can create commits in repositories that are not at the root of
+the tested trash dir. Add "-C <dir>" similar to gits -C parameter
+that will perform the operation in the given directory.
 
-diff --git a/worktree.c b/worktree.c
-index 75db689672..2559f33846 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -406,3 +406,27 @@ const struct worktree *find_shared_symref(const char *symref,
- 
- 	return existing;
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/test-lib-functions.sh | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index fdaeb3a96b..579e812506 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -157,16 +157,21 @@ debug () {
+ 	 GIT_TEST_GDB=1 "$@"
  }
-+
-+static int uses_worktree_internal(struct worktree **worktrees)
-+{
-+	int i;
-+	for (i = 0; worktrees[i]; i++)
-+		; /* nothing */
-+
-+	free_worktrees(worktrees);
-+	return i > 1;
-+}
-+
-+int uses_worktrees(void)
-+{
-+	return uses_worktree_internal(get_worktrees(0));
-+}
-+
-+int submodule_uses_worktrees(const char *path)
-+{
-+	struct worktree **worktrees = get_submodule_worktrees(path, 0);
-+	if (!worktrees)
-+		return 0;
-+
-+	return uses_worktree_internal(worktrees);
-+}
-diff --git a/worktree.h b/worktree.h
-index 157fbc4a66..76027b1fd2 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -33,6 +33,13 @@ extern struct worktree **get_worktrees(unsigned flags);
- extern struct worktree **get_submodule_worktrees(const char *path,
- 						 unsigned flags);
  
-+/*
-+ * Returns 1 if more than one worktree exists.
-+ * Returns 0 if only the main worktree exists.
-+ */
-+extern int uses_worktrees(void);
-+extern int submodule_uses_worktrees(const char *path);
-+
- /*
-  * Return git dir of the worktree. Note that the path may be relative.
-  * If wt is NULL, git dir of current worktree is returned.
+-# Call test_commit with the arguments "<message> [<file> [<contents> [<tag>]]]"
++# Call test_commit with the arguments
++# [-C <directory>] <message> [<file> [<contents> [<tag>]]]"
+ #
+ # This will commit a file with the given contents and the given commit
+ # message, and tag the resulting commit with the given tag name.
+ #
+ # <file>, <contents>, and <tag> all default to <message>.
++#
++# If the first argument is "-C", the second argument is used as a path for
++# the git invocations.
+ 
+ test_commit () {
+ 	notick= &&
+ 	signoff= &&
++	indir= &&
+ 	while test $# != 0
+ 	do
+ 		case "$1" in
+@@ -176,21 +181,26 @@ test_commit () {
+ 		--signoff)
+ 			signoff="$1"
+ 			;;
++		-C)
++			indir="$2"
++			shift
++			;;
+ 		*)
+ 			break
+ 			;;
+ 		esac
+ 		shift
+ 	done &&
++	indir=${indir:+"$indir"/} &&
+ 	file=${2:-"$1.t"} &&
+-	echo "${3-$1}" > "$file" &&
+-	git add "$file" &&
++	echo "${3-$1}" > "$indir$file" &&
++	git ${indir:+ -C "$indir"} add "$file" &&
+ 	if test -z "$notick"
+ 	then
+ 		test_tick
+ 	fi &&
+-	git commit $signoff -m "$1" &&
+-	git tag "${4:-$1}"
++	git ${indir:+ -C "$indir"} commit $signoff -m "$1" &&
++	git ${indir:+ -C "$indir"} tag "${4:-$1}"
+ }
+ 
+ # Call test_merge with the arguments "<message> <commit>", where <commit>
 -- 
 2.11.0.rc2.30.gc512cbd.dirty
 
