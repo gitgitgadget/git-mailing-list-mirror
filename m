@@ -2,212 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4C8E1FF7F
-	for <e@80x24.org>; Thu,  8 Dec 2016 01:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAA551FF7F
+	for <e@80x24.org>; Thu,  8 Dec 2016 01:46:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933115AbcLHBi2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 20:38:28 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36132 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932759AbcLHBi1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 20:38:27 -0500
-Received: by mail-wm0-f65.google.com with SMTP id m203so322623wma.3
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:38:27 -0800 (PST)
+        id S933226AbcLHBqm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 20:46:42 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:33240 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752704AbcLHBql (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 20:46:41 -0500
+Received: by mail-pg0-f44.google.com with SMTP id 3so168145486pgd.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:46:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=pcJ9N64WtcgOJEfwEIQtn8/EBprJJl2wgd77CTiqvIE=;
-        b=GU83iWoA+bOY2lA3d3E6slOh9gzR96XpQNmRX6ID3IHaEmA7FPHk3/+CCKCES+YYqL
-         o97c3K3pt78CTm7/318crbTXr1WjDsmv+Ju7hcjyTAQpv5ZeAftMbR2sznaw3l9cmbVj
-         tK/88+2d2YHsPlMqVrjV5dE9ytRPeaYcErUKAc9rKD3I07vPlIHKC6eAD4nV4p0WXH63
-         cxoYuZhCIaoMBtcR5SgtcRuSPv+IBJmbD6NQ+xVJv1swdZVNoUq5CLo+gf4FjZX4nWls
-         inkiJO7wW7qfCXNobgx0kRoINALelio9+EWwktb01hc6JAr2UNIhEXP05uCXYA2ByR67
-         npag==
+        bh=VbOeLWxfpY8/xaUsx3vOgp9tLZiJ3oARVqX6Ft0q4B4=;
+        b=cQ8BCbV40YrGp7LFuom75Nmq8etqsnSMCcU5wMcjLPj/pUgb3a2VntncespXN6aSxJ
+         5mtSNhjpC3CdD7EH+71ZhEIMXC/TFBYevyYRC2i+x2rC7NnzxJSG2+TQQfxSA4CE/DyX
+         POvCeViYWL/jqp1gWXXNuprAL7lw/4b5jX8sZQnpe+qlZFct10UEm/Q2m0Y9bsbUnByt
+         wng77rOx7ZSzNFmq+DbaLgTBt0bqL1lEj2xj+iaLOYvI0+CI1/X/WJ+TfY/+qiQO7TTi
+         mTVLUCmEB4AfvryM+XYOfCEcXa34Dh/hNiD/ScnVPXCrL2/cso/TF3Xfb5QB+tmc1Xos
+         2zYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=pcJ9N64WtcgOJEfwEIQtn8/EBprJJl2wgd77CTiqvIE=;
-        b=MX3FCUhycFHDspom8/xrPZU+rg1T2EtbTlqlQrYdmQlWKX0e+qklQjdH8TLRKY3s4x
-         Ru3gj6Maso8dMXMBu/Dr8P+loubtKBOFjFBgtV8aZEuriESlHXW1gTJN8DWFbG7eP307
-         K6iags0Ma2otTMkoj8G0unPA0WD1KqDX+ooLZOLUK9UvQZKFjks7MJBT5j1yRuUVgwWQ
-         HRIZDrguYDaxoQvdZ7WYRgIvRn74KWknjHacYHqHGeA2vYKkD3SrME88/MUvfWyXyPHd
-         HCAVQFMy/XIY/gRMJaENczLklDejWyP/eE9d+XxP7WCFEJY5w4TAfOa7I1BLZv59EKPq
-         Ay4Q==
-X-Gm-Message-State: AKaTC0159yh3lFGH3jZ/fKeXswwWe8rhihanH20p17shYwpLaQWYvTCzmOWPTA6nso8mCg==
-X-Received: by 10.28.185.78 with SMTP id j75mr1008078wmf.14.1481161106051;
-        Wed, 07 Dec 2016 17:38:26 -0800 (PST)
-Received: from localhost.localdomain ([104.131.203.210])
-        by smtp.gmail.com with ESMTPSA id f126sm12435139wme.22.2016.12.07.17.38.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 17:38:25 -0800 (PST)
-From:   vi0oss@gmail.com
-To:     git@vger.kernel.org
-Cc:     stefanbeller@gmail.com, "Vitaly \"_Vi\" Shukela" <vi0oss@gmail.com>
-Subject: [PATCH] submodule--helper: set alternateLocation for cloned submodules
-Date:   Thu,  8 Dec 2016 04:38:14 +0300
-Message-Id: <20161208013814.4943-1-vi0oss@gmail.com>
-X-Mailer: git-send-email 2.10.2
+        bh=VbOeLWxfpY8/xaUsx3vOgp9tLZiJ3oARVqX6Ft0q4B4=;
+        b=ja5pX1e3vEspaSvlSasCMVEhSQvoTvie1XUO/ObNou//2MMZRsmEt2ymragPf2Vspc
+         8Nvf5Bl5g5qh5+F39jEj/hnp4WPMbCVsi/PQ7vLqO+nry1vsOv5M1G5YtMsiC/6Z3ZzR
+         p9ZsH8L1tOTBoH0UYH79q4krMGrnMXKZQC7VxihbQM4r18hcn7GENizFkgWXQFAQzfS/
+         G7bwCinBhSfq39i6ECmZ2C77mQNukFPTM72wgNom8FqD4lJHjuHtAQLIxNDJTxBc8bW4
+         fjdSKxnhCo6XmETFDUUPcShBmmCCj5YfnsGj8MOvPvEI9J0tIloKdNsooG2Jxq7AC/Un
+         I4QQ==
+X-Gm-Message-State: AKaTC01zWRD9wdNeHhnJ0+7kJLtryXwDHOyezT1x6qgqrATIykS5pRSQUxm1TsJa6uJo60Ln
+X-Received: by 10.98.32.151 with SMTP id m23mr72985142pfj.127.1481161600586;
+        Wed, 07 Dec 2016 17:46:40 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:2441:4f9a:ad0f:a8d7])
+        by smtp.gmail.com with ESMTPSA id q12sm45406362pfj.18.2016.12.07.17.46.39
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 07 Dec 2016 17:46:39 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     bmwill@google.com
+Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCHv6 0/7] submodule embedgitdirs
+Date:   Wed,  7 Dec 2016 17:46:16 -0800
+Message-Id: <20161208014623.7588-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.rc2.30.gc512cbd.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Vitaly \"_Vi\" Shukela" <vi0oss@gmail.com>
+v6:
+ * renamed embedgitdirs to absorbgitdirs embedding may be interpreted as
+   embedding the git dir into the working directory, whereas absorbing sounds
+   more like the submodule is absorbed by the superproject, making the
+   submodule less independent
+ * Worktrees API offer uses_worktrees(void) and submodule_uses_worktree(path).
+ * moved the printing to stderr and one layer up (out of the pure
+   relocate_git_dir function).
+ * connect_... is in dir.h now.
 
-In 31224cbdc7 (clone: recursive and reference option triggers
-submodule alternates, 2016-08-17) a mechanism was added to
-have submodules referenced.  It did not address _nested_
-submodules, however.
+v5:
+* Add another layer of abstraction, i.e. the relocate_git_dir is only about
+  moving a git dir of one repository. The submodule specific stuff (e.g.
+  recursion into nested submodules) is in submodule.{c,h}
 
-This patch makes all not just the root repository, but also
-all submodules (recursively) have submodule.alternateLocation
-and submodule.alternateErrorStrategy configured, making Git
-search for possible alternates for nested submodules as well.
+  This was motivated by reviews on the series of checkout aware of submodules
+  building on top of this series, as we want to directly call the embed-git-dirs
+  function without the overhead of spawning a child process.
 
-As submodule's alternate target does not end in .git/objects
-(rather .git/modules/qqqqqq/objects), this alternate target
-path restriction for in add_possible_reference_from_superproject
-relates from "*.git/objects" to just */objects".
+v4:
+* rebuilt on top of nd/worktree-list-fixup
+* fix and test behavior for un-init submodules (don't crash, rather do nothing)
+* incorporated a "static" as pointed out by Ramsay
+* use internal functions instead of duplicating code in worktree.c
+  (use get_common_dir_noenv for the submodule to actually get the common dir)
+* fixed a memory leak in relocate_gitdir
 
-New tests have been added to t7408-submodule-reference.
+v3:
+* have a slightly more generic function "relocate_gitdir".
+  The recursion is strictly related to submodules, though.
+* bail out if a submodule is using worktrees.
+  This also lays the groundwork for later doing the proper thing,
+  as worktree.h offers a function `get_submodule_worktrees(path)`
+* nit by duy: use git_path instead of git_common_dir
 
-Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
----
+v2:
+* fixed commit message for patch:
+ "submodule: use absolute path for computing relative path connecting"
+* a new patch "submodule helper: support super prefix"
+* redid the final patch with more tests and fixing bugs along the way
+* "test-lib-functions.sh: teach test_commit -C <dir>" unchanged
 
-Notes:
-    Third review: missing && in test fixed.
-    
-    Mailmap change not included.
+v1:
+The discussion of the submodule checkout series revealed to me that a command
+is needed to move the git directory from the submodules working tree to be
+embedded into the superprojects git directory.
 
- builtin/submodule--helper.c    | 19 ++++++++++--
- t/t7408-submodule-reference.sh | 66 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+), 2 deletions(-)
+So I wrote the code to intern the submodules git dir into the superproject,
+but whilst writing the code I realized this could be valueable for our use
+in testing too. So I exposed it via the submodule--helper. But as the
+submodule helper ought to be just an internal API, we could also
+offer it via the proper submodule command.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4beeda5..92fd676 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -498,9 +498,9 @@ static int add_possible_reference_from_superproject(
- 
- 	/*
- 	 * If the alternate object store is another repository, try the
--	 * standard layout with .git/modules/<name>/objects
-+	 * standard layout with .git/(modules/<name>)+/objects
- 	 */
--	if (ends_with(alt->path, ".git/objects")) {
-+	if (ends_with(alt->path, "/objects")) {
- 		char *sm_alternate;
- 		struct strbuf sb = STRBUF_INIT;
- 		struct strbuf err = STRBUF_INIT;
-@@ -583,6 +583,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	struct strbuf rel_path = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct string_list reference = STRING_LIST_INIT_NODUP;
-+	char *sm_alternate = NULL, *error_strategy = NULL;
- 
- 	struct option module_clone_options[] = {
- 		OPT_STRING(0, "prefix", &prefix,
-@@ -672,6 +673,20 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		die(_("could not get submodule directory for '%s'"), path);
- 	git_config_set_in_file(p, "core.worktree",
- 			       relative_path(path, sm_gitdir, &rel_path));
-+
-+	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
-+	git_config_get_string("submodule.alternateLocation", &sm_alternate);
-+	if (sm_alternate)
-+		git_config_set_in_file(p, "submodule.alternateLocation",
-+					   sm_alternate);
-+	git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
-+	if (error_strategy)
-+		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
-+					   error_strategy);
-+
-+	free(sm_alternate);
-+	free(error_strategy);
-+
- 	strbuf_release(&sb);
- 	strbuf_release(&rel_path);
- 	free(sm_gitdir);
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index 1c1e289..e159fc5 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -125,4 +125,70 @@ test_expect_success 'ignoring missing submodule alternates passes clone and subm
- 	)
- '
- 
-+test_expect_success 'preparing second superproject with a nested submodule plus partial clone' '
-+	test_create_repo supersuper &&
-+	(
-+		cd supersuper &&
-+		echo "I am super super." >file &&
-+		git add file &&
-+		git commit -m B-super-super-initial
-+		git submodule add "file://$base_dir/super" subwithsub &&
-+		git commit -m B-super-super-added &&
-+		git submodule update --init --recursive &&
-+		git repack -ad
-+	) &&
-+	git clone supersuper supersuper2 &&
-+	(
-+		cd supersuper2 &&
-+		git submodule update --init
-+	)
-+'
-+
-+# At this point there are three root-level positories: A, B, super and super2
-+
-+test_expect_success 'nested submodule alternate in works and is actually used' '
-+	test_when_finished "rm -rf supersuper-clone" &&
-+	git clone --recursive --reference supersuper supersuper supersuper-clone &&
-+	(
-+		cd supersuper-clone &&
-+		# test superproject has alternates setup correctly
-+		test_alternate_is_used .git/objects/info/alternates . &&
-+		# immediate submodule has alternate:
-+		test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub &&
-+		# nested submodule also has alternate:
-+		test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
-+	)
-+'
-+
-+check_that_two_of_three_alternates_are_used() {
-+	test_alternate_is_used .git/objects/info/alternates . &&
-+	# immediate submodule has alternate:
-+	test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub &&
-+	# but nested submodule has no alternate:
-+	test_must_fail test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
-+}
-+
-+
-+test_expect_success 'missing nested submodule alternate fails clone and submodule update' '
-+	test_when_finished "rm -rf supersuper-clone" &&
-+	test_must_fail git clone --recursive --reference supersuper2 supersuper2 supersuper-clone &&
-+	(
-+		cd supersuper-clone &&
-+		check_that_two_of_three_alternates_are_used &&
-+		# update of the submodule fails
-+		test_must_fail git submodule update --init --recursive
-+	)
-+'
-+
-+test_expect_success 'missing nested submodule alternate in --reference-if-able mode' '
-+	test_when_finished "rm -rf supersuper-clone" &&
-+	git clone --recursive --reference-if-able supersuper2 supersuper2 supersuper-clone &&
-+	(
-+		cd supersuper-clone &&
-+		check_that_two_of_three_alternates_are_used &&
-+		# update of the submodule succeeds
-+		git submodule update --init --recursive
-+	)
-+'
-+
- test_done
+The command as it is has little value to the end user for now, but
+breaking it out of the submodule checkout series hopefully makes review easier.
+
+Thanks,
+Stefan
+
+Stefan Beller (7):
+  submodule: use absolute path for computing relative path connecting
+  submodule helper: support super prefix
+  test-lib-functions.sh: teach test_commit -C <dir>
+  worktree: get worktrees from submodules
+  worktree: add function to check if worktrees are in use
+  move connect_work_tree_and_git_dir to dir.h
+  submodule: add absorb-git-dir function
+
+ Documentation/git-submodule.txt    |  15 +++++
+ builtin/submodule--helper.c        |  69 ++++++++++++++++----
+ dir.c                              |  38 +++++++++++
+ dir.h                              |   4 ++
+ git-submodule.sh                   |   7 +-
+ git.c                              |   2 +-
+ submodule.c                        | 127 ++++++++++++++++++++++++++++++-------
+ submodule.h                        |   5 +-
+ t/t7412-submodule-absorbgitdirs.sh | 101 +++++++++++++++++++++++++++++
+ t/test-lib-functions.sh            |  20 ++++--
+ worktree.c                         |  70 +++++++++++++++++---
+ worktree.h                         |  13 ++++
+ 12 files changed, 418 insertions(+), 53 deletions(-)
+ create mode 100755 t/t7412-submodule-absorbgitdirs.sh
+
 -- 
-2.10.2
+2.11.0.rc2.30.gc512cbd.dirty
 
