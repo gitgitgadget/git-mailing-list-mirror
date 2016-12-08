@@ -2,156 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CDD220259
-	for <e@80x24.org>; Thu,  8 Dec 2016 14:24:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A1B21FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 14:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932270AbcLHOYo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 09:24:44 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34107 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752340AbcLHOYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 09:24:32 -0500
-Received: by mail-wm0-f66.google.com with SMTP id g23so3878962wme.1
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 06:24:31 -0800 (PST)
+        id S932105AbcLHOdQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 09:33:16 -0500
+Received: from mail-wj0-f195.google.com ([209.85.210.195]:34377 "EHLO
+        mail-wj0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752721AbcLHOdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 09:33:15 -0500
+Received: by mail-wj0-f195.google.com with SMTP id xy5so54731991wjc.1
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 06:33:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IPyH+obOZXMXdIzhbSIf1ZnZLeAF6BCXx8x04PZInEk=;
-        b=tywGxFGRZqgIOFV/eud/WLatySlRKOzfLUbv6mFXJQkk5X7dwK54Bh0g83kcpYSy5r
-         0KwKCPaFHSukHcqBMjcqmLuXUaG0sfUIZRnpxOT+pjdxQcLh/bYMgIxKfQ1oP3FNUCZ7
-         OvFvhiX5AD2+4qWJIqwABpMHlkhlU2AJrsqINLzOyJnPd+N4kjv8n7x5xSi4QeGDyVBU
-         j9nfUpESVAqDmKOTeZ3aQB8dF5yjPAuFpY7Cz63VrTPFyL0Cx1YYgqsm5d5k48O0Zxre
-         rjpccIJjiJP1NKVhRNkKS8OmqbAjfPozBoqpfaVUzkc3Q7+SumugttCjW53wSAOHzQ+Z
-         iSTw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=BrHkfuI8uqPdSUcmdFHX+l8BXASW+YB1O7kyAwBEr7A=;
+        b=YHtBQDXJ+r2a7NCKKntqhKnxmv2O72hU5qO1Yfqf3nS9FfMneTTARsMCFEBhaq8OO9
+         RhJBdkHVTWQxSnEWhU+FNFSgvpe0Nw+aV9m5lfU0BEgVBhCrjrspb3EXpspUvGt63uMz
+         ibeHy2QI9s6KuUK5iMeO4y659jFpH4ojkkwqmY3XtHX6FzZx/9ytyR/WrjB9WMnUXT68
+         3CbNj+z2g1g3VJNEggXyGJjAKdID+byIp8fCXk0iB1NZ8Qe/fVVMZCFAebglJbW20s0S
+         Wus+Oqwhq0Dd+MibltWgyYZ8zRSzyiBS1UUhd6KdD/Y5wY0IWyymbtq3Fkkz4BW5PaxW
+         2KxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IPyH+obOZXMXdIzhbSIf1ZnZLeAF6BCXx8x04PZInEk=;
-        b=DQitda6BSHSqVe9H19MURyUoQegRHPJvNx+T7mggaq3Hr925s2k9LsMVFlwTk20hkR
-         T9hUHF3xA4KNePsAGLBrIDFIX9SlXz7PguywehXvQ/QNSfMQ1KHxR0g2H9g91NORwnRM
-         5RJm9G0Bb4Zaz8Q/oEGXpMvvVRToltQpc4eDq6YZxVpEIt9wE4XLDaZP/zQXt3F2fed0
-         q/5CdU/MRyotSw0o3A5PUbq95GHtRaegBDwcq4J1wUqbULi2iYRfyo7VlTCFGd7b2Akd
-         nRUraILZfQ5u8w0SU4uQx8T3sQvr9zG0YuFDvxaVyKA2fy+IjVtDKXucExJ9/y24Apka
-         51Dw==
-X-Gm-Message-State: AKaTC02wvYoe4/5PMkvTeZEVZ7G7d/49yTKoDq4JJ+BBhl1ZGEhNy0qO3nScz410CgcENQ==
-X-Received: by 10.28.208.203 with SMTP id h194mr2371108wmg.45.1481207070999;
-        Thu, 08 Dec 2016 06:24:30 -0800 (PST)
-Received: from localhost.localdomain (x590d68ae.dyn.telefonica.de. [89.13.104.174])
-        by smtp.gmail.com with ESMTPSA id l67sm15464028wmf.20.2016.12.08.06.24.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Dec 2016 06:24:30 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Leho Kraav <leho@conversionready.com>,
-        git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv2 4/7] versioncmp: pass full tagnames to swap_prereleases()
-Date:   Thu,  8 Dec 2016 15:23:58 +0100
-Message-Id: <20161208142401.1329-5-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.11.0.78.g5a2d011
-In-Reply-To: <20161208142401.1329-1-szeder.dev@gmail.com>
-References: <20161005033353.Horde.33pf2naqnF4HgwPWSy9DaHV@webmail.informatik.kit.edu>
- <20161208142401.1329-1-szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=BrHkfuI8uqPdSUcmdFHX+l8BXASW+YB1O7kyAwBEr7A=;
+        b=JxeQ3QjUjk7CMKdy02XYYm55jeejf5tSkAHbGolIerrE7PHgNmdNJHtTogJQSacQ8A
+         fJT2pJ8KUYkvtGcPdyMW5rd/wGF3PnlR6kxHcG2eHEMr+5tbPPWx/xwalJRGXDWeC7Bp
+         7dlf2doKux4Sv8wahtbR8fUDBveY/vwQkr0613LphykT1J69OLJyAyNWC2ry3DhXEiIA
+         wzeAes5rxH4y3j+4dyje6Z+e/W0che6z8nhKwwHWiGWZjhU/cylzWh90I8LTwBXphFCC
+         ZCnYYzItfQwP7t2JkgH5WzY2TDlVpyBM03UHlvI2Lb7r/QILetmBB0Q3nGKyJ+l/j2yg
+         GYug==
+X-Gm-Message-State: AKaTC03eUkY6E3OWVzFjIXV/ai0peJ6THa1RT7sfGhQr1CvoFJwtOXRD3tg5pHOaQWdBOw==
+X-Received: by 10.194.10.72 with SMTP id g8mr76095954wjb.57.1481206698024;
+        Thu, 08 Dec 2016 06:18:18 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w79sm15500134wmw.0.2016.12.08.06.18.17
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 08 Dec 2016 06:18:17 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: Serious bug with Git-2.11.0-64-bit and Git-LFS
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CABW+60za0shXucPgg_jGYt4f8QbkLzLmS5GRf8czE67Taqd+zw@mail.gmail.com>
+Date:   Thu, 8 Dec 2016 15:18:30 +0100
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D1437EA2-F4D3-4190-8D79-020C06CFA3DB@gmail.com>
+References: <CABW+60x0PSw7uNQZg4SeN7EAbNpraR_HWvnVFz1-fVLYX=B8RQ@mail.gmail.com> <06520F42-BD49-4349-83B3-74DCA1E260CD@gmail.com> <CABW+60za0shXucPgg_jGYt4f8QbkLzLmS5GRf8czE67Taqd+zw@mail.gmail.com>
+To:     Nick Warr <nick.warr@bossastudios.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The swap_prereleases() helper function is responsible for finding
-configured prerelease suffixes in a pair of tagnames to be compared,
-but this function currently gets to see only the parts of those two
-tagnames starting at the first different character.  To fix some
-issues related to the common part of two tagnames overlapping with
-leading part of a prerelease suffix, this helper function must see
-both full tagnames.
 
-In preparation for the fix in the following patch, refactor
-swap_prereleases() and its caller to pass two full tagnames and an
-additional offset indicating the position of the first different
-character.
+> On 08 Dec 2016, at 15:00, Nick Warr <nick.warr@bossastudios.com> =
+wrote:
+>=20
+> That looks pretty much like the error we're dealing with, any reason
+> why going back a point version on Git (not git-lfs) would resolve the
+> issue however?
 
-While updating the comment describing that function, remove the
-sentence about not dealing with both tagnames having the same suffix.
-Currently it doesn't add much value (we know that there is a different
-character, so it's obvious that it can't possibly be the same suffix
-in both), and at the end of this patch series it won't even be true
-anymore.
+Going back to GitLFS 1.4.* would make the error disappear. However, I =
+think
+you should fix your repository. Try this:
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- versioncmp.c | 29 +++++++++++++----------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+git lfs clone <YOUR REPO URL>
+cd <YOUR REPO>
+git rm --cached "workers/unity/Assets/3rdPartyAssets/FORGE3D/Sci-Fi =
+Effects/Effects/Debris/Meshes/debris_junk.FBX"
+git add --force "workers/unity/Assets/3rdPartyAssets/FORGE3D/Sci-Fi =
+Effects/Effects/Debris/Meshes/debris_junk.FBX"
+git commit -m "Move files properly to GitLFS"
+git push
 
-diff --git a/versioncmp.c b/versioncmp.c
-index 80bfd109f..a55c23ad5 100644
---- a/versioncmp.c
-+++ b/versioncmp.c
-@@ -25,32 +25,28 @@ static const struct string_list *prereleases;
- static int initialized;
- 
- /*
-- * p1 and p2 point to the first different character in two strings. If
-- * either p1 or p2 starts with a prerelease suffix, it will be forced
-- * to be on top.
-+ * off is the offset of the first different character in the two strings
-+ * s1 and s2. If either s1 or s2 contains a prerelease suffix starting
-+ * at that offset, it will be forced to be on top.
-  *
-- * If both p1 and p2 start with (different) suffix, the order is
-- * determined by config file.
-- *
-- * Note that we don't have to deal with the situation when both p1 and
-- * p2 start with the same suffix because the common part is already
-- * consumed by the caller.
-+ * If both s1 and s2 contain a (different) suffix at that position,
-+ * their order is determined by the order of those two suffixes in the
-+ * configuration.
-  *
-  * Return non-zero if *diff contains the return value for versioncmp()
-  */
--static int swap_prereleases(const void *p1_,
--			    const void *p2_,
-+static int swap_prereleases(const char *s1,
-+			    const char *s2,
-+			    int off,
- 			    int *diff)
- {
--	const char *p1 = p1_;
--	const char *p2 = p2_;
- 	int i, i1 = -1, i2 = -1;
- 
- 	for (i = 0; i < prereleases->nr; i++) {
- 		const char *suffix = prereleases->items[i].string;
--		if (i1 == -1 && starts_with(p1, suffix))
-+		if (i1 == -1 && starts_with(s1 + off, suffix))
- 			i1 = i;
--		if (i2 == -1 && starts_with(p2, suffix))
-+		if (i2 == -1 && starts_with(s2 + off, suffix))
- 			i2 = i;
- 	}
- 	if (i1 == -1 && i2 == -1)
-@@ -121,7 +117,8 @@ int versioncmp(const char *s1, const char *s2)
- 		initialized = 1;
- 		prereleases = git_config_get_value_multi("versionsort.prereleasesuffix");
- 	}
--	if (prereleases && swap_prereleases(p1 - 1, p2 - 1, &diff))
-+	if (prereleases && swap_prereleases(s1, s2, (const char *) p1 - s1 - 1,
-+					    &diff))
- 		return diff;
- 
- 	state = result_type[state * 3 + (((c2 == '0') + (isdigit (c2) != 0)))];
--- 
-2.11.0.78.g5a2d011
+Afterwards you should be able to use the latest version of Git and =
+GitLFS
+without trouble.
+
+Cheers,
+Lars
+
+PS: Top posting is not that popular in the Git community ;-)
+
+
+>=20
+> On 8 December 2016 at 13:57, Lars Schneider <larsxschneider@gmail.com> =
+wrote:
+>>=20
+>>> On 08 Dec 2016, at 12:46, Nick Warr <nick.warr@bossastudios.com> =
+wrote:
+>>>=20
+>>> Using Git-2.11.0 with the latest git-lfs 1.5.2 (also tested with
+>>> 1.5.3) cloning from our locally hosted gitlab CE server via HTTPS.
+>>>=20
+>>> When cloning a repo (large, 3.3 gig in git, 10.3 in LFS)  for the
+>>> first time the clone will finish the checkout of the git part, then
+>>> when it starts downloading the LFS parts it will reliably finish =
+with
+>>> a smudge filter error.
+>>>=20
+>>> This leaves the repo in an unstable condition, you can then fetch =
+the
+>>> lfs part without issue, but checking out the lfs files or trying a =
+git
+>>> reset --hard will continue to spit out the same error. As you can =
+see,
+>>> the actual error is not particularly useful.
+>>>=20
+>>> fatal: workers/unity/Assets/3rdPartyAssets/FORGE3D/Sci-Fi
+>>> Effects/Effects/Debris/Meshes/debris_junk.FBX: smudge filter lfs
+>>> failed
+>>> Unknown command ""
+>>>=20
+>>> Possibly it's due to the file extension being all capital letters, =
+we
+>>> did manage to change the error by recommitting the file with a
+>>> lowercase extension, but it failed on the next file (which also had =
+a
+>>> capital letter extension).
+>>>=20
+>>> This has happened on multiple fresh windows 10 64 bit installs,
+>>> different machines and target directories (to hopefully remove the
+>>> possibility of file permissions) where cloning is taking place.
+>>>=20
+>>> The solution is to back level to Git 2.10.2 and the error =
+disappears.
+>>>=20
+>>> More than willing to provide any further information,
+>>=20
+>> Hi Nick,
+>>=20
+>> debris_junk.FBX is not stored properly in Git LFS.
+>> I explained the problem in detail here:
+>> https://github.com/git-lfs/git-lfs/issues/1729
+>>=20
+>> You should add the file properly to GitLFS to fix the problem.
+>> However, I think this is a regression in GitLFS and I hope it will
+>> be fixed in the next version.
+>>=20
+>> No change/fix in Git is required.
+>>=20
+>> Cheers,
+>> Lars
 
