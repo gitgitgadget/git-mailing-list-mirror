@@ -2,119 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68DC41FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 18:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C81B21FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 18:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752796AbcLHS6o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 13:58:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64010 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751577AbcLHS6n (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752388AbcLHS6n (ORCPT <rfc822;e@80x24.org>);
         Thu, 8 Dec 2016 13:58:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13991544D4;
-        Thu,  8 Dec 2016 13:58:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZbzhOrBsfGzYhhVlbQulyWu+GWk=; b=Ykwt+p
-        7Hlz/xUfQBMe48AzCsWP2WE6mAtKG61B4IdnGdnQo527Uno76F3FV5oOudS6QbZZ
-        QCtC5MrFHUga1ucDLMig075TwO2hLS5MAPsyqG6CsFRR3TNGfgVxI7bK1uG1KBVq
-        31R9Hwm2qpv0FD/4ipaAo9XJ9HPaN2XSQ7gaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ah6eOVPT8CnTMRIlhHn9M/+7pb8KSjX9
-        S8IQ6nGI0VyDB01pBpl73Z5bFbG+VMYJ/42o2rUqywjOMBUeh3pvQ9mUf6Wv3WMv
-        yz7XM8jKiPh8Y7TQT+UrOHvyLGFlIJKI3eITPC2VUKU/XzZ72i4sfrx9xHlhwsAy
-        ZS90rUuO0WI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B7A5544D3;
-        Thu,  8 Dec 2016 13:58:42 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 61DFD544D2;
-        Thu,  8 Dec 2016 13:58:41 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v8 00/19] port branch.c to use ref-filter's printing options
-References: <20161207153627.1468-1-Karthik.188@gmail.com>
-        <CA+P7+xquordVY19dypqNcAuQqoRbFmHhzb0w+HXCaJmm_Ex7zQ@mail.gmail.com>
-Date:   Thu, 08 Dec 2016 10:58:39 -0800
-In-Reply-To: <CA+P7+xquordVY19dypqNcAuQqoRbFmHhzb0w+HXCaJmm_Ex7zQ@mail.gmail.com>
-        (Jacob Keller's message of "Wed, 7 Dec 2016 16:01:48 -0800")
-Message-ID: <xmqqa8c6tfhc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35118 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750827AbcLHS6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 13:58:42 -0500
+Received: by mail-wm0-f68.google.com with SMTP id a20so5423665wme.2
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 10:58:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=X+HJ5v3G3xZyKu1bk0/R2oiaVdpHoDUzLFsZLecreRE=;
+        b=MF3EYQZxSN+gbirSf4PKdMtkZQQ4ht23UViN7Gp/mfEgMzypvOL82VpgwuE2wC46n0
+         L8XWUYG/asCK/UuVrvR8jZXKa17Hs0ewlI/Jee7Wx7qg0T+knIIwC9z0r8PimTovn/Vz
+         QfLtC6YRwnFIv5vwdN/Yif8SFfU06nFa5Gm8SC8SuUvxeMTDijUTFvaOAQdYxIB+9XF4
+         oXukPpiAmuBBPVONI2Jpis8dbMvXddClKEeNwoDqpzQQBp0eNPBp7+NgqYVP97V8ydx5
+         qS9rsBt/9nvJv0w7Ob/zbi6epWSYYQlQg8rIEuzXsA1ZxeN0hxitpnbVi4B10QiQh26z
+         hwzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=X+HJ5v3G3xZyKu1bk0/R2oiaVdpHoDUzLFsZLecreRE=;
+        b=WvJvk1UK5wjBZ+T6ZwfZfIlk/erVxDlo6doCHTgEMqoiDG9d1pSazNfEuz1rf7REG7
+         qZR+R3ptsPPTE4kHhD1ueDhZkG5gqQ9hlI8KaSPB7+HNOrlJRvgoIIktnXD0OcV6fWrM
+         lNutRCNESuxO7LeewGc3PN7GnRO1Mbxo/2bzsenML4BIBACkPreFayhG/eoLWAdcCIQs
+         XcrXzWCRBDYLsccUmN0k4gcupT/SU0URdlu7/+mmolGxAhXIYAcx3xZYjQAvFHlW1z1k
+         l/c30Ire1h+O3fRzJYn3RVh2ED2X9LFn+T9HiuwueliQ7BiM1FOEE0m7+eQ+F3pP+8yD
+         Co6A==
+X-Gm-Message-State: AKaTC023uPclppbJZCc+qWezmvIhkH899LHCfy26sPfwVhOSu4kGvlC6ZWtXfZsFzFGNisQfigAZL+5Qf69ATw==
+X-Received: by 10.28.220.197 with SMTP id t188mr3407758wmg.57.1481223521132;
+ Thu, 08 Dec 2016 10:58:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 55C63D4C-BD78-11E6-A02E-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.194.145.101 with HTTP; Thu, 8 Dec 2016 10:58:40 -0800 (PST)
+In-Reply-To: <20161207160923.7028-3-szeder.dev@gmail.com>
+References: <20161207160923.7028-1-szeder.dev@gmail.com> <20161207160923.7028-3-szeder.dev@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 8 Dec 2016 19:58:40 +0100
+Message-ID: <CAM0VKjk1mnNzQX6LThq1t7keesBz_fjE9x2e0ywsBKSNKP9SCw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ref-filter: add function to parse atoms from a
+ nul-terminated string
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Wed, Dec 7, 2016 at 5:09 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+> ref-filter's parse_ref_filter_atom() function parses an atom between
+> the start and end pointers it gets as arguments.  This is fine for two
+> of its callers, which process '%(atom)' format specifiers and the end
+> pointer comes directly from strchr() looking for the closing ')'.
+> However, it's not quite so straightforward for its other two callers,
+> which process sort specifiers given as plain nul-terminated strings.
+> Especially not for ref_default_sorting(), which has the default
+> hard-coded as a string literal, but can't use it directly, because a
+> pointer to the end of that string literal is needed as well.
+> The next patch will add yet another caller using a string literal.
 
->> +       are left behind.  If a displayed ref has fewer components than
->> +       `<N>`, the command aborts with an error.
->>
->
-> Would it make more sense to not die and instead just return the empty
-> string? On the one hand, if we die() it's obvious that you tried to
-> strip too many components. But on the other hand, it's also somewhat
-> annoying to have the whole command fail because we happen upon a
-> single ref that has fewer components?
->
-> So, for positive numbers, we simply strip what we can, which may
-> result in the empty string, and for negative numbers, we keep up to
-> what we said, while potentially keeping the entire string. I feel
-> that's a better alternative than a die() in the middle of a ref
-> filter..
->
-> What are other people's thoughts on this?
+Oops, that last sentence should be deleted, there is no third patch, sorry.
 
-There probably are three ways to handle a formatting request that
-cannot be satisfied for some refs but not others [*1*].  I agree
-with you that dying the whole thing is probably the least useful
-one.
-
-We already format "%(taggername)" into an empty string when the ref
-points at an object that is not an annotated tag, and substituting
-an unsatisifiable request "%(refname:lstrip=N)" with an empty string
-for a ref whose name does not have enough number of components is in
-line with that existing practice.
-
-The other possibility is to omit refs that cannot be formatted
-according to the format specifier.  We do not currently have
-provision for doing so, but it may not be bad if we can say:
-
-    $ git for-each-ref \
-	--require="%(taggername)" \
-	--require="%(refname:lstrip=4)" \
-	--format="%(refname:short)" \
-	refs/tags/
-
-to list _only_ annotated tags that has at least 4 components from
-refs/tags/ hierarchy.
-
-The "--require" thing obviously is an orthogonal feature, that
-nobody has asked for, and does not have to exist.  For the purpose
-of this review thread, I think it is OK to just conclude:
-
-    "--format" should replace "%(any unsatisifiable atom)" with an
-    empty string.
-
-Thanks.
-
-[Footnote]
-
-*1* A malformed formatting request (e.g. %(if) that is not closed)
-    cannot be satisified but that is true for all refs and is
-    outside of the scope of this discussion.  The command should die
-    and I think it already does.
+G=C3=A1bor
