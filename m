@@ -2,182 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4001FF7F
-	for <e@80x24.org>; Thu,  8 Dec 2016 00:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58D931FF7F
+	for <e@80x24.org>; Thu,  8 Dec 2016 00:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933523AbcLHACK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 19:02:10 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36232 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932967AbcLHACJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 19:02:09 -0500
-Received: by mail-yw0-f194.google.com with SMTP id r204so33074432ywb.3
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 16:02:09 -0800 (PST)
+        id S933750AbcLHACn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 19:02:43 -0500
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:35266 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932967AbcLHACm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 19:02:42 -0500
+Received: by mail-qt0-f179.google.com with SMTP id c47so397344857qtc.2
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 16:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=FPmto62ne0t1gxSzErcNYZY+bRfR9pXSGArbg0z1vVM=;
-        b=LaukMiWImPYtaNEQk08acxpcgd+1lpIZVLClZ7NchiYGEfObFaT2WiwvnpiuWHjg/V
-         6lgmZJB547oA2J+kuBhLms3ro4AdsWkRkswM8TnM7p/ROxWwp90C01TR00H+J0m2k3hq
-         A+X8v81b8yUIPke7g5I2qhD8GCOAMqsHzF0tuZE4W4DHpvTI96h1Du/6wnuQIaY5PHov
-         ZcQ8h7TablEosPE11ymlb9FFPfglhrMJNvKPoMNZCeSVCdmneCxbIslxRv/COLbeq9wA
-         +HMEgP1uLTdfh4rf26xydvEtgFW2gLEhfJCozitmMm00d4avmJoetYWrkWF+b9nOJUYt
-         ZDYg==
+        bh=gMGmvUnH0pik6+NEK7Bnm8e+oj4jdbFw7CaMWVMGkZM=;
+        b=a/HVoD9uonukcmpvbIhb4uDT5v0XXm+i7ZLr6eo1Q/4eovqrxDuI8JIRETY4c5xBdo
+         f4CvfXdJ59HMEPkoDbzcO2G7Hx5iJoDVkKfe+poaLqfX7hXYZa5WuGQczsvvjw8BL2Zy
+         OC5ljLF7zpuao/Vp9o/IrbFa+9sYMLbo/CAug6/ZzgBDlCM/Dl7kWyjFBCCl51cVO+eu
+         69as8Lahpx3yPd54MPMCR4T/YvSQcTkFf42CqfIOz/iLz76RGQjvW1Fr5urf3vFKqGk6
+         OGu2Fu04KlBVzsvMYuqUMBaBv+dyA1e929w7deWGZX3ya8kVS3oY1lCo50putoUQbDdM
+         74Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=FPmto62ne0t1gxSzErcNYZY+bRfR9pXSGArbg0z1vVM=;
-        b=En7TkN4+fAghgRbhwC+C81axZtXmIcjvdQXaWxdEAQ092IlXt0Ao93hzTqtbyZ/5HR
-         U8Z9WGjzVfS63WubTHjiYlA9bBCT/zVVLDff8JBrUZ0K0zPUAYWUByow94Zr+PMN9sCD
-         GyGysPpy42T+JkPaCwLtmqURlhnN9ytUErid/i7en7FoCziTVsmw+N/k82W/KVvg5YvZ
-         rrOiFOOrFUlaFIHeiUBcckd55dZxPtBPNYoYkSSbZOAKQIBTy+kivZAGO9WUK68Nkb2A
-         26DP1xo7yM92cDtBqNXSDjt+qo3437QmAxAB5ua8VLLNB63AnUdZXo/2DYMwOGPMZSpE
-         t3yg==
-X-Gm-Message-State: AKaTC03mA2G6guaP0vuVUnX82M+NflNenYH6WJuAlcCnXZAx+f76773NP8je/vLHKr9zf4KG4uI02qFgW3LHoA==
-X-Received: by 10.37.177.6 with SMTP id g6mr18325380ybj.132.1481155328937;
- Wed, 07 Dec 2016 16:02:08 -0800 (PST)
+        bh=gMGmvUnH0pik6+NEK7Bnm8e+oj4jdbFw7CaMWVMGkZM=;
+        b=Q1W91OClkFO1wD1IWTU9/UX9fxTgiiTL0hBwMw9b/4zYop3hll8uIzZk0LBGxnmMBS
+         VEPlLvoe1agbEBtdXD9tHMoc6PgWmKAh7/NcBAyng9ZklpQVbHNzfHaAnTPZQrUbGyN6
+         MULHmmGGvsESmsFUhjSchKhX8GFDclu/oY6+muG76V/iHBMZFpuWYSMs2/I+lalWLDnj
+         0c7MClZjzXUkcEqArar51VlRX6iTRrDIh9S0PGpjIKTUeAFdcYbDUjBmxsDnN8kXMIN2
+         /qevivRqwcc2+YPCDcuinIGku9q4tna2qTPSFKz3+TA5AshuzdhMNqBmDaxIA5w/koVm
+         iWIQ==
+X-Gm-Message-State: AKaTC00rrcIZbRIsZ4KqUodxJRSprkbHIRD7N6gxYBgVnzPjy0x/2SvMZ4vvG7IZEHe5Jka9oQNPrMZ8MephRbRZ
+X-Received: by 10.200.37.221 with SMTP id f29mr69062229qtf.123.1481155361486;
+ Wed, 07 Dec 2016 16:02:41 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.118.87 with HTTP; Wed, 7 Dec 2016 16:01:48 -0800 (PST)
-In-Reply-To: <20161207153627.1468-1-Karthik.188@gmail.com>
-References: <20161207153627.1468-1-Karthik.188@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 7 Dec 2016 16:01:48 -0800
-Message-ID: <CA+P7+xquordVY19dypqNcAuQqoRbFmHhzb0w+HXCaJmm_Ex7zQ@mail.gmail.com>
-Subject: Re: [PATCH v8 00/19] port branch.c to use ref-filter's printing options
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Received: by 10.12.147.188 with HTTP; Wed, 7 Dec 2016 16:02:41 -0800 (PST)
+In-Reply-To: <20161207224948.7957-1-vi0oss@gmail.com>
+References: <20161207224948.7957-1-vi0oss@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Dec 2016 16:02:41 -0800
+Message-ID: <CAGZ79kaSVcf1zk4P1hWsU=aJG7G99qohhavBftmPxnrkjW+nfQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] submodule--helper: set alternateLocation for cloned submodules
+To:     vi0oss <vi0oss@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Stefan Beller <stefanbeller@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 7, 2016 at 7:36 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> This is part of unification of the commands 'git tag -l, git branch -l
-> and git for-each-ref'. This ports over branch.c to use ref-filter's
-> printing options.
->
-> Initially posted here: $(gmane/279226). It was decided that this series
-> would follow up after refactoring ref-filter parsing mechanism, which
-> is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
->
-> v1 can be found here: $(gmane/288342)
-> v2 can be found here: $(gmane/288863)
-> v3 can be found here: $(gmane/290299)
-> v4 can be found here: $(gmane/291106)
-> v5b can be found here: $(gmane/292467)
-> v6 can be found here: http://marc.info/?l=git&m=146330914118766&w=2
-> v7 can be found here: http://marc.info/?l=git&m=147863593317362&w=2
->
-> Changes in this version:
->
-> 1. use an enum for holding the comparision type in
-> %(if:[equals/notequals=...]) options.
-> 2. rename the 'strip' option to 'lstrip' and introduce an 'rstrip'
-> option. Also modify them to take negative values. This drops the
-> ':dri' and ':base' options.
-> 3. Drop unecessary code.
-> 4. Cleanup code and fix spacing.
-> 5. Add more comments wherever required.
-> 6. Add quote_literal_for_format(const char *s) for safer string
-> insertions in branch.c:build_format().
->
-> Thanks to Jacob, Jackub, Junio and Matthieu for their inputs on the
-> previous version.
->
-> Interdiff below.
->
-> Karthik Nayak (19):
->   ref-filter: implement %(if), %(then), and %(else) atoms
->   ref-filter: include reference to 'used_atom' within 'atom_value'
->   ref-filter: implement %(if:equals=<string>) and
->     %(if:notequals=<string>)
->   ref-filter: modify "%(objectname:short)" to take length
->   ref-filter: move get_head_description() from branch.c
->   ref-filter: introduce format_ref_array_item()
->   ref-filter: make %(upstream:track) prints "[gone]" for invalid
->     upstreams
->   ref-filter: add support for %(upstream:track,nobracket)
->   ref-filter: make "%(symref)" atom work with the ':short' modifier
->   ref-filter: introduce refname_atom_parser_internal()
->   ref-filter: introduce refname_atom_parser()
->   ref-filter: make remote_ref_atom_parser() use
->     refname_atom_parser_internal()
->   ref-filter: rename the 'strip' option to 'lstrip'
->   ref-filter: modify the 'lstrip=<N>' option to work with negative '<N>'
->   ref-filter: add an 'rstrip=<N>' option to atoms which deal with
->     refnames
->   ref-filter: allow porcelain to translate messages in the output
->   branch, tag: use porcelain output
->   branch: use ref-filter printing APIs
->   branch: implement '--format' option
->
->  Documentation/git-branch.txt       |   7 +-
->  Documentation/git-for-each-ref.txt |  86 +++++--
->  builtin/branch.c                   | 290 +++++++---------------
->  builtin/tag.c                      |   6 +-
->  ref-filter.c                       | 488 +++++++++++++++++++++++++++++++------
->  ref-filter.h                       |   7 +
->  t/t3203-branch-output.sh           |  16 +-
->  t/t6040-tracking-info.sh           |   2 +-
->  t/t6300-for-each-ref.sh            |  88 ++++++-
->  t/t6302-for-each-ref-filter.sh     |  94 +++++++
->  10 files changed, 784 insertions(+), 300 deletions(-)
->
-> Interdiff:
->
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index f4ad297..c72baeb 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -92,13 +92,14 @@ refname::
->         The name of the ref (the part after $GIT_DIR/).
->         For a non-ambiguous short name of the ref append `:short`.
->         The option core.warnAmbiguousRefs is used to select the strict
-> -       abbreviation mode. If `strip=<N>` is appended, strips `<N>`
-> -       slash-separated path components from the front of the refname
-> -       (e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
-> -       `<N>` must be a positive integer.  If a displayed ref has fewer
-> -       components than `<N>`, the command aborts with an error. For the base
-> -       directory of the ref (i.e. foo in refs/foo/bar/boz) append
-> -       `:base`. For the entire directory path append `:dir`.
-> +       abbreviation mode. If `lstrip=<N>` or `rstrip=<N>` option can
+On Wed, Dec 7, 2016 at 2:49 PM,  <vi0oss@gmail.com> wrote:
+> Notes:
+>     Resolved issues pointed by Stefan Beller except of
+>     the one about loosened path check, which he aggreed
+>     to be relaxed for this case.
 
-Grammar here, drop the If before `lstrip since you're referring to
-multiples and you say "x can be appended to y" rather than "if x is
-added, do y"
+I am sorry to have given an incomplete review at the first time. :/
+More below.
 
-> +       be appended to strip `<N>` slash-separated path components
-> +       from or end of the refname respectively (e.g.,
-> +       `%(refname:lstrip=2)` turns `refs/tags/foo` into `foo` and
-> +       `%(refname:rstrip=2)` turns `refs/tags/foo` into `refs`).  if
-> +       `<N>` is a negative number, then only `<N>` path components
-> +       are left behind.  If a displayed ref has fewer components than
-> +       `<N>`, the command aborts with an error.
+> +       /* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
+> +       git_config_get_string("submodule.alternateLocation", &sm_alternate);
+> +       if (sm_alternate) {
+> +               git_config_set_in_file(p, "submodule.alternateLocation",
+> +                                          sm_alternate);
+> +       }
+
+For a single command, we usually omit the braces for
+an if clause, i.e.
+
+    if (foo)
+        bar(...);
+
+    /* code goes on */
+
+
+> +       git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
+> +       if (error_strategy) {
+> +               git_config_set_in_file(p, "submodule.alternateErrorStrategy",
+> +                                          error_strategy);
+> +       }
+> +
+> +               free(sm_alternate);
+> +               free(error_strategy);
+> +
+
+The indentation seems a bit off for the free here?
+(The main nit that motivated me writing the email)
+
+
+>         strbuf_release(&sb);
+>         strbuf_release(&rel_path);
+>         free(sm_gitdir);
+> diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+> index 1c1e289..ef7771b 100755
+> --- a/t/t7408-submodule-reference.sh
+> +++ b/t/t7408-submodule-reference.sh
+> @@ -125,4 +125,76 @@ test_expect_success 'ignoring missing submodule alternates passes clone and subm
+>         )
+>  '
 >
+> +test_expect_success 'preparing second superproject with a nested submodule' '
+> +       test_create_repo supersuper &&
+> +       (
+> +               cd supersuper &&
+> +               echo "I am super super." >file &&
+> +               git add file &&
+> +               git commit -m B-super-super-initial
+> +               git submodule add "file://$base_dir/super" subwithsub &&
+> +               git commit -m B-super-super-added &&
+> +               git submodule update --init --recursive &&
+> +               git repack -ad
+> +       )
+> +'
+> +
+> +# At this point there are three root-level positories: A, B, super and super2
+> +
+> +test_expect_success 'nested submodule alternate in works and is actually used' '
+> +       test_when_finished "rm -rf supersuper-clone" &&
+> +       git clone --recursive --reference supersuper supersuper supersuper-clone &&
+> +       (
+> +               cd supersuper-clone &&
+> +               # test superproject has alternates setup correctly
+> +               test_alternate_is_used .git/objects/info/alternates . &&
+> +               # immediate submodule has alternate:
+> +               test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub
+> +               # nested submodule also has alternate:
+> +               test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
+> +       )
+> +'
+> +
+> +test_expect_success 'missing nested submodule alternate fails clone and submodule update' '
+> +       test_when_finished "rm -rf supersuper-clone supersuper2" &&
+> +       git clone supersuper supersuper2 &&
+> +       (
+> +               cd supersuper2 &&
+> +               git submodule update --init
+> +       ) &&
+> +       test_must_fail git clone --recursive --reference supersuper2 supersuper2 supersuper-clone &&
+> +       (
+> +               cd supersuper-clone &&
+> +               # test superproject has alternates setup correctly
+> +               test_alternate_is_used .git/objects/info/alternates . &&
+> +               # update of the submodule fails
+> +               test_must_fail git submodule update --init --recursive &&
+> +               # immediate submodule has alternate:
+> +               test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub
+> +               # but nested submodule has no alternate:
+> +               test_must_fail test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
+> +       )
+> +'
+> +
+> +test_expect_success 'missing nested submodule alternate in --reference-if-able mode' '
+> +       test_when_finished "rm -rf supersuper-clone supersuper2" &&
+> +       git clone supersuper supersuper2 &&
+> +       (
+> +               cd supersuper2 &&
+> +               git submodule update --init
+> +       ) &&
+> +       git clone --recursive --reference-if-able supersuper2 supersuper2 supersuper-clone &&
+> +       (
+> +               cd supersuper-clone &&
+> +               # test superproject has alternates setup correctly
+> +               test_alternate_is_used .git/objects/info/alternates . &&
+> +               # update of the submodule fails
+> +               test_must_fail git submodule update --init --recursive &&
+> +               # immediate submodule has alternate:
+> +               test_alternate_is_used .git/modules/subwithsub/objects/info/alternates subwithsub
+> +               # but nested submodule has no alternate:
+> +               test_must_fail test_alternate_is_used .git/modules/subwithsub/modules/sub/objects/info/alternates subwithsub/sub
+> +       )
 
-Would it make more sense to not die and instead just return the empty
-string? On the one hand, if we die() it's obvious that you tried to
-strip too many components. But on the other hand, it's also somewhat
-annoying to have the whole command fail because we happen upon a
-single ref that has fewer components?
+Both the first and the last part are the same in the last two tests,
+the only difference is the line with git clone --reference ...
+Maybe we can use a function somehow to make this a bit more
+obvious?
 
-So, for positive numbers, we simply strip what we can, which may
-result in the empty string, and for negative numbers, we keep up to
-what we said, while potentially keeping the entire string. I feel
-that's a better alternative than a die() in the middle of a ref
-filter..
-
-What are other people's thoughts on this?
+Otherwise the tests look good to me.
 
 Thanks,
-Jake
+Stefan
