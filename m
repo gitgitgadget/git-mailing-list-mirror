@@ -2,86 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDA2620259
-	for <e@80x24.org>; Thu,  8 Dec 2016 16:54:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40D601FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 17:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752642AbcLHQyc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 11:54:32 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61163 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752618AbcLHQyb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 11:54:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D38E547CF;
-        Thu,  8 Dec 2016 11:54:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p8kaZL8vpAKW5P//HUFrZ+lsGU8=; b=lA45va
-        PFwbtvF3CQ2+/8g96hlMy9Ex7a/FBHNyF9wOeUY+bxUHhFgn8NI7Nw+utQLkd9Hc
-        dR97mtxXU5ASbwWiUBO4lU46xgIGdh9u66ilEQ4FSCmATFp65dIv1hbeMzI6hoEE
-        D2tMNyWQmqAuua2n9DFrE0MywbnEpkn7U28Lc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JrjIhs2uYgRfdHmELQVVfG3Fy035zzpO
-        Snf4Q7QRhBcgcX6uNrZfCCWn7BP6QxEJWaSxxlIhCFF7Y9EM2dnCQmNzrNjVQ23j
-        rx8c/DTQCjiA+nDnlgrwhSKdoyC+hFM9kJk25I6/QUzMl3v/DntWOX4zvvxGSwJv
-        P68B8Tkaz8o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9592A547CE;
-        Thu,  8 Dec 2016 11:54:30 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 118A6547CD;
-        Thu,  8 Dec 2016 11:54:30 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        sbeller@google.com, peff@peff.net, jacob.keller@gmail.com
-Subject: Re: [PATCH] real_path: make real_path thread-safe
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
-        <1480964316-99305-2-git-send-email-bmwill@google.com>
-        <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
-        <20161207001018.GD103573@google.com>
-        <7d968fd8-a92d-efd3-ce67-7de6049b6d56@kdbg.org>
-        <20161207222927.GB116201@google.com>
-        <1767f01a-4125-d99b-37db-3f4a56aaa28a@kdbg.org>
-Date:   Thu, 08 Dec 2016 08:54:29 -0800
-In-Reply-To: <1767f01a-4125-d99b-37db-3f4a56aaa28a@kdbg.org> (Johannes Sixt's
-        message of "Thu, 8 Dec 2016 12:32:46 +0100")
-Message-ID: <xmqqwpfatl8a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752343AbcLHR1M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 12:27:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53722 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751829AbcLHR1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 12:27:11 -0500
+Received: (qmail 20660 invoked by uid 109); 8 Dec 2016 17:26:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Dec 2016 17:26:26 +0000
+Received: (qmail 11203 invoked by uid 111); 8 Dec 2016 17:27:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Dec 2016 12:27:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Dec 2016 12:26:26 -0500
+Date:   Thu, 8 Dec 2016 12:26:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 0/7] Pie-in-the-sky attempt to fix the early config
+Message-ID: <20161208172626.3ee2nmgsxsh2vovf@sigill.intra.peff.net>
+References: <cover.1481211338.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FC7A28FE-BD66-11E6-B38A-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1481211338.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Thu, Dec 08, 2016 at 04:35:56PM +0100, Johannes Schindelin wrote:
 
-> Am 07.12.2016 um 23:29 schrieb Brandon Williams:
->> Instead of assuming root is "/"
->> I'll need to extract what root is from an absolute path.  Aside from
->> what root looks like, do most other path constructs behave similarly in
->> unix and windows? (like ".." and "." as examples)
->
-> Yes, .. and . work the same way, except that they cannot appear in the
-> \\server\share part. I also think that .. does not cancel these parts.
->
-> As long as you use is_absolute_path() and do not simplify path
-> components before offset_1st_component(), you should be on the safe
-> side.
->
->> Since I don't really have a windows machine to test things it might be
->> slightly difficult to get everything correct quickly but hopefully we can
->> get this working :)
->
-> I'll lend a hand, of course, as time permits.
+> The idea here is to discover the .git/ directory gently (i.e. without
+> changing the current working directory), and to use it to read the
+> .git/config file early, before we actually called setup_git_directory()
+> (if we ever do that).
 
-Thanks, as always, for working well together ;-).
+Great. Thanks for taking a stab at this.
+
+> Notes:
+> 
+> - I find the diff pretty ugly: I wish there was a more elegant way to
+>   *disable* discovery of .git/ *just* for `init` and `clone`. I
+>   considered a function `about_to_create_git_dir()` that is called in a
+>   hard-coded manner *only* for `init` and `clone`, but that would
+>   introduce another magic side effect, when all I want is to reduce those.
+
+It looks like a lot of that ugliness comes from passing around the "are
+we OK to peek at git-dir config" flag through the various pager-related
+calls.  I don't think it would be bad to use a global for "we do not
+want a repo".  After all, it's just modifying the _existing_ global for
+"are we in a repo". And I do not see that global going away anytime
+soon. Sometimes it's good to make incremental steps towards an end goal,
+but in this case it seems like we just pay the cost of the step without
+any real plan for reaping the benefit in the long term.
+
+As an alternative, I also think it would be OK to just always have the
+pager config read from local repo, even for init/clone. In other words,
+to loosen the idea that git-init can _never_ look in the current
+git-dir, and declare that there is a stage before the command is
+initiated, and during which git may read local-repo config. Aliases
+would fall into this, too, so:
+
+  git config --local alias.foo init
+  git foo /some/other/dir
+
+would work (as it must, because we cannot know that "foo" is "init"
+until we read the config!).
+
+I have a feeling you may declare that too magical, but I think it's
+consistent and practical.
+
+> - For the moment, I do not handle dashed invocations of `init` and
+>   `clone` correctly. The real problem is the continued existence of
+>   the dashed git-init and git-clone, of course.
+
+I assume you mean setting the CREATES_GIT_DIR flag here? I think it
+would apply to the dashed invocations, too. They strip off the "git-"
+and end up in handle_builtin() just like "git clone" does. I didn't test
+it, though.
+
+> - There is still duplicated code. For the sake of this RFC, I did not
+>   address that yet.
+
+Yeah, I did not read your discover function very carefully. Because I
+think the one thing we really don't want to do here is introduce a
+separate lookup process that is not shared by setup_git_directory(). The
+only sane path, I think, is to refactor setup_git_directory() to build
+on top of discover_git_directory(), which implies that the latter
+handles all of the cases.
+
+> - The read_early_config() function is called multiple times, re-reading
+>   all the config files and re-discovering the .git/ directory multiple
+>   times, which is quite wasteful. For the sake of this RFC, I did not
+>   address that yet.
+
+We already have a config-caching system. If we went with a global
+"config_discover_refs", then I think the sequence for something like
+git-init would become:
+
+  1. When git.c starts, config_discover_refs is set to "true". Pager and
+     alias lookup may look in .git/config if it's available, even if
+     they go through the configset cache.
+
+  2. As soon as git-init starts, it disables config_discover_refs, and
+     it flushes the config cache. Any configset lookups will now examine
+     the reduced config.
+
+  3. When git-init has set up the real repo it is operating on, it can
+     reenable config_discover_refs (though it may not even need to; that
+     flag probably wouldn't have any effect once we've entered the
+     repository and have_git_dir() returns true).
+
+> - t7006 fails and the error message is a bit cryptic (not to mention the
+>   involved function trace, which is mind-boggling for what is supposed
+>   to be a simply, shell script-based test suite). I did not have time to
+>   look into that yet.
+
+Running t7006 I see a lot of old failures turned into successes, which
+is good (because running from a subdirectory now actually respects local
+pager config). The one failure looks like it is testing the wrong thing.
+
+It is checking that we _don't_ respect a local core.pager in some cases,
+as a proxy for whether or not we are breaking things by doing setup too
+early. But the whole point of your series is to fix that, and respect
+the config without causing the setup breakage. After your patches, the
+proxy behavior and the failure case are disconnected. The test should be
+flipped, and ideally another one added that confirms we didn't actually
+run setup_git_directory(), but I'm not sure how to test that directly.
+
+> - after discover_git_directory_gently() did its work, the code happily
+>   uses its result *only* for the current read_early_config() run, and
+>   lets setup_git_dir_gently() do the whole work *again*. For the sake of
+>   this RFC, I did not address that yet.
+
+If caching happens at the config layer, then we'd probably only call
+this once anyway (or if we did call it again after a config flush, it
+would be a good sign that we should compute its value again).
+
+-Peff
