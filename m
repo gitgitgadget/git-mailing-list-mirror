@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C700E1FF7F
-	for <e@80x24.org>; Thu,  8 Dec 2016 01:47:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 091E41FF7F
+	for <e@80x24.org>; Thu,  8 Dec 2016 01:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933979AbcLHBq5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 20:46:57 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34635 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933901AbcLHBqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 20:46:44 -0500
-Received: by mail-pf0-f181.google.com with SMTP id c4so80393993pfb.1
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:46:44 -0800 (PST)
+        id S933958AbcLHBqz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 20:46:55 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35364 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752807AbcLHBqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 20:46:48 -0500
+Received: by mail-pf0-f182.google.com with SMTP id i88so79990561pfk.2
+        for <git@vger.kernel.org>; Wed, 07 Dec 2016 17:46:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=us/MUGo5+mJ59HhsF4kge51woa99s/NdVxcbzPkRKFA=;
-        b=XUII6zxm6t6Jd5qB8lNPNizGPsPQQptU44IB+m5kaLyc6p+2shYUMZ+WfSlb1A7Vmb
-         kEgn8UD7VptSngdK8O6wOwYFumVSCEyN+LUOTWIkoKqbvTzI+XY6qnK2t72CNrxrVoTY
-         rOwETl4jA+Ln9rgKoMnp10tyPgHEUB3JqvdPiZGJO6LEwdxrwRjEOpSv7tNEhSuDuSw/
-         wY9UlISzXVOfJTSfGFdYYE4yCw4dXiTFChA90Ncd4Jg2Ax5AQLRk3hLbW42vMG+MeaLv
-         rwNzGStzqd2TF+xfFKXCDNfhjsW2pOjTQ2dOoamtUDeDp+Y5q8h2TBhluTBHkAUNQdv5
-         eIkA==
+        bh=FYi8VyTAK8Ei5Q16Vf/hLHeT8Mr/aH05cnddbXDNYJk=;
+        b=KXTLpK9+JSL7bWZX5nAeVTevPGG4MTG39DJCwKCEh+u9PICT54rZInD7o9xgR/FisN
+         kbWBFeuzGh87F11qfv9A3NewXq4wSQaREzgTayOu+04/6mQ7U0IRiMUKFf0/4MnbuZsZ
+         7JZ8a/KhWA5rPBp+YNGHi5MPELs57xDJeeLE6YBFdJx0XFlXhxnCywN+cqR6MVGzORwj
+         PFldniMmUkg+BQC6T6Dhq4d2fcDFoKS7jaluHD5mTv0E9/GFLcpbEzxBZuwY3EwE8etL
+         0tl+FS7AcUubRC2Kq+UxtseWYa7DCb6pZ8RKdpU7PNXOGctmIInM7UNGOQ70SWyhSen0
+         dFzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=us/MUGo5+mJ59HhsF4kge51woa99s/NdVxcbzPkRKFA=;
-        b=Nh8TeFPKVDY+NUB8/OQ1LCKf+gfumX1LIuEEKBKPeI7/K2q4vEJUeo2J2FZkKPvAPF
-         rPwJ+qKjIwJScIall2FgEoKX75Ts9l3wvOFk5ogOau2wWAh64SmYrnzgs9Op96ihXMWc
-         Lsmr3XHo1cBCBdkUw1m4CO14CVJKAWoNYHrdvJb50g7MF1JNdgiuXAnF6hX6MLCUk//0
-         /VTLOPelEB6Zii9h/XZB7CzT1NbqXc0rheiygIb6IgTbLAOfM7jo1ahZpoHqiPLSObNv
-         EGMOkPPjZEyuEohd0/Rfl5pgNcC/fbmfpacvjIYE27vKPCWlzf2+EWpgv4KanXPms6KL
-         M1QQ==
-X-Gm-Message-State: AKaTC00Ty9P8IKXYRi7b0MS1IwlcrG2rvOGrgbu0YgQlasMWI5cajYW1ALPHAasJC0YC3DYf
-X-Received: by 10.99.138.75 with SMTP id y72mr126184448pgd.90.1481161603977;
-        Wed, 07 Dec 2016 17:46:43 -0800 (PST)
+        bh=FYi8VyTAK8Ei5Q16Vf/hLHeT8Mr/aH05cnddbXDNYJk=;
+        b=Lb/LsqaotUVcQTJf3SSYhVWGVZG6jWmHprly/HsZPKMbokPDsi9OR1z0E8xqT/MCNj
+         kUL5eE99gqQbwBmWGvibutsSEMoj9e4mpFJ23D8H1zVZjVdq87DaW8Qv4wnFRClIoCQf
+         6X4uClT9btT0wyjbaSdgcUVSDVADIy8Swnj3Dn/uM0TFaSTZ5KlxrUVwWF6RC3w+koa7
+         t+VOkDf/hr+J01mndOu9gP5E+aT98tRaE9vZE8dSKIKTNnN0eqTMr6ENFuFKTMZIpGEo
+         vg38nTMJH42xDDjvk5EuWTyXFsNGBFIsvN8lRO5ZejshNo5EuYaW+D4LZtb/0/yfuRkI
+         tJFQ==
+X-Gm-Message-State: AKaTC00XyG7UDDVRZ+HV+dMiDvDohI1RNnRGAjxjyf/AKFlCj/yBNvbUgJvTV4df7G2Ez+0D
+X-Received: by 10.84.217.149 with SMTP id p21mr125213888pli.121.1481161607713;
+        Wed, 07 Dec 2016 17:46:47 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:2441:4f9a:ad0f:a8d7])
-        by smtp.gmail.com with ESMTPSA id n24sm45439993pfb.0.2016.12.07.17.46.43
+        by smtp.gmail.com with ESMTPSA id 131sm45222726pfx.92.2016.12.07.17.46.47
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 17:46:43 -0800 (PST)
+        Wed, 07 Dec 2016 17:46:47 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv6 3/7] test-lib-functions.sh: teach test_commit -C <dir>
-Date:   Wed,  7 Dec 2016 17:46:19 -0800
-Message-Id: <20161208014623.7588-4-sbeller@google.com>
+Subject: [PATCHv6 6/7] move connect_work_tree_and_git_dir to dir.h
+Date:   Wed,  7 Dec 2016 17:46:22 -0800
+Message-Id: <20161208014623.7588-7-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.30.gc512cbd.dirty
 In-Reply-To: <20161208014623.7588-1-sbeller@google.com>
 References: <20161208014623.7588-1-sbeller@google.com>
@@ -60,75 +60,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Specifically when setting up submodule tests, it comes in handy if
-we can create commits in repositories that are not at the root of
-the tested trash dir. Add "-C <dir>" similar to gits -C parameter
-that will perform the operation in the given directory.
+That function was primarily used by submodule code, but the function
+itself is not inherently about submodules. In the next patch we'll
+introduce relocate_git_dir, which can be used by worktrees as well,
+so find a neutral middle ground in dir.h.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/test-lib-functions.sh | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ dir.c       | 26 ++++++++++++++++++++++++++
+ dir.h       |  1 +
+ submodule.c | 26 --------------------------
+ submodule.h |  1 -
+ 4 files changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index fdaeb3a96b..579e812506 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -157,16 +157,21 @@ debug () {
- 	 GIT_TEST_GDB=1 "$@"
+diff --git a/dir.c b/dir.c
+index bfa8c8a9a5..8b74997c66 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2748,3 +2748,29 @@ void untracked_cache_add_to_index(struct index_state *istate,
+ {
+ 	untracked_cache_invalidate_path(istate, path);
+ }
++
++/* Update gitfile and core.worktree setting to connect work tree and git dir */
++void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
++{
++	struct strbuf file_name = STRBUF_INIT;
++	struct strbuf rel_path = STRBUF_INIT;
++	char *real_git_dir = xstrdup(real_path(git_dir));
++	char *real_work_tree = xstrdup(real_path(work_tree));
++
++	/* Update gitfile */
++	strbuf_addf(&file_name, "%s/.git", work_tree);
++	write_file(file_name.buf, "gitdir: %s",
++		   relative_path(real_git_dir, real_work_tree, &rel_path));
++
++	/* Update core.worktree setting */
++	strbuf_reset(&file_name);
++	strbuf_addf(&file_name, "%s/config", real_git_dir);
++	git_config_set_in_file(file_name.buf, "core.worktree",
++			       relative_path(real_work_tree, real_git_dir,
++					     &rel_path));
++
++	strbuf_release(&file_name);
++	strbuf_release(&rel_path);
++	free(real_work_tree);
++	free(real_git_dir);
++}
+diff --git a/dir.h b/dir.h
+index 97c83bb383..051674a431 100644
+--- a/dir.h
++++ b/dir.h
+@@ -335,4 +335,5 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+ void add_untracked_cache(struct index_state *istate);
+ void remove_untracked_cache(struct index_state *istate);
++extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ #endif
+diff --git a/submodule.c b/submodule.c
+index 66c5ce5a24..0bb50b4b62 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1222,32 +1222,6 @@ int merge_submodule(unsigned char result[20], const char *path,
+ 	return 0;
  }
  
--# Call test_commit with the arguments "<message> [<file> [<contents> [<tag>]]]"
-+# Call test_commit with the arguments
-+# [-C <directory>] <message> [<file> [<contents> [<tag>]]]"
- #
- # This will commit a file with the given contents and the given commit
- # message, and tag the resulting commit with the given tag name.
- #
- # <file>, <contents>, and <tag> all default to <message>.
-+#
-+# If the first argument is "-C", the second argument is used as a path for
-+# the git invocations.
+-/* Update gitfile and core.worktree setting to connect work tree and git dir */
+-void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+-{
+-	struct strbuf file_name = STRBUF_INIT;
+-	struct strbuf rel_path = STRBUF_INIT;
+-	char *real_git_dir = xstrdup(real_path(git_dir));
+-	char *real_work_tree = xstrdup(real_path(work_tree));
+-
+-	/* Update gitfile */
+-	strbuf_addf(&file_name, "%s/.git", work_tree);
+-	write_file(file_name.buf, "gitdir: %s",
+-		   relative_path(real_git_dir, real_work_tree, &rel_path));
+-
+-	/* Update core.worktree setting */
+-	strbuf_reset(&file_name);
+-	strbuf_addf(&file_name, "%s/config", real_git_dir);
+-	git_config_set_in_file(file_name.buf, "core.worktree",
+-			       relative_path(real_work_tree, real_git_dir,
+-					     &rel_path));
+-
+-	strbuf_release(&file_name);
+-	strbuf_release(&rel_path);
+-	free(real_work_tree);
+-	free(real_git_dir);
+-}
+-
+ int parallel_submodules(void)
+ {
+ 	return parallel_jobs;
+diff --git a/submodule.h b/submodule.h
+index d9e197a948..4e3bf469b4 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -65,7 +65,6 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
+ int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
+ 		struct string_list *needs_pushing);
+ int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
+-void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ int parallel_submodules(void);
  
- test_commit () {
- 	notick= &&
- 	signoff= &&
-+	indir= &&
- 	while test $# != 0
- 	do
- 		case "$1" in
-@@ -176,21 +181,26 @@ test_commit () {
- 		--signoff)
- 			signoff="$1"
- 			;;
-+		-C)
-+			indir="$2"
-+			shift
-+			;;
- 		*)
- 			break
- 			;;
- 		esac
- 		shift
- 	done &&
-+	indir=${indir:+"$indir"/} &&
- 	file=${2:-"$1.t"} &&
--	echo "${3-$1}" > "$file" &&
--	git add "$file" &&
-+	echo "${3-$1}" > "$indir$file" &&
-+	git ${indir:+ -C "$indir"} add "$file" &&
- 	if test -z "$notick"
- 	then
- 		test_tick
- 	fi &&
--	git commit $signoff -m "$1" &&
--	git tag "${4:-$1}"
-+	git ${indir:+ -C "$indir"} commit $signoff -m "$1" &&
-+	git ${indir:+ -C "$indir"} tag "${4:-$1}"
- }
- 
- # Call test_merge with the arguments "<message> <commit>", where <commit>
+ /*
 -- 
 2.11.0.rc2.30.gc512cbd.dirty
 
