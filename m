@@ -2,90 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB2F1FF7F
-	for <e@80x24.org>; Thu,  8 Dec 2016 00:04:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAD91FF7F
+	for <e@80x24.org>; Thu,  8 Dec 2016 00:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933659AbcLHAEB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Dec 2016 19:04:01 -0500
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33131 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932400AbcLHAEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2016 19:04:00 -0500
-Received: by mail-pg0-f46.google.com with SMTP id 3so167269621pgd.0
-        for <git@vger.kernel.org>; Wed, 07 Dec 2016 16:04:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6Z7zom2U3vXmhMiRiSPSLPFicqtRrwXA399mGC2hq28=;
-        b=IXP00r0HU1SiWCZXLVNKDqGLlJ+T83hQgH2hs1f/3tl1dW/P5uJaMlFFxIVRKNqN48
-         afc6c3wwhFSskx2F5YW7Rboys8FLMo64tPb8CHrT/mKGSEvdXVKCunSFgdHJFpb2kyVB
-         UBIhTgVL3NG8GbLIh+1h60qveOfnkfwyGss468C6vnQiemzIqRNxoPCwVdLptP8aK+C9
-         WnuaRYMkrLz2JPDi4JUJ/OptyrxVmdmdqXox5TmQKWOKhXfX+F1yQ8wq3JKO3ezp4KDP
-         RNdEhN6SwVnkvLopu+e+i4kVURu94pqQwR4H1CMzDRQy04b+dPzPkYsjL8nABp4nAbUN
-         Ft/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6Z7zom2U3vXmhMiRiSPSLPFicqtRrwXA399mGC2hq28=;
-        b=eviJjecKYhSS4vaGGJ6wbwKWwluHCmFAQrwgihUXYvcWdLD6ghSUI3JtFGuFyoAkz2
-         87xuRYDFXtq2TlV3tEByjmOR02GIiOnCCmNxCoZ2BOcCKho5IWmILgCU/R1T7HI8KnrQ
-         Sul5I4FaUShfY5lcfzuS0n64u9E/lFW39lZUEJhN9/FbNH9FUdDrqBVy4iSOrbpzXzHI
-         lJSnToBQSPgGxk1VO+87nYfDG3BCUdllPyyXBDT48QRaZPq1G36yW4pZCSNUGEPAzg8+
-         smqOXUhoI53/QbTN9cliS4Oa8sE+hdXVnX9kh9ZQjx5mGT4hGEU60ZyxTrKVXIoaAn1j
-         EJug==
-X-Gm-Message-State: AKaTC03pmvOZ367QxBU4enYtvqtxDUry9jdmfVcfKxz2lalLJjNFei/SC2ZrahMIN+vJ4t9q
-X-Received: by 10.84.211.144 with SMTP id c16mr152827997pli.37.1481155439760;
-        Wed, 07 Dec 2016 16:03:59 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:ccae:4719:31da:e07d])
-        by smtp.gmail.com with ESMTPSA id 72sm45094904pfw.37.2016.12.07.16.03.58
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Dec 2016 16:03:58 -0800 (PST)
-Date:   Wed, 7 Dec 2016 16:03:57 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/17] dir: convert create_simplify to use the pathspec
- struct interface
-Message-ID: <20161208000357.GJ116201@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481061106-117775-3-git-send-email-bmwill@google.com>
- <CACsJy8AX09pxkyUkLU905v1MpXocLzV5bK0APuNmMUNb50Lavg@mail.gmail.com>
+        id S1753180AbcLHAUg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Dec 2016 19:20:36 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50647 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753012AbcLHAUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2016 19:20:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B2B457722;
+        Wed,  7 Dec 2016 19:20:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=81ZzsrlVysd3wVylIPjKOl4sp+c=; b=tOhMgS
+        KzQf9uYlGPSUlqBMhYAHbO001noLJgLOWSiLD+G8rFIm5wqVfQlF7RWRXZCBkfTM
+        4UN8/U30LNiaJyIZJzCQfZ8PinJvDQqKFSVsJDP30o7eVfRAy91BSHrj9t+lhvBO
+        mzW15YrKInSdqVUpmbm4hyxVGwgifkDAmDUdc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=clJIXo1V9mX6ffWgGTlsT9RpjtGjL8+j
+        RmrYyprnwfRBX9gDCKG+mxw4kjhxMzVYMu9z+BXkCxPPccyIci9Whvy1cHV3u/oD
+        ouz480skARZ9l5Z4mFwByTTtSJ0bSrY6yv5aeWOHjXN8ObvV+cezNoY+SBzG0fns
+        h66VlQVaqBU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01A6D57721;
+        Wed,  7 Dec 2016 19:20:34 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D2AF57720;
+        Wed,  7 Dec 2016 19:20:33 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] describe: add support for multiple match patterns
+References: <20161207023259.29355-1-jacob.e.keller@intel.com>
+        <20161207023259.29355-2-jacob.e.keller@intel.com>
+        <xmqqa8c7wfxu.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xrPivwMzGhzKxu30jns+YvSQGXBKUc4JDmfbenTy27tZg@mail.gmail.com>
+Date:   Wed, 07 Dec 2016 16:20:32 -0800
+In-Reply-To: <CA+P7+xrPivwMzGhzKxu30jns+YvSQGXBKUc4JDmfbenTy27tZg@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 7 Dec 2016 15:49:22 -0800")
+Message-ID: <xmqq60mvuv8v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AX09pxkyUkLU905v1MpXocLzV5bK0APuNmMUNb50Lavg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 223CC32A-BCDC-11E6-87EF-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07, Duy Nguyen wrote:
-> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
-> > Convert 'create_simplify()' to use the pathspec struct interface from
-> > using the '_raw' entry in the pathspec.
-> 
-> It would be even better to kill this create_simplify() and let
-> simplify_away() handle struct pathspec directly.
-> 
-> There is a bug in this code, that might have been found if we
-> simpify_away() handled pathspec directly: the memcmp() in
-> simplify_away() will not play well with :(icase) magic. My bad. If
-> :(icase) is used, the easiest/safe way is simplify nothing. Later on
-> maybe we can teach simplify_away() to do strncasecmp instead. We could
-> ignore exclude patterns there too (although not excluding is not a
-> bug).
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-So are you implying that the simplify struct needs to be killed?  That
-way the pathspec struct itself is being passed around instead?
+> Basically, this started as a script to try each pattern in sequence,
+> but this is slow, cumbersome and easy to mess up.
+>
+> You're suggesting just add a single second pattern that we will do
+> matches and discard any tag that matches that first?
 
--- 
-Brandon Williams
+I am not suggesting anything. I was just trying to see how well what
+was designed and implemented supports the use case that motivated
+the feature. Think of it as a sanity check and review of the design.
+
+> I think I can implement that pretty easily, and it should have simpler
+> semantics. We can discard first, and then match what remains easily.
+
+I actually think "multiple" and "negative" are orthogonal and both
+are good things.  If we are enhancing the filtering by refname
+patterns to allow multiple patterns (i.e. your patch), that is good,
+and it would be ideal if we can also have support for negative ones.
