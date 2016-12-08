@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A11D21FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 19:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECFFD1FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 19:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932396AbcLHS7r (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 13:59:47 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:32963 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932340AbcLHS7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 13:59:43 -0500
-Received: by mail-pg0-f50.google.com with SMTP id 3so176787956pgd.0
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 10:59:42 -0800 (PST)
+        id S932643AbcLHTB5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 14:01:57 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:32976 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932340AbcLHS7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 13:59:48 -0500
+Received: by mail-pg0-f54.google.com with SMTP id 3so176788627pgd.0
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 10:59:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fRUp/tDa0jR+bk6RlUlEKYdMfk0sZ+D0t1h8Jsh+wNA=;
-        b=OdI13zTskEMez5vDB5BHUkpxhubDV4Qh1zbJDZ2jFr02vjuhOtzGt82tv7L+4RzH18
-         OnSUCTnAi6EUI3Mtg6J4PJAoGG4yjECP+ftbCMCazalITtFgwIyWHM+WvwRtIT6cweS7
-         ca/uf+XGjxz8z8u2d9RkHnyw83cSH86CGM6MS/kKs0ObSW0zz18jRntjovWJLxabV7h5
-         ZWMh6TpI00pTYhim4U0Dpvg4+hfmzKRdSIPYV7Zkg4aIYbTurnhia+gl0uyP+9xSU2YB
-         I3M6bicDUe8Bw5h90Bvy/PVHmToy4jCHgjYZpEj1f2jHk78Ge4Zym3SO4d59AvkXleUQ
-         7a9g==
+        bh=feajjchO1vfEbxVPVO75ouG2MfKojb3xI4uZBCRCPgc=;
+        b=ij5akh+C34Po6d0iBiRlFSfdpbARUlRLjt5S3hKItp+IVzUSSVg5C7J3gHG/aGVskB
+         /IB+1Ybkzkgo87uNW1O6+UpG/k389s4lFM5px4aBHrz9W4Ulm1qR7z2AyvPFIZudTy2f
+         8RV14hxQ5IuwDI7ZAJgOoohxYLVcOuzIUCuq76Cekiq4Bze/CiGu7Zx8fT9NLua1CltD
+         9kE2WZpWZswrE0AhxQtfzdV7MpOCbCfwJy6bxnmGU7uPaUcB5GIhZGm8s0ion2oYzTV8
+         HXjoCgFkMqON34TMav1b1jZ0QdkyJ6ZRKSKEn4ceR0r0UOTwgS0Y24HPICAWVof7lZFR
+         iYHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fRUp/tDa0jR+bk6RlUlEKYdMfk0sZ+D0t1h8Jsh+wNA=;
-        b=IWykw9+GoiDrHT49l3ixga5rDpd0Or0YeTfuVRLxWu2QDQfLNrmDy2j5j0otf2jIbi
-         GZ6wFS8G8XRVjU9HczFaqkIrg+FSgy252C3gjHQbSnelFqilwIfkR1AlziXYf9n1OUzv
-         KdVeUG0LPBOUMAOQ29FEMlWs+7WnOvauFQzI2hFa2Xofcj4rzM1kA0ruHQjxXL3fqXdT
-         38HqASk2jPteTyMaddJ7RPlfzVaRt3wgicoXIhNeVmiT5TX7Ihp5XQNc3Y9GWG1H+7Nh
-         nuxg2e4Bbc5Qx16xzvPD72u6tK11Zeh6Yix4hF66VbYHvkMJF7FDv1QORit9lIBQVf6N
-         TeAw==
-X-Gm-Message-State: AKaTC02YBGzsSYcWbt14tOz3dCoEJFxIdI9DcPFMgKy8tIJ5RQixFs6SHJfPCKILkiDSC2i8
-X-Received: by 10.99.228.5 with SMTP id a5mr135689434pgi.1.1481223582369;
-        Thu, 08 Dec 2016 10:59:42 -0800 (PST)
+        bh=feajjchO1vfEbxVPVO75ouG2MfKojb3xI4uZBCRCPgc=;
+        b=U9lKy5sncc2LSTFhrK2JoqZaSF49H1GTAlI5sVK5TtuLuctP8j8OvKgarHD20GbkIl
+         IjDdh5T3Jxv/5vR+yoa6pg/qsGhMOkyCZM0T33OChPLy4L193zdvfoaEfPoL+USnQjzW
+         j1AOalbNwEKwOIkHO8ITsMmhtUlZZiOoDnIIwOYiJnbvF/UFVeRWpHbJ0IgYyujBRw1b
+         a113u7EBBMKiDtUzv0A6lZGhdmZZKV8/DYAO70tgrD3HY8qV4mncM9eWoJ3rUa5Kydyp
+         ecbMK40QfUWNBiy3gZRzo3vAD8bW1LszT8PI5CQjQzZWL/axoqAlyym0hL/9jeX/KVpm
+         3Ubg==
+X-Gm-Message-State: AKaTC01j/7W9V/DL5ia2xai8J0PoTYJpFSQJfLJdkKXw/DutS4DcwOnKbvbqZeSAITL8bv4S
+X-Received: by 10.99.3.202 with SMTP id 193mr133436276pgd.157.1481223585711;
+        Thu, 08 Dec 2016 10:59:45 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id p64sm51815634pfi.88.2016.12.08.10.59.41
+        by smtp.gmail.com with ESMTPSA id p64sm51815634pfi.88.2016.12.08.10.59.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Dec 2016 10:59:41 -0800 (PST)
+        Thu, 08 Dec 2016 10:59:44 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         pclouds@gmail.com, gitster@pobox.com
-Subject: [PATCH v2 13/16] pathspec: create parse_element_magic helper
-Date:   Thu,  8 Dec 2016 10:59:07 -0800
-Message-Id: <1481223550-65277-14-git-send-email-bmwill@google.com>
+Subject: [PATCH v2 15/16] pathspec: small readability changes
+Date:   Thu,  8 Dec 2016 10:59:09 -0800
+Message-Id: <1481223550-65277-16-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1481223550-65277-1-git-send-email-bmwill@google.com>
 References: <1481061106-117775-1-git-send-email-bmwill@google.com>
@@ -61,76 +62,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out the logic responsible for the magic in a pathspec element
-into its own function.
-
-Also avoid calling into the parsing functions when
-`PATHSPEC_LITERAL_PATH` is specified since it causes magic to be
-ignored and all paths to be treated as literals.
+A few small changes to improve readability.  This is done by grouping related
+assignments, adding blank lines, ensuring lines are <80 characters, and
+adding additional comments.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pathspec.c | 37 ++++++++++++++++++++-----------------
- 1 file changed, 20 insertions(+), 17 deletions(-)
+ pathspec.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/pathspec.c b/pathspec.c
-index 6e9555e..f37f887 100644
+index cf88390..4686298 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -245,6 +245,19 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
- 	return pos;
- }
+@@ -336,6 +336,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 	if ((magic & PATHSPEC_LITERAL) && (magic & PATHSPEC_GLOB))
+ 		die(_("%s: 'literal' and 'glob' are incompatible"), elt);
  
-+static const char *parse_element_magic(unsigned *magic, int *prefix_len,
-+				       const char *elem)
-+{
-+	if (elem[0] != ':' || get_literal_global())
-+		return elem; /* nothing to do */
-+	else if (elem[1] == '(')
-+		/* longhand */
-+		return parse_long_magic(magic, prefix_len, elem);
-+	else
-+		/* shorthand */
-+		return parse_short_magic(magic, elem);
-+}
++	/* Create match string which will be used for pathspec matching */
+ 	if (pathspec_prefix >= 0) {
+ 		match = xstrdup(copyfrom);
+ 		prefixlen = pathspec_prefix;
+@@ -343,11 +344,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 		match = xstrdup(copyfrom);
+ 		prefixlen = 0;
+ 	} else {
+-		match = prefix_path_gently(prefix, prefixlen, &prefixlen, copyfrom);
++		match = prefix_path_gently(prefix, prefixlen,
++					   &prefixlen, copyfrom);
+ 		if (!match)
+ 			die(_("%s: '%s' is outside repository"), elt, copyfrom);
+ 	}
 +
- /*
-  * Take an element of a pathspec and check for magic signatures.
-  * Append the result to the prefix. Return the magic bitmap.
-@@ -267,26 +280,16 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
- 	char *match;
- 	int i, pathspec_prefix = -1;
+ 	item->match = match;
++	item->len = strlen(item->match);
++	item->prefix = prefixlen;
++
+ 	/*
+ 	 * Prefix the pathspec (keep all magic) and assign to
+ 	 * original. Useful for passing to another command.
+@@ -364,8 +370,6 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 	} else {
+ 		item->original = xstrdup(elt);
+ 	}
+-	item->len = strlen(item->match);
+-	item->prefix = prefixlen;
  
--	if (elt[0] != ':' || get_literal_global() ||
--	    (flags & PATHSPEC_LITERAL_PATH)) {
--		; /* nothing to do */
--	} else if (elt[1] == '(') {
--		/* longhand */
--		copyfrom = parse_long_magic(&element_magic,
--					    &pathspec_prefix,
--					    elt);
--	} else {
--		/* shorthand */
--		copyfrom = parse_short_magic(&element_magic, elt);
--	}
--
--	magic |= element_magic;
--
- 	/* PATHSPEC_LITERAL_PATH ignores magic */
--	if (flags & PATHSPEC_LITERAL_PATH)
-+	if (flags & PATHSPEC_LITERAL_PATH) {
- 		magic = PATHSPEC_LITERAL;
--	else
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
+ 	    strip_submodule_slash_cheap(item);
+@@ -373,13 +377,14 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+ 	    strip_submodule_slash_expensive(item);
+ 
+-	if (magic & PATHSPEC_LITERAL)
++	if (magic & PATHSPEC_LITERAL) {
+ 		item->nowildcard_len = item->len;
+-	else {
 +	} else {
-+		copyfrom = parse_element_magic(&element_magic,
-+					       &pathspec_prefix,
-+					       elt);
-+		magic |= element_magic;
- 		magic |= get_global_magic(element_magic);
-+	}
- 
- 	if (pathspec_prefix >= 0 &&
- 	    (prefixlen || (prefix && *prefix)))
+ 		item->nowildcard_len = simple_length(item->match);
+ 		if (item->nowildcard_len < prefixlen)
+ 			item->nowildcard_len = prefixlen;
+ 	}
++
+ 	item->flags = 0;
+ 	if (magic & PATHSPEC_GLOB) {
+ 		/*
 -- 
 2.8.0.rc3.226.g39d4020
 
