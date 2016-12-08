@@ -2,248 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96C561FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 23:58:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2D41FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 23:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932212AbcLHX6g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 18:58:36 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:32945 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753087AbcLHX6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 18:58:35 -0500
-Received: by mail-pf0-f180.google.com with SMTP id d2so366842pfd.0
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 15:58:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iMgH3TwhaFs72uv25ykE7osjayQBD+yqMDcJr4JPF4g=;
-        b=Il3kbak3vKZCavE+fQWAagBRDjiPDIdf1CotIENr1SKuqspx7OLKU9OEy6duVlyRFn
-         OrZChpY7WzSXhv8sPXxowaNz3FRnWQ0YMV7ideEethL3/zKrVoYlic23VApiwqno5W0y
-         b3TCGIdGMcwFvDKS4I2hqxSrT0Q8VsjpvAzFewz560LIOILeP7Sk0uTPva6LuLDkpIif
-         WFJeaIVDzRnA4gE9+nUzjD+iNyvoeQUj7C3fNVxhg2/MpUgLhQoeBmItJGp0hqNMjdGf
-         5T7PBth0rVKukfh1wLl2POSnK6prqydHUg+/S5vk7+yB1aNNp/vi/Y4LMc1rqT+l4ugS
-         fm5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=iMgH3TwhaFs72uv25ykE7osjayQBD+yqMDcJr4JPF4g=;
-        b=BQf2Fh+CKwvQsB0F+Q6S9f5M8zrVSb/RP/6iRZOsTIXDAKD49gvfcPs14lSN0enVr5
-         NCe0be0OCog4MIELxobBGtblDvdMlsJQ47OnuVq1yFFy3oNBjWjDdaeqgI03pxqRz1Z2
-         Zj/XVGSmsXF6hfgkSQBF/az0pUonFch7V6xq8jFVCDiJy2iwG8yDrq9zm27I4f4Kjb+M
-         CdEPrUTnlrTup8n3VeccLvPQb4oVP8dYZ7C4FGsI82ABVXvau0yd/6CYfnVB8mBqeLoO
-         PbOA64mqYMdeQ1IvRh3fFyHZoQcorZPA+sn4V4T0a/vanvLr8FkzCpEBTClIztuCWWAZ
-         l0dg==
-X-Gm-Message-State: AKaTC01xwHPs6SGDq6DYtWBE+gMMe6yuGjn6AvwQ+RwH6/v8fiGkUJDb1Nu6eukC7ArnKrdd
-X-Received: by 10.98.28.79 with SMTP id c76mr77254842pfc.8.1481241514103;
-        Thu, 08 Dec 2016 15:58:34 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id a7sm52505499pfl.87.2016.12.08.15.58.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Dec 2016 15:58:32 -0800 (PST)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        peff@peff.net, jacob.keller@gmail.com, gitster@pobox.com,
-        ramsay@ramsayjones.plus.com, tboegi@web.de, j6t@kdbg.org,
-        pclouds@gmail.com
-Subject: [PATCH v2 2/4] real_path: convert real_path_internal to strbuf_realpath
-Date:   Thu,  8 Dec 2016 15:58:12 -0800
-Message-Id: <1481241494-6861-3-git-send-email-bmwill@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <1481241494-6861-1-git-send-email-bmwill@google.com>
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
- <1481241494-6861-1-git-send-email-bmwill@google.com>
+        id S932736AbcLHX6k (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 18:58:40 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58871 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932567AbcLHX6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 18:58:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A310854A21;
+        Thu,  8 Dec 2016 18:58:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wdeCRaAP3KOjPg+YbTfHD6cAnXQ=; b=kJjezT
+        tfP+lDuCVTHt524vCYFPgFqYMMxLPOHj1LCa1jOHhKvqeshzLAw1T1lEIat3q8eq
+        9ktCXcwEaFZZigSazMqwzhBSVCEHZyZKDprV1PVcXOUdhKykGnwEReiBkczJ9LS8
+        vmNx7XILlS3wmyvj5ojOE9JregUXMA/VAl0Zs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YLYS4EWDgDmJGRdOACJ80X1IY21vjmTj
+        ugyd7frWtM3ovkESARWpzmMrSXGQL+4fpa7EOgDcLstmoaqhu2PpSKMpxK2AbTFF
+        TbRw8cXePqtPAu2CybGVPiDoW/CKm55p7VJkTON66FiJSVJJPGFzL+q29RvAUe/5
+        qVIq3o+oh9g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9829654A20;
+        Thu,  8 Dec 2016 18:58:38 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1BAC954A1F;
+        Thu,  8 Dec 2016 18:58:38 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     git@vger.kernel.org, jacob.keller@gmail.com, jnareb@gmail.com
+Subject: Re: [PATCH v8 00/19] port branch.c to use ref-filter's printing options
+References: <20161207153627.1468-1-Karthik.188@gmail.com>
+Date:   Thu, 08 Dec 2016 15:58:36 -0800
+In-Reply-To: <20161207153627.1468-1-Karthik.188@gmail.com> (Karthik Nayak's
+        message of "Wed, 7 Dec 2016 21:06:08 +0530")
+Message-ID: <xmqqpol2rn0z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3CA707E0-BDA2-11E6-90D4-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the name of real_path_internal to strbuf_realpath.  In addition
-push the static strbuf up to its callers and instead take as a
-parameter a pointer to a strbuf to use for the final result.
+Thanks.  
 
-This change makes strbuf_realpath reentrant.
+Will replace, with the attached stylistic fixes squashed in for
+minor issues that were spotted by my mechanical pre-acceptance
+filter.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- abspath.c | 53 +++++++++++++++++++++++++----------------------------
- cache.h   |  2 ++
- 2 files changed, 27 insertions(+), 28 deletions(-)
+ ref-filter.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index 92f2a29..b0d4c1b 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -48,21 +48,17 @@ static void get_next_component(struct strbuf *next, struct strbuf *remaining)
-  * Return the real path (i.e., absolute path, with symlinks resolved
-  * and extra slashes removed) equivalent to the specified path.  (If
-  * you want an absolute path but don't mind links, use
-- * absolute_path().)  The return value is a pointer to a static
-- * buffer.
-+ * absolute_path().)  Places the resolved realpath in the provided strbuf.
-  *
-  * The directory part of path (i.e., everything up to the last
-  * dir_sep) must denote a valid, existing directory, but the last
-  * component need not exist.  If die_on_error is set, then die with an
-  * informative error message if there is a problem.  Otherwise, return
-  * NULL on errors (without generating any output).
-- *
-- * If path is our buffer, then return path, as it's already what the
-- * user wants.
-  */
--static const char *real_path_internal(const char *path, int die_on_error)
-+char *strbuf_realpath(struct strbuf *resolved, const char *path,
-+		      int die_on_error)
- {
--	static struct strbuf resolved = STRBUF_INIT;
- 	struct strbuf remaining = STRBUF_INIT;
- 	struct strbuf next = STRBUF_INIT;
- 	struct strbuf symlink = STRBUF_INIT;
-@@ -70,10 +66,6 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 	int num_symlinks = 0;
- 	struct stat st;
+diff --git b/ref-filter.c a/ref-filter.c
+index a68ed7b147..a9d2c6a89d 100644
+--- b/ref-filter.c
++++ a/ref-filter.c
+@@ -76,7 +76,7 @@ static struct used_atom {
+ 		struct {
+ 			enum { RR_REF, RR_TRACK, RR_TRACKSHORT } option;
+ 			struct refname_atom refname;
+-			unsigned int nobracket: 1;
++			unsigned int nobracket : 1;
+ 		} remote_ref;
+ 		struct {
+ 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+@@ -559,7 +559,7 @@ static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_st
+ 	if (if_then_else->cmp_status == COMPARE_EQUAL) {
+ 		if (!strcmp(if_then_else->str, cur->output.buf))
+ 			if_then_else->condition_satisfied = 1;
+-	} else 	if (if_then_else->cmp_status == COMPARE_UNEQUAL) {
++	} else if (if_then_else->cmp_status == COMPARE_UNEQUAL) {
+ 		if (strcmp(if_then_else->str, cur->output.buf))
+ 			if_then_else->condition_satisfied = 1;
+ 	} else if (cur->output.len && !is_empty(cur->output.buf))
+@@ -1106,7 +1106,8 @@ static const char *lstrip_ref_components(const char *refname, int len)
+ 		const char *p = refname;
  
--	/* We've already done it */
--	if (path == resolved.buf)
--		return path;
--
- 	if (!*path) {
- 		if (die_on_error)
- 			die("The empty string is not a valid path");
-@@ -81,16 +73,16 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 			goto error_out;
- 	}
+ 		/* Find total no of '/' separated path-components */
+-		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++);
++		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++)
++			;
+ 		/*
+ 		 * The number of components we need to strip is now
+ 		 * the total minus the components to be left (Plus one
+@@ -1140,7 +1141,8 @@ static const char *rstrip_ref_components(const char *refname, int len)
+ 		const char *p = refname;
  
--	strbuf_reset(&resolved);
-+	strbuf_reset(resolved);
- 
- 	if (is_absolute_path(path)) {
- 		/* absolute path; start with only root as being resolved */
- 		int offset = offset_1st_component(path);
--		strbuf_add(&resolved, path, offset);
-+		strbuf_add(resolved, path, offset);
- 		strbuf_addstr(&remaining, path + offset);
- 	} else {
- 		/* relative path; can use CWD as the initial resolved path */
--		if (strbuf_getcwd(&resolved)) {
-+		if (strbuf_getcwd(resolved)) {
- 			if (die_on_error)
- 				die_errno("unable to get current working directory");
- 			else
-@@ -109,21 +101,21 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 			continue; /* '.' component */
- 		} else if (next.len == 2 && !strcmp(next.buf, "..")) {
- 			/* '..' component; strip the last path component */
--			strip_last_component(&resolved);
-+			strip_last_component(resolved);
- 			continue;
- 		}
- 
- 		/* append the next component and resolve resultant path */
--		if (!is_dir_sep(resolved.buf[resolved.len - 1]))
--			strbuf_addch(&resolved, '/');
--		strbuf_addbuf(&resolved, &next);
-+		if (!is_dir_sep(resolved->buf[resolved->len - 1]))
-+			strbuf_addch(resolved, '/');
-+		strbuf_addbuf(resolved, &next);
- 
--		if (lstat(resolved.buf, &st)) {
-+		if (lstat(resolved->buf, &st)) {
- 			/* error out unless this was the last component */
- 			if (!(errno == ENOENT && !remaining.len)) {
- 				if (die_on_error)
- 					die_errno("Invalid path '%s'",
--						  resolved.buf);
-+						  resolved->buf);
- 				else
- 					goto error_out;
- 			}
-@@ -139,12 +131,12 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 					goto error_out;
- 			}
- 
--			len = strbuf_readlink(&symlink, resolved.buf,
-+			len = strbuf_readlink(&symlink, resolved->buf,
- 					      st.st_size);
- 			if (len < 0) {
- 				if (die_on_error)
- 					die_errno("Invalid symlink '%s'",
--						  resolved.buf);
-+						  resolved->buf);
- 				else
- 					goto error_out;
- 			}
-@@ -152,8 +144,8 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 			if (is_absolute_path(symlink.buf)) {
- 				/* absolute symlink; set resolved to root */
- 				int offset = offset_1st_component(symlink.buf);
--				strbuf_reset(&resolved);
--				strbuf_add(&resolved, symlink.buf, offset);
-+				strbuf_reset(resolved);
-+				strbuf_add(resolved, symlink.buf, offset);
- 				strbuf_remove(&symlink, 0, offset);
- 			} else {
- 				/*
-@@ -161,7 +153,7 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 				 * strip off the last component since it will
- 				 * be replaced with the contents of the symlink
- 				 */
--				strip_last_component(&resolved);
-+				strip_last_component(resolved);
- 			}
- 
- 			/*
-@@ -181,24 +173,29 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 		}
- 	}
- 
--	retval = resolved.buf;
-+	retval = resolved->buf;
- 
- error_out:
- 	strbuf_release(&remaining);
- 	strbuf_release(&next);
- 	strbuf_release(&symlink);
- 
-+	if (!retval)
-+		strbuf_reset(resolved);
-+
- 	return retval;
- }
- 
- const char *real_path(const char *path)
- {
--	return real_path_internal(path, 1);
-+	static struct strbuf realpath = STRBUF_INIT;
-+	return strbuf_realpath(&realpath, path, 1);
- }
- 
- const char *real_path_if_valid(const char *path)
- {
--	return real_path_internal(path, 0);
-+	static struct strbuf realpath = STRBUF_INIT;
-+	return strbuf_realpath(&realpath, path, 0);
- }
- 
- /*
-diff --git a/cache.h b/cache.h
-index a50a61a..7a81294 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1064,6 +1064,8 @@ static inline int is_absolute_path(const char *path)
- 	return is_dir_sep(path[0]) || has_dos_drive_prefix(path);
- }
- int is_directory(const char *);
-+char *strbuf_realpath(struct strbuf *resolved, const char *path,
-+		      int die_on_error);
- const char *real_path(const char *path);
- const char *real_path_if_valid(const char *path);
- const char *absolute_path(const char *path);
--- 
-2.8.0.rc3.226.g39d4020
-
+ 		/* Find total no of '/' separated path-components */
+-		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++);
++		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++)
++			;
+ 		/*
+ 		 * The number of components we need to strip is now
+ 		 * the total minus the components to be left (Plus one
