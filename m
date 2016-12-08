@@ -2,109 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29F2D1FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 18:22:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55E5F20451
+	for <e@80x24.org>; Thu,  8 Dec 2016 18:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752136AbcLHSWK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 13:22:10 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55593 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751143AbcLHSWJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 13:22:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD58653B64;
-        Thu,  8 Dec 2016 13:22:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yLZObivrnIjJu3vl2Xvln9Jf75c=; b=uIcV1R
-        6dmfNwL60A3NdpvDOWJIxX/dH3KGsnq1c3wVRJlNGBJCLv/ovEw5nIWJUw4JgjlU
-        FWfbM5hI5dBBQnPqJyHskI8HM5imt6bUmj0dyBsZ3Fbb5FZmCRx5PVmBIgsTJbDo
-        9qqU1CDgQ0aRxteHgDhV2q3TlE7YDhHfDkE9A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fHLVmGFMumdiQxIWXBnXfK7Pd1NLxECK
-        Cj8oJJk0r/Enl/cNvjBdOtcsQ2q87u5FsLz3qcaDaqH77lyUNa+qR1KNw7tbt6HI
-        iPP+0vaCRfcRTcdEeumRYIzX8DPfxQg2zGcER+FNCyYI4VTIol5eaY4GyknvdgOH
-        9N+T2L48iKg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4D4153B62;
-        Thu,  8 Dec 2016 13:22:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4061953B61;
-        Thu,  8 Dec 2016 13:22:08 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Robbie Iannucci <iannucci@google.com>
-Subject: Re: [PATCH 3/3] lockfile: LOCK_REPORT_ON_ERROR
-References: <xmqqd1h3y506.fsf@gitster.mtv.corp.google.com>
-        <20161207194105.25780-1-gitster@pobox.com>
-        <20161207194105.25780-4-gitster@pobox.com>
-        <alpine.DEB.2.20.1612081252490.23160@virtualbox>
-Date:   Thu, 08 Dec 2016 10:22:06 -0800
-In-Reply-To: <alpine.DEB.2.20.1612081252490.23160@virtualbox> (Johannes
-        Schindelin's message of "Thu, 8 Dec 2016 12:53:39 +0100 (CET)")
-Message-ID: <xmqqinquth69.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932270AbcLHSlt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 13:41:49 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:52547 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753380AbcLHSls (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 13:41:48 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tZPNB2SsFz5tlK;
+        Thu,  8 Dec 2016 19:41:46 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id CA8FB1E71;
+        Thu,  8 Dec 2016 19:41:45 +0100 (CET)
+Subject: Re: [PATCH] real_path: make real_path thread-safe
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <1480964316-99305-1-git-send-email-bmwill@google.com>
+ <1480964316-99305-2-git-send-email-bmwill@google.com>
+ <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
+ <20161207001018.GD103573@google.com>
+ <b73e61f8-0cff-b33e-118a-e530d367c94c@ramsayjones.plus.com>
+ <20161207201409.GA19743@tb-raspi>
+ <xmqqtwafwkdt.fsf@gitster.mtv.corp.google.com>
+ <20161207221335.GA116201@google.com> <20161208075555.GA23595@tb-raspi>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        jacob.keller@gmail.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <6cae7549-72f2-e591-ad48-28d449a62caf@kdbg.org>
+Date:   Thu, 8 Dec 2016 19:41:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A90F5C6-BD73-11E6-BC83-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20161208075555.GA23595@tb-raspi>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Am 08.12.2016 um 08:55 schrieb Torsten Bögershausen:
+> Some conversion may be done in mingw.c:
+> https://github.com/github/git-msysgit/blob/master/compat/mingw.c
+> So what I understand, '/' in Git are already converted into '\' if needed ?
 
-> Sorry for the breakage.
+Only if needed, and there are not many places where this is the case. 
+(Actually, I can't find one place where we do.) In particular, typical 
+file accesses does not require the conversion.
 
-Apologies from me, too.  Once a topic is merged, the credit still
-remains with the contributor, but the blame is shared by the project
-as a whole, with those who missed breakages during their reviews,
-and those who didn't review or test and let breakages pass.
+> It seams that we may wnat a function get_start_of_path(uncpath),
+> which returns:
+>
+> get_start_of_path_win("//?/D:/very-long-path")         "/very-long-path"
 
-> When libifying the code, I tried to be careful to retain the error
-> messages when not dying,...
+We have offset_1st_component().
 
-Quite honestly, I do not think either of us cared about preserving
-the exact error message the end-user was getting from each failure
-sites that the series changed a call with die-on-error=1 to a call
-with die-on-error=0 that is followed by a negative return while
-reviewing this series.  As I wrote in the proposed log message for
-3/3, this one was noticed as a end-user breaking change because it
-was the only one that has become totally silent.  For example, this
-bit from sequencer.c::write_message() we can see in the output from
-"git show --first-parent 2a4062a4a8" does not preserve the message
-at all:
+-- Hannes
 
-    diff --git a/sequencer.c b/sequencer.c
-    index 3804fa931d..eec8a60d6b 100644
-    --- a/sequencer.c
-    +++ b/sequencer.c
-    @@ -180,17 +180,20 @@
-    ...
-    -static void write_message(struct strbuf *msgbuf, const char *filename)
-    +static int write_message(struct strbuf *msgbuf, const char *filename)
-     {
-            static struct lock_file msg_file;
-
-    -	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
-    -					       LOCK_DIE_ON_ERROR);
-    +	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
-    +	if (msg_fd < 0)
-    +		return error_errno(_("Could not lock '%s'"), filename);
-
-And I do not think it is necessarily bad that the error message
-changed with this conversion.  In other words, I do not think it
-should have been the goal to preserve the exact error message.
-hold_lock*() can afford to give a detailed message that strongly
-sounds as being the final decision when called with die-on-error=1
-because it knows it is dying.  However, the message from the updated
-write_message(), "could not lock", cannot be final---the caller may
-want to add something else after it to describe what failed in a
-larger picture.
