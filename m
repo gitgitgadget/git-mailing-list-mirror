@@ -2,135 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E5361FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 18:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68DC41FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 18:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932226AbcLHSzi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 13:55:38 -0500
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:33474 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932201AbcLHSzh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 13:55:37 -0500
-Received: by mail-qt0-f176.google.com with SMTP id p16so419104523qta.0
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 10:55:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Lw7vlLjr9WVZ+TDOesQXMZI349ziwVPBNRQr4tuKUcE=;
-        b=aWUHonMofttihsA7f43S/xembIgc6wEK+v7kRqyn4hEnYN7s1hgh3J/Gxd1243Z9qA
-         rlhHRNENsCz09X/H8opLMeAWXUQc92BZDPNPj0wtc1+Snfl7e8AVheym07cSmChvdPH4
-         3PVc5AL3MXPQYTVGjbVGYi8seOJw8S8VXvZQQQLs3ZQtT9JfAE0gvwEOjKLnYZ3oIOJy
-         nvZqPCMvcRqv5ufhUhKabPmPqLsNLg6MehGgmwDkvIy13R5IyZDmdJiUY6+he28MApHc
-         H75oNaLRxClGhtvmLbqujimYrEcPuppk0i2MCnUjJYKvEMDc3y9OvovKz5RX0V1t+OkL
-         FVGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Lw7vlLjr9WVZ+TDOesQXMZI349ziwVPBNRQr4tuKUcE=;
-        b=MNm4a8QtH1H8+CGXg7qv1H3KW1QYVb55/TIW2CYzglfHAbKm0Mo5x7seYKuE3mnCh7
-         UiuXmNa2qRa4LXKRn+Pz666CaBILVjlUQFZ7BJk6XjAQV5AfQ0B5u1sTndR2/0o2qJ9k
-         6yB6cWkZJDiFxaD9X+WJZiq5m1+Nf0x4YJgo48+saglfWciX7c/UvTdTIoxiHjSfjKCS
-         uDkGFOrTHAeJ+PRhWzk2zhda6k0jUQBaFYh2FYugjDa8yYYacS01hMwQtOJFRQBjRTr0
-         NYdFSNpN3Y7qm6u278qr1iRS1FqTzLsh1s9/N5xvWcywOepPAK4jzs6jY6bMnJZFmDc7
-         Ezmw==
-X-Gm-Message-State: AKaTC01PYf1PCP33HCuuV/CUBaDViILy8vzJuDkAncbmPLspieb/bXHwn00KbUwuaZ3ivAWaY0VxN/gQGb/Zn9u6
-X-Received: by 10.200.53.9 with SMTP id y9mr64211504qtb.176.1481223336371;
- Thu, 08 Dec 2016 10:55:36 -0800 (PST)
+        id S1752796AbcLHS6o (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 13:58:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64010 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751577AbcLHS6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 13:58:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13991544D4;
+        Thu,  8 Dec 2016 13:58:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZbzhOrBsfGzYhhVlbQulyWu+GWk=; b=Ykwt+p
+        7Hlz/xUfQBMe48AzCsWP2WE6mAtKG61B4IdnGdnQo527Uno76F3FV5oOudS6QbZZ
+        QCtC5MrFHUga1ucDLMig075TwO2hLS5MAPsyqG6CsFRR3TNGfgVxI7bK1uG1KBVq
+        31R9Hwm2qpv0FD/4ipaAo9XJ9HPaN2XSQ7gaw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ah6eOVPT8CnTMRIlhHn9M/+7pb8KSjX9
+        S8IQ6nGI0VyDB01pBpl73Z5bFbG+VMYJ/42o2rUqywjOMBUeh3pvQ9mUf6Wv3WMv
+        yz7XM8jKiPh8Y7TQT+UrOHvyLGFlIJKI3eITPC2VUKU/XzZ72i4sfrx9xHlhwsAy
+        ZS90rUuO0WI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B7A5544D3;
+        Thu,  8 Dec 2016 13:58:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 61DFD544D2;
+        Thu,  8 Dec 2016 13:58:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Karthik Nayak <karthik.188@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v8 00/19] port branch.c to use ref-filter's printing options
+References: <20161207153627.1468-1-Karthik.188@gmail.com>
+        <CA+P7+xquordVY19dypqNcAuQqoRbFmHhzb0w+HXCaJmm_Ex7zQ@mail.gmail.com>
+Date:   Thu, 08 Dec 2016 10:58:39 -0800
+In-Reply-To: <CA+P7+xquordVY19dypqNcAuQqoRbFmHhzb0w+HXCaJmm_Ex7zQ@mail.gmail.com>
+        (Jacob Keller's message of "Wed, 7 Dec 2016 16:01:48 -0800")
+Message-ID: <xmqqa8c6tfhc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Thu, 8 Dec 2016 10:55:35 -0800 (PST)
-In-Reply-To: <CACsJy8Bs78ywGq5p6yAFGi1KACAXFEeroyQSJye5-RL5gqOS+Q@mail.gmail.com>
-References: <20161208014623.7588-1-sbeller@google.com> <20161208014623.7588-5-sbeller@google.com>
- <CACsJy8Bs78ywGq5p6yAFGi1KACAXFEeroyQSJye5-RL5gqOS+Q@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 8 Dec 2016 10:55:35 -0800
-Message-ID: <CAGZ79kYtEUvuTX09sJm3C0rG0-BrBz4bN0FCs6E5d2jHhtKN6w@mail.gmail.com>
-Subject: Re: [PATCHv6 4/7] worktree: get worktrees from submodules
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 55C63D4C-BD78-11E6-A02E-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 8, 2016 at 2:09 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Dec 8, 2016 at 8:46 AM, Stefan Beller <sbeller@google.com> wrote:
+Jacob Keller <jacob.keller@gmail.com> writes:
+
+>> +       are left behind.  If a displayed ref has fewer components than
+>> +       `<N>`, the command aborts with an error.
 >>
->>         worktree = xcalloc(1, sizeof(*worktree));
->>         worktree->path = strbuf_detach(&worktree_path, NULL);
->> @@ -101,7 +101,8 @@ static struct worktree *get_main_worktree(void)
 >
-> All the good stuff is outside context lines again.. Somewhere between
-> here we call add_head_info() which calls resolve_ref_unsafe(), which
-> always uses data from current repo, not the submodule we want it to
-> look at.
-
-Unrelated side question: What would you think of "variable context line
-configuration" ? e.g. you could configure it to include anything from
-up that line
-that is currently shown after the @@ which is the function signature line.
-
-As to the add_head_info/resolve_ref_unsafe what impact does that have?
-It produces a wrong head info but AFAICT it will never die(), such that for the
-purposes of this series (which only wants to know if a submodule uses the
-worktree feature) it should be fine.
-
-It is highly misleading though for others to build upon this.
-So maybe I'll only add the functionality internally in worktree.c
-and document why the values are wrong, and only expose the
-"int submodule_uses_worktrees(const char *path)" ?
-
->> @@ -209,6 +211,30 @@ struct worktree **get_worktrees(unsigned flags)
->>         return list;
+> Would it make more sense to not die and instead just return the empty
+> string? On the one hand, if we die() it's obvious that you tried to
+> strip too many components. But on the other hand, it's also somewhat
+> annoying to have the whole command fail because we happen upon a
+> single ref that has fewer components?
 >
-> Right before this line is mark_current_worktree(), which in turn calls
-> get_git_dir() and not suitable for peeking into another repository the
-> way submodule code does. get_worktree_git_dir() called within that
-> function shares the same problem.
-
-It actually works correctly: "No submodule is the current worktree".
-
-
+> So, for positive numbers, we simply strip what we can, which may
+> result in the empty string, and for negative numbers, we keep up to
+> what we said, while potentially keeping the entire string. I feel
+> that's a better alternative than a die() in the middle of a ref
+> filter..
 >
->>  }
->>
->> +struct worktree **get_worktrees(unsigned flags)
->> +{
->> +       return get_worktrees_internal(get_git_common_dir(), flags);
->> +}
->> +
->> +struct worktree **get_submodule_worktrees(const char *path, unsigned flags)
->> +{
->> +       char *submodule_gitdir;
->> +       struct strbuf sb = STRBUF_INIT;
->> +       struct worktree **ret;
->> +
->> +       submodule_gitdir = git_pathdup_submodule(path, "%s", "");
->> +       if (!submodule_gitdir)
->> +               return NULL;
->> +
->> +       /* the env would be set for the superproject */
->> +       get_common_dir_noenv(&sb, submodule_gitdir);
->
-> Technically we need to read submodule_gitdir/.config and see if we can
-> understand core.repositoryformatversion, or find any unrecognized
-> extensions. But the problem is not specific to this code. And fixing
-> it is no small task. But perhaps we could call a dummy
-> validate_submodule_gitdir() here? Then when we implement that function
-> for real, we don't have to search the entire code base to see where to
-> put it.
->
-> Kinda off-topic though. Feel free to ignore the above comment.
+> What are other people's thoughts on this?
 
-ok I'll add a TODO/emptyfunction for that.
+There probably are three ways to handle a formatting request that
+cannot be satisfied for some refs but not others [*1*].  I agree
+with you that dying the whole thing is probably the least useful
+one.
 
-Thanks for the review!
-Stefan
+We already format "%(taggername)" into an empty string when the ref
+points at an object that is not an annotated tag, and substituting
+an unsatisifiable request "%(refname:lstrip=N)" with an empty string
+for a ref whose name does not have enough number of components is in
+line with that existing practice.
+
+The other possibility is to omit refs that cannot be formatted
+according to the format specifier.  We do not currently have
+provision for doing so, but it may not be bad if we can say:
+
+    $ git for-each-ref \
+	--require="%(taggername)" \
+	--require="%(refname:lstrip=4)" \
+	--format="%(refname:short)" \
+	refs/tags/
+
+to list _only_ annotated tags that has at least 4 components from
+refs/tags/ hierarchy.
+
+The "--require" thing obviously is an orthogonal feature, that
+nobody has asked for, and does not have to exist.  For the purpose
+of this review thread, I think it is OK to just conclude:
+
+    "--format" should replace "%(any unsatisifiable atom)" with an
+    empty string.
+
+Thanks.
+
+[Footnote]
+
+*1* A malformed formatting request (e.g. %(if) that is not closed)
+    cannot be satisified but that is true for all refs and is
+    outside of the scope of this discussion.  The command should die
+    and I think it already does.
