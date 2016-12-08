@@ -2,56 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC54C1FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 19:50:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 594D31FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 20:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752401AbcLHTuK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 14:50:10 -0500
-Received: from smtpfb1-g21.free.fr ([212.27.42.9]:37175 "EHLO
-        smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751905AbcLHTuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 14:50:09 -0500
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-        by smtpfb1-g21.free.fr (Postfix) with ESMTP id 025762E319
-        for <git@vger.kernel.org>; Thu,  8 Dec 2016 20:50:02 +0100 (CET)
-Received: from ylum.localnet (unknown [IPv6:2a01:e34:edf7:4710:1366:30a:a1d9:15f1])
-        (Authenticated sender: domi.dumont)
-        by smtp3-g21.free.fr (Postfix) with ESMTPSA id CE55B13F89A
-        for <git@vger.kernel.org>; Thu,  8 Dec 2016 20:49:59 +0100 (CET)
-From:   Dominique Dumont <dod@debian.org>
-To:     git@vger.kernel.org
-Reply-To: dod@debian.org
-Subject: Feature request: read git config from parent directory
-Date:   Thu, 08 Dec 2016 20:49:58 +0100
-Message-ID: <3881793.6JIRvg1BPW@ylum>
-User-Agent: KMail/5.2.3 (Linux/4.8.0-2-amd64; KDE/5.28.0; x86_64; ; )
+        id S1753028AbcLHUTD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 15:19:03 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:33823 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752035AbcLHUTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 15:19:02 -0500
+Received: by mail-qk0-f175.google.com with SMTP id q130so273466834qke.1
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 12:19:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=HMLe6pOK5GUkKpI28K/nNuJFl/GfYOMb/fHhO9taUyE=;
+        b=HNhs0aeZ1LCxI4zYFehMljy+F6OeUefMaGTPSqdMfZuTsFOlj/GNn8Kf/4lVhKsPWn
+         X0dkqSly/uSJN1AwfKf5Ux8jpd2zQUTBGf6v5Arrxm0HV71QQabbUB5GMkcNggYNqqzs
+         q1dl5+lcd3INnPCchvZMS9zCOqLGJxumiE/u8ZbZihGpS2miLK9EwXie374Q5EpJW5OM
+         bWgmWdolKlQ3BPV0pTGNN2RTkPzJ1HWcV5bw3seBc/X7Zy1UFQsxyoxkIxCKKyoQEAC0
+         9YULElcAXeEwu2ogcnAPzL0hAQdn1T6rytexhxYAgk0ptNwUT2aMjROVIgulWn2LzqLI
+         /vxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=HMLe6pOK5GUkKpI28K/nNuJFl/GfYOMb/fHhO9taUyE=;
+        b=mDifcqPrpZcL9Pl5+UVDTAmJgftabaaq8lWqZEHbk3/w2YgOd0YygNdw54fpp430is
+         BO9TKGifOth10gQh1Zr1/Yd3hU4fsEtDYTosTjIBnCY8yLVLG5Ip2seZrxOZRkZfbVBH
+         +CN8HRLVt2G4RAvAUvTV7ceWV7xFMFDx86bSbRrhLwVlvFDvbNhylHPhDoyMXhChpJ5T
+         r80t9rGXoO05fPqcgboGXGyIo5T4DjzbsrSWgaryS+2+weYI04UxTyGQGx2rTqkchBza
+         UEa1uR/UpOP5QCPGfovNeBLU8Hjsye6X2LMmLF8vcWJfCP73o+72eSw07N2KrHGye1gt
+         gcvg==
+X-Gm-Message-State: AKaTC03nklNbkrBTi3ViI0fTvVcsAkX1zLPgp66d9ugbDsFKyJv2ix3R2c0fB5uwKeSwTDX11N4PLVqkeQk/qjaG
+X-Received: by 10.55.186.3 with SMTP id k3mr73077583qkf.47.1481228341352; Thu,
+ 08 Dec 2016 12:19:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Received: by 10.12.147.188 with HTTP; Thu, 8 Dec 2016 12:19:00 -0800 (PST)
+In-Reply-To: <CACsJy8AohKMTm0inUyxu=kTwxNFcCbbBRO=O126SCzi5e=0tSQ@mail.gmail.com>
+References: <20161208014623.7588-1-sbeller@google.com> <20161208014623.7588-3-sbeller@google.com>
+ <CACsJy8AohKMTm0inUyxu=kTwxNFcCbbBRO=O126SCzi5e=0tSQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 8 Dec 2016 12:19:00 -0800
+Message-ID: <CAGZ79kagKKE7fiwdPGgLsaQuQV-Y2ePgPdTLkwZJ0T9UN9uH_Q@mail.gmail.com>
+Subject: Re: [PATCHv6 2/7] submodule helper: support super prefix
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello
+>
+> unsigned int is probably safer for variables that are used as bit-flags.
 
-I use the same machine for work and open-source contribution. In both cases, I 
-deal with a lot of repositories. Depending on whether I commit for work or 
-open-source activities, I must use a different mail address. I used to setup 
-work address for each work repo in git local config, but this is no longer 
-practical.
+done
 
-Since I use different directories for work and open-source, would it be 
-possible for git to read irs config also from parent directories ? I.e. setup 
-git to read config from ./.git/config then ../.gitconfig, ../../gitconfig until 
-global ~/.gitconfig.
+> If it's meant for users to see, please _() the string.
 
-All the best
+done
 
--- 
- https://github.com/dod38fr/   -o- http://search.cpan.org/~ddumont/
-http://ddumont.wordpress.com/  -o-   irc: dod at irc.debian.org
+>> +       { "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+>
+> The same macro defined twice in two separate .c files? Hmm.. it
+> confused me a bit because i thought there was a connection.. I guess
+> it's ok.
+
+Its effect is exactly the same. just plain code duplication. I assume that
+is okay here as it really is only one constant for now. Maybe we can
+refactor that to
+be defined in a header file (but which? There is no such thing as a git.h, where
+I'd expect to put it.)
+
+Thanks,
+Stefan
