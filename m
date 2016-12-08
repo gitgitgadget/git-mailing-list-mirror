@@ -2,89 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90FEE1FC96
-	for <e@80x24.org>; Thu,  8 Dec 2016 11:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D99E61FC96
+	for <e@80x24.org>; Thu,  8 Dec 2016 11:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752728AbcLHLGQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 06:06:16 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35089 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751665AbcLHLGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 06:06:15 -0500
-Received: by mail-io0-f193.google.com with SMTP id g8so195548ioi.2
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 03:06:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Bns7oqLrVD/OMU+A+qmGPL/AZzx5S4A2FiOKF7DtSW0=;
-        b=mNGIOJm8hngjK6tg+itBgVCkyQUFKh1YPiJ0AZHvXlb17+IkT/rMgoTX21KF1Kmxrp
-         +Pb2P8cs35ArXumXKdGn8M8cWPQxbOrddNAxgvcqcXa4MV7QC5ivkdggYp3AhsF3Z31T
-         7bc0rWgbvtVLlFcRt2H9SCi7X8QNiQwSH1XtpPpfl0fAWHzIv1WjCRRgQzc7nSPW4Drk
-         n2/33y14l/gBOTvy8JgnqQQnPeF8QS8tyMD/W2urUneeUdhxSh32KQipOrrvAfHwPBSX
-         8qdB8+I2oJrTQy/sU71afs+9ucs+YaVPt9aikRBD0IgZmcBIb7YvDs8aB4da06kcY2o9
-         yYWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Bns7oqLrVD/OMU+A+qmGPL/AZzx5S4A2FiOKF7DtSW0=;
-        b=PPQSBf0Z3UdTS5L2N8fHWsIpX5/depFy8dgF/mfDyi5NLT1qq9sN0K3AvhVKEe4YAS
-         8OKKzSy3vOnCMFMBnZc9qoSof3KRKTf8DnegAIiM6mKsDl5mO9FjgKGBxfwb68Q3eExD
-         hYY8krBTknsff10PZnrbrvqEkk2KQVnjZIAJ92pqzHSS1Lw90iI7oUsUUWIjJOOpx1AW
-         SnXWuHrNkBi6iRutgZ/AGbMRdMZcOT3KX9udt9YM4K8H31Vfx8AUCWww5FgaJnAUxv2F
-         /nS8KJllU49BCOui0Qs7t//EQpQTZcz6I+vc6KKFFDK+BnNqMcqX3xZoKMaLrvNvwJli
-         2U2w==
-X-Gm-Message-State: AKaTC03No7fDKniR+tBvjXiR2QmqkTZUFnRuPFMdInuIKx2SQh54xLHHhIoqh9PotQgL5j4sZ6s0qoxnRV7bkQ==
-X-Received: by 10.36.26.148 with SMTP id 142mr1117225iti.74.1481195174862;
- Thu, 08 Dec 2016 03:06:14 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Thu, 8 Dec 2016 03:05:44 -0800 (PST)
-In-Reply-To: <20161208000357.GJ116201@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481061106-117775-3-git-send-email-bmwill@google.com> <CACsJy8AX09pxkyUkLU905v1MpXocLzV5bK0APuNmMUNb50Lavg@mail.gmail.com>
- <20161208000357.GJ116201@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 8 Dec 2016 18:05:44 +0700
-Message-ID: <CACsJy8DtUwnOjBV49navkfgqPzEsNuX2LVaeVU=Ap2PWLpGFdA@mail.gmail.com>
-Subject: Re: [PATCH 02/17] dir: convert create_simplify to use the pathspec
- struct interface
+        id S1752102AbcLHLde (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 06:33:34 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:51850 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750989AbcLHLdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 06:33:33 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3tZCsC4Kfzz5tlC;
+        Thu,  8 Dec 2016 12:32:47 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id EECB51E71;
+        Thu,  8 Dec 2016 12:32:46 +0100 (CET)
+Subject: Re: [PATCH] real_path: make real_path thread-safe
 To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+References: <1480964316-99305-1-git-send-email-bmwill@google.com>
+ <1480964316-99305-2-git-send-email-bmwill@google.com>
+ <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
+ <20161207001018.GD103573@google.com>
+ <7d968fd8-a92d-efd3-ce67-7de6049b6d56@kdbg.org>
+ <20161207222927.GB116201@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        sbeller@google.com, peff@peff.net, jacob.keller@gmail.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <1767f01a-4125-d99b-37db-3f4a56aaa28a@kdbg.org>
+Date:   Thu, 8 Dec 2016 12:32:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
+MIME-Version: 1.0
+In-Reply-To: <20161207222927.GB116201@google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 8, 2016 at 7:03 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 12/07, Duy Nguyen wrote:
->> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
->> > Convert 'create_simplify()' to use the pathspec struct interface from
->> > using the '_raw' entry in the pathspec.
->>
->> It would be even better to kill this create_simplify() and let
->> simplify_away() handle struct pathspec directly.
->>
->> There is a bug in this code, that might have been found if we
->> simpify_away() handled pathspec directly: the memcmp() in
->> simplify_away() will not play well with :(icase) magic. My bad. If
->> :(icase) is used, the easiest/safe way is simplify nothing. Later on
->> maybe we can teach simplify_away() to do strncasecmp instead. We could
->> ignore exclude patterns there too (although not excluding is not a
->> bug).
->
-> So are you implying that the simplify struct needs to be killed?  That
-> way the pathspec struct itself is being passed around instead?
+Am 07.12.2016 um 23:29 schrieb Brandon Williams:
+> Instead of assuming root is "/"
+> I'll need to extract what root is from an absolute path.  Aside from
+> what root looks like, do most other path constructs behave similarly in
+> unix and windows? (like ".." and "." as examples)
 
-Yes. simplify struct was a thing when pathspec was an array of char *.
-At this point I think it can retire (when we have time to retire it)
--- 
-Duy
+Yes, .. and . work the same way, except that they cannot appear in the 
+\\server\share part. I also think that .. does not cancel these parts.
+
+As long as you use is_absolute_path() and do not simplify path 
+components before offset_1st_component(), you should be on the safe side.
+
+> Since I don't really have a windows machine to test things it might be
+> slightly difficult to get everything correct quickly but hopefully we can
+> get this working :)
+
+I'll lend a hand, of course, as time permits.
+
+-- Hannes
+
