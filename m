@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C92D20259
-	for <e@80x24.org>; Thu,  8 Dec 2016 21:04:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D990120259
+	for <e@80x24.org>; Thu,  8 Dec 2016 21:04:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753010AbcLHVEG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 16:04:06 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:35560 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752257AbcLHVEF (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753363AbcLHVEO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 16:04:14 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:35563 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752319AbcLHVEF (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 8 Dec 2016 16:04:05 -0500
-Received: by mail-pg0-f51.google.com with SMTP id p66so177696835pga.2
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 13:03:35 -0800 (PST)
+Received: by mail-pg0-f43.google.com with SMTP id p66so177696971pga.2
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 13:03:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zlueNzl2BqG2Wa5Drnr0Gy+U6KwIjo+x7IrRUfo8BYk=;
-        b=MG3NpldRp1bZ33922xx33YxWQq6dia5jJNsUP++XL3A1zs6Qz1MrE0qg+jCOAMksDB
-         z8f/FDY29fo88E+DTb27zdWEBCDEA+vj4yBKO1vCjSuD36cbg46tzsB3KwoSW8jXXKzM
-         2MXZWSSuMgtzAVwo2Md3GHNhePX1ppHzcmm88gagNPrYHGxxaTvmr4prTA9xTmwIiKGj
-         a1dLYZnkuLCRtreg+kUcGcZACdptm4AYQRGorEFhSgCPznFSTR8Q7c29gkB3BIOmGoiR
-         +S0p4dUGFw6b00gHQcrSYw9/kWRB0zvrn9+o5H92/IVyfjWmP/cC3gP27dfzjuAfPWl8
-         eBNg==
+        bh=U7j9yfaCd6iNJveTAwKgY2WHT/IRoC3y4r/O8vLZNJM=;
+        b=I7CWoQ0sX5M0w93QLRkVzVyJEWqW94tjQbfAjFfaE4l2Pp/Kc2kM0SRJ8Z8P8Ncwf2
+         3qTc9Ka4oI76ITc0xG3/Jm4mv7jfEJ5L+TVhSfGlH6Anp5HbIJTaZa4SBuoGLwGpptP3
+         mEW82xy6cBfAq8jGf49t8bQYiz3WdPFha6vyLhW840E4hXXHr9GN+5TqOe2s7Ph61kbU
+         ohf7zDT83XEv3CW6BsJx+suNpuiGJzVDX0sPpObgmcd41DAntq+QQ321MS2GmXpuRW2k
+         ItAFp5OLMGHjCvG2qahwQAylxUnLPaGtKO6qQ6ri7W6ktXwSCfZjbpHTRNkaU6x3CXox
+         cORw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zlueNzl2BqG2Wa5Drnr0Gy+U6KwIjo+x7IrRUfo8BYk=;
-        b=MX4GGM+Ob/SeXx39bihhMiIwOvmXFVHVVXkKzP/c0zzrlvRHl9vnF873sB13exbaqL
-         tTfz6hauUP18rK21Nv0fkvNiIH+w5xnh84k1DHHftVxd6DRfRavk3JSfejfok7Z2TAmS
-         9jTI7fpLSSUqlHVOgpAQhCLzMcv0MmjbZc+K1LsYgia+5sDj0pnyNz+xfj86CzjvJhew
-         x3vq/8sO+tohCM5JpMMqKtJy4pqchNnCLRSBVDM3FsJUajv+lZ7N3en83V7PA1/vcLqY
-         zOEtlgVbi9zA3ClcuneTTC9yQNtzziOHoxtMsdJrfhlKhs2o1U486e1U0pPS17K6lRX1
-         oqMA==
-X-Gm-Message-State: AKaTC03hOgwYioscvASFuBQ7vvYRLF2/2UeV1xZgo8hxdvSmlFXDCz9RiWp+Y8Mr7yX5JVlm
-X-Received: by 10.99.184.18 with SMTP id p18mr18310051pge.33.1481231014514;
-        Thu, 08 Dec 2016 13:03:34 -0800 (PST)
+        bh=U7j9yfaCd6iNJveTAwKgY2WHT/IRoC3y4r/O8vLZNJM=;
+        b=jwco5b3F/Kk1qvnYD4fbEt6UVARMKewpDD42yaaayOd/mH4UkuZ1rNCZoDr0on+CFP
+         YrMko3Jv+NmRWC4HEa16A4jth9Yfhr/O1/TZoL3JJpluKDdblmIAkj8sjR5GCmNR610+
+         JLFUyySaXhjhtRQO2GqaimK0vUbFvWDYC77l1VPeEgWElUnwoBMKGcl0N9sT/TVodQWq
+         T1ZS5puWDIRnBTeWtPPrNrXPMihSHFNmXA+AMXT5oGeBWA154JrkunOznzhdQPHiBW1u
+         SMBXntWnLyftZNz6wwID0bNMUisbf6AxLTIniwhiHGw2jRTksym/DVpbk4C5zSCHPRZW
+         YpnQ==
+X-Gm-Message-State: AKaTC03bt1QBANmpGBT8YxohJbAq04ANQ47mWWXprsyGexuo4MTK1qrKTqhk7dTvh7+dM14H
+X-Received: by 10.99.24.84 with SMTP id 20mr136334881pgy.12.1481231015573;
+        Thu, 08 Dec 2016 13:03:35 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:6884:a3d1:aaf8:234b])
-        by smtp.gmail.com with ESMTPSA id y29sm52199550pfd.63.2016.12.08.13.03.33
+        by smtp.gmail.com with ESMTPSA id c8sm52281396pfe.15.2016.12.08.13.03.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 08 Dec 2016 13:03:34 -0800 (PST)
+        Thu, 08 Dec 2016 13:03:35 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv7 1/6] submodule: use absolute path for computing relative path connecting
-Date:   Thu,  8 Dec 2016 13:03:24 -0800
-Message-Id: <20161208210329.12919-2-sbeller@google.com>
+Subject: [PATCHv7 2/6] submodule helper: support super prefix
+Date:   Thu,  8 Dec 2016 13:03:25 -0800
+Message-Id: <20161208210329.12919-3-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.29.g7c00390.dirty
 In-Reply-To: <20161208210329.12919-1-sbeller@google.com>
 References: <20161208210329.12919-1-sbeller@google.com>
@@ -60,60 +60,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current caller of connect_work_tree_and_git_dir passes
-an absolute path for the `git_dir` parameter. In the future patch
-we will also pass in relative path for `git_dir`. Extend the functionality
-of connect_work_tree_and_git_dir to take relative paths for parameters.
-
-We could work around this in the future patch by computing the absolute
-path for the git_dir in the calling site, however accepting relative
-paths for either parameter makes the API for this function much harder
-to misuse.
+Just like main commands in Git, the submodule helper needs
+access to the superproject prefix. Enable this in the git.c
+but have its own fuse in the helper code by having a flag to
+turn on the super prefix.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ builtin/submodule--helper.c | 31 ++++++++++++++++++++-----------
+ git.c                       |  2 +-
+ 2 files changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 6f7d883de9..d4f7afe2f1 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1223,27 +1223,28 @@ int merge_submodule(unsigned char result[20], const char *path,
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 4beeda5f9f..5643848667 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1076,21 +1076,24 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
+ 	return 0;
  }
  
- /* Update gitfile and core.worktree setting to connect work tree and git dir */
--void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
-+void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
- {
- 	struct strbuf file_name = STRBUF_INIT;
- 	struct strbuf rel_path = STRBUF_INIT;
--	const char *real_work_tree = xstrdup(real_path(work_tree));
-+	char *git_dir = xstrdup(real_path(git_dir_));
-+	char *work_tree = xstrdup(real_path(work_tree_));
++#define SUPPORT_SUPER_PREFIX (1<<0)
++
+ struct cmd_struct {
+ 	const char *cmd;
+ 	int (*fn)(int, const char **, const char *);
++	unsigned option;
+ };
  
- 	/* Update gitfile */
- 	strbuf_addf(&file_name, "%s/.git", work_tree);
- 	write_file(file_name.buf, "gitdir: %s",
--		   relative_path(git_dir, real_work_tree, &rel_path));
-+		   relative_path(git_dir, work_tree, &rel_path));
+ static struct cmd_struct commands[] = {
+-	{"list", module_list},
+-	{"name", module_name},
+-	{"clone", module_clone},
+-	{"update-clone", update_clone},
+-	{"relative-path", resolve_relative_path},
+-	{"resolve-relative-url", resolve_relative_url},
+-	{"resolve-relative-url-test", resolve_relative_url_test},
+-	{"init", module_init},
+-	{"remote-branch", resolve_remote_submodule_branch}
++	{"list", module_list, 0},
++	{"name", module_name, 0},
++	{"clone", module_clone, 0},
++	{"update-clone", update_clone, 0},
++	{"relative-path", resolve_relative_path, 0},
++	{"resolve-relative-url", resolve_relative_url, 0},
++	{"resolve-relative-url-test", resolve_relative_url_test, 0},
++	{"init", module_init, 0},
++	{"remote-branch", resolve_remote_submodule_branch, 0},
+ };
  
- 	/* Update core.worktree setting */
- 	strbuf_reset(&file_name);
- 	strbuf_addf(&file_name, "%s/config", git_dir);
- 	git_config_set_in_file(file_name.buf, "core.worktree",
--			       relative_path(real_work_tree, git_dir,
--					     &rel_path));
-+			       relative_path(work_tree, git_dir, &rel_path));
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+@@ -1100,9 +1103,15 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ 		die(_("submodule--helper subcommand must be "
+ 		      "called with a subcommand"));
  
- 	strbuf_release(&file_name);
- 	strbuf_release(&rel_path);
--	free((void *)real_work_tree);
-+	free(work_tree);
-+	free(git_dir);
- }
+-	for (i = 0; i < ARRAY_SIZE(commands); i++)
+-		if (!strcmp(argv[1], commands[i].cmd))
++	for (i = 0; i < ARRAY_SIZE(commands); i++) {
++		if (!strcmp(argv[1], commands[i].cmd)) {
++			if (get_super_prefix() &&
++			    !(commands[i].option & SUPPORT_SUPER_PREFIX))
++				die(_("%s doesn't support --super-prefix"),
++				    commands[i].cmd);
+ 			return commands[i].fn(argc - 1, argv + 1, prefix);
++		}
++	}
  
- int parallel_submodules(void)
+ 	die(_("'%s' is not a valid submodule--helper "
+ 	      "subcommand"), argv[1]);
+diff --git a/git.c b/git.c
+index efa1059fe0..98dcf6c518 100644
+--- a/git.c
++++ b/git.c
+@@ -493,7 +493,7 @@ static struct cmd_struct commands[] = {
+ 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stripspace", cmd_stripspace },
+-	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP },
++	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+ 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+ 	{ "tag", cmd_tag, RUN_SETUP },
+ 	{ "unpack-file", cmd_unpack_file, RUN_SETUP },
 -- 
 2.11.0.rc2.29.g7c00390.dirty
 
