@@ -2,124 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8E561FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 15:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 083BA1FBB0
+	for <e@80x24.org>; Thu,  8 Dec 2016 15:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753677AbcLHPgT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 10:36:19 -0500
-Received: from mout.gmx.net ([212.227.15.19]:65262 "EHLO mout.gmx.net"
+        id S1753802AbcLHPgW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 10:36:22 -0500
+Received: from mout.gmx.net ([212.227.15.15]:56867 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750851AbcLHPgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 10:36:17 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQhyf-1c4ieD0cv7-00U6pE; Thu, 08
- Dec 2016 16:36:00 +0100
-Date:   Thu, 8 Dec 2016 16:35:56 +0100 (CET)
+        id S1750851AbcLHPgU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 10:36:20 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4WRI-1cZwo70wOa-00yiXQ; Thu, 08
+ Dec 2016 16:36:15 +0100
+Date:   Thu, 8 Dec 2016 16:36:14 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH/RFC 0/7] Pie-in-the-sky attempt to fix the early config
-Message-ID: <cover.1481211338.git.johannes.schindelin@gmx.de>
+Subject: [PATCH/RFC 3/7] Mark builtins that create .git/ directories
+In-Reply-To: <cover.1481211338.git.johannes.schindelin@gmx.de>
+Message-ID: <43a2d85a3bf92c9efacad722fafdbea77b409acd.1481211338.git.johannes.schindelin@gmx.de>
+References: <cover.1481211338.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lXbgNJF/WBE9JzCTLUnMgmUlgX85AIpyPaz6Dk7IgJs4SvbZ54/
- PPl32qRu9oYIzrVVIDbhy5EEgzGL36gmcGLr+ztZDZZ6HHOz6Pu7Mh5pHf5lo4KEd5qZoNJ
- qU/J/7hl6fY1CmiWHZf8nGG0kL99yfHd8N5MowFVf5RKjscm056jsEMDszr2dogvZRw3+NH
- bJgROSRYTHpJUAt6JULtA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W+p9vT2cujc=:qxWy9Yv98CMsPbLWIJtk0u
- dHQLwkYWc/Myed65L5q5vHCombFsc/f5DTAWL848e0dTut/mDwedbEVIHt6jNdtALu5qxhJHI
- P2tR0o5ZO8MosVTkF+XlH9zlVgQJ6dIUf+cWTNk/ad7j1gO3TjtP3HPN3ms559BkgElKHjeDn
- 9xzQyzWIbV2xEegXV18d2HNkQHignekp3h6cGo+EEpKS3SY9La80YvRgwjvKWtxn9+4hAi+vn
- HEhi4jPNLHx5CG4l/fltwr4h7nCZEeGIpxOybkyntLa/7Hw1szTPYruNFP/cvNLDk2n3ki3OO
- NOf7cGt9zym+xbzL8rjwh11tyM+ufgKtA7ogn8H08/ZH5EU+hLhavraIwHI8QR326nIXPrlL0
- /GngV+JDDFi0dBONE/0PELnarSuRhsLfK/+8S/z8mHxx1HJBofJg4t4dyHw7mouADa04P+Cde
- K/eK1C82T6yFPVZwnkVWFZJaEtmWQLyf27CiEqcmZPS8syv5FmY2la85mqAeRpBjJgku9blNp
- ow35fjk69E19L6WTp86tDVwDUveK2iD/5c2CUnUCyUbyBDLXs7gk4k3WHC5UZl3M9xHEOq0Sn
- DqKWIH3PUJiH9Zr7yu8F5mPSapun83ILDl/kTXi6yd8K4+lGpYFqxHIV8f/NoVUzX9PKD4L/O
- zjbgqsEX0SBz3w7WxfJC4xp+8kxqEr5cJVi+HGcmNwkgv/hISfEWtP5QKEyZxbtS/UpyGKmMG
- sqoDJckwHBspQl6d/skjqqOhJgA/vCaPRV3AExL8qekjMMVV2xvDtvpAgrgJ/FJjXZ0jZyxmf
- IJ1uMZR
+X-Provags-ID: V03:K0:pD8CbWOs9RoWjvLovHcFLXxTrLy0eT/+FRoL36Fex6SE8OuE2ZZ
+ Gj0HK7owYs/xDHlummuqUT2qC5AiUdpkQDBWYVyDic7JWLiTSaZUtj80CLr0HbH1T2qWP0L
+ q7izkcnqWa1Ai+HiVeSIcxmWLzVQKAGTY5GRfVbQjMA/IB9RXYYRL1gttFPQSoSjo3Xwy2t
+ IHaj+O3IegS5di/OBFUSA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SI4NJbBUWIg=:eXvm6QjZBs6xReWVE4wkX9
+ 1oV7Fxx43yysmN1/9XukvXYB5EMes6tmlvMZRZLBE7JsPg/KQ7xXor7dWmlXpqsTIJYa7he/E
+ OzNGoW06iHlNoDsibJrWnnkhxfcVIMlTTqiBfLsosR0YZEyV7H63i8YKO/qCuRObr0mcOTpFN
+ muYIkAiGyhsy33miKHi6YBVaaang8Nx6TpPY/iuItbSMWkUIpuZeDJWW5T3JuhY20nWi6NDlP
+ agV9hHsXWiYNZN83qaTctjJfxx+yjOZKQRAUAjLduDW/409hfdyZfHtDHCN7DRje2rxw+VHax
+ u+C3oDYlo1WFCaKCS6PMtoN4mHVRHPC2fKE4Qe6wmehot2gEKCdBXoZBHqUJ0FtOBUwtDt1UB
+ 0DtlVy4reqTka7HwFPGtoFITztDhkd1VlKbmPcFz8SvV1rJuVHjnxVbec1lztipVamix0Z2of
+ 2gUsunyBuM1jNw4njgHq4xQHegBRyImgZmlyyCgAHEXkCKiLSeYQcRdaC5UEnuVg9LsKZIEVZ
+ 6VG8jsLSPROM8VxTY8MZyQihKeuPwI1J/tOpaYvKAK329DCTS5hfSUN0z/7ZEHCkgKqI8uetX
+ nW+ojEx70vya46OUMLJSWTtLVuAZi5V58t6SCWxHXcYiwFb8DrtfpKVWHoz0Xcg1X5wADPe/Z
+ Jp+3kEifCZja89PfjFfyV97QZ0a1U1/ZBqs/agL/GTU0CTNtMIQ8JaW9h7tGbIP/5nmzGQz0Y
+ peTAmmPdHQ+dr0NiPLZCiOqC7AfpGwIHpXm5Wftrns3UdO1gxqwljjP/K9/f6TQI7PQ0/EjL2
+ ZPzl0C8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hopefully these patches will lead to something that we can integrate,
-and that eventually will make Git's startup sequence much less
-surprising.
+To refactor read_early_config() so that it discovers .git/config
+properly, we have to make certain that commands such as `git init` (i.e.
+commands that create their own .git/ and therefore do *not* want to
+be affected by any other .git/ directory) skip this discovery.
 
-The idea here is to discover the .git/ directory gently (i.e. without
-changing the current working directory), and to use it to read the
-.git/config file early, before we actually called setup_git_directory()
-(if we ever do that).
+Let's introduce a flag that states for every builtin whether it creates
+its own .git/ directory or not.
 
-Notes:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-- I find the diff pretty ugly: I wish there was a more elegant way to
-  *disable* discovery of .git/ *just* for `init` and `clone`. I
-  considered a function `about_to_create_git_dir()` that is called in a
-  hard-coded manner *only* for `init` and `clone`, but that would
-  introduce another magic side effect, when all I want is to reduce those.
-
-- For the moment, I do not handle dashed invocations of `init` and
-  `clone` correctly. The real problem is the continued existence of
-  the dashed git-init and git-clone, of course.
-
-- There is still duplicated code. For the sake of this RFC, I did not
-  address that yet.
-
-- The read_early_config() function is called multiple times, re-reading
-  all the config files and re-discovering the .git/ directory multiple
-  times, which is quite wasteful. For the sake of this RFC, I did not
-  address that yet.
-
-- t7006 fails and the error message is a bit cryptic (not to mention the
-  involved function trace, which is mind-boggling for what is supposed
-  to be a simply, shell script-based test suite). I did not have time to
-  look into that yet.
-
-- after discover_git_directory_gently() did its work, the code happily
-  uses its result *only* for the current read_early_config() run, and
-  lets setup_git_dir_gently() do the whole work *again*. For the sake of
-  this RFC, I did not address that yet.
-
-
-Johannes Schindelin (7):
-  Make read_early_config() reusable
-  read_early_config(): avoid .git/config hack when unneeded
-  Mark builtins that create .git/ directories
-  read_early_config(): special-case `init` and `clone`
-  read_early_config(): really discover .git/
-  WIP read_config_early(): respect ceiling directories
-  WIP: read_early_config(): add tests
-
- builtin/am.c            |   2 +-
- builtin/blame.c         |   2 +-
- builtin/grep.c          |   4 +-
- builtin/log.c           |   4 +-
- builtin/var.c           |   2 +-
- cache.h                 |   8 ++--
- config.c                | 110 ++++++++++++++++++++++++++++++++++++++++++++++++
- diff.c                  |   4 +-
- git.c                   |  25 +++++------
- pager.c                 |  44 +++----------------
- t/helper/test-config.c  |  15 +++++++
- t/t1309-early-config.sh |  50 ++++++++++++++++++++++
- 12 files changed, 209 insertions(+), 61 deletions(-)
- create mode 100755 t/t1309-early-config.sh
-
-
-base-commit: 8d7a455ed52e2a96debc080dfc011b6bb00db5d2
-Published-As: https://github.com/dscho/git/releases/tag/early-config-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git early-config-v1
-
+diff --git a/git.c b/git.c
+index dce529fcbf..61df78afc8 100644
+--- a/git.c
++++ b/git.c
+@@ -318,12 +318,13 @@ static int handle_alias(int *argcp, const char ***argv)
+ #define RUN_SETUP		(1<<0)
+ #define RUN_SETUP_GENTLY	(1<<1)
+ #define USE_PAGER		(1<<2)
++#define CREATES_GIT_DIR         (1<<3)
+ /*
+  * require working tree to be present -- anything uses this needs
+  * RUN_SETUP for reading from the configuration file.
+  */
+-#define NEED_WORK_TREE		(1<<3)
+-#define SUPPORT_SUPER_PREFIX	(1<<4)
++#define NEED_WORK_TREE		(1<<4)
++#define SUPPORT_SUPER_PREFIX	(1<<5)
+ 
+ struct cmd_struct {
+ 	const char *cmd;
+@@ -412,7 +413,7 @@ static struct cmd_struct commands[] = {
+ 	{ "cherry", cmd_cherry, RUN_SETUP },
+ 	{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+-	{ "clone", cmd_clone },
++	{ "clone", cmd_clone, CREATES_GIT_DIR },
+ 	{ "column", cmd_column, RUN_SETUP_GENTLY },
+ 	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+@@ -438,7 +439,7 @@ static struct cmd_struct commands[] = {
+ 	{ "hash-object", cmd_hash_object },
+ 	{ "help", cmd_help },
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
+-	{ "init", cmd_init_db },
++	{ "init", cmd_init_db, CREATES_GIT_DIR },
+ 	{ "init-db", cmd_init_db },
+ 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+ 	{ "log", cmd_log, RUN_SETUP },
 -- 
 2.11.0.rc3.windows.1
+
 
