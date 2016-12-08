@@ -2,106 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5022D1FBB0
-	for <e@80x24.org>; Thu,  8 Dec 2016 19:02:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85B7620259
+	for <e@80x24.org>; Thu,  8 Dec 2016 19:17:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752737AbcLHTCq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 14:02:46 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:35236 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752658AbcLHTCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 14:02:45 -0500
-Received: by mail-pg0-f42.google.com with SMTP id p66so176793461pga.2
-        for <git@vger.kernel.org>; Thu, 08 Dec 2016 11:02:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=5i57vqDtRXzOzDBB8+S6eV+Pu7+zt0KLptntgaAVjjw=;
-        b=IRrRqrUvSub7joNvIazEgt6gGICbQyiUkaccil++lqBpVU2UtPdtUabFJK6UcqyRcp
-         TQdHmK71MC8dITzkzNVvUYOL8+cPeKlwuWk5sn8j6nTtNTx68wsMdJOQwuAUt/A4XWbs
-         bmvki3WP9AIeFxDLrmjK9rb/PikG7MoCZRpYW6Qy271TgIngmQn/u8PWwpdNWrivz0TV
-         WYn3TSDB4d1m3HmE29MGYBDupAadw4da8fpf+cw7T9dCKJKAdeHFqVDI32E1Rhmi2JWH
-         r9IaZAkjiM7pJWMTaIopz2mvxRq2Spx2T3BQwa/1ZQAW6EfIuO4KQvPw2xNnjJIdS7+C
-         +F4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=5i57vqDtRXzOzDBB8+S6eV+Pu7+zt0KLptntgaAVjjw=;
-        b=AaavhM39t84PebcV2nKKtUUbaPmmgepGVF1tCoS5+j3t7SnhkFb2nGhhKq3AOgr9UR
-         vIj6a+ryepA4aTQWgc3MX+QvVtc+5qFGQ64dj/ETHGD6LgOBudjGHqVxaUJ1i/KLLH+N
-         FNaKDyBX3CIX/f8gYlBMu1HU1KQhTvmP3YI4Z0g8QDPc1PTP96349GW4qm37D71b1/xw
-         caRi8+m15shGHQZGyyF3CI0KZXROY/MNgm32PSSn5lNFt5Ig3cfbGQkC5xvsbn+fsut9
-         FXos9FTWtQc4GN3DMUJq7ljJ+u8DT+7Y1gh4uUnLv/i4h/nGTBbIBIeVLS0QbzwHOtjj
-         +kIw==
-X-Gm-Message-State: AKaTC01caTDp7J/iZ9hgehoGFXmDS6/KmskydESBJ2Eh2pKCqu5i+JZKg30VCtp/9I5qC5pz
-X-Received: by 10.99.5.21 with SMTP id 21mr133633745pgf.32.1481223764527;
-        Thu, 08 Dec 2016 11:02:44 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:5c3f:7794:7672:2048])
-        by smtp.gmail.com with ESMTPSA id i194sm52036722pgc.46.2016.12.08.11.02.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 08 Dec 2016 11:02:43 -0800 (PST)
-Date:   Thu, 8 Dec 2016 11:02:42 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jacob.keller@gmail.com
-Subject: Re: [PATCH] real_path: make real_path thread-safe
-Message-ID: <20161208190242.GA63154@google.com>
-References: <1480964316-99305-1-git-send-email-bmwill@google.com>
- <1480964316-99305-2-git-send-email-bmwill@google.com>
- <xmqqtwagy65q.fsf@gitster.mtv.corp.google.com>
- <20161207001018.GD103573@google.com>
- <b73e61f8-0cff-b33e-118a-e530d367c94c@ramsayjones.plus.com>
- <20161207201409.GA19743@tb-raspi>
- <xmqqtwafwkdt.fsf@gitster.mtv.corp.google.com>
- <20161207221335.GA116201@google.com>
- <20161208075555.GA23595@tb-raspi>
- <6cae7549-72f2-e591-ad48-28d449a62caf@kdbg.org>
+        id S1752834AbcLHTRj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 14:17:39 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60884 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752614AbcLHTRi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 14:17:38 -0500
+Received: from [192.168.178.43] ([92.76.249.62]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEWxh-1cPkNm10DR-00Fhxc; Thu, 08
+ Dec 2016 20:17:31 +0100
+Subject: Re: [PATCH 4/5] Make sequencer abort safer
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20161207215133.13433-1-s-beyer@gmx.net>
+ <20161207215133.13433-4-s-beyer@gmx.net>
+ <alpine.DEB.2.20.1612081627290.23160@virtualbox>
+ <xmqqr35itjor.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <c02708de-8b47-e490-4a1e-77f5727b1156@gmx.net>
+Date:   Thu, 8 Dec 2016 20:17:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6cae7549-72f2-e591-ad48-28d449a62caf@kdbg.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqr35itjor.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:RRLyO50ZDw4S7er6yXqFnUqBaKBxe65X6v7Cjte4h7MMDJIPiO6
+ ZK6Zhhl8gpUPMP5tfHp3Q8BEOumaL6rAdSsmq0tXYfwd2Mmt5UwylAKZimsTrnVz3gfdG4c
+ AlodUgJAHUdFWjGE7CkW7GzZeqIU7ZEMBTvJpz3NlaGPQNxOL1AyBgfx5qZtyP1+1M2+Q0h
+ u12xx7t9e9n23DBtjZxLw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:G3o6gvBDVtA=:Vpm06GmWX6q9hVRfbRWhtS
+ BRZOUF+qhTRDhviHah+Sm5NHkk7mdGHhhP8Xqkc1kEdaoC341LJAtZ313TIGdF4OkjXmf1dMz
+ 0pMq6aw6cevfnoCNTiuzr9ka/SjSJOOccGVKbdDsxsLxQEKHNMeLPy9+HNAW2zSgsnRqZktMA
+ gEhCJ2CXOmNyh3zxXj2fbAGNzgvUSJXLJg9D/58FaKl/1RccVdesiTb8DofU7yhfpobHnLl8/
+ Uv3bsCTvXrr3qhA9jfF1EoO7bBcgnUM6sn2LXOhoS73ObG1J6121K7E+6JsFzckNNqmN+Buht
+ Ufaz6b4clJpj8Pu3SIyqdLin8CMOXWfAd7gWlPE/eDL24t/GjF3g+ECfr2BT9ZJYCEn3sReG5
+ rhMJHXk5b9/V3wuvcI97GXjrAVGzafyqFd2MrXRM1vKLcjsPf9UFdavyL1D47Q5D3tL0yQmF8
+ lhgCKBpUNXhh8/RImQYGbDKu5l6hemng6UUkHkEnrE2aYa8FtOHeA1JwjQcr2Q0zPxP367AJo
+ KbYCn7/AZkkZaY/j0Ous5C/5YWj4sidpo8hsPkrBuTXimF/mh4X8lnprwt+pWJezbI7ubsoXg
+ aYTbI+mmyOkDaM2K+Vvm/sVoU+f8U0fA9w1dRq3yUs9V9BJbZl0I1dOo6m43Rh+ZARyuT9jSp
+ YuxGZRXdObUNxxA7xRP0Ge+7wPT/7B2yql0IeOuDIK7Wk1S9M+zy0gZlml3EeqMAewenmT8BO
+ WIotltX/jtcEKws+1HXSzMTExqHVry+lgRTswQggB3QodP/5G8twQeJYtcuIsJ4+/6ojDpeq7
+ Q+gZu2M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/08, Johannes Sixt wrote:
-> Am 08.12.2016 um 08:55 schrieb Torsten Bögershausen:
-> >Some conversion may be done in mingw.c:
-> >https://github.com/github/git-msysgit/blob/master/compat/mingw.c
-> >So what I understand, '/' in Git are already converted into '\' if needed ?
+Hi,
+
+I'm a little afraid of feeding Parkinson's law of triviality here, but... ;)
+
+On 12/08/2016 06:27 PM, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Only if needed, and there are not many places where this is the
-> case. (Actually, I can't find one place where we do.) In particular,
-> typical file accesses does not require the conversion.
-
-That's convenient, that way I don't have to worry about using '\' as a
-directory separator instead of '/'.
-
+>> On Wed, 7 Dec 2016, Stephan Beyer wrote:
+>>
+>>> diff --git a/sequencer.c b/sequencer.c
+>>> index 30b10ba14..c9b560ac1 100644
+>>> --- a/sequencer.c
+>>> +++ b/sequencer.c
+>>> @@ -27,6 +27,7 @@ GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
+>>>  static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
+>>>  static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
+>>>  static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+>>> +static GIT_PATH_FUNC(git_path_curr_file, "sequencer/current")
+>>
+>> Is it required by law to have a four-letter infix, or can we have a nicer
+>> variable name (e.g. git_path_current_file)?
 > 
-> >It seams that we may wnat a function get_start_of_path(uncpath),
-> >which returns:
-> >
-> >get_start_of_path_win("//?/D:/very-long-path")         "/very-long-path"
-> 
-> We have offset_1st_component().
+> I agree with you that, as other git_path_*_file variables match the
+> actual name on the filesystem, this one should too, together with
+> the update_curr_file() function.
 
-Thanks for letting me know this function exists, that makes my job a bit
-easier.
+I totally agree with that (and I don't know why I used "curr", probably
+just because it looked consistent and good...).
 
--- 
-Brandon Williams
+However:
+
+> -static void update_curr_file()
+> +static void update_current_file(void)
+
+This function name could lead to the impression that there is some
+current file (defined by a global state or whatever) that is updated.
+
+So I'd rather rename the *file* to one of
+
+ * sequencer/abort-safety (consistent to am, describes its purpose)
+ * sequencer/safety (shorter, still describes the purpose)
+ * sequencer/current-head (describes what it contains)
+ * sequencer/last (a four-letter word, not totally unambiguous though)
+
+> By the way, this step seems to be a fix to an existing problem, and
+> the new test added in 3/5 seems to be a demonstration of the issue.
+> If that is the case, shouldn't the new test initially expect failure
+> and updated by this step to expect success?
+
+That's usually a matter of taste that I sometimes also discuss with
+colleagues in other projects... However, for the git test suite with its
+"known breakage" behavior, your recommendation is surely the best way to
+do it (aside from introducing the test and the fix in one commit... but
+that does not show in the history that there actually was that breakage)
+
+~Stephan
