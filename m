@@ -2,114 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D14231FF7F
-	for <e@80x24.org>; Fri,  9 Dec 2016 09:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EBF41FF7F
+	for <e@80x24.org>; Fri,  9 Dec 2016 09:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933002AbcLIJNQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 04:13:16 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:57992 "EHLO
-        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932247AbcLIJNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 04:13:14 -0500
-X-Greylist: delayed 43238 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Dec 2016 04:13:14 EST
-Received: from homiemail-a21.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
-        by hapkido.dreamhost.com (Postfix) with ESMTP id 864154284
-        for <git@vger.kernel.org>; Thu,  8 Dec 2016 13:12:34 -0800 (PST)
-Received: from homiemail-a21.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id C3912300074;
-        Thu,  8 Dec 2016 13:12:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=YnST/
-        86kbZUQ9uhKJCsl6mWKsxs=; b=h88Dkyhk6b+or4diXXhKQuwyW2FwLyCcHnwAC
-        B7IfbylWw+VjlYfe/gNasmzi9Q6CP9BZ3sRQ0tkfG0pMvqpYdAhWw3lj4aOlWtQQ
-        /hWDhrWgaB1m5M4yMGUHLaBkAoS2kg9B3h/36Q+9zNYuBMro/FMj4GCFjfXbQv3X
-        2uJfCo=
-Received: from [172.31.11.72] (gzac10-107-1.nje.twosigma.com [208.77.214.155])
-        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 424C2300061;
-        Thu,  8 Dec 2016 13:12:33 -0800 (PST)
-Message-ID: <1481231552.20894.20.camel@frank>
-Subject: Re: [REGRESSION 2.10.2] problematic "empty auth" changes
-From:   David Turner <novalis@novalis.org>
+        id S932564AbcLIJrk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 04:47:40 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34478 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932245AbcLIJrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 04:47:37 -0500
+Received: by mail-pg0-f67.google.com with SMTP id e9so1843824pgc.1
+        for <git@vger.kernel.org>; Fri, 09 Dec 2016 01:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IjOXpeO1igQlsE5ABOYrqMewBgZpUWQLxUZ2dgCo2QE=;
+        b=ZzqfMCwjtpECYYFaLm6pMgXQU7SJokjypQGL3Pu2p0V04hHrTh6JOcHz6HvBJMjDbi
+         fb7ESNOxbQdtGB2lDG5lZbDVMw9qpos0c5bbTgdBWlWSYbkmZmJR0Amdm7y1Ux00hdvR
+         fjoIjgQPEuxfxyKbLHH0jkAdnQdXTJdfe6AjL4w3tWJ94YKYYFFBh/X3mtF/apI4BoKn
+         t/fYn4ZG/XqC9UuZrmfOhrz+Ngf86PwZANwgk76oVFggIZJbZc5T1LJVTaQRyMrBgnU+
+         0Tv5bLMEsg2JGzuD+kuEgUtUrazxMNPWlft/5eE4zbHQCRZatL/2dmrOfg2tzSVTtObX
+         feCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IjOXpeO1igQlsE5ABOYrqMewBgZpUWQLxUZ2dgCo2QE=;
+        b=m9KXhbtGB7GuRAOdou0jbjoQBQEFQtdH/gOWh0ryeDDKmxOWP/j7ZMcUQ9N3L2ucvl
+         AZlm74P5X3bEwfsfIqd1syXMOVEMskLLPj6r3afBdQ+NES5L7la6tZfKcMZFr5/BkJC5
+         zFDgfVWhtQRV7CiuDP7CN4YAhcATmAn8PxxwHjcv+MSzbbkjx7eZcaUAeP/J83LbHU8V
+         9mF4VN4x7akaUgP+pmphPbc2Ad1GywbOzUxZzCnLsW12oSZLqM5DXxrOAB6ljdpezoyE
+         oE+pxoaufJfKzIi8IVSpVcAu/0ZVzTjXTrB3zqV9G8kM9GNTgHTQbYHVXNfO2k78SpNe
+         NjTg==
+X-Gm-Message-State: AKaTC02qVxXNG958zLYbHEU4gGzUR21DRz4gzUouuleeoMKrRzTgcWS1PveM5O9Bu5hENQ==
+X-Received: by 10.98.73.1 with SMTP id w1mr80979381pfa.123.1481276857171;
+        Fri, 09 Dec 2016 01:47:37 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id v82sm56202528pfi.6.2016.12.09.01.47.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Dec 2016 01:47:35 -0800 (PST)
+Date:   Fri, 9 Dec 2016 01:47:33 -0800
+From:   David Aguilar <davvid@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Date:   Thu, 08 Dec 2016 16:12:32 -0500
-In-Reply-To: <alpine.DEB.2.20.1612081538260.23160@virtualbox>
-References: <alpine.DEB.2.20.1612081538260.23160@virtualbox>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Cc:     "P. Duijst" <p.duijst@gmail.com>, git@vger.kernel.org
+Subject: Re: Error after calling git difftool -d with
+Message-ID: <20161209094733.f2ism4snbrsbe2nw@gmail.com>
+References: <5f630c90-cf54-3a23-c9a9-af035d4514e0@gmail.com>
+ <alpine.DEB.2.20.1612021704170.117539@virtualbox>
+ <20161205051510.itftw4hyzkv6nnxn@gmail.com>
+ <c0c8c333-adfa-ad58-f1ec-7239a3a16528@gmail.com>
+ <alpine.DEB.2.20.1612051142550.117539@virtualbox>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1612051142550.117539@virtualbox>
+User-Agent: NeoMutt/20161104 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2016-12-08 at 15:47 +0100, Johannes Schindelin wrote:
-> Hi Dave,
+On Mon, Dec 05, 2016 at 11:56:31AM +0100, Johannes Schindelin wrote:
+> Hi Peter,
 > 
-> I got a couple of bug reports that claim that 2.10.2 regressed on using
-> network credentials. That is, users regularly hit Enter twice when being
-> asked for user name and password while fetching via https://, and cURL
-> automatically used to fall back to using the login credentials (i.e.
-> authenticating via the Domain controller).
+> On Mon, 5 Dec 2016, P. Duijst wrote:
 > 
-> Turns out those claims are correct: hitting Enter twice (or using URLs
-> with empty user name/password such as https://:tfs:8080/) work in 2.10.1
-> and yield "Authentication failed" in 2.10.2.
+> > On 12/5/2016 06:15, David Aguilar wrote:
+> > > On Fri, Dec 02, 2016 at 05:05:06PM +0100, Johannes Schindelin wrote:
+> > > >
+> > > > On Fri, 2 Dec 2016, P. Duijst wrote:
+> > > >
+> > > > > Incase filenames are used with a quote ' or a bracket [  (and
+> > > > > maybe some more characters), git "diff" and "difftool -y" works
+> > > > > fine, but git *difftool **-d* gives the next error message:
+> > > > >
+> > > > >     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
+> > > > >     $ git diff
+> > > > >     diff --git a/Test ''inch.txt b/Test ''inch.txt
+> > > > >     index dbff793..41f3257 100644
+> > > > >     --- a/Test ''inch.txt
+> > > > >     +++ b/Test ''inch.txt
+> > > > >     @@ -1 +1,3 @@
+> > > > >     +
+> > > > >     +ddd
+> > > > >       Test error in simple repository
+> > > > >     warning: LF will be replaced by CRLF in Test ''inch.txt.
+> > > > >     The file will have its original line endings in your working
+> > > > >     directory.
+> > > > >
+> > > > >     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
+> > > > >     *$ git difftool -d*
+> > > > >     *fatal: Cannot open '/d/Dev/test//Test ''inch.txt': No such file or
+> > > > >     directory*
+> > > > >     *hash-object /d/Dev/test//Test ''inch.txt: command returned error:
+> > > > >     128*
+> > > > >
+> > > > >     peter@scm_ws_10 MINGW64 /d/Dev/test (master)
+> > > > >     $
+> > > > >
+> > > > >
+> > > > > This issue is inside V2.10.x and V2.11.0.
+> > > > > V2.9.0 is working correctly...
+> > > > You say v2.11.0, but did you also try the new, experimental builtin
+> > > > difftool? You can test without reinstalling:
+> > > >
+> > > >  git -c difftool.useBuiltin=true difftool -d ...
+> > >
+> > > FWIW, I verified that this problem does not manifest itself on Linux,
+> > > using the current scripted difftool.
+> > >
+> > > Peter, what actual diff tool are you using?
+> > >
+> > > Since these filenames work fine with "difftool -d" on Linux, it
+> > > suggests that this is either a tool-specific issue, or an issue
+> > > related to unix-to-windows path translation.
+> > 
+> > @Johannes: "git -c difftool.useBuiltin=true difftool -d" works OK :-), beyond
+> > compare is launching with the diff's displayed
 > 
-> I tracked this down to 5275c3081c (http: http.emptyauth should allow empty
-> (not just NULL) usernames, 2016-10-04) which all of a sudden disallowed
-> empty user names (and now only handles things correctly when
-> http.emptyAuth is set to true specifically).
+> Perfect.
 > 
-> This smells like a real bad regression to me, certainly given the time I
-> had to spend to figure this out (starting from not exactly helpful bug
-> reports, due to being very specific to their setups being private).
+> In that case, I think it is not worth fixing the scripted tool but focus
+> on getting rid of it in favor of the builtin version.
 > 
-> I am *really* tempted to change the default of http.emptyAuth to true, *at
-> least* for Windows (where it is quite common to use your login credentials
-> to authenticate to corporate servers).
-> 
-> Before I do anything rash, though: Do you see any downside to that?
+> It's not like it is the only problem with having difftool implemented
+> as a script...
 
-I know of no reason that shouldn't work.  Indeed, it's what we use do
-internally.  So far, nobody has reported problems.  That said, we have
-exactly three sets of git servers that most users talk to (two different
-internal; and occasionally github.com for external stuff).  So our
-coverage is not very broad.
+I just sent some patches[1] that makes it so that difftool always
+operates from the top-level of the repo, particularly when
+calling hash-object.  They also eliminate using paths with
+embedded "//" in them, both of which may have caused this issue
 
-If you're going to do it, tho, don't just do it for Windows users -- do
-it for everyone.  Plenty of Unix clients connect to Windows-based auth
-systems.
+Though we can side-step this specific issue with the new builtin
+difftool, if our use of hash-object with double-slashed absolute
+paths was not the problem reported above, then another
+possibility is that there's a problem in the Git.pm Perl module,
+which affects more than just difftool.
 
-That said, I could imagine that there are cases where it would cause
-failures for a different set of users.  I don't know of any off the top
-of my head, but this is not my area of expertise.
+I'm curious to understand the root cause of the problem.
 
-We could move closer to the old behavior with something like:
+Does Git.pm go through a shell on Windows?
 
-        if (!http_auth.username || !*http_auth.username) {
-                if (curl_empty_auth)
-                        curl_easy_setopt(result, CURLOPT_USERPWD, ":");
-                if (!http_auth.username)
-                        return;
-        }
+Why was hash-object complaining about the correct path,
+but reported that it didn't exist?
+Did having "//" in the path cause the problem?
 
-This is very ad-hoc, in that I have not examined exactly when
-http_auth.username would be null vs empty; it merely attempts to get as
-close as possible to the old behavior.
+Enlightenment from the GFW internals perspective is much
+appreciated.
 
-[Side note: I was curious if 26a7b23429 would have been a better fix for
-our problem.  It appears that the answer is no; using that patch but
-minus my 5275c3081c does not work for us.]
+Since this reportedly worked in older versions, I'm led to
+believe that 32b8c581ec (difftool: use Git::* functions instead
+of passing around state), which first introduced the use of
+paths with embedded "//", was the root cause.  If this is true
+then the patches should fix the scripted difftool on Windows.
 
+[1] http://public-inbox.org/git/20161209085848.10929-1-davvid@gmail.com/T/#t
 
+cheers,
+-- 
+David
