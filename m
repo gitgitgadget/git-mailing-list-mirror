@@ -2,83 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 007A91FBB0
-	for <e@80x24.org>; Fri,  9 Dec 2016 00:22:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39FA51FBB0
+	for <e@80x24.org>; Fri,  9 Dec 2016 00:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932946AbcLIAWE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 19:22:04 -0500
-Received: from mail.nottheoilrig.com ([52.27.13.164]:38996 "EHLO
-        mail.nottheoilrig.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932785AbcLIAWD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 19:22:03 -0500
-Received: from mail.nottheoilrig.com (localhost [127.0.0.1])
-        by mail.nottheoilrig.com (Postfix) with ESMTP id DFA3C22693
-        for <git@vger.kernel.org>; Fri,  9 Dec 2016 00:22:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nottheoilrig.com;
-        s=3532ada; t=1481242922;
-        bh=5O+u0mmDQrjAs1OkIm9xfKJgLMHLrk2cb8OuZBx5nJ4=;
-        h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
-        b=WofLqlLhKrl/ownbzowAtDbwiK8KZXhM1nKuaa47oRRdbLrW76fAb5Yhhcd8shNrQ
-         VIt75lq8W6bJ5xDLv2lY9u8SUM1IdeXqg/IkXAO4ulkQ+VKZFfyruP+QC8CA79XBtY
-         J6tIT6snK5BCNRYZxWUsyxYuCTeXOMSucruDhjQ4=
-Received: from [192.168.0.10] (S0106c8fb26402908.ek.shawcable.net [24.66.132.201])
-        by mail.nottheoilrig.com (Postfix) with ESMTPSA;
-        Fri,  9 Dec 2016 00:22:02 +0000 (UTC)
-Subject: Re: [PATCH v4] diff: handle --no-abbrev in no-index case
-To:     Junio C Hamano <gitster@pobox.com>
-References: <20161206010134.21856-1-jack@nottheoilrig.com>
- <20161206165614.22921-1-jack@nottheoilrig.com>
- <xmqqtwaerq1x.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-From:   Jack Bates <bk874k@nottheoilrig.com>
-Message-ID: <763ddb21-f735-342b-45a4-2f22e03dd346@nottheoilrig.com>
-Date:   Thu, 8 Dec 2016 17:22:01 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.4.0
+        id S932580AbcLIA0X (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 19:26:23 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62837 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753882AbcLIAZt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 19:25:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C04B757542;
+        Thu,  8 Dec 2016 19:25:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qitOsUFMgpIeZVa/ohZg8psgkyk=; b=Jut2HY
+        pR/e1hWjIYF21OJCwsUIyGss6MJH+s2t4VZ/Z4L51JW++thwv5qI5jW18HQ/Ae+Z
+        8vDQjezDeZVLJDWbU06fe14XiAUMA8WOR3jCTKbrd/zRsWPSvniS0/wd0aeCckbx
+        ug7t16FNBO2LDGcZKigv4Xn+ZSzjDaoYXXOCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jKSBshoToxaKYG5QJLnd9mOU/WYpwv/v
+        cKT65z0FwQtm41jzVdjr7RsjbkEtRdwe75dC1ne/gTM1rnq1jokAgSzXmSr+FzUm
+        orC6EcH2AXLOyGnpWxRzykZecbD59eOt2K7HIcpd99qGo0kbNWsI1eBtFJ28LZht
+        skm69IdpKvQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B8EB857540;
+        Thu,  8 Dec 2016 19:25:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 39D885753E;
+        Thu,  8 Dec 2016 19:25:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH v2 00/16] pathspec cleanup
+References: <1481061106-117775-1-git-send-email-bmwill@google.com>
+        <1481223550-65277-1-git-send-email-bmwill@google.com>
+Date:   Thu, 08 Dec 2016 16:25:30 -0800
+In-Reply-To: <1481223550-65277-1-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Thu, 8 Dec 2016 10:58:54 -0800")
+Message-ID: <xmqqk2barls5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtwaerq1x.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: FE25BD82-BDA5-11E6-9B54-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/12/16 03:53 PM, Junio C Hamano wrote:
-> Jack Bates <bk874k@nottheoilrig.com> writes:
->> @@ -3364,6 +3365,7 @@ void diff_setup(struct diff_options *options)
->>
->>  	options->file = stdout;
->>
->> +	options->abbrev = DEFAULT_ABBREV;
->
-> This is a new change relative to your earlier one.
->
-> I looked at all the callers of diff_setup() and noticed that many of
-> them were initializing "struct diff_options" that is on-stack that
-> is totally uninitialized, which means they were using a completely
-> random value that happened to be on the stack.
->
-> Which was surprising and made me wonder how the entire "diff" code
-> could have ever worked correctly for the past 10 years, as it's not
-> like all the users always passed --[no-]abbrev[=<value>] from the
-> command line.
->
-> In any case, this cannot possibly be introducing a regression; these
-> callsites of diff_setup() were starting from a random garbage---now
-> they start with -1 in this field.  If they were doing the right
-> thing by assigning their own abbrev to the field after diff_setup()
-> returned, they will continue to do the same, and otherwise they will
-> keep doing whatever random things they have been doing when the
-> uninitialized field happened to contain -1 the same way.
->
-> I didn't look carefully at the additional tests, but the code change
-> looks good.
->
-> Thanks.
+Will queue, but with fixes on issues spotted by my pre-acceptance
+mechanical filter squashed in, to fix style issues in the
+destination of code movements.
 
-Great, thanks for reviewing it!
+ pathspec.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/pathspec.c b/pathspec.c
+index 08abdd3922..cabc02e79b 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -68,7 +68,7 @@ static struct pathspec_magic {
+ 	const char *name;
+ } pathspec_magic[] = {
+ 	{ PATHSPEC_FROMTOP, '/', "top" },
+-	{ PATHSPEC_LITERAL,'\0', "literal" },
++	{ PATHSPEC_LITERAL, '\0', "literal" },
+ 	{ PATHSPEC_GLOB,   '\0', "glob" },
+ 	{ PATHSPEC_ICASE,  '\0', "icase" },
+ 	{ PATHSPEC_EXCLUDE, '!', "exclude" },
+@@ -290,8 +290,8 @@ static void strip_submodule_slash_expensive(struct pathspec_item *item)
+ 			item->len--;
+ 			item->match[item->len] = '\0';
+ 		} else {
+-			die (_("Pathspec '%s' is in submodule '%.*s'"),
+-			     item->original, ce_len, ce->name);
++			die(_("Pathspec '%s' is in submodule '%.*s'"),
++			    item->original, ce_len, ce->name);
+ 		}
+ 	}
+ }
+@@ -364,10 +364,10 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+ 	}
+ 
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
+-	    strip_submodule_slash_cheap(item);
++		strip_submodule_slash_cheap(item);
+ 
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+-	    strip_submodule_slash_expensive(item);
++		strip_submodule_slash_expensive(item);
+ 
+ 	if (magic & PATHSPEC_LITERAL) {
+ 		item->nowildcard_len = item->len;
+
+
