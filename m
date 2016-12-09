@@ -2,75 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 873391FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 16:20:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D3311FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 16:53:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753837AbcLIQUP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 11:20:15 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34305 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933823AbcLIQUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 11:20:09 -0500
-Received: by mail-io0-f196.google.com with SMTP id y124so7804849iof.1
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 08:20:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=NVUJU8maPi9q+srdIBaTGdatO/MZ78QnC8/5enbhaxg=;
-        b=rsZ6SDF0L1KB1kWMTQ30o5vPq6BIVf89QhuU1k2+0syfD3z84MNZgqXM2KxWFxHoNb
-         1UxGYf7Hc4PBREYwAPYFPKZ+YpWKkjNPhzZ+HQtMAIa8S0z/C7vaVLQqIvvRB4/l1Zcc
-         246if8h24QUzB+R6Q1KZEApVI1leHSHO7YYJ7IX7vEygz+pxKHd7ZmF0pL6AYoBPDbtv
-         AhYD10RypOtkq9N2+lFejo+newbv5wdHyT4CspXoFd4TF9hZyKJnGt9JRYiZTM3vMlBC
-         CqltqdK47vVLOK/1WpH62Qy8qRWsKbB1pVGW9gEpoHRPryTlKWpn/h5jlWaByo2hD5sL
-         KsDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=NVUJU8maPi9q+srdIBaTGdatO/MZ78QnC8/5enbhaxg=;
-        b=fbvvMiUIB2nxLyG8ipv7Wzv+ZHt2PTR/XBKbN9N/I6vmfja6c7hY0pByiHvR4FgFqC
-         s87PLtTLGdonuRTMXPrDLiKPW1KlmctxyLnjhL9BheM1pP3dBpXGZURfUhxz+1Z/xk5t
-         I0SyjOBDNfLaH6Z4+9ezxEAfHvB6qQkST3MsQrQGgYO9981IKFEMQ7jaahrzZa1KSqGU
-         evj5YlWg//26q6MEuWm11ufz6iFgigietav8pC3EaJktFt4kGsgXbfueFfCTk/tv14jn
-         yAKx3vK3JeK6rTFUReJISCfY1z7WsdvhLzn1Ofgv5ZIDx3ko2OocJfK9yu2esKwRnAnb
-         GJwg==
-X-Gm-Message-State: AKaTC01LyH9NJKqm5otI1M3ATU33ZwZB2rLtWJFtNMKxNzMbzgXM5ORwbLpthAoLlPMdLw==
-X-Received: by 10.107.34.8 with SMTP id i8mr64915264ioi.132.1481300408476;
-        Fri, 09 Dec 2016 08:20:08 -0800 (PST)
-Received: from [192.168.1.4] ([208.157.186.52])
-        by smtp.gmail.com with ESMTPSA id m83sm14951721ioi.11.2016.12.09.08.20.07
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Dec 2016 08:20:07 -0800 (PST)
-From:   Kyle Flesness <flesness@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: Git 2.11.0 on OS X El Capitan 10.11.6
-Message-Id: <4F041053-81EE-4EB3-BA96-F5E10D51A12C@gmail.com>
-Date:   Fri, 9 Dec 2016 10:20:07 -0600
-To:     git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        id S933812AbcLIQxM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 11:53:12 -0500
+Received: from mout.gmx.net ([212.227.15.19]:65091 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932361AbcLIQxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 11:53:11 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfBX6-1czRbO2fbk-00omZq; Fri, 09
+ Dec 2016 17:52:58 +0100
+Date:   Fri, 9 Dec 2016 17:52:56 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 0/7] Pie-in-the-sky attempt to fix the early config
+In-Reply-To: <CACsJy8DDwKhOBOxD_yOf2MfhxP4_TDDj3AwCf25ct6YH3TGp6g@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1612091722290.23160@virtualbox>
+References: <cover.1481211338.git.johannes.schindelin@gmx.de> <CACsJy8DDwKhOBOxD_yOf2MfhxP4_TDDj3AwCf25ct6YH3TGp6g@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:RALpnT2AKyODh5WaK7LSYefNnGoMzXOLi0h1fpa3YMYyeJKprww
+ ZgT/DMS3ZrvH/G4mKYYP8DAWCyxTQmk62nW3cLvv+HZIYIaabocfRlrBLnyUu531pxe1teX
+ xGnIb+xZ8QBXQEO8smV2M2HQCmkAh4Y8zwv3ZRqJR86Z/gwftefJMDKze8+6NEfesh1iRio
+ KYqjA6nQG+fKbVWc5Iitg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t4QayL+q7Mg=:74MKWf2Muu8+w5CdHpCCN0
+ FzCfmu2F6SsMXSRM57pukMSadITjJuIw/Y45Y6DiOGHqs9M1CC0Wi8mI8sY4JMO7vD90RiEEW
+ 0TyY6G+US9EHjuLTRgKKMJUtLqzdfiSwse9O7BXr0clb87M3Ib9/n/3OED4sOVCJ0iOQl5CBW
+ 1g5ecG1vopHDWqDp9+lfIiK6amT8RgKII02XlS8h5oelwAmeQOqCJ7Vnf+uQVCLB3emXGpGki
+ Sy14QFbnnOVYLA53TneQRZxUK7RmWFdRd5vp8a3SsdSm0Ktbod+eoj5hFG3A7ajg5BnWgzQj1
+ nAjNfAIf+RzyqlHA0g3rWM6EwgBnkrechhnNHmhrXYIvKghrUr6NbpIPJOEiDYk+SZQRyBjsP
+ IKJSDHYS+O4Qg+uZDnKgZ2k0ju+o/NSIRBh0EwIcPkchBy2EkKZ11ssfOrc6wJgNIqOTTQTsd
+ iRg4T3VNMDzH06qo13sTOAY9UjL/wdv1hjR/VlnMrL0y+N1jmU5i4VHsy9iWSuDIgMzY7sDLR
+ X5Yz6yyIkNw89H8OjHhLz8U9qhphDrUnCqU8tVuMYRPpBCzfMnkdtzxbQf0pk/61H5v4FAbaS
+ ydd7g3VZYC6lckWahiC7CHovTcdW/QB1jYk1L68eFRihL/46CdHeoldmHeKOK9fPRGP7+pKo4
+ UQWhr1n7fMY/0qp0uOk7iY1biTZSkxWUNyP0/E1qO7nR2ABmL5UkcSVijtnLbXRghcNIfmhPb
+ 22Mb9CY03Tg1kY7JF1GMRs7dGDqs66TCWWp5CPve6+n3u3FMbCH+NBdA5m9ms2Dp1FZXEHgv1
+ Z6OR/+i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello! Thanks for taking the time to read this bug report, I am =
-operating a mac book pro with OS X El Capitan 10.11.6 and attempting to =
-download git 2.10.1, the installation appears to finalize with no =
-problems but Git is not at the download destination from the designated =
-path. Will 2.11.0 be compatible with OS X El Capitan 10.11.6? Any other =
-solutions you might recommend?
+Hi Duy,
 
-Thank you for your time and hard work!!
+On Fri, 9 Dec 2016, Duy Nguyen wrote:
 
-Cheers,
+> On Thu, Dec 8, 2016 at 10:35 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > Hopefully these patches will lead to something that we can integrate,
+> > and that eventually will make Git's startup sequence much less
+> > surprising.
+> 
+> What did it surprise you with?
 
-Kyle=
+I mentioned a couple of WTFs elsewhere:
+
+- that it changes the working directory (personally, I am not surprised,
+  just because I was exposed to the Git source code for 10+ years,
+  however, I know developers who do not share that experience and find that
+  feature... interesting)
+
+- that there are multiple code paths to do essentially the same thing, but
+  in an incompatible manner: setup_git_directory() and setup_git_env()
+  (and possibly more)
+
+- that some environment variables are set, and need to be unset (or even
+  possibly reset to no-longer-known values) to allow subprocesses to
+  access different repositories
+
+- that git_path() can be used before setup_git_directory() without
+  failure, but wreaks havoc with subsequent git_config() calls.
+
+- that the setup_git_directory() cascade is completely oblivious of
+  whatever config has already been read (possibly requiring clearing)
+
+- that setup_git_directory() *returns* the prefix, even stores it in
+  startup_info, but a subsequent call to setup_git_directory() returns
+  NULL
+
+- that as a consequence, builtins that require the prefix to work if there
+  is any, but do not necessarily require a repository to begin with, think
+  `git diff`, *must not* be marked with RUN_SETUP_GENTLY
+
+- that check_repository_format() sets have_repository=1
+
+- that setup_git_directory() is a oneliner, calling
+  setup_git_directory_gently(NULL), when it would be more logical to
+  simply make setup_git_directory() accept the "nongit_ok" parameter
+
+- that setup_git_directory_gently() is not at all gentle when the
+  parameter is NULL
+
+- that resolve_gitdir() does not, in fact, resolve any git directory, but
+  only tests a specified path whether it refers to a .git/ directory or to
+  a .git file
+
+- that resolve_gitdir() actually tests for a .git *file*
+
+- that resolve_gitdir() is not used in setup_git_directory_gently_1()
+
+- that resolve_gitdir() tries the order directory,file and
+  setup_git_directory_gently_1() tries the opposite order
+
+- that the handling of the ceiling directories is hardcoded into the
+  setup_git_directory_gently_1() function
+
+- that a ceiling directory of /home/hello/world does not prevent Git from
+  looking at /home/hello/world/.git/
+
+- that canonicalize_ceiling_entry()' relationship to ceiling directories
+  is rather coincidental when the name suggests that it is very specific
+
+- that canonicalize_ceiling_entry() does not, in fact, canonicalize
+  non-absolute entries
+
+Need I go on? I could, you know...
+
+> I can see that I disrespect the ceiling directory setting, perhaps
+> that's that.
+
+No, I actually see a lot of good reasons for the ceiling directories.
+
+Ciao,
+Dscho
