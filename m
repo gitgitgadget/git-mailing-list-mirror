@@ -2,80 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD741FF7F
-	for <e@80x24.org>; Fri,  9 Dec 2016 11:33:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02D541FF7F
+	for <e@80x24.org>; Fri,  9 Dec 2016 11:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932393AbcLILdl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 06:33:41 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:32848 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753645AbcLILdk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 06:33:40 -0500
-Received: by mail-io0-f172.google.com with SMTP id d9so51323934ioe.0
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 03:33:40 -0800 (PST)
+        id S933222AbcLILfs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 06:35:48 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35662 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932468AbcLILfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 06:35:46 -0500
+Received: by mail-pf0-f195.google.com with SMTP id i88so1102445pfk.2
+        for <git@vger.kernel.org>; Fri, 09 Dec 2016 03:35:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2EabwVJpbMs8WR1lnXC5kXO4I1SR1dJI8Opr87kB2XQ=;
-        b=YiV3MhS4AwhuZ2AF3pDIAYhKQkafruB4Q6UVe5ykPfVI1URubgMY3hoXnVNZyOp4Wb
-         r+RQbD16RcJSTS0G9tX+X5J1VX6CZgAUxTCTYkgSLvXjYlXwnaenIj3/fKSk7NNEIGe/
-         6Emk89HZu3436T0ixC2aqAbPg1xy84UWO3YgghOzMeUsMZ4mzyBt3GPCHQTHxRQkhDch
-         5L61NrLbLWh6dXxd1SgRw/tdZxFZleNiqZS3K2vXiVkLCHTS/KK2jYdwxtVICnNqr3t1
-         +FadFYr17eXlXCxsyURtpOWPRy8+oB0hBEnxlu0m7P+g++JBSzj6zwB9KzccoP4Fdwjn
-         qH/Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=G/s9DhHFGsCOgmtQIabR18uccBduZA9qcRFTW85JCr0=;
+        b=D2kiRSvn/FzZ5UlDywUTTiLjElSe4wrU4vlqIlHCVxuQtcSUIxnHfdL2/DhW3kwBwg
+         1gAwUcMvGE/9XHzzGap7kQRiLID+FdmoevK7BpDDv3KBZaIbTDYKpNUmgGfc7/4TnF2Q
+         ZS2w3bckZbMYG2M8BMtB+kHCevnO2eol0HhG4KIQuB1T+zlbugQG9HoNzFBdbxa4xx/j
+         gdM45hSOJHRTZSU3knbgDOSv/wO0+X7GX+w1SBOBil+bJ1JY/NkXAN7Jj0c3qaLsu49X
+         06mC2bR1SdBkXr+sDx8U2+5nYnH7sw4ueoHIiseBrYeVJ6cDcUsmz1Ot3gwbPvRaGJFf
+         jHQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2EabwVJpbMs8WR1lnXC5kXO4I1SR1dJI8Opr87kB2XQ=;
-        b=TQLJxYy9iJ3/vTqV09Ul0ifvkKhdFHSYu3eT/BRVL7n6A8EpIf07X9HeVWwd/2ciyi
-         PfqV2B7XpChM/D4B4uC1oF8Rcz60Ty+5w2riNh9YZ4cY63WnqpYbEMGZj0DmTfGPaKxh
-         fKF+QxcC+PAjWtagZhv2+d/d5a5S0Gh4T1Slhw798Ej5kMhFs9FBwjcHHVMGOXA28j2U
-         brBrhXNLqssA0J5CdXvm4Wz6VklTc+eSunA6bnj3GqR8aHwfMDokNgZvHDNMupMyyn6y
-         ftC1Sh8F793w2O4pT32+o5XBuTfMIDISTA5/zOX1pGC7lp+O0XOc8BESMJ7vF3BlPtuS
-         r96w==
-X-Gm-Message-State: AKaTC00FZeARuQt3n/clcWQ3fI7b3d+OV2giFAcdVBzvsjq2cC7UVF4D2w2pV9byT6/ibBMtvSGhFuc9GDaq8Q==
-X-Received: by 10.36.184.194 with SMTP id m185mr6189319ite.3.1481283219518;
- Fri, 09 Dec 2016 03:33:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=G/s9DhHFGsCOgmtQIabR18uccBduZA9qcRFTW85JCr0=;
+        b=Ngy4xr+/03EOkm19lITb6ISuDyRJHaS6ssWyHJZn/ObM6SSCSDDFTjoTWzf6xW5veM
+         LbM7LohT3dPn+t1RkJe53pEsGrfncGm7y7pJHqx+Jw17Yxjy4SqgukggG/JNjF8pOWFR
+         MVTmG59w3OiCvmN1ORU83ceueHJdOyLSArbdBJlhhPwmkIooM0nZxCIsM5vtbVhoNTdQ
+         t/Wd3bSiJVpHhKiX4l65nA87SkaKSRfjgRGiYyB/cq1oLn6KzpC9TIrgZXK0rvAm1Rr4
+         vUYIL5KGwpPZOwk2sH93ZuVIjjpyvZOPTuVdBHsrSmCqsgwxQDvTQEe1rHJtgXjUodMn
+         lC5A==
+X-Gm-Message-State: AKaTC02CsaalB8WzAuDlf220xPJGVU/KjjyHZgRnmciibwDgOzM9hqtc2F5n5gIkwlbEIg==
+X-Received: by 10.99.113.87 with SMTP id b23mr24881825pgn.41.1481283345902;
+        Fri, 09 Dec 2016 03:35:45 -0800 (PST)
+Received: from ash ([115.73.166.29])
+        by smtp.gmail.com with ESMTPSA id 65sm57080659pfl.21.2016.12.09.03.35.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 Dec 2016 03:35:45 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 09 Dec 2016 18:35:40 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, s-beyer@gmx.net,
+        christian.couder@gmail.com, szeder@ira.uka.de,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] rebase: rename --forget to be consistent with sequencer
+Date:   Fri,  9 Dec 2016 18:34:26 +0700
+Message-Id: <20161209113427.6039-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <CACsJy8CX0HO=LxcEK3K+pCecgFY=40R+gpFoy7CGeN5zEJFJVQ@mail.gmail.com>
+References: <CACsJy8CX0HO=LxcEK3K+pCecgFY=40R+gpFoy7CGeN5zEJFJVQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Fri, 9 Dec 2016 03:33:08 -0800 (PST)
-In-Reply-To: <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com> <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
- <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 9 Dec 2016 18:33:08 +0700
-Message-ID: <CACsJy8CX0HO=LxcEK3K+pCecgFY=40R+gpFoy7CGeN5zEJFJVQ@mail.gmail.com>
-Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stephan Beyer <s-beyer@gmx.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 8, 2016 at 3:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stephan Beyer <s-beyer@gmx.net> writes:
->
->> [1] By the way: git cherry-pick --quit, git rebase --forget ...
->> different wording for the same thing makes things unintuitive.
->
-> It is not too late to STOP "--forget" from getting added to "rebase"
-> and give it a better name.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-rebase.txt           | 4 ++--
+ contrib/completion/git-completion.bash | 4 ++--
+ git-rebase.sh                          | 6 +++---
+ t/t3407-rebase-abort.sh                | 8 ++++----
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-Having the same operation with different names only increases git
-reputation of bad/inconsistent UI. Either forget is renamed to quit,
-or vice versa. I prefer forget, but the decision is yours and the
-community's. So I'm sending two patches to rename in either direction.
-You can pick one.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index e01d78e..f892458 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[<upstream> [<branch>]]
+ 'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+ 	--root [<branch>]
+-'git rebase' --continue | --skip | --abort | --forget | --edit-todo
++'git rebase' --continue | --skip | --abort | --quit | --edit-todo
+ 
+ DESCRIPTION
+ -----------
+@@ -252,7 +252,7 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ 	will be reset to where it was when the rebase operation was
+ 	started.
+ 
+---forget::
++--quit::
+ 	Abort the rebase operation but HEAD is not reset back to the
+ 	original branch. The index and working tree are also left
+ 	unchanged as a result.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 8159f28..2c134f8 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1670,10 +1670,10 @@ _git_rebase ()
+ {
+ 	local dir="$(__gitdir)"
+ 	if [ -f "$dir"/rebase-merge/interactive ]; then
+-		__gitcomp "--continue --skip --abort --forget --edit-todo"
++		__gitcomp "--continue --skip --abort --quit --edit-todo"
+ 		return
+ 	elif [ -d "$dir"/rebase-apply ] || [ -d "$dir"/rebase-merge ]; then
+-		__gitcomp "--continue --skip --abort --forget"
++		__gitcomp "--continue --skip --abort --quit"
+ 		return
+ 	fi
+ 	__git_complete_strategy && return
+diff --git a/git-rebase.sh b/git-rebase.sh
+index f0de633..c62b178 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -43,7 +43,7 @@ continue!          continue
+ abort!             abort and check out the original branch
+ skip!              skip current patch and continue
+ edit-todo!         edit the todo list during an interactive rebase
+-forget!            abort but keep HEAD where it is
++quit!              abort but keep HEAD where it is
+ "
+ . git-sh-setup
+ . git-sh-i18n
+@@ -240,7 +240,7 @@ do
+ 	--verify)
+ 		ok_to_skip_pre_rebase=
+ 		;;
+-	--continue|--skip|--abort|--forget|--edit-todo)
++	--continue|--skip|--abort|--quit|--edit-todo)
+ 		test $total_argc -eq 2 || usage
+ 		action=${1##--}
+ 		;;
+@@ -403,7 +403,7 @@ abort)
+ 	finish_rebase
+ 	exit
+ 	;;
+-forget)
++quit)
+ 	exec rm -rf "$state_dir"
+ 	;;
+ edit-todo)
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index 6bc5e71..910f218 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -99,26 +99,26 @@ testrebase() {
+ testrebase "" .git/rebase-apply
+ testrebase " --merge" .git/rebase-merge
+ 
+-test_expect_success 'rebase --forget' '
++test_expect_success 'rebase --quit' '
+ 	cd "$work_dir" &&
+ 	# Clean up the state from the previous one
+ 	git reset --hard pre-rebase &&
+ 	test_must_fail git rebase master &&
+ 	test_path_is_dir .git/rebase-apply &&
+ 	head_before=$(git rev-parse HEAD) &&
+-	git rebase --forget &&
++	git rebase --quit &&
+ 	test $(git rev-parse HEAD) = $head_before &&
+ 	test ! -d .git/rebase-apply
+ '
+ 
+-test_expect_success 'rebase --merge --forget' '
++test_expect_success 'rebase --merge --quit' '
+ 	cd "$work_dir" &&
+ 	# Clean up the state from the previous one
+ 	git reset --hard pre-rebase &&
+ 	test_must_fail git rebase --merge master &&
+ 	test_path_is_dir .git/rebase-merge &&
+ 	head_before=$(git rev-parse HEAD) &&
+-	git rebase --forget &&
++	git rebase --quit &&
+ 	test $(git rev-parse HEAD) = $head_before &&
+ 	test ! -d .git/rebase-merge
+ '
 -- 
-Duy
+2.8.2.524.g6ff3d78
+
