@@ -2,97 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E0731FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 13:09:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69EA81FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 13:21:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932465AbcLINJP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 08:09:15 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34399 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751953AbcLINJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 08:09:14 -0500
-Received: by mail-io0-f193.google.com with SMTP id y124so6701816iof.1
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 05:09:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2cJQsc3o0I5d/zpP8hUl9OFphbSAOeXK6AMo2GzdRpQ=;
-        b=fH/r8066fB9d9Buhh/FSZH6BBuQVTG2gyakZ+rgVOMmjNclVs5Op7w0wqAhCCtEgJZ
-         IBpEHW9ufDjiA8uoZKv6kESKmyVydwV/OG2RAfGEIZtSEr8KKug8Ey1F97MisQrvPHwZ
-         QL/hSsWceOwDC1PeRojeIsAfiPrH7Ex857eJt1qlwB/Zrfv4wwc8AUdRaQv3XjSHmH+0
-         9ssD6bMBxdbXrtGhrRJx2+iBPEJ7hXJlhgKct9bVztoXw6afmxd5myh9mcQM0wHr44G4
-         jawndZyLdjzfBLKfNtyXAM/X5dxd1kDqVvxqfnxEs29BRNEHhaY5T5RZDGHr9tNyN4ws
-         yTpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2cJQsc3o0I5d/zpP8hUl9OFphbSAOeXK6AMo2GzdRpQ=;
-        b=RQy0eudfHSau0i014DxQBgyf7LW+Qq/S0ItIr3UXJTSYVjkpNv9bq0yynZ/EqDWVJ4
-         VSvbav4BTwxOWGG+w1oEkC/G9dB64LN2IbDHMhkOdAbq+4C6kh7Y9m505lcfKhjeAtnF
-         XdXOuXqyO5mmH7ccUsSfCvrBEAo8Cakwxs/56mADrbfIq26D3OH1yVdYn1ODaLB7oFxG
-         WsE5lLpO7FwCReoThrwyQItDvDyzQ0yD+cy19gbMaznxL+3yacsug1YU69MxmGgzjjJN
-         fYeM15yOrtHfqumF7KU5ZauZg639lx0Q/ptZaZu2+0sRoqmk3dRfn85u38Y2OfBXAfEU
-         wLqg==
-X-Gm-Message-State: AKaTC03yczgTNN+Hy+tXF/55jh8itGaOPFGgPSkCK/qULyxkccFf1mCClJaTY1NQfk1Tyy6pWZ6Bm2gN1rsgSg==
-X-Received: by 10.107.132.74 with SMTP id g71mr69685238iod.19.1481288953498;
- Fri, 09 Dec 2016 05:09:13 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Fri, 9 Dec 2016 05:08:42 -0800 (PST)
-In-Reply-To: <20161208181957.GP116201@google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481061106-117775-3-git-send-email-bmwill@google.com> <CACsJy8AX09pxkyUkLU905v1MpXocLzV5bK0APuNmMUNb50Lavg@mail.gmail.com>
- <20161208000357.GJ116201@google.com> <CACsJy8DtUwnOjBV49navkfgqPzEsNuX2LVaeVU=Ap2PWLpGFdA@mail.gmail.com>
- <20161208181957.GP116201@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 9 Dec 2016 20:08:42 +0700
-Message-ID: <CACsJy8Cc6hE1Rbqjrc93xDMc0UUm0yMh0A-fyu3dfJ2G1jhENQ@mail.gmail.com>
-Subject: Re: [PATCH 02/17] dir: convert create_simplify to use the pathspec
- struct interface
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+        id S932557AbcLINVu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 08:21:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61728 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752625AbcLINVt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 08:21:49 -0500
+X-Greylist: delayed 509 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Dec 2016 08:21:49 EST
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1B80155609;
+        Fri,  9 Dec 2016 08:13:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=cGUVsmknzg1arVMBDMx06/jOK6k
+        =; b=BguImxElP+LqC/CPFz5k1NOVYh2a01oyPWIvKrYjQEBI8iLZeCccgpqQjAP
+        omvZM5lZFKrORD4bo8ghD0nS4bkfsB0XUbB5qqeobdHUpcQhtEPUcmFLzJa2GNyq
+        lXxQisxPdmiZWy++uXyKdj53EHVuMI95FvSm+KFvilX4rOpw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FFAF55607;
+        Fri,  9 Dec 2016 08:13:19 -0500 (EST)
+Received: from localhost.localdomain (unknown [207.161.55.243])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 56C03555FE;
+        Fri,  9 Dec 2016 08:13:18 -0500 (EST)
+From:   Quinn Grier <quinn@quinngrier.com>
+To:     git@vger.kernel.org
+Cc:     Quinn Grier <quinn@quinngrier.com>
+Subject: [PATCH] describe: add tests for unusual graphs
+Date:   Fri,  9 Dec 2016 07:11:41 -0600
+Message-Id: <20161209131141.3096-1-quinn@quinngrier.com>
+X-Mailer: git-send-email 2.8.3
+X-Pobox-Relay-ID: 405EE88E-BE11-11E6-9107-B2917B1B28F4-75739717!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 9, 2016 at 1:19 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 12/08, Duy Nguyen wrote:
->> On Thu, Dec 8, 2016 at 7:03 AM, Brandon Williams <bmwill@google.com> wrote:
->> > On 12/07, Duy Nguyen wrote:
->> >> On Wed, Dec 7, 2016 at 4:51 AM, Brandon Williams <bmwill@google.com> wrote:
->> >> > Convert 'create_simplify()' to use the pathspec struct interface from
->> >> > using the '_raw' entry in the pathspec.
->> >>
->> >> It would be even better to kill this create_simplify() and let
->> >> simplify_away() handle struct pathspec directly.
->> >>
->> >> There is a bug in this code, that might have been found if we
->> >> simpify_away() handled pathspec directly: the memcmp() in
->> >> simplify_away() will not play well with :(icase) magic. My bad. If
->> >> :(icase) is used, the easiest/safe way is simplify nothing. Later on
->> >> maybe we can teach simplify_away() to do strncasecmp instead. We could
->> >> ignore exclude patterns there too (although not excluding is not a
->> >> bug).
->> >
->> > So are you implying that the simplify struct needs to be killed?  That
->> > way the pathspec struct itself is being passed around instead?
->>
->> Yes. simplify struct was a thing when pathspec was an array of char *.
->> At this point I think it can retire (when we have time to retire it)
->
-> Alright, then for now I can leave this change as is and have a follow up
-> series that kills the simplify struct.
+git describe may give incorrect results if there are backdated commits
+or multiple roots. This commit adds two test_expect_failure tests that
+demonstrate these problems.
 
-Do let me know if you decide to drop it, so I can put it back in my backlog.
+Signed-off-by: Quinn Grier <quinn@quinngrier.com>
+---
+ t/t6120-describe.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 85f2694..ca82837 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -206,4 +206,52 @@ test_expect_success 'describe --contains with the exact tags' '
+ 	test_cmp expect actual
+ '
+ 
++#
++# A---B*--D master
++#  \     /
++#   .---C topic
++#
++
++test_expect_failure 'backdated commit' '(
++	test_tick &&
++	b=$GIT_COMMITTER_DATE && test_tick &&
++	test_create_repo backdated-commit &&
++	cd backdated-commit &&
++	git commit --allow-empty -m A && test_tick &&
++	GIT_COMMITTER_DATE=$b git commit --allow-empty -m B && test_tick &&
++	git checkout -b topic :/A &&
++	git commit --allow-empty -m C && test_tick &&
++	git checkout master &&
++	git merge -m D topic && test_tick &&
++	git tag -m B B :/B && test_tick &&
++	git describe :/D >tmp &&
++	sed s/-g.\*// tmp >actual &&
++	echo B-2 >expected &&
++	test_cmp expected actual
++)'
++
++#
++# A---B*--D master
++#        /
++#       C* other
++#
++
++test_expect_failure 'multiple roots' '(
++	test_tick &&
++	test_create_repo multiple-roots &&
++	cd multiple-roots &&
++	git commit --allow-empty -m A && test_tick &&
++	git commit --allow-empty -m B && test_tick &&
++	git checkout --orphan other &&
++	git commit --allow-empty -m C && test_tick &&
++	git checkout master &&
++	git merge --allow-unrelated-histories -m D other && test_tick &&
++	git tag -m B B :/B && test_tick &&
++	git tag -m C C :/C && test_tick &&
++	git describe :/D >tmp &&
++	sed s/-g.\*// tmp >actual &&
++	echo B-2 >expected &&
++	test_cmp expected actual
++)'
++
+ test_done
 -- 
-Duy
+2.8.3
+
