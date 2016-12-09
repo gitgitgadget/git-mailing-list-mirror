@@ -2,79 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C29AB1FBB0
-	for <e@80x24.org>; Fri,  9 Dec 2016 00:29:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 252362093C
+	for <e@80x24.org>; Fri,  9 Dec 2016 01:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753920AbcLIA3A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Dec 2016 19:29:00 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51810 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751611AbcLIA27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2016 19:28:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D049955082;
-        Thu,  8 Dec 2016 19:28:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MjpY7LL5tY+Z5NIn/30tmWRRQe4=; b=mooiLn
-        nC6Usy88d+EDj4MOUV8qcmIH4fBj6OqUI1nIpS48vwvgmU23KWR1S7IQrw6pNekw
-        gkfKbCS8TZoKOBoomOTEvCcVs2nkeLy7hbl8qZZsDS+OeuPnhSTX/3rA8iCymQ8S
-        yRFJcX5zTvZZxLduHT1Xx8ZvgkhIUSjyVEgEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=W34PpCrP23lkMEERPn5nEZKPxRNTLiuJ
-        JqGWsFcF166UVlvJMpntuj3w96mI4z/XBaUlSSa0C6aXafUVSO2O5xe0G4NpwVPz
-        KRJWmqSBOAuoSMJwspy0iL80zHSytcZVUyi42SGTFxxd9OppNt8/jkv1f6TyiInh
-        Wzndw1PPU6I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8F6555081;
-        Thu,  8 Dec 2016 19:28:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 44EED55080;
-        Thu,  8 Dec 2016 19:28:58 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH v2 14/16] pathspec: create strip submodule slash helpers
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
-        <1481223550-65277-1-git-send-email-bmwill@google.com>
-        <1481223550-65277-15-git-send-email-bmwill@google.com>
-Date:   Thu, 08 Dec 2016 16:28:56 -0800
-In-Reply-To: <1481223550-65277-15-git-send-email-bmwill@google.com> (Brandon
-        Williams's message of "Thu, 8 Dec 2016 10:59:08 -0800")
-Message-ID: <xmqqfulyrlmf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753578AbcLIBpv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Dec 2016 20:45:51 -0500
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:33170 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbcLIBpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2016 20:45:50 -0500
+Received: by mail-yw0-f176.google.com with SMTP id r204so3432256ywb.0
+        for <git@vger.kernel.org>; Thu, 08 Dec 2016 17:45:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=saqpDIfdLf3gr/JioRDuS1OLyYi/GlGCNhQK938xn+Q=;
+        b=mzLIZDe3se0PQ0ze5ySRUHY8oB1K40p3ch6v8mEcphX0+TBXgHXsG7SrRe0Sk4IV9J
+         G+7+s2Npv2y7WkiDGCRbAB+2Af6kFnHh9J2rGrwghtrhMXMeuWuChdAnjL0Dv0jIhMfF
+         Q4ksZZBoR4Ww90AnBtxIWKOjEfEHvJUm/GMe+Z+n1BrQaNO/1dWMmmUwG8rjIOVE+QPG
+         TgTmbNfZ6ABSTkYcP/NjySggXKoqVhPOsfxwRJrv4no4U6wefaSeB/dddc4d0NoNlMou
+         KrY1yoYN5YFXhaVonBjXdK+RqwXnvucaDtwwGid0RduwXhPZ3hjXnefXPJ5S744bDVg4
+         qSSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=saqpDIfdLf3gr/JioRDuS1OLyYi/GlGCNhQK938xn+Q=;
+        b=H1HuQkHruwEk2qanGcjqGlnBGdkDL0NW6tJ+j0JmEN/3BuA/3dEHLE4XyXJPLYfpQe
+         1L/n8QQyHvgNQ8zkudlC7A2BRG9Wx5Y35w9hXZ8Dtm/WFI09z5xafwvtwkWCLqWIzNWR
+         ke2AvREhd9ck2836SZ9yOza3fQiX0GRSMOHWB89vCSeB9qQ6FvY4pkOWYnXjhTRq0d2e
+         gJBi/eu9+o8tyNH9Rzauxyku0jILHM8tl8cg4WlB98kP4YH7ZRLeEbbHYVQSCMwjXL2p
+         y01p84ydDbKNoRvPMhVS3TEbCwBRvUVnk25o9oSdF8Y6jtwvODEkdkvss6qrERy4M8yX
+         xK6g==
+X-Gm-Message-State: AKaTC03fFHkbQAb9eWHED3+FLDUI0dRnDOfgJG+cuGNIipNcjrtCrtCSD+Ub7/gtd3hkTsquNRMURnBjamkvvA==
+X-Received: by 10.13.250.3 with SMTP id k3mr69206959ywf.276.1481247949371;
+ Thu, 08 Dec 2016 17:45:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 798E3314-BDA6-11E6-BE59-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.37.118.87 with HTTP; Thu, 8 Dec 2016 17:45:28 -0800 (PST)
+In-Reply-To: <xmqqa8c6tfhc.fsf@gitster.mtv.corp.google.com>
+References: <20161207153627.1468-1-Karthik.188@gmail.com> <CA+P7+xquordVY19dypqNcAuQqoRbFmHhzb0w+HXCaJmm_Ex7zQ@mail.gmail.com>
+ <xmqqa8c6tfhc.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 8 Dec 2016 17:45:29 -0800
+Message-ID: <CA+P7+xrGuEjc-QFkPSg7FCNFfq-rRTa7PsuiiY-1Edj381LidA@mail.gmail.com>
+Subject: Re: [PATCH v8 00/19] port branch.c to use ref-filter's printing options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Karthik Nayak <karthik.188@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Thu, Dec 8, 2016 at 10:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> *1* A malformed formatting request (e.g. %(if) that is not closed)
+>     cannot be satisified but that is true for all refs and is
+>     outside of the scope of this discussion.  The command should die
+>     and I think it already does.
 
-> +static void strip_submodule_slash_cheap(struct pathspec_item *item)
-> +{
-> +	int i;
-> +
-> +	if ((item->len >= 1 && item->match[item->len - 1] == '/') &&
-> +	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
-> +	    S_ISGITLINK(active_cache[i]->ce_mode)) {
-> +		item->len--;
-> +		item->match[item->len] = '\0';
-> +	}
-> +}
+Agreed. I was only making the case that if it could "possibly" be
+satisfied, then we shouldn't die.
 
-I know that this is merely a moved code, but while I was reading
-this, it triggered "Do not make an assignment inside if condition"
-check.  But more importantly, is the code even correct?  If the path
-for the submodule is unmerged, we would get a negative i that points
-at the conflicting entry; don't we want to do something about it, at
-least when we have a submodule entry at stage #2 (i.e. ours)?
+Thanks,
+Jake
