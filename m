@@ -2,92 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D29B41FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 19:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C3511FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 19:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752748AbcLITbk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 14:31:40 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54957 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752684AbcLITbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 14:31:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D28756916;
-        Fri,  9 Dec 2016 14:31:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x2EHpnfs8YUva/5qSRRxt6d8Thw=; b=EMbZwu
-        lh2Hzp9C3sOnTdmoX/gEK1zQHPqd2JGn4hWexv4oa5L7CKh5gTom3RIYq4d/OEoq
-        noNKSCKVKkDU+hH76JLjUY3pM0wtJiHESvz+YkFxJAPmADr8xr79rz0IR61aHdYT
-        RZ5BFk30JXsX5PoCbUxx3X0HKBZ8Xj61mikTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VRAvM/HrNYb8Ewjfh1R2crgIlTP9Msg0
-        ZP+Z1uKgHc+04EwIHeh7CqF7C6MvLSXsxhAbXWft6rQ8i13KqVRpxxkPmX6slXBF
-        q3SlJkFqHTAeak73764yFbK7cpo21fk1qZMNazf0HeP0FSBwd3xdvakujf62eco2
-        u2W3xoHQ8vA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9247D56915;
-        Fri,  9 Dec 2016 14:31:38 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE2DA56914;
-        Fri,  9 Dec 2016 14:31:37 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: Re: [REGRESSION 2.10.2] problematic "empty auth" changes
-References: <alpine.DEB.2.20.1612081538260.23160@virtualbox>
-        <1481231552.20894.20.camel@frank>
-        <alpine.DEB.2.20.1612091048540.23160@virtualbox>
-Date:   Fri, 09 Dec 2016 11:31:36 -0800
-In-Reply-To: <alpine.DEB.2.20.1612091048540.23160@virtualbox> (Johannes
-        Schindelin's message of "Fri, 9 Dec 2016 16:58:31 +0100 (CET)")
-Message-ID: <xmqqoa0krjaf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752937AbcLITkH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 14:40:07 -0500
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:35915 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752691AbcLITkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 14:40:06 -0500
+Received: by mail-qk0-f171.google.com with SMTP id n21so27852543qka.3
+        for <git@vger.kernel.org>; Fri, 09 Dec 2016 11:40:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EM4vgEYY6K4vs9dk+zLOkNKkz/ehlB73gc9mmHUGj5A=;
+        b=eNjdcGT6RUytyszlGW08kkQPcFvo5pbb45Bl8RzPeVS4N4DCnsvibYnfrBt8qwD4EQ
+         gQ8fj1w1JgLQdFceWMdBiPA0BqjiKEwBKe1DD4hWXe5fLrlhV+AKiFK7ksIZqHDo6mNp
+         afoEn3k8t6ImtlA79C93dWKSPgyp97ufas/+A1fqlCKkJfwL/rvXR3KrNKh6H12q+8il
+         Kny0bMGvRymn4D5pElC783EBgBV17Hb0VesUOFLldQTXYJjraqHywNxSsOk/oqx9Pg+1
+         pZPB5NBtz5B8ECRxL/gp8/NxYU1pJrrMFFDBrHdau9R7IfqZFEPbBGFm0Mra3vJATzE6
+         MPOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EM4vgEYY6K4vs9dk+zLOkNKkz/ehlB73gc9mmHUGj5A=;
+        b=auzYkyC5ARVqXUAX2aVxFetUuJH5PLN4lII7661OYNSW4IQyYgmevvqQbPda+yKT+t
+         4zFJAvV9rp9CAAwr6JgSdcxlvFxbbSe7W+dnXDSFBbpxjO7dQbP08I3hkZ2qXC1AcGCw
+         3FafXFsJc246MaJ/97ADFiu3NhJJ0RttM7+KUfituES9LiYWG4aEBQY1lssYxj82DFw5
+         Ghn5Uacr8m4B9ZdT5CrJ626W7mrlirBM2WjzTFl0lWvNOVoOMGkqaIMZBPqJLPpXbBjP
+         o3ZhYfuUQqJjq9A2a3qo3fIFamafUmnVkkCQs4NAv7DjOrfVWk1sjNFsgEndXXZjtqr2
+         g6KQ==
+X-Gm-Message-State: AKaTC01nSMBPnBVaRhXVAks8gtlVrsk30wXkf6M/j800kow17qNpdegH1FzhdLgTX5bl/yJBetx64/IHkwsPMK2A
+X-Received: by 10.55.16.147 with SMTP id 19mr70023176qkq.255.1481312405402;
+ Fri, 09 Dec 2016 11:40:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A51B75E-BE46-11E6-B8F0-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.147.188 with HTTP; Fri, 9 Dec 2016 11:40:04 -0800 (PST)
+In-Reply-To: <1481311118-174146-1-git-send-email-bmwill@google.com>
+References: <CACsJy8AX6C8Tux9_8ZynBMNS2EW2pKQOGK8k0hVmbWvbZ8pa=Q@mail.gmail.com>
+ <1481311118-174146-1-git-send-email-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 9 Dec 2016 11:40:04 -0800
+Message-ID: <CAGZ79kYVumubF58fdwejE2hvCLfgdVqTxn_w=S-CBFY-NdgqQg@mail.gmail.com>
+Subject: Re: [PATCH 14/16] pathspec: create strip submodule slash helpers
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Dec 9, 2016 at 11:18 AM, Brandon Williams <bmwill@google.com> wrote:
+> Factor out the logic responsible for stripping the trailing slash on
+> pathspecs referencing submodules into its own function.
+>
+> Change-Id: Icad62647c04b4195309def0e3db416203d14f9e4
 
-> It would be different, of course, if http.emptyAuth would *not* allow the
-> user to type their credentials when accessing something like
-> https://github.com/dscho/shhh-secret-repository, *only* trying the login
-> credentials. But that is not the case, with http.emptyAuth=true, login
-> credentials are attempted first, and when they fail, the user is still
-> asked interactively for their credentials.
->
-> All I can see is that this would be *an improvement*: corporate users
-> trying to access a Git repository that requires their login credentials
-> would now not even need to enter empty user name/password.
+I think we should come up with a solution to wipe out change ids
+before sending emails. ;)
 
-Yup, my thought process after seeing your first message to David
-exactly mirrored the above two paragraphs.  It sounds like you two
-have a good plan ;-)
-
-Thanks.
-
-> This alone would be already a good reason to change the default, IMHO.
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  pathspec.c | 68 ++++++++++++++++++++++++++++++++++++++------------------------
+>  1 file changed, 42 insertions(+), 26 deletions(-)
 >
-> So here is my plan:
+> diff --git a/pathspec.c b/pathspec.c
+> index 84a57cf..4d9a6a0 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -258,6 +258,44 @@ static const char *parse_element_magic(unsigned *magic, int *prefix_len,
+>                 return parse_short_magic(magic, elem);
+>  }
 >
-> - change the default of http.emptyAuth to true in the next Git for Windows
->   version
+> +static void strip_submodule_slash_cheap(struct pathspec_item *item)
+> +{
+> +       if (item->len >= 1 && item->match[item->len - 1] == '/') {
+> +               int i = cache_name_pos(item->match, item->len - 1);
+> +
+> +               if (i >= 0 && S_ISGITLINK(active_cache[i]->ce_mode)) {
+> +                       item->len--;
+> +                       item->match[item->len] = '\0';
+> +               }
+> +       }
+> +}
+> +
+> +static void strip_submodule_slash_expensive(struct pathspec_item *item)
+> +{
+> +       int i;
+> +
+> +       for (i = 0; i < active_nr; i++) {
+> +               struct cache_entry *ce = active_cache[i];
+> +               int ce_len = ce_namelen(ce);
+> +
+> +               if (!S_ISGITLINK(ce->ce_mode))
+> +                       continue;
+> +
+> +               if (item->len <= ce_len || item->match[ce_len] != '/' ||
+> +                   memcmp(ce->name, item->match, ce_len))
+> +                       continue;
+> +
+> +               if (item->len == ce_len + 1) {
+> +                       /* strip trailing slash */
+> +                       item->len--;
+> +                       item->match[item->len] = '\0';
+> +               } else {
+> +                       die(_("Pathspec '%s' is in submodule '%.*s'"),
+> +                           item->original, ce_len, ce->name);
+> +               }
+> +       }
+> +}
+> +
+>  /*
+>   * Take an element of a pathspec and check for magic signatures.
+>   * Append the result to the prefix. Return the magic bitmap.
+> @@ -278,7 +316,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+>         unsigned magic = 0, element_magic = 0;
+>         const char *copyfrom = elt;
+>         char *match;
+> -       int i, pathspec_prefix = -1;
+> +       int pathspec_prefix = -1;
 >
-> - publish a prerelease for early adopters to test
+>         /* PATHSPEC_LITERAL_PATH ignores magic */
+>         if (flags & PATHSPEC_LITERAL_PATH) {
+> @@ -329,33 +367,11 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+>         item->len = strlen(item->match);
+>         item->prefix = prefixlen;
 >
-> - contribute this patch here on the Git mailing list, in the hope that it
->   will make it into the next major version
+> -       if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
+> -           (item->len >= 1 && item->match[item->len - 1] == '/') &&
+> -           (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
+> -           S_ISGITLINK(active_cache[i]->ce_mode)) {
+> -               item->len--;
+> -               match[item->len] = '\0';
+> -       }
+> +       if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
+> +               strip_submodule_slash_cheap(item);
 >
-> Ciao,
-> Dscho
+>         if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+> -               for (i = 0; i < active_nr; i++) {
+> -                       struct cache_entry *ce = active_cache[i];
+> -                       int ce_len = ce_namelen(ce);
+> -
+> -                       if (!S_ISGITLINK(ce->ce_mode))
+> -                               continue;
+> -
+> -                       if (item->len <= ce_len || match[ce_len] != '/' ||
+> -                           memcmp(ce->name, match, ce_len))
+> -                               continue;
+> -                       if (item->len == ce_len + 1) {
+> -                               /* strip trailing slash */
+> -                               item->len--;
+> -                               match[item->len] = '\0';
+> -                       } else
+> -                               die (_("Pathspec '%s' is in submodule '%.*s'"),
+> -                                    elt, ce_len, ce->name);
+> -               }
+> +               strip_submodule_slash_expensive(item);
+>
+>         if (magic & PATHSPEC_LITERAL)
+>                 item->nowildcard_len = item->len;
+> --
+> 2.8.0.rc3.226.g39d4020
+>
