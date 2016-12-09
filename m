@@ -2,95 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2EA51FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 15:53:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4C81FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 15:58:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933547AbcLIPxI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 10:53:08 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34425 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933539AbcLIPxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 10:53:06 -0500
-Received: by mail-lf0-f68.google.com with SMTP id x143so365022lfd.1
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 07:53:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I3z2R78wV4oCEBXbYk780Nc5BNcFxL6fTktLES4p3Zc=;
-        b=uDQArrhkc6+AI/ge+gTCcaFb7w/vsJl9rMg7fuUekFmzrqZ8skqdZCLKj9CyddrHXr
-         LUJ7QbRBhcluDtLIJAEirUSzNfurcHAWXAPNcsJnbpc8uLXVx9i+9YA0heSLSLBzcBD6
-         JsY9+vhJ3282ulJd7cAeFuL0m49OTcFqOl+OuMrzXzltU8J1KV9hNdR3kkjppg1OPiwN
-         m5OuwAexXmtfSc2Q8umum3z7h4Wi6IeCiFk6c7A31rhckyd6T772q+vM57yncN9Ny4aQ
-         902Gvw5SaX4/1S+Li8/NGcKyswpdB/G3K8bPZli1eIvGnHvflmhX8u+8vDDbJmT4aJWn
-         S5GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=I3z2R78wV4oCEBXbYk780Nc5BNcFxL6fTktLES4p3Zc=;
-        b=iuLAujb0STS1gdmBOZ8GLTUKTVDO5+dWSCkD6y9WtnaOKZg5v6TfbTCWp+aaJ1J+sU
-         E0LEcsm1vhTL/0YEqpbDOlppRLsoxHQZIHOzA1rDmXeDDuofSfNL+rgFdT86CIl8OFgY
-         ls3srcqp38kV5vV6ZZuW0DnPvpZtwRHMVu6OmxYtqL2ZynJD3cqbFgKTkW21V7DtfNeW
-         UHLz18fvMr+0zhR+zvIXoI7JMtfjWo1tpGL6v9bQJflZwKGAwSuqm8C16icd2+8MW1Eq
-         N06Mf9PyvAtStDKSBRP3tOEmz0oksXaq8l8eZ80GoRO+UMD5248+VFB8WWblovHnV9d9
-         KbhA==
-X-Gm-Message-State: AKaTC02F6wgPIZHtBUC80i3dHDsMn29Lg98QwxDgMwuaioTKjn0gADmU65v3qhu3U/oRGw==
-X-Received: by 10.25.104.2 with SMTP id d2mr22329510lfc.95.1481298785239;
-        Fri, 09 Dec 2016 07:53:05 -0800 (PST)
-Received: from kristoffer-SZ68R2.privnett.uib.no (uib-guest.uib.no. [129.177.138.114])
-        by smtp.gmail.com with ESMTPSA id r204sm6646500lfr.19.2016.12.09.07.53.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Dec 2016 07:53:04 -0800 (PST)
-From:   Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
-Subject: [PATCH 4/4] doc: omit needless "for"
-Date:   Fri,  9 Dec 2016 16:51:12 +0100
-Message-Id: <20161209155112.2112-5-kristoffer.haugsbakk@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com>
-References: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com>
+        id S933428AbcLIP6k (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 10:58:40 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54214 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932664AbcLIP6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 10:58:39 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhRI2-1c1Xwo1TG6-00MckV; Fri, 09
+ Dec 2016 16:58:32 +0100
+Date:   Fri, 9 Dec 2016 16:58:31 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     David Turner <novalis@novalis.org>
+cc:     git@vger.kernel.org
+Subject: Re: [REGRESSION 2.10.2] problematic "empty auth" changes
+In-Reply-To: <1481231552.20894.20.camel@frank>
+Message-ID: <alpine.DEB.2.20.1612091048540.23160@virtualbox>
+References: <alpine.DEB.2.20.1612081538260.23160@virtualbox> <1481231552.20894.20.camel@frank>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:RADek6grhxGVZ2ueIzDKMJd9i/K1JkVjKlg6eVRoRJOeH087/wu
+ ZaMxFEnMy7FhQJ0FLYQVWHX2tzAvwAIriVYbAKlcv3vCV4acuCba81/KtGr87KaqUocxC6x
+ AHfkbjeZ+mF4Vj6bKwqfC8uXm3VbA9gTgZmdK7UjL8DG9vlwvOAnGHS/Bz39TujMPx0ELU4
+ BF9E1kUqhqcPrbRbPyEug==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QNMVljx3BKQ=:Gub4fErowNrle4BriSLtab
+ vvqVsLP4lxSPLLxTmOv+p4oLil4yfY/oQY6zHns2IKUUoFPi8ke7tJ+3ZE49afUSoXJ85wbDp
+ MwveIh3RtQb9MpACm8ADLAZ7Cf+30n8PKqrHI1h5wRrqK62x9OZWyvJkCBtJhMAzrMh9m9pS6
+ AMRISULB/PTWF18cLL4elBfks+Fb0jqbzZ83vn4M5OfGFTQAnCzXC2PIjya8OYXoXPJxliEJj
+ z3lEQyYsckzE30J1M+9zOCzgsvzBtu3JAuu2CBSrIJ6TyVwTOWkfxYn4qRuTU9uhwAWGtBP3Y
+ ajkzJy3grHaG8SQKd7gYbgqFvgzDk0Ef/Li6MY32aEBj5kRh4rFN+Nm3kbLLfj1G+iQpwURRC
+ uN29ap/RNI9Hv14teiva6rbZ1SsIAzOL3hw1f9fYINKczjWfr7vYBxmfRsbWWhNKlYjggs6CN
+ fwy/6X97J4qROGMVUde5mY+ZEHTV/kXk5BbaBNS+jXCnwBSBSYo5mKeRnNXLdslYcUMRmCC0U
+ YGY8zsZ5C97WxExkzAgktgU5KJK1E+R9fv7WiNrM3FwbSpWWq8rPUhHC3Ds6np4RaMPdyHxwx
+ n1NQHbH+wj0raSCPfWs0EFhyK90Hreb4IRng/pVl6piPVFkV5/4aleKx0PIIfq/WmFXzDnOyp
+ knCDfi/WXaLFmntOpWyjP73Z0CyKg2juOvqVUmqiKslpLc65JM1kgOdSake6qfutnetrPnkxv
+ +HqcrKKTLFACQpl2hfkaifpLKvx6YUDUnNRuhzEf4y1td0g+0aB3WosfeKcAl9KDMQrwydxvL
+ 4sz+bTX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What was intended was perhaps "... plumbing does for you" ("you" added), but
-simply omitting the word "for" is more terse and gets the intended point across
-just as well, if not more so.
+Hi David,
 
-I originally went with the approach of writing "for you", but Junio C
-Hamano suggested this approach instead.
+On Thu, 8 Dec 2016, David Turner wrote:
 
-Signed-off-by: Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
----
+> On Thu, 2016-12-08 at 15:47 +0100, Johannes Schindelin wrote:
+> 
+> > I got a couple of bug reports that claim that 2.10.2 regressed on
+> > using network credentials. That is, users regularly hit Enter twice
+> > when being asked for user name and password while fetching via
+> > https://, and cURL automatically used to fall back to using the login
+> > credentials (i.e.  authenticating via the Domain controller).
+> > 
+> > Turns out those claims are correct: hitting Enter twice (or using URLs
+> > with empty user name/password such as https://:tfs:8080/) work in
+> > 2.10.1 and yield "Authentication failed" in 2.10.2.
+> > 
+> > I tracked this down to 5275c3081c (http: http.emptyauth should allow
+> > empty (not just NULL) usernames, 2016-10-04) which all of a sudden
+> > disallowed empty user names (and now only handles things correctly
+> > when http.emptyAuth is set to true specifically).
+> > 
+> > This smells like a real bad regression to me, certainly given the time
+> > I had to spend to figure this out (starting from not exactly helpful
+> > bug reports, due to being very specific to their setups being
+> > private).
+> > 
+> > I am *really* tempted to change the default of http.emptyAuth to true,
+> > *at least* for Windows (where it is quite common to use your login
+> > credentials to authenticate to corporate servers).
+> > 
+> > Before I do anything rash, though: Do you see any downside to that?
+> 
+> I know of no reason that shouldn't work.  Indeed, it's what we use do
+> internally.  So far, nobody has reported problems.
 
-Notes (kristoffers):
-    The original patch was sent to the mailing list on 2016-11-04, and Junio
-    replied with his suggested correction on 2016-11-10; see the cover
-    letter.
+Good.
 
- Documentation/gitcore-tutorial.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> That said, we have exactly three sets of git servers that most users
+> talk to (two different internal; and occasionally github.com for
+> external stuff).  So our coverage is not very broad.
 
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 72ca9c1ef..22309cfb4 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -25,7 +25,7 @@ you want to understand Git's internals.
- The core Git is often called "plumbing", with the prettier user
- interfaces on top of it called "porcelain". You may not want to use the
- plumbing directly very often, but it can be good to know what the
--plumbing does for when the porcelain isn't flushing.
-+plumbing does when the porcelain isn't flushing.
- 
- Back when this document was originally written, many porcelain
- commands were shell scripts. For simplicity, it still uses them as
--- 
-2.11.0
+Okay. I think I will extend that coverage rather boldly, then ;-)
 
+> If you're going to do it, tho, don't just do it for Windows users -- do
+> it for everyone.  Plenty of Unix clients connect to Windows-based auth
+> systems.
+
+Makes sense.
+
+> That said, I could imagine that there are cases where it would cause
+> failures for a different set of users.
+
+Let's see. At the moment, my main concern is that Git for Windows is
+broken for corporate users (i.e. users who rely on the implicit
+login authentication provided through their domain accounts). I cannot
+imagine that defaulting http.emptyAuth=true could cause any worse
+breakage.
+
+It would be different, of course, if http.emptyAuth would *not* allow the
+user to type their credentials when accessing something like
+https://github.com/dscho/shhh-secret-repository, *only* trying the login
+credentials. But that is not the case, with http.emptyAuth=true, login
+credentials are attempted first, and when they fail, the user is still
+asked interactively for their credentials.
+
+All I can see is that this would be *an improvement*: corporate users
+trying to access a Git repository that requires their login credentials
+would now not even need to enter empty user name/password.
+
+This alone would be already a good reason to change the default, IMHO.
+
+So here is my plan:
+
+- change the default of http.emptyAuth to true in the next Git for Windows
+  version
+
+- publish a prerelease for early adopters to test
+
+- contribute this patch here on the Git mailing list, in the hope that it
+  will make it into the next major version
+
+Ciao,
+Dscho
