@@ -2,88 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1D8B1FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 19:16:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA88E1FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 19:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752937AbcLITQz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 14:16:55 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56905 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752111AbcLITQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 14:16:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 193F855D21;
-        Fri,  9 Dec 2016 14:16:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DHLYM66EAw1Ue/s3wB0pGZppSZ0=; b=TLi1Ag
-        NxVThQiTJnfg/aT1SDTn5bC3ZyIg7drXhC0V25L8aw9rJ3SV6Le68IAECweLBVSA
-        mH1oP4TbTGvUwuElNuelilCbPAS5wtIp015f3YyTTSolfN/XZEarfsRll6r/MwcR
-        UW/MqTGahb79Mylzym8BXnd4SyusH7fJILU7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=L6EulXIrl3RRflTyyfViPRzDgZIjZEa0
-        F/oTrk2QTUOK/ECuw/frqZ4nRkPZLyAxgMI+NT7C31TOKzV+SFMieUQDQZ2LHC5m
-        nWtb0fkCVh1R+FoAra8LjfsCKkH6/5uZvD4mrDTHCLhAKKHa0AzRscP/mWJzT2R8
-        qPPG77bTHWY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FBBB55D20;
-        Fri,  9 Dec 2016 14:16:54 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7CAC855D1E;
-        Fri,  9 Dec 2016 14:16:53 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Chris Packham <judge.packham@gmail.com>, GIT <git@vger.kernel.org>
-Subject: Re: Any interest in 'git merge --continue' as a command
-References: <CAFOYHZDs5rBt5+4D_ViMYfV04foq3h_UrsSMA3FfyMzLh9QdwA@mail.gmail.com>
-        <20161209091127.sxxczhfslrqsqs3m@sigill.intra.peff.net>
-Date:   Fri, 09 Dec 2016 11:16:52 -0800
-In-Reply-To: <20161209091127.sxxczhfslrqsqs3m@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 9 Dec 2016 04:11:27 -0500")
-Message-ID: <xmqqshpwrjyz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0B22F114-BE44-11E6-97CB-E98412518317-77302942!pb-smtp1.pobox.com
+        id S1752183AbcLITTA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 14:19:00 -0500
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:35274 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751953AbcLITTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 14:19:00 -0500
+Received: by mail-pg0-f47.google.com with SMTP id p66so10666962pga.2
+        for <git@vger.kernel.org>; Fri, 09 Dec 2016 11:18:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=qTccj6kq0NsjHJzQ5pIcWhw406i6riMWpKDpOh/6HhI=;
+        b=jq1/sZjWdQs4Z5sRYQgbZCDLc1nmdeF0sgscA6tO8X7SBgVLCN26V2hj56Fq3PuvS4
+         XLRdIPrh3Cjr5JIZlCyuM2EZcDj1YXac54/Qmz0qnFhJIdIKJwH2g4rFCQNJFBOvUehL
+         PQdDTAQ8Oc4vqk5xKDEUs9yX4pbJv+G+HGohnDdIGNgq9GfLlQFPLWxeauhUddxjjL0y
+         3datLXhOh2vYvvqCF3paCyKHnT9gQevfcI2+S4S22bAXA43Azl+NDlhu+9d4qvI/zGuF
+         p2mHkBq4mAdlagXqBQbpBhCfV9gYbsuaQG9DTwDNC7pGVGDXo1NzJP/GfD/7r4iAwaLD
+         bRBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=qTccj6kq0NsjHJzQ5pIcWhw406i6riMWpKDpOh/6HhI=;
+        b=Ag4m7YFTQOYHHxV3JFh8VyqYiVGunlgdpIVHaoOs6iObx/iT/GyoaoJssHMVH4lJl0
+         1ZgvQxS71hRTgRSe11gv27aeoCvvDconTQxqwWPZcvQlIWcZL5V/Zq2XYiMTuQUMgtsH
+         tuW3Lbv+qYUDV4WV5txJmAE1MrTahDB6gkafm947QQIQFBg7Rw2NHOLVKwj1mbJV2Wsq
+         /fvejYBzeUp32nkrRQ6VRjZHt/dlnCmtqIvmfGI2YNWICcvcFjMg4c5bW12trZrObW65
+         vi+3TCH32OnvlWt+YJMUAoomIfgdiHIs1zJHCYkCINePeJK1zWYQKRvWGKEuy//Y9EMn
+         4cqA==
+X-Gm-Message-State: AKaTC0266iivvpNQO2eR6/Z3+6EdPS6a1FN8ppZi0vXiyJq2dWB4CPvRPEDutfdMJzTASp4E
+X-Received: by 10.84.172.131 with SMTP id n3mr156984834plb.5.1481311139251;
+        Fri, 09 Dec 2016 11:18:59 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([172.27.69.28])
+        by smtp.gmail.com with ESMTPSA id s3sm59372943pfe.27.2016.12.09.11.18.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 09 Dec 2016 11:18:58 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        pclouds@gmail.com, gitster@pobox.com
+Subject: [PATCH 14/16] pathspec: create strip submodule slash helpers
+Date:   Fri,  9 Dec 2016 11:18:38 -0800
+Message-Id: <1481311118-174146-1-git-send-email-bmwill@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <CACsJy8AX6C8Tux9_8ZynBMNS2EW2pKQOGK8k0hVmbWvbZ8pa=Q@mail.gmail.com>
+References: <CACsJy8AX6C8Tux9_8ZynBMNS2EW2pKQOGK8k0hVmbWvbZ8pa=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Factor out the logic responsible for stripping the trailing slash on
+pathspecs referencing submodules into its own function.
 
->> They knew about git rebase --continue (and git am and git cherry-pick)
->> but they were unsure how to "continue" a merge (it didn't help that
->> the advice saying to use 'git commit' was scrolling off the top of the
->> terminal). I know that using 'git commit' has been the standard way to
->> complete a merge but given other commands have a --continue should
->> merge have it as well?
->
-> It seems like that would be in line with 35d2fffdb (Provide 'git merge
-> --abort' as a synonym to 'git reset --merge', 2010-11-09), whose stated
-> goal was providing consistency with other multi-command operations.
->
-> I assume it would _just_ run a vanilla "git commit", and not try to do
-> any trickery with updating the index (which could be disastrous).
+Change-Id: Icad62647c04b4195309def0e3db416203d14f9e4
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ pathspec.c | 68 ++++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 42 insertions(+), 26 deletions(-)
 
-If we were to have "merge --continue", I agree that it would be the
-logical implementation.
-
-There is nothing to "continue" in a stopped merge where Git asked
-for help from the user, and because of that, I view the final "git
-commit" as "concluding the merge", not "continuing".  "continue"
-makes quite a lot of sense with rebase and cherry-pick A..B that
-stopped; it concludes the current step and let it continue to
-process the remainder.  So from that point of view, it somewhat
-feels strange to call it "merge --continue", but it probably is just
-me.
-
-
+diff --git a/pathspec.c b/pathspec.c
+index 84a57cf..4d9a6a0 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -258,6 +258,44 @@ static const char *parse_element_magic(unsigned *magic, int *prefix_len,
+ 		return parse_short_magic(magic, elem);
+ }
+ 
++static void strip_submodule_slash_cheap(struct pathspec_item *item)
++{
++	if (item->len >= 1 && item->match[item->len - 1] == '/') {
++		int i = cache_name_pos(item->match, item->len - 1);
++
++		if (i >= 0 && S_ISGITLINK(active_cache[i]->ce_mode)) {
++			item->len--;
++			item->match[item->len] = '\0';
++		}
++	}
++}
++
++static void strip_submodule_slash_expensive(struct pathspec_item *item)
++{
++	int i;
++
++	for (i = 0; i < active_nr; i++) {
++		struct cache_entry *ce = active_cache[i];
++		int ce_len = ce_namelen(ce);
++
++		if (!S_ISGITLINK(ce->ce_mode))
++			continue;
++
++		if (item->len <= ce_len || item->match[ce_len] != '/' ||
++		    memcmp(ce->name, item->match, ce_len))
++			continue;
++
++		if (item->len == ce_len + 1) {
++			/* strip trailing slash */
++			item->len--;
++			item->match[item->len] = '\0';
++		} else {
++			die(_("Pathspec '%s' is in submodule '%.*s'"),
++			    item->original, ce_len, ce->name);
++		}
++	}
++}
++
+ /*
+  * Take an element of a pathspec and check for magic signatures.
+  * Append the result to the prefix. Return the magic bitmap.
+@@ -278,7 +316,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 	unsigned magic = 0, element_magic = 0;
+ 	const char *copyfrom = elt;
+ 	char *match;
+-	int i, pathspec_prefix = -1;
++	int pathspec_prefix = -1;
+ 
+ 	/* PATHSPEC_LITERAL_PATH ignores magic */
+ 	if (flags & PATHSPEC_LITERAL_PATH) {
+@@ -329,33 +367,11 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 	item->len = strlen(item->match);
+ 	item->prefix = prefixlen;
+ 
+-	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
+-	    (item->len >= 1 && item->match[item->len - 1] == '/') &&
+-	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
+-	    S_ISGITLINK(active_cache[i]->ce_mode)) {
+-		item->len--;
+-		match[item->len] = '\0';
+-	}
++	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
++		strip_submodule_slash_cheap(item);
+ 
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+-		for (i = 0; i < active_nr; i++) {
+-			struct cache_entry *ce = active_cache[i];
+-			int ce_len = ce_namelen(ce);
+-
+-			if (!S_ISGITLINK(ce->ce_mode))
+-				continue;
+-
+-			if (item->len <= ce_len || match[ce_len] != '/' ||
+-			    memcmp(ce->name, match, ce_len))
+-				continue;
+-			if (item->len == ce_len + 1) {
+-				/* strip trailing slash */
+-				item->len--;
+-				match[item->len] = '\0';
+-			} else
+-				die (_("Pathspec '%s' is in submodule '%.*s'"),
+-				     elt, ce_len, ce->name);
+-		}
++		strip_submodule_slash_expensive(item);
+ 
+ 	if (magic & PATHSPEC_LITERAL)
+ 		item->nowildcard_len = item->len;
+-- 
+2.8.0.rc3.226.g39d4020
 
