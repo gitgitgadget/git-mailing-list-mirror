@@ -2,87 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 758DE1FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 18:49:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BBAB1FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 19:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752425AbcLISta (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 13:49:30 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:35849 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752263AbcLISt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 13:49:29 -0500
-Received: by mail-qt0-f175.google.com with SMTP id w33so24276233qtc.3
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 10:49:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=v6OlmXC7Yoz6W7wR+2Nw0nlDCwg/clF43X7vPLGOP8Q=;
-        b=YnCrZ1FY1xx8hmm0piwlorLkundL0qYBy6TZN26oNT0G0UBT0ftNAS45oUnrtoD9pA
-         UrVvU9FpqmbFM2IY1EJmehhmG53ZY5nmfqUo3e6q5Ooiu2dNN3zUZr7kGcCzm8bzqSAd
-         iGlyVuKxSdR6tVdaoXiPVAK9zb/Q9FprDgueE5v1KhIWN/IsCJC1Zbnzp09cKurBg8gy
-         tckbzMjryX3m1KZ7W4aASToisY+PwZFhaMelZwwz/bRSbYwEmASH/jdPY0aL5m1DXZXq
-         6r/6D1Mg66jyfsew9X3MyHVQ/1aQ61WP22HJJRs6wmeg9tkhATtsHIiwgwudgObHFFR+
-         SH/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=v6OlmXC7Yoz6W7wR+2Nw0nlDCwg/clF43X7vPLGOP8Q=;
-        b=XzjZtZw9GKqJ+8O+e/2Wly188SiUtnflkmTJXBdEBqVloBtFOyUOXxj7AgDl8Z23LM
-         6QwBVU2lPaW5GDzYShTTBK2DNPYuM2Et89ZudciqC/pm06hU5pePxbBVNCK1b+UInF0Y
-         Pm/Wt95QgEvd9gxgAiTFPu+kecRb+KIIgc9YLwO3VJnChSbcXz6e18Xg5/8mw+xl3YLU
-         V3fkyg1TTssW1DMxOsiwdZb3NPZ22nmCk23SgS6cNNP+d5+LAO/9q8rJlOBxkcSODIzw
-         VFyiSy8rP627cBN0XShVu4a9yBqUBb2wkHGgJNRDqPJdrt6dTEU1Q6kQR5kxS/VSY6tB
-         sTIA==
-X-Gm-Message-State: AKaTC01QRpgvQJanKFYjqoDQG4vjaaetixqOjp1/T16Oo6Jtrx1w5zuD91MXjD0ZHiTzPEcho/8zBcAWYXum1NW6
-X-Received: by 10.237.34.206 with SMTP id q14mr69317163qtc.101.1481309368520;
- Fri, 09 Dec 2016 10:49:28 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Fri, 9 Dec 2016 10:49:28 -0800 (PST)
-In-Reply-To: <20161209120006.GA6609@ash>
-References: <20161208210329.12919-1-sbeller@google.com> <20161208210329.12919-5-sbeller@google.com>
- <20161209120006.GA6609@ash>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 9 Dec 2016 10:49:28 -0800
-Message-ID: <CAGZ79kaV4FYZEbRWQxKBHJg1jVzOkte1QxLZgu75=Jja_BMRGQ@mail.gmail.com>
-Subject: Re: [PATCHv7 4/6] worktree: have a function to check if worktrees are
- in use
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+        id S1752762AbcLITBh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 14:01:37 -0500
+Received: from mout.gmx.net ([212.227.15.15]:56975 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751130AbcLITBg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 14:01:36 -0500
+Received: from fermat.fritz.box ([88.70.156.94]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEWPx-1cQddo2hJ3-00Fi00; Fri, 09
+ Dec 2016 20:01:29 +0100
+From:   Stephan Beyer <s-beyer@gmx.net>
+To:     git@vger.kernel.org
+Cc:     Stephan Beyer <s-beyer@gmx.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2 1/5] am: Fix filename in safe_to_abort() error message
+Date:   Fri,  9 Dec 2016 20:01:07 +0100
+Message-Id: <20161209190111.9571-1-s-beyer@gmx.net>
+X-Mailer: git-send-email 2.11.0.27.g74d6bea
+In-Reply-To: <xmqq4m2drlys.fsf@gitster.mtv.corp.google.com>
+References: <xmqq4m2drlys.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:govwN4uJHdc53m/ZZ6H7kY4uC9918UwLBgK29AmP70/9jG64oa+
+ tjfLieC6hGX7WSRNV/GwBqZcq5uPLOlq4JOpnLb7lQKUVXNVMbKEBrN6UwcWJtkiGMdVMWS
+ HByBmM44qC/g+HVWDzm4LT/Y+xDqbdLHmG6sUPknPWcdYPHj+vJuMfizkxCNKKkv1zaG/K7
+ IQeFWyC2Q/RlDwArWfvuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LJdoEzrBfVc=:Xw6T4JxQPuV3Q91Phdspo5
+ FCC9QvcLCpnuqJ3B8J2kedjbs4GOcwMfac1AyMo3jlxgnRRKF7al2sT9H3DUrSRCscqwVNwNq
+ DuKk+8q3RBRsLWnqWspYaoWKxKLmUslFKQg1MtYEz/HCOlMvMimuRZeA+eg1WbvxKUilaiJ/D
+ hohjNNvWOgfeUgMr0ah5TvNU3RAMlEyY5okU6cS2l8e1N4LAtn9Oa81zfq0m5BA+DsrN+kR7C
+ o10RIxRjj80TAS+bvETRnj4+uf1Fmk3f3w+TJLJYazdwACEHKH3xAwjgV1tGB3XG/Yv87ypZM
+ sJwSLK3+WoYmXfwewDs+gf8MxADJURkTR5z1/ra3rYT88xLXoVKhi4Bb0ha7FbJ90eL3yDK8g
+ YWH5VZyXU7wS1/saxloOkrM1J+bT+jrllHbZPIiZEnsiOOo2IfW2rN8fzAuNFrMWFoKxoUE+V
+ NJFwqogCgVg/IpgcsgF9jKiNuJHhNJfOg+ZtYFXbFfkiijWQivwisxF9MsRS2sZ7gRJf9iT/Q
+ qWDw0mxjXiUG+R90T8gEkNhruqSMrR6f8MOdtIOqAWeWRM2lPP43OmiPhUtLQowPOf+YdZiwB
+ SvBql+Qd3IY06qsbtHu+vnet5Wy1JB+cWzhgznNUGe2vh+SL1mjdp9XIlPTbCnDfShBmGnz8+
+ XNWsq9AOVh2t4nlEAAiSKvnGMPfsuBgyBtTG1GLKOa1/cTuUfWhrmJ1+tLBo/0PipgcGFGobb
+ uk2zkntbPQr7jIXS4wFgo2l2lcWIpAV2TpWYNhu705LN8qGDJUfdEuBh4B8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 9, 2016 at 4:00 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+ builtin/am.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> int submodule_uses_worktrees(const char *path)
-> {
->         struct strbuf path = STRBUF_INIT;
->         DIR *dir;
->         struct dirent *d;
->         int ret = 0;
->
->         strbuf_addf(&path, "%s/worktrees", path);
->         dir = opendir(path.buf);
->         strbuf_release(&path);
->
->         if (!dir)
->                 return 0;
+diff --git a/builtin/am.c b/builtin/am.c
+index 6981f42ce..7cf40e6f2 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2124,7 +2124,7 @@ static int safe_to_abort(const struct am_state *state)
+ 
+ 	if (read_state_file(&sb, state, "abort-safety", 1) > 0) {
+ 		if (get_oid_hex(sb.buf, &abort_safety))
+-			die(_("could not parse %s"), am_path(state, "abort_safety"));
++			die(_("could not parse %s"), am_path(state, "abort-safety"));
+ 	} else
+ 		oidclr(&abort_safety);
+ 
+-- 
+2.11.0.27.g74d6bea
 
-The submodule may be one of the linked worktrees, which would be
-caught if we use the code as I sent it out?
-
-If this is one of the linked worktrees, we'd rather check if a file
-"commondir" or "gitdir" exists?
-
-I ask that because I would not know how to relocate such a linked
-worktree gitdir?
