@@ -2,102 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFCF91FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 23:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52C091FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 23:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752088AbcLIXwW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 18:52:22 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:33313 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751639AbcLIXwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 18:52:21 -0500
-Received: by mail-qk0-f173.google.com with SMTP id x190so33531716qkb.0
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 15:52:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7Y4G6BK5ihvHcsw1K2hrb3tCff1Cg+FMl/be7nOGcis=;
-        b=SCyZVCb7m8U4GvMkTqeyqdX6IfYzse7DGDfM0bppBmkatQ7Qt/yC2mtFp+agKH2fI6
-         PnOhSt3t1k+tDMTtVkRq2aRK1+clNeHs+/DdjGuF5zltZX+kWNI6INdfSVr0isRyiXsc
-         7Nk9vHlPCc+TSIUJRr6SwL/65XWdj83nPT/K488cdV0mXOf7/vtXI5LV8BCNnVwv72rM
-         SZL/ZCUgKCoFcaeDDUJU1Iy/wMq8+XMeyisFSS4GbVdR7w4NIPhnP/36M0bu2YftMuBp
-         2S4f0t114LVXY/EjdDLMS7RSGhTt4oJZ0e9wvphpYcMbsSsXWRDwP0sSScMEm9FlWaUL
-         1DPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7Y4G6BK5ihvHcsw1K2hrb3tCff1Cg+FMl/be7nOGcis=;
-        b=GbHbuyknCfwZdOTgjExuBOVRubq8ijv6ZnB3kf7gQ/fD99ot1OuPOYCBmPfEPrP7ag
-         HgYUVxdetq2h1SQ1jjBO8n5XhOvzjH3v6iGFELAkXYyE9WsXCybpR6PYP9ohwA2BEnUm
-         7XNEBlv7MfxBtlJVaNO6mPE4Ua2JvQXKM2uzUzNPTyCXqCy3y9k/yYrKL/LpF3SWpKsu
-         0okW5gVmgWl5E+RyfepSu+OC06h0+kDvHS6g4YyAO6Ib+pnbbEXSaM8ZL9xOF4O9K9ej
-         FlMzfCiMPTX3GmazSTHcPNgOFwRC3Hx4eZl1xJmL1b6CQ4/D0Jqj+r8pSQz1oE4jgfDi
-         ZUNg==
-X-Gm-Message-State: AKaTC01Ea0ekbAsy6quP1eQHycbrel1y6vitkSBQ6r9XVra4ImScw9qZxkPrzyu2oWivk92vHNoz2qcAOgF0mvqs
-X-Received: by 10.233.216.7 with SMTP id u7mr16322736qkf.220.1481327540970;
- Fri, 09 Dec 2016 15:52:20 -0800 (PST)
+        id S1752131AbcLIXwb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 18:52:31 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53824 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751639AbcLIXwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 18:52:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7AC456DEB;
+        Fri,  9 Dec 2016 18:52:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Aovr10RuzTd30c6BoHR9gQQVhCw=; b=gMIuKm
+        FVq33u/bc7b0KlFeQpaGUUqSCj9Ff2I+P64It8aBxRQcjRytc8JLqsI9lqIkHlU1
+        DQYBHD2xuzGWFz/bDyY+B//GR7oK8QszWkYA3g9JicmggI8rpO1nDCe0eoR8B/DV
+        ZiAaeC3rmNYiOm728m8kBG482qVsUxLIqqpQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XODBQo8ZOu7ffrI/Jib7HzaGqA1Kui2S
+        u/oajD5vK9Z32GVBYK6ueJdztARt3Idi8kXoucoiyrIvsOdb9TAj+zfTBnadn6sf
+        oh+FGBS5wRt9aR6/IOa3PUnsAPMNvhyOKZfepKF3Z5rKsv88LlrKOnrlIPeozaEi
+        BJTrir3t+6U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B024456DEA;
+        Fri,  9 Dec 2016 18:52:29 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 24CF256DE9;
+        Fri,  9 Dec 2016 18:52:29 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] send-email: allow a custom hook to prevent sending email
+References: <20161209203449.17940-1-sbeller@google.com>
+        <xmqqfulwraq2.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaqw=XqrNF5+Ta8CwcD7FyA853UQUdMxHmBAaMHPMHrXg@mail.gmail.com>
+Date:   Fri, 09 Dec 2016 15:52:27 -0800
+In-Reply-To: <CAGZ79kaqw=XqrNF5+Ta8CwcD7FyA853UQUdMxHmBAaMHPMHrXg@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 9 Dec 2016 14:53:24 -0800")
+Message-ID: <xmqqshpwpsn8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Fri, 9 Dec 2016 15:52:20 -0800 (PST)
-In-Reply-To: <xmqqwpf8pt0g.fsf@gitster.mtv.corp.google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481223550-65277-1-git-send-email-bmwill@google.com> <1481223550-65277-13-git-send-email-bmwill@google.com>
- <xmqqwpf8pt0g.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 9 Dec 2016 15:52:20 -0800
-Message-ID: <CAGZ79ka0P0rKF8QH3V0jC-O19eT0oaE+fJLGifbfmm3jC_SijA@mail.gmail.com>
-Subject: Re: [PATCH v2 12/16] pathspec: create parse_long_magic function
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8B253CB6-BE6A-11E6-9669-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 9, 2016 at 3:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Williams <bmwill@google.com> writes:
->
->> Factor out the logic responsible for parsing long magic into its own
->> function.  As well as hoist the prefix check logic outside of the inner
->> loop as there isn't anything that needs to be done after matching
->> "prefix:".
->>
->> Signed-off-by: Brandon Williams <bmwill@google.com>
->
-> These refactoring changes look like they are all going in the good
-> direction.  Stefan's :(attr:<attribute spec>)path" changes however
-> have severe conflicts (e.g. the topic already does something similar
-> to this step and calls the factored-out function eat_long_magic()).
->
-> My gut feeling is that we probably should ask Stefan's series to be
-> rebased on top of this series that cleans up pathspec implementation,
-> once it stabilizes.
+Stefan Beller <sbeller@google.com> writes:
 
-Very much so.
+> So you are suggesting to
+> * have the check later in the game (e.g. just after asking
+>    "Send this email? ([y]es|[n]o|[q]uit|[a]ll): " as then other information
+>   such as additional @to @cc are available.
 
-Jonathan Nieder mentioned off list that he prefers to see that
-series rerolled without mutexes if possible. That is possible by
-creating the questions "struct attr_check" before preloading the
-index and then using the read only questions in the threaded code,
-to obtain answers fast; also no need for a mutex.
-
-I did not look into that yet, though. So I think you could discard that
-series (again) until I find time to either redo the series or
-resend it with a proper explanation on why the approach above
-is not feasible.
-
->  We could probably go the other way around, but
-> logically it makes more sense to build "pathspec can also match
-> using attributes information" on top of a refactored codebase.
->
-> Thoughts?
-
-Please let the refactoring in in favor of the attr series.
+Yeah, probably before the loop starts asking that question for each
+message.  And hook does not necessarily need to cause the program to
+die.  The question can be reworded to "Your hook says no, but do you
+really want to send it?",
