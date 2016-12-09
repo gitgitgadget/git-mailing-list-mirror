@@ -2,99 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFB211FF7F
-	for <e@80x24.org>; Fri,  9 Dec 2016 10:37:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD741FF7F
+	for <e@80x24.org>; Fri,  9 Dec 2016 11:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753453AbcLIKhs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 05:37:48 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33010 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752636AbcLIKhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 05:37:47 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 3so1979564pgd.0
-        for <git@vger.kernel.org>; Fri, 09 Dec 2016 02:37:47 -0800 (PST)
+        id S932393AbcLILdl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 06:33:41 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:32848 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753645AbcLILdk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 06:33:40 -0500
+Received: by mail-io0-f172.google.com with SMTP id d9so51323934ioe.0
+        for <git@vger.kernel.org>; Fri, 09 Dec 2016 03:33:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=gQgHZa173Ry36f4+lHBRecJzUVEtpF0MsOXYkJSr1KU=;
-        b=QX0/q+ceuO7e/pCmaSHrad69iMyRj81GwQ9bB4uPTUaC9M5oDYa0A8k7CC3HvFO3hN
-         QrKGPEd8aan0GIx954DA+1xgAhRah4fMJmJN+n2iV2K2cZHKmOF1ABJCOMQkjDgtg9Fb
-         WRVjGpZxhLeAq7Eg2owksQkigOKgN/7BxU4UuKdV0+cAdwO2qZjwYAGtmhlyV14dzfJM
-         bQwF0CKWtKRhtng7WdNWcNDZHUPVSN7t/o0cmhTSNIYs4a7JYrriBefG2ocP9Zvk2A5y
-         hC/0PJK2d4ZcDuAkt/IwqVeMtmFVehTuiKEYQhgncYpHHBXPftE44EB8sJwk2e3RYC9X
-         K15Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2EabwVJpbMs8WR1lnXC5kXO4I1SR1dJI8Opr87kB2XQ=;
+        b=YiV3MhS4AwhuZ2AF3pDIAYhKQkafruB4Q6UVe5ykPfVI1URubgMY3hoXnVNZyOp4Wb
+         r+RQbD16RcJSTS0G9tX+X5J1VX6CZgAUxTCTYkgSLvXjYlXwnaenIj3/fKSk7NNEIGe/
+         6Emk89HZu3436T0ixC2aqAbPg1xy84UWO3YgghOzMeUsMZ4mzyBt3GPCHQTHxRQkhDch
+         5L61NrLbLWh6dXxd1SgRw/tdZxFZleNiqZS3K2vXiVkLCHTS/KK2jYdwxtVICnNqr3t1
+         +FadFYr17eXlXCxsyURtpOWPRy8+oB0hBEnxlu0m7P+g++JBSzj6zwB9KzccoP4Fdwjn
+         qH/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=gQgHZa173Ry36f4+lHBRecJzUVEtpF0MsOXYkJSr1KU=;
-        b=lnMXSBnKdlawh9ye6y47RvAF3kAzSokSIe/dg3rQc1mLPKpjLlEmD2Q48bvGXie3ur
-         obpdJXQ5NFjox5bhybGNdeEgq/7VcwTMn1ZjSC1Q+8AT2EBHsI/JRH/cBvnvwKLUKV8Z
-         9ExLitmCqOvKDkoMLpkNrsvl7L3PoPQCSmLi+2fYbEkJkaPf9z1c2lagBujfH+fUcLzO
-         ZXtKld56Q6N3qfd20fq5pG8jAxlXrZzHYKMxRZr1LA7DdGnmRdoWuc6uPss4wz7yW/it
-         x9fBzj5Oc7RwT4KXzW9bmar4tdnz3bnC2hVkYeRAbcRO9v0o1lD4gC9DrlcvgbKEyKsk
-         ER/A==
-X-Gm-Message-State: AKaTC00uCcWNAP5O84ABEBFdFoPl9yXmYQnXfsNC9q3LXXEmuKPR51NIyp/DjyfqHYDUZQ==
-X-Received: by 10.99.43.8 with SMTP id r8mr142978971pgr.83.1481279866723;
-        Fri, 09 Dec 2016 02:37:46 -0800 (PST)
-Received: from android-fbb6869f23c6f304 (50-39-169-6.bvtn.or.frontiernet.net. [50.39.169.6])
-        by smtp.gmail.com with ESMTPSA id s8sm56568105pfj.45.2016.12.09.02.37.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Dec 2016 02:37:46 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20161209091127.sxxczhfslrqsqs3m@sigill.intra.peff.net>
-References: <CAFOYHZDs5rBt5+4D_ViMYfV04foq3h_UrsSMA3FfyMzLh9QdwA@mail.gmail.com> <20161209091127.sxxczhfslrqsqs3m@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2EabwVJpbMs8WR1lnXC5kXO4I1SR1dJI8Opr87kB2XQ=;
+        b=TQLJxYy9iJ3/vTqV09Ul0ifvkKhdFHSYu3eT/BRVL7n6A8EpIf07X9HeVWwd/2ciyi
+         PfqV2B7XpChM/D4B4uC1oF8Rcz60Ty+5w2riNh9YZ4cY63WnqpYbEMGZj0DmTfGPaKxh
+         fKF+QxcC+PAjWtagZhv2+d/d5a5S0Gh4T1Slhw798Ej5kMhFs9FBwjcHHVMGOXA28j2U
+         brBrhXNLqssA0J5CdXvm4Wz6VklTc+eSunA6bnj3GqR8aHwfMDokNgZvHDNMupMyyn6y
+         ftC1Sh8F793w2O4pT32+o5XBuTfMIDISTA5/zOX1pGC7lp+O0XOc8BESMJ7vF3BlPtuS
+         r96w==
+X-Gm-Message-State: AKaTC00FZeARuQt3n/clcWQ3fI7b3d+OV2giFAcdVBzvsjq2cC7UVF4D2w2pV9byT6/ibBMtvSGhFuc9GDaq8Q==
+X-Received: by 10.36.184.194 with SMTP id m185mr6189319ite.3.1481283219518;
+ Fri, 09 Dec 2016 03:33:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain;
- charset=UTF-8
-Subject: Re: Any interest in 'git merge --continue' as a command
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 09 Dec 2016 02:37:42 -0800
-To:     Jeff King <peff@peff.net>, Chris Packham <judge.packham@gmail.com>
-CC:     GIT <git@vger.kernel.org>
-Message-ID: <025427FB-D91F-48B4-B031-5AE1C7BAC779@gmail.com>
+Received: by 10.64.69.3 with HTTP; Fri, 9 Dec 2016 03:33:08 -0800 (PST)
+In-Reply-To: <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
+References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com> <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
+ <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 9 Dec 2016 18:33:08 +0700
+Message-ID: <CACsJy8CX0HO=LxcEK3K+pCecgFY=40R+gpFoy7CGeN5zEJFJVQ@mail.gmail.com>
+Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stephan Beyer <s-beyer@gmx.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 9, 2016 1:11:27 AM PST, Jeff King <peff@peff.net> wrote:
->On Fri, Dec 09, 2016 at 08:57:58PM +1300, Chris Packham wrote:
+On Thu, Dec 8, 2016 at 3:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stephan Beyer <s-beyer@gmx.net> writes:
 >
->> I hit this at $dayjob recently.
->> 
->> A developer had got themselves into a confused state when needing to
->> resolve a merge conflict.
->> 
->> They knew about git rebase --continue (and git am and git
->cherry-pick)
->> but they were unsure how to "continue" a merge (it didn't help that
->> the advice saying to use 'git commit' was scrolling off the top of
->the
->> terminal). I know that using 'git commit' has been the standard way
->to
->> complete a merge but given other commands have a --continue should
->> merge have it as well?
+>> [1] By the way: git cherry-pick --quit, git rebase --forget ...
+>> different wording for the same thing makes things unintuitive.
 >
->It seems like that would be in line with 35d2fffdb (Provide 'git merge
->--abort' as a synonym to 'git reset --merge', 2010-11-09), whose stated
->goal was providing consistency with other multi-command operations.
->
->I assume it would _just_ run a vanilla "git commit", and not try to do
->any trickery with updating the index (which could be disastrous).
->
->-Peff
+> It is not too late to STOP "--forget" from getting added to "rebase"
+> and give it a better name.
 
-This makes sense to me.
-
-Thanks,
-Jake
-
-
+Having the same operation with different names only increases git
+reputation of bad/inconsistent UI. Either forget is renamed to quit,
+or vice versa. I prefer forget, but the decision is yours and the
+community's. So I'm sending two patches to rename in either direction.
+You can pick one.
+-- 
+Duy
