@@ -2,110 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D376B1FC96
-	for <e@80x24.org>; Fri,  9 Dec 2016 22:19:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68B2E1FC96
+	for <e@80x24.org>; Fri,  9 Dec 2016 22:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752352AbcLIWTv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 17:19:51 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:59860 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750756AbcLIWTu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Dec 2016 17:19:50 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1752833AbcLIWX4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 17:23:56 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60660 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752434AbcLIWXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 17:23:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 514CA56C57;
+        Fri,  9 Dec 2016 17:23:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=AxcGyZ4UauON
+        eLIaZkgJNcajfsE=; b=Yt78aG0mTeVr34PtaZ4HqRkdD87R1IOFaMWemI5JJKQ/
+        n+UPJlEihm+d+J/7yWxVRr2EktlnUGQAmuHn30Fm6iQ5xCaj4xNOygciPFPN4PJF
+        xSLJEnQ2skQYNzAbt3xGKTx11e1V1cz/Yg2wDf3Jnrvo954Ei4Uiq4hu95jLMMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Gp7jnH
+        u4QKsh6pIG5Fkc/YT8HofQgxK/E7Cc2MEf2NXXyc5qU58G9gAzH0NPuU1ghklrSN
+        ds0XsLh29uzAsVEgmNTxp2u9RirGvyLb+/f/WrnnaScUxecT5AIr4i7HPDb5d8Y8
+        lkkhQrQJwnLlOMSYL3HHd4At378ar4oGBYmPA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 331B856C56;
+        Fri,  9 Dec 2016 17:23:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 39DA4282B7;
-        Fri,  9 Dec 2016 22:19:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1481321988;
-        bh=jfcpHgpc7n0nWDn5mJ7XnYGQo3YhY0Ux1Xg2KkGW1VE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nWVc+QMgm173p1kSY9DoiDG8/aX69H95dQ7NAuNqHkrSk/fZH5uSvH9UrO+AffY/1
-         pzZ/diuE8ItUdOMIPXY4XvqS2Sfga4aE50fsKWCjfTNbjbXpW/zDdMpYD2ZdMcgk7C
-         tP8dgOjJtaeLoDHWFAg5awdaQC/ky1+4o69PhX8G8ZaiDB4LoAFYG5b1VIlYU4IsCq
-         p5vOavCiMNjBuAnLaDOjmBPAhYSi6YM9OtUcV7xUOKHpLk0mO+K2JrMElRpzfbLuLi
-         8M4y6YH9FEo9roWLjRlElCdfOBlPy1/JRagxgWsx4p/0hzsN3iHV7merP5wgP531FA
-         6EBur1ieLVxZjr7zGmgMuZEe8MMUpq+eoHefwI9gWWrH4SGQ0Kp/dl/Gvl+NPiJd1I
-         F/60bS+SQnnSnauZsGkpGGQ92+E0DR7TMsO1ODLTRzD6vQuU/SW8NvCElPdBseYULz
-         +0wq8PwfkJxzn2TA0sCZdrWrrOlVJogrjkt1WefADblGavDAf90
-Date:   Fri, 9 Dec 2016 22:19:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     David Turner <novalis@novalis.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [REGRESSION 2.10.2] problematic "empty auth" changes
-Message-ID: <20161209221854.re6qf3e5225wxvge@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Turner <novalis@novalis.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <alpine.DEB.2.20.1612081538260.23160@virtualbox>
- <1481231552.20894.20.camel@frank>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 844AB56C55;
+        Fri,  9 Dec 2016 17:23:53 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v6 01/16] Git.pm: add subroutines for commenting lines
+References: <20161111124541.8216-1-vascomalmeida@sapo.pt>
+        <20161111124541.8216-2-vascomalmeida@sapo.pt>
+        <1479823833.1956.7.camel@sapo.pt>
+        <xmqqoa17quls.fsf@gitster.mtv.corp.google.com>
+        <1481303956.4934.8.camel@sapo.pt>
+        <alpine.DEB.2.20.1612091832310.23160@virtualbox>
+Date:   Fri, 09 Dec 2016 14:23:52 -0800
+In-Reply-To: <alpine.DEB.2.20.1612091832310.23160@virtualbox> (Johannes
+        Schindelin's message of "Fri, 9 Dec 2016 18:32:53 +0100 (CET)")
+Message-ID: <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2imlqxux2k5jisxb"
-Content-Disposition: inline
-In-Reply-To: <1481231552.20894.20.camel@frank>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/20161104 (1.7.1)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2AD5DF84-BE5E-11E6-95CC-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---2imlqxux2k5jisxb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hi Vasco,
+>
+> On Fri, 9 Dec 2016, Vasco Almeida wrote:
+>
+>> A Ter, 22-11-2016 =C3=A0s 09:42 -0800, Junio C Hamano escreveu:
+>> > The incremental update below looks sensible. We'd also want to
+>> > protect this codepath from a misconfigured two-or-more byte sequence
+>> > in core.commentchar, I would suspect, to be consistent.
+>>=20
+>> Are the below changes alright for what you propose? It just checks if
+>> the length of core.commentchar's value is 1, otherwise use '#' as the
+>> comment_line_char.
+>> As a note, when I set core.commentchar with "git config
+>> core.commentChar 'batata'", I get the following error message when I
+>> issue "git add -i":
+>>=20
+>> error: core.commentChar should only be one character
+>> fatal: bad config variable 'core.commentchar' in file '.git/config' at=
+ line 6
+>
+> This is exactly the same issue I fixed for rebase -i recently.
 
-On Thu, Dec 08, 2016 at 04:12:32PM -0500, David Turner wrote:
-> I know of no reason that shouldn't work.  Indeed, it's what we use do
-> internally.  So far, nobody has reported problems.  That said, we have
-> exactly three sets of git servers that most users talk to (two different
-> internal; and occasionally github.com for external stuff).  So our
-> coverage is not very broad.
->=20
-> If you're going to do it, tho, don't just do it for Windows users -- do
-> it for everyone.  Plenty of Unix clients connect to Windows-based auth
-> systems.
-
-Let me echo this.  This would make Kerberos (and probably other forms of
-SPNEGO) work out of the box, which would reduce a lot of confusion that
-people have.
-
-I can confirm enabling http.emptyAuth works properly with Kerberos,
-including with fallback to Basic, so I see no reason why we shouldn't do
-it.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---2imlqxux2k5jisxb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.16 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlhLLgAACgkQv1NdgR9S
-9ovLIg//aTou3BF21L5S1xnMRDGMElnV64akfBtVSmsfU3ZE8/o8rHt08BRVVaCr
-yPeQNS7bxRenSH8hRZIOvDPAG4nkQG4LQpgoQKoEyzU0bpchNc/6/Drm8uLXm0My
-lbJzAG7Ph7/5tLq0OWcxZA1nzbwy9uCt3VrS2cYksyXR/kSDIZGhbIdEo5Vc0Dsc
-2ZK1+PRl4fE3I9h7IP55G13wr3N7EWNbDdjqG5wah7cSKqeAfEvvlhWJn9Bevz+d
-sYFe6uMPHn798whwF9R6iCdSzHm/ZUop2Crc7z8oHC040jAs9w5rS269SIrSKhwD
-NUBrWvDZOLShEMEbOwB/ncuIv3fYDOGfjgCQxqiZoWem34aCBkKJDjpdEIqaNbGC
-IAd6B5ya4+jps/2qARt0CGmxEM1ShWEKVDQgYNYqAcBFttorLJIsIDOGT+hscMnM
-ztYCskPg+m66FCdZ94qM56cehcuwOLZ//pDS2s2BjX0rCqwucxkJ/Noke9GYWyGc
-lkT4Ax1BwcU8gtb1jSJJFQkF9HW4IxsADgljC9VlxQ/Wz51IVaICN49rYO7mdej9
-uxm5l9/cVIb/1ROnNz10qYMEufwZwnZzLhYcJgRUNQmgnx/CWchyaK0ATjeXlPfa
-Z9glgzikfYgN+1TF5cpihEURi3oXqHR9dOyc3g2DUaH0XMFeguM=
-=oVwn
------END PGP SIGNATURE-----
-
---2imlqxux2k5jisxb--
+Yes, but the patch we see here punts "core.commentChar is not a
+single-byte single-letter--panic!" case differently.  I think you
+did "just take the first one" in "rebase -i", which I think is more
+in line with the rest of the system, and this addition to Git.pm
+should do the same, I think.
