@@ -2,84 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB1A1FF7F
-	for <e@80x24.org>; Fri,  9 Dec 2016 08:25:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 761831FF7F
+	for <e@80x24.org>; Fri,  9 Dec 2016 08:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932367AbcLIIZj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Dec 2016 03:25:39 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:34500 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932313AbcLIIZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2016 03:25:38 -0500
-Received: from tigra.domain007.com ([192.168.2.102])
-        by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id uB98PU5S021784;
-        Fri, 9 Dec 2016 11:25:32 +0300
-Date:   Fri, 9 Dec 2016 11:25:30 +0300
-From:   Konstantin Khomoutov <kostix+git@007spb.ru>
-To:     git@vger.kernel.org
-Cc:     "Karamjeet Singh" <karamjeet.singh@netsutra.com>
-Subject: Re: git bash error
-Message-Id: <20161209112530.6ed9a309c4169182a1d163ea@domain007.com>
-In-Reply-To: <58D2713C848141E88F0156A1BF3A8B19@Karamjeet>
-References: <58D2713C848141E88F0156A1BF3A8B19@Karamjeet>
-X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S932495AbcLII6y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Dec 2016 03:58:54 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36481 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752985AbcLII6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2016 03:58:54 -0500
+Received: by mail-pg0-f66.google.com with SMTP id x23so1708218pgx.3
+        for <git@vger.kernel.org>; Fri, 09 Dec 2016 00:58:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=jG9xnSUTDZuE/mcVvnDV9h6hAirSeg4XdVc+7R15zws=;
+        b=DkZicGQwUzomSuE9d/zlWv3rUMWobHQN9YPWxKDdvgfnP1FeruoKOzW1sN5vKU9KIa
+         hhBkYMG0q245JJ3PW/8/g8f0rbL10/Bg7ZxYWIeFicagPwbsI1NIydwzS26Ri40sHhut
+         0jyDUHmZxMNJhByfP53X0Igwhp4hdq7+lyaC+OdK3aCEvSO+Kz7KkoBJveOAVvHkrX37
+         JVYQe4gylvkg5xOtWmGx/iilkvWUSNTPfkdusSNWMrNNfUeReFHN8JiUH3y7Ogr7CAwL
+         Le+wOCD5KBD6CwBWoIP8KKMABIUaTiKOPj15eiuix+yiak2h48E8Mzn6pEysUdOslzHK
+         XbkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jG9xnSUTDZuE/mcVvnDV9h6hAirSeg4XdVc+7R15zws=;
+        b=dyXxfqfRREv0KZ/hAjzLn5mmZaMWYHYVYHdC9k7k5DvufqVJjB9EgLSLp2mrCXsKf1
+         DSwMPRUiQ/rlm/W8KItUW/0Vm8EJVRL7Pyzllqwc5kZJmp5RyW43f914Lr2+bdUj42zl
+         VOKcgh2feKKC1v52F4H0oOspsU6hetMMDkcFtIvOOHJi/j1+dj2FBh2/01wVrx2nIhTZ
+         W9H4VBMS02S3kjtx4XTmqU65QH3bLIulCgVK/zkOSoJ343TQ5Rc6Jp+OrqkhDsIgK8mT
+         PRG/trHT99w9bGNwF4gkxHJPYPY2tQIxkjv9JcSeyyFLsUsOfJUfz1+ojKmVMd4pVg6D
+         sr7w==
+X-Gm-Message-State: AKaTC03RHEkWfhUpiAcWDYQP5C0iL46w2xpN6cmk273DPLbEzYY9prYW/TLniLMYW7LxHQ==
+X-Received: by 10.99.65.65 with SMTP id o62mr141997739pga.73.1481273933454;
+        Fri, 09 Dec 2016 00:58:53 -0800 (PST)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id o26sm55587687pfk.91.2016.12.09.00.58.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 Dec 2016 00:58:51 -0800 (PST)
+From:   David Aguilar <davvid@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git ML <git@vger.kernel.org>
+Subject: [PATCH 1/3] difftool: sanitize $workdir as early as possible
+Date:   Fri,  9 Dec 2016 00:58:46 -0800
+Message-Id: <20161209085848.10929-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.11.0.26.gb65c994
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 9 Dec 2016 11:38:55 +0530
-"Karamjeet Singh" <karamjeet.singh@netsutra.com> wrote:
+The double-slash fixup on the $workdir variable was being
+performed just-in-time to avoid double-slashes in symlink
+targets, but the rest of the code was silently using paths with
+embedded "//" in them.
 
-> Dear git support,
-> My app is crashing whenever i launch the git bash tool. I am
-> attaching the error log file from the event viewer. Can you please
-> let me know what the issue is with it.
-> https://www.dropbox.com/sh/mhkmjn8bmh3x1oh/AABUKmhnn-HW2Kv5UVxdckN6a?dl=0
+A recent user-reported error message contained double-slashes.
+Eliminate the issue by sanitizing inputs as soon as they arrive.
 
-Hi!
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ git-difftool.perl | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Your report misses lots of information required to even approach it:
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 959822d5f3..17c336321f 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -224,9 +224,7 @@ EOF
+ 	delete($ENV{GIT_INDEX_FILE});
+ 
+ 	# Changes in the working tree need special treatment since they are
+-	# not part of the index. Remove any trailing slash from $workdir
+-	# before starting to avoid double slashes in symlink targets.
+-	$workdir =~ s|/$||;
++	# not part of the index.
+ 	for my $file (@working_tree) {
+ 		my $dir = dirname($file);
+ 		unless (-d "$rdir/$dir") {
+@@ -389,6 +387,7 @@ sub dir_diff
+ 	my $repo = Git->repository();
+ 	my $repo_path = $repo->repo_path();
+ 	my $workdir = $repo->wc_path();
++	$workdir =~ s|/$||; # Avoid double slashes in symlink targets
+ 	my ($a, $b, $tmpdir, @worktree) = setup_dir_diff($workdir, $symlinks);
+ 
+ 	if (defined($extcmd)) {
+-- 
+2.11.0.26.gb65c994
 
-- What Git version are you using (the fact is: in each next version of
-  a software package some bugs get fixed and others might creep in;
-  so knowing an exact version is paramount).
-
-- What OS? Version, flavor, architecture (32/64 bit).
-
-- What software package (i.e. where did you get your Git install from)?
-
-From the term "git bash", I gather you're talking about Git for Windows.
-If so, that project has its own bug tracker on Github [1] -- because
-it's still a project sort-of separate from the "vanilla" Git due to
-the fact it maintains a set of changes not yet in the Git proper, and
-they do packaging work, too.
-
-Please use that issue tracker in two steps:
-
-1) Search it for your issue.  Say, remove the "is:open" modifier from
-   the search box in the tracker's web interface, put there the words
-   "git", "bash" and "crash" and search.  I'm sure you'll get a hefty
-   amount of reports.  Please see whether your issue is already
-   reported.
-
-2) If yes, and if (and only if) you have additional details about it,
-   please summarise them in a comment.  Please try to write that in
-   plain English (plain bad non-native English is okay :-)); try not to
-   post links to pictures or videos.  They aren't indexed by search
-   engines and require the maintainers to switch their context when
-   reading your report/comment.  On some platforms (say, w/o proper
-   full-blown web browser) they can even be plain hard to even see.
-
-3) If no, write your report there -- by filling the offerred template.
-
-Thanks.
-
-1. https://github.com/git-for-windows/git/issues/
