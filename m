@@ -6,36 +6,37 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3B43203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 09:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43D8A203EA
+	for <e@80x24.org>; Sat, 10 Dec 2016 09:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751639AbcLJJci (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 04:32:38 -0500
-Received: from tschil.ethgen.ch ([5.9.7.51]:41041 "EHLO tschil.ethgen.ch"
+        id S1751953AbcLJJlh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 04:41:37 -0500
+Received: from tschil.ethgen.ch ([5.9.7.51]:41046 "EHLO tschil.ethgen.ch"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751334AbcLJJcg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 04:32:36 -0500
+        id S1751501AbcLJJlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 04:41:36 -0500
 Received: from home.ethgen.de ([94.247.217.2] helo=ikki.ket)
         by tschil.ethgen.ch with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.87)
         (envelope-from <klaus@ethgen.de>)
-        id 1cFe19-0004JO-QX
-        for git@vger.kernel.org; Sat, 10 Dec 2016 10:32:31 +0100
+        id 1cFe9u-0004MN-7d
+        for git@vger.kernel.org; Sat, 10 Dec 2016 10:41:34 +0100
 Received: from klaus by ikki.ket with local (Exim 4.88)
         (envelope-from <klaus@ikki.ethgen.ch>)
-        id 1cFe19-0008I2-Ab
-        for git@vger.kernel.org; Sat, 10 Dec 2016 10:32:31 +0100
-Date:   Sat, 10 Dec 2016 10:32:31 +0100
+        id 1cFe9t-0000Eh-MC
+        for git@vger.kernel.org; Sat, 10 Dec 2016 10:41:33 +0100
+Date:   Sat, 10 Dec 2016 10:41:33 +0100
 From:   Klaus Ethgen <Klaus@Ethgen.ch>
 To:     git@vger.kernel.org
 Subject: Re: [BUG] Colon in remote urls
-Message-ID: <20161210093230.26q7fxcrs2cpll6g@ikki.ethgen.ch>
+Message-ID: <20161210094133.7htkb6cmjuhkdh4v@ikki.ethgen.ch>
 References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch>
  <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net>
  <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org>
+ <20161210082657.zjp52a2zdtqifmg3@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1; x-action=pgp-signed
-In-Reply-To: <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org>
+In-Reply-To: <20161210082657.zjp52a2zdtqifmg3@sigill.intra.peff.net>
 OpenPGP: id=79D0B06F4E20AF1C;
  url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
 User-Agent: NeoMutt/20161126 (1.7.1)
@@ -47,19 +48,31 @@ X-Mailing-List: git@vger.kernel.org
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-Am Fr den  9. Dez 2016 um 22:32 schrieb Johannes Sixt:
-> There are too many systems out there that use a backslash in path names. I
-> don't think it is wise to use it also as the quoting character.
+Am Sa den 10. Dez 2016 um  9:26 schrieb Jeff King:
+> Yeah, I picked it arbitrarily as the common quoting character, but I
+> agree it probably makes backwards compatibility (and general usability
+> when you have to double-backslash each instance) pretty gross on
+> Windows.
 
-Well, the minority, I believe. And only the minority where the command
-line git is used anywhere.
+Well, I don't know of many people using the original git on windows.
+Most of them using some graphical third-party tools.
 
-But for the majority of OS, where the command line git is in use
-(instead of graphically third party git tools) is perfect known for
-backslash as escaping character. However, don't forget that a backslash
-could also be part of the file name.
+The main git suite is most often used on linux where a colon is a valid
+character For example using /mnt/c: as mount path for windows file
+systems or /bla/foo/dated_repository_2016-12-10_12:00.git for dated and
+timed repositories.
 
-Regads
+My btrfs snapshot dir looks like:
+   ~snapshot> l -gGhN
+   [...]
+   drwxr-x--x 1 296 2016-07-30T13:55 daily_2016-12-10_00:00:01.270213478
+   drwxr-x--x 1 296 2016-07-30T13:55 hourly_2016-12-10_05:00:01.372037552
+   [...]
+
+Compared to the backslash, although it is a perfect legal character in
+POSIX file systems, I do not know any use of it.
+
+Regards
    Klaus
 - -- 
 Klaus Ethgen                                       http://www.ethgen.ch/
@@ -68,15 +81,15 @@ Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
 -----BEGIN PGP SIGNATURE-----
 Comment: Charset: ISO-8859-1
 
-iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlhLy64ACgkQpnwKsYAZ
-9qzYfQwAmVIR+bVOvOcZ+yu7HddC5mwo7st6w+vPcdLKpFWcHIhsG//cHq6he+mm
-/Dmfhnc4Yp+dSy7Z99p9DV67hAj0Zxj2koxBo4eCdwWhnKrphCHSST8j2IxIg/0h
-Y1axQEBc5hV9nImTYmOks0pa5c9wKkZS36aTjP63PKgIv46A8RDY/QXAm2uO4kjj
-gfBEiDVkQA99QlvpP1qbuRCK3QUmfqxrP9ldiAhmuDBbNv2smiBxhoN3E6NgKTJG
-fM6WjaZPUqpDUiky5gO0xfOpf6s2c/GMTEO1I5aWom6VKtrOoYUyMlyeMiqALWj7
-KfN7TJfDqp3THo0AkLXuukrNMv9gdfgiAimGqYgSfFM9P60aPjGeC7nBt875PSae
-jdVjIGyl0tHZzSIbBoSecQqx8h65eZaHLaS1uNf704m+EwIs1X2daI7Re3DcAyzL
-EWJxtZyZbG/GooCdA9deywlEAtGNOdIg+p+YkThsmEGiaOir/fAMyviSP/jONTCq
-OC5oHOcK
-=x9y4
+iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlhLzc0ACgkQpnwKsYAZ
+9qy1jQv/Wcafo8nJuy/dNIpxN5tNaLEENrY6a2dkv379F2miEJYROlWO6UzG86hY
+0WIZAm5BKK6SpPVztTMcs2GHPF0iCB4V4RyQFdFa73OhaAgHOJRdy50eaGSz6vt6
+lDZkJZsG0FoXcT6Fapdl5xZeoNDXjPcYH/7yFQ7VjMD5HTpLDIs8E5Mb8V1jwehV
+JKzQd136vksS2qB96jElAYonXFwImvYfTplH3nELJh/kKRJOT8Mzgj/+X7vxnQcC
+NISiLysSxqPm5d9yDsfN1eofMNGn2zgJZStOP6jNV2yqldMgN0fJX4Mt449GpBO8
+OSYjN828QsDYXCWdTCKxbLCxjfNxfvQgHHR7ugSlf9xPrro3MjQjg2cMhZ/fCzCm
+XcC4X+Iyec2F0wHSQiXqlb7wiOXa1Oup6zmTRe/G5HkhlCap/+R2nOCfkqEEwhkB
+moYTqfETqqTJUJiiYVM/U8LBFWGnBBCGWgRPzyNdFna+WnvD93s9JPeg7q9qFm6x
+8flMJBm8
+=M5IW
 -----END PGP SIGNATURE-----
