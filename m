@@ -7,98 +7,89 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44175203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 11:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9B27203EA
+	for <e@80x24.org>; Sat, 10 Dec 2016 11:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752840AbcLJLB3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 06:01:29 -0500
-Received: from mail-io0-f171.google.com ([209.85.223.171]:34853 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752704AbcLJLB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 06:01:27 -0500
-Received: by mail-io0-f171.google.com with SMTP id h30so99280990iod.2
-        for <git@vger.kernel.org>; Sat, 10 Dec 2016 03:01:27 -0800 (PST)
+        id S1752845AbcLJLDQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 06:03:16 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:33899 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752704AbcLJLDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 06:03:15 -0500
+Received: by mail-io0-f196.google.com with SMTP id y124so11911956iof.1
+        for <git@vger.kernel.org>; Sat, 10 Dec 2016 03:03:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=dBPoXDOao1cXmK2i9edkdlh1aQozjqDXkNkUGqmtJlo=;
-        b=kOeeWoLh2+mGFSm74EEXEnInbivEDy1znn0efjyaseY2SaYcu4ffO2WO75ftQgEvMe
-         rzn0q/3FVSObKy6mqd/NS6V6Uz6Aq3Yyjcm3E4t8161z3Wxcs9+YuiiQsPcAYV834ws6
-         5+Inwgtvr3Do6WuuV+ncPwqk8k+biEw0EWrb4/APdjQIOdxcXgCSczKdnku0U5CPkU/A
-         oX9fsejeWYtodpCQpLNEgL4mFIUwe/FTCpcYSGY8t5C2OMejWX/uj4Nad8BBu61YDoX9
-         bTRvqxQt6q+hhv9th6Br/RI1QL422iCmM1CA/WzLHeKiMhdT1tDaWm7HtzVnpeR0xOl1
-         7bMA==
+        bh=5EeOYKQNS7aUtRckFfqmvzlnkSlzADGozkZ22y0iIRQ=;
+        b=iYnm4o5Xrxvw+km1HauOqOzWC+zYcUSnHr8dwTNeGg7B6xPZOSHqBC7hLelZ5tY7y2
+         uKdGR1vLWYaFzpdJlX0qttK6cgaizZaOMNw2pbqCP1/q1ql8ZX1/+k3DKsfgQ7MGCuCU
+         Ijq4I+dERsb0UiTgSn3czkwLZ1JUppm8Kk44RM+LpjTBDTHksogEucuYqXGdJI11KhoJ
+         +h66MJj0E9nA3/cBNFGW/W5Np3oqSDDzMC4NPKySdaK1GPxcX9ZTSERCeM8EQKeAhVYE
+         7JQ6WDt0xLOtWB4/7W0f6ljeqrZJZgQeDWLfucSW4PbFO4MDv6poN61P7f6TI7TVGvf7
+         vjoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=dBPoXDOao1cXmK2i9edkdlh1aQozjqDXkNkUGqmtJlo=;
-        b=e7ZDt0BgWSEgxol1VL/oid6/T8XifJMJGob+TH3dWjnraiFTBxyGgejI7nu1MF34Kd
-         5WZTrrjGCNPzSXeF7/k3fxuWlz6boT16dfTUm0oi0is+Hq0dHnMw0zschm1ayQHNS01p
-         uvhfIrVlfSpNYFuHwEWtKJ+smftNeEtl/rfdAbGDcAukAbj1nHrKYwR1KYX+hLyI2uID
-         uyNeQiLeJeLGlIf5kXBDBODLp7tcXhVndqUe/HherDHmBqnRt9yIvVKSvBWGF/rckVdp
-         NS5g9RbAR7jvtcXfavp+byjQvuGWAx3eDWtGJgTFrZKXatCf7EryziDHFV++QdUN+xpj
-         pWTQ==
-X-Gm-Message-State: AKaTC016gwwc5uOE1I5D0/O3uQEOEod3d8Ush+1Iit3qPv98vlC84o/oZt671mB6SeG3/10oDz1kyWXahPAbjw==
-X-Received: by 10.107.44.137 with SMTP id s131mr68919458ios.212.1481367686897;
- Sat, 10 Dec 2016 03:01:26 -0800 (PST)
+        bh=5EeOYKQNS7aUtRckFfqmvzlnkSlzADGozkZ22y0iIRQ=;
+        b=lvh7ENGDMUKK4DghYJFVZeTT1y+tdxWy1v/DN7UVMQaTjSYAjDz3/1h4SR7z4g2KnQ
+         UN+o+RdlpqYgMLe6/aGXkwv5BmaWBb+XlEjDNM5VrdUDA1qT9aHyGLwvtWjd7f8PoWI8
+         uSz6F0hTRO9HiXIVn7jlRAjEtONTp4cub4LtbwmypswkaJ0yDIeIEjIT1NMaQjN3+3AL
+         riwElbCKtVlXv7Tvt9wpCDW+/NWNzS3F6i5qXwY5Z5tGO/lkwFc/kaG0RYGYUTobI0Mz
+         TiHNKJPghshOV3F1ffrazx2/UU+bXPHYN4Q/SRP5A/QYPE+m4dLbti7VQlg29d+GNTX6
+         qBAA==
+X-Gm-Message-State: AKaTC01CtrpPfLe9+LN0wuYKEkzRwscNC5LWub6OwFYd08Cvhv2CGvB+nQCtMpl/ahj11veZVNeovTXakt4l5w==
+X-Received: by 10.36.66.76 with SMTP id i73mr10509507itb.50.1481367794932;
+ Sat, 10 Dec 2016 03:03:14 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Sat, 10 Dec 2016 03:00:56 -0800 (PST)
-In-Reply-To: <e0780f7c-ccb4-29fe-3d72-80e45a202f65@gmx.net>
-References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com> <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
- <xmqq8trry08k.fsf@gitster.mtv.corp.google.com> <CACsJy8CX0HO=LxcEK3K+pCecgFY=40R+gpFoy7CGeN5zEJFJVQ@mail.gmail.com>
- <xmqq8trprn7f.fsf@gitster.mtv.corp.google.com> <e0780f7c-ccb4-29fe-3d72-80e45a202f65@gmx.net>
+Received: by 10.64.69.3 with HTTP; Sat, 10 Dec 2016 03:02:44 -0800 (PST)
+In-Reply-To: <20161209194232.GC88637@google.com>
+References: <1480964316-99305-1-git-send-email-bmwill@google.com>
+ <1481241494-6861-1-git-send-email-bmwill@google.com> <CACsJy8A2M_G34MeHh6vGsrf5ePOOduM6u=n17_EZLtu31uDAYg@mail.gmail.com>
+ <20161209194232.GC88637@google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Dec 2016 18:00:56 +0700
-Message-ID: <CACsJy8Div=Baenn7c-1wxgvrOh5PG=naeDrEYC8gs+AvJE7wZA@mail.gmail.com>
-Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+Date:   Sat, 10 Dec 2016 18:02:44 +0700
+Message-ID: <CACsJy8C=0SPYcwC34zTzfVg=U8xiN=XYWuiEVqP_OK5dJF_SfQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] road to reentrant real_path
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 10, 2016 at 2:24 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi Junio,
->
-> On 12/09/2016 07:07 PM, Junio C Hamano wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->>> Having the same operation with different names only increases git
->>> reputation of bad/inconsistent UI. Either forget is renamed to quit,
->>> or vice versa. I prefer forget, but the decision is yours and the
->>> community's. So I'm sending two patches to rename in either direction.
->>> You can pick one.
+On Sat, Dec 10, 2016 at 2:42 AM, Brandon Williams <bmwill@google.com> wrote:
+> On 12/09, Duy Nguyen wrote:
+>> On Fri, Dec 9, 2016 at 6:58 AM, Brandon Williams <bmwill@google.com> wrote:
+>> > diff --git a/setup.c b/setup.c
+>> > index fe572b8..0d9fdd0 100644
+>> > --- a/setup.c
+>> > +++ b/setup.c
+>> > @@ -254,10 +254,12 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
+>> >                 if (!is_absolute_path(data.buf))
+>> >                         strbuf_addf(&path, "%s/", gitdir);
+>> >                 strbuf_addbuf(&path, &data);
+>> > -               strbuf_addstr(sb, real_path(path.buf));
+>> > +               strbuf_realpath(sb, path.buf, 1);
 >>
->> I actually was advocating to remove both by making --abort saner.
->> With an updated --abort that behaves saner, is "rebase --forget"
->> still necessary?
+>> This is not the same because of this hunk in strbuf_realpath()
 >
-> A quick change in t3407 of the "rebase --forget" test to use "rebase
-> --abort" failed.  That's because it checks the use-case of
-> forgetting/aborting without changing the HEAD.  So --abort makes a
-> rollback, --forget just keeps the current head.  I am not sure if that
-> tested use-case is a real use-case though.
+> Then perhaps I shouldn't make this change (and just leave it as is)
+> since the way real_path_internal/strbuf_realpath is written requires
+> that the strbuf being used for the resolved path only contains the
+> resolved path (see the lstat(resolved->buf &st) call).  Sidenote it
+> looks like strbuf_getcwd() also does a reset, though more subtlety,
+> since it just passes its buffer to getcwd().
 
-It is. I wanted something like this for years but "rm -rf
-/path/to/.git/rebase*" was not as bad when there were no linked
-worktrees.
-
-rebase and cherry-pick/revert are not exactly in the same situation.
-When cherry-pick/revert in "continue/abort" mode, there's usually some
-conflicted files and it's easy to notice.
-
-But an interactive rebase could stop at some commit with clean
-worktree (the 'edit' command). Then I could even add some more commits
-on top. I don't see how 'rebase --abort' can know my intention in this
-case, whether I tried (with some new commits) and failed, and want to
-revert/abort the whole thing, moving HEAD back to the original; or
-whether I forgot I was in the middle of rebase and started to do
-something else, and --abort needs to keep HEAD where it is.
+Yeah that's ok too (I did not see this subtlety when I suggested the change).
 -- 
 Duy
