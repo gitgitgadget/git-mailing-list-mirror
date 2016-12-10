@@ -2,92 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 598811FF7F
-	for <e@80x24.org>; Sat, 10 Dec 2016 18:23:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9B81FF7F
+	for <e@80x24.org>; Sat, 10 Dec 2016 19:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752195AbcLJSXK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 13:23:10 -0500
-Received: from ud03.udmedia.de ([194.117.254.43]:39604 "EHLO
-        mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752034AbcLJSXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 13:23:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=jump-ing.de; h=subject:to
-        :references:cc:from:message-id:date:mime-version:in-reply-to
-        :content-type:content-transfer-encoding; s=k1; bh=PlotidvepzAoWA
-        hIjcHzJDFSrtudMbUJTRt4j3QI95A=; b=uvZx/oqIyYrr6vHrYj3xrHEAn8irKD
-        VU0KHGE5Pu2sCdWggeSa8BBiJyGhjcNMfiTXpqSwnjs2805riHWJ+BLaCvEa8R5O
-        2Wux/QER0+HeNcD6Zxrg8Cp7tUa4MZE9DgGArmBuHrcg06J6THB++7SnDDQ5G2PM
-        UXR9jGSRlvTuo=
-Received: (qmail 13048 invoked from network); 10 Dec 2016 19:23:07 +0100
-Received: from hsi-kbw-37-209-119-31.hsi15.kabel-badenwuerttemberg.de (HELO ?10.0.0.102?) (ud03?291p1@37.209.119.31)
-  by mail.ud03.udmedia.de with ESMTPSA (ECDHE-RSA-AES128-GCM-SHA256 encrypted, authenticated); 10 Dec 2016 19:23:07 +0100
-Subject: Re: Resend: Gitk: memory consumption improvements
-To:     Stefan Beller <sbeller@google.com>
-References: <d10d2b12-4ef1-61e9-0b3c-89aa41c9eeff@jump-ing.de>
- <CAGZ79ka4TRXW7-YY8hqvYz_NJ+dZxtwY6KDSOJ+0cZF4i-J+fA@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Paul Mackerras <paulus@ozlabs.org>
-From:   Markus Hitter <mah@jump-ing.de>
-Message-ID: <0c2a3b89-832a-a78f-f77e-a4a2659ddb90@jump-ing.de>
-Date:   Sat, 10 Dec 2016 19:23:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+        id S1752288AbcLJT4d (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 14:56:33 -0500
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34583 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751496AbcLJT43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 14:56:29 -0500
+Received: by mail-lf0-f65.google.com with SMTP id x143so2820869lfd.1
+        for <git@vger.kernel.org>; Sat, 10 Dec 2016 11:56:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=c21UlODUyJCkFwHcV2uoZH+lV9MOiLRoRLrLPnGYD6c=;
+        b=J8xT+TI45SIZl5PUDizCDYfPqfNbuROWSPExQBOOHJ/i0V1C8QwhvskDXLezFdbfgw
+         Ggws9jiRm2KloesDgDiyS46Y+AKANpwPgKGzoSyrhPqoUetM1p8cwuaRkQTpqs7jXfQr
+         y9ZQCgsFfHbm+I38etC0MRej27eNn6/9U0Dfnc+n8JEQNMutLzqZ59GK/QTVrsw8tsB9
+         /vEr6aijwkmBl/g4YrbctZk40HnqPN+ARXblBu/Z0EBmwNcC4tOKEGE0yn0OcympzQla
+         oIjHrPW089oMo/Ze3LMFtGngvaURi/A8ULmMceV4IR1NF8ofMcJi+68XLTzjLzeE61lV
+         dJXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=c21UlODUyJCkFwHcV2uoZH+lV9MOiLRoRLrLPnGYD6c=;
+        b=XHsN2ziGlemUqWEMJtG3k5Gw/UwlKP/bvk3AHc1GnL/rI7vG9VQPLKIw3aaLZDJDJd
+         SyvL7lB9zgmNqV+D9JBgO9aZihwMYEURN6rpfG1f3NOQdkape7vHMW4JYy8/BAE46yFr
+         A/4nXvWGFwYJ1OVGHwquWFviGoU88kODCIvpOPuAoKR567gbCdrSY1dqOchErYtNdGhz
+         sbxP6S9jEo5aSb8Mzu+mSSGElLX2ozzi/7wNz8cmvIHE18dvpUyfU2bCo3JGCaOXYguT
+         9HR9RDFie2TQkyUspRmJIPHuTO4q+3SqgiQSTlA3MT4cFoCWN/EOPbUkUY/1rg8ds139
+         0YdQ==
+X-Gm-Message-State: AKaTC009F8ajJXznvegL/O97XdeClNPzSNxlJQOqePz6zcSS0wBBhCJANJakvP7ZZ2ce20nsfYNEM73kdlgYBQ==
+X-Received: by 10.46.7.10 with SMTP id 10mr37947801ljh.60.1481399787299; Sat,
+ 10 Dec 2016 11:56:27 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79ka4TRXW7-YY8hqvYz_NJ+dZxtwY6KDSOJ+0cZF4i-J+fA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Received: by 10.25.221.217 with HTTP; Sat, 10 Dec 2016 11:56:26 -0800 (PST)
+In-Reply-To: <20161209190111.9571-4-s-beyer@gmx.net>
+References: <xmqq4m2drlys.fsf@gitster.mtv.corp.google.com> <20161209190111.9571-1-s-beyer@gmx.net>
+ <20161209190111.9571-4-s-beyer@gmx.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 10 Dec 2016 20:56:26 +0100
+Message-ID: <CAP8UFD0hCke_W6C=gOHinpj+G3WCFKf7Cji6zREDer4RUBxKxg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] Make sequencer abort safer
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.12.2016 um 18:57 schrieb Stefan Beller:
-> On Fri, Dec 9, 2016 at 3:51 AM, Markus Hitter <mah@jump-ing.de> wrote:
->>
->> It's a month now since I sent three patches to this list for reducing memory consumption of Gitk considerably:
->>
->> https://public-inbox.org/git/de7cd593-0c10-4e93-1681-7e123504f5d5@jump-ing.de/
->> https://public-inbox.org/git/e09a5309-351d-d246-d272-f527f50ad444@jump-ing.de/
->> https://public-inbox.org/git/8e1c5923-d2a6-bc77-97ab-3f154b41d2ea@jump-ing.de/
->> https://public-inbox.org/git/2cb7f76f-0004-a5b6-79f1-9bb4f979cf14@jump-ing.de/
->>
->> Everybody cheered, but apparently nobody picked these patches up and applied them to either the Git or Gitk repository. They don't appear in the regular "what's cooking" post either.
-> 
-> The "What's cooking" email is done by Junio (the Git maintainer)
-> describing the development of Git, whereas gitk is maintained by Paul
-> if I understand correctly.
+On Fri, Dec 9, 2016 at 8:01 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
 
-TBH, there might be no Gitk maintenance at all, because the last commit in either repository dates February 2016. It's a bit hard to believe there was not a single contribution in 10 months.
+[...]
 
+> +static int rollback_is_safe(void)
+> +{
+> +       struct strbuf sb = STRBUF_INIT;
+> +       struct object_id expected_head, actual_head;
+> +
+> +       if (strbuf_read_file(&sb, git_path_abort_safety_file(), 0) >= 0) {
+> +               strbuf_trim(&sb);
+> +               if (get_oid_hex(sb.buf, &expected_head)) {
+> +                       strbuf_release(&sb);
+> +                       die(_("could not parse %s"), git_path_abort_safety_file());
+> +               }
+> +               strbuf_release(&sb);
+> +       }
 
-> I'd love to see those patches in use here (via a regular upstream update).
-> 
-> So I guess the way to go for you is to keep bugging Paul for an ack?
+Maybe the following is a bit simpler:
 
-Like:
+       if (strbuf_read_file(&sb, git_path_abort_safety_file(), 0) >= 0) {
+               int res;
+               strbuf_trim(&sb);
+               res = get_oid_hex(sb.buf, &expected_head);
+               strbuf_release(&sb);
+               if (res)
+                   die(_("could not parse %s"), git_path_abort_safety_file());
+       }
 
-  Hey hey Paul!
-  Come and get the goal!
-  Fetch the patch and get applied
-  to our all's delight!
-
-or like
-
-  Macke- Macke- Mackerras!
-  Come here and join with us!
-  It's just a simple 'git am'
-  and you are the man!
-
-Another encouraging poem?
-
-
-Markus
-
--- 
-- - - - - - - - - - - - - - - - - - -
-Dipl. Ing. (FH) Markus Hitter
-http://www.jump-ing.de/
+Thanks,
+Christian.
