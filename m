@@ -2,113 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09DFD203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 11:16:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D0F5203EA
+	for <e@80x24.org>; Sat, 10 Dec 2016 11:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752704AbcLJLQk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 06:16:40 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:33671 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbcLJLQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 06:16:39 -0500
-Received: by mail-io0-f195.google.com with SMTP id p13so11918407ioi.0
-        for <git@vger.kernel.org>; Sat, 10 Dec 2016 03:16:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=epBGnU6BIEOPwX2nFVDRX48CJIeu7mU4Ce9lyFxN7rU=;
-        b=iviKY5Bw3psyGsYMt6nyytlygAAx3ZNS5EFkF2sjfPunNx0ILpYKCa15Tf1OcB9U/5
-         J/ETtPYHkKgA5pqlw2gS7pwxSWhWGNYcVUT9dpr0RdTHsJDhLQBwV03neTzXQc5DTlWT
-         Td1dbp4+DRRl6lK34ssmS5TCx4uJXQbwzFy6xNWMPiDNPYeXWEX0jbh2nQNaz9nncGg6
-         5nm8qPHYwUCazGce52/DCCA6xNJPwEGjyer+k+UJ8bmI3HVcL9Vq14vERKaOAy1iIVO0
-         LqQf9bxZZRxLo3eCglc9MQjDr/KnRstAU75GGkyMnBG+j9T/d8sD6+wCFXaPUA61XHgm
-         hMlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=epBGnU6BIEOPwX2nFVDRX48CJIeu7mU4Ce9lyFxN7rU=;
-        b=OSn8oUkaHiIoRASTPUsWcZfZu+KWhGMwQliYgk2g7fGe6P67rK5je+CqHSygcIkVkh
-         7D3Yrf7fAaoj0lWHdS8Ysn1SDiGNoT+DPbktZN06SmJXHd/I7q5QxFJKfzW1gzROcpZ3
-         XsqJmIm42f2347VT9NgdYETCMDGfpCQwt4RdsQEwQKz9aa7lNOJHyXmOGbZEc+ADTEim
-         bSJzyWelaUacdZjEnzkqHQmre78GFwGQ/JhLC2wx3F6fnfVQKSa4yB9VZopmUUHe0BZQ
-         BGe0+UGm1jOL1ghf3qWPKPyg6vugU3eevKPjOXgAf9enYoohu/hElOE/hHclZUf1qaJ6
-         aF7Q==
-X-Gm-Message-State: AKaTC03dB3PkRD0jBL1M+oeagSPqyuAnashyQL3DBf6v5QDgOOC7BctPDn9Ft87MKs3jhBEqUEhjd4pb8JReag==
-X-Received: by 10.107.132.74 with SMTP id g71mr73950351iod.19.1481368598863;
- Sat, 10 Dec 2016 03:16:38 -0800 (PST)
+        id S1752840AbcLJLQp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 06:16:45 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:40041 "EHLO smtp3-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751388AbcLJLQo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 06:16:44 -0500
+X-Greylist: delayed 142002 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Dec 2016 06:16:44 EST
+Received: from ylum.localnet (unknown [IPv6:2a01:e34:edf7:4710:1366:30a:a1d9:15f1])
+        (Authenticated sender: domi.dumont)
+        by smtp3-g21.free.fr (Postfix) with ESMTPSA id 5A5E613F8AA;
+        Sat, 10 Dec 2016 12:16:39 +0100 (CET)
+From:   Dominique Dumont <dod@debian.org>
+To:     Duy Nguyen <pclouds@gmail.com>
+Reply-To: dod@debian.org
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Feature request: read git config from parent directory
+Date:   Sat, 10 Dec 2016 12:16:38 +0100
+Message-ID: <4777019.UsV5sng9HM@ylum>
+User-Agent: KMail/5.2.3 (Linux/4.8.0-2-amd64; KDE/5.28.0; x86_64; ; )
+In-Reply-To: <CACsJy8AgbGXvMC0XWSPuBHEveJfJFEYUgghDC1Yc7Eka1Dyd8Q@mail.gmail.com>
+References: <3881793.6JIRvg1BPW@ylum> <CACsJy8AgbGXvMC0XWSPuBHEveJfJFEYUgghDC1Yc7Eka1Dyd8Q@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Sat, 10 Dec 2016 03:16:08 -0800 (PST)
-In-Reply-To: <CAGZ79kaV4FYZEbRWQxKBHJg1jVzOkte1QxLZgu75=Jja_BMRGQ@mail.gmail.com>
-References: <20161208210329.12919-1-sbeller@google.com> <20161208210329.12919-5-sbeller@google.com>
- <20161209120006.GA6609@ash> <CAGZ79kaV4FYZEbRWQxKBHJg1jVzOkte1QxLZgu75=Jja_BMRGQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Dec 2016 18:16:08 +0700
-Message-ID: <CACsJy8CQD9QOhJzN7Dm8-=bjrZSEWM_03ETgroin-Lm6vKMuRw@mail.gmail.com>
-Subject: Re: [PATCHv7 4/6] worktree: have a function to check if worktrees are
- in use
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 10, 2016 at 1:49 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Dec 9, 2016 at 4:00 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->
->> int submodule_uses_worktrees(const char *path)
->> {
->>         struct strbuf path = STRBUF_INIT;
->>         DIR *dir;
->>         struct dirent *d;
->>         int ret = 0;
->>
->>         strbuf_addf(&path, "%s/worktrees", path);
->>         dir = opendir(path.buf);
->>         strbuf_release(&path);
->>
->>         if (!dir)
->>                 return 0;
->
-> The submodule may be one of the linked worktrees, which would be
-> caught if we use the code as I sent it out?
+On Friday, 9 December 2016 19:38:05 CET Duy Nguyen wrote:
+> >> Sounds like the same problem I have (and the reason I came up with
+> >> conditional include [1]). Would that work for you (check out the
+> >> example part in that patch)?
+> > 
+> > If I understand correcly, I would need to set up config include in each
+> > git
+> > repository. This is as much work as setting up user.email in the same
+> > place.
+> 
+> Well, no. You set this up in ~/.gitconfig. If you need to add some
+> settings in /abc/def/.gitconfig and expect repositories in this path
+> to reach it via the parent chain, then you could write something like
+> 
+> [include "gitdir:/abc/def/"]
+> file = your-config-file
+> 
+> in ~/.gitconfig and achieve the same effect, because all repos will
+> read ~/.gitconfig, and if it finds out the repo's location is inside
+> /abc/def, your-config-file will be loaded. It could contain email
+> settings or whatever.
+> 
+> So, instead of spreading .gitconfig files around and relying on
+> parent-chain to reach them, you write a few filter rules in
+> ~/.gitconfig to tell all the repos what to load.
 
-I think I simplified it too much, there should still be a
-git_common_dir_noenv() to retrieve the correct common dir in the
-submodule from gitdir. Then, if the repo in question has any linked
-worktrees, you probably can't handle it. It does not matter if the
-submodule gitdir in question is a linked or main worktree.
+oh... yes, that would solve my problem and have no impact on other user who 
+don't need this feature. 
 
-> If this is one of the linked worktrees, we'd rather check if a file
-> "commondir" or "gitdir" exists?
+I do hope that the improvement you proposed will be merged.
 
-Well, in theory yes. But we're apparently not ready for that. If you
-check the files exist, but the files are not valid, then it's still
-not considered a worktree. Which is not much different from what we do
-here (if the directory exists, assuming it's a worktree). It should
-catch all the valid worktrees. But yes it could give some false
-positive. Since we're just using this function to stop the aborbing
-git dir operation, i think this is acceptable.
+Thanks for the explanation.
 
-(It goes even trickier, even get_worktrees() won't detect if the
-linked worktree is already dead, .e.g. deleted manually, I believe.
-Those have to be cleaned up by 'git worktree prune' which does even
-more checks before it declare "this directory is garbage").
-
-> I ask that because I would not know how to relocate such a linked
-> worktree gitdir?
-
-
+All the best
 
 -- 
-Duy
+ https://github.com/dod38fr/   -o- http://search.cpan.org/~ddumont/
+http://ddumont.wordpress.com/  -o-   irc: dod at irc.debian.org
