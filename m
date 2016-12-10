@@ -2,77 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D0F5203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 11:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 123B41FF7F
+	for <e@80x24.org>; Sat, 10 Dec 2016 13:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752840AbcLJLQp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 06:16:45 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:40041 "EHLO smtp3-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751388AbcLJLQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 06:16:44 -0500
-X-Greylist: delayed 142002 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Dec 2016 06:16:44 EST
-Received: from ylum.localnet (unknown [IPv6:2a01:e34:edf7:4710:1366:30a:a1d9:15f1])
-        (Authenticated sender: domi.dumont)
-        by smtp3-g21.free.fr (Postfix) with ESMTPSA id 5A5E613F8AA;
-        Sat, 10 Dec 2016 12:16:39 +0100 (CET)
-From:   Dominique Dumont <dod@debian.org>
-To:     Duy Nguyen <pclouds@gmail.com>
-Reply-To: dod@debian.org
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Feature request: read git config from parent directory
-Date:   Sat, 10 Dec 2016 12:16:38 +0100
-Message-ID: <4777019.UsV5sng9HM@ylum>
-User-Agent: KMail/5.2.3 (Linux/4.8.0-2-amd64; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <CACsJy8AgbGXvMC0XWSPuBHEveJfJFEYUgghDC1Yc7Eka1Dyd8Q@mail.gmail.com>
-References: <3881793.6JIRvg1BPW@ylum> <CACsJy8AgbGXvMC0XWSPuBHEveJfJFEYUgghDC1Yc7Eka1Dyd8Q@mail.gmail.com>
+        id S1752672AbcLJNlh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 08:41:37 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36664 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752273AbcLJNlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 08:41:36 -0500
+Received: by mail-wm0-f65.google.com with SMTP id m203so1894244wma.3
+        for <git@vger.kernel.org>; Sat, 10 Dec 2016 05:41:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=q5wh4YP9Q8a1yjLNzFncZnGUGZMP8mh2u/MTE2Glx90=;
+        b=nlOIoV0W1kdE42L94KD6zz7ePalMCTLdPHAdrDLYyeCMVaJS42i94kYcxR+1EtXGOR
+         RFvGxkbUADOGG51Fvj71HumJlinDt22rfHjfwLPyL7g2GVd2moNTcJ2kQpSOMn98DSxR
+         J1vWOvsPGpWeQHMCl4E2diUCkdO6F2h1BMbgKQg6rbOwO22SFlis6+MFDa4et2zo37JI
+         tsgoazQjE3OoCBx1h8Zs7p/oy5N0MbQ9O63N2g0tob7xSnHEOmHvCwqBhG40T+D6IkSR
+         cqrjTVBw4vKNxNOYHGYef0Rp56xNCAXSQO7zvHNao8xqJ01nEegWlBr2bSbwEqtK9KLK
+         6QDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=q5wh4YP9Q8a1yjLNzFncZnGUGZMP8mh2u/MTE2Glx90=;
+        b=QeXscr2B1Zb6xhigPW0PYVRpmyw6XQWpTpXN3Yr3Tng0L9491o+QQlBf+o341+6mOQ
+         1BUB0mkutXxXKrvty5X+D94M8tkuFy8QyLYekSp+xpSeyWzn/a4xwg9wTzTVxp0Fvn52
+         87Jw1i0H+ODYG9BtG5ap4EFskNnfKDRiRbME/R4uuTO02dDGN0L5v86Q8KGaEsGrRIm5
+         9ZniTi9uBOoTjUzU5Z/8qpar8oN1DiSps14/ZR+1ZfJeYujyBChSSmKWRnDUqHMk88XY
+         blAK92m1JFEPg/3e3cJcKigyXoHFzW/Y3sUZknptTbjEKA/bXt6iGklbAgi7vtmmKitY
+         s0iQ==
+X-Gm-Message-State: AKaTC00feBcqbmDIhQAwLsWaGCzhwFRKE09BC/gnYau6c7knSPked1nrOu93vd8wswVL6g==
+X-Received: by 10.28.148.81 with SMTP id w78mr2410617wmd.42.1481377294780;
+        Sat, 10 Dec 2016 05:41:34 -0800 (PST)
+Received: from ?IPv6:2001:470:7bd6:1000::2? ([2001:470:7bd6:1000::2])
+        by smtp.gmail.com with ESMTPSA id x5sm47610796wje.36.2016.12.10.05.41.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Dec 2016 05:41:34 -0800 (PST)
+Subject: Re: [PATCH] submodule--helper: set alternateLocation for cloned
+ submodules
+To:     stefanbeller@gmail.com
+References: <20161208013814.4943-1-vi0oss@gmail.com>
+Cc:     git@vger.kernel.org
+From:   vi0oss <vi0oss@gmail.com>
+Message-ID: <12000496-2191-2915-8a9e-fe7c314c5676@gmail.com>
+Date:   Sat, 10 Dec 2016 16:41:32 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <20161208013814.4943-1-vi0oss@gmail.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, 9 December 2016 19:38:05 CET Duy Nguyen wrote:
-> >> Sounds like the same problem I have (and the reason I came up with
-> >> conditional include [1]). Would that work for you (check out the
-> >> example part in that patch)?
-> > 
-> > If I understand correcly, I would need to set up config include in each
-> > git
-> > repository. This is as much work as setting up user.email in the same
-> > place.
-> 
-> Well, no. You set this up in ~/.gitconfig. If you need to add some
-> settings in /abc/def/.gitconfig and expect repositories in this path
-> to reach it via the parent chain, then you could write something like
-> 
-> [include "gitdir:/abc/def/"]
-> file = your-config-file
-> 
-> in ~/.gitconfig and achieve the same effect, because all repos will
-> read ~/.gitconfig, and if it finds out the repo's location is inside
-> /abc/def, your-config-file will be loaded. It could contain email
-> settings or whatever.
-> 
-> So, instead of spreading .gitconfig files around and relying on
-> parent-chain to reach them, you write a few filter rules in
-> ~/.gitconfig to tell all the repos what to load.
-
-oh... yes, that would solve my problem and have no impact on other user who 
-don't need this feature. 
-
-I do hope that the improvement you proposed will be merged.
-
-Thanks for the explanation.
-
-All the best
-
--- 
- https://github.com/dod38fr/   -o- http://search.cpan.org/~ddumont/
-http://ddumont.wordpress.com/  -o-   irc: dod at irc.debian.org
+On 12/08/2016 04:38 AM, vi0oss@gmail.com wrote:
+>      Third review: missing && in test fixed.
+>      
+Shall something more be done about this or just wait until the patch 
+gets reviewed and integrated?
