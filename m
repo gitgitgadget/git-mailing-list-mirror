@@ -2,86 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4ED1FF7F
-	for <e@80x24.org>; Sat, 10 Dec 2016 14:53:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C0661FF7F
+	for <e@80x24.org>; Sat, 10 Dec 2016 15:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752583AbcLJOxH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 09:53:07 -0500
-Received: from mout.gmx.net ([212.227.17.22]:51856 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752183AbcLJOxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 09:53:06 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDW9x-1cPvD520YH-00Gp3H; Sat, 10
- Dec 2016 15:52:42 +0100
-Date:   Sat, 10 Dec 2016 15:52:39 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     David Turner <novalis@novalis.org>, git@vger.kernel.org
+        id S1752777AbcLJPXq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 10:23:46 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:32840 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752429AbcLJPXp (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 10 Dec 2016 10:23:45 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E3F20282B7;
+        Sat, 10 Dec 2016 15:23:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1481383422;
+        bh=snPSEyGZsthx4JREDDXwRRRgL+l2K6K9tt1TXr9KXqQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zmypWmaWK5sskqJrFrOLKSt5cGEmJ+S6amzVqsq946mF6BAiDmca5yO7J0YAz2X7W
+         tuTcgzq/QFW48+KF5f7OKg6hl2+wjpmrOuSZcwmm+aqhydUi0LloSnuBLd3NZONeFE
+         4dSyZQ2FE6XL6N9p339cMnLmH+vTl4hVDjc5ELYNi0Ckij00I/DTeXvGqqVbAZdXag
+         RgNiQuce2/PBtCbkvCdHMPBbKwXSidW495+zAg8cZZ2Eb3QVIs/JquTbASGLCWBikU
+         iDPaBgqSSXnBtir/oqxjZwpLDVpxI2BFKTjYtGep/8+u5xtgjs6anChCL5qb8665ob
+         R8mKKTGrMimwZydrlrDbOAVfURY4dd8Z+hcN8VtOsyQR2tOemmhlflg7+swm2IkUyM
+         lMngEx2zQ/04MGRKxw9FluEr3QnL5f2Xxo4srlCcGtm7G/qKQvVqnmABQjWIN3XCOH
+         L3DiWVOjlrkGUlyJfUc2nlIzhwi9BXMeLK0yJliTvol0v/jIA8N
+Date:   Sat, 10 Dec 2016 15:23:39 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     David Turner <novalis@novalis.org>, git@vger.kernel.org
 Subject: Re: [REGRESSION 2.10.2] problematic "empty auth" changes
-In-Reply-To: <20161209221854.re6qf3e5225wxvge@genre.crustytoothpaste.net>
-Message-ID: <alpine.DEB.2.20.1612101551100.23160@virtualbox>
-References: <alpine.DEB.2.20.1612081538260.23160@virtualbox> <1481231552.20894.20.camel@frank> <20161209221854.re6qf3e5225wxvge@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Message-ID: <20161210152338.vzd4w3pr7wy6p4ki@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+References: <alpine.DEB.2.20.1612081538260.23160@virtualbox>
+ <1481231552.20894.20.camel@frank>
+ <20161209221854.re6qf3e5225wxvge@genre.crustytoothpaste.net>
+ <alpine.DEB.2.20.1612101551100.23160@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UF4x9FxfNdQbDDgkfmQiN4w+77JFLXyNb18tY/2RRsu1lXK5nf9
- BdUimLxaGdlJlVjE2qlFHVaqzGxAAw7N2ajlbw3wLf4YHljTySLkdDQ0WRUeoS5zeuvNKMc
- AgCUiU+O38vl3BRwdNin5pCY8ZzhRC+FcLZWFbaHA/Ax3ztaKCUgb0y/2DKa6AudQ9MZPeF
- PyoxAJEuJBvucGt0f3KsQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aPtzMdQJmp0=:8hMM2umfWAGx2AJHk+33l+
- 7JYCvoRUWmrEDmM52hw14+TGcrJfTWn2+3MjaZEnSSJtYLAYjD/qB4+bjkHapUeUGnNCEmGsc
- IgsrV6Liak5bWKaMw1EGzSQLYApxSd7t1/xCpeoy4mI8RVUm+tcMOfUsWury0/yVeqikD1Ymr
- lMR2kfLOKQBEvHOl0fFiTNBonbLU/L11zRCW9+zD+094dm86/Jil06A5zPZwrg6o0N6cxDcVy
- +ilUQYcEmun9xH/vnYqqzXFYnZaYrPsN3EuogpVLcEtx9BsoxnA5cuiOHYWqqduPb25Ew7kfI
- J1gExJ5in7XJdZcH59j9J5Fr4IjOrBoxehH3TaZh7BX5jvD3VPuodN1UZaWJctY8mkTBQdNir
- 6hXLI3cBO2J0LpZk0bcc7ayCtQZNZhwm6ouglb75PMT6ubFHolQMwfiozAyT1gNjPVgkBCnTv
- knO5TtzJk/1FDtE+KStZ8qdxyYFOUHvnDoXAOv2QTzfVI5Ny9zF64VBw9XW1z3IEBVL+/Fzmq
- mz6WPxb7ZsQNuRllAv3uYmlyW7cLVDhM/4yNUJKtiMFo7+rYaeJhCqrZ2xnvl9nMz1eGkOrm7
- 2gEp8o4rA+ordL3b+1Gol0tWQgYbShi3tLRGRgOvfaOJZXCYUQERtz6n7elrSUbEz5yAAm/nB
- ezKHd9XJDAtSPL2S4pKTODg/+SSUrtrd5+RYxZnMJpIyMuJG7n+31CjhGzgSjiORld7MFWXk0
- T48CJhIETTI/ykK+C542TFawJsO88oSn0X8LbiiriW2U6p4A4j908NDCishySeQgl50ek88UB
- C1V0FYL
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="nqbnlb5v7l7njgei"
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1612101551100.23160@virtualbox>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-1-amd64)
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
 
-On Fri, 9 Dec 2016, brian m. carlson wrote:
+--nqbnlb5v7l7njgei
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Thu, Dec 08, 2016 at 04:12:32PM -0500, David Turner wrote:
-> > I know of no reason that shouldn't work.  Indeed, it's what we use do
-> > internally.  So far, nobody has reported problems.  That said, we have
-> > exactly three sets of git servers that most users talk to (two
-> > different internal; and occasionally github.com for external stuff).
-> > So our coverage is not very broad.
-> > 
-> > If you're going to do it, tho, don't just do it for Windows users --
-> > do it for everyone.  Plenty of Unix clients connect to Windows-based
-> > auth systems.
-> 
-> Let me echo this.  This would make Kerberos (and probably other forms of
-> SPNEGO) work out of the box, which would reduce a lot of confusion that
-> people have.
-> 
-> I can confirm enabling http.emptyAuth works properly with Kerberos,
-> including with fallback to Basic, so I see no reason why we shouldn't do
-> it.
+On Sat, Dec 10, 2016 at 03:52:39PM +0100, Johannes Schindelin wrote:
+> One of my colleagues offered a legitimate concern: it potentially adds
+> another round-trip.
+>=20
+> Do you happen to know whether regular HTTPS negotiation will have an extra
+> round-trip if Kerberos is attempted, but we have to fall back to
+> interactively prompt for (or use stored) credentials?
 
-One of my colleagues offered a legitimate concern: it potentially adds
-another round-trip.
+With Kerberos (using tickets), you have 7 request/response pairs, and an
+additional round trip for the 100 Continue if your push is larger than
+http.postBuffer.  You only have 6 for Basic using Kerberos.
 
-Do you happen to know whether regular HTTPS negotiation will have an extra
-round-trip if Kerberos is attempted, but we have to fall back to
-interactively prompt for (or use stored) credentials?
+However, libcurl is generally going to be able to figure out whether
+your Kerberos credentials can be used, so when it falls back to Basic,
+it does so because it knows you have nothing to use with Negotiate (e.g.
+you have no ticket), and therefore it doesn't even try.  I suppose if I
+tried to push to a server that offered Negotiate and Basic, but didn't
+accept my Kerberos credentials, it might fall back in such a way,
+though.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Ciao,
-Johannes
+--nqbnlb5v7l7njgei
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.16 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlhMHfoACgkQv1NdgR9S
+9ou5Ag/+J17tuOFGW9/Yq7WXr8hFpc94osdXHILC/tJkeuaKdhsnts6gWmiDaKfG
+tLjWO7VAXF5g6ocWUiP5HjK3ze6uUnWP5e+JrBf/h0QAW0IsG9apjxI/nKk60l18
+rWgfX9q4WXzgxofuOaUawTb2aN/JY0M82Ri1iBUViVTWcwKK39CS+tNspP8xN0tJ
+5D7mqKLLVnd1h3W0E1EAphjnhKUcqH0uikiWO3z6iiLPFr++vtfBHXPe2BmhkNe+
+jp9wIhK3N0alvIowqDuDnnNHJSX60VmZ40cjcoeL2iI4ypxEaZ8ybXq5VDkEpJLW
+wE6k4+7ElhUpflkUSh4KXQLrj6xLx6g4wTZ6FzRNO8WI1t+cFAGuSsR7PQx9Q9CL
+EuyXnB0KOKYWNQ27pRzqBk1N8mpWHws1a7qp17wU1b0K6Bm9uEwqWJU9zi1mQDow
+nF7o2WkCD/vf40r22hyr9m84CJSQwUq2hFIIhzHOs+uTe0KWH3qDm1Fl5pjwGO8F
+xUkDIGlfbl1tmO5aZes5DK8s9QgaqJesZx5B3hB5uqyxRiOYd72H/x+zZh5hPX79
+rxzm/WkksUcGKAOJoOCgFcBiBDEWxDKnUZvwenPHdx0Y7uPbbVY+ZbL4HUi37bQn
+7604DsvzKE8qeEZh8zNzXpF/NRDyTKzBt0vBSjHDGf6tqZiFigc=
+=90Dv
+-----END PGP SIGNATURE-----
+
+--nqbnlb5v7l7njgei--
