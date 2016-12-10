@@ -6,93 +6,93 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1576B1FF7F
-	for <e@80x24.org>; Sat, 10 Dec 2016 22:04:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8CD01FF7F
+	for <e@80x24.org>; Sat, 10 Dec 2016 22:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752514AbcLJWEh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 17:04:37 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59085 "EHLO
+        id S1752769AbcLJWJc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 17:09:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52549 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752223AbcLJWEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 17:04:36 -0500
+        with ESMTP id S1752300AbcLJWJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 17:09:31 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2352B5551B;
-        Sat, 10 Dec 2016 17:04:35 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B19254AA5;
+        Sat, 10 Dec 2016 17:09:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BHpEqvPa0oInJ+mEX0yPuPqxeYA=; b=w6zGhv
-        UKFlEiky2hxi1heognS8idzNESlBiD3poHqPTKQfSAZAlAyzLLf4GO6uUHp+t2j2
-        qIuziiYz8MnUQ5Z5aDYI6PsSBN5Nvc0ACAQZiKY3z1pdG/spHkKYRy+678bFs3o+
-        uxDJ+woKyX/wzyWXQRPbwJb+h2kGuOfBar9Gk=
+        :content-type; s=sasl; bh=g1yes4tXz1w/f9yaRGVNZUCmNbk=; b=JdrudX
+        WLvkSkQTFl8+C0sx/sgZ/9BqibZLt/IMToVf2O6DpmWvLaX9bhTupahJRJw2u5vy
+        wlMs3REbjSWGFqQPE0yj4pD4uHH+4U+aJgFAHidzSIxh6fmDqHcoqChJ2Pjs9SWA
+        V1mwXTMFspjEBN9Lld0U3qBVb7OJxVPXiDXxY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K36xu090dYGykMR/+Cszn7Sbc91qxOBs
-        O/rGUD4U6kKpqcrwahYQVdzc79JbY+Qw/bKczRbDkMffOgz/sU+prvRbDU9pSJsO
-        tursfsz0sLnkiWaK6+3p8xKAOOwC7bk2UTxBEycpDAMX81+8kAOBQo/JQo/RavSU
-        VVNmzGE2HDo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A83A5551A;
-        Sat, 10 Dec 2016 17:04:35 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=TTLNwodbq9QuUFMXTnMUz/WSa+KcR51I
+        YEkFmJezr+20Pd7N+3W/rUwEELW0z+YEGI+L1hIsd0It5BD/mN6zW2mS7bblHRdS
+        ggfo1LgbB/9KIQcp5gbEB5wNKPq6fyjMx0rvSPIBcKbcr3XLDQT7cuu+IbEEGhTs
+        yZkglKAcSSc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 601A854AA4;
+        Sat, 10 Dec 2016 17:09:30 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8A3FA55519;
-        Sat, 10 Dec 2016 17:04:34 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2BE954AA1;
+        Sat, 10 Dec 2016 17:09:29 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ariel <asgit@dsgml.com>, git@vger.kernel.org
-Subject: Re: git add -p with new file
-References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
-        <20161209141129.r53b4rbtgd76fn2a@sigill.intra.peff.net>
-        <alpine.DEB.2.11.1612091331170.13185@cherryberry.dsgml.com>
-        <20161210085556.nwg3pbay367jqin5@sigill.intra.peff.net>
-Date:   Sat, 10 Dec 2016 14:04:33 -0800
-In-Reply-To: <20161210085556.nwg3pbay367jqin5@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 10 Dec 2016 03:55:56 -0500")
-Message-ID: <xmqq37hvphji.fsf@gitster.mtv.corp.google.com>
+To:     Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v6 01/16] Git.pm: add subroutines for commenting lines
+References: <20161111124541.8216-1-vascomalmeida@sapo.pt>
+        <20161111124541.8216-2-vascomalmeida@sapo.pt>
+        <1479823833.1956.7.camel@sapo.pt>
+        <xmqqoa17quls.fsf@gitster.mtv.corp.google.com>
+        <1481303956.4934.8.camel@sapo.pt>
+        <alpine.DEB.2.20.1612091832310.23160@virtualbox>
+        <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
+        <1481364496.1993.14.camel@sapo.pt>
+Date:   Sat, 10 Dec 2016 14:09:28 -0800
+In-Reply-To: <1481364496.1993.14.camel@sapo.pt> (Vasco Almeida's message of
+        "Sat, 10 Dec 2016 09:08:16 -0100")
+Message-ID: <xmqqy3zno2qv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A267D9D2-BF24-11E6-B898-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5256B8C2-BF25-11E6-A2D6-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-> On Fri, Dec 09, 2016 at 01:43:24PM -0500, Ariel wrote:
-> ...
->> But it doesn't have to be that way. You could make add -p identical to add
->> without options, except the -p prompts to review diffs first.
->
-> The question is whether you would annoy people using "-p" if you started
-> including untracked files by default. I agree because it's inherently an
-> interactive process that we can be looser with backwards compatibility.
+> I wonder why this is important when Git errors out when
+> core.commentChar is set to more than 1 characters or 0 characters.
 
-It might be interactive, but it will be irritating that we suddenly
-have to see hundreds of lines in an untracked file before we are
-asked to say "no I do not want to add this file" and have to do so
-for all the untracked files that happen to match the given pathspec.
+I think it should be consistent with the way core.commentchar is
+treated in the rest of the system, namely this bit from config.c:
 
-It might make it less irritating if one of the interactive choices
-offered in the first prompt were N that tells the command: "No,
-ignore all the untracked paths", though.  I dunno.
+	if (!strcmp(var, "core.commentchar")) {
+		if (!value)
+			return config_error_nonbool(var);
+		else if (!strcasecmp(value, "auto"))
+			auto_comment_line_char = 1;
+		else if (value[0] && !value[1]) {
+			comment_line_char = value[0];
+			auto_comment_line_char = 0;
+		} else
+			return error("core.commentChar should only be one character");
+		return 0;
+	}
 
-Also, because "git add -p" (no pathspec) is NOT a no-op, the
-similarity Ariel sees with "git add" (no other options) does not
-hold.  As you kept explaining (but perhaps not successfully being
-understood yet), "add -p" works like "add -u", and it will make the
-command incoherent if we allowed "git add -p <path>" to add new
-paths, exactly because "git add -u <path>" does not do so.  Of
-course that can be fixed by allowing "git add -u" to also add new
-paths that match pathspec.
+And I think I misread this piece of code.  
 
-Of course, Ariel can vote for making "add -p" more like "add" (with
-no options) than "add -u".  I _think_ it is a better way to solve
-the incoherence than making "add -u" to add new paths.  But what it
-means is that "add -p <paths>" works on both tracked and untracked
-paths that match the given pathspec <paths>, and also "add -p" (no
-pathspec) must become a no-op (because "add" without option and
-pathspec is).
-
+We only update comment_line_char from the default "#" when the
+configured value is a single-byte character and we ignore incorrect
+values in the configuration file.  So I think the patch you sent is
+correct after all.
