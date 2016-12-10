@@ -2,75 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 197511FF7F
-	for <e@80x24.org>; Sat, 10 Dec 2016 21:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10B061FF7F
+	for <e@80x24.org>; Sat, 10 Dec 2016 21:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752184AbcLJVrD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 16:47:03 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:33290 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752034AbcLJVrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 16:47:03 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout06 with smtp
-        id JMn01u0020srQBz01Mn1No; Sat, 10 Dec 2016 21:47:01 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Xom4AhN9 c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=oxl3eEVWfhasoAaCSAIA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] branch: mark a file-local symbol with static
-Message-ID: <16326b3f-45c8-df4e-d52f-5dac62610b21@ramsayjones.plus.com>
-Date:   Sat, 10 Dec 2016 21:46:59 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S1752250AbcLJV5x (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 16:57:53 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36693 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752034AbcLJV5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 16:57:52 -0500
+Received: by mail-pg0-f65.google.com with SMTP id x23so6240695pgx.3
+        for <git@vger.kernel.org>; Sat, 10 Dec 2016 13:57:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=XZxQUwcOwgVe9qjFrmrjaArA+WdNhnuiXgEvcjcg1l0=;
+        b=H+n5GZtoXx4RzEwaxd6NO72+F+JP7J2OPiB2MyNMF6ZkFvP/6uYd92wyPdsog2WSzR
+         rqzn6/Oi5VEq7NiN0QgbGRKMrja1fGC2HHHV89uDP4kuVIdIBiPJyerjCG1FZulYHp0i
+         uZBrS/yXi8mlSjMJ68KQeYQs56d5xbCtKv+CU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XZxQUwcOwgVe9qjFrmrjaArA+WdNhnuiXgEvcjcg1l0=;
+        b=RoVpxyH0OyPkuJU5v7BqMm+d54aIYmPM5i/e0V7GDv9yAjj43IdyTZQzAB8fXn9rFB
+         t7imxiN+2FWB9BjPVQ9Qcla+vw7U75woUzqoFpTuwQnVFGxbPMOmug2eq3nLooEExZwe
+         dLmkWE5a3mQJf5duuVzn0jiiYoRS1rECulcS2xGhpEbBBHKqx/lgXasQjjni6z9OjI8l
+         I3UFWHlFNP9/HnvynIhb7orpGAGloULZe02J/N+h+13/KUHEnBLv/jUcaMrxASpK8KPA
+         I+R9Yuhp2jltRBsW8+4xrkLP9QnE/ow8mIYefY6wQHJBPRrThP3juoodoqwp6hoJAGOb
+         WOCA==
+X-Gm-Message-State: AKaTC03gmjvjjVE3P3/HNh0VzD538cK1+hYXo9a5tLOeDUkpzydrBCsjp2vTHkGtrzNcfA==
+X-Received: by 10.84.209.173 with SMTP id y42mr15816404plh.94.1481407071576;
+        Sat, 10 Dec 2016 13:57:51 -0800 (PST)
+Received: from ethel.corp.roku (cpc108967-cmbg20-2-0-cust367.5-4.cable.virginm.net. [81.101.7.112])
+        by smtp.gmail.com with ESMTPSA id i124sm66882955pgd.15.2016.12.10.13.57.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sat, 10 Dec 2016 13:57:50 -0800 (PST)
+From:   Luke Diamand <luke@diamand.org>
+To:     git@vger.kernel.org
+Cc:     viniciusalexandre@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: [PATCHv2] git-p4 worktree support
+Date:   Sat, 10 Dec 2016 21:57:33 +0000
+Message-Id: <20161210215734.7468-1-luke@diamand.org>
+X-Mailer: git-send-email 2.8.2.703.g78b384c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Second attempt at teaching git-p4 about worktrees.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+Earlier discussion here:
 
-Hi Karthik,
+http://marc.info/?l=git&m=148097985622294
 
-If you need to re-roll your 'kn/ref-filter-branch-list' branch, could
-you please squash this into the relevant patch (commit 715a4826ab,
-"branch: use ref-filter printing APIs", 07-12-2016).
+Git-p4 exports GIT_DIR so that when it chdirs into the
+P4 client area to apply the change, git commands called
+from there will work correctly.
 
-Thanks!
+Luke Diamand (1):
+  git-p4: support git worktrees
 
-ATB,
-Ramsay Jones
+ git-p4.py               | 47 ++++++++++++++++++++++++++---------------------
+ t/t9800-git-p4-basic.sh | 20 ++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 21 deletions(-)
 
- builtin/branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 2c9aa2b29..4386273ce 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -306,7 +306,7 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
- 	return max;
- }
- 
--const char *quote_literal_for_format(const char *s)
-+static const char *quote_literal_for_format(const char *s)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
 -- 
-2.11.0
+2.8.2.703.g78b384c.dirty
+
