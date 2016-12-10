@@ -2,94 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43D8A203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 09:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E924203EA
+	for <e@80x24.org>; Sat, 10 Dec 2016 10:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751953AbcLJJlh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 04:41:37 -0500
-Received: from tschil.ethgen.ch ([5.9.7.51]:41046 "EHLO tschil.ethgen.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751501AbcLJJlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 04:41:36 -0500
-Received: from home.ethgen.de ([94.247.217.2] helo=ikki.ket)
-        by tschil.ethgen.ch with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.87)
-        (envelope-from <klaus@ethgen.de>)
-        id 1cFe9u-0004MN-7d
-        for git@vger.kernel.org; Sat, 10 Dec 2016 10:41:34 +0100
-Received: from klaus by ikki.ket with local (Exim 4.88)
-        (envelope-from <klaus@ikki.ethgen.ch>)
-        id 1cFe9t-0000Eh-MC
-        for git@vger.kernel.org; Sat, 10 Dec 2016 10:41:33 +0100
-Date:   Sat, 10 Dec 2016 10:41:33 +0100
-From:   Klaus Ethgen <Klaus@Ethgen.ch>
-To:     git@vger.kernel.org
-Subject: Re: [BUG] Colon in remote urls
-Message-ID: <20161210094133.7htkb6cmjuhkdh4v@ikki.ethgen.ch>
-References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch>
- <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net>
- <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org>
- <20161210082657.zjp52a2zdtqifmg3@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; x-action=pgp-signed
-In-Reply-To: <20161210082657.zjp52a2zdtqifmg3@sigill.intra.peff.net>
-OpenPGP: id=79D0B06F4E20AF1C;
- url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
-User-Agent: NeoMutt/20161126 (1.7.1)
+        id S1752929AbcLJKIV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 05:08:21 -0500
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:56972 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752881AbcLJKIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 05:08:19 -0500
+Received: (qmail 12435 invoked from network); 10 Dec 2016 10:08:17 -0000
+Received: (qmail 12584 invoked from network); 10 Dec 2016 10:08:17 -0000
+Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <gitster@pobox.com>; 10 Dec 2016 10:08:17 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+Message-ID: <1481364496.1993.14.camel@sapo.pt>
+Subject: Re: [PATCH v6 01/16] Git.pm: add subroutines for commenting lines
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        =?ISO-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
+        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Date:   Sat, 10 Dec 2016 09:08:16 -0100
+In-Reply-To: <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
+References: <20161111124541.8216-1-vascomalmeida@sapo.pt>
+         <20161111124541.8216-2-vascomalmeida@sapo.pt>
+         <1479823833.1956.7.camel@sapo.pt>
+         <xmqqoa17quls.fsf@gitster.mtv.corp.google.com>
+         <1481303956.4934.8.camel@sapo.pt>
+         <alpine.DEB.2.20.1612091832310.23160@virtualbox>
+         <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+A Sex, 09-12-2016 às 14:23 -0800, Junio C Hamano escreveu:
+> > This is exactly the same issue I fixed for rebase -i recently.
+> 
+> Yes, but the patch we see here punts "core.commentChar is not a
+> single-byte single-letter--panic!" case differently.  I think you
+> did "just take the first one" in "rebase -i", which I think is more
+> in line with the rest of the system, and this addition to Git.pm
+> should do the same, I think.
 
-Am Sa den 10. Dez 2016 um  9:26 schrieb Jeff King:
-> Yeah, I picked it arbitrarily as the common quoting character, but I
-> agree it probably makes backwards compatibility (and general usability
-> when you have to double-backslash each instance) pretty gross on
-> Windows.
+I hope the changes below are in line with the rest of the system. If
+so, I will send a new re-roll with them.
 
-Well, I don't know of many people using the original git on windows.
-Most of them using some graphical third-party tools.
+I wonder why this is important when Git errors out when
+core.commentChar is set to more than 1 characters or 0 characters. Is
+it just to be consistent with "rebase -i" changes introduced
+by Johannes Schindelin?
 
-The main git suite is most often used on linux where a colon is a valid
-character For example using /mnt/c: as mount path for windows file
-systems or /bla/foo/dated_repository_2016-12-10_12:00.git for dated and
-timed repositories.
+I am not sure what does "if (length($comment_line_char) != 1)" check.
+Whether it checks single-byte or single-letter or both...
 
-My btrfs snapshot dir looks like:
-   ~snapshot> l -gGhN
-   [...]
-   drwxr-x--x 1 296 2016-07-30T13:55 daily_2016-12-10_00:00:01.270213478
-   drwxr-x--x 1 296 2016-07-30T13:55 hourly_2016-12-10_05:00:01.372037552
-   [...]
-
-Compared to the backslash, although it is a perfect legal character in
-POSIX file systems, I do not know any use of it.
-
-Regards
-   Klaus
-- -- 
-Klaus Ethgen                                       http://www.ethgen.ch/
-pub  4096R/4E20AF1C 2011-05-16            Klaus Ethgen <Klaus@Ethgen.ch>
-Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
------BEGIN PGP SIGNATURE-----
-Comment: Charset: ISO-8859-1
-
-iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlhLzc0ACgkQpnwKsYAZ
-9qy1jQv/Wcafo8nJuy/dNIpxN5tNaLEENrY6a2dkv379F2miEJYROlWO6UzG86hY
-0WIZAm5BKK6SpPVztTMcs2GHPF0iCB4V4RyQFdFa73OhaAgHOJRdy50eaGSz6vt6
-lDZkJZsG0FoXcT6Fapdl5xZeoNDXjPcYH/7yFQ7VjMD5HTpLDIs8E5Mb8V1jwehV
-JKzQd136vksS2qB96jElAYonXFwImvYfTplH3nELJh/kKRJOT8Mzgj/+X7vxnQcC
-NISiLysSxqPm5d9yDsfN1eofMNGn2zgJZStOP6jNV2yqldMgN0fJX4Mt449GpBO8
-OSYjN828QsDYXCWdTCKxbLCxjfNxfvQgHHR7ugSlf9xPrro3MjQjg2cMhZ/fCzCm
-XcC4X+Iyec2F0wHSQiXqlb7wiOXa1Oup6zmTRe/G5HkhlCap/+R2nOCfkqEEwhkB
-moYTqfETqqTJUJiiYVM/U8LBFWGnBBCGWgRPzyNdFna+WnvD93s9JPeg7q9qFm6x
-8flMJBm8
-=M5IW
------END PGP SIGNATURE-----
+-- >8 --
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 3a6d846..4e0ab5a 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1072,7 +1072,7 @@ sub edit_hunk_manually {
+ 	print $fh @$oldtext;
+ 	my $is_reverse = $patch_mode_flavour{IS_REVERSE};
+ 	my ($remove_plus, $remove_minus) = $is_reverse ? ('-', '+') :
+('+', '-');
+-	my $comment_line_char = Git::config("core.commentchar") ||
+'#';
++	my $comment_line_char = Git::get_comment_line_char;
+ 	print $fh Git::comment_lines sprintf(__ <<EOF, $remove_minus,
+$remove_plus, $comment_line_char),
+ ---
+ To remove '%s' lines, make them ' ' lines (context).
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 69cd1dd..3211650 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -1451,6 +1451,23 @@ sub prefix_lines {
+ 	return $string;
+ }
+ 
++=item get_comment_line_char ( )
++
++Gets the core.commentchar configuration value.
++The value falls-back to # if core.commentchar is set to 'auto'.
++
++=cut
++
++sub get_comment_line_char {
++	my $comment_line_char = config("core.commentchar") || '#';
++	$comment_line_char = '#' if ($comment_line_char eq 'auto');
++	if (length($comment_line_char) != 1) {
++		# use first character
++		$comment_line_char = substr($comment_line_char, 0, 1);
++	}
++	return $comment_line_char;
++}
++
+ =item comment_lines ( STRING [, STRING... ])
+ 
+ Comments lines following core.commentchar configuration.
+@@ -1458,7 +1475,7 @@ Comments lines following core.commentchar
+configuration.
+ =cut
+ 
+ sub comment_lines {
+-	my $comment_line_char = config("core.commentchar") || '#';
++	my $comment_line_char = get_comment_line_char;
+ 	return prefix_lines("$comment_line_char ", @_);
+ }
+ 
