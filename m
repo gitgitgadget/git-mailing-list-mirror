@@ -2,129 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E924203EA
-	for <e@80x24.org>; Sat, 10 Dec 2016 10:08:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4398E203EA
+	for <e@80x24.org>; Sat, 10 Dec 2016 10:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752929AbcLJKIV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 05:08:21 -0500
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:56972 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752881AbcLJKIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 05:08:19 -0500
-Received: (qmail 12435 invoked from network); 10 Dec 2016 10:08:17 -0000
-Received: (qmail 12584 invoked from network); 10 Dec 2016 10:08:17 -0000
-Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <gitster@pobox.com>; 10 Dec 2016 10:08:17 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-Message-ID: <1481364496.1993.14.camel@sapo.pt>
-Subject: Re: [PATCH v6 01/16] Git.pm: add subroutines for commenting lines
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        =?ISO-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
-        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-Date:   Sat, 10 Dec 2016 09:08:16 -0100
-In-Reply-To: <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
-References: <20161111124541.8216-1-vascomalmeida@sapo.pt>
-         <20161111124541.8216-2-vascomalmeida@sapo.pt>
-         <1479823833.1956.7.camel@sapo.pt>
-         <xmqqoa17quls.fsf@gitster.mtv.corp.google.com>
-         <1481303956.4934.8.camel@sapo.pt>
-         <alpine.DEB.2.20.1612091832310.23160@virtualbox>
-         <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1752673AbcLJKYv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 05:24:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54605 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752203AbcLJKYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 05:24:49 -0500
+Received: (qmail 6425 invoked by uid 109); 10 Dec 2016 10:24:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Dec 2016 10:24:49 +0000
+Received: (qmail 25764 invoked by uid 111); 10 Dec 2016 10:25:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Dec 2016 05:25:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Dec 2016 05:24:46 -0500
+Date:   Sat, 10 Dec 2016 05:24:46 -0500
+From:   Jeff King <peff@peff.net>
+To:     Klaus Ethgen <Klaus@Ethgen.ch>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] Colon in remote urls
+Message-ID: <20161210102446.2sf3dxy7yj7sifcd@sigill.intra.peff.net>
+References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch>
+ <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net>
+ <xmqqwpf8rkeq.fsf@gitster.mtv.corp.google.com>
+ <20161210092928.jkaf2rwxhicafmxr@ikki.ethgen.ch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161210092928.jkaf2rwxhicafmxr@ikki.ethgen.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A Sex, 09-12-2016 às 14:23 -0800, Junio C Hamano escreveu:
-> > This is exactly the same issue I fixed for rebase -i recently.
+On Sat, Dec 10, 2016 at 10:29:28AM +0100, Klaus Ethgen wrote:
+
+> > I think we long time ago in 2005 have declared that a colon in a
+> > directory name would not work for Git repositories because of things
+> > like GIT_CEILING_DIRECTORIES, GIT_ALTERNATE_OBJECT_DIRECTORIES; so I
+> > do not think we terribly mind that direction.
 > 
-> Yes, but the patch we see here punts "core.commentChar is not a
-> single-byte single-letter--panic!" case differently.  I think you
-> did "just take the first one" in "rebase -i", which I think is more
-> in line with the rest of the system, and this addition to Git.pm
-> should do the same, I think.
+> That is the first I hear and I really wonder about.
+> 
+> A colon a perfectly allowed character in POSIX filesystems.
 
-I hope the changes below are in line with the rest of the system. If
-so, I will send a new re-roll with them.
+Sure, it's allowed, but it will cause problems due to other syntactic
+conventions.  Try putting "/usr/path:with:colons" into your $PATH
+variable, for instance. Try rsyncing "xxx:yyy.git" somewhere.
 
-I wonder why this is important when Git errors out when
-core.commentChar is set to more than 1 characters or 0 characters. Is
-it just to be consistent with "rebase -i" changes introduced
-by Johannes Schindelin?
+Git does have heuristics for figuring out the difference between
+"host:repo.git" as an SSH remote versus a local path, but they're not
+foolproof.
 
-I am not sure what does "if (length($comment_line_char) != 1)" check.
-Whether it checks single-byte or single-letter or both...
+> Moreover, it was no problem before and was introduced as a problem just
+> in that version. Even more, a pull (and so a clone I believe) of such a
+> path is absolutely ok. Just the push fails.
 
--- >8 --
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 3a6d846..4e0ab5a 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1072,7 +1072,7 @@ sub edit_hunk_manually {
- 	print $fh @$oldtext;
- 	my $is_reverse = $patch_mode_flavour{IS_REVERSE};
- 	my ($remove_plus, $remove_minus) = $is_reverse ? ('-', '+') :
-('+', '-');
--	my $comment_line_char = Git::config("core.commentchar") ||
-'#';
-+	my $comment_line_char = Git::get_comment_line_char;
- 	print $fh Git::comment_lines sprintf(__ <<EOF, $remove_minus,
-$remove_plus, $comment_line_char),
- ---
- To remove '%s' lines, make them ' ' lines (context).
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 69cd1dd..3211650 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -1451,6 +1451,23 @@ sub prefix_lines {
- 	return $string;
- }
- 
-+=item get_comment_line_char ( )
-+
-+Gets the core.commentchar configuration value.
-+The value falls-back to # if core.commentchar is set to 'auto'.
-+
-+=cut
-+
-+sub get_comment_line_char {
-+	my $comment_line_char = config("core.commentchar") || '#';
-+	$comment_line_char = '#' if ($comment_line_char eq 'auto');
-+	if (length($comment_line_char) != 1) {
-+		# use first character
-+		$comment_line_char = substr($comment_line_char, 0, 1);
-+	}
-+	return $comment_line_char;
-+}
-+
- =item comment_lines ( STRING [, STRING... ])
- 
- Comments lines following core.commentchar configuration.
-@@ -1458,7 +1475,7 @@ Comments lines following core.commentchar
-configuration.
- =cut
- 
- sub comment_lines {
--	my $comment_line_char = config("core.commentchar") || '#';
-+	my $comment_line_char = get_comment_line_char;
- 	return prefix_lines("$comment_line_char ", @_);
- }
- 
+Sort of. This has always been a problem with the variables Junio
+mentioned. The change in v2.11 is that the alternates subsystem is being
+used in some cases where it wasn't before, which is surfacing this
+limitation in more places.
+
+> > directory, i.e. GIT_OBJECT_QUARANTINE_DIRECTORY, whose value is
+> > added without splitting to the list of alternate object stores, and
+> > the quarantine codepath can export that instead.
+> 
+> I didn't get it, why is there a need to split? I mean, it is not
+> possible to push to two locations at the same time, so why is there
+> splitting at all?
+
+Because the new quarantine feature[1] is built on top of the existing
+alternates mechanism, which can have several sources.
+
+I do think we should address this as a regression, but I think repo
+names with colons are always going to suffer from some corner cases.
+
+-Peff
+
+[1] See 25ab004c5 and the commits leading up to it for more discussion
+    of what the new feature is, if you're curious.
