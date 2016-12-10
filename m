@@ -2,94 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5F351FF7F
-	for <e@80x24.org>; Sat, 10 Dec 2016 20:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E85FD1FF7F
+	for <e@80x24.org>; Sat, 10 Dec 2016 21:23:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752626AbcLJUwU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Dec 2016 15:52:20 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:32314 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752583AbcLJUwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Dec 2016 15:52:19 -0500
-Received: from PhilipOakley ([92.22.22.210])
-        by smtp.talktalk.net with SMTP
-        id Foczc6KzZgKstFoczcLBak; Sat, 10 Dec 2016 20:52:18 +0000
-X-Originating-IP: [92.22.22.210]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=ml+yzTU89BnYyX12/wy+jA==:117
- a=ml+yzTU89BnYyX12/wy+jA==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
- a=t1KctSBbKY_QnIvKVvoA:9 a=wPNLvfGTeEIA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <34DFA15DE05248069167FE613B66CD70@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Kristoffer Haugsbakk" <kristoffer.haugsbakk@gmail.com>,
-        <git@vger.kernel.org>
-Cc:     "Kristoffer Haugsbakk" <kristoffer.haugsbakk@gmail.com>
-References: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com> <20161209155112.2112-4-kristoffer.haugsbakk@gmail.com>
-Subject: Re: [PATCH 3/4] doc: make the intent of sentence clearer
-Date:   Sat, 10 Dec 2016 20:52:18 -0000
-Organization: OPDS
+        id S1752367AbcLJVXO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Dec 2016 16:23:14 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54844 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751088AbcLJVXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2016 16:23:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B966A54D09;
+        Sat, 10 Dec 2016 16:23:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3f+iFx6whspvtCpuCxJJL3jLEwo=; b=PqzgB4
+        HMOyhTNZme0vLsjScTYdspmxzfRB4JibjZ9mzHGiOGMw9dEXomnnmkYIqQKM/vPm
+        aBk45zPAOXdzXiwxFULN2f2nbxeaF5daYcCNBM/pGIhZiq+C5/Ql/2Pi7vRPUBMc
+        mWv/IeICuE4YV0NV0McVhYbDu933LnADQygmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WpFIRv5OcHScXb5ws4lgBA48HLqvrwuJ
+        pojWoWLSTMQoJZV8idzXQ8psspXVkeY6JGjACwQCu8KWdnkxKrpMBCxAJdrt5dSx
+        OMQUBNJR54ZGadU1E1NZHqR/Ud75WIRCA36E6xjo+1l2NnUmJpFDrzHQdRmfxkSq
+        P3mgpgNpIgQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0A0154D08;
+        Sat, 10 Dec 2016 16:23:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 318A154D07;
+        Sat, 10 Dec 2016 16:23:12 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Stephan Beyer <s-beyer@gmx.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: BUG: "cherry-pick A..B || git reset --hard OTHER"
+References: <xmqqlgvs28bh.fsf@gitster.mtv.corp.google.com>
+        <6facca6e-622a-ea8f-89d8-a18b7faee3cc@gmx.net>
+        <xmqq8trry08k.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8CX0HO=LxcEK3K+pCecgFY=40R+gpFoy7CGeN5zEJFJVQ@mail.gmail.com>
+        <xmqq8trprn7f.fsf@gitster.mtv.corp.google.com>
+        <e0780f7c-ccb4-29fe-3d72-80e45a202f65@gmx.net>
+        <CACsJy8Div=Baenn7c-1wxgvrOh5PG=naeDrEYC8gs+AvJE7wZA@mail.gmail.com>
+Date:   Sat, 10 Dec 2016 13:23:10 -0800
+In-Reply-To: <CACsJy8Div=Baenn7c-1wxgvrOh5PG=naeDrEYC8gs+AvJE7wZA@mail.gmail.com>
+        (Duy Nguyen's message of "Sat, 10 Dec 2016 18:00:56 +0700")
+Message-ID: <xmqqfulvpjgh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfDt6zcDLRzrJNJScq57kY49XMEOT5yKYC7JW9YvKoU4yB2H3sKMOjf1losr5VwnhuMZxXCCCQWuh/8OBmhitc9yUdZirw1ufLqC45vN4eRRp9tstBUpq
- FBxaX2VRAuTABlQCKLcF0jdw2O/836NCfT6vfpRGAFClkgZh4Ij61wmgjyxuI3kWyn1MMoFf1rYOb7jC342yYdtWFYeAq5S9ajmttbWfO9Y/qu96ooW4bS5b
- gWGUH87gCvpRSbNd+5gHog==
+Content-Type: text/plain
+X-Pobox-Relay-ID: DACD6FD6-BF1E-11E6-A59C-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Kristoffer Haugsbakk" <kristoffer.haugsbakk@gmail.com>
-Sent: Friday, December 09, 2016 3:51 PM
-> By adding the word "just", which might have been accidentally omitted.
->
-> Adding the word "just" makes it clear that the point is to *not* do an
-> octopus merge simply because you *can* do it.  In other words, you
-> should have a reason for doing it beyond simply having two (seemingly)
-> independent commits that you need to merge into another branch, since
-> it's not always the best approach.
->
-> The previous sentence made it look more like it was trying to say that
-> you shouldn't do an octopus merge *because* you can do an octopus merge.
-> Although this interpretation doesn't make sense and the rest of the
-> paragraph makes the intended meaning clear, this adjustment should make
-> the intent of the sentence more immediately clear to the reader.
->
-> Signed-off-by: Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
-> ---
-> Documentation/gitcore-tutorial.txt | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/gitcore-tutorial.txt 
-> b/Documentation/gitcore-tutorial.txt
-> index 72ed90ca3..72ca9c1ef 100644
-> --- a/Documentation/gitcore-tutorial.txt
-> +++ b/Documentation/gitcore-tutorial.txt
-> @@ -1635,7 +1635,7 @@ $ git show-branch
-> ++* [master~2] Pretty-print messages.
-> ------------
->
-> -Note that you should not do Octopus because you can.  An octopus
-> +Note that you should not do Octopus just because you can.  An octopus
-> is a valid thing to do and often makes it easier to view the
-> commit history if you are merging more than two independent
-> changes at the same time.  However, if you have merge conflicts
-> -- 
-> 2.11.0
->
-Looks like a reasonable emphasis to me
---
-Philip (UK) 
+Duy Nguyen <pclouds@gmail.com> writes:
 
+> rebase and cherry-pick/revert are not exactly in the same situation.
+> When cherry-pick/revert in "continue/abort" mode, there's usually some
+> conflicted files and it's easy to notice.
+>
+> But an interactive rebase could stop at some commit with clean
+> worktree (the 'edit' command). Then I could even add some more commits
+> on top. I don't see how 'rebase --abort' can know my intention in this
+> case, whether I tried (with some new commits) and failed, and want to
+> revert/abort the whole thing, moving HEAD back to the original; or
+> whether I forgot I was in the middle of rebase and started to do
+> something else, and --abort needs to keep HEAD where it is.
+
+OK.
