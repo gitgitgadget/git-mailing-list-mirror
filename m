@@ -2,99 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCB2E203EA
-	for <e@80x24.org>; Sun, 11 Dec 2016 13:00:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8380720441
+	for <e@80x24.org>; Sun, 11 Dec 2016 13:05:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753133AbcLKNAi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Dec 2016 08:00:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54876 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751335AbcLKNAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2016 08:00:38 -0500
-Received: (qmail 21388 invoked by uid 109); 11 Dec 2016 13:00:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 11 Dec 2016 13:00:37 +0000
-Received: (qmail 32670 invoked by uid 111); 11 Dec 2016 13:01:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 11 Dec 2016 08:01:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Dec 2016 08:00:34 -0500
-Date:   Sun, 11 Dec 2016 08:00:34 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ariel <asgit@dsgml.com>, git@vger.kernel.org
-Subject: Re: git add -p with new file
-Message-ID: <20161211130034.ygj5l2gbx33uknlk@sigill.intra.peff.net>
-References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
- <20161209141129.r53b4rbtgd76fn2a@sigill.intra.peff.net>
- <alpine.DEB.2.11.1612091331170.13185@cherryberry.dsgml.com>
- <20161210085556.nwg3pbay367jqin5@sigill.intra.peff.net>
- <xmqq37hvphji.fsf@gitster.mtv.corp.google.com>
+        id S1752898AbcLKNE5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Dec 2016 08:04:57 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:63779 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751335AbcLKNE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2016 08:04:57 -0500
+Received: from PhilipOakley ([92.22.22.210])
+        by smtp.talktalk.net with SMTP
+        id G3oEc8HcbgKstG3oEcLeH1; Sun, 11 Dec 2016 13:04:55 +0000
+X-Originating-IP: [92.22.22.210]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=ml+yzTU89BnYyX12/wy+jA==:117
+ a=ml+yzTU89BnYyX12/wy+jA==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
+ a=LI31VYkt35nQEw4drjcA:9 a=wPNLvfGTeEIA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <2645548666054ED5BD30436E9DA41C14@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Kristoffer Haugsbakk" <kristoffer.haugsbakk@gmail.com>,
+        "Git List" <git@vger.kernel.org>
+Cc:     "Kristoffer Haugsbakk" <kristoffer.haugsbakk@gmail.com>
+References: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com> <20161209155112.2112-5-kristoffer.haugsbakk@gmail.com>
+Subject: Re: [PATCH 4/4] doc: omit needless "for"
+Date:   Sun, 11 Dec 2016 13:04:54 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq37hvphji.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfLjmnryJsXIb8qo6JzwcvVCC0ZInck/6CxJhErc+AK/Ac/6LZV/cL8ECZ9jkx9C9o6DkUPYzlRGkZToExYwbtKYa20x0AuoshWe6spXTDcPcgWWaSCqX
+ kgZKE35JEJbYTPgusmbHBB1GV3AvAO/p6F1/QthzqptZBihxRUw+P5fY4DCY70boVROtegLko6U3ZPoXdzvleHsat0XNdBeOfX8AEqrRi9x0PfqGHSAeX0Hf
+ PX39hvynrUoNC5hTQh4cPQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 10, 2016 at 02:04:33PM -0800, Junio C Hamano wrote:
+From: "Kristoffer Haugsbakk" <kristoffer.haugsbakk@gmail.com>
+Sent: Friday, December 09, 2016 3:51 PM
+> What was intended was perhaps "... plumbing does for you" ("you" added),
+> but
+> simply omitting the word "for" is more terse and gets the intended point
+> across
+> just as well, if not more so.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Dec 09, 2016 at 01:43:24PM -0500, Ariel wrote:
-> > ...
-> >> But it doesn't have to be that way. You could make add -p identical to add
-> >> without options, except the -p prompts to review diffs first.
-> >
-> > The question is whether you would annoy people using "-p" if you started
-> > including untracked files by default. I agree because it's inherently an
-> > interactive process that we can be looser with backwards compatibility.
-> 
-> It might be interactive, but it will be irritating that we suddenly
-> have to see hundreds of lines in an untracked file before we are
-> asked to say "no I do not want to add this file" and have to do so
-> for all the untracked files that happen to match the given pathspec.
-> 
-> It might make it less irritating if one of the interactive choices
-> offered in the first prompt were N that tells the command: "No,
-> ignore all the untracked paths", though.  I dunno.
+After some thought, I think the original is more 'right'.
 
-Yeah, I agree dumping the contents automatically is annoying. Ariel
-suggested asking twice about each path, which sounds clunky to me. I'd
-probably give a simple question, with an option to dump the contents.
-Like:
+Without the 'for' it suggests that understanding individual plumbing 
+commands would explain some issue being seen with a fancy porcelain command 
+which they probably don't. Rather the 'for' is forward looking toward using 
+the plumbing commands as tools to investigate and then re-plumb the 
+aestehetics to the desired output.
 
-  $ echo foo >untracked
-  $ git add -p
-  New file: untracked
-  Stage this file [y,n,v,q,a,d,/,e,?]? v     <-- user types 'v' for "view"
+The whole porcelain euphemism makes for some awkward phrasing.
 
-  diff --git a/untracked b/untracked
-  index e69de29..257cc56 100644
-  --- a/untracked
-  +++ b/untracked
-  @@ -0,0 +1 @@
-  +foo
-  Stage this file [y,n,v,q,a,d,/,e?]? y
+>
+> I originally went with the approach of writing "for you", but Junio C
+> Hamano suggested this approach instead.
+>
+> Signed-off-by: Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
+> ---
+>
+> Notes (kristoffers):
+>    The original patch was sent to the mailing list on 2016-11-04, and
+> Junio
+>    replied with his suggested correction on 2016-11-10; see the cover
+>    letter.
+>
+> Documentation/gitcore-tutorial.txt | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/gitcore-tutorial.txt
+> b/Documentation/gitcore-tutorial.txt
+> index 72ca9c1ef..22309cfb4 100644
+> --- a/Documentation/gitcore-tutorial.txt
+> +++ b/Documentation/gitcore-tutorial.txt
+> @@ -25,7 +25,7 @@ you want to understand Git's internals.
+> The core Git is often called "plumbing", with the prettier user
 
-Alternatively, "v" could just run "$GIT_PAGER <file>". The point is to
-refresh your memory on what is in it before making a decision.
+If we are tidying up here, then perhaps
+s/core Git is often/Git commands are often/
+to better clarify what aspects are plumbing / porcelain.
 
-I'd also probably add interactive.showUntracked to make the whole thing
-optional (but I think it would be OK to default it to on).
+> interfaces on top of it called "porcelain". You may not want to use the
+> plumbing directly very often, but it can be good to know what the
+> -plumbing does for when the porcelain isn't flushing.
+> +plumbing does when the porcelain isn't flushing.
 
-Some thought would have to be given handling binary files, as we
-wouldn't want to dump their contents (but maybe showing them in a pager
-would be OK).. We skip them entirely right now. So a related feature may
-be asking "Stage this file" for binary files, with an option to somehow
-view the contents.
+I'm not so sure that the direct allusion to 'flushing' is exactly the right
+tone. Part of the issue is the 'porcelain' is the initial euphemism. The 
+other part is that both porcelain and plumbing commands have the same level 
+of CLI un-prettiness, so the distinction isn't there.
 
-I don't have plans to work on any of this myself. Just dumping thoughts
-on what I'd expect an implementation to deal with.
+In the end I strung together:
+"
+The core Git commands are often called "plumbing",
+ while those with the prettier user friendly
+ output are called "porcelain".
 
--Peff
+ You may not want to use the plumbing directly very often,
+ but it can be good to know what the plumbing does
+ when either the porcelain isn't flushing, or different output aethetics are 
+desired.
+"
+
+Though having both prettier and friendly in the same phrase maybe overkill.
+
+>
+> Back when this document was originally written, many porcelain
+> commands were shell scripts. For simplicity, it still uses them as
+> -- 
+> 2.11.0
+>
+--
+Philip
+
