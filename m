@@ -2,148 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C9B81FF7F
-	for <e@80x24.org>; Sun, 11 Dec 2016 11:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28782203EA
+	for <e@80x24.org>; Sun, 11 Dec 2016 12:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752272AbcLKLRI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Dec 2016 06:17:08 -0500
-Received: from mout.gmx.net ([212.227.17.22]:64593 "EHLO mout.gmx.net"
+        id S1752769AbcLKMRr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Dec 2016 07:17:47 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:33688 "EHLO mx1.redhat.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752208AbcLKLRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2016 06:17:07 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLi1v-1cGJF117at-000qgH; Sun, 11
- Dec 2016 12:17:00 +0100
-Date:   Sun, 11 Dec 2016 12:16:57 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S1752399AbcLKMRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2016 07:17:46 -0500
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id EEA5861BAA
+        for <git@vger.kernel.org>; Sun, 11 Dec 2016 12:17:45 +0000 (UTC)
+Received: from krava (dhcp-1-167.brq.redhat.com [10.34.1.167])
+        by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id uBBCHiKQ019128
+        for <git@vger.kernel.org>; Sun, 11 Dec 2016 07:17:45 -0500
+Date:   Sun, 11 Dec 2016 13:17:44 +0100
+From:   Jiri Olsa <jolsa@redhat.com>
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH 1/1] mingw: intercept isatty() to handle /dev/null as Git
- expects it
-In-Reply-To: <cover.1481454992.git.johannes.schindelin@gmx.de>
-Message-ID: <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
-References: <cover.1481454992.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Subject: [BUG] git crash for git remote update tip tip
+Message-ID: <20161211121744.GA1973@krava>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Il99fdHj4JO59IhufdoXhlIH4VmV34zxNyU3fxLxXHDkxlBfG3+
- 5m5rCqyC0sS2KKF4ZEhQ003bj+j8pcZfuDInXfm2qipVcnup5mFoAh6wV/pgCWACrkUfzMb
- tWSyO5Ppo+IytkD/Ar27qMVJamwxXVJ1HEgZAU2rM3ia1i+9Ztvgm1bjy57smxXIn+OGKNp
- lqIyITldwTdRMkeHsyObg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oI4X3G/xeZE=:TV3RdZS9cpVwfUrvnHNaFt
- bnv8J077jAnrtMihp/6PqPPCJ11Gh3PWogS38zNoAcWTtaZk/ayPMmOcc4zb/XumhenyvHC8E
- RxZwN7k4W/bM8wKVJ74LSco6DT9c8SToOIEPZuXju5sP81NIxXlhIGjk7pKxxiCgYvKbwWLuK
- Abn8TfA4j49UU06VFkfxmMEBt0ILDmFMWQX0sgw2YWptG3JIE4UIb3sMK6FkJ7OiFe+FF9mOb
- H8bdvmr7TaR0zxjFprHOaA3v77MVoar8KlDX0ayBz1OBvbN45ZZqqnE6zqyCRMcQIBm3iSqFs
- edyc7RdeaxRFbPU/JuebS66C5lEg6bQFmxALbq2o3jIt0ql27FTHyZj1HDBQkUHMr/5gfXOV3
- NMc2KfITCw7g8fSDESH8al5sUF11dHxlbTZtFgOtWjAleTAL2tbkQPvVoBJnZZKsbYRtkk6Y6
- FO+Uj0xGk8IiK9lpTZhzhdwhL2jjRl23cdE+W7oshjIlJ/bem+oWxtIpkQtfbd7WjABtYWFpf
- n8AcJbzHEUhxZYtL/qnbLYYuNH16XKoLSibv74GV6hD5yBofZjjVoyDSYd8SXAKxDVMqqzmAK
- 7NTGryf3Feu06Gadn3YGt14I4lFd+yLE6X3qE1JRsNV2Acsrqf/zLpB9t59BxxpS6B76qejLH
- evyfFWhq9rq8TISyHnDrP3+mLgZyL+zdv9I9eKh2+yz5uNl9FFTZVavshch+UsL5ZuVo1V4q6
- oRy2CW2gd4a6/Dg5p17Tr/+okKZ3giTrVzg6UL1s3aBoAoYBw4Z7gizktz9OFFK3GIOl48bjs
- iy0XXKG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.7.1 (2016-10-04)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Sun, 11 Dec 2016 12:17:46 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When Git's source code calls isatty(), it really asks whether the
-respective file descriptor is connected to an interactive terminal.
+hi,
+I accidentaly added 2 remotes and git remote update
+crashed, see the attached output.
 
-Windows' _isatty() function, however, determines whether the file
-descriptor is associated with a character device. And NUL, Windows'
-equivalent of /dev/null, is a character device.
+[jolsa@krava perf]$ git --version
+git version 2.7.4
 
-Which means that for years, Git mistakenly detected an associated
-interactive terminal when being run through the test suite, which
-almost always redirects stdin, stdout and stderr to /dev/null.
+thanks,
+jirka
 
-This bug only became obvious, and painfully so, when the new
-bisect--helper entered the `pu` branch and made the automatic build & test
-time out because t6030 was waiting for an answer.
 
-For details, see
-
-	https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.h   |  3 +++
- compat/winansi.c | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
-
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 034fff9479..3350169555 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -384,6 +384,9 @@ int mingw_raise(int sig);
-  * ANSI emulation wrappers
-  */
- 
-+int winansi_isatty(int fd);
-+#define isatty winansi_isatty
-+
- void winansi_init(void);
- HANDLE winansi_get_osfhandle(int fd);
- 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index db4a5b0a37..cb725fb02f 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -7,6 +7,9 @@
- #include <wingdi.h>
- #include <winreg.h>
- 
-+/* In this file, we actually want to use Windows' own isatty(). */
-+#undef isatty
-+
- /*
-  ANSI codes used by git: m, K
- 
-@@ -570,6 +573,36 @@ static void detect_msys_tty(int fd)
- 
- #endif
- 
-+int winansi_isatty(int fd)
-+{
-+	int res = isatty(fd);
-+
-+	if (res) {
-+		/*
-+		 * Make sure that /dev/null is not fooling Git into believing
-+		 * that we are connected to a terminal, as "_isatty() returns a
-+		 * nonzero value if the descriptor is associated with a
-+		 * character device."; for more information, see
-+		 *
-+		 * https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
-+		 */
-+		HANDLE handle = (HANDLE)_get_osfhandle(fd);
-+		if (fd == STDIN_FILENO) {
-+			DWORD dummy;
-+
-+			if (!GetConsoleMode(handle, &dummy))
-+				res = 0;
-+		} else if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
-+			CONSOLE_SCREEN_BUFFER_INFO dummy;
-+
-+			if (!GetConsoleScreenBufferInfo(handle, &dummy))
-+				res = 0;
-+		}
-+	}
-+
-+	return res;
-+}
-+
- void winansi_init(void)
- {
- 	int con1, con2;
--- 
-2.11.0.rc3.windows.1
+[jolsa@krava perf]$ git remote update tip tip
+Fetching tip
+Fetching tip
+*** Error in `git': double free or corruption (fasttop): 0x000055afef92c560 ***
+======= Backtrace: =========
+/lib64/libc.so.6(+0x7570b)[0x7f1ff79b170b]
+/lib64/libc.so.6(+0x7deaa)[0x7f1ff79b9eaa]
+/lib64/libc.so.6(cfree+0x4c)[0x7f1ff79bd40c]
+git(+0x13aa30)[0x55afed553a30]
+git(+0x44936)[0x55afed45d936]
+git(+0x1189f)[0x55afed42a89f]
+git(+0x10970)[0x55afed429970]
+/lib64/libc.so.6(__libc_start_main+0xf1)[0x7f1ff795c731]
+git(+0x10e59)[0x55afed429e59]
+======= Memory map: ========
+55afed419000-55afed5ed000 r-xp 00000000 fd:01 1321939                    /usr/libexec/git-core/git
+55afed7ec000-55afed7f0000 r--p 001d3000 fd:01 1321939                    /usr/libexec/git-core/git
+55afed7f0000-55afed7f8000 rw-p 001d7000 fd:01 1321939                    /usr/libexec/git-core/git
+55afed7f8000-55afed824000 rw-p 00000000 00:00 0 
+55afef106000-55afef946000 rw-p 00000000 00:00 0                          [heap]
+7f1fec000000-7f1fec021000 rw-p 00000000 00:00 0 
+7f1fec021000-7f1ff0000000 ---p 00000000 00:00 0 
+7f1ff0c61000-7f1ff0c77000 r-xp 00000000 fd:01 1311838                    /usr/lib64/libgcc_s-6.2.1-20160916.so.1
+7f1ff0c77000-7f1ff0e76000 ---p 00016000 fd:01 1311838                    /usr/lib64/libgcc_s-6.2.1-20160916.so.1
+7f1ff0e76000-7f1ff0e77000 r--p 00015000 fd:01 1311838                    /usr/lib64/libgcc_s-6.2.1-20160916.so.1
+7f1ff0e77000-7f1ff0e78000 rw-p 00016000 fd:01 1311838                    /usr/lib64/libgcc_s-6.2.1-20160916.so.1
+7f1ff0e78000-7f1ff793c000 r--p 00000000 fd:01 1588307                    /usr/lib/locale/locale-archive
+7f1ff793c000-7f1ff7af5000 r-xp 00000000 fd:01 1316983                    /usr/lib64/libc-2.23.so
+7f1ff7af5000-7f1ff7cf4000 ---p 001b9000 fd:01 1316983                    /usr/lib64/libc-2.23.so
+7f1ff7cf4000-7f1ff7cf8000 r--p 001b8000 fd:01 1316983                    /usr/lib64/libc-2.23.so
+7f1ff7cf8000-7f1ff7cfa000 rw-p 001bc000 fd:01 1316983                    /usr/lib64/libc-2.23.so
+7f1ff7cfa000-7f1ff7cfe000 rw-p 00000000 00:00 0 
+7f1ff7cfe000-7f1ff7d05000 r-xp 00000000 fd:01 1317075                    /usr/lib64/librt-2.23.so
+7f1ff7d05000-7f1ff7f04000 ---p 00007000 fd:01 1317075                    /usr/lib64/librt-2.23.so
+7f1ff7f04000-7f1ff7f05000 r--p 00006000 fd:01 1317075                    /usr/lib64/librt-2.23.so
+7f1ff7f05000-7f1ff7f06000 rw-p 00007000 fd:01 1317075                    /usr/lib64/librt-2.23.so
+7f1ff7f06000-7f1ff7f1d000 r-xp 00000000 fd:01 1315488                    /usr/lib64/libpthread-2.23.so
+7f1ff7f1d000-7f1ff811c000 ---p 00017000 fd:01 1315488                    /usr/lib64/libpthread-2.23.so
+7f1ff811c000-7f1ff811d000 r--p 00016000 fd:01 1315488                    /usr/lib64/libpthread-2.23.so
+7f1ff811d000-7f1ff811e000 rw-p 00017000 fd:01 1315488                    /usr/lib64/libpthread-2.23.so
+7f1ff811e000-7f1ff8122000 rw-p 00000000 00:00 0 
+7f1ff8122000-7f1ff8137000 r-xp 00000000 fd:01 1312081                    /usr/lib64/libz.so.1.2.8
+7f1ff8137000-7f1ff8336000 ---p 00015000 fd:01 1312081                    /usr/lib64/libz.so.1.2.8
+7f1ff8336000-7f1ff8337000 r--p 00014000 fd:01 1312081                    /usr/lib64/libz.so.1.2.8
+7f1ff8337000-7f1ff8338000 rw-p 00015000 fd:01 1312081                    /usr/lib64/libz.so.1.2.8
+7f1ff8338000-7f1ff83aa000 r-xp 00000000 fd:01 1320777                    /usr/lib64/libpcre.so.1.2.7
+7f1ff83aa000-7f1ff85a9000 ---p 00072000 fd:01 1320777                    /usr/lib64/libpcre.so.1.2.7
+7f1ff85a9000-7f1ff85aa000 r--p 00071000 fd:01 1320777                    /usr/lib64/libpcre.so.1.2.7
+7f1ff85aa000-7f1ff85ab000 rw-p 00072000 fd:01 1320777                    /usr/lib64/libpcre.so.1.2.7
+7f1ff85ab000-7f1ff85cf000 r-xp 00000000 fd:01 1311836                    /usr/lib64/ld-2.23.so
+7f1ff8705000-7f1ff87af000 rw-p 00000000 00:00 0 
+7f1ff87cc000-7f1ff87ce000 rw-p 00000000 00:00 0 
+7f1ff87ce000-7f1ff87cf000 r--p 00023000 fd:01 1311836                    /usr/lib64/ld-2.23.so
+7f1ff87cf000-7f1ff87d0000 rw-p 00024000 fd:01 1311836                    /usr/lib64/ld-2.23.so
+7f1ff87d0000-7f1ff87d1000 rw-p 00000000 00:00 0 
+7ffe37593000-7ffe375b4000 rw-p 00000000 00:00 0                          [stack]
+7ffe375e4000-7ffe375e6000 r--p 00000000 00:00 0                          [vvar]
+7ffe375e6000-7ffe375e8000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+error: fetch died of signal 6
