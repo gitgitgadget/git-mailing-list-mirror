@@ -2,91 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 501F81FF7F
-	for <e@80x24.org>; Sun, 11 Dec 2016 11:02:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ED6F1FF7F
+	for <e@80x24.org>; Sun, 11 Dec 2016 11:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752116AbcLKLCO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Dec 2016 06:02:14 -0500
-Received: from tschil.ethgen.ch ([5.9.7.51]:43057 "EHLO tschil.ethgen.ch"
+        id S1752207AbcLKLQ7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Dec 2016 06:16:59 -0500
+Received: from mout.gmx.net ([212.227.15.15]:63812 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752041AbcLKLCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2016 06:02:13 -0500
-Received: from home.ethgen.de ([94.247.217.2] helo=ikki.ket)
-        by tschil.ethgen.ch with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.87)
-        (envelope-from <klaus@ethgen.de>)
-        id 1cG1tR-0008Nf-Rf
-        for git@vger.kernel.org; Sun, 11 Dec 2016 12:02:10 +0100
-Received: from klaus by ikki.ket with local (Exim 4.88)
-        (envelope-from <klaus@ikki.ethgen.ch>)
-        id 1cG1tR-0002Bk-5M
-        for git@vger.kernel.org; Sun, 11 Dec 2016 12:02:09 +0100
-Date:   Sun, 11 Dec 2016 12:02:09 +0100
-From:   Klaus Ethgen <Klaus@Ethgen.ch>
+        id S1751795AbcLKLQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2016 06:16:57 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MS5QA-1c5d4T2PGs-00THDs; Sun, 11
+ Dec 2016 12:16:51 +0100
+Date:   Sun, 11 Dec 2016 12:16:49 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-Subject: Re: [BUG] Colon in remote urls
-Message-ID: <20161211110208.642unp7c2i653sav@ikki.ethgen.ch>
-References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch>
- <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net>
- <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org>
- <20161210093230.26q7fxcrs2cpll6g@ikki.ethgen.ch>
- <alpine.DEB.2.20.1612101918040.23160@virtualbox>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH 0/1] Fix a long-standing isatty() problem on Windows
+Message-ID: <cover.1481454992.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; x-action=pgp-signed
-In-Reply-To: <alpine.DEB.2.20.1612101918040.23160@virtualbox>
-OpenPGP: id=79D0B06F4E20AF1C;
- url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
-User-Agent: NeoMutt/20161126 (1.7.1)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:8WVkLmYCrb/uopppkfHZOkHYgjbquJic9Nvpr8xnd0uco/dlG0M
+ pSWGKAGJlT03KINlEqPncCsRqzWuDHM6A1CXpl7tOfrMucMxixt0vHR88PJ9s5+yaZvWNRG
+ vD/F1Q0+q7cNm0YELpTdl+G8xA7Z6Gt4IKkB1WSdXZEm1RRRKqfPC9ZM4Ufp6OXx9Vf2z3v
+ GXQSLnNLKMP+SJTgsHo/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vXHGFgGQ51c=:fTgWACgLWrXlupCQhltmmr
+ h4UCwBCH50LJdKroELGr9UdpSAL35YNdPX1etweAdGxNWm94zibtAk/MlbD4fUC4nnlNlzsXF
+ HlMsvoemBBXn7euGPRhcfHRRqNfAPr57Jd2nytvdqYPybd2ECocnmwH3YNhC93w12NLE8jZrm
+ MQfSlfVheh3y7Sn+7pYTzWnyI/lFnDSkW5mY38hIuRoDqOfLSs30S9eA8t5/kfU7xqoS8L8X2
+ wBZLiJ+WeIaHdsa5Uo/aHzAWJF3GgTfe/fDaCFWGaQ8LwvzTETp+i82yZwItfSZlnmxLjsXND
+ guU3jMoTb5g3Ox6DOQYuQwdVKcGyM1RWDEVn1LK/yBYKjmiP14xokndDsJ48dNOG6j6M+/Jp2
+ BamZKPlSKUbDlw07ER62QXFgKpBezkh/0tF9pt7clJjSEoTscFGFCilC8HsYksAIPq0G6+6aA
+ Jy439Hy6DnFnakzPEs2Unqv42VvBaqMHGJyVX/dJFY+mCVAXzbOsBzY3b9F1lUzxrFQ84eb/5
+ 67jWJ5aWvPTd/nN7aSCtuH8+bB/y/ZAFFiQDWaWP4CpitwbwaX+q/HtfOD4GpCsTMpN1MO52P
+ LVHKp7Y7Iv6cN2K69jpCgMUCMy5RxYTdtXZmmwsHV+RUc8q0lTtWblHJy5ywS8f1T/T56mzYw
+ 9/I+m34RbkTwUp+thYajpbpZ5wpkKzuePvIKwZuvFao0Ka+1I0+Ukc/9Ql/a/OZPObI7ywW6c
+ Ej0OVyjFy8ZegZ79XqJKxiLsW5ZeHRXLN6wfeCkPzFbDuRjd1UTgO4m/yPChWBy99VZiFI5Us
+ 6H9KSRx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+I finally got a chance to debug the problems with the ever-timing-out
+test runs of `pu` on Windows. Turns out that pb/bisect uncovered a
+really old, really bad bug: on Windows, isatty() does not do what Git
+expects, at least not completely: it detects interactive terminals *and
+character devices*.
 
-Hi,
+Why is this such a big deal?
 
-Am Sa den 10. Dez 2016 um 19:18 schrieb Johannes Schindelin:
-> On Sat, 10 Dec 2016, Klaus Ethgen wrote:
-> > Am Fr den  9. Dez 2016 um 22:32 schrieb Johannes Sixt:
-> > > There are too many systems out there that use a backslash in path names. I
-> > > don't think it is wise to use it also as the quoting character.
-> > Well, the minority, I believe. And only the minority where the command
-> > line git is used anywhere.
-> 
-> Please provide evidence for such bold assumptions.
+One such character device is NUL, Windows' equivalent of /dev/null. And
+guess what happens when the new tests of the bisect--helper run, with
+stdin redirected from /dev/null? Precisely. Git asks "the user" for
+reassurance that it may really continue, waiting forever. Or for Ctrl+C.
 
-How is it "bold" to see that the majority of widows users does not use
-or even like command line tools. And as git is command line tool (most
-of them), users does use third party tools instead of the original.
+As we know what Git's source code wants, we have to make extra certain
+to test whether isatty() reports success for a Console. The common way
+to do this is to run GetConsoleMode() for input file descriptors, and
+GetConsoleScreenBufferInfo() for output file descriptors.
 
-I know companies where the "developers" doesn't even know of the
-existent of a git command line use. They look with owe when they see
-that I use a shell to use git.
+One additional note: the new winansi_isatty() function was put into this
+particular spot not only because it vaguely makes sense to put
+tty-related stuff into compat/winansi.c, but with required future
+changes in mind:
 
-Regards
-   Klaus
-- -- 
-Klaus Ethgen                                       http://www.ethgen.ch/
-pub  4096R/4E20AF1C 2011-05-16            Klaus Ethgen <Klaus@Ethgen.ch>
-Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
------BEGIN PGP SIGNATURE-----
-Comment: Charset: ISO-8859-1
+The current way in which Git for Windows makes sure that isatty()
+returns non-zero for Git Bash (which runs in a terminal emulator called
+MinTTY that does *not* have any Windows Console associated with it, and
+therefore Windows' _isatty() would actually return 0 if it was not for
+our detect_msys_tty() function) is hacky and needs to be fixed properly.
 
-iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlhNMioACgkQpnwKsYAZ
-9qzPygv/ZZr+qW4y/JoTWP6BVu+qDFhean7mHoj5vCSgXwCPzZHSvWIDLdqcrboR
-UR7K3oTz9yMaoMRiNq7pu/QBJlwRSJ8ByqSde8mzXOVTqvEC5kvLugU3Ehc1fs0u
-ZpoQvXBy0SrpKcuNApMdTFMO9OmCwRNAt2JecCQqyQi6hs6Ws5xTCReOEry00wb/
-RdLKOpXwOn5n3ESRAQcqLWhWGs9aUVrfQRCHR2rIYsjx1s/tt+NVWa0hzTnJZt3T
-wcQDlGjgeXsu8gJHPNSxAJv5paiNK4JG5x6UUOUuAzmvIYmwd6kEiyNQctTRd0JM
-ZCBEYnmZQhHbvrkyKsVvUYJhE9FT0hKMAJO791ZiLCN696EJR4BCOZ9I+7GePFtY
-dxb3RNsI9imCXqAHyaguY5tQImzc7P5eQfvH4CdmI9DOmwMUlirvt7pjT94pLFNQ
-pxFphD+gd5tUL6QL5fmoUFQVQacQ9Vfs2riTiHerWnBq8P1Hw4KWVYd6ImFo8u3o
-aWvUfXFg
-=1Yj3
------END PGP SIGNATURE-----
+It is hacky because it relies on internals of the MSVC runtime that do
+not hold true for the new Universal runtimes, which are used when
+compiling with Visual C.
+
+We already have experimental code to future-proof this method, and we
+use that already when compiling Git for Windows in Visual Studio.
+
+The place in which winansi_isatty() now lives will hopefully make it
+possible to unify the code paths again, so that both GCC and Visual C
+use detect_msys_tty() through winansi_isatty().
+
+This will also fix a bug where current Visual C-built Git may misdetect
+a reopened stdin to be connected to an interactive terminal.
+
+
+Johannes Schindelin (1):
+  mingw: intercept isatty() to handle /dev/null as Git expects it
+
+ compat/mingw.h   |  3 +++
+ compat/winansi.c | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+
+
+base-commit: 8d7a455ed52e2a96debc080dfc011b6bb00db5d2
+Published-As: https://github.com/dscho/git/releases/tag/mingw-isatty-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git mingw-isatty-v1
+
+-- 
+2.11.0.rc3.windows.1
+
