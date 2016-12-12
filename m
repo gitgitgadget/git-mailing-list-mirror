@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 546DF206A4
+	by dcvr.yhbt.net (Postfix) with ESMTP id 698E32070D
 	for <e@80x24.org>; Mon, 12 Dec 2016 18:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753761AbcLLSRM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 13:17:12 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:32776 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752510AbcLLSRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 13:17:10 -0500
-Received: by mail-pf0-f179.google.com with SMTP id d2so13800876pfd.0
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 10:17:10 -0800 (PST)
+        id S932155AbcLLSRI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 13:17:08 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:35479 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753656AbcLLSRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 13:17:07 -0500
+Received: by mail-pg0-f52.google.com with SMTP id p66so37773066pga.2
+        for <git@vger.kernel.org>; Mon, 12 Dec 2016 10:17:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9J2Iw74oQE8+wgBNVLyaT2iUrhTRqcIq5ivoRC+bSeA=;
-        b=hEdFlQV0YAm1YZXW/Dy8HDUahuYxfvuHfC6SVO/u6z8ATVxQoOnFTumRNFXS1vcDlR
-         49rsalCskeWYp4/arvI31xa1AILBwCUgT6r6SQpy04alTr2FoQRuTWzFXdhj9RDZz58/
-         T73MtLJg1wBAmNLIxVVvOBAZ2JqB5OmRtEQ8CTC8sDDjQqZ/1/lckQ3mrWr4EQmohyEB
-         SXJkve5BkPygtT7Q/xCHv1szTLNmUjKscFoX/UtEjK+Xthco2qNlhnFKIs0bkM6CfkO2
-         ECZMqk+ED0FKJmM+h22ut0h3bowsQuHp/UN+eA//+SIUWsWfGm1xdsQdz0rgnwqWIEQ8
-         o9mA==
+        bh=Vq+qdzWxzYu37YY+zITkSGoTUqkqYohY7DJUSi4GzPE=;
+        b=jInqAQCTLHm7+y94/mN9NaW/U7RBC5m+jhcsHCM/UJdYKTHf6eyjwhB4ZH6dFtEGQ/
+         UIF3QAuZKI2fqK1SpmRA1rBAv2zLFy/Sj59cWr1n+pRITJ+6lU9deyA1P9jkqmT9uT07
+         e+WfjUF+FT/jK0pXQkNIA1Cr4D1Ic09fRIuFca4HPIhDb0MPRhYzGzkDN1ymzqLy61KX
+         81t68cterrbmsSJ1CWt/nqI3SrLGEyUsuSyUjqpw4RNOFjj6f4fCoVtd5NYwjetZ6y3X
+         RC+J0+cgtvcA8JH2poda+F8JqnbNk9jOx9PUfrn2bmanEIa3huYQTVbvFLzWD2k4RE/O
+         PJ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=9J2Iw74oQE8+wgBNVLyaT2iUrhTRqcIq5ivoRC+bSeA=;
-        b=U3VYJw/pFgx9h+qrMQUtPfykX68mD90RVwPV6PHo4tO0MWXzASXZ+ns3WdVanTb7Zl
-         AZkAb2SUhSXjlwYRBbWqjNAs19MMThe9G5eekFyhWTmfzCZtU3BA6iOLwyy/IGr++k54
-         aOSJ+yrtYS02ITE4mic3UU/pkPVTshKOwrJOprRhcfOBymOrM2XyHc2sIap/3s7TccN8
-         sRkU0nZOjovjJFHgWWLtqe60r+Lvv6UiQMZg7XyLL6/PvkNPFXxGGwAwYAZCU3rAbTpO
-         7lA/3sA5TlDBEhUnUyBMOJyF51n3DQq3pW7DJaqIViVeTnq5NTLEpjt6H+uixHfH3D2s
-         Jgag==
-X-Gm-Message-State: AKaTC01QL300kEqYHQGpa2o1aj0TxbYpVo8+TTjXtoLLt5TQgcx2hk1gSAnE4GDV5qkjyR6U
-X-Received: by 10.84.197.129 with SMTP id n1mr187687081pld.30.1481566629409;
-        Mon, 12 Dec 2016 10:17:09 -0800 (PST)
+        bh=Vq+qdzWxzYu37YY+zITkSGoTUqkqYohY7DJUSi4GzPE=;
+        b=fA4IvKzvGivPsN5cJh9b6C4Q6d30wwuJWK1jDnYOxFEc5R+j2oQb3pyOx1OT4vMNpl
+         opstaWVHgu2rem4yt8jUp5xO4O7g5J/YlbExvQqJt3ym4n78qV8xeFZ6LmD3DGCn8P9O
+         NcBmCHFVFB6057HbLOoXdSAGCS9J7eTCgLq1zIPXhd42vx62CEPmYQ7AR+JLwnnpZzUY
+         I+AskERYC18wdj8FcA71aTuIJd65t3I3wqVpIRXMz6YXV39AIKrkApBS8dmuq8O3MNS1
+         934dNxIOvTkFRRX634dJMOTtIEvNZs/bu9MC/gT9ZdQZQ85J42b4S6fkqB+0JfFi4uGk
+         SCOA==
+X-Gm-Message-State: AKaTC01N+ZLkkuzjp32CcgzsEXKP8LU7vppoy9aMSh7D9mkgIOma+ILmIwLGO6k0Djm+nA5S
+X-Received: by 10.99.37.195 with SMTP id l186mr167606768pgl.91.1481566626139;
+        Mon, 12 Dec 2016 10:17:06 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id y66sm77644889pgb.21.2016.12.12.10.17.07
+        by smtp.gmail.com with ESMTPSA id y66sm77644889pgb.21.2016.12.12.10.17.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Dec 2016 10:17:08 -0800 (PST)
+        Mon, 12 Dec 2016 10:17:05 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         peff@peff.net, jacob.keller@gmail.com, gitster@pobox.com,
         ramsay@ramsayjones.plus.com, tboegi@web.de, j6t@kdbg.org,
         pclouds@gmail.com
-Subject: [PATCH v3 4/4] real_path: have callers use real_pathdup and strbuf_realpath
-Date:   Mon, 12 Dec 2016 10:16:55 -0800
-Message-Id: <1481566615-75299-5-git-send-email-bmwill@google.com>
+Subject: [PATCH v3 2/4] real_path: convert real_path_internal to strbuf_realpath
+Date:   Mon, 12 Dec 2016 10:16:53 -0800
+Message-Id: <1481566615-75299-3-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1481566615-75299-1-git-send-email-bmwill@google.com>
 References: <1481241494-6861-1-git-send-email-bmwill@google.com>
@@ -63,157 +63,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate callers of real_path() who duplicate the retern value to use
-real_pathdup or strbuf_realpath.
+Change the name of real_path_internal to strbuf_realpath.  In addition
+push the static strbuf up to its callers and instead take as a
+parameter a pointer to a strbuf to use for the final result.
+
+This change makes strbuf_realpath reentrant.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/init-db.c |  6 +++---
- environment.c     |  2 +-
- setup.c           | 13 ++++++++-----
- sha1_file.c       |  2 +-
- submodule.c       |  2 +-
- transport.c       |  2 +-
- worktree.c        |  2 +-
- 7 files changed, 16 insertions(+), 13 deletions(-)
+ abspath.c | 53 +++++++++++++++++++++++++----------------------------
+ cache.h   |  2 ++
+ 2 files changed, 27 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 2399b97..76d68fa 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -338,7 +338,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+diff --git a/abspath.c b/abspath.c
+index cafcae0..8c6c76b 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -55,21 +55,17 @@ static void get_next_component(struct strbuf *next, struct strbuf *remaining)
+  * Return the real path (i.e., absolute path, with symlinks resolved
+  * and extra slashes removed) equivalent to the specified path.  (If
+  * you want an absolute path but don't mind links, use
+- * absolute_path().)  The return value is a pointer to a static
+- * buffer.
++ * absolute_path().)  Places the resolved realpath in the provided strbuf.
+  *
+  * The directory part of path (i.e., everything up to the last
+  * dir_sep) must denote a valid, existing directory, but the last
+  * component need not exist.  If die_on_error is set, then die with an
+  * informative error message if there is a problem.  Otherwise, return
+  * NULL on errors (without generating any output).
+- *
+- * If path is our buffer, then return path, as it's already what the
+- * user wants.
+  */
+-static const char *real_path_internal(const char *path, int die_on_error)
++char *strbuf_realpath(struct strbuf *resolved, const char *path,
++		      int die_on_error)
  {
- 	int reinit;
- 	int exist_ok = flags & INIT_DB_EXIST_OK;
--	char *original_git_dir = xstrdup(real_path(git_dir));
-+	char *original_git_dir = real_pathdup(git_dir);
+-	static struct strbuf resolved = STRBUF_INIT;
+ 	struct strbuf remaining = STRBUF_INIT;
+ 	struct strbuf next = STRBUF_INIT;
+ 	struct strbuf symlink = STRBUF_INIT;
+@@ -77,10 +73,6 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 	int num_symlinks = 0;
+ 	struct stat st;
  
- 	if (real_git_dir) {
- 		struct stat st;
-@@ -489,7 +489,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
- 
- 	if (real_git_dir && !is_absolute_path(real_git_dir))
--		real_git_dir = xstrdup(real_path(real_git_dir));
-+		real_git_dir = real_pathdup(real_git_dir);
- 
- 	if (argc == 1) {
- 		int mkdir_tried = 0;
-@@ -560,7 +560,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 		const char *git_dir_parent = strrchr(git_dir, '/');
- 		if (git_dir_parent) {
- 			char *rel = xstrndup(git_dir, git_dir_parent - git_dir);
--			git_work_tree_cfg = xstrdup(real_path(rel));
-+			git_work_tree_cfg = real_pathdup(rel);
- 			free(rel);
- 		}
- 		if (!git_work_tree_cfg)
-diff --git a/environment.c b/environment.c
-index 0935ec6..9b943d2 100644
---- a/environment.c
-+++ b/environment.c
-@@ -259,7 +259,7 @@ void set_git_work_tree(const char *new_work_tree)
- 		return;
+-	/* We've already done it */
+-	if (path == resolved.buf)
+-		return path;
+-
+ 	if (!*path) {
+ 		if (die_on_error)
+ 			die("The empty string is not a valid path");
+@@ -88,16 +80,16 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 			goto error_out;
  	}
- 	git_work_tree_initialized = 1;
--	work_tree = xstrdup(real_path(new_work_tree));
-+	work_tree = real_pathdup(new_work_tree);
- }
  
- const char *get_git_work_tree(void)
-diff --git a/setup.c b/setup.c
-index fe572b8..1b534a7 100644
---- a/setup.c
-+++ b/setup.c
-@@ -256,8 +256,10 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
- 		strbuf_addbuf(&path, &data);
- 		strbuf_addstr(sb, real_path(path.buf));
- 		ret = 1;
--	} else
-+	} else {
- 		strbuf_addstr(sb, gitdir);
-+	}
-+
- 	strbuf_release(&data);
- 	strbuf_release(&path);
- 	return ret;
-@@ -692,7 +694,7 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 	/* --work-tree is set without --git-dir; use discovered one */
- 	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
- 		if (offset != cwd->len && !is_absolute_path(gitdir))
--			gitdir = xstrdup(real_path(gitdir));
-+			gitdir = real_pathdup(gitdir);
- 		if (chdir(cwd->buf))
- 			die_errno("Could not come back to cwd");
- 		return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-@@ -800,11 +802,12 @@ static int canonicalize_ceiling_entry(struct string_list_item *item,
- 		/* Keep entry but do not canonicalize it */
- 		return 1;
+-	strbuf_reset(&resolved);
++	strbuf_reset(resolved);
+ 
+ 	if (is_absolute_path(path)) {
+ 		/* absolute path; start with only root as being resolved */
+ 		int offset = offset_1st_component(path);
+-		strbuf_add(&resolved, path, offset);
++		strbuf_add(resolved, path, offset);
+ 		strbuf_addstr(&remaining, path + offset);
  	} else {
--		const char *real_path = real_path_if_valid(ceil);
--		if (!real_path)
-+		char *real_path = real_pathdup(ceil);
-+		if (!real_path) {
- 			return 0;
-+		}
- 		free(item->string);
--		item->string = xstrdup(real_path);
-+		item->string = real_path;
- 		return 1;
+ 		/* relative path; can use CWD as the initial resolved path */
+-		if (strbuf_getcwd(&resolved)) {
++		if (strbuf_getcwd(resolved)) {
+ 			if (die_on_error)
+ 				die_errno("unable to get current working directory");
+ 			else
+@@ -116,21 +108,21 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 			continue; /* '.' component */
+ 		} else if (next.len == 2 && !strcmp(next.buf, "..")) {
+ 			/* '..' component; strip the last path component */
+-			strip_last_component(&resolved);
++			strip_last_component(resolved);
+ 			continue;
+ 		}
+ 
+ 		/* append the next component and resolve resultant path */
+-		if (!is_dir_sep(resolved.buf[resolved.len - 1]))
+-			strbuf_addch(&resolved, '/');
+-		strbuf_addbuf(&resolved, &next);
++		if (!is_dir_sep(resolved->buf[resolved->len - 1]))
++			strbuf_addch(resolved, '/');
++		strbuf_addbuf(resolved, &next);
+ 
+-		if (lstat(resolved.buf, &st)) {
++		if (lstat(resolved->buf, &st)) {
+ 			/* error out unless this was the last component */
+ 			if (errno != ENOENT || remaining.len) {
+ 				if (die_on_error)
+ 					die_errno("Invalid path '%s'",
+-						  resolved.buf);
++						  resolved->buf);
+ 				else
+ 					goto error_out;
+ 			}
+@@ -146,12 +138,12 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 					goto error_out;
+ 			}
+ 
+-			len = strbuf_readlink(&symlink, resolved.buf,
++			len = strbuf_readlink(&symlink, resolved->buf,
+ 					      st.st_size);
+ 			if (len < 0) {
+ 				if (die_on_error)
+ 					die_errno("Invalid symlink '%s'",
+-						  resolved.buf);
++						  resolved->buf);
+ 				else
+ 					goto error_out;
+ 			}
+@@ -159,8 +151,8 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 			if (is_absolute_path(symlink.buf)) {
+ 				/* absolute symlink; set resolved to root */
+ 				int offset = offset_1st_component(symlink.buf);
+-				strbuf_reset(&resolved);
+-				strbuf_add(&resolved, symlink.buf, offset);
++				strbuf_reset(resolved);
++				strbuf_add(resolved, symlink.buf, offset);
+ 				strbuf_remove(&symlink, 0, offset);
+ 			} else {
+ 				/*
+@@ -168,7 +160,7 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 				 * strip off the last component since it will
+ 				 * be replaced with the contents of the symlink
+ 				 */
+-				strip_last_component(&resolved);
++				strip_last_component(resolved);
+ 			}
+ 
+ 			/*
+@@ -188,24 +180,29 @@ static const char *real_path_internal(const char *path, int die_on_error)
+ 		}
  	}
+ 
+-	retval = resolved.buf;
++	retval = resolved->buf;
+ 
+ error_out:
+ 	strbuf_release(&remaining);
+ 	strbuf_release(&next);
+ 	strbuf_release(&symlink);
+ 
++	if (!retval)
++		strbuf_reset(resolved);
++
+ 	return retval;
  }
-diff --git a/sha1_file.c b/sha1_file.c
-index 9c86d19..6a03cc3 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -291,7 +291,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
- 	struct strbuf pathbuf = STRBUF_INIT;
  
- 	if (!is_absolute_path(entry) && relative_base) {
--		strbuf_addstr(&pathbuf, real_path(relative_base));
-+		strbuf_realpath(&pathbuf, relative_base, 1);
- 		strbuf_addch(&pathbuf, '/');
- 	}
- 	strbuf_addstr(&pathbuf, entry);
-diff --git a/submodule.c b/submodule.c
-index 6f7d883..c85ba50 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1227,7 +1227,7 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+ const char *real_path(const char *path)
  {
- 	struct strbuf file_name = STRBUF_INIT;
- 	struct strbuf rel_path = STRBUF_INIT;
--	const char *real_work_tree = xstrdup(real_path(work_tree));
-+	const char *real_work_tree = real_pathdup(work_tree);
+-	return real_path_internal(path, 1);
++	static struct strbuf realpath = STRBUF_INIT;
++	return strbuf_realpath(&realpath, path, 1);
+ }
  
- 	/* Update gitfile */
- 	strbuf_addf(&file_name, "%s/.git", work_tree);
-diff --git a/transport.c b/transport.c
-index d57e8de..236c6f6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1130,7 +1130,7 @@ static int refs_from_alternate_cb(struct alternate_object_database *e,
- 	const struct ref *extra;
- 	struct alternate_refs_data *cb = data;
+ const char *real_path_if_valid(const char *path)
+ {
+-	return real_path_internal(path, 0);
++	static struct strbuf realpath = STRBUF_INIT;
++	return strbuf_realpath(&realpath, path, 0);
+ }
  
--	other = xstrdup(real_path(e->path));
-+	other = real_pathdup(e->path);
- 	len = strlen(other);
- 
- 	while (other[len-1] == '/')
-diff --git a/worktree.c b/worktree.c
-index f7869f8..c90e013 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -255,7 +255,7 @@ struct worktree *find_worktree(struct worktree **list,
- 		return wt;
- 
- 	arg = prefix_filename(prefix, strlen(prefix), arg);
--	path = xstrdup(real_path(arg));
-+	path = real_pathdup(arg);
- 	for (; *list; list++)
- 		if (!fspathcmp(path, real_path((*list)->path)))
- 			break;
+ /*
+diff --git a/cache.h b/cache.h
+index a50a61a..7a81294 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1064,6 +1064,8 @@ static inline int is_absolute_path(const char *path)
+ 	return is_dir_sep(path[0]) || has_dos_drive_prefix(path);
+ }
+ int is_directory(const char *);
++char *strbuf_realpath(struct strbuf *resolved, const char *path,
++		      int die_on_error);
+ const char *real_path(const char *path);
+ const char *real_path_if_valid(const char *path);
+ const char *absolute_path(const char *path);
 -- 
 2.8.0.rc3.226.g39d4020
 
