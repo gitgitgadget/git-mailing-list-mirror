@@ -2,113 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 336921FF76
-	for <e@80x24.org>; Mon, 12 Dec 2016 11:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADD621FF76
+	for <e@80x24.org>; Mon, 12 Dec 2016 11:45:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752418AbcLLLUx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 06:20:53 -0500
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36839 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752396AbcLLLUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 06:20:52 -0500
-Received: by mail-yw0-f194.google.com with SMTP id r204so7477260ywb.3
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 03:20:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GmICN+91R28q3bH4At1H48gsXJjcS6whXJvdDtMSVvM=;
-        b=T6qrusmarIbQ1oBFB09U4dewZPz3ttsdby5IQWuw0NTNzYLsxjfPd9YdM1fHwg24v2
-         WdgDy9blqsCVPOZ3tS5QMCrSQYmRRXoRiTxFSNvBO6PYZtUUMY42ZnewVXfH7sWQtcmd
-         9hMuz5lGD0k7Kn6QOZZ1SDnhgE5Ve46nij18UEK/J8M/dThuFH+pN7+DsXYNQf2+TZNp
-         YdXe0zTxiO+f5UQszUk0VUMT6cIKZYidBwRN24gcuFXgBTwYDYThvEG8b3IHdzphhh3R
-         DHSDEb6ukqSnn6Q5bd2SYLJNlh5GyEAW2m+xz86wXFj5qFrIzKhA54eB0nJdq2ixuWoE
-         IFmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GmICN+91R28q3bH4At1H48gsXJjcS6whXJvdDtMSVvM=;
-        b=M2fbU4UkN2x2RV5zT/Zn/60D6hXlBxN6esr8Da0hPA5X5KCdngrpmzsKvjjbu2vKVl
-         r17kqj56ZhpWeLSzPpG1/A9VA7+tN5Q64NN5tWzTqTtAVAmFUirS23JaWlKEA9e6e9mK
-         YnxglMAcmsGsG5WzjF8kekm6AFEUPF/4ylRaP4dgQbhOk+nL5fQoWX/hpuAiPKw7Bkli
-         2nhxLXKexHSObKwFwSe4fTTvB3NwC5InWC9VCNBhuc65w0FGJnAZ3uFdmMFqSbOrH+Zw
-         8duJ+In1MFO5LQX/5ES0kMyUSfQ/UuO6zNPu+qh2Ay54XE3BrrTYFzM1nDo3FrWbVvwN
-         kz6w==
-X-Gm-Message-State: AKaTC02BvLNr1Ni596MKHNIEGz4lQih4/h/FhVFNREGkaV65SLbGUinEeTnK8xRVFDxUrKBTdjpm6pB2Pd4wJw==
-X-Received: by 10.129.46.133 with SMTP id u127mr87499815ywu.94.1481541651345;
- Mon, 12 Dec 2016 03:20:51 -0800 (PST)
+        id S1751742AbcLLLpC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 06:45:02 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:19021 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750899AbcLLLpB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 06:45:01 -0500
+Received: from PhilipOakley ([92.22.43.52])
+        by smtp.talktalk.net with SMTP
+        id GP2QcoDjzg5ctGP2QcCIeh; Mon, 12 Dec 2016 11:44:59 +0000
+X-Originating-IP: [92.22.43.52]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=bdMpa6HB c=1 sm=1 tr=0 a=TiUaNfyp0frjGcgCwpSSeA==:117
+ a=TiUaNfyp0frjGcgCwpSSeA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=lA2rK6zZORSxTSK1rqEA:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <775B98CA998147CC9A68CF6040B86CE1@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "David Aguilar" <davvid@gmail.com>, "Johannes Sixt" <j6t@kdbg.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Git ML" <git@vger.kernel.org>
+References: <20161210032144.25503-1-davvid@gmail.com> <20161210032144.25503-2-davvid@gmail.com> <37d8bc43-9f24-b8e8-cb52-de9cc9b2adde@kdbg.org> <20161212071646.5bqnnjpfnmnj6fm4@gmail.com>
+Subject: Re: [PATCH 2/2] mergetools/tortoisemerge: simplify can_diff() by using "false"
+Date:   Mon, 12 Dec 2016 11:44:59 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.129.19.214 with HTTP; Mon, 12 Dec 2016 03:20:20 -0800 (PST)
-In-Reply-To: <20161209140345.76ybodldmg2lxgbn@sigill.intra.peff.net>
-References: <20161207153627.1468-1-Karthik.188@gmail.com> <20161207153627.1468-19-Karthik.188@gmail.com>
- <20161209140345.76ybodldmg2lxgbn@sigill.intra.peff.net>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Mon, 12 Dec 2016 16:50:20 +0530
-Message-ID: <CAOLa=ZSPDLwziGEvyixebAkS2M1JMYidQNHfDbnmYarFCjn80A@mail.gmail.com>
-Subject: Re: [PATCH v8 18/19] branch: use ref-filter printing APIs
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfNMhz+X0CAJaYSNdpdkkrR1pN0CwpnF0VtTKkYZFbCiWbAQbFgpReYJhzhl+IDGYfqFKzqo8osAKb+FIEPdw+0oP+Dc/GZA8Kkd10asVyM+pOGu25TuQ
+ K/tavVLOa3bM/37TQOsfS7R1kzF7GFEv28/gLIik8mMYZlPpThz7D4cjzLx7RHOlfkjgY6la1rfl3q4epgfbwz8U5YAVIdYIsYpD0VbfML59lyaavB/1wSue
+ 7w4oZC5n0Ab20fXYDWhaMQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 9, 2016 at 7:33 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Dec 07, 2016 at 09:06:26PM +0530, Karthik Nayak wrote:
->
->> +const char *quote_literal_for_format(const char *s)
->>  {
->> +     struct strbuf buf = STRBUF_INIT;
+From: "David Aguilar" <davvid@gmail.com>
+> On Sat, Dec 10, 2016 at 09:15:34AM +0100, Johannes Sixt wrote:
+>> Am 10.12.2016 um 04:21 schrieb David Aguilar:
+>> > Signed-off-by: David Aguilar <davvid@gmail.com>
+>> > ---
+>> > This patch builds upon da/mergetool-trust-exit-code
+>> >
+>> >  mergetools/tortoisemerge | 2 +-
+>> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>> >
+>> > diff --git a/mergetools/tortoisemerge b/mergetools/tortoisemerge
+>> > index d7ab666a59..9067d8a4e5 100644
+>> > --- a/mergetools/tortoisemerge
+>> > +++ b/mergetools/tortoisemerge
+>> > @@ -1,5 +1,5 @@
+>> >  can_diff () {
+>> > - return 1
+>> > + false
+>> >  }
 >>
->> +     strbuf_reset(&buf);
->> +     while (*s) {
->> +             const char *ep = strchrnul(s, '%');
->> +             if (s < ep)
->> +                     strbuf_add(&buf, s, ep - s);
->> +             if (*ep == '%') {
->> +                     strbuf_addstr(&buf, "%%");
->> +                     s = ep + 1;
->> +             } else {
->> +                     s = ep;
->> +             }
->>       }
->> +     return buf.buf;
->>  }
+>> Why is this a simplification?
+>>
+>> My concern is that 'false' is not necessarily a shell built-in. Then this 
+>> is
+>> actually a pessimization.
 >
-> You should use strbuf_detach() to return the buffer from a strbuf.
-> Otherwise it is undefined whether the pointer is allocated or not (and
-> whether it needs to be freed).
+> The "simplification" is semantic only.
 >
-> In this case, if "s" is empty, buf.buf would point to a string literal,
-> but otherwise to allocated memory. strbuf_detach() normalizes that.
+> Motivation: if someone reads the implementation of can_diff()
+> and it says "false" then that communicates intent moreso than
+> reading "return 1", which a programmer unfamiliar with shell
+> conventions might misinterpret as boolean "true".
 >
-> But...
->
->> +                         branch_get_color(BRANCH_COLOR_REMOTE), maxwidth, quote_literal_for_format(remote_prefix),
->
-> This caller never stores the return value, and it ends up leaking. So I
-> wonder if you wanted "static struct strbuf" in the first place (and that
-> would explain the strbuf_reset() in your function).
->
-> -Peff
 
-Ah! Yes this should be 'static struct strbuf' indeed, I blindly copied Junio's
-suggestion.
+Is this a case where a short comment would be informative?
 
-strbuf_detach() is also a better way to go.
+ + return 1 /* shell: false */
 
-Thanks.
 
--- 
-Regards,
-Karthik Nayak
+> I care less about semantics then I do about making things better
+> for Windows, so we can forget about these two patches.
+> -- 
+> David
+>
+--
+Philip 
+
