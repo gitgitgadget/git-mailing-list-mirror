@@ -2,82 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70F2D206A4
-	for <e@80x24.org>; Mon, 12 Dec 2016 19:05:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29EC2206A4
+	for <e@80x24.org>; Mon, 12 Dec 2016 19:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752941AbcLLTFR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 14:05:17 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61611 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752379AbcLLTFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 14:05:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 76BAE5559E;
-        Mon, 12 Dec 2016 14:05:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OuZWvu/M61e2EBret7IJFAYtX4A=; b=W3B6cH
-        2ZhhMnPbn7q6ljvkhnN9DuhfIvD0xaNc/TL+fvUrVzcli2mUvSS7NxxyQ3HdQQPF
-        BT+J7HQEH+o5yzmlzKonOXt4qkEIfv4i7rrWptDWg5s+yTl/8q0XGD5g+cGoLgfh
-        xlrVqXmYpuGILJqLOZc2vMpA22riBuvGsi23M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LUjGZXWyf3kD+gpzJVGFXYnF8ROT6YdD
-        3U2qr0ZbGFjZJrwPmmo9+tPIyMBjd8bSvEQP48edIRDZP22c5wFxWA0QNYhQGYoR
-        F5mVpmWCgHXv4MYyeuI3TADM1+hhpjHMN+8GzkfU2ICDFnpFvGGBKCqaqNNL1UDB
-        N9vZriJivv8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67A425559D;
-        Mon, 12 Dec 2016 14:05:15 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC8155559C;
-        Mon, 12 Dec 2016 14:05:14 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luis Ressel <aranea@aixah.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] date-formats.txt: Typo fix
-References: <20161212164502.6187-1-aranea@aixah.de>
-Date:   Mon, 12 Dec 2016 11:05:13 -0800
-In-Reply-To: <20161212164502.6187-1-aranea@aixah.de> (Luis Ressel's message of
-        "Mon, 12 Dec 2016 17:45:02 +0100")
-Message-ID: <xmqqeg1dm0ie.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932115AbcLLTNB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 14:13:01 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:33254 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752512AbcLLTNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 14:13:01 -0500
+Received: by mail-qk0-f176.google.com with SMTP id x190so93445355qkb.0
+        for <git@vger.kernel.org>; Mon, 12 Dec 2016 11:13:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=l6bl7g28zokR9OWNcLYA16l1gS+uX2e/RVdF+5HSQWk=;
+        b=zOSJMzkRxtu7yWUfcb7jD/h21rKqrgkWoSKR8rA0PjUYX3C8c3L90alpcemXm82j8p
+         atYIAvU35wSbUd5ptM3tTGEpZHk62l0GmRa1miwarAIC05mMKDZdcWQanc/K5L47u0jV
+         IiioYIOuBjUbWM010e/Jfe1Hkp827NwED8uFTsyDXwqUA5xOSGbgrxdqnz74uLJoB+EQ
+         eJmYBcrezqRuZb8BoZxiYQ5jvZ2QRjayQXjZFrhcOfaDclKuX1jIB/fP1lJumUZL68Ms
+         rQya4RlAetOS1Hh9Rz35EJCVpSFp4+Mz8llDm3G4Ghu5uTwIIVr2+Xvl8A5okml/0kap
+         Mj6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=l6bl7g28zokR9OWNcLYA16l1gS+uX2e/RVdF+5HSQWk=;
+        b=ezfk+/poroaSzH3hTp6OydKlCp6lifdqyK0v/mTKMW5b90Qu2qo8ZYzyn/A6nC5qTz
+         iESZGca8aw7b0nmKzHU+U4Bqm/PuXHaMKbw8T6HZhWnyNnP0QlelLt0swpAVGtoLpPO0
+         03LgOvCYxFNKjLlm3RaYbzJhrclXKLUpvvzqAcAYWtocZNVi4h5pQUTTkOruT7RKCzgs
+         t5+lYEP/kRiSgB2QQL7s/rg3Iq8uc20dWJ1EoOA8Iakr37eFQSOr1HDzO2ij+TqB5phR
+         tlV9SLtSwXL3WRVmwxXyWaGbacNOelbQ8Mf9LFJ+glKnOXUp88fQo4wvRxUxjb40JpJ+
+         56AQ==
+X-Gm-Message-State: AKaTC02iogUbnnR1+ESmCqoxarewNNRAJUyZJIOV4OhihSy3GGOB3kHyx8/7RRgiceoarBmEinqeA8Y8e6cJXg==
+X-Received: by 10.55.149.131 with SMTP id x125mr81396032qkd.128.1481569979951;
+ Mon, 12 Dec 2016 11:12:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E9F91B60-C09D-11E6-9BA6-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.237.58.131 with HTTP; Mon, 12 Dec 2016 11:12:39 -0800 (PST)
+From:   ELI <eliptus@gmail.com>
+Date:   Mon, 12 Dec 2016 11:12:39 -0800
+Message-ID: <CAKU2X8YiRGBa=ttT7EtEm5csXcUV_pBd1pyAQsEndv-p_3iNYQ@mail.gmail.com>
+Subject: Subtree Split Bug - Irrelevant Commits Included in History
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luis Ressel <aranea@aixah.de> writes:
+Subtree Split has a bug in which irrelevant commits are included in
+the sub-project's history.  Along with breaking compatibility with
+branches created before the bug was introduced, this significantly and
+unnecessarily bloats the sub-project's git repository.
 
-> Last time I checked, I was living in the UTC+01:00 time zone. UTC+02:00
-> would be Central European _Summer_ Time.
->
-> Signed-off-by: Luis Ressel <aranea@aixah.de>
-> ---
->  Documentation/date-formats.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I contacted this group about a this bug back in April and later
+followed up with a reproducible test case.  However, I've failed to
+get a response or traction, despite the significance of the bug.
 
-Thanks, will queue.
+My previous emails, including the reproduction steps, can be found in
+the archives:
+http://lists-archives.com/git/875747-subtree-split-includes-commits-outside-prefix-directory.html
 
-> diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
-> index 35e8da201..6926e0a4c 100644
-> --- a/Documentation/date-formats.txt
-> +++ b/Documentation/date-formats.txt
-> @@ -11,7 +11,7 @@ Git internal format::
->  	It is `<unix timestamp> <time zone offset>`, where `<unix
->  	timestamp>` is the number of seconds since the UNIX epoch.
->  	`<time zone offset>` is a positive or negative offset from UTC.
-> -	For example CET (which is 2 hours ahead UTC) is `+0200`.
-> +	For example CET (which is 1 hour ahead of UTC) is `+0100`.
->  
->  RFC 2822::
->  	The standard email format as described by RFC 2822, for example
+Regards,
+- Harpreet "Eli" Sangha
