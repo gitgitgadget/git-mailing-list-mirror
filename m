@@ -2,93 +2,44 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25F4B1FF40
-	for <e@80x24.org>; Mon, 12 Dec 2016 00:41:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB731FF40
+	for <e@80x24.org>; Mon, 12 Dec 2016 01:58:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754005AbcLLAlK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Dec 2016 19:41:10 -0500
-Received: from 84-40-64-11.net1.bg ([84.40.64.11]:55306 "HELO net1.bg"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S1753992AbcLLAlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2016 19:41:10 -0500
-X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Dec 2016 19:41:09 EST
-Message-ID: <148150326623.23270.731550397432155412@net1.bg>
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment
+        id S1753945AbcLLB6a (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Dec 2016 20:58:30 -0500
+Received: from ozlabs.org ([103.22.144.67]:55239 "EHLO ozlabs.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753805AbcLLB62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2016 20:58:28 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+        id 3tcQwg2jFWz9t2G; Mon, 12 Dec 2016 12:58:27 +1100 (AEDT)
+Date:   Mon, 12 Dec 2016 11:01:44 +1100
+From:   Paul Mackerras <paulus@ozlabs.org>
+To:     Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] gitk: Makefile: create install bin directory
+Message-ID: <20161212000144.GB18316@fergus.ozlabs.ibm.com>
+References: <1462470392-19991-1-git-send-email-vascomalmeida@sapo.pt>
 MIME-Version: 1.0
-From:   <team@e-see.com>
-Date:   Mon, 12 Dec 2016 00:41:06 -0000
-Subject: 
-Content-Type: application/zip; name="EMAIL_711924158_git.zip"
-To:     <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1462470392-19991-1-git-send-email-vascomalmeida@sapo.pt>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-AA==
+On Thu, May 05, 2016 at 05:46:32PM +0000, Vasco Almeida wrote:
+> Force creation of destination bin directory. Before this commit, gitk
+> would fail to install if this directory didn't already exist.
+> 
+> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+
+Thanks, applied (with slight tweak to commit message).
+
+Paul.
