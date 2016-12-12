@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37778206A4
-	for <e@80x24.org>; Mon, 12 Dec 2016 19:04:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51A77206A4
+	for <e@80x24.org>; Mon, 12 Dec 2016 19:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753021AbcLLTEq (ORCPT <rfc822;e@80x24.org>);
+        id S1753273AbcLLTEs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 14:04:48 -0500
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33766 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753235AbcLLTEq (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Dec 2016 14:04:46 -0500
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:35714 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751816AbcLLTEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 14:04:44 -0500
-Received: by mail-pg0-f48.google.com with SMTP id p66so38159366pga.2
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 11:04:44 -0800 (PST)
+Received: by mail-pf0-f180.google.com with SMTP id d2so13955043pfd.0
+        for <git@vger.kernel.org>; Mon, 12 Dec 2016 11:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=021vT+6JnM/5P5Oz7+8yYIZS29aOF9BoYD6x8HwzuxQ=;
-        b=aJoIT+EbeBriW0jMAMiSn+muhHRxZz3pEruM++7V9RHzBK4JJGCMntnZcTArJXerK8
-         v9FvSjUTMyU024I1KY8juSUeGOCWSK/DdfUB0KXu64YGkMWo5mdFe628vz6jsmkIrYAd
-         3TMld1uz39SzrvOxdYocqS8OXGIz/IVaW9nRa0PkF4ZxYLqnL0r5/fEmXJ5UbZ+vnGmz
-         HujDSCSjZc81jOY0W7S6BezpsFPOEXmfNyy4C1JZASzchaQKLMFZcY4XbeGPII4OUiCf
-         blasHuDW0nYVqUM6rAF6x/vCVgpBh6+qyn2zL4HSjS01Gu+PK9jOJn3DKC7R2FFlh72q
-         1/zQ==
+        bh=qvP1fQLdTFQsMlVmMmCNUmug/HgNS1AvtrY2ziByn3U=;
+        b=WJhv2tA8RYywIIKqtcvi8zda4XiK/4uIytRmvROvcPxB0jgX74eIFOy9vOW5F0xgqL
+         29uxE2tdvEiM1yj+B8mZbbK1C/sO4etF77gFf5ZFUhrFv+uEKdsv8zPlPbMvsbS2Y/yl
+         iOGzzh/IGsnAPpe3UNjFRflo2StahbYiNU5cBxGXgHLLSSxT3t9qq9iFAY7lr9u+LZjn
+         c4ttFEAyrATXqLA2hjxRTInpFD8O6BtXe6OYk2yn5Hf8Eu4xIKfu8tXcE/DFdYRYtuWm
+         ba+0TVm0/JzwpcPJacfvE7yUkR83cqed6UbHWEsGMM/4q1gtpysQf5e5XyCpu92fRKpw
+         suSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=021vT+6JnM/5P5Oz7+8yYIZS29aOF9BoYD6x8HwzuxQ=;
-        b=RLBq5J8h6R7+KThSMRnQB4hMVJ91KJZoCqFkOEStq5Qt2LNdJvdlV+ugKEZZQJ+wFZ
-         +vxaZCXB62FUayC8CUL55twRUh2vwg+jIZ+XYPp4zuhXaCAJWkUXbCPhzhwcJQ0sBWHU
-         KJfJkrMCkDQX/yc59abpNUyGz+0WSLFPAmhcKwNgi5t8F3R1fFao2NxDsxiEYXV+nK5c
-         L6IWYZ5p9b1OmclkmSfu6ycqOtOrzRbbDy8+Y6NhWRLDpQ9Mya44S8BuhAcmf3cRnNsd
-         rAXp87oBAoOtt9lDmrxGixdJ+4+tUFTcpgM9i0WJQnzAfTKi9vAbAtwD/1wRkgKFV+mq
-         7Gug==
-X-Gm-Message-State: AKaTC003CTwA1R5vM3rJEywok75Hzos184kdAfYTICpJHHDoXWFHj+WHBMZlrGS1xAjyOb4+
-X-Received: by 10.99.130.198 with SMTP id w189mr32097413pgd.172.1481569483456;
-        Mon, 12 Dec 2016 11:04:43 -0800 (PST)
+        bh=qvP1fQLdTFQsMlVmMmCNUmug/HgNS1AvtrY2ziByn3U=;
+        b=WFpUde5y85otC/kJV3jtDgCXxku4ziTj07ngTxrKUeiu0+DNI3/Ly0RgWjs/Zn0X7L
+         6Rl2egU1b8ueCM/xik0pLmdEhhtWcV+cB38OHGR6BHRbksWryQ/MykpOJKql6LeEYJi7
+         uY7+2/SP+hFcvtLJNZqkCmQmcpm4UtCJ8FQ9gLlbaNnnRkZQYGtTbbaZ7kr4OyMAcjOK
+         2wS/ZThSRTu/wrKFZ3vVLxsd9AxrP2ZSCgqp9PKc5b922cqp/5ooOrC11kCfBcIeh3LI
+         EGlRKvIaW9s/QkvYpzjHI+RsP2rIHhLPawtqvPXUn4vBDXrwzU9Tzl09QMeIAKnagvjj
+         b1+A==
+X-Gm-Message-State: AKaTC01TlVcGV83zKWq73MbvbIbd5dNdRAMCn9Fu+fgKP+eojvegbe2VOuQqxJRqTrP01veX
+X-Received: by 10.98.211.135 with SMTP id z7mr98233714pfk.109.1481569485728;
+        Mon, 12 Dec 2016 11:04:45 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:642c:37a4:3709:a2b3])
-        by smtp.gmail.com with ESMTPSA id i76sm77227453pfk.89.2016.12.12.11.04.42
+        by smtp.gmail.com with ESMTPSA id z9sm77319891pfd.29.2016.12.12.11.04.45
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Dec 2016 11:04:42 -0800 (PST)
+        Mon, 12 Dec 2016 11:04:45 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv8 2/6] submodule helper: support super prefix
-Date:   Mon, 12 Dec 2016 11:04:31 -0800
-Message-Id: <20161212190435.10358-3-sbeller@google.com>
+Subject: [PATCHv8 4/6] worktree: check if a submodule uses worktrees
+Date:   Mon, 12 Dec 2016 11:04:33 -0800
+Message-Id: <20161212190435.10358-5-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.49.ge1f3b0c.dirty
 In-Reply-To: <20161212190435.10358-1-sbeller@google.com>
 References: <20161212190435.10358-1-sbeller@google.com>
@@ -60,86 +60,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like main commands in Git, the submodule helper needs
-access to the superproject prefix. Enable this in the git.c
-but have its own fuse in the helper code by having a flag to
-turn on the super prefix.
+In a later patch we want to move around the the git directory of
+a submodule. Both submodules as well as worktrees are involved in
+placing git directories at unusual places, so their functionality
+may collide. To react appropriately to situations where worktrees
+in submodules are in use, offer a new function to query the
+a submodule if it uses the worktree feature.
+
+An earlier approach:
+  "Implement submodule_get_worktrees and just count them", however:
+  This can be done cheaply (both in new code to write as well as run time)
+  by obtaining the list of worktrees based off that submodules git
+  directory. However as we have loaded the variables for the current
+  repository, the values in the submodule worktree
+  can be wrong, e.g.
+  * core.ignorecase may differ between these two repositories
+  * the ref resolution is broken (refs/heads/branch in the submodule
+    resolves to the sha1 value of the `branch` in the current repository
+    that may not exist or have another sha1)
+
+The implementation here is just checking for any files in
+$GIT_COMMON_DIR/worktrees for the submodule, which ought to be sufficient
+if the submodule is using the current repository format, which we also
+check.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c | 31 ++++++++++++++++++++-----------
- git.c                       |  2 +-
- 2 files changed, 21 insertions(+), 12 deletions(-)
+ worktree.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ worktree.h |  5 +++++
+ 2 files changed, 55 insertions(+)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4beeda5f9f..5643848667 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1076,21 +1076,24 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
- 	return 0;
+diff --git a/worktree.c b/worktree.c
+index eb6121263b..d4606aa8cd 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -380,3 +380,53 @@ const struct worktree *find_shared_symref(const char *symref,
+ 
+ 	return existing;
  }
- 
-+#define SUPPORT_SUPER_PREFIX (1<<0)
 +
- struct cmd_struct {
- 	const char *cmd;
- 	int (*fn)(int, const char **, const char *);
-+	unsigned option;
- };
- 
- static struct cmd_struct commands[] = {
--	{"list", module_list},
--	{"name", module_name},
--	{"clone", module_clone},
--	{"update-clone", update_clone},
--	{"relative-path", resolve_relative_path},
--	{"resolve-relative-url", resolve_relative_url},
--	{"resolve-relative-url-test", resolve_relative_url_test},
--	{"init", module_init},
--	{"remote-branch", resolve_remote_submodule_branch}
-+	{"list", module_list, 0},
-+	{"name", module_name, 0},
-+	{"clone", module_clone, 0},
-+	{"update-clone", update_clone, 0},
-+	{"relative-path", resolve_relative_path, 0},
-+	{"resolve-relative-url", resolve_relative_url, 0},
-+	{"resolve-relative-url-test", resolve_relative_url_test, 0},
-+	{"init", module_init, 0},
-+	{"remote-branch", resolve_remote_submodule_branch, 0},
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-@@ -1100,9 +1103,15 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 		die(_("submodule--helper subcommand must be "
- 		      "called with a subcommand"));
- 
--	for (i = 0; i < ARRAY_SIZE(commands); i++)
--		if (!strcmp(argv[1], commands[i].cmd))
-+	for (i = 0; i < ARRAY_SIZE(commands); i++) {
-+		if (!strcmp(argv[1], commands[i].cmd)) {
-+			if (get_super_prefix() &&
-+			    !(commands[i].option & SUPPORT_SUPER_PREFIX))
-+				die(_("%s doesn't support --super-prefix"),
-+				    commands[i].cmd);
- 			return commands[i].fn(argc - 1, argv + 1, prefix);
-+		}
++int submodule_uses_worktrees(const char *path)
++{
++	char *submodule_gitdir;
++	struct strbuf sb = STRBUF_INIT;
++	DIR *dir;
++	struct dirent *d;
++	int ret;
++	struct repository_format format;
++
++	submodule_gitdir = git_pathdup_submodule(path, "%s", "");
++	if (!submodule_gitdir)
++		return 0;
++
++	/* The env would be set for the superproject. */
++	get_common_dir_noenv(&sb, submodule_gitdir);
++
++	/*
++	 * The check below is only known to be good for repository format
++	 * version 0 at the time of writing this code.
++	 */
++	strbuf_addstr(&sb, "/config");
++	read_repository_format(&format, sb.buf);
++	if (format.version != 0) {
++		strbuf_release(&sb);
++		return 1;
 +	}
++
++	/* Replace config by worktrees. */
++	strbuf_setlen(&sb, sb.len - strlen("config"));
++	strbuf_addstr(&sb, "worktrees");
++
++	/* See if there is any file inside the worktrees directory. */
++	dir = opendir(sb.buf);
++	strbuf_release(&sb);
++	free(submodule_gitdir);
++
++	if (!dir)
++		return 0;
++
++	while ((d = readdir(dir)) != NULL) {
++		if (is_dot_or_dotdot(d->d_name))
++			continue;
++
++		ret = 1;
++		break;
++	}
++	closedir(dir);
++	return ret;
++}
+diff --git a/worktree.h b/worktree.h
+index d59ce1fee8..6bfb985203 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -27,6 +27,11 @@ struct worktree {
+  */
+ extern struct worktree **get_worktrees(unsigned flags);
  
- 	die(_("'%s' is not a valid submodule--helper "
- 	      "subcommand"), argv[1]);
-diff --git a/git.c b/git.c
-index efa1059fe0..98dcf6c518 100644
---- a/git.c
-+++ b/git.c
-@@ -493,7 +493,7 @@ static struct cmd_struct commands[] = {
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 	{ "stripspace", cmd_stripspace },
--	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP },
-+	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX},
- 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
- 	{ "tag", cmd_tag, RUN_SETUP },
- 	{ "unpack-file", cmd_unpack_file, RUN_SETUP },
++/*
++ * Returns 1 if linked worktrees exist, 0 otherwise.
++ */
++extern int submodule_uses_worktrees(const char *path);
++
+ /*
+  * Return git dir of the worktree. Note that the path may be relative.
+  * If wt is NULL, git dir of current worktree is returned.
 -- 
 2.11.0.rc2.49.ge1f3b0c.dirty
 
