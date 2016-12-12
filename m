@@ -2,78 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78B4B206A4
-	for <e@80x24.org>; Mon, 12 Dec 2016 18:00:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92936206A4
+	for <e@80x24.org>; Mon, 12 Dec 2016 18:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753803AbcLLSAn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 13:00:43 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62606 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752809AbcLLSAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 13:00:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D38658A40;
-        Mon, 12 Dec 2016 13:00:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o9JeWDH023kk99gHbyTB1CwGc+g=; b=S8yT3p
-        f9JmT2cYXMXnolSUpchMcAgtoF4LLrGbaDXvNVFBS4Wmv7RTspifySaUzAAVlDob
-        NxyoUvfklt7uqEV9APzDDRoPzQAEO6WoTeSLYUribq2kr/hF/mpswRVp+V61gAfb
-        6qeHt7zqVVRl/f70jvXj4dBZfgz6me/ab65U4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oSVGG8Rwi/l/ga0klbTHscLpxiuR9ABi
-        mJ+3T2DYkfc6p5BbRDIIakLHogSfOamtiD0j9GztMS+qqa9s01mRkRqKG/5xeAfh
-        e44mQQL2pDPmMYjRdPQdoVAwA644ISuN10bghZVm9ry21j1iOOY+mPYh1pp7iCvR
-        7AKYeY6w2CQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 140E158A3F;
-        Mon, 12 Dec 2016 13:00:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7ED5158A3E;
-        Mon, 12 Dec 2016 13:00:40 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     vi0oss <vi0oss@gmail.com>, Stefan Beller <stefanbeller@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] submodule--helper: set alternateLocation for cloned submodules
-References: <20161208013814.4943-1-vi0oss@gmail.com>
-        <12000496-2191-2915-8a9e-fe7c314c5676@gmail.com>
-        <CAGZ79kYUbsy2TQ1noqS-9zLVUkQaeJbv6vwxykS+A_HHcxGnCw@mail.gmail.com>
-Date:   Mon, 12 Dec 2016 10:00:38 -0800
-In-Reply-To: <CAGZ79kYUbsy2TQ1noqS-9zLVUkQaeJbv6vwxykS+A_HHcxGnCw@mail.gmail.com>
-        (Stefan Beller's message of "Sun, 11 Dec 2016 21:35:26 -0800")
-Message-ID: <xmqqzik1m3i1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1752869AbcLLSMu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 13:12:50 -0500
+Received: from mout.web.de ([217.72.192.78]:57706 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752337AbcLLSMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 13:12:49 -0500
+Received: from birne12.local ([195.252.60.88]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MPYNR-1cLC3A0RuL-004jPO; Mon, 12
+ Dec 2016 19:12:45 +0100
+Subject: Re: [PATCH 1/3] update_unicode.sh: update the uniset repo if it
+ exists
+To:     Beat Bolli <dev+git@drbeat.li>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <1481499265-18361-1-git-send-email-dev+git@drbeat.li>
+ <64bc846c-0304-dd7b-73bf-a6c3a4135381@web.de>
+ <c96d013c38df7737cfd551a0fce87314@drbeat.li>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <ca10a51a-0fab-e4a4-8d7d-035673af4c06@web.de>
+Date:   Mon, 12 Dec 2016 19:12:38 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
+ Gecko/20100101 Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4A9200A-C094-11E6-BACE-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <c96d013c38df7737cfd551a0fce87314@drbeat.li>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:jE9iqJyiI/BnSA4m1p2dcChUey0dDwq2k5x4qXf5s7+zcHXLAHw
+ EJqRYGQQR2QH4kDan2lxo7OjLJVcfXz/JQu/6Fhnx25QV+Ht2ud7Hq/5gOD7I0jTT6MRunE
+ XwUxY/sJ4MPwTLxOrlNwteiQHkZjeh0lQiuZpW+iVHv1g60hEcFRnjkYg7XuW8GvRGKnYDY
+ gzttyXsAy5ilIL4UWjORA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ij9ajMmGn8A=:J5NQXI7rISPcf3CS8oXIoI
+ LB6617DsTzPhGImLvlN2VzEjF/DjGjGSPwSMaH913E6zPNXHtLPsJ11CynAfT3QuRLqFpRF/8
+ JWECw9eZvfoGS9xUgk29gAuXLeexG3RHXi00Uq2ebLAGCj/GmPSj6PouqMAPsMTzulXEltYGe
+ 3BeUst2sfvuU2/xzvvGQDLkxBoNq88lsv3xCRgNXSiq0XYlqOmlV0CgnLf5MZMhjalF0Wbgbh
+ +6ZzG2QuXyLPZOCm7extaKa8hYkTbdegqVV0lFO6H1Vgh2eOG6yn1sjOYyXtZ6st4e4aDampk
+ 9p97UoCbcKjqfyiFXQyiUB2d5mExZO78gaKEXAE2UbCpm2pwtnhEoFOP4iFi9w6UNvOVduV8h
+ 38dXwgzQ8a4igSlFE1DNoTBg4rqHTVBGXygA65wXKdrr8MGb7R/b0+3d5osxLhrTEEhN4W83K
+ Uo1v8PQu4y+EqwAGoBInvDnl/CmXoH7lPAKRkwivUEBDz9ZFnWKcVNaWqsZlq0QB0h6aI5dbC
+ lOoNFXRq7qS1md3VHzaBfXzsiNvi07lX0tZ58k33EjB/JS5C5hbqOU+kVMMg1WM5xpbSjYWlO
+ oj51wTn/759RR72WoB/BTjVajSmTuckX8+rwZGRg5REc32EB/2g2WFziqiai8RK37QUCjOgcW
+ 3qQX+rBSLh8dATOT+/J4DWlTMVUI95uw9XT21he/XksYEh95aCvZ0sj/qbL2+mBzt0dgMlFYH
+ 5Vb2UgLNKj+tZee7COj4weBbiWhlJ7qm46TQWJOApE0ySlCMrs69Oo6fflWCVJj63nkRDLSvp
+ YvmW1Xs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
 
-> On Sat, Dec 10, 2016 at 5:41 AM, vi0oss <vi0oss@gmail.com> wrote:
->> On 12/08/2016 04:38 AM, vi0oss@gmail.com wrote:
->>>
->>>      Third review: missing && in test fixed.
->>>
+>> Minor question, especially to the next commit:
+>> Should we make sure to checkout the exact version, which has been tested?
+>> In this case  cb97792880625e24a9f581412d03659091a0e54f
 >>
->> Shall something more be done about this or just wait until the patch gets
->> reviewed and integrated?
->
-> I have no further comments and think the most recent version you sent
-> to the list
-> is fine. However others are invited to comment as well. :)
+>> And this is for both a fresh clone and the git pull
+>> needs to be replaced by
+>> git fetch && git checkout cb97792880625e24a9f581412d03659091a0e54f
+>>
+>>
+>> (Which of course is a shell variable)
+> 
+> I was actually wondering what the policy was for adding submodules to the Git repo,
+> but then decided against it. Another option would be to fork uniset on GitHub and
+> just let it stay on a working commit.
+> 
+> Junio, what's your stance on this?
+> 
+> Beat
 
-I'll take that as a reviewed-by from you and queue it.
+If I run  ./update_unicode.sh on the latest master of   https://github.com/depp/uniset.git ,
+commit  a5fac4a091857dd5429cc2d, I get a diff in  unicode_width.h like this:
 
-Thanks, both.
+-{ 0x0300, 0x036F },
+
++{ 768, 879 },
+
+IOW, all hex values are printed as decimal values.
+Not a problem for the compiler, but for the human
+to check the unicode tables.
+
+So I think we should "pin" the version of uniset.
+
