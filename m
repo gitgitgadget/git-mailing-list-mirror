@@ -2,94 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 007351FF40
-	for <e@80x24.org>; Mon, 12 Dec 2016 05:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 182FC1FF40
+	for <e@80x24.org>; Mon, 12 Dec 2016 06:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753315AbcLLFx1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 00:53:27 -0500
-Received: from mout.web.de ([212.227.15.3]:52696 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750830AbcLLFx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 00:53:26 -0500
-Received: from macce.local ([194.47.243.184]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCZfe-1cOWlE10Ta-009PCr; Mon, 12
- Dec 2016 06:53:22 +0100
-Subject: Re: [PATCH 1/3] update_unicode.sh: update the uniset repo if it
- exists
-To:     Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
-References: <1481499265-18361-1-git-send-email-dev+git@drbeat.li>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <64bc846c-0304-dd7b-73bf-a6c3a4135381@web.de>
-Date:   Mon, 12 Dec 2016 06:53:16 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.5.1
+        id S1750858AbcLLGTe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 01:19:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54604 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750720AbcLLGTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 01:19:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 65B4C58F73;
+        Mon, 12 Dec 2016 01:19:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=068+WZr0IUPjdOL1r6Qz6ADzFco=; b=BxBRHk
+        DgMoBaYkUvW9qZK5NvQU6EYRwU5MdTKT/qPpy17Vkeh5LPJ8Jx4kKB4UfP/RE3GU
+        66c04Q0b0Y2RkVNyHRiycfDvnYuRsXgKjIcM2uLVPKyVChpy2DiQXNYYsFQGXR28
+        z0U9jwdvTET6wMej4J16L/rPrpCsNqbLIzzAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bBl6yj3r+ZF3s6DvyrZjZqQ+6YxltcBo
+        nRENxzqRqT3ho/Uxdr4KP7xYHYi8u0wpbF7tWPXf5VHwl9r/S7TCqMtXc2qztamg
+        5Fdc1GfVRJGnNv2kFUJeC8iyIjU4kDLcWkl9Vwx1v+TRNDksYHNPmZ73aTyE/ZuV
+        UBjWLpL58MQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B3EE58F72;
+        Mon, 12 Dec 2016 01:19:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC75A58F70;
+        Mon, 12 Dec 2016 01:19:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 12/16] pathspec: create parse_long_magic function
+References: <1481061106-117775-1-git-send-email-bmwill@google.com>
+        <1481223550-65277-1-git-send-email-bmwill@google.com>
+        <1481223550-65277-13-git-send-email-bmwill@google.com>
+        <xmqqwpf8pt0g.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79ka0P0rKF8QH3V0jC-O19eT0oaE+fJLGifbfmm3jC_SijA@mail.gmail.com>
+        <xmqqk2b7ps08.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kbbk4vdW_mbC0riXOf=31V9AQV7zKEh56G+sxjjzAr2-g@mail.gmail.com>
+Date:   Sun, 11 Dec 2016 22:19:30 -0800
+In-Reply-To: <CAGZ79kbbk4vdW_mbC0riXOf=31V9AQV7zKEh56G+sxjjzAr2-g@mail.gmail.com>
+        (Stefan Beller's message of "Sun, 11 Dec 2016 21:38:26 -0800")
+Message-ID: <xmqqfultoej1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1481499265-18361-1-git-send-email-dev+git@drbeat.li>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:5OCXS30OnvlLQ0fpgH2cb/l/GnAWwEjbECbvW5ukMr9U+o0wwDz
- tsGy2vBaN7B+ZBDSIeZEUECrtW3GHMlFNy9SdObTAGDiHP8R4xf+TVs7Vpj7YNLSF83et1Q
- XdAKraVDvzHA9n6IMlX+bK8+Ly/chfxEeTOpfEUaCapnEYQ75MgDfKkzbVZl4HTau6Ykjl3
- 1y8WnBXDyuS7kCqJotURQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:14nS0tU8px4=:9w5W1r1GQpxDoLz7IS/aUN
- CrsXlktCw1ZUcVurVmnpkZ+xvQyDzisn2NV42gJakNskcTc4t7bRwdathWBNaflVB+4Wz4tZg
- jGiVwIVvOnU4yy+//sV6QmFiNBBpD4L8wAPKUeNn/oauDp31eDYiarV+PP/AFOvIEpCqB14yg
- 6oFb15Wbp4AL9D/twiTm+sSzpWwzmQTnwc3nIGg5/ZGqCJkgSoseOCD/ruNaA1ySihL6O1JoG
- jccU3gK8j5Q5gYIwuC3mZLahVqi9gBIkuKfEqWtXg7VCD2rDOf6lBqEkIxNnwnF5LOCHh/qEA
- c/MknOfSl4J8AV4XnzmJf5c09hTXUhxNsrLWdYV+NkoCRwOKQEBuOgvcFd141r/tlGjZMy5N8
- aXrBKRZw6m0gPb1lKtOS7E4R4rt2TVS8TUPdI3D0Wp7E/uaJ6o3eH+QIg+vrqEZBNS0m0LM0a
- QnuY+wojxi2VGtQXQMFK90s2Gqf+yu7ZAPywblk9rLtN9QNsbSVr71+tT/sZz5tqJiO3neZ+X
- 0SQFyGprK6QdwrVicPRs3aAbfpOuz7Ih5kmpvNAHMIfZrx3gHzaarCGZc4U/InvtlE8DEZQtF
- 6c5FAPoqoNRc0+hSAtLZ+civDRy4iK83hGTIgQyqRtbECNggbsk7yXdVjkUHzdYg3vnRDjR8X
- k+iV+vQDd74DD35s6Q+LioocYNL4hYc2bs644tmEPS/wVt5FgNFdWmYbNLZ4VwoBmIyC//l2Y
- KGUVymn2xF4c7wyeYCaT2R6YFONVIrx6wSkIr27X3gGVfQM3umpErdbJV0xJNLOTTgLlkT7Se
- 5NjJJTM
+Content-Type: text/plain
+X-Pobox-Relay-ID: F1C56904-C032-11E6-85C3-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2016-12-12 00:34, Beat Bolli wrote:
-> We need to track the new commits in uniset, otherwise their and our code
-> get out of sync.
-> 
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
-> 
-> Junio, these go on top of my bb/unicode-9.0 branch, please.
-> 
-> Thanks!
-> 
->  update_unicode.sh | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/update_unicode.sh b/update_unicode.sh
-> index 4c1ec8d..9ca7d8b 100755
-> --- a/update_unicode.sh
-> +++ b/update_unicode.sh
-> @@ -14,6 +14,11 @@ fi &&
->  		http://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt &&
->  	if ! test -d uniset; then
->  		git clone https://github.com/depp/uniset.git
-> +	else
-> +	(
-> +		cd uniset &&
-> +		git pull
-If upstream has accepted your patches, that's nice.
+Stefan Beller <sbeller@google.com> writes:
 
-Minor question, especially to the next commit:
-Should we make sure to checkout the exact version, which has been tested?
-In this case  cb97792880625e24a9f581412d03659091a0e54f
+>> I do not see how it would work without further splitting the
+>> attr_stack.  I think you made it per check[], but you would further
+>> split it per <check, thread> before losing the mutex, no?
+>
+> Well I have not yet looked into it again, so my memories are
+> rusty, but the <check> is read only, such that the answers only
+> need to be per thread?
 
-And this is for both a fresh clone and the git pull
-needs to be replaced by
-git fetch && git checkout cb97792880625e24a9f581412d03659091a0e54f
+<check> is read-only, so as long as you populate the singleton
+attr's beforehand, they can be shared across threads.  <answer>
+of course needs an instance per thread, and that is why you have
+them typically on stack.
+
+The process of filling <answer> by asking for a set of attrs in
+<check> for one <path> goes roughly like:
+
+ - make sure attr_stack is set up for <path>, namely, the
+   info/attributes and .gitattributes files for each leading
+   directory are parsed.
+
+ - go over the attr_stack entries and see what entries match <path>,
+   and collect the result for <check> in <answer>
+
+Before d90675c151 ("attr: keep attr stack for each check",
+2016-11-10), I had only one instance of an attr stack [*1*], but
+with that commit, you made it per <check>, which is a good move to
+allow us to optimize by keeping only the attributes relevant to
+<check> on the attr stack.
+
+But it does not solve the threading issue.
+
+If multiple threads are asking for the same set of attrs
+(i.e. running the same codepath using the same <check>) but for
+<path>s in different parts of the working tree (e.g. "git checkout"
+that is multi-threaded, each thread asking for eol related
+attributes and checking out different subdirectories), you'd need
+mutex for correct operation at least, but that won't perform well
+because you'd end up thrashing the attr stack.  You'd need to split
+attr stack further and make it per (<check>, thread) tuple and you
+no longer need mutex at that point, but not before that.
 
 
-(Which of course is a shell variable
+[footnote]
 
+*1* This is because the attr subsystem originally wasn't designed to
+    be used from multiple threads at the same time hence it was
+    sufficient to have a single "currently interested are of the
+    directory hierarchy".
