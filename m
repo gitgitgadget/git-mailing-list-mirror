@@ -2,72 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23E141FF76
-	for <e@80x24.org>; Mon, 12 Dec 2016 10:44:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B65311FF76
+	for <e@80x24.org>; Mon, 12 Dec 2016 11:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754203AbcLLKoI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 05:44:08 -0500
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:36084 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754113AbcLLKoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 05:44:07 -0500
-Received: by mail-yw0-f179.google.com with SMTP id a10so61328683ywa.3
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 02:44:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TE1/uwzOtjD7TjGM3wXViyQyBQSDPX2d3VBGQ4DjIjA=;
-        b=HEBihjMO3vKscn+VDLU5l/6YiGB2krOsGOKnA1wR2H/NP3HoyZnsKzLBEmL+Pp+qWo
-         o/RQzN7WFewu21vLd5cfBsqbD8dLfAjEe19bUtCHRzwzitP4peV4yivC2kc7dJhy8hUb
-         L8NWQq93e0HNDIBOS2Z8Ya2u1xhUPW8WSKhZuUElrI18OvO8wJtoEu3NPDxYUnlrdFvb
-         y70BMmRAKgzpSdWup1zCiLPev/REuLyriRgqujFHDTwZAfBtME0ldHoF6KibaZtkFnFi
-         Unv1fMoloTAseIt2SFHyHkQ/fP35digLfINOD7PFAFz4YDRaovCtOnYX/tOPDV6gK7AX
-         y/Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TE1/uwzOtjD7TjGM3wXViyQyBQSDPX2d3VBGQ4DjIjA=;
-        b=a768CpXAwu8UTEzFiIhaTm9YtznSRqfJTaIrkePUG+UPvtLw5JliYQKIlL+4f70ZqQ
-         HhOj1If7BxPqKNUIXRHy/6SWxBd5UQX9dXgeWCgP9b13mXcEedOPx7E48zu2DzpTijUo
-         b637kL4DoxonZXPMFJ/gQB13zljRb/korid644biKq+wUrOYZn+7XrVJ1/wb8I44OE75
-         WMjOHd5VcnabdjwjMgKcx3JHDXfnY8c9GlITcKEK8Ig53WGuVNj4wYU6SkhAbJRYmB3y
-         FFeunhcUbzjxvewoWPbKi2jHDBbuKI1icqo4bXA+NH3i0+B0v/nUJATsvzGPzEVoMqaT
-         FLxA==
-X-Gm-Message-State: AKaTC02PPjySSuQpHncvtQFdbSRHycdyaPKrHbKJ9zb/IBXoglNgw03nhZjqQbBM4V9F3WQ2wa4WdLraJWRLSA==
-X-Received: by 10.129.55.13 with SMTP id e13mr99729862ywa.344.1481539446550;
- Mon, 12 Dec 2016 02:44:06 -0800 (PST)
+        id S1754135AbcLLLDQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 06:03:16 -0500
+Received: from mout.gmx.net ([212.227.17.20]:56475 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752848AbcLLLDQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 06:03:16 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MdXSC-1bzzYu0JfY-00PNM6; Mon, 12
+ Dec 2016 12:03:08 +0100
+Date:   Mon, 12 Dec 2016 12:03:06 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Klaus Ethgen <Klaus@Ethgen.ch>
+cc:     git@vger.kernel.org
+Subject: Re: [BUG] Colon in remote urls
+In-Reply-To: <20161211110208.642unp7c2i653sav@ikki.ethgen.ch>
+Message-ID: <alpine.DEB.2.20.1612121133220.23160@virtualbox>
+References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch> <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net> <88bed7c9-4d5d-45d5-5d13-6a8ae834e602@kdbg.org> <20161210093230.26q7fxcrs2cpll6g@ikki.ethgen.ch> <alpine.DEB.2.20.1612101918040.23160@virtualbox>
+ <20161211110208.642unp7c2i653sav@ikki.ethgen.ch>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.129.19.214 with HTTP; Mon, 12 Dec 2016 02:43:36 -0800 (PST)
-In-Reply-To: <xmqqpol2rn0z.fsf@gitster.mtv.corp.google.com>
-References: <20161207153627.1468-1-Karthik.188@gmail.com> <xmqqpol2rn0z.fsf@gitster.mtv.corp.google.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Mon, 12 Dec 2016 16:13:36 +0530
-Message-ID: <CAOLa=ZSuy9NjxaPS4V2LyjPo6Ek3r4gAvXBsW2VZJXgGtSq=kA@mail.gmail.com>
-Subject: Re: [PATCH v8 00/19] port branch.c to use ref-filter's printing options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:0+B7nEN1Dtqu8Gh4jKwnfKpndx/xrd3x5sSPdVdTKokCvIByZcf
+ +38aIrZ6l6QtggPqT0H36YUpS250acAlK0UBdBIe6RJvKzmlYPn9gi2dKR5hzrSqDtdI4K/
+ HtUzrtwHSr023A1ODsNwMFjNGDdrIpv6nbgXL1VRQv9iny4meWaLXyVoSghjMe0BWWHhSa1
+ do+c3UOu16ubJAbgiK1Kw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nyqvtvBnttk=:QPAbnSTTAKCBP6LG2bDDir
+ srIL5izvZoYwrbnZ2d6cKHQSS5O12HKW/6+iBMSzw5vRZTLdbOHegxSa7DjoqrK1TUcFaT0ap
+ rDjk1Ows5LQvypTWIDl0u4b3vvrjZE8yRUZhQGhdC5r08eyG7oT87uGVFp2Xf95CtJdU+F26T
+ e6QMQ026r5OJaCyM3dfB+eVmdiMu6yHG39wK8wEUIJiiAP+LI+MEOvd5jelcRqxq/S796NvjZ
+ fVRG31joWSozhTx4DCl3pDqx4JwhrqGxPFSsaSKEF2mtSluI3Cx35+BwwLLsHx/86LZzQMyZn
+ FZ646glY0RyQwBtPJGYNuOV/8ZWMRLDSKI6+uGXs4z7kHY9K7D7gnjnXWThhK8hSZHt3qDTaJ
+ yCKVd/4+QWWIIvU4YmueocmlqzTPAuwOPPi8xHSyxly+kE5XK4/BeVHm8znXtN3sBtrX9mM9Z
+ CRFyS/PsDYgpLIgPSPYRBC4c8UhKEbRbtySLqS48egq6QeX14cfOhV5nyKI9cAE96rOHt3ri5
+ aywdUHH94djWKGiq4CFKbXrC9oKy2lOvoEUgeZKamVwiBASGDPPnLLJlRcq1q6vChQpM7z6Xc
+ eWR8uiyqVb7ZgYlo03L0QyVpSud3y0yD9sdqYef5dtkQHRg5gV61vwYDD6mi6ozWCypG42JIC
+ VhWZDyRKK1qha3INV5B2brqlkSisBFCo+W+yKdw3g9Ig/ETfGAgctOO8bpnjo82kmpJ2KDbv5
+ jz40/+rBNgQNEusj2drPN/Ck0Vd7oUXp1b0w5P+yWSlnwRjypfqlr69nm/OggouEcKTKEWd/S
+ EyqP0cj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 9, 2016 at 5:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Thanks.
->
-> Will replace, with the attached stylistic fixes squashed in for
-> minor issues that were spotted by my mechanical pre-acceptance
-> filter.
->
+Hi Klaus,
 
-Thanks for this. Will add it to my local branch too if there's a need
-for a re-roll.
+On Sun, 11 Dec 2016, Klaus Ethgen wrote:
+
+> Am Sa den 10. Dez 2016 um 19:18 schrieb Johannes Schindelin:
+> > On Sat, 10 Dec 2016, Klaus Ethgen wrote:
+> > > Am Fr den  9. Dez 2016 um 22:32 schrieb Johannes Sixt:
+> > > > There are too many systems out there that use a backslash in path names. I
+> > > > don't think it is wise to use it also as the quoting character.
+> > > Well, the minority, I believe. And only the minority where the command
+> > > line git is used anywhere.
+> > 
+> > Please provide evidence for such bold assumptions.
+> 
+> How is it "bold" to see that the majority of widows users does not use
+> or even like command line tools.
+
+First of all, it is "Windows users", not "widows users", unless, of
+course, you want to discuss things that are completely inappropriate for
+this list.
+
+Second, you still did not back up your claim with anything resembling
+evidence, instead just reiterating your beliefs. That is not good enough.
+
+Third, my experience contradicts your beliefs rather violently.
+
+So let's try some evidence for a change: the 64-bit installer of Git for
+Windows v2.10.2 was downloaded over 1.25 million times. That is not a
+negligible number.  If you want to go back to v2.8.1, it is even 3.8
+million downloads. That is a tall number to call a minority.
+
+Now let's look at your claim that Windows users do not use the
+command-line. The mere existence of posh-git (Powershell bindings for Git)
+is already a contradiction to that claim.
+
+Even if that was not enough, the Git for Windows bug tracker is full of
+reports of users who clearly use the command-line.
+
+And there is more evidence: When comparing the download numbers of the
+different Git for Windows versions, one thing really sticks out: those
+versions were downloaded the most (by a factor of more than 2x over the
+other versions) which were made available through Visual Studio's
+"Download command-line Git tools" feature, e.g. v2.8.1 and v2.9.0. That is
+a rather strong indicator that users wanted to use the command-line.
+
+Fourth, even if Windows users were the minority, and even if Windows users
+were not using the command-line, which are claims soundly refuted by the
+evidence I presented above, the fact alone that you are talking about
+putting a group of people at a disadvantage based merely on your belief
+that they are in a minority should not inform us, the Git developers, on
+any kind of policy decision.
+
+We will not intentionally break Git usage, or make Git usage hard, for
+a specific group of Git users, unless there are technical reasons to
+do that. Demographic reasons do not count.
+
+For example, we will not make Git hard to use for female programmers,
+on the grounds that they currently constitute a minority.
+
+> I know companies where the "developers" doesn't even know of the
+> existent of a git command line use. They look with owe when they see
+> that I use a shell to use git.
+
+I must have spoken to hundreds of Git for Windows users, and must have
+been in communication with many more via email or bug tracker, and I
+cannot recall a single one who used Git without using the command-line.
+
+Note: I do not count my personal experience here as evidence, but the
+numbers alone are a strong indicator to me that your argument has a pretty
+weak foundation.
+
+Ciao,
+Johannes
+
+P.S.: Maybe reply-to-all in the future; it is the custom on this here
+mailing list.
