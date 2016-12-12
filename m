@@ -2,112 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E6D7206A4
-	for <e@80x24.org>; Mon, 12 Dec 2016 18:17:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3724206A4
+	for <e@80x24.org>; Mon, 12 Dec 2016 18:33:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752524AbcLLSRP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 13:17:15 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:36251 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932115AbcLLSRI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 13:17:08 -0500
-Received: by mail-pf0-f172.google.com with SMTP id 189so13788007pfz.3
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 10:17:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fXXyHGd2neDiTlLS7urpgtqrQuX7zS+Vdd9WCvaLSQs=;
-        b=PqAf6nCZtubfG3zwz9awRxVcjiHg7qCClQAdpeRMwO+60k6B1t/ZZBj7Q1C17mSx4T
-         aQjh/hI39HmBKXQaA48y/W07vGTzoBapjAvdyVIr+ZUzfhnZdAvMi4WER4pBioTMajCI
-         WAZF/gOFwQjHoxqoo0/loK1VlNfX8geP29JKPIblKy9Kq7FXBVEloU1nObytyDkKPPaO
-         3P3qeA2bY+owZqSlyXqfk68qmOuVgGfo5RdiRpNwE0jgFYW/W1+kSXXf4f6XpJ5CqSLF
-         CmhAZQ4vvdpm3oPcrFDtgSdg3nHMiIpXwUxjWdpjIjM9ENmZsOzGm1Va8i2DzyX4KXvj
-         GV0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fXXyHGd2neDiTlLS7urpgtqrQuX7zS+Vdd9WCvaLSQs=;
-        b=TC13w1AWXS/EQ1ylQRxgSXNsSCLphjoxyXnrJxsYYrT2s8w/QDAJycOlEUchZcXvTQ
-         GWZtrSU+p5EbPzfWgP8C9PQmo9wY25k5MaIDinkwKPWOQbk0VGuXj4v+4i5UbpTwFYf7
-         7rbkXkxhAx7y1Yrj1P95IUBgKKLbr2UkgbliFFsZxTKWmkl6M+lG+wBlaqGUweeLlLVz
-         Lir9IRSPNMfk/lQSCyRdXt+nacg9pfgO1kwu9hxqBRytNe40JgufiETaAwXYFj5P/Ytf
-         709dWxqGPhwf9GsbcKKetO3cUb9Uv5hpupr2OWYGaij2T8LfprTdCWc4O/VxLqpolEnK
-         YmPQ==
-X-Gm-Message-State: AKaTC00nAbNaay7FDwCZgmrxj06cZoR9UPMbTHXdwb6WbiNreX8eqbFMUBqNaS7Cl8BLRmVR
-X-Received: by 10.84.164.106 with SMTP id m39mr185742177plg.97.1481566627830;
-        Mon, 12 Dec 2016 10:17:07 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id y66sm77644889pgb.21.2016.12.12.10.17.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Dec 2016 10:17:06 -0800 (PST)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        peff@peff.net, jacob.keller@gmail.com, gitster@pobox.com,
-        ramsay@ramsayjones.plus.com, tboegi@web.de, j6t@kdbg.org,
-        pclouds@gmail.com
-Subject: [PATCH v3 3/4] real_path: create real_pathdup
-Date:   Mon, 12 Dec 2016 10:16:54 -0800
-Message-Id: <1481566615-75299-4-git-send-email-bmwill@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <1481566615-75299-1-git-send-email-bmwill@google.com>
-References: <1481241494-6861-1-git-send-email-bmwill@google.com>
- <1481566615-75299-1-git-send-email-bmwill@google.com>
+        id S1753358AbcLLSdE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 13:33:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64278 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752488AbcLLSdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 13:33:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD63558098;
+        Mon, 12 Dec 2016 13:33:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tSjV+gmUAIdh
+        enwDcrZF/ufgZLI=; b=gXbDzNgbS6CjkAtZVGmIguChRR6KmSoqn6g6PcFEMc2T
+        LDNTBgpQMPtYK11I9IR1djd2a1IOO6qy2lzUvKQtiGj8BjPMQj7ybn4BgjQG/xN7
+        ODrzJHBwetp/MaeheimJbFk1aPRxVRKubL0PKethaWvt7tAfO2RoeTVRD8iBvUc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KP2E3C
+        SXJizCCa3K3QANBnP5da4PD6wB0MNMglhLygtljSfN3QrcsgCaAq3tXbN0F4tswz
+        CEEHhwgqLKiHObbYK+HiP6Ypgg8Vc8fA2az2+UNSPiZl+upNvdFtxdev0/uLUhds
+        FYfRmXKF4SLWm1abC4692t+3oO24i08WHQEPk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B441B58096;
+        Mon, 12 Dec 2016 13:33:02 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3825D58094;
+        Mon, 12 Dec 2016 13:33:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] update_unicode.sh: update the uniset repo if it exists
+References: <1481499265-18361-1-git-send-email-dev+git@drbeat.li>
+        <64bc846c-0304-dd7b-73bf-a6c3a4135381@web.de>
+        <c96d013c38df7737cfd551a0fce87314@drbeat.li>
+        <ca10a51a-0fab-e4a4-8d7d-035673af4c06@web.de>
+Date:   Mon, 12 Dec 2016 10:33:00 -0800
+In-Reply-To: <ca10a51a-0fab-e4a4-8d7d-035673af4c06@web.de> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Mon, 12 Dec 2016 19:12:38
+ +0100")
+Message-ID: <xmqqr35dm203.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6A027ED2-C099-11E6-B602-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create real_pathdup which returns a caller owned string of the resolved
-realpath based on the provide path.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- abspath.c | 13 +++++++++++++
- cache.h   |  1 +
- 2 files changed, 14 insertions(+)
+> If I run ./update_unicode.sh on the latest master of
+> https://github.com/depp/uniset.git , commit
+> a5fac4a091857dd5429cc2d, I get a diff in unicode_width.h like
+> this:
+>
+> -{ 0x0300, 0x036F },
+>
+> +{ 768, 879 },
+>
+> IOW, all hex values are printed as decimal values.
+> Not a problem for the compiler, but for the human
+> to check the unicode tables.
+>
+> So I think we should "pin" the version of uniset.
 
-diff --git a/abspath.c b/abspath.c
-index 8c6c76b..79ee310 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -205,6 +205,19 @@ const char *real_path_if_valid(const char *path)
- 	return strbuf_realpath(&realpath, path, 0);
- }
- 
-+char *real_pathdup(const char *path)
-+{
-+	struct strbuf realpath = STRBUF_INIT;
-+	char *retval = NULL;
-+
-+	if (strbuf_realpath(&realpath, path, 0))
-+		retval = strbuf_detach(&realpath, NULL);
-+
-+	strbuf_release(&realpath);
-+
-+	return retval;
-+}
-+
- /*
-  * Use this to get an absolute path from a relative one. If you want
-  * to resolve links, you should use real_path.
-diff --git a/cache.h b/cache.h
-index 7a81294..e12a5d9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1068,6 +1068,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 		      int die_on_error);
- const char *real_path(const char *path);
- const char *real_path_if_valid(const char *path);
-+char *real_pathdup(const char *path);
- const char *absolute_path(const char *path);
- const char *remove_leading_path(const char *in, const char *prefix);
- const char *relative_path(const char *in, const char *prefix, struct strbuf *sb);
--- 
-2.8.0.rc3.226.g39d4020
+Sure, and I'd rather see the update-unicode.sh script moved
+somewhere in contrib/ while at it.  Those who are interested in
+keeping up with the unicode standard are tiny minority of the
+developer population, and most of us would treat the built width
+table as the source (after all, that is what we ship).
 
+To be bluntly honest, I'd rather not to see "update-unicode.sh"
+download and build uniset at all.  It's as if po/ hierarchy shipping
+with its own script to download and build msgmerge--that's madness.
+Needless to say, shipping the sources for uniset embedded in our
+project tree (either as a snapshot-fork or as a submodule) is even
+worse.  Those who want to muck with po/ are expected to have
+msgmerge and friends.  Why not expect the same for those who want to
+update the unicode width table?
+
+I'd rather see a written instruction telling which snapshot to get
+and from where to build and place on their $PATH in the README file,
+sitting next to the update-unicode.sh script in contrib/uniwidth/
+directory, for those who are interested in building the width table
+"from the source", and the update-unicode.sh script to assume that
+uniset is available.
