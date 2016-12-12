@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51A77206A4
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C37E209B3
 	for <e@80x24.org>; Mon, 12 Dec 2016 19:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753273AbcLLTEs (ORCPT <rfc822;e@80x24.org>);
+        id S1753235AbcLLTEw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 14:04:52 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:35722 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751816AbcLLTEs (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Dec 2016 14:04:48 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33766 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753235AbcLLTEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 14:04:46 -0500
-Received: by mail-pf0-f180.google.com with SMTP id d2so13955043pfd.0
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 11:04:46 -0800 (PST)
+Received: by mail-pg0-f46.google.com with SMTP id p66so38159819pga.2
+        for <git@vger.kernel.org>; Mon, 12 Dec 2016 11:04:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qvP1fQLdTFQsMlVmMmCNUmug/HgNS1AvtrY2ziByn3U=;
-        b=WJhv2tA8RYywIIKqtcvi8zda4XiK/4uIytRmvROvcPxB0jgX74eIFOy9vOW5F0xgqL
-         29uxE2tdvEiM1yj+B8mZbbK1C/sO4etF77gFf5ZFUhrFv+uEKdsv8zPlPbMvsbS2Y/yl
-         iOGzzh/IGsnAPpe3UNjFRflo2StahbYiNU5cBxGXgHLLSSxT3t9qq9iFAY7lr9u+LZjn
-         c4ttFEAyrATXqLA2hjxRTInpFD8O6BtXe6OYk2yn5Hf8Eu4xIKfu8tXcE/DFdYRYtuWm
-         ba+0TVm0/JzwpcPJacfvE7yUkR83cqed6UbHWEsGMM/4q1gtpysQf5e5XyCpu92fRKpw
-         suSA==
+        bh=I//XHx886JxyAQjDlc3RzYQHSp/T5zChLUdfOk5zAs8=;
+        b=O0Yp51ZG8z6fR0INBc5VWq6M4uv9JnW/ZqiC7Hfi5dDOVulqYLKjeGyxUwu641mg46
+         fXAG0sJw9nugXbohxvnsGrdfZwtKIEc9OPurnN6YcfEG/I1inBMHKGjZIihUOTzxeKzt
+         tcMxScsTSP1Yn64+V3KqTGdRMj9ANa7rMzMSbZ4Pnhtafs89nvUOpllm9eeneB2jPVas
+         LsdFzuiHOgIIBXcvL3O695LG5A323LLOGKXK1zmpJs8kqb/2iiwdfXZ7t9TWGm2/91+o
+         Y3j5ml1Piud6MLvwNh5pEgYu9XpoN/+4inAQWYmVJdhiahp1gUa2yzDNdOfNQ4RLwZ+X
+         xURA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qvP1fQLdTFQsMlVmMmCNUmug/HgNS1AvtrY2ziByn3U=;
-        b=WFpUde5y85otC/kJV3jtDgCXxku4ziTj07ngTxrKUeiu0+DNI3/Ly0RgWjs/Zn0X7L
-         6Rl2egU1b8ueCM/xik0pLmdEhhtWcV+cB38OHGR6BHRbksWryQ/MykpOJKql6LeEYJi7
-         uY7+2/SP+hFcvtLJNZqkCmQmcpm4UtCJ8FQ9gLlbaNnnRkZQYGtTbbaZ7kr4OyMAcjOK
-         2wS/ZThSRTu/wrKFZ3vVLxsd9AxrP2ZSCgqp9PKc5b922cqp/5ooOrC11kCfBcIeh3LI
-         EGlRKvIaW9s/QkvYpzjHI+RsP2rIHhLPawtqvPXUn4vBDXrwzU9Tzl09QMeIAKnagvjj
-         b1+A==
-X-Gm-Message-State: AKaTC01TlVcGV83zKWq73MbvbIbd5dNdRAMCn9Fu+fgKP+eojvegbe2VOuQqxJRqTrP01veX
-X-Received: by 10.98.211.135 with SMTP id z7mr98233714pfk.109.1481569485728;
-        Mon, 12 Dec 2016 11:04:45 -0800 (PST)
+        bh=I//XHx886JxyAQjDlc3RzYQHSp/T5zChLUdfOk5zAs8=;
+        b=aCketitFos2bxAA9awFKGZ05cQJ1nKGgrdKvcINUbbZyLCFOAS3CxIjC2x3FOyQYBY
+         oLF/EJo4ioh9zgU4HZnPFIsU8wutsNFnx0soigywVJPSceNc30FErGg5AAYEigh3xHmg
+         TebHLHcc6TPyBoQYJYUtuA2KMuLdOrkEuedtciRF+d3rp1OIJ3hxf2ICiFhF23KSukhp
+         q6qQFVxlXrQDAFagCqMsgeZL5NkfEYjhFbHc7LBTUpoSUoEDERf388NQ66pFsFAO27WO
+         Z2jXzIG2chHpu1wCpWZhdjKugjvJd9EocM9/IfWFAq3vyc9bF+WzS4VazAgD43Eb7xsl
+         /PlA==
+X-Gm-Message-State: AKaTC02vUfn8Y0bOzZWdWEGVYIG9kKXQifuPWc/+cV3GRVbLKl7Xgzixc8N/IHkn9sdx0MQv
+X-Received: by 10.84.218.79 with SMTP id f15mr187275456plm.155.1481569486893;
+        Mon, 12 Dec 2016 11:04:46 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:642c:37a4:3709:a2b3])
-        by smtp.gmail.com with ESMTPSA id z9sm77319891pfd.29.2016.12.12.11.04.45
+        by smtp.gmail.com with ESMTPSA id y2sm77213543pff.82.2016.12.12.11.04.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Dec 2016 11:04:45 -0800 (PST)
+        Mon, 12 Dec 2016 11:04:46 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv8 4/6] worktree: check if a submodule uses worktrees
-Date:   Mon, 12 Dec 2016 11:04:33 -0800
-Message-Id: <20161212190435.10358-5-sbeller@google.com>
+Subject: [PATCHv8 5/6] move connect_work_tree_and_git_dir to dir.h
+Date:   Mon, 12 Dec 2016 11:04:34 -0800
+Message-Id: <20161212190435.10358-6-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.49.ge1f3b0c.dirty
 In-Reply-To: <20161212190435.10358-1-sbeller@google.com>
 References: <20161212190435.10358-1-sbeller@google.com>
@@ -60,110 +60,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we want to move around the the git directory of
-a submodule. Both submodules as well as worktrees are involved in
-placing git directories at unusual places, so their functionality
-may collide. To react appropriately to situations where worktrees
-in submodules are in use, offer a new function to query the
-a submodule if it uses the worktree feature.
-
-An earlier approach:
-  "Implement submodule_get_worktrees and just count them", however:
-  This can be done cheaply (both in new code to write as well as run time)
-  by obtaining the list of worktrees based off that submodules git
-  directory. However as we have loaded the variables for the current
-  repository, the values in the submodule worktree
-  can be wrong, e.g.
-  * core.ignorecase may differ between these two repositories
-  * the ref resolution is broken (refs/heads/branch in the submodule
-    resolves to the sha1 value of the `branch` in the current repository
-    that may not exist or have another sha1)
-
-The implementation here is just checking for any files in
-$GIT_COMMON_DIR/worktrees for the submodule, which ought to be sufficient
-if the submodule is using the current repository format, which we also
-check.
+That function was primarily used by submodule code, but the function
+itself is not inherently about submodules. In the next patch we'll
+introduce relocate_git_dir, which can be used by worktrees as well,
+so find a neutral middle ground in dir.h.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- worktree.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
- worktree.h |  5 +++++
- 2 files changed, 55 insertions(+)
+ dir.c       | 25 +++++++++++++++++++++++++
+ dir.h       |  1 +
+ submodule.c | 25 -------------------------
+ submodule.h |  1 -
+ 4 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index eb6121263b..d4606aa8cd 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -380,3 +380,53 @@ const struct worktree *find_shared_symref(const char *symref,
- 
- 	return existing;
+diff --git a/dir.c b/dir.c
+index bfa8c8a9a5..e0efd3c2c3 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2748,3 +2748,28 @@ void untracked_cache_add_to_index(struct index_state *istate,
+ {
+ 	untracked_cache_invalidate_path(istate, path);
  }
 +
-+int submodule_uses_worktrees(const char *path)
++/* Update gitfile and core.worktree setting to connect work tree and git dir */
++void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
 +{
-+	char *submodule_gitdir;
-+	struct strbuf sb = STRBUF_INIT;
-+	DIR *dir;
-+	struct dirent *d;
-+	int ret;
-+	struct repository_format format;
++	struct strbuf file_name = STRBUF_INIT;
++	struct strbuf rel_path = STRBUF_INIT;
++	char *git_dir = xstrdup(real_path(git_dir_));
++	char *work_tree = xstrdup(real_path(work_tree_));
 +
-+	submodule_gitdir = git_pathdup_submodule(path, "%s", "");
-+	if (!submodule_gitdir)
-+		return 0;
++	/* Update gitfile */
++	strbuf_addf(&file_name, "%s/.git", work_tree);
++	write_file(file_name.buf, "gitdir: %s",
++		   relative_path(git_dir, work_tree, &rel_path));
 +
-+	/* The env would be set for the superproject. */
-+	get_common_dir_noenv(&sb, submodule_gitdir);
++	/* Update core.worktree setting */
++	strbuf_reset(&file_name);
++	strbuf_addf(&file_name, "%s/config", git_dir);
++	git_config_set_in_file(file_name.buf, "core.worktree",
++			       relative_path(work_tree, git_dir, &rel_path));
 +
-+	/*
-+	 * The check below is only known to be good for repository format
-+	 * version 0 at the time of writing this code.
-+	 */
-+	strbuf_addstr(&sb, "/config");
-+	read_repository_format(&format, sb.buf);
-+	if (format.version != 0) {
-+		strbuf_release(&sb);
-+		return 1;
-+	}
-+
-+	/* Replace config by worktrees. */
-+	strbuf_setlen(&sb, sb.len - strlen("config"));
-+	strbuf_addstr(&sb, "worktrees");
-+
-+	/* See if there is any file inside the worktrees directory. */
-+	dir = opendir(sb.buf);
-+	strbuf_release(&sb);
-+	free(submodule_gitdir);
-+
-+	if (!dir)
-+		return 0;
-+
-+	while ((d = readdir(dir)) != NULL) {
-+		if (is_dot_or_dotdot(d->d_name))
-+			continue;
-+
-+		ret = 1;
-+		break;
-+	}
-+	closedir(dir);
-+	return ret;
++	strbuf_release(&file_name);
++	strbuf_release(&rel_path);
++	free(work_tree);
++	free(git_dir);
 +}
-diff --git a/worktree.h b/worktree.h
-index d59ce1fee8..6bfb985203 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -27,6 +27,11 @@ struct worktree {
-  */
- extern struct worktree **get_worktrees(unsigned flags);
+diff --git a/dir.h b/dir.h
+index 97c83bb383..051674a431 100644
+--- a/dir.h
++++ b/dir.h
+@@ -335,4 +335,5 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+ void add_untracked_cache(struct index_state *istate);
+ void remove_untracked_cache(struct index_state *istate);
++extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ #endif
+diff --git a/submodule.c b/submodule.c
+index d4f7afe2f1..0bb50b4b62 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1222,31 +1222,6 @@ int merge_submodule(unsigned char result[20], const char *path,
+ 	return 0;
+ }
  
-+/*
-+ * Returns 1 if linked worktrees exist, 0 otherwise.
-+ */
-+extern int submodule_uses_worktrees(const char *path);
-+
+-/* Update gitfile and core.worktree setting to connect work tree and git dir */
+-void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+-{
+-	struct strbuf file_name = STRBUF_INIT;
+-	struct strbuf rel_path = STRBUF_INIT;
+-	char *git_dir = xstrdup(real_path(git_dir_));
+-	char *work_tree = xstrdup(real_path(work_tree_));
+-
+-	/* Update gitfile */
+-	strbuf_addf(&file_name, "%s/.git", work_tree);
+-	write_file(file_name.buf, "gitdir: %s",
+-		   relative_path(git_dir, work_tree, &rel_path));
+-
+-	/* Update core.worktree setting */
+-	strbuf_reset(&file_name);
+-	strbuf_addf(&file_name, "%s/config", git_dir);
+-	git_config_set_in_file(file_name.buf, "core.worktree",
+-			       relative_path(work_tree, git_dir, &rel_path));
+-
+-	strbuf_release(&file_name);
+-	strbuf_release(&rel_path);
+-	free(work_tree);
+-	free(git_dir);
+-}
+-
+ int parallel_submodules(void)
+ {
+ 	return parallel_jobs;
+diff --git a/submodule.h b/submodule.h
+index d9e197a948..4e3bf469b4 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -65,7 +65,6 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
+ int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
+ 		struct string_list *needs_pushing);
+ int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
+-void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ int parallel_submodules(void);
+ 
  /*
-  * Return git dir of the worktree. Note that the path may be relative.
-  * If wt is NULL, git dir of current worktree is returned.
 -- 
 2.11.0.rc2.49.ge1f3b0c.dirty
 
