@@ -2,81 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2034B1FF40
-	for <e@80x24.org>; Mon, 12 Dec 2016 05:38:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 007351FF40
+	for <e@80x24.org>; Mon, 12 Dec 2016 05:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750780AbcLLFi3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 00:38:29 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:34679 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750741AbcLLFi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 00:38:28 -0500
-Received: by mail-qt0-f172.google.com with SMTP id n6so67181586qtd.1
-        for <git@vger.kernel.org>; Sun, 11 Dec 2016 21:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xS2BzKb7Gdn9ywfYcKclBZZC80ASbLHZB7pjz8oi9FU=;
-        b=mJk/htV4QDldwaNGXbKMU3BhhD7wAu9nYR4m2fe7R96VVczV7l2DjZ4Iet1NaQFSti
-         k1kxEQuI61AE6djHF+K3zMEGg2j6RfDMPLZUMmA6Jfs2I+25+T75a0Px4zJ0tu4RQlK8
-         qFshu9+HHMS1qrbF3HfAfvAF2sQ5gPBjY4x4zTbJWZanPXFcUQgBLpJh3h4FW7mWZM3X
-         3Anb/cOcsh2h6RwpOr+A77GuaQjTGkQcd3cJ903PPSb+h3abSp6CA9modda8SP/6KHu3
-         ecHMtv33Ms6mo5eKHo6sSPwvLWs8TjymbMkCI3ffHkZdL/wnYSBp/FtxM1zrUStTDDWN
-         wrjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xS2BzKb7Gdn9ywfYcKclBZZC80ASbLHZB7pjz8oi9FU=;
-        b=IWieFQwx7MR58JLpzy3Al3BubKLDTp0py/J/p5Vq69qg6lWT4CZJkmC+Zo0ehNRkZK
-         lT5lSpRilIFMTxuudr5+jSiL+v9hwwYYIyBXipanNsUbU1QtchmSwGXVSmhAINay5aF2
-         5T6sQsOUuA8KoMUkyk98IBqJ2EkaXQQ5zApynyOmPIeYZFlF8qWKUimBSwg6gumvAWOz
-         f2oenM+NLoS/qKNFoUrwvAFcFPcFiGob5k+3cScEmoutRg9HBSZ5a+7DNuT6jXHMwmz0
-         3L6+dU+fTLxiCCAyUEfld9kXaUc4QXDMornBcGDP6ByvfghcCe+kGrctFQIdf0zCYxYH
-         h92Q==
-X-Gm-Message-State: AKaTC00CT1Y7P/5WYBbPu+GLjt/S92rmwKWHqIgWl5N8W73pU5QYBb+VVOeWxjI+yRWbI5MWnCBYvnvHf+vNVLLS
-X-Received: by 10.200.49.235 with SMTP id i40mr89223649qte.170.1481521107304;
- Sun, 11 Dec 2016 21:38:27 -0800 (PST)
+        id S1753315AbcLLFx1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 00:53:27 -0500
+Received: from mout.web.de ([212.227.15.3]:52696 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750830AbcLLFx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 00:53:26 -0500
+Received: from macce.local ([194.47.243.184]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MCZfe-1cOWlE10Ta-009PCr; Mon, 12
+ Dec 2016 06:53:22 +0100
+Subject: Re: [PATCH 1/3] update_unicode.sh: update the uniset repo if it
+ exists
+To:     Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
+References: <1481499265-18361-1-git-send-email-dev+git@drbeat.li>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <64bc846c-0304-dd7b-73bf-a6c3a4135381@web.de>
+Date:   Mon, 12 Dec 2016 06:53:16 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
+ Gecko/20100101 Thunderbird/45.5.1
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Sun, 11 Dec 2016 21:38:26 -0800 (PST)
-In-Reply-To: <xmqqk2b7ps08.fsf@gitster.mtv.corp.google.com>
-References: <1481061106-117775-1-git-send-email-bmwill@google.com>
- <1481223550-65277-1-git-send-email-bmwill@google.com> <1481223550-65277-13-git-send-email-bmwill@google.com>
- <xmqqwpf8pt0g.fsf@gitster.mtv.corp.google.com> <CAGZ79ka0P0rKF8QH3V0jC-O19eT0oaE+fJLGifbfmm3jC_SijA@mail.gmail.com>
- <xmqqk2b7ps08.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sun, 11 Dec 2016 21:38:26 -0800
-Message-ID: <CAGZ79kbbk4vdW_mbC0riXOf=31V9AQV7zKEh56G+sxjjzAr2-g@mail.gmail.com>
-Subject: Re: [PATCH v2 12/16] pathspec: create parse_long_magic function
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <1481499265-18361-1-git-send-email-dev+git@drbeat.li>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:5OCXS30OnvlLQ0fpgH2cb/l/GnAWwEjbECbvW5ukMr9U+o0wwDz
+ tsGy2vBaN7B+ZBDSIeZEUECrtW3GHMlFNy9SdObTAGDiHP8R4xf+TVs7Vpj7YNLSF83et1Q
+ XdAKraVDvzHA9n6IMlX+bK8+Ly/chfxEeTOpfEUaCapnEYQ75MgDfKkzbVZl4HTau6Ykjl3
+ 1y8WnBXDyuS7kCqJotURQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:14nS0tU8px4=:9w5W1r1GQpxDoLz7IS/aUN
+ CrsXlktCw1ZUcVurVmnpkZ+xvQyDzisn2NV42gJakNskcTc4t7bRwdathWBNaflVB+4Wz4tZg
+ jGiVwIVvOnU4yy+//sV6QmFiNBBpD4L8wAPKUeNn/oauDp31eDYiarV+PP/AFOvIEpCqB14yg
+ 6oFb15Wbp4AL9D/twiTm+sSzpWwzmQTnwc3nIGg5/ZGqCJkgSoseOCD/ruNaA1ySihL6O1JoG
+ jccU3gK8j5Q5gYIwuC3mZLahVqi9gBIkuKfEqWtXg7VCD2rDOf6lBqEkIxNnwnF5LOCHh/qEA
+ c/MknOfSl4J8AV4XnzmJf5c09hTXUhxNsrLWdYV+NkoCRwOKQEBuOgvcFd141r/tlGjZMy5N8
+ aXrBKRZw6m0gPb1lKtOS7E4R4rt2TVS8TUPdI3D0Wp7E/uaJ6o3eH+QIg+vrqEZBNS0m0LM0a
+ QnuY+wojxi2VGtQXQMFK90s2Gqf+yu7ZAPywblk9rLtN9QNsbSVr71+tT/sZz5tqJiO3neZ+X
+ 0SQFyGprK6QdwrVicPRs3aAbfpOuz7Ih5kmpvNAHMIfZrx3gHzaarCGZc4U/InvtlE8DEZQtF
+ 6c5FAPoqoNRc0+hSAtLZ+civDRy4iK83hGTIgQyqRtbECNggbsk7yXdVjkUHzdYg3vnRDjR8X
+ k+iV+vQDd74DD35s6Q+LioocYNL4hYc2bs644tmEPS/wVt5FgNFdWmYbNLZ4VwoBmIyC//l2Y
+ KGUVymn2xF4c7wyeYCaT2R6YFONVIrx6wSkIr27X3gGVfQM3umpErdbJV0xJNLOTTgLlkT7Se
+ 5NjJJTM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 10, 2016 at 10:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Jonathan Nieder mentioned off list that he prefers to see that
->> series rerolled without mutexes if possible. That is possible by
->> creating the questions "struct attr_check" before preloading the
->> index and then using the read only questions in the threaded code,
->> to obtain answers fast; also no need for a mutex.
->
-> I do not see how it would work without further splitting the
-> attr_stack.  I think you made it per check[], but you would further
-> split it per <check, thread> before losing the mutex, no?
+On 2016-12-12 00:34, Beat Bolli wrote:
+> We need to track the new commits in uniset, otherwise their and our code
+> get out of sync.
+> 
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+> 
+> Junio, these go on top of my bb/unicode-9.0 branch, please.
+> 
+> Thanks!
+> 
+>  update_unicode.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/update_unicode.sh b/update_unicode.sh
+> index 4c1ec8d..9ca7d8b 100755
+> --- a/update_unicode.sh
+> +++ b/update_unicode.sh
+> @@ -14,6 +14,11 @@ fi &&
+>  		http://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt &&
+>  	if ! test -d uniset; then
+>  		git clone https://github.com/depp/uniset.git
+> +	else
+> +	(
+> +		cd uniset &&
+> +		git pull
+If upstream has accepted your patches, that's nice.
 
-Well I have not yet looked into it again, so my memories are
-rusty, but the <check> is read only, such that the answers only
-need to be per thread?
+Minor question, especially to the next commit:
+Should we make sure to checkout the exact version, which has been tested?
+In this case  cb97792880625e24a9f581412d03659091a0e54f
+
+And this is for both a fresh clone and the git pull
+needs to be replaced by
+git fetch && git checkout cb97792880625e24a9f581412d03659091a0e54f
+
+
+(Which of course is a shell variable
+
