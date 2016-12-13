@@ -2,78 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E4AD203EC
-	for <e@80x24.org>; Tue, 13 Dec 2016 19:33:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B627203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 19:40:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933887AbcLMTbI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 14:31:08 -0500
-Received: from mout.gmx.net ([212.227.17.21]:54369 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933813AbcLMTaV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 14:30:21 -0500
-Received: from [192.168.178.43] ([88.71.224.113]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDE6y-1cOcx23OnM-00GXmd; Tue, 13
- Dec 2016 20:22:00 +0100
-Subject: git add -p with unmerged files (was: git add -p with new file)
-To:     Ariel <asgit@dsgml.com>, git@vger.kernel.org
-References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Message-ID: <98817141-fa57-7687-09c4-dc96419d8a35@gmx.net>
-Date:   Tue, 13 Dec 2016 20:21:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
+        id S1753487AbcLMTkP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 14:40:15 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:36760 "EHLO
+        mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752826AbcLMTkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 14:40:09 -0500
+Received: by mail-qk0-f181.google.com with SMTP id n21so127568887qka.3
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 11:38:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=bc1PUHoNolSHBS0/Uc3a/vI5tjMk6ZKNttvYlJOEh1w=;
+        b=CNamO8S2Bi4nma9sEuhgIxeZW84Inu5l8dUubVh6ZhAWPdFkepjlu1VDQAFYTh7pGc
+         s2TRxaWNdjw3MdIPHia5zsOIBw5NYEYXuLa7g1OU06d4qxK2izMz4X/c4/Mr+o1z6RsA
+         NtJLHVZSPTT09u8PRiyrt6IpgF9h9QCzpbX8MayRMH+I9MpPkcAneug+gnCPxQLjGTUw
+         +ppwQd7jI9E2mHM4DucFqYMrU9HQWNfZtJznFn7+UIyi4j39Dz6gifMIMnF0dpggDdTN
+         2LYHJrasjRjIklrgGp/Qpq1Y8EoFJT9nE/xHheFETlFO2+4QlVeibcLj9cjCSYIfemZ8
+         RkUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=bc1PUHoNolSHBS0/Uc3a/vI5tjMk6ZKNttvYlJOEh1w=;
+        b=S5lsOgV5mFI+kI+3eohjtN3yeZ5lM1zuQSa7bkPXG4XP52AZOHH6mLFUlhjBBHEYK4
+         jJHFTp5BA9meb3M9jsrTdxjs0m9sfAvv1x+tsKr1ICt9XZMByvcbcHNocpLWKWvTKLT7
+         E+rSca1n882bAxJajUnF6JzcFA094ACPHdi3Hr0TUL+/iE7k/RG6luK/Xdk/rjMvWEk9
+         37mN0Zfjc3a1F9MeEAE/lFdlCEYFcK6g9PzJJ+LY4gdNq341+jxYAZdltLVTUzxXp5lo
+         awdCgzwoIXbarXK/8MXzadOyPXs4kAUeEAepqgO2aYnR9piUKmg68qovIy0pOskqbk4W
+         5jYA==
+X-Gm-Message-State: AKaTC018bBEUrXyXWDWvwlHQpCS2QdBBAm+EQGMmFOTpyYMGXWDgy3Dj01P7u9jpbj9VOTgqdaYMWvzbv2i/f9+6
+X-Received: by 10.55.20.164 with SMTP id 36mr33353462qku.86.1481657938167;
+ Tue, 13 Dec 2016 11:38:58 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:bmxsj2mI+v5wpgtQppEiYrZGCYrC2huNuwJ/3YKZ+60YIwcHqny
- Kotd6trKw93VxxpgewbtfyB6cHJeQoEp+QhbGuRKgQ8fuTiv+m0kcXBf1nqUskWgbfbtiLl
- sSRTiFsDcj601dbQoxUtBKveFgpmee8lGU1rudaypP4dvu/2GacC6IZ0AqXNjXw4nTr9wbX
- VT5ug0om+AYBNCXW+SU8g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JCPa9ApZAog=:h7SfS4DOHgno6pnbqjxt4j
- cgPlvFeg+chFTIHplFna+piZMp6mFXIBJi1BqZ6v517T3ekTfKt1j8ZvoB5E6UkTvkN60Vd12
- 9zNCHc7BadiybjrjXF/96PY5Bqf9SxQKwu23fDWa7wteaIjT5wommj4CQJAwUYw3qI4jR3Htw
- PlRqEN50bytPStFw3JGnOXMNq5XB7CaMCXU6jWdwAE31/ror6jAERdfU2QKkSKPFMGkeEjw0v
- OGaQ5n4M5qDYf05TNOhp7+0eZH9N0XczBz+UG0rkLN5OZ1+3sjXMtEbhzO4Wc+6rkw3mez6ly
- gB0raQhmCKiXBVIagDwxgKKHsWYRV+kxI3tX4ICycbImXzM2kIE4st2XGLG2Mcqrs1rkcgyVQ
- ThHrQnICUNUQqD98CodQLD9xzTzTGorq1458mCjTwbnfSdmu5LXEdURp6ClPKBzh0MVnhllCc
- 05unkEZECJ9IAuIJPrFPkqWBHqeq57rakgQ9JcuwRjW75xM88AVwjNnWJHAYCryg+moSmk1cp
- CT12fFnafIzffG1tayUUfTpRb7r2WfQt2YgS9YLz8BQ6JeDOiPEMUH5brpPnBrM+pp+VMbTak
- RyhsQ9pj5lfRUwZTojDb1oGtfyCP8kiMswPqP99T9z4zshZGYRotOjJG7B1kOMgGeq9sPqCEz
- GmJ6UAzQxBUqGCc4qAb89e+p0lFfdWbfc8An/usqGNAkEIQ2qLGVy5s8uHBD4ULL7zoEP4BeZ
- nwyxe5pdG8uMqi+TWBwEzxdtm99gI4jchW7fUbl0kTH9zo7h1fNa8cblpB01g+wpnYWkE0jmw
- KiKdYeu
+Received: by 10.12.147.188 with HTTP; Tue, 13 Dec 2016 11:38:57 -0800 (PST)
+In-Reply-To: <CAGZ79kZCza=cwtzQ7raU3ch_Z_5TDqt0AGN2fPHiRSTDu66Fag@mail.gmail.com>
+References: <20161213014055.14268-1-sbeller@google.com> <xmqqr35c5luq.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbmtYzFmEKrxHKx-_WY=0NDJM=QZYJziim-eh-w4WzDKw@mail.gmail.com>
+ <xmqq37hr4q5t.fsf@gitster.mtv.corp.google.com> <CAGZ79kY_E8xnOpCAFQo_91FeQCs9X3fkassFYunG=adx81AcBg@mail.gmail.com>
+ <xmqqtwa73ara.fsf@gitster.mtv.corp.google.com> <CAGZ79kZCza=cwtzQ7raU3ch_Z_5TDqt0AGN2fPHiRSTDu66Fag@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Dec 2016 11:38:57 -0800
+Message-ID: <CAGZ79kYsfybEBnWzv4OjCCLe70fNS=roZdKDbN_DSb4PDVJj7g@mail.gmail.com>
+Subject: Re: [PATCH 0/6] git-rm absorbs submodule git directory before deletion
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Turner <David.Turner@twosigma.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Dec 13, 2016 at 11:13 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Dec 13, 2016 at 11:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>>> I do not think there is no dispute about what embedding means.
+>>>
+>>> double negative: You think we have a slight dispute here.
+>>
+>> Sorry, I do not think there is any dispute on that.
+>>
+>>>>  A
+>>>> submodule whose .git is inside its working tree has its repository
+>>>> embedded.
+>>>>
+>>>> What we had trouble settling on was what to call the operation to
+>>>> undo the embedding, unentangling its repository out of the working
+>>>> tree.  I'd still vote for unembed if you want a name to be nominated.
+>>>
+>>> So I can redo the series with two commands "git submodule [un]embed".
+>>>
+>>> For me "unembed" == "absorb", such that we could also go with
+>>> absorb into superproject <-> embed into worktree
+>>
+>> With us agreeing that "embed" is about something is _IN_ submodule
+>> working tree, unembed would naturally be something becomes OUTSIDE
+>> the same thing (i.e. "submodule working tree").
 
-While we're on the topic that "git add -p" should behave like the
-"normal" "git add" (not "git add -u"): what about unmerged changes?
+I do not agree, yet.
+So I thought about this for a while.
 
-When I have merge conflicts, I almost always use my aliases
-"edit-unmerged" and "add-unmerged":
+The standard in Git is to have the .git directory inside the working tree,
+which is why you are convinced that embedded means the .git is in the
+working tree, because you approach this discussion as the Git maintainer,
+spending only little time on submodule related stuff.
 
-$ git config --global --list | grep unmerged
-alias.list-unmerged=diff --name-only --diff-filter=U
-alias.edit-unmerged=!vim `git list-unmerged`
-alias.add-unmerged=!git add `git list-unmerged`
-alias.reset-unmerged=!uf=`git list-unmerged`; git reset HEAD $uf; git
-checkout -- $uf
+The desired standard for submodules is to have the git dir inside the
+superprojects git dir (since  501770e, Aug 2011, Move git-dir for
+submodules), which is why I think an "embedded submodule git dir"
+is inside the superproject already.
 
-The "add-unmerged" alias is always a little scary because I'd rather
-like to check the changes with the "git add -p" workflow I am used to.
+I think both views are legit, and we would want to choose the one that
+users find most intuitive (and I think there will be users that find either
+viewpoint intuitive).
 
-Opinions?
+So when you have typed "git submodule ", I wonder if a user would
+assume a submodule-centric mindset of how submodules ought to
+work or if they still look at a submodule as its own git repo
+that just happens to be embedded into the superproject.
 
-Best
-  Stephan
+I guess the latter is the case, so embedding is actually inside the working
+tree and un-embedding is the relocation to the superproject.
