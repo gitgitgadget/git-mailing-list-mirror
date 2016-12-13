@@ -6,67 +6,72 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD7BD1FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 11:50:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C67821FF40
+	for <e@80x24.org>; Tue, 13 Dec 2016 11:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933047AbcLMLuY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 06:50:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55614 "EHLO cloud.peff.net"
+        id S932955AbcLMLwX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 06:52:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55618 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933027AbcLMLuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 06:50:22 -0500
-Received: (qmail 29868 invoked by uid 109); 13 Dec 2016 11:50:22 -0000
+        id S932461AbcLMLwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 06:52:23 -0500
+Received: (qmail 30006 invoked by uid 109); 13 Dec 2016 11:52:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 11:50:22 +0000
-Received: (qmail 13769 invoked by uid 111); 13 Dec 2016 11:51:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 11:52:22 +0000
+Received: (qmail 13790 invoked by uid 111); 13 Dec 2016 11:53:03 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 06:51:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2016 06:50:18 -0500
-Date:   Tue, 13 Dec 2016 06:50:18 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 06:53:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2016 06:52:18 -0500
+Date:   Tue, 13 Dec 2016 06:52:18 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Klaus Ethgen <Klaus@Ethgen.ch>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] handling alternates paths with colons
-Message-ID: <20161213115018.quulwlheycjtlsub@sigill.intra.peff.net>
-References: <20161209140215.qlam6bexm5irpro2@ikki.ethgen.ch>
- <20161209152219.ehfk475vdg4levop@sigill.intra.peff.net>
- <xmqqwpf8rkeq.fsf@gitster.mtv.corp.google.com>
- <20161210085133.2pnkz6eqlxoxdckg@sigill.intra.peff.net>
- <20161212194929.bdcihf7orjabzb2h@sigill.intra.peff.net>
- <xmqqvauo7p0r.fsf@gitster.mtv.corp.google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Klaus Ethgen <Klaus@ethgen.ch>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] alternates: accept double-quoted paths
+Message-ID: <20161213115218.7arxxatus7qjdu2m@sigill.intra.peff.net>
+References: <20161212194929.bdcihf7orjabzb2h@sigill.intra.peff.net>
+ <20161212195222.rxnabok6amklt2zf@sigill.intra.peff.net>
+ <CACsJy8B52ZDRTUjGLqub_1wELtugv99xbDnBg1PX1LUTb6nVMQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqvauo7p0r.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CACsJy8B52ZDRTUjGLqub_1wELtugv99xbDnBg1PX1LUTb6nVMQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 12, 2016 at 02:37:08PM -0800, Junio C Hamano wrote:
+On Tue, Dec 13, 2016 at 06:30:15PM +0700, Duy Nguyen wrote:
 
-> Jeff King <peff@peff.net> writes:
+> On Tue, Dec 13, 2016 at 2:52 AM, Jeff King <peff@peff.net> wrote:
+> > Instead, let's treat names as unquoted unless they begin
+> > with a double-quote, in which case they are interpreted via
+> > our usual C-stylke quoting rules. This also breaks
+> > backwards-compatibility, but in a smaller way: it only
+> > matters if your file has a double-quote as the very _first_
+> > character in the path (whereas an escape character is a
+> > problem anywhere in the path).  It's also consistent with
+> > many other parts of git, which accept either a bare pathname
+> > or a double-quoted one, and the sender can choose to quote
+> > or not as required.
 > 
-> > So here are patches that do that. It kicks in only when the first
-> > character of a path is a double-quote, and then expects the usual
-> > C-style quoting.
+> At least attr has the same problem and is going the same direction
+> [1]. Cool. (I actually thought the patch was in and evidence that this
+> kind of backward compatibility breaking was ok, turns out the patch
+> has stayed around for years)
 > 
-> The quote being per delimited component is what makes this fifth
-> approach a huge win.  
-> 
-> All sane components on a list-valued environment are still honored
-> and an insane component that has either a colon in the middle or
-> begins with a double-quote gets quoted.  As long as nobody used a
-> path that begins with a double-quote as an element in such a
-> list-valued environment (and they cannot be, as using a non-absolute
-> path as an element does not make much sense), this will be safe, and
-> a path with a colon didn't work with Git unaware of the new quoting
-> rule anyway.  Nice.
+> [1] http://public-inbox.org/git/%3C20161110203428.30512-18-sbeller@google.com%3E/
 
-We do support non-absolute paths, both in alternates files and
-environment variables. It's a nice feature if you want to have a
-relocatable family of shared repositories. I'd imagine that most cases
-start with "../", though.
+Thanks for digging that up. As soon as I came up with the idea[1], I
+wanted to use the attr code as an example of a similar problem and
+solution, but I couldn't find it in the code. Which makes sense if it
+wasn't merged.
+
+I do think it's a pretty reasonable approach in general, and would be OK
+for the attributes code.
 
 -Peff
+
+[1] One could argue that I did not come up with the idea at all, but
+    rather just remembered that somebody else had done so. :)
