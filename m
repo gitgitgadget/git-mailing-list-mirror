@@ -2,77 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA8262042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 16:13:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 852DA203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 16:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933403AbcLMQNp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 11:13:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51489 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752932AbcLMQNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 11:13:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA08D54DBE;
-        Tue, 13 Dec 2016 11:13:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LMu0LSjcYVkolU0jeV7/1hiB7wg=; b=uLQ24F
-        9f5fD32v+smkO3hBDDTYPlgrCWZZEWJnSIflNedo1PHjLluuI1RUIqq2Ch6IzsGt
-        24FkX5TOEdhcSYO7rVziHPP88wdK0F0KHlnKGM4izHSp/1SczdiiTD4Pp4Dfmb7m
-        Cetp3B8y9rvTieNCYy7Wmav86ho1flQ2ZCmsA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=c89YWSMIRc3/+pZIrjYzAg7FqqfCI1h6
-        OGuWZW6SUQ5fjXsxUBBXSEsGatVKB8sUXojO54jhD2aKm7PTXz/Qmrm2ZMnpBcLM
-        oRLhEp8p9ZutvI8wfNcYFItBAYXpi+w5z3j18l8QkRtlKAXz9/dRC44MM+0yXkfh
-        LMQs1TB1WZA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A27B154DBC;
-        Tue, 13 Dec 2016 11:13:36 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1732754DB9;
-        Tue, 13 Dec 2016 11:13:36 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2016, #02; Mon, 12)
-References: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1612131641291.23160@virtualbox>
-Date:   Tue, 13 Dec 2016 08:13:34 -0800
-In-Reply-To: <alpine.DEB.2.20.1612131641291.23160@virtualbox> (Johannes
-        Schindelin's message of "Tue, 13 Dec 2016 16:42:21 +0100 (CET)")
-Message-ID: <xmqqinqn6c41.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933750AbcLMQly (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 11:41:54 -0500
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:33143 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752845AbcLMQkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 11:40:19 -0500
+Received: by mail-lf0-f68.google.com with SMTP id y21so4110546lfa.0
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 08:40:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=e9DWYoLyuWlk4IjjpS+iKfTTwGWpqm3sAL8e5YC3COw=;
+        b=zK4IO27j6iJicY6DvwrjWIpSoS8ljYVKrEkkD5A8Uo0tl3Hqv6XMjWvk2w2Dz3q/+l
+         TzBWVXgpeu1V3r6COEXH1wei8LcS9luNejNuqEZ7a+GJE+e6QDOtCWPpqgdp1BRNa3iE
+         aBRu6BtMh/GIAE3EtgLlCZyHi2etpA23ZgGJzVot0qB0B9ac/DrNO58y7CaCG2831v5a
+         9soAkKe4ksEhNsFO7ONmCE3KDPTJm2RCOk8FJhz6lxb3SJkX/Tn9/8i5z2cR4SqiGBnG
+         zMxXTE1XRJV2wIr13Qaz6Op9R4qoK1edxR5dhRfPMTrv+sqH0y4Aso0m6ci+u+XJL127
+         uedA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=e9DWYoLyuWlk4IjjpS+iKfTTwGWpqm3sAL8e5YC3COw=;
+        b=EA+vve3a27y5aZahOTRV8dy5otMag2RhL94Z54hOIcJi4OHsSahEQJsKY908AmRm53
+         H8HQ566aCIBVa5Hk7NKAcqv+55/U8LGXoDrCu+dEHx8l8eZco31gXbbvcYRgQIVckdHq
+         UgR0ASLKQ5ugNbO9unEAJvAfRgyBI4JH74tUfbQGrzvcUtU3lnYhI6vzAxtictJYbR8a
+         1qYff0AdMpKYVWqUmnneAv0Z31iLxEBYC0quASKZok7r0RLODXRgPAY4lMFTVgqFOsAj
+         tZceTs6XEDariKNn9C+UFEM8iHMDKcfHzEUS88+lBIBXFkb22L9dVrixmGsUuljL6zTd
+         Z7GQ==
+X-Gm-Message-State: AKaTC019CeHjt1imgOANy7t1aFIVot/xUSYXyVuzPD0phKnOvoAGiwGE+JOFsLE/pmQf8N25RwqCciO4LmHtLw==
+X-Received: by 10.46.13.9 with SMTP id 9mr23739357ljn.37.1481647217238; Tue,
+ 13 Dec 2016 08:40:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 19D1855A-C14F-11E6-842F-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.25.221.217 with HTTP; Tue, 13 Dec 2016 08:40:16 -0800 (PST)
+In-Reply-To: <xmqqy400bno3.fsf@gitster.mtv.corp.google.com>
+References: <20161130210420.15982-1-chriscool@tuxfamily.org> <xmqqy400bno3.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 13 Dec 2016 17:40:16 +0100
+Message-ID: <CAP8UFD1=-xKWaDnGKrtm2mzVxpH7N-Q3iqnOJeOM5QrtNpitrA@mail.gmail.com>
+Subject: Re: [RFC/PATCH v3 00/16] Add initial experimental external ODB support
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->>  While I think it would make it easier for people to experiment and
->>  build on if the topic is merged to 'next', I am at the same time a
->>  bit reluctant to merge an unproven new topic that introduces a new
->>  file format, which we may end up having to support til the end of
->>  time.  It is likely that to support a "prime clone from CDN", it
->>  would need a lot more than just "these are the heads and the pack
->>  data is over there", so this may not be sufficient.
->> 
->>  Will discard.
+On Wed, Nov 30, 2016 at 11:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> You could mark it as experimental, subject to change, and merge it to
-> `next` safely.
+>> For now there should be one odb ref per blob. Each ref name should be
+>> refs/odbs/<odbname>/<sha1> where <sha1> is the sha1 of the blob stored
+>> in the external odb named <odbname>.
+>>
+>> These odb refs should all point to a blob that should be stored in the
+>> Git repository and contain information about the blob stored in the
+>> external odb. This information can be specific to the external odb.
+>> The repos can then share this information using commands like:
+>>
+>> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
+>
+> Unless this is designed to serve only a handful of blobs, I cannot
+> see how this design would scale successfully.  I notice you wrote
+> "For now" at the beginning, but what is the envisioned way this will
+> evolve in the future?
 
-Are you planning, or do you know somebody who plans to use that code
-soonish?  Otherwise I'd prefer to drop it---at this point, the series
-is merely "just because we can", not "because we need it to further
-improve this or that".
+In general I think that having a lot of refs is really a big problem
+right now in Git as many big organizations using Git are facing this
+problem in one form or another.
+So I think that support for a big number of refs is a separate and
+important problem that should and hopefully will be solved.
+
+My preferred way to solve it would be with something like Shawn's
+RefTree. I think it would also help regarding other problems like
+speeding up git protocol, tracking patch series (see git-series
+discussions), tools like https://www.softwareheritage.org/, ...
+
+If the "big number of refs" problem is not solved and many refs in
+refs/odbs/<odbname>/ is a problem, it's possible to have just one ref
+in refs/odbs/<odbname>/ that points to a blob that contains a list
+(maybe a json list with information attached to each item) of the
+blobs stored in the external odb. Though I think it would be more
+complex to edit/parse this list than to deal with many refs in
+refs/odbs/<odbname>/.
