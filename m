@@ -2,86 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09E8F203EC
-	for <e@80x24.org>; Tue, 13 Dec 2016 19:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 596AB203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 19:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933857AbcLMTrX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 14:47:23 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60613 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752409AbcLMTrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 14:47:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C8F4A55522;
-        Tue, 13 Dec 2016 14:47:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SX8MeJ9OsaRBaF5HYoZhoXNd1Vs=; b=KQnDiA
-        CazWjsmkKosGc6g0H+S+32IqcDSAmyXkzOgnky8jMpxVZDwiUJYnfaFA0NOcKZvg
-        R0ulinaHf/XlzUoLO32abB8HunejLnn23o5EsTdUrE9RoQkqBrRcVDQTSNtaQSGy
-        BzOUFxf+Jg+rwaRs2Y389+syq7LvQmMnUr5qg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hSBBNLWsKU3fOC7s/og5GwoisY2Qj0C/
-        XHyUephfmxz+RZtQ+W8HVUY8rBjqkR2zTqS+YRNcuxrZWnMIoOkqu3JD+MWYTtKh
-        wigIgp1ciUPc8v4Wt9a7mjvm62Au8BoK/G+sHfrZpFF2OsJ8j8cAK87jhdQYmHiC
-        VylWgs/7E+I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BEAF255521;
-        Tue, 13 Dec 2016 14:47:10 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1047855520;
-        Tue, 13 Dec 2016 14:47:09 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        David Turner <David.Turner@twosigma.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH 0/6] git-rm absorbs submodule git directory before deletion
-References: <20161213014055.14268-1-sbeller@google.com>
-        <xmqqr35c5luq.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbmtYzFmEKrxHKx-_WY=0NDJM=QZYJziim-eh-w4WzDKw@mail.gmail.com>
-        <xmqq37hr4q5t.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kY_E8xnOpCAFQo_91FeQCs9X3fkassFYunG=adx81AcBg@mail.gmail.com>
-        <xmqqtwa73ara.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZCza=cwtzQ7raU3ch_Z_5TDqt0AGN2fPHiRSTDu66Fag@mail.gmail.com>
-        <CAGZ79kYsfybEBnWzv4OjCCLe70fNS=roZdKDbN_DSb4PDVJj7g@mail.gmail.com>
-Date:   Tue, 13 Dec 2016 11:47:08 -0800
-In-Reply-To: <CAGZ79kYsfybEBnWzv4OjCCLe70fNS=roZdKDbN_DSb4PDVJj7g@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 13 Dec 2016 11:38:57 -0800")
-Message-ID: <xmqq60mn3937.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S932959AbcLMTuE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 14:50:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55966 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752432AbcLMTtD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 14:49:03 -0500
+Received: (qmail 27770 invoked by uid 109); 13 Dec 2016 19:49:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 19:49:02 +0000
+Received: (qmail 17979 invoked by uid 111); 13 Dec 2016 19:49:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 14:49:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2016 14:49:00 -0500
+Date:   Tue, 13 Dec 2016 14:49:00 -0500
+From:   Jeff King <peff@peff.net>
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Ariel <asgit@dsgml.com>, git@vger.kernel.org,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: git add -p with unmerged files (was: git add -p with new file)
+Message-ID: <20161213194859.eoztbojnp4veaozc@sigill.intra.peff.net>
+References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
+ <98817141-fa57-7687-09c4-dc96419d8a35@gmx.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EF8A411A-C16C-11E6-9C64-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <98817141-fa57-7687-09c4-dc96419d8a35@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Dec 13, 2016 at 08:21:59PM +0100, Stephan Beyer wrote:
 
-> The desired standard for submodules is to have the git dir inside the
-> superprojects git dir (since  501770e, Aug 2011, Move git-dir for
-> submodules), which is why I think an "embedded submodule git dir"
-> is inside the superproject already.
+> While we're on the topic that "git add -p" should behave like the
+> "normal" "git add" (not "git add -u"): what about unmerged changes?
 
-Think how you start a new submodule.  What are the steps you take
-before you say "git submodule add"?  And where does .git for the
-submodule live at that point?
+I agree that's a related part of the workflow, though the implementation
+is a bit harder.
 
-With the current system, you as the submodule originator need to do
-something different to make your working tree of the superproject
-match what the others who clone from your public repository.
+> When I have merge conflicts, I almost always use my aliases
+> "edit-unmerged" and "add-unmerged":
+> 
+> $ git config --global --list | grep unmerged
+> alias.list-unmerged=diff --name-only --diff-filter=U
+> alias.edit-unmerged=!vim `git list-unmerged`
 
-And comparing the two layout, the one originally held by the
-submodule originator has .git embedded in the working tree, no?
+You might like contrib/git-jump for that, which makes it easier to go to
+the specific spots within files.
 
-All of the above is coming from "submodule" centric mindset.  It
-just is not centric to those who follow what others originated.
+When "git jump merge" produces no hits, I know I've dealt with all of
+the conflicts (textual ones, anyway). I do often want to run "git add
+-p" then to review the changes before staging.
+
+I think what is most helpful there is probably "git diff HEAD" to see
+what the merge is bringing in (or the cherry-pick, or "am", or
+whatever). If I wanted "add -p" to do anything, I think it would be to
+act as if stage 2 ("ours", which should be the same as what is in HEAD)
+was already in the index. I.e., show the diff against that, apply any
+hunks we select, and store the whole thing as stage 0, losing the
+unmerged bit.
+
+When you select all hunks, this is equivalent to "git add unmerge-file".
+If you choose only a subset of hunks, it leaves the unselected ones for
+you to examine later via "git diff". And if you choose none, it should
+probably leave unmerged.
+
+That's just a scheme I thought up, though. I've never actually tried it
+in practice.
+
+-Peff
