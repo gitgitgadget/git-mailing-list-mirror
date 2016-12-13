@@ -6,72 +6,94 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C67821FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 11:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC4791FF40
+	for <e@80x24.org>; Tue, 13 Dec 2016 11:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932955AbcLMLwX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 06:52:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55618 "EHLO cloud.peff.net"
+        id S932369AbcLML7g (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 06:59:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55626 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932461AbcLMLwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 06:52:23 -0500
-Received: (qmail 30006 invoked by uid 109); 13 Dec 2016 11:52:22 -0000
+        id S1752747AbcLML7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 06:59:36 -0500
+Received: (qmail 30451 invoked by uid 109); 13 Dec 2016 11:59:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 11:52:22 +0000
-Received: (qmail 13790 invoked by uid 111); 13 Dec 2016 11:53:03 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 11:59:35 +0000
+Received: (qmail 13820 invoked by uid 111); 13 Dec 2016 12:00:16 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 06:53:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2016 06:52:18 -0500
-Date:   Tue, 13 Dec 2016 06:52:18 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 07:00:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2016 06:59:31 -0500
+Date:   Tue, 13 Dec 2016 06:59:31 -0500
 From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Klaus Ethgen <Klaus@ethgen.ch>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] alternates: accept double-quoted paths
-Message-ID: <20161213115218.7arxxatus7qjdu2m@sigill.intra.peff.net>
-References: <20161212194929.bdcihf7orjabzb2h@sigill.intra.peff.net>
- <20161212195222.rxnabok6amklt2zf@sigill.intra.peff.net>
- <CACsJy8B52ZDRTUjGLqub_1wELtugv99xbDnBg1PX1LUTb6nVMQ@mail.gmail.com>
+To:     Chris Packham <judge.packham@gmail.com>
+Cc:     git@vger.kernel.org, mah@jump-ing.de, jacob.keller@gmail.com,
+        gitster@pobox.com
+Subject: Re: [PATCHv2 1/2] merge: Add '--continue' option as a synonym for
+ 'git commit'
+Message-ID: <20161213115931.tz7ce3z2meaxydbh@sigill.intra.peff.net>
+References: <20161212083413.7334-1-judge.packham@gmail.com>
+ <20161213084859.13426-1-judge.packham@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACsJy8B52ZDRTUjGLqub_1wELtugv99xbDnBg1PX1LUTb6nVMQ@mail.gmail.com>
+In-Reply-To: <20161213084859.13426-1-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 13, 2016 at 06:30:15PM +0700, Duy Nguyen wrote:
+On Tue, Dec 13, 2016 at 09:48:58PM +1300, Chris Packham wrote:
 
-> On Tue, Dec 13, 2016 at 2:52 AM, Jeff King <peff@peff.net> wrote:
-> > Instead, let's treat names as unquoted unless they begin
-> > with a double-quote, in which case they are interpreted via
-> > our usual C-stylke quoting rules. This also breaks
-> > backwards-compatibility, but in a smaller way: it only
-> > matters if your file has a double-quote as the very _first_
-> > character in the path (whereas an escape character is a
-> > problem anywhere in the path).  It's also consistent with
-> > many other parts of git, which accept either a bare pathname
-> > or a double-quoted one, and the sender can choose to quote
-> > or not as required.
-> 
-> At least attr has the same problem and is going the same direction
-> [1]. Cool. (I actually thought the patch was in and evidence that this
-> kind of backward compatibility breaking was ok, turns out the patch
-> has stayed around for years)
-> 
-> [1] http://public-inbox.org/git/%3C20161110203428.30512-18-sbeller@google.com%3E/
+> +	if (continue_current_merge) {
+> +		int nargc = 1;
+> +		const char *nargv[] = {"commit", NULL};
+> +
+> +		if (argc)
+> +			usage_msg_opt("--continue expects no arguments",
+> +			      builtin_merge_usage, builtin_merge_options);
 
-Thanks for digging that up. As soon as I came up with the idea[1], I
-wanted to use the attr code as an example of a similar problem and
-solution, but I couldn't find it in the code. Which makes sense if it
-wasn't merged.
+This checks that we don't have:
 
-I do think it's a pretty reasonable approach in general, and would be OK
-for the attributes code.
+  git merge --continue foobar
+
+but still allows:
+
+  git merge --continue --some-option
+
+because parse_options() decrements argc.
+
+It would be insane to check individually which options might have been
+set. But I wonder if we could do something like:
+
+  int orig_argc = argc;
+  ...
+  argc = parse_options(argc, argv, ...);
+
+  if (continue_current_merge) {
+	if (orig_argc != 1) /* maybe 2, to account for argv[0] ? */
+		usage_msg_opt("--continue expects no arguments", ...);
+  }
+
+That gets trickier if there ever is an option that's OK to use with
+--continue. We might want to forward along "--quiet", for example. On
+the other hand, we silently ignore it now, so maybe it is better to
+complain and then let --quiet get added later if somebody cares.
+
+Whatever we do here, I think "--abort" should get the same treatment
+(probably as a separate patch).
+
+> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+> index 85248a14b..44b34ef3a 100755
+> --- a/t/t7600-merge.sh
+> +++ b/t/t7600-merge.sh
+> @@ -154,6 +154,7 @@ test_expect_success 'test option parsing' '
+>  	test_must_fail git merge -s foobar c1 &&
+>  	test_must_fail git merge -s=foobar c1 &&
+>  	test_must_fail git merge -m &&
+> +	test_must_fail git merge --continue foobar &&
+>  	test_must_fail git merge
+>  '
+
+Your tests look good, though obviously if you check for options above,
+that should be covered in this test.
 
 -Peff
-
-[1] One could argue that I did not come up with the idea at all, but
-    rather just remembered that somebody else had done so. :)
