@@ -2,82 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F053203EC
-	for <e@80x24.org>; Tue, 13 Dec 2016 19:12:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB86F203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 19:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934050AbcLMTMl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 14:12:41 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52121 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932912AbcLMTMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 14:12:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A1B657493;
-        Tue, 13 Dec 2016 14:12:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NC9jRSFYNVoymKmgSY8bs8Sgk20=; b=qkz0as
-        P7fUvXx0TxMqCMDGvWOWh+lmXc/BgCw8PF8DeFCcaSRNgqX/VZlZfBJfhsvdTZpA
-        Ag26klfqFORidVG03SPnX5pmIg5fsuibdYEUwtv0y4YiuIuCNtS8Zr95mkmnIurY
-        Fwre8PG+mppV0/oFzs9jXCTodnH31STvCcdzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Dt/UGsJvGy3q076gEl2w7qI0m16KoZpU
-        sQtlpnNsdLGOP2YvwIh8KjKJ7Lu84OzzU06lT2jkQEgIvERenZ5b8FUAK4a36tse
-        nvSOtoRsgPAO9YftH4jzs6a0lALVXVylxlUF9fH9/k/kZKd+a6aGYgi1Wlffb4Yd
-        RBG9cjCM3iI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2189E57492;
-        Tue, 13 Dec 2016 14:12:38 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 848DB57491;
-        Tue, 13 Dec 2016 14:12:37 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stephan Beyer <s-beyer@gmx.net>, Ariel <asgit@dsgml.com>,
+        id S934346AbcLMTNC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 14:13:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55935 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753120AbcLMTMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 14:12:49 -0500
+Received: (qmail 25437 invoked by uid 109); 13 Dec 2016 19:12:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 19:12:48 +0000
+Received: (qmail 17641 invoked by uid 111); 13 Dec 2016 19:13:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Dec 2016 14:13:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2016 14:12:45 -0500
+Date:   Tue, 13 Dec 2016 14:12:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Klaus Ethgen <Klaus@Ethgen.ch>,
         git@vger.kernel.org
-Subject: Re: git add -p with new file
-References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
-        <20161209141129.r53b4rbtgd76fn2a@sigill.intra.peff.net>
-        <alpine.DEB.2.11.1612091331170.13185@cherryberry.dsgml.com>
-        <20161210085556.nwg3pbay367jqin5@sigill.intra.peff.net>
-        <xmqq37hvphji.fsf@gitster.mtv.corp.google.com>
-        <20161211130034.ygj5l2gbx33uknlk@sigill.intra.peff.net>
-        <dc698b79-6311-a2a3-c564-a43ef071e62b@gmx.net>
-        <20161213173341.wemlunlixdp6277h@sigill.intra.peff.net>
-        <xmqq7f734qe0.fsf@gitster.mtv.corp.google.com>
-        <20161213185653.ys3ig377zhmblncl@sigill.intra.peff.net>
-Date:   Tue, 13 Dec 2016 11:12:36 -0800
-In-Reply-To: <20161213185653.ys3ig377zhmblncl@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 13 Dec 2016 13:56:53 -0500")
-Message-ID: <xmqqpokv3aor.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+Subject: Re: [PATCH 3/2] t5547-push-quarantine: run the path separator test
+ on Windows, too
+Message-ID: <20161213191245.we6422xpapfgd2gt@sigill.intra.peff.net>
+References: <20161212194929.bdcihf7orjabzb2h@sigill.intra.peff.net>
+ <20161212195355.znqlu44lgnke3ltc@sigill.intra.peff.net>
+ <d9d2580c-a2e5-d9f3-1f56-6814b2b2285d@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1C380FEE-C168-11E6-A4DE-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d9d2580c-a2e5-d9f3-1f56-6814b2b2285d@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, Dec 13, 2016 at 08:09:31PM +0100, Johannes Sixt wrote:
 
->> Perhaps the latter is not advertised well enough?  "add -p" does not
->> even page so it is not very useful way to check what is being added
->> if you are adding a new file (unless you are doing a toy example to
->> add a 7-line file).
->
-> I use "add -p" routinely for my final add-and-sanity-check,...
-> ... To me they are all tools in the toolbox, and I can pick the one that
-> works best in any given situation, or that I just feel like using that
-> day.
+> Am 12.12.2016 um 20:53 schrieb Jeff King:
+> > Johannes, please let me know if I am wrong about skipping the test on
+> > !MINGW. The appropriate check there would be ";" anyway, but I am not
+> > sure _that_ is allowed in paths, either.
+> 
+> Here is a version for Windows. I'd prefer this patch on top instead
+> of squashing it into yours to keep the $PWD vs. $(pwd) explanation.
+> 
+> The result is the same as yours in all practical matters; but this
+> version I have already tested.
 
-Oh, there is no question about that.  I was just pointing out that
-"add -p" is not the "one that works best" when dealing with a path
-that is not yet even in the index.
+Yeah, I'm happy to have this on top. The patch itself looks obviously
+correct. Thanks!
+
+-Peff
