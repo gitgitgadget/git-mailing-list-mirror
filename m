@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E7C1203C1
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9333C206A4
 	for <e@80x24.org>; Tue, 13 Dec 2016 01:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932595AbcLMBlO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Dec 2016 20:41:14 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33790 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932525AbcLMBlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2016 20:41:07 -0500
-Received: by mail-pf0-f169.google.com with SMTP id d2so15453675pfd.0
-        for <git@vger.kernel.org>; Mon, 12 Dec 2016 17:41:06 -0800 (PST)
+        id S932602AbcLMBlQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Dec 2016 20:41:16 -0500
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:34529 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753082AbcLMBlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2016 20:41:06 -0500
+Received: by mail-pf0-f175.google.com with SMTP id c4so15435087pfb.1
+        for <git@vger.kernel.org>; Mon, 12 Dec 2016 17:41:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wQiL2bsd38DPDEK5CF+IlLFBdd1YOqrzRdnRnw9osjo=;
-        b=BRHMK3PIRStyCqQUHoKJdBeVBvXLTlWUF3XjQ8d9qy7S20Jua+sxoI9rFuTMIZDrmk
-         15UdjQ55IEuLjgZbD5+/XsGjL0JSxTCkJ1eTK9S+RmN3ThnOw2E4raoM1l0s2OH+j6eP
-         CDzHwOs2+Y71jXaxVW+Fgwia5ondZTvTFXDcdWh7CJg8zXeU3CGPQPQeBV9mS7wzPIi4
-         qcjn54WK5uPNOiY9Qu2E2t7/5ZDhdMotkbza48yXhc3aLbh/yjDtopPjFGE4xfwJRFbG
-         3p08EOzcyyNv/40jeadbqyGWwrQQ9JHaVGwanuXyA72GlkCPmXcrEv+5bA49XLHUPyhi
-         NNjw==
+        bh=J95d87j0O7h4D23WsRulYnIe7fm0Tg1GH3kjWy4JqAo=;
+        b=ap2OsFtRSM/R55HNWJX0XilCwOtAHCAPduN6oASafqtvj2cCvVnpf3aGvQVpEQcja3
+         gmNqbHwkAp4Zd7ZNDpu0qxGJe988YLhXHfuv677h2j/YuYD7HPYt3PVaPyXOqCc88ip3
+         9CnJLRnme1jq/MSdW6EiPkZe78LRQogByVAxBgDv141CNAO4Sw4Hq+MxiJxn3eB129wU
+         j20CWc77Q/TEDlRxcCMJk8pJr1rjuT3WH4uWYw5bMQocKaeAva7GvuDJuwz32dWM2iQI
+         bRISi52YxA/aWYbQHfaWK5dhRq+vexIMl7wW+GNL53SoROMAhNZMuyH40JU7Zm3KXiUM
+         CGdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wQiL2bsd38DPDEK5CF+IlLFBdd1YOqrzRdnRnw9osjo=;
-        b=WqfiCNCniblSlxZdcWtnwZxy4xz0Bw/ttKY/eYWlYrXYs6DPxNngp0NcoWl2cJdvey
-         cEyU8DQHDAPXZ6TPU0U1E3+NbFQdVi1RfQtvH6NAedr0AXqV6zK5kQzBYo680pGDiow5
-         oBN3mr7mFiGonILeHXy//nkPgtkk3c9jbnj8l4+YFqWVRFT2MupfdOrukmntUWBb2vID
-         YRDpkFCY4oiEK6eliEWPoMtmBNjJHKrB5Y8urruE1ctD9TyyjRaJiTtge7gTamz1a9R1
-         PTCc0BZNIzpjWiTV18pMI+OWuf2ro6ef9QQ60Q/5BJxbMjBZB/q/8guhibRai0+hj/Rt
-         8esg==
-X-Gm-Message-State: AKaTC00Mj8tFOudVWV0mDMDXEmunYwX7U3J7CWrpwig58zgjLZb7G488NoQTzEpoJKT7QNZU
-X-Received: by 10.98.141.153 with SMTP id p25mr98220203pfk.148.1481593265917;
-        Mon, 12 Dec 2016 17:41:05 -0800 (PST)
+        bh=J95d87j0O7h4D23WsRulYnIe7fm0Tg1GH3kjWy4JqAo=;
+        b=AgYob3IhXOpyoLftJhyS4gwfRYgLwOhuJdxGrrGFQMhghOFNJ+EZOHOyAfdZMjp36N
+         b5vuze1/B/QEneuZ4FxjvZ9Yu/2sH8WOR08KGmG/q60eQTncIGVRAo8CdbGmPc5LDNBW
+         uOjaZQyyQbR2kSDVQ5cr/srl7pHsCdubE9cAGQmSJigG0Gh0dbid5AD8VpfIuTDHlP/j
+         mY1mukP+zgQ8hIceHIaCVFAtBb7LuesAbhjcDvwsQh2nv+3KqjTRUTxUbrVH86/UzT7/
+         GMjYc9nUPVAcKdAK2xFB4+rSZjFVtsV003HTGkikc1Ete5+SxugGUdLivuNmgb/s0+Xq
+         GBCA==
+X-Gm-Message-State: AKaTC00rEYllrH8MCigvA5FiZrgr1URbP5HOaEErOfg2TFpusDMlAjQF4dvWG2e5kbxgYRBs
+X-Received: by 10.99.2.142 with SMTP id 136mr173112164pgc.25.1481593264889;
+        Mon, 12 Dec 2016 17:41:04 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:642c:37a4:3709:a2b3])
-        by smtp.gmail.com with ESMTPSA id 140sm78707145pgg.0.2016.12.12.17.41.05
+        by smtp.gmail.com with ESMTPSA id 1sm78656593pgp.1.2016.12.12.17.41.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Dec 2016 17:41:05 -0800 (PST)
+        Mon, 12 Dec 2016 17:41:04 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, David.Turner@twosigma.com, bmwill@google.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 6/6] rm: add absorb a submodules git dir before deletion
-Date:   Mon, 12 Dec 2016 17:40:55 -0800
-Message-Id: <20161213014055.14268-7-sbeller@google.com>
+Subject: [PATCH 5/6] t3600: slightly modernize style
+Date:   Mon, 12 Dec 2016 17:40:54 -0800
+Message-Id: <20161213014055.14268-6-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.35.g26e18c9
 In-Reply-To: <20161213014055.14268-1-sbeller@google.com>
 References: <20161213014055.14268-1-sbeller@google.com>
@@ -60,215 +60,387 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When deleting a submodule we need to keep the actual git directory around,
-such that we do not lose local changes in there and at a later checkout
-of the submodule we don't need to clone it again.
+Remove the space between redirection and file name.
+Also remove unnecessary invocations of subshells, such as
 
-Implement `depopulate_submodule`, that migrates the git directory before
-deletion of a submodule and afterwards the equivalent of "rm -rf", which
-is already found in entry.c, so expose that and for clarity add a suffix
-"_or_dir" to it.
+	(cd submod &&
+		echo X >untracked
+	) &&
+
+as there is no point of having the shell for functional purposes.
+In case of a single Git command use the `-C` option to let Git cd into
+the directory.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/rm.c  | 18 ++++++------------
- cache.h       |  2 ++
- entry.c       |  5 +++++
- submodule.c   | 31 +++++++++++++++++++++++++++++++
- submodule.h   |  6 ++++++
- t/t3600-rm.sh | 41 ++++++++++++++++-------------------------
- 6 files changed, 66 insertions(+), 37 deletions(-)
+ t/t3600-rm.sh | 122 ++++++++++++++++++++++++----------------------------------
+ 1 file changed, 50 insertions(+), 72 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index fdd7183f61..f8c5e9b6c6 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -400,18 +400,12 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 						continue;
- 					}
- 				} else {
--					strbuf_reset(&buf);
--					strbuf_addstr(&buf, path);
--					if (!remove_dir_recursively(&buf, 0)) {
--						removed = 1;
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--						strbuf_release(&buf);
--						continue;
--					} else if (!file_exists(path))
--						/* Submodule was removed by user */
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
-+					if (file_exists(path))
-+						depopulate_submodule(path);
-+					removed = 1;
-+					if (!remove_path_from_gitmodules(path))
-+						gitmodules_modified = 1;
-+					continue;
- 					/* Fallthrough and let remove_path() fail. */
- 				}
- 			}
-diff --git a/cache.h b/cache.h
-index a50a61a197..b645ca2f9a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -2018,4 +2018,6 @@ void sleep_millisec(int millisec);
-  */
- void safe_create_dir(const char *dir, int share);
- 
-+extern void remove_directory_or_die(struct strbuf *path);
-+
- #endif /* CACHE_H */
-diff --git a/entry.c b/entry.c
-index c6eea240b6..02c4ac9f22 100644
---- a/entry.c
-+++ b/entry.c
-@@ -73,6 +73,11 @@ static void remove_subtree(struct strbuf *path)
- 		die_errno("cannot rmdir '%s'", path->buf);
- }
- 
-+void remove_directory_or_die(struct strbuf *path)
-+{
-+	remove_subtree(path);
-+}
-+
- static int create_file(const char *path, unsigned int mode)
- {
- 	mode = (mode & 0100) ? 0777 : 0666;
-diff --git a/submodule.c b/submodule.c
-index e42efa2337..3770ecb7b9 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -308,6 +308,37 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
-+void depopulate_submodule(const char *path)
-+{
-+	struct strbuf pathbuf = STRBUF_INIT;
-+	char *dot_git = xstrfmt("%s/.git", path);
-+
-+	/* Is it populated? */
-+	if (!resolve_gitdir(dot_git))
-+		goto out;
-+
-+	/* Does it have a .git directory? */
-+	if (!submodule_uses_gitfile(path)) {
-+		absorb_git_dir_into_superproject("", path,
-+			ABSORB_GITDIR_RECURSE_SUBMODULES);
-+
-+		if (!submodule_uses_gitfile(path)) {
-+			/*
-+			 * We should be using a gitfile by now. Let's double
-+			 * check as losing the git dir would be fatal.
-+			 */
-+			die("BUG: could not absorb git directory for '%s'", path);
-+		}
-+	}
-+
-+	strbuf_addstr(&pathbuf, path);
-+	remove_directory_or_die(&pathbuf);
-+
-+out:
-+	strbuf_release(&pathbuf);
-+	free(dot_git);
-+}
-+
- /* Helper function to display the submodule header line prior to the full
-  * summary output. If it can locate the submodule objects directory it will
-  * attempt to lookup both the left and right commits and put them into the
-diff --git a/submodule.h b/submodule.h
-index 3ed3aa479a..516e377a12 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -53,6 +53,12 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const char *del, const char *add, const char *reset,
- 		const struct diff_options *opt);
- extern void set_config_fetch_recurse_submodules(int value);
-+
-+/*
-+ * Removes a submodule from a given path. When the submodule contains its
-+ * git directory instead of a gitlink, migrate that first into the superproject.
-+ */
-+extern void depopulate_submodule(const char *path);
- extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
 diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 5e5a16c863..5aa6db584c 100755
+index 14f0edca2b..5e5a16c863 100755
 --- a/t/t3600-rm.sh
 +++ b/t/t3600-rm.sh
-@@ -569,26 +569,22 @@ test_expect_success 'rm of a conflicted unpopulated submodule succeeds' '
+@@ -111,21 +111,21 @@ test_expect_success 'Remove nonexistent file with --ignore-unmatch' '
+ '
+ 
+ test_expect_success '"rm" command printed' '
+-	echo frotz > test-file &&
++	echo frotz >test-file &&
+ 	git add test-file &&
+ 	git commit -m "add file for rm test" &&
+-	git rm test-file > rm-output &&
++	git rm test-file >rm-output &&
+ 	test $(grep "^rm " rm-output | wc -l) = 1 &&
+ 	rm -f test-file rm-output &&
+ 	git commit -m "remove file from rm test"
+ '
+ 
+ test_expect_success '"rm" command suppressed with --quiet' '
+-	echo frotz > test-file &&
++	echo frotz >test-file &&
+ 	git add test-file &&
+ 	git commit -m "add file for rm --quiet test" &&
+-	git rm --quiet test-file > rm-output &&
+-	test $(wc -l < rm-output) = 0 &&
++	git rm --quiet test-file >rm-output &&
++	test_must_be_empty rm-output &&
+ 	rm -f test-file rm-output &&
+ 	git commit -m "remove file from rm --quiet test"
+ '
+@@ -221,7 +221,7 @@ test_expect_success 'Call "rm" from outside the work tree' '
+ 	mkdir repo &&
+ 	(cd repo &&
+ 	 git init &&
+-	 echo something > somefile &&
++	 echo something >somefile &&
+ 	 git add somefile &&
+ 	 git commit -m "add a file" &&
+ 	 (cd .. &&
+@@ -287,7 +287,7 @@ test_expect_success 'rm removes empty submodules from work tree' '
+ 	git commit -m "add submodule" &&
+ 	git rm submod &&
+ 	test ! -e submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+@@ -298,7 +298,7 @@ test_expect_success 'rm removes removed submodule from index and .gitmodules' '
+ 	git submodule update &&
+ 	rm -rf submod &&
+ 	git rm submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+@@ -309,7 +309,7 @@ test_expect_success 'rm removes work tree of unmodified submodules' '
+ 	git submodule update &&
+ 	git rm submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+@@ -320,7 +320,7 @@ test_expect_success 'rm removes a submodule with a trailing /' '
+ 	git submodule update &&
+ 	git rm submod/ &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
  	test_cmp expect actual
  '
  
--test_expect_success 'rm of a populated submodule with a .git directory fails even when forced' '
-+test_expect_success 'rm of a populated submodule with a .git directory migrates git dir' '
- 	git checkout -f master &&
+@@ -335,17 +335,15 @@ test_expect_success 'rm succeeds when given a directory with a trailing /' '
+ test_expect_success 'rm of a populated submodule with different HEAD fails unless forced' '
  	git reset --hard &&
  	git submodule update &&
- 	(cd submod &&
- 		rm .git &&
- 		cp -R ../.git/modules/sub .git &&
--		GIT_WORK_TREE=. git config --unset core.worktree
-+		GIT_WORK_TREE=. git config --unset core.worktree &&
-+		rm -r ../.git/modules/sub
- 	) &&
--	test_must_fail git rm submod &&
--	test -d submod &&
--	test -d submod/.git &&
--	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	test_must_fail git rm -f submod &&
--	test -d submod &&
--	test -d submod/.git &&
-+	git rm submod 2>output.err &&
-+	! test -d submod &&
-+	! test -d submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	rm -rf submod
-+	test -s actual &&
-+	test_i18ngrep Migrating output.err
- '
- 
- cat >expect.deepmodified <<EOF
-@@ -667,27 +663,22 @@ test_expect_success 'rm of a populated nested submodule with a nested .git direc
- 	git submodule update --recursive &&
- 	(cd submod/subsubmod &&
- 		rm .git &&
--		cp -R ../../.git/modules/sub/modules/sub .git &&
-+		mv ../../.git/modules/sub/modules/sub .git &&
- 		GIT_WORK_TREE=. git config --unset core.worktree
- 	) &&
--	test_must_fail git rm submod &&
--	test -d submod &&
--	test -d submod/subsubmod/.git &&
--	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	test_must_fail git rm -f submod &&
--	test -d submod &&
--	test -d submod/subsubmod/.git &&
-+	git rm submod 2>output.err &&
-+	! test -d submod &&
-+	! test -d submod/subsubmod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	rm -rf submod
-+	test -s actual &&
-+	test_i18ngrep Migrating output.err
- '
- 
- test_expect_success 'checking out a commit after submodule removal needs manual updates' '
--	git commit -m "submodule removal" submod &&
-+	git commit -m "submodule removal" submod .gitmodules &&
- 	git checkout HEAD^ &&
+-	(cd submod &&
+-		git checkout HEAD^
+-	) &&
++	git -C submod checkout HEAD^ &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+@@ -418,34 +416,30 @@ test_expect_success 'rm issues a warning when section is not found in .gitmodule
+ test_expect_success 'rm of a populated submodule with modifications fails unless forced' '
+ 	git reset --hard &&
  	git submodule update &&
--	git checkout -q HEAD^ 2>actual &&
-+	git checkout -q HEAD^ &&
- 	git checkout -q master 2>actual &&
- 	test_i18ngrep "^warning: unable to rmdir submod:" actual &&
- 	git status -s submod >actual &&
+-	(cd submod &&
+-		echo X >empty
+-	) &&
++	echo X >submod/empty &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'rm of a populated submodule with untracked files fails unless forced' '
+ 	git reset --hard &&
+ 	git submodule update &&
+-	(cd submod &&
+-		echo X >untracked
+-	) &&
++	echo X >submod/untracked &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -461,16 +455,12 @@ test_expect_success 'setup submodule conflict' '
+ 	git add nitfol &&
+ 	git commit -m "added nitfol 2" &&
+ 	git checkout -b conflict1 master &&
+-	(cd submod &&
+-		git fetch &&
+-		git checkout branch1
+-	) &&
++	git -C submod fetch &&
++	git -C submod checkout branch1 &&
+ 	git add submod &&
+ 	git commit -m "submod 1" &&
+ 	git checkout -b conflict2 master &&
+-	(cd submod &&
+-		git checkout branch2
+-	) &&
++	git -C submod checkout branch2 &&
+ 	git add submod &&
+ 	git commit -m "submod 2"
+ '
+@@ -486,7 +476,7 @@ test_expect_success 'rm removes work tree of unmodified conflicted submodule' '
+ 	test_must_fail git merge conflict2 &&
+ 	git rm submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -494,18 +484,16 @@ test_expect_success 'rm of a conflicted populated submodule with different HEAD
+ 	git checkout conflict1 &&
+ 	git reset --hard &&
+ 	git submodule update &&
+-	(cd submod &&
+-		git checkout HEAD^
+-	) &&
++	git -C submod checkout HEAD^ &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+@@ -515,18 +503,16 @@ test_expect_success 'rm of a conflicted populated submodule with modifications f
+ 	git checkout conflict1 &&
+ 	git reset --hard &&
+ 	git submodule update &&
+-	(cd submod &&
+-		echo X >empty
+-	) &&
++	echo X >submod/empty &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+@@ -536,18 +522,16 @@ test_expect_success 'rm of a conflicted populated submodule with untracked files
+ 	git checkout conflict1 &&
+ 	git reset --hard &&
+ 	git submodule update &&
+-	(cd submod &&
+-		echo X >untracked
+-	) &&
++	echo X >submod/untracked &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -564,12 +548,12 @@ test_expect_success 'rm of a conflicted populated submodule with a .git director
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -d submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	test_must_fail git rm -f submod &&
+ 	test -d submod &&
+ 	test -d submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git merge --abort &&
+ 	rm -rf submod
+@@ -581,7 +565,7 @@ test_expect_success 'rm of a conflicted unpopulated submodule succeeds' '
+ 	test_must_fail git merge conflict2 &&
+ 	git rm submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -597,12 +581,12 @@ test_expect_success 'rm of a populated submodule with a .git directory fails eve
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -d submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	! test -s actual &&
+ 	test_must_fail git rm -f submod &&
+ 	test -d submod &&
+ 	test -d submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	! test -s actual &&
+ 	rm -rf submod
+ '
+@@ -629,58 +613,52 @@ test_expect_success 'setup subsubmodule' '
+ test_expect_success 'rm recursively removes work tree of unmodified submodules' '
+ 	git rm submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'rm of a populated nested submodule with different nested HEAD fails unless forced' '
+ 	git reset --hard &&
+ 	git submodule update --recursive &&
+-	(cd submod/subsubmod &&
+-		git checkout HEAD^
+-	) &&
++	git -C submod/subsubmod checkout HEAD^ &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'rm of a populated nested submodule with nested modifications fails unless forced' '
+ 	git reset --hard &&
+ 	git submodule update --recursive &&
+-	(cd submod/subsubmod &&
+-		echo X >empty
+-	) &&
++	echo X >submod/subsubmod/empty &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'rm of a populated nested submodule with nested untracked files fails unless forced' '
+ 	git reset --hard &&
+ 	git submodule update --recursive &&
+-	(cd submod/subsubmod &&
+-		echo X >untracked
+-	) &&
++	echo X >submod/subsubmod/untracked &&
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -f submod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -695,12 +673,12 @@ test_expect_success 'rm of a populated nested submodule with a nested .git direc
+ 	test_must_fail git rm submod &&
+ 	test -d submod &&
+ 	test -d submod/subsubmod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	! test -s actual &&
+ 	test_must_fail git rm -f submod &&
+ 	test -d submod &&
+ 	test -d submod/subsubmod/.git &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	! test -s actual &&
+ 	rm -rf submod
+ '
+@@ -716,7 +694,7 @@ test_expect_success 'checking out a commit after submodule removal needs manual
+ 	echo "?? submod/" >expected &&
+ 	test_cmp expected actual &&
+ 	rm -rf submod &&
+-	git status -s -uno --ignore-submodules=none > actual &&
++	git status -s -uno --ignore-submodules=none >actual &&
+ 	! test -s actual
+ '
+ 
 -- 
 2.11.0.rc2.35.g7af3268
 
