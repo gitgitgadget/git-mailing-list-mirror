@@ -2,121 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B21802042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 19:04:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DEAC203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 19:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933035AbcLMTD6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 14:03:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52314 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932964AbcLMTD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 14:03:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8CEF3572A4;
-        Tue, 13 Dec 2016 14:03:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kFleV8J5RsTs6U3r5DPaqdhOOOg=; b=qyi90p
-        Pr04OxBGpcy/XnyxHVssZZsXZ2yJdK43oZQtcOY1p5oY15Y3BX9OD7ZJiDExV6+Q
-        ZaL3u4JNlFDE9ZuN3GdRxohLwSroqlx8lNb/nfF+Vr6yi3D4FY+nlr52+IX/2PNf
-        /z4GjK8i0iK35e7kUwxgIQytSf1bEGVr+s95A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=h6y0tH//SIT7MwsykS6aEfAw31RBWJRc
-        qrRYtbaQ56r6MKVrASHyF/ooi1N5Im84WmVKhMroS+QUUH5Ou6/VTW9VmDJT5UHF
-        vR/PI1vRQDfGwRAlj7gDhrj+3a+b3K6CdYRRObnUV7py4MMGA2ZUy709B0uE/HPm
-        nSCSen0nLO8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 855BB572A3;
-        Tue, 13 Dec 2016 14:03:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 02C6C572A2;
-        Tue, 13 Dec 2016 14:03:54 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] builtin/commit.c: convert trivial snprintf calls to xsnprintf
-References: <20161213132717.42965-1-gitter.spiros@gmail.com>
-        <20161213135514.z7eituxgxsvybwgz@sigill.intra.peff.net>
-Date:   Tue, 13 Dec 2016 11:03:53 -0800
-In-Reply-To: <20161213135514.z7eituxgxsvybwgz@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 13 Dec 2016 08:55:14 -0500")
-Message-ID: <xmqqy3zj3b3a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753409AbcLMTIB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 14:08:01 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:34760 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752112AbcLMTH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 14:07:58 -0500
+Received: by mail-qt0-f182.google.com with SMTP id n6so116402294qtd.1
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 11:07:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uyGTLoWD1sG2TUS2Q4RxY1+zNm7vD/FFp+xK42Y0RGc=;
+        b=EISvrNlVLH+ZlbI6ofOSXp0g2X+bRByEtaYKzSbNFLz484zHi2fN+8mZlvGJJWrFM5
+         WyEy8cqQKHtDmz0hkna1Id8eKvMi4NKD5TbWgChYbLE9fbLw5RHbwJERrWtbYUYXqtrH
+         FQEGamF6revDSe9/YvbtTOhcwXvKk/zyX0nvoDwHakdLZ6AOP49vqc1nC1ONnRCt5On0
+         Kug20CT0fjhXA8L8Z7pB67CvAamwr6V2rT+Bpbkk0kc0/i5tcWMWRHNw/7LJyaUjipch
+         7lUOiM3TjWSKc3POk/U9LO2TQtVTVfcBhzPZq6x9045NKM/WCovyHTeQAmLuInorPNLu
+         pJcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uyGTLoWD1sG2TUS2Q4RxY1+zNm7vD/FFp+xK42Y0RGc=;
+        b=kZmcw/12cOBfsDm8ljiKFdi5XNLzXr4AtPJhSYoCBaykZ2oIJDtobQ0xp2VYN++krJ
+         PFpfEkl5zKn1sQvahwlmJL4ueCJ+BiRJ6SWrHuamW6dRDhGHWHTRKCtGHv3A0me0lQZM
+         9kb1JbgfE96/9/HO8rwqCLvPzpvzeETlNFK9gbOX+gfXvQi+LJPSQz1qNa046HsAOIfw
+         fXVmYKRBT1XyKt7FNpKCs3qjtPHZsbrO1ZbQkXSdzE0EXI9ECWl3xJAeE5uUpHIQzi8h
+         8+iQDAKu5qpBZwXmEEr9mK2XEdjCKkoHlq+94iLu20Cg+3tDPxzO9uslGv3jPCsmlEIu
+         6jdQ==
+X-Gm-Message-State: AKaTC01jluIxjqQvNJ5oSVV/BER6WZP6YX1el91nGHbgNAfn8VXOuxmEU65VtKbTpshSgWFX01GbVDNVUfP2r9ZW
+X-Received: by 10.200.49.235 with SMTP id i40mr95996296qte.170.1481656052578;
+ Tue, 13 Dec 2016 11:07:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4C4AB0E-C166-11E6-A91F-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.12.147.188 with HTTP; Tue, 13 Dec 2016 11:07:32 -0800 (PST)
+In-Reply-To: <xmqq37hr4q5t.fsf@gitster.mtv.corp.google.com>
+References: <20161213014055.14268-1-sbeller@google.com> <xmqqr35c5luq.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbmtYzFmEKrxHKx-_WY=0NDJM=QZYJziim-eh-w4WzDKw@mail.gmail.com> <xmqq37hr4q5t.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Dec 2016 11:07:32 -0800
+Message-ID: <CAGZ79kY_E8xnOpCAFQo_91FeQCs9X3fkassFYunG=adx81AcBg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] git-rm absorbs submodule git directory before deletion
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        David Turner <David.Turner@twosigma.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> +		argv_array_pushf(&env, "GIT_INDEX_FILE=%s", index_file);
->> +		if (launch_editor(git_path_commit_editmsg(), NULL, env.argv)) {
->>  			fprintf(stderr,
->>  			_("Please supply the message using either -m or -F option.\n"));
->> +			argv_array_clear(&env);
->>  			exit(1);
->>  		}
->> +		argv_array_clear(&env);
+On Tue, Dec 13, 2016 at 10:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> I'd generally skip the clear() right before exiting, though I saw
-> somebody disagree with me recently on that.  I wonder if we should
-> decide as a project on whether it is worth doing or not.
-
-I'd say it is a responsibility of the person who turns exit(1) to
-return -1 to ensure the code does not leak.
-
->> @@ -1525,12 +1526,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
->>  static int run_rewrite_hook(const unsigned char *oldsha1,
->>  			    const unsigned char *newsha1)
->>  {
->> -	/* oldsha1 SP newsha1 LF NUL */
->> -	static char buf[2*40 + 3];
->> +	char *buf;
->>  	struct child_process proc = CHILD_PROCESS_INIT;
->>  	const char *argv[3];
->>  	int code;
->> -	size_t n;
->>  
->>  	argv[0] = find_hook("post-rewrite");
->>  	if (!argv[0])
->> @@ -1546,34 +1545,33 @@ static int run_rewrite_hook(const unsigned char *oldsha1,
->>  	code = start_command(&proc);
->>  	if (code)
->>  		return code;
->> -	n = snprintf(buf, sizeof(buf), "%s %s\n",
->> -		     sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
->> +	buf = xstrfmt("%s %s\n", sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
->>  	sigchain_push(SIGPIPE, SIG_IGN);
->> -	write_in_full(proc.in, buf, n);
->> +	write_in_full(proc.in, buf, strlen(buf));
->>  	close(proc.in);
->> +	free(buf);
+>> On Mon, Dec 12, 2016 at 11:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>
+>>>> The "checkout --recurse-submodules" series got too large to comfortably send
+>>>> it out for review, so I had to break it up into smaller series'; this is the
+>>>> first subseries, but it makes sense on its own.
+>>>>
+>>>> This series teaches git-rm to absorb the git directory of a submodule instead
+>>>> of failing and complaining about the git directory preventing deletion.
+>>>>
+>>>> It applies on origin/sb/submodule-embed-gitdir.
+>>>
+>>> Thanks.  I probably should rename the topic again with s/embed/absorb/;
+>>
+>> I mostly renamed it in the hope to settle our dispute what embedding means. ;)
 >
-> Any time you care about the length of the result, I'd generally use an
-> actual strbuf instead of xstrfmt. The extra strlen isn't a big deal
-> here, but it somehow seems simpler to me. It probably doesn't matter
-> much either way, though.
+> I do not think there is no dispute about what embedding means.
 
-Your justification for this extra allocation was that it is a
-heavy-weight operation.  While I agree that the runtime cost of
-allocation and deallocation does not matter, I would be a bit
-worried about extra cognitive burden to programmers.  They did not
-have to worry about leaking because they are writing a fixed length
-string.  Now they do, whether they use xstrfmt() or struct strbuf.
-When they need to update what they write, they do have to remember
-to adjust the size of the "fixed string", and the original is not
-free from the "programmers' cognitive cost" point of view, of
-course.  Probably use of strbuf/xstrfmt is an overall win.
+double negative: You think we have a slight dispute here.
 
-And of course, I think strbuf is more appropriate if you have to do
-strlen().
+>  A
+> submodule whose .git is inside its working tree has its repository
+> embedded.
+>
+> What we had trouble settling on was what to call the operation to
+> undo the embedding, unentangling its repository out of the working
+> tree.  I'd still vote for unembed if you want a name to be nominated.
+
+So I can redo the series with two commands "git submodule [un]embed".
+
+For me "unembed" == "absorb", such that we could also go with
+absorb into superproject <-> embed into worktree
+
+
+>
+>> Note that sb/t3600-cleanup is part of this series now,
+>> (The first commit of that series is in patch 6/6 of this series, and patch 5 is
+>> the modernization effort.)
+>
+> Well, "t3600: remove useless redirect" has been in 'next' already;
+> do you mean that you want me to queue this series on top of that
+> topic?
+>
+
+I need to reroll this series any way; the reroll will be on top of that.
+
+Thanks,
+Stefan
