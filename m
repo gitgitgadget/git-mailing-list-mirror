@@ -2,109 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A5D209B4
-	for <e@80x24.org>; Tue, 13 Dec 2016 21:42:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF9C209B4
+	for <e@80x24.org>; Tue, 13 Dec 2016 21:48:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753744AbcLMVl6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 16:41:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63452 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753651AbcLMVl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 16:41:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 66F3556CC1;
-        Tue, 13 Dec 2016 16:35:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dQc8iUDAoHHzn7Opu6n6vcuKEzE=; b=DEBvqs
-        D8u9i6+0Yntu6ZbRx77gg1p4oQo+GEB0V1ZhQ4d22tKur85CUy4K2mlexeKFyfKy
-        EL2Ajg55l+U2QqJchYireYYQBkPQLjibv0HencRTRPis7XfvcbSRtYOdVb8zI++I
-        raZcHycke6AVAfdjIKqWjJh7kG0ZZAo7B9Tys=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VYR0AU4BS2E1Q9JnN0DpcYcLahbpvSXA
-        aIWm6vyh9mpxYwG/ltgibNl6/Y5rKjgpvdNnPq88a62g9zOrsxKXrS0QUH6+mD7S
-        mAGT0/A3HXtY5FebAxk2SaeadxMze3bmqkk6klBaKP6lzgJ8gHuHFQCym8V2rT75
-        cAjlLRXeuuM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E83156CC0;
-        Tue, 13 Dec 2016 16:35:09 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C998B56CBF;
-        Tue, 13 Dec 2016 16:35:08 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 04/34] sequencer (rebase -i): implement the 'exec' command
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <54d4e8d3673662d1ec806f3f4a779a17effbdaf2.1481642927.git.johannes.schindelin@gmx.de>
-Date:   Tue, 13 Dec 2016 13:35:07 -0800
-In-Reply-To: <54d4e8d3673662d1ec806f3f4a779a17effbdaf2.1481642927.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:29:49 +0100
-        (CET)")
-Message-ID: <xmqq7f731pis.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1754190AbcLMVsg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 16:48:36 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:36367 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752363AbcLMVsf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 16:48:35 -0500
+Received: by mail-lf0-f66.google.com with SMTP id o20so16726lfg.3
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 13:48:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:date
+         :message-id:mime-version;
+        bh=KVSmanhlFcSH+Z9/oFdEERl2Zdy9y+/PZnYvYv/LE1s=;
+        b=uIzYR2NdH9CU5O/6k1bf+nWKTAS1UBLlDrmVc01y4Pit2MZSvyUAFJ58xs2cUIzkSO
+         7Pal50zrB3t+qeUeQkZ8KrGQab/YjupVrhj8zHzOXmbef6Igox2jYzt4Pc71H0yTslKK
+         Qob7EixwqiRYXtAWz4QeBkhw1VJHDF5Gozr6EWj3cZzybqj3qrniEOd747CO/tqyqZ37
+         n9R2Wa7CUH9ekyxLObDn8qjPAPJvn+akB8nhBudLDUKEwS2njJuzniMn1oHAUmuRXWdX
+         DQpSXjusc/JfRLkYMA6OkP2QfyBVPxSSAQIshwAxBvZ6r+IXHamcN2lNHD8LZVoKKOI7
+         Lseg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:date:message-id:mime-version;
+        bh=KVSmanhlFcSH+Z9/oFdEERl2Zdy9y+/PZnYvYv/LE1s=;
+        b=Cm97fTNm0Vv+ZAHzXc12yukHI1j58uV8xtFcfBQ9fF2CA1leQHmEt9COFVJp6GuLvG
+         Z5vDJpt6EIFbDP7AxhJ7iFYSOx7CQfMHm+AHphh27zNxy2vq9iayjthIi1CA6O8BDrX9
+         zg7agBNI9ccWN25DWOYGszk2RkEGxaY/JJRP1YIpcZg0QElSuo7CTCiFsVwEgVPjAHnc
+         Z7EWjxlaC/2O+hJzl4hQjGPf8CHmuegzlL870tV06UDFN5AZpoQkYzzgl15OHsfKbaxD
+         zUfFIHf68NgQytlEgcIU8/UZRZNc22knOfPDpaiF0HTmLtP6SALpceuzCRFUHjR9BGeB
+         D4mQ==
+X-Gm-Message-State: AKaTC00nODIBmYJPxyOafrBz0yaua8N2MjqLndt6jxarsn28HUyO/FG1HyPQS716gIcKCA==
+X-Received: by 10.46.9.129 with SMTP id 123mr36969464ljj.20.1481664864072;
+        Tue, 13 Dec 2016 13:34:24 -0800 (PST)
+Received: from kristoffer-SZ68R2 (uib-guest.uib.no. [129.177.138.114])
+        by smtp.gmail.com with ESMTPSA id z1sm10248728lja.27.2016.12.13.13.34.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Dec 2016 13:34:23 -0800 (PST)
+References: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com> <20161209155112.2112-2-kristoffer.haugsbakk@gmail.com> <88A192B34B3D4DDDA47628687AE458D3@PhilipOakley> <8737hsj7wp.fsf@gmail.com> <xmqqoa0f4s2v.fsf@gitster.mtv.corp.google.com>
+User-agent: mu4e 0.9.17; emacs 24.5.1
+From:   Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
+Subject: Re: [PATCH 1/4] doc: add articles (grammar)
+In-reply-to: <xmqqoa0f4s2v.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 13 Dec 2016 22:34:22 +0100
+Message-ID: <87y3zjikdd.fsf@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 052E8418-C17C-11E6-9AE9-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> +static int do_exec(const char *command_line)
-> +{
-> +	const char *child_argv[] = { NULL, NULL };
-> +	int dirty, status;
-> +
-> +	fprintf(stderr, "Executing: %s\n", command_line);
-> +	child_argv[0] = command_line;
-> +	status = run_command_v_opt(child_argv, RUN_USING_SHELL);
-> +
-> +	/* force re-reading of the cache */
-> +	if (discard_cache() < 0 || read_cache() < 0)
-> +		return error(_("could not read index"));
-> +
-> +	dirty = require_clean_work_tree("rebase", NULL, 1, 1);
-> +
-> +	if (status) {
-> +		warning(_("execution failed: %s\n%s"
-> +			  "You can fix the problem, and then run\n"
-> +			  "\n"
-> +			  "  git rebase --continue\n"
-> +			  "\n"),
-> +			command_line,
-> +			dirty ? N_("and made changes to the index and/or the "
-> +				"working tree\n") : "");
-> +		if (status == 127)
-> +			/* command not found */
-> +			status = 1;
-> +	}
-> +	else if (dirty) {
-> +		warning(_("execution succeeded: %s\nbut "
-> +			  "left changes to the index and/or the working tree\n"
-> +			  "Commit or stash your changes, and then run\n"
-> +			  "\n"
-> +			  "  git rebase --continue\n"
-> +			  "\n"), command_line);
-> +		status = 1;
-> +	}
-> +
-> +	return status;
-> +}
+Junio C Hamano writes:
 
-OK, this looks like a faithful reproduction of what the scripted
-version does inside do_next() helper function.
+> I was planning to merge all four from you as-is to 'next' today,
+> though.  Should I wait?
 
-Please have "else if" on the same line as "}" that closes the
-"if (...) {" in the same if/else if/else cascade.
+I'll definitely defer to whatever you think is best.  I guess it depends
+on whether you are interested in Philip Oakley's suggestions.  I sent
+those emails to inform about what I intended to do in the next round, if
+it got to that point, since I haven't tried to contribute to such an
+organised project before.  So I was informing about my assumptions about
+how to deal with "looks good to me"-kinds of feedback.
+
+So for my part, I'm happy with iterating on this (perhaps just adding
+the two "acks", or also replying to the suggestions), or just merging it
+as-is.
+
+-- 
+Kristoffer Haugsbakk
