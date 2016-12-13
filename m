@@ -7,119 +7,104 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 554982042F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19B7C206A4
 	for <e@80x24.org>; Tue, 13 Dec 2016 15:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934190AbcLMPcJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 10:32:09 -0500
-Received: from mout.gmx.net ([212.227.17.20]:49248 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933976AbcLMPcD (ORCPT <rfc822;git@vger.kernel.org>);
+        id S934171AbcLMPcD (ORCPT <rfc822;e@80x24.org>);
         Tue, 13 Dec 2016 10:32:03 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MW9TR-1c6C3T0mBF-00XON5; Tue, 13
- Dec 2016 16:31:58 +0100
-Date:   Tue, 13 Dec 2016 16:31:57 +0100 (CET)
+Received: from mout.gmx.net ([212.227.15.15]:49378 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933759AbcLMPbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 10:31:46 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LymHf-1cey8Y0pbr-016A1B; Tue, 13
+ Dec 2016 16:29:57 +0100
+Date:   Tue, 13 Dec 2016 16:29:56 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2 27/34] sequencer (rebase -i): differentiate between comments
- and 'noop'
+Subject: [PATCH v2 06/34] sequencer (rebase -i): write the 'done' file
 In-Reply-To: <cover.1481642927.git.johannes.schindelin@gmx.de>
-Message-ID: <b82347c627fd3b8a74827bc773a5df2d16c6dded.1481642927.git.johannes.schindelin@gmx.de>
+Message-ID: <4a1229e9f2d3715607935519f359b5d7986c2290.1481642927.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VLvKUPoy3XkCYdO4Aus5BXkGNV+NrO05C7BOnb3IVRg+lTMwb19
- eG19MozcWhEqEgf4eTjEZivb1JSASNmGI7uSSgfDFQCXDLaxvigOH+CU0ejtSdosdFf+Eo0
- D+RixC12aaKA6Dg6jgHPcSa+esgbVF84+WU4MeZTFNbq+BFTqomtOwcwJs2iYko9uGY2W3K
- Rho/q17pvbAFQwUGfOy7A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8tWxc8LmemM=:opIwIKpdOLnZiC2mDBZ5O/
- mlD+zJ43Rgy5sqASfvLC3/zFyH/LzN7FgvG3ka3mG9KGJ1S/L7rvH6LNSs0cg2xxbPKhku+Sf
- Zx/OLZSavUpjb0F4MlLUEA6lLRRtabX7BEchEDj1y7mWdtxq0QIFHy2A6oZhatJ6GzLAS98FI
- 1Zvef8O5j107hB3SKOg5311qonNmX1FtQT8LrkeB6VaMNUzgYJjWUYKb6SiJJrXZ4PpvPOnsQ
- /p5eeItE6IYykwXv5c9t7rQmqBtize80v3Hhx0OoNydVUxgLkWqRmhj1BW9tlO3/kOJL6T5xp
- IQWeBvED3EgCfWDPjabDf3zmKOI3581tBrCtTt1DCF5QROh4JuYwu9ATYXQNuakjUKMRs2uxv
- kjbx9CVehSON0kbKpj5rCTt3UcOx2EJtCFsN3/Mp3dmIg3iKOIWb2GgR50Rw7WmYA3sVFNSrT
- F3DFlZWgcajZlmb5m6nC2eJu63s7wssd1uFUHpbgv1Q0PJcAxaUGOxic/PBzbE11t/0S09TGM
- N2V3P3ru3dehVoJCApcDAAWjYY6pmGRA5fbFdS7pLj/IUFCeFl31/lWLLLSON5J1F+/+SHPgm
- mv99Uj8H2QXyHaY+RghdKH1wMJ6/f7X1khMXVvFyfeBsuZYWgUYDPBs6nh7EsR0Fk0qGOAzgP
- lzCZkidJVuQaab5m0VBNqnBeY4R2Fv0XcOVgyyDydriSDtG6uZf3RKDiGUdjtJj2xwCdcMBuQ
- Q5pRVVR7n2vMwwm8/trCBuMNgkm4f2Slr56X7Zk5QPfT3w/sCPzWyNi5Ntq5yL09YL+SQTxiR
- BVUllb3
+X-Provags-ID: V03:K0:mcmgicYqp6mepChoqCd79awUkDMXlUQsEitLMmXqm0Ona7zYboD
+ 2VHhepmnzvkJ3YaGEf8GkLbWBUnUpPMgcCR9KQ8qjyvvO7wbR3I8oFDtVo4c2MTdaebPr71
+ +njsq1AbXOP0sJTtwbmjBfvEYnWjY8GGy6WtjBZ520MXHrs5a6V0T+lexo/vXsglopfZhkF
+ DPVeWlnwIzPsWrutU9LKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q2Q1wyoWbyc=:GgE0TIOmqrKLIJyFz2zuh/
+ FCuVrl+saGwbcOnP/Ie+97mI8NGz2C1SojeZUK89L+BwYVggjOfPhI9dW/gZMIWun2AumzidP
+ DaMKfhK9JPWAKaGVDOMspRZyyT2nWKI2MktY7bHUEvwmcwKPUdE1h5fCb2e44IajYAnW7kdnM
+ yvQmwTj9wv8a19eFkWPTmY05Lla0rq4qXVOXEsf9ccg1VGyk6z6vlE7U82bZAZdVsr1cx4X0s
+ sAgeTL90u1UBTXzaXZNT+Yd8+KZyY8zb1F7JEwG8+8PkS1o88/nlmNpNeJ2aK9jjvtfGX7agt
+ 95X8y5cKlN1V0qb2EtU4DmFZ4pCxHUjEhTVklqUWICSuaKLW5xeIu2sSaEoT8F3qH64MiRADf
+ el2IR7MNxhsRzOvDtHvEoBz16DOOmeEvbr1mwiutLrVP3cJJCXLCZMmPVl18Hecx0dVDBq+Xo
+ r2cHQAWKgUjPEHuGk5QP7Y0fJYrtN6Z5AbJXD+ZelIKq0L0xyFbMhA2J6yc9C2EvZ632nGW/i
+ Tk6MV3/wXrS9YmMNElOgRz8yfoSZdvkSqmHhuf/vI+gz1Nv9D0EpysMW+/X10bYcyA5Ss1v14
+ r7OIJl7iI3/QOJpn64D4Xbc4PYbpNFIPD568bcm5/LUOxlIHgx4NYKSBlgF1s1zmz2yiaXUwe
+ UhqRFUNky9E9xUqEnO1s+WF9MfJmFZ07zrHhHpobPiSNlv6+6fR1Q3rwx/G1VeHDkmndX7iEW
+ Avu5wPBrdfwaX+Y/9B3AXmkIhK0yobo5JCiBRrTHltx/a+k3DB8wWBXjdvyxh/KH1LaUEHyqs
+ Bf6wGsE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the upcoming patch, we will support rebase -i's progress
-reporting. The progress skips comments but counts 'noop's.
+In the interactive rebase, commands that were successfully processed are
+not simply discarded, but appended to the 'done' file instead. This is
+used e.g. to display the current state to the user in the output of
+`git status` or the progress.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ sequencer.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 1f314b2743..63f6f25ced 100644
+index 1ab50884bd..f6e20b142a 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -770,7 +770,9 @@ enum todo_command {
- 	TODO_EXEC,
- 	/* commands that do nothing but are counted for reporting progress */
- 	TODO_NOOP,
--	TODO_DROP
-+	TODO_DROP,
-+	/* comments (not counted for reporting progress) */
-+	TODO_COMMENT
- };
- 
- static struct {
-@@ -785,12 +787,13 @@ static struct {
- 	{ 's', "squash" },
- 	{ 'x', "exec" },
- 	{ 0,   "noop" },
--	{ 'd', "drop" }
-+	{ 'd', "drop" },
-+	{ 0,   NULL }
- };
- 
- static const char *command_to_string(const enum todo_command command)
- {
--	if ((size_t)command < ARRAY_SIZE(todo_command_info))
-+	if (command < TODO_COMMENT)
- 		return todo_command_info[command].str;
- 	die("Unknown command: %d", command);
+@@ -39,6 +39,12 @@ static GIT_PATH_FUNC(rebase_path, "rebase-merge")
+  */
+ static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
+ /*
++ * The rebase command lines that have already been processed. A line
++ * is moved here when it is first handled, before any associated user
++ * actions.
++ */
++static GIT_PATH_FUNC(rebase_path_done, "rebase-merge/done")
++/*
+  * A script to set the GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
+  * GIT_AUTHOR_DATE that will be used for the commit that is currently
+  * being rebased.
+@@ -1295,6 +1301,23 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+ 		return error_errno(_("could not write to '%s'"), todo_path);
+ 	if (commit_lock_file(&todo_lock) < 0)
+ 		return error(_("failed to finalize '%s'."), todo_path);
++
++	if (is_rebase_i(opts)) {
++		const char *done_path = rebase_path_done();
++		int fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
++		int prev_offset = !next ? 0 :
++			todo_list->items[next - 1].offset_in_buf;
++
++		if (fd >= 0 && offset > prev_offset &&
++		    write_in_full(fd, todo_list->buf.buf + prev_offset,
++				  offset - prev_offset) < 0) {
++			close(fd);
++			return error_errno(_("could not write to '%s'"),
++					   done_path);
++		}
++		if (fd >= 0)
++			close(fd);
++	}
+ 	return 0;
  }
-@@ -1237,14 +1240,14 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- 	bol += strspn(bol, " \t");
  
- 	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
--		item->command = TODO_NOOP;
-+		item->command = TODO_COMMENT;
- 		item->commit = NULL;
- 		item->arg = bol;
- 		item->arg_len = eol - bol;
- 		return 0;
- 	}
- 
--	for (i = 0; i < ARRAY_SIZE(todo_command_info); i++)
-+	for (i = 0; i < TODO_COMMENT; i++)
- 		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
- 			item->command = i;
- 			break;
-@@ -1254,7 +1257,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- 			item->command = i;
- 			break;
- 		}
--	if (i >= ARRAY_SIZE(todo_command_info))
-+	if (i >= TODO_COMMENT)
- 		return -1;
- 
- 	if (item->command == TODO_NOOP) {
 -- 
 2.11.0.rc3.windows.1
 
