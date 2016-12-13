@@ -7,163 +7,145 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD5D92042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 15:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79D12042F
+	for <e@80x24.org>; Tue, 13 Dec 2016 15:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933334AbcLMPgP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 10:36:15 -0500
-Received: from mout.gmx.net ([212.227.15.18]:56763 "EHLO mout.gmx.net"
+        id S933394AbcLMPg2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 10:36:28 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54428 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932390AbcLMPgK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 10:36:10 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1F72-1capoH2SpE-00tEPh; Tue, 13
- Dec 2016 16:29:21 +0100
-Date:   Tue, 13 Dec 2016 16:29:14 +0100 (CET)
+        id S932390AbcLMPg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 10:36:27 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQ2Wx-1cDE7n3cIt-005Egc; Tue, 13
+ Dec 2016 16:29:37 +0100
+Date:   Tue, 13 Dec 2016 16:29:34 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2 01/34] sequencer: support a new action: 'interactive
- rebase'
+Subject: [PATCH v2 02/34] sequencer (rebase -i): implement the 'noop'
+ command
 In-Reply-To: <cover.1481642927.git.johannes.schindelin@gmx.de>
-Message-ID: <297140020a7312af03136848dcdd0353ee3abdfe.1481642927.git.johannes.schindelin@gmx.de>
+Message-ID: <934c8e420cc4a75b1f3e4489fa4a4135c48f78ae.1481642927.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RpZTu7BNK5P3t17LoXDqj5X/hBJCvaUfEV454zwMFkdTfZVFiAI
- f27wz0xUsUhXAkkM7yBRm7+Qs+WtPLBUR0c3qc0ePWI83H+uE/1B6el2mJsh5LRi7PAptBd
- 5c0Z61IpgP+G4lfvISf9jYI8RIHwF4HeWV7+RS3Y84w+gh5oRZ/vkdrF8J+eKwkvxcwLTh9
- Py3fFAzJX79nFwh1a+KOA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:25VYBZOo5y4=:T2a0I1rAqMZHFvtBaph2et
- IwSYn35msdImF/YmLCU8e0nZUNFkXFVmVCihz/qwbzXEVMyDGfZdpB4wQ2WGcTWvvkWcNR04l
- IwHld62Xu5Iw2AMhta121Wk0rWLoiau8OGiI3vpVAM5NSE547+5JRZpAyMcs3KKini2WS4bny
- D9RzoswRXHnBS+GX7PKmtRrVhXsz9V4cPQNkWHDODKwKEGGzIAshQkaB3znONGYjY/Ybl9fM8
- YQ4m1WRZhPVix2vIW0o1q77ui/Of3MnWgScDtp/3lp9NanSY95SRVDEsArL0k/Ub5tZ/ppjxn
- QlzRW59fPhhOxd09CUhAPq6QuYyfa5EqOfW4puJPXOeFrDo9o3fdx4u38xN+gCUmF8oiILKvp
- 1mVxyMFzBJMWjUXEZFc4irjt5aZQRrAyXFF3VPq5xbEDD4SAOURrsss/uRPSSeYezs+tDBVpp
- 0Or9pw4f5jYEuVkRcFC9WTAL50ZVHQnez54sMUSVPgKYToyTKDGujUS2FR8V+nu5eTlf4Txlq
- DF/ZdXuMNNAY70h72S22nUUOHN4+jHi1fkTWk0tgT0PL03Hr93Vw1byT9q1OyEl1OADoVDcdF
- zjf9s/r/LDPaBXaR0AaWdLffkPxEKJR1BoaJVQRDFPUtcwd/OJK2Pv646vLHwpgRZ3n6k60HM
- U8ANLhkJEzFsyf83X9TKIppHJ1w1SBwOcYL7f8bxaXpIuwew2upVypFrSC70B2d+PANRag1B5
- DqsuEu9PbFKydyEx059o9Bz2IPk6LTxGzuXhEu8bpapWIDSR2tR93zsc7UIQMzQnbDowx/yj1
- cqyxQw3
+X-Provags-ID: V03:K0:nRb0uGJSiYMlWbmebrimgSu1dIqg36iQtm1CthQvnhCrD2Jzbic
+ PRUjY/Jp/dZPTsFALqvDzQnteLzW52C5oUuZvVjfLugKGM9odBIpHQ0JWGC12YnkEc965KG
+ 4HghUwr/JOOt1z8a325NMiVXuoGlq+pD5VWxchHWXFc40eqDKVHT3MqThvsMbT0TlcX9MUQ
+ kDz2dyN/+3Ig1LsQW9ZjQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EkQbA0ymE0Q=:uWGSpHewVrOj6WrsheXCKF
+ J3NXIzBRUreQIYoEK9q1tpdoJw5Ltv7nlkH7CBnQ3mu3LNzfQCsok/17uzBzoNbJx8OIIUvUm
+ 6fEQLHj1zY3+TM2gXHSoqnBpnvnYYfUrbsmXrjkdXpgwfajOGmMKyvELDLM4cxHxBz0O4j22H
+ C/eh/VMw+lOxLHQIX0MhoShz/0ltEQIuszq4GCYb13eRZ57DFWwazr6niSfpMYhX/W6aYII+O
+ 6Bkbr9EMilQnRLSpGWvEds5vZVBExJX06ezS3pyf1IYNEY5NPCCNlf4pZ1K5rYVFqWsW6f5Sr
+ CWtdVqCyGNEoCcJR6EUfwd88nNxbfSM9YE3d5t0V2w36kfenxO9dV8R/O3yh0kmXzWdnnx2O3
+ o4WSsaWGqo3V+Xyu0lWlf3Hm43yL23pLjw2WiWmzUZpV/M4WgZj1G2PjQIJKM3og89fOrrbM0
+ 7QHgEsqmawIAKah/NrSPuUglmH7xvadMzGi3kCHWtel9TkZ7EmmVOeGrmh7WTRMPhKWmcJkgP
+ hOiMjpki9krBM3mzq4772wt7eqpKgopKyw++dCcEzQwx4d6ij9QUxXlY3pkiSgi++8a8a1Aw3
+ PTJjPBYaAN8U+/cm48/036PwBIoXBxQHgCjlQIgvNHruw3dk6vcA3/0PkvKf6D0MjRpykgoYC
+ FcVg7YLe3r7V0FxA3Lmzcacb8EoMy0tuNSmDToKjWYt46v3L6bFAyJe3IzD5FzYpYUQLT2SCa
+ 82EGKtiL0rKUyvZ70J+mbODedarnUBY1jtPSZQqiTzNDXFHf0DFENTKISsilp6pMTI8tvJvAJ
+ oI2K+P6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch introduces a new action for the sequencer. It really does not
-do a whole lot of its own right now, but lays the ground work for
-patches to come. The intention, of course, is to finally make the
-sequencer the work horse of the interactive rebase (the original idea
-behind the "sequencer" concept).
+The 'noop' command is probably the most boring of all rebase -i commands
+to support in the sequencer.
+
+Which makes it an excellent candidate for this first stab to add support
+for rebase -i's commands to the sequencer.
+
+For the moment, let's also treat empty lines and commented-out lines as
+'noop'; We will refine that handling later in this patch series.
+
+To make it easier to identify "classes" of todo_commands (such as:
+determine whether a command is pick-like, i.e. handles a single commit),
+let's enforce a certain order of said commands.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 33 +++++++++++++++++++++++++++++----
- sequencer.h |  3 ++-
- 2 files changed, 31 insertions(+), 5 deletions(-)
+ sequencer.c | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 30b10ba143..21cfdacd06 100644
+index 21cfdacd06..1224799286 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -28,6 +28,14 @@ static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
- static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
- static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+@@ -639,14 +639,23 @@ static int allow_empty(struct replay_opts *opts, struct commit *commit)
+ 		return 1;
+ }
  
-+static GIT_PATH_FUNC(rebase_path, "rebase-merge")
 +/*
-+ * The file containing rebase commands, comments, and empty lines.
-+ * This file is created by "git rebase -i" then edited by the user. As
-+ * the lines are processed, they are removed from the front of this
-+ * file and written to the tail of 'done'.
++ * Note that ordering matters in this enum. Not only must it match the mapping
++ * below, it is also divided into several sections that matter.  When adding
++ * new commands, make sure you add it in the right section.
 + */
-+static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
- /*
-  * A script to set the GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
-  * GIT_AUTHOR_DATE that will be used for the commit that is currently
-@@ -40,19 +48,22 @@ static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
-  */
- static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
- 
--/* We will introduce the 'interactive rebase' mode later */
- static inline int is_rebase_i(const struct replay_opts *opts)
- {
--	return 0;
-+	return opts->action == REPLAY_INTERACTIVE_REBASE;
- }
- 
- static const char *get_dir(const struct replay_opts *opts)
- {
-+	if (is_rebase_i(opts))
-+		return rebase_path();
- 	return git_path_seq_dir();
- }
- 
- static const char *get_todo_path(const struct replay_opts *opts)
- {
-+	if (is_rebase_i(opts))
-+		return rebase_path_todo();
- 	return git_path_todo_file();
- }
- 
-@@ -168,7 +179,15 @@ int sequencer_remove_state(struct replay_opts *opts)
- 
- static const char *action_name(const struct replay_opts *opts)
- {
--	return opts->action == REPLAY_REVERT ? N_("revert") : N_("cherry-pick");
-+	switch (opts->action) {
-+	case REPLAY_REVERT:
-+		return N_("revert");
-+	case REPLAY_PICK:
-+		return N_("cherry-pick");
-+	case REPLAY_INTERACTIVE_REBASE:
-+		return N_("rebase -i");
-+	}
-+	die(_("Unknown action: %d"), opts->action);
- }
- 
- struct commit_message {
-@@ -395,7 +414,10 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 
- 	if (active_cache_changed &&
- 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
--		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-+		/*
-+		 * TRANSLATORS: %s will be "revert", "cherry-pick" or
-+		 * "rebase -i".
-+		 */
- 		return error(_("%s: Unable to write new index file"),
- 			_(action_name(opts)));
- 	rollback_lock_file(&index_lock);
-@@ -1204,6 +1226,9 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
- 	const char *todo_path = get_todo_path(opts);
- 	int next = todo_list->current, offset, fd;
- 
-+	if (is_rebase_i(opts))
-+		next++;
-+
- 	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
- 	if (fd < 0)
- 		return error_errno(_("could not lock '%s'"), todo_path);
-diff --git a/sequencer.h b/sequencer.h
-index 7a513c576b..cb21cfddee 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -7,7 +7,8 @@ const char *git_path_seq_dir(void);
- 
- enum replay_action {
- 	REPLAY_REVERT,
--	REPLAY_PICK
-+	REPLAY_PICK,
-+	REPLAY_INTERACTIVE_REBASE
+ enum todo_command {
++	/* commands that handle commits */
+ 	TODO_PICK = 0,
+-	TODO_REVERT
++	TODO_REVERT,
++	/* commands that do nothing but are counted for reporting progress */
++	TODO_NOOP
  };
  
- struct replay_opts {
+ static const char *todo_command_strings[] = {
+ 	"pick",
+-	"revert"
++	"revert",
++	"noop"
+ };
+ 
+ static const char *command_to_string(const enum todo_command command)
+@@ -916,6 +925,14 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	/* left-trim */
+ 	bol += strspn(bol, " \t");
+ 
++	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
++		item->command = TODO_NOOP;
++		item->commit = NULL;
++		item->arg = bol;
++		item->arg_len = eol - bol;
++		return 0;
++	}
++
+ 	for (i = 0; i < ARRAY_SIZE(todo_command_strings); i++)
+ 		if (skip_prefix(bol, todo_command_strings[i], &bol)) {
+ 			item->command = i;
+@@ -924,6 +941,13 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	if (i >= ARRAY_SIZE(todo_command_strings))
+ 		return -1;
+ 
++	if (item->command == TODO_NOOP) {
++		item->commit = NULL;
++		item->arg = bol;
++		item->arg_len = eol - bol;
++		return 0;
++	}
++
+ 	/* Eat up extra spaces/ tabs before object name */
+ 	padding = strspn(bol, " \t");
+ 	if (!padding)
+@@ -1292,7 +1316,12 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 		struct todo_item *item = todo_list->items + todo_list->current;
+ 		if (save_todo(todo_list, opts))
+ 			return -1;
+-		res = do_pick_commit(item->command, item->commit, opts);
++		if (item->command <= TODO_REVERT)
++			res = do_pick_commit(item->command, item->commit,
++					opts);
++		else if (item->command != TODO_NOOP)
++			return error(_("unknown command %d"), item->command);
++
+ 		todo_list->current++;
+ 		if (res)
+ 			return res;
 -- 
 2.11.0.rc3.windows.1
 
