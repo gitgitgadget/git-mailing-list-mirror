@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E69D1FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 07:11:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D29581FF40
+	for <e@80x24.org>; Tue, 13 Dec 2016 07:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753257AbcLMHLw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 02:11:52 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64595 "EHLO
+        id S1752753AbcLMH2d (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 02:28:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51469 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750818AbcLMHLv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 02:11:51 -0500
+        with ESMTP id S1752359AbcLMH2d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 02:28:33 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CFFD64D507;
-        Tue, 13 Dec 2016 02:11:49 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD7274D8D1;
+        Tue, 13 Dec 2016 02:28:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/1e92N7HBZ2zBdszQb2XbT5/HGo=; b=w8qkiQ
-        NgcNUAp91mmPcIP02mSIXKHxAjGBVAHWG+JvxYy42a/p0j9h8/PDPeU+18sgVGpC
-        CkI8d4fBR+dOt7YITo1ED3DZr9eUHf0NI+IdZfeB/7iJHEXLbHVt+A90gFs5Mc0c
-        v9UfjeECu/IkCPe7jiHEA4d6QCYBbaQ4dc620=
+        :content-type; s=sasl; bh=wAmoS1Jxkdur0+3ZwfUBxku9oAo=; b=McNjMq
+        evdPHW0fwnwH17IqLZ8AQ/8qBBhXyZSmQW+SpQG86Fh/i1QMs7QvY76OsGG3o/2R
+        zW1ErMMTfqUtGmWPW9Dkl3u2SnWIbLqnnqqWSZFxxPBX5HfE27ZrN6pRP/ugM++A
+        Mlcy78kgAvi+9TdSioULWz+99R+fSYP8dd6OM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DaCBhwOOxAJxDKFxo+55K+4TUQjRJeuE
-        OiI3w7sOcXgv9TWJwTGYNl53yzNTbdmPLS9CWK4LkNwH27lJgYwX3FG88ipJzV2K
-        SKUghWCZGO0Wao1BNIT78qPO4sBIaHeifK2brriV7Kr3AvWwJaaNBXvafDHh67j1
-        t0H9Rc8Ody8=
+        :content-type; q=dns; s=sasl; b=mVrIpZlPpVAFcJiJXHlMXA6ezl0Jo8Co
+        UNXg730MX8uowh02fjvnpDRgSgq+UkOAoo6p3MFa3pgot7C9ge3DNhJKkaDNyhGQ
+        uinw/xAD38kDpYuFObmEnAyo4D7rJEyw00Tej+s3VwGPZpKnc2EO5gQD1lmI14Ob
+        arGw3asYBvo=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B36094D503;
-        Tue, 13 Dec 2016 02:11:49 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ACB224D8D0;
+        Tue, 13 Dec 2016 02:28:31 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F9154D502;
-        Tue, 13 Dec 2016 02:11:49 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2556A4D8CF;
+        Tue, 13 Dec 2016 02:28:31 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t3600: slightly modernize style
-References: <20161212235455.13796-1-sbeller@google.com>
-Date:   Mon, 12 Dec 2016 23:11:47 -0800
-In-Reply-To: <20161212235455.13796-1-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 12 Dec 2016 15:54:55 -0800")
-Message-ID: <xmqqvauo5mmk.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, David.Turner@twosigma.com, bmwill@google.com
+Subject: Re: [PATCH 0/6] git-rm absorbs submodule git directory before deletion
+References: <20161213014055.14268-1-sbeller@google.com>
+Date:   Mon, 12 Dec 2016 23:28:29 -0800
+In-Reply-To: <20161213014055.14268-1-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 12 Dec 2016 17:40:49 -0800")
+Message-ID: <xmqqr35c5luq.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6A27D9B0-C103-11E6-AE91-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: BF68C798-C105-11E6-9720-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,18 +58,34 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> Remove the space between redirection and file name.
-> Also remove unnecessary invocations of subshells, such as
+> The "checkout --recurse-submodules" series got too large to comfortably send
+> it out for review, so I had to break it up into smaller series'; this is the
+> first subseries, but it makes sense on its own.
 >
-> 	(cd submod &&
-> 		echo X >untracked
-> 	) &&
->
-> as there is no point of having the shell for functional purposes.
-> In case of a single Git command use the `-C` option to let Git cd into
-> the directory.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+> This series teaches git-rm to absorb the git directory of a submodule instead
+> of failing and complaining about the git directory preventing deletion.
+>  
+> It applies on origin/sb/submodule-embed-gitdir.
 
-Looks good.  Thanks.
+Thanks.  I probably should rename the topic again with s/embed/absorb/;
+
+> Any feedback welcome!
+>
+> Thanks,
+> Stefan
+>
+> Stefan Beller (6):
+>   submodule.h: add extern keyword to functions
+>   submodule: modernize ok_to_remove_submodule to use argv_array
+>   submodule: add flags to ok_to_remove_submodule
+>   ok_to_remove_submodule: absorb the submodule git dir
+>   t3600: slightly modernize style
+>   rm: add absorb a submodules git dir before deletion
+>
+>  builtin/rm.c  |  21 +++-----
+>  cache.h       |   2 +
+>  entry.c       |   5 ++
+>  submodule.c   |  77 +++++++++++++++++++++++-----
+>  submodule.h   |  64 ++++++++++++++---------
+>  t/t3600-rm.sh | 159 +++++++++++++++++++++++----------------------------------
+>  6 files changed, 182 insertions(+), 146 deletions(-)
