@@ -6,110 +6,134 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30000209B4
-	for <e@80x24.org>; Tue, 13 Dec 2016 21:57:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33C9320451
+	for <e@80x24.org>; Tue, 13 Dec 2016 22:48:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753543AbcLMV5l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 16:57:41 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55333 "EHLO
+        id S1751028AbcLMWsv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 17:48:51 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52579 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753402AbcLMV5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 16:57:40 -0500
+        with ESMTP id S1750776AbcLMWsv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 17:48:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C113A57244;
-        Tue, 13 Dec 2016 16:51:37 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3044655AF9;
+        Tue, 13 Dec 2016 17:48:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=moxBerP5so+djx60B5IxmzrYfBI=; b=eK6H+U
-        GDmJqySYV6um0CI8oIb1e9xyxD/zP8s3VJEkP4YP+LcVX+tPhr4ZOqdeuH20nkq6
-        ncYCdYfoHhwYeys8AFVOlCD6z9znJwo8D/4uPc21ah9RodXU/sLo7AntpZsvg0hO
-        b7sKB0mp1AFbmwx40vn5R4v1WArfZzl5PfFCI=
+        :content-type; s=sasl; bh=7iGMlAteWQC02TevXHSwNYmTMuE=; b=T2t5FQ
+        QG5h8jJLvNXzTvli9FxS3sKu2mcS51C5I04PUUYd5wskRswqdZVqI+NveUKdtLM/
+        LTiQHx+2J/jyUOLsDXppDvSHnA9FFMIzLUOC28qw7XgM5Bjayl/ZR2MXQBQGan5E
+        K4UMQ02rm3GY7ShXzzOTFyg5ujJycJY/eOvLE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=whzfU4vfQ5Zh4HMFqix7MPjvprX3fLNv
-        pMR5PeNfv/fU7AZoAKA9FSG0neyQEVRUAck6gdNbGT8PYvwQAryU7RStovfM3WIx
-        Xpgy0Vk3I4RCNQ5o/DWiTvy8I53qRrYZcgKpllqeOdcW7eG2fEuh5vAGaFrplTA+
-        ZpzQ3+JlJCc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8B1E57243;
-        Tue, 13 Dec 2016 16:51:37 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=HqQEhgZzKRCcP9I6AqV8sljn3I/pmkkH
+        Cb9PyepkDNhN7oGl7G+/F2P2DvAitykq9XQe9BQ1zflX98EY6VdEo7WVUOrnP6hO
+        T6cZhnVfO13r86ZTCBZL3lgsOK93yeapjt7cxO63+w+6B8DtBIRx5b7oZ8QzBciA
+        /iBZ2KRTjR8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 287AA55AF8;
+        Tue, 13 Dec 2016 17:48:49 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3BDFB57242;
-        Tue, 13 Dec 2016 16:51:37 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9E38755AF5;
+        Tue, 13 Dec 2016 17:48:48 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 05/34] sequencer (rebase -i): learn about the 'verbose' mode
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <1d1f8d8b0696769bb85dd8a2269dc281aa91eede.1481642927.git.johannes.schindelin@gmx.de>
-Date:   Tue, 13 Dec 2016 13:51:36 -0800
-In-Reply-To: <1d1f8d8b0696769bb85dd8a2269dc281aa91eede.1481642927.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:29:53 +0100
-        (CET)")
-Message-ID: <xmqq37hr1orb.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] fix pushing to //server/share/dir paths on Windows
+References: <2ff2613c-47da-a780-5d38-93e16cb16328@kdbg.org>
+Date:   Tue, 13 Dec 2016 14:48:47 -0800
+In-Reply-To: <2ff2613c-47da-a780-5d38-93e16cb16328@kdbg.org> (Johannes Sixt's
+        message of "Tue, 13 Dec 2016 22:32:01 +0100")
+Message-ID: <xmqqpokvzbqo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 525337D2-C17E-11E6-8039-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4F99D728-C186-11E6-9DE7-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> @@ -1493,9 +1498,26 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->  	}
+> There is a change in behavior: \\server\share is not transformed
+> into //server/share anymore, but all subsequent directory separators
+> are rewritten to '/'. This should not make a difference; Windows can
+> handle the mix.
+
+I saw Dscho had a similar "windows can handle the mix" change in an
+earlier development cycle, I think, and this is being consistent.
+
+>  Another long-standing bug uncovered by the quarantine series.
+>
+>  Dscho, it looks like this could fix the original report at
+>  https://github.com/git-for-windows/git/issues/979
+>
+>  This patch should cook well because of the change in behavior.
+>  I would not be surprised if there is some fall-out.
+>
+>  The other bug I'm alluding to, I still have to investigate. I do
+>  not think that it can be counted as fall-out.
+>
+>  path.c | 24 +++++++++++++++---------
+>  1 file changed, 15 insertions(+), 9 deletions(-)
+
+Thanks.
+
+> diff --git a/path.c b/path.c
+> index 52d889c88e..02dc70fb92 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -991,7 +991,7 @@ const char *remove_leading_path(const char *in, const char *prefix)
+>   *
+>   * Performs the following normalizations on src, storing the result in dst:
+>   * - Ensures that components are separated by '/' (Windows only)
+> - * - Squashes sequences of '/'.
+> + * - Squashes sequences of '/' except "//server/share" on Windows
+
+"on windows" because offset_1st_component() does the magic only
+there?  Makes sense.
+
+>   * - Removes "." components.
+>   * - Removes ".." components, and the components the precede them.
+>   * Returns failure (non-zero) if a ".." component appears as first path
+> @@ -1014,17 +1014,23 @@ const char *remove_leading_path(const char *in, const char *prefix)
+>  int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+>  {
+>  	char *dst0;
+> -	int i;
+> -
+> -	for (i = has_dos_drive_prefix(src); i > 0; i--)
+> -		*dst++ = *src++;
+> -	dst0 = dst;
+> +	int offset;
 >  
->  	if (is_rebase_i(opts)) {
-> +		struct strbuf buf = STRBUF_INIT;
-> +
->  		/* Stopped in the middle, as planned? */
->  		if (todo_list->current < todo_list->nr)
->  			return 0;
-> +
-> +		if (opts->verbose) {
-> +			const char *argv[] = {
-> +				"diff-tree", "--stat", NULL, NULL
-> +			};
-> +
-> +			if (!read_oneliner(&buf, rebase_path_orig_head(), 0))
-> +				return error(_("could not read '%s'"),
-> +					rebase_path_orig_head());
-> +			strbuf_addstr(&buf, "..HEAD");
-> +			argv[2] = buf.buf;
-> +			run_command_v_opt(argv, RUN_GIT_CMD);
-> +			strbuf_reset(&buf);
-> +		}
-> +		strbuf_release(&buf);
+> -	if (is_dir_sep(*src)) {
+> +	/*
+> +	 * Handle initial part of absolute path: "/", "C:/", "\\server\share/".
+> +	 */
+> +	offset = offset_1st_component(src);
+> +	if (offset) {
+> +		/* Convert the trailing separator to '/' on Windows. */
+> +		memcpy(dst, src, offset - 1);
+> +		dst += offset - 1;
+>  		*dst++ = '/';
+> -		while (is_dir_sep(*src))
+> -			src++;
+> +		src += offset;
 >  	}
+> +	dst0 = dst;
 
-It's a bit curious that the previous step avoided running a separate
-process and instead did "diff-tree -p" all in C, but this one does not.
+By resetting dst0 here, we ensure that up_one that is triggered by
+seeing "../" will not escape the \\server\share\ part, which makes
+sense to me.
 
-I think it is because this one is outside the loop?  The original,
-being a scripted Porcelain, formulates a lazy and loose command
-line, but you may want to tighten it up a bit if you spawn a
-process.  If your user happens to have a file whose name is
-$orig_head..HEAD, the command line you are creating (which is
-identical to the scripted version) will barf with "ambiguous
-argument".
-
-One good thing about a complete C rewrite is that it won't have an
-issue like this one because you'd be working with in-core objects.
-
-> diff --git a/sequencer.h b/sequencer.h
-> index cb21cfddee..f885b68395 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -24,6 +24,7 @@ struct replay_opts {
->  	int allow_empty;
->  	int allow_empty_message;
->  	int keep_redundant_commits;
-> +	int verbose;
+> +	while (is_dir_sep(*src))
+> +		src++;
 >  
->  	int mainline;
+>  	for (;;) {
+>  		char c = *src;
