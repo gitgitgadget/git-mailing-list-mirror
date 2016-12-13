@@ -6,137 +6,161 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7EDB209B4
-	for <e@80x24.org>; Tue, 13 Dec 2016 20:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57143209B4
+	for <e@80x24.org>; Tue, 13 Dec 2016 20:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938560AbcLMUpy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 15:45:54 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62021 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S938531AbcLMUcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 15:32:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FF5955F5D;
-        Tue, 13 Dec 2016 15:32:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1JR87M3FWzEh4TQWqbsH47t4xO0=; b=BXj6Kf
-        8uhIlg8jDzr5f4Tl6WXbYHqp0BQt7PGDxG+3BrSLtfz2nJlDlIZ0TD70FyaMmoP9
-        0Dp+Ezpqo7et+na+kGSp7wB3jQMhNQ6hpt2RlhvuQ0EzjJ8NWdFGu+eKzdN++eJv
-        vHMmX239Km4d2TMfnRxOmtCPJa7aJbNac2DTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AdZP7KT0KwOJNN2LxgPVEhxtjJReGqUB
-        N8ZuDMM8Qc7MgHY7XFowGvv5mY9Ime+b41k1EukUpaUoVpOrO4w8EioUGNrYGYrz
-        1tl7EbqBXFbNATk0G3qq/LDe2oUTft+TQhCTWwpzHjo6yPzKF9pDyzdZhvN5K8N0
-        /aWOhZJiHh0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1833455F5C;
-        Tue, 13 Dec 2016 15:32:09 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8762155F5B;
-        Tue, 13 Dec 2016 15:32:08 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 01/34] sequencer: support a new action: 'interactive rebase'
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <297140020a7312af03136848dcdd0353ee3abdfe.1481642927.git.johannes.schindelin@gmx.de>
-Date:   Tue, 13 Dec 2016 12:32:07 -0800
-In-Reply-To: <297140020a7312af03136848dcdd0353ee3abdfe.1481642927.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:29:14 +0100
-        (CET)")
-Message-ID: <xmqqk2b31sfs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 37F6CF1C-C173-11E6-BF0C-E98412518317-77302942!pb-smtp1.pobox.com
+        id S966205AbcLMU4f (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 15:56:35 -0500
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34181 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S941126AbcLMU4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 15:56:33 -0500
+Received: by mail-pg0-f49.google.com with SMTP id x23so51404208pgx.1
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 12:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=38ugOrry3Zzm0AVz4/7nSO3oah22MM3ol2TT76ACA3I=;
+        b=IQM9dEX8LXS1SiGhQwL/xSsTdvc2PgAr8kML+cj54D5WPM4P0QzVeMyh6EpTbvfnfY
+         J+9JB6x6B/xptP3emd5Dr6eGIeQZrPgPmgwiMuXOayoBsI/PrU1y/64w0Zr4zTWOidSG
+         41fMyELz3TG/KE/bT1PLeZ9jjX7lYeSqcKIubsFPfTl18SGvX9V/bL9BCchyLDXjy2dl
+         S2LNLJLz7i0wclaV3RjvOtpXtByxLjJSuuZQ1td8nBfb9RCnEzLilzWcs+q8Cc/NunlV
+         KOmQqhceg6H8vppMFINN1ntElwACULDD7z2A7x/+J/lU8qWHqg6MMw4o8VGQjOgiRq4W
+         +9Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=38ugOrry3Zzm0AVz4/7nSO3oah22MM3ol2TT76ACA3I=;
+        b=UyiQwI64NEG7zuOLd0eDb5Oejf5gO1VO6O6HmsA0goWYN4MYH+0fAW6nU/pN0O7KJA
+         kyDZdExp1q1zNuXoHN3vGta1hwzM6eua4J+CUdKQj+FuaCVQexgI/2Rg9gd1OfqgnNrh
+         nMSw47nyOGOUYel6Ucp9Cmqke3ZPnnKHpNEq43p7gqFGA9/mK17QT3jFhfwwKnLJhS74
+         MQBan09KvbSGkr47Rg+u4CZ/16YFE68079l0FivXGZ0LmfQhSItC3n/urQUzRj7Bzavb
+         1tkNv1Ml7v0IAk5vdduqdn4cZlqHMSsSJXJrtkh8SQGgQRqzeQi4XOeROWj0JSf0AR0D
+         v2pA==
+X-Gm-Message-State: AKaTC02POawVMQNQvKR2El/F65n7H/TG53RJhdgkkxt8tTkatgP3d/h6JEvix4Z+NAbIx5W0
+X-Received: by 10.84.202.163 with SMTP id x32mr37797763pld.46.1481662591394;
+        Tue, 13 Dec 2016 12:56:31 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:5b5:8785:ab45:d22f])
+        by smtp.gmail.com with ESMTPSA id l11sm82016003pfb.28.2016.12.13.12.56.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Dec 2016 12:56:30 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, David.Turner@twosigma.com, bmwill@google.com,
+        sandals@crustytoothpaste.net, Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 1/5] submodule.h: add extern keyword to functions
+Date:   Tue, 13 Dec 2016 12:56:18 -0800
+Message-Id: <20161213205622.841-2-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.rc2.35.g26e18c9
+In-Reply-To: <20161213205622.841-1-sbeller@google.com>
+References: <20161213205622.841-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+As the upcoming series will add a lot of functions to the submodule
+header, let's first make the header consistent to the rest of the project
+by adding the extern keyword to functions.
 
->  static inline int is_rebase_i(const struct replay_opts *opts)
->  {
-> -	return 0;
-> +	return opts->action == REPLAY_INTERACTIVE_REBASE;
->  }
->  
->  static const char *get_dir(const struct replay_opts *opts)
->  {
-> +	if (is_rebase_i(opts))
-> +		return rebase_path();
->  	return git_path_seq_dir();
->  }
->  
->  static const char *get_todo_path(const struct replay_opts *opts)
->  {
-> +	if (is_rebase_i(opts))
-> +		return rebase_path_todo();
->  	return git_path_todo_file();
->  }
->  
-> @@ -168,7 +179,15 @@ int sequencer_remove_state(struct replay_opts *opts)
->  
->  static const char *action_name(const struct replay_opts *opts)
->  {
-> -	return opts->action == REPLAY_REVERT ? N_("revert") : N_("cherry-pick");
-> +	switch (opts->action) {
-> +	case REPLAY_REVERT:
-> +		return N_("revert");
-> +	case REPLAY_PICK:
-> +		return N_("cherry-pick");
-> +	case REPLAY_INTERACTIVE_REBASE:
-> +		return N_("rebase -i");
-> +	}
-> +	die(_("Unknown action: %d"), opts->action);
->  }
+As per the CodingGuidelines we try to stay below 80 characters per line,
+so adapt all those functions to stay below 80 characters that are already
+using more than one line.  Those function using just one line are better
+kept in one line than breaking them up into multiple lines just for the
+goal of staying below the character limit as it makes grepping
+for functions easier if they are one liners.
 
-This case statement which looks perfectly sensible---it says that
-there are three equal modes the subsystem operates in.  
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.h | 55 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 30 insertions(+), 25 deletions(-)
 
-This is just a mental note and not a suggestion to change anything
-immediately, but it makes me wonder if git_dir/get_todo_path would
-also want to do so, moving towards retiring is_rebase_i() which is
-"everything else vs one oddball which is rebase-i" mindset.
+diff --git a/submodule.h b/submodule.h
+index 6229054b99..61fb610749 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -29,50 +29,55 @@ struct submodule_update_strategy {
+ };
+ #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
+ 
+-int is_staging_gitmodules_ok(void);
+-int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+-int remove_path_from_gitmodules(const char *path);
+-void stage_updated_gitmodules(void);
+-void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
++extern int is_staging_gitmodules_ok(void);
++extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
++extern int remove_path_from_gitmodules(const char *path);
++extern void stage_updated_gitmodules(void);
++extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
+ 		const char *path);
+-int submodule_config(const char *var, const char *value, void *cb);
+-void gitmodules_config(void);
+-int parse_submodule_update_strategy(const char *value,
++extern int submodule_config(const char *var, const char *value, void *cb);
++extern void gitmodules_config(void);
++extern int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst);
+-const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
+-void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+-void show_submodule_summary(FILE *f, const char *path,
++extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
++extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
++extern void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset);
+-void show_submodule_inline_diff(FILE *f, const char *path,
++extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *line_prefix,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset,
+ 		const struct diff_options *opt);
+-void set_config_fetch_recurse_submodules(int value);
+-void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+-int fetch_populated_submodules(const struct argv_array *options,
++extern void set_config_fetch_recurse_submodules(int value);
++extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
++extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
+ 			       int quiet, int max_parallel_jobs);
+-unsigned is_submodule_modified(const char *path, int ignore_untracked);
+-int submodule_uses_gitfile(const char *path);
+-int ok_to_remove_submodule(const char *path);
+-int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
+-		    const unsigned char a[20], const unsigned char b[20], int search);
+-int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
+-		struct string_list *needs_pushing);
+-int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
+-int parallel_submodules(void);
++extern unsigned is_submodule_modified(const char *path, int ignore_untracked);
++extern int submodule_uses_gitfile(const char *path);
++extern int ok_to_remove_submodule(const char *path);
++extern int merge_submodule(unsigned char result[20], const char *path,
++			   const unsigned char base[20],
++			   const unsigned char a[20],
++			   const unsigned char b[20], int search);
++extern int find_unpushed_submodules(unsigned char new_sha1[20],
++				    const char *remotes_name,
++				    struct string_list *needs_pushing);
++extern int push_unpushed_submodules(unsigned char new_sha1[20],
++				    const char *remotes_name);
++extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
++extern int parallel_submodules(void);
+ 
+ /*
+  * Prepare the "env_array" parameter of a "struct child_process" for executing
+  * a submodule by clearing any repo-specific envirionment variables, but
+  * retaining any config in the environment.
+  */
+-void prepare_submodule_repo_env(struct argv_array *out);
++extern void prepare_submodule_repo_env(struct argv_array *out);
+ 
+ #define ABSORB_GITDIR_RECURSE_SUBMODULES (1<<0)
+ extern void absorb_git_dir_into_superproject(const char *prefix,
+-- 
+2.11.0.rc2.35.g26e18c9
 
-> @@ -395,7 +414,10 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->  
->  	if (active_cache_changed &&
->  	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-> -		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-> +		/*
-> +		 * TRANSLATORS: %s will be "revert", "cherry-pick" or
-> +		 * "rebase -i".
-> +		 */
-
-IIRC, the "TRANSLATORS:" comment has to deviate from our coding
-style due to tool limitation and has to be done like this:
-
-> +		/* TRANSLATORS: %s will be "revert", "cherry-pick" or
-> +		 * "rebase -i".
-> +		 */
-
-> @@ -1204,6 +1226,9 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
->  	const char *todo_path = get_todo_path(opts);
->  	int next = todo_list->current, offset, fd;
->  
-> +	if (is_rebase_i(opts))
-> +		next++;
-> +
-
-This is because...?  Everybody else counts 0-based while rebase-i
-counts from 1 or something?
-
->  	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
->  	if (fd < 0)
->  		return error_errno(_("could not lock '%s'"), todo_path);
-
-Everything else in the patch is understandable.  This bit isn't
-without explanation, at least to me.
