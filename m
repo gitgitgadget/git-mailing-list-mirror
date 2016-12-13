@@ -2,91 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C955F1FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 08:49:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1B941FF40
+	for <e@80x24.org>; Tue, 13 Dec 2016 09:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932700AbcLMIt3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 03:49:29 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33784 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932305AbcLMIt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 03:49:26 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 3so3863200pgd.0
-        for <git@vger.kernel.org>; Tue, 13 Dec 2016 00:49:26 -0800 (PST)
+        id S1753077AbcLMJWj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 04:22:39 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36788 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752456AbcLMJWg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 04:22:36 -0500
+Received: by mail-pf0-f194.google.com with SMTP id c4so5778840pfb.3
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 01:22:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZyQvnDzB97O6c0QAnBCiQDlxyNyuw0D/fVFafA96cWs=;
-        b=FURi8VqQVxzpz+LwABfwLFeUhtkh1PHO9h6wydzS289DYj96ahGBX2TvZOjlj70ibM
-         NoRPcauGmcACdn33CSBhSnwpI/oZNOWCkZhjV8+P7sOa2aKvhEB/kv0yl93tNRkoR+N3
-         oBVvA4NPUprzdEuDXQSt+HcP/hcvcgPuh4nghKo13qU1T9R95+zdaELVH9Joqd5Vcei4
-         JpU4YtC8X50ij7AlpheZBTxcDu+7HnhZdrUBfqQy2AS8jnffwKrdXvxjZoQJOiyJAw84
-         wNQEUVWXomm6XxsTNBCOYu+5n7+NLMUZiNEWQb2p26A+uYMiu6a/sTNOhmFPicUREwYe
-         hgOA==
+        h=from:to:cc:subject:date:message-id;
+        bh=Ak/5TL78AgZ5948j1Dqn8SpdZHrQ/217pthjojSHeK0=;
+        b=wUTVYJAy6h8iJS5hIb1u+W+uWl1EGoJ0iRRDR4NQr3PJo6PokcwkA2HEK8/Iewcv/5
+         gvJM6h7NocQ3A8yr9txNvOpOhzODdW867XxyEK/imsSqjogJA4Tj+MhMGZ7w+6dprcYr
+         SJF4bWFza3xOWUMvkCf3lRT01b5U2wyaZ1PnN+UJwqaLhSG2556ZD4uctWzgv969wn3s
+         1go5H6NNh4/hOLATPj58LPJxDesYKcURChMaJWIbJoCOXCN9wk5ihp713jENg9kFmcGs
+         BTDRZkwuOMUUBjxtn6NHIl3POdyp4NS5WG2+3gzSsfrgAjWHw79BHGsI1JGCjWhiiYXR
+         6yPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ZyQvnDzB97O6c0QAnBCiQDlxyNyuw0D/fVFafA96cWs=;
-        b=iGcT9h43oNkrHsZLDk4TUTsKmuSis7C9Yp2VHw2L00sQQBoGiBjO3k4RbZ8sj/McyT
-         cCGnFmlkXcCTcM2oWdV5vQ1M6HzmI76WvQ7lpzCQcojFZQX/yH2F/YISQxJ5m8qYdU1Z
-         KMB1+gW3NBkxSp684YbsJBIIWLqJL+HSfHvVS+XBSBSCcffiViTNBKgpdYsRJulCCK47
-         jcQQ72cXQOELNvoz1tC24r7C6Pqk8OeyOgSTOUB7RNkMzpA0GJNoCqaU3RrUeGwItkXu
-         d8VvmAVbaRzWSMop4MR06wiFF/mtbUfDHTNw2YWiTBZwFob3jxoqAEuboUxjNjbOKYSk
-         wDmg==
-X-Gm-Message-State: AKaTC02ay4I6jRMouvRv/Bq43HCgcuTPGX2R/3/UyR/2TjLhmOKvbRbwmnsu0K5TSj93Eg==
-X-Received: by 10.99.211.21 with SMTP id b21mr129701710pgg.120.1481618960889;
-        Tue, 13 Dec 2016 00:49:20 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Ak/5TL78AgZ5948j1Dqn8SpdZHrQ/217pthjojSHeK0=;
+        b=IxppCBZN9yybyoPFZGUVb/y8CDMBljxDYaUyBwIIvGu1WCvI4uf5rdzFxSuNliHOVP
+         Po3c9tFE3ecM+CD069jawMJqAfFx92j1TXhnunB91cCtdFUycAR9dT9IbkaAucXx447z
+         l86ZzSUqwcGgpoz+wTVHLsxCBFyXxn8Vdv+uHBzfgQGeduERqs6X4JN73thwpPV484LO
+         s+f6WQ9PR/2uXIGPxuzOQBmHLkeBPU2xtDC8P9fhYK1Wvsw+7IFupQLvAzFcYNFPY+P+
+         9bAGx5BMMEQj5EsW3G3c8yGY0P1mxdLA+XPC3vtvqo3Ikx4UXknfzXKANLun9qTLn3ij
+         AxSA==
+X-Gm-Message-State: AKaTC02ZJcYDDd7nh3nHSQjRWgo9kjuQJ1H/9J6qx16ZxFXo8R4vsQHjF5A6lI/E6TX0KQ==
+X-Received: by 10.84.218.8 with SMTP id q8mr194978909pli.138.1481620955749;
+        Tue, 13 Dec 2016 01:22:35 -0800 (PST)
 Received: from chrisp-dl.atlnz.lc ([2001:df5:b000:22:7966:ce03:97ae:8cb])
-        by smtp.gmail.com with ESMTPSA id m5sm79839976pgn.42.2016.12.13.00.49.17
+        by smtp.gmail.com with ESMTPSA id u3sm49594747pfk.3.2016.12.13.01.22.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Dec 2016 00:49:20 -0800 (PST)
+        Tue, 13 Dec 2016 01:22:34 -0800 (PST)
 From:   Chris Packham <judge.packham@gmail.com>
 To:     git@vger.kernel.org
-Cc:     mah@jump-ing.de, peff@peff.net, jacob.keller@gmail.com,
-        gitster@pobox.com, Chris Packham <judge.packham@gmail.com>
-Subject: [PATCHv2 2/2] completion: add --continue option for merge
-Date:   Tue, 13 Dec 2016 21:48:59 +1300
-Message-Id: <20161213084859.13426-2-judge.packham@gmail.com>
+Cc:     gitter.spiros@gmail.com, Chris Packham <judge.packham@gmail.com>
+Subject: [RFC/PATCH] Makefile: add cppcheck target
+Date:   Tue, 13 Dec 2016 22:22:25 +1300
+Message-Id: <20161213092225.15299-1-judge.packham@gmail.com>
 X-Mailer: git-send-email 2.11.0.24.ge6920cf
-In-Reply-To: <20161213084859.13426-1-judge.packham@gmail.com>
-References: <20161212083413.7334-1-judge.packham@gmail.com>
- <20161213084859.13426-1-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add 'git merge --continue' option when completing.
+Add cppcheck target to Makefile. Cppcheck is a static
+analysis tool for C/C++ code. Cppcheck primarily detects
+the types of bugs that the compilers normally do not detect.
+It is an useful target for doing QA analysis.
 
+Based-on-patch-by: Elia Pinto <gitter.spiros@gmail.com>
 Signed-off-by: Chris Packham <judge.packham@gmail.com>
 ---
+I had been playing with cppcheck for some other projects and happened to
+notice [1] in the archives. This is my attempt to resolve the feedback
+that Junio made at the time.
 
-Notes:
-    Changes in v2:
-    - new.
+In terms of errors that are actually reported there are only a few
 
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+$ make cppcheck
+cppcheck --force --quiet --inline-suppr  .
+[compat/nedmalloc/malloc.c.h:4093]: (error) Possible null pointer dereference: sp
+[compat/nedmalloc/malloc.c.h:4106]: (error) Possible null pointer dereference: sp
+[compat/nedmalloc/nedmalloc.c:551]: (error) Expression '*(&p.mycache)=TlsAlloc(),TLS_OUT_OF_INDEXES==*(&p.mycache)' depends on order of evaluation of side effects
+[compat/regex/regcomp.c:3086]: (error) Memory leak: sbcset
+[compat/regex/regcomp.c:3634]: (error) Memory leak: sbcset
+[compat/regex/regcomp.c:3086]: (error) Memory leak: mbcset
+[compat/regex/regcomp.c:3634]: (error) Memory leak: mbcset
+[compat/regex/regcomp.c:2802]: (error) Uninitialized variable: table_size
+[compat/regex/regcomp.c:2805]: (error) Uninitialized variable: table_size
+[compat/regex/regcomp.c:532]: (error) Memory leak: fastmap
+[t/t4051/appended1.c:3]: (error) Invalid number of character '{' when these macros are defined: ''.
+[t/t4051/appended2.c:35]: (error) Invalid number of character '{' when these macros are defined: ''.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 21016bf8d..1f97ffae1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1552,7 +1552,7 @@ _git_merge ()
- 	case "$cur" in
- 	--*)
- 		__gitcomp "$__git_merge_options
--			--rerere-autoupdate --no-rerere-autoupdate --abort"
-+			--rerere-autoupdate --no-rerere-autoupdate --abort --continue"
- 		return
- 	esac
- 	__gitcomp_nl "$(__git_refs)"
+The last 2 are just false positives from test data. I haven't looked
+into any of the others.
+
+I've also provisioned for enabling extra checks by passing CPPCHECK_ADD
+in the make invocation.
+
+$ make cppcheck CPPCHECK_ADD=--enable=all
+... lots of output
+    
+[1] - http://public-inbox.org/git/1390993371-2431-1-git-send-email-gitter.spiros@gmail.com/#t
+
+ Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index f53fcc90d..8b5976d88 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2635,3 +2635,7 @@ cover_db: coverage-report
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
+ 
++.PHONY: cppcheck
++
++cppcheck:
++	cppcheck --force --quiet --inline-suppr $(CPPCHECK_ADD) .
 -- 
 2.11.0.24.ge6920cf
 
