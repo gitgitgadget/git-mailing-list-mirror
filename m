@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91ACF2042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 13:06:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65A8F2042F
+	for <e@80x24.org>; Tue, 13 Dec 2016 13:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753234AbcLMNGD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 08:06:03 -0500
-Received: from mail-wj0-f196.google.com ([209.85.210.196]:34341 "EHLO
-        mail-wj0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751769AbcLMNGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 08:06:02 -0500
-Received: by mail-wj0-f196.google.com with SMTP id xy5so16347637wjc.1
-        for <git@vger.kernel.org>; Tue, 13 Dec 2016 05:06:02 -0800 (PST)
+        id S932620AbcLMNXx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 08:23:53 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33907 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932446AbcLMNXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 08:23:52 -0500
+Received: by mail-wm0-f67.google.com with SMTP id g23so18414577wme.1
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 05:23:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=references:user-agent:from:to:cc:subject:in-reply-to:date
          :message-id:mime-version;
-        bh=kavUNMj6sK7JWqlFFDTH9eRFBqlxVRK1RlSWxgv6pBc=;
-        b=KkYFrjgS6xb98kzenQZzz9d5NxGoruZECcZISO7aGKV2kPTLb6EsYre1HqdqfCInQl
-         +uREiXkIum+cXaBMaZBrXpqHe801BaT4asvtKVEepUunX0lfd0ThIeB0jUi+8XP3K66A
-         yhm7MHU8/2MEWjnMO603y1mqcFZPWU1Q3/+Pv2CpvC2b1d3mNLAYqTeRnMJ4osvxsZ+Y
-         h4I6G8D1wcB+3SPnl5R/8WUvvJOrOy71Lg88lEgfNLWzYb1Lc3cXpSzVJzFvfcr+VQBh
-         /YS62mFN0SBF02dDa39RljnwUT/CfXt8S1DCD7Fp/GIqcCh982U2wLcHheCrUxxhmElI
-         SP2w==
+        bh=ZaBle3X1E68msFFLI2yH5RNNBLxo5k8mamPH+V8nCN4=;
+        b=k0uxi+v+vnVOB0zuB407FC19/PDFAZsOxMrsQqZhSMMKVBEz1bpjyTkulOK27qOwjE
+         Io00VXDfhcxl9Ed0h8McxgHoTmYvFNk3yF4UZ/Lz77rZdlep92CvVJx/2JJoOv+eN3lM
+         VDwAL5c2E4OU8QY3AMEKTfjAuzw+fjvYp62ewGm3qq6jkHXqHuV9HZtaR7Rwq66EQ0Q2
+         ce8hPC+rxrzK+CBFIKYrZ9mw0NMeV3Z9qpBYJ1/unt0X8tIF+XgG/5eyUcxzhKwkFoc2
+         kp3jo/mPE22c7nsenC0ClIpVNHcn31rQ53Ja/tgq1qD/DvT0+Kx+bBb7+c9uQKVaDZ3f
+         t4tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject
          :in-reply-to:date:message-id:mime-version;
-        bh=kavUNMj6sK7JWqlFFDTH9eRFBqlxVRK1RlSWxgv6pBc=;
-        b=TTaoEuybnG2O2YrqHyJCICLdKxLe/edwWBO7xhVInF3XKoJkz2Rm07l7RDwaJnsX0g
-         lvvzIh+R/M4qvqNwLUDKCply1ujxFrhmaD+S0mOTS3o8jDfnjnP/zsHAgZdafHuAXGWv
-         QljymC3626VW6/SH0xPIsxlxzbCjWhAXAPbYB7EYtU01Y90AlSYRg+aEqRHA9rUn/6B5
-         OLgSpQCdu2j/Efoz5qrrvtfF8mdBwZTW9AU3OvDEV7w9+xlTa5fHEd9GzGNEHlZzsx1l
-         kjlQfCUmXZkBZVBNkbGkNDF936ez5nuALa8JWpVx/nnVKgwdF5rRTa543w3NKD2bEHu3
-         w9pg==
-X-Gm-Message-State: AKaTC01Hn2+l9CZVA/Xac5Ey/bEzQa/1wL4IxAGn0iZeqEiPTNt/qpHrGtREtuTW1/mRdg==
-X-Received: by 10.46.76.26 with SMTP id z26mr42280941lja.9.1481634360155;
-        Tue, 13 Dec 2016 05:06:00 -0800 (PST)
+        bh=ZaBle3X1E68msFFLI2yH5RNNBLxo5k8mamPH+V8nCN4=;
+        b=ckNkWm4Jb2qaUlztR35ctg63k0kiKe9LOL9kB1VDQUvu8ZEia+QH1BpPU6adQ62nQN
+         rPI5V5rMjNjhoPfHzwgak4UAreHc6T51u22dZoKWdNDrZPXsHORaSY+A4uGZRztQq4u6
+         OxN5L2YHbODVsSNPczRgT0q8mmEvDHlwqXr//LvEsh/T554Wo9385ih5dgIwjCuECxLc
+         Yi/qnqDDbHJvSeVJ9F72juTpbEGm2QNUTS+g/tcoaSkPA41qjJClmYKwc1kfNc2OCPUj
+         y0l3ejYOfScjKsHmq92HM4BxlcNFcebDjwQog3b4iug7dhlj8NpYRAAadk9gDiw4HeTe
+         vBfQ==
+X-Gm-Message-State: AKaTC00C9jJlsfE564XR++fVmgGFWmgrQuZaxqXJTfS/XXVcmS+8LqHsrzpnMpXzVT1vZw==
+X-Received: by 10.25.64.16 with SMTP id n16mr1093195lfa.119.1481635430811;
+        Tue, 13 Dec 2016 05:23:50 -0800 (PST)
 Received: from kristoffer-SZ68R2 (uib-guest.uib.no. [129.177.138.114])
-        by smtp.gmail.com with ESMTPSA id m129sm9884139lfe.6.2016.12.13.05.05.58
+        by smtp.gmail.com with ESMTPSA id n124sm9937200lfb.33.2016.12.13.05.23.49
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Dec 2016 05:05:59 -0800 (PST)
-References: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com> <20161209155112.2112-2-kristoffer.haugsbakk@gmail.com> <88A192B34B3D4DDDA47628687AE458D3@PhilipOakley>
+        Tue, 13 Dec 2016 05:23:50 -0800 (PST)
+References: <20161209155112.2112-1-kristoffer.haugsbakk@gmail.com> <20161209155112.2112-4-kristoffer.haugsbakk@gmail.com> <34DFA15DE05248069167FE613B66CD70@PhilipOakley>
 User-agent: mu4e 0.9.17; emacs 24.5.1
 From:   Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
 To:     Philip Oakley <philipoakley@iee.org>
 Cc:     git@vger.kernel.org,
         Kristoffer Haugsbakk <kristoffer.haugsbakk@gmail.com>
-Subject: Re: [PATCH 1/4] doc: add articles (grammar)
-In-reply-to: <88A192B34B3D4DDDA47628687AE458D3@PhilipOakley>
-Date:   Tue, 13 Dec 2016 14:05:58 +0100
-Message-ID: <8737hsj7wp.fsf@gmail.com>
+Subject: Re: [PATCH 3/4] doc: make the intent of sentence clearer
+In-reply-to: <34DFA15DE05248069167FE613B66CD70@PhilipOakley>
+Date:   Tue, 13 Dec 2016 14:23:49 +0100
+Message-ID: <871sxcj72y.fsf@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -65,11 +65,9 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Thank you for reviewing this series, Philip.
-
 Philip Oakley writes:
 
-> This looks good to me.
+> Looks like a reasonable emphasis to me
 
 I'll add this header:
 
