@@ -7,109 +7,113 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5769D206A4
+	by dcvr.yhbt.net (Postfix) with ESMTP id 452C72042F
 	for <e@80x24.org>; Tue, 13 Dec 2016 15:32:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934202AbcLMPce (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 10:32:34 -0500
-Received: from mout.gmx.net ([212.227.15.19]:60470 "EHLO mout.gmx.net"
+        id S934200AbcLMPcY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 10:32:24 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54821 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932984AbcLMPcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 10:32:31 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVdfD-1c7qD21Ckp-00Z2NR; Tue, 13
- Dec 2016 16:32:15 +0100
-Date:   Tue, 13 Dec 2016 16:32:00 +0100 (CET)
+        id S934077AbcLMPcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 10:32:00 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXqV1-1c5dIC0HXr-00WpS5; Tue, 13
+ Dec 2016 16:31:55 +0100
+Date:   Tue, 13 Dec 2016 16:31:54 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2 28/34] run_command_opt(): optionally hide stderr when the
- command succeeds
+Subject: [PATCH v2 26/34] sequencer (rebase -i): implement the 'drop'
+ command
 In-Reply-To: <cover.1481642927.git.johannes.schindelin@gmx.de>
-Message-ID: <1e82aeabb906a35175362418b2b4957fae50c3b0.1481642927.git.johannes.schindelin@gmx.de>
+Message-ID: <ed2df6cecd9a53681d2fead4ae5b4839d653afc3.1481642927.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:26mEF4rKPpk/nmmG5fcFdH6bQADxoZQZeuo3hzPAFBWoZahYiug
- kR0oxJWIiMZ/ACI+8iZ2PKO84+yipktmaxH0N1SCSByNt7bzchpogMiwTx24FSmELHZ1Cb2
- xaOautk6SA8Y1hIYGuiAuirrlaiHRt3INpz9Hkuwgn0txftZd5XrY5ukPUA+gGDxl/M0upG
- qbaJbX4WS0jTiXIk81UNw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OxfRLO6fiGg=:8ohAr58iXXpy2rLlZfYq3Q
- J+sPOjr23Eqio/2+3fhKQmO5pn8hXE8DTzAj/P8zvjwc28Mp4tZ/MY2pEhvU5LJZQ6bHczVQm
- IEgHmVUR4WGvExkicBeVFtrS4g/nuMvndq6+sNQElTg+QNgypicshbbSD2zPBxQu6tHPPUcCV
- ATPTzOcmDCGPKJgKj6Ly+/GRxPRpgEpAGgANLUHOElJDZbskF9Fiy994XmzQgjIuWx7eeUIkP
- 2P13+19bh4pdKDdYcCGRFpqXDD8tFGjktgxPvsi8ArI+fUEIycJvwZEeXeNR2w6Yr+V5qmkpl
- SHG4F2mkT0+/o+XJr9UnaYYl0exQdxKLUDMfHC/cZSipPCiJyNlSgefImmzp2DgugJ7MSy6V4
- SWC9hCoDm32S4h1EuFgDFBoWSOKPUTSmCzpLaoabTAbtWEy7jX4cm0MV7N4wHrtJV7JLkXJPs
- AM2kthtlxWVmxdhy6uU+3KOW7JwYKwDbXfRzoQNMkG9W7mfpD+UQ3nn72hF+AlTHmIXIT54c9
- 1hGA9AzZ48NvVAfAlTTe6+Mnh20VxPF8k06jvwpVmAnbeEdM+RgcEOXi71arUDOyz1KGVkAHN
- EwywLhwZQFM1DFtjJPuH1LJhD+TqH7Z4r2BwhhDgPNs/Zzm5+mp/hjq7bqlmb3A/GinROZ7ic
- xffIyhc+6fx9q0Jun4TO2xtMGZl+MUQr/yLUYSpCAMwhH0iFKM8Frlf99Sr40iouBk2Z1PatA
- VMfstvmaTJGT/eVuoxPHq2SQDF1VUNvNaGDPpCuWL17paYSL/c1EENtrcDrnDPXy7oRzuYe21
- s34l5Kl
+X-Provags-ID: V03:K0:pKniW2CmEABWhmekO05pujb50VhoHBELC5WVVRmXAkNDfS7xpH9
+ j9gibW8GCSL+UFVa+V2MXzxwrAAivZBuLWJnIkZrH+Zl9HBuF7s1NuzhB1AqRQJBWmHCthc
+ 8xLmeCDPiTcSD/rqyxD4434oNZw2Yj9wx9R55t2LFI2Z0AeX+DiwrndsvF44zG3P8+YfADw
+ tpUY8oC4VSCkg3d4gp6Ag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a/gaYlfe/dM=:3gmVwgEu0m425IgzmMVJlK
+ xpUuzIgJkwKXD2GJeUz7t8G6Bw8xiXEBGc/k23j2EnNjN5EifhRhOouOYB/kI6R8+kHd3rLyB
+ IFp1mDP4rTRpJm8KnIe4CmJG7G+SWZXEoL/1WsYPKfg3Yh3n306LSK+3Jq6lMQIX4fREAxgkh
+ 5oaFZ2FJ82d5QqSqrUq9ejLlltvdULienXk+REO/fYDyhR3VOhHzBrPcYzvgDHVicl5ZPV4Rg
+ 6qCd2UaeQHOI5FOMrlNy8wHAsLYMainfBVwa2hWeIBnPxAYmUZH0J/inO85aBig9XbxD6WRkA
+ YLyDary73iEhjbRjogh2MxckfzkG/IkcKWl5xMu6QUGPwxFMX3brLXVBZxd71jqReY6BLajnt
+ v7RsDndXJycdy+s6Uxa3ifjnWUR9u0GfvZUSWnwfznCaWGNgasoKoe1yvadfZMPcfnzKIw9mG
+ ncUtKdQJH3Icq7NptMG8ptgrRP2T21iUDujj3xFlDhgUl7/saPPkzSqW1/3+PBIAqGqlzwYu7
+ aWzX+qp/j/0+4Hk0Cx67fGieb5yYi2PGoYL1xhxxpXCeNsxPS9hTi5EhJ6tVVT52Dcszlu/f4
+ Th/x+Sdh+mwFGoD2bNnmdPy8d+xS3oOiTiEwlrVLUTdgXBgEmaq1cec3fUrEL7QtlI7WxF88n
+ nF+XtzLRmogdOFWzkiF7Twk9YEVQi7one8liFZdIbFhexiJ+IHxtTbAyPh92Eij2prZdKo+Xz
+ drJC5WvDft99mQjq+6MgyeRVi+CBl398nUeB4emQXjD6GPnPnYPnAh5spBGHpjNLm/BGojKO/
+ MMqeHgk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will be needed to hide the output of `git commit` when the
-sequencer handles an interactive rebase's script.
+The parsing part of a 'drop' command is almost identical to parsing a
+'pick', while the operation is the same as that of a 'noop'.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- run-command.c | 23 +++++++++++++++++++++++
- run-command.h |  1 +
- 2 files changed, 24 insertions(+)
+ sequencer.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index ca905a9e80..5bb957afdd 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -589,6 +589,29 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
- 	cmd.clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
- 	cmd.dir = dir;
- 	cmd.env = env;
-+
-+	if (opt & RUN_HIDE_STDERR_ON_SUCCESS) {
-+		struct strbuf buf = STRBUF_INIT;
-+		int res;
-+
-+		cmd.err = -1;
-+		if (start_command(&cmd) < 0)
-+			return -1;
-+
-+		if (strbuf_read(&buf, cmd.err, 0) < 0) {
-+			close(cmd.err);
-+			finish_command(&cmd); /* throw away exit code */
-+			return -1;
-+		}
-+
-+		close(cmd.err);
-+		res = finish_command(&cmd);
-+		if (res)
-+			fputs(buf.buf, stderr);
-+		strbuf_release(&buf);
-+		return res;
-+	}
-+
- 	return run_command(&cmd);
- }
+diff --git a/sequencer.c b/sequencer.c
+index 03256b5b1d..1f314b2743 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -769,7 +769,8 @@ enum todo_command {
+ 	/* commands that do something else than handling a single commit */
+ 	TODO_EXEC,
+ 	/* commands that do nothing but are counted for reporting progress */
+-	TODO_NOOP
++	TODO_NOOP,
++	TODO_DROP
+ };
  
-diff --git a/run-command.h b/run-command.h
-index dd1c78c28d..65a21ddd4e 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -72,6 +72,7 @@ extern int run_hook_ve(const char *const *env, const char *name, va_list args);
- #define RUN_SILENT_EXEC_FAILURE 8
- #define RUN_USING_SHELL 16
- #define RUN_CLEAN_ON_EXIT 32
-+#define RUN_HIDE_STDERR_ON_SUCCESS 64
- int run_command_v_opt(const char **argv, int opt);
+ static struct {
+@@ -783,7 +784,8 @@ static struct {
+ 	{ 'f', "fixup" },
+ 	{ 's', "squash" },
+ 	{ 'x', "exec" },
+-	{ 0,   "noop" }
++	{ 0,   "noop" },
++	{ 'd', "drop" }
+ };
  
- /*
+ static const char *command_to_string(const enum todo_command command)
+@@ -1317,7 +1319,7 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
+ 		else if (is_fixup(item->command))
+ 			return error(_("cannot '%s' without a previous commit"),
+ 				command_to_string(item->command));
+-		else if (item->command != TODO_NOOP)
++		else if (item->command < TODO_NOOP)
+ 			fixup_okay = 1;
+ 	}
+ 
+@@ -1827,7 +1829,7 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
+ 	int i;
+ 
+ 	for (i = todo_list->current + offset; i < todo_list->nr; i++)
+-		if (todo_list->items[i].command != TODO_NOOP)
++		if (todo_list->items[i].command < TODO_NOOP)
+ 			return todo_list->items[i].command;
+ 
+ 	return -1;
+@@ -1960,7 +1962,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 			res = do_exec(item->arg);
+ 			*end_of_arg = saved;
+ 		}
+-		else if (item->command != TODO_NOOP)
++		else if (item->command < TODO_NOOP)
+ 			return error(_("unknown command %d"), item->command);
+ 
+ 		todo_list->current++;
 -- 
 2.11.0.rc3.windows.1
 
