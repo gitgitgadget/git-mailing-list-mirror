@@ -2,151 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E41F7209B4
-	for <e@80x24.org>; Tue, 13 Dec 2016 21:30:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF70C209B5
+	for <e@80x24.org>; Tue, 13 Dec 2016 21:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754090AbcLMVai (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 16:30:38 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63791 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752941AbcLMVah (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 16:30:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 362DE57EAD;
-        Tue, 13 Dec 2016 16:30:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=m1bbWOYmjs6ojJ5RucSWOsK6n00=; b=N+xYhJ
-        SPn5QNdeg0nX0p53OcJnr69HYwNDkufNohxJmEOIKIW4o4Q4+znd8WGr2lnsgV+L
-        lM/B+9y1W5k1c5HaHIAE1WYtOCaEBpNbInMhZ5kL/0OTWc/p/v96CGOj3YOpzUpo
-        QHxZRm7rIWOgFcELtEPTkxx1HcOoXXOQ3dYJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XnBAuEqVh6KFNUgI0WGzb7MkP9y4UU30
-        UPifoAWU8besjgRAWnLXe/qiLQS8MPU5MGb4Cvh/NCYoe43Ts+nWfL7Zk0snGqX0
-        fTLMM0z6YuaworGNpzuM7IgEGR/mystc6kwC3o0Oh/9EYRfA4L/NyCio7J4riG0i
-        5mt3jrLPWhI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 14EDA57EAC;
-        Tue, 13 Dec 2016 16:30:36 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B5DA57EAA;
-        Tue, 13 Dec 2016 16:30:35 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1754075AbcLMVc4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 16:32:56 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:13793 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752941AbcLMVcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 16:32:54 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3tdXwL1cHqz5tlJ;
+        Tue, 13 Dec 2016 22:32:02 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C61A5221F;
+        Tue, 13 Dec 2016 22:32:01 +0100 (CET)
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] fix pushing to //server/share/dir paths on Windows
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 03/34] sequencer (rebase -i): implement the 'edit' command
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <a1361151ad1dad8f4dc3c412c7ed30f625d67ba0.1481642927.git.johannes.schindelin@gmx.de>
-Date:   Tue, 13 Dec 2016 13:30:34 -0800
-In-Reply-To: <a1361151ad1dad8f4dc3c412c7ed30f625d67ba0.1481642927.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:29:40 +0100
-        (CET)")
-Message-ID: <xmqqbmwf1pqd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+Message-ID: <2ff2613c-47da-a780-5d38-93e16cb16328@kdbg.org>
+Date:   Tue, 13 Dec 2016 22:32:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 624F9ADE-C17B-11E6-8E46-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+normalize_path_copy() is not prepared to keep the double-slash of a
+//server/share/dir kind of path, but treats it like a regular POSIX
+style path and transforms it to /server/share/dir.
 
-> @@ -43,6 +44,20 @@ static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
->   */
->  static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
->  /*
+The bug manifests when 'git push //server/share/dir master' is run,
+because tmp_objdir_add_as_alternate() uses the path in normalized
+form when it registers the quarantine object database via
+link_alt_odb_entries(). Needless to say that the directory cannot be
+accessed using the wrongly normalized path.
 
-It is minor, but please have a blank line to separate the logical
-blocks.  If you have "comment for thing A" before "thing A", then 
-having a blank after that before "comment for thing B" and "thing B"
-that follow would help.  Otherwise "thing A" immediately followed by
-"comment for thing B" are (mis)read together, leading to nonsense.
+Fix it by skipping all of the root part, not just a potential drive
+prefix. offset_1st_component takes care of this, see the
+implementation in compat/mingw.c::mingw_offset_1st_component().
 
-> + * When an "edit" rebase command is being processed, the SHA1 of the
-> + * commit to be edited is recorded in this file.  When "git rebase
-> + * --continue" is executed, if there are any staged changes then they
-> + * will be amended to the HEAD commit, but only provided the HEAD
-> + * commit is still the commit to be edited.  When any other rebase
-> + * command is processed, this file is deleted.
-> + */
-> +static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
-> +/*
-> + * When we stop at a given patch via the "edit" command, this file contains
-> + * the long commit name of the corresponding patch.
+There is a change in behavior: \\server\share is not transformed
+into //server/share anymore, but all subsequent directory separators
+are rewritten to '/'. This should not make a difference; Windows can
+handle the mix. In the context of 'git push' this cannot be verified,
+though, as there seems to be an independent bug that transforms the
+double '\\' to a single '\' on the way.
 
-If you abbreviate an object name to 38-hex that is still long but
-that is not full; if you meant full 40-hex, better spell it out as
-"full"---that conveys useful information to programmers (e.g. they
-can just use get_sha1_hex()).
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Another long-standing bug uncovered by the quarantine series.
 
-But I think you are writing short_commit_name() to it?  So perhaps
-"an abbreviated commit object name"?
+ Dscho, it looks like this could fix the original report at
+ https://github.com/git-for-windows/git/issues/979
 
-> @@ -1301,9 +1318,87 @@ static int save_opts(struct replay_opts *opts)
->  	return res;
->  }
->  
-> +static int make_patch(struct commit *commit, struct replay_opts *opts)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct rev_info log_tree_opt;
-> +	const char *commit_buffer = get_commit_buffer(commit, NULL), *subject, *p;
-> +	int res = 0;
-> +
-> +	p = short_commit_name(commit);
-> +	if (write_message(p, strlen(p), rebase_path_stopped_sha(), 1) < 0)
-> +		return -1;
-> +
-> +	strbuf_addf(&buf, "%s/patch", get_dir(opts));
-> +	memset(&log_tree_opt, 0, sizeof(log_tree_opt));
-> +	init_revisions(&log_tree_opt, NULL);
-> +	log_tree_opt.abbrev = 0;
-> +	log_tree_opt.diff = 1;
-> +	log_tree_opt.diffopt.output_format = DIFF_FORMAT_PATCH;
-> +	log_tree_opt.disable_stdin = 1;
-> +	log_tree_opt.no_commit_id = 1;
-> +	log_tree_opt.diffopt.file = fopen(buf.buf, "w");
-> +	log_tree_opt.diffopt.use_color = GIT_COLOR_NEVER;
-> +	if (!log_tree_opt.diffopt.file)
-> +		res |= error_errno(_("could not open '%s'"), buf.buf);
-> +	else {
-> +		res |= log_tree_commit(&log_tree_opt, commit);
-> +		fclose(log_tree_opt.diffopt.file);
-> +	}
-> +	strbuf_reset(&buf);
-> +	strbuf_addf(&buf, "%s/message", get_dir(opts));
-> +	if (!file_exists(buf.buf)) {
-> +		find_commit_subject(commit_buffer, &subject);
-> +		res |= write_message(subject, strlen(subject), buf.buf, 1);
-> +		unuse_commit_buffer(commit, commit_buffer);
-> +	}
-> +	strbuf_release(&buf);
-> +
-> +	return res;
-> +}
+ This patch should cook well because of the change in behavior.
+ I would not be surprised if there is some fall-out.
 
-OK.  This seems to match what scripted make_patch does in a handful
-of lines.  We probably should have given you a helper to reduce
-boilerplate that sets up log_tree_opt so that this function does not
-have to be this long, but that is a separate topic.
+ The other bug I'm alluding to, I still have to investigate. I do
+ not think that it can be counted as fall-out.
 
-Does it matter output_format is set to FORMAT_PATCH here, though?
-With --no-commit-id set, I suspect there is no log message or
-authorship information given to the output.
+ path.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-As you are only interested in seeing the patch/diff in this file and
-the log is stored in a separate "message" file, as long as "patch"
-file gets the patch correctly, it is not a problem, but it just
-looked strange to see FORMAT_PATCH there.
+diff --git a/path.c b/path.c
+index 52d889c88e..02dc70fb92 100644
+--- a/path.c
++++ b/path.c
+@@ -991,7 +991,7 @@ const char *remove_leading_path(const char *in, const char *prefix)
+  *
+  * Performs the following normalizations on src, storing the result in dst:
+  * - Ensures that components are separated by '/' (Windows only)
+- * - Squashes sequences of '/'.
++ * - Squashes sequences of '/' except "//server/share" on Windows
+  * - Removes "." components.
+  * - Removes ".." components, and the components the precede them.
+  * Returns failure (non-zero) if a ".." component appears as first path
+@@ -1014,17 +1014,23 @@ const char *remove_leading_path(const char *in, const char *prefix)
+ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ {
+ 	char *dst0;
+-	int i;
+-
+-	for (i = has_dos_drive_prefix(src); i > 0; i--)
+-		*dst++ = *src++;
+-	dst0 = dst;
++	int offset;
+ 
+-	if (is_dir_sep(*src)) {
++	/*
++	 * Handle initial part of absolute path: "/", "C:/", "\\server\share/".
++	 */
++	offset = offset_1st_component(src);
++	if (offset) {
++		/* Convert the trailing separator to '/' on Windows. */
++		memcpy(dst, src, offset - 1);
++		dst += offset - 1;
+ 		*dst++ = '/';
+-		while (is_dir_sep(*src))
+-			src++;
++		src += offset;
+ 	}
++	dst0 = dst;
++
++	while (is_dir_sep(*src))
++		src++;
+ 
+ 	for (;;) {
+ 		char c = *src;
+-- 
+2.11.0.79.g263f27a
 
