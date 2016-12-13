@@ -2,85 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DAA7203EC
-	for <e@80x24.org>; Tue, 13 Dec 2016 19:29:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E4AD203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 19:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932906AbcLMT2x (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 14:28:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64777 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752112AbcLMT2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 14:28:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92D52577A9;
-        Tue, 13 Dec 2016 14:28:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D6zjJdzN4u/RQILHAVOwhaREoe0=; b=SypdQZ
-        dzl+2c005axHlCUO7OcyiXayX5wGvw33xR4ZJEbCG97AWwhLWugr4ABBooc2pb5l
-        8L6Dk8WYuJzM8UseZEM8wIk50yIioiQoeesgMFwbi937PtaeM1xmuxgm2W0dtw3e
-        BdQ2LE3HXsolCs5hUNQAqlY/PsHXgz4FtbFVA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Rkyucy8qOxooTj/QH+yBUOanR53/JHx4
-        GiAiN5Y1ii5mZxt9x+deb4Gk/dvTqVHrxLuKwYWZz5vvwKn8fmdE27cC3tkH+bV1
-        kKeRPXn7fYrtRxpVVciKHIHzOIKlP/q0yOudn4wAC0Y/jdj2LfZ9uVd3ortEDAZ6
-        FXgclNb7vXU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A5C0577A7;
-        Tue, 13 Dec 2016 14:28:23 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0E56757792;
-        Tue, 13 Dec 2016 14:28:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Dec 2016, #02; Mon, 12)
-References: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1612131839220.3147@virtualbox>
-Date:   Tue, 13 Dec 2016 11:28:21 -0800
-In-Reply-To: <alpine.DEB.2.20.1612131839220.3147@virtualbox> (Johannes
-        Schindelin's message of "Tue, 13 Dec 2016 20:19:15 +0100 (CET)")
-Message-ID: <xmqqeg1b39yi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S933887AbcLMTbI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 14:31:08 -0500
+Received: from mout.gmx.net ([212.227.17.21]:54369 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933813AbcLMTaV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 14:30:21 -0500
+Received: from [192.168.178.43] ([88.71.224.113]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDE6y-1cOcx23OnM-00GXmd; Tue, 13
+ Dec 2016 20:22:00 +0100
+Subject: git add -p with unmerged files (was: git add -p with new file)
+To:     Ariel <asgit@dsgml.com>, git@vger.kernel.org
+References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Message-ID: <98817141-fa57-7687-09c4-dc96419d8a35@gmx.net>
+Date:   Tue, 13 Dec 2016 20:21:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4FCAD696-C16A-11E6-900B-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:bmxsj2mI+v5wpgtQppEiYrZGCYrC2huNuwJ/3YKZ+60YIwcHqny
+ Kotd6trKw93VxxpgewbtfyB6cHJeQoEp+QhbGuRKgQ8fuTiv+m0kcXBf1nqUskWgbfbtiLl
+ sSRTiFsDcj601dbQoxUtBKveFgpmee8lGU1rudaypP4dvu/2GacC6IZ0AqXNjXw4nTr9wbX
+ VT5ug0om+AYBNCXW+SU8g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JCPa9ApZAog=:h7SfS4DOHgno6pnbqjxt4j
+ cgPlvFeg+chFTIHplFna+piZMp6mFXIBJi1BqZ6v517T3ekTfKt1j8ZvoB5E6UkTvkN60Vd12
+ 9zNCHc7BadiybjrjXF/96PY5Bqf9SxQKwu23fDWa7wteaIjT5wommj4CQJAwUYw3qI4jR3Htw
+ PlRqEN50bytPStFw3JGnOXMNq5XB7CaMCXU6jWdwAE31/ror6jAERdfU2QKkSKPFMGkeEjw0v
+ OGaQ5n4M5qDYf05TNOhp7+0eZH9N0XczBz+UG0rkLN5OZ1+3sjXMtEbhzO4Wc+6rkw3mez6ly
+ gB0raQhmCKiXBVIagDwxgKKHsWYRV+kxI3tX4ICycbImXzM2kIE4st2XGLG2Mcqrs1rkcgyVQ
+ ThHrQnICUNUQqD98CodQLD9xzTzTGorq1458mCjTwbnfSdmu5LXEdURp6ClPKBzh0MVnhllCc
+ 05unkEZECJ9IAuIJPrFPkqWBHqeq57rakgQ9JcuwRjW75xM88AVwjNnWJHAYCryg+moSmk1cp
+ CT12fFnafIzffG1tayUUfTpRb7r2WfQt2YgS9YLz8BQ6JeDOiPEMUH5brpPnBrM+pp+VMbTak
+ RyhsQ9pj5lfRUwZTojDb1oGtfyCP8kiMswPqP99T9z4zshZGYRotOjJG7B1kOMgGeq9sPqCEz
+ GmJ6UAzQxBUqGCc4qAb89e+p0lFfdWbfc8An/usqGNAkEIQ2qLGVy5s8uHBD4ULL7zoEP4BeZ
+ nwyxe5pdG8uMqi+TWBwEzxdtm99gI4jchW7fUbl0kTH9zo7h1fNa8cblpB01g+wpnYWkE0jmw
+ KiKdYeu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> ok 13 - grep tree and more pathspecs
->
-> expecting success: 
-> 	git init parent &&
-> 	test_when_finished "rm -rf parent" &&
-> 	echo "foobar" >"parent/fi:le" &&
-> 	git -C parent add "fi:le" &&
-> 	git -C parent commit -m "add fi:le" &&
-> ...
-> 	test_cmp expect actual
->
-> ++ git init parent
-> Initialized empty Git repository in C:/git-sdk-64/usr/src/git/wip3/t/trash
-> directory.t7814-grep-recurse-submodules/parent/.git/
-> ++ test_when_finished 'rm -rf parent'
-> ++ test 0 = 0
-> ++ test_cleanup='{ rm -rf parent
-> 		} && (exit "$eval_ret"); eval_ret=$?; :'
-> ++ echo foobar
-> ++ git -C parent add fi:le
-> fatal: pathspec 'fi:le' did not match any files
+While we're on the topic that "git add -p" should behave like the
+"normal" "git add" (not "git add -u"): what about unmerged changes?
 
-I think !MINGW prereq is missing?
+When I have merge conflicts, I almost always use my aliases
+"edit-unmerged" and "add-unmerged":
 
+$ git config --global --list | grep unmerged
+alias.list-unmerged=diff --name-only --diff-filter=U
+alias.edit-unmerged=!vim `git list-unmerged`
+alias.add-unmerged=!git add `git list-unmerged`
+alias.reset-unmerged=!uf=`git list-unmerged`; git reset HEAD $uf; git
+checkout -- $uf
+
+The "add-unmerged" alias is always a little scary because I'd rather
+like to check the changes with the "git add -p" workflow I am used to.
+
+Opinions?
+
+Best
+  Stephan
