@@ -6,86 +6,78 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8255D203EC
-	for <e@80x24.org>; Tue, 13 Dec 2016 19:11:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F053203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 19:12:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934060AbcLMTLL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 14:11:11 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51605 "EHLO
+        id S934050AbcLMTMl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 14:12:41 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52121 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932547AbcLMTLK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 14:11:10 -0500
+        with ESMTP id S932912AbcLMTMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 14:12:40 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F87A53DE2;
-        Tue, 13 Dec 2016 14:11:07 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A1B657493;
+        Tue, 13 Dec 2016 14:12:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wXRArdv6a/qBPPPGOc6xBu6ZFls=; b=pEMvnu
-        SwjB1OVbutTVy0lkEACv99W9VXj+4MAgPMdAI5HUhsiXy4Wvzz+8yKUvOWHgOCV4
-        dA28Ela/tpcUsCmwxDJpNRC6pdsK4Cs8HiOkxXOP8P/nESjGm7XEHjb4u0sNV+D1
-        cQa7CK5u3SIiDOO53a6hCytw35r0IgDaBDclk=
+        :content-type; s=sasl; bh=NC9jRSFYNVoymKmgSY8bs8Sgk20=; b=qkz0as
+        P7fUvXx0TxMqCMDGvWOWh+lmXc/BgCw8PF8DeFCcaSRNgqX/VZlZfBJfhsvdTZpA
+        Ag26klfqFORidVG03SPnX5pmIg5fsuibdYEUwtv0y4YiuIuCNtS8Zr95mkmnIurY
+        Fwre8PG+mppV0/oFzs9jXCTodnH31STvCcdzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jlF7bDDV2+oRAFrnHry06GQHOBAf05du
-        431Q7ZbUD0PrKUKjZgWSetw2Yrx7XXDt2UpVeI3uwCFJnmB3Jdnzlma5fyK8LYVH
-        HDdbRg6h6gYQ+ffFrHzbj7dQhS7K5MZrcyNl3YLBDhd3CAhPF7CEwI6UN050PEgn
-        3IdhWNADD5M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7501653DE1;
-        Tue, 13 Dec 2016 14:11:07 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Dt/UGsJvGy3q076gEl2w7qI0m16KoZpU
+        sQtlpnNsdLGOP2YvwIh8KjKJ7Lu84OzzU06lT2jkQEgIvERenZ5b8FUAK4a36tse
+        nvSOtoRsgPAO9YftH4jzs6a0lALVXVylxlUF9fH9/k/kZKd+a6aGYgi1Wlffb4Yd
+        RBG9cjCM3iI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2189E57492;
+        Tue, 13 Dec 2016 14:12:38 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E07FB53DE0;
-        Tue, 13 Dec 2016 14:11:06 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 848DB57491;
+        Tue, 13 Dec 2016 14:12:37 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        David Turner <David.Turner@twosigma.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH 0/6] git-rm absorbs submodule git directory before deletion
-References: <20161213014055.14268-1-sbeller@google.com>
-        <xmqqr35c5luq.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbmtYzFmEKrxHKx-_WY=0NDJM=QZYJziim-eh-w4WzDKw@mail.gmail.com>
-        <xmqq37hr4q5t.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kY_E8xnOpCAFQo_91FeQCs9X3fkassFYunG=adx81AcBg@mail.gmail.com>
-Date:   Tue, 13 Dec 2016 11:11:05 -0800
-In-Reply-To: <CAGZ79kY_E8xnOpCAFQo_91FeQCs9X3fkassFYunG=adx81AcBg@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 13 Dec 2016 11:07:32 -0800")
-Message-ID: <xmqqtwa73ara.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stephan Beyer <s-beyer@gmx.net>, Ariel <asgit@dsgml.com>,
+        git@vger.kernel.org
+Subject: Re: git add -p with new file
+References: <alpine.DEB.2.11.1612062012540.13185@cherryberry.dsgml.com>
+        <20161209141129.r53b4rbtgd76fn2a@sigill.intra.peff.net>
+        <alpine.DEB.2.11.1612091331170.13185@cherryberry.dsgml.com>
+        <20161210085556.nwg3pbay367jqin5@sigill.intra.peff.net>
+        <xmqq37hvphji.fsf@gitster.mtv.corp.google.com>
+        <20161211130034.ygj5l2gbx33uknlk@sigill.intra.peff.net>
+        <dc698b79-6311-a2a3-c564-a43ef071e62b@gmx.net>
+        <20161213173341.wemlunlixdp6277h@sigill.intra.peff.net>
+        <xmqq7f734qe0.fsf@gitster.mtv.corp.google.com>
+        <20161213185653.ys3ig377zhmblncl@sigill.intra.peff.net>
+Date:   Tue, 13 Dec 2016 11:12:36 -0800
+In-Reply-To: <20161213185653.ys3ig377zhmblncl@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 13 Dec 2016 13:56:53 -0500")
+Message-ID: <xmqqpokv3aor.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E6349656-C167-11E6-B830-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1C380FEE-C168-11E6-A4DE-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> I do not think there is no dispute about what embedding means.
+>> Perhaps the latter is not advertised well enough?  "add -p" does not
+>> even page so it is not very useful way to check what is being added
+>> if you are adding a new file (unless you are doing a toy example to
+>> add a 7-line file).
 >
-> double negative: You think we have a slight dispute here.
+> I use "add -p" routinely for my final add-and-sanity-check,...
+> ... To me they are all tools in the toolbox, and I can pick the one that
+> works best in any given situation, or that I just feel like using that
+> day.
 
-Sorry, I do not think there is any dispute on that.
-
->>  A
->> submodule whose .git is inside its working tree has its repository
->> embedded.
->>
->> What we had trouble settling on was what to call the operation to
->> undo the embedding, unentangling its repository out of the working
->> tree.  I'd still vote for unembed if you want a name to be nominated.
->
-> So I can redo the series with two commands "git submodule [un]embed".
->
-> For me "unembed" == "absorb", such that we could also go with
-> absorb into superproject <-> embed into worktree
-
-With us agreeing that "embed" is about something is _IN_ submodule
-working tree, unembed would naturally be something becomes OUTSIDE
-the same thing (i.e. "submodule working tree").  However, if you
-introduce "absorb", we suddenly need to talk about a different
-thing, i.e. "superproject's .git/modules", that is doing the
-absorption.  That is why I suggest "unembed" over "absorb".
+Oh, there is no question about that.  I was just pointing out that
+"add -p" is not the "one that works best" when dealing with a path
+that is not yet even in the index.
