@@ -2,85 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5882F2042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 15:50:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AC6B203EC
+	for <e@80x24.org>; Tue, 13 Dec 2016 16:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933504AbcLMPuj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 10:50:39 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57141 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933015AbcLMPtI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 10:49:08 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBFgr-1cR1y70iA9-00AE6a; Tue, 13
- Dec 2016 16:42:22 +0100
-Date:   Tue, 13 Dec 2016 16:42:21 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
+        id S933944AbcLMQJu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 11:09:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63751 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932602AbcLMQJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 11:09:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F09C5325C;
+        Tue, 13 Dec 2016 11:09:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FyrbMK62XBDY6FVrfDOc7SExJ4U=; b=ZR565J
+        +HjSzoHgn4d2gNkxBGD8aFlnNC98KTD2mb4LSjVhsmvkd6mIZYQLimsIEdhsVDlE
+        ZVMA0D7xj7ztTXJ6lzRjA8zBDO7J4WXx0bJ1nWecHBZSitZhEI7FI3FW/nPrJrMC
+        aros2ZtH0y7r/f1GM5TPhFqbXOmCnfgnBpj/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mK3XtRT91DnFAqwHGW2+Zf42KLO9G7nV
+        ZPkfJKP+l77csLYqPSnVqLEMmbKAyFjlPIgtsI/YokuE+bPkKDthRD4OuDE5rlxZ
+        YRiDM12HXvHE6mGVDWdqwuVW3z01WNczAKfQWCJxNc98obHUmuQSl7MYE9Qanwp7
+        zOMmClwZCgo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 658C25325B;
+        Tue, 13 Dec 2016 11:09:47 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CEC5A53259;
+        Tue, 13 Dec 2016 11:09:46 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Dec 2016, #02; Mon, 12)
-In-Reply-To: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1612131641291.23160@virtualbox>
 References: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        <alpine.DEB.2.20.1612131638290.23160@virtualbox>
+Date:   Tue, 13 Dec 2016 08:09:45 -0800
+In-Reply-To: <alpine.DEB.2.20.1612131638290.23160@virtualbox> (Johannes
+        Schindelin's message of "Tue, 13 Dec 2016 16:39:46 +0100 (CET)")
+Message-ID: <xmqqmvfz6cae.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:IA3AVYnarueLP8mTbV/Ga2sXQYIifUVx5Gk6wxPTw/BDbmQwHcb
- Vcka9TayqMxfXoy/OTiBV7uptWBL/YBkwsXTRh72oD/oVzAPA7ry98sXjJqPrLT6Gpxx7ua
- qslCyJWO0rTRiN0vawrycHqXSzTXawPX6dFYoSvec8uwNnni71Jx2b2Xl1ZL4I4ihbPAaby
- 3pB3TPZXDdKuKfgWomkVQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tTgtm83K5M8=:O2Y7Xk0pC1F1aajPWul7Kq
- PxatcxnIAvO3qrndJtS4waXW5X1hj8i3nX2bqFTkJp5LK04B399Up+P6tp2JIr6pgJL7+x+i9
- Jf071RhOD6Sq+7ok56rTW+pz1PYf8WZ3Q9wge89TfGjbmSi2lMBaXQRgUMBS8d1pMDTeyuL4p
- S3CLhhrFKIvIBGi9Qm6PZOcL1W1Jvb993O8hqEVeIewZKZ3bHMqA+tyAO0ChN0vVqOrZpa7yQ
- p85HDQw5nOlzCteAD8d9HZUICZCuEcs4vErxR2ntBQ0lqA5W8N62K4oz8NateN4skY2kg7O69
- 01kSxkwEeeCc8GUMDf7ZOY1ddb+NoZiz3fvr/IQHSjALhDAiCZP9m5VfB3PuNzQw1uf+4yfPs
- 4/eA90v2xgIiPMhRWXYonbzKOfpMA6Wne0Lim6C49iuZZV/XOvl/FOxhRbjxP2qfV+AUz049k
- fz+iuIf6isAtvPW1fUx0f3BY6bzGKV0A0hM+JtiTvy8b1AIeTaVbIrERgQgj3fpX5vDWOhjJb
- v/IvURSXQ+KqMpP4jhf1GP8d7HKoFAzOYOgJxsqWwl8cV1WHlBmlvIqX7FzxwTS6b9eKEI3DW
- IBC2gvTKajexrjYMI7Mx9xDGb+yHsakZ/6YPcUCXFJq+2Wp+fSftCK/AlAXPWo9NIcwvonAZT
- GKUsRL0Dam5lIZsrjwhxJRJq9q1tefe3+aGOXxnKlfA1GWOzrCcZA/beXAdF1qD9OKN6kihTc
- 5Ii/GOYDdH0PIb4m24nGwwkVfrmRUSHT0ovkCHYCixtA3ofQ/ieqKxBwx5+4cvcGEPk6ba0bv
- MHjFNlc
+Content-Type: text/plain
+X-Pobox-Relay-ID: 912CB4E0-C14E-11E6-A6C3-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 12 Dec 2016, Junio C Hamano wrote:
+> Hi Junio,
+>
+> On Mon, 12 Dec 2016, Junio C Hamano wrote:
+>
+>> * js/mingw-isatty (2016-12-11) 1 commit
+>>   (merged to 'next' on 2016-12-12 at 60c1da6676)
+>>  + mingw: intercept isatty() to handle /dev/null as Git expects it
+>> 
+>>  We often decide if a session is interactive by checking if the
+>>  standard I/O streams are connected to a TTY, but isatty() emulation
+>>  on Windows incorrectly returned true if it is used on NUL (i.e. an
+>>  equivalent to /dev/null). This has been fixed.
+>
+> I'd like to suggest a reword: we did not use an isatty() emulation, but
+> Windows' own _isatty() function that simply has different semantics than
+> what Git expected. *Now* we have an isatty() emulation that wraps
+> _isatty() and emulates the behavior expected by Git.
 
-> * jc/bundle (2016-03-03) 6 commits
->  - index-pack: --clone-bundle option
->  - Merge branch 'jc/index-pack' into jc/bundle
->  - bundle v3: the beginning
->  - bundle: keep a copy of bundle file name in the in-core bundle header
->  - bundle: plug resource leak
->  - bundle doc: 'verify' is not about verifying the bundle
-> 
->  The beginning of "split bundle", which could be one of the
->  ingredients to allow "git clone" traffic off of the core server
->  network to CDN.
-> 
->  While I think it would make it easier for people to experiment and
->  build on if the topic is merged to 'next', I am at the same time a
->  bit reluctant to merge an unproven new topic that introduces a new
->  file format, which we may end up having to support til the end of
->  time.  It is likely that to support a "prime clone from CDN", it
->  would need a lot more than just "these are the heads and the pack
->  data is over there", so this may not be sufficient.
-> 
->  Will discard.
+Thanks for a comment.
 
-You could mark it as experimental, subject to change, and merge it to
-`next` safely.
+One of the things that the new code does with the fix is this:
 
-Ciao,
-Dscho
++/* In this file, we actually want to use Windows' own isatty(). */
++#undef isatty
++
+
+which undoes "#define isatty winansi_isatty" that other code uses,
+so that the implementation of winansi_isatty() can say isatty() and
+get what people usually get when they say "isatty()" on Windows.
+
+Before or after that patch, there is no "#define isatty _isatty" in
+our codebase.  I take all of the above to mean that Windows does
+give us isatty() function (not a macro--as otherwise it won't become
+available to us again by "#undef isatty"), that in turn internally
+calls what it calls _isatty() that says true for NUL?
+
+Following the above reasoning, I meant "whatever you get when you
+write isatty() on Windows" by "isatty() emulation on Windows" in the
+paragraph you are commenting on.  I didn't say "what was written by
+Git for Windows folks to emulate isatty()" or "what was given by MS
+development tools", as that distinction is immaterial and does not
+change the value of the fix.
