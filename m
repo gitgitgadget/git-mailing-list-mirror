@@ -2,100 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BF8F1FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 11:17:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 168421FF40
+	for <e@80x24.org>; Tue, 13 Dec 2016 11:18:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932633AbcLMLRE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 06:17:04 -0500
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:49412 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932464AbcLMLRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 06:17:04 -0500
-Received: (qmail 25190 invoked from network); 13 Dec 2016 11:17:01 -0000
-Received: (qmail 14181 invoked from network); 13 Dec 2016 11:17:01 -0000
-Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <gitster@pobox.com>; 13 Dec 2016 11:17:01 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-Message-ID: <1481627820.2041.21.camel@sapo.pt>
-Subject: Re: [PATCH v6 01/16] Git.pm: add subroutines for commenting lines
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        =?ISO-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>,
-        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-Date:   Tue, 13 Dec 2016 10:17:00 -0100
-In-Reply-To: <xmqqy3zno2qv.fsf@gitster.mtv.corp.google.com>
-References: <20161111124541.8216-1-vascomalmeida@sapo.pt>
-         <20161111124541.8216-2-vascomalmeida@sapo.pt>
-         <1479823833.1956.7.camel@sapo.pt>
-         <xmqqoa17quls.fsf@gitster.mtv.corp.google.com>
-         <1481303956.4934.8.camel@sapo.pt>
-         <alpine.DEB.2.20.1612091832310.23160@virtualbox>
-         <xmqqk2b8rbbb.fsf@gitster.mtv.corp.google.com>
-         <1481364496.1993.14.camel@sapo.pt>
-         <xmqqy3zno2qv.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S932804AbcLMLSK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 06:18:10 -0500
+Received: from mail-io0-f178.google.com ([209.85.223.178]:33862 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932464AbcLMLSJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 06:18:09 -0500
+Received: by mail-io0-f178.google.com with SMTP id p42so49442433ioo.1
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 03:18:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TM1pruogXTjciHRsk8MzMPZ9taO6+hSESVaZ+lhJXQw=;
+        b=cYfD7weOdlZdqA8B/5vuRLN1aXzsoRAFTHgPfdaZX9TdUGmg91lPiPcLlebSnt/swR
+         Ukgk120KnlcWpdAL04fBsof04bNk+agse8uGDpyCY9bcZF7DeYhJEkKJmzZGLkRyDxDk
+         mG7uUIkNHIfeTjVfzzaUx/fDn7L3Gr7RcuwL25Ev53ntziAfQliW5TJQzVB4huF9oW9K
+         YnrSIuSxNAJaBi+RcOSszBPKOVbI9MBBhTHz6IB1J36rgGIPzt5kMm9Pt5LGbYkIKrAB
+         wPYQMo9VIjq0hA7+EVI+5MPN7LVSIX6mQeMvEkmZnEisNTD38ddcYHaKkxGJsZleTtb4
+         C+Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TM1pruogXTjciHRsk8MzMPZ9taO6+hSESVaZ+lhJXQw=;
+        b=cKeG+m4ORiTEVDcKqW4Hwmp6e9EGWvdpwaB1SGa0bCHFRoWbg/6A8b4LXITm6GAip6
+         KlXSTaXKa4HEX4ntdSE3JlRuN0RK5n/OSOuyd9PBShM98sSZbjNH+z9GZI7ucGHQ+sQY
+         daankTKV8mk8GrDexRJ4Z60qikvJHs5qvkqV8rcdK98rtplp6oIcVGa21a8AxCS4DgZM
+         Z3qcwDxtHCkvdu9zERbIB69jERqqrXIVj0jM14DQvGYUEnRPjUKBq8dTRU025uFrz+F+
+         ogNl2kRSkZyy2Igs0AarHhkelayhfUf2EZYt3XaUADZb3VFFmLl4as5a8iEyH4QWsehf
+         9UcQ==
+X-Gm-Message-State: AKaTC03mNPjhh0htTASgkIn4itJaNB9BpIQpjQkIMF3oOsOhFRuiYsElctKVmHAGiYR8+sUK+RKNU1K+fMmh8Q==
+X-Received: by 10.36.184.194 with SMTP id m185mr1833786ite.3.1481627888449;
+ Tue, 13 Dec 2016 03:18:08 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.64.69.3 with HTTP; Tue, 13 Dec 2016 03:17:37 -0800 (PST)
+In-Reply-To: <CAE5ih7_6Ap_dY3mRb3Hk2yzDRMkZ3HnnQOaikF=ybx_XNdVWhQ@mail.gmail.com>
+References: <20161210215734.7468-1-luke@diamand.org> <20161210215734.7468-2-luke@diamand.org>
+ <CAE5ih7_6Ap_dY3mRb3Hk2yzDRMkZ3HnnQOaikF=ybx_XNdVWhQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 13 Dec 2016 18:17:37 +0700
+Message-ID: <CACsJy8A+cEJoKyfEnJvqwT4pvUGgcrmJdRmXKyRoAff4EYgcuw@mail.gmail.com>
+Subject: Re: [PATCHv2] git-p4: support git worktrees
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>,
+        Vinicius Kursancew <viniciusalexandre@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A Sáb, 10-12-2016 às 14:09 -0800, Junio C Hamano escreveu:
-> We only update comment_line_char from the default "#" when the
-> configured value is a single-byte character and we ignore incorrect
-> values in the configuration file.  So I think the patch you sent is
-> correct after all.
+On Sun, Dec 11, 2016 at 2:19 PM, Luke Diamand <luke@diamand.org> wrote:
+> On 10 December 2016 at 21:57, Luke Diamand <luke@diamand.org> wrote:
+>> git-p4 would attempt to find the git directory using
+>> its own specific code, which did not know about git
+>> worktrees. This caused git operations to fail needlessly.
+>>
+>> Rework it to use "git rev-parse --git-dir" instead, which
+>> knows about worktrees.
+>
+> Actually this doesn't work as well as the original version. "git
+> rev-parse --git-dir" won't go and find the ".git" subdirectory. The
+> previous version would go looking for it, so this would introduce a
+> regression.
 
-I am still not sure what version do we prefer.
-
-Check whether core.commentchar is a single character. If not, use '#'
-as the $comment_line_char.
-
-+sub get_comment_line_char {
-+       my $comment_line_char = config("core.commentchar") || '#';
-+       $comment_line_char = '#' if ($comment_line_char eq 'auto');
-+       $comment_line_char = '#' if (length($comment_line_char) != 1);
-+       return $comment_line_char;
-+}
-
-Check whether core.commentchar is a single character. If not, use the
-first character of the core.commentchar value, mirroring the "rebase
--i" behavior introduced recently.
-
-+sub get_comment_line_char {
-+       my $comment_line_char = config("core.commentchar") || '#';
-+       $comment_line_char = '#' if ($comment_line_char eq 'auto');
-+       if (length($comment_line_char) != 1) {
-+               # use first character
-+               $comment_line_char = substr($comment_line_char, 0, 1);
-+       }
-+       return $comment_line_char;
-+}
-
-Or akin to what I had in the first patch related to handling 'auto'
-value of core.commentchar configuration variable:
-
-+sub get_comment_line_char {
-+       my $comment_line_char = config("core.commentchar") || '#';
-+       $comment_line_char = '#' if ($comment_line_char eq 'auto');
-+       return $comment_line_char;
-+}
-
-Which assumes that the value of core.commentchar configuration variable
-is either 'auto' or one single character, or the variable is not
-defined.
+Maybe git rev-parse --git-path HEAD, then strip out the /HEAD part?
+-- 
+Duy
