@@ -7,93 +7,69 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 731A12042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 15:39:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ECAE2042F
+	for <e@80x24.org>; Tue, 13 Dec 2016 15:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933843AbcLMPjV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 10:39:21 -0500
-Received: from mout.gmx.net ([212.227.15.18]:51454 "EHLO mout.gmx.net"
+        id S933908AbcLMPjx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 10:39:53 -0500
+Received: from mout.gmx.net ([212.227.15.15]:52404 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932493AbcLMPjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 10:39:15 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Md3ZK-1bzqRl29sQ-00IEoT; Tue, 13
- Dec 2016 16:32:35 +0100
-Date:   Tue, 13 Dec 2016 16:32:34 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S932493AbcLMPjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 10:39:52 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSduu-1c9Dvj1oJA-00Rcq5; Tue, 13
+ Dec 2016 16:39:47 +0100
+Date:   Tue, 13 Dec 2016 16:39:46 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2 29/34] sequencer (rebase -i): show only failed `git
- commit`'s output
-In-Reply-To: <cover.1481642927.git.johannes.schindelin@gmx.de>
-Message-ID: <4cce3c1462b290494b3195c9ff4918ad99c24a14.1481642927.git.johannes.schindelin@gmx.de>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2016, #02; Mon, 12)
+In-Reply-To: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1612131638290.23160@virtualbox>
+References: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RSrrVdCvuQrxPPuMVxQMRBlTz9H9D5sdtMTyJ3P2VZPD6n65AWd
- pobpdpbsiFH0jYxIkYKYZziMIfWL/Ha2qATkmq0mCfulx5CXGhCp7K26/FO32N+chZVCVtl
- 8k4mVJv8toDGUaIYZNgIi4GgocCVw97tbicjegHQ/dCbfTUFW3ZQ/iYSyoYRSt6Hg+cWspI
- 3zjXReb5ft/cMIiLmn08g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JoMBeejJZvw=:1hhJRl66tk0gdajEfTFoq1
- z5KIed7Xf3IstKsWcuTz22DDSHnV2ecDnVif5s28XiOqGi7EnNZ0zVcY3WFjQSPYDZQ9AWFAA
- BJowoyVYgj/JdzcQgN0KJnTCddij37HOMhxvfKaITmFxnjHOB4dzV3JL5Yuex5G+etIpbEr7X
- 0VcvzMNj8tkL6ORz1oIdP3BDLLcG1YG2/aF3Cwxcw3F2AV8ivzTEkw7Bx6NHq/PDrkdlgOpFi
- p8ZCQu90AZ1e6cnJ3/CcNNB3dVhGEzNPamIQFQrxjndKK828aerE3AIvANxKVd74UZExBf+bw
- /pVwtFHir9PVmqcF1xJ2onWUxBpc4Gjr9o2tEfgCcEpXGPjLtQLO9v7vOUBGXF89m7qNjBFsD
- 0VJa7kHlxDCoPLmBdgetljhZhL/MMqF0XeIhiVT1AVElnYtc6wnop4HIX6pCdZv37bsdeY8Qt
- TABIEmk7hh3bpEan5OyBCXLEiBzU3+a33YYttK0t59fQ+mSliTBNHNjfGGzLqpR71nAPTP7D1
- U0mzMNTEBveghg9I+NDyBSxYTCF7KM/IuiLqKYeadHFeDQ1KcXjYh7n61MTeh+r82fdI8YtCB
- 5XxQJ0PwI20SaWFyptgLZIiQvs364tBXEevax6JBrhVbY3lMKr9ySeFy/qzYOt0D3we/wtNOY
- vVd4nFlkD8gbXYi2EwrohGpBM0c7RHX5WgYQbVkxyAjgUtnz7SDmm6NH1PrHdQiSjrhANsLeO
- sYNBr/Phw51UZrkze0kMDzQ6N8DtaFWVgQrTHHnaRHVCD47EAQ9Z5s27dYGZmGeC2X8eUQJNf
- Owlclns
+X-Provags-ID: V03:K0:cfvw5cNw2iNz1y5QImoQxFGsUx9vn0eA4Ao6j2YtIE8r7vTlgsG
+ mKHH9UVwXKF7pRah5hUNtn6Nv3fcyLnJlngXYrbfRhnrtu2oc0HxKaIpeVJBO1u3zDCblO8
+ KEvZJp12z8ph6AfX/ofay68atDeUN7lq0KWhQPqMwPmi1oweFGsd8Hy/4fsmEJ11d5ryJhl
+ 0ayAdDgCA1D14021Gp2XQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZXkx+9CkRTY=:r9+p2TVGdUoWb/f54FAPtt
+ 2Vx58RBRzuKWvVs9jo8mBArTesmuAOELWe1hUhH6sUiLf59JslkKv1fi4zT9Un+u8JkLkAoD2
+ eF1qUlSgEEVt9TyPA6uNhf63LO5niyMU3op5rFkP0Uk/UuAJEGDNr6G+RDu+WPkmjyn1JvaGN
+ 9dKrjHH8+k7CVKJrF9rNA7ylbzx3e26q87L15CObteuyor4GvURqdapefWdUBR7X1hTNzyhcl
+ E7uaAyPfKcSoslDDXtYIuKBIT3VcOzknVXi4cT3cUCscaqcxu6DWHfP8vOCP4XxUjWFqTdkT3
+ +ZohZwlXdChTmyJ6qyBWjZd1mb3Qq//Wg9bZ1Yw4qMWh4B+OtSFvJ4fxMkKAmM1/ci+PXlgGv
+ MI8FrmjeRh1ujcTo4X2i/ttuDP5iBzI4CAtji4DjAdMzzhOT8R8la+Iz9y5eGBausccRsST4Y
+ AQbmYn4Ad2yOgpT+BSupRLfySmGk6Z4utefiKdqzWxzwR4Ec4mU/DZljN0/y/MjB4GP5bRof4
+ miZTMdK0lY5ESx88R2b+ZuJDX83PH1XlmUtZj1xjX/VeBzhACZUUPnGEzdPPTKvdkQfFy4/aD
+ EZfYNP+HsJvoEqkEvUI3+JXbVysOky2vAxQLwWIpoGF6hqT6V/AC3OoXmEovrqIBDk7gLS8Iy
+ oarR63p5+mkrZLXF2elR1dexMb9a9nJWaDhVbY1JD+dNQ2uwDMYCuAsKa8BIsMlwugWQKFCwN
+ UHXOLnyLWZROLeRrMGBcnawRAktezYVWm9dvA7EcPKoHFlKwC3jKMMo56pGb1eZT+YmYwaTbJ
+ BeiVecV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the behavior of the shell script version of the interactive
-rebase, by using the `output` function defined in `git-rebase.sh`.
+Hi Junio,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+On Mon, 12 Dec 2016, Junio C Hamano wrote:
 
-diff --git a/sequencer.c b/sequencer.c
-index 63f6f25ced..dfa4fab98b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -647,10 +647,15 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- {
- 	char **env = NULL;
- 	struct argv_array array;
--	int rc;
-+	int opt = RUN_GIT_CMD, rc;
- 	const char *value;
- 
- 	if (is_rebase_i(opts)) {
-+		if (!edit) {
-+			opt |= RUN_COMMAND_STDOUT_TO_STDERR;
-+			opt |= RUN_HIDE_STDERR_ON_SUCCESS;
-+		}
-+
- 		env = read_author_script();
- 		if (!env) {
- 			const char *gpg_opt = gpg_sign_opt_quoted(opts);
-@@ -687,7 +692,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	if (opts->allow_empty_message)
- 		argv_array_push(&array, "--allow-empty-message");
- 
--	rc = run_command_v_opt_cd_env(array.argv, RUN_GIT_CMD, NULL,
-+	rc = run_command_v_opt_cd_env(array.argv, opt, NULL,
- 			(const char *const *)env);
- 	argv_array_clear(&array);
- 	free(env);
--- 
-2.11.0.rc3.windows.1
+> * js/mingw-isatty (2016-12-11) 1 commit
+>   (merged to 'next' on 2016-12-12 at 60c1da6676)
+>  + mingw: intercept isatty() to handle /dev/null as Git expects it
+> 
+>  We often decide if a session is interactive by checking if the
+>  standard I/O streams are connected to a TTY, but isatty() emulation
+>  on Windows incorrectly returned true if it is used on NUL (i.e. an
+>  equivalent to /dev/null). This has been fixed.
 
+I'd like to suggest a reword: we did not use an isatty() emulation, but
+Windows' own _isatty() function that simply has different semantics than
+what Git expected. *Now* we have an isatty() emulation that wraps
+_isatty() and emulates the behavior expected by Git.
 
+Thanks,
+Dscho
