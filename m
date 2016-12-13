@@ -2,122 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA7341FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 08:47:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADCE9206A4
+	for <e@80x24.org>; Tue, 13 Dec 2016 08:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932386AbcLMIq7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 03:46:59 -0500
-Received: from praxis.kevinlocke.name ([205.185.125.39]:42680 "EHLO
-        praxis.kevinlocke.name" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752932AbcLMIq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 03:46:59 -0500
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Dec 2016 03:46:58 EST
-Received: from kevinolos (host-98-127-248-171.bln-mt.client.bresnan.net [98.127.248.171])
-        (Authenticated sender: kevin@kevinlocke.name)
-        by praxis.kevinlocke.name (Postfix) with ESMTPSA id 426603120443
-        for <git@vger.kernel.org>; Tue, 13 Dec 2016 01:41:53 -0700 (MST)
-Received: by kevinolos (Postfix, from userid 1000)
-        id 5DFB14A1D23; Tue, 13 Dec 2016 01:41:51 -0700 (MST)
-Date:   Tue, 13 Dec 2016 01:41:51 -0700
-From:   Kevin Locke <kevin@kevinlocke.name>
+        id S932698AbcLMItT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 03:49:19 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34696 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753259AbcLMItP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 03:49:15 -0500
+Received: by mail-pg0-f68.google.com with SMTP id e9so3853736pgc.1
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 00:49:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=TgUf61iWQlvTXThgJMY2igCd4UNnRTmh85V9WMn3fGw=;
+        b=tVngytXMpgAsa++wZhBc1fQBa2wqS47C+8rVBWy84W/LTFEOKhMEjxauL1B8RCdZgP
+         J7LcnUTykFhm/xQAnUItSNzYyWLEEGbytmrjk3KOJoHzrN3WntKB8yveacEzLXXiSw+9
+         Bbnh4yPrRVLhx8DLfGB4ruld1bknkeKk7Gr4RClhty+7TMnmIZDj6DQkrXBkoJQbTve+
+         teJ8x+YUnuc/HzAlYHUBKPmyc6nF3yeXKLQ0xwXx3e5OxxhQfViAk1om65x8psbXP4ml
+         JHKfCM4hv5l2LXxWOCmS0ziUflpChVku/Tod51NRpnv0bWlACKwh8KjaKsB/MmZRiTri
+         FZbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=TgUf61iWQlvTXThgJMY2igCd4UNnRTmh85V9WMn3fGw=;
+        b=dJJvayxk3kuZDH1wXxsao8p73cTBw9+IQ2G59BUEehD+37cYQnljJawBytaI0/k/sn
+         /a7XmyWjJPIuA8Zs+XTcOJH0OUTg+fYaeJRMiy5rCwe98fFps0n1pGw0SoBWqXcRol7t
+         DeKhXsQQsXowjyhZtzZT1dY1S9UneE8ee7U3z+6k+Ggk0uVhfFv+RVy4JRm5keZIwauV
+         OcafNCU8kl8/2Qst/xUQ9h8xKhuscdQpE2j+B2DtS29OeCdgYM9r5d6UB2kAmAZ0ONhp
+         gzypjeZDzRlFXYMn7MfqE85t4JNcGs7AGx3GoFOaoYzWXkv808i4ZfivTZKa3leb9mLx
+         LL7Q==
+X-Gm-Message-State: AKaTC02wdIN5b7KAUXvc0eY94UdxzadTxZ3HbWSxYwYRhfl/a46VRTdI4MLCqpipuN2B5A==
+X-Received: by 10.84.168.4 with SMTP id e4mr194612994plb.160.1481618955087;
+        Tue, 13 Dec 2016 00:49:15 -0800 (PST)
+Received: from chrisp-dl.atlnz.lc ([2001:df5:b000:22:7966:ce03:97ae:8cb])
+        by smtp.gmail.com with ESMTPSA id m5sm79839976pgn.42.2016.12.13.00.49.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 13 Dec 2016 00:49:14 -0800 (PST)
+From:   Chris Packham <judge.packham@gmail.com>
 To:     git@vger.kernel.org
-Subject: log: range_set_append: Assertion failed with -L:funcname:
-Message-ID: <20161213084151.vwzl56n7ryf7pxfc@kevinolos>
-Mail-Followup-To: Kevin Locke <kevin@kevinlocke.name>, git@vger.kernel.org
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="enpqbrz5rl3s3qwy"
-Content-Disposition: inline
-User-Agent: NeoMutt/20161126 (1.7.1)
+Cc:     mah@jump-ing.de, peff@peff.net, jacob.keller@gmail.com,
+        gitster@pobox.com, Chris Packham <judge.packham@gmail.com>
+Subject: [PATCHv2 1/2] merge: Add '--continue' option as a synonym for 'git commit'
+Date:   Tue, 13 Dec 2016 21:48:58 +1300
+Message-Id: <20161213084859.13426-1-judge.packham@gmail.com>
+X-Mailer: git-send-email 2.11.0.24.ge6920cf
+In-Reply-To: <20161212083413.7334-1-judge.packham@gmail.com>
+References: <20161212083413.7334-1-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Teach 'git merge' the --continue option which allows 'continuing' a
+merge by completing it. The traditional way of completing a merge after
+resolving conflicts is to use 'git commit'. Now with commands like 'git
+rebase' and 'git cherry-pick' having a '--continue' option adding such
+an option to 'git merge' presents a consistent UI.
 
---enpqbrz5rl3s3qwy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Chris Packham <judge.packham@gmail.com>
+---
 
-Hi all,
+Notes:
+    Changes in v2:
+    - add --continue to builtin_merge_usage
+    - verify that no other arguments are present when --continue is used.
+    - add basic test
 
-I encountered the following assertion failure when running in a local
-clone of the https://github.com/nodejs/node.git repository:
+ Documentation/git-merge.txt | 13 ++++++++++++-
+ builtin/merge.c             | 22 +++++++++++++++++++++-
+ t/t7600-merge.sh            |  8 ++++++++
+ 3 files changed, 41 insertions(+), 2 deletions(-)
 
-$ git log -L:writeFileSync:lib/fs.js -L:appendFileSync:lib/fs.js aa67b1^..aa67b1
-git: line-log.c:71: range_set_append: Assertion `rs->nr == 0 || rs->ranges[rs->nr-1].end <= a' failed.
-Aborted
-
-I was able to provoke the same assertion failure in the git repository
-with the following:
-
-$ git log -L:print_one_push_status:transport.c -L:transport_summary_width:transport.c f9db0c^..f9db0c
-
-(FWIW, f9db0c is a merge commit while aa67b1 is not.)
-
-I was able to reproduce the error with git built from 13b8f6 (the
-commit which introduced git log -L:pattern:file) as well as current
-next (91ed5b).  The backtrace from next is attached.
-
-Any assistance to avoid or fix the error would be greatly appreciated.
-
-Thanks,
-Kevin
-
-P.S.  Please CC me in replies as I am not subscribed to this ML.
-
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index b758d5556..765b0f26e 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
+ 'git merge' <msg> HEAD <commit>...
+ 'git merge' --abort
++'git merge' --continue
+ 
+ DESCRIPTION
+ -----------
+@@ -61,6 +62,9 @@ reconstruct the original (pre-merge) changes. Therefore:
+ discouraged: while possible, it may leave you in a state that is hard to
+ back out of in the case of a conflict.
+ 
++The fourth syntax ("`git merge --continue`") can only be run after the
++merge has resulted in conflicts. 'git merge --continue' will take the
++currently staged changes and complete the merge.
+ 
+ OPTIONS
+ -------
+@@ -99,6 +103,12 @@ commit or stash your changes before running 'git merge'.
+ 'git merge --abort' is equivalent to 'git reset --merge' when
+ `MERGE_HEAD` is present.
+ 
++--continue::
++	Take the currently staged changes and complete the merge.
+++
++'git merge --continue' is equivalent to 'git commit' when
++`MERGE_HEAD` is present.
++
+ <commit>...::
+ 	Commits, usually other branch heads, to merge into our branch.
+ 	Specifying more than one commit will create a merge with
+@@ -277,7 +287,8 @@ After seeing a conflict, you can do two things:
+ 
+  * Resolve the conflicts.  Git will mark the conflicts in
+    the working tree.  Edit the files into shape and
+-   'git add' them to the index.  Use 'git commit' to seal the deal.
++   'git add' them to the index.  Use 'git merge --continue' to seal the
++   deal.
+ 
+ You can work through the conflict with a number of tools:
+ 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index b65eeaa87..379685223 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -46,6 +46,7 @@ static const char * const builtin_merge_usage[] = {
+ 	N_("git merge [<options>] [<commit>...]"),
+ 	N_("git merge [<options>] <msg> HEAD <commit>"),
+ 	N_("git merge --abort"),
++	N_("git merge --continue"),
+ 	NULL
+ };
+ 
+@@ -65,6 +66,7 @@ static int option_renormalize;
+ static int verbosity;
+ static int allow_rerere_auto;
+ static int abort_current_merge;
++static int continue_current_merge;
+ static int allow_unrelated_histories;
+ static int show_progress = -1;
+ static int default_to_upstream = 1;
+@@ -223,6 +225,8 @@ static struct option builtin_merge_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOL(0, "abort", &abort_current_merge,
+ 		N_("abort the current in-progress merge")),
++	OPT_BOOL(0, "continue", &continue_current_merge,
++		N_("continue the current in-progress merge")),
+ 	OPT_BOOL(0, "allow-unrelated-histories", &allow_unrelated_histories,
+ 		 N_("allow merging unrelated histories")),
+ 	OPT_SET_INT(0, "progress", &show_progress, N_("force progress reporting"), 1),
+@@ -739,7 +743,7 @@ static void abort_commit(struct commit_list *remoteheads, const char *err_msg)
+ 	if (err_msg)
+ 		error("%s", err_msg);
+ 	fprintf(stderr,
+-		_("Not committing merge; use 'git commit' to complete the merge.\n"));
++		_("Not committing merge; use 'git merge --continue' to complete the merge.\n"));
+ 	write_merge_state(remoteheads);
+ 	exit(1);
+ }
+@@ -1166,6 +1170,22 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		goto done;
+ 	}
+ 
++	if (continue_current_merge) {
++		int nargc = 1;
++		const char *nargv[] = {"commit", NULL};
++
++		if (argc)
++			usage_msg_opt("--continue expects no arguments",
++			      builtin_merge_usage, builtin_merge_options);
++
++		if (!file_exists(git_path_merge_head()))
++			die(_("There is no merge in progress (MERGE_HEAD missing)."));
++
++		/* Invoke 'git commit' */
++		ret = cmd_commit(nargc, nargv, prefix);
++		goto done;
++	}
++
+ 	if (read_cache_unmerged())
+ 		die_resolve_conflict("merge");
+ 
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 85248a14b..44b34ef3a 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -154,6 +154,7 @@ test_expect_success 'test option parsing' '
+ 	test_must_fail git merge -s foobar c1 &&
+ 	test_must_fail git merge -s=foobar c1 &&
+ 	test_must_fail git merge -m &&
++	test_must_fail git merge --continue foobar &&
+ 	test_must_fail git merge
+ '
+ 
+@@ -763,4 +764,11 @@ test_expect_success 'merge nothing into void' '
+ 	)
+ '
+ 
++test_expect_success 'merge can be completed with --continue' '
++	git reset --hard c0 &&
++	git merge --no-ff --no-commit c1 &&
++	git merge --continue &&
++	verify_parents $c0 $c1
++'
++
+ test_done
 -- 
-Kevin Locke  |  kevin@kevinlocke.name    | XMPP: kevin@kevinlocke.name
-             |  https://kevinlocke.name  | IRC:   kevinoid on freenode
+2.11.0.24.ge6920cf
 
---enpqbrz5rl3s3qwy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="backtrace.txt"
-
-#0  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:58
-#1  0x00007ffff6fa040a in __GI_abort () at abort.c:89
-#2  0x00007ffff6f97e47 in __assert_fail_base (fmt=<optimized out>, 
-    assertion=assertion@entry=0x555555754400 "rs->nr == 0 || rs->ranges[rs->nr-1].end <= a", file=file@entry=0x5555557543eb "line-log.c", line=line@entry=71, 
-    function=function@entry=0x555555754730 <__PRETTY_FUNCTION__.29201> "range_set_append") at assert.c:92
-#3  0x00007ffff6f97ef2 in __GI___assert_fail (
-    assertion=0x555555754400 "rs->nr == 0 || rs->ranges[rs->nr-1].end <= a", 
-    file=0x5555557543eb "line-log.c", line=71, 
-    function=0x555555754730 <__PRETTY_FUNCTION__.29201> "range_set_append")
-    at assert.c:101
-#4  0x00005555556677dd in range_set_append (rs=0x7fffffffd320, a=421, b=434)
-    at line-log.c:71
-#5  0x00005555556686f8 in range_set_shift_diff (out=0x7fffffffd320, 
-    rs=0x7fffffffd330, diff=0x7fffffffd3a0) at line-log.c:442
-#6  0x00005555556687aa in range_set_map_across_diff (out=0x7fffffffd3c0, 
-    rs=0x555555ad9698, diff=0x7fffffffd3a0, touched_out=0x7fffffffd410)
-    at line-log.c:465
-#7  0x000055555566a33e in process_diff_filepair (rev=0x7fffffffd5f0, 
-    pair=0x555555a60830, range=0x555555ad9680, diff_out=0x7fffffffd410)
-    at line-log.c:1036
-#8  0x000055555566a4ec in process_all_files (range_out=0x555555a5ba10, 
-    rev=0x7fffffffd5f0, queue=0x555555a078a0, range=0x555555a347a0)
-    at line-log.c:1076
-#9  0x000055555566a852 in process_ranges_merge_commit (rev=0x7fffffffd5f0, 
-    commit=0x555555a19f70, range=0x555555a347a0) at line-log.c:1158
-#10 0x000055555566aa37 in process_ranges_arbitrary_commit (rev=0x7fffffffd5f0, 
-    commit=0x555555a19f70) at line-log.c:1202
-#11 0x000055555566ab4b in line_log_filter (rev=0x7fffffffd5f0)
-    at line-log.c:1236
-#12 0x00005555556c59f1 in prepare_revision_walk (revs=0x7fffffffd5f0)
-    at revision.c:2773
-#13 0x00005555555ac8a9 in cmd_log_walk (rev=0x7fffffffd5f0)
-    at builtin/log.c:347
-#14 0x00005555555ad9e1 in cmd_log (argc=4, argv=0x7fffffffe0d8, prefix=0x0)
-    at builtin/log.c:682
-#15 0x0000555555566079 in run_builtin (p=0x5555559b5ba0 <commands+1152>, 
-    argc=4, argv=0x7fffffffe0d8) at git.c:373
-#16 0x00005555555662fa in handle_builtin (argc=4, argv=0x7fffffffe0d8)
-    at git.c:572
-#17 0x0000555555566534 in cmd_main (argc=4, argv=0x7fffffffe0d8) at git.c:677
-#18 0x00005555555fd6bf in main (argc=4, argv=0x7fffffffe0d8)
-    at common-main.c:40
-
---enpqbrz5rl3s3qwy--
