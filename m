@@ -2,90 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D29581FF40
-	for <e@80x24.org>; Tue, 13 Dec 2016 07:28:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F5EB1FF40
+	for <e@80x24.org>; Tue, 13 Dec 2016 08:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752753AbcLMH2d (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 02:28:33 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51469 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752359AbcLMH2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 02:28:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD7274D8D1;
-        Tue, 13 Dec 2016 02:28:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wAmoS1Jxkdur0+3ZwfUBxku9oAo=; b=McNjMq
-        evdPHW0fwnwH17IqLZ8AQ/8qBBhXyZSmQW+SpQG86Fh/i1QMs7QvY76OsGG3o/2R
-        zW1ErMMTfqUtGmWPW9Dkl3u2SnWIbLqnnqqWSZFxxPBX5HfE27ZrN6pRP/ugM++A
-        Mlcy78kgAvi+9TdSioULWz+99R+fSYP8dd6OM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mVrIpZlPpVAFcJiJXHlMXA6ezl0Jo8Co
-        UNXg730MX8uowh02fjvnpDRgSgq+UkOAoo6p3MFa3pgot7C9ge3DNhJKkaDNyhGQ
-        uinw/xAD38kDpYuFObmEnAyo4D7rJEyw00Tej+s3VwGPZpKnc2EO5gQD1lmI14Ob
-        arGw3asYBvo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ACB224D8D0;
-        Tue, 13 Dec 2016 02:28:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2556A4D8CF;
-        Tue, 13 Dec 2016 02:28:31 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, David.Turner@twosigma.com, bmwill@google.com
-Subject: Re: [PATCH 0/6] git-rm absorbs submodule git directory before deletion
-References: <20161213014055.14268-1-sbeller@google.com>
-Date:   Mon, 12 Dec 2016 23:28:29 -0800
-In-Reply-To: <20161213014055.14268-1-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 12 Dec 2016 17:40:49 -0800")
-Message-ID: <xmqqr35c5luq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+        id S1753118AbcLMIdZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 03:33:25 -0500
+Received: from mail-io0-f171.google.com ([209.85.223.171]:32942 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752892AbcLMIdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 03:33:24 -0500
+Received: by mail-io0-f171.google.com with SMTP id d9so212602705ioe.0
+        for <git@vger.kernel.org>; Tue, 13 Dec 2016 00:33:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ORg7f4QS3XZ/om9/sUSEFrDAouAEzLx/ynSu/YPdcS0=;
+        b=d3Y+vORhAyuRbDa+9z5GgaDtHBFddsp0+1/MxYVdyOszhbuYfk0G0mPwtiaFPXSeG/
+         BjVLPppTTHUiBidS+V1FxJMLyKjQ37EsVSNyOrPiMlbGz11YRjNAllf4bP8gJFao31yu
+         00bfROlmCXgpM+1xDpHh8RsEjGtic014cFfiwuWbJVIKLLFU85BxYDHuqIJIZhqN2yfy
+         HbGDk1jHb3vEjaRNuhQ5KYU/dg723R1hYLwEE7zQBNab77JljapGeZnuHvUQcrDMFj0B
+         TfQ4sA6Z8J5gFp7ixL2gF0DhqETdlpTwQoLNv7YO+YYres7xT1OqvCWu4eNBi0hTIeff
+         NuxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ORg7f4QS3XZ/om9/sUSEFrDAouAEzLx/ynSu/YPdcS0=;
+        b=ktmnSYJs6T78KAxSYDtPaNq36mXE3JsLSey6uKJ7Lr2IBVqyVIqxqIQUZj9YmpD5iu
+         NiqhToyg9L5ga6IjK+OWwh91PnHqTotNNbf2NrXaJ99ZJBuJug0MsNF1Hnd9vXUBlN3j
+         FruceJZL+BfynW018orGpI0LoGs4OolRuhpHt8GhKumt9y/QZGjFlBVA89Begv0O23p5
+         /XCQM4q+tEXe5Ytr2qeIlYXfsh40g7EBe0QxQnAjhxioreZgLcHpP/O3qGpKkcTRMa7O
+         tblHTFuj5xumN/Y2M252rOBNEIsUW7bmVQjZDpj0V2kQWJCl75ZeEb+anJOSpRfBhJfo
+         On8g==
+X-Gm-Message-State: AKaTC01GHpkixggyPbAU8mRFqWL2nu3Egve3Sjgqz/mNf3A86J//9//jD7lp6TN7UMUmZ+gXr/Qgm2kfL8R4jw==
+X-Received: by 10.36.203.66 with SMTP id u63mr1478038itg.111.1481618003790;
+ Tue, 13 Dec 2016 00:33:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF68C798-C105-11E6-9720-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.79.0.93 with HTTP; Tue, 13 Dec 2016 00:33:23 -0800 (PST)
+In-Reply-To: <b814932a-b395-2b27-979f-cd170ba363ee@jump-ing.de>
+References: <CAFOYHZAsU_gNb=_K=iMFKFdt60SJ4Wm=Ag5=XMXuQgxNxCqWLA@mail.gmail.com>
+ <20161212083413.7334-1-judge.packham@gmail.com> <b814932a-b395-2b27-979f-cd170ba363ee@jump-ing.de>
+From:   Chris Packham <judge.packham@gmail.com>
+Date:   Tue, 13 Dec 2016 21:33:23 +1300
+Message-ID: <CAFOYHZCEOXxFCih9E00kf1A7Y_QKe2GCuCB6w8_DJVRevNN9CQ@mail.gmail.com>
+Subject: Re: [RFC/PATCH] merge: Add '--continue' option as a synonym for 'git commit'
+To:     Markus Hitter <mah@jump-ing.de>
+Cc:     GIT <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Dec 12, 2016 at 10:02 PM, Markus Hitter <mah@jump-ing.de> wrote:
+> Am 12.12.2016 um 09:34 schrieb Chris Packham:
+>> Teach 'git merge' the --continue option which allows 'continuing' a
+>> merge by completing it. The traditional way of completing a merge after
+>> resolving conflicts is to use 'git commit'. Now with commands like 'git
+>> rebase' and 'git cherry-pick' having a '--continue' option adding such
+>> an option to 'git merge' presents a consistent UI.
+>
+> Like.
+>
+> While Junio is entirely right that this is redundant, the inner workings of Git are just voodoo for a (guessed) 95% of users out there, so a consistent UI is important.
+>
+>>  DESCRIPTION
+>>  -----------
+>> @@ -61,6 +62,9 @@ reconstruct the original (pre-merge) changes. Therefore:
+>>  discouraged: while possible, it may leave you in a state that is hard to
+>>  back out of in the case of a conflict.
+>>
+>> +The fourth syntax ("`git merge --continue`") can only be run after the
+>> +merge has resulted in conflicts. 'git merge --continue' will take the
+>> +currently staged changes and complete the merge.
+>
+> I think this should mention the equivalence to 'git commit'.
+>
 
-> The "checkout --recurse-submodules" series got too large to comfortably send
-> it out for review, so I had to break it up into smaller series'; this is the
-> first subseries, but it makes sense on its own.
->
-> This series teaches git-rm to absorb the git directory of a submodule instead
-> of failing and complaining about the git directory preventing deletion.
->  
-> It applies on origin/sb/submodule-embed-gitdir.
+It is mentioned in the OPTIONS section where the --continue option is
+documented. I could move it here but the OPTIONS section is where the
+--abort synonym also has a reference to git reset --merge.
 
-Thanks.  I probably should rename the topic again with s/embed/absorb/;
-
-> Any feedback welcome!
 >
-> Thanks,
-> Stefan
+> Markus
 >
-> Stefan Beller (6):
->   submodule.h: add extern keyword to functions
->   submodule: modernize ok_to_remove_submodule to use argv_array
->   submodule: add flags to ok_to_remove_submodule
->   ok_to_remove_submodule: absorb the submodule git dir
->   t3600: slightly modernize style
->   rm: add absorb a submodules git dir before deletion
->
->  builtin/rm.c  |  21 +++-----
->  cache.h       |   2 +
->  entry.c       |   5 ++
->  submodule.c   |  77 +++++++++++++++++++++++-----
->  submodule.h   |  64 ++++++++++++++---------
->  t/t3600-rm.sh | 159 +++++++++++++++++++++++----------------------------------
->  6 files changed, 182 insertions(+), 146 deletions(-)
+> --
+> - - - - - - - - - - - - - - - - - - -
+> Dipl. Ing. (FH) Markus Hitter
+> http://www.jump-ing.de/
