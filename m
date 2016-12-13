@@ -7,133 +7,124 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 627B92042F
-	for <e@80x24.org>; Tue, 13 Dec 2016 15:37:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97ECC2042F
+	for <e@80x24.org>; Tue, 13 Dec 2016 15:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933533AbcLMPhE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Dec 2016 10:37:04 -0500
-Received: from mout.gmx.net ([212.227.15.18]:55803 "EHLO mout.gmx.net"
+        id S933362AbcLMPhM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Dec 2016 10:37:12 -0500
+Received: from mout.gmx.net ([212.227.17.22]:52548 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933362AbcLMPhD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2016 10:37:03 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbPPQ-1c0O742td6-00ImhF; Tue, 13
- Dec 2016 16:30:26 +0100
-Date:   Tue, 13 Dec 2016 16:30:09 +0100 (CET)
+        id S933224AbcLMPhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2016 10:37:11 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ls7MZ-1clauE47CB-013zSK; Tue, 13
+ Dec 2016 16:30:34 +0100
+Date:   Tue, 13 Dec 2016 16:30:30 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2 09/34] sequencer (rebase -i): write an author-script
- file
+Subject: [PATCH v2 10/34] sequencer (rebase -i): allow continuing with staged
+ changes
 In-Reply-To: <cover.1481642927.git.johannes.schindelin@gmx.de>
-Message-ID: <09c2718e119f809093794410ae1a738c1cd122d1.1481642927.git.johannes.schindelin@gmx.de>
+Message-ID: <9978c32139c522c08d5a8f685011829cc830bfc0.1481642927.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:272nkv9o50fwaQFjfcW2zYecurf0Fd7NXG2ane2WclzBfhQIL9n
- N55TuAJ1FFB4meiMESglmkCCy8HX0ZIvfctHTFDPw93A+zpXzqPB7DNNA5J7I399vonrNN5
- VPKFO4/olc6GsT6vK72pUM6Bltnj0LMQ9UU2KmyuY9NN9JPzbcB00Z5Bdok2kiOyzFCh7tG
- XjSqRejlW4z6loqZo4G2A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aYw5BxK7sI0=:yjFDbt2wJHwPxlpKGE6GAB
- +EVcNzF24fVQ98RhknZRCWZZZ/Kc9oIpUYVQCWOdUzNxO6RrUrCiNQF/wDVOZ+GNFWb68rBl7
- YOdiQzTI2Pf6IHxBRS77eUfRcJH5cTsSEzpkV3OMQOqh56fdIC8Z9fxHgIeypugMt95voEzBB
- 0RK5A5Iogwk3sb09QnzigHZunpAtx0/zmbxQjHfMLIg4gYaOYyGRxDn56JI23Bzuq7v427Tqf
- xZbIFpuK/9ImK4rLb7f2vAfwkzaIzEC/NVOEdafc7kXg9xaC5mXVZIT3olqBnnWtfLbn30F+l
- hYJWV0WamCVBLPHK4eb9SIUk1RP1GhxU3I1U2mv/0BLGVD2/KZxx/4yJPJscIkCPRvJ+C0hMZ
- 16UIVF/UrV7crQOPROXRLR2PXPYqX41Iollg80N77IMDBHemKCcrDTZDXjrMvRcSbZxATxF7w
- z0sYsB6SJ0Q+Hlg275NxrIcBcql36BwnRB2kff3DIvn6LRMYXzq3jVBTayBvX3uCvtOjA0258
- Zgg1xlxVJyLzDRY+HUoNCcnSARFUSX0lcOX9KUlTc0z0dfmG7rRLaJ7amZ0JoSOLh9VY1PcBH
- JdZcwG6ZQUVXuNlydLzG8EOvLcUFQELQKGYr+Ry8cez0a09dSyKuVtrVThWUkQtz5FNJs1sCd
- nh2Y2Z4MuqjTyA3gyfeklrBqSyx1QAhyMxAYCn2yfqxmpbKonkp7clar2uvDlBhuiLJx0ACLw
- RrWgWa6j4sbd8Eu8+eIXD0WTki0EfOVrbOHq9mfflj8L9KsqHhN5C4/98DUoMU/UkE4xUfP+Y
- IgMudZB
+X-Provags-ID: V03:K0:YhVR3x4VgID1xwRA5TUpYkRMvNKMrf+pKRShOR889mpYSFgiWoH
+ S+NYyJ7w7nGOV33OI9fB0WpRgr0D0VAzhKQK6zDePt/Z6qYr//u24ovRbCeOyz7el6Rh906
+ ZpiEaWUUGRoT0cwyec8rILSou0pWKXq2rQGsHmXgmbJwnm+pnztnO7sD2l5bG5CHKVGGdIw
+ TaW2VwXjbsH+O9j3iM2eg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZGmvPf3N/sY=:NyT5T3xmTQjhnlaF0MxrpS
+ HzLnFXLFvTuVREcsu1VDUvwYt3c1FFIXsQBQ79HDFvBW6D95722tjZYaQxwlPmvv1CRwYDqhh
+ +10XAT/7NTT5lzHnLAyjLTgpko74c48RJsR7eEX4OiTddksIg2KpM6boAvn/5Nn0kUXNLsdTd
+ i38mGDvPXx1hQlaHVG3ap8QQeAWHUo5HGLLSfPinMSIgNtFVKBZU8XhN+V7+mnzGMiRFUJY4l
+ UJhhTxM32tqS/eTGmJqHglJv5fw0A8zmb+DWi+c66eDQ/fLO1iDA9HR7Mviyn+ryPO3ZB+xC6
+ 6iUc+yPBTv0/5RWdizb/45Go4l4ioR07d1eHcbp8ifm6G3Oj4ODxvdgA+fGWWVwU9j0rz+S8V
+ VHEZdZf1jo5qd5fKBs3c2xYCIfqqljow8t9TKrSk9jTnFo9syVqWH3Lly9lOZ8Ss0URZBxuW7
+ QxWbiTAcJCx89j/4xx8UjEOZ9WBPp5qYVmrOcNcvtpmaFgZTqxEfLD4rZ0N4lJBpjjiGxH1NY
+ RcD61sSt6CiBN8oOcIhYm3cNNIelc8SLdz33sQe9aSw2yFSwg5VFRNf3MoKPltvj46ct5r7oz
+ XfkJoeGRn05W8Hu+L/HHfrtdXNkdwXmATZ5vZLD9ReSWBFkRvYcLSwA8mywNtPLycGwQ5fzBp
+ sqW+DE2xlJv7NYO+UclqShaFO11HHO7NZuQr/7XbgS0KN41TtPQT5/ayf7Nt0w6ltybzM/gRw
+ MJ6He4rAL9/VmGwZFXXmYW4ltfk6cgPwGDeCU/aXxHtqXDIreZkhaV8JqJxt8AsWIhMQi9ltr
+ 1E9eA+K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the interactive rebase aborts, it writes out an author-script file
-to record the author information for the current commit. As we are about
-to teach the sequencer how to perform the actions behind an interactive
-rebase, it needs to write those author-script files, too.
+When an interactive rebase is interrupted, the user may stage changes
+before continuing, and we need to commit those changes in that case.
+
+Please note that the nested "if" added to the sequencer_continue() is
+not combined into a single "if" because it will be extended with an
+"else" clause in a later patch in this patch series.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 50 insertions(+), 1 deletion(-)
+ sequencer.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index e443f4765d..80469b6954 100644
+index 80469b6954..855d3ba503 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -515,6 +515,53 @@ static int is_index_unchanged(void)
- 	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.oid.hash);
+@@ -1829,6 +1829,42 @@ static int continue_single_pick(void)
+ 	return run_command_v_opt(argv, RUN_GIT_CMD);
  }
  
-+static int write_author_script(const char *message)
++static int commit_staged_changes(struct replay_opts *opts)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *eol;
-+	int res;
++	int amend = 0;
 +
-+	for (;;)
-+		if (!*message || starts_with(message, "\n")) {
-+missing_author:
-+			/* Missing 'author' line? */
-+			unlink(rebase_path_author_script());
-+			return 0;
-+		}
-+		else if (skip_prefix(message, "author ", &message))
-+			break;
-+		else if ((eol = strchr(message, '\n')))
-+			message = eol + 1;
-+		else
-+			goto missing_author;
++	if (has_unstaged_changes(1))
++		return error(_("cannot rebase: You have unstaged changes."));
++	if (!has_uncommitted_changes(0))
++		return 0;
 +
-+	strbuf_addstr(&buf, "GIT_AUTHOR_NAME='");
-+	while (*message && *message != '\n' && *message != '\r')
-+		if (skip_prefix(message, " <", &message))
-+			break;
-+		else if (*message != '\'')
-+			strbuf_addch(&buf, *(message++));
-+		else
-+			strbuf_addf(&buf, "'\\\\%c'", *(message++));
-+	strbuf_addstr(&buf, "'\nGIT_AUTHOR_EMAIL='");
-+	while (*message && *message != '\n' && *message != '\r')
-+		if (skip_prefix(message, "> ", &message))
-+			break;
-+		else if (*message != '\'')
-+			strbuf_addch(&buf, *(message++));
-+		else
-+			strbuf_addf(&buf, "'\\\\%c'", *(message++));
-+	strbuf_addstr(&buf, "'\nGIT_AUTHOR_DATE='@");
-+	while (*message && *message != '\n' && *message != '\r')
-+		if (*message != '\'')
-+			strbuf_addch(&buf, *(message++));
-+		else
-+			strbuf_addf(&buf, "'\\\\%c'", *(message++));
-+	res = write_message(buf.buf, buf.len, rebase_path_author_script(), 1);
-+	strbuf_release(&buf);
-+	return res;
++	if (file_exists(rebase_path_amend())) {
++		struct strbuf rev = STRBUF_INIT;
++		unsigned char head[20], to_amend[20];
++
++		if (get_sha1("HEAD", head))
++			return error(_("cannot amend non-existing commit"));
++		if (!read_oneliner(&rev, rebase_path_amend(), 0))
++			return error(_("invalid file: '%s'"), rebase_path_amend());
++		if (get_sha1_hex(rev.buf, to_amend))
++			return error(_("invalid contents: '%s'"),
++				rebase_path_amend());
++		if (hashcmp(head, to_amend))
++			return error(_("\nYou have uncommitted changes in your "
++				       "working tree. Please, commit them\n"
++				       "first and then run 'git rebase "
++				       "--continue' again."));
++
++		strbuf_release(&rev);
++		amend = 1;
++	}
++
++	if (run_git_commit(rebase_path_message(), opts, 1, 1, amend, 0))
++		return error(_("could not commit staged changes."));
++	unlink(rebase_path_amend());
++	return 0;
 +}
 +
- /*
-  * Read the author-script file into an environment block, ready for use in
-  * run_command(), that can be free()d afterwards.
-@@ -974,7 +1021,9 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		}
- 	}
+ int sequencer_continue(struct replay_opts *opts)
+ {
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+@@ -1837,6 +1873,10 @@ int sequencer_continue(struct replay_opts *opts)
+ 	if (read_and_refresh_cache(opts))
+ 		return -1;
  
--	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
-+	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
-+		res = -1;
-+	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
- 		res = do_recursive_merge(base, next, base_label, next_label,
- 					 head, &msgbuf, opts);
- 		if (res < 0)
++	if (is_rebase_i(opts)) {
++		if (commit_staged_changes(opts))
++			return -1;
++	}
+ 	if (!file_exists(get_todo_path(opts)))
+ 		return continue_single_pick();
+ 	if (read_populate_opts(opts))
 -- 
 2.11.0.rc3.windows.1
 
