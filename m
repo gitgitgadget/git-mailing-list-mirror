@@ -6,74 +6,88 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 458BF1FF40
-	for <e@80x24.org>; Wed, 14 Dec 2016 14:32:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E440A1FF40
+	for <e@80x24.org>; Wed, 14 Dec 2016 14:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755744AbcLNOc4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 09:32:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56403 "EHLO cloud.peff.net"
+        id S1756195AbcLNOot (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 09:44:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56408 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755436AbcLNOcz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 09:32:55 -0500
-Received: (qmail 31537 invoked by uid 109); 14 Dec 2016 14:32:37 -0000
+        id S1755912AbcLNOos (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 09:44:48 -0500
+Received: (qmail 32265 invoked by uid 109); 14 Dec 2016 14:44:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 14:32:37 +0000
-Received: (qmail 25368 invoked by uid 111); 14 Dec 2016 14:33:18 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 14:44:46 +0000
+Received: (qmail 25400 invoked by uid 111); 14 Dec 2016 14:45:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 09:33:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2016 09:32:35 -0500
-Date:   Wed, 14 Dec 2016 09:32:35 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 09:45:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2016 09:44:44 -0500
+Date:   Wed, 14 Dec 2016 09:44:44 -0500
 From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Chris Packham <judge.packham@gmail.com>
-Subject: [PATCH 4/4] Makefile: exclude contrib from FIND_SOURCE_FILES
-Message-ID: <20161214143234.pvtvn456ijltvueu@sigill.intra.peff.net>
-References: <20161214142533.svktxk63eiwaaeor@sigill.intra.peff.net>
+To:     Jonas Hartmann <jh@ht-studios.de>
+Cc:     git@vger.kernel.org
+Subject: Re: git stash filename - stashing single files.
+Message-ID: <20161214144444.k4v64accedl6xvho@sigill.intra.peff.net>
+References: <b528e23b-c763-846e-4040-504a58b690fd@ht-studios.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161214142533.svktxk63eiwaaeor@sigill.intra.peff.net>
+In-Reply-To: <b528e23b-c763-846e-4040-504a58b690fd@ht-studios.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When you're working on the git project, you're unlikely to
-care about random bits in contrib/ (e.g., you would not want
-to jump to the copy of xmalloc in the wincred credential
-helper). Nobody has really complained because there are
-relatively few C files in contrib.
+On Wed, Dec 14, 2016 at 02:53:20PM +0100, Jonas Hartmann wrote:
 
-Now that we're matching shell scripts, too, we get quite a
-few more hits, especially in the obsolete contrib/examples
-directory. Looking for usage() should turn up the one in
-git-sh-setup, not in some long-dead version of git-clone.
+> http://stackoverflow.com/questions/3040833/stash-only-one-file-out-of-multiple-files-that-have-changed-with-git#comment32451416_3040833
+> 
+> Could it be possible to have "git stash [filename][filename]...", to
+> stash only single files?
+> There seems to be a broad community desire.
 
-Let's just exclude all of contrib. Any specific projects
-there which are big enough to want tags can generate them
-separately.
+I think this would be useful.  You can pick and choose with "git stash
+-p", but I have still often wanted "git stash -p [filename]".
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+There is one problem, though: any non-option arguments to "git stash
+save" are interpreted as the stash message. So just:
 
-diff --git a/Makefile b/Makefile
-index ef8de4a75..76267262c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2154,10 +2154,12 @@ FIND_SOURCE_FILES = ( \
- 		'*.[hcS]' \
- 		'*.sh' \
- 		':!*[tp][0-9][0-9][0-9][0-9]*' \
-+		':!contrib' \
- 		2>/dev/null || \
- 	$(FIND) . \
- 		\( -name .git -type d -prune \) \
- 		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
-+		-o \( -name contrib -type d -prune \) \
- 		-o \( -name build -type d -prune \) \
- 		-o \( -name 'trash*' -type d -prune \) \
- 		-o \( -name '*.[hcS]' -type f -print \) \
--- 
-2.11.0.341.g202cd3142
+  git stash save file
+
+would break backwards compatibility. Annoyingly, so would:
+
+  git stash save -- file
+
+which uses the "--" to let you have a message which starts with a dash.
+
+Personally, I think this is a pretty terrible interface. Besides the
+fact that I have never written a stash message in all my years of using
+git, it's totally inconsistent with the rest of git (which would use
+"-m" for the message, and treat arguments as pathspecs).
+
+So it might be worth changing, but we'd probably have to deal with the
+backwards compatibility fallout, have a deprecation period, etc.
+
+As for "git stash" without "save", there is magic to rewrite:
+
+  git stash [opts]
+
+into
+
+  git stash save [opts]
+
+but it explicitly does not allow non-option arguments. So:
+
+  git stash foo
+
+is an error (and not unreasonably, since "git stash list" creates an
+ambiguity problem). Perhaps:
+
+  git stash -- foo
+
+could be allowed to treat "foo" as a filename. There wouldn't be any
+backwards compatibility problems, though it would be weird and
+inconsistent to be able to specify filenames via the "shortcut"
+invocation, but not with "git stash save".
+
+-Peff
