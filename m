@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_PH_SURBL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA05D1FF40
-	for <e@80x24.org>; Wed, 14 Dec 2016 12:56:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AD3D1FF40
+	for <e@80x24.org>; Wed, 14 Dec 2016 12:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755740AbcLNM4N (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 07:56:13 -0500
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:56656 "EHLO sapo.pt"
+        id S1755750AbcLNM4M (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 07:56:12 -0500
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:56618 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1755724AbcLNM4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 07:56:09 -0500
-Received: (qmail 2248 invoked from network); 14 Dec 2016 12:55:44 -0000
-Received: (qmail 28364 invoked from network); 14 Dec 2016 12:55:44 -0000
+        id S1755330AbcLNMzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 07:55:44 -0500
+Received: (qmail 2132 invoked from network); 14 Dec 2016 12:55:41 -0000
+Received: (qmail 27123 invoked from network); 14 Dec 2016 12:55:40 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 14 Dec 2016 12:55:44 -0000
+          for <git@vger.kernel.org>; 14 Dec 2016 12:55:40 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -35,9 +35,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v7 14/16] i18n: send-email: mark string with interpolation for translation
-Date:   Wed, 14 Dec 2016 11:54:37 -0100
-Message-Id: <20161214125439.8822-15-vascomalmeida@sapo.pt>
+Subject: [PATCH v7 07/16] i18n: add--interactive: mark patch prompt for translation
+Date:   Wed, 14 Dec 2016 11:54:30 -0100
+Message-Id: <20161214125439.8822-8-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.11.0.44.g7d42c6c
 In-Reply-To: <20161214125439.8822-1-vascomalmeida@sapo.pt>
 References: <20161214125439.8822-1-vascomalmeida@sapo.pt>
@@ -48,308 +48,215 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark warnings, errors and other messages that are interpolated for
-translation.
+Mark prompt message assembled in place for translation, unfolding each
+use case for each entry in the %patch_modes hash table.
 
-We call sprintf() before calling die() and in few other circumstances in
-order to replace the values on the placeholders.
+Previously, this script relied on whether $patch_mode was set to run the
+command patch_update_cmd() or show status and loop the main loop. Now,
+it uses $cmd to indicate we must run patch_update_cmd() and $patch_mode
+is used to tell which flavor of the %patch_modes are we on.  This is
+introduced in order to be able to mark and unfold the message prompt
+knowing in which context we are.
+
+The tracking of context was done previously by point %patch_mode_flavour
+hash table to the correct entry of %patch_modes, focusing only on value
+of %patch_modes. Now, we are also interested in the key ('staged',
+'stash', 'checkout_head', ...).
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-send-email.perl | 87 +++++++++++++++++++++++++++++------------------------
- 1 file changed, 47 insertions(+), 40 deletions(-)
+ Makefile                  |  2 +-
+ git-add--interactive.perl | 54 ++++++++++++++++++++++++++++++++++++++++-------
+ perl/Git/I18N.pm          | 11 +++++++++-
+ t/t0202/test.pl           |  5 ++++-
+ 4 files changed, 61 insertions(+), 11 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 00d234e11..7f3297cdf 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -279,10 +279,13 @@ sub signal_handler {
- 	# tmp files from --compose
- 	if (defined $compose_filename) {
- 		if (-e $compose_filename) {
--			print "'$compose_filename' contains an intermediate version of the email you were composing.\n";
-+			printf __("'%s' contains an intermediate version ".
-+				  "of the email you were composing.\n"),
-+				  $compose_filename;
- 		}
- 		if (-e ($compose_filename . ".final")) {
--			print "'$compose_filename.final' contains the composed email.\n"
-+			printf __("'%s.final' contains the composed email.\n"),
-+				  $compose_filename;
- 		}
- 	}
+diff --git a/Makefile b/Makefile
+index fdef1dd94..3c889dc63 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2115,7 +2115,7 @@ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
+ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
+ 	--keyword=gettextln --keyword=eval_gettextln
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
+-	--keyword=__ --keyword="__n:1,2"
++	--keyword=__ --keyword=N__ --keyword="__n:1,2"
+ LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+ LOCALIZED_SH = $(SCRIPT_SH)
+ LOCALIZED_SH += git-parse-remote.sh
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index cd617837b..b7d382b10 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -93,6 +93,7 @@ sub colored {
+ }
  
-@@ -431,7 +434,7 @@ $smtp_encryption = '' unless (defined $smtp_encryption);
- my(%suppress_cc);
- if (@suppress_cc) {
- 	foreach my $entry (@suppress_cc) {
--		die "Unknown --suppress-cc field: '$entry'\n"
-+		die sprintf(__("Unknown --suppress-cc field: '%s'\n"), $entry)
- 			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
- 		$suppress_cc{$entry} = 1;
- 	}
-@@ -460,7 +463,7 @@ my $confirm_unconfigured = !defined $confirm;
- if ($confirm_unconfigured) {
- 	$confirm = scalar %suppress_cc ? 'compose' : 'auto';
- };
--die "Unknown --confirm setting: '$confirm'\n"
-+die sprintf(__("Unknown --confirm setting: '%s'\n"), $confirm)
- 	unless $confirm =~ /^(?:auto|cc|compose|always|never)/;
+ # command line options
++my $cmd;
+ my $patch_mode;
+ my $patch_mode_revision;
  
- # Debugging, print out the suppressions.
-@@ -492,16 +495,16 @@ my %aliases;
- sub parse_sendmail_alias {
- 	local $_ = shift;
- 	if (/"/) {
--		print STDERR "warning: sendmail alias with quotes is not supported: $_\n";
-+		printf STDERR __("warning: sendmail alias with quotes is not supported: %s\n"), $_;
- 	} elsif (/:include:/) {
--		print STDERR "warning: `:include:` not supported: $_\n";
-+		printf STDERR __("warning: `:include:` not supported: %s\n"), $_;
- 	} elsif (/[\/|]/) {
--		print STDERR "warning: `/file` or `|pipe` redirection not supported: $_\n";
-+		printf STDERR __("warning: `/file` or `|pipe` redirection not supported: %s\n"), $_;
- 	} elsif (/^(\S+?)\s*:\s*(.+)$/) {
- 		my ($alias, $addr) = ($1, $2);
- 		$aliases{$alias} = [ split_addrs($addr) ];
- 	} else {
--		print STDERR "warning: sendmail line is not recognized: $_\n";
-+		printf STDERR __("warning: sendmail line is not recognized: %s\n"), $_;
+@@ -173,7 +174,8 @@ my %patch_modes = (
+ 	},
+ );
+ 
+-my %patch_mode_flavour = %{$patch_modes{stage}};
++$patch_mode = 'stage';
++my %patch_mode_flavour = %{$patch_modes{$patch_mode}};
+ 
+ sub run_cmd_pipe {
+ 	if ($^O eq 'MSWin32') {
+@@ -1311,6 +1313,44 @@ sub display_hunks {
+ 	return $i;
+ }
+ 
++my %patch_update_prompt_modes = (
++	stage => {
++		mode => N__("Stage mode change [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Stage deletion [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Stage this hunk [y,n,q,a,d,/%s,?]? "),
++	},
++	stash => {
++		mode => N__("Stash mode change [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Stash deletion [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Stash this hunk [y,n,q,a,d,/%s,?]? "),
++	},
++	reset_head => {
++		mode => N__("Unstage mode change [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Unstage deletion [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Unstage this hunk [y,n,q,a,d,/%s,?]? "),
++	},
++	reset_nothead => {
++		mode => N__("Apply mode change to index [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Apply deletion to index [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Apply this hunk to index [y,n,q,a,d,/%s,?]? "),
++	},
++	checkout_index => {
++		mode => N__("Discard mode change from worktree [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Discard deletion from worktree [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Discard this hunk from worktree [y,n,q,a,d,/%s,?]? "),
++	},
++	checkout_head => {
++		mode => N__("Discard mode change from index and worktree [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Discard deletion from index and worktree [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Discard this hunk from index and worktree [y,n,q,a,d,/%s,?]? "),
++	},
++	checkout_nothead => {
++		mode => N__("Apply mode change to index and worktree [y,n,q,a,d,/%s,?]? "),
++		deletion => N__("Apply deletion to index and worktree [y,n,q,a,d,/%s,?]? "),
++		hunk => N__("Apply this hunk to index and worktree [y,n,q,a,d,/%s,?]? "),
++	},
++);
++
+ sub patch_update_file {
+ 	my $quit = 0;
+ 	my ($ix, $num);
+@@ -1383,12 +1423,9 @@ sub patch_update_file {
+ 		for (@{$hunk[$ix]{DISPLAY}}) {
+ 			print;
+ 		}
+-		print colored $prompt_color, $patch_mode_flavour{VERB},
+-		  ($hunk[$ix]{TYPE} eq 'mode' ? ' mode change' :
+-		   $hunk[$ix]{TYPE} eq 'deletion' ? ' deletion' :
+-		   ' this hunk'),
+-		  $patch_mode_flavour{TARGET},
+-		  " [y,n,q,a,d,/$other,?]? ";
++		print colored $prompt_color,
++			sprintf(__($patch_update_prompt_modes{$patch_mode}{$hunk[$ix]{TYPE}}), $other);
++
+ 		my $line = prompt_single_character;
+ 		last unless defined $line;
+ 		if ($line) {
+@@ -1644,6 +1681,7 @@ sub process_args {
+ 		die sprintf(__("invalid argument %s, expecting --"),
+ 			       $arg) unless $arg eq "--";
+ 		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
++		$cmd = 1;
+ 	}
+ 	elsif ($arg ne "--") {
+ 		die sprintf(__("invalid argument %s, expecting --"), $arg);
+@@ -1680,7 +1718,7 @@ sub main_loop {
+ 
+ process_args();
+ refresh();
+-if ($patch_mode) {
++if ($cmd) {
+ 	patch_update_cmd();
+ }
+ else {
+diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
+index 617d8c2a1..c41425c8d 100644
+--- a/perl/Git/I18N.pm
++++ b/perl/Git/I18N.pm
+@@ -13,7 +13,7 @@ BEGIN {
  	}
  }
  
-@@ -582,11 +585,11 @@ sub is_format_patch_arg {
- 		if (defined($format_patch)) {
- 			return $format_patch;
- 		}
--		die(<<EOF);
--File '$f' exists but it could also be the range of commits
-+		die sprintf(__ <<EOF, $f, $f);
-+File '%s' exists but it could also be the range of commits
- to produce patches for.  Please disambiguate by...
+-our @EXPORT = qw(__ __n);
++our @EXPORT = qw(__ __n N__);
+ our @EXPORT_OK = @EXPORT;
  
--    * Saying "./$f" if you mean a file; or
-+    * Saying "./%s" if you mean a file; or
-     * Giving --format-patch option if you mean a range.
- EOF
- 	} catch Git::Error::Command with {
-@@ -604,7 +607,7 @@ while (defined(my $f = shift @ARGV)) {
- 		@ARGV = ();
- 	} elsif (-d $f and !is_format_patch_arg($f)) {
- 		opendir my $dh, $f
--			or die "Failed to opendir $f: $!";
-+			or die sprintf(__("Failed to opendir %s: %s"), $f, $!);
- 
- 		push @files, grep { -f $_ } map { catfile($f, $_) }
- 				sort readdir $dh;
-@@ -628,7 +631,8 @@ if ($validate) {
- 	foreach my $f (@files) {
- 		unless (-p $f) {
- 			my $error = validate_patch($f);
--			$error and die "fatal: $f: $error\nwarning: no patches were sent\n";
-+			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
-+						  $f, $error);
- 		}
- 	}
- }
-@@ -651,7 +655,7 @@ sub get_patch_subject {
- 		return "GIT: $1\n";
- 	}
- 	close $fh;
--	die "No subject line in $fn ?";
-+	die sprintf(__("No subject line in %s?"), $fn);
+ sub __bootstrap_locale_messages {
+@@ -54,6 +54,8 @@ BEGIN
+ 		*__ = sub ($) { $_[0] };
+ 		*__n = sub ($$$) { $_[2] == 1 ? $_[0] : $_[1] };
+ 	};
++
++	sub N__($) { return shift; }
  }
  
- if ($compose) {
-@@ -661,7 +665,7 @@ if ($compose) {
- 		tempfile(".gitsendemail.msg.XXXXXX", DIR => $repo->repo_path()) :
- 		tempfile(".gitsendemail.msg.XXXXXX", DIR => "."))[1];
- 	open my $c, ">", $compose_filename
--		or die "Failed to open for writing $compose_filename: $!";
-+		or die sprintf(__("Failed to open for writing %s: %s"), $compose_filename, $!);
+ 1;
+@@ -74,6 +76,7 @@ Git::I18N - Perl interface to Git's Gettext localizations
  
+ 	printf __n("commited %d file\n", "commited %d files\n", $files), $files;
  
- 	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
-@@ -692,10 +696,10 @@ EOT
- 	}
++
+ =head1 DESCRIPTION
  
- 	open my $c2, ">", $compose_filename . ".final"
--		or die "Failed to open $compose_filename.final : " . $!;
-+		or die sprintf(__("Failed to open %s.final: %s"), $compose_filename, $!);
+ Git's internal Perl interface to gettext via L<Locale::Messages>. If
+@@ -95,6 +98,12 @@ passthrough fallback function.
  
- 	open $c, "<", $compose_filename
--		or die "Failed to open $compose_filename : " . $!;
-+		or die sprintf(__("Failed to open %s: %s"), $compose_filename, $!);
+ L<Locale::Messages>'s ngettext function or passthrough fallback function.
  
- 	my $need_8bit_cte = file_has_nonascii($compose_filename);
- 	my $in_body = 0;
-@@ -769,7 +773,9 @@ sub ask {
- 			return $resp;
- 		}
- 		if ($confirm_only) {
--			my $yesno = $term->readline("Are you sure you want to use <$resp> [y/N]? ");
-+			my $yesno = $term->readline(
-+				# TRANSLATORS: please keep [y/N] as is.
-+				sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
- 			if (defined $yesno && $yesno =~ /y/i) {
- 				return $resp;
- 			}
-@@ -811,9 +817,9 @@ if (!defined $auto_8bit_encoding && scalar %broken_encoding) {
- if (!$force) {
- 	for my $f (@files) {
- 		if (get_patch_subject($f) =~ /\Q*** SUBJECT HERE ***\E/) {
--			die "Refusing to send because the patch\n\t$f\n"
-+			die sprintf(__("Refusing to send because the patch\n\t%s\n"
- 				. "has the template subject '*** SUBJECT HERE ***'. "
--				. "Pass --force if you really want to send.\n";
-+				. "Pass --force if you really want to send.\n"), $f);
- 		}
- 	}
- }
-@@ -848,7 +854,7 @@ my %EXPANDED_ALIASES;
- sub expand_one_alias {
- 	my $alias = shift;
- 	if ($EXPANDED_ALIASES{$alias}) {
--		die "fatal: alias '$alias' expands to itself\n";
-+		die sprintf(__("fatal: alias '%s' expands to itself\n"), $alias);
- 	}
- 	local $EXPANDED_ALIASES{$alias} = 1;
- 	return $aliases{$alias} ? expand_aliases(@{$aliases{$alias}}) : $alias;
-@@ -910,7 +916,7 @@ sub extract_valid_address {
- sub extract_valid_address_or_die {
- 	my $address = shift;
- 	$address = extract_valid_address($address);
--	die "error: unable to extract a valid address from: $address\n"
-+	die sprintf(__("error: unable to extract a valid address from: %s\n"), $address)
- 		if !$address;
- 	return $address;
- }
-@@ -918,7 +924,7 @@ sub extract_valid_address_or_die {
- sub validate_address {
- 	my $address = shift;
- 	while (!extract_valid_address($address)) {
--		print STDERR "error: unable to extract a valid address from: $address\n";
-+		printf STDERR __("error: unable to extract a valid address from: %s\n"), $address;
- 		# TRANSLATORS: Make sure to include [q] [d] [e] in your
- 		# translation. The program will only accept English input
- 		# at this point.
-@@ -1223,7 +1229,7 @@ sub ssl_verify_params {
- 		return (SSL_verify_mode => SSL_VERIFY_PEER(),
- 			SSL_ca_file => $smtp_ssl_cert_path);
- 	} else {
--		die "CA path \"$smtp_ssl_cert_path\" does not exist";
-+		die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
- 	}
++=head2 N__($)
++
++No-operation that only returns its argument. Use this if you want xgettext to
++extract the text to the pot template but do not want to trigger retrival of the
++translation at run time.
++
+ =head1 AUTHOR
+ 
+ E<AElig>var ArnfjE<ouml>rE<eth> Bjarmason <avarab@gmail.com>
+diff --git a/t/t0202/test.pl b/t/t0202/test.pl
+index 4101833a8..2cbf7b959 100755
+--- a/t/t0202/test.pl
++++ b/t/t0202/test.pl
+@@ -4,7 +4,7 @@ use lib (split(/:/, $ENV{GITPERLLIB}));
+ use strict;
+ use warnings;
+ use POSIX qw(:locale_h);
+-use Test::More tests => 11;
++use Test::More tests => 13;
+ use Git::I18N;
+ 
+ my $has_gettext_library = $Git::I18N::__HAS_LIBRARY;
+@@ -32,6 +32,7 @@ is_deeply(\@Git::I18N::EXPORT, \@Git::I18N::EXPORT_OK, "sanity: Git::I18N export
+ 	my %prototypes = (qw(
+ 		__	$
+ 		__n	$$$
++		N__	$
+ 	));
+ 	while (my ($sub, $proto) = each %prototypes) {
+ 		is(prototype(\&{"Git::I18N::$sub"}), $proto, "sanity: $sub has a $proto prototype");
+@@ -55,6 +56,8 @@ is_deeply(\@Git::I18N::EXPORT, \@Git::I18N::EXPORT_OK, "sanity: Git::I18N export
+ 		"Get singular string through __n() in C locale");
+ 	is(__n($got_singular, $got_plural, 2), $expect_plural,
+ 		"Get plural string through __n() in C locale");
++
++	is(N__($got), $expect, "Passing a string through N__() in the C locale works");
  }
  
-@@ -1386,14 +1392,14 @@ EOF
- 					# supported commands
- 					$smtp->hello($smtp_domain);
- 				} else {
--					die "Server does not support STARTTLS! ".$smtp->message;
-+					die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
- 				}
- 			}
- 		}
- 
- 		if (!$smtp) {
--			die "Unable to initialize SMTP properly. Check config and use --smtp-debug. ",
--			    "VALUES: server=$smtp_server ",
-+			die __("Unable to initialize SMTP properly. Check config and use --smtp-debug."),
-+			    " VALUES: server=$smtp_server ",
- 			    "encryption=$smtp_encryption ",
- 			    "hello=$smtp_domain",
- 			    defined $smtp_server_port ? " port=$smtp_server_port" : "";
-@@ -1410,10 +1416,10 @@ EOF
- 			$smtp->datasend("$line") or die $smtp->message;
- 		}
- 		$smtp->dataend() or die $smtp->message;
--		$smtp->code =~ /250|200/ or die "Failed to send $subject\n".$smtp->message;
-+		$smtp->code =~ /250|200/ or die sprintf(__("Failed to send %s\n"), $subject).$smtp->message;
- 	}
- 	if ($quiet) {
--		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
-+		printf($dry_run ? __("Dry-Sent %s\n") : __("Sent %s\n"), $subject);
- 	} else {
- 		print($dry_run ? __("Dry-OK. Log says:\n") : __("OK. Log says:\n"));
- 		if (!file_name_is_absolute($smtp_server)) {
-@@ -1443,7 +1449,7 @@ $subject = $initial_subject;
- $message_num = 0;
- 
- foreach my $t (@files) {
--	open my $fh, "<", $t or die "can't open file $t";
-+	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
- 
- 	my $author = undef;
- 	my $sauthor = undef;
-@@ -1665,18 +1671,18 @@ sub recipients_cmd {
- 
- 	my @addresses = ();
- 	open my $fh, "-|", "$cmd \Q$file\E"
--	    or die "($prefix) Could not execute '$cmd'";
-+	    or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
- 	while (my $address = <$fh>) {
- 		$address =~ s/^\s*//g;
- 		$address =~ s/\s*$//g;
- 		$address = sanitize_address($address);
- 		next if ($address eq $sender and $suppress_cc{'self'});
- 		push @addresses, $address;
--		printf("($prefix) Adding %s: %s from: '%s'\n",
--		       $what, $address, $cmd) unless $quiet;
-+		printf(__("(%s) Adding %s: %s from: '%s'\n"),
-+		       $prefix, $what, $address, $cmd) unless $quiet;
- 		}
- 	close $fh
--	    or die "($prefix) failed to close pipe to '$cmd'";
-+	    or die sprintf(__("(%s) failed to close pipe to '%s'"), $prefix, $cmd);
- 	return @addresses;
- }
- 
-@@ -1730,10 +1736,10 @@ sub unique_email_list {
- sub validate_patch {
- 	my $fn = shift;
- 	open(my $fh, '<', $fn)
--		or die "unable to open $fn: $!\n";
-+		or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
- 	while (my $line = <$fh>) {
- 		if (length($line) > 998) {
--			return "$.: patch contains a line longer than 998 characters";
-+			return sprintf(__("%s: patch contains a line longer than 998 characters"), $.);
- 		}
- 	}
- 	return;
-@@ -1749,10 +1755,11 @@ sub handle_backup {
- 	    (substr($file, 0, $lastlen) eq $last) &&
- 	    ($suffix = substr($file, $lastlen)) !~ /^[a-z0-9]/i) {
- 		if (defined $known_suffix && $suffix eq $known_suffix) {
--			print "Skipping $file with backup suffix '$known_suffix'.\n";
-+			printf(__("Skipping %s with backup suffix '%s'.\n"), $file, $known_suffix);
- 			$skip = 1;
- 		} else {
--			my $answer = ask("Do you really want to send $file? (y|N): ",
-+			# TRANSLATORS: please keep "[y|N]" as is.
-+			my $answer = ask(sprintf(__("Do you really want to send %s? [y|N]: "), $file),
- 					 valid_re => qr/^(?:y|n)/i,
- 					 default => 'n');
- 			$skip = ($answer ne 'y');
-@@ -1780,7 +1787,7 @@ sub handle_backup_files {
- sub file_has_nonascii {
- 	my $fn = shift;
- 	open(my $fh, '<', $fn)
--		or die "unable to open $fn: $!\n";
-+		or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
- 	while (my $line = <$fh>) {
- 		return 1 if $line =~ /[^[:ascii:]]/;
- 	}
-@@ -1790,7 +1797,7 @@ sub file_has_nonascii {
- sub body_or_subject_has_nonascii {
- 	my $fn = shift;
- 	open(my $fh, '<', $fn)
--		or die "unable to open $fn: $!\n";
-+		or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
- 	while (my $line = <$fh>) {
- 		last if $line =~ /^$/;
- 		return 1 if $line =~ /^Subject.*[^[:ascii:]]/;
+ # Test a basic message on different locales
 -- 
 2.11.0.44.g7d42c6c
 
