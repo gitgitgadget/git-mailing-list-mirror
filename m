@@ -2,199 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63D1A209E6
-	for <e@80x24.org>; Wed, 14 Dec 2016 08:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEC241FF76
+	for <e@80x24.org>; Wed, 14 Dec 2016 08:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755067AbcLNIRg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 03:17:36 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36052 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755060AbcLNIRf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 03:17:35 -0500
-Received: by mail-lf0-f67.google.com with SMTP id o20so1005192lfg.3
-        for <git@vger.kernel.org>; Wed, 14 Dec 2016 00:17:34 -0800 (PST)
+        id S1754830AbcLNIZ0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 03:25:26 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:36398 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753138AbcLNIZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 03:25:25 -0500
+Received: by mail-io0-f194.google.com with SMTP id b194so3356696ioa.3
+        for <git@vger.kernel.org>; Wed, 14 Dec 2016 00:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fBhCH8jcNl/gfwsswIIzJDBoDTaOmYhEdups/LlPois=;
-        b=bSWwq1yoDG4CYJ4kASL4ABQ3GZ1nCUqd+rOaLMsnkqe4LtZx4HxkfLyKqODb0AWKxK
-         JZMAAaf3yvGLWIv9oq+z37qW0XQXobec5H0/uMqvYh0IPSKsxQZLM+3jkfZKb6fYPwnu
-         /PSJes0M2Ec+of2EMc4IYL4+UzJo5oRdQsIWk=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=J97+9BFUANFt7WQjuMhIAtkbnrlzkziXDyo78eCceTc=;
+        b=ku+ipRQfi7y14RF1qcps5Bv9UFGqimp45dhfSBz+qi4t4oWbyAdRNkShPGtVkRDmtc
+         h82kHNDZF4aLgBoaB2D3ruXglzJ5AvNLaFDSguZKJg0uLHTo1D4trNAxXx7YbY+4yTu8
+         +Nl0mlqJAAjFinwmRC7wb7P9Z72ac+rnGzztbum9yYY42svBSZYp6r+2X2/BVlvCz9B4
+         X9w1EMtqgG7xcrIReU7qTfYdn16Hg+gELbU4T9DF+8gyLqXPPpmyCqHy4SLR3bJyayc3
+         Kmk4r6aFLiVVlB7fnvVzz9Z1d09v0kR5aOCKjU61uhVdjmbdjjdrzAsGMEZJ+tMe3B9j
+         q74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fBhCH8jcNl/gfwsswIIzJDBoDTaOmYhEdups/LlPois=;
-        b=IoWLscEAFur8jdBBp4WJ1uwR+tiHWKCIcgXq8HdJ1CqnR0dSxrkvX2iG0hgt5SS3ze
-         rJA0guBy3YRZjKvjV6072kwBVj0OLPSAseu33b5nuUhvHCFo+yaEQUlogqEv2ArdpGnD
-         5AO91bewOICetrYIQiGjIU8CT/qJurfJ0i6pGbfx4pHDZ3JdVBZcLSvQfVSoG9Qpg/yW
-         Hzm1tz8h2zQs0EBcibhEDqd49kll6YwrNin7cAG/vTr0Pm5e6N4aw58Dh8X3k5U86nDB
-         eEf98dcCGXVZK0qhLEaBr08zTv30ixeb+9GTc2g60LhIsmUFu7sUbbkaH8uFKRncMII9
-         xCIA==
-X-Gm-Message-State: AKaTC00wtI5gZ/WyrghU2dnxKzc5vb7QQwWBI5+mBD0VJcSKvYz8GEiQWLYJzGqu8r8j8w==
-X-Received: by 10.28.21.1 with SMTP id 1mr6413957wmv.133.1481703452915;
-        Wed, 14 Dec 2016 00:17:32 -0800 (PST)
-Received: from lgd-kipper.corp.roku ([81.145.207.254])
-        by smtp.gmail.com with ESMTPSA id c133sm6381484wme.12.2016.12.14.00.17.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Dec 2016 00:17:32 -0800 (PST)
-From:   Luke Diamand <luke@diamand.org>
-To:     git@vger.kernel.org
-Cc:     Vinicius Kursancew <viniciusalexandre@gmail.com>,
-        larsxschneider@gmail.com, aoakley@roku.com,
-        Duy Nguyen <pclouds@gmail.com>, Luke Diamand <luke@diamand.org>
-Subject: [PATCHv1 1/1] git-p4: avoid crash adding symlinked directory
-Date:   Wed, 14 Dec 2016 08:17:24 +0000
-Message-Id: <20161214081724.16663-2-luke@diamand.org>
-X-Mailer: git-send-email 2.11.0.274.g0ea315c
-In-Reply-To: <20161214081724.16663-1-luke@diamand.org>
-References: <20161214081724.16663-1-luke@diamand.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=J97+9BFUANFt7WQjuMhIAtkbnrlzkziXDyo78eCceTc=;
+        b=XKjLEQf3v164HTcOO31JPCBefMRShUeLZI6a30kM5iS+w5ZnWBpF9vvIm0F0H6SnZ5
+         AIg7t24jr5yhqsiiYrOlKu0Nzhy3g5NPND7uCXpVqQVB1T1We4nhzYiCuSZg9tPwKC5V
+         vJKilejmRbTSlskD0Qwo8r34JH7SX9Oi/r95fOaMhey3T+vLisxvOEXErf2+h4dFWGvo
+         N731EcnOX98pr4SEzagQwdRejbQ9O6GlyDz6i5DhoWHQBKPAHJU/ytfw6S3YoK66/8C4
+         kpjKJ4N1KhINK9HSXSjNfEGO3lhLP7dpEUI1CzuD4bzlyUSapGpowqvjsphEHbCUaxuj
+         mwUQ==
+X-Gm-Message-State: AKaTC020V2l1G2pzzPxTLKmUv0RAQvjk3e5ZbNpiv7h7xMnOWvr8sjxPiZ4B20FT7CytCu4XEGm/UoVhKXpIBw==
+X-Received: by 10.107.195.204 with SMTP id t195mr83260724iof.46.1481703834329;
+ Wed, 14 Dec 2016 00:23:54 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.79.0.93 with HTTP; Wed, 14 Dec 2016 00:23:53 -0800 (PST)
+In-Reply-To: <20161213122854.pphyp342tstxbbqe@sigill.intra.peff.net>
+References: <20161213092225.15299-1-judge.packham@gmail.com>
+ <20161213121510.5o5axuwzztbxcvfd@sigill.intra.peff.net> <20161213122854.pphyp342tstxbbqe@sigill.intra.peff.net>
+From:   Chris Packham <judge.packham@gmail.com>
+Date:   Wed, 14 Dec 2016 21:23:53 +1300
+Message-ID: <CAFOYHZD5iUzXFH6CFCKhG8UmQb8q0CiUZFSBAeicUmjSt9mgig@mail.gmail.com>
+Subject: Re: [RFC/PATCH] Makefile: add cppcheck target
+To:     Jeff King <peff@peff.net>
+Cc:     GIT <git@vger.kernel.org>, Elia Pinto <gitter.spiros@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When submitting to P4, if git-p4 came across a symlinked
-directory, then during the generation of the submit diff, it would
-try to open it as a normal file and fail.
+On Wed, Dec 14, 2016 at 1:28 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Dec 13, 2016 at 07:15:10AM -0500, Jeff King wrote:
+>
+>> I think these last two are a good sign that we need to be feeding the
+>> list of source files to cppcheck. I tried your patch and it also started
+>> looking in t/perf/build, which are old versions of git built to serve
+>> the performance-testing suite.
+>>
+>> See the way that the "tags" target is handled for a possible approach.
+>
+> Maybe something like this:
+>
+> diff --git a/Makefile b/Makefile
+> index 8b5976d88..e7684ae63 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2638,4 +2638,6 @@ cover_db_html: cover_db
+>  .PHONY: cppcheck
+>
+>  cppcheck:
+> -       cppcheck --force --quiet --inline-suppr $(CPPCHECK_ADD) .
+> +       $(FIND_SOURCE_FILES) |\
+> +       grep -v ^t/t |\
+> +       xargs cppcheck --force --quiet --inline-suppr $(CPPCHECK_ADD)
 
-Spot this case, and instead output the target of the symlink in
-the submit diff.
+Will look at something like this for v2.
 
-Add a test case.
+>
+>> My main complaint with any static checker is how we can handle false
+>> positives. [...]
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py                     | 26 ++++++++++++++++++++------
- t/t9830-git-p4-symlink-dir.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 6 deletions(-)
- create mode 100755 t/t9830-git-p4-symlink-dir.sh
+<snip>
 
-diff --git a/git-p4.py b/git-p4.py
-index fd5ca5246..d2f59bd91 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -25,6 +25,7 @@ import stat
- import zipfile
- import zlib
- import ctypes
-+import errno
- 
- try:
-     from subprocess import CalledProcessError
-@@ -1538,7 +1539,7 @@ class P4Submit(Command, P4UserMap):
-             if response == 'n':
-                 return False
- 
--    def get_diff_description(self, editedFiles, filesToAdd):
-+    def get_diff_description(self, editedFiles, filesToAdd, symlinks):
-         # diff
-         if os.environ.has_key("P4DIFF"):
-             del(os.environ["P4DIFF"])
-@@ -1553,10 +1554,17 @@ class P4Submit(Command, P4UserMap):
-             newdiff += "==== new file ====\n"
-             newdiff += "--- /dev/null\n"
-             newdiff += "+++ %s\n" % newFile
--            f = open(newFile, "r")
--            for line in f.readlines():
--                newdiff += "+" + line
--            f.close()
-+
-+            try:
-+                f = open(newFile, "r")
-+                for line in f.readlines():
-+                    newdiff += "+" + line
-+                f.close()
-+            except IOError as e:
-+                if e.errno == errno.EISDIR and newFile in symlinks:
-+                    newdiff += "+%s\n" % os.readlink(newFile)
-+                else:
-+                    raise
- 
-         return (diff + newdiff).replace('\r\n', '\n')
- 
-@@ -1574,6 +1582,7 @@ class P4Submit(Command, P4UserMap):
-         filesToDelete = set()
-         editedFiles = set()
-         pureRenameCopy = set()
-+        symlinks = set()
-         filesToChangeExecBit = {}
- 
-         for line in diff:
-@@ -1590,6 +1599,11 @@ class P4Submit(Command, P4UserMap):
-                 filesToChangeExecBit[path] = diff['dst_mode']
-                 if path in filesToDelete:
-                     filesToDelete.remove(path)
-+
-+                dst_mode = int(diff['dst_mode'], 8)
-+                if dst_mode == 0120000:
-+                    symlinks.add(path)
-+
-             elif modifier == "D":
-                 filesToDelete.add(path)
-                 if path in filesToAdd:
-@@ -1727,7 +1741,7 @@ class P4Submit(Command, P4UserMap):
-         separatorLine = "######## everything below this line is just the diff #######\n"
-         if not self.prepare_p4_only:
-             submitTemplate += separatorLine
--            submitTemplate += self.get_diff_description(editedFiles, filesToAdd)
-+            submitTemplate += self.get_diff_description(editedFiles, filesToAdd, symlinks)
- 
-         (handle, fileName) = tempfile.mkstemp()
-         tmpFile = os.fdopen(handle, "w+b")
-diff --git a/t/t9830-git-p4-symlink-dir.sh b/t/t9830-git-p4-symlink-dir.sh
-new file mode 100755
-index 000000000..3dc528bb1
---- /dev/null
-+++ b/t/t9830-git-p4-symlink-dir.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='git p4 symlinked directories'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'symlinked directory' '
-+	(
-+		cd "$cli" &&
-+		: >first_file.t &&
-+		p4 add first_file.t &&
-+		p4 submit -d "first change"
-+	) &&
-+	git p4 clone --dest "$git" //depot &&
-+	(
-+		cd "$git" &&
-+		mkdir -p some/sub/directory &&
-+		mkdir -p other/subdir2 &&
-+		: > other/subdir2/file.t &&
-+		(cd some/sub/directory && ln -s ../../../other/subdir2 .) &&
-+		git add some other &&
-+		git commit -m "symlinks" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit -v
-+	) &&
-+	(
-+		cd "$cli" &&
-+		p4 sync &&
-+		test -L some/sub/directory/subdir2
-+		test_path_is_file some/sub/directory/subdir2/file.t
-+	)
-+
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-2.11.0.274.g0ea315c
+> So I think it is capable of finding real problems, but I think we'd need
+> some way of squelching false positives, preferably in a way that carries
+> forward as the code changes (so not just saying "foo.c:1234 is a false
+> positive", which will break when it becomes "foo.c:1235").
 
+If we're prepared to wear them, the --inline-suppr will let us
+annotate the code to avoid the false-positives. Suppressions can also
+be specified with --suppressions-list=file-with-suppressions but that
+would suffer from the moving target problem although you can specify
+the file without the line number to squash a class of warning for a
+whole file.
