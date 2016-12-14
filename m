@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28B791FF76
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2FB1FF76
 	for <e@80x24.org>; Wed, 14 Dec 2016 08:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755066AbcLNIib (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 03:38:31 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34716 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755048AbcLNIi3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 03:38:29 -0500
-Received: by mail-pg0-f67.google.com with SMTP id e9so1735405pgc.1
-        for <git@vger.kernel.org>; Wed, 14 Dec 2016 00:38:29 -0800 (PST)
+        id S1755102AbcLNIii (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 03:38:38 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:32822 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755090AbcLNIig (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 03:38:36 -0500
+Received: by mail-pf0-f196.google.com with SMTP id 144so824209pfv.0
+        for <git@vger.kernel.org>; Wed, 14 Dec 2016 00:38:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B8+MtnNgt81eyfT5mrb9SgeJBKzH0uRwaS5VaG2eLO0=;
-        b=y6eSzNf8ZZ+0rWKfuBWWUuYR7P2noOB2xfudtYbUP6ahEkAzooEp2FBnCG8x7OUxt+
-         r8xoqb2locbWkYttvTWIh5XS/aZCQGUKB8EZFcab7KFbeKXU5O0Grt2Bxg3SLYGPfsZN
-         9dbfYz3v5+cC41tiwU4yCM5ebqVUdcb3kqfFmKDFZLiO+4DKS3VPrH4CzTN4AVAQj2ca
-         BGuDI4FFslkTJxZNAkwm8+mMlrQKPIyqEMTZXvp7bp3hLwQO+TRR/sa6lW9QADuJRgAx
-         QTpqCX5SYbbAhzWPzzeACAlgLg0755z/XpqDiWDL2T4MO9wXfDBQDjZQILW+5EOI9sFx
-         oZwg==
+        bh=lqzRtGuZEAD2gyPZ7HAojYDJ1jcY2Mw3BGlSlj7zOok=;
+        b=ILkIxNIE/UPxa4YhaZdCRzIkhAmwVwZuaJM3v66IVxJlCp368K5t5Fe1tZQRut1eyF
+         Wq9d+bJBfUi8rjByV1aDGge15JfO0FWQwEVXpWpENzn2TbYkeYpnEg1BSGmmIkemivyx
+         0P/NvLnvNbrKXSsFjFYOZL2P9pBE0MuJgfvBr55+bfa03xeaS08ylztrxBM1SpcaD57T
+         R3DF4yiwhHWwoGbLoWWYzrXPSGQX8u9GeIVzZkOKkVJyi2ir+2Zs2oKdYaTLIOSCDV0+
+         5S1M0gZ6FtM62W9HURF6K/slHW2StMzG5NT7qlAtnTOW/Fw3AmuNzXSFj0kTvMDl9rWq
+         gsjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=B8+MtnNgt81eyfT5mrb9SgeJBKzH0uRwaS5VaG2eLO0=;
-        b=F3OXS1rM+fW5xiR2URh9CTAv7ssX3EbbuJafxaZFgMN7gVJcxfu1xooMxv7YubfGUQ
-         qWef5tfp6SZF9uPEQkFAH6AnesvOxCBAUX6mP6YEQe7YMuB82MKaJylofEvLP+c1P/Jk
-         FikxDwSTy1R8aPeODxch1uoHZkIu5vx7hdFur3npIkz3rUP5r9CtQY286hQ5/oav8GbW
-         DuqgO12Vf9/cTg9GsXMxk9admN7bK/BSsZsMwMXTafLZz5uUrygnGt3alVM9ke5PwkpT
-         iN7ML7VpqIsiPHcEA+B+x8c1Y1onU14IvmJGXu5y+MQWSzdi7RT1BUJXVQOWlwlkZ/Sy
-         s0tA==
-X-Gm-Message-State: AKaTC03B/GOTdAiRjo1WiBb7aMVl1QcBhgqa182QDTOxcM+k7NtfjZ1o4BRrLjLhHoumrg==
-X-Received: by 10.84.216.21 with SMTP id m21mr204561236pli.119.1481704709224;
-        Wed, 14 Dec 2016 00:38:29 -0800 (PST)
+        bh=lqzRtGuZEAD2gyPZ7HAojYDJ1jcY2Mw3BGlSlj7zOok=;
+        b=DVOBWO58nh1c6kzX8+bA/74EjsiWJsBDKNNjz8bObuOFwgE9UEkLQXPpnDTbC1GPd0
+         T/KmiUbuBvTinTmhBBZTAqxdbVIvonFbNwMd5Gx71wlXMNdagDrULzeht0lBLgUk1yMr
+         48ouZVmQkkvCxhoDhGHphiAsH90emwymKJsH+MJeNjqby9ms7kRkbdAMnSK87DQkSOnm
+         7B0avYr/1/XqqEAG8aoYelb/Ch4cOf5+CCu4XHZ5S0sySPMmkxBLOTyiKzLIDyZuspkD
+         tOnF46gTxSugt2s9mNQaNAhxGxj8DBcUaTMGrcdMGmvk8oFzeeKOzU1RtVZm8k8r3wba
+         UaYA==
+X-Gm-Message-State: AKaTC00+a0c7002Er+TcdWw86ZCY5Fd3aF8olDw1Qr78qIv1n7+/Gk3JoD/VelM8w77pBA==
+X-Received: by 10.84.217.70 with SMTP id e6mr204013988plj.161.1481704715873;
+        Wed, 14 Dec 2016 00:38:35 -0800 (PST)
 Received: from chrisp-dl.atlnz.lc ([2001:df5:b000:22:50cb:a0f2:6faa:ea3b])
-        by smtp.gmail.com with ESMTPSA id g63sm85225192pfd.60.2016.12.14.00.38.25
+        by smtp.gmail.com with ESMTPSA id g63sm85225192pfd.60.2016.12.14.00.38.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Dec 2016 00:38:28 -0800 (PST)
+        Wed, 14 Dec 2016 00:38:35 -0800 (PST)
 From:   Chris Packham <judge.packham@gmail.com>
 To:     git@vger.kernel.org
 Cc:     mah@jump-ing.de, peff@peff.net, jacob.keller@gmail.com,
         gitster@pobox.com, Chris Packham <judge.packham@gmail.com>
-Subject: [PATCH 2/3] completion: add --continue option for merge
-Date:   Wed, 14 Dec 2016 21:37:56 +1300
-Message-Id: <20161214083757.26412-2-judge.packham@gmail.com>
+Subject: [PATCH 3/3] merge: Ensure '--abort' option takes no arguments
+Date:   Wed, 14 Dec 2016 21:37:57 +1300
+Message-Id: <20161214083757.26412-3-judge.packham@gmail.com>
 X-Mailer: git-send-email 2.11.0.24.ge6920cf
 In-Reply-To: <20161214083757.26412-1-judge.packham@gmail.com>
 References: <20161213084859.13426-1-judge.packham@gmail.com>
@@ -62,31 +62,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add 'git merge --continue' option when completing.
+Like '--continue', the '--abort' option doesn't make any sense with
+other options or arguments to 'git merge' so ensure that none are
+present.
 
 Signed-off-by: Chris Packham <judge.packham@gmail.com>
 ---
-Changes in v2:
-- new
 Changes in v3:
-- none
+- new
 
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/merge.c  | 4 ++++
+ t/t7600-merge.sh | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 21016bf8d..1f97ffae1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1552,7 +1552,7 @@ _git_merge ()
- 	case "$cur" in
- 	--*)
- 		__gitcomp "$__git_merge_options
--			--rerere-autoupdate --no-rerere-autoupdate --abort"
-+			--rerere-autoupdate --no-rerere-autoupdate --abort --continue"
- 		return
- 	esac
- 	__gitcomp_nl "$(__git_refs)"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 836ec281b..668aaffb8 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1163,6 +1163,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		int nargc = 2;
+ 		const char *nargv[] = {"reset", "--merge", NULL};
+ 
++		if (orig_argc != 2)
++			usage_msg_opt("--abort expects no arguments",
++			      builtin_merge_usage, builtin_merge_options);
++
+ 		if (!file_exists(git_path_merge_head()))
+ 			die(_("There is no merge to abort (MERGE_HEAD missing)."));
+ 
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 682139c4e..2ebda509a 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -154,6 +154,8 @@ test_expect_success 'test option parsing' '
+ 	test_must_fail git merge -s foobar c1 &&
+ 	test_must_fail git merge -s=foobar c1 &&
+ 	test_must_fail git merge -m &&
++	test_must_fail git merge --abort foobar &&
++	test_must_fail git merge --abort --quiet &&
+ 	test_must_fail git merge --continue foobar &&
+ 	test_must_fail git merge --continue --quiet &&
+ 	test_must_fail git merge
 -- 
 2.11.0.24.ge6920cf
 
