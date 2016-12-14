@@ -6,52 +6,53 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00EF91FF6D
-	for <e@80x24.org>; Wed, 14 Dec 2016 22:40:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8A71FF40
+	for <e@80x24.org>; Wed, 14 Dec 2016 22:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935051AbcLNWkZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 17:40:25 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:33600 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935042AbcLNWkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 17:40:23 -0500
-Received: by mail-pg0-f51.google.com with SMTP id 3so12529821pgd.0
-        for <git@vger.kernel.org>; Wed, 14 Dec 2016 14:40:23 -0800 (PST)
+        id S934725AbcLNWke (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 17:40:34 -0500
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34104 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935044AbcLNWkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 17:40:20 -0500
+Received: by mail-pg0-f49.google.com with SMTP id x23so12523031pgx.1
+        for <git@vger.kernel.org>; Wed, 14 Dec 2016 14:40:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fH1BMc1OZ9SBuYatkD5BN0ekSF7QqQzaiczHW+Gwjhs=;
-        b=TUvvDUduGXUrgkhgB4rVShm3ZOyEIcuUWSo+VRgj9ILr7fuHY/KfRlj7UQoRXc8X1h
-         HchS6S2Md6IDGcRPDp7QY7Ivu6JQJH6ROdDS9wJtVZcU634nGwFPVEDAlBJ/UOrtVuO4
-         FdkYxkqafBEiiDPmiiZMiV5WDyekmoIfOvLehiPayLX1ou0aJFoV9G8FWYqwy7jfRiAe
-         ZgHhcZRDweTHKokPLl0bcJWMpgfn2WIFnmf7kLjdKezDEGZ97kFzUnnV485bfveELTcI
-         vgGUxsfiB91dA8XHhAoVH7vQH3DE4udZH/jIyQN+nHFPTx1oLuGC2fGeNSz4xne8ydG5
-         j35w==
+        bh=U5rPM6Mbmrsg5qTSd6mq2UJBlIbZjYXwjdmNSwgjc90=;
+        b=ZkNPIH+th0yFU+IcATn/QmiwH/v79bUi8Pqh+l7CVCNmMK308Lo96ZEq9Sim+qYOBe
+         gNJ/lbcV3FdWdplVfnrkwgySSe2D+SHlg6GqlF8RSjS6iBW/yGQw2cfZRpGwyEtuynbS
+         T16F6PG4qrYJkmtVGIB9HrUtZatiQqm7SCVJPV3mE87pVen+11J1ojOksgjdvHF69Q2Y
+         R2jaOr4j9SP21L7H64z1BgAEANt5UkqjOf5MoweGM47ImhLatAtm9/vpRicFNEhjkehh
+         ag07Ywf2Aypu7ZYOPY0jVPYbDmu1n1u7Dq7hwxRrThM+nFo9muzkC/dNoscECqNXfrL2
+         6wFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fH1BMc1OZ9SBuYatkD5BN0ekSF7QqQzaiczHW+Gwjhs=;
-        b=fym4JlC4il6KySnXtHIOL3/pwyEzoisdELaUqwyW6Rp1erVVa0wPIebwPqiAZnguUs
-         lWN13K91pTf9VEQvtRiZmVoCnvZwzqHdhmvSp7Bs9ESEYxg60TcfLrhdUsewuyRJ3LNk
-         nGWX8udAJmKHGFNVij+4Xm4sn4P771cVWJ6+9SsdemfermY6BMczqEYABnAA+2gr92rc
-         7KLjN9hmgD8RiFGs8wxcPzK3kQpUt+/TQehChv4tKDqCqQRMqRZ5qWaOac4fyIaJXhwP
-         ofb2Gn37kGUJ30sLjStr0ilzpgbXjzkSg8Qz0mEXkBsXP1ASS6hY4WI0raa4gW57+Bsl
-         +HlA==
-X-Gm-Message-State: AKaTC020+V72M8UShOLiBXN0CARyfN7XDgakL9ze61zs0GH0NR2wL57/e/0Xr1schnjN3X0t
-X-Received: by 10.84.218.70 with SMTP id f6mr66756963plm.142.1481755223040;
-        Wed, 14 Dec 2016 14:40:23 -0800 (PST)
+        bh=U5rPM6Mbmrsg5qTSd6mq2UJBlIbZjYXwjdmNSwgjc90=;
+        b=RGKDWQ3m3Nz9YzkigH+a0tUoo7E3em3VZif8ThzVc/10nvmdOPasc2IKLMBZcGrkT+
+         lAjCKARb6CSM8dGJbWXiNn3ycoktm07QFoR4MIPUYN05lcVK8IXz8GyxG/p90BPcl03w
+         b19qOogrGHcWU8k1d0qNiwfOuZKsNH60qzkpIyGGqeqlVtpV2iB/1lz8LDgWK55g5sGv
+         WVidO5HheBTvT62jdw/nYmKIowz28eQ6mS/Fv2e7BWAFgz7Vr6mqKzUP63Qo6NKKR6la
+         pWGdSHkyHBEikNku8GXrXOJFgFHgZoUisb9+8jGVm+g/WmdfRf1CjJOOtC5wdnSc9nX7
+         eunQ==
+X-Gm-Message-State: AKaTC02U5jtBu9TSMl8gT4nScrMOiC2WaJGI0lTm78EvX6g7CLQAKGQw2sP0k/oHOawA8maE
+X-Received: by 10.84.206.37 with SMTP id f34mr213385429ple.127.1481755219864;
+        Wed, 14 Dec 2016 14:40:19 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id 72sm89600973pfw.37.2016.12.14.14.40.21
+        by smtp.gmail.com with ESMTPSA id 72sm89600973pfw.37.2016.12.14.14.40.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Dec 2016 14:40:22 -0800 (PST)
+        Wed, 14 Dec 2016 14:40:18 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, gitster@pobox.com, sbeller@google.com,
-        bburky@bburky.com, jrnieder@gmail.com
-Subject: [PATCH v10 6/6] http: respect protocol.*.allow=user for http-alternates
-Date:   Wed, 14 Dec 2016 14:39:55 -0800
-Message-Id: <1481755195-174539-7-git-send-email-bmwill@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
+        peff@peff.net, sbeller@google.com, bburky@bburky.com,
+        jrnieder@gmail.com
+Subject: [PATCH v10 4/6] http: create function to get curl allowed protocols
+Date:   Wed, 14 Dec 2016 14:39:53 -0800
+Message-Id: <1481755195-174539-5-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1481755195-174539-1-git-send-email-bmwill@google.com>
 References: <1481679637-133137-1-git-send-email-bmwill@google.com>
@@ -61,143 +62,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Move the creation of an allowed protocols whitelist to a helper
+function. This will be useful when we need to compute the set of
+allowed protocols differently for normal and redirect cases.
 
-The http-walker may fetch the http-alternates (or
-alternates) file from a remote in order to find more
-objects. This should count as a "not from the user" use of
-the protocol. But because we implement the redirection
-ourselves and feed the new URL to curl, it will use the
-CURLOPT_PROTOCOLS rules, not the more restrictive
-CURLOPT_REDIR_PROTOCOLS.
-
-The ideal solution would be for each curl request we make to
-know whether or not is directly from the user or part of an
-alternates redirect, and then set CURLOPT_PROTOCOLS as
-appropriate. However, that would require plumbing that
-information through all of the various layers of the http
-code.
-
-Instead, let's check the protocol at the source: when we are
-parsing the remote http-alternates file. The only downside
-is that if there's any mismatch between what protocol we
-think it is versus what curl thinks it is, it could violate
-the policy.
-
-To address this, we'll make the parsing err on the picky
-side, and only allow protocols that it can parse
-definitively. So for example, you can't elude the "http"
-policy by asking for "HTTP://", even though curl might
-handle it; we would reject it as unknown. The only unsafe
-case would be if you have a URL that starts with "http://"
-but curl interprets as another protocol. That seems like an
-unlikely failure mode (and we are still protected by our
-base CURLOPT_PROTOCOL setting, so the worst you could do is
-trigger one of https, ftp, or ftps).
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- http-walker.c              | 52 ++++++++++++++++++++++++++++++++++++----------
- t/t5550-http-fetch-dumb.sh | 10 +++++++++
- 2 files changed, 51 insertions(+), 11 deletions(-)
+ http.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/http-walker.c b/http-walker.c
-index c2f81cd..b34b6ac 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -3,6 +3,7 @@
- #include "walker.h"
- #include "http.h"
- #include "list.h"
-+#include "transport.h"
- 
- struct alt_base {
- 	char *base;
-@@ -160,6 +161,32 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- #endif
+diff --git a/http.c b/http.c
+index 034426e..f7c488a 100644
+--- a/http.c
++++ b/http.c
+@@ -489,10 +489,25 @@ static void set_curl_keepalive(CURL *c)
  }
+ #endif
  
-+static int is_alternate_allowed(const char *url)
++static long get_curl_allowed_protocols(void)
 +{
-+	const char *protocols[] = {
-+		"http", "https", "ftp", "ftps"
-+	};
-+	int i;
++	long allowed_protocols = 0;
 +
-+	for (i = 0; i < ARRAY_SIZE(protocols); i++) {
-+		const char *end;
-+		if (skip_prefix(url, protocols[i], &end) &&
-+		    starts_with(end, "://"))
-+			break;
-+	}
++	if (is_transport_allowed("http"))
++		allowed_protocols |= CURLPROTO_HTTP;
++	if (is_transport_allowed("https"))
++		allowed_protocols |= CURLPROTO_HTTPS;
++	if (is_transport_allowed("ftp"))
++		allowed_protocols |= CURLPROTO_FTP;
++	if (is_transport_allowed("ftps"))
++		allowed_protocols |= CURLPROTO_FTPS;
 +
-+	if (i >= ARRAY_SIZE(protocols)) {
-+		warning("ignoring alternate with unknown protocol: %s", url);
-+		return 0;
-+	}
-+	if (!is_transport_allowed(protocols[i], 0)) {
-+		warning("ignoring alternate with restricted protocol: %s", url);
-+		return 0;
-+	}
-+
-+	return 1;
++	return allowed_protocols;
 +}
 +
- static void process_alternates_response(void *callback_data)
+ static CURL *get_curl_handle(void)
  {
- 	struct alternates_request *alt_req =
-@@ -274,17 +301,20 @@ static void process_alternates_response(void *callback_data)
- 				struct strbuf target = STRBUF_INIT;
- 				strbuf_add(&target, base, serverlen);
- 				strbuf_add(&target, data + i, posn - i - 7);
--				warning("adding alternate object store: %s",
--					target.buf);
--				newalt = xmalloc(sizeof(*newalt));
--				newalt->next = NULL;
--				newalt->base = strbuf_detach(&target, NULL);
--				newalt->got_indices = 0;
--				newalt->packs = NULL;
--
--				while (tail->next != NULL)
--					tail = tail->next;
--				tail->next = newalt;
-+
-+				if (is_alternate_allowed(target.buf)) {
-+					warning("adding alternate object store: %s",
-+						target.buf);
-+					newalt = xmalloc(sizeof(*newalt));
-+					newalt->next = NULL;
-+					newalt->base = strbuf_detach(&target, NULL);
-+					newalt->got_indices = 0;
-+					newalt->packs = NULL;
-+
-+					while (tail->next != NULL)
-+						tail = tail->next;
-+					tail->next = newalt;
-+				}
- 			}
- 		}
- 		i = posn + 1;
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 22011f0..c0ee29c 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -360,5 +360,15 @@ test_expect_success 'http-alternates cannot point at funny protocols' '
- 		clone "$HTTPD_URL/dumb/evil.git" evil-file
- '
+ 	CURL *result = curl_easy_init();
+-	long allowed_protocols = 0;
  
-+test_expect_success 'http-alternates triggers not-from-user protocol check' '
-+	echo "$HTTPD_URL/dumb/victim.git/objects" \
-+		>"$evil/objects/info/http-alternates" &&
-+	test_config_global http.followRedirects true &&
-+	test_must_fail git -c protocol.http.allow=user \
-+		clone $HTTPD_URL/dumb/evil.git evil-user &&
-+	git -c protocol.http.allow=always \
-+		clone $HTTPD_URL/dumb/evil.git evil-user
-+'
-+
- stop_httpd
- test_done
+ 	if (!result)
+ 		die("curl_easy_init failed");
+@@ -572,16 +587,10 @@ static CURL *get_curl_handle(void)
+ 	curl_easy_setopt(result, CURLOPT_POST301, 1);
+ #endif
+ #if LIBCURL_VERSION_NUM >= 0x071304
+-	if (is_transport_allowed("http"))
+-		allowed_protocols |= CURLPROTO_HTTP;
+-	if (is_transport_allowed("https"))
+-		allowed_protocols |= CURLPROTO_HTTPS;
+-	if (is_transport_allowed("ftp"))
+-		allowed_protocols |= CURLPROTO_FTP;
+-	if (is_transport_allowed("ftps"))
+-		allowed_protocols |= CURLPROTO_FTPS;
+-	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
+-	curl_easy_setopt(result, CURLOPT_PROTOCOLS, allowed_protocols);
++	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
++			 get_curl_allowed_protocols());
++	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
++			 get_curl_allowed_protocols());
+ #else
+ 	warning("protocol restrictions not applied to curl redirects because\n"
+ 		"your curl version is too old (>= 7.19.4)");
 -- 
 2.8.0.rc3.226.g39d4020
 
