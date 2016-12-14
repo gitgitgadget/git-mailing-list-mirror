@@ -2,86 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C9F51FF40
-	for <e@80x24.org>; Wed, 14 Dec 2016 18:01:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F8AE1FF40
+	for <e@80x24.org>; Wed, 14 Dec 2016 18:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754302AbcLNSBA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 13:01:00 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:36305 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753453AbcLNSA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 13:00:59 -0500
-Received: by mail-pg0-f50.google.com with SMTP id f188so10338272pgc.3
-        for <git@vger.kernel.org>; Wed, 14 Dec 2016 10:00:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GQGLqiLT9a674Oy5AfiPxgjQsg3uASKgIoZ06Ax3Kbg=;
-        b=izyyd+L/mVG/9lU08oqKmgcP+Mxq4YXKLareAUl5raIj37bqSsCrpwOIB20xJxC235
-         wQVKLZkaXQQD7imaNCPytgvuDhZXyAx1SlctKvHDfWHbaObCoinuapQ7wQIr9ThYQgSh
-         F65qI75ch2TBeW+4urgOlSjI6BDKOR4olR0HarTmVcRBQWj5624JixRIN1U/Kdb0A2lc
-         Hn4WK6xITecBU+3lfrHAg1A6TueEvXS4ty4KbWMfqJH//7QKO9tgIZKK/UcZlNW6aOj/
-         3+owzjr8zZz0ZWfibj66J68jNnwSEpvxA/DKPfUvZhcajiHy3ciWly8sNm9XVYj4IjQA
-         Rptw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GQGLqiLT9a674Oy5AfiPxgjQsg3uASKgIoZ06Ax3Kbg=;
-        b=gNNyM7N6JTpTwzR1MKOSKPrde2gVkFvLTNrQ8HvAT6dxj49YmwunYpvCmfOdeZNgyn
-         UdipoybCtQnzP4UyqRxZSdU4ep5KTPrLw7g9GdqevSKoXnltj4MCoNfSU+FPqyPjirov
-         noa35OuSXFOOMXR3sLnL0Qi/ssm/AQXs5yL3WK1Lj1icKZhmpzpGsP5O+E0EZxPK8Ou6
-         qGdR7sRisMpAOK5iC2BSwQkSLuEcIqHnn0dwshpHJwxJrXgOypG7yrT6sukkzdJs2KSM
-         vtgjpAmFFIzhhq3e7+pyczr4qhDDe90Gd04NT4hthXU7t9VPgteDurovSSeJbKjhyqBv
-         Lazw==
-X-Gm-Message-State: AKaTC01haemxiF5YD/LZYl3c1OUUEZnUdY67hpz4HqTGdLNNod2rDrz/0Na/cFjA9mv/GAw1
-X-Received: by 10.98.217.67 with SMTP id s64mr108174937pfg.66.1481738458767;
-        Wed, 14 Dec 2016 10:00:58 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:a0bd:b7d6:4331:46ad])
-        by smtp.gmail.com with ESMTPSA id c8sm88967055pfe.15.2016.12.14.10.00.57
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Dec 2016 10:00:57 -0800 (PST)
-Date:   Wed, 14 Dec 2016 10:00:56 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
-        gitster@pobox.com, jrnieder@gmail.com
-Subject: Re: [PATCH v9 4/5] http: create function to get curl allowed
- protocols
-Message-ID: <20161214180056.GB20063@google.com>
-References: <1480636862-40489-1-git-send-email-bmwill@google.com>
- <1481679637-133137-1-git-send-email-bmwill@google.com>
- <1481679637-133137-5-git-send-email-bmwill@google.com>
- <20161214160330.iqvwxshsgk4n2gm7@sigill.intra.peff.net>
+        id S1754372AbcLNSEv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 13:04:51 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52878 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754366AbcLNSEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 13:04:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A009357740;
+        Wed, 14 Dec 2016 13:04:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XZgcxNcZlcl5lCWWpoF0DR1shmY=; b=GQbvMh
+        VJD5XHFJyIFmVuBxl5p50XouVfjGDkMLQRlTFkhuGVqW3TH4zQJ9yqP9cT/UcY9v
+        8JBv3EDxNBO/2keBSBHOtqT95CcmKwvIOXeSnFRbzq5Zfr517uOzxRlVaJXmeHtb
+        /P6HDqu1bU3yjED566jOjtJe8gUfAzKK6esls=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jCj81zZnZXItBeocchGEAfo/lTTUcnWu
+        AyIoR0SSV0h/VJZW+/0/ijbbAvd8iNY1J5UuG7hUeLdObxLX/zB64t64kQZmqO1m
+        uAOFc1f/arTLO+RebdoRnyI5OLcbGHQxMlpJlJ3ruxSqgO1aZE0ZmRvBv75SJleB
+        PQx0wvANCtA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97CCC5773E;
+        Wed, 14 Dec 2016 13:04:48 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 021E45773D;
+        Wed, 14 Dec 2016 13:04:47 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Chris Packham <judge.packham@gmail.com>
+Cc:     git@vger.kernel.org, mah@jump-ing.de, peff@peff.net,
+        jacob.keller@gmail.com
+Subject: Re: [PATCHv3 1/3] merge: Add '--continue' option as a synonym for 'git commit'
+References: <20161213084859.13426-1-judge.packham@gmail.com>
+        <20161214083757.26412-1-judge.packham@gmail.com>
+Date:   Wed, 14 Dec 2016 10:04:46 -0800
+In-Reply-To: <20161214083757.26412-1-judge.packham@gmail.com> (Chris Packham's
+        message of "Wed, 14 Dec 2016 21:37:55 +1300")
+Message-ID: <xmqqk2b2xu81.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161214160330.iqvwxshsgk4n2gm7@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CD006406-C227-11E6-99D7-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/14, Jeff King wrote:
-> On Tue, Dec 13, 2016 at 05:40:36PM -0800, Brandon Williams wrote:
-> 
-> > Move the creation of an allowed protocols whitelist to a helper
-> > function.
-> 
-> This is "what" but not "why". You can figure it out if you see the next
-> patch, but it's often nice to make a brief mention, like:
-> 
->   This will be useful when we need to compute the set of allowed
->   protocols differently for normal and redirect cases.
+The last one 3/3 is a nice touch that makes sure that we do not
+forget what we discovered during the discussion.  Very much
+appreciated.
 
-Commit message writing is hard (at least for me :).  I'll update the
-message to indicate the why.
-
--- 
-Brandon Williams
+Will queue.  Thanks.
