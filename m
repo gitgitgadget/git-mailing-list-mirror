@@ -2,128 +2,316 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B44DD1FF40
-	for <e@80x24.org>; Wed, 14 Dec 2016 12:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5B241FF40
+	for <e@80x24.org>; Wed, 14 Dec 2016 12:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754970AbcLNMx1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 07:53:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56312 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754744AbcLNMx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 07:53:26 -0500
-Received: (qmail 25593 invoked by uid 109); 14 Dec 2016 12:53:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 12:53:25 +0000
-Received: (qmail 24554 invoked by uid 111); 14 Dec 2016 12:54:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 07:54:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2016 07:53:23 -0500
-Date:   Wed, 14 Dec 2016 07:53:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 28/34] run_command_opt(): optionally hide stderr when
- the command succeeds
-Message-ID: <20161214125322.o3naglvyuzgk2pri@sigill.intra.peff.net>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
- <cover.1481642927.git.johannes.schindelin@gmx.de>
- <1e82aeabb906a35175362418b2b4957fae50c3b0.1481642927.git.johannes.schindelin@gmx.de>
- <2637bed1-c36f-32f6-b255-ea32da76d792@kdbg.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2637bed1-c36f-32f6-b255-ea32da76d792@kdbg.org>
+        id S1755614AbcLNMzm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 07:55:42 -0500
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:54071 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1755330AbcLNMzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 07:55:41 -0500
+Received: (qmail 17762 invoked from network); 14 Dec 2016 12:55:38 -0000
+Received: (qmail 26261 invoked from network); 14 Dec 2016 12:55:38 -0000
+Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 14 Dec 2016 12:55:38 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
+To:     git@vger.kernel.org
+Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
+        David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v7 02/16] i18n: add--interactive: mark strings for translation
+Date:   Wed, 14 Dec 2016 11:54:25 -0100
+Message-Id: <20161214125439.8822-3-vascomalmeida@sapo.pt>
+X-Mailer: git-send-email 2.11.0.44.g7d42c6c
+In-Reply-To: <20161214125439.8822-1-vascomalmeida@sapo.pt>
+References: <20161214125439.8822-1-vascomalmeida@sapo.pt>
+In-Reply-To: <20161005172110.30801-1-vascomalmeida@sapo.pt>
+References: <20161005172110.30801-1-vascomalmeida@sapo.pt>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 14, 2016 at 09:34:20AM +0100, Johannes Sixt wrote:
+Mark simple strings (without interpolation) for translation.
 
-> I wanted to see what it would look like if we make it the caller's
-> responsibility to throw away stderr. The patch is below, as fixup
-> of patch 29/34. The change is gross, but the end result is not that
-> bad, though not really a delightful read, either, mostly due to the
-> strange cleanup semantics of the start_command/finish_command combo,
-> so... I dunno.
+Brackets around first parameter of ternary operator is necessary because
+otherwise xgettext fails to extract strings marked for translation from
+the rest of the file.
 
-I don't have a strong opinion on the patches under discussion, but here
-are a few pointers on the run-command interface:
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ git-add--interactive.perl | 76 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 42 insertions(+), 34 deletions(-)
 
-> +	struct child_process cmd = CHILD_PROCESS_INIT;
-> [...]
->  		env = read_author_script();
->  		if (!env) {
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index ee3d81269..cf216ecb6 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -4,6 +4,7 @@ use 5.008;
+ use strict;
+ use warnings;
+ use Git;
++use Git::I18N;
+ 
+ binmode(STDOUT, ":raw");
+ 
+@@ -253,8 +254,9 @@ sub list_untracked {
+ 	run_cmd_pipe(qw(git ls-files --others --exclude-standard --), @ARGV);
+ }
+ 
+-my $status_fmt = '%12s %12s %s';
+-my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
++# TRANSLATORS: you can adjust this to align "git add -i" status menu
++my $status_fmt = __('%12s %12s %s');
++my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'));
+ 
+ {
+ 	my $initial;
+@@ -680,7 +682,7 @@ sub update_cmd {
+ 	my @mods = list_modified('file-only');
+ 	return if (!@mods);
+ 
+-	my @update = list_and_choose({ PROMPT => 'Update',
++	my @update = list_and_choose({ PROMPT => __('Update'),
+ 				       HEADER => $status_head, },
+ 				     @mods);
+ 	if (@update) {
+@@ -692,7 +694,7 @@ sub update_cmd {
+ }
+ 
+ sub revert_cmd {
+-	my @update = list_and_choose({ PROMPT => 'Revert',
++	my @update = list_and_choose({ PROMPT => __('Revert'),
+ 				       HEADER => $status_head, },
+ 				     list_modified());
+ 	if (@update) {
+@@ -726,13 +728,13 @@ sub revert_cmd {
+ }
+ 
+ sub add_untracked_cmd {
+-	my @add = list_and_choose({ PROMPT => 'Add untracked' },
++	my @add = list_and_choose({ PROMPT => __('Add untracked') },
+ 				  list_untracked());
+ 	if (@add) {
+ 		system(qw(git update-index --add --), @add);
+ 		say_n_paths('added', @add);
+ 	} else {
+-		print "No untracked files.\n";
++		print __("No untracked files.\n");
+ 	}
+ 	print "\n";
+ }
+@@ -1166,8 +1168,14 @@ sub edit_hunk_loop {
+ 		}
+ 		else {
+ 			prompt_yesno(
+-				'Your edited hunk does not apply. Edit again '
+-				. '(saying "no" discards!) [y/n]? '
++				# TRANSLATORS: do not translate [y/n]
++				# The program will only accept that input
++				# at this point.
++				# Consider translating (saying "no" discards!) as
++				# (saying "n" for "no" discards!) if the translation
++				# of the word "no" does not start with n.
++				__('Your edited hunk does not apply. Edit again '
++				   . '(saying "no" discards!) [y/n]? ')
+ 				) or return undef;
+ 		}
+ 	}
+@@ -1213,11 +1221,11 @@ sub apply_patch_for_checkout_commit {
+ 		run_git_apply 'apply '.$reverse, @_;
+ 		return 1;
+ 	} elsif (!$applies_index) {
+-		print colored $error_color, "The selected hunks do not apply to the index!\n";
+-		if (prompt_yesno "Apply them to the worktree anyway? ") {
++		print colored $error_color, __("The selected hunks do not apply to the index!\n");
++		if (prompt_yesno __("Apply them to the worktree anyway? ")) {
+ 			return run_git_apply 'apply '.$reverse, @_;
+ 		} else {
+-			print colored $error_color, "Nothing was applied.\n";
++			print colored $error_color, __("Nothing was applied.\n");
+ 			return 0;
+ 		}
+ 	} else {
+@@ -1237,9 +1245,9 @@ sub patch_update_cmd {
+ 
+ 	if (!@mods) {
+ 		if (@all_mods) {
+-			print STDERR "Only binary files changed.\n";
++			print STDERR __("Only binary files changed.\n");
+ 		} else {
+-			print STDERR "No changes.\n";
++			print STDERR __("No changes.\n");
+ 		}
+ 		return 0;
+ 	}
+@@ -1247,7 +1255,7 @@ sub patch_update_cmd {
+ 		@them = @mods;
+ 	}
+ 	else {
+-		@them = list_and_choose({ PROMPT => 'Patch update',
++		@them = list_and_choose({ PROMPT => __('Patch update'),
+ 					  HEADER => $status_head, },
+ 					@mods);
+ 	}
+@@ -1397,12 +1405,12 @@ sub patch_update_file {
+ 				my $response = $1;
+ 				my $no = $ix > 10 ? $ix - 10 : 0;
+ 				while ($response eq '') {
+-					my $extra = "";
+ 					$no = display_hunks(\@hunk, $no);
+ 					if ($no < $num) {
+-						$extra = " (<ret> to see more)";
++						print __("go to which hunk (<ret> to see more)? ");
++					} else {
++						print __("go to which hunk? ");
+ 					}
+-					print "go to which hunk$extra? ";
+ 					$response = <STDIN>;
+ 					if (!defined $response) {
+ 						$response = '';
+@@ -1439,7 +1447,7 @@ sub patch_update_file {
+ 			elsif ($line =~ m|^/(.*)|) {
+ 				my $regex = $1;
+ 				if ($1 eq "") {
+-					print colored $prompt_color, "search for regex? ";
++					print colored $prompt_color, __("search for regex? ");
+ 					$regex = <STDIN>;
+ 					if (defined $regex) {
+ 						chomp $regex;
+@@ -1462,7 +1470,7 @@ sub patch_update_file {
+ 					$iy++;
+ 					$iy = 0 if ($iy >= $num);
+ 					if ($ix == $iy) {
+-						error_msg "No hunk matches the given pattern\n";
++						error_msg __("No hunk matches the given pattern\n");
+ 						last;
+ 					}
+ 				}
+@@ -1474,7 +1482,7 @@ sub patch_update_file {
+ 					$ix--;
+ 				}
+ 				else {
+-					error_msg "No previous hunk\n";
++					error_msg __("No previous hunk\n");
+ 				}
+ 				next;
+ 			}
+@@ -1483,7 +1491,7 @@ sub patch_update_file {
+ 					$ix++;
+ 				}
+ 				else {
+-					error_msg "No next hunk\n";
++					error_msg __("No next hunk\n");
+ 				}
+ 				next;
+ 			}
+@@ -1496,13 +1504,13 @@ sub patch_update_file {
+ 					}
+ 				}
+ 				else {
+-					error_msg "No previous hunk\n";
++					error_msg __("No previous hunk\n");
+ 				}
+ 				next;
+ 			}
+ 			elsif ($line =~ /^j/) {
+ 				if ($other !~ /j/) {
+-					error_msg "No next hunk\n";
++					error_msg __("No next hunk\n");
+ 					next;
+ 				}
+ 			}
+@@ -1560,18 +1568,18 @@ sub diff_cmd {
+ 	my @mods = list_modified('index-only');
+ 	@mods = grep { !($_->{BINARY}) } @mods;
+ 	return if (!@mods);
+-	my (@them) = list_and_choose({ PROMPT => 'Review diff',
++	my (@them) = list_and_choose({ PROMPT => __('Review diff'),
+ 				     IMMEDIATE => 1,
+ 				     HEADER => $status_head, },
+ 				   @mods);
+ 	return if (!@them);
+-	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
++	my $reference = (is_initial_commit()) ? get_empty_tree() : 'HEAD';
+ 	system(qw(git diff -p --cached), $reference, '--',
+ 		map { $_->{VALUE} } @them);
+ }
+ 
+ sub quit_cmd {
+-	print "Bye.\n";
++	print __("Bye.\n");
+ 	exit(0);
+ }
+ 
+@@ -1594,32 +1602,32 @@ sub process_args {
+ 			if ($1 eq 'reset') {
+ 				$patch_mode = 'reset_head';
+ 				$patch_mode_revision = 'HEAD';
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 				if ($arg ne '--') {
+ 					$patch_mode_revision = $arg;
+ 					$patch_mode = ($arg eq 'HEAD' ?
+ 						       'reset_head' : 'reset_nothead');
+-					$arg = shift @ARGV or die "missing --";
++					$arg = shift @ARGV or die __("missing --");
+ 				}
+ 			} elsif ($1 eq 'checkout') {
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 				if ($arg eq '--') {
+ 					$patch_mode = 'checkout_index';
+ 				} else {
+ 					$patch_mode_revision = $arg;
+ 					$patch_mode = ($arg eq 'HEAD' ?
+ 						       'checkout_head' : 'checkout_nothead');
+-					$arg = shift @ARGV or die "missing --";
++					$arg = shift @ARGV or die __("missing --");
+ 				}
+ 			} elsif ($1 eq 'stage' or $1 eq 'stash') {
+ 				$patch_mode = $1;
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 			} else {
+ 				die "unknown --patch mode: $1";
+ 			}
+ 		} else {
+ 			$patch_mode = 'stage';
+-			$arg = shift @ARGV or die "missing --";
++			$arg = shift @ARGV or die __("missing --");
+ 		}
+ 		die "invalid argument $arg, expecting --"
+ 		    unless $arg eq "--";
+@@ -1641,10 +1649,10 @@ sub main_loop {
+ 		   [ 'help', \&help_cmd, ],
+ 	);
+ 	while (1) {
+-		my ($it) = list_and_choose({ PROMPT => 'What now',
++		my ($it) = list_and_choose({ PROMPT => __('What now'),
+ 					     SINGLETON => 1,
+ 					     LIST_FLAT => 4,
+-					     HEADER => '*** Commands ***',
++					     HEADER => __('*** Commands ***'),
+ 					     ON_EOF => \&quit_cmd,
+ 					     IMMEDIATE => 1 }, @cmd);
+ 		if ($it) {
+-- 
+2.11.0.44.g7d42c6c
 
-The child_process struct comes with its own internal env array. So you
-can do:
-
-  read_author_script(&cmd.env_array);
-  if (!cmd.env_array.argc)
-	...
-
-and then you don't have to worry about free-ing env, as it happens
-automatically as part of the child cleanup (I suspect the refactoring
-may also reduce some of the confusing memory handling in
-read_author_script()).
-
-> +	if (cmd.stdout_to_stderr) {
-> +		/* hide stderr on success */
-> +		cmd.err = -1;
-> +		rc = -1;
-> +		if (start_command(&cmd) < 0)
-> +			goto cleanup;
-> +
-> +		if (strbuf_read(&errout, cmd.err, 0) < 0) {
-> +			close(cmd.err);
-> +			finish_command(&cmd); /* throw away exit code */
-> +			goto cleanup;
-> +		}
-> +
-> +		close(cmd.err);
-> +		rc = finish_command(&cmd);
-> +		if (rc)
-> +			fputs(errout.buf, stderr);
-> +	} else {
-> +		rc = run_command(&cmd);
-> +	}
-
-We have a helper function for capturing output, so I think you can write
-this as:
-
-  if (cmd.err == -1) {
-        struct strbuf errout = STRBUF_INIT;
-        int rc = pipe_command(&cmd,
-		              NULL, 0, /* stdin */
-                              NULL, 0, /* stdout */
-                              &errout, 0);
-        if (rc)
-                fputs(errout.buf, stderr);
-        strbuf_release(&errout);
-  } else
-        rc = run_command(&cmd);
-
-and drop the cleanup goto entirely (if you do the "env" thing above, you
-could even drop "rc" and just return directly from each branch of the
-conditional).
-
-> -	rc = run_command_v_opt_cd_env(array.argv, opt, NULL,
-> -			(const char *const *)env);
-> -	argv_array_clear(&array);
-> +cleanup:
-> +	child_process_clear(&cmd);
-> +	strbuf_release(&errout);
->  	free(env);
-
-Even if you do keep the goto here, I think this child_process_clear() is
-unnecessary. It should be done automatically either by finish_command(),
-or by start_command() when it returns an error.
-
--Peff
