@@ -2,216 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93AE21FF40
-	for <e@80x24.org>; Wed, 14 Dec 2016 20:13:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E8941FF40
+	for <e@80x24.org>; Wed, 14 Dec 2016 20:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933267AbcLNUNa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Dec 2016 15:13:30 -0500
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:32944 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933260AbcLNUN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2016 15:13:27 -0500
-Received: by mail-pg0-f44.google.com with SMTP id 3so11419725pgd.0
-        for <git@vger.kernel.org>; Wed, 14 Dec 2016 12:13:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fCgu6/io3FJwYyzV5f94ANf+O5W+H0XvH4ayNuMf1r4=;
-        b=siedeY6zThMR8ve09yIc5wB5rjODVq+wbOEGvjWSk2ByT5RmBWkkcArVheufO+SWAL
-         B4Cbj4hvPNUBRCKf9t99aw0jkG9Q3pDWUyrwus4VOqvZN1Bczg5bFgTbSXHRHJyMbNgS
-         mkJ06+POYfiXL3fxNtBBCSOK3NBMFJZowtbHPvs6jWo8hegBxUF7QwT+URL01OLK4dhQ
-         Dtw50sUYbQUB/y3vuUSPN3agfk/TAah8+ylgRTOCdATqbOdSFkGgf3Naci9lAJqqJAqb
-         ffKsRaWDQ0uGVSNts3LayyJbXZrMBOZN479YH4bz8okmysQ0U55qupOPXHWxL8dqw/BD
-         hq8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fCgu6/io3FJwYyzV5f94ANf+O5W+H0XvH4ayNuMf1r4=;
-        b=O/AegBY6oD3ztYpiiem6dc1yA+VBzkBNV3fKofbJlkEwo9sZzyH1sZovqKvH4AfQ8c
-         +nMCOUxx7uYLAY5e7uN8qh0pfhoFejO5NGjjsV605yEUMkDU2E4fo0ZDTbfd1Qyjk5rD
-         YGbI5jYIv6c+z+DbCtYgwr47qNp3aGyITsq6/L6I9qkUPejA3lX0IgaBrzRt7m9EvX0f
-         5WIY0P7YC6sgG45V2ijTC7dljrPYBvdtC3AL2Ni5yvsOopboQPikzjL9NIwteoDc0Vi+
-         bAGIg84fi0uwaoM55/5ONHG7cEz1+99Omvp7cw/1OPvhtp8YbL9hyuBM29Bl9wuqtasu
-         8HEQ==
-X-Gm-Message-State: AKaTC01huHTd2e9KpJTq3enE05dsO42SQ0+zbzNgiDT6nR3fFKpaM9WFfUeZVqeoZFauEvIy
-X-Received: by 10.98.163.71 with SMTP id s68mr108438871pfe.60.1481746406004;
-        Wed, 14 Dec 2016 12:13:26 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:a0bd:b7d6:4331:46ad])
-        by smtp.gmail.com with ESMTPSA id h185sm48176728pfg.90.2016.12.14.12.13.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Dec 2016 12:13:24 -0800 (PST)
-Date:   Wed, 14 Dec 2016 12:13:23 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
+        id S1753835AbcLNUfV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Dec 2016 15:35:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56650 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753085AbcLNUfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2016 15:35:20 -0500
+Received: (qmail 21036 invoked by uid 109); 14 Dec 2016 20:33:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 20:33:52 +0000
+Received: (qmail 28776 invoked by uid 111); 14 Dec 2016 20:34:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Dec 2016 15:34:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2016 15:33:49 -0500
+Date:   Wed, 14 Dec 2016 15:33:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org, sbeller@google.com, bburky@bburky.com,
         gitster@pobox.com, jrnieder@gmail.com
 Subject: Re: [PATCH v9 5/5] transport: add from_user parameter to
  is_transport_allowed
-Message-ID: <20161214201323.GC20063@google.com>
+Message-ID: <20161214203349.6ym3v2ny2gonovx2@sigill.intra.peff.net>
 References: <1480636862-40489-1-git-send-email-bmwill@google.com>
  <1481679637-133137-1-git-send-email-bmwill@google.com>
  <1481679637-133137-6-git-send-email-bmwill@google.com>
  <20161214164050.uxk434kzhw6au4c2@sigill.intra.peff.net>
+ <20161214201323.GC20063@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20161214164050.uxk434kzhw6au4c2@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20161214201323.GC20063@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/14, Jeff King wrote:
-> On Tue, Dec 13, 2016 at 05:40:37PM -0800, Brandon Williams wrote:
-> 
-> > Add the from_user parameter to the 'is_transport_allowed' function.
-> > This allows callers to query if a transport protocol is allowed, given
-> > that the caller knows that the protocol is coming from the user (1) or
-> > not from the user (0) such as redirects in libcurl.  If unknown a -1
-> > should be provided which falls back to reading `GIT_PROTOCOL_FROM_USER`
-> > to determine if the protocol came from the user.
-> 
-> I think your commit message is upside-down with respect to the purpose
-> of the patch. The end goal we want is for http to distinguish between
-> protocol restrictions for redirects versus initial requests. The rest is
-> an implementation detail. It's definitely still worth discussing that
-> implementation detail (though I think your in-code comments may be
-> sufficient), but I don't see the rationale discussed here at all.
+On Wed, Dec 14, 2016 at 12:13:23PM -0800, Brandon Williams wrote:
 
-I'll fix the commit message to better discuss the reasoning behind the
-change.
+> > I find it unlikely that anybody would ever care, but at least we'd do
+> > the safe thing. I dunno. Maybe I am just being lazy.
+> 
+> Well, that's unfortunate!  It does sound like a more full-proof solution
+> to these dumb http alternates could be involved.  I don't think your
+> simple "lazy" solution may be enough to not just die by default.
+> 
+> By default ftp/ftps will have a policy of "user only" which means they
+> will be set by the call to get_curl_allowed_protocol(-1) but not set by
+> get_curl_allowed_protocol(0).  This would result in the call to
+> check_alternates_protocol_restrictions failing all the time unless the
+> user explicitly sets ftp/ftps to "always" or "never".  If that is the
+> desired behavior then your proposed solution would be fine, otherwise we
+> may have to do the more involved approach.
 
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  http.c      | 14 +++++++-------
-> >  transport.c |  8 +++++---
-> >  transport.h | 13 ++++++++++---
-> >  3 files changed, 22 insertions(+), 13 deletions(-)
-> 
-> I'm trying to think of a way to test this. I guess the case we are
-> covering here is when a server redirects, but the protocol is only
-> allowed from the user. So:
-> 
-> diff --git a/t/t5812-proto-disable-http.sh b/t/t5812-proto-disable-http.sh
-> index 044cc152f..d911afd24 100755
-> --- a/t/t5812-proto-disable-http.sh
-> +++ b/t/t5812-proto-disable-http.sh
-> @@ -30,5 +30,12 @@ test_expect_success 'curl limits redirects' '
->  	test_must_fail git clone "$HTTPD_URL/loop-redir/smart/repo.git"
->  '
->  
-> +test_expect_success 'http can be limited to from-user' '
-> +	git -c protocol.http.allow=user \
-> +		clone "$HTTPD_URL/smart/repo.git" plain.git &&
-> +	test_must_fail git -c protocol.http.allow=user \
-> +		clone "$HTTPD_URL/smart-redir-perm/repo.git" redir.git
-> +'
-> +
->  stop_httpd
->  test_done
-> 
-> It's an oddball configuration, and you'd probably just set
-> http.followRedirects=false in practice, but it does correctly check this
-> case.
+Oh, hrm, you're right. I was definitely meaning for this to kick in only
+when you had explicitly configured a protocol to "user" (they'd still
+need to enable redirects, but that's much more likely).
 
-K I'll add this in as a test.
+Arguably ftp should be on the "safe" list, since it's implemented via
+the exact same code as https. That list comes originally from 33cfccbbf
+(submodule: allow only certain protocols for submodule fetches,
+2015-09-16), but that was just based on what I thought was reasonable at
+the time.
 
-> > @@ -588,9 +588,9 @@ static CURL *get_curl_handle(void)
-> >  #endif
-> >  #if LIBCURL_VERSION_NUM >= 0x071304
-> >  	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
-> > -			 get_curl_allowed_protocols());
-> > +			 get_curl_allowed_protocols(0));
-> >  	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
-> > -			 get_curl_allowed_protocols());
-> > +			 get_curl_allowed_protocols(-1));
-> 
-> This covers internal redirects done by libcurl, but not the dumb-walker
-> http-alternates nonsense. We have to feed the URL from http-alternates
-> back to curl ourselves, so it uses CURLOPT_PROTOCOLS even though it
-> should count as "not from the user".
-> 
-> To fix that, I think we'd need something like:
-> 
->   - get_curl_handle() stops setting these options, as it is done only
->     once when the curl handle is initialized. Instead, the protocol
->     restrictions should go into get_active_slot(), which is called for
->     each request.  The values set would remain the same, and be the
->     baseline.
-> 
->   - the http-walker.c code would need to know when it's requesting from
->     the base URL, and when it's an alternate. I think this would depend
->     on the position of the "alt" in in the linked list it keeps.
-> 
->   - when requesting from an alternate, http-walker would set
->     CURLOPT_PROTOCOLS with get_curl_allowed_protocols(0)
-> 
-> I have to admit that it sounds like a fair bit of work for a pretty
-> obscure case. You'd have to:
-> 
->   1. Turn http.allowRedirects to "true", to allow redirects even for
->      non-initial contact.
-> 
->   2. Turn one of protocol.{http,https,ftp,ftps}.allow to "user" to
->      restrict it from being used in a redirect.
-> 
-> I'm tempted to punt on it and just do:
-> 
->   if (http_follow_config == HTTP_FOLLOW_ALWAYS &&
->       get_curl_allowed_protocols(0) != get_curl_allowed_protocols(-1))
-> 	die("user-only protocol restrictions not implemented for http-alternates");
-> 
-> which errs on the safe side. We could even shove that down into the case
-> where we actually see some alternates, like:
-> 
-> diff --git a/http-walker.c b/http-walker.c
-> index c2f81cd6a..5bcc850b1 100644
-> --- a/http-walker.c
-> +++ b/http-walker.c
-> @@ -160,6 +160,12 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
->  #endif
->  }
->  
-> +static void check_alternates_protocol_restrictions(void)
-> +{
-> +	if (get_curl_allowed_protocols(0) != get_curl_allowed_protocol(-1))
-> +		die("user-only protocol restrictions not implemented for http alternates");
-> +}
-> +
->  static void process_alternates_response(void *callback_data)
->  {
->  	struct alternates_request *alt_req =
-> @@ -272,6 +278,7 @@ static void process_alternates_response(void *callback_data)
->  			/* skip "objects\n" at end */
->  			if (okay) {
->  				struct strbuf target = STRBUF_INIT;
-> +				check_alternates_protocol_restrictions();
->  				strbuf_add(&target, base, serverlen);
->  				strbuf_add(&target, data + i, posn - i - 7);
->  				warning("adding alternate object store: %s",
-> 
-> I find it unlikely that anybody would ever care, but at least we'd do
-> the safe thing. I dunno. Maybe I am just being lazy.
+I find it hard to believe anybody actually uses git-over-ftp these days,
+let alone as a protocol redirect via http-alternates. But AFAIK it does
+work.
 
-Well, that's unfortunate!  It does sound like a more full-proof solution
-to these dumb http alternates could be involved.  I don't think your
-simple "lazy" solution may be enough to not just die by default.
+One other "simple" fix is at the moment we parse http-alternates, to
+parse the URL ourself and check the policy. Like:
 
-By default ftp/ftps will have a policy of "user only" which means they
-will be set by the call to get_curl_allowed_protocol(-1) but not set by
-get_curl_allowed_protocol(0).  This would result in the call to
-check_alternates_protocol_restrictions failing all the time unless the
-user explicitly sets ftp/ftps to "always" or "never".  If that is the
-desired behavior then your proposed solution would be fine, otherwise we
-may have to do the more involved approach.
+  const char *protocols[] = {
+	"http", "https", "ftp", "ftps"
+  };
 
--- 
-Brandon Williams
+  for (i = 0; i < ARRAY_SIZE(protocols); i++) {
+	const char *end;
+	if (skip_prefix(url, protocols[i], end) && starts_with(end, "://"))
+		break;
+  }
+
+  if (i >= ARRAY_SIZE(protocols))
+	warning("ignoring alternate with unknown protocol: %s", url);
+  else if (!is_transport_allowed(protocols[i], 0))
+	warning("ignoring alternate with restricted protocol: %s", url);
+  else {
+	/* actually set up the alt struct */
+  }
+
+That keeps the logic nicely contained. The downside is that if our
+interpretation of the URL is ever different than curl's, it could create
+a security problem. The bit above seems fairly foolproof, though,
+because it functions as a whitelist. So it doesn't matter if you can
+trigger an http request via curl with exotic syntax; it matters whether
+curl will trigger anything _besides_ an http syntax if the string starts
+with "http://". Which seems unlikely.
+
+I may have convinced myself this is a reasonable approach.
+
+-Peff
