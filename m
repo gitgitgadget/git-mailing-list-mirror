@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01CC01FF76
-	for <e@80x24.org>; Thu, 15 Dec 2016 11:29:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7397D1FF76
+	for <e@80x24.org>; Thu, 15 Dec 2016 11:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755479AbcLOL27 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Dec 2016 06:28:59 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33649 "EHLO
+        id S1755587AbcLOL3C (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Dec 2016 06:29:02 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33672 "EHLO
         mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751501AbcLOL26 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2016 06:28:58 -0500
-Received: by mail-pg0-f67.google.com with SMTP id 3so5974928pgd.0
-        for <git@vger.kernel.org>; Thu, 15 Dec 2016 03:28:57 -0800 (PST)
+        with ESMTP id S1751501AbcLOL3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2016 06:29:01 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 3so5975056pgd.0
+        for <git@vger.kernel.org>; Thu, 15 Dec 2016 03:29:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/mXsqXhr50wRSEJFIyL0K5EChFZdc5/ffJnmak5Vy/Y=;
-        b=cFqL5GKnzhrVJD8mmdAuqVb1Qi/qrgBwsEkRemJseYe7vcbAUUXnM+XcvCVIcTO//d
-         k/54rqOPRM5F+VbPwGc16NnTQRPf+3xb7lDZdWS7+Mr45bp++iY/Q0a36S/dfevBGtAU
-         sGbrkYmeZAvNhDk78vTAS/0a6qwZuw96ynanf9fLrl2N0VIqcuyLDLgOwZLhJpzMm/9Q
-         hmUep/gzaYlLPPoqCRUXd9dtCbnhC66y2i9E7Oa+t+BVmAoFHUUw0hEMb6A/W6cDZjiW
-         murVvHoZDbG/SThncbLcP5nN8o4vgmC3IBCeVHImZHRT8Dg2hP/nSQvJgsaTBx726Aom
-         ewTA==
+        bh=0FLO93pndRepjwgLtAHIo1gnZVj0Aag8d++AG83NJkM=;
+        b=qQn3T6KQ6TRL5VHT1kfA5JaIXV08p0OJvMxcUv+WspBWt2jHFahQAjNM1S0I5VJLMi
+         W4ZEqb/feQUKQZU/HWrXtw0Ai+hqIgHT4mWUThvW1ME4ZaJKKNcbmlgV45RTcj2vpdtO
+         pSmLEnS2znwHr6W19iS79N8dJ2FsXvwN8l+HsRFIMMnG2lj/iTqQPzbJ0Nl89Ln2ofPX
+         q/4iwWC6ra6DkOgSO+bK5/MsgGylKiH2YQfkQt9BpXOFxIyljUm9HRENgSjx+/p47fZM
+         Fpao5aamJ4TMfSrnE0Sf4VZiWHXLgE7RFPCTlG19Gl26Uii65xNj5nDnpQQSR5O+1pX4
+         cvmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/mXsqXhr50wRSEJFIyL0K5EChFZdc5/ffJnmak5Vy/Y=;
-        b=DzE/ZecALtwngkpxioiONSyqFwF+Sxv17Dvz3Wap/kyadSWd4pXBN6r+Qvt/h3k7QP
-         iCKyNuYPLvQ5yBhX/vUFoscdKBmfobYKUpcYqnxe/U65wti7sMzQf0o+xPErt+2ki/Cj
-         tO7ho5oA0xk2aTu5PcV+rmBvqT4OtdIyEE+Kd9YtVhpZ7uKrt78jhUV/HK4o2ybZ1eg2
-         H98WrzGxrwaZ6iroxZKY1eopUDOkV62rPp78Ut2JNILxtE5SfGU2LcOLoghHW+0XHsWV
-         TPsBJUhyxWRqbHeVcMmlGkPuqoehsmc6UZcrRjrgaVpnGjmeWaM7zcGKK3OT+MobPPDX
-         Yu6w==
-X-Gm-Message-State: AKaTC00AdNdS1ZDEg1y/4/u1qXoGinQqg7hOPqcbFvHGBPKUYxag9mzTA+V23+UnfQaeIw==
-X-Received: by 10.99.166.2 with SMTP id t2mr1398581pge.40.1481801337446;
-        Thu, 15 Dec 2016 03:28:57 -0800 (PST)
+        bh=0FLO93pndRepjwgLtAHIo1gnZVj0Aag8d++AG83NJkM=;
+        b=qgQpfrnGBGT+Wnz8Cv7+V1jnoupmylRPmetsMn+NBYqdnJBBCRlGlQdc0rE1og1fro
+         6knL0RRhAdAAnTHQNnC4x8la977z4mAWKpWpj152ntec8Cc9UKYOY0CiROsa1jjBNcVS
+         KPBSt/BeLZ0cpl7wetjlN8TSVM5D//F54WVwPmrOZA4/QejBLGDQo8OY1H3/ZjBDqCyb
+         qXYhDdctJbt5Jr3KDYJu5wcQEBEibf+6DddOwBNRnzVv9yIJNRXXFen7KBZ+6E1ujzMB
+         OYnQ0B5TGjQHMmRhzbsb6i6uN7acZGng+x/2m+Z+JOJL01etKbxz1oVbnFgq1KizmRg4
+         pekQ==
+X-Gm-Message-State: AKaTC01G/M8l1UWoxI9iddNTNhACy21GNcA008aXuM0V7g5ItH9Qbe6J0xoTnwrRpnMejQ==
+X-Received: by 10.99.60.11 with SMTP id j11mr1424638pga.26.1481801340359;
+        Thu, 15 Dec 2016 03:29:00 -0800 (PST)
 Received: from kpdpro.suho.local ([118.211.97.195])
-        by smtp.gmail.com with ESMTPSA id 189sm3930190pgh.5.2016.12.15.03.28.54
+        by smtp.gmail.com with ESMTPSA id 189sm3930190pgh.5.2016.12.15.03.28.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Dec 2016 03:28:56 -0800 (PST)
+        Thu, 15 Dec 2016 03:28:59 -0800 (PST)
 From:   Pierre Dumuid <pmdumuid@gmail.com>
 To:     paulus@ozlabs.org, git@vger.kernel.org
 Cc:     Pierre Dumuid <pmdumuid@gmail.com>
-Subject: [PATCH 2/6] Add ability to follow a remote branch with a dialog
-Date:   Thu, 15 Dec 2016 21:58:43 +1030
-Message-Id: <20161215112847.14719-2-pmdumuid@gmail.com>
+Subject: [PATCH 3/6] Add a tree view to the local branches, remote branches and tags, where / is treated as a directory seperator.
+Date:   Thu, 15 Dec 2016 21:58:44 +1030
+Message-Id: <20161215112847.14719-3-pmdumuid@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161215112847.14719-1-pmdumuid@gmail.com>
 References: <20161215112847.14719-1-pmdumuid@gmail.com>
@@ -60,130 +60,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A suggested name is provided when creating a new "following" branch.
-
 Signed-off-by: Pierre Dumuid <pmdumuid@gmail.com>
 ---
- gitk | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 82 insertions(+), 4 deletions(-)
+ gitk | 117 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 117 insertions(+)
 
 diff --git a/gitk b/gitk
-index 50d1ef4..36cba49 100755
+index 36cba49..a894f1d 100755
 --- a/gitk
 +++ b/gitk
-@@ -2673,6 +2673,7 @@ proc makewindow {} {
- 	{mc "Rename this branch" command mvbranch}
- 	{mc "Remove this branch" command rmbranch}
- 	{mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
-+	{mc "Follow this branch"  command follow_remote_branch_dialog}
-     }
-     $headctxmenu configure -tearoff 0
- 
-@@ -9947,23 +9948,100 @@ proc headmenu {x y id head} {
-     stopfinding
-     set headmenuid $id
-     set headmenuhead $head
--    array set state {0 normal 1 normal 2 normal}
-+    array set state {0 normal 1 normal 2 normal 3 normal}
-     if {[string match "remotes/*" $head]} {
- 	set localhead [string range $head [expr [string last / $head] + 1] end]
- 	if {[info exists headids($localhead)]} {
- 	    set state(0) disabled
- 	}
--	array set state {1 disabled 2 disabled}
-+	array set state {1 disabled 2 disabled 3 normal}
-     }
-     if {$head eq $mainhead} {
--	array set state {0 disabled 2 disabled}
-+	array set state {0 disabled 2 disabled 3 disabled}
-+    } else {
-+	set state(3) disabled
-     }
--    foreach i {0 1 2} {
-+    foreach i {0 1 2 3} {
- 	$headctxmenu entryconfigure $i -state $state($i)
-     }
-     tk_popup $headctxmenu $x $y
+@@ -2089,6 +2089,10 @@ proc makewindow {} {
+ 	    {mc "Reread re&ferences" command rereadrefs}
+ 	    {mc "&List references" command showrefs -accelerator F2}
+ 	    {xx "" separator}
++	    {mc "List Local Branches"  command {show_tree_of_references_dialog "localBranches"}  -accelerator F6}
++	    {mc "List Remote Branches" command {show_tree_of_references_dialog "remoteBranches"} -accelerator F7}
++	    {mc "List Tags"            command {show_tree_of_references_dialog "tags"}           -accelerator F8}
++	    {xx "" separator}
+ 	    {mc "Start git &gui" command {exec git gui &}}
+ 	    {xx "" separator}
+ 	    {mc "&Quit" command doquit -accelerator Meta1-Q}
+@@ -2601,6 +2605,9 @@ proc makewindow {} {
+     bind . <F5> updatecommits
+     bindmodfunctionkey Shift 5 reloadcommits
+     bind . <F2> showrefs
++    bind . <F6> {show_tree_of_references_dialog "localBranches"}
++    bind . <F7> {show_tree_of_references_dialog "remoteBranches"}
++    bind . <F8> {show_tree_of_references_dialog "tags"}
+     bindmodfunctionkey Shift 4 {newview 0}
+     bind . <F4> edit_or_newview
+     bind . <$M1B-q> doquit
+@@ -10146,6 +10153,116 @@ proc rmbranch {} {
+     run refill_reflist
  }
  
-+proc follow_remote_branch_dialog {} {
-+    global headmenuhead NS
++# Display a tree view of local branches, remote branches, and tags according to view_type.
++#
++# @param string view_type
++#    Must be one of "localBranches", "remoteBranches", or "tags".
++#
++proc show_tree_of_references_dialog {view_type} {
++    global NS
++    global treefilelist
++    global headids tagids
 +
-+    # check the tree is clean first??
-+    nowbusy createFollowingBranch [mc "Creating following branch"]
-+    update
-+    dohidelocalchanges
++    switch -- $view_type {
++	"localBranches" {
++	    set dialogName "Local Branches"
++	    set top .show_tree_of_local_branches
++	    set listOfReferences [lsort [array names headids -regexp {^(?!remotes/)} ]]
++	    set truncateFrom 0
++	}
++	"remoteBranches" {
++	    set dialogName "Remote Branches"
++	    set top .show_tree_of_remote_branches
++	    set listOfReferences [lsort [array names headids -regexp {^remotes/} ]]
++	    set truncateFrom 8
++	}
++	"tags" {
++	    set dialogName "Tags"
++	    set top .show_tree_of_tags
++	    set listOfReferences [lsort [array names tagids]]
++	    set truncateFrom 0
++	}
++    }
 +
-+    set top .create_following_branch
-+    catch {destroy $top}
++    if {[winfo exists $top]} {
++	raise $top
++	return
++    }
++
 +    ttk_toplevel $top
++    wm title $top [mc "$dialogName: %s" [file tail [pwd]]]
++    wm geometry $top "600x900"
++
 +    make_transient $top .
 +
-+    ${NS}::label $top.title -text [mc "Create following branch"]
-+    grid $top.title - -pady 10
++    ## See http://www.tkdocs.com/tutorial/tree.html
++    ttk::treeview $top.referenceList -xscrollcommand "$top.horizontalScrollBar set" -yscrollcommand "$top.verticalScrollBar set"
 +
-+    ${NS}::label $top.remote_branch_name_label -text [mc "Remote Branch:"]
-+    ${NS}::entry $top.remote_branch_name -width 40
-+    $top.remote_branch_name insert 0 $headmenuhead
-+    $top.remote_branch_name conf -state readonly
-+    grid $top.remote_branch_name_label $top.remote_branch_name -sticky w
++    # Populate the dialog
++    foreach reference $listOfReferences {
++	# The display name omits some leading characters (such as "remotes/")
++	set referenceDisplayName [string range $reference $truncateFrom end]
 +
-+    ${NS}::label $top.new_branch_name_label -text [mc "Name:"]
-+    ${NS}::entry $top.new_branch_name -width 40
-+    set suggested_name $headmenuhead
-+    regsub {^remotes/[^/]*/} $suggested_name {} suggested_name
-+    $top.new_branch_name insert 0 $suggested_name
-+    grid $top.new_branch_name_label $top.new_branch_name -sticky w
++	# Split the branch/tag by slashes, and incrementally ensure that each leaf in the treeview exists..
++	# otherwise add it.
++	set treeLeaves [split $referenceDisplayName "/"]
++	for {set i 0} {$i < [llength $treeLeaves]} {} {
++	    set leafReferenceId [join [lrange $treeLeaves 0 $i] "/"]
++	    if {![$top.referenceList exists $leafReferenceId]} {
++		if {$i > 0} {
++		    set parentLeafId [join [lrange $treeLeaves 0 $i-1] "/"]
++		} else {
++		    set parentLeafId {}
++		}
++		$top.referenceList insert $parentLeafId end -id $leafReferenceId -text [lindex $treeLeaves $i]
++	    }
++	    incr i
++	}
++    }
 +
-+    set actionCreate [list follow_remote_branch_callback $top]
-+    set actionCancel "catch {notbusy createFollowingBranch; destroy $top}"
++    ${NS}::scrollbar $top.verticalScrollBar   -command "$top.referenceList yview" -orient vertical
++    ${NS}::scrollbar $top.horizontalScrollBar -command "$top.referenceList xview" -orient horizontal
 +
-+    ${NS}::frame $top.buts
-+    ${NS}::button $top.buts.go  -text [mc "Create"] -command $actionCreate
-+    ${NS}::button $top.buts.can -text [mc "Cancel"] -command $actionCancel
-+    grid $top.buts.go $top.buts.can
-+    grid columnconfigure $top.buts 0 -weight 1 -uniform a
-+    grid columnconfigure $top.buts 1 -weight 1 -uniform a
-+    grid $top.buts - -pady 10 -sticky ew
++    grid $top.referenceList $top.verticalScrollBar -sticky nsew
++    grid $top.horizontalScrollBar x -sticky ew
 +
-+    bind $top <Key-Return> $actionCreate
-+    bind $top <Key-Escape> $actionCancel
++    bind $top <Key-Escape> [list destroy $top]
 +
-+    focus $top.new_branch_name
++    bind $top.referenceList <<TreeviewSelect>> {callback_tree_of_references_item_selected %W; break}
++
++    grid columnconfigure $top 0 -weight 1
++    grid rowconfigure    $top 0 -weight 1
 +}
 +
-+proc follow_remote_branch_callback {top} {
-+    global headids idheads NS
-+    set new_branch_name    [$top.new_branch_name get]
-+    set remote_branch_name [$top.remote_branch_name get]
-+    set cmdargs {}
++# Call back for selecting a branch / tag in the tree of references
++#
++# @param w
++#
++proc callback_tree_of_references_item_selected {w} {
++    global headids tagids
 +
-+    if {$new_branch_name eq {}} {
-+	error_popup [mc "Please specify a name for the new branch"] $top
-+	return
-+    }
-+    if {[info exists headids($new_branch_name)]} {
-+	error_popup [mc "The branch name you specified already exists, please specify a new name"] $top
-+	return
-+    }
-+    catch {destroy $top}
-+
-+    lappend cmdargs $new_branch_name $remote_branch_name
-+
-+    if {[catch {
-+	eval exec git branch --track $cmdargs
-+    } err]} {
-+	notbusy createFollowingBranch
-+	error_popup $err
-+    } else {
-+	notbusy createFollowingBranch
-+	updatecommits
++    set itemId [$w focus]
++    switch -- $w {
++	".show_tree_of_local_branches.referenceList" {
++	    if {[info exists headids($itemId)]} {
++		selbyid $headids($itemId)
++	    }
++	}
++	".show_tree_of_remote_branches.referenceList" {
++	    set itemId "remotes/$itemId"
++	    if {[info exists headids($itemId)]} {
++		selbyid $headids($itemId)
++	    }
++	}
++	".show_tree_of_tags.referenceList" {
++	    if {[info exists tagids($itemId)]} {
++		selbyid $tagids($itemId)
++	    }
++	}
 +    }
 +}
 +
- proc cobranch {} {
-     global headmenuid headmenuhead headids
-     global showlocalchanges
++
+ # Display a list of tags and heads
+ proc showrefs {} {
+     global showrefstop bgcolor fgcolor selectbgcolor NS
 -- 
 2.10.2
 
