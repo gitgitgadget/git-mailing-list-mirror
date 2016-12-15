@@ -2,72 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F86F1FF6D
-	for <e@80x24.org>; Thu, 15 Dec 2016 20:40:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 176351FF6D
+	for <e@80x24.org>; Thu, 15 Dec 2016 21:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754288AbcLOUkO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Dec 2016 15:40:14 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57277 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752333AbcLOUkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2016 15:40:09 -0500
-Received: (qmail 20449 invoked by uid 109); 15 Dec 2016 20:40:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Dec 2016 20:40:03 +0000
-Received: (qmail 6067 invoked by uid 111); 15 Dec 2016 20:40:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Dec 2016 15:40:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2016 15:40:00 -0500
-Date:   Thu, 15 Dec 2016 15:40:00 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: index-pack outside of repository?
-Message-ID: <20161215204000.avlcfaqjwstkptu2@sigill.intra.peff.net>
+        id S1754140AbcLOV3v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Dec 2016 16:29:51 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36480 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752067AbcLOV3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2016 16:29:50 -0500
+Received: by mail-it0-f68.google.com with SMTP id n68so363387itn.3
+        for <git@vger.kernel.org>; Thu, 15 Dec 2016 13:29:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=TJ8m1RE77etYp+Ai7VwOeiOrP/HbymumFgKz/f4jYvM=;
+        b=E+rl2Q+kxIo8QomXHTLx4fUAKlLJg/VE7a5GXWcsc6x9hYY9i1PG3wf3Mss6qF1hef
+         7JgcJFUPeT98rrPC01Gfo/4NkJ7Ru1i0zuedqxot6xoWFBf3eLqSBdKRofD7XW1Oljft
+         qWZYstsbS+IS4L1JGtPT4T6+MX0+urMZekDM9UHmcWGiBQ5nDvRhFZbosh41ujT90RAF
+         nNaaw3Szluc3yIsbZW+4wLFog40V64NIFSGxBAYz78hhKqrDX1lNj/OxjYQ5fur89peB
+         6+f6qdEKK7ZakaFYJtblG3YUgjf5w4y3LkjOkpBWs3GrbDIaxa64JzP3Cx+dxlSx+ahy
+         M4uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=TJ8m1RE77etYp+Ai7VwOeiOrP/HbymumFgKz/f4jYvM=;
+        b=S6JZWW+BvU5rdv21ew+LUJIU17r8jsnePaMHE3li8AgFb2EadgaCNiweH0Ce1mIN9r
+         pexk+vyicHOnmIOnLNH94cFzSP9gUITqx86CRwCFFKgTRqRCtAgxrQCHcxuIyixJR2LC
+         zw546f+z3zzOrdZopGLbhudeddapo3VcNLw1+Z9FkTvdR618cIbGAbuGk0/3UeI4frZu
+         3nlY5L1NxRbY3rrCmSKFMg83D6ioVlIvUnXbXBZUE0ea6GnnjM0D7pv1VyGy6V2NPg15
+         OuAvPX0s1vNVMoIUH16R++BjemhOOwkmEJMD3QFyhE+TRtw4vK0OevnrM1J2IUoCjQOy
+         xB0w==
+X-Gm-Message-State: AKaTC01q6YDOdKtakQxePc5sdgPZb8LBIBglEUS89wan2g5Hq/fcG5dpvaAdsThzHTIF8gRUWVXQVUarFzIDVA==
+X-Received: by 10.36.148.84 with SMTP id j81mr385272ite.35.1481837389333; Thu,
+ 15 Dec 2016 13:29:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Received: by 10.107.146.65 with HTTP; Thu, 15 Dec 2016 13:29:47 -0800 (PST)
+In-Reply-To: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
+References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 15 Dec 2016 13:29:47 -0800
+X-Google-Sender-Auth: eyVE255TB9PRieJrLioNw71boD4
+Message-ID: <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+Subject: Re: Allow "git shortlog" to group by committer information
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running git on 'next', you can trigger a BUG:
+Just a ping on this patch..
 
-  $ cd /some/repo
-  $ git pack-objects --all --stdout </dev/null >/tmp/foo.pack
-  $ cd /not-a-git-repo
-  $ git index-pack --stdin </tmp/foo.pack
-  fatal: BUG: setup_git_env called without repository
+On Tue, Oct 11, 2016 at 11:45 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> In some situations you may want to group the commits not by author,
+> but by committer instead.
+>
+> For example, when I just wanted to look up what I'm still missing from
+> linux-next in the current merge window [..]
 
-This obviously comes from my b1ef400eec (setup_git_env: avoid blind
-fall-back to ".git", 2016-10-20). What's going on is that index-pack
-uses RUN_SETUP_GENTLY, but never actually handles the out-of-repo case.
-When we use the internal git_dir to make "objects/pack/pack-xxx.pack",
-it barfs.
+It's another merge window later for the kernel, and I just re-applied
+this patch to my git tree because I still want to know teh committer
+information rather than the authorship information, and it still seems
+to be the simplest way to do that.
 
-In older versions of git will just blindly write into
-".git/objects/pack", even though there's no repository there.
+Jeff had apparently done something similar as part of a bigger
+patch-series, but I don't see that either. I really don't care very
+much how this is done, but I do find this very useful, I do things
+like
 
-So I think complaining to the user is the right thing to do here. I
-started to write a patch to have index-pack notice when it needs a repo
-and doesn't have one, but the logic is actually a bit unclear.  Do we
-need to complain early _just_ when --stdin is specified, or does that
-miss somes cases?  Likewise, are there cases where --stdin can operate
-without a repo? I couldn't think of any.
+   git shortlog -cnse linus..next |
+        head -20 |
+        cut -f2 |
+        sed 's/$/,/'
 
-I'm actually wondering if the way it calls die() in 'next' is a pretty
-reasonable way for things to work in general. It happens when we lazily
-try to ask for the repository directory. So we don't have to replicate
-logic to say "are we going to need a repo"; at the moment we need it, we
-notice we don't have it and die. The only problem is that it says "BUG"
-and not "this operation must be run in a git repository".
+to generate a nice list of the top-20 committers that I haven't gotten
+pull requests from yet.
 
-That strategy _might_ be a problem for some programs, which would want
-to notice the issue early before doing work. But it seems like a
-reasonable outcome for index-pack. Thoughts?
+Yes, I can just maintain this myself, and maybe nobody else needs it,
+but it's pretty simple and straightforward, and there didn't seem to
+be any real reason not to have the option..
 
--Peff
+                 Linus
