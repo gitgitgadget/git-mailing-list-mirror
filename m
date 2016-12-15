@@ -2,81 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43EEC1FF6D
-	for <e@80x24.org>; Thu, 15 Dec 2016 20:16:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F86F1FF6D
+	for <e@80x24.org>; Thu, 15 Dec 2016 20:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755845AbcLOUPv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Dec 2016 15:15:51 -0500
-Received: from mxout01.autodesk.com ([132.188.64.231]:36428 "EHLO
-        mxout01.autodesk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751772AbcLOUPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2016 15:15:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=autodesk.com; s=s1;
-        h=MIME-Version:Content-Transfer-Encoding:Content-Type:Message-ID:Date:Subject:To:From; bh=1Xly6VBrDWP912qa2vga370r5YVACwP1mSyUg3da7g0=;
-        b=nEOYXtzE3/xT6RWE9PSWlcWziL7P/QeDJrPMvmbCmPey1HBdVQ7czdxHU11pxYj5eHNOD8X32jQFtOWXrmt9DsUN+bg2Ksq1VX6pNU/XrvJ+bdGWIyGZQLcoHa/HfUFoIX6ei/A4ZF8RKyc0ZIz2wCAJnWU7n/zUwE19shVjA7JkSvMwcz5ugcgJlP2Dw9I+LARNO5EB37f08kqnkwP+P4Um8ZUnr5CUdeviYF1kHpzp3n47U+B7ku8fIW6/GdK9lp0+3skOIh1+Ak3wA8ZbGSYY5375QqztqsiLvMXb7GmnYg1zC0UhgOdayvnlIzj0ALthTCdYPC4YCGHPpKtjjA==;
-Received: from [141.251.76.23] (helo=005-smtp-out.autodesk.com)
-        by mxout01.autodesk.com with esmtps (TLSv1.2:AES256-SHA256:256)
-        (Exim 4.84_2)
-        (envelope-from <larry.minton@autodesk.com>)
-        id 1cHcQe-0006H1-QH
-        for git@vger.kernel.org; Thu, 15 Dec 2016 15:15:00 -0500
-Received: from BLUPR79MB001.MGDADSK.autodesk.com (141.251.76.20) by
- BLUPR79MB003.MGDADSK.autodesk.com (141.251.76.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.761.13; Thu, 15 Dec 2016 20:14:59 +0000
-Received: from BLUPR79MB001.MGDADSK.autodesk.com ([141.251.76.20]) by
- BLUPR79MB001.MGDADSK.autodesk.com ([141.251.76.20]) with mapi id
- 15.01.0761.022; Thu, 15 Dec 2016 20:14:59 +0000
-From:   Larry Minton <larry.minton@autodesk.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Is there a way to have local changes in a branch 'bake' while working
- in different branches?
-Thread-Topic: Is there a way to have local changes in a branch 'bake' while
- working in different branches?
-Thread-Index: AdJW7l6YXm7TGqXRTUOyzZVjoX4P5wAITbyA
-Date:   Thu, 15 Dec 2016 20:14:58 +0000
-Message-ID: <14b481f95c5043aca6cdfddfe4728fa9@BLUPR79MB001.MGDADSK.autodesk.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [141.251.76.68]
-x-ms-office365-filtering-correlation-id: af342535-0645-4469-fd60-08d425270b57
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1754288AbcLOUkO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Dec 2016 15:40:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57277 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752333AbcLOUkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2016 15:40:09 -0500
+Received: (qmail 20449 invoked by uid 109); 15 Dec 2016 20:40:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Dec 2016 20:40:03 +0000
+Received: (qmail 6067 invoked by uid 111); 15 Dec 2016 20:40:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Dec 2016 15:40:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2016 15:40:00 -0500
+Date:   Thu, 15 Dec 2016 15:40:00 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: index-pack outside of repository?
+Message-ID: <20161215204000.avlcfaqjwstkptu2@sigill.intra.peff.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider recommended I ask you this question.
+Running git on 'next', you can trigger a BUG:
 
-My question:
+  $ cd /some/repo
+  $ git pack-objects --all --stdout </dev/null >/tmp/foo.pack
+  $ cd /not-a-git-repo
+  $ git index-pack --stdin </tmp/foo.pack
+  fatal: BUG: setup_git_env called without repository
 
-Let's say I have a code change that I want to 'bake' for a while locally, j=
-ust to make sure some edge case doesn't pop up while I am working on other =
-things.=A0 Is there any practical way of doing that?=20
-I could constantly merge that 'bake me' branch into other branches as I wor=
-k on them and then remove those changes from the branches before sending th=
-em out for code review, but sooner or later pretty much guaranteed to screw=
- that up....
+This obviously comes from my b1ef400eec (setup_git_env: avoid blind
+fall-back to ".git", 2016-10-20). What's going on is that index-pack
+uses RUN_SETUP_GENTLY, but never actually handles the out-of-repo case.
+When we use the internal git_dir to make "objects/pack/pack-xxx.pack",
+it barfs.
 
-His response:
+In older versions of git will just blindly write into
+".git/objects/pack", even though there's no repository there.
 
-Good question. Your merging idea would work but I agree it might be cumbers=
-ome. In this situation I keep modified files in my tree. That would work fo=
-r you too, but this would be inconvenient if you have many changed files. I=
- wonder how the Git core guys manage this kind of situation.
+So I think complaining to the user is the right thing to do here. I
+started to write a patch to have index-pack notice when it needs a repo
+and doesn't have one, but the logic is actually a bit unclear.  Do we
+need to complain early _just_ when --stdin is specified, or does that
+miss somes cases?  Likewise, are there cases where --stdin can operate
+without a repo? I couldn't think of any.
 
-Thanks,
+I'm actually wondering if the way it calls die() in 'next' is a pretty
+reasonable way for things to work in general. It happens when we lazily
+try to ask for the repository directory. So we don't have to replicate
+logic to say "are we going to need a repo"; at the moment we need it, we
+notice we don't have it and die. The only problem is that it says "BUG"
+and not "this operation must be run in a git repository".
 
-Larry Minton
-3ds Max Core team
-LiveDesign Group
-Media & Entertainment, Education Experiences, Impact (MEI)
+That strategy _might_ be a problem for some programs, which would want
+to notice the issue early before doing work. But it seems like a
+reasonable outcome for index-pack. Thoughts?
 
+-Peff
