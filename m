@@ -7,259 +7,183 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C7511FF76
-	for <e@80x24.org>; Thu, 15 Dec 2016 11:28:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01CC01FF76
+	for <e@80x24.org>; Thu, 15 Dec 2016 11:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755292AbcLOL24 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Dec 2016 06:28:56 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34867 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751501AbcLOL2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2016 06:28:55 -0500
-Received: by mail-pg0-f66.google.com with SMTP id p66so5958168pga.2
-        for <git@vger.kernel.org>; Thu, 15 Dec 2016 03:28:55 -0800 (PST)
+        id S1755479AbcLOL27 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Dec 2016 06:28:59 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33649 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751501AbcLOL26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2016 06:28:58 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 3so5974928pgd.0
+        for <git@vger.kernel.org>; Thu, 15 Dec 2016 03:28:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=/aYoFKYMwcR7g0/IBxoQOOTOT5Yl5aK4ZpcHboJ9Pb0=;
-        b=tMmqMTx7OPuX9vdVwkXF83YqcVLK0+An8mCOSjNmt1AffRAjMkH7Q+h7BZK+xa8GcD
-         2cX0IJOJcEEoFWlqMNWyWe9nBXfKCA1hxNWNpwvxi4CQufQtDbxdVRKaJ5ro64kiXxhv
-         bi4b9oVAhn6p/8RFFXzB/VlMqsztMZK5Ufwc+8mAs0IofphoEeoMmAPCt/J8RmVVBSJv
-         ScLY/4vV+GFspZkf06KxbHZcGST2QSjlWoHmjf8CFjfwhmsOgWFl5nImx9KW6/W2KgAk
-         veKMSrI9pOo39SSWVHe3sdzbWtVRqGpNcQww0ExOPGpa2Ev8CW/MeO9+/smSAqwNrU7E
-         mgWQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/mXsqXhr50wRSEJFIyL0K5EChFZdc5/ffJnmak5Vy/Y=;
+        b=cFqL5GKnzhrVJD8mmdAuqVb1Qi/qrgBwsEkRemJseYe7vcbAUUXnM+XcvCVIcTO//d
+         k/54rqOPRM5F+VbPwGc16NnTQRPf+3xb7lDZdWS7+Mr45bp++iY/Q0a36S/dfevBGtAU
+         sGbrkYmeZAvNhDk78vTAS/0a6qwZuw96ynanf9fLrl2N0VIqcuyLDLgOwZLhJpzMm/9Q
+         hmUep/gzaYlLPPoqCRUXd9dtCbnhC66y2i9E7Oa+t+BVmAoFHUUw0hEMb6A/W6cDZjiW
+         murVvHoZDbG/SThncbLcP5nN8o4vgmC3IBCeVHImZHRT8Dg2hP/nSQvJgsaTBx726Aom
+         ewTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/aYoFKYMwcR7g0/IBxoQOOTOT5Yl5aK4ZpcHboJ9Pb0=;
-        b=DitD0Ibjx4m5PwlGvUk5STGxEbhaGJaZVZW0ns4wp7z/u5Zz4RD32xn3url+ff4Abr
-         vTZyfzDwGqo0DwjqexrzE9ge5oqU/JKbzld+i3OViDPq1N3uf0Bw1aQ0cdmxDWhS+eJC
-         s5YvrvYHST3VThiYqwi4cjmjfWg10ZpbBnnL1xdV4NKdLAlDHxBb6k3e4UTRutI7oaYc
-         p63GaEs7bGrprLMg5oEUiwcF7cFoKOv2k3kqqT+vGNtFkwZ/JfSDnFksCrcvOPhcix3L
-         6xUNiTq46GJzdxuO6wKR6fDIcr8arQSmPk4KVENwGVeKs0pKwLVdSoKN82swglTplCsx
-         TCqA==
-X-Gm-Message-State: AKaTC03WYHAgVlIVhQW1q1KtX91Q0h9tO9XmUyJl3z0mCaT2K1ySmtXGqkpDrdNOzUwKkw==
-X-Received: by 10.99.149.22 with SMTP id p22mr1363818pgd.21.1481801334488;
-        Thu, 15 Dec 2016 03:28:54 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/mXsqXhr50wRSEJFIyL0K5EChFZdc5/ffJnmak5Vy/Y=;
+        b=DzE/ZecALtwngkpxioiONSyqFwF+Sxv17Dvz3Wap/kyadSWd4pXBN6r+Qvt/h3k7QP
+         iCKyNuYPLvQ5yBhX/vUFoscdKBmfobYKUpcYqnxe/U65wti7sMzQf0o+xPErt+2ki/Cj
+         tO7ho5oA0xk2aTu5PcV+rmBvqT4OtdIyEE+Kd9YtVhpZ7uKrt78jhUV/HK4o2ybZ1eg2
+         H98WrzGxrwaZ6iroxZKY1eopUDOkV62rPp78Ut2JNILxtE5SfGU2LcOLoghHW+0XHsWV
+         TPsBJUhyxWRqbHeVcMmlGkPuqoehsmc6UZcrRjrgaVpnGjmeWaM7zcGKK3OT+MobPPDX
+         Yu6w==
+X-Gm-Message-State: AKaTC00AdNdS1ZDEg1y/4/u1qXoGinQqg7hOPqcbFvHGBPKUYxag9mzTA+V23+UnfQaeIw==
+X-Received: by 10.99.166.2 with SMTP id t2mr1398581pge.40.1481801337446;
+        Thu, 15 Dec 2016 03:28:57 -0800 (PST)
 Received: from kpdpro.suho.local ([118.211.97.195])
-        by smtp.gmail.com with ESMTPSA id 189sm3930190pgh.5.2016.12.15.03.28.51
+        by smtp.gmail.com with ESMTPSA id 189sm3930190pgh.5.2016.12.15.03.28.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Dec 2016 03:28:53 -0800 (PST)
+        Thu, 15 Dec 2016 03:28:56 -0800 (PST)
 From:   Pierre Dumuid <pmdumuid@gmail.com>
 To:     paulus@ozlabs.org, git@vger.kernel.org
 Cc:     Pierre Dumuid <pmdumuid@gmail.com>
-Subject: [PATCH 1/6] Enable ability to visualise the results of git cherry C1 C2
-Date:   Thu, 15 Dec 2016 21:58:42 +1030
-Message-Id: <20161215112847.14719-1-pmdumuid@gmail.com>
+Subject: [PATCH 2/6] Add ability to follow a remote branch with a dialog
+Date:   Thu, 15 Dec 2016 21:58:43 +1030
+Message-Id: <20161215112847.14719-2-pmdumuid@gmail.com>
 X-Mailer: git-send-email 2.10.2
+In-Reply-To: <20161215112847.14719-1-pmdumuid@gmail.com>
+References: <20161215112847.14719-1-pmdumuid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's a bit clunky but it works!!
-
-Usage:
- - mark commit one (e.g. v45)
- - Select commit two.
- - Switch the gdttype to the option, "git-cherry between marked commit and:"
+A suggested name is provided when creating a new "following" branch.
 
 Signed-off-by: Pierre Dumuid <pmdumuid@gmail.com>
 ---
- gitk | 110 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 107 insertions(+), 3 deletions(-)
+ gitk | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 82 insertions(+), 4 deletions(-)
 
 diff --git a/gitk b/gitk
-index a14d7a1..50d1ef4 100755
+index 50d1ef4..36cba49 100755
 --- a/gitk
 +++ b/gitk
-@@ -2319,7 +2319,9 @@ proc makewindow {} {
- 		[mc "containing:"] \
- 		[mc "touching paths:"] \
- 		[mc "adding/removing string:"] \
--		[mc "changing lines matching:"]]
-+		[mc "changing lines matching:"] \
-+		[mc "git-cherry between marked commit and:"] \
-+	       ]
-     trace add variable gdttype write gdttype_change
-     pack .tf.lbar.gdttype -side left -fill y
+@@ -2673,6 +2673,7 @@ proc makewindow {} {
+ 	{mc "Rename this branch" command mvbranch}
+ 	{mc "Remove this branch" command rmbranch}
+ 	{mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
++	{mc "Follow this branch"  command follow_remote_branch_dialog}
+     }
+     $headctxmenu configure -tearoff 0
  
-@@ -4707,6 +4709,18 @@ proc gdttype_change {name ix op} {
-     global gdttype highlight_files findstring findpattern
- 
+@@ -9947,23 +9948,100 @@ proc headmenu {x y id head} {
      stopfinding
-+
-+    if {$gdttype eq [mc "git-cherry between marked commit and:"]} {
-+	if {$highlight_files ne {}} {
-+	    set highlight_files {}
-+	    hfiles_change
-+	}
-+	findcom_change
-+	update_gitcherrylist
-+	drawvisible
-+	return
-+    }
-+
-     if {$findstring ne {}} {
- 	if {$gdttype eq [mc "containing:"]} {
- 	    if {$highlight_files ne {}} {
-@@ -4733,6 +4747,9 @@ proc find_change {name ix op} {
-     stopfinding
-     if {$gdttype eq [mc "containing:"]} {
- 	findcom_change
-+    } elseif {$gdttype eq [mc "git-cherry between marked commit and:"]} {
-+	findcom_change
-+	update_gitcherrylist
-     } else {
- 	if {$highlight_files ne $findstring} {
- 	    set highlight_files $findstring
-@@ -4742,6 +4759,54 @@ proc find_change {name ix op} {
-     drawvisible
+     set headmenuid $id
+     set headmenuhead $head
+-    array set state {0 normal 1 normal 2 normal}
++    array set state {0 normal 1 normal 2 normal 3 normal}
+     if {[string match "remotes/*" $head]} {
+ 	set localhead [string range $head [expr [string last / $head] + 1] end]
+ 	if {[info exists headids($localhead)]} {
+ 	    set state(0) disabled
+ 	}
+-	array set state {1 disabled 2 disabled}
++	array set state {1 disabled 2 disabled 3 normal}
+     }
+     if {$head eq $mainhead} {
+-	array set state {0 disabled 2 disabled}
++	array set state {0 disabled 2 disabled 3 disabled}
++    } else {
++	set state(3) disabled
+     }
+-    foreach i {0 1 2} {
++    foreach i {0 1 2 3} {
+ 	$headctxmenu entryconfigure $i -state $state($i)
+     }
+     tk_popup $headctxmenu $x $y
  }
  
-+proc update_gitcherrylist {} {
-+    global gitcherryids
-+    global markedid
-+    global findstring
-+    global fstring
-+    global currentid
-+    global iddrawn
++proc follow_remote_branch_dialog {} {
++    global headmenuhead NS
 +
-+    unset -nocomplain gitcherryids
-+    set fs $findstring
++    # check the tree is clean first??
++    nowbusy createFollowingBranch [mc "Creating following branch"]
++    update
++    dohidelocalchanges
 +
-+    if {$findstring eq {}} {
-+	$fstring delete 0 end
-+	$fstring insert 0 $currentid
-+    }
++    set top .create_following_branch
++    catch {destroy $top}
++    ttk_toplevel $top
++    make_transient $top .
 +
-+    if {![info exists markedid]} {
-+	error_popup [mc "Please mark a git commit before using this find method!"]
-+	return
-+    }
++    ${NS}::label $top.title -text [mc "Create following branch"]
++    grid $top.title - -pady 10
 +
-+    #puts [join [list "Running cherry between: `" $markedid "` and `" $findstring "`"] ""]
++    ${NS}::label $top.remote_branch_name_label -text [mc "Remote Branch:"]
++    ${NS}::entry $top.remote_branch_name -width 40
++    $top.remote_branch_name insert 0 $headmenuhead
++    $top.remote_branch_name conf -state readonly
++    grid $top.remote_branch_name_label $top.remote_branch_name -sticky w
 +
-+    if {[catch {set cherryOutput [exec git cherry $markedid $findstring]}]} {
-+	puts "ERROR: An error occured running git-cherry!"
-+	return
-+    }
++    ${NS}::label $top.new_branch_name_label -text [mc "Name:"]
++    ${NS}::entry $top.new_branch_name -width 40
++    set suggested_name $headmenuhead
++    regsub {^remotes/[^/]*/} $suggested_name {} suggested_name
++    $top.new_branch_name insert 0 $suggested_name
++    grid $top.new_branch_name_label $top.new_branch_name -sticky w
 +
-+    set cherryLines [split $cherryOutput "\n"]
-+    foreach cherryLine $cherryLines {
-+	set op [lindex [split $cherryLine " "] 0]
-+	set gitSha [lindex [split $cherryLine " "] 1]
++    set actionCreate [list follow_remote_branch_callback $top]
++    set actionCancel "catch {notbusy createFollowingBranch; destroy $top}"
 +
-+	#puts [join [list "line is: `" $cherryLine "`, op:`" $op "`, gitSha:`" $gitSha "`"] ""]
-+	if {$op eq "+"} {
-+	    set gitcherryids($gitSha) 1
-+	    if ([info exists iddrawn($gitSha)]) {
-+		bolden $gitSha mainfontbold
-+	    }
++    ${NS}::frame $top.buts
++    ${NS}::button $top.buts.go  -text [mc "Create"] -command $actionCreate
++    ${NS}::button $top.buts.can -text [mc "Cancel"] -command $actionCancel
++    grid $top.buts.go $top.buts.can
++    grid columnconfigure $top.buts 0 -weight 1 -uniform a
++    grid columnconfigure $top.buts 1 -weight 1 -uniform a
++    grid $top.buts - -pady 10 -sticky ew
 +
-+	}
-+    }
-+    # puts "list is as follows"
-+    #foreach {gitsha setBold} [array get gitcherryids] {
-+    # 	puts [concat $gitsha = $setBold]
-+    #}
++    bind $top <Key-Return> $actionCreate
++    bind $top <Key-Escape> $actionCancel
++
++    focus $top.new_branch_name
 +}
 +
- proc findcom_change args {
-     global nhighlights boldnameids
-     global findpattern findtype findstring gdttype
-@@ -4802,6 +4867,9 @@ proc do_file_hl {serial} {
- 	set gdtargs [list "-S$highlight_files"]
-     } elseif {$gdttype eq [mc "changing lines matching:"]} {
- 	set gdtargs [list "-G$highlight_files"]
-+    } elseif {$gdttype eq [mc "git-cherry between marked commit and:"]} {
-+	# Skipping opening the file handle, filehighlight
++proc follow_remote_branch_callback {top} {
++    global headids idheads NS
++    set new_branch_name    [$top.new_branch_name get]
++    set remote_branch_name [$top.remote_branch_name get]
++    set cmdargs {}
++
++    if {$new_branch_name eq {}} {
++	error_popup [mc "Please specify a name for the new branch"] $top
 +	return
-     } else {
- 	# must be "containing:", i.e. we're searching commit info
- 	return
-@@ -4882,6 +4950,17 @@ proc doesmatch {f} {
-     }
- }
- 
-+proc askcherryhighlight {row id} {
-+    global nhighlights gitcherryids
-+
-+    set isbold 0
-+    if {[info exists gitcherryids($id)]} {
-+	set isbold 1
 +    }
++    if {[info exists headids($new_branch_name)]} {
++	error_popup [mc "The branch name you specified already exists, please specify a new name"] $top
++	return
++    }
++    catch {destroy $top}
 +
-+    set nhighlights($id) $isbold
++    lappend cmdargs $new_branch_name $remote_branch_name
++
++    if {[catch {
++	eval exec git branch --track $cmdargs
++    } err]} {
++	notbusy createFollowingBranch
++	error_popup $err
++    } else {
++	notbusy createFollowingBranch
++	updatecommits
++    }
 +}
 +
- proc askfindhighlight {row id} {
-     global nhighlights commitinfo iddrawn
-     global findloc
-@@ -6216,6 +6295,7 @@ proc drawcmitrow {row} {
-     global filehighlight fhighlights findpattern nhighlights
-     global hlview vhighlights
-     global highlight_related rhighlights
-+    global gdttype
- 
-     if {$row >= $numcommits} return
- 
-@@ -6226,6 +6306,11 @@ proc drawcmitrow {row} {
-     if {[info exists filehighlight] && ![info exists fhighlights($id)]} {
- 	askfilehighlight $row $id
-     }
-+
-+    if {$gdttype eq [mc "git-cherry between marked commit and:"] && ![info exists nhighlights($id)]} {
-+	askcherryhighlight $row $id
-+    }
-+
-     if {$findpattern ne {} && ![info exists nhighlights($id)]} {
- 	askfindhighlight $row $id
-     }
-@@ -6776,7 +6861,9 @@ proc dofind {{dirn 1} {wrap 1}} {
-     }
-     set findcurline $findstartline
-     nowbusy finding [mc "Searching"]
--    if {$gdttype ne [mc "containing:"] && ![info exists filehighlight]} {
-+    if {$gdttype eq [mc "git-cherry between marked commit and:"]} {
-+	# Don't do anything related to open do_file_hl since we'll just have a list
-+    } elseif {$gdttype ne [mc "containing:"] && ![info exists filehighlight]} {
- 	after cancel do_file_hl $fh_serial
- 	do_file_hl $fh_serial
-     }
-@@ -6803,6 +6890,7 @@ proc findmore {} {
-     global findstartline findcurline findallowwrap
-     global find_dirn gdttype fhighlights fprogcoord
-     global curview varcorder vrownum varccommits vrowmod
-+    global gitcherryids
- 
-     if {![info exists find_dirn]} {
- 	return 0
-@@ -6848,7 +6936,23 @@ proc findmore {} {
-     set arow [lindex $vrownum($curview) $ai]
-     set ids [lindex $varccommits($curview,$a)]
-     set arowend [expr {$arow + [llength $ids]}]
--    if {$gdttype eq [mc "containing:"]} {
-+
-+    if {$gdttype eq [mc "git-cherry between marked commit and:"]} {
-+	for {} {$n > 0} {incr n -1; incr l $find_dirn} {
-+	    if {$l < $arow || $l >= $arowend} {
-+		incr ai $find_dirn
-+		set a [lindex $varcorder($curview) $ai]
-+		set arow [lindex $vrownum($curview) $ai]
-+		set ids [lindex $varccommits($curview,$a)]
-+		set arowend [expr {$arow + [llength $ids]}]
-+	    }
-+	    set id [lindex $ids [expr {$l - $arow}]]
-+	    if {[info exists gitcherryids($id)]} {
-+		set found 1
-+	    }
-+	    if {$found} break
-+	}
-+    } elseif {$gdttype eq [mc "containing:"]} {
- 	for {} {$n > 0} {incr n -1; incr l $find_dirn} {
- 	    if {$l < $arow || $l >= $arowend} {
- 		incr ai $find_dirn
+ proc cobranch {} {
+     global headmenuid headmenuhead headids
+     global showlocalchanges
 -- 
 2.10.2
 
