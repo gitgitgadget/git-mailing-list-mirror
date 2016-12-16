@@ -2,127 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5F251FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 17:27:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7C481FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 17:48:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756057AbcLPR1z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 12:27:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55130 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755151AbcLPR1x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 12:27:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86361569F8;
-        Fri, 16 Dec 2016 12:27:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+MyW5eo9FvWHE2faJfs5pkU5b8I=; b=Nol/uT
-        BC3ss0FI7GdDq0HhDvMa27OPkOlA15f5cAXbjMqKFTcPWBm5wRB39JtASuguyQJ4
-        YneZVMhOElcU3sr2Xhgj3FgZOu15/MOZ4zzI7rpfv12Pq7WCl8I1GykTOIlmRP91
-        kLgDaLVzXkL3on3bgPVfgr0KNfpdZufCf+D4E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=izlbmBBjYSQu/BkNIut38ksiVeSl+f2u
-        o2x52MB2emF6sbE1BPk6oteKQvkDoqMOIeZzZ5afIwKRvXHewmFS411hih0LRaKw
-        ZavL6RUX+Mv4N8Xvc3K8I7r+Y/5uJkDy0ZXG0MrX1BlqqBbgqtj0tlCuYdlcBnt1
-        Nd5bdu3jUvk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F21D569F7;
-        Fri, 16 Dec 2016 12:27:52 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 05F29569F6;
-        Fri, 16 Dec 2016 12:27:51 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Allow "git shortlog" to group by committer information
-References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
-        <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
-        <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
-        <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net>
-Date:   Fri, 16 Dec 2016 09:27:50 -0800
-In-Reply-To: <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 16 Dec 2016 08:51:41 -0500")
-Message-ID: <xmqqlgvfu6ll.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1755151AbcLPRsF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 12:48:05 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:26383 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754552AbcLPRsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 12:48:04 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3tgHpV2N3jz5tlH;
+        Fri, 16 Dec 2016 18:48:02 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 4A9461E70;
+        Fri, 16 Dec 2016 18:48:01 +0100 (CET)
+Subject: Re: [PATCH 1/1] mingw: intercept isatty() to handle /dev/null as Git
+ expects it
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <cover.1481454992.git.johannes.schindelin@gmx.de>
+ <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org>
+Date:   Fri, 16 Dec 2016 18:48:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F8FFC770-C3B4-11E6-9431-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> It obviously would need updating if we switch away from "-c", but I
-> think I am OK with the short "-c" (even if we add a more exotic grouping
-> option later, this can remain as a short synonym).
-
-Yeah, I think it probably is OK.  
-
-As it is very clear that "group by author" is the default, there is
-no need to add the corresponding "-a/--author" option, either.  The
-fact that "--no-committer" can countermand an earlier "--committer"
-on the command line is just how options work, so it probably does
-not deserve a separate mention, either.
-
-Thanks.
-
-> -- >8 --
-> Subject: [PATCH] shortlog: test and document --committer option
+Am 11.12.2016 um 12:16 schrieb Johannes Schindelin:
+> When Git's source code calls isatty(), it really asks whether the
+> respective file descriptor is connected to an interactive terminal.
 >
-> This puts the final touches on the feature added by
-> fbfda15fb8 (shortlog: group by committer information,
-> 2016-10-11).
+> Windows' _isatty() function, however, determines whether the file
+> descriptor is associated with a character device. And NUL, Windows'
+> equivalent of /dev/null, is a character device.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+> Which means that for years, Git mistakenly detected an associated
+> interactive terminal when being run through the test suite, which
+> almost always redirects stdin, stdout and stderr to /dev/null.
+>
+> This bug only became obvious, and painfully so, when the new
+> bisect--helper entered the `pu` branch and made the automatic build & test
+> time out because t6030 was waiting for an answer.
+>
+> For details, see
+>
+> 	https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  Documentation/git-shortlog.txt |  4 ++++
->  t/t4201-shortlog.sh            | 13 +++++++++++++
->  2 files changed, 17 insertions(+)
+>  compat/mingw.h   |  3 +++
+>  compat/winansi.c | 33 +++++++++++++++++++++++++++++++++
+>  2 files changed, 36 insertions(+)
 >
-> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-> index 31af7f2736..ee6c5476c1 100644
-> --- a/Documentation/git-shortlog.txt
-> +++ b/Documentation/git-shortlog.txt
-> @@ -47,6 +47,10 @@ OPTIONS
->  
->  	Each pretty-printed commit will be rewrapped before it is shown.
->  
-> +-c::
-> +--committer::
-> +	Collect and show committer identities instead of authors.
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index 034fff9479..3350169555 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -384,6 +384,9 @@ int mingw_raise(int sig);
+>   * ANSI emulation wrappers
+>   */
+>
+> +int winansi_isatty(int fd);
+> +#define isatty winansi_isatty
 > +
->  -w[<width>[,<indent1>[,<indent2>]]]::
->  	Linewrap the output by wrapping each line at `width`.  The first
->  	line of each entry is indented by `indent1` spaces, and the second
-> diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-> index ae08b57712..6c7c637481 100755
-> --- a/t/t4201-shortlog.sh
-> +++ b/t/t4201-shortlog.sh
-> @@ -190,4 +190,17 @@ test_expect_success 'shortlog with --output=<file>' '
->  	test_line_count = 3 shortlog
->  '
->  
-> +test_expect_success 'shortlog --committer (internal)' '
-> +	cat >expect <<-\EOF &&
-> +	     3	C O Mitter
-> +	EOF
-> +	git shortlog -nsc HEAD >actual &&
-> +	test_cmp expect actual
-> +'
+>  void winansi_init(void);
+>  HANDLE winansi_get_osfhandle(int fd);
+>
+> diff --git a/compat/winansi.c b/compat/winansi.c
+> index db4a5b0a37..cb725fb02f 100644
+> --- a/compat/winansi.c
+> +++ b/compat/winansi.c
+> @@ -7,6 +7,9 @@
+>  #include <wingdi.h>
+>  #include <winreg.h>
+>
+> +/* In this file, we actually want to use Windows' own isatty(). */
+> +#undef isatty
 > +
-> +test_expect_success 'shortlog --committer (external)' '
-> +	git log --format=full | git shortlog -nsc >actual &&
-> +	test_cmp expect actual
-> +'
+>  /*
+>   ANSI codes used by git: m, K
+>
+> @@ -570,6 +573,36 @@ static void detect_msys_tty(int fd)
+>
+>  #endif
+>
+> +int winansi_isatty(int fd)
+> +{
+> +	int res = isatty(fd);
 > +
->  test_done
+> +	if (res) {
+> +		/*
+> +		 * Make sure that /dev/null is not fooling Git into believing
+> +		 * that we are connected to a terminal, as "_isatty() returns a
+> +		 * nonzero value if the descriptor is associated with a
+> +		 * character device."; for more information, see
+> +		 *
+> +		 * https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
+> +		 */
+> +		HANDLE handle = (HANDLE)_get_osfhandle(fd);
+> +		if (fd == STDIN_FILENO) {
+> +			DWORD dummy;
+> +
+> +			if (!GetConsoleMode(handle, &dummy))
+> +				res = 0;
+> +		} else if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
+> +			CONSOLE_SCREEN_BUFFER_INFO dummy;
+> +
+> +			if (!GetConsoleScreenBufferInfo(handle, &dummy))
+> +				res = 0;
+
+I am sorry to have to report that this check does not work as expected. 
+I am operating Git from CMD, not mintty, BTW.
+
+It fails with GetLastError() == 6 (invalid handle value). The reason for 
+this is, I think, that in reality we are not writing to the console 
+directly, but to a pipe, which is drained by console_thread(), which 
+writes to the console.
+
+I have little clue what this winansi.c file is doing. Do you have any 
+pointers where I should start digging?
+
+Wait...
+
+Should we not use winansi_get_osfhandle() instead of _get_osfhandle()?
+
+> +		}
+> +	}
+> +
+> +	return res;
+> +}
+> +
+>  void winansi_init(void)
+>  {
+>  	int con1, con2;
+>
+
