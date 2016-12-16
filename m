@@ -2,108 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E2271FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 19:35:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D6AB1FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 19:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756199AbcLPTfI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 14:35:08 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:36793 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753248AbcLPTfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 14:35:07 -0500
-Received: by mail-io0-f195.google.com with SMTP id b194so12920743ioa.3
-        for <git@vger.kernel.org>; Fri, 16 Dec 2016 11:35:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0yjpjnf9n3hngLbeNSOKEN423kpvgitM5xw2LKw35+k=;
-        b=pmjd9ruhWDDWulPMEw75LNAlK3zhgnCiCl2JL7ijOWfCyiFwtONV2hpUlkwVDnScSR
-         GLI9YMLXyNQx7+QaP0yuQlkS5OAMhawO8vnuG2lqOmNusUN5lZGhuOBS4bGuHkcW/o/r
-         DSfl9+ImSxBIsNkyqESFEuOuBaqCggS7mXU8zkZGMPgNnLe3AvtBBxT7NbaFzUS2Uwn/
-         ty8jlMzic24AXe3A10HHOaJBdw4lP9WSQe3BDod4QRz6ZeQvgzPr/paPIHTyJXLXnPwL
-         WvfcwNDYnZW8/PbiZHNJccGRQ/4t1D9vUJZhfH60/FARO4ovru2Nu/lIpFqcJAzy8lXx
-         4SdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0yjpjnf9n3hngLbeNSOKEN423kpvgitM5xw2LKw35+k=;
-        b=Tp9DlcihePj/HrZdEy6+91Ls2ISnOA/hg9LC6Ws+TZnBwXiLDT2n5NopI+I683L77R
-         TgeDJRpAzXZx7U2iz7foZEScpQ6dsEOTQxgUcfLkAus5YIqLrzjuf0S9KdjBkmJ9Pobb
-         BmevlqPUyooigdgD7YBUBfYF9bdP6TL5HLUSqF9VZwfyLbkdvCsD9LV6ulasOkjLmzpo
-         9pbsdRFgHeLUrTZx1kXF+WcjG7xdaFyyzRqsWvBsK3A1GEldjkLlaRAjfvPC3vskFAbd
-         t2XpC7fl27HKzr/rnteBQJ3KnvnK42pvoKuXVVk9fZfujJ3AHS66rAXQolUtdy9JUrjb
-         WP1g==
-X-Gm-Message-State: AIkVDXJmbpbv1s5Oev+xlTP84enXqd95lh8Z+n5MY7oSN4rVKF4H8GVAoiLd8yTEdhcEJCtxBfJD1IUAAG74Sg==
-X-Received: by 10.107.53.165 with SMTP id k37mr4594238ioo.74.1481916906422;
- Fri, 16 Dec 2016 11:35:06 -0800 (PST)
+        id S1758312AbcLPTiy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 14:38:54 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57388 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754199AbcLPTiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 14:38:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F18B56265;
+        Fri, 16 Dec 2016 14:38:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QwtPAX2JWtVFPnaj2/K8wYPe9j4=; b=QSag4z
+        A165DmAoGG1tfdAD2AgQpzgfxFb9YGq/WYND3I5yr/R3kb4A6x5r90V7r9BABsgh
+        Ngm4kQjrxUFqmQnDD0bzJJrnlg4X8q6xuaoIZeu4UOb7qyYiDjIvlGjHgpauSoLv
+        1YQ1j5gmmdKwH9rZoNpIrEphxjkESouMK61W4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DOhqjMH2EyAIOppU8cNGi22IZwu+zGsY
+        DFqmmXBWDsmGJE8HYyiNTD3szoFmXPoIZLT9VsyOo+VunaulVbJ8ZqFf+oVpZnlu
+        gogh+zA9azbf37xlHSqfxPgBtelYMfWT5cYl+3Z6lCH6rIBkYKz9rvOQHvF2/P4y
+        SOSjPvyLmf0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1866C56263;
+        Fri, 16 Dec 2016 14:38:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B3AB56261;
+        Fri, 16 Dec 2016 14:38:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 20/34] sequencer (rebase -i): copy commit notes at end
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+        <cover.1481642927.git.johannes.schindelin@gmx.de>
+        <a2ea8bd57461fe0969f3df09a0374005f12ac6c7.1481642927.git.johannes.schindelin@gmx.de>
+Date:   Fri, 16 Dec 2016 11:38:50 -0800
+In-Reply-To: <a2ea8bd57461fe0969f3df09a0374005f12ac6c7.1481642927.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:31:29 +0100
+        (CET)")
+Message-ID: <xmqqvaujr7ed.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.142.137 with HTTP; Fri, 16 Dec 2016 11:35:05 -0800 (PST)
-In-Reply-To: <a4c7fec8-0e84-eb53-ca22-c369ce3facfa@gmx.net>
-References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1ab6-bda8420e-9a63-47d7-9b99-47465b6333d9-000000@eu-west-1.amazonses.com>
- <a4c7fec8-0e84-eb53-ca22-c369ce3facfa@gmx.net>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Sat, 17 Dec 2016 01:05:05 +0530
-Message-ID: <CAFZEwPMwviof5jNvQnxFZYdw324XpbLSQ9mzEQjrCW-K4A+GCA@mail.gmail.com>
-Subject: Re: [PATCH v15 08/27] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 45A72D7C-C3C7-11E6-A32B-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Stephan,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-On Thu, Nov 17, 2016 at 5:17 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi,
->
-> On 10/14/2016 04:14 PM, Pranit Bauva wrote:
->> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->> index d84ba86..c542e8b 100644
->> --- a/builtin/bisect--helper.c
->> +++ b/builtin/bisect--helper.c
->> @@ -123,13 +123,40 @@ static int bisect_reset(const char *commit)
->>       return bisect_clean_state();
->>  }
->>
->> +static int is_expected_rev(const char *expected_hex)
->> +{
->> +     struct strbuf actual_hex = STRBUF_INIT;
->> +     int res = 0;
->> +     if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 40) {
->> +             strbuf_trim(&actual_hex);
->> +             res = !strcmp(actual_hex.buf, expected_hex);
->> +     }
->> +     strbuf_release(&actual_hex);
->> +     return res;
->> +}
->
-> I am not sure it does what it should.
->
-> I would expect the following behavior from this function:
->  - file does not exist (or is "broken") => return 0
->  - actual_hex != expected_hex => return 0
->  - otherwise return 1
->
-> If I am not wrong, the code does the following instead:
->  - file does not exist (or is "broken") => return 0
->  - actual_hex != expected_hex => return 1
->  - otherwise => return 0
+> +static void flush_rewritten_pending(void) {
+> +	struct strbuf buf = STRBUF_INIT;
+> +	unsigned char newsha1[20];
+> +	FILE *out;
+> +
+> +	if (strbuf_read_file(&buf, rebase_path_rewritten_pending(), 82) > 0 &&
+> +			!get_sha1("HEAD", newsha1) &&
+> +			(out = fopen(rebase_path_rewritten_list(), "a"))) {
 
-It seems that I didn't carefully see what the shell code is (or
-apparently did a mistake in understanding it ;)). I think the C
-version does exactly what the shell version does. Can you confirm it
-once again, please?
+An error in fopen() here ...
 
-Regards,
-Pranit Bauva
+> + ...
+> +	}
+> +	strbuf_release(&buf);
+> +}
+> +
+> +static void record_in_rewritten(struct object_id *oid,
+> +		enum todo_command next_command) {
+> +	FILE *out = fopen(rebase_path_rewritten_pending(), "a");
+> +
+> +	if (!out)
+> +		return;
+
+... and here are ignored as an insignificant error in the scripted
+version, and this one does the same.  
+
+> +
+> +	fprintf(out, "%s\n", oid_to_hex(oid));
+> +	fclose(out);
+> +
+> +	if (!is_fixup(next_command))
+> +		flush_rewritten_pending();
+> +}
+> +
+>  static int do_pick_commit(enum todo_command command, struct commit *commit,
+>  		struct replay_opts *opts, int final_fixup)
+>  {
+> @@ -1750,6 +1797,17 @@ static int is_final_fixup(struct todo_list *todo_list)
+>  	return 1;
+>  }
+>  
+> +static enum todo_command peek_command(struct todo_list *todo_list, int offset)
+> +{
+> +	int i;
+> +
+> +	for (i = todo_list->current + offset; i < todo_list->nr; i++)
+> +		if (todo_list->items[i].command != TODO_NOOP)
+> +			return todo_list->items[i].command;
+
+Makes me wonder, after having commented on 07/34 regarding the fact
+that in the end you would end up having three variants of no-op
+(i.e. NOOP, DROP and COMMENT), what definition of a "command" this
+function uses to return its result, when asked to "peek".  I suspect
+that this will be updated in a later patch to do "< TODO_NOOP"
+instead?  If so, then that answers one question in my comment on
+07/34, i.e.
+
+    If a check for "is it one of the no-op commands?" appears only
+    here, a single liner comment may be sufficient (but necessary)
+    to help readers.  Otherwise a single-liner helper function
+    (similar to is_fixup() you have) with a descriptive name would
+    be better than a single liner comment.
+
+The answer is "no, it is not just there" hence the conclusion is "we
+want a helper with a descriptive name".
