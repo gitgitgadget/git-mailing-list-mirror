@@ -6,71 +6,83 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 233261FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 21:44:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 745E71FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 21:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756929AbcLPVo3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 16:44:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57798 "EHLO cloud.peff.net"
+        id S1757973AbcLPVtM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 16:49:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57802 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755661AbcLPVo2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 16:44:28 -0500
-Received: (qmail 10947 invoked by uid 109); 16 Dec 2016 21:44:28 -0000
+        id S1757707AbcLPVtK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 16:49:10 -0500
+Received: (qmail 11170 invoked by uid 109); 16 Dec 2016 21:49:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 21:44:28 +0000
-Received: (qmail 14939 invoked by uid 111); 16 Dec 2016 21:45:09 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 21:49:10 +0000
+Received: (qmail 14966 invoked by uid 111); 16 Dec 2016 21:49:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 16:45:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2016 16:44:25 -0500
-Date:   Fri, 16 Dec 2016 16:44:25 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 16:49:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2016 16:49:07 -0500
+Date:   Fri, 16 Dec 2016 16:49:07 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: index-pack outside of repository?
-Message-ID: <20161216214424.o3x4xqttrao3i73v@sigill.intra.peff.net>
-References: <20161215204000.avlcfaqjwstkptu2@sigill.intra.peff.net>
- <xmqqshpou3wt.fsf@gitster.mtv.corp.google.com>
- <xmqqlgvfso16.fsf@gitster.mtv.corp.google.com>
+To:     David Turner <novalis@novalis.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: "disabling bitmap writing, as some objects are not being packed"?
+Message-ID: <20161216214906.z53yp2x4n6hdc27m@sigill.intra.peff.net>
+References: <1481922331.28176.11.camel@frank>
+ <xmqqpokrr2cf.fsf@gitster.mtv.corp.google.com>
+ <20161216213214.z3mzkp2xqnwrqkh2@sigill.intra.peff.net>
+ <1481924416.28176.19.camel@frank>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqlgvfso16.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1481924416.28176.19.camel@frank>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 16, 2016 at 10:54:13AM -0800, Junio C Hamano wrote:
+On Fri, Dec 16, 2016 at 04:40:16PM -0500, David Turner wrote:
 
-> I am tempted to suggest an intermediate step that comes before
-> b1ef400eec ("setup_git_env: avoid blind fall-back to ".git"",
-> 2016-10-20), which is the attached, and publish that as part of an
-> official release.  That way, we'll see what is broken without
-> hurting people too much (unless they or their scripts care about
-> extra message given to the standard error stream).  I suspect that
-> released Git has a slightly larger user base than what is cooked on
-> 'next'.
+> I would assume, based on the documentation, that auto gc would be doing
+> an all-into-one repack:
+> "If the number of packs exceeds the value of gc.autopacklimit, then
+>  existing packs (except those marked with a .keep file) are
+>  consolidated into a single pack by using the -A option of git
+>  repack."
 > 
->  environment.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/environment.c b/environment.c
-> index 0935ec696e..88f857331e 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -167,8 +167,11 @@ static void setup_git_env(void)
->  	const char *replace_ref_base;
->  
->  	git_dir = getenv(GIT_DIR_ENVIRONMENT);
-> -	if (!git_dir)
-> +	if (!git_dir) {
-> +		if (!startup_info->have_repository)
-> +			warning("BUG: please report this at git@vger.kernel.org");
->  		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-> +	}
+> I don't have any settings that limit the size of packs, either.  And a
+> manual git repack -a -d creates only a single pack.  Its loneliness
+> doesn't last long, because pretty soon a new pack is created by an
+> incoming push.
 
-Yes, I think this is a nice way to ease into the change. I wish I had
-thought of it when doing the original series, and we could have shipped
-it in v2.11. :)
+The interesting code is in need_to_gc():
+
+        /*
+         * If there are too many loose objects, but not too many
+         * packs, we run "repack -d -l".  If there are too many packs,
+         * we run "repack -A -d -l".  Otherwise we tell the caller
+         * there is no need.
+         */
+        if (too_many_packs())
+                add_repack_all_option();
+        else if (!too_many_loose_objects())
+                return 0;
+
+So if you have (say) 10 packs and 10,000 objects, we'll incrementally
+pack those objects into a single new pack.
+
+I never noticed this myself because we do not use auto-gc at GitHub at
+all. We only ever do a big all-into-one repack.
+
+> Unless this just means that some objects are being kept loose (perhaps
+> because they are unreferenced)? 
+
+If they're unreferenced, they won't be part of the new pack. You might
+accumulate loose objects that are ejected from previous packs, which
+could trigger auto-gc to do an incremental pack (even though it wouldn't
+be productive, because they're unreferenced!). You may also get them
+from pushes (small pushes will be exploded into loose objects by
+default).
 
 -Peff
