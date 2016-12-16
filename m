@@ -2,107 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39B541FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 18:08:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 078E61FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 18:42:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755429AbcLPSI5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 13:08:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61289 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751334AbcLPSI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 13:08:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 925AD571E6;
-        Fri, 16 Dec 2016 13:08:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D8W9MpPkcWaGRfTdvi+19sOso3k=; b=SLTlMX
-        VichJx5+sKLsIBCBWJFriDPURAfyXBGLKI2YiA52reBno6LIVW+z2NTBoaKqktzB
-        RlUqpfk08WUgzZShB8T+7moHWYTdoUJ6gp9LUGZVxoMXKjfCY9OX679lyKmecbG8
-        ID8G9MyCrM1ZLoT4Ls4qaeXVQKrMyWzSfD3is=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KBcXOue1q5JiIubDJQE9msnYLb6VgQZN
-        ArLiCPda+KUBY3GH9Xu+Hg/vyiSv4V/v25z5jlONDMYguGokpQd193hEGKVTYkmA
-        Gdb2tHsHlHu1ybaPh6YPIvQerzb3xvp7KZ43CYHZJYMjArRQWIP/AWhU2b7jc/00
-        hNry65F+B6I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 88391571E5;
-        Fri, 16 Dec 2016 13:08:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0D9DC571E4;
-        Fri, 16 Dec 2016 13:08:54 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 1/1] mingw: intercept isatty() to handle /dev/null as Git expects it
-References: <cover.1481454992.git.johannes.schindelin@gmx.de>
-        <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
-        <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org>
-Date:   Fri, 16 Dec 2016 10:08:53 -0800
-In-Reply-To: <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org> (Johannes Sixt's
-        message of "Fri, 16 Dec 2016 18:48:01 +0100")
-Message-ID: <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1755850AbcLPSmN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 13:42:13 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:35827 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755951AbcLPSmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 13:42:11 -0500
+Received: by mail-it0-f42.google.com with SMTP id c20so23247134itb.0
+        for <git@vger.kernel.org>; Fri, 16 Dec 2016 10:42:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MMUNm6jNrUo/gMaqf7JhKho2i0XTFcBQtoFRXJoAdXY=;
+        b=pmlC/4S86ZYlYWXJDCOclMQ9OSjBxM6m2KhEtWGI9Nc9+rbVQilM1dRXri43B0WrUj
+         lYGCCXCVQ6Bpjd4jQH9yx4gvTKyx4C+lZtaKu8B3vGzT2q5or40jStowL7pUGqEBrTf5
+         EQsKMRHWEwTXZviE9sM2+R30BQhEe4PRuchwNwpv9al0N59+vDpZYN3ddJuS/rcPouxR
+         +To+ejGaUig4cGiZLgQNLvwoQEgJn4aWWmsprQ7M2xZijngCVd8zrjcFCarcHDR1Ld6Q
+         d/O+doycuzaftvHVEsAmJb4QKiJjsLxD173hBfUKc0xsY0iyvvyUSx/ob8C5Fi7s1i5U
+         0ZNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MMUNm6jNrUo/gMaqf7JhKho2i0XTFcBQtoFRXJoAdXY=;
+        b=CwdpM1LpkIg7eKYyduaRuWR5HiE07PqYJZCsWFB3ypyTvNLUtDmpwan7AZpop52hdi
+         juE2M7MRzIi8BN255Vq/kuo96MUJmONCnVdXnAJaHKVExgf07r+IOUjF1CjGiLu4jJyQ
+         FNty5L+mHWXXppco/dkHKm+1wg9Umofo/GLNvmeBrcgIzkN9Fz8ThE2zyMa4qbGoJON1
+         ckmjaQsP11uaz2YEbaIhHY/N/14DFdsOzpzV3pM5QQUbiYYRSuWOrqUwAIV4FUrNpq92
+         SlfrWyY+FI9cO2eHkwd2xlwpriHycSXCIGd2YFxbjdDq9aA6yFA2N/7HySXk9+m1oEpo
+         vfNw==
+X-Gm-Message-State: AKaTC012Jv3UpjVUKpF2dSs5PjBFTk4TLvyWEa/4mq23gdkCsao9MJVO9nThJ94kiLADOmc9kNBrDWGBVZ+nkA==
+X-Received: by 10.36.82.22 with SMTP id d22mr4187917itb.53.1481913725408; Fri,
+ 16 Dec 2016 10:42:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B51475D2-C3BA-11E6-830D-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.64.87.169 with HTTP; Fri, 16 Dec 2016 10:41:25 -0800 (PST)
+From:   Josh Bleecher Snyder <josharian@gmail.com>
+Date:   Fri, 16 Dec 2016 10:41:25 -0800
+Message-ID: <CAFAcib_cY8FeLFkW1=MfR+P7xoupGK9DFegNY5boExHSRppAmg@mail.gmail.com>
+Subject: Segfault in git_config_set_multivar_in_file_gently with direct_io in
+ FUSE filesystem
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+I am using git with a simple in-memory FUSE filesystem. When I enable
+direct_io, I get a segfault from
+git_config_set_multivar_in_file_gently during git clone.
 
-> Am 11.12.2016 um 12:16 schrieb Johannes Schindelin:
->> When Git's source code calls isatty(), it really asks whether the
->> respective file descriptor is connected to an interactive terminal.
->> ...
->> +			if (!GetConsoleScreenBufferInfo(handle, &dummy))
->> +				res = 0;
->
-> I am sorry to have to report that this check does not work as
-> expected. I am operating Git from CMD, not mintty, BTW.
+I have full reproduction instructions using Go and macOS at
+https://github.com/josharian/gitbug. It also includes a stack trace in
+case anyone wants to try blind debugging. Happy to provide more info
+if it will help.
 
-Ouch.
-
-Sorry for not having waited for you to chime in before agreeing to
-fast-track this one, and now this is in 'master'.
-
-I should have known better than that by now, after having seen you
-uncover bugs that did not trigger in Dscho's environment and vice
-versa to tell you that Windows specific things both of you deem good
-have a much higher chance of being correct than a change without an
-Ack by the other.
-
-
-
-> It fails with GetLastError() == 6 (invalid handle value). The reason
-> for this is, I think, that in reality we are not writing to the
-> console directly, but to a pipe, which is drained by console_thread(),
-> which writes to the console.
->
-> I have little clue what this winansi.c file is doing. Do you have any
-> pointers where I should start digging?
->
-> Wait...
->
-> Should we not use winansi_get_osfhandle() instead of _get_osfhandle()?
->
->> +		}
->> +	}
->> +
->> +	return res;
->> +}
->> +
->>  void winansi_init(void)
->>  {
->>  	int con1, con2;
->>
+Thanks,
+Josh
