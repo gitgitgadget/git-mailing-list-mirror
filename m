@@ -6,75 +6,111 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 662281FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 13:39:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9EBF1FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 13:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760300AbcLPNjp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 08:39:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57557 "EHLO cloud.peff.net"
+        id S1759603AbcLPNvq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 08:51:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57565 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757712AbcLPNjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 08:39:44 -0500
-Received: (qmail 16371 invoked by uid 109); 16 Dec 2016 13:39:43 -0000
+        id S1755619AbcLPNvo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 08:51:44 -0500
+Received: (qmail 17222 invoked by uid 109); 16 Dec 2016 13:51:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 13:39:43 +0000
-Received: (qmail 11652 invoked by uid 111); 16 Dec 2016 13:40:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 13:51:44 +0000
+Received: (qmail 11701 invoked by uid 111); 16 Dec 2016 13:52:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 08:40:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2016 08:39:40 -0500
-Date:   Fri, 16 Dec 2016 08:39:40 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 08:52:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2016 08:51:41 -0500
+Date:   Fri, 16 Dec 2016 08:51:41 -0500
 From:   Jeff King <peff@peff.net>
 To:     Linus Torvalds <torvalds@linux-foundation.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: Allow "git shortlog" to group by committer information
-Message-ID: <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
+Message-ID: <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net>
 References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
  <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+ <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+In-Reply-To: <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 15, 2016 at 01:29:47PM -0800, Linus Torvalds wrote:
+On Fri, Dec 16, 2016 at 08:39:40AM -0500, Jeff King wrote:
 
-> On Tue, Oct 11, 2016 at 11:45 AM, Linus Torvalds
-> <torvalds@linux-foundation.org> wrote:
-> > In some situations you may want to group the commits not by author,
-> > but by committer instead.
-> >
-> > For example, when I just wanted to look up what I'm still missing from
-> > linux-next in the current merge window [..]
+> I'm OK with the approach your patch takes, but I think there were some
+> unresolved issues:
 > 
-> It's another merge window later for the kernel, and I just re-applied
-> this patch to my git tree because I still want to know teh committer
-> information rather than the authorship information, and it still seems
-> to be the simplest way to do that.
+>   - are we OK taking the short "-c" for this, or do we want
+>     "--group-by=committer" or something like it?
 > 
-> Jeff had apparently done something similar as part of a bigger
-> patch-series, but I don't see that either. I really don't care very
-> much how this is done, but I do find this very useful, I do things
-> like
+>   - no tests; you can steal the general form from my [1]
+> 
+>   - no documentation (can also be stolen from [1], though the syntax is
+>     quite different)
 
-Sorry if I de-railed the earlier conversation. The shortlog
-group-by-trailer work didn't seem useful enough for me to make it a
-priority.
+Being moved by the holiday spirit, I wrote a patch to address the latter
+two. ;)
 
-I'm OK with the approach your patch takes, but I think there were some
-unresolved issues:
+It obviously would need updating if we switch away from "-c", but I
+think I am OK with the short "-c" (even if we add a more exotic grouping
+option later, this can remain as a short synonym).
 
-  - are we OK taking the short "-c" for this, or do we want
-    "--group-by=committer" or something like it?
+-- >8 --
+Subject: [PATCH] shortlog: test and document --committer option
 
-  - no tests; you can steal the general form from my [1]
+This puts the final touches on the feature added by
+fbfda15fb8 (shortlog: group by committer information,
+2016-10-11).
 
-  - no documentation (can also be stolen from [1], though the syntax is
-    quite different)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-shortlog.txt |  4 ++++
+ t/t4201-shortlog.sh            | 13 +++++++++++++
+ 2 files changed, 17 insertions(+)
 
--Peff
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index 31af7f2736..ee6c5476c1 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -47,6 +47,10 @@ OPTIONS
+ 
+ 	Each pretty-printed commit will be rewrapped before it is shown.
+ 
++-c::
++--committer::
++	Collect and show committer identities instead of authors.
++
+ -w[<width>[,<indent1>[,<indent2>]]]::
+ 	Linewrap the output by wrapping each line at `width`.  The first
+ 	line of each entry is indented by `indent1` spaces, and the second
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index ae08b57712..6c7c637481 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -190,4 +190,17 @@ test_expect_success 'shortlog with --output=<file>' '
+ 	test_line_count = 3 shortlog
+ '
+ 
++test_expect_success 'shortlog --committer (internal)' '
++	cat >expect <<-\EOF &&
++	     3	C O Mitter
++	EOF
++	git shortlog -nsc HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'shortlog --committer (external)' '
++	git log --format=full | git shortlog -nsc >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.11.0.348.g960a0b554
 
-[1] http://public-inbox.org/git/20151229073515.GK8842@sigill.intra.peff.net/
