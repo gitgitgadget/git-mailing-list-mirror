@@ -6,82 +6,99 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B20E20489
-	for <e@80x24.org>; Fri, 16 Dec 2016 17:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6F91FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 17:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753537AbcLPRxz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 12:53:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61251 "EHLO
+        id S1754382AbcLPR5X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 12:57:23 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50151 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751334AbcLPRxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 12:53:53 -0500
+        with ESMTP id S1753056AbcLPR5W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 12:57:22 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B68256EEA;
-        Fri, 16 Dec 2016 12:52:53 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CAC0A54EE2;
+        Fri, 16 Dec 2016 12:57:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uAGrCgvY7/jI8s4FOkwfgwb+yYA=; b=OiSj3h
-        74FRsNRJyMfja39GMqvrCrYwiwO6E40t+i82oQNwYWatGElDNujmKAqYGSc7iadB
-        4tFsVFHnQQDUKMSuwrQtjr1lM1kiEbRJXM5CKCGDMKyvWTFk6PFJK577xRmiRqDZ
-        rL3S7G1ivU0qKyoCCJOFYfIwdT+PJ0uV+63ok=
+        :content-type; s=sasl; bh=7wBpjyBig1EW/1lkB/hh6U9hUDs=; b=bYYrOy
+        tZ7lm+TlOXAyt3KaLs4AU5dsKMFXCq7yHph7gT47N66xXBzsYhkqV6F9yAqs9AG6
+        /CGtn7jlDMcFceRCcAq8YcjrCCP2TKW4oRKqKuEkZGd+lQwISiqG+B9ReBKIGTiy
+        sIGMOpDxnZGHMue7D/CqZkEv4BTVwJXerigbc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=prZWDfaNtYGkSe3ymGJYVBRbEz5ekxW4
-        DchVGdtXIUcz2/2xCYRE/aGzeO5+tr2u7Uw3YkdUUVhlwigl50ykAtiBztyWBYQC
-        vrcL/+OVrhO3gOsw5KwUQ9vz+mLnpnDVDLkwpDcnQiI9C9Wtg12mXm4tbUoZdD/q
-        HqSUt7ZZoUs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 43A1D56EE9;
-        Fri, 16 Dec 2016 12:52:53 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=YzBWhSIMP4oMh7hJohYdQB2qp5r5FbRL
+        IcvJYywDJdhWesICxWw/pdXvkK7bg4BZQENt48eJMXBedNIgXrWv5ZazNhEXQZXE
+        T9sHnQYpWXYvywsuuGGn66LDLFjXFI2IRs0If33N0hKmuSTC+wN8aR+qGYuUK037
+        MvUQtBkDoGw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C18BF54EE1;
+        Fri, 16 Dec 2016 12:57:20 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBB9F56EE8;
-        Fri, 16 Dec 2016 12:52:52 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33C3954EDD;
+        Fri, 16 Dec 2016 12:57:20 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: index-pack outside of repository?
-References: <20161215204000.avlcfaqjwstkptu2@sigill.intra.peff.net>
-        <xmqqshpou3wt.fsf@gitster.mtv.corp.google.com>
-        <20161216013728.in2dazshtarrnnq3@sigill.intra.peff.net>
-        <20161216022904.cjang6napnl2vkc6@sigill.intra.peff.net>
-Date:   Fri, 16 Dec 2016 09:52:51 -0800
-In-Reply-To: <20161216022904.cjang6napnl2vkc6@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 15 Dec 2016 21:29:04 -0500")
-Message-ID: <xmqqd1gru5fw.fsf@gitster.mtv.corp.google.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Jeff King <peff@peff.net>, Chiel ten Brinke <ctenbrinke@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] README: replace gmane link with public-inbox
+References: <CAFw20syajXbjCQRcrqCv8pS9JwSge7-V4Hsg96n8SpYv2jJneQ@mail.gmail.com>
+        <20161215141719.52peppv5pbjk3nuf@sigill.intra.peff.net>
+        <20161215215702.GA28777@starla>
+Date:   Fri, 16 Dec 2016 09:57:19 -0800
+In-Reply-To: <20161215215702.GA28777@starla> (Eric Wong's message of "Thu, 15
+        Dec 2016 21:57:02 +0000")
+Message-ID: <xmqqbmwbu58g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7782DA8A-C3B8-11E6-87DE-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 16EC0862-C3B9-11E6-BCB2-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Eric Wong <e@80x24.org> writes:
 
-> On Thu, Dec 15, 2016 at 08:37:28PM -0500, Jeff King wrote:
+> Jeff King <peff@peff.net> wrote:
+> ...
+>> Yes, the status of gmane was up in the air for a while, but I think we
+>> can give it up as dead now (at least for our purposes).
 >
->> But if this case really is just "if (from_stdin)" that's quite easy,
->> too.
+> s/http/nntp/ still works for gmane.
+> ...
+>> -- >8 --
+>> Subject: README: replace gmane link with public-inbox
+> ...
+> No objections, here.
 >
-> So here is that patch (with some associated refactoring and cleanups).
-> This is conceptually independent of jk/no-looking-at-dotgit-outside-repo-final,
-> though it should be fine to merge with that topic. The BUG will actually
-> pass the new test, because it calls die, too. I wonder if we should die
-> with a unique error code on BUGs, and catch them in test_must_fail
-> similar to the way we catch signal death.
->
->   [1/3]: t5000: extract nongit function to test-lib-functions.sh
->   [2/3]: index-pack: complain when --stdin is used outside of a repo
->   [3/3]: t: use nongit() function where applicable
+> There's also https://mail-archive.com/git@vger.kernel.org
+> Where https://mid.mail-archive.com/<Message-ID> also works
 
-I think 2/3 is a good change to ensure we get a reasonable error for
-"index-pack --stdin", and 3/3 is a very good cleanup.  Both of them
-of course are enabled by 1/3.
+Yes, but do we want to be exhaustive here, of just cite one that is
+a useful starting point?  I think it is the latter.
 
-We still fail "nongit git index-pack tmp.pack" with a BUG: though.
+Mentioning nntp for those who prefer (including me) may have value,
+though.
+
+ README.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index c0cd5580ea..91704fe451 100644
+--- a/README.md
++++ b/README.md
+@@ -34,7 +34,8 @@ requests, comments and patches to git@vger.kernel.org (read
+ To subscribe to the list, send an email with just "subscribe git" in
+ the body to majordomo@vger.kernel.org. The mailing list archives are
+ available at https://public-inbox.org/git,
+-http://marc.info/?l=git and other archival sites.
++http://marc.info/?l=git and other archival sites.  
++Those who prefer NNTP can use nntp://news.public-inbox.org/inbox.comp.version-control.git
+ 
+ The maintainer frequently sends the "What's cooking" reports that
+ list the current status of various development topics to the mailing
 
 
 
