@@ -2,72 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A3D91FF6D
-	for <e@80x24.org>; Fri, 16 Dec 2016 02:01:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F9891FF6D
+	for <e@80x24.org>; Fri, 16 Dec 2016 02:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758995AbcLPCBN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Dec 2016 21:01:13 -0500
-Received: from fed1rmfepo102.cox.net ([68.230.241.144]:51577 "EHLO
-        fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758990AbcLPCBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2016 21:01:11 -0500
-X-Greylist: delayed 597 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Dec 2016 21:01:11 EST
-Received: from fed1rmimpo210.cox.net ([68.230.241.161])
-          by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20161216015104.FHIL4150.fed1rmfepo103.cox.net@fed1rmimpo210.cox.net>
-          for <git@vger.kernel.org>; Thu, 15 Dec 2016 20:51:04 -0500
-Received: from thunderbird.smith.home ([68.231.74.134])
-        by fed1rmimpo210.cox.net with cox
-        id LRr31u00s2tqoqC01Rr3d9; Thu, 15 Dec 2016 20:51:03 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090203.58534888.0009,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.1 cv=L8+9O7n8 c=1 sm=1 tr=0
- a=/Rt4pg3TtX3KzfzhvVoEow==:117 a=/Rt4pg3TtX3KzfzhvVoEow==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=n5n_aSjo0skA:10 a=ybZZDoGAAAAA:8 a=mxE3G1GSVv1aKpg1R4YA:9 a=CjuIK1q_8ugA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 366F991CAB;
-        Thu, 15 Dec 2016 18:51:03 -0700 (MST)
-From:   Stephen & Linda Smith <ischis2@cox.net>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Allow "git shortlog" to group by committer information
-Date:   Thu, 15 Dec 2016 18:51:02 -0700
-Message-ID: <3720429.U3o1zloj4W@thunderbird>
-User-Agent: KMail/5.2.3 (Linux/4.8.0-30-generic; KDE/5.26.0; x86_64; ; )
-References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com> <xmqqoa0cu3nn.fsf@gitster.mtv.corp.google.com>
+        id S1757304AbcLPC3J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Dec 2016 21:29:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57388 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751427AbcLPC3H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2016 21:29:07 -0500
+Received: (qmail 8636 invoked by uid 109); 16 Dec 2016 02:29:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 02:29:07 +0000
+Received: (qmail 8510 invoked by uid 111); 16 Dec 2016 02:29:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Dec 2016 21:29:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2016 21:29:04 -0500
+Date:   Thu, 15 Dec 2016 21:29:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: index-pack outside of repository?
+Message-ID: <20161216022904.cjang6napnl2vkc6@sigill.intra.peff.net>
+References: <20161215204000.avlcfaqjwstkptu2@sigill.intra.peff.net>
+ <xmqqshpou3wt.fsf@gitster.mtv.corp.google.com>
+ <20161216013728.in2dazshtarrnnq3@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20161216013728.in2dazshtarrnnq3@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, December 15, 2016 5:39:53 PM MST Linus Torvalds wrote:
-> On Thu, Dec 15, 2016 at 4:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Sorry, I'll just re-send it without the attachment. I prefer inline
-> myself, but I thought you didn't care (and gmail makes it
-> unnecessarily hard).
-> 
->                 Linus
+On Thu, Dec 15, 2016 at 08:37:28PM -0500, Jeff King wrote:
 
-Why does gmail make it unnecessarily hard?  
+> But if this case really is just "if (from_stdin)" that's quite easy,
+> too.
 
-I thought that a good percentage of the kernel maintainers use git send-email.   
-what would make that command easier to use with gmail?
+So here is that patch (with some associated refactoring and cleanups).
+This is conceptually independent of jk/no-looking-at-dotgit-outside-repo-final,
+though it should be fine to merge with that topic. The BUG will actually
+pass the new test, because it calls die, too. I wonder if we should die
+with a unique error code on BUGs, and catch them in test_must_fail
+similar to the way we catch signal death.
 
-sps
+  [1/3]: t5000: extract nongit function to test-lib-functions.sh
+  [2/3]: index-pack: complain when --stdin is used outside of a repo
+  [3/3]: t: use nongit() function where applicable
 
+ builtin/index-pack.c     |  2 ++
+ t/t1308-config-set.sh    | 10 ++--------
+ t/t5000-tar-tree.sh      | 14 --------------
+ t/t5300-pack-object.sh   | 15 +++++++++++++++
+ t/t9100-git-svn-basic.sh | 17 ++---------------
+ t/t9902-completion.sh    |  7 +------
+ t/test-lib-functions.sh  | 14 ++++++++++++++
+ 7 files changed, 36 insertions(+), 43 deletions(-)
+
+-Peff
