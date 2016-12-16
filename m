@@ -2,97 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B20F91FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 21:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A29A41FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 21:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933681AbcLPVkT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 16:40:19 -0500
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:56078 "EHLO
-        homiemail-a18.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933002AbcLPVkS (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Dec 2016 16:40:18 -0500
-X-Greylist: delayed 2084 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Dec 2016 16:40:18 EST
-Received: from homiemail-a18.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a18.g.dreamhost.com (Postfix) with ESMTP id 14F77258067;
-        Fri, 16 Dec 2016 13:40:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=hEW96
-        q/RByg2y1HxrPKNj2do7JM=; b=ikhD6g14Eegrx647jpsIJtItaQm4L39GbtuyU
-        nwp/pDClnS4u8YLLdUhLxhfNagzh8tDQe9CJxWNsmP47A22s18BLeuOBMHjCzDt3
-        XTFVL5B8dGIvPltk2dBSe8QSMkBARhAiXDTJkCQq6dhm+LmWdVv1J8G7OPotmG7u
-        iKCf2Y=
-Received: from [172.31.11.72] (gzac10-107-1.nje.twosigma.com [208.77.214.155])
-        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1756018AbcLPVmg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 16:42:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64934 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755661AbcLPVme (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 16:42:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E470579F2;
+        Fri, 16 Dec 2016 16:42:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=T1ElKsIgXqajC8PGzsKqW+LvAy0=; b=LiZt8w
+        gxyHZWG6fsz+C5bQLy86srC2StSlpFGYOX4NyFd0wISPJFvTJDH6gShewgkQmeZm
+        NZ93SP78hfAe9qRtv/+xNv749zPu2SXJ4iWoDPPOaaTAnsvMsr9/9sPXw9h8leiv
+        jKFTBA0SaTCcpXWX76R+eXrHOju0z5iM+kYZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vTbS2XxYjYOu91cBfxTXITYFv8jhxHJq
+        s4BKN74CK2RpBEw57swpjeY9tEg72MYOTwdXyAfBSPZcxOrb6zYJXwMQ3bKdNQMR
+        LSc2y6E+Giiwu/I0j9nHsnbniPukWd6gP/lSXQq4dF6VR+fpr8r1X+MzOngHKwUu
+        Eu0cBJ0wOME=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 046FF579F1;
+        Fri, 16 Dec 2016 16:42:34 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a18.g.dreamhost.com (Postfix) with ESMTPSA id 9621F258066;
-        Fri, 16 Dec 2016 13:40:17 -0800 (PST)
-Message-ID: <1481924416.28176.19.camel@frank>
-Subject: Re: "disabling bitmap writing, as some objects are not being
- packed"?
-From:   David Turner <novalis@novalis.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-        <pclouds@gmail.com>
-Date:   Fri, 16 Dec 2016 16:40:16 -0500
-In-Reply-To: <20161216213214.z3mzkp2xqnwrqkh2@sigill.intra.peff.net>
-References: <1481922331.28176.11.camel@frank>
-         <xmqqpokrr2cf.fsf@gitster.mtv.corp.google.com>
-         <20161216213214.z3mzkp2xqnwrqkh2@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6F3BA579F0;
+        Fri, 16 Dec 2016 16:42:33 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
+        jonathantanmy@google.com, jacob.keller@gmail.com, j6t@kdbg.org
+Subject: Re: [PATCH v7 0/7] recursively grep across submodules
+References: <1480555714-186183-1-git-send-email-bmwill@google.com>
+        <1481915002-162130-1-git-send-email-bmwill@google.com>
+Date:   Fri, 16 Dec 2016 13:42:32 -0800
+In-Reply-To: <1481915002-162130-1-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Fri, 16 Dec 2016 11:03:15 -0800")
+Message-ID: <xmqqlgvfr1o7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8D7ABBF8-C3D8-11E6-A3DD-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2016-12-16 at 16:32 -0500, Jeff King wrote:
-> On Fri, Dec 16, 2016 at 01:28:00PM -0800, Junio C Hamano wrote:
-> 
-> > > 2. I don't understand what would cause that message.  That is, what bad
-> > > thing am I doing that I should stop doing?  I've briefly skimmed the
-> > > code and commit message, but the answer isn't leaping out at me.
-> > 
-> > Enabling bitmap generation for incremental packing that does not
-> > cram everything into a single pack is triggering it, I would
-> > presume.  Perhaps we should ignore -b option in most of the cases
-> > and enable it only for "repack -a -d -f" codepath?  Or detect that
-> > we are being run from "gc --auto" and automatically disable -b?  I
-> > have a feeling that an approach along that line is closer to the
-> > real solution than tweaking report_last_gc_error() and trying to
-> > deduce if we are making any progress.
-> 
-> Ah, indeed. I was thinking in my other response that "git gc" would
-> always kick off an all-into-one repack. But "gc --auto" will not in
-> certain cases. And yes, in those cases you definitely would want
-> --no-write-bitmap-index. I think it would be reasonable for "git repack"
-> to disable bitmap-writing automatically when not doing an all-into-one
-> repack.
+Brandon Williams <bmwill@google.com> writes:
 
-I do not have alternates and am not using --local.  Nor do I have .keep
-packs.
+> Changes in v7:
+> * Rebased on 'origin/bw/realpath-wo-chdir' in order to fix the race condition
+>   that occurs when verifying a submodule's gitdir.
+> * Reverted is_submodule_populated() to use resolve_gitdir() now that there is
+>   no race condition.
+> * Added !MINGW to a test in t7814 so that it won't run on windows.  This is due
+>   to testing if colons in filenames are still handled correctly, yet windows
+>   doesn't allow colons in filenames.
 
-I would assume, based on the documentation, that auto gc would be doing
-an all-into-one repack:
-"If the number of packs exceeds the value of gc.autopacklimit, then
- existing packs (except those marked with a .keep file) are
- consolidated into a single pack by using the -A option of git
- repack."
+Nice.  
 
-I don't have any settings that limit the size of packs, either.  And a
-manual git repack -a -d creates only a single pack.  Its loneliness
-doesn't last long, because pretty soon a new pack is created by an
-incoming push.
+Will queue again to see if those on other platforms have troubles
+with it.  I read it through again and think the series is ready for
+'next'.
 
-Unless this just means that some objects are being kept loose (perhaps
-because they are unreferenced)? 
-
-
+Thanks.
