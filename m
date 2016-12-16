@@ -1,84 +1,80 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+X-Spam-ASN:  
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4C521FF6D
-	for <e@80x24.org>; Fri, 16 Dec 2016 06:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 662281FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 13:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753977AbcLPGEm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 01:04:42 -0500
-Received: from smtprelay0099.hostedemail.com ([216.40.44.99]:51342 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1752509AbcLPGEl (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Dec 2016 01:04:41 -0500
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay07.hostedemail.com (Postfix) with ESMTP id B57F7C1F71;
-        Fri, 16 Dec 2016 06:04:28 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: name76_26d8a895dba46
-X-Filterd-Recvd-Size: 2244
-Received: from XPS-9350 (unknown [47.151.132.55])
-        (Authenticated sender: joe@perches.com)
-        by omf09.hostedemail.com (Postfix) with ESMTPA;
-        Fri, 16 Dec 2016 06:04:26 +0000 (UTC)
-Message-ID: <1481868265.29291.84.camel@perches.com>
-Subject: Re: [PATCH] printk: Remove no longer used second struct cont
-From:   Joe Perches <joe@perches.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        git <git@vger.kernel.org>,
-        Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>,
-        Petr Mladek <pmladek@suse.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Date:   Thu, 15 Dec 2016 22:04:25 -0800
-In-Reply-To: <xmqqtwa4tqnc.fsf@gitster.mtv.corp.google.com>
-References: <1481806438-30185-1-git-send-email-geert@linux-m68k.org>
-         <20161215162336.GA18152@pathway.suse.cz>
-         <20161216013706.GA20445@jagdpanzerIV.localdomain>
-         <CA+55aFz3B2BfjG54z7ALOwezCHSdQp+YbFaHcJkCg=fzoKtfNg@mail.gmail.com>
-         <1481853432.29291.76.camel@perches.com>
-         <CA+55aFxaOFoh+Zrm5tNhU4hWu4Z032+nqV3vXK=QPJyhZsU3_A@mail.gmail.com>
-         <1481855446.29291.80.camel@perches.com>
-         <xmqqtwa4tqnc.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.1-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1760300AbcLPNjp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 08:39:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57557 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1757712AbcLPNjo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 08:39:44 -0500
+Received: (qmail 16371 invoked by uid 109); 16 Dec 2016 13:39:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 13:39:43 +0000
+Received: (qmail 11652 invoked by uid 111); 16 Dec 2016 13:40:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 08:40:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2016 08:39:40 -0500
+Date:   Fri, 16 Dec 2016 08:39:40 -0500
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Allow "git shortlog" to group by committer information
+Message-ID: <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
+References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
+ <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2016-12-15 at 21:00 -0800, Junio C Hamano wrote:
-> Joe Perches <joe@perches.com> writes:
+On Thu, Dec 15, 2016 at 01:29:47PM -0800, Linus Torvalds wrote:
+
+> On Tue, Oct 11, 2016 at 11:45 AM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+> > In some situations you may want to group the commits not by author,
+> > but by committer instead.
+> >
+> > For example, when I just wanted to look up what I'm still missing from
+> > linux-next in the current merge window [..]
 > 
-> > grep 2.5.4 was the last version that supported the -P option to
-> > grep through for multiple lines.
+> It's another merge window later for the kernel, and I just re-applied
+> this patch to my git tree because I still want to know teh committer
+> information rather than the authorship information, and it still seems
+> to be the simplest way to do that.
 > 
-> Does anybody know why it was dropped?
+> Jeff had apparently done something similar as part of a bigger
+> patch-series, but I don't see that either. I really don't care very
+> much how this is done, but I do find this very useful, I do things
+> like
 
-perl compatible regexes in grep have always been "experimental"
-and never officially supported.
+Sorry if I de-railed the earlier conversation. The shortlog
+group-by-trailer work didn't seem useful enough for me to make it a
+priority.
 
-From the grep manual https://www.gnu.org/software/grep/manual/grep.html
+I'm OK with the approach your patch takes, but I think there were some
+unresolved issues:
 
-    --perl-regexp
+  - are we OK taking the short "-c" for this, or do we want
+    "--group-by=committer" or something like it?
 
-        Interpret the pattern as a Perl-compatible regular expression
-    (PCRE). This is highly experimental, particularly when combined with
-    the -z (--null-data) option, and ‘grep -P’ may warn of unimplemented
-    features. See Other Options.
+  - no tests; you can steal the general form from my [1]
 
+  - no documentation (can also be stolen from [1], though the syntax is
+    quite different)
 
-It wasn't dropped so much as "enhanced" away.
+-Peff
 
-Oh well.
-
+[1] http://public-inbox.org/git/20151229073515.GK8842@sigill.intra.peff.net/
