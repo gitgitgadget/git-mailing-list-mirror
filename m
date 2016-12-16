@@ -2,101 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28FA41FF40
-	for <e@80x24.org>; Fri, 16 Dec 2016 18:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9151FF40
+	for <e@80x24.org>; Fri, 16 Dec 2016 19:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757798AbcLPSyR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 13:54:17 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64272 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1757643AbcLPSyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 13:54:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E972655901;
-        Fri, 16 Dec 2016 13:54:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KJEexpPOV8NmDSTx4/E+48szav0=; b=Baelua
-        b+ogOfgAYsAcbscBuOxNIN0IStkzusYOeoBu7WxqzAkG7iWyvUWt2I/x+qX3QIpo
-        TeklB4MnJDhUdfU8gnDGQiZGy5EZ0fPMrxxVE0M172969O5uRPP+Xg2aGuSR37/t
-        apHeBt1zN3K+DGyNmnJDWWMnFCj/tPs3J0IqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qTt5ASv1Jzk1NrplZGsKGaUGSybTGPNQ
-        oF9/7UVsaZ/cVbTgZ87GFNSepZyK4qMQis02X8RNb7ugeNANocl4uxghHVWBRRCB
-        kf8PQTXie/PoZVPSBjg+VGub6Bff2J86484u1xtk0DRxIO/GMahN7g9x8Nu6XtU2
-        bzTVPGxOSwQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E166355900;
-        Fri, 16 Dec 2016 13:54:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6541D558FF;
-        Fri, 16 Dec 2016 13:54:14 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: index-pack outside of repository?
-References: <20161215204000.avlcfaqjwstkptu2@sigill.intra.peff.net>
-        <xmqqshpou3wt.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 16 Dec 2016 10:54:13 -0800
-In-Reply-To: <xmqqshpou3wt.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 15 Dec 2016 16:13:38 -0800")
-Message-ID: <xmqqlgvfso16.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1755355AbcLPTBR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 14:01:17 -0500
+Received: from mail-io0-f193.google.com ([209.85.223.193]:35321 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752782AbcLPTBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 14:01:15 -0500
+Received: by mail-io0-f193.google.com with SMTP id f73so12831834ioe.2
+        for <git@vger.kernel.org>; Fri, 16 Dec 2016 11:00:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yG0hgp0vyWR6Ok8sfjNvudRIyWQT/78MPQG6NgHeQG4=;
+        b=jzFCtzD8xayYak37UozQkA8Ao0E3P+sfJHgdNEo2+y9f6oPEt73ZOSIzgs9WV0jMuT
+         s6DwzFXeAgug1VbuB0qlzj5dKqEy+x7NEcFSQll6ypyt8pHGIZhpAcVceqEp/SWGjuQC
+         9U0M5oRGMjpMLhLH6wd5UOyzxUj4D8OX7vcCqR5OeuXVvDW9qPbaVmvU+4dBM12pAY5W
+         CXUmUE6aL9DeOKEwN/JqDSW420tdAiRRSXq7558+27HFhMidsbXCle/1qPNdozThksja
+         Ps1OsMyqMq4nNIdb5gK0P6YPYHmVpp99NQzJ67RngWcTc7l3dRjnO4Dmul7KormMFcld
+         Wj9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yG0hgp0vyWR6Ok8sfjNvudRIyWQT/78MPQG6NgHeQG4=;
+        b=LA/cGtaPOPjQLgZJXM5+oWHbqIIJhg5B0r/blcHLoSXkhwBYIF3GcenJgCF1wnpk5X
+         i7LjigcgDs5gJxkG6q8PnicRErUexychFeHiJkrbJQ6FXGjPGCkHSnUU1TbUo7lec0IN
+         Pgwh3RF0GhOTNeXvfbWMqDCCdhjxeOABdiP4x0J5gUwy8elVpSGEiHOtzgw05A/NYd4C
+         LLXZA8boXXH0xJjhPgBhS5dAK9xkiTkPs0K1hQRfDdmjdAQRUG5Ka7BanLZlW9QASOQj
+         36aFLP31EfWcLHDAz/aa5VtgnAsWvRP1oGqIhSf7fTVKn06yZ4UU8vQGkGMj5MS0pToT
+         eggg==
+X-Gm-Message-State: AIkVDXKBiOOYmcmBYLBKH8KWRTwB1zryMG1SxUTQ42nJ9hW47zXwHv7DlJGHTIRlgN1C3OGq6iHU+48yyoV3pg==
+X-Received: by 10.107.53.165 with SMTP id k37mr4426852ioo.74.1481914833958;
+ Fri, 16 Dec 2016 11:00:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09F18846-C3C1-11E6-BC4E-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.79.142.137 with HTTP; Fri, 16 Dec 2016 11:00:33 -0800 (PST)
+In-Reply-To: <CAFZEwPOZhO=sXLVwh03C8QN0uVXBUfb=xZ-JS003tgCNLgVOjg@mail.gmail.com>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1ab6-bda8420e-9a63-47d7-9b99-47465b6333d9-000000@eu-west-1.amazonses.com>
+ <a4c7fec8-0e84-eb53-ca22-c369ce3facfa@gmx.net> <CAFZEwPOZhO=sXLVwh03C8QN0uVXBUfb=xZ-JS003tgCNLgVOjg@mail.gmail.com>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Sat, 17 Dec 2016 00:30:33 +0530
+Message-ID: <CAFZEwPO2WgBjOnmvu1VOiz3PMYYx2mxircCWk+BWxmuunC=VQA@mail.gmail.com>
+Subject: Re: [PATCH v15 08/27] bisect--helper: `is_expected_rev` &
+ `check_expected_revs` shell function in C
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hey Stephan,
 
-> Jeff King <peff@peff.net> writes:
-> ...
->> I'm actually wondering if the way it calls die() in 'next' is a pretty
->> reasonable way for things to work in general. It happens when we lazily
->> try to ask for the repository directory. So we don't have to replicate
->> logic to say "are we going to need a repo"; at the moment we need it, we
->> notice we don't have it and die. The only problem is that it says "BUG"
->> and not "this operation must be run in a git repository".
+On Wed, Dec 7, 2016 at 1:03 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+
+>> I don't understand why the return value is int and not void. To avoid a
+>> "return 0;" line when calling this function?
 >
-> Isn't what we currently have is a good way to discover which
-> codepaths we missed to add a check to issue the latter error?
+> Initially I thought I would be using the return value but now I
+> realize that it is meaningless to do so. Using void seems better. :)
 
-I am tempted to suggest an intermediate step that comes before
-b1ef400eec ("setup_git_env: avoid blind fall-back to ".git"",
-2016-10-20), which is the attached, and publish that as part of an
-official release.  That way, we'll see what is broken without
-hurting people too much (unless they or their scripts care about
-extra message given to the standard error stream).  I suspect that
-released Git has a slightly larger user base than what is cooked on
-'next'.
+I just recollected when I was creating the next iteration of this
+series that I will need that int.
 
- environment.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+>>> +     case CHECK_EXPECTED_REVS:
+>>> +             return check_expected_revs(argv, argc);
 
-diff --git a/environment.c b/environment.c
-index 0935ec696e..88f857331e 100644
---- a/environment.c
-+++ b/environment.c
-@@ -167,8 +167,11 @@ static void setup_git_env(void)
- 	const char *replace_ref_base;
- 
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
--	if (!git_dir)
-+	if (!git_dir) {
-+		if (!startup_info->have_repository)
-+			warning("BUG: please report this at git@vger.kernel.org");
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-+	}
- 	gitfile = read_gitfile(git_dir);
- 	git_dir = xstrdup(gitfile ? gitfile : git_dir);
- 	if (get_common_dir(&sb, git_dir))
+See this.
+
+Regards,
+Pranit Bauva
