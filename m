@@ -2,99 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F37FF1FF76
-	for <e@80x24.org>; Sat, 17 Dec 2016 19:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 417931FF76
+	for <e@80x24.org>; Sat, 17 Dec 2016 19:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753460AbcLQTmr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 14:42:47 -0500
-Received: from mout.gmx.net ([212.227.17.20]:63256 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750799AbcLQTmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2016 14:42:46 -0500
-Received: from [192.168.178.43] ([88.71.237.80]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC7em-1cRAZ82eAa-008rNp; Sat, 17
- Dec 2016 20:42:42 +0100
-Subject: Re: [PATCH v15 08/27] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
- <01020157c38b1ab6-bda8420e-9a63-47d7-9b99-47465b6333d9-000000@eu-west-1.amazonses.com>
- <a4c7fec8-0e84-eb53-ca22-c369ce3facfa@gmx.net>
- <CAFZEwPOZhO=sXLVwh03C8QN0uVXBUfb=xZ-JS003tgCNLgVOjg@mail.gmail.com>
- <CAFZEwPO2WgBjOnmvu1VOiz3PMYYx2mxircCWk+BWxmuunC=VQA@mail.gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <22624028-b22d-5e4f-7101-c97e6e3e853c@gmx.net>
-Date:   Sat, 17 Dec 2016 20:42:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
-MIME-Version: 1.0
-In-Reply-To: <CAFZEwPO2WgBjOnmvu1VOiz3PMYYx2mxircCWk+BWxmuunC=VQA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:vCKva+lVUfra+j1Qqc3G7U2zQ/KvBE248AEipTs8jpJwoJ+GJN8
- Fmwl6onGsPjOaaCRcvYZSV2wlJok8L+rItHJdwefEw0BnCmOb4KTJ2X4RBtrA3r9czVTpdd
- kidPhsYJEJIAGmXbSkj2zrfACqabum2scd/PqtbNTkk9tYsDpSmaJfqjuKKRMt1K5g4sJWh
- XboCaArgqU7OArNx8+42A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bOGYREQfK+g=:GFskoWOC26usRW2FreQxBJ
- nxT9XweY8dO5+ZCePNlRoHVXZThwqeGN/yt6B091WHf8R/uHknzHEC9GjfZGU7Nw0b4Sj5ptB
- ozQQK0D2+46DE9YOtdTFhzwoI+WeOC8mAWwvsEv1sYYV/bZg8bOBuJWjVdOu/8fytcdI1d6Wl
- Qp3ZRcmnUgmQVA5RgUNC67aDwwJeydqua22d4SArYqFQBE2O8kIIBHdv996k7v8fnvnejajzW
- aVTnFrLvfe62cWXrPVH2NpzanOW8GFoLURASxNuyxKV3m8zeFrCMxGy4ayFz6LbHVby1qyvAo
- P0x/vRoRt2WUq/q9LXl4MRTBiQy4VYf6tcxpAhSp3TD7gH9vhkNLFw91Q2D06+s5Pyv0vKjk6
- JJq34ijA/UugvBq9aXgWlfpBDdAe/DTOO/D6hhVwXxEZ7qqKlC/lLfx68yDEQKX1TeiIkCvvz
- akYI6l9dvun7YYvCaqV2qNxT2eu8am4WQlJEdQJ4ekZPtOilWKf84nBW6z+lckyzXeCLqX3oK
- uvZc4VJ5WUdREjxMsxdz2q5QdBfucALF2bfs13KfL8aamdxs8LqL+/KqEkn2djqQhfdVKoQ3E
- zHEavDXMviHhf/kU/bzZuNw1aRzUb6El9P+F6riv2ezvVCkLs2iXJfr53MoNZGqJZtB1cSt3h
- ESH7F8ksliEQVz1M//2p+JQKd4nEidhjVBvUfAE6k55JSP22XTGpm8EizciGu+skLArWA4ORM
- SHv5joN8xtH0Bt1bIH4az0gCHd25e75ASJ2o5N4WMDNmoMFkbZuzUlF0xZmn65ecLkpsS5Cu8
- TRt6VZ7
+        id S1754159AbcLQTy0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 14:54:26 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33697 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752296AbcLQTyY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2016 14:54:24 -0500
+Received: by mail-pg0-f68.google.com with SMTP id g1so1761819pgn.0
+        for <git@vger.kernel.org>; Sat, 17 Dec 2016 11:54:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=BM6+/Vj71+6kdoknT2/GBRrKTugJSxIP1dI22ctN7zA=;
+        b=h7CX7+hEJVJhSIXoHlaGs9tN0saVMNt/xuFhuWJ3us/H+VaLUUOF0neu5AjincZO9e
+         LYdyUV5H1O4w7ZNovNiaLX7UbEbZCSehY7H18JWizoT0gOW+4MvTUUf/gtdwYf7QWRCa
+         HJGVyc7hAX0gMrDxw7dLn1P2Mjt5mSw4r4HAbWfvvFtqjQTe/zDJJihvwZgqijiFRKSV
+         1lFueGV+ZFRJTVh4QgljLfhZviV+xwYyIUukjZMhpfRYLEDU8QlP+IMwlxc4QgtmVXH+
+         EHV+bSWjue7Z0/qrroFpyHOlItgZ9Jf9Ean5seeeFz4uVBAc0+HqWfO147F12yP7WpDR
+         dEIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=BM6+/Vj71+6kdoknT2/GBRrKTugJSxIP1dI22ctN7zA=;
+        b=PJEtVjJHkB1We+DZJAZyj/PbCdKTTDxroMyEUQ5m6iKkvFP4sH8gJZp/+R0021vkjn
+         SMSProe8YY1Op+nnw5BIT0sPpRE4OO/Cv+rTMBikfWMxL28FQjnVyZ7sVVdtQU9Qhhfp
+         xMzJD9va6D+PLpb17ZxOUXaHuPLxHQ1qLDx1bZFmvEDvWiWcKTsOYidnBaxyNT7Ykp/D
+         Tlg5sOj2We+wuHhZLfgOhjDkdx8+bk7NNQGf+OrKRMRpqBIDZWzcVDdnLZkfppUdBAUc
+         XCzEv8nydDy4nm9U9QSI2Wa13IaDbU5vYA91bt4YLKSSzDISsjTrwdu65Zb835aciKyO
+         G40w==
+X-Gm-Message-State: AIkVDXL9j87J9Oj9sZ+px1JNVo/hUYfZbf2OAzybCu413RLTESntbzmO02/mxha6Viji+A==
+X-Received: by 10.99.49.11 with SMTP id x11mr1771648pgx.92.1482004464091;
+        Sat, 17 Dec 2016 11:54:24 -0800 (PST)
+Received: from localhost.localdomain ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
+        by smtp.gmail.com with ESMTPSA id 186sm20678311pfv.61.2016.12.17.11.54.23
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 17 Dec 2016 11:54:23 -0800 (PST)
+From:   "Kyle J. McKay" <mackyle@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: [PATCH] mailinfo.c: move side-effects outside of assert
+Date:   Sat, 17 Dec 2016 11:54:18 -0800
+Message-Id: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pranit,
+Since 6b4b013f18 (mailinfo: handle in-body header continuations,
+2016-09-20, v2.11.0) mailinfo.c has contained new code with an
+assert of the form:
 
-On 12/16/2016 08:00 PM, Pranit Bauva wrote:
-> On Wed, Dec 7, 2016 at 1:03 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>> I don't understand why the return value is int and not void. To avoid a
->>> "return 0;" line when calling this function?
->>
->> Initially I thought I would be using the return value but now I
->> realize that it is meaningless to do so. Using void seems better. :)
-> 
-> I just recollected when I was creating the next iteration of this
-> series that I will need that int.
-> 
->>>> +     case CHECK_EXPECTED_REVS:
->>>> +             return check_expected_revs(argv, argc);
-> 
-> See this.
+	assert(call_a_function(...))
 
-This does not show that you need the "int", it just shows that you use
-the return value of the function. But this return value is (in the
-original shell code as well as in your v15) always 0. That is a sign
-that the "void" return value makes more sense. Of course, then the line
-above must be changed to
+The function in question, check_header, has side effects.  This
+means that when NDEBUG is defined during a release build the
+function call is omitted entirely, the side effects do not
+take place and tests (fortunately) start failing.
 
-+     case CHECK_EXPECTED_REVS:
-+             check_expected_revs(argv, argc);
-+             return 0;
+Move the function call outside of the assert and assert on
+the result of the function call instead so that the code
+still works properly in a release build and passes the tests.
 
-By the way, it also seems that the original function name
-"check_expected_revs" was not the best choice (because the function
-always returns 0, but the "check" implies that some semantically true or
-false is returned).
-On the other hand, it might also be useful (I cannot tell) to return
-different values in check_expected_revs() — to signal the caller that
-something changed or something did not change — but then ignore the
-return value.
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
 
-Best
-  Stephan
+Notes:
+    Please include this PATCH in 2.11.x maint
+
+ mailinfo.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index 2fb3877e..47442fb5 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -708,9 +708,12 @@ static int is_scissors_line(const char *line)
+ 
+ static void flush_inbody_header_accum(struct mailinfo *mi)
+ {
++	int okay;
++
+ 	if (!mi->inbody_header_accum.len)
+ 		return;
+-	assert(check_header(mi, &mi->inbody_header_accum, mi->s_hdr_data, 0));
++	okay = check_header(mi, &mi->inbody_header_accum, mi->s_hdr_data, 0);
++	assert(okay);
+ 	strbuf_reset(&mi->inbody_header_accum);
+ }
+ 
+---
