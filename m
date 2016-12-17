@@ -2,110 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 411451FF76
-	for <e@80x24.org>; Sat, 17 Dec 2016 20:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF9361FF76
+	for <e@80x24.org>; Sun, 18 Dec 2016 00:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756524AbcLQUYQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 15:24:16 -0500
-Received: from mout.gmx.net ([212.227.15.18]:49264 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752410AbcLQUYP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2016 15:24:15 -0500
-Received: from [192.168.178.43] ([88.71.237.80]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwJFG-1cfvYC3F7e-0185sm; Sat, 17
- Dec 2016 21:23:54 +0100
-Subject: Re: [PATCH v2 01/34] sequencer: support a new action: 'interactive
- rebase'
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
- <cover.1481642927.git.johannes.schindelin@gmx.de>
- <297140020a7312af03136848dcdd0353ee3abdfe.1481642927.git.johannes.schindelin@gmx.de>
- <xmqqy3ziwbpk.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <f0762491-63ca-0814-0005-b2cbdd4dc505@gmx.net>
-Date:   Sat, 17 Dec 2016 21:23:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
+        id S1758012AbcLRAHj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 19:07:39 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:36184
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756074AbcLRAHi (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 17 Dec 2016 19:07:38 -0500
+X-Greylist: delayed 6973 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Dec 2016 19:07:38 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1482012683;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=Y2sTKcPnHGb/tLPLH3D/7QlCWyqHs1UhTBrOc7jZqYg=;
+        b=XSKmjOE1fsdXhJmoug+0ZuSpk1arLddJtP5ESqvV6/o+YWl7peOimCHv50Bpn5/r
+        3zHL25X8/AoIEj2X55IlIm7KqZrgedrqsTGHW+2LsoMq3+bw2yx1HalpHPBJi68+jHs
+        SI0sVbsaTdu8X3V2+M/CkiA/H7+R+yb7QdvLw0r4=
+From:   George Vanburgh <george@vanburgh.me>
+To:     git@vger.kernel.org
+Message-ID: <010201590ed6ecaa-740c2532-827e-4f5a-af46-0f58d0722db6-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020159037a8995-2d1da9d4-4a27-4b98-818b-432fc0ad8a52-000000@eu-west-1.amazonses.com>
+References: <01020159037a8995-2d1da9d4-4a27-4b98-818b-432fc0ad8a52-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2] git-p4: Fix multi-path changelist empty commits
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3ziwbpk.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:uC9zS2iux1T6zWVTrGcPKutHpySsAAlf9YFi6nl6IDCBGtTMNOT
- rUgZFYhGmlx6kEKc+ck8zLBc37u01TIfwO8v6NmJnkqyQTytQh2N3QeUKyV1tMTHKo7dVL8
- 29PQ7vqo55dbmz4LvW+kqHOXeAh6hDGJTzN4ljFpe7eCXJDH52ClZu/URTniSy5G3ruLlZ5
- xFfGtU+lN9YEyl0PftcUQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MW4o7rGQYrE=:Pkt7c4lLs5Z+LEKzUaYqtA
- fLpURRev+zUkDM1UiJ6FlppQIK2LiAgK8TNkbNtHvKqNRVTMwSmUamFwRYBofN9qDCc1gRabN
- SHzn5kEYvGKrtrnU/gxzku6c3LFzAerdxDqDBnG7CYTz1J5nLhv1b2wWGnRMADhd2sB0JTrhx
- YsmVlr18w/NuugfuaVzrOdwd40s+FFSRHWqeat9XJB2DEgglGB/fciR9ekZLHPWBR53IKNYOG
- D5cThRi4WpjzPof7/lV8Z0Q+e0Ijw7ILUSl1TWDFIvRKYkDmM3TliGcaWv30sPZshKN6J378X
- NeIqYXDiFz/e1y9oll7SXBhrMOeQ89+iyxOAVqqtFpsTF48OCIjS4jSFnop4RN28w74h5h0sf
- 57Jr1yNXE39lfgftUotBN6eonO20SUv+J8v7RtB2/KPSVOmYI4HMjUj/XS+/APX4jnzg8YXRA
- UflocbaZW7T4LznfcR1Urbi+5PNC6PkKPoXNoQFF+hoET9WxYlOt3jbOENs9g6XaFe6eKO1Xv
- //kpWY7pgAo35nuFe4XHmedrSLLXI6rgpO+8fRQgn8MAhmkfe11Qy6AiOOJ4WA2dl6+E8heHo
- 9RP4ZTS0sH9qk1pp5W2ZtWQnlBjoDNfQEEN8Eo3ruxRaa//rnfa7tGL+ETDkUt2uZTi/S31xu
- guJOE7QBnSI8dlyDa/LUxm+c6Q8kh13gFstpX2NPC5xmdQC3D4+6SPOrEiixCOOvH5fLITmJb
- LW/Lry8/i2Zy7bc3KRw7XWgsbDmfKCHDk+wIBNhXPUFsayJcReR7WIaRUxAnPpjeGk/s0O167
- s0Xjxu/
+Date:   Sat, 17 Dec 2016 22:11:23 +0000
+X-SES-Outgoing: 2016.12.18-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: George Vanburgh <gvanburgh@bloomberg.net>
 
-On 12/14/2016 08:29 PM, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->> -/* We will introduce the 'interactive rebase' mode later */
->>  static inline int is_rebase_i(const struct replay_opts *opts)
->>  {
->> -	return 0;
->> +	return opts->action == REPLAY_INTERACTIVE_REBASE;
->>  }
->>  
->>  static const char *get_dir(const struct replay_opts *opts)
->>  {
->> +	if (is_rebase_i(opts))
->> +		return rebase_path();
->>  	return git_path_seq_dir();
->>  }
-> 
-> This obviously makes the assumption made by 39784cd362 ("sequencer:
-> remove useless get_dir() function", 2016-12-07) invalid, where the
-> "remove useless" thought that the callers of this function wants a
-> single answer that does not depend on opts.
-> 
-> I'll revert that commit from the sb/sequencer-abort-safety topic (as
-> the topic is in 'next' already) to keep this one.  Please holler if
-> that is a mistaken decision.
+When importing from multiple perforce paths - we may attempt to import
+a changelist that contains files from two (or more) of these depot
+paths. Currently, this results in multiple git commits - one
+containing the changes, and the other(s) as empty commit(s). This
+behavior was introduced in commit 1f90a64
+("git-p4: reduce number of server queries for fetches", 2015-12-19).
 
-It seems to be the right decision if one wants to keep the internal-path
-backwards-compatibility of "git rebase -i" (and it seems that Dscho
-wants to keep it).
+Reproduction Steps:
 
-However, maintaining more than one directory (like "sequencer" for
-sequencer state and "rebase-merge" for rebase todo and log) can cause
-the necessity to be even more careful when hacking on sequencer... For
-example, the cleanup code must delete both of them, not only one of them.
+1. Have a git repo cloned from a perforce repo using multiple depot
+paths (e.g. //depot/foo and //depot/bar).
+2. Submit a single change to the perforce repo that makes changes in
+both //depot/foo and //depot/bar.
+3. Run "git p4 sync" to sync the change from #2.
 
-Hence, I think that it's a wiser choice to keep one directory for
-sequencer state *and* additional files.
-If we (a) save everything in "sequencer", we break the internal-path
-backwards-compatbility but we can get rid of get_dir()...
-If we (b) save everything in "rebase-merge" when using rebase -i and
-save everything in "sequencer" for pick/revert, we are 100%
-backwards-compatible, but we have to change every occurrence of
-git_path_seq_dir() to get_dir() and the GIT_PATH_FUNC definitions of
-git_path_{todo,opts,head}_file must be replaced by definitions using
-get_dir().
+Change is synced as multiple commits, one for each depot path that was
+affected.
 
-Best
-  Stephan
+Using a set, instead of a list inside p4ChangesForPaths() ensures that
+each changelist is unique to the returned list, and therefore only a
+single commit is generated for each changelist.
+
+Reported-by: James Farwell <jfarwell@vmware.com>
+Signed-off-by: George Vanburgh <gvanburgh@bloomberg.net>
+---
+ git-p4.py               |  4 ++--
+ t/t9800-git-p4-basic.sh | 22 +++++++++++++++++++++-
+ 2 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index fd5ca52..6307bc8 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -822,7 +822,7 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+                 die("cannot use --changes-block-size with non-numeric revisions")
+             block_size = None
+ 
+-    changes = []
++    changes = set()
+ 
+     # Retrieve changes a block at a time, to prevent running
+     # into a MaxResults/MaxScanRows error from the server.
+@@ -841,7 +841,7 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+ 
+         # Insert changes in chronological order
+         for line in reversed(p4_read_pipe_lines(cmd)):
+-            changes.append(int(line.split(" ")[1]))
++            changes.add(int(line.split(" ")[1]))
+ 
+         if not block_size:
+             break
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index 0730f18..4d93522 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -131,6 +131,26 @@ test_expect_success 'clone two dirs, @all, conflicting files' '
+ 	)
+ '
+ 
++test_expect_success 'clone two dirs, each edited by submit, single git commit' '
++	(
++		cd "$cli" &&
++		echo sub1/f4 >sub1/f4 &&
++		p4 add sub1/f4 &&
++		echo sub2/f4 >sub2/f4 &&
++		p4 add sub2/f4 &&
++		p4 submit -d "sub1/f4 and sub2/f4"
++	) &&
++	git p4 clone --dest="$git" //depot/sub1@all //depot/sub2@all &&
++	test_when_finished cleanup_git &&
++	(
++		cd "$git" &&
++		git ls-files >lines &&
++		test_line_count = 4 lines &&
++		git log --oneline p4/master >lines &&
++		test_line_count = 5 lines
++	)
++'
++
+ revision_ranges="2000/01/01,#head \
+ 		 1,2080/01/01 \
+ 		 2000/01/01,2080/01/01 \
+@@ -147,7 +167,7 @@ test_expect_success 'clone using non-numeric revision ranges' '
+ 		(
+ 			cd "$git" &&
+ 			git ls-files >lines &&
+-			test_line_count = 6 lines
++			test_line_count = 8 lines
+ 		)
+ 	done
+ '
+
+--
+https://github.com/git/git/pull/311
