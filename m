@@ -2,200 +2,260 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 919531FF40
-	for <e@80x24.org>; Sat, 17 Dec 2016 01:01:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E02F11FF40
+	for <e@80x24.org>; Sat, 17 Dec 2016 01:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762296AbcLQBBH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 20:01:07 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36628 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1762227AbcLQBA6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 20:00:58 -0500
-Received: by mail-pf0-f194.google.com with SMTP id c4so5035595pfb.3
-        for <git@vger.kernel.org>; Fri, 16 Dec 2016 17:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=27zdukAixz3vRYjRNOZX9pmt5mo0IkcW+L3x7CljVGQ=;
-        b=LKAuf93zOTalPOl2ciaeFTBTneqnUwmtf5mBIT8qpnhnV74iSNisEwExIqKsqgBLlr
-         0tg1NgmVBMNEC+oSSHXQbPaz+ZVzSY+T4wwHWK0tooJVCLUgkVfuf2mgKRLioD53Kb5w
-         /xiAPNYotZ/mgddkupGo6ySVXIumQRnRX+uOw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=27zdukAixz3vRYjRNOZX9pmt5mo0IkcW+L3x7CljVGQ=;
-        b=TQbE9BIN90rMxztNJJbLqtuAPjNvKVu4ZYQomneOdIJKDIIxtpGaYmYXCqF6QAFEbc
-         JbKw6qM6o8hWTmBRBS3bme30aQIBZHXAMtXSNVMzfQo+IsayzT7R8HkkSXJ704JNkcU7
-         yutFwO0Hkg/valY3nd9+VewlDQiQMW9L0dQieH2w5EXolp2LHB1MkJtcRoadyxZSy6zq
-         xEQEbVfOJ9fBh2FykyCBnT3/yBcelOcsW3Ji6Eut1U8CZnx5k5tudW5ToJO1OgMJrrop
-         UbD3YFiDR6bfjuHS7FB6doTrfq4Plou5GyNU4DwF32bbmntlAqO/4o74o1rZS2igF2SE
-         /86Q==
-X-Gm-Message-State: AKaTC02pJQCaVqQvM3bHHuuEwXD7BNOOBWUD8blaJkn+e6/rYUbxw01Biq+2fH+Nswd3+w==
-X-Received: by 10.98.50.67 with SMTP id y64mr5745579pfy.98.1481936452233;
-        Fri, 16 Dec 2016 17:00:52 -0800 (PST)
-Received: from ethel.corp.roku (cpc108967-cmbg20-2-0-cust367.5-4.cable.virginm.net. [81.101.7.112])
-        by smtp.gmail.com with ESMTPSA id h185sm14341306pfg.90.2016.12.16.17.00.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Dec 2016 17:00:51 -0800 (PST)
-From:   Luke Diamand <luke@diamand.org>
+        id S1758132AbcLQBYg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 20:24:36 -0500
+Received: from mga04.intel.com ([192.55.52.120]:16030 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1757457AbcLQBYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 20:24:35 -0500
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga104.fm.intel.com with ESMTP; 16 Dec 2016 17:24:34 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.33,360,1477983600"; 
+   d="scan'208";a="1082903354"
+Received: from jekeller-desk.amr.corp.intel.com ([10.166.35.174])
+  by fmsmga001.fm.intel.com with ESMTP; 16 Dec 2016 17:24:34 -0800
+From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        viniciusalexandre@gmail.com, aoakley@roku.com,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCHv2] git-p4: avoid crash adding symlinked directory
-Date:   Sat, 17 Dec 2016 01:00:40 +0000
-Message-Id: <20161217010040.1399-2-luke@diamand.org>
-X-Mailer: git-send-email 2.8.2.703.g78b384c.dirty
-In-Reply-To: <20161217010040.1399-1-luke@diamand.org>
-References: <20161217010040.1399-1-luke@diamand.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v2 0/5] extend describe and name-rev pattern matching
+Date:   Fri, 16 Dec 2016 17:24:26 -0800
+Message-Id: <20161217012431.29548-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.11.0.rc2.152.g4d04e67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When submitting to P4, if git-p4 came across a symlinked
-directory, then during the generation of the submit diff, it would
-try to open it as a normal file and fail.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Spot symlinks (of any type) and output a description of the symlink
-instead.
+This series adds support for extending describe and name-rev pattern
+matching to allow (a) taking multiple patterns and (b) negative patterns
+which discard instead of keep. These changes increase the flexibility of
+the describe mechanism so that searching for specific tag formats can be
+done more easily.
 
-Add a test case.
+Changes since v1
+* add new patches for negative pattern matching
+* tweak the documentation slightly
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py                     | 26 ++++++++++++++++++++------
- t/t9830-git-p4-symlink-dir.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 6 deletions(-)
- create mode 100755 t/t9830-git-p4-symlink-dir.sh
-
-diff --git a/git-p4.py b/git-p4.py
-index fd5ca52..16d0b8a 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -25,6 +25,7 @@ import stat
- import zipfile
- import zlib
- import ctypes
-+import errno
+-- interdiff since v1 --
+diff --git c/Documentation/git-describe.txt w/Documentation/git-describe.txt
+index c85f2811ce28..a89bbde207b2 100644
+--- c/Documentation/git-describe.txt
++++ w/Documentation/git-describe.txt
+@@ -83,11 +83,18 @@ OPTIONS
+ --match <pattern>::
+	Only consider tags matching the given `glob(7)` pattern,
+	excluding the "refs/tags/" prefix.  This can be used to avoid
+-	leaking private tags from the repository, or to shrink the scope of
+-	searched tags to avoid -rc tags or similar. If given multiple a list
+-	of patterns will be accumulated, and tags matching any of the patterns
+-	will be considered. Use `--no-match` to clear and reset the list of
+-	patterns.
++	leaking private tags from the repository. If given multiple times, a
++	list of patterns will be accumulated, and tags matching any of the
++	patterns will be considered. Use `--no-match` to clear and reset the
++	list of patterns.
++
++--discard <pattern>::
++	Do not consider tags matching the given `glob(7)` pattern, excluding
++	the "refs/tags/" prefix. This can be used to narrow the tag space and
++	find only tags matching some meaningful criteria. If given multiple
++	times, a list of patterns will be accumulated and tags matching any
++	of the patterns will be discarded. Use `--no-discard` to clear and
++	reset the list of patterns.
  
- try:
-     from subprocess import CalledProcessError
-@@ -1538,7 +1539,7 @@ class P4Submit(Command, P4UserMap):
-             if response == 'n':
-                 return False
+ --always::
+	Show uniquely abbreviated commit object as fallback.
+diff --git c/Documentation/git-name-rev.txt w/Documentation/git-name-rev.txt
+index 7433627db12d..9b46e5ea9aae 100644
+--- c/Documentation/git-name-rev.txt
++++ w/Documentation/git-name-rev.txt
+@@ -30,6 +30,13 @@ OPTIONS
+	given multiple times, use refs whose names match any of the given shell
+	patterns. Use `--no-refs` to clear any previous ref patterns given.
  
--    def get_diff_description(self, editedFiles, filesToAdd):
-+    def get_diff_description(self, editedFiles, filesToAdd, symlinks):
-         # diff
-         if os.environ.has_key("P4DIFF"):
-             del(os.environ["P4DIFF"])
-@@ -1553,10 +1554,17 @@ class P4Submit(Command, P4UserMap):
-             newdiff += "==== new file ====\n"
-             newdiff += "--- /dev/null\n"
-             newdiff += "+++ %s\n" % newFile
--            f = open(newFile, "r")
--            for line in f.readlines():
--                newdiff += "+" + line
--            f.close()
++--discard=<pattern>::
++	Do not use any ref whose name matches a given shell pattern. The
++	pattern can be one of branch name, tag name or fully qualified ref
++	name. If given multiple times, discard refs that match any of the given
++	shell patterns. Use `--no-discards` to clear the list of discard
++	patterns.
 +
-+            is_link = os.path.islink(newFile)
-+            expect_link = newFile in symlinks
-+
-+            if is_link and expect_link:
-+                newdiff += "+%s\n" % os.readlink(newFile)
-+            else:
-+                f = open(newFile, "r")
-+                for line in f.readlines():
-+                    newdiff += "+" + line
-+                f.close()
+ --all::
+	List all commits reachable from all refs
  
-         return (diff + newdiff).replace('\r\n', '\n')
+diff --git c/builtin/describe.c w/builtin/describe.c
+index e3ceab65e273..c09288ee6321 100644
+--- c/builtin/describe.c
++++ w/builtin/describe.c
+@@ -29,6 +29,7 @@ static int max_candidates = 10;
+ static struct hashmap names;
+ static int have_util;
+ static struct string_list patterns = STRING_LIST_INIT_NODUP;
++static struct string_list discard_patterns = STRING_LIST_INIT_NODUP;
+ static int always;
+ static const char *dirty;
  
-@@ -1574,6 +1582,7 @@ class P4Submit(Command, P4UserMap):
-         filesToDelete = set()
-         editedFiles = set()
-         pureRenameCopy = set()
-+        symlinks = set()
-         filesToChangeExecBit = {}
+@@ -130,6 +131,22 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+		return 0;
  
-         for line in diff:
-@@ -1590,6 +1599,11 @@ class P4Submit(Command, P4UserMap):
-                 filesToChangeExecBit[path] = diff['dst_mode']
-                 if path in filesToDelete:
-                     filesToDelete.remove(path)
+	/*
++	 * If we're given discard patterns, first discard any tag which match
++	 * any of the discard pattern.
++	 */
++	if (discard_patterns.nr) {
++		struct string_list_item *item;
 +
-+                dst_mode = int(diff['dst_mode'], 8)
-+                if dst_mode == 0120000:
-+                    symlinks.add(path)
++		if (!is_tag)
++			return 0;
 +
-             elif modifier == "D":
-                 filesToDelete.add(path)
-                 if path in filesToAdd:
-@@ -1727,7 +1741,7 @@ class P4Submit(Command, P4UserMap):
-         separatorLine = "######## everything below this line is just the diff #######\n"
-         if not self.prepare_p4_only:
-             submitTemplate += separatorLine
--            submitTemplate += self.get_diff_description(editedFiles, filesToAdd)
-+            submitTemplate += self.get_diff_description(editedFiles, filesToAdd, symlinks)
++		for_each_string_list_item(item, &discard_patterns) {
++			if (!wildmatch(item->string, path + 10, 0, NULL))
++				return 0;
++		}
++	}
++
++	/*
+	 * If we're given patterns, accept only tags which match at least one
+	 * pattern.
+	 */
+@@ -140,9 +157,8 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
+			return 0;
  
-         (handle, fileName) = tempfile.mkstemp()
-         tmpFile = os.fdopen(handle, "w+b")
-diff --git a/t/t9830-git-p4-symlink-dir.sh b/t/t9830-git-p4-symlink-dir.sh
-new file mode 100755
-index 0000000..3dc528b
---- /dev/null
-+++ b/t/t9830-git-p4-symlink-dir.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
+		for_each_string_list_item(item, &patterns) {
+-			if (!wildmatch(item->string, path + 10, 0, NULL)) {
++			if (!wildmatch(item->string, path + 10, 0, NULL))
+				break;
+-			}
+ 
+			/* If we get here, no pattern matched. */
+			return 0;
+@@ -422,6 +438,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+			    N_("consider <n> most recent tags (default: 10)")),
+		OPT_STRING_LIST(0, "match", &patterns, N_("pattern"),
+			   N_("only consider tags matching <pattern>")),
++		OPT_STRING_LIST(0, "discard", &discard_patterns, N_("pattern"),
++			   N_("do not consider tags matching <pattern>")),
+		OPT_BOOL(0, "always",        &always,
+			N_("show abbreviated commit object as fallback")),
+		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
+@@ -459,6 +477,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+			argv_array_push(&args, "--tags");
+			for_each_string_list_item(item, &patterns)
+				argv_array_pushf(&args, "--refs=refs/tags/%s", item->string);
++			for_each_string_list_item(item, &discard_patterns)
++				argv_array_pushf(&args, "--discard=refs/tags/%s", item->string);
+		}
+		if (argc)
+			argv_array_pushv(&args, argv);
+diff --git c/builtin/name-rev.c w/builtin/name-rev.c
+index 000a2a700ed3..86479c17a7c9 100644
+--- c/builtin/name-rev.c
++++ w/builtin/name-rev.c
+@@ -109,6 +109,7 @@ struct name_ref_data {
+	int tags_only;
+	int name_only;
+	struct string_list ref_filters;
++	struct string_list discard_filters;
+ };
+ 
+ static struct tip_table {
+@@ -150,6 +151,15 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+	if (data->tags_only && !starts_with(path, "refs/tags/"))
+		return 0;
+ 
++	if (data->discard_filters.nr) {
++		struct string_list_item *item;
 +
-+test_description='git p4 symlinked directories'
++		for_each_string_list_item(item, &data->discard_filters) {
++			if (subpath_matches(path, item->string) >= 0)
++				return 0;
++		}
++	}
 +
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
+	if (data->ref_filters.nr) {
+		struct string_list_item *item;
+		int matched = 0;
+@@ -323,12 +333,14 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ {
+	struct object_array revs = OBJECT_ARRAY_INIT;
+	int all = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+-	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP };
++	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
+	struct option opts[] = {
+		OPT_BOOL(0, "name-only", &data.name_only, N_("print only names (no SHA-1)")),
+		OPT_BOOL(0, "tags", &data.tags_only, N_("only use tags to name the commits")),
+		OPT_STRING_LIST(0, "refs", &data.ref_filters, N_("pattern"),
+				   N_("only use refs matching <pattern>")),
++		OPT_STRING_LIST(0, "discard", &data.discard_filters, N_("pattern"),
++				   N_("ignore refs matching <pattern>")),
+		OPT_GROUP(""),
+		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
+		OPT_BOOL(0, "stdin", &transform_stdin, N_("read from stdin")),
+diff --git c/t/t6007-rev-list-cherry-pick-file.sh w/t/t6007-rev-list-cherry-pick-file.sh
+index d072ec43b016..8a4c35f6ffee 100755
+--- c/t/t6007-rev-list-cherry-pick-file.sh
++++ w/t/t6007-rev-list-cherry-pick-file.sh
+@@ -118,6 +118,13 @@ test_expect_success 'name-rev --refs excludes non-matched patterns' '
+	test_cmp actual.named expect
+ '
+ 
++test_expect_success 'name-rev --discard excludes matched patterns' '
++	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
++	git name-rev --stdin --name-only --refs="*tags/*" --discard="*E" \
++		< actual > actual.named &&
++	test_cmp actual.named expect
 +'
 +
-+test_expect_success 'symlinked directory' '
-+	(
-+		cd "$cli" &&
-+		: >first_file.t &&
-+		p4 add first_file.t &&
-+		p4 submit -d "first change"
-+	) &&
-+	git p4 clone --dest "$git" //depot &&
-+	(
-+		cd "$git" &&
-+		mkdir -p some/sub/directory &&
-+		mkdir -p other/subdir2 &&
-+		: > other/subdir2/file.t &&
-+		(cd some/sub/directory && ln -s ../../../other/subdir2 .) &&
-+		git add some other &&
-+		git commit -m "symlinks" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit -v
-+	) &&
-+	(
-+		cd "$cli" &&
-+		p4 sync &&
-+		test -L some/sub/directory/subdir2
-+		test_path_is_file some/sub/directory/subdir2/file.t
-+	)
-+
+ cat >expect <<EOF
+ $(git rev-list --left-right --cherry-pick F...E -- bar)
+ EOF
+diff --git c/t/t6120-describe.sh w/t/t6120-describe.sh
+index 9e5db9b87a1f..4e4a9f2e5305 100755
+--- c/t/t6120-describe.sh
++++ w/t/t6120-describe.sh
+@@ -218,6 +218,14 @@ test_expect_success 'describe --contains and --match' '
+	test_cmp expect actual
+ '
+ 
++test_expect_success 'describe --discard' '
++	echo "c~1" >expect &&
++	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
++	test_must_fail git describe --contains --match="B" $tagged_commit &&
++	git describe --contains --match="?" --discard="A" $tagged_commit >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
+ test_expect_success 'describe --contains and --no-match' '
+	echo "A^0" >expect &&
+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
+
+Jacob Keller (5):
+  doc: add documentation for OPT_STRING_LIST
+  name-rev: extend --refs to accept multiple patterns
+  name-rev: add support to discard refs by pattern match
+  describe: teach --match to accept multiple patterns
+  describe: teach describe negative pattern matches
+
+ Documentation/git-describe.txt                | 13 ++++++-
+ Documentation/git-name-rev.txt                | 11 +++++-
+ Documentation/technical/api-parse-options.txt |  5 +++
+ builtin/describe.c                            | 51 ++++++++++++++++++++++----
+ builtin/name-rev.c                            | 53 +++++++++++++++++++++------
+ t/t6007-rev-list-cherry-pick-file.sh          | 30 +++++++++++++++
+ t/t6120-describe.sh                           | 19 ++++++++++
+ 7 files changed, 161 insertions(+), 21 deletions(-)
+
 -- 
-2.8.2.703.g78b384c.dirty
+2.11.0.rc2.152.g4d04e67
 
