@@ -2,103 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4645E1FF40
-	for <e@80x24.org>; Sat, 17 Dec 2016 01:31:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA0971FF40
+	for <e@80x24.org>; Sat, 17 Dec 2016 02:25:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759173AbcLQBbB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 20:31:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53618 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1758725AbcLQBbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 20:31:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C10E757544;
-        Fri, 16 Dec 2016 20:30:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C5626TjSs1ntDPkKmw00ediqanA=; b=hSMAZw
-        RWWm6jR6RrPR7O3eJFmJY6cwd58aNVRe9xpYjCqgXAYGUXnUE5mKLoPlQtLJ7RJ2
-        hTZoyRtHI6NEgrlbMM7IVfVjjDwnfdxrPv4GoJycjoHwirpO2xPoxgJTX9VQ9zbW
-        hZGF8m5Tw1nadYXLKQiZt9575/WMPrURDRfMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DDdnlHOhxTyFTKjlzZJ7I7pBKvlw/+S2
-        /ik+Ka/8JlnNpLFHNsqX/2os0X+GO7E79QfEd5DZo/wDxWenY1b6WEU+kI+3NOaZ
-        u/WHBnfGfPyrlin4Od9LB9gfatzRBqiZc8XQPGG7H0yF99dOM/ebvjTIoZTjn1N0
-        JXxQfkh0zss=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B85EA57542;
-        Fri, 16 Dec 2016 20:30:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35F3D57541;
-        Fri, 16 Dec 2016 20:30:58 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Norbert Kiesel <nkiesel@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] diff: prefer indent heuristic over compaction heuristic
-References: <20161217005442.5866-1-jacob.e.keller@intel.com>
-Date:   Fri, 16 Dec 2016 17:30:57 -0800
-In-Reply-To: <20161217005442.5866-1-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Fri, 16 Dec 2016 16:54:42 -0800")
-Message-ID: <xmqq7f6zqr3i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S934983AbcLQCZN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 21:25:13 -0500
+Received: from mail-wj0-f177.google.com ([209.85.210.177]:33878 "EHLO
+        mail-wj0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934965AbcLQCZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 21:25:11 -0500
+Received: by mail-wj0-f177.google.com with SMTP id tg4so106676985wjb.1
+        for <git@vger.kernel.org>; Fri, 16 Dec 2016 18:25:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=vanburgh.me; s=google;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=ZNtByHul1SXKazWYEeSZF/G+avd04rgqnav/SDdppAM=;
+        b=Fo3HyyrbokqrRT8TP+ooB2bPrUmMcR/zaXHWBY+NfA57vPSqhPjdo9Vu7WpoIhpP2x
+         wkCMR9GLbQVx+mWpBiTSHDjoxGHL+gyI7Oskpb8tGUpqaH3kWA8pq2+yCV7NcFfhZ6Z5
+         adLlqdG0rz4TnH7iTuiE45N9uhHm7sLFAk7Fg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=ZNtByHul1SXKazWYEeSZF/G+avd04rgqnav/SDdppAM=;
+        b=LXrBvyspQd6udU8KrNmmBTYtQqXUl1RIX0Q8/Z3f9+eSk5hBMyH+O8kPwSt0MjbIsF
+         LGxoKLwIvqO0u9OCsTxz4xnBQ4ZCnBHFz44uHtsgjAMFywrNwg87VS1uO1NV6C4JyvQc
+         RxMNZhmhaPnNGiGkjBlBQeRRqVtBcSeBtlAv1U3nU/MlU6rJtJkOi78/2SJqpD93bO3R
+         pw21gMA76mT8t7PNLy/gl+UPR9MyBDFQH5YJaSYpuK3yKU1MHAeMzTRVnlDpt5dbGPMs
+         CBMvgThI5xe2a9vLg+ZYbG/e7LFrg7pWjOlfr8JsX3e0V4e8Jy6B0X51lArDYvA1bDtV
+         FwTg==
+X-Gm-Message-State: AIkVDXLkEhN31MtZpcP1Vsjx1RBXHw28DWH5mdykvBbSW9mgbdmSL6hfnHUyqgpGqEYq8Q==
+X-Received: by 10.194.177.231 with SMTP id ct7mr5105292wjc.221.1481941509708;
+        Fri, 16 Dec 2016 18:25:09 -0800 (PST)
+Received: from [10.146.153.89] (92.40.248.113.threembb.co.uk. [92.40.248.113])
+        by smtp.gmail.com with ESMTPSA id f10sm9315609wjl.28.2016.12.16.18.25.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Dec 2016 18:25:09 -0800 (PST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAE5ih7-+tahL4=OrW6F6UPKKRg1KFkw32e=pnTx6j2WTZ-BhOw@mail.gmail.com>
+References: <01020159037a8995-2d1da9d4-4a27-4b98-818b-432fc0ad8a52-000000@eu-west-1.amazonses.com> <CAE5ih7-+tahL4=OrW6F6UPKKRg1KFkw32e=pnTx6j2WTZ-BhOw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 761E20D8-C3F8-11E6-AD8A-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=UTF-8
+Subject: Re: [PATCH] git-p4: Fix multi-path changelist empty commits
+From:   George Vanburgh <george@vanburgh.me>
+Date:   Sat, 17 Dec 2016 03:25:03 +0100
+To:     Luke Diamand <luke@diamand.org>
+CC:     Git Users <git@vger.kernel.org>
+Message-ID: <2BE8EE6F-F718-475A-A2BA-483F39F5B9A0@vanburgh.me>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
+
+On 17 December 2016 01:47:55 CET, Luke Diamand <luke@diamand.org> wrote:
+>On 15 December 2016 at 17:14, George Vanburgh <george@vanburgh.me>
+>wrote:
+>> From: George Vanburgh <gvanburgh@bloomberg.net>
+>>
+>> When importing from multiple perforce paths - we may attempt to
+>import a changelist that contains files from two (or more) of these
+>depot paths. Currently, this results in multiple git commits - one
+>containing the changes, and the other(s) as empty commits. This
+>behavior was introduced in commit 1f90a64 ("git-p4: reduce number of
+>server queries for fetches", 2015-12-19).
 >
-> The current configuration code for enabling experimental heuristics
-> prefers the last-set heuristic in the configuration. However, it is not
-> necessarily easy to see what order the configuration will be read. This
-> means that it is possible for a user to have accidentally enabled both
-> heuristics, and end up only enabling the older compaction heuristic.
+>That's definitely a bug, thanks for spotting that! Even more so for
+>adding a test case.
+
+Not a problem - thanks to you guys for maintaining such an awesome tool!
+
 >
-> Modify the code so that we do not clear the other heuristic when we set
-> each heuristic enabled. Then, during diff_setup() when we check the
-> configuration, we will first check the newer indent heuristic. This
-> ensures that we only enable the newer heuristic if both have been
-> enabled.
+>>
+>> Reproduction Steps:
+>>
+>> 1. Have a git repo cloned from a perforce repo using multiple depot
+>paths (e.g. //depot/foo and //depot/bar).
+>> 2. Submit a single change to the perforce repo that makes changes in
+>both //depot/foo and //depot/bar.
+>> 3. Run "git p4 sync" to sync the change from #2.
+>>
+>> Change is synced as multiple commits, one for each depot path that
+>was affected.
+>>
+>> Using a set, instead of a list inside p4ChangesForPaths() ensures
+>that each changelist is unique to the returned list, and therefore only
+>a single commit is generated for each changelist.
 >
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
->  diff.c | 10 ++--------
->  1 file changed, 2 insertions(+), 8 deletions(-)
+>The change looks good to me apart from one missing "&&" in the test
+>case (see below).
 
-Although I do not think we should spend too much braincycles on this
-one (we should rather just removing the older one soonish), I think
-this patch is going in a wrong direction.  I agree that "the last
-one wins" is a bit hard to see (until you check with "git config -l"
-perhaps) but it at least is predictable.  With this patch, you need
-to KNOW that indent wins over compaction, perhaps by knowing the
-order they were developed, which demands a lot more from the users.
+Oops - I'll correct that and resubmit :)
 
-We probably should just keep one and remove the other.
+>Possibly need to rewrap the comment line (I think there's a 72
+>character limit) ?
 
-> diff --git a/diff.c b/diff.c
-> index ec8728362dae..48a5b2797e3d 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -223,16 +223,10 @@ void init_diff_ui_defaults(void)
->  
->  int git_diff_heuristic_config(const char *var, const char *value, void *cb)
->  {
-> +	if (!strcmp(var, "diff.indentheuristic"))
->  		diff_indent_heuristic = git_config_bool(var, value);
-> +	if (!strcmp(var, "diff.compactionheuristic"))
->  		diff_compaction_heuristic = git_config_bool(var, value);
->  	return 0;
->  }
+Sure - I'll fix that in the resubmission
+
+>
+>Luke
+>
+>
+>>
+>> Reported-by: James Farwell <jfarwell@vmware.com>
+>> Signed-off-by: George Vanburgh <gvanburgh@bloomberg.net>
+>> ---
+>>  git-p4.py               |  4 ++--
+>>  t/t9800-git-p4-basic.sh | 22 +++++++++++++++++++++-
+>>  2 files changed, 23 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/git-p4.py b/git-p4.py
+>> index fd5ca52..6307bc8 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -822,7 +822,7 @@ def p4ChangesForPaths(depotPaths, changeRange,
+>requestedBlockSize):
+>>                  die("cannot use --changes-block-size with
+>non-numeric revisions")
+>>              block_size = None
+>>
+>> -    changes = []
+>> +    changes = set()
+>>
+>>      # Retrieve changes a block at a time, to prevent running
+>>      # into a MaxResults/MaxScanRows error from the server.
+>> @@ -841,7 +841,7 @@ def p4ChangesForPaths(depotPaths, changeRange,
+>requestedBlockSize):
+>>
+>>          # Insert changes in chronological order
+>>          for line in reversed(p4_read_pipe_lines(cmd)):
+>> -            changes.append(int(line.split(" ")[1]))
+>> +            changes.add(int(line.split(" ")[1]))
+>>
+>>          if not block_size:
+>>              break
+>> diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+>> index 0730f18..4d72e0b 100755
+>> --- a/t/t9800-git-p4-basic.sh
+>> +++ b/t/t9800-git-p4-basic.sh
+>> @@ -131,6 +131,26 @@ test_expect_success 'clone two dirs, @all,
+>conflicting files' '
+>>         )
+>>  '
+>>
+>> +test_expect_success 'clone two dirs, each edited by submit, single
+>git commit' '
+>> +       (
+>> +               cd "$cli" &&
+>> +               echo sub1/f4 >sub1/f4 &&
+>> +               p4 add sub1/f4 &&
+>> +               echo sub2/f4 >sub2/f4 &&
+>> +               p4 add sub2/f4 &&
+>> +               p4 submit -d "sub1/f4 and sub2/f4"
+>> +       ) &&
+>> +       git p4 clone --dest="$git" //depot/sub1@all //depot/sub2@all
+>&&
+>> +       test_when_finished cleanup_git &&
+>> +       (
+>> +               cd "$git"
+>
+>Missing &&
+>
+>> +               git ls-files >lines &&
+>> +               test_line_count = 4 lines &&
+>> +               git log --oneline p4/master >lines &&
+>> +               test_line_count = 5 lines
+>> +       )
+>> +'
+>> +
+>>  revision_ranges="2000/01/01,#head \
+>>                  1,2080/01/01 \
+>>                  2000/01/01,2080/01/01 \
+>> @@ -147,7 +167,7 @@ test_expect_success 'clone using non-numeric
+>revision ranges' '
+>>                 (
+>>                         cd "$git" &&
+>>                         git ls-files >lines &&
+>> -                       test_line_count = 6 lines
+>> +                       test_line_count = 8 lines
+>>                 )
+>>         done
+>>  '
+>>
+>> --
+>> https://github.com/git/git/pull/311
+
