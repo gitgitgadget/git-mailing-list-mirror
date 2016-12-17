@@ -2,105 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0CF1FF6D
-	for <e@80x24.org>; Sat, 17 Dec 2016 08:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E26491FF6D
+	for <e@80x24.org>; Sat, 17 Dec 2016 11:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752224AbcLQIjF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 03:39:05 -0500
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:33461 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751522AbcLQIjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2016 03:39:04 -0500
-Received: by mail-yw0-f170.google.com with SMTP id r204so43148919ywb.0
-        for <git@vger.kernel.org>; Sat, 17 Dec 2016 00:39:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XmCc5UA1KdqXVwKIcdtMqcOFzyhKP58Jxxka1xySrL0=;
-        b=rJ1o0ee8pNsvexvVRYGEMk++EqxgECd22bS4P0UqBqrBI0cqvQ/8oDz6us/hWWn0/2
-         EbT2GMadvxEjXLt4gqls5qDsExrAx1qrZApBF0Ee4qan8lbTLaIwvQ5rvEG2euzc+Y+M
-         Heuh7T+Qaw21Q7331uUVVDR93H+fefu7Vg8O2bqu9ko9SPUjD6eBsHxq0Qa8HMRiNepR
-         AdLRRn4gSfjWsp+rW3s5m8CgBTWJK2u6QyXFuH6rFAGvjr/TFn49f56DSwuM1SeNsce+
-         j+2cPx19IZ2XkWRC+ywzegmmAYOAaQ9W5+af0MzM31WqMaB86O1HEnSEu35vGk1S2iWn
-         t4lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XmCc5UA1KdqXVwKIcdtMqcOFzyhKP58Jxxka1xySrL0=;
-        b=qO3tpf+QH5hEVAJd9EhRvVHKu+J4mjPEABvb7IWAku2SBzAEyRPxxwnpVjW4BtigYn
-         kGDdDg3Q48QA1TR9SeQnZ5KB8RJYA7bKXXsr4BDoPpzeVcR7Fu6sKeo0GslCwezhVQOZ
-         CwXnr4wL/bURZbaDZX7ko43GzJ2cArqXS8knFKPegAs9fnEUl7wyASFEoSIRfxvxqK4Y
-         wxjLdzbn3bbVwR47maODSFzVeZS0RyMk1ytlJKQCDQHr6irKz6h+F+A7I0vl789gqRg1
-         9xcJcH/s2JhFR2jqufNGSydsivuVEAbYN67z5/vh6POlBC8iriTnDeHI5v8/YPN0w8mA
-         ihCA==
-X-Gm-Message-State: AKaTC01v3vhycsD/bsPDmGlyhdGggZRZfPX6wbranhIRyF6lGR0fZGeOnF30K7Ke5IlrmN2eCoKd/a8lww0GHg==
-X-Received: by 10.129.62.24 with SMTP id l24mr5269193ywa.346.1481963943666;
- Sat, 17 Dec 2016 00:39:03 -0800 (PST)
+        id S1752381AbcLQL4X (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 06:56:23 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:58273 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751537AbcLQL4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2016 06:56:22 -0500
+Received: from PhilipOakley ([92.22.46.253])
+        by smtp.talktalk.net with SMTP
+        id IDb9c4ayQxR4bIDb9c9UmD; Sat, 17 Dec 2016 11:56:21 +0000
+X-Originating-IP: [92.22.46.253]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=HVo2oSqvnpFDrJ9/Aa7uoQ==:117
+ a=HVo2oSqvnpFDrJ9/Aa7uoQ==:17 a=8nJEP1OIZ-IA:10 a=QyXUC8HyAAAA:8
+ a=pGLkceISAAAA:8 a=aM8jztsd7vx8E5MsmZ8A:9 a=wPNLvfGTeEIA:10
+ a=avl4LiGQNoF5OB0DmCJ7:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <67572777448E4DCE967BA079110A3487@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jacob Keller" <jacob.e.keller@intel.com>, <git@vger.kernel.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Jacob Keller" <jacob.keller@gmail.com>
+References: <20161217012431.29548-1-jacob.e.keller@intel.com> <20161217012431.29548-2-jacob.e.keller@intel.com>
+Subject: Re: [PATCH v2 1/5] doc: add documentation for OPT_STRING_LIST
+Date:   Sat, 17 Dec 2016 11:56:19 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.129.19.214 with HTTP; Sat, 17 Dec 2016 00:38:33 -0800 (PST)
-In-Reply-To: <xmqqbmwbqw25.fsf@gitster.mtv.corp.google.com>
-References: <xmqqbmwbqw25.fsf@gitster.mtv.corp.google.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sat, 17 Dec 2016 14:08:33 +0530
-Message-ID: <CAOLa=ZREUWqdH_2HNn_JQcf4RW9k1dAN5BtwPN2HnzuDoUdkWw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2016, #04; Fri, 16)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfN0hq2Eu1IG7U8GguZHCooaClhcVPPFAAeeHPNaqvdZguwS8JD4T3vDyBxed+U635NGh7oZgbp035YqplHOdEBOe2NXvCXvlVFL3GuZovI9rllv/hYe/
+ 7krkXX0rNx25P+L5/twiCCJE4V4OcPmEk6ZS3vA8o6+XfIYEQDTRsftzUNhMHwg751OU0Y9paSogiKfTENjYvbpfh1DxasMSqGPijyqxTVI3FTk/rKAuRsgQ
+ PC5UFc+JGS4LsD0brT4//FJXqLbk9WnJJP88+0YuNQI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-
+From: "Jacob Keller" <jacob.e.keller@intel.com>
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> * kn/ref-filter-branch-list (2016-12-08) 20 commits
->  - branch: implement '--format' option
->  - branch: use ref-filter printing APIs
->  - branch, tag: use porcelain output
->  - ref-filter: allow porcelain to translate messages in the output
->  - ref-filter: add an 'rstrip=<N>' option to atoms which deal with refnames
->  - ref-filter: modify the 'lstrip=<N>' option to work with negative '<N>'
->  - ref-filter: rename the 'strip' option to 'lstrip'
->  - ref-filter: make remote_ref_atom_parser() use refname_atom_parser_internal()
->  - ref-filter: introduce refname_atom_parser()
->  - ref-filter: introduce refname_atom_parser_internal()
->  - ref-filter: make "%(symref)" atom work with the ':short' modifier
->  - ref-filter: add support for %(upstream:track,nobracket)
->  - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
->  - ref-filter: introduce format_ref_array_item()
->  - ref-filter: move get_head_description() from branch.c
->  - ref-filter: modify "%(objectname:short)" to take length
->  - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
->  - ref-filter: include reference to 'used_atom' within 'atom_value'
->  - ref-filter: implement %(if), %(then), and %(else) atoms
->  - for-each-ref: do not segv with %(HEAD) on an unborn branch
+> Commit c8ba16391655 ("parse-options: add OPT_STRING_LIST helper",
+> 2011-06-09) added the OPT_STRING_LIST as a way to accumulate a repeated
+> list of strings. However, this was not documented in the
+> api-parse-options documentation. Add documentation now so that future
+> developers may learn of its existence.
 >
->  The code to list branches in "git branch" has been consolidated
->  with the more generic ref-filter API.
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> Documentation/technical/api-parse-options.txt | 5 +++++
+> 1 file changed, 5 insertions(+)
 >
->  What's the doneness of the topic?  I recall discussing die vs empty
->  and also saw a "squash this in when you reroll", but I lost track.
+> diff --git a/Documentation/technical/api-parse-options.txt 
+> b/Documentation/technical/api-parse-options.txt
+> index 27bd701c0d68..92791740aa64 100644
+> --- a/Documentation/technical/api-parse-options.txt
+> +++ b/Documentation/technical/api-parse-options.txt
+> @@ -168,6 +168,11 @@ There are some macros to easily define options:
+>  Introduce an option with string argument.
+>  The string argument is put into `str_var`.
 >
+> +`OPT_STRING_LIST(short long, &list, arg_str, description)`::
 
-I was waiting for more reviews, if any.
-For now we need to come to a conclusion on the die vs empty discussion
-(http://marc.info/?l=git&m=148112502029302&w=2) I'll start working on returning
-empty rather than die.
+should there be an extra comma between 'short long' in a similar manner to 
+the OPT_INTEGER argument list below?
 
-Also Jeff suggested some changes, which I've incorporated into my local branch.
-(http://marc.info/?t=148112503600001&r=1&w=2). I'll reroll if no
-further changes are
-suggested soon :)
 
--- 
-Regards,
-Karthik Nayak
+> + Introduce an option with a string argument. Repeated invocations
+> + accumulate into a list of strings. Reset and clear the list with
+> + `--no-option`.
+> +
+> `OPT_INTEGER(short, long, &int_var, description)`::
+>  Introduce an option with integer argument.
+>  The integer is put into `int_var`.
+> -- 
+> 2.11.0.rc2.152.g4d04e67
+>
+> 
+
