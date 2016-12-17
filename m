@@ -2,68 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 997B41FF76
-	for <e@80x24.org>; Sat, 17 Dec 2016 13:28:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB621FF76
+	for <e@80x24.org>; Sat, 17 Dec 2016 13:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754300AbcLQN2n (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 08:28:43 -0500
-Received: from p3plsmtpa12-08.prod.phx3.secureserver.net ([68.178.252.237]:44642
-        "EHLO p3plsmtpa12-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752656AbcLQN2m (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 17 Dec 2016 08:28:42 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Dec 2016 08:28:42 EST
-Received: from wheezy.local ([82.181.81.240])
-        by :SMTPAUTH: with SMTP
-        id IEunc4LTDTStiIEuxcTrSO; Sat, 17 Dec 2016 06:20:53 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Karsten Blees <blees@dcon.de>
-Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org
-Subject: [PATCH] mingw: consider that UNICODE_STRING::Length counts bytes
-Date:   Sat, 17 Dec 2016 15:20:31 +0200
-Message-Id: <1481980831-18511-1-git-send-email-max@max630.net>
-X-Mailer: git-send-email 2.3.4.2801.g3d0809b
-X-CMAE-Envelope: MS4wfP/I5eB1CtwESMTm74jcey8cvLNCgWTDJA1cb2eJasGed+i+amCQkoooYjc7TbYUMRnifVTdIMDjaksiLLXz/S+5M9ytvwbS4MYz9hAKKTpSkMq6Uuhx
- FaFp71gBmBlB5G7Ow9Nckxi7qm/TDKoBaxBXgQA0sHMYBgdXO4hRn07VUbxoZ7Wk22rw5wwUdEqarQ5hzkQxiWJV48CVohSTfKbj1bf9ighUKO3a9q5KXFFo
- TV5QcOKSn+iIs56RZapTDbGmlJdYgvznI7fhqKmQglk=
+        id S1754079AbcLQNn0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 08:43:26 -0500
+Received: from avasout05.plus.net ([84.93.230.250]:44057 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751711AbcLQNnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2016 08:43:25 -0500
+Received: from [10.0.2.15] ([143.159.212.40])
+        by avasout05 with smtp
+        id M1jL1u0010srQBz011jMyk; Sat, 17 Dec 2016 13:43:22 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=ZKOnoTzb c=1 sm=1 tr=0
+ a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
+ a=IkcTkHD0fZMA:10 a=gu6fZOg2AAAA:8 a=MLNZb-YQqNZKZXsrJ4AA:9 a=QEXdDO2ut3YA:10
+ a=-FEs8UIgK8oA:10 a=NWVoK91CQyQA:10 a=2RSlZUUhi9gRBrsHwhhZ:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: What's cooking in git.git (Dec 2016, #04; Fri, 16)
+To:     Karthik Nayak <karthik.188@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqqbmwbqw25.fsf@gitster.mtv.corp.google.com>
+ <CAOLa=ZREUWqdH_2HNn_JQcf4RW9k1dAN5BtwPN2HnzuDoUdkWw@mail.gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <10d14d56-c7a0-ac31-ec57-a9ed163e1204@ramsayjones.plus.com>
+Date:   Sat, 17 Dec 2016 13:43:19 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
+MIME-Version: 1.0
+In-Reply-To: <CAOLa=ZREUWqdH_2HNn_JQcf4RW9k1dAN5BtwPN2HnzuDoUdkWw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-UNICODE_STRING::Length field means size of buffer in bytes[1], despite of buffer
-itself being array of wchar_t. Because of that terminating zero is placed twice
-as far. Fix it.
 
-[1] https://msdn.microsoft.com/en-us/library/windows/desktop/aa380518.aspx
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Access outside of buffer was very unlikely (for that user needed to redirect
-standard fd to a file with path longer than ~250 symbols), it still did not
-seem to do any harm, and otherwise it did not break because only substring is
-checked, but it was still incorrect.
- compat/winansi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 17/12/16 08:38, Karthik Nayak wrote:
+> Hello,
+> 
+>>
+>> * kn/ref-filter-branch-list (2016-12-08) 20 commits
+>>  - branch: implement '--format' option
+>>  - branch: use ref-filter printing APIs
+>>  - branch, tag: use porcelain output
+>>  - ref-filter: allow porcelain to translate messages in the output
+>>  - ref-filter: add an 'rstrip=<N>' option to atoms which deal with refnames
+>>  - ref-filter: modify the 'lstrip=<N>' option to work with negative '<N>'
+>>  - ref-filter: rename the 'strip' option to 'lstrip'
+>>  - ref-filter: make remote_ref_atom_parser() use refname_atom_parser_internal()
+>>  - ref-filter: introduce refname_atom_parser()
+>>  - ref-filter: introduce refname_atom_parser_internal()
+>>  - ref-filter: make "%(symref)" atom work with the ':short' modifier
+>>  - ref-filter: add support for %(upstream:track,nobracket)
+>>  - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
+>>  - ref-filter: introduce format_ref_array_item()
+>>  - ref-filter: move get_head_description() from branch.c
+>>  - ref-filter: modify "%(objectname:short)" to take length
+>>  - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
+>>  - ref-filter: include reference to 'used_atom' within 'atom_value'
+>>  - ref-filter: implement %(if), %(then), and %(else) atoms
+>>  - for-each-ref: do not segv with %(HEAD) on an unborn branch
+>>
+>>  The code to list branches in "git branch" has been consolidated
+>>  with the more generic ref-filter API.
+>>
+>>  What's the doneness of the topic?  I recall discussing die vs empty
+>>  and also saw a "squash this in when you reroll", but I lost track.
+>>
+> 
+> I was waiting for more reviews, if any.
+> For now we need to come to a conclusion on the die vs empty discussion
+> (http://marc.info/?l=git&m=148112502029302&w=2) I'll start working on returning
+> empty rather than die.
+> 
+> Also Jeff suggested some changes, which I've incorporated into my local branch.
+> (http://marc.info/?t=148112503600001&r=1&w=2). I'll reroll if no
+> further changes are
+> suggested soon :)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 3be60ce..6b4f736 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -553,7 +553,7 @@ static void detect_msys_tty(int fd)
- 			buffer, sizeof(buffer) - 2, &result)))
- 		return;
- 	name = nameinfo->Name.Buffer;
--	name[nameinfo->Name.Length] = 0;
-+	name[nameinfo->Name.Length / sizeof(*name)] = 0;
- 
- 	/* check if this could be a MSYS2 pty pipe ('msys-XXXX-ptyN-XX') */
- 	if (!wcsstr(name, L"msys-") || !wcsstr(name, L"-pty"))
--- 
-2.3.4.2801.g3d0809b
+Not forgetting to make 'quote_literal_for_format()' static. ;-)
+
+ATB,
+Ramsay Jones
+
 
