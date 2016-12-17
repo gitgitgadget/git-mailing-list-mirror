@@ -2,135 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 910A71FF40
-	for <e@80x24.org>; Sat, 17 Dec 2016 01:24:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4645E1FF40
+	for <e@80x24.org>; Sat, 17 Dec 2016 01:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758597AbcLQBYo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 20:24:44 -0500
-Received: from mga04.intel.com ([192.55.52.120]:43564 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758337AbcLQBYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 20:24:37 -0500
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga104.fm.intel.com with ESMTP; 16 Dec 2016 17:24:34 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.33,360,1477983600"; 
-   d="scan'208";a="1082903360"
-Received: from jekeller-desk.amr.corp.intel.com ([10.166.35.174])
-  by fmsmga001.fm.intel.com with ESMTP; 16 Dec 2016 17:24:34 -0800
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1759173AbcLQBbB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 20:31:01 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53618 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1758725AbcLQBbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 20:31:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C10E757544;
+        Fri, 16 Dec 2016 20:30:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=C5626TjSs1ntDPkKmw00ediqanA=; b=hSMAZw
+        RWWm6jR6RrPR7O3eJFmJY6cwd58aNVRe9xpYjCqgXAYGUXnUE5mKLoPlQtLJ7RJ2
+        hTZoyRtHI6NEgrlbMM7IVfVjjDwnfdxrPv4GoJycjoHwirpO2xPoxgJTX9VQ9zbW
+        hZGF8m5Tw1nadYXLKQiZt9575/WMPrURDRfMk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DDdnlHOhxTyFTKjlzZJ7I7pBKvlw/+S2
+        /ik+Ka/8JlnNpLFHNsqX/2os0X+GO7E79QfEd5DZo/wDxWenY1b6WEU+kI+3NOaZ
+        u/WHBnfGfPyrlin4Od9LB9gfatzRBqiZc8XQPGG7H0yF99dOM/ebvjTIoZTjn1N0
+        JXxQfkh0zss=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B85EA57542;
+        Fri, 16 Dec 2016 20:30:58 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35F3D57541;
+        Fri, 16 Dec 2016 20:30:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Norbert Kiesel <nkiesel@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2 5/5] describe: teach describe negative pattern matches
-Date:   Fri, 16 Dec 2016 17:24:31 -0800
-Message-Id: <20161217012431.29548-6-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.11.0.rc2.152.g4d04e67
-In-Reply-To: <20161217012431.29548-1-jacob.e.keller@intel.com>
-References: <20161217012431.29548-1-jacob.e.keller@intel.com>
+Subject: Re: [PATCH] diff: prefer indent heuristic over compaction heuristic
+References: <20161217005442.5866-1-jacob.e.keller@intel.com>
+Date:   Fri, 16 Dec 2016 17:30:57 -0800
+In-Reply-To: <20161217005442.5866-1-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Fri, 16 Dec 2016 16:54:42 -0800")
+Message-ID: <xmqq7f6zqr3i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 761E20D8-C3F8-11E6-AD8A-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Teach git-describe the `--discard` option which will allow specifying
-a glob pattern of tags to ignore. This can be combined with the
-`--match` patterns to enable more flexibility in determining which tags
-to consider.
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> The current configuration code for enabling experimental heuristics
+> prefers the last-set heuristic in the configuration. However, it is not
+> necessarily easy to see what order the configuration will be read. This
+> means that it is possible for a user to have accidentally enabled both
+> heuristics, and end up only enabling the older compaction heuristic.
+>
+> Modify the code so that we do not clear the other heuristic when we set
+> each heuristic enabled. Then, during diff_setup() when we check the
+> configuration, we will first check the newer indent heuristic. This
+> ensures that we only enable the newer heuristic if both have been
+> enabled.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>  diff.c | 10 ++--------
+>  1 file changed, 2 insertions(+), 8 deletions(-)
 
-For example, suppose you wish to find the first official release tag
-that contains a certain commit. If we assume that official release tags
-are of the form "v*" and pre-release candidates include "*rc*" in their
-name, we can now find the first tag that introduces commit abcdef via:
+Although I do not think we should spend too much braincycles on this
+one (we should rather just removing the older one soonish), I think
+this patch is going in a wrong direction.  I agree that "the last
+one wins" is a bit hard to see (until you check with "git config -l"
+perhaps) but it at least is predictable.  With this patch, you need
+to KNOW that indent wins over compaction, perhaps by knowing the
+order they were developed, which demands a lot more from the users.
 
-  git describe --contains --match="v*" --discard="*rc*"
+We probably should just keep one and remove the other.
 
-Add documentation and tests for this change.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/git-describe.txt |  8 ++++++++
- builtin/describe.c             | 21 +++++++++++++++++++++
- 2 files changed, 29 insertions(+)
-
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index 7ad41e2f6ade..a89bbde207b2 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -88,6 +88,14 @@ OPTIONS
- 	patterns will be considered. Use `--no-match` to clear and reset the
- 	list of patterns.
- 
-+--discard <pattern>::
-+	Do not consider tags matching the given `glob(7)` pattern, excluding
-+	the "refs/tags/" prefix. This can be used to narrow the tag space and
-+	find only tags matching some meaningful criteria. If given multiple
-+	times, a list of patterns will be accumulated and tags matching any
-+	of the patterns will be discarded. Use `--no-discard` to clear and
-+	reset the list of patterns.
-+
- --always::
- 	Show uniquely abbreviated commit object as fallback.
- 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 5cc9e9abe798..c09288ee6321 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -29,6 +29,7 @@ static int max_candidates = 10;
- static struct hashmap names;
- static int have_util;
- static struct string_list patterns = STRING_LIST_INIT_NODUP;
-+static struct string_list discard_patterns = STRING_LIST_INIT_NODUP;
- static int always;
- static const char *dirty;
- 
-@@ -130,6 +131,22 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
- 		return 0;
- 
- 	/*
-+	 * If we're given discard patterns, first discard any tag which match
-+	 * any of the discard pattern.
-+	 */
-+	if (discard_patterns.nr) {
-+		struct string_list_item *item;
-+
-+		if (!is_tag)
-+			return 0;
-+
-+		for_each_string_list_item(item, &discard_patterns) {
-+			if (!wildmatch(item->string, path + 10, 0, NULL))
-+				return 0;
-+		}
-+	}
-+
-+	/*
- 	 * If we're given patterns, accept only tags which match at least one
- 	 * pattern.
- 	 */
-@@ -421,6 +438,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			    N_("consider <n> most recent tags (default: 10)")),
- 		OPT_STRING_LIST(0, "match", &patterns, N_("pattern"),
- 			   N_("only consider tags matching <pattern>")),
-+		OPT_STRING_LIST(0, "discard", &discard_patterns, N_("pattern"),
-+			   N_("do not consider tags matching <pattern>")),
- 		OPT_BOOL(0, "always",        &always,
- 			N_("show abbreviated commit object as fallback")),
- 		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
-@@ -458,6 +477,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			argv_array_push(&args, "--tags");
- 			for_each_string_list_item(item, &patterns)
- 				argv_array_pushf(&args, "--refs=refs/tags/%s", item->string);
-+			for_each_string_list_item(item, &discard_patterns)
-+				argv_array_pushf(&args, "--discard=refs/tags/%s", item->string);
- 		}
- 		if (argc)
- 			argv_array_pushv(&args, argv);
--- 
-2.11.0.rc2.152.g4d04e67
-
+> diff --git a/diff.c b/diff.c
+> index ec8728362dae..48a5b2797e3d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -223,16 +223,10 @@ void init_diff_ui_defaults(void)
+>  
+>  int git_diff_heuristic_config(const char *var, const char *value, void *cb)
+>  {
+> +	if (!strcmp(var, "diff.indentheuristic"))
+>  		diff_indent_heuristic = git_config_bool(var, value);
+> +	if (!strcmp(var, "diff.compactionheuristic"))
+>  		diff_compaction_heuristic = git_config_bool(var, value);
+>  	return 0;
+>  }
