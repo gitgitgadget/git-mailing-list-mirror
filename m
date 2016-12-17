@@ -2,139 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB57D1FF76
-	for <e@80x24.org>; Sat, 17 Dec 2016 16:10:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F37FF1FF76
+	for <e@80x24.org>; Sat, 17 Dec 2016 19:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754218AbcLQQK5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 11:10:57 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33750 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752821AbcLQQK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2016 11:10:56 -0500
-Received: by mail-wm0-f68.google.com with SMTP id u144so10819259wmu.0
-        for <git@vger.kernel.org>; Sat, 17 Dec 2016 08:10:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7rcr9YQ3sTZGWtIwk9PR8lZDvDxhKfcg6bGazOWq5xw=;
-        b=L4nMgbAoO132XyRsMX2tl6Fi/3xMp3yy0T1SXBM3Htm4UvYVPhYs4j45K75UCxPmJV
-         Zphlm0Zv6YmDESgXhSyu7sl+ypzeA1mTn7sFgCo7w523SDRx8vo1WDyHzlq2CORidm9m
-         IJPp6kg+B2EVD1iEcIWffPnY6BmcSDphtOP08zL/VNg8f5OCEgBn0hUjzTdqm68qm8f4
-         Z1ghyC/jcaYb7lK/hMc4uBuXv6Npm1uwTDm9NQuAsaJgTLO+9z3S6pIEbArAR26EMvY2
-         670OwBr+SHa9mia69pMu6mdCFjaJ71v8Lo56OWM/nJt3JUjFwAsXXdPFpl2qSdCooMkB
-         M4ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7rcr9YQ3sTZGWtIwk9PR8lZDvDxhKfcg6bGazOWq5xw=;
-        b=VieCLspoUJBjdGsDSQhLDYk6nspteihapi0tGTEWoqz20O4E6m5OOATEOQ8q0fXjyS
-         Pk8UD7k0Yuc5Sj4C6VtOKURhcuUcLR5rWE+JDiNeD3hZeVi4VFkXkNY5uo/eJSC1xQzO
-         BqH7Fo8dXjtsuF4nvyf+gJL8x2VQaZqw86l8cYLXgqyYQwsrr1LfKsTadiHusugnIAn1
-         IVT43ASnLnbuaPmou38QeAZHI4bkbumf5iiBvOgc9cyrTFMFHiQd5FU8KHviXN5uM0Bc
-         GzB9Dso/SX/7Fql/b9YlpxuY6uJ9+bljxXznd7ECYBbol3GmRXZm3QQUS9pmjH5laght
-         qmzQ==
-X-Gm-Message-State: AIkVDXKanFa2mePCpi/SsUJoj6pPtIY/5PuxT+mu/ZTABVuX+ngSwr9S96+SlaKDX2fVwA==
-X-Received: by 10.28.215.6 with SMTP id o6mr7215309wmg.5.1481991054722;
-        Sat, 17 Dec 2016 08:10:54 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB5290.dip0.t-ipconnect.de. [93.219.82.144])
-        by smtp.gmail.com with ESMTPSA id g17sm12069595wjs.38.2016.12.17.08.10.53
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 17 Dec 2016 08:10:53 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: test failure
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <50C75781-FE3B-410F-9866-63342607707B@gmail.com>
-Date:   Sat, 17 Dec 2016 17:11:23 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B3D96792-047D-4C91-8DCC-60C800B2861B@gmail.com>
-References: <dd8decbc-f856-4f68-6d77-7ea9d5f9d126@ramsayjones.plus.com> <50C75781-FE3B-410F-9866-63342607707B@gmail.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S1753460AbcLQTmr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 14:42:47 -0500
+Received: from mout.gmx.net ([212.227.17.20]:63256 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750799AbcLQTmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2016 14:42:46 -0500
+Received: from [192.168.178.43] ([88.71.237.80]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC7em-1cRAZ82eAa-008rNp; Sat, 17
+ Dec 2016 20:42:42 +0100
+Subject: Re: [PATCH v15 08/27] bisect--helper: `is_expected_rev` &
+ `check_expected_revs` shell function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1ab6-bda8420e-9a63-47d7-9b99-47465b6333d9-000000@eu-west-1.amazonses.com>
+ <a4c7fec8-0e84-eb53-ca22-c369ce3facfa@gmx.net>
+ <CAFZEwPOZhO=sXLVwh03C8QN0uVXBUfb=xZ-JS003tgCNLgVOjg@mail.gmail.com>
+ <CAFZEwPO2WgBjOnmvu1VOiz3PMYYx2mxircCWk+BWxmuunC=VQA@mail.gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <22624028-b22d-5e4f-7101-c97e6e3e853c@gmx.net>
+Date:   Sat, 17 Dec 2016 20:42:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
+MIME-Version: 1.0
+In-Reply-To: <CAFZEwPO2WgBjOnmvu1VOiz3PMYYx2mxircCWk+BWxmuunC=VQA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:vCKva+lVUfra+j1Qqc3G7U2zQ/KvBE248AEipTs8jpJwoJ+GJN8
+ Fmwl6onGsPjOaaCRcvYZSV2wlJok8L+rItHJdwefEw0BnCmOb4KTJ2X4RBtrA3r9czVTpdd
+ kidPhsYJEJIAGmXbSkj2zrfACqabum2scd/PqtbNTkk9tYsDpSmaJfqjuKKRMt1K5g4sJWh
+ XboCaArgqU7OArNx8+42A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bOGYREQfK+g=:GFskoWOC26usRW2FreQxBJ
+ nxT9XweY8dO5+ZCePNlRoHVXZThwqeGN/yt6B091WHf8R/uHknzHEC9GjfZGU7Nw0b4Sj5ptB
+ ozQQK0D2+46DE9YOtdTFhzwoI+WeOC8mAWwvsEv1sYYV/bZg8bOBuJWjVdOu/8fytcdI1d6Wl
+ Qp3ZRcmnUgmQVA5RgUNC67aDwwJeydqua22d4SArYqFQBE2O8kIIBHdv996k7v8fnvnejajzW
+ aVTnFrLvfe62cWXrPVH2NpzanOW8GFoLURASxNuyxKV3m8zeFrCMxGy4ayFz6LbHVby1qyvAo
+ P0x/vRoRt2WUq/q9LXl4MRTBiQy4VYf6tcxpAhSp3TD7gH9vhkNLFw91Q2D06+s5Pyv0vKjk6
+ JJq34ijA/UugvBq9aXgWlfpBDdAe/DTOO/D6hhVwXxEZ7qqKlC/lLfx68yDEQKX1TeiIkCvvz
+ akYI6l9dvun7YYvCaqV2qNxT2eu8am4WQlJEdQJ4ekZPtOilWKf84nBW6z+lckyzXeCLqX3oK
+ uvZc4VJ5WUdREjxMsxdz2q5QdBfucALF2bfs13KfL8aamdxs8LqL+/KqEkn2djqQhfdVKoQ3E
+ zHEavDXMviHhf/kU/bzZuNw1aRzUb6El9P+F6riv2ezvVCkLs2iXJfr53MoNZGqJZtB1cSt3h
+ ESH7F8ksliEQVz1M//2p+JQKd4nEidhjVBvUfAE6k55JSP22XTGpm8EizciGu+skLArWA4ORM
+ SHv5joN8xtH0Bt1bIH4az0gCHd25e75ASJ2o5N4WMDNmoMFkbZuzUlF0xZmn65ecLkpsS5Cu8
+ TRt6VZ7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Pranit,
 
-> On 17 Dec 2016, at 15:28, Lars Schneider <larsxschneider@gmail.com> =
-wrote:
->=20
->=20
->> On 16 Dec 2016, at 21:32, Ramsay Jones <ramsay@ramsayjones.plus.com> =
-wrote:
->>=20
->> Hi Lars,
->>=20
->> For the last two days, I've noticed t0021.15 on the 'pu' branch has =
-been failing intermittently (well it fails with: 'make test >ptest-out', =
-but
->> when run by hand, it fails only say 1-in-6, 1-in-18, etc.).
->>=20
->> [yes, it's a bit strange; this hasn't changed in a couple of weeks!]
->>=20
->> I don't have time to investigate further tonight and, since I had not
->> heard anyone else complain, I thought I should let you know.
->>=20
->> See below for the output from a failing run. [Note: this is on Linux
->> Mint 18, tonight's pu branch @7c7984401].
->=20
-> Thanks Ramsay!=20
->=20
-> I was able to reproduce the problem with this test:
->=20
-> 	test_expect_success 'ramsay-report' '
-> 		test_config_global filter.protocol.clean cat &&
-> 		git init &&
-> 		echo "*.r filter=3Dprotocol" >.gitattributes &&
-> 		echo "bla" >test.r &&
-> 		git add . &&
-> 		GIT_TRACE=3D1 git commit -m "test commit 2" > trace 2>&1 =
-&&
-> 		grep "run_command" trace
-> 	'
->=20
-> It looks like as if Git occasionally forgets to run the clean filter.
-> I bisected the problem and I think the problem starts with "diff: do =
-not=20
-> reuse worktree files that need "clean" conversion" (06dec439a3) which
-> definitively sounds related.
->=20
-> Back in June I reported that Git invokes the clean process 4 times if =
-a
-> single file is added. Peff took a closer look and suggested the patch
-> mentioned above to remove one unnecessary invocation. I re-read his =
-comments
-> and everything sounds still reasonable to me:
-> =
-http://public-inbox.org/git/1469134747-26785-1-git-send-email-larsxschneid=
-er@gmail.com/#t
->=20
-> Does anyone have a clue what is going on?=20
-> I keep digging...
+On 12/16/2016 08:00 PM, Pranit Bauva wrote:
+> On Wed, Dec 7, 2016 at 1:03 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>> I don't understand why the return value is int and not void. To avoid a
+>>> "return 0;" line when calling this function?
+>>
+>> Initially I thought I would be using the return value but now I
+>> realize that it is meaningless to do so. Using void seems better. :)
+> 
+> I just recollected when I was creating the next iteration of this
+> series that I will need that int.
+> 
+>>>> +     case CHECK_EXPECTED_REVS:
+>>>> +             return check_expected_revs(argv, argc);
+> 
+> See this.
 
-Ugh. I stopped coding, started cleaning the house, and it hit me:
-"git commit" shouldn't call the filter anyways. I suspect it is called =
-in
-my tests because I add and commit the file to the index right after its=20=
+This does not show that you need the "int", it just shows that you use
+the return value of the function. But this return value is (in the
+original shell code as well as in your v15) always 0. That is a sign
+that the "void" return value makes more sense. Of course, then the line
+above must be changed to
 
-creation. All this usually happens within 1 second and therefore Git =
-cannot
-know if the file was modified between "add" and "commit". That's why it =
-needs
-to run "clean" again.
++     case CHECK_EXPECTED_REVS:
++             check_expected_revs(argv, argc);
++             return 0;
 
-I will adjust the tests.
+By the way, it also seems that the original function name
+"check_expected_revs" was not the best choice (because the function
+always returns 0, but the "check" implies that some semantically true or
+false is returned).
+On the other hand, it might also be useful (I cannot tell) to return
+different values in check_expected_revs() — to signal the caller that
+something changed or something did not change — but then ignore the
+return value.
 
-Cheers,
-Lars=
+Best
+  Stephan
