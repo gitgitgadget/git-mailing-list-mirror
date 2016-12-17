@@ -2,413 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF7201FF76
-	for <e@80x24.org>; Sat, 17 Dec 2016 15:35:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB57D1FF76
+	for <e@80x24.org>; Sat, 17 Dec 2016 16:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755784AbcLQPft (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 10:35:49 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:35387 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753430AbcLQPfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2016 10:35:48 -0500
-Received: by mail-lf0-f68.google.com with SMTP id p100so3768149lfg.2
-        for <git@vger.kernel.org>; Sat, 17 Dec 2016 07:35:47 -0800 (PST)
+        id S1754218AbcLQQK5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 11:10:57 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33750 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752821AbcLQQK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2016 11:10:56 -0500
+Received: by mail-wm0-f68.google.com with SMTP id u144so10819259wmu.0
+        for <git@vger.kernel.org>; Sat, 17 Dec 2016 08:10:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N4f4Jcg6SsML/xw2QGRp0FMRh5xV79r8zLyr9UykhHA=;
-        b=EL7rVT3tCU+y6RR/tnhARQa/i/2tmdnZGm5o4lYiGPqHbEcEScaBQolWbTyoyrkCf0
-         8Jp9f+YKoOQfP3M7wVbAXF80OAL3bowYH3eCZQqAky3UZTBn/sVFnH9igSZcr1EBqHEw
-         hWff6GbpuWR3HfBJZFCvHItB6Dco1CzxIll8Ja7sQo2b2zPBpHA4qOGmTO473dnw2k4O
-         FX0W9o1xK1+sNO17Xu8+lh9G480fEL0Aa6ZNqTU7/yfI0r3oIStIsDjAJ24KQJVCLQrt
-         HF7lvPCfMWV1YkTPSKw2l3lD1vR1AUvMbQiRM9PdcyzLZ452d5Jud17/I5NP0HR4pZ4T
-         Y0yw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=7rcr9YQ3sTZGWtIwk9PR8lZDvDxhKfcg6bGazOWq5xw=;
+        b=L4nMgbAoO132XyRsMX2tl6Fi/3xMp3yy0T1SXBM3Htm4UvYVPhYs4j45K75UCxPmJV
+         Zphlm0Zv6YmDESgXhSyu7sl+ypzeA1mTn7sFgCo7w523SDRx8vo1WDyHzlq2CORidm9m
+         IJPp6kg+B2EVD1iEcIWffPnY6BmcSDphtOP08zL/VNg8f5OCEgBn0hUjzTdqm68qm8f4
+         Z1ghyC/jcaYb7lK/hMc4uBuXv6Npm1uwTDm9NQuAsaJgTLO+9z3S6pIEbArAR26EMvY2
+         670OwBr+SHa9mia69pMu6mdCFjaJ71v8Lo56OWM/nJt3JUjFwAsXXdPFpl2qSdCooMkB
+         M4ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N4f4Jcg6SsML/xw2QGRp0FMRh5xV79r8zLyr9UykhHA=;
-        b=dtcJ+HelJiiRh8jY8UnSFgL0t3YwjCgcSgSVMK+vMkrYjyjygcrLYjb6Gv5EuN+j4m
-         PibUAKeqYesQzkFhjucG7eZdIzwAVWvY6T2Gj+eXhUZPpwvMDFeNr9PdqV4WtTmtmZUM
-         NFqkvyyH3j2nzj3cufnoYN9Z7Sl1WShbHJHA21y9yTkpuLP7tXGXiarq1mk3BBy4Gtga
-         M8RN5MRx1jftXjJKfO7OqNJS+NlozIU7Mej05rlG8X4Jc9hDdSDcopYlu1ZOPtgdCOtO
-         MLWQOKOV/wEgdpHMYvDsSvQL/6widp+Iu/mnaaAu1J9esD8MhlJC95RN59BVuteLe78U
-         5ZhA==
-X-Gm-Message-State: AIkVDXJie2EfQnl8JpHSkRCJkfsa45AEaw3nxoFe4TKFmv4AxIUsfrlwPd+IlmK03sEQSni1k5XFkI09JAbRSg==
-X-Received: by 10.46.7.18 with SMTP id 18mr3447672ljh.30.1481988946261; Sat,
- 17 Dec 2016 07:35:46 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.221.217 with HTTP; Sat, 17 Dec 2016 07:35:45 -0800 (PST)
-In-Reply-To: <20161217145547.11748-1-chriscool@tuxfamily.org>
-References: <20161217145547.11748-1-chriscool@tuxfamily.org>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 17 Dec 2016 16:35:45 +0100
-Message-ID: <CAP8UFD0Z7UquU0qiGq9y5AXtR-BiMEme9i=MnKRRzD_zyDpdzA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/21] Add configuration options for split-index
-To:     git <git@vger.kernel.org>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=7rcr9YQ3sTZGWtIwk9PR8lZDvDxhKfcg6bGazOWq5xw=;
+        b=VieCLspoUJBjdGsDSQhLDYk6nspteihapi0tGTEWoqz20O4E6m5OOATEOQ8q0fXjyS
+         Pk8UD7k0Yuc5Sj4C6VtOKURhcuUcLR5rWE+JDiNeD3hZeVi4VFkXkNY5uo/eJSC1xQzO
+         BqH7Fo8dXjtsuF4nvyf+gJL8x2VQaZqw86l8cYLXgqyYQwsrr1LfKsTadiHusugnIAn1
+         IVT43ASnLnbuaPmou38QeAZHI4bkbumf5iiBvOgc9cyrTFMFHiQd5FU8KHviXN5uM0Bc
+         GzB9Dso/SX/7Fql/b9YlpxuY6uJ9+bljxXznd7ECYBbol3GmRXZm3QQUS9pmjH5laght
+         qmzQ==
+X-Gm-Message-State: AIkVDXKanFa2mePCpi/SsUJoj6pPtIY/5PuxT+mu/ZTABVuX+ngSwr9S96+SlaKDX2fVwA==
+X-Received: by 10.28.215.6 with SMTP id o6mr7215309wmg.5.1481991054722;
+        Sat, 17 Dec 2016 08:10:54 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB5290.dip0.t-ipconnect.de. [93.219.82.144])
+        by smtp.gmail.com with ESMTPSA id g17sm12069595wjs.38.2016.12.17.08.10.53
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 17 Dec 2016 08:10:53 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: test failure
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <50C75781-FE3B-410F-9866-63342607707B@gmail.com>
+Date:   Sat, 17 Dec 2016 17:11:23 +0100
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B3D96792-047D-4C91-8DCC-60C800B2861B@gmail.com>
+References: <dd8decbc-f856-4f68-6d77-7ea9d5f9d126@ramsayjones.plus.com> <50C75781-FE3B-410F-9866-63342607707B@gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The previous versions were:
->
->   RFC: https://github.com/chriscool/git/commits/config-split-index7
->   v1:  https://github.com/chriscool/git/commits/config-split-index72
 
-The diff since v1 is:
+> On 17 Dec 2016, at 15:28, Lars Schneider <larsxschneider@gmail.com> =
+wrote:
+>=20
+>=20
+>> On 16 Dec 2016, at 21:32, Ramsay Jones <ramsay@ramsayjones.plus.com> =
+wrote:
+>>=20
+>> Hi Lars,
+>>=20
+>> For the last two days, I've noticed t0021.15 on the 'pu' branch has =
+been failing intermittently (well it fails with: 'make test >ptest-out', =
+but
+>> when run by hand, it fails only say 1-in-6, 1-in-18, etc.).
+>>=20
+>> [yes, it's a bit strange; this hasn't changed in a couple of weeks!]
+>>=20
+>> I don't have time to investigate further tonight and, since I had not
+>> heard anyone else complain, I thought I should let you know.
+>>=20
+>> See below for the output from a failing run. [Note: this is on Linux
+>> Mint 18, tonight's pu branch @7c7984401].
+>=20
+> Thanks Ramsay!=20
+>=20
+> I was able to reproduce the problem with this test:
+>=20
+> 	test_expect_success 'ramsay-report' '
+> 		test_config_global filter.protocol.clean cat &&
+> 		git init &&
+> 		echo "*.r filter=3Dprotocol" >.gitattributes &&
+> 		echo "bla" >test.r &&
+> 		git add . &&
+> 		GIT_TRACE=3D1 git commit -m "test commit 2" > trace 2>&1 =
+&&
+> 		grep "run_command" trace
+> 	'
+>=20
+> It looks like as if Git occasionally forgets to run the clean filter.
+> I bisected the problem and I think the problem starts with "diff: do =
+not=20
+> reuse worktree files that need "clean" conversion" (06dec439a3) which
+> definitively sounds related.
+>=20
+> Back in June I reported that Git invokes the clean process 4 times if =
+a
+> single file is added. Peff took a closer look and suggested the patch
+> mentioned above to remove one unnecessary invocation. I re-read his =
+comments
+> and everything sounds still reasonable to me:
+> =
+http://public-inbox.org/git/1469134747-26785-1-git-send-email-larsxschneid=
+er@gmail.com/#t
+>=20
+> Does anyone have a clue what is going on?=20
+> I keep digging...
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8fbef25cb1..52a3cac4ff 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2782,9 +2782,9 @@ splitIndex.sharedIndexExpire::
-     index file is created. The value "now" expires all entries
-     immediately, and "never" suppresses expiration altogether.
-     The default value is "one.week.ago".
--    Note that each time a new split-index file is created, the
--    mtime of the related shared index file is updated to the
--    current time.
-+    Note that each time a split index based on a shared index file
-+    is either created or read from, the mtime of the shared index
-+    file is updated to the current time.
-     See linkgit:git-update-index[1].
+Ugh. I stopped coding, started cleaning the house, and it hit me:
+"git commit" shouldn't call the filter anyways. I suspect it is called =
+in
+my tests because I add and commit the file to the index right after its=20=
 
- status.relativePaths::
-diff --git a/Documentation/git-update-index.txt
-b/Documentation/git-update-index.txt
-index 635d1574b2..46c953b2f2 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -407,10 +407,14 @@ specified by the splitIndex.maxPercentChange
-config variable (see
- linkgit:git-config[1]).
+creation. All this usually happens within 1 second and therefore Git =
+cannot
+know if the file was modified between "add" and "commit". That's why it =
+needs
+to run "clean" again.
 
- Each time a new shared index file is created, the old shared index
--files are deleted if they are older than what is specified by the
--splitIndex.sharedIndexExpire config variable (see
-+files are deleted if their mtime is older than what is specified by
-+the splitIndex.sharedIndexExpire config variable (see
- linkgit:git-config[1]).
+I will adjust the tests.
 
-+To avoid deleting a shared index file that is still used, its mtime is
-+updated to the current time everytime a new split index based on the
-+shared index file is either created or read from.
-+
- Untracked cache
- ---------------
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c1e9602892..1e40d45aa2 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -100,8 +100,8 @@ static void gc_config(void)
-     git_config_get_int("gc.auto", &gc_auto_threshold);
-     git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
-     git_config_get_bool("gc.autodetach", &detach_auto);
--    git_config_get_date_string("gc.pruneexpire", &prune_expire);
--    git_config_get_date_string("gc.worktreepruneexpire",
-&prune_worktrees_expire);
-+    git_config_get_expiry("gc.pruneexpire", &prune_expire);
-+    git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
-     git_config(git_default_config, NULL);
- }
-
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index a14dbf2612..dc1fd0d44d 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1099,18 +1099,18 @@ int cmd_update_index(int argc, const char
-**argv, const char *prefix)
-
-     if (split_index > 0) {
-         if (git_config_get_split_index() == 0)
--            warning("core.splitIndex is set to false; "
--                "remove or change it, if you really want to "
--                "enable split index");
-+            warning(_("core.splitIndex is set to false; "
-+                  "remove or change it, if you really want to "
-+                  "enable split index"));
-         if (the_index.split_index)
-             the_index.cache_changed |= SPLIT_INDEX_ORDERED;
-         else
-             add_split_index(&the_index);
-     } else if (!split_index) {
-         if (git_config_get_split_index() == 1)
--            warning("core.splitIndex is set to true; "
--                "remove or change it, if you really want to "
--                "disable split index");
-+            warning(_("core.splitIndex is set to true; "
-+                  "remove or change it, if you really want to "
-+                  "disable split index"));
-         remove_split_index(&the_index);
-     }
-
-diff --git a/cache.h b/cache.h
-index 8e26aaf05e..279415afbd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1823,11 +1823,13 @@ extern int git_config_get_bool(const char
-*key, int *dest);
- extern int git_config_get_bool_or_int(const char *key, int *is_bool,
-int *dest);
- extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest);
--extern int git_config_get_date_string(const char *key, const char **output);
- extern int git_config_get_untracked_cache(void);
- extern int git_config_get_split_index(void);
- extern int git_config_get_max_percent_split_change(void);
-
-+/* This dies if the configured or default date is in the future */
-+extern int git_config_get_expiry(const char *key, const char **output);
-+
- /*
-  * This is a hack for test programs like test-dump-untracked-cache to
-  * ensure that they do not modify the untracked cache when reading it.
-diff --git a/config.c b/config.c
-index f88c61bb30..5c52cefd78 100644
---- a/config.c
-+++ b/config.c
-@@ -1685,7 +1685,7 @@ int git_config_get_pathname(const char *key,
-const char **dest)
-     return ret;
- }
-
--int git_config_get_date_string(const char *key, const char **output)
-+int git_config_get_expiry(const char *key, const char **output)
- {
-     int ret = git_config_get_string_const(key, output);
-     if (ret)
-@@ -1714,8 +1714,8 @@ int git_config_get_untracked_cache(void)
-         if (!strcasecmp(v, "keep"))
-             return -1;
-
--        error("unknown core.untrackedCache value '%s'; "
--              "using 'keep' default value", v);
-+        error(_("unknown core.untrackedCache value '%s'; "
-+            "using 'keep' default value"), v);
-         return -1;
-     }
-
-@@ -1740,9 +1740,8 @@ int git_config_get_max_percent_split_change(void)
-         if (0 <= val && val <= 100)
-             return val;
-
--        error("splitindex.maxpercentchange value '%d' "
--              "should be between 0 and 100", val);
--        return -1;
-+        return error(_("splitIndex.maxPercentChange value '%d' "
-+                   "should be between 0 and 100"), val);
-     }
-
-     return -1; /* default value */
-diff --git a/read-cache.c b/read-cache.c
-index 9727efcb5b..35377f0a3e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1685,10 +1685,25 @@ int do_read_index(struct index_state *istate,
-const char *path, int must_exist)
-     die("index file corrupt");
- }
-
-+/*
-+ * Signal that the shared index is used by updating its mtime.
-+ *
-+ * This way, shared index can be removed if they have not been used
-+ * for some time. It's ok to fail to update the mtime if we are on a
-+ * read only file system.
-+ */
-+void freshen_shared_index(char *base_sha1_hex)
-+{
-+    const char *shared_index = git_path("sharedindex.%s", base_sha1_hex);
-+    check_and_freshen_file(shared_index, 1);
-+}
-+
- int read_index_from(struct index_state *istate, const char *path)
- {
-     struct split_index *split_index;
-     int ret;
-+    char *base_sha1_hex;
-+    const char *base_path;
-
-     /* istate->initialized covers both .git/index and .git/sharedindex.xxx */
-     if (istate->initialized)
-@@ -1706,15 +1721,16 @@ int read_index_from(struct index_state
-*istate, const char *path)
-         discard_index(split_index->base);
-     else
-         split_index->base = xcalloc(1, sizeof(*split_index->base));
--    ret = do_read_index(split_index->base,
--                git_path("sharedindex.%s",
--                     sha1_to_hex(split_index->base_sha1)), 1);
-+
-+    base_sha1_hex = sha1_to_hex(split_index->base_sha1);
-+    base_path = git_path("sharedindex.%s", base_sha1_hex);
-+    ret = do_read_index(split_index->base, base_path, 1);
-     if (hashcmp(split_index->base_sha1, split_index->base->sha1))
-         die("broken index, expect %s in %s, got %s",
--            sha1_to_hex(split_index->base_sha1),
--            git_path("sharedindex.%s",
--                 sha1_to_hex(split_index->base_sha1)),
-+            base_sha1_hex, base_path,
-             sha1_to_hex(split_index->base->sha1));
-+
-+    freshen_shared_index(base_sha1_hex);
-     merge_base_index(istate);
-     post_read_index_from(istate);
-     return ret;
-@@ -2205,8 +2221,8 @@ static unsigned long get_shared_index_expire_date(void)
-     static int shared_index_expire_date_prepared;
-
-     if (!shared_index_expire_date_prepared) {
--        git_config_get_date_string("splitindex.sharedindexexpire",
--                       &shared_index_expire);
-+        git_config_get_expiry("splitindex.sharedindexexpire",
-+                      &shared_index_expire);
-         shared_index_expire_date = approxidate(shared_index_expire);
-         shared_index_expire_date_prepared = 1;
-     }
-@@ -2225,22 +2241,20 @@ static int can_delete_shared_index(const char
-*shared_sha1_hex)
-     if (!expiration)
-         return 0;
-     if (stat(shared_index, &st))
--        return error_errno("could not stat '%s", shared_index);
-+        return error_errno(_("could not stat '%s"), shared_index);
-     if (st.st_mtime > expiration)
-         return 0;
-
-     return 1;
- }
-
--static void clean_shared_index_files(const char *current_hex)
-+static int clean_shared_index_files(const char *current_hex)
- {
-     struct dirent *de;
-     DIR *dir = opendir(get_git_dir());
-
--    if (!dir) {
--        error_errno("unable to open git dir: %s", get_git_dir());
--        return;
--    }
-+    if (!dir)
-+        return error_errno(_("unable to open git dir: %s"), get_git_dir());
-
-     while ((de = readdir(dir)) != NULL) {
-         const char *sha1_hex;
-@@ -2250,9 +2264,11 @@ static void clean_shared_index_files(const char
-*current_hex)
-             continue;
-         if (can_delete_shared_index(sha1_hex) > 0 &&
-             unlink(git_path("%s", de->d_name)))
--            error_errno("unable to unlink: %s", git_path("%s", de->d_name));
-+            error_errno(_("unable to unlink: %s"), git_path("%s", de->d_name));
-     }
-     closedir(dir);
-+
-+    return 0;
- }
-
- static struct tempfile temporary_sharedindex;
-@@ -2286,7 +2302,7 @@ static int write_shared_index(struct index_state *istate,
-
- static const int default_max_percent_split_change = 20;
-
--int too_many_not_shared_entries(struct index_state *istate)
-+static int too_many_not_shared_entries(struct index_state *istate)
- {
-     int i, not_shared = 0;
-     int max_split = git_config_get_max_percent_split_change();
-@@ -2331,17 +2347,14 @@ int write_locked_index(struct index_state
-*istate, struct lock_file *lock,
-         if ((v & 15) < 6)
-             istate->cache_changed |= SPLIT_INDEX_ORDERED;
-     }
--    if (istate->cache_changed & SPLIT_INDEX_ORDERED ||
--        too_many_not_shared_entries(istate)) {
-+    if (too_many_not_shared_entries(istate))
-+        istate->cache_changed |= SPLIT_INDEX_ORDERED;
-+    if (istate->cache_changed & SPLIT_INDEX_ORDERED) {
-         int ret = write_shared_index(istate, lock, flags);
-         if (ret)
-             return ret;
-     } else {
--        /* Signal that the shared index is used */
--        const char *shared_index = git_path("sharedindex.%s",
--                            sha1_to_hex(si->base_sha1));
--        if (!check_and_freshen_file(shared_index, 1))
--            warning("could not freshen '%s'", shared_index);
-+        freshen_shared_index(sha1_to_hex(si->base_sha1));
-     }
-
-     return write_split_index(istate, lock, flags);
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index f448fc13cd..800f84a593 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -313,17 +313,17 @@ EOF
- test_expect_success 'shared index files expire after 7 days by default' '
-     : >ten &&
-     git update-index --add ten &&
--    test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
-+    test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
-     just_under_7_days_ago=$((1-7*86400)) &&
-     test-chmtime =$just_under_7_days_ago .git/sharedindex.* &&
-     : >eleven &&
-     git update-index --add eleven &&
--    test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
-+    test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
-     just_over_7_days_ago=$((-1-7*86400)) &&
-     test-chmtime =$just_over_7_days_ago .git/sharedindex.* &&
-     : >twelve &&
-     git update-index --add twelve &&
--    test $(ls .git/sharedindex.* | wc -l) = 1
-+    test $(ls .git/sharedindex.* | wc -l) -le 2
- '
-
- test_expect_success 'check splitIndex.sharedIndexExpire set to 8 days' '
-@@ -331,12 +331,12 @@ test_expect_success 'check
-splitIndex.sharedIndexExpire set to 8 days' '
-     test-chmtime =$just_over_7_days_ago .git/sharedindex.* &&
-     : >thirteen &&
-     git update-index --add thirteen &&
--    test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
-+    test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
-     just_over_8_days_ago=$((-1-8*86400)) &&
-     test-chmtime =$just_over_8_days_ago .git/sharedindex.* &&
-     : >fourteen &&
-     git update-index --add fourteen &&
--    test $(ls .git/sharedindex.* | wc -l) = 1
-+    test $(ls .git/sharedindex.* | wc -l) -le 2
- '
-
- test_expect_success 'check splitIndex.sharedIndexExpire set to
-"never" and "now"' '
-@@ -345,13 +345,13 @@ test_expect_success 'check
-splitIndex.sharedIndexExpire set to "never" and "now"
-     test-chmtime =$just_10_years_ago .git/sharedindex.* &&
-     : >fifteen &&
-     git update-index --add fifteen &&
--    test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
-+    test $(ls .git/sharedindex.* | wc -l) -gt 2 &&
-     git config splitIndex.sharedIndexExpire now &&
-     just_1_second_ago=-1 &&
-     test-chmtime =$just_1_second_ago .git/sharedindex.* &&
-     : >sixteen &&
-     git update-index --add sixteen &&
--    test $(ls .git/sharedindex.* | wc -l) = 1
-+    test $(ls .git/sharedindex.* | wc -l) -le 2
- '
-
- test_done
+Cheers,
+Lars=
