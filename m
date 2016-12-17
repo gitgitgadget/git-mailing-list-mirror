@@ -1,97 +1,122 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN:  
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB621FF76
-	for <e@80x24.org>; Sat, 17 Dec 2016 13:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD051FF76
+	for <e@80x24.org>; Sat, 17 Dec 2016 14:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754079AbcLQNn0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Dec 2016 08:43:26 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:44057 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751711AbcLQNnZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2016 08:43:25 -0500
-Received: from [10.0.2.15] ([143.159.212.40])
-        by avasout05 with smtp
-        id M1jL1u0010srQBz011jMyk; Sat, 17 Dec 2016 13:43:22 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=ZKOnoTzb c=1 sm=1 tr=0
- a=8Z0saNXTz8GoXi/9Q5ysMA==:117 a=8Z0saNXTz8GoXi/9Q5ysMA==:17
- a=IkcTkHD0fZMA:10 a=gu6fZOg2AAAA:8 a=MLNZb-YQqNZKZXsrJ4AA:9 a=QEXdDO2ut3YA:10
- a=-FEs8UIgK8oA:10 a=NWVoK91CQyQA:10 a=2RSlZUUhi9gRBrsHwhhZ:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: What's cooking in git.git (Dec 2016, #04; Fri, 16)
-To:     Karthik Nayak <karthik.188@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <xmqqbmwbqw25.fsf@gitster.mtv.corp.google.com>
- <CAOLa=ZREUWqdH_2HNn_JQcf4RW9k1dAN5BtwPN2HnzuDoUdkWw@mail.gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <10d14d56-c7a0-ac31-ec57-a9ed163e1204@ramsayjones.plus.com>
-Date:   Sat, 17 Dec 2016 13:43:19 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <CAOLa=ZREUWqdH_2HNn_JQcf4RW9k1dAN5BtwPN2HnzuDoUdkWw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S1754612AbcLQO2R (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Dec 2016 09:28:17 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35998 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752377AbcLQO2Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2016 09:28:16 -0500
+Received: by mail-wm0-f65.google.com with SMTP id m203so10474053wma.3
+        for <git@vger.kernel.org>; Sat, 17 Dec 2016 06:28:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Pvjs9AErOC72910fXZquA4B/ovQzU/b+IInD6LgzDKk=;
+        b=WyfK+z0eyoJz5jKV7i0bjTKa6fZGmuxEu9oOcEOLJDdHPUc2a04reiXlKbZvNkQPx9
+         EO1FHWXWwowUpOiQuSA0b/9OZw2p6VIUYc7LnUmBJEg0Jc6/olrhgUSJ18kdeEmdjfXF
+         7Etjdp0T2nhpX3/PiBy+V8XHShFEIZyG8JQA8LuJz3Pgjrxz1zAlmkYpRKo2x2TU/MDr
+         8ZHvSu5/8rwRW8sKxzSwoDsb5PFT3Cxr+47TLFY6PTcGVtDQC6fyCWTxR/kAuiZC/FOm
+         1c1VZj+1xUXlKf5ot0kpw0yPEQpKXTMMinzu4T7+e/O+sIxekhnXzBmCvnVhgfX9JNXF
+         UnyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Pvjs9AErOC72910fXZquA4B/ovQzU/b+IInD6LgzDKk=;
+        b=C592mwvZZSpph6N9bWX5eV32Choe48Mk/nYgqWHxNxpQprT1a9OO+fypabfp283+EE
+         YWkh9xT2J2fb/QI3PM30Pg0hgPjefIIuu7C/nr3tR//5e7w2qUBO44nUEInrCTEcNkOS
+         LSU7Qf5UbnMVMFWnuwNVfGmShNWUMVb13/9VIKLQfpH0YBu/c8mc2ojsImt/HrheIELT
+         q3MzRegCGYZQXeBfGYIdSxKOk1DRuVtXv56eLBnXTlzQ6ME/YXTaGU03dp30tgQIZDXd
+         1EI6t/jVpjkwZA/oAJGoOB5fTtKmy8uEp86JJyZ85GbCqMnwx3T2XMHEMti++UFCGj45
+         fVXg==
+X-Gm-Message-State: AIkVDXJPPQXumyK4DbmnlKVaMy7d0cxuwtvGiwY1epmeSL7lZiOmbImxGttOHE2ovnC8WA==
+X-Received: by 10.28.58.14 with SMTP id h14mr7609805wma.7.1481984894662;
+        Sat, 17 Dec 2016 06:28:14 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB5290.dip0.t-ipconnect.de. [93.219.82.144])
+        by smtp.gmail.com with ESMTPSA id y4sm11730580wjp.0.2016.12.17.06.28.13
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 17 Dec 2016 06:28:14 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: test failure
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <dd8decbc-f856-4f68-6d77-7ea9d5f9d126@ramsayjones.plus.com>
+Date:   Sat, 17 Dec 2016 15:28:43 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <50C75781-FE3B-410F-9866-63342607707B@gmail.com>
+References: <dd8decbc-f856-4f68-6d77-7ea9d5f9d126@ramsayjones.plus.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+> On 16 Dec 2016, at 21:32, Ramsay Jones <ramsay@ramsayjones.plus.com> =
+wrote:
+>=20
+> Hi Lars,
+>=20
+> For the last two days, I've noticed t0021.15 on the 'pu' branch has =
+been failing intermittently (well it fails with: 'make test >ptest-out', =
+but
+> when run by hand, it fails only say 1-in-6, 1-in-18, etc.).
+>=20
+> [yes, it's a bit strange; this hasn't changed in a couple of weeks!]
+>=20
+> I don't have time to investigate further tonight and, since I had not
+> heard anyone else complain, I thought I should let you know.
+>=20
+> See below for the output from a failing run. [Note: this is on Linux
+> Mint 18, tonight's pu branch @7c7984401].
 
-On 17/12/16 08:38, Karthik Nayak wrote:
-> Hello,
-> 
->>
->> * kn/ref-filter-branch-list (2016-12-08) 20 commits
->>  - branch: implement '--format' option
->>  - branch: use ref-filter printing APIs
->>  - branch, tag: use porcelain output
->>  - ref-filter: allow porcelain to translate messages in the output
->>  - ref-filter: add an 'rstrip=<N>' option to atoms which deal with refnames
->>  - ref-filter: modify the 'lstrip=<N>' option to work with negative '<N>'
->>  - ref-filter: rename the 'strip' option to 'lstrip'
->>  - ref-filter: make remote_ref_atom_parser() use refname_atom_parser_internal()
->>  - ref-filter: introduce refname_atom_parser()
->>  - ref-filter: introduce refname_atom_parser_internal()
->>  - ref-filter: make "%(symref)" atom work with the ':short' modifier
->>  - ref-filter: add support for %(upstream:track,nobracket)
->>  - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
->>  - ref-filter: introduce format_ref_array_item()
->>  - ref-filter: move get_head_description() from branch.c
->>  - ref-filter: modify "%(objectname:short)" to take length
->>  - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
->>  - ref-filter: include reference to 'used_atom' within 'atom_value'
->>  - ref-filter: implement %(if), %(then), and %(else) atoms
->>  - for-each-ref: do not segv with %(HEAD) on an unborn branch
->>
->>  The code to list branches in "git branch" has been consolidated
->>  with the more generic ref-filter API.
->>
->>  What's the doneness of the topic?  I recall discussing die vs empty
->>  and also saw a "squash this in when you reroll", but I lost track.
->>
-> 
-> I was waiting for more reviews, if any.
-> For now we need to come to a conclusion on the die vs empty discussion
-> (http://marc.info/?l=git&m=148112502029302&w=2) I'll start working on returning
-> empty rather than die.
-> 
-> Also Jeff suggested some changes, which I've incorporated into my local branch.
-> (http://marc.info/?t=148112503600001&r=1&w=2). I'll reroll if no
-> further changes are
-> suggested soon :)
+Thanks Ramsay!=20
 
-Not forgetting to make 'quote_literal_for_format()' static. ;-)
+I was able to reproduce the problem with this test:
 
-ATB,
-Ramsay Jones
+	test_expect_success 'ramsay-report' '
+		test_config_global filter.protocol.clean cat &&
+		git init &&
+		echo "*.r filter=3Dprotocol" >.gitattributes &&
+		echo "bla" >test.r &&
+		git add . &&
+		GIT_TRACE=3D1 git commit -m "test commit 2" > trace 2>&1 =
+&&
+		grep "run_command" trace
+	'
 
+It looks like as if Git occasionally forgets to run the clean filter.
+I bisected the problem and I think the problem starts with "diff: do not=20=
 
+reuse worktree files that need "clean" conversion" (06dec439a3) which
+definitively sounds related.
+
+Back in June I reported that Git invokes the clean process 4 times if a
+single file is added. Peff took a closer look and suggested the patch
+mentioned above to remove one unnecessary invocation. I re-read his =
+comments
+and everything sounds still reasonable to me:
+=
+http://public-inbox.org/git/1469134747-26785-1-git-send-email-larsxschneid=
+er@gmail.com/#t
+
+Does anyone have a clue what is going on?=20
+I keep digging...
+
+Thanks,
+Lars=20=
