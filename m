@@ -2,196 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA0971FF40
-	for <e@80x24.org>; Sat, 17 Dec 2016 02:25:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80F781FF40
+	for <e@80x24.org>; Sat, 17 Dec 2016 04:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934983AbcLQCZN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Dec 2016 21:25:13 -0500
-Received: from mail-wj0-f177.google.com ([209.85.210.177]:33878 "EHLO
-        mail-wj0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934965AbcLQCZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2016 21:25:11 -0500
-Received: by mail-wj0-f177.google.com with SMTP id tg4so106676985wjb.1
-        for <git@vger.kernel.org>; Fri, 16 Dec 2016 18:25:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vanburgh.me; s=google;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=ZNtByHul1SXKazWYEeSZF/G+avd04rgqnav/SDdppAM=;
-        b=Fo3HyyrbokqrRT8TP+ooB2bPrUmMcR/zaXHWBY+NfA57vPSqhPjdo9Vu7WpoIhpP2x
-         wkCMR9GLbQVx+mWpBiTSHDjoxGHL+gyI7Oskpb8tGUpqaH3kWA8pq2+yCV7NcFfhZ6Z5
-         adLlqdG0rz4TnH7iTuiE45N9uhHm7sLFAk7Fg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=ZNtByHul1SXKazWYEeSZF/G+avd04rgqnav/SDdppAM=;
-        b=LXrBvyspQd6udU8KrNmmBTYtQqXUl1RIX0Q8/Z3f9+eSk5hBMyH+O8kPwSt0MjbIsF
-         LGxoKLwIvqO0u9OCsTxz4xnBQ4ZCnBHFz44uHtsgjAMFywrNwg87VS1uO1NV6C4JyvQc
-         RxMNZhmhaPnNGiGkjBlBQeRRqVtBcSeBtlAv1U3nU/MlU6rJtJkOi78/2SJqpD93bO3R
-         pw21gMA76mT8t7PNLy/gl+UPR9MyBDFQH5YJaSYpuK3yKU1MHAeMzTRVnlDpt5dbGPMs
-         CBMvgThI5xe2a9vLg+ZYbG/e7LFrg7pWjOlfr8JsX3e0V4e8Jy6B0X51lArDYvA1bDtV
-         FwTg==
-X-Gm-Message-State: AIkVDXLkEhN31MtZpcP1Vsjx1RBXHw28DWH5mdykvBbSW9mgbdmSL6hfnHUyqgpGqEYq8Q==
-X-Received: by 10.194.177.231 with SMTP id ct7mr5105292wjc.221.1481941509708;
-        Fri, 16 Dec 2016 18:25:09 -0800 (PST)
-Received: from [10.146.153.89] (92.40.248.113.threembb.co.uk. [92.40.248.113])
-        by smtp.gmail.com with ESMTPSA id f10sm9315609wjl.28.2016.12.16.18.25.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Dec 2016 18:25:09 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAE5ih7-+tahL4=OrW6F6UPKKRg1KFkw32e=pnTx6j2WTZ-BhOw@mail.gmail.com>
-References: <01020159037a8995-2d1da9d4-4a27-4b98-818b-432fc0ad8a52-000000@eu-west-1.amazonses.com> <CAE5ih7-+tahL4=OrW6F6UPKKRg1KFkw32e=pnTx6j2WTZ-BhOw@mail.gmail.com>
+        id S1753440AbcLQEEb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Dec 2016 23:04:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57905 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752223AbcLQEEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Dec 2016 23:04:30 -0500
+Received: (qmail 6372 invoked by uid 109); 17 Dec 2016 04:04:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 17 Dec 2016 04:04:30 +0000
+Received: (qmail 16429 invoked by uid 111); 17 Dec 2016 04:05:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Dec 2016 23:05:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2016 23:04:26 -0500
+Date:   Fri, 16 Dec 2016 23:04:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pack-objects: don't warn about bitmaps on incremental
+ pack
+Message-ID: <20161217040426.7qeixbihiou5mbsl@sigill.intra.peff.net>
+References: <20161216214906.z53yp2x4n6hdc27m@sigill.intra.peff.net>
+ <1481932775-12952-1-git-send-email-dturner@twosigma.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain;
- charset=UTF-8
-Subject: Re: [PATCH] git-p4: Fix multi-path changelist empty commits
-From:   George Vanburgh <george@vanburgh.me>
-Date:   Sat, 17 Dec 2016 03:25:03 +0100
-To:     Luke Diamand <luke@diamand.org>
-CC:     Git Users <git@vger.kernel.org>
-Message-ID: <2BE8EE6F-F718-475A-A2BA-483F39F5B9A0@vanburgh.me>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1481932775-12952-1-git-send-email-dturner@twosigma.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Dec 16, 2016 at 06:59:35PM -0500, David Turner wrote:
 
+> When running git pack-objects --incremental, we do not expect to be
+> able to write a bitmap; it is very likely that objects in the new pack
+> will have references to objects outside of the pack.  So we don't need
+> to warn the user about it.
+> [...]
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 0fd52bd..96de213 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1083,7 +1083,8 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>  	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset)) {
+>  		/* The pack is missing an object, so it will not have closure */
+>  		if (write_bitmap_index) {
+> -			warning(_(no_closure_warning));
+> +			if (!incremental)
+> +				warning(_(no_closure_warning));
+>  			write_bitmap_index = 0;
+>  		}
+>  		return 0;
 
-On 17 December 2016 01:47:55 CET, Luke Diamand <luke@diamand.org> wrote:
->On 15 December 2016 at 17:14, George Vanburgh <george@vanburgh.me>
->wrote:
->> From: George Vanburgh <gvanburgh@bloomberg.net>
->>
->> When importing from multiple perforce paths - we may attempt to
->import a changelist that contains files from two (or more) of these
->depot paths. Currently, this results in multiple git commits - one
->containing the changes, and the other(s) as empty commits. This
->behavior was introduced in commit 1f90a64 ("git-p4: reduce number of
->server queries for fetches", 2015-12-19).
->
->That's definitely a bug, thanks for spotting that! Even more so for
->adding a test case.
+I agree that the user doesn't need to be warned about it when running
+"gc --auto", but I wonder if somebody invoking "pack-objects
+--incremental --write-bitmap-index" ought to be.
 
-Not a problem - thanks to you guys for maintaining such an awesome tool!
+In other words, your patch is detecting at a low level that we've been
+given a nonsense combination of options, but should we perhaps stop
+passing nonsense in the first place?
 
->
->>
->> Reproduction Steps:
->>
->> 1. Have a git repo cloned from a perforce repo using multiple depot
->paths (e.g. //depot/foo and //depot/bar).
->> 2. Submit a single change to the perforce repo that makes changes in
->both //depot/foo and //depot/bar.
->> 3. Run "git p4 sync" to sync the change from #2.
->>
->> Change is synced as multiple commits, one for each depot path that
->was affected.
->>
->> Using a set, instead of a list inside p4ChangesForPaths() ensures
->that each changelist is unique to the returned list, and therefore only
->a single commit is generated for each changelist.
->
->The change looks good to me apart from one missing "&&" in the test
->case (see below).
+Either at the repack level, with something like:
 
-Oops - I'll correct that and resubmit :)
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 80dd06b4a2..6608a902b1 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -231,8 +231,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		argv_array_pushf(&cmd.args, "--no-reuse-delta");
+ 	if (no_reuse_object)
+ 		argv_array_pushf(&cmd.args, "--no-reuse-object");
+-	if (write_bitmaps)
+-		argv_array_push(&cmd.args, "--write-bitmap-index");
+ 
+ 	if (pack_everything & ALL_INTO_ONE) {
+ 		get_non_kept_pack_filenames(&existing_packs);
+@@ -256,8 +254,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	} else {
+ 		argv_array_push(&cmd.args, "--unpacked");
+ 		argv_array_push(&cmd.args, "--incremental");
++		write_bitmap_index = 0;
+ 	}
+ 
++	if (write_bitmaps)
++		argv_array_push(&cmd.args, "--write-bitmap-index");
+ 	if (local)
+ 		argv_array_push(&cmd.args,  "--local");
+ 	if (quiet)
 
->Possibly need to rewrap the comment line (I think there's a 72
->character limit) ?
+Though that still means we do not warn on:
 
-Sure - I'll fix that in the resubmission
+  git repack --write-bitmap-index
 
->
->Luke
->
->
->>
->> Reported-by: James Farwell <jfarwell@vmware.com>
->> Signed-off-by: George Vanburgh <gvanburgh@bloomberg.net>
->> ---
->>  git-p4.py               |  4 ++--
->>  t/t9800-git-p4-basic.sh | 22 +++++++++++++++++++++-
->>  2 files changed, 23 insertions(+), 3 deletions(-)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index fd5ca52..6307bc8 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -822,7 +822,7 @@ def p4ChangesForPaths(depotPaths, changeRange,
->requestedBlockSize):
->>                  die("cannot use --changes-block-size with
->non-numeric revisions")
->>              block_size = None
->>
->> -    changes = []
->> +    changes = set()
->>
->>      # Retrieve changes a block at a time, to prevent running
->>      # into a MaxResults/MaxScanRows error from the server.
->> @@ -841,7 +841,7 @@ def p4ChangesForPaths(depotPaths, changeRange,
->requestedBlockSize):
->>
->>          # Insert changes in chronological order
->>          for line in reversed(p4_read_pipe_lines(cmd)):
->> -            changes.append(int(line.split(" ")[1]))
->> +            changes.add(int(line.split(" ")[1]))
->>
->>          if not block_size:
->>              break
->> diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
->> index 0730f18..4d72e0b 100755
->> --- a/t/t9800-git-p4-basic.sh
->> +++ b/t/t9800-git-p4-basic.sh
->> @@ -131,6 +131,26 @@ test_expect_success 'clone two dirs, @all,
->conflicting files' '
->>         )
->>  '
->>
->> +test_expect_success 'clone two dirs, each edited by submit, single
->git commit' '
->> +       (
->> +               cd "$cli" &&
->> +               echo sub1/f4 >sub1/f4 &&
->> +               p4 add sub1/f4 &&
->> +               echo sub2/f4 >sub2/f4 &&
->> +               p4 add sub2/f4 &&
->> +               p4 submit -d "sub1/f4 and sub2/f4"
->> +       ) &&
->> +       git p4 clone --dest="$git" //depot/sub1@all //depot/sub2@all
->&&
->> +       test_when_finished cleanup_git &&
->> +       (
->> +               cd "$git"
->
->Missing &&
->
->> +               git ls-files >lines &&
->> +               test_line_count = 4 lines &&
->> +               git log --oneline p4/master >lines &&
->> +               test_line_count = 5 lines
->> +       )
->> +'
->> +
->>  revision_ranges="2000/01/01,#head \
->>                  1,2080/01/01 \
->>                  2000/01/01,2080/01/01 \
->> @@ -147,7 +167,7 @@ test_expect_success 'clone using non-numeric
->revision ranges' '
->>                 (
->>                         cd "$git" &&
->>                         git ls-files >lines &&
->> -                       test_line_count = 6 lines
->> +                       test_line_count = 8 lines
->>                 )
->>         done
->>  '
->>
->> --
->> https://github.com/git/git/pull/311
+which is nonsense (it is asking for an incremental repack with bitmaps).
 
+So maybe do it at the gc level, like:
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 069950d0b4..d3c978c765 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -191,6 +191,11 @@ static void add_repack_all_option(void)
+ 	}
+ }
+ 
++static void add_repack_incremental_option(void)
++{
++	argv_array_push(&repack, "--no-write-bitmap-index");
++}
++
+ static int need_to_gc(void)
+ {
+ 	/*
+@@ -208,7 +213,9 @@ static int need_to_gc(void)
+ 	 */
+ 	if (too_many_packs())
+ 		add_repack_all_option();
+-	else if (!too_many_loose_objects())
++	else if (too_many_loose_objects())
++		add_repack_incremental_option();
++	else
+ 		return 0;
+ 
+ 	if (run_hook_le(NULL, "pre-auto-gc", NULL))
+
+-Peff
