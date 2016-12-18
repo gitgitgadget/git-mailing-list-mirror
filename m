@@ -2,98 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 586781FF6D
-	for <e@80x24.org>; Sun, 18 Dec 2016 12:18:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A5F31FF6D
+	for <e@80x24.org>; Sun, 18 Dec 2016 12:20:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760810AbcLRMRd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Dec 2016 07:17:33 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33352 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760585AbcLRMRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2016 07:17:32 -0500
-Received: by mail-pg0-f68.google.com with SMTP id g1so3490048pgn.0
-        for <git@vger.kernel.org>; Sun, 18 Dec 2016 04:17:32 -0800 (PST)
+        id S1760349AbcLRMTv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Dec 2016 07:19:51 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36111 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755883AbcLRMTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2016 07:19:50 -0500
+Received: by mail-pg0-f67.google.com with SMTP id a1so8257150pgf.3
+        for <git@vger.kernel.org>; Sun, 18 Dec 2016 04:19:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=86Xk2NFQZfrppdnIr0TcNaSqdQcrUoAI95Hghe0Jz90=;
-        b=sJXSZNHtmQqRtRQJaCZfGFjVh3Bg0Jc8nsK0IJnLhqgee2QhtAMzwkVGAtFFVyLElZ
-         lDAAa1ANbYyah+osNW06Ybfb6y6/sgkXljVmVrE4qtQ6/PqElykf6Xu/6eBeo6c2HOtE
-         +m1JNoFgAX9Awr0yMU8ShhsldtvYshasxsmttk6aj3GOR9HZVKRfAXQGAOY2agi+3RMv
-         5TyLQPAZFa0D/sLjCoIYqfuOfpOJPk3r5df2omcfVmhEE/OC/Q5eFZJRZjjPafVJQwXz
-         vl05YR/FHOK0BwQNfH7URBPdvMYBTCWZVZunK7fgUgOz6hAjxvZAYMZHhK8kQIPt7jQO
-         Mgqw==
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=xfKI6+1SsDK8zF+cEHrChWb4IUHnNgxCe2hkQhFlt0c=;
+        b=Ezm13kJdm1ONBy/QlY9jwHRy+dCCZsN0Uj1dCAw2mjwJyqd+FxsEsN6Xyc28/covZf
+         XW3msk/N/bhcP/9uywPF6mktxvxTPomKeY5fXKpU0LZsRQmuXlNYFusYFKdpQ8Fok1vi
+         pD9edOVI2Nu6suLRTlKV1uIQXZAgSuVySmGoqzrhcsYZc9g7FmYf2x+eQCwXdAsF+mEG
+         5qHcUkwlCpBNfhJ7zB3o0KWXHMyz3ZvxKEI9dm9jRTwMN2ah8hWfTJw7LtG4HwCLKNCp
+         H6NMHReD1s/VJlrY/6nA9LoghlXxGU8I8nOmqY2wvHOuIgsda+vIpLrQ0H56peAP6len
+         q41g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=86Xk2NFQZfrppdnIr0TcNaSqdQcrUoAI95Hghe0Jz90=;
-        b=RLh3cKqSeB4n2pM3Kpt5QLavwUr+p953KaEBlxuqcgRo+y/IlH2JbDfHxGvn6vYvzQ
-         QMuNEqfnG8kaGrjXCwNg9K/46KxRriahBYvrKV6c5WiTnmTmwfjMCokt2vTw/8LWjsO+
-         ejScqCxSIKXXvGb1uvmC8EkiQhDyiAjkk7eItlZXJIBWe5+g01jzyLq9qqCmAhrCyYma
-         wUFusGWQ32wLh/VVEgP5qmnijAyz02xi3BNQiMQqjAHP0FXP1N/xzDJb59SLoVkrrCn7
-         X/91eufFpc2aFB9zkdJuZ+4L0dFd+DvG8CCs2a126L5pCDZIpGBfnNDjEl7EuR3XjgyG
-         sPfw==
-X-Gm-Message-State: AIkVDXIw/J0Lk7GMC+G4KPkW/kyUWckG24sHRgAH9XSTWo29QY/ehnnbzCpgZwgsFLkFXg==
-X-Received: by 10.99.143.72 with SMTP id r8mr4784694pgn.128.1482063451507;
-        Sun, 18 Dec 2016 04:17:31 -0800 (PST)
-Received: from unique-pc ([14.102.13.66])
-        by smtp.googlemail.com with ESMTPSA id y29sm24135859pfd.63.2016.12.18.04.17.29
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 18 Dec 2016 04:17:31 -0800 (PST)
-Message-ID: <1482063500.10858.1.camel@gmail.com>
-Subject: Suggestion for the "Did you mean this?" feature
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     git@vger.kernel.org
-Date:   Sun, 18 Dec 2016 17:48:20 +0530
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.2-1 
-Mime-Version: 1.0
+        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=xfKI6+1SsDK8zF+cEHrChWb4IUHnNgxCe2hkQhFlt0c=;
+        b=pEMVWiymEU+tcIiiiNj4ZjdZwTPIkO6ePnLFL6UGCS16bQGbdn4zN2hsERJkFMcdcB
+         bkS50Eg6lhBr7tlECTerkAEYMrjeuPJKfDkEOlXqrzk7TStAOf4ALGoz8SQwquoq0OtT
+         ts2FReQOXG51l05wIwnHKsn1gzFnieVtp+otCibANQv8kwA0Ax5kQmVzCdFySVgWRRXi
+         B0SyOuTV29iYYpTnSB+idVVQQ4+U83qLoxgsf+ZuZYs0UHjASj9MHAhBn+ivzhbYOnA2
+         Dfo8JcDzn+iNtDvILNgjwKtdymG45WFoDQVBzamgRe3y/VG7P205JUYsWBUPNjc0E4Sr
+         oZEg==
+X-Gm-Message-State: AKaTC03uuf1JL46aWlisfNYcyj21AFehAy1OJ4WpygjBNReI3qfkO5GSpZ0yuFuTj5iy0Q==
+X-Received: by 10.84.218.8 with SMTP id q8mr24906400pli.138.1482063589935;
+        Sun, 18 Dec 2016 04:19:49 -0800 (PST)
+Received: from android-57455bc40c756945 (50-39-169-1.bvtn.or.frontiernet.net. [50.39.169.1])
+        by smtp.gmail.com with ESMTPSA id 2sm24322910pgy.27.2016.12.18.04.19.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Dec 2016 04:19:49 -0800 (PST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <67572777448E4DCE967BA079110A3487@PhilipOakley>
+References: <20161217012431.29548-1-jacob.e.keller@intel.com> <20161217012431.29548-2-jacob.e.keller@intel.com> <67572777448E4DCE967BA079110A3487@PhilipOakley>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Content-Type: text/plain;
+ charset=UTF-8
+Subject: Re: [PATCH v2 1/5] doc: add documentation for OPT_STRING_LIST
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 18 Dec 2016 04:19:38 -0800
+To:     Philip Oakley <philipoakley@iee.org>,
+        Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+CC:     Junio C Hamano <gitster@pobox.com>
+Message-ID: <E9C90A8A-8D05-4357-BCEF-AAFAE16225CC@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+On December 17, 2016 3:56:19 AM PST, Philip Oakley <philipoakley@iee.org> wrote:
+>From: "Jacob Keller" <jacob.e.keller@intel.com>
+>> From: Jacob Keller <jacob.keller@gmail.com>
+>>
+>> Commit c8ba16391655 ("parse-options: add OPT_STRING_LIST helper",
+>> 2011-06-09) added the OPT_STRING_LIST as a way to accumulate a
+>repeated
+>> list of strings. However, this was not documented in the
+>> api-parse-options documentation. Add documentation now so that future
+>> developers may learn of its existence.
+>>
+>> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+>> ---
+>> Documentation/technical/api-parse-options.txt | 5 +++++
+>> 1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/technical/api-parse-options.txt 
+>> b/Documentation/technical/api-parse-options.txt
+>> index 27bd701c0d68..92791740aa64 100644
+>> --- a/Documentation/technical/api-parse-options.txt
+>> +++ b/Documentation/technical/api-parse-options.txt
+>> @@ -168,6 +168,11 @@ There are some macros to easily define options:
+>>  Introduce an option with string argument.
+>>  The string argument is put into `str_var`.
+>>
+>> +`OPT_STRING_LIST(short long, &list, arg_str, description)`::
+>
+>should there be an extra comma between 'short long' in a similar manner
+>to 
+>the OPT_INTEGER argument list below?
+>
+>
 
-I have found the "Did you mean this?" feature of git as a very good
-feature. I thought it would be even better if it took a step toward by
-asking for a prompt when there was only one alternative to the command
-that was entered. 
+You are indeed correct sir. I will fix this up.
 
-E.g.
+Thanks,
+Jake
 
-> unique@unique-pc:~$ git hepl
-> git: 'hepl' is not a git command. See 'git --help'.
-> 
-> Did you mean this?
-> 	help
-> [yes/No] : y
-> usage: git [--version] [--help] [-C <path>] [-c name=value]
->            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-
-> path]
-> ....
-
-This would make it even better for the user as it would avoid having to
-correct the mistake long commands that had only a single error
-(considering history feature is enabled). 
-
-Is this is a good idea ?
-
-
--- 
-
-
-Regards,
-Kaartic
