@@ -2,105 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A5F31FF6D
-	for <e@80x24.org>; Sun, 18 Dec 2016 12:20:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85D9C1FF6D
+	for <e@80x24.org>; Sun, 18 Dec 2016 12:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760349AbcLRMTv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Dec 2016 07:19:51 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36111 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755883AbcLRMTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2016 07:19:50 -0500
-Received: by mail-pg0-f67.google.com with SMTP id a1so8257150pgf.3
-        for <git@vger.kernel.org>; Sun, 18 Dec 2016 04:19:50 -0800 (PST)
+        id S932306AbcLRMhZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Dec 2016 07:37:25 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35618 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751389AbcLRMhX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2016 07:37:23 -0500
+Received: by mail-wm0-f68.google.com with SMTP id a20so13792296wme.2
+        for <git@vger.kernel.org>; Sun, 18 Dec 2016 04:37:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=xfKI6+1SsDK8zF+cEHrChWb4IUHnNgxCe2hkQhFlt0c=;
-        b=Ezm13kJdm1ONBy/QlY9jwHRy+dCCZsN0Uj1dCAw2mjwJyqd+FxsEsN6Xyc28/covZf
-         XW3msk/N/bhcP/9uywPF6mktxvxTPomKeY5fXKpU0LZsRQmuXlNYFusYFKdpQ8Fok1vi
-         pD9edOVI2Nu6suLRTlKV1uIQXZAgSuVySmGoqzrhcsYZc9g7FmYf2x+eQCwXdAsF+mEG
-         5qHcUkwlCpBNfhJ7zB3o0KWXHMyz3ZvxKEI9dm9jRTwMN2ah8hWfTJw7LtG4HwCLKNCp
-         H6NMHReD1s/VJlrY/6nA9LoghlXxGU8I8nOmqY2wvHOuIgsda+vIpLrQ0H56peAP6len
-         q41g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=fSEr7RB3qwm9OCXP4f4d1jWOnnPtpD2n55d1q1fdtN4=;
+        b=u2bpZ93hTcRPdb0lsaGLUoN8JlNdJtvRalsC6VtA+P5o4gVxodDCYINU14XsJlCX4n
+         oZYLxCMM/8BJfFLbsgEOqptfw4Mb9e6rKs44aIcLb6nLLJeCzNYx+Y4r8wS7OMqSEaKi
+         s6XCkiNs/UKYs7fxyNIuQxj7a4P9IwjWWMEz6C6/4vr4M9AazchG8oFIokFrEzRnHwJ/
+         3ddkl01Y8AXiYL3xURfgdg5JHcuta2+Nwb9D4VJ4yAa3sAxdEbc3syNYqa1rQynvhapF
+         dH2Wcsyup/p2vyQr7+i1w5Oo57obRMbVeu5njOMQnnP6sGbRebPf9Bc55rWvGisa6ugW
+         YDrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=xfKI6+1SsDK8zF+cEHrChWb4IUHnNgxCe2hkQhFlt0c=;
-        b=pEMVWiymEU+tcIiiiNj4ZjdZwTPIkO6ePnLFL6UGCS16bQGbdn4zN2hsERJkFMcdcB
-         bkS50Eg6lhBr7tlECTerkAEYMrjeuPJKfDkEOlXqrzk7TStAOf4ALGoz8SQwquoq0OtT
-         ts2FReQOXG51l05wIwnHKsn1gzFnieVtp+otCibANQv8kwA0Ax5kQmVzCdFySVgWRRXi
-         B0SyOuTV29iYYpTnSB+idVVQQ4+U83qLoxgsf+ZuZYs0UHjASj9MHAhBn+ivzhbYOnA2
-         Dfo8JcDzn+iNtDvILNgjwKtdymG45WFoDQVBzamgRe3y/VG7P205JUYsWBUPNjc0E4Sr
-         oZEg==
-X-Gm-Message-State: AKaTC03uuf1JL46aWlisfNYcyj21AFehAy1OJ4WpygjBNReI3qfkO5GSpZ0yuFuTj5iy0Q==
-X-Received: by 10.84.218.8 with SMTP id q8mr24906400pli.138.1482063589935;
-        Sun, 18 Dec 2016 04:19:49 -0800 (PST)
-Received: from android-57455bc40c756945 (50-39-169-1.bvtn.or.frontiernet.net. [50.39.169.1])
-        by smtp.gmail.com with ESMTPSA id 2sm24322910pgy.27.2016.12.18.04.19.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Dec 2016 04:19:49 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <67572777448E4DCE967BA079110A3487@PhilipOakley>
-References: <20161217012431.29548-1-jacob.e.keller@intel.com> <20161217012431.29548-2-jacob.e.keller@intel.com> <67572777448E4DCE967BA079110A3487@PhilipOakley>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain;
- charset=UTF-8
-Subject: Re: [PATCH v2 1/5] doc: add documentation for OPT_STRING_LIST
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 18 Dec 2016 04:19:38 -0800
-To:     Philip Oakley <philipoakley@iee.org>,
-        Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-CC:     Junio C Hamano <gitster@pobox.com>
-Message-ID: <E9C90A8A-8D05-4357-BCEF-AAFAE16225CC@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=fSEr7RB3qwm9OCXP4f4d1jWOnnPtpD2n55d1q1fdtN4=;
+        b=GwhUGjcKjJ7bReAN1kpXuSLF66y1Q53Ch+DRIEfA4k09OSG+OZLZRgaVk7rRUuUrjM
+         O3X+G34ZiEl7ql6ge2V0H8ScboC771xrLYQfljq8/KPE5qu2CREsl+OS1T1GIrgOI5DH
+         OZ2IPr+XtIt6zZVNRC5KNJN6/epVPq+ENW/HqlvJx4B3JPBJestYlzRmilcuK02kxhNx
+         B0e7gjYMtul/csIk+jqeJTiG29fXPHdBzp8kUjgxzDKJ9+oCPIGcDW0fH5xAFJJzRn2X
+         AR+JLpcQi8DgpZyiU2RpveWTDssCr51AAKCxst2a1ekIrLNbKivlQS/0lntAOAw/dxi7
+         JXjQ==
+X-Gm-Message-State: AIkVDXJTysfehI7xXhkYgnlzbUVNAdn5DtNURTxZ9o4m9l5fqyhpXGmE9awZZewTXbX94w==
+X-Received: by 10.28.113.76 with SMTP id m73mr9094220wmc.114.1482064642288;
+        Sun, 18 Dec 2016 04:37:22 -0800 (PST)
+Received: from slxBook4.fritz.box.fritz.box ([93.219.100.150])
+        by smtp.gmail.com with ESMTPSA id vr9sm15818999wjc.35.2016.12.18.04.37.21
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 18 Dec 2016 04:37:21 -0800 (PST)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     ramsay@ramsayjones.plus.com, peff@peff.net, gitster@pobox.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1] t0021: fix flaky test
+Date:   Sun, 18 Dec 2016 13:37:48 +0100
+Message-Id: <20161218123748.72101-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <B3D96792-047D-4C91-8DCC-60C800B2861B@gmail.com>
+References: <B3D96792-047D-4C91-8DCC-60C800B2861B@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 17, 2016 3:56:19 AM PST, Philip Oakley <philipoakley@iee.org> wrote:
->From: "Jacob Keller" <jacob.e.keller@intel.com>
->> From: Jacob Keller <jacob.keller@gmail.com>
->>
->> Commit c8ba16391655 ("parse-options: add OPT_STRING_LIST helper",
->> 2011-06-09) added the OPT_STRING_LIST as a way to accumulate a
->repeated
->> list of strings. However, this was not documented in the
->> api-parse-options documentation. Add documentation now so that future
->> developers may learn of its existence.
->>
->> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->> ---
->> Documentation/technical/api-parse-options.txt | 5 +++++
->> 1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/technical/api-parse-options.txt 
->> b/Documentation/technical/api-parse-options.txt
->> index 27bd701c0d68..92791740aa64 100644
->> --- a/Documentation/technical/api-parse-options.txt
->> +++ b/Documentation/technical/api-parse-options.txt
->> @@ -168,6 +168,11 @@ There are some macros to easily define options:
->>  Introduce an option with string argument.
->>  The string argument is put into `str_var`.
->>
->> +`OPT_STRING_LIST(short long, &list, arg_str, description)`::
->
->should there be an extra comma between 'short long' in a similar manner
->to 
->the OPT_INTEGER argument list below?
->
->
+From: Lars Schneider <larsxschneider@gmail.com>
 
-You are indeed correct sir. I will fix this up.
+t0021.15 creates files, adds them to the index, and commits them. All
+this usually happens in a test run within the same second and Git cannot
+know if the files have been changed between `add` and `commit`.  Thus,
+Git has to run the clean filter in both operations. Sometimes these
+invocations spread over two different seconds and Git can infer that the
+files were not changed between `add` and `commit` based on their
+modification timestamp. The test would fail as it expects the filter
+invocation. Remove this expectation to make the test stable.
 
-Thanks,
-Jake
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+
+Notes:
+    Base Commit: f8bf8f2a7b (next)
+    Diff on Web: https://github.com/git/git/compare/f8bf8f2a7b...larsxschneider:9d88b66e03
+    Checkout:    git fetch https://github.com/larsxschneider/git filter-process/fix-flaky-test-v1 && git checkout 9d88b66e03
+
+ t/t0021-conversion.sh | 17 +----------------
+ 1 file changed, 1 insertion(+), 16 deletions(-)
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 6f16983d3e..161f560446 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -377,22 +377,7 @@ test_expect_success PERL 'required process filter should filter data' '
+ 		EOF
+ 		test_cmp_count expected.log rot13-filter.log &&
+ 
+-		filter_git commit -m "test commit 2" &&
+-		cat >expected.log <<-EOF &&
+-			START
+-			init handshake complete
+-			IN: clean test.r $S [OK] -- OUT: $S . [OK]
+-			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+-			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+-			IN: clean testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+-			IN: clean test.r $S [OK] -- OUT: $S . [OK]
+-			IN: clean test2.r $S2 [OK] -- OUT: $S2 . [OK]
+-			IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
+-			IN: clean testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
+-			STOP
+-		EOF
+-		test_cmp_count expected.log rot13-filter.log &&
+-
++		git commit -m "test commit 2" &&
+ 		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x=.r" &&
+ 
+ 		filter_git checkout --quiet --no-progress . &&
+-- 
+2.11.0
 
