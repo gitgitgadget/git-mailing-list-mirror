@@ -2,102 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C88551FF6D
-	for <e@80x24.org>; Sun, 18 Dec 2016 13:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF131FF6D
+	for <e@80x24.org>; Sun, 18 Dec 2016 13:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761021AbcLRNQw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Dec 2016 08:16:52 -0500
-Received: from mout.gmx.net ([212.227.15.19]:50362 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1760876AbcLRNQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2016 08:16:51 -0500
-Received: from [192.168.178.43] ([88.71.250.242]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCLcP-1cRi8M0x97-0098bW; Sun, 18
- Dec 2016 14:16:47 +0100
+        id S1761221AbcLRN0Z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Dec 2016 08:26:25 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33364 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760842AbcLRN0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2016 08:26:24 -0500
+Received: by mail-pg0-f68.google.com with SMTP id g1so3608377pgn.0
+        for <git@vger.kernel.org>; Sun, 18 Dec 2016 05:26:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=qS4qlUXsK4LEzrA+aOUsKQH/w5yPzWOokOv6nCZ9TeE=;
+        b=fQCFUTRYHDCDYfdEDmFQEZF9lCs6rNTIu8Rw0VO+qRMU8VY1Dvxij19PCBfEtkxvJd
+         mnUKxBT8cjWA8gpHZaUN0IlvqKw84OQnQ75imk4TDtEt6IxZMWyoH+7WZLF0WRz+andH
+         e3Yg1Ry2M659QjbFe7On65IPJ/7Zm76hB1Si6gViz4fqHIkZgbJXOHjIQrtSa0ChOzJL
+         kAVY6qq4HWlro0kVlmAUF5eRsneK83YQAd9VrMvwNi4YlY6VshVU5i8gdj7VUwCPwbdW
+         BVgu0gTGYxJz8jPjqwr+D/rXU4OJUDEz3RTs1GZuxNn0xXVEM+cR4/pMHPCwA3q3TjGj
+         AbuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qS4qlUXsK4LEzrA+aOUsKQH/w5yPzWOokOv6nCZ9TeE=;
+        b=VaktrMjirscuDL+q+UUypgWrbYHVSLBmugsA0mmxq9zg1s2H7xbkIY2lYOjbO5jP1O
+         LALiYJ8VZiaZBap5H5axDzxfNr0FWEkxuIvp1ElQ8A+wgsMBYRbmcvEFNI828eBieNZX
+         yOzTluVgzJlxYAhp8ScGg1eC9KKtkybeK+mq2CY7JaicHX29FsPtpwqCrSZGsHJjTRHg
+         0UbWSlWDsL/Ndi2iqVR7n/yI/+jPShjrvZPpqqcRm5UKfKV9vd8b2oPgUT7ZbVUbWxoV
+         QvaP8xJB+hyGvUS2aYr6jDOohXSvwBMV+BiL5bm8pED85IsOv0nhyz5xdMxhwQMvb00N
+         uhhA==
+X-Gm-Message-State: AIkVDXLeMV+abYWa+hdx11OQ0uNvcuPn3Rrf4W1BWaVF0KoucUdUHWhMh5Edai1FPSU+yA==
+X-Received: by 10.99.126.68 with SMTP id o4mr4156978pgn.66.1482067584057;
+        Sun, 18 Dec 2016 05:26:24 -0800 (PST)
+Received: from unique-pc ([14.102.13.66])
+        by smtp.googlemail.com with ESMTPSA id x4sm24646266pgc.14.2016.12.18.05.25.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 18 Dec 2016 05:26:23 -0800 (PST)
+Message-ID: <1482067588.13943.4.camel@gmail.com>
 Subject: Re: Suggestion for the "Did you mean this?" feature
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        git@vger.kernel.org
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
+Date:   Sun, 18 Dec 2016 18:56:28 +0530
+In-Reply-To: <5e1a3c4b-43b9-29f2-68fe-8149d9940123@gmx.net>
 References: <1482063500.10858.1.camel@gmail.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Message-ID: <5e1a3c4b-43b9-29f2-68fe-8149d9940123@gmx.net>
-Date:   Sun, 18 Dec 2016 14:16:46 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.0
-MIME-Version: 1.0
-In-Reply-To: <1482063500.10858.1.camel@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:bKwIMZ9TyA4dclETdWD8fdjp3UbQDbf+jnXRDUhk67BaUwABK+g
- LErexDIV56MtUlQY9zHDhzLBzbN3DsDx67zQS99MK1Q07v/v3iSUla6l7/JQnGNYjLklBfx
- qlQA/69GUBoPj7Te2IqqQm3ORKke7wjANgHqT2ZSn4duCAta83a7dLhYc827NNZzbF2X5nl
- TogJ7JSUSc3wwpmEGjZ/w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:U5pSLhyExSo=:A1hE2xsRg3uURLj7WOVezF
- wdMKraMIIeFdbTg09hqmDyWJCA4muSvq+CxPKSsA8T7lF6uPOPlfolNW65pg/KSVLTmet9xNA
- XL+iJ88Jl4+IqzTf67E3eGBjbFfFAM9KaMm1r2932XYXZvjseU8LxX2C3gd0Zd6k24V1lXpI+
- A2/yO2OgFSWEHA0qgwUsixrTQFSYYzcNOg3ORY6koZOFzR/hZabUM6EfSip6dkBcJQponUtNR
- 1EyPfxmokHBiOqdC62DXlG9EOpb5G753fKMIiZhmvSA+/4EWe4FUksYasBEXypp0v527QEhNT
- REauc/joHeTNrkqXsDxggNxU0A25cHkY516DVY+69AJic7FqH5sW/Z2486kP/tmweecPnyu8B
- 8GvUh1asqk8fphu7AojJMMmUnb706Rzox8lHEeyJ+WWNmR9VNuITcYTheUyt68OMCiaG3W5I+
- z1KH7lsd+L7NxqKm5VcVjDfO6tsP2LwywPJwM5k02bXms1O+KrXM1hx2OsmZ8JEX7mermmS6c
- WXUD4UZhMriTQ9pBqdrHbcZDUmzT+dRUGv/me10leqMM+aw2v1y6PhJ40QfhFVVWxlYUGRNwD
- eBGFkkHA5lt2cLhZLGK+UVndwn7Z0k17SW8VsxY5cYGTyMB9ZKwsfaC6PkPtfFkO0/5ywMPoF
- LbiteSxKrQMGz5IUozV7dLyrWpGmeKODm2RuqRbPywer4AyRRzL8HUhZUU2oCwEuUe74ECWIY
- AU35KujzRJXMU9T8nbAPCAFeh8ZF9Zahev07O1fLR6WyNsJtkDpF2TBVCtuaGfwIqSU+QO03U
- viB5J8s
+         <5e1a3c4b-43b9-29f2-68fe-8149d9940123@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.2-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, 2016-12-18 at 14:16 +0100, Stephan Beyer wrote:
 
-On 12/18/2016 01:18 PM, Kaartic Sivaraam wrote:
-> I have found the "Did you mean this?" feature of git as a very good
-> feature. I thought it would be even better if it took a step toward by
-> asking for a prompt when there was only one alternative to the command
-> that was entered. 
+> I cannot tell if this is a good idea (or why it would be a bad idea)
+> but
+> why do you restrict your suggestion to the case when there is only
+> one
+> alternative?
 > 
-> E.g.
+> Why not also something like:
 > 
->> unique@unique-pc:~$ git hepl
->> git: 'hepl' is not a git command. See 'git --help'.
->>
->> Did you mean this?
->> 	help
->> [yes/No] : y
->> usage: git [--version] [--help] [-C <path>] [-c name=value]
->>            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-
->> path]
->> ....
+> ---
+> $ git sta
+> git: 'sta' is not a git command. See 'git --help'.
 > 
-> This would make it even better for the user as it would avoid having to
-> correct the mistake long commands that had only a single error
-> (considering history feature is enabled). 
-> 
-> Is this is a good idea ?
+> Did you mean one of these?
+> 	[1] status
+> 	[2] stage
+> 	[3] stash
+> You can choose or quit [1,2,3,q]:
 
-I cannot tell if this is a good idea (or why it would be a bad idea) but
-why do you restrict your suggestion to the case when there is only one
-alternative?
+That would be fine too. Just thought it would be a good start to start
+with a simple case. Also, I wasn't sure if there were any drawback's
+that I was missing. I guess if it was implemented it wouldn't be
+difficult to extend it further.
 
-Why not also something like:
-
----
-$ git sta
-git: 'sta' is not a git command. See 'git --help'.
-
-Did you mean one of these?
-	[1] status
-	[2] stage
-	[3] stash
-You can choose or quit [1,2,3,q]:
----
+-- 
 
 
-Best
-  Stephan
+Regards,
+Kaartic
