@@ -2,122 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC2AB1FF6D
-	for <e@80x24.org>; Sun, 18 Dec 2016 15:38:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2077C1FF6D
+	for <e@80x24.org>; Sun, 18 Dec 2016 17:52:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932291AbcLRPht (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Dec 2016 10:37:49 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:32947 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757833AbcLRPhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2016 10:37:48 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3thSqG0Mmvz5tlR;
-        Sun, 18 Dec 2016 16:37:45 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 7A94F2222;
-        Sun, 18 Dec 2016 16:37:45 +0100 (CET)
-Subject: Re: [PATCH] winansi_isatty(): fix when Git is used from CMD
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover.1481454992.git.johannes.schindelin@gmx.de>
- <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
- <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org>
- <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
- <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org>
- <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Pranit Bauva <pranit.bauva@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <d661dbf1-9852-965a-2ca9-67d763115b9e@kdbg.org>
-Date:   Sun, 18 Dec 2016 16:37:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
+        id S1753253AbcLRRvX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Dec 2016 12:51:23 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33877 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752602AbcLRRvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2016 12:51:22 -0500
+Received: by mail-wm0-f66.google.com with SMTP id g23so14746323wme.1
+        for <git@vger.kernel.org>; Sun, 18 Dec 2016 09:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=xugvRBPYS3EhKmlkYKHbtq5YhCL1xZZQz5FO7kKvDh8=;
+        b=P9CNDamLAtqp+QOZSup6zg7LnYCeizpi61aK/kKj2WOtA9CRgmTedXDMIYloEdF7C/
+         8B/K4+cRUNDEbkkNLOLHAGfo3sGBx9bgcg6ys1aLohuJDJNKEOUv1IILGpNuDpIKSWJ7
+         m06LG1RFrG7/3t5KlFsRJunr2GbCr9IR3ddchZhRQfM5MKdm68NyJ9G5UA1tSCKbpOjU
+         Vfg73l9ZU46AOYZI7gimWokZD00dnaSdA2qVbwci7ePJVBypGdC0JXHnzaTCRfPmfLZ2
+         KNXhr4+qBNuplY0dYTcfHKmKZrNBxb8bzleuRLT4+PoO2fzHg5ETocX7u28qBRk4SVAD
+         ZlJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=xugvRBPYS3EhKmlkYKHbtq5YhCL1xZZQz5FO7kKvDh8=;
+        b=bkgOzvWCvPY4/dVQwzuCucL1ZPBLxpi2qtoyjPAi/ytJVBDwGTWcknhMIpt8PT3vr1
+         dEv/Zo7dadh3WK3i5Rur9k7xo4JyR8Yy4iC6l43WTMwcy4DMhDRSOuXeu72mleZ2JbNn
+         wU0p1of6UUrf2KPReW7O3CCgk0PWHEGdJpC6YSLKyNdtdmbGhOkSR/Xch/elrxIFzXem
+         7fo3hwi7EjlCO3cTQxOPkYEX9Xov45BPysm3jEiAAGO78Ly/C0ABLu5LS2fqazV1MmwB
+         /08MYdur5B1CPhYTZho9V1l0Jus323toPYjR8gpxvaLtdO+1NXhBBgzxJuecmy/UjYpk
+         PBvg==
+X-Gm-Message-State: AIkVDXL8r8Y325OQpNDwvs9hFAt/eme6lE8DRQ8HaSoeX8091mKfwER8ULwvaeL3iY5RTw==
+X-Received: by 10.28.4.199 with SMTP id 190mr10319408wme.11.1482083481186;
+        Sun, 18 Dec 2016 09:51:21 -0800 (PST)
+Received: from slxBook4.fritz.box.fritz.box (p5DDB6496.dip0.t-ipconnect.de. [93.219.100.150])
+        by smtp.gmail.com with ESMTPSA id yj10sm16961250wjb.3.2016.12.18.09.51.19
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 18 Dec 2016 09:51:20 -0800 (PST)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     luke@diamand.org, gitster@pobox.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1] git-p4: fix git-p4.pathEncoding for removed files
+Date:   Sun, 18 Dec 2016 18:51:53 +0100
+Message-Id: <20161218175153.92336-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.12.2016 um 16:26 schrieb Johannes Sixt:
-> The new isatty() override implemented by cbb3f3c9b197 (mingw: intercept
-> isatty() to handle /dev/null as Git expects it, 2016-12-11) does not
-> take into account that _get_osfhandle() returns the handle visible by
-> the C code, which is the pipe. But it actually wants to investigate the
-> properties of the handle that is actually connected to the outside
-> world. Fortunately, there is already winansi_get_osfhandle(), which
-> returns exactly this handle. Use it.
+From: Lars Schneider <larsxschneider@gmail.com>
 
-But quite frankly, I find the implementation of winansi_isatty()
-very unsatisfactory.
+In a9e38359e3 we taught git-p4 a way to re-encode path names from what
+was used in Perforce to UTF-8. This path re-encoding worked properly for
+"added" paths. "Removed" paths were not re-encoded and therefore
+different from the "added" paths. Consequently, these files were not
+removed in a git-p4 cloned Git repository because the path names did not
+match.
 
-I understand that you wanted to be defensive and to override the
-decision made by MSVCRT only when necessary.
+Fix this by moving the re-encoding to a place that affects "added" and
+"removed" paths. Add a test to demonstrate the issue.
 
-However!
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
 
-winansi.c is all about overriding MSVCRT's console handling. If we are
-connected to a console, then by the time isatty() is called (from
-outside the emulation layer), all handling of file descriptors 1 and 2
-is already outside MSVCRT's control. In particular, we have determined
-unambiguously whether a terminal is connected (see is_console()). I
-suggest to have the implementation below (on top of the patch I'm
-responding to).
+Notes:
+    Base Commit: d1271bddd4 (v2.11.0)
+    Diff on Web: https://github.com/git/git/compare/d1271bddd4...larsxschneider:05a82caa69
+    Checkout:    git fetch https://github.com/larsxschneider/git git-p4/fix-path-encoding-v1 && git checkout 05a82caa69
 
-What do you think?
+ git-p4.py                       | 19 +++++++++----------
+ t/t9822-git-p4-path-encoding.sh | 16 ++++++++++++++++
+ 2 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index ba360be69b..1748d17777 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -575,9 +575,8 @@ static void detect_msys_tty(int fd)
+diff --git a/git-p4.py b/git-p4.py
+index fd5ca52462..8f311cb4e8 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2366,6 +2366,15 @@ class P4Sync(Command, P4UserMap):
+                     break
  
- int winansi_isatty(int fd)
- {
--	int res = isatty(fd);
+         path = wildcard_decode(path)
++        try:
++            path.decode('ascii')
++        except:
++            encoding = 'utf8'
++            if gitConfig('git-p4.pathEncoding'):
++                encoding = gitConfig('git-p4.pathEncoding')
++            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
++            if self.verbose:
++                print 'Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path)
+         return path
+ 
+     def splitFilesIntoBranches(self, commit):
+@@ -2495,16 +2504,6 @@ class P4Sync(Command, P4UserMap):
+             text = regexp.sub(r'$\1$', text)
+             contents = [ text ]
+ 
+-        try:
+-            relPath.decode('ascii')
+-        except:
+-            encoding = 'utf8'
+-            if gitConfig('git-p4.pathEncoding'):
+-                encoding = gitConfig('git-p4.pathEncoding')
+-            relPath = relPath.decode(encoding, 'replace').encode('utf8', 'replace')
+-            if self.verbose:
+-                print 'Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, relPath)
 -
--	if (res) {
-+	switch (fd) {
-+	case 0:
- 		/*
- 		 * Make sure that /dev/null is not fooling Git into believing
- 		 * that we are connected to a terminal, as "_isatty() returns a
-@@ -586,21 +585,19 @@ int winansi_isatty(int fd)
- 		 *
- 		 * https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
- 		 */
--		HANDLE handle = winansi_get_osfhandle(fd);
--		if (fd == STDIN_FILENO) {
-+		{
-+			HANDLE handle = (HANDLE)_get_osfhandle(fd);
- 			DWORD dummy;
+         if self.largeFileSystem:
+             (git_mode, contents) = self.largeFileSystem.processContent(git_mode, relPath, contents)
  
--			if (!GetConsoleMode(handle, &dummy))
--				res = 0;
--		} else if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
--			CONSOLE_SCREEN_BUFFER_INFO dummy;
--
--			if (!GetConsoleScreenBufferInfo(handle, &dummy))
--				res = 0;
-+			return !!GetConsoleMode(handle, &dummy);
- 		}
-+	case 1:
-+		return !!hconsole1;
-+	case 2:
-+		return !!hconsole2;
- 	}
+diff --git a/t/t9822-git-p4-path-encoding.sh b/t/t9822-git-p4-path-encoding.sh
+index 7b83e696a9..c78477c19b 100755
+--- a/t/t9822-git-p4-path-encoding.sh
++++ b/t/t9822-git-p4-path-encoding.sh
+@@ -51,6 +51,22 @@ test_expect_success 'Clone repo containing iso8859-1 encoded paths with git-p4.p
+ 	)
+ '
  
--	return res;
-+	return isatty(fd);
- }
- 
- void winansi_init(void)
++test_expect_success 'Delete iso8859-1 encoded paths and clone' '
++	(
++		cd "$cli" &&
++		ISO8859="$(printf "$ISO8859_ESCAPED")" &&
++		p4 delete "$ISO8859" &&
++		p4 submit -d "remove file"
++	) &&
++	git p4 clone --destination="$git" //depot@all &&
++	test_when_finished cleanup_git &&
++	(
++		cd "$git" &&
++		git -c core.quotepath=false ls-files >actual &&
++		test_must_be_empty actual
++	)
++'
++
+ test_expect_success 'kill p4d' '
+ 	kill_p4d
+ '
 -- 
-2.11.0.79.gf6b77ca
+2.11.0
 
