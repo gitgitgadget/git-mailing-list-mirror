@@ -2,153 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 130531FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 23:43:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD9F71FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 23:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933159AbcLSXmf convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 19 Dec 2016 18:42:35 -0500
-Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:47616 "EHLO
-        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754593AbcLSXme (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 18:42:34 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 2F72E100048;
-        Mon, 19 Dec 2016 23:35:07 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id TXMJOPMIfy3A; Mon, 19 Dec 2016 23:35:07 +0000 (GMT)
-Received: from exmbdft5.ad.twosigma.com (exmbdft5.ad.twosigma.com [172.22.1.56])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 1B6718002E;
-        Mon, 19 Dec 2016 23:35:07 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft5.ad.twosigma.com (172.22.1.56) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Mon, 19 Dec 2016 23:35:06 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%23]) with mapi id
- 15.00.1263.000; Mon, 19 Dec 2016 23:35:06 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Stefan Beller' <sbeller@google.com>,
-        "gitster@pobox.com" <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "bmwill@google.com" <bmwill@google.com>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>
-Subject: RE: [PATCHv4 0/5] git-rm absorbs submodule git directory before
- deletion
-Thread-Topic: [PATCHv4 0/5] git-rm absorbs submodule git directory before
- deletion
-Thread-Index: AQHSWk+koPuPUuujEU+MuXbKCQtHJKEP7Bug
-Date:   Mon, 19 Dec 2016 23:35:06 +0000
-Message-ID: <a756fb33dbdb4a81a46e40c5e0aaef2f@exmbdft7.ad.twosigma.com>
-References: <20161219232828.5075-1-sbeller@google.com>
-In-Reply-To: <20161219232828.5075-1-sbeller@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.9]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
+        id S1753502AbcLSXyr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 18:54:47 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34890 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753093AbcLSXyq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 18:54:46 -0500
+Received: by mail-io0-f194.google.com with SMTP id f73so20784667ioe.2
+        for <git@vger.kernel.org>; Mon, 19 Dec 2016 15:54:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=pagJPJ4SFDQeJoJOyaUTqqvI5Cco7FZrHLo9O9gTFuo=;
+        b=RAVZpmwZLYV06PB6pHWJetODdEkVkP/ITki/Ddj9nAhwtFBHkoYWljJzZQk44xQ3A8
+         FtJiX6s/oU/yblQhaUemRqsRsxjfsNdQ9ehrNHSlt2i2HjmHQy6YTdx4UT85AnC6P6+Z
+         TXJWWXSarPxB3vCAYM9PWPA4LNnMXOpgeN9uPlDmsBqFJOiHT8uqnKribdVvc7MuoNCq
+         k+110hwF6UZzEnXNPZm3ebOLBkNculiHCPf38atHbe0rtFXlmjZP8gYWH+XSFuZiQ4zc
+         BE5lNOAjSY4aGX86Cx3itFyVV2oMJ/eWWI7weyTHZ+nvuKJGgvkaqdzLd4vE5uprR0Uo
+         Oh4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=pagJPJ4SFDQeJoJOyaUTqqvI5Cco7FZrHLo9O9gTFuo=;
+        b=BprrR51ezauY+r0vwpqZ4Yz3mYVN1pMgZAWbqyqgKSUIw2gC2WADbS7MFoApwuy4B5
+         fd4204sHvfOr+qB1KbCcRMHN28MVm3RqBhsv0eI/OwCpMIlKUnuKTh2HZH/dw3ud7C4a
+         vQQHs8yTBnRQYNnddlKNdPnrTEJ5MvnXagY838pLz6gZjQf4SfyC2xVa9vsqCjmTU8CS
+         TVTm1vCjPdcTfc5baelBs6kwZTrJYjDdFr+yoJYW6O9ZQFOqFQiFh/lJMwjhhY5lmjbR
+         LRu7IrHRJsqnCrESqfieWYWtMHe5M4KLkBJTJq1/pX4Y8RaaC3t3w5PDREwO1f/0rB8E
+         5tJw==
+X-Gm-Message-State: AKaTC03ox6WW1LLpdhqKHdYASe5KrqlEar5Y5tUdrc/yElBkcC4kzY6iTXWdQBZWluxQiQ==
+X-Received: by 10.107.59.88 with SMTP id i85mr19487285ioa.198.1482191685385;
+        Mon, 19 Dec 2016 15:54:45 -0800 (PST)
+Received: from localhost.localdomain ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
+        by smtp.gmail.com with ESMTPSA id t129sm9305892iod.3.2016.12.19.15.54.44
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 19 Dec 2016 15:54:45 -0800 (PST)
+From:   "Kyle J. McKay" <mackyle@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: [PATCH v3] mailinfo.c: move side-effects outside of assert
+Date:   Mon, 19 Dec 2016 15:54:41 -0800
+Message-Id: <735f6ca98151fc081ea871016afc4b6@58437222ff6db9ee7cbe9d1a5a1ad4e>
+In-Reply-To: <xmqqbmw7mrg4.fsf@gitster.mtv.corp.google.com>
+References: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0> <20161219200259.nqqyvk6c72bcoaui@sigill.intra.peff.net> <A916CED6-C49D-41D8-A7EE-A5FEDA641F4A@gmail.com> <d5690ac7-ff62-99b9-7e7e-929bd7f0433b@google.com> <xmqqbmw7ocoz.fsf@gitster.mtv.corp.google.com> <ebaf4c892a78bc3ae614a23d87f9c0f@58437222ff6db9ee7cbe9d1a5a1ad4e> <xmqqbmw7mrg4.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Other than Brandon's issue on 3/5 (which I noticed myself but wanted to double-check that my mailer wasn't playing tricks on me and so lost the race to report), this version looks good.
+On Dec 19, 2016, at 15:26, Junio C Hamano wrote:
 
-> -----Original Message-----
-> From: Stefan Beller [mailto:sbeller@google.com]
-> Sent: Monday, December 19, 2016 6:28 PM
-> To: gitster@pobox.com
-> Cc: git@vger.kernel.org; bmwill@google.com; sandals@crustytoothpaste.net;
-> David Turner; Stefan Beller
-> Subject: [PATCHv4 0/5] git-rm absorbs submodule git directory before
-> deletion
-> 
-> v4:
-> * reworded commit messages of the last 2 patches
-> * introduced a new patch introducing {run,start,finish}_command_or_die
-> * found an existing function in dir.h to use to remove a directory
->   which deals gracefully with the cornercases, that Junio pointed out.
-> 
-> v3:
-> * removed the patch to enhance ok_to_remove_submodule to absorb the
-> submodule
->   if needed
-> * Removed all the error reporting from git-rm that was related to
-> submodule
->   git directories not absorbed.
-> * instead just absorb the git repositories or let the absorb function die
->   with an appropriate error message.
-> 
-> v2:
-> * new base where to apply the patch:
->   sb/submodule-embed-gitdir merged with sb/t3600-cleanup.
->   I got merge conflicts and resolved them this way:
-> #@@@ -709,9 -687,10 +687,9 @@@ test_expect_success 'checking out a com
-> #          git commit -m "submodule removal" submod &&
-> #          git checkout HEAD^ &&
-> #          git submodule update &&
-> #-         git checkout -q HEAD^ 2>actual &&
-> #+         git checkout -q HEAD^ &&
-> #          git checkout -q master 2>actual &&
-> # -        echo "warning: unable to rmdir submod: Directory not empty"
-> >expected &&
-> # -        test_i18ncmp expected actual &&
-> # +        test_i18ngrep "^warning: unable to rmdir submod:" actual &&
-> #          git status -s submod >actual &&
-> #          echo "?? submod/" >expected &&
-> #          test_cmp expected actual &&
-> #
-> 
-> * improved commit message in "ok_to_remove_submodule: absorb the submodule
-> git dir"
->   (David Turner offered me some advice on how to write better English off
-> list)
-> * simplified code in last patch:
->   -> dropped wrong comment for fallthrough
->   -> moved redundant code out of both bodies of an if-clause.
-> * Fixed last patchs commit message to have "or_die" instead of or_dir.
-> 
-> v1:
-> The "checkout --recurse-submodules" series got too large to comfortably
-> send it out for review, so I had to break it up into smaller series'; this
-> is the first subseries, but it makes sense on its own.
-> 
-> This series teaches git-rm to absorb the git directory of a submodule
-> instead of failing and complaining about the git directory preventing
-> deletion.
-> 
-> It applies on origin/sb/submodule-embed-gitdir.
-> 
-> Any feedback welcome!
-> 
-> Thanks,
-> Stefan
-> 
-> Stefan Beller (5):
->   submodule.h: add extern keyword to functions
->   submodule: modernize ok_to_remove_submodule to use argv_array
->   run-command: add {run,start,finish}_command_or_die
->   submodule: add flags to ok_to_remove_submodule
->   rm: absorb a submodules git dir before deletion
-> 
->  builtin/rm.c  | 82 +++++++++++++++---------------------------------------
-> -----
->  run-command.c | 28 ++++++++++++++++++++  run-command.h |  4 +++
->  submodule.c   | 27 ++++++++++----------
->  submodule.h   | 58 ++++++++++++++++++++++++------------------
->  t/t3600-rm.sh | 39 +++++++++++-----------------
->  6 files changed, 114 insertions(+), 124 deletions(-)
-> 
-> --
-> 2.11.0.rc2.53.gb7b3fba.dirty
+> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>
+>>> OK.  So we do not expect it to fail, but we still do want the side
+>>> effect of that function (i.e. accmulation into the field).
+>>>
+>>> Somebody care to send a final "agreed-upon" version?
+>>
+>> Yup, here it is:
+>
+> Thanks.
 
+Whoops. there's an extra paragraph in the commit description that I
+meant to remove and, of course, I didn't notice it until I sent the
+copy to the list.  :(
+
+I don't think a "fixup" or "squash" can replace a description, right?
+
+So here's a replacement patch with the correct description with the
+deleted paragrah:
+
+-- >8 --
+
+Since 6b4b013f18 (mailinfo: handle in-body header continuations,
+2016-09-20, v2.11.0) mailinfo.c has contained new code with an
+assert of the form:
+
+	assert(call_a_function(...))
+
+The function in question, check_header, has side effects.  This
+means that when NDEBUG is defined during a release build the
+function call is omitted entirely, the side effects do not
+take place and tests (fortunately) start failing.
+
+Since the only time that mi->inbody_header_accum is appended to is
+in check_inbody_header, and appending onto a blank
+mi->inbody_header_accum always happens when is_inbody_header is
+true, this guarantees a prefix that causes check_header to always
+return true.
+
+Therefore replace the assert with an if !check_header + DIE
+combination to reflect this.
+
+Helped-by: Jonathan Tan <jonathantanmy@google.com>
+Helped-by: Jeff King <peff@peff.net>
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+
+Notes:
+    Please include this PATCH in 2.11.x maint
+
+ mailinfo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index 2fb3877e..a489d9d0 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -710,7 +710,8 @@ static void flush_inbody_header_accum(struct mailinfo *mi)
+ {
+ 	if (!mi->inbody_header_accum.len)
+ 		return;
+-	assert(check_header(mi, &mi->inbody_header_accum, mi->s_hdr_data, 0));
++	if (!check_header(mi, &mi->inbody_header_accum, mi->s_hdr_data, 0))
++		die("BUG: inbody_header_accum, if not empty, must always contain a valid in-body header");
+ 	strbuf_reset(&mi->inbody_header_accum);
+ }
+ 
+---
