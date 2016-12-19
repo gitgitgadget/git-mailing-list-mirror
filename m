@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB7AE1FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 23:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 382041FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 23:30:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933087AbcLSX2t (ORCPT <rfc822;e@80x24.org>);
+        id S933347AbcLSX3p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 18:29:45 -0500
+Received: from mail-io0-f180.google.com ([209.85.223.180]:34893 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933073AbcLSX2t (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Dec 2016 18:28:49 -0500
-Received: from mail-io0-f178.google.com ([209.85.223.178]:36566 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932826AbcLSX2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 18:28:46 -0500
-Received: by mail-io0-f178.google.com with SMTP id 136so166257498iou.3
-        for <git@vger.kernel.org>; Mon, 19 Dec 2016 15:28:46 -0800 (PST)
+Received: by mail-io0-f180.google.com with SMTP id h30so166004705iod.2
+        for <git@vger.kernel.org>; Mon, 19 Dec 2016 15:28:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ngdzyMcpQqt7yOSlTLHMvS5bRY+yxD04FM7r36eQKEo=;
-        b=mnHajxo36yzP44j86Cku/sMGNyy2fv7yqz5Tk98ZnmLNTIzekaQoJubfh2X1tJY8N/
-         122X3qG/LEZTKPqlE9L60mGSbGD4B7+Ji5Y9FLAOb5uaonZT1UFB6/o4Enb3KjrF56V3
-         3UvoLMo1Qm7JcxZK08UxiOHduWQ3C8tl9XbQnkSJ5Fw1NYmcvt799E1wfdMvcWCXrW8p
-         gy+fNTfyCOX7wmkxDaxzmrVnqscYZnUpeA6DZE1VcjAORvY1jo8cN8A+LzFNsYHEa07o
-         KivVmxVTNLbam31YyuzsyCsBpY4C/I268FboVal4zJm9IE8bfdOYFRHhRQe5hLbgMyvO
-         bvog==
+        bh=R0zGQI69dmKQsfTTnr73hrRwTm0jwFm0YBVa7PXKqso=;
+        b=OnWPV3/aZXavsLAEYgsdoXq0cGImX8czx5quNQcNf9Fo7Co7zfPiGmcCgig8dwrgI+
+         pBXZlvmksCAyiZqhvdogAxsqIGh04xdgLyoj50VphzvnD+zuC5Fe10vmWQpZyqTO7xGL
+         KPmmFak24gCLEK2seMetzZBQN96SSYS0/GYR94KEGO7pJZXwq9MTKt6AC0NXg9xcUvg0
+         8Aznc7/5yWn8g2ivkE52MAL3c9usNAgjfIFsoxAdPKDNeVtb3lYw9jOWaHGe43jOMnPY
+         SJmx57nGFely+Inp3Z4tQESfa+ClP2ByJf3RtxUJrP6vOzyul86KUhBsuGLO49gpNpVU
+         r5Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ngdzyMcpQqt7yOSlTLHMvS5bRY+yxD04FM7r36eQKEo=;
-        b=U3FS3seU1nOGNBd/Ir6VECbTQGfUazQgkxB9sRQGLt8W3+VTHZGitSl5NU/pYH3gNy
-         zkHQky4YWbNckC7PTtCDejKQ6j0dgJh3obcD6ffV2uJG7Fnta9ufiCefMtN1k/CqSeJ8
-         VyBkQtsm9XsSy9L1h5zIETYOpaJGoJ9yf8iX/+Ikq0oWoP+iSvNcwlMehOSy5RHRcKWU
-         eFVncrBANhIM+w4FC4i6xaFYYZ542s62AofpNhH7SK9ZAvwQeuuxLWeqyQ/iRYfRrdJw
-         YCZzk3awXi+u3cu96WkCZZ9hd1UV5B+/hZxFd4D1kFsUq6ywqbLEth6VA+62UsJOZQtJ
-         ksUQ==
-X-Gm-Message-State: AIkVDXJMdt/+Bh1wop3zQnDc/byk/2K1WyQyRH11GXYckyUDtu4voNTxyWHOPdxIUh7pmTDl
-X-Received: by 10.107.142.194 with SMTP id q185mr19976866iod.147.1482190125524;
-        Mon, 19 Dec 2016 15:28:45 -0800 (PST)
+        bh=R0zGQI69dmKQsfTTnr73hrRwTm0jwFm0YBVa7PXKqso=;
+        b=WK5FBwSztNWIscr7IQGB/L0rjK0tE47VjpYCcfKqswdeYZREkEYh9KzdEmUNoj1n7R
+         nquSM3+n/mmVGfWAqtog4u1q4EHilkmy9zDJzJhDLmEOnxPklER/qOmyQ+8dr3gWg4iG
+         mDHJq3EYLydDRke8DatJSMdT1E6xj4H4PrrP1vKjoSZdnzQl8AaSBL/QQ+h2El//pxSP
+         LOIOfQKpD3BTEg6qI5SMTuvtShV2VJbCW58rMpvAh1yK25xVm8ErL9BHZXwYSHRyodgj
+         QsMsEpXLeDttvRrmy2Kolp4+7/1R6bnugieeopKydacwzHw7YjdIFlEzN1xx5Dou+TVK
+         CTOg==
+X-Gm-Message-State: AKaTC01q+CmBKy3MOfAHlp8fPjI4lYbpXhG3h8KOAaZo8XION51aDgKVzmbwZbG5oUMHExnF
+X-Received: by 10.107.10.20 with SMTP id u20mr18146164ioi.187.1482190127969;
+        Mon, 19 Dec 2016 15:28:47 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:2c2e:3e21:f7c2:2ccc])
-        by smtp.gmail.com with ESMTPSA id f187sm1416823ita.7.2016.12.19.15.28.44
+        by smtp.gmail.com with ESMTPSA id o138sm2318115itc.18.2016.12.19.15.28.47
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 19 Dec 2016 15:28:44 -0800 (PST)
+        Mon, 19 Dec 2016 15:28:47 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com,
         sandals@crustytoothpaste.net, David.Turner@twosigma.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 1/5] submodule.h: add extern keyword to functions
-Date:   Mon, 19 Dec 2016 15:28:24 -0800
-Message-Id: <20161219232828.5075-2-sbeller@google.com>
+Subject: [PATCHv4 3/5] run-command: add {run,start,finish}_command_or_die
+Date:   Mon, 19 Dec 2016 15:28:26 -0800
+Message-Id: <20161219232828.5075-4-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.53.gb7b3fba.dirty
 In-Reply-To: <20161219232828.5075-1-sbeller@google.com>
 References: <20161219232828.5075-1-sbeller@google.com>
@@ -62,107 +62,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the upcoming series will add a lot of functions to the submodule
-header, let's first make the header consistent to the rest of the project
-by adding the extern keyword to functions.
-
-As per the CodingGuidelines we try to stay below 80 characters per line,
-so adapt all those functions to stay below 80 characters that are already
-using more than one line.  Those function using just one line are better
-kept in one line than breaking them up into multiple lines just for the
-goal of staying below the character limit as it makes grepping
-for functions easier if they are one liners.
+In a later patch we want to report the exact command that we run in the
+error message. Add a convenient way to the run command API that runs the
+given command or reports the exact command as failure.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.h | 55 ++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 30 insertions(+), 25 deletions(-)
+ run-command.c | 28 ++++++++++++++++++++++++++++
+ run-command.h |  4 ++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/submodule.h b/submodule.h
-index 6229054b99..61fb610749 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -29,50 +29,55 @@ struct submodule_update_strategy {
- };
- #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
+diff --git a/run-command.c b/run-command.c
+index ca905a9e80..a0587db334 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -279,6 +279,17 @@ static int wait_or_whine(pid_t pid, const char *argv0, int in_signal)
+ 	return code;
+ }
  
--int is_staging_gitmodules_ok(void);
--int update_path_in_gitmodules(const char *oldpath, const char *newpath);
--int remove_path_from_gitmodules(const char *path);
--void stage_updated_gitmodules(void);
--void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
-+extern int is_staging_gitmodules_ok(void);
-+extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
-+extern int remove_path_from_gitmodules(const char *path);
-+extern void stage_updated_gitmodules(void);
-+extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
- 		const char *path);
--int submodule_config(const char *var, const char *value, void *cb);
--void gitmodules_config(void);
--int parse_submodule_update_strategy(const char *value,
-+extern int submodule_config(const char *var, const char *value, void *cb);
-+extern void gitmodules_config(void);
-+extern int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
--const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
--void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
--void show_submodule_summary(FILE *f, const char *path,
-+extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
-+extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
-+extern void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
- 		const char *del, const char *add, const char *reset);
--void show_submodule_inline_diff(FILE *f, const char *path,
-+extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const char *line_prefix,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
- 		const char *del, const char *add, const char *reset,
- 		const struct diff_options *opt);
--void set_config_fetch_recurse_submodules(int value);
--void check_for_new_submodule_commits(unsigned char new_sha1[20]);
--int fetch_populated_submodules(const struct argv_array *options,
-+extern void set_config_fetch_recurse_submodules(int value);
-+extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
-+extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
- 			       int quiet, int max_parallel_jobs);
--unsigned is_submodule_modified(const char *path, int ignore_untracked);
--int submodule_uses_gitfile(const char *path);
--int ok_to_remove_submodule(const char *path);
--int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
--		    const unsigned char a[20], const unsigned char b[20], int search);
--int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
--		struct string_list *needs_pushing);
--int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
--int parallel_submodules(void);
-+extern unsigned is_submodule_modified(const char *path, int ignore_untracked);
-+extern int submodule_uses_gitfile(const char *path);
-+extern int ok_to_remove_submodule(const char *path);
-+extern int merge_submodule(unsigned char result[20], const char *path,
-+			   const unsigned char base[20],
-+			   const unsigned char a[20],
-+			   const unsigned char b[20], int search);
-+extern int find_unpushed_submodules(unsigned char new_sha1[20],
-+				    const char *remotes_name,
-+				    struct string_list *needs_pushing);
-+extern int push_unpushed_submodules(unsigned char new_sha1[20],
-+				    const char *remotes_name);
-+extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
-+extern int parallel_submodules(void);
++static void report_and_die(struct child_process *cmd, const char *action)
++{
++	int i;
++	struct strbuf err = STRBUF_INIT;
++	if (cmd->git_cmd)
++		strbuf_addstr(&err, "git ");
++	for (i = 0; cmd->argv[i]; )
++		strbuf_addf(&err, "'%s'", cmd->argv[i]);
++	die(_("could not %s %s"), action, err.buf);
++}
++
+ int start_command(struct child_process *cmd)
+ {
+ 	int need_in, need_out, need_err;
+@@ -546,6 +557,12 @@ int start_command(struct child_process *cmd)
+ 	return 0;
+ }
  
++void start_command_or_die(struct child_process *cmd)
++{
++	if (start_command(cmd))
++		report_and_die(cmd, "start");
++}
++
+ int finish_command(struct child_process *cmd)
+ {
+ 	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 0);
+@@ -558,6 +575,11 @@ int finish_command_in_signal(struct child_process *cmd)
+ 	return wait_or_whine(cmd->pid, cmd->argv[0], 1);
+ }
+ 
++void finish_command_or_die(struct child_process *cmd)
++{
++	if (finish_command(cmd))
++		report_and_die(cmd, "finish");
++}
+ 
+ int run_command(struct child_process *cmd)
+ {
+@@ -592,6 +614,12 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
+ 	return run_command(&cmd);
+ }
+ 
++void run_command_or_die(struct child_process *cmd)
++{
++	if (finish_command(cmd))
++		report_and_die(cmd, "run");
++}
++
+ #ifndef NO_PTHREADS
+ static pthread_t main_thread;
+ static int main_thread_set;
+diff --git a/run-command.h b/run-command.h
+index dd1c78c28d..e4585885c5 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -56,6 +56,10 @@ int finish_command(struct child_process *);
+ int finish_command_in_signal(struct child_process *);
+ int run_command(struct child_process *);
+ 
++void start_command_or_die(struct child_process *);
++void finish_command_or_die(struct child_process *);
++void run_command_or_die(struct child_process *);
++
  /*
-  * Prepare the "env_array" parameter of a "struct child_process" for executing
-  * a submodule by clearing any repo-specific envirionment variables, but
-  * retaining any config in the environment.
-  */
--void prepare_submodule_repo_env(struct argv_array *out);
-+extern void prepare_submodule_repo_env(struct argv_array *out);
- 
- #define ABSORB_GITDIR_RECURSE_SUBMODULES (1<<0)
- extern void absorb_git_dir_into_superproject(const char *prefix,
+  * Returns the path to the hook file, or NULL if the hook is missing
+  * or disabled. Note that this points to static storage that will be
 -- 
 2.11.0.rc2.53.gb7b3fba.dirty
 
