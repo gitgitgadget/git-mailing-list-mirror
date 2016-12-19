@@ -2,129 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D723F1FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 13:44:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADEA91FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 13:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755354AbcLSNnw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 08:43:52 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:51635 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755228AbcLSNnv (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Dec 2016 08:43:51 -0500
-X-AuditID: 1207440c-e53ff700000009a1-65-5857e411692c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 5D.1B.02465.114E7585; Mon, 19 Dec 2016 08:43:45 -0500 (EST)
-Received: from [192.168.69.190] (p57906BA3.dip0.t-ipconnect.de [87.144.107.163])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBJDhhij001463
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 19 Dec 2016 08:43:44 -0500
-Subject: Re: [PATCH 5/5] check-ref-format: New --stdin option
-To:     Ian Jackson <ijackson@chiark.greenend.org.uk>, git@vger.kernel.org
-References: <20161104191358.28812-1-ijackson@chiark.greenend.org.uk>
- <20161104191358.28812-6-ijackson@chiark.greenend.org.uk>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <14d95a74-ad7e-a1dd-c3da-52afd53cede4@alum.mit.edu>
-Date:   Mon, 19 Dec 2016 14:43:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.1
+        id S1762080AbcLSNqc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 08:46:32 -0500
+Received: from mout.gmx.net ([212.227.15.19]:49758 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752737AbcLSNqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 08:46:30 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ldq55-1czyRl2Z8t-00j0kd; Mon, 19
+ Dec 2016 14:46:10 +0100
+Date:   Mon, 19 Dec 2016 14:46:08 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 03/34] sequencer (rebase -i): implement the 'edit'
+ command
+In-Reply-To: <xmqqbmwf1pqd.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1612191438200.54750@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de> <a1361151ad1dad8f4dc3c412c7ed30f625d67ba0.1481642927.git.johannes.schindelin@gmx.de> <xmqqbmwf1pqd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20161104191358.28812-6-ijackson@chiark.greenend.org.uk>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqCv0JDzC4MoxRouuK91MFqtbFrE4
-        MHl8O7WJ2ePzJrkApigum5TUnMyy1CJ9uwSujN+3ljAXLBGqmHZyCmsD43y+LkZODgkBE4kb
-        X7cwdjFycQgJXGaUeP9mPyuEc4FJ4vusWYwgVcICthKNq5eygNgiAm4SZz81MoHYQgL1Em9e
-        gjRwcrAJ6Eos6mkGinNw8ArYS+zvdgIJswioSuye9ResRFQgROLynKNsIDavgKDEyZlPwEZy
-        CrhKfLnYzwxiMwvoSey4/osVwpaX2P52DvMERr5ZSFpmISmbhaRsASPzKka5xJzSXN3cxMyc
-        4tRk3eLkxLy81CJdQ73czBK91JTSTYyQsOPZwfhtncwhRgEORiUeXsm3YRFCrIllxZW5hxgl
-        OZiURHmnrA2JEOJLyk+pzEgszogvKs1JLT7EKMHBrCTCu/FeeIQQb0piZVVqUT5MSpqDRUmc
-        V3WJup+QQHpiSWp2ampBahFMVoaDQ0mCt/8RUKNgUWp6akVaZk4JQpqJgxNkOA/QcIvHIMOL
-        CxJzizPTIfKnGBWlxHmVQBICIImM0jy4XlhaeMUoDvSKMK8aSBUPMKXAdb8CGswENHhhN9jg
-        kkSElFQDY3qf4QP+F/GSZ75/qdmVHGUu422T6L/qqsWv0Euffr/+lrOFJbsycNMqnYdSWbML
-        8nkt/vGK28zL4vO7IemT32ga9XH3zIIabnsFtsxgR51T8/hWedyUefxi91qBft3+ZPl3qTIu
-        bU0HwoX6Pi64s2iqkveCVhYLldLfn+9K3q+2drLk9P+txFKckWioxVxUnAgAsg2WneYCAAA=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:VxpU1QCRePn1g8q1DcOIUIKsY0bZqcuxlg0H3e7zpDm5gD4FsX9
+ eQhgHSxoNVngfm8Ef7tUS4UOT9n52YCsWpOzFR1q2YOFQM9eb04mG4TozobHjJX2dp3eIep
+ V4XoHIx9A4FgD6CypgEeEdWsVLZgHgdnmAlmOT5332NOT0TUlIK+XqfvUlW/vwN8N3VE1mE
+ y31nbr1mu7l6HtHBntr4g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YW0QxbLIeVQ=:cYIjA2bZwPFPvryV8EZM6l
+ QkiWXZQ93ebYHA9hXLhD4XapMTT5FPbqfMnwIIXIGDP9CrWOev01MopV1zmQOTh2RrFLR6ast
+ iEATyVKiAUxAdKLV5zvZQugK3gWetac8Si1UAH6kPFOd2ktHA9pWVetNZOb4lqqmta2MBP3vY
+ oBuq/LPRaajQ+p9sxnZ7OIZwsDxhpgDjaXOhkrTvl4IYS0HUG8xvfM3WOkjuridS5E3uNaa79
+ JtFOw43MHiI6h1s127vcZ3CoVR+1xBpu5t3i/jFr5sy/y2erjnRTEp/iP+0Yjrs0AcOq1K41H
+ XoTPOqWe9aaerEg1WSVHsFpa4MaHdW4YjNGCOQEwZ+nq/AyW55/ztjYGdLYQBoMrLNHqfBEZQ
+ a6fNKfuoX+okMAA7KaaqvdBAi8wD8yFZCSfpLhq5Rvj+322ixt0mnh8rFLoCd+NItuwX+XZtP
+ SHRe8LpNo2YgJDb7cFRtqsDG2WAfS8PGL0pG3X9TLBu9xG8K3w84Z/ZDrPVoRFznhV//nOgCp
+ ejqQCgvdmx7UAcpLV4k/A0W/yzs0/PKfYfgPGjaIQtGUEsEWSv01SsbN+JQhTD4QWPqK/6CSh
+ e95lM32ei7uAj9f6wD2I2lqCo7JRkehT/WXsLn1EMgd+wZI40JkJvf8v6xAk2tO2J44NWpzCd
+ Ggkyr0P1JfzSP/QxKhu/DHsnJF5IeRGXLnhwzouESDUrp6dTSk5b3A5N3eHEioZ1q9geg4oSN
+ 3qjfRHvrC9eisuZxgC2ijUxhvM7T4wm44RidGziWqqsn/mIvAZs4Kmp9gNG1w5UBr9uqcXuva
+ +BnDwUH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/04/2016 08:13 PM, Ian Jackson wrote:
-> Signed-off-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
-> ---
->  Documentation/git-check-ref-format.txt | 10 ++++++++--
->  builtin/check-ref-format.c             | 34 +++++++++++++++++++++++++++++++---
->  2 files changed, 39 insertions(+), 5 deletions(-)
+Hi Junio,
+
+On Tue, 13 Dec 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> [...]
-> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-> index 559d5c2..87f52fa 100644
-> --- a/builtin/check-ref-format.c
-> +++ b/builtin/check-ref-format.c
-> @@ -76,6 +76,7 @@ static int check_one_ref_format(const char *refname)
->  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  {
->  	int i;
-> +	int use_stdin = 0;
->  
->  	if (argc == 2 && !strcmp(argv[1], "-h"))
->  		usage(builtin_check_ref_format_usage);
-> @@ -93,6 +94,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  			check_branch = 1;
->  		else if (!strcmp(argv[i], "--report-errors"))
->  			report_errors = 1;
-> +		else if (!strcmp(argv[i], "--stdin"))
-> +			use_stdin = 1;
->  		else
->  			usage(builtin_check_ref_format_usage);
->  	}
-> @@ -100,8 +103,33 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  	if (check_branch && (flags || normalize))
->  		usage(builtin_check_ref_format_usage);
->  
-> -	if (! (i == argc - 1))
-> -		usage(builtin_check_ref_format_usage);
-> +	if (!use_stdin) {
-> +		if (! (i == argc - 1))
-> +			usage(builtin_check_ref_format_usage);
-> +
-> +		return check_one_ref_format(argv[i]);
-> +	} else {
-> +		char buffer[2048];
-> +		int worst = 0;
->  
-> -	return check_one_ref_format(argv[i]);
-> +		if (! (i == argc))
-> +			usage(builtin_check_ref_format_usage);
-> +
-> +		while (fgets(buffer, sizeof(buffer), stdin)) {
-> +			char *newline = strchr(buffer, '\n');
-> +			if (!newline) {
-> +				fprintf(stderr, "%s --stdin: missing final newline or line too long\n", *argv);
-> +				exit(127);
-> +			}
-> +			*newline = 0;
-> +			int got = check_one_ref_format(buffer);
-
-Another minor point: project policy is not to mix declarations and code.
-Please declare `got` at the top of the block.
-
-> +			if (got > worst)
-> +				worst = got;
-> +		}
-> +		if (!feof(stdin)) {
-> +			perror("reading from stdin");
-> +			exit(127);
-> +		}
-> +		return worst;
-> +	}
->  }
+> > @@ -43,6 +44,20 @@ static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
+> >   */
+> >  static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
+> >  /*
 > 
+> It is minor, but please have a blank line to separate the logical
+> blocks.
 
-Michael
+Ah, but where to draw the line? These comments in front of some of the
+rebase_path_* functions clarify the particular role of the corresponding
+paths, but all of those functions belong to the same block of
+rebase_path_* functions. That latter circumstance is what made me decide
+to *not* insert blank lines here, but only a blank line before that block
+(to separate from the sequencer path functions) and after that block (to
+separate from the rest of the code).
 
+> If you have "comment for thing A" before "thing A", then having a blank
+> after that before "comment for thing B" and "thing B" that follow would
+> help.  Otherwise "thing A" immediately followed by "comment for thing B"
+> are (mis)read together, leading to nonsense.
+
+In this case, I think it is quite obvious that the comments belong to the
+immediately following line, and that all of the path functions are part of
+a bigger block.
+
+> > + * When an "edit" rebase command is being processed, the SHA1 of the
+> > + * commit to be edited is recorded in this file.  When "git rebase
+> > + * --continue" is executed, if there are any staged changes then they
+> > + * will be amended to the HEAD commit, but only provided the HEAD
+> > + * commit is still the commit to be edited.  When any other rebase
+> > + * command is processed, this file is deleted.
+> > + */
+> > +static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
+> > +/*
+> > + * When we stop at a given patch via the "edit" command, this file contains
+> > + * the long commit name of the corresponding patch.
+> 
+> If you abbreviate an object name to 38-hex that is still long but
+> that is not full; if you meant full 40-hex, better spell it out as
+> "full"---that conveys useful information to programmers (e.g. they
+> can just use get_sha1_hex()).
+> 
+> But I think you are writing short_commit_name() to it?  So perhaps
+> "an abbreviated commit object name"?
+
+Fixed.
+
+> > @@ -1301,9 +1318,87 @@ static int save_opts(struct replay_opts *opts)
+> >  	return res;
+> >  }
+> >  
+> > +static int make_patch(struct commit *commit, struct replay_opts *opts)
+> > +{
+> > +	struct strbuf buf = STRBUF_INIT;
+> > +	struct rev_info log_tree_opt;
+> > +	const char *commit_buffer = get_commit_buffer(commit, NULL), *subject, *p;
+> > +	int res = 0;
+> > +
+> > +	p = short_commit_name(commit);
+> > +	if (write_message(p, strlen(p), rebase_path_stopped_sha(), 1) < 0)
+> > +		return -1;
+> > +
+> > +	strbuf_addf(&buf, "%s/patch", get_dir(opts));
+> > +	memset(&log_tree_opt, 0, sizeof(log_tree_opt));
+> > +	init_revisions(&log_tree_opt, NULL);
+> > +	log_tree_opt.abbrev = 0;
+> > +	log_tree_opt.diff = 1;
+> > +	log_tree_opt.diffopt.output_format = DIFF_FORMAT_PATCH;
+> > +	log_tree_opt.disable_stdin = 1;
+> > +	log_tree_opt.no_commit_id = 1;
+> > +	log_tree_opt.diffopt.file = fopen(buf.buf, "w");
+> > +	log_tree_opt.diffopt.use_color = GIT_COLOR_NEVER;
+> > +	if (!log_tree_opt.diffopt.file)
+> > +		res |= error_errno(_("could not open '%s'"), buf.buf);
+> > +	else {
+> > +		res |= log_tree_commit(&log_tree_opt, commit);
+> > +		fclose(log_tree_opt.diffopt.file);
+> > +	}
+> > +	strbuf_reset(&buf);
+> > +	strbuf_addf(&buf, "%s/message", get_dir(opts));
+> > +	if (!file_exists(buf.buf)) {
+> > +		find_commit_subject(commit_buffer, &subject);
+> > +		res |= write_message(subject, strlen(subject), buf.buf, 1);
+> > +		unuse_commit_buffer(commit, commit_buffer);
+> > +	}
+> > +	strbuf_release(&buf);
+> > +
+> > +	return res;
+> > +}
+> 
+> OK.  This seems to match what scripted make_patch does in a handful
+> of lines.  We probably should have given you a helper to reduce
+> boilerplate that sets up log_tree_opt so that this function does not
+> have to be this long, but that is a separate topic.
+> 
+> Does it matter output_format is set to FORMAT_PATCH here, though?
+> With --no-commit-id set, I suspect there is no log message or
+> authorship information given to the output.
+> 
+> As you are only interested in seeing the patch/diff in this file and
+> the log is stored in a separate "message" file, as long as "patch"
+> file gets the patch correctly, it is not a problem, but it just
+> looked strange to see FORMAT_PATCH there.
+
+I am indifferent as to FORMAT_PATCH. It is there simply as a direct
+translation of the `diff-tree -p` command in
+https://github.com/git/git/blob/v2.11.0/git-rebase--interactive.sh#L188
+
+Ciao,
+Dscho
