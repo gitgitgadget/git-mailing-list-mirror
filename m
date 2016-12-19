@@ -2,82 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 932B71FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 23:28:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 343B81FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 23:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933065AbcLSX1O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 18:27:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61508 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932401AbcLSX1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 18:27:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F07855A42F;
-        Mon, 19 Dec 2016 18:27:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a3TL3IhsqRdGHBGwz+yYkJE+74M=; b=uTT8Ah
-        kUGDM2TRRhPFNNJrnBOrLZXOvSGnFp5iMJuEkZ62eQawYsahNqdAR15QmzWPGdqK
-        ypIgxCIXq7R6kVFr+gDhNSMxyC/g2UCSTHVWpDty8EUiVVET0lxvahWGW6e5tR16
-        3g2j/bWE47K3aVdsaLF43V5yWmDtfpZYkXUeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iul9zidEaZVu3f6hOCeRojhJDMI9Fd6N
-        1aj8OsuvJR8xZd0NiQQOxcM/yW5OVHZgTO0TSbZ1eF7VAmZgi/8SUIH1rzENwidE
-        lJjSkBdrZ5INYhVZQCkoRnXKGp6ivLrSFmwahpxLHZDp2L7cctb6BGdudprYlsT4
-        BNg3vdDF5uc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E781D5A42E;
-        Mon, 19 Dec 2016 18:27:10 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 534675A42D;
-        Mon, 19 Dec 2016 18:27:10 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] improve relocate_git_dir to fail into a sane state.
-References: <20161219215709.24620-1-sbeller@google.com>
-        <xmqqfuljmswl.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZA1HxsdCAQxKiNMQrH9fLrhGKc8Um7x-R7u92ujVBigQ@mail.gmail.com>
-Date:   Mon, 19 Dec 2016 15:27:09 -0800
-In-Reply-To: <CAGZ79kZA1HxsdCAQxKiNMQrH9fLrhGKc8Um7x-R7u92ujVBigQ@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 19 Dec 2016 15:14:49 -0800")
-Message-ID: <xmqq7f6vmrea.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A9FE8392-C642-11E6-A863-E98412518317-77302942!pb-smtp1.pobox.com
+        id S932984AbcLSX2r (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 18:28:47 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:38447 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932401AbcLSX2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 18:28:46 -0500
+Received: by mail-it0-f44.google.com with SMTP id x2so8465148itf.1
+        for <git@vger.kernel.org>; Mon, 19 Dec 2016 15:28:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=R2eLctxjSCWK58TorxgPyI/kr3dKBN8BHFbaonEYRec=;
+        b=K/0IV9dybMBDmPtx8JfVAeFOTIbExGQb+k7ihfrRMTi7KCoewv73O6ENLLWa6PM0gh
+         yWbwKPeoAe6KcwM/aPvnMk0vBiZrsFGBHs9K+COvKZlQbMtF3/KweCxppwx8ftyP0jDx
+         BY9aXYx513ZHzjvpuGUMMQo/ngRiUcYL4rlHO/rrUaYxZjNNRFfIV669vn8w30COU7A9
+         1S/iHhdkVPg0Vq3qeCUFHt0u8QB4K4UK0hnH7rfhNoVrMA9pm+KzBrGZlQ0f4u/SPC3S
+         K0zapj/4a11vO6kYU8QZlF8QikkImvwCetpi8vFvggrVHS07hqP45Q4BekZw0pqtUkuB
+         hjGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=R2eLctxjSCWK58TorxgPyI/kr3dKBN8BHFbaonEYRec=;
+        b=qRr01m26PJsHgZKKM/u64MCG3kghEUl7E0/90apDuwSF4Zq2tAmuYE2nvcaqonkb3m
+         aWXWIPLJ25QRIx6r1Ytp+TGrvVhACp0CYOucCJ1KLQFJq6WvPNl2QfYpyH/uKjdxQuiL
+         SqOuhUQWfOFY5Ur0qsNO1c8uBk0FQU0APqYRkAunKyuGc4PYwWLM4AKmWFs3IrvrFBPb
+         6eUW7natfQFRPQ4xo5hT5QSUh5je/G+j09DVWS/lzjvHomL5+uuQfmRZOMFdVcaX78Re
+         bimVzLVwwM7O+qyWqOBXPFiZxYXzhFQWjOHVPZnkpXPFgdB61xOwkX0xkLUz1CHh5oF1
+         fSig==
+X-Gm-Message-State: AKaTC01FKxcAEWkFNbtGoIexjiP1p6fFMQNttbwYfkFzpsGtBrUBQVo69XLaG9aNoOLAfAWj
+X-Received: by 10.36.70.21 with SMTP id j21mr20993584itb.60.1482190124153;
+        Mon, 19 Dec 2016 15:28:44 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:2c2e:3e21:f7c2:2ccc])
+        by smtp.gmail.com with ESMTPSA id m127sm7843052itc.19.2016.12.19.15.28.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 19 Dec 2016 15:28:43 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, bmwill@google.com,
+        sandals@crustytoothpaste.net, David.Turner@twosigma.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCHv4 0/5] git-rm absorbs submodule git directory before deletion
+Date:   Mon, 19 Dec 2016 15:28:23 -0800
+Message-Id: <20161219232828.5075-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.rc2.53.gb7b3fba.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+v4:
+* reworded commit messages of the last 2 patches
+* introduced a new patch introducing {run,start,finish}_command_or_die
+* found an existing function in dir.h to use to remove a directory
+  which deals gracefully with the cornercases, that Junio pointed out.
 
-> On Mon, Dec 19, 2016 at 2:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> This goes on top of sb/submodule-embed-gitdir.
->>> When the absorbing of a git dir fails, try to recover into a sane state,
->>> i.e. try to undo the move of the git dir.
->>
->> Are these unconditionally good improvements?  I ask because the
->> series is still not in 'next' and it is the last chance to fold
->> these into existing patches if we wanted to.
->
-> Actually I forgot to mark these as RFC-ish as it is a response to
-> https://public-inbox.org/git/20161219053507.GA2335@duynguyen.vn.dektech.internal/
-> (which was the only review comment this round)
->
-> So I'd say these patches are rather experimental in my mind
-> unlike the absorb series, which I assume is ok as is already.
+v3:
+* removed the patch to enhance ok_to_remove_submodule to absorb the submodule
+  if needed
+* Removed all the error reporting from git-rm that was related to submodule
+  git directories not absorbed.
+* instead just absorb the git repositories or let the absorb function die
+  with an appropriate error message.
 
-OK.  Thanks for clarification.
+v2:
+* new base where to apply the patch:
+  sb/submodule-embed-gitdir merged with sb/t3600-cleanup.
+  I got merge conflicts and resolved them this way:
+#@@@ -709,9 -687,10 +687,9 @@@ test_expect_success 'checking out a com
+#          git commit -m "submodule removal" submod &&
+#          git checkout HEAD^ &&
+#          git submodule update &&
+#-         git checkout -q HEAD^ 2>actual &&
+#+         git checkout -q HEAD^ &&
+#          git checkout -q master 2>actual &&
+# -        echo "warning: unable to rmdir submod: Directory not empty" >expected &&
+# -        test_i18ncmp expected actual &&
+# +        test_i18ngrep "^warning: unable to rmdir submod:" actual &&
+#          git status -s submod >actual &&
+#          echo "?? submod/" >expected &&
+#          test_cmp expected actual &&
+#
+
+* improved commit message in "ok_to_remove_submodule: absorb the submodule git dir"
+  (David Turner offered me some advice on how to write better English off list)
+* simplified code in last patch:
+  -> dropped wrong comment for fallthrough
+  -> moved redundant code out of both bodies of an if-clause.
+* Fixed last patchs commit message to have "or_die" instead of or_dir.
+
+v1:
+The "checkout --recurse-submodules" series got too large to comfortably send
+it out for review, so I had to break it up into smaller series'; this is the
+first subseries, but it makes sense on its own.
+
+This series teaches git-rm to absorb the git directory of a submodule instead
+of failing and complaining about the git directory preventing deletion.
+
+It applies on origin/sb/submodule-embed-gitdir.
+
+Any feedback welcome!
+
+Thanks,
+Stefan
+
+Stefan Beller (5):
+  submodule.h: add extern keyword to functions
+  submodule: modernize ok_to_remove_submodule to use argv_array
+  run-command: add {run,start,finish}_command_or_die
+  submodule: add flags to ok_to_remove_submodule
+  rm: absorb a submodules git dir before deletion
+
+ builtin/rm.c  | 82 +++++++++++++++--------------------------------------------
+ run-command.c | 28 ++++++++++++++++++++
+ run-command.h |  4 +++
+ submodule.c   | 27 ++++++++++----------
+ submodule.h   | 58 ++++++++++++++++++++++++------------------
+ t/t3600-rm.sh | 39 +++++++++++-----------------
+ 6 files changed, 114 insertions(+), 124 deletions(-)
+
+-- 
+2.11.0.rc2.53.gb7b3fba.dirty
+
