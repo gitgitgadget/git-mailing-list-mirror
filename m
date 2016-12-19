@@ -2,90 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1D221FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 12:30:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21D1B1FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 12:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932386AbcLSM35 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 07:29:57 -0500
-Received: from chiark.greenend.org.uk ([212.13.197.229]:44595 "EHLO
-        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754774AbcLSM3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 07:29:55 -0500
-X-Greylist: delayed 2111 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Dec 2016 07:29:55 EST
-Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
-        (return-path ijackson@chiark.greenend.org.uk)
-        id 1cIwWh-0002kg-Qv; Mon, 19 Dec 2016 11:54:43 +0000
-From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
+        id S1755281AbcLSMv1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 07:51:27 -0500
+Received: from mout.gmx.net ([212.227.17.22]:61267 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755247AbcLSMv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 07:51:26 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRkhB-1cC3W132Yz-00T0SC; Mon, 19
+ Dec 2016 13:51:16 +0100
+Date:   Mon, 19 Dec 2016 13:51:14 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 02/34] sequencer (rebase -i): implement the 'noop'
+ command
+In-Reply-To: <xmqqtwa7ze9i.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1612191237400.54750@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de> <934c8e420cc4a75b1f3e4489fa4a4135c48f78ae.1481642927.git.johannes.schindelin@gmx.de> <xmqqfulr1s5z.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFzxFFNY+dL6s7dLZeVXBsBKD0aeof5Bj2wcD1CpefVSAA@mail.gmail.com> <xmqqtwa7ze9i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22615.51843.744027.398293@chiark.greenend.org.uk>
-Date:   Mon, 19 Dec 2016 11:54:43 +0000
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/5] check-ref-format: Refactor to make --branch code more
- common
-In-Reply-To: <e93ee78a-aa5e-27f6-9703-6efa385f487b@alum.mit.edu>
-References: <20161104191358.28812-1-ijackson@chiark.greenend.org.uk>
-        <20161104191358.28812-3-ijackson@chiark.greenend.org.uk>
-        <e93ee78a-aa5e-27f6-9703-6efa385f487b@alum.mit.edu>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:PDXFz0c7n1gWRErzyC59ZQqIOeto0278v41JGT6gWmh0oCJBPMP
+ FizJ55oic7ioDaT+AbZqrkCqN8gtm4JZeMkwGDlMHG+8MSFWy+eWqeYw/gCMoAJf+cgDPs5
+ SvzqMoZK0xs3H7+vlArvZuLMjW468lYEG8kPOGaD9OhJKNzsx6hIJnSgfkS3u34gY7X1KmA
+ Y/4Wg8l4wfrZEZpxDxgmQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fmtFj8avq84=:vdLuWeiXgLtyQ5kzc4iox9
+ xMivaDDRomBRjEJVPswwrMPAOIVwpgD/OKuqdbjkGaOxGa+c850LebIA4kpO8zycqF6KVbifc
+ BwEQvkbGZBxhExsU9rUrpNWX+qlFlP5YbWMNaeC4W0uEqfEyLwgBTR9OffRIAGEgY2POJpmVo
+ OJ49oBmirdB2r6CX5/OTqaZtfJA9uwMPO0YYuMMMfYsDCxO6ul2JNfB7N8DTeOmIrF7DbHxgs
+ Y7GAOhbR7/4jp4RGWR/gwo8E8PatP/L04ahqv7JUFYwZR2vYePE4frT2uK8+QHEmsKgmYrQhE
+ hDEOINjohpyGKS2GFHYApqEmIFUvAMI+rN7B8XbxHoC22Xvbr55NstuRFju4Slaoz1IJJ/s7A
+ CQDYLFw88F01QF9n7LGftEWWCEedOJAmNrtDM/y8xkzc+7iWpQgN6LosMNufW5zfWBtJ5tKL4
+ LhWJmelRmGVJ95hGJPbqiHezjXMlbA/MdLgCrgDJxRe3HsizPccPZSFRXGfZjpolUm3Vy1/Os
+ YcRiWTEIT0NriioGY5l0z1jf7uv4mEWCpOa/PDiZ6fbQnmIYdhx545FoAqYa4QheZ0uQXwtrD
+ 3QgVbJRALtgnotGALC/AD3y6yRldiThGEEGrq2qLvW3//owivBRhw/bIc0md7VBY5Wim6AfJb
+ FvWNl+6HkyEfql0Ua5WpEbBFkFaZtJgvD2eUzeGM/5uQ6h5wuJ1nwSui0A/mnkdspRHXi2C1P
+ 4SaHBI7EMnDKJSiqWMUBMGEvitSejERFJMRlyXgHoNFUUps5P80EwW7Vt5aaiplbdopGwKlmt
+ 35C/+32
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty writes ("Re: [PATCH 2/5] check-ref-format: Refactor to make --branch code more common"):
-> On 11/04/2016 08:13 PM, Ian Jackson wrote:
-> >  static int normalize = 0;
-> > +static int check_branch = 0;
-> >  static int flags = 0;
-> >  
-> >  static int check_one_ref_format(const char *refname)
-> >  {
-> > +	int got;
+Hi,
+
+On Tue, 13 Dec 2016, Junio C Hamano wrote:
+
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
 > 
-> `got` is an unusual name for this variable, and I don't really
-> understand what the word means in this context. Is there a reason not to
-> use the more usual `err`?
+> > On Tue, Dec 13, 2016 at 12:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >>
+> >>> +/*
+> >>> + * Note that ordering matters in this enum. Not only must it match the mapping
+> >>> + * below, it is also divided into several sections that matter.  When adding
+> >>> + * new commands, make sure you add it in the right section.
+> >>> + */
+> >>
+> >> Good thinking.
 
-I have no real opinion about the name of this variable.  `err' is a
-fine name too.
+Not my thinking... This was in direct response to a suggestion by Dennis
+Kaarsemaker, I cannot take credit for the idea.
 
-> > +	if (check_branch && (flags || normalize))
+> Makes me wish C were a better language, though ;-)
+> >
+> > Do this:
+> >
+> >   static const char *todo_command_strings[] = {
+> >       [TODO_PICK] = "pick",
+> >       [TODO_REVERT] = "revert",
+> >       [TODO_NOOP] = "noop:,
+> >   };
+> >
+> > which makes the array be order-independent. You still need to make
+> > sure you fill in all the entries, of course, but it tends to avoid at
+> > least one gotcha, and it makes it more obvious how the two are tied
+> > together.
 > 
-> Is there a reason not to allow `--normalize` with `--branch`?
-> (Currently, `git check-ref-format --branch` *does* allow input like
-> `refs/heads/foo`.)
+> Yes, I know.  But I do not think the variant of C we stick to is not
+> new enough to have that.
 
-It was like that when I found it :-).  I wasn't sure why this
-restriction was there so I left it alone.
+Let me try to express this without double negation: our coding guidelines
+state very explicitly that we do not use C99 initializers, and it also
+explains why: we want to support a broader range of compilers. For
+details, see:
 
-Looking at it again: AFAICT from the documentation --branch is a
-completely different mode.  The effect of --normalize is not to do
-additional work, but simply to produce additional output.  It really
-means --print-normalized.  --branch already prints output, but AFAICT
-it does not collapse slashes.  This seems like a confusing collection
-of options.  But, sorting that out is beyond the scope of what I was
-trying to do.
+https://github.com/git/git/blob/v2.11.0/Documentation/CodingGuidelines#L179-L181
 
-In my series I have at least managed not to make any of this any
-worse, I think: the --stdin option I introduce applies to both modes
-equally, and doesn't make future improvements to the conflict between
---branch and --normalize any harder.
+TBH I briefly considered going the same route as I did for the fsck
+warnings (taking a lot of heat for the ugliness):
 
-(In _this_ patch, certainly, allowing --normalize with --branch would
-be wrong, since _this_ patch is just refactoring.)
+https://github.com/git/git/blob/v2.11.0/fsck.c#L17-L85
 
-Thanks,
-Ian.
+It would have looked somewhat like this:
 
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+	#define FOREACH_TODO(FUNC) \
+		FUNC(PICK, 'p', "pick") \
+		FUNC(REVERT, 0, "revert") \
+		FUNC(EDIT, 'e', "edit") \
+		...
+		FUNC(COMMENT, 0, NULL)
 
-If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
-a private address which bypasses my fierce spamfilter.
+	#define TODO(id, short, long) TODO_##id,
+	enum todo_command {
+		FOREACH_TODO(TODO)
+		TODO_MAX
+	};
+	#undef TODO
+
+	#define TODO(id, short, long) { short, long },
+	static struct {
+		char c;
+		const char *str;
+	} todo_command_info[] = {
+		FOREACH_TODO(TODO)
+		{ 0, NULL }
+	};
+	#undef TODO
+
+I have to admit that even I prefer the version I provided in my
+contribution over the "fsck method" outlined above.
+
+Ciao,
+Dscho
