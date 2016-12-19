@@ -2,125 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07D5C1FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 22:00:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 582EC1FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 22:05:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932406AbcLSWA0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 17:00:26 -0500
-Received: from mail-it0-f46.google.com ([209.85.214.46]:35744 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932282AbcLSWAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 17:00:24 -0500
-Received: by mail-it0-f46.google.com with SMTP id c20so69160009itb.0
-        for <git@vger.kernel.org>; Mon, 19 Dec 2016 14:00:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WtQAhifFMlqp3EMoy0eFAOX650ppB09qq/EqwrOcwnw=;
-        b=RfYv9KuF6Yi6NWCHl+ODnD1pZ5U8VkQYmeWtZDwXFALCf2EOCJBMLxkBtztKnXkU7d
-         pLoo4frTXAIJiMQZgFvFVnWMG0gMOzVCurU5o2Espgbdcu2ucRNBkbDh7ulUv241oP/7
-         Qw8SPGTfW39zQjoQ3M50CmQ9qTUmgN75qxoeV6zwdjxUaTVHf8XFaBtZBYp4A2dASjJS
-         SlYjtL4R/cuISFwPQwSv3b3uXOLYX40PpTiJv2k1OmprNEbANkOWpXuTpmQqmz6CbO/3
-         J/c/aZZyIOoeAOQnCY78Xd4lXb62gKGq71J2PYcIvuYt9sE1z0a9h1Uaq05uTJuPn+nA
-         g89A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=WtQAhifFMlqp3EMoy0eFAOX650ppB09qq/EqwrOcwnw=;
-        b=WhIqxE6EmUAuOoYycftOgRh+504mDtNEQRV7a9IXZkvob3zALB9DmQjq2R54W3S1ud
-         nBH9w/A/njw2W06lPgabwu/GuEwPYWsYS1SibL+rdZVAu6oYMBMUWRoDh8qrepHeZzHU
-         xfAlAVEEyDRW/oXDGLcRj7k2Mnli/S0Yt+HsbZIcqdnkT1qpOVstyXPrIEXCsh4Q/Jj9
-         tjzYZOGGvsF0dHwbEiU7wQ5bzdAPlk1ydyM0MSP/cYc2agKDJxpZPB2MNbAmN7VYLo1C
-         bsWM16+9zDvB3P/WRlpvAn19XNPIfZhpgQDR97BGSxGOxavpPQ53rV/GofKpD1sPuKMA
-         +KEg==
-X-Gm-Message-State: AKaTC00INToN5iwHPEBZgSKvg9XjSFDb/6cHvltC5R/gtmisLJ2qp37RBmfC3lWdYOW0b1r/
-X-Received: by 10.36.13.82 with SMTP id 79mr18510639itx.66.1482184818193;
-        Mon, 19 Dec 2016 14:00:18 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:2c2e:3e21:f7c2:2ccc])
-        by smtp.gmail.com with ESMTPSA id v74sm9049760ioi.2.2016.12.19.14.00.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 19 Dec 2016 14:00:17 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     pclouds@gmail.com, bmwill@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] dir.c: split up connect_work_tree_and_git_dir
-Date:   Mon, 19 Dec 2016 13:57:08 -0800
-Message-Id: <20161219215709.24620-2-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.rc2.53.gb7b3fba.dirty
-In-Reply-To: <20161219215709.24620-1-sbeller@google.com>
-References: <20161219215709.24620-1-sbeller@google.com>
+        id S1755901AbcLSWFA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 17:05:00 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51847 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753270AbcLSWE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 17:04:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A25B5A6C5;
+        Mon, 19 Dec 2016 17:04:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=D1R1syoZsttoHd11sTmyauic9aI=; b=NtrNxn
+        EebBF9tTPWBLlrNDtI9UiC71u+vZb6L7RKB/OeooVLust6H9ZZDeMXA0SVzwNJSd
+        CAN2DTp/Yy2Afd6iqTLAfpjqBIipJeTkC8RKr1djhStbRxGyO9lQnbuf0lWXHAW0
+        ssKkCUhu5VwwKlK9SM+wXPZFAdW3XX0ABZyaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YnLA+85tp9DVxOPYh83me8TLZFKNDe7J
+        KJlS5DqL84QHq3YcwxJcPnsuA1so2CXkjzvuEb7doNFrm4zxBLEgzFDGpOfYtpI1
+        ZMVCC1DDdiyOwWNIaQgZcDjO6cMqmYviApO3cATlvYXuo7U5ChsNJVJ/SEV37kI4
+        k9eKRNDum2s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 425FC5A6C4;
+        Mon, 19 Dec 2016 17:04:57 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B523A5A6C1;
+        Mon, 19 Dec 2016 17:04:55 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     git@vger.kernel.org,
+        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Chris Packham <judge.packham@gmail.com>,
+        Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Tweak help auto-correct phrasing.
+References: <CAFOYHZDnpzdYq9j4-xGSdKZQX9deLBpZZhz209qV7cCtq537SA@mail.gmail.com>
+        <20161219170137.5507-1-marcnarc@xiplink.com>
+Date:   Mon, 19 Dec 2016 14:04:54 -0800
+In-Reply-To: <20161219170137.5507-1-marcnarc@xiplink.com> (Marc Branchaud's
+        message of "Mon, 19 Dec 2016 12:01:37 -0500")
+Message-ID: <xmqqpoknmv7d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2CC8913E-C637-11E6-9AD4-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we want to treat the failures of each of the two steps
-differently, so split them up first.
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- dir.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+> ---
+>
+> On 2016-12-18 07:48 PM, Chris Packham wrote:
+>>
+>> This feature already exists (although it's not interactive). See
+>> help.autoCorrect in the git-config man page. "git config
+>> help.autoCorrect -1" should to the trick.
+>
+> Awesome, I was unaware of this feature.  Thanks!
+>
+> I found the message it prints a bit awkward, so here's a patch to fix it up.
+>
+> Instead of:
+>
+>    WARNING: You called a Git command named 'lgo', which does not exist.
+>    Continuing under the assumption that you meant 'log'
+>    in 1.5 seconds automatically...
+>
+> it's now:
+>
+>    WARNING: You called a Git command named 'lgo', which does not exist.
+>    Continuing in 1.5 seconds under the assumption that you meant 'log'.
+>
+> 		M.
 
-diff --git a/dir.c b/dir.c
-index d872cc1570..b2cb23fe88 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2749,27 +2749,41 @@ void untracked_cache_add_to_index(struct index_state *istate,
- 	untracked_cache_invalidate_path(istate, path);
- }
- 
--/* Update gitfile and core.worktree setting to connect work tree and git dir */
--void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
-+static void point_gitlink_file_to(const char *work_tree, const char *git_dir)
- {
- 	struct strbuf file_name = STRBUF_INIT;
- 	struct strbuf rel_path = STRBUF_INIT;
--	char *git_dir = xstrdup(real_path(git_dir_));
--	char *work_tree = xstrdup(real_path(work_tree_));
- 
--	/* Update gitfile */
- 	strbuf_addf(&file_name, "%s/.git", work_tree);
- 	write_file(file_name.buf, "gitdir: %s",
- 		   relative_path(git_dir, work_tree, &rel_path));
- 
--	/* Update core.worktree setting */
--	strbuf_reset(&file_name);
-+	strbuf_release(&file_name);
-+	strbuf_release(&rel_path);
-+}
-+
-+static void set_core_work_tree_to_connect(const char *work_tree, const char *git_dir)
-+{
-+	struct strbuf file_name = STRBUF_INIT;
-+	struct strbuf rel_path = STRBUF_INIT;
-+
- 	strbuf_addf(&file_name, "%s/config", git_dir);
- 	git_config_set_in_file(file_name.buf, "core.worktree",
- 			       relative_path(work_tree, git_dir, &rel_path));
- 
- 	strbuf_release(&file_name);
- 	strbuf_release(&rel_path);
-+}
-+
-+/* Update gitfile and core.worktree setting to connect work tree and git dir */
-+void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
-+{
-+	char *git_dir = xstrdup(real_path(git_dir_));
-+	char *work_tree = xstrdup(real_path(work_tree_));
-+
-+	point_gitlink_file_to(work_tree, git_dir);
-+	set_core_work_tree_to_connect(work_tree, git_dir);
-+
- 	free(work_tree);
- 	free(git_dir);
- }
--- 
-2.11.0.rc2.53.gb7b3fba.dirty
+Sounds better.
 
+The "Instead of ... we now show ..." description deserves to be in
+the log message, not after "---" line.
+
+s/under the assumption/assuming/ would make it even shorter and give
+the potentially long corrected command name a chance to still fit on
+the line without wrapping, I would think, though.
+
+>
+>  help.c | 18 ++++++++++++------
+>  1 file changed, 12 insertions(+), 6 deletions(-)
+>
+> diff --git a/help.c b/help.c
+> index 53e2a67e00..55350c0673 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -381,12 +381,18 @@ const char *help_unknown_cmd(const char *cmd)
+>  		clean_cmdnames(&main_cmds);
+>  		fprintf_ln(stderr,
+>  			   _("WARNING: You called a Git command named '%s', "
+> -			     "which does not exist.\n"
+> -			     "Continuing under the assumption that you meant '%s'"),
+> -			cmd, assumed);
+> -		if (autocorrect > 0) {
+> -			fprintf_ln(stderr, _("in %0.1f seconds automatically..."),
+> -				(float)autocorrect/10.0);
+> +			     "which does not exist."),
+> +			   cmd);
+> +		if (autocorrect < 0)
+> +			fprintf_ln(stderr,
+> +				   _("Continuing under the assumption that "
+> +				     "you meant '%s'."),
+> +				   assumed);
+> +		else {
+> +			fprintf_ln(stderr,
+> +				   _("Continuing in %0.1f seconds under the "
+> +				     "assumption that you meant '%s'."),
+> +				   (float)autocorrect/10.0, assumed);
+>  			sleep_millisec(autocorrect * 100);
+>  		}
+>  		return assumed;
