@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1A4B1FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 21:30:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03C0C1FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 21:30:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753478AbcLSV3V (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 16:29:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53337 "EHLO
+        id S1753610AbcLSV3m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 16:29:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51844 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752339AbcLSV3U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 16:29:20 -0500
+        with ESMTP id S1752966AbcLSV3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 16:29:41 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4DAB5A0C2;
-        Mon, 19 Dec 2016 16:29:18 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED37458048;
+        Mon, 19 Dec 2016 16:29:40 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+zyLBtteUkrVpgJaSu0hvSdh6eY=; b=vmQqYy
-        ItfDK7A8RbGwpdRljUZGdLvLVGpkg6EOOUXKiz/3p9WgznxJ5uj7u1+016qGjTW4
-        NOi0zIselVOaRXE4sR4Uu3aR4NFd9Fwx5WGra8OgHJ0hOobVqZ8OmjDvJQlcHEcV
-        YHppQ1YR+8wyizEUdxxtm3j4iT2LLYbP/jS6Y=
+        :content-type; s=sasl; bh=hARGyWxSn4W3/tPkE3CEN0/p5Ig=; b=bvKG9q
+        Sfk/Nk6zVTgquJXdQy1jAGneoeiDV0hQxy4TqzyR8+EdW6F5xtmNwRcfx7NtVIpw
+        +qiwj87j3kNrzu8ipO+UHQ4QIgS5HRbrYM4CZhD0MjanQcdHECp49MnnrIlMomwG
+        IIRb1TqaRH+AfAkjn0cCvOhhuKcNCefdS+YOY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fxDIm6w5xD+O1s4rIfB0BhxUEbb5C+Ir
-        2EqCcG7GQr0nOo/Nk1WdoY0sZrs1ngmXAIDJbSIFSlkeTrV6t+ua/ozQS+gMqWX6
-        vfLL0HcAKgwmM37qnPEdNnsW1OXYCmRWhhnkG9e+cFsK+qliN7aCB5H4fCP72N4e
-        P2rf+Xh1f4E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC9155A0C1;
-        Mon, 19 Dec 2016 16:29:18 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=dWSz3TPgMriEWwbBiF0CxSwPqT4XjIzo
+        7ZooTtZdaq6xG5uSIFrvogitC8+WftY+h++OCkctP7klUwzTh43dRWANKTgSomTC
+        sDzhajaz2bupSSxj7VlbwCbsuX55Ux0cluOkBP8O2ijPrK6gKZjZmmt36brkkfYQ
+        T1Gwq/cCg0c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E572558047;
+        Mon, 19 Dec 2016 16:29:40 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 213415A0C0;
-        Mon, 19 Dec 2016 16:29:18 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F92358046;
+        Mon, 19 Dec 2016 16:29:40 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     larsxschneider@gmail.com
 Cc:     git@vger.kernel.org, luke@diamand.org
-Subject: Re: [PATCH v1] git-p4: fix git-p4.pathEncoding for removed files
-References: <20161218175153.92336-1-larsxschneider@gmail.com>
-Date:   Mon, 19 Dec 2016 13:29:17 -0800
-In-Reply-To: <20161218175153.92336-1-larsxschneider@gmail.com>
-        (larsxschneider@gmail.com's message of "Sun, 18 Dec 2016 18:51:53
+Subject: Re: [PATCH v1] git-p4: add diff/merge properties to .gitattributes for GitLFS files
+References: <20161218190140.3732-1-larsxschneider@gmail.com>
+Date:   Mon, 19 Dec 2016 13:29:38 -0800
+In-Reply-To: <20161218190140.3732-1-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Sun, 18 Dec 2016 20:01:40
         +0100")
-Message-ID: <xmqq37hjobf6.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqy3zbmwu5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 32A262B0-C632-11E6-AE65-E98412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3FDBFB12-C632-11E6-BCE4-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,98 +61,118 @@ larsxschneider@gmail.com writes:
 
 > From: Lars Schneider <larsxschneider@gmail.com>
 >
-> In a9e38359e3 we taught git-p4 a way to re-encode path names from what
-> was used in Perforce to UTF-8. This path re-encoding worked properly for
-> "added" paths. "Removed" paths were not re-encoded and therefore
-> different from the "added" paths. Consequently, these files were not
-> removed in a git-p4 cloned Git repository because the path names did not
-> match.
+> The `git lfs track` command generates a .gitattributes file with diff
+> and merge properties [1]. Set the same .gitattributes format for files
+> tracked with GitLFS in git-p4.
 >
-> Fix this by moving the re-encoding to a place that affects "added" and
-> "removed" paths. Add a test to demonstrate the issue.
+> [1] https://github.com/git-lfs/git-lfs/blob/v1.5.3/commands/command_track.go#L121
 >
 > Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 > ---
 
-Thanks.
+Thanks.  Luke, does this look ok?
 
-The above description makes me wonder what happens to "modified"
-paths, but presumably they are handled in a separate codepath?  Or
-does this also cover not just "removed" but also paths with any
-change?
-
-Luke, does this look good?
-
+>
 > Notes:
 >     Base Commit: d1271bddd4 (v2.11.0)
->     Diff on Web: https://github.com/git/git/compare/d1271bddd4...larsxschneider:05a82caa69
->     Checkout:    git fetch https://github.com/larsxschneider/git git-p4/fix-path-encoding-v1 && git checkout 05a82caa69
+>     Diff on Web: https://github.com/git/git/compare/d1271bddd4...larsxschneider:e045b3d5c8
+>     Checkout:    git fetch https://github.com/larsxschneider/git git-p4/fix-lfs-attributes-v1 && git checkout e045b3d5c8
 >
->  git-p4.py                       | 19 +++++++++----------
->  t/t9822-git-p4-path-encoding.sh | 16 ++++++++++++++++
->  2 files changed, 25 insertions(+), 10 deletions(-)
+>  git-p4.py                 |  4 ++--
+>  t/t9824-git-p4-git-lfs.sh | 24 ++++++++++++------------
+>  2 files changed, 14 insertions(+), 14 deletions(-)
 >
 > diff --git a/git-p4.py b/git-p4.py
-> index fd5ca52462..8f311cb4e8 100755
+> index fd5ca52462..87b6932c81 100755
 > --- a/git-p4.py
 > +++ b/git-p4.py
-> @@ -2366,6 +2366,15 @@ class P4Sync(Command, P4UserMap):
->                      break
->  
->          path = wildcard_decode(path)
-> +        try:
-> +            path.decode('ascii')
-> +        except:
-> +            encoding = 'utf8'
-> +            if gitConfig('git-p4.pathEncoding'):
-> +                encoding = gitConfig('git-p4.pathEncoding')
-> +            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
-> +            if self.verbose:
-> +                print 'Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path)
->          return path
->  
->      def splitFilesIntoBranches(self, commit):
-> @@ -2495,16 +2504,6 @@ class P4Sync(Command, P4UserMap):
->              text = regexp.sub(r'$\1$', text)
->              contents = [ text ]
->  
-> -        try:
-> -            relPath.decode('ascii')
-> -        except:
-> -            encoding = 'utf8'
-> -            if gitConfig('git-p4.pathEncoding'):
-> -                encoding = gitConfig('git-p4.pathEncoding')
-> -            relPath = relPath.decode(encoding, 'replace').encode('utf8', 'replace')
-> -            if self.verbose:
-> -                print 'Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, relPath)
-> -
->          if self.largeFileSystem:
->              (git_mode, contents) = self.largeFileSystem.processContent(git_mode, relPath, contents)
->  
-> diff --git a/t/t9822-git-p4-path-encoding.sh b/t/t9822-git-p4-path-encoding.sh
-> index 7b83e696a9..c78477c19b 100755
-> --- a/t/t9822-git-p4-path-encoding.sh
-> +++ b/t/t9822-git-p4-path-encoding.sh
-> @@ -51,6 +51,22 @@ test_expect_success 'Clone repo containing iso8859-1 encoded paths with git-p4.p
->  	)
->  '
->  
-> +test_expect_success 'Delete iso8859-1 encoded paths and clone' '
-> +	(
-> +		cd "$cli" &&
-> +		ISO8859="$(printf "$ISO8859_ESCAPED")" &&
-> +		p4 delete "$ISO8859" &&
-> +		p4 submit -d "remove file"
-> +	) &&
-> +	git p4 clone --destination="$git" //depot@all &&
-> +	test_when_finished cleanup_git &&
-> +	(
-> +		cd "$git" &&
-> +		git -c core.quotepath=false ls-files >actual &&
-> +		test_must_be_empty actual
-> +	)
-> +'
-> +
->  test_expect_success 'kill p4d' '
->  	kill_p4d
->  '
+> @@ -1098,10 +1098,10 @@ class GitLFS(LargeFileSystem):
+>                  '# Git LFS (see https://git-lfs.github.com/)\n',
+>                  '#\n',
+>              ] +
+> -            ['*.' + f.replace(' ', '[[:space:]]') + ' filter=lfs -text\n'
+> +            ['*.' + f.replace(' ', '[[:space:]]') + ' filter=lfs diff=lfs merge=lfs -text\n'
+>                  for f in sorted(gitConfigList('git-p4.largeFileExtensions'))
+>              ] +
+> -            ['/' + f.replace(' ', '[[:space:]]') + ' filter=lfs -text\n'
+> +            ['/' + f.replace(' ', '[[:space:]]') + ' filter=lfs diff=lfs merge=lfs -text\n'
+>                  for f in sorted(self.largeFiles) if not self.hasLargeFileExtension(f)
+>              ]
+>          )
+> diff --git a/t/t9824-git-p4-git-lfs.sh b/t/t9824-git-p4-git-lfs.sh
+> index 110a7e7924..1379db6357 100755
+> --- a/t/t9824-git-p4-git-lfs.sh
+> +++ b/t/t9824-git-p4-git-lfs.sh
+> @@ -81,9 +81,9 @@ test_expect_success 'Store files in LFS based on size (>24 bytes)' '
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		/file2.dat filter=lfs -text
+> -		/file4.bin filter=lfs -text
+> -		/path[[:space:]]with[[:space:]]spaces/file3.bin filter=lfs -text
+> +		/file2.dat filter=lfs diff=lfs merge=lfs -text
+> +		/file4.bin filter=lfs diff=lfs merge=lfs -text
+> +		/path[[:space:]]with[[:space:]]spaces/file3.bin filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
+> @@ -109,7 +109,7 @@ test_expect_success 'Store files in LFS based on size (>25 bytes)' '
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		/file4.bin filter=lfs -text
+> +		/file4.bin filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
+> @@ -135,7 +135,7 @@ test_expect_success 'Store files in LFS based on extension (dat)' '
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		*.dat filter=lfs -text
+> +		*.dat filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
+> @@ -163,8 +163,8 @@ test_expect_success 'Store files in LFS based on size (>25 bytes) and extension
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		*.dat filter=lfs -text
+> -		/file4.bin filter=lfs -text
+> +		*.dat filter=lfs diff=lfs merge=lfs -text
+> +		/file4.bin filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
+> @@ -199,8 +199,8 @@ test_expect_success 'Remove file from repo and store files in LFS based on size
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		/file2.dat filter=lfs -text
+> -		/path[[:space:]]with[[:space:]]spaces/file3.bin filter=lfs -text
+> +		/file2.dat filter=lfs diff=lfs merge=lfs -text
+> +		/path[[:space:]]with[[:space:]]spaces/file3.bin filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
+> @@ -237,8 +237,8 @@ test_expect_success 'Add .gitattributes and store files in LFS based on size (>2
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		/file2.dat filter=lfs -text
+> -		/path[[:space:]]with[[:space:]]spaces/file3.bin filter=lfs -text
+> +		/file2.dat filter=lfs diff=lfs merge=lfs -text
+> +		/path[[:space:]]with[[:space:]]spaces/file3.bin filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
+> @@ -278,7 +278,7 @@ test_expect_success 'Add big files to repo and store files in LFS based on compr
+>  		#
+>  		# Git LFS (see https://git-lfs.github.com/)
+>  		#
+> -		/file6.bin filter=lfs -text
+> +		/file6.bin filter=lfs diff=lfs merge=lfs -text
+>  		EOF
+>  		test_path_is_file .gitattributes &&
+>  		test_cmp expect .gitattributes
