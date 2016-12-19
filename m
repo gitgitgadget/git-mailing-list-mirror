@@ -2,83 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AAD01FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 17:46:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7EF61FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 17:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932718AbcLSRp5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 12:45:57 -0500
-Received: from mout.gmx.net ([212.227.17.20]:54819 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932659AbcLSRp4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 12:45:56 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lskr7-1chjln1TUv-012LGC; Mon, 19
- Dec 2016 18:45:42 +0100
-Date:   Mon, 19 Dec 2016 18:45:40 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     "Kyle J. McKay" <mackyle@gmail.com>
-cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] mailinfo.c: move side-effects outside of assert
-In-Reply-To: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0>
-Message-ID: <alpine.DEB.2.20.1612191844520.54750@virtualbox>
-References: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932909AbcLSRto (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 12:49:44 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52233 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932358AbcLSRtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 12:49:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1E9C5916F;
+        Mon, 19 Dec 2016 12:49:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PM8+rjbFwMm8Al9DEgjWye9Pd2w=; b=uHtxYK
+        vo2YLxwW5EWvwkU/cOfqL0er23pe7kB9aaJhg38Roq9IWH5eF41CXRP7rQDe0kKA
+        f9ELKMc/J7YsAz+ekY2CsJcJ5qoCSSvfibqzySkMdPLI1IoxfP8f7e3uqlGJJtOc
+        d3tYGlooQYtXr6ZFEYMyoxoS14I2UU21qH0Oo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=odeqJBVmA565NT0Q+9gqgPAw8+uVZYg/
+        IoJINw+3MDDg5J0kZcnRhZFyt3P28lFDM1hJ6a8BMyjuuVwVIczBj/jNnpIQxxaZ
+        WtmOy64xzLRQWU1AZ4sWPsohrMDPzRGBmXiditN26HlRilMs3TTuvlfMN2hMdbZ0
+        dbRN4jV0yT4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9ED795916E;
+        Mon, 19 Dec 2016 12:49:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E8BD85916D;
+        Mon, 19 Dec 2016 12:49:40 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     git@vger.kernel.org, George Vanburgh <george@vanburgh.me>
+Subject: Re: [PATCH v2] git-p4: Fix multi-path changelist empty commits
+References: <01020159037a8995-2d1da9d4-4a27-4b98-818b-432fc0ad8a52-000000@eu-west-1.amazonses.com>
+        <010201590ed6ecaa-740c2532-827e-4f5a-af46-0f58d0722db6-000000@eu-west-1.amazonses.com>
+Date:   Mon, 19 Dec 2016 09:49:39 -0800
+In-Reply-To: <010201590ed6ecaa-740c2532-827e-4f5a-af46-0f58d0722db6-000000@eu-west-1.amazonses.com>
+        (George Vanburgh's message of "Sat, 17 Dec 2016 22:11:23 +0000")
+Message-ID: <xmqqy3zbq05o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:y+JsZ4iQ9rlooc9/odkqja43liORmilYnxSWVQyqcSMdvTOT0PW
- RlvfV3SXjXtQaEQk3O373v0m1w6N6Z+BZjZm0hoYUtYAkvoQFHrJlL1HO6ughcdJoVEsJt4
- hamgVumAlUbj295hZ78IJAHOMWhhgCdRWC8Cke9Dn/oCgS0yVQlI8kMOB7Z07mxYVn9DUkV
- i0vd2kL4uGs0pesEALvcw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3+Y3R/Py9FM=:/HhIKMbyTc878/zueFNP92
- YHImDMCyZRt/+7ZeyYXvIXuq0VVySP1eU5CaFkDFK1MewxaZZhbdNMAsUMZ9SkNTQw/QH/ebH
- 3orPGWTUgiWfNzNCo/1Zhf6Ntr9GJvTCCPgSMFlsaqR1To3wMrWPmtqQq6W7iHDhxI5RI+dbF
- MSeGPDQ2M5ptjf80mFt+K2uAckqg58aEx2L3WZEE4aVY5LZaHwtEA8YCEo/awsiZVgjE3EIXj
- l9MOZ5JxmmJcrCejoF84Fv5jwwS+avwOC/rhhm2MSb3Hyry6WwHvN4FrnJ8bKlXAe1XltgOSy
- jTPVENsE5pSCG2l4dJSXEZi9roiSCMj0iBspKa77VevbBvS0JsFcVzNomN37lrelWpz08J5a6
- fR2TQ7lmB5tqBqdxsJn+d/Tjm9aX3vtcEjCmzevC8qaUhLNml8eodl9cpyyVLVqO5UIc3Vrh/
- vOLH/UtHJyUlmMdxvrt9E8F1pxYpi4ICG1exFzEJmsq/Oo9E9lVYwfe15dKM13q7bl96gPcV8
- HCGWlugqsNPZCyTEuRjOcw9PQL5j3FuFLERhUGLUvcg42MxgmfGia1JyplooV5EeWFUSTAKi0
- cm1/v7c24rDp4Sp8xy3Z0N34I+WW0156FRN6tdFLyrJoInt+ofNWnPlba8YNoEU19CInN+kGA
- wxRv4nHtCLS3OqPmaJ8rOm2gbWzuhlaXTKjzLufva9e5M6bw1byRnpIpxUeKiUWfVk96dRFSH
- 7fgg3CWtEnIb9HKxehmjavuLrktYVVxHrU4cadXch/0M8IC1foAy8IiK0E2quYO4oaIKqxeIy
- Z2/N9Z1
+Content-Type: text/plain
+X-Pobox-Relay-ID: 846BDB18-C613-11E6-9021-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+George Vanburgh <george@vanburgh.me> writes:
 
-On Sat, 17 Dec 2016, Kyle J. McKay wrote:
+> From: George Vanburgh <gvanburgh@bloomberg.net>
+>
+> When importing from multiple perforce paths - we may attempt to import
+> a changelist that contains files from two (or more) of these depot
+> paths. Currently, this results in multiple git commits - one
+> containing the changes, and the other(s) as empty commit(s). This
+> behavior was introduced in commit 1f90a64
+> ("git-p4: reduce number of server queries for fetches", 2015-12-19).
+>
+> Reproduction Steps:
+>
+> 1. Have a git repo cloned from a perforce repo using multiple depot
+> paths (e.g. //depot/foo and //depot/bar).
+> 2. Submit a single change to the perforce repo that makes changes in
+> both //depot/foo and //depot/bar.
+> 3. Run "git p4 sync" to sync the change from #2.
+>
+> Change is synced as multiple commits, one for each depot path that was
+> affected.
+>
+> Using a set, instead of a list inside p4ChangesForPaths() ensures that
+> each changelist is unique to the returned list, and therefore only a
+> single commit is generated for each changelist.
+>
+> Reported-by: James Farwell <jfarwell@vmware.com>
+> Signed-off-by: George Vanburgh <gvanburgh@bloomberg.net>
+> ---
 
-> Since 6b4b013f18 (mailinfo: handle in-body header continuations,
-> 2016-09-20, v2.11.0) mailinfo.c has contained new code with an
-> assert of the form:
-> 
-> 	assert(call_a_function(...))
-> 
-> The function in question, check_header, has side effects.  This
-> means that when NDEBUG is defined during a release build the
-> function call is omitted entirely, the side effects do not
-> take place and tests (fortunately) start failing.
-> 
-> Move the function call outside of the assert and assert on
-> the result of the function call instead so that the code
-> still works properly in a release build and passes the tests.
-> 
-> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+Thanks, George.  Luke, can I add your "Reviewed-by:" here?
 
-ACK. I noticed this problem (and fixed it independently as a part of a
-huge patch series I did not get around to submit yet) while trying to get
-Git to build correctly with Visual C.
-
-Ciao,
-Dscho
+>  git-p4.py               |  4 ++--
+>  t/t9800-git-p4-basic.sh | 22 +++++++++++++++++++++-
+>  2 files changed, 23 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index fd5ca52..6307bc8 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -822,7 +822,7 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+>                  die("cannot use --changes-block-size with non-numeric revisions")
+>              block_size = None
+>  
+> -    changes = []
+> +    changes = set()
+>  
+>      # Retrieve changes a block at a time, to prevent running
+>      # into a MaxResults/MaxScanRows error from the server.
+> @@ -841,7 +841,7 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+>  
+>          # Insert changes in chronological order
+>          for line in reversed(p4_read_pipe_lines(cmd)):
+> -            changes.append(int(line.split(" ")[1]))
+> +            changes.add(int(line.split(" ")[1]))
+>  
+>          if not block_size:
+>              break
+> diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+> index 0730f18..4d93522 100755
+> --- a/t/t9800-git-p4-basic.sh
+> +++ b/t/t9800-git-p4-basic.sh
+> @@ -131,6 +131,26 @@ test_expect_success 'clone two dirs, @all, conflicting files' '
+>  	)
+>  '
+>  
+> +test_expect_success 'clone two dirs, each edited by submit, single git commit' '
+> +	(
+> +		cd "$cli" &&
+> +		echo sub1/f4 >sub1/f4 &&
+> +		p4 add sub1/f4 &&
+> +		echo sub2/f4 >sub2/f4 &&
+> +		p4 add sub2/f4 &&
+> +		p4 submit -d "sub1/f4 and sub2/f4"
+> +	) &&
+> +	git p4 clone --dest="$git" //depot/sub1@all //depot/sub2@all &&
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		cd "$git" &&
+> +		git ls-files >lines &&
+> +		test_line_count = 4 lines &&
+> +		git log --oneline p4/master >lines &&
+> +		test_line_count = 5 lines
+> +	)
+> +'
+> +
+>  revision_ranges="2000/01/01,#head \
+>  		 1,2080/01/01 \
+>  		 2000/01/01,2080/01/01 \
+> @@ -147,7 +167,7 @@ test_expect_success 'clone using non-numeric revision ranges' '
+>  		(
+>  			cd "$git" &&
+>  			git ls-files >lines &&
+> -			test_line_count = 6 lines
+> +			test_line_count = 8 lines
+>  		)
+>  	done
+>  '
+>
+> --
+> https://github.com/git/git/pull/311
