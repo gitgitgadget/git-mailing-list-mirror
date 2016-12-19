@@ -2,92 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 322FB1FF76
-	for <e@80x24.org>; Mon, 19 Dec 2016 11:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4C461FF76
+	for <e@80x24.org>; Mon, 19 Dec 2016 11:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933132AbcLSLSu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 06:18:50 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36202 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932352AbcLSLSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 06:18:48 -0500
-Received: by mail-pf0-f194.google.com with SMTP id c4so7453685pfb.3
-        for <git@vger.kernel.org>; Mon, 19 Dec 2016 03:18:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vmeiuEq+pNSxF85fxKh/5NbdUj07GvXF4VZCioKzJDw=;
-        b=pAV+iFo6kcuVexsV7NP8oPSvFDwp7F1hIpSZLcctgYM7fM8Pbov3TBhIG0aWVhCB1E
-         DFMvTyBI5N4nVUIVbfvkjy3iTBCKctcxmdemP+MCUeyxAWmaKS5w2xv1+InsX1FwyJIZ
-         e5gSyEh1XizHHn0stVGcHnhtWwGhPhsyY2QO3g/dS3j+YJRq3s0FQUkDOpat9RksyIPu
-         MQcgQ0t33KHzA56W5j3VyInEngSyHSYKjndFlQUzujZrZVxQasOR1XrFVoGFVt6tvWF2
-         Q8Q5dC4HynTEsNyGK8/qnNeHSMK//e7SvvwAhqZgBgoTqDjxBuS0ANsIDDJiUGysP+i1
-         VOKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vmeiuEq+pNSxF85fxKh/5NbdUj07GvXF4VZCioKzJDw=;
-        b=Rp7HArHeAAXj6eNuVEdNGi5EmeDzETOTZ5/XiXYQpTE8YZiNmrgxhn//mWZN4eTA0X
-         vFEbJoYl+yx0RhslMytk9ugBn6Y4qy8lMk5oZ7n+RArfy30feYwvTc/6sig2nw/kY7kN
-         HkY+sQ3YqpDuyaGNiPbrOJMHcBvAp0aexDpWutKkXdxQMYet0iV4MZEZ1waJdUahcDGr
-         Mh9Zrat0PpVN4rLbsdRXGKr4ukbCmVQ0nQImazCF2aowtehlupfDLzZgI+TQloSZ+U6o
-         oX6gH+z5RfMrUhUbOzfYFfPuSF0uoITFwR2LfGG1Mys/4H1bZIpVUqzstAGIlGanpWJ7
-         iBQA==
-X-Gm-Message-State: AKaTC03hj9+PCkEX5AmKEItpmWlJRM8QL0auTvw1l6MAAHEzXmpHbQ9foEXaTlrTKkuDUw==
-X-Received: by 10.98.69.133 with SMTP id n5mr14694463pfi.160.1482146327737;
-        Mon, 19 Dec 2016 03:18:47 -0800 (PST)
-Received: from ash ([115.73.171.119])
-        by smtp.gmail.com with ESMTPSA id j68sm30659888pfk.95.2016.12.19.03.18.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Dec 2016 03:18:47 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 19 Dec 2016 18:18:43 +0700
-Date:   Mon, 19 Dec 2016 18:18:43 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 04/21] read-cache: add and then use tweak_split_index()
-Message-ID: <20161219111843.GB24125@ash>
-References: <20161217145547.11748-1-chriscool@tuxfamily.org>
- <20161217145547.11748-5-chriscool@tuxfamily.org>
+        id S1755241AbcLSLVQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 06:21:16 -0500
+Received: from mout.gmx.net ([212.227.15.19]:52205 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752830AbcLSLVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 06:21:14 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mdr7l-1bxiuh2N0H-00PemC; Mon, 19
+ Dec 2016 12:21:02 +0100
+Date:   Mon, 19 Dec 2016 11:49:25 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2016, #02; Mon, 12)
+In-Reply-To: <xmqqinqn6c41.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1612191145080.54750@virtualbox>
+References: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1612131641291.23160@virtualbox> <xmqqinqn6c41.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161217145547.11748-5-chriscool@tuxfamily.org>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:fHnbB7p9gyV5hw+bjS6v0mYLrOeOXuY1G5ubEzKbyT4vbIPqrPP
+ VziVeYHOMuveXUk8tCnuPBPIRpew9IAUAYwdAdWcrZ4Y/uSLAT0MJr4+zl0Exh8CyBbO6uK
+ Iw6ZH0o0PkW+VvgXhPg7e4HsbPQMcFFH2Dpotdsx/Xyg0BWDGhVzFOE52DMTnlbdhDFIhvI
+ /r1XeaSpt2yk/1CCMZqsg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GFhGwOEvfqE=:Vt0mNkYWIl0yARnQUUzGYv
+ mITTtya9y4d62+OYcCBcZ0c1SrOlkwkeiwEyyJmuH6A1555IiaLz0XspIVptP5kwPM620clOy
+ fBlhQktHtHPnrbinu7ClbRdIMP1N5v/9+/EViKRfTq6hdyykyQZty6v6+wFEL1o0pPOZmwOkF
+ ujN8qkwH2hwpJgB9Pq64q/ZVa00oiWOiR2xWM/lwXm1B2DACotq8Jg2rLNKRGsX4t5PBlFKuM
+ c0GaqVRuYLJQlueLBfkEn8/3vK+KJ8toaqnhp3mZ5wwdh8EaS/Kng4Drd7/7TIYX0tZWaNzfw
+ FeEQIMO06cTuuHDqbA/npW0i8HS/70gvweqL3917Dxo4w2UJnPU7rdTHTnb4aKjBn1ZqV0eRm
+ 0lD1D6oLngU5dEFUG1TZ/MiknMi4juOxqkubhLbTu08P79fCQAvq+vjT74b8Zs4qFbUQsBGrI
+ 7Eax4Eitn4lVRRJq62czZZif+KeoQK+iXGwDRgN0QcTgTgYNS+JH1wpSKosOeYWlzzGw1EvL4
+ dOES0YF/mYczAZkwNdx3tjxPMz3MYvrU6MsYSPa1THkdEjeDzVxwPhsEF5og5T/uBgtrWguu8
+ +DR9iFYyJz40/QFK3x/Me8Awbyqz3DDxp94dMzlhi59MKxBrk5JfoNoDmP/27B2hydS4KIwUH
+ xo1Ey3Un/cnn+bmc+b2ux1yutJz+c0y6iTwH6GwFo6A491AEQC1pnEF15BI02MoQ/ag5wa6Zm
+ WVELplO0zxf75kEUXKEjhEkSOBUTk9TJzFBWSyAijb2IDtCCSkcz0g8N9YD7cfKXvjGk0hHkx
+ 2vHAb+e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 17, 2016 at 03:55:30PM +0100, Christian Couder wrote:
-> +static void tweak_split_index(struct index_state *istate)
-> +{
-> +	switch (git_config_get_split_index()) {
-> +	case -1: /* unset: do nothing */
-> +		break;
-> +	case 0: /* false */
-> +		remove_split_index(istate);
-> +		break;
-> +	case 1: /* true */
-> +		add_split_index(istate);
-> +		break;
-> +	default: /* unknown value: do nothing */
+Hi Junio,
 
-Probably should die("BUG:") here since it looks to me like
-git_config_maybe_bool() (inside git_config_get_split_index) in this
-case has been updated to return more values than we can handle. And we
-need to know about that so we can handle it properly.
+On Tue, 13 Dec 2016, Junio C Hamano wrote:
 
-> +		break;
-> +	}
-> +}
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >>  While I think it would make it easier for people to experiment and
+> >>  build on if the topic is merged to 'next', I am at the same time a
+> >>  bit reluctant to merge an unproven new topic that introduces a new
+> >>  file format, which we may end up having to support til the end of
+> >>  time.  It is likely that to support a "prime clone from CDN", it
+> >>  would need a lot more than just "these are the heads and the pack
+> >>  data is over there", so this may not be sufficient.
+> >> 
+> >>  Will discard.
+> >
+> > You could mark it as experimental, subject to change, and merge it to
+> > `next` safely.
+> 
+> Are you planning, or do you know somebody who plans to use that code
+> soonish?
+
+I am too swamped with other things (most importantly, automate the
+identification of the as-of-recent-quite-frequent breakages reported by my
+build jobs).
+
+I know that one of my colleagues wanted to have a look at it, and so I
+thought that having it as an experimental feature that I could even
+integrate into Git for Windows for a wider audience could help justify
+alotting the time.
+
+> Otherwise I'd prefer to drop it---at this point, the series is merely
+> "just because we can", not "because we need it to further improve this
+> or that".
+
+Oh, I thought that this was meant as a starting point for anybody
+interested in playing with resumable clones or with easing server loads.
+
+In any case, I just wanted to be sure that you considered making it an
+experimental feature instead of dropping it. Just in case that you did not
+think of that as a possibility.
+
+Ciao,
+Dscho
