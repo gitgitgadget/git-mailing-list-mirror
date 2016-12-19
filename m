@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF5EA1FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 20:58:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3BD1FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 21:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758207AbcLSU51 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 15:57:27 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:36542 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754419AbcLSU50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 15:57:26 -0500
-Received: by mail-qk0-f169.google.com with SMTP id n21so23143199qka.3
-        for <git@vger.kernel.org>; Mon, 19 Dec 2016 12:57:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fAetDFATI0CdhJb4h5y+hlLTr7VH4QdFwhw5Vmc9WGc=;
-        b=vrhzhCXiYOBWQyHfSZIkAYcL+c1J5wOg9yX7LgMzSdneU7YE+qIvPsVzM3JBP63VKD
-         Q+GJkBYe7f5uuknnU6bTAz8tl/Tge6QlKy/PKxV3x77l89wT7UZ6E4tucdFaq0wI+mVc
-         0AQmFgMBzamxlvO2t0rPsK8NSozmjv2ReXNM1MnYIKQ+HkdCM4iiodnU7BEb/Z2N5bX9
-         cSmKtO+slFPZo/nwU6z33ZQpIhRSPLazq7F12VVF2QzU3wTTHJ061GxlYR+V4dv5P5MY
-         QHXnZ7LfjeHeMtuJRf+A/M9JDuNRhDn39yPTeD4v02FQz7eefBBL05Z9nDaWzGBLVSPi
-         94LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fAetDFATI0CdhJb4h5y+hlLTr7VH4QdFwhw5Vmc9WGc=;
-        b=fdnNxlWgXufOmGhsyGH40K5QM5c/PMFOo0gvNC1ca/UO15eBiRDKRZCkkfTltvHhZW
-         268p+hd2PI98ER0d2K5VG+y0Sa/VGUmimH2phyjrIvTUXLwQpD05Bid4AZLaEGOom2W2
-         r7LSM5GEnz90wS4E/u/3/BgQZ9ny54IyMbSmAc8OF+37EQS4tddprBpgHy8pDNOWlg5P
-         lIEZo0kdNgg6kgOa9M8CnjHfoj+nem6EVe4G3alq0jf+hdGyGDcsNqL1GE5WssToiyKD
-         j/CPKKN4y4KNKlNZC6lafs2NGE8Nk2LKtFI9z4BS7E4qSuiD5cp78780Vz2niN7VLpA/
-         6pEQ==
-X-Gm-Message-State: AIkVDXJSXvjS7odC5Axra/Jsd4CwZyIAuXmukohgoD+jVJSqrbpdevghYD9BeVH1guY84eN+VA7YggJoPE+cLcEE
-X-Received: by 10.55.53.147 with SMTP id c141mr2106659qka.255.1482181045017;
- Mon, 19 Dec 2016 12:57:25 -0800 (PST)
+        id S1753926AbcLSVBw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 16:01:52 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56194 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754087AbcLSVBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 16:01:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BC7759B04;
+        Mon, 19 Dec 2016 16:01:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PzqqPPPE1pivDoWNvF1v8edhOlM=; b=Bzv3LX
+        EH7mPL301cm3+iS7+31sv0D9NegngnKi9pfbfdmboshY9WwB3JrkXtgZ43lpJ8UI
+        wzmZJtVjojHgZVjftT0qiWxO2JkXcokr3Op7hMh+6OnW+2nviifo3Id8TNN0EeYd
+        YYlC5cDAdSKeIi68Ea65PufUwdIpGg6UH/Rm8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MP3yUTGVLFOslch9/E0eqr58653B4QTn
+        6segL3rdjybJnvvvvjCVPp53ys1l6fvtZ13I5VfGjCi/RVGEuw0Xu8FmBUyxHA2H
+        od5EPMoaTjff9hK/+5fxrKq7QDOeb7jfbcWsQFv0tM4ZSyln4KRSuYzqX652b7Hx
+        m/R/1yNyG1E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63CFD59B03;
+        Mon, 19 Dec 2016 16:01:50 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D574659B02;
+        Mon, 19 Dec 2016 16:01:49 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "Kyle J. McKay" <mackyle@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] mailinfo.c: move side-effects outside of assert
+References: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0>
+        <20161219200259.nqqyvk6c72bcoaui@sigill.intra.peff.net>
+        <A916CED6-C49D-41D8-A7EE-A5FEDA641F4A@gmail.com>
+        <d5690ac7-ff62-99b9-7e7e-929bd7f0433b@google.com>
+Date:   Mon, 19 Dec 2016 13:01:48 -0800
+In-Reply-To: <d5690ac7-ff62-99b9-7e7e-929bd7f0433b@google.com> (Jonathan Tan's
+        message of "Mon, 19 Dec 2016 12:54:15 -0800")
+Message-ID: <xmqqbmw7ocoz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Mon, 19 Dec 2016 12:57:24 -0800 (PST)
-In-Reply-To: <20161128094319.16176-11-pclouds@gmail.com>
-References: <20161112022337.13317-1-pclouds@gmail.com> <20161128094319.16176-1-pclouds@gmail.com>
- <20161128094319.16176-11-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 19 Dec 2016 12:57:24 -0800
-Message-ID: <CAGZ79kbgJ=1j9V1QxmdzoKx60ZnqsJet2VwDH72Kz5PrDArOnA@mail.gmail.com>
-Subject: Re: [PATCH v2 10/11] worktree move: refuse to move worktrees with submodules
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C3B2DFE-C62E-11E6-B841-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2016 at 1:43 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> +
-> +                       if (S_ISGITLINK(ce->ce_mode)) {
-> +                               found_submodules =3D 1;
-> +                               break;
-> +                       }
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-While I applaud being careful with submodules, I think this may be a bit
-overeager, because empty (both not initialized as well as not populated)
-submodules are fine.
+>>> This is obviously an improvement, but it makes me wonder if we should be
+>>> doing:
+>>>
+>>>  if (!check_header(mi, &mi->inbody_header_accum, mi->s_hdr_data))
+>>>     die("BUG: some explanation of why this can never happen");
+>>>
+>>> which perhaps documents the intended assumptions more clearly. A comment
+>>> regarding the side effects might also be helpful.
+>>
+>> I wondered exactly the same thing myself.  I was hoping Jonathan would
+>> pipe in here with some analysis about whether this is:
+>>
+>>   a) a super paranoid, just-in-case, can't really ever fail because by
+>> the time we get to this code we've already effectively validated
+>> everything that could cause check_header to return false in this case
+>> ...
+> The answer is "a". The only time that mi->inbody_header_accum is
+> appended to is in check_inbody_header, and appending onto a blank
+> mi->inbody_header_accum always happens when is_inbody_header is true
+> (which guarantees a prefix that causes check_header to always return
+> true).
+>
+> Peff's suggestion sounds reasonable to me, maybe with an error message
+> like "BUG: inbody_header_accum, if not empty, must always contain a
+> valid in-body header".
 
-In origin/bw/grep-recurse-submodules^6 you find
-    int is_submodule_populated(const char *path)
+OK.  So we do not expect it to fail, but we still do want the side
+effect of that function (i.e. accmulation into the field).
 
-that could be useful here, i.e. I'd imagine you'd change the condition to
-
-    if (S_ISGITLINK(ce->ce_mode)
-        && !is_submodule_populated(ce->name)) {
-        ...
-
-I guess that can come as a fixup later though.
+Somebody care to send a final "agreed-upon" version?
