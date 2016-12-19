@@ -2,165 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3BA1FF6D
-	for <e@80x24.org>; Mon, 19 Dec 2016 02:45:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69EC51FF6D
+	for <e@80x24.org>; Mon, 19 Dec 2016 05:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752301AbcLSCou (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Dec 2016 21:44:50 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:56992 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751171AbcLSCot (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2016 21:44:49 -0500
-X-Greylist: delayed 1950 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Dec 2016 21:44:48 EST
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.88)
-        (envelope-from <glandium@glandium.org>)
-        id 1cInQy-0004AO-8k; Mon, 19 Dec 2016 11:12:12 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Cc:     johan@herland.net, gitster@pobox.com
-Subject: [PATCH] fast-import: properly fanout notes when tree is imported
-Date:   Mon, 19 Dec 2016 11:12:12 +0900
-Message-Id: <20161219021212.15978-1-mh@glandium.org>
-X-Mailer: git-send-email 2.11.0.dirty
+        id S1754519AbcLSFfP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 00:35:15 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36195 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754373AbcLSFfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 00:35:14 -0500
+Received: by mail-pg0-f66.google.com with SMTP id w68so1248062pgw.3
+        for <git@vger.kernel.org>; Sun, 18 Dec 2016 21:35:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=q0dKxLpBRDRN0mNd9qLF3X9dtpwWmuxpAj9p6hOmBb4=;
+        b=rhAtPQa4qg5yShUYAqxTHxNO7yOyJ4caFfKNy7Zy5rwEnxQff/wxEBh3kPFHompDBb
+         phQWEOn4cqh1W0mWmFqVuVV1SIyiM/hPTDZ34dMO+EFdAwTAKpdX6YDu2B279+XsHUzU
+         Br8aC5MM/sIhjo6FUu5Ghxmt9HaUoVd+M5oa+oS6nq7PTm9pc0IvuBMWu6KM15ukGW8r
+         rSslghr0R6s6XwWMF7/WzdHujc77rCJNROeU771LRoZUU58Vrc5Hwnweob7EXMA0NPpm
+         7hN2K4paItF5CEoUGodJOKQtixjtRUTFzmvBQswSjt0/Qj+nCLrCT+4+RhYKIHtJCTMg
+         B/sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=q0dKxLpBRDRN0mNd9qLF3X9dtpwWmuxpAj9p6hOmBb4=;
+        b=RLNfIJPY16RveqF+jSxahugAXLS/BbwKEE3JO5T/HSAVDVFwADGF6g1mNK63hCbwoR
+         /ES81cujkhC+jwc76xjo3XkKAoZSSGDqBadt+sJM5HFCSYhoRsnXR1MsFycJoQKGzG2p
+         9avh6/4J0bpLBzKED7rK4pW3INYZYoRm33zZKwujMMOHUzbIvsz2Nk0ghxtl1DvcnN81
+         ziX6pZaqEABZ9H968pfIjEmBPBiQVrKrrUfqTIJzmuWuFUiovkkETAFF0LQ9M1osEdqf
+         hVhBG7/hX3dkkxApXVcvv99lUBFtVy1zE6lbPTntAuCzKwortRa2SnFCkg4qhAPcX4E7
+         QLcA==
+X-Gm-Message-State: AKaTC02hlQCAofsI9cygyrNKUsAjHuBOnFCUvZB/H1AO9Vz9aJn5S0NbldS6buwljffPMA==
+X-Received: by 10.84.216.21 with SMTP id m21mr31438005pli.119.1482125713612;
+        Sun, 18 Dec 2016 21:35:13 -0800 (PST)
+Received: from duynguyen.vn.dektech.internal ([14.161.14.188])
+        by smtp.gmail.com with ESMTPSA id g63sm27616574pfd.60.2016.12.18.21.35.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Dec 2016 21:35:12 -0800 (PST)
+Date:   Mon, 19 Dec 2016 12:35:07 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com
+Subject: Re: [PATCHv8 6/6] submodule: add absorb-git-dir function
+Message-ID: <20161219053507.GA2335@duynguyen.vn.dektech.internal>
+References: <20161212190435.10358-1-sbeller@google.com>
+ <20161212190435.10358-7-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161212190435.10358-7-sbeller@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In typical uses of fast-import, trees are inherited from a parent
-commit. In that case, the tree_entry for the branch looks like:
+On Mon, Dec 12, 2016 at 11:04:35AM -0800, Stefan Beller wrote:
+> diff --git a/dir.c b/dir.c
+> index e0efd3c2c3..d872cc1570 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2773,3 +2773,15 @@ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+>  	free(work_tree);
+>  	free(git_dir);
+>  }
+> +
+> +/*
+> + * Migrate the git directory of the given path from old_git_dir to new_git_dir.
+> + */
+> +void relocate_gitdir(const char *path, const char *old_git_dir, const char *new_git_dir)
+> +{
+> +	if (rename(old_git_dir, new_git_dir) < 0)
+> +		die_errno(_("could not migrate git directory from '%s' to '%s'"),
+> +			old_git_dir, new_git_dir);
+> +
+> +	connect_work_tree_and_git_dir(path, new_git_dir);
 
-  .versions[1].sha1 = $some_sha1
-  .tree = <tree structure loaded from $some_sha1>
+Should we worry about recovering (e.g. maybe move new_git_dir back to
+old_git_dir) if this connect_work_tree_and_git_dir() fails?
 
-However, when trees are imported, rather than inherited, that is not the
-case. One can import a tree with a filemodify command, replacing the
-root tree object.
+Both write_file() and git_config_set_.. in this function may die(). In
+such a case the repo is in broken state and the user needs pretty good
+submodule understanding to recover from it, I think.
 
-e.g.
-  "M 040000 $some_sha1 \n"
-
-In this case, the tree_entry for the branch looks like:
-
-  .versions[1].sha1 = $some_sha1
-  .tree = NULL
-
-When adding new notes with the notemodify command, do_change_note_fanout
-is called to get a notes count, and to do so, it loops over the
-tree_entry->tree, but doesn't do anything when the tree is NULL.
-
-In the latter case above, it means do_change_note_fanout thinks the tree
-contains no note, and new notes are added with no fanout.
-
-Interestingly, do_change_note_fanout does check whether subdirectories
-have a NULL .tree, in which case it uses load_tree(). Which means the
-right behaviour happens when using the filemodify command to import
-subdirectories.
-
-This change makes do_change_note_fanount call load_tree() whenever the
-tree_entry it is given has no tree loaded, making all cases handled
-equally.
-
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
-
-This is something I should have submitted a patch for a long time ago, back
-when this was discussed in the thread starting from
-https://www.spinics.net/lists/git/msg242426.html. The message most relevant to
-this patch in the thread is https://www.spinics.net/lists/git/msg242448.html.
-
- fast-import.c                |  8 +++++---
- t/t9301-fast-import-notes.sh | 41 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+), 3 deletions(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index cb545d7df5..5e528b1999 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2220,13 +2220,17 @@ static uintmax_t do_change_note_fanout(
- 		char *fullpath, unsigned int fullpath_len,
- 		unsigned char fanout)
- {
--	struct tree_content *t = root->tree;
-+	struct tree_content *t;
- 	struct tree_entry *e, leaf;
- 	unsigned int i, tmp_hex_sha1_len, tmp_fullpath_len;
- 	uintmax_t num_notes = 0;
- 	unsigned char sha1[20];
- 	char realpath[60];
- 
-+	if (!root->tree)
-+		load_tree(root);
-+	t = root->tree;
-+
- 	for (i = 0; t && i < t->entry_count; i++) {
- 		e = t->entries[i];
- 		tmp_hex_sha1_len = hex_sha1_len + e->name->str_len;
-@@ -2278,8 +2282,6 @@ static uintmax_t do_change_note_fanout(
- 				leaf.tree);
- 		} else if (S_ISDIR(e->versions[1].mode)) {
- 			/* This is a subdir that may contain note entries */
--			if (!e->tree)
--				load_tree(e);
- 			num_notes += do_change_note_fanout(orig_root, e,
- 				hex_sha1, tmp_hex_sha1_len,
- 				fullpath, tmp_fullpath_len, fanout);
-diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
-index 83acf68bc3..b408b2b32d 100755
---- a/t/t9301-fast-import-notes.sh
-+++ b/t/t9301-fast-import-notes.sh
-@@ -483,6 +483,47 @@ test_expect_success 'verify that lots of notes trigger a fanout scheme' '
- 
- '
- 
-+# Create another notes tree from the one above
-+cat >>input <<INPUT_END
-+commit refs/heads/other_commits
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+commit #$(($num_commit + 1))
-+COMMIT
-+
-+from refs/heads/many_commits
-+M 644 inline file
-+data <<EOF
-+file contents in commit #$(($num_commit + 1))
-+EOF
-+
-+commit refs/notes/other_notes
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+committing one more note on a tree imported from a previous notes tree
-+COMMIT
-+
-+M 040000 $(git log --no-walk --format=%T refs/notes/many_notes) 
-+N inline :$(($num_commit + 1))
-+data <<EOF
-+note for commit #$(($num_commit + 1))
-+EOF
-+INPUT_END
-+
-+test_expect_success 'verify that importing a notes tree respects the fanout scheme' '
-+	git fast-import <input &&
-+
-+	# None of the entries in the top-level notes tree should be a full SHA1
-+	git ls-tree --name-only refs/notes/other_notes |
-+	while read path
-+	do
-+		if test $(expr length "$path") -ge 40
-+		then
-+			return 1
-+		fi
-+	done
-+'
-+
- cat >>expect_non-note1 << EOF
- This is not a note, but rather a regular file residing in a notes tree
- EOF
--- 
-2.11.0.dirty
-
+Recovering is not easy (nor entirely safe) either, though I suppose if
+we keep original copies for modified files, then we could restore them
+after moving the directory back and pray the UNIX gods that all
+operations succeed.
+--
+Duy
