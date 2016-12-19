@@ -2,102 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56E371FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 19:19:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A84FC1FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 19:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755633AbcLSTSG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 14:18:06 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58718 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753719AbcLSTSE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 14:18:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 05626588A3;
-        Mon, 19 Dec 2016 14:18:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S4tLAR2y2wdCtRjvUghjrGJGr0E=; b=s/jP3b
-        Xq8oikF5cDt3XIli38oMV3AGWk9eFznn0nWbvB0SuRZy2tROHtWbJH+5SSliIdrR
-        FyAUAG4tfms72G3zAjkT8J/nYylB7hB34J33S+s5bGYdC+DyDIVIzMNhYFz6jJc3
-        2k0ZvJVpCSx4svnSASR2gRsGYu8nJM7ZtawDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vPsp1t0rj2rtggmkTxn4WowVxui+eYlU
-        GXz2ulSKzbBgzY5hruuT2Q1JfaxRoIof97iGFgm5Kkqow7dlke+Zv2sky7qtD3Gk
-        0g2W6KEFr9aOYxUnUiFqldHXtND2ynQP1sjJ8rbruGpXkydsQmgTT3Zi2ZlDWpl2
-        HZPAKTBDy0A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F083E588A2;
-        Mon, 19 Dec 2016 14:18:03 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06E88588A0;
-        Mon, 19 Dec 2016 14:18:02 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 32/34] sequencer (rebase -i): show the progress
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <9e48dffa8e58183debb79f29413afa81af174475.1481642927.git.johannes.schindelin@gmx.de>
-Date:   Mon, 19 Dec 2016 11:18:01 -0800
-In-Reply-To: <9e48dffa8e58183debb79f29413afa81af174475.1481642927.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:32:44 +0100
-        (CET)")
-Message-ID: <xmqqr353ohhy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DCB44344-C61F-11E6-959E-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1753171AbcLSTXi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 14:23:38 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:32946 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752905AbcLSTXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 14:23:37 -0500
+Received: by mail-pg0-f68.google.com with SMTP id g1so7522777pgn.0
+        for <git@vger.kernel.org>; Mon, 19 Dec 2016 11:23:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9lYGO0CImGNcc+lOeN4GYZJsNttJX0l0omNVfTQKxSY=;
+        b=lPixOBb117km/Y8RwxnbbJkF1iBNU5YE736gZ+s1qSg58qq0OWipLoO+s7C6tvaX07
+         6g8KgQlKVaaksqWBmRZbvBogN0TJniP1aBqf1o6j1iNlO3YdG3bosIi/YLu9cwlvHJxk
+         RFfM3Mifuu9XA59E5/o1K9nv/bau1/5eatXoGwYnEGwxvE4X4VD752GH7vXZqLsdBTes
+         iVp/DIip48y7eMu/rZHhEZ6yKFRvJzlgENzJX1HLtlL3wFpovLtTm5boUIsk6gNlr/Wu
+         iYYJ5/P33ZRoSZxYhggWRy1UwGa2qkbpoKXKLiHjn1oUz8eXg5DWGSIZ+Dn8mG0aM+rk
+         B0pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9lYGO0CImGNcc+lOeN4GYZJsNttJX0l0omNVfTQKxSY=;
+        b=nu+8GzwZJxTnjNsXorxlJ4krpaNX53xgux9ayhJj7sQWAncOCdseFGq2Mokx2Wi9XV
+         gW9F9K0KXFhZVT6TTepWMsZ7b0wHMkf4+aIExMm4KYAKETnXF3zsodpZx4dSaflexvwC
+         O9v3rYspFMk9ywdtJgFOYQ5wmH2xerTJBaXoBsD6/xYlXeHAynY/8y1AWhvr1ttDsk9E
+         9j3GQqDfrUV0+Qb2peT4Y8nWAlUcnfD9lavMsr62C3Mh1n0r57uoK8hMiWVfpKgeQ0QM
+         ekeZs2nOxoMrDJpFwZSCUmRAPMPb+bFXYOkqp94XXBJ3jXhafz16G22SpR8EKmmo3nK7
+         uSZw==
+X-Gm-Message-State: AKaTC02lOLrld1YCutSH0TJRDUFm7qXuWOvsIy+2+b1unxZTB4iVBu19se/CMuosVhrYww==
+X-Received: by 10.98.150.88 with SMTP id c85mr16515976pfe.68.1482175416823;
+        Mon, 19 Dec 2016 11:23:36 -0800 (PST)
+Received: from unique-pc ([14.102.13.66])
+        by smtp.googlemail.com with ESMTPSA id s197sm33503255pgc.38.2016.12.19.11.23.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Dec 2016 11:23:36 -0800 (PST)
+Message-ID: <1482175466.2882.2.camel@gmail.com>
+Subject: Re: Suggestion for the "Did you mean this?" feature
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Chris Packham <judge.packham@gmail.com>
+Cc:     GIT <git@vger.kernel.org>
+Date:   Tue, 20 Dec 2016 00:54:26 +0530
+In-Reply-To: <CAFOYHZDnpzdYq9j4-xGSdKZQX9deLBpZZhz209qV7cCtq537SA@mail.gmail.com>
+References: <1482063500.10858.1.camel@gmail.com>
+         <CAFOYHZDnpzdYq9j4-xGSdKZQX9deLBpZZhz209qV7cCtq537SA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.2-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hello all,
 
-> The interactive rebase keeps the user informed about its progress.
-> If the sequencer wants to do the grunt work of the interactive
-> rebase, it also needs to show that progress.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Sun, 18 December 2016 at 20:59, Alexei Lozovsky wrote,
+> It's definitely a good thing for human users. For example, I am
+> annoyed
+> from time to time when I type in some long spell, mistype one minor
+> thing,
+> and the whole command fails. Then I need to press <up>, correct the
+> obvious typo, and run the command again.
+> 
+> Though, there is one aspect which may be the reason why git does not
+> have
+> this feature: it requires interactive input. For example, it won't
+> work
+> if some script tries to run an invalid git command. And git cannot
+> really
+> tell whether it is running interactively or in a batch mode. If it is
+> running in batch mode then the whole script may hang indefinitely
+> waiting
+> for nonexistent input. This also may apply to using git with pipes.
+> 
+> Maybe a configuration option or some GIT_NO_PROMPT environment
+> variable
+> may be used to force disable this, but it still will be a hassle for
+> the
+> scripts.
+
+This is a good point that I didn't think of, sir. Thanks for bringing
+it up. It seems that in some other form git does have the feature I was
+suggesting.
+
+
+On Mon, 2016-12-19 at 13:48 +1300, Chris Packham wrote:
+> This feature already exists (although it's not interactive). See
+> help.autoCorrect in the git-config man page. "git config
+> help.autoCorrect -1" should to the trick.
+Thanks for bringing this to notice, sir. I wasn't aware of it before.
+It's in essence the same feature.
+
+
+On Mon, 2016-12-19 at 12:01 -0500, Marc Branchaud wrote:
+> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
 > ---
->  sequencer.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+> 
+> Awesome, I was unaware of this feature.  Thanks!
+> 
+> I found the message it prints a bit awkward, so here's a patch to fix
+> it up.
+> 
+> Instead of:
+> 
+>    WARNING: You called a Git command named 'lgo', which does not
+> exist.
+>    Continuing under the assumption that you meant 'log'
+>    in 1.5 seconds automatically...
+> 
+> it's now:
+> 
+>    WARNING: You called a Git command named 'lgo', which does not
+> exist.
+>    Continuing in 1.5 seconds under the assumption that you meant
+> 'log'.
+Happy that my mail introduced a little change to git by revealing a not
+often used feature.
 
-Sensible.  This further adds two comparisons with TODO_COMMENT and
-makes need for is_counted() or something like that felt more.
+-- 
 
-    $ git grep TODO_COMMENT pu sequencer.c
 
-shows that some places "x < TODO_COMMENT" is used while some other
-places "y != TODO_COMMENT" is used, both for the same purpose, and
-"z >= TODO_COMMENT" is also seen for the negation of the same.
-
-I think all of them except for one can become is_counted() or
-!is_counted() to convey what they want to check better while the one
-used in the loop control:
-
-	for (i = 0; i < TODO_COMMENT; i++)
-
-should probably become:
-
-	for (i = 0; i < ARRAY_SIZE(todo_command_info); i++)
-
-as the parsing loop wants to check the input against all known
-commands and there is no strong reason for that layer to know how
-the insns are numbered.  is_xxx() implementation can take advantage
-of the way the insns are numbered, but there is no point spreading
-the knowledge to higher layer in the callchain.
-
-Other than that, all 34 patches looked sensible steps explained as a
-coherent story that unfolds bit by bit, which was mostly a pleasant
-read.
-
-Thanks.
+Regards,
+Kaartic
