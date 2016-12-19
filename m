@@ -2,84 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B11501FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 18:57:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 788021FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 18:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934233AbcLSS4Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 13:56:16 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:32811 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933595AbcLSS4P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 13:56:15 -0500
-Received: by mail-qk0-f173.google.com with SMTP id t184so24409447qkd.0
-        for <git@vger.kernel.org>; Mon, 19 Dec 2016 10:56:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KYzQb24eB9l5bCuXMCts/GDQHUwquGMFbzkgfjIWaLg=;
-        b=WKUZCHGAglgsiyvQyvL86ov08Ojx3UUQJXo7GlL6C566gqe7gjX0tT2/0iAJ7wU78v
-         BwDSe/czbXG9f7Ojp9Ia9qRbJNzT9wzMgVM8jfla3qPNIG8WZ5vKJRiXlK4gyy3mY3Jh
-         MH3gzXRgm51OhFtQCOPwD4bZALYiIopx99gO2u4CyCqValJi9B7y9Tu1npffB5Km5AIK
-         KrKzO4ej3XK78lIMjEVnZ7SYrpb8r8CAti0VgOTG/b2r8A2icvsl6q8BooJ9tyu1dx/o
-         wk5Lv2zh6ugvpLUSS90ZT4RBPNpODZZ3usj+FAlEA0GXAFiZdBYyuSzKdS6pL/kOFB7C
-         llOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KYzQb24eB9l5bCuXMCts/GDQHUwquGMFbzkgfjIWaLg=;
-        b=gn65WAZnkZKjBgTJewTevNwELuqPZvf1oazR+ipnhq30ACDWzGmMdplY3w5UchUjDy
-         hj11fe7nzwpD8dNgG0lcmHrjX6By+AJAE/m5NAUse3UulH7U1ivWdaO6UKn3LjQ/4UCB
-         TIkUAeAWy/dDTChObhLSWkmNEshv2hHnCRIPAExPlGte/TDGp942GtksKLOt3bFQl+gS
-         sVD7RPA2aUXqziicVKBWdJFif9r5LbN0hm+yvpfQ/d2aemXR9uR7F3m0zWrKek/zu6e1
-         nKVF8DO47v3haFr3tFkoSFxEOR7/EJzWGLhrv+q20mMwsxNWNOGRUpfoJF7N7HnrmcB4
-         TztA==
-X-Gm-Message-State: AIkVDXKIPCQ4M82xtY1pOedjGUTr/2ZfP8k2PgFNphCT90VGzhjuNPf2/wo9l5KazGpd90JVyiZjwGIrY7lNcPl7
-X-Received: by 10.233.216.7 with SMTP id u7mr886897qkf.220.1482173774669; Mon,
- 19 Dec 2016 10:56:14 -0800 (PST)
+        id S933896AbcLSS6g (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 13:58:36 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65333 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932852AbcLSS6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 13:58:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EC775806B;
+        Mon, 19 Dec 2016 13:58:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dlICv+EXtAeytVw040Qdd7LUOnQ=; b=l4Lb6g
+        e/DIn57XgXSpKlXACUFx4YuSPX/4psKjELwdIlMuvsKUOLVlVEdUOIY7uoTU2Uny
+        krekNck13vt2s5hZ43x8cKrFCWIq7/utCllcDkDutzXXoCTy6GbiN7vGEeRL7Bgo
+        yJOVqm53/dB0y21cs33xSCpDy/BICUSNVSKrQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ITpxYm+PnTXvJwrA8pBwVuO0DUaxrI55
+        mAF8lmXsNxVSfkDZNOo+WLgblcmLa3lFB+qIECORljzdnRFcH2lRidsxIg9W17Cb
+        RpQlDHGET6fclU7AX39ce1mIF9eqD2tEOlbUWDaCRtmEVGr9UF73BFITHhBTtuIi
+        +rwxQug68uk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9424C5806A;
+        Mon, 19 Dec 2016 13:58:33 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0E77C58069;
+        Mon, 19 Dec 2016 13:58:32 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 24/34] sequencer (rebase -i): respect strategy/strategy_opts settings
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+        <cover.1481642927.git.johannes.schindelin@gmx.de>
+        <a21233f368f066408051e6bdc9a2b6ec513e9e11.1481642927.git.johannes.schindelin@gmx.de>
+Date:   Mon, 19 Dec 2016 10:58:31 -0800
+In-Reply-To: <a21233f368f066408051e6bdc9a2b6ec513e9e11.1481642927.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Tue, 13 Dec 2016 16:31:47 +0100
+        (CET)")
+Message-ID: <xmqqzijroieg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.147.188 with HTTP; Mon, 19 Dec 2016 10:56:14 -0800 (PST)
-In-Reply-To: <1482171933-180601-4-git-send-email-bmwill@google.com>
-References: <1482171933-180601-1-git-send-email-bmwill@google.com> <1482171933-180601-4-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 19 Dec 2016 10:56:14 -0800
-Message-ID: <CAGZ79kbc_o-B4nX8T1WN4z2PrpSHmrFBskeRA1rbdkzdnv2okw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] push: add option to push only submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2358B706-C61D-11E6-AE1C-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 19, 2016 at 10:25 AM, Brandon Williams <bmwill@google.com> wrote:
-> Teach push the --recurse-submodules=only option.  This enables push to
-> recursively push all unpushed submodules while leaving the superproject
-> unpushed.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> The sequencer already has an idea about using different merge
+> strategies. We just piggy-back on top of that, using rebase -i's
+> own settings, when running the sequencer in interactive rebase mode.
 >
-> This is a desirable feature in a scenario where updates to the
-> superproject are handled automatically by some other means, perhaps a
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  sequencer.c | 26 +++++++++++++++++++++++++-
+>  1 file changed, 25 insertions(+), 1 deletion(-)
 
-e.g. Gerrit. (No need to be shy about our code review tool)
+A handful of steps before and including this one look quite faithful
+port to C from the scripted one.  
 
->
-> code review tool.  In this scenario a developer could make a change
-> which spans multiple submodules and then push their commits for code
-> review.  Upon completion of the code review, their commits can be
-> accepted and applied to their respective submodules while the code
-> review tool can then automatically update the superproject to the most
-> recent SHA1 of each submodule.  This would eliminate the merge conflicts
-> in the superproject that could occur if multiple people are contributing
-> to the same submodule.
-
-Code and tests look good to me, I think the commit message
-is good enough, but let's hear Junio on this one.
-
-Thanks,
-Stefan
+Looking good.
