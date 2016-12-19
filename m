@@ -2,112 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72C7E1FF40
-	for <e@80x24.org>; Mon, 19 Dec 2016 18:15:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35A531FF40
+	for <e@80x24.org>; Mon, 19 Dec 2016 18:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755542AbcLSSOb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 13:14:31 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60939 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754930AbcLSSO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 13:14:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D677E597E5;
-        Mon, 19 Dec 2016 13:14:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TkrQgg7fv5GF
-        T+Lblp7m8uJRqLA=; b=QB6q4FYGrziW09xiZZKKXc7FPo1uZhJzFDeZSZxnIihn
-        fQPN48up3CxV4scRH43Vgxn1Ova4vo8KMS5EPT0Z3diZwhFilam9GdSl54qcHlNu
-        pL3GPEpLrtp15p4Ker8y6qMz3HhGGK1MCwAaeNodnGCp71RNKU6HjAIvZAf0Yv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RGGbd0
-        KWv1PDe6TwkOY6jcmETTVlemjVjNmq6xSmGyTPieleLW7mDhxV9i4OvftsIk2ekj
-        HdBMQckhhd4269H30/o6R7cE5HQ6AMsQY8YB2nBwtanoDJugVh+N1drmJ6xXlq3M
-        MXfqSSZRI7jhsEdnLlr3jdd0oWXwuYpxbhDS0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CEF17597E4;
-        Mon, 19 Dec 2016 13:14:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4BEFA597E3;
-        Mon, 19 Dec 2016 13:14:28 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, josharian@gmail.com
-Subject: Re: [PATCH] config.c: handle error case for fstat() calls
-References: <CAFAcib_cY8FeLFkW1=MfR+P7xoupGK9DFegNY5boExHSRppAmg@mail.gmail.com>
-        <20161219092155.20359-1-pclouds@gmail.com>
-Date:   Mon, 19 Dec 2016 10:14:27 -0800
-In-Reply-To: <20161219092155.20359-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 19 Dec 2016 16:21:55 +0700")
-Message-ID: <xmqqtw9zpz0c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1755714AbcLSSPK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 13:15:10 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:33229 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754930AbcLSSPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 13:15:09 -0500
+Received: by mail-qt0-f175.google.com with SMTP id p16so152497463qta.0
+        for <git@vger.kernel.org>; Mon, 19 Dec 2016 10:15:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=emmIEyCX/cVmSVbeofhRizxPHSnuYBnKyKPM4OJkwJg=;
+        b=eZ82gYKPaF8a3YqecF8KIgy1Wy4+CfgYrkGr+qJCfrQ70GFkKnct2Nb2qhbmyer7zC
+         FuHqxsseBaxC7wibacJYm4mMXCGdfZpC/DV1n0N8Rsxv+5GV4gELW/SZa6oWw80zl/8n
+         0MtaMWAst5gVc31MriWdcaE+y/NgAxNNFLMiz7f5gI5FeW14l7kMeHnWg2XQInOu/ncm
+         8K6Kln5BXjS8XrAjVQQTawvo53WT8wVy9lUTwoQsSyF25b0xjRDOaY/iMXiFmFyRJ2Eh
+         l1zbz9Be25/Hws7sgtiTr046E4YuJYrLyqfV+1Hv1pWCFeurKaIixAzXJIDnaWKVoLGX
+         VibQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=emmIEyCX/cVmSVbeofhRizxPHSnuYBnKyKPM4OJkwJg=;
+        b=HiRQ4b8Yn/Un756O1ACPvbok03qT3nSexZgncPh04FnFvEfU0XwwGhcj3m6bpxEj31
+         LeKw8gg4l4Ov3zTZqhxaIheq0aO2QmpOIHx+PGqu5BaQvDK42VCGPgq2h/dLURuupMJb
+         Hq7e2PwqKV2LIA2IT1LymTpgEICVp8q12s+9eb63x1xP9BGMCpr571+JLTyNUaDe7Blu
+         NGEaKko4kUvSdrulbXC5avcUeZ6XczIdo5VyYQZwhzWjSBEfC7UmgrcQ4vluYZU2J2va
+         ovrJt/Y5Bh57wzPK22V+b3hTjaB2qZjAv0sVt4ukK5Ko5jmhHDO9RpzKegJdK3J8S8fp
+         c17w==
+X-Gm-Message-State: AIkVDXJpsF0KOA4VuDo8qraeT2UOJ0uRpsW1a+hOViZEivMCBJ3W9Jj1b6VxQ9hWz8KGt+NOtI5e+8tNLB6Bxgve
+X-Received: by 10.200.58.65 with SMTP id w59mr15993909qte.54.1482171308675;
+ Mon, 19 Dec 2016 10:15:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FAF41ED2-C616-11E6-ACED-E98412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.12.147.188 with HTTP; Mon, 19 Dec 2016 10:15:08 -0800 (PST)
+In-Reply-To: <20161219053507.GA2335@duynguyen.vn.dektech.internal>
+References: <20161212190435.10358-1-sbeller@google.com> <20161212190435.10358-7-sbeller@google.com>
+ <20161219053507.GA2335@duynguyen.vn.dektech.internal>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 19 Dec 2016 10:15:08 -0800
+Message-ID: <CAGZ79kYPEiUGXR-qTbbHzaeOwbHH88mdx7GP8QX2Ff1bypcrwQ@mail.gmail.com>
+Subject: Re: [PATCHv8 6/6] submodule: add absorb-git-dir function
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> ---
->  Will this fix the problem I'm replying to? I don't know. I found this
->  while checking the code and it should be fixed regardless.
-
-Yeah, from a cursory read, it is a step in the right direction to
-check the return value of fstat(). =20
-
-Shouldn't the error-return path in the second hunk rollback the
-lockfile to clean after itself?  The existing "Oh, we cannot chmod
-to match the original" check that comes immediately after shares the
-same issue, so this is not a new problem, but making an existing one
-worse.
-
->  config.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+On Sun, Dec 18, 2016 at 9:35 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Dec 12, 2016 at 11:04:35AM -0800, Stefan Beller wrote:
+>> diff --git a/dir.c b/dir.c
+>> index e0efd3c2c3..d872cc1570 100644
+>> --- a/dir.c
+>> +++ b/dir.c
+>> @@ -2773,3 +2773,15 @@ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+>>       free(work_tree);
+>>       free(git_dir);
+>>  }
+>> +
+>> +/*
+>> + * Migrate the git directory of the given path from old_git_dir to new_git_dir.
+>> + */
+>> +void relocate_gitdir(const char *path, const char *old_git_dir, const char *new_git_dir)
+>> +{
+>> +     if (rename(old_git_dir, new_git_dir) < 0)
+>> +             die_errno(_("could not migrate git directory from '%s' to '%s'"),
+>> +                     old_git_dir, new_git_dir);
+>> +
+>> +     connect_work_tree_and_git_dir(path, new_git_dir);
 >
-> diff --git a/config.c b/config.c
-> index 83fdecb..4973256 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -2194,7 +2194,12 @@ int git_config_set_multivar_in_file_gently(const=
- char *config_filename,
->  			goto out_free;
->  		}
-> =20
-> -		fstat(in_fd, &st);
-> +		if (fstat(in_fd, &st) =3D=3D -1) {
-> +			error_errno(_("fstat on %s failed"), config_filename);
-> +			ret =3D CONFIG_INVALID_FILE;
-> +			goto out_free;
-> +		}
-> +
->  		contents_sz =3D xsize_t(st.st_size);
->  		contents =3D xmmap_gently(NULL, contents_sz, PROT_READ,
->  					MAP_PRIVATE, in_fd, 0);
-> @@ -2414,7 +2419,10 @@ int git_config_rename_section_in_file(const char=
- *config_filename,
->  		goto unlock_and_out;
->  	}
-> =20
-> -	fstat(fileno(config_file), &st);
-> +	if (fstat(fileno(config_file), &st) =3D=3D -1) {
-> +		ret =3D error_errno(_("fstat on %s failed"), config_filename);
-> +		goto out;
-> +	}
-> =20
->  	if (chmod(get_lock_file_path(lock), st.st_mode & 07777) < 0) {
->  		ret =3D error_errno("chmod on %s failed",
+> Should we worry about recovering (e.g. maybe move new_git_dir back to
+> old_git_dir) if this connect_work_tree_and_git_dir() fails?
+
+What if the move back fails?
+
+>
+> Both write_file() and git_config_set_.. in this function may die(). In
+> such a case the repo is in broken state and the user needs pretty good
+> submodule understanding to recover from it, I think.
+>
+> Recovering is not easy (nor entirely safe) either, though I suppose if
+> we keep original copies for modified files, then we could restore them
+> after moving the directory back and pray the UNIX gods that all
+> operations succeed.
+
+There are different levels of brokenness available.
+I just tried what happens if core.worktree is unset in a submodule
+and that seems to not impact git operations (I only tested git-status
+both in the superproject as well as in the submodule).
+
+So I wonder why we set core.worktree at all here as it doesn't
+seem to be needed.
+
+Which means that the move of the git directory as well as the .git file
+update to point at that moved directory are the important things
+to get right.
+
+So maybe:
+
+1) rename the git dir or die
+2) write the new gitlink
+    If that fails remove the .git file (if it exists partially or empty)
+    and undo 1) by calling rename again with swapped arguments
+    and then die
+3) set core.worktree
+    If that fails, just warn the user
