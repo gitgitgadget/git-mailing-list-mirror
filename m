@@ -2,98 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4C461FF76
-	for <e@80x24.org>; Mon, 19 Dec 2016 11:22:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A36D1FF76
+	for <e@80x24.org>; Mon, 19 Dec 2016 11:23:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755241AbcLSLVQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 06:21:16 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52205 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752830AbcLSLVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 06:21:14 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mdr7l-1bxiuh2N0H-00PemC; Mon, 19
- Dec 2016 12:21:02 +0100
-Date:   Mon, 19 Dec 2016 11:49:25 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2016, #02; Mon, 12)
-In-Reply-To: <xmqqinqn6c41.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1612191145080.54750@virtualbox>
-References: <xmqqoa0g96o3.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1612131641291.23160@virtualbox> <xmqqinqn6c41.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1761223AbcLSLWJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 06:22:09 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:62249 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1759884AbcLSLWI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Dec 2016 06:22:08 -0500
+X-AuditID: 12074414-773ff70000004a85-30-5857c2defe77
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 11.A5.19077.ED2C7585; Mon, 19 Dec 2016 06:22:06 -0500 (EST)
+Received: from [192.168.69.190] (p57906BA3.dip0.t-ipconnect.de [87.144.107.163])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBJBM4gO027882
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 19 Dec 2016 06:22:06 -0500
+Subject: Re: [PATCH 5/5] check-ref-format: New --stdin option
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>, git@vger.kernel.org
+References: <20161104191358.28812-1-ijackson@chiark.greenend.org.uk>
+ <20161104191358.28812-6-ijackson@chiark.greenend.org.uk>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <9d2d25d8-e9cf-5d9f-8e7e-5d426e219344@alum.mit.edu>
+Date:   Mon, 19 Dec 2016 12:22:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fHnbB7p9gyV5hw+bjS6v0mYLrOeOXuY1G5ubEzKbyT4vbIPqrPP
- VziVeYHOMuveXUk8tCnuPBPIRpew9IAUAYwdAdWcrZ4Y/uSLAT0MJr4+zl0Exh8CyBbO6uK
- Iw6ZH0o0PkW+VvgXhPg7e4HsbPQMcFFH2Dpotdsx/Xyg0BWDGhVzFOE52DMTnlbdhDFIhvI
- /r1XeaSpt2yk/1CCMZqsg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GFhGwOEvfqE=:Vt0mNkYWIl0yARnQUUzGYv
- mITTtya9y4d62+OYcCBcZ0c1SrOlkwkeiwEyyJmuH6A1555IiaLz0XspIVptP5kwPM620clOy
- fBlhQktHtHPnrbinu7ClbRdIMP1N5v/9+/EViKRfTq6hdyykyQZty6v6+wFEL1o0pPOZmwOkF
- ujN8qkwH2hwpJgB9Pq64q/ZVa00oiWOiR2xWM/lwXm1B2DACotq8Jg2rLNKRGsX4t5PBlFKuM
- c0GaqVRuYLJQlueLBfkEn8/3vK+KJ8toaqnhp3mZ5wwdh8EaS/Kng4Drd7/7TIYX0tZWaNzfw
- FeEQIMO06cTuuHDqbA/npW0i8HS/70gvweqL3917Dxo4w2UJnPU7rdTHTnb4aKjBn1ZqV0eRm
- 0lD1D6oLngU5dEFUG1TZ/MiknMi4juOxqkubhLbTu08P79fCQAvq+vjT74b8Zs4qFbUQsBGrI
- 7Eax4Eitn4lVRRJq62czZZif+KeoQK+iXGwDRgN0QcTgTgYNS+JH1wpSKosOeYWlzzGw1EvL4
- dOES0YF/mYczAZkwNdx3tjxPMz3MYvrU6MsYSPa1THkdEjeDzVxwPhsEF5og5T/uBgtrWguu8
- +DR9iFYyJz40/QFK3x/Me8Awbyqz3DDxp94dMzlhi59MKxBrk5JfoNoDmP/27B2hydS4KIwUH
- xo1Ey3Un/cnn+bmc+b2ux1yutJz+c0y6iTwH6GwFo6A491AEQC1pnEF15BI02MoQ/ag5wa6Zm
- WVELplO0zxf75kEUXKEjhEkSOBUTk9TJzFBWSyAijb2IDtCCSkcz0g8N9YD7cfKXvjGk0hHkx
- 2vHAb+e
+In-Reply-To: <20161104191358.28812-6-ijackson@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqHv/UHiEwfEZrBZdV7qZLFa3LGJx
+        YPL4dmoTs8fnTXIBTFFcNimpOZllqUX6dglcGc09V5kKtklXzH+8j6mB8ZBoFyMnh4SAicTZ
+        HfcZuxi5OIQELjNKdDSvYYJwLjBJnDvwnQmkSljAVqJx9VIWEFtEwE3i7KdGsLiQQL3Em5f7
+        WUFsNgFdiUU9zWBxXgF7iZvTVoPFWQRUJfY2bWYEsUUFQiQuzznKBlEjKHFy5hOwmZwCrhJf
+        LvYzg9jMAnoSO67/YoWw5SW2v53DPIGRbxaSlllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3
+        ODkxLy+1SNdCLzezRC81pXQTIyTwRHYwHjkpd4hRgINRiYe34H1YhBBrYllxZe4hRkkOJiVR
+        3ilrQyKE+JLyUyozEosz4otKc1KLDzFKcDArifBu2xseIcSbklhZlVqUD5OS5mBREuf9tljd
+        T0ggPbEkNTs1tSC1CCYrw8GhJMGrBIwwIcGi1PTUirTMnBKENBMHJ8hwHqDh4QdBhhcXJOYW
+        Z6ZD5E8xKkqJ80aDJARAEhmleXC9sMTwilEc6BVh3scgVTzApALX/QpoMBPQ4IXdYINLEhFS
+        Ug2MhRMtM0M4X2tbHZfQWvg+qXyn8YtDC/+dlnNoKNr1Zc6GZaLpVzMqY1k/nfmd+sRvz67G
+        VobiWNMdi16KrX63qoMhYfaKGW82llTOm24Rszxj0o3LdZOdW+bacDoenPqdSY7j7c/3yVrH
+        G0OP2ntadp5R25Ec8nbL0/cOqbrNte/a1L1jBJ7fUWIpzkg01GIuKk4EAB1r1oTnAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Tue, 13 Dec 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 11/04/2016 08:13 PM, Ian Jackson wrote:
+> Signed-off-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
+> ---
+>  Documentation/git-check-ref-format.txt | 10 ++++++++--
+>  builtin/check-ref-format.c             | 34 +++++++++++++++++++++++++++++++---
+>  2 files changed, 39 insertions(+), 5 deletions(-)
 > 
-> >>  While I think it would make it easier for people to experiment and
-> >>  build on if the topic is merged to 'next', I am at the same time a
-> >>  bit reluctant to merge an unproven new topic that introduces a new
-> >>  file format, which we may end up having to support til the end of
-> >>  time.  It is likely that to support a "prime clone from CDN", it
-> >>  would need a lot more than just "these are the heads and the pack
-> >>  data is over there", so this may not be sufficient.
-> >> 
-> >>  Will discard.
-> >
-> > You could mark it as experimental, subject to change, and merge it to
-> > `next` safely.
+> diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
+> index e9a2657..5a213ce 100644
+> --- a/Documentation/git-check-ref-format.txt
+> +++ b/Documentation/git-check-ref-format.txt
+> @@ -10,8 +10,9 @@ SYNOPSIS
+>  [verse]
+>  'git check-ref-format' [--report-errors] [--normalize]
+>         [--[no-]allow-onelevel] [--refspec-pattern]
+> -       <refname>
+> -'git check-ref-format' [--report-errors] --branch <branchname-shorthand>
+> +       <refname> | --stdin
+> +'git check-ref-format' [--report-errors] --branch
+> +       <branchname-shorthand> | --stdin
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -109,6 +110,11 @@ OPTIONS
+>  	If any ref does not check OK, print a message to stderr.
+>          (By default, git check-ref-format is silent.)
+>  
+> +--stdin::
+> +	Instead of checking on ref supplied on the command line,
+> +	read refs, one per line, from stdin.  The exit status is
+> +	0 if all the refs were OK.
+> +
+>  
+>  EXAMPLES
+>  --------
+> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+> index 559d5c2..87f52fa 100644
+> --- a/builtin/check-ref-format.c
+> +++ b/builtin/check-ref-format.c
+> @@ -76,6 +76,7 @@ static int check_one_ref_format(const char *refname)
+>  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i;
+> +	int use_stdin = 0;
+>  
+>  	if (argc == 2 && !strcmp(argv[1], "-h"))
+>  		usage(builtin_check_ref_format_usage);
+> @@ -93,6 +94,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+>  			check_branch = 1;
+>  		else if (!strcmp(argv[i], "--report-errors"))
+>  			report_errors = 1;
+> +		else if (!strcmp(argv[i], "--stdin"))
+> +			use_stdin = 1;
+>  		else
+>  			usage(builtin_check_ref_format_usage);
+>  	}
+> @@ -100,8 +103,33 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+>  	if (check_branch && (flags || normalize))
+>  		usage(builtin_check_ref_format_usage);
+>  
+> -	if (! (i == argc - 1))
+> -		usage(builtin_check_ref_format_usage);
+> +	if (!use_stdin) {
+> +		if (! (i == argc - 1))
+> +			usage(builtin_check_ref_format_usage);
+
+Given the changes that you made to support `--stdin`, it would be pretty
+easy to support multiple command line arguments, now, too. (But this
+needn't be part of your patch series.)
+
+> +
+> +		return check_one_ref_format(argv[i]);
+> +	} else {
+> +		char buffer[2048];
+> +		int worst = 0;
+>  
+> -	return check_one_ref_format(argv[i]);
+> +		if (! (i == argc))
+> +			usage(builtin_check_ref_format_usage);
+> +
+> +		while (fgets(buffer, sizeof(buffer), stdin)) {
+
+`strbuf_getline()` would make this a lot easier and also eliminate the
+need to specify a buffer size.
+
+> +			char *newline = strchr(buffer, '\n');
+> +			if (!newline) {
+> +				fprintf(stderr, "%s --stdin: missing final newline or line too long\n", *argv);
+> +				exit(127);
+> +			}
+> +			*newline = 0;
+> +			int got = check_one_ref_format(buffer);
+> +			if (got > worst)
+> +				worst = got;
+> +		}
+> +		if (!feof(stdin)) {
+> +			perror("reading from stdin");
+> +			exit(127);
+> +		}
+> +		return worst;
+> +	}
+>  }
 > 
-> Are you planning, or do you know somebody who plans to use that code
-> soonish?
 
-I am too swamped with other things (most importantly, automate the
-identification of the as-of-recent-quite-frequent breakages reported by my
-build jobs).
+Michael
 
-I know that one of my colleagues wanted to have a look at it, and so I
-thought that having it as an experimental feature that I could even
-integrate into Git for Windows for a wider audience could help justify
-alotting the time.
-
-> Otherwise I'd prefer to drop it---at this point, the series is merely
-> "just because we can", not "because we need it to further improve this
-> or that".
-
-Oh, I thought that this was meant as a starting point for anybody
-interested in playing with resumable clones or with easing server loads.
-
-In any case, I just wanted to be sure that you considered making it an
-experimental feature instead of dropping it. Just in case that you did not
-think of that as a possibility.
-
-Ciao,
-Dscho
