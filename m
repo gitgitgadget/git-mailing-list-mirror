@@ -2,84 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD771FF6D
-	for <e@80x24.org>; Mon, 19 Dec 2016 01:13:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3BA1FF6D
+	for <e@80x24.org>; Mon, 19 Dec 2016 02:45:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752051AbcLSBMl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Dec 2016 20:12:41 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50378 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752411AbcLSBMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2016 20:12:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 172765852E;
-        Sun, 18 Dec 2016 20:12:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=M8Ia/kx9FXI0psIVUAxAJ1BwgRk=; b=mIxAZr
-        i/umj4KJVMLNpfFnkuzBcvRaeOCASGcKi9Pa1jbMuGfTOimgGsR/oUS0llqPXRF/
-        GNj7fj3cBz4RZ5/Dbw6ZUckR0ECbYHqQhPpmSQt10gNfAhdCbNXfx3S8GJAWOYNR
-        kVw8CL9rZokJKmo6TepcI1zKn/ldNUrWmRSQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GYwi4s6geFj9lXY8I/kpsn/Z45PCPBCD
-        +TvSUVsh3Zp53ztI5fhcq69VMutb7ClvKCw6tFC8rmfuFVif0rNNrM29cE4A0vPK
-        7spITlKliqU1xxKzapBUI9g6KlNilpTNZiybNJjeTcXKbq0SPApOU9TZmGMAutmd
-        hfzsKEO+Hi0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0DDD35852D;
-        Sun, 18 Dec 2016 20:12:20 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 854155852C;
-        Sun, 18 Dec 2016 20:12:19 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] winansi_isatty(): fix when Git is used from CMD
-References: <cover.1481454992.git.johannes.schindelin@gmx.de>
-        <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
-        <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org>
-        <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
-        <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org>
-        <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
-Date:   Sun, 18 Dec 2016 17:12:18 -0800
-In-Reply-To: <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org> (Johannes Sixt's
-        message of "Sun, 18 Dec 2016 16:26:02 +0100")
-Message-ID: <xmqq37hkrabx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 30291D1C-C588-11E6-B0E6-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1752301AbcLSCou (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Dec 2016 21:44:50 -0500
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:56992 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751171AbcLSCot (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2016 21:44:49 -0500
+X-Greylist: delayed 1950 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Dec 2016 21:44:48 EST
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.88)
+        (envelope-from <glandium@glandium.org>)
+        id 1cInQy-0004AO-8k; Mon, 19 Dec 2016 11:12:12 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     git@vger.kernel.org
+Cc:     johan@herland.net, gitster@pobox.com
+Subject: [PATCH] fast-import: properly fanout notes when tree is imported
+Date:   Mon, 19 Dec 2016 11:12:12 +0900
+Message-Id: <20161219021212.15978-1-mh@glandium.org>
+X-Mailer: git-send-email 2.11.0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+In typical uses of fast-import, trees are inherited from a parent
+commit. In that case, the tree_entry for the branch looks like:
 
-> ..
-> The new isatty() override implemented by cbb3f3c9b197 (mingw: intercept
-> isatty() to handle /dev/null as Git expects it, 2016-12-11) does not
-> take into account that _get_osfhandle() returns the handle visible by
-> the C code, which is the pipe. But it actually wants to investigate the
-> properties of the handle that is actually connected to the outside
-> world. Fortunately, there is already winansi_get_osfhandle(), which
-> returns exactly this handle. Use it.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
-> I was able to test the idea earlier than anticipated and it does work
-> for me.
+  .versions[1].sha1 = $some_sha1
+  .tree = <tree structure loaded from $some_sha1>
 
-I'll queue this in 'pu' so that I won't forget, but this time I'll
-make sure I won't act on it until I see you two agree on the right
-way forward.
+However, when trees are imported, rather than inherited, that is not the
+case. One can import a tree with a filemodify command, replacing the
+root tree object.
 
-Thanks.  
+e.g.
+  "M 040000 $some_sha1 \n"
+
+In this case, the tree_entry for the branch looks like:
+
+  .versions[1].sha1 = $some_sha1
+  .tree = NULL
+
+When adding new notes with the notemodify command, do_change_note_fanout
+is called to get a notes count, and to do so, it loops over the
+tree_entry->tree, but doesn't do anything when the tree is NULL.
+
+In the latter case above, it means do_change_note_fanout thinks the tree
+contains no note, and new notes are added with no fanout.
+
+Interestingly, do_change_note_fanout does check whether subdirectories
+have a NULL .tree, in which case it uses load_tree(). Which means the
+right behaviour happens when using the filemodify command to import
+subdirectories.
+
+This change makes do_change_note_fanount call load_tree() whenever the
+tree_entry it is given has no tree loaded, making all cases handled
+equally.
+
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+
+This is something I should have submitted a patch for a long time ago, back
+when this was discussed in the thread starting from
+https://www.spinics.net/lists/git/msg242426.html. The message most relevant to
+this patch in the thread is https://www.spinics.net/lists/git/msg242448.html.
+
+ fast-import.c                |  8 +++++---
+ t/t9301-fast-import-notes.sh | 41 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 3 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index cb545d7df5..5e528b1999 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2220,13 +2220,17 @@ static uintmax_t do_change_note_fanout(
+ 		char *fullpath, unsigned int fullpath_len,
+ 		unsigned char fanout)
+ {
+-	struct tree_content *t = root->tree;
++	struct tree_content *t;
+ 	struct tree_entry *e, leaf;
+ 	unsigned int i, tmp_hex_sha1_len, tmp_fullpath_len;
+ 	uintmax_t num_notes = 0;
+ 	unsigned char sha1[20];
+ 	char realpath[60];
+ 
++	if (!root->tree)
++		load_tree(root);
++	t = root->tree;
++
+ 	for (i = 0; t && i < t->entry_count; i++) {
+ 		e = t->entries[i];
+ 		tmp_hex_sha1_len = hex_sha1_len + e->name->str_len;
+@@ -2278,8 +2282,6 @@ static uintmax_t do_change_note_fanout(
+ 				leaf.tree);
+ 		} else if (S_ISDIR(e->versions[1].mode)) {
+ 			/* This is a subdir that may contain note entries */
+-			if (!e->tree)
+-				load_tree(e);
+ 			num_notes += do_change_note_fanout(orig_root, e,
+ 				hex_sha1, tmp_hex_sha1_len,
+ 				fullpath, tmp_fullpath_len, fanout);
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index 83acf68bc3..b408b2b32d 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -483,6 +483,47 @@ test_expect_success 'verify that lots of notes trigger a fanout scheme' '
+ 
+ '
+ 
++# Create another notes tree from the one above
++cat >>input <<INPUT_END
++commit refs/heads/other_commits
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++commit #$(($num_commit + 1))
++COMMIT
++
++from refs/heads/many_commits
++M 644 inline file
++data <<EOF
++file contents in commit #$(($num_commit + 1))
++EOF
++
++commit refs/notes/other_notes
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++committing one more note on a tree imported from a previous notes tree
++COMMIT
++
++M 040000 $(git log --no-walk --format=%T refs/notes/many_notes) 
++N inline :$(($num_commit + 1))
++data <<EOF
++note for commit #$(($num_commit + 1))
++EOF
++INPUT_END
++
++test_expect_success 'verify that importing a notes tree respects the fanout scheme' '
++	git fast-import <input &&
++
++	# None of the entries in the top-level notes tree should be a full SHA1
++	git ls-tree --name-only refs/notes/other_notes |
++	while read path
++	do
++		if test $(expr length "$path") -ge 40
++		then
++			return 1
++		fi
++	done
++'
++
+ cat >>expect_non-note1 << EOF
+ This is not a note, but rather a regular file residing in a notes tree
+ EOF
+-- 
+2.11.0.dirty
+
