@@ -2,100 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69EC51FF6D
-	for <e@80x24.org>; Mon, 19 Dec 2016 05:36:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E71A31FF76
+	for <e@80x24.org>; Mon, 19 Dec 2016 08:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754519AbcLSFfP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 00:35:15 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36195 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754373AbcLSFfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 00:35:14 -0500
-Received: by mail-pg0-f66.google.com with SMTP id w68so1248062pgw.3
-        for <git@vger.kernel.org>; Sun, 18 Dec 2016 21:35:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=q0dKxLpBRDRN0mNd9qLF3X9dtpwWmuxpAj9p6hOmBb4=;
-        b=rhAtPQa4qg5yShUYAqxTHxNO7yOyJ4caFfKNy7Zy5rwEnxQff/wxEBh3kPFHompDBb
-         phQWEOn4cqh1W0mWmFqVuVV1SIyiM/hPTDZ34dMO+EFdAwTAKpdX6YDu2B279+XsHUzU
-         Br8aC5MM/sIhjo6FUu5Ghxmt9HaUoVd+M5oa+oS6nq7PTm9pc0IvuBMWu6KM15ukGW8r
-         rSslghr0R6s6XwWMF7/WzdHujc77rCJNROeU771LRoZUU58Vrc5Hwnweob7EXMA0NPpm
-         7hN2K4paItF5CEoUGodJOKQtixjtRUTFzmvBQswSjt0/Qj+nCLrCT+4+RhYKIHtJCTMg
-         B/sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=q0dKxLpBRDRN0mNd9qLF3X9dtpwWmuxpAj9p6hOmBb4=;
-        b=RLNfIJPY16RveqF+jSxahugAXLS/BbwKEE3JO5T/HSAVDVFwADGF6g1mNK63hCbwoR
-         /ES81cujkhC+jwc76xjo3XkKAoZSSGDqBadt+sJM5HFCSYhoRsnXR1MsFycJoQKGzG2p
-         9avh6/4J0bpLBzKED7rK4pW3INYZYoRm33zZKwujMMOHUzbIvsz2Nk0ghxtl1DvcnN81
-         ziX6pZaqEABZ9H968pfIjEmBPBiQVrKrrUfqTIJzmuWuFUiovkkETAFF0LQ9M1osEdqf
-         hVhBG7/hX3dkkxApXVcvv99lUBFtVy1zE6lbPTntAuCzKwortRa2SnFCkg4qhAPcX4E7
-         QLcA==
-X-Gm-Message-State: AKaTC02hlQCAofsI9cygyrNKUsAjHuBOnFCUvZB/H1AO9Vz9aJn5S0NbldS6buwljffPMA==
-X-Received: by 10.84.216.21 with SMTP id m21mr31438005pli.119.1482125713612;
-        Sun, 18 Dec 2016 21:35:13 -0800 (PST)
-Received: from duynguyen.vn.dektech.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id g63sm27616574pfd.60.2016.12.18.21.35.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Dec 2016 21:35:12 -0800 (PST)
-Date:   Mon, 19 Dec 2016 12:35:07 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com
-Subject: Re: [PATCHv8 6/6] submodule: add absorb-git-dir function
-Message-ID: <20161219053507.GA2335@duynguyen.vn.dektech.internal>
-References: <20161212190435.10358-1-sbeller@google.com>
- <20161212190435.10358-7-sbeller@google.com>
+        id S1752947AbcLSIfE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 03:35:04 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:51971 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750947AbcLSIfD (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Dec 2016 03:35:03 -0500
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Dec 2016 03:35:03 EST
+X-AuditID: 1207440e-7c7ff700000009ec-6e-585799ff65e0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 64.33.02540.FF997585; Mon, 19 Dec 2016 03:27:46 -0500 (EST)
+Received: from [192.168.69.190] (p57906BA3.dip0.t-ipconnect.de [87.144.107.163])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBJ8RfJL020845
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 19 Dec 2016 03:27:42 -0500
+Subject: Re: [PATCH 1/5] check-ref-format: Refactor out check_one_ref_format
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>, git@vger.kernel.org
+References: <20161104191358.28812-1-ijackson@chiark.greenend.org.uk>
+ <20161104191358.28812-2-ijackson@chiark.greenend.org.uk>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <3e277bb8-bd1f-0d8c-47a7-9673ad711bce@alum.mit.edu>
+Date:   Mon, 19 Dec 2016 09:27:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161212190435.10358-7-sbeller@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20161104191358.28812-2-ijackson@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqMs0KzzC4PVHFouuK91MFqtbFrE4
+        MHl8O7WJ2ePzJrkApigum5TUnMyy1CJ9uwSujN8fX7AX3OGtWPliB2MD41uuLkZODgkBE4mr
+        e3exdDFycQgJXGaUuPPhMTOEc4FJYufXZYwgVcICPhL7TvYzg9giAm4SZz81MoHYQgL1EidO
+        7ASrYRPQlVjU0wwW5xWwl/i7bAdYnEVAVWLR9vVgvaICIRKX5xxlg6gRlDg58wkLiM0p4Cqx
+        4vsJsBpmAT2JHdd/sULY8hLb385hnsDINwtJyywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxb
+        nJyYl5dapGusl5tZopeaUrqJERJ4fDsY29fLHGIU4GBU4uEteB8WIcSaWFZcmXuIUZKDSUmU
+        d8rakAghvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrzfpodHCPGmJFZWpRblw6SkOViUxHnVlqj7
+        CQmkJ5akZqemFqQWwWRlODiUJHijZgI1ChalpqdWpGXmlCCkmTg4QYbzAA2vmQEyvLggMbc4
+        Mx0if4pRUUqc9yBIQgAkkVGaB9cLSwyvGMWBXhHmlQFZwQNMKnDdr4AGMwENXtgNNrgkESEl
+        1cDouv9GpMOkmg3cr58+uhBafao56sU9LisGj7orN662hgkEc87YsvLsn5M39x8WSvoruO+V
+        ehVnTWPNyd+FjhnO7hkrhV5Pu1E/1/3tivceBRUSF60Su3fOZf6vm3686oqJtESEuZ7cZatX
+        YUmqvt3vvWMPVM5WSYuKYlj4r/7BNJmZXU+e/RVRYinOSDTUYi4qTgQAqfrITOcCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 12, 2016 at 11:04:35AM -0800, Stefan Beller wrote:
-> diff --git a/dir.c b/dir.c
-> index e0efd3c2c3..d872cc1570 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2773,3 +2773,15 @@ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
->  	free(work_tree);
->  	free(git_dir);
+On 11/04/2016 08:13 PM, Ian Jackson wrote:
+> We are going to want to reuse this.  No functional change right now.
+> 
+> It currently has a hidden memory leak if --normalize is used.
+> 
+> Signed-off-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
+> ---
+>  builtin/check-ref-format.c | 26 ++++++++++++++------------
+>  1 file changed, 14 insertions(+), 12 deletions(-)
+> 
+> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+> index eac4994..4d56caa 100644
+> --- a/builtin/check-ref-format.c
+> +++ b/builtin/check-ref-format.c
+> @@ -48,12 +48,22 @@ static int check_ref_format_branch(const char *arg)
+>  	return 0;
 >  }
+>  
+> +static int normalize = 0;
+> +static int flags = 0;
 > +
-> +/*
-> + * Migrate the git directory of the given path from old_git_dir to new_git_dir.
-> + */
-> +void relocate_gitdir(const char *path, const char *old_git_dir, const char *new_git_dir)
+> +static int check_one_ref_format(const char *refname)
 > +{
-> +	if (rename(old_git_dir, new_git_dir) < 0)
-> +		die_errno(_("could not migrate git directory from '%s' to '%s'"),
-> +			old_git_dir, new_git_dir);
+> +	if (normalize)
+> +		refname = collapse_slashes(refname);
+> +	if (check_refname_format(refname, flags))
+> +		return 1;
+> +	if (normalize)
+> +		printf("%s\n", refname);
+
+This function needs to `return 0` if it gets to the end.
+
+> +}
 > +
-> +	connect_work_tree_and_git_dir(path, new_git_dir);
+>  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i;
+> -	int normalize = 0;
+> -	int flags = 0;
+> -	const char *refname;
+>  
+>  	if (argc == 2 && !strcmp(argv[1], "-h"))
+>  		usage(builtin_check_ref_format_usage);
+> @@ -76,13 +86,5 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+>  	if (! (i == argc - 1))
+>  		usage(builtin_check_ref_format_usage);
+>  
+> -	refname = argv[i];
+> -	if (normalize)
+> -		refname = collapse_slashes(refname);
+> -	if (check_refname_format(refname, flags))
+> -		return 1;
+> -	if (normalize)
+> -		printf("%s\n", refname);
+> -
+> -	return 0;
+> +	return check_one_ref_format(argv[i]);
+>  }
+> 
 
-Should we worry about recovering (e.g. maybe move new_git_dir back to
-old_git_dir) if this connect_work_tree_and_git_dir() fails?
+Michael
 
-Both write_file() and git_config_set_.. in this function may die(). In
-such a case the repo is in broken state and the user needs pretty good
-submodule understanding to recover from it, I think.
-
-Recovering is not easy (nor entirely safe) either, though I suppose if
-we keep original copies for modified files, then we could restore them
-after moving the directory back and pray the UNIX gods that all
-operations succeed.
---
-Duy
