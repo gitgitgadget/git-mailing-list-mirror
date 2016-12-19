@@ -6,157 +6,89 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A36D1FF76
-	for <e@80x24.org>; Mon, 19 Dec 2016 11:23:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6E0C1FF76
+	for <e@80x24.org>; Mon, 19 Dec 2016 11:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761223AbcLSLWJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 06:22:09 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:62249 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1759884AbcLSLWI (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Dec 2016 06:22:08 -0500
-X-AuditID: 12074414-773ff70000004a85-30-5857c2defe77
+        id S1761688AbcLSL37 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 06:29:59 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43094 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755034AbcLSL35 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Dec 2016 06:29:57 -0500
+X-AuditID: 12074413-465ff70000000a33-fe-5857c4a698f5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 11.A5.19077.ED2C7585; Mon, 19 Dec 2016 06:22:06 -0500 (EST)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B5.72.02611.6A4C7585; Mon, 19 Dec 2016 06:29:42 -0500 (EST)
 Received: from [192.168.69.190] (p57906BA3.dip0.t-ipconnect.de [87.144.107.163])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBJBM4gO027882
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBJBTeGW028225
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 19 Dec 2016 06:22:06 -0500
-Subject: Re: [PATCH 5/5] check-ref-format: New --stdin option
+        Mon, 19 Dec 2016 06:29:41 -0500
+Subject: Re: [PATCH 0/5] git check-ref-format --stdin --report-errors
 To:     Ian Jackson <ijackson@chiark.greenend.org.uk>, git@vger.kernel.org
 References: <20161104191358.28812-1-ijackson@chiark.greenend.org.uk>
- <20161104191358.28812-6-ijackson@chiark.greenend.org.uk>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <9d2d25d8-e9cf-5d9f-8e7e-5d426e219344@alum.mit.edu>
-Date:   Mon, 19 Dec 2016 12:22:04 +0100
+Message-ID: <561c0338-66cd-f806-7b3b-b422f98a1564@alum.mit.edu>
+Date:   Mon, 19 Dec 2016 12:29:40 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.5.1
 MIME-Version: 1.0
-In-Reply-To: <20161104191358.28812-6-ijackson@chiark.greenend.org.uk>
+In-Reply-To: <20161104191358.28812-1-ijackson@chiark.greenend.org.uk>
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqHv/UHiEwfEZrBZdV7qZLFa3LGJx
-        YPL4dmoTs8fnTXIBTFFcNimpOZllqUX6dglcGc09V5kKtklXzH+8j6mB8ZBoFyMnh4SAicTZ
-        HfcZuxi5OIQELjNKdDSvYYJwLjBJnDvwnQmkSljAVqJx9VIWEFtEwE3i7KdGsLiQQL3Em5f7
-        WUFsNgFdiUU9zWBxXgF7iZvTVoPFWQRUJfY2bWYEsUUFQiQuzznKBlEjKHFy5hOwmZwCrhJf
-        LvYzg9jMAnoSO67/YoWw5SW2v53DPIGRbxaSlllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3
-        ODkxLy+1SNdCLzezRC81pXQTIyTwRHYwHjkpd4hRgINRiYe34H1YhBBrYllxZe4hRkkOJiVR
-        3ilrQyKE+JLyUyozEosz4otKc1KLDzFKcDArifBu2xseIcSbklhZlVqUD5OS5mBREuf9tljd
-        T0ggPbEkNTs1tSC1CCYrw8GhJMGrBIwwIcGi1PTUirTMnBKENBMHJ8hwHqDh4QdBhhcXJOYW
-        Z6ZD5E8xKkqJ80aDJARAEhmleXC9sMTwilEc6BVh3scgVTzApALX/QpoMBPQ4IXdYINLEhFS
-        Ug2MhRMtM0M4X2tbHZfQWvg+qXyn8YtDC/+dlnNoKNr1Zc6GZaLpVzMqY1k/nfmd+sRvz67G
-        VobiWNMdi16KrX63qoMhYfaKGW82llTOm24Rszxj0o3LdZOdW+bacDoenPqdSY7j7c/3yVrH
-        G0OP2ntadp5R25Ec8nbL0/cOqbrNte/a1L1jBJ7fUWIpzkg01GIuKk4EAB1r1oTnAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqLvsSHiEwc5F+hZdV7qZLFa3LGJx
+        YPL4dmoTs8fnTXIBTFFcNimpOZllqUX6dglcGWvnvmQqeMtTsfbeV+YGxh6uLkZODgkBE4kZ
+        zb1sXYxcHEIClxklvq44wwzhXGCSOHThImMXIweHsICrxNuWMpAGEQE3ibOfGplAbCEBF4nu
+        3hdsIDabgK7Eop5msDivgL3ExpkrwGwWAVWJ1t2bwGxRgRCJy3OOskHUCEqcnPmEBcTmBBp/
+        8vk9ZhCbWUBPYsf1X6wQtrzE9rdzmCcw8s1C0jILSdksJGULGJlXMcol5pTm6uYmZuYUpybr
+        Ficn5uWlFuma6+VmluilppRuYoSEnfAOxl0n5Q4xCnAwKvHwFrwPixBiTSwrrsw9xCjJwaQk
+        yjtlbUiEEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHevEPhEUK8KYmVValF+TApaQ4WJXFetSXq
+        fkIC6YklqdmpqQWpRTBZGQ4OJQle7sNAjYJFqempFWmZOSUIaSYOTpDhPEDDHUBqeIsLEnOL
+        M9Mh8qcYFaXEeXeAbBUASWSU5sH1wtLCK0ZxoFeEeb1A2nmAKQWu+xXQYCagwQu7wQaXJCKk
+        pBoY1blOrSv8YnrRLsf+4OzLTaeUzlhw+F75cc/2197vdpVm38+Evzm1rezlgmXHtWIEmua/
+        X2VvUy+f81zw3pZZzh/WLpn0+Wim1jSx1bKO12o6+32XcCY+O/jry/7ezG3h57Y9Ou1l9rPj
+        ydS8QL4Dre57HOyUP08VOhnquH2m+uWstdLTfhct3KbEUpyRaKjFXFScCACN1TIA5gIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 11/04/2016 08:13 PM, Ian Jackson wrote:
-> Signed-off-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
-> ---
->  Documentation/git-check-ref-format.txt | 10 ++++++++--
->  builtin/check-ref-format.c             | 34 +++++++++++++++++++++++++++++++---
->  2 files changed, 39 insertions(+), 5 deletions(-)
+> I wanted to be able to syntax check lots of proposed refs quickly
+> (please don't ask why - it's complicated!)
 > 
-> diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-> index e9a2657..5a213ce 100644
-> --- a/Documentation/git-check-ref-format.txt
-> +++ b/Documentation/git-check-ref-format.txt
-> @@ -10,8 +10,9 @@ SYNOPSIS
->  [verse]
->  'git check-ref-format' [--report-errors] [--normalize]
->         [--[no-]allow-onelevel] [--refspec-pattern]
-> -       <refname>
-> -'git check-ref-format' [--report-errors] --branch <branchname-shorthand>
-> +       <refname> | --stdin
-> +'git check-ref-format' [--report-errors] --branch
-> +       <branchname-shorthand> | --stdin
->  
->  DESCRIPTION
->  -----------
-> @@ -109,6 +110,11 @@ OPTIONS
->  	If any ref does not check OK, print a message to stderr.
->          (By default, git check-ref-format is silent.)
->  
-> +--stdin::
-> +	Instead of checking on ref supplied on the command line,
-> +	read refs, one per line, from stdin.  The exit status is
-> +	0 if all the refs were OK.
-> +
->  
->  EXAMPLES
->  --------
-> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-> index 559d5c2..87f52fa 100644
-> --- a/builtin/check-ref-format.c
-> +++ b/builtin/check-ref-format.c
-> @@ -76,6 +76,7 @@ static int check_one_ref_format(const char *refname)
->  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  {
->  	int i;
-> +	int use_stdin = 0;
->  
->  	if (argc == 2 && !strcmp(argv[1], "-h"))
->  		usage(builtin_check_ref_format_usage);
-> @@ -93,6 +94,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  			check_branch = 1;
->  		else if (!strcmp(argv[i], "--report-errors"))
->  			report_errors = 1;
-> +		else if (!strcmp(argv[i], "--stdin"))
-> +			use_stdin = 1;
->  		else
->  			usage(builtin_check_ref_format_usage);
->  	}
-> @@ -100,8 +103,33 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  	if (check_branch && (flags || normalize))
->  		usage(builtin_check_ref_format_usage);
->  
-> -	if (! (i == argc - 1))
-> -		usage(builtin_check_ref_format_usage);
-> +	if (!use_stdin) {
-> +		if (! (i == argc - 1))
-> +			usage(builtin_check_ref_format_usage);
-
-Given the changes that you made to support `--stdin`, it would be pretty
-easy to support multiple command line arguments, now, too. (But this
-needn't be part of your patch series.)
-
-> +
-> +		return check_one_ref_format(argv[i]);
-> +	} else {
-> +		char buffer[2048];
-> +		int worst = 0;
->  
-> -	return check_one_ref_format(argv[i]);
-> +		if (! (i == argc))
-> +			usage(builtin_check_ref_format_usage);
-> +
-> +		while (fgets(buffer, sizeof(buffer), stdin)) {
-
-`strbuf_getline()` would make this a lot easier and also eliminate the
-need to specify a buffer size.
-
-> +			char *newline = strchr(buffer, '\n');
-> +			if (!newline) {
-> +				fprintf(stderr, "%s --stdin: missing final newline or line too long\n", *argv);
-> +				exit(127);
-> +			}
-> +			*newline = 0;
-> +			int got = check_one_ref_format(buffer);
-> +			if (got > worst)
-> +				worst = got;
-> +		}
-> +		if (!feof(stdin)) {
-> +			perror("reading from stdin");
-> +			exit(127);
-> +		}
-> +		return worst;
-> +	}
->  }
+> So I added a --stdin option to git-check-ref-format.  Also it has
+> --report-errors now too so you can get some kind of useful error
+> message if it complains.
 > 
+> It's still not really a good batch mode but it's good enough for my
+> use case.  To improve it would involve a new command line option to
+> offer a suitable stdout output format.
+> 
+> There are three small refactoring patches and the two patches with new
+> options and corresponding docs.
+> 
+> Thanks for your attention.
+> 
+> FYI I am not likely to need this again in the near future: it's a
+> one-off use case.  So my effort for rework is probably limited.  I
+> thought I'd share what I'd done in what I hope is a useful form,
+> anyway.
+
+Thanks for your patches. I left some comments about the individual patches.
+
+I don't know whether this feature will be popular, but it's not a lot of
+code to add it, so it would be OK with me.
+
+Especially given that the output is not especially machine-readable, it
+might be more consistent with other commands to call the new feature
+`--verbose` rather than `--report-errors`.
+
+If it is thought likely that scripts will want to leave a pipe open to
+this command and feed it one query at a time, then it would be helpful
+to flush stdout after each reference's result is written. If the
+opposite use case is common (mass processing of refnames), we could
+always add a `--buffer` option like the one that `git cat-file --batch` has.
 
 Michael
 
