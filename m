@@ -2,208 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 036891FF76
-	for <e@80x24.org>; Tue, 20 Dec 2016 23:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2671FF76
+	for <e@80x24.org>; Tue, 20 Dec 2016 23:47:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934870AbcLTXV6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 18:21:58 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33953 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932479AbcLTXV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 18:21:57 -0500
-Received: by mail-pf0-f180.google.com with SMTP id c4so30987993pfb.1
-        for <git@vger.kernel.org>; Tue, 20 Dec 2016 15:21:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/XvVBiyg8MCqx6CZFFWMvKS4HRY+IIVXNs2psNbM5TE=;
-        b=ThnY511kLkN2jgOZos02/3gDvvc1e3/u7NO/JA4jzVOjZiwXnQlWY+sKEF62MCT39M
-         6qK6N/GNGwzWItqb30iRr2IbW1PYW2xXfzAzx/FMy4lLYaRp0qNflRDnWI9PUH0nwbqx
-         aAcVS0Zhw48IU7zVe4GPY0r0HM88Zp5BodSOcHQtEbqlUIiaoydpurVi1M+46notOlrz
-         r61/Z0lPmFqGrMTy8n3rv1CHw75zLJBGp5QZJOOt5hgW/Doo1+EAktJ2Yr03tR7a2oIV
-         ENHYYu/7+RuMGVj7WgHiEHbVHbcqpqyfFMB/W7KULWGlUkd/qsSfVqDzfulVLifCVaMG
-         IT9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/XvVBiyg8MCqx6CZFFWMvKS4HRY+IIVXNs2psNbM5TE=;
-        b=krMZ9MCPQrOLfq6lFL2sezHwUgZmDgAk1w/JXchRlTAx+T2tKsmN7yU3rcDILqV3nk
-         /VBgVH0Er9YOVdGp+Lj3m76Xx6nfy8/O4b3KSQIjN+XJQ3FiaJmmD/+PZAwxYUtWeSHz
-         MjqilhWi/ySHStHU7QmDlYAdfCEqaGdU82dZmuwhIXrhO1LmFwTix7zafOLXyz92dVBK
-         A197HfaU7q3yDey61fOYD8MmEGk+yvpNHkZ2MQ4zcuxx+qGyqtvFLm/PDgfnz3QT+Fp8
-         e75DwLo7AW7ELShHxDq4QGA58bOoDNCo9P/Wpomt71d2aB0SAaxQrzK5jlV7nDN9Z9a/
-         Lfjw==
-X-Gm-Message-State: AIkVDXKFCpFYrCiestay640/EW8MXjH+Wpmx7QkFB7f9OqC4+NpI1KWHCrboFOeaJTasSD/M
-X-Received: by 10.98.166.70 with SMTP id t67mr1454391pfe.132.1482275567709;
-        Tue, 20 Dec 2016 15:12:47 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:6c5b:c771:3806:a807])
-        by smtp.gmail.com with ESMTPSA id i194sm41810616pgc.46.2016.12.20.15.12.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Dec 2016 15:12:47 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 3/4] submodule: rename and add flags to ok_to_remove_submodule
-Date:   Tue, 20 Dec 2016 15:12:26 -0800
-Message-Id: <20161220231227.14115-4-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.rc2.53.gb7b3fba.dirty
-In-Reply-To: <20161220231227.14115-1-sbeller@google.com>
-References: <20161220231227.14115-1-sbeller@google.com>
+        id S933365AbcLTXrF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 18:47:05 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54157 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932479AbcLTXrD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 18:47:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CDA9256E5D;
+        Tue, 20 Dec 2016 18:46:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yzqbOfAkXIaJxKNWxe66HwJQsq8=; b=mBd6cU
+        uI/rdkkfcEFY4N5qsJ95R+290JYjQzZtm3DoCkJEAGZFc0Se2Mq0zHSaiKhDlYx7
+        pAwlr0c9n34G3ybNqmcQslPWpkh95+XyJ95RkfvKeJg23k8OScAq6hOrT2jWrhtd
+        PUd8jjoXpn72ahwKnFek6sJO7PF+Zs/0n9PhY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Nc/x6f2U18BOUHx+FzFuJEq/Ff5nOp1K
+        kiUqEYooyUrtpl2AqXOoG7QXs2iKsIh8cvf2zCc86YOajaxfqHOPoWH37xHaOxgJ
+        87vmTlA78+W5Kg0EzyZ+IX7r3AyMABpBarJrplLGFXMB7izXoFocfkdtE3J7fMYF
+        jVuzl0Wbxvs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C624F56E5B;
+        Tue, 20 Dec 2016 18:46:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4160756E56;
+        Tue, 20 Dec 2016 18:46:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 09/34] sequencer (rebase -i): write an author-script file
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+        <cover.1481642927.git.johannes.schindelin@gmx.de>
+        <09c2718e119f809093794410ae1a738c1cd122d1.1481642927.git.johannes.schindelin@gmx.de>
+        <xmqqd1gtuivc.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1612191800530.54750@virtualbox>
+        <xmqqy3zbl718.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 20 Dec 2016 15:46:30 -0800
+In-Reply-To: <xmqqy3zbl718.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 19 Dec 2016 17:32:19 -0800")
+Message-ID: <xmqq37hijh9l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 885FC17A-C70E-11E6-9106-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In different contexts the question "Is it ok to delete a submodule?"
-may be answered differently.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In 293ab15eea (submodule: teach rm to remove submodules unless they
-contain a git directory, 2012-09-26) a case was made that we can safely
-ignore ignored untracked files for removal as we explicitely ask for the
-removal of the submodule.
+>> We keep coming back to the same argument. You want this quoting/dequoting
+>> to be turned into a full-fledged parser. And I keep pointing out that the
+>> code here does not *need* to parse but only construct an environment
+>> block.
+>
+> I am afraid you are mis-reading me.  I see a code that _READS_ some
+> data format, for which we already have a parser, and then write out
+> things based on what it read.  I do not want you to make anything
+> into a full-fledged parser---I just do not want to see an ad-hoc
+> reader and instead the code to USE existing parser.
 
-In a later patch we want to remove submodules even when the user doesn't
-explicitly ask for it (e.g. checking out a tree-ish in which the submodule
-doesn't exist).  In that case we want to be more careful when it comes
-to deletion of untracked files. As of this patch it is unclear how this
-will be implemented exactly, so we'll offer flags in which the caller
-can specify how the different untracked files ought to be handled.
+To extend this a bit.
 
-As the flags allow the function to not die on an error when spawning
-a child process, we need to find an appropriate return code for the
-case when the child process could not be started. As in that case we
-cannot tell if the submodule is ok to remove, we'd want to return 'false'.
+I care rather deeply about not spreading the re-invention of parsers
+and formatters throughout the code, because that would introduce
+unnecesary maintenance burden.
 
-As only 0 is understood as false, rename the function to invert the
-meaning, i.e. the return code of 0 signals the removal of the submodule
-is fine, and other values can be used to return a more precise answer
-what went wrong.
+Quoting a string so that it is acceptable inside a pair of single
+quotes, occasionally stepping outside of the sq context and using
+backquote to excape individual byte, for example, might feel simple
+enough that anybody can just write inline instead of learning how to
+call and actually calling sq_quote().  You open ', show each byte
+unless it is a ', in which case you close ' and give \' and
+immediately open '.  That was what sq_quote() did originally and for
+a long time.  If however we allowed everybody to reinvent the code
+to quote all over the place, with a lame "This is different and does
+not *need* to call shared code" excuse, it would have required a lot
+more effort to do a change like the one in 77d604c309 ("Enhanced
+sq_quote()", 2005-10-10) that changed the quoting rules slightly to
+make the output safer to accomodate different variants of shells.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/rm.c |  4 +++-
- submodule.c  | 49 +++++++++++++++++++++++++++++++++++++------------
- submodule.h  |  6 +++++-
- 3 files changed, 45 insertions(+), 14 deletions(-)
+The same thing can be said for split_ident() code.  The "author"
+line has name, '<', email address, '>', timestring, '+' or '-', and
+timezone.  Splitting them into NAME and TIME may be very simple, and
+"does not *need* to parse", right?  Not really.  If you look at how
+split_ident() evolved to accomodate the real world malformed lines
+like duplicated closing '>' and realize that what we have there may
+probably *NOT* the perfect one (i.e. there may be other malformed
+input we may have to accomodate by tweaking the implementation
+further), we really do not want a hand-rolled ad-hoc "splitter" that
+"does not *need* to parse".
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 3f3e24eb36..5a5a66272b 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -187,7 +187,9 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		 */
- 		if (ce_match_stat(ce, &st, 0) ||
- 		    (S_ISGITLINK(ce->ce_mode) &&
--		     !ok_to_remove_submodule(ce->name)))
-+		     bad_to_remove_submodule(ce->name,
-+				SUBMODULE_REMOVAL_DIE_ON_ERROR |
-+				SUBMODULE_REMOVAL_IGNORE_IGNORED_UNTRACKED)))
- 			local_changes = 1;
- 
- 		/*
-diff --git a/submodule.c b/submodule.c
-index 9f0b544ebe..1cc04d24e5 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1019,39 +1019,64 @@ int submodule_uses_gitfile(const char *path)
- 	return 1;
- }
- 
--int ok_to_remove_submodule(const char *path)
-+/*
-+ * Check if it is a bad idea to remove a submodule, i.e. if we'd lose data
-+ * when doing so.
-+ *
-+ * Return 1 if we'd lose data, return 0 if the removal is fine,
-+ * and negative values for errors.
-+ */
-+int bad_to_remove_submodule(const char *path, unsigned flags)
- {
- 	ssize_t len;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--	int ok_to_remove = 1;
-+	int ret = 0;
- 
- 	if (!file_exists(path) || is_empty_dir(path))
--		return 1;
-+		return 0;
- 
- 	if (!submodule_uses_gitfile(path))
--		return 0;
-+		return 1;
- 
--	argv_array_pushl(&cp.args, "status", "--porcelain", "-u",
-+	argv_array_pushl(&cp.args, "status", "--porcelain",
- 				   "--ignore-submodules=none", NULL);
-+
-+	if (flags & SUBMODULE_REMOVAL_IGNORE_UNTRACKED)
-+		argv_array_push(&cp.args, "-uno");
-+	else
-+		argv_array_push(&cp.args, "-uall");
-+
-+	if (!(flags & SUBMODULE_REMOVAL_IGNORE_IGNORED_UNTRACKED))
-+		argv_array_push(&cp.args, "--ignored");
-+
- 	prepare_submodule_repo_env(&cp.env_array);
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 1;
- 	cp.out = -1;
- 	cp.dir = path;
--	if (start_command(&cp))
--		die(_("could not run 'git status --porcelain -u --ignore-submodules=none' in submodule %s"), path);
-+	if (start_command(&cp)) {
-+		if (flags & SUBMODULE_REMOVAL_DIE_ON_ERROR)
-+			die(_("could not start 'git status in submodule '%s'"),
-+				path);
-+		ret = -1;
-+		goto out;
-+	}
- 
- 	len = strbuf_read(&buf, cp.out, 1024);
- 	if (len > 2)
--		ok_to_remove = 0;
-+		ret = 1;
- 	close(cp.out);
- 
--	if (finish_command(&cp))
--		die(_("'git status --porcelain -u --ignore-submodules=none' failed in submodule %s"), path);
--
-+	if (finish_command(&cp)) {
-+		if (flags & SUBMODULE_REMOVAL_DIE_ON_ERROR)
-+			die(_("could not run 'git status in submodule '%s'"),
-+				path);
-+		ret = -1;
-+	}
-+out:
- 	strbuf_release(&buf);
--	return ok_to_remove;
-+	return ret;
- }
- 
- static int find_first_merges(struct object_array *result, const char *path,
-diff --git a/submodule.h b/submodule.h
-index 61fb610749..21b1569413 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -59,7 +59,11 @@ extern int fetch_populated_submodules(const struct argv_array *options,
- 			       int quiet, int max_parallel_jobs);
- extern unsigned is_submodule_modified(const char *path, int ignore_untracked);
- extern int submodule_uses_gitfile(const char *path);
--extern int ok_to_remove_submodule(const char *path);
-+
-+#define SUBMODULE_REMOVAL_DIE_ON_ERROR (1<<0)
-+#define SUBMODULE_REMOVAL_IGNORE_UNTRACKED (1<<1)
-+#define SUBMODULE_REMOVAL_IGNORE_IGNORED_UNTRACKED (1<<2)
-+extern int bad_to_remove_submodule(const char *path, unsigned flags);
- extern int merge_submodule(unsigned char result[20], const char *path,
- 			   const unsigned char base[20],
- 			   const unsigned char a[20],
--- 
-2.11.0.rc2.53.gb7b3fba.dirty
+The same thing can be said for the code that reads the
+author-script, too.
 
+So please do not waste any more time arguing.  I think you spent
+arguing more time than you would otherwise have had to spend if you
+just used existing helper functions, both in this thread and the
+older one about reading the author-script.
