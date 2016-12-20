@@ -2,122 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF0CB1FF76
-	for <e@80x24.org>; Tue, 20 Dec 2016 19:20:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA2A1FF76
+	for <e@80x24.org>; Tue, 20 Dec 2016 19:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937351AbcLTTUd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 14:20:33 -0500
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:34770 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751259AbcLTTUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 14:20:32 -0500
-Received: by mail-oi0-f51.google.com with SMTP id 3so5396015oih.1
-        for <git@vger.kernel.org>; Tue, 20 Dec 2016 11:20:31 -0800 (PST)
+        id S965120AbcLTTYT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 14:24:19 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:35546 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965253AbcLTTXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 14:23:32 -0500
+Received: by mail-qt0-f180.google.com with SMTP id c47so186209156qtc.2
+        for <git@vger.kernel.org>; Tue, 20 Dec 2016 11:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tento-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=YImXS8y/ktBfdvPW6kMziuE/TCNJNx/bnihUSaLb/ys=;
-        b=LNd+Pm+3g+RWSZUl3kV3D3aMbnWoTv2YTBrvw2toIp0RNqb/9YUSaJKuSDEBrFC98b
-         ZUggBBUa9n9P+L/P+L0fnRRIFmJanJWFsCsz391IDXYVhMsLfwk+BoEw/SsVpzqa9gQM
-         TdYOyaNHIYYOYZQfDSG5jFvmJ0sfVO12GVErbQ5ljuuEqpqxVmH95+5VYRVBeO3tkftp
-         +Ml4zUmG5P8aJmDjZgcr+FpYH35iSsTSLwikAgUKGLcZRiCrz0Sk1lVTmxVC2vXxxn9l
-         WQE2pBTzc4dZbXEqAhDoEq5Orpzi5a6SWByb2dJPk8PSvfDhB+5+Jix+ZGyOFh82+ro2
-         8KAw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Tu7wvBgW74nwoQrxzyCTBTt9DcmcnDdlH+OTb1Le6tU=;
+        b=abxnh0VuTbMagoaaWERuPLWss6lUg3ywdb5ay3TOPiTjQ/mKNZ7ekD8eUow/1KHhZX
+         asYJH5Ks5HIvueqpZZ6C5bag4mx1WxdkiSycC0Vi3pOOgjfYaByeuBynKQHPIO6WmGp4
+         f4GAW1sZ/srLuoS+jjlkXwFkY9yJTq4veSTxlPRd8mKvUGe8BU7JFOttNXHdBuEm9qA4
+         0PKlannAKrWiIoVXO+THwpWyptJlnix+u/la178YrzvZc3pmnEM+29rkyrfX/bmN2h3i
+         IFhO3By9u+8nxLVHwCyLCW/AEm13HC5kz+rMvgsdHk0UoekE38GsZABpsv5Ah5PIoO0b
+         msiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=YImXS8y/ktBfdvPW6kMziuE/TCNJNx/bnihUSaLb/ys=;
-        b=CEoZPqsDChmblb1gkiK6XwHrTS5fpMhx4f46lL+ehh6BYISOLeVzv6Uj0PcsheHq3d
-         WVze3b79O/irj01ax0novLAzM5OfaS8b0VqM4CHxT1vZVY+dcCXJzY/tukkjxtKabUWk
-         ae61bmkfg7JPI/G4sxqjj2JKuWdRei3jXki8TMrJwYR0PYmpi2MdEsbuTpXw6KLsQ5IS
-         XpmToiBeB29Lqn45UPwnmTJ8S1jKPF7phIG1PqWzbybV6I1M2Ha16OsJL1Y6JBq7vW86
-         j+yUupcrIJVoimqIu9zBeUOUUjC40O6X26Bjp5ikHnpyMgETUqasRWB1ULreqpWh+BPH
-         BxZA==
-X-Gm-Message-State: AIkVDXKK3dEd6y2nfDJ7mwP6eBsjbBHbbR3fH3pD5lTTYqQwnwh5hEBlf9vwRJLgySWCCtr8jxTa7379GD9kEn3q
-X-Received: by 10.202.82.193 with SMTP id g184mr517512oib.23.1482261631082;
- Tue, 20 Dec 2016 11:20:31 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Tu7wvBgW74nwoQrxzyCTBTt9DcmcnDdlH+OTb1Le6tU=;
+        b=KTEc1KApKjFX0uusWp0lLVkJPm6A8rvY7z4GAcspaG8muyZIXN94GSDJiJDfxTUbvr
+         tSEfxwW4z6Gd5Mgg6D1LU7Xkdcj97Eq1La8pQUn8g+NyQpDB7j/JpoYDr4CkkdafO+Cp
+         R4GMNE1F/1xFzio6lffbjoxUBHy9fV6Ydu1tNN60gjuhzrsQHK3BamNa9OkLMV6AGksf
+         CkRgt4W2944d9Oxlq39/sR3V40SilNCwRbMHjh47jDO+sHijYqjRY2iU6+sASuGzqbB2
+         ZxvzrGAOhpBLL/HIgsM5XTcfL0udGZyB5oFzYMcPMhVPs+FyoTUdO1IRMjM1dra854Xc
+         dMtg==
+X-Gm-Message-State: AIkVDXLF93/DA2fIY61wqylVipHZ/14wosrbdd4eL/wjSM4CQtx+kZFWwY0yav3S1XTOYfgPGpF4ppMY9a56dBVH
+X-Received: by 10.237.34.206 with SMTP id q14mr985410qtc.101.1482261811572;
+ Tue, 20 Dec 2016 11:23:31 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.41.69 with HTTP; Tue, 20 Dec 2016 11:20:30 -0800 (PST)
-From:   Pete Harlan <pgit@tento.net>
-Date:   Tue, 20 Dec 2016 11:20:30 -0800
-Message-ID: <CAAB=nN=dVgg1BREfoZhOTcT5PQSbi+wE+Ng7fqjUSenkp9fcKg@mail.gmail.com>
-Subject: [GIT GUI/PATCH/RFC] git gui: get current theme in 8.5-backwards-compatible
- way
-To:     Pat Thoyts <patthoyts@users.sourceforge.net>
-Cc:     git@vger.kernel.org
+Received: by 10.12.147.188 with HTTP; Tue, 20 Dec 2016 11:23:31 -0800 (PST)
+In-Reply-To: <aad0af97-7588-632d-a113-5d8372b8b7a8@kdbg.org>
+References: <20161219232828.5075-1-sbeller@google.com> <20161219232828.5075-4-sbeller@google.com>
+ <aad0af97-7588-632d-a113-5d8372b8b7a8@kdbg.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 20 Dec 2016 11:23:31 -0800
+Message-ID: <CAGZ79kYNKWfnEXWJfyRUutFyaQiRD9qW--LkK4Nbwdf7FtdPQA@mail.gmail.com>
+Subject: Re: [PATCHv4 3/5] run-command: add {run,start,finish}_command_or_die
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        David Turner <David.Turner@twosigma.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Later Tcl 8.5 versions learned to return the current theme by omitting
-the final argument to "[ttk::style theme use]", but this throws an
-error on earlier 8.5 versions (e.g., 8.5.7).
+On Tue, Dec 20, 2016 at 10:33 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 20.12.2016 um 00:28 schrieb Stefan Beller:
+>>
+>> +static void report_and_die(struct child_process *cmd, const char *action)
+>> +{
+>> +       int i;
+>> +       struct strbuf err = STRBUF_INIT;
+>> +       if (cmd->git_cmd)
+>> +               strbuf_addstr(&err, "git ");
+>> +       for (i = 0; cmd->argv[i]; )
+>> +               strbuf_addf(&err, "'%s'", cmd->argv[i]);
+>
+>
+> Take note that cmd is accessed here.
+>
+>> +       die(_("could not %s %s"), action, err.buf);
+>
+>
+> Should lego sentences not be avoided? They are not exactly translator
+> friendly.
+>
+> Given that a lot of effort is spent elsewhere to actually *avoid* dying in
+> library code, this new die() is not very welcome, I must say.
 
-InitTheme works around this by catching the error and reading
-::ttk::currentTheme instead.
+I agree on the sentiment. In a reroll I'll drop this patch and instead introduce
+a function `char *get_child_command_line(struct child_process*);`, which
+a caller can call before calling finish_command and then use the
+resulting string
+to assemble an error message without lego.
 
-A call to "[ttk::style theme use]" was added to ttext in 30508bc
-("Amend tab ordering and text widget border and highlighting.",
-2016-10-02).  Break out InitTheme's workaround into its own
-get_current_theme proc and use it in both places.
-
-Signed-off-by: Pete Harlan <pgit@tento.net>
----
-
-Note: Applies to the upstream git-gui repo, http://repo.or.cz/git-gui .
-To apply to Git itself, apply in the git-gui directory.
-
-Issue entered Git in v2.10.1-537-g3eae30870.
-
- lib/themed.tcl | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/lib/themed.tcl b/lib/themed.tcl
-index 351a712..85c157b 100644
---- a/lib/themed.tcl
-+++ b/lib/themed.tcl
-@@ -28,10 +28,7 @@ proc InitTheme {} {
-                }
-        }
-
--       # Handle either current Tk or older versions of 8.5
--       if {[catch {set theme [ttk::style theme use]}]} {
--               set theme  $::ttk::currentTheme
--       }
-+       set theme [get_current_theme]
-
-        if {[lsearch -exact {default alt classic clam} $theme] != -1} {
-                # Simple override of standard ttk::entry to change the field
-@@ -248,7 +245,7 @@ proc tspinbox {w args} {
- proc ttext {w args} {
-        global use_ttk
-        if {$use_ttk} {
--               switch -- [ttk::style theme use] {
-+               switch -- [get_current_theme] {
-                        "vista" - "xpnative" {
-                                lappend args -highlightthickness 0
--borderwidth 0
-                        }
-@@ -343,6 +340,16 @@ proc on_choosefont {familyvar sizevar font} {
-        set size [dict get $font -size]
- }
-
-+# Get current theme in a backwards-compatible way.
-+proc get_current_theme {} {
-+       # Handle either current Tk or older versions of 8.5
-+       if {[catch {set theme [ttk::style theme use]}]} {
-+               set theme $::ttk::currentTheme
-+       }
-+
-+       return $theme
-+}
-+
- # Local variables:
- # mode: tcl
- # indent-tabs-mode: t
+Thanks for the thorough review!
+Stefan
