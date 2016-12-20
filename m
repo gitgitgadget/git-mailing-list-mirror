@@ -2,83 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8467203EA
-	for <e@80x24.org>; Tue, 20 Dec 2016 16:49:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEB23203EA
+	for <e@80x24.org>; Tue, 20 Dec 2016 16:50:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936133AbcLTQtP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 11:49:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59015 "EHLO cloud.peff.net"
+        id S936180AbcLTQuV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 11:50:21 -0500
+Received: from mout.gmx.net ([212.227.15.15]:64735 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934237AbcLTQtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 11:49:14 -0500
-Received: (qmail 2350 invoked by uid 109); 20 Dec 2016 16:49:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Dec 2016 16:49:13 +0000
-Received: (qmail 5668 invoked by uid 111); 20 Dec 2016 16:49:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Dec 2016 11:49:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Dec 2016 11:49:11 -0500
-Date:   Tue, 20 Dec 2016 11:49:11 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Leho Kraav <leho@conversionready.com>, git@vger.kernel.org
-Subject: Re: [PATCHv2 0/7] Fix and generalize version sort reordering
-Message-ID: <20161220164910.deanwq5hcve3vggt@sigill.intra.peff.net>
-References: <20161005033353.Horde.33pf2naqnF4HgwPWSy9DaHV@webmail.informatik.kit.edu>
- <20161208142401.1329-1-szeder.dev@gmail.com>
- <20161214170852.bzh5pyl4bov6rwbt@sigill.intra.peff.net>
- <CAM0VKjmDDKgYCvtbwpx=GcwRENzvSDLW_Xhia3btdeMjtAjAvg@mail.gmail.com>
+        id S934237AbcLTQuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 11:50:19 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lg0sd-1cvBOI2Ncx-00pbUw; Tue, 20
+ Dec 2016 17:50:05 +0100
+Date:   Tue, 20 Dec 2016 17:50:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH] winansi_isatty(): fix when Git is used from CMD
+In-Reply-To: <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1612201732160.54750@virtualbox>
+References: <cover.1481454992.git.johannes.schindelin@gmx.de> <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de> <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org> <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
+ <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org> <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKjmDDKgYCvtbwpx=GcwRENzvSDLW_Xhia3btdeMjtAjAvg@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:MjjFW3bpHAUXQkUFqfPbNI/ZPmifWB+vyeHmH0Uzb3cVBmVPrym
+ fEDdO2puOnZNeHo/y0N5XvDKMc6kGgusnfB1iqOo/jc2xvu+w34GUz3ZVdIDzWq+74i80Ix
+ KEofRd5C2MvEmR9XV3pBjdRm87IO1BhSbRLm3Pfc2/hKyBvSxxGGDRpY4cIj27aTh8nHCZt
+ PN3nfVkpJhOfczkWRNy4A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q+Gc3A6tqMg=:/lm4kyVc+Mk1gpfcl54Rde
+ 45UhbRRs1vBb2r0HYjLLx+h3x7ETpTGqPCWYwDzyMzHNnOsppc9IPuvxHhXIQJwY74CLsiTAd
+ Mn+O33OWhikPMeNPp+mIDrjtz79cYYsIejYRMq4kOkvsabwoa91lgY8+l74ggN84ikhX+iNYD
+ 3lDnmF/z+Q5jHejqVL9F37vTj0+/1Dlidpphe2AIkYm6O3LFV2EplLSB2Z44MbhTy5vm/UrXI
+ lGgL4sNoWxamnNFqHGj7UK9bKN+LWvIdpWLmhkkr8q5MPg9Mg4Y1IIqD3EoNEEnFOCaF9S0DN
+ dX6z/IBe4uwwTsNcxBJeh5gzjD4sKNCvGBR+p7tqmpSu8rGOyJD9cfPKbTavAGz5nVxDWk8hI
+ xO1MIhYR23LPNvI4a/TTvmhkFMQpUT2YNc4saoPTUDgK8wGcGfyyvxiGHaiO6mobHLeI20rrU
+ MBeLG0eUkt4y31FTHHRYvtxTLVpzlaZNrY4hViJ9Si8FQLzc/75li3971Jwe39hCIKUFS5kdK
+ zJSNDKt4GHYK3EImCXFTMOcotXk3wf2AXz49rZT/IhG+b/f9pLv9u+lLdy/KvBCCzNiA7/zI0
+ UpBX1Kk8o+5zs11SGmcrC8/PMxX/n3lnuKqjvJwRL3I+07g5n8U8V/AGL0Vq29mycUcAShI5V
+ RgHZZ2hc8vf0GE2j7L9OoXfxEOYv9RtIX44xeQYkl7IP/jV+XAMRakGRxPfkGh+3s13xPx7nj
+ Rcc+O2Yur0HUS0P9VTQwjh9tR03Mmus635LFwyVPziDZ/cwzdDyTM77Vjxv5Y9SyfO2tAxshj
+ JV8tm5e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 20, 2016 at 09:50:42AM +0100, SZEDER Gábor wrote:
+Hi Hannes,
 
-> > It just seems like the whole thing would conceptually easier if we
-> > pre-parsed the versions into a sequence of elements, then the comparison
-> > between any two elements would just walk that sequence. The benefit
-> > there is that you can implement whatever rules you like for the parsing
-> > (like "prefer longer suffixes to shorter"), but you know the comparison
-> > will always be consistent.
+On Sun, 18 Dec 2016, Johannes Sixt wrote:
+
+> The code in winansi.c emulates ANSI escape sequences when Git is
+> connected to the "real" windows console, CMD.exe. The details are
+> outline in eac14f8909d9 (Win32: Thread-safe windows console output,
+> 2012-01-14). Essentially, it plugs a pipe between C code and the actual
+> console output handle.
 > 
-> I considered parsing tagnames into prefix, version number and suffix,
-> and then work from that, but decided against it.
+> This commit also added an override for isatty(), but it was made
+> unnecessary by fcd428f4a952 (Win32: fix broken pipe detection,
+> 2012-03-01).
 > 
-> versioncmp() is taken from glibc, so I assume that it's thoroughly
-> tested, even in corner cases (e.g. multiple leading zeros).
-> Furthermore, I think it's a good thing that by default (i.e. without
-> suffix reordering) our version sort orders the same way as glibc's
-> version sort does.  Introducing a different algorithm would risk bugs
-> in the more subtle cases.
+> The new isatty() override implemented by cbb3f3c9b197 (mingw: intercept
+> isatty() to handle /dev/null as Git expects it, 2016-12-11) does not
+> take into account that _get_osfhandle() returns the handle visible by
+> the C code, which is the pipe. But it actually wants to investigate the
+> properties of the handle that is actually connected to the outside
+> world. Fortunately, there is already winansi_get_osfhandle(), which
+> returns exactly this handle. Use it.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+> I was able to test the idea earlier than anticipated and it does work
+> for me.
 
-Fair enough. If it's working, I agree there is risk in changing things.
-And if you're willing to deal with the bugs, then I'm happy to stand
-back. :)
+Thank you.
 
-> Then there are all the weird release suffixes out there, and I didn't
-> want to decide on a policy for splitting them sanely; don't know
-> whether there exist any universal rules for this splitting at
-> all.  E.g. one of the packages here has the following version (let's
-> ignore the fact that because of the '~' this is an invalid refname in
-> git):
+> diff --git a/compat/winansi.c b/compat/winansi.c
+> index cb725fb02f..ba360be69b 100644
+> --- a/compat/winansi.c
+> +++ b/compat/winansi.c
+> @@ -586,7 +586,7 @@ int winansi_isatty(int fd)
+>  		 *
+>  		 * https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
+>  		 */
+> -		HANDLE handle = (HANDLE)_get_osfhandle(fd);
+> +		HANDLE handle = winansi_get_osfhandle(fd);
 
-I have a hunch that any policy you'd have to set for splitting is going
-to end up becoming a policy you'll have to use when comparing (or you
-risk violating the transitivity of your comparison function).
+That code works because winansi_get_osfhandle() is in winansi.c, where its
+call to isatty() is *not* redirected to winansi_isatty(). Good.
 
-But that's just a hunch, not a proof. Again, I'm happy to defer to you
-if you're the one working on it.
+My plan was actually to clean up the "magic" detect_msys_tty() code: it
+messes with internals of the MSVC runtime that are no longer the same in
+the Universal Runtime (UCRT), and hence we already had to come up with a
+different way to detect an MSYS2 pipe. My preference would be to merge
+that logic into winansi_isatty() and abandon the _pioinfo hack.
 
--Peff
+Let's just clean up all of this in one go.
+
+Ciao,
+Dscho
