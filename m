@@ -2,98 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 927FC1FF40
-	for <e@80x24.org>; Tue, 20 Dec 2016 01:40:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A9AA1FF40
+	for <e@80x24.org>; Tue, 20 Dec 2016 05:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754688AbcLTBjr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 20:39:47 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34724 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752966AbcLTBjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 20:39:45 -0500
-Received: by mail-io0-f196.google.com with SMTP id y124so21089609iof.1
-        for <git@vger.kernel.org>; Mon, 19 Dec 2016 17:39:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=hHwHfKJiGAwABQGq/3YPpTRAkZqqx0miBH0Hfv2mY2Q=;
-        b=f62jSnJ5wtjUzkw26inVrU1FqwOpmzqmM4kBTkF8JQUBaX6o6QRyNoX/DklGrTE0aq
-         G4XricFxqtK8MxBFYtELXwwKm2luaKHkwkN1t5K5ei7jyJKJEHzTNH2qZFScJctvzQ1Q
-         HhT65rObUpFuQMCTR+7W09LfdS6ZdhuUGBDg2ahUK/ygXIOQX/Ao5deEBY4coU0aSpSq
-         moYrcd1jpTTQYFdJqxSbVxvsUBfwbG06PxpRiec4iIhTXQ+HUoJnqNdYpDPoS2SLko4R
-         eFxqqb98HofYodr+KZf5/VsDa1SFbX75qzJKcoYTrvHcydL72G316QQ/vWKcvTxtgpJ6
-         FZrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=hHwHfKJiGAwABQGq/3YPpTRAkZqqx0miBH0Hfv2mY2Q=;
-        b=mNQMkYHbvQr3j2OPi9zfWecxZ37AqPEBaioT7rRgEkNW65oy/1pr9pNRpLiTyobLm7
-         D0yk5uGGNNLGB0Igmab5PyKZK0VHo9AHhwCzBFBYvo62yykjuG8M6vE2WCnbHeOI/mb+
-         XMaKt1tTLSg7sPrDrxeo8boLiAWOSPD85EUkZ9xwnyrpp90zXv5MmhCZFmmlscK60R3R
-         L/iBxZNQj1crEyoIoS5s3hmBD+sui4BqwZelORNTJJl+pmO/AYDmsSD5zN0NTEdHWxxD
-         mNQk7Jq8jxOPIlwUDPgDV1dyMsrQezAER9M+lxV/rZrGI8FXAtPdc1eRcmmkdiq0ySdm
-         Ahig==
-X-Gm-Message-State: AIkVDXJvDeeYUcguWM5KxJpXnLP8ar920LEuJ+tHSzaZTctrVJ48EGpTSI0w151fdGDq86eIY1lCRoQaCFPtlQ==
-X-Received: by 10.107.59.9 with SMTP id i9mr21214505ioa.176.1482197984970;
- Mon, 19 Dec 2016 17:39:44 -0800 (PST)
+        id S1751687AbcLTF32 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 00:29:28 -0500
+Received: from p3plsmtpa06-05.prod.phx3.secureserver.net ([173.201.192.106]:34794
+        "EHLO p3plsmtpa06-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751088AbcLTF31 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Dec 2016 00:29:27 -0500
+X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Dec 2016 00:29:27 EST
+Received: from wheezy.local ([82.181.81.240])
+        by :SMTPAUTH: with SMTP
+        id JCricNytooeIsJCrocfMeL; Mon, 19 Dec 2016 22:21:38 -0700
+Date:   Tue, 20 Dec 2016 07:21:30 +0200
+From:   Max Kirillov <max@max630.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Karsten Blees <blees@dcon.de>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] mingw: consider that UNICODE_STRING::Length counts bytes
+Message-ID: <20161220052130.GA10028@wheezy.local>
+References: <1482183120-21592-1-git-send-email-max@max630.net>
+ <xmqqtw9zmvjq.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Mon, 19 Dec 2016 17:39:14 -0800 (PST)
-In-Reply-To: <CAGZ79kYPEiUGXR-qTbbHzaeOwbHH88mdx7GP8QX2Ff1bypcrwQ@mail.gmail.com>
-References: <20161212190435.10358-1-sbeller@google.com> <20161212190435.10358-7-sbeller@google.com>
- <20161219053507.GA2335@duynguyen.vn.dektech.internal> <CAGZ79kYPEiUGXR-qTbbHzaeOwbHH88mdx7GP8QX2Ff1bypcrwQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 20 Dec 2016 08:39:14 +0700
-Message-ID: <CACsJy8BWMXBN8gXRavGbtuSJkV6AcYaqgGohA5mhEw8MNrQMzg@mail.gmail.com>
-Subject: Re: [PATCHv8 6/6] submodule: add absorb-git-dir function
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtw9zmvjq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-CMAE-Envelope: MS4wfLNc9KjUohUxn17i8ELmFIsfON10z8/NwoiM99wA72pmVaGynPCIMuPipQ7yXZB13W1Q1mup9O7gj5j4bZ3cEzkcJTqGbtpOsYCJFN2F9NPy61ct2+yG
+ jJ+SuMhXGFXaz2jGufxQGMBIMa7bRu/kX3NnSZWPFaHmnBL51bG5r5hXyM4dOihYi2AwACu+scFTNChxJYb3omaWrn9h5jNfmE2Etg7PTXB3RsZH1uWtK9q3
+ 6do29HxTq7WJ/+5oVkZD0cmnr+z3aw56OC8QMl8mxbw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 20, 2016 at 1:15 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Sun, Dec 18, 2016 at 9:35 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Mon, Dec 12, 2016 at 11:04:35AM -0800, Stefan Beller wrote:
->>> diff --git a/dir.c b/dir.c
->>> index e0efd3c2c3..d872cc1570 100644
->>> --- a/dir.c
->>> +++ b/dir.c
->>> @@ -2773,3 +2773,15 @@ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
->>>       free(work_tree);
->>>       free(git_dir);
->>>  }
->>> +
->>> +/*
->>> + * Migrate the git directory of the given path from old_git_dir to new_git_dir.
->>> + */
->>> +void relocate_gitdir(const char *path, const char *old_git_dir, const char *new_git_dir)
->>> +{
->>> +     if (rename(old_git_dir, new_git_dir) < 0)
->>> +             die_errno(_("could not migrate git directory from '%s' to '%s'"),
->>> +                     old_git_dir, new_git_dir);
->>> +
->>> +     connect_work_tree_and_git_dir(path, new_git_dir);
->>
->> Should we worry about recovering (e.g. maybe move new_git_dir back to
->> old_git_dir) if this connect_work_tree_and_git_dir() fails?
->
-> What if the move back fails?
+On Mon, Dec 19, 2016 at 01:57:29PM -0800, Junio C Hamano wrote:
+> Max, I see this is a resend from a few days ago
 
-That's when you pray the UNIX gods that recovery steps don't fail :-)
-This is why I don't _suggest_ to do things but just wonder about it.
-In theory though, if we keep recovery to dead simple operations (e.g.
-a series of rename() and nothing else) then it's less likely to fail.
-I'll look at the new patches when I get home.
+Sorry about resend. For some reason I don't get the list
+copy (might be some clever duplicate elimination in my
+forwardings), and marc.info seems to be slow to update, so I
+had no indication the first message got into list. Now I see
+they are there in the other archive.
+
+PS: probably http://vger.kernel.org/vger-lists.html#git
+should be updated because there is no archive at gmane
+anymore.
+
 -- 
-Duy
+Max
