@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D6561FF40
-	for <e@80x24.org>; Tue, 20 Dec 2016 01:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 927FC1FF40
+	for <e@80x24.org>; Tue, 20 Dec 2016 01:40:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932172AbcLTBc5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Dec 2016 20:32:57 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56818 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752796AbcLTBcz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2016 20:32:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D4EA5A9AE;
-        Mon, 19 Dec 2016 20:32:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ekV9hPyXLKr4R5OZ3rMaxnwm/eQ=; b=RuGO+/
-        vvTlEAtMU63yt86X54GfQkS2ddJgnkTksZxL5dsUXAkS5bQhKJnT6jlX6mecXVzo
-        ekKYjnbYJlv/jJD2iK1cRNJGpQsYHKPfXRWJAHWmIlyRD46e3JWAwBLlpnVD3PnK
-        aiTTNIdTBe/uU7H4IQevhZJS4UhEs1LtV9pSk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UMiFC1nOffnKipPecJMkRXUQlnlNUzgD
-        dFpBw143lB+9ONTATsfd3pndqUiARH9FG6nxvwohM2XmGWKaYSGhNxtpj5WdcMg/
-        0vhKGYEAjKJBOkJLCk1xT3w754pQmMRQmPoQyEwKkNuGTtLwAz3tjhypA3n60ewU
-        ohjVQlSh3rI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 258D25A9AD;
-        Mon, 19 Dec 2016 20:32:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89B1C5A9AC;
-        Mon, 19 Dec 2016 20:32:20 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 09/34] sequencer (rebase -i): write an author-script file
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <09c2718e119f809093794410ae1a738c1cd122d1.1481642927.git.johannes.schindelin@gmx.de>
-        <xmqqd1gtuivc.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1612191800530.54750@virtualbox>
-Date:   Mon, 19 Dec 2016 17:32:19 -0800
-In-Reply-To: <alpine.DEB.2.20.1612191800530.54750@virtualbox> (Johannes
-        Schindelin's message of "Mon, 19 Dec 2016 18:06:37 +0100 (CET)")
-Message-ID: <xmqqy3zbl718.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1754688AbcLTBjr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Dec 2016 20:39:47 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:34724 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752966AbcLTBjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2016 20:39:45 -0500
+Received: by mail-io0-f196.google.com with SMTP id y124so21089609iof.1
+        for <git@vger.kernel.org>; Mon, 19 Dec 2016 17:39:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hHwHfKJiGAwABQGq/3YPpTRAkZqqx0miBH0Hfv2mY2Q=;
+        b=f62jSnJ5wtjUzkw26inVrU1FqwOpmzqmM4kBTkF8JQUBaX6o6QRyNoX/DklGrTE0aq
+         G4XricFxqtK8MxBFYtELXwwKm2luaKHkwkN1t5K5ei7jyJKJEHzTNH2qZFScJctvzQ1Q
+         HhT65rObUpFuQMCTR+7W09LfdS6ZdhuUGBDg2ahUK/ygXIOQX/Ao5deEBY4coU0aSpSq
+         moYrcd1jpTTQYFdJqxSbVxvsUBfwbG06PxpRiec4iIhTXQ+HUoJnqNdYpDPoS2SLko4R
+         eFxqqb98HofYodr+KZf5/VsDa1SFbX75qzJKcoYTrvHcydL72G316QQ/vWKcvTxtgpJ6
+         FZrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hHwHfKJiGAwABQGq/3YPpTRAkZqqx0miBH0Hfv2mY2Q=;
+        b=mNQMkYHbvQr3j2OPi9zfWecxZ37AqPEBaioT7rRgEkNW65oy/1pr9pNRpLiTyobLm7
+         D0yk5uGGNNLGB0Igmab5PyKZK0VHo9AHhwCzBFBYvo62yykjuG8M6vE2WCnbHeOI/mb+
+         XMaKt1tTLSg7sPrDrxeo8boLiAWOSPD85EUkZ9xwnyrpp90zXv5MmhCZFmmlscK60R3R
+         L/iBxZNQj1crEyoIoS5s3hmBD+sui4BqwZelORNTJJl+pmO/AYDmsSD5zN0NTEdHWxxD
+         mNQk7Jq8jxOPIlwUDPgDV1dyMsrQezAER9M+lxV/rZrGI8FXAtPdc1eRcmmkdiq0ySdm
+         Ahig==
+X-Gm-Message-State: AIkVDXJvDeeYUcguWM5KxJpXnLP8ar920LEuJ+tHSzaZTctrVJ48EGpTSI0w151fdGDq86eIY1lCRoQaCFPtlQ==
+X-Received: by 10.107.59.9 with SMTP id i9mr21214505ioa.176.1482197984970;
+ Mon, 19 Dec 2016 17:39:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 266FA1FC-C654-11E6-A202-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.64.69.3 with HTTP; Mon, 19 Dec 2016 17:39:14 -0800 (PST)
+In-Reply-To: <CAGZ79kYPEiUGXR-qTbbHzaeOwbHH88mdx7GP8QX2Ff1bypcrwQ@mail.gmail.com>
+References: <20161212190435.10358-1-sbeller@google.com> <20161212190435.10358-7-sbeller@google.com>
+ <20161219053507.GA2335@duynguyen.vn.dektech.internal> <CAGZ79kYPEiUGXR-qTbbHzaeOwbHH88mdx7GP8QX2Ff1bypcrwQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 20 Dec 2016 08:39:14 +0700
+Message-ID: <CACsJy8BWMXBN8gXRavGbtuSJkV6AcYaqgGohA5mhEw8MNrQMzg@mail.gmail.com>
+Subject: Re: [PATCHv8 6/6] submodule: add absorb-git-dir function
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Junio,
+On Tue, Dec 20, 2016 at 1:15 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Dec 18, 2016 at 9:35 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Mon, Dec 12, 2016 at 11:04:35AM -0800, Stefan Beller wrote:
+>>> diff --git a/dir.c b/dir.c
+>>> index e0efd3c2c3..d872cc1570 100644
+>>> --- a/dir.c
+>>> +++ b/dir.c
+>>> @@ -2773,3 +2773,15 @@ void connect_work_tree_and_git_dir(const char *work_tree_, const char *git_dir_)
+>>>       free(work_tree);
+>>>       free(git_dir);
+>>>  }
+>>> +
+>>> +/*
+>>> + * Migrate the git directory of the given path from old_git_dir to new_git_dir.
+>>> + */
+>>> +void relocate_gitdir(const char *path, const char *old_git_dir, const char *new_git_dir)
+>>> +{
+>>> +     if (rename(old_git_dir, new_git_dir) < 0)
+>>> +             die_errno(_("could not migrate git directory from '%s' to '%s'"),
+>>> +                     old_git_dir, new_git_dir);
+>>> +
+>>> +     connect_work_tree_and_git_dir(path, new_git_dir);
+>>
+>> Should we worry about recovering (e.g. maybe move new_git_dir back to
+>> old_git_dir) if this connect_work_tree_and_git_dir() fails?
 >
-> On Thu, 15 Dec 2016, Junio C Hamano wrote:
->
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->> 
->> > +	strbuf_addstr(&buf, "GIT_AUTHOR_NAME='");
->> > +	while (*message && *message != '\n' && *message != '\r')
->> > +		if (skip_prefix(message, " <", &message))
->> > +			break;
->> > +		else if (*message != '\'')
->> > +			strbuf_addch(&buf, *(message++));
->> > +		else
->> > +			strbuf_addf(&buf, "'\\\\%c'", *(message++));
->> > +	strbuf_addstr(&buf, "'\nGIT_AUTHOR_EMAIL='");
->> > +	while (*message && *message != '\n' && *message != '\r')
->> > +		if (skip_prefix(message, "> ", &message))
->> > +			break;
->> > +		else if (*message != '\'')
->> > +			strbuf_addch(&buf, *(message++));
->> > +		else
->> > +			strbuf_addf(&buf, "'\\\\%c'", *(message++));
->> 
->> Aren't these reading from an in-core commit object?  
->> 
->> If so, it should use split_ident_line() for consistency with other
->> parts of the system to do this parsing.  We should also already have
->> a helper for simple shell-quoting in quote.c and you would want to
->> use that instead of open coding like this.
->
-> We keep coming back to the same argument. You want this quoting/dequoting
-> to be turned into a full-fledged parser. And I keep pointing out that the
-> code here does not *need* to parse but only construct an environment
-> block.
+> What if the move back fails?
 
-I am afraid you are mis-reading me.  I see a code that _READS_ some
-data format, for which we already have a parser, and then write out
-things based on what it read.  I do not want you to make anything
-into a full-fledged parser---I just do not want to see an ad-hoc
-reader and instead the code to USE existing parser.
-
+That's when you pray the UNIX gods that recovery steps don't fail :-)
+This is why I don't _suggest_ to do things but just wonder about it.
+In theory though, if we keep recovery to dead simple operations (e.g.
+a series of rename() and nothing else) then it's less likely to fail.
+I'll look at the new patches when I get home.
+-- 
+Duy
