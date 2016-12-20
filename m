@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEB23203EA
-	for <e@80x24.org>; Tue, 20 Dec 2016 16:50:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90C4B1FF76
+	for <e@80x24.org>; Tue, 20 Dec 2016 16:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936180AbcLTQuV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 11:50:21 -0500
-Received: from mout.gmx.net ([212.227.15.15]:64735 "EHLO mout.gmx.net"
+        id S1755843AbcLTQxy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 11:53:54 -0500
+Received: from mout.gmx.net ([212.227.15.15]:53809 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934237AbcLTQuT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 11:50:19 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lg0sd-1cvBOI2Ncx-00pbUw; Tue, 20
- Dec 2016 17:50:05 +0100
-Date:   Tue, 20 Dec 2016 17:50:04 +0100 (CET)
+        id S1755520AbcLTQxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 11:53:53 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPV69-1cEiy21r5F-004g7a; Tue, 20
+ Dec 2016 17:53:47 +0100
+Date:   Tue, 20 Dec 2016 17:53:45 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Johannes Sixt <j6t@kdbg.org>
 cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Pranit Bauva <pranit.bauva@gmail.com>
 Subject: Re: [PATCH] winansi_isatty(): fix when Git is used from CMD
-In-Reply-To: <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1612201732160.54750@virtualbox>
+In-Reply-To: <d661dbf1-9852-965a-2ca9-67d763115b9e@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1612201751060.54750@virtualbox>
 References: <cover.1481454992.git.johannes.schindelin@gmx.de> <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de> <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org> <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
- <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org> <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
+ <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org> <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org> <d661dbf1-9852-965a-2ca9-67d763115b9e@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:MjjFW3bpHAUXQkUFqfPbNI/ZPmifWB+vyeHmH0Uzb3cVBmVPrym
- fEDdO2puOnZNeHo/y0N5XvDKMc6kGgusnfB1iqOo/jc2xvu+w34GUz3ZVdIDzWq+74i80Ix
- KEofRd5C2MvEmR9XV3pBjdRm87IO1BhSbRLm3Pfc2/hKyBvSxxGGDRpY4cIj27aTh8nHCZt
- PN3nfVkpJhOfczkWRNy4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q+Gc3A6tqMg=:/lm4kyVc+Mk1gpfcl54Rde
- 45UhbRRs1vBb2r0HYjLLx+h3x7ETpTGqPCWYwDzyMzHNnOsppc9IPuvxHhXIQJwY74CLsiTAd
- Mn+O33OWhikPMeNPp+mIDrjtz79cYYsIejYRMq4kOkvsabwoa91lgY8+l74ggN84ikhX+iNYD
- 3lDnmF/z+Q5jHejqVL9F37vTj0+/1Dlidpphe2AIkYm6O3LFV2EplLSB2Z44MbhTy5vm/UrXI
- lGgL4sNoWxamnNFqHGj7UK9bKN+LWvIdpWLmhkkr8q5MPg9Mg4Y1IIqD3EoNEEnFOCaF9S0DN
- dX6z/IBe4uwwTsNcxBJeh5gzjD4sKNCvGBR+p7tqmpSu8rGOyJD9cfPKbTavAGz5nVxDWk8hI
- xO1MIhYR23LPNvI4a/TTvmhkFMQpUT2YNc4saoPTUDgK8wGcGfyyvxiGHaiO6mobHLeI20rrU
- MBeLG0eUkt4y31FTHHRYvtxTLVpzlaZNrY4hViJ9Si8FQLzc/75li3971Jwe39hCIKUFS5kdK
- zJSNDKt4GHYK3EImCXFTMOcotXk3wf2AXz49rZT/IhG+b/f9pLv9u+lLdy/KvBCCzNiA7/zI0
- UpBX1Kk8o+5zs11SGmcrC8/PMxX/n3lnuKqjvJwRL3I+07g5n8U8V/AGL0Vq29mycUcAShI5V
- RgHZZ2hc8vf0GE2j7L9OoXfxEOYv9RtIX44xeQYkl7IP/jV+XAMRakGRxPfkGh+3s13xPx7nj
- Rcc+O2Yur0HUS0P9VTQwjh9tR03Mmus635LFwyVPziDZ/cwzdDyTM77Vjxv5Y9SyfO2tAxshj
- JV8tm5e
+X-Provags-ID: V03:K0:J3f9nSGAKlB6v2VoZ/2YNQyZJmoDZGmOTivUF2iAZ5N53VkQUqw
+ lKtgCGfSPG77SYHaQ8UZFbHZMc9YaEDp2N0hOHkZ8sMy+Pix6BbkSrZreDYdLzInWeZjPR+
+ uhfLtkYL4ofYKGOa3sxGIsPT/nNN6z4AgUrkEEVTirdi1daB2Iw8ptLmZAulDYT6f10zwHQ
+ PPOh7bhvrKdaAulXdN23A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xN97pm6LK7g=:Ku1oaJugcV1bANrRAO3pK2
+ 5eDXAfagl1iq2fvdPA7x6U0Ux3m7ngbXPEOhtkPscmY22R99DkiNj9kZCOFTS9cKS3R10e798
+ q05elB2udyU7fxws86+7o5qyQpXQUHmMX5itQBwyXk/z6s/Ss4lXdQQ8B8T7bT0PoHQfssKQ0
+ vJ4URxTlMI1QhQZ++qPIVSdN6ShKkz5kFFhy/caGCOsQl99xQYKTBUeyHeFc0gA00OjRdY2pA
+ LvMeLS1RN0JwHb2qPHOXctDl7DkG9tu3SO6E7w3Pm2EW4upJiI766KGKfYNeHQ2zZb/GmfWEf
+ C5i4ctn6y/f4WJtSe/iD1nUfULqs+itnZ93dsjpBCEpCGMcIkKQqaK/fBrq6DPpPBxbdQzbse
+ G0VPeFMfVXh36o0OUHHtzaRG5BbJ8CfI1HHFmyJeTh89upf4CiZxaoQezOfAf2Von+GbyeeYO
+ Lao9uVuMgZ+Q+BO2yHKenmx1jvIQmb58WVoM8wFSd8kWLz2CpWlH8VNx7a0cDJa20CLmnga4H
+ Z9i4Bq8ZUVCT3d+Oy9IEgdyE85Hc7WMfWIp9Et5Jk2hnk0FGDAWtflcwVC5cx0uyQviypCtIt
+ aScyS7vOTua8sssFLWyosBx6aFQrdjFECKiAFZZDuU7mgKjGOHV95Lrzsoa5Uf6Gy8WLJXcI1
+ vsNQ24MQJfobl5VLehsoWTYFZZpOEJQywIvDuPfizdWc5LE1GV8IRXVA+mqiia8veokJ2BPXq
+ M47xDZymxI9xyHoitGt3Gv+gR0cfpC0IPyJwhvm6ui8SwXMp48FQ5JqSHeZ9EvJ1hSXKSdGfx
+ l4DTaQe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,52 +59,70 @@ Hi Hannes,
 
 On Sun, 18 Dec 2016, Johannes Sixt wrote:
 
-> The code in winansi.c emulates ANSI escape sequences when Git is
-> connected to the "real" windows console, CMD.exe. The details are
-> outline in eac14f8909d9 (Win32: Thread-safe windows console output,
-> 2012-01-14). Essentially, it plugs a pipe between C code and the actual
-> console output handle.
+> What do you think?
 > 
-> This commit also added an override for isatty(), but it was made
-> unnecessary by fcd428f4a952 (Win32: fix broken pipe detection,
-> 2012-03-01).
-> 
-> The new isatty() override implemented by cbb3f3c9b197 (mingw: intercept
-> isatty() to handle /dev/null as Git expects it, 2016-12-11) does not
-> take into account that _get_osfhandle() returns the handle visible by
-> the C code, which is the pipe. But it actually wants to investigate the
-> properties of the handle that is actually connected to the outside
-> world. Fortunately, there is already winansi_get_osfhandle(), which
-> returns exactly this handle. Use it.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
-> I was able to test the idea earlier than anticipated and it does work
-> for me.
-
-Thank you.
-
 > diff --git a/compat/winansi.c b/compat/winansi.c
-> index cb725fb02f..ba360be69b 100644
+> index ba360be69b..1748d17777 100644
 > --- a/compat/winansi.c
 > +++ b/compat/winansi.c
-> @@ -586,7 +586,7 @@ int winansi_isatty(int fd)
+> @@ -575,9 +575,8 @@ static void detect_msys_tty(int fd)
+>  
+>  int winansi_isatty(int fd)
+>  {
+> -	int res = isatty(fd);
+> -
+> -	if (res) {
+> +	switch (fd) {
+> +	case 0:
+>  		/*
+>  		 * Make sure that /dev/null is not fooling Git into believing
+>  		 * that we are connected to a terminal, as "_isatty() returns a
+> @@ -586,21 +585,19 @@ int winansi_isatty(int fd)
 >  		 *
 >  		 * https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
 >  		 */
-> -		HANDLE handle = (HANDLE)_get_osfhandle(fd);
-> +		HANDLE handle = winansi_get_osfhandle(fd);
+> -		HANDLE handle = winansi_get_osfhandle(fd);
+> -		if (fd == STDIN_FILENO) {
+> +		{
+> +			HANDLE handle = (HANDLE)_get_osfhandle(fd);
+>  			DWORD dummy;
+>  
+> -			if (!GetConsoleMode(handle, &dummy))
+> -				res = 0;
+> -		} else if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
+> -			CONSOLE_SCREEN_BUFFER_INFO dummy;
+> -
+> -			if (!GetConsoleScreenBufferInfo(handle, &dummy))
+> -				res = 0;
+> +			return !!GetConsoleMode(handle, &dummy);
+>  		}
+> +	case 1:
+> +		return !!hconsole1;
+> +	case 2:
+> +		return !!hconsole2;
+>  	}
+>  
+> -	return res;
+> +	return isatty(fd);
+>  }
+>  
+>  void winansi_init(void)
 
-That code works because winansi_get_osfhandle() is in winansi.c, where its
-call to isatty() is *not* redirected to winansi_isatty(). Good.
+I think that would break running Git in Git Bash (i.e. MinTTY) ;-)
 
-My plan was actually to clean up the "magic" detect_msys_tty() code: it
-messes with internals of the MSVC runtime that are no longer the same in
-the Universal Runtime (UCRT), and hence we already had to come up with a
-different way to detect an MSYS2 pipe. My preference would be to merge
-that logic into winansi_isatty() and abandon the _pioinfo hack.
+Let me try to come up with a patch series starting from your patch. We
+need
 
-Let's just clean up all of this in one go.
+- to abandon the _pioinfo hack
+
+- to make isatty() work correctly with /dev/null
+
+- to make isatty() work correctly in CMD
+
+- to make isatty() work correctly in MinTTY (i.e. with MSYS2 pipes instead
+  of Consoles)
+
+I think we can have it all.
 
 Ciao,
 Dscho
