@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF60B1FF76
-	for <e@80x24.org>; Tue, 20 Dec 2016 23:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FB671FF76
+	for <e@80x24.org>; Tue, 20 Dec 2016 23:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934743AbcLTXUz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 18:20:55 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:35119 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934112AbcLTXUy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 18:20:54 -0500
-Received: by mail-pg0-f42.google.com with SMTP id i5so12827472pgh.2
-        for <git@vger.kernel.org>; Tue, 20 Dec 2016 15:20:53 -0800 (PST)
+        id S934445AbcLTXVV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 18:21:21 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:36302 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932479AbcLTXVU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 18:21:20 -0500
+Received: by mail-pg0-f46.google.com with SMTP id f188so77865958pgc.3
+        for <git@vger.kernel.org>; Tue, 20 Dec 2016 15:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TJdDbEaVNX1jyW92iTJnKCnwJWgBaLKYBEQe7X9/Etk=;
-        b=bkoR+A2+DhKUJqsQ5eTOij9TU4uW6BQEvBiRYl0dVvrVzN6vSWdOxky/rXrAMXs0DP
-         c/DRL92UplOy+EjOxiCQZczx/KrZcibYvMiRN63bdRikOjGaA75kY/Yz9kd/R7dHxKMt
-         JkLejaLFSJ33zpoN+DiU/X3E4k9PUHfm7ehQQ4wP9VpyPnoXqNieLSL1/XUmip2Sbzj6
-         BTd31TkMxZexeZ295TYfhtvzmuJlVV7mATtvFD9OxONIoXqJthK0Lfea1tXcUISixHQg
-         0PxSSMp+xy0SSwLLEemwwj+8vxrAHbykcK3+UKMX82dzUUkRx8gEKxew8pfASMjJLc21
-         9m2A==
+        bh=ngdzyMcpQqt7yOSlTLHMvS5bRY+yxD04FM7r36eQKEo=;
+        b=SjIDdIvzJmoZqxn/Bl1MoSwUlrL86B8lLkqsaR4SqrZ82Q9alHn7ajdZ+a+7SGHJSh
+         jidUOtlnhqOsm06rkxovSpCYqKbz+1R+Jkx6/2cXP37NAoZ7P4FjBgcWVOwou8VNeQcC
+         6RrkUiJu3e9R3DVPKlmUtj41rk4gJJ22K4vWj3SbOMunhYd91lhVlTaDDRgsUij3tO3P
+         Rrz8ymDJgz8Z3U4skPpWY38MjRtS2t9kDCZcxz1+INr5+1EnLEPWSXbMpvrcWsVxqkvU
+         SH4FyO9TFYSHWS9PimqV1poa7fR+hfM1wlD9jmo6qJcX/92xKBEdprSRTdEJzekY50wt
+         8A2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TJdDbEaVNX1jyW92iTJnKCnwJWgBaLKYBEQe7X9/Etk=;
-        b=M1unvzyLsmoHuMjoBDmWdl3hlpGcARjZdI16pE7wePE8YmXM55p9PTrZJCEJHVrb6F
-         ydLDl9RB1wF7BMnNmzqW4az+8nAOmZnPBXUL846CJL6VBGverdLTEjXssGfYKo7ZZQ99
-         um7XCvxUX3zofh6PwWpKYf/r0mdA+wkaYtA+PVye/mnLpuVZagdgcqEV57pqBtP3rIUw
-         1m6R5UV4ZXm8Sxlk5TlaGL0P7piadtAesQQROZEu4vzdQjE+HXgUUYMZII9aOwHU13XX
-         j7cEwveJvZFjE+RUKAk0PAzZIPSWfP/NYt4NTThhUaOCsUEwlS/6BtMvj7czWttlhlF9
-         Uq5Q==
-X-Gm-Message-State: AIkVDXJc2OvQZ+3IVrh9cP96Y96I5GpHDv8fHQ8vAqKAW2ciCgMSKBB9mHvSq4gTWCMQGdjY
-X-Received: by 10.84.169.169 with SMTP id h38mr3079674plb.48.1482275568838;
-        Tue, 20 Dec 2016 15:12:48 -0800 (PST)
+        bh=ngdzyMcpQqt7yOSlTLHMvS5bRY+yxD04FM7r36eQKEo=;
+        b=euFH4lVzVLcB0KIR4Q2TCvyAPsyjg6kgC+3zVLi3gGxhnCij6Ke38z5pwGRHSu5F5F
+         4l4uRBYe25kv6uC0aDOpyeQP03JKbvzuCkimq+/8enCYymtr4DRV2ae4X63lAgHbrut4
+         E4OjdTNfFw+kDVUi77d6MLxHRrpS7kbFwjEW+frxCdhXXtyeuKa6qmjaWN2Jkauz/51Z
+         i8wWGh3QmJhOi9BLO4mw/T6xmYPLdqEx/x+v4pY5dQ+ZacEZOZRbURcTPQmmESvGMRkC
+         x8aQfAMWzi9BKF/H+OxBgwO7aqETD3pitfh45RDNJurVgrBXZfE+r1LRUHhhzRDLRrDC
+         vVIg==
+X-Gm-Message-State: AIkVDXJq56tLqtxCGUcKqLBf4mumyvZaMjr/vIzSW/Urr7tHrWSkJhN5gmh6wo+xMiS2HXfr
+X-Received: by 10.99.241.21 with SMTP id f21mr2708936pgi.110.1482275565390;
+        Tue, 20 Dec 2016 15:12:45 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b10:6c5b:c771:3806:a807])
-        by smtp.gmail.com with ESMTPSA id 16sm41479307pfk.54.2016.12.20.15.12.48
+        by smtp.gmail.com with ESMTPSA id y200sm41486442pfb.16.2016.12.20.15.12.44
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Dec 2016 15:12:48 -0800 (PST)
+        Tue, 20 Dec 2016 15:12:45 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 4/4] rm: absorb a submodules git dir before deletion
-Date:   Tue, 20 Dec 2016 15:12:27 -0800
-Message-Id: <20161220231227.14115-5-sbeller@google.com>
+Subject: [PATCHv4 1/4] submodule.h: add extern keyword to functions
+Date:   Tue, 20 Dec 2016 15:12:24 -0800
+Message-Id: <20161220231227.14115-2-sbeller@google.com>
 X-Mailer: git-send-email 2.11.0.rc2.53.gb7b3fba.dirty
 In-Reply-To: <20161220231227.14115-1-sbeller@google.com>
 References: <20161220231227.14115-1-sbeller@google.com>
@@ -59,254 +59,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When deleting a submodule, we need to keep the actual git directory around,
-such that we do not lose local changes in there and at a later checkout
-of the submodule we don't need to clone it again.
+As the upcoming series will add a lot of functions to the submodule
+header, let's first make the header consistent to the rest of the project
+by adding the extern keyword to functions.
 
-Now that the functionality is available to absorb the git directory of a
-submodule, rewrite the checking in git-rm to not complain, but rather
-relocate the git directories inside the superproject.
-
-An alternative solution was discussed to have a function
-`depopulate_submodule`. That would couple the check for its git directory
-and possible relocation before the the removal, such that it is less
-likely to miss the check in the future.  But the indirection with such
-a function added seemed also complex. The reason for that was that this
-possible move of the git directory was also implemented in
-`ok_to_remove_submodule`, such that this function could truthfully
-answer whether it is ok to remove the submodule.
-
-The solution proposed here defers all these checks to the caller.
+As per the CodingGuidelines we try to stay below 80 characters per line,
+so adapt all those functions to stay below 80 characters that are already
+using more than one line.  Those function using just one line are better
+kept in one line than breaking them up into multiple lines just for the
+goal of staying below the character limit as it makes grepping
+for functions easier if they are one liners.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/rm.c  | 79 ++++++++++++++---------------------------------------------
- t/t3600-rm.sh | 39 ++++++++++++-----------------
- 2 files changed, 33 insertions(+), 85 deletions(-)
+ submodule.h | 55 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 30 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 5a5a66272b..6f2001b0eb 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -59,27 +59,9 @@ static void print_error_files(struct string_list *files_list,
- 	}
- }
+diff --git a/submodule.h b/submodule.h
+index 6229054b99..61fb610749 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -29,50 +29,55 @@ struct submodule_update_strategy {
+ };
+ #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
  
--static void error_removing_concrete_submodules(struct string_list *files, int *errs)
--{
--	print_error_files(files,
--			  Q_("the following submodule (or one of its nested "
--			     "submodules)\n"
--			     "uses a .git directory:",
--			     "the following submodules (or one of their nested "
--			     "submodules)\n"
--			     "use a .git directory:", files->nr),
--			  _("\n(use 'rm -rf' if you really want to remove "
--			    "it including all of its history)"),
--			  errs);
--	string_list_clear(files, 0);
--}
--
--static int check_submodules_use_gitfiles(void)
-+static void submodules_absorb_gitdir_if_needed(const char *prefix)
- {
- 	int i;
--	int errs = 0;
--	struct string_list files = STRING_LIST_INIT_NODUP;
--
- 	for (i = 0; i < list.nr; i++) {
- 		const char *name = list.entry[i].name;
- 		int pos;
-@@ -99,12 +81,9 @@ static int check_submodules_use_gitfiles(void)
- 			continue;
+-int is_staging_gitmodules_ok(void);
+-int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+-int remove_path_from_gitmodules(const char *path);
+-void stage_updated_gitmodules(void);
+-void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
++extern int is_staging_gitmodules_ok(void);
++extern int update_path_in_gitmodules(const char *oldpath, const char *newpath);
++extern int remove_path_from_gitmodules(const char *path);
++extern void stage_updated_gitmodules(void);
++extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
+ 		const char *path);
+-int submodule_config(const char *var, const char *value, void *cb);
+-void gitmodules_config(void);
+-int parse_submodule_update_strategy(const char *value,
++extern int submodule_config(const char *var, const char *value, void *cb);
++extern void gitmodules_config(void);
++extern int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst);
+-const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
+-void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+-void show_submodule_summary(FILE *f, const char *path,
++extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
++extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
++extern void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset);
+-void show_submodule_inline_diff(FILE *f, const char *path,
++extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *line_prefix,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset,
+ 		const struct diff_options *opt);
+-void set_config_fetch_recurse_submodules(int value);
+-void check_for_new_submodule_commits(unsigned char new_sha1[20]);
+-int fetch_populated_submodules(const struct argv_array *options,
++extern void set_config_fetch_recurse_submodules(int value);
++extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
++extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
+ 			       int quiet, int max_parallel_jobs);
+-unsigned is_submodule_modified(const char *path, int ignore_untracked);
+-int submodule_uses_gitfile(const char *path);
+-int ok_to_remove_submodule(const char *path);
+-int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
+-		    const unsigned char a[20], const unsigned char b[20], int search);
+-int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
+-		struct string_list *needs_pushing);
+-int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
+-int parallel_submodules(void);
++extern unsigned is_submodule_modified(const char *path, int ignore_untracked);
++extern int submodule_uses_gitfile(const char *path);
++extern int ok_to_remove_submodule(const char *path);
++extern int merge_submodule(unsigned char result[20], const char *path,
++			   const unsigned char base[20],
++			   const unsigned char a[20],
++			   const unsigned char b[20], int search);
++extern int find_unpushed_submodules(unsigned char new_sha1[20],
++				    const char *remotes_name,
++				    struct string_list *needs_pushing);
++extern int push_unpushed_submodules(unsigned char new_sha1[20],
++				    const char *remotes_name);
++extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
++extern int parallel_submodules(void);
  
- 		if (!submodule_uses_gitfile(name))
--			string_list_append(&files, name);
-+			absorb_git_dir_into_superproject(prefix, name,
-+				ABSORB_GITDIR_RECURSE_SUBMODULES);
- 	}
--
--	error_removing_concrete_submodules(&files, &errs);
--
--	return errs;
- }
+ /*
+  * Prepare the "env_array" parameter of a "struct child_process" for executing
+  * a submodule by clearing any repo-specific envirionment variables, but
+  * retaining any config in the environment.
+  */
+-void prepare_submodule_repo_env(struct argv_array *out);
++extern void prepare_submodule_repo_env(struct argv_array *out);
  
- static int check_local_mod(struct object_id *head, int index_only)
-@@ -120,7 +99,6 @@ static int check_local_mod(struct object_id *head, int index_only)
- 	int errs = 0;
- 	struct string_list files_staged = STRING_LIST_INIT_NODUP;
- 	struct string_list files_cached = STRING_LIST_INIT_NODUP;
--	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
- 	struct string_list files_local = STRING_LIST_INIT_NODUP;
- 
- 	no_head = is_null_oid(head);
-@@ -219,13 +197,8 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		else if (!index_only) {
- 			if (staged_changes)
- 				string_list_append(&files_cached, name);
--			if (local_changes) {
--				if (S_ISGITLINK(ce->ce_mode) &&
--				    !submodule_uses_gitfile(name))
--					string_list_append(&files_submodule, name);
--				else
--					string_list_append(&files_local, name);
--			}
-+			if (local_changes)
-+				string_list_append(&files_local, name);
- 		}
- 	}
- 	print_error_files(&files_staged,
-@@ -247,8 +220,6 @@ static int check_local_mod(struct object_id *head, int index_only)
- 			  &errs);
- 	string_list_clear(&files_cached, 0);
- 
--	error_removing_concrete_submodules(&files_submodule, &errs);
--
- 	print_error_files(&files_local,
- 			  Q_("the following file has local modifications:",
- 			     "the following files have local modifications:",
-@@ -342,6 +313,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			exit(0);
- 	}
- 
-+	submodules_absorb_gitdir_if_needed(prefix);
-+
- 	/*
- 	 * If not forced, the file, the index and the HEAD (if exists)
- 	 * must match; but the file can already been removed, since
-@@ -358,9 +331,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			oidclr(&oid);
- 		if (check_local_mod(&oid, index_only))
- 			exit(1);
--	} else if (!index_only) {
--		if (check_submodules_use_gitfiles())
--			exit(1);
- 	}
- 
- 	/*
-@@ -389,32 +359,20 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 */
- 	if (!index_only) {
- 		int removed = 0, gitmodules_modified = 0;
--		struct strbuf buf = STRBUF_INIT;
- 		for (i = 0; i < list.nr; i++) {
- 			const char *path = list.entry[i].name;
- 			if (list.entry[i].is_submodule) {
--				if (is_empty_dir(path)) {
--					if (!rmdir(path)) {
--						removed = 1;
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--						continue;
--					}
--				} else {
--					strbuf_reset(&buf);
--					strbuf_addstr(&buf, path);
--					if (!remove_dir_recursively(&buf, 0)) {
--						removed = 1;
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--						strbuf_release(&buf);
--						continue;
--					} else if (!file_exists(path))
--						/* Submodule was removed by user */
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--					/* Fallthrough and let remove_path() fail. */
--				}
-+				struct strbuf buf = STRBUF_INIT;
-+
-+				strbuf_addstr(&buf, path);
-+				if (remove_dir_recursively(&buf, 0))
-+					die(_("could not remove '%s'"), path);
-+				strbuf_release(&buf);
-+
-+				removed = 1;
-+				if (!remove_path_from_gitmodules(path))
-+					gitmodules_modified = 1;
-+				continue;
- 			}
- 			if (!remove_path(path)) {
- 				removed = 1;
-@@ -423,7 +381,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			if (!removed)
- 				die_errno("git rm: '%s'", path);
- 		}
--		strbuf_release(&buf);
- 		if (gitmodules_modified)
- 			stage_updated_gitmodules();
- 	}
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index bcbb680651..5aa6db584c 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -569,26 +569,22 @@ test_expect_success 'rm of a conflicted unpopulated submodule succeeds' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rm of a populated submodule with a .git directory fails even when forced' '
-+test_expect_success 'rm of a populated submodule with a .git directory migrates git dir' '
- 	git checkout -f master &&
- 	git reset --hard &&
- 	git submodule update &&
- 	(cd submod &&
- 		rm .git &&
- 		cp -R ../.git/modules/sub .git &&
--		GIT_WORK_TREE=. git config --unset core.worktree
-+		GIT_WORK_TREE=. git config --unset core.worktree &&
-+		rm -r ../.git/modules/sub
- 	) &&
--	test_must_fail git rm submod &&
--	test -d submod &&
--	test -d submod/.git &&
--	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	test_must_fail git rm -f submod &&
--	test -d submod &&
--	test -d submod/.git &&
-+	git rm submod 2>output.err &&
-+	! test -d submod &&
-+	! test -d submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	rm -rf submod
-+	test -s actual &&
-+	test_i18ngrep Migrating output.err
- '
- 
- cat >expect.deepmodified <<EOF
-@@ -667,24 +663,19 @@ test_expect_success 'rm of a populated nested submodule with a nested .git direc
- 	git submodule update --recursive &&
- 	(cd submod/subsubmod &&
- 		rm .git &&
--		cp -R ../../.git/modules/sub/modules/sub .git &&
-+		mv ../../.git/modules/sub/modules/sub .git &&
- 		GIT_WORK_TREE=. git config --unset core.worktree
- 	) &&
--	test_must_fail git rm submod &&
--	test -d submod &&
--	test -d submod/subsubmod/.git &&
--	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	test_must_fail git rm -f submod &&
--	test -d submod &&
--	test -d submod/subsubmod/.git &&
-+	git rm submod 2>output.err &&
-+	! test -d submod &&
-+	! test -d submod/subsubmod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	rm -rf submod
-+	test -s actual &&
-+	test_i18ngrep Migrating output.err
- '
- 
- test_expect_success 'checking out a commit after submodule removal needs manual updates' '
--	git commit -m "submodule removal" submod &&
-+	git commit -m "submodule removal" submod .gitmodules &&
- 	git checkout HEAD^ &&
- 	git submodule update &&
- 	git checkout -q HEAD^ &&
+ #define ABSORB_GITDIR_RECURSE_SUBMODULES (1<<0)
+ extern void absorb_git_dir_into_superproject(const char *prefix,
 -- 
 2.11.0.rc2.53.gb7b3fba.dirty
 
