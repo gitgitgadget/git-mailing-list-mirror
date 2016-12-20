@@ -6,41 +6,35 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 953B81FF76
-	for <e@80x24.org>; Tue, 20 Dec 2016 18:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2313A1FF76
+	for <e@80x24.org>; Tue, 20 Dec 2016 18:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934545AbcLTSwZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 13:52:25 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:7280 "EHLO bsmtp1.bon.at"
+        id S934598AbcLTSzA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 13:55:00 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:17842 "EHLO bsmtp1.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934445AbcLTSwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 13:52:24 -0500
+        id S932658AbcLTSy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 13:54:59 -0500
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3tjn2s6S6Dz5tlC;
-        Tue, 20 Dec 2016 19:52:21 +0100 (CET)
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3tjn5t0FCpz5tlF;
+        Tue, 20 Dec 2016 19:54:58 +0100 (CET)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 66B2A2222;
-        Tue, 20 Dec 2016 19:52:21 +0100 (CET)
-Subject: Re: Allow "git shortlog" to group by committer information
-To:     Junio C Hamano <gitster@pobox.com>
-References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
- <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
- <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
- <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net>
- <16b115e0-3a7e-a5c2-1526-44bbcfc97db8@kdbg.org>
- <xmqq60melazp.fsf@gitster.mtv.corp.google.com>
- <xmqq1sx2lara.fsf@gitster.mtv.corp.google.com>
- <xmqqvauejvnr.fsf@gitster.mtv.corp.google.com>
-Cc:     Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
+        by dx.site (Postfix) with ESMTP id C2F5D2222;
+        Tue, 20 Dec 2016 19:54:57 +0100 (CET)
+Subject: Re: [PATCHv4 3/5] run-command: add {run,start,finish}_command_or_die
+To:     Stefan Beller <sbeller@google.com>
+References: <20161219232828.5075-1-sbeller@google.com>
+ <20161219232828.5075-4-sbeller@google.com>
+ <aad0af97-7588-632d-a113-5d8372b8b7a8@kdbg.org>
+Cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com,
+        sandals@crustytoothpaste.net, David.Turner@twosigma.com
 From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <d2ac90d6-c4f4-a759-a6e2-2d7fe5bb1c1d@kdbg.org>
-Date:   Tue, 20 Dec 2016 19:52:21 +0100
+Message-ID: <8a75de4b-76aa-c111-6946-91a709d890f7@kdbg.org>
+Date:   Tue, 20 Dec 2016 19:54:57 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.5.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqvauejvnr.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <aad0af97-7588-632d-a113-5d8372b8b7a8@kdbg.org>
 Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -48,22 +42,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.12.2016 um 19:35 schrieb Junio C Hamano:
->  test_expect_success 'shortlog --committer (internal)' '
-> +	git checkout --orphan side &&
-> +	git commit --allow-empty -m one &&
-> +	git commit --allow-empty -m two &&
-> +	GIT_COMMITTER_NAME="Sin Nombre" git commit --allow-empty -m three &&
-
-Clever! Thank you. Will test in 12 hours.
-
-> +
->  	cat >expect <<-\EOF &&
-> -	     3	C O Mitter
-> +	     2	C O Mitter
-> +	     1	Sin Nombre
->  	EOF
->  	git shortlog -nsc HEAD >actual &&
->  	test_cmp expect actual
+Am 20.12.2016 um 19:33 schrieb Johannes Sixt:
+> Am 20.12.2016 um 00:28 schrieb Stefan Beller:
+>> +void run_command_or_die(struct child_process *cmd)
+>> +{
+>> +    if (finish_command(cmd))
+>> +        report_and_die(cmd, "run");
 >
+> And here as well.
+
+Oh, and BTW, this one wraps only finish_command, not run_command.
+
+-- Hannes
 
