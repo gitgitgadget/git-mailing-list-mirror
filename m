@@ -2,127 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90C4B1FF76
-	for <e@80x24.org>; Tue, 20 Dec 2016 16:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4FC1FF76
+	for <e@80x24.org>; Tue, 20 Dec 2016 16:58:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755843AbcLTQxy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 11:53:54 -0500
-Received: from mout.gmx.net ([212.227.15.15]:53809 "EHLO mout.gmx.net"
+        id S933743AbcLTQ57 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 11:57:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59027 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755520AbcLTQxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 11:53:53 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPV69-1cEiy21r5F-004g7a; Tue, 20
- Dec 2016 17:53:47 +0100
-Date:   Tue, 20 Dec 2016 17:53:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] winansi_isatty(): fix when Git is used from CMD
-In-Reply-To: <d661dbf1-9852-965a-2ca9-67d763115b9e@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1612201751060.54750@virtualbox>
-References: <cover.1481454992.git.johannes.schindelin@gmx.de> <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de> <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org> <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
- <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org> <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org> <d661dbf1-9852-965a-2ca9-67d763115b9e@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932357AbcLTQ56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 11:57:58 -0500
+Received: (qmail 2914 invoked by uid 109); 20 Dec 2016 16:57:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Dec 2016 16:57:57 +0000
+Received: (qmail 5753 invoked by uid 111); 20 Dec 2016 16:58:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Dec 2016 11:58:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Dec 2016 11:57:55 -0500
+Date:   Tue, 20 Dec 2016 11:57:55 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] log: support 256 colors with --graph=256colors
+Message-ID: <20161220165754.hkmnsxiwbcgn6uin@sigill.intra.peff.net>
+References: <20161220123929.15329-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:J3f9nSGAKlB6v2VoZ/2YNQyZJmoDZGmOTivUF2iAZ5N53VkQUqw
- lKtgCGfSPG77SYHaQ8UZFbHZMc9YaEDp2N0hOHkZ8sMy+Pix6BbkSrZreDYdLzInWeZjPR+
- uhfLtkYL4ofYKGOa3sxGIsPT/nNN6z4AgUrkEEVTirdi1daB2Iw8ptLmZAulDYT6f10zwHQ
- PPOh7bhvrKdaAulXdN23A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xN97pm6LK7g=:Ku1oaJugcV1bANrRAO3pK2
- 5eDXAfagl1iq2fvdPA7x6U0Ux3m7ngbXPEOhtkPscmY22R99DkiNj9kZCOFTS9cKS3R10e798
- q05elB2udyU7fxws86+7o5qyQpXQUHmMX5itQBwyXk/z6s/Ss4lXdQQ8B8T7bT0PoHQfssKQ0
- vJ4URxTlMI1QhQZ++qPIVSdN6ShKkz5kFFhy/caGCOsQl99xQYKTBUeyHeFc0gA00OjRdY2pA
- LvMeLS1RN0JwHb2qPHOXctDl7DkG9tu3SO6E7w3Pm2EW4upJiI766KGKfYNeHQ2zZb/GmfWEf
- C5i4ctn6y/f4WJtSe/iD1nUfULqs+itnZ93dsjpBCEpCGMcIkKQqaK/fBrq6DPpPBxbdQzbse
- G0VPeFMfVXh36o0OUHHtzaRG5BbJ8CfI1HHFmyJeTh89upf4CiZxaoQezOfAf2Von+GbyeeYO
- Lao9uVuMgZ+Q+BO2yHKenmx1jvIQmb58WVoM8wFSd8kWLz2CpWlH8VNx7a0cDJa20CLmnga4H
- Z9i4Bq8ZUVCT3d+Oy9IEgdyE85Hc7WMfWIp9Et5Jk2hnk0FGDAWtflcwVC5cx0uyQviypCtIt
- aScyS7vOTua8sssFLWyosBx6aFQrdjFECKiAFZZDuU7mgKjGOHV95Lrzsoa5Uf6Gy8WLJXcI1
- vsNQ24MQJfobl5VLehsoWTYFZZpOEJQywIvDuPfizdWc5LE1GV8IRXVA+mqiia8veokJ2BPXq
- M47xDZymxI9xyHoitGt3Gv+gR0cfpC0IPyJwhvm6ui8SwXMp48FQ5JqSHeZ9EvJ1hSXKSdGfx
- l4DTaQe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20161220123929.15329-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+On Tue, Dec 20, 2016 at 07:39:29PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-On Sun, 18 Dec 2016, Johannes Sixt wrote:
-
-> What do you think?
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  I got mad after tracing two consecutive red history lines in `git log
+>  --graph --oneline` back to their merge points, far far away. Yeah
+>  probably should fire up tig, or gitk or something.
 > 
-> diff --git a/compat/winansi.c b/compat/winansi.c
-> index ba360be69b..1748d17777 100644
-> --- a/compat/winansi.c
-> +++ b/compat/winansi.c
-> @@ -575,9 +575,8 @@ static void detect_msys_tty(int fd)
->  
->  int winansi_isatty(int fd)
->  {
-> -	int res = isatty(fd);
-> -
-> -	if (res) {
-> +	switch (fd) {
-> +	case 0:
->  		/*
->  		 * Make sure that /dev/null is not fooling Git into believing
->  		 * that we are connected to a terminal, as "_isatty() returns a
-> @@ -586,21 +585,19 @@ int winansi_isatty(int fd)
->  		 *
->  		 * https://msdn.microsoft.com/en-us/library/f4s0ddew.aspx
->  		 */
-> -		HANDLE handle = winansi_get_osfhandle(fd);
-> -		if (fd == STDIN_FILENO) {
-> +		{
-> +			HANDLE handle = (HANDLE)_get_osfhandle(fd);
->  			DWORD dummy;
->  
-> -			if (!GetConsoleMode(handle, &dummy))
-> -				res = 0;
-> -		} else if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
-> -			CONSOLE_SCREEN_BUFFER_INFO dummy;
-> -
-> -			if (!GetConsoleScreenBufferInfo(handle, &dummy))
-> -				res = 0;
-> +			return !!GetConsoleMode(handle, &dummy);
->  		}
-> +	case 1:
-> +		return !!hconsole1;
-> +	case 2:
-> +		return !!hconsole2;
->  	}
->  
-> -	return res;
-> +	return isatty(fd);
->  }
->  
->  void winansi_init(void)
+>  This may sound like a good thing to add, but I don't know how good it
+>  is compared to the good old 16 color palette, yet as I haven't tried it
+>  for long since it's just written.
 
-I think that would break running Git in Git Bash (i.e. MinTTY) ;-)
+Hmm. At some point the colors become too close together to be easily
+distinguishable. In your code you have:
 
-Let me try to come up with a patch series starting from your patch. We
-need
+> +	if (arg && !strcmp(arg, "256colors")) {
+> +		int i, start = 17, stop = 232;
+> +		column_colors_max = stop - start;
+> +		column_colors =
+> +			xmalloc((column_colors_max + 1) * sizeof(*column_colors));
+> +		for (i = start; i < stop; i++) {
+> +			struct strbuf sb = STRBUF_INIT;
+> +			strbuf_addf(&sb, "\033[38;5;%dm", i);
+> +			column_colors[i - start] = strbuf_detach(&sb, NULL);
+> +		}
+> +		column_colors[column_colors_max] = xstrdup(GIT_COLOR_RESET);
+> +		/* ignore the closet 16 colors on either side for the next line */
+> +		column_colors_step = 16;
+> +	}
 
-- to abandon the _pioinfo hack
+So you step by 16, over a set of 215 colors. That seems to give only 13
+colors, versus the original 16. :)
 
-- to make isatty() work correctly with /dev/null
+I know that is a simplification. If you wrap around, then you get your
+13 colors, and then another 13 colors that aren't _quite_ the same, and
+so on, until you've used all 256. I'm just not sure if the 1st and 14th
+color would be visually different enough for it to matter (I admit I
+didn't do any experiments, though).
 
-- to make isatty() work correctly in CMD
+> ---graph::
+> +--graph[=<options>]::
+>  	Draw a text-based graphical representation of the commit history
+>  	on the left hand side of the output.  This may cause extra lines
+>  	to be printed in between commits, in order for the graph history
 
-- to make isatty() work correctly in MinTTY (i.e. with MSYS2 pipes instead
-  of Consoles)
+I wonder if we would ever want another use for "--graph=foo". I guess
+any such thing could fall under the name of "graph options", and we'd
+end up with "--graph=256colors,unicode" or something like that.
 
-I think we can have it all.
+I do suspect people would want a config option for this, though. I.e.,
+you'd want to enable it all the time if you have a terminal which can
+handle 256 colors, not just for a particular invocation.
 
-Ciao,
-Dscho
+-Peff
