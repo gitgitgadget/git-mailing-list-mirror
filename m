@@ -2,114 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2671FF76
-	for <e@80x24.org>; Tue, 20 Dec 2016 23:47:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C703D1FF76
+	for <e@80x24.org>; Wed, 21 Dec 2016 00:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933365AbcLTXrF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 18:47:05 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54157 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932479AbcLTXrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 18:47:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CDA9256E5D;
-        Tue, 20 Dec 2016 18:46:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yzqbOfAkXIaJxKNWxe66HwJQsq8=; b=mBd6cU
-        uI/rdkkfcEFY4N5qsJ95R+290JYjQzZtm3DoCkJEAGZFc0Se2Mq0zHSaiKhDlYx7
-        pAwlr0c9n34G3ybNqmcQslPWpkh95+XyJ95RkfvKeJg23k8OScAq6hOrT2jWrhtd
-        PUd8jjoXpn72ahwKnFek6sJO7PF+Zs/0n9PhY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Nc/x6f2U18BOUHx+FzFuJEq/Ff5nOp1K
-        kiUqEYooyUrtpl2AqXOoG7QXs2iKsIh8cvf2zCc86YOajaxfqHOPoWH37xHaOxgJ
-        87vmTlA78+W5Kg0EzyZ+IX7r3AyMABpBarJrplLGFXMB7izXoFocfkdtE3J7fMYF
-        jVuzl0Wbxvs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C624F56E5B;
-        Tue, 20 Dec 2016 18:46:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4160756E56;
-        Tue, 20 Dec 2016 18:46:31 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v2 09/34] sequencer (rebase -i): write an author-script file
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-        <cover.1481642927.git.johannes.schindelin@gmx.de>
-        <09c2718e119f809093794410ae1a738c1cd122d1.1481642927.git.johannes.schindelin@gmx.de>
-        <xmqqd1gtuivc.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1612191800530.54750@virtualbox>
-        <xmqqy3zbl718.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 20 Dec 2016 15:46:30 -0800
-In-Reply-To: <xmqqy3zbl718.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 19 Dec 2016 17:32:19 -0800")
-Message-ID: <xmqq37hijh9l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1755159AbcLUAGA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 19:06:00 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:45651 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753937AbcLUAF6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Dec 2016 19:05:58 -0500
+X-AuditID: 1207440c-e3bff700000009a1-8f-5859c7640e54
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 60.9F.02465.467C9585; Tue, 20 Dec 2016 19:05:57 -0500 (EST)
+Received: from [192.168.69.190] (p57907272.dip0.t-ipconnect.de [87.144.114.114])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBL05sn5008337
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Tue, 20 Dec 2016 19:05:55 -0500
+Subject: Re: [PATCH 00/13] gitk: tweak rendering of remote-tracking references
+To:     Marc Branchaud <marcnarc@xiplink.com>,
+        Paul Mackerras <paulus@samba.org>
+References: <cover.1482164633.git.mhagger@alum.mit.edu>
+ <97d97bc6-54f1-2ef2-fe04-7e7f144d7e51@xiplink.com>
+Cc:     git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <046b088c-afd5-66b9-fe3c-255e42a7d768@alum.mit.edu>
+Date:   Wed, 21 Dec 2016 01:05:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 885FC17A-C70E-11E6-9106-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <97d97bc6-54f1-2ef2-fe04-7e7f144d7e51@xiplink.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqJt6PDLCYPt6bouuK91MFitn3GC0
+        WHNkMbsDs8fcXX2MHp83yXkcuPyYLYA5issmJTUnsyy1SN8ugSuju/sNS8Fx+Yq3G1+xNzDe
+        l+hi5OCQEDCRWLZdvIuRi0NI4DKjxK8fK1ghnAtMErO+T2PrYuTkEBbwk3g8cRKYLSLgI7G8
+        ey47iC0kkCNxZOkZJhCbWUBcYt3c82BxNgFdiUU9zWBxXgF7iQVv9rKBLGMRUJU49DUXJCwq
+        ECJxec5RNogSQYmTM5+wgNicQOVt9/vYIEbqSey4/osVwpaX2P52DvMERv5ZSFpmISmbhaRs
+        ASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQAOXZwfhtncwhRgEORiUe
+        XgG7yAgh1sSy4srcQ4ySHExKorwZHUAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrxGx4ByvCmJ
+        lVWpRfkwKWkOFiVxXtUl6n5CAumJJanZqakFqUUwWRkODiUJXkmQRsGi1PTUirTMnBKENBMH
+        J8hwHqDh54+CDC8uSMwtzkyHyJ9iVJQS530MkhAASWSU5sH1whLIK0ZxoFeEeQ+BVPEAkw9c
+        9yugwUxAgxd2h4MMLklESEk1MPbE+Pv+XDzZqGB1iuayWP0tzEc2GVQukfb+lDincrp9U7KK
+        A09NqLVi59EKI7PnGZqBXfJt1wWc3EXZXnOeNOjSaaje8vZwlH1jTNpCDc7vAQUrH6ULccne
+        W5O0+vimT3W7Te4v8pT7qlZ/xpDPXaV/2cUsruZb1TX893IvavBKpqhz9dxTYinOSDTUYi4q
+        TgQAHc1pUPsCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12/20/2016 04:01 PM, Marc Branchaud wrote:
+> On 2016-12-19 11:44 AM, Michael Haggerty wrote:
+>> This patch series changes a bunch of details about how remote-tracking
+>> references are rendered in the commit list of gitk:
+> 
+> Thanks for this!  I like the new, compact look very much!
+> 
+> That said, I remember when I was a new git user and I leaned heavily on
+> gitk to understand how references worked.  It was particularly
+> illuminating to see the remote references distinctly labeled, and the
+> fact that they were "remotes/origin/foo" gave me an Aha! moment where I
+> came to understand that the refs hierarchy is more flexible than just
+> the conventions coded into git itself.  I eventually felt free to create
+> my own, private ref hierarchies.
+> 
+> I am in no way opposed to this series.  I just wanted to point out that
+> there was some utility in those labels.  It makes me think that it might
+> be worthwhile for gitk to have a "raw-refs" mode, that shows the full
+> "refs/foo/bar/baz" paths of all the heads, tags, and whatever else.  It
+> could be a useful teaching tool for git.
 
->> We keep coming back to the same argument. You want this quoting/dequoting
->> to be turned into a full-fledged parser. And I keep pointing out that the
->> code here does not *need* to parse but only construct an environment
->> block.
->
-> I am afraid you are mis-reading me.  I see a code that _READS_ some
-> data format, for which we already have a parser, and then write out
-> things based on what it read.  I do not want you to make anything
-> into a full-fledged parser---I just do not want to see an ad-hoc
-> reader and instead the code to USE existing parser.
+Yes, I understand that the longer names might be useful for beginners,
+and the full names even more so. However, I think once a user has that
+"aha!" moment, the space wasted on all the redundant words is a real
+impediment to gitk's usability. It is common to have a few references on
+a single commit (especially if you pull from multiple remotes), in which
+case the summary line is completely invisible (and therefore its context
+menu is unreachable). I don't like the idea of dumbing down the UI
+permanently based on what users need at the very beginning of their Git
+usage.
 
-To extend this a bit.
+Would it be possible to use the short names in the UI but to add the
+full names to a tooltip or to the context menu?
 
-I care rather deeply about not spreading the re-invention of parsers
-and formatters throughout the code, because that would introduce
-unnecesary maintenance burden.
+>> * Omit the "remote/" prefix on normal remote-tracking references. They
+> 
+> If you re-roll, s:remote/:remotes/:.
 
-Quoting a string so that it is acceptable inside a pair of single
-quotes, occasionally stepping outside of the sq context and using
-backquote to excape individual byte, for example, might feel simple
-enough that anybody can just write inline instead of learning how to
-call and actually calling sq_quote().  You open ', show each byte
-unless it is a ', in which case you close ' and give \' and
-immediately open '.  That was what sq_quote() did originally and for
-a long time.  If however we allowed everybody to reinvent the code
-to quote all over the place, with a lame "This is different and does
-not *need* to call shared code" excuse, it would have required a lot
-more effort to do a change like the one in 77d604c309 ("Enhanced
-sq_quote()", 2005-10-10) that changed the quoting rules slightly to
-make the output safer to accomodate different variants of shells.
+Thanks.
 
-The same thing can be said for split_ident() code.  The "author"
-line has name, '<', email address, '>', timestring, '+' or '-', and
-timezone.  Splitting them into NAME and TIME may be very simple, and
-"does not *need* to parse", right?  Not really.  If you look at how
-split_ident() evolved to accomodate the real world malformed lines
-like duplicated closing '>' and realize that what we have there may
-probably *NOT* the perfect one (i.e. there may be other malformed
-input we may have to accomodate by tweaking the implementation
-further), we really do not want a hand-rolled ad-hoc "splitter" that
-"does not *need* to parse".
+>>   are already distinguished via their two-tone rendering and (usually)
+>>   longer names, and this change saves a lot of visual clutter and
+>>   horizontal space.
+>>
+>> * Render remote-tracking references that have more than the usual
+>>   three slashes like
+>>
+>>       origin/foo/bar
+>>       ^^^^^^^
+>>
+>>   rather than
+>>
+>>       origin/foo/bar (formerly remotes/origin/foo/bar)
+>>       ^^^^^^^^^^^              ^^^^^^^^^^^^^^^^^^^
+>>
+>>   , where the indicated part is the prefix that is rendered in a
+>>   different color. Usually, such a reference represents a remote
+>>   branch that contains a slash in its name, so the new split more
+>>   accurately portrays the separation between remote name and remote
+>>   branch name.
+> 
+> *Love* this change!  :)
+> 
+>> * Introduce a separate constant to specify the background color used
+>>   for the branch name part of remote-tracking references, to allow it
+>>   to differ from the color used for local branches (which by default
+>>   is bright green).
+>>
+>> * Change the default background colors for remote-tracking branches to
+>>   light brown and brown (formerly they were pale orange and bright
+>>   green).
+> 
+> Please don't change the remotebgcolor default.
+> 
+> Also, perhaps the default remoterefbgcolor should be
+>     set remoterefbgcolor $headbgcolor
+> ?
+> 
+> I say this because when I applied the series, without the last patch, I
+> was miffed that the remote/ref colour had changed.
 
-The same thing can be said for the code that reads the
-author-script, too.
+This is a one-time inconvenience that gitk developers will experience. I
+doubt that users jump backwards and forwards in gitk versions very often.
 
-So please do not waste any more time arguing.  I think you spent
-arguing more time than you would otherwise have had to spend if you
-just used existing helper functions, both in this thread and the
-older one about reading the author-script.
+I do find it strange that gitk writes a color selection to its
+configuration file *even if the user has left it at its default*.
+Normally I would expect only user-changed settings to be written to the
+config file, and other values to use the default that is built into the
+program. For example, such an approach would have made the transition
+from "green" to "lime" easier.
+
+> [...]
+
+Thanks for your feedback!
+Michael
+
