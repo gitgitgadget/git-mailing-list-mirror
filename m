@@ -2,71 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B53761FF76
-	for <e@80x24.org>; Wed, 21 Dec 2016 00:18:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 250D7203EA
+	for <e@80x24.org>; Wed, 21 Dec 2016 03:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933871AbcLUAST (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Dec 2016 19:18:19 -0500
-Received: from mail-it0-f54.google.com ([209.85.214.54]:35759 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933131AbcLUASS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2016 19:18:18 -0500
-Received: by mail-it0-f54.google.com with SMTP id c20so92510342itb.0
-        for <git@vger.kernel.org>; Tue, 20 Dec 2016 16:18:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=dvNYfTkc3WahK74tmDYeHhRgDLbZM9/gh3JRcJBrcEk=;
-        b=dQobu0OKSHxf8y63EJeQWs4rIYcSeIciRn6nfu1y9PJiyV7i534CMVRVuG3+tF/vFg
-         Y9vvhWRpZtsoCb/bQlTU1a+VDCAF43hsRU8bPPIY1EGZ6Njfmg3h0tT7oK2MfJgupb3f
-         1v6lkFDTi4W0aS463iUYfnpre4lGKjDa/L3y48FN9H2HvyGEWCa+bz0cTzM2D8YbKzoq
-         HCiLRGP965jPqn/dBhoYSnVmTdkBEPn0TMugmDH851wGlYc/HU/TGfZUTwH7Ps7PRIck
-         4G1/9a7c1SjDm9qxpY45Qd1J6Sv2T0pxM8OTQpyR+0rQ1RP+PQ/wywy5b3ceerWhpWiN
-         pRCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=dvNYfTkc3WahK74tmDYeHhRgDLbZM9/gh3JRcJBrcEk=;
-        b=tvcS/o25ZxZlE+QskNQER/08dNYSb3hT33LGOFQF4bWQIo2FmH013mbi+YcBwaYVcy
-         caaV0VF4PNCW6/LApknN2tfb7coPw247a5TO5Wyp1uDsVytfqj2ruUK4uIkzrotq2xxv
-         tWweIiEhMf71S/0xdWbwETNejrzueZGvQeXr3ru68Cpl9BvlwxAjrZ90xqA8luVD6zSl
-         OWzlRqXfg4rtTWQtT0opzJ5frMlXdydSDMjbhdvCYDxiyEon9P/ZTcFbU3t/QedfB1MZ
-         0oRgHkP8Yyz/Z5Wcfv50AF2TkDJxKA8nid/NmnnBXy37OyQotdS166zSpn5Nefc587RL
-         rBxQ==
-X-Gm-Message-State: AIkVDXIPt5ro2ejIMCYanoiRIajnvz02dSXk7GofHwfHVj/6TWjYmETqDw7NuHFyXFmQNv7uptR5GQMxWOa2PA==
-X-Received: by 10.36.146.134 with SMTP id l128mr3071929itd.11.1482279497359;
- Tue, 20 Dec 2016 16:18:17 -0800 (PST)
+        id S1756801AbcLUDWZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Dec 2016 22:22:25 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59234 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753083AbcLUDWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2016 22:22:25 -0500
+Received: (qmail 16857 invoked by uid 109); 21 Dec 2016 03:22:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Dec 2016 03:22:24 +0000
+Received: (qmail 8823 invoked by uid 111); 21 Dec 2016 03:23:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Dec 2016 22:23:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Dec 2016 22:22:21 -0500
+Date:   Tue, 20 Dec 2016 22:22:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Allow "git shortlog" to group by committer information
+Message-ID: <20161221032221.s7jmgnfrr6tyuyuk@sigill.intra.peff.net>
+References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
+ <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+ <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
+ <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net>
+ <16b115e0-3a7e-a5c2-1526-44bbcfc97db8@kdbg.org>
+ <xmqq60melazp.fsf@gitster.mtv.corp.google.com>
+ <xmqq1sx2lara.fsf@gitster.mtv.corp.google.com>
+ <xmqqvauejvnr.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.6.163 with HTTP; Tue, 20 Dec 2016 16:18:16 -0800 (PST)
-From:   Norbert Kiesel <nkiesel@gmail.com>
-Date:   Tue, 20 Dec 2016 16:18:16 -0800
-Message-ID: <CAM+g_NtsSaiZdy2Pq0gR9AaO6xiNnGSUbj5yd-uW3S80roEGCg@mail.gmail.com>
-Subject: config for `format-patch --notes`?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqvauejvnr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Dec 20, 2016 at 10:35:36AM -0800, Junio C Hamano wrote:
 
-I use `git format-patch master..myBranch` quite a bit to send patches
-to other developers.  I also add notes to the commits
-so that I e.g. remember which patches were emailed to whom.  `git log`
-has an option to automatically include the notes in
-the output.  However, I can't find such an option for `git
-format-patch`.  Am I missing something?
+> -- >8 --
+> Subject: SQUASH???
+> 
+> Make sure the test does not depend on the result of the previous
+> tests; with MINGW prerequisite satisfied, a "reset to original and
+> rebuild" in an earlier test was skipped, resulting in different
+> history being tested with this and the next tests.
 
-Another nice option would to to somehow include the branch name in the
-resulting output.  Right now I use either notes
-or abuse the `--subject` option for this.
+Yeah, this looks good, and obviously correct.
 
-</nk>
+I do wonder if in general it should be the responsibility of skippable
+tests to make sure we end up with the same state whether they are run or
+not. That might manage the complexity more. But I certainly don't mind
+tests being defensive like you have here.
 
-P.S.: Today I'm sad and proud to say "Ich bin ein Berliner!" --nk
+-Peff
