@@ -6,91 +6,97 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BC1C1FF40
-	for <e@80x24.org>; Wed, 21 Dec 2016 20:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1D7E1FF6D
+	for <e@80x24.org>; Wed, 21 Dec 2016 21:08:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755101AbcLUU7b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 15:59:31 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64229 "EHLO
+        id S1756173AbcLUVIZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 16:08:25 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58520 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752922AbcLUU7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 15:59:30 -0500
+        with ESMTP id S1755986AbcLUVIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 16:08:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC3CF59458;
-        Wed, 21 Dec 2016 15:59:29 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6C5E587CA;
+        Wed, 21 Dec 2016 16:08:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cP5FUE80iZlp8azAlhrGbI9DZsA=; b=F/LZr8
-        w9vONq4QIpG4oQfqrpGZ6ANZ2ck/KEyhdQwbey387xwvDiFjHpQTz2TPgtFtkfhc
-        dU4iMouIoe0L7pUXTgceKkbDuKyuea4UtKEuhpOUqYiznlxXC21V2Ywjl0cKfQYC
-        qYL07Vw7ZCkcBB3UyfZKh7nZhp9ShvKiZY+Jk=
+        :content-type; s=sasl; bh=ZLq1uBvvRTvrB7AIkD62IqHi+b4=; b=HNHkjs
+        eiiqk3FI5G4cV8A6NnI6DtuH2Xub60GUWTlfLD3Ike2e5At+yW9iHdgAcjiKE77k
+        8mrEiWkwf567F3RXkBbO83ua7VgWNnq3Ho7BJfuxhMJcEAuVFHKqaPkUNSGoS+M0
+        l5ApyrVkyTS9tkYVh8fWby1pcVQhCgyIq6QJQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wZFKfRTBN8bbEPTVwYfmAswFMQBJnDbK
-        yD9F9G15DDjemQ+bvQoKvfg3K8LvECz3ht1ZSOjMPTBw+d11tTO0zkmCq/8W+qGL
-        Dq2Ppqt70ZokwaGxO79EeW2IpTyO3FVGGfNcAbUtdcEasFFz32Vn4jfyrWw2sBXC
-        +gVZpXFWSVI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0D6F59457;
-        Wed, 21 Dec 2016 15:59:29 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=pwNiIA2zw81/+CY8wELlf/1j5gjm5Ed7
+        aTWYpQqZRL/aUWB6RwZrYtDSjNbw0A/QPqZlw5bl73Xvnx6FF8cvV+UqYaG3opvl
+        hS6VY3m0MLH1cTIpyqyxsmq6AYRsfMyxBIZgc62j8m0jKSt0bzymFC8Ui5Opozyy
+        A/6OWMCS+MM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC92A587C6;
+        Wed, 21 Dec 2016 16:08:22 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CE0959456;
-        Wed, 21 Dec 2016 15:59:29 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 52160587C4;
+        Wed, 21 Dec 2016 16:08:22 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kai Zhang <kai@netskope.com>
+To:     Andreas Krey <a.krey@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: Bug report: Git pull hang occasionally
-References: <9B7DCFB3-73A4-40DE-8FC6-867C5016EF95@netskope.com>
-Date:   Wed, 21 Dec 2016 12:59:27 -0800
-In-Reply-To: <9B7DCFB3-73A4-40DE-8FC6-867C5016EF95@netskope.com> (Kai Zhang's
-        message of "Wed, 21 Dec 2016 11:47:56 -0800")
-Message-ID: <xmqq8tr9huc0.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Races on ref .lock files?
+References: <20161216164751.GA12174@inner.h.apk.li>
+        <xmqqpokru6yg.fsf@gitster.mtv.corp.google.com>
+        <20161221100033.GB1206@inner.h.apk.li>
+Date:   Wed, 21 Dec 2016 13:08:21 -0800
+In-Reply-To: <20161221100033.GB1206@inner.h.apk.li> (Andreas Krey's message of
+        "Wed, 21 Dec 2016 11:00:33 +0100")
+Message-ID: <xmqq4m1xhtx6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5D3CF3CA-C7C0-11E6-88C9-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9AF1E490-C7C1-11E6-ACB5-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kai Zhang <kai@netskope.com> writes:
+Andreas Krey <a.krey@gmx.de> writes:
 
-> 2016/12/20 20:38:10 [error] 9957#0: *687703 FastCGI sent in stderr: "fatal: 'HEAD' is a symref but it is not?" while reading response header from upstream, client: 10.1.0.11, server: server, request: "POST /git/repo_name/.git/git-upload-pack HTTP/1.1", upstream: "fastcgi://unix:/var/run/fcgiwrap.socket:", host: "server"
+> In a different instance, we have a simple bare git repo that we
+> use for backup purposes. Which means there are lots of pushes
+> going there (all to disjunct refs), and I now cared to look
+> into those logfiles:
+>
+> ----snip
+> Wed Dec 21 05:08:14 CET 2016
+> fatal: Unable to create '/data/git-backup/backup.git/packed-refs.lock': File exists.
+>
+> If no other git process is currently running, this probably means a
+> git process crashed in this repository earlier. Make sure no other git
+> process is running and remove the file manually to continue.
+> error: failed to run pack-refs
+> To git-backup-user@socrepo.advantest.com:backup.git
+>  + 8aac9ae...2df6d56 refs/zz/current -> refs/backup/socvm217/ZworkspacesZsocvm217ZjohanabtZws-release_tools.Ycurr (forced update)
+> ----snip
+>
+> I interpret this as "I updated the refs files, but packing them
+> didn't work because someone else was also packing right now."
 
-(Not a solution)
+Correct.
 
-In order to tell the client if HEAD is a symbolic ref and to what
-underlying ref it points at if it is a symbolic ref, at the very
-beginning of upload-pack, there is a call to head_ref_namespaced()
-that uses find_symref().  find_symref() gets "HEAD" and a boolean
-that says if it is a symbolic ref, but it does not get where the
-symbolic ref points at, so it does resolve_ref_unsafe() to learn
-that information.
+> Is that happening as designed, or do I need to be afraid
+> that some refs didn't make the push?
 
-Between the time head_ref_namespaced() checks the refs database and
-finds that HEAD is a symbolic ref, and the time find_symref() calls
-resolve_ref_unsafe() to find out where it leads to, if somebody else
-updates HEAD, resolve_ref_unsafe() can give an unexpected result, as
-all of these read-only operations are performed without any locking.
+Correct and No.  Packing refs into the packed-refs file is merely a
+performance thing and done under the lock (needless to say, updating
+individual refs is also done under the lock).  Your push may have
+competed with somebody else's push that started earlier and you may
+have given up packing refs, but no ill effect should be left behind.
 
-And the unexpected discrepancy is reported by find_symref() as
-fatal.  The server side dies, and somehow that fact is lost between
-the upload-pack process and the client and somebody in the middle
-(e.g. fastcgi interface or nginx webserver on the server side, or
-the remote-curl helper on the client side) keeps the "git fetch"
-process waiting.
-
-So there seem to be two issues.  
-
- - Because of the unlocked read, find_symref() can observe an
-   inconsistent state.  Perhaps it should be updated not to die but
-   to retry, expecting that transient inconsistency will go away.
-
- - A fatal error in upload-pack is not reported back to the client
-   to cause it exit is an obvious one, and even if we find a way to
-   make this fatal error in find_symref() not to trigger, fatal
-   errors in other places in the code can trigger the same symptom.
+When the lock holder (the other guy who competes with your push)
+stuffs refs into a packed-refs file, the values for the refs you
+pushed may not be in the packed-refs file, because the other guy may
+have observed and captured the value before your push updated them.
+Those refs updated by you that are missed by the other guy will be
+left as loose refs.  Because whenever Git tries to find the value
+for a ref, it always checks the loose refs first, there is no issue
+due to this.
 
