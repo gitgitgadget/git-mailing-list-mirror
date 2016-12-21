@@ -2,101 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1D7E1FF6D
-	for <e@80x24.org>; Wed, 21 Dec 2016 21:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFE311FF40
+	for <e@80x24.org>; Wed, 21 Dec 2016 21:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756173AbcLUVIZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 16:08:25 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58520 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755986AbcLUVIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 16:08:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6C5E587CA;
-        Wed, 21 Dec 2016 16:08:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZLq1uBvvRTvrB7AIkD62IqHi+b4=; b=HNHkjs
-        eiiqk3FI5G4cV8A6NnI6DtuH2Xub60GUWTlfLD3Ike2e5At+yW9iHdgAcjiKE77k
-        8mrEiWkwf567F3RXkBbO83ua7VgWNnq3Ho7BJfuxhMJcEAuVFHKqaPkUNSGoS+M0
-        l5ApyrVkyTS9tkYVh8fWby1pcVQhCgyIq6QJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pwNiIA2zw81/+CY8wELlf/1j5gjm5Ed7
-        aTWYpQqZRL/aUWB6RwZrYtDSjNbw0A/QPqZlw5bl73Xvnx6FF8cvV+UqYaG3opvl
-        hS6VY3m0MLH1cTIpyqyxsmq6AYRsfMyxBIZgc62j8m0jKSt0bzymFC8Ui5Opozyy
-        A/6OWMCS+MM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC92A587C6;
-        Wed, 21 Dec 2016 16:08:22 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 52160587C4;
-        Wed, 21 Dec 2016 16:08:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Krey <a.krey@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Races on ref .lock files?
-References: <20161216164751.GA12174@inner.h.apk.li>
-        <xmqqpokru6yg.fsf@gitster.mtv.corp.google.com>
-        <20161221100033.GB1206@inner.h.apk.li>
-Date:   Wed, 21 Dec 2016 13:08:21 -0800
-In-Reply-To: <20161221100033.GB1206@inner.h.apk.li> (Andreas Krey's message of
-        "Wed, 21 Dec 2016 11:00:33 +0100")
-Message-ID: <xmqq4m1xhtx6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1756963AbcLUVJy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 16:09:54 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:55403 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756493AbcLUVJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 16:09:52 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3tkS306fXhz5tlP;
+        Wed, 21 Dec 2016 22:09:48 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 632732222;
+        Wed, 21 Dec 2016 22:09:48 +0100 (CET)
+Subject: Re: Allow "git shortlog" to group by committer information
+To:     Junio C Hamano <gitster@pobox.com>
+References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
+ <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+ <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net>
+ <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net>
+ <16b115e0-3a7e-a5c2-1526-44bbcfc97db8@kdbg.org>
+ <xmqq60melazp.fsf@gitster.mtv.corp.google.com>
+ <xmqq1sx2lara.fsf@gitster.mtv.corp.google.com>
+ <xmqqvauejvnr.fsf@gitster.mtv.corp.google.com>
+ <d2ac90d6-c4f4-a759-a6e2-2d7fe5bb1c1d@kdbg.org>
+Cc:     Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <a74c5915-d00e-cf85-1fbe-94647586c8aa@kdbg.org>
+Date:   Wed, 21 Dec 2016 22:09:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9AF1E490-C7C1-11E6-ACB5-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <d2ac90d6-c4f4-a759-a6e2-2d7fe5bb1c1d@kdbg.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Krey <a.krey@gmx.de> writes:
-
-> In a different instance, we have a simple bare git repo that we
-> use for backup purposes. Which means there are lots of pushes
-> going there (all to disjunct refs), and I now cared to look
-> into those logfiles:
+Am 20.12.2016 um 19:52 schrieb Johannes Sixt:
+> Am 20.12.2016 um 19:35 schrieb Junio C Hamano:
+>>  test_expect_success 'shortlog --committer (internal)' '
+>> +    git checkout --orphan side &&
+>> +    git commit --allow-empty -m one &&
+>> +    git commit --allow-empty -m two &&
+>> +    GIT_COMMITTER_NAME="Sin Nombre" git commit --allow-empty -m three &&
 >
-> ----snip
-> Wed Dec 21 05:08:14 CET 2016
-> fatal: Unable to create '/data/git-backup/backup.git/packed-refs.lock': File exists.
+> Clever! Thank you. Will test in 12 hours.
 >
-> If no other git process is currently running, this probably means a
-> git process crashed in this repository earlier. Make sure no other git
-> process is running and remove the file manually to continue.
-> error: failed to run pack-refs
-> To git-backup-user@socrepo.advantest.com:backup.git
->  + 8aac9ae...2df6d56 refs/zz/current -> refs/backup/socvm217/ZworkspacesZsocvm217ZjohanabtZws-release_tools.Ycurr (forced update)
-> ----snip
+>> +
+>>      cat >expect <<-\EOF &&
+>> -         3    C O Mitter
+>> +         2    C O Mitter
+>> +         1    Sin Nombre
+>>      EOF
+>>      git shortlog -nsc HEAD >actual &&
+>>      test_cmp expect actual
+>>
 >
-> I interpret this as "I updated the refs files, but packing them
-> didn't work because someone else was also packing right now."
 
-Correct.
+I confirm that t4201 now passes on Windows with this fixup.
 
-> Is that happening as designed, or do I need to be afraid
-> that some refs didn't make the push?
-
-Correct and No.  Packing refs into the packed-refs file is merely a
-performance thing and done under the lock (needless to say, updating
-individual refs is also done under the lock).  Your push may have
-competed with somebody else's push that started earlier and you may
-have given up packing refs, but no ill effect should be left behind.
-
-When the lock holder (the other guy who competes with your push)
-stuffs refs into a packed-refs file, the values for the refs you
-pushed may not be in the packed-refs file, because the other guy may
-have observed and captured the value before your push updated them.
-Those refs updated by you that are missed by the other guy will be
-left as loose refs.  Because whenever Git tries to find the value
-for a ref, it always checks the loose refs first, there is no issue
-due to this.
+-- Hannes
 
