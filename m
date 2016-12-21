@@ -2,65 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55E221FF40
-	for <e@80x24.org>; Wed, 21 Dec 2016 22:45:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A33FA1FF40
+	for <e@80x24.org>; Wed, 21 Dec 2016 23:13:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762057AbcLUWnx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 17:43:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59472 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1762029AbcLUWm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 17:42:26 -0500
-Received: (qmail 32187 invoked by uid 109); 21 Dec 2016 22:42:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Dec 2016 22:42:26 +0000
-Received: (qmail 14655 invoked by uid 111); 21 Dec 2016 22:43:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Dec 2016 17:43:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Dec 2016 17:42:22 -0500
-Date:   Wed, 21 Dec 2016 17:42:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Klaus Ethgen <Klaus@Ethgen.ch>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/2] t5615-alternate-env: double-quotes in file names do
- not work on Windows
-Message-ID: <20161221224222.6fn6irefmd6li6oa@sigill.intra.peff.net>
-References: <20161212194929.bdcihf7orjabzb2h@sigill.intra.peff.net>
- <20161212195355.znqlu44lgnke3ltc@sigill.intra.peff.net>
- <d9d2580c-a2e5-d9f3-1f56-6814b2b2285d@kdbg.org>
- <00b6235d-c1bc-30c2-6539-6c78c4ce9eb0@kdbg.org>
+        id S1757141AbcLUXNL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 18:13:11 -0500
+Received: from fed1rmfepo103.cox.net ([68.230.241.145]:41463 "EHLO
+        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756261AbcLUXMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 18:12:31 -0500
+Received: from fed1rmimpo109.cox.net ([68.230.241.158])
+          by fed1rmfepo103.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20161221231230.BQBY4150.fed1rmfepo103.cox.net@fed1rmimpo109.cox.net>
+          for <git@vger.kernel.org>; Wed, 21 Dec 2016 18:12:30 -0500
+Received: from thunderbird.smith.home ([68.231.74.134])
+        by fed1rmimpo109.cox.net with cox
+        id NnCV1u00M2tqoqC01nCWqk; Wed, 21 Dec 2016 18:12:30 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090203.585B0C5E.0055,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.1 cv=eMuz9Cd1 c=1 sm=1 tr=0
+ a=/Rt4pg3TtX3KzfzhvVoEow==:117 a=/Rt4pg3TtX3KzfzhvVoEow==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=n5n_aSjo0skA:10 a=I5mMoxeXPAKNBeLdcd0A:9 a=CjuIK1q_8ugA:10
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 68BF891D4C
+        for <git@vger.kernel.org>; Wed, 21 Dec 2016 16:12:29 -0700 (MST)
+From:   Stephen & Linda Smith <ischis2@cox.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: References to old messages
+Date:   Wed, 21 Dec 2016 16:12:27 -0700
+Message-ID: <2284357.IWoC4bU66L@thunderbird>
+User-Agent: KMail/5.2.3 (Linux/4.8.0-32-generic; KDE/5.26.0; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <00b6235d-c1bc-30c2-6539-6c78c4ce9eb0@kdbg.org>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 21, 2016 at 10:33:43PM +0100, Johannes Sixt wrote:
+I want to pick up work  on a patch that I was working on previously.  
 
-> Protect a recently added test case with !MINGW.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  I don't remember why I did not notice this failure sooner.
->  Perhaps I did, but then ran out of time to debug it...
-> 
->  The patch should go on top of jk/quote-env-path-list-component.
-> [...]
-> -test_expect_success 'broken quoting falls back to interpreting raw' '
-> +test_expect_success !MINGW 'broken quoting falls back to interpreting raw' '
->  	mv one.git \"one.git &&
->  	check_obj \"one.git/objects <<-EOF
->  	$one blob
+I had been told to reference (i.e. footnote) a gmane URL.  With that service 
+no longer being being online, what is the preferred method footnoting?
 
-Hmph. I explicitly avoided a colon in the filename so that it would run
-on MINGW. Is a double-quote also not allowed?
-
--Peff
+sps
