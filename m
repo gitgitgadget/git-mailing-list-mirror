@@ -2,143 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 988C81FF76
-	for <e@80x24.org>; Wed, 21 Dec 2016 05:54:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDF721FF40
+	for <e@80x24.org>; Wed, 21 Dec 2016 07:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754237AbcLUFyW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 00:54:22 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36822 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751858AbcLUFyU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 00:54:20 -0500
-Received: by mail-pf0-f193.google.com with SMTP id c4so10290122pfb.3
-        for <git@vger.kernel.org>; Tue, 20 Dec 2016 21:54:20 -0800 (PST)
+        id S933912AbcLUH4H (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 02:56:07 -0500
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:34732 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933416AbcLUH4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 02:56:06 -0500
+Received: by mail-yw0-f179.google.com with SMTP id t125so95518142ywc.1
+        for <git@vger.kernel.org>; Tue, 20 Dec 2016 23:56:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:in-reply-to:subject:references:message-id
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=w+UBG0g/EZM3hAalRQ/7qATUX7X6oZRCKGoT/f31+54=;
-        b=STY9onyBfXKyy3LA8R4RIGyGBAiuV2AqNVOxzqeR07O1t+ZnApQXCPcG5qePjpxdHV
-         MfljhvDlLUKquwq6WEFXODrCEpmjuqZ3QWNQDWuNI3FyM0HszTH3eZYK1nZvkceXtdFV
-         oSuBaBQvsSv/BPYMhmzgGF0n/NyR2T8tYlwbHXcAPVIlS0QBjCBqqOdOYQOrsQ3eVvsO
-         bHwCRCtJuKEi7ty3EWUKZnwZ/31ff4y3EJekmgtlPM7e27ItP6PQ3nEStdx27SgIfHp/
-         hBOWOw5hIbr1jT8kyo/vw5ZnOWNBK9rizvHMNAfwSMY9q/J6kCm3gksgWmTxBdKWJG+B
-         udwA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tateT6TqUZD1UfKHe+p67vKCGr/2flI5a/ulGcl0+DY=;
+        b=GruhG4CSq5uai1g9SccWNj1WrJECLtWu1zIyMwvGsBgmruQeLG2NPxoZ3AvMaaaSLV
+         fabkPmeOZDboBJg3PFOyJK8tKL4/mfjHMIoK9GukN51h/CBoqoMZgRi5ZHJFzItc6yL1
+         TYwDZIXDjw8h1A+yLhxU4IJehT9WU+ryd3HotPYPxYGGpWyqoMAq1DtuBWJIMptdOt1M
+         DuBs4dKZ1Lr7qr5gZqtf5REya4Qq6FVmfIZtE+q1RnZQ2bDoU3l/IrMXHEWlU0rc8OL8
+         yvruCbabQf9Vnn9iZ1uupZe+Yt70X610p1gfqFFHD034sR40hbSdv5VnX3nHal0tStnx
+         OKYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:in-reply-to:subject:references
-         :message-id:content-transfer-encoding:mime-version:date:cc;
-        bh=w+UBG0g/EZM3hAalRQ/7qATUX7X6oZRCKGoT/f31+54=;
-        b=QYEBQ0cf8K8UI6An8uSnwd3tbiEogJCp/T5Uf6PaEhHUevlFjOWfR+CBnH6wiZgZgi
-         WqZYji06SQ0+Ge4jZVPGE1JyiAJT8Por5Xdf0Nh1YP8ng3CVewUd6DYkrBFlD9bQlhco
-         xC4hsTYmyiLCAh/0Cho+0RzPmvcH20umBRX/iEj9qcpW86pYVS+gcqFVI67kmTGIZQ2V
-         vRAtNZBPytrwB52oJPS8GQFEEnhWgOCCJ4euRIjsOUZOKxmE94Alo26N901hrEA8hJLk
-         RxL31WI1pBF+V3DOSrahA+xG/rP4luaXAQUnf0vhIDRf+YsW73nv+G3k4osbfqFEpdQU
-         6GQw==
-X-Gm-Message-State: AIkVDXJ74lq8ESZ+akPlIAfJRXFRvgJKptz2VkHfrGgfqHNVf5MSsNd+qqwFKcOjsaurtQ==
-X-Received: by 10.98.103.201 with SMTP id t70mr2580241pfj.99.1482299659849;
-        Tue, 20 Dec 2016 21:54:19 -0800 (PST)
-Received: from ?IPv6:2002:46b5:ad14::223:12ff:fe05:eebd? ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
-        by smtp.gmail.com with ESMTPSA id 29sm1817023pfo.58.2016.12.20.21.54.18
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Dec 2016 21:54:19 -0800 (PST)
-From:   "Kyle J. McKay" <mackyle@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tateT6TqUZD1UfKHe+p67vKCGr/2flI5a/ulGcl0+DY=;
+        b=eEFPsj4FjmBcOfpuOjpBBjen6iZ0/kZdb+QMViZgAReI3jpsLxHar/jNUL52S7iKNm
+         imcNdEQvqXXKloNeXCcojdAE617B7ClYVW/Fn+aOyFXkXY5+mwQBpvRCKGQwyPeFyI2Y
+         kHSrsFsy6iQmCIcvUBvJHt7xMSccyBrawwaOwn7NFaZWGKP+WbFfvHoo5Gmwf5UF3bqU
+         oqvKijlVR0PqAW48DYJrFcncYzMyt+yaTgyB5Lz/rxkVd6XebBWtLylQRvfVmelRUANZ
+         yEzCL1vSyn7MPQHpJtFjsBEcEe7w25uoVRGXwU9TQHvz0LxXik0utSNK1g7yIMEvHuEy
+         CyIw==
+X-Gm-Message-State: AIkVDXIFF6o9MgNLKWAErbsW5BVC8SE0ud/7NSHbMNMPJp30ETU7m5bWFLfM4lLND7wiVhmpQ0DzdfZ2rUh/pw==
+X-Received: by 10.13.234.19 with SMTP id t19mr3062856ywe.204.1482306966125;
+ Tue, 20 Dec 2016 23:56:06 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.37.118.87 with HTTP; Tue, 20 Dec 2016 23:55:45 -0800 (PST)
+In-Reply-To: <20161221032221.s7jmgnfrr6tyuyuk@sigill.intra.peff.net>
+References: <CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com>
+ <CA+55aFxSQ2wxU3cA+8uqS-W8mbobF35dVCZow2BcixGOOvGVFQ@mail.gmail.com>
+ <20161216133940.hu474phggdslh6ka@sigill.intra.peff.net> <20161216135141.yhas67pzfm7bxxum@sigill.intra.peff.net>
+ <16b115e0-3a7e-a5c2-1526-44bbcfc97db8@kdbg.org> <xmqq60melazp.fsf@gitster.mtv.corp.google.com>
+ <xmqq1sx2lara.fsf@gitster.mtv.corp.google.com> <xmqqvauejvnr.fsf@gitster.mtv.corp.google.com>
+ <20161221032221.s7jmgnfrr6tyuyuk@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 20 Dec 2016 23:55:45 -0800
+Message-ID: <CA+P7+xrMgzFcuqwBg6z2_ZPgAVKwLX2eyK6D4C0v-c3zAMFqUg@mail.gmail.com>
+Subject: Re: Allow "git shortlog" to group by committer information
 To:     Jeff King <peff@peff.net>
-In-Reply-To: <20161220164526.qnwnmr7cvyycmw6a@sigill.intra.peff.net>
-Subject: Re: [PATCH] mailinfo.c: move side-effects outside of assert
-References: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0> <20161219200259.nqqyvk6c72bcoaui@sigill.intra.peff.net> <A916CED6-C49D-41D8-A7EE-A5FEDA641F4A@gmail.com> <alpine.DEB.2.20.1612201511480.54750@virtualbox> <20161220164526.qnwnmr7cvyycmw6a@sigill.intra.peff.net>
-Message-Id: <222ACFD4-ED9A-4B94-8BDD-3C70648A684B@gmail.com>
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Apple Message framework v936)
-Date:   Tue, 20 Dec 2016 21:54:15 -0800
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-X-Mauler: Craptastic (2.936)
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Dec 20, 2016, at 08:45, Jeff King wrote:
-
-> On Tue, Dec 20, 2016 at 03:12:35PM +0100, Johannes Schindelin wrote:
+On Tue, Dec 20, 2016 at 7:22 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Dec 20, 2016 at 10:35:36AM -0800, Junio C Hamano wrote:
 >
->>> On Dec 19, 2016, at 09:45, Johannes Schindelin wrote:
->>>
->>>> ACK. I noticed this problem (and fixed it independently as a part  
->>>> of a
->>>> huge patch series I did not get around to submit yet) while  
->>>> trying to
->>>> get Git to build correctly with Visual C.
->>>
->>> Does this mean that Dscho and I are the only ones who add -DNDEBUG  
->>> for
->>> release builds?  Or are we just the only ones who actually run the  
->>> test
->>> suite on such builds?
+>> -- >8 --
+>> Subject: SQUASH???
 >>
->> It seems you and I are for the moment the only ones bothering with  
->> running
->> the test suite on release builds.
+>> Make sure the test does not depend on the result of the previous
+>> tests; with MINGW prerequisite satisfied, a "reset to original and
+>> rebuild" in an earlier test was skipped, resulting in different
+>> history being tested with this and the next tests.
 >
-> I wasn't aware anybody actually built with NDEBUG at all. You'd have  
-> to
-> explicitly ask for it via CFLAGS, so I assume most people don't.
+> Yeah, this looks good, and obviously correct.
+>
+> I do wonder if in general it should be the responsibility of skippable
+> tests to make sure we end up with the same state whether they are run or
+> not. That might manage the complexity more. But I certainly don't mind
+> tests being defensive like you have here.
+>
+> -Peff
 
-Not a good assumption.  You know what happens when you assume[1],  
-right? ;)
+That seems like a good idea, but I'm not sure how you would implement
+it in practice? Would we just "rely" on a skipable test having a "do
+this if we skip, instead" block? That would be easier to spot but I
+think still relies on the skip-able tests being careful?
 
-I've been defining NDEBUG whenever I make a release build for quite  
-some time (not just for Git) in order to squeeze every last possible  
-drop of performance out of it.
-
-> Certainly I never have when deploying to GitHub's cluster (let alone  
-> my
-> personal use), and I note that the Debian package also does not.
-
-Yeah, I don't do it for my personal use because those are often not  
-based on a release tag so I want to see any assertion failures that  
-might happen and they're also not performance critical either.
-
-> So from my perspective it is not so much "do not bother with release
-> builds" as "are release builds even a thing for git?"
-
-They should be if you're deploying Git in a performance critical  
-environment.
-
-> One of the
-> reasons I suggested switching the assert() to a die("BUG") is that the
-> latter cannot be disabled. We generally seem to prefer those to  
-> assert()
-> in our code-base (though there is certainly a mix). If the assertions
-> are not expensive to compute, I think it is better to keep them in for
-> all builds. I'd much rather get a report from a user that says "I hit
-> this BUG" than "git segfaulted and I have no idea where" (of course I
-> prefer a backtrace even more, but that's not always an option).
-
-Perhaps Git should provide a "verify" macro.  Works like "assert"  
-except that it doesn't go away when NDEBUG is defined.  Being Git- 
-provided it could also use Git's die function.  Then Git could do a  
-global replace of assert with verify and institute a no-assert policy.
-
-> I do notice that we set NDEBUG for nedmalloc, though if I am reading  
-> the
-> Makefile right, it is just for compiling those files. It looks like
-> there are a ton of asserts there that _are_ potentially expensive, so
-> that makes sense.
-
-So there's no way to get a non-release build of nedmalloc inside Git  
-then without hacking the Makefile?  What if you need those assertions  
-enabled?  Maybe NDEBUG shouldn't be defined by default for any files.
-
---Kyle
-
-[1] https://www.youtube.com/watch?v=KEP1acj29-Y
+Thanks,
+Jake
