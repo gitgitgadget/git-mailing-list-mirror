@@ -2,57 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A33FA1FF40
-	for <e@80x24.org>; Wed, 21 Dec 2016 23:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDC561FF40
+	for <e@80x24.org>; Wed, 21 Dec 2016 23:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757141AbcLUXNL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 18:13:11 -0500
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:41463 "EHLO
-        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756261AbcLUXMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 18:12:31 -0500
-Received: from fed1rmimpo109.cox.net ([68.230.241.158])
-          by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20161221231230.BQBY4150.fed1rmfepo103.cox.net@fed1rmimpo109.cox.net>
-          for <git@vger.kernel.org>; Wed, 21 Dec 2016 18:12:30 -0500
-Received: from thunderbird.smith.home ([68.231.74.134])
-        by fed1rmimpo109.cox.net with cox
-        id NnCV1u00M2tqoqC01nCWqk; Wed, 21 Dec 2016 18:12:30 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090203.585B0C5E.0055,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.1 cv=eMuz9Cd1 c=1 sm=1 tr=0
- a=/Rt4pg3TtX3KzfzhvVoEow==:117 a=/Rt4pg3TtX3KzfzhvVoEow==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=n5n_aSjo0skA:10 a=I5mMoxeXPAKNBeLdcd0A:9 a=CjuIK1q_8ugA:10
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 68BF891D4C
-        for <git@vger.kernel.org>; Wed, 21 Dec 2016 16:12:29 -0700 (MST)
-From:   Stephen & Linda Smith <ischis2@cox.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: References to old messages
-Date:   Wed, 21 Dec 2016 16:12:27 -0700
-Message-ID: <2284357.IWoC4bU66L@thunderbird>
-User-Agent: KMail/5.2.3 (Linux/4.8.0-32-generic; KDE/5.26.0; x86_64; ; )
+        id S1764264AbcLUXRY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 18:17:24 -0500
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:34386 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758301AbcLUXPV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 18:15:21 -0500
+Received: by mail-qk0-f182.google.com with SMTP id q68so97741795qki.1
+        for <git@vger.kernel.org>; Wed, 21 Dec 2016 15:15:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5S2UTqr3mY13Nqc6Efo7M/XoJsX7+bHyBPeuvy98kfM=;
+        b=SsmLiqdcAW+lKX9L0yE716sWO/gnHDoi0Sv6gUDGlGDA9rRqQG8Iwh1YLeoRTlaM9f
+         0bjaAO4Y+0tIswYAjjc1MgM7sIUbBNcicJhddAOBu+pMrcymMwNBUyzhAT/6W4eRUbET
+         zCcgrd4Ix1YdTAb+XEklRuuphupL7m8e7gJzuMM6bmZYXalhFYs8NzZhpcGtijzFjiLH
+         nXLni4qRDSTsmfMHcf7+HpLs+i2UJasCjDpswZW0m8WNEhNB6wotLIZ26dY8Le4HxR8F
+         pGfZdQj8w+edA6fvPoJ4mJ+JN92Ps0U4G2lOv6fXdBKeiLmrOus89ANMzlWp8a46gzSj
+         HMwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5S2UTqr3mY13Nqc6Efo7M/XoJsX7+bHyBPeuvy98kfM=;
+        b=m/ln5MteZHLExVMWjUioFyHgjb7PZv5rAJt3QSW8ZZHapA4r1fGnYxvJ8k0SH6mqvF
+         3c6IJJspuzqn1fqitZpA7JoH6+v5Teltmmw/yFco6/mgZqvLD+o0LGk7LX1mYtzkTliq
+         BDJDMT5IUIk7L4RpUVEgJZ5dzW4ZyNvQN0ipjGn2a+or0yrPnhJWV/ERPcyQLJaUUhKv
+         7d/3C/nGE2KXbC8Yvb0aafsvEyfpVrjDJitbYlDiwFC93aSfzFb8578X4K0G4sdM+VGc
+         PVAruEgzgGHgkR7DdWX8qz8fAW1GOXoJxSau6ykwIOZg5VZ3e7OgeCNkWK5xLqfwD4Hw
+         Wx4g==
+X-Gm-Message-State: AIkVDXLchcUCHb1S9UDgQQuQXCX5wnU+dAJJXK2YUS5ywAyKC0k0oI1zg4E2+r66xUkejnr5Cdse1EohDqe/a1KQ
+X-Received: by 10.55.3.19 with SMTP id 19mr7141355qkd.86.1482362120934; Wed,
+ 21 Dec 2016 15:15:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Received: by 10.12.148.45 with HTTP; Wed, 21 Dec 2016 15:15:20 -0800 (PST)
+In-Reply-To: <2284357.IWoC4bU66L@thunderbird>
+References: <2284357.IWoC4bU66L@thunderbird>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 21 Dec 2016 15:15:20 -0800
+Message-ID: <CAGZ79kbVvWbdHrVhO+Lbf1snuBFyeUggsjvMGwJW=n07dgyX+Q@mail.gmail.com>
+Subject: Re: References to old messages
+To:     "Stephen & Linda Smith" <ischis2@cox.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I want to pick up work  on a patch that I was working on previously.  
+On Wed, Dec 21, 2016 at 3:12 PM, Stephen & Linda Smith <ischis2@cox.net> wrote:
+> I want to pick up work  on a patch that I was working on previously.
+>
+> I had been told to reference (i.e. footnote) a gmane URL.  With that service
+> no longer being being online, what is the preferred method footnoting?
+>
+> sps
 
-I had been told to reference (i.e. footnote) a gmane URL.  With that service 
-no longer being being online, what is the preferred method footnoting?
-
-sps
+See https://public-inbox.org/git/
