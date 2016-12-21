@@ -2,80 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F991FF40
-	for <e@80x24.org>; Wed, 21 Dec 2016 18:54:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8073B1FF40
+	for <e@80x24.org>; Wed, 21 Dec 2016 19:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755151AbcLUSyI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 13:54:08 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58453 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754398AbcLUSyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 13:54:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 40E8958F11;
-        Wed, 21 Dec 2016 13:54:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gZe1NmRjIevMXZzUd6MUxRvCS4U=; b=PEAC4h
-        tHXHUxEwav0jXOkvEh6V6CBASwDPCL0w1yrXnCHijJ24MmJTWM5psqqoqfQsrBPI
-        qSIaw2XYcfBkluv1qznMA4SXgBbZk1Dv7imGkdGUIu2nNk15HvPJW4PYGn+ecH7W
-        x5mgvMjyJUgcGkb2A6AeKZTtnejT10ZWHW8sg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QWH/po67BJYYGSizqKufbBimgZmIgflx
-        gujOfG5iGqWj4thuPNh4iiUzetr5prq8RHoJjn2BYQ+bTVyu9GcTu7OeLo/YE31k
-        qbM0+TlEM4KGc52TdmccrGGn/sUI4oAbFEIzgfl5XgfV1c0rYHjQqkxPcFVkakEy
-        XmZHmzKFVpo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 37EB858F10;
-        Wed, 21 Dec 2016 13:54:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9DFFE58F0F;
-        Wed, 21 Dec 2016 13:54:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] winansi_isatty(): fix when Git is used from CMD
-References: <cover.1481454992.git.johannes.schindelin@gmx.de>
-        <42ddc270ea04e01e899cc479063e5d602e4a4448.1481454992.git.johannes.schindelin@gmx.de>
-        <129f000c-49c1-0e75-26b3-c96e9b442443@kdbg.org>
-        <xmqqy3zfsq4q.fsf@gitster.mtv.corp.google.com>
-        <5977e71d-da58-7cb0-bc69-343bb3a1341d@kdbg.org>
-        <ffc6a7a0-4ae4-b755-0b09-5bcd7114a2e6@kdbg.org>
-        <alpine.DEB.2.20.1612201732160.54750@virtualbox>
-        <xmqqtw9yleop.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1612211857480.155951@virtualbox>
-Date:   Wed, 21 Dec 2016 10:54:04 -0800
-In-Reply-To: <alpine.DEB.2.20.1612211857480.155951@virtualbox> (Johannes
-        Schindelin's message of "Wed, 21 Dec 2016 18:59:42 +0100 (CET)")
-Message-ID: <xmqqlgv9i04z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1757084AbcLUTHV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 14:07:21 -0500
+Received: from smtp98.iad3a.emailsrvr.com ([173.203.187.98]:56582 "EHLO
+        smtp98.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756543AbcLUTHU (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Dec 2016 14:07:20 -0500
+Received: from smtp37.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp37.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id B459D59FA;
+        Wed, 21 Dec 2016 14:07:19 -0500 (EST)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp37.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 90C5559C7;
+        Wed, 21 Dec 2016 14:07:19 -0500 (EST)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Wed, 21 Dec 2016 14:07:19 -0500
+Subject: Re: [PATCH 00/13] gitk: tweak rendering of remote-tracking references
+To:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Paul Mackerras <paulus@samba.org>
+References: <cover.1482164633.git.mhagger@alum.mit.edu>
+ <97d97bc6-54f1-2ef2-fe04-7e7f144d7e51@xiplink.com>
+ <046b088c-afd5-66b9-fe3c-255e42a7d768@alum.mit.edu>
+Cc:     git@vger.kernel.org
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <bfbd5992-da30-b1f0-59e5-a2f36d2e3062@xiplink.com>
+Date:   Wed, 21 Dec 2016 14:07:19 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D8C8AD16-C7AE-11E6-BAC3-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <046b088c-afd5-66b9-fe3c-255e42a7d768@alum.mit.edu>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2016-12-20 07:05 PM, Michael Haggerty wrote:
+> On 12/20/2016 04:01 PM, Marc Branchaud wrote:
+>> On 2016-12-19 11:44 AM, Michael Haggerty wrote:
+>>> This patch series changes a bunch of details about how remote-tracking
+>>> references are rendered in the commit list of gitk:
+>>
+>> Thanks for this!  I like the new, compact look very much!
+>>
+>> That said, I remember when I was a new git user and I leaned heavily on
+>> gitk to understand how references worked.  It was particularly
+>> illuminating to see the remote references distinctly labeled, and the
+>> fact that they were "remotes/origin/foo" gave me an Aha! moment where I
+>> came to understand that the refs hierarchy is more flexible than just
+>> the conventions coded into git itself.  I eventually felt free to create
+>> my own, private ref hierarchies.
+>>
+>> I am in no way opposed to this series.  I just wanted to point out that
+>> there was some utility in those labels.  It makes me think that it might
+>> be worthwhile for gitk to have a "raw-refs" mode, that shows the full
+>> "refs/foo/bar/baz" paths of all the heads, tags, and whatever else.  It
+>> could be a useful teaching tool for git.
+>
+> Yes, I understand that the longer names might be useful for beginners,
+> and the full names even more so. However, I think once a user has that
+> "aha!" moment, the space wasted on all the redundant words is a real
+> impediment to gitk's usability. It is common to have a few references on
+> a single commit (especially if you pull from multiple remotes), in which
+> case the summary line is completely invisible (and therefore its context
+> menu is unreachable). I don't like the idea of dumbing down the UI
+> permanently based on what users need at the very beginning of their Git
+> usage.
 
-> I prepared a patch series based on `pu`, on top of Hannes' patch, and I
-> also prepared a branch that is based on `master`, obviously without
-> Hannes' patch.
+I agree.
 
-I think the latter is what you have at
+> Would it be possible to use the short names in the UI but to add the
+> full names to a tooltip or to the context menu?
 
- $ git fetch https://github.com/dscho/git mingw-isatty-fixup-master
+I don't know -- my Tk-fu is weak.
 
-If that is correct, I am inclined to fetch that and queue it on
-'pu', replacing Hannes's patch, and then to ask him to Test/Ack it.
+>>> * Omit the "remote/" prefix on normal remote-tracking references. They
+>>
+>> If you re-roll, s:remote/:remotes/:.
+>
+> Thanks.
+>
+>>>   are already distinguished via their two-tone rendering and (usually)
+>>>   longer names, and this change saves a lot of visual clutter and
+>>>   horizontal space.
+>>>
+>>> * Render remote-tracking references that have more than the usual
+>>>   three slashes like
+>>>
+>>>       origin/foo/bar
+>>>       ^^^^^^^
+>>>
+>>>   rather than
+>>>
+>>>       origin/foo/bar (formerly remotes/origin/foo/bar)
+>>>       ^^^^^^^^^^^              ^^^^^^^^^^^^^^^^^^^
+>>>
+>>>   , where the indicated part is the prefix that is rendered in a
+>>>   different color. Usually, such a reference represents a remote
+>>>   branch that contains a slash in its name, so the new split more
+>>>   accurately portrays the separation between remote name and remote
+>>>   branch name.
+>>
+>> *Love* this change!  :)
+>>
+>>> * Introduce a separate constant to specify the background color used
+>>>   for the branch name part of remote-tracking references, to allow it
+>>>   to differ from the color used for local branches (which by default
+>>>   is bright green).
+>>>
+>>> * Change the default background colors for remote-tracking branches to
+>>>   light brown and brown (formerly they were pale orange and bright
+>>>   green).
+>>
+>> Please don't change the remotebgcolor default.
+>>
+>> Also, perhaps the default remoterefbgcolor should be
+>>     set remoterefbgcolor $headbgcolor
+>> ?
+>>
+>> I say this because when I applied the series, without the last patch, I
+>> was miffed that the remote/ref colour had changed.
+>
+> This is a one-time inconvenience that gitk developers will experience. I
+> doubt that users jump backwards and forwards in gitk versions very often.
 
-Thanks.
+In what way do you mean it's restricted to gitk developers?
+
+Patch 12 introduces remoterefbgcolor, with a specific default value. 
+Prior to that, the "ref part" of remote refs was rendered with 
+headbgcolor.  Users who changed their headbgcolor are used to seeing the 
+"ref part" of remote refs in the same color as their local heads. 
+Applying patch 12 changes the "ref part" color of remote refs, for such 
+users.
+
+All I'm saying is that make the remoterefbgcolor default be $headbgcolor 
+avoids this.
+
+But, honestly, I don't feel strongly about it.
+
+		M.
+
