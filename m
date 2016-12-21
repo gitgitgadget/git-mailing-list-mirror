@@ -6,102 +6,140 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DFE61FF40
-	for <e@80x24.org>; Wed, 21 Dec 2016 18:11:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 718051FF6D
+	for <e@80x24.org>; Wed, 21 Dec 2016 18:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755764AbcLUSK6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 13:10:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64574 "EHLO
+        id S1756940AbcLUSp0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 13:45:26 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59188 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752790AbcLUSK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 13:10:57 -0500
+        with ESMTP id S1755809AbcLUSpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 13:45:25 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FA345856D;
-        Wed, 21 Dec 2016 13:10:56 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EFB858B8D;
+        Wed, 21 Dec 2016 13:45:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=bBnfZKeK/uOg
-        ikzOa/5lnG6qpKY=; b=mIG+7DeZP2YqbzaGpMawlvbp/NLZfnUhqOtVtaF7e3Gb
-        +0ZmazXKGQktgZTUMrCyFhH0/mWMq0uBYCzEizHy+GBjOHk3jXYmOvuQUacWCCdr
-        FU9TzdTi6u6qGgcHT2FsjjX0KMoilbL8I8jFxPEqOEz7ti3960KMfjc8ui21Vkg=
+        :content-type; s=sasl; bh=4PNy59xfUo4hoJiHyeMZp/4w54Q=; b=goT3r4
+        +zX4VS2ZMyFEG7ayCfjrui5aGHVOcjimLjWlTv/5r6T3G3mRogTnBkdKUeYssLLL
+        9u4xcNoNZffgm+XnrnDHOme3edwbM5ArcRA5CgnS1TJJCenikHXoKR9JSPqqbSsk
+        LkVCWYtWevxcpET3UHXyVX7fJiEtDZhGbLVeI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nPHucz
-        TF1CqZVxCEOGTQrX9mCCoNIuIhuw9BfMiFRf5e3x9GW1ieVmGWKcxOObbS8Nxd9O
-        VfS0EYWrBEplAhUKB8Gjj8C6EjpSmF+i7RCd4DpxjVdxKdiFX8JuZdAjNUkQAjnq
-        7rphlspxXtC4QVofDDqv2c3P+3we1K0RO1uUY=
+        :content-type; q=dns; s=sasl; b=PrhUPIn766HfWLDuIoZJ4+0RS8/vwvBr
+        zhhG/frG9qOx4MnowrTbBO6gYZail1cL+rlEO1eDOCQmCk1hKHD20Vq716XoayHm
+        oRi4B23ZWvbG4yus2fGHwMzWcJo736Uy4oX1JUnjeyKsq0tEkllZydGYfW3vYJ2M
+        NguGPank8dw=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96FF75856C;
-        Wed, 21 Dec 2016 13:10:56 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 66B9058B8C;
+        Wed, 21 Dec 2016 13:45:24 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 12A4D5856B;
-        Wed, 21 Dec 2016 13:10:56 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CA25858B8B;
+        Wed, 21 Dec 2016 13:45:23 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] string-list: make compare function compatible with qsort(3)
-References: <c7bac0b7-c555-162f-7880-0355831cee48@web.de>
-Date:   Wed, 21 Dec 2016 10:10:54 -0800
-In-Reply-To: <c7bac0b7-c555-162f-7880-0355831cee48@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Wed, 21 Dec 2016 10:36:41 +0100")
-Message-ID: <xmqqy3z9i24x.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/2] mingw: replace isatty() hack
+References: <cover.1482342791.git.johannes.schindelin@gmx.de>
+        <18174f0a7fbb4a0ccd8ca8380e00161826166a32.1482342791.git.johannes.schindelin@gmx.de>
+Date:   Wed, 21 Dec 2016 10:45:22 -0800
+In-Reply-To: <18174f0a7fbb4a0ccd8ca8380e00161826166a32.1482342791.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Wed, 21 Dec 2016 18:53:43 +0100
+        (CET)")
+Message-ID: <xmqqpokli0jh.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D1477B04-C7A8-11E6-9161-B2917B1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A1CA5126-C7AD-11E6-B250-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> The cmp member of struct string_list points to a comparison function
-> that is used for sorting and searching of list items.  It takes two
-> string pointers -- like strcmp(3), which is in fact the default;
-> cmp_items() provides a qsort(3) compatible interface by passing the
-> string members of two struct string_list_item pointers to cmp.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> One shortcoming is that the comparison function is restricted to workin=
-g
-> with the string members of items; util is inaccessible to it.  Another
-> one is that the value of cmp is passed in a global variable to
-> cmp_items(), making string_list_sort() non-reentrant.
+> For over a year, Git for Windows has carried a patch that detects the
+> MSYS2 pseudo ttys used by Git for Windows' default Git Bash (i.e. a
+> terminal that is not backed by a Win32 Console).
+>
+> This patch accesses internals that of a previous MSVC runtime that is no
+> longer valid in newer versions, therefore we needed a replacement for
+> that hack in order to be able to compile Git using recent Microsoft
+> Visual C++.
 
-I think it is insane to make util accessible to the comparison
-function in the first place.
+Sorry, but I cannot parse the early part of the first sentence of
+the second paragraph before the comma; I am especially having
+trouble around the first "that".
 
-A string-list is primarily a table of strings that can be used to
-quickly look up a string in it (or detect absense of it), and
-optionally set and get the data associated to that string.  If you
-allow the comparison function to take anything other than the string
-itself into account, you can no longer binary search unless you
-force callers to specify what to put in util when a string is added
-to the table, and you also remove the ability to modify util once a
-string is added to the table.
+> This patch back-ports that patch and makes even the MINGW (i.e.
+> GCC-compiled) Git use it.
+>
+> As a side effect (which was the reason for the back-port), this patch
+> also fixes the previous misguided attempt to intercept isatty() so that
+> it handles character devices (such as /dev/null) as Git expects it.
 
-The string-list API exposes the "append without sorting and then
-sort before starting to look up efficiently with a binary search",
-and I think that is its biggest misdesign.  Such an optimization
-would have been hidden from callers in a correctly designed API by
-making sure sorting happens lazily when a function that wants to see
-a sorted nature of the list for the first time, but somehow we ended
-up with an API with separate functions _insert() and _append() with
-an explicit _sort().  It then leads to unsorted_*_lookup() and
-similar mess, that imply that a string-list can be used not as a
-look-up table but just an unordered bag of items.  In our attempt to
-make it serve as these two quite different things, it has become
-good API for neither of its two uses.  The caller is forced to know
-when the list is not sorted and unsorted_* variant must be used, for
-example.  "Perhaps it makes it even more flexible if we made util
-available to ordering decision" is a line of thinking that makes it
-even worse.
+I had to read the above three times to understand which patches
+three instances of "This patch" and one instance of "that patch"
+refer to.  I wish it were easier to read, but I think I got them all
+right [*1*] after re-reading, and the story made sense to me.
 
-I do agree that non-reentrancy is an issue that is worth solving,
-though.
+> +static int fd_is_interactive[3] = { 0, 0, 0 };
+> +#define FD_CONSOLE 0x1
+> +#define FD_SWAPPED 0x2
+> +#define FD_MSYS    0x4
+>  
+>  /*
+>   ANSI codes used by git: m, K
+> @@ -105,6 +108,9 @@ static int is_console(int fd)
+>  	} else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
+>  		return 0;
+>  
+> +	if (fd >=0 && fd <= 2)
+
+Style: if (fd >= 0 && fd <= 2)
+
+> +/* Wrapper for isatty().  Most calls in the main git code
+
+Style: /*
+	* multi-line comment block begins with slash-asterisk
+        * and ends with asterisk-slash without anything else on
+	* the line.
+	*/
+
+> + * call isatty(1 or 2) to see if the instance is interactive
+> + * and should: be colored, show progress, paginate output.
+> + * We lie and give results for what the descriptor WAS at
+> + * startup (and ignore any pipe redirection we internally
+> + * do).
+> + */
+> +#undef isatty
+>  int winansi_isatty(int fd)
+>  {
+> +	if (fd >=0 && fd <= 2)
+
+Style: if (fd >= 0 && fd <= 2)
+
+> +		return fd_is_interactive[fd] != 0;
+> +	return isatty(fd);
+>  }
+
+Thanks.
+
+
+[Footnote]
+
+*1* What I thought I understood in my own words:
+
+    Git for Windows has carried a patch that depended on internals
+    of MSVC runtime, but it does not work correctly with recent MSVC
+    runtime.  A replacement was written originally for compiling
+    with VC++.  The patch in this message is a backport of that
+    replacement, and it also fixes the previous attempt to make
+    isatty() work.
 
