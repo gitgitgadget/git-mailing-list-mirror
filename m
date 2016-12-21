@@ -2,153 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8073B1FF40
-	for <e@80x24.org>; Wed, 21 Dec 2016 19:07:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D66041FF40
+	for <e@80x24.org>; Wed, 21 Dec 2016 19:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757084AbcLUTHV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 14:07:21 -0500
-Received: from smtp98.iad3a.emailsrvr.com ([173.203.187.98]:56582 "EHLO
-        smtp98.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756543AbcLUTHU (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 21 Dec 2016 14:07:20 -0500
-Received: from smtp37.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp37.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id B459D59FA;
-        Wed, 21 Dec 2016 14:07:19 -0500 (EST)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp37.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 90C5559C7;
-        Wed, 21 Dec 2016 14:07:19 -0500 (EST)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Wed, 21 Dec 2016 14:07:19 -0500
-Subject: Re: [PATCH 00/13] gitk: tweak rendering of remote-tracking references
-To:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Paul Mackerras <paulus@samba.org>
-References: <cover.1482164633.git.mhagger@alum.mit.edu>
- <97d97bc6-54f1-2ef2-fe04-7e7f144d7e51@xiplink.com>
- <046b088c-afd5-66b9-fe3c-255e42a7d768@alum.mit.edu>
-Cc:     git@vger.kernel.org
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <bfbd5992-da30-b1f0-59e5-a2f36d2e3062@xiplink.com>
-Date:   Wed, 21 Dec 2016 14:07:19 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
-MIME-Version: 1.0
-In-Reply-To: <046b088c-afd5-66b9-fe3c-255e42a7d768@alum.mit.edu>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+        id S1758952AbcLUTsQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 14:48:16 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:34290 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758880AbcLUTsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 14:48:15 -0500
+Received: by mail-pg0-f44.google.com with SMTP id y62so36477683pgy.1
+        for <git@vger.kernel.org>; Wed, 21 Dec 2016 11:47:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=netskope.com; s=google;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=v1SPtcnfe+Ic8eLts+VtYGnt4VZQulLXplUuUvv8YK8=;
+        b=GpbBqSFMibXiEFr+Q5yXPH4COLQ5zlrM1HB2A14F8S2lHBqgy6zTkiJWObKNCMCiKw
+         myaqWHcOIqwPmkw/gvJ9uhw5rkTojFNgCSW+v7XNWLWDCqhm3BiYj/iQDP0VlrC/ia9x
+         Ig4WhdFl1uQPGLtan6HcvkfTp9UsVaOfK+EYU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=v1SPtcnfe+Ic8eLts+VtYGnt4VZQulLXplUuUvv8YK8=;
+        b=eFe6cGwHRt9GqOLO0h1h5TpnxyhequwKcWfkBxETI/uxuZBuWGr1Um7P4McefP2l7h
+         w00wIbBF/pPu/Vlph8zjFHGV6ZgE0toKCong32tYJuBcdwlrorR+/5G0bBJfFgE/rUUG
+         K9nFqGUaF+4ZGKqSTrI0rJLIM/8fSMYf4PpQwxfAUPD5Dmd9iRZvqnOrnIzIANJXTj4U
+         gUCsH9beACW6CoXcyLsMo7bn2eufiG20Oj9ydTdTw2rXuk9p/gciPEkXhZFBDSJZu4e2
+         WdRIbKtExTtA+/ti5rXqW9WN38tx2ZrsUSyp6LV4NJxOyg2nFUPV2KcJGr8LMmkJRLfq
+         OgVw==
+X-Gm-Message-State: AIkVDXJQUXq0FKzjXSYd66xvEw1a78S6B2PplnUpTjwteXymQjhKfI2D9fRkCHSJaFXGQkGq
+X-Received: by 10.84.198.129 with SMTP id p1mr12025660pld.14.1482349678478;
+        Wed, 21 Dec 2016 11:47:58 -0800 (PST)
+Received: from [192.168.65.161] (162.253.183.182.static.etheric.net. [162.253.183.182])
+        by smtp.gmail.com with ESMTPSA id y20sm48864049pfj.26.2016.12.21.11.47.57
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 21 Dec 2016 11:47:58 -0800 (PST)
+From:   Kai Zhang <kai@netskope.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Subject: Bug report: Git pull hang occasionally
+Message-Id: <9B7DCFB3-73A4-40DE-8FC6-867C5016EF95@netskope.com>
+Date:   Wed, 21 Dec 2016 11:47:56 -0800
+To:     git@vger.kernel.org
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2016-12-20 07:05 PM, Michael Haggerty wrote:
-> On 12/20/2016 04:01 PM, Marc Branchaud wrote:
->> On 2016-12-19 11:44 AM, Michael Haggerty wrote:
->>> This patch series changes a bunch of details about how remote-tracking
->>> references are rendered in the commit list of gitk:
->>
->> Thanks for this!  I like the new, compact look very much!
->>
->> That said, I remember when I was a new git user and I leaned heavily on
->> gitk to understand how references worked.  It was particularly
->> illuminating to see the remote references distinctly labeled, and the
->> fact that they were "remotes/origin/foo" gave me an Aha! moment where I
->> came to understand that the refs hierarchy is more flexible than just
->> the conventions coded into git itself.  I eventually felt free to create
->> my own, private ref hierarchies.
->>
->> I am in no way opposed to this series.  I just wanted to point out that
->> there was some utility in those labels.  It makes me think that it might
->> be worthwhile for gitk to have a "raw-refs" mode, that shows the full
->> "refs/foo/bar/baz" paths of all the heads, tags, and whatever else.  It
->> could be a useful teaching tool for git.
->
-> Yes, I understand that the longer names might be useful for beginners,
-> and the full names even more so. However, I think once a user has that
-> "aha!" moment, the space wasted on all the redundant words is a real
-> impediment to gitk's usability. It is common to have a few references on
-> a single commit (especially if you pull from multiple remotes), in which
-> case the summary line is completely invisible (and therefore its context
-> menu is unreachable). I don't like the idea of dumbing down the UI
-> permanently based on what users need at the very beginning of their Git
-> usage.
+Issue: Git pull hang occasionally, and when git pull start hanging, need =
+manually "kill -9" to stop hanging
 
-I agree.
+Environment:
+Server side:
+Git version: 2.11.0
+OS: ubuntu 12.04
+Nginx: 1.9.7.4
+fcgiwrap: 1.1.0
+Git repo: None bare, small size (less than 5 MB including .git folder), =
+small file number (less than 100 files)
 
-> Would it be possible to use the short names in the UI but to add the
-> full names to a tooltip or to the context menu?
+Nginx config for git:
 
-I don't know -- my Tk-fu is weak.
+    location ~* /git(\/.*) {
+        root /var/git;
+        fastcgi_buffers 256 8k;
+        fastcgi_param SCRIPT_FILENAME   =
+/usr/lib/git-core/git-http-backend;
+        fastcgi_param GIT_HTTP_EXPORT_ALL       true;
+        fastcgi_param GIT_PROJECT_ROOT          /var/git;
+        fastcgi_param PATH_INFO                 $1;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        include         /opt/openresty/nginx/conf/fastcgi_params;
+    }
 
->>> * Omit the "remote/" prefix on normal remote-tracking references. They
->>
->> If you re-roll, s:remote/:remotes/:.
->
-> Thanks.
->
->>>   are already distinguished via their two-tone rendering and (usually)
->>>   longer names, and this change saves a lot of visual clutter and
->>>   horizontal space.
->>>
->>> * Render remote-tracking references that have more than the usual
->>>   three slashes like
->>>
->>>       origin/foo/bar
->>>       ^^^^^^^
->>>
->>>   rather than
->>>
->>>       origin/foo/bar (formerly remotes/origin/foo/bar)
->>>       ^^^^^^^^^^^              ^^^^^^^^^^^^^^^^^^^
->>>
->>>   , where the indicated part is the prefix that is rendered in a
->>>   different color. Usually, such a reference represents a remote
->>>   branch that contains a slash in its name, so the new split more
->>>   accurately portrays the separation between remote name and remote
->>>   branch name.
->>
->> *Love* this change!  :)
->>
->>> * Introduce a separate constant to specify the background color used
->>>   for the branch name part of remote-tracking references, to allow it
->>>   to differ from the color used for local branches (which by default
->>>   is bright green).
->>>
->>> * Change the default background colors for remote-tracking branches to
->>>   light brown and brown (formerly they were pale orange and bright
->>>   green).
->>
->> Please don't change the remotebgcolor default.
->>
->> Also, perhaps the default remoterefbgcolor should be
->>     set remoterefbgcolor $headbgcolor
->> ?
->>
->> I say this because when I applied the series, without the last patch, I
->> was miffed that the remote/ref colour had changed.
->
-> This is a one-time inconvenience that gitk developers will experience. I
-> doubt that users jump backwards and forwards in gitk versions very often.
+Client side:
+Git version: 2.11.0
+OS: ubuntu 12.04
+All git operations go through http only
 
-In what way do you mean it's restricted to gitk developers?
+End to end work flow:
+Keep committing small files to non-bare git repo on server side (twice =
+per second), message will be sent to client side for every update, once =
+client receives message, do git pull
 
-Patch 12 introduces remoterefbgcolor, with a specific default value. 
-Prior to that, the "ref part" of remote refs was rendered with 
-headbgcolor.  Users who changed their headbgcolor are used to seeing the 
-"ref part" of remote refs in the same color as their local heads. 
-Applying patch 12 changes the "ref part" color of remote refs, for such 
-users.
+Hanging frequency:
+Around 4 times a day
 
-All I'm saying is that make the remoterefbgcolor default be $headbgcolor 
-avoids this.
+Hanging command stack:
+root     32640 23228  0 20:51 ?        00:00:00 git pull -v remote_name =
+master --allow-unrelated-histories
+root     32641 32640  0 20:51 ?        00:00:00 git fetch =
+--update-head-ok -v remote_name master
+root     32642 32641  0 20:51 ?        00:00:00 git-remote-http =
+remote_name http://server:80/git/repo_name/.git
+root     32651 32642  0 20:51 ?        00:00:00 git fetch-pack =
+--stateless-rpc --stdin --lock-pack --thin --no-progress =
+http://server:80/git/repo_name/.git/
 
-But, honestly, I don't feel strongly about it.
+Access log for hanging git pull:
+10.1.0.10 - - [20/Dec/2016:20:38:10 +0000] "GET =
+/git/repo_name/.git/info/refs?service=3Dgit-upload-pack HTTP/1.1" 200 =
+363 "-" "git/2.11.0" "-"
+10.1.0.10 - - [20/Dec/2016:20:38:10 +0000] "POST =
+/git/repo_name/.git/git-upload-pack HTTP/1.1" 200 5 "-" "git/2.11.0" "-"
 
-		M.
+Error log for hanging git pull:
+2016/12/20 20:38:10 [error] 9957#0: *687703 FastCGI sent in stderr: =
+"fatal: 'HEAD' is a symref but it is not?" while reading response header =
+from upstream, client: 10.1.0.11, server: server, request: "POST =
+/git/repo_name/.git/git-upload-pack HTTP/1.1", upstream: =
+"fastcgi://unix:/var/run/fcgiwrap.socket:", host: "server"
+
+
+Some observation:
+1. When hanging happen, same repository could be cloned or pulled by =
+another process on the same client.
+2. After killing hanging git pull, during retry,  same repository can be =
+sync up successfully.
+3. Git pull has been executed twice per second. But hanging only happens =
+around 4 times a day.
+4. When "fatal: 'HEAD' is a symref but it is not?" happen for POST on =
+server side, client side always start to hang. And when hanging happen =
+on client side, this log for POST always appears. But, if  "fatal: =
+'HEAD' is a symref but it is not?" happen for GET request on server =
+side, client side never hang. For example:=20
+
+2016/12/20 20:36:53 [error] 9954#0: *685174 FastCGI sent in stderr: =
+"fatal: 'HEAD' is a symref but it is not?" while reading response header =
+from upstream, client: 10.1.0.11, server: server, request: "GET =
+/git/repo_name/.git/info/refs?service=3Dgit-upload-pack HTTP/1.1", =
+upstream: "fastcgi://unix:/var/run/fcgiwrap.socket:", host: "server"
+
+will not trigger hanging on client side. And this log "fatal: 'HEAD' is =
+a symref but it is not?" is happening very rare (less than 10 times a =
+day).
+
+
+It seems a error handling issue on client side. Any help or pointer on =
+where to look will be appreciated.
+
+Regards
+Kai
+
+PS. I am not subscribed to the mailing list, please keep me in Cc
+
 
