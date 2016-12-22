@@ -2,147 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190231FF76
-	for <e@80x24.org>; Thu, 22 Dec 2016 09:49:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F5DA1FF76
+	for <e@80x24.org>; Thu, 22 Dec 2016 10:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755476AbcLVJtU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 04:49:20 -0500
-Received: from mail-it0-f54.google.com ([209.85.214.54]:35998 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750792AbcLVJtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 04:49:19 -0500
-Received: by mail-it0-f54.google.com with SMTP id 75so96732024ite.1
-        for <git@vger.kernel.org>; Thu, 22 Dec 2016 01:49:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bqAglfC+a6gjAWFoQmnpCZaFsG8OHMk+y3jwyHNaBfY=;
-        b=fD+8rXwc8GIFfGZkdotqPoKMyizAPzW9Zf9z9nbOAvCaq/W1hMS0ncUFZ/d0OYf2pV
-         VSRypQpUlP+B7bEc9PY4Wb1LKX0fHiktzDGz5GzBesMt3UnAPvHhHH+Bjdwx+K4tD+y5
-         m4YSTXv6O+HlcfcXmjxifJJinXhNEazi2a+B9n3pvsPzUTHh3ukuKMtafZpyVASmVITn
-         rgDRNA+KS00zXv4c+ZYwnSJOgEuFKCKM5qW8CHl8yd7QjWoEorUAQKT3HociGIgZptRb
-         UmEVVR4rufIpAaWebJM8IPjzRmSqfCiRPMQYTNvLZeu6Cj7b/S6JzdeHcvNBoHiLpuDe
-         wbEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bqAglfC+a6gjAWFoQmnpCZaFsG8OHMk+y3jwyHNaBfY=;
-        b=eX7N1Zh6ZoDUNPmwnB1zszqSp+LFZws+YKOI9dN8klCbKDSRNiNLsrgE93WG4cu7kB
-         jJoKZUVp3Rx6zQjRAESANuqbAi312K1+42eF7oLKI4Eev3ibJMeLWtBmX1THS+EGpmMi
-         0LqloIMPRWd4bbaDX7fmesKS03LkH8yRbUhF4DvINZ5p/xbcQF6Mjq0/87YBWCsWMlgz
-         Uyy0sM/7GaYG63J5FE+meFeAqNXmjW1nsi3PQRvPEWoUgoiuDLNWf1LHYKUfOjqgl7/q
-         o4kQSEoGtB0aWXFIU88/ktwU/EiPKMOL2ZZgYHyCwUQWjeBFq8fKnewDtgS/Ox/I5rOT
-         Zpcg==
-X-Gm-Message-State: AIkVDXIUoAi+PzH9xyv1SZP3pk++uAfwTImp7U2LP26Lxh2FS5xDQmJJZO6Eyy2IeDcZq5spgLJbZxg5knwMog==
-X-Received: by 10.36.66.76 with SMTP id i73mr9272964itb.50.1482400158591; Thu,
- 22 Dec 2016 01:49:18 -0800 (PST)
+        id S1756562AbcLVKus (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 05:50:48 -0500
+Received: from hetzner.fladi.at ([144.76.17.165]:43274 "EHLO hetzner.fladi.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752694AbcLVKuq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 05:50:46 -0500
+X-Greylist: delayed 2245 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Dec 2016 05:50:46 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=@; s=rsa1;
+         h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:Sender:Reply-To:
+        Cc:Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+        References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+        List-Owner:List-Archive; bh=15xzfMzDOuTy63MslVmNZFnio3IDJYEZTQlZ/tukZ0Q=; b=s
+        dzwpDnl3RgJlWxTeGNKjkcXTGh4D+UXe9ES7tH2Kvnt6sb5jK3PI/ulrjQykWu9GZm7cW5QikaraC
+        nauw17EG5t552f4zFI4p1M742UnuGcPBn9oXkDUFTCuzGiJ8WU;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=localhost;
+         s=rsa1; h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=15xzfMzDOuTy63MslVmNZFnio3IDJYEZTQlZ/tukZ0Q=; b=TLpkWbo8Byzc9S4/IB1o6eczzo
+        neEMKknszmXKWqr/4GDqMFerTrSaADKT54GqRMmRdpwlN9tmt7MZKSSdsymHlogaab2Jh6j8pvAz+
+        6LxmNUgD6CSFsoGmlW3IQ6Kg8;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fladi.at;
+         s=rsa1; h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=15xzfMzDOuTy63MslVmNZFnio3IDJYEZTQlZ/tukZ0Q=; b=L53dXklTZbWdpqoA1wj2pXPOuw
+        eTwZA58OA5QgwTn55MIFEvnfQ9Ywo1vd2wILyC5l/P4FmPFg51p9yDQfsq6a7qH/AL1bz7OVvwSOw
+        Z9pdI2evpFmxx9fNMwXYA36pF;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=openservices.at; s=rsa1; h=Content-Type:MIME-Version:Date:Message-ID:
+        Subject:From:To:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=15xzfMzDOuTy63MslVmNZFnio3IDJYEZTQlZ/tukZ0Q=; b=JI++6INK+EqU3ElMs+GF8qxUHf
+        QwRXdBG9GBStTlb8Mro+QLUObMN6xl+M23VApUHTDurMms2u7bBsOx50oAsM3NqslMOjTHsPgqz8I
+        C4ne7CtDA2Byt0FbkCAq5O7Ig;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=qraz.at;
+        s=rsa1; h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=15xzfMzDOuTy63MslVmNZFnio3IDJYEZTQlZ/tukZ0Q=; b=a+936ELmQf8U4jqeGhoemtaRCH
+        Cyd40Shs4JNX13WiLbGxa+POzpo364tjFjBXDepvQKBfgznAvGsiUWinfTB2Lv+oRod2tnyG/higG
+        rubXJuCt8wwpDr0/6Xc+q1zRe;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=firedata.at
+        ; s=rsa1; h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=15xzfMzDOuTy63MslVmNZFnio3IDJYEZTQlZ/tukZ0Q=; b=BGv/SwyJW0u1eNMg0Rjgf9zFlm
+        CyIxWqwqlFcF/rKqM0KDjPTM8P0ONa0JGgbNdFVekQsuA2On2ArJd/kJUY/dQXdE8btfl0NHVtbo+
+        G4Ch3vXbfiqTPzRnmgiV2vJXH;
+Received: from [2a01:4f8:191:4a4:b072:45ff:feea:6846] (port=60088)
+        by hetzner.fladi.at with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.88)
+        (envelope-from <michael@fladi.at>)
+        id 1cK0MP-0004Hs-N9
+        for git@vger.kernel.org; Thu, 22 Dec 2016 11:12:34 +0100
+To:     git@vger.kernel.org
+From:   Michael Fladischer <michael@fladi.at>
+Subject: Bug-Report: git-svn and backslash in SVN branch name
+Openpgp: id=D8812F4065320B8DCA3CEF18694CADEF51C7B5B6
+Organization: Fladi.at
+Message-ID: <cb8cd9b1-9882-64d2-435d-40d0b2b82d59@fladi.at>
+Date:   Thu, 22 Dec 2016 11:12:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Thu, 22 Dec 2016 01:48:48 -0800 (PST)
-In-Reply-To: <20161220165754.hkmnsxiwbcgn6uin@sigill.intra.peff.net>
-References: <20161220123929.15329-1-pclouds@gmail.com> <20161220165754.hkmnsxiwbcgn6uin@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 22 Dec 2016 16:48:48 +0700
-Message-ID: <CACsJy8CnS1=_vA5xhbZ94Qyh7ySC5FvaALu1vhQwt_YJya4wHA@mail.gmail.com>
-Subject: Re: [PATCH] log: support 256 colors with --graph=256colors
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="59QhWh9g7r6o0NL6u9MlWDWC1ddQ5c3Xs"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 20, 2016 at 11:57 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Dec 20, 2016 at 07:39:29PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  I got mad after tracing two consecutive red history lines in `git log
->>  --graph --oneline` back to their merge points, far far away. Yeah
->>  probably should fire up tig, or gitk or something.
->>
->>  This may sound like a good thing to add, but I don't know how good it
->>  is compared to the good old 16 color palette, yet as I haven't tried it
->>  for long since it's just written.
->
-> Hmm. At some point the colors become too close together to be easily
-> distinguishable. In your code you have:
->
->> +     if (arg && !strcmp(arg, "256colors")) {
->> +             int i, start =3D 17, stop =3D 232;
->> +             column_colors_max =3D stop - start;
->> +             column_colors =3D
->> +                     xmalloc((column_colors_max + 1) * sizeof(*column_c=
-olors));
->> +             for (i =3D start; i < stop; i++) {
->> +                     struct strbuf sb =3D STRBUF_INIT;
->> +                     strbuf_addf(&sb, "\033[38;5;%dm", i);
->> +                     column_colors[i - start] =3D strbuf_detach(&sb, NU=
-LL);
->> +             }
->> +             column_colors[column_colors_max] =3D xstrdup(GIT_COLOR_RES=
-ET);
->> +             /* ignore the closet 16 colors on either side for the next=
- line */
->> +             column_colors_step =3D 16;
->> +     }
->
-> So you step by 16, over a set of 215 colors. That seems to give only 13
-> colors, versus the original 16. :)
->
-> I know that is a simplification. If you wrap around, then you get your
-> 13 colors, and then another 13 colors that aren't _quite_ the same, and
-> so on, until you've used all 256. I'm just not sure if the 1st and 14th
-> color would be visually different enough for it to matter (I admit I
-> didn't do any experiments, though).
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--59QhWh9g7r6o0NL6u9MlWDWC1ddQ5c3Xs
+Content-Type: multipart/mixed; boundary="pX94JUFFFgHqu9g28aqBLhsu4nM4tTKMh";
+ protected-headers="v1"
+From: Michael Fladischer <michael@fladi.at>
+To: git@vger.kernel.org
+Message-ID: <cb8cd9b1-9882-64d2-435d-40d0b2b82d59@fladi.at>
+Subject: Bug-Report: git-svn and backslash in SVN branch name
 
-Yep. If the jump sequence is a random one, we're less likely to run
-into this. But I think Junio's "run git-log in 2 terminals with the
-same coloring" convinces me randomization here is not the best thing.
+--pX94JUFFFgHqu9g28aqBLhsu4nM4tTKMh
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The best solution would be select colors per text line, so we can pick
-different colors. But I think that's a lot of computation (and
-probably an NP problem too). The second best option is have a good,
-predefined color palette. We don't need a red of all shades, we need
-something that look distinct enough from the rest. I googled for this
-first and failed. But I think I could approach it a different way:
-collect colors that have names. That reduces the number of colors so
-we can go back to "step 1 at a time" and still don't run into two
-similar colors often.
+Hi,
 
->> ---graph::
->> +--graph[=3D<options>]::
->>       Draw a text-based graphical representation of the commit history
->>       on the left hand side of the output.  This may cause extra lines
->>       to be printed in between commits, in order for the graph history
->
-> I wonder if we would ever want another use for "--graph=3Dfoo"
+I'm  trying to clone a SVN repo in order to migrate it to git but i hit
+a wall with SVN branch names that contain a backslash, which seems to be
+allowed in SVN but prohibited in git refs:
 
-I do. See the screenshot in [1] from the original mail. I have to
-stare at --graph so often lately that it might get my attention before
-other things.
+r289 =3D c4cb1f0c34e741a07de9673515c853d49c5522b9
+(refs/remotes/origin/dicomBaseClass)
+Found possible branch point: file:///path.repo/trunk/dicomBaseClass =3D>
+file:///path.repo/tags/dicomBaseClass%5Cv0.1, 181
+Initializing parent: refs/remotes/origin/tags/dicomBaseClass\v0.1@181
+W: Ignoring error from SVN, path probably does not exist: (160013):
+Filesystem has no item: File not found: revision 101, path
+'/trunk/dicomBaseClass'
+W: Do not be alarmed at the above message git-svn is just searching
+aggressively for old history.
+This may take a while on large repositories
+Found possible branch point: file:///path.repo/dicomBaseClass =3D>
+file:///path.repo/trunk/dicomBaseClass, 172
+Initializing parent: refs/remotes/origin/tags/dicomBaseClass\v0.1@172
+fatal: update_ref failed for ref
+'refs/remotes/origin/tags/dicomBaseClass\v0.1@172': refusing to update
+ref with bad name
+'refs/remotes/origin/tags/dicomBaseClass\v0.1@172'
+update-ref -m r75 refs/remotes/origin/tags/dicomBaseClass\v0.1@172
+1fe0cc23e3cd56a1087562f8ca3d2e40cd2b30d4: command returned error: 128
 
-> I guess any such thing could fall under the name of "graph options", and =
-we'd
-> end up with "--graph=3D256colors,unicode" or something like that.
+The tag in case is "dicomBaseClass\v0.1@172".
 
-Exactly.
+Is there a way to mangle those names on the fly to get rid of the
+backslashes or can they be handled in any other way to be compatible
+with git?
 
-> I do suspect people would want a config option for this, though. I.e.,
-> you'd want to enable it all the time if you have a terminal which can
-> handle 256 colors, not just for a particular invocation.
-
-Yeah. That also means we need the ability to override/negate config
-options, perhaps something like --graph=3D-256colors.
+Cheers,
 --=20
-Duy
+Michael Fladischer
+Fladi.at
+
+
+--pX94JUFFFgHqu9g28aqBLhsu4nM4tTKMh--
+
+--59QhWh9g7r6o0NL6u9MlWDWC1ddQ5c3Xs
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEqVSlRXW87UkkCnJc/9PIi5l90WoFAlhbpwkACgkQ/9PIi5l9
+0WpBcQf9FxvpYfCal9w52dn5cUPHUV4bo6Y7dRf6zCYo7Kh1Q6Y7jDA8YT0c2/gP
+RzKN6faTCQBVZ4fogvxVOrBKnN819ZZh8eiFh2EF91X4lSMewnLL1OwhcEChcBHA
+4tTFRcQcSKdW0Jr59IEb2IGk233ItyAR4xMLROJ72SVTf9FW2HIq0vpNBc+iPKJ9
+Wd7n5ofipDci3L8o1aVn0FaLFf1Ea9kWFfsxc6T7bsEjKZJbmMW09AXP6MKaJ2L4
+gMd64isNygTnD4UjJ9lQFzRyK8X5JvnCt2TcjtM6nFZ7Xervkg+LoNgJJjdsx74l
+Xkww+9ANegzxSZ0Xu8nxYX65Bm8RIA==
+=z30q
+-----END PGP SIGNATURE-----
+
+--59QhWh9g7r6o0NL6u9MlWDWC1ddQ5c3Xs--
