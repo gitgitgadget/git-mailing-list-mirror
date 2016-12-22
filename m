@@ -2,95 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 646581FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 21:19:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 311F91FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 21:23:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966777AbcLVVTC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 16:19:02 -0500
-Received: from mail-ua0-f175.google.com ([209.85.217.175]:34749 "EHLO
-        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752715AbcLVVTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 16:19:00 -0500
-Received: by mail-ua0-f175.google.com with SMTP id 34so57135169uac.1
-        for <git@vger.kernel.org>; Thu, 22 Dec 2016 13:18:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=qTtWMopjK7DWlr+faTQxFCTd936djJtbBeXCcd7goRo=;
-        b=ZTVjbScm6ITuXdU/6Jyklig0kCNtc6kBZnpdmg/6gYPh0dE2UeBXsywZ0IRgUXqSE6
-         dYQnxG3n0I3m4nzigNwrepxYQOv5wyDDv77XowCMjZx7pzu+V2CtuxMs9JlnQ70ixD4S
-         5uqvrx7srqSXvNfOpCaMq8WgbnXlG1aSgtKld0al2fzMmXdEcRYvgBCJd6hndhp192ag
-         kvrrD0PSElHG1Qp/NkUFdC/THbJ5PsbPSl3VXKK4nUMb0IvwrEdpndxNaAnRgRQcUgx9
-         IUTQSvz1mWjQI6Lz7BZEkVbWMT4c8x0JrJj6r7WuvS9n8clwthi6i6SKOsqqmTjx6iwS
-         lLAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=qTtWMopjK7DWlr+faTQxFCTd936djJtbBeXCcd7goRo=;
-        b=DT72x0Wwj/CLhYjmV+AKgtwIvmMTjRMGV3IlDxp/JVXNzWY8I+ByNfhtzNymVvvRyK
-         h3d8QE4t1neCvx5KSeJLeQ1XZRNsC9S73kWx2Qz2e0065eBXYBn9YjLXqH1VM8vDI0WK
-         T3gKB2NLja6zeJyYD/pN9sojVg2zNehXl+MSO4L7INC4IQrjzleEw3eJZj/0P5asME84
-         SDocJF/LsfL5G07wdKgSTjVrFjoBIdA2P5oMG3dx4nAjAMOeBLn/em52H/u8xNpkzUNi
-         ejw9VRyOQpVTOhCV1Gmyc3zryy6Ym04Yz23LMCaxJFwACGES6fCTnp2rBKzz9B2SIMVc
-         SBSA==
-X-Gm-Message-State: AIkVDXL/8v6Ko/NX8X18SwyjiGsO6C6cNG/Sc5/8fOqtchkGA9PIK275cvNgPyfq2ZjFdbirVNFeiFGEgfx04w==
-X-Received: by 10.176.71.21 with SMTP id h21mr9123994uac.167.1482441538709;
- Thu, 22 Dec 2016 13:18:58 -0800 (PST)
+        id S938782AbcLVVXe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 16:23:34 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57904 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933582AbcLVVXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 16:23:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32A2059E4D;
+        Thu, 22 Dec 2016 16:23:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hstyRbE+7BeXMA4uE4IXo3PIZao=; b=LIqi8x
+        34xNLXtDn6olQdNcZsOmYrMzarZ29KjJJIxBr/YpUjyIe8CwLGM31dxbNko6jUqH
+        xEZ9j79X7AuOjCnPtQoBEYViLEBy4jNm9uz3nhx4p+gb5QUU0MkBkdp4O+Cd7NTv
+        3a3mKgtY0Avt2NDZvqFSJGtjsCBKKuAi/68gI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bbD5cJ/XeiYbEkbeWM0wfCPCUNfuncaW
+        HK4I36NTnVRLTptcNyP6mZaHZ1Prp/ObuzgU8psW/CQzCUgPEA2oifhaWNalO7Vw
+        qe5Cr6qJEBNgy5+J8/b9hivexX3TE2Thx0hYLDy1C31d+IhF0ipSkK3gWN6xiV1A
+        4JFpx7hM07c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A8E859E48;
+        Thu, 22 Dec 2016 16:23:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 942EC59E46;
+        Thu, 22 Dec 2016 16:23:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH v1] git-p4: fix git-p4.pathEncoding for removed files
+References: <20161218175153.92336-1-larsxschneider@gmail.com>
+        <xmqq37hjobf6.fsf@gitster.mtv.corp.google.com>
+        <CAE5ih7-=bD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoTK02EDfg@mail.gmail.com>
+Date:   Thu, 22 Dec 2016 13:23:30 -0800
+In-Reply-To: <CAE5ih7-=bD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoTK02EDfg@mail.gmail.com>
+        (Luke Diamand's message of "Tue, 20 Dec 2016 11:01:23 +0000")
+Message-ID: <xmqqeg0zfyjx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.45.11 with HTTP; Thu, 22 Dec 2016 13:18:38 -0800 (PST)
-In-Reply-To: <CAJtFkWtjowyGaFfsCVd-HAZM2-3e0=CkkyYfxne8KRdYq5kJ9g@mail.gmail.com>
-References: <CAJtFkWtjowyGaFfsCVd-HAZM2-3e0=CkkyYfxne8KRdYq5kJ9g@mail.gmail.com>
-From:   Stefan Monov <logixoul@gmail.com>
-Date:   Thu, 22 Dec 2016 23:18:38 +0200
-Message-ID: <CAJtFkWuypdH+ikdXL=-DXOx-8F+34nV3phqO2jTGoqtnM7=DZA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Making_it_possible_to_do_=E2=80=9Cgit_push_origin=E2=80=9D_i?=
-        =?UTF-8?Q?nstead_of_=E2=80=9Cgit_push_origin_=3Cbranch=3E=E2=80=9D=2C_without_having_to_?=
-        =?UTF-8?Q?one=2Dtime_prepare_each_branch_for_it?=
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: E35343C0-C88C-11E6-8188-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Also, if I do the "setup" step (`push -u`) for a branch that doesn't
-exist yet (neither on my PC nor on the server), does that remove the
-need to do `git checkout -b <branch>` first?
+Luke Diamand <luke@diamand.org> writes:
 
-On Thu, Dec 22, 2016 at 11:14 PM, Stefan Monov <logixoul@gmail.com> wrote:
-> Hi.
+> The change puts the logic into stripRepoPath() instead, which is
+> indeed called from both of those functions (good), but also from
+> splitFilesIntoBranches(), but only if self.useClientSpec is set. That
+> function only gets used if we're doing the automatic branch detection
+> logic, so it's possible that this code might now be broken and we
+> wouldn't know.
 >
-> I'd like to use just:
+> Lars, what do you think? Other than the above, the change looks good,
+> so it may all be fine.
 >
->     git push
->
-> or at most:
->
->     git push origin
->
-> rather than having to first check which is the active branch with `git
-> branch --list`, then type:
->
->     git push origin <branch>
->
-> At [1] and [2] I've seen that if I do this once:
->
->     git push -u origin <branch>
->
-> then from then on I can use just `git push` _for that branch_.
-> However, I don't want to do this "setup" step for each branch, because
-> it's extra work that I also may forget to do.
->
-> Why is this "setup" step necessary and can I avoid it?
->
-> Thanks,
-> Stefan
->
-> [1] http://stackoverflow.com/q/19312622
-> [2] http://stackoverflow.com/q/6529136
+> (As an aside, this is the heart of the code that's going to need some
+> careful rework if/when we ever move to Python3).
+
+Thanks.  
+
+I'll merge this as-is to 'next', expecting that further refinement
+can be done incrementally.
+
