@@ -2,102 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 454671FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 17:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAF831FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 17:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1765900AbcLVRdF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 12:33:05 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:36600 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760440AbcLVRdE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 12:33:04 -0500
-Received: by mail-pg0-f51.google.com with SMTP id f188so99876824pgc.3
-        for <git@vger.kernel.org>; Thu, 22 Dec 2016 09:33:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uumroQguwsR6TSURPu5EAeTvplnfmJ0MJ4VdOsxzRBA=;
-        b=uGQBm7cpDsxN5tmtpzocH/qDMezA2AU6sWfqH63i0W4DM+kEnRBhBEDxdFbaadEPhk
-         07SsO0pzBMY8Ez/+BBDz9gUgZ/CEMirMEG8DksRUZD2EaWv4Rst2Orsd9c1fCV2UuWv3
-         7NWkvqP4YdOuadYaKjCb7KlJtiNWx5MtBn1K9CINmtfmH8QdUSKJN/DyR0Rs22PyDkGO
-         fFmyT9G3cc/OVLOb9wXhDwexaWEKl8M3YlA+RiMlCl4iWiUduqdz+RkXsf4vA90x7aJQ
-         hTk6ZIIVPm7T9nn8Ftw/LIoyc8hLLhqUFku9YSlMSEuky8xhO9i6hPntHWh7R4uGOO0Y
-         Q0wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uumroQguwsR6TSURPu5EAeTvplnfmJ0MJ4VdOsxzRBA=;
-        b=T4/JOw3jhjgEHhaZz8LpwTRSdEY0K7WUyiaoeTUyIOfGux3mgQDh4tM5KrCLs9g3Do
-         18Vc8YZRNBr2DJ5aMslminoWbMpcAakqPNjnh8Jhxj3WFL2WT45mHnwTYlNQ+wAvUYvt
-         1BsLmvTsrvc5mtFK7tnErCr8EuAEXfYdT9JBOuSV8AvZ6QACUdjw79Hbyp2Sgbf4+0xV
-         13oR15RwpL5rldBAfPNCbRkmJ8oYrp8i2MaNXM5koyOz5qFKZ0oWmbdXHJcx3n6o6Fmh
-         fR11QzAjW92YtmQIg6yH2vCoSs0eAEufvxFaC55qv+H5uUJ6e2rMPGOc5ouzLTSDAito
-         imBw==
-X-Gm-Message-State: AIkVDXKmM7HKsq/68mFJN7o3ghP2IMn4TrKifaGbQTHV0O6DFjpQauCSnEMd/vyQiQ4/585L
-X-Received: by 10.84.170.195 with SMTP id j61mr21723218plb.13.1482427983700;
-        Thu, 22 Dec 2016 09:33:03 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:d088:6946:f252:36bf])
-        by smtp.gmail.com with ESMTPSA id o126sm56611790pga.34.2016.12.22.09.33.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Dec 2016 09:33:02 -0800 (PST)
-Date:   Thu, 22 Dec 2016 09:33:01 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jacob.keller@gmail.com, gitster@pobox.com,
-        ramsay@ramsayjones.plus.com, tboegi@web.de, pclouds@gmail.com
-Subject: Re: [PATCH bw/realpath-wo-chdir] real_path: canonicalize directory
- separators in root parts
-Message-ID: <20161222173301.GB119874@google.com>
-References: <1481241494-6861-1-git-send-email-bmwill@google.com>
- <1481566615-75299-1-git-send-email-bmwill@google.com>
- <097e3e2e-f46d-b0aa-be9c-68c274c5e3dc@kdbg.org>
- <20161221223304.GA119874@google.com>
- <0c9aa347-d64e-b7d7-9b07-52d844d76252@kdbg.org>
+        id S941767AbcLVRtl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 12:49:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59484 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S941110AbcLVRtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 12:49:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3391E59090;
+        Thu, 22 Dec 2016 12:49:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rWrA88DjDSC6iPDRZBmRKL4sY8g=; b=rXg3Tj
+        qHmpRepm9uN2IAeULvsldXw3Tt5ggFuqoo9AqYSzqm56d2JAneWXyACaDWm2JEj2
+        DmsUblfBJPyMSgpvEOjFWrmX0Y5M5gtNl2pehBKsLFa07Efca7IikijuKuFMnbA9
+        YO9aknLHTHL25vzRAZrk45LDV/G4BYQ+fftAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RUTMhCQj7mTJm0l8W7zNuYOYAeYELXSd
+        s8OD5jTN38tUg6kNJpVrN5ueQFrosTKT+GCKQO8alxwdJe5HiC5OPw7Vwmf/WWcP
+        uvLcHG6G8z1bYYGDQVHzoGY2Uis9Ln+L2tY0U1MVc+ldBqcsKzwUhbr/8d7mIkCz
+        r2WDRMKOh8w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B6135908E;
+        Thu, 22 Dec 2016 12:49:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 83D665908C;
+        Thu, 22 Dec 2016 12:49:38 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v2 0/3] Really fix the isatty() problem on Windows
+References: <cover.1482342791.git.johannes.schindelin@gmx.de>
+        <cover.1482426497.git.johannes.schindelin@gmx.de>
+Date:   Thu, 22 Dec 2016 09:49:37 -0800
+In-Reply-To: <cover.1482426497.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Thu, 22 Dec 2016 18:08:51 +0100 (CET)")
+Message-ID: <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0c9aa347-d64e-b7d7-9b07-52d844d76252@kdbg.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0238E538-C86F-11E6-9D17-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/22, Johannes Sixt wrote:
-> Am 21.12.2016 um 23:33 schrieb Brandon Williams:
-> >On 12/21, Johannes Sixt wrote:
-> >>+/* copies root part from remaining to resolved, canonicalizing it on the way */
-> >>+static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
-> >>+{
-> >>+	int offset = offset_1st_component(remaining->buf);
-> >>+
-> >>+	strbuf_reset(resolved);
-> >>+	strbuf_add(resolved, remaining->buf, offset);
-> >>+#ifdef GIT_WINDOWS_NATIVE
-> >>+	convert_slashes(resolved->buf);
-> >>+#endif
-> >
-> >So then the only extra cononicalization that is happening here is
-> >converting '\\server\share' to '//server/share'? (or 'c:\' to 'c:/')
-> 
-> Correct. All other directory separators are canonicalized by the
-> primary function, strbuf_realpath.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Sounds good. Logically everything looks good to me.  And I like that
-setting 'resolved' to the root of an abs path is pulled out into a
-helper function.  It took me a couple extra seconds to realize that
-offset_1st_component returns 0 with a relative path, which makes causes
-the call to get_root_part to essentially be a noop (ie nothing is
-resolved).
+> My previous fix may have fixed running the new
+> t/t6030-bisect-porcelain.sh script that tested the new bisect--helper,
+> which in turn used isatty() to determine whether it was running
+> interactively and was fooled by being redirected to /dev/null.
+>
+> But it not only broke paging when running in a CMD window, due to
+> testing in the wrong worktree I also missed that it broke paging in Git
+> for Windows 2.x' Git Bash (i.e. a MinTTY terminal emulator).
+>
+> Let's use this opportunity to actually clean up the entire isatty() mess
+> once and for all, as part of the problem was introduced by a clever hack
+> that messes with internals of the Microsoft C runtime, and which changed
+> recently, so it was not such a clever hack to begin with.
+>
+> Happily, one of my colleagues had to address that latter problem
+> recently when he was tasked to make Git compile with Microsoft Visual C
+> (the rationale: debugging facilities of Visual Studio are really
+> outstanding, try them if you get a chance).
+>
+> And incidentally, replacing the previous hack with the clean, new
+> solution, which specifies explicitly for the file descriptors 0, 1 and 2
+> whether we detected an MSYS2 pseudo-tty, whether we detected a real
+> Win32 Console, and whether we had to swap out a real Win32 Console for a
+> pipe to allow child processes to inherit it.
+>
+> While at it (or, actually, more like: as I already made this part of v1
+> by mistake), upstream the patch carried in Git for Windows that supports
+> color when running Git for Windows in Cygwin terminals.
+>
+> Changes since v1:
+>
+> - rebased onto master
+>
+> - unsquashed 2/3 which was improperly snuck in before,
 
-Thanks for helping get this to work on windows!
+As Windows specific changes, I didn't notice these two were independent.
 
--- 
-Brandon Williams
+> - noted that Beat Bolli tested this (see
+>   https://github.com/git-for-windows/git/issues/997#issuecomment-268764693)
+>
+> - fixed the confusing commit message by using Junio's suggested
+>   replacement
+
+Sorry, but I didn't mean to "suggest replacement".  I was just
+testing my understanding by attempt to rephrase the gist of it.
+
+There was one thing I still wasn't clear in my "summary of my
+understanding".  Is the "replacement originally done for compiling
+with VC++" a solution that still peeks into MSVC runtime internals
+but is usable with both old and more recent one?  Or is it a more
+kosher approach that does not play with the internals to make it
+unlikely that it would have to change again in the future?
+
+Your "use this opportunity to actually clean up" above suggests that
+the answer is the latter, but if you took my "summary of my
+understanding", it is likely that that fact is not captured in the
+resulting log message.
+
+The interdiff obviously looks good.  Let's move this series forward.
+I'll see if it can be merged down to 'maint', too, but it probably
+would not matter that much.
+
+Thanks.
+
+
