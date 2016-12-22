@@ -2,114 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3D3F1FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 17:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B72EC1FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 18:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965187AbcLVR7V (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 12:59:21 -0500
-Received: from mout.gmx.net ([212.227.17.20]:57526 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965052AbcLVR7V (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 12:59:21 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsD9n-1ciIIR1ynf-013zGN; Thu, 22
- Dec 2016 18:59:12 +0100
-Date:   Thu, 22 Dec 2016 18:59:10 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        id S941844AbcLVSTd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 13:19:33 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58512 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S941315AbcLVSTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 13:19:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70EDE59BD4;
+        Thu, 22 Dec 2016 13:19:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9cnELKvBuN9UVrKbD43nq1v/LSk=; b=iOUZzL
+        v7Q04M0qIhLHjIEe+vHhOy2buoa1fA0q7OPMXSsjrqMcrS86TiUHCqDVSw2wTS2f
+        O5oIaWvRD/49HxPBf/xlec7ZF3oB0A9fhJ+C8MndGEQqaumN7qlU0TO6DSoTpFhL
+        GyDIofMMrOGW172lvz+q15iTG1la9MNMss84c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=HwT9vfS0imA+MQ7QA3MKaL9BgW3MP44b
+        nfPZ/R6SB6nXxh+f6X4KJdicTkz/Y5YZc0NhHiNT4w2LnUBWM0UTouTUgbamZ7lF
+        PFOiLBiC1xpsq6N1oqjdiH27lQhXniLKIZ9sjYj0XVFPFgARs8Ky3gAVDjI2LVci
+        MPPi9Ps9F2Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61D9659BD3;
+        Thu, 22 Dec 2016 13:19:28 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B7C3359BD2;
+        Thu, 22 Dec 2016 13:19:27 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>
 Subject: Re: [PATCH v2 0/3] Really fix the isatty() problem on Windows
-In-Reply-To: <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1612221852320.155951@virtualbox>
-References: <cover.1482342791.git.johannes.schindelin@gmx.de>        <cover.1482426497.git.johannes.schindelin@gmx.de> <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+References: <cover.1482342791.git.johannes.schindelin@gmx.de>
+        <cover.1482426497.git.johannes.schindelin@gmx.de>
+        <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 22 Dec 2016 10:19:26 -0800
+In-Reply-To: <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 22 Dec 2016 09:49:37 -0800")
+Message-ID: <xmqq37hfhln5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JWg8ZBrno86YfTC1Flrue9KoB5sxQQRg7Z43ovdBHw9deKFEzwN
- DHQ3puj5idHbl5x65WQoDriTI4/Z+02/23jkL5JYh3ojTHaqiDBH3GQINEpMnnICdHybG0t
- sxAQMq9uWznFzIKws3SrstWElDmqgmBweQGL4z4oELrkgw9itfHxmjQbaUMq07L/2aj5E9/
- Xxww+eQZ9U+tImq7XdP3Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SLcXZV7L/DU=:jSEOsYfYvQQbzossruCKxy
- LmBrYDrsRmB2blPANnwFa34n3EmT5zEj4n0tzxrtE14nyqgPHGYg8PiJdA2s2iPnGbYQuvOEK
- AroTyihm9SOeNoHFZiXLwX58TXMs59VOrzdeFGZGT22dZnCLcDDomVrW+yFdHWCIglMfPjFU3
- Jxktp90e1iGWCYRvhCGnZGTj+ybMXBQcewH4+3P91MCTd+A6XveyCuqHpdn4F+6j/4lfYYhtv
- PHtQ737yOAjP6PkgPfohsHgRrfMvm2c2+7cEJaxjs651SYcda1oGOb9czby7R2uzRAyjEol3I
- aVqlFRC8/00M3bfbzBepC4HzE6YP0wFh0hKa1vKpa2HFdDdNnMJunO/9KAfLUD78RV7HMGKd0
- DmZn5RZJa/CQTlnilJXkI2Y0/fi2Z1rbMYZLAPgjjBWwAP9Nnvj+T/y6kvnm3yvlHWhx2L7eF
- pF5Egx/T8avUfvvcNwE9XeW8uBYKfjN7W1L0tj4eEzEOLPGAchw8eGAzg478sPdKKGrIq7xhC
- Cs2iRnixd9LfMNQfP1dvYEoQuUNPFlQ+iFLirwEQPLFAILdIrV3oL0Hun46mMsr3KpXSqSqoJ
- El0RuYqE60Y7dyNkhBoZ6zBZ5HpMWJ9wsjIvvheBy86Z8ZXpK/v3f5VGM0KR6kTAWPK5se7Kk
- 7J6sA22zsnA+VaaN7+cDXEIAr9Rl6QYZIU7BI/eLNIpwN75BbykoRZ2b3KLKATReOXg5mHA7o
- miWQaviHSl7h+H4+463N9cpubkM+q6TiPpxViwK7U0VtxR6+jFHuSlffJyu3C4lDi9T9FtAxC
- YOANv8/
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2CACBC00-C873-11E6-B82C-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Thu, 22 Dec 2016, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > - unsquashed 2/3 which was improperly snuck in before,
-> 
-> As Windows specific changes, I didn't notice these two were independent.
-
-Yeah, sorry, I only realized today that I had snuck that one in when
-re-reviewing the changes.
-
-> > - fixed the confusing commit message by using Junio's suggested
-> >   replacement
-> 
+> ...
+>> - fixed the confusing commit message by using Junio's suggested
+>>   replacement
+>
 > Sorry, but I didn't mean to "suggest replacement".  I was just
 > testing my understanding by attempt to rephrase the gist of it.
-
-I did like your phrasing, though.
-
-> There was one thing I still wasn't clear in my "summary of my
-> understanding".  Is the "replacement originally done for compiling
-> with VC++" a solution that still peeks into MSVC runtime internals
-> but is usable with both old and more recent one?  Or is it a more
-> kosher approach that does not play with the internals to make it
-> unlikely that it would have to change again in the future?
-
-Oh, it is kosher. There is no more messing with internals.
-
+> ...
 > Your "use this opportunity to actually clean up" above suggests that
 > the answer is the latter, but if you took my "summary of my
 > understanding", it is likely that that fact is not captured in the
 > resulting log message.
 
-Right... I tried to make that clear by saying that this change replaces
-the hack.
+So using the original log message in v1 and what you wrote in the
+message I was responding to as references, let me try a real
+"suggested" one as penance.
 
-> The interdiff obviously looks good.  Let's move this series forward.
-> I'll see if it can be merged down to 'maint', too, but it probably
-> would not matter that much.
+I need to ask one clarification on what you wrote before completing
+that effort, though.
 
-I will have to release a new Git for Windows version Real Soon Now [*1*],
-so I will have to take those patches kind of there (as Git for Windows
-will be based on upstream/maint for a while now).
+>> And incidentally, replacing the previous hack with the clean, new
+>> solution, which specifies explicitly for the file descriptors 0, 1 and 2
+>> whether we detected an MSYS2 pseudo-tty, whether we detected a real
+>> Win32 Console, and whether we had to swap out a real Win32 Console for a
+>> pipe to allow child processes to inherit it.
 
-My thinking is that I will publish a prerelease either tonight or
-tomorrow, then go offline until next year, and then immediately publish
-Git for Windows v2.11.0(2) (or v2.11.1 if you publish a bugfix version in
-the meantime).
+This has subject but not verb.  I parsed the above like so:
 
-Ciao,
-Dscho
+    Replacing the previous hack with the clean, new solution (which
+    specifies explicitly for the file descriptors 0, 1 and 2
+     - whether we detected an MSYS2 pseudo-tty, 
+     - whether we detected a real Win32 Console, and 
+     - whether we had to swap out a real Win32 Console for a
+       pipe to allow child processes to inherit it
+    )
 
-Footnote *1*: There is a new cURL version with some security fixes,
-although I do not think they are super-critical, then there is the fix for
-the double slashes in //server/share/directory, the fix for the empty
-credentials and I should probably also try to update the MSYS2 runtime to
-the newest version of Cygwin's runtime. Lots of stuff.
+So the entire thing is a noun phrase "replacing with a new patch",
+and I take that as the subject of an unfinished sentence.  What did
+that subject do?  Replacing with a new patch allows us to do "this
+wonderful thing", but what "this wonderful thing" is not clear.
+
+Subject: mingw: replace isatty() hack
+From: Jeff Hostetler <jeffhost@microsoft.com>
+
+For over a year, Git for Windows has carried a patch that detects
+the MSYS2 pseudo ttys used by Git for Windows' default Git Bash
+(i.e. a terminal that is not backed by a Win32 Console), but it did
+so by accessing internals of a previous MSVC runtime that is no
+longer valid in newer versions.  
+
+Clean up this mess by backporting a patch that was originally done
+to compile Git with a recent VC++.  Replacing the previous hack with
+the clean, new solution, which specifies explicitly for the file
+descriptors 0, 1 and 2 whether we detected an MSYS2 pseudo-tty,
+whether we detected a real Win32 Console, and whether we had to swap
+out a real Win32 Console for a pipe to allow child processes to
+inherit it, lets us do XXXXX.
+
+As a side effect (which was the reason for the back-port), this patch
+also fixes the previous misguided attempt to intercept isatty() so that
+it handles character devices (such as /dev/null) as Git expects it.
