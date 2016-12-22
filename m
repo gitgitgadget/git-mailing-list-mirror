@@ -2,53 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D0D1FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 21:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 646581FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 21:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758073AbcLVVOx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 16:14:53 -0500
-Received: from mail-ua0-f181.google.com ([209.85.217.181]:32990 "EHLO
-        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752619AbcLVVOx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 16:14:53 -0500
-Received: by mail-ua0-f181.google.com with SMTP id y22so60514932uay.0
-        for <git@vger.kernel.org>; Thu, 22 Dec 2016 13:14:52 -0800 (PST)
+        id S966777AbcLVVTC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 16:19:02 -0500
+Received: from mail-ua0-f175.google.com ([209.85.217.175]:34749 "EHLO
+        mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752715AbcLVVTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 16:19:00 -0500
+Received: by mail-ua0-f175.google.com with SMTP id 34so57135169uac.1
+        for <git@vger.kernel.org>; Thu, 22 Dec 2016 13:18:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=tCik2r8S5gL1U41bUTbDF25Pf10mOVxKhkVr4ZY4f0s=;
-        b=fwkSMmt1Z9sotUazwFSahbrydyaDayKFzW3lp3zFBjAEpkQsXu8kaO2tGMe8Q2R/sR
-         +AHAERfmvQGnzJRWggrwZK4+Rpz5QSJIsg/tFQWJvuedI1M3UyofdXHk1EH7RdI+/91M
-         AaITW1Oir/JrSPhyE5RR3pAGsyz0OA+unUgIBONiNC2g0sqzrreTO6GPYIDVcKofk1oO
-         dLaMKzbOu9BpP599ujLGdp9v0Q4hYVClOXI6FOBY03wWFy7FSjt0PtQXiJFIO8CSoiTv
-         /RywD5ayqtNYDeP84CiNmKjoicyLwQigOP92iTpPhMVzps/TpWrVdqsDJzOo3oXvxz3J
-         y9Mw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=qTtWMopjK7DWlr+faTQxFCTd936djJtbBeXCcd7goRo=;
+        b=ZTVjbScm6ITuXdU/6Jyklig0kCNtc6kBZnpdmg/6gYPh0dE2UeBXsywZ0IRgUXqSE6
+         dYQnxG3n0I3m4nzigNwrepxYQOv5wyDDv77XowCMjZx7pzu+V2CtuxMs9JlnQ70ixD4S
+         5uqvrx7srqSXvNfOpCaMq8WgbnXlG1aSgtKld0al2fzMmXdEcRYvgBCJd6hndhp192ag
+         kvrrD0PSElHG1Qp/NkUFdC/THbJ5PsbPSl3VXKK4nUMb0IvwrEdpndxNaAnRgRQcUgx9
+         IUTQSvz1mWjQI6Lz7BZEkVbWMT4c8x0JrJj6r7WuvS9n8clwthi6i6SKOsqqmTjx6iwS
+         lLAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=tCik2r8S5gL1U41bUTbDF25Pf10mOVxKhkVr4ZY4f0s=;
-        b=CqkXlGoECj7luOqONCMc24/LNSlDBBbj+HZHW+cOS+z1QFLRL4I8I/rhjBEH9eFl6n
-         yKPpeD1Njr3QsD6XlKhM4wtAoML7DUn13yJB78j31rDvPM/QTT7igmgW3M1u/R3324ew
-         zd79q6ksY45ma+6Qdlxn6OalTVeYBfNgIB9t6MDKv30olVh0V/aJalzec7npgq2STL7h
-         qpqEK6EDktVgpUhzgU/TuW8JIxevZk4hgwaK32xA//7TPNlm4eSKuxhMRLvWv+uauyRu
-         LH+ahA3K20ONTIp08YXjv8VaiKbR1WNpajVa4dTVmlWxFvnZjA3yYWYY7H0jyYTXxyBT
-         9EVw==
-X-Gm-Message-State: AIkVDXISH4RGh8WTK01V1jOTwNovu6bnFxdyaXhwvl49Zz1MWqkkJhbSfFmAbGgSZyTAEeLgsmkjzmPnXj5ncA==
-X-Received: by 10.176.71.21 with SMTP id h21mr9112356uac.167.1482441291879;
- Thu, 22 Dec 2016 13:14:51 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=qTtWMopjK7DWlr+faTQxFCTd936djJtbBeXCcd7goRo=;
+        b=DT72x0Wwj/CLhYjmV+AKgtwIvmMTjRMGV3IlDxp/JVXNzWY8I+ByNfhtzNymVvvRyK
+         h3d8QE4t1neCvx5KSeJLeQ1XZRNsC9S73kWx2Qz2e0065eBXYBn9YjLXqH1VM8vDI0WK
+         T3gKB2NLja6zeJyYD/pN9sojVg2zNehXl+MSO4L7INC4IQrjzleEw3eJZj/0P5asME84
+         SDocJF/LsfL5G07wdKgSTjVrFjoBIdA2P5oMG3dx4nAjAMOeBLn/em52H/u8xNpkzUNi
+         ejw9VRyOQpVTOhCV1Gmyc3zryy6Ym04Yz23LMCaxJFwACGES6fCTnp2rBKzz9B2SIMVc
+         SBSA==
+X-Gm-Message-State: AIkVDXL/8v6Ko/NX8X18SwyjiGsO6C6cNG/Sc5/8fOqtchkGA9PIK275cvNgPyfq2ZjFdbirVNFeiFGEgfx04w==
+X-Received: by 10.176.71.21 with SMTP id h21mr9123994uac.167.1482441538709;
+ Thu, 22 Dec 2016 13:18:58 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.103.45.11 with HTTP; Thu, 22 Dec 2016 13:14:31 -0800 (PST)
+Received: by 10.103.45.11 with HTTP; Thu, 22 Dec 2016 13:18:38 -0800 (PST)
+In-Reply-To: <CAJtFkWtjowyGaFfsCVd-HAZM2-3e0=CkkyYfxne8KRdYq5kJ9g@mail.gmail.com>
+References: <CAJtFkWtjowyGaFfsCVd-HAZM2-3e0=CkkyYfxne8KRdYq5kJ9g@mail.gmail.com>
 From:   Stefan Monov <logixoul@gmail.com>
-Date:   Thu, 22 Dec 2016 23:14:31 +0200
-Message-ID: <CAJtFkWtjowyGaFfsCVd-HAZM2-3e0=CkkyYfxne8KRdYq5kJ9g@mail.gmail.com>
-Subject: =?UTF-8?Q?Making_it_possible_to_do_=E2=80=9Cgit_push_origin=E2=80=9D_inste?=
-        =?UTF-8?Q?ad_of_=E2=80=9Cgit_push_origin_=3Cbranch=3E=E2=80=9D=2C_without_having_to_one=2D?=
-        =?UTF-8?Q?time_prepare_each_branch_for_it?=
+Date:   Thu, 22 Dec 2016 23:18:38 +0200
+Message-ID: <CAJtFkWuypdH+ikdXL=-DXOx-8F+34nV3phqO2jTGoqtnM7=DZA@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Making_it_possible_to_do_=E2=80=9Cgit_push_origin=E2=80=9D_i?=
+        =?UTF-8?Q?nstead_of_=E2=80=9Cgit_push_origin_=3Cbranch=3E=E2=80=9D=2C_without_having_to_?=
+        =?UTF-8?Q?one=2Dtime_prepare_each_branch_for_it?=
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
@@ -56,33 +59,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
+Also, if I do the "setup" step (`push -u`) for a branch that doesn't
+exist yet (neither on my PC nor on the server), does that remove the
+need to do `git checkout -b <branch>` first?
 
-I'd like to use just:
-
-    git push
-
-or at most:
-
-    git push origin
-
-rather than having to first check which is the active branch with `git
-branch --list`, then type:
-
-    git push origin <branch>
-
-At [1] and [2] I've seen that if I do this once:
-
-    git push -u origin <branch>
-
-then from then on I can use just `git push` _for that branch_.
-However, I don't want to do this "setup" step for each branch, because
-it's extra work that I also may forget to do.
-
-Why is this "setup" step necessary and can I avoid it?
-
-Thanks,
-Stefan
-
-[1] http://stackoverflow.com/q/19312622
-[2] http://stackoverflow.com/q/6529136
+On Thu, Dec 22, 2016 at 11:14 PM, Stefan Monov <logixoul@gmail.com> wrote:
+> Hi.
+>
+> I'd like to use just:
+>
+>     git push
+>
+> or at most:
+>
+>     git push origin
+>
+> rather than having to first check which is the active branch with `git
+> branch --list`, then type:
+>
+>     git push origin <branch>
+>
+> At [1] and [2] I've seen that if I do this once:
+>
+>     git push -u origin <branch>
+>
+> then from then on I can use just `git push` _for that branch_.
+> However, I don't want to do this "setup" step for each branch, because
+> it's extra work that I also may forget to do.
+>
+> Why is this "setup" step necessary and can I avoid it?
+>
+> Thanks,
+> Stefan
+>
+> [1] http://stackoverflow.com/q/19312622
+> [2] http://stackoverflow.com/q/6529136
