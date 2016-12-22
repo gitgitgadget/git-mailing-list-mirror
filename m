@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 996FB20968
-	for <e@80x24.org>; Thu, 22 Dec 2016 21:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1F9620968
+	for <e@80x24.org>; Thu, 22 Dec 2016 21:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757551AbcLVVho (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 16:37:44 -0500
-Received: from mout.gmx.net ([212.227.15.18]:64998 "EHLO mout.gmx.net"
+        id S941294AbcLVVjD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 16:39:03 -0500
+Received: from mout.gmx.net ([212.227.15.15]:64627 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752839AbcLVVhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 16:37:43 -0500
+        id S941244AbcLVVjC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 16:39:02 -0500
 Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDyil-1cM9fB0Cw3-00HN1A; Thu, 22
- Dec 2016 22:37:22 +0100
-Date:   Thu, 22 Dec 2016 22:37:20 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MI5JG-1cHQiW0P2k-003scW; Thu, 22
+ Dec 2016 22:38:46 +0100
+Date:   Thu, 22 Dec 2016 22:38:44 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH v2 3/3] mingw: replace isatty() hack
-In-Reply-To: <e9f8a015-4106-fa88-082a-9e8c06ff61f3@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1612222235200.155951@virtualbox>
-References: <cover.1482342791.git.johannes.schindelin@gmx.de> <cover.1482426497.git.johannes.schindelin@gmx.de> <5e3c505a206a735e6ba0bfaf4c73965e95a928eb.1482426497.git.johannes.schindelin@gmx.de> <e9f8a015-4106-fa88-082a-9e8c06ff61f3@kdbg.org>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Klaus Ethgen <Klaus@Ethgen.ch>, git@vger.kernel.org
+Subject: Re: [PATCH 4/2] t5615-alternate-env: double-quotes in file names do
+ not work on Windows
+In-Reply-To: <54ba9cff-b6f7-7660-261f-393cd5181da6@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1612222237530.155951@virtualbox>
+References: <20161212194929.bdcihf7orjabzb2h@sigill.intra.peff.net> <20161212195355.znqlu44lgnke3ltc@sigill.intra.peff.net> <d9d2580c-a2e5-d9f3-1f56-6814b2b2285d@kdbg.org> <00b6235d-c1bc-30c2-6539-6c78c4ce9eb0@kdbg.org> <20161221224222.6fn6irefmd6li6oa@sigill.intra.peff.net>
+ <4e66fba1-d881-6a96-1e4d-da9c897353ac@kdbg.org> <54ba9cff-b6f7-7660-261f-393cd5181da6@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eCkkXbrfqS17oGpGVHJrJvDCW0v8K2xzYZMy9ki7isuhzx1sKL5
- Fngg9OWvyyvxh3k/FH/4Vol0a/CE3tDsSFXOmKhvSlbGS6iB+ZVhZuijhitWsJWf0PUm7k5
- NMVp3UcXXkly318vlcybe72dSSCNjfIeDcyUYeh5jw/OOaH6uPKuE8ddxIxj0PzajLf2LP4
- jE5DLSWx+h2aGXJvHtUeA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aNeOyFssvTw=:DA76CuI/GUEvs9S/v93R1l
- brAv+YoDWHgUk6QRgzNzYPrrsREH6mWpZYQcdC9z1DHbFniVFfduh/8aLpzp+PXPlhnzwCclL
- MB8f3h96m2OdNHn++Bn1Y/l9aB4t5QydGVCilPUTkbiVnfWEk3mxjxlkcXVo29nvDrtGe1LaU
- cVNw25LAvlW1tINcD3RzXtubbWvudCAI9UiCLr3AXZdfzkhHP+oksPLgypi+f4o3dCLNgvrIW
- /MCEPlSsF31rv64gYCpqvAuYXR8akyGJqi/89yJu/o+I+sDlXlnlgilC23jdrZsWDFvdJ+oQZ
- Z+OjP+2NjHuqNN53r8WJihlLuIjM5fxzfNJp2b9wElS8Mcv+wVRm12EdYUq50AWDayCvLKXVe
- jA+moXD0IRPLdbjQgiEF1m2q0ohDPJ/E0zsrybwEky3ZXc4agBGWvjCq3PfjMpWL9VJTOXRQ8
- E6vQW0qsi6HM0+6bqj9Qbu06ZRPEOdzz1FYQUprH6nu93F5R6lJko+7DGI2nabp/FNaORRvgb
- i2VlhmMMRva47oWHBr0864OP/ms45GR4378y2n6bGNmVNEGVHTpg9L6oSbEH4JFqEOHR8qGmn
- QkjSJOMrbkIc/qKnp+U8aGiQPxNnspeZTrTfGJMSnKj3UOhZenjdukA83zK/4hssoFrw2bzjr
- RrIrwzNKEAUfzJh9GFLzOHrQo86BQ03jSVwsocCLQbGRfjvLQ/eMfZjW1kRj9vkL0T08rDzZA
- 3sikTDW4ZyRto5fB0hO54GByQOFI2ouVYGYZa6Q9hBxnK8XjOXrg4VF3WGqprEMPYpDkUHFyE
- lKvShoa
+X-Provags-ID: V03:K0:+3HBddCKJY0/fw7MEaRvwlN+CnUNLgUo1I6yZBXiHYMrR/0IMDQ
+ WvLUq/mY9pQ7xwu1UP/GhVF2M8bEy1a5Kclbido1b/tu2VM8+TaczwXOCOqbXqtqtVhXHgN
+ uedVy/UrItNWRkSXff/mxhqLBcCXJ2GGZz4Xv4I9We++JeA45Rg1Fn1B0L7CMlz6Y+OrFoc
+ g4KOK1Ek/yca8E6a03d4g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LTULO+xDIAc=:23BxXcrs5Z8btRmPiljSl/
+ O35XridrFA2MAA5RHrAXVRif7K/KdlqX86z5nObS2m1OlFe6Hws6tgJggEnM+anERtBwA3XNP
+ lD/oxnaqVep1kAl8SxXnQkmphN5rK1yVZj6XOmUZ8thk1pp+415Z3Y1Us2FR6Bu2YXwBfFAHX
+ 94Nc1GBcXjF/VBxNyqXZVL5ijo/zM12VljkRqr9NPc8TZAWNHqfOk3ODgmJaxwVqaBW1Ion/o
+ Zzz8y/X2DVFVs2/wiPqx+LNxPErsVT6O53SjAaz3UvmOOBW8A0rXByhXgebmGE5cslCF+1aU9
+ TDtpgEAWsVEhvRSCVxV5G3DecePP707Z5oXYG+j9YBPfRXWvb6aAIST3SD4sYAJ8ZSgPpXxTa
+ RKqVgkuIvbe9JCZWATnD1fnQldcSHWz0bfA7W2mMLQ/l4HENfwSdRfvQo6Iiso5oq1C1vWDJk
+ mcELvO5drr0gQV2afZhmqj8xK8147gV6Ayemcq2bMuYFwdAiK4aHNrY7Ri5m7c8iQ/ZJWEGLk
+ rrg8LJ1ds5xFF/CbRyjsi4FwuwY9HBDZRQtE6a33GJQLRBkvxtcWUpImRsqghl8N8R4Rw3Xjp
+ EWjB/WLw0YPzfsBEonRI2Ja11bEVZRScEe9KJbp/97aZdEgvjl4OWrqrx63YlACTPtcneyn4v
+ FyDuwxf7X4CwsbVK7FCpMjJBuwMcly+VvWBMQBDa7JvvtkTMvut1RIbmA9c3V8u4r/uVd5wxU
+ iDdWwInicGPHxk1kwkHdEiRjKpRuWxzk0s48NVXkKmvBKg1lAD7/SNFjjHMFDWnj+mz5pYssJ
+ 05Dk3ui
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,61 +60,25 @@ Hi Hannes,
 
 On Thu, 22 Dec 2016, Johannes Sixt wrote:
 
-> Am 22.12.2016 um 18:09 schrieb Johannes Schindelin:
-> > +static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
-> > +{
-> > +	/*
-> > +	 * Create a copy of the original handle associated with fd
-> > +	 * because the original will get closed when we dup2().
-> > +	 */
-> > +	HANDLE handle = (HANDLE)_get_osfhandle(fd);
-> > +	HANDLE duplicate = duplicate_handle(handle);
+> Am 22.12.2016 um 07:13 schrieb Johannes Sixt:
+> > Am 21.12.2016 um 23:42 schrieb Jeff King:
+> > > Hmph. I explicitly avoided a colon in the filename so that it would
+> > > run on MINGW. Is a double-quote also not allowed?
 > >
-> > +	/* Create a temp fd associated with the already open "new_handle". */
-> > +	int new_fd = _open_osfhandle((intptr_t)new_handle, O_BINARY);
-> >
-> > +	assert((fd == 1) || (fd == 2));
-> >
-> > +	/*
-> > +	 * Use stock dup2() to re-bind fd to the new handle.  Note that
-> > +	 * this will implicitly close(1) and close both fd=1 and the
-> > +	 * originally associated handle.  It will open a new fd=1 and
-> > +	 * call DuplicateHandle() on the handle associated with new_fd.
-> > +	 * It is because of this implicit close() that we created the
-> > +	 * copy of the original.
-> > +	 *
-> > +	 * Note that the OS can recycle HANDLE (numbers) just like it
-> > +	 * recycles fd (numbers), so we must update the cached value
-> > +	 * of "console".  You can use GetFileType() to see that
-> > +	 * handle and _get_osfhandle(fd) may have the same number
-> > +	 * value, but they refer to different actual files now.
+> > It is not allowed; that was my conclusion. But now that you ask, I'll
+> > double-check.
 > 
-> Certainly, the OS does not recycle handle values that are in use (open). Then
-> I do not quite get the point of this paragraph. See...
+> Ok, the point is that I get this error:
 > 
-> > +	 *
-> > +	 * Note that dup2() when given target := {0,1,2} will also
-> > +	 * call SetStdHandle(), so we don't need to worry about that.
-> > +	 */
-> > +	dup2(new_fd, fd);
-> > +	if (console == handle)
-> > +		console = duplicate;
+> mv: cannot move `one.git' to `"one.git'
 > 
-> ... This is where "the cached value of console is updated", right? If console
-> == handle, then this is not because a handle value was recycled, but because
-> fd *was* console. Since the old value of console has been closed by the
-> dup2(), we must refer to the back-up value in the future. Am I missing
-> something?
+> I don't feel inclined to find out which of 'mv' or the Windows API or
+> the NTFS driver prevents the double-quotes and come up with a
+> work-around just to get the test to run in some form. Let's leave it at
+> the !MINGW prerequisite.
 
-You are correct, we must update `console` because `handle` is no longer
-the handle we want.
-
-The comment above only meant to reinforce that we have to forget about the
-previous handle, too, as we might access something completely different
-than a console otherwise.
-
-Would you have a suggestion how to rephrase the comment to make it less
-confusing?
+Double-quotes are not allowed in file names in Windows. NTFS would allow
+them just fine.
 
 Ciao,
 Dscho
