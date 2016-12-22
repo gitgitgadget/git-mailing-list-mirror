@@ -2,67 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4770D1FF40
-	for <e@80x24.org>; Thu, 22 Dec 2016 03:59:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15C4B1FF40
+	for <e@80x24.org>; Thu, 22 Dec 2016 04:53:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757562AbcLVD72 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Dec 2016 22:59:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59563 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753379AbcLVD71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2016 22:59:27 -0500
-Received: (qmail 19638 invoked by uid 109); 22 Dec 2016 03:59:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Dec 2016 03:59:27 +0000
-Received: (qmail 17262 invoked by uid 111); 22 Dec 2016 04:00:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Dec 2016 23:00:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Dec 2016 22:59:23 -0500
-Date:   Wed, 21 Dec 2016 22:59:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     "Kyle J. McKay" <mackyle@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] mailinfo.c: move side-effects outside of assert
-Message-ID: <20161222035923.chgdv7pcbzevihhm@sigill.intra.peff.net>
-References: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0>
- <20161219200259.nqqyvk6c72bcoaui@sigill.intra.peff.net>
- <A916CED6-C49D-41D8-A7EE-A5FEDA641F4A@gmail.com>
- <alpine.DEB.2.20.1612201511480.54750@virtualbox>
- <20161220164526.qnwnmr7cvyycmw6a@sigill.intra.peff.net>
- <222ACFD4-ED9A-4B94-8BDD-3C70648A684B@gmail.com>
- <20161221155539.aykcmkuzqvq733ri@sigill.intra.peff.net>
- <F5001DF2-20C2-4757-997F-9D40BD48E1D9@gmail.com>
- <99C4A905-D66B-4609-9E55-06F9BC301C74@gmail.com>
+        id S1757826AbcLVExH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Dec 2016 23:53:07 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36038 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755385AbcLVExG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2016 23:53:06 -0500
+Received: by mail-it0-f67.google.com with SMTP id n68so19646912itn.3
+        for <git@vger.kernel.org>; Wed, 21 Dec 2016 20:53:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Utmh0alIjXJ+uRoLG+ceVPAQ5bxMhl91XvLzhxZpFhk=;
+        b=EyQeB1ss1ciUHQVXOq6YcEtCrWAvqVND398RQF9hPkoDexpi+P+T8d0gTVEVaQH8I/
+         v0bVCGI2n/XPuP/RpJMWFufdoGm0U+7oy8kHuv/P9WAE3V+O6dR40Ilo2iLOKjHnMaLr
+         W25BDkNNe9rmfsrdTlBzU6bAr+MeH4rQdlE+q59LRhl3eAwKpLt0UfkovDcqMvMaiZde
+         VsxpuUuGfGTJq7TFEDK8rjjlLR8fXjOU6z47E+G0Ynx9ij5giOUB/sIyKPzonX1fmlPR
+         66SHx/htOZfsoRsGUOBU+CV/+AieIS1+B31CTOJp9PUykdY+jXG4Oe9WjWf05OcU5nkI
+         cMpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Utmh0alIjXJ+uRoLG+ceVPAQ5bxMhl91XvLzhxZpFhk=;
+        b=AMt7CKcYFDWDTqsJ7h6wMJwf49LqX70HUEbj2NEwEHIgbP6ENa5AkECC9ynfx090D9
+         ANRFL4HtqR0mEc/9biAr7kZMKBWLOFSIJkCB86IBjcgWB7rr820IdTc4Sv0JIBy6cB5G
+         caJSh8ymH+uVsqU7CpUb4iGxtJhxpMzEF/f9/i/bCq0uTB3/ZuJqvJMiwIJMkjXvQmqQ
+         c+qCRjArdRJgHCJ2YGOduiQaOd0a4ZADmhHWg75hUgHOXCujUZKWFjfba4MQ4Gr+x7KL
+         vjpo1n6FIfm+5YyCesyj6QSPnXolOJtwXnOMt0kDUqYqPkFAoUhlldth7gcLjwWYzAOl
+         YQtQ==
+X-Gm-Message-State: AIkVDXKeEvXFkANt2QVPxYbjt3o71qXKj//sqLP0WCXtCjpTszqGBzKPDd7WIQnYgqrwEE4LMbDnrX7BUZCZlQ==
+X-Received: by 10.36.213.4 with SMTP id a4mr11221725itg.0.1482382385189; Wed,
+ 21 Dec 2016 20:53:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <99C4A905-D66B-4609-9E55-06F9BC301C74@gmail.com>
+Received: by 10.107.181.197 with HTTP; Wed, 21 Dec 2016 20:53:04 -0800 (PST)
+From:   Paul Sbarra <sbarra.paul@gmail.com>
+Date:   Wed, 21 Dec 2016 22:53:04 -0600
+Message-ID: <CAGf+dShpkPvsC8wQN6mWmYeMZ3=i-ZOzDNSM1aa0rinKW6+-+g@mail.gmail.com>
+Subject: builtin difftool parsing issue
+To:     johannes.schindelin@gmx.de
+Cc:     davvid@gmail.com, dennis@kaarsemaker.net, git@vger.kernel.org,
+        gitster@pobox.com
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 21, 2016 at 07:53:15PM -0800, Kyle J. McKay wrote:
+Sadly, I haven't been able to figure out how to get the mbox file from
+this tread into gmail, but wanted to report a parsing issue I've found
+with the builtin difftool.
 
-> It seems to me what you are saying is that Git's "assert" calls are
-> DIAGNOSTIC and therefore belong in a release build -- well, except for the
-> nedmalloc "assert" calls which do not.
+Original Patch:
+https://public-inbox.org/git/ac91e4818cfb5c5af6b5874662dbeb61cde1f69d.1480019834.git.johannes.schindelin@gmx.de/#t
 
-Yes, I think that is a good way of thinking about it (modulo that I
-really can't say one way or the other about nedmalloc's uses).
+> + *status = *++p;
+> + if (!status || p[1])
+> + return error("unexpected trailer: '%s'", p);
+> + return 0;
 
-There _are_ some DEBUG-type things in Git that are protected by #ifdefs
-that default to "off" (grep for DIFF_DEBUG, for instance). I'm actually
-of the opinion that debugging code like that should be in all builds and
-triggerable at run-time, provided it carries no significant performance
-penalty when the run-time switch is not enabled. But I do agree that's a
-totally separate question than from your DEBUG/DIAGNOSTIC distinction.
+The p[1] null check assumes the status is only one character long, but
+git-diff's raw output format shows that a numeric value can follow in
+the copy-edit and rename-edit cases.
 
--Peff
+I'm looking forward to seeing the builtin difftool land.  I came across it
+while investigating adding --submodule=diff (expanding on diff's
+recent addition) support and this looks more promising then the perl
+script.  Hopefully I will make some progress.  Any tips/pointers would
+be greatly appreciated.
+
+Thanks
