@@ -7,97 +7,101 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 392741FCC7
-	for <e@80x24.org>; Thu, 22 Dec 2016 23:16:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C9DD1FCC7
+	for <e@80x24.org>; Thu, 22 Dec 2016 23:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941867AbcLVXQZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 18:16:25 -0500
-Received: from mout.gmx.net ([212.227.17.20]:62044 "EHLO mout.gmx.net"
+        id S941870AbcLVXQ3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 18:16:29 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50102 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S941861AbcLVXQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 18:16:24 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lu2F0-1ck9952qLG-011VTA; Fri, 23
- Dec 2016 00:16:17 +0100
-Date:   Fri, 23 Dec 2016 00:16:16 +0100 (CET)
+        id S941861AbcLVXQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 18:16:27 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsPwa-1ciUik0KAi-0124KL; Fri, 23
+ Dec 2016 00:16:22 +0100
+Date:   Fri, 23 Dec 2016 00:16:20 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
+cc:     Alan Davies <alan.n.davies@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v3 1/3] mingw: adjust is_console() to work with stdin
+Subject: [PATCH v3 2/3] mingw: fix colourization on Cygwin pseudo terminals
 In-Reply-To: <cover.1482448531.git.johannes.schindelin@gmx.de>
-Message-ID: <ca4c61c603247c8ad0b876b068f6cd41fbe01667.1482448531.git.johannes.schindelin@gmx.de>
+Message-ID: <796e3c4b5bda1170bfbb690a73dab5442b9c77e4.1482448531.git.johannes.schindelin@gmx.de>
 References: <cover.1482426497.git.johannes.schindelin@gmx.de> <cover.1482448531.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:v6sxmJ+Qp9o5ZzI0MtclXIbLNawsIEiQbMmc9vTrJ41JKaH3NKO
- R2pDtMBBaa2peSJMWB+Yaviz5QHJi1Z4z8gpjzhMLR/etXt05Qz7MpgwY00Ft3CPVvqPbyu
- 1pH+UaMp+/M1A6nyiJgpjN9gmhy6UgSscom7nFBqIs4kgn7dRu+v52sNRlq8qccsTtVeZ/o
- zCbHvpzwXKRZP2AB2Qr5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lrCqXCyoMA8=:ercHjTWNVHxIqisNZ9R3B1
- kEg4ksydOk5AwuKrkR4JJPlkrSyrGkJlpQ6EeGZlklllo2RK2Ek2OMwSk7/tXKLdWfP/eSGWs
- nrIgejKOK3TIA6GvhMHZfJvyFbEMiEH+64y9faMzOYHIc1MaPk2CuvEXPluLczyDBFdMA1RVW
- iC8L2JZ+UTIdoCj6PVYTbiCzc3QxZS5kdyDSCVCpMCbrWw4lzWkFuMCaLrm0yIwlYg3kW3Cgq
- rWA4WKvGoR/4DUjyD3nGSm0AVw0dTidnYmiPk/pTUfFU3AIsiocODhM9kXta0Vz/sx3PFDPWK
- qKaQ/P3pgK5ORAIkx0DeLD5sUUjDYHhlWrek0IyAVIVCUSndQS2JXgeJ4MHwjSu6oIn4V1yNC
- MzCA2dLqmR0v/8MKCPWvXpkmM0kuaosI5wXgcf6+jHqhkeGMaMBvVZnAyCY6dIlk/BwQNUFWp
- MswKV2dyNsjvanBwuJ98VBgf2aSIR68FooInpvzgkqmCuku7UpjQ6JiAfRDL98qNqDXiVDC2I
- cNoYo1VT+ZQKqLkgTUMZ9Te+jRO1ELHpjGOEkvA5v4IFBI/1WE1MroDNgMo/AdsJod8tbR9ny
- US6Mj0MTUlraNyJI/eGW88dzcwYRkGkW96Iu2wKMyoljfIyM2ETs3jYMm1mWv1Yd66FV90+k4
- lVGGKsAhmyOggIwDeLE4nDuk2o5t/cDH2j4FHPP/+ZDBrrfIKHFQmCA4OXIPocLTgcUfmk8U8
- cR60HxmCi9b+dmRqG9qjiKhp6beIvBkT8viWYqvJgtHoZwQbtn+lL1bmExVLUvdK9EVpA2jv3
- vmN07nL
+X-Provags-ID: V03:K0:fX+AfoS5Hiabn0NraiMfbtedNFZEMSs8hyJ1xgegptDVIcA4enp
+ ycyKp60ihKUZIfAgvJrrvGKTesQjm2ayKZsH1Sy4Qim2dn0J3boR3wtIz49PkyhadgsgCo5
+ o3OFGFmp7+QljdqFlo3L+93fPb0EoaJVMz844R+0NQtSWKFVUq3aisRvYhV6n9CoQoj4LUS
+ gVpOzIFwC19grUiT1pd1A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5fIhnhTY0+U=:09BEBDJMJTM7SZ2cJfFzIF
+ NPgmiqCVhe8zOd25MQpBqVQ/vGVJajCJSP1flIKVwIoYrFA8xw04fdqhnzpdMQZgUlcwQx4oE
+ TWaSmBiewygINAPtqVnAWgQih3zlRJKv/d8s/zuhQFKm0fyNnx+1cu4v1H9ZIjQ+B+/Fdeb+b
+ GrhF8OARmk4QXlVxi9YNu7v13rdNyzoT6X9G8Ka/1BOwsjaILvSFJPmH/cXqZTeyZeUnl6wAs
+ HMAdyeYEXye8F0A6Tlb2lYaqhkNuUhXr8bHRM4nyGxuhYoZgQdNc3bRHESE850T0p3Fq/+a3y
+ gODerYjHFdiGux7X6yc9jilgRdFgEe6RSWaecL/S49+qYlX0X7D93hvdGDZD65OrgFzZ5WJg3
+ HEFRJuGOFZHQgHAF+wt3EI/w2JnmuSxciF9P2vNgAvZqKgaT/ThMnnf4vP/sfl/7ul4PoRsAK
+ 6LCMQqM9PZBmvQPJaXcRkW3Rro6n12iGdP9U2kHQDSDstOdpVzJGO2Gv80yP22QQmb8hSGOo3
+ kU6LqewTqk5+MH/2nqZ/B4FC/a6AkRvUhBIWw+fCnrER5ayEPwZvX3Em092hAL5Ziqq8sP1AG
+ 6Ap1WRpJ5+uoTAGdNWi6MK6qsIJlw2IJ4ln0iO6c5AbGwTpayYLsoDAlgZ7y6E2XDo5kXUICk
+ iCESGJ1abXeXSDFMMLVt5w2H/CUuWi8WcaBj1G7NVOha4QheifVl+OkJDwtkLgBbOO/rUF0xz
+ G8dwkNMIargRjZ8S+xTW+7tRa8MTRu+U8QlIq8VmJNtSe0uhg/7BqjGStF9jUqJPOScfwVCFX
+ grdudE9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When determining whether a handle corresponds to a *real* Win32 Console
-(as opposed to, say, a character device such as /dev/null), we use the
-GetConsoleOutputBufferInfo() function as a tell-tale.
+From: Alan Davies <alan.n.davies@gmail.com>
 
-However, that does not work for *input* handles associated with a
-console. Let's just use the GetConsoleMode() function for input handles,
-and since it does not work on output handles fall back to the previous
-method for those.
+Git only colours the output and uses pagination if isatty() returns 1.
+MSYS2 and Cygwin emulate pseudo terminals via named pipes, meaning that
+isatty() returns 0.
 
-This patch prepares for using is_console() instead of my previous
-misguided attempt in cbb3f3c9b1 (mingw: intercept isatty() to handle
-/dev/null as Git expects it, 2016-12-11) that broke everything on
-Windows.
+f7f90e0f4f (mingw: make isatty() recognize MSYS2's pseudo terminals
+(/dev/pty*), 2016-04-27) fixed this for MSYS2 terminals, but not for
+Cygwin.
 
+The named pipes that Cygwin and MSYS2 use are very similar. MSYS2 PTY pipes
+are called 'msys-*-pty*' and Cygwin uses 'cygwin-*-pty*'. This commit
+modifies the existing check to allow both MSYS2 and Cygwin PTY pipes to be
+identified as TTYs.
+
+Note that pagination is still broken when running Git for Windows from
+within Cygwin, as MSYS2's less.exe is spawned (and does not like to
+interact with Cygwin's PTY).
+
+This partially fixes https://github.com/git-for-windows/git/issues/267
+
+Signed-off-by: Alan Davies <alan.n.davies@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ compat/winansi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/compat/winansi.c b/compat/winansi.c
-index cb725fb02f..590d61cb1b 100644
+index 590d61cb1b..fa37695fca 100644
 --- a/compat/winansi.c
 +++ b/compat/winansi.c
-@@ -84,6 +84,7 @@ static void warn_if_raster_font(void)
- static int is_console(int fd)
- {
- 	CONSOLE_SCREEN_BUFFER_INFO sbi;
-+	DWORD mode;
- 	HANDLE hcon;
+@@ -562,8 +562,12 @@ static void detect_msys_tty(int fd)
+ 	name = nameinfo->Name.Buffer;
+ 	name[nameinfo->Name.Length] = 0;
  
- 	static int initialized = 0;
-@@ -98,7 +99,10 @@ static int is_console(int fd)
- 		return 0;
+-	/* check if this could be a MSYS2 pty pipe ('msys-XXXX-ptyN-XX') */
+-	if (!wcsstr(name, L"msys-") || !wcsstr(name, L"-pty"))
++	/*
++	 * Check if this could be a MSYS2 pty pipe ('msys-XXXX-ptyN-XX')
++	 * or a cygwin pty pipe ('cygwin-XXXX-ptyN-XX')
++	 */
++	if ((!wcsstr(name, L"msys-") && !wcsstr(name, L"cygwin-")) ||
++			!wcsstr(name, L"-pty"))
+ 		return;
  
- 	/* check if its a handle to a console output screen buffer */
--	if (!GetConsoleScreenBufferInfo(hcon, &sbi))
-+	if (!fd) {
-+		if (!GetConsoleMode(hcon, &mode))
-+			return 0;
-+	} else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
- 		return 0;
- 
- 	/* initialize attributes */
+ 	/* init ioinfo size if we haven't done so */
 -- 
 2.11.0.rc3.windows.1
 
