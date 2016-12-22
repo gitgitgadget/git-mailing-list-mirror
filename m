@@ -2,88 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11DC31FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 17:57:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3D3F1FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 17:59:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941804AbcLVR53 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 12:57:29 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58092 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932468AbcLVR52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 12:57:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CAA05922F;
-        Thu, 22 Dec 2016 12:57:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ed2YvBBxeUOvExxi3CfAi4wmfRU=; b=w7VWqm
-        fHydomMs2SgGtFtl1OsWcycm5ybCxOmnJ8duzGzLKdaTVF2LuuX5JBH5c5u7f99o
-        KM0QN40cnmbMCV0fvI5+v0+d5OB1oi3b515GwCmWTOq5DuOOcBMQZULC97oPnH8i
-        Lh7yMSCcPN26S/na1jmEbRtHN7DmNU9obG5UA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gFmViSRo27nUPFw2gxtYPqlRZBUxLz1+
-        YRnswwFuWY/3XwnueGoBNmrAIczJ49CeXX0F6XQ8+0hY3r91aErd/Mytma52IPiq
-        ZtEmKsjPI/O4nZ+UMsvbvvOf1yqnRRI++YqXrWH6huYB7LGLIF9pAEWP1riSK4ss
-        XiGTzwbwrIw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33F155922E;
-        Thu, 22 Dec 2016 12:57:27 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C0C85922C;
-        Thu, 22 Dec 2016 12:57:26 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Kyle J. McKay" <mackyle@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] mailinfo.c: move side-effects outside of assert
-References: <900a55073f78a9f19daca67e468d334@3c843fe6ba8f3c586a21345a2783aa0>
-        <20161219200259.nqqyvk6c72bcoaui@sigill.intra.peff.net>
-        <A916CED6-C49D-41D8-A7EE-A5FEDA641F4A@gmail.com>
-        <alpine.DEB.2.20.1612201511480.54750@virtualbox>
-        <20161220164526.qnwnmr7cvyycmw6a@sigill.intra.peff.net>
-        <222ACFD4-ED9A-4B94-8BDD-3C70648A684B@gmail.com>
-        <20161221155539.aykcmkuzqvq733ri@sigill.intra.peff.net>
-        <F5001DF2-20C2-4757-997F-9D40BD48E1D9@gmail.com>
-        <20161222033418.dmslmuhq7mqhmkwq@sigill.intra.peff.net>
-Date:   Thu, 22 Dec 2016 09:57:25 -0800
-In-Reply-To: <20161222033418.dmslmuhq7mqhmkwq@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 21 Dec 2016 22:34:19 -0500")
-Message-ID: <xmqq7f6rhmnu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S965187AbcLVR7V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 12:59:21 -0500
+Received: from mout.gmx.net ([212.227.17.20]:57526 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965052AbcLVR7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 12:59:21 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsD9n-1ciIIR1ynf-013zGN; Thu, 22
+ Dec 2016 18:59:12 +0100
+Date:   Thu, 22 Dec 2016 18:59:10 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v2 0/3] Really fix the isatty() problem on Windows
+In-Reply-To: <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1612221852320.155951@virtualbox>
+References: <cover.1482342791.git.johannes.schindelin@gmx.de>        <cover.1482426497.git.johannes.schindelin@gmx.de> <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 193AD9A2-C870-11E6-A480-E98412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:JWg8ZBrno86YfTC1Flrue9KoB5sxQQRg7Z43ovdBHw9deKFEzwN
+ DHQ3puj5idHbl5x65WQoDriTI4/Z+02/23jkL5JYh3ojTHaqiDBH3GQINEpMnnICdHybG0t
+ sxAQMq9uWznFzIKws3SrstWElDmqgmBweQGL4z4oELrkgw9itfHxmjQbaUMq07L/2aj5E9/
+ Xxww+eQZ9U+tImq7XdP3Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SLcXZV7L/DU=:jSEOsYfYvQQbzossruCKxy
+ LmBrYDrsRmB2blPANnwFa34n3EmT5zEj4n0tzxrtE14nyqgPHGYg8PiJdA2s2iPnGbYQuvOEK
+ AroTyihm9SOeNoHFZiXLwX58TXMs59VOrzdeFGZGT22dZnCLcDDomVrW+yFdHWCIglMfPjFU3
+ Jxktp90e1iGWCYRvhCGnZGTj+ybMXBQcewH4+3P91MCTd+A6XveyCuqHpdn4F+6j/4lfYYhtv
+ PHtQ737yOAjP6PkgPfohsHgRrfMvm2c2+7cEJaxjs651SYcda1oGOb9czby7R2uzRAyjEol3I
+ aVqlFRC8/00M3bfbzBepC4HzE6YP0wFh0hKa1vKpa2HFdDdNnMJunO/9KAfLUD78RV7HMGKd0
+ DmZn5RZJa/CQTlnilJXkI2Y0/fi2Z1rbMYZLAPgjjBWwAP9Nnvj+T/y6kvnm3yvlHWhx2L7eF
+ pF5Egx/T8avUfvvcNwE9XeW8uBYKfjN7W1L0tj4eEzEOLPGAchw8eGAzg478sPdKKGrIq7xhC
+ Cs2iRnixd9LfMNQfP1dvYEoQuUNPFlQ+iFLirwEQPLFAILdIrV3oL0Hun46mMsr3KpXSqSqoJ
+ El0RuYqE60Y7dyNkhBoZ6zBZ5HpMWJ9wsjIvvheBy86Z8ZXpK/v3f5VGM0KR6kTAWPK5se7Kk
+ 7J6sA22zsnA+VaaN7+cDXEIAr9Rl6QYZIU7BI/eLNIpwN75BbykoRZ2b3KLKATReOXg5mHA7o
+ miWQaviHSl7h+H4+463N9cpubkM+q6TiPpxViwK7U0VtxR6+jFHuSlffJyu3C4lDi9T9FtAxC
+ YOANv8/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Junio,
 
-> Well, no, I mostly just said that I do not think there is any point in
-> defining NDEBUG in the first place, as there is little or no benefit to
-> removing those asserts from the built product.
-> ...
-> Sure, if you want to mass-convert them, doing so with a macro similar to
-> assert is the simplest way. I don't think we are in a huge hurry to do
-> that conversion though. I'm not complaining that NDEBUG works as
-> advertised by disabling asserts. I'm just claiming that it's largely
-> pointless in our code base, and I'd consider die("BUG") to be our
-> "usual" style. 
+On Thu, 22 Dec 2016, Junio C Hamano wrote:
 
-I agree with all of the above. Given the way how our own code uses
-assert(), there is little point removing them and turning them over
-time into "if (...) die(BUG)" would probably be better.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > - unsquashed 2/3 which was improperly snuck in before,
+> 
+> As Windows specific changes, I didn't notice these two were independent.
 
-Borrowed code like nedmalloc may be a different story, but as you
-said in a separate message in this thread, I think we are better off
-leaving that to those who care about that piece of code.
+Yeah, sorry, I only realized today that I had snuck that one in when
+re-reviewing the changes.
+
+> > - fixed the confusing commit message by using Junio's suggested
+> >   replacement
+> 
+> Sorry, but I didn't mean to "suggest replacement".  I was just
+> testing my understanding by attempt to rephrase the gist of it.
+
+I did like your phrasing, though.
+
+> There was one thing I still wasn't clear in my "summary of my
+> understanding".  Is the "replacement originally done for compiling
+> with VC++" a solution that still peeks into MSVC runtime internals
+> but is usable with both old and more recent one?  Or is it a more
+> kosher approach that does not play with the internals to make it
+> unlikely that it would have to change again in the future?
+
+Oh, it is kosher. There is no more messing with internals.
+
+> Your "use this opportunity to actually clean up" above suggests that
+> the answer is the latter, but if you took my "summary of my
+> understanding", it is likely that that fact is not captured in the
+> resulting log message.
+
+Right... I tried to make that clear by saying that this change replaces
+the hack.
+
+> The interdiff obviously looks good.  Let's move this series forward.
+> I'll see if it can be merged down to 'maint', too, but it probably
+> would not matter that much.
+
+I will have to release a new Git for Windows version Real Soon Now [*1*],
+so I will have to take those patches kind of there (as Git for Windows
+will be based on upstream/maint for a while now).
+
+My thinking is that I will publish a prerelease either tonight or
+tomorrow, then go offline until next year, and then immediately publish
+Git for Windows v2.11.0(2) (or v2.11.1 if you publish a bugfix version in
+the meantime).
+
+Ciao,
+Dscho
+
+Footnote *1*: There is a new cURL version with some security fixes,
+although I do not think they are super-critical, then there is the fix for
+the double slashes in //server/share/directory, the fix for the empty
+credentials and I should probably also try to update the MSYS2 runtime to
+the newest version of Cygwin's runtime. Lots of stuff.
