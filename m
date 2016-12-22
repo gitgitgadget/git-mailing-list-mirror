@@ -2,74 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82EF21FCC7
-	for <e@80x24.org>; Thu, 22 Dec 2016 22:38:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D34E1FCC7
+	for <e@80x24.org>; Thu, 22 Dec 2016 22:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966449AbcLVWin (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 17:38:43 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:34508 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965603AbcLVWim (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 17:38:42 -0500
-Received: by mail-qk0-f179.google.com with SMTP id q68so128611703qki.1
-        for <git@vger.kernel.org>; Thu, 22 Dec 2016 14:38:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Mh+FrOR8JkinHHxBn1Mi8QAgwOpqvtetk+fYjqcTdiE=;
-        b=Qt/GWlHANIXI+qgQSuN5vG/aqd5NNp/lZOurJybhR8WXnWL/V20QDUKEBbg6OUsI6t
-         J8Ta3IQOUPAihQM8SzhAo5oyAJW46YAP9wjtxCa47ofMenRRRzTqjLV/mRAwonnVwNSe
-         tHriFR00Q36O86/5VvxyOjaFt/sFO8z4VhOYS9fmjZTTg3ZSKhvWgsSLd/Q3v2peZU0h
-         a5urIKDAqckMwJCt1iThjAUUMjJxSHQGuGuUED96dGsJF+k6WCTIkM8cHwV3P55v5rn2
-         ecWMDYn83FTAMvwNZRQGsL367Q9rP5tqkBVIpVCqzpYopkyc8/3c29PcfJimswgJiLFD
-         Hkow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Mh+FrOR8JkinHHxBn1Mi8QAgwOpqvtetk+fYjqcTdiE=;
-        b=jqWlMl4gffKvBASt0WcmMFaa4NfwbdAFhcn8UrfY2Z68OwcG1AO/tJrpYyGWqK7nrc
-         Z3U8JvME+7vTdycnOxb2KolpUipyNbpGO+Nr5KTYYyKO/jpkqJrfLa/HyMWRKGm1PeAJ
-         +ItITGdavpvcrK7jHzrU6MtnCvI5/+aELSxTEMMSORkZJCDVhsLSjJIkcZmu5eKLgbe+
-         k5xwHBTqRmQJ5MhQvfU3NpvavEQytsAveV91bIps4EXixWmRdS414dRCmQdafbJkGSYQ
-         XcEPWjnFQd/hXuuWnO9ZyyB6OfgX+ejAIrX7c1ws1lB0CsNNuDmGsPdRQXLynoL7NCS1
-         ZyRw==
-X-Gm-Message-State: AIkVDXKa5ZFeEuQVb0qcxkQWhQW0SiOQShY0LERNlL9ScM9w+a5XmTTSnjl1vyS8H5UoJDl7Zbyx1iSUVaE5MZIn
-X-Received: by 10.55.105.129 with SMTP id e123mr13240135qkc.173.1482446321665;
- Thu, 22 Dec 2016 14:38:41 -0800 (PST)
+        id S941271AbcLVWn4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 17:43:56 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62035 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S941232AbcLVWnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 17:43:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0DA7758B44;
+        Thu, 22 Dec 2016 17:43:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XqGFZHwY128Vq9MVfwppJklHz5w=; b=CKZYNn
+        oek+V1c3f7gfyYVvM+uC9b1lkIA8g0NbxITz2D8wCYLbxVqIVpL6CaVRYiC5FlIR
+        MKP9jl/Il1jTjfn0WLlkWHvYFqxahBKz/A/rZuM1GAK1LV8Cu7xG7xd+csBQQo1O
+        bIAYhHM0PVDtonlHgI4WZ7FpELQ+cMdsRKLJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=APEK7n/TJUpKklaHoaFpR+pApSaJ8l93
+        xBM7cXfaIJlOEZEE5OkCjWNZe0MYr3pY0Dhb/4tz20iF0LXOWn+i/BcNN8y47zOE
+        ev+SnW7WSkW9U3v+qcYxM+/cKh9b9GHNpgqMeKw1fmsL64nqCG1fWicJwVxB+hVP
+        n8LPqQxUFPY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0411558B42;
+        Thu, 22 Dec 2016 17:43:55 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7784E58B41;
+        Thu, 22 Dec 2016 17:43:54 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Norbert Kiesel <nkiesel@gmail.com>
+Subject: Re: [PATCH] diff: prefer indent heuristic over compaction heuristic
+References: <20161217005442.5866-1-jacob.e.keller@intel.com>
+        <xmqq7f6zqr3i.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xp=7h7oATwO6vunqO+nfGhvQgiRkwG0P44hC4YLW2MRhA@mail.gmail.com>
+        <xmqqinqbfz2r.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xrkp-qiUVmfeLUcaMP-RSDbH4u3vCjVoQN8=mhz25Cd3A@mail.gmail.com>
+Date:   Thu, 22 Dec 2016 14:43:53 -0800
+In-Reply-To: <CA+P7+xrkp-qiUVmfeLUcaMP-RSDbH4u3vCjVoQN8=mhz25Cd3A@mail.gmail.com>
+        (Jacob Keller's message of "Thu, 22 Dec 2016 13:41:38 -0800")
+Message-ID: <xmqqpokjeg9i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Thu, 22 Dec 2016 14:38:41 -0800 (PST)
-In-Reply-To: <6ff2c5a3-fe81-0bec-ad9a-d62bdb4a176f@gmail.com>
-References: <6ff2c5a3-fe81-0bec-ad9a-d62bdb4a176f@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 22 Dec 2016 14:38:41 -0800
-Message-ID: <CAGZ79kbZ-+LFgDiwekXteTq6BWfLc1Ab_3FKW5VRSUh2Meb5Dg@mail.gmail.com>
-Subject: Re: Feature request: git rebase --no-edit --continue
-To:     Daniel Chumak <chumak.daniel.dev@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1DFD11E4-C898-11E6-AD61-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 22, 2016 at 2:35 PM, Daniel Chumak
-<chumak.daniel.dev@gmail.com> wrote:
-> Is there a reason why there is no '--no-edit' option for git rebase?
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-Nobody added it so far.
-
-> I would
-> like to use this option after editing a commit and continuing the current
-> interactive rebase without having to change the commit message.
+>>                 { OPTION_LOWLEVEL_CALLBACK, 0, "compaction-heuristic", NULL, NULL, N_("Use an experimental blank-line-based heuristic to improve diffs"), PARSE_OPT_NOARG, parse_opt_unknown_cb },
+>>
 >
+> The unchanged context line should have its description re-worded to
+> something like "Use an experimental heuristic to improve diffs" as it
+> no longer uses only blank lines.
 
-You're welcome to write a patch for it. :)
+Thanks.  The final copy I pushed out has that change.
 
-On the other hand you could just use
-EDITOR=true git rebase --continue
