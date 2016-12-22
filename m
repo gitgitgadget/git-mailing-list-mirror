@@ -2,72 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDE3B1FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 18:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A40141FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 18:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966532AbcLVScW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 13:32:22 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60532 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S966534AbcLVScV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 13:32:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BDAB9598A1;
-        Thu, 22 Dec 2016 13:32:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D8ik5xTmVyfXrBfRz40fcCIUB7k=; b=Gb+QVU
-        8+TQX52wAq6rru2+RFSOCThHZFgrg8RH/8+czof1lJCGFrlvzgSAJOvVwUbELGcC
-        qbm/phY/JyQ1AjQ3DOp135oYkFP6HuPgExsxwoynFCVBYXtPDegHqIo/s4MUx/Sq
-        G/jSgIMhNPfMM8TSvQHWouSPHGDHyr7LunI3k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Af5xVGRw2S1OOCt2A/9J3k0kM4rQ8BDe
-        W6o5ovFKMm/D60Rqj4vB/29+YRPNyLotV4TkUXurhB/vu4hueRN15XV5euXp1LAe
-        1j/yMlyiVqhRu7ImJRj2UgbuN2ovY8qiuikhW+EKFiO1PkKhijs9nb9U+Q2wqUur
-        B4gQzWpapzk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B48E8598A0;
-        Thu, 22 Dec 2016 13:32:18 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F2C65989F;
-        Thu, 22 Dec 2016 13:32:17 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH v2 0/3] Really fix the isatty() problem on Windows
+        id S965748AbcLVSsi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 13:48:38 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:34147 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755587AbcLVSsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 13:48:37 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3tl0sb1GK7z5tlP;
+        Thu, 22 Dec 2016 19:48:35 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 185151B85;
+        Thu, 22 Dec 2016 19:48:34 +0100 (CET)
+Subject: Re: [PATCH 0/2] Really fix the isatty() problem on Windows
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <cover.1482342791.git.johannes.schindelin@gmx.de>
-        <cover.1482426497.git.johannes.schindelin@gmx.de>
-        <xmqqd1gjhn0u.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1612221852320.155951@virtualbox>
-Date:   Thu, 22 Dec 2016 10:32:16 -0800
-In-Reply-To: <alpine.DEB.2.20.1612221852320.155951@virtualbox> (Johannes
-        Schindelin's message of "Thu, 22 Dec 2016 18:59:10 +0100 (CET)")
-Message-ID: <xmqqy3z7g6hb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+ <b0541907-ee79-207b-dc0f-1e3e7d761950@kdbg.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <ecc920bc-5323-a85c-c29f-9a3a7e4450e8@kdbg.org>
+Date:   Thu, 22 Dec 2016 19:48:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F7D0B836-C874-11E6-9703-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <b0541907-ee79-207b-dc0f-1e3e7d761950@kdbg.org>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->> Sorry, but I didn't mean to "suggest replacement".  I was just
->> testing my understanding by attempt to rephrase the gist of it.
+Am 21.12.2016 um 22:15 schrieb Johannes Sixt:
+> Am 21.12.2016 um 18:53 schrieb Johannes Schindelin:
+>> The current patch series is based on `pu`, as that already has the
+>> winansi_get_osfhandle() fix. For ease of testing, I also have a branch
+>> based on master which you can pull via
+>>
+>>     git pull https://github.com/dscho/git mingw-isatty-fixup-master
 >
-> I did like your phrasing, though.
+> Will test and report back tomorrow.
 
-OK, then let's use these three patches as-is.  I just made sure that
-they can go to maintenance track for 2.11.x; so all should be good.
+This version 1 of the series passes the test suite (next + a handful 
+other topics) for me. It has also undergone a bit of field testing, and 
+things look fine.
 
-Thanks.
+I haven't looked at the resulting code, yet, but I don't expect to find 
+anything fishy.
+
+-- Hannes
+
