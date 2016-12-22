@@ -7,150 +7,105 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7CE11FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 17:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BC121FF6D
+	for <e@80x24.org>; Thu, 22 Dec 2016 17:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761887AbcLVRJH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 12:09:07 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57739 "EHLO mout.gmx.net"
+        id S1759721AbcLVRJ2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 12:09:28 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63411 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755550AbcLVRJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 12:09:06 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ltr89-1cjvdJ3uGz-011EIm; Thu, 22
- Dec 2016 18:08:53 +0100
-Date:   Thu, 22 Dec 2016 18:08:51 +0100 (CET)
+        id S1762052AbcLVRJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 12:09:27 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCxfb-1cTlv124fr-009fva; Thu, 22
+ Dec 2016 18:09:20 +0100
+Date:   Thu, 22 Dec 2016 18:09:18 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
+cc:     Alan Davies <alan.n.davies@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v2 0/3] Really fix the isatty() problem on Windows
-In-Reply-To: <cover.1482342791.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1482426497.git.johannes.schindelin@gmx.de>
-References: <cover.1482342791.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 2/3] mingw: fix colourization on Cygwin pseudo terminals
+In-Reply-To: <cover.1482426497.git.johannes.schindelin@gmx.de>
+Message-ID: <796e3c4b5bda1170bfbb690a73dab5442b9c77e4.1482426497.git.johannes.schindelin@gmx.de>
+References: <cover.1482342791.git.johannes.schindelin@gmx.de> <cover.1482426497.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Z8fgCyWrWniXip7pYGOTXkcAnyZ6rWa1rKBZYw/s7Rh5B64WMuS
- 0eezzJx/01NmnIGyF7vQEn83M6lVzE+2FeMYAjOxtp6Uct5Ptga4B6JpIMStpdNAPwLN6JO
- vboLcgxDvSK3veuWsjfFPjkAWOEaN0q5Tucy3BXAahKVp1rCNXsWCQkszx00s5SbsoJZoU1
- dyDI3G0nlrrK2wj6ICnnQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HYCp19liC0k=:Nx8NwISWHuRYm1J/+v9VmZ
- g0V18QnFldhLurUYxq0wQFKSSreglyYYqw3Lg7alvVEd/tIfEBhfGAlXM1cyG05TyXud5tkT5
- aEd8ORfZpO4hyNLZHGoCVdSYTvE+QAw4M0f7ZvvDlBpNdc0chJcVZIvAOZCIrn+wCsJcFddvE
- OQcHm762kZvEcBYDoFL0UGAB2M+ZSMQ/hwkUeUaQMPX4Ncb3U3Tsc4CyWe5Q5BlyAzrUiCRp4
- 8Mj0i22vrKuRzrkg98oEEU8RvKF6AITSFjtGS/2XaANvHX4vs4f1hdigdx1K6zSi0xoD1vk1+
- 1COp+4/U9gGKTeofR9DDSKS0DNB7DEV5QcOW4R4isa5nEtrZXMGp2IV7DdyFkKV6U4VYqO6fg
- WGmYE3/hlZSsTBoMCR2MPEwWHsOjvVy9dzUL1CLxUamyvrZu6sDyNW2KlxsfQ09W5Oy01LyCd
- MpuYO1ny0g5fu9IGijRGl/sSvmhCC79gxLWIfrnee/OuLIkDAMe4Lp6UDH+2SK7/728q9WGPj
- IKfiB1lodJOPOfXzAHTdFHENbraQYEe4ksDpU2qZOWeUJgR+Yu+lUCCHPzuA5X4R09rGhLyrp
- BSeP3WnEpFNGGQ2nv93Fd5dO6GUOC+pdHS4cQDTUWkttuPKepiKi9xzQUS4KOPahVu0i1slZj
- bxTE82cFO2O8KXhVOi0gqcuWDr+ea8Qj/mqDsasVLXCBIMiDyYmzUEdq0e5hQMMuFvaQ4Fy7O
- M39MxKfhLLk4jTB76+6KYXPW8ND7RG4VOy4+6oUqCqc0vG8BG0s4s6Qr1QzVyqb4vGUBFN8so
- XkTl8yx
+X-Provags-ID: V03:K0:xr5xsh8PAXxDyH4srXE2SpWmT/4AYEnt7b4oSuLiZxyujqCIQ22
+ IpsdTmVhPTHsePzwghqqaV1ZxkX7FUQljpdgcahNUKZvJTPdwbmCBMq6gVmy55RwgDFHno/
+ 6RJBH2AomxMKz3wcKj2fblA9f+Tmmvm0A0w77G9DuLNloU4UQVzA/N3JvUMFii8AAH/zonb
+ bZmO6NaFcCJBx+SNp2SSA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vCVVifByDxY=:44zIRSEpN9uhIDXG9Jia+L
+ buzl5kZGSjYLrl9cEp4yGm8RlHVo6cSTmQE8b7ZNXk4OB7F1aI+25aR4pOd21q8v7n7m68yy6
+ +TyA6T1CaLUrcVrAYuED2atRenmqcp/+hevJqso5WRovsG2vWLyqA+OFeCDAKm0bucr/+bTdK
+ DdNr4uCalyBxSDpNiqQiDdnEgSow+KnHnnKdvMQSGpPLDlFNuDO6Bo/QBNhw9RWs6OirZ4yR3
+ X8HPvNFuMwzhxZC45WzAUTt68JeKteUlJtwsBoJN6isrsbdqhtxVdb/haBzMCgV0CU03SJ9dV
+ MY985WUskDFpKQGE1pJSrzVZ+/x4Z0YixyV12SZd7jaSs0O/n64pP1zme13aKyI3TiAtqybms
+ S3wrDduGiyiJRnKHgJpOFJ0db7HCLkUoJk+gjH3dsA0ZIiSLqjRWTYkoNwkGSJppME0JbGWqw
+ J+P0CITznMPUtM6++IimyNIAa0acvtaTcYRmnDco4CeinOnVWrCbTjizxcSAchUkcQ5yQ3zhM
+ s6dpU+8GASss8B21JJ0LSCiUE9J+20jr1b6Mu2jBzEn3csqB9R9XcRgSQaQOaYHOOHiW3evKp
+ eNrALv1curPNxaGsmp4c7eRU+LRPmqxXeKGLuROumZIkSTbd4lSWfacZdJVBsSLVFAUQ7f86T
+ O+KJRxm0h3mdPvLJcUuUxhBI+2pDfB2FG3uLyzVA2753T9wF1e555XXXMGJYVqnXNkzGAWoqC
+ eC0r81JDJcqxrbMheEjmGZfGb+OUDXZcHBwGDTHx2GxyUS4PMnYCuk/FYBrLeXEDgBTpx9gsS
+ Yq+/nLeQvdTNXuxTAdGixJ/OlsDJgYnhFkh2O7ILDUrROjeFbW/gE5TAJSJ7mkV3ziOHABHZu
+ RwcM0TDePE4QccXCne8cpI7scRKvjQxam9Z7wJGDM2UlKWWNH1/Ee//2QuMfBvTL+n8PUCsAD
+ /SgEn787GRKgvGirYcMQnSVwYhVkfFxJoPYCytFMcw20Arze+XKJk82cdZ6SVWn6ZEGmR3pof
+ ZGNUrIkG7pTwuSa42maDwWSgBXAlmM0rmRoOhB7YY8taCv0lu/JfgOZ2YCkUOgIqvw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My previous fix may have fixed running the new
-t/t6030-bisect-porcelain.sh script that tested the new bisect--helper,
-which in turn used isatty() to determine whether it was running
-interactively and was fooled by being redirected to /dev/null.
+From: Alan Davies <alan.n.davies@gmail.com>
 
-But it not only broke paging when running in a CMD window, due to
-testing in the wrong worktree I also missed that it broke paging in Git
-for Windows 2.x' Git Bash (i.e. a MinTTY terminal emulator).
+Git only colours the output and uses pagination if isatty() returns 1.
+MSYS2 and Cygwin emulate pseudo terminals via named pipes, meaning that
+isatty() returns 0.
 
-Let's use this opportunity to actually clean up the entire isatty() mess
-once and for all, as part of the problem was introduced by a clever hack
-that messes with internals of the Microsoft C runtime, and which changed
-recently, so it was not such a clever hack to begin with.
+f7f90e0f4f (mingw: make isatty() recognize MSYS2's pseudo terminals
+(/dev/pty*), 2016-04-27) fixed this for MSYS2 terminals, but not for
+Cygwin.
 
-Happily, one of my colleagues had to address that latter problem
-recently when he was tasked to make Git compile with Microsoft Visual C
-(the rationale: debugging facilities of Visual Studio are really
-outstanding, try them if you get a chance).
+The named pipes that Cygwin and MSYS2 use are very similar. MSYS2 PTY pipes
+are called 'msys-*-pty*' and Cygwin uses 'cygwin-*-pty*'. This commit
+modifies the existing check to allow both MSYS2 and Cygwin PTY pipes to be
+identified as TTYs.
 
-And incidentally, replacing the previous hack with the clean, new
-solution, which specifies explicitly for the file descriptors 0, 1 and 2
-whether we detected an MSYS2 pseudo-tty, whether we detected a real
-Win32 Console, and whether we had to swap out a real Win32 Console for a
-pipe to allow child processes to inherit it.
+Note that pagination is still broken when running Git for Windows from
+within Cygwin, as MSYS2's less.exe is spawned (and does not like to
+interact with Cygwin's PTY).
 
-While at it (or, actually, more like: as I already made this part of v1
-by mistake), upstream the patch carried in Git for Windows that supports
-color when running Git for Windows in Cygwin terminals.
+This partially fixes https://github.com/git-for-windows/git/issues/267
 
-Changes since v1:
+Signed-off-by: Alan Davies <alan.n.davies@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/winansi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-- rebased onto master
-
-- unsquashed 2/3 which was improperly snuck in before,
-
-- noted that Beat Bolli tested this (see
-  https://github.com/git-for-windows/git/issues/997#issuecomment-268764693)
-
-- fixed the confusing commit message by using Junio's suggested
-  replacement
-
-- added the missing white space between ">=" and "0"
-
-
-Alan Davies (1):
-  mingw: fix colourization on Cygwin pseudo terminals
-
-Jeff Hostetler (1):
-  mingw: replace isatty() hack
-
-Johannes Schindelin (1):
-  mingw: adjust is_console() to work with stdin
-
- compat/winansi.c | 198 +++++++++++++++++++++++--------------------------------
- 1 file changed, 84 insertions(+), 114 deletions(-)
-
-
-base-commit: 1d1bdafd64266e5ee3bd46c6965228f32e4022ea
-Published-As: https://github.com/dscho/git/releases/tag/mingw-isatty-fixup-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git mingw-isatty-fixup-v2
-
-Interdiff vs v1:
-
- diff --git a/compat/winansi.c b/compat/winansi.c
- index f51a2856d2..477209fce7 100644
- --- a/compat/winansi.c
- +++ b/compat/winansi.c
- @@ -108,7 +108,7 @@ static int is_console(int fd)
-  	} else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
-  		return 0;
-  
- -	if (fd >=0 && fd <= 2)
- +	if (fd >= 0 && fd <= 2)
-  		fd_is_interactive[fd] |= FD_CONSOLE;
-  
-  	/* initialize attributes */
- @@ -555,7 +555,8 @@ static void detect_msys_tty(int fd)
-  
-  #endif
-  
- -/* Wrapper for isatty().  Most calls in the main git code
- +/*
- + * Wrapper for isatty().  Most calls in the main git code
-   * call isatty(1 or 2) to see if the instance is interactive
-   * and should: be colored, show progress, paginate output.
-   * We lie and give results for what the descriptor WAS at
- @@ -565,7 +566,7 @@ static void detect_msys_tty(int fd)
-  #undef isatty
-  int winansi_isatty(int fd)
-  {
- -	if (fd >=0 && fd <= 2)
- +	if (fd >= 0 && fd <= 2)
-  		return fd_is_interactive[fd] != 0;
-  	return isatty(fd);
-  }
-
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 590d61cb1b..fa37695fca 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -562,8 +562,12 @@ static void detect_msys_tty(int fd)
+ 	name = nameinfo->Name.Buffer;
+ 	name[nameinfo->Name.Length] = 0;
+ 
+-	/* check if this could be a MSYS2 pty pipe ('msys-XXXX-ptyN-XX') */
+-	if (!wcsstr(name, L"msys-") || !wcsstr(name, L"-pty"))
++	/*
++	 * Check if this could be a MSYS2 pty pipe ('msys-XXXX-ptyN-XX')
++	 * or a cygwin pty pipe ('cygwin-XXXX-ptyN-XX')
++	 */
++	if ((!wcsstr(name, L"msys-") && !wcsstr(name, L"cygwin-")) ||
++			!wcsstr(name, L"-pty"))
+ 		return;
+ 
+ 	/* init ioinfo size if we haven't done so */
 -- 
 2.11.0.rc3.windows.1
+
 
