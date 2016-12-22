@@ -2,80 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311F91FF6D
-	for <e@80x24.org>; Thu, 22 Dec 2016 21:23:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D821F206A2
+	for <e@80x24.org>; Thu, 22 Dec 2016 21:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938782AbcLVVXe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Dec 2016 16:23:34 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57904 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933582AbcLVVXe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2016 16:23:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32A2059E4D;
-        Thu, 22 Dec 2016 16:23:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hstyRbE+7BeXMA4uE4IXo3PIZao=; b=LIqi8x
-        34xNLXtDn6olQdNcZsOmYrMzarZ29KjJJIxBr/YpUjyIe8CwLGM31dxbNko6jUqH
-        xEZ9j79X7AuOjCnPtQoBEYViLEBy4jNm9uz3nhx4p+gb5QUU0MkBkdp4O+Cd7NTv
-        3a3mKgtY0Avt2NDZvqFSJGtjsCBKKuAi/68gI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bbD5cJ/XeiYbEkbeWM0wfCPCUNfuncaW
-        HK4I36NTnVRLTptcNyP6mZaHZ1Prp/ObuzgU8psW/CQzCUgPEA2oifhaWNalO7Vw
-        qe5Cr6qJEBNgy5+J8/b9hivexX3TE2Thx0hYLDy1C31d+IhF0ipSkK3gWN6xiV1A
-        4JFpx7hM07c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A8E859E48;
-        Thu, 22 Dec 2016 16:23:32 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 942EC59E46;
-        Thu, 22 Dec 2016 16:23:31 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH v1] git-p4: fix git-p4.pathEncoding for removed files
-References: <20161218175153.92336-1-larsxschneider@gmail.com>
-        <xmqq37hjobf6.fsf@gitster.mtv.corp.google.com>
-        <CAE5ih7-=bD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoTK02EDfg@mail.gmail.com>
-Date:   Thu, 22 Dec 2016 13:23:30 -0800
-In-Reply-To: <CAE5ih7-=bD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoTK02EDfg@mail.gmail.com>
-        (Luke Diamand's message of "Tue, 20 Dec 2016 11:01:23 +0000")
-Message-ID: <xmqqeg0zfyjx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1758496AbcLVVeK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Dec 2016 16:34:10 -0500
+Received: from mout.gmx.net ([212.227.17.21]:60328 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754159AbcLVVeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2016 16:34:09 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaJWs-1czb6C1hfS-00m30z; Thu, 22
+ Dec 2016 22:33:54 +0100
+Date:   Thu, 22 Dec 2016 22:33:52 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH 0/2] Really fix the isatty() problem on Windows
+In-Reply-To: <ecc920bc-5323-a85c-c29f-9a3a7e4450e8@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1612222233400.155951@virtualbox>
+References: <cover.1482342791.git.johannes.schindelin@gmx.de> <b0541907-ee79-207b-dc0f-1e3e7d761950@kdbg.org> <ecc920bc-5323-a85c-c29f-9a3a7e4450e8@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E35343C0-C88C-11E6-8188-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:RdlvjlkttuGIUq0uA1gSXgPi356kMZCs+Iem+yCwyoDSKXsCpVD
+ qI2gCmuFZ6h2NgRU2FoVhWWpLsCHdTT4iUi9Dj5HWDNy3fU5S5wwbi7uWbLKcnIvmEaMG4i
+ kCO/088O572ULA2Z5+inXL1QJRxMztusoZ83glNNENYps1yfbby19ANWXdpYMJVpF7yqXYn
+ 5vvQ4InrYgfQd5MjEmNXg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:i7M1XjvDBsY=:aJAhfjLEZG/5PCVQc7C3P/
+ Zt8wbltvOEzjNIE4YMF8PXpjW9ROUQubWVCI3MIMWxO2+s8yhGIW7VlMxuDFrkkM47l6T1Qpq
+ 4Kkb+TAL48oaUrtnOrU38/EgpNU4XgyvA5y2WmQLbtTpnUbqtcPYp1ZWLrCz5cnJ1aAdrhMq0
+ Ps/kAi3x78IPtRznkOVnF/BGT/dBEqn/SHf4t03fmo1+0V31PuqxI4zu/NmCEHozHgqytqUEW
+ jKx2rtZDcVuCjdK4kyPKNXeHXbEnhAmZRWSf3i3QQpZcVYyZrZ2uLVwHb+wNEAAAvmwLW/CTe
+ huvaMo1cDOAvw9u5jawVaAwqEc4lBAvkJ8XMuo9CKNVihtwn61CFFbTnKkASMgM3H9cKVQGjG
+ AzVLBRi12cUYp2BzIUhjFwr5QlLi1FTJVjJltcTsEMYkBkoz4BBb6YNPeeixDnA7JD6sLbzqL
+ OpBt0K8cNKdCHvtTyJAjUMCyZbcwC2Xyt2PrmRk38rmG5RgVGhaQIDW3+vzuZKvnQVuvWhEdO
+ k3G8ygkgHadeQXdWnVWplLVnzuiD8XoOt73cvoozTxPvMcCHAQo80JMJRZhSHQ06aLCVBIQ5s
+ RB0DlHvEn02rfAB58pwKtp5HWHt4gqxGTnupqtN8kCmoAhALC7XWLDe42aHu2Atn54OlqKtNJ
+ Yu84rhTsEtBiQIzFyDzBWtgRiE2UgGrK7l3IGbYapaf8bs8x1Aq9qaGnANK6y8z27FRtn2Eb+
+ r4DI/Bu1g6LVWB/2oLb9wcX05jaL9hQXKXoergQ8wbn+E+dcjLew75daFLH46cM6dcw7+onU1
+ bPzT+OqB093iRzOqbVH+ifCaIEh+oE1RZS987qR3zwdwsYXnlUSoy5lG8IBi7qvvgXAP5qN0d
+ 6FNB9o5oK9Sd2eBKQ38iyn/RCdmNEb9f249kiIiYUEc6wKIsGM4cuYy0KfEIWeeUcuZDJtKlV
+ HDLT0PrqSwPVPoT9atxAdVcDhgIEyAPVJJzd8GsKdV3kJLRupKdRLxmvVf1va36IK8FQ7TFIl
+ mL2ABRM5rlmNDf5tIVSybi8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
+Hi Hannes,
 
-> The change puts the logic into stripRepoPath() instead, which is
-> indeed called from both of those functions (good), but also from
-> splitFilesIntoBranches(), but only if self.useClientSpec is set. That
-> function only gets used if we're doing the automatic branch detection
-> logic, so it's possible that this code might now be broken and we
-> wouldn't know.
->
-> Lars, what do you think? Other than the above, the change looks good,
-> so it may all be fine.
->
-> (As an aside, this is the heart of the code that's going to need some
-> careful rework if/when we ever move to Python3).
+On Thu, 22 Dec 2016, Johannes Sixt wrote:
 
-Thanks.  
+> Am 21.12.2016 um 22:15 schrieb Johannes Sixt:
+> > Am 21.12.2016 um 18:53 schrieb Johannes Schindelin:
+> > > The current patch series is based on `pu`, as that already has the
+> > > winansi_get_osfhandle() fix. For ease of testing, I also have a branch
+> > > based on master which you can pull via
+> > >
+> > >     git pull https://github.com/dscho/git mingw-isatty-fixup-master
+> >
+> > Will test and report back tomorrow.
+> 
+> This version 1 of the series passes the test suite (next + a handful other
+> topics) for me. It has also undergone a bit of field testing, and things look
+> fine.
+> 
+> I haven't looked at the resulting code, yet, but I don't expect to find
+> anything fishy.
 
-I'll merge this as-is to 'next', expecting that further refinement
-can be done incrementally.
-
+Thanks for confirming!
+Dscho
