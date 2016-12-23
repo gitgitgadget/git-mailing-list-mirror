@@ -2,135 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EDB01FF76
-	for <e@80x24.org>; Fri, 23 Dec 2016 17:11:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA1C91FF76
+	for <e@80x24.org>; Fri, 23 Dec 2016 17:46:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761715AbcLWRLs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Dec 2016 12:11:48 -0500
-Received: from mout.gmx.net ([212.227.15.15]:52750 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755198AbcLWRLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Dec 2016 12:11:47 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Likl3-1cqEIN3vmX-00cw0u; Fri, 23
- Dec 2016 18:11:35 +0100
-Date:   Fri, 23 Dec 2016 18:11:33 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] mingw: add a regression test for pushing to UNC paths
-Message-ID: <9fb8a9f405b19db087379ea5bbad80c3fbac8e4e.1482513055.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1764215AbcLWRq3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Dec 2016 12:46:29 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63731 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756025AbcLWRq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Dec 2016 12:46:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BD41E586CA;
+        Fri, 23 Dec 2016 12:46:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=q8UMO2MSvtVV6sQzWj222v1CXSs=; b=dx623f
+        p9OLILc6dkgLw2P0HJ+umtok0QeFF/CfVlKuUIvXHA4z+mcgVTjLdW6wYOR9+Jea
+        CalWqSKuqrySXwykl+qbygNzF/qt5PgA432t3/+SUYN+ypoQLqa9bh/LzMMqmP+9
+        pB6PpOfLcfZRGc8Nvz5dNPZFgPevlOMEr8nEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KxVESmZxYXqtzA448pOLujspQ83M/a0U
+        0wPuVsU8Y+jTI+ChVbZd1kq2tV9R25A8H+SmaAuLMz9iCD0dpLojJ5s0TCNrpbJ2
+        ER0bIDaz8CPAbktsZ7d61gri//sODg8oCyPsMAhT6nQwWkQHKxiKDMOO0haN4nu8
+        VoaXzZxaaR4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5340586C9;
+        Fri, 23 Dec 2016 12:46:26 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 22C5F586C8;
+        Fri, 23 Dec 2016 12:46:26 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Dec 2016, #07; Thu, 22)
+References: <xmqqzijnehgb.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8CEKj6Lbn++NHhyB7J8HBrMW4F37SHi2soCH1z=RJz4GQ@mail.gmail.com>
+Date:   Fri, 23 Dec 2016 09:46:24 -0800
+In-Reply-To: <CACsJy8CEKj6Lbn++NHhyB7J8HBrMW4F37SHi2soCH1z=RJz4GQ@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 23 Dec 2016 17:18:42 +0700")
+Message-ID: <xmqqd1giedxr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:EzFHU8cvs0xhOr6asvB397j+OwZSKd7noCdVS0cB1ji/mWVh9ql
- fpRlN7BESPf4ZrularjbdzLvPMipDmysFrYgKh6h2mnudCPjVEjkeSWNXBJgCIIlBpt5EAq
- MR6Q0ca6tCu43xfvE8O/5yZ+lBeo5SEuV4aS2dLpLhypLoEYfgJ30cnKF+W+Vlng5dXOoZY
- FNnQCBb6Lez4UbIBOjQhA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:C1teMtW3gSI=:9giz+eNwa/OqbNUL94rnhq
- mkfM6NukSgz//gjly4etVjZeg3BqsfnMmOZSmMfTFHGPbSv5hIUDiLbT7XGVEy4HHD+qnzBDU
- WQE1VKTf+6kBBSVg092mYgxEvKtnFSrU1ONrfXUZJrfTE1dWrYax5sF7WPn+N8qL98amJ50+F
- OXgqUnw7mjWafVeNo+uA0jbJxDYqlEWsmVadpYkLSn6A7l5x0uyspsIueGASEA5nLEbBE8pVO
- dvq+71TytWJgMM6wc97rxcS5pTKQ5L6qo+LAHMBOJ3InqIL+MdOOX5JlAXl4aTE5zEBfMpEPy
- 7Ym6BmUxLkgiCaqunP0DNV2fjQMEgLch1b5W45rdX9fcQxOwIpSN1krsGZnWlqGsXGP8+kwFW
- +UEGFV3Kms1Z3zTpnA2tNb33AAmPpMfP6j0SkP/z+83FRITu2doI9mJaUp4fraU7PKapuqnwE
- OOgySgbRoDKmkCLu31ks3EbLg72gmNNQqE23fPeCh8dX43xsS08zz/kDOZHgpD67HqxFrPCLS
- wV9cj2J1dpqQPCdUCoJU4riMrTNjwJLdczn9PWOgBTytbcCvrQMIapoufvgukmO4d/irEaV7E
- Ecne8CMdsias1zRurjNCZ+joe1AZUPIqHfVbHE2wLpnGTPhHFBLrouvz+vGqxBoP5O3HP7MoO
- ukZSFhwEzqWCVMQE3FnFsd3Yvy2IhGoYHy9BYfEpu6+owKFp76casJ8+hLLFB06NWmUl/NH76
- +HTe3gppE8pIN8AFlFFxnWzZiInICL6pAzRipfg/L4nfC110SUG9JiYh6hQUJh11Y881xae7a
- QCKOgJb
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9F469EA-C937-11E6-B5B3-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Windows, there are "UNC paths" to access network (AKA shared)
-folders, of the form \\server\sharename\directory. This provides a
-convenient way for Windows developers to share their Git repositories
-without having to have a dedicated server.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Git for Windows v2.11.0 introduced a regression where pushing to said
-UNC paths no longer works, although fetching and cloning still does, as
-reported here: https://github.com/git-for-windows/git/issues/979
+> On Fri, Dec 23, 2016 at 5:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Will merge to 'next'.
+>>  - nd/config-misc-fixes                                         12-22          #3
+>
+> Hold it. You made a comment about rollback lockfile on uninitialized
+> variable or something but I haven't time to really look at it yet.
 
-This regression was fixed in 7814fbe3f1 (normalize_path_copy(): fix
-pushing to //server/share/dir on Windows, 2016-12-14).
+The fix for it is squashed in to the version queued. Please double
+check by fetching from me and comparing it with what you sent out.
 
-Let's make sure that it does not regress again, by introducing a test
-that uses so-called "administrative shares": disk volumes are
-automatically shared under certain circumstances, e.g.  the C: drive is
-shared as \\localhost\c$. The test needs to be skipped if the current
-directory is inaccessible via said administrative share, of course.
+Thanks.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/unc-paths-test-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git unc-paths-test-v1
-
- t/t5580-clone-push-unc.sh | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
- create mode 100755 t/t5580-clone-push-unc.sh
-
-diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
-new file mode 100755
-index 0000000000..e06d230724
---- /dev/null
-+++ b/t/t5580-clone-push-unc.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+test_description='various UNC path tests (Windows-only)'
-+. ./test-lib.sh
-+
-+if ! test_have_prereq MINGW; then
-+	skip_all='skipping UNC path tests, requires Windows'
-+	test_done
-+fi
-+
-+UNCPATH="$(pwd)"
-+case "$UNCPATH" in
-+[A-Z]:*)
-+	# Use administrative share e.g. \\localhost\C$\git-sdk-64\usr\src\git
-+	# (we use forward slashes here because MSYS2 and Git accept them, and
-+	# they are easier on the eyes)
-+	UNCPATH="//localhost/${UNCPATH%%:*}\$/${UNCPATH#?:}"
-+	test -d "$UNCPATH" || {
-+		skip_all='could not access administrative share; skipping'
-+		test_done
-+	}
-+	;;
-+*)
-+	skip_all='skipping UNC path tests, cannot determine current path as UNC'
-+	test_done
-+	;;
-+esac
-+
-+test_expect_success setup '
-+	test_commit initial
-+'
-+
-+test_expect_success clone '
-+	git clone "file://$UNCPATH" clone
-+'
-+
-+test_expect_success push '
-+	(
-+		cd clone &&
-+		git checkout -b to-push &&
-+		test_commit to-push &&
-+		git push origin HEAD
-+	)
-+'
-+
-+test_done
-
-base-commit: 1ede815b8d1562f46b7aa5d55af084a3cad2ecf8
--- 
-2.11.0.rc3.windows.1
