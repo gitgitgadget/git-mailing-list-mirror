@@ -2,95 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A071FF76
-	for <e@80x24.org>; Fri, 23 Dec 2016 22:23:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81F701FF76
+	for <e@80x24.org>; Fri, 23 Dec 2016 23:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753833AbcLWWXr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Dec 2016 17:23:47 -0500
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:35815 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751936AbcLWWXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Dec 2016 17:23:46 -0500
-Received: by mail-yw0-f170.google.com with SMTP id v81so32898876ywb.2
-        for <git@vger.kernel.org>; Fri, 23 Dec 2016 14:23:46 -0800 (PST)
+        id S1752563AbcLWXys (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Dec 2016 18:54:48 -0500
+Received: from mail-wj0-f196.google.com ([209.85.210.196]:35068 "EHLO
+        mail-wj0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751347AbcLWXyr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Dec 2016 18:54:47 -0500
+Received: by mail-wj0-f196.google.com with SMTP id hb5so8897400wjc.2
+        for <git@vger.kernel.org>; Fri, 23 Dec 2016 15:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6hFyu4u/am+oNJTgOD5gpwBWROOx7Z2nnAy1fZ/kkz4=;
-        b=jE9jWcBRbQThxPi+7xrcX74tSjXb2IPuqOqRXM4sduy1bNqZaXknZUsHGUti6Ua5An
-         5lVszRyhZpjfy2XKfOjurm6JOfWaREBd4rq5XAFydaoF4FiBd4APxOvRkBw9ei5Vx3Q8
-         1+rgQdKqEBybtcwDnOMDNz3J9EhTCmfevTuzloKXuAPGOygXKzk6bp21gUq/iDMnBKkM
-         t/Fac43VEJtcmj9WSefhN85bd28xVfPaDF9d1DGoZuyEhTv0fT/vcjnU0dtnCeTKWtE8
-         0X2PG37rCEmqwiG3rP6olhO0WuaGsLSbx1Di6RaobgVPrO9S9m+ChPqHOehpiUX5hscw
-         gznA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9jEhNNRCEvIZ4hYvfpp+Ylad2k4+SSF1fzXDXtcDQcI=;
+        b=Hny9P/h9TuXajhrvdJ0uWWVIkmzpLsjMXwHtVKejHID4NjNXSUWAAjmb0m4bqxOCTP
+         aTkD7mAHIbZ84C7oxiQEKvrIIB4OaGXKBZGD0M1Aonr064EfqjebLPFbYYt8ulUc6g3B
+         v/FCaYslDwFc+R+MswLxAOd3SD9vW2VvbLVNBfnrv6DJ49D+5yQnZFBVoz5JWISpVFuO
+         ZNFt0ge2RqULgqEi7ADmNpGgT+et1XXkk69Pi3eq1LkeMPMWZE6Ar+EIlCYE9f5Zh7Ff
+         d5XgwzchoTVZ7iKrFrY1myLLQloieQteZvhryyCbUsOPALrNPxfuFwCxSbrUJJoXfGE/
+         y1aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6hFyu4u/am+oNJTgOD5gpwBWROOx7Z2nnAy1fZ/kkz4=;
-        b=QuxXOjAO+9iFgNgsplqwd3wg/o6b40tr7Me1HZRy4sL6L5qHxPAs15yP7WIeQmKNFF
-         yuvFvKSrJGHReJfBuZVM8OGj6OMxgHkpHED67Ej7SW3uZWfNZYU1HOtHa3gm1tqIW1sa
-         YYwvpc3mCLsjw+xsOI0OhabIrDziTMB/LOK4pQ25RlTfJ+iAjmH30J3pDDfr05uHGn9Z
-         TwAy0Rw6ZbJx0ErbDrjnbBS3yQ8TfVcIFP8VmSnpuycbGq3PYLakT4XPcMmMYsjr+z0l
-         Ivcb2kQqTIA3T2N8zTQCGtZ4vSllhpCM82WJM+77Sd9kP3jLa4POceSk0/feGOJ6hOpT
-         jdYA==
-X-Gm-Message-State: AIkVDXJ89FGV8dQfCA8aTaMT5cPGbM/tIrawLYHyoFEpbhex94m67pHt2cjCUV2BM0Z44aNSQWKgjSbhHg4SCw==
-X-Received: by 10.13.254.71 with SMTP id o68mr14311325ywf.318.1482531825391;
- Fri, 23 Dec 2016 14:23:45 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.177.158 with HTTP; Fri, 23 Dec 2016 14:23:24 -0800 (PST)
-In-Reply-To: <20161223222145.vkf6mjvs5t7ag3od@sigill.intra.peff.net>
-References: <20161217005442.5866-1-jacob.e.keller@intel.com>
- <xmqq7f6zqr3i.fsf@gitster.mtv.corp.google.com> <CA+P7+xp=7h7oATwO6vunqO+nfGhvQgiRkwG0P44hC4YLW2MRhA@mail.gmail.com>
- <xmqqinqbfz2r.fsf@gitster.mtv.corp.google.com> <20161223072201.zw2lwkdcs6qmb4rp@sigill.intra.peff.net>
- <CA+P7+xrWsCkABzpSkYJ4fb2_JijmUx=Sf4Hgsr6Z+k=_GogE_Q@mail.gmail.com>
- <20161223161917.4a352c2wzerj5uyz@sigill.intra.peff.net> <xmqqh95uedzu.fsf@gitster.mtv.corp.google.com>
- <xmqq8tr6e46o.fsf@gitster.mtv.corp.google.com> <20161223222145.vkf6mjvs5t7ag3od@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 23 Dec 2016 14:23:24 -0800
-Message-ID: <CA+P7+xrMFnW8NCySpMuWWnXBE30RwmOgr-0Xgjaa5i8eDPGGUw@mail.gmail.com>
-Subject: Re: [PATCH] diff: prefer indent heuristic over compaction heuristic
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Norbert Kiesel <nkiesel@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9jEhNNRCEvIZ4hYvfpp+Ylad2k4+SSF1fzXDXtcDQcI=;
+        b=tRZpAHm/21O69RFAYJJSPPjE9ezhJSLWMlHzD9wtSe2dyKRcQQxfpaLNv/WHx54Rn+
+         JwfadTZ17yQTgHuCRwwnVI4fP/D86iPbQpbUXYLdz8Wunn2PEF7kcHy+k2abL3i6traQ
+         6O3xIPJEpjfVQgC1IjYhy2j6dzltGEX1PqL65i2qpCDREzIxQuwVtKmt8XSgy3Lu4WBl
+         MYZjIfC61e6DuTzvCciUmcBGygtoaOyZLYve/+jjtWNS+wv7rUziGhOxMOq04NCsp98t
+         +2iO49RC+UMoa9LDtrHFldLDnW4knzwYkvJ3AwLVz+L/xhDQpHH4Nn7Xs1MCTlqt2jgD
+         l9RQ==
+X-Gm-Message-State: AIkVDXIUeHV4CZdNyiL6iAsqRZbNbGyE0awfgq9L7JbwWFCN4FWEfXQE3ajaq1DueFposg==
+X-Received: by 10.194.148.134 with SMTP id ts6mr15247946wjb.220.1482537285378;
+        Fri, 23 Dec 2016 15:54:45 -0800 (PST)
+Received: from krk4cz1410qf7.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id cl10sm42674850wjb.4.2016.12.23.15.54.44
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 23 Dec 2016 15:54:44 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: What's cooking in git.git (Dec 2016, #07; Thu, 22)
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqzijnehgb.fsf@gitster.mtv.corp.google.com>
+Date:   Sat, 24 Dec 2016 00:55:29 +0100
+Cc:     git <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <7E1C7387-4F37-423F-803D-3B5690B49D40@gmail.com>
+References: <xmqqzijnehgb.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 23, 2016 at 2:21 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 23, 2016 at 01:17:03PM -0800, Junio C Hamano wrote:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > I guess both you and Michael are in favor of just removing compaction
->> > variant without any renames, so let me prepare a reroll and queue
->> > that instead.  We can flip the default perhaps one release later.
->>
->> -- >8 --
->> Subject: [PATCH] diff: retire "compaction" heuristics
->
-> Looks good to me from a cursory read.
->
-> Thanks.
->
-> -Peff
 
-Same. This is more obviously correct since we didn't have to change a
-bunch of references to INDENT_HEURISTIC. I agree that the name does
-not make sense now, but if our goal is to make it default with a
-disable option, I think that we shouldn't worry too much about the
-naming.
+> On 22 Dec 2016, at 23:18, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+>=20
+> Even though I try not to do two "What's cooking" report back to back,
+> I wanted to push out a few topics that we want to have in 'master'
+> soonish on 'next' before things really quiet and slow down due to
+> year-end holidays.
+>=20
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+>=20
+>    http://git-blame.blogspot.com/p/git-public-repositories.html
+>=20
+> Here are the summaries:
+>=20
+> Will merge to 'master'.
+> + jc/push-default-explicit                                     =
+10-31/11-01    #2
+> + sb/submodule-config-cleanup                                  =
+11-22/11-23    #3
+> + va/i18n-perl-scripts                                         =
+12-14/12-19   #16
+> + cp/merge-continue                                            =
+12-15/12-19    #4
+> + bw/transport-protocol-policy                                 =
+12-15/12-19    #6
+> + ls/filter-process                                            =
+12-18/12-19    #2
+> + ld/p4-compare-dir-vs-symlink                                 =
+12-18/12-20    #1
+> + jk/difftool-in-subdir                                        =
+12-11/12-21    #4
+> + sb/submodule-embed-gitdir                                    =
+12-12/12-21    #6
+> + gv/p4-multi-path-commit-fix                                  =
+12-19/12-21    #1
+> + mk/mingw-winansi-ttyname-termination-fix                     =
+12-20/12-21    #1
+> + lt/shortlog-by-committer                                     =
+12-20/12-21    #3
+> + va/i18n-even-more                                            =
+12-20/12-22    #1
+> + ls/p4-lfs                                                    =
+12-20/12-22    #1
+> + js/mingw-isatty                                              =
+12-22/12-22    #3
+> + bw/realpath-wo-chdir                                         =
+12-22/12-22    #5
+> + bw/grep-recurse-submodules                                   =
+12-22/12-22    #7
+>=20
+> Will merge to 'next'.
+> - jc/git-open-cloexec                                          11-02   =
+       #3
+> - ls/p4-path-encoding                                          12-18   =
+       #1
 
-Thanks,
-Jake
+Please hold it. Luke [1] made a good point and I need some time to think =
+it through.
+
+[1] =
+http://public-inbox.org/git/CAE5ih7-=3DbD_ZoL5pFYfD2Qvy-XE24V_cgge0XoAvuoT=
+K02EDfg@mail.gmail.com/
+
+--
+
+Unrelated to my topic:
+=20
+"next" seems to generate a small error on macOS. Probably introduced in
+"worktree: check if a submodule uses worktrees" (1a248cf)
+
+worktree.c:423:9: error: variable 'ret' is used uninitialized whenever =
+'while' loop exits because its condition is false =
+[-Werror,-Wsometimes-uninitialized]
+        while ((d =3D readdir(dir)) !=3D NULL) {
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+worktree.c:431:9: note: uninitialized use occurs here
+        return ret;
+               ^~~
+worktree.c:423:9: note: remove the condition if it is always true
+        while ((d =3D readdir(dir)) !=3D NULL) {
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+               1
+worktree.c:390:9: note: initialize the variable 'ret' to silence this =
+warning
+        int ret;
+               ^
+                =3D 0
+1 error generated.
+
+More: =
+https://s3.amazonaws.com/archive.travis-ci.org/jobs/186186597/log.txt
+
+
+- Lars
+
