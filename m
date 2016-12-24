@@ -2,63 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9591FF76
-	for <e@80x24.org>; Sat, 24 Dec 2016 02:57:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E7B11FCC7
+	for <e@80x24.org>; Sat, 24 Dec 2016 10:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762357AbcLXC5e (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Dec 2016 21:57:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60113 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752359AbcLXC5d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Dec 2016 21:57:33 -0500
-Received: (qmail 21203 invoked by uid 109); 24 Dec 2016 02:57:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 24 Dec 2016 02:57:33 +0000
-Received: (qmail 28068 invoked by uid 111); 24 Dec 2016 02:58:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Dec 2016 21:58:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Dec 2016 21:57:30 -0500
-Date:   Fri, 23 Dec 2016 21:57:30 -0500
-From:   Jeff King <peff@peff.net>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] auto gc: don't write bitmaps for incremental
- repacks
-Message-ID: <20161224025730.vwz2k4af6z6piinl@sigill.intra.peff.net>
-References: <1482541735-21346-1-git-send-email-dturner@twosigma.com>
- <1482541735-21346-2-git-send-email-dturner@twosigma.com>
+        id S1752875AbcLXKu7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Dec 2016 05:50:59 -0500
+Received: from mail-it0-f42.google.com ([209.85.214.42]:34135 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751258AbcLXKu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Dec 2016 05:50:58 -0500
+Received: by mail-it0-f42.google.com with SMTP id 75so36619633ite.1
+        for <git@vger.kernel.org>; Sat, 24 Dec 2016 02:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rLbrZfDUm8CSXvJva7gHE5c3TG19fq4jQWO1dBpJCNE=;
+        b=tLRP1L0SAhu3xrydmQZCi1Fr6wQ6gVLViFyYTSaHYkxJq2nUnsXD3Wfy12gvZXKJKJ
+         y2oN4KVkDNpgS3sHX5A5frEEbVg6hG7UsZf+HYnGmzqIKxtLD0vveAbJM0QpVjivAxvN
+         BMOKIJbEs53JRd40EH2Mhlw9CUhuJ5OteEEi3dmlTD6YXMvqNb7j+0+ygSXRFtBswtSJ
+         TgogxCcPzM2O5b8XfPJQG81KAOuSeGnRO70hZnkJkKQ3oF4dcER0NHHUxATZDt06IOVM
+         PGfIVlQ9OyMoE47HSCuQd29LAealEzvzx9RFLWMH6yiQ4Lbcwf/AjrbwaVNikocu8MDI
+         7HmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rLbrZfDUm8CSXvJva7gHE5c3TG19fq4jQWO1dBpJCNE=;
+        b=IzmCt1O+wrHzdOH44lRRoRuzfI+3SllfRSS6djAWI13RLj2myqNY/4UYVYoIl0hIN5
+         lSjdHZZSBJT6rjZjPBixDz6UyrnSgBY50UED8kDwtLZCPzc2viVE5Wb030Bn8vs47Uhp
+         eDpUz5140QkQZ3Bv9kg9uyvUVAJbmLovyXGSLlZy1GywuYWZsj7ytxBcV3EHxX11NIrY
+         Jalh6RERoUczZipRUe6C7/VhhicO1N2K1RP3J3oSrnRwnFkMd13mM7B2imj9mTlXSV8R
+         9bjbr9BlUyyABBYPukBJ+6ig9WaVer4FLEQczCWEU2Ay9TqIYUc1S7WP93yWf6Ke1X9n
+         J5PA==
+X-Gm-Message-State: AIkVDXLaRggau77Ab2WuUz4Cq+V00hTkKLw01sBshxqHXKIOiLeDA88FLF00M9AQctG75jHMAczutuFMVwbwAA==
+X-Received: by 10.36.184.194 with SMTP id m185mr16343371ite.3.1482576657642;
+ Sat, 24 Dec 2016 02:50:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1482541735-21346-2-git-send-email-dturner@twosigma.com>
+Received: by 10.64.69.3 with HTTP; Sat, 24 Dec 2016 02:50:27 -0800 (PST)
+In-Reply-To: <xmqqd1giedxr.fsf@gitster.mtv.corp.google.com>
+References: <xmqqzijnehgb.fsf@gitster.mtv.corp.google.com> <CACsJy8CEKj6Lbn++NHhyB7J8HBrMW4F37SHi2soCH1z=RJz4GQ@mail.gmail.com>
+ <xmqqd1giedxr.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 24 Dec 2016 17:50:27 +0700
+Message-ID: <CACsJy8B_h4u11LdQyvZBNFBTxbD58QZb1M_ugL+Nr9R2Wd-4Qw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2016, #07; Thu, 22)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 23, 2016 at 08:08:54PM -0500, David Turner wrote:
+On Sat, Dec 24, 2016 at 12:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Fri, Dec 23, 2016 at 5:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Will merge to 'next'.
+>>>  - nd/config-misc-fixes                                         12-22          #3
+>>
+>> Hold it. You made a comment about rollback lockfile on uninitialized
+>> variable or something but I haven't time to really look at it yet.
+>
+> The fix for it is squashed in to the version queued. Please double
+> check by fetching from me and comparing it with what you sent out.
 
-> +	git gc --auto 2>err &&
-> +	test_i18ngrep ! "^warning:" err &&
-> +	ls .git/objects/pack/ | grep -v bitmap | sort >post_packs &&
-
-I'm not sure why you omit the bitmap here. It shouldn't change, right?
-In that case it should not be mentioned by comm, and not impact the
-counts you check later (and in the off chance that a new .bitmap is
-created, we'd want to know and fail the test, I would think).
-
-> +	comm --output-delimiter , -1 -3 existing_packs post_packs >new &&
-> +	comm --output-delimiter , -2 -3 existing_packs post_packs >del &&
-
-I don't think --output-delimiter will be portable beyond GNU comm.
-
-> +	test_line_count = 0 del && # No packs are deleted
-> +	test_line_count = 2 new # There is one new pack and its .idx
-
-This logic makes sense (and is much nicer than the previous round).
-
--Peff
+Looks good. Merge it! :-D
+-- 
+Duy
