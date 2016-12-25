@@ -2,80 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 075B3200E0
-	for <e@80x24.org>; Sun, 25 Dec 2016 02:37:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7978B200E0
+	for <e@80x24.org>; Sun, 25 Dec 2016 02:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752948AbcLYChI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Dec 2016 21:37:08 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33732 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752101AbcLYChH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Dec 2016 21:37:07 -0500
-Received: by mail-io0-f172.google.com with SMTP id d9so278470021ioe.0
-        for <git@vger.kernel.org>; Sat, 24 Dec 2016 18:37:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9fGOKt8EEiky/JYIJ+fObjRe1T7Y20XBJPI4uvV6ixA=;
-        b=W6QftflIfMDBvV8PMOxw8MUnXiSOOkaowA7RVwG48BNCyehvRuRB0VFwgm/xcceaMv
-         VpBUUZMmM6VP9Gc2I6IvZw6++kG1BqF0bLERptBoRdRjUs+STgSdVoJDApFGxUNEe1Z5
-         gW/veDq4WmEsbsU3JH8b2DV6nef3cnudcPhh9dDXrFEID2JNZYL2lYUOPX/OOcWGMy73
-         IquJSnyEKwdZs2uNPZ7eAeGRkcWWUgnjOS9X8QPy7xNHZlpcBU/SaTMG6zqiusZxNCTh
-         L2/rz7OgaWleWguCqIEHJS37iwdmUWW1yltyrkreViH1KKj3lfsQ3RauOz7Xd0tKSd7K
-         zL5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9fGOKt8EEiky/JYIJ+fObjRe1T7Y20XBJPI4uvV6ixA=;
-        b=kmeJe7uphB3AcD37IqulGUeKUYX995Dp9+/9ICcGVWO5Lw/mDTIABR0zzetrGb5x8C
-         x3znkNtLuWmFX9f3ZYl8aQCKvTMWmAe1CYacB8gP8U8E+FnY6lWxcYrMHDpO89FNZTtl
-         cyUGmx0VZ/ttb+v6K+SMtRD822V9aq+RbhrTTRKk7QV5lhVOgypmibh7W2SIRTITCP08
-         O2WLyhd479P36Jg4cRX87zXlK3VFvv0J8NRRxAjr6Ng7kT5jyt75m5q5pRY02QCxqvyv
-         Z4zc9JWuoJ3WjT0269wf7egEspYK2PRhnznvNkckOeIg4ujxM11lVGnUg15HLxviIYl5
-         QDtg==
-X-Gm-Message-State: AIkVDXKZu5d7SzmYX4E8Zk/txEXiT0nNSsLwM57PxH3qpoIloiyyJUqlOq66F/V+y/YB1/O/kdRhS/raXg1kfQ==
-X-Received: by 10.107.44.137 with SMTP id s131mr17428779ios.212.1482633426803;
- Sat, 24 Dec 2016 18:37:06 -0800 (PST)
+        id S1753154AbcLYCi5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Dec 2016 21:38:57 -0500
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:49102 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752965AbcLYCi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Dec 2016 21:38:56 -0500
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.88)
+        (envelope-from <mh@glandium.org>)
+        id 1cKyYa-00042X-Cf; Sun, 25 Dec 2016 11:29:04 +0900
+Date:   Sun, 25 Dec 2016 11:29:04 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     hvoigt@hvoigt.net, sbeller@google.com, gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: Corner case involving null sha1, alternates, cache misses, and
+ submodule config API
+Message-ID: <20161225022904.v2mixrnbitvlviuu@glandium.org>
 MIME-Version: 1.0
-Received: by 10.64.69.3 with HTTP; Sat, 24 Dec 2016 18:36:36 -0800 (PST)
-In-Reply-To: <xmqqtw9vg4vh.fsf@gitster.mtv.corp.google.com>
-References: <20161220123929.15329-1-pclouds@gmail.com> <20161220165754.hkmnsxiwbcgn6uin@sigill.intra.peff.net>
- <CACsJy8CnS1=_vA5xhbZ94Qyh7ySC5FvaALu1vhQwt_YJya4wHA@mail.gmail.com> <xmqqtw9vg4vh.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 25 Dec 2016 09:36:36 +0700
-Message-ID: <CACsJy8ANbXZWOV+zN-S8c8V0aTWZ4DHZ=GVmuuAqmY=oFh8T-Q@mail.gmail.com>
-Subject: Re: [PATCH] log: support 256 colors with --graph=256colors
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 23, 2016 at 2:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> If I were doing this, I'd just prepare a table with 32 color slots
-> or so [*1*], start at a random spot (say 017:00005f) of
->
->     https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg,
->
-> and pick spots by jumping southeast like a chess knight
-> (i.e. 017->030->043->086->...) until the table is filled, wrapping
-> around at the edge of that color chart as necessary.
+Hi,
 
-If you want to play with that, [1] may help, which sorts colors in hsv
-space, and you can select a few colors to see how they look, either
-manually or by calculation. Yeah we probably get maybe 32 (or 48 if
-you stretch it a bit) distinct colors. Not sure if it's any better
-with true color terminals, probably not.
+As you might be aware, I'm working on a mercurial remote helper for git.
+The way it stores metadata for mercurial manifests abuses "commit"
+references in trees, which are normally used for submodules.
 
-[1] https://gist.github.com/pclouds/616b67f0b5a9b20d74373286574cd0ac
--- 
-Duy
+Some operations in the helper use git diff-tree on those trees to find
+files faster than just using ls-tree on every commit would.
+
+Anyways, long story short, it turns out that a combination of
+everything mentioned in the subject of this email causes running git
+diff-tree -r --stdin with a list of 300k+ pairs of commits to take 10
+minutes, when (after investigation) adding --ignore-submodules=dirty
+made it take 1 minute instead, for the exact same 3GB output.
+
+It turns out, this all starts in is_submodule_ignored(), which contains:
+
+        if (!DIFF_OPT_TST(options, OVERRIDE_SUBMODULE_CONFIG))
+                set_diffopt_flags_from_submodule_config(options, path);
+
+And set_diffopt_flags_from_submodule_config calls:
+
+        submodule_from_path(null_sha1, path);
+
+And because there is no actual submodule involved, at some point that
+null_sha1 ends up in the call to read_sha1_file from
+submodule-config.c's config_from, which then proceeds to try to open the
+null sha1 as a loose object in every alternate, doing multiple system
+calls in each directory for something that is bound to fail. And to add
+pain to injury, it repeats that for each and every line of input to git
+diff-tree because the object cache doesn't care about storing negatives
+(which makes perfect sense for most cases).
+
+Even worse, when read_object returns NULL because the object doesn't
+exist, read_sha1_file_extended calls has_loose_object which does
+another set of system calls.
+
+Now, while I realize my use case is very atypical, and that I should
+just use --ignore-submodule=dirty, the fact that using the null sha1 can
+trigger such behavior strikes me as a footgun that would be better
+avoided. Especially when you factor the fact that
+read_sha1_file_extended calls lookup_replace_object_extended, which
+suggests one might interfere by creating a replace object for the null
+sha1. (BTW, it's not entirely clear to me, in the context of actual
+submodules, what the various --ignore-submodule options are supposed to
+mean for trees that are not the current HEAD ; also, the manual page say
+"all" is the default, but that doesn't appear to be true)
+
+From a cursory look at the output of `git grep \\bnull_sha1` it doesn't
+look like the null sha1 is used anywhere else in a similar fashion where
+it can be attempted to be read as an object. So, one could consider this
+is something the submodule config code should handle on its own by
+treating the null_sha1 argument to submodule_from_path (really
+config_from) specially. After all, gitmodule_sha1_from_commit already
+avoids a get_sha1() call when it's given the null sha1.
+
+OTOH, it seems submodule_from_path and submodule_from_name, the only two
+public functions that end up in config_from(), are *always* called with
+either the null sha1 or a literal null pointer. The *only* calls to
+these functions that doesn't involve a null sha1 or a null pointer is
+from test code. So all in all, I'm not entirely sure what this sha1
+argument is all about in the first place.
+
+However, an argument could be made that null_sha1 should be treated
+specially at a lower level (read_sha1_file, I guess).
+
+What would be sensible to do here?
+
+Mike
