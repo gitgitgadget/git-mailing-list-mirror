@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AC41200E0
+	by dcvr.yhbt.net (Postfix) with ESMTP id C15F4200E0
 	for <e@80x24.org>; Mon, 26 Dec 2016 10:23:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932220AbcLZKXB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Dec 2016 05:23:01 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33238 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755059AbcLZKW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Dec 2016 05:22:58 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u144so52474481wmu.0
-        for <git@vger.kernel.org>; Mon, 26 Dec 2016 02:22:57 -0800 (PST)
+        id S1755713AbcLZKXL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Dec 2016 05:23:11 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34852 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755666AbcLZKWy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Dec 2016 05:22:54 -0500
+Received: by mail-wm0-f68.google.com with SMTP id l2so26996075wml.2
+        for <git@vger.kernel.org>; Mon, 26 Dec 2016 02:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Fxkid3anQLJpAoBkWIKs3nFPM3NWeQEpvH+ANQ6T0aY=;
-        b=RnXnqWP5jGRDs0y9DHTZDppKrnUV8wkIZdKP+C3spca/btmjrNsDNn7CkSseLfoj0w
-         z/lk7lENfOGi4EZF4oW/CgUz6aM1X8plVz7Q9vX6qYoVQv6a2jAX32+wQx+AcQKM7vT5
-         kn5pTt7e/ypQhfgWGkDKrsP9YCjbsxBnS3Wg4U/lkwjp0tin1knNoX2Xxf/GJQ5K7ozO
-         JfzeAw3IdNtqWJceoCGsvH0qgUd96Tucqm8JiSdYWDpc71CBRZWm2ZAtfsAYWael+MWl
-         1r15IoY5JdceVZS85gsvwO19/x0OJ6cNjlvFwXgmkouACs5JSGQAR3A7D1KDbyf/qQ+O
-         h97g==
+        bh=E8Iza6yJo1MUWzGE4jXu5SpP4H1JtETLMul2TXpyxeM=;
+        b=A7p/MUuMzJGmRGhwLDiL4vmnfh+9BKne5N8s1Y/5Dkascb7GtHgz4LUZjXEZqWNW35
+         UPNqEuuBQtXiVAr8MPsorhEHA9RaCm6S9JpfCN3JGB68Db8ZZceDfXDJl59btPtLUeCT
+         0qRKHQEV8kffNW3SzRww1TLzEpbh7Bi26D5tgEw6x3fhe+JRm/nPHli1zj4apfCKB3E2
+         3ShcvB1b3WUQWugJx3x0Bbwp7fZ4IkaIfF0Gpgybn1VhytNTkKyV1Bugwaiy2KlNbEfo
+         QM1jkTSdOKi1+Ls7tzadApKmNH+DyiHbn9yP5R34hqjCnLbEG5vNWFph7N4GrB3uhYmv
+         MpxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Fxkid3anQLJpAoBkWIKs3nFPM3NWeQEpvH+ANQ6T0aY=;
-        b=PTW0jZYI/Ipp3jbrApRC59aDmIDwGQU1xBn0Leb1/cZXsVoD0goqtcvGbWq/NK12aU
-         /laJCqMa7GLDByI2Unh+zpa4mZQGLDIuItwD9cYwu7vdUy5Uag2T9qG/Fwt971UaOBdX
-         NgJ/Xn7TtfRADzVHOQTQ/c4CydbEPjm5zKGtnxMAF59AE8TrLoaQ9Zfj4QlxBWbtVE1Y
-         Qy9a8whzSeUMR+WhOBu6xbPW/xCDKqWZRmVolIWsfb4tQoAfXpKhDASr6XIPCgDTL6Bh
-         ryckEToVNnF+6ifLx/ElsxfLos145nlKKtG7wUgVZ/h1GhCeMbj0j2+JD3xhVM7SxU1f
-         RkdQ==
-X-Gm-Message-State: AIkVDXLI2zA1t2Ri5B+vkSGUXcC9q0miKutX5grrNoG48+y7AxgsOctLu+DH97LOWVEDqg==
-X-Received: by 10.28.17.145 with SMTP id 139mr23851723wmr.50.1482747776440;
-        Mon, 26 Dec 2016 02:22:56 -0800 (PST)
+        bh=E8Iza6yJo1MUWzGE4jXu5SpP4H1JtETLMul2TXpyxeM=;
+        b=GzcBo6lrRkme/oea9vt9REJzp8FLNLw/5FbVQX6dJeUO0IbXCw20tEvsPJhV+LDLhK
+         5rt0SmcbuIvFYBmPTCr4Ue/iC3RtjNL5kSZkPjoc7+M6IHuCU+TgPE8m8tXCbwDz7AiL
+         dhOhyl7lGPLJsDiBlAcz6ZVkyI0DKqK8iwIItXRv4WJTLo60vPkwP/EuIcM2tFuWdYA0
+         x+mboW9xgVR50SB+ppgfkSp7S2xcjGR5snx9+R0yBDgKJK74CGkha0/IfF4ysKlX0MS2
+         bfvfDuiNa+jg3hwh3XJgQkRXVyrMS/tSOKO86nePoc1wx5RQMCOlW18InYGCuesT6pAO
+         kIJw==
+X-Gm-Message-State: AIkVDXKC/PWJC3kAMMgU/zgoMSRK6oDKyqHv33BY9NZ60ztm0z79nCa2jlXsRYx05ujPDg==
+X-Received: by 10.28.107.77 with SMTP id g74mr24097680wmc.109.1482747773318;
+        Mon, 26 Dec 2016 02:22:53 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id kp5sm54259010wjb.8.2016.12.26.02.22.55
+        by smtp.gmail.com with ESMTPSA id kp5sm54259010wjb.8.2016.12.26.02.22.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Dec 2016 02:22:55 -0800 (PST)
+        Mon, 26 Dec 2016 02:22:52 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -53,9 +53,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 20/21] Documentation/config: add splitIndex.sharedIndexExpire
-Date:   Mon, 26 Dec 2016 11:22:21 +0100
-Message-Id: <20161226102222.17150-21-chriscool@tuxfamily.org>
+Subject: [PATCH v3 17/21] t1700: test shared index file expiration
+Date:   Mon, 26 Dec 2016 11:22:18 +0100
+Message-Id: <20161226102222.17150-18-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.11.0.209.gda91e66374.dirty
 In-Reply-To: <20161226102222.17150-1-chriscool@tuxfamily.org>
 References: <20161226102222.17150-1-chriscool@tuxfamily.org>
@@ -66,31 +66,62 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config.txt | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t1700-split-index.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e0f5a77980..24e771d22e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2786,6 +2786,17 @@ splitIndex.maxPercentChange::
- 	than 20 percent of the total number of entries.
- 	See linkgit:git-update-index[1].
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index f03addf654..f448fc13cd 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -310,4 +310,48 @@ EOF
+ 	test_cmp expect actual
+ '
  
-+splitIndex.sharedIndexExpire::
-+	When the split index feature is used, shared index files with
-+	a mtime older than this time will be removed when a new shared
-+	index file is created. The value "now" expires all entries
-+	immediately, and "never" suppresses expiration altogether.
-+	The default value is "one.week.ago".
-+	Note that each time a new split-index file is created, the
-+	mtime of the related shared index file is updated to the
-+	current time.
-+	See linkgit:git-update-index[1].
++test_expect_success 'shared index files expire after 7 days by default' '
++	: >ten &&
++	git update-index --add ten &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	just_under_7_days_ago=$((1-7*86400)) &&
++	test-chmtime =$just_under_7_days_ago .git/sharedindex.* &&
++	: >eleven &&
++	git update-index --add eleven &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	just_over_7_days_ago=$((-1-7*86400)) &&
++	test-chmtime =$just_over_7_days_ago .git/sharedindex.* &&
++	: >twelve &&
++	git update-index --add twelve &&
++	test $(ls .git/sharedindex.* | wc -l) = 1
++'
 +
- status.relativePaths::
- 	By default, linkgit:git-status[1] shows paths relative to the
- 	current directory. Setting this variable to `false` shows paths
++test_expect_success 'check splitIndex.sharedIndexExpire set to 8 days' '
++	git config splitIndex.sharedIndexExpire "8.days.ago" &&
++	test-chmtime =$just_over_7_days_ago .git/sharedindex.* &&
++	: >thirteen &&
++	git update-index --add thirteen &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	just_over_8_days_ago=$((-1-8*86400)) &&
++	test-chmtime =$just_over_8_days_ago .git/sharedindex.* &&
++	: >fourteen &&
++	git update-index --add fourteen &&
++	test $(ls .git/sharedindex.* | wc -l) = 1
++'
++
++test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"' '
++	git config splitIndex.sharedIndexExpire never &&
++	just_10_years_ago=$((-365*10*86400)) &&
++	test-chmtime =$just_10_years_ago .git/sharedindex.* &&
++	: >fifteen &&
++	git update-index --add fifteen &&
++	test $(ls .git/sharedindex.* | wc -l) -gt 1 &&
++	git config splitIndex.sharedIndexExpire now &&
++	just_1_second_ago=-1 &&
++	test-chmtime =$just_1_second_ago .git/sharedindex.* &&
++	: >sixteen &&
++	git update-index --add sixteen &&
++	test $(ls .git/sharedindex.* | wc -l) = 1
++'
++
+ test_done
 -- 
 2.11.0.209.gda91e66374.dirty
 
