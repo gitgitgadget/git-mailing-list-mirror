@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BB4F200E0
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F14F2049B
 	for <e@80x24.org>; Mon, 26 Dec 2016 10:22:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755537AbcLZKWp (ORCPT <rfc822;e@80x24.org>);
+        id S1755610AbcLZKWu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Dec 2016 05:22:50 -0500
+Received: from mail-wj0-f194.google.com ([209.85.210.194]:32861 "EHLO
+        mail-wj0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755488AbcLZKWp (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Dec 2016 05:22:45 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33070 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbcLZKWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Dec 2016 05:22:39 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u144so52473428wmu.0
-        for <git@vger.kernel.org>; Mon, 26 Dec 2016 02:22:39 -0800 (PST)
+Received: by mail-wj0-f194.google.com with SMTP id kp2so48029076wjc.0
+        for <git@vger.kernel.org>; Mon, 26 Dec 2016 02:22:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aWAd9NegIriVnoKzgljo0PQJhGnv1Ov7TO9X1snnuXk=;
-        b=OkgMQ4mVRl+bAHmbt7DXVZxSSb/chaIOWs7Y+5eL2R4SYpqYf8imJUWjW9U5uODuDK
-         iNhwn1pm0xZg2iunxVLDGwa0Pjxkr3GyDPQ8U0fC5DAwUoZYlldGqUeeP2mL6aPIzpFW
-         7nAs98S0p8fedKyxYC38vyj4j7w1jQF3KcSm5iPPL8zO6jtGmrTEP7gq9DTvt67DUIvC
-         PAY2H4t0WBXIjxeAMeYXB9mxNOaKZ9c5ma1iSYG9RuIffaeKKDueVI9d8WwRvVC6c7g3
-         6G4TaubDMjZfQZfn0jiR/6Fa6O7XS5hI1IOpzWdhGI2LwYI7rWTC/12mpqeDyYK3YNPC
-         NyNg==
+        bh=rcekvVKAyCibidPxkOal+3YNarePSnDmR66vY4AnglM=;
+        b=nt268czqwdGeo44LC+QHxoDUpJ5JDnkHz7WTR0JYoSlxIyMB6yVZ11EbweKuyJtBrR
+         DgtE3GNKn6aZoWKdcsrffCffGwI/mA35gQKaNkt32TbqQJ9Rf0DptisJi+Qq+YOd7sei
+         jozKKI7WClDwM8arANzpYqWaQJeLwcjhFgpt5IL50UQP4e+SnZFGV17bYlgvtrSdvPbc
+         xHHDFdXF5YfXP51YF5+Isc3pVp6cMDQpHyKZO5Y7ecQ9t9mO2XhnpN+XoFl4w7YyiQKK
+         zpL3RVU7Up+RTn0FbfL74/LRpXdH4+Ihvn7CkbRFjsebFXZAu+zmRT/ldU2GRLeHqRy0
+         AgVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=aWAd9NegIriVnoKzgljo0PQJhGnv1Ov7TO9X1snnuXk=;
-        b=jy+LgvAmdxXwsIwft95T8JVdLbL/aV0gLHxkmgB5/GOJCkH8CMuk2uYenx7lb+PNlj
-         nYULOKieLxTgHIUCWnZyHSFOMJNT1RyppHIiYG+0OlTPZFbLyhCGZ7SgbQzEmuBQS3bu
-         Jby0/osmnMESTip4QjbfSGnuiP9RWWGyySrIbP40X50g8t8TvGoAZ789gH5NDYr4c13r
-         XMeRup7V1yfxEdxedyK91AHIlfWjNQcyssP8FlwVViKqY/9LBw4hvhHTIzdpj2fhpHB2
-         O8KUte67C7mDxU2k2deB60gPChPE/mlNH/fjthJDerWDL5DY/DL17faIwmMr9nwp0jMJ
-         h3yQ==
-X-Gm-Message-State: AIkVDXK3jN5Qpe2JZmljYpKl48UB+l+uv8qGZVUzgsj4yg8x9sGw88GwEqlzXnrG7khTEA==
-X-Received: by 10.28.126.146 with SMTP id z140mr25031189wmc.84.1482747757613;
-        Mon, 26 Dec 2016 02:22:37 -0800 (PST)
+        bh=rcekvVKAyCibidPxkOal+3YNarePSnDmR66vY4AnglM=;
+        b=k6YtBSS8AAkmv7RoczoC+6fcfpbSbqbCpHiRjoPArua2t43lC0BTd8TLgugLmyd/wA
+         OmV9qIp7iS6dVUde788dT6IFtANkHav/+84/T7/14tR2prjFuvmYKPldXNMuK4tLVmVJ
+         Ye02oueciDDt81j0EOPAF6ANHdbbwz+MhdlPUiF2KA+YJdb6UgT7qBga1c3UKs7UHJ7K
+         bs+sOlfoObYia4n+XZkAC/z3dCVTH5JZpiqWEEGH6YEds6XNXC9ylRFSpaYZENnfM/Lk
+         4e/vfd69rQtPW3R6qNiS3s/LkS4xeef2qTGBAIwew5mvc3P9melwJH5nM02tN8jJ3giO
+         WPnw==
+X-Gm-Message-State: AIkVDXJdKAdeQOk31olSsyfEOab2Oh+FF1QLbQ/d3UJBRNO7KxauxP571X7Qxn0vQDMwDw==
+X-Received: by 10.194.185.70 with SMTP id fa6mr23189434wjc.121.1482747763725;
+        Mon, 26 Dec 2016 02:22:43 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id kp5sm54259010wjb.8.2016.12.26.02.22.36
+        by smtp.gmail.com with ESMTPSA id kp5sm54259010wjb.8.2016.12.26.02.22.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Dec 2016 02:22:36 -0800 (PST)
+        Mon, 26 Dec 2016 02:22:43 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -53,9 +53,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 04/21] read-cache: add and then use tweak_split_index()
-Date:   Mon, 26 Dec 2016 11:22:05 +0100
-Message-Id: <20161226102222.17150-5-chriscool@tuxfamily.org>
+Subject: [PATCH v3 09/21] config: add git_config_get_max_percent_split_change()
+Date:   Mon, 26 Dec 2016 11:22:10 +0100
+Message-Id: <20161226102222.17150-10-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.11.0.209.gda91e66374.dirty
 In-Reply-To: <20161226102222.17150-1-chriscool@tuxfamily.org>
 References: <20161226102222.17150-1-chriscool@tuxfamily.org>
@@ -64,46 +64,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will make us use the split-index feature or not depending
-on the value of the "core.splitIndex" config variable.
+This new function will be used in a following commit to get the
+value of the "splitIndex.maxPercentChange" config variable.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- read-cache.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ cache.h  |  1 +
+ config.c | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/read-cache.c b/read-cache.c
-index f92a912dcb..732b7fe611 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1566,10 +1566,27 @@ static void tweak_untracked_cache(struct index_state *istate)
- 	}
+diff --git a/cache.h b/cache.h
+index c126fe475e..e15b421b6f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1822,6 +1822,7 @@ extern int git_config_get_maybe_bool(const char *key, int *dest);
+ extern int git_config_get_pathname(const char *key, const char **dest);
+ extern int git_config_get_untracked_cache(void);
+ extern int git_config_get_split_index(void);
++extern int git_config_get_max_percent_split_change(void);
+ 
+ /*
+  * This is a hack for test programs like test-dump-untracked-cache to
+diff --git a/config.c b/config.c
+index 421e8c9da6..cf212785bb 100644
+--- a/config.c
++++ b/config.c
+@@ -1719,6 +1719,21 @@ int git_config_get_split_index(void)
+ 	return -1; /* default value */
  }
  
-+static void tweak_split_index(struct index_state *istate)
++int git_config_get_max_percent_split_change(void)
 +{
-+	switch (git_config_get_split_index()) {
-+	case -1: /* unset: do nothing */
-+		break;
-+	case 0: /* false */
-+		remove_split_index(istate);
-+		break;
-+	case 1: /* true */
-+		add_split_index(istate);
-+		break;
-+	default: /* unknown value: do nothing */
-+		break;
++	int val = -1;
++
++	if (!git_config_get_int("splitindex.maxpercentchange", &val)) {
++		if (0 <= val && val <= 100)
++			return val;
++
++		return error(_("splitIndex.maxPercentChange value '%d' "
++			       "should be between 0 and 100"), val);
 +	}
++
++	return -1; /* default value */
 +}
 +
- static void post_read_index_from(struct index_state *istate)
+ NORETURN
+ void git_die_config_linenr(const char *key, const char *filename, int linenr)
  {
- 	check_ce_order(istate);
- 	tweak_untracked_cache(istate);
-+	tweak_split_index(istate);
- }
- 
- /* remember to discard_cache() before reading a different cache! */
 -- 
 2.11.0.209.gda91e66374.dirty
 
