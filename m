@@ -2,120 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C02E31FCC7
-	for <e@80x24.org>; Mon, 26 Dec 2016 03:25:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EED5E200E0
+	for <e@80x24.org>; Mon, 26 Dec 2016 08:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754169AbcLZDZO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Dec 2016 22:25:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59619 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752480AbcLZDZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Dec 2016 22:25:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D8715C2D3;
-        Sun, 25 Dec 2016 22:25:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Tm7KOqyJpws7gCyv/8xCCwJSj6I=; b=RFZFdq
-        TIHG0S6assMhHH1zM+52lhW3XaiXQMqXUwgImxbqnpZaE1ae8tzm9fEeJaJKRNx6
-        P50ZjcqfmsxAPrsNcalUgVgAc8NaIojmGQNsO7QEyOAoGGfr+xT+hprBUduy4eAR
-        TJrTp9/GxdcQnXUj7Tkp3PM6Q4RQVNwq4tyyI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mf3HViOSsyqtDgwbHHAazxo0NTrWBhap
-        7FtsTzWL5IiBp5KiApkiGebP6ZdsnL31qTIlgPBYqRwpTfnQf6Tdw972VUeDwVAQ
-        7kFX9TBHe+WLdNe2PtQEE+i4ZBkSDDQ3eTGdczRRKWab4/3G4esSoLBAUxfPuL65
-        kY/4A9HVVYU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 828D55C2D0;
-        Sun, 25 Dec 2016 22:25:12 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0319A5C2CF;
-        Sun, 25 Dec 2016 22:25:11 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Igor Djordjevic BugA <igor.d.djordjevic@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-apply: warn/fail on *changed* end of line (eol) *only*?
-References: <ac97f925-d930-0592-0a2a-66c9218b1417@gmail.com>
-Date:   Sun, 25 Dec 2016 19:25:10 -0800
-In-Reply-To: <ac97f925-d930-0592-0a2a-66c9218b1417@gmail.com> (Igor Djordjevic
-        BugA's message of "Mon, 26 Dec 2016 00:49:24 +0100")
-Message-ID: <xmqqvau7cqy1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1755311AbcLZIPO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Dec 2016 03:15:14 -0500
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35904 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754712AbcLZIPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Dec 2016 03:15:13 -0500
+Received: by mail-lf0-f65.google.com with SMTP id t196so8143078lff.3
+        for <git@vger.kernel.org>; Mon, 26 Dec 2016 00:15:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0v83I4ftIoO5M3entJrz92knOvlwWcGYNhhfg2+i9ps=;
+        b=qw16foxRVuIkhUzGXJljOHAH5KzPUaPSG8jf4b3mVj/xIzn+iIh8vDAUtalsSwUvJz
+         jqdZRVRfFhWz22/t18Buqw0QBwHjcuibeomkUOXMdhba94jUeR02jdu9PzsTk2t/LknM
+         5sn3kvLJwe9JaGKUXN+X0ZEzmbREs/QNdx1WWmXKc0saSwhtqUmLvLriNFp1QOoBhxKq
+         CcXZ1x4Z6MuF/npt+GhSlP5l4AlyGoLPqLjHhtPp8QAow+/rq/OjycyQPl2hQTBuORFW
+         ytarIG/jtOl69t9FEAXB8W8+O+i4d5aXchkZ4iRuojSoaAQPPQmERE5vDi2AVVBN2MEI
+         FPaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0v83I4ftIoO5M3entJrz92knOvlwWcGYNhhfg2+i9ps=;
+        b=XzkKEpVW0j12HBhf+V6797U2znMLLIs4MsCVAzHZnLErUzrKgecaLqISW66M6/CZeZ
+         7/7e/OiTlHJVIRbSWDdEBz7DlykGaoSBLK2UNKQgkI4TkUbnWEp6tUxbKvlkmjgm/Dew
+         zbrf8ju3iPcX0ASb2vfo1Qsx2L844REs7fYHpUPICw+GtRbM3pHp4LWXPT4Tu28j+Okq
+         MMGKAQjji19rPkadQM9LR0yn60sUKkw+pfCd3euKFcQ/HETIqWZYjMvB1aBZ1wA3JH3R
+         XLj/pr8h81ps99R1JE2EKnTojwf0L1qrMguSCgpTxhJBOw4EEU5hXycF1LLoe4nbPj+/
+         68DQ==
+X-Gm-Message-State: AIkVDXJvJL1jBx2P593WsLuyNUDlFiEuzY83eH6xgYvQfQiXZudG/onKkmB4ANCLEuqbaL8OJsCCaRKfYwM2Ag==
+X-Received: by 10.25.99.73 with SMTP id x70mr9436686lfb.81.1482740108662; Mon,
+ 26 Dec 2016 00:15:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E9032F8E-CB1A-11E6-8763-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.25.152.13 with HTTP; Mon, 26 Dec 2016 00:15:08 -0800 (PST)
+In-Reply-To: <20161219111442.GA24125@ash>
+References: <20161217145547.11748-1-chriscool@tuxfamily.org>
+ <20161217145547.11748-3-chriscool@tuxfamily.org> <20161219111442.GA24125@ash>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 26 Dec 2016 09:15:08 +0100
+Message-ID: <CAP8UFD0MWm_VNC=8Cyz4UgD1-DWM3D1JUY2YPh=9AwnXJRjufA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/21] config: add git_config_get_split_index()
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Igor Djordjevic BugA <igor.d.djordjevic@gmail.com> writes:
+On Mon, Dec 19, 2016 at 12:14 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Dec 17, 2016 at 03:55:28PM +0100, Christian Couder wrote:
+>> diff --git a/config.c b/config.c
+>> index 2eaf8ad77a..c1343bbb3e 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -1709,6 +1709,16 @@ int git_config_get_untracked_cache(void)
+>>       return -1; /* default value */
+>>  }
+>>
+>> +int git_config_get_split_index(void)
+>> +{
+>> +     int val = -1;
+>
+> Is it redundant to set default value here because it's not used
+> anywhere? The "return val;" will always have the new value from
+> git_config_. And you don't use "val" in error case.
 
-> In short -- git-apply warns on applying the patch with CRLF line endings
-> (new), considered whitespace errors, even when previous hunk version
-> (old) has/had that very same CRLF line endings, too, so nothing actually
-> changed in this regards. Even worse, it happily applies a patch with LF
-> line endings (new) without any warning/hint, even though previous (old)
-> line endings were CRLF, thus effectively (and silently) breaking the
-> (previous) line endings.
-
-Let me see if I understood your problem description correctly.
-
-Imagine that the project wants LF line endings, i.e. it considers
-that a line with CRLF ending has an unwanted "whitespace" at the
-end.  Now, you start from this source file:
-
-    1 <CRLF>
-    3 <CRLF>
-    5 <CRLF>
-
-and a patch like this comes in:
-
-     1 <CRLF>
-    -3 <CRLF>
-    +three <CRLF>
-     5 <CRLF>
-
-You think that "3 <CRLF>" was replaced by "three <CRLF>", and the
-claim is "the 'previous' contents already had <CRLF> ending, so the
-change is not making things worse".
-
-But what if the patch was like this?
-
-     1 <CRLF>
-    -3 <CRLF>
-    +three <CRLF>
-    +four <CRLF>
-     5 <CRLF>
-
-Do you want to warn on "four <CRLF>" because it does not have any
-"previous" corresponding line?
-
-Extending the thought further, which line do you want to warn and
-which line do you not want to, if the patch were like this instead?
-
-     1 <CRLF>
-    -3 <CRLF>
-    +four <CRLF>
-    +three <CRLF>
-     5 <CRLF>
-
-Extending this thought experiment further, you would realize that
-fundamentally the concept of "previous contents" has no sensible
-definition.
-
-Incidentally, not realizing "there is no sensible definition of
-'previous contents'" is a source of another often seen confusion by
-new users of Git and any version control systems regarding the
-"blame" feature.  When given the final answer by "blame", they often
-say "what content did the line have _before_ the commit blame gave
-me?"  As there is no sensible definition of 'previous contents' that
-corresponds to the line, that question does not in general have a
-sensible answer.
+Yeah, it is redundant, so I will not set the default value here in the
+next version.
