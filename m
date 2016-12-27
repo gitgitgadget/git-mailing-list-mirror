@@ -2,110 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E47C200E0
-	for <e@80x24.org>; Tue, 27 Dec 2016 17:27:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849F2200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 17:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755560AbcL0R1f (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 12:27:35 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54935 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755530AbcL0R1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2016 12:27:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 522F05853F;
-        Tue, 27 Dec 2016 12:27:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AmDIxoKfBZKrzpADd6A775R48Wk=; b=wRpX6N
-        LctrflMjru3ZJub9qIlJas5XmTLvXPIztMJ9vV7vaqt6m796NuztbevsS4IhK9pd
-        +hp4pT3ppKIAE8JKS/m+s5wr8hstbyhp9TSnOCWWz7AvzoA1UFwyeyy5efh2qYGV
-        BV6jOcMZUA17CUfCsVbIJ0uUZH8L1U/Z1PCn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XknND/2Ac7vv5/aE3I3bx7HURp7ODDNb
-        zMyuEajTgwR6+uhosAKMvRJPcBJsP3GOFRm07U7jH1qQlPzBPMcVcdEdQyA6MXjm
-        //al1nC3Ibk2fd/MDl5c7zOAu4YKNkTT4zFtVfpzq/FqNnJXEpyqhF10g66DUTgV
-        sGH5mahDdp0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BA1E5853D;
-        Tue, 27 Dec 2016 12:27:24 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C68FC5853C;
-        Tue, 27 Dec 2016 12:27:23 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Igor Djordjevic BugA <igor.d.djordjevic@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-apply: warn/fail on *changed* end of line (eol) *only*?
-References: <ac97f925-d930-0592-0a2a-66c9218b1417@gmail.com>
-        <xmqqvau7cqy1.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Dec 2016 09:27:22 -0800
-In-Reply-To: <xmqqvau7cqy1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sun, 25 Dec 2016 19:25:10 -0800")
-Message-ID: <xmqq8tr1cmf9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1754328AbcL0RsV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 12:48:21 -0500
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:34418 "EHLO
+        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752415AbcL0RsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 12:48:19 -0500
+Received: by mail-vk0-f49.google.com with SMTP id x186so212213901vkd.1
+        for <git@vger.kernel.org>; Tue, 27 Dec 2016 09:48:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UD4ui0NspbVgngf8pQRHCtqSjf7wsr3/SI/J/0bpsXA=;
+        b=ot0WFxf0tvLHPvUUymnew97fQNeeKgtZ4MWux7dFtbpNFKE1MJFD3FGQD6otNnBL0j
+         G/GmJIzFZJZYpXQkypysEhb9UcUOuBSUBmGOASIr9yBJor7ivmHm4+YPSVia9EHigXPD
+         1gMvSckkZUYlleiyR4H+AZr/VuGo3Dj//G6H9y/cwNhWcLMnhK6hKR+e33rxUjKlp6V9
+         E3HxfsIKuN6FtTYNHpl7PSHe0g7pKbQhkCDY5cBH8T3i/q/eiLqEIQthd0C2YKmRRoFX
+         iQfiKCfg5wgURacrjPgAWsDrp2aSqKcJGGxWux3s/z44z1fMwWVJ6kQeQ3Unl4kM4wnY
+         q6Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UD4ui0NspbVgngf8pQRHCtqSjf7wsr3/SI/J/0bpsXA=;
+        b=rlWYzvfeUmZGoXfU6K+SKOTncx5EphNbLqyakMKlhwVxeha06Q3gMUyNAR6WtNs779
+         mZ+jFNoJthaCwCG2QnxUgpdFYshPOTvWx2NAp6cP2Chx8GbnKXO3emX+Lcu0unqxJXgJ
+         10Cf1KrRogTQggZfLgv7I/Q23wcdZqF+2K3j19YaDNP63ILwp7qwWJ/MrtP0DggqLWmi
+         JKSSDGuXzn2NxT8QJIoZ4BIU87QXxNPClu9SvtEcnya6uiP6LPC1gw2J9ByjagOKJBPd
+         EoZd5hEjGpiFGhYMcNu1HmoCvqa0KPqBimb7TMR2aCqD58j9j3RlzykvIsZaeaMrFSWF
+         Ge5w==
+X-Gm-Message-State: AIkVDXK7Ff9gUMR+5/xSYwWkIOdIzWdNSCwvKYTIWgx8R//C9N+yazKqyI8zeKB0oP9F8R71rNNZ/WczplsiVw==
+X-Received: by 10.31.183.144 with SMTP id h138mr9982331vkf.48.1482860898694;
+ Tue, 27 Dec 2016 09:48:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BAB9CB3E-CC59-11E6-B334-E98412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.103.45.11 with HTTP; Tue, 27 Dec 2016 09:47:58 -0800 (PST)
+In-Reply-To: <CA+P7+xpdKEoNY_cgY4g3bMVZe0p-2bYT4Y-3nYyd0O03iD1nZg@mail.gmail.com>
+References: <CAJtFkWtjowyGaFfsCVd-HAZM2-3e0=CkkyYfxne8KRdYq5kJ9g@mail.gmail.com>
+ <CA+P7+xpdKEoNY_cgY4g3bMVZe0p-2bYT4Y-3nYyd0O03iD1nZg@mail.gmail.com>
+From:   Stefan Monov <logixoul@gmail.com>
+Date:   Tue, 27 Dec 2016 19:47:58 +0200
+Message-ID: <CAJtFkWvE7_owqH0KET++Oxv9pDmygwnmDMnOE2r14hQN6BxFgw@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Making_it_possible_to_do_=E2=80=9Cgit_push_origin=E2=80=9D_i?=
+        =?UTF-8?Q?nstead_of_=E2=80=9Cgit_push_origin_=3Cbranch=3E=E2=80=9D=2C_without_having_to_?=
+        =?UTF-8?Q?one=2Dtime_prepare_each_branch_for_it?=
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Imagine that the project wants LF line endings, i.e. it considers
-> that a line with CRLF ending has an unwanted "whitespace" at the
-> end.  Now, you start from this source file:
->
->     1 <CRLF>
->     3 <CRLF>
->     5 <CRLF>
->
-> and a patch like this comes in:
->
->      1 <CRLF>
->     -3 <CRLF>
->     +three <CRLF>
->      5 <CRLF>
->
-> You think that "3 <CRLF>" was replaced by "three <CRLF>", and the
-> claim is "the 'previous' contents already had <CRLF> ending, so the
-> change is not making things worse".
-
-To see the problem with "check existing lines", it probably is
-easier to extend the above example to start from a file with one
-more line, like this:
-
-    1 <CRLF>
-    3 <CRLF>
-    4 <LF>
-    5 <CRLF>
-
-and extend all the example patches to remove "4 <LF>" line as well,
-where they remove "3 <CRLF>", making the first example patch like
-so:
-
-     1 <CRLF>
-    -3 <CRLF>
-    -4 <LF>
-    +three <CRLF>
-     5 <CRLF>
-
-Now, if you take "three <CRLF>" to be replacing "3 <CRLF>", then you
-may feel that not warning on the CRLF would be the right thing, but
-there is no reason (other than the fact you, a human, understand
-what 'three' means) to choose "3 <CRLF>" over "4 <LF>" as the
-original.  If you take "three <CRLF>" to be replacing "4 <LF>", you
-would need to warn.
-
-A totally uninteresting special case is when the original is all
-<CRLF>, but in that case, as you already said in the original
-message, the project wants <CRLF> and you can configure it as such.
-Then <CR> in the line-end <CRLF> won't be mistaken as if it is a
-whitespace character <CR> at the end of a line terminated with <LF>.
+Thanks guys!
