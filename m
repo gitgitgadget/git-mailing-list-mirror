@@ -2,97 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB6020441
-	for <e@80x24.org>; Tue, 27 Dec 2016 17:04:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86C3D200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 17:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755107AbcL0REj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 12:04:39 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:57277 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751136AbcL0REg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 27 Dec 2016 12:04:36 -0500
-X-AuditID: 12074412-5f5ff700000009b5-06-58629f20c7a6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id E0.40.02485.02F92685; Tue, 27 Dec 2016 12:04:33 -0500 (EST)
-Received: from [192.168.69.190] (p5B10401B.dip0.t-ipconnect.de [91.16.64.27])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBRH4UQe014216
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Tue, 27 Dec 2016 12:04:32 -0500
+        id S1755169AbcL0RRC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 12:17:02 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51121 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751638AbcL0RRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 12:17:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02CD657280;
+        Tue, 27 Dec 2016 12:16:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lUrclpMN2jialabNj20fbB99MVY=; b=pGmNDf
+        s3y41pErZdKRzxgHq9f7IkrMQQX5XeU5CKwyNttBJwPPSxxclhWZ8Yek6Nf3hRY8
+        AxJ/y/5Y3lUN4uPySCZ2kTJJGYQKj6bIm/1R43Q09dEP48nZAhxE0YSzjmnHn/mS
+        Wp3D0LsXFbRncIm1yI4tEdY7c4RPgy+SJEHew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JX/x8TlfwsVZrw88yfgtPz3HjpUxr1m2
+        uigrSoTDis5iORTlYz9pxCPt5T7pqmT492hferzx0oyjA04wl4/9CdMhPc4QJnYJ
+        P0fXZnmxMBmXogWq0fw/PQWfDjWY1e4XQTLpLvoYGK32tICAz3ruEEfU9goD+LS1
+        qNoGaedNCZw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E95695727F;
+        Tue, 27 Dec 2016 12:16:58 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 414955727E;
+        Tue, 27 Dec 2016 12:16:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Dec 2016, #05; Mon, 19)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <xmqq37hjmow0.fsf@gitster.mtv.corp.google.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <afd95065-d076-b962-8337-b87008b9f894@alum.mit.edu>
-Date:   Tue, 27 Dec 2016 18:04:30 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.1
+        <afd95065-d076-b962-8337-b87008b9f894@alum.mit.edu>
+Date:   Tue, 27 Dec 2016 09:16:56 -0800
+In-Reply-To: <afd95065-d076-b962-8337-b87008b9f894@alum.mit.edu> (Michael
+        Haggerty's message of "Tue, 27 Dec 2016 18:04:30 +0100")
+Message-ID: <xmqqd1gdcmwn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq37hjmow0.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrEIsWRmVeSWpSXmKPExsUixO6iqKs4PynCYNtmcYuuK91MFg29V5gd
-        mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugStjxe9jrAWneCvOnWtgaWBs4O5i5OSQEDCRuPXu
-        LnsXIxeHkMBlRolpHzaxQDhnmSSmTpjK1MXIwSEsYC9xe58HSIOIgLXE75/fmUBsIQErifn9
-        f1lAbDYBXYlFPc1g5bxA5XfPqYKYLAKqEguvKoJUiAqESFyec5QNxOYVEJQ4OfMJWCcn0MSP
-        l26zgtjMAnoSO67/grLlJba/ncM8gZFvFpKWWUjKZiEpW8DIvIpRLjGnNFc3NzEzpzg1Wbc4
-        OTEvL7VI10wvN7NELzWldBMjJOCEdjCuPyl3iFGAg1GJhzdgVWKEEGtiWXFl7iFGSQ4mJVHe
-        lklJEUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeM/NAcrxpiRWVqUW5cOkpDlYlMR5fy5W9xMS
-        SE8sSc1OTS1ILYLJynBwKEnwCs4DahQsSk1PrUjLzClBSDNxcIIM5wEafnQuyPDigsTc4sx0
-        iPwpRmOOW8eXPGXi+HMGSAqx5OXnpUqJ81aBlAqAlGaU5sFNgyWNV4ziQM8J8/4CqeIBJhy4
-        ea+AVjEBrdKvjwdZVZKIkJJqYNzkZRS45vAjVVuRre6br8xV+RS7k+NMSka+G/+D+D6Gp2w3
-        m9K1A79ZR2zQFbI/8WfOxoWlq34o33nA31DReP1FU1xgUujn7oi4C7MO5JjL3bSvSi1XrkqZ
-        wbuW+2142lemnvo91j8jD1WIG744yrhWwFwnpKNqP3fy46UP3O8fbOCpiNpYrcRSnJFoqMVc
-        VJwIADGexmj1AgAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: 45DF1400-CC58-11E6-BCEF-B2917B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/20/2016 01:21 AM, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> 
-> The second (rather large) batch of topics have been merged to
-> 'master'.  Please test and catch possible regressions early.
-> 
-> You can find the changes described here in the integration branches
-> of the repositories listed at
-> 
->     http://git-blame.blogspot.com/p/git-public-repositories.html
-> 
-> --------------------------------------------------
-> [Graduated to "master"]
-> 
-> [...]
-> * jc/lock-report-on-error (2016-12-07) 3 commits
->   (merged to 'next' on 2016-12-13 at cb6c07ee92)
->  + lockfile: LOCK_REPORT_ON_ERROR
->  + hold_locked_index(): align error handling with hold_lockfile_for_update()
->  + wt-status: implement opportunisitc index update correctly
-> 
->  Git 2.11 had a minor regression in "merge --ff-only" that competed
->  with another process that simultanously attempted to update the
->  index. We used to explain what went wrong with an error message,
->  but the new code silently failed.  The error message has been
->  resurrected.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Sorry I didn't notice this earlier, but the `LOCK_REPORT_ON_ERROR`
-constant introduced by
+> Sorry I didn't notice this earlier, but the `LOCK_REPORT_ON_ERROR`
+> constant introduced by
+>
+>     3f061bf "lockfile: LOCK_REPORT_ON_ERROR", 2016-12-07
+>
+> sets that constant to the value 2,...
 
-    3f061bf "lockfile: LOCK_REPORT_ON_ERROR", 2016-12-07
+Sorry I didn't notice this earlier, either.  Thanks for spotting.
 
-sets that constant to the value 2, which is the same value set for the
-existing constant `LOCK_NO_DEREF`. Both constants define bits that can
-be set in the `flags` argument of `hold_lock_file_for_update()`, so one
-of these values needs to be changed.
+-- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Tue, 27 Dec 2016 09:12:09 -0800
+Subject: [PATCH] lockfile: move REPORT_ON_ERROR bit elsewhere
 
-Michael
+There was LOCK_NO_DEREF defined as 2 = 1<<1 with the same value,
+which was missed due to a huge comment block.  Deconflict by moving
+the new one to 4 = 1<<2 for now.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ lockfile.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lockfile.h b/lockfile.h
+index 16775a7d79..7b715f9e77 100644
+--- a/lockfile.h
++++ b/lockfile.h
+@@ -137,7 +137,7 @@ struct lock_file {
+  * ... this flag can be passed instead to return -1 and give the usual
+  * error message upon an error.
+  */
+-#define LOCK_REPORT_ON_ERROR 2
++#define LOCK_REPORT_ON_ERROR 4
+ 
+ /*
+  * Usually symbolic links in the destination path are resolved. This
+-- 
+2.11.0-449-gc01fa73926
 
