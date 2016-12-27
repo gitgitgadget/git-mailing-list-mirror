@@ -2,120 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 802CF200E0
-	for <e@80x24.org>; Tue, 27 Dec 2016 22:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B549A200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 22:15:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752675AbcL0WMv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 17:12:51 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55761 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752978AbcL0WMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2016 17:12:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8623D5A120;
-        Tue, 27 Dec 2016 17:12:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+rxap3839iNA5+ntpvfz23gHTMo=; b=opuVvl
-        dM2x9/7/1ggYkWJJnsGjzcBpzcQZuqUIhFR42a6lVxjMmoodaIRduH6r66xHjQGs
-        ft+oc/gHP1TbBc0RqmqiY3tJhpIt4NR4Yzb5YZLkgU3HZsqhsEkZeeowWbniXTTD
-        36Awovs5mG/XtqnOjg3ObZsa2yeNqH5C0d10w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GKWNGk6wpcGqOyGlvllP+fynw5Ug75jU
-        IPAIf6q6hnrwaX+jP8opWbotyFu5CADjXgfiekLP8gmt/TxYMkawUYN5rtHwoO/m
-        KopDheWLa+5o5Y8otI6G5V+MpuFGzd3Aw0LlVhWj/Du8PER1dfGYyZXg4KW1apE/
-        lbfPzNctylw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D9725A11F;
-        Tue, 27 Dec 2016 17:12:30 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F39615A11B;
-        Tue, 27 Dec 2016 17:12:29 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     larsxschneider@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] worktree: initialize return value for submodule_uses_worktrees
-References: <7E1C7387-4F37-423F-803D-3B5690B49D40@gmail.com>
-        <20161227175013.12747-1-sbeller@google.com>
-Date:   Tue, 27 Dec 2016 14:12:28 -0800
-In-Reply-To: <20161227175013.12747-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 27 Dec 2016 09:50:13 -0800")
-Message-ID: <xmqqa8bh6myb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+        id S1754899AbcL0WOt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 17:14:49 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35704 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754730AbcL0WOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 17:14:46 -0500
+Received: by mail-wm0-f66.google.com with SMTP id l2so33611153wml.2
+        for <git@vger.kernel.org>; Tue, 27 Dec 2016 14:14:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ZPXekJ7VS72MkfNfHld1+v45eGgoV9FwtDRMzjSUgig=;
+        b=fvYZDJqx7R40J4CidI6FnTifV4J3dhb3xmhOAHIMAjOgIFJ/5nbBiPvhXNj8nrun1o
+         hzJlr8iQJ2D04pP0CRt84kFWFMtFy+ApA+P4lOHHOl0A1meIHeNQYf+y6D2CtyVIvo3c
+         9NDfuy7JWOVmKOpfEXqg7pNbJY31Ly1iFlR0issJMBNP17zs6rbkHcSvkm3JGweeXuhS
+         MuZtyW9PZPmscA2vMa2qjGc1SNKfk8aifgGlQv3xaIi2WMJLZW6D7HhIgEwpLtgTwz5H
+         KXVf3TZYT4cvanbW1kWLI+pdJEjfp+SP49V0rjXbHTYcPU1N9vCV+ebZwF1KVHzTCwOI
+         Qajg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=ZPXekJ7VS72MkfNfHld1+v45eGgoV9FwtDRMzjSUgig=;
+        b=g9mnexIPT/bA23nkFq3o3fccFCYhmg02EqwpAjTPzJqPhiHq/dUaiYodvTfaQgHDP8
+         lHcIjnESYlXU5eBGf7SlEuu2vqpunoXDpBrgdpV8uI4A0Ldw7temCcKNJTWbv7RX4fa/
+         0l9q87RUyfjiQnw9i0OFVvOnMjCZW+A2f9UUSe+rUEvaR/HaNBS42FIUIuLdmx3dgzv7
+         Vo7+qZFNjZmBmspVrbyUIBcGAJlwit6p9p9Cn2owLlUwzajCLoS3FWb6z+++MFOkgd1A
+         29OYkp6y0G0Ik7JIXugry3tQnTj2P04e9juzcDGzKE40CVuxDAUoBsAatxpIIGweNYLw
+         72Mg==
+X-Gm-Message-State: AIkVDXJ4MXdb/cBTCkw467vaj+5zWuJSuXNukAE27J07bPSZV9f8YNnK+oCdbTDJ47bFkw==
+X-Received: by 10.28.229.144 with SMTP id c138mr24005475wmh.23.1482876884853;
+        Tue, 27 Dec 2016 14:14:44 -0800 (PST)
+Received: from [192.168.5.102] ([87.116.180.175])
+        by smtp.gmail.com with ESMTPSA id w197sm57831372wmd.11.2016.12.27.14.14.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Dec 2016 14:14:44 -0800 (PST)
+Subject: Re: git-apply: warn/fail on *changed* end of line (eol) *only*?
+To:     Junio C Hamano <gitster@pobox.com>
+References: <ac97f925-d930-0592-0a2a-66c9218b1417@gmail.com>
+ <xmqqvau7cqy1.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tr1cmf9.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+From:   Igor Djordjevic BugA <igor.d.djordjevic@gmail.com>
+Message-ID: <00a4a54c-bc8e-9fef-0f70-232c85b0139b@gmail.com>
+Date:   Tue, 27 Dec 2016 23:14:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8ECECA92-CC81-11E6-AFCF-E98412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqq8tr1cmf9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On 27/12/2016 18:27, Junio C Hamano wrote:
 
-> When the worktrees directory is empty, the `ret` will be returned
-> uninitialized. Fix it by initializing the value.
+> To see the problem with "check existing lines", it probably is
+> easier to extend the above example to start from a file with one
+> more line, like this:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+>     1 <CRLF>
+>     3 <CRLF>
+>     4 <LF>
+>     5 <CRLF>
 >
-> This goes on top of 1a248cf (origin/sb/submodule-embed-gitdir);
-> ideally to be squashed, but as it is in next already, as a separate
-> patch.
+> and extend all the example patches to remove "4 <LF>" line as well,
+> where they remove "3 <CRLF>", making the first example patch like
+> so:
 >
-> Thanks,
-> Stefan
-
-If you initialize it at the definition site, it would be more
-consistent if these "return 0" we see earlier parts of the function
-also returned "ret" instead of "0".  A better alternative would be
-to initialize it to 0 before it starts to matter, i.e. immediately
-before the
-
-	while (readdir()) {
-		if (is_dot_or_dotdot())
-			continue;
-		ret = 1;
-                break;
-	}		
-
-loop.  I also wonder if that loop is easier to read 
-
-	for (has_paths = 0; !has_paths && (d = readdir(dir)) != NULL; ) {
-		if (is_dot_or_dotdot())
-			continue;
-		has_paths = 1;
-	}                
-
-or even make it a helper function "is_empty_directory(const char *)".
-
-Having said that, I'll queue this as-is and will merge to 'master'
-by the end of the day, as I'm planning to disappear until early next
-year, so please do not "reroll" this to add yet another integration
-cycle to my day.
-
-Thanks.
-
-
->  worktree.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>      1 <CRLF>
+>     -3 <CRLF>
+>     -4 <LF>
+>     +three <CRLF>
+>      5 <CRLF>
 >
-> diff --git a/worktree.c b/worktree.c
-> index d4606aa8cd..828fd7a0ad 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -387,7 +387,7 @@ int submodule_uses_worktrees(const char *path)
->  	struct strbuf sb = STRBUF_INIT;
->  	DIR *dir;
->  	struct dirent *d;
-> -	int ret;
-> +	int ret = 0;
->  	struct repository_format format;
->  
->  	submodule_gitdir = git_pathdup_submodule(path, "%s", "");
+> Now, if you take "three <CRLF>" to be replacing "3 <CRLF>", then you
+> may feel that not warning on the CRLF would be the right thing, but
+> there is no reason (other than the fact you, a human, understand
+> what 'three' means) to choose "3 <CRLF>" over "4 <LF>" as the
+> original.  If you take "three <CRLF>" to be replacing "4 <LF>", you
+> would need to warn.
+
+Hmm, but why do you keep insisting on knowing what the lines are about,
+and still making a 'per line' end of line comparison? Besides, your
+example falls within the (only?) special case I mentioned as the one Git
+probably shouldn`t be acting upon, as both <LF> and <CRLF> are present
+among the the old hunk lines already (lines starting with '-').
+
+The logic should be simple, what I tried to describe in the previous
+message:
+
+  1. Examine all '-' lines line endings.
+
+  1.1. If not all line endings are the same (like in your example, no
+       matter the line content), do nothing.
+	
+  1.2. If all line endings _are_ the same within the old hunk ('-'
+       lines), check if any of the '+' lines (new hunk) has a different
+       line ending (still no matter the line content).
+	
+  1.2.1. If no different line endings among '+' lines in comparison to
+         unique line ending found in '-' lines, do nothing.
+
+  1.2.2. If _any_ of the '+' lines _has_ a different line ending in
+         comparison to unique line ending found in '-' lines, then do
+         warn/fail.
+		
+This even might seem as the most sensible approach, no matter the
+overall project end of line setting, which is exactly why I find it
+interesting - it seems to 'just work', being beginner friendly _and_
+also watching your back on unexpected end of line changes.
+
+> A totally uninteresting special case is when the original is all
+> <CRLF>, but in that case, as you already said in the original
+> message, the project wants <CRLF> and you can configure it as such.
+> Then <CR> in the line-end <CRLF> won't be mistaken as if it is a
+> whitespace character <CR> at the end of a line terminated with <LF>.
+
+But this is exactly the most confusing case, especially for beginners,
+where project configuration is incorrect, and you get warned about
+'whitespace errors' where all line endings (old/new) are in fact still
+the same (confusing).
+
+Yet worse, you don`t get warned of different line endings being applied,
+as these are considered 'correct' due to current (incorrect) setting, no
+matter the whole file is actually different, which you don`t get warned
+about in the first place, and you may discover the file line ending
+breakage only when other contributors start complaining.
+
+Also, would it be sensible to account for a possible file inside the
+project having different line endings than project in general...? This
+would help there as well, without unintentionally breaking the file.
+
+Regards, BugA
+
+P.S. I guess you don`t need me to tell you that, but please feel free
+to drop out of this discussion at your own discretion, even though I
+enjoy sharing thoughts (and learning new stuff!), I do kind of feel I`m
+wasting your time for something that might not be that important, if at
+all, otherwise someone would have probably addressed it so far :/
