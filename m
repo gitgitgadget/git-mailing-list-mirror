@@ -6,95 +6,106 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86C3D200E0
-	for <e@80x24.org>; Tue, 27 Dec 2016 17:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E47C200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 17:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755169AbcL0RRC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 12:17:02 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51121 "EHLO
+        id S1755560AbcL0R1f (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 12:27:35 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54935 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751638AbcL0RRA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2016 12:17:00 -0500
+        with ESMTP id S1755530AbcL0R1d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 12:27:33 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02CD657280;
-        Tue, 27 Dec 2016 12:16:59 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 522F05853F;
+        Tue, 27 Dec 2016 12:27:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lUrclpMN2jialabNj20fbB99MVY=; b=pGmNDf
-        s3y41pErZdKRzxgHq9f7IkrMQQX5XeU5CKwyNttBJwPPSxxclhWZ8Yek6Nf3hRY8
-        AxJ/y/5Y3lUN4uPySCZ2kTJJGYQKj6bIm/1R43Q09dEP48nZAhxE0YSzjmnHn/mS
-        Wp3D0LsXFbRncIm1yI4tEdY7c4RPgy+SJEHew=
+        :content-type; s=sasl; bh=AmDIxoKfBZKrzpADd6A775R48Wk=; b=wRpX6N
+        LctrflMjru3ZJub9qIlJas5XmTLvXPIztMJ9vV7vaqt6m796NuztbevsS4IhK9pd
+        +hp4pT3ppKIAE8JKS/m+s5wr8hstbyhp9TSnOCWWz7AvzoA1UFwyeyy5efh2qYGV
+        BV6jOcMZUA17CUfCsVbIJ0uUZH8L1U/Z1PCn0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JX/x8TlfwsVZrw88yfgtPz3HjpUxr1m2
-        uigrSoTDis5iORTlYz9pxCPt5T7pqmT492hferzx0oyjA04wl4/9CdMhPc4QJnYJ
-        P0fXZnmxMBmXogWq0fw/PQWfDjWY1e4XQTLpLvoYGK32tICAz3ruEEfU9goD+LS1
-        qNoGaedNCZw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E95695727F;
-        Tue, 27 Dec 2016 12:16:58 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=XknND/2Ac7vv5/aE3I3bx7HURp7ODDNb
+        zMyuEajTgwR6+uhosAKMvRJPcBJsP3GOFRm07U7jH1qQlPzBPMcVcdEdQyA6MXjm
+        //al1nC3Ibk2fd/MDl5c7zOAu4YKNkTT4zFtVfpzq/FqNnJXEpyqhF10g66DUTgV
+        sGH5mahDdp0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BA1E5853D;
+        Tue, 27 Dec 2016 12:27:24 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 414955727E;
-        Tue, 27 Dec 2016 12:16:58 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C68FC5853C;
+        Tue, 27 Dec 2016 12:27:23 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
+To:     Igor Djordjevic BugA <igor.d.djordjevic@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2016, #05; Mon, 19)
-References: <xmqq37hjmow0.fsf@gitster.mtv.corp.google.com>
-        <afd95065-d076-b962-8337-b87008b9f894@alum.mit.edu>
-Date:   Tue, 27 Dec 2016 09:16:56 -0800
-In-Reply-To: <afd95065-d076-b962-8337-b87008b9f894@alum.mit.edu> (Michael
-        Haggerty's message of "Tue, 27 Dec 2016 18:04:30 +0100")
-Message-ID: <xmqqd1gdcmwn.fsf@gitster.mtv.corp.google.com>
+Subject: Re: git-apply: warn/fail on *changed* end of line (eol) *only*?
+References: <ac97f925-d930-0592-0a2a-66c9218b1417@gmail.com>
+        <xmqqvau7cqy1.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 27 Dec 2016 09:27:22 -0800
+In-Reply-To: <xmqqvau7cqy1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sun, 25 Dec 2016 19:25:10 -0800")
+Message-ID: <xmqq8tr1cmf9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 45DF1400-CC58-11E6-BCEF-B2917B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BAB9CB3E-CC59-11E6-B334-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Sorry I didn't notice this earlier, but the `LOCK_REPORT_ON_ERROR`
-> constant introduced by
+> Imagine that the project wants LF line endings, i.e. it considers
+> that a line with CRLF ending has an unwanted "whitespace" at the
+> end.  Now, you start from this source file:
 >
->     3f061bf "lockfile: LOCK_REPORT_ON_ERROR", 2016-12-07
+>     1 <CRLF>
+>     3 <CRLF>
+>     5 <CRLF>
 >
-> sets that constant to the value 2,...
+> and a patch like this comes in:
+>
+>      1 <CRLF>
+>     -3 <CRLF>
+>     +three <CRLF>
+>      5 <CRLF>
+>
+> You think that "3 <CRLF>" was replaced by "three <CRLF>", and the
+> claim is "the 'previous' contents already had <CRLF> ending, so the
+> change is not making things worse".
 
-Sorry I didn't notice this earlier, either.  Thanks for spotting.
+To see the problem with "check existing lines", it probably is
+easier to extend the above example to start from a file with one
+more line, like this:
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Tue, 27 Dec 2016 09:12:09 -0800
-Subject: [PATCH] lockfile: move REPORT_ON_ERROR bit elsewhere
+    1 <CRLF>
+    3 <CRLF>
+    4 <LF>
+    5 <CRLF>
 
-There was LOCK_NO_DEREF defined as 2 = 1<<1 with the same value,
-which was missed due to a huge comment block.  Deconflict by moving
-the new one to 4 = 1<<2 for now.
+and extend all the example patches to remove "4 <LF>" line as well,
+where they remove "3 <CRLF>", making the first example patch like
+so:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- lockfile.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+     1 <CRLF>
+    -3 <CRLF>
+    -4 <LF>
+    +three <CRLF>
+     5 <CRLF>
 
-diff --git a/lockfile.h b/lockfile.h
-index 16775a7d79..7b715f9e77 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -137,7 +137,7 @@ struct lock_file {
-  * ... this flag can be passed instead to return -1 and give the usual
-  * error message upon an error.
-  */
--#define LOCK_REPORT_ON_ERROR 2
-+#define LOCK_REPORT_ON_ERROR 4
- 
- /*
-  * Usually symbolic links in the destination path are resolved. This
--- 
-2.11.0-449-gc01fa73926
+Now, if you take "three <CRLF>" to be replacing "3 <CRLF>", then you
+may feel that not warning on the CRLF would be the right thing, but
+there is no reason (other than the fact you, a human, understand
+what 'three' means) to choose "3 <CRLF>" over "4 <LF>" as the
+original.  If you take "three <CRLF>" to be replacing "4 <LF>", you
+would need to warn.
 
+A totally uninteresting special case is when the original is all
+<CRLF>, but in that case, as you already said in the original
+message, the project wants <CRLF> and you can configure it as such.
+Then <CR> in the line-end <CRLF> won't be mistaken as if it is a
+whitespace character <CR> at the end of a line terminated with <LF>.
