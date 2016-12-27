@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AE5B200E0
-	for <e@80x24.org>; Tue, 27 Dec 2016 16:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48AF5200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 16:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932946AbcL0QYL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 11:24:11 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33362 "EHLO
+        id S932980AbcL0QYP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 11:24:15 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34500 "EHLO
         mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932814AbcL0QYB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2016 11:24:01 -0500
-Received: by mail-pg0-f67.google.com with SMTP id g1so12849110pgn.0
-        for <git@vger.kernel.org>; Tue, 27 Dec 2016 08:24:00 -0800 (PST)
+        with ESMTP id S932863AbcL0QYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 11:24:04 -0500
+Received: by mail-pg0-f67.google.com with SMTP id b1so12845038pgc.1
+        for <git@vger.kernel.org>; Tue, 27 Dec 2016 08:24:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=grDnVNddfZ7ReXtHUMAop962DCkGwPQdx0f3c2A2JJw=;
-        b=Hn239rZA9t6w0qUi30EO38leDD80emZrFsRt1fLlRgXsggNUnOp4NW8jLVARALxG8a
-         6EPVxBHuTnJXsZ7Elad5hkXKGwbMPo0vPi1YH9lMmHMoJSVZp3XufThO0ySAZhz9IcUm
-         YHHQEArRPGZoBhU/5iS1MO2et9OOg2sVRissJ+SULhTd+2ShNpV4pFGSEgZWjr9yZOCH
-         CR4IBGfO1SHf5DgYI7jgtTuM2SRDdqd8itr5SndrYokRDXOCioc9kGfMsTTQ0+YGVFLM
-         A2ChE/3ma1hK2cU9yUkH7HGM4A2Ji8oCVYu5i8GmeyFta/9xp7LYW+uR6z33RXCFgERe
-         gifw==
+        bh=IpzXxj1cC/2u9NM563FCNmWmBKUPqsYIU7s6fp4rhus=;
+        b=ZAfK90DIJ96jEutW/5CoYtPGMod/9wnmSNh439VY2GTkZNinX3uTptZ4e8MfeUu1WX
+         J3ZhGgUrTEf1gWeDGrLnxVwocY6FVLg9QahPCZf6lIhSzLtV/+g5krF7eif8I3S1sBWU
+         k5QdEHWaek11quqts1AZQSa67TaW/fH6llhwfx0DQoeMbmWY5+rCN0O8Nqc83XYKWk9p
+         3fCGeViXghBBC8PP6irIwSWjiozIaRuKgfZa0ckWR99izKgUKXENgk9e0BQz+Oj+n1E6
+         A8UpucLSK1n6s4bTr6jLdVNPt9K5z/hlXHh6Q2DjoHshEZf1HBgVp8XEMrs2UHoUbGAL
+         rPbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=grDnVNddfZ7ReXtHUMAop962DCkGwPQdx0f3c2A2JJw=;
-        b=epUh5VTGn6Slhqu/bUoUTgjChFTUtHkWHBiqKWQKnAGMzYIY3UzXxliUcG96QPpALS
-         JtfT8SMHfBPnJYgv7h9d08CinSuZsIbjcbTMvbweiLax6c6wtjmp3ULiJwTvaWO8lkhb
-         hHnT4vFHh4OwgkaBdkwVbA5Sl0PEdd8KM41P1C865BuwnrG9oDjKLrqm+aLcKcg4hHR6
-         e17EYfvQgh6ZS/uyLxCthDTYNPGQvY39LAEUm6zEe1uUTM2am2fKtHJrlsEE6kQGQEot
-         W6gv/AwKGTPQ7my4apTOQLVYJyQJhA8MUYTfhEnHBGlcstCb3Bvh8kBD/MZpWZq7zb/4
-         Z3UQ==
-X-Gm-Message-State: AIkVDXKMb1pQgSDOfaWlmH92+QGhm/v+jjTL/+JI8nh6EOp/g7z3XQCrG+pyQfk0XNsm3w==
-X-Received: by 10.98.211.143 with SMTP id z15mr19899545pfk.36.1482855840186;
-        Tue, 27 Dec 2016 08:24:00 -0800 (PST)
+        bh=IpzXxj1cC/2u9NM563FCNmWmBKUPqsYIU7s6fp4rhus=;
+        b=fLCMEzMtxsJwvcwHurmJ970oK2sT8nVynHV6qQm3gsdVibWY4LS0A8yQDMJNQeC3eL
+         uUzsslHL4/0NPCtrHd/VUOWHcaf1ci+RrsObBed7bbr7gFXS0gvrbOpV3DzED1gUd7ya
+         Zv0Nd5B3sBooNb3z/ro+JQ+lUrghWJCA5tLAgncSQcGgtFLMqPGTvJVKR3BqkNLH1PG2
+         yJ+uvx+eecy635l3/mD1yUyAyL507V6LQMj3pO00hz7hU6x0eTD9WwUd9lIsHJkcgG2v
+         qa69bgsb5RTqY0jJ3qLgchN/Go5yGXuZYxxdC22H2whYhCtB93tXMxBV5wbd+QJS4K2F
+         HBJA==
+X-Gm-Message-State: AIkVDXJTyLkLi0oi1gKNMyWuU02qxPjYiefiw9r8MgA8Ys/wQnUsfpdyC1v2qQ4Si21dOQ==
+X-Received: by 10.99.65.65 with SMTP id o62mr59851819pga.73.1482855842710;
+        Tue, 27 Dec 2016 08:24:02 -0800 (PST)
 Received: from AamlaJuice.corp.endurance.com ([115.110.127.198])
-        by smtp.gmail.com with ESMTPSA id c64sm46517096pfa.91.2016.12.27.08.23.57
+        by smtp.gmail.com with ESMTPSA id c64sm46517096pfa.91.2016.12.27.08.24.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Dec 2016 08:23:59 -0800 (PST)
+        Tue, 27 Dec 2016 08:24:02 -0800 (PST)
 From:   Karthik Nayak <karthik.188@gmail.com>
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jacob.keller@gmail.com, gitster@pobox.com,
         ramsay@ramsayjones.plus.com, Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v9 19/20] branch: use ref-filter printing APIs
-Date:   Tue, 27 Dec 2016 21:53:56 +0530
-Message-Id: <20161227162357.28212-20-Karthik.188@gmail.com>
+Subject: [PATCH v9 20/20] branch: implement '--format' option
+Date:   Tue, 27 Dec 2016 21:53:57 +0530
+Message-Id: <20161227162357.28212-21-Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.10.2
 In-Reply-To: <20161227162357.28212-1-Karthik.188@gmail.com>
 References: <20161227162357.28212-1-Karthik.188@gmail.com>
@@ -64,378 +64,142 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Port branch.c to use ref-filter APIs for printing. This clears out
-most of the code used in branch.c for printing and replaces them with
-calls made to the ref-filter library.
+Implement the '--format' option provided by 'ref-filter'. This lets the
+user list branches as per desired format similar to the implementation
+in 'git for-each-ref'.
 
-Introduce build_format() which gets the format required for printing
-of refs. Make amendments to print_ref_list() to reflect these changes.
-
-The strings included in build_format() may not be safely quoted for
-inclusion (i.e. it might contain '%' which needs to be escaped with an
-additional '%'). Introduce quote_literal_for_format() as a helper
-function which takes a string and returns a version of the string that
-is safely quoted to be used in the for-each-ref format which is built
-in build_format().
-
-Change calc_maxwidth() to also account for the length of HEAD ref, by
-calling ref-filter:get_head_discription().
-
-Also change the test in t6040 to reflect the changes.
-
-Before this patch, all cross-prefix symrefs weren't shortened. Since
-we're using ref-filter APIs, we shorten all symrefs by default. We also
-allow the user to change the format if needed with the introduction of
-the '--format' option in the next patch.
+Add tests and documentation for the same.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/branch.c         | 249 ++++++++++++++++-------------------------------
- t/t3203-branch-output.sh |   2 +-
- t/t6040-tracking-info.sh |   2 +-
- 3 files changed, 88 insertions(+), 165 deletions(-)
+ Documentation/git-branch.txt |  7 ++++++-
+ builtin/branch.c             | 14 +++++++++-----
+ t/t3203-branch-output.sh     | 14 ++++++++++++++
+ 3 files changed, 29 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 5516a47..1fae4ee 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[--column[=<options>] | --no-column]
+ 	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
+-	[--points-at <object>] [<pattern>...]
++	[--points-at <object>] [--format=<format>] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
+@@ -250,6 +250,11 @@ start-point is either a local or remote-tracking branch.
+ --points-at <object>::
+ 	Only list branches of the given object.
+ 
++--format <format>::
++	A string that interpolates `%(fieldname)` from the object
++	pointed at by a ref being shown.  The format is the same as
++	that of linkgit:git-for-each-ref[1].
++
+ Examples
+ --------
+ 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 34cd61c..2887545 100644
+index 2887545..4051a18 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -36,12 +36,12 @@ static unsigned char head_sha1[20];
- 
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
--	GIT_COLOR_RESET,
--	GIT_COLOR_NORMAL,	/* PLAIN */
--	GIT_COLOR_RED,		/* REMOTE */
--	GIT_COLOR_NORMAL,	/* LOCAL */
--	GIT_COLOR_GREEN,	/* CURRENT */
--	GIT_COLOR_BLUE,		/* UPSTREAM */
-+	"%(color:reset)",
-+	"%(color:reset)",	/* PLAIN */
-+	"%(color:red)",		/* REMOTE */
-+	"%(color:reset)",	/* LOCAL */
-+	"%(color:green)",	/* CURRENT */
-+	"%(color:blue)",	/* UPSTREAM */
+@@ -28,6 +28,7 @@ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+ 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
+ 	N_("git branch [<options>] [-r | -a] [--points-at]"),
++	N_("git branch [<options>] [-r | -a] [--format]"),
+ 	NULL
  };
- enum color_branch {
- 	BRANCH_COLOR_RESET = 0,
-@@ -280,180 +280,88 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	return(ret);
+ 
+@@ -364,14 +365,14 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+ 	return strbuf_detach(&fmt, NULL);
  }
  
--static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
--		int show_upstream_ref)
-+static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
+-static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
++static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
  {
--	int ours, theirs;
--	char *ref = NULL;
--	struct branch *branch = branch_get(branch_name);
--	const char *upstream;
--	struct strbuf fancy = STRBUF_INIT;
--	int upstream_is_gone = 0;
--	int added_decoration = 1;
--
--	if (stat_tracking_info(branch, &ours, &theirs, &upstream) < 0) {
--		if (!upstream)
--			return;
--		upstream_is_gone = 1;
--	}
--
--	if (show_upstream_ref) {
--		ref = shorten_unambiguous_ref(upstream, 0);
--		if (want_color(branch_use_color))
--			strbuf_addf(&fancy, "%s%s%s",
--					branch_get_color(BRANCH_COLOR_UPSTREAM),
--					ref, branch_get_color(BRANCH_COLOR_RESET));
--		else
--			strbuf_addstr(&fancy, ref);
--	}
-+	int i, max = 0;
-+	for (i = 0; i < refs->nr; i++) {
-+		struct ref_array_item *it = refs->items[i];
-+		const char *desc = it->refname;
-+		int w;
- 
--	if (upstream_is_gone) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: gone]"), fancy.buf);
--		else
--			added_decoration = 0;
--	} else if (!ours && !theirs) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s]"), fancy.buf);
--		else
--			added_decoration = 0;
--	} else if (!ours) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
--		else
--			strbuf_addf(stat, _("[behind %d]"), theirs);
-+		skip_prefix(it->refname, "refs/heads/", &desc);
-+		skip_prefix(it->refname, "refs/remotes/", &desc);
-+		if (it->kind == FILTER_REFS_DETACHED_HEAD) {
-+			char *head_desc = get_head_description();
-+			w = utf8_strwidth(head_desc);
-+			free(head_desc);
-+		} else
-+			w = utf8_strwidth(desc);
- 
--	} else if (!theirs) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: ahead %d]"), fancy.buf, ours);
--		else
--			strbuf_addf(stat, _("[ahead %d]"), ours);
--	} else {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
--				    fancy.buf, ours, theirs);
--		else
--			strbuf_addf(stat, _("[ahead %d, behind %d]"),
--				    ours, theirs);
-+		if (it->kind == FILTER_REFS_REMOTES)
-+			w += remote_bonus;
-+		if (w > max)
-+			max = w;
- 	}
--	strbuf_release(&fancy);
--	if (added_decoration)
--		strbuf_addch(stat, ' ');
--	free(ref);
-+	return max;
- }
- 
--static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
--			     struct ref_filter *filter, const char *refname)
-+static const char *quote_literal_for_format(const char *s)
- {
--	struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
--	const char *sub = _(" **** invalid ref ****");
--	struct commit *commit = item->commit;
-+	static struct strbuf buf = STRBUF_INIT;
- 
--	if (!parse_commit(commit)) {
--		pp_commit_easy(CMIT_FMT_ONELINE, commit, &subject);
--		sub = subject.buf;
-+	strbuf_reset(&buf);
-+	while (*s) {
-+		const char *ep = strchrnul(s, '%');
-+		if (s < ep)
-+			strbuf_add(&buf, s, ep - s);
-+		if (*ep == '%') {
-+			strbuf_addstr(&buf, "%%");
-+			s = ep + 1;
-+		} else {
-+			s = ep;
-+		}
- 	}
--
--	if (item->kind == FILTER_REFS_BRANCHES)
--		fill_tracking_info(&stat, refname, filter->verbose > 1);
--
--	strbuf_addf(out, " %s %s%s",
--		find_unique_abbrev(item->commit->object.oid.hash, filter->abbrev),
--		stat.buf, sub);
--	strbuf_release(&stat);
--	strbuf_release(&subject);
-+	return buf.buf;
- }
- 
--static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
--				      struct ref_filter *filter, const char *remote_prefix)
-+static char *build_format(struct ref_filter *filter, int maxwidth, const char *remote_prefix)
- {
--	char c;
--	int current = 0;
--	int color;
--	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
--	const char *prefix_to_show = "";
--	const char *prefix_to_skip = NULL;
--	const char *desc = item->refname;
--	char *to_free = NULL;
--
--	switch (item->kind) {
--	case FILTER_REFS_BRANCHES:
--		prefix_to_skip = "refs/heads/";
--		skip_prefix(desc, prefix_to_skip, &desc);
--		if (!filter->detached && !strcmp(desc, head))
--			current = 1;
--		else
--			color = BRANCH_COLOR_LOCAL;
--		break;
--	case FILTER_REFS_REMOTES:
--		prefix_to_skip = "refs/remotes/";
--		skip_prefix(desc, prefix_to_skip, &desc);
--		color = BRANCH_COLOR_REMOTE;
--		prefix_to_show = remote_prefix;
--		break;
--	case FILTER_REFS_DETACHED_HEAD:
--		desc = to_free = get_head_description();
--		current = 1;
--		break;
--	default:
--		color = BRANCH_COLOR_PLAIN;
--		break;
--	}
-+	struct strbuf fmt = STRBUF_INIT;
-+	struct strbuf local = STRBUF_INIT;
-+	struct strbuf remote = STRBUF_INIT;
- 
--	c = ' ';
--	if (current) {
--		c = '*';
--		color = BRANCH_COLOR_CURRENT;
--	}
-+	strbuf_addf(&fmt, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %%(end)",
-+		    branch_get_color(BRANCH_COLOR_CURRENT));
- 
--	strbuf_addf(&name, "%s%s", prefix_to_show, desc);
- 	if (filter->verbose) {
--		int utf8_compensation = strlen(name.buf) - utf8_strwidth(name.buf);
--		strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
--			    maxwidth + utf8_compensation, name.buf,
-+		strbuf_addf(&local, "%%(align:%d,left)%%(refname:lstrip=2)%%(end)", maxwidth);
-+		strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
-+		strbuf_addf(&local, " %%(objectname:short=7) ");
-+
-+		if (filter->verbose > 1)
-+			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
-+				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
-+				    branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
-+		else
-+			strbuf_addf(&local, "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)");
-+
-+		strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s%%(if)%%(symref)%%(then) -> %%(symref:short)"
-+			    "%%(else) %%(objectname:short=7) %%(contents:subject)%%(end)",
-+			    branch_get_color(BRANCH_COLOR_REMOTE), maxwidth, quote_literal_for_format(remote_prefix),
- 			    branch_get_color(BRANCH_COLOR_RESET));
--	} else
--		strbuf_addf(&out, "%c %s%s%s", c, branch_get_color(color),
--			    name.buf, branch_get_color(BRANCH_COLOR_RESET));
--
--	if (item->symref) {
--		const char *symref = item->symref;
--		if (prefix_to_skip)
--			skip_prefix(symref, prefix_to_skip, &symref);
--		strbuf_addf(&out, " -> %s", symref);
--	}
--	else if (filter->verbose)
--		/* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
--		add_verbose_info(&out, item, filter, desc);
--	if (column_active(colopts)) {
--		assert(!filter->verbose && "--column and --verbose are incompatible");
--		string_list_append(&output, out.buf);
- 	} else {
--		printf("%s\n", out.buf);
-+		strbuf_addf(&local, "%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
-+			    branch_get_color(BRANCH_COLOR_RESET));
-+		strbuf_addf(&remote, "%s%s%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
-+			    branch_get_color(BRANCH_COLOR_REMOTE), quote_literal_for_format(remote_prefix),
-+			    branch_get_color(BRANCH_COLOR_RESET));
- 	}
--	strbuf_release(&name);
--	strbuf_release(&out);
--	free(to_free);
--}
--
--static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
--{
--	int i, max = 0;
--	for (i = 0; i < refs->nr; i++) {
--		struct ref_array_item *it = refs->items[i];
--		const char *desc = it->refname;
--		int w;
- 
--		skip_prefix(it->refname, "refs/heads/", &desc);
--		skip_prefix(it->refname, "refs/remotes/", &desc);
--		w = utf8_strwidth(desc);
-+	strbuf_addf(&fmt, "%%(if:notequals=refs/remotes)%%(refname:rstrip=-2)%%(then)%s%%(else)%s%%(end)", local.buf, remote.buf);
- 
--		if (it->kind == FILTER_REFS_REMOTES)
--			w += remote_bonus;
--		if (w > max)
--			max = w;
--	}
--	return max;
-+	strbuf_release(&local);
-+	strbuf_release(&remote);
-+	return strbuf_detach(&fmt, NULL);
- }
- 
- static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
-@@ -462,6 +370,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	int i;
  	struct ref_array array;
  	int maxwidth = 0;
  	const char *remote_prefix = "";
-+	struct strbuf out = STRBUF_INIT;
-+	char *format;
+ 	struct strbuf out = STRBUF_INIT;
+-	char *format;
++	char *to_free = NULL;
  
  	/*
  	 * If we are listing more than just remote branches,
-@@ -473,18 +383,31 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 
- 	memset(&array, 0, sizeof(array));
- 
--	verify_ref_format("%(refname)%(symref)");
- 	filter_refs(&array, filter, filter->kind | FILTER_REFS_INCLUDE_BROKEN);
- 
+@@ -388,7 +389,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
  	if (filter->verbose)
  		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
  
-+	format = build_format(filter, maxwidth, remote_prefix);
-+	verify_ref_format(format);
-+
- 	ref_array_sort(sorting, &array);
+-	format = build_format(filter, maxwidth, remote_prefix);
++	if (!format)
++		format = to_free = build_format(filter, maxwidth, remote_prefix);
+ 	verify_ref_format(format);
  
--	for (i = 0; i < array.nr; i++)
--		format_and_print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
-+	for (i = 0; i < array.nr; i++) {
-+		format_ref_array_item(array.items[i], format, 0, &out);
-+		if (column_active(colopts)) {
-+			assert(!filter->verbose && "--column and --verbose are incompatible");
-+			 /* format to a string_list to let print_columns() do its job */
-+			string_list_append(&output, out.buf);
-+		} else {
-+			fwrite(out.buf, 1, out.len, stdout);
-+			putchar('\n');
-+		}
-+		strbuf_release(&out);
-+	}
+ 	ref_array_sort(sorting, &array);
+@@ -407,7 +409,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	}
  
  	ref_array_clear(&array);
-+	free(format);
+-	free(format);
++	free(to_free);
  }
  
  static void reject_rebase_or_bisect_branch(const char *target)
+@@ -528,6 +530,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	struct ref_filter filter;
+ 	int icase = 0;
+ 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
++	const char *format = NULL;
+ 
+ 	struct option options[] = {
+ 		OPT_GROUP(N_("Generic options")),
+@@ -569,6 +572,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			N_("print only branches of the object"), 0, parse_opt_object_name
+ 		},
+ 		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
++		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -641,7 +645,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!sorting)
+ 			sorting = ref_default_sorting();
+ 		sorting->ignore_case = icase;
+-		print_ref_list(&filter, sorting);
++		print_ref_list(&filter, sorting, format);
+ 		print_columns(&output, colopts, NULL);
+ 		string_list_clear(&output, 0);
+ 		return 0;
 diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 52283df..4521328 100755
+index 4521328..5778c0a 100755
 --- a/t/t3203-branch-output.sh
 +++ b/t/t3203-branch-output.sh
-@@ -194,7 +194,7 @@ test_expect_success 'local-branch symrefs shortened properly' '
- 	git symbolic-ref refs/heads/ref-to-remote refs/remotes/origin/branch-one &&
- 	cat >expect <<-\EOF &&
- 	  ref-to-branch -> branch-one
--	  ref-to-remote -> refs/remotes/origin/branch-one
-+	  ref-to-remote -> origin/branch-one
- 	EOF
- 	git branch >actual.raw &&
- 	grep ref-to <actual.raw >actual &&
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 3d5c238..97a0765 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -44,7 +44,7 @@ b1 [ahead 1, behind 1] d
- b2 [ahead 1, behind 1] d
- b3 [behind 1] b
- b4 [ahead 2] f
--b5 g
-+b5 [gone] g
- b6 c
- EOF
+@@ -225,4 +225,18 @@ test_expect_success 'sort branches, ignore case' '
+ 	)
+ '
  
++test_expect_success 'git branch --format option' '
++	cat >expect <<-\EOF &&
++	Refname is (HEAD detached from fromtag)
++	Refname is refs/heads/ambiguous
++	Refname is refs/heads/branch-one
++	Refname is refs/heads/branch-two
++	Refname is refs/heads/master
++	Refname is refs/heads/ref-to-branch
++	Refname is refs/heads/ref-to-remote
++	EOF
++	git branch --format="Refname is %(refname)" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.10.2
 
