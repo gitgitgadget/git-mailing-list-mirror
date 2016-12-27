@@ -2,327 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 182CE200E0
-	for <e@80x24.org>; Tue, 27 Dec 2016 19:10:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30D3B200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 19:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755948AbcL0TKR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 14:10:17 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:35352 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754578AbcL0TKP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2016 14:10:15 -0500
-Received: by mail-pg0-f54.google.com with SMTP id i5so82628360pgh.2
-        for <git@vger.kernel.org>; Tue, 27 Dec 2016 11:10:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=Eo41plEm1EfYJ9Jb52UoIJ/zh/nzcvgsgtRIJbJ8KJc=;
-        b=kkmQvxGhDtSTbRFhPpw2VdcsKG0NXM7hoOtJ9Bv1jKoUyk4sbXxTsJoDoH/2miMO/v
-         xWuHzT5WcG4rlW1jndmyknEkk/CpZcImnFbQZkbrymmkcmHfiIiKhkXWM/rZUGhxnAbx
-         /VvAKvSSqlUCkupXia/WC29Ukd0N+d7+zpC54aNMmZQ2IWTMyL5UsEETeaFvP2tDuMJm
-         UgUWlGQ1rIJzrwJfEhZEsFvBiWaAv/eWhfJtcAmp8ZCMYC6doZbHagsP2rKWNx24XY5b
-         pTMbDKwL3PctQh7yjS0B0M/V3CYTxzU/w+oGxnjuYu/fw+/dyYmsUikNPwrFmfL31zJo
-         034Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Eo41plEm1EfYJ9Jb52UoIJ/zh/nzcvgsgtRIJbJ8KJc=;
-        b=Xz/cdMysrBPWMjAktULaNTRHIt970fJ8Pdyu4kmCl4v4bCJrBCTeJw2JhpsCwf3QXn
-         WdZmWxvL23idvcKEfSrXEfPBF6XWr/Pw+g6NeL01pjErzb9Gfv6gWVPtDV49Pyo8nvpp
-         IoTkh1ZP76LYaegHwq/poMARTJbPInLwwPTVItMqq34WbLIDpB4ljkl/EfLgIGhi0vuP
-         xJPOopmBT975aZTPilkJceKdwqEY2Bgtl++Ex+yoyKkvTrki/aAKv/DCc6wZneGPKkdu
-         8DrKoWn4I0zkj1ksB9Q3/NN5gcDXwJmTJIM5NoRQkTRzQ2qg6QUffsZxeA3urZbrkHEb
-         mQhQ==
-X-Gm-Message-State: AIkVDXKu3jKmwYH5PLPq3ddZMrFl4kqBKIMxvTikZavxqqPdEG78tS26BhVVPP45W+Ay6TGv
-X-Received: by 10.84.206.37 with SMTP id f34mr69682612ple.127.1482865451492;
-        Tue, 27 Dec 2016 11:04:11 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:1aa:810:98b9:be05])
-        by smtp.gmail.com with ESMTPSA id y6sm92033471pge.16.2016.12.27.11.04.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Dec 2016 11:04:10 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, bmwill@google.com, David.Turner@twosigma.com,
-        sandals@crustytoothpaste.net, 6t@kdbg.org,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv6] rm: absorb a submodules git dir before deletion
-Date:   Tue, 27 Dec 2016 11:03:14 -0800
-Message-Id: <20161227190314.22655-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.rc2.50.g8bda6b2.dirty
+        id S1756094AbcL0TKf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 14:10:35 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64136 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756140AbcL0TKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 14:10:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 304DA59A43;
+        Tue, 27 Dec 2016 14:10:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=o1InuWDxxlbtsy/c5rQSnZFKISw=; b=vRPkim
+        hR32yXool+O+knCrv8iuyLRu444knmXvl9ONSptQ9Cvkv86V1LeTjIYB7c8LWnNW
+        M6goJIX6AUBofcAoaS7mNx3qGGMmoSOCFx4F5bM5MqHX+2Pc+6fTyYDZiKJ1FlN+
+        Y9/NKXw43TNkBhkx+2yEKWK6S/JIAoKRH26Kk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JjOjakq25YdumBhMq6d8NErrQ0QjUR5s
+        mJ4F05X1pEtyPt+eI/pH5OwAcugmaM/YJChXHNep2CmylHlQAhWgfSILA8s4wpta
+        gp/JE8GwQ5dyH+NLkW1mtVjoN9bu44XdObKgPCx0jKfrjhTOXTH9F2zTWQJ7lfbe
+        T329RwTtOPg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 280D059A42;
+        Tue, 27 Dec 2016 14:10:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9AFFD59A41;
+        Tue, 27 Dec 2016 14:10:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 14/21] read-cache: touch shared index files when used
+References: <20161226102222.17150-1-chriscool@tuxfamily.org>
+        <20161226102222.17150-15-chriscool@tuxfamily.org>
+Date:   Tue, 27 Dec 2016 11:10:30 -0800
+In-Reply-To: <20161226102222.17150-15-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Mon, 26 Dec 2016 11:22:15 +0100")
+Message-ID: <xmqqa8bhb32x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 22FE337A-CC68-11E6-95DD-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When deleting a submodule, we need to keep the actual git directory around,
-such that we do not lose local changes in there and at a later checkout
-of the submodule we don't need to clone it again.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Now that the functionality is available to absorb the git directory of a
-submodule, rewrite the checking in git-rm to not complain, but rather
-relocate the git directories inside the superproject.
+> +/*
+> + * Signal that the shared index is used by updating its mtime.
+> + *
+> + * This way, shared index can be removed if they have not been used
+> + * for some time. It's ok to fail to update the mtime if we are on a
+> + * read only file system.
+> + */
+> +void freshen_shared_index(char *base_sha1_hex)
+> +{
+> +	const char *shared_index = git_path("sharedindex.%s", base_sha1_hex);
+> +	check_and_freshen_file(shared_index, 1);
 
-An alternative solution was discussed to have a function
-`depopulate_submodule`. That would couple the check for its git directory
-and possible relocation before the the removal, such that it is less
-likely to miss the check in the future.  But the indirection with such
-a function added seemed also complex. The reason for that was that this
-possible move of the git directory was also implemented in
-`ok_to_remove_submodule`, such that this function could truthfully
-answer whether it is ok to remove the submodule.
+What happens when this call fails?  The function returns 0 if the
+file did not even exist.  It also returns 0 if you cannot update its
+timestamp.
 
-The solution proposed here defers all these checks to the caller.
+Shouldn't the series be exposing freshen_file() instead _and_ taking
+its error return value seriously?
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-This replaces the last patch of the series 
-"git-rm absorbs submodule git directory before deletion".
-named "rm: absorb a submodules git dir before deletion".
-
-The only change is a guard (!index_only) for
-submodules_absorb_gitdir_if_needed(prefix);
-
-Junio, the other concern you raised about not checking
-for local modifications in the submodule has been answered
-as a reply there; we do check for local modifications there,
-though it is not obvious.
-
-Thanks,
-Stefan
-
- builtin/rm.c  | 80 ++++++++++++++---------------------------------------------
- t/t3600-rm.sh | 39 +++++++++++------------------
- 2 files changed, 34 insertions(+), 85 deletions(-)
-
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 5a5a66272b..20635dca94 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -59,27 +59,9 @@ static void print_error_files(struct string_list *files_list,
- 	}
- }
- 
--static void error_removing_concrete_submodules(struct string_list *files, int *errs)
--{
--	print_error_files(files,
--			  Q_("the following submodule (or one of its nested "
--			     "submodules)\n"
--			     "uses a .git directory:",
--			     "the following submodules (or one of their nested "
--			     "submodules)\n"
--			     "use a .git directory:", files->nr),
--			  _("\n(use 'rm -rf' if you really want to remove "
--			    "it including all of its history)"),
--			  errs);
--	string_list_clear(files, 0);
--}
--
--static int check_submodules_use_gitfiles(void)
-+static void submodules_absorb_gitdir_if_needed(const char *prefix)
- {
- 	int i;
--	int errs = 0;
--	struct string_list files = STRING_LIST_INIT_NODUP;
--
- 	for (i = 0; i < list.nr; i++) {
- 		const char *name = list.entry[i].name;
- 		int pos;
-@@ -99,12 +81,9 @@ static int check_submodules_use_gitfiles(void)
- 			continue;
- 
- 		if (!submodule_uses_gitfile(name))
--			string_list_append(&files, name);
-+			absorb_git_dir_into_superproject(prefix, name,
-+				ABSORB_GITDIR_RECURSE_SUBMODULES);
- 	}
--
--	error_removing_concrete_submodules(&files, &errs);
--
--	return errs;
- }
- 
- static int check_local_mod(struct object_id *head, int index_only)
-@@ -120,7 +99,6 @@ static int check_local_mod(struct object_id *head, int index_only)
- 	int errs = 0;
- 	struct string_list files_staged = STRING_LIST_INIT_NODUP;
- 	struct string_list files_cached = STRING_LIST_INIT_NODUP;
--	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
- 	struct string_list files_local = STRING_LIST_INIT_NODUP;
- 
- 	no_head = is_null_oid(head);
-@@ -219,13 +197,8 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		else if (!index_only) {
- 			if (staged_changes)
- 				string_list_append(&files_cached, name);
--			if (local_changes) {
--				if (S_ISGITLINK(ce->ce_mode) &&
--				    !submodule_uses_gitfile(name))
--					string_list_append(&files_submodule, name);
--				else
--					string_list_append(&files_local, name);
--			}
-+			if (local_changes)
-+				string_list_append(&files_local, name);
- 		}
- 	}
- 	print_error_files(&files_staged,
-@@ -247,8 +220,6 @@ static int check_local_mod(struct object_id *head, int index_only)
- 			  &errs);
- 	string_list_clear(&files_cached, 0);
- 
--	error_removing_concrete_submodules(&files_submodule, &errs);
--
- 	print_error_files(&files_local,
- 			  Q_("the following file has local modifications:",
- 			     "the following files have local modifications:",
-@@ -342,6 +313,9 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			exit(0);
- 	}
- 
-+	if (!index_only)
-+		submodules_absorb_gitdir_if_needed(prefix);
-+
- 	/*
- 	 * If not forced, the file, the index and the HEAD (if exists)
- 	 * must match; but the file can already been removed, since
-@@ -358,9 +332,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			oidclr(&oid);
- 		if (check_local_mod(&oid, index_only))
- 			exit(1);
--	} else if (!index_only) {
--		if (check_submodules_use_gitfiles())
--			exit(1);
- 	}
- 
- 	/*
-@@ -389,32 +360,20 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 */
- 	if (!index_only) {
- 		int removed = 0, gitmodules_modified = 0;
--		struct strbuf buf = STRBUF_INIT;
- 		for (i = 0; i < list.nr; i++) {
- 			const char *path = list.entry[i].name;
- 			if (list.entry[i].is_submodule) {
--				if (is_empty_dir(path)) {
--					if (!rmdir(path)) {
--						removed = 1;
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--						continue;
--					}
--				} else {
--					strbuf_reset(&buf);
--					strbuf_addstr(&buf, path);
--					if (!remove_dir_recursively(&buf, 0)) {
--						removed = 1;
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--						strbuf_release(&buf);
--						continue;
--					} else if (!file_exists(path))
--						/* Submodule was removed by user */
--						if (!remove_path_from_gitmodules(path))
--							gitmodules_modified = 1;
--					/* Fallthrough and let remove_path() fail. */
--				}
-+				struct strbuf buf = STRBUF_INIT;
-+
-+				strbuf_addstr(&buf, path);
-+				if (remove_dir_recursively(&buf, 0))
-+					die(_("could not remove '%s'"), path);
-+				strbuf_release(&buf);
-+
-+				removed = 1;
-+				if (!remove_path_from_gitmodules(path))
-+					gitmodules_modified = 1;
-+				continue;
- 			}
- 			if (!remove_path(path)) {
- 				removed = 1;
-@@ -423,7 +382,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			if (!removed)
- 				die_errno("git rm: '%s'", path);
- 		}
--		strbuf_release(&buf);
- 		if (gitmodules_modified)
- 			stage_updated_gitmodules();
- 	}
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index bcbb680651..5aa6db584c 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -569,26 +569,22 @@ test_expect_success 'rm of a conflicted unpopulated submodule succeeds' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rm of a populated submodule with a .git directory fails even when forced' '
-+test_expect_success 'rm of a populated submodule with a .git directory migrates git dir' '
- 	git checkout -f master &&
- 	git reset --hard &&
- 	git submodule update &&
- 	(cd submod &&
- 		rm .git &&
- 		cp -R ../.git/modules/sub .git &&
--		GIT_WORK_TREE=. git config --unset core.worktree
-+		GIT_WORK_TREE=. git config --unset core.worktree &&
-+		rm -r ../.git/modules/sub
- 	) &&
--	test_must_fail git rm submod &&
--	test -d submod &&
--	test -d submod/.git &&
--	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	test_must_fail git rm -f submod &&
--	test -d submod &&
--	test -d submod/.git &&
-+	git rm submod 2>output.err &&
-+	! test -d submod &&
-+	! test -d submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	rm -rf submod
-+	test -s actual &&
-+	test_i18ngrep Migrating output.err
- '
- 
- cat >expect.deepmodified <<EOF
-@@ -667,24 +663,19 @@ test_expect_success 'rm of a populated nested submodule with a nested .git direc
- 	git submodule update --recursive &&
- 	(cd submod/subsubmod &&
- 		rm .git &&
--		cp -R ../../.git/modules/sub/modules/sub .git &&
-+		mv ../../.git/modules/sub/modules/sub .git &&
- 		GIT_WORK_TREE=. git config --unset core.worktree
- 	) &&
--	test_must_fail git rm submod &&
--	test -d submod &&
--	test -d submod/subsubmod/.git &&
--	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	test_must_fail git rm -f submod &&
--	test -d submod &&
--	test -d submod/subsubmod/.git &&
-+	git rm submod 2>output.err &&
-+	! test -d submod &&
-+	! test -d submod/subsubmod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	! test -s actual &&
--	rm -rf submod
-+	test -s actual &&
-+	test_i18ngrep Migrating output.err
- '
- 
- test_expect_success 'checking out a commit after submodule removal needs manual updates' '
--	git commit -m "submodule removal" submod &&
-+	git commit -m "submodule removal" submod .gitmodules &&
- 	git checkout HEAD^ &&
- 	git submodule update &&
- 	git checkout -q HEAD^ &&
--- 
-2.11.0.rc2.50.g8bda6b2.dirty
-
+> +}
+> +
+>  int read_index_from(struct index_state *istate, const char *path)
+>  {
+>  	struct split_index *split_index;
+> @@ -2273,6 +2286,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+>  		int ret = write_shared_index(istate, lock, flags);
+>  		if (ret)
+>  			return ret;
+> +	} else {
+> +		freshen_shared_index(sha1_to_hex(si->base_sha1));
+>  	}
+>  
+>  	return write_split_index(istate, lock, flags);
