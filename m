@@ -2,117 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C6B200E0
-	for <e@80x24.org>; Tue, 27 Dec 2016 18:54:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8D79200E0
+	for <e@80x24.org>; Tue, 27 Dec 2016 19:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755875AbcL0Sxy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Dec 2016 13:53:54 -0500
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:33078 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755550AbcL0Sxv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2016 13:53:51 -0500
-Received: by mail-qt0-f177.google.com with SMTP id p16so331019725qta.0
-        for <git@vger.kernel.org>; Tue, 27 Dec 2016 10:52:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Qqn9bmi/rGynffpVJXdlOyWS4VcSk/Gb9HUvxhtQJEo=;
-        b=eZpqbeIvy5H2tEvUug9xVyjXMT+C0SpDeroBvSZPY3dshoKc01mwCH2ahtF/87RpBk
-         gnIV5+W8J/rDsZOQ2/TdZP3v+uhc+zQswMK0usgH/OvMXCNjv1nwdblcdY0RgB5/Ps06
-         yp9bMlNaw6hA3yb6ffRS1VBRcwIt7nNJT2wwzSJrMmXtKCHc6/nI4B5hHG2y3i7zmf5r
-         DDijCDWv2y8WHqkqHKhTY7ovTBJDHwXvxk7KOng312ljuLF7U+eZvZQwyRvX8NRg8FiB
-         O7AespDNJpROzIqs231/bbzBEMHqAG0/BokjcGwOdl7bUYT47k+bqHnI97OirGcOMrFE
-         fNLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Qqn9bmi/rGynffpVJXdlOyWS4VcSk/Gb9HUvxhtQJEo=;
-        b=hUy+D/pFj8WBdesDk2P3hu7tDUqj6lyXOWYpTn1OuX557xkrKpXjj+cZ/qg54ywb2v
-         MeLcG2I1ul8bQpn8CRxz78fXDXgBk+8a5Y71m1WimzMBtEZzSyKbXqRSEawTjXpGeosw
-         myAvT83dm4Ox8B4pAci1GITu8xmy3euUbikD9zZTwURijpWZOZdqq7OcEAGOUQuM53lV
-         TTE096ZV5+itpg//lw/e5Z08noAlnK4Ps6lulZvJHGp2bLDjd0pGN8MX7Kf13q+U7qaf
-         pVLZQpxYrp8W1jvOAgZHlcqyD1xQweR62HLuN8W3IXMZFOboEXt40sDHAqyK6KCx1aeQ
-         7C3w==
-X-Gm-Message-State: AIkVDXI3XzV8MiVkppvXdULv0/Ho0plP4m7M6VVY/GubaQTlgj7rWgxs4JvYBbjrASgXOXHLV4Wz0fwJN7jO2Sqo
-X-Received: by 10.237.34.206 with SMTP id q14mr29805868qtc.101.1482864358546;
- Tue, 27 Dec 2016 10:45:58 -0800 (PST)
+        id S1756067AbcL0TJX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Dec 2016 14:09:23 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52538 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754578AbcL0TJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2016 14:09:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D3D5F59A0D;
+        Tue, 27 Dec 2016 14:09:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fKy9VW5q+BxvM1et9GL2d4EM0C4=; b=BxUfen
+        C/jlCSfSWkfu0meWoQ7dMQrlthmKF9/PSravoMv9bQogpmfynPqYewDNF7t0VEzV
+        ZIyLvrtUyCVXbc6S+c2k9d4cHeIw0Da/vCMyCDhc1GgOLbSlKZK3u1TdmzDlTmsO
+        nHiNlRf+n1ajE5ASPIRP9XMYLYMGo6qb3RPyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mBUidYECAry426/1RNlRTO33WVdRQbEk
+        T359ZsohFbE8P/JgZgcYhqbp4T+iwPM7rR+IS93cxvNDyyL8b5EqkPwZLkn8RkeZ
+        EqvxPOb+1cES2mKmqqVH8yBaYpqfqIFfhDfaZBuvFQANwRUKGmFB9uoakvizWkgG
+        LniIxuGMi1g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CBFBF59A0C;
+        Tue, 27 Dec 2016 14:09:18 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C9B959A0B;
+        Tue, 27 Dec 2016 14:09:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 12/21] Documentation/config: add splitIndex.maxPercentChange
+References: <20161226102222.17150-1-chriscool@tuxfamily.org>
+        <20161226102222.17150-13-chriscool@tuxfamily.org>
+Date:   Tue, 27 Dec 2016 11:09:17 -0800
+In-Reply-To: <20161226102222.17150-13-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Mon, 26 Dec 2016 11:22:13 +0100")
+Message-ID: <xmqqlgv1b34y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.90 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Tue, 27 Dec 2016 10:45:58 -0800 (PST)
-In-Reply-To: <20161227082922.8B7A813893D@mail.altsci.com>
-References: <20161227082922.8B7A813893D@mail.altsci.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 27 Dec 2016 10:45:58 -0800
-Message-ID: <CAGZ79kbOjpi4SBLPVaKXJ+L8VN+0N=ZqgDcHeYydkKsS20yR1Q@mail.gmail.com>
-Subject: Re: Gitview Shell Injection Vulnerability
-To:     Javantea <jvoss@altsci.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, aneesh.kumar@gmail.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F740F1DC-CC67-11E6-8E44-E98412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc the author of gitview
+Christian Couder <christian.couder@gmail.com> writes:
 
-On Tue, Dec 27, 2016 at 12:29 AM, Javantea <jvoss@altsci.com> wrote:
-> I have found a shell injection vulnerability in contrib/gitview/gitview.
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  Documentation/config.txt | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 >
-> Gitview Shell Injection Vulnerability
->
-> Versions affected: 8cb711c8a5-1d1bdafd64 (<=3D2.11.0)
->
-> Gitview executes shell commands using string concatenation with user supp=
-lied data, filenames and branch names. Running Gitview and interacting with=
- the user interface with a malicious filename or branch name in the current=
- repository results in malicious commands being executed as the current use=
-r.
->
-> AnnotateWindow.add_file_data(self, filename, commit_sha1, line_num):
->     fp =3D os.popen("git cat-file blob " + commit_sha1 +":"+filename)
->
-> AnnotateWindow.annotate(self, filename, commit_sha1, line_num):
->     fp =3D os.popen("git ls-tree "+ commit_sha1 + " -- " + filename)
->     fp =3D os.popen("git blame --incremental -C -C -- " + filename + " " =
-+ commit_sha1)
->
-> GitView.set_branch(self, args):
->     fp =3D os.popen("git rev-parse --sq --default HEAD " + list_to_string=
-(args, 1))
->     fp =3D os.popen("git rev-list  --header --topo-order --parents " + gi=
-t_rev_list_cmd)
->
-> The program also has other uses of os.popen but none use values that the =
-user can manipulate. However, the fix should definitely replace these insta=
-nces so that the code might one day pass pylint and manual code review easi=
-er.
->
-> The function os.popen has been replaced by safer functions in the subproc=
-ess module. The code can be improved easily because it requires very little=
- change to convert the code to work with arrays of strings instead of strin=
-gs.
->
-> If you have any questions or would like a patch, please let me know.
->
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 221c5982c0..e0f5a77980 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2773,6 +2773,19 @@ showbranch.default::
+>  	The default set of branches for linkgit:git-show-branch[1].
+>  	See linkgit:git-show-branch[1].
+>  
+> +splitIndex.maxPercentChange::
+> +	When the split index feature is used, this specifies the
+> +	percent of entries the split index can contain compared to the
+> +	whole number of entries in both the split index and the shared
 
-I guess you could send a patch to fix it. It is unclear to me
-how the patch submission process for these work, though.
-Please see contrib/README to see why it is unclear to me.
-
-> I expect that things that start their life in the contrib/ area
-> to graduate out of contrib/ once they mature, either by becoming
-> projects on their own, or moving to the toplevel directory.  On
-> the other hand, I expect I'll be proposing removal of disused
-> and inactive ones from time to time.
-
-Maybe it's time for a spring cleanup and remove some old (dead?)
-projects from contrib?
-
-Thanks,
-Stefan
+s/whole/total/ to match the last sentence of this section, perhaps?
+"The number of all entries" would also be OK, but "the whole number
+of entries" sounds a bit strange.
