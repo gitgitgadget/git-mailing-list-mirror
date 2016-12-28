@@ -2,79 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52E5A1FCA5
-	for <e@80x24.org>; Wed, 28 Dec 2016 09:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F309D1FCA5
+	for <e@80x24.org>; Wed, 28 Dec 2016 09:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751280AbcL1JUS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Dec 2016 04:20:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60974 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751103AbcL1JUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2016 04:20:17 -0500
-Received: (qmail 15107 invoked by uid 109); 28 Dec 2016 09:20:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Dec 2016 09:20:14 +0000
-Received: (qmail 17564 invoked by uid 111); 28 Dec 2016 09:21:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Dec 2016 04:21:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Dec 2016 04:20:11 -0500
-Date:   Wed, 28 Dec 2016 04:20:11 -0500
-From:   Jeff King <peff@peff.net>
-To:     "John P. Hartmann" <jphartmann@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: HowTo distribute a hook with the reposity.
-Message-ID: <20161228092011.bnqqcvujescbdhji@sigill.intra.peff.net>
-References: <6e228b75-0208-63e8-b4e8-70905e3f9ea3@gmail.com>
- <CA+P7+xqHTgRvMRwgL2TJ7SRb_SR0sbtA039J_5N0xSjf3TNrgg@mail.gmail.com>
- <20161228060840.gelgcs2hd33id56j@sigill.intra.peff.net>
- <6801f971-418d-18c9-8002-9c2f7b8c8008@gmail.com>
- <20161228085248.tu54e6ug5fvpr26l@sigill.intra.peff.net>
- <39886f48-c48f-6800-8aa4-20e0b2ab0e6d@gmail.com>
+        id S1751219AbcL1JlU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Dec 2016 04:41:20 -0500
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:35236 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751145AbcL1JlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2016 04:41:19 -0500
+Received: by mail-yw0-f193.google.com with SMTP id b66so24198583ywh.2
+        for <git@vger.kernel.org>; Wed, 28 Dec 2016 01:40:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7nxaXi57mpKZHu9ZDf/KqKAdGcViu920fQzp3YtwS/M=;
+        b=rAV5T5II5zPu/Sw9kgCv+1WRACydfUIM7htyZ5o4oCayKmRwLG6ZhvA6t64ks6BRPr
+         znUuX+QxMeWy+Rx57ikUTQ2s4kZM+57ioYUijBsZoyFrB4IwlgpS5/H2mCxKtfnEYmEP
+         RYtp14cMRSjPa48yS+8HbtFtJM2oBxPcegLvpVuYRrAu4asnDu/W/P7ea35wavNRabrB
+         5PUwyuhHk1OlHm7L18w/uUg46NbNs2LFEesvXtiv4wVxL1KTQXpCrf+ULKYa1Px/OYug
+         GgkanzmiDUgQN75JuzzU3pMjmQjKzonVJ5G9dOB3dEZAuWI4u68N764Im864lTy8HbrZ
+         vxMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7nxaXi57mpKZHu9ZDf/KqKAdGcViu920fQzp3YtwS/M=;
+        b=I6dJdK633c8zR/I/BaJX6VufmuYxCwsYpFk837owNKg7HEPYAjDh5kCzGZbpb3+3rq
+         BcA4vqcjQhVlS3RnXb3OInJHUB1UDOPA1EvKVt4Akd13EWs7KBGrUNAqTF5pR7NVTS0B
+         /ixZVO3vvfu3+wz5hbnBpPT9L22rfKFDv7pIvRNuGzIPV7SGWowdCbMjPNSvpsszmT/C
+         UuFwlVhKskmzzopIutiP/WBtUePu1lV1jTtgRgI8hQN894GU8CHnz4Q5D6R1klAmL6nX
+         j4ZgUWBssiRYe3jt37rYGinWiyg+bZB4fAGPME2MhDVu4r7frmIl0MIxpODkoL0rSGbl
+         agUw==
+X-Gm-Message-State: AIkVDXKfECtu6hTmML8SadOmoK7zk5M1s9I/37i2LO8eS99q4acmxaSv36KgH3VWboAPvxcmaBObCe8g+4OkGg==
+X-Received: by 10.13.229.70 with SMTP id o67mr28207244ywe.131.1482918034848;
+ Wed, 28 Dec 2016 01:40:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <39886f48-c48f-6800-8aa4-20e0b2ab0e6d@gmail.com>
+Received: by 10.129.19.214 with HTTP; Wed, 28 Dec 2016 01:40:04 -0800 (PST)
+In-Reply-To: <xmqqinq56phu.fsf@gitster.mtv.corp.google.com>
+References: <20161227162357.28212-1-Karthik.188@gmail.com> <20161227162357.28212-20-Karthik.188@gmail.com>
+ <xmqqinq56phu.fsf@gitster.mtv.corp.google.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Wed, 28 Dec 2016 15:10:04 +0530
+Message-ID: <CAOLa=ZTPMbhzv_9mLv63UvPu__JqwQrpd2d8ogXuz5wNKb70Dw@mail.gmail.com>
+Subject: Re: [PATCH v9 19/20] branch: use ref-filter printing APIs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 28, 2016 at 09:09:04AM +0000, John P. Hartmann wrote:
+On Wed, Dec 28, 2016 at 2:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>>  static char branch_colors[][COLOR_MAXLEN] = {
+>> -     GIT_COLOR_RESET,
+>> -     GIT_COLOR_NORMAL,       /* PLAIN */
+>> -     GIT_COLOR_RED,          /* REMOTE */
+>> -     GIT_COLOR_NORMAL,       /* LOCAL */
+>> -     GIT_COLOR_GREEN,        /* CURRENT */
+>> -     GIT_COLOR_BLUE,         /* UPSTREAM */
+>> +     "%(color:reset)",
+>> +     "%(color:reset)",       /* PLAIN */
+>> +     "%(color:red)",         /* REMOTE */
+>> +     "%(color:reset)",       /* LOCAL */
+>> +     "%(color:green)",       /* CURRENT */
+>> +     "%(color:blue)",        /* UPSTREAM */
+>>  };
+>
+> The contents of this table is no longer tied to COLOR_MAXLEN.  The
+> above entries used by default happen to be shorter, but it is
+> misleading.
+>
+>         static const char *branch_colors[] = {
+>         "%(color:reset)",
+>         ...
+>         };
+>
+> perhaps?
+>
+> More importantly, does this re-definition of the branch_colors[]
+> work with custom colors filled in git_branch_config() by calling
+> e.g. color_parse("red", branch_colors[BRANCH_COLOR_REMOTE]), where
+> "red" and "remote" come from an existing configuration file?
+>
+>         [color "branch"]
+>                 remote = red
+>
+> It obviously would not work if you changed the type of branch_colors[]
+> because the color_parse() wants the caller to have allocated space
+> of COLOR_MAXLEN.
+>
+> But if filling these ANSI escape sequence into the format works OK,
+> then doesn't it tell us that we do not need to have this change to
+> use "%(color:reset)" etc. as the new default values?
 
-> The problem I am grappling with is how to obtain the latest git commit hash
-> and enter it into the generated code.  Configure/make would appear to the
-> the time, but by then the user may not have git installed (e.g., extracted
-> the project as .zip from github), so it needs to be done "back at the farm".
-> 
-> I hear that the best I can do is create a normal script in the repro and add
-> to the developer handbook that "btw, here is a git hook that will run it
-> automatically if you so choose".
+Good point, this would overwrite the existing configuration based setup
+existing in builtin/branch.c.
 
-Yes, if you want the information to be conveyed in a .zip from GitHub,
-then you'll have to commit the value to the repository. For example,
-the script in Git itself looks like this:
+I think it'd make sense to use the existing branch_colors[] definition without
+any changes. That's mean that instead of using %(color:<color>). We hard
+code the colors by calling  branch_get_color(). This is ok with me since,
+users who which to have their own formats will anyways use --format option.
 
-  https://github.com/git/git/blob/master/GIT-VERSION-GEN
-
-We pull the value from the Git repository if we have one, then fallback
-to a .version file which is generated when release tarballs are
-generated, and then finally fall back to a baked-in DEF_VER variable
-that is updated manually after each release (and that last is what you'd
-get if you had, say, a .zip file from GitHub).
-
-I'm not sure you would want to update that DEF_VER for _every_ commit,
-though, even if you could do so with a hook. It would mean every commit
-would update the version field. And of course it could not have the git
-commit id, because that is generated from a hash of the contents that
-includes the contents of that version field.
-
-If you're mostly interested in building straight from GitHub .zip files,
-those do include the commit id (or tag name) in the directory name, so
-your Makefile could deduce it at runtime from that information.
-
--Peff
+-- 
+Regards,
+Karthik Nayak
