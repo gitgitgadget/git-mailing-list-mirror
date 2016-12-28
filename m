@@ -2,148 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08C9D20441
-	for <e@80x24.org>; Wed, 28 Dec 2016 18:35:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 389E920441
+	for <e@80x24.org>; Wed, 28 Dec 2016 18:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751809AbcL1SfY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Dec 2016 13:35:24 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:52204 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751249AbcL1SfX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2016 13:35:23 -0500
-Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 825A65455E;
-        Wed, 28 Dec 2016 18:35:05 +0000 (UTC)
-Received: from localhost (ovpn-116-29.gru2.redhat.com [10.97.116.29])
-        by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id uBSIZ4qK028236;
-        Wed, 28 Dec 2016 13:35:04 -0500
-From:   Eduardo Habkost <ehabkost@redhat.com>
-To:     git@vger.kernel.org
-Cc:     Paul Tan <pyokagan@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2] am: add am.signoff add config variable
-Date:   Wed, 28 Dec 2016 16:35:01 -0200
-Message-Id: <20161228183501.15068-1-ehabkost@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Wed, 28 Dec 2016 18:35:05 +0000 (UTC)
+        id S1751881AbcL1Svl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Dec 2016 13:51:41 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:34066 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751865AbcL1Svl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2016 13:51:41 -0500
+Received: by mail-qk0-f176.google.com with SMTP id h201so113355662qke.1
+        for <git@vger.kernel.org>; Wed, 28 Dec 2016 10:51:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8HBKnKG/LcIyphzifICFxCIAcC5WlFBWVq50KhqbIq0=;
+        b=ivUqcsBZylMwISUMnvb9Tg9uzbcJDcCtyQfsfN2PmWWQg9hGu7IVq4+UbImj2Q/W/3
+         7edJ9piOPZJ/DlAVTClt+HFSbYHxMVzEjZSL1iZMgxEOtXWJ9SggHMIOkBGWGxTttRM1
+         IBs1tb8omqxgR/qPEMaAbquzlDBPX54qnsGnyW057P4GjDpL7YeuE+d8RqLNuvcD59K5
+         Yy4fJrtWarp8YKbhpDoOfKmfrK37a2S1WdmnGwHx2XQEFMhJ/mAUfFOwL/afXnM978aw
+         oAvoGW8XMYxlHKVMTVKrRnHKCk7aPFSzKVx49g2Zi8Q3dDjhyQX1J/docHm89QlBtf1y
+         8Ldg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8HBKnKG/LcIyphzifICFxCIAcC5WlFBWVq50KhqbIq0=;
+        b=dovwI5Sy9EobuYmztJ6QYkficojVvLHez1HBYqa9PXtJA9uacXmANZiFIiRNh2SfF8
+         9Uzpz7iuI16XtLObzlPMO/k9qeZ28v4zqCrVpFnW3KDmgIhRn+UgbgbIoFvKOAXbgRzC
+         /0vSgVWbM1XIvu/kJG2csJN0wrU3y1i/I3g44sP72kZv9mzLGMcymreipqWReNOlSPIU
+         UwyJM87WRbsS9Gh8ow/RnZAz/oJ3DRoJT0GmpNU/qeLaUSVfFCMxBwD4IQgQr7E0xWEW
+         t/YPAaAuENHm6s9/sNfqmz/RpVFlW+y8iCgrTYpTtES29Yq7N+8hntI7YmK6JGfwhLli
+         U+cQ==
+X-Gm-Message-State: AIkVDXKvWhvoSKeqy9fDzdcbSDOTl/XIpdgxaWQwOVH7T2QhjM4e/wZCJwxxTzzUvn8JRaJvbOVnIux2MuWk0sMV
+X-Received: by 10.55.105.129 with SMTP id e123mr39472282qkc.173.1482951088905;
+ Wed, 28 Dec 2016 10:51:28 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.146.7 with HTTP; Wed, 28 Dec 2016 10:51:28 -0800 (PST)
+In-Reply-To: <20161228183501.15068-1-ehabkost@redhat.com>
+References: <20161228183501.15068-1-ehabkost@redhat.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Dec 2016 10:51:28 -0800
+Message-ID: <CAGZ79kaBpC5ym2N_fMZHDmL4gGpU8pFAsupCE4aTdENh+=z72g@mail.gmail.com>
+Subject: Re: [PATCH v2] am: add am.signoff add config variable
+To:     Eduardo Habkost <ehabkost@redhat.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Paul Tan <pyokagan@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-am has options to enable --message-id and --3way by default,
-but no option to enable --signoff by default. Add a "am.signoff"
-config option.
+On Wed, Dec 28, 2016 at 10:35 AM, Eduardo Habkost <ehabkost@redhat.com> wrote:
+> git-am has options to enable --message-id and --3way by default,
+> but no option to enable --signoff by default. Add a "am.signoff"
+> config option.
+>
+> Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
+> ---
+> Changes v1 -> v2:
+> * Added documentation to Documentation/git-am.txt and
+>   Documentation/config.txt
+> * Added test cases to t4150-am.sh
 
-Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
----
-Changes v1 -> v2:
-* Added documentation to Documentation/git-am.txt and
-  Documentation/config.txt
-* Added test cases to t4150-am.sh
----
- Documentation/config.txt |  5 +++++
- Documentation/git-am.txt |  6 ++++--
- builtin/am.c             |  2 ++
- t/t4150-am.sh            | 24 ++++++++++++++++++++++++
- 4 files changed, 35 insertions(+), 2 deletions(-)
+Thanks!
+Documentation and code looks good to me, for the test a small nit below.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 30cb94610..6b2990203 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -822,6 +822,11 @@ am.keepcr::
- 	by giving `--no-keep-cr` from the command line.
- 	See linkgit:git-am[1], linkgit:git-mailsplit[1].
- 
-+am.signoff::
-+	If true, git-am will add a `Signed-off-by:` line to the commit
-+	message. See the signoff option in linkgit:git-commit[1] for
-+	more information.
-+
- am.threeWay::
- 	By default, `git am` will fail if the patch does not apply cleanly. When
- 	set to true, this setting tells `git am` to fall back on 3-way merge if
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 12879e402..f22f10d40 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
- SYNOPSIS
- --------
- [verse]
--'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
-+'git am' [--[no-]signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
- 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
-@@ -32,10 +32,12 @@ OPTIONS
- 	If you supply directories, they will be treated as Maildirs.
- 
- -s::
----signoff::
-+--[no]-signoff::
- 	Add a `Signed-off-by:` line to the commit message, using
- 	the committer identity of yourself.
- 	See the signoff option in linkgit:git-commit[1] for more information.
-+	The `am.signoff` configuration variable can be used to specify the
-+	default behaviour.  `--no-signoff` is useful to override `am.signoff`.
- 
- -k::
- --keep::
-diff --git a/builtin/am.c b/builtin/am.c
-index 31fb60578..d2e02334f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -154,6 +154,8 @@ static void am_state_init(struct am_state *state, const char *dir)
- 
- 	git_config_get_bool("am.messageid", &state->message_id);
- 
-+	git_config_get_bool("am.signoff", &state->signoff);
-+
- 	state->scissors = SCISSORS_UNSET;
- 
- 	argv_array_init(&state->git_apply_opts);
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 89a5bacac..41b5481c9 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -479,6 +479,30 @@ test_expect_success 'am --signoff adds Signed-off-by: line' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '--no-signoff overrides am.signoff' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard first &&
-+	test_config am.signoff true &&
-+	git am --no-signoff <patch2 &&
-+	printf "%s\n" "$signoff" >expected &&
-+	git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
-+	test $(git cat-file commit HEAD | grep -c "Signed-off-by:") -eq 0
-+'
-+
-+test_expect_success 'am.signoff adds Signed-off-by: line' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard first &&
-+	test_config am.signoff true &&
-+	git am <patch2 &&
-+	printf "%s\n" "$signoff" >expected &&
-+	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >>expected &&
-+	git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
-+	test_cmp expected actual &&
-+	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expected &&
-+	git cat-file commit HEAD | grep "Signed-off-by:" >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'am stays in branch' '
- 	echo refs/heads/master2 >expected &&
- 	git symbolic-ref HEAD >actual &&
--- 
-2.11.0.259.g40922b1
+> +test_expect_success '--no-signoff overrides am.signoff' '
+> +       rm -fr .git/rebase-apply &&
+> +       git reset --hard first &&
+> +       test_config am.signoff true &&
+> +       git am --no-signoff <patch2 &&
+> +       printf "%s\n" "$signoff" >expected &&
 
+"expected" is never read in this test, so we can omit this line?
+
+> +       git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
+
+So we check if the previous commit is not tampered with,
+
+> +       test $(git cat-file commit HEAD | grep -c "Signed-off-by:") -eq 0
+
+and then we check if the top most commit has zero occurrences
+for lines grepped for sign off. That certainly works, but took me a
+while to understand (TIL about -c in grep :).
+
+Another way that to write this check, that Git regulars may be more used to is:
+
+    git cat-file commit HEAD | grep "Signed-off-by:" >actual
+    test_must_be_empty actual
+
+I would have suggested to grep for $signoff instead of "Signed-off-by:",
+but it turns out being fuzzy here is better and would also catch e.g.
+a broken sign off.
+
+> +test_expect_success 'am.signoff adds Signed-off-by: line' '
+> +       rm -fr .git/rebase-apply &&
+> +       git reset --hard first &&
+> +       test_config am.signoff true &&
+> +       git am <patch2 &&
+> +       printf "%s\n" "$signoff" >expected &&
+> +       echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >>expected &&
+> +       git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
+> +       test_cmp expected actual &&
+> +       echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expected &&
+> +       git cat-file commit HEAD | grep "Signed-off-by:" >actual &&
+> +       test_cmp expected actual
+> +'
+
+This test looks good to me,
+
+Thanks,
+Stefan
