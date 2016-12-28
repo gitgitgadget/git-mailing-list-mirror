@@ -2,111 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16462092F
-	for <e@80x24.org>; Wed, 28 Dec 2016 17:18:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C326320441
+	for <e@80x24.org>; Wed, 28 Dec 2016 17:21:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751936AbcL1RR4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Dec 2016 12:17:56 -0500
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36630 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751059AbcL1RRz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2016 12:17:55 -0500
-Received: by mail-pg0-f44.google.com with SMTP id f188so157526798pgc.3
-        for <git@vger.kernel.org>; Wed, 28 Dec 2016 09:17:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XhEad4r0tLTu3FnO+Q/3mtiZQ3XtjiYpGyyM6KFI+Hw=;
-        b=r/JpDPgaJ6j3PCI4qF8ZFk1Bqeyz/i3jUdZMvZFQyU29zFOw68PTu8hi8dofJJm0/o
-         Q+OUNGeYYA+nCnw7Eq2Urgdarayw0GF3DsULAC1PXdsRf5HeaZCjwM98qeEicmwWrIzF
-         HUEZmsoKLHfsmA7j1OQyEZqUpKwjPt1y5kX3CkHldf41eiEoFx+oXfVyysUQsy9iZpr9
-         Do+f3urxIV9f7Xb552qjQ6TYwJcDKVYygx2kMnGHpF9IdQ1vEbAbXy5ZUw6c391B7258
-         FSgepXIWRED0nsE4WsyQFBcwdgfbRV8b5CpgGm+SpqZ2agZsehiluNPyz95Jz2+uyCxt
-         ct0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=XhEad4r0tLTu3FnO+Q/3mtiZQ3XtjiYpGyyM6KFI+Hw=;
-        b=lmTx3RCVVfc9lMQ2UKEYnRYPxbJK8nyGiOmn/z+fWb3/n464HWD222snXh5XF+JmTP
-         Rh9PtsJ9nQLd6M4OVyXg9Ntl/dbWPK/BL3luNnsGNyUEa4t6DJ3jjPBoRXJ3/0h5/5FY
-         CkW55hogzvvcQd3rCWJ6nOD6DUXju4kS45IjQlJEuOtkw3xZwrLEitfqZlp3YVvSNCXo
-         z8gJmBDZBk3Ds7F62D347xr9cFsgFNTWFWqDcKq9ObOggLq/BbdvBL028jMrNQ3VhDDc
-         2A2Qn53q+4y0vsyrJKcedE21RbdjhVGsgi6rVbMH1sw2dqWE2XQwEcpezbZDB+lHUBwg
-         p3kw==
-X-Gm-Message-State: AIkVDXLdiGxa0zhKvN4qGnbv8KoDJNQJGS2JDV6soIO/rBHwEqHHKjEUWo22sAT3GhF8u3Bf
-X-Received: by 10.98.52.71 with SMTP id b68mr35868559pfa.18.1482945474337;
-        Wed, 28 Dec 2016 09:17:54 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b10:d4d5:954a:76bf:2d18])
-        by smtp.gmail.com with ESMTPSA id q5sm23170461pgf.45.2016.12.28.09.17.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Dec 2016 09:17:53 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     peff@peff.net
-Cc:     git@vger.kernel.org, bmwill@google.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2] pathspec: give better message for submodule related pathspec error
-Date:   Wed, 28 Dec 2016 09:17:46 -0800
-Message-Id: <20161228171746.22859-1-sbeller@google.com>
-X-Mailer: git-send-email 2.11.0.259.ga95e92af08
-In-Reply-To: <20161228055826.xu2gclwkvisbft6o@sigill.intra.peff.net>
-References: <20161228055826.xu2gclwkvisbft6o@sigill.intra.peff.net>
+        id S1751807AbcL1RVM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Dec 2016 12:21:12 -0500
+Received: from imap.thunk.org ([74.207.234.97]:51292 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750976AbcL1RVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2016 12:21:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=Hpek/Hgb+4Vqtj1ZvgPpGhNeFpKYbNiUtV6kEJzSDGY=;
+        b=AoeQCMSN+BwwUK6GgR8LZBFOt0eH3jU3XZgToe3tj2jPxmGDaZoNaeMpaBZT5hsvY64fR7Bka2Gr2v8xNwj5TCDgAYHwBFnzJh8Bgv9We3wOf7Fe1flNf9zOG3vGNadkh9fID49WFnH4wugrnyQmD3a4N3hSesw1jwKrWI/wWQ4=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.84_2)
+        (envelope-from <tytso@thunk.org>)
+        id 1cMGjB-00053y-TD; Wed, 28 Dec 2016 16:05:21 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 1B40AC00B0A; Wed, 28 Dec 2016 11:05:21 -0500 (EST)
+Date:   Wed, 28 Dec 2016 11:05:21 -0500
+From:   Theodore Ts'o <tytso@mit.edu>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFH] gpg --import entropy while running tests
+Message-ID: <20161228160520.dsybuqljzkzsik2d@thunk.org>
+References: <20161228072303.4wbhkwf37fvgpi7h@sigill.intra.peff.net>
+ <20161228080230.wygcmdmwvifcthvl@sigill.intra.peff.net>
+ <20161228083930.5li6cb6yplusc26m@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161228083930.5li6cb6yplusc26m@sigill.intra.peff.net>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Every once in a while someone complains to the mailing list to have
-run into this weird assertion[1].
+On Wed, Dec 28, 2016 at 03:39:30AM -0500, Jeff King wrote:
+> >   https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commit;h=4473db1ef24031ff4e26c9a9de95dbe898ed2b97
+> > 
+> > So this does seem like a gpg bug.
+> 
+> I've submitted a bug report to gpg:
+> 
+>   https://bugs.gnupg.org/gnupg/issue2897
+> 
+> so we'll see what they say.
 
-The usual response from the mailing list is link to old discussions[2],
-and acknowledging the problem stating it is known.
+Yeah, they are definitely doing something very.... hard to explain.
 
-For now just improve the user visible error message.
+Pid 8348 is the gpg-agent process which the main gpg program (pid
+8344) connected to.  It starts trying to get randomness in response to
+a KEYWRAP command:
 
-[1] https://www.google.com/search?q=item-%3Enowildcard_len
-[2] http://git.661346.n2.nabble.com/assert-failed-in-submodule-edge-case-td7628687.html
-    https://www.spinics.net/lists/git/msg249473.html
+8348  10:58:57.882909 access("/dev/random", R_OK) = 0
+8348  10:58:57.883205 access("/dev/urandom", R_OK) = 0
+8348  10:58:57.883472 open("/dev/urandom", O_RDONLY) = 9
+8348  10:58:57.883729 fcntl(9, F_GETFD) = 0
+8348  10:58:57.883914 fcntl(9, F_SETFD, FD_CLOEXEC) = 0
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+It opens /dev/urandom, but then never uses fd 9 ever again.  Instead,
+it uses getrandom, but in a pretty silly fashion, with lots of sleeps
+in between, and not between each progress report, either:
 
-Peff wrote:
-> Don't you need to flip the logic here? An assert() triggers when the
-> condition is not true, but an "if" does the opposite. So "assert(X)"
-> should always become "if (!X) die(...)".
+8348  10:58:57.884129 write(8, "S PROGRESS need_entropy X 30 120", 32 <unfinished ...>
+8344  10:58:57.884338 <... read resumed> "S PROGRESS need_entropy X 30 120", 1002) = 32
+8348  10:58:57.884424 <... write resumed> ) = 32
+8344  10:58:57.884488 read(5,  <unfinished ...>
+8348  10:58:57.884550 write(8, "\n", 1 <unfinished ...>
+8344  10:58:57.884715 <... read resumed> "\n", 970) = 1
+8348  10:58:57.884800 <... write resumed> ) = 1
+8344  10:58:57.884883 read(5,  <unfinished ...>
+8348  10:58:57.884951 nanosleep({0, 100000000}, NULL) = 0
+8348  10:58:57.985363 select(10, [9], NULL, NULL, {0, 100000}) = 1 (in [9], left {0, 99994})
+8348  10:58:57.985593 getrandom("&\275\354^\256\320\3w\21:R]`eJ\t\t\350\245\202>\255\237\324\324\340\24^c\323\210\376"..., 90, 0) = 90
+8348  10:58:57.985751 write(8, "S PROGRESS need_entropy X 120 12"..., 33) = 33
+8344  10:58:57.985885 <... read resumed> "S PROGRESS need_entropy X 120 12"..., 1002) = 33
+8348  10:58:57.985934 write(8, "\n", 1 <unfinished ...>
+8344  10:58:57.985982 read(5,  <unfinished ...>
+8348  10:58:57.986015 <... write resumed> ) = 1
+8344  10:58:57.986048 <... read resumed> "\n", 969) = 1
+8348  10:58:57.986090 nanosleep({0, 100000000},  <unfinished ...>
+8344  10:58:57.986142 read(5,  <unfinished ...>
+8348  10:58:58.086253 <... nanosleep resumed> NULL) = 0
+8348  10:58:58.086370 write(8, "S PROGRESS need_entropy X 30 120", 32) = 32
+8344  10:58:58.086502 <... read resumed> "S PROGRESS need_entropy X 30 120", 1002) = 32
+8348  10:58:58.086541 write(8, "\n", 1 <unfinished ...>
+8344  10:58:58.086579 read(5,  <unfinished ...>
+8348  10:58:58.086604 <... write resumed> ) = 1
+8344  10:58:58.086630 <... read resumed> "\n", 970) = 1
+8348  10:58:58.086661 nanosleep({0, 100000000},  <unfinished ...>
+8344  10:58:58.086703 read(5,  <unfinished ...>
+8348  10:58:58.186815 <... nanosleep resumed> NULL) = 0
+8348  10:58:58.186894 select(10, [9], NULL, NULL, {0, 100000}) = 1 (in [9], left {0, 99995})
+8348  10:58:58.187038 getrandom("\365\221\374m\360\235\27\330\264\223\365\363<6\302\324F\5\354Q|,\366\253\337u\226\265\345\250CA"..., 90, 0) = 90
 
-Duh! and it should compile as well. 
+The worst part of this is that the commit description claims this is a
+workaround for libgcrypt using /dev/random, but it's not using
+/dev/random --- it's using getrandom, and it pointlessly opened
+/dev/urandom first (having never opened /dev/random).
 
-Thanks,
-Stefan
+This looks like a classic case of Lotus Notes / Websphere disease ---
+to many d*mned layers of abstraction....
 
- pathspec.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/pathspec.c b/pathspec.c
-index 22ca74a126..4724d522f2 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -313,8 +313,11 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 	}
- 
- 	/* sanity checks, pathspec matchers assume these are sane */
--	assert(item->nowildcard_len <= item->len &&
--	       item->prefix         <= item->len);
-+	if (item->nowildcard_len > item->len ||
-+	    item->prefix         > item->len)
-+		die (_("Path leads inside submodule '%s', but the submodule "
-+		       "was not recognized, i.e. not initialized or deleted"),
-+		       item->original);
- 	return magic;
- }
- 
--- 
-2.11.0.196.gee862f456e.dirty
-
+						- Ted
