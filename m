@@ -2,159 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E040920441
-	for <e@80x24.org>; Wed, 28 Dec 2016 22:55:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D102320441
+	for <e@80x24.org>; Wed, 28 Dec 2016 23:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752037AbcL1Wzx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Dec 2016 17:55:53 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:58414 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751906AbcL1Wzx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2016 17:55:53 -0500
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 7B2B2C056793;
-        Wed, 28 Dec 2016 22:55:52 +0000 (UTC)
-Received: from localhost (ovpn-116-29.gru2.redhat.com [10.97.116.29])
-        by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id uBSMtpej012961;
-        Wed, 28 Dec 2016 17:55:51 -0500
-From:   Eduardo Habkost <ehabkost@redhat.com>
-To:     git@vger.kernel.org
-Cc:     Paul Tan <pyokagan@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH v3] am: add am.signoff add config variable
-Date:   Wed, 28 Dec 2016 20:55:44 -0200
-Message-Id: <20161228225544.16388-1-ehabkost@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Wed, 28 Dec 2016 22:55:52 +0000 (UTC)
+        id S1752037AbcL1X1B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Dec 2016 18:27:01 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:34712 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751956AbcL1X07 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2016 18:26:59 -0500
+Received: by mail-pg0-f54.google.com with SMTP id y62so108057183pgy.1
+        for <git@vger.kernel.org>; Wed, 28 Dec 2016 15:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=2hbXfbRY7+kw68yNT2lyH/WY9DO04MedEHaFBq+54UU=;
+        b=TnaA+w27YtLRytXqRsweLZtuPykCeUFt8YsNjH3hpnTxeF55uVNukm0XvMO8rj9ZBA
+         Ia25k+VA+PYJWdUr0oEqa+vMZ9jtRNpNi7tsnHrPCO7tjkQXpy+33prZuteyT75Vms5w
+         btzQSKAILJ5Urr26QAXtU3q+8D/fNZzd/iQAKdjyvINxcYUdW1M+pt6uMnNDZ6OGMBqS
+         ubwrv3vCW5uDlgGefiBkUUYiheoN01mL56QDfFTxocDVl8XLoEEF9mmKO5kMV3rocpl8
+         3wjnRg/74BXEaLyz25f4DqZF3OSP71ltpLs/Olx5GeLo1408l0aEKP37Iz/YLxOORXVp
+         Z0kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=2hbXfbRY7+kw68yNT2lyH/WY9DO04MedEHaFBq+54UU=;
+        b=OxcWbcjqkxCLbLLdWB84NyPBau7zRIhT9SQ5Berl+bf++OEo3EkGrlObiuWcEhKtot
+         5WQVRYi863JD4Gq/yvpul4p+meM77D2l2m3EcvSElTkL1MVGxaD9y7P7iqMUbJAfJF+5
+         r/BFaHmqOQDxMhIyR4B2USboMbqlqZTlGuxMiAaRaf0w1yH+yerjBW/4YaL4FOkUbCC5
+         hQ37WEB5hja0MO92oCh87OMhbQB2UvAvInYCt0JwRBQ/iVfTvUJFFv3Cf1jksorV2F7G
+         QlUU0lJ2yh5wDSMkt0r80/FNy6AZ9VGOWOkbJEJNv8CPr43e3+oCqgPD5rS3E/aNpMkG
+         bDCg==
+X-Gm-Message-State: AIkVDXLG6IWsP/2Gray0fzUB2OxFsJsxLK7honiRJBfRs0vkb6Z/g7bi/h2UMUHNJWWRC4kv
+X-Received: by 10.98.101.71 with SMTP id z68mr30927009pfb.165.1482967618977;
+        Wed, 28 Dec 2016 15:26:58 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:a8f2:a269:38d5:58bc])
+        by smtp.gmail.com with ESMTPSA id f5sm83762455pgg.5.2016.12.28.15.26.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 28 Dec 2016 15:26:58 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     l.s.r@web.de, gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] unpack-trees: move checkout state into check_updates
+Date:   Wed, 28 Dec 2016 15:26:16 -0800
+Message-Id: <20161228232616.21109-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.rc2.51.g8b63c0e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-am has options to enable --message-id and --3way by default,
-but no option to enable --signoff by default. Add a "am.signoff"
-config option.
+The checkout state was introduced via 16da134b1f9
+(read-trees: refactor the unpack_trees() part, 2006-07-30). An attempt to
+refactor the checkout state was done in b56aa5b268e (unpack-trees: pass
+checkout state explicitly to check_updates(), 2016-09-13), but we can
+go even further.
 
-Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
+The `struct checkout state` is not used in unpack_trees apart from
+initializing it, so move it into the function that makes use of it,
+which is `check_updates`.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
-Changes v1 -> v2:
-* Added documentation to Documentation/git-am.txt and
-  Documentation/config.txt
-* Added test cases to t4150-am.sh
+ unpack-trees.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-Changes v2 -> v3:
-* Fix doc to mention "--[no-]signoff" instead of "--[no]-signoff"
-  * Reported-by: Andreas Schwab <schwab@linux-m68k.org>
-* Add missing test_cmp line on test code
-* Use "! grep" instead of "$(grep -c ...)" -eq 0
-  * Suggested-by: Stefan Beller <sbeller@google.com>
----
- Documentation/config.txt |  5 +++++
- Documentation/git-am.txt |  6 ++++--
- builtin/am.c             |  2 ++
- t/t4150-am.sh            | 26 ++++++++++++++++++++++++++
- 4 files changed, 37 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 30cb94610..6b2990203 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -822,6 +822,11 @@ am.keepcr::
- 	by giving `--no-keep-cr` from the command line.
- 	See linkgit:git-am[1], linkgit:git-mailsplit[1].
+diff --git a/unpack-trees.c b/unpack-trees.c
+index ea799d37c5..78703af135 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -224,14 +224,18 @@ static void unlink_entry(const struct cache_entry *ce)
+ 	schedule_dir_for_removal(ce->name, ce_namelen(ce));
+ }
  
-+am.signoff::
-+	If true, git-am will add a `Signed-off-by:` line to the commit
-+	message. See the signoff option in linkgit:git-commit[1] for
-+	more information.
-+
- am.threeWay::
- 	By default, `git am` will fail if the patch does not apply cleanly. When
- 	set to true, this setting tells `git am` to fall back on 3-way merge if
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 12879e402..1f14986c7 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
- SYNOPSIS
- --------
- [verse]
--'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
-+'git am' [--[no-]signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
- 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
-@@ -32,10 +32,12 @@ OPTIONS
- 	If you supply directories, they will be treated as Maildirs.
+-static int check_updates(struct unpack_trees_options *o,
+-			 const struct checkout *state)
++static int check_updates(struct unpack_trees_options *o)
+ {
+ 	unsigned cnt = 0, total = 0;
+ 	struct progress *progress = NULL;
+ 	struct index_state *index = &o->result;
+ 	int i;
+ 	int errs = 0;
++	struct checkout state = CHECKOUT_INIT;
++	state.force = 1;
++	state.quiet = 1;
++	state.refresh_cache = 1;
++	state.istate = &o->result;
  
- -s::
----signoff::
-+--[no-]-signoff::
- 	Add a `Signed-off-by:` line to the commit message, using
- 	the committer identity of yourself.
- 	See the signoff option in linkgit:git-commit[1] for more information.
-+	The `am.signoff` configuration variable can be used to specify the
-+	default behaviour.  `--no-signoff` is useful to override `am.signoff`.
+ 	if (o->update && o->verbose_update) {
+ 		for (total = cnt = 0; cnt < index->cache_nr; cnt++) {
+@@ -270,7 +274,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+-				errs |= checkout_entry(ce, state, NULL);
++				errs |= checkout_entry(ce, &state, NULL);
+ 			}
+ 		}
+ 	}
+@@ -1100,14 +1104,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	int i, ret;
+ 	static struct cache_entry *dfc;
+ 	struct exclude_list el;
+-	struct checkout state = CHECKOUT_INIT;
  
- -k::
- --keep::
-diff --git a/builtin/am.c b/builtin/am.c
-index 31fb60578..d2e02334f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -154,6 +154,8 @@ static void am_state_init(struct am_state *state, const char *dir)
+ 	if (len > MAX_UNPACK_TREES)
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+-	state.force = 1;
+-	state.quiet = 1;
+-	state.refresh_cache = 1;
+-	state.istate = &o->result;
  
- 	git_config_get_bool("am.messageid", &state->message_id);
+ 	memset(&el, 0, sizeof(el));
+ 	if (!core_apply_sparse_checkout || !o->update)
+@@ -1244,7 +1243,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	}
  
-+	git_config_get_bool("am.signoff", &state->signoff);
-+
- 	state->scissors = SCISSORS_UNSET;
- 
- 	argv_array_init(&state->git_apply_opts);
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 89a5bacac..d65c8e5c4 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -479,6 +479,32 @@ test_expect_success 'am --signoff adds Signed-off-by: line' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '--no-signoff overrides am.signoff' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard first &&
-+	test_config am.signoff true &&
-+	git am --no-signoff <patch2 &&
-+	printf "%s\n" "$signoff" >expected &&
-+	git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
-+	test_cmp expected actual &&
-+	git cat-file commit HEAD > actual &&
-+	! grep -q "Signed-off-by:" actual
-+'
-+
-+test_expect_success 'am.signoff adds Signed-off-by: line' '
-+	rm -fr .git/rebase-apply &&
-+	git reset --hard first &&
-+	test_config am.signoff true &&
-+	git am <patch2 &&
-+	printf "%s\n" "$signoff" >expected &&
-+	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >>expected &&
-+	git cat-file commit HEAD^ | grep "Signed-off-by:" >actual &&
-+	test_cmp expected actual &&
-+	echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expected &&
-+	git cat-file commit HEAD | grep "Signed-off-by:" >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'am stays in branch' '
- 	echo refs/heads/master2 >expected &&
- 	git symbolic-ref HEAD >actual &&
+ 	o->src_index = NULL;
+-	ret = check_updates(o, &state) ? (-2) : 0;
++	ret = check_updates(o) ? (-2) : 0;
+ 	if (o->dst_index) {
+ 		if (!ret) {
+ 			if (!o->result.cache_tree)
 -- 
-2.11.0.259.g40922b1
+2.11.0.rc2.51.g8b63c0e.dirty
 
