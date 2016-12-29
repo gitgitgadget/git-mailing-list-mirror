@@ -2,101 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8578C200E0
-	for <e@80x24.org>; Thu, 29 Dec 2016 10:11:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B81D4200E0
+	for <e@80x24.org>; Thu, 29 Dec 2016 10:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752604AbcL2KLk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Dec 2016 05:11:40 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34911 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752402AbcL2KLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2016 05:11:39 -0500
-Received: by mail-wm0-f66.google.com with SMTP id l2so40308455wml.2
-        for <git@vger.kernel.org>; Thu, 29 Dec 2016 02:10:39 -0800 (PST)
+        id S1752431AbcL2KXq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Dec 2016 05:23:46 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33346 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752346AbcL2KXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Dec 2016 05:23:45 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u144so65808765wmu.0
+        for <git@vger.kernel.org>; Thu, 29 Dec 2016 02:23:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=MFC7ZrTHVjwb63g4iKPsNbd6SOoQy4xSM3XRyK+OSFQ=;
-        b=IOe60ulyUUm2kB4GgwNHE5EoFcquWgmidlwpmH1hrtv8XGQA4pZfouX4nA7wnzMnis
-         cRPb7MXFqmsOsT4WrlqS7SLDt3LcTXBg6vw1fnha8vtIELnDfvEFrKS6CxwMschmev1J
-         YdcKarScdYwYCyDkBNeJflCLQaScQdSrDF2S21HWanxV6Y/BRNI9wOyCVWZvbpLdm0EW
-         kNiDTlecP0kbUTZejm1+xQx+KmUhVi8HUqTVmgyYewUC0XG+jw1avCXOvxqWcJ0g8FV+
-         J5ZQX2TG44xowvAYKwoQ3Jd8uNKftZ7KKv4HCjhQnFkMsN1aSNhosQEls0DBo1N2xeZh
-         ppCg==
+        h=from:to:cc:subject:date:message-id;
+        bh=eeN7jUxgjAaGEZrYPiFK13gSO+SDv3WR75wAzZgRgAQ=;
+        b=BICZoYyJJAMrGx3gGBZIrviwDpYDa6fVPb6ZyDyWKdzBnu5zFlzYnc+6k6cQWwSGuE
+         vy0sgErJqeYOCpFw0GcEE9VGCoc67BTAfg57/AqMwBZD0BP7SdR+2IFNBDr1CfNhq8FI
+         NFkYs2RGgBpRC+ExwIHHZoPmqCBREd3bABQA3WpCAlUTmZd5z6M36OjL/yUzqh9CKuUV
+         ktvWgYRtIqYv1TH8er7EHTnpv7Tibvk2gz7LiJdDSOJkDkKOQbzBFSEngJuG1yD+wOCJ
+         9kfdgaGUrkd+njW5ddHUfEtGqAfxbgjOObCcTQya5q8WZHYhrQPLZ1L3cNUH1aPc23a1
+         7ZOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=MFC7ZrTHVjwb63g4iKPsNbd6SOoQy4xSM3XRyK+OSFQ=;
-        b=IK+Ckskp10rIaq9nsOf73p2FoJqnor64eaS95TUJipn5mv9J1j947AMmE6JFPEzZ3h
-         Z6OfAjItG8L1LHgm06gZdJI/klU/SUzJWGL1UePFQ7Jwq6MSVc21Myox3fh9Gs1L5qAY
-         2x4Lm9zXJ6/awCIcmj1a9HzH/6R+t9GC3u0hzMaThrxcqHGwYqbuwtRe7rWGbovThNAX
-         2thTmLm3pWBBpMpBgVOGEfmR40M7/RiRSABFK/LpwDuNrFx7yOnqwb82n/WvlnSsOLmG
-         uTiToSGVvEKbYnzd59cn4fKi1BNU+PrxtmNoOJzRWnHCEy+p+ee8dDHtdNwsOHZA/lKq
-         6BkQ==
-X-Gm-Message-State: AIkVDXLOM2BHRAlNYcfDncKPA13EZeKZwT5P/EULEstZ8DZpefvJbWJTtaL2kZncLya8TQ==
-X-Received: by 10.28.226.139 with SMTP id z133mr41205942wmg.139.1483006238970;
-        Thu, 29 Dec 2016 02:10:38 -0800 (PST)
-Received: from [192.168.0.185] (HSI-KBW-085-216-063-243.hsi.kabelbw.de. [85.216.63.243])
-        by smtp.gmail.com with ESMTPSA id t194sm45309286wmd.1.2016.12.29.02.10.38
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 29 Dec 2016 02:10:38 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Dec 2016, #08; Tue, 27)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqy3z155o1.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 29 Dec 2016 11:10:37 +0100
-Cc:     git <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9E13F972-F374-4126-A599-A8A7618D4AF3@gmail.com>
-References: <xmqqy3z155o1.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>, bmwill@google.com
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=eeN7jUxgjAaGEZrYPiFK13gSO+SDv3WR75wAzZgRgAQ=;
+        b=HnS9ZO13eafq6A7pqftb8wR5qBdbw2+jK/zesWRleip+JktmgfoKxa7MJ4ogZTwpp9
+         aGbk7fHKVz65od5sAai0FLAmtnpKw5qeCfJ9u0XtJriy+HRzmY9U5kX6XB92iEP+R+2c
+         5HoSp1Hy9OhKzTxIf24PIzxLu6YVDx93+1NF1+1CqdaUKDefG5bzJ0v8GSWUP//X765H
+         KFk/Lv75fVDuNamSPGgzfrCv5haYFyO8HUcyd/kowJz0qhA3n0dMrUXzG88MPUgmpfvb
+         QJ2we3q0pLWKdr6Vmj7/0tSpPowKokCbvaEffgZjngm0e1YOvA0NI1CNJ9gWTcYIp+9n
+         CyRA==
+X-Gm-Message-State: AIkVDXIktGxve3p6APV33KrwsPGAuFQcTngBN4c1bTl5beg3mRsbbfbrygwZ9cJwkUP4Aw==
+X-Received: by 10.28.176.200 with SMTP id z191mr36956247wme.17.1483007024348;
+        Thu, 29 Dec 2016 02:23:44 -0800 (PST)
+Received: from localhost.localdomain ([77.123.83.51])
+        by smtp.gmail.com with ESMTPSA id js10sm68174104wjb.19.2016.12.29.02.23.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Dec 2016 02:23:43 -0800 (PST)
+From:   Igor Kushnir <igorkuo@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Luke Diamand <luke@diamand.org>,
+        Ori Rawlings <orirawlings@gmail.com>,
+        Igor Kushnir <igorkuo@gmail.com>
+Subject: [PATCH v2] git-p4: do not pass '-r 0' to p4 commands
+Date:   Thu, 29 Dec 2016 12:22:23 +0200
+Message-Id: <20161229102223.6028-1-igorkuo@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git-p4 crashes when used with a very old p4 client version
+that does not support the '-r <number>' option in its commands.
 
-> On 28 Dec 2016, at 00:11, Junio C Hamano <gitster@pobox.com> wrote:
->=20
->=20
-> * bw/realpath-wo-chdir (2016-12-22) 5 commits
->  (merged to 'next' on 2016-12-22 at fea8fa870f)
-> + real_path: canonicalize directory separators in root parts
-> + real_path: have callers use real_pathdup and strbuf_realpath
-> + real_path: create real_pathdup
-> + real_path: convert real_path_internal to strbuf_realpath
-> + real_path: resolve symlinks by hand
-> (this branch is used by bw/grep-recurse-submodules.)
->=20
-> The implementation of "real_path()" was to go there with chdir(2)
-> and call getcwd(3), but this obviously wouldn't be usable in a
-> threaded environment.  Rewrite it to manually resolve relative
-> paths including symbolic links in path components.
+Allow making git-p4 work with old p4 clients by setting git-p4.retries to 0.
 
-"real_path: resolve symlinks by hand" (05b458c) introduces
-"MAXSYMLINKS" which is already defined on macOS in
+Alternatively git-p4.retries could be made opt-in.
+But since only very old, barely maintained p4 versions don't support
+the '-r' option, the setting-retries-to-0 workaround would do.
 
-/usr/include/sys/param.h:197:9:
+The "-r retries" option is present in Perforce 2012.2 Command Reference,
+but absent from Perforce 2012.1 Command Reference.
 
- * .., MAXSYMLINKS defines the
- * maximum number of symbolic links that may be expanded in a path name.
- * It should be set high enough to allow all legitimate uses, but halt
- * infinite loops reasonably quickly.
- */
+Signed-off-by: Igor Kushnir <igorkuo@gmail.com>
+---
+ Documentation/git-p4.txt | 2 ++
+ git-p4.py                | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-
-Log with JS: https://travis-ci.org/git/git/jobs/187092215
-Log without JS: =
-https://s3.amazonaws.com/archive.travis-ci.org/jobs/187092215/log.txt
-
-- Lars
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index bae862ddc..7436c64a9 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -479,6 +479,8 @@ git-p4.client::
+ git-p4.retries::
+ 	Specifies the number of times to retry a p4 command (notably,
+ 	'p4 sync') if the network times out. The default value is 3.
++	Set the value to 0 to disable retries or if your p4 version
++	does not support retries (pre 2012.2).
+ 
+ Clone and sync variables
+ ~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/git-p4.py b/git-p4.py
+index 22e3f57e7..7bda915bd 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -83,7 +83,9 @@ def p4_build_cmd(cmd):
+     if retries is None:
+         # Perform 3 retries by default
+         retries = 3
+-    real_cmd += ["-r", str(retries)]
++    if retries > 0:
++        # Provide a way to not pass this option by setting git-p4.retries to 0
++        real_cmd += ["-r", str(retries)]
+ 
+     if isinstance(cmd,basestring):
+         real_cmd = ' '.join(real_cmd) + ' ' + cmd
+-- 
+2.11.0
 
