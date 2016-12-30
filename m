@@ -2,79 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E0E11FCA5
-	for <e@80x24.org>; Fri, 30 Dec 2016 01:36:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4967D20441
+	for <e@80x24.org>; Fri, 30 Dec 2016 10:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751537AbcL3Bgb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Dec 2016 20:36:31 -0500
-Received: from mout.web.de ([212.227.15.14]:52717 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751039AbcL3Bga (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2016 20:36:30 -0500
-Received: from [192.168.178.36] ([79.213.118.247]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LpO8D-1cyqgd1kG5-00f6ts; Fri, 30
- Dec 2016 02:36:22 +0100
-Subject: Re: [PATCH] submodule.c: use GIT_DIR_ENVIRONMENT consistently
-To:     Stefan Beller <sbeller@google.com>
-References: <20161230004739.19144-1-sbeller@google.com>
-Cc:     gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6dd0a31e-d877-5311-37ef-313ed9ab9716@web.de>
-Date:   Fri, 30 Dec 2016 02:36:20 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+        id S1752232AbcL3Ku7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Dec 2016 05:50:59 -0500
+Received: from mail-io0-f181.google.com ([209.85.223.181]:33305 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751820AbcL3Ku6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Dec 2016 05:50:58 -0500
+Received: by mail-io0-f181.google.com with SMTP id d9so369597232ioe.0
+        for <git@vger.kernel.org>; Fri, 30 Dec 2016 02:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=tLXuTypquRYaP88RsP3fZwbcXUHEXbWaZqDDYY/wXD8=;
+        b=hI8vkGTLtUKCQ00GelM4MYAcl3YuQ62VTAENsKOVktHHsTLJ/nYbjEobbpJNXqDoCK
+         n+6nolCsw65s4kgoTAoRYCckPtUaHBnRjLFZrogtafeoPohDX13vfaXufaZbsjPGcopT
+         WW5nEJyKk0gPdhiWnaCzzaJW7DRZPISuBSzzj1gImDGqMEO2XCrvUNH3svkKkfFz7Lkg
+         ngPxSGByY32+nzDnP6QUTGSj7FjfmDOb4PmshznV+sBKkX3Xq8zQtNQkjq/sDVSJsOis
+         EDzeJKxfDStjBaCbeHs7KPFJkCS/u7zxS1hokrQD6JrnVN8m72AcqeFvbxilMi/NaJEU
+         5P9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=tLXuTypquRYaP88RsP3fZwbcXUHEXbWaZqDDYY/wXD8=;
+        b=OoPABP2Av3IcTDPFA8JECJK3zeEvhWMd9Db/Owr3CxYrLibBbforLN6kteBSP7/j3u
+         CAkDdKPQrmt7FAwqhCTaJ93xSNkpmStMVLHOqA9nNrD6eEDWbr3BKVuOUk3CoFiPkiA+
+         rzHb5a4tADSOEck8TRfXiA6mwBF+G+/5y9w4gCeiKHLCoURzzh5zFFrdPobodj9GixnT
+         rL33RRRFUByg9NzKUTdoeo06we77dyKey6OdS6XTVp1a9nlQGvq6QFiaTGP9LkAPCKI+
+         ngUSDQBXDU5O4507EitgB6//MC9FbKfAjcZPZ4IflzJJ9QC/yWVmuMg6KtWyCRqR3cNe
+         GciQ==
+X-Gm-Message-State: AIkVDXIIORbsBbxsI2BmXo1/sTPmaWxAN7EbeWaoGZafMBsTfcvLQ2yy2OENJhzG8MZ9MFkubteX7NCj4WUxAA==
+X-Received: by 10.107.152.140 with SMTP id a134mr40763362ioe.207.1483095057450;
+ Fri, 30 Dec 2016 02:50:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161230004739.19144-1-sbeller@google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:nDXik9CnmMSLKwvEWvqZ1RGZg44/BPFnqmEXM2OlOPe9k30HPit
- x92lX8CpH1j4qPy2lpvOoTDVoH7IhFSAGWFR9JV/13Ihmx8W/Uss5uzs9fv2BbAEIBynqIT
- QaAAPrKjTwHQdlAIBY0E3TchVrHtGONiBZ5fYGD892VleIDrNIOhZrGKoJ0uA4RULVznPnw
- fHl+CrlbQJUhhIv8v7fyg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lYQuddim3/M=:/qbqjBpgILN0w0A5kCyLzu
- hEg2LwGrV2ACvsVYjmWQLt2hET2trfI0X85Ly/5yF89AzN1lNyVC7iw3E0iChtmTFUve0dwnV
- K3SXp8VTjK9pUL8QXN53y5TVedgOnUUTX6g5RpGixhC6PSiIe4ywcIPa3uvSxTBpOzWcR4oxD
- ZWtuvPUbWHumUmkFBK8bWJ3c73VAcwshu2UmNwm0amkUxGuzBvlbFax6IepztiJXLf9X7srKf
- KeLgV6hrmxmY5z5Da2wzioJVHSzjq0HLIX06dCyNipyKYAJzCz8fHDJaq+2bWqJDITBM9NYNV
- V01RcnClRy2Tsd+RdhLxf3Ce/dwQoeI58aq05rv3GJTJZv5vNirfD9mx4FGGpuAXfhAkk8xhu
- cXfUqEclFVz4a5Plw0QPvv3gZHJwqQd8+1CfW5fBVV/5kYzAFGNoGhBY9ObiLBcPw/N9xhFhw
- lSEdMdod8HFYiEy9jCqDVjBnJFwgOgKnD14pNIXXdvVezk3Iy1t3QFfhiFBHR9brUsoQ70w15
- igk2JaIIy4KUJHo9laXYnz8Fli/9XGygCfC7KLvR7ZAVuDS3QEUq0pw4MjMvX7OQS7azVnsTi
- yG+YnaJ9Lr/JMAkBLHqkL6A8XX++hxADSN9C9j+blrPkbB51up+ZMz5bQrT1nhUxxqM1KXYeP
- kek+f80/YSD0aeFAKDbyIuDREQ2yRCE+Z2RhsTsDpirjm6z1TlMJ3Bp2AJ6SvEalyWo0rv7EH
- 4j5HE+UhjiIAWqU5bc1Gc+TO4cc5IpqnX9kkF12NgSQuQgIlu6YW28crAczAUFaJgJ1N5qwRw
- +WO2rha
+Received: by 10.79.136.130 with HTTP; Fri, 30 Dec 2016 02:50:56 -0800 (PST)
+From:   Tor Andersson <tor@ccxvii.net>
+Date:   Fri, 30 Dec 2016 11:50:56 +0100
+X-Google-Sender-Auth: -QO5IeQY4U7TCOC1nElbmLM958o
+Message-ID: <CAAmwXB=M8yZY2sFLwavrrQSEW9bipFhNZyLduwYXtZNK6-Ppxg@mail.gmail.com>
+Subject: Wanted: shallow submodule clones with --no-single-branch.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.12.2016 um 01:47 schrieb Stefan Beller:
-> diff --git a/submodule.c b/submodule.c
-> index ece17315d6..973b9f3f96 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1333,5 +1333,6 @@ void prepare_submodule_repo_env(struct argv_array *out)
->  		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
->  			argv_array_push(out, *var);
->  	}
-> -	argv_array_push(out, "GIT_DIR=.git");
-> +	argv_array_push(out, "%s=%s", GIT_DIR_ENVIRONMENT,
-> +		DEFAULT_GIT_DIR_ENVIRONMENT);
+Hi,
 
-argv_array_pushf (with added "f") instead?
+When adding submodules with --depth=1 only the master branch is
+cloned. This often leaves the submodule pointing to a non-existing
+commit.
 
-And indent continued lines to align them with the left parenthesis, like 
-this:
+It would be useful if I could pass the --no-single-branch argument to
+the submodule clone process, since then a submodule can point to any
+tag or branch without ending up in this situation. I've got a local
+patch to hardwire the --no-single-branch argument in the
+builtin/submodule--helper.c clone_submodule function, but I'm not sure
+if this will have any other adverse effects?
 
-	fn(arg1,
-	   arg2);
+Better yet would be for the shallow submodule clone to automatically
+retrieve and graft the actual commit the submodule points to, but
+that's probably wishing for too much.
 
->  }
->
-
+-Tor
