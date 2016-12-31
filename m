@@ -2,101 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44C6C1FCA5
-	for <e@80x24.org>; Sat, 31 Dec 2016 08:01:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 431371FCA5
+	for <e@80x24.org>; Sat, 31 Dec 2016 10:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753567AbcLaIBn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 31 Dec 2016 03:01:43 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:53597 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753204AbcLaIBm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 31 Dec 2016 03:01:42 -0500
-X-AuditID: 1207440c-e53ff700000009a1-eb-586765d8cee1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id FE.A6.02465.8D567685; Sat, 31 Dec 2016 03:01:28 -0500 (EST)
-Received: from [192.168.69.190] (p5B104C0E.dip0.t-ipconnect.de [91.16.76.14])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBV81QPd022492
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 31 Dec 2016 03:01:27 -0500
-Subject: Re: [PATCH v3 14/23] log_ref_write_1(): don't depend on logfile
- argument
-To:     Jeff King <peff@peff.net>
-References: <cover.1483153436.git.mhagger@alum.mit.edu>
- <1e1295aff09039fc49188b085bda6ee5166d313e.1483153436.git.mhagger@alum.mit.edu>
- <20161231063523.fncqqpr3m42jjvbs@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        David Turner <novalis@novalis.org>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <de31c8f1-28b6-9c21-2e1b-1fa114add5ed@alum.mit.edu>
-Date:   Sat, 31 Dec 2016 09:01:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.1
+        id S1754570AbcLaKXP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Dec 2016 05:23:15 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36668 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754101AbcLaKXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2016 05:23:14 -0500
+Received: by mail-it0-f68.google.com with SMTP id n68so43596105itn.3
+        for <git@vger.kernel.org>; Sat, 31 Dec 2016 02:23:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Z8jERBeC4atCvq8xTDErJIdL3ksKvwCo+3N/yJz1/fw=;
+        b=hKaB0/ZUGXz3T7Gax0W238/MLpUHcLghuT1cZ4PadDbr0R9TX3a/ylULWfnRWbd0FE
+         qsSuwSlD19zEjL604w4+3yay6fx22GvsZ7MIIurx8MJvyhbjZJzqHSweXeJUoS7tUAvN
+         ZxGKErK1l7RbBVRdie34n8wWKjVHoZOFQj83xDP4J4dYUt1wabG25DkLfmtaFnvgY8+p
+         qqKOkN/Oy8FGiC/XygKQNJymqa4jzgo32UGlNZFtkYoVmhHrWXnqGC3IJWZOa64AmNEJ
+         dpCJPIjLnODMujiVlGL+jpmPxoP6QmlY3cH2+CMe2VFoU8IuUyGLP1IADg3/gFUfZG7L
+         oxzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Z8jERBeC4atCvq8xTDErJIdL3ksKvwCo+3N/yJz1/fw=;
+        b=A8Hcw7ecjDzZyIemMLIGt4sWj3Xe9xptbFfzJtX30Stc+wyCvwfO9npK5r5fBNuHub
+         mxwWerVeE2p9QP/mOnKL5vJwGmYriPbyCVg2w6h4gacjDN3BIUiL7JpDvVU0cD9zFcJi
+         u+jriA/YjIOis0O3xrXisGAAOsSyWgFMcVEpjlRWiX+MlFcA7To/ZxahGtK6/Sotnr0K
+         Se5G7UfGbFZJ+8+qQSgiimZToSz3BMFHS2U9wxWfp0BPmGJq6F+3+PS9smrOeu7WawkZ
+         wcU2YMSBIf4agngUnW9ndLXzArpYY6jAlrtNXbfOh4/Vq9/UEmsZFKX8efUg1Ufi7j4U
+         N3Gg==
+X-Gm-Message-State: AIkVDXL6V29k9Y9gm4P1DpQmf1B06FdpDblZjaY5km8gYvvtarkvYkooePtvrngDbncacX+sFZzaVbopbGKxZA==
+X-Received: by 10.36.216.132 with SMTP id b126mr44197974itg.45.1483179793249;
+ Sat, 31 Dec 2016 02:23:13 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161231063523.fncqqpr3m42jjvbs@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqHsjNT3CoOmGiUXXlW4mi4beK8wW
-        Sx6+Zrb40dLD7MDi0dV+hM3jWe8eRo+Ll5Q9Pm+SC2CJ4rJJSc3JLEst0rdL4Mpo/zOfrWAi
-        b8XJG71MDYynuboYOTkkBEwkNj94yNLFyMUhJHCZUWLyzAfMEM5ZJonTZ9+zgFQJCwRL3N/9
-        F8wWEZCV+H54IyNE0SFGiaZ175lBEswCGRI9d36zgthsAroSi3qamUBsXgF7iYUbb4LZLAKq
-        EmfeHgOrERUIkbg85ygbRI2gxMmZT8AWcAq4SCxsaWKBmKku8WfeJaj58hLb385hnsDIPwtJ
-        yywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuol5tZopeaUrqJERK4PDsYv62T
-        OcQowMGoxMPbcS0tQog1say4MvcQoyQHk5Ior6VlaoQQX1J+SmVGYnFGfFFpTmox0OsczEoi
-        vNEJ6RFCvCmJlVWpRfkwKWkOFiVxXtUl6n5CAumJJanZqakFqUUwWRkODiUJ3tgUoEbBotT0
-        1Iq0zJwShDQTByfIcB6g4VkgNbzFBYm5xZnpEPlTjIpS4rw6IAkBkERGaR5cLyyxvGIUB3pF
-        mLcMpIoHmJTgul8BDWYCGvw1DmxwSSJCSqqBUcrtxolrJw9p+UeHmuhqnvAqfvNqaVaVT97D
-        uztmf1zhyXpng1FmwMw/FV5P+m/1xf+397I49+ybn6sAZ0bMUXXV1gVtU47s5voV5M9w4Z2P
-        eWHdwwdTN5ff/BzF8J1RZ9p+mcao8C/7tbPkWBemavNaeYsdC3PLSHkbpLniAL9vw6KVN6JY
-        lViKMxINtZiLihMBm19oXAcDAAA=
+Received: by 10.79.142.137 with HTTP; Sat, 31 Dec 2016 02:23:12 -0800 (PST)
+In-Reply-To: <8bd0682f-e35e-a50e-24a9-fd3a53454ed4@gmx.net>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1af0-5d688c2e-868d-4d8c-a8fd-9a675f7f01da-000000@eu-west-1.amazonses.com>
+ <8bd0682f-e35e-a50e-24a9-fd3a53454ed4@gmx.net>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Sat, 31 Dec 2016 15:53:12 +0530
+Message-ID: <CAFZEwPMbT+BZ=eDxW1xkgH-Nrd=AMm1vGejLKmQ5wdM84TVnmQ@mail.gmail.com>
+Subject: Re: [PATCH v15 15/27] bisect--helper: `bisect_next` and
+ `bisect_auto_next` shell function in C
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/31/2016 07:35 AM, Jeff King wrote:
-> On Sat, Dec 31, 2016 at 04:12:54AM +0100, Michael Haggerty wrote:
-> 
->> It's unnecessary to pass a strbuf holding the reflog path up and down
->> the call stack now that it is hardly needed by the callers. Remove the
->> places where log_ref_write_1() uses it, in preparation for making it
->> internal to log_ref_setup().
+Hey Stephan,
+
+Extremely sorry I just forgot to reply to this email before. I was
+preparing from the next iteration when I saw this.
+
+On Mon, Nov 21, 2016 at 1:31 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
+> Hi Pranit,
+>
+> this one is hard to review because you do two or three commits in one here.
+> I think the first commit should be the exit()->return conversion, the
+> second commit is next and autonext, and the third commit is the pretty
+> trivial bisect_start commit ;) However, you did it this way and it's
+> always a hassle to split commit, so I don't really care...
+
+I had confusion about how to split the commits, but then I then
+decided to dump it all together so that it compiles (I was finding it
+difficult to split into meaningful parts which also compiled).
+
+> However, I was reviewing this superficially, to be honest. This mail
+> skips the next and autonext part.
+>
+> On 10/14/2016 04:14 PM, Pranit Bauva wrote:
+>> diff --git a/bisect.c b/bisect.c
+>> index 45d598d..7c97e85 100644
+>> --- a/bisect.c
+>> +++ b/bisect.c
+>> @@ -843,16 +878,21 @@ static int check_ancestors(const char *prefix)
+>>   *
+>>   * If that's not the case, we need to check the merge bases.
+>>   * If a merge base must be tested by the user, its source code will be
+>> - * checked out to be tested by the user and we will exit.
+>> + * checked out to be tested by the user and we will return.
+>>   */
+>> -static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+>> +static int check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+>>  {
+>>       char *filename = git_pathdup("BISECT_ANCESTORS_OK");
+>>       struct stat st;
+>> -     int fd;
+>> +     int fd, res = 0;
 >>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>  refs/files-backend.c | 12 ++++++++----
->>  1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 7f26cf8..5a96424 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -2837,14 +2837,18 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
->>  	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
->>  				  git_committer_info(0), msg);
->>  	if (result) {
->> -		strbuf_addf(err, "unable to append to '%s': %s", logfile->buf,
->> -			    strerror(errno));
->> +		int save_errno = errno;
+>> +     /*
+>> +      * We don't want to clean the bisection state
+>> +      * as we need to get back to where we started
+>> +      * by using `git bisect reset`.
+>> +      */
+>>       if (!current_bad_oid)
+>> -             die(_("a %s revision is needed"), term_bad);
+>> +             error(_("a %s revision is needed"), term_bad);
+>
+> Only error() or return error()?
+
+It should be return error(). Thanks for pointing it out! :)
+
+>> @@ -873,8 +916,11 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+>>                             filename);
+>>       else
+>>               close(fd);
 >> +
->> +		strbuf_addf(err, "unable to append to '%s': %s",
->> +			    git_path("logs/%s", refname), strerror(save_errno));
-> 
-> Hmm. This means the logic of "the path for a reflog is
-> git_path(logs/%s)" is now replicated in several places. Which feels kind
-> of like a backwards step. But I guess it is pretty well cemented in the
-> concept of files-backend.c, and I do like the later cleanups that this
-> allows.
+>> +     goto done;
+>>   done:
+>
+> I never understand why you do this. In case of adding a "fail" label
+> (and fail code like "res = -1;") between "goto done" and "done:", it's
+> fine... but without one this is just a nop.
 
-This might end up in a helper function in the not-too-distant future for
-other reasons, but given that such code already appears multiple times,
-I didn't feel too guilty about it.
+I will just remove that line.
 
-Michael
+>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>> index 1d3e17f..fcd7574 100644
+>> --- a/builtin/bisect--helper.c
+>> +++ b/builtin/bisect--helper.c
+>> @@ -427,15 +560,24 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+>>               no_checkout = 1;
+>>
+>>       for (i = 0; i < argc; i++) {
+>> -             if (!strcmp(argv[i], "--")) {
+>> +             const char *arg;
+>> +             if (starts_with(argv[i], "'"))
+>> +                     arg = sq_dequote(xstrdup(argv[i]));
+>> +             else
+>> +                     arg = argv[i];
+>
+> One is xstrdup'ed, one is not, so there'll be a leak somewhere, and it's
+> an inconsistent leak... I guess it's a bad idea to do it this way ;)
+> (Also below.)
 
+Yes. I will use xstrdup() and it does leak.
 
+>> @@ -443,24 +585,31 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+>>                       no_checkout = 1;
+>>               } else if (!strcmp(arg, "--term-good") ||
+>>                        !strcmp(arg, "--term-old")) {
+>> +                     if (starts_with(argv[++i], "'"))
+>> +                             terms->term_good = sq_dequote(xstrdup(argv[i]));
+>> +                     else
+>> +                             terms->term_good = xstrdup(argv[i]);
+>>                       must_write_terms = 1;
+>> -                     terms->term_good = xstrdup(argv[++i]);
+>>               } else if (skip_prefix(arg, "--term-good=", &arg)) {
+>>                       must_write_terms = 1;
+>> -                     terms->term_good = xstrdup(arg);
+>> +                     terms->term_good = arg;
+>
+> No ;) (See my other comments (to other patches) for the "terms" leaks.)
+
+Yes I have addressed this issue.
+
+> [This repeats several times below.]
+>
+>> diff --git a/git-bisect.sh b/git-bisect.sh
+>> index f0896b3..d574c44 100755
+>> --- a/git-bisect.sh
+>> +++ b/git-bisect.sh
+>> @@ -109,6 +88,7 @@ bisect_skip() {
+>>  bisect_state() {
+>>       bisect_autostart
+>>       state=$1
+>> +     get_terms
+>>       git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
+>>       get_terms
+>>       case "$#,$state" in
+>
+> I can't say if this change is right or wrong. It looks right, but: How
+> does this relate to the other changes? Is this the right patch for it?
+
+This line is because of the following:
+
+ * TERM_BAD and TERM_GOOD are global but in the coming patch they
+would be removed as global variables.
+
+ * To compensate for that, I will write out the state of TERM_BAD and
+TERM_GOOD every time it is updated in the file BISECT_TERMS.
+
+ * So we will be reading it from there.
+
+ * It is quite possible that this is completely redundant as for now
+but I really don't care to check for each case because I have removed
+the shell function bisect_state() afterwards and then this line won't
+create a problem there because we are using `struct bisect_terms`
+there.
