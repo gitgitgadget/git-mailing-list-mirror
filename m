@@ -2,128 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13E1E2070D
-	for <e@80x24.org>; Sat, 31 Dec 2016 03:14:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38EF720C1D
+	for <e@80x24.org>; Sat, 31 Dec 2016 06:11:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754717AbcLaDOH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Dec 2016 22:14:07 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:53310 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754628AbcLaDNY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 30 Dec 2016 22:13:24 -0500
-X-AuditID: 12074411-fbbff700000009b7-53-58672252fc69
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 54.63.02487.25227685; Fri, 30 Dec 2016 22:13:22 -0500 (EST)
-Received: from bagpipes.fritz.box (p5B104C0E.dip0.t-ipconnect.de [91.16.76.14])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBV3D6u4010692
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 30 Dec 2016 22:13:21 -0500
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        David Turner <novalis@novalis.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 10/23] log_ref_write(): inline function
-Date:   Sat, 31 Dec 2016 04:12:50 +0100
-Message-Id: <dba3d081c32854593d8113f9cd604a9891748bcd.1483153436.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <cover.1483153436.git.mhagger@alum.mit.edu>
+        id S1751977AbcLaGLw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 31 Dec 2016 01:11:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33468 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751264AbcLaGLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2016 01:11:51 -0500
+Received: (qmail 9127 invoked by uid 109); 31 Dec 2016 06:11:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 31 Dec 2016 06:11:51 +0000
+Received: (qmail 2055 invoked by uid 111); 31 Dec 2016 06:12:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 31 Dec 2016 01:12:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 31 Dec 2016 01:11:46 -0500
+Date:   Sat, 31 Dec 2016 01:11:46 -0500
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        David Turner <novalis@novalis.org>
+Subject: Re: [PATCH v3 05/23] raceproof_create_file(): new function
+Message-ID: <20161231061146.gxlbma6w7odho4c7@sigill.intra.peff.net>
 References: <cover.1483153436.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGIsWRmVeSWpSXmKPExsUixO6iqBuklB5hcKdTz6LrSjeTRUPvFWaL
-        2yvmM1ssefia2eJHSw+zA6vH3/cfmDy62o+weTzr3cPocfGSssfnTXIBrFFcNimpOZllqUX6
-        dglcGdu/fmUp+CdW0TV9P2MD42WhLkZODgkBE4n/71+wdDFycQgJXGaUeHBgLxuEc5xJ4tjn
-        rSwgVWwCuhKLepqZQGwRATWJiW2HwDqYBSYySkzbcgksISxgJbHswGxWEJtFQFXi87wXzCA2
-        r0CUxJdfB1kg1slJXNr2BSzOKWAhsfhTH1ivkIC5xLqdl5gnMPIsYGRYxSiXmFOaq5ubmJlT
-        nJqsW5ycmJeXWqRrqpebWaKXmlK6iRESPII7GGeclDvEKMDBqMTD++BGWoQQa2JZcWXuIUZJ
-        DiYlUV5Ly9QIIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8C+XSI4R4UxIrq1KL8mFS0hwsSuK8
-        fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8CopAjYJFqempFWmZOSUIaSYOTpDhPEDD/UFqeIsL
-        EnOLM9Mh8qcYFaXEedcqACUEQBIZpXlwvbDofsUoDvSKMO8ukHYeYGKA634FNJgJaLBaTjLI
-        4JJEhJRUA2P+udwUB6Mzf1fo+i92/F97pDDjWJTk0dYFUSJ/Hh+6dbhtg+Llr1x/GmZ7Hu18
-        Y2TAujBG/Jld9NGz190Pm/NEGsy4Oj1p6u4VptP3zeYoUXixNGaKzZeYbwmG1q/zFnHsrwxZ
-        HLrVz2/PG8OMUAXryiv5nf1/VipGlT5bx1kYNrHiKHP50+9KLMUZiYZazEXFiQDwwmwCyQIA
-        AA==
+ <f933f9d3c4c53b42ecc75b7a743ed4bfd390b4c5.1483153436.git.mhagger@alum.mit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f933f9d3c4c53b42ecc75b7a743ed4bfd390b4c5.1483153436.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function doesn't do anything beyond call files_log_ref_write(), so
-replace it with the latter at its call sites.
+On Sat, Dec 31, 2016 at 04:12:45AM +0100, Michael Haggerty wrote:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs/files-backend.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+> Add a function that tries to create a file and any containing
+> directories in a way that is robust against races with other processes
+> that might be cleaning up empty directories at the same time.
+> 
+> The actual file creation is done by a callback function, which, if it
+> fails, should set errno to EISDIR or ENOENT according to the convention
+> of open(). raceproof_create_file() detects such failures, and
+> respectively either tries to delete empty directories that might be in
+> the way of the file or tries to create the containing directories. Then
+> it retries the callback function.
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 49a119c..fd8a751 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2832,14 +2832,6 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	return 0;
- }
- 
--static int log_ref_write(const char *refname, const unsigned char *old_sha1,
--			 const unsigned char *new_sha1, const char *msg,
--			 int flags, struct strbuf *err)
--{
--	return files_log_ref_write(refname, old_sha1, new_sha1, msg, flags,
--				   err);
--}
--
- int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
- 			const unsigned char *new_sha1, const char *msg,
- 			int flags, struct strbuf *err)
-@@ -2903,7 +2895,8 @@ static int commit_ref_update(struct files_ref_store *refs,
- 	assert_main_repository(&refs->base, "commit_ref_update");
- 
- 	clear_loose_ref_cache(refs);
--	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, 0, err)) {
-+	if (files_log_ref_write(lock->ref_name, lock->old_oid.hash, sha1,
-+				logmsg, 0, err)) {
- 		char *old_msg = strbuf_detach(err, NULL);
- 		strbuf_addf(err, "cannot update the ref '%s': %s",
- 			    lock->ref_name, old_msg);
-@@ -2934,7 +2927,7 @@ static int commit_ref_update(struct files_ref_store *refs,
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name)) {
- 			struct strbuf log_err = STRBUF_INIT;
--			if (log_ref_write("HEAD", lock->old_oid.hash, sha1,
-+			if (files_log_ref_write("HEAD", lock->old_oid.hash, sha1,
- 					  logmsg, 0, &log_err)) {
- 				error("%s", log_err.buf);
- 				strbuf_release(&log_err);
-@@ -2973,7 +2966,8 @@ static void update_symref_reflog(struct ref_lock *lock, const char *refname,
- 	struct strbuf err = STRBUF_INIT;
- 	unsigned char new_sha1[20];
- 	if (logmsg && !read_ref(target, new_sha1) &&
--	    log_ref_write(refname, lock->old_oid.hash, new_sha1, logmsg, 0, &err)) {
-+	    files_log_ref_write(refname, lock->old_oid.hash, new_sha1,
-+				logmsg, 0, &err)) {
- 		error("%s", err.buf);
- 		strbuf_release(&err);
- 	}
-@@ -3748,9 +3742,11 @@ static int files_transaction_commit(struct ref_store *ref_store,
- 
- 		if (update->flags & REF_NEEDS_COMMIT ||
- 		    update->flags & REF_LOG_ONLY) {
--			if (log_ref_write(lock->ref_name, lock->old_oid.hash,
--					  update->new_sha1,
--					  update->msg, update->flags, err)) {
-+			if (files_log_ref_write(lock->ref_name,
-+						lock->old_oid.hash,
-+						update->new_sha1,
-+						update->msg, update->flags,
-+						err)) {
- 				char *old_msg = strbuf_detach(err, NULL);
- 
- 				strbuf_addf(err, "cannot update the ref '%s': %s",
--- 
-2.9.3
+This seems like a nice primitive, and the resulting change in patch 7 is
+very pleasant.
 
+At first I was surprised that the callback did not take the more usual
+open(2) flags, which might make it easy to reuse a few basic callbacks.
+But I see that in most cases the actual opening is deep inside a higher
+level construct like the lockfile code, and anything beyond the "void *"
+callback parameter that you have would make that really awkward.
+
+> +/*
+> + * Callback function for raceproof_create_file(). This function is
+> + * expected to do something that makes dirname(path) permanent despite
+> + * the fact that other processes might be cleaning up empty
+> + * directories at the same time. Usually it will create a file named
+> + * path, but alternatively it could create another file in that
+> + * directory, or even chdir() into that directory. The function should
+> + * return 0 if the action was completed successfully. On error, it
+> + * should return a nonzero result and set errno.
+> + * raceproof_create_file() treats two errno values specially:
+> + *
+> + * - ENOENT -- dirname(path) does not exist. In this case,
+> + *             raceproof_create_file() tries creating dirname(path)
+> + *             (and any parent directories, if necessary) and calls
+> + *             the function again.
+> + *
+> + * - EISDIR -- the file already exists and is a directory. In this
+> + *             case, raceproof_create_file() deletes the directory
+> + *             (recursively) if it is empty and calls the function
+> + *             again.
+
+It took me a minute to figure out why EISDIR is recursive.
+
+If we are trying to create "foo/bar/baz", we can only get EISDIR when
+"baz" exists and is a directory. I at first took your recursive to me
+that we delete it and "foo/bar" and "foo". Which is just silly and
+counterproductive.
+
+But presumably you mean that we delete "foo/bar/baz/xyzzy", etc, up to
+"foo/bar/baz", provided they are all empty directories. I think your
+comment is probably OK and I was just being thick, but maybe stating it
+like:
+
+  ...removes the directory if it is empty (and recursively any empty
+  directories it contains) and calls the function again.
+
+would be more clear. That is still leaving the definition of "empty"
+implied, but it's hopefully obvious from the context.
+
+> +int raceproof_create_file(const char *path, create_file_fn fn, void *cb)
+> +{
+> +	/*
+> +	 * The number of times we will try to remove empty directories
+> +	 * in the way of path. This is only 1 because if another
+> +	 * process is racily creating directories that conflict with
+> +	 * us, we don't want to fight against them.
+> +	 */
+> +	int remove_directories_remaining = 1;
+> +
+> +	/*
+> +	 * The number of times that we will try to create the
+> +	 * directories containing path. We are willing to attempt this
+> +	 * more than once, because another process could be trying to
+> +	 * clean up empty directories at the same time as we are
+> +	 * trying to create them.
+> +	 */
+> +	int create_directories_remaining = 3;
+
+We know that 3 is higher than 1, so we would not fight forever between
+writing "foo" and "foo/bar". That made me wonder if we could fight with
+other code. The obvious one would be try_remove_empty_parents() in
+files-backend.c, but it makes only a single attempt at each directory.
+So we should "win" against it short of weird cases (like somebody
+running "git pack-refs --prune" in a tight loop).
+
+> [...the actual function logic...]
+
+Nice. This looks very straightforward.
+
+-Peff
