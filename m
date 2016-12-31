@@ -6,96 +6,150 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BA4720C24
-	for <e@80x24.org>; Sat, 31 Dec 2016 03:14:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E78EB20C1D
+	for <e@80x24.org>; Sat, 31 Dec 2016 03:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754714AbcLaDOD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Dec 2016 22:14:03 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:62485 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754632AbcLaDNY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 30 Dec 2016 22:13:24 -0500
-X-AuditID: 12074413-44dff70000000a33-fe-5867224a910b
+        id S1754638AbcLaDNY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Dec 2016 22:13:24 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:55417 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754540AbcLaDNU (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 30 Dec 2016 22:13:20 -0500
+X-AuditID: 1207440d-8b7ff700000009ba-97-5867225030f9
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id AC.5B.02611.A4227685; Fri, 30 Dec 2016 22:13:17 -0500 (EST)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id DD.21.02490.05227685; Fri, 30 Dec 2016 22:13:20 -0500 (EST)
 Received: from bagpipes.fritz.box (p5B104C0E.dip0.t-ipconnect.de [91.16.76.14])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBV3D6tw010692
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id uBV3D6u2010692
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 30 Dec 2016 22:13:13 -0500
+        Fri, 30 Dec 2016 22:13:18 -0500
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         David Turner <novalis@novalis.org>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 04/23] safe_create_leading_directories(): set errno on SCLD_EXISTS
-Date:   Sat, 31 Dec 2016 04:12:44 +0100
-Message-Id: <ea26c628a22d169063b781d87ea961f4b787a8f4.1483153436.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 08/23] rename_tmp_log(): use raceproof_create_file()
+Date:   Sat, 31 Dec 2016 04:12:48 +0100
+Message-Id: <75f51a671ed56bff55906c6f9400d53dfe8199c9.1483153436.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1483153436.git.mhagger@alum.mit.edu>
 References: <cover.1483153436.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGIsWRmVeSWpSXmKPExsUixO6iqOurlB5hsGydrEXXlW4mi4beK8wW
-        t1fMZ7ZY8vA1s8WPlh5mB1aPv+8/MHl0tR9h83jWu4fR4+IlZY/Pm+QCWKO4bFJSczLLUov0
-        7RK4Mo79PsBW0MVTcfzlVaYGxoOcXYycHBICJhLnuvYxdzFycQgJXGaU2D+nmRXCOc4k8fnT
-        ORaQKjYBXYlFPc1MILaIgJrExLZDLCBFzAITGSWmbbkElhAWCJX4+X82G4jNIqAq0fRpNVgz
-        r0CUxOmfa1gh1slJXNr2hRnE5hSwkFj8qQ+sV0jAXGLdzkvMExh5FjAyrGKUS8wpzdXNTczM
-        KU5N1i1OTszLSy3SNdfLzSzRS00p3cQICR7hHYy7TsodYhTgYFTi4X1wIy1CiDWxrLgy9xCj
-        JAeTkiivpWVqhBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3oVy6RFCvCmJlVWpRfkwKWkOFiVx
-        XrUl6n5CAumJJanZqakFqUUwWRkODiUJXgVFoEbBotT01Iq0zJwShDQTByfIcB6g4f4gNbzF
-        BYm5xZnpEPlTjIpS4rxrFYASAiCJjNI8uF5YdL9iFAd6RZiXFaSdB5gY4LpfAQ1mAhqslpMM
-        MrgkESEl1cAo/fqafsP8hwvtM7Ny1+8/2NK7p7Xe9tz1EyefTtZO/MOTsdk21+vELK4Dei+0
-        C7e93ZPYrK/x1/pN0MvvIvlr57wyPaPDl/496U5m+PKc19KzuoytPm9PnH/+DLuf1cu5776t
-        9lu5aJXL7W0WsZ0y11W6313h3btX6FrZhXUXmLTmlVnZJHPbKbEUZyQaajEXFScCAJky8JrJ
-        AgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKIsWRmVeSWpSXmKPExsUixO6iqBuglB5h0LaQ3aLrSjeTRUPvFWaL
+        2yvmM1ssefia2eJHSw+zA6vH3/cfmDy62o+weTzr3cPocfGSssfnTXIBrFFcNimpOZllqUX6
+        dglcGU+uPWAreCJWMX/DO/YGxh+CXYycHBICJhI/7raxgthCApcZJW4/ju5i5AKyjzNJ9L7Y
+        ywaSYBPQlVjU08wEYosIqElMbDvEAlLELDCRUWLalktgCWEBd4lV01+BNbAIqEpMP/sdzOYV
+        iJL4fxhig4SAnMSlbV+YQWxOAQuJxZ/6mCA2m0us23mJeQIjzwJGhlWMcok5pbm6uYmZOcWp
+        ybrFyYl5ealFukZ6uZkleqkppZsYIaHDu4Px/zqZQ4wCHIxKPLwPbqRFCLEmlhVX5h5ilORg
+        UhLltbRMjRDiS8pPqcxILM6ILyrNSS0+xCjBwawkwrtQLj1CiDclsbIqtSgfJiXNwaIkzqu2
+        RN1PSCA9sSQ1OzW1ILUIJivDwaEkwbtQEahRsCg1PbUiLTOnBCHNxMEJMpwHaHgvSA1vcUFi
+        bnFmOkT+FKOilDjvWgWghABIIqM0D64XFtuvGMWBXhHmrQVp5wGmBbjuV0CDmYAGq+Ukgwwu
+        SURISTUw9vduf5iq8nHv93Dzl9KFpR/Djs84E3aQ99GKteKLrR9Y+uyuMIzWKl52YS+H6mLH
+        Q1ePrvlkc1CK98fUjYfMNso4au8847PgTAvv98Q38b9cORo2zWp+GPb9tprMpeO5hjoXDesk
+        ni4TUJLJ+5iwU7BpR/hz++0JQelvipXvdj4veMv/w4w1TImlOCPRUIu5qDgRAGU5iZ/IAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The exit path for SCLD_EXISTS wasn't setting errno, which some callers
-use to generate error messages for the user. Fix the problem and
-document that the function sets errno correctly to help avoid similar
-regressions in the future.
+Besides shortening the code, this saves an unnecessary call to
+safe_create_leading_directories_const() in almost all cases.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- cache.h     | 5 +++--
- sha1_file.c | 4 +++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ refs/files-backend.c | 73 +++++++++++++++++++++-------------------------------
+ 1 file changed, 30 insertions(+), 43 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index a50a61a..8177c3a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1031,8 +1031,9 @@ int adjust_shared_perm(const char *path);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 74de289..3f18a01 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2489,55 +2489,42 @@ static int files_delete_refs(struct ref_store *ref_store,
+  */
+ #define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
  
- /*
-  * Create the directory containing the named path, using care to be
-- * somewhat safe against races.  Return one of the scld_error values
-- * to indicate success/failure.
-+ * somewhat safe against races. Return one of the scld_error values to
-+ * indicate success/failure. On error, set errno to describe the
-+ * problem.
-  *
-  * SCLD_VANISHED indicates that one of the ancestor directories of the
-  * path existed at one point during the function call and then
-diff --git a/sha1_file.c b/sha1_file.c
-index 10395e7..ae8f0b4 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -137,8 +137,10 @@ enum scld_error safe_create_leading_directories(char *path)
- 		*slash = '\0';
- 		if (!stat(path, &st)) {
- 			/* path exists */
--			if (!S_ISDIR(st.st_mode))
-+			if (!S_ISDIR(st.st_mode)) {
-+				errno = ENOTDIR;
- 				ret = SCLD_EXISTS;
-+			}
- 		} else if (mkdir(path, 0777)) {
- 			if (errno == EEXIST &&
- 			    !stat(path, &st) && S_ISDIR(st.st_mode))
+-static int rename_tmp_log(const char *newrefname)
++static int rename_tmp_log_callback(const char *path, void *cb)
+ {
+-	int attempts_remaining = 4;
+-	struct strbuf path = STRBUF_INIT;
+-	int ret = -1;
++	int *true_errno = cb;
+ 
+- retry:
+-	strbuf_reset(&path);
+-	strbuf_git_path(&path, "logs/%s", newrefname);
+-	switch (safe_create_leading_directories_const(path.buf)) {
+-	case SCLD_OK:
+-		break; /* success */
+-	case SCLD_VANISHED:
+-		if (--attempts_remaining > 0)
+-			goto retry;
+-		/* fall through */
+-	default:
+-		error("unable to create directory for %s", newrefname);
+-		goto out;
++	if (rename(git_path(TMP_RENAMED_LOG), path)) {
++		/*
++		 * rename(a, b) when b is an existing directory ought
++		 * to result in ISDIR, but Solaris 5.8 gives ENOTDIR.
++		 * Sheesh. Record the true errno for error reporting,
++		 * but report EISDIR to raceproof_create_file() so
++		 * that it knows to retry.
++		 */
++		*true_errno = errno;
++		if (errno == ENOTDIR)
++			errno = EISDIR;
++		return -1;
++	} else {
++		return 0;
+ 	}
++}
+ 
+-	if (rename(git_path(TMP_RENAMED_LOG), path.buf)) {
+-		if ((errno==EISDIR || errno==ENOTDIR) && --attempts_remaining > 0) {
+-			/*
+-			 * rename(a, b) when b is an existing
+-			 * directory ought to result in ISDIR, but
+-			 * Solaris 5.8 gives ENOTDIR.  Sheesh.
+-			 */
+-			if (remove_empty_directories(&path)) {
+-				error("Directory not empty: logs/%s", newrefname);
+-				goto out;
+-			}
+-			goto retry;
+-		} else if (errno == ENOENT && --attempts_remaining > 0) {
+-			/*
+-			 * Maybe another process just deleted one of
+-			 * the directories in the path to newrefname.
+-			 * Try again from the beginning.
+-			 */
+-			goto retry;
+-		} else {
++static int rename_tmp_log(const char *newrefname)
++{
++	char *path = git_pathdup("logs/%s", newrefname);
++	int ret, true_errno;
++
++	ret = raceproof_create_file(path, rename_tmp_log_callback, &true_errno);
++	if (ret) {
++		if (errno == EISDIR)
++			error("Directory not empty: %s", path);
++		else
+ 			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
+-				newrefname, strerror(errno));
+-			goto out;
+-		}
++				newrefname, strerror(true_errno));
+ 	}
+-	ret = 0;
+-out:
+-	strbuf_release(&path);
++
++	free(path);
+ 	return ret;
+ }
+ 
 -- 
 2.9.3
 
