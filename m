@@ -2,84 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BEB91FEB3
-	for <e@80x24.org>; Sun,  1 Jan 2017 05:06:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2411C1FEB3
+	for <e@80x24.org>; Sun,  1 Jan 2017 05:59:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750791AbdAAFGo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jan 2017 00:06:44 -0500
-Received: from mail.foxkit.us ([45.32.83.9]:44542 "EHLO mail.wilcox-tech.com"
+        id S1750839AbdAAF7x (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jan 2017 00:59:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33677 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750698AbdAAFGn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jan 2017 00:06:43 -0500
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Jan 2017 00:06:43 EST
-Received: (qmail 23984 invoked from network); 1 Jan 2017 04:59:19 -0000
-Received: from ip68-13-242-69.ok.ok.cox.net (HELO ?10.1.1.57?) (awilcox@wilcox-tech.com@68.13.242.69)
-  by mail.foxkit.us with ESMTPA; 1 Jan 2017 04:59:19 -0000
-To:     git@vger.kernel.org
-From:   "A. Wilcox" <awilfox@adelielinux.org>
-Subject: Test failures when Git is built with libpcre and grep is built
- without it
-X-Enigmail-Draft-Status: N1110
-Organization: =?UTF-8?Q?Ad=c3=a9lie_Linux?=
-Message-ID: <58688C9F.4000605@adelielinux.org>
-Date:   Sat, 31 Dec 2016 22:59:11 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+        id S1750726AbdAAF7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jan 2017 00:59:53 -0500
+Received: (qmail 27369 invoked by uid 109); 1 Jan 2017 05:59:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 01 Jan 2017 05:59:53 +0000
+Received: (qmail 6412 invoked by uid 111); 1 Jan 2017 06:00:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 01 Jan 2017 01:00:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 01 Jan 2017 00:59:48 -0500
+Date:   Sun, 1 Jan 2017 00:59:48 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+        David Turner <novalis@novalis.org>
+Subject: Re: [PATCH v3 21/23] try_remove_empty_parents(): don't accommodate
+ consecutive slashes
+Message-ID: <20170101055947.7b5jxih3wlprqcil@sigill.intra.peff.net>
+References: <cover.1483153436.git.mhagger@alum.mit.edu>
+ <c7a89febcbf7bdffb44f8fdf63a43f11339a0289.1483153436.git.mhagger@alum.mit.edu>
+ <xmqqvatz4imu.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqvatz4imu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, Dec 31, 2016 at 06:30:01PM -0800, Junio C Hamano wrote:
 
-Hello!
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+> > "refname" has already been checked by check_refname_format(), so it
+> > cannot have consecutive slashes.
+> 
+> In the endgame state, this has two callers.  Both use what came in
+> the transaction->updates[] array.  Presumably "has already been
+> checked by check_refname_format()" says that whoever created entries
+> in that array must have called the function, but it would be helpful
+> to be more explicit here.
 
-I'm attempting to package Git for our new Linux distribution and I
-have run in to a failure on our PowerPC builder while running the test
-suite.
+Hmm, yeah. This is called when we are deleting a ref, and I thought we
+explicitly _didn't_ do check_refname_format() when deleting, so that
+funny-named refs could be deleted. It's only is_refname_safe() that we
+must pass.
 
-The PowerPC builder runs a tiny version of grep(1) that was not built
-with PCRE.  As such, grep -P returns 2 and prints:
+So I have no idea if that's a problem in the code or not, but it is at
+least not immediately obvious who is responsible for calling
+check_refname_format() here.
 
-grep: support for the -P option is not compiled into this
-- --disable-perl-regexp binary
-
-However, our Git build *does* link against libpcre.  This causes a
-tests numbered 142 and 143 to fail in t7810-grep.sh.
-
-I am not sure the best way to handle this but I felt it would be
-prudent to inform you of this issue.  I will be happy to provide any
-other information you may require.
-
-Best,
-arw
-
-- -- 
-A. Wilcox (awilfox)
-Project Lead, Adélie Linux
-http://adelielinux.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJYaIycAAoJEMspy1GSK50U/g4P/AtPRfeOv8pENfI/PnlhXqSD
-C28CR0Hzv4qBv/Ay8vpBfmkM177bBnra5GTcfnAZ0wvxJUiqnkluu+EJ2UWfPNse
-r5ZbDkXCp42oek+vIi7jYi7UsyNqwyT1DziYLR5PDopT3L8YK7i9pZCQZ+mDSmVT
-Iu3gYmLvyyEL7r104o6ACRw11P5CDL9bKFmSVacD9UvPL3EjOM9LrSdRDzvJmk0u
-nqAOH6yw4wknxCWGPA3JT4DM9GD5DB/Y+UmVQrrpA+Txl8gbPjgzb1PX4qogHjNq
-dNDk1jeKJd/CmwJdAU6eKQ3bgfnIXzLbTDVmaMTMlUUsHzlqE/7QYnrae76ECmmn
-drmezgKRwTtVgQjQ8l/F/c+EQhux9c0zM9Lz+0Hrd7v1WwohLQDA0xYOE8cCaLw1
-8WmXQWjNG1Ih2GpAZH7CRreWyiDAiaAZI2d/zOhsgG9edNEmNn+LkesajVdMywUJ
-jKlxmKk6qK2uPDPVrD261ODtMxVdptG6/+m24iz56WRERWkkFBpZz15OtrtlLa2E
-0LcFiu2f5lki12XDZsSJwkLeGfb6KyxfCPKtGP7TAVAYO43ORQHKhks8pheOMwJa
-dpL4+72CzkI57LyCtl0NiSMZH2zKUvxp8OqKgE/gpDwbhwh8spAHdUaiaS6emiPj
-MM6jb7ru9eo4gD6seRCp
-=R9eQ
------END PGP SIGNATURE-----
+-Peff
