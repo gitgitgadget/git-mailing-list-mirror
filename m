@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B24F1FCA5
-	for <e@80x24.org>; Sun,  1 Jan 2017 19:20:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A0701FCA5
+	for <e@80x24.org>; Sun,  1 Jan 2017 19:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932417AbdAATTw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jan 2017 14:19:52 -0500
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53874 "EHLO
+        id S932427AbdAATUE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jan 2017 14:20:04 -0500
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:53854 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932406AbdAATTq (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Jan 2017 14:19:46 -0500
+        by vger.kernel.org with ESMTP id S932389AbdAATTn (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Jan 2017 14:19:43 -0500
 Received: from genre.crustytoothpaste.net (unknown [173.243.43.210])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C60D4280AF;
-        Sun,  1 Jan 2017 19:19:44 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E4FDB280AE;
+        Sun,  1 Jan 2017 19:19:41 +0000 (UTC)
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 13/17] refs: convert each_reflog_ent_fn to struct object_id
-Date:   Sun,  1 Jan 2017 19:18:43 +0000
-Message-Id: <20170101191847.564741-14-sandals@crustytoothpaste.net>
+Subject: [PATCH 10/17] Convert remaining callers of resolve_refdup to object_id
+Date:   Sun,  1 Jan 2017 19:18:40 +0000
+Message-Id: <20170101191847.564741-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170101191847.564741-1-sandals@crustytoothpaste.net>
 References: <20170101191847.564741-1-sandals@crustytoothpaste.net>
@@ -34,379 +34,197 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make each_reflog_ent_fn take two struct object_id pointers instead of
-two pointers to unsigned char.  Convert the various callbacks to use
-struct object_id as well.  Also, rename fsck_handle_reflog_sha1 to
-fsck_handle_reflog_oid.
+There are a few leaf functions in various files that call
+resolve_refdup.  Convert these functions to use struct object_id
+internally to prepare for transitioning resolve_refdup itself.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fsck.c       | 16 ++++++++--------
- builtin/merge-base.c |  6 +++---
- builtin/reflog.c     |  2 +-
- reflog-walk.c        |  6 +++---
- refs.c               | 24 ++++++++++++------------
- refs.h               |  2 +-
- refs/files-backend.c | 24 ++++++++++++------------
- revision.c           | 12 ++++++------
- sha1_name.c          |  2 +-
- wt-status.c          |  6 +++---
- 10 files changed, 50 insertions(+), 50 deletions(-)
+ builtin/notes.c        | 18 +++++++++---------
+ builtin/receive-pack.c |  4 ++--
+ ref-filter.c           |  4 ++--
+ reflog-walk.c          | 12 ++++++------
+ transport.c            |  4 ++--
+ wt-status.c            |  4 ++--
+ 6 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f01b81eeb..8d6e98399 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -393,13 +393,13 @@ static int fsck_obj_buffer(const unsigned char *sha1, enum object_type type,
- 
- static int default_refs;
- 
--static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1,
-+static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
- 	unsigned long timestamp)
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 5248a9bad..8c569a49a 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -693,7 +693,7 @@ static int merge_abort(struct notes_merge_options *o)
+ static int merge_commit(struct notes_merge_options *o)
  {
- 	struct object *obj;
+ 	struct strbuf msg = STRBUF_INIT;
+-	unsigned char sha1[20], parent_sha1[20];
++	struct object_id oid, parent_oid;
+ 	struct notes_tree *t;
+ 	struct commit *partial;
+ 	struct pretty_print_context pretty_ctx;
+@@ -705,27 +705,27 @@ static int merge_commit(struct notes_merge_options *o)
+ 	 * and target notes ref from .git/NOTES_MERGE_REF.
+ 	 */
  
--	if (!is_null_sha1(sha1)) {
--		obj = lookup_object(sha1);
-+	if (!is_null_oid(oid)) {
-+		obj = lookup_object(oid->hash);
- 		if (obj) {
- 			if (timestamp && name_objects)
- 				add_decoration(fsck_walk_options.object_names,
-@@ -408,13 +408,13 @@ static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1,
- 			obj->used = 1;
- 			mark_object_reachable(obj);
- 		} else {
--			error("%s: invalid reflog entry %s", refname, sha1_to_hex(sha1));
-+			error("%s: invalid reflog entry %s", refname, oid_to_hex(oid));
- 			errors_found |= ERROR_REACHABLE;
- 		}
+-	if (get_sha1("NOTES_MERGE_PARTIAL", sha1))
++	if (get_oid("NOTES_MERGE_PARTIAL", &oid))
+ 		die(_("failed to read ref NOTES_MERGE_PARTIAL"));
+-	else if (!(partial = lookup_commit_reference(sha1)))
++	else if (!(partial = lookup_commit_reference(oid.hash)))
+ 		die(_("could not find commit from NOTES_MERGE_PARTIAL."));
+ 	else if (parse_commit(partial))
+ 		die(_("could not parse commit from NOTES_MERGE_PARTIAL."));
+ 
+ 	if (partial->parents)
+-		hashcpy(parent_sha1, partial->parents->item->object.oid.hash);
++		oidcpy(&parent_oid, &partial->parents->item->object.oid);
+ 	else
+-		hashclr(parent_sha1);
++		oidclr(&parent_oid);
+ 
+ 	t = xcalloc(1, sizeof(struct notes_tree));
+ 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+ 
+ 	o->local_ref = local_ref_to_free =
+-		resolve_refdup("NOTES_MERGE_REF", 0, sha1, NULL);
++		resolve_refdup("NOTES_MERGE_REF", 0, oid.hash, NULL);
+ 	if (!o->local_ref)
+ 		die(_("failed to resolve NOTES_MERGE_REF"));
+ 
+-	if (notes_merge_commit(o, t, partial, sha1))
++	if (notes_merge_commit(o, t, partial, oid.hash))
+ 		die(_("failed to finalize notes merge"));
+ 
+ 	/* Reuse existing commit message in reflog message */
+@@ -733,8 +733,8 @@ static int merge_commit(struct notes_merge_options *o)
+ 	format_commit_message(partial, "%s", &msg, &pretty_ctx);
+ 	strbuf_trim(&msg);
+ 	strbuf_insert(&msg, 0, "notes: ", 7);
+-	update_ref(msg.buf, o->local_ref, sha1,
+-		   is_null_sha1(parent_sha1) ? NULL : parent_sha1,
++	update_ref(msg.buf, o->local_ref, oid.hash,
++		   is_null_oid(&parent_oid) ? NULL : parent_oid.hash,
+ 		   0, UPDATE_REFS_DIE_ON_ERR);
+ 
+ 	free_notes(t);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 6b97cbdbe..b24644242 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1414,7 +1414,7 @@ static void execute_commands(struct command *commands,
+ {
+ 	struct check_connected_options opt = CHECK_CONNECTED_INIT;
+ 	struct command *cmd;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct iterate_data data;
+ 	struct async muxer;
+ 	int err_fd = 0;
+@@ -1471,7 +1471,7 @@ static void execute_commands(struct command *commands,
+ 	check_aliased_updates(commands);
+ 
+ 	free(head_name_to_free);
+-	head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
++	head_name = head_name_to_free = resolve_refdup("HEAD", 0, oid.hash, NULL);
+ 
+ 	if (use_atomic)
+ 		execute_commands_atomic(commands, si);
+diff --git a/ref-filter.c b/ref-filter.c
+index 1a978405e..a759bf67d 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -961,9 +961,9 @@ static void populate_value(struct ref_array_item *ref)
+ 	ref->value = xcalloc(used_atom_cnt, sizeof(struct atom_value));
+ 
+ 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
+-		unsigned char unused1[20];
++		struct object_id unused1;
+ 		ref->symref = resolve_refdup(ref->refname, RESOLVE_REF_READING,
+-					     unused1, NULL);
++					     unused1.hash, NULL);
+ 		if (!ref->symref)
+ 			ref->symref = "";
  	}
- }
- 
--static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int fsck_handle_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-@@ -422,10 +422,10 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 
- 	if (verbose)
- 		fprintf(stderr, "Checking reflog %s->%s\n",
--			sha1_to_hex(osha1), sha1_to_hex(nsha1));
-+			oid_to_hex(ooid), oid_to_hex(noid));
- 
--	fsck_handle_reflog_sha1(refname, osha1, 0);
--	fsck_handle_reflog_sha1(refname, nsha1, timestamp);
-+	fsck_handle_reflog_oid(refname, ooid, 0);
-+	fsck_handle_reflog_oid(refname, noid, timestamp);
- 	return 0;
- }
- 
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index b572a37c2..db95bc29c 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -131,7 +131,7 @@ static void add_one_commit(unsigned char *sha1, struct rev_collect *revs)
- 	commit->object.flags |= TMP_MARK;
- }
- 
--static int collect_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int collect_one_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 				  const char *ident, unsigned long timestamp,
- 				  int tz, const char *message, void *cbdata)
- {
-@@ -139,9 +139,9 @@ static int collect_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 
- 	if (revs->initial) {
- 		revs->initial = 0;
--		add_one_commit(osha1, revs);
-+		add_one_commit(ooid->hash, revs);
- 	}
--	add_one_commit(nsha1, revs);
-+	add_one_commit(noid->hash, revs);
- 	return 0;
- }
- 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 7a7136e53..747277577 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -615,7 +615,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	return status;
- }
- 
--static int count_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
 diff --git a/reflog-walk.c b/reflog-walk.c
-index fe5be4147..99679f582 100644
+index a246af276..f98748e2a 100644
 --- a/reflog-walk.c
 +++ b/reflog-walk.c
-@@ -19,7 +19,7 @@ struct complete_reflogs {
- 	int nr, alloc;
- };
+@@ -45,11 +45,11 @@ static struct complete_reflogs *read_complete_reflog(const char *ref)
+ 	reflogs->ref = xstrdup(ref);
+ 	for_each_reflog_ent(ref, read_one_reflog, reflogs);
+ 	if (reflogs->nr == 0) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		const char *name;
+ 		void *name_to_free;
+ 		name = name_to_free = resolve_refdup(ref, RESOLVE_REF_READING,
+-						     sha1, NULL);
++						     oid.hash, NULL);
+ 		if (name) {
+ 			for_each_reflog_ent(name, read_one_reflog, reflogs);
+ 			free(name_to_free);
+@@ -172,18 +172,18 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		reflogs = item->util;
+ 	else {
+ 		if (*branch == '\0') {
+-			unsigned char sha1[20];
++			struct object_id oid;
+ 			free(branch);
+-			branch = resolve_refdup("HEAD", 0, sha1, NULL);
++			branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
+ 			if (!branch)
+ 				die ("No current branch");
  
--static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
-+static int read_one_reflog(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-@@ -28,8 +28,8 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
- 
- 	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
- 	item = array->items + array->nr;
--	hashcpy(item->ooid.hash, osha1);
--	hashcpy(item->noid.hash, nsha1);
-+	oidcpy(&item->ooid, ooid);
-+	oidcpy(&item->noid, noid);
- 	item->email = xstrdup(email);
- 	item->timestamp = timestamp;
- 	item->tz = tz;
-diff --git a/refs.c b/refs.c
-index 9bd0bc177..4bc924790 100644
---- a/refs.c
-+++ b/refs.c
-@@ -669,7 +669,7 @@ struct read_ref_at_cb {
- 	int *cutoff_cnt;
- };
- 
--static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
-@@ -693,30 +693,30 @@ static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
- 		 * hold the values for the previous record.
- 		 */
- 		if (!is_null_sha1(cb->osha1)) {
--			hashcpy(cb->sha1, nsha1);
--			if (hashcmp(cb->osha1, nsha1))
-+			hashcpy(cb->sha1, noid->hash);
-+			if (hashcmp(cb->osha1, noid->hash))
- 				warning("Log for ref %s has gap after %s.",
- 					cb->refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
  		}
- 		else if (cb->date == cb->at_time)
--			hashcpy(cb->sha1, nsha1);
--		else if (hashcmp(nsha1, cb->sha1))
-+			hashcpy(cb->sha1, noid->hash);
-+		else if (hashcmp(noid->hash, cb->sha1))
- 			warning("Log for ref %s unexpectedly ended on %s.",
- 				cb->refname, show_date(cb->date, cb->tz,
- 						       DATE_MODE(RFC2822)));
--		hashcpy(cb->osha1, osha1);
--		hashcpy(cb->nsha1, nsha1);
-+		hashcpy(cb->osha1, ooid->hash);
-+		hashcpy(cb->nsha1, noid->hash);
- 		cb->found_it = 1;
- 		return 1;
- 	}
--	hashcpy(cb->osha1, osha1);
--	hashcpy(cb->nsha1, nsha1);
-+	hashcpy(cb->osha1, ooid->hash);
-+	hashcpy(cb->nsha1, noid->hash);
- 	if (cb->cnt > 0)
- 		cb->cnt--;
- 	return 0;
- }
- 
--static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
-+static int read_ref_at_ent_oldest(struct object_id *ooid, struct object_id *noid,
- 				  const char *email, unsigned long timestamp,
- 				  int tz, const char *message, void *cb_data)
+ 		reflogs = read_complete_reflog(branch);
+ 		if (!reflogs || reflogs->nr == 0) {
+-			unsigned char sha1[20];
++			struct object_id oid;
+ 			char *b;
+-			if (dwim_log(branch, strlen(branch), sha1, &b) == 1) {
++			if (dwim_log(branch, strlen(branch), oid.hash, &b) == 1) {
+ 				if (reflogs) {
+ 					free(reflogs->ref);
+ 					free(reflogs);
+diff --git a/transport.c b/transport.c
+index 04e5d6623..be217609f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -467,11 +467,11 @@ void transport_print_push_status(const char *dest, struct ref *refs,
  {
-@@ -730,9 +730,9 @@ static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
- 		*cb->cutoff_tz = tz;
- 	if (cb->cutoff_cnt)
- 		*cb->cutoff_cnt = cb->reccnt;
--	hashcpy(cb->sha1, osha1);
-+	hashcpy(cb->sha1, ooid->hash);
- 	if (is_null_sha1(cb->sha1))
--		hashcpy(cb->sha1, nsha1);
-+		hashcpy(cb->sha1, noid->hash);
- 	/* We just want the first entry */
- 	return 1;
- }
-diff --git a/refs.h b/refs.h
-index 694784391..ce35c4019 100644
---- a/refs.h
-+++ b/refs.h
-@@ -290,7 +290,7 @@ int delete_reflog(const char *refname);
+ 	struct ref *ref;
+ 	int n = 0;
+-	unsigned char head_sha1[20];
++	struct object_id head_oid;
+ 	char *head;
+ 	int summary_width = transport_summary_width(refs);
  
- /* iterate over reflog entries */
- typedef int each_reflog_ent_fn(
--		unsigned char *old_sha1, unsigned char *new_sha1,
-+		struct object_id *old_oid, struct object_id *new_oid,
- 		const char *committer, unsigned long timestamp,
- 		int tz, const char *msg, void *cb_data);
+-	head = resolve_refdup("HEAD", RESOLVE_REF_READING, head_sha1, NULL);
++	head = resolve_refdup("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL);
  
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f9023939d..3da3141ee 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3113,15 +3113,15 @@ static int files_delete_reflog(struct ref_store *ref_store,
- 
- static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
- {
--	unsigned char osha1[20], nsha1[20];
-+	struct object_id ooid, noid;
- 	char *email_end, *message;
- 	unsigned long timestamp;
- 	int tz;
- 
- 	/* old SP new SP name <email> SP time TAB msg LF */
- 	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
--	    get_sha1_hex(sb->buf, osha1) || sb->buf[40] != ' ' ||
--	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
-+	    get_oid_hex(sb->buf, &ooid) || sb->buf[40] != ' ' ||
-+	    get_oid_hex(sb->buf + 41, &noid) || sb->buf[81] != ' ' ||
- 	    !(email_end = strchr(sb->buf + 82, '>')) ||
- 	    email_end[1] != ' ' ||
- 	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
-@@ -3136,7 +3136,7 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
- 		message += 6;
- 	else
- 		message += 7;
--	return fn(osha1, nsha1, sb->buf + 82, timestamp, tz, message, cb_data);
-+	return fn(&ooid, &noid, sb->buf + 82, timestamp, tz, message, cb_data);
- }
- 
- static char *find_beginning_of_line(char *bob, char *scan)
-@@ -3936,10 +3936,10 @@ struct expire_reflog_cb {
- 	reflog_expiry_should_prune_fn *should_prune_fn;
- 	void *policy_cb;
- 	FILE *newlog;
--	unsigned char last_kept_sha1[20];
-+	struct object_id last_kept_oid;
- };
- 
--static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 			     const char *email, unsigned long timestamp, int tz,
- 			     const char *message, void *cb_data)
- {
-@@ -3947,9 +3947,9 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	struct expire_reflog_policy_cb *policy_cb = cb->policy_cb;
- 
- 	if (cb->flags & EXPIRE_REFLOGS_REWRITE)
--		osha1 = cb->last_kept_sha1;
-+		ooid = &cb->last_kept_oid;
- 
--	if ((*cb->should_prune_fn)(osha1, nsha1, email, timestamp, tz,
-+	if ((*cb->should_prune_fn)(ooid->hash, noid->hash, email, timestamp, tz,
- 				   message, policy_cb)) {
- 		if (!cb->newlog)
- 			printf("would prune %s", message);
-@@ -3958,9 +3958,9 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	} else {
- 		if (cb->newlog) {
- 			fprintf(cb->newlog, "%s %s %s %lu %+05d\t%s",
--				sha1_to_hex(osha1), sha1_to_hex(nsha1),
-+				oid_to_hex(ooid), oid_to_hex(noid),
- 				email, timestamp, tz, message);
--			hashcpy(cb->last_kept_sha1, nsha1);
-+			oidcpy(&cb->last_kept_oid, noid);
- 		}
- 		if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
- 			printf("keep %s", message);
-@@ -4047,14 +4047,14 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 		 */
- 		int update = (flags & EXPIRE_REFLOGS_UPDATE_REF) &&
- 			!(type & REF_ISSYMREF) &&
--			!is_null_sha1(cb.last_kept_sha1);
-+			!is_null_oid(&cb.last_kept_oid);
- 
- 		if (close_lock_file(&reflog_lock)) {
- 			status |= error("couldn't write %s: %s", log_file,
- 					strerror(errno));
- 		} else if (update &&
- 			   (write_in_full(get_lock_file_fd(lock->lk),
--				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
-+				oid_to_hex(&cb.last_kept_oid), 40) != 40 ||
- 			    write_str_in_full(get_lock_file_fd(lock->lk), "\n") != 1 ||
- 			    close_ref(lock) < 0)) {
- 			status |= error("couldn't write %s",
-diff --git a/revision.c b/revision.c
-index b37dbec37..d9fe73318 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1196,11 +1196,11 @@ static void handle_refs(const char *submodule, struct rev_info *revs, unsigned f
- 	for_each(submodule, handle_one_ref, &cb);
- }
- 
--static void handle_one_reflog_commit(unsigned char *sha1, void *cb_data)
-+static void handle_one_reflog_commit(struct object_id *oid, void *cb_data)
- {
- 	struct all_refs_cb *cb = cb_data;
--	if (!is_null_sha1(sha1)) {
--		struct object *o = parse_object(sha1);
-+	if (!is_null_oid(oid)) {
-+		struct object *o = parse_object(oid->hash);
- 		if (o) {
- 			o->flags |= cb->all_flags;
- 			/* ??? CMDLINEFLAGS ??? */
-@@ -1214,12 +1214,12 @@ static void handle_one_reflog_commit(unsigned char *sha1, void *cb_data)
- 	}
- }
- 
--static int handle_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+static int handle_one_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
--	handle_one_reflog_commit(osha1, cb_data);
--	handle_one_reflog_commit(nsha1, cb_data);
-+	handle_one_reflog_commit(ooid, cb_data);
-+	handle_one_reflog_commit(noid, cb_data);
- 	return 0;
- }
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index 73a915ff1..744e9f884 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1051,7 +1051,7 @@ struct grab_nth_branch_switch_cbdata {
- 	struct strbuf buf;
- };
- 
--static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
-+static int grab_nth_branch_switch(struct object_id *ooid, struct object_id *noid,
- 				  const char *email, unsigned long timestamp, int tz,
- 				  const char *message, void *cb_data)
- {
+ 	if (verbose) {
+ 		for (ref = refs; ref; ref = ref->next)
 diff --git a/wt-status.c b/wt-status.c
-index f0d750880..08a4d0bd3 100644
+index a715e7190..f0d750880 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1367,7 +1367,7 @@ struct grab_1st_switch_cbdata {
- 	unsigned char nsha1[20];
- };
+@@ -121,7 +121,7 @@ static void status_printf_more(struct wt_status *s, const char *color,
  
--static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
-+static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
- 			   const char *email, unsigned long timestamp, int tz,
- 			   const char *message, void *cb_data)
+ void wt_status_prepare(struct wt_status *s)
  {
-@@ -1381,13 +1381,13 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
- 		return 0;
- 	target += strlen(" to ");
- 	strbuf_reset(&cb->buf);
--	hashcpy(cb->nsha1, nsha1);
-+	hashcpy(cb->nsha1, noid->hash);
- 	end = strchrnul(target, '\n');
- 	strbuf_add(&cb->buf, target, end - target);
- 	if (!strcmp(cb->buf.buf, "HEAD")) {
- 		/* HEAD is relative. Resolve it to the right reflog entry. */
- 		strbuf_reset(&cb->buf);
--		strbuf_add_unique_abbrev(&cb->buf, nsha1, DEFAULT_ABBREV);
-+		strbuf_add_unique_abbrev(&cb->buf, noid->hash, DEFAULT_ABBREV);
- 	}
- 	return 1;
- }
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 
+ 	memset(s, 0, sizeof(*s));
+ 	memcpy(s->color_palette, default_wt_status_colors,
+@@ -129,7 +129,7 @@ void wt_status_prepare(struct wt_status *s)
+ 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+ 	s->use_color = -1;
+ 	s->relative_paths = 1;
+-	s->branch = resolve_refdup("HEAD", 0, sha1, NULL);
++	s->branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
+ 	s->reference = "HEAD";
+ 	s->fp = stdout;
+ 	s->index_file = get_index_file();
 -- 
 2.11.0
 
