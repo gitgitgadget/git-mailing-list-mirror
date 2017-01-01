@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9342B1FCA5
-	for <e@80x24.org>; Sun,  1 Jan 2017 19:19:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18D041FCA5
+	for <e@80x24.org>; Sun,  1 Jan 2017 19:19:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932392AbdAATTk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jan 2017 14:19:40 -0500
+        id S932395AbdAATTm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jan 2017 14:19:42 -0500
 Received: from castro.crustytoothpaste.net ([75.10.60.170]:53814 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932183AbdAATTi (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 1 Jan 2017 14:19:38 -0500
+        by vger.kernel.org with ESMTP id S932389AbdAATTk (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 1 Jan 2017 14:19:40 -0500
 Received: from genre.crustytoothpaste.net (unknown [173.243.43.210])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A5551280AF;
-        Sun,  1 Jan 2017 19:19:36 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 74F35280AF;
+        Sun,  1 Jan 2017 19:19:39 +0000 (UTC)
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 03/17] builtin/describe: convert to struct object_id
-Date:   Sun,  1 Jan 2017 19:18:33 +0000
-Message-Id: <20170101191847.564741-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 07/17] builtin/branch: convert to struct object_id
+Date:   Sun,  1 Jan 2017 19:18:37 +0000
+Message-Id: <20170101191847.564741-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170101191847.564741-1-sandals@crustytoothpaste.net>
 References: <20170101191847.564741-1-sandals@crustytoothpaste.net>
@@ -34,180 +34,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the functions in this file and struct commit_name  to struct
-object_id.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/describe.c | 50 +++++++++++++++++++++++++-------------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ builtin/branch.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 01490a157..738e68f95 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -39,11 +39,11 @@ static const char *diff_index_args[] = {
- 
- struct commit_name {
- 	struct hashmap_entry entry;
--	unsigned char peeled[20];
-+	struct object_id peeled;
- 	struct tag *tag;
- 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
- 	unsigned name_checked:1;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char *path;
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 9d30f55b0..faf472ff8 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -32,7 +32,7 @@ static const char * const builtin_branch_usage[] = {
  };
  
-@@ -54,17 +54,17 @@ static const char *prio_names[] = {
- static int commit_name_cmp(const struct commit_name *cn1,
- 		const struct commit_name *cn2, const void *peeled)
- {
--	return hashcmp(cn1->peeled, peeled ? peeled : cn2->peeled);
-+	return oidcmp(&cn1->peeled, peeled ? peeled : &cn2->peeled);
- }
+ static const char *head;
+-static unsigned char head_sha1[20];
++static struct object_id head_oid;
  
--static inline struct commit_name *find_commit_name(const unsigned char *peeled)
-+static inline struct commit_name *find_commit_name(const struct object_id *peeled)
- {
--	return hashmap_get_from_hash(&names, sha1hash(peeled), peeled);
-+	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
- }
+ static int branch_use_color = -1;
+ static char branch_colors[][COLOR_MAXLEN] = {
+@@ -117,13 +117,13 @@ static int branch_merged(int kind, const char *name,
+ 	if (kind == FILTER_REFS_BRANCHES) {
+ 		struct branch *branch = branch_get(name);
+ 		const char *upstream = branch_get_upstream(branch, NULL);
+-		unsigned char sha1[20];
++		struct object_id oid;
  
- static int replace_name(struct commit_name *e,
- 			       int prio,
--			       const unsigned char *sha1,
-+			       const struct object_id *oid,
- 			       struct tag **tag)
- {
- 	if (!e || e->prio < prio)
-@@ -77,13 +77,13 @@ static int replace_name(struct commit_name *e,
- 		struct tag *t;
- 
- 		if (!e->tag) {
--			t = lookup_tag(e->sha1);
-+			t = lookup_tag(e->oid.hash);
- 			if (!t || parse_tag(t))
- 				return 1;
- 			e->tag = t;
- 		}
- 
--		t = lookup_tag(sha1);
-+		t = lookup_tag(oid->hash);
- 		if (!t || parse_tag(t))
- 			return 0;
- 		*tag = t;
-@@ -96,24 +96,24 @@ static int replace_name(struct commit_name *e,
- }
- 
- static void add_to_known_names(const char *path,
--			       const unsigned char *peeled,
-+			       const struct object_id *peeled,
- 			       int prio,
--			       const unsigned char *sha1)
-+			       const struct object_id *oid)
- {
- 	struct commit_name *e = find_commit_name(peeled);
- 	struct tag *tag = NULL;
--	if (replace_name(e, prio, sha1, &tag)) {
-+	if (replace_name(e, prio, oid, &tag)) {
- 		if (!e) {
- 			e = xmalloc(sizeof(struct commit_name));
--			hashcpy(e->peeled, peeled);
--			hashmap_entry_init(e, sha1hash(peeled));
-+			oidcpy(&e->peeled, peeled);
-+			hashmap_entry_init(e, sha1hash(peeled->hash));
- 			hashmap_add(&names, e);
- 			e->path = NULL;
- 		}
- 		e->tag = tag;
- 		e->prio = prio;
- 		e->name_checked = 0;
--		hashcpy(e->sha1, sha1);
-+		oidcpy(&e->oid, oid);
- 		free(e->path);
- 		e->path = xstrdup(path);
+ 		if (upstream &&
+ 		    (reference_name = reference_name_to_free =
+ 		     resolve_refdup(upstream, RESOLVE_REF_READING,
+-				    sha1, NULL)) != NULL)
+-			reference_rev = lookup_commit_reference(sha1);
++				    oid.hash, NULL)) != NULL)
++			reference_rev = lookup_commit_reference(oid.hash);
  	}
-@@ -154,7 +154,7 @@ static int get_name(const char *path, const struct object_id *oid, int flag, voi
- 	else
- 		prio = 0;
- 
--	add_to_known_names(all ? path + 5 : path + 10, peeled.hash, prio, oid->hash);
-+	add_to_known_names(all ? path + 5 : path + 10, &peeled, prio, oid);
- 	return 0;
+ 	if (!reference_rev)
+ 		reference_rev = head_rev;
+@@ -153,10 +153,10 @@ static int branch_merged(int kind, const char *name,
  }
  
-@@ -212,7 +212,7 @@ static unsigned long finish_depth_computation(
- static void display_name(struct commit_name *n)
+ static int check_branch_commit(const char *branchname, const char *refname,
+-			       const unsigned char *sha1, struct commit *head_rev,
++			       const struct object_id *oid, struct commit *head_rev,
+ 			       int kinds, int force)
  {
- 	if (n->prio == 2 && !n->tag) {
--		n->tag = lookup_tag(n->sha1);
-+		n->tag = lookup_tag(n->oid.hash);
- 		if (!n->tag || parse_tag(n->tag))
- 			die(_("annotated tag %s not available"), n->path);
- 	}
-@@ -230,14 +230,14 @@ static void display_name(struct commit_name *n)
- 		printf("%s", n->path);
- }
- 
--static void show_suffix(int depth, const unsigned char *sha1)
-+static void show_suffix(int depth, const struct object_id *oid)
+-	struct commit *rev = lookup_commit_reference(sha1);
++	struct commit *rev = lookup_commit_reference(oid->hash);
+ 	if (!rev) {
+ 		error(_("Couldn't look up commit object for '%s'"), refname);
+ 		return -1;
+@@ -183,7 +183,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 			   int quiet)
  {
--	printf("-%d-g%s", depth, find_unique_abbrev(sha1, abbrev));
-+	printf("-%d-g%s", depth, find_unique_abbrev(oid->hash, abbrev));
- }
- 
- static void describe(const char *arg, int last_one)
- {
+ 	struct commit *head_rev = NULL;
 -	unsigned char sha1[20];
 +	struct object_id oid;
- 	struct commit *cmit, *gave_up_on = NULL;
- 	struct commit_list *list;
- 	struct commit_name *n;
-@@ -246,20 +246,20 @@ static void describe(const char *arg, int last_one)
- 	unsigned long seen_commits = 0;
- 	unsigned int unannotated_cnt = 0;
+ 	char *name = NULL;
+ 	const char *fmt;
+ 	int i;
+@@ -207,7 +207,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	}
  
--	if (get_sha1(arg, sha1))
-+	if (get_oid(arg, &oid))
- 		die(_("Not a valid object name %s"), arg);
--	cmit = lookup_commit_reference(sha1);
-+	cmit = lookup_commit_reference(oid.hash);
- 	if (!cmit)
- 		die(_("%s is not a valid '%s' object"), arg, commit_type);
- 
--	n = find_commit_name(cmit->object.oid.hash);
-+	n = find_commit_name(&cmit->object.oid);
- 	if (n && (tags || all || n->prio == 2)) {
- 		/*
- 		 * Exact match to an existing ref.
- 		 */
- 		display_name(n);
- 		if (longformat)
--			show_suffix(0, n->tag ? n->tag->tagged->oid.hash : sha1);
-+			show_suffix(0, n->tag ? &n->tag->tagged->oid : &oid);
- 		if (dirty)
- 			printf("%s", dirty);
- 		printf("\n");
-@@ -276,7 +276,7 @@ static void describe(const char *arg, int last_one)
- 		struct commit *c;
- 		struct commit_name *n = hashmap_iter_first(&names, &iter);
- 		for (; n; n = hashmap_iter_next(&iter)) {
--			c = lookup_commit_reference_gently(n->peeled, 1);
-+			c = lookup_commit_reference_gently(n->peeled.hash, 1);
- 			if (c)
- 				c->util = n;
+ 	if (!force) {
+-		head_rev = lookup_commit_reference(head_sha1);
++		head_rev = lookup_commit_reference(head_oid.hash);
+ 		if (!head_rev)
+ 			die(_("Couldn't look up commit object for HEAD"));
+ 	}
+@@ -235,7 +235,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					RESOLVE_REF_READING
+ 					| RESOLVE_REF_NO_RECURSE
+ 					| RESOLVE_REF_ALLOW_BAD_NAME,
+-					sha1, &flags);
++					oid.hash, &flags);
+ 		if (!target) {
+ 			error(remote_branch
+ 			      ? _("remote-tracking branch '%s' not found.")
+@@ -245,13 +245,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
  		}
-@@ -380,7 +380,7 @@ static void describe(const char *arg, int last_one)
  
- 	display_name(all_matches[0].name);
- 	if (abbrev)
--		show_suffix(all_matches[0].depth, cmit->object.oid.hash);
-+		show_suffix(all_matches[0].depth, &cmit->object.oid);
- 	if (dirty)
- 		printf("%s", dirty);
- 	printf("\n");
+ 		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+-		    check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
++		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+ 					force)) {
+ 			ret = 1;
+ 			goto next;
+ 		}
+ 
+-		if (delete_ref(name, is_null_sha1(sha1) ? NULL : sha1,
++		if (delete_ref(name, is_null_oid(&oid) ? NULL : oid.hash,
+ 			       REF_NODEREF)) {
+ 			error(remote_branch
+ 			      ? _("Error deleting remote-tracking branch '%s'")
+@@ -267,7 +267,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 			       bname.buf,
+ 			       (flags & REF_ISBROKEN) ? "broken"
+ 			       : (flags & REF_ISSYMREF) ? target
+-			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
++			       : find_unique_abbrev(oid.hash, DEFAULT_ABBREV));
+ 		}
+ 		delete_branch_config(bname.buf);
+ 
+@@ -693,7 +693,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 	track = git_branch_track;
+ 
+-	head = resolve_refdup("HEAD", 0, head_sha1, NULL);
++	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+ 	if (!strcmp(head, "HEAD"))
 -- 
 2.11.0
 
