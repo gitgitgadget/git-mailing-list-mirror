@@ -2,111 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E9DB1FCA5
-	for <e@80x24.org>; Sun,  1 Jan 2017 15:24:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FFE81FCA5
+	for <e@80x24.org>; Sun,  1 Jan 2017 16:28:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755152AbdAAPYw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jan 2017 10:24:52 -0500
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:35443 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755109AbdAAPYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jan 2017 10:24:51 -0500
-Received: by mail-qk0-f193.google.com with SMTP id u25so43875254qki.2
-        for <git@vger.kernel.org>; Sun, 01 Jan 2017 07:24:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LQ6QB3jJwSikD1Cd3dNXVSCWN+4aDy9B8DJ9g0/ETts=;
-        b=LrgPjg0GSDxsUgsJ8kFf47CsnJFxNxw9veibGsi58EIyBCKAwlpsjr9hZTKW8qo1ni
-         t7WE5fBLeYl88oO9um8TflxsOTAAY4QCCfO6t5EEUhbThALBsycy1PL4g32dQDg4wh5B
-         EAZiNairAm2VSW7L3o/2fdMh06DXpGnw4VyJs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LQ6QB3jJwSikD1Cd3dNXVSCWN+4aDy9B8DJ9g0/ETts=;
-        b=piFbnGSVMhwkJrJHc012Z9dtX246H/CWrZF6LB0qaVHs7R6bM5Z21z0j/l+u3vEbwo
-         eXw9WnlpnN/SuF4y2okK0UDgrgLeQZmvlyfWXqk5yWsFlTxi94i00hkCQhD8s/0xjMkP
-         lMVZQap0ZRR8+Ltbl2YreunR2vBOkqxpSKrpdOXlg2W7Q7VAPD4l+lekICzFmHJUdLZX
-         j5DzFqgWxN3/JCs9L146FATCR9QAhWBM5EH8bpJjKmfDRcmZ6PDGEc4MYOcquKQ9Rq3L
-         gStITxD8cjCK1wSlSOWnR/Y+PcMm33YQ0ty4WG67CzOF9BIRkmJpfdBlW170EoZPfBdZ
-         t6FA==
-X-Gm-Message-State: AIkVDXL42nlJKeVlMofPXM4ALpMGSr1WRyYcCIMsitI9g6uyMVOgj7dd1IIjUknHxhxKHYEXClL5fKn4/N89Xw==
-X-Received: by 10.55.132.67 with SMTP id g64mr33030894qkd.153.1483284290400;
- Sun, 01 Jan 2017 07:24:50 -0800 (PST)
+        id S932152AbdAAQ17 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 1 Jan 2017 11:27:59 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63378 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932066AbdAAQ16 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jan 2017 11:27:58 -0500
+Received: from [192.168.178.43] ([88.71.226.185]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ls8Qd-1cVrFf1DiR-013z1O; Sun, 01
+ Jan 2017 17:27:52 +0100
+Subject: Re: [PATCH v15 15/27] bisect--helper: `bisect_next` and
+ `bisect_auto_next` shell function in C
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+References: <01020157c38b19e0-81123fa5-5d9d-4f64-8f1b-ff336e83ebe4-000000@eu-west-1.amazonses.com>
+ <01020157c38b1af0-5d688c2e-868d-4d8c-a8fd-9a675f7f01da-000000@eu-west-1.amazonses.com>
+ <06402c8a-14a4-3d70-8d98-659cfe9f1aa2@gmx.net>
+ <CAFZEwPPtF5P5nGp+=btHtwNm1unTJ7qo1khJHCqLvNn1=RYAUQ@mail.gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Message-ID: <cdf41dcc-bdc5-a3a7-8d39-8b85e01cda85@gmx.net>
+Date:   Sun, 1 Jan 2017 17:27:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.0
 MIME-Version: 1.0
-Received: by 10.200.47.111 with HTTP; Sun, 1 Jan 2017 07:24:49 -0800 (PST)
-In-Reply-To: <285ed013-5c59-0b98-7dc0-8f729587a313@kdbg.org>
-References: <20161231114412.23439-1-pranit.bauva@gmail.com>
- <CAE5ih7-7e+ZLUbE7iquWV2=qP4ofzAHUC2ZPg3b-ivSpCo4eRw@mail.gmail.com> <285ed013-5c59-0b98-7dc0-8f729587a313@kdbg.org>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Sun, 1 Jan 2017 15:24:49 +0000
-Message-ID: <CAE5ih7-b7LpPYPkuDnJakb12LPZ5UE2TeV17aYXAsbP2aH5zEA@mail.gmail.com>
-Subject: Re: [PATCH] don't use test_must_fail with grep
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAFZEwPPtF5P5nGp+=btHtwNm1unTJ7qo1khJHCqLvNn1=RYAUQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:r4F8/62ssPeZu/ntnKCQaMEH6KA/90JoQ9BZevylfD57qWK796z
+ uXP4jGK/Esz7kWUP1HTD1RJu6IbOx1Jvugp671vXLUbVrfnUrce+tgzy3wJ7ezIE2CcZtdd
+ +OCdtRr77e4A/UoQnHja+sN9VXpnUEAvyupfl0argltIVk6zvlHENHF4FJZRVbqxqcxc9LL
+ Bo426yufZ2tEySkLhre3Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NQ8BL3rZiVY=:yBGdUyCC+aSdN+VvFgS/pB
+ yyE5Zzl0bJhp2CIGWhgiQEhNs0u6QClbq7+MGcIEizFNdPys5LFTSBcU3Ce0C2l25sFLazxZo
+ D4zZQowW7YCjm918eolY0HOQ89HUDFaHPfc/xmB3ImOzxdegMa9uZSbpi7rn6E+py4bpA2+Pz
+ PLQVjv8z+nhDdkvrYYILA+feJCCkyeWoBkgKnU3VVGlVhZ6UZPEseZ9wsF71+79l902QOKti7
+ eg9y9qfrRTzosVFWzu1BxFmBBI867QHRESVQaIhdf1VW2EXQAT+j7yFJzV+wCQl23SMf14qJj
+ usVnoZ7/9KXw6hj+bfMLqtFS/RKmlwcRvqnOctR305BN6nBhHpZLTAvpDx3Tv2M+gDW9i0sS+
+ hixTruAL+jv7U2tGW6aTLhApC5Az7qUicNEunwZKSRJnBpj+GQHkHGRocK7z0fArtFcAxaGsi
+ z2kIL+xr87X0QiFUkxQFYaVf3uuVzdnDhrZA/einfxoyIhSfCYa84aDU/5Mk4QN9sIaCnsRP9
+ p/mAOaVBKCE1ezT/JEGafJgQghE424W7g2eqSScnaOxlcQaY5+hV13PSjCkCMM4abl6wfBazD
+ yG2CF56wBSwTLF6p93+d+P7sutg5kUZWAH+i9R/8ktxBGqNI8HB70AGIyrrOkMK6nASYWjPB4
+ ZVb9Cikw5qkkPKdT4Imz7vmeKSzo0HtB+VD57Bl5y5aEvCpm0aRqEeUdOYC+EnXPDCWgnXP7d
+ yhf6ItX5MNSTd0DLyr38KDqirmksjId8MsI8BrQj/Cs1oDalKBHbE+B4w6iBc/d1FczIDkfHB
+ dDkQbfukc65qlWwlpv+Ie5zphXTavHizhTtZ3eHK0PcqGxTBCint8Z+p9UrJRgBqkeOoIXxfm
+ 3bdenp7h6ZKH16YnSJCrUViA8K/sT7il8LS7cvRpOBGr8W9fcLx2zzdmuIDy9toa5slxaKb0W
+ 4BSRq5nPhDG6kFhgVN8QmFCcyYS4tab62jsR48yfL0HvEWXffbWnbyCjOgOaPhI91kKNrXTDR
+ n0t3FPMIl0Lu15KB3v08Du8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1 January 2017 at 14:50, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 01.01.2017 um 15:23 schrieb Luke Diamand:
->>
->> On 31 December 2016 at 11:44, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>>
->>> diff --git a/t/t9813-git-p4-preserve-users.sh
->>> b/t/t9813-git-p4-preserve-users.sh
->>> index 0fe231280..2384535a7 100755
->>> --- a/t/t9813-git-p4-preserve-users.sh
->>> +++ b/t/t9813-git-p4-preserve-users.sh
->>> @@ -126,13 +126,13 @@ test_expect_success 'not preserving user with mixed
->>> authorship' '
->>>                 grep "git author charlie@example.com does not match" &&
->>>
->>>                 make_change_by_user usernamefile3 alice alice@example.com
->>> &&
->>> -               git p4 commit |\
->>> -               test_must_fail grep "git author.*does not match" &&
->>> +               ! git p4 commit |\
->>> +               grep "git author.*does not match" &&
->>
->>
->> Would it be clearer to use this?
->>
->>     git p4 commit |\
->>     grep -q -v "git author.*does not match" &&
->>
->> With your original change, I think that if "git p4 commit" fails, then
->> that expression will be treated as a pass.
->
->
-> No. The exit code of the upstream in a pipe is ignored. For this reason,
-> having a git invocation as the upstream of a pipe *anywhere* in the test
-> suite is frowned upon. Hence, a better rewrite would be
->
->         git p4 commit >actual &&
->         ! grep "git author.*does not match" actual &&
->
-> which makes me wonder: Is the message that we do expect not to occur
-> actually printed on stdout? It sounds much more like an error message, i.e.,
-> text that is printed on stderr. Wouldn't we need this?
->
->         git p4 commit >actual 2>&1 &&
->         ! grep "git author.*does not match" actual &&
+Hi Pranit,
 
-The message is actually part of a template presented to the user via
-their chosen editor. For this test, we set the editor to be "cat", so
-it comes out on stdout.
+On 12/31/2016 11:43 AM, Pranit Bauva wrote:
+>>> +
+>>> +static int bisect_auto_next(struct bisect_terms *terms, const char *prefix)
+>>> +{
+>>> +     if (!bisect_next_check(terms, NULL))
+>>> +             return bisect_next(terms, prefix);
+>>> +
+>>> +     return 0;
+>>> +}
+>>
+>> Hmm, the handling of the return values is a little confusing. However,
+>> if I understand the sh source correctly, it always returns success, no
+>> matter if bisect_next failed or not. I do not know if you had something
+>> special in mind here.
+> 
+> Umm. Shell code used to die() and thus exit with an error code.
 
-Your first suggestion would therefore be fine (and similarly for the
-other cases).
+The invoked bisect_next shell code called "exit", right... you had to
+replace this by passing return values. I get it. Thank you!
+
+>>>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>>> @@ -643,6 +794,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>>>                        N_("print out the bisect terms"), BISECT_TERMS),
+>>>               OPT_CMDMODE(0, "bisect-start", &cmdmode,
+>>>                        N_("start the bisect session"), BISECT_START),
+>>> +             OPT_CMDMODE(0, "bisect-next", &cmdmode,
+>>> +                      N_("find the next bisection commit"), BISECT_NEXT),
+>>> +             OPT_CMDMODE(0, "bisect-auto-next", &cmdmode,
+>>> +                      N_("verify the next bisection state then find the next bisection state"), BISECT_AUTO_NEXT),
+>>
+>> The next bisection *state* is found?
+> 
+> checkout is more appropriate. I don't remember why I used "find".
+
+"checkout the next bisection commit" maybe?
+
+Thanks,
+  Stephan
