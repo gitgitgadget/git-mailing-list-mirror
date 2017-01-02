@@ -2,103 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D215D205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 14:34:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACEEA205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 14:38:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933277AbdABOed (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 09:34:33 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:46197 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933062AbdABOec (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 2 Jan 2017 09:34:32 -0500
-X-AuditID: 1207440e-7c7ff700000009ec-45-586a64f2192f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 79.D4.02540.2F46A685; Mon,  2 Jan 2017 09:34:27 -0500 (EST)
-Received: from [192.168.69.190] (p5B10411C.dip0.t-ipconnect.de [91.16.65.28])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v02EYNB8028435
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 2 Jan 2017 09:34:25 -0500
-Subject: Re: [PATCH 09/17] builtin/merge: convert to struct object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <20170101191847.564741-1-sandals@crustytoothpaste.net>
- <20170101191847.564741-10-sandals@crustytoothpaste.net>
-Cc:     Jeff King <peff@peff.net>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <f6b59780-a76c-1e13-f983-c0cc767cc2b8@alum.mit.edu>
-Date:   Mon, 2 Jan 2017 15:34:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.5.1
+        id S933310AbdABOis (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 09:38:48 -0500
+Received: from mout.gmx.net ([212.227.15.15]:49398 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933062AbdABOir (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 09:38:47 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1d2uI20vVk-00epsE; Mon, 02
+ Jan 2017 15:38:34 +0100
+Date:   Mon, 2 Jan 2017 15:38:31 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Kevin Daudt <me@ikke.info>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 28/34] run_command_opt(): optionally hide stderr when
+ the command succeeds
+In-Reply-To: <f4a72743-3488-3466-5b9f-0dacec102a54@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1701021533220.3469@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de> <cover.1481642927.git.johannes.schindelin@gmx.de> <1e82aeabb906a35175362418b2b4957fae50c3b0.1481642927.git.johannes.schindelin@gmx.de> <2637bed1-c36f-32f6-b255-ea32da76d792@kdbg.org>
+ <20161214125322.o3naglvyuzgk2pri@sigill.intra.peff.net> <20161214130640.ginadvry7wor3tkc@sigill.intra.peff.net> <f4a72743-3488-3466-5b9f-0dacec102a54@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20170101191847.564741-10-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqPs5JSvCoPedmUXXlW4mix8tPcwW
-        bTN/MDkweyy/+ZfJ41nvHkaPz5vkApijuGxSUnMyy1KL9O0SuDIeHehnL7jEVfHl+VPmBsZj
-        HF2MHBwSAiYSyzvsuxi5OIQELjNKPJt2jx3COcMk8XvSHHaQImEBV4kdn+W7GDk5RAS8JOY/
-        msEKYgsJ1Eh82raAGcRmFpCVWL/iLyOIzSagK7Gop5kJxOYVsJeY9+kyWD2LgIrE/rM7WUBs
-        UYEQictzjrJB1AhKnJz5BCzOKeAicfBSNyPETD2JHdd/sULY8hLb385hnsDIPwtJyywkZbOQ
-        lC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGusl5tZopeaUrqJERKgfDsY29fLHGIU4GBU
-        4uF9EJMVIcSaWFZcmXuIUZKDSUmUN2FDRoQQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd738UDl
-        vCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3vZkoEbBotT01Iq0zJwS
-        hDQTByfIcB6g4UUgNbzFBYm5xZnpEPlTjIpS4ryTQBICIImM0jy4XlgCecUoDvSKMG8nSBUP
-        MPnAdb8CGswENPhrXDrI4JJEhJRUA+PaoloV59rPrGtOhCqyVE+J9zrLG+6y+kXBM9eVR3fw
-        sU5cWP5ZXI/HXPPVIX5rN4eZJ5a9OhjG6ZzNzbYs0aLIPGfBDEvOup1hGnsqdzzy/sq/PG1H
-        Apdz2eIIp1Wrhe+k7rF3/c0kwb98xbf7d3WLxI5PSn7w48nlp6Z+oa8ubax/cEVx+RwlluKM
-        REMt5qLiRABMfbfH+wIAAA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:1RTsMXRP5ceWzkPfbU7/aG2q4lGJlzqnQ4PMnqXadXw6tlXt0Ys
+ onBUdgxN27E4r5Yzj4e96ox/MRsLt1JMzERBerbQIT2I9hfNoga6O/JRx6d4yhNFGJs5DX4
+ YGLTuKcHFAGfVwbfzgd6CutgaDrj4kLBQYvkgVqcvMTldmo8UNvkOLe19CtVYAb2Bb6+cD3
+ X3rCVwMgJ2vniBmqEMiUQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+j+boBEnuU0=:dQx0iAzulAJXiH587OPOLU
+ /le8y8DpbzQ710yRSG9duEGMyW5kPIDux6xPD5Tea92JlAUny06VPZbFfqt3Mz+Dcj/aKbanc
+ 3KDh7Sxddm/PSzcqjoulL2kePC/cBd87t7uSMCkJXUYQsZj4itkXI0cirEalG0hylgXDWjcD0
+ 8zJeppNB9PvqFVycTvTbxiN7/AdVXFWK1O0qekGN4P7GnUzha2fmuI3Xs1CBIIPQe+Ts39F1e
+ xvIxg89/6GNEmy7VI78/Wgy/0vygkuKPTk86qL+C9o8TADW+D3ql7SPud5ZXCBjeiUkpSZK5K
+ etOrAeKLpLnQJk1xSMTthgcF0hZDqwWz3wuqxiRe9o0ou9TG+0jOyPTRsGOUYvgsOg4cZB1xn
+ h4GvXE7E/WxCdw1gTXMtOXij0kwUd8aT7wbse6tnjPdNLALtwzZOFKNcr9jHoJCqBY5qVVarD
+ ncfmpweVg4mlIYAVrftu80JS22Q949ybC+pZknioE9vSMdoNSEliI7c6YwRvqD2lS00sdSTAX
+ 1LU7hB/sCaCmWBCggpS46UO6uUUonhgtqNwm4dYUOTxhlEQ1p5mw0n23AYe+7q5bm3OAEibhl
+ BqI/qssSRxCut8eZd6NEo0eMXwQTXwDmgdxJAljA+s+1WYBJQhzlB2wF58c7smVcsk0F3z9ri
+ mSkgihdoBEZvWtkxTegah7nl05TTiS697cXX/4VoU6RGjHkdCxPBAewt1L4x0ha4wlq7jv4Fe
+ LUzg/pvlXB/yvds0CqZOH5O3C/K0o3qQ6/4a2E8sRrOQDTo0DXLzstjzXCUH2F4E26AnCqDd0
+ +ilHpU3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/01/2017 08:18 PM, brian m. carlson wrote:
-> Additionally convert several uses of the constant 40 into
-> GIT_SHA1_HEXSZ.
+Hi Hannes,
+
+On Wed, 14 Dec 2016, Johannes Sixt wrote:
+
+> Am 14.12.2016 um 14:06 schrieb Jeff King:
+> > On Wed, Dec 14, 2016 at 07:53:23AM -0500, Jeff King wrote:
+> >
+> > > I don't have a strong opinion on the patches under discussion, but
+> > > here are a few pointers on the run-command interface:
+> > > [...]
+> >
+> > And here is a patch representing my suggestions, on top of yours. Not
+> > tested beyond "make test".
 > 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/merge.c | 136 ++++++++++++++++++++++++++++----------------------------
->  1 file changed, 68 insertions(+), 68 deletions(-)
+> Thank you, that looks way better.
 > 
-> [...]
-> @@ -437,25 +437,25 @@ static void merge_name(const char *remote, struct strbuf *msg)
->  	strbuf_branchname(&bname, remote);
->  	remote = bname.buf;
->  
-> -	memset(branch_head, 0, sizeof(branch_head));
-> +	memset(&branch_head, 0, sizeof(branch_head));
+> If there is agreement that this approach is preferable, I think we can
+> have patches on top of the series; they would be orthogonal and do not
+> have to take hostage of it. (And it looks like I won't be able to follow
+> up until later this week[end].)
 
-I think this could be
+Seeing as the original intention was to do away with the
+RUN_HIDE_STDERR_ON_SUCCESS flag, and that the sequencer-i branch *must*
+include that functionality somehow, it is unfortunately not really
+possible to do this on top of the patch series.
 
-        oidclr(&branch_head);
+I say "unfortunately" because I feel pretty uncomfortable with replacing
+something that has been tried and tested by something that still awaits
+the test of time.
 
->  	remote_head = get_merge_parent(remote);
->  	if (!remote_head)
->  		die(_("'%s' does not point to a commit"), remote);
-> [...]
-> @@ -1113,9 +1113,9 @@ static struct commit_list *collect_parents(struct commit *head_commit,
->  
->  int cmd_merge(int argc, const char **argv, const char *prefix)
->  {
-> -	unsigned char result_tree[20];
-> -	unsigned char stash[20];
-> -	unsigned char head_sha1[20];
-> +	struct object_id result_tree;
-> +	struct object_id stash;
-> +	struct object_id head_oid;
+So the only possible course of action I see is to go the really long
+route: incorporate the patches to use pipe_command() instead of
+introducing a new RUN_* flag (which means basically munch up your patch
+and Peff's and move it somewhere into the middle of the sequencer-i patch
+series, which is exactly what I already did locally), cook the patches
+beyond recognition in `next`, i.e. cook it really long to give it a really
+good testing before moving the patches to `master`.
 
-These could comfortably be declared on a single line now.
-
->  	struct commit *head_commit;
->  	struct strbuf buf = STRBUF_INIT;
->  	const char *head_arg;
-> [...]
-
-Michael
-
+Ciao,
+Johannes
