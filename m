@@ -7,84 +7,128 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A85E7205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 15:27:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB61B205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 15:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755610AbdABP1o (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 10:27:44 -0500
-Received: from mout.gmx.net ([212.227.17.21]:64519 "EHLO mout.gmx.net"
+        id S1756293AbdABP1j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 10:27:39 -0500
+Received: from mout.gmx.net ([212.227.17.21]:55328 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756288AbdABP1k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 10:27:40 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lpfas-1d2LXt3rmw-00fOE5; Mon, 02
- Jan 2017 16:27:28 +0100
-Date:   Mon, 2 Jan 2017 16:27:25 +0100 (CET)
+        id S1756282AbdABP1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 10:27:38 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvPgd-1cWdFx2IZn-010gY5; Mon, 02
+ Jan 2017 16:27:22 +0100
+Date:   Mon, 2 Jan 2017 16:27:21 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         Stephan Beyer <s-beyer@gmx.net>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 14/38] sequencer (rebase -i): remove CHERRY_PICK_HEAD when
- no longer needed
+Subject: [PATCH v3 13/38] sequencer (rebase -i): allow continuing with staged
+ changes
 In-Reply-To: <cover.1483370556.git.johannes.schindelin@gmx.de>
-Message-ID: <0712fcd8a1489ec2cd67855d7940c1a167a04aa4.1483370556.git.johannes.schindelin@gmx.de>
+Message-ID: <7d3fe6850ffbf9252199c3d190e76efb18afeaca.1483370556.git.johannes.schindelin@gmx.de>
 References: <cover.1481642927.git.johannes.schindelin@gmx.de> <cover.1483370556.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:M5HtJhSrRvnmZNkwVhiVejCv/jOSb5t9OJpMOx82ikMUpFfdJsK
- JCmyO/USDxk4QJx3xhdDeGLRk60qOO69UxehVg3Q2JOlvJPjJwcLCuOvkyD40UfrsxEu7VZ
- Me/LrgUFpWacCIL4/oKMpgw/2iRNEH+QJ7ZwxZT7JpZZHrRgMWZGSBW6LGx4n4bqfwbWo/0
- WiJoLUdxAljk+vXI19o5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:f3Icnq+W8Qw=:am6WQkEBrIYkLPAGx6ZY/P
- KUYI462I0cZioswSIA1uaxmZskm5kN0mkyDssgb9YxGKBDnsmsz5ZIsDkCcBUjlycBDLfHtgk
- mGoCbl1z7dtNyi6RhbPINWB6+gsYdkruMPHLuzHnKdNBX7veI4hk5qsrzeF6dZxe3sUU2HL+h
- OfGiVf6kZKxjH/4qUNWSZfMWyH5/gJabalSnbiol43SmHIrHfTP2AbrE1CxDUjnaAqlhO0LKa
- /0C9+vbnZyTcqkBQ0Wk/DEUaaO0VDMulEf4nOtHACrDuIrKIp55uoGgfWzwbSgK2xY81wjBy2
- 9fCpcl6hhaXmHQqIScPdqPtkLjbUxwpvnTS+xlV1NBRPmaXHHtGN5lDRgTWV2NGppMF4ObvEA
- /Su8U7TPuSFnD6xf2bmsYArjvjj0mqeOV29F/M6M6W3EZeRm/sI5OyB09iIWCmGYByf416nvH
- rjDjxv29vBR3QPvfI0NHwyO9+VCCqcqBrDvuo6rzBxHxTX4Rhr8aWAh6Vc2fZuoYajkRHpI9h
- ktGHVen0m/VD94MBov2vPR2beiu9eNj865h4JzE6RpyRu6WFSwrF9x1piw8bgFB2WnGcV+Rws
- j03vsxEaxQIBG3WuU9wIhdpRcGRVh9Xy7sBOYzJiDYggvra3xElEXm7Y4F7aDiy9yZ7kMcFpa
- yK7Djpf9U/JiQFT9aLDLJ0K1M3Vd5Yn2gXczW8e/plFo1q2OZgAuFZ62T/+tw5pts0phzMWRT
- Ymu8nQ8IklT6b3RbgqvvBMuV5lWJt9sbiT4b03X84V6znKa8wPtNY/39m/BOogmq7XEbv46Cg
- W/eTFl1+KWb/0uFAG2mHLQMQA99P68j33wQj/w/gorrCFUED7Gp5tlq+f+HWsyXP4OCBAv/l+
- 2U3b1RcNLmmkUV2ttJtfikcq9SoQj23c9J5fy9HoAimS14Eq9NQZ1MtPl/S9bpdNi4YtNKeRf
- GddxmRtrC6/P6cs3CqANamdQyJhRSP3tW9QYspdUozx+mqnMidSZj7EzvI5lGeQYBKMVFxbCi
- 3okx81QXA1+XAufmIvrxrao=
+X-Provags-ID: V03:K0:KgIihQ4ZJOfivPx9seWBGwpHdhbA+R3sj2MrkJ6jVH2xkCV2+d+
+ yXUWEcUHNuwKVnZR8xcKdwu37c+QztSRTVsvqOA9Dx4VK0mtSnqs1M/rKNQISnI2OJ1I8Xs
+ xa9Z7SjEvRFSfIbDyIbSuG5+ll4i8cwDgYEaTXpxAwZ5XWq8nT2T0WFz9zdiJX0OWjihZzI
+ r9a5/O3YGh4iiyqvW4FIg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tfQlb4d6Q6Y=:ERacOSBeNfv4iN9SAWcJM8
+ a80OQkLQMJbt2weOKFqCPhGzPdJm7oLdAKokD4MDVdOu2hbF022qxrSkTSwfQFBqnAJ6ZgnPA
+ SSLqf+tyySgqSPfQdzd54srMIrj9qjuvResFT6eMZzD4/s19YLVc6OVO2n+YwQ/LOoicjwf79
+ TzduoPHICXrIZuMC/jnw+UdRxnMWbIeaEF6qI5cnhDBgM6rrUnzaXftYbMFHHkcZ8N/n/KYDF
+ U0Xeb+/ZP9w1RRtx4YF+QE8GgnYSmdGOoOfE+I7/kjlm8ArhHwZ+j8fXivSNpi6KCzuD0+ZV7
+ JmGzm/6XpeB0pKjCWqC0Iv71mdHox/PrnVy/AMOgdyx63QffYgmHuF61xmxYlYLaX4ZMEN4/b
+ 9N/VwBdbeY5BXfJFUiSqcNotE5sfmf0f26t/Hxn/5+8IIhRPIZ7bR29fKjGuh05yP7ULRuNXP
+ xYULA050TNAIajKPhqp/UKaTne6SmrzvNS1QygImQA4BpZBUGIcsXP565bJTFKvEq8vQrNTki
+ jchVOyGDoPp+mp3vhvEaW8RbYXTiNAHYfMCbflL3pZhbREti9WW02JfGfi8rFniRMChhHRJIr
+ rLmKjL/jpXZsmT4ByZ9DU6H6XHBtBkchi+aNTIhctKHFj5gQn8CEAGPPLjlAdv4p2RywUpBs7
+ R8puPCKpEvqdOzhBbkcyf2BDfp514M6GDia7wDQLwmv4bPcDpK5ZIOtXkuTohQgXuIy4gJ4J9
+ tU6q3/52Ri8Pinn/o+qtV/f6nwS5R/BB2rDSXGlaGix1rGy7JQJb/ud3saRdDsVwX/zOip4Jf
+ RgO7mGDlTrFCdHgreR5F5rsBuS82GMAKc5nhE4zifAAzFcKUUQ+4dF3NIYU10I2A5zL+09d1l
+ CuNttX+Zz8+6KgSfObaglrTWTX2SzmJ36+IgbLPFT8niEXry2tqNwyK3tJNquK0YXdJcCrT1E
+ 9fp4xRSFa7aRelWEX+5Al3iz3C6HgJL6aV/On1qCisX0MjMin4I7zETCwQ/oHRKT4PkOkoD+o
+ /HftW5xoR/6r++6rMIDDQzcDacFGSx3pAlqm3jCswmJ3tVzFhlfOmWGZo+Z6B1ofYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The scripted version of the interactive rebase already does that.
+When an interactive rebase is interrupted, the user may stage changes
+before continuing, and we need to commit those changes in that case.
+
+Please note that the nested "if" added to the sequencer_continue() is
+not combined into a single "if" because it will be extended with an
+"else" clause in a later patch in this patch series.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sequencer.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 69301fecc6..52e17c8887 100644
+index 9913882603..69301fecc6 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1832,8 +1832,13 @@ static int commit_staged_changes(struct replay_opts *opts)
+@@ -1826,6 +1826,42 @@ static int continue_single_pick(void)
+ 	return run_command_v_opt(argv, RUN_GIT_CMD);
+ }
  
- 	if (has_unstaged_changes(1))
- 		return error(_("cannot rebase: You have unstaged changes."));
--	if (!has_uncommitted_changes(0))
-+	if (!has_uncommitted_changes(0)) {
-+		const char *cherry_pick_head = git_path("CHERRY_PICK_HEAD");
++static int commit_staged_changes(struct replay_opts *opts)
++{
++	int amend = 0;
 +
-+		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
-+			return error(_("could not remove CHERRY_PICK_HEAD"));
- 		return 0;
++	if (has_unstaged_changes(1))
++		return error(_("cannot rebase: You have unstaged changes."));
++	if (!has_uncommitted_changes(0))
++		return 0;
++
++	if (file_exists(rebase_path_amend())) {
++		struct strbuf rev = STRBUF_INIT;
++		unsigned char head[20], to_amend[20];
++
++		if (get_sha1("HEAD", head))
++			return error(_("cannot amend non-existing commit"));
++		if (!read_oneliner(&rev, rebase_path_amend(), 0))
++			return error(_("invalid file: '%s'"), rebase_path_amend());
++		if (get_sha1_hex(rev.buf, to_amend))
++			return error(_("invalid contents: '%s'"),
++				rebase_path_amend());
++		if (hashcmp(head, to_amend))
++			return error(_("\nYou have uncommitted changes in your "
++				       "working tree. Please, commit them\n"
++				       "first and then run 'git rebase "
++				       "--continue' again."));
++
++		strbuf_release(&rev);
++		amend = 1;
 +	}
++
++	if (run_git_commit(rebase_path_message(), opts, 1, 1, amend, 0))
++		return error(_("could not commit staged changes."));
++	unlink(rebase_path_amend());
++	return 0;
++}
++
+ int sequencer_continue(struct replay_opts *opts)
+ {
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+@@ -1834,6 +1870,10 @@ int sequencer_continue(struct replay_opts *opts)
+ 	if (read_and_refresh_cache(opts))
+ 		return -1;
  
- 	if (file_exists(rebase_path_amend())) {
- 		struct strbuf rev = STRBUF_INIT;
++	if (is_rebase_i(opts)) {
++		if (commit_staged_changes(opts))
++			return -1;
++	}
+ 	if (!file_exists(get_todo_path(opts)))
+ 		return continue_single_pick();
+ 	if (read_populate_opts(opts))
 -- 
 2.11.0.rc3.windows.1
 
