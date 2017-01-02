@@ -2,101 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63E2D205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 19:18:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76CB0205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 22:25:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756164AbdABTFY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 14:05:24 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:37895 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755844AbdABTFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 14:05:12 -0500
-Received: by mail-it0-f41.google.com with SMTP id x2so282219437itf.1
-        for <git@vger.kernel.org>; Mon, 02 Jan 2017 11:05:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/YR+aOl5vZEd/NF/++S2kKNTmQ0XEgodohdSG7lSBRw=;
-        b=U0ybI01VauIuiGqAsq1Msh3rw/WGQSDmw6hemZc5bjxVEbLvV2Qoy+TfuH0h7StOZK
-         klaHrtiIEK2LNdu9tM5A/gqVQAJQg2Z9GFPemu+98GjLZ4+Wb+jaKgFEku1FWl6Bj9LC
-         OwBJ1IiIhot96O75Zh8RIahXCdOsJhjtiH6hYLhqOETyr6VKsjmzFb9sFOv1n5UvPH7i
-         iljZSwVkmFen0KNeo2hQYVyQtOdVj/q2bFaSBpTpM6iLAPE150SRg3xbzKcXBlDE7N4U
-         CC0Zk4RVx1iyPw3X2yqL/2lcRjBCeGjX45gD9DDSMa/dcT4PUINmxWBepBfpQCIqWs1E
-         Urog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/YR+aOl5vZEd/NF/++S2kKNTmQ0XEgodohdSG7lSBRw=;
-        b=U4Z68wVAA/UDpag5dHrFMK/B7pfZ4pBAM5WJrzCnApg1hHwKZ7UvlxiqO4UGlal9L8
-         wh2ckx/4JmlINm3073XYPLt2iwwNwp9Y7ljEFGfqVEBUJUwvyZcjrc3E3ylFYypzs7bn
-         X+MpsQAtMFu8+U4x+ZOmHTxcOkL7j04/7bN6eltu4Ki5EgJe6BkVmkHaRc2F+mOaaeD7
-         /lR2ymyj5Ulti970qCyMf9ZUGx4KiMbRT6bgRh/Fz1NqYpFOFw0p9wSblOKbyx/jOruR
-         xmn48/oFt/TWxDxCYtW9WWPXR2sCvt1M9fCij2sGPij5ZGBzyr2iAEdwT02A40aD/LYM
-         FPpA==
-X-Gm-Message-State: AIkVDXJMshy7pz9+aBw8+gkRoYah1gvACj6fHiR2n8XEpNZHjvkH3qK2xo21pqqxhYuzgBxernCZXX/s52lSXQ==
-X-Received: by 10.36.213.4 with SMTP id a4mr52652499itg.0.1483383912099; Mon,
- 02 Jan 2017 11:05:12 -0800 (PST)
+        id S1756364AbdABWZi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 17:25:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34404 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934287AbdABWZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 17:25:12 -0500
+Received: (qmail 10212 invoked by uid 109); 2 Jan 2017 22:25:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 22:25:12 +0000
+Received: (qmail 20238 invoked by uid 111); 2 Jan 2017 22:26:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 17:26:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jan 2017 17:25:09 -0500
+Date:   Mon, 2 Jan 2017 17:25:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: [PATCH] archive-zip: load userdiff config
+Message-ID: <20170102222509.ho7motscnffrtnfh@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.107.181.197 with HTTP; Mon, 2 Jan 2017 11:05:11 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1701021712010.3469@virtualbox>
-References: <CAGf+dShpkPvsC8wQN6mWmYeMZ3=i-ZOzDNSM1aa0rinKW6+-+g@mail.gmail.com>
- <alpine.DEB.2.20.1701021712010.3469@virtualbox>
-From:   Paul Sbarra <sbarra.paul@gmail.com>
-Date:   Mon, 2 Jan 2017 13:05:11 -0600
-Message-ID: <CAGf+dSjM9nuroeSM9mkQmO3ho4XcZhLo1CR76q-jbeQ-WNGG+Q@mail.gmail.com>
-Subject: Re: builtin difftool parsing issue
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I would have expected `git difftool --submodule=diff ...` to work... What
-> are the problems?
+Since 4aff646d17 (archive-zip: mark text files in archives,
+2015-03-05), the zip archiver will look at the userdiff
+driver to decide whether a file is text or binary. This
+usually doesn't need to look any further than the attributes
+themselves (e.g., "-diff", etc). But if the user defines a
+custom driver like "diff=foo", we need to look at
+"diff.foo.binary" in the config. Prior to this patch, we
+didn't actually load it.
 
-The docs for difftool state...
-"git difftool is a frontend to git diff and accepts the same options
-and arguments."
-which could lead a user to expect passing --submodule=diff to have a
-similar behavior for difftool.  It would be especially useful when
-combined with --dir-diff.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I'd be surprised if anybody actually triggered this in practice. I don't
+think any of the custom-driver fields except "binary" matter, and using
+direct attributes is almost always easier than setting up a custom
+driver. Though you could also do trickery with:
 
-Unfortunately, due to the way the left/right directories are built up,
-difftool needs to handle this option itself.  Currently a file
-representing the submodule directory is created that contains the
-hash.
+  git -c diff.default.binary=true archive ...
 
-if (S_ISGITLINK(lmode) || S_ISGITLINK(rmode)) {
-   strbuf_reset(&buf);
-   strbuf_addf(&buf, "Subproject commit %s", oid_to_hex(&loid));
-   add_left_or_right(&submodules, src_path, buf.buf, 0);
-   strbuf_reset(&buf);
-   strbuf_addf(&buf, "Subproject commit %s", oid_to_hex(&roid));
-   if (!oidcmp(&loid, &roid))
-      strbuf_addstr(&buf, "-dirty");
-   add_left_or_right(&submodules, dst_path, buf.buf, 1);
-   continue;
-}
+if you wanted to be really clever.
 
-To achieve the desired behavior a diff command would need to be run
-within the submodule.  A further complication is whether submodules
-should be processed recursively.  I'm not sure whether or not diff
-handles them recursively.  I believe the logic to parse and build up
-the files would need to be factored out such that it could be called
-for the super-project as well as each submodule change.
+I ran across this while investigating a case where somebody's zipfile
+was all marked as binary (it turned out not to be related; the issue was
+just that their Git was pre-4aff646d17).
 
-This is all out of scope for your effort as the existing (perl-based)
-difftool doesn't do this either.  However, it's a feature that would
-provide a significant simplification to the workflow used at the
-office to review changes.
+I also happened to notice that zipfiles are created using the local
+timezone (because they have no notion of the timezone, so we have to
+pick _something_). That's probably the least-terrible option, but it was
+certainly surprising to me when I tried to bit-for-bit reproduce a
+zipfile from GitHub on my local machine.
+
+ archive-zip.c          |  7 +++++++
+ t/t5003-archive-zip.sh | 22 ++++++++++++++++++----
+ 2 files changed, 25 insertions(+), 4 deletions(-)
+
+diff --git a/archive-zip.c b/archive-zip.c
+index 9db47357b0..b429a8d974 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -554,11 +554,18 @@ static void dos_time(time_t *time, int *dos_date, int *dos_time)
+ 	*dos_time = t->tm_sec / 2 + t->tm_min * 32 + t->tm_hour * 2048;
+ }
+ 
++static int archive_zip_config(const char *var, const char *value, void *data)
++{
++	return userdiff_config(var, value);
++}
++
+ static int write_zip_archive(const struct archiver *ar,
+ 			     struct archiver_args *args)
+ {
+ 	int err;
+ 
++	git_config(archive_zip_config, NULL);
++
+ 	dos_time(&args->time, &zip_date, &zip_time);
+ 
+ 	zip_dir = xmalloc(ZIP_DIRECTORY_MIN_SIZE);
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 14744b2a4b..55c7870997 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -64,6 +64,12 @@ check_zip() {
+ 		test_cmp_bin $original/nodiff.crlf $extracted/nodiff.crlf &&
+ 		test_cmp_bin $original/nodiff.lf   $extracted/nodiff.lf
+ 	"
++
++	test_expect_success UNZIP " validate that custom diff is unchanged " "
++		test_cmp_bin $original/custom.cr   $extracted/custom.cr &&
++		test_cmp_bin $original/custom.crlf $extracted/custom.crlf &&
++		test_cmp_bin $original/custom.lf   $extracted/custom.lf
++	"
+ }
+ 
+ test_expect_success \
+@@ -78,6 +84,9 @@ test_expect_success \
+      printf "text\r"	>a/nodiff.cr &&
+      printf "text\r\n"	>a/nodiff.crlf &&
+      printf "text\n"	>a/nodiff.lf &&
++     printf "text\r"	>a/custom.cr &&
++     printf "text\r\n"	>a/custom.crlf &&
++     printf "text\n"	>a/custom.lf &&
+      printf "\0\r"	>a/binary.cr &&
+      printf "\0\r\n"	>a/binary.crlf &&
+      printf "\0\n"	>a/binary.lf &&
+@@ -112,15 +121,20 @@ test_expect_success 'add files to repository' '
+ test_expect_success 'setup export-subst and diff attributes' '
+ 	echo "a/nodiff.* -diff" >>.git/info/attributes &&
+ 	echo "a/diff.* diff" >>.git/info/attributes &&
++	echo "a/custom.* diff=custom" >>.git/info/attributes &&
++	git config diff.custom.binary true &&
+ 	echo "substfile?" export-subst >>.git/info/attributes &&
+ 	git log --max-count=1 "--pretty=format:A${SUBSTFORMAT}O" HEAD \
+ 		>a/substfile1
+ '
+ 
+-test_expect_success \
+-    'create bare clone' \
+-    'git clone --bare . bare.git &&
+-     cp .git/info/attributes bare.git/info/attributes'
++test_expect_success 'create bare clone' '
++	git clone --bare . bare.git &&
++	cp .git/info/attributes bare.git/info/attributes &&
++	# Recreate our changes to .git/config rather than just copying it, as
++	# we do not want to clobber core.bare or other settings.
++	git -C bare.git config diff.custom.binary true
++'
+ 
+ test_expect_success \
+     'remove ignored file' \
+-- 
+2.11.0.519.g31435224cf
