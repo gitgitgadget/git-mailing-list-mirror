@@ -6,66 +6,68 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 246BB1FCA5
-	for <e@80x24.org>; Mon,  2 Jan 2017 04:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46AC31FEB3
+	for <e@80x24.org>; Mon,  2 Jan 2017 06:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932523AbdABETv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 1 Jan 2017 23:19:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33932 "EHLO cloud.peff.net"
+        id S1754718AbdABGmS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 01:42:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33949 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932389AbdABETu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jan 2017 23:19:50 -0500
-Received: (qmail 7816 invoked by uid 109); 2 Jan 2017 04:19:50 -0000
+        id S1751350AbdABGmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 01:42:17 -0500
+Received: (qmail 16161 invoked by uid 109); 2 Jan 2017 06:42:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 04:19:50 +0000
-Received: (qmail 11688 invoked by uid 111); 2 Jan 2017 04:20:38 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 06:42:16 +0000
+Received: (qmail 12190 invoked by uid 111); 2 Jan 2017 06:43:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 01 Jan 2017 23:20:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 01 Jan 2017 23:19:47 -0500
-Date:   Sun, 1 Jan 2017 23:19:47 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 01:43:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jan 2017 01:42:14 -0500
+Date:   Mon, 2 Jan 2017 01:42:14 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Git mailing list <git@vger.kernel.org>,
-        David Turner <novalis@novalis.org>
-Subject: Re: [PATCH v3 00/23] Delete directories left empty after ref deletion
-Message-ID: <20170102041947.5jzx6og5fcpv7oso@sigill.intra.peff.net>
-References: <cover.1483153436.git.mhagger@alum.mit.edu>
- <20161231064746.6bvis76p5x5ubc2b@sigill.intra.peff.net>
- <xmqqr34n4ii8.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xqqVFvDKSCTrGVVdpZB_VHwGdZ3gFQzo+RQqCu0FpOsAQ@mail.gmail.com>
- <994A5650F89F4B0080530BF7FD1879FD@PhilipOakley>
- <CA+P7+xqxSpV4yOjE+Lv0kw19Kq6UAbcN_-7O3U_EeBoT7AOtfw@mail.gmail.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: Rebasing multiple branches at once
+Message-ID: <20170102064214.5fvjyv54c7wbrk2i@sigill.intra.peff.net>
+References: <20161231081433.3zo6lrsjsu2qho4u@glandium.org>
+ <xmqqmvfb4i5a.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+P7+xqxSpV4yOjE+Lv0kw19Kq6UAbcN_-7O3U_EeBoT7AOtfw@mail.gmail.com>
+In-Reply-To: <xmqqmvfb4i5a.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 01, 2017 at 12:36:11PM -0800, Jacob Keller wrote:
+On Sat, Dec 31, 2016 at 06:40:33PM -0800, Junio C Hamano wrote:
 
-> But how likely is it to end up with differing binaries running on the
-> exact same repository concurrently? Basically, I am trying to see
-> whether or not we could accidentally end up causing problems by trying
-> to race with other git processes that haven't yet been made safe
-> against race? Is the worst case only that some git operation would
-> fail and you would have to retry?
+> What people seem to do is to teach the branch that ends with F that
+> its upstream is the local branch that ends with E, so that they can
+> be lazy when rebasing a branch that knows its upstream.  I suspect
+> that you would end up with
+> 
+> A---G---B'--C'--D'--E'--F'
+> 
+> instead if it is done naively, but if you really care that the
+> branch that ends with F does not have E, you presumably want to have
+> the branch that ends at D its own identity, so
+> 
+>  (1) 'master' or whatever that used to end at A and now its tip is
+>      at G;
+> 
+>  (2) the branch that ends at D whose upstream is 'master';
+> 
+>  (3) the branch that ends at E whose upstream is (2); and
+> 
+>  (4) the branch that ends at F whose upstream is (2).
+> 
+> I personally do not do that, though, because you'd need to remember
+> the order in which these three branches must be rebased (i.e. (2)
+> must be done first before rebasing (3) and (4) in any order).
 
-Yes, I think that is the worst case.
+I do occasionally have dependent topics, and use a topological sort to
+order my rebases, which solves the problem. The code I use is in:
 
-A more likely scenario might be something like a server accepting pushes
-or other ref updates from both JGit and regular git (or maybe libgit2
-and regular git).
-
-IMHO it's not really worth worrying about too much. Certain esoteric
-setups might have a slightly higher chance of a pretty obscure race
-condition happening on a very busy repository. I hate to say "eh, ship
-it, we'll see if anybody complains". But I'd be surprised to get a
-single report about this.
+  https://github.com/peff/git/blob/meta/rebase
 
 -Peff
