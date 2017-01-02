@@ -2,146 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D760205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 16:04:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E6A6205F4
+	for <e@80x24.org>; Mon,  2 Jan 2017 16:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756262AbdABQEP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 11:04:15 -0500
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:36168 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756234AbdABQEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 11:04:14 -0500
-Received: by mail-lf0-f65.google.com with SMTP id t196so23740636lff.3
-        for <git@vger.kernel.org>; Mon, 02 Jan 2017 08:04:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IEHzBFsq+pg7jRDDfe8uaF5ln7KzeDqSAIArlaGLxCA=;
-        b=qkoxIj70YaftpfqdNZSypf+Q8Ibasv6ajamWa0A9PdgayBcdFmLz6CoDeLmNsjNFuy
-         OWKIPatyM4AADm/zJve9rHqlNXroc0S81nKVYUzsiHBiWUlOLSkLXMKF0ZRLj+gSKXXg
-         R53u3B8BA5UoJ8OXq8GnKHIaGeOybmP/lwzcO4jXEu66Iqa6PN8gv252OmN0+Ykranpn
-         nZ4Fgf+G0E2zrExeOVatYF8jLOHnHANkUVtrAkLYgL0N5/5w0DTYUtP+w5R3C90qrzzN
-         G8yglX85UJjofykhalk96RKc6z51pL7vCY8eBPCmi5vBk2/UPxO96lMUfI8yhGC2J033
-         2mag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IEHzBFsq+pg7jRDDfe8uaF5ln7KzeDqSAIArlaGLxCA=;
-        b=XbI2KbUggwD/LC32k+ixZt5KCDXRfwH3DoK0i1XOwMIsM4/FEv0+0jZi5Lpp0rFWjd
-         inb44uCyxP+f19ilmye8yRrkaAws4iPJ5Tu9xaKHu4Mr4ofHaZ1lsMtMHV4jnsHZtlNK
-         nukRWYekcGsO0yWXu+XmHV6IuDOdNOGwWIYNcGECwvsnu4LS45hUhgELOJi1vRJIBL+m
-         W+mzFTZpC+v0LwbwpgnsIxZCeG6J3t7xMdkM7bf9Hw/rJbJWvvTrqmXEHkhv3cx8AiZM
-         AXfjf07U2dnTmap1thRCq9xw3VIYQ2dOTbFo4crMs5IXaOhO/EHzQe/x8zpzqFzqiZrS
-         myxQ==
-X-Gm-Message-State: AIkVDXK2DnrnKbi/G/SCoqoCH8+X4CiEJUJ7bZ0sk3ixAW0gPAOC2ZkyzuH767f87mBbTgED+/qgpMdSLq4Qmg==
-X-Received: by 10.25.209.73 with SMTP id i70mr16354398lfg.24.1483373052417;
- Mon, 02 Jan 2017 08:04:12 -0800 (PST)
+        id S932761AbdABQNU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 11:13:20 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58373 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755748AbdABQNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 11:13:19 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8Nik-1cjaQM3wbC-00vxUI; Mon, 02
+ Jan 2017 17:13:13 +0100
+Date:   Mon, 2 Jan 2017 17:12:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Paul Sbarra <sbarra.paul@gmail.com>
+cc:     davvid@gmail.com, dennis@kaarsemaker.net, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: builtin difftool parsing issue
+In-Reply-To: <CAGf+dShpkPvsC8wQN6mWmYeMZ3=i-ZOzDNSM1aa0rinKW6+-+g@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1701021712010.3469@virtualbox>
+References: <CAGf+dShpkPvsC8wQN6mWmYeMZ3=i-ZOzDNSM1aa0rinKW6+-+g@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.25.135.198 with HTTP; Mon, 2 Jan 2017 08:04:11 -0800 (PST)
-In-Reply-To: <xmqq8tr19ocs.fsf@gitster.mtv.corp.google.com>
-References: <20161226102222.17150-1-chriscool@tuxfamily.org>
- <20161226102222.17150-22-chriscool@tuxfamily.org> <xmqq8tr19ocs.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 2 Jan 2017 17:04:11 +0100
-Message-ID: <CAP8UFD2qK5uv5mrCOe1h48H8sUezC_Jk3-fftBxdOhBssmxTgA@mail.gmail.com>
-Subject: Re: [PATCH v3 21/21] Documentation/git-update-index: explain splitIndex.*
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:w0uQTaX8sMXSEn2BZe9KqLA6dlFsRsbPSBOIOLU8TdFWFjUYRGk
+ 4Clinrx9V3kD+pTKYsLnbVfKhGnCKns54Qst77DBVT5mICUJFJZLIK4I993MNCmykmTOWOB
+ ueaxgqG4qj5dJq+029Dqblyn/BQXEMyGm+EurpYHgGPk4kroqPQVsz/7Grcv8h1Pi54PGIV
+ EZjM5z6dl/6lDjmbg9zMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YXalrxh0WLU=:NuIrV70CC4xPf+nCFM9yWM
+ /AWasAfoS79L4oWKEJPHRnB1zeNfZdgjA30nm7qEtQ7MJVCDPKH3KMcNXefJG205N22XulClZ
+ lQPW4WxQpQ3X9fPA+mNevswf+ogGBk8Ob40FcBqU3QhjTa/B0MRDbJqwEtJRqzmG8I2Ir6xes
+ 2g5KL5NSaTYnLu1XEnDrbqpuWkoxpFXTH1sumtYezNPj08DYXohOtA/x6yQOuJ9/1RFglbb7s
+ eeIU7taNIcplgG7KADJX2kKB6D/rwhOY71ik51rPIb8EiqLh6oBe8QjqNZ5pHgUwh7kk8zAx8
+ iQ7jXfeWSj9xOz2BUvqTbETcJ4aXpPhTO2yUyCQnMyTqbnGp84f36cu22LjlX2YptZkPaR1Z5
+ +qS/JvI9s0ZAmTfdiVJPGeEzQfkdZRpLTbrSlaWQLvyeGc6+G+kTz2sWdtVymAglrjw4ZUb0M
+ v/S39mok6XCYDvjXlfqKqiaZK23x2+lmNZH32KDUWw4JZPaVtoHHuPwWZNsXnX+J/9pGBqLa9
+ YkEWTJ8pLfKkaUWLBoJ6yIrFqaNwbxoiV66jFt1hAWvjCzdqyyJKaQQDFPgumnvxO9Grqpal4
+ cvhpm/YruVqFYnogYn/uBTRTPAH7DTOgG+bPXCFMZcU3RGo9kysngllQXcNkoN/aOgdWDOjy9
+ SNJNU6TYgO50F2d9ZGRib9ZrKO6m0qR6nJKLly/dUKo1FjnD4JjP2Z4oiPeRN44qLBInsjoiZ
+ y4UBdatmxKkHLgx1VXvxCw/wwTm664CmUcjeKrHoKguJ8hntsS3afXd7Dp2ldd3pyOLx/dcQN
+ Sz/P9PW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 27, 2016 at 8:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->>  --split-index::
->>  --no-split-index::
->> -     Enable or disable split index mode. If enabled, the index is
->> -     split into two files, $GIT_DIR/index and $GIT_DIR/sharedindex.<SHA-1>.
->> -     Changes are accumulated in $GIT_DIR/index while the shared
->> -     index file contains all index entries stays unchanged. If
->> -     split-index mode is already enabled and `--split-index` is
->> -     given again, all changes in $GIT_DIR/index are pushed back to
->> -     the shared index file. This mode is designed for very large
->> -     indexes that take a significant amount of time to read or write.
->> +     Enable or disable split index mode. If split-index mode is
->> +     already enabled and `--split-index` is given again, all
->> +     changes in $GIT_DIR/index are pushed back to the shared index
->> +     file.
->
-> In the world after this series that introduced the percentage-based
-> auto consolidation, it smells strange, or even illogical, that index
-> is un-split after doing this:
->
->     $ git update-index --split-index
->     $ git update-index --split-index
->
-> Before this series, it may have been a quick and dirty way to force
-> consolidating the split index without totally disabling the feature,
-> i.e. it would have looked more like
->
->     $ git update-index --split-index
->     ... work work work to accumulate more modifications
->     ... consolidate into one --- there was no other way than
->     ... disabling it temporarily
->     $ git update-index --no-split-index
->     ... but the user likes the feature so re-enable it.
->     $ git update-index --split-index
->
-> which I guess is where this strange behaviour comes from.
->
-> It may be something we need to fix to unconfuse the end-users after
-> this series lands.  Even though "first disable and then re-enable"
-> takes two commands (as opposed to one), it is far more logical.  And
-> the percentage-based auto consolidation feature is meant to reduce
-> the need for manual consolidation, so it probably makes sense to
-> remove this illogical feature.
+Hi Paul,
 
-Yeah, I tend to agree that this feature could be removed later. Though
-before removing it, I'd like to hear Duy's opinion on this as he
-created the feature in the first place.
+On Wed, 21 Dec 2016, Paul Sbarra wrote:
 
->> @@ -394,6 +390,31 @@ Although this bit looks similar to assume-unchanged bit, its goal is
->>  different from assume-unchanged bit's. Skip-worktree also takes
->>  precedence over assume-unchanged bit when both are set.
->>
->> +Split index
->> +-----------
->> +
->> +This mode is designed for very large indexes that take a significant
->> +amount of time to read or write.
->
-> This is not a new problem, but it probably is incorrect to say "to
-> read or write".  It saves time by not rewriting the whole thing but
-> instead write out only the updated bits.  You'd still read the whole
-> thing while populating the in-core index from the disk, and if
-> anything, you'd probably spend _more_ cycles because you'd essentially
-> be reading the base and then reading the delta to apply on top.
+> Sadly, I haven't been able to figure out how to get the mbox file from
+> this tread into gmail, but wanted to report a parsing issue I've found
+> with the builtin difftool.
+> 
+> Original Patch:
+> https://public-inbox.org/git/ac91e4818cfb5c5af6b5874662dbeb61cde1f69d.1480019834.git.johannes.schindelin@gmx.de/#t
+> 
+> > + *status = *++p;
+> > + if (!status || p[1])
+> > + return error("unexpected trailer: '%s'", p);
+> > + return 0;
+> 
+> The p[1] null check assumes the status is only one character long, but
+> git-diff's raw output format shows that a numeric value can follow in
+> the copy-edit and rename-edit cases.
 
-Ok, then what about:
+Thank you for the report! I fixed it locally.
 
-+This mode is designed for repositories with very large indexes, and aims
-+at reducing the time it takes to repeatedly write these indexes.
+> I'm looking forward to seeing the builtin difftool land.  I came across it
+> while investigating adding --submodule=diff (expanding on diff's
+> recent addition) support and this looks more promising then the perl
+> script.  Hopefully I will make some progress.  Any tips/pointers would
+> be greatly appreciated.
 
->> +To avoid deleting a shared index file that is still used, its mtime is
->> +updated to the current time everytime a new split index based on the
->> +shared index file is either created or read from.
->
-> The same comment on the mention of "mtime" in another patch applies
-> here as well.
+I would have expected `git difftool --submodule=diff ...` to work... What
+are the problems?
 
-Ok, I will use "modification time" instead of "mtime".
-
-Thanks.
+Ciao,
+Johannes
