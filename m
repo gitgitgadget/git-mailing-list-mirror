@@ -7,85 +7,83 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C830205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79622205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933075AbdABPfw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 10:35:52 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49531 "EHLO mout.gmx.net"
+        id S933117AbdABPfy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 10:35:54 -0500
+Received: from mout.gmx.net ([212.227.17.22]:62165 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932874AbdABPfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 10:35:51 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7Hao-1ckg0Y0Lpe-00x3Z3; Mon, 02
- Jan 2017 16:35:40 +0100
-Date:   Mon, 2 Jan 2017 16:35:39 +0100 (CET)
+        id S933079AbdABPfw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 10:35:52 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MATlG-1cCUrt20kM-00Bbrd; Mon, 02
+ Jan 2017 16:35:43 +0100
+Date:   Mon, 2 Jan 2017 16:35:42 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         Stephan Beyer <s-beyer@gmx.net>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 34/38] sequencer (rebase -i): show only failed cherry-picks'
- output
+Subject: [PATCH v3 35/38] sequencer (rebase -i): suggest --edit-todo upon
+ unknown command
 In-Reply-To: <cover.1483370556.git.johannes.schindelin@gmx.de>
-Message-ID: <4209508dfa80b1097a1b25b07f1a723c27d7c07d.1483370556.git.johannes.schindelin@gmx.de>
+Message-ID: <42517ba8f64410dd81fac7b7b31f855c1a3e9c7a.1483370556.git.johannes.schindelin@gmx.de>
 References: <cover.1481642927.git.johannes.schindelin@gmx.de> <cover.1483370556.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Auk51YWiUjIYGnJbPSwKonulSVmoYBf1ShTLkiQXhi1RTl1dBzW
- MXx+G8hwngGk3j6vbVuwKiAJuqfLcbOJr5ElCMQR4CYF9LXJUAJpvKQtHxHIwm+wAMLqH8x
- npWFTECYJ22uNL/6mB3tX5Fa2+61szKt7PQBEa4wCbDJ2b0W2xIMVHnzBA23ZlWLOVJSj6h
- m4PMnc9A9BA2yV6RFU3FQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5PJV3LS5C1s=:6nljlsMsorjSHz41fUBZxy
- de0+Kc2H31EBnx/DYve8LViOORO6wzcZ6fjdQuPC9kfLnKiT6JaLe20zTjWwqCjXqq4AdB6r0
- Wo2/SDz9P6xlioOHHe4/f+4CCtaBphLz5Nv1ReythXYaJmeVElus5NFj+rglBtErDP19XcHaO
- 4amBIp2YMSHYicljag7XVQHaDEY7E00WeP8UfPbn3K7KWHBSfA69KtiWqihA5Xr7L0aKUTCzU
- JioLCUn0N+w1TP940lsz4KH5pghN/51TNx7f2AfaNM0HIlK6FtDzA6L1voqTC9VHHg3h21rpB
- zbsRCLhBy7scXeO+9byGv/WJWqAHv1mqNGHtx5jCY+4vKrmuGcJ1aDfw1FDmM2wCp0VO2dbEm
- Y1PYJNmS1RcX0lxeqhToCPCVA+W2p0R/MXmxXBwNUjyxnKub0t7a6+7p+4R8BfTGPOeKiw1PP
- WLd95NzOAsK8n615lS6vGE4pThe54RiDzSAduVI/8ON/lSG5fFTTHgrS62uSDupCZeGCnXWX6
- kN49eKtS4Tk2I6Ed3IZOE+0/UJ2uhZ8DeuuqBkAurgQikXtavlq3hkZhPjSs7kEOa/NOpoZnZ
- Iwx8oMmulN0edurkMn6hHUeaKHnAWN8I5T+w+KqFXu8UcyPrU9aWgBqbcDCa/PTjsFso0LOB0
- 5BGKwy/8rfl2z9kvN3+nur57WBsBTxP659SFF89NqnLOQ0/NrwhKN7eJ2d4NJSk1vV51/zlUy
- 1p5736y1eP0I9IGXWurqC5wamj0EH3zFYt1cZlb9eYyxGFKVMhBufGviw8/f6XwVpO3EYvDNK
- jx6y6Xm
+X-Provags-ID: V03:K0:s6bs+ve0M4roCQFcyPxC0IL/nT9ZDpIKTsm3dNURTeFs8oG5nsJ
+ HFqBjXx6uA8fyrcEBBMVk/wsDV/daEmHrJ8Uff6EkT3Llqj06mF6RtjePK6jJFwcyjjVggX
+ 41q4hiNEYbmXrNPOWVyVYgftrWA2d6XF4Kh9ZL5aEqpFZJW8qDLYXttfcNB6kv1W4KmeAIk
+ JZCaqVjt5rkVzLeg/y97A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:U2vXKWRzOCc=:gtawDPxLbRmssTpUz1Ddqn
+ PCmKWTByMslqocAfrb/Su0f+0FeCvWdtDILy0TBYzYtyUVOK+tyqbkISuKGeG2+A3iEslfgtM
+ EJYjgCTBEPBXKNGcKqpK6bdREOLlgZvr5vSW/pel47vLi8QYgNHbpO2qm8+bDj3LVEwNWx47b
+ qPyHEmwBqWMUsBHk4M8d49Ls9HAJlByvwi2V4H1DW4Dt2pcoz/TOTcOqPgckJ0w1PC2XCEC25
+ +YbojIRvL2t+uPO+6EPdFFgG3NB9NlUvjeF+4EocmYJxvxo0ni4Y9PiZ1KlUkFbKsuulq6hXP
+ GfhJpVQZKaEd2EGQ/yiUoZnXgtqa4fqigkmXe8CoM18R9xm1yHqVgZ8Pr/eY47IfEB7X9QdJo
+ uDSdc/EE7ICHH/Wvz3OpR2R0EkPdMtEDhbPhi5rV027PcXGcrkjO2gFtX75mFV1/m9QhnsYm1
+ gYDecEeNsVgi7Nf9xJGa3HcGNdVFvtWdJ9l01/DyDaH3drVP3rP20yJW5XRhC5j6H7O5+U6cL
+ Mih23x8snVEFbemmwhWXa8hMZpRybqR1/egGyGB+OWByDvSBCtOl+/wgWuqBgYfS5Hg0R6gmK
+ ejB5OwnaQ8lZsLyjjsI4VL4T+2jCQtDHHvvEMp2r/aS8vnWBkjzPQ0Ix+qFI0Lc3uqy0989F+
+ Z8udszqrXcwwX4z5YWejqpjz7hBKgCzVmqPYXHdJpgSqoj+JNgg+fbmir624nu1ToOzeEys74
+ 6lKEpNuLqshmx/88WuFVbYjFpDO4qZXV/3VVwg0mQLgrbUwVctOxahSyTVoQ43v2yzcZJ3VBk
+ pNX+NC2HFDyW+xOg/i+Sfb4Qd8Tlaym2c2GHEkuyN0vjUM+h1PR1MtFpBVokcafD9qetDmoWH
+ pA9KsnvrB8lwja88v0wLHSMdGp+DqczI3BYTbIwxwCbvPJ5RXyBepsnUMUPl5tFDD3SzQDyFw
+ KQ9dEuPz1cSguuUeEuVZ5Zt7ijbjvxHfvhMRRPYWBE8CdK1l7F9hSkFC6BJSL+hwYUI8D76Mp
+ oBlHbBkkCVeXp/C67Eu0of7fFiABEDf6MWQFyKr/lEtL3T755cisuAQmLavXUd82Aw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the behavior of the shell script version of the interactive
-rebase, by using the `output` function defined in `git-rebase.sh`.
+This is the same behavior as known from `git rebase -i`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sequencer.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index a501dfce38..4f37ba8d33 100644
+index 4f37ba8d33..4792a3de3b 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -433,6 +433,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	o.ancestor = base ? base_label : "(empty tree)";
- 	o.branch1 = "HEAD";
- 	o.branch2 = next ? next_label : "(empty tree)";
-+	if (is_rebase_i(opts))
-+		o.buffer_output = 2;
+@@ -1314,8 +1314,12 @@ static int read_populate_todo(struct todo_list *todo_list,
+ 	close(fd);
  
- 	head_tree = parse_tree_indirect(head);
- 	next_tree = next ? next->tree : empty_tree();
-@@ -444,6 +446,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	clean = merge_trees(&o,
- 			    head_tree,
- 			    next_tree, base_tree, &result);
-+	if (is_rebase_i(opts) && clean <= 0)
-+		fputs(o.obuf.buf, stdout);
- 	strbuf_release(&o.obuf);
- 	if (clean < 0)
- 		return clean;
+ 	res = parse_insn_buffer(todo_list->buf.buf, todo_list);
+-	if (res)
++	if (res) {
++		if (is_rebase_i(opts))
++			return error(_("please fix this using "
++				       "'git rebase --edit-todo'."));
+ 		return error(_("unusable instruction sheet: '%s'"), todo_file);
++	}
+ 
+ 	if (!todo_list->nr &&
+ 	    (!is_rebase_i(opts) || !file_exists(rebase_path_done())))
 -- 
 2.11.0.rc3.windows.1
 
