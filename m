@@ -7,96 +7,120 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4DA5205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 15:34:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4878205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755901AbdABPey (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 10:34:54 -0500
-Received: from mout.gmx.net ([212.227.17.20]:63471 "EHLO mout.gmx.net"
+        id S932869AbdABPfC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 10:35:02 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64999 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755749AbdABPex (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 10:34:53 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvDpe-1cWM9e2kHS-010PUo; Mon, 02
- Jan 2017 16:34:36 +0100
-Date:   Mon, 2 Jan 2017 16:34:34 +0100 (CET)
+        id S1755749AbdABPfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 10:35:02 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsCdj-1cVXk015zT-013zQ7; Mon, 02
+ Jan 2017 16:34:55 +0100
+Date:   Mon, 2 Jan 2017 16:34:39 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         Stephan Beyer <s-beyer@gmx.net>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 29/38] sequencer (rebase -i): implement the 'drop'
- command
+Subject: [PATCH v3 30/38] sequencer (rebase -i): differentiate between comments
+ and 'noop'
 In-Reply-To: <cover.1483370556.git.johannes.schindelin@gmx.de>
-Message-ID: <d9cf36422193fc9bd97fe7a0cccb7bf5eda93002.1483370556.git.johannes.schindelin@gmx.de>
+Message-ID: <fa764016c4fa4cbb78436eabe1e1bd0ee1766890.1483370556.git.johannes.schindelin@gmx.de>
 References: <cover.1481642927.git.johannes.schindelin@gmx.de> <cover.1483370556.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tOl0ytxso8kZxSUNcroylzVG3mc5I1SVqVpHKib4NOR0v99Lrrg
- 9Bp22slVjfI+Oj+zqiyhkxWBXTFmozQBS4N2wVNPxScPahrKBbEnyvQWikezcw5hayb3LJC
- C5jWcNvPDTitnaw9VnGQs7oRkNjsts8arjJ/kCrW2TyZ+iiYyAGcgzv4f9QCNp/wUHUWKZ8
- Nxie60+pTjSX/s1sP/jgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aNJuEZA9biQ=:xSeVKLRtpjM4xWTmGPtxPl
- ZjletDBpnzNyjKAyXj5rF5WiVa9VXCQqAkKNCha/rMaowu4LGCg5Bq1cSVXSZoIOs3A9ICLKu
- 1C3HYAFox1k680268BgdFrygzV9INurpBTBZ8QZBmfP6S4B/mWTN62JthEa1oI8THTtdZBa+c
- y2eu0rtYpV01qH7Du8gte0MreGczkgzKB2hsUjOVPOT2mJg4p6hmjHZBo3LWfsVkcB4BSeDM4
- mKo2/FquYCyjNaQL6DxeWoIkUB/vdzNCZFaMCC46TisIu4sX8mg4Mu26a8kBWxUuhbij2G2j0
- JxJMwyd6/vjZHdJ5lDJcQPd3X8oC9tTdRx3nFDLFb5B59vrJRBTMy56mXmbzVjoX8u/yHJ3l1
- wWbyzauFS0i0lVY3aTu8i9AQhwx0MguGZx9ggol2oFeLZf9GmUJbbUw3I3yHGNDmG8W5ta4WJ
- zTyhN/nJtGzpDdbjO2o7gmnLvmkskmq9livvpgQ1ACGXRtff5t4tFQpfHJcZgqODp0MnWFePH
- dRlLUj7LrxY1SdGYDS+BSysvM0FoGh4vtROzix6VH7UhQp60KqHTJqsOyefyXdrh9pJqT+tWa
- /CWtnhy2qHhDb3RkUWXST/CxU9GYnZ2a3hxfQAYeE06RlYwyhsazx+0Jwd8fmnIqqKw34xZES
- XUyh+0OBOGSIQHCeR16y6Ua0sZ3xZM5a9ITq22onv1nJptCADbJQyFCHin9NB+fr1BJZLYl2a
- w09RvAtBOVmpzz2NvsC1bPC9xIRS3xnxwPu5SnadyE/ZBF4gk8wdY0tCQtQT9iEkiB3CcrdN8
- ytgov1p
+X-Provags-ID: V03:K0:b2Yd32wlb225r5/H/YG296YXkLFdrf1XBvtSRSoQMpysDhuap3O
+ TdH8xcmwf2pEjku0PQMRb1QhvvospzprRdMFeGDVOFjV4+GlM/dNZIaqKF7+KD3WCkMpDMf
+ jWt4fJQ1M24xNMLJC6XBz/2MMI/Qz8pmX40pphyJCrF9zCfavXa4HJ7CId1smRJA3iIaX6C
+ mpNMmnLPiCnM9WcZbC87Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fnM7SrJ/D/0=:cZc8PamA1BD/0HE4HeJzAV
+ zqH7Seiw3GLFBqhmGKqsVUWJrZAhwb13SbvwQuON7tyM30pWSt7jZsqtmlIZQMN3tGBQn4Riy
+ EFglDudDtGaKYd9W1+AvhU4Pu7J8ujKGsPGzqNzdmWkN8YbLSha1vKTcjtC3eErpxw+1CFhII
+ O5UG296ASak6JwQhWPq/DKOgdbaYzMW9WOUwrSwt9cOIl+/Vw54Xy/NJDCO1/6SN//DcgkR0W
+ O8wNJTFVgnQgkuJVmu0psBGZH9MIQzAFwgqgT2WeRR3XKUa09Ddup0kppNVdkWL4lrYRvZFP0
+ vao+eHSnzfgumsLCKTSvzUQQSQcpjy/s5irs40E5bA/RzYx9iLr0qRS7SlqmH72iUhCNLdXs8
+ cpKYllpzU64g2WrEwgeEFuAPEyeQB/mTr2KsRQ6lLEn3R9ljbkLNGUrmNGQEydjXi0NzBH9fH
+ yybA8thcZZ81pFSrxnzEtdzq2TKmYQv0AODBBqiuY5YvZvSzMOTHZ8rNLTAHA7Q4ImwM5I+cG
+ dAY4T1D2OauhBGE2USL1BQuIKDPsu1xqQJODMFlzOygNtWIsBaabHq0dnEkf7EcZ/Mh6uzH8+
+ o8DUtxYgjOWCCYQgPR6iDZnyDKG73opK59iqfCCFyMKamD654lVB8xRub5EZmULVGkLQ/O3Cr
+ Qr2YbeKMM+DJ5tUeV1gCe44kDClyvVYPusoIMJK8rGN2BIGHY8caZAzriVsVqGnXtOuFkAqW4
+ x8H5pqzMWrHuAFHP4TQ5yOAIeNpmPstQj+EfJRR+ISx+Yu+eQjvYMjEpl8yGHuv7sq7jWGlfB
+ FjQ4ow6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The parsing part of a 'drop' command is almost identical to parsing a
-'pick', while the operation is the same as that of a 'noop'.
+In the upcoming patch, we will support rebase -i's progress
+reporting. The progress skips comments but counts 'noop's.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sequencer.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index dd5b843a84..6e92f186ae 100644
+index 6e92f186ae..41f80ea2c4 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -736,7 +736,8 @@ enum todo_command {
- 	/* commands that do something else than handling a single commit */
+@@ -737,7 +737,9 @@ enum todo_command {
  	TODO_EXEC,
  	/* commands that do nothing but are counted for reporting progress */
--	TODO_NOOP
-+	TODO_NOOP,
-+	TODO_DROP
+ 	TODO_NOOP,
+-	TODO_DROP
++	TODO_DROP,
++	/* comments (not counted for reporting progress) */
++	TODO_COMMENT
  };
  
  static struct {
-@@ -750,7 +751,8 @@ static struct {
- 	{ 'f', "fixup" },
+@@ -752,12 +754,13 @@ static struct {
  	{ 's', "squash" },
  	{ 'x', "exec" },
--	{ 0,   "noop" }
-+	{ 0,   "noop" },
-+	{ 'd', "drop" }
+ 	{ 0,   "noop" },
+-	{ 'd', "drop" }
++	{ 'd', "drop" },
++	{ 0,   NULL }
  };
  
  static const char *command_to_string(const enum todo_command command)
-@@ -762,7 +764,7 @@ static const char *command_to_string(const enum todo_command command)
- 
- static int is_noop(const enum todo_command command)
  {
--	return TODO_NOOP <= (size_t)command;
-+	return TODO_NOOP <= command;
+-	if ((size_t)command < ARRAY_SIZE(todo_command_info))
++	if (command < TODO_COMMENT)
+ 		return todo_command_info[command].str;
+ 	die("Unknown command: %d", command);
  }
+@@ -1198,14 +1201,14 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	bol += strspn(bol, " \t");
  
- static int is_fixup(enum todo_command command)
+ 	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
+-		item->command = TODO_NOOP;
++		item->command = TODO_COMMENT;
+ 		item->commit = NULL;
+ 		item->arg = bol;
+ 		item->arg_len = eol - bol;
+ 		return 0;
+ 	}
+ 
+-	for (i = 0; i < ARRAY_SIZE(todo_command_info); i++)
++	for (i = 0; i < TODO_COMMENT; i++)
+ 		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+ 			item->command = i;
+ 			break;
+@@ -1214,7 +1217,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 			item->command = i;
+ 			break;
+ 		}
+-	if (i >= ARRAY_SIZE(todo_command_info))
++	if (i >= TODO_COMMENT)
+ 		return -1;
+ 
+ 	if (item->command == TODO_NOOP) {
 -- 
 2.11.0.rc3.windows.1
 
