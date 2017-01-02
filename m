@@ -2,119 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06887205F4
-	for <e@80x24.org>; Mon,  2 Jan 2017 11:15:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42CCA205F4
+	for <e@80x24.org>; Mon,  2 Jan 2017 11:23:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932866AbdABLPH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 06:15:07 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:43016 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751307AbdABLPF (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 2 Jan 2017 06:15:05 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 103582095C;
-        Mon,  2 Jan 2017 06:15:05 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 02 Jan 2017 06:15:05 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-        date:from:in-reply-to:message-id:references:subject:to
-        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=D1V
-        JaJ21Fzv1ODUarIcOTy0l9DU=; b=kInqfBldLfcD2QFVWaZOTC0xb+t4cx0zvnV
-        vygyR/0HbyyamN8xXb7xoW9w1dkH82aEkSpsIt24SjdAkTy8Hxe7dYDHATU2ZhCM
-        VrMi7QBXAFgGy5JZzo6LBg38T09mxZ722XRZo/gxuffv9cOA2V+W91GD0JUYS5Rs
-        FTL4KB7w=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=date:from:in-reply-to:message-id
-        :references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-        :x-sasl-enc; s=smtpout; bh=D1VJaJ21Fzv1ODUarIcOTy0l9DU=; b=PQOXy
-        7+6LIELQ3jJF7rDKN9xeqGmdb19mrXanhxG1VNBw/yt3TBDYGBvXYtVNOUq0NWM/
-        NNr4N2zR+8qc9O1evDgu6Pz2J/qCrLpsgBvD2gxTLHOjqgqomYyuAFScu/CHlLZ4
-        pZwsVNGQ0ft4PARQhdaYNUPw+lAgjraSPEVy7g=
-X-ME-Sender: <xms:OTZqWGAI8TNRHGl8Modm7ZymojWh3Edt4N_N4aoQJCIa7C_a6WLo9g>
-X-Sasl-enc: NRNbjb0v5JEfMlEvKIzqBEuIym/HREDLyAzlh+gJn2sb 1483355704
-Received: from localhost (p5dc51a6b.dip0.t-ipconnect.de [93.197.26.107])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 8D4F27E8D9;
-        Mon,  2 Jan 2017 06:15:04 -0500 (EST)
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-To:     git@vger.kernel.org
-Subject: [RFC PATCH 3/5] error/warning framework framework: coccinelli rules
-Date:   Mon,  2 Jan 2017 12:14:52 +0100
-Message-Id: <da98fec6fa421be916f169ef62353339c4273e89.1483354746.git.git@drmicha.warpmail.net>
-X-Mailer: git-send-email 2.11.0.372.g2fcea0e476
-In-Reply-To: <cover.1483354746.git.git@drmicha.warpmail.net>
-References: <cover.1483354746.git.git@drmicha.warpmail.net>
+        id S1755563AbdABLX2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 06:23:28 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:33468 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751307AbdABLX0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 06:23:26 -0500
+Received: by mail-lf0-f66.google.com with SMTP id y21so39867758lfa.0
+        for <git@vger.kernel.org>; Mon, 02 Jan 2017 03:23:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=r2x4LeluC6Cxp3yIFLEF3gQFIIj/AMyLkpgSKOhT6pQ=;
+        b=jn6FJPnq5pbI/fX8KPMBeHV94NdfIX8ysB7v79jshf/bmanrBBmWprBMrcDuYgEjzE
+         snRc5bnU+VK+3kSdR9ZAXld3RUjrDhnVNzrS//0O5vrDEhtxuVr3zvyR9maHkUQQBzQp
+         ijHPbXnFTJaK9Vnkqb/rLBlw1kTUf9r5ebHsHpJqHPXLnjWxDMwe16CPa2lexplEImVF
+         cywKdHcFAmb+Xb9Q5KvlTuWANOTZSo8UQ82U7M4gnY2EyH3w3Sob2nkdh08f7wi74y7/
+         SY1Ld5p38ilp1UOfHYJCsWHNnjUVR2FRxyDI5gVqS8Y7BXmQnVHl5I4lpWcKigZnw765
+         fJEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=r2x4LeluC6Cxp3yIFLEF3gQFIIj/AMyLkpgSKOhT6pQ=;
+        b=ppB8Wh5E6fBfMxn+5SLbRLzqz/ld3tp2EBUUK2qd90gGV6FjkkBVM8Fgx0dM+1jCZD
+         mTSoRjhMzhMwm50/MHvAwCywBNuYotzDhKenJCcW25gAJncRKEJ7NV3FmleZJqR0VjQS
+         o5mVBTN/iCbBeQ0d/iz1XSl/sPdfoYzdZjtcWv+kF5RWv/3HN+yUCVDRyVv5h5Um8anE
+         49R87bjmOmaAi0dYUFzDz6ZBV8/2bZPZHt3ZLy0+dVOlG65iZZSvu5qiAIoP/ZfLXt46
+         pY9KfDTd7Q0Jk1TlhJZKsNzkEgQiyc69PSxLNmmgxPTThkPPzm2qw28Y2fD98iUKhzRG
+         bjPQ==
+X-Gm-Message-State: AIkVDXLH96/a1gJyOD0U8sWX+CRR8uSUJdTJ1Y57qbxheTsUmYUVUZpf9bY2r1V/DijlrHY56Rnoa891YFUH0w==
+X-Received: by 10.46.7.10 with SMTP id 10mr20684727ljh.60.1483356204955; Mon,
+ 02 Jan 2017 03:23:24 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.25.135.198 with HTTP; Mon, 2 Jan 2017 03:23:24 -0800 (PST)
+In-Reply-To: <xmqqk2al9ocv.fsf@gitster.mtv.corp.google.com>
+References: <20161226102222.17150-1-chriscool@tuxfamily.org>
+ <20161226102222.17150-11-chriscool@tuxfamily.org> <xmqqk2al9ocv.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 2 Jan 2017 12:23:24 +0100
+Message-ID: <CAP8UFD3_1EN=0EsD12Cew1MuW8yhtPAZw0M_g3wmvKFk-uGXxw@mail.gmail.com>
+Subject: Re: [PATCH v3 10/21] read-cache: regenerate shared index if necessary
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Provide coccinelli rules which check for error(), warning() etc. with
-localised argument and create a patch to replace them with error_(),
-warning_() etc. in order to fully localize them.
+On Tue, Dec 27, 2016 at 8:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> +     case 0:
+>> +             return 1; /* 0% means always write a new shared index */
+>> +     case 100:
+>> +             return 0; /* 100% means never write a new shared index */
+>> +     default:
+>> +             ; /* do nothing: just use the configured value */
+>> +     }
+>
+> Just like you did in 04/21, write "break" to avoid mistakes made in
+> the future, i.e.
+>
+>         default:
+>                 break; /* just use the configured value */
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- contrib/coccinelle/errorl10n.cocci | 47 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
- create mode 100644 contrib/coccinelle/errorl10n.cocci
+Ok, I will do that.
 
-diff --git a/contrib/coccinelle/errorl10n.cocci b/contrib/coccinelle/errorl10n.cocci
-new file mode 100644
-index 0000000000..d62a440644
---- /dev/null
-+++ b/contrib/coccinelle/errorl10n.cocci
-@@ -0,0 +1,47 @@
-+@@
-+expression E;
-+@@
-+- usage(_(E));
-++ usage_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- usagef(_(E));
-++ usagef_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- die(_(E));
-++ die_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- error(_(E));
-++ error_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- warning(_(E));
-++ warning_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- die_errno(_(E));
-++ die_errno_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- error_errno(_(E));
-++ error_errno_(_(E));
-+
-+@@
-+expression E;
-+@@
-+- warning_errno(_(E));
-++ warning_errno_(_(E));
--- 
-2.11.0.372.g2fcea0e476
+>> +
+>> +     /* Count not shared entries */
+>> +     for (i = 0; i < istate->cache_nr; i++) {
+>> +             struct cache_entry *ce = istate->cache[i];
+>> +             if (!ce->index)
+>> +                     not_shared++;
+>> +     }
+>> +
+>> +     return istate->cache_nr * max_split < not_shared * 100;
+>
+> On a 32-bit arch with 2G int and more than 20 million paths in the
+> index, multiplying by max_split that can come close to 100 can
+> theoretically cause integer overflow, but in practice it probably
+> does not matter.  Or does it?
 
+From a cursory look a "struct cache_entry" takes at least 80 bytes
+without counting the "char name[FLEX_ARRAY]" on a 32 bit machine, so I
+don't think it would be a good idea to work on a repo with 20 million
+paths on a 32 bit machine, but maybe theoretically it could be a
+problem.
+
+To be safe I think I will use:
+
+return (int64_t)istate->cache_nr * max_split < (int64_t)not_shared * 100;
