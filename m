@@ -7,45 +7,49 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2524E205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 16:04:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07199205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 16:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756231AbdABQEC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 11:04:02 -0500
-Received: from mout.gmx.net ([212.227.15.18]:58256 "EHLO mout.gmx.net"
+        id S1756242AbdABQEK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 11:04:10 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50236 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756185AbdABQEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 11:04:01 -0500
+        id S1756185AbdABQEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 11:04:09 -0500
 Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgtWa-1cAnOs1llw-00M4QH; Mon, 02
- Jan 2017 17:03:54 +0100
-Date:   Mon, 2 Jan 2017 17:03:53 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LgqQQ-1ctWLx2tKI-00oDbT; Mon, 02
+ Jan 2017 17:04:00 +0100
+Date:   Mon, 2 Jan 2017 17:03:57 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] Fix the documentation to build with asciidoctor
-Message-ID: <cover.1483373021.git.johannes.schindelin@gmx.de>
+cc:     =?UTF-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] asciidoctor: fix user-manual to be built by
+ `asciidoctor`
+In-Reply-To: <cover.1483373021.git.johannes.schindelin@gmx.de>
+Message-ID: <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de>
+References: <cover.1483373021.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1493540345-1483373034=:3469"
-X-Provags-ID: V03:K0:Q0spFr+8m4VF9PSmPKMkqI4GriGwllKpecFAlSJBO6/QuLtuNMR
- wNmC9ngTpmfimR8AdVNoVZWNqENOd/VgIUKI5S2tHx6y8TcSPGLfkLBthBE2tasEy/Vubo6
- 9ABVRcPSJ9aJs+5RT24LmRX/TWTZ3HeSakAPcQiA6tJaSPS99aUag7fEyOw27nhxKV1a5Cd
- 59GPibek8d3fEjG7YFvjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pb7ez9xf7hg=:uCg1rBt+IPZxtnGWEnWcEc
- O1jKQewMAffxVqYN3A1F0UBLnRdrPeUNeGD64OTN7NnFJnBA9NsZ8QgdsyDgbewlA7bmndEqj
- qvwsLIayq7zCTCyP8Veh/miKbqFplHAYrR/xje87IrCB5rb/dPbVqzeS+/DyRNb0B7fv2se1B
- wicvuyvh0hUiFF6up2hnJNND0R/d6iln4JUBGKSTK2SyyKW2asYfDCc4FBttZGlKwcGRVQCid
- bkeFC3itemuYBvofdICKr/RFoI1cGxAOQrqWwmYrb8/u4Bc65pGPIXtFqVYHkr4uAnIcvJNvw
- DjGdQaulQS1vmFH6a6u+Yl/oBL2DHy6vUxLpoEcDAomjyEmvo81dZ62iZvn5tSujQLGLY8+o2
- W0N9Fr4vdCZJwXHaiXfw6EhHXLHqAakA5ice3Gxjxt/F3IjbA5r9oEscDV1Ri4NbrfU8D0Ml2
- NOFQy9iHBWw/vF48f6GiYaUVp5en8D69iKNAIBRWzouZmn/Lpa2ZVC2DivUqQkTrF5Z51DwAr
- jCSPbV+INbZR95B9Tw5YdVFFz4iy6a0kn4UPp8mdlLcogQWa5CQgan+vD6VBLQ/twi62VdHrf
- HIA8yhu3DIMHT5qm0V6+JaUEgSaFTvZ7Vs+Ym18Q5SULUDxiYdNN39hjusmRNNTPB63diS4sX
- V8xDEOxqdMvQNGEgYw+4lmh/TN/CvmVoJw0T/zxZPG7R+hKI3A+dD/Fg/lmX6bV+lxowfFepM
- KfTsObOw9Am9DQqxdTQIdoC5rpJjyLDcBOVZiqZhceJJfEUOglr/CPpzOrmlCVeeY/NeR8nji
- +DIqNsc
+Content-Type: multipart/mixed; BOUNDARY="8323329-705827979-1483373039=:3469"
+X-Provags-ID: V03:K0:xNpE9w2sMYX384qsfN2IPuTmHgomeYbARoByzEPsZHqJ5c22Dph
+ WHRQq31m0Ya6rpaw8qZrKsZ3sNs2K3Voh8q9SNPmH5yc2QXsGr1VhLw1n6YVY8oDk0mSwW2
+ KdTQ75M4oHC/RDLUOT/1DwQjmPYnv98zGTlhpqD6A9jrW1Lbvzcb3nzgAAghotlKxezd7cy
+ 9XELOrAGE5aMQxYtoIO6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NHkdGMvx8B0=:ZQmWMiHUJfvgI6+L77H7Ap
+ EpqilVBf8lV2IvEC987pu0KOzqzDo7enJwa7/y6y8y+SyHBtPrbWJYWev1MGSZCqJ8X2FLb0Q
+ NYREA9W9qvyqZS0SG/ItsXNKQNDuNKqrXtGU6VTF2acvFl6zTg0i63ygUarbmAo88+h5KvZR0
+ 6h9sxoQs00APzscVqESSYeZqhvgTSXtDHbB3dT9lS/0/ARJ9XkDEur7MxkyYaJf+aOnZHM1fe
+ 02VRG00Fcz6QWcA6EyG4vTv/y3ZOaLyXbwtq5OrngkWBmuqr3EOPJXVF3DrkPYPB5Giw3oy8g
+ s9BXIClCArp4i0W5A4RN2Lf0mkIjOLaGx+j4/4jbNm5+RQV00B6Cmrd5lpDPJUDMHXRWcNERR
+ xZ6yFWOUz/YUa2QJE+8CphzX6bT+XWmABa1VA3dT9JR9Gm/8So0wQy64PwMvHuGI2+PTmUxRK
+ FWHBeer+lXro1RGNVj57eJp/YVNCcMHBJG9CVZO834uiVJ0W8/O0tROWsHX7b+WAqe5LQwLeN
+ TgX96E2W2PLoseb7m7r+b/CfHRL/xQ4m01I/rCR38F29SgW7vFaKld9/4AnVGk55bURFI0Ej2
+ LeUEKrxYx20qRKiqV/58fUJh9isFvfNSU9iLxUtRZMsT/KooqzrC7c7LCE8kPcHLnxWc6Jd4L
+ rqX1Bwb1v7iPLyW8kcFDCJ0pjJiAvon+kbTxKUfWvP6xXh6mzj1BxoVMV8lMP7IDUPDPUSJHN
+ TmVDj23PyzSJshjWGIJH07B4cPwfMZa8VdcIiSv5wYbZJoUs/BuwwWHx4sF8gOxr9u95oNU0V
+ OugefnU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -54,73 +58,68 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1493540345-1483373034=:3469
+--8323329-705827979-1483373039=:3469
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-The first patch in this series has been with Git for Windows for well
-over a year already, the second one is a replacement for such an old
-patch.
+From: =3D?UTF-8?q?=3DEB=3DA7=3D88=3DEB=3D88=3D84=3DEC=3D97=3D98?=3D <nalla@=
+hamal.uberspace.de>
 
-The reason why we use asciidoctor in Git for Windows is easy to see:
-when building new Git for Windows packages, rendering the documentation
-dominates the time by far. It takes roughly 75 seconds to compile all
-the executables from scratch on my main work machine, but it takes
-roughly 125 seconds to build the documentation from scratch.
+The `user-manual.txt` is designed as a `book` but the `Makefile` wants
+to build it as an `article`. This seems to be a problem when building
+the documentation with `asciidoctor`. Furthermore the parts *Git
+Glossary* and *Appendix B* had no subsections which is not allowed when
+building with `asciidoctor`. So lets add a *dummy* section.
 
-Out of those 125 seconds, 45 are taken by the HTML documentation.
+Signed-off-by: =EB=A7=88=EB=88=84=EC=97=98 <nalla@hamal.uberspace.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/Makefile        | 2 +-
+ Documentation/user-manual.txt | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-In the Git for Windows project, we realized a long time ago that we
-could reduce the time dramatically by using asciidoctor: it takes only
-15 seconds to build the HTML documentation.
-
-Those savings come at a cost, though: asciidoctor was designed to be
-much less flexible than asciidoc, in favor for maximum speed and minimal
-size of the code base. And to accomodate those shortcomings, it is
-unfortunately necessary to change Git's documentation sources.
-
-So what is the big deal with those timings? It's only half a minute!
-
-This is on a very beefy machine. Internally, I use quite a bit of
-Continuous Integration to build intermediate Git for Windows versions
-for testing, and those builds are backed by reasonably-sized VMs. That
-makes it worth shaving that extra time off.
-
-Side note for the curious who wonder why asciidoctor is *so much* faster
-than asciidoc: my gut feeling is that the primary reason for this is,
-once again, the POSIX emulation layer: asciidoc runs as a Python script,
-using a Python interpreter that uses the MSYS2 runtime for path
-translation and fork emulation (among other things), while asciidoctor
-runs as a Ruby script, using a pure Windows Ruby interpreter (for those
-remembering the nomenclature: the Python interpreter is an MSYS2 program
-while the Ruby interpreter is a MINGW program). But even after that I
-suspect that asciidoc was just not designed for speed, on a very
-fundamental level.
-
-Now back to the patch series: I *hope* the patches are not too
-disruptive. I am very open to changing them however needed, I only care
-about one result in the end: that the documentation builds correctly
-(and fast) with asciidoctor.
-
-
-Johannes Schindelin (1):
-  giteveryday: unbreak rendering with AsciiDoctor
-
-=EB=A7=88=EB=88=84=EC=97=98 (1):
-  asciidoctor: fix user-manual to be built by `asciidoctor`
-
- Documentation/Makefile        |  2 +-
- Documentation/giteveryday.txt | 17 +++++++++--------
- Documentation/user-manual.txt |  8 ++++++++
- 3 files changed, 18 insertions(+), 9 deletions(-)
-
-
-base-commit: e05806da9ec4aff8adfed142ab2a2b3b02e33c8c
-Published-As: https://github.com/dscho/git/releases/tag/asciidoctor-fixes-v=
-1
-Fetch-It-Via: git fetch https://github.com/dscho/git asciidoctor-fixes-v1
-
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b43d66eae6..a9fb497b83 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -337,7 +337,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+=20
+ user-manual.xml: user-manual.txt user-manual.conf
+ =09$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-=09$(TXT_TO_XML) -d article -o $@+ $< && \
++=09$(TXT_TO_XML) -d book -o $@+ $< && \
+ =09mv $@+ $@
+=20
+ technical/api-index.txt: technical/api-index-skel.txt \
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 5e07454572..bc29298678 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -4395,6 +4395,10 @@ itself!
+ Git Glossary
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=20
++[[git-explained]]
++Git explained
++-------------
++
+ include::glossary-content.txt[]
+=20
+ [[git-quick-start]]
+@@ -4636,6 +4640,10 @@ $ git gc
+ Appendix B: Notes and todo list for this manual
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=20
++[[todo-list]]
++Todo list
++---------
++
+ This is a work in progress.
+=20
+ The basic requirements:
 --=20
 2.11.0.rc3.windows.1
 
---8323329-1493540345-1483373034=:3469--
+
+--8323329-705827979-1483373039=:3469--
