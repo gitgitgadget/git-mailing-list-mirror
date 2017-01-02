@@ -2,106 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4BD205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 14:33:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D215D205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 14:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933274AbdABOdd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 09:33:33 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35245 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932719AbdABOdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 09:33:32 -0500
-Received: by mail-lf0-f67.google.com with SMTP id x140so25903704lfa.2
-        for <git@vger.kernel.org>; Mon, 02 Jan 2017 06:33:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CJb2LdxMdlWKYBv2QpYLC9HVK13qyQNjMtwZxClEZEE=;
-        b=avDP51gtqmOSnSC81AQey0l/UEXuJMcy1GBRcqkc2gwVbqYPSN2x3qJ/w9lTbzOJlR
-         6T7JvtlQ5hdxesQdzdbqwp/NRUKJmoJfJcHSQLQJWlf6IfueAczYq9g5AP/C/5VTTLjN
-         AdrdbMIlFc7Zj9AxgKyfx+eOchcS6I8DgCSvquA0xyhUPXkqMD7w6O9V9EFnsrgvSEOe
-         ri+txneCNSGQ0lZ6Y5G/ek3bVouN6yNxEk2osC9EmvcysT3opfcSCZtvEdfOkZv53lQR
-         +PlKP5sGx94kaVoJYS8kwLopkpQm8U7Q9iH2kWSyACKzcmPGXrGmQm5NUbbpZ8jgG63I
-         AdsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CJb2LdxMdlWKYBv2QpYLC9HVK13qyQNjMtwZxClEZEE=;
-        b=KHJSSpuJzK2i2d7F4b0jQm7wTD1H71ogwQGTHoSWIZd6hZVYki9oCjKjBmvkPNQ4lG
-         B9gsA9e0CDXYqwI9G9ECIB4MzSq0n1TAhBumfNq9D4iK82a4LS3tGATHhkQHcu79KuT5
-         Kh0VV1SrB2oXI4GH33I12cvUiEiclQrffRL1BPXkh1l9d37iTvR4Pu4FiMkzHGbJPAff
-         Y/aWQCqwQYB9rm/KTNqR57CEnXlmlvbMqlxh4klzN68yqO6GNB+gsNgZd8/D9ndd8haP
-         tbkXBjKCmxvgit3vx8R8viW75uNFdCWunNTW2OGhNTNdWmacr4TDxcOGfhFKvxEQd6mC
-         8A2Q==
-X-Gm-Message-State: AIkVDXIW9njBtnn7Tcm75rbJCKaKLet9ySt10cMD5dc0hl/oCSD19KBSahdLvFUeBJHSGt7TGh33X0Y9ePJaww==
-X-Received: by 10.25.209.73 with SMTP id i70mr16267545lfg.24.1483367610307;
- Mon, 02 Jan 2017 06:33:30 -0800 (PST)
+        id S933277AbdABOed (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 09:34:33 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:46197 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933062AbdABOec (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Jan 2017 09:34:32 -0500
+X-AuditID: 1207440e-7c7ff700000009ec-45-586a64f2192f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 79.D4.02540.2F46A685; Mon,  2 Jan 2017 09:34:27 -0500 (EST)
+Received: from [192.168.69.190] (p5B10411C.dip0.t-ipconnect.de [91.16.65.28])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v02EYNB8028435
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 2 Jan 2017 09:34:25 -0500
+Subject: Re: [PATCH 09/17] builtin/merge: convert to struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <20170101191847.564741-1-sandals@crustytoothpaste.net>
+ <20170101191847.564741-10-sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <f6b59780-a76c-1e13-f983-c0cc767cc2b8@alum.mit.edu>
+Date:   Mon, 2 Jan 2017 15:34:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Received: by 10.25.135.198 with HTTP; Mon, 2 Jan 2017 06:33:29 -0800 (PST)
-In-Reply-To: <xmqqeg0t9oct.fsf@gitster.mtv.corp.google.com>
-References: <20161226102222.17150-1-chriscool@tuxfamily.org>
- <20161226102222.17150-21-chriscool@tuxfamily.org> <xmqqeg0t9oct.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 2 Jan 2017 15:33:29 +0100
-Message-ID: <CAP8UFD0bgxVrc=RGHs1GrZ_5PF4cdfhqXLMiCSJTNw9axrr=_w@mail.gmail.com>
-Subject: Re: [PATCH v3 20/21] Documentation/config: add splitIndex.sharedIndexExpire
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170101191847.564741-10-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqPs5JSvCoPedmUXXlW4mix8tPcwW
+        bTN/MDkweyy/+ZfJ41nvHkaPz5vkApijuGxSUnMyy1KL9O0SuDIeHehnL7jEVfHl+VPmBsZj
+        HF2MHBwSAiYSyzvsuxi5OIQELjNKPJt2jx3COcMk8XvSHHaQImEBV4kdn+W7GDk5RAS8JOY/
+        msEKYgsJ1Eh82raAGcRmFpCVWL/iLyOIzSagK7Gop5kJxOYVsJeY9+kyWD2LgIrE/rM7WUBs
+        UYEQictzjrJB1AhKnJz5BCzOKeAicfBSNyPETD2JHdd/sULY8hLb385hnsDIPwtJyywkZbOQ
+        lC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGusl5tZopeaUrqJERKgfDsY29fLHGIU4GBU
+        4uF9EJMVIcSaWFZcmXuIUZKDSUmUN2FDRoQQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd738UDl
+        vCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3vZkoEbBotT01Iq0zJwS
+        hDQTByfIcB6g4UUgNbzFBYm5xZnpEPlTjIpS4ryTQBICIImM0jy4XlgCecUoDvSKMG8nSBUP
+        MPnAdb8CGswENPhrXDrI4JJEhJRUA+PaoloV59rPrGtOhCqyVE+J9zrLG+6y+kXBM9eVR3fw
+        sU5cWP5ZXI/HXPPVIX5rN4eZJ5a9OhjG6ZzNzbYs0aLIPGfBDEvOup1hGnsqdzzy/sq/PG1H
+        Apdz2eIIp1Wrhe+k7rF3/c0kwb98xbf7d3WLxI5PSn7w48nlp6Z+oa8ubax/cEVx+RwlluKM
+        REMt5qLiRABMfbfH+wIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 27, 2016 at 8:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  Documentation/config.txt | 11 +++++++++++
->>  1 file changed, 11 insertions(+)
->>
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index e0f5a77980..24e771d22e 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -2786,6 +2786,17 @@ splitIndex.maxPercentChange::
->>       than 20 percent of the total number of entries.
->>       See linkgit:git-update-index[1].
->>
->> +splitIndex.sharedIndexExpire::
->> +     When the split index feature is used, shared index files with
->> +     a mtime older than this time will be removed when a new shared
->
-> As end-user facing documentation, it would be much better if we can
-> rephrase it for those who do not know what a 'mtime' is, and it
-> would be even better if we can do so without losing precision.
->
-> I think "shared index files that were not modified since the time
-> this variable specifies will be removed" would be understandable and
-> correct enough?
+On 01/01/2017 08:18 PM, brian m. carlson wrote:
+> Additionally convert several uses of the constant 40 into
+> GIT_SHA1_HEXSZ.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/merge.c | 136 ++++++++++++++++++++++++++++----------------------------
+>  1 file changed, 68 insertions(+), 68 deletions(-)
+> 
+> [...]
+> @@ -437,25 +437,25 @@ static void merge_name(const char *remote, struct strbuf *msg)
+>  	strbuf_branchname(&bname, remote);
+>  	remote = bname.buf;
+>  
+> -	memset(branch_head, 0, sizeof(branch_head));
+> +	memset(&branch_head, 0, sizeof(branch_head));
 
-Yeah, I agree it is better for end users. I will use what you suggest.
+I think this could be
 
->> +     index file is created. The value "now" expires all entries
->> +     immediately, and "never" suppresses expiration altogether.
->> +     The default value is "one.week.ago".
->> +     Note that each time a new split-index file is created, the
->> +     mtime of the related shared index file is updated to the
->> +     current time.
->
-> To match the above suggestion, "Note that a shared index file is
-> considered modified (for the purpose of expiration) each time a new
-> split-index file is created based on it."?
+        oidclr(&branch_head);
 
-Yeah, I also agree it is better and will use that.
+>  	remote_head = get_merge_parent(remote);
+>  	if (!remote_head)
+>  		die(_("'%s' does not point to a commit"), remote);
+> [...]
+> @@ -1113,9 +1113,9 @@ static struct commit_list *collect_parents(struct commit *head_commit,
+>  
+>  int cmd_merge(int argc, const char **argv, const char *prefix)
+>  {
+> -	unsigned char result_tree[20];
+> -	unsigned char stash[20];
+> -	unsigned char head_sha1[20];
+> +	struct object_id result_tree;
+> +	struct object_id stash;
+> +	struct object_id head_oid;
+
+These could comfortably be declared on a single line now.
+
+>  	struct commit *head_commit;
+>  	struct strbuf buf = STRBUF_INIT;
+>  	const char *head_arg;
+> [...]
+
+Michael
+
