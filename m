@@ -2,124 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07199205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 16:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08362205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 16:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756242AbdABQEK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 11:04:10 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50236 "EHLO mout.gmx.net"
+        id S1756254AbdABQEM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 11:04:12 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50296 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756185AbdABQEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1756234AbdABQEJ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 2 Jan 2017 11:04:09 -0500
 Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LgqQQ-1ctWLx2tKI-00oDbT; Mon, 02
- Jan 2017 17:04:00 +0100
-Date:   Mon, 2 Jan 2017 17:03:57 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXqaN-1c2nAX0fWJ-00WpT9; Mon, 02
+ Jan 2017 17:04:06 +0100
+Date:   Mon, 2 Jan 2017 17:04:05 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-cc:     =?UTF-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] asciidoctor: fix user-manual to be built by
- `asciidoctor`
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] giteveryday: unbreak rendering with AsciiDoctor
 In-Reply-To: <cover.1483373021.git.johannes.schindelin@gmx.de>
-Message-ID: <3c160f81a88cf8697f2459bb7f2a3e27fb3e469c.1483373021.git.johannes.schindelin@gmx.de>
+Message-ID: <c3b21bbec96408c4d6698129fd336c24c9e2f0f0.1483373021.git.johannes.schindelin@gmx.de>
 References: <cover.1483373021.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-705827979-1483373039=:3469"
-X-Provags-ID: V03:K0:xNpE9w2sMYX384qsfN2IPuTmHgomeYbARoByzEPsZHqJ5c22Dph
- WHRQq31m0Ya6rpaw8qZrKsZ3sNs2K3Voh8q9SNPmH5yc2QXsGr1VhLw1n6YVY8oDk0mSwW2
- KdTQ75M4oHC/RDLUOT/1DwQjmPYnv98zGTlhpqD6A9jrW1Lbvzcb3nzgAAghotlKxezd7cy
- 9XELOrAGE5aMQxYtoIO6w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NHkdGMvx8B0=:ZQmWMiHUJfvgI6+L77H7Ap
- EpqilVBf8lV2IvEC987pu0KOzqzDo7enJwa7/y6y8y+SyHBtPrbWJYWev1MGSZCqJ8X2FLb0Q
- NYREA9W9qvyqZS0SG/ItsXNKQNDuNKqrXtGU6VTF2acvFl6zTg0i63ygUarbmAo88+h5KvZR0
- 6h9sxoQs00APzscVqESSYeZqhvgTSXtDHbB3dT9lS/0/ARJ9XkDEur7MxkyYaJf+aOnZHM1fe
- 02VRG00Fcz6QWcA6EyG4vTv/y3ZOaLyXbwtq5OrngkWBmuqr3EOPJXVF3DrkPYPB5Giw3oy8g
- s9BXIClCArp4i0W5A4RN2Lf0mkIjOLaGx+j4/4jbNm5+RQV00B6Cmrd5lpDPJUDMHXRWcNERR
- xZ6yFWOUz/YUa2QJE+8CphzX6bT+XWmABa1VA3dT9JR9Gm/8So0wQy64PwMvHuGI2+PTmUxRK
- FWHBeer+lXro1RGNVj57eJp/YVNCcMHBJG9CVZO834uiVJ0W8/O0tROWsHX7b+WAqe5LQwLeN
- TgX96E2W2PLoseb7m7r+b/CfHRL/xQ4m01I/rCR38F29SgW7vFaKld9/4AnVGk55bURFI0Ej2
- LeUEKrxYx20qRKiqV/58fUJh9isFvfNSU9iLxUtRZMsT/KooqzrC7c7LCE8kPcHLnxWc6Jd4L
- rqX1Bwb1v7iPLyW8kcFDCJ0pjJiAvon+kbTxKUfWvP6xXh6mzj1BxoVMV8lMP7IDUPDPUSJHN
- TmVDj23PyzSJshjWGIJH07B4cPwfMZa8VdcIiSv5wYbZJoUs/BuwwWHx4sF8gOxr9u95oNU0V
- OugefnU
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ymBtQeDogXL9GbK6eeMJBTfZDp/L2h/rAR/uTnmRel66a8mJdCG
+ LdsgH28+vlwiRi2FddU5ulWBy6QRNFJsrNW1/Q2pPizj7FwP4IAWRrV7SQNXR5iWA8mV2Jt
+ K203mh8PiyHNi59KEJa4hZHf3pFqIQH8Obt1DHCCXDNBCuej+JkbOFt1nz6Hs6FtHM6tmZp
+ zZjh/aoat8tOMPXYxwnFw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GDqpCmJRNho=:5CJKg7l/li00dEvW1/fPOO
+ Rfh07k8BuH/aUXvZSqvOHtSC1eJVQVGIxj/hx/Uv3gRgi4WY/8DigIrI4PricAF6G3C3xN4mC
+ 5kLx5SJLAwaNjkPQ1klpQGh0ta53ygWwYxnnwkD9WhX7xDjr0oi2YZTW8qPBQBlWe4xfze1Kj
+ L1Wzd+yIMy89cJavvkOqJ3F4z9Viey+9ldwzsIqpMAD3ouw6Jz7YOaVTVNTH1u0gra7z5I2mw
+ mtsTF0ZLbEN50g3MEBVk+y3XXJEn0uaTpCdYrylnC4boqvfjrtIX+5RixR4rR3p1uCcX7/Dip
+ ki8WiB6hnn9ugaeAsJAgNHViI6MhhCwzW/Kw8C7zIkPcU6j40vZ5qvL5cH8reilkUcxXL5jjN
+ 4l7qudpCeDNzT5xhRk/hvoQ91LznZi4EbG3KhBffwq7HLB2CKhoNwrz38HtpHxDhGvO5qSkbZ
+ e+6ytkJaSA4FhyVpXHsPtsGlJfD5z2DHf6ma8d+1eOPksHKlAupbvrl+9tSBK3jvyUrx4xK0A
+ fgxD5CZqa7n2URAGxAYXnCV6rDbD9wADC8SJ8oppfZsIcigIT6dPOV2M/O2oubsVw/I/1jdkx
+ D1QeGtU8pdmJb++ftvp0i05FQTHUqrlnsbrORWwNIgCh4KHSqo1GKWBis9469B2WtXgQoLc2r
+ m7bGYLTqmzcu7cHhSJn/2kYLJz4g5Pcx3jbb+nepmRwvyoFS3r44BPlczeWmWVUWUpDOft7kz
+ E2chIDqckv3DiLMql4YvnESwLhyk0ByktlJFEfYHn8L4L6kN3hB+4u9SSWn3KB69nUzLCJREm
+ 0QOnSDz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The "giteveryday" document has a callout list that contains a code
+block. This is not a problem for AsciiDoc, but AsciiDoctor sadly was
+explicitly designed *not* to render this correctly [*1*]. The symptom is
+an unhelpful
 
---8323329-705827979-1483373039=:3469
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+	line 322: callout list item index: expected 1 got 12
+	line 325: no callouts refer to list item 1
+	line 325: callout list item index: expected 2 got 13
+	line 327: no callouts refer to list item 2
 
-From: =3D?UTF-8?q?=3DEB=3DA7=3D88=3DEB=3D88=3D84=3DEC=3D97=3D98?=3D <nalla@=
-hamal.uberspace.de>
+In Git for Windows, we rely on the speed improvement of AsciiDoctor (on
+this developer's machine, `make -j15 html` takes roughly 30 seconds with
+AsciiDoctor, 70 seconds with AsciiDoc), therefore we need a way to
+render this correctly.
 
-The `user-manual.txt` is designed as a `book` but the `Makefile` wants
-to build it as an `article`. This seems to be a problem when building
-the documentation with `asciidoctor`. Furthermore the parts *Git
-Glossary* and *Appendix B* had no subsections which is not allowed when
-building with `asciidoctor`. So lets add a *dummy* section.
+The easiest way out is to simplify the callout list, as suggested by
+AsciiDoctor's author, even while one may very well disagree with him
+that a code block hath no place in a callout list.
 
-Signed-off-by: =EB=A7=88=EB=88=84=EC=97=98 <nalla@hamal.uberspace.de>
+*1*: https://github.com/asciidoctor/asciidoctor/issues/1478
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/Makefile        | 2 +-
- Documentation/user-manual.txt | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ Documentation/giteveryday.txt | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index b43d66eae6..a9fb497b83 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -337,7 +337,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
-=20
- user-manual.xml: user-manual.txt user-manual.conf
- =09$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
--=09$(TXT_TO_XML) -d article -o $@+ $< && \
-+=09$(TXT_TO_XML) -d book -o $@+ $< && \
- =09mv $@+ $@
-=20
- technical/api-index.txt: technical/api-index-skel.txt \
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 5e07454572..bc29298678 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -4395,6 +4395,10 @@ itself!
- Git Glossary
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=20
-+[[git-explained]]
-+Git explained
-+-------------
+diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
+index 35473ad02f..10c8ff93c0 100644
+--- a/Documentation/giteveryday.txt
++++ b/Documentation/giteveryday.txt
+@@ -307,9 +307,16 @@ master or exposed as a part of a stable branch.
+ <9> backport a critical fix.
+ <10> create a signed tag.
+ <11> make sure master was not accidentally rewound beyond that
+-already pushed out.  `ko` shorthand points at the Git maintainer's
++already pushed out.
++<12> In the output from `git show-branch`, `master` should have
++everything `ko/master` has, and `next` should have
++everything `ko/next` has, etc.
++<13> push out the bleeding edge, together with new tags that point
++into the pushed history.
 +
- include::glossary-content.txt[]
-=20
- [[git-quick-start]]
-@@ -4636,6 +4640,10 @@ $ git gc
- Appendix B: Notes and todo list for this manual
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=20
-+[[todo-list]]
-+Todo list
-+---------
++In this example, the `ko` shorthand points at the Git maintainer's
+ repository at kernel.org, and looks like this:
+-+
 +
- This is a work in progress.
-=20
- The basic requirements:
---=20
+ ------------
+ (in .git/config)
+ [remote "ko"]
+@@ -320,12 +327,6 @@ repository at kernel.org, and looks like this:
+ 	push = +refs/heads/pu
+ 	push = refs/heads/maint
+ ------------
+-+
+-<12> In the output from `git show-branch`, `master` should have
+-everything `ko/master` has, and `next` should have
+-everything `ko/next` has, etc.
+-<13> push out the bleeding edge, together with new tags that point
+-into the pushed history.
+ 
+ 
+ Repository Administration[[ADMINISTRATION]]
+-- 
 2.11.0.rc3.windows.1
-
-
---8323329-705827979-1483373039=:3469--
