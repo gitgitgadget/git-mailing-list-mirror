@@ -2,148 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76CB0205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 22:25:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B43E205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 23:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756364AbdABWZi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 17:25:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34404 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934287AbdABWZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 17:25:12 -0500
-Received: (qmail 10212 invoked by uid 109); 2 Jan 2017 22:25:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 22:25:12 +0000
-Received: (qmail 20238 invoked by uid 111); 2 Jan 2017 22:26:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 17:26:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jan 2017 17:25:09 -0500
-Date:   Mon, 2 Jan 2017 17:25:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH] archive-zip: load userdiff config
-Message-ID: <20170102222509.ho7motscnffrtnfh@sigill.intra.peff.net>
+        id S1756843AbdABXcR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 18:32:17 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:55180 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756814AbdABXan (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Jan 2017 18:30:43 -0500
+X-AuditID: 1207440c-e53ff700000009a1-5d-586ae2a23f99
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id FD.2A.02465.2A2EA685; Mon,  2 Jan 2017 18:30:42 -0500 (EST)
+Received: from [192.168.69.190] (p5B10411C.dip0.t-ipconnect.de [91.16.65.28])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v02NUeG1023164
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 2 Jan 2017 18:30:41 -0500
+Subject: Re: [PATCH 13/17] refs: convert each_reflog_ent_fn to struct
+ object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20170101191847.564741-1-sandals@crustytoothpaste.net>
+ <20170101191847.564741-14-sandals@crustytoothpaste.net>
+ <49fcccfa-df28-c01b-0e51-1451ecf8e784@alum.mit.edu>
+ <20170102191256.fjqsns3rgjyehzgp@genre.crustytoothpaste.net>
+Cc:     git discussion list <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <d5fc2830-37c2-9274-77b7-97ecc5f9b763@alum.mit.edu>
+Date:   Tue, 3 Jan 2017 00:30:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20170102191256.fjqsns3rgjyehzgp@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsUixO6iqLvoUVaEwd0XChZdV7qZLH609DBb
+        tM38weTA7LH85l8mj2e9exg9Pm+SC2CO4rJJSc3JLEst0rdL4Mp4tYS7YCJXxaaly5kaGC+z
+        dzFyckgImEgsvNzL2sXIxSEkcJlR4s/UxWwQzhkmiV8XnrGBVAkLBEq8eL8PzBYRMJVY8n4f
+        E0TRR0aJZ9POs4IkmAU8JOa//soMYrMJ6Eos6mlmArF5BewlFvT8Z+li5OBgEVCROHWYESQs
+        KhAicXnOUTaIEkGJkzOfsIDYnAKeEsfvNkON1JPYcf0XlC0vsf3tHOYJjPyzkLTMQlI2C0nZ
+        AkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSmlmxghIcqzg/HbOplDjAIcjEo8
+        vA9isiKEWBPLiitzDzFKcjApifI+rQMK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuE9cA8ox5uS
+        WFmVWpQPk5LmYFES51Vdou4nJJCeWJKanZpakFoEk5Xh4FCS4JV4CNQoWJSanlqRlplTgpBm
+        4uAEGc4DNNwXpIa3uCAxtzgzHSJ/ilFRSpy3HiQhAJLIKM2D64WlkFeM4kCvCPN6gFTxANMP
+        XPcroMFMQIO/xqWDDC5JREhJNTCKzFvM7Pnt2QoWjd1nGdZxVO53l5CpqpjOEGj0SV3yjIZ+
+        1kGftnmJ8+IYrasUkp/9/ZqReznW/INpRsSz76snzoy86f3gV9ic6BtTW+vchdxkjf/6X5mh
+        nsEvrPxo/iMJzWPHw8t/N2z9pTBZd4lV8de3Mf2nWO5NVLkd9uXWkmTT/JwcmWtKLMUZiYZa
+        zEXFiQDu6IQn/AIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 4aff646d17 (archive-zip: mark text files in archives,
-2015-03-05), the zip archiver will look at the userdiff
-driver to decide whether a file is text or binary. This
-usually doesn't need to look any further than the attributes
-themselves (e.g., "-diff", etc). But if the user defines a
-custom driver like "diff=foo", we need to look at
-"diff.foo.binary" in the config. Prior to this patch, we
-didn't actually load it.
+On 01/02/2017 08:12 PM, brian m. carlson wrote:
+> On Mon, Jan 02, 2017 at 04:07:16PM +0100, Michael Haggerty wrote:
+>> On 01/01/2017 08:18 PM, brian m. carlson wrote:
+>>>  	/* old SP new SP name <email> SP time TAB msg LF */
+>>>  	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
+>>> -	    get_sha1_hex(sb->buf, osha1) || sb->buf[40] != ' ' ||
+>>> -	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
+>>> +	    get_oid_hex(sb->buf, &ooid) || sb->buf[40] != ' ' ||
+>>> +	    get_oid_hex(sb->buf + 41, &noid) || sb->buf[81] != ' ' ||
+>>
+>> Some magic numbers above could be converted to use constants.
+> 
+> Yes, I saw that.  I opted to leave it as it is for the moment.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'd be surprised if anybody actually triggered this in practice. I don't
-think any of the custom-driver fields except "binary" matter, and using
-direct attributes is almost always easier than setting up a custom
-driver. Though you could also do trickery with:
+Totally understandable.
 
-  git -c diff.default.binary=true archive ...
+> I think
+> my next series is going to include a small sscanf-style parser to parse
+> these.  Right now, using constants here is going to leave it extremely
+> difficult to read.  Something like the following for the OIDs:
+> 
+>   strbuf_git_scanf(sb, "%h %h ", &ooid, &noid);
+> 
+> and then following up parsing the remainder.
 
-if you wanted to be really clever.
+Maybe something with an interface like skip_prefix wouldn't be too
+obnoxious:
 
-I ran across this while investigating a case where somebody's zipfile
-was all marked as binary (it turned out not to be related; the issue was
-just that their Git was pre-4aff646d17).
+    const char *p = sb.buf;
+    if (oid_prefix(p, &ooid, &p) &&
+        *p++ == ' ' &&
+        oid_prefix(p, &noid, &p) && ...
 
-I also happened to notice that zipfiles are created using the local
-timezone (because they have no notion of the timezone, so we have to
-pick _something_). That's probably the least-terrible option, but it was
-certainly surprising to me when I tried to bit-for-bit reproduce a
-zipfile from GitHub on my local machine.
+> [...]
 
- archive-zip.c          |  7 +++++++
- t/t5003-archive-zip.sh | 22 ++++++++++++++++++----
- 2 files changed, 25 insertions(+), 4 deletions(-)
+Michael
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 9db47357b0..b429a8d974 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -554,11 +554,18 @@ static void dos_time(time_t *time, int *dos_date, int *dos_time)
- 	*dos_time = t->tm_sec / 2 + t->tm_min * 32 + t->tm_hour * 2048;
- }
- 
-+static int archive_zip_config(const char *var, const char *value, void *data)
-+{
-+	return userdiff_config(var, value);
-+}
-+
- static int write_zip_archive(const struct archiver *ar,
- 			     struct archiver_args *args)
- {
- 	int err;
- 
-+	git_config(archive_zip_config, NULL);
-+
- 	dos_time(&args->time, &zip_date, &zip_time);
- 
- 	zip_dir = xmalloc(ZIP_DIRECTORY_MIN_SIZE);
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index 14744b2a4b..55c7870997 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -64,6 +64,12 @@ check_zip() {
- 		test_cmp_bin $original/nodiff.crlf $extracted/nodiff.crlf &&
- 		test_cmp_bin $original/nodiff.lf   $extracted/nodiff.lf
- 	"
-+
-+	test_expect_success UNZIP " validate that custom diff is unchanged " "
-+		test_cmp_bin $original/custom.cr   $extracted/custom.cr &&
-+		test_cmp_bin $original/custom.crlf $extracted/custom.crlf &&
-+		test_cmp_bin $original/custom.lf   $extracted/custom.lf
-+	"
- }
- 
- test_expect_success \
-@@ -78,6 +84,9 @@ test_expect_success \
-      printf "text\r"	>a/nodiff.cr &&
-      printf "text\r\n"	>a/nodiff.crlf &&
-      printf "text\n"	>a/nodiff.lf &&
-+     printf "text\r"	>a/custom.cr &&
-+     printf "text\r\n"	>a/custom.crlf &&
-+     printf "text\n"	>a/custom.lf &&
-      printf "\0\r"	>a/binary.cr &&
-      printf "\0\r\n"	>a/binary.crlf &&
-      printf "\0\n"	>a/binary.lf &&
-@@ -112,15 +121,20 @@ test_expect_success 'add files to repository' '
- test_expect_success 'setup export-subst and diff attributes' '
- 	echo "a/nodiff.* -diff" >>.git/info/attributes &&
- 	echo "a/diff.* diff" >>.git/info/attributes &&
-+	echo "a/custom.* diff=custom" >>.git/info/attributes &&
-+	git config diff.custom.binary true &&
- 	echo "substfile?" export-subst >>.git/info/attributes &&
- 	git log --max-count=1 "--pretty=format:A${SUBSTFORMAT}O" HEAD \
- 		>a/substfile1
- '
- 
--test_expect_success \
--    'create bare clone' \
--    'git clone --bare . bare.git &&
--     cp .git/info/attributes bare.git/info/attributes'
-+test_expect_success 'create bare clone' '
-+	git clone --bare . bare.git &&
-+	cp .git/info/attributes bare.git/info/attributes &&
-+	# Recreate our changes to .git/config rather than just copying it, as
-+	# we do not want to clobber core.bare or other settings.
-+	git -C bare.git config diff.custom.binary true
-+'
- 
- test_expect_success \
-     'remove ignored file' \
--- 
-2.11.0.519.g31435224cf
