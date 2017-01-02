@@ -2,107 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42CCA205F4
-	for <e@80x24.org>; Mon,  2 Jan 2017 11:23:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87C71205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 12:09:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755563AbdABLX2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 06:23:28 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33468 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751307AbdABLX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 06:23:26 -0500
-Received: by mail-lf0-f66.google.com with SMTP id y21so39867758lfa.0
-        for <git@vger.kernel.org>; Mon, 02 Jan 2017 03:23:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=r2x4LeluC6Cxp3yIFLEF3gQFIIj/AMyLkpgSKOhT6pQ=;
-        b=jn6FJPnq5pbI/fX8KPMBeHV94NdfIX8ysB7v79jshf/bmanrBBmWprBMrcDuYgEjzE
-         snRc5bnU+VK+3kSdR9ZAXld3RUjrDhnVNzrS//0O5vrDEhtxuVr3zvyR9maHkUQQBzQp
-         ijHPbXnFTJaK9Vnkqb/rLBlw1kTUf9r5ebHsHpJqHPXLnjWxDMwe16CPa2lexplEImVF
-         cywKdHcFAmb+Xb9Q5KvlTuWANOTZSo8UQ82U7M4gnY2EyH3w3Sob2nkdh08f7wi74y7/
-         SY1Ld5p38ilp1UOfHYJCsWHNnjUVR2FRxyDI5gVqS8Y7BXmQnVHl5I4lpWcKigZnw765
-         fJEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=r2x4LeluC6Cxp3yIFLEF3gQFIIj/AMyLkpgSKOhT6pQ=;
-        b=ppB8Wh5E6fBfMxn+5SLbRLzqz/ld3tp2EBUUK2qd90gGV6FjkkBVM8Fgx0dM+1jCZD
-         mTSoRjhMzhMwm50/MHvAwCywBNuYotzDhKenJCcW25gAJncRKEJ7NV3FmleZJqR0VjQS
-         o5mVBTN/iCbBeQ0d/iz1XSl/sPdfoYzdZjtcWv+kF5RWv/3HN+yUCVDRyVv5h5Um8anE
-         49R87bjmOmaAi0dYUFzDz6ZBV8/2bZPZHt3ZLy0+dVOlG65iZZSvu5qiAIoP/ZfLXt46
-         pY9KfDTd7Q0Jk1TlhJZKsNzkEgQiyc69PSxLNmmgxPTThkPPzm2qw28Y2fD98iUKhzRG
-         bjPQ==
-X-Gm-Message-State: AIkVDXLH96/a1gJyOD0U8sWX+CRR8uSUJdTJ1Y57qbxheTsUmYUVUZpf9bY2r1V/DijlrHY56Rnoa891YFUH0w==
-X-Received: by 10.46.7.10 with SMTP id 10mr20684727ljh.60.1483356204955; Mon,
- 02 Jan 2017 03:23:24 -0800 (PST)
+        id S932603AbdABMJO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 07:09:14 -0500
+Received: from mout.gmx.net ([212.227.17.22]:51764 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932557AbdABMJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 07:09:12 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGzwE-1cJ7bO33Pm-00Dmhq; Mon, 02
+ Jan 2017 13:09:04 +0100
+Date:   Mon, 2 Jan 2017 13:09:03 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Segev Finer <segev208@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] connect: handle putty/plink also in GIT_SSH_COMMAND
+Message-ID: <2ff29a4d00e0e13d460122d8008e762361ca90aa.1483358673.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.25.135.198 with HTTP; Mon, 2 Jan 2017 03:23:24 -0800 (PST)
-In-Reply-To: <xmqqk2al9ocv.fsf@gitster.mtv.corp.google.com>
-References: <20161226102222.17150-1-chriscool@tuxfamily.org>
- <20161226102222.17150-11-chriscool@tuxfamily.org> <xmqqk2al9ocv.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 2 Jan 2017 12:23:24 +0100
-Message-ID: <CAP8UFD3_1EN=0EsD12Cew1MuW8yhtPAZw0M_g3wmvKFk-uGXxw@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] read-cache: regenerate shared index if necessary
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:989kvKrMW/hYf3QcCEf/yM/KLBlKXFg0x00UbWUOiMIPvTe4ztJ
+ 161hIcddVbQyzqiun7mcYMCmyuodc6GO7dBEqJJJcDERddByRStmBxkkxbQwEVyNp/NKYyt
+ 7jZKwjpU8R6XhBEuLqyLJsQVs/T4MRX/1ZV8Zja9TdeEL3i/b3DwGvBMRuCprOMODnkFHXM
+ vKLiyI5uuylm99xDMTRxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5k0ruAMAf+I=:llOksrdOhAbZjYUe8jHH8R
+ qWIdS/BoByNyosPnHIvcbBf3oVhgyhYSJxvScdnRiAOepLq4l8yiC7vPITmYdW4jx0w6F9mpR
+ DNp+RBwmN5aWbPxfsaKF4cHQ8w2FFeCLNs3JXxZr0yKY6H1rXorQGrS0rde86o7qImlpP+EH3
+ Vnnpc49JDtHikVg9leZHr1+VhRjGEUZl79uzlU1KzfxuvNigxyFuAFgFyPR2B1hedT0TZWyAF
+ HKG1NYK/ksoNNTN0Zbz/Q0knZXp1T8ia4MpdK7O+r9eiGTQwzcCTgt2ZS4bpHiZTNP8hQDOfT
+ QYcsqfB9CaptCnNLIEHlEaYR3hdfw0Y/lSwHtcjcwoz7ofhWbJZqv6evJ+gwaPe1GLq2ma4Yx
+ Q0caZkDmhbyah3ECbGJ+Y+Ep5Qq440seHHjhLAbC5n801hyvVUMeCeZlh6V7VNMr08/WZBkzx
+ VBT5zfKduhhFcqsmM7mluwY+3FByR5pr3Y3pbddgdSebT4y/JywgOrkBmRyV4lfqelyYtSDqz
+ XoOKr+XNNPlKse6AdL7ZMArHem0kKrMVNZsCFzgBAyMSX4iRD/3w+7EzC+Xmzxu3Nd5eTznsx
+ HLdDv84XCkQdwfaGVx8Qcncedpv+OIAERJDiy/zPY08l139se/U2rFMPllc7PgkIBboyjmMP7
+ 2tqx6cuxEAlLoiLqLhrFF3jobTcvKPKk+WHY5LxPl2bST/HbXGMTBsJSrGOCPbo2JJ7fxqYXd
+ pe2Kxi8RlbEtyv19QxDxt41o6Vpfh24dS231AvAesC5EZOHAbuqauDtADdZpdGSUHLw2JvueT
+ opDPmPwHAwkwDWEJNinSLEmwTyjtM6FjSo28xtpwRuz51JFMBe0VZqrU98uU2Ed4rmmU3/ssl
+ 0EKFIFHuxmP0EA89sRlzQL/zUXhD9PaB2mgqWA5KULY0nw45IS8fLrJOiDRbOErNdDs6eZpM+
+ fj381lRhP3wqmxm8SX7QkOMJj52eeJjPNZK/Andkqgj4oa+YqORGKNNlsghik3wU+gHAfQVj1
+ 9BynbPbtjWyA/N++zGgq+0SeAJKCxPFHbF/hkoVmWuMoA7GjWmU5F6CUPBgNE3LiAg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 27, 2016 at 8:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> +     case 0:
->> +             return 1; /* 0% means always write a new shared index */
->> +     case 100:
->> +             return 0; /* 100% means never write a new shared index */
->> +     default:
->> +             ; /* do nothing: just use the configured value */
->> +     }
->
-> Just like you did in 04/21, write "break" to avoid mistakes made in
-> the future, i.e.
->
->         default:
->                 break; /* just use the configured value */
+From: Segev Finer <segev208@gmail.com>
 
-Ok, I will do that.
+Git for Windows has special support for the popular SSH client PuTTY:
+when using PuTTY's non-interactive version ("plink.exe"), we use the -P
+option to specify the port rather than OpenSSH's -p option. TortoiseGit
+ships with its own, forked version of plink.exe, that adds support for
+the -batch option, and for good measure we special-case that, too.
 
->> +
->> +     /* Count not shared entries */
->> +     for (i = 0; i < istate->cache_nr; i++) {
->> +             struct cache_entry *ce = istate->cache[i];
->> +             if (!ce->index)
->> +                     not_shared++;
->> +     }
->> +
->> +     return istate->cache_nr * max_split < not_shared * 100;
->
-> On a 32-bit arch with 2G int and more than 20 million paths in the
-> index, multiplying by max_split that can come close to 100 can
-> theoretically cause integer overflow, but in practice it probably
-> does not matter.  Or does it?
+However, this special-casing of PuTTY only covers the case where the
+user overrides the SSH command via the environment variable GIT_SSH
+(which allows specifying the name of the executable), not
+GIT_SSH_COMMAND (which allows specifying a full command, including
+additional command-line options).
 
-From a cursory look a "struct cache_entry" takes at least 80 bytes
-without counting the "char name[FLEX_ARRAY]" on a 32 bit machine, so I
-don't think it would be a good idea to work on a repo with 20 million
-paths on a 32 bit machine, but maybe theoretically it could be a
-problem.
+When users want to pass any additional arguments to (Tortoise-)Plink,
+such as setting a private key, they are required to either use a shell
+script named plink or tortoiseplink or duplicate the logic that is
+already in Git for passing the correct style of command line arguments,
+which can be difficult, error prone and annoying to get right.
 
-To be safe I think I will use:
+This patch simply reuses the existing logic and expands it to cover
+GIT_SSH_COMMAND, too.
 
-return (int64_t)istate->cache_nr * max_split < (int64_t)not_shared * 100;
+Note: it may look a little heavy-handed to duplicate the entire
+command-line and then split it, only to extract the name of the
+executable. However, this is not a performance-critical code path, and
+the code is much more readable this way.
+
+Signed-off-by: Segev Finer <segev208@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/putty-w-args-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git putty-w-args-v1
+
+
+	Original Pull Request:
+	https://github.com/git-for-windows/git/pull/1006
+
+ connect.c        | 23 ++++++++++++++++-------
+ t/t5601-clone.sh | 15 +++++++++++++++
+ 2 files changed, 31 insertions(+), 7 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 8cb93b0720..c81f77001b 100644
+--- a/connect.c
++++ b/connect.c
+@@ -772,6 +772,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 			int putty = 0, tortoiseplink = 0;
+ 			char *ssh_host = hostandport;
+ 			const char *port = NULL;
++			char *ssh_argv0 = NULL;
+ 			transport_check_allowed("ssh");
+ 			get_host_and_port(&ssh_host, &port);
+ 
+@@ -792,10 +793,15 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 			}
+ 
+ 			ssh = get_ssh_command();
+-			if (!ssh) {
+-				const char *base;
+-				char *ssh_dup;
+-
++			if (ssh) {
++				char *split_ssh = xstrdup(ssh);
++				const char **ssh_argv;
++
++				if (split_cmdline(split_ssh, &ssh_argv))
++					ssh_argv0 = xstrdup(ssh_argv[0]);
++				free(split_ssh);
++				free((void *)ssh_argv);
++			} else {
+ 				/*
+ 				 * GIT_SSH is the no-shell version of
+ 				 * GIT_SSH_COMMAND (and must remain so for
+@@ -807,8 +813,11 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				if (!ssh)
+ 					ssh = "ssh";
+ 
+-				ssh_dup = xstrdup(ssh);
+-				base = basename(ssh_dup);
++				ssh_argv0 = xstrdup(ssh);
++			}
++
++			if (ssh_argv0) {
++				const char *base = basename(ssh_argv0);
+ 
+ 				tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
+ 					!strcasecmp(base, "tortoiseplink.exe");
+@@ -816,7 +825,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 					!strcasecmp(base, "plink") ||
+ 					!strcasecmp(base, "plink.exe");
+ 
+-				free(ssh_dup);
++				free(ssh_argv0);
+ 			}
+ 
+ 			argv_array_push(&conn->args, ssh);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index a433394200..5b228e2675 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -386,6 +386,21 @@ test_expect_success 'tortoiseplink is like putty, with extra arguments' '
+ 	expect_ssh "-batch -P 123" myhost src
+ '
+ 
++test_expect_success 'double quoted plink.exe in GIT_SSH_COMMAND' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink.exe" &&
++	GIT_SSH_COMMAND="\"$TRASH_DIRECTORY/plink.exe\" -v" \
++		git clone "[myhost:123]:src" ssh-bracket-clone-plink-3 &&
++	expect_ssh "-v -P 123" myhost src
++'
++
++SQ="'"
++test_expect_success 'single quoted plink.exe in GIT_SSH_COMMAND' '
++	copy_ssh_wrapper_as "$TRASH_DIRECTORY/plink.exe" &&
++	GIT_SSH_COMMAND="$SQ$TRASH_DIRECTORY/plink.exe$SQ -v" \
++		git clone "[myhost:123]:src" ssh-bracket-clone-plink-4 &&
++	expect_ssh "-v -P 123" myhost src
++'
++
+ # Reset the GIT_SSH environment variable for clone tests.
+ setup_ssh_wrapper
+ 
+
+base-commit: e05806da9ec4aff8adfed142ab2a2b3b02e33c8c
+-- 
+2.11.0.rc3.windows.1
