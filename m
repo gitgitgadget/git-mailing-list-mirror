@@ -7,98 +7,146 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871C8205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 641A2205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933018AbdABPfm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 10:35:42 -0500
-Received: from mout.gmx.net ([212.227.15.18]:55740 "EHLO mout.gmx.net"
+        id S933057AbdABPfq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 10:35:46 -0500
+Received: from mout.gmx.net ([212.227.15.15]:62493 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932874AbdABPfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 10:35:42 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcBin-1cpxDp0VwT-00jYrn; Mon, 02
- Jan 2017 16:35:36 +0100
-Date:   Mon, 2 Jan 2017 16:35:34 +0100 (CET)
+        id S932874AbdABPfo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 10:35:44 -0500
+Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMk99-1cR5hx1bIt-008XPF; Mon, 02
+ Jan 2017 16:35:26 +0100
+Date:   Mon, 2 Jan 2017 16:35:25 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         Stephan Beyer <s-beyer@gmx.net>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 33/38] sequencer (rebase -i): show only failed `git
- commit`'s output
+Subject: [PATCH v3 31/38] sequencer: make reading author-script more
+ elegant
 In-Reply-To: <cover.1483370556.git.johannes.schindelin@gmx.de>
-Message-ID: <f1ebd5e2de84d197326593a0c8018fd7e0446d6e.1483370556.git.johannes.schindelin@gmx.de>
+Message-ID: <f688d6b0aba5cc761a15c0305af8c8250e953352.1483370556.git.johannes.schindelin@gmx.de>
 References: <cover.1481642927.git.johannes.schindelin@gmx.de> <cover.1483370556.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bFIay83A7bn+F8kCMTzJNbbz+AB4SUs0wXHrhWlZeeEJav1Qix9
- S+jedSSCtoGIwEUtwJx8XWpIohd/qX4FoExxSUpjmkndgKiNgJkYKKJC7jPmRN9XJotRgsj
- I8Kyr1oE8HCSgJ9n5HPhtAw8LeACscnYrpsJYJNVF94rIxoeUtcKlINsi0TDT8hi3upO3N4
- SQn6fhDTw04H9mWOujWjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZJxiFQPNU5g=:Qs0fgtOAR7IF32KVd6dXlP
- dggPJ69/25t0k5mYWa6gWMTamW/dPBsVwbrf2xur+SVeXDWn90Mtpvvf0fKdwluRu5iwds7Tz
- tGQjj8DY6rkleLuwnvvE9slYTriGhmtAMkLVYS5n5UKxluQ5jGhLkw0xwSN8I/AdmGbIAHVi1
- Ek7pdAvD8WdSHfSY3FMsM/0ZV8PZ0t9XYQjfFNVnaPummRd6rG4U/z6m8fVvLKh8icZo5wE6X
- SI9mYBDlFUChWdZgKDNy2XZl3Q9pNu6JsncspSwcKCyriD+9ffmW+3eMI6X0Ds+KgtFXqgwjz
- 58k+DZYMA/B7oqoi0K9feeQktLs+zqPFBNtE5xUI/a+zZqMvlki59jgqx/evzqgGQ81cyrY/G
- DFfwd+2IiEGjVoyesmAGhvbg8GsLHOflx5kpgvG9Qb6bdfZ0i8BvuTuPEOYR9Y9PzmpeqOIUG
- ngNOIjw5+2RwZ9/H6P8zkBQUE78ClnswcKxT+P6SvMrt4lNEc5gwjP+Vyb8WUYoiLkDoD3hJZ
- z5WwQC/t5N30EUIi6hDb1bpqEUgSdC+mVRQUxoWMe8GwL8HDc1SrAu0k/h5YsbjQR0q4w7jrI
- yFIq25KkEh2oIZfpAmdqWkTGLyvEoP16Jy47B6aKsJjp7XiRS19u8ce9vagkRJnPnhWS20Hcm
- 0d0xYYxtq8Mjz7QaufIJfNJhdsnnL1NSrFoEcs1nBY49fUaEqOmrwd9YhNMgRiFOPAZDH3rl4
- uG/7MfnISUNX2RPfY12rqULHYg/pulqtyoBxxStKsiL8knSO/C3yGdkk7/n+qCPopTSNEvLMq
- irW0wNf
+X-Provags-ID: V03:K0:xcqC//extl3euEiu9klpacivAPF6ysDfirXhcHbd5SuEtDS3l88
+ QjF7h258SArNXjibSh2mKLzM03wmCW9GkuLxmuFirXJsySfV7RwSq/JFZf+cN7TFA/T7gCZ
+ y5sl0jaAtOi185z0zpfSs6YpSVIA6TZuGS3K9WRkXzfvgeIXlH2FWdqIe6TmkTYHbaj0BST
+ julM6PQ3O2ll8e5Wzg6QQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QVNszTN6M00=:jkWh9neiMo0BEpEiQ+Q6WY
+ fXDZNGM4Cr5IULTLYuGFjSkYHuhNOyR5tPqitSc5yNbtmalNrHK8n5amSEkIwaBmfz0XTh1im
+ R5MsOBfxYFdm3Hr0Ir66ZRoNpMzAGV8wWrZWOOeXZDrSeTkNhnsTOZCEt0vcnYhLaqk45UvHp
+ Phfp4xHPDxTEACoguAt2XdHO48wuSj4Pw9c2Ojc9va0BoNY1V+iSjbSM8Ho9NqU2mnpFxs31X
+ dl9Kq1mm8qPBbq89VBa5gMreL2ZaA+PZm+CVgvTA0qREAHu4hbUCpJCI14iO10PTwjpb/XW2F
+ iUCbzu26j9lidA9Rsgaorew1OApMgCLuovCOcdpaRWMzs3urPPmhrzP/lUdPpG72SMaY8asoT
+ hKP7vJRtaanzP43DCVbWPSZi+a4OqFflBykUwvvExUpY51SxycD7CMIeRQzfK8tyzND/4x9sy
+ OtNgc0RZBm2JIvWMt3uhz+KpsjFv8FShzXRGqdH38v7khdZQdePNRq9fWALO3DWn4unnBOh5y
+ fAJgqnCBLPw1gkG+31zy4bybxKzZxnQbj8uIXg3KvUModLrsyVjN1OPW6fGAJ0WDfMXJXg+uE
+ bwJIuT9aSjGCYZ1EpY/BB/5JuKF0p0X8zty76UvoreKdvuLMJQ6r/Pluc/um6GFmF4TPz/cGo
+ pUGVvl94997z0pFBJYQ2IslDlXlwhSWSxBEldN9UZBmpb7UmaAnQasmc350+Rz1WsULittlDU
+ 65yzYk3z4TmPZeokIPa0+WvV4hI5kZbv5K7A0pLxJMz2fUjK37AdcC0X4CPSHDJB3lfzYZx8+
+ YymngyO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the behavior of the shell script version of the interactive
-rebase, by using the `output` function defined in `git-rebase.sh`.
+Rather than abusing a strbuf to come up with an environment block, let's
+just use the argv_array structure which serves the same purpose much
+better.
 
+While at it, rename the function to reflect the fact that it does not
+really care exactly what environment variables are defined in said file.
+
+Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sequencer.c | 32 +++++++++++---------------------
+ 1 file changed, 11 insertions(+), 21 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index c7dc5a2ad4..a501dfce38 100644
+index 41f80ea2c4..a0d0aaeaf8 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -610,6 +610,11 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	cmd.git_cmd = 1;
+@@ -544,18 +544,17 @@ static int write_author_script(const char *message)
+ }
+ 
+ /*
+- * Read the author-script file into an environment block, ready for use in
+- * run_command(), that can be free()d afterwards.
++ * Read a list of environment variable assignments (such as the author-script
++ * file) into an environment block. Returns -1 on error, 0 otherwise.
+  */
+-static char **read_author_script(void)
++static int read_env_script(struct argv_array *env)
+ {
+ 	struct strbuf script = STRBUF_INIT;
+ 	int i, count = 0;
+-	char *p, *p2, **env;
+-	size_t env_size;
++	char *p, *p2;
+ 
+ 	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
+-		return NULL;
++		return -1;
+ 
+ 	for (p = script.buf; *p; p++)
+ 		if (skip_prefix(p, "'\\\\''", (const char **)&p2))
+@@ -567,19 +566,12 @@ static char **read_author_script(void)
+ 			count++;
+ 		}
+ 
+-	env_size = (count + 1) * sizeof(*env);
+-	strbuf_grow(&script, env_size);
+-	memmove(script.buf + env_size, script.buf, script.len);
+-	p = script.buf + env_size;
+-	env = (char **)strbuf_detach(&script, NULL);
+-
+ 	for (i = 0; i < count; i++) {
+-		env[i] = p;
++		argv_array_push(env, p);
+ 		p += strlen(p) + 1;
+ 	}
+-	env[count] = NULL;
+ 
+-	return env;
++	return 0;
+ }
+ 
+ static const char staged_changes_advice[] =
+@@ -612,14 +604,12 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 			  int allow_empty, int edit, int amend,
+ 			  int cleanup_commit_message)
+ {
+-	char **env = NULL;
+-	struct argv_array array;
++	struct argv_array env = ARGV_ARRAY_INIT, array;
+ 	int rc;
+ 	const char *value;
  
  	if (is_rebase_i(opts)) {
-+		if (!edit) {
-+			cmd.stdout_to_stderr = 1;
-+			cmd.err = -1;
-+		}
-+
- 		if (read_env_script(&cmd.env_array)) {
+-		env = read_author_script();
+-		if (!env) {
++		if (!read_env_script(&env)) {
  			const char *gpg_opt = gpg_sign_opt_quoted(opts);
  
-@@ -644,6 +649,19 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 	if (opts->allow_empty_message)
- 		argv_array_push(&cmd.args, "--allow-empty-message");
+ 			return error(_(staged_changes_advice),
+@@ -655,9 +645,9 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&array, "--allow-empty-message");
  
-+	if (cmd.err == -1) {
-+		/* hide stderr on success */
-+		struct strbuf buf = STRBUF_INIT;
-+		int rc = pipe_command(&cmd,
-+				      NULL, 0,
-+				      /* stdout is already redirected */
-+				      NULL, 0,
-+				      &buf, 0);
-+		if (rc)
-+			fputs(buf.buf, stderr);
-+		strbuf_release(&buf);
-+		return rc;
-+	}
+ 	rc = run_command_v_opt_cd_env(array.argv, RUN_GIT_CMD, NULL,
+-			(const char *const *)env);
++			(const char *const *)env.argv);
+ 	argv_array_clear(&array);
+-	free(env);
++	argv_array_clear(&env);
  
- 	return run_command(&cmd);
+ 	return rc;
  }
 -- 
 2.11.0.rc3.windows.1
