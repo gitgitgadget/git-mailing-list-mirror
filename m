@@ -2,79 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D64D31FEB3
-	for <e@80x24.org>; Mon,  2 Jan 2017 06:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A34651FEB3
+	for <e@80x24.org>; Mon,  2 Jan 2017 08:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754013AbdABGxy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 01:53:54 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33956 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752242AbdABGxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 01:53:54 -0500
-Received: (qmail 16856 invoked by uid 109); 2 Jan 2017 06:53:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 06:53:53 +0000
-Received: (qmail 12241 invoked by uid 111); 2 Jan 2017 06:54:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Jan 2017 01:54:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jan 2017 01:53:51 -0500
-Date:   Mon, 2 Jan 2017 01:53:51 -0500
-From:   Jeff King <peff@peff.net>
-To:     "A. Wilcox" <awilfox@adelielinux.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Test failures when Git is built with libpcre and grep is built
- without it
-Message-ID: <20170102065351.7ymrm77asjbghgdg@sigill.intra.peff.net>
-References: <58688C9F.4000605@adelielinux.org>
+        id S1754949AbdABI3Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 03:29:24 -0500
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:33960 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751104AbdABI3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 03:29:23 -0500
+Received: by mail-lf0-f68.google.com with SMTP id d16so27284785lfb.1
+        for <git@vger.kernel.org>; Mon, 02 Jan 2017 00:29:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=p9C0hejfWBTjV/dh/8Js6P/g96zVvRXtObImPX/8B40=;
+        b=Xh2+X7NCJdbiEEZ6DYM9RzMcfpcOBjuEyUK2nuEg6HxrCr0NbBsAAUvD0q6R+1YQ5S
+         WVAzjuXPezOyyE78BLDua9OKVPaUyCrvB7rNBGsSe7DdS8nRLdCVaQ2bdF8v95vdOEuG
+         wyfqDQqoyKIIGCLD2ptTp75ChXXhMi10fldfFd5PKKUQ0arwsjuu+opoweXkUjpkAWio
+         xDLWW0NvEkvkV89Gmhpog3IrToCiV5TZa24VfM1gZeoxPN2cTGvHwym1bdU1cG7W9sEx
+         Shy2XYK4GWPOX2nS5AhOTYiI1Aw3+kbzRWxD03iTmKp2lvpEsW+eqUxh0R0NKzdSAYLp
+         AV7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=p9C0hejfWBTjV/dh/8Js6P/g96zVvRXtObImPX/8B40=;
+        b=pbvezfIRJCKlP6RddmESMCPRm/1dC4nZBybD/mHqBuGbJgWQ+NUFU+D/Q+oCVMRCig
+         68Fe5x6uhfyt7oFFcr6r7zTqqoHoWahd6Ud+7rp8iiDhQkmpXAna3pytT/rPs27tN/bu
+         sAHhm64/9uf2YKQDPwvSDplo3m8ETvooTy4+p0+rk8hlNtM12Bl4B8ky3sFHKioGNPtk
+         Vf2mdXF07jUdQacUnsKXtVlYb9gWroDLvK3cNyYxTiWw95vjB49aXisQI2FqFiQlGo/P
+         crULU9lWRueRUJhluSBfsjRoGvd6vaqwen1q/WgmHGSST4yhuYyVQvZ6Ri0uqrVePdi6
+         rfrA==
+X-Gm-Message-State: AIkVDXICyOHNCWYyc0y6ifDzY+/zGRJhs3AMmCq5afMUBjXEjWjYUFbagHIw8ucy8pdRZx0/B2nyTaCQmJmjkg==
+X-Received: by 10.25.99.73 with SMTP id x70mr20827140lfb.81.1483345761468;
+ Mon, 02 Jan 2017 00:29:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <58688C9F.4000605@adelielinux.org>
+Received: by 10.25.135.198 with HTTP; Mon, 2 Jan 2017 00:29:21 -0800 (PST)
+In-Reply-To: <xmqqvau59ocy.fsf@gitster.mtv.corp.google.com>
+References: <20161226102222.17150-1-chriscool@tuxfamily.org>
+ <20161226102222.17150-7-chriscool@tuxfamily.org> <xmqqvau59ocy.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 2 Jan 2017 09:29:21 +0100
+Message-ID: <CAP8UFD1TwVvsvuffyHuzse_9afbNvSEJtyQyWzn6Rc4KwJNwHQ@mail.gmail.com>
+Subject: Re: [PATCH v3 06/21] t1700: add tests for core.splitIndex
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 31, 2016 at 10:59:11PM -0600, A. Wilcox wrote:
+On Tue, Dec 27, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> +test_expect_success 'set core.splitIndex config variable to true' '
+>> +     git config core.splitIndex true &&
+>> +     : >three &&
+>> +     git update-index --add three &&
+>> +     git ls-files --stage >ls-files.actual &&
+>> +     cat >ls-files.expect <<EOF &&
+>> +100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0    one
+>> +100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0    three
+>> +100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0    two
+>> +EOF
+>> +     test_cmp ls-files.expect ls-files.actual &&
+>
+> It does not add much value to follow the "existing" outdated style
+> like this when you are only adding new tests.  Write these like
+>
+>         cat >ls-files.expect <<-\EOF &&
+>         100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       one
+>         100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       three
+>         100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       two
+>         EOF
+>
+> which would give incentive to others (or yourself) to update the
+> style of the existing mess ;-).
 
-> I'm attempting to package Git for our new Linux distribution and I
-> have run in to a failure on our PowerPC builder while running the test
-> suite.
-> 
-> The PowerPC builder runs a tiny version of grep(1) that was not built
-> with PCRE.  As such, grep -P returns 2 and prints:
-> 
-> grep: support for the -P option is not compiled into this
-> - --disable-perl-regexp binary
-> 
-> However, our Git build *does* link against libpcre.  This causes a
-> tests numbered 142 and 143 to fail in t7810-grep.sh.
-
-If we are using "grep -P" in our test suite, it should definitely be
-marked with a prerequisite that is independent of the LIBPCRE one.
-
-But I can't find any such place in our test suite. Grepping for
-"grep.*-P" doesn't turn up any hits, and dropping this into my PATH as
-"grep":
-
-    #!/bin/sh
-
-    case "$*" in
-    *-P*|*perl-regex*)
-      echo >&2 "Pretending not to understand -P"
-      exit 1
-    esac
-
-    exec /bin/grep "$@"
-
-doesn't break anything. We do call "git grep -P", of course, but that
-should be using the internal libpcre (once upon a time we would invoke
-an external grep, but that feature has been gone for years).
-
-Can you show us the output of "./t7810-grep.sh -v -i"?
-
--Peff
+Ok, I will add a patch to update the style of the existing tests at
+the beginning of the series and then use the same new style in the
+tests I add in later patches.
