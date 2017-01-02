@@ -2,75 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 537771FEB3
-	for <e@80x24.org>; Mon,  2 Jan 2017 10:58:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC1541FEB3
+	for <e@80x24.org>; Mon,  2 Jan 2017 11:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755481AbdABK6Y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 05:58:24 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50012 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755155AbdABK6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 05:58:23 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8MyE-1cjdk61EyQ-00vxMf; Mon, 02
- Jan 2017 11:58:20 +0100
-Date:   Mon, 2 Jan 2017 11:58:18 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     "M. Abuhena Sobuj" <abuhenasobuj@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Error: could not fork child process: Resource temporarily
- unavailable (-1)
-In-Reply-To: <CACkJq_gQQURdyUf5HvSqvw0Ee_yjCnFZ0DXJxZt42JOwEOd2tg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1701021155350.3469@virtualbox>
-References: <CACkJq_gQQURdyUf5HvSqvw0Ee_yjCnFZ0DXJxZt42JOwEOd2tg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:vb62DEPi/BXs+a+k+JDDSSg8Yz6k7TXB6kI+4B9tlMgZPJqWcoS
- 3LB+0hqTDMuXNNMuWvalXdHdAVvgwbbXXrgywadnxvJQGJ4IumFWRVC0CoTKvJgmPfamoza
- eddGNCuwyfVJLU4YeLJgcf3vRq7KmqVqA0yVgD0/bxdy3RT8ThFctzOZA1EkyxVxXuhqiHv
- iLgmlMDdj8b7JElMu1MHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5lEUVoVqUjA=:T+KQUJEPcBQx/ROWhcFRrv
- O7LS5vP40AtSsV2eeFSWE5MbKvsmlVS5yvGMxAkgaUfFy61we5ulCWlCdCnMKcaH+L1vU9W6L
- 86+UhGyVQVBRvX2l3dUkOS55Xexg2jH8BTllu9xBIBv3ICuHhBfUuX3WpSnEtLUOyEDlpxiOw
- 8vizGiP27IQNcZJqJYx9JvsKfqXMC8cqWak1W0MF+3uMSZHT4Ldzrv7mmhplPxNLGeMS41QTb
- rPB9FzqRDBG7bMonky3uwfCjkKmzAPWSgdggYNkOWkAW1L/CDFP8GOw5o2D/QL25EFV/FItC+
- o6HNI64SmuICh2zRAeygkaxe/zgWhGZAIj0ZCEvEWkTuUUYO04XNHsSpVUuCStzaoJya5wvru
- OpbeNAlcUAz3ywaxuhqmDK63CSBd8IXaVIP+tNuODqb/hGPhYYurtUUmzYk+CKN7EOC6uXfVM
- CQ/XRDAsyjHdQfIMgvyEvKH4UYWnVuoTTmH9FkfRrK/Ehe4kcmnPxL3P+sYmXwN/FZUjJIvPE
- 20kA2BeNvipdTh36Hk8jAZBWVOcsdltef3MMKgsp+O7pOx9cXL0GIlDCdTg4FoT29n9K7CI2T
- gOFg/TsKToF6ORpOQUF5xk6j9CPXmxaA0ysO4NBXq/j9LgjXCSVKpQyGGmq0PweXQFTxsWdkl
- zGQQWhALx4rjERRhoXEAY3R36cA88M4Sl0MW9Dlb0+PL6pxIEIaFQVBfZNrZK2fgtQkiRJ3CD
- qRkBW3SoXJO/OfHvyXuvOXa7HDg7v1zMf4mrDxsQsOoY+JaZqipdTO90Q1kC2w/+PSJr6vfhW
- tdQhymL
+        id S932662AbdABLO6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 06:14:58 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:58320 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751307AbdABLO5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Jan 2017 06:14:57 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id D58BC2094F;
+        Mon,  2 Jan 2017 06:14:56 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 02 Jan 2017 06:14:56 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+        date:from:message-id:subject:to:x-me-sender:x-me-sender
+        :x-sasl-enc:x-sasl-enc; s=mesmtp; bh=J4wpPykKzH0aq/7iA/YQvAA1BMQ
+        =; b=j5lm6j2AoDArPJzPggpEYv/AZqvD4HrYZAXuqSy9P9gI7Tr4j6fA1yvfJSq
+        h8E0np5gHcO3jdmJqotG7vIO+B5LmCUJTAcHyy2Epf9c8sh1BazC3UiYL6M3DwBO
+        EMjH8+1v94CJqOnnHyCUEpqKKvr55zXNoN9EEGQmAQK9S9+U=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=J4
+        wpPykKzH0aq/7iA/YQvAA1BMQ=; b=CsxBC44+N8BdnxKkwBfUtF+k14HU28Mt7R
+        EslLzSwxF+iLe/HIsGqawprecoXjcZ5iPR9CjXAlVKDDKKHuvmFEUqJFcmr/nTqu
+        PM6cuzYSV/pkTFYr+jXMjQepmaqIIz20VFWiGxxMRnRt3qrUHGX8rQoz79hOGH9Q
+        nt6Nbg0SU=
+X-ME-Sender: <xms:MDZqWN_HPXVwtFxAR6tH2nlzE9BqiSpshTRYlqy14tsAxuVlxJoHLg>
+X-Sasl-enc: ZKJvTEqZYwHxI3bjvY+dN+CEFW6zUcT4R9dTdNNlrw4L 1483355696
+Received: from localhost (p5dc51a6b.dip0.t-ipconnect.de [93.197.26.107])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 4B0167E8C3;
+        Mon,  2 Jan 2017 06:14:56 -0500 (EST)
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH 0/5] Localise error headers
+Date:   Mon,  2 Jan 2017 12:14:49 +0100
+Message-Id: <cover.1483354746.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.11.0.372.g2fcea0e476
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Currently, the headers "error: ", "warning: " etc. - generated by die(),
+warning() etc. - are not localized, but we feed many localized error messages
+into these functions so that we produce error messages with mixed localisation.
 
-On Mon, 2 Jan 2017, M. Abuhena Sobuj wrote:
+This series introduces variants of die() etc. that use localised variants of
+the headers, i.e. _("error: ") etc., and are to be fed localized messages. So,
+instead of die(_("not workee")), which would produce a mixed localisation (such
+as "error: geht ned"), one should use die_(_("not workee")) (resulting in
+"Fehler: geht ned").
 
-> My Git Bash was perfect but suddenly It stooped work for me.
-> 
-> I just got message
-> "Error: could not fork child process: Resource temporarily unavailable (-1).
-> DLL rebasing may be required. See 'rebaseall / rebase --help'."
+In this implementation, the gettext call for the header and the body are done
+in different places (error function vs. caller) but this call pattern seems to
+be the easiest variant for the caller, because the message body has to be marked
+for localisation in any case, and N_() requires more letters than _(), an extra
+argument to die() etc. even more than the extra "_" in the function name.
 
-Is this a 32-bit system? If so, simply try to reinstall Git for Windows,
-that should make it work again [*1*].
+1/5 prepares the error machinery
+2/5 provides new variants error_() etc.
+3/5 has coccinelli rules error(_(E)) -> error_(_(E)) etc.
+4/5 applies the coccinelli patches
 
-If that does not solve the problem, you will want to open a ticket at
-https://github.com/git-for-windows/git/issues/new
+5/5 is not to be applied to the main tree, but helps you try out the feature:
+it has changes to de.po and git.pot so that e.g. "git branch" has fully localised
+error messages (see the recipe in the commit message).
 
-Ciao,
-Johannes
+Michael J Gruber (5):
+  error/warn framework: prepare for l10n
+  error/warn framework: provide localized variants
+  error/warn framework framework: coccinelli rules
+  error/warn framework: localize
+  WIP: Feature demonstration
 
-Footnote *1*: https://github.com/git-for-windows/git/wiki/32-bit-issues
+ advice.c                           |   16 +-
+ apply.c                            |   10 +-
+ apply.h                            |    4 +-
+ archive.c                          |    6 +-
+ attr.c                             |    3 +-
+ bisect.c                           |    2 +-
+ branch.c                           |    4 +-
+ builtin/add.c                      |   20 +-
+ builtin/am.c                       |   27 +-
+ builtin/archive.c                  |   10 +-
+ builtin/blame.c                    |   12 +-
+ builtin/branch.c                   |   45 +-
+ builtin/bundle.c                   |    4 +-
+ builtin/check-ignore.c             |   14 +-
+ builtin/check-mailmap.c            |    2 +-
+ builtin/checkout-index.c           |    2 +-
+ builtin/checkout.c                 |   27 +-
+ builtin/clean.c                    |   10 +-
+ builtin/clone.c                    |   39 +-
+ builtin/column.c                   |    2 +-
+ builtin/commit.c                   |   87 +-
+ builtin/config.c                   |    2 +-
+ builtin/describe.c                 |    6 +-
+ builtin/diff.c                     |    2 +-
+ builtin/fetch.c                    |   21 +-
+ builtin/gc.c                       |    3 +-
+ builtin/grep.c                     |   14 +-
+ builtin/help.c                     |    4 +-
+ builtin/index-pack.c               |   42 +-
+ builtin/interpret-trailers.c       |    2 +-
+ builtin/log.c                      |   48 +-
+ builtin/merge-recursive.c          |    2 +-
+ builtin/merge.c                    |   53 +-
+ builtin/mv.c                       |    6 +-
+ builtin/notes.c                    |   40 +-
+ builtin/pack-objects.c             |    4 +-
+ builtin/prune.c                    |    2 +-
+ builtin/pull.c                     |   10 +-
+ builtin/push.c                     |   22 +-
+ builtin/remote.c                   |   10 +-
+ builtin/repack.c                   |    4 +-
+ builtin/replace.c                  |    2 +-
+ builtin/reset.c                    |   10 +-
+ builtin/rev-list.c                 |    2 +-
+ builtin/rev-parse.c                |    2 +-
+ builtin/revert.c                   |    4 +-
+ builtin/rm.c                       |    6 +-
+ builtin/shortlog.c                 |    2 +-
+ builtin/show-branch.c              |    7 +-
+ builtin/submodule--helper.c        |    9 +-
+ builtin/tag.c                      |   20 +-
+ builtin/unpack-objects.c           |    2 +-
+ builtin/update-index.c             |    8 +-
+ builtin/worktree.c                 |    6 +-
+ bundle.c                           |    4 +-
+ config.c                           |    4 +-
+ connect.c                          |    6 +-
+ connected.c                        |    2 +-
+ contrib/coccinelle/errorl10n.cocci |   47 +
+ daemon.c                           |    3 +-
+ diff.c                             |    8 +-
+ dir.c                              |    4 +-
+ fast-import.c                      |    4 +-
+ fetch-pack.c                       |   26 +-
+ git-compat-util.h                  |   18 +-
+ help.c                             |    2 +-
+ http-backend.c                     |    4 +-
+ http.c                             |    4 +-
+ merge.c                            |    2 +-
+ notes-utils.c                      |    2 +-
+ pathspec.c                         |   13 +-
+ po/de.po                           | 2922 ++++++++++++++++++++++++------------
+ po/git.pot                         | 2781 ++++++++++++++++++++++------------
+ pretty.c                           |    2 +-
+ ref-filter.c                       |   20 +-
+ remote.c                           |    2 +-
+ revision.c                         |    4 +-
+ run-command.c                      |    6 +-
+ send-pack.c                        |   12 +-
+ sequencer.c                        |    7 +-
+ setup.c                            |    6 +-
+ sha1_file.c                        |    2 +-
+ submodule.c                        |    8 +-
+ trailer.c                          |    4 +-
+ transport.c                        |    2 +-
+ tree-walk.c                        |    2 +-
+ usage.c                            |  122 +-
+ wrapper.c                          |    2 +-
+ wt-status.c                        |    2 +-
+ 89 files changed, 4408 insertions(+), 2374 deletions(-)
+ create mode 100644 contrib/coccinelle/errorl10n.cocci
+
+-- 
+2.11.0.372.g2fcea0e476
+
