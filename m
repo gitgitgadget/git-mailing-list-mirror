@@ -2,94 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A34651FEB3
-	for <e@80x24.org>; Mon,  2 Jan 2017 08:29:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32DDB1FEB3
+	for <e@80x24.org>; Mon,  2 Jan 2017 08:58:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754949AbdABI3Y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 03:29:24 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:33960 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751104AbdABI3X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 03:29:23 -0500
-Received: by mail-lf0-f68.google.com with SMTP id d16so27284785lfb.1
-        for <git@vger.kernel.org>; Mon, 02 Jan 2017 00:29:22 -0800 (PST)
+        id S1755320AbdABI6O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 03:58:14 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36808 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751104AbdABI6N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 03:58:13 -0500
+Received: by mail-pg0-f54.google.com with SMTP id f188so201903357pgc.3
+        for <git@vger.kernel.org>; Mon, 02 Jan 2017 00:58:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=p9C0hejfWBTjV/dh/8Js6P/g96zVvRXtObImPX/8B40=;
-        b=Xh2+X7NCJdbiEEZ6DYM9RzMcfpcOBjuEyUK2nuEg6HxrCr0NbBsAAUvD0q6R+1YQ5S
-         WVAzjuXPezOyyE78BLDua9OKVPaUyCrvB7rNBGsSe7DdS8nRLdCVaQ2bdF8v95vdOEuG
-         wyfqDQqoyKIIGCLD2ptTp75ChXXhMi10fldfFd5PKKUQ0arwsjuu+opoweXkUjpkAWio
-         xDLWW0NvEkvkV89Gmhpog3IrToCiV5TZa24VfM1gZeoxPN2cTGvHwym1bdU1cG7W9sEx
-         Shy2XYK4GWPOX2nS5AhOTYiI1Aw3+kbzRWxD03iTmKp2lvpEsW+eqUxh0R0NKzdSAYLp
-         AV7A==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=obuAhKcBCwPHqH7orI/wpRcnScbOd321twAtqCfTNVc=;
+        b=Neq1KE38/bMgVf+luJM+czy6HN5d3XazzC69n63IyFUZ8uilY0uEqeNio7iEEOs4Gt
+         5Yxk/MLo5u/I6U6PA7kPIIhhG+8nbq8QxpQk4uBpbuJWSeGlrszPpN5HeumzEd/Mcodj
+         p4Kmp3zxiGxXfQYLolnp3HJZVRk4Sf3GfRu1iG5RIBjH1dvefSIWzbzpokRo/xa8dL6z
+         baN+WY3rZg18j+Xqpv2Nc4gIqakHsYpC4do4RQz9U/V9esa++IRC1JapX3UtxDodiXUX
+         mWTN6/0nnYeaCWrlqWaijQve6/a8OBhjvNMk+LfxINDvgiU61a2ZMYouolRjKtBAbYOI
+         oMbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=p9C0hejfWBTjV/dh/8Js6P/g96zVvRXtObImPX/8B40=;
-        b=pbvezfIRJCKlP6RddmESMCPRm/1dC4nZBybD/mHqBuGbJgWQ+NUFU+D/Q+oCVMRCig
-         68Fe5x6uhfyt7oFFcr6r7zTqqoHoWahd6Ud+7rp8iiDhQkmpXAna3pytT/rPs27tN/bu
-         sAHhm64/9uf2YKQDPwvSDplo3m8ETvooTy4+p0+rk8hlNtM12Bl4B8ky3sFHKioGNPtk
-         Vf2mdXF07jUdQacUnsKXtVlYb9gWroDLvK3cNyYxTiWw95vjB49aXisQI2FqFiQlGo/P
-         crULU9lWRueRUJhluSBfsjRoGvd6vaqwen1q/WgmHGSST4yhuYyVQvZ6Ri0uqrVePdi6
-         rfrA==
-X-Gm-Message-State: AIkVDXICyOHNCWYyc0y6ifDzY+/zGRJhs3AMmCq5afMUBjXEjWjYUFbagHIw8ucy8pdRZx0/B2nyTaCQmJmjkg==
-X-Received: by 10.25.99.73 with SMTP id x70mr20827140lfb.81.1483345761468;
- Mon, 02 Jan 2017 00:29:21 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=obuAhKcBCwPHqH7orI/wpRcnScbOd321twAtqCfTNVc=;
+        b=J9kUDPenuVX2lNCbfw7nbobnFA+eMQ950HHtQiOlviK+WLC5a/L5Rt08SbUd4wRCme
+         HYJCH3yiYsbheWDTH8EqrdxUtIAiYtx4jJVh8XsXjHC3DFNDuN9znkTlQNIYzzP24QqV
+         2e3aMJSrstMGW0yUF+BqN6qB3WhPip/qdg65oLeQXMDyryguSgJf/HaSjdPt9LMCdijx
+         9bR8YoDE4EdJn8IdJhntfvy/Dz//COEV8echui5vBA/cGZrn1zjg2W+iRpRt5poyAjiz
+         DdRIkL8v4kOLioiL1Kgqb8aDwggdKCpX3nP8zq+pjl9X0WUw7F0j+U3/gg5BAc2//awk
+         4vQQ==
+X-Gm-Message-State: AIkVDXIucwlTuu/gAUOGilNkK9+jRpPrDlkGH7HPOUYBxzZwMUGOxQ6LnjXBabAQhaxhMA==
+X-Received: by 10.84.232.197 with SMTP id x5mr89219445plm.102.1483347493252;
+        Mon, 02 Jan 2017 00:58:13 -0800 (PST)
+Received: from arch-attack.localdomain (c-50-152-192-15.hsd1.ca.comcast.net. [50.152.192.15])
+        by smtp.gmail.com with ESMTPSA id c2sm130302341pfl.66.2017.01.02.00.58.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Jan 2017 00:58:12 -0800 (PST)
+Date:   Mon, 2 Jan 2017 00:58:10 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Cc:     spearce@spearce.org, gitster@pobox.com
+Subject: [PATCH] completion: complete git submodule subcommands
+Message-ID: <20170102085810.GA10331@arch-attack.localdomain>
 MIME-Version: 1.0
-Received: by 10.25.135.198 with HTTP; Mon, 2 Jan 2017 00:29:21 -0800 (PST)
-In-Reply-To: <xmqqvau59ocy.fsf@gitster.mtv.corp.google.com>
-References: <20161226102222.17150-1-chriscool@tuxfamily.org>
- <20161226102222.17150-7-chriscool@tuxfamily.org> <xmqqvau59ocy.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 2 Jan 2017 09:29:21 +0100
-Message-ID: <CAP8UFD1TwVvsvuffyHuzse_9afbNvSEJtyQyWzn6Rc4KwJNwHQ@mail.gmail.com>
-Subject: Re: [PATCH v3 06/21] t1700: add tests for core.splitIndex
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 27, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> +test_expect_success 'set core.splitIndex config variable to true' '
->> +     git config core.splitIndex true &&
->> +     : >three &&
->> +     git update-index --add three &&
->> +     git ls-files --stage >ls-files.actual &&
->> +     cat >ls-files.expect <<EOF &&
->> +100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0    one
->> +100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0    three
->> +100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0    two
->> +EOF
->> +     test_cmp ls-files.expect ls-files.actual &&
->
-> It does not add much value to follow the "existing" outdated style
-> like this when you are only adding new tests.  Write these like
->
->         cat >ls-files.expect <<-\EOF &&
->         100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       one
->         100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       three
->         100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       two
->         EOF
->
-> which would give incentive to others (or yourself) to update the
-> style of the existing mess ;-).
+Allow git submodule subcommands to be completed. This allows the
+'--remote' in the command 'git submodule update --remote', for example,
+to be fully completed.
 
-Ok, I will add a patch to update the style of the existing tests at
-the beginning of the series and then use the same new style in the
-tests I add in later patches.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+Hi Shawn, sorry this is my first contribution to a mailing-list based
+project. If I've done anything wrong, please let me know.
+
+Thanks,
+
+Denton Liu
+
+---
+ contrib/completion/git-completion.bash | 46 ++++++++++++++++++++++++++--------
+ 1 file changed, 35 insertions(+), 11 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 21016bf8d..941fbdfe2 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2556,17 +2556,41 @@ _git_submodule ()
+ 	__git_has_doubledash && return
+ 
+ 	local subcommands="add status init deinit update summary foreach sync"
+-	if [ -z "$(__git_find_on_cmdline "$subcommands")" ]; then
+-		case "$cur" in
+-		--*)
+-			__gitcomp "--quiet --cached"
+-			;;
+-		*)
+-			__gitcomp "$subcommands"
+-			;;
+-		esac
+-		return
+-	fi
++	local subcommand="$(__git_find_on_cmdline "$subcommands")"
++
++	case "$subcommand,$cur" in
++	,--*)
++		__gitcomp "--quiet"
++		;;
++	,*)
++		__gitcomp "$subcommands --quiet"
++		;;
++	add,--*)
++		__gitcomp "--force --name --reference --depth"
++		;;
++	status,--*)
++		__gitcomp "--cached --recursive"
++		;;
++	deinit,--*)
++		__gitcomp "--force --all"
++		;;
++	update,--*)
++		__gitcomp "
++			--init --remote --no-fetch --no-recommended-shallow
++			--recommended-shallow --force --rebase --merge --reference
++			--depth --recursive --jobs
++			"
++		;;
++	summary,--*)
++		__gitcomp "--cached --files --summary-limit"
++		;;
++	summary,*)
++		__gitcomp_nl "$(__git_refs)"
++		;;
++	foreach,--*|sync,--*)
++		__gitcomp "--recursive"
++		;;
++	esac
+ }
+ 
+ _git_svn ()
+-- 
+2.11.0
+
