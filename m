@@ -7,147 +7,85 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 641A2205C9
-	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C830205C9
+	for <e@80x24.org>; Mon,  2 Jan 2017 15:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933057AbdABPfq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 2 Jan 2017 10:35:46 -0500
-Received: from mout.gmx.net ([212.227.15.15]:62493 "EHLO mout.gmx.net"
+        id S933075AbdABPfw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 2 Jan 2017 10:35:52 -0500
+Received: from mout.gmx.net ([212.227.15.19]:49531 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932874AbdABPfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2017 10:35:44 -0500
+        id S932874AbdABPfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2017 10:35:51 -0500
 Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMk99-1cR5hx1bIt-008XPF; Mon, 02
- Jan 2017 16:35:26 +0100
-Date:   Mon, 2 Jan 2017 16:35:25 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7Hao-1ckg0Y0Lpe-00x3Z3; Mon, 02
+ Jan 2017 16:35:40 +0100
+Date:   Mon, 2 Jan 2017 16:35:39 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         Stephan Beyer <s-beyer@gmx.net>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 31/38] sequencer: make reading author-script more
- elegant
+Subject: [PATCH v3 34/38] sequencer (rebase -i): show only failed cherry-picks'
+ output
 In-Reply-To: <cover.1483370556.git.johannes.schindelin@gmx.de>
-Message-ID: <f688d6b0aba5cc761a15c0305af8c8250e953352.1483370556.git.johannes.schindelin@gmx.de>
+Message-ID: <4209508dfa80b1097a1b25b07f1a723c27d7c07d.1483370556.git.johannes.schindelin@gmx.de>
 References: <cover.1481642927.git.johannes.schindelin@gmx.de> <cover.1483370556.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:xcqC//extl3euEiu9klpacivAPF6ysDfirXhcHbd5SuEtDS3l88
- QjF7h258SArNXjibSh2mKLzM03wmCW9GkuLxmuFirXJsySfV7RwSq/JFZf+cN7TFA/T7gCZ
- y5sl0jaAtOi185z0zpfSs6YpSVIA6TZuGS3K9WRkXzfvgeIXlH2FWdqIe6TmkTYHbaj0BST
- julM6PQ3O2ll8e5Wzg6QQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QVNszTN6M00=:jkWh9neiMo0BEpEiQ+Q6WY
- fXDZNGM4Cr5IULTLYuGFjSkYHuhNOyR5tPqitSc5yNbtmalNrHK8n5amSEkIwaBmfz0XTh1im
- R5MsOBfxYFdm3Hr0Ir66ZRoNpMzAGV8wWrZWOOeXZDrSeTkNhnsTOZCEt0vcnYhLaqk45UvHp
- Phfp4xHPDxTEACoguAt2XdHO48wuSj4Pw9c2Ojc9va0BoNY1V+iSjbSM8Ho9NqU2mnpFxs31X
- dl9Kq1mm8qPBbq89VBa5gMreL2ZaA+PZm+CVgvTA0qREAHu4hbUCpJCI14iO10PTwjpb/XW2F
- iUCbzu26j9lidA9Rsgaorew1OApMgCLuovCOcdpaRWMzs3urPPmhrzP/lUdPpG72SMaY8asoT
- hKP7vJRtaanzP43DCVbWPSZi+a4OqFflBykUwvvExUpY51SxycD7CMIeRQzfK8tyzND/4x9sy
- OtNgc0RZBm2JIvWMt3uhz+KpsjFv8FShzXRGqdH38v7khdZQdePNRq9fWALO3DWn4unnBOh5y
- fAJgqnCBLPw1gkG+31zy4bybxKzZxnQbj8uIXg3KvUModLrsyVjN1OPW6fGAJ0WDfMXJXg+uE
- bwJIuT9aSjGCYZ1EpY/BB/5JuKF0p0X8zty76UvoreKdvuLMJQ6r/Pluc/um6GFmF4TPz/cGo
- pUGVvl94997z0pFBJYQ2IslDlXlwhSWSxBEldN9UZBmpb7UmaAnQasmc350+Rz1WsULittlDU
- 65yzYk3z4TmPZeokIPa0+WvV4hI5kZbv5K7A0pLxJMz2fUjK37AdcC0X4CPSHDJB3lfzYZx8+
- YymngyO
+X-Provags-ID: V03:K0:Auk51YWiUjIYGnJbPSwKonulSVmoYBf1ShTLkiQXhi1RTl1dBzW
+ MXx+G8hwngGk3j6vbVuwKiAJuqfLcbOJr5ElCMQR4CYF9LXJUAJpvKQtHxHIwm+wAMLqH8x
+ npWFTECYJ22uNL/6mB3tX5Fa2+61szKt7PQBEa4wCbDJ2b0W2xIMVHnzBA23ZlWLOVJSj6h
+ m4PMnc9A9BA2yV6RFU3FQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5PJV3LS5C1s=:6nljlsMsorjSHz41fUBZxy
+ de0+Kc2H31EBnx/DYve8LViOORO6wzcZ6fjdQuPC9kfLnKiT6JaLe20zTjWwqCjXqq4AdB6r0
+ Wo2/SDz9P6xlioOHHe4/f+4CCtaBphLz5Nv1ReythXYaJmeVElus5NFj+rglBtErDP19XcHaO
+ 4amBIp2YMSHYicljag7XVQHaDEY7E00WeP8UfPbn3K7KWHBSfA69KtiWqihA5Xr7L0aKUTCzU
+ JioLCUn0N+w1TP940lsz4KH5pghN/51TNx7f2AfaNM0HIlK6FtDzA6L1voqTC9VHHg3h21rpB
+ zbsRCLhBy7scXeO+9byGv/WJWqAHv1mqNGHtx5jCY+4vKrmuGcJ1aDfw1FDmM2wCp0VO2dbEm
+ Y1PYJNmS1RcX0lxeqhToCPCVA+W2p0R/MXmxXBwNUjyxnKub0t7a6+7p+4R8BfTGPOeKiw1PP
+ WLd95NzOAsK8n615lS6vGE4pThe54RiDzSAduVI/8ON/lSG5fFTTHgrS62uSDupCZeGCnXWX6
+ kN49eKtS4Tk2I6Ed3IZOE+0/UJ2uhZ8DeuuqBkAurgQikXtavlq3hkZhPjSs7kEOa/NOpoZnZ
+ Iwx8oMmulN0edurkMn6hHUeaKHnAWN8I5T+w+KqFXu8UcyPrU9aWgBqbcDCa/PTjsFso0LOB0
+ 5BGKwy/8rfl2z9kvN3+nur57WBsBTxP659SFF89NqnLOQ0/NrwhKN7eJ2d4NJSk1vV51/zlUy
+ 1p5736y1eP0I9IGXWurqC5wamj0EH3zFYt1cZlb9eYyxGFKVMhBufGviw8/f6XwVpO3EYvDNK
+ jx6y6Xm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than abusing a strbuf to come up with an environment block, let's
-just use the argv_array structure which serves the same purpose much
-better.
+This is the behavior of the shell script version of the interactive
+rebase, by using the `output` function defined in `git-rebase.sh`.
 
-While at it, rename the function to reflect the fact that it does not
-really care exactly what environment variables are defined in said file.
-
-Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 32 +++++++++++---------------------
- 1 file changed, 11 insertions(+), 21 deletions(-)
+ sequencer.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 41f80ea2c4..a0d0aaeaf8 100644
+index a501dfce38..4f37ba8d33 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -544,18 +544,17 @@ static int write_author_script(const char *message)
- }
+@@ -433,6 +433,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	o.ancestor = base ? base_label : "(empty tree)";
+ 	o.branch1 = "HEAD";
+ 	o.branch2 = next ? next_label : "(empty tree)";
++	if (is_rebase_i(opts))
++		o.buffer_output = 2;
  
- /*
-- * Read the author-script file into an environment block, ready for use in
-- * run_command(), that can be free()d afterwards.
-+ * Read a list of environment variable assignments (such as the author-script
-+ * file) into an environment block. Returns -1 on error, 0 otherwise.
-  */
--static char **read_author_script(void)
-+static int read_env_script(struct argv_array *env)
- {
- 	struct strbuf script = STRBUF_INIT;
- 	int i, count = 0;
--	char *p, *p2, **env;
--	size_t env_size;
-+	char *p, *p2;
- 
- 	if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
--		return NULL;
-+		return -1;
- 
- 	for (p = script.buf; *p; p++)
- 		if (skip_prefix(p, "'\\\\''", (const char **)&p2))
-@@ -567,19 +566,12 @@ static char **read_author_script(void)
- 			count++;
- 		}
- 
--	env_size = (count + 1) * sizeof(*env);
--	strbuf_grow(&script, env_size);
--	memmove(script.buf + env_size, script.buf, script.len);
--	p = script.buf + env_size;
--	env = (char **)strbuf_detach(&script, NULL);
--
- 	for (i = 0; i < count; i++) {
--		env[i] = p;
-+		argv_array_push(env, p);
- 		p += strlen(p) + 1;
- 	}
--	env[count] = NULL;
- 
--	return env;
-+	return 0;
- }
- 
- static const char staged_changes_advice[] =
-@@ -612,14 +604,12 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 			  int allow_empty, int edit, int amend,
- 			  int cleanup_commit_message)
- {
--	char **env = NULL;
--	struct argv_array array;
-+	struct argv_array env = ARGV_ARRAY_INIT, array;
- 	int rc;
- 	const char *value;
- 
- 	if (is_rebase_i(opts)) {
--		env = read_author_script();
--		if (!env) {
-+		if (!read_env_script(&env)) {
- 			const char *gpg_opt = gpg_sign_opt_quoted(opts);
- 
- 			return error(_(staged_changes_advice),
-@@ -655,9 +645,9 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 		argv_array_push(&array, "--allow-empty-message");
- 
- 	rc = run_command_v_opt_cd_env(array.argv, RUN_GIT_CMD, NULL,
--			(const char *const *)env);
-+			(const char *const *)env.argv);
- 	argv_array_clear(&array);
--	free(env);
-+	argv_array_clear(&env);
- 
- 	return rc;
- }
+ 	head_tree = parse_tree_indirect(head);
+ 	next_tree = next ? next->tree : empty_tree();
+@@ -444,6 +446,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	clean = merge_trees(&o,
+ 			    head_tree,
+ 			    next_tree, base_tree, &result);
++	if (is_rebase_i(opts) && clean <= 0)
++		fputs(o.obuf.buf, stdout);
+ 	strbuf_release(&o.obuf);
+ 	if (clean < 0)
+ 		return clean;
 -- 
 2.11.0.rc3.windows.1
 
