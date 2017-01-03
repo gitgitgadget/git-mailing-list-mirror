@@ -2,101 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17DCA1FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 18:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BEFC2092F
+	for <e@80x24.org>; Tue,  3 Jan 2017 18:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760250AbdACSPa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 13:15:30 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:33899 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753227AbdACSP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 13:15:28 -0500
-Received: by mail-pg0-f47.google.com with SMTP id y62so165205992pgy.1
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:15:28 -0800 (PST)
+        id S1760288AbdACSPm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 13:15:42 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:34971 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753227AbdACSPk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 13:15:40 -0500
+Received: by mail-qt0-f180.google.com with SMTP id c47so469898233qtc.2
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:15:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JNNoEIaPJ1UzVjvsAwyCwvmC2c3AIXd9wD6EIhB77Vk=;
-        b=Qg+5iX3BNYvAAGy/BjDebIfQzw6cOC6FIlKT7eJxisIzxeu4QtVAq9ZVQPyMUhBjN3
-         ojHOzzlaxuefDfAKr58iqXqEMWgGbV+R3MzHOb3zF8re7FZ0Mrbb6Ctw8KakjdqnlRTx
-         ISdOJnumaLR3iqPtyT/50VYpqSL71IVAJw8OsUzJeh2NMO5Iuq8RKSMNvVSl0iV0rNTe
-         uO/vymFTlIiwnqpCOIsJMurRCftdSvirkX6/WVO4IMICTA8GYJHT21uSwBlejrZJKEZL
-         UnrGgZzlXVLCSKowhF1KG5ZOaxQq9vkBR9AVZt4LzULlbsp3ea1U7Jaqn6vgQp+QVcLl
-         Yajg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=x1uUmuBpThIpkwGYVdmRnA5oYFE2ZnA7CiX7S3+wdM8=;
+        b=qiFwCH0cSDN1T9yfq9Ad+8NkudFwT0HG+LxVkv2InVAF1S7TB/GA4tptoSosMnFU6+
+         A8H9Rr4lEWGLFGWn25X7CcR7993LYM+OJV8vsDKshKmqckcH+hH7YRlleQWxe8qN+t3p
+         X2fW+HdSdT0gzGKzknsveBrYISlZJSIr/CVaSKGYDVxFsHUmWucgZ4sFJyukWHExVcAY
+         W1C7isDaYlIlEUWovDv2ZWkikb3OzIhIKndzClyvizG+puoizo31ke7Nnn690xQ5M3Ln
+         +HztrFNdMWIcc1qeJnjuiOyF3g2XPqMK+ZWOG8h1xPog6JwKrPbxkJV2R47aHBcvrNcM
+         ZeZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JNNoEIaPJ1UzVjvsAwyCwvmC2c3AIXd9wD6EIhB77Vk=;
-        b=NhORdpJVO5+weWlNjz4tjMDX7tjSv2t3HoKs1n96OPRQjPGnjNZPHS2yDC4zEhEGs6
-         dyhuCYlvsgM1RlbXNBgnm0JBTzWF78uJ4GEmRzahUlrMNq4MFVpxQkKhzk2m4rRxDXcB
-         L3Bb9++uicB0xnVEknJkbadI8QJWLKjnvnYk+Y2SXGE4NFLY/k+mnUvdF06sITjUDbUI
-         MmoPTBDmWTK38m7eMSqG+2OyhIApXjVWRo2xCjnv9kB9++eQ6Vq856vdJDfbTkKFX2Zs
-         t/SQXD2jK8sA+87aVXBTXebtAQTjKdHbWzYl1xwTZHuRfPUcFb3Q7OMswNo0Gor6ia5f
-         im2Q==
-X-Gm-Message-State: AIkVDXLVOgGG0ygxQPONTc15o1N6Kiqga671xZU5ZQvuOUcwHf+NGwbez1IVvg3VwrLxeNWF
-X-Received: by 10.99.149.1 with SMTP id p1mr119109984pgd.21.1483467328178;
-        Tue, 03 Jan 2017 10:15:28 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:c019:d4:4575:9b1b])
-        by smtp.gmail.com with ESMTPSA id 65sm141503979pfl.21.2017.01.03.10.15.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 03 Jan 2017 10:15:26 -0800 (PST)
-Date:   Tue, 3 Jan 2017 10:15:25 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 08/16] pathspec: always show mnemonic and name in
- unsupported_magic
-Message-ID: <20170103181525.GB42671@google.com>
-References: <1481223550-65277-1-git-send-email-bmwill@google.com>
- <1481670870-66754-1-git-send-email-bmwill@google.com>
- <1481670870-66754-9-git-send-email-bmwill@google.com>
- <CACsJy8Cja1um2oFDWufyk_7xaZbf9+=kyuWFx==Vb0nHiMqiwA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=x1uUmuBpThIpkwGYVdmRnA5oYFE2ZnA7CiX7S3+wdM8=;
+        b=imQYzJ8syasBAV65PfbOTNBVeKPfHyaUCRpH0bbkc61u9F8zqrBmmzIq8twQaCqmPG
+         6kapjR0ck9ixjMbDmxNMJuSeiHajiOQjpToELyafDi/dDfC6ZjGbnE0gGQtoWfKeE9e7
+         iMulguabnmTpgfO1mT1sFpyJVjMfOWfEAMhwzFW2/6PHEL7Co3KKAFIFnQusUWpsYBbB
+         5HHe9nQCAMHiApqIP3z7CB16b6r1+521br5gpf899wWvwFKOXauG5ZQ29SBYPHk0VL6W
+         6r/769mo5lPImp4a/v9I+U6AXAJSZkIVjW38/ySgQD4TcrQ/XdTfIVdkVfW4nVTcGXDS
+         lo2A==
+X-Gm-Message-State: AIkVDXLsZomgXupAi76M5O9upAPdH9mHpHeAJEktdfHgBYLVHWehEq91U3PvEWa2B0+dDyVbe7KyUWMX+EqTKCVU
+X-Received: by 10.200.44.217 with SMTP id 25mr54504471qtx.176.1483467339239;
+ Tue, 03 Jan 2017 10:15:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Cja1um2oFDWufyk_7xaZbf9+=kyuWFx==Vb0nHiMqiwA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 10:15:38 -0800 (PST)
+In-Reply-To: <xmqqh95j60uh.fsf@gitster.mtv.corp.google.com>
+References: <20161229192908.32633-1-sbeller@google.com> <xmqqh95j60uh.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 3 Jan 2017 10:15:38 -0800
+Message-ID: <CAGZ79kZ5F46UzeNeVYQV1EKEEa6+az-Pe_jrT+wZF9X6b34CGA@mail.gmail.com>
+Subject: Re: [PATCH] pathspec: give better message for submodule related
+ pathspec error
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/03, Duy Nguyen wrote:
-> On Wed, Dec 14, 2016 at 6:14 AM, Brandon Williams <bmwill@google.com> wrote:
-> > @@ -340,8 +336,9 @@ static void NORETURN unsupported_magic(const char *pattern,
-> >                         continue;
-> >                 if (sb.len)
-> >                         strbuf_addch(&sb, ' ');
-> > -               if (short_magic & m->bit)
-> > -                       strbuf_addf(&sb, "'%c'", m->mnemonic);
-> > +
-> > +               if (m->mnemonic)
-> > +                       strbuf_addf(&sb, "'(%c)%s'", m->mnemonic, m->name);
-> >                 else
-> >                         strbuf_addf(&sb, "'%s'", m->name);
-> >         }
-> 
-> The die() call is out of diff context, but it'll print
-> 
-> pathspec magic not supported by this command: (!)top
-> 
-> which looks too much like :(<name>)<mnemonic> pathspec syntax too me
-> and threw me off a bit. And it's a bit cryptic, isn't it? Since this
-> is meant for human, maybe we can just write
-> 
-> pathspec magic not supported by this command: top (mnemonic: '!')
+On Sat, Dec 31, 2016 at 5:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> Every once in a while someone complains to the mailing list to have
+>> run into this weird assertion[1].
+>>
+>> The usual response from the mailing list is link to old discussions[2],
+>> and acknowledging the problem stating it is known.
+>>
+>> For now just improve the user visible error message.
+>
+> Thans. judging from the date: header I take this is meant as v3 that
+> supersedes v2 done on Wednesday.
 
-I was trying to keep it short and sweet, turns out that ends up being
-more difficult to understand.  I like your suggestion, it definitely
-makes things much clearer.
+Yes, that is correct. Sorry for being sloppy not numbering the
+patches correctly.
 
--- 
-Brandon Williams
+>
+> It is not clear in the above that what this thing is.  Given that we
+> are de-asserting it, is the early part of the new code diagnosing an
+> end-user error (i.e. you gave me a pathspec but that extends into a
+> submodule which is a no-no)?  The "was a submodule issue" comment
+> added is "this is an end-user mistake, there is nothing to fix in
+> the code"?
+
+This is not a fix in the code, but purely improving an error message.
+So far anytime someone run into this assert, it was related to submodules.
+I do not know the pathspec code well enough to claim this condition
+can be produced via submodules *only*, though.
+
+So I proposed a more defensive patch, which diagnoses if it is the
+"no-no, pathspec extends into a submodule" first and then throws
+a generic error afterwards in case it is not the submodule issue.
+
+> I take that the new "BUG" thing tells the Git developers that no
+> sane codepath should throw an pathspec_item that satisfies the
+> condition of the if() statement for non-submodules?
+
+If we want to keep the semantics of the assert around, then we
+have to have a blank statement if the submodule error message
+is not triggered.
+
+I assume if we print this BUG, then there is an actual bug.
+
+>
+>> diff --git a/pathspec.c b/pathspec.c
+>> index 22ca74a126..b446d79615 100644
+>> --- a/pathspec.c
+>> +++ b/pathspec.c
+>> @@ -313,8 +313,23 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+>>       }
+>>
+>>       /* sanity checks, pathspec matchers assume these are sane */
+>> -     assert(item->nowildcard_len <= item->len &&
+>> -            item->prefix         <= item->len);
+>> +     if (item->nowildcard_len > item->len ||
+>> +         item->prefix         > item->len) {
+>> +             /* Historically this always was a submodule issue */
+>> +             for (i = 0; i < active_nr; i++) {
+>> +                     struct cache_entry *ce = active_cache[i];
+>> +                     int ce_len = ce_namelen(ce);
+>> +                     int len = ce_len < item->len ? ce_len : item->len;
+>> +                     if (!S_ISGITLINK(ce->ce_mode))
+>> +                             continue;
+>
+> Computation of ce_len and len are better done after this check, no?
+
+Yes, though I trusted the modern-day-compilers to get it right. Will
+fix in a reroll.
+
+>> +test_expect_success 'setup a submodule' '
+>> +     test_commit 1 &&
+>> +     git submodule add ./ sub &&
+>
+> Is this adding our own project as its submodule?
+
+Yes it is.
+
+>
+> It MIGHT be a handy hack when writing a test, but let's stop doing
+> that insanity.
+
+I agree that this is not a good idea.
+
+>  No sane project does that in real life, doesn't it?
+
+If such a project was cloned with submodules, it would recurse endlessly. :)
+
+> Create a subdirectory, make it a repository, have a commit there and
+> bind that as our own submodule.  That would be a more normal way to
+> start your own superproject and its submodule pair if they originate
+> together at the same place.
+
+I wonder if we want to have a helper function in test-lib.sh to be used
+for that. This use case (have a repository and a submodule) happens in
+a lot of tests, so we could make life easier by providing a function
+in the library so it is even easier than this HACK.
+
+> Better yet create a separate repository, have a commit there, and
+> then pull it in with "git submodule add && git submodule init" into
+> our repository.  That would be the normal way to borrow somebody
+> else's project as a part of your own superproject.
+
+The library function could do that, yes.
+
+Thanks,
+Stefan
