@@ -2,113 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE928209B9
-	for <e@80x24.org>; Tue,  3 Jan 2017 19:10:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 027841FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 19:13:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934096AbdACTKH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 14:10:07 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35843 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757817AbdACTKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 14:10:02 -0500
-Received: by mail-pg0-f50.google.com with SMTP id f188so217555782pgc.3
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 11:10:02 -0800 (PST)
+        id S1757876AbdACTN0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 14:13:26 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:34448 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757967AbdACTNZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 14:13:25 -0500
+Received: by mail-pg0-f48.google.com with SMTP id y62so165679551pgy.1
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 11:13:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i09lRAPbhG4JF6LI3ooI+tp6rEafjOQ7GaWkCpXnxfU=;
-        b=fj2JSxUOeafTUsrdwirNxJy5xxpptyHjFQj86FUVDVGw7CXwoNiUk+KluT4CJTkdPa
-         4s5Mt4j/rI5HiSZquFGmXK+4cHTL1eluI9c4j7qQiSn2REost0BDD/9dsdDJgUdJrIdV
-         BxL1kXoGZWAamm0x9JacDgMS6iRJTy19vENFf2nBA0weOGpH52OmGcNMHVbklEW7LB0N
-         OHCtGq2136xs38yVMGxloeACYG3Q26IFL6HYrL6viAh1fP21nKwc+uLcchJmRKb2jIyL
-         BHjd+39cZNvgTEKOlWTtB36Kg2EeNRPvWieQH3BkKi115UUGgrBQFs/8hAthQsVU88eO
-         BBTA==
+        bh=hV2g0UTb7nf+Xa2y5BPQZPDeSGE8h07gg7c+2s7puoc=;
+        b=gAXq1+Z5/0Zdh/zG3po5qgCHfckgCkNvd9oA+0xXX7Yv7JvUlgqjh73otaQ3Gx07hM
+         CrlTsSm0Z9RKG51Q7nbYYwKrE2o/V2v7qQRI2WP4cYpFmqwU0rOvIS5LiZOUQkIvXz1U
+         abamZxkG90hs8PP9NHQqjGPETMnATcxTmUbUeDPqgNUAMXhvW3fUS1rA067QoH2l6hnI
+         wLoF4y8lwE4ZgW4CVeTknfUzFSws7himJHqWRrvYIUx70042xMUOKX3kM2/uQvm4aWXr
+         btszCZbW8uIYLULmTrzZpNShhj2MgVi4cT6kLWAqYO4eOKBB51VCA4V1JxAuVTGfib3d
+         k9Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=i09lRAPbhG4JF6LI3ooI+tp6rEafjOQ7GaWkCpXnxfU=;
-        b=gFPbmHE4dSr1IJPw5kx0T8ogFGn8tw3cqhkw9oyGmK+7gCphasQk1uzJ6NSGKGrEDK
-         8uAdX7scq/+gbcXlpn9Y1IIOsOF4Fx33Cd6Q7mGQ/05XL9iK4WVFt2Q5YzNJxLky83lS
-         2hwjCE5bdkS/BfAi8Vdx2bbRVbVRbhSwm5c7HjLq9uVCxI2lD6YfQF84U7sIdNio7tN/
-         7MAS1dpdvNwWPOib/G0RydiPS2iwHjcQe9h7g6ECz3YoJOBHldFpjTcn+rWIV7hzB2ty
-         lUUdGzIpVB+6D9y+mzcYeGqHAv74nN1CrsXfiPkw2b4vD2nJ5ogqjRrebBJgIP2/cUBw
-         FA0w==
-X-Gm-Message-State: AIkVDXKVTbAdEj059OCLRv1xNTLu8n0fivEM9cIx10CJFq0mu537y68SvK6eKfdhdJM6+MG6
-X-Received: by 10.99.123.3 with SMTP id w3mr111255245pgc.155.1483470601735;
-        Tue, 03 Jan 2017 11:10:01 -0800 (PST)
+        bh=hV2g0UTb7nf+Xa2y5BPQZPDeSGE8h07gg7c+2s7puoc=;
+        b=lxorPsJ0E+9OMB2HVaHgpyYLbFVuThd6N1C2XMJnbqX8oRvjxC9RrCWGSPo81iYhOr
+         9y6EoLTGb5czCQfs6DB+nYNRfalpn+oCPk+Ozl3Trz3Pd4RjhtUtrSQFBShniNourBq7
+         7bhcfbV1RX1CCZOfgbPZAe/IZxnyFcXeDn40q9GAvTM1hQp88dgRW7zisQ5GrrEbnbcz
+         JIAt2fAEp09MEnfNu/LmUmbMrkdFr78qHO19CA8QC6un5iVVHKHmz06Xt0FLVSXgiujl
+         pPeXG3Fja+Kj7YUNfRhMfePgc+MQpq2r3/jfAwTyPo72FOz8+xaGWK5oE+4ZtaocBZah
+         alHA==
+X-Gm-Message-State: AIkVDXLyG6rvisA9mDYctDzSJFvVYjIvAGnpubpNGD8Cys5yd7ZE5msbn5pZHw2OQCHFqfUr
+X-Received: by 10.99.164.9 with SMTP id c9mr118786003pgf.141.1483468997329;
+        Tue, 03 Jan 2017 10:43:17 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id q5sm66947112pgf.45.2017.01.03.11.09.59
+        by smtp.gmail.com with ESMTPSA id e5sm141421338pfd.77.2017.01.03.10.43.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jan 2017 11:10:00 -0800 (PST)
+        Tue, 03 Jan 2017 10:43:16 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        peff@peff.net, jacob.keller@gmail.com, gitster@pobox.com,
-        ramsay@ramsayjones.plus.com, tboegi@web.de, j6t@kdbg.org,
-        pclouds@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v4 3/5] real_path: create real_pathdup
-Date:   Tue,  3 Jan 2017 11:09:21 -0800
-Message-Id: <20170103190923.11882-4-bmwill@google.com>
+        pclouds@gmail.com, gitster@pobox.com
+Subject: [PATCH v4 12/16] pathspec: create parse_long_magic function
+Date:   Tue,  3 Jan 2017 10:42:37 -0800
+Message-Id: <20170103184241.128409-13-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
-In-Reply-To: <20170103190923.11882-1-bmwill@google.com>
-References: <1481566615-75299-1-git-send-email-bmwill@google.com>
- <20170103190923.11882-1-bmwill@google.com>
+In-Reply-To: <20170103184241.128409-1-bmwill@google.com>
+References: <1481670870-66754-1-git-send-email-bmwill@google.com>
+ <20170103184241.128409-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create real_pathdup which returns a caller owned string of the resolved
-realpath based on the provide path.
+Factor out the logic responsible for parsing long magic into its own
+function.  As well as hoist the prefix check logic outside of the inner
+loop as there isn't anything that needs to be done after matching
+"prefix:".
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- abspath.c | 13 +++++++++++++
- cache.h   |  1 +
- 2 files changed, 14 insertions(+)
+ pathspec.c | 92 ++++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 57 insertions(+), 35 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index c3a6acd4d..f4283f465 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -205,6 +205,19 @@ const char *real_path_if_valid(const char *path)
- 	return strbuf_realpath(&realpath, path, 0);
+diff --git a/pathspec.c b/pathspec.c
+index 8574010d5..f1439f6f9 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -157,6 +157,60 @@ static int get_global_magic(int element_magic)
  }
  
-+char *real_pathdup(const char *path)
+ /*
++ * Parse the pathspec element looking for long magic
++ *
++ * saves all magic in 'magic'
++ * if prefix magic is used, save the prefix length in 'prefix_len'
++ * returns the position in 'elem' after all magic has been parsed
++ */
++static const char *parse_long_magic(unsigned *magic, int *prefix_len,
++				    const char *elem)
 +{
-+	struct strbuf realpath = STRBUF_INIT;
-+	char *retval = NULL;
++	const char *pos;
++	const char *nextat;
 +
-+	if (strbuf_realpath(&realpath, path, 0))
-+		retval = strbuf_detach(&realpath, NULL);
++	for (pos = elem + 2; *pos && *pos != ')'; pos = nextat) {
++		size_t len = strcspn(pos, ",)");
++		int i;
 +
-+	strbuf_release(&realpath);
++		if (pos[len] == ',')
++			nextat = pos + len + 1; /* handle ',' */
++		else
++			nextat = pos + len; /* handle ')' and '\0' */
 +
-+	return retval;
++		if (!len)
++			continue;
++
++		if (starts_with(pos, "prefix:")) {
++			char *endptr;
++			*prefix_len = strtol(pos + 7, &endptr, 10);
++			if (endptr - pos != len)
++				die(_("invalid parameter for pathspec magic 'prefix'"));
++			continue;
++		}
++
++		for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
++			if (strlen(pathspec_magic[i].name) == len &&
++			    !strncmp(pathspec_magic[i].name, pos, len)) {
++				*magic |= pathspec_magic[i].bit;
++				break;
++			}
++		}
++
++		if (ARRAY_SIZE(pathspec_magic) <= i)
++			die(_("Invalid pathspec magic '%.*s' in '%s'"),
++			    (int) len, pos, elem);
++	}
++
++	if (*pos != ')')
++		die(_("Missing ')' at the end of pathspec magic in '%s'"),
++		    elem);
++	pos++;
++
++	return pos;
 +}
 +
- /*
-  * Use this to get an absolute path from a relative one. If you want
-  * to resolve links, you should use real_path.
-diff --git a/cache.h b/cache.h
-index 7a8129403..e12a5d912 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1068,6 +1068,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 		      int die_on_error);
- const char *real_path(const char *path);
- const char *real_path_if_valid(const char *path);
-+char *real_pathdup(const char *path);
- const char *absolute_path(const char *path);
- const char *remove_leading_path(const char *in, const char *prefix);
- const char *relative_path(const char *in, const char *prefix, struct strbuf *sb);
++/*
+  * Parse the pathspec element looking for short magic
+  *
+  * saves all magic in 'magic'
+@@ -218,41 +272,9 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 		; /* nothing to do */
+ 	} else if (elt[1] == '(') {
+ 		/* longhand */
+-		const char *nextat;
+-		for (copyfrom = elt + 2;
+-		     *copyfrom && *copyfrom != ')';
+-		     copyfrom = nextat) {
+-			size_t len = strcspn(copyfrom, ",)");
+-			if (copyfrom[len] == ',')
+-				nextat = copyfrom + len + 1;
+-			else
+-				/* handle ')' and '\0' */
+-				nextat = copyfrom + len;
+-			if (!len)
+-				continue;
+-			for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+-				if (strlen(pathspec_magic[i].name) == len &&
+-				    !strncmp(pathspec_magic[i].name, copyfrom, len)) {
+-					element_magic |= pathspec_magic[i].bit;
+-					break;
+-				}
+-				if (starts_with(copyfrom, "prefix:")) {
+-					char *endptr;
+-					pathspec_prefix = strtol(copyfrom + 7,
+-								 &endptr, 10);
+-					if (endptr - copyfrom != len)
+-						die(_("invalid parameter for pathspec magic 'prefix'"));
+-					/* "i" would be wrong, but it does not matter */
+-					break;
+-				}
+-			}
+-			if (ARRAY_SIZE(pathspec_magic) <= i)
+-				die(_("Invalid pathspec magic '%.*s' in '%s'"),
+-				    (int) len, copyfrom, elt);
+-		}
+-		if (*copyfrom != ')')
+-			die(_("Missing ')' at the end of pathspec magic in '%s'"), elt);
+-		copyfrom++;
++		copyfrom = parse_long_magic(&element_magic,
++					    &pathspec_prefix,
++					    elt);
+ 	} else {
+ 		/* shorthand */
+ 		copyfrom = parse_short_magic(&element_magic, elt);
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
