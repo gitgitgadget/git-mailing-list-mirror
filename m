@@ -2,104 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9691E1FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 17:59:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17DCA1FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 18:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759822AbdACR7B (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 12:59:01 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:33117 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753143AbdACR67 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 12:58:59 -0500
-Received: by mail-qk0-f173.google.com with SMTP id t184so383060546qkd.0
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 09:58:59 -0800 (PST)
+        id S1760250AbdACSPa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 13:15:30 -0500
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:33899 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753227AbdACSP2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 13:15:28 -0500
+Received: by mail-pg0-f47.google.com with SMTP id y62so165205992pgy.1
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:15:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5JlysuYnIvr6IbOHvVVTQime3re9FWGRaHanlJdOLhE=;
-        b=A+2evc+fayMCThB3Oy4SsXErLIHu6YGQ4kzcZ2cJpain3epXuKKGbBY3itS5NJJ63I
-         oFlH9Yc4u9IB7tq4wMEKLlEPou8TwQkIOOvmgLWE9EYL05I+dSRQQ0dLzUYtFHJsif1E
-         0J+9i3VMUJ6GWiHO3ncPLlGS0p8SSDtll05TJPrYG8Aqa8t+AStbMIJvRjtTMUTJ3yiJ
-         udtBtSUXaSllwSVyT9U3haXZ+uU6epmXrgZXjsOK/sifDnNYNEW0i6DlxyiNIjaoQVCl
-         SoTFHszIUdOZWUguDb8YMEyN9LAbZeUa9iGH6aTZuubMSo5U+Ooq6grMXhk5fyaNEd6R
-         URkw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JNNoEIaPJ1UzVjvsAwyCwvmC2c3AIXd9wD6EIhB77Vk=;
+        b=Qg+5iX3BNYvAAGy/BjDebIfQzw6cOC6FIlKT7eJxisIzxeu4QtVAq9ZVQPyMUhBjN3
+         ojHOzzlaxuefDfAKr58iqXqEMWgGbV+R3MzHOb3zF8re7FZ0Mrbb6Ctw8KakjdqnlRTx
+         ISdOJnumaLR3iqPtyT/50VYpqSL71IVAJw8OsUzJeh2NMO5Iuq8RKSMNvVSl0iV0rNTe
+         uO/vymFTlIiwnqpCOIsJMurRCftdSvirkX6/WVO4IMICTA8GYJHT21uSwBlejrZJKEZL
+         UnrGgZzlXVLCSKowhF1KG5ZOaxQq9vkBR9AVZt4LzULlbsp3ea1U7Jaqn6vgQp+QVcLl
+         Yajg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5JlysuYnIvr6IbOHvVVTQime3re9FWGRaHanlJdOLhE=;
-        b=r823Av4dor2O6jw7eSPXNFcKLtbN+YSe4NLfGynFFMSOxQCAeZ/MxyuhVG4lJYdzQR
-         UJTPzLKe0bZwnM9EDI/YEbShybJ3AinUSxKQyj9YyqM3lM18VX7WTmeraA7CRxGrj1VD
-         bcYk0wm7Lq/Vv3auyWoeFStV9JRghr0smsEjwuMqy/jPOn2YOjH5F6vL7OIAUxv2GIW9
-         OkIMNVoEPTddyT81QoxelpJeobjLq32L4p9qqyWUYnv0ASy1HbGOad1Abh/bsbP1NK/y
-         wwUKMXZkGDxLRP9LaPbZy6jx4+8TZn4jYYoN8kmzzUfVZboSzymlPPrIUTfuFrxs7L87
-         1sQw==
-X-Gm-Message-State: AIkVDXI3WUr2FORgA3CuKqhpl151+Drs1SH8O7DX7KkkgrjAREJNU31xPlXobQSEz7GgMqY0E8z0e6BsexNxRwjv
-X-Received: by 10.55.221.5 with SMTP id n5mr58872684qki.58.1483466320599; Tue,
- 03 Jan 2017 09:58:40 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JNNoEIaPJ1UzVjvsAwyCwvmC2c3AIXd9wD6EIhB77Vk=;
+        b=NhORdpJVO5+weWlNjz4tjMDX7tjSv2t3HoKs1n96OPRQjPGnjNZPHS2yDC4zEhEGs6
+         dyhuCYlvsgM1RlbXNBgnm0JBTzWF78uJ4GEmRzahUlrMNq4MFVpxQkKhzk2m4rRxDXcB
+         L3Bb9++uicB0xnVEknJkbadI8QJWLKjnvnYk+Y2SXGE4NFLY/k+mnUvdF06sITjUDbUI
+         MmoPTBDmWTK38m7eMSqG+2OyhIApXjVWRo2xCjnv9kB9++eQ6Vq856vdJDfbTkKFX2Zs
+         t/SQXD2jK8sA+87aVXBTXebtAQTjKdHbWzYl1xwTZHuRfPUcFb3Q7OMswNo0Gor6ia5f
+         im2Q==
+X-Gm-Message-State: AIkVDXLVOgGG0ygxQPONTc15o1N6Kiqga671xZU5ZQvuOUcwHf+NGwbez1IVvg3VwrLxeNWF
+X-Received: by 10.99.149.1 with SMTP id p1mr119109984pgd.21.1483467328178;
+        Tue, 03 Jan 2017 10:15:28 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:c019:d4:4575:9b1b])
+        by smtp.gmail.com with ESMTPSA id 65sm141503979pfl.21.2017.01.03.10.15.26
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 03 Jan 2017 10:15:26 -0800 (PST)
+Date:   Tue, 3 Jan 2017 10:15:25 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 08/16] pathspec: always show mnemonic and name in
+ unsupported_magic
+Message-ID: <20170103181525.GB42671@google.com>
+References: <1481223550-65277-1-git-send-email-bmwill@google.com>
+ <1481670870-66754-1-git-send-email-bmwill@google.com>
+ <1481670870-66754-9-git-send-email-bmwill@google.com>
+ <CACsJy8Cja1um2oFDWufyk_7xaZbf9+=kyuWFx==Vb0nHiMqiwA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 09:58:40 -0800 (PST)
-In-Reply-To: <20170102184536.10488-2-pranit.bauva@gmail.com>
-References: <20161231114412.23439-1-pranit.bauva@gmail.com>
- <20170102184536.10488-1-pranit.bauva@gmail.com> <20170102184536.10488-2-pranit.bauva@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 3 Jan 2017 09:58:40 -0800
-Message-ID: <CAGZ79kZRFLzD7wcAnFvke9vBxxTAgE7=Ud7F_O95EfkWqz=LJw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] t9813: avoid using pipes
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, luke@diamond.org,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Cja1um2oFDWufyk_7xaZbf9+=kyuWFx==Vb0nHiMqiwA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 2, 2017 at 10:45 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> The exit code of the upstream in a pipe is ignored thus we should avoid
-> using it.
+On 01/03, Duy Nguyen wrote:
+> On Wed, Dec 14, 2016 at 6:14 AM, Brandon Williams <bmwill@google.com> wrote:
+> > @@ -340,8 +336,9 @@ static void NORETURN unsupported_magic(const char *pattern,
+> >                         continue;
+> >                 if (sb.len)
+> >                         strbuf_addch(&sb, ' ');
+> > -               if (short_magic & m->bit)
+> > -                       strbuf_addf(&sb, "'%c'", m->mnemonic);
+> > +
+> > +               if (m->mnemonic)
+> > +                       strbuf_addf(&sb, "'(%c)%s'", m->mnemonic, m->name);
+> >                 else
+> >                         strbuf_addf(&sb, "'%s'", m->name);
+> >         }
+> 
+> The die() call is out of diff context, but it'll print
+> 
+> pathspec magic not supported by this command: (!)top
+> 
+> which looks too much like :(<name>)<mnemonic> pathspec syntax too me
+> and threw me off a bit. And it's a bit cryptic, isn't it? Since this
+> is meant for human, maybe we can just write
+> 
+> pathspec magic not supported by this command: top (mnemonic: '!')
 
-for commands under test, i.e. git things. Other parts can be piped if that makes
-the test easier. Though I guess that can be guessed by the reader as well,
-as you only convert git commands on upstream pipes.
+I was trying to keep it short and sweet, turns out that ends up being
+more difficult to understand.  I like your suggestion, it definitely
+makes things much clearer.
 
-> By writing out the output of the git command to a file, we can
-> test the exit codes of both the commands.
->
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-
-Thanks for taking ownership of this issue as well. :)
-
-> ---
->  t/t9813-git-p4-preserve-users.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
-> index 798bf2b67..9d7550ff3 100755
-> --- a/t/t9813-git-p4-preserve-users.sh
-> +++ b/t/t9813-git-p4-preserve-users.sh
-> @@ -118,12 +118,12 @@ test_expect_success 'not preserving user with mixed authorship' '
->                 make_change_by_user usernamefile3 Derek derek@example.com &&
->                 P4EDITOR=cat P4USER=alice P4PASSWD=secret &&
->                 export P4EDITOR P4USER P4PASSWD &&
-> -               git p4 commit |\
-> -               grep "git author derek@example.com does not match" &&
-> +               git p4 commit >actual 2>&1 &&
-
-Why do we need to pipe 2>&1 here?
-Originally the piping only fed the stdout to grep, so this patch changes the
-test? Maybe
-
-    2>actual.err &&
-    test_must_be_empty actual.err
-
-instead?
-
-Thanks,
-Stefan
+-- 
+Brandon Williams
