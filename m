@@ -7,95 +7,79 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4543B1FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 19:45:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 640D11FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 19:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933385AbdACTpO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 14:45:14 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:34862 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752449AbdACTpM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 14:45:12 -0500
-Received: by mail-qk0-f178.google.com with SMTP id u25so375014269qki.2
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 11:45:11 -0800 (PST)
+        id S933499AbdACTsl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 14:48:41 -0500
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:34902 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760396AbdACTsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 14:48:37 -0500
+Received: by mail-qk0-f171.google.com with SMTP id u25so375109749qki.2
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 11:48:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=WELGs/ObEtL1jU5OiULae3+dV4/xOLf2msFwED98J5k=;
-        b=BirGPqW+rTNn7xn1biE/jTyg48jcZaaalS4+D+A6ENT6ifT0tA92wj3U9TjghQ6l7W
-         1GDwGhQn61KZ3iFgTsH/PnQ9u+fFoKz3Au4G/VFAmNids6bOXoBMIWKQ/VvJTdXKfioG
-         4uXqC+2lkx6z+rEiRgKsTUnWWLCPOfy2IxVbgM10VUVqfGedVa21kwAjYxfyjyeSfYSi
-         u/VJtWPeQZyD+ry9OyLGgHKCPFHLHZs+3/QTftSA3cxPCp525+uaux2NU7TZ2bhhevfE
-         F6/uXekQZ/QWeN+F8uZJEaIgWMaflnLYo1xWkSJYYI28rZj8ZpTFVNCe24VnBicOV0Jc
-         cHGA==
+        bh=dBw4PYJ4P9/9P2a6pWX2taPAWTFgHA/CuXynfrOLrbU=;
+        b=Jaio6j7CQvzOmBCry5/KbxDkOnroVu5a9/lGYRueoEXie0hAhSi6FrtiOYEFeA37KT
+         j6HgAKaxDNcBlDFMtNLm7ZyfwuzrQroQZ9oQkyZRu9BwpTnSzHED0TZn9Sob5TK/Q9h0
+         kM1qtCe/+2x6tfMndT8199PsO/9Wlhb4TyKVqBfSQLJ/N7HTiMQTaSIyry4sNJdHOG+1
+         bg3qgrq17ddvrZN+78yKsQwoooeAtqGK8Maz+H4+sEtC7P38stERx+TOpkoeG3N6TU12
+         cFRvDXDK4AJmCSNDL/pfUA9fgYF6npYt4/UF13Wdy/kltWxpo9S5HFoPP4M6Ii2cbMcW
+         v+Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=WELGs/ObEtL1jU5OiULae3+dV4/xOLf2msFwED98J5k=;
-        b=kjw0+aY8jA8tKjvEooj2BBQUaVpeL/jQUJbq4CyOFqsc//F9mna5Xq3jeY5Qm8QRDP
-         Pd3adDpiUSZSZgz8YkAWNH5RAmBnW4fa+4EQyGopBJHrlwnKyps9F0t2ExjABHLs81gd
-         DLlhLO1cjiE0XKZ32uatmWRAka80scHUaItJzWWU/pNEdMcLsYRKQ4z3NM7Z3NgzWR5U
-         QCuppKtyFZrprPaLghQ5IhKere7UJle0TGN0vVnURzTL5AxNZrLcsRLB/ztE7ytg140T
-         a1dqdMVJ1ILr1DNQDQJl1XpMVJ69TApGUQVpacg4+OUqfTakFva9JoETS/HU1X4a8Lhz
-         5FZw==
-X-Gm-Message-State: AIkVDXI+1rxpsPxGegPayb0YTLO6DFjF0tQFJBb5k/Tn1oXRutwhUJepbVaey2asMVQCz2hhZoawkpd1tPwLtkLZ
-X-Received: by 10.55.221.5 with SMTP id n5mr59293016qki.58.1483472711225; Tue,
- 03 Jan 2017 11:45:11 -0800 (PST)
+        bh=dBw4PYJ4P9/9P2a6pWX2taPAWTFgHA/CuXynfrOLrbU=;
+        b=IjV2zXEYglPt/LfwvBpCZcYDo6d7rJaIejxe6j5iMmr4KcwpVZeO1PCwCGjmuDShPW
+         0wFgyvc54hpC8A5Z7r9upeQVdyyLPS428ckaPcLS9mDet9qMiJXBFJlaXptkgYBjAdC9
+         pjgQip289Iq55ZjjU4s0VdTR4p+OqEp27S7WDUKw3OUZzzvTNgfcrol/YvWouIoyvS8y
+         XzdHNSs+uPmVhSEV7y7esyKJZXXpsWVuZ55FpekvBIUeKO2FFdlu+oL+hrbbmIauIy/f
+         1bzmNSwgCTlHcknbf+W2vwORkn+wFhh38qY0b3wqzFpiO0ih/GdN3czCe9slli0ydVPE
+         hfYA==
+X-Gm-Message-State: AIkVDXL2uug24rXrT9FIleWUbOpOnd7lLMRdNZYb1pso1PXZzeyLPSZITsmki1+TNBs3Lc7XNy8MY/EE+7RnnGX6
+X-Received: by 10.55.197.28 with SMTP id p28mr61369951qki.255.1483472916373;
+ Tue, 03 Jan 2017 11:48:36 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 11:45:10 -0800 (PST)
-In-Reply-To: <cover.1483354746.git.git@drmicha.warpmail.net>
-References: <cover.1483354746.git.git@drmicha.warpmail.net>
+Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 11:48:35 -0800 (PST)
+In-Reply-To: <CAFZEwPPfE_WSn2QbmER+5mkaC8RnVDs5gsSJE+Y0v-CfYaZB2w@mail.gmail.com>
+References: <20161231114412.23439-1-pranit.bauva@gmail.com>
+ <20170102184536.10488-1-pranit.bauva@gmail.com> <20170102184536.10488-2-pranit.bauva@gmail.com>
+ <CAGZ79kZRFLzD7wcAnFvke9vBxxTAgE7=Ud7F_O95EfkWqz=LJw@mail.gmail.com> <CAFZEwPPfE_WSn2QbmER+5mkaC8RnVDs5gsSJE+Y0v-CfYaZB2w@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 3 Jan 2017 11:45:10 -0800
-Message-ID: <CAGZ79ka-FXfFN8ZqE6+v06o3nKa7ad0iWttn99Y2wf5m6wfs8A@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/5] Localise error headers
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 3 Jan 2017 11:48:35 -0800
+Message-ID: <CAGZ79kYS9QGea57R5PnbXWdUnHH+=vw+E4_=eqUPd1LoW_7r0A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] t9813: avoid using pipes
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, luke@diamond.org,
+        Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 2, 2017 at 3:14 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Currently, the headers "error: ", "warning: " etc. - generated by die(),
-> warning() etc. - are not localized, but we feed many localized error messages
-> into these functions so that we produce error messages with mixed localisation.
 >
-> This series introduces variants of die() etc. that use localised variants of
-> the headers, i.e. _("error: ") etc., and are to be fed localized messages. So,
-> instead of die(_("not workee")), which would produce a mixed localisation (such
-> as "error: geht ned"), one should use die_(_("not workee")) (resulting in
-> "Fehler: geht ned").
-
-Have you considered
-
-    die_("non localized error here")
-
-to produce:
-
-    "Fehler: trotzdem uebersetzt hier"
-    ("error: here it is translated")
-
+> git p4 commit >actual &&
+> grep "git author derek@example.com does not match" actual &&
 >
-> In this implementation, the gettext call for the header and the body are done
-> in different places (error function vs. caller) but this call pattern seems to
-> be the easiest variant for the caller, because the message body has to be marked
-> for localisation in any case, and N_() requires more letters than _(), an extra
-> argument to die() etc. even more than the extra "_" in the function name.
+> What do you think?
 
-I see. We have to markup the strings to be translatable such that the .po files
-are complete. It would be really handy if there was a way to say "anything that
-is fed to this function (die_) needs to be marked for translation.
+From the travis logs:
 
-Looking through
-https://www.gnu.org/software/gettext/manual/html_node/xgettext-Invocation.html
-such a thing doesn't seem to exist.
+    'actual.err' is not empty, it contains:
+    ... - file(s) up-to-date.
 
-So in that case die_(_(...)) seems to be the easiest way forward.
+I think(/hope) such a progress is tested for at another test,
+and not relevant here so I'd think the proposed
+
+    git p4 commit >actual &&
+    grep "git author derek@example.com does not match" actual &&
+
+is fine here.
 
 Thanks,
 Stefan
