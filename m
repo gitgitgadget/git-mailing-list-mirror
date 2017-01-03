@@ -2,130 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9461FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 19:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96CDE1FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 19:21:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760806AbdACTRN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 14:17:13 -0500
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:33498 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757444AbdACTRL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 14:17:11 -0500
-Received: by mail-pg0-f41.google.com with SMTP id g1so178573309pgn.0
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 11:15:42 -0800 (PST)
+        id S1760869AbdACTVq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 14:21:46 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:34182 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760864AbdACTVo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 14:21:44 -0500
+Received: by mail-qk0-f174.google.com with SMTP id h201so245600372qke.1
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 11:21:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=V1DMKc491HQzh9aUgBq/amVZI9UA6MdUBT7BRq1JJBc=;
-        b=mldC055/XBECYF7INbh/4QR4DnmRI+XfUKPwbQrrgjh7EUmFOp3aEcAZd01mk6s5t/
-         wsd0ATWnt5S+Ka5DCqXf7Si1ALVc20bwnmE1iV5b7JJKCIISqWp8ZN8J7f0pmrAfJDTP
-         N7XjArsG32FBR+rfAo2L2gTXw0OlvXOBll5kOQfZsSzzQf0tGJS6k40fcDBFdvN6FfxL
-         AB2A5xs6hiLifFPNUCskPV/XCXmNKSWPEKvUoeClyhGkLowIUriA9FqstoQl6cp2x1op
-         f8qfLizqEC+wR+hAag8+HpWzfHSFx2DScWWZdaFZz/GWzRMVqzZC1d7KCFIymVWvmR+r
-         ZMQg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xO8DP97J8z4ufFhMU54FDe7hBcBgk1bLKzycXPzCaJI=;
+        b=dFWfOnMGru9aYaa8ZnqOr6wMXsY9NHjG62oMqXpMHV+PB3UN7kgkkRGg7D6TzuPCRS
+         GAcKHdSFc9UBmmj5NVKyimG/abcUeqwK4nP7bm9tD0LSygBVaAana49H3GE7LtBrE6+X
+         NbLq6FrWYHHR/SDl2kUL/TNfEKPxHCE+ZTjgX58ryiIvgG6q8WyZtL/BvOwZwcf0X+0p
+         xQZd70uogQakAYsAalbi/uBm1VibnuRmgJlzGkhC8ce0dpDtFp/fxzDJDcgoJe2Ll75D
+         00JXmk5LKaDeMQjNDSCXi1RjLlyz77ByeEacP/5ReT4JxMF08WJ/S5x6z1peZi9O0K/T
+         CpLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=V1DMKc491HQzh9aUgBq/amVZI9UA6MdUBT7BRq1JJBc=;
-        b=hDPP+2JFCrMbkkGuB4b4krqNnIoKM73ypIAY0jgzcL63rBpflbcoSCIJBOhoga5F1q
-         lcufzCNXF5NCGL0LSMyLRw7Rv8cZaE7BVRvc4mp4ivBl9V+10cY9h455YvsXaG3unoaj
-         g9BXqZAfR/RFsceWZl0ejbZrrMnyOzktzjm0EEUWxco5EVmFL+ZXsIiVUc+BzUZBovng
-         LUdZUD98rmNKDMbUu9jIb+fRo2PeuztdOVIJ4pJ+0OJCN0qYaEPwYLf6BhKSJ2UCrsFk
-         00PRGIjXHURodOnqCFfwMLVY9pcDoctJRqmWsk6q1Dwi1jqVJx5LBDiTdP9hDN+cc9KX
-         pJAg==
-X-Gm-Message-State: AIkVDXLOOGo3kBKjbEV4V/cK/iyn9VRRhTVyNQBLG3In8+HwYZ3ZLj/XDKNXUJJ0ZVzend3N
-X-Received: by 10.99.127.72 with SMTP id p8mr117431294pgn.183.1483469004037;
-        Tue, 03 Jan 2017 10:43:24 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id e5sm141421338pfd.77.2017.01.03.10.43.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jan 2017 10:43:22 -0800 (PST)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        pclouds@gmail.com, gitster@pobox.com
-Subject: [PATCH v4 16/16] pathspec: rename prefix_pathspec to init_pathspec_item
-Date:   Tue,  3 Jan 2017 10:42:41 -0800
-Message-Id: <20170103184241.128409-17-bmwill@google.com>
-X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
-In-Reply-To: <20170103184241.128409-1-bmwill@google.com>
-References: <1481670870-66754-1-git-send-email-bmwill@google.com>
- <20170103184241.128409-1-bmwill@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xO8DP97J8z4ufFhMU54FDe7hBcBgk1bLKzycXPzCaJI=;
+        b=rnObp/zbxkO61ViqORUoO3QB9lYtMY0DNnNH5B1lGDy8clzvKU0jgChSvKuIUGUGiI
+         yJ8fBvMSv/HXJCQiXWZoQe7QxfZtjyPmII8FVGX/ORKnrG5FhLX/8Z97Wtf8g3JB1I+j
+         CIi7PxlqqzyQEu3KHXIlS8LEgJgfWp5D23RFEG8y9Yymw0CjeYjQwAvO1j/0zr7gjiSf
+         XTn8YQPO+mkRxCFWnfdta9WPnyIbL+RvklaBgX/EnGvP0uLPZKUDUjDjZBXwMDx2OqV+
+         28BnJQgvaMqEZ19gw4jjiLKVtJqhPj0Rij02rdK4/3CW5Q6h0puph+vq/zZ3U73cF1a4
+         pdgQ==
+X-Gm-Message-State: AIkVDXL715TBqJheLNlXQwcyf1p6HC+5pCTw8m219e93GZ598XzHWJZ6M7bMGmx9ZdY9Oz+IecVC/dAMfzwaxX3W
+X-Received: by 10.55.90.68 with SMTP id o65mr29232759qkb.47.1483471303347;
+ Tue, 03 Jan 2017 11:21:43 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 11:21:42 -0800 (PST)
+In-Reply-To: <CAAmwXB=M8yZY2sFLwavrrQSEW9bipFhNZyLduwYXtZNK6-Ppxg@mail.gmail.com>
+References: <CAAmwXB=M8yZY2sFLwavrrQSEW9bipFhNZyLduwYXtZNK6-Ppxg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 3 Jan 2017 11:21:42 -0800
+Message-ID: <CAGZ79kYZwSM78FoytDm9VhFY0D=Z1tzoq=tW7h65kSCYSr0grQ@mail.gmail.com>
+Subject: Re: Wanted: shallow submodule clones with --no-single-branch.
+To:     Tor Andersson <tor@ccxvii.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Give a more relevant name to the prefix_pathspec function as it does
-more than just prefix a pathspec element.
+On Fri, Dec 30, 2016 at 2:50 AM, Tor Andersson <tor@ccxvii.net> wrote:
+> Hi,
+>
+> When adding submodules with --depth=1 only the master branch is
+> cloned. This often leaves the submodule pointing to a non-existing
+> commit.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- pathspec.c | 24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+You can also use the "--branch=not_master" flag to track another branch.
+This however doesn't clone the correct branch. I would have expected that
+it cloned the correct branch instead.
 
-diff --git a/pathspec.c b/pathspec.c
-index ae9e1401f..bcf3ba039 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -297,21 +297,11 @@ static void strip_submodule_slash_expensive(struct pathspec_item *item)
- }
- 
- /*
-- * Take an element of a pathspec and check for magic signatures.
-- * Append the result to the prefix. Return the magic bitmap.
-- *
-- * For now, we only parse the syntax and throw out anything other than
-- * "top" magic.
-- *
-- * NEEDSWORK: This needs to be rewritten when we start migrating
-- * get_pathspec() users to use the "struct pathspec" interface.  For
-- * example, a pathspec element may be marked as case-insensitive, but
-- * the prefix part must always match literally, and a single stupid
-- * string cannot express such a case.
-+ * Perform the initialization of a pathspec_item based on a pathspec element.
-  */
--static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
--				const char *prefix, int prefixlen,
--				const char *elt)
-+static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
-+			       const char *prefix, int prefixlen,
-+			       const char *elt)
- {
- 	unsigned magic = 0, element_magic = 0;
- 	const char *copyfrom = elt;
-@@ -329,6 +319,8 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
- 		magic |= get_global_magic(element_magic);
- 	}
- 
-+	item->magic = magic;
-+
- 	if (pathspec_prefix >= 0 &&
- 	    (prefixlen || (prefix && *prefix)))
- 		die("BUG: 'prefix' magic is supposed to be used at worktree's root");
-@@ -401,7 +393,6 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
- 	/* sanity checks, pathspec matchers assume these are sane */
- 	assert(item->nowildcard_len <= item->len &&
- 	       item->prefix         <= item->len);
--	return magic;
- }
- 
- static int pathspec_item_cmp(const void *a_, const void *b_)
-@@ -501,8 +492,7 @@ void parse_pathspec(struct pathspec *pathspec,
- 	for (i = 0; i < n; i++) {
- 		entry = argv[i];
- 
--		item[i].magic = prefix_pathspec(item + i, flags,
--						prefix, prefixlen, entry);
-+		init_pathspec_item(item + i, flags, prefix, prefixlen, entry);
- 
- 		if (item[i].magic & PATHSPEC_EXCLUDE)
- 			nr_exclude++;
--- 
-2.11.0.390.gc69c2f50cf-goog
+>
+> It would be useful if I could pass the --no-single-branch argument to
+> the submodule clone process, since then a submodule can point to any
+> tag or branch without ending up in this situation.
 
+
+Adding --no-single-branch sounds like a good idea for general use,
+but it seems like a clunky workaround when looking for a specific branch,
+i.e. fixing the --branch flag sounds like the right approach for this
+issue here?
+
+> I've got a local
+> patch to hardwire the --no-single-branch argument in the
+> builtin/submodule--helper.c clone_submodule function, but I'm not sure
+> if this will have any other adverse effects?
+
+Well, when asking for depth=1, the user usually actually wants to have the
+least amount of data, which is why --depth implies --single-branch
+in clone.
+
+So adding it unconditionally is a bad idea IMHO, we'd need to have a flag
+for that propagated from git-submodule.sh (function cmd_add) to the
+submodule--helpers module_clone.
+
+>
+> Better yet would be for the shallow submodule clone to automatically
+> retrieve and graft the actual commit the submodule points to, but
+> that's probably wishing for too much.
+
+I think fixing the branch option comes a bit closer, but still doesn't
+fix this root problem. "submodule update" tries to fetch by sha1
+directly in the hope that the server has uploadpack.\
+allowReachableSHA1InWant configured.
+
+In "submodule add" I think it is sufficient to take the current remotes
+$branch and record that, so I do not see the need in the add code
+to support direct sha1s unlike the update command?
+
+Thanks,
+Stefan
