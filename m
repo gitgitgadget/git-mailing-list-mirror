@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65D9F1FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 18:50:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19ABC1FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 18:50:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965597AbdACSue (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 13:50:34 -0500
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:33992 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965542AbdACSuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 13:50:24 -0500
-Received: by mail-pg0-f52.google.com with SMTP id y62so165491113pgy.1
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:50:24 -0800 (PST)
+        id S965639AbdACSul (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 13:50:41 -0500
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:35960 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965542AbdACSug (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 13:50:36 -0500
+Received: by mail-pg0-f49.google.com with SMTP id f188so217396722pgc.3
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:50:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SQkasPj5uJaeKft2woiPL/flzBf02XQQEjAxkDQz7U0=;
-        b=UO/HSW5dfr19xBLBXWWA3LTzJCvymKv7F6pJd5vQZt/QrDuAxWJ8tdSOYpX3ly6QV5
-         16xSkd4Ih22x1C39Bv9K6Mr60DBfsoooqQlJtQHSrN15NcbLKggt27wDJHhxGHhQUtW0
-         aNxSK6JmRFTnmFGkkPwlqBQFW0JBsOyp9L36VhP/DQZ4Zu2M7ifTs3XlLo0pr49npLV+
-         TDh7POtRBSSg8SZ1RZf7g7hkkXa+h59sWG2z/IAjQ5woU7JL2TOT3NE8s5zZXiFJdcmH
-         kghb76zPmhBqomlPvyTxq1Jtqv3metthOcyk7WlmY4hAtogH9rupSMSq5Athiu2Pvihq
-         tJhQ==
+        bh=VFpBAPAPeNi3NhRsEKGO9l0nu2Z3fs0eGTvHWc6JDyk=;
+        b=Fbi6KKvUNNm/FWSpB5itOhp/xV7GSxkH2T1bv4uyKA5ZbLUlLf3HYNMKRs5Mkm2VCJ
+         PRJof5oXI0aJK81SlYw7X3Y8g5EBsNSetK/NQjv2Q00aHK38v5Yq0YsW4ZBsvrReXuKe
+         gvbaiBR60qj4Pa/LXNjySKvADU8TngIXcgjecQKV0H302OcxF28757m6yU3oc7TufbBp
+         K7HkgRQE3jCwP8+CAF5OYa8f10XwC5jEWedZvyMD+tTfPx9HyacN07XwSLvhjP+Fyxjl
+         ad9Ppf3aNXY+tfkCmQ0U7l1naiLBfPvfhFFf5rKcjqOkyHdaO4rWnij4OCWGDjnERrni
+         0OGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SQkasPj5uJaeKft2woiPL/flzBf02XQQEjAxkDQz7U0=;
-        b=e0bM5w9KGV0u0Se2xYXpQ+s90ckhSF7VoVSRN1YmLLsuGgRhOZLH06QYxw2Y+tvYzn
-         +9oBcoG0QmP4YW0Q8yoXQaoYN6pefYQ4etJL/6RqA1LgwWO4ZSIXqBBCBpw3MIhjRTfN
-         +RhxksI8tCtcDCACtYhKFxo01qtiOWz2pHoZGOvZmSPI++2A0sFuBKeJQJ2WVQIbgIHP
-         cmGQc7f8cLKQNIc03M29AeHgB1dugKDwdKrClwy69Gxq+DgILYqC4TM6f/i353+gug0Z
-         kacncqIVpHYlNDXbZzgS0QphZOemnMxhhDEVNoRVPoqUEOAm7c6JgW6bIm8/AGtqKcdW
-         kRJQ==
-X-Gm-Message-State: AIkVDXLPvjIzG0VPDvjohsEejB4ax1OLmR6Cl1Xgbhq1ugxWqcOqef4JzBI/ER/RfzbhXBsu
-X-Received: by 10.99.207.17 with SMTP id j17mr114833498pgg.57.1483469000638;
-        Tue, 03 Jan 2017 10:43:20 -0800 (PST)
+        bh=VFpBAPAPeNi3NhRsEKGO9l0nu2Z3fs0eGTvHWc6JDyk=;
+        b=L4a066cBpQdSDz0bknJNJsFXOWySXWL/NvScIVDHVVCbEwBfHYOMWjXEKsRnMWuUgv
+         VlUHMo/yGnqeKg9vGpKQwjJKFhq22k7waq8zs7xER+oDLWD7a4DU8Y5YhkVRm3Gl5nmz
+         pOngtH87+PRSQpT87yeX0u2cD4LmFWS5sb6x98eLlfetPGOIlkA9D7c24g+EHMwBEFPC
+         P8g1bGMmiXdLx7w2dj64ezVXtdb1xWW7/7q64DePmeVCmYyXlUOqmj/TEeq95sg2a+gy
+         fmOb/Q3o4iGxpCuWu4bYfX7hyUAWB/gK/P2vR+35nWHpPDlONE5EtdXeRdWxbhcqqtaG
+         oEng==
+X-Gm-Message-State: AIkVDXILbdTzPN/bjOK0Dmt3PYRKQXyJS5f5FsgKXqBEERCw7wGPk5LExSd7nGFPj+C0wbi9
+X-Received: by 10.98.26.88 with SMTP id a85mr59039900pfa.57.1483468990466;
+        Tue, 03 Jan 2017 10:43:10 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id e5sm141421338pfd.77.2017.01.03.10.43.18
+        by smtp.gmail.com with ESMTPSA id e5sm141421338pfd.77.2017.01.03.10.43.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jan 2017 10:43:19 -0800 (PST)
+        Tue, 03 Jan 2017 10:43:09 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         pclouds@gmail.com, gitster@pobox.com
-Subject: [PATCH v4 14/16] pathspec: create strip submodule slash helpers
-Date:   Tue,  3 Jan 2017 10:42:39 -0800
-Message-Id: <20170103184241.128409-15-bmwill@google.com>
+Subject: [PATCH v4 08/16] pathspec: always show mnemonic and name in unsupported_magic
+Date:   Tue,  3 Jan 2017 10:42:33 -0800
+Message-Id: <20170103184241.128409-9-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
 In-Reply-To: <20170103184241.128409-1-bmwill@google.com>
 References: <1481670870-66754-1-git-send-email-bmwill@google.com>
@@ -61,109 +61,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out the logic responsible for stripping the trailing slash on
-pathspecs referencing submodules into its own function.
+For better clarity, always show the mnemonic and name of the unsupported
+magic being used.  This lets users have a more clear understanding of
+what magic feature isn't supported.  And if they supplied a mnemonic,
+the user will be told what its corresponding name is which will allow
+them to more easily search the man pages for that magic type.
+
+This also avoids passing an extra parameter around the pathspec
+initialization code.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pathspec.c | 68 ++++++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 42 insertions(+), 26 deletions(-)
+ pathspec.c | 24 +++++++++---------------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
 
 diff --git a/pathspec.c b/pathspec.c
-index fe811a0a4..4a1f8ea44 100644
+index b9a3819d6..ee87494c7 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -258,6 +258,44 @@ static const char *parse_element_magic(unsigned *magic, int *prefix_len,
- 		return parse_short_magic(magic, elem);
+@@ -101,9 +101,7 @@ static void prefix_short_magic(struct strbuf *sb, int prefixlen,
+  * the prefix part must always match literally, and a single stupid
+  * string cannot express such a case.
+  */
+-static unsigned prefix_pathspec(struct pathspec_item *item,
+-				unsigned *p_short_magic,
+-				unsigned flags,
++static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
+ 				const char *prefix, int prefixlen,
+ 				const char *elt)
+ {
+@@ -210,7 +208,6 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+ 	}
+ 
+ 	magic |= short_magic;
+-	*p_short_magic = short_magic;
+ 
+ 	/* --noglob-pathspec adds :(literal) _unless_ :(glob) is specified */
+ 	if (noglob_global && !(magic & PATHSPEC_GLOB))
+@@ -329,8 +326,7 @@ static int pathspec_item_cmp(const void *a_, const void *b_)
  }
  
-+static void strip_submodule_slash_cheap(struct pathspec_item *item)
-+{
-+	if (item->len >= 1 && item->match[item->len - 1] == '/') {
-+		int i = cache_name_pos(item->match, item->len - 1);
+ static void NORETURN unsupported_magic(const char *pattern,
+-				       unsigned magic,
+-				       unsigned short_magic)
++				       unsigned magic)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int i;
+@@ -339,9 +335,11 @@ static void NORETURN unsupported_magic(const char *pattern,
+ 		if (!(magic & m->bit))
+ 			continue;
+ 		if (sb.len)
+-			strbuf_addch(&sb, ' ');
+-		if (short_magic & m->bit)
+-			strbuf_addf(&sb, "'%c'", m->mnemonic);
++			strbuf_addstr(&sb, ", ");
 +
-+		if (i >= 0 && S_ISGITLINK(active_cache[i]->ce_mode)) {
-+			item->len--;
-+			item->match[item->len] = '\0';
-+		}
-+	}
-+}
-+
-+static void strip_submodule_slash_expensive(struct pathspec_item *item)
-+{
-+	int i;
-+
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *ce = active_cache[i];
-+		int ce_len = ce_namelen(ce);
-+
-+		if (!S_ISGITLINK(ce->ce_mode))
-+			continue;
-+
-+		if (item->len <= ce_len || item->match[ce_len] != '/' ||
-+		    memcmp(ce->name, item->match, ce_len))
-+			continue;
-+
-+		if (item->len == ce_len + 1) {
-+			/* strip trailing slash */
-+			item->len--;
-+			item->match[item->len] = '\0';
-+		} else {
-+			die(_("Pathspec '%s' is in submodule '%.*s'"),
-+			    item->original, ce_len, ce->name);
-+		}
-+	}
-+}
-+
- /*
-  * Take an element of a pathspec and check for magic signatures.
-  * Append the result to the prefix. Return the magic bitmap.
-@@ -278,7 +316,7 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
- 	unsigned magic = 0, element_magic = 0;
- 	const char *copyfrom = elt;
- 	char *match;
--	int i, pathspec_prefix = -1;
-+	int pathspec_prefix = -1;
++		if (m->mnemonic)
++			strbuf_addf(&sb, "'%s' (mnemonic: '%c')",
++				    m->name, m->mnemonic);
+ 		else
+ 			strbuf_addf(&sb, "'%s'", m->name);
+ 	}
+@@ -413,11 +411,9 @@ void parse_pathspec(struct pathspec *pathspec,
+ 	prefixlen = prefix ? strlen(prefix) : 0;
  
- 	/* PATHSPEC_LITERAL_PATH ignores magic */
- 	if (flags & PATHSPEC_LITERAL_PATH) {
-@@ -329,33 +367,11 @@ static unsigned prefix_pathspec(struct pathspec_item *item, unsigned flags,
- 	item->len = strlen(item->match);
- 	item->prefix = prefixlen;
+ 	for (i = 0; i < n; i++) {
+-		unsigned short_magic;
+ 		entry = argv[i];
  
--	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
--	    (item->len >= 1 && item->match[item->len - 1] == '/') &&
--	    (i = cache_name_pos(item->match, item->len - 1)) >= 0 &&
--	    S_ISGITLINK(active_cache[i]->ce_mode)) {
--		item->len--;
--		match[item->len] = '\0';
--	}
-+	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
-+		strip_submodule_slash_cheap(item);
+-		item[i].magic = prefix_pathspec(item + i, &short_magic,
+-						flags,
++		item[i].magic = prefix_pathspec(item + i, flags,
+ 						prefix, prefixlen, entry);
+ 		if ((flags & PATHSPEC_LITERAL_PATH) &&
+ 		    !(magic_mask & PATHSPEC_LITERAL))
+@@ -425,9 +421,7 @@ void parse_pathspec(struct pathspec *pathspec,
+ 		if (item[i].magic & PATHSPEC_EXCLUDE)
+ 			nr_exclude++;
+ 		if (item[i].magic & magic_mask)
+-			unsupported_magic(entry,
+-					  item[i].magic & magic_mask,
+-					  short_magic);
++			unsupported_magic(entry, item[i].magic & magic_mask);
  
- 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
--		for (i = 0; i < active_nr; i++) {
--			struct cache_entry *ce = active_cache[i];
--			int ce_len = ce_namelen(ce);
--
--			if (!S_ISGITLINK(ce->ce_mode))
--				continue;
--
--			if (item->len <= ce_len || match[ce_len] != '/' ||
--			    memcmp(ce->name, match, ce_len))
--				continue;
--			if (item->len == ce_len + 1) {
--				/* strip trailing slash */
--				item->len--;
--				match[item->len] = '\0';
--			} else
--				die (_("Pathspec '%s' is in submodule '%.*s'"),
--				     elt, ce_len, ce->name);
--		}
-+		strip_submodule_slash_expensive(item);
- 
- 	if (magic & PATHSPEC_LITERAL)
- 		item->nowildcard_len = item->len;
+ 		if ((flags & PATHSPEC_SYMLINK_LEADING_PATH) &&
+ 		    has_symlink_leading_path(item[i].match, item[i].len)) {
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
