@@ -2,168 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BEFC2092F
-	for <e@80x24.org>; Tue,  3 Jan 2017 18:15:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C0DC1FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 18:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760288AbdACSPm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 13:15:42 -0500
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:34971 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753227AbdACSPk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 13:15:40 -0500
-Received: by mail-qt0-f180.google.com with SMTP id c47so469898233qtc.2
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:15:40 -0800 (PST)
+        id S1760569AbdACSbv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 13:31:51 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33560 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753228AbdACSbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 13:31:45 -0500
+Received: by mail-pf0-f172.google.com with SMTP id d2so78089781pfd.0
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:30:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=x1uUmuBpThIpkwGYVdmRnA5oYFE2ZnA7CiX7S3+wdM8=;
-        b=qiFwCH0cSDN1T9yfq9Ad+8NkudFwT0HG+LxVkv2InVAF1S7TB/GA4tptoSosMnFU6+
-         A8H9Rr4lEWGLFGWn25X7CcR7993LYM+OJV8vsDKshKmqckcH+hH7YRlleQWxe8qN+t3p
-         X2fW+HdSdT0gzGKzknsveBrYISlZJSIr/CVaSKGYDVxFsHUmWucgZ4sFJyukWHExVcAY
-         W1C7isDaYlIlEUWovDv2ZWkikb3OzIhIKndzClyvizG+puoizo31ke7Nnn690xQ5M3Ln
-         +HztrFNdMWIcc1qeJnjuiOyF3g2XPqMK+ZWOG8h1xPog6JwKrPbxkJV2R47aHBcvrNcM
-         ZeZw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=57ZiQLVkdbYXBJyaf1OpFEQx+wANPqTa39iNJf8xias=;
+        b=CS2UYnfNX7z69TpT3asB4u6XjyLiVqdivoZ+3jao9jEA3Icde27qF1Z0Z7ko9+iCHM
+         FRrlyKUYZ7ho6KZItCHYlwL4LjmNsB9SMYh8UkbAbPY9MVD2vQ5PkdK1Q4Ptr5uOi2fg
+         326Wa1e8+qhoNrvnwb9L2DSKWKc6nAu+XNTtiLw8iTruhCQ6uqw0GCB13RxLmcymn7lK
+         Goc8ObUB6Y9+MRhDksCnLrEM3LvIvKhPu7Rtn2NRijbfGAU0PTtgA/KPVMirVb2q1EhR
+         kDhQHyHJeK6LyEvmf6QLiWAUqpMjJhRcmEYMlaIMpxp2ufEIUhoa+wDYdrPqVC+Be3c4
+         S+OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=x1uUmuBpThIpkwGYVdmRnA5oYFE2ZnA7CiX7S3+wdM8=;
-        b=imQYzJ8syasBAV65PfbOTNBVeKPfHyaUCRpH0bbkc61u9F8zqrBmmzIq8twQaCqmPG
-         6kapjR0ck9ixjMbDmxNMJuSeiHajiOQjpToELyafDi/dDfC6ZjGbnE0gGQtoWfKeE9e7
-         iMulguabnmTpgfO1mT1sFpyJVjMfOWfEAMhwzFW2/6PHEL7Co3KKAFIFnQusUWpsYBbB
-         5HHe9nQCAMHiApqIP3z7CB16b6r1+521br5gpf899wWvwFKOXauG5ZQ29SBYPHk0VL6W
-         6r/769mo5lPImp4a/v9I+U6AXAJSZkIVjW38/ySgQD4TcrQ/XdTfIVdkVfW4nVTcGXDS
-         lo2A==
-X-Gm-Message-State: AIkVDXLsZomgXupAi76M5O9upAPdH9mHpHeAJEktdfHgBYLVHWehEq91U3PvEWa2B0+dDyVbe7KyUWMX+EqTKCVU
-X-Received: by 10.200.44.217 with SMTP id 25mr54504471qtx.176.1483467339239;
- Tue, 03 Jan 2017 10:15:39 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 10:15:38 -0800 (PST)
-In-Reply-To: <xmqqh95j60uh.fsf@gitster.mtv.corp.google.com>
-References: <20161229192908.32633-1-sbeller@google.com> <xmqqh95j60uh.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=57ZiQLVkdbYXBJyaf1OpFEQx+wANPqTa39iNJf8xias=;
+        b=UrB86L3Lox+Q2CUtgUF2gd55/enVPoKUAPgmMetkqCdr59GSrm0DgU3IVZD+MEi69W
+         aDNRxCWQvCtnTrCd5MAN0nTkIQs1cfbJj780fIeAsve5dSQxRKvi+NZWKdoeXkMG70eI
+         Tb3Bi2qpxNvjeNudmgMaNvtz+L4UlMarsj9NllPP3dZdZDW+qCFg66N+bU175Qhs/MMx
+         L2k8RJqZzCNSRV5bQUQ32chTGOZOxw4+BtxcdW/O/EBp3lkDv7ypa1OXkt/CUkqTa2DL
+         mgLI18MYC57LL7ppWmUPk0yWp9+SuTguMkwNBffpl++mC/epq70nt0QoUaRLxrFY5osL
+         Hruw==
+X-Gm-Message-State: AIkVDXKQdrnYpBZJaA0EpUP9QuktVTj+6p/yeRAYphHw8zDHB2sSvjaw67D6YKoyfqfqqqyL
+X-Received: by 10.99.1.132 with SMTP id 126mr117531149pgb.129.1483468258408;
+        Tue, 03 Jan 2017 10:30:58 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b10:b58c:264b:e559:128])
+        by smtp.gmail.com with ESMTPSA id l11sm141456455pfb.28.2017.01.03.10.30.57
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 03 Jan 2017 10:30:57 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 3 Jan 2017 10:15:38 -0800
-Message-ID: <CAGZ79kZ5F46UzeNeVYQV1EKEEa6+az-Pe_jrT+wZF9X6b34CGA@mail.gmail.com>
-Subject: Re: [PATCH] pathspec: give better message for submodule related
- pathspec error
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+To:     gitster@pobox.com, l.s.r@web.de
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2] submodule.c: use GIT_DIR_ENVIRONMENT consistently
+Date:   Tue,  3 Jan 2017 10:30:47 -0800
+Message-Id: <20170103183047.17968-1-sbeller@google.com>
+X-Mailer: git-send-email 2.11.0.259.g8b4ce6293d.dirty
+In-Reply-To: <6dd0a31e-d877-5311-37ef-313ed9ab9716@web.de>
+References: <6dd0a31e-d877-5311-37ef-313ed9ab9716@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 31, 2016 at 5:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Every once in a while someone complains to the mailing list to have
->> run into this weird assertion[1].
->>
->> The usual response from the mailing list is link to old discussions[2],
->> and acknowledging the problem stating it is known.
->>
->> For now just improve the user visible error message.
->
-> Thans. judging from the date: header I take this is meant as v3 that
-> supersedes v2 done on Wednesday.
+In C code we have the luxury of having constants for all the important
+things that are hard coded. This is the only place in C, that hard codes
+the git directory environment variable, so fix it.
 
-Yes, that is correct. Sorry for being sloppy not numbering the
-patches correctly.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
->
-> It is not clear in the above that what this thing is.  Given that we
-> are de-asserting it, is the early part of the new code diagnosing an
-> end-user error (i.e. you gave me a pathspec but that extends into a
-> submodule which is a no-no)?  The "was a submodule issue" comment
-> added is "this is an end-user mistake, there is nothing to fix in
-> the code"?
+v2:
+  argv_array_pushf and realigned.
 
-This is not a fix in the code, but purely improving an error message.
-So far anytime someone run into this assert, it was related to submodules.
-I do not know the pathspec code well enough to claim this condition
-can be produced via submodules *only*, though.
+v1:
+  Signed-off-by-the-format-patch-config ;)
+  
+  This is the only occurrence for "GIT_DIR=" in C, but what about ".git"
+  git grep "\.git\"" *.c finds some places, which we may want to convert
+  to DEFAULT_GIT_DIR_ENVIRONMENT?
+  (mainly things that are newer if I can judge the places correctly
+  lots of submodules, worktrees and the no data in ".git" bug AFAICT)
+  
+  Thanks,
+  Stefan
 
-So I proposed a more defensive patch, which diagnoses if it is the
-"no-no, pathspec extends into a submodule" first and then throws
-a generic error afterwards in case it is not the submodule issue.
+ submodule.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> I take that the new "BUG" thing tells the Git developers that no
-> sane codepath should throw an pathspec_item that satisfies the
-> condition of the if() statement for non-submodules?
+diff --git a/submodule.c b/submodule.c
+index ece17315d6..973b9f3f96 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1333,5 +1333,6 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+ 			argv_array_push(out, *var);
+ 	}
+-	argv_array_push(out, "GIT_DIR=.git");
++	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
++			 DEFAULT_GIT_DIR_ENVIRONMENT);
+ }
+-- 
+2.11.0.259.ga95e92af08.dirty
 
-If we want to keep the semantics of the assert around, then we
-have to have a blank statement if the submodule error message
-is not triggered.
-
-I assume if we print this BUG, then there is an actual bug.
-
->
->> diff --git a/pathspec.c b/pathspec.c
->> index 22ca74a126..b446d79615 100644
->> --- a/pathspec.c
->> +++ b/pathspec.c
->> @@ -313,8 +313,23 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->>       }
->>
->>       /* sanity checks, pathspec matchers assume these are sane */
->> -     assert(item->nowildcard_len <= item->len &&
->> -            item->prefix         <= item->len);
->> +     if (item->nowildcard_len > item->len ||
->> +         item->prefix         > item->len) {
->> +             /* Historically this always was a submodule issue */
->> +             for (i = 0; i < active_nr; i++) {
->> +                     struct cache_entry *ce = active_cache[i];
->> +                     int ce_len = ce_namelen(ce);
->> +                     int len = ce_len < item->len ? ce_len : item->len;
->> +                     if (!S_ISGITLINK(ce->ce_mode))
->> +                             continue;
->
-> Computation of ce_len and len are better done after this check, no?
-
-Yes, though I trusted the modern-day-compilers to get it right. Will
-fix in a reroll.
-
->> +test_expect_success 'setup a submodule' '
->> +     test_commit 1 &&
->> +     git submodule add ./ sub &&
->
-> Is this adding our own project as its submodule?
-
-Yes it is.
-
->
-> It MIGHT be a handy hack when writing a test, but let's stop doing
-> that insanity.
-
-I agree that this is not a good idea.
-
->  No sane project does that in real life, doesn't it?
-
-If such a project was cloned with submodules, it would recurse endlessly. :)
-
-> Create a subdirectory, make it a repository, have a commit there and
-> bind that as our own submodule.  That would be a more normal way to
-> start your own superproject and its submodule pair if they originate
-> together at the same place.
-
-I wonder if we want to have a helper function in test-lib.sh to be used
-for that. This use case (have a repository and a submodule) happens in
-a lot of tests, so we could make life easier by providing a function
-in the library so it is even easier than this HACK.
-
-> Better yet create a separate repository, have a commit there, and
-> then pull it in with "git submodule add && git submodule init" into
-> our repository.  That would be the normal way to borrow somebody
-> else's project as a part of your own superproject.
-
-The library function could do that, yes.
-
-Thanks,
-Stefan
