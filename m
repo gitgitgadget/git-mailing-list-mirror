@@ -2,153 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 140201FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 18:53:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6049C1FEB3
+	for <e@80x24.org>; Tue,  3 Jan 2017 18:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965498AbdACSxM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 13:53:12 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36848 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760669AbdACSxG (ORCPT <rfc822;git@vger.kernel.org>);
+        id S965673AbdACSxk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 13:53:40 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:32911 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760438AbdACSxG (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 3 Jan 2017 13:53:06 -0500
-Received: by mail-pf0-f177.google.com with SMTP id 189so78115017pfz.3
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:52:11 -0800 (PST)
+Received: by mail-pg0-f52.google.com with SMTP id g1so178378014pgn.0
+        for <git@vger.kernel.org>; Tue, 03 Jan 2017 10:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=28bV5FSlzrSbj0oLHEL/hreEPmvHtHtJ5f3XGbrkH3M=;
-        b=EfMhterXPRgsTHWBB+YBKvaWWnQyNYyulVh9ZMODDKn4qHHLo6cwVa+II6tSIfEFZU
-         3yjk5/ZDZptqwXZ4Hn58dqxZvUgQr5lB5moJBGmlb2rSU9Cl0t0Y998UYb7wK11fjKkH
-         64ss+sRTNPmyfNemngqHzELIXTNGJ6R6EVhabY5V/7KLuebLIDAOGCDYB3W14uP71l6j
-         rSW9+BLDtWmd31P0JsL1mxjYjzBWCi9XZ6sr+lR+scuJwkVEuEPfmz6KCSm4FG2PVy7+
-         WSutDyr4qwsbmFoaXBSPbTTjRCl/KvWwU+5xvd6waI0R6EccFzP+6iUMqYxEn8K6oflP
-         CbVA==
+        bh=qqXJ2L/Iczbv3J2quV3C7gLA8pcvWmsIVRvKL4pmOiI=;
+        b=NXPydKzgZ5JPfnnANcPh+auY1PSShX9Ik1D2GoQKCW0lViymCA1NT9iVxL0rmDHZeH
+         ip8v03XKHC4pDRfXAq9fPRud//FdcMCauNoYzpojAFG0xna4zIiXMUnp/CCaohlxQHlQ
+         q/JsZpsCMhqlZckEWIRKrPgCUqE58xmVQMxRt36BmWx2sArSqlYOWcsEnHAcuPNM+s4C
+         Mzigy5LiYlfkImRMU6ch8FNBW6XQ4ABxexDyXWz8Exazte3iMl8f7aTYmtSIX6/3R5qO
+         p4EVCMdxJ8/gx58ohYE8zp/ZesPGfur9s8ntRSDMcXbCWX2Ve/dCh+z0T/Q6xxS11CR1
+         exsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=28bV5FSlzrSbj0oLHEL/hreEPmvHtHtJ5f3XGbrkH3M=;
-        b=e6hmVLxSA05PzTvMxKl9K9Rg4g9/9CiX99oAqWChCMswpQH3KcjoVcObRhX4JCArpg
-         c/RqB2w7mk1WCiQqoLFKjOfEXNbjpvqXWa/RzNOk9OqeljkAgv56mL4YY8zfk6DOuUeC
-         49JBSooHNX4qqukRq3On/bJ9jaZRRzWGRcI1MaK1J0MSyj9gLiDmume4GdQcCyMDLIU0
-         DgQQ/lcc+0WSlv2v3AAsQQjs2KWdfx8DoRzgHac+KV8lHURU8x8jJGNWApeM9lAYooYW
-         c1xfSKm5QnPRIzjyJKVEkEmkbwQonjksx1B3/OFBMjwznGmtvuy4jsKQJFl64aTDpnGe
-         fLVA==
-X-Gm-Message-State: AIkVDXL+6sslorWNJByeoi7tsJjiqhP4pYgA/zOcvk241NUHNXMt05hUoTXcfOMgE8N186j1
-X-Received: by 10.84.192.1 with SMTP id b1mr137792187pld.113.1483468987003;
-        Tue, 03 Jan 2017 10:43:07 -0800 (PST)
+        bh=qqXJ2L/Iczbv3J2quV3C7gLA8pcvWmsIVRvKL4pmOiI=;
+        b=BPykbjrhzpq66md1VJODJjQddgf6eFJlP1R5DyEneQ9RC50wiAMAEMUtEGeQSNqXoW
+         w0t5wXt3Q5O+NRI67fGLOAXgxGgBiMko1Crq93fvBiTTYNhEHcuynHeEcAm/l1KL6ib0
+         LyEIcxHIV/LxWD3Jzj9ywROUD5a8ttwWxPte0yKhNXQ6pR4C9ZdznRHyBd1XZoduVvKy
+         0vZNr+gRAQg26OX/+aBAcwwMtvohoJuP6vVdmws0aTDuiX0GH/2HDtGq+s+obXJQBTLo
+         qHS0upp7o5devlWEvjXoqKwRd96truGMCBHuUnOmagpH/re0upo9q4PAV1sYUiw3duUx
+         HETw==
+X-Gm-Message-State: AIkVDXLoN30zg0h6w6l9BvIjJfdupvB3vHiaOph/VPMqIzX4zwZMLh3moqkbZb8eiCjdlRFH
+X-Received: by 10.84.164.106 with SMTP id m39mr136681609plg.97.1483468977548;
+        Tue, 03 Jan 2017 10:42:57 -0800 (PST)
 Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id e5sm141421338pfd.77.2017.01.03.10.43.05
+        by smtp.gmail.com with ESMTPSA id e5sm141421338pfd.77.2017.01.03.10.42.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jan 2017 10:43:05 -0800 (PST)
+        Tue, 03 Jan 2017 10:42:56 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         pclouds@gmail.com, gitster@pobox.com
-Subject: [PATCH v4 06/16] pathspec: copy and free owned memory
-Date:   Tue,  3 Jan 2017 10:42:31 -0800
-Message-Id: <20170103184241.128409-7-bmwill@google.com>
+Subject: [PATCH v4 00/16] pathspec cleanup
+Date:   Tue,  3 Jan 2017 10:42:25 -0800
+Message-Id: <20170103184241.128409-1-bmwill@google.com>
 X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
-In-Reply-To: <20170103184241.128409-1-bmwill@google.com>
+In-Reply-To: <1481670870-66754-1-git-send-email-bmwill@google.com>
 References: <1481670870-66754-1-git-send-email-bmwill@google.com>
- <20170103184241.128409-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'original' string entry in a pathspec_item is only duplicated some
-of the time, instead always make a copy of the original and take
-ownership of the memory.
+v4 addresses a few comments from Duy.
+* [2/16] push the guard pathspec macro into simplify_away() and
+  exclude_matches_pathsepc().
+* [6/16] when freeing a pathspec struct, set pathsepc->nr = 0.
+* [8/16] tweak the die message when using unsupported magic to be more human
+  readable.
 
-Since both 'match' and 'original' string entries in a pathspec_item are
-owned by the pathspec struct, they need to be freed when clearing the
-pathspec struct (in 'clear_pathspec()') and duplicated when copying the
-pathspec struct (in 'copy_pathspec()').
+Brandon Williams (16):
+  mv: remove use of deprecated 'get_pathspec()'
+  dir: remove struct path_simplify
+  dir: convert fill_directory to use the pathspec struct interface
+  ls-tree: convert show_recursive to use the pathspec struct interface
+  pathspec: remove the deprecated get_pathspec function
+  pathspec: copy and free owned memory
+  pathspec: remove unused variable from unsupported_magic
+  pathspec: always show mnemonic and name in unsupported_magic
+  pathspec: simpler logic to prefix original pathspec elements
+  pathspec: factor global magic into its own function
+  pathspec: create parse_short_magic function
+  pathspec: create parse_long_magic function
+  pathspec: create parse_element_magic helper
+  pathspec: create strip submodule slash helpers
+  pathspec: small readability changes
+  pathspec: rename prefix_pathspec to init_pathspec_item
 
-Also change the type of 'match' and 'original' to 'char *' in order to
-more explicitly show the ownership of the memory.
+ Documentation/technical/api-setup.txt |   2 -
+ builtin/ls-tree.c                     |  16 +-
+ builtin/mv.c                          |  50 ++--
+ cache.h                               |   1 -
+ dir.c                                 | 193 ++++++--------
+ pathspec.c                            | 480 +++++++++++++++++++---------------
+ pathspec.h                            |   5 +-
+ 7 files changed, 390 insertions(+), 357 deletions(-)
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- pathspec.c | 23 +++++++++++++++++++----
- pathspec.h |  4 ++--
- 2 files changed, 21 insertions(+), 6 deletions(-)
+--- interdiff between v3 and v4
+
+diff --git a/dir.c b/dir.c
+index 15f7c9993..e8ddd7f8a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1353,6 +1353,15 @@ static int simplify_away(const char *path, int pathlen,
+ {
+ 	int i;
+ 
++	if (pathspec)
++		guard_pathspec(pathspec,
++			       pathspec_fromtop |
++			       pathspec_maxdepth |
++			       pathspec_literal |
++			       pathspec_glob |
++			       pathspec_icase |
++			       pathspec_exclude);
++
+ 	if (!pathspec || !pathspec->nr)
+ 		return 0;
+ 
+@@ -1385,6 +1394,15 @@ static int exclude_matches_pathspec(const char *path, int pathlen,
+ {
+ 	int i;
+ 
++	if (pathspec)
++		guard_pathspec(pathspec,
++			       pathspec_fromtop |
++			       pathspec_maxdepth |
++			       pathspec_literal |
++			       pathspec_glob |
++			       pathspec_icase |
++			       pathspec_exclude);
++
+ 	if (!pathspec || !pathspec->nr)
+ 		return 0;
+ 
+@@ -1996,15 +2014,6 @@ int read_directory(struct dir_struct *dir, const char *path,
+ {
+ 	struct untracked_cache_dir *untracked;
+ 
+-	if (pathspec)
+-		guard_pathspec(pathspec,
+-			       pathspec_fromtop |
+-			       pathspec_maxdepth |
+-			       pathspec_literal |
+-			       pathspec_glob |
+-			       pathspec_icase |
+-			       pathspec_exclude);
+-
+ 	if (has_symlink_leading_path(path, len))
+ 		return dir->nr;
 
 diff --git a/pathspec.c b/pathspec.c
-index 1f918cbae..b8faa8f46 100644
+index d4efcf666..bcf3ba039 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -259,8 +259,9 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
- 		}
- 		strbuf_addstr(&sb, match);
- 		item->original = strbuf_detach(&sb, NULL);
--	} else
--		item->original = elt;
-+	} else {
-+		item->original = xstrdup(elt);
-+	}
- 	item->len = strlen(item->match);
- 	item->prefix = prefixlen;
+@@ -414,10 +414,11 @@ static void NORETURN unsupported_magic(const char *pattern,
+ 		if (!(magic & m->bit))
+ 			continue;
+ 		if (sb.len)
+-			strbuf_addch(&sb, ' ');
++			strbuf_addstr(&sb, ", ");
  
-@@ -388,8 +389,8 @@ void parse_pathspec(struct pathspec *pathspec,
- 			die("BUG: PATHSPEC_PREFER_CWD requires arguments");
- 
- 		pathspec->items = item = xcalloc(1, sizeof(*item));
--		item->match = prefix;
--		item->original = prefix;
-+		item->match = xstrdup(prefix);
-+		item->original = xstrdup(prefix);
- 		item->nowildcard_len = item->len = strlen(prefix);
- 		item->prefix = item->len;
- 		pathspec->nr = 1;
-@@ -453,13 +454,27 @@ void parse_pathspec(struct pathspec *pathspec,
- 
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
- {
-+	int i;
-+
- 	*dst = *src;
- 	ALLOC_ARRAY(dst->items, dst->nr);
- 	COPY_ARRAY(dst->items, src->items, dst->nr);
-+
-+	for (i = 0; i < dst->nr; i++) {
-+		dst->items[i].match = xstrdup(src->items[i].match);
-+		dst->items[i].original = xstrdup(src->items[i].original);
-+	}
- }
- 
- void clear_pathspec(struct pathspec *pathspec)
- {
-+	int i;
-+
-+	for (i = 0; i < pathspec->nr; i++) {
-+		free(pathspec->items[i].match);
-+		free(pathspec->items[i].original);
-+	}
+ 		if (m->mnemonic)
+-			strbuf_addf(&sb, "'(%c)%s'", m->mnemonic, m->name);
++			strbuf_addf(&sb, "'%s' (mnemonic: '%c')",
++				    m->name, m->mnemonic);
+ 		else
+ 			strbuf_addf(&sb, "'%s'", m->name);
+ 	}
+@@ -544,4 +545,5 @@ void clear_pathspec(struct pathspec *pathspec)
+ 	}
  	free(pathspec->items);
  	pathspec->items = NULL;
 +	pathspec->nr = 0;
  }
-diff --git a/pathspec.h b/pathspec.h
-index 70a592e91..49fd823dd 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -25,8 +25,8 @@ struct pathspec {
- 	unsigned magic;
- 	int max_depth;
- 	struct pathspec_item {
--		const char *match;
--		const char *original;
-+		char *match;
-+		char *original;
- 		unsigned magic;
- 		int len, prefix;
- 		int nowildcard_len;
+
 -- 
 2.11.0.390.gc69c2f50cf-goog
 
