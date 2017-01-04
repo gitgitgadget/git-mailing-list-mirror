@@ -2,89 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9891FEB3
-	for <e@80x24.org>; Tue,  3 Jan 2017 20:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 967571FEB3
+	for <e@80x24.org>; Wed,  4 Jan 2017 00:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756685AbdACUL2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 15:11:28 -0500
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:34254 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751182AbdACUL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 15:11:26 -0500
-Received: by mail-qt0-f169.google.com with SMTP id d45so250759260qta.1
-        for <git@vger.kernel.org>; Tue, 03 Jan 2017 12:11:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=M4Z9j0plk+KxUstKLNykzW6r2IpT27lMQf2LFMjO8P4=;
-        b=uPQPRTt8dtqK2H8tW0dGrWbXW6N7XV38TyJWSOP2TQMdQ0cCy245bxAkiesXxjSCq7
-         PlEeAL9IqPQm9y5tml+p/79ZCQQdt/jC7xsALtxgq+CxrqmJtWKUOsM1fKkvrsCWePyA
-         Kn9FA95LCSGxtspriUw/PQY0olllGmdMgw9J5j2ZwqPPd9/pwmBaINKFxDxBwpdlZFHV
-         Rt1y267fZDEPb0DnDY5UaARheOj/MYmfQaPfextpg5Wb2CTOHu2hON+pfHFc6AQ8zh2D
-         XafnZK9k3CN6Zxe3ineGFrXBRFbaJVEDmVtYFJgwJNUIDH0KnAqN+V7jvSgzGs71SCBB
-         TAoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=M4Z9j0plk+KxUstKLNykzW6r2IpT27lMQf2LFMjO8P4=;
-        b=ebIeqIYzCGwPzLVtQHQGo9lQVBLfHky7Wld55ed4qzCccTq9h9jPdVB2C5DUl8U0Xn
-         j3pxkvxnEr5LjgMbSVSdzEiQgvBDe9wp/BhTgJd2CCh/WlUcxygFK7Dyhi2iwc6/Pp9F
-         QfpPzKDq6/llwMmEJf54gtPKdcCTE9i2eVq5mNK8Ky2zdFTgxtFWUr6JSoKrTQvHfrvD
-         DUXwl1ykmRVrmQjSoFaBpzpEEV1ZkUj0zNhIA3nuwdIvK0aGEW+L+bpr59ybQnKqpL3C
-         ELzll7senPy7hSUzZcKZEqIuxuwwRFd1aMLPMLen7D/fYuTXFUKH6+T7lGmpLNNwAOjg
-         bwiA==
-X-Gm-Message-State: AIkVDXK6obqeu/koR94ESew9tb1vn+2iBMAjYdq8xwpK13qSWk0/dWLQNQ4vRzq+L1DlcAuIZWFScyWXMyLZ3LxY
-X-Received: by 10.200.42.253 with SMTP id c58mr54141802qta.145.1483474285557;
- Tue, 03 Jan 2017 12:11:25 -0800 (PST)
+        id S1762235AbdADAkg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 19:40:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34860 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751223AbdADAke (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 19:40:34 -0500
+Received: (qmail 10258 invoked by uid 109); 4 Jan 2017 00:40:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Jan 2017 00:40:34 +0000
+Received: (qmail 28094 invoked by uid 111); 4 Jan 2017 00:41:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Jan 2017 19:41:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2017 19:40:31 -0500
+Date:   Tue, 3 Jan 2017 19:40:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] archive-zip: load userdiff config
+Message-ID: <20170104004031.ccm6skvfe3u4kkbw@sigill.intra.peff.net>
+References: <20170102222509.ho7motscnffrtnfh@sigill.intra.peff.net>
+ <7710c564-6b53-1908-7205-210d80eda59b@web.de>
 MIME-Version: 1.0
-Received: by 10.12.146.7 with HTTP; Tue, 3 Jan 2017 12:11:25 -0800 (PST)
-In-Reply-To: <18e9a1009aac2329cb9bf9d12fbac4e8ac19a5bb.1483373635.git.johannes.schindelin@gmx.de>
-References: <cover.1480019834.git.johannes.schindelin@gmx.de>
- <cover.1483373635.git.johannes.schindelin@gmx.de> <18e9a1009aac2329cb9bf9d12fbac4e8ac19a5bb.1483373635.git.johannes.schindelin@gmx.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 3 Jan 2017 12:11:25 -0800
-Message-ID: <CAGZ79kZ--jp08pK+xwn1N2VQQr8bA5+DveE2HsoY90R1gR6c_A@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] Avoid Coverity warning about unfree()d git_exec_path()
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Paul Sbarra <sbarra.paul@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7710c564-6b53-1908-7205-210d80eda59b@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 2, 2017 at 8:22 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Technically, it is correct that git_exec_path() returns a possibly
-> malloc()ed string. Practically, it is *sometimes* not malloc()ed. So
-> let's just use a static variable to make it a singleton. That'll shut
-> Coverity up, hopefully.
+On Tue, Jan 03, 2017 at 06:24:39PM +0100, René Scharfe wrote:
 
-I picked up this patch and applied it to the coverity branch
-that I maintain at github/stefanbeller/git.
+> Am 02.01.2017 um 23:25 schrieb Jeff King:
+> > Since 4aff646d17 (archive-zip: mark text files in archives,
+> > 2015-03-05), the zip archiver will look at the userdiff
+> > driver to decide whether a file is text or binary. This
+> > usually doesn't need to look any further than the attributes
+> > themselves (e.g., "-diff", etc). But if the user defines a
+> > custom driver like "diff=foo", we need to look at
+> > "diff.foo.binary" in the config. Prior to this patch, we
+> > didn't actually load it.
+> 
+> Ah, didn't think of that, obviously.
+> 
+> Would it make sense for userdiff_find_by_path() to die if userdiff_config()
+> hasn't been called, yet?
 
-I'd love to see this patch upstream as it reduces my maintenance
-burden of the coverity branch by a patch.
+Yeah, perhaps. That makes it impossible for a program to intentionally
+ignore the config. But it looks like even plumbing diff commands load
+userdiff (which makes sense; they control its behavior through things
+like ALLOW_TEXTCONV). So it's probably fine to have it everywhere.
 
-Early on when Git was new to coverity, some arguments were made
-that patches like these only clutter the main code base which is read
-by a lot of people, hence we want these quirks for coverity not upstream.
-And I think that still holds.
+Other options include:
 
-If this patch is only to appease coverity (as the commit message eludes
-to) I think this may be a bad idea for upstream.  If this patch fixes an
-actual problem, then the commit message needs to spell that out.
+  1. Just loading it always as part of git_default_config.
 
-Thanks,
-Stefan
+  2. Lazy-loading it on the first call. This seems elegant, though it
+     does open up hidden cache-invalidation issues. E.g., somebody asks
+     for userdiff_find_by_path(), we load the values, then they
+     setup_git_repository(), and we would need to reload. That's
+     far-fetched for userdiff, but it makes lazy-loading as a general
+     pattern a bit of a potential maintenance trap.
+
+     We could also introduce some infrastructure to deal with that
+     (e.g., if callers could ask the config machinery "have you been
+     invalidated"). That would help here and in other places (e.g., I
+     considered this when dealing with get_shared_repository()).
+
+> > I also happened to notice that zipfiles are created using the local
+> > timezone (because they have no notion of the timezone, so we have to
+> > pick _something_). That's probably the least-terrible option, but it was
+> > certainly surprising to me when I tried to bit-for-bit reproduce a
+> > zipfile from GitHub on my local machine.
+> 
+> That reminds me of an old request to allow users better control over the
+> meta-data written into archives.  Being able to specify a time zone offset
+> could be a start.
+
+I did it with:
+
+  TZ=PST8PDT git archive ...
+
+which let me get a bit-for-bit match with what GitHub generates. The
+real problem was just knowing that I needed to do that. OTOH, we're
+considering having GitHub generate all archives in UTC for sanity's
+sake, and it would be nice to do that by setting zip.timezone instead of
+hacking $TZ for each invocation.
+
+> > +static int archive_zip_config(const char *var, const char *value, void *data)
+> > +{
+> > +	return userdiff_config(var, value);
+> > +}
+> > +
+> >  static int write_zip_archive(const struct archiver *ar,
+> >  			     struct archiver_args *args)
+> >  {
+> >  	int err;
+> > 
+> > +	git_config(archive_zip_config, NULL);
+> > +
+> 
+> I briefly thought about moving this call to archive.c with the rest of the
+> config-related stuff, but I agree it's better kept here.
+
+That was my first thought, but there are already two config calls:
+write_archive() loads default config, but then archive-tar loads
+tar-specific config. Since only zip cares about userdiff, I patterned it
+after the latter. But arguably everybody _could_ end up calling into
+userdiff. If we take that philosophy, though, I'd be more inclined to
+push it into git_default_config(). That covers archive writers _and_ any
+other programs which might happen to call into the diff code.
+
+> Looks good, thanks!
+
+Thanks for reviewing.
+
+-Peff
