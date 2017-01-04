@@ -2,120 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00BF520754
-	for <e@80x24.org>; Wed,  4 Jan 2017 18:13:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5CD320754
+	for <e@80x24.org>; Wed,  4 Jan 2017 18:16:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965205AbdADSNY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jan 2017 13:13:24 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35716 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934001AbdADSNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2017 13:13:21 -0500
-Received: by mail-pf0-f169.google.com with SMTP id i88so83074620pfk.2
-        for <git@vger.kernel.org>; Wed, 04 Jan 2017 10:13:21 -0800 (PST)
+        id S933514AbdADSKC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jan 2017 13:10:02 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:34323 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751326AbdADSJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2017 13:09:12 -0500
+Received: by mail-qk0-f175.google.com with SMTP id a20so19318287qkc.1
+        for <git@vger.kernel.org>; Wed, 04 Jan 2017 10:09:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=nzSvtOkvygrqo9OfCmaJgDqCkOIE9pw2UN5zhbITEGc=;
-        b=MXNEFBqALbC0jYp+7lQyDHNQ1Yg+Ns23JUKSXiegeQurqKQc+eNXAdk3D3Xwa9LfZD
-         nb0w3kMt7I/Jmf1qhrEHp22L5Gak2/R9+7GJZcTpDdVbOyGuy4bH5gJuhsy498uql7hc
-         HI2OWvW+F4jQazn9fCjY258DfGaPhEdIZWO4kQ8WYLd3qX4pQWbkwNjA0JLfVqZSy//g
-         APF+ByGrIUMTmT2pvOZlM1IAFNzcUeQ33Aiqf4i4rrihLMj4EHClgepMGGobWf4uRX5w
-         /V/tzlapyO1stDzEnY6pPnzI7IFjLRxdrkHOgUK/m70kRkkqeelMxZG9wys9V0+6iTk7
-         dM6Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=if93Zkago/a6ptlxJmhI0Z4Trzah5YacvmEB51qmVp8=;
+        b=jGXwfX97aGgRHjMVtXgsgJ/Jpos6o7f2hLarM2znUSTwD7AqD2xCaN0YlfatcxYc6a
+         96H2pJg/+j9tg1BIbwoz9smHxwJMKKUBvfVdv0/LFbH520TaMb6PLuV0GKnvv7a20kW6
+         ci6et/HNf3dhm9g44UWvehiPSIpYnFbHSyH8FweV960veUcR/+PfASKEbimPS77Ukq39
+         iqWNLnq1vmM3US0ZxFH20DHqCS1FFQZN/zT8Gwo543TRqg+RfWCUm9fmPVYY4W+TS3YT
+         e3JAECIXXPn4K207Qxsd1GXPjN8otwrahoU6QiakuaEiBynATMtT3YN5fN1Bp4n2xFPT
+         4p+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=nzSvtOkvygrqo9OfCmaJgDqCkOIE9pw2UN5zhbITEGc=;
-        b=cBl9/s8PLywT0Ys/tOijadrU/AjcArdxlU32vG9Hh4mmiFBEf8hJhmnyURPh0VlEoz
-         OXQXXCeoz4T8owDV3Rt64RLwYdenOrJEm4jNH8oN0PH/YJWpLodzjLj0a53J7FvwWL4n
-         Ivi/7HuMIYi4uBCy3bwuFXOp5qxPhEdQaxP5DXlzF5oq4wRApNFxM+dK7iFSLVbHynLt
-         yeK2GXguAKrparnKaRdUFZwsFOwHcXnxPsZrEch2rmpHgfyliGDQRfKIMZxTKHve+2M0
-         g58Mg6qMKOww/pEea6kK3vhuPEyyZAfvHekJdjH6Wwv6MTl6W/3oDZ2z8w+x+9C0jRLq
-         o8oQ==
-X-Gm-Message-State: AIkVDXLSmavIpwWyBa0G8dbFZfbkXT1q+OYylaLdocOlviWZkEaj8JwZUGnv0rXOO7oqpIpN
-X-Received: by 10.84.143.1 with SMTP id 1mr147598255ply.86.1483553600751;
-        Wed, 04 Jan 2017 10:13:20 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:1930:3cb0:6c91:e070])
-        by smtp.gmail.com with ESMTPSA id o126sm149873873pga.34.2017.01.04.10.13.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 04 Jan 2017 10:13:19 -0800 (PST)
-Date:   Wed, 4 Jan 2017 10:13:18 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org, sbeller@google.com, jacob.keller@gmail.com,
-        gitster@pobox.com, ramsay@ramsayjones.plus.com, j6t@kdbg.org,
-        pclouds@gmail.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v4 0/5] road to reentrant real_path
-Message-ID: <20170104181318.GC69227@google.com>
-References: <1481566615-75299-1-git-send-email-bmwill@google.com>
- <20170103190923.11882-1-bmwill@google.com>
- <20170104004825.3s27dsircdp5lqte@sigill.intra.peff.net>
- <3f9a530c-402f-f276-4721-fa6a8a6fef41@web.de>
- <20170104070107.huse2a6thz737epv@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=if93Zkago/a6ptlxJmhI0Z4Trzah5YacvmEB51qmVp8=;
+        b=ii4MZrP6SiU9aADIozVi3CxGpfmD0vzZNLjbX6wkLmaGEXoTSdLymtRiyccL0YWES6
+         K3LO6fzE24W4iupwL2564qXpyQ3g3qO+WtP/i7Y1dLG23IjDdb8rAuVWtoAwW/n2msA4
+         grQFfgLzKf/+VP8lShIi8SXz/CLjUMVOQXbXc/zhSx1EFcpBOgFb2MA31RFfCetLq8iy
+         RRfSkyxKRNmA4Nml9OG0t9JCMsJkqynJo2Ywrduu+A7auENQSv6f6kNgc8FaA37ew8bZ
+         jFOPC3sn+T1p6FKlXaC5HNgc4+QJrktEfbpWD0lmTSbWQWQTVsaPru3xSxze/4C71OfB
+         yU6w==
+X-Gm-Message-State: AIkVDXKFTVoHksX72LRQMAHwR5+L3A4FFql7qLp2PP0OD5xp+xupu+0bfKkLNFxo2YhkXjpbTgjiGVsxE5rgcku0
+X-Received: by 10.233.216.7 with SMTP id u7mr64746945qkf.220.1483553351050;
+ Wed, 04 Jan 2017 10:09:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170104070107.huse2a6thz737epv@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.12.146.7 with HTTP; Wed, 4 Jan 2017 10:09:10 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1701032231400.3469@virtualbox>
+References: <cover.1480019834.git.johannes.schindelin@gmx.de>
+ <cover.1483373635.git.johannes.schindelin@gmx.de> <18e9a1009aac2329cb9bf9d12fbac4e8ac19a5bb.1483373635.git.johannes.schindelin@gmx.de>
+ <CAGZ79kZ--jp08pK+xwn1N2VQQr8bA5+DveE2HsoY90R1gR6c_A@mail.gmail.com> <alpine.DEB.2.20.1701032231400.3469@virtualbox>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 4 Jan 2017 10:09:10 -0800
+Message-ID: <CAGZ79kbNYZpYh9fMDKEhMiO5L8SbbtSC8f79RAa-wsOUxE8LDA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] Avoid Coverity warning about unfree()d git_exec_path()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Paul Sbarra <sbarra.paul@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/04, Jeff King wrote:
-> On Wed, Jan 04, 2017 at 07:56:02AM +0100, Torsten Bögershausen wrote:
-> 
-> > On 04.01.17 01:48, Jeff King wrote:
-> > > On Tue, Jan 03, 2017 at 11:09:18AM -0800, Brandon Williams wrote:
-> > > 
-> > >> Only change with v4 is in [1/5] renaming the #define MAXSYMLINKS back to
-> > >> MAXDEPTH due to a naming conflict brought up by Lars Schneider.
-> > > 
-> > > Hmm. Isn't MAXSYMLINKS basically what you want here, though? It what's
-> > > what all other similar functions will be using.
-> > > 
-> > > The only problem was that we were redefining the macro. So maybe:
-> > > 
-> > >   #ifndef MAXSYMLINKS
-> > >   #define MAXSYMLINKS 5
-> > >   #endif
-> > > 
-> > > would be a good solution?
-> > Why 5  ? (looking at the  20..30 below)
-> > And why 5 on one system and e.g. on my Mac OS
-> > #define MAXSYMLINKS     32  
-> 
-> I mentioned "5" because that is the current value of MAXDEPTH. I do
-> think it would be reasonable to bump it to something higher.
-> 
-> > Would the same value value for all Git installations on all platforms make sense?
-> > #define GITMAXSYMLINKS 20
-> 
-> I think it's probably more important to match the rest of the OS, so
-> that open("foo") and realpath("foo") behave similarly on the same
-> system. Though I think even that isn't always possible, as the limit is
-> dynamic on some systems.
-> 
-> I think the idea of the 20-30 range is that it's small enough to catch
-> an infinite loop quickly, and large enough that nobody will ever hit it
-> in practice. :)
+On Tue, Jan 3, 2017 at 1:33 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> This patch was originally only to appease Coverity, but it actually *does*
+> plug a very real memory leak: previously, *every* call to git_exec_path()
+> *possibly* returned a newly-malloc()ed buffer. Now, the first call will
+> store that pointer in a static variable and reuse it later.
+>
+> Could you maybe help me with improving the commit message?
 
-I agree that we should have similar guarantees as the OS provides,
-especially if the OS already has MAXSYMLINKS defined.  What then, should
-the fall back value be if the OS doesn't have this defined?  5 like we
-have done historically, or something around the 20-30 range as Torsten
-suggests?
+As someone not familiar with that area of code, this explained it
+enough for me to understand, so maybe:
 
--- 
-Brandon Williams
+    exec_cmd: do not leak via git_exec_path
+
+    Every call to git_exec_path() possibly returned a newly-malloc()ed
+    buffer. Now, the first call will allocate the buffer and subsequent
+    calls return a pointer to it, which then prevents leaking memory
+    on each call.
+
+The return value of a "const char *" hints to the caller, that the memory
+is not owned by the caller, do we need to be explicit there (i.e. a comment
+declaring the memory ownership? Probably not.)
+
+Thanks,
+Stefan
