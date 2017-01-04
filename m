@@ -2,95 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F6F205C9
-	for <e@80x24.org>; Wed,  4 Jan 2017 09:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F26B205C9
+	for <e@80x24.org>; Wed,  4 Jan 2017 11:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967406AbdADJto (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jan 2017 04:49:44 -0500
-Received: from mout.gmx.net ([212.227.17.21]:57546 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753489AbdADJtl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2017 04:49:41 -0500
-Received: from virtualbox ([37.24.141.236]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTjMy-1byHIF3C1A-00QWWS; Wed, 04
- Jan 2017 10:42:55 +0100
-Date:   Tue, 3 Jan 2017 22:33:46 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Paul Sbarra <sbarra.paul@gmail.com>
-Subject: Re: [PATCH v4 1/4] Avoid Coverity warning about unfree()d
- git_exec_path()
-In-Reply-To: <CAGZ79kZ--jp08pK+xwn1N2VQQr8bA5+DveE2HsoY90R1gR6c_A@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1701032231400.3469@virtualbox>
-References: <cover.1480019834.git.johannes.schindelin@gmx.de> <cover.1483373635.git.johannes.schindelin@gmx.de> <18e9a1009aac2329cb9bf9d12fbac4e8ac19a5bb.1483373635.git.johannes.schindelin@gmx.de>
- <CAGZ79kZ--jp08pK+xwn1N2VQQr8bA5+DveE2HsoY90R1gR6c_A@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1758910AbdADLtR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jan 2017 06:49:17 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:35700 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757176AbdADLtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2017 06:49:13 -0500
+Received: by mail-io0-f194.google.com with SMTP id f73so59509532ioe.2
+        for <git@vger.kernel.org>; Wed, 04 Jan 2017 03:49:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cY+RTiNL/nc9KmLRheKxmPBUMb7Ah9C3rO9BKHZDbWo=;
+        b=rBqhJLW4ZqXGKlJMU9CCh7sd5wsAnVldriaiIwwtZjargpZlqzeNaYRJDGR7KTppti
+         GWZl2G4i+mK65qvtjmwF6buDNsRT1Y+t2jOsISzSugBoSVgzNwDPno6IGNae1B6x7Po4
+         MR2WS3UV94qhr8x1dCVJTxg7rk6XP6M/dGUj9WIKkjJlgcSXaMNFC92U8CA6cIyvyjEB
+         FAllgeRaJFy9i05iGusmZahi7TwJbTbV/5/TNNteI4ARWeDCfxrsZZtJb6tmyEiZ6ybT
+         B6q2ZfE3c4IhNVwBxc325osrV1ayHlyBpJYdtwQa3qViAnp0r5yBaEiVLXLx4hrHXDxi
+         O8vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cY+RTiNL/nc9KmLRheKxmPBUMb7Ah9C3rO9BKHZDbWo=;
+        b=kUjLGSeKAp96ebZjfA6pcZcyWEJHVcJSvb5flA2QBkp1xkFRCECxvDXaeTVSbeEogK
+         faHkWPkODWZwFOazgDPvPjqSNnToGojO+lexq7jSuR4LQYC7dJKTj7042o27b16M6NoZ
+         Ja3ELagPyNoO0XtqqEbHm94iTgLZXHHUMABWeHYB2SNEG+xQX7KpQlGFXulaSpoGJdA2
+         wvO6nbohhbwm9vO5dI3IpWIHvcwMZoRJCcfclqrNY+JrekwZ3CEQAObfJ0xSMvjs3RQ8
+         CSJsgNUN9slRQvsxDQajNIn1wYU7ieU8hIj+8CWLmj45Ka/bzp9Se/jqDGQBkobRKI9R
+         i7Ug==
+X-Gm-Message-State: AIkVDXIS9rRohHy5S5BucIaYx/xrpy2RBU+bvvJ8BnJwx0mbNxMIP1fxonaLAMoI7vhpPuVFUSkWSvhvxGf0Mg==
+X-Received: by 10.107.182.70 with SMTP id g67mr61199333iof.120.1483530552488;
+ Wed, 04 Jan 2017 03:49:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:W2/EED7pSeJn/MvD+v/VG5IlBl67b12YU/NT+Gsxbzt/fUcOtLN
- Km74SFfoWyUt14vvAxxQ7s7HugXsDnaAZWJQvFU6UryPAOgdQt/qt1gENNEewB9NMHUb1/D
- fQNB7BRk2eiJ5VyalrS8gJJ8CZabeTC9tIelREIZ1+C4O/Dhgu5i0lB71YRm7PR6YwKdg4s
- gM0g9y9+rbYaZ7SFmB/Xw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uXwPaQAocUU=:p6l6Tei5kSr6Lg1akX/SvE
- Fx5Nzl/7PLXeuf/z6tsMiI0euWmsMaXdqkh4ftVU+aV/KL/SbS3xykVUpE/7cVn50XCGSyqJT
- 8tmeV/I25eur9413cE9f+LlqsAMK/svxWV8jpyx8ElPA5U2sXhy90HmeK4xzOqiYPHih8nhH2
- u/BLPqA6GDgdG0tVA02qeOM33tbIzGyefS6jyjzP1Nk2T5SDnMnIJfa6QcoNvx4+cW/OhDdZB
- 6XbeaJBxOB8KCvrS4LRLJa5X8KeC/mZjTwx4Ui2nHS2GGrgWYkMmjW3g8iQFHsT1QAWtLBQau
- OM5QJi3r+AdyHBQE+pPftv4jhqEjYTZmjEp7FAFK7dtKF6bxFWz8/NBpIDDi6Z7/n5dh6jyny
- imSbWqMe9njObDo8BEnagxGNi88qbZLhilwGdHOljlM9v7Carza4YYW58OWHhqsNjIyVy86fN
- ew1xTl3S01bv1+OlIhk/cT8LCFHxgPpMEiOtQXquPqgD1UiEZCRobUUWjzQOo3a2LDk3P0xAI
- XakNpsYOQMkVgKSTX3yWxFL2hpNLeIGSVOfy516pKhigeylijLpj48jffs8IwgwPzLEAV3yco
- plc5+zRJ4HNaPJbjRZxfZY/S+JOyiMldKWo9wN6gPu0Vwj45M791LLI8ZQgf1OlvV2ab8qdII
- cMnkfXlhyr1OX6puaRm7KDfK77Ofhq7yBGGwfJ0OpcHl2AHoR3LlnyGVRT0R2NjlxvQsh9vic
- pjHKEMPcDVJCxHkGfEN+rPVXdWxNcniHNyovLFr7kN041ylViVK24KeN/NAnTvZ9+3Wn3g3CU
- AFCC3+TrcviITn9rSXh0IRRy+urOA==
+Received: by 10.79.142.137 with HTTP; Wed, 4 Jan 2017 03:49:11 -0800 (PST)
+In-Reply-To: <CAE5ih78vLwDubesnAxD=g3TzsbN0sQZae3McdFcwDAZfYYhXSg@mail.gmail.com>
+References: <20170102184536.10488-1-pranit.bauva@gmail.com>
+ <20170103195708.15157-1-pranit.bauva@gmail.com> <20170103195708.15157-2-pranit.bauva@gmail.com>
+ <CAE5ih78vLwDubesnAxD=g3TzsbN0sQZae3McdFcwDAZfYYhXSg@mail.gmail.com>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Wed, 4 Jan 2017 17:19:11 +0530
+Message-ID: <CAFZEwPNuWf3WPY_WjTK8on1mzC58nZgmFhNdkmqQY5=-HE9XCg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] t9813: avoid using pipes
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hey Luke,
 
-On Tue, 3 Jan 2017, Stefan Beller wrote:
+On Wed, Jan 4, 2017 at 2:41 PM, Luke Diamand <luke@diamand.org> wrote:
+> On 3 January 2017 at 19:57, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> The exit code of the upstream in a pipe is ignored thus we should avoid
+>> using it. By writing out the output of the git command to a file, we can
+>> test the exit codes of both the commands.
+>
+> Do we also need to fix t9814-git-p4-rename.sh ?
 
-> On Mon, Jan 2, 2017 at 8:22 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > Technically, it is correct that git_exec_path() returns a possibly
-> > malloc()ed string. Practically, it is *sometimes* not malloc()ed. So
-> > let's just use a static variable to make it a singleton. That'll shut
-> > Coverity up, hopefully.
-> 
-> I picked up this patch and applied it to the coverity branch
-> that I maintain at github/stefanbeller/git.
-> 
-> I'd love to see this patch upstream as it reduces my maintenance
-> burden of the coverity branch by a patch.
-> 
-> Early on when Git was new to coverity, some arguments were made
-> that patches like these only clutter the main code base which is read
-> by a lot of people, hence we want these quirks for coverity not upstream.
-> And I think that still holds.
-> 
-> If this patch is only to appease coverity (as the commit message eludes
-> to) I think this may be a bad idea for upstream.  If this patch fixes an
-> actual problem, then the commit message needs to spell that out.
+I don't think so. As Johannes[1] and Stefan[2] pointed out, we should
+avoid upstream pipes for git. p4 can be treated as an "external
+command" just like grep/sed.
 
-This patch was originally only to appease Coverity, but it actually *does*
-plug a very real memory leak: previously, *every* call to git_exec_path()
-*possibly* returned a newly-malloc()ed buffer. Now, the first call will
-store that pointer in a static variable and reuse it later.
-
-Could you maybe help me with improving the commit message?
-
-Ciao,
-Dscho
+[1]: http://public-inbox.org/git/285ed013-5c59-0b98-7dc0-8f729587a313@kdbg.org/
+[2]: http://public-inbox.org/git/CAGZ79kZRFLzD7wcAnFvke9vBxxTAgE7=Ud7F_O95EfkWqz=LJw@mail.gmail.com/
