@@ -6,326 +6,151 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C46E20756
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE88E20798
 	for <e@80x24.org>; Wed,  4 Jan 2017 22:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968494AbdADWBx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jan 2017 17:01:53 -0500
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:36658 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S968468AbdADWBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2017 17:01:41 -0500
-Received: by mail-pg0-f53.google.com with SMTP id f188so231554967pgc.3
-        for <git@vger.kernel.org>; Wed, 04 Jan 2017 14:01:34 -0800 (PST)
+        id S968499AbdADWBy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jan 2017 17:01:54 -0500
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:36691 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968484AbdADWBr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2017 17:01:47 -0500
+Received: by mail-pg0-f43.google.com with SMTP id f188so231556849pgc.3
+        for <git@vger.kernel.org>; Wed, 04 Jan 2017 14:01:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F4rvoR1NQR1lQr8SFSDSbXrHW3X8YYLDz7wwYl7Xwmc=;
-        b=C+8t+t24KoQlvWNYTaX1G52438CTTa3R1H39E/nJ6Bo30Bwxzi/bI3ceW8fpAofQ1N
-         nliDaGUheYbRDrB9i/8ohOtyg2KhfH0QLUYKK9uaBRz9fQE9iHNs9wkMOK0NXgGedDRu
-         GhJEQ22pDeyMwQLMKLKRBo8XBXIic5VEqBSb0BD5RAn1BaqLARbFGHKIOHelCQ8g492n
-         NtoI6Opx/FH+VOlJ85BmDYvXs8ERIX9cXqd9snRuY0DKW413xbXOYAwSzcXFF++MyVUk
-         820PEKit6PFYJ25+C+qA4GrTJ0b4r5K/rmsoqNxcDYZDcuoAA109inl5a8GQfp7/zTiC
-         Jhig==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=lc4Hocs886kyFfYrpZNI91i4ChuH2LL42el46/x0vXI=;
+        b=FbUQ16+jAUYEXqeP8QXoafc58cDJW58NGUehBV/QbBid2NrijHW3b50tpu7lBtM3Fd
+         1F/MQU9eosPmm/7G8NdRwVAyb1OyrRcQn4TrWfz6iLV0rmqXc7l7HaAIcP38jnToXbtL
+         wjQYOja03wYzqe3XX7n5+eMXCEDEXKMUHOr/Zpg8q6D8zOGJ6cBWqrbTGGl2JDDRdMoB
+         nD/ncFYryGRMNN+gLBZWT8wXR0riQP37htvUnUPz+gm9610Hx6hP6Mz4mefn1lOoK3Me
+         IA/P5mXxeo0iEFFsqX8MHwcAId03YNmHOVeKz7SXm+QeWHl3BC6FiZKibzpAEyukJUGc
+         Rx3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=F4rvoR1NQR1lQr8SFSDSbXrHW3X8YYLDz7wwYl7Xwmc=;
-        b=I89MWDfKueQqwxz2Tx8FWiLfgxLLNIbYLNCDyGnOw3CmbBRIGxewOaFrRMkURugrax
-         Y4Uf5yVuvHvsNqZJY30iQKFf0252rDUZvvnD5md6wQpymNhNxvpGwRdS4F723D+4SUpF
-         1TKuXwL99UBCTvMwnV4PF1WIQAF4FECm1liHSuH1laeTsBGCcWTX9/jN56aQGuTce7Hw
-         Oxc5anNfv1Ph7fmM0mZg40VN/h1E4hvReu+BVD8D02N7VJHOuu3dCuqWkFIPcBBvUX8F
-         5kb1iBUsWiFe82+h5RU8etvZiRDRUnoxGPfm32AM47fHppuUHWGVfpns7SYBCRa35wQb
-         TO7w==
-X-Gm-Message-State: AIkVDXIBfy2nbjkCcQPoy7XDGkC3mKZDM4Y9OcWtHIvJyC38/d4LLcPbsCMN76tf1E6oo27U
-X-Received: by 10.84.137.169 with SMTP id 38mr150147928pln.128.1483567293831;
-        Wed, 04 Jan 2017 14:01:33 -0800 (PST)
-Received: from roshar.mtv.corp.google.com ([172.27.69.28])
-        by smtp.gmail.com with ESMTPSA id n29sm550351pfg.80.2017.01.04.14.01.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 04 Jan 2017 14:01:32 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=lc4Hocs886kyFfYrpZNI91i4ChuH2LL42el46/x0vXI=;
+        b=gTFo8k3hgiT/gN36Jdxgm5g2so8CAan6xJ6QYY24VopDPsMYssppZngKJ8et7w96d+
+         UIgSpx4PdpKjjSFBviA6x+dWOhpszNoffbg23XJmYrqjt+qnrHS8DinfxLcxaCW1h8PE
+         64c4di8TEJPYA/Ci+hl0L1iStj13IFYnTb+NO4gEHJdyeu2Qgz0knqxAMzF1Jm0EK+5Z
+         vGsuCoX5P0cpvWphkC1DHzxjYagP4XNsvVcg/cg8rXxHdfm0L6txpJxzTXOsM4TfLM9J
+         bKsCvYg49BD1fepz5pSx2VgOq3FWdbcPEZenMW0znsbfUJ02gOSPAyXb5BUE4puRLebQ
+         oaiQ==
+X-Gm-Message-State: AIkVDXLj2Kf4r5085Q7PE6zXisJr3WZxaSWuH6KoLsQOQEJEJTpzmphPBehFep4wyH9bUCzS
+X-Received: by 10.84.164.231 with SMTP id l36mr150318146plg.33.1483566922372;
+        Wed, 04 Jan 2017 13:55:22 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:1930:3cb0:6c91:e070])
+        by smtp.gmail.com with ESMTPSA id p68sm148954065pfd.11.2017.01.04.13.55.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 04 Jan 2017 13:55:21 -0800 (PST)
+Date:   Wed, 4 Jan 2017 13:55:20 -0800
 From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        peff@peff.net, jacob.keller@gmail.com, gitster@pobox.com,
-        ramsay@ramsayjones.plus.com, tboegi@web.de, j6t@kdbg.org,
-        pclouds@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v5 1/5] real_path: resolve symlinks by hand
-Date:   Wed,  4 Jan 2017 14:01:20 -0800
-Message-Id: <20170104220124.145808-2-bmwill@google.com>
-X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
-In-Reply-To: <20170104220124.145808-1-bmwill@google.com>
-References: <20170103190923.11882-1-bmwill@google.com>
- <20170104220124.145808-1-bmwill@google.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v4 0/5] road to reentrant real_path
+Message-ID: <20170104215520.GA68241@google.com>
+References: <1481566615-75299-1-git-send-email-bmwill@google.com>
+ <20170103190923.11882-1-bmwill@google.com>
+ <20170104004825.3s27dsircdp5lqte@sigill.intra.peff.net>
+ <3f9a530c-402f-f276-4721-fa6a8a6fef41@web.de>
+ <20170104070107.huse2a6thz737epv@sigill.intra.peff.net>
+ <20170104181318.GC69227@google.com>
+ <CAGZ79kbdNuGe038Wb9OR1SKq-XYtsPrLsn6XueO6zsKKGFYiNg@mail.gmail.com>
+ <CA+P7+xp+j1ajPLjE-RukSmp33_bRkD7J65X-++frkYd9LWLSkQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+P7+xp+j1ajPLjE-RukSmp33_bRkD7J65X-++frkYd9LWLSkQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current implementation of real_path uses chdir() in order to resolve
-symlinks.  Unfortunately this isn't thread-safe as chdir() affects a
-process as a whole and not just an individual thread.  Instead perform
-the symlink resolution by hand so that the calls to chdir() can be
-removed, making real_path one step closer to being reentrant.
+On 01/04, Jacob Keller wrote:
+> On Wed, Jan 4, 2017 at 10:22 AM, Stefan Beller <sbeller@google.com> wrote:
+> > On Wed, Jan 4, 2017 at 10:13 AM, Brandon Williams <bmwill@google.com> wrote:
+> >> On 01/04, Jeff King wrote:
+> >>> On Wed, Jan 04, 2017 at 07:56:02AM +0100, Torsten Bögershausen wrote:
+> >>>
+> >>> > On 04.01.17 01:48, Jeff King wrote:
+> >>> > > On Tue, Jan 03, 2017 at 11:09:18AM -0800, Brandon Williams wrote:
+> >>> > >
+> >>> > >> Only change with v4 is in [1/5] renaming the #define MAXSYMLINKS back to
+> >>> > >> MAXDEPTH due to a naming conflict brought up by Lars Schneider.
+> >>> > >
+> >>> > > Hmm. Isn't MAXSYMLINKS basically what you want here, though? It what's
+> >>> > > what all other similar functions will be using.
+> >>> > >
+> >>> > > The only problem was that we were redefining the macro. So maybe:
+> >>> > >
+> >>> > >   #ifndef MAXSYMLINKS
+> >>> > >   #define MAXSYMLINKS 5
+> >>> > >   #endif
+> >>> > >
+> >>> > > would be a good solution?
+> >>> > Why 5  ? (looking at the  20..30 below)
+> >>> > And why 5 on one system and e.g. on my Mac OS
+> >>> > #define MAXSYMLINKS     32
+> >>>
+> >>> I mentioned "5" because that is the current value of MAXDEPTH. I do
+> >>> think it would be reasonable to bump it to something higher.
+> >>>
+> >>> > Would the same value value for all Git installations on all platforms make sense?
+> >>> > #define GITMAXSYMLINKS 20
+> >>>
+> >>> I think it's probably more important to match the rest of the OS, so
+> >>> that open("foo") and realpath("foo") behave similarly on the same
+> >>> system. Though I think even that isn't always possible, as the limit is
+> >>> dynamic on some systems.
+> >>>
+> >>> I think the idea of the 20-30 range is that it's small enough to catch
+> >>> an infinite loop quickly, and large enough that nobody will ever hit it
+> >>> in practice. :)
+> >>
+> >> I agree that we should have similar guarantees as the OS provides,
+> >> especially if the OS already has MAXSYMLINKS defined.  What then, should
+> >> the fall back value be if the OS doesn't have this defined?  5 like we
+> >> have done historically, or something around the 20-30 range as Torsten
+> >> suggests?
+> >
+> > As a fallback I'd rather go for a larger number than too small.
+> > The reason for the existence is just to break an infinite loop
+> > (and report an error? which the current code doesn't quite do,
+> > but your series actually does).
+> >
+> > If the number is too large, then it takes a bit longer to generate the error
+> > message, but the error path is no big deal w.r.t. performance, so it's fine
+> > for it taking a bit longer.
+> >
+> > If the number is too low, then we may hinder people from getting actual
+> > work done, (i.e. they have to figure out what the problem is and recompile
+> > git), so I'd think a larger number is not harmful. So 32?
+> >
+> 
+> I think I agree as well.
+> 
+> Thanks,
+> Jake
+> 
+> >>
+> >> --
+> >> Brandon Williams
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- abspath.c | 194 ++++++++++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 133 insertions(+), 61 deletions(-)
+That's two people for 32.  I'll use that as the fallback and resend the
+series.
 
-diff --git a/abspath.c b/abspath.c
-index 2825de859..629201e48 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -11,8 +11,47 @@ int is_directory(const char *path)
- 	return (!stat(path, &st) && S_ISDIR(st.st_mode));
- }
- 
-+/* removes the last path component from 'path' except if 'path' is root */
-+static void strip_last_component(struct strbuf *path)
-+{
-+	size_t offset = offset_1st_component(path->buf);
-+	size_t len = path->len;
-+
-+	/* Find start of the last component */
-+	while (offset < len && !is_dir_sep(path->buf[len - 1]))
-+		len--;
-+	/* Skip sequences of multiple path-separators */
-+	while (offset < len && is_dir_sep(path->buf[len - 1]))
-+		len--;
-+
-+	strbuf_setlen(path, len);
-+}
-+
-+/* get (and remove) the next component in 'remaining' and place it in 'next' */
-+static void get_next_component(struct strbuf *next, struct strbuf *remaining)
-+{
-+	char *start = NULL;
-+	char *end = NULL;
-+
-+	strbuf_reset(next);
-+
-+	/* look for the next component */
-+	/* Skip sequences of multiple path-separators */
-+	for (start = remaining->buf; is_dir_sep(*start); start++)
-+		; /* nothing */
-+	/* Find end of the path component */
-+	for (end = start; *end && !is_dir_sep(*end); end++)
-+		; /* nothing */
-+
-+	strbuf_add(next, start, end - start);
-+	/* remove the component from 'remaining' */
-+	strbuf_remove(remaining, 0, end - remaining->buf);
-+}
-+
- /* We allow "recursive" symbolic links. Only within reason, though. */
--#define MAXDEPTH 5
-+#ifndef MAXSYMLINKS
-+#define MAXSYMLINKS 32
-+#endif
- 
- /*
-  * Return the real path (i.e., absolute path, with symlinks resolved
-@@ -21,7 +60,6 @@ int is_directory(const char *path)
-  * absolute_path().)  The return value is a pointer to a static
-  * buffer.
-  *
-- * The input and all intermediate paths must be shorter than MAX_PATH.
-  * The directory part of path (i.e., everything up to the last
-  * dir_sep) must denote a valid, existing directory, but the last
-  * component need not exist.  If die_on_error is set, then die with an
-@@ -33,22 +71,16 @@ int is_directory(const char *path)
-  */
- static const char *real_path_internal(const char *path, int die_on_error)
- {
--	static struct strbuf sb = STRBUF_INIT;
-+	static struct strbuf resolved = STRBUF_INIT;
-+	struct strbuf remaining = STRBUF_INIT;
-+	struct strbuf next = STRBUF_INIT;
-+	struct strbuf symlink = STRBUF_INIT;
- 	char *retval = NULL;
--
--	/*
--	 * If we have to temporarily chdir(), store the original CWD
--	 * here so that we can chdir() back to it at the end of the
--	 * function:
--	 */
--	struct strbuf cwd = STRBUF_INIT;
--
--	int depth = MAXDEPTH;
--	char *last_elem = NULL;
-+	int num_symlinks = 0;
- 	struct stat st;
- 
- 	/* We've already done it */
--	if (path == sb.buf)
-+	if (path == resolved.buf)
- 		return path;
- 
- 	if (!*path) {
-@@ -58,74 +90,114 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 			goto error_out;
- 	}
- 
--	strbuf_reset(&sb);
--	strbuf_addstr(&sb, path);
--
--	while (depth--) {
--		if (!is_directory(sb.buf)) {
--			char *last_slash = find_last_dir_sep(sb.buf);
--			if (last_slash) {
--				last_elem = xstrdup(last_slash + 1);
--				strbuf_setlen(&sb, last_slash - sb.buf + 1);
--			} else {
--				last_elem = xmemdupz(sb.buf, sb.len);
--				strbuf_reset(&sb);
--			}
-+	strbuf_reset(&resolved);
-+
-+	if (is_absolute_path(path)) {
-+		/* absolute path; start with only root as being resolved */
-+		int offset = offset_1st_component(path);
-+		strbuf_add(&resolved, path, offset);
-+		strbuf_addstr(&remaining, path + offset);
-+	} else {
-+		/* relative path; can use CWD as the initial resolved path */
-+		if (strbuf_getcwd(&resolved)) {
-+			if (die_on_error)
-+				die_errno("unable to get current working directory");
-+			else
-+				goto error_out;
- 		}
-+		strbuf_addstr(&remaining, path);
-+	}
- 
--		if (sb.len) {
--			if (!cwd.len && strbuf_getcwd(&cwd)) {
-+	/* Iterate over the remaining path components */
-+	while (remaining.len > 0) {
-+		get_next_component(&next, &remaining);
-+
-+		if (next.len == 0) {
-+			continue; /* empty component */
-+		} else if (next.len == 1 && !strcmp(next.buf, ".")) {
-+			continue; /* '.' component */
-+		} else if (next.len == 2 && !strcmp(next.buf, "..")) {
-+			/* '..' component; strip the last path component */
-+			strip_last_component(&resolved);
-+			continue;
-+		}
-+
-+		/* append the next component and resolve resultant path */
-+		if (!is_dir_sep(resolved.buf[resolved.len - 1]))
-+			strbuf_addch(&resolved, '/');
-+		strbuf_addbuf(&resolved, &next);
-+
-+		if (lstat(resolved.buf, &st)) {
-+			/* error out unless this was the last component */
-+			if (errno != ENOENT || remaining.len) {
- 				if (die_on_error)
--					die_errno("Could not get current working directory");
-+					die_errno("Invalid path '%s'",
-+						  resolved.buf);
- 				else
- 					goto error_out;
- 			}
-+		} else if (S_ISLNK(st.st_mode)) {
-+			ssize_t len;
-+			strbuf_reset(&symlink);
-+
-+			if (num_symlinks++ > MAXSYMLINKS) {
-+				errno = ELOOP;
- 
--			if (chdir(sb.buf)) {
- 				if (die_on_error)
--					die_errno("Could not switch to '%s'",
--						  sb.buf);
-+					die("More than %d nested symlinks "
-+					    "on path '%s'", MAXSYMLINKS, path);
- 				else
- 					goto error_out;
- 			}
--		}
--		if (strbuf_getcwd(&sb)) {
--			if (die_on_error)
--				die_errno("Could not get current working directory");
--			else
--				goto error_out;
--		}
- 
--		if (last_elem) {
--			if (sb.len && !is_dir_sep(sb.buf[sb.len - 1]))
--				strbuf_addch(&sb, '/');
--			strbuf_addstr(&sb, last_elem);
--			free(last_elem);
--			last_elem = NULL;
--		}
--
--		if (!lstat(sb.buf, &st) && S_ISLNK(st.st_mode)) {
--			struct strbuf next_sb = STRBUF_INIT;
--			ssize_t len = strbuf_readlink(&next_sb, sb.buf, 0);
-+			len = strbuf_readlink(&symlink, resolved.buf,
-+					      st.st_size);
- 			if (len < 0) {
- 				if (die_on_error)
- 					die_errno("Invalid symlink '%s'",
--						  sb.buf);
-+						  resolved.buf);
- 				else
- 					goto error_out;
- 			}
--			strbuf_swap(&sb, &next_sb);
--			strbuf_release(&next_sb);
--		} else
--			break;
-+
-+			if (is_absolute_path(symlink.buf)) {
-+				/* absolute symlink; set resolved to root */
-+				int offset = offset_1st_component(symlink.buf);
-+				strbuf_reset(&resolved);
-+				strbuf_add(&resolved, symlink.buf, offset);
-+				strbuf_remove(&symlink, 0, offset);
-+			} else {
-+				/*
-+				 * relative symlink
-+				 * strip off the last component since it will
-+				 * be replaced with the contents of the symlink
-+				 */
-+				strip_last_component(&resolved);
-+			}
-+
-+			/*
-+			 * if there are still remaining components to resolve
-+			 * then append them to symlink
-+			 */
-+			if (remaining.len) {
-+				strbuf_addch(&symlink, '/');
-+				strbuf_addbuf(&symlink, &remaining);
-+			}
-+
-+			/*
-+			 * use the symlink as the remaining components that
-+			 * need to be resloved
-+			 */
-+			strbuf_swap(&symlink, &remaining);
-+		}
- 	}
- 
--	retval = sb.buf;
-+	retval = resolved.buf;
-+
- error_out:
--	free(last_elem);
--	if (cwd.len && chdir(cwd.buf))
--		die_errno("Could not change back to '%s'", cwd.buf);
--	strbuf_release(&cwd);
-+	strbuf_release(&remaining);
-+	strbuf_release(&next);
-+	strbuf_release(&symlink);
- 
- 	return retval;
- }
 -- 
-2.11.0.390.gc69c2f50cf-goog
-
+Brandon Williams
