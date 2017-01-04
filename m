@@ -7,92 +7,63 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B57205C9
-	for <e@80x24.org>; Wed,  4 Jan 2017 09:11:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DEB8205C9
+	for <e@80x24.org>; Wed,  4 Jan 2017 09:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966638AbdADJLi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jan 2017 04:11:38 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33807 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965344AbdADJLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2017 04:11:35 -0500
-Received: by mail-qt0-f196.google.com with SMTP id j29so2169173qtc.1
-        for <git@vger.kernel.org>; Wed, 04 Jan 2017 01:11:34 -0800 (PST)
+        id S966706AbdADJRY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jan 2017 04:17:24 -0500
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:35211 "EHLO
+        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966657AbdADJRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2017 04:17:23 -0500
+Received: by mail-qk0-f178.google.com with SMTP id u25so389744582qki.2
+        for <git@vger.kernel.org>; Wed, 04 Jan 2017 01:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=diamand.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=x292wMpVRwG6H1RUyI85BugqgF+V9cJoDD76eBfU9/E=;
-        b=dvL1kcUH+MkRYru7iEMJXDtBxX7NvldFEnLwOGUmaHvpLvu2nfczx42tx6LqXen5py
-         m9dMs+MOY+d6QcgLx18p2j91u+V8B3KxtxBGSnbukpfhgO78Ui2ewx6aWrQPAsQPzJa8
-         DvWqHyqaAbUO1pAwZh5r5qXzgAa0ezq5fTeSM=
+        bh=CXBx14k5UZ9X8Gpd02AHSfxFuune73uabq5STOU0hW4=;
+        b=aMYpwKEpeyOhHqhFnls3JYAknElfTj/QqSeHsfotV4ZoT5PVh/KmPSaDBDBCIqclX1
+         WZxhCOV8yZzO2VZvUJRRVhtPefsP5q/yAu4frSet1Sc7TeYeLkoWd4p+rsB269aat9q+
+         V6y/LK08uo1wKCX+MwND38fswGOqA+j9lzcac=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=x292wMpVRwG6H1RUyI85BugqgF+V9cJoDD76eBfU9/E=;
-        b=ZFX6xUz49/9cymRu7Ixqyujc/fNApb1N74Y4ll41nl1skyM2tgNcDjEaYGC9Nz05AM
-         AUs61wivjVPsSFbCkQjjT06vSgsQJ/UnxKUSo6pamJM4ZvzSNLdXlQrUQDoTmzekq13f
-         VAqmVTZMTycu1UpiKvsQ9nkCX4DXJZ+OU7zeOrytPgO4dHHAxTMLrBM4hJeIeZ97LShP
-         Il0fcfugbNegOboE63aOohhNAlOeBmbVHUf51v95OuQBJNWGFAIVsDC7qB6/RQZWYz1V
-         qoSVmqRvzGYHlGbIkTv3dhuQ2uTykGF2Rsvf1+hil3yoOd7CZcC5XnXHrg0oddJNPmcZ
-         PBYQ==
-X-Gm-Message-State: AIkVDXIpcwJJvhrlXWmRrzajaRNtevzJMLko5WjehDd9mB/+Ecv5ye9uzIFhiZnN0eBpaFxrQvl6NGPhTyPtbQ==
-X-Received: by 10.237.60.101 with SMTP id u34mr68373358qte.53.1483521094282;
- Wed, 04 Jan 2017 01:11:34 -0800 (PST)
+        bh=CXBx14k5UZ9X8Gpd02AHSfxFuune73uabq5STOU0hW4=;
+        b=XM1WeKG8awY5r7zw6noaaMrr2H3IYWHn70WaWPLM9zdPGFfMRKwyxjBMrSOWT6Igh1
+         PGHRuv1r6+OFSStMAIErhtWIJr/IKBX/goGtJHqF7+BWybrs8fvr8hT1e87znc+ERWwv
+         kEv2jMDKjht3ASM3DdVoufuULV8miU+OkomaQ7iNeHx4SF5AYNIXQHZf7C4+FisnyXmT
+         fYClYvKZGqUvCS/SBP1NoigqveYDOOniAcugd9uriMAdpTCjl0r7D8pPhFsH/8bekxMa
+         1sjFE2AxoO8OLLq3ZxmxrYUm9kC5EXR/cenjqzuJX3Dzob2b8qTYMM18qenvtJ1CNv4I
+         1izA==
+X-Gm-Message-State: AIkVDXKJtkltcH9JqXxfptPpetduiUOQhaEIp2zmYNqkONba5zX/+g8bWpXcys54RHolVMcHn26Qt61wypIssA==
+X-Received: by 10.55.112.65 with SMTP id l62mr74088504qkc.76.1483520970714;
+ Wed, 04 Jan 2017 01:09:30 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.237.62.179 with HTTP; Wed, 4 Jan 2017 01:11:33 -0800 (PST)
-In-Reply-To: <20170103195708.15157-2-pranit.bauva@gmail.com>
-References: <20170102184536.10488-1-pranit.bauva@gmail.com>
- <20170103195708.15157-1-pranit.bauva@gmail.com> <20170103195708.15157-2-pranit.bauva@gmail.com>
+Received: by 10.237.62.179 with HTTP; Wed, 4 Jan 2017 01:09:30 -0800 (PST)
+In-Reply-To: <CAPv0x+PoQ+3ERAc_0gviYP5j1-Zg=X+B1OSC6vDKatqUhFtAag@mail.gmail.com>
+References: <20161229102223.6028-1-igorkuo@gmail.com> <CAPv0x+PoQ+3ERAc_0gviYP5j1-Zg=X+B1OSC6vDKatqUhFtAag@mail.gmail.com>
 From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 4 Jan 2017 09:11:33 +0000
-Message-ID: <CAE5ih78vLwDubesnAxD=g3TzsbN0sQZae3McdFcwDAZfYYhXSg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] t9813: avoid using pipes
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>
+Date:   Wed, 4 Jan 2017 09:09:30 +0000
+Message-ID: <CAE5ih7_D4F=vic+Dud-QwTushVmW200W8C+T6H+igH+WoSz6rA@mail.gmail.com>
+Subject: Re: [PATCH v2] git-p4: do not pass '-r 0' to p4 commands
+To:     Ori Rawlings <orirawlings@gmail.com>
+Cc:     Igor Kushnir <igorkuo@gmail.com>, Git Users <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3 January 2017 at 19:57, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> The exit code of the upstream in a pipe is ignored thus we should avoid
-> using it. By writing out the output of the git command to a file, we can
-> test the exit codes of both the commands.
+On 3 January 2017 at 20:02, Ori Rawlings <orirawlings@gmail.com> wrote:
+> Looks good to me.
 
-Do we also need to fix t9814-git-p4-rename.sh ?
+And me.
+
+
 
 >
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
->  t/t9813-git-p4-preserve-users.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
 >
-> diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
-> index 798bf2b67..2133b21ae 100755
-> --- a/t/t9813-git-p4-preserve-users.sh
-> +++ b/t/t9813-git-p4-preserve-users.sh
-> @@ -118,12 +118,12 @@ test_expect_success 'not preserving user with mixed authorship' '
->                 make_change_by_user usernamefile3 Derek derek@example.com &&
->                 P4EDITOR=cat P4USER=alice P4PASSWD=secret &&
->                 export P4EDITOR P4USER P4PASSWD &&
-> -               git p4 commit |\
-> -               grep "git author derek@example.com does not match" &&
-> +               git p4 commit >actual &&
-> +               grep "git author derek@example.com does not match" actual &&
->
->                 make_change_by_user usernamefile3 Charlie charlie@example.com &&
-> -               git p4 commit |\
-> -               grep "git author charlie@example.com does not match" &&
-> +               git p4 commit >actual &&
-> +               grep "git author charlie@example.com does not match" actual &&
->
->                 make_change_by_user usernamefile3 alice alice@example.com &&
->                 git p4 commit >actual 2>&1 &&
-> --
-> 2.11.0
->
+> Ori Rawlings
