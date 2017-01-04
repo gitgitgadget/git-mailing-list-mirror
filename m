@@ -2,146 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9B9820756
-	for <e@80x24.org>; Wed,  4 Jan 2017 21:46:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82AB720756
+	for <e@80x24.org>; Wed,  4 Jan 2017 22:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759098AbdADVqc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 4 Jan 2017 16:46:32 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35976 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751807AbdADVqa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2017 16:46:30 -0500
-Received: by mail-lf0-f67.google.com with SMTP id j75so2124589lfe.3
-        for <git@vger.kernel.org>; Wed, 04 Jan 2017 13:46:29 -0800 (PST)
+        id S1761568AbdADWBm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 4 Jan 2017 17:01:42 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33700 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968462AbdADWBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2017 17:01:41 -0500
+Received: by mail-pf0-f170.google.com with SMTP id d2so84083066pfd.0
+        for <git@vger.kernel.org>; Wed, 04 Jan 2017 14:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4ZNFZVh+8dXydxM5FfYHwk+KuwEyBo1FyDUnG7RR0hg=;
-        b=Zy/yucm5sT7+WJ6ZBqiwDBFybRU/ksMis5+XLpgTbOmazXR5J2L7tm148zmVDSkReX
-         3QfzVAT2buqv4bY2TRnEltAzT7SaoOJF7fowJ4ZUUd7d5l1pTmcj8Skeid4YIvo60IlS
-         NniTKyinZPbvMT3dRqpP43d22bWv6BwX+16vTQRBh+PrTzJKNumoEu4b2muZmZVdzF4d
-         D0Y8mEEsrFdSgBcCPJwiC1/o2tuyiQViD1SDhRVjTkBU9lBJCYElYTlsWowOlmH2xiBw
-         sSLaS5Ocq8QB2CPXs7qaKflGWure5yOxi2/GaxGYVLut73j5NOVpOW/Ch28dZz1IBjHm
-         hX8w==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=27oBlMatSduaLDwir0r22HgVB+3v61K8YzCLvf46EmM=;
+        b=Cq3XJinx9doDa7G19TXMa8fpNk+guHVUWfVRCDtA37gCE8yFrwEXT0DoHcvwVhMbs7
+         1qLfmTlQD9rAAYAHijfcG4nFnZDtcaW6fdmM/SljZ7CwLDbAAXHkLsmUt4yWaTfBbpZb
+         I3AYCyT8nUpUXf8KI1+CGl4Fhob9E8gCs7gIsDCaGzUd4H2F2G7PsAL+l5VOZdE7Q2l1
+         xxfS0/NjydTPDIpFeKU3XI3U5/hnzd0Y25wUBT+Z9wK4N2JH4Xb5C1YqS8o4HH7fDJiy
+         RNSzHh/VfL9OerI+nOGl2delwFvbCThKUoiQ2QhlsohOuEwxk361xg84kO5RrFFkAZ+Z
+         yTtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4ZNFZVh+8dXydxM5FfYHwk+KuwEyBo1FyDUnG7RR0hg=;
-        b=lLisDuDtp1JdogUoliqrP4qCAN8+0S/bbJLM508asEsRFnq1EmO35DoBfcXTcnwLvf
-         gqAd28Mq0iX5fFCgZfcX0O0yQK17sUfuxVx9iIY7or+tgC6WZyAM1uhjCtgzQTWuJ814
-         I5WK2IcNBc4B1RS7nwmls5i3KjqIbB4aPdvPHusg0coYNgEU18ctiqgS+wMeucxGu0nw
-         6Vttne3+e9Xr+/wf7gWkuA7Vw6/cHSMbEtcdO7XHbt/faiN0UyY1RvvII0447i4V+eb/
-         Yw+c1SLmbCcjdgpso/ykmnImXdfV24+LqXmFCihcBbQfCulpb6USjgDCtT83hLz7PbrR
-         lCGQ==
-X-Gm-Message-State: AIkVDXIm1cSn4F9lws8nI0diS42CDuYX8OjDLjazyNCEwFIy8hdpC5xpDUKsy3/WdBlT4OtUwJL5hAq6AnvbqQ==
-X-Received: by 10.46.14.9 with SMTP id 9mr23089471ljo.59.1483566388741; Wed,
- 04 Jan 2017 13:46:28 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.25.145.79 with HTTP; Wed, 4 Jan 2017 13:46:07 -0800 (PST)
-In-Reply-To: <CAGZ79kbdNuGe038Wb9OR1SKq-XYtsPrLsn6XueO6zsKKGFYiNg@mail.gmail.com>
-References: <1481566615-75299-1-git-send-email-bmwill@google.com>
- <20170103190923.11882-1-bmwill@google.com> <20170104004825.3s27dsircdp5lqte@sigill.intra.peff.net>
- <3f9a530c-402f-f276-4721-fa6a8a6fef41@web.de> <20170104070107.huse2a6thz737epv@sigill.intra.peff.net>
- <20170104181318.GC69227@google.com> <CAGZ79kbdNuGe038Wb9OR1SKq-XYtsPrLsn6XueO6zsKKGFYiNg@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 4 Jan 2017 13:46:07 -0800
-Message-ID: <CA+P7+xp+j1ajPLjE-RukSmp33_bRkD7J65X-++frkYd9LWLSkQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] road to reentrant real_path
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=27oBlMatSduaLDwir0r22HgVB+3v61K8YzCLvf46EmM=;
+        b=hAPmEHAjpj8ClyH2Dgl4ahAoZ9JF1DspN8lJtKvxW9TSfXIri+FcuZlGZ54bTXRNvb
+         o8PZMGJEAez0AQdue9hCiLpqKY545dSpYIB1H2BltXrzxr+LtT8ChqjIuA/CN8uYwR/j
+         C7b8AuVt1+wjDOrSIVm8tdV8kLIsLOo+fpAsRyuG0ai09VzOGUffuez0G4mru1wvC7iv
+         ydbD95OCB8o9bcHc/VdGJ2Ubo/aWOTVpBjsAgSclkd3+XX65+28d25RYBp2igK7x+uoH
+         /c4o4Xu0gBW9K4tcjguC/0ZI4Zd2gGAEgHO1Oj5PqERRWeIzXr2uZ2t/oEJlayx27ntz
+         PcPg==
+X-Gm-Message-State: AIkVDXLvDQxbmBz043ICFOslY1qWAHmB8AnS5qgHUjPwLWsBSnen+rZjPtzeH4NSYTsMkDiq
+X-Received: by 10.84.234.9 with SMTP id m9mr119299235plk.49.1483567292038;
+        Wed, 04 Jan 2017 14:01:32 -0800 (PST)
+Received: from roshar.mtv.corp.google.com ([172.27.69.28])
+        by smtp.gmail.com with ESMTPSA id n29sm550351pfg.80.2017.01.04.14.01.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 04 Jan 2017 14:01:30 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        peff@peff.net, jacob.keller@gmail.com, gitster@pobox.com,
+        ramsay@ramsayjones.plus.com, tboegi@web.de, j6t@kdbg.org,
+        pclouds@gmail.com, larsxschneider@gmail.com
+Subject: [PATCH v5 0/5] road to reentrant real_path
+Date:   Wed,  4 Jan 2017 14:01:19 -0800
+Message-Id: <20170104220124.145808-1-bmwill@google.com>
+X-Mailer: git-send-email 2.11.0.390.gc69c2f50cf-goog
+In-Reply-To: <20170103190923.11882-1-bmwill@google.com>
+References: <20170103190923.11882-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 4, 2017 at 10:22 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Jan 4, 2017 at 10:13 AM, Brandon Williams <bmwill@google.com> wro=
-te:
->> On 01/04, Jeff King wrote:
->>> On Wed, Jan 04, 2017 at 07:56:02AM +0100, Torsten B=C3=B6gershausen wro=
-te:
->>>
->>> > On 04.01.17 01:48, Jeff King wrote:
->>> > > On Tue, Jan 03, 2017 at 11:09:18AM -0800, Brandon Williams wrote:
->>> > >
->>> > >> Only change with v4 is in [1/5] renaming the #define MAXSYMLINKS b=
-ack to
->>> > >> MAXDEPTH due to a naming conflict brought up by Lars Schneider.
->>> > >
->>> > > Hmm. Isn't MAXSYMLINKS basically what you want here, though? It wha=
-t's
->>> > > what all other similar functions will be using.
->>> > >
->>> > > The only problem was that we were redefining the macro. So maybe:
->>> > >
->>> > >   #ifndef MAXSYMLINKS
->>> > >   #define MAXSYMLINKS 5
->>> > >   #endif
->>> > >
->>> > > would be a good solution?
->>> > Why 5  ? (looking at the  20..30 below)
->>> > And why 5 on one system and e.g. on my Mac OS
->>> > #define MAXSYMLINKS     32
->>>
->>> I mentioned "5" because that is the current value of MAXDEPTH. I do
->>> think it would be reasonable to bump it to something higher.
->>>
->>> > Would the same value value for all Git installations on all platforms=
- make sense?
->>> > #define GITMAXSYMLINKS 20
->>>
->>> I think it's probably more important to match the rest of the OS, so
->>> that open("foo") and realpath("foo") behave similarly on the same
->>> system. Though I think even that isn't always possible, as the limit is
->>> dynamic on some systems.
->>>
->>> I think the idea of the 20-30 range is that it's small enough to catch
->>> an infinite loop quickly, and large enough that nobody will ever hit it
->>> in practice. :)
->>
->> I agree that we should have similar guarantees as the OS provides,
->> especially if the OS already has MAXSYMLINKS defined.  What then, should
->> the fall back value be if the OS doesn't have this defined?  5 like we
->> have done historically, or something around the 20-30 range as Torsten
->> suggests?
->
-> As a fallback I'd rather go for a larger number than too small.
-> The reason for the existence is just to break an infinite loop
-> (and report an error? which the current code doesn't quite do,
-> but your series actually does).
->
-> If the number is too large, then it takes a bit longer to generate the er=
-ror
-> message, but the error path is no big deal w.r.t. performance, so it's fi=
-ne
-> for it taking a bit longer.
->
-> If the number is too low, then we may hinder people from getting actual
-> work done, (i.e. they have to figure out what the problem is and recompil=
-e
-> git), so I'd think a larger number is not harmful. So 32?
->
+changes in v5:
+* set errno to ELOOP when MAXSYMLINKS is exceded.
+* revert to use MAXSYMLINKS instead of MAXDEPTH.
+* If the OS hasn't defined MAXSYMLINKS, use a fallback value of 32.
 
-I think I agree as well.
+Brandon Williams (4):
+  real_path: resolve symlinks by hand
+  real_path: convert real_path_internal to strbuf_realpath
+  real_path: create real_pathdup
+  real_path: have callers use real_pathdup and strbuf_realpath
 
-Thanks,
-Jake
+Johannes Sixt (1):
+  real_path: canonicalize directory separators in root parts
 
->>
->> --
->> Brandon Williams
+ abspath.c         | 231 +++++++++++++++++++++++++++++++++++++-----------------
+ builtin/init-db.c |   6 +-
+ cache.h           |   3 +
+ environment.c     |   2 +-
+ setup.c           |  13 +--
+ sha1_file.c       |   2 +-
+ submodule.c       |   2 +-
+ transport.c       |   2 +-
+ worktree.c        |   2 +-
+ 9 files changed, 178 insertions(+), 85 deletions(-)
+
+--- interdiff with v4
+
+diff --git a/abspath.c b/abspath.c
+index 3562d17bf..fce40fddc 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -62,7 +62,9 @@ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
+ }
+ 
+ /* We allow "recursive" symbolic links. Only within reason, though. */
+-#define MAXDEPTH 5
++#ifndef MAXSYMLINKS
++#define MAXSYMLINKS 32
++#endif
+ 
+ /*
+  * Return the real path (i.e., absolute path, with symlinks resolved
+@@ -138,10 +140,12 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+ 			ssize_t len;
+ 			strbuf_reset(&symlink);
+ 
+-			if (num_symlinks++ > MAXDEPTH) {
++			if (num_symlinks++ > MAXSYMLINKS) {
++				errno = ELOOP;
++
+ 				if (die_on_error)
+ 					die("More than %d nested symlinks "
+-					    "on path '%s'", MAXDEPTH, path);
++					    "on path '%s'", MAXSYMLINKS, path);
+ 				else
+ 					goto error_out;
+ 			}
+
+-- 
+2.11.0.390.gc69c2f50cf-goog
+
