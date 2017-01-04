@@ -6,124 +6,62 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 967571FEB3
-	for <e@80x24.org>; Wed,  4 Jan 2017 00:40:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2181FEB3
+	for <e@80x24.org>; Wed,  4 Jan 2017 00:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762235AbdADAkg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 3 Jan 2017 19:40:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34860 "EHLO cloud.peff.net"
+        id S932640AbdADAs4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 3 Jan 2017 19:48:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34865 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751223AbdADAke (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2017 19:40:34 -0500
-Received: (qmail 10258 invoked by uid 109); 4 Jan 2017 00:40:34 -0000
+        id S932644AbdADAsy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2017 19:48:54 -0500
+Received: (qmail 10765 invoked by uid 109); 4 Jan 2017 00:48:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Jan 2017 00:40:34 +0000
-Received: (qmail 28094 invoked by uid 111); 4 Jan 2017 00:41:23 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Jan 2017 00:48:28 +0000
+Received: (qmail 28163 invoked by uid 111); 4 Jan 2017 00:49:16 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Jan 2017 19:41:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2017 19:40:31 -0500
-Date:   Tue, 3 Jan 2017 19:40:31 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Jan 2017 19:49:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2017 19:48:25 -0500
+Date:   Tue, 3 Jan 2017 19:48:25 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] archive-zip: load userdiff config
-Message-ID: <20170104004031.ccm6skvfe3u4kkbw@sigill.intra.peff.net>
-References: <20170102222509.ho7motscnffrtnfh@sigill.intra.peff.net>
- <7710c564-6b53-1908-7205-210d80eda59b@web.de>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jacob.keller@gmail.com,
+        gitster@pobox.com, ramsay@ramsayjones.plus.com, tboegi@web.de,
+        j6t@kdbg.org, pclouds@gmail.com, larsxschneider@gmail.com
+Subject: Re: [PATCH v4 0/5] road to reentrant real_path
+Message-ID: <20170104004825.3s27dsircdp5lqte@sigill.intra.peff.net>
+References: <1481566615-75299-1-git-send-email-bmwill@google.com>
+ <20170103190923.11882-1-bmwill@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7710c564-6b53-1908-7205-210d80eda59b@web.de>
+In-Reply-To: <20170103190923.11882-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 03, 2017 at 06:24:39PM +0100, René Scharfe wrote:
+On Tue, Jan 03, 2017 at 11:09:18AM -0800, Brandon Williams wrote:
 
-> Am 02.01.2017 um 23:25 schrieb Jeff King:
-> > Since 4aff646d17 (archive-zip: mark text files in archives,
-> > 2015-03-05), the zip archiver will look at the userdiff
-> > driver to decide whether a file is text or binary. This
-> > usually doesn't need to look any further than the attributes
-> > themselves (e.g., "-diff", etc). But if the user defines a
-> > custom driver like "diff=foo", we need to look at
-> > "diff.foo.binary" in the config. Prior to this patch, we
-> > didn't actually load it.
-> 
-> Ah, didn't think of that, obviously.
-> 
-> Would it make sense for userdiff_find_by_path() to die if userdiff_config()
-> hasn't been called, yet?
+> Only change with v4 is in [1/5] renaming the #define MAXSYMLINKS back to
+> MAXDEPTH due to a naming conflict brought up by Lars Schneider.
 
-Yeah, perhaps. That makes it impossible for a program to intentionally
-ignore the config. But it looks like even plumbing diff commands load
-userdiff (which makes sense; they control its behavior through things
-like ALLOW_TEXTCONV). So it's probably fine to have it everywhere.
+Hmm. Isn't MAXSYMLINKS basically what you want here, though? It what's
+what all other similar functions will be using.
 
-Other options include:
+The only problem was that we were redefining the macro. So maybe:
 
-  1. Just loading it always as part of git_default_config.
+  #ifndef MAXSYMLINKS
+  #define MAXSYMLINKS 5
+  #endif
 
-  2. Lazy-loading it on the first call. This seems elegant, though it
-     does open up hidden cache-invalidation issues. E.g., somebody asks
-     for userdiff_find_by_path(), we load the values, then they
-     setup_git_repository(), and we would need to reload. That's
-     far-fetched for userdiff, but it makes lazy-loading as a general
-     pattern a bit of a potential maintenance trap.
+would be a good solution?
 
-     We could also introduce some infrastructure to deal with that
-     (e.g., if callers could ask the config machinery "have you been
-     invalidated"). That would help here and in other places (e.g., I
-     considered this when dealing with get_shared_repository()).
+It looks like the "usual" value is more like 20 or 30 on most systems,
+though.  We should probably also set errno to ELOOP when we hit the
+limit, which is what other symlink-resolving functions would do.
 
-> > I also happened to notice that zipfiles are created using the local
-> > timezone (because they have no notion of the timezone, so we have to
-> > pick _something_). That's probably the least-terrible option, but it was
-> > certainly surprising to me when I tried to bit-for-bit reproduce a
-> > zipfile from GitHub on my local machine.
-> 
-> That reminds me of an old request to allow users better control over the
-> meta-data written into archives.  Being able to specify a time zone offset
-> could be a start.
-
-I did it with:
-
-  TZ=PST8PDT git archive ...
-
-which let me get a bit-for-bit match with what GitHub generates. The
-real problem was just knowing that I needed to do that. OTOH, we're
-considering having GitHub generate all archives in UTC for sanity's
-sake, and it would be nice to do that by setting zip.timezone instead of
-hacking $TZ for each invocation.
-
-> > +static int archive_zip_config(const char *var, const char *value, void *data)
-> > +{
-> > +	return userdiff_config(var, value);
-> > +}
-> > +
-> >  static int write_zip_archive(const struct archiver *ar,
-> >  			     struct archiver_args *args)
-> >  {
-> >  	int err;
-> > 
-> > +	git_config(archive_zip_config, NULL);
-> > +
-> 
-> I briefly thought about moving this call to archive.c with the rest of the
-> config-related stuff, but I agree it's better kept here.
-
-That was my first thought, but there are already two config calls:
-write_archive() loads default config, but then archive-tar loads
-tar-specific config. Since only zip cares about userdiff, I patterned it
-after the latter. But arguably everybody _could_ end up calling into
-userdiff. If we take that philosophy, though, I'd be more inclined to
-push it into git_default_config(). That covers archive writers _and_ any
-other programs which might happen to call into the diff code.
-
-> Looks good, thanks!
-
-Thanks for reviewing.
+I'm surprised we didn't hit this on Linux, which has MAXSYMLINKS, too.
+We should be picking it up from <sys/param.h>.
 
 -Peff
