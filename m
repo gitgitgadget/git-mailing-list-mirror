@@ -2,87 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED5EC205C9
-	for <e@80x24.org>; Thu,  5 Jan 2017 15:49:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CEBC205C9
+	for <e@80x24.org>; Thu,  5 Jan 2017 17:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161720AbdAEPtK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 10:49:10 -0500
-Received: from spork.scientician.org ([66.228.35.160]:43970 "EHLO
-        spork.scientician.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1034257AbdAEPtI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 10:49:08 -0500
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jan 2017 10:49:08 EST
-X-Submitted: to spork.scientician.org (Postfix) with ESMTPSA id 06C1348BE2
-X-Submitted: to mail.scientician.org (Postfix) with ESMTPSA id 236FA20026
-From:   Richard Hansen <hansenr@google.com>
-Subject: Re: [PATCH 2/4] t7610: make tests more independent and debuggable
+        id S1752427AbdAEREi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 12:04:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35614 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754743AbdAERDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 12:03:44 -0500
+Received: (qmail 1937 invoked by uid 109); 5 Jan 2017 17:02:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Jan 2017 17:02:17 +0000
+Received: (qmail 10201 invoked by uid 111); 5 Jan 2017 17:03:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Jan 2017 12:03:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Jan 2017 12:02:15 -0500
+Date:   Thu, 5 Jan 2017 12:02:15 -0500
+From:   Jeff King <peff@peff.net>
 To:     Stefan Beller <sbeller@google.com>
-References: <20170104005042.51530-1-hansenr@google.com>
- <20170104005042.51530-3-hansenr@google.com>
- <CAGZ79kb9UvV6AaRLBP5OzyRtTTXarRZRZDMd_1k5n9CrgbVr5A@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-Message-ID: <3f0222d0-fc61-ac41-3b1d-7f506fcb1f61@scientician.org>
-Date:   Thu, 5 Jan 2017 10:41:58 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+Cc:     Stefan Schindler <stsch@boxbox.org>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: core.sshCommand and url.*.insteadOf for submodules
+Message-ID: <20170105170214.6fmsbj6ltbmpvcfb@sigill.intra.peff.net>
+References: <17f2724d-7001-203e-f0b5-cf586703a41a@boxbox.org>
+ <CAGZ79kb8TTaJBmVCWK3jnr4RvGjmfmsj3-ieT87wzyFLYi5frQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kb9UvV6AaRLBP5OzyRtTTXarRZRZDMd_1k5n9CrgbVr5A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kb8TTaJBmVCWK3jnr4RvGjmfmsj3-ieT87wzyFLYi5frQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-01-04 15:27, Stefan Beller wrote:
-> On Tue, Jan 3, 2017 at 4:50 PM, Richard Hansen <hansenr@google.com> wrote:
->> If a test fails it might leave the repository in a strange state.  Add
->> 'git reset --hard' at the beginning of each test to increase the odds
->> of passing when an earlier test fails.
->
-> So each test is cleaning up the previous test, which *may* confuse
-> a reader ("how is the reset --hard relevant for this test? Oooh it's
-> just a cleanup").
->
-> We could put it another way by having each test itself make clean
-> up after itself via
->
->   test_when_finished "git reset --hard" &&
->   ..
->
-> at the beginning of each test.
-> This would produce the same order of operations, i.e. a
-> reset run between each test, but semantically tells the reader
-> that the reset is part of the current test cleaning up after itself,
-> as "reset" is operation for this particular test to cleanup.
-> Does that make sense?
+On Thu, Jan 05, 2017 at 05:53:30AM -0800, Stefan Beller wrote:
 
-I like that idea; thanks for the suggestion.  I'll cook up a reroll.
+> > My scenario is as follows: I use 2 SSH keys for GitHub, for private and
+> > work-related repositories. My default key is my private key. So when I
+> > clone a work repository and try getting the submodules, `git submodule
+> > update --init` fails. This is also the case when setting
+> > `core.sshCommand` and `url.*.insteadOf` (useful for substituting
+> > "github.com" by some ~/.ssh/config'ured host).
+> 
+> which is why e.g.
+> git config --global url.https://github.com/.insteadOf git://github.com/
+> is not your preferred way here.
+> 
+> There was some discussion a couple of weeks ago, which settings
+> should be kept when recursing into submodules, Jacob and Jeff cc'd.
 
->>
->> Also use test-specific branches to avoid interfering with later tests
->> and to make the tests easier to debug.
->
-> That sounds great!
-> Though in the code I only spot one occurrence for
->
-> +       git checkout -b test$test_count branch1 &&
->
-> so maybe that could be part of the first patch in the series?
+The only discussion I recall was from last May. But that was about "-c"
+config on the command-line, and the end decision was that we pass it all
+down to submodules, per 89044baa8b (submodule: stop sanitizing config
+options, 2016-05-04).
 
-There are two; the other is buried in the change for the 'mergetool on 
-file in parent dir' test.
+I think the problem here is more about propagating options from the
+superproject's repo-level config into the submodules. AFAIK we do not do
+that at all, but I may have missed some patches in that area.
 
-Thanks for the review,
-Richard
+Another approach would be conditional config includes based on the repo
+path. With the patches discussed in [1], you could do something like:
 
+  git config --global include./path/to/work/repos.path .gitconfig-work
+  git config -f ~/.gitconfig-work url.foo.insteadOf bar
 
->
-> Thanks,
-> Stefan
+-Peff
 
+[1] http://public-inbox.org/git/20160626070617.30211-1-pclouds@gmail.com/
