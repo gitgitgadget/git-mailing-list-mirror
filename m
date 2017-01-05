@@ -7,122 +7,102 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A420205C9
-	for <e@80x24.org>; Thu,  5 Jan 2017 15:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C61AF205C9
+	for <e@80x24.org>; Thu,  5 Jan 2017 15:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032914AbdAEPqL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 5 Jan 2017 10:46:11 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:33725 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S968132AbdAEPqK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2017 10:46:10 -0500
-Received: by mail-qk0-f175.google.com with SMTP id s140so23667637qke.0
-        for <git@vger.kernel.org>; Thu, 05 Jan 2017 07:46:09 -0800 (PST)
+        id S1034256AbdAEPsf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 5 Jan 2017 10:48:35 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:34492 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032915AbdAEPsd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2017 10:48:33 -0500
+Received: by mail-qt0-f170.google.com with SMTP id l7so4826346qtd.1
+        for <git@vger.kernel.org>; Thu, 05 Jan 2017 07:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to;
-        bh=3vOIcO9S1Koz0oP8FtT7KoSfoEcM6OIbWcnA8gi9/QE=;
-        b=ndGjGgxqwNmpj6ft1Rt2y7cmb0hh2pPwQnbtVgVvvLavpsxHKhMVKMqW2I7j9Nf8nR
-         gJy8lrZMUVAoqWHNA0590/jKmo/qNLbqclrkSVB3kSXQVe4u4tvaLcpJmKhN9fZ5ruWI
-         8hfnuCZ0Qud2c3PCB+pgyRjHPLlvHFhvLEjg2a1ha7rgjKT9NU2/GtirceJx1NAxZj2T
-         ynGamvzs1q79RuWQHW5sDWjd+eWSyuelH00+5+Kh6FwjrzHBT4x417w4+9Z1i5poOQn+
-         DvGABBvakD4qPbo5ZigH6UXsbDDGhcgbuS9iNQXfOjVkVyr/SlSaGLEfNVwT3pUQmbU4
-         xLJQ==
+        bh=GDpbPT4N1ZqyIsRYCHH20nYnpOo7QHpLjH9FW48LbwY=;
+        b=PkzMF4NmydI0dD/eDhY4bf9TkKc5hpfNreqWU3DkmNbhgDl2Ht9gl1zMBZ4n68iBKD
+         Lfvgx3Ibi7anS72lyd99DZlUigKpPpFOK5hMGtozMT4bvCxtW7qlMtfNEgmA/jG0NuY7
+         TD0P0rEs8/zpM8XFrEc51ySLhkJ7URcSzzWcXmcEfFzX2rqKE6AiJBAH2Q1VC/15tZ32
+         oOHVgP/HbVV+mihPUUr7cAuiahsTVFCbImwBFmhty/ex3AgXFeNRWf5vN7zT2jRWruGu
+         +I5eZUDcvWrxVMT48Rn16S55hp8qenK6iINpWYPlzHJsKL0Tw43RKreRktocM6DNXr8P
+         B2kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to;
-        bh=3vOIcO9S1Koz0oP8FtT7KoSfoEcM6OIbWcnA8gi9/QE=;
-        b=J4jEA2/1/utGAOAyK//BxouZTqdbIl4kWpV4tGhvepWHh9sbk005tCjulYzCf2h/+D
-         2dknfJ87+uDZ37LsfSdGDTIv3kABtqoXc+iNiy1PaQQELeQV0YST8m3fWT8a3TT1bWC1
-         I15Am34hwRxid5hDadjpa9t688BW5u2wJ8k99jXXLs0rVHCoIbW/o+IUfZErxlHnhIpK
-         j8MJfX1fZSVOCvDJSWqD/hKx+qJvxi16LJa6k382TtzPyo/ez8Rku+h4Hj3/KkPOZ7gj
-         tdepoTSkT/yaxtaR7+9c6Fywf20V7yBZUvndu8wFAgiYAC/EOxOpWiZtFYkB5L3RdAol
-         2jYQ==
-X-Gm-Message-State: AIkVDXIvM9wP8Jd8t+xLQY4Yg/0vasSGPO9kvWcv0vmgZQd4Twe9U018229ppJcSZzH32Oux
-X-Received: by 10.55.169.21 with SMTP id s21mr71669937qke.246.1483631169010;
-        Thu, 05 Jan 2017 07:46:09 -0800 (PST)
+        bh=GDpbPT4N1ZqyIsRYCHH20nYnpOo7QHpLjH9FW48LbwY=;
+        b=W0guk047Q82t/6v0QKASQpfgSWRpNkn09JJlKtYII7gt6imWNp0/WB7RbpE7AHzUnP
+         sgteXJFyVis+EoL7P1fLwcf4jqvtF6l8L5e5S9eNwUwQsvGGTW/jFGf61jwO/lvYB3Jb
+         AjCg0l9t1Jfnr6rme0R8jQzb1Wr892/oDYCA3pzjMt+CkKouFlLPqVdilrLngCM4jdWt
+         Q9WpYv7OV/bgBUvXeHyZj9Law67O/FdRxi4e6b+t2ma5mgxlHWVC9NM84+xQDLvkigNn
+         f4HIjy7PhA8fNVodyBXA/jFSQKHeVHsR05jRzum6dtUSPO/h0i4ap+VOjRoMT8t0tF7h
+         YTZw==
+X-Gm-Message-State: AIkVDXJx5sKOmRXv69+z8qVSHGVjZzkRVXkbw3sI+zx8ToU9sg6NnbHuungoGeh12rxt51Cp
+X-Received: by 10.200.35.250 with SMTP id r55mr75683940qtr.161.1483631312346;
+        Thu, 05 Jan 2017 07:48:32 -0800 (PST)
 Received: from hansenr.cam.corp.google.com ([2620:0:1004:2:cc5c:732f:48cc:4621])
-        by smtp.gmail.com with ESMTPSA id s11sm34775420qte.28.2017.01.05.07.46.08
+        by smtp.gmail.com with ESMTPSA id 140sm25060349qkj.19.2017.01.05.07.48.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Jan 2017 07:46:08 -0800 (PST)
+        Thu, 05 Jan 2017 07:48:31 -0800 (PST)
 Subject: Re: [PATCH 2/4] t7610: make tests more independent and debuggable
-To:     Stefan Beller <sbeller@google.com>
+To:     Simon Ruderich <simon@ruderich.org>
 References: <20170104005042.51530-1-hansenr@google.com>
  <20170104005042.51530-3-hansenr@google.com>
- <CAGZ79kb9UvV6AaRLBP5OzyRtTTXarRZRZDMd_1k5n9CrgbVr5A@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+ <20170105122037.t4k7cby6klqb4lci@ruderich.org>
+Cc:     git@vger.kernel.org, davvid@gmail.com, j6t@kdbg.org
 From:   Richard Hansen <hansenr@google.com>
-Message-ID: <50fb1887-c6c6-9ec9-8d6c-fc4c6193bd98@google.com>
-Date:   Thu, 5 Jan 2017 10:46:07 -0500
+Message-ID: <bf3fcea5-9507-018b-d67b-70ce208a8677@google.com>
+Date:   Thu, 5 Jan 2017 10:48:31 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.5.1
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kb9UvV6AaRLBP5OzyRtTTXarRZRZDMd_1k5n9CrgbVr5A@mail.gmail.com>
+In-Reply-To: <20170105122037.t4k7cby6klqb4lci@ruderich.org>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="94eb2c06f362d310e205455acc44"
+        boundary="001a114028945d9aa505455ad53f"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---94eb2c06f362d310e205455acc44
-Content-Type: text/plain; charset=utf-8; format=flowed
+--001a114028945d9aa505455ad53f
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 2017-01-04 15:27, Stefan Beller wrote:
-> On Tue, Jan 3, 2017 at 4:50 PM, Richard Hansen <hansenr@google.com> wrote:
->> If a test fails it might leave the repository in a strange state.  Add
->> 'git reset --hard' at the beginning of each test to increase the odds
->> of passing when an earlier test fails.
->
-> So each test is cleaning up the previous test, which *may* confuse
-> a reader ("how is the reset --hard relevant for this test? Oooh it's
-> just a cleanup").
->
-> We could put it another way by having each test itself make clean
-> up after itself via
->
->   test_when_finished "git reset --hard" &&
->   ..
->
-> at the beginning of each test.
-> This would produce the same order of operations, i.e. a
-> reset run between each test, but semantically tells the reader
-> that the reset is part of the current test cleaning up after itself,
-> as "reset" is operation for this particular test to cleanup.
-> Does that make sense?
-
-I like that idea; thanks for the suggestion.  I'll cook up a reroll.
-
+On 2017-01-05 07:20, Simon Ruderich wrote:
+> On Tue, Jan 03, 2017 at 07:50:40PM -0500, Richard Hansen wrote:
+>> [snip]
+>> @@ -145,8 +148,13 @@ test_expect_success 'mergetool in subdir' '
+>>  '
 >>
->> Also use test-specific branches to avoid interfering with later tests
->> and to make the tests easier to debug.
+>>  test_expect_success 'mergetool on file in parent dir' '
+>> +	git reset --hard &&
+>> +	git checkout -b test$test_count branch1 &&
+>> +	git submodule update -N &&
+>>  	(
+>>  		cd subdir &&
+>> +		test_must_fail git merge master >/dev/null 2>&1 &&
+>> +		( yes "" | git mergetool file3 >/dev/null 2>&1 ) &&
 >
-> That sounds great!
-> Though in the code I only spot one occurrence for
->
-> +       git checkout -b test$test_count branch1 &&
->
-> so maybe that could be part of the first patch in the series?
+> This change seems unrelated to the changes mentioned in the
+> commit message. Was it intended?
 
-There are two; the other is buried in the change for the 'mergetool on 
-file in parent dir' test.  I'll improve the commit message to make it 
-more clear.
+Yes, that is intentional; without this change, the test depends on the 
+successful completion of the previous test.  I'll improve the commit 
+message.
 
-Thanks for the review,
+Thanks,
 Richard
 
-
 >
-> Thanks,
-> Stefan
+> Regards
+> Simon
 
---94eb2c06f362d310e205455acc44
+--001a114028945d9aa505455ad53f
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -204,13 +184,13 @@ m4YUSo869xADdrGrWJ7KzroFbucLZYh3niIjVICp7fh9wtLgbX7X/akdubehYhy/l+AIMml6Zlyu
 GNGCGIleyQ0bAdjjG+dKrDErUlui8wd/YplvelaTAzSvNpxcrr+2YB8UBWcYkgULkp5GDCC2guKl
 rMF1mTS6N6GMxUi30sZicbMxggJeMIICWgIBATBcMEwxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBH
 bG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlHbG9iYWxTaWduIEhWIFMvTUlNRSBDQSAxAgwvfEOc
-7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIIhV6E0lOo3A5QmmkZrq
-1D2ccf2oTx7l4nCSk1bTZ77DMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
-MQ8XDTE3MDEwNTE1NDYwOVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
+7N3JjQI9nAwwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIO2FCcFKYV0zsn3PVmw6
+xd0gX4DiKJZC7PGHp43X5MEXMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTE3MDEwNTE1NDgzMlowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUD
 BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsG
-CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAl78Q2dIJNms3XZPbmkNZSaE2noMFfraxN8dvg
-J/IloBMnrI5SXAAYUWgIbgpmr7K1Q3cgbbcmBypfFd7NkTVxyzMLYKbcpD7Wi7f9nyURW9D1Z8YT
-57fRYl/BzYnor4rA4poJSJ7VeA4Rk9GjIgGeuMy9olPOmft4WD5k3fNh7ZewFsW7mdpusQNdJHE5
-J4T7i6QQhsmPbzyEmUnPue4mpI2tm2lvh/k4ASoijUsNypK14DtKtJ6fcrSqUEiE4e0+utqgVL1S
-sDkS3Ei01xbQvfS0klB5xm5VJwrXY+qZC7D9+KMHw/1UlHZhcoii6ftbrykMBMyA6IBr/XG/eqai
---94eb2c06f362d310e205455acc44--
+CWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAwy9oVDItQyBrXK5UoqHrXk/Hg9UmaEmOfXq12
+H1XOWBAzF7ojAOQ1rMIWrpYMUNwKdD2q+R29CDUpunzytOWiqUNeeTIGjM/E/GYq7F+bG5acNZoZ
+OyERKD8KRu34zKEIBQYiDgEuAepiUGgJCELpsI6kNL/VN3cMEZVZ/tlkjBQq4lMCT5hEzKXQ1xsm
+QP61Q2i5dpZwpD1Ww3oiytjiizDLP5fDhrXfoKjmA3mBAkvpZea372qwIHdHcjYe5GUEfkQwx4wr
+JAvMi4zVESA5aD0hio2D0frThGEVakVCxpoyZbKy/1ljCfI5PBth31e9ZjoZ+V1WFLZx5IzGFOhU
+--001a114028945d9aa505455ad53f--
